@@ -941,9 +941,9 @@ case 'addnoteaction':
 	break;
 	
 //------------------------------------------------------------------------------
-//-- add new Shared Note using CA assistant
+//-- add new Shared Note census event using GEDFact assistant
 case 'addnewnote_assisted':
-	if (isset($_REQUEST['pid'])) 		$pid		 = $_REQUEST['pid'];
+	if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
 	global $pid;
 	
 	echo PGV_JS_START;
@@ -977,7 +977,7 @@ case 'addnewnote_assisted':
 	break;
 	
 //------------------------------------------------------------------------------
-//-- create a shared note census record from the incoming variables using GEDFact Assistant
+//-- add Shared Note census event from the incoming variables using GEDFact Assistant
 case 'addnoteaction_assisted':
 	include ('modules/GEDFact_assistant/_CENS/gedrec_append.php');
 	break;
@@ -1962,9 +1962,9 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 		}
 
 		if ($success) {
-			$success = $success && delete_gedrec($pid);
+			$success2 = $success && delete_gedrec($pid);
 		}
-		if ($success) {
+		if ($success2) {
 			echo "<br /><br />".$pgv_lang["gedrec_deleted"];
 			if ($action=="deletenote") {
 				$link="notelist.php";
@@ -1973,7 +1973,7 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 			}else if ($action=="deleterepo") {
 				$link="repolist.php";
 			}
-		//	echo PGV_JS_START, "edit_close('{$link}');", PGV_JS_END;
+			echo PGV_JS_START, "edit_close('{$link}');", PGV_JS_END;
 		}
 	}
 	break;
@@ -2647,30 +2647,31 @@ case 'mod_edit_fact':
 
 
 // Redirect to new record, if requested
-/*
 if (isset($_REQUEST['goto'])) { 
 	$goto = $_REQUEST['goto'];
 }
 if (isset($_REQUEST['link'])) {
 	$link = $_REQUEST['link'];
 }
-*/
 if (empty($goto) && empty($link)) {
 	$link='';
 }
 
-// autoclose window when update successful ========================================= 
-if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG ) {
+// autoclose window when update successful and not previously closed with $success2 ==== 
+global $success2;
+if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG && !isset($success2)) {
 	echo PGV_JS_START;
 	if ($action=="copy") {
 		echo "window.close();";
+	} else if (isset($closeparent) && $closeparent=="yes" ) {
+		echo "window.opener.close(); window.opener.edit_close('{$link}'); window.close(); ";
 	} else {
 		echo "edit_close('{$link}');";
 	}
 	echo PGV_JS_END;
 }
 
-// Decide whether to print footer or not ===========================================
+// Decide whether to print footer or not ================================================
 if ($action == 'addmedia_links' || $action == 'addnewnote_assisted' ) {
 	// Do not print footer.
 	echo "<br /><div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div>\n";

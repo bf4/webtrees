@@ -1,6 +1,6 @@
 <?php
 /**
-* PopUp Window to provide editing features.
+* Include for GEDFact Assistant - Census.
 *
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
@@ -84,114 +84,79 @@ if (!empty($PUBL)) {
 }
 if (!empty($NOTE)) {
 	//$new_Notegedrec .= "1 NOTE @$NOTE@\n";
-	if (!empty($CALN)) $new_Notegedrec .= "2 CALN $CALN\n";
+	if (!empty($CALN)) {
+		$new_Notegedrec .= "2 CALN $CALN\n";
+	}
 }
 if (PGV_DEBUG) {
 	echo "<pre>$new_Notegedrec</pre>";
 }
-// $xref_Note = "Test";
-$xref_Note = append_gedrec($new_Notegedrec);
-$link = "note.php?nid=$xref_Note&show_changes=yes";
-
-if ($xref_Note) {
-	$closeparent="yes";
-	echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]." (".$xref_Note.")<br /><br />";
-	echo "<a href=\"javascript://NOTE $xref_Note\" onclick=\"openerpasteid('$xref_Note'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref_Note</b></a>\n";
-	echo "<br /><br />";
-	echo "<br /><br />";
-	
-	// DEBUG ==========================================================
-	// echo "Census event now linked to Indi id's: <br />". $pid_array;
-	// echo "<br /><br />";
-	// ================================================================
+if (!$pid_array) {
+	echo "<br /><br /><br />&nbsp;&nbsp;&nbsp;";
+	echo "No Individuals Selected <a href=\"javascript://Close Window\" onclick=\"window.close();\">&nbsp;&nbsp; Close Window and try again </a><br /><br /><br />\n";
+}else{
+	$xref_Note = append_gedrec($new_Notegedrec);
 }
-// ========================================================================================
-
-
-
+if (isset($xref_Note)) {
+	$closeparent="yes";
+	$link = "individual.php?pid=$pid&show_changes=yes";
+}
+// End Part (1) ===========================================================================
 
 
 // PART (2) COPY CENSUS EVENT TO THE EXTRACTED PID's CREATION =============================
-// Still working on this for auto update of census event into affected Indi Id's ==========
-
-if (!isset($pid_array)){
+if (!$pid_array){
 	$cens_pids = array($pid);
-	$idnums="";
+	$idnums="none";
 }else{
 	$cens_pids = explode(", ", $pid_array);
 	$idnums="multi";
 }
-
-// DEBUG ==============
-//echo '<b>PIDs: </b>';
-//	print_r($cens_pids);
-//echo '<br /><br />';
-// =====================
-
-// Cycle through each individual concerned defined by $cens_pids array.
-foreach ($cens_pids as $pid) {
-	if (isset($pid)) {
-		$gedrec = find_updated_record($pid, PGV_GED_ID);
-		if (empty($gedrec)) $gedrec = find_gedcom_record($pid, PGV_GED_ID);			
-	} else if (isset($famid)) {
-		$gedrec = find_updated_record($famid, PGV_GED_ID);
-		if (empty($gedrec)) $gedrec = find_gedcom_record($famid, PGV_GED_ID);			
-	}
-
-
-	$lines = explode("\n", $gedrec);
-	$newgedrec = "";
-	for($i=0; $i<count($lines); $i++) {
-		if (strpos($lines[$i], "1 _PGV_OBJS")===false) {
-			$newgedrec .= $lines[$i];
+// Cycle through each individual concerned defined by $cens_pids array. ======
+if ($idnums=="multi") {
+	foreach ($cens_pids as $pid) {
+		if (isset($pid)) {
+			$gedrec = find_updated_record($pid, PGV_GED_ID);
+			if (empty($gedrec)) $gedrec = find_gedcom_record($pid, PGV_GED_ID);
+		} else if (isset($famid)) {
+			$gedrec = find_updated_record($famid, PGV_GED_ID);
+			if (empty($gedrec)) $gedrec = find_gedcom_record($famid, PGV_GED_ID);
 		}
-	}
 
+		// Variables for new_cens_gedrec =====================================
+		$cens_date="05 APR 1960";
+		$cens_plac="Withnell, Lancashire";
+		$cens_addr="Brinscall Station, School Lane";
+		$cens_pid_age="3y";
+		$cens_sour="S2";
+		$cens_sour_citation="RG12/3419/131/16";
+		$cens_note_level="2";
+		$cens_obje_level="3";
+		$cens_obje_id="M457";
+		$cens_note_id=$xref_Note;
 
-	// variables for new_cens_gedrec
-	$cens_date="05 APR 1891";
-	$cens_plac="Withnell, Lancashire";
-	$cens_addr="Brinscall Station, School Lane";
-	$cens_pid_age="3y";
-	$cens_sour="S2";
-	$cens_sour_level="2";
-	$cens_sour_citation="RG12/3419/131/16";
-	$cens_note_id=$xref_Note;
-	$cens_obje="M457";
+		// New Census event ==================================================
+		$new_cens_event_gedrec  = "\n";
+		$new_cens_event_gedrec .= "1 CENS"."\n";
+		$new_cens_event_gedrec .= "2 DATE ".$cens_date."\n";
+		$new_cens_event_gedrec .= "2 PLAC ".$cens_plac."\n";
+		$new_cens_event_gedrec .= "2 ADDR ".$cens_addr."\n";
+		$new_cens_event_gedrec .= "2 AGE  ".$cens_pid_age."\n";
+		$new_cens_event_gedrec .= "2 SOUR @".$cens_sour."@"."\n";
+		$new_cens_event_gedrec .= "3 PAGE ".$cens_sour_citation."\n";
+		$new_cens_event_gedrec .= "3 DATA"."\n";
+		$new_cens_event_gedrec .= "4 DATE ".$cens_date."\n";
+		$new_cens_event_gedrec .= $cens_obje_level." OBJE @".$cens_obje_id."@"."\n";
+		$new_cens_event_gedrec .= $cens_note_level." NOTE @".$cens_note_id."@"."\n";
 
-	$new_cens_event_gedrec  = "";
+		// Append New Census event to gedrec =================================== 
+		$new_cens_event_gedrec_updated = $gedrec . $new_cens_event_gedrec . "\n";
 
-	$new_cens_event_gedrec .= $newgedrec."\n";
+		// Replace Indi GEedrec with newly added Census event ================== 
+		$success = replace_gedrec($pid, $new_cens_event_gedrec_updated);
 
-	$new_cens_event_gedrec .= "1 CENS"."\n";
-	$new_cens_event_gedrec .= "2 DATE ".$cens_date."\n";
-	$new_cens_event_gedrec .= "2 PLAC ".$cens_plac."\n";
-	$new_cens_event_gedrec .= "2 ADDR ".$cens_addr."\n";
-	$new_cens_event_gedrec .= "2 AGE  ".$cens_pid_age."\n";
-	$new_cens_event_gedrec .= $cens_sour_level." SOUR @".$cens_sour."@"."\n";
-	$new_cens_event_gedrec .= "3 PAGE ".$cens_sour_citation."\n";
-	$new_cens_event_gedrec .= "3 DATA"."\n";
-	$new_cens_event_gedrec .= "4 DATE ".$cens_date."\n";
-	$new_cens_event_gedrec .= "3 NOTE @".$cens_note_id."@"."\n";
-	$new_cens_event_gedrec .= "3 OBJE @".$cens_obje."@"."\n";
-
-// Still working on this for auto update of census event into affected Indi Id's ===============================
-	// $newgedrec = trim($new_cens_event_gedrec);
-	// $success2 = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec, $update_CHAN)));
-
-	// $success2 = replace_gedrec($pid, $new_cens_event_gedrec) ; // && append_gedrec($new_cens_event_gedrec);
-
-	//	$xref = append_gedrec($new_cens_event_gedrec);
-	//	$link = "individual.php?pid=$xref&show_changes=yes";
-
-	//	$new_cens_event_gedrec2 = str_replace("\n", "<br />", $new_cens_event_gedrec); 
-	//	echo '<b>NEW GEDREC: '.$pid.'</b><br />', $new_cens_event_gedrec2;
-	//	echo '<br /><br />';
-// =============================================================================================================
-
-
-
-} // end foreach $cens_pids  -------------
-
+	} // end foreach $cens_pids  -------------
+}
+// End Part (2) ===========================================================================
 
 ?>
