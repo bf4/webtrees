@@ -43,36 +43,36 @@ $emptyfacts = array('_HOL', '_NMR', '_SEPR', 'ADOP', 'ANUL', 'BAPL', 'BAPM', 'BA
 'DATA', 'DEAT', 'DIV', 'DIVF', 'EMIG', 'ENDL', 'ENGA', 'FCOM', 'GRAD',
 'HUSB', 'IMMI', 'MAP', 'MARB', 'MARC', 'MARL', 'MARR', 'MARS', 'NATU', 'ORDN',
 'PROB', 'RESI', 'RETI', 'SLGC', 'SLGS', 'WIFE', 'WILL');
-$templefacts = array('SLGC','SLGS','BAPL','ENDL','CONL');
-$nonplacfacts = array('ENDL','NCHI','SLGC','SLGS');
-$nondatefacts = array('ABBR','ADDR','AFN','AUTH','CHIL','EMAIL','FAX','HUSB','NAME','NCHI','NOTE','OBJE',
-'PHON','PUBL','REFN','REPO','SEX','SOUR','SSN','TEXT','TITL','WIFE','WWW','_EMAIL');
+$templefacts = array('SLGC', 'SLGS', 'BAPL', 'ENDL', 'CONL');
+$nonplacfacts = array('ENDL', 'NCHI', 'SLGC', 'SLGS');
+$nondatefacts = array('ABBR', 'ADDR', 'AFN', 'AUTH', 'CHIL', 'EMAIL', 'FAX', 'HUSB', 'NAME', 'NCHI', 'NOTE', 'OBJE',
+'PHON', 'PUBL', 'REFN', 'REPO', 'SEX', 'SOUR', 'SSN', 'TEXT', 'TITL', 'WIFE', 'WWW', '_EMAIL');
 $typefacts = array(); //-- special facts that go on 2 TYPE lines
 
 // Next two vars used by insert_missing_subtags()
-$date_and_time=array('BIRT','DEAT'); // Tags with date and time
+$date_and_time=array('BIRT', 'DEAT'); // Tags with date and time
 $level2_tags=array( // The order of the $keys is significant
-	'_HEB' =>array('NAME','TITL'),
-	'ROMN' =>array('NAME','TITL'),
-	'TYPE' =>array('GRAD','EVEN','FACT','IDNO','MARR','ORDN','SSN'),
-	'AGNC' =>array('EDUC','GRAD','OCCU','RETI','ORDN'),
+	'_HEB' =>array('NAME', 'TITL'),
+	'ROMN' =>array('NAME', 'TITL'),
+	'TYPE' =>array('GRAD', 'EVEN', 'FACT', 'IDNO', 'MARR', 'ORDN', 'SSN'),
+	'AGNC' =>array('EDUC', 'GRAD', 'OCCU', 'RETI', 'ORDN'),
 	'CAUS' =>array('DEAT'),
 	'CALN' =>array('REPO'),
 	'CEME' =>array('BURI'), // CEME is NOT a valid 5.5.1 tag
 	'RELA' =>array('ASSO'),
-	'DATE' =>array('ANUL','CENS','DIV','DIVF','ENGA','MARB','MARC','MARR','MARL', 'MARS','RESI','EVEN','EDUC','OCCU','PROP','RELI','RESI','BIRT','CHR','DEAT','BURI','CREM','ADOP','BAPM','BARM','BASM','BLES','CHRA','CONF','FCOM','ORDN','NATU','EMIG','IMMI','CENS','PROB','WILL','GRAD','RETI','EVEN','BAPL','CONL','ENDL','SLGC','SLGS','_TODO'),
-	'TEMP' =>array('BAPL','CONL','ENDL','SLGC','SLGS'),
-	'PLAC' =>array('ANUL','CENS','DIV','DIVF','ENGA','MARB','MARC','MARR','MARL', 'MARS','RESI','EVEN','EDUC','OCCU','PROP','RELI','RESI','BIRT','CHR','DEAT','BURI','CREM','ADOP','BAPM','BARM','BASM','BLES','CHRA','CONF','FCOM','ORDN','NATU','EMIG','IMMI','CENS','PROB','WILL','GRAD','RETI','EVEN','BAPL','CONL','ENDL','SLGC','SLGS','SSN'),
-	'STAT' =>array('BAPL','CONL','ENDL','SLGC','SLGS'),
-	'ADDR' =>array('BIRT','CHR','CHRA','DEAT','CREM','BURI','MARR','CENS','EDUC','GRAD','OCCU','PROP','ORDN','RESI','EVEN'),
-	'PHON' =>array('OCCU','RESI'),
-	'FAX'  =>array('OCCU','RESI'),
-	'URL'  =>array('OCCU','RESI'),
-	'EMAIL'=>array('OCCU','RESI'),
-	'AGE'  =>array('CENS','DEAT'),
+	'DATE' =>array('ANUL', 'CENS', 'DIV', 'DIVF', 'ENGA', 'MARB', 'MARC', 'MARR', 'MARL', 'MARS', 'RESI', 'EVEN', 'EDUC', 'OCCU', 'PROP', 'RELI', 'RESI', 'BIRT', 'CHR', 'DEAT', 'BURI', 'CREM', 'ADOP', 'BAPM', 'BARM', 'BASM', 'BLES', 'CHRA', 'CONF', 'FCOM', 'ORDN', 'NATU', 'EMIG', 'IMMI', 'CENS', 'PROB', 'WILL', 'GRAD', 'RETI', 'EVEN', 'BAPL', 'CONL', 'ENDL', 'SLGC', 'SLGS', '_TODO'),
+	'TEMP' =>array('BAPL', 'CONL', 'ENDL', 'SLGC', 'SLGS'),
+	'PLAC' =>array('ANUL', 'CENS', 'DIV', 'DIVF', 'ENGA', 'MARB', 'MARC', 'MARR', 'MARL', 'MARS', 'RESI', 'EVEN', 'EDUC', 'OCCU', 'PROP', 'RELI', 'RESI', 'BIRT', 'CHR', 'DEAT', 'BURI', 'CREM', 'ADOP', 'BAPM', 'BARM', 'BASM', 'BLES', 'CHRA', 'CONF', 'FCOM', 'ORDN', 'NATU', 'EMIG', 'IMMI', 'CENS', 'PROB', 'WILL', 'GRAD', 'RETI', 'EVEN', 'BAPL', 'CONL', 'ENDL', 'SLGC', 'SLGS', 'SSN'),
+	'STAT' =>array('BAPL', 'CONL', 'ENDL', 'SLGC', 'SLGS'),
+	'ADDR' =>array('BIRT', 'CHR', 'CHRA', 'DEAT', 'CREM', 'BURI', 'MARR', 'CENS', 'EDUC', 'GRAD', 'OCCU', 'PROP', 'ORDN', 'RESI', 'EVEN'),
+	'PHON' =>array('OCCU', 'RESI'),
+	'FAX'  =>array('OCCU', 'RESI'),
+	'URL'  =>array('OCCU', 'RESI'),
+	'EMAIL'=>array('OCCU', 'RESI'),
+	'AGE'  =>array('CENS', 'DEAT'),
 	'HUSB' =>array('MARR'),
 	'WIFE' =>array('MARR'),
-	'FAMC' =>array('ADOP','SLGC'),
+	'FAMC' =>array('ADOP', 'SLGC'),
 	'FILE' =>array('OBJE'),
 	'_PRIM'=>array('OBJE'),
 	'EVEN' =>array('DATA'),
@@ -121,7 +121,7 @@ function checkChangeTime($pid, $gedrec, $last_time) {
 	}
 	if (isset($_REQUEST['linenum']) && $changeTime!=0 && $last_time && $changeTime > $last_time) {
 		echo "<span class=\"error\">", str_replace("#PID#", $pid, $pgv_lang["edit_concurrency_msg2"]), "<br /><br />";
-		if (!empty($changeUser)) echo str_replace(array("#CHANGEUSER#", "#CHANGEDATE#"), array($changeUser,date("d M Y H:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"]), "<br /><br />";
+		if (!empty($changeUser)) echo str_replace(array("#CHANGEUSER#", "#CHANGEDATE#"), array($changeUser, date("d M Y H:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"]), "<br /><br />";
 		echo $pgv_lang["edit_concurrency_reload"], "</span>";
 		print_simple_footer();
 		exit;
@@ -344,7 +344,7 @@ function check_gedcom($gedrec, $chan=true) {
 		if (!empty($line)) $newrec .= $line."\n";
 	}
 
-	$newrec = html_entity_decode($newrec,ENT_COMPAT,'UTF-8');
+	$newrec = html_entity_decode($newrec, ENT_COMPAT, 'UTF-8');
 	return $newrec;
 }
 
@@ -587,7 +587,7 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 			case 'addspouseaction':
 				if ($famtag=='WIFE' && preg_match('/\/(.*)\//', $indi_name, $match)) {
 					if ($SURNAME_TRADITION=='polish') {
-						$match[1]=preg_replace(array('/ski$/','/cki$/','/dzki$/'), array('ska', 'cka', 'dzka'), $match[1]);
+						$match[1]=preg_replace(array('/ski$/', '/cki$/', '/dzki$/'), array('ska', 'cka', 'dzka'), $match[1]);
 					}
 					$new_marnm=$match[1];
 				}
@@ -595,7 +595,7 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 			case 'addchildaction':
 				if (preg_match('/\/((?:[a-z]{2,3}\s+)*)(.*)\//i', $father_name, $match)) {
 					if ($SURNAME_TRADITION=='polish' && $sextag=='F') {
-						$match[2]=preg_replace(array('/ski$/','/cki$/','/dzki$/'), array('ska', 'cka', 'dzka'), $match[2]);
+						$match[2]=preg_replace(array('/ski$/', '/cki$/', '/dzki$/'), array('ska', 'cka', 'dzka'), $match[2]);
 					}
 					$name_fields['SPFX']=trim($match[1]);
 					$name_fields['SURN']=$match[2];
@@ -605,7 +605,7 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 			case 'addnewparentaction':
 				if ($famtag=='HUSB' && preg_match('/\/((?:[a-z]{2,3}\s+)*)(.*)\//i', $indi_name, $match)) {
 					if ($SURNAME_TRADITION=='polish' && $sextag=='M') {
-						$match[2]=preg_replace(array('/ska$/','/cka$/','/dzka$/'), array('ski', 'cki', 'dzki'), $match[2]);
+						$match[2]=preg_replace(array('/ska$/', '/cka$/', '/dzka$/'), array('ski', 'cki', 'dzki'), $match[2]);
 					}
 					$name_fields['SPFX']=trim($match[1]);
 					$name_fields['SURN']=$match[2];
@@ -635,7 +635,7 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 		if (empty($name_fields['NSFX'])) $name_fields['NSFX']=$name_bits[10];
 		if ($NAME_REVERSE && empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
 		// Don't automatically create an empty NICK - it is an "advanced" field.
-		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m',$namerec))
+		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m', $namerec))
 			$name_fields['NICK']=$name_bits[6];
 	}
 
@@ -790,8 +790,8 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 		// "list" format names are always "surn, givn".
 		str=str.replace(/,/g," ");
 
-		str=str.replace(/\s\s+/g," ");
-		return str.replace(/(^\s+)|(\s+$)/g,'');
+		str=str.replace(/\s\s+/g, " ");
+		return str.replace(/(^\s+)|(\s+$)/g, '');
 	}
 
 	function lang_class(str) {
@@ -997,7 +997,7 @@ function print_addnewmedia_link($element_id) {
 	$text = $pgv_lang["add_media"];
 	if (isset($PGV_IMAGES["addmedia"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addmedia"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	echo '&nbsp;&nbsp;&nbsp;<a href="javascript:;" onclick="pastefield=document.getElementById(\'', $element_id, '\'); window.open(\'addmedia.php?action=showmediaform&linktoid={$linkToID}&level={$level}\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">';
+	echo '&nbsp;&nbsp;&nbsp;<a href="javascript:;" onclick="pastefield=document.getElementById(\'', $element_id, '\'); window.open(\'addmedia.php?action=showmediaform&linktoid={$linkToID}&level={$level}\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">';
 	echo $Link;
 	echo "</a>";
 }
@@ -1108,20 +1108,20 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			// pos (+) : N or E
 			// neg (-) : S or W
 			txt=field.value.toUpperCase();
-			txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
-			txt=txt.replace(/ /g,':'); // N12 34 ==> N12.34
-			txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
-			txt=txt.replace(/-/g,neg); // -0.5698 ==> W0.5698
-			txt=txt.replace(/,/g,'.'); // 0,5698 ==> 0.5698
+			txt=txt.replace(/(^\s*)|(\s*$)/g, ''); // trim
+			txt=txt.replace(/ /g, ':'); // N12 34 ==> N12.34
+			txt=txt.replace(/\+/g, ''); // +17.1234 ==> 17.1234
+			txt=txt.replace(/-/g, neg); // -0.5698 ==> W0.5698
+			txt=txt.replace(/,/g, '.'); // 0,5698 ==> 0.5698
 			// 0�34'11 ==> 0:34:11
-			txt=txt.replace(/\uB0/g,':'); // �
-			txt=txt.replace(/\u27/g,':'); // '
+			txt=txt.replace(/\uB0/g, ':'); // �
+			txt=txt.replace(/\u27/g, ':'); // '
 			// 0:34:11.2W ==> W0.5698
 			txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
 			// 0:34W ==> W0.5667
 			txt=txt.replace(/^([0-9]+):([0-9]+)(.*)/g, function($0, $1, $2, $3) { var n=parseFloat($1); n+=($2/60); n=Math.round(n*1E4)/1E4; return $3+n; });
 			// 0.5698W ==> W0.5698
-			txt=txt.replace(/(.*)([N|S|E|W]+)$/g,'$2$1');
+			txt=txt.replace(/(.*)([N|S|E|W]+)$/g, '$2$1');
 			// 17.1234 ==> N17.1234
 			if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
 			field.value = txt;
@@ -1173,7 +1173,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	if ($upperlevel) $element_id=$upperlevel."_".$fact; // ex: BIRT_DATE | DEAT_DATE ...
 
 	// field value
-	$islink = (substr($value,0,1)=="@" and substr($value,0,2)!="@#");
+	$islink = (substr($value, 0, 1)=="@" and substr($value, 0, 2)!="@#");
 	if ($islink) $value=trim(trim(substr($tag, strlen($fact)+3)), " @\r");
 	else $value=trim(substr($tag, strlen($fact)+3));
 	if ($fact=='REPO' || $fact=='SOUR' || $fact=='OBJE' || $fact=='FAMC')
@@ -1531,18 +1531,18 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	}
 	else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" onchange=\"updateTextName('", $element_id, "');\" value=\"", PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8')), "\" />";
-		echo "<span id=\"", $element_id, "_display\">", PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8')), "</span>";
+		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" onchange=\"updateTextName('", $element_id, "');\" value=\"", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "\" />";
+		echo "<span id=\"", $element_id, "_display\">", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "</span>";
 		echo " <a href=\"#edit_name\" onclick=\"convertHidden('", $element_id, "'); return false;\"> ";
 		if (isset($PGV_IMAGES["edit_indi"]["small"])) echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["edit_indi"]["small"], "\" border=\"0\" width=\"20\" alt=\"", $pgv_lang["edit_name"], "\" align=\"top\" />";
 		else echo "<span class=\"age\">[", $pgv_lang["edit_name"], "]</span>";
 		echo "</a>";
 	} else {
 		// textarea
-		if ($rows>1) echo "<textarea tabindex=\"", $tabkey, "\" id=\"", $element_id, "\" name=\"", $element_name, "\" rows=\"", $rows, "\" cols=\"", $cols, "\">", PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8')), "</textarea><br />\n";
+		if ($rows>1) echo "<textarea tabindex=\"", $tabkey, "\" id=\"", $element_id, "\" name=\"", $element_name, "\" rows=\"", $rows, "\" cols=\"", $cols, "\">", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "</textarea><br />\n";
 		else {
 			// text
-			echo "<input tabindex=\"", $tabkey, "\" type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8')), "\" size=\"", $cols, "\" dir=\"ltr\"";
+			echo "<input tabindex=\"", $tabkey, "\" type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "\" size=\"", $cols, "\" dir=\"ltr\"";
 			echo " class=\"{$fact}\"";
 			echo " autocomplete=\"off\"";
 			if (in_array($fact, $subnamefacts)) echo " onblur=\"updatewholename();\" onkeyup=\"updatewholename();\"";
@@ -1655,7 +1655,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $action=="add" && $label=="GEDFact Assistant" && $pid) {
 				$type_pid=GedcomRecord::getInstance($pid);
 				if ($type_pid->getType()=="INDI" ) { 
-					echo "&nbsp;&nbsp;&nbsp;".$pgv_lang["create_shared_note_assisted"];
+					echo "&nbsp;&nbsp;&nbsp;", $pgv_lang["create_shared_note_assisted"];
 					print_addnewnote_assisted_link($element_id);
 				}
 			}else{
@@ -2324,7 +2324,7 @@ function create_add_form($fact) {
 	$tags = array();
 
 	// handle  MARRiage TYPE
-	if (substr($fact,0,5)=="MARR_") {
+	if (substr($fact, 0, 5)=="MARR_") {
 		$tags[0] = "MARR";
 		add_simple_tag("1 MARR");
 		insert_missing_subtags($fact);
@@ -2391,7 +2391,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	// ==================================================================
 	
 	if (count($fields)>2) {
-		$ct = preg_match("/@.*@/",$fields[2]);
+		$ct = preg_match("/@.*@/", $fields[2]);
 		$levellink = $ct > 0;
 	} else {
 		$levellink = false;
@@ -2538,8 +2538,8 @@ function insert_missing_subtags($level1tag, $add_date=false)
 
 	// handle  MARRiage TYPE
 	$type_val = '';
-	if (substr($level1tag,0,5)=="MARR_") {
-		$type_val = substr($level1tag,5);
+	if (substr($level1tag, 0, 5)=="MARR_") {
+		$type_val = substr($level1tag, 5);
 		$level1tag = "MARR";
 	}
 

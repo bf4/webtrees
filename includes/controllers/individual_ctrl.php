@@ -80,7 +80,7 @@ class IndividualControllerRoot extends BaseController {
 	var $total_names = 0;
 	var $SEX_COUNT = 0;
 	var $sexarray = array();
-	var $tabarray = array("facts","notes","sources","media","relatives","tree","research","map","lightbox","spare","nav");
+	var $tabarray = array("facts", "notes", "sources", "media", "relatives", "tree", "research", "map", "lightbox", "spare", "nav");
 
 	/**
 	* constructor
@@ -394,15 +394,15 @@ class IndividualControllerRoot extends BaseController {
 
 					$name = $this->indi->getFullName();
 					if (file_exists("modules/lightbox/album.php")) {
-						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
+						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "\">" . "\n";
 					}else
 
 					if (!$USE_MEDIA_VIEWER && $imgsize) {
-						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url(encrypt($firstmediarec["file"]))."',$imgwidth, $imgheight);\">";
+						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url(encrypt($firstmediarec["file"]))."', $imgwidth, $imgheight);\">";
 					}else{
 						$result .= "<a href=\"mediaviewer.php?mid={$mid}\">";
 					}
-					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'))."\" alt=\"".PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'))."\" />";
+					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))."\" alt=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))."\" />";
 					$result .= "</a>";
 					return $result;
 				}
@@ -546,7 +546,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		if ($showQuickForm) {
 			$submenu = new Menu($pgv_lang["quick_update_title"]);
-			$submenu->addOnclick("return quickEdit('".$this->pid."','','".$GEDCOM."');");
+			$submenu->addOnclick("return quickEdit('".$this->pid."', '', '".$GEDCOM."');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
@@ -1126,11 +1126,11 @@ class IndividualControllerRoot extends BaseController {
 				<td class="facts_label"><br />
 				</td>
 				<td class="facts_value<?php print $styleadd ?>">
-					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
+					<?php //echo "<span class=\"details_label\">", $factarray["NCHI"], ": </span>", $family->getNumberOfChildren(), "<br />";?>
 					<?php if ($date && $date->isOK() || $place) {
 						$marr_type = "MARR_".strtoupper($family->getMarriageType());
-						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>";
-						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
+						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>";
+						else echo "<span class=\"details_label\">", $factarray["MARR"], ": </span>", $family->getMarriageType();
 						if ($date) {
 							echo $date->Display(false);
 							if (!empty($place)) echo ' -- ';
@@ -1168,11 +1168,11 @@ class IndividualControllerRoot extends BaseController {
 							if (isset($factdetail))
 								if (count($factdetail) == 3)
 									if (strtoupper($factdetail[2]) == "Y")
-										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["yes"];
+										echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>", $pgv_lang["yes"];
 									else if (strtoupper($factdetail[2]) == "N")
-										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["no"];
+										echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>", $pgv_lang["no"];
 						}
-						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
+						else echo "<span class=\"details_label\">", $factarray["MARR"], ": </span>", $family->getMarriageType();
 					}
 					?>
 				</td>
@@ -1233,8 +1233,8 @@ class IndividualControllerRoot extends BaseController {
 				<td class="facts_value"><?php print_help_link($action."_help", "qm"); ?>
 					<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>');"><?php print $pgv_lang[$action]; ?></a>
 					<span style='white-space:nowrap;'>
-						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','M');"><?php echo Person::sexImage('M', 'small', '', $pgv_lang[$child_m]); ?></a>
-						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','F');"><?php echo Person::sexImage('F', 'small', '', $pgv_lang[$child_f]); ?></a>
+						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>', 'M');"><?php echo Person::sexImage('M', 'small', '', $pgv_lang[$child_m]); ?></a>
+						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>', 'F');"><?php echo Person::sexImage('F', 'small', '', $pgv_lang[$child_f]); ?></a>
 					</span>
 				</td>
 			</tr>
@@ -1247,9 +1247,9 @@ class IndividualControllerRoot extends BaseController {
 // LB Fix for no googlemaps ==========================================================================
 
 		if (file_exists("modules/googlemap/defaultconfig.php")) {
-			$tab_array = array("facts","notes","sources","media","relatives","tree","research","map","lightbox","spare","nav");
+			$tab_array = array("facts", "notes", "sources", "media", "relatives", "tree", "research", "map", "lightbox", "spare", "nav");
 		}else{
-			$tab_array = array("facts","notes","sources","media","relatives","tree","research","lightbox","spare","nav");
+			$tab_array = array("facts", "notes", "sources", "media", "relatives", "tree", "research", "lightbox", "spare", "nav");
 		}
 		$tabType = $tab_array[$tab];
 
@@ -1474,14 +1474,14 @@ class IndividualControllerRoot extends BaseController {
 			?>
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_note_help", "qm"); ?><?php echo $pgv_lang["add_note_lbl"]; ?></td>
-					<td class="facts_value"><a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','NOTE'); return false;"><?php echo $pgv_lang["add_note"]; ?></a>
+					<td class="facts_value"><a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>', 'NOTE'); return false;"><?php echo $pgv_lang["add_note"]; ?></a>
 					<br />
 					</td>
 				</tr>
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_shared_note_help", "qm"); ?><?php echo $pgv_lang["add_shared_note_lbl"]; ?></td>
 					<td class="facts_value">
-					<a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','SHARED_NOTE'); return false;"><?php echo $pgv_lang["add_shared_note"]; ?></a>
+					<a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>', 'SHARED_NOTE'); return false;"><?php echo $pgv_lang["add_shared_note"]; ?></a>
 					<br />
 					</td>
 				</tr>
@@ -1594,7 +1594,7 @@ class IndividualControllerRoot extends BaseController {
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_source_help", "qm"); ?><?php echo $pgv_lang["add_source_lbl"]; ?></td>
 					<td class="facts_value">
-					<a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','SOUR'); return false;"><?php echo $pgv_lang["add_source"]; ?></a>
+					<a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>', 'SOUR'); return false;"><?php echo $pgv_lang["add_source"]; ?></a>
 					<br />
 					</td>
 				</tr>
@@ -1688,8 +1688,8 @@ class IndividualControllerRoot extends BaseController {
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
 					<td class="facts_value">
-						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&linktoid=<?php print $this->pid; ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
-						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php print $this->pid; ?>&linkto=person', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
+						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&linktoid=<?php print $this->pid; ?>', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
+						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php print $this->pid; ?>&linkto=person', '_blank', 'top=50, left=50, width=400, height=300, resizable=1, scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
 					</td>
 				</tr>
 			<?php
@@ -1851,19 +1851,19 @@ class IndividualControllerRoot extends BaseController {
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("add_wife_help", "qm"); ?>
-				<a href="javascript:;" onclick="return addspouse('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["add_new_wife"]; ?></a>
+				<a href="javascript:;" onclick="return addspouse('<?php print $this->pid; ?>', 'WIFE');"><?php print $pgv_lang["add_new_wife"]; ?></a>
 				</td>
 			</tr>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_new_wife_help", "qm"); ?>
-				<a href="javascript:;" onclick="return linkspouse('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["link_new_wife"]; ?></a>
+				<a href="javascript:;" onclick="return linkspouse('<?php print $this->pid; ?>', 'WIFE');"><?php print $pgv_lang["link_new_wife"]; ?></a>
 				</td>
 			</tr>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_new_husb_help", "qm"); ?>
-				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["link_as_husband"]; ?></a>
+				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>', 'HUSB');"><?php print $pgv_lang["link_as_husband"]; ?></a>
 				</td>
 			</tr>
 			<?php }
@@ -1871,19 +1871,19 @@ class IndividualControllerRoot extends BaseController {
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("add_husband_help", "qm"); ?>
-				<a href="javascript:;" onclick="return addspouse('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["add_new_husb"]; ?></a>
+				<a href="javascript:;" onclick="return addspouse('<?php print $this->pid; ?>', 'HUSB');"><?php print $pgv_lang["add_new_husb"]; ?></a>
 				</td>
 			</tr>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_husband_help", "qm"); ?>
-				<a href="javascript:;" onclick="return linkspouse('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["link_new_husb"]; ?></a>
+				<a href="javascript:;" onclick="return linkspouse('<?php print $this->pid; ?>', 'HUSB');"><?php print $pgv_lang["link_new_husb"]; ?></a>
 				</td>
 			</tr>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_wife_help", "qm"); ?>
-				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["link_as_wife"]; ?></a>
+				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>', 'WIFE');"><?php print $pgv_lang["link_as_wife"]; ?></a>
 				</td>
 			</tr>
 			<?php } ?>
@@ -1891,7 +1891,7 @@ class IndividualControllerRoot extends BaseController {
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("add_opf_child_help", "qm"); ?>
-				<a href="javascript:;" onclick="return addopfchild('<?php print $this->pid; ?>','U');"><?php print $pgv_lang["add_opf_child"]; ?></a>
+				<a href="javascript:;" onclick="return addopfchild('<?php print $this->pid; ?>', 'U');"><?php print $pgv_lang["add_opf_child"]; ?></a>
 				</td>
 			</tr>
 <?php } ?>
