@@ -178,22 +178,22 @@ jQuery(document).ready(function($){
 		minChars: 2
 	});
 	// NPFX
-	var npfx_accept = new Array(<?php if (isset($NPFX_accept)) foreach($NPFX_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
+	var npfx_accept = new Array(<?php if (isset($NPFX_accept)) foreach($NPFX_accept as $k=>$v) echo "'", $v, "', "; echo "''";?>);
 	$("#NPFX").autocomplete(npfx_accept, {
 		minChars: 0
 	});
 	// SPFX
-	var spfx_accept = new Array(<?php if (isset($SPFX_accept)) foreach($SPFX_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
+	var spfx_accept = new Array(<?php if (isset($SPFX_accept)) foreach($SPFX_accept as $k=>$v) echo "'", $v, "', "; echo "''";?>);
 	$("#SPFX").autocomplete(spfx_accept, {
 		minChars: 0
 	});
 	// NSFX
-	var nsfx_accept = new Array(<?php if (isset($NSFX_accept)) foreach($NSFX_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
+	var nsfx_accept = new Array(<?php if (isset($NSFX_accept)) foreach($NSFX_accept as $k=>$v) echo "'", $v, "', "; echo "''";?>);
 	$("#NSFX").autocomplete(nsfx_accept, {
 		minChars: 0
 	});
 	// FILE_FORM
-	var file_form_accept = new Array(<?php if (isset($FILE_FORM_accept)) foreach($FILE_FORM_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
+	var file_form_accept = new Array(<?php if (isset($FILE_FORM_accept)) foreach($FILE_FORM_accept as $k=>$v) echo "'", $v, "', "; echo "''";?>);
 	$("#FILE_FORM").autocomplete(file_form_accept, {
 		minChars: 0
 	});
