@@ -76,7 +76,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		<?php if (!empty($META_PAGE_TYPE)) {?><meta name="page-type" content="<?php echo htmlspecialchars($META_PAGE_TYPE); ?>" /><?php } ?>
 		<?php if (!empty($META_ROBOTS)) {?><meta name="robots" content="<?php echo htmlspecialchars($META_ROBOTS); ?>" /><?php } ?>
 		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php echo htmlspecialchars($META_REVISIT); ?>" /><?php } ?>
-		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW." - ".PGV_PHPGEDVIEW_URL; ?>" />
+		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
 	<?php echo $head; //-- additional header information ?>
@@ -96,7 +96,7 @@ function switchMenu(openMe,closeMe)
 	    closeIt.style.display = 'none';
 	    openIt.style.display = '';
 		SetCookie("menu",document.getElementById(openMe).id.toString(),7);
-		window.location = '<?php echo $SCRIPT_NAME."?".$QUERY_STRING; ?>';
+		window.location = '<?php echo $SCRIPT_NAME,"?",$QUERY_STRING; ?>';
 	}
 function SetCookie(cookieName,cookieValue,nDays)
 	{
