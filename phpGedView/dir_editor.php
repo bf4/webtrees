@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,43 +34,33 @@ if (!PGV_USER_IS_ADMIN) {
 	exit;
 }
 
-function full_rmdir( $dir )
-{
-	if ( !is_writable( $dir ) )
-	{
-		if ( !@chmod( $dir, 0777 ) )
-		{
+function full_rmdir($dir) {
+	if (!is_writable($dir)) {
+		if (!@chmod($dir, 0777)) {
 			return FALSE;
 		}
 	}
 
-	$d = dir( $dir );
-	while ( FALSE !== ( $entry = $d->read() ) )
-	{
-		if ( $entry == '.' || $entry == '..' )
-		{
+	$d = dir($dir);
+	while (FALSE !== ($entry = $d->read())) {
+		if ($entry == '.' || $entry == '..') {
 			continue;
 		}
 		$entry = $dir . '/' . $entry;
-		if ( is_dir( $entry ) )
-		{
-			if ( !full_rmdir( $entry ) )
-			{
+		if (is_dir($entry)) {
+			if (!full_rmdir($entry)) {
 				return FALSE;
 			}
 			continue;
 		}
-		if ( !@unlink( $entry ) )
-		{
+		if (!@unlink($entry)) {
 			$d->close();
 			return FALSE;
 		}
 	}
 
 	$d->close();
-
-	rmdir( $dir );
-
+	rmdir($dir);
 	return TRUE;
 }
 
@@ -78,6 +68,8 @@ function full_rmdir( $dir )
 $ajaxdeleted = false;
 $elements = Array();
 $locked_by_context = array("readme.txt","index.php","gedcoms.php");
+$dbname = explode("/", $DBNAME);
+$locked_by_context[] = end($dbname);
 
 print_header($pgv_lang["index_dir_cleanup"]);
 print "<h3>".$pgv_lang["index_dir_cleanup"]."</h3>";
@@ -85,8 +77,7 @@ print "<h3>".$pgv_lang["index_dir_cleanup"]."</h3>";
 print $pgv_lang['index_dir_cleanup_inst'];
 
 //post back
-if(isset($_REQUEST["to_delete"]))
-{
+if(isset($_REQUEST["to_delete"])) {
 	print "<span class=\"error\">".$pgv_lang["deleted_files"]."</span><br/>";
 	foreach($_REQUEST["to_delete"] as $k=>$v){
 		if (is_dir($INDEX_DIRECTORY.$v)) full_rmdir($INDEX_DIRECTORY.$v);
