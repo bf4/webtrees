@@ -43,14 +43,14 @@ function hidebar()
 }
 JSCRIPT;
         $onload ="hidebar();";
-        if ((stristr($SCRIPT_NAME,"individual") ==false ))
+        if ((stristr($SCRIPT_NAME, "individual") ==false ))
         {
-                if (stristr($SCRIPT_NAME,"pedigree") or
-                (stristr($SCRIPT_NAME,"descendancy")) or
-                (stristr($SCRIPT_NAME,"timeline")) or
-                (stristr($SCRIPT_NAME,"relationship")))
+                if (stristr($SCRIPT_NAME, "pedigree") or
+                (stristr($SCRIPT_NAME, "descendancy")) or
+                (stristr($SCRIPT_NAME, "timeline")) or
+                (stristr($SCRIPT_NAME, "relationship")))
                 {
-                echo "\n".<<<JSCRIPT
+                echo "\n", <<<JSCRIPT
 function resize_content_div()
 { // resizes the container table to fit data
         if (document.getElementById('footer'))
@@ -62,7 +62,7 @@ function resize_content_div()
                 var browserWidth = Math.max(document.body.clientWidth, 200);
 JSCRIPT;
                 $onload .="\n\tresize_content_div();";
-                if (stristr($SCRIPT_NAME,"pedigree") or stristr($SCRIPT_NAME,"descendancy"))
+                if (stristr($SCRIPT_NAME, "pedigree") or stristr($SCRIPT_NAME, "descendancy"))
                 { // pedigree and descendancy height
                         echo "\t\ty = foot.offsetTop;\n";
                         //echo "\t\tz = parseInt(y);\n";
@@ -70,31 +70,31 @@ JSCRIPT;
                         //echo "\t\talert(y);\n";
                         echo "\t\tcont.style.height=(z.toString()+'px');\n";
 
-                } else if (strstr($SCRIPT_NAME,"timeline"))
+                } else if (strstr($SCRIPT_NAME, "timeline"))
                 { // timeline height
                         global $endoffset;
                         if (!$endoffset) $endoffset=270;
-                        echo "\t\ty='".($endoffset)."px';\n";
+                        echo "\t\ty='", $endoffset, "px';\n";
                         echo "\t\tcont.style.height=(y);\n";
-                } else if (strstr($SCRIPT_NAME,"relationship"))
+                } else if (strstr($SCRIPT_NAME, "relationship"))
                 { // relationship height and width
-                        global $maxyoffset,$xoffset,$Dbwidth,$xs;
+                        global $maxyoffset, $xoffset, $Dbwidth, $xs;
                         $xoffset += $Dbwidth+$xs;
-                        echo "\t\ty='".($maxyoffset-70)."px';\n";
+                        echo "\t\ty='", ($maxyoffset-70), "px';\n";
                         echo "\t\tcont.style.height=(y);\n";
                         // check if xoffset is lower then default screensize
-                        echo "\t\tx=".$xoffset.";\n";
+                        echo "\t\tx=", $xoffset, ";\n";
                         echo "\t\tif (x < (browserWidth))\n";
                         echo "\t\t\tx= (browserWidth);";
                         echo "\t\tcont.style.width=x.toString()+'px';\n";
                         echo "\t\thead.style.width=x.toString()+'px';\n";
                 }
-                if (strstr($SCRIPT_NAME,"pedigree"))
+                if (strstr($SCRIPT_NAME, "pedigree"))
                 { // pedigree width
                         global $bwidth, $bxspacing, $PEDIGREE_GENERATIONS, $talloffset, $Darrowwidth;
                         $xoffset = ($PEDIGREE_GENERATIONS * ($bwidth+(2*$bxspacing))) + (2*$Darrowwidth);
                         if ($talloffset==0) { $xoffset = floor($xoffset /1.4); }
-                        echo "\t\tx=".$xoffset.";\n";
+                        echo "\t\tx=", $xoffset, ";\n";
                         echo "\t\tif (x < (browserWidth))\n";
                         echo "\t\t\tx= (browserWidth);\n";
                         //echo "alert(x);";
@@ -102,18 +102,18 @@ JSCRIPT;
                         echo "\t\thead.style.width=(x).toString()+'px';\n";
 
                 } // descendancy width
-                if (strstr($SCRIPT_NAME,"descendancy"))
+                if (strstr($SCRIPT_NAME, "descendancy"))
                 {
                         global $maxxoffset;
                         $xoffset = ($maxxoffset+60);
-                        echo "\t\tx=".$xoffset.";\n";
+                        echo "\t\tx=", $xoffset, ";\n";
                         echo "\t\tif (x < (browserWidth))\n";
                         echo "\t\t\tx= (browserWidth);\n";
                         echo "\t\tcont.style.width=x.toString()+'px';\n";
                         echo "\t\thead.style.width=x.toString()+'px';\n";
                 } //
                 echo "\n\t}\n}\n";
-        }  else if (stristr($SCRIPT_NAME,"index"))
+        }  else if (stristr($SCRIPT_NAME, "index"))
         {
                 echo "\n";
                 echo "function resize_content_div()\n";
@@ -151,7 +151,7 @@ JSCRIPT;
         }
 
         echo "\nwindow.onload = function() {\n\t";
-        echo $onload."\n";
+        echo $onload, "\n";
 		echo "if (window.sizeLines) sizeLines();\n";
         echo "}\n-->\n";
         echo "</script>\n";
@@ -162,16 +162,16 @@ echo "</td></tr></table>"; // Close table started in toplinks.html
 echo "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
 echo "\n\t<br /><div align=\"center\" style=\"width:99%;\">";
 echo contact_links();
-echo '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" width="100" height="45" border="0" alt="'.PGV_PHPGEDVIEW. (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") . '" title="'.PGV_PHPGEDVIEW . (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") . '" /></a><br />';
+echo '<br /><a href="', PGV_PHPGEDVIEW_URL, '" target="_blank"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['gedview']['other'], '" width="100" height="45" border="0" alt="', PGV_PHPGEDVIEW, (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") , '" title="', PGV_PHPGEDVIEW , (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") , '" /></a><br />';
 echo "\n\t<br />";
 print_help_link("preview_help", "qm");
-echo "<a href=\"$SCRIPT_NAME?view=preview&amp;".get_query_string()."\">".$pgv_lang["print_preview"]."</a>";
+echo "<a href=\"$SCRIPT_NAME?view=preview&amp;", get_query_string(), "\">", $pgv_lang["print_preview"], "</a>";
 echo "<br />";
 if ($SHOW_STATS || PGV_DEBUG) {
 	echo execution_stats();
 }
 if (exists_pending_change()) {
-	echo "<br />".$pgv_lang["changes_exist"]." <a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a>\n";
+	echo "<br />", $pgv_lang["changes_exist"], " <a href=\"javascript:;\" onclick=\"window.open('edit_changes.php', '_blank', 'width=600, height=500, resizable=1, scrollbars=1'); return false;\">", $pgv_lang["accept_changes"], "</a>\n";
 }
 echo "</div>";
 echo "</div> <!-- close div id=\"footer\" -->\n";
