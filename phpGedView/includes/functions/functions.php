@@ -102,7 +102,7 @@ function safe_REQUEST($arr, $var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
 	if (is_array($regex)) {
 		$regex='(?:'.join('|', $regex).')';
 	}
-	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.addcslashes($regex,'~').'$~', $arr[$var])) {
+	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.addcslashes($regex, '~').'$~', $arr[$var])) {
 		return trim_recursive($arr[$var]);
 	} else {
 		return $default;
@@ -113,14 +113,14 @@ function encode_url($url, $entities=true) {
 	$url = decode_url($url, $entities); // Make sure we don't do any double conversions
 	$url = str_replace(array(' ', '+', '@#', '"', "'"), array('%20', '%2b', '@%23', '%22', '%27'), $url);
 	if ($entities) {
-		$url = htmlspecialchars($url,ENT_COMPAT,'UTF-8');
+		$url = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');
 	}
 	return $url;
 }
 
 function decode_url($url, $entities=true) {
 	if ($entities) {
-		$url = html_entity_decode($url,ENT_COMPAT,'UTF-8');
+		$url = html_entity_decode($url, ENT_COMPAT, 'UTF-8');
 	}
 	$url = rawurldecode($url); // GEDCOM names can legitimately contain " " and "+"
 	return $url;
@@ -173,7 +173,7 @@ function update_config(&$text, $var, $value) {
 		$text=preg_replace($regex, $assign, $text);
 	} else {
 		// Variable not found in file - insert it
-		$text=preg_replace('/^(.*[\r\n]+)([ \t]*[$].*)$/s', '$1'.$assign." // new config variable\n".'$2',$text);
+		$text=preg_replace('/^(.*[\r\n]+)([ \t]*[$].*)$/s', '$1'.$assign." // new config variable\n".'$2', $text);
 	}
 }
 
@@ -239,19 +239,19 @@ function write_access_option($checkVar) {
 
 	echo "<option value=\"PGV_PRIV_PUBLIC\"";
 	echo ($checkVar==PGV_PRIV_PUBLIC) ? " selected=\"selected\"" : '';
-	echo ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
+	echo ">", $pgv_lang["PRIV_PUBLIC"], "</option>\n";
 
 	echo "<option value=\"PGV_PRIV_USER\"";
 	echo ($checkVar==PGV_PRIV_USER) ? " selected=\"selected\"" : '';
-	echo ">".$pgv_lang["PRIV_USER"]."</option>\n";
+	echo ">", $pgv_lang["PRIV_USER"], "</option>\n";
 
 	echo "<option value=\"PGV_PRIV_NONE\"";
 	echo ($checkVar==PGV_PRIV_NONE) ? " selected=\"selected\"" : '';
-	echo ">".$pgv_lang["PRIV_NONE"]."</option>\n";
+	echo ">", $pgv_lang["PRIV_NONE"], "</option>\n";
 
 	echo "<option value=\"PGV_PRIV_HIDE\"";
 	echo ($checkVar==PGV_PRIV_HIDE) ? " selected=\"selected\"" : '';
-	echo ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
+	echo ">", $pgv_lang["PRIV_HIDE"], "</option>\n";
 }
 
 /**
@@ -409,7 +409,7 @@ function store_gedcoms() {
 	if (!$fp) {
 		global $whichFile;
 		$whichFile = $INDEX_DIRECTORY."gedcoms.php";
-		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
+		print "<span class=\"error\">".print_text("gedcom_config_write_error", 0, 1)."<br /></span>\n";
 	} else {
 		fwrite($fp, $gedcomtext);
 		fclose($fp);
@@ -551,7 +551,7 @@ function update_lang_settings() {
 // detect authorisation by ACL.
 function file_is_writeable($file) {
 	$err_write = false;
-	$handle = @fopen($file,"r+");
+	$handle = @fopen($file, "r+");
 	if ($handle) {
 		$i = fclose($handle);
 		$err_write = true;
@@ -571,7 +571,7 @@ function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 		if (PGV_ERROR_LEVEL==0) {
 			return;
 		}
-		if (stristr($errstr,"by reference")==true) {
+		if (stristr($errstr, "by reference")==true) {
 			return;
 		}
 		$fmt_msg="\n<br />ERROR {$errno}: {$errstr}<br />\n";
@@ -724,7 +724,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 			$pos2 = strlen($gedrec);
 		}
 		if (empty($ignore) || strpos($ignore, $fact)===false) {
-			if (!$ApplyPriv || (showFact($fact, $id)&& showFactDetails($fact,$id))) {
+			if (!$ApplyPriv || (showFact($fact, $id)&& showFactDetails($fact, $id))) {
 				if (isset($prev_tags[$fact])) {
 					$prev_tags[$fact]++;
 				} else {
@@ -736,7 +736,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 						$tt = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
 						if ($tt>0) {
 							$type = trim($tmatch[1]);
-							if (!$ApplyPriv || (showFact($type, $id)&&showFactDetails($type,$id))) {
+							if (!$ApplyPriv || (showFact($type, $id)&&showFactDetails($type, $id))) {
 								$repeats[] = trim($subrec)."\n";
 							}
 						} else
@@ -766,7 +766,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 			for ($i=0; $i<$ct; $i++) {
 				$fact = trim($match[$i][1]);
 				if (empty($ignore) || strpos($ignore, $fact)===false) {
-					if (!$ApplyPriv || (showFact($fact, $id)&&showFactDetails($fact,$id))) {
+					if (!$ApplyPriv || (showFact($fact, $id)&&showFactDetails($fact, $id))) {
 						if (isset($prev_tags[$fact])) {
 							$prev_tags[$fact]++;
 						} else {
@@ -778,7 +778,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 							$ct = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
 							if ($ct>0) {
 								$type = trim($tmatch[1]);
-								if (!$ApplyPriv or (showFact($type, $id)&&showFactDetails($type,$id))) {
+								if (!$ApplyPriv or (showFact($type, $id)&&showFactDetails($type, $id))) {
 									$repeats[] = trim($subrec)."\n";
 								}
 							} else {
@@ -1176,7 +1176,7 @@ function find_children_in_record($famrec, $me='') {
 		return $children;
 	}
 
-	$num = preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', $famrec, $match,PREG_SET_ORDER);
+	$num = preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', $famrec, $match, PREG_SET_ORDER);
 	for ($i=0; $i<$num; $i++) {
 		$child = trim($match[$i][1]);
 		if ($child!=$me) {
@@ -1238,7 +1238,7 @@ function find_visible_families_in_record($indirec, $tag) {
 	$visiblefams = array();
 	// select only those that are visible to current user
 	foreach ($allfams as $key=>$famid) {
-		if (displayDetailsById($famid,"FAM")) {
+		if (displayDetailsById($famid, "FAM")) {
 			$visiblefams[] = $famid;
 		}
 	}
@@ -1413,7 +1413,7 @@ function extract_filename($fullpath) {
 
 	$filename="";
 	$regexp = "'[/\\\]'";
-	$srch = "/".addcslashes($MEDIA_DIRECTORY,'/.')."/";
+	$srch = "/".addcslashes($MEDIA_DIRECTORY, '/.')."/";
 	$repl = "";
 	if (!isFileExternal($fullpath)) {
 		$nomedia = stripcslashes(preg_replace($srch, $repl, $fullpath));
@@ -1656,7 +1656,7 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 				if ($aLetter!=$bLetter && $bLetter!="" && $aLetter!="") {
 					//-- get the position of the letter in the alphabet string
 					if ($aMultiLetter) {
-						$sortAfter = substr($aLetter,0,1);
+						$sortAfter = substr($aLetter, 0, 1);
 						if ($aLetter=="CH") $sortAfter = "H";		// This one doesn't follow the rule
 						if ($aLetter=="Ch") $sortAfter = "H";
 						if ($aLetter=="ch") $sortAfter = "h";
@@ -1667,7 +1667,7 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 						if ($aPos===false) $aPos = @strpos($alphabet_lower, $aLetter);
 					}
 					if ($bMultiLetter) {
-						$sortAfter = substr($bLetter,0,1);
+						$sortAfter = substr($bLetter, 0, 1);
 						if ($bLetter=="CH") $sortAfter = "H";		// This one doesn't follow the rule
 						if ($bLetter=="Ch") $sortAfter = "H";
 						if ($bLetter=="ch") $sortAfter = "h";
@@ -1916,8 +1916,8 @@ function sort_facts(&$arr) {
 	}
 
 	//-- sort each type of array
-	usort($dated, array("Event","CompareDate"));
-	usort($nondated, array("Event","CompareType"));
+	usort($dated, array("Event", "CompareDate"));
+	usort($nondated, array("Event", "CompareType"));
 
 	//-- merge the arrays back together comparing by Facts
 	$dc = count($dated);
@@ -1928,7 +1928,7 @@ function sort_facts(&$arr) {
 	// while there is anything in the dated array continue merging
 	while($i<$dc) {
 		// compare each fact by type to merge them in order
-		if ($j<$nc && Event::CompareType($dated[$i],$nondated[$j])>0) {
+		if ($j<$nc && Event::CompareType($dated[$i], $nondated[$j])>0) {
 			$arr[$k] = $nondated[$j];
 			$j++;
 		}
@@ -2492,7 +2492,7 @@ function get_relationship1($pid1, $pid2, $followspouse=true, $maxlength=0) {
 		return false;
 	}
 
-	// Search for paths of lengths 1,2,3,...
+	// Search for paths of lengths 1, 2, 3, ...
 	for ($n=1; ; ++$n) {
 		// Nothing found within the required path length
 		if ($maxlength && $maxlength<$n) {
@@ -2602,7 +2602,7 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
 		return false;
 	}
 
-	// Search for paths of lengths 1,2,3,...
+	// Search for paths of lengths 1, 2, 3, ...
 	for ($n=1; ; ++$n) {
 		// Nothing found within the required path length
 		if ($maxlength && $maxlength<$n) {
@@ -2977,7 +2977,7 @@ function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_emp
 	$list[$pid]->generation = 1;
 	while (count($genlist)>0) {
 		$id = array_shift($genlist);
-		if (strpos($id,"empty")===0) continue; // id can be something like "empty7"
+		if (strpos($id, "empty")===0) continue; // id can be something like "empty7"
 		$person = Person::getInstance($id);
 		$famids = $person->getChildFamilies();
 		if (count($famids)>0) {
@@ -3114,7 +3114,7 @@ function CheckPageViews() {
 		return;
 
 	// The media firewall should not be throttled
-	if (strpos($_SERVER["SCRIPT_NAME"],"mediafirewall") > -1)
+	if (strpos($_SERVER["SCRIPT_NAME"], "mediafirewall") > -1)
 		return;
 
 	if (!empty($_SESSION["pageviews"]["time"]) && !empty($_SESSION["pageviews"]["number"])) {
@@ -3672,8 +3672,8 @@ function encrypt($string, $key='') {
 function decrypt($string, $key='') {
 	if (empty($key)) $key = session_id();
 
-	if (substr($string,0,1)!='*') return $string;		// Input is not a valid encrypted string
-	$string = base64_decode(strtr(substr($string,1), '-_#', '+/='));
+	if (substr($string, 0, 1)!='*') return $string;		// Input is not a valid encrypted string
+	$string = base64_decode(strtr(substr($string, 1), '-_#', '+/='));
 
 	$result = '';
 	for($i=0; $i<strlen($string); $i++) {
@@ -3726,28 +3726,28 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			}
 			switch ($type) {
 			case 'url_flv':
-				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'local_flv':
-				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'url_wmv':
-				$url = encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'local_audio':
 			case 'local_wmv':
-				$url = encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'url_image':
 			case 'local_image':
-				$url = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'url_picasa':
 			case 'url_page':
 			case 'url_other':
 			case 'local_page':
 			// case 'local_other':
-				$url = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH},{$LB_URL_HEIGHT},click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH}, {$LB_URL_HEIGHT}, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			}
 		}
@@ -3827,14 +3827,14 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			break;
 		default:
 			$thumb = $thumbName;
-			if (substr($type,0,4)=='url_') {
+			if (substr($type, 0, 4)=='url_') {
 				$width = ' width="'.$THUMBNAIL_WIDTH.'"';
 			}
 	}
 
 	// -- Use an overriding thumbnail if one has been provided
 	// Don't accept any overriding thumbnails that are in the "images" or "themes" directories
-	if (substr($thumbName,0,7)!='images/' && substr($thumbName,0,7)!='themes/') {
+	if (substr($thumbName, 0, 7)!='images/' && substr($thumbName, 0, 7)!='themes/') {
 		if ($USE_MEDIA_FIREWALL && $MEDIA_FIREWALL_THUMBS) {
 			$tempThumbName = get_media_firewall_path($thumbName);
 		} else {
@@ -3847,7 +3847,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 
 	// -- Use the theme-specific media icon if nothing else works
 	$realThumb = $thumb;
-	if (substr($type,0,6)=='local_' && !file_exists($thumb)) {
+	if (substr($type, 0, 6)=='local_' && !file_exists($thumb)) {
 		if (!$USE_MEDIA_FIREWALL || !$MEDIA_FIREWALL_THUMBS) {
 			$thumb = $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['media']['large'];
 			$realThumb = $thumb;
