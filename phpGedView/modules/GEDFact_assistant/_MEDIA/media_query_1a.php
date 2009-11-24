@@ -58,7 +58,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 		$record=GedcomRecord::getInstance($link);
 		echo "<tr ><td>";
 		echo $i;
-		echo "</td><td id=\"existId_".$i."\" class=\"row2\">";
+		echo "</td><td id=\"existId_", $i, "\" class=\"row2\">";
 			echo $link;
 		echo "</td><td>";
 		if ($record->getType()=='INDI') {
@@ -79,8 +79,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 		$nam = $idrecord->getFullName();
 		echo $nam;
 		echo "</td>";
-		echo "<td align='center'><input alt='", $pgv_lang["keep_link"], 		"', title='", $pgv_lang["keep_link"], 		"' type='radio' id='".$link."_off' name='".$link."' checked /></td>";
-		echo "<td align='center'><input alt='", $pgv_lang["remove_link"], 	"', title='", $pgv_lang["remove_link"], 	"' type='radio' id='".$link."_on'  name='".$link."' /></td>";
+		echo "<td align='center'><input alt='", $pgv_lang["keep_link"], 		"', title='", $pgv_lang["keep_link"], 		"' type='radio' id='", $link, "_off' name='", $link, "' checked /></td>";
+		echo "<td align='center'><input alt='", $pgv_lang["remove_link"], 	"', title='", $pgv_lang["remove_link"], 	"' type='radio' id='", $link, "_on'  name='", $link, "' /></td>";
 
 		if ($record->getType()=='INDI') {
 			?>

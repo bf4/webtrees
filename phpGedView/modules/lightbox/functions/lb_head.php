@@ -88,7 +88,7 @@ include_once ('includes/media_reorder_count.php');
 
 	// If in re-order mode do not show header links, but instead, show drag and drop title.
 	if (isset($reorder) && $reorder==1){
-		echo "<center><b>".$pgv_lang["reorder_media_title"]."</b></center>" ;
+		echo "<center><b>", $pgv_lang["reorder_media_title"], "</b></center>" ;
 		echo "<br />";
 
 	}else{

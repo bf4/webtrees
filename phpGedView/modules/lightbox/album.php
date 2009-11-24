@@ -51,7 +51,7 @@ function cut_html($string)
 
     while ($a = strstr($a, '&'))
     {
-        //echo "'".$a."'\n";
+        //echo "'", $a, "'\n";
         $b=strstr($a, ';');
         if (!$b)
         {
@@ -59,7 +59,7 @@ function cut_html($string)
             $nb=strlen($a);
             return substr($string, 0, strlen($string)-$nb);
         }
-        $a=substr($a,1,strlen($a)-1);
+        $a=substr($a, 1, strlen($a)-1);
     }
     return $string;
 }

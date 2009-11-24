@@ -100,8 +100,8 @@ if ($action == "ChangeFlag") {
 			window.opener.document.editplaces.icon.value = "places/flags/<?php echo $flags[$_POST["FLAGS"]];?>.gif";
 			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/flags/<?php echo $country[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo $pgv_lang["pl_remove_flag"]?></a>";
 <?php } else { ?>
-			window.opener.document.editplaces.icon.value = "places/<?php echo $countrySelected."/flags/".$flags[$_POST["FLAGS"]];?>.gif";
-			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/<?php echo $countrySelected."/flags/".$flags[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo $pgv_lang["pl_remove_flag"]?></a>";
+			window.opener.document.editplaces.icon.value = "places/<?php echo $countrySelected, "/flags/", $flags[$_POST["FLAGS"]];?>.gif";
+			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/<?php echo $countrySelected, "/flags/", $flags[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo $pgv_lang["pl_remove_flag"]?></a>";
 <?php } ?>
 			window.close();
 		}
@@ -111,7 +111,7 @@ if ($action == "ChangeFlag") {
 	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
 		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	}
-	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">", $pgv_lang["close_window"], "</a></div><br />\n";
 	print_simple_footer();
 	exit;
 }
@@ -139,7 +139,7 @@ else {
 
 var helpWin;
 function helpPopup(which) {
-	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which, '_blank', 'left=50, top=50, width=500, height=320, resizable=1, scrollbars=1');
 	else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
 	return false;
 }
@@ -185,9 +185,9 @@ function getHelp(which) {
 				<select name="COUNTRYSELECT" dir="ltr" tabindex="0" onchange="selectCountry()">
 					<option value="Countries"><?php echo $pgv_lang["pl_countries"]; ?></option>
 					<?php foreach ($countryList as $country_key=>$country_name) {
-						echo "	<option value=\"".$country_key."\"";
+						echo "<option value=\"", $country_key, "\"";
 						if ($countrySelected == $country_key) echo " selected=\"selected\" ";
-						echo ">".$country_name."</option>\n";
+						echo ">", $country_name, "</option>\n";
 					} ?>
 				</select>
 			</td>
@@ -197,7 +197,7 @@ function getHelp(which) {
 	$j = 1;
 	for ($i = 0; $i < count($flags); $i++) {
 		if ($countrySelected == "Countries") {
-			$tempstr = "	<td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"".$flags[$i]."\"  title=\"";
+			$tempstr = "<td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"".$flags[$i]."\"  title=\"";
 			if (array_key_exists( $country[$i], $countries))
 				$tempstr .=$countries[$country[$i]];
 			else if ($flags[$i]=="blank") {
@@ -206,13 +206,13 @@ function getHelp(which) {
 			}
 			else
 				$tempstr .= $flags[$i];
-			echo $tempstr."\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";
+			echo $tempstr, "\">&nbsp;&nbsp;", $flags[$i], "</input></td>\n";
 		}
 		else {
-			echo "	<td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/".$countrySelected."/flags/".$flags[$i].".gif\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";
+			echo "<td><input type=\"radio\" dir=\"ltr\" tabindex=\"", ($i+1), "\" name=\"FLAGS\" value=\"", $i, "\" onchange=\"enableButtons();\"><img src=\"places/", $countrySelected, "/flags/", $flags[$i], ".gif\">&nbsp;&nbsp;", $flags[$i], "</input></td>\n";
 		}
 		if ($j == 4) {
-			echo "	</tr><tr>\n";
+			echo "</tr><tr>\n";
 			$j = 0;
 		}
 		$j = $j + 1;
@@ -223,7 +223,7 @@ function getHelp(which) {
 	<input id="savebutton" name="save2" type="submit" disabled="true" value="<?php echo $pgv_lang["save"];?>" /><br />
 </form>
 <?php
-echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
+echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">", $pgv_lang["close_window"], "</a></div><br />\n";
 
 print_simple_footer();
 ?>

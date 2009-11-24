@@ -95,13 +95,13 @@ function get_place_list_loc($parent_id) {
 	global $display, $TBLPREFIX;
 	if ($display=="inactive") {
 		$rows=
-			PGV_DB::prepare("SELECT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
+			PGV_DB::prepare("SELECT pl_id, pl_place, pl_lati, pl_long, pl_zoom, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
 			->execute(array($parent_id))
 			->fetchAll();
 	} else {
 		$rows=
 			PGV_DB::prepare(
-				"SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon".
+				"SELECT DISTINCT pl_id, pl_place, pl_lati, pl_long, pl_zoom, pl_icon".
 				" FROM {$TBLPREFIX}placelocation".
 				" INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level={$TBLPREFIX}places.p_level".
 				" WHERE pl_parent_id=? ORDER BY pl_place"
@@ -130,7 +130,7 @@ function outputLevel($parent_id) {
 	$level=count($tmp);
 
 	$rows=
-		PGV_DB::prepare("SELECT pl_id, pl_place,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
+		PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
 		->execute(array($parent_id))
 		->fetchAll();
 
@@ -163,7 +163,7 @@ function findFiles($path) {
 if (!PGV_USER_IS_ADMIN) {
 	echo "<span class=\"subheaders\">{$pgv_lang['edit_place_locations']}</span><br /><br />";
 	echo "<table class=\"facts_table\">\n";
-	echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
+	echo "<tr><td colspan=\"2\" class=\"facts_value\">", $pgv_lang["gm_admin_error"];
 	echo "</td></tr></table>\n";
 	echo "<br /><br /><br />\n";
 	print_footer();
@@ -263,7 +263,7 @@ if ($action=="ImportGedcom") {
 				$placelistUniq[$j-1]["lati"] = $place["lati"];
 				$placelistUniq[$j-1]["long"] = $place["long"];
 			} else if (($place["lati"] != "0") || ($place["long"] != "0")) {
-				echo "Verscil: vorige waarde = $prevPlace, $prevLati, $prevLong, huidige = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br />";
+				echo "Verscil: vorige waarde = $prevPlace, $prevLati, $prevLong, huidige = ", $place["place"], ", ", $place["lati"], ", ", $place["long"], "<br />";
 			}
 		}
 		$prevPlace = $place["place"];
@@ -273,7 +273,7 @@ if ($action=="ImportGedcom") {
 
 	$highestIndex = getHighestIndex();
 
-	$default_zoom_level=array(4,7,10,12);
+	$default_zoom_level=array(4, 7, 10, 12);
 	foreach ($placelistUniq as $k=>$place) {
         $parent=preg_split('/ *, */', $place["place"]);
 		$parent=array_reverse($parent);
@@ -286,7 +286,7 @@ if ($action=="ImportGedcom") {
 				$escparent = "Unknown";
 			}
 			$row=
-				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ?")
+				PGV_DB::prepare("SELECT pl_id, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ?")
 				->execute(array($i, $parent_id, $escparent))
 				->fetchOneRow();
 			if ($i < count($parent)-1) {
@@ -340,7 +340,7 @@ if ($action=="ImportFile") {
 					<option></option>
 					<?php foreach($placefiles as $p=>$placefile) { ?>
 					<option value="<?php echo htmlspecialchars($placefile); ?>"><?php 
-						if (substr($placefile,0,1)=="/") echo substr($placefile,1); 
+						if (substr($placefile, 0, 1)=="/") echo substr($placefile, 1); 
 						else echo $placefile; ?></option>
 					<?php } ?>
 				</select>
@@ -375,7 +375,7 @@ if ($action=="ImportFile2") {
 	if (!empty($_FILES["placesfile"]["tmp_name"])) $lines = file($_FILES["placesfile"]["tmp_name"]);
 	else if (!empty($_REQUEST['localfile'])) $lines = file("modules/googlemap/extra".$_REQUEST['localfile']);
 	// Strip BYTE-ORDER-MARK, if present
-	if (!empty($lines[0]) && substr($lines[0],0,3)==PGV_UTF8_BOM) $lines[0]=substr($lines[0],3);
+	if (!empty($lines[0]) && substr($lines[0], 0, 3)==PGV_UTF8_BOM) $lines[0]=substr($lines[0], 3);
 	asort($lines);
 	$highestIndex = getHighestIndex();
 	$placelist = array();
@@ -430,7 +430,7 @@ if ($action=="ImportFile2") {
 				$placelistUniq[$j-1]["zoom"] = $place["zoom"];
 				$placelistUniq[$j-1]["icon"] = $place["icon"];
 			} else if (($place["lati"] != "0") || ($place["long"] != "0")) {
-				echo "Differenc: last value = $prevPlace, $prevLati, $prevLong, current = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br />";
+				echo "Differenc: last value = $prevPlace, $prevLati, $prevLong, current = ", $place["place"], ", ", $place["lati"], ", ", $place["long"], "<br />";
 			}
 		}
 		$prevPlace = $place["place"];
@@ -453,7 +453,7 @@ if ($action=="ImportFile2") {
 				$escparent = "Unknown";
 			}
 			$row=
-				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
+				PGV_DB::prepare("SELECT pl_id, pl_long, pl_lati, pl_zoom, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
 				->execute(array($i, $parent_id, $escparent))
 				->fetchOneRow();
 			if (empty($row)) {       // this name does not yet exist: create entry
@@ -524,7 +524,7 @@ if ($action=="DeleteRecord") {
 <!--
 var helpWin;
 function helpPopup(which) {
-	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=400,resizable=1,scrollbars=1');
+	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which, '_blank', 'left=50, top=50, width=500, height=400, resizable=1, scrollbars=1');
 	else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
 	return false;
 }
@@ -538,12 +538,12 @@ function showchanges() {
 }
 
 function edit_place_location(placeid) {
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
+	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=680, height=550, resizable=1, scrollbars=1');
 	return false;
 }
 
 function add_place_location(placeid) {
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
+	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=680, height=550, resizable=1, scrollbars=1');
 	return false;
 }
 
@@ -569,17 +569,17 @@ foreach (array_reverse($where_am_i, true) as $id=>$place) {
 	else {
 		echo "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}&display={$display}\">";
 		if ($place != "Unknown")
-			echo PrintReady($place)."</a>";
+			echo PrintReady($place), "</a>";
 		else
-			echo $pgv_lang["pl_unknown"]."</a>";
+			echo $pgv_lang["pl_unknown"], "</a>";
 	}
 	echo " - ";
 }
 echo "<a href=\"module.php?mod=googlemap&pgvaction=places&parent=0&display=$display\">{$pgv_lang['top_level']}</a>";
 echo "<br /><br /><form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&parent=$parent&display=$display\">";
-echo "\n<table><tr><td class=\"optionbox\">".$pgv_lang["list_inactive"].": <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
+echo "\n<table><tr><td class=\"optionbox\">", $pgv_lang["list_inactive"], ": <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
 if ($display == 'inactive') echo " checked=\"checked\"";
-echo ">\n<input type=\"submit\" value=\"".$pgv_lang["view"]."\" >";
+echo ">\n<input type=\"submit\" value=\"", $pgv_lang["view"], "\" >";
 print_help_link("PLE_ACTIVE_help", "qm", "PLE_ACTIVE");
 echo "</td></tr></table>";
 echo "</form>";
@@ -600,9 +600,9 @@ if (count($placelist) == 0)
 foreach ($placelist as $place) {
 	echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places&parent={$place['place_id']}&display={$display}\">";
 	if ($place["place"] != "Unknown")
-			echo PrintReady($place["place"])."</a></td>";
+			echo PrintReady($place["place"]), "</a></td>";
 		else
-			echo $pgv_lang["pl_unknown"]."</a></td>";
+			echo $pgv_lang["pl_unknown"], "</a></td>";
 	echo "<td class=\"optionbox\">{$place['lati']}</td>";
 	echo "<td class=\"optionbox\">{$place['long']}</td>";
 	echo "<td class=\"optionbox\">{$place['zoom']}</td>";
@@ -617,7 +617,7 @@ foreach ($placelist as $place) {
 			echo "<img src=\"http://labs.google.com/ridefinder/images/mm_20_red.png\">";
 		}
 	} else {
-		echo "<img src=\"".$place["icon"]." \"width=\"25\" height=\"15\">";
+		echo "<img src=\"", $place["icon"], " \"width=\"25\" height=\"15\">";
 	}
 	echo "</td>";
 	echo "<td class=\"optionbox\"><a href=\"javascript:;\" onclick=\"edit_place_location({$place['place_id']});return false;\">{$pgv_lang["edit"]}</a></td>";
@@ -626,7 +626,7 @@ foreach ($placelist as $place) {
 		->execute(array($place["place_id"]))
 		->fetchOne();
 	if ($noRows==0) { ?>
-	<td class="optionbox"><a href="javascript:;" onclick="delete_place(<?php echo $place["place_id"].");return false;\">";?><img src="images/remove.gif" border="0" alt="<?php echo $pgv_lang["remove"];?>" /></a></td>
+	<td class="optionbox"><a href="javascript:;" onclick="delete_place(<?php echo $place["place_id"], ");return false;\">";?><img src="images/remove.gif" border="0" alt="<?php echo $pgv_lang["remove"];?>" /></a></td>
 <?php       } else { ?>
 		<td class="optionbox"><img src="images/remove-dis.png" border="0" alt="" /> </td>
 <?php       } ?>
@@ -666,7 +666,7 @@ foreach ($placelist as $place) {
 if(empty($SEARCH_SPIDER))
 	print_footer();
 else {
-	echo $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+	echo $pgv_lang["label_search_engine_detected"], ": ", $SEARCH_SPIDER;
 	echo "\n</div>\n\t</body>\n</html>";
 }
 ?>
