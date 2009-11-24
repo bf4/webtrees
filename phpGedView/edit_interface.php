@@ -2653,7 +2653,7 @@ if (isset($_REQUEST['goto'])) {
 if (isset($_REQUEST['link'])) {
 	$link = $_REQUEST['link'];
 }
-if (empty($goto) && empty($link)) {
+if (empty($goto) || empty($link)) {
 	$link='';
 }
 
