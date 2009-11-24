@@ -50,7 +50,7 @@ if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 }
 
 if (!$controller->source){
-	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
 	print_footer();
 	exit;
 }
@@ -60,7 +60,7 @@ else if ($controller->source->isMarkedDeleted()) {
 
 echo PGV_JS_START;
 echo 'function show_gedcom_record() {';
-echo ' var recwin=window.open("gedrecord.php?pid=', $controller->sid, '", "_blank", "top=0,left=0,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");';
+echo ' var recwin=window.open("gedrecord.php?pid=', $controller->sid, '", "_blank", "top=0, left=0, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");';
 echo '}';
 echo 'function showchanges() {';
 echo ' window.location="source.php?sid=', $controller->sid, '&show_changes=yes"';
@@ -129,13 +129,13 @@ print_main_media($controller->sid);
 if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	print_add_new_fact($controller->sid, $sourcefacts, 'SOUR');
 	// new media
-	echo '<tr><td class="descriptionbox '.$TEXT_DIRECTION.'">';
+	echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
 	print_help_link('add_media_help', 'qm', 'add_media_lbl');
-	echo $pgv_lang['add_media_lbl'] . '</td>';
-	echo '<td class="optionbox '.$TEXT_DIRECTION.'">';
-	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->sid, '\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
+	echo $pgv_lang['add_media_lbl'] , '</td>';
+	echo '<td class="optionbox ', $TEXT_DIRECTION, '">';
+	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->sid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
 	echo '<br />';
-	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->sid.'&linkto=source\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang['link_to_existing_media'].'</a>';
+	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid=', $controller->sid, '&linkto=source\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', $pgv_lang['link_to_existing_media'], '</a>';
 	echo '</td></tr>';
 }
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';

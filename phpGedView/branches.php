@@ -86,7 +86,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 //-- results
 if ($surn) {
 	$surn_lang = whatLanguage($surn);
-	echo "<fieldset><legend>".PGV_ICON_BRANCHES." ".PrintReady($surn)."</legend>";
+	echo "<fieldset><legend>", PGV_ICON_BRANCHES, " ", PrintReady($surn), "</legend>";
 	$indis = indis_array($surn, $soundex_std, $soundex_dm);
 	echo "<ol>";
 	foreach ($indis as $k=>$person) {
@@ -100,7 +100,7 @@ if ($surn) {
 	if ($rootid) {
 		$person = Person::getInstance($rootid);
 		echo "<p class=\"center\">{$pgv_lang['rootid']} : <a title=\"{$person->xref}\" href=\"{$person->getLinkUrl()}\">{$person->getFullName()}</a>";
-		echo "<br />{$pgv_lang["direct-ancestors"]} : ".count($_SESSION['user_ancestors'])."</p>";
+		echo "<br />{$pgv_lang["direct-ancestors"]} : ", count($_SESSION['user_ancestors']), "</p>";
 	}
 }
 print_footer();
@@ -125,7 +125,7 @@ function print_fams($person, $famid=null) {
 		break;
 	}
 	if (empty($person_name)) {
-		echo "<span title=\"".PrintReady(strip_tags($person->getFullName()))."\">".$person->getSexImage()."...</span>";
+		echo "<span title=\"", PrintReady(strip_tags($person->getFullName())), "\">", $person->getSexImage(), "...</span>";
 		return;
 	}
 	$person_lang = whatLanguage($person_name);

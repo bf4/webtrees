@@ -114,11 +114,11 @@ if ((!$disp)||(!$ALLOW_EDIT_GEDCOM)) {
 
 	echo $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
-	if (!PGV_USER_CAN_EDIT) echo "<br />".$pgv_lang["user_cannot_edit"];
-	if (!$ALLOW_EDIT_GEDCOM) echo "<br />".$pgv_lang["gedcom_editing_disabled"];
+	if (!PGV_USER_CAN_EDIT) echo "<br />", $pgv_lang["user_cannot_edit"];
+	if (!$ALLOW_EDIT_GEDCOM) echo "<br />", $pgv_lang["gedcom_editing_disabled"];
 	if (!$disp) {
-		echo "<br />".$pgv_lang["privacy_prevented_editing"];
-		if (!empty($pid)) echo "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
+		echo "<br />", $pgv_lang["privacy_prevented_editing"];
+		if (!empty($pid)) echo "<br />", $pgv_lang["privacy_not_granted"], " pid $pid.";
 	}
 	print_simple_footer();
 	exit;
@@ -212,7 +212,7 @@ if ($action=="update") {
 					$oldfac = trim(substr($famrec, $pos1, $pos2-$pos1));
 					$noupdfact = FactEditRestricted($pid, $oldfac);
 					if ($noupdfact) {
-						echo "<br />".$pgv_lang["update_fact_restricted"]." ".$factarray[$fact]."<br /><br />";
+						echo "<br />", $pgv_lang["update_fact_restricted"], " ", $factarray[$fact], "<br /><br />";
 					}
 					else {
 						//-- delete the fact
@@ -262,8 +262,8 @@ if ($action=="update") {
 	}
 
 	$person=Person::getInstance($pid);
-	echo "<h2>".$pgv_lang["quick_update_title"]."</h2>\n";
-	echo "<b>".PrintReady(stripLRMRLM($person->getFullName()))."</b><br /><br />";
+	echo "<h2>", $pgv_lang["quick_update_title"], "</h2>\n";
+	echo "<b>", PrintReady(stripLRMRLM($person->getFullName())), "</b><br /><br />";
 
 	AddToChangeLog("Quick update attempted for $pid by >".PGV_USER_NAME."<");
 
@@ -884,7 +884,7 @@ if ($action=="update") {
 			$childrec .= "\n1 FAMC @$newfamid@\n";
 			replace_gedrec($cxref, $childrec, $update_CHAN);
 		}
-		echo $pgv_lang["update_successful"]."<br />\n";;
+		echo $pgv_lang["update_successful"], "<br />\n";
 	}
 	if (!empty($newfamid)) {
 		$famrec = preg_replace("/0 @(.*)@/", "0 @".$newfamid."@", $famrec);
@@ -1240,13 +1240,13 @@ if ($action=="update") {
 	}
 
 	if ($updated && empty($error)) {
-		echo $pgv_lang["update_successful"]."<br />";
+		echo $pgv_lang["update_successful"], "<br />";
 		AddToChangeLog("Quick update for $pid by >".PGV_USER_NAME."<");
 		//echo "<pre>$gedrec</pre>";
 		if ($oldgedrec!=$gedrec) replace_gedrec($pid, $gedrec, $update_CHAN);
 	}
 	if (!empty($error)) {
-		echo "<span class=\"error\">".$error."</span>";
+		echo "<span class=\"error\">", $error, "</span>";
 	}
 
 	if ($closewin) {
@@ -1255,14 +1255,14 @@ if ($action=="update") {
 			echo "\n<script type=\"text/javascript\">\n<!--\nif (window.opener.showchanges) window.opener.showchanges(); window.close();\n//-->\n</script>";
 		}
 		echo "<center><br /><br /><br />";
-		echo "<a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
+		echo "<a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">", $pgv_lang["close_window"], "</a><br /></center>\n";
 		print_simple_footer();
 		exit;
 	}
 }
 
-if ($action!="update") echo "<h2>".$pgv_lang["quick_update_title"]."</h2>\n";
-echo $pgv_lang["quick_update_instructions"]."<br /><br />";
+if ($action!="update") echo "<h2>", $pgv_lang["quick_update_title"], "</h2>\n";
+echo $pgv_lang["quick_update_instructions"], "<br /><br />";
 
 init_calendar_popup();
 ?>
@@ -1275,7 +1275,7 @@ function paste_id(value) {
 
 var helpWin;
 function helpPopup(which) {
-	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('help_text.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('help_text.php?help='+which, '_blank', 'left=50, top=50, width=500, height=320, resizable=1, scrollbars=1');
 	else helpWin.location = 'help_text.php?help='+which;
 	return false;
 }
@@ -1290,7 +1290,7 @@ if ($action=="choosepid") {
 	<tr>
 		<td><?php echo $pgv_lang["enter_pid"]; ?></td>
 		<td><input type="text" size="6" name="pid" id="pid" />
-		<?php print_findindi_link("pid","");?>
+		<?php print_findindi_link("pid", "");?>
 		</td>
 	</tr>
 	</table>
@@ -1456,7 +1456,7 @@ if ($action=="choosepid") {
 	$person=Person::getInstance($pid);
 	echo '<b>', PrintReady(stripLRMRLM($person->getFullName()));
 	if ($SHOW_ID_NUMBERS) {
-		echo PrintReady("&nbsp;&nbsp;(".$pid.")");
+		echo PrintReady("&nbsp;&nbsp;(", $pid, ")");
 	}
 	echo '</b><br />';
 ?>
@@ -1514,14 +1514,14 @@ function checkform(frm) {
 				if($pid!=$parents["HUSB"]) $spid=$parents["HUSB"];
 				else $spid=$parents["WIFE"];
 			}
-			echo "<td id=\"pagetab$i\" class=\"tab_cell_inactive\" onclick=\"switch_tab($i); return false;\"><a href=\"javascript: ".$pgv_lang["family_with"]."&nbsp;";
+			echo "<td id=\"pagetab$i\" class=\"tab_cell_inactive\" onclick=\"switch_tab($i); return false;\"><a href=\"javascript: ", $pgv_lang["family_with"], "&nbsp;";
 			$person=Person::getInstance($spid);
 			if ($person) {
 				echo PrintReady(stripLRMRLM(strip_tags($person->getFullName())));
-				echo "\" onclick=\"switch_tab($i); return false;\">".$pgv_lang["family_with"]." ";
+				echo "\" onclick=\"switch_tab($i); return false;\">", $pgv_lang["family_with"], " ";
 				echo PrintReady(stripLRMRLM($person->getFullName()));
 			} else {
-				echo "\" onclick=\"switch_tab($i); return false;\">".$pgv_lang["family_with"]." ".$pgv_lang["unknown"];
+				echo "\" onclick=\"switch_tab($i); return false;\">", $pgv_lang["family_with"], " ", $pgv_lang["unknown"];
 			}
 			echo "</a></td>\n";
 		}
@@ -1531,25 +1531,25 @@ function checkform(frm) {
 		<?php
 		$i++;
 		for($j=1; $j<=count($cfams); $j++) {
-			echo "<td id=\"pagetab$i\" class=\"tab_cell_inactive\" onclick=\"switch_tab($i); return false;\"><a href=\"javascript: ".$pgv_lang["as_child"]."\" onclick=\"switch_tab($i); return false;\">".$pgv_lang["as_child"];
+			echo "<td id=\"pagetab$i\" class=\"tab_cell_inactive\" onclick=\"switch_tab($i); return false;\"><a href=\"javascript: ", $pgv_lang["as_child"], "\" onclick=\"switch_tab($i); return false;\">", $pgv_lang["as_child"];
 			echo "</a></td>\n";
 			$i++;
 		}
 		?>
 		</tr>
 		<tr>
-			<td id="pagetab0bottom" class="tab_active_bottom"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
+			<td id="pagetab0bottom" class="tab_active_bottom"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
 			<?php
 		for($i=1; $i<=count($sfams); $i++) {
-			echo "<td id=\"pagetab{$i}bottom\" class=\"tab_inactive_bottom\"><img src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["spacer"]["other"]."\" width=\"1\" height=\"1\" alt=\"\" /></td>\n";
+			echo "<td id=\"pagetab{$i}bottom\" class=\"tab_inactive_bottom\"><img src=\"$PGV_IMAGE_DIR/", $PGV_IMAGES["spacer"]["other"], "\" width=\"1\" height=\"1\" alt=\"\" /></td>\n";
 		}
 		for($j=1; $j<=count($cfams); $j++) {
-			echo "<td id=\"pagetab{$i}bottom\" class=\"tab_inactive_bottom\"><img src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["spacer"]["other"]."\" width=\"1\" height=\"1\" alt=\"\" /></td>\n";
+			echo "<td id=\"pagetab{$i}bottom\" class=\"tab_inactive_bottom\"><img src=\"$PGV_IMAGE_DIR/", $PGV_IMAGES["spacer"]["other"], "\" width=\"1\" height=\"1\" alt=\"\" /></td>\n";
 			$i++;
 		}
 		?>
-			<td id="pagetab<?php echo $i; ?>bottom" class="tab_inactive_bottom"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
-			<td class="tab_inactive_bottom_right" style="width:10%;"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
+			<td id="pagetab<?php echo $i; ?>bottom" class="tab_inactive_bottom"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
+			<td class="tab_inactive_bottom_right" style="width:10%;"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
 	</tr>
 </table>
 <div id="tab0">
@@ -1558,26 +1558,26 @@ function checkform(frm) {
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); echo $factarray["SURN"];?></td>
-	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="SURN" value="<?php echo PrintReady(htmlspecialchars($SURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="SURN" value="<?php echo PrintReady(htmlspecialchars($SURN, ENT_COMPAT, 'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_given_name_help", "qm"); echo $factarray["GIVN"];?></td>
-	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="GIVN" value="<?php echo PrintReady(htmlspecialchars($GIVN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="GIVN" value="<?php echo PrintReady(htmlspecialchars($GIVN, ENT_COMPAT, 'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php if (!$NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); echo $factarray["SURN"];?></td>
-	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="SURN" value="<?php echo PrintReady(htmlspecialchars($SURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="SURN" value="<?php echo PrintReady(htmlspecialchars($SURN, ENT_COMPAT, 'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
 <?php if (strstr($ADVANCED_NAME_FACTS, "_MARNM")!==false) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); echo $factarray["_MARNM"];?></td>
-	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="MRSURN" value="<?php echo PrintReady(htmlspecialchars($MRSURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="MRSURN" value="<?php echo PrintReady(htmlspecialchars($MRSURN, ENT_COMPAT, 'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
@@ -1585,19 +1585,19 @@ function checkform(frm) {
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); echo $pgv_lang["hebrew_surn"];?></td>
-	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="HSURN" value="<?php echo PrintReady(htmlspecialchars($HSURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="HSURN" value="<?php echo PrintReady(htmlspecialchars($HSURN, ENT_COMPAT, 'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_GIVN_help", "qm"); echo $pgv_lang["hebrew_givn"];?></td>
-	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="HGIVN" value="<?php echo PrintReady(htmlspecialchars($HGIVN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="HGIVN" value="<?php echo PrintReady(htmlspecialchars($HGIVN, ENT_COMPAT,  'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php if (!$NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); echo $pgv_lang["hebrew_surn"];?></td>
-	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="HSURN" value="<?php echo PrintReady(htmlspecialchars($HSURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="HSURN" value="<?php echo PrintReady(htmlspecialchars($HSURN, ENT_COMPAT, 'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
@@ -1606,19 +1606,19 @@ function checkform(frm) {
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_SURN_help", "qm"); echo $pgv_lang["roman_surn"];?></td>
-	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RSURN" value="<?php echo PrintReady(htmlspecialchars($RSURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RSURN" value="<?php echo PrintReady(htmlspecialchars($RSURN, ENT_COMPAT, 'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_GIVN_help", "qm"); echo $pgv_lang["roman_givn"];?></td>
-	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RGIVN" value="<?php echo PrintReady(htmlspecialchars($RGIVN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RGIVN" value="<?php echo PrintReady(htmlspecialchars($RGIVN, ENT_COMPAT, 'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php if (!$NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_SURN_help", "qm"); echo $pgv_lang["roman_surn"];?></td>
-	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RSURN" value="<?php echo PrintReady(htmlspecialchars($RSURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RSURN" value="<?php echo PrintReady(htmlspecialchars($RSURN, ENT_COMPAT, 'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
@@ -1663,29 +1663,29 @@ foreach($indifacts as $f=>$fact) {
 	</td>
 	<?php if (!in_array($fact_tag, $emptyfacts)) { ?>
 	<td class="optionbox" colspan="2">
-		<input type="text" name="DESCS[]" size="61" value="<?php echo PrintReady(htmlspecialchars($desc,ENT_COMPAT,'UTF-8')); ?>" />
-		<input type="hidden" name="DATES[]" value="<?php echo htmlspecialchars($date,ENT_COMPAT,'UTF-8'); ?>" />
-		<input type="hidden" name="PLACS[]" value="<?php echo htmlspecialchars($plac,ENT_COMPAT,'UTF-8'); ?>" />
-		<input type="hidden" name="TEMPS[]" value="<?php echo htmlspecialchars($temp,ENT_COMPAT,'UTF-8'); ?>" />
+		<input type="text" name="DESCS[]" size="61" value="<?php echo PrintReady(htmlspecialchars($desc, ENT_COMPAT, 'UTF-8')); ?>" />
+		<input type="hidden" name="DATES[]" value="<?php echo htmlspecialchars($date, ENT_COMPAT, 'UTF-8'); ?>" />
+		<input type="hidden" name="PLACS[]" value="<?php echo htmlspecialchars($plac, ENT_COMPAT, 'UTF-8'); ?>" />
+		<input type="hidden" name="TEMPS[]" value="<?php echo htmlspecialchars($temp, ENT_COMPAT, 'UTF-8'); ?>" />
 	</td>
 	<?php } else {
 		if (!in_array($fact_tag, $nondatefacts)) { ?>
 			<td class="optionbox">
-				<input type="hidden" name="DESCS[]" value="<?php echo htmlspecialchars($desc,ENT_COMPAT,'UTF-8'); ?>" />
-				<input type="text" dir="ltr" tabindex="<?php echo $tabkey; $tabkey++;?>" size="15" name="DATES[]" id="DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date,ENT_COMPAT,'UTF-8')); ?>" />&nbsp;<?php print_calendar_popup("DATE$f");?>
+				<input type="hidden" name="DESCS[]" value="<?php echo htmlspecialchars($desc, ENT_COMPAT, 'UTF-8'); ?>" />
+				<input type="text" dir="ltr" tabindex="<?php echo $tabkey; $tabkey++;?>" size="15" name="DATES[]" id="DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date, ENT_COMPAT, 'UTF-8')); ?>" />&nbsp;<?php print_calendar_popup("DATE$f");?>
 			</td>
 		<?php }
 		if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
 			<td class="optionbox">
-				<input type="text" size="35" tabindex="<?php echo $tabkey; $tabkey++; ?>" name="PLACS[]" id="place<?php echo $f; ?>" value="<?php echo PrintReady(htmlspecialchars($plac,ENT_COMPAT,'UTF-8')); ?>" />
+				<input type="text" size="35" tabindex="<?php echo $tabkey; $tabkey++; ?>" name="PLACS[]" id="place<?php echo $f; ?>" value="<?php echo PrintReady(htmlspecialchars($plac, ENT_COMPAT, 'UTF-8')); ?>" />
 				<?php print_findplace_link("place$f"); ?>
 				<input type="hidden" name="TEMPS[]" value="" />
 			</td>
 		<?php
 		}
 		else {
-			echo "<td class=\"optionbox\"><select tabindex=\"".$tabkey."\" name=\"TEMPS[]\" >\n";
-			echo "<option value=''>".$pgv_lang["no_temple"]."</option>\n";
+			echo "<td class=\"optionbox\"><select tabindex=\"", $tabkey, "\" name=\"TEMPS[]\" >\n";
+			echo "<option value=''>", $pgv_lang["no_temple"], "</option>\n";
 			foreach($TEMPLE_CODES as $code=>$temple) {
 				echo "<option value=\"$code\"";
 				if ($code==$temp) echo " selected=\"selected\"";
@@ -1701,7 +1701,7 @@ foreach($indifacts as $f=>$fact) {
 		<td class="optionbox center">
 			<input type="hidden" name="REMS[<?php echo $f; ?>]" id="REM<?php echo $f; ?>" value="0" />
 			<a href="javascript: <?php echo $pgv_lang["delete"]; ?>" onclick="if (confirm('<?php echo $pgv_lang["check_delete"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); } return false;">
-				<img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php echo $pgv_lang["delete"]; ?>" />
+				<img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php echo $pgv_lang["delete"]; ?>" />
 			</a>
 		</td>
 	</tr>
@@ -1731,7 +1731,7 @@ if (count($addfacts)>0) { ?>
 	function checkDesc(newfactSelect) {
 		if (newfactSelect.selectedIndex==0) return;
 		var fact = newfactSelect.options[newfactSelect.selectedIndex].value;
-		var emptyfacts = "<?php foreach($emptyfacts as $ind=>$efact) echo $efact.","; ?>";
+		var emptyfacts = "<?php foreach($emptyfacts as $ind=>$efact) echo $efact, ","; ?>";
 		descFact = document.getElementById('descFact');
 		if (!descFact) return;
 		if (emptyfacts.indexOf(fact)!=-1) {
@@ -1755,12 +1755,12 @@ if (count($addfacts)>0) { ?>
 				break;
 			}
 		}
-		if (!$found) echo "\t\t<option value=\"$fact\">".$factarray[$fact]."</option>\n";
+		if (!$found) echo "\t\t<option value=\"$fact\">", $factarray[$fact], "</option>\n";
 	}
 	?>
 		</select>
 		<div id="descFact" style="display:none;"><br />
-			<?php echo $pgv_lang["description"]." "; ?><input type="text" size="35" name="DESC" />
+			<?php echo $pgv_lang["description"], " "; ?><input type="text" size="35" name="DESC" />
 		</div>
 	</td>
 	<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="15" name="DATE" id="DATE" onblur="valid_date(this);" />&nbsp;<?php print_calendar_popup("DATE");?></td>
@@ -1784,20 +1784,20 @@ if ($person && !$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($F
 	</td>
 	<td class="optionbox" colspan="3">
 		<?php if (!empty($CITY)&&!empty($POST)) { ?>
-			<?php  if (empty($ADDR)) { ?><input type="hidden" name="ADDR" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADDR),ENT_COMPAT,'UTF-8')); ?>" /><?php } ?>
+			<?php  if (empty($ADDR)) { ?><input type="hidden" name="ADDR" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADDR), ENT_COMPAT, 'UTF-8')); ?>" /><?php } ?>
 			<table>
-			<?php if (!empty($_NAME)) { ?><tr><td><?php echo $factarray["NAME"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($_NAME)) echo "dir=\"ltr\""; ?> name="_NAME" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($_NAME),ENT_COMPAT,'UTF-8')); ?>" /></td></tr><?php } ?>
-			<?php  if (!empty($ADDR)) { ?><tr><td><?php echo $factarray["ADDR"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) echo "dir=\"ltr\""; ?> name="ADDR" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADDR),ENT_COMPAT,'UTF-8')); ?>" /></td></tr><?php } ?>
-			<tr><td><?php echo $factarray["ADR1"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) echo "dir=\"ltr\""; ?> name="ADR1" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADR1),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
-			<tr><td><?php echo $factarray["ADR2"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR2)) echo "dir=\"ltr\""; ?> name="ADR2" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADR2),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
-			<tr><td><?php echo $factarray["CITY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CITY)) echo "dir=\"ltr\""; ?> name="CITY" value="<?php echo PrintReady(htmlspecialchars(strip_tags($CITY),ENT_COMPAT,'UTF-8')); ?>" />
-			<?php echo $factarray["STAE"]; ?> <input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($STAE)) echo "dir=\"ltr\""; ?> name="STAE" value="<?php echo PrintReady(htmlspecialchars(strip_tags($STAE),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
-			<tr><td><?php echo $factarray["POST"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($POST)) echo "dir=\"ltr\""; ?> name="POST" value="<?php echo PrintReady(htmlspecialchars(strip_tags($POST),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
-			<tr><td><?php echo $factarray["CTRY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CTRY)) echo "dir=\"ltr\""; ?> name="CTRY" value="<?php echo PrintReady(htmlspecialchars(strip_tags($CTRY),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
+			<?php if (!empty($_NAME)) { ?><tr><td><?php echo $factarray["NAME"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($_NAME)) echo "dir=\"ltr\""; ?> name="_NAME" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($_NAME), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr><?php } ?>
+			<?php  if (!empty($ADDR)) { ?><tr><td><?php echo $factarray["ADDR"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) echo "dir=\"ltr\""; ?> name="ADDR" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADDR), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr><?php } ?>
+			<tr><td><?php echo $factarray["ADR1"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) echo "dir=\"ltr\""; ?> name="ADR1" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADR1), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr>
+			<tr><td><?php echo $factarray["ADR2"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR2)) echo "dir=\"ltr\""; ?> name="ADR2" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADR2), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr>
+			<tr><td><?php echo $factarray["CITY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CITY)) echo "dir=\"ltr\""; ?> name="CITY" value="<?php echo PrintReady(htmlspecialchars(strip_tags($CITY), ENT_COMPAT, 'UTF-8')); ?>" />
+			<?php echo $factarray["STAE"]; ?> <input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($STAE)) echo "dir=\"ltr\""; ?> name="STAE" value="<?php echo PrintReady(htmlspecialchars(strip_tags($STAE), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr>
+			<tr><td><?php echo $factarray["POST"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($POST)) echo "dir=\"ltr\""; ?> name="POST" value="<?php echo PrintReady(htmlspecialchars(strip_tags($POST), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr>
+			<tr><td><?php echo $factarray["CTRY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CTRY)) echo "dir=\"ltr\""; ?> name="CTRY" value="<?php echo PrintReady(htmlspecialchars(strip_tags($CTRY), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr>
 			</table>
 
 		<?php } else { ?>
-		<textarea name="ADDR" tabindex="<?php echo $tabkey; ?>" cols="40" rows="4"><?php echo PrintReady(htmlspecialchars(strip_tags($ADDR),ENT_COMPAT,'UTF-8')); ?></textarea>
+		<textarea name="ADDR" tabindex="<?php echo $tabkey; ?>" cols="40" rows="4"><?php echo PrintReady(htmlspecialchars(strip_tags($ADDR), ENT_COMPAT, 'UTF-8')); ?></textarea>
 		<?php } ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -1807,7 +1807,7 @@ if ($person && !$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($F
 		<?php echo $factarray["PHON"]; ?>
 	</td>
 	<td class="optionbox" colspan="3">
-		<input type="text" dir="ltr" tabindex="<?php echo $tabkey; $tabkey++; ?>" name="PHON" size="20" value="<?php echo PrintReady(htmlspecialchars($PHON,ENT_COMPAT,'UTF-8')); ?>" />
+		<input type="text" dir="ltr" tabindex="<?php echo $tabkey; $tabkey++; ?>" name="PHON" size="20" value="<?php echo PrintReady(htmlspecialchars($PHON, ENT_COMPAT, 'UTF-8')); ?>" />
 	</td>
 </tr>
 <tr>
@@ -1815,7 +1815,7 @@ if ($person && !$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($F
 				<?php echo $factarray["FAX"]; ?>
 		</td>
 		<td class="optionbox" colspan="3">
-				<input type="text" dir="ltr" tabindex="<?php echo $tabkey; $tabkey++; ?>" name="FAX" size="20" value="<?php echo PrintReady(htmlspecialchars($FAX,ENT_COMPAT,'UTF-8')); ?>" />
+				<input type="text" dir="ltr" tabindex="<?php echo $tabkey; $tabkey++; ?>" name="FAX" size="20" value="<?php echo PrintReady(htmlspecialchars($FAX, ENT_COMPAT, 'UTF-8')); ?>" />
 	</td>
 </tr>
 <tr>
@@ -1823,7 +1823,7 @@ if ($person && !$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($F
 		<?php echo $factarray["EMAIL"]; ?>
 	</td>
 	<td class="optionbox" colspan="3">
-		<input type="text" dir="ltr" tabindex="<?php echo $tabkey; ?>" name="EMAIL" size="40" value="<?php echo PrintReady(htmlspecialchars($EMAIL,ENT_COMPAT,'UTF-8')); ?>" />
+		<input type="text" dir="ltr" tabindex="<?php echo $tabkey; ?>" name="EMAIL" size="40" value="<?php echo PrintReady(htmlspecialchars($EMAIL, ENT_COMPAT, 'UTF-8')); ?>" />
 	</td>
 	<?php $tabkey++; ?>
 </tr>
@@ -1848,7 +1848,7 @@ for($i=1; $i<=count($sfams); $i++) {
 		$famrec = find_updated_record($famid, PGV_GED_ID);
 		$family = new Family($famrec);
 	}
-	echo $pgv_lang["family_with"]." ";
+	echo $pgv_lang["family_with"], " ";
 	$parents = find_parents_in_record($famrec);
 	$spid = "";
 	if($parents) {
@@ -1857,14 +1857,14 @@ for($i=1; $i<=count($sfams); $i++) {
 	}
 	$person=Person::getInstance($spid);
 	if ($person) {
-		echo "<a href=\"#\" onclick=\"return quickEdit('".$person->getXref()."','','", PGV_GEDCOM, "');\">";
+		echo "<a href=\"#\" onclick=\"return quickEdit('", $person->getXref(), "', '', '", PGV_GEDCOM, "');\">";
 		$name = PrintReady(stripLRMRLM($person->getFullName()));
 		if ($SHOW_ID_NUMBERS) $name .= PrintReady(" (".$person->getXref().")");
 		$name .= " [".$pgv_lang["edit"]."]";
-		echo $name."</a>\n";
+		echo $name, "</a>\n";
 	}
 	else echo $pgv_lang["unknown"];
-	$subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
+	$subrecords = $family->getFacts(array("HUSB", "WIFE", "CHIL"));
 	$famfacts = array();
 	foreach($subrecords as $ind=>$eventObj) {
 		$fact = $eventObj->getTag();
@@ -1891,7 +1891,7 @@ for($i=1; $i<=count($sfams); $i++) {
 <tr>
 	<td class="descriptionbox"><?php echo $pgv_lang["enter_pid"]; ?></td>
 	<td class="optionbox" colspan="3"><input type="text" size="10" name="SPID[<?php echo $i; ?>]" id="SPID<?php echo $i; ?>" value="<?php echo $spid; ?>" />
-		<?php print_findindi_link("SPID$i","");?>
+		<?php print_findindi_link("SPID$i", "");?>
 		</td>
 	</tr>
 <?php if (empty($spid)) { ?>
@@ -1982,7 +1982,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	</tr>
 	<?php $tabkey++; ?>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["BIRT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="35" type="text" tabindex="<?php echo $tabkey; ?>" name="BPLAC<?php echo $i; ?>" id="bplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="35" type="text" tabindex="<?php echo $tabkey; ?>" name="BPLAC<?php echo $i; ?>" id="bplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("bplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -1993,7 +1993,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	</tr>
 	<?php $tabkey++; ?>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["DEAT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="35" type="text" tabindex="<?php echo $tabkey; ?>" name="DPLAC<?php echo $i; ?>" id="dplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="35" type="text" tabindex="<?php echo $tabkey; ?>" name="DPLAC<?php echo $i; ?>" id="dplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("dplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2062,15 +2062,15 @@ foreach($famfacts as $f=>$eventObj) {
 					}
 				?>
 				</td>
-				<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date,ENT_COMPAT,'UTF-8')); ?>" />&nbsp;<?php print_calendar_popup("F{$i}DATE{$f}");?></td>
+				<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date, ENT_COMPAT, 'UTF-8')); ?>" />&nbsp;<?php print_calendar_popup("F{$i}DATE{$f}");?></td>
 				<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
-					<td class="optionbox"><input type="text" size="35" tabindex="<?php echo $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php echo PrintReady(htmlspecialchars($plac,ENT_COMPAT,'UTF-8')); ?>" />
+					<td class="optionbox"><input type="text" size="35" tabindex="<?php echo $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php echo PrintReady(htmlspecialchars($plac, ENT_COMPAT, 'UTF-8')); ?>" />
 					<?php print_findplace_link("F{$i}place{$f}"); ?>
 					</td>
 				<?php }
 				else {
-					echo "<td class=\"optionbox\"><select tabindex=\"".$tabkey."\" name=\"F".$i."TEMP[]\" >\n";
-					echo "<option value=''>".$pgv_lang["no_temple"]."</option>\n";
+					echo "<td class=\"optionbox\"><select tabindex=\"", $tabkey, "\" name=\"F", $i, "TEMP[]\" >\n";
+					echo "<option value=''>", $pgv_lang["no_temple"], "</option>\n";
 					foreach($TEMPLE_CODES as $code=>$temple) {
 						echo "<option value=\"$code\"";
 						if ($code==$temp) echo " selected=\"selected\"";
@@ -2084,7 +2084,7 @@ foreach($famfacts as $f=>$eventObj) {
 					<input type="hidden" name="F<?php echo $i; ?>REMS[<?php echo $f; ?>]" id="F<?php echo $i; ?>REM<?php echo $f; ?>" value="0" />
 					<?php if ($date!='' || $plac!='' || $temp!='' || $check==true) { ?>
 					<a href="javascript: <?php echo $pgv_lang["delete"]; ?>" onclick="if (confirm('<?php echo $pgv_lang["check_delete"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); } return false;">
-						<img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php echo $pgv_lang["delete"]; ?>" />
+						<img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php echo $pgv_lang["delete"]; ?>" />
 					</a>
 					<?php } ?>
 				</td>
@@ -2117,12 +2117,12 @@ if (count($famaddfacts)>0) { ?>
 				break;
 			}
 		}
-		if (!$found) echo "\t\t<option value=\"$fact\">".$factarray[$fact]."</option>\n";
+		if (!$found) echo "\t\t<option value=\"$fact\">", $factarray[$fact], "</option>\n";
 	}
 	?>
 		</select>
 	</td>
-	<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="15" name="F<?php echo $i; ?>DATE" id="F<?php echo $i; ?>DATE" onblur="valid_date(this);" />&nbsp;<?php print_calendar_popup("F".$i."DATE");?></td>
+	<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="15" name="F<?php echo $i; ?>DATE" id="F<?php echo $i; ?>DATE" onblur="valid_date(this);" />&nbsp;<?php print_calendar_popup("F", $i, "DATE");?></td>
 	<?php $tabkey++; ?>
 	<td class="optionbox"><input type="text" size="35" tabindex="<?php echo $tabkey; ?>" name="F<?php echo $i; ?>PLAC" id="F<?php echo $i; ?>place" />
 	<?php print_findplace_link("F".$i."place"); ?>
@@ -2152,7 +2152,7 @@ $chil = find_children_in_record($famrec);
 					$name = $person->getFullName();
 					if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
 					$name .= " [".$pgv_lang["edit"]."]";
-					echo "<a href=\"#\" onclick=\"return quickEdit('".$child."','','", PGV_GEDCOM, "');\">";
+					echo "<a href=\"#\" onclick=\"return quickEdit('", $child, "', '', '", PGV_GEDCOM, "');\">";
 					echo PrintReady(stripLRMRLM($name));
 					echo "</a>";
 					$childrec = find_person_record($child, PGV_GED_ID);
@@ -2175,7 +2175,7 @@ $chil = find_children_in_record($famrec);
 					?>
 					<td class="optionbox center">
 						<a href="javascript: <?php echo $pgv_lang["remove_child"]; ?>" onclick="if (confirm('<?php echo $pgv_lang["confirm_remove"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>CDEL.value='<?php echo $child; ?>'; document.quickupdate.submit(); } return false;">
-							<img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php echo $pgv_lang["remove_child"]; ?>" />
+							<img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php echo $pgv_lang["remove_child"]; ?>" />
 						</a>
 					</td>
 					<?php
@@ -2189,7 +2189,7 @@ if (empty($child_surname)) $child_surname = "";
 <tr>
 	<td class="descriptionbox"><?php echo $pgv_lang["add_new_chil"]; ?></td>
 	<td class="optionbox" colspan="3"><input type="text" size="10" name="CHIL[]" id="CHIL<?php echo $i; ?>" />
-		<?php print_findindi_link("CHIL$i","");?>
+		<?php print_findindi_link("CHIL$i", "");?>
 	</td>
 </tr>
 <?php if ($NAME_REVERSE) { ?>
@@ -2271,7 +2271,7 @@ if (empty($child_surname)) $child_surname = "";
 	</tr>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["BIRT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="C<?php echo $i; ?>PLAC" id="c<?php echo $i; ?>place" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="C<?php echo $i; ?>PLAC" id="c<?php echo $i; ?>place" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("c".$i."place"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2284,7 +2284,7 @@ if (empty($child_surname)) $child_surname = "";
 	</tr>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["DEAT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("c".$i."dplace"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2391,7 +2391,7 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["BIRT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="BPLAC" id="bplace" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="BPLAC" id="bplace" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("bplace"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2405,7 +2405,7 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["DEAT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="DPLAC" id="dplace" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="DPLAC" id="dplace" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("dplace"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2433,7 +2433,7 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="MPLAC" id="mplace" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="manchor1x" id="manchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="MPLAC" id="mplace" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" name="manchor1x" id="manchor1x" alt="" />
 	<?php print_findplace_link("mplace"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2524,7 +2524,7 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["BIRT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="CPLAC" id="cplace" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="CPLAC" id="cplace" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("cplace"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2538,7 +2538,7 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["DEAT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="CDPLAC" id="cdplace" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="CDPLAC" id="cdplace" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("cdplace"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2561,7 +2561,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_family_record($famid, PGV_GED_ID);
 	else $famrec = find_updated_record($famid, PGV_GED_ID);
 
-	if ($family) $subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
+	if ($family) $subrecords = $family->getFacts(array("HUSB", "WIFE", "CHIL"));
 	else $subrecords=array();
 	$famfacts = array();
 	foreach($subrecords as $ind=>$eventObj) {
@@ -2601,17 +2601,17 @@ for($j=1; $j<=count($cfams); $j++) {
 		$ct = preg_match("~1 NAME.*/(.*)/~", $fatherrec, $match);
 		if ($ct>0) $child_surname = $match[1];
 		if ($person->getSex()=="F") $label = $pgv_lang["mother"];
-		echo "<a href=\"#\" onclick=\"return quickEdit('".$parents["HUSB"]."','','", PGV_GEDCOM, "');\">";
+		echo "<a href=\"#\" onclick=\"return quickEdit('", $parents["HUSB"], "', '', '", PGV_GEDCOM, "');\">";
 		$name = $person->getFullname();
 		if ($SHOW_ID_NUMBERS) $name .= " (".$parents["HUSB"].")";
 		$name .= " [".$pgv_lang["edit"]."]";
-		echo PrintReady(stripLRMRLM($name))."</a>\n";		
+		echo PrintReady(stripLRMRLM($name)), "</a>\n";		
 	} else {
 		echo $pgv_lang["unknown"];
 	}
 	echo "</td></tr>";
-	echo "<tr><td class=\"descriptionbox\">".$pgv_lang["enter_pid"]."</td><td  class=\"optionbox\" colspan=\"3\"><input type=\"text\" size=\"10\" name=\"FATHER[$i]\" id=\"FATHER$i\" value=\"".$parents['HUSB']."\" />";
-	print_findindi_link("FATHER$i","");
+	echo "<tr><td class=\"descriptionbox\">", $pgv_lang["enter_pid"], "</td><td  class=\"optionbox\" colspan=\"3\"><input type=\"text\" size=\"10\" name=\"FATHER[$i]\" id=\"FATHER$i\" value=\"", $parents['HUSB'], "\" />";
+	print_findindi_link("FATHER$i", "");
 	echo "</td></tr>";
 ?>
 <?php if (empty($parents["HUSB"])) { ?>
@@ -2703,7 +2703,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["BIRT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="FBPLAC<?php echo $i; ?>" id="Fbplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="FBPLAC<?php echo $i; ?>" id="Fbplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("Fbplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2717,7 +2717,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["DEAT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="FDPLAC<?php echo $i; ?>" id="Fdplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="FDPLAC<?php echo $i; ?>" id="Fdplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("Fdplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2736,17 +2736,17 @@ for($j=1; $j<=count($cfams); $j++) {
 	if ($person) {
 		$motherrec = $person->getGedcomRecord();
 		if ($person->getSex()=="M") $label = $pgv_lang["father"];
-		echo "<a href=\"#\" onclick=\"return quickEdit('".$parents["WIFE"]."','','", PGV_GEDCOM, "');\">";
+		echo "<a href=\"#\" onclick=\"return quickEdit('", $parents["WIFE"], "', '', '", PGV_GEDCOM, "');\">";
 		$name = $person->getFullName();
 		if ($SHOW_ID_NUMBERS) $name .= " (".$parents["WIFE"].")";
 		$name .= " [".$pgv_lang["edit"]."]";
-		echo PrintReady(stripLRMRLM($name))."</a>\n";
+		echo PrintReady(stripLRMRLM($name)), "</a>\n";
 	} else {
 		echo $pgv_lang['unknown'];
 	}
 	echo "</td></tr>\n";
-	echo "<tr><td  class=\"descriptionbox\">".$pgv_lang["enter_pid"]."</td><td  class=\"optionbox\" colspan=\"3\"><input type=\"text\" size=\"10\" name=\"MOTHER[$i]\" id=\"MOTHER$i\" value=\"".$parents['WIFE']."\" />";
-	print_findindi_link("MOTHER$i","");
+	echo "<tr><td  class=\"descriptionbox\">", $pgv_lang["enter_pid"], "</td><td  class=\"optionbox\" colspan=\"3\"><input type=\"text\" size=\"10\" name=\"MOTHER[$i]\" id=\"MOTHER$i\" value=\"", $parents['WIFE'], "\" />";
+	print_findindi_link("MOTHER$i", "");
 	?>
 </td></tr>
 <?php if (empty($parents["WIFE"])) { ?>
@@ -2838,7 +2838,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["BIRT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="MBPLAC<?php echo $i; ?>" id="Mbplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="MBPLAC<?php echo $i; ?>" id="Mbplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("Mbplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2852,7 +2852,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["DEAT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="MDPLAC<?php echo $i; ?>" id="Mdplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="MDPLAC<?php echo $i; ?>" id="Mdplace<?php echo $i; ?>" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("Mdplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2921,15 +2921,15 @@ foreach($famfacts as $f=>$eventObj) {
 			}
 			?>
 		</td>
-		<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date,ENT_COMPAT,'UTF-8')); ?>" />&nbsp;<?php print_calendar_popup("F{$i}DATE$f");?></td>
+		<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date, ENT_COMPAT, 'UTF-8')); ?>" />&nbsp;<?php print_calendar_popup("F{$i}DATE$f");?></td>
 		<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
-			<td class="optionbox"><input size="35" type="text" tabindex="<?php echo $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php echo PrintReady(htmlspecialchars($plac,ENT_COMPAT,'UTF-8')); ?>" />
+			<td class="optionbox"><input size="35" type="text" tabindex="<?php echo $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php echo PrintReady(htmlspecialchars($plac, ENT_COMPAT, 'UTF-8')); ?>" />
 			<?php print_findplace_link("F".$i."place$f"); ?>
 			</td>
 		<?php }
 		else {
-			echo "<td class=\"optionbox\"><select tabindex=\"".$tabkey."\" name=\"F".$i."TEMP[]\" >\n";
-			echo "<option value=''>".$pgv_lang["no_temple"]."</option>\n";
+			echo "<td class=\"optionbox\"><select tabindex=\"", $tabkey, "\" name=\"F", $i, "TEMP[]\" >\n";
+			echo "<option value=''>", $pgv_lang["no_temple"], "</option>\n";
 			foreach($TEMPLE_CODES as $code=>$temple) {
 				echo "<option value=\"$code\"";
 				if ($code==$temp) echo " selected=\"selected\"";
@@ -2943,7 +2943,7 @@ foreach($famfacts as $f=>$eventObj) {
 			<input type="hidden" name="F<?php echo $i; ?>REMS[<?php echo $f; ?>]" id="F<?php echo $i; ?>REM<?php echo $f; ?>" value="0" />
 			<?php if ($date!='' || $plac!='' || $temp!='' || $check==true) { ?>
 			<a href="javascript: <?php echo $pgv_lang["delete"]; ?>" onclick="if (confirm('<?php echo $pgv_lang["check_delete"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); } return false;">
-				<img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php echo $pgv_lang["delete"]; ?>" />
+				<img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php echo $pgv_lang["delete"]; ?>" />
 			</a>
 			<?php } ?>
 		</td>
@@ -2979,12 +2979,12 @@ foreach($famfacts as $f=>$eventObj) {
 					break;
 				}
 			}
-			if (!$found) echo "\t\t<option value=\"$fact\">".$factarray[$fact]."</option>\n";
+			if (!$found) echo "\t\t<option value=\"$fact\">", $factarray[$fact], "</option>\n";
 		}
 		?>
 			</select>
 		</td>
-		<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="15" name="F<?php echo $i; ?>DATE" id="F<?php echo $i; ?>DATE" onblur="valid_date(this);" />&nbsp;<?php print_calendar_popup("F".$i."DATE");?></td>
+		<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="15" name="F<?php echo $i; ?>DATE" id="F<?php echo $i; ?>DATE" onblur="valid_date(this);" />&nbsp;<?php print_calendar_popup("F", $i, "DATE");?></td>
 		<?php $tabkey++; ?>
 		<td class="optionbox"><input size="35" type="text" tabindex="<?php echo $tabkey; ?>" name="F<?php echo $i; ?>PLAC" id="F<?php echo $i; ?>place" />
 		<?php print_findplace_link("F".$i."place"); ?>
@@ -3014,7 +3014,7 @@ $chil = find_children_in_record($famrec, $pid);
 			$name = $person->getFullName();
 			if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
 			$name .= " [".$pgv_lang["edit"]."]";
-			echo "<a href=\"#\" onclick=\"return quickEdit('".$child."','','", PGV_GEDCOM, "');\">";
+			echo "<a href=\"#\" onclick=\"return quickEdit('", $child, "', '', '", PGV_GEDCOM, "');\">";
 			echo PrintReady(stripLRMRLM($name));
 			echo "</a>";
 			echo "</td>\n<td class=\"optionbox center\">";
@@ -3032,7 +3032,7 @@ $chil = find_children_in_record($famrec, $pid);
 			?>
 			<td class="optionbox center">
 				<a href="javascript: <?php echo $pgv_lang["remove_child"]; ?>" onclick="if (confirm('<?php echo $pgv_lang["confirm_remove"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>CDEL.value='<?php echo $child; ?>'; document.quickupdate.submit(); } return false;">
-					<img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php echo $pgv_lang["remove_child"]; ?>" />
+					<img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php echo $pgv_lang["remove_child"]; ?>" />
 				</a>
 			</td>
 			<?php
@@ -3045,7 +3045,7 @@ $chil = find_children_in_record($famrec, $pid);
 <tr>
 	<td class="descriptionbox"><?php echo $pgv_lang["add_child_to_family"]; ?></td>
 	<td class="optionbox" colspan="3"><input type="text" size="10" name="CHIL[]" id="CHIL<?php echo $i; ?>" />
-	<?php print_findindi_link("CHIL$i","");?>
+	<?php print_findindi_link("CHIL$i", "");?>
 	</td>
 </tr>
 <?php if ($NAME_REVERSE) { ?>
@@ -3127,7 +3127,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["BIRT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="C<?php echo $i; ?>PLAC" id="c<?php echo $i; ?>place" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="C<?php echo $i; ?>PLAC" id="c<?php echo $i; ?>place" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("c".$i."place"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -3141,7 +3141,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["DEAT:PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
+	<td class="optionbox" colspan="3"><input size="45" type="text" tabindex="<?php echo $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("c".$i."dplace"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -3154,11 +3154,11 @@ $chil = find_children_in_record($famrec, $pid);
 }
 if (PGV_USER_IS_ADMIN) {
 	echo "<table class=\"facts_table width80\">\n";
-	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap\">";
+	echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap\">";
 	print_help_link("no_update_CHAN_help", "qm");
-	echo $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+	echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 	echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
-	echo $pgv_lang["no_update_CHAN"]."<br />\n";
+	echo $pgv_lang["no_update_CHAN"], "<br />\n";
 	echo "</td></tr>\n";
 	echo "</table>";
 }

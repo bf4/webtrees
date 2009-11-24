@@ -29,7 +29,7 @@ require './config.php';
 require_once 'includes/functions/functions_print_lists.php';
 
 print_header($pgv_lang['shared_note_list']);
-echo '<div class="center"><h2>'.$pgv_lang['shared_note_list'].'</h2>';
+echo '<div class="center"><h2>', $pgv_lang['shared_note_list'], '</h2>';
 print_note_table(get_note_list(PGV_GED_ID));
 echo '</div>';
 print_footer();

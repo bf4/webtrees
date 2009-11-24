@@ -211,13 +211,13 @@ if ($view!='preview') {
 	if ($filtersx=="M") {
 		echo Person::sexImage('M', 'large', 'vertical-align: middle', $pgv_lang['male']), ' | ';
 	} else {
-		echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=M&action={$action}")."\">";
+		echo "<a href=\"", encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=M&action={$action}"), "\">";
 		echo Person::sexImage('M', 'small', 'vertical-align: middle', $pgv_lang['male']), '</a> | ';
 	}
 	if ($filtersx=="F")
 		echo Person::sexImage('F', 'large', 'vertical-align: middle', $pgv_lang['female']), ' | ';
 	else {
-		echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=F&action={$action}")."\">";
+		echo "<a href=\"", encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=F&action={$action}"), "\">";
 		echo Person::sexImage('F', 'small', 'vertical-align: middle', $pgv_lang['female']), '</a>';
 	}
 	print "</td>";

@@ -57,10 +57,10 @@ if ($view!="preview") {
 	echo '<table class="list_table', $TEXT_DIRECTION, '">';
 	echo '<tr><td class="descriptionbox">';
 	print_help_link("desc_rootid_help", "qm");
-	echo $pgv_lang["root_person"]."&nbsp;</td>";
+	echo $pgv_lang["root_person"], "&nbsp;</td>";
 	echo '<td class="optionbox vmiddle">';
 	echo '<input class="pedigree_form" type="text" id="pid" name="pid" size="3" value="', $controller->pid, '" />';
-	print_findindi_link("pid","");
+	print_findindi_link("pid", "");
 	echo '</td>';
 	echo '<td class="descriptionbox">';
 	print_help_link("box_width_help", "qm");

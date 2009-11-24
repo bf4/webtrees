@@ -53,8 +53,8 @@ if ($display=="hierarchy") print_header($pgv_lang["place_list"]);
 else print_header($pgv_lang["place_list2"]);
 
 echo "\n\t<div class=\"center\">";
-if ($display=="hierarchy") echo "<h2>".$pgv_lang["place_list"]."</h2>\n\t";
-else echo "<h2>".$pgv_lang["place_list2"]."</h2>\n\t";
+if ($display=="hierarchy") echo "<h2>", $pgv_lang["place_list"], "</h2>\n\t";
+else echo "<h2>", $pgv_lang["place_list2"], "</h2>\n\t";
 
 // Make sure the "parent" array has no holes
 if (isset($parent) && is_array($parent)) {
@@ -113,24 +113,24 @@ if ($display=="hierarchy") {
 	if ($level>0) {
 		//-- link to search results
 		if ((($level>1)||($parent[0]!=""))&&($numfound>0)) {
-			echo $numfound." ".$pgv_lang["connections"].": ";
+			echo $numfound, " ", $pgv_lang["connections"], ": ";
 		}
 		//-- breadcrumb
 		$numls = count($parent)-1;
 		$num_place="";
 		//-- place and page text orientation is opposite -> top level added at the beginning of the place text
 		echo "<a href=\"?level=0\">";
-		if ($numls>=0 && (($TEXT_DIRECTION=="ltr" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="rtl" && !hasRtLText($parent[$numls])))) echo $pgv_lang["top_level"].", ";
+		if ($numls>=0 && (($TEXT_DIRECTION=="ltr" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="rtl" && !hasRtLText($parent[$numls])))) echo $pgv_lang["top_level"], ", ";
 		echo "</a>";
 			for($i=$numls; $i>=0; $i--) {
-			echo "<a href=\"?level=".($i+1);
+			echo "<a href=\"?level=", ($i+1);
 			for ($j=0; $j<=$i; $j++) {
-				$levels = explode(',', trim($parent[$j]));
+				$levels = explode(', ', trim($parent[$j]));
 				// Routine for replacing ampersands
 				foreach($levels as $pindex=>$ppart) {
 					$ppart = rawurlencode($ppart);
 					$ppart = preg_replace("/amp\%3B/", "", trim($ppart));
-					echo "&amp;parent[$j]=".$ppart;
+					echo "&amp;parent[$j]=", $ppart;
 				}
 			}
  			echo "\">";
@@ -180,10 +180,10 @@ if ($display=="hierarchy") {
 				if ($level>2) {
 					$county = $parent[2];
 					$mapname .= "_".$county;
-					$areaname = str_replace("'","\'",$parent[2]);
+					$areaname = str_replace("'", "\'", $parent[2]);
 				}
 				else {
-					$areaname = str_replace("'","\'",$parent[1]);
+					$areaname = str_replace("'", "\'", $parent[1]);
 				}
 				// Transform certain two-byte UTF-8 letters with diacritics
 				// to their 1-byte ASCII analogues without diacritics
@@ -195,13 +195,13 @@ if ($display=="hierarchy") {
 			}
 			if (file_exists($imgfile) and file_exists($mapfile)) {
 				include ($mapfile);
-				echo "<img src='".$imgfile."' usemap='#".$mapname."' border='0' alt='".$areaname."' title='".$areaname."' />";
+				echo "<img src='", $imgfile, "' usemap='#", $mapname, "' border='0' alt='", $areaname, "' title='", $areaname, "' />";
 				?>
 				<script type="text/javascript" src="js/strings.js"></script>
 				<script type="text/javascript">
 				<!--
 				//copy php array into js array
-				var places_accept = new Array(<?php foreach ($placelist as $key => $value) echo "'".str_replace("'", "\'", $value)."',"; echo "''";?>)
+				var places_accept = new Array(<?php foreach ($placelist as $key => $value) echo "'", str_replace("'", "\'", $value), "', "; echo "''";?>)
 				Array.prototype.in_array = function(val) {
 					for (var i in this) {
 						if (this[i] == val) return true;
@@ -212,46 +212,46 @@ if ($display=="hierarchy") {
 					if (txt=='') return;
 					// search full text [California (CA)]
 					var search = txt;
-					if (places_accept.in_array(search)) return(location.href = '?level=2<?php echo "&parent[0]=".urlencode($parent[0])."&parent[1]="?>'+search);
+					if (places_accept.in_array(search)) return(location.href = '?level=2<?php echo "&parent[0]=", urlencode($parent[0]), "&parent[1]="?>'+search);
 					// search without optional code [California]
 					txt = txt.replace(/(\/)/,' ('); // case: finnish/swedish ==> finnish (swedish)
 					p=txt.indexOf(' (');
-					if (p>1) search=txt.substring(0,p);
+					if (p>1) search=txt.substring(0, p);
 					else return;
-					if (places_accept.in_array(search)) return(location.href = '?level=2<?php echo "&parent[0]=".urlencode($parent[0])."&parent[1]="?>'+search);
+					if (places_accept.in_array(search)) return(location.href = '?level=2<?php echo "&parent[0]=", urlencode($parent[0]), "&parent[1]="?>'+search);
 					// search with code only [CA]
 					search=txt.substring(p+2);
 					p=search.indexOf(')');
-					if (p>1) search=search.substring(0,p);
-					if (places_accept.in_array(search)) return(location.href = '?level=2<?php echo "&parent[0]=".urlencode($parent[0])."&parent[1]="?>'+search);
+					if (p>1) search=search.substring(0, p);
+					if (places_accept.in_array(search)) return(location.href = '?level=2<?php echo "&parent[0]=", urlencode($parent[0]), "&parent[1]="?>'+search);
 				}
 				function setPlaceCounty(txt) {
 					if (txt=='') return;
 					var search = txt;
-					if (places_accept.in_array(search)) return(location.href = '?level=3<?php echo "&parent[0]=".urlencode($parent[0])."&parent[1]=".urlencode(@$parent[1])."&parent[2]="?>'+search);
+					if (places_accept.in_array(search)) return(location.href = '?level=3<?php echo "&parent[0]=", urlencode($parent[0]), "&parent[1]=", urlencode(@$parent[1]), "&parent[2]="?>'+search);
 					txt = txt.replace(/(\/)/,' (');
 					p=txt.indexOf(' (');
-					if (p>1) search=txt.substring(0,p);
+					if (p>1) search=txt.substring(0, p);
 					else return;
-					if (places_accept.in_array(search)) return(location.href = '?level=3<?php echo "&parent[0]=".urlencode($parent[0])."&parent[1]=".urlencode(@$parent[1])."&parent[2]="?>'+search);
+					if (places_accept.in_array(search)) return(location.href = '?level=3<?php echo "&parent[0]=", urlencode($parent[0]), "&parent[1]=", urlencode(@$parent[1]), "&parent[2]="?>'+search);
 					search=txt.substring(p+2);
 					p=search.indexOf(')');
-					if (p>1) search=search.substring(0,p);
-					if (places_accept.in_array(search)) return(location.href = '?level=3<?php echo "&parent[0]=".urlencode($parent[0])."&parent[1]=".urlencode(@$parent[1])."&parent[2]="?>'+search);
+					if (p>1) search=search.substring(0, p);
+					if (places_accept.in_array(search)) return(location.href = '?level=3<?php echo "&parent[0]=", urlencode($parent[0]), "&parent[1]=", urlencode(@$parent[1]), "&parent[2]="?>'+search);
 				}
 				function setPlaceCity(txt) {
 					if (txt=='') return;
 					var search = txt;
-					if (places_accept.in_array(search)) return(location.href = '?level=4<?php echo "&parent[0]=".urlencode($parent[0])."&parent[1]=".urlencode(@$parent[1])."&parent[2]=".urlencode(@$parent[2])."&parent[3]="?>'+search);
+					if (places_accept.in_array(search)) return(location.href = '?level=4<?php echo "&parent[0]=", urlencode($parent[0]), "&parent[1]=", urlencode(@$parent[1]), "&parent[2]=", urlencode(@$parent[2]), "&parent[3]="?>'+search);
 					txt = txt.replace(/(\/)/,' (');
 					p=txt.indexOf(' (');
-					if (p>1) search=txt.substring(0,p);
+					if (p>1) search=txt.substring(0, p);
 					else return;
-					if (places_accept.in_array(search)) return(location.href = '?level=4<?php echo "&parent[0]=".urlencode($parent[0])."&parent[1]=".urlencode(@$parent[1])."&parent[2]=".urlencode(@$parent[2])."&parent[3]="?>'+search);
+					if (places_accept.in_array(search)) return(location.href = '?level=4<?php echo "&parent[0]=", urlencode($parent[0]), "&parent[1]=", urlencode(@$parent[1]), "&parent[2]=", urlencode(@$parent[2]), "&parent[3]="?>'+search);
 					search=txt.substring(p+2);
 					p=search.indexOf(')');
-					if (p>1) search=search.substring(0,p);
-					if (places_accept.in_array(search)) return(location.href = '?level=4<?php echo "&parent[0]=".urlencode($parent[0])."&parent[1]=".urlencode(@$parent[1])."&parent[2]=".urlencode(@$parent[2])."&parent[3]="?>'+search);
+					if (p>1) search=search.substring(0, p);
+					if (places_accept.in_array(search)) return(location.href = '?level=4<?php echo "&parent[0]=", urlencode($parent[0]), "&parent[1]=", urlencode(@$parent[1]), "&parent[2]=", urlencode(@$parent[2]), "&parent[3]="?>'+search);
 				}
 				//-->
 				</script>
@@ -287,9 +287,9 @@ if ($display=="hierarchy") {
 			if ($ct1 > 20) echo "colspan=\"3\"";
 			else if ($ct1 > 4) echo "colspan=\"2\"";
 			echo ">&nbsp;";
-			echo "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["place"]["small"]."\" border=\"0\" title=\"".$pgv_lang["search_place"]."\" alt=\"".$pgv_lang["search_place"]."\" />&nbsp;&nbsp;";
+			echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", $pgv_lang["search_place"], "\" alt=\"", $pgv_lang["search_place"], "\" />&nbsp;&nbsp;";
 			if ($level>0) {
-				echo " ".$pgv_lang["place_list_aft"].": ";
+				echo " ", $pgv_lang["place_list_aft"], ": ";
 				echo PrintReady($num_place);
 			}
 			else echo $pgv_lang["place_list"];
@@ -302,8 +302,8 @@ if ($display=="hierarchy") {
 		if (begRTLText($value))
 			echo "<li class=\"rtl\" dir=\"rtl\"";
 		else echo "<li class=\"ltr\" dir=\"ltr\"";
-		echo " type=\"square\">\n<a href=\"?action=$action&amp;level=".($level+1).$linklevels;
-		echo "&amp;parent[$level]=".urlencode($value)."\" class=\"list_item\">";
+		echo " type=\"square\">\n<a href=\"?action=$action&amp;level=", ($level+1), $linklevels;
+		echo "&amp;parent[$level]=", urlencode($value), "\" class=\"list_item\">";
 
 		if (trim($value)=="") echo $pgv_lang["unknown"];
 		else echo PrintReady($value);
@@ -331,7 +331,7 @@ if ($display=="hierarchy") {
 			echo " style=\"text-align: center;\">";
 			echo "<a href=\"?action=show&amp;level=$level";
 			foreach($parent as $key=>$value) {
-				echo "&amp;parent[$key]=".urlencode(trim($value));
+				echo "&amp;parent[$key]=", urlencode(trim($value));
 			}
 			echo "\"><span class=\"formField\">";
 			if (trim($value)=="") echo $pgv_lang["unknown"];
@@ -387,15 +387,15 @@ if ($display=="list") {
 	$placelist = array_unique($placelist);
 	uasort($placelist, "stringsort");
 	if (count($placelist)==0) {
-		echo "<b>".$pgv_lang["no_results"]."</b><br />";
+		echo "<b>", $pgv_lang["no_results"], "</b><br />";
 	}
 	else {
 		echo "\n\t<table class=\"list_table $TEXT_DIRECTION\"";
 		if ($TEXT_DIRECTION=="rtl") echo " dir=\"rtl\"";
 		echo ">\n\t\t<tr>\n\t\t<td class=\"list_label\" ";
 		$ct = count($placelist);
-		echo " colspan=\"".($ct>20?"3":"2")."\">&nbsp;";
-		echo "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["place"]["small"]."\" border=\"0\" title=\"".$pgv_lang["search_place"]."\" alt=\"".$pgv_lang["search_place"]."\" />&nbsp;&nbsp;";
+		echo " colspan=\"", ($ct>20?"3":"2"), "\">&nbsp;";
+		echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", $pgv_lang["search_place"], "\" alt=\"", $pgv_lang["search_place"], "\" />&nbsp;&nbsp;";
 		echo $pgv_lang["place_list2"];
 		echo "&nbsp;";
 		print_help_link("ppp_placelist_help2", "qm");
@@ -418,7 +418,7 @@ if ($display=="list") {
 				echo "<li class=\"rtl\" dir=\"rtl\"";
 			else echo "<li class=\"ltr\" dir=\"ltr\"";
 			echo " type=\"square\"><a href=\"?action=show&amp;display=hierarchy&amp;level=$level$linklevels\">";
-			echo PrintReady($revplace)."</a></li>\n";
+			echo PrintReady($revplace), "</a></li>\n";
 			$i++;
 			if ($ct > 20){
 				if ($i == floor($ct / 3)) echo "\n\t\t</ul></td>\n\t\t<td class=\"list_value_wrap\"><ul>";
@@ -429,7 +429,7 @@ if ($display=="list") {
 		echo "\n\t\t</ul></td></tr>\n\t\t";
 		if ($i>1) {
 			echo "<tr><td>";
-			if ($i>0) echo $pgv_lang["total_unic_places"]." ".$i;
+			if ($i>0) echo $pgv_lang["total_unic_places"], " ", $i;
 			echo "</td></tr>\n";
 		}
 		echo "\n\t\t</table>";
@@ -437,8 +437,8 @@ if ($display=="list") {
 }
 
 echo "<br /><a href=\"?display=";
-if ($display=="list") echo "hierarchy\">".$pgv_lang["show_place_hierarchy"];
-else echo "list\">".$pgv_lang["show_place_list"];
+if ($display=="list") echo "hierarchy\">", $pgv_lang["show_place_hierarchy"];
+else echo "list\">", $pgv_lang["show_place_list"];
 echo "</a><br /><br />\n";
 if ($hasplaceform) {
 	$placeheader = substr($header, $hasplaceform);
@@ -449,7 +449,7 @@ if ($hasplaceform) {
 	}
 }
 else {
-	echo $pgv_lang["form"].$pgv_lang["default_form"]."  ".$pgv_lang["default_form_info"];
+	echo $pgv_lang["form"], $pgv_lang["default_form"], "  ", $pgv_lang["default_form_info"];
 	print_help_link("ppp_default_form_help", "qm");
 }
 echo "<br /><br /></div>";

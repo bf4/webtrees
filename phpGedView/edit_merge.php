@@ -177,7 +177,7 @@ if ($action!="choose") {
 							} else {
 								$record=fetch_gedcom_record($id, PGV_GED_ID);
 								$record=$record['gedrec'];
-								echo $pgv_lang["updating_linked"]." {$id}<br />\n";
+								echo $pgv_lang["updating_linked"], " {$id}<br />\n";
 								$newrec=str_replace("@$gid2@", "@$gid1@", $record);
 								$newrec=preg_replace(
 									'/(\n1.*@.+@.*(?:(?:\n[2-9].*)*))((?:\n1.*(?:\n[2-9].*)*)*\1)/',
@@ -225,17 +225,17 @@ if ($action=="choose") {
 	function iopen_find(textbox, gedselect) {
 		pasteto = textbox;
 		ged = gedselect.options[gedselect.selectedIndex].value;
-		findwin = window.open('find.php?type=indi&ged='+ged, '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
+		findwin = window.open('find.php?type=indi&ged='+ged, '_blank', 'left=50, top=50, width=600, height=500, resizable=1,  scrollbars=1');
 	}
 	function fopen_find(textbox, gedselect) {
 		pasteto = textbox;
 		ged = gedselect.options[gedselect.selectedIndex].value;
-		findwin = window.open('find.php?type=fam&ged='+ged, '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
+		findwin = window.open('find.php?type=fam&ged='+ged, '_blank', 'left=50, top=50, width=600, height=500, resizable=1, scrollbars=1');
 	}
 	function sopen_find(textbox, gedselect) {
 		pasteto = textbox;
 		ged = gedselect.options[gedselect.selectedIndex].value;
-		findwin = window.open('find.php?type=source&ged='+ged, '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
+		findwin = window.open('find.php?type=source&ged='+ged, '_blank', 'left=50, top=50, width=600, height=500, resizable=1, scrollbars=1');
 	}
 	function paste_id(value) {
 		pasteto.value=value;
