@@ -92,6 +92,7 @@ $pgv_lang["names"]			= "Imena";
 $pgv_lang["children"]			= "Otroci";
 $pgv_lang["lchildren"]			= "otroci";
 $pgv_lang["child"]			= "Otrok";
+$pgv_lang["grandchildren"]		= "pravnuki";
 $pgv_lang["family"] 			= "Družina";
 $pgv_lang["as_child"]			= "Družina s starši";
 $pgv_lang["shared_note_menu"]		= "Možnosti za skupen zapisek";
@@ -400,6 +401,7 @@ $pgv_lang["charts"] 			= "Preglednice";
 $pgv_lang["lists"]			= "Seznami";
 $pgv_lang["box_width"] 			= "Širina okvirčka";
 $pgv_lang["random_surn"]		= "Naključen priimek";
+$pgv_lang["generation_number"]		= "Rodov";
 
 
 //-- FUNCTIONS FILE MESSAGES
@@ -867,6 +869,7 @@ $pgv_lang["view_fam_nav_research"]	= "Poglej raziskave za ...";
 $pgv_lang["view_fam_nav_map"]		= "Poglej zemljevid za ...";
 $pgv_lang["view_fam_nav_spare"]		= "Poglej proste podatke za ...";
 $pgv_lang["navigator"]			= "Navigator";
+$pgv_lang["fam_navigator"]		= "Družinski navigator";
 
 $pgv_lang["relationship_great"]		= "Veliko";
 $pgv_lang["relationship_chart"] 	= "Sorodstvena razmerja";
@@ -1489,6 +1492,8 @@ $pgv_lang["son_of"]				= "sin od";
 $pgv_lang["daughter_of"]			= "hči od";
 $pgv_lang["child_of"]				= "Otrok od ";
 $pgv_lang["children_of"]			= "Otroci od ";
+$pgv_lang["descendancy_pronoun_m"]	= "On je ";
+$pgv_lang["descendancy_pronoun_f"]	= "Ona je ";
 
 
 $pgv_lang["family_group_report"]	= "Družinsko poročilo";
@@ -1668,6 +1673,8 @@ $pgv_lang["statnnames"]                = "Skupno število imen";
 $pgv_lang["statnfam"]                  = "Skupno število družin";
 $pgv_lang["statnmale"]                 = "Skupno število moških";
 $pgv_lang["statnfemale"]               = "Skupno število žensk";
+$pgv_lang["with_sources"]	       = "Z viri";
+$pgv_lang["without_sources"]	       = "Brez virov";
 $pgv_lang["stat_sindi"]                = "Oseb z viri";
 $pgv_lang["stat_sfam"]                 = "Družin z viri";
 $pgv_lang["statvars"]		       = "Vnesi naslednje parametre za izris";
@@ -1681,8 +1688,9 @@ $pgv_lang["stat_3_map"]                = "Smrti po državah";
 $pgv_lang["stat_4_map"]                = "Poroke po državah";
 $pgv_lang["stat_5_birth"]	       = "Rojstva po stoletjih";
 $pgv_lang["stat_6_death"]	       = "Smrti po stoletjih";
-$pgv_lang["stat_7_marr"]	       = "Poroke po stoletjih";
-$pgv_lang["stat_8_fam"]                = "Družine z viri";
+$pgv_lang["stat_7_marr"]	       = "Porok po stoletjih";
+$pgv_lang["stat_7_div"]		       = "Ločitev po stoletjih";
+$pgv_lang["stat_8_fam"]                = "Družin z viri";
 $pgv_lang["stat_9_indi"]               = "Osebe z viri";
 $pgv_lang["stat_10_none"]		 = "Nič";
 $pgv_lang["stat_11_mb"]			 = "Mesec rojstva";
@@ -1724,6 +1732,7 @@ $pgv_lang["one_child"]                 	 = "obdobje enega otroka";
 $pgv_lang["two_children"]             	 = "obdobje med otrokoma";
 $pgv_lang["statreset"]			 = "Ponastavi";
 $pgv_lang["statsubmit"]			 = "Pokaži izris";
+$pgv_lang["stat_largest_families"] 	 = "Največje družine";
 
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]	= "Izris statističnih podatkov";
