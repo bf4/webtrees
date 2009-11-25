@@ -4949,7 +4949,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
     }
 
     // ----- Create the directory
-    if (!@mkdir($p_dir, 0777))
+    if (!@mkdir($p_dir, PGV_PERM_EXE))
+    
     {
       // ----- Error log
       PclZip::privErrorLog(PCLZIP_ERR_DIR_CREATE_FAIL, "Unable to create directory '$p_dir'");

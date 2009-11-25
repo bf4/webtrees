@@ -36,7 +36,7 @@ if (!PGV_USER_IS_ADMIN) {
 
 function full_rmdir($dir) {
 	if (!is_writable($dir)) {
-		if (!@chmod($dir, 0777)) {
+		if (!@chmod($dir, PGV_PERM_EXE))
 			return FALSE;
 		}
 	}
