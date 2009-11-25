@@ -77,8 +77,8 @@ echo "</select></td></tr>";
 //Option box for 'Open in new window'
 echo "<tr><td class='descriptionbox'>{$pgv_lang["open_link"]}</td>";
 echo "<td class='optionbox'><select name='openinnew'>";
-echo "<option value='0' ", ($openinnew?" selected='selected'":""), ">{$pgv_lang["same_win"]}</option>";
-echo "<option value='1' ", ($openinnew?" selected='selected'":""), ">{$pgv_lang["new_win"]}</option>";
+echo "<option value='0' ", $openinnew?" selected='selected'":"", ">{$pgv_lang["same_win"]}</option>";
+echo "<option value='1' ", $openinnew?" selected='selected'":"", ">{$pgv_lang["new_win"]}</option>";
 echo "</select></td></tr>";
 //Option box to select top level place within Gedcom
 echo "<tr><td class='descriptionbox'>", $pgv_lang['placecheck_top'], "</td>";
@@ -109,7 +109,7 @@ if ($country!='XYZ') {
 		->execute(array($par_id))
 		->fetchOneColumn();
 	foreach ($places as $place) {
-		echo "<option value='{$place}'", ($place==$state?" selected='selected'":""), ">{$place}</option>";
+		echo "<option value='{$place}'", $place==$state?" selected='selected'":"", ">{$place}</option>";
 	}
 	echo "</select></td></tr>";
 }

@@ -36,7 +36,7 @@ print_lang_form();
 print_theme_dropdown();
 echo "<br />";
 echo contact_links();
-echo '<br /><a href="', PGV_PHPGEDVIEW_URL, '" target="_blank"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['gedview']['other'], '" width="100" height="45" border="0" alt="', PGV_PHPGEDVIEW, (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") , '" title="', PGV_PHPGEDVIEW , (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") , '" /></a><br />';
+echo '<br /><a href="', PGV_PHPGEDVIEW_URL, '" target="_blank"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['gedview']['other'], '" width="100" height="45" border="0" alt="', PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" title="', PGV_PHPGEDVIEW , PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" /></a><br />';
 echo "\n\t<br />";
 print_help_link("preview_help", "qm");
 echo "<a href=\"$SCRIPT_NAME?view=preview&amp;", get_query_string(), "\">", $pgv_lang["print_preview"], "</a>";
