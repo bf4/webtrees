@@ -43,6 +43,7 @@ VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["stat_lived_longest"]					25 Nov 2009				W
 +$pgv_lang["stat_own_charts"]						24 Nov 2009				A
 +$pgv_lang["statnliving"]							24 Nov 2009				A
 +$pgv_lang["statndead"]								24 Nov 2009				A
