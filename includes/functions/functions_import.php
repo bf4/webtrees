@@ -1196,7 +1196,7 @@ function empty_database($ged_id, $keepmedia) {
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file=?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_file =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name        WHERE n_file =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates       WHERE d_file =?")->execute(array($ged_id));;
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates       WHERE d_file =?")->execute(array($ged_id));
 
 	if ($keepmedia) {
 		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link   WHERE l_file    =? AND l_type<> ?")->execute(array($ged_id, 'OBJE'));
@@ -1298,7 +1298,7 @@ function write_file() {
 	$logline = AddToLog($path." updated");
 	check_in($logline, basename($path), dirname($path));
 
-	return true;;
+	return true;
 }
 /**
 * Accpet changed gedcom record into database

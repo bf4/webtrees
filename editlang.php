@@ -475,7 +475,7 @@ case "export" :
 			$language_array = array_merge($language_array, read_export_file_into_array($pgv_language[$language2], "pgv_lang["));
 		}
 		$new_language_array = array();
-		$new_language_array_counter = 0;;
+		$new_language_array_counter = 0;
 
 		for ($z = 0, $zmax = sizeof($language_array); $z < $zmax; $z++) {
 			if (isset($language_array[$z][0])) {
@@ -822,7 +822,7 @@ foreach ($language_settings as $key=>$value) {
 	$DICTIONARY_SORT[$key]      =$value["DICTIONARY_SORT"];
 	$COLLATION[$key]            =$value["COLLATION"];
 	$DATE_FORMAT_array[$key]    =$value["DATE_FORMAT"];
-	$TIME_FORMAT_array[$key]    =$value["TIME_FORMAT"];;
+	$TIME_FORMAT_array[$key]    =$value["TIME_FORMAT"];
 	$WEEK_START_array[$key]     =$value["WEEK_START"];
 	$TEXT_DIRECTION_array[$key] =$value["TEXT_DIRECTION"];
 	$NAME_REVERSE_array[$key]   =$value["NAME_REVERSE"];
