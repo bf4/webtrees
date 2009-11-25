@@ -1289,7 +1289,7 @@ class stats {
 		$i = 1;
 		foreach ($countries as $country) {
 			$place = '<a href="'.encode_url(get_place_url($country['country'])).'" class="list_item" title="'.$country['country'].'">'.PrintReady($country['country']).'</a>';
-			$top10[]="\t<li>".$place." ".PrintReady("[".$country['tot']."]")."</li>\n";
+			$top10[]="\t<li>".PrintReady($place." [".$country['tot']."]")."</li>\n";
 			if ($i++==10) break;
 		}
 		$top10=join("\n", $top10);
@@ -1307,7 +1307,7 @@ class stats {
 		arsort($places);
 		foreach ($places as $place=>$count) {
 			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
-			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
+			$top10[]="\t<li>".PrintReady($place." [".$count."]")."</li>\n";
 			if ($i++==10) break;
 		}
 		$top10=join("\n", $top10);
@@ -1325,7 +1325,7 @@ class stats {
 		arsort($places);
 		foreach ($places as $place=>$count) {
 			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
-			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
+			$top10[]="\t<li>".PrintReady($place." [".$count."]")."</li>\n";
 			if ($i++==10) break;
 		}
 		$top10=join("\n", $top10);
@@ -1343,7 +1343,7 @@ class stats {
 		arsort($places);
 		foreach ($places as $place=>$count) {
 			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
-			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
+			$top10[]="\t<li>".PrintReady($place." [".$count."]")."</li>\n";
 			if ($i++==10) break;
 		}
 		$top10=join("\n", $top10);
@@ -1360,18 +1360,21 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						."d_fact='BIRT'";
+						."d_fact='BIRT' AND "
+						."d_type='@#DGREGORIAN@'";
 		} else if ($sex) {
 			$sql = "SELECT d_month, i_sex, COUNT(*) FROM {$TBLPREFIX}dates "
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						."d_fact='BIRT'";
+						."d_fact='BIRT' AND "
+						."d_type='@#DGREGORIAN@'";
 		} else {
 			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						."d_fact='BIRT'";
+						."d_fact='BIRT' AND "
+						."d_type='@#DGREGORIAN@'";
 		}
 		if ($year1>=0 && $year2>=0) {
 			$sql .= " AND d_year BETWEEN '{$year1}' AND '{$year2}'";
@@ -1421,18 +1424,21 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						."d_fact='DEAT'";
+						."d_fact='DEAT' AND "
+						."d_type='@#DGREGORIAN@'";
 		} else if ($sex) {
 			$sql = "SELECT d_month, i_sex, COUNT(*) FROM {$TBLPREFIX}dates "
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						."d_fact='DEAT'";
+						."d_fact='DEAT' AND "
+						."d_type='@#DGREGORIAN@'";
 		} else {
 			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
-					."d_file={$this->_ged_id} AND "
-					."d_fact='DEAT'";
+						."d_file={$this->_ged_id} AND "
+						."d_fact='DEAT' AND "
+						."d_type='@#DGREGORIAN@'";
 		}
 		if ($year1>=0 && $year2>=0) {
 			$sql .= " AND d_year BETWEEN '{$year1}' AND '{$year2}'";
@@ -1790,6 +1796,8 @@ class stats {
 					." birth.d_fact='BIRT' AND"
 					." death.d_fact='DEAT' AND"
 					.' birth.d_julianday1!=0 AND'
+					." birth.d_type='@#DGREGORIAN@' AND"
+					." death.d_type='@#DGREGORIAN@' AND"
 					.' death.d_julianday1>birth.d_julianday2'
 				.' GROUP BY century, sex ORDER BY century, sex');
 
@@ -2390,7 +2398,8 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						."d_fact='MARR'";
+						."d_fact='MARR' AND "
+						."d_type='@#DGREGORIAN@'";
 						if ($year1>=0 && $year2>=0) {
 							$sql .= " AND d_year BETWEEN '{$year1}' AND '{$year2}'";
 						}
@@ -2471,7 +2480,8 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						."d_fact IN ('DIV', 'ANUL', '_SEPR')";
+						."d_fact IN ('DIV', 'ANUL', '_SEPR') AND "
+						."d_type='@#DGREGORIAN@'";
 						if ($year1>=0 && $year2>=0) {
 							$sql .= " AND d_year BETWEEN '{$year1}' AND '{$year2}'";
 						}
@@ -2599,6 +2609,8 @@ class stats {
 					." birth.d_fact = 'BIRT' AND"
 					." married.d_fact = 'MARR' AND"
 					.' birth.d_julianday1 != 0 AND'
+					." birth.d_type='@#DGREGORIAN@' AND"
+					." married.d_type='@#DGREGORIAN@' AND"
 					.' married.d_julianday2 > birth.d_julianday1'
 				.' GROUP BY century, sex ORDER BY century, sex');
 			$max = 0;
@@ -3086,7 +3098,8 @@ class stats {
 				.' WHERE'
 					.' married.d_gid = fam.f_id AND'
 					." fam.f_file = {$this->_ged_id} AND"
-					." married.d_fact = 'MARR'"
+					." married.d_fact = 'MARR' AND"
+					." married.d_type='@#DGREGORIAN@'"
 				.' GROUP BY century ORDER BY century');
 			foreach ($rows as $values) {
 				if ($max<$values['num']) $max = $values['num'];
@@ -3236,7 +3249,8 @@ class stats {
 				.' married.d_gid = fam.f_id AND'
 				." fam.f_file = {$this->_ged_id} AND"
 				.$years
-				." married.d_fact = 'MARR'"
+				." married.d_fact = 'MARR' AND"
+				." married.d_type='@#DGREGORIAN@'"
 			.' GROUP BY century ORDER BY century');
 		foreach ($rows as $values) {
 			if ($max<$values['count']) $max = $values['count'];
@@ -3420,7 +3434,7 @@ class stats {
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
 		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
-		$chart_title .= PrintReady($pgv_lang["other"].' ['.($tot_indi-$tot).']');
+		$chart_title .= $pgv_lang["other"].' ['.($tot_indi-$tot).']';
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
