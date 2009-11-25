@@ -91,7 +91,7 @@ function is_dead($indirec, $current_year='', $import=false) {
 	}
 
 	// Check for a death record occuring on/before the current year.
-	preg_match_all('/\n1 '.PGV_EVENTS_DEAT.'(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
+	preg_match_all('/\n1 (?:'.PGV_EVENTS_DEAT.')(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
 	foreach ($date_matches[1] as $date_match) {
 		$date=new GedcomDate($date_match);
 		if ($date->isOK()) {
@@ -158,7 +158,7 @@ function is_dead($indirec, $current_year='', $import=false) {
 		foreach ($fams_matches[1] as $fams_match) {
 			$famrec=find_family_record($fams_match, $ged_id);
 			// Check all marriage events
-			preg_match_all('/\n1 '.PGV_EVENTS_MARR.'(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
+			preg_match_all('/\n1 (?:'.PGV_EVENTS_MARR.')(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
 			foreach ($date_matches[1] as $date_match) {
 				$date=new GedcomDate($date_match);
 				if ($date->isOK()) {
