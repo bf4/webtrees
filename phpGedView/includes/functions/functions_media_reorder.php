@@ -127,10 +127,10 @@ function media_reorder_row($rtype, $rowm, $pid) {
 		$j=$j;
 	}
 	$media_data = $rowm['m_media'];
-	print "<input type=\"hidden\" name=\"order1[$media_data]\" value=\"$j\" />";
+	echo "<input type=\"hidden\" name=\"order1[", $media_data, "]\" value=\"", $j, "\" />";
 
-    print "</li>";
-    print "\n\n";;
+    echo "</li>";
+    echo "\n\n";
     return true;
 
 }

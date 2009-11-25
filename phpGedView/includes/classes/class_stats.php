@@ -1403,7 +1403,7 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);;
+				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
 				$centuries .= $century.' - '.$values['count(*)'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
@@ -1465,7 +1465,7 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);;
+				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
 				$centuries .= $century.' - '.$values['count(*)'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
