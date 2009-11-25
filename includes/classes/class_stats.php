@@ -1623,10 +1623,12 @@ class stats {
 				$age = $age.'d';
 			}
 			$func($age, $show_years);
-			if ($type == 'list') {
-				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]</li>\n";
-			} else {
-				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]";
+			if ($person->canDisplayDetails()) {
+				if ($type == 'list') {
+					$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]</li>\n";
+				} else {
+					$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]";
+				}
 			}
 		}
 		if ($type == 'list') {

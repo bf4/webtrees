@@ -167,6 +167,9 @@ function switch_tab(tab) {
 				</tr>
 			</table>
 			<br />
+			<?php
+			if (PGV_USER_ID) {
+			?>
 			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_live_longest"];?></b></div>
 			<table class="facts_table">
 				<tr>
@@ -179,6 +182,9 @@ function switch_tab(tab) {
 				</tr>
 			</table>
 			<br />
+			<?php
+			}
+			?>
 			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_names"];?></b></div>
 			<table class="facts_table">
 				<tr>
@@ -244,8 +250,8 @@ function switch_tab(tab) {
 			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_marr_age"];?></b></div>
 			<table class="facts_table">
 				<tr>
-					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_long_marr_age"], " - ", $stats->topAgeOfMarriage());?></td>
-					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_short_marr_age"], " - ", $stats->minAgeOfMarriage());?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_long_marr_age"]." - ".$stats->topAgeOfMarriage());?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_short_marr_age"]." - ".$stats->minAgeOfMarriage());?></td>
 				</tr>
 				<tr>
 					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topAgeOfMarriageFamily();?></td>
@@ -256,16 +262,16 @@ function switch_tab(tab) {
 			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_19_arm"];?></b></div>
 			<table class="facts_table">
 				<tr>
-					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_male"], " - ", $stats->youngestMarriageMaleAge(true));?></td>
-					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_female"], " - ", $stats->youngestMarriageFemaleAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_male"]." - ".$stats->youngestMarriageMaleAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_female"]." - ".$stats->youngestMarriageFemaleAge(true));?></td>
 				</tr>
 				<tr>
 					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->youngestMarriageMale();?></td>
 					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->youngestMarriageFemale();?></td>
 				</tr>
 				<tr>
-					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_male"], " - ", $stats->oldestMarriageMaleAge(true));?></td>
-					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_female"], " - ", $stats->oldestMarriageFemaleAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_male"]." - ".$stats->oldestMarriageMaleAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_female"]." - ".$stats->oldestMarriageFemaleAge(true));?></td>
 				</tr>
 				<tr>
 					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->oldestMarriageMale();?></td>
@@ -279,16 +285,16 @@ function switch_tab(tab) {
 			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_childbirth_age"];?></b></div>
 			<table class="facts_table">
 				<tr>
-					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_father"], " - ", $stats->youngestFatherAge(true));?></td>
-					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_mother"], " - ", $stats->youngestMotherAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_father"]." - ".$stats->youngestFatherAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_mother"]." - ".$stats->youngestMotherAge(true));?></td>
 				</tr>
 				<tr>
 					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->youngestFather();?></td>
 					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->youngestMother();?></td>
 				</tr>
 				<tr>
-					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_father"], " - ", $stats->oldestFatherAge(true));?></td>
-					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_mother"], " - ", $stats->oldestMotherAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_father"]." - ".$stats->oldestFatherAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_mother"]." - ".$stats->oldestMotherAge(true));?></td>
 				</tr>
 				<tr>
 					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->oldestFather();?></td>
