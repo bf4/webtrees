@@ -248,7 +248,7 @@ if ($action=='addServer') {
 		//-- check the existing server list
 		foreach ($remoteServers as $server) {
 			if (stristr($server['url'], $turl)) {
-				if (empty($gedcom_id) || (strpos($server['gedcom'], "_DBID $gedcom_id")!==false) {
+				if (empty($gedcom_id) || (strpos($server['gedcom'], "_DBID $gedcom_id")!==false)) {
 					$whichFile = $server['name'];
 					$errorServer = print_text("error_remote_duplicate",0,1);
 					break;
@@ -378,7 +378,7 @@ function showSite(siteID) {
 				</td>
 				<td valign="top">
 					<span dir="ltr">
-					<input type="text" id="txtAddIp" name="address" size="16"  value="<?php echo (empty($errorSearch))? '':$address;?>" />
+					<input type="text" id="txtAddIp" name="address" size="16"  value="<?php echo empty($errorSearch) ? '':$address;?>" />
 					</span>
 					&nbsp;
 				</td>
@@ -455,7 +455,7 @@ function showSite(siteID) {
 				</td>
 				<td valign="top">
 					<span dir="ltr">
-					<input type="text" id="txtAddIp" name="address" size="16"  value="<?php echo (empty($errorBanned))? '':$address;?>" />
+					<input type="text" id="txtAddIp" name="address" size="16"  value="<?php echo empty($errorBanned) ? '':$address;?>" />
 					</span>
 					&nbsp;
 				</td>

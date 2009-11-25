@@ -238,19 +238,19 @@ function write_access_option($checkVar) {
 	global $pgv_lang;
 
 	echo "<option value=\"PGV_PRIV_PUBLIC\"";
-	echo ($checkVar==PGV_PRIV_PUBLIC) ? " selected=\"selected\"" : '';
+	echo $checkVar==PGV_PRIV_PUBLIC ? " selected=\"selected\"" : '';
 	echo ">", $pgv_lang["PRIV_PUBLIC"], "</option>\n";
 
 	echo "<option value=\"PGV_PRIV_USER\"";
-	echo ($checkVar==PGV_PRIV_USER) ? " selected=\"selected\"" : '';
+	echo $checkVar==PGV_PRIV_USER ? " selected=\"selected\"" : '';
 	echo ">", $pgv_lang["PRIV_USER"], "</option>\n";
 
 	echo "<option value=\"PGV_PRIV_NONE\"";
-	echo ($checkVar==PGV_PRIV_NONE) ? " selected=\"selected\"" : '';
+	echo $checkVar==PGV_PRIV_NONE ? " selected=\"selected\"" : '';
 	echo ">", $pgv_lang["PRIV_NONE"], "</option>\n";
 
 	echo "<option value=\"PGV_PRIV_HIDE\"";
-	echo ($checkVar==PGV_PRIV_HIDE) ? " selected=\"selected\"" : '';
+	echo $checkVar==PGV_PRIV_HIDE ? " selected=\"selected\"" : '';
 	echo ">", $pgv_lang["PRIV_HIDE"], "</option>\n";
 }
 

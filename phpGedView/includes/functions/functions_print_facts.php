@@ -678,7 +678,7 @@ function print_media_links($factrec, $level, $pid='') {
 						echo "<a href=\"", encode_url("mediaviewer.php?mid={$media_id}"), "\">";
 					}
 
-					echo "<img src=\"", $thumbnail, "\" border=\"0\" align=\"" , ($TEXT_DIRECTION== "rtl"?"right": "left") , "\" class=\"thumbnail\"";
+					echo "<img src=\"", $thumbnail, "\" border=\"0\" align=\"" , $TEXT_DIRECTION== "rtl"?"right": "left" , "\" class=\"thumbnail\"";
 					if ($isExternal) echo " width=\"", $THUMBNAIL_WIDTH, "\"";
 					echo " alt=\"" . PrintReady($mediaTitle) . "\"";
 					//LBox --------  change for Lightbox Album --------------------------------------------
@@ -1545,14 +1545,17 @@ function print_main_media_row($rtype, $rowm, $pid) {
 
 		//-- Thumbnail field
 		echo '<a href="', $mediaInfo['url'], '">';
-		echo '<img src="', $mediaInfo['thumb'], '" border="none" align="', ($TEXT_DIRECTION=="rtl" ? "right":"left"), '" class="thumbnail"', $mediaInfo['width'];
+		echo '<img src="', $mediaInfo['thumb'], '" border="none" align="', $TEXT_DIRECTION=="rtl" ? "right":"left", '" class="thumbnail"', $mediaInfo['width'];
 		echo ' alt="', PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')), '" title="', PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')), '" /></a>';
 
 		if(empty($SEARCH_SPIDER)) {
 			echo "<a href=\"", encode_url("mediaviewer.php?mid={$rowm['m_media']}"), "\">";
 		}
-		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) echo "<i>" , getLRM() , PrintReady(htmlspecialchars($mediaTitle, ENT_COMPAT, 'UTF-8')."&nbsp;&nbsp;({$rowm['m_media']})");
-		else echo "<i>", PrintReady(htmlspecialchars($mediaTitle, ENT_COMPAT, 'UTF-8')."&nbsp;&nbsp;({$rowm['m_media']})");
+		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) {
+			echo "<i>", getLRM(), PrintReady(htmlspecialchars($mediaTitle, ENT_COMPAT, 'UTF-8')."&nbsp;&nbsp;({$rowm['m_media']})");
+		} else {
+			echo "<i>", PrintReady(htmlspecialchars($mediaTitle, ENT_COMPAT, 'UTF-8')."&nbsp;&nbsp;({$rowm['m_media']})");
+		}
 		$addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $rowm["m_gedrec"]);
@@ -1570,7 +1573,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if (!empty($rowm["m_ext"])) {
 			echo "\n\t\t\t<br /><span class=\"label\">", $factarray["FORM"], ": </span> <span class=\"field\">", $rowm["m_ext"], "</span>";
 			if(isset($imgsize) and $imgsize[2]!==false) {
-				echo "\n\t\t\t<span class=\"label\"><br />", $pgv_lang["image_size"], ": </span> <span class=\"field\" style=\"direction: ltr;\">" , $imgsize[0] , ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM(). " ") : " x ") , $imgsize[1] , "</span>";
+				echo "\n\t\t\t<span class=\"label\"><br />", $pgv_lang["image_size"], ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imgsize[0], $TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM(). " ") : " x ", $imgsize[1], "</span>";
 			}
 		}
 		if (preg_match('/2 DATE (.+)/', get_sub_record("FILE", 1, $rowm["m_gedrec"]), $match)) {

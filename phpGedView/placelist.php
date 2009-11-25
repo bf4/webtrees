@@ -394,7 +394,7 @@ if ($display=="list") {
 		if ($TEXT_DIRECTION=="rtl") echo " dir=\"rtl\"";
 		echo ">\n\t\t<tr>\n\t\t<td class=\"list_label\" ";
 		$ct = count($placelist);
-		echo " colspan=\"", ($ct>20?"3":"2"), "\">&nbsp;";
+		echo " colspan=\"", $ct>20 ? "3" : "2", "\">&nbsp;";
 		echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", $pgv_lang["search_place"], "\" alt=\"", $pgv_lang["search_place"], "\" />&nbsp;&nbsp;";
 		echo $pgv_lang["place_list2"];
 		echo "&nbsp;";
@@ -414,10 +414,12 @@ if ($display=="list") {
 				if ($place=="") $revplace .= $pgv_lang["unknown"];
 				else $revplace .= $place;
 			}
-			if (begRTLText($revplace))
+			if (begRTLText($revplace)) {
 				echo "<li class=\"rtl\" dir=\"rtl\"";
-			else echo "<li class=\"ltr\" dir=\"ltr\"";
-			echo " type=\"square\"><a href=\"?action=show&amp;display=hierarchy&amp;level=$level$linklevels\">";
+			} else {
+				echo "<li class=\"ltr\" dir=\"ltr\"";
+			}
+			echo " type=\"square\"><a href=\"?action=show&amp;display=hierarchy&amp;level=", $level, $linklevels, "\">";
 			echo PrintReady($revplace), "</a></li>\n";
 			$i++;
 			if ($ct > 20){

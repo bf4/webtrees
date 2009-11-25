@@ -224,7 +224,7 @@ if ($ct>0) {
 	echo "\n<tr><td colspan=\"2\">\n";
 	echo "\n\t<table class=\"list_table width100\">\n";
 	echo "\n<tr>\n";
-	echo "<td class=\"width30\" align=\"" . ($TEXT_DIRECTION == "ltr"?"left":"right") . "\">";
+	echo "<td class=\"width30\" align=\"", $TEXT_DIRECTION == "ltr"?"left":"right", "\">";
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($ct>$max) {
 			if ($currentPage > 1) {
@@ -251,7 +251,7 @@ if ($ct>0) {
 	}
 	echo "</td>";
 	echo "<td align=\"center\">", print_text("page_x_of_y", 0, 1), "</td>";
-	echo "<td class=\"width30\" align=\"" . ($TEXT_DIRECTION == "ltr"?"right":"left") . "\">";
+	echo "<td class=\"width30\" align=\"", $TEXT_DIRECTION == "ltr"?"right":"left", "\">";
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($ct>$max) {
 			if ($start+$max < $ct) {
@@ -403,10 +403,10 @@ if ($ct>0) {
 
 			$fileSize = media_filesize($media["FILE"]);
 			$sizeString = getfilesize($fileSize);
-			echo "&nbsp;&nbsp;&nbsp;<span class=\"field\" style=\"direction: ltr;\">" . $sizeString . "</span>";
+			echo "&nbsp;&nbsp;&nbsp;<span class=\"field\" style=\"direction: ltr;\">", $sizeString, "</span>";
 
 			if ($imgsize[2]!==false) {
-				echo "\n\t\t\t<span class=\"label\"><br />", $pgv_lang["image_size"], ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imgsize[0], ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x "), $imgsize[1], "</span>";
+				echo "\n\t\t\t<span class=\"label\"><br />", $pgv_lang["image_size"], ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imgsize[0], $TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ", $imgsize[1], "</span>";
 			}
 		}
 
@@ -427,7 +427,7 @@ if ($ct>0) {
 	echo "\n<tr><td colspan=\"2\">\n";
 	print"\n\t<table class=\"list_table width100\">\n";
 	echo "\n<tr>\n";
-	echo "<td class=\"width30\" align=\"" . ($TEXT_DIRECTION == "ltr"?"left":"right") . "\">";
+	echo "<td class=\"width30\" align=\"", $TEXT_DIRECTION == "ltr"?"left":"right", "\">";
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($ct>$max) {
 			if ($currentPage > 1) {
@@ -454,7 +454,7 @@ if ($ct>0) {
 	}
 	echo "</td>";
 	echo "<td align=\"center\">", print_text("page_x_of_y", 0, 1), "</td>";
-	echo "<td class=\"width30\" align=\"" . ($TEXT_DIRECTION == "ltr"?"right":"left") . "\">";
+	echo "<td class=\"width30\" align=\"", $TEXT_DIRECTION == "ltr"?"right":"left", "\">";
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($ct>$max) {
 			if ($start+$max < $ct) {

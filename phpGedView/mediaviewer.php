@@ -130,7 +130,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 
 					//-- Thumbnail field
 					echo '<a href="', $mediaInfo['url'], '">';
-					echo '<img src="', $mediaInfo['thumb'], '" border="0" align="', ($TEXT_DIRECTION=="rtl" ? "left":"right"), '" class="thumbnail"', $mediaInfo['width'];
+					echo '<img src="', $mediaInfo['thumb'], '" border="0" align="', $TEXT_DIRECTION=="rtl" ? "left":"right", '" class="thumbnail"', $mediaInfo['width'];
 
 					// Finish off anchor and tooltips
 					print " alt=\"" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\" /></a>";
