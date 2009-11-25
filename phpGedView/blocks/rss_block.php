@@ -44,7 +44,7 @@ $PGV_BLOCKS["print_RSS_block"]["config"]		= array("cache"=>0);
  * Prints a block allowing the user to login to the site directly from the portal
  */
 function print_RSS_block($block = true, $config="", $side, $index) {
-	global $LANGUAGE, $pgv_lang, $GEDCOM;
+	global $LANGUAGE, $pgv_lang;
 
 	$id="rss_block";
 	$title = print_help_link("rss_feed_help", "qm","",false,true);
@@ -52,7 +52,7 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 	$content = "<div class=\"center\">";
 	$content .= "<form method=\"post\" action=\"\" name=\"rssform\">";
 	$content .= "<br />";
-	$content .= "<select name=\"rssStyle\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = '".encode_url("rss.php?ged={$GEDCOM}&lang={$LANGUAGE}") . "' + (document.rssform.module.value==''? '' : '&module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&auth=' + document.rssform.auth.value);\">";
+	$content .= "<select name=\"rssStyle\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = '".encode_url("rss.php?ged=".PGV_GEDCOM."&lang={$LANGUAGE}") . "' + (document.rssform.module.value==''? '' : '&module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&auth=' + document.rssform.auth.value);\">";
 	$content .= "<option value=\"ATOM\" selected=\"selected\">ATOM 1.0</option>";
 	$content .= "<option value=\"RSS2.0\">RSS 2.0</option>";
 	$content .= "<option value=\"RSS1.0\">RSS 1.0</option>";
@@ -61,7 +61,7 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 	$content .= "<option value=\"HTML\">HTML</option>";
 	$content .= "<option value=\"JS\">JavaScript</option>";
 	$content .= "</select>";
-	$content .= "<select name=\"module\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = '".encode_url("rss.php?ged={$GEDCOM}&lang={$LANGUAGE}") . "' + (document.rssform.module.value==''? '' : '&module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&auth=' + document.rssform.auth.value);\">";
+	$content .= "<select name=\"module\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = '".encode_url("rss.php?ged=".PGV_GEDCOM."&lang={$LANGUAGE}") . "' + (document.rssform.module.value==''? '' : '&module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&auth=' + document.rssform.auth.value);\">";
 	$content .= "<option value=\"\">" . $pgv_lang["all"] . "</option>";
 	$content .= "<option value=\"today\">" . $pgv_lang["on_this_day"] . " </option>";
 	$content .= "<option value=\"upcoming\">" . $pgv_lang["upcoming_events"] . "</option>";
@@ -71,16 +71,16 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 	$content .= "<option value=\"recentChanges\">" . $pgv_lang["recent_changes"] . "</option>";
 	$content .= "<option value=\"randomMedia\">" . $pgv_lang["random_picture"] . "</option>";
 	$content .= "</select>";
-	$content .= " <a id=\"rss_button\" href=\"".encode_url("rss.php?ged={$GEDCOM}&lang={$LANGUAGE}") . "\"><img class=\"icon\" src=\"images/feed-icon16x16.png\" alt=\"RSS\" title=\"RSS\" /></a>";
+	$content .= " <a id=\"rss_button\" href=\"".encode_url("rss.php?ged=".PGV_GEDCOM."&lang={$LANGUAGE}") . "\"><img class=\"icon\" src=\"images/feed-icon16x16.png\" alt=\"RSS\" title=\"RSS\" /></a>";
 	$content .= "</form></div>";
 	$content .= "<div class=\"center\">";
 	$content .= "</div>";
 
 	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		require $THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		require $THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 ?>

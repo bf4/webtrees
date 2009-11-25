@@ -53,7 +53,7 @@ $PGV_BLOCKS["getting_started_block"]["config"]		= array("cache"=>5);
 
 //-- function to print the gedcom block
 function getting_started_block($block = true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $SHOW_COUNTER;
+	global $pgv_lang, $SHOW_COUNTER;
 
 	$id = "getting_started";
 	$title = $pgv_lang["install_step_8"];
@@ -69,7 +69,10 @@ function getting_started_block($block = true, $config="", $side, $index) {
 	$content .= '</ul>';
 
 	global $THEME_DIR;
-	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
-	else include($THEME_DIR."/templates/block_main_temp.php");
+	if ($block) {
+		require $THEME_DIR.'/templates/block_small_temp.php';
+	} else {
+		require $THEME_DIR.'/templates/block_main_temp.php';
+	}
 }
 ?>

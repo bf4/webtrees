@@ -65,7 +65,7 @@ $PGV_BLOCKS['print_gedcom_stats']['config']   =array(
 //-- function to print the gedcom statistics block
 
 function print_gedcom_stats($block=true, $config='', $side, $index) {
-	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $PGV_IMAGE_DIR, $PGV_IMAGES, $MULTI_MEDIA;
+	global $PGV_BLOCKS, $pgv_lang, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $PGV_IMAGE_DIR, $PGV_IMAGES, $MULTI_MEDIA;
 	global $top10_block_present;
 
 	if (empty($config)) $config = $PGV_BLOCKS['print_gedcom_stats']['config'];
@@ -80,7 +80,7 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 	if ($PGV_BLOCKS['print_gedcom_stats']['canconfig']) {
 		if ($ctype=='gedcom' && PGV_USER_GEDCOM_ADMIN || $ctype=='user' && PGV_USER_ID) {
 			if ($ctype=='gedcom') {
-				$name = str_replace("'", "\'", $GEDCOM);
+				$name = PGV_GEDCOM;
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -90,7 +90,7 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 	}
 	$title .= $pgv_lang['gedcom_stats'];
 
-	$stats=new stats($GEDCOM);
+	$stats=new stats(PGV_GEDCOM);
 
 	$content = "<b><a href=\"index.php?ctype=gedcom\">".PrintReady(strip_tags(get_gedcom_setting(PGV_GED_ID, 'title')))."</a></b><br />";
 	$head = find_gedcom_record('HEAD', PGV_GED_ID);
@@ -119,12 +119,12 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 
 	$content .= '<br /><table><tr><td valign="top" class="width20"><table cellspacing="1" cellpadding="0">';
 	if ($config['stat_indi']=='yes') {
-		$content.='<tr><td class="facts_label">'.$pgv_lang['stat_individuals'].'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?surname_sublist=no&ged={$GEDCOM}").'">'.$stats->totalIndividuals().'</a></div></td></tr>';
+		$content.='<tr><td class="facts_label">'.$pgv_lang['stat_individuals'].'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?surname_sublist=no&ged=".PGV_GEDCOM).'">'.$stats->totalIndividuals().'</a></div></td></tr>';
 		$content.='<tr><td class="facts_label">'.$pgv_lang['stat_males'].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalSexMales().'<br />'.$stats->totalSexMalesPercentage().'%</div></td></tr>';
 		$content.='<tr><td class="facts_label">'.$pgv_lang['stat_females'].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalSexFemales().'<br />'.$stats->totalSexFemalesPercentage().'%</div></td></tr>';
 	}
 	if ($config['stat_surname']=='yes') {
-		$content .= '<tr><td class="facts_label">'.$pgv_lang['stat_surnames'].'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?show_all=yes&surname_sublist=yes&ged={$GEDCOM}").'">'.$stats->totalSurnames().'</a></div></td></tr>';
+		$content .= '<tr><td class="facts_label">'.$pgv_lang['stat_surnames'].'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?show_all=yes&surname_sublist=yes&ged=".PGV_GEDCOM).'">'.$stats->totalSurnames().'</a></div></td></tr>';
 	}
 	if ($config['stat_fam']=='yes') {
 		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_families'].'</td><td class="facts_value"><div dir="rtl"><a href="famlist.php">'.$stats->totalFamilies().'</a></div></td></tr>';
@@ -231,7 +231,7 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 					if ($i>0) {
 						$content .= ', ';
 					}
-					$content .= '<a href="'.encode_url("indilist.php?ged={$GEDCOM}&surname=".$surname['name']).'">'.PrintReady($surname['name']).'</a>';
+					$content .= '<a href="'.encode_url("indilist.php?ged=".PGV_GEDCOM."&surname=".$surname['name']).'">'.PrintReady($surname['name']).'</a>';
 					$i++;
 				}
 			}
@@ -240,9 +240,9 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 
 	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR.'templates/block_small_temp.php');
+		require $THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include($THEME_DIR.'templates/block_main_temp.php');
+		require $THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 

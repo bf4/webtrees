@@ -49,7 +49,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
  * Prints a block allowing the user review all changes pending approval
  */
 function review_changes_block($block = true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $ctype, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $pgv_lang, $ctype, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $pgv_changes, $TEXT_DIRECTION, $SHOW_SOURCES, $PGV_BLOCKS;
 	global $PHPGEDVIEW_EMAIL;
 
@@ -93,7 +93,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 			if ($PGV_BLOCKS["review_changes_block"]["canconfig"]) {
 				if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 					if ($ctype=="gedcom") {
-						$name = str_replace("'", "\'", $GEDCOM);
+						$name = PGV_GEDCOM;
 					} else {
 						$name = PGV_USER_NAME;
 					}
@@ -113,7 +113,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 			}
 			foreach ($pgv_changes as $cid=>$changes) {
 				$change = $changes[count($changes)-1];
-				if ($change["gedcom"]==$GEDCOM) {
+				if ($change["gedcom"]==PGV_GEDCOM) {
 					$record=GedcomRecord::getInstance($change['gid']);
 					if ($record->getType()!='SOUR' || $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 						$content.='<b>'.PrintReady($record->getFullName()).'</b> '.getLRM().'('.$record->getXref().')'.getLRM();
@@ -133,9 +133,9 @@ function review_changes_block($block = true, $config="", $side, $index) {
 
 			global $THEME_DIR;
 			if ($block) {
-				include($THEME_DIR."templates/block_small_temp.php");
+				require $THEME_DIR.'templates/block_small_temp.php';
 			} else {
-				include($THEME_DIR."templates/block_main_temp.php");
+				require $THEME_DIR.'templates/block_main_temp.php';
 			}
 		}
 	}

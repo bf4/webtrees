@@ -52,9 +52,9 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 
 	global $THEME_DIR;
 	if ($style) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		require $THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		require $THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 ?>

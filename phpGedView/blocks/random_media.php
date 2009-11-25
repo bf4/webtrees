@@ -80,7 +80,7 @@ if ($MULTI_MEDIA) {
 
 	//-- function to display a random picture from the gedcom
 	function print_random_media($block = true, $config="", $side, $index) {
-		global $pgv_lang, $GEDCOM, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $pgv_lang, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
 		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 		global $PGV_BLOCKS, $ctype, $action;
@@ -180,7 +180,7 @@ if ($MULTI_MEDIA) {
 				if ($PGV_BLOCKS["print_random_media"]["canconfig"]) {
 					if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 						if ($ctype=="gedcom") {
-							$name = str_replace("'", "\'", $GEDCOM);
+							$name = PGV_GEDCOM;
 						} else {
 							$name = PGV_USER_NAME;
 						}
@@ -316,7 +316,7 @@ function openPic(filename, width, height) {
 			$content .= "</div>"; // random_picture_content
 			$content .= "</div>"; // random_picture_container
 			global $THEME_DIR;
-			include($THEME_DIR."templates/block_main_temp.php");
+			require $THEME_DIR.'templates/block_main_temp.php';
 		}
 	}
 

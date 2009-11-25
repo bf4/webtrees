@@ -46,7 +46,7 @@ $PGV_BLOCKS["print_recent_changes"]["config"]   = array(
 //-- this block prints a list of changes that have occurred recently in your gedcom
 function print_recent_changes($block=true, $config="", $side, $index) {
 	global $pgv_lang, $ctype;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 
 	$block = true;  // Always restrict this block's height
 
@@ -65,7 +65,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	if ($PGV_BLOCKS["print_recent_changes"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = str_replace("'", "\'", $GEDCOM);
+				$name = PGV_GEDCOM;
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -83,7 +83,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	} else {
 		$content .= print_text("recent_changes_some",0,1);
 		// sortable table
-		require_once("includes/functions/functions_print_lists.php");
+		require_once 'includes/functions/functions_print_lists.php';
 		ob_start();
 		print_changes_table($found_facts);
 		$content .= ob_get_clean();
@@ -91,9 +91,9 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 
 	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		require $THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		require $THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 
