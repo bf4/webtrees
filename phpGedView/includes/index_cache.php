@@ -121,7 +121,7 @@ function saveCachedBlock($block, $index, $content) {
  */
 function removeDir($dir) {
 	if (!is_writable($dir)) {
-		if (!@chmod($dir, 0777)) return FALSE;
+		if (!@chmod($dir, PGV_PERM_EXE)) return FALSE;
 	}
 
 	$d = dir($dir);
