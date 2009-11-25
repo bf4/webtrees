@@ -50,7 +50,7 @@ $PGV_BLOCKS['print_gedcom_news']['config']		= array(
  */
 function print_gedcom_news($block = true, $config='', $side, $index)
 {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $PGV_BLOCKS;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype, $PGV_BLOCKS;
 
 	if(empty($config)) {
 		$config = $PGV_BLOCKS['print_gedcom_news']['config'];
@@ -63,7 +63,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$config['flag'] = 0;
 	}
 
-	$usernews = getUserNews($GEDCOM);
+	$usernews = getUserNews(PGV_GEDCOM);
 
 	$id = "gedcom_news";
 	$title = "";
@@ -75,7 +75,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	if ($PGV_BLOCKS['print_gedcom_news']['canconfig']) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = str_replace("'", "\'", $GEDCOM);
+				$name = PGV_GEDCOM;
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -162,7 +162,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	}
 	$printedAddLink = false;
 	if (PGV_USER_GEDCOM_ADMIN) {
-		$content .= "<a href=\"javascript:;\" onclick=\"addnews('".str_replace("'", "\'", $GEDCOM)."'); return false;\">".$pgv_lang["add_news"]."</a>";
+		$content .= "<a href=\"javascript:;\" onclick=\"addnews('".urlencode(PGV_GEDCOM)."'); return false;\">".$pgv_lang["add_news"]."</a>";
 		$printedAddLink = true;
 	}
 	if ($config['limit'] == 'date' || $config['limit'] == 'count') {
@@ -173,9 +173,9 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 
 	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		require $THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		require $THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 

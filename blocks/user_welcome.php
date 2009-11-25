@@ -41,7 +41,7 @@ $PGV_BLOCKS["print_welcome_block"]["config"]	= array("cache"=>0);
 
 //-- function to print the welcome block
 function print_welcome_block($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	$id="user_welcome";
 	$title = $pgv_lang["welcome"]." ".getUserFullName(PGV_USER_ID);
@@ -64,9 +64,9 @@ function print_welcome_block($block=true, $config="", $side, $index) {
 
 	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		require $THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		require $THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 ?>

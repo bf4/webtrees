@@ -48,7 +48,7 @@ $PGV_BLOCKS['print_todo']['config']   =array(
 
 // this block prints a list of _TODO events in your gedcom
 function print_todo($block=true, $config='', $side, $index) {
-	global $pgv_lang, $factarray, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
+	global $pgv_lang, $factarray, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 
 	$block=true; // Always restrict this block's height
 
@@ -61,7 +61,7 @@ function print_todo($block=true, $config='', $side, $index) {
 	if ($PGV_BLOCKS['print_todo']['canconfig']) {
 		if ($ctype=='gedcom' && PGV_USER_GEDCOM_ADMIN || $ctype=='user' && PGV_USER_ID) {
 			if ($ctype=='gedcom') {
-				$name = str_replace("'", "\'", $GEDCOM);
+				$name = PGV_GEDCOM;
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -72,8 +72,8 @@ function print_todo($block=true, $config='', $side, $index) {
 	$title .= $pgv_lang['todo_block'];
 	$content = "";
 
-	require_once("js/sorttable.js.htm");
-	require_once("includes/classes/class_gedcomrecord.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/classes/class_gedcomrecord.php';
 
 	$all_gedcoms=get_all_gedcoms();
 
@@ -91,35 +91,30 @@ function print_todo($block=true, $config='', $side, $index) {
 	$content .= '<th class="list_label">'.$factarray['TEXT'].'</th>';
 	$content .= '</tr>';
 
-	$OLD_GEDCOM=$GEDCOM;
 	$found=false;
 	$end_jd=$config['show_future']=='yes' ? 99999999 : client_jd();
-	foreach ($all_gedcoms as $ged_id=>$ged_name) {
-		$GEDCOM=$ged_name;
-		foreach (get_calendar_events(0, $end_jd, '_TODO', $ged_id) as $todo) {
-			$record=GedcomRecord::getInstance($todo['id']);
-			if ($record && $record->canDisplayDetails()) {
-				$pgvu=get_gedcom_value('_PGVU', 2, $todo['factrec']);
-				if ($pgvu==PGV_USER_ID || !$pgvu && $config['show_unassigned']=='yes' || $pgvu && $config['show_other']=='yes') {
-					$content.='<tr valign="top">';
-					if (count($all_gedcoms)>1) {
-						$content.='<td class="list_value_wrap"><a href="'.encode_url("index.php?ctype=gedcom&ged={$ged_name}").'">'.$ged_name.'</a></td>';
-					}
-					$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
-					$name=$record->getListName();
-					$content.='<td class="list_value_wrap" align="'.get_align($name).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($name).'</a></td>';
-					if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
-						$content.='<td class="list_value_wrap">'.$pgvu.'</td>';
-					}
-					$text=get_gedcom_value('_TODO', 1, $todo['factrec']);
-					$content.='<td class="list_value_wrap" align="'.get_align($text).'">'.PrintReady($text).'</td>';
-					$content.='</tr>';
-					$found=true;
+	foreach (get_calendar_events(0, $end_jd, '_TODO', $ged_id) as $todo) {
+		$record=GedcomRecord::getInstance($todo['id']);
+		if ($record && $record->canDisplayDetails()) {
+			$pgvu=get_gedcom_value('_PGVU', 2, $todo['factrec']);
+			if ($pgvu==PGV_USER_ID || !$pgvu && $config['show_unassigned']=='yes' || $pgvu && $config['show_other']=='yes') {
+				$content.='<tr valign="top">';
+				if (count($all_gedcoms)>1) {
+					$content.='<td class="list_value_wrap"><a href="'.encode_url("index.php?ctype=gedcom&ged={$ged_name}").'">'.$ged_name.'</a></td>';
 				}
+				$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
+				$name=$record->getListName();
+				$content.='<td class="list_value_wrap" align="'.get_align($name).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($name).'</a></td>';
+				if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
+					$content.='<td class="list_value_wrap">'.$pgvu.'</td>';
+				}
+				$text=get_gedcom_value('_TODO', 1, $todo['factrec']);
+				$content.='<td class="list_value_wrap" align="'.get_align($text).'">'.PrintReady($text).'</td>';
+				$content.='</tr>';
+				$found=true;
 			}
 		}
 	}
-	$GEDCOM=$OLD_GEDCOM;
 
 	$content .= '</table>';
 	if (!$found) {
@@ -128,9 +123,9 @@ function print_todo($block=true, $config='', $side, $index) {
 
 	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		require $THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		require $THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 
