@@ -364,8 +364,11 @@ class MediaControllerRoot extends IndividualController{
 		global $pgv_changes, $GEDCOM, $pgv_lang;
 
 		$ignore = array("TITL","FILE");
-		if ($this->show_changes) $ignore = array();
-		else if (PGV_USER_GEDCOM_ADMIN) $ignore = array("TITL");
+		if ($this->show_changes) {
+			$ignore = array();
+		} elseif (PGV_USER_GEDCOM_ADMIN) {
+			$ignore = array("TITL");
+		}
 
 		$facts = $this->mediaobject->getFacts($ignore);
 		sort_facts($facts);

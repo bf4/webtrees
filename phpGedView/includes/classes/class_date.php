@@ -1051,26 +1051,31 @@ class GedcomDate {
 				}
 			}
 		// Unambiguous dates - override calendar escape
-		if (preg_match('/^(tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell)$/', $m))
+		if (preg_match('/^(tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell)$/', $m)) {
 			$cal='@#dhebrew@';
-		else
-			if (preg_match('/^(vend|brum|frim|nivo|pluv|vent|germ|flor|prai|mess|ther|fruc|comp)$/', $m))
+		} else {
+			if (preg_match('/^(vend|brum|frim|nivo|pluv|vent|germ|flor|prai|mess|ther|fruc|comp)$/', $m)) {
 				$cal='@#dfrench r@';
-			else
-				if (preg_match('/^(muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah)$/', $m))
+			} else {
+				if (preg_match('/^(muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah)$/', $m)) {
 					$cal='@#dhijri@'; // This is a PGV extension
-				else
-					if (preg_match('/^\d+( b ?c)|\d\d\d\d \/ \d{1,4}$/', $y))
-						$cal='@#djulian@';
+				} elseif (preg_match('/^\d+( b ?c)|\d\d\d\d \/ \d{1,4}$/', $y)) {
+					$cal='@#djulian@';
+				}
+			}
+		}
 		// Ambiguous dates - don't override calendar escape
-		if ($cal=='')
-			if (preg_match('/^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)$/', $m))
+		if ($cal=='') {
+			if (preg_match('/^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)$/', $m)) {
 				$cal='@#dgregorian@';
-			else
-				if (preg_match('/^[345]\d\d\d$/', $y)) // Year 3000-5999
+			} else {
+				if (preg_match('/^[345]\d\d\d$/', $y)) { // Year 3000-5999
 					$cal='@#dhebrew@';
-				else
+				} else {
 					$cal='@#dgregorian@';
+				}
+			}
+		}
 		// Now construct an object of the correct type
 		switch ($cal) {
 		case '@#dgregorian@':
@@ -1131,41 +1136,48 @@ class GedcomDate {
 		$conv1='';
 		$conv2='';
 		foreach ($cal_fmts as $cal_fmt)
-			if ($cal_fmt!='none')	{
+			if ($cal_fmt!='none') {
 				$d1conv=$this->date1->convert_to_cal($cal_fmt);
-				if ($d1conv->InValidRange())
+				if ($d1conv->InValidRange()) {
 					$d1tmp=$d1conv->Format($date_fmt);
-				else
+				} else {
 					$d1tmp='';
+				}
 				$q1tmp=$this->qual1;
 				if (is_null($this->date2)) {
 					$d2conv=null;
 					$d2tmp='';
 				} else {
 					$d2conv=$this->date2->convert_to_cal($cal_fmt);
-					if ($d2conv->InValidRange())
+					if ($d2conv->InValidRange()) {
 						$d2tmp=$d2conv->Format($date_fmt);
-					else
+					} else {
 						$d2tmp='';
+					}
 				}
 				$q2tmp=$this->qual2;
 				$q3tmp='';
 				// Localise the date
 				$func($q1tmp, $d1tmp, $q2tmp, $d2tmp, $q3tmp);
 				// If the date is different to the unconverted date, add it to the date string.
-				if ($d1!=$d1tmp && $d1tmp!='')
-					if ($url)
-						if ($CALENDAR_FORMAT!="none")
+				if ($d1!=$d1tmp && $d1tmp!='') {
+					if ($url) {
+						if ($CALENDAR_FORMAT!="none") {
 							$conv1.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d1conv->CalendarURL($date_fmt).'">'.$d1tmp.'</a>)</span>';
-						else
+						} else {
 							$conv1.=' <span dir="'.$TEXT_DIRECTION.'"><br /><a href="'.$d1conv->CalendarURL($date_fmt).'">'.$d1tmp.'</a></span>';
-					else
+						}
+					} else {
 						$conv1.=' <span dir="'.$TEXT_DIRECTION.'">('.$d1tmp.')</span>';
-				if (!is_null($this->date2) && $d2!=$d2tmp && $d1tmp!='')
-					if ($url)
+					}
+				}
+				if (!is_null($this->date2) && $d2!=$d2tmp && $d1tmp!='') {
+					if ($url) {
 						$conv2.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d2conv->CalendarURL($date_fmt).'">'.$d2tmp.'</a>)</span>';
-					else
+					} else {
 						$conv2.=' <span dir="'.$TEXT_DIRECTION.'">('.$d2tmp.')</span>';
+					}
+				}
 			}
 
 		// Add URLs, if requested
@@ -1280,18 +1292,21 @@ class GedcomDate {
 			$bmax=$b->MaxJD();
 			break;
 		}
-		if ($amax<$bmin)
+		if ($amax<$bmin) {
 			return -1;
-		else
-			if ($amin>$bmax && $bmax>0)
+		} else {
+			if ($amin>$bmax && $bmax>0) {
 				return 1;
-			else
-				if ($amin<$bmin && $amax<=$bmax)
+			} else {
+				if ($amin<$bmin && $amax<=$bmax) {
 					return -1;
-				else
-					if ($amin>$bmin && $amax>=$bmax && $bmax>0)
-						return 1;
-				else return 0;
+				} elseif ($amin>$bmin && $amax>=$bmax && $bmax>0) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		}
 	}
 
 	// Check whether a gedcom date contains usable calendar date(s).

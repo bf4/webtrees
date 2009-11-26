@@ -44,22 +44,33 @@ function print_sosa_number($sosa, $pid = "", $arrowDirection = "up") {
 	global $view, $pbwidth, $pbheight;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
-	if (substr($sosa,-1,1)==".") $personLabel = substr($sosa,0,-1);
-	else $personLabel = $sosa;
-	if ($arrowDirection=="blank") $visibility = "hidden";
-	else $visibility = "normal";
-	print "<td class=\"subheaders center\" style=\"vertical-align: middle; text-indent: 0px; margin-top: 0px; white-space: nowrap; visibility: $visibility;\">";
-	print getLRM() . $personLabel . getLRM();
+	if (substr($sosa,-1,1)==".") {
+		$personLabel = substr($sosa,0,-1);
+	} else {
+		$personLabel = $sosa;
+	}
+	if ($arrowDirection=="blank") {
+		$visibility = "hidden";
+	} else {
+		$visibility = "normal";
+	}
+	echo "<td class=\"subheaders center\" style=\"vertical-align: middle; text-indent: 0px; margin-top: 0px; white-space: nowrap; visibility: ", $visibility, ";\">";
+	echo getLRM(), $personLabel, getLRM();
 	if ($sosa != "1" && $pid != "") {
-		if ($arrowDirection=="left") $dir = 0;
-		else if ($arrowDirection=="right") $dir = 1;
-		else if ($arrowDirection== "down") $dir = 3;
-		else $dir = 2;		// either "blank" or "up"
-		print "<br />";
+		if ($arrowDirection=="left") {
+			$dir = 0;
+		} elseif ($arrowDirection=="right") {
+			$dir = 1;
+		} elseif ($arrowDirection== "down") {
+			$dir = 3;
+		} else {
+			$dir = 2;		// either "blank" or "up"
+		}
+		echo "<br />";
 		print_url_arrow($pid, "#$pid", "$pid", $dir);
 //		print "&nbsp;";
 	}
-	print "</td>";
+	echo "</td>";
 }
 
 /**
@@ -305,16 +316,20 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	if ((count($children) > 0) || (count($newchildren) > 0) || (count($oldchildren) > 0)) {
 		foreach($children as $indexval => $chil) {
 			if (!in_array($chil, $oldchildren)) {
-				print "<tr>\n";
+				echo "<tr>\n";
 				if ($sosa != 0) {
-					if ($chil == $childid) print_sosa_number($sosa, $childid);
-					else if (empty($label)) print_sosa_number("");
-					else print_sosa_number($label.($nchi++).".");
+					if ($chil == $childid) {
+						print_sosa_number($sosa, $childid);
+					} elseif (empty($label)) {
+						print_sosa_number("");
+					} else {
+						print_sosa_number($label.($nchi++).".");
+					}
 				}
-				print "<td valign=\"middle\" >";
+				echo "<td valign=\"middle\" >";
 				print_pedigree_person($chil, 1, $show_famlink, 8, $personcount);
 				$personcount++;
-				print "</td>";
+				echo "</td>";
 				if ($sosa != 0) {
 					// loop for all families where current child is a spouse
 					$famids = find_sfamily_ids($chil);
@@ -681,8 +696,9 @@ function get_sosa_name($sosa) {
 
     // first try a generic algorithm, this is later overridden
 	// by language specific algorithms.
-	if (!empty($pgv_lang["sosa_$sosa"])) $sosaname = $pgv_lang["sosa_$sosa"];
-	else if($gen > 2) {
+	if (!empty($pgv_lang["sosa_$sosa"])) {
+		$sosaname = $pgv_lang["sosa_$sosa"];
+	} elseif($gen > 2) {
 		switch ($LANGUAGE) {
 		case "danish":
 		case "norwegian":
@@ -701,17 +717,28 @@ function get_sosa_name($sosa) {
 			if ($gen == 1) $sosaname .= $grand;
 
 			for ($i=$gen; $i>0; $i--){
-				if (!(floor($sosa/(pow(2,$i)))%2)) $addname .= $father;
-				else $addname .= $mother;
-				if (($gen%2 && !($i%2)) || (!($gen%2) && $i%2)) $addname .= "s ";
+				if (!(floor($sosa/(pow(2,$i)))%2)) {
+					$addname .= $father;
+				} else {
+					$addname .= $mother;
+				}
+				if (($gen%2 && !($i%2)) || (!($gen%2) && $i%2)) {
+					$addname .= "s ";
+				}
 			}
-			if ($LANGUAGE == "swedish") $sosaname = $addname;
+			if ($LANGUAGE == "swedish") {
+				$sosaname = $addname;
+			}
 			if ($sosa%2==0){
 				$sosaname .= $father;
-				if ($gen>0) $addname .= $father;
+				if ($gen>0) {
+					$addname .= $father;
+				}
 			} else {
 				$sosaname .= $mother;
-				if ($gen>0) $addname .= $mother;
+				if ($gen>0) {
+					$addname .= $mother;
+				}
 			}
 			$sosaname = UTF8_str_split($sosaname);
 			$sosaname[0] = UTF8_strtoupper($sosaname[0]);

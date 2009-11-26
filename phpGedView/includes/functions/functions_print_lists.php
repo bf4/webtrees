@@ -351,35 +351,41 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		echo '</td>';
 		//-- Last change
-		if ($tiny && $SHOW_LAST_CHANGE)
-			print "<td class=\"list_value_wrap rela\">".$person->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
+		if ($tiny && $SHOW_LAST_CHANGE) {
+			echo "<td class=\"list_value_wrap rela\">", $person->LastChangeTimestamp(empty($SEARCH_SPIDER)), "</td>";
+		}
 		//-- Sorting by gender
 		echo "<td style=\"display:none\">";
 		echo $person->getSex();
 		echo "</td>";
 		//-- Filtering by birth date
 		echo "<td style=\"display:none\">";
-		if (!$person->canDisplayDetails() || GedcomDate::Compare($birth_dates[0], $d100y)>0)
+		if (!$person->canDisplayDetails() || GedcomDate::Compare($birth_dates[0], $d100y)>0) {
 			echo "Y100";
-		else
+		} else {
 			echo "YES";
+		}
 		echo "</td>";
 		//-- Filtering by death date
 		echo "<td style=\"display:none\">";
 		if ($person->isDead()) {
-			if (GedcomDate::Compare($death_dates[0], $d100y)>0)
+			if (GedcomDate::Compare($death_dates[0], $d100y)>0) {
 				echo "Y100";
-			else
+			} else {
 				echo "YES";
-		} else
+			}
+		} else {
 			echo "N";
+		}
 		echo "</td>";
 		//-- Roots or Leaves ?
 		echo "<td style=\"display:none\">";
-		if (!$person->getChildFamilyIds()) echo "R"; // roots
-		else if (!$person->isDead() && $person->getNumberOfChildren()<1) echo "L"; // leaves
+		if (!$person->getChildFamilyIds()) {
+			echo "R"; // roots
+		} elseif (!$person->isDead() && $person->getNumberOfChildren()<1) {
+			echo "L"; // leaves
+		}
 		echo "</td>";
-
 		echo "</tr>\n";
 	}
 	echo "</tbody>";
@@ -728,16 +734,18 @@ function print_fam_table($datalist, $legend="", $option="") {
 		}
 		//-- Last change
 		if ($tiny && $SHOW_LAST_CHANGE)
-			print '<td class="list_value_wrap rela">'.$family->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
+			echo '<td class="list_value_wrap rela">', $family->LastChangeTimestamp(empty($SEARCH_SPIDER)), '</td>';
 		//-- Sorting by marriage date
 		echo "<td style=\"display:none\">";
-		if (!$family->canDisplayDetails() || !$mdate->isOK())
+		if (!$family->canDisplayDetails() || !$mdate->isOK()) {
 			echo "U";
-		else
-			if (GedcomDate::Compare($mdate, $d100y)>0)
+		} else {
+			if (GedcomDate::Compare($mdate, $d100y)>0) {
 				echo "Y100";
-			else
+			} else {
 				echo "YES";
+			}
+		}
 		if ($family->isDivorced())
 			echo " DIV";
 		echo "</td>";
@@ -756,10 +764,12 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Roots or Leaves
 		echo "<td style=\"display:none\">";
-		if (!$husb->getChildFamilyIds() && !$wife->getChildFamilyIds()) echo "R"; // roots
-		else if (!$husb->isDead() && !$wife->isDead() && $family->getNumberOfChildren()<1) echo "L"; // leaves
+		if (!$husb->getChildFamilyIds() && !$wife->getChildFamilyIds()) {
+			echo "R"; // roots
+		} elseif (!$husb->isDead() && !$wife->isDead() && $family->getNumberOfChildren()<1) {
+			echo "L"; // leaves
+		}
 		echo "</td>";
-
 		echo "</tr>\n";
 	}
 	echo "</tbody>";
@@ -1680,16 +1690,20 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 
 		$value['name'] = $record->getListName();
 		$value['url'] = $record->getLinkUrl();
-		if ($record->getType()=="INDI")
+		if ($record->getType()=="INDI") {
 			$value['sex'] = $record->getSexImage();
-		else
+		} else {
 			$value['sex'] = '';
+		}
 		$filtered_events[] = $value;
 	}
 
 	// Now we've filtered the list, we can sort by event, if required
-	if ($sort_by_event=="anniv") uasort($filtered_events, 'event_sort');
-	else if ($sort_by_event) uasort($filtered_events, 'event_sort_name');
+	if ($sort_by_event=="anniv") {
+		uasort($filtered_events, 'event_sort');
+	} elseif ($sort_by_event) {
+		uasort($filtered_events, 'event_sort_name');
+	}
 
 	foreach($filtered_events as $value) {
 		$return .= "<tr class=\"vevent\">"; // hCalendar:vevent
@@ -1845,16 +1859,20 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 
 		$value['name'] = $record->getListName();
 		$value['url'] = $record->getLinkUrl();
-		if ($record->getType()=="INDI")
+		if ($record->getType()=="INDI") {
 			$value['sex'] = $record->getSexImage();
-		else
+		} else {
 			$value['sex'] = '';
+		}
 		$filtered_events[] = $value;
 	}
 
 	// Now we've filtered the list, we can sort by event, if required
-	if ($sort_by_event=="anniv") uasort($filtered_events, 'event_sort');
-	else if ($sort_by_event) uasort($filtered_events, 'event_sort_name');
+	if ($sort_by_event=="anniv") {
+		uasort($filtered_events, 'event_sort');
+	} elseif ($sort_by_event) {
+		uasort($filtered_events, 'event_sort_name');
+	}
 
 	foreach($filtered_events as $value) {
 		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
@@ -1912,8 +1930,11 @@ function print_chart_by_age($data, $title) {
 	global $view, $stylesheet, $print_stylesheet;
 
 	$css = new cssparser(false);
-	if ($view=="preview") $css->Parse($print_stylesheet);
-	else $css->Parse($stylesheet);
+	if ($view=="preview") {
+		$css->Parse($print_stylesheet);
+	} else {
+		$css->Parse($stylesheet);
+	}
 	$color = $css->Get("body", "background-color");
 	$color = str_replace("#", "", $color);
 	switch(strtoupper($color)) {
@@ -1945,20 +1966,34 @@ function print_chart_by_age($data, $title) {
 	$chart_url .= "&amp;chxt=x,y,r"; // axis labels specification
 	$chart_url .= "&amp;chm=V,FF0000,0,".($avg-0.3).",1"; // average age line marker
 	$chart_url .= "&amp;chxl=0:|"; // label
-	for ($age=0; $age<=$agemax; $age+=5) $chart_url .= $age."|||||"; // x axis
+	for ($age=0; $age<=$agemax; $age+=5) {
+		$chart_url .= $age."|||||"; // x axis
+	}
 	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
 	$chart_url .= "|2:||";
 	$step = $vmax;
-	for ($d=floor($vmax); $d>0; $d--) if ($vmax<($d*10+1) && fmod($vmax, $d)==0) $step = $d;
-	if ($step==floor($vmax)) for ($d=floor($vmax-1); $d>0; $d--) if (($vmax-1)<($d*10+1) && fmod(($vmax-1), $d)==0) $step = $d;
-	for ($n=$step; $n<$vmax; $n+=$step) $chart_url .= $n."|";
+	for ($d=floor($vmax); $d>0; $d--) {
+		if ($vmax<($d*10+1) && fmod($vmax, $d)==0) $step = $d;
+	}
+	if ($step==floor($vmax)) {
+		for ($d=floor($vmax-1); $d>0; $d--) {
+			if (($vmax-1)<($d*10+1) && fmod(($vmax-1), $d)==0) $step = $d;
+		}
+	}
+	for ($n=$step; $n<$vmax; $n+=$step) {
+		$chart_url .= $n."|";
+	}
 	$chart_url .= $vmax." / ".$count; // r axis
 	$chart_url .= "&amp;chg=100,".round(100*$step/$vmax, 1).",1,5"; // grid
 	$chart_url .= "&amp;chd=s:"; // data : simple encoding from A=0 to 9=61
 	$CHART_ENCODING61 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-	for ($age=0; $age<=$agemax; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "M")*61/$vmax)];
+	for ($age=0; $age<=$agemax; $age++) {
+		$chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "M")*61/$vmax)];
+	}
 	$chart_url .= ",";
-	for ($age=0; $age<=$agemax; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "F")*61/$vmax)];
+	for ($age=0; $age<=$agemax; $age++) {
+		$chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "F")*61/$vmax)];
+	}
 	echo "<img src=\"", $chart_url, "\" alt=\"", $title, "\" title=\"", $title, "\" class=\"gchart\" />";
 }
 
@@ -1999,20 +2034,34 @@ function print_chart_by_decade($data, $title) {
 	$chart_url .= "&amp;chtt=".urlencode($title); // title
 	$chart_url .= "&amp;chxt=x,y,r"; // axis labels specification
 	$chart_url .= "&amp;chxl=0:|&lt;|||"; // <1570
-	for ($y=1600; $y<2030; $y+=50) $chart_url .= $y."|||||"; // x axis
+	for ($y=1600; $y<2030; $y+=50) {
+		$chart_url .= $y."|||||"; // x axis
+	}
 	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
 	$chart_url .= "|2:||";
 	$step = $vmax;
-	for ($d=floor($vmax); $d>0; $d--) if ($vmax<($d*10+1) && fmod($vmax, $d)==0) $step = $d;
-	if ($step==floor($vmax)) for ($d=floor($vmax-1); $d>0; $d--) if (($vmax-1)<($d*10+1) && fmod(($vmax-1), $d)==0) $step = $d;
-	for ($n=$step; $n<$vmax; $n+=$step) $chart_url .= $n."|";
+	for ($d=floor($vmax); $d>0; $d--) {
+		if ($vmax<($d*10+1) && fmod($vmax, $d)==0) $step = $d;
+	}
+	if ($step==floor($vmax)) {
+		for ($d=floor($vmax-1); $d>0; $d--) {
+			if (($vmax-1)<($d*10+1) && fmod(($vmax-1), $d)==0) $step = $d;
+		}
+	}
+	for ($n=$step; $n<$vmax; $n+=$step) {
+		$chart_url .= $n."|";
+	}
 	$chart_url .= $vmax." / ".$count; // r axis
 	$chart_url .= "&amp;chg=100,".round(100*$step/$vmax, 1).",1,5"; // grid
 	$chart_url .= "&amp;chd=s:"; // data : simple encoding from A=0 to 9=61
 	$CHART_ENCODING61 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-	for ($y=1570; $y<2030; $y+=10) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$y], "M")*61/$vmax)];
+	for ($y=1570; $y<2030; $y+=10) {
+		$chart_url .= $CHART_ENCODING61[floor(substr_count($data[$y], "M")*61/$vmax)];
+	}
 	$chart_url .= ",";
-	for ($y=1570; $y<2030; $y+=10) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$y], "F")*61/$vmax)];
+	for ($y=1570; $y<2030; $y+=10) {
+		$chart_url .= $CHART_ENCODING61[floor(substr_count($data[$y], "F")*61/$vmax)];
+	}
 	echo "<img src=\"", $chart_url, "\" alt=\"", $title, "\" title=\"", $title, "\" class=\"gchart\" />";
 }
 

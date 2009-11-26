@@ -267,19 +267,22 @@ function print_fact(&$eventObj, $noedit=false) {
 		if ((showFactDetails($factref, $pid)) && (!FactViewRestricted($pid, $factrec))) {
 			// -- first print TYPE for some facts
 			if ($fact!="EVEN" && $fact!="FACT") {
-				$ct = preg_match("/2 TYPE (.*)/", $factrec, $match);
-				if ($ct>0) {
+				if (preg_match("/2 TYPE (.*)/", $factrec, $match)) {
 					$type = trim($match[1]);
-					if (isset ($factarray["MARR_".UTF8_strtoupper($type)])) echo $factarray["MARR_".UTF8_strtoupper($type)];
-					else if (isset($factarray[$type])) echo $factarray[$type];
-					else if (isset($pgv_lang[$type])) echo $pgv_lang[$type];
-					else echo $type;
+					if (isset ($factarray["MARR_".UTF8_strtoupper($type)])) {
+						echo $factarray["MARR_".UTF8_strtoupper($type)];
+					} elseif (isset($factarray[$type])) {
+						echo $factarray[$type];
+					} elseif (isset($pgv_lang[$type])) {
+						echo $pgv_lang[$type];
+					} else {
+						echo $type;
+					}
 					echo "<br />";
 				}
 			}
 			//-- print spouse name for marriage events
-			$ct = preg_match("/_PGVS @(.*)@/", $factrec, $match);
-			if ($ct>0) {
+			if (preg_match("/_PGVS @(.*)@/", $factrec, $match)) {
 				$spouse=Person::getInstance($match[1]);
 				if ($spouse) {
 					echo " <a href=\"", encode_url($spouse->getLinkUrl()), "\">";
@@ -293,12 +296,12 @@ function print_fact(&$eventObj, $noedit=false) {
 				if ($view!="preview" && $spouse) echo " - ";
 				if ($view!="preview" && empty($SEARCH_SPIDER)) {
 					echo "<a href=\"", encode_url("family.php?famid={$pid}"), "\">";
-					if ($TEXT_DIRECTION == "ltr") echo " " . getLRM();
-					else echo " " . getRLM();
+					if ($TEXT_DIRECTION == "ltr") echo " ", getLRM();
+					else echo " ", getRLM();
 					echo "[", $pgv_lang["view_family"];
-					if ($SHOW_ID_NUMBERS) echo " " . getLRM() . "($pid)" . getLRM();
-					if ($TEXT_DIRECTION == "ltr") echo getLRM() . "]</a>\n";
-					else echo getRLM() . "]</a>\n";
+					if ($SHOW_ID_NUMBERS) echo " ", getLRM(), "($pid)", getLRM();
+					if ($TEXT_DIRECTION == "ltr") echo getLRM(), "]</a>\n";
+					else echo getRLM(), "]</a>\n";
 					echo "<br />";
 				}
 			}
@@ -346,8 +349,11 @@ function print_fact(&$eventObj, $noedit=false) {
 					if ($SHOW_MEDIA_FILENAME || PGV_USER_GEDCOM_ADMIN) echo getLRM(), $event, ' ' , getLRM();
 				} elseif ($event!='Y') {
 					if (!strstr('ADDR _RATID _CREM ', substr($fact, 0, 5).' ')) {
-						if ($factref=='file_size' || $factref=='image_size') echo PrintReady($rawEvent);
-						else echo PrintReady($event);
+						if ($factref=='file_size' || $factref=='image_size') {
+							echo PrintReady($rawEvent);
+						} else {
+							echo PrintReady($event);
+						}
 					}
 				}
 				$temp = trim(get_cont(2, $factrec));
@@ -1521,13 +1527,22 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$imgheight = $imgsize[1]+150;
 
 		// Check Filetype of media item ( URL, Local or Other )
-		if (preg_match("/^https?:\/\//i", $rowm['m_file'])) $file_type = 'url_';
-		else $file_type = 'local_';
-		if (preg_match("/\.flv$/i", $rowm['m_file']) && file_exists('modules/JWplayer/flvVideo.php')) $file_type .= 'flv';
-		else if (preg_match("/\.(jpg|jpeg|gif|png)$/i", $rowm['m_file'])) $file_type .= 'image';
-		else if (preg_match("/\.(pdf|avi)$/i", $rowm['m_file'])) $file_type .= 'page';
-		else if (preg_match("/\.mp3$/i", $rowm['m_file'])) $file_type .= 'audio';
-		else $file_type = 'other';
+		if (preg_match("/^https?:\/\//i", $rowm['m_file'])) {
+			$file_type = 'url_';
+		} else {
+			$file_type = 'local_';
+		}
+		if (preg_match("/\.flv$/i", $rowm['m_file']) && file_exists('modules/JWplayer/flvVideo.php')) {
+			$file_type .= 'flv';
+		} elseif (preg_match("/\.(jpg|jpeg|gif|png)$/i", $rowm['m_file'])) {
+			$file_type .= 'image';
+		} elseif (preg_match("/\.(pdf|avi)$/i", $rowm['m_file'])) {
+			$file_type .= 'page';
+		} elseif (preg_match("/\.mp3$/i", $rowm['m_file'])) {
+			$file_type .= 'audio';
+		} else {
+			$file_type = 'other';
+		}
 
 		//Get media item Notes
 		$haystack = $rowm["m_gedrec"];
