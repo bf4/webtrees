@@ -10,6 +10,8 @@
 
 
 Version 4.2.3
+ - Update: PCLzip 2.8.2 (volschin)
+ - Update: TCPDF 4.8.016 (volschin)
  - Fixed: [ 1738619 ] Deleting Gedcom file - Misc Entried Remain in DB (fisharebest)
  - Fixed: [ 2881117 ] 4.2.2 Merge 2 Indis makes 2 clones in Fam record (fisharebest)
  - Fixed: [ 2840835 ] Checker reports warning if CONT tag value is all spaces (fisharebest)
