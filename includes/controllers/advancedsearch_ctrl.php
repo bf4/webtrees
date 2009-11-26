@@ -47,7 +47,7 @@ class AdvancedSearchController extends SearchController {
 	 * constructor
 	 */
 	function AdvancedSearchController() {
-		parent :: SearchController();
+		parent::__construct();
 	}
 	/**
 	 * Initialization function
