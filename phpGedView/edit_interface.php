@@ -2238,22 +2238,34 @@ case 'changefamily':
 		}
 		for ($i=0; $i<count($children); $i++) {
 			if (!is_null($children[$i])) {
-				if ($children[$i]->getSex()=="M") $children[$i]->setLabel($pgv_lang["son"]);
-				else if ($children[$i]->getSex()=="F") $children[$i]->setLabel($pgv_lang["daughter"]);
-				else $children[$i]->setLabel($pgv_lang["child"]);
+				if ($children[$i]->getSex()=="M") {
+					$children[$i]->setLabel($pgv_lang["son"]);
+				} elseif ($children[$i]->getSex()=="F") {
+					$children[$i]->setLabel($pgv_lang["daughter"]);
+				} else {
+					$children[$i]->setLabel($pgv_lang["child"]);
+				}
 			}
 		}
 	}
 	else {
 		if (!is_null($father)) {
-			if ($father->getSex()=="F") $father->setLabel($pgv_lang["wife"]);
-			else if ($father->getSex()=="M") $father->setLabel($pgv_lang["husband"]);
-			else $father->setLabel($pgv_lang["spouse"]);
+			if ($father->getSex()=="F") {
+				$father->setLabel($pgv_lang["wife"]);
+			} elseif ($father->getSex()=="M") {
+				$father->setLabel($pgv_lang["husband"]);
+			} else {
+				$father->setLabel($pgv_lang["spouse"]);
+			}
 		}
 		if (!is_null($mother)) {
-			if ($mother->getSex()=="F") $mother->setLabel($pgv_lang["wife"]);
-			else if ($mother->getSex()=="M") $mother->setLabel($pgv_lang["husband"]);
-			else $father->setLabel($pgv_lang["spouse"]);
+			if ($mother->getSex()=="F") {
+				$mother->setLabel($pgv_lang["wife"]);
+			} elseif ($mother->getSex()=="M") {
+				$mother->setLabel($pgv_lang["husband"]);
+			} else {
+				$father->setLabel($pgv_lang["spouse"]);
+			}
 		}
 	}
 	echo PGV_JS_START;

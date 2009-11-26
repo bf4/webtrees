@@ -178,18 +178,32 @@ if ($action=="update") {
 					$RESNS[$j]="";
 				}
 				if ((empty($DATES[$j]))&&(empty($PLACS[$j]))&&(empty($TEMPS[$j]))&&(empty($RESNS[$j]))) {
-					if (!in_array($fact, $typefacts)) $factrec = "1 $fact";
-					else $factrec = "1 EVEN\n2 TYPE $fact";
-					if (!empty($DESCS[$j])) $factrec .= " $DESCS[$j]\n";
-					else if (!empty($FMARRY)) $factrec = "1 MARR Y\n";
-					else if (!empty($FDIVY)) $factrec = "1 DIV Y\n";
-					else $factrec="";
+					if (!in_array($fact, $typefacts)) {
+						$factrec = "1 $fact";
+					} else {
+						$factrec = "1 EVEN\n2 TYPE $fact";
+					}
+					if (!empty($DESCS[$j])) {
+						$factrec .= " $DESCS[$j]\n";
+					} elseif (!empty($FMARRY)) {
+						$factrec = "1 MARR Y\n";
+					} elseif (!empty($FDIVY)) {
+						$factrec = "1 DIV Y\n";
+					} else {
+						$factrec="";
+					}
 				}
 				else {
-					if (!in_array($fact, $typefacts)) $factrec = "1 $fact";
-					else $factrec = "1 EVEN\n2 TYPE $fact";
-					if (!empty($DESCS[$j])) $factrec .= " $DESCS[$j]\n";
-					else $factrec .= "\n";
+					if (!in_array($fact, $typefacts)) {
+						$factrec = "1 $fact";
+					} else {
+						$factrec = "1 EVEN\n2 TYPE $fact";
+					}
+					if (!empty($DESCS[$j])) {
+						$factrec .= " $DESCS[$j]\n";
+					} else {
+						$factrec .= "\n";
+					}
 					if (!empty($DATES[$j])) $factrec .= "2 DATE $DATES[$j]\n";
 					if (!empty($PLACS[$j])) $factrec .= "2 PLAC $PLACS[$j]\n";
 					if (!empty($TEMPS[$j])) $factrec .= "2 TEMP $TEMPS[$j]\n";
@@ -2020,17 +2034,23 @@ foreach($famfacts as $f=>$eventObj) {
 	?>
 			<tr>
 				<td class="descriptionbox">
-				<?php if (isset($factarray[$fact_tag])) echo $factarray[$fact_tag];
-					else if (isset($pgv_lang[$fact_tag])) echo $pgv_lang[$fact_tag];
-					else echo $fact_tag;
+				<?php if (isset($factarray[$fact_tag])) {
+					echo $factarray[$fact_tag];
+				} elseif (isset($pgv_lang[$fact_tag])) {
+					echo $pgv_lang[$fact_tag];
+				} else {
+					echo $fact_tag;
+				}
 				?>
 					<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
 				<?php
 					if ($fact_tag=='MARR') {
 						$factdetail = explode(' ', trim($eventObj->getGedComRecord("MARR")));
-						if (isset($factdetail[2]))
-							if (count($factdetail) > 3 || strtoupper($factdetail[2]) == "Y")
+						if (isset($factdetail[2])) {
+							if (count($factdetail) > 3 || strtoupper($factdetail[2]) == "Y") {
 								$check = true;
+							}
+						}
 						?>
 						&nbsp;&nbsp;
 						<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>MARRY" id="F<?php echo $i; ?>MARRY"
@@ -2042,12 +2062,13 @@ foreach($famfacts as $f=>$eventObj) {
 						?>
 						<label for="F<?php echo $i; ?>MARRY"><?php echo $pgv_lang["yes"]; ?></label>
 						<?php
-					}
-					else if ($fact_tag=='DIV') {
+					} elseif ($fact_tag=='DIV') {
 						$factdetail = explode(' ', trim($eventObj->getGedComRecord("DIV")));
-						if (isset($factdetail[2]))
-							if (count($factdetail) > 3 || strtoupper($factdetail[2]) == "Y")
+						if (isset($factdetail[2])) {
+							if (count($factdetail) > 3 || strtoupper($factdetail[2]) == "Y") {
 								$check = true;
+							}
+						}
 						?>
 						&nbsp;&nbsp;
 						<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>DIV" id="F<?php echo $i; ?>DIV"
@@ -2879,42 +2900,51 @@ foreach($famfacts as $f=>$eventObj) {
 	?>
 	<tr>
 		<td class="descriptionbox">
-		<?php if (isset($factarray[$fact_tag])) echo $factarray[$fact_tag];
-			else if (isset($pgv_lang[$fact_tag])) echo $pgv_lang[$fact_tag];
-			else echo $fact_tag;
+		<?php if (isset($factarray[$fact_tag])) {
+			echo $factarray[$fact_tag];
+		} elseif (isset($pgv_lang[$fact_tag])) {
+			echo $pgv_lang[$fact_tag];
+		} else {
+			echo $fact_tag;
+		}
 		?>
 			<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
 			<?php
 			if ($fact_tag=='MARR') {
 				$factdetail = explode(' ', trim($eventObj->getGedComRecord("MARR")));
-				if (isset($factdetail[2]))
-					if (count($factdetail) > 3 || strtoupper($factdetail[2]) == "Y")
+				if (isset($factdetail[2])) {
+					if (count($factdetail) > 3 || strtoupper($factdetail[2]) == "Y") {
 						$check = true;
+					}
+				}
 				?>
 				&nbsp;&nbsp;
 				<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>MARRY" id="F<?php echo $i; ?>MARRY"
 				<?php
 				if ($check) {
 					echo 'checked="checked">';
+				} else {
+					echo '>';
 				}
-				else echo '>';
 				?>
 				<label for="F<?php echo $i; ?>MARRY"><?php echo $pgv_lang["yes"]; ?></label>
 				<?php
-			}
-			else if ($fact_tag=='DIV') {
+			} elseif ($fact_tag=='DIV') {
 				$factdetail = explode(' ', trim($eventObj->getGedComRecord("DIV")));
-				if (isset($factdetail[2]))
-					if (count($factdetail) > 3 || strtoupper($factdetail[2]) == "Y")
+				if (isset($factdetail[2])) {
+					if (count($factdetail) > 3 || strtoupper($factdetail[2]) == "Y") {
 						$check = true;
+					}
+				}
 				?>
 				&nbsp;&nbsp;
 				<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>DIV" id="F<?php echo $i; ?>DIV"
 				<?php
 				if ($check) {
 					echo 'checked="checked">';
+				} else {
+					echo '>';
 				}
-				else echo '>';
 				?>
 				<label for="F<?php echo $i; ?>DIV"><?php echo $pgv_lang["yes"]; ?></label>
 				<?php

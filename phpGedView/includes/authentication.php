@@ -274,14 +274,15 @@ function AddToLog($LogString, $savelangerror=false) {
 
 	$wroteLogString = false;
 
-	if ($LOGFILE_CREATE=="none")
+	if ($LOGFILE_CREATE=="none") {
 		return;
+	}
 
-	if (isset($_SERVER['REMOTE_ADDR']))
+	if (isset($_SERVER['REMOTE_ADDR'])) {
 		$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
-	else
-		if ($argc>1)
-			$REMOTE_ADDR = "cli";
+	} elseif ($argc>1) {
+		$REMOTE_ADDR = "cli";
+	}
 	if ($LOGFILE_CREATE !== "none" && $savelangerror === false) {
 		if (empty($LOGFILE_CREATE))
 			$LOGFILE_CREATE="daily";
@@ -454,10 +455,11 @@ function addMessage($message) {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 		if (!get_user_id($message["from"])) {
 			$email1 = $pgv_lang["message_email1"];
-			if (!empty($message["from_name"]))
+			if (!empty($message["from_name"])) {
 				$email1 .= $message["from_name"]."\r\n\r\n".$message["body"];
-			else
+			} else {
 				$email1 .= $from."\r\n\r\n".$message["body"];
+			}
 		} else {
 			$email1 = $pgv_lang["message_email1"];
 			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
@@ -466,13 +468,14 @@ function addMessage($message) {
 			if (stristr($from, $PHPGEDVIEW_EMAIL)){
 				$from = get_user_setting($WEBMASTER_EMAIL, 'email');
 			}
-			if (!get_user_id($message["from"]))
+			if (!get_user_id($message["from"])) {
 				$header2 = $PHPGEDVIEW_EMAIL;
-			else
-				if (isset($to))
-					$header2 = $to;
-			if (!empty($header2))
+			} elseif (isset($to)) {
+				$header2 = $to;
+			}
+			if (!empty($header2)) {
 				pgvMail($from, $header2, $subject2, $email2);
+			}
 		}
 	}
 

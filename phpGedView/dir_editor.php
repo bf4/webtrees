@@ -72,17 +72,20 @@ $dbname = explode("/", $DBNAME);
 $locked_by_context[] = end($dbname);
 
 print_header($pgv_lang["index_dir_cleanup"]);
-print "<h3>".$pgv_lang["index_dir_cleanup"]."</h3>";
+echo "<h3>", $pgv_lang["index_dir_cleanup"], "</h3>";
 
-print $pgv_lang['index_dir_cleanup_inst'];
+echo $pgv_lang['index_dir_cleanup_inst'];
 
 //post back
 if(isset($_REQUEST["to_delete"])) {
-	print "<span class=\"error\">".$pgv_lang["deleted_files"]."</span><br/>";
-	foreach($_REQUEST["to_delete"] as $k=>$v){
-		if (is_dir($INDEX_DIRECTORY.$v)) full_rmdir($INDEX_DIRECTORY.$v);
-		else if (file_exists($INDEX_DIRECTORY.$v)) unlink($INDEX_DIRECTORY.$v);
-		print "<span class=\"error\">".$v."</span><br/>";
+	echo "<span class=\"error\">", $pgv_lang["deleted_files"], "</span><br/>";
+	foreach($_REQUEST["to_delete"] as $k=>$v) {
+		if (is_dir($INDEX_DIRECTORY.$v)) {
+			full_rmdir($INDEX_DIRECTORY.$v);
+		} elseif (file_exists($INDEX_DIRECTORY.$v)) {
+			unlink($INDEX_DIRECTORY.$v);
+		}
+		echo "<span class=\"error\">", $v, "</span><br/>";
 	}
 
 }

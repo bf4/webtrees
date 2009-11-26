@@ -371,22 +371,28 @@ function print_td_person($n) {
 	//$text = unhtmlentities($text);
 
 	// -- empty box
-	if (empty($text)) $text = "&nbsp;<br />&nbsp;<br />";
+	if (empty($text)) {
+		$text = "&nbsp;<br />&nbsp;<br />";
+	}
 	// -- box color
 	$isF="";
 	if ($n==1) {
-		if ($indi->getSex()=='F')
+		if ($indi->getSex()=='F') {
 			$isF="F";
-	} else
-		if ($n%2)
-			$isF="F";
+		}
+	} elseif ($n%2) {
+		$isF="F";
+	}
 	// -- box size
-	if ($n==1) print "<td";
-	else print "<td width='15%'";
+	if ($n==1) {
+		echo "<td";
+	} else {
+		echo "<td width='15%'";
+	}
 	// -- print box content
-	print " class=\"person_box".$isF."\" style=\"text-align:center; vertical-align:top;\" >";
-	print $text;
-	print "</td>";
+	echo " class=\"person_box", $isF, "\" style=\"text-align:center; vertical-align:top;\" >";
+	echo $text;
+	echo "</td>";
 }
 
 function print_arrow_person($n, $arrow_dir) {
@@ -400,8 +406,11 @@ function print_arrow_person($n, $arrow_dir) {
 
 	$arrow_dir = substr($arrow_dir,0,1);
 	if ($TEXT_DIRECTION=="rtl") {
-		if ($arrow_dir=="l") $arrow_dir="r";
-		else if ($arrow_dir=="r") $arrow_dir="l";
+		if ($arrow_dir=="l") {
+			$arrow_dir="r";
+		} elseif ($arrow_dir=="r") {
+			$arrow_dir="l";
+		}
 	}
 	if ($TEXT_DIRECTION=="ltr") {
 		$title = $pgv_lang["compact_chart"].": ".$pid;
