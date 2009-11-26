@@ -75,14 +75,9 @@ function print_todo($block=true, $config='', $side, $index) {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_gedcomrecord.php';
 
-	$all_gedcoms=get_all_gedcoms();
-
 	$table_id = 'ID'.floor(microtime()*1000000); // sorttable requires a unique ID
 	$content .= '<table id="'.$table_id.'" class="sortable list_table center">';
 	$content .= '<tr>';
-	if (count($all_gedcoms)>1) {
-		$content .= '<th class="list_label">GEDCOM</th>';
-	}
 	$content .= '<th class="list_label">'.$factarray['DATE'].'</th>';
 	$content .= '<th class="list_label">'.$pgv_lang['record'].'</th>';
 	if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
@@ -99,12 +94,9 @@ function print_todo($block=true, $config='', $side, $index) {
 			$pgvu=get_gedcom_value('_PGVU', 2, $todo['factrec']);
 			if ($pgvu==PGV_USER_ID || !$pgvu && $config['show_unassigned']=='yes' || $pgvu && $config['show_other']=='yes') {
 				$content.='<tr valign="top">';
-				if (count($all_gedcoms)>1) {
-					$content.='<td class="list_value_wrap"><a href="'.encode_url("index.php?ctype=gedcom&ged={PGV_GEDCOM}").'">'.PGV_GEDCOM.'</a></td>';
-				}
 				$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
 				$name=$record->getListName();
-				$content.='<td class="list_value_wrap" align="'.get_align(PGV_GEDCOM).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady(PGV_GEDCOM).'</a></td>';
+				$content.='<td class="list_value_wrap" align="'.get_align(PGV_GEDCOM).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($name).'</a></td>';
 				if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
 					$content.='<td class="list_value_wrap">'.$pgvu.'</td>';
 				}
