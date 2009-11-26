@@ -1127,38 +1127,42 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH;
 
 	// NOTE: add a table and form to easily add new values to the table
-	print "<form method=\"post\" name=\"newmedia\" action=\"addmedia.php\" enctype=\"multipart/form-data\">\n";
-	print "<input type=\"hidden\" name=\"action\" value=\"$action\" />\n";
-	print "<input type=\"hidden\" name=\"ged\" value=\"".PGV_GEDCOM."\" />\n";
-	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
-	if (!empty($linktoid)) print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
-	print "<input type=\"hidden\" name=\"level\" value=\"$level\" />\n";
-	print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
-	print "<tr><td class=\"topbottombar\" colspan=\"2\">";
+	echo "<form method=\"post\" name=\"newmedia\" action=\"addmedia.php\" enctype=\"multipart/form-data\">\n";
+	echo "<input type=\"hidden\" name=\"action\" value=\"", $action, "\" />\n";
+	echo "<input type=\"hidden\" name=\"ged\" value=\"", PGV_GEDCOM, "\" />\n";
+	echo "<input type=\"hidden\" name=\"pid\" value=\"", $pid, "\" />\n";
+	if (!empty($linktoid)) {
+		echo "<input type=\"hidden\" name=\"linktoid\" value=\"", $linktoid, "\" />\n";
+	}
+	echo "<input type=\"hidden\" name=\"level\" value=\"", $level, "\" />\n";
+	echo "<table class=\"facts_table center ", $TEXT_DIRECTION, "\">\n";
+	echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
 	if ($action == "newentry") {
 		echo $pgv_lang["add_media"];
 	} else {
 		echo print_text('edit_media', 0 , 1);
 	}
-	print "</td></tr>";
-	print "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"" . $pgv_lang["save"] . "\" /></td></tr>";
+	echo "</td></tr>";
+	echo "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"", $pgv_lang["save"], "\" /></td></tr>";
 	if ($linktoid == "new" || ($linktoid == "" && $action != "update")) {
-		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, "wrap width25\">";
 		print_help_link("add_media_linkid", "qm");
-		print $pgv_lang["add_fav_enter_id"] . "</td>";
-		print "<td class=\"optionbox wrap\"><input type=\"text\" name=\"gid\" id=\"gid\" size=\"6\" value=\"\" />";
+		echo $pgv_lang["add_fav_enter_id"], "</td>";
+		echo "<td class=\"optionbox wrap\"><input type=\"text\" name=\"gid\" id=\"gid\" size=\"6\" value=\"\" />";
 		print_findindi_link("gid", "");
 		print_findfamily_link("gid");
 		print_findsource_link("gid");
-		print "<br /><sub>" . $pgv_lang["add_linkid_advice"] . "</sub></td></tr>\n";
+		echo "<br /><sub>", $pgv_lang["add_linkid_advice"], "</sub></td></tr>\n";
 	}
-	if (isset ($pgv_changes[$pid . "_" . PGV_GEDCOM]))
+	if (isset ($pgv_changes[$pid . "_" . PGV_GEDCOM])) {
 		$gedrec = find_updated_record($pid, PGV_GED_ID);
-	else
-		if (gedcom_record_type($pid, get_id_from_gedcom(PGV_GEDCOM)) == "OBJE")
+	} else {
+		if (gedcom_record_type($pid, get_id_from_gedcom(PGV_GEDCOM)) == "OBJE") {
 			$gedrec = find_media_record($pid, PGV_GED_ID);
-		else
+		} else {
 			$gedrec = "";
+		}
+	}
 
 	// 0 OBJE
 	// 1 FILE

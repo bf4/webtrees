@@ -87,8 +87,11 @@ class PedigreeControllerRoot extends BaseController {
 
 		// This is passed as a global.  A parameter would be better...
 		$this->show_full = ($this->show_full) ? 1 : 0;		// Make SURE this is an integer
-		if ($this->talloffset>3) $this->talloffset=3;
-		else if ($this->talloffset<0) $this->talloffset=0;
+		if ($this->talloffset>3) {
+			$this->talloffset=3;
+		} elseif ($this->talloffset<0) {
+			$this->talloffset=0;
+		}
 		$show_full = $this->show_full;
 		$talloffset = $this->talloffset;
 
@@ -124,22 +127,33 @@ class PedigreeControllerRoot extends BaseController {
 		$this->treesize = pow(2, (int)($this->PEDIGREE_GENERATIONS))-1;
 
 		//-- ancestry_array puts everyone at $i+1
-		for($i=0; $i<$this->treesize; $i++) $this->treeid[$i] = $this->treeid[$i+1];
+		for($i=0; $i<$this->treesize; $i++) {
+			$this->treeid[$i] = $this->treeid[$i+1];
+		}
 
 		if (!$this->show_full) {
-			if ($this->talloffset==0) $baseyoffset = 160+$bheight*2;
-			else if ($this->talloffset==1) $baseyoffset = 180+$bheight*2;
-			else if ($this->talloffset>1) {
-				if ($this->PEDIGREE_GENERATIONS==3) $baseyoffset = 30;
-				else $baseyoffset = -85;
+			if ($this->talloffset==0) {
+				$baseyoffset = 160+$bheight*2;
+			} elseif ($this->talloffset==1) {
+				$baseyoffset = 180+$bheight*2;
+			} elseif ($this->talloffset>1) {
+				if ($this->PEDIGREE_GENERATIONS==3) {
+					$baseyoffset = 30;
+				} else {
+					$baseyoffset = -85;
+				}
 			}
-		}
-		else {
-			if ($this->talloffset==0) $baseyoffset = 100+$bheight/2;
-			else if ($this->talloffset==1) $baseyoffset = 160+$bheight/2;
-			else if ($this->talloffset>1) {
-				if ($this->PEDIGREE_GENERATIONS==3) $baseyoffset = 30;
-				else $baseyoffset = -85;
+		} else {
+			if ($this->talloffset==0) {
+				$baseyoffset = 100+$bheight/2;
+			} elseif ($this->talloffset==1) {
+				$baseyoffset = 160+$bheight/2;
+			} elseif ($this->talloffset>1) {
+				if ($this->PEDIGREE_GENERATIONS==3) {
+					$baseyoffset = 30;
+				} else {
+					$baseyoffset = -85;
+				}
 			}
 		}
 		//-- adjustments for preview

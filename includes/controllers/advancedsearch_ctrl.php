@@ -147,9 +147,13 @@ class AdvancedSearchController extends SearchController {
 		$label = "";
 		$parts = preg_split("/:/", $tag);
 		foreach($parts as $part) {
-			if (isset($factarray[$part])) $label .= $factarray[$part]." ";
-			else if (isset($pgv_lang[$part])) $label .= $pgv_lang[$part]." ";
-			else $label .= $part." ";
+			if (isset($factarray[$part])) {
+				$label .= $factarray[$part]." ";
+			} elseif (isset($pgv_lang[$part])) {
+				$label .= $pgv_lang[$part]." ";
+			} else {
+				$label .= $part." ";
+			}
 		}
 		return $label;
 	}

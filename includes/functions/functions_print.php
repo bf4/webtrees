@@ -1420,8 +1420,11 @@ function print_text($help, $level=0, $noprint=0){
 			echo "[LANG_DEBUG] Embedded variable: ", $match[$i][1], "<br /><br />";
 		}
 		$value = print_text($newreplace, $level+1);
-		if ($value!==false) $sentence = str_replace($match[$i][0], $value, $sentence);
-		else if ($noprint==0 && $level==0) $sentence = str_replace($match[$i][0], $match[$i][1].": ".$pgv_lang["var_not_exist"], $sentence);
+		if ($value!==false) {
+			$sentence = str_replace($match[$i][0], $value, $sentence);
+		} elseif ($noprint==0 && $level==0) {
+			$sentence = str_replace($match[$i][0], $match[$i][1].": ".$pgv_lang["var_not_exist"], $sentence);
+		}
 	}
 	// ------ Replace paired ~  by tag_start and tag_end (those vars contain CSS classes)
 	$sentence=preg_replace('/~([^<>]{1,})~/e', "'<span class=\"helpstart\">'.UTF8_strtoupper('\\1').'</span>'", $sentence);
@@ -1744,36 +1747,45 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
 				if ($cr > 0) {
 					$rela = get_sosa_name($relamatch[0][1]);
-				}
-				else {
-					if (isset($pgv_lang[$key])) $rela = $pgv_lang[$key];
-					else if (isset($factarray[strtoupper($key)])) $rela = $factarray[strtoupper($key)];
-					else $rela = $rmatch[1];
+				} else {
+					if (isset($pgv_lang[$key])) {
+						$rela = $pgv_lang[$key];
+					} elseif (isset($factarray[strtoupper($key)])) {
+						$rela = $factarray[strtoupper($key)];
+					} else {
+						$rela = $rmatch[1];
+					}
 					if ($key == "nephew") {
 						$node = get_relationship($pid, $pid2);
 						if (isset($node["path"][1])) {
 							$sex3 = Person::getInstance($node["path"][1])->getSex();
-							if ($sex3 == "M")  $rela = $pgv_lang["bosa_brothers_offspring_2"];
-							else if ($sex3 == "F")  $rela = $pgv_lang["bosa_sisters_offspring_2"];
+							if ($sex3 == "M") {
+								$rela = $pgv_lang["bosa_brothers_offspring_2"];
+							} elseif ($sex3 == "F") {
+								$rela = $pgv_lang["bosa_sisters_offspring_2"];
+							}
 						}
-					}
-					else if ($key == "niece") {
+					} elseif ($key == "niece") {
 						$node = get_relationship($pid, $pid2);
 						if (isset($node["path"][1])) {
 							$sex3 = Person::getInstance($node["path"][1])->getSex();
-							if ($sex3 == "M")  $rela = $pgv_lang["bosa_brothers_offspring_3"];
-							else if ($sex3 == "F")  $rela = $pgv_lang["bosa_sisters_offspring_3"];
+							if ($sex3 == "M") {
+								$rela = $pgv_lang["bosa_brothers_offspring_3"];
+							} elseif ($sex3 == "F") {
+								$rela = $pgv_lang["bosa_sisters_offspring_3"];
+							}
 						}
-					}
-					else if ($key == "uncle" || $key == "aunt") {
+					} elseif ($key == "uncle" || $key == "aunt") {
 						$node = get_relationship($pid, $pid2);
 						if (isset($node["path"][1])) {
 							$sex3 = Person::getInstance($node["path"][1])->getSex();
-							if ($sex3 == "M")  $rela = $pgv_lang["sosa_{$key}_2"];
-							else if ($sex3 == "F")  $rela = $pgv_lang["sosa_{$key}_3"];
+							if ($sex3 == "M") {
+								$rela = $pgv_lang["sosa_{$key}_2"];
+							} elseif ($sex3 == "F") {
+								$rela = $pgv_lang["sosa_{$key}_3"];
+							}
 						}
-					}
-					else if ($key == "twin" || $key == "twin_brother" || $key =="twin_sister") {
+					} elseif ($key == "twin" || $key == "twin_brother" || $key =="twin_sister") {
 						$autoRela = true;
 					}
 				}
@@ -1781,13 +1793,15 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
 				// Allow special processing for different languages
 				$func="rela_localisation_{$lang_short_cut[$LANGUAGE]}";
-				if (function_exists($func))
+				if (function_exists($func)) {
 					// Localise the relationship
 					echo $func($rela, $pid2);
-				else
+				} else {
 					echo " {$rela}: ";
+				}
+			} else {
+				$rela = $factarray["RELA"]; // default
 			}
-			else $rela = $factarray["RELA"]; // default
 
 		// ASSOciate ID link
 		$gedrec = find_gedcom_record($pid2, PGV_GED_ID);
@@ -1813,16 +1827,22 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				if (!strstr($factrec, "_BIRT_") && !strstr($factrec, "_DEAT_") && GedcomDate::Compare($event_date, $death_date)>=0 && $tmp->isDead()) {
 					// After death, print time since death
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $event_date), true);
-					if (!empty($age))
-						if (GedcomDate::GetAgeGedcom($death_date, $event_date)=="0d") $ageText = "(".$pgv_lang["at_death_day"].")";
-						else $ageText = "(".$age." ".$pgv_lang["after_death"].")";
-				}
-				else if (GedcomDate::GetAgeGedcom($birth_date, $event_date)!="0d") {
+					if (!empty($age)) {
+						if (GedcomDate::GetAgeGedcom($death_date, $event_date)=="0d") {
+							$ageText = "(".$pgv_lang["at_death_day"].")";
+						} else {
+							$ageText = "(".$age." ".$pgv_lang["after_death"].")";
+						}
+					}
+				} elseif (GedcomDate::GetAgeGedcom($birth_date, $event_date)!="0d") {
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
-					if (!empty($age))
+					if (!empty($age)) {
 						$ageText = "({$pgv_lang['age']} {$age})";
+					}
 				}
-				if (!empty($ageText)) echo '<span class="age"> ', PrintReady($ageText), '</span>';
+				if (!empty($ageText)) {
+					echo '<span class="age"> ', PrintReady($ageText), '</span>';
+				}
 			}
 
 			// RELAtionship calculation : for a family print relationship to both spouses
@@ -1840,15 +1860,23 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				else if ($pid!=$pid2 && $rela!="twin_sister") echo " - <a href=\"", encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID), "\">[" , $pgv_lang["relationship_chart"] , "]</a>";
 			}
 
-		}
-		else if (strstr($gedrec, "@ FAM")!==false) {
+		} elseif (strstr($gedrec, "@ FAM")!==false) {
 			echo "<a href=\"", encode_url("family.php?show_full=1&famid={$pid2}"), "\">";
-			if ($TEXT_DIRECTION == "ltr") echo getLRM(); else echo " " . getRLM();
+			if ($TEXT_DIRECTION == "ltr") {
+				echo getLRM();
+			} else {
+				echo " ", getRLM();
+			}
 			echo "[", $pgv_lang["view_family"];
-			if ($SHOW_ID_NUMBERS) echo " " . getLRM() . "($pid2)" . getLRM();
-			if ($TEXT_DIRECTION == "ltr") echo getLRM() . "]</a>"; else echo getRLM() . "]</a>";
-		}
-		else {
+			if ($SHOW_ID_NUMBERS) {
+				echo " ", getLRM(), "($pid2)", getLRM();
+			}
+			if ($TEXT_DIRECTION == "ltr") {
+				echo getLRM(), "]</a>"; 
+			} else {
+				echo getRLM(), "]</a>";
+			}
+		} else {
 			if (strstr($pid2, " ")) echo $pid2;
 			else echo $pgv_lang["unknown"];
 			if ($SHOW_ID_NUMBERS) {
@@ -1995,9 +2023,13 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>=0) {
 					// After death, print time since death
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $date), true);
-					if ($age!='')
-						if (GedcomDate::GetAgeGedcom($death_date, $date)=="0d") $ageText = '('.$pgv_lang['at_death_day'].')';
-						else $ageText = '('.$age.' '.$pgv_lang['after_death'].')';
+					if ($age!='') {
+						if (GedcomDate::GetAgeGedcom($death_date, $date)=="0d") {
+							$ageText = '('.$pgv_lang['at_death_day'].')';
+						} else {
+							$ageText = '('.$age.' '.$pgv_lang['after_death'].')';
+						}
+					}
 				}
 				if ($ageText!='') $html .= '<span class="age"> '.PrintReady($ageText).'</span>';
 			}

@@ -282,20 +282,32 @@ class SearchControllerRoot extends BaseController {
 		$this->inputFieldNames[] = "tagfilter";
 
 		// Get the search results based on the action
-		if (isset ($this->topsearch)) $this->TopSearch();
+		if (isset ($this->topsearch)) {
+			$this->TopSearch();
+		}
 		// If we want to show associated persons, build the list
-		if ($this->action == "general") $this->GeneralSearch();
-		else if ($this->action == "soundex") $this->SoundexSearch();
-		else if ($this->action == "replace") $this->SearchAndReplace();
-		else if ($this->action == "multisite") $this->MultiSiteSearch();
+		if ($this->action == "general") {
+			$this->GeneralSearch();
+		} elseif ($this->action == "soundex") {
+			$this->SoundexSearch();
+		} elseif ($this->action == "replace") {
+			$this->SearchAndReplace();
+		} elseif ($this->action == "multisite") {
+			$this->MultiSiteSearch();
+		}
 	}
 
 	function getPageTitle() {
 		global $pgv_lang;
-		if ($this->action == "general") return $pgv_lang["search_general"];
-		else if ($this->action == "soundex") return $pgv_lang["search_soundex"];
-		else if ($this->action == "replace") return $pgv_lang["search_replace"];
-		else if ($this->action == "multisite") return $pgv_lang["multi_site_search"];
+		if ($this->action == "general") {
+			return $pgv_lang["search_general"];
+		} elseif ($this->action == "soundex") {
+			return $pgv_lang["search_soundex"];
+		} elseif ($this->action == "replace") {
+			return $pgv_lang["search_replace"];
+		} elseif ($this->action == "multisite") {
+			return $pgv_lang["multi_site_search"];
+		}
 	}
 
 	/**

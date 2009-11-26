@@ -456,13 +456,14 @@ class LifespanControllerRoot extends BaseController {
 
 				$eventinformation = Array();
 				$eventspacing = Array();
-				foreach($unparsedEvents as $index=>$val)
-				{
+				foreach($unparsedEvents as $index=>$val) {
 					$date = $val->getDate();
 					if (!empty($date)) {
 						$fact = $val->getTag();
 						$yearsin = $date->date1->y-$birthYear;
-						if ($lifespannumeral==0) $lifespannumeral = 1;
+						if ($lifespannumeral==0) {
+							$lifespannumeral = 1;
+						}
 						$eventwidth = ($yearsin/$lifespannumeral)* 100; // percent of the lifespan before the event occured used for determining div spacing
 						// figure out some schema
 						$evntwdth = $eventwidth."%";
@@ -472,10 +473,16 @@ class LifespanControllerRoot extends BaseController {
 						}
 						$place = $val->getPlace();
 						$trans = $fact;
-						if (isset($factarray[$fact])) $trans = $factarray[$fact];
-						else if (isset($pgv_lang[$fact])) $trans = $pgv_lang[$fact];
-						if (isset($eventinformation[$evntwdth])) $eventinformation[$evntwdth] .= "<br />\n".$trans."<br />\n".strip_tags($date->Display(false, '', NULL, false))." ".$place;
-						else $eventinformation[$evntwdth]= $fact."-fact, ".$trans."<br />\n".strip_tags($date->Display(false, '', NULL, false))." ".$place;
+						if (isset($factarray[$fact])) {
+							$trans = $factarray[$fact];
+						} elseif (isset($pgv_lang[$fact])) {
+							$trans = $pgv_lang[$fact];
+						}
+						if (isset($eventinformation[$evntwdth])) {
+							$eventinformation[$evntwdth] .= "<br />\n".$trans."<br />\n".strip_tags($date->Display(false, '', NULL, false))." ".$place;
+						} else {
+							$eventinformation[$evntwdth]= $fact."-fact, ".$trans."<br />\n".strip_tags($date->Display(false, '', NULL, false))." ".$place;
+						}
 					}
 				}
 
@@ -484,22 +491,30 @@ class LifespanControllerRoot extends BaseController {
 				if ($width > ($minlength +110)) {
 					echo "\n<div id=\"bar_", $value->getXref(), "\" style=\"position: absolute; top:", $Y, "px; left:", $startPos, "px; width:", $width, "px; height:", $height, "px; background-color:", $this->color, "; border: solid blue 1px; z-index:$Z;\">";
 					foreach($eventinformation as $evtwidth=>$val){
-						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>";
+						echo "<div style=\"position:absolute; left:", $evtwidth, ";\"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>";
 						$text = explode("-fact, ", $val);
 						$fact = $text[0];
 						$val = $text[1];
-						if (isset ($factAbbrev[$fact])) print $factAbbrev[$fact];
-						else print UTF8_substr($val, 0, 1);
-						print "</b><span>".PrintReady($val)."</span></a></div>";
+						if (isset ($factAbbrev[$fact])) {
+							echo $factAbbrev[$fact];
+						} else {
+							echo UTF8_substr($val, 0, 1);
+						}
+						echo "</b><span>", PrintReady($val), "</span></a></div>";
 					}
 					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
-					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>";
-					if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
-					else print UTF8_substr($factarray["BIRT"], 0, 1);
-					if (!$birthReal) print "*";
-					print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url($value->getLinkUrl())."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
-					"\n\t\t<td width=\"15\">";
+					echo "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>";
+					if (isset ($factAbbrev["BIRT"])) {
+						echo $factAbbrev["BIRT"];
+					} else {
+						echo UTF8_substr($factarray["BIRT"], 0, 1);
+					}
+					if (!$birthReal) {
+						echo "*";
+					}
+					echo "</b><span>", $value->getSexImage(), $indiName, "<br/>", $factarray["BIRT"], " ", strip_tags($bdate->Display(false)), " ", PrintReady($value->getBirthPlace()), "</span></a></td>" ,
+						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"", encode_url($value->getLinkUrl()), "\">", $value->getSexImage(), $indiName, ":  $lifespan </a></td>" ,
+						"\n\t\t<td width=\"15\">";
 					if ($value->isDead()) {
 						if ($deathReal || $value->isDead()) {
 							print "<a class=\"showit\" href=\"#\"><b>";

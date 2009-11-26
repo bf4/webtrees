@@ -1750,42 +1750,54 @@ function event_sort_name($a, $b) {
 
 function mediasort($a, $b) {
 	$aKey = "";
-	if (!empty($a["TITL"]))
+	if (!empty($a["TITL"])) {
 		$aKey = $a["TITL"];
-	else
-		if (!empty($a["titl"]))
+	} else {
+		if (!empty($a["titl"])) {
 			$aKey = $a["titl"];
-		else
-			if (!empty($a["NAME"]))
+		} else {
+			if (!empty($a["NAME"])) {
 				$aKey = $a["NAME"];
-			else
-				if (!empty($a["name"]))
+			} else {
+				if (!empty($a["name"])) {
 					$aKey = $a["name"];
-				else
-					if (!empty($a["FILE"]))
+				} else {
+					if (!empty($a["FILE"])) {
 						$aKey = basename($a["FILE"]);
-					else
-						if (!empty($a["file"]))
+					} else {
+						if (!empty($a["file"])) {
 							$aKey = basename($a["file"]);
+						}
+					}
+				}
+			}
+		}
+	}
 
 	$bKey = "";
-	if (!empty($b["TITL"]))
+	if (!empty($b["TITL"])) {
 		$bKey = $b["TITL"];
-	else
-		if (!empty($b["titl"]))
+	} else {
+		if (!empty($b["titl"])) {
 			$bKey = $b["titl"];
-		else
-			if (!empty($b["NAME"]))
+		} else {
+			if (!empty($b["NAME"])) {
 				$bKey = $b["NAME"];
-			else
-				if (!empty($b["name"]))
+			} else {
+				if (!empty($b["name"])) {
 					$bKey = $b["name"];
-				else
-					if (!empty($b["FILE"]))
+				} else {
+					if (!empty($b["FILE"])) {
 						$bKey = basename($b["FILE"]);
-					else
-						if (!empty($b["file"]))
+					} else {
+						if (!empty($b["file"])) {
 							$bKey = basename($b["file"]);
+						}
+					}
+				}
+			}
+		}
+	}
 	return compareStrings($aKey, $bKey, true);		// Case-insensitive compare
 }
 /**
@@ -1845,26 +1857,24 @@ function compare_facts_date($arec, $brec) {
 	if ($adate->qual1=='BEF') {
 		$amin=$amin-1;
 		$amax=$amin;
-	} else
-		if ($adate->qual1=='AFT') {
-			$amax=$amax+1;
-			$amin=$amax;
-		}
+	} elseif ($adate->qual1=='AFT') {
+		$amax=$amax+1;
+		$amin=$amax;
+	}
 	if ($bdate->qual1=='BEF') {
 		$bmin=$bmin-1;
 		$bmax=$bmin;
-	} else
-		if ($bdate->qual1=='AFT') {
-			$bmax=$bmax+1;
-			$bmin=$bmax;
-		}
+	} elseif ($bdate->qual1=='AFT') {
+		$bmax=$bmax+1;
+		$bmin=$bmax;
+	}
 
-	if ($amax<$bmin)
+	if ($amax<$bmin) {
 		return -1;
-	else
-		if ($amin>$bmax)
+	} else {
+		if ($amin>$bmax) {
 			return 1;
-		else {
+		} else {
 			//-- ranged date... take the type of fact sorting into account
 			$factWeight = 0;
 			if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
@@ -1873,7 +1883,7 @@ function compare_facts_date($arec, $brec) {
 			//-- fact is prefered to come before, so compare using the minimum ranges
 			if ($factWeight < 0 && $amin!=$bmin) {
 				return ($amin-$bmin);
-			} else
+			} else {
 				if ($factWeight > 0 && $bmax!=$amax) {
 					//-- fact is prefered to come after, so compare using the max of the ranges
 					return ($bmax-$amax);
@@ -1881,17 +1891,20 @@ function compare_facts_date($arec, $brec) {
 					//-- facts are the same or the ranges don't give enough info, so use the average of the range
 					$aavg = ($amin+$amax)/2;
 					$bavg = ($bmin+$bmax)/2;
-					if ($aavg<$bavg)
+					if ($aavg<$bavg) {
 						return -1;
-					else
-						if ($aavg>$bavg)
+					} else {
+						if ($aavg>$bavg) {
 							return 1;
-						else
+						} else {
 							return $factWeight;
+						}
+					}
 				}
-
+			}
 			return 0;
 		}
+	}
 }
 
 /**
@@ -2101,16 +2114,16 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		$end_time = microtime(true);
 		$exectime = $end_time - $start_time;
 		if (($TIME_LIMIT>1)&&($exectime > $TIME_LIMIT-1)) {
-			print "<span class=\"error\">".$pgv_lang["timeout_error"]."</span>\n";
+			echo "<span class=\"error\">", $pgv_lang["timeout_error"], "</span>\n";
 			return false;
 		}
 		if (count($p1nodes)==0) {
 			if ($maxlength!=0) {
-				if (!isset($NODE_CACHE_LENGTH))
+				if (!isset($NODE_CACHE_LENGTH)) {
 					$NODE_CACHE_LENGTH = $maxlength;
-				else
-					if ($NODE_CACHE_LENGTH<$maxlength)
-						$NODE_CACHE_LENGTH = $maxlength;
+				} elseif ($NODE_CACHE_LENGTH<$maxlength) {
+					$NODE_CACHE_LENGTH = $maxlength;
+				}
 			}
 			if (headers_sent()) {
 				print "\n<!-- Relationship $pid1-$pid2 NOT FOUND | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
@@ -2123,12 +2136,13 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		//-- search the node list for the shortest path length
 		$shortest = -1;
 		foreach ($p1nodes as $index=>$node) {
-			if ($shortest == -1)
+			if ($shortest == -1) {
 				$shortest = $index;
-			else {
+			} else {
 				$node1 = $p1nodes[$shortest];
-				if ($node1["length"] > $node["length"])
+				if ($node1["length"] > $node["length"]) {
 					$shortest = $index;
+				}
 			}
 		}
 		if ($shortest==-1)
@@ -2940,23 +2954,28 @@ function get_query_string() {
 	if (!empty($_GET)) {
 		foreach ($_GET as $key => $value) {
 			if ($key != "view") {
-				if (!is_array($value))
+				if (!is_array($value)) {
 					$qstring .= "{$key}={$value}&";
-				else
-					foreach ($value as $k=>$v)
+				} else {
+					foreach ($value as $k=>$v) {
 						$qstring .= "{$key}[{$k}]={$v}&";
+					}
+				}
 			}
 		}
 	} else {
 		if (!empty($_POST)) {
 			foreach ($_POST as $key => $value) {
 				if ($key != "view") {
-					if (!is_array($value))
+					if (!is_array($value)) {
 						$qstring .= "{$key}={$value}&";
-					else
-						foreach ($value as $k=>$v)
-							if (!is_array($v))
+					} else {
+						foreach ($value as $k=>$v) {
+							if (!is_array($v)) {
 								$qstring .= "{$key}[{$k}]={$v}&";
+							}
+						}
+					}
 				}
 			}
 		}
@@ -2996,31 +3015,29 @@ function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_emp
 				if ($husband) {
 					$list[$husband->getXref()] = $husband;
 					$list[$husband->getXref()]->generation = $list[$id]->generation+1;
-				} else
-					if ($show_empty) {
-						$list["empty" . $total_num_skipped] = new Person('');
-						$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
-					}
+				} elseif ($show_empty) {
+					$list["empty" . $total_num_skipped] = new Person('');
+					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
+				}
 				if ($wife) {
 					$list[$wife->getXref()] = $wife;
 					$list[$wife->getXref()]->generation = $list[$id]->generation+1;
-				} else
-					if ($show_empty) {
-						$list["empty" . $total_num_skipped] = new Person('');
-						$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
-					}
+				} elseif ($show_empty) {
+					$list["empty" . $total_num_skipped] = new Person('');
+					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
+				}
 				if ($generations == -1 || $list[$id]->generation+1 < $generations) {
 					$skipped_gen = $list[$id]->generation+1;
-					if ($husband)
+					if ($husband) {
 						array_push($genlist, $husband->getXref());
-					else
-						if ($show_empty)
-							array_push($genlist, "empty" . $total_num_skipped);
-					if ($wife)
+					} elseif ($show_empty) {
+						array_push($genlist, "empty" . $total_num_skipped);
+					}
+					if ($wife) {
 						array_push($genlist, $wife->getXref());
-					else
-						if ($show_empty)
-							array_push($genlist, "empty" . $total_num_skipped);
+					} elseif ($show_empty) {
+						array_push($genlist, "empty" . $total_num_skipped);
+					}
 				}
 				$total_num_skipped++;
 				if ($children) {

@@ -2192,8 +2192,11 @@ class stats {
 			if (!isset($rows[$family['family']])) $rows[$family['family']] = $family['age'];
 		}
 		foreach ($wrows as $family) {
-			if (!isset($rows[$family['family']])) $rows[$family['family']] = $family['age'];
-			else if ($rows[$family['family']] > $family['age']) $rows[$family['family']] = $family['age'];
+			if (!isset($rows[$family['family']])) {
+				$rows[$family['family']] = $family['age'];
+			} elseif ($rows[$family['family']] > $family['age']) {
+				$rows[$family['family']] = $family['age'];
+			}
 		}
 		if ($age_dir == 'DESC') {arsort($rows);}
 		else {asort($rows);}
@@ -3279,9 +3282,21 @@ class stats {
 		$chm .= 't'.$unknown.',000000,0,'.$i.',11';
 		$chxl .= $pgv_lang["no_date_fam"]."|1:||".$pgv_lang["century"]."|2:|0|";
 		$step = $max+1;
-		for ($d=floor($max+1); $d>0; $d--) if (($max+1)<($d*10+1) && fmod(($max+1),$d)==0) $step = $d;
-		if ($step==floor($max+1)) for ($d=floor($max); $d>0; $d--) if ($max<($d*10+1) && fmod($max,$d)==0) $step = $d;
-		for ($n=$step; $n<=($max+1); $n+=$step) $chxl .= $n."|";
+		for ($d=floor($max+1); $d>0; $d--) {
+			if (($max+1)<($d*10+1) && fmod(($max+1),$d)==0) {
+				$step = $d;
+			}
+		}
+		if ($step==floor($max+1)) {
+			for ($d=floor($max); $d>0; $d--) {
+				if ($max<($d*10+1) && fmod($max,$d)==0) {
+					$step = $d;
+				}
+			}
+		}
+		for ($n=$step; $n<=($max+1); $n+=$step) {
+			$chxl .= $n."|";
+		}
 		$chxl .= "3:||".$pgv_lang["statnfam"]."|";
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chm=D,FF0000,0,0:".($i-1).",3,1|{$chm}&amp;chd=e:{$chd}&amp;chco=0000FF,ffffff00&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_22_fwok"]."\" title=\"".$pgv_lang["stat_22_fwok"]."\" />";
 	}

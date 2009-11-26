@@ -421,15 +421,21 @@ class IndividualControllerRoot extends BaseController {
 		global $pgv_lang, $factarray, $UNDERLINE_NAME_QUOTES, $NAME_REVERSE;
 		global $lang_short_cut, $LANGUAGE;
 
-		if (!$event->canShowDetails()) return false;
+		if (!$event->canShowDetails()) {
+			return false;
+		}
 		$factrec = $event->getGedComRecord();
 		$linenum = $event->getLineNumber();
 
 		$this->name_count++;
-		print "<td valign=\"top\"";
-		if (strpos($factrec, "PGV_OLD")!==false) print " class=\"namered\"";
-		if (strpos($factrec, "PGV_NEW")!==false) print " class=\"nameblue\"";
-		print ">";
+		echo "<td valign=\"top\"";
+		if (strpos($factrec, "PGV_OLD")!==false) {
+			echo " class=\"namered\"";
+		}
+		if (strpos($factrec, "PGV_NEW")!==false) {
+			echo " class=\"nameblue\"";
+		}
+		echo ">";
 		if (!preg_match("/^2 (SURN)|(GIVN)/m", $factrec)) {
 			$dummy=new Person($factrec);
 			$dummy->setPrimaryName(0);
@@ -448,39 +454,46 @@ class IndividualControllerRoot extends BaseController {
 						$func($fact, $this->pid);
 					}
 				}
-				print "\n\t\t\t<span class=\"label\">";
-				if (isset($pgv_lang[$fact])) print $pgv_lang[$fact];
-				else if (isset($factarray[$fact])) print $factarray[$fact];
-				else print $fact;
-				print ":</span><span class=\"field\"> ";
+				echo "\n\t\t\t<span class=\"label\">";
+				if (isset($pgv_lang[$fact])) {
+					print $pgv_lang[$fact];
+				} elseif (isset($factarray[$fact])) {
+					echo $factarray[$fact];
+				} else {
+					echo $fact;
+				}
+				echo ":</span><span class=\"field\"> ";
 				if (isset($nmatch[$i][2])) {
 					$name = trim($nmatch[$i][2]);
 					$name = preg_replace("'/,'", ",", $name);
 					$name = preg_replace("'/'", " ", $name);
-					if ($UNDERLINE_NAME_QUOTES) $name=preg_replace('/"([^"]*)"/', '<span class="starredname">\\1</span>', $name);
+					if ($UNDERLINE_NAME_QUOTES) {
+						$name=preg_replace('/"([^"]*)"/', '<span class="starredname">\\1</span>', $name);
+					}
 					$name=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $name);
-					print PrintReady($name);
+					echo PrintReady($name);
 				}
-				print " </span><br />";
+				echo " </span><br />";
 			}
 		}
 		if ($this->total_names>1 && !$this->isPrintPreview() && $this->userCanEdit() && !strpos($factrec, 'PGV_OLD')) {
-			print "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">".$pgv_lang["edit_name"]."</a> | ";
-			print "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">".$pgv_lang["delete_name"]."</a>\n";
-			if ($this->name_count==2) print_help_link("delete_name_help", "qm");
-			print "<br />\n";
+			echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">", $pgv_lang["edit_name"], "</a> | ";
+			echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", $pgv_lang["delete_name"], "</a>\n";
+			if ($this->name_count==2) {
+				print_help_link("delete_name_help", "qm");
+			}
+			echo "<br />\n";
 		}
-		$ct = preg_match("/\d (NOTE)|(SOUR)/", $factrec);
-		if ($ct>0) {
+		if (preg_match("/\d (NOTE)|(SOUR)/", $factrec)>0) {
 			// -- find sources for this name
-			print "<div class=\"indent\">";
+			echo "<div class=\"indent\">";
 			print_fact_sources($factrec, 2);
 			//-- find the notes for this name
-			print "&nbsp;&nbsp;&nbsp;";
+			echo "&nbsp;&nbsp;&nbsp;";
 			print_fact_notes($factrec, 2);
-			print "</div><br />";
+			echo "</div><br />";
 		}
-		print "</td>\n";
+		echo "</td>\n";
 	}
 
 	/**
@@ -530,19 +543,27 @@ class IndividualControllerRoot extends BaseController {
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		global $NAME_LINENUM, $SEX_LINENUM, $pgv_lang, $pgv_changes, $USE_QUICK_UPDATE;
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
-		else $ff="";
+		if ($TEXT_DIRECTION=="rtl") {
+			$ff="_rtl";
+		} else {
+			$ff="";
+		}
 		//-- main edit menu
 		$menu = new Menu($pgv_lang["edit"]);
-		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
+		if (!empty($PGV_IMAGES["edit_indi"]["small"])) {
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
+		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		// Determine whether the Quick Update form can be shown
 		$showQuickForm = false;
 		if ($USE_QUICK_UPDATE) {
-			if ($USE_QUICK_UPDATE==='1' && PGV_USER_IS_ADMIN) $showQuickForm = true;
-			else if ($USE_QUICK_UPDATE==='2' && PGV_USER_GEDCOM_ADMIN) $showQuickForm = true;
-			else if (($USE_QUICK_UPDATE==='3' || $USE_QUICK_UPDATE===true) && PGV_USER_CAN_EDIT) $showQuickForm = true;
+			if ($USE_QUICK_UPDATE==='1' && PGV_USER_IS_ADMIN) {
+				$showQuickForm = true;
+			} elseif ($USE_QUICK_UPDATE==='2' && PGV_USER_GEDCOM_ADMIN) {
+				$showQuickForm = true;
+			} elseif (($USE_QUICK_UPDATE==='3' || $USE_QUICK_UPDATE===true) && PGV_USER_CAN_EDIT) {
+				$showQuickForm = true;
+			}
 		}
 		if ($showQuickForm) {
 			$submenu = new Menu($pgv_lang["quick_update_title"]);
@@ -922,17 +943,22 @@ class IndividualControllerRoot extends BaseController {
 				$label = $labels["sibling"];
 				$sex = $children[$i]->getSex();
 				if ($sex=="F") {
-				$label = $labels["sister"];
+					$label = $labels["sister"];
 				}
 				if ($sex=="M") {
-				$label = $labels["brother"];
+					$label = $labels["brother"];
 				}
-				if ($children[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+				if ($children[$i]->getXref()==$this->pid) {
+					$label = "<img src=\"images/selected.png\" alt=\"\" />";
+				}
 				$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $children[$i]->gedrec);
 				$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
 				if ($pedi) {
-					if ($pedi=="birth") $label .= " (".$factarray["BIRT"].")";
-					else if (isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
+					if ($pedi=="birth") {
+						$label .= " (".$factarray["BIRT"].")";
+					} elseif (isset($pgv_lang[$pedi])) {
+						$label .= " (".$pgv_lang[$pedi].")";
+					}
 				}
 				$children[$i]->setLabel($label);
 			}
@@ -1125,19 +1151,26 @@ class IndividualControllerRoot extends BaseController {
 			<tr>
 				<td class="facts_label"><br />
 				</td>
-				<td class="facts_value<?php print $styleadd ?>">
+				<td class="facts_value<?php echo $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">", $factarray["NCHI"], ": </span>", $family->getNumberOfChildren(), "<br />";?>
-					<?php if ($date && $date->isOK() || $place) {
+					<?php 
+					if ($date && $date->isOK() || $place) {
 						$marr_type = "MARR_".strtoupper($family->getMarriageType());
-						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>";
-						else echo "<span class=\"details_label\">", $factarray["MARR"], ": </span>", $family->getMarriageType();
+						if (isset($factarray[$marr_type])) {
+							echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>";
+						} else {
+							echo "<span class=\"details_label\">", $factarray["MARR"], ": </span>", $family->getMarriageType();
+						}
 						if ($date) {
 							echo $date->Display(false);
-							if (!empty($place)) echo ' -- ';
+							if (!empty($place)) {
+								echo ' -- ';
+							}
 						}
-						if (!empty($place)) echo $place;
-					}
-					else if (get_sub_record(1, "1 _NMR", find_family_record($famid, PGV_GED_ID))) {
+						if (!empty($place)) {
+							echo $place;
+						}
+					} elseif (get_sub_record(1, "1 _NMR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
@@ -1145,8 +1178,7 @@ class IndividualControllerRoot extends BaseController {
 							$func("_NMR", $famid);
 						}
 						echo $factarray["_NMR"];
-					}
-					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid, PGV_GED_ID))) {
+					} elseif (get_sub_record(1, "1 _NMAR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
@@ -1154,25 +1186,28 @@ class IndividualControllerRoot extends BaseController {
 							$func("_NMAR", $famid);
 						}
 						echo $factarray["_NMAR"];
-					}
-					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
-						print "<a href=\"#\" onclick=\"return add_new_record('".$famid."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
-					}
-					else {
+					} elseif ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
+						echo "<a href=\"#\" onclick=\"return add_new_record('", $famid, "', 'MARR');\">", $pgv_lang['add_marriage'], "</a>";
+					} else {
 						$factdetail = explode(' ', trim($family->getMarriageRecord()));
-						if ($family->getMarriageType())
+						if ($family->getMarriageType()) {
 							$marr_type = "MARR_".strtoupper($family->getMarriageType());
-						else
+						} else {
 							$marr_type = "MARR";
-						if (isset($factarray[$marr_type])) {
-							if (isset($factdetail))
-								if (count($factdetail) == 3)
-									if (strtoupper($factdetail[2]) == "Y")
-										echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>", $pgv_lang["yes"];
-									else if (strtoupper($factdetail[2]) == "N")
-										echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>", $pgv_lang["no"];
 						}
-						else echo "<span class=\"details_label\">", $factarray["MARR"], ": </span>", $family->getMarriageType();
+						if (isset($factarray[$marr_type])) {
+							if (isset($factdetail)) {
+								if (count($factdetail) == 3) {
+									if (strtoupper($factdetail[2]) == "Y") {
+										echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>", $pgv_lang["yes"];
+									} elseif (strtoupper($factdetail[2]) == "N") {
+										echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>", $pgv_lang["no"];
+									}
+								}
+							}
+						} else {
+							echo "<span class=\"details_label\">", $factarray["MARR"], ": </span>", $family->getMarriageType();
+						}
 					}
 					?>
 				</td>
