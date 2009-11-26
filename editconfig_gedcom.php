@@ -572,9 +572,13 @@ if ($action=="update") {
 	foreach ($_POST as $key=>$value) {
 		if ($key != "path") {
 			$key=str_replace("NEW_", "", $key);
-			if ($value=='yes') $$key=true;
-			else if ($value=='no') $$key=false;
-			else $$key=$value;
+			if ($value=='yes') {
+				$$key=true;
+			} elseif ($value=='no') {
+				$$key=false;
+			} else {
+				$$key=$value;
+			}
 		}
 	}
 
@@ -595,12 +599,19 @@ if ($action=="update") {
 			$news["date"] = client_time();
 			addNews($news);
 		}
-		if ($source == "upload_form") $check = "upload";
-		else if ($source == "add_form") $check = "add";
-		else if ($source == "add_new_form") $check = "add_new";
-		if (!isset($bakfile)) $bakfile = "";
-		if ($source !== "") header("Location: ".encode_url("uploadgedcom.php?action=$source&check=$check&step=2&GEDFILENAME={$GEDFILENAME}&path={$path}&verify=verify_gedcom&bakfile={$bakfile}", false));
-		else {
+		if ($source == "upload_form") {
+			$check = "upload";
+		} elseif ($source == "add_form") {
+			$check = "add";
+		} elseif ($source == "add_new_form") {
+			$check = "add_new";
+		}
+		if (!isset($bakfile)) {
+			$bakfile = "";
+		}
+		if ($source !== "") {
+			header("Location: ".encode_url("uploadgedcom.php?action=$source&check=$check&step=2&GEDFILENAME={$GEDFILENAME}&path={$path}&verify=verify_gedcom&bakfile={$bakfile}", false));
+		} else {
 			header("Location: editgedcoms.php");
 		}
 		exit;
@@ -654,21 +665,25 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 
 <form enctype="multipart/form-data" method="post" id="configform" name="configform" action="editconfig_gedcom.php">
 
-<table class="facts_table <?php print $TEXT_DIRECTION; ?>">
+<table class="facts_table <?php echo $TEXT_DIRECTION; ?>">
 	<tr>
 		<td colspan="2" class="facts_label"><?php
-		print "<h2>".$pgv_lang["gedconf_head"]." - ";
+		echo "<h2>", $pgv_lang["gedconf_head"], " - ";
 		if (PGV_GED_ID) {
 			echo PrintReady(get_gedcom_setting(PGV_GED_ID, 'title'));
+		} elseif ($source == "add_form") {
+			echo $pgv_lang["add_gedcom"];
+		} elseif ($source == "upload_form") {
+			echo $pgv_lang["upload_gedcom"];
+		} elseif ($source == "add_new_form") {
+			echo $pgv_lang["add_new_gedcom"];
+		} elseif ($source == "replace_form") {
+			echo $pgv_lang['upload_replacement'];
 		}
-		else if ($source == "add_form") print $pgv_lang["add_gedcom"];
-		else if ($source == "upload_form") print $pgv_lang["upload_gedcom"];
-		else if ($source == "add_new_form") print $pgv_lang["add_new_gedcom"];
-		else if ($source == "replace_form") print $pgv_lang['upload_replacement'];
-		print "</h2>";
-		print "<a href=\"editgedcoms.php\"><b>";
-		print $pgv_lang["lang_back_manage_gedcoms"];
-		print "</b></a><br /><br />";
+		echo "</h2>";
+		echo "<a href=\"editgedcoms.php\"><b>";
+		echo $pgv_lang["lang_back_manage_gedcoms"];
+		echo "</b></a><br /><br />";
 	?>
 
 <?php if ($source!="replace_form") { ?>
