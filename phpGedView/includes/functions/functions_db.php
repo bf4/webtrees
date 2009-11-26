@@ -1889,6 +1889,7 @@ function delete_gedcom($ged_id) {
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}mutex         WHERE mx_name   =?")->execute(array($ged));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name          WHERE n_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news          WHERE n_username=?")->execute(array($ged));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=?")->execute(array($ged_id));
