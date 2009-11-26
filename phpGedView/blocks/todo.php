@@ -93,18 +93,18 @@ function print_todo($block=true, $config='', $side, $index) {
 
 	$found=false;
 	$end_jd=$config['show_future']=='yes' ? 99999999 : client_jd();
-	foreach (get_calendar_events(0, $end_jd, '_TODO', $ged_id) as $todo) {
+	foreach (get_calendar_events(0, $end_jd, '_TODO', PGV_GED_ID) as $todo) {
 		$record=GedcomRecord::getInstance($todo['id']);
 		if ($record && $record->canDisplayDetails()) {
 			$pgvu=get_gedcom_value('_PGVU', 2, $todo['factrec']);
 			if ($pgvu==PGV_USER_ID || !$pgvu && $config['show_unassigned']=='yes' || $pgvu && $config['show_other']=='yes') {
 				$content.='<tr valign="top">';
 				if (count($all_gedcoms)>1) {
-					$content.='<td class="list_value_wrap"><a href="'.encode_url("index.php?ctype=gedcom&ged={$ged_name}").'">'.$ged_name.'</a></td>';
+					$content.='<td class="list_value_wrap"><a href="'.encode_url("index.php?ctype=gedcom&ged={PGV_GEDCOM}").'">'.PGV_GEDCOM.'</a></td>';
 				}
 				$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
 				$name=$record->getListName();
-				$content.='<td class="list_value_wrap" align="'.get_align($name).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($name).'</a></td>';
+				$content.='<td class="list_value_wrap" align="'.get_align(PGV_GEDCOM).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady(PGV_GEDCOM).'</a></td>';
 				if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
 					$content.='<td class="list_value_wrap">'.$pgvu.'</td>';
 				}
