@@ -878,9 +878,7 @@ class stats {
 		$sizes = explode('x', $size);
 		$tot = $this->_totalMediaType('all');
 		// Beware divide by zero
-		if ($tot==0) {
-			$tot=1;
-		}
+		if ($tot==0) return $pgv_lang["none"];
 		// Build a table listing only the media types actually present in the GEDCOM
 		$mediaCounts = array();
 		$mediaTypes = "";
@@ -1285,6 +1283,7 @@ class stats {
 	function commonCountriesList() {
 		global $TEXT_DIRECTION;
 		$countries = $this->_statsPlaces();
+		if (!is_array($countries)) return;
 		$top10 = array();
 		$i = 1;
 		foreach ($countries as $country) {
@@ -1396,7 +1395,7 @@ class stats {
 				$tot += $values['count(*)'];
 			}
 			// Beware divide by zero
-			if ($tot==0) $tot=1;
+			if ($tot==0) return '';
 			$centuries = "";
 			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
 			foreach ($rows as $values) {
@@ -1460,10 +1459,9 @@ class stats {
 				$tot += $values['count(*)'];
 			}
 			// Beware divide by zero
-			if ($tot==0) $tot=1;
+			if ($tot==0) return '';
 			$centuries = "";
 			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
-			$counts=array();
 			foreach ($rows as $values) {
 				if (function_exists($func)) {
 					$century = $func($values['century']);
@@ -1546,6 +1544,32 @@ class stats {
 			.' ORDER BY'
 				.' age DESC'
 		, 1);
+		//testing
+		/*
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' i_id AS id,'
+				.' death.d_julianday2-birth.d_julianday1 AS age'
+			.' FROM'
+				.' (SELECT d_gid, d_file, MIN(d_julianday1) AS birth_jd'
+					.' FROM {$TBLPREFIX}date'
+					." WHERE d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND d_julianday1>0"
+					.' GROUP BY d_gid, d_file'
+				.' ) AS birth'
+			.' JOIN ('
+				.' SELECT d_gid, d_file, MIN(d_julianday1) AS death_jd'
+					.' FROM {$TBLPREFIX}date'
+					." WHERE d_fact IN ('DEAT', 'BURI', 'CREM') AND d_julianday1>0"
+					.' GROUP BY d_gid, d_file'
+				.' ) AS death USING (d_gid, d_file)'
+			.' JOIN {$TBLPREFIX}individuals ON (d_gid=i_id AND d_file=i_file)'
+			.' WHERE'
+				." i_file={$this->_ged_id} AND"
+				.$sex_search
+			.' ORDER BY'
+				.' age DESC'
+		, 1);
+		*/
 		if (!isset($rows[0])) {return '';}
 		$row = $rows[0];
 		$person=Person::getInstance($row['id']);
@@ -1762,7 +1786,7 @@ class stats {
 				$age = floor($age/365.25).'y';
 			} else if (floor($age/12)>0) {
 				$age = floor($age/12).'m';
-			} else {
+			} else if (!empty($age)) {
 				$age = $age.'d';
 			}
 			$func($age, $show_years);
@@ -1800,7 +1824,7 @@ class stats {
 					." death.d_type='@#DGREGORIAN@' AND"
 					.' death.d_julianday1>birth.d_julianday2'
 				.' GROUP BY century, sex ORDER BY century, sex');
-
+			if (empty($rows)) return '';
 			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
 			$chxl = "0:|";
 			$male = true;
@@ -2455,7 +2479,7 @@ class stats {
 				$tot += $values['count(*)'];
 			}
 			// Beware divide by zero
-			if ($tot==0) $tot=1;
+			if ($tot==0) return '';
 			$centuries = "";
 			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
 			$counts=array();
@@ -2537,7 +2561,7 @@ class stats {
 				$tot += $values['count(*)'];
 			}
 			// Beware divide by zero
-			if ($tot==0) $tot=1;
+			if ($tot==0) return '';
 			$centuries = "";
 			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
 			$counts=array();
@@ -2616,6 +2640,7 @@ class stats {
 					." married.d_type='@#DGREGORIAN@' AND"
 					.' married.d_julianday2 > birth.d_julianday1'
 				.' GROUP BY century, sex ORDER BY century, sex');
+			if (empty($rows)) return'';
 			$max = 0;
 			foreach ($rows as $values) {
 				if ($max<$values['age']) $max = $values['age'];
@@ -3104,6 +3129,7 @@ class stats {
 					." married.d_fact = 'MARR' AND"
 					." married.d_type='@#DGREGORIAN@'"
 				.' GROUP BY century ORDER BY century');
+			if (empty($rows)) return '';
 			foreach ($rows as $values) {
 				if ($max<$values['num']) $max = $values['num'];
 			}
@@ -3255,6 +3281,7 @@ class stats {
 				." married.d_fact = 'MARR' AND"
 				." married.d_type='@#DGREGORIAN@'"
 			.' GROUP BY century ORDER BY century');
+		if (empty($rows)) return '';
 		foreach ($rows as $values) {
 			if ($max<$values['count']) $max = $values['count'];
 			$tot += $values['count'];
@@ -3587,7 +3614,8 @@ class stats {
 		if (isset($params[4]) && $params[4] != '') {$maxtoshow = strtolower($params[4]);}else{$maxtoshow = 7;}
 		$sizes = explode('x', $size);
 		$tot_indi = $this->totalIndividuals();
-		$given = self::_commonGivenQuery('B', 'chart', true);
+		$given = self::_commonGivenQuery('B', 'chart');
+		if (!is_array($given)) return '';
 		$given = array_slice($given, 0, $maxtoshow);
 		if (count($given) <= 0) {return '';}
 		$tot = 0;
