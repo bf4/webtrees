@@ -159,6 +159,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= "<input type=\"hidden\" name=\"ctype\" value=\"$ctype\" />\n";
 		$content .= "<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n";
 		$content .= "<input type=\"hidden\" name=\"ged\" value=\"".PGV_GEDCOM."\" />\n";
+		$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center {$TEXT_DIRECTION}\">";
 		$content .= "<tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
 		$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";
 
