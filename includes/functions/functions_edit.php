@@ -1265,43 +1265,50 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	}else{
 		echo "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 	}
+
 	// help link
-	if (!in_array($fact, $emptyfacts)) {
-		if ($fact=="DATE") {
-			print_help_link("def_gedcom_date_help", "qm", "date");
-		} elseif ($fact=="FORM" && $upperlevel!='OBJE') {
-			print_help_link("PLAC_FORM_help", "qm");
-		} elseif ($fact=="RESN") {
-			print_help_link($fact."_help", "qm");
-		} elseif ($fact=="NOTE" && $islink){
-			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
-				print_help_link("edit_add_GEDFact_ASSISTED_help", "qm");
-			}else{
-				print_help_link("edit_add_SHARED_NOTE_help", "qm");
+	// If using GEDFact-assistant window
+	if ($action=="addnewnote_assisted") {
+		// Do not print on GEDFact Assistant window
+	}else{
+		if (!in_array($fact, $emptyfacts)) {
+			if ($fact=="DATE") {
+				print_help_link("def_gedcom_date_help", "qm", "date");
+			} elseif ($fact=="FORM" && $upperlevel!='OBJE') {
+				print_help_link("PLAC_FORM_help", "qm");
+			} elseif ($fact=="RESN") {
+				print_help_link($fact."_help", "qm");
+			} elseif ($fact=="NOTE" && $islink){
+				if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
+					print_help_link("edit_add_GEDFact_ASSISTED_help", "qm");
+				}else{
+					print_help_link("edit_add_SHARED_NOTE_help", "qm");
+				}
+			} else {
+				print_help_link("edit_".$fact."_help", "qm");
 			}
-		} else {
-			print_help_link("edit_".$fact."_help", "qm");
 		}
-	}
-	if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
-		// Allow special processing for different languages
-		$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
-		if (function_exists($func)) {
-			// Localise the AKA fact
-			$func($fact, $pid);
+		if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
+			// Allow special processing for different languages
+			$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+			if (function_exists($func)) {
+				// Localise the AKA fact
+				$func($fact, $pid);
+			}
 		}
-	}
-	else if ($fact=="AGNC" && !empty($main_fact)) {
-		// Allow special processing for different languages
-		$func="fact_AGNC_localisation_{$lang_short_cut[$LANGUAGE]}";
-		if (function_exists($func)) {
-			// Localise the AGNC fact
-			$func($fact, $main_fact);
+		else if ($fact=="AGNC" && !empty($main_fact)) {
+			// Allow special processing for different languages
+			$func="fact_AGNC_localisation_{$lang_short_cut[$LANGUAGE]}";
+			if (function_exists($func)) {
+				// Localise the AGNC fact
+				$func($fact, $main_fact);
+			}
 		}
 	}
 	if (PGV_DEBUG) {
 		echo $element_name, "<br />\n";
 	}
+	
 
 	// tag name
 	if (!empty($label)) {
@@ -1313,7 +1320,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	} else {
 		if ($fact=="NOTE" && $islink){
 			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
-				echo "GEDFact Assistant"; 
+			//	use $label (GEDFact Assistant); 
 			}else{
 				echo $pgv_lang["shared_note"];
 			}
@@ -1542,7 +1549,12 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		if ($rows>1) echo "<textarea tabindex=\"", $tabkey, "\" id=\"", $element_id, "\" name=\"", $element_name, "\" rows=\"", $rows, "\" cols=\"", $cols, "\">", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "</textarea><br />\n";
 		else {
 			// text
-			echo "<input tabindex=\"", $tabkey, "\" type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "\" size=\"", $cols, "\" dir=\"ltr\"";
+			// If using GEDFact-assistant window
+			if ($action=="addnewnote_assisted") {
+				echo "<input tabindex=\"", $tabkey, "\" type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8')), "\" style=\"width:4.1em;\" dir=\"ltr\"";
+			}else{
+				echo "<input tabindex=\"", $tabkey, "\" type=\"text\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8')), "\" size=\"", $cols, "\" dir=\"ltr\"";
+			}
 			echo " class=\"{$fact}\"";
 			echo " autocomplete=\"off\"";
 			if (in_array($fact, $subnamefacts)) echo " onblur=\"updatewholename();\" onkeyup=\"updatewholename();\"";
@@ -1667,14 +1679,16 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 				}
 			}
 		}
-		echo "<br />";
-		// ===========================================================
 
-		if ($fact=="OBJE") print_findmedia_link($element_id, "1media");
+		if ($fact=="OBJE") { 
+			print_findmedia_link($element_id, "1media");
+		}
 		if ($fact=="OBJE" && !$value) {
 			print_addnewmedia_link($element_id);
 			$value = "new";
 		}
+		
+		echo "<br />";
 	}
 	
 	// current value
