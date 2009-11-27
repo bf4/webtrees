@@ -910,17 +910,13 @@ if ($stage == 1) {
 	$BLOCK_SIZE = 1024 * 4; //-- 4k bytes per read (4kb is usually the page size of a virtual memory system)
 	//-- resume a halted import from the session
 	if (!empty ($_SESSION["resumed"])) {
-		$TOTAL_BYTES = $_SESSION["TOTAL_BYTES"];
+		$import_stats=$_SESSION['import_stats'];
+		$start_time  =$_SESSION['start_time'];
+		$TOTAL_BYTES =$_SESSION["TOTAL_BYTES"];
 		$fcontents = $_SESSION["fcontents"];
-		$listtype = $_SESSION["listtype"];
-		$exectime_start = $_SESSION["exectime_start"];
 		$media_count = $_SESSION["media_count"];
 		$found_ids = $_SESSION["found_ids"];
 		$MAX_IDS = $_SESSION["MAX_IDS"];
-		$show_type = $_SESSION["show_type"];
-		$i_start = $_SESSION["i_start"];
-		$type_BYTES = $_SESSION["type_BYTES"];
-		$i = $_SESSION["i"];
 		$autoContinue = $_SESSION["autoContinue"];
 		fseek($fpged, $TOTAL_BYTES);
 	} else {
@@ -928,8 +924,9 @@ if ($stage == 1) {
 		$TOTAL_BYTES = 0;
 		$media_count = 0;
 		$MAX_IDS = array();
-		$listtype = array();
 		$_SESSION["resumed"] = 1;
+		$import_stats=array();
+		$start_time=microtime(true);
 	}
 	while (!feof($fpged)) {
 		$temp = fread($fpged, $BLOCK_SIZE);
@@ -947,70 +944,51 @@ if ($stage == 1) {
 			}
 
 			//-- pull the next record out of the file
-			if ($pos2)
-			$indirec = substr($fcontents, $pos1, $pos2 - $pos1);
-			else
-			$indirec = substr($fcontents, $pos1);
-
-			//-- remove any extra slashes
-			$indirec = preg_replace("/\\\/", "/", $indirec);
-			print "\n";
-
-			//-- import anything that is not a blob
-			if (strpos($indirec, "\n1 BLOB")===false) {
-				try {
-					import_record(trim($indirec), get_id_from_gedcom($GEDCOM), false);
-				} catch (PDOException $ex) {
-					// Import errors are likely to be caused by duplicate records.
-					// There is no safe way of handling these.  Just display them
-					// and let the user decide.
-					echo '<pre class="error">', $ex->getMessage(), '</pre>';
-					// Don't let the error message disappear off the screen.
-					$autoContinue=false;
-				}
+			if ($pos2) {
+				$indirec = substr($fcontents, $pos1, $pos2 - $pos1);
+			} else {
+				$indirec = substr($fcontents, $pos1);
 			}
+
+			try {
+				$record_type=import_record($indirec, PGV_GED_ID, false);
+			} catch (PDOException $ex) {
+				// Import errors are likely to be caused by duplicate records.
+				// There is no safe way of handling these.  Just display them
+				// and let the user decide.
+				echo '<pre class="error">', $ex->getMessage(), '</pre>';
+				// Don't let the error message disappear off the screen.
+				$autoContinue=false;
+			}
+
+			// Generate import statistics
+			if (!isset($import_stats[$record_type])) {
+				$import_stats[$record_type]=array(
+					'records'=>0,
+					'bytes'  =>0,
+					'seconds'=>0
+				);
+			}
+			$end_time=microtime(true);
+			$import_stats[$record_type]['records']++;
+			$import_stats[$record_type]['bytes'  ]+=$pos2 ? $pos2-$pos1 : strlen($indirec);
+			$import_stats[$record_type]['seconds']+=$end_time-$start_time;
+			$start_time=$end_time;
 
 			//-- move the cursor to the start of the next record
 			$pos1 = $pos2;
 
-			//-- calculate some statistics
-			if (!isset ($show_type)) {
-				$show_type = $xtype;
-				$i_start = 1;
-				$exectime_start = 0;
-				$type_BYTES = 0;
-			}
 			$i ++;
-			if ($show_type != $xtype) {
-				$newtime = time();
-				$exectime = $newtime - $oldtime;
-				$show_exectime = $exectime - $exectime_start;
-				$show_i = $i - $i_start;
-				$type_BYTES = $TOTAL_BYTES - $type_BYTES;
-				if (!isset ($listtype[$show_type]["type"])) {
-					$listtype[$show_type]["exectime"] = $show_exectime;
-					$listtype[$show_type]["bytes"] = $type_BYTES;
-					$listtype[$show_type]["i"] = $show_i;
-					$listtype[$show_type]["i_start"] = $i_start;
-					$listtype[$show_type]["type"] = $show_type;
-				} else {
-					$listtype[$show_type]["exectime"] += $show_exectime;
-					$listtype[$show_type]["bytes"] += $type_BYTES;
-					$listtype[$show_type]["i"] += $show_i;
-				}
-				$show_type = $xtype;
-				$i_start = $i;
-				$exectime_start = $exectime;
-				$type_BYTES = $TOTAL_BYTES;
-			}
+
 			//-- update the progress bars at every 50 records
 			if ($i % 25 == 0) {
 				$newtime = time();
 				$exectime = $newtime - $oldtime;
-				print "\n<script type=\"text/javascript\">update_progress($TOTAL_BYTES, $exectime);</script>\n";
+				echo PGV_JS_START, "update_progress($pos2, $exectime);", PGV_JS_END;
 				flush();
-			} else
-			print " ";
+			} else {
+				print ' ';
+			}
 
 			//-- check if we are getting close to timing out
 			if ($i % 5 == 0) {
@@ -1022,18 +1000,14 @@ if ($stage == 1) {
 					$importtime = $importtime + $exectime;
 					$fcontents = substr($fcontents, $pos2);
 					//-- store the resume information in the session
+					$_SESSION['import_stats']=$import_stats;
+					$_SESSION['start_time']=$start_time;
 					$_SESSION["media_count"] = $media_count;
 					$_SESSION["TOTAL_BYTES"] = $TOTAL_BYTES;
 					$_SESSION["fcontents"] = $fcontents;
-					$_SESSION["listtype"] = $listtype;
-					$_SESSION["exectime_start"] = $exectime_start;
 					$_SESSION["importtime"] = $importtime;
 					$_SESSION["MAX_IDS"] = $MAX_IDS;
-					$_SESSION["i"] = $i;
 					$_SESSION["found_ids"] = $found_ids;
-					$_SESSION["show_type"] = $show_type;
-					$_SESSION["i_start"] = $i_start;
-					$_SESSION["type_BYTES"] = $type_BYTES;
 					$_SESSION["autoContinue"] = $autoContinue;
 
 					//-- close the file connection
@@ -1111,54 +1085,56 @@ if ($stage == 1) {
 	$go_pedi = $pgv_lang["click_here_to_go_to_pedigree_tree"];
 	$go_welc = $pgv_lang["welcome_page"];
 	if ($LANGUAGE == "french" || $LANGUAGE == "italian") {
-		print "<script type=\"text/javascript\">complete_progress($importtime, \"$exec_text\", \"$go_pedi\", \"$go_welc\");</script>";
+		echo PGV_JS_START, "complete_progress($importtime, \"$exec_text\", \"$go_pedi\", \"$go_welc\");", PGV_JS_END;
 	} else {
-		print "<script type=\"text/javascript\">complete_progress($importtime, '$exec_text', '$go_pedi', '$go_welc');</script>";
+		echo PGV_JS_START, "complete_progress($importtime, '$exec_text', '$go_pedi', '$go_welc');", PGV_JS_END;
 	}
 	flush();
 
-	// TODO: Layout for Hebrew
-	$show_table1 = "\n<table class=\"list_table\"><tr>";
+	// Import Statistics
+	$show_table1  = "<table class=\"list_table\"><tr>";
 	$show_table1 .= "<tr><td class=\"topbottombar\" colspan=\"4\">".$pgv_lang["ged_import"]."</td></tr>";
-	$show_table1 .= "<td class=\"descriptionbox\">&nbsp;".$pgv_lang["exec_time"]."&nbsp;</td>";
-	$show_table1 .= "<td class=\"descriptionbox\">&nbsp;".$pgv_lang["bytes_read"]."&nbsp;</td>\n";
-	$show_table1 .= "<td class=\"descriptionbox\">&nbsp;".$pgv_lang["found_record"]."&nbsp;</td>";
-	$show_table1 .= "<td class=\"descriptionbox\">&nbsp;".$pgv_lang["type"]."&nbsp;</td></tr>\n";
-	foreach ($listtype as $indexval => $type) {
-		$show_table1 .= "<tr><td class=\"optionbox indent\">".$type["exectime"]." ".$pgv_lang["sec"]."</td>";
-		$show_table1 .= "<td class=\"optionbox indent\">". ($type["bytes"] == "0" ? "++" : $type["bytes"])."</td>\n";
-		$show_table1 .= "<td class=\"optionbox indent\">".$type["i"]."</td>";
-		$show_table1 .= "<td class=\"optionbox\">&nbsp;".$type["type"]."&nbsp;</td></tr>\n";
+	$show_table1 .= "<td class=\"descriptionbox\">".$pgv_lang["exec_time"]."</td>";
+	$show_table1 .= "<td class=\"descriptionbox\">".$pgv_lang["bytes_read"]."</td>";
+	$show_table1 .= "<td class=\"descriptionbox\">".$pgv_lang["found_record"]."</td>";
+	$show_table1 .= "<td class=\"descriptionbox\">".$pgv_lang["type"]."</td></tr>";
+	$total_seconds=0;
+	$total_bytes  =0;
+	$total_records=0;
+	foreach ($import_stats as $type=>$stats) {
+		$total_seconds+=$stats['seconds'];
+		$total_bytes  +=$stats['bytes'];
+		$total_records+=$stats['records'];
+		$show_table1 .= "<tr><td class=\"optionbox indent\">".sprintf("%.2f %s", $stats['seconds'], $pgv_lang['sec'])."</td>";
+		$show_table1 .= "<td class=\"optionbox indent\">".$stats['bytes']."</td>";
+		$show_table1 .= "<td class=\"optionbox indent\">".$stats['records']."</td>";
+		$show_table1 .= "<td class=\"optionbox\">".$type."</td></tr>";
 	}
-	$show_table1 .= "<tr><td class=\"optionbox indent\">$importtime ".$pgv_lang["sec"]."</td>";
-	$show_table1 .= "<td class=\"optionbox indent\">$TOTAL_BYTES<script type=\"text/javascript\">update_progress($TOTAL_BYTES, $exectime);</script></td>\n";
-	$show_table1 .= "<td class=\"optionbox indent\">". ($i -1)."</td>";
-	$show_table1 .= "<td class=\"optionbox\">&nbsp;</td></tr>\n";
-	$show_table1 .= "</table>\n";
-	print "<tr><td class=\"topbottombar $TEXT_DIRECTION\">";
-	print $pgv_lang["import_statistics"];
-	print "</td></tr>";
+	$show_table1 .= "<tr><td class=\"optionbox indent\">".sprintf("%.2f %s", $total_seconds, $pgv_lang['sec'])."</td>";
+	$show_table1 .= "<td class=\"optionbox indent\">".$total_bytes.PGV_JS_START."update_progress($total_bytes, $exectime);".PGV_JS_END;
+	$show_table1 .= "<td class=\"optionbox indent\">". $total_records."</td>";
+	$show_table1 .= "<td class=\"optionbox\">&nbsp;</td></tr>";
+	$show_table1 .= "</table>";
+	echo "<tr><td class=\"topbottombar $TEXT_DIRECTION\">", $pgv_lang["import_statistics"], "</td></tr>";
 	print "<tr><td class=\"optionbox\">";
-	print "\n<table cellspacing=\"20px\"><tr><td class=\"optionbox\" style=\"vertical-align: top;\">";
+	print "<table cellspacing=\"20px\"><tr><td class=\"optionbox\" style=\"vertical-align: top;\">";
 	if (isset ($skip_table)) {
 	 print "<br />...";
 	} else {
 		print $show_table1;
 	}
-	print "</td></tr></table>\n";
+	print "</td></tr></table>";
 	// NOTE: Finished Links
-	import_max_ids(get_id_from_gedcom($FILE), $MAX_IDS);
-	set_gedcom_setting(get_id_from_gedcom($ged), 'imported', true);
-	set_gedcom_setting(get_id_from_gedcom($ged), 'pgv_ver', PGV_VERSION);
+	import_max_ids(PGV_GED_ID, $MAX_IDS);
+	set_gedcom_setting(PGV_GED_ID, 'imported', true);
+	set_gedcom_setting(PGV_GED_ID, 'pgv_ver', PGV_VERSION);
 	print "</td></tr>";
 
 	$record_count = 0;
 	$_SESSION["resumed"] = 0;
+	unset ($_SESSION['import_stats']);
 	unset ($_SESSION["TOTAL_BYTES"]);
 	unset ($_SESSION["fcontents"]);
-	unset ($_SESSION["listtype"]);
-	unset ($_SESSION["exectime_start"]);
-	unset ($_SESSION["i"]);
 	@ set_time_limit($TIME_LIMIT);
 }
 }
