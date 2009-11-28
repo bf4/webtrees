@@ -99,7 +99,7 @@ $PGV_BLOCKS = array();
 $d = dir("blocks");
 while (false !== ($entry = $d->read())) {
 	if (($entry!=".") && ($entry!="..") && ($entry!="CVS") && (preg_match("/\.php$/", $entry)>0)) {
-		include_once("blocks/".$entry);
+		require_once("blocks/".$entry);
 	}
 }
 $d->close();
@@ -118,7 +118,7 @@ if (file_exists("modules")) {
 				while (false !== ($entry = $d->read())) {
 				if (($entry!=".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")&&(preg_match("/\.php$/", $entry)>0)) {
 						$p=$path.'/'.$entry;
-						include_once($p);
+						require_once($p);
 					}
 				}
 			}

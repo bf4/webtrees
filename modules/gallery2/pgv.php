@@ -45,7 +45,7 @@ if(!file_exists("{$modinfo['Gallery2']['path']}/embed.php"))
 define('PGV_GALLERY2_INIT', true);
 
 // Load the embeding API
-include_once "{$modinfo['Gallery2']['path']}/embed.php";
+require_once "{$modinfo['Gallery2']['path']}/embed.php";
 
 // Load PGV embeding language file
 require_once 'modules/gallery2/language/mod_en.php';

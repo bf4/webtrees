@@ -41,11 +41,11 @@ print_header($controller->getPageTitle());
 
 // LightBox
 if (PGV_USE_LIGHTBOX) {
-	include './modules/lightbox/lb_defaultconfig.php';
+	require './modules/lightbox/lb_defaultconfig.php';
 	if (file_exists('./modules/lightbox/lb_config.php')) {
-		include './modules/lightbox/lb_config.php';
+		require './modules/lightbox/lb_config.php';
 	}
-	include './modules/lightbox/functions/lb_call_js.php';
+	require './modules/lightbox/functions/lb_call_js.php';
 	loadLangFile('lightbox:lang');
 }
 
@@ -142,7 +142,7 @@ echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
 
 // Print the tasks table
 if (file_exists('./modules/research_assistant/research_assistant.php') && $SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
-	include_once './modules/research_assistant/research_assistant.php';
+	require_once './modules/research_assistant/research_assistant.php';
 	$mod=new ra_functions();
 	$mod->Init();
 	echo $mod->getSourceTasks($controller->sid, $controller->source->getFullName());

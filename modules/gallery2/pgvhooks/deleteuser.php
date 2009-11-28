@@ -28,7 +28,7 @@ $modinfo = parse_ini_file('modules/gallery2.php', true);
 if(!isset($modinfo['Gallery2']['path'])){$modinfo['Gallery2']['path'] = 'modules/gallery2';}
 if(file_exists("{$modinfo['Gallery2']['path']}/embed.php"))
 {
-	include_once "{$modinfo['Gallery2']['path']}/embed.php";
+	require_once "{$modinfo['Gallery2']['path']}/embed.php";
 	require_once 'modules/gallery2/G2EmbedDiscoveryUtilities.class';
 	require_once("{$modinfo['Gallery2']['path']}/modules/core/classes/GalleryCoreApi.class");
 	require_once("{$modinfo['Gallery2']['path']}/modules/core/classes/GallerySession.class");

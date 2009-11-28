@@ -223,7 +223,7 @@ class AncestryControllerRoot extends BaseController {
 //-- load a user extended class if one exists
 if (file_exists('includes/controllers/ancestry_ctrl_user.php'))
 {
-	include_once 'includes/controllers/ancestry_ctrl_user.php';
+	require_once 'includes/controllers/ancestry_ctrl_user.php';
 }
 else
 {

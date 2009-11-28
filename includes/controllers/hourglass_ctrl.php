@@ -598,7 +598,7 @@ class HourglassControllerRoot extends BaseController {
 //-- load a user extended class if one exists
 if (file_exists('includes/controllers/hourglass_ctrl_user.php'))
 {
-	include_once 'includes/controllers/hourglass_ctrl_user.php';
+	require_once 'includes/controllers/hourglass_ctrl_user.php';
 }
 else
 {

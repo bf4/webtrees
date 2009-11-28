@@ -968,7 +968,7 @@ case 'addnewnote_assisted':
 			<input id="pid_array" type="hidden" name="pid_array" value="none" />
 			<input id="pid" type="hidden" name="pid" value=<?php echo $pid; ?> />
 			<?php
-				include ('modules/GEDFact_assistant/CENS_ctrl.php');
+				require ('modules/GEDFact_assistant/CENS_ctrl.php');
 			?>
 		</form>
 	</div>
@@ -979,7 +979,7 @@ case 'addnewnote_assisted':
 //------------------------------------------------------------------------------
 //-- add Shared Note census event from the incoming variables using GEDFact Assistant
 case 'addnoteaction_assisted':
-	include ('modules/GEDFact_assistant/_CENS/gedrec_append.php');
+	require ('modules/GEDFact_assistant/_CENS/gedrec_append.php');
 	break;
 	
 //------------------------------------------------------------------------------
@@ -1006,7 +1006,7 @@ case 'addmedia_links':
 		<input type="hidden" name="noteid" value="newnote" />			
 	<!--	<input type="hidden" name="pid" value="<?php // echo $pid; ?>" />		--> 
 		<?php
-		include ('modules/GEDFact_assistant/MEDIA_ctrl.php');
+		require ('modules/GEDFact_assistant/MEDIA_ctrl.php');
 		?>
 	</form>
 	<?php
@@ -2045,7 +2045,7 @@ case 'paste':
 case 'reorder_media': // Sort page using Popup
 	require_once("js/prototype.js.htm");
 	require_once("js/scriptaculous.js.htm");
-	include_once("includes/media_reorder.php");
+	require_once("includes/media_reorder.php");
 	break;
 
 //------------------------------------------------------------------------------
@@ -2649,7 +2649,7 @@ case 'reorder_fams_update':
 //-- for reuse of editing functions from forms
 case 'mod_edit_fact':
 	if (isset($_REQUEST['mod'])) $mod = $_REQUEST['mod'];
-	include_once('modules/'.$mod.'/'.$mod.'.php');
+	require_once('modules/'.$mod.'/'.$mod.'.php');
 	$module = new $mod();
 	if (method_exists($module, "edit_fact")) {
 		$module->edit_fact();

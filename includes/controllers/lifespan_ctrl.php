@@ -612,7 +612,7 @@ class LifespanControllerRoot extends BaseController {
 // -- end of class
 //-- load a user extended class if one exists
 if (file_exists('includes/controllers/timeline_ctrl_user.php')) {
-	include_once 'includes/controllers/timeline_ctrl_user.php';
+	require_once 'includes/controllers/timeline_ctrl_user.php';
 } else {
 	class LifespanController extends LifespanControllerRoot {
 	}

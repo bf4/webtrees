@@ -348,7 +348,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 //-- load a user extended class if one exists
 if (file_exists('includes/controllers/descendancy_ctrl_user.php'))
 {
-	include_once 'includes/controllers/descendancy_ctrl_user.php';
+	require_once 'includes/controllers/descendancy_ctrl_user.php';
 }
 else
 {

@@ -28,7 +28,7 @@
 //		print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
 		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
 
-		include_once('modules/googlemap/googlemap.php');
+		require_once('modules/googlemap/googlemap.php');
 
 		if ($GOOGLEMAP_ENABLED == "false") {
 			print "<table class=\"facts_table\">\n";
@@ -75,7 +75,7 @@
 			}else{
 				if(empty($SEARCH_SPIDER)) {
 					if($SESSION_HIDE_GOOGLEMAP == "false") {
-						include_once('modules/googlemap/googlemap.php');
+						require_once('modules/googlemap/googlemap.php');
 						print "<table width=\"100%\" border=\"0\" class=\"facts_table\">\n";
 						print "<tr><td valign=\"top\">\n";
 						print "<div id=\"googlemap_left\">\n";

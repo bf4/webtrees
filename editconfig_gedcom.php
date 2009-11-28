@@ -583,7 +583,7 @@ if ($action=="update") {
 	}
 
 	//-- delete the cache files for the welcome page blocks
-	include_once("includes/index_cache.php");
+	require_once("includes/index_cache.php");
 	clearCache();
 
 	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated");
