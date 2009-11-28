@@ -34,8 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_USERMIGRATE_CTRL_PHP', '');
 
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/functions/functions_export.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/functions/functions_export.php';
 
 loadLangFile("pgv_confighelp");
 
@@ -261,7 +261,7 @@ class UserMigrateControllerRoot extends BaseController {
 
 		// Make the zip
 		if (count($this->flist) > 0) {
-			require_once "includes/pclzip.lib.php";
+			require_once PGV_ROOT.'includes/pclzip.lib.php';
 			$this->buname = date("YmdHis").".zip";
 			$this->fname = $INDEX_DIRECTORY.$this->buname;
 			$comment = "Created by ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT." on ".date("r").".";
@@ -294,7 +294,7 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->impSuccess = false;
 			return;
 		} else {
-			require $INDEX_DIRECTORY."authenticate.php";
+			require $INDEX_DIRECTORY.'authenticate.php';
 			$countold = count($users);
 			PGV_DB::exec("DELETE FROM {$TBLPREFIX}users");
 			foreach($users as $username=>$user) {
@@ -441,9 +441,9 @@ class UserMigrateControllerRoot extends BaseController {
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/usermigrate_ctrl_user.php'))
+if (file_exists(PGV_ROOT.'includes/controllers/usermigrate_ctrl_user.php'))
 {
-	require_once 'includes/controllers/usermigrate_ctrl_user.php';
+	require_once PGV_ROOT.'includes/controllers/usermigrate_ctrl_user.php';
 }
 else
 {

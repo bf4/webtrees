@@ -29,7 +29,7 @@
 
 require './config.php';
 
-require_once './includes/controllers/clippings_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/clippings_ctrl.php';
 loadlangfile('pgv_admin');		// we need some definitions from this file, even when not logged in as admin
 
 $controller = new ClippingsController();
@@ -38,8 +38,7 @@ $controller->init();
 // -- print html header information
 print_header($pgv_lang["clip_cart"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
-require './js/sorttable.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 echo PGV_JS_START;
 echo 'function radAncestors(elementid) {var radFamilies=document.getElementById(elementid);radFamilies.checked=true;}';

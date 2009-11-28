@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_edit.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
 
 loadLangFile('pgv_confighelp');
 
@@ -230,7 +230,7 @@ if ($action=='createuser' || $action=='edituser2') {
 } else {
 	print_header($pgv_lang['user_admin']);
 
-	if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 }
 
 // Print the form to edit a user

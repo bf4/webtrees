@@ -28,8 +28,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once 'modules/research_assistant/forms/ra_form.php';
-require_once 'includes/functions/functions_edit.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_form.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
 
 class %FORMNAME% extends ra_form {
 

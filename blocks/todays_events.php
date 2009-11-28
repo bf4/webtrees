@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_TODAYS_EVENTS_PHP', '');
 
-require_once 'includes/functions/functions_print_lists.php';
+require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $PGV_BLOCKS["print_todays_events"]["name"]		= $pgv_lang["todays_events_block"];
 $PGV_BLOCKS["print_todays_events"]["descr"]		= "todays_events_descr";

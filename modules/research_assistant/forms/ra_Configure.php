@@ -30,7 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once 'modules/research_assistant/forms/ra_form.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_form.php';
 
 global $pgv_lang;
 loadLangFile("pgv_confighelp");
@@ -41,8 +41,10 @@ loadLangFile("pgv_confighelp");
  
 global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;
 global $INDEX_DIRECTORY, $GEDCOM, $person_privacy;
-require_once './modules/research_assistant/forms/ra_privacy.php';
-if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) require_once $INDEX_DIRECTORY.$GEDCOM."_ra_priv.php";
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_privacy.php';
+if (file_exists($INDEX_DIRECTORY.$GEDCOM.'_ra_priv.php')) {
+	require_once $INDEX_DIRECTORY.$GEDCOM.'_ra_priv.php';
+}
 
 if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
 
@@ -69,7 +71,7 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
 		fclose($fp);
 	}
 	
-	require $INDEX_DIRECTORY.$GEDCOM."_ra_priv.php";
+	require $INDEX_DIRECTORY.$GEDCOM.'_ra_priv.php';
 	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated");
 	$gedcomprivname = $GEDCOM."_ra_priv.php";
 	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);

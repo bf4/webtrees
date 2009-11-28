@@ -1020,7 +1020,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 </table>
 <?php
 // ==================================================================
-require_once 'includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
 /**
  * print the information for an individual chart box
  *

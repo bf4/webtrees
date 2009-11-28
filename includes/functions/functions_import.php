@@ -32,11 +32,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_IMPORT_PHP', '');
 
-require_once 'includes/index_cache.php';
-require_once 'includes/classes/class_media.php';
-require_once 'includes/classes/class_mutex.php';
-require_once 'includes/functions/functions_lang.php';
-require_once 'includes/functions/functions_export.php';
+require_once PGV_ROOT.'includes/index_cache.php';
+require_once PGV_ROOT.'includes/classes/class_media.php';
+require_once PGV_ROOT.'includes/classes/class_mutex.php';
+require_once PGV_ROOT.'includes/functions/functions_lang.php';
+require_once PGV_ROOT.'includes/functions/functions_export.php';
 
 // Tidy up a gedcom record on import, so that we can access it consistently/efficiently.
 function reformat_record_import($rec) {

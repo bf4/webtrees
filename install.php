@@ -38,10 +38,10 @@
  */
 
 //-- load up the configuration or the default configuration
-if (file_exists('config.php')) require_once './config.php';
+if (file_exists('./config.php')) require_once './config.php';
 else require_once './config.dist';
 
-require_once 'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 //-- if we are configured, then make sure that only admins access this page
 if (PGV_DB::isConnected() && adminUserExists() && !userIsAdmin()) {
@@ -455,7 +455,7 @@ $errormsg = "";
 					$success = printAdminUserForm();
 					break;
 				case 8:
-					require_once './blocks/getting_started.php';
+					require_once PGV_ROOT.'blocks/getting_started.php';
 					getting_started_block(false,"",0,0);
 					break;
 				default:	// case 1
@@ -743,7 +743,7 @@ function printConfigForm(){
 	$oldmemorylimit = @ini_get('memory_limit');
 	if ($oldmemorylimit > $PGV_MEMORY_LIMIT) $PGV_MEMORY_LIMIT = $oldmemorylimit;
 
-	require_once './js/dhtmlXTabbar.js.htm';
+	require_once PGV_ROOT.'js/dhtmlXTabbar.js.htm';
 	?>
 	<?php if ($BROWSERTYPE!='msie') { ?>
 	<div id="conf_tabbar" class="dhtmlxTabBar" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'; else echo ' align="left"';?> skinColors="<?php print $PGV_DXHTMLTAB_COLORS; ?>" style="min-width: 450px; height: 380px">

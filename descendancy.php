@@ -26,15 +26,15 @@
 
 require './config.php';
 
-require './includes/controllers/descendancy_ctrl.php';
-require './includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/controllers/descendancy_ctrl.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $controller=new DescendancyController();
 $controller->init();
 
 print_header($controller->name." ".$pgv_lang["descend_chart"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
 if (PGV_USE_LIGHTBOX) {

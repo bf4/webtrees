@@ -34,9 +34,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_MEDIA_CTRL_PHP', '');
 
-require_once 'includes/controllers/individual_ctrl.php';
-require_once 'includes/classes/class_media.php';
-require_once 'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/controllers/individual_ctrl.php';
+require_once PGV_ROOT.'includes/classes/class_media.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 class MediaControllerRoot extends IndividualController{
 
@@ -454,8 +454,8 @@ class MediaControllerRoot extends IndividualController{
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/media_ctrl_user.php')) {
-	require_once 'includes/controllers/media_ctrl_user.php';
+if (file_exists(PGV_ROOT.'includes/controllers/media_ctrl_user.php')) {
+	require_once PGV_ROOT.'includes/controllers/media_ctrl_user.php';
 } else {
 	class MediaController extends MediaControllerRoot {
 	}

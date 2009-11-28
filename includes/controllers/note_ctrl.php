@@ -31,11 +31,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_NOTE_CTRL_PHP', '');
 
-require_once 'includes/functions/functions_print_facts.php';
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/classes/class_note.php';
-require_once 'includes/classes/class_menu.php';
-require_once 'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/classes/class_note.php';
+require_once PGV_ROOT.'includes/classes/class_menu.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 $nonfacts = array();
 /**
@@ -339,12 +339,9 @@ class NoteControllerRoot extends BaseController {
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/note_ctrl_user.php'))
-{
-	require_once 'includes/controllers/note_ctrl_user.php';
-}
-else
-{
+if (file_exists(PGV_ROOT.'includes/controllers/note_ctrl_user.php')) {
+	require_once PGV_ROOT.'includes/controllers/note_ctrl_user.php';
+} else {
 	class NoteController extends NoteControllerRoot
 	{
 	}

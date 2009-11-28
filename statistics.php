@@ -28,7 +28,7 @@
  */
 
 require './config.php';
-require_once './includes/classes/class_stats.php';
+require_once PGV_ROOT.'includes/classes/class_stats.php';
 
 print_header($pgv_lang["statistics"]);
 
@@ -442,9 +442,9 @@ function switch_tab(tab) {
 	<fieldset>
 	<legend><?php echo $pgv_lang["stat_create"]; ?></legend>
 	<?php 
-require_once './includes/functions/functions_places.php';
+require_once PGV_ROOT.'includes/functions/functions_places.php';
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--

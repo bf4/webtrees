@@ -29,7 +29,7 @@
 
 require './config.php';
 
-require_once 'includes/controllers/media_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/media_ctrl.php';
 
 $controller = new MediaController();
 $controller->init();
@@ -179,7 +179,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 			<br /><b><?php print $pgv_lang["relations_heading"]; ?></b><br /><br />
 			<?php
 				// PrintMediaLinks($links, "");
-				require_once 'includes/functions/functions_print_lists.php';
+				require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 				print_changes_table($links, $SHOW_LAST_CHANGE, $pgv_lang["total_links"]);
 			}	?>
 		</td>

@@ -30,7 +30,7 @@
 
 require './config.php';
 
-require_once './includes/controllers/lifespan_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/lifespan_ctrl.php';
 
 $controller = new LifespanController();
 $controller->init();
@@ -40,7 +40,7 @@ $zoomfactor = 10;
 
 print_header($pgv_lang["lifespan_chart"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
 	<script language="JavaScript" type="text/javascript">
 	<!--

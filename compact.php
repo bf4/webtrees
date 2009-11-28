@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
 
 // Extract form variables
 $rootid    =safe_GET_xref('rootid');
@@ -43,7 +43,7 @@ $addname=$person->getAddName();
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
 if (PGV_USE_LIGHTBOX) {

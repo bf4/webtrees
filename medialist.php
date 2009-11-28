@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_print_facts.php';
+require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 
 
 loadLangFile("lightbox:lang");
@@ -46,15 +46,15 @@ if (!isset($_SESSION["medialist"])) $search = "yes";
 $currentdironly = (isset($_REQUEST['subdirs']) && $_REQUEST['subdirs']=="on") ? false : true;
 print_header($pgv_lang["multi_title"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 echo "\n\t<div class=\"center\"><h2>", $pgv_lang["multi_title"], "</h2></div>\n\t";
 
 // Get Javascript variables from lb_config.php ---------------------------
 if (PGV_USE_LIGHTBOX) {
-	require './modules/lightbox/lb_defaultconfig.php';
-	if (file_exists('modules/lightbox/lb_config.php')) require './modules/lightbox/lb_config.php';
-	require './modules/lightbox/functions/lb_call_js.php';
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) require PGV_ROOT.'modules/lightbox/lb_config.php';
+	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 
 	if ($theme_name=="Minimal") {
 		// Force icon options to "text" when we're dealing with the Minimal theme
@@ -341,7 +341,7 @@ if ($ct>0) {
 
 					// ---------- Link Media to person, family or source  ---------------
 					echo "<td class=\"width33 wrap center font9\" valign=\"top\">";
-					require  './modules/lightbox/functions/lb_link.php';
+					require  PGV_ROOT.'modules/lightbox/functions/lb_link.php';
 					echo "</td>";
 
 					// ---------- View Media Details (mediaviewer) --------------------
@@ -487,8 +487,8 @@ if ($ct>0) {
 echo "\n</div>\n";
 // -- load up the slideshow code
 if (!PGV_USE_LIGHTBOX) {
-	if (file_exists("modules/slideshow/slideshow.php")) {
-		require_once './modules/slideshow/slideshow.php';
+	if (file_exists(PGV_ROOT.'modules/slideshow/slideshow.php')) {
+		require_once PGV_ROOT.'modules/slideshow/slideshow.php';
 	}
 }
 print_footer();

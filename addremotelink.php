@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require './includes/controllers/remotelink_ctrl.php';
+require PGV_ROOT.'includes/controllers/remotelink_ctrl.php';
 
 $controller=new RemoteLinkController();
 $controller->init();

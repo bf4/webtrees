@@ -25,7 +25,7 @@
 */
 
 require './config.php';
-require 'includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 loadLangFile("pgv_country");
 uasort($countries, "stringsort");
@@ -107,7 +107,7 @@ uasort($assorela, "stringsort");
 print_simple_header('Edit Interface');
 
 if ($ENABLE_AUTOCOMPLETE) {
-	require './js/autocomplete.js.htm';
+	require PGV_ROOT.'js/autocomplete.js.htm';
 }
 echo PGV_JS_START;
 ?>
@@ -968,7 +968,7 @@ case 'addnewnote_assisted':
 			<input id="pid_array" type="hidden" name="pid_array" value="none" />
 			<input id="pid" type="hidden" name="pid" value=<?php echo $pid; ?> />
 			<?php
-				require './modules/GEDFact_assistant/CENS_ctrl.php';
+				require PGV_ROOT.'modules/GEDFact_assistant/CENS_ctrl.php';
 			?>
 		</form>
 	</div>
@@ -979,7 +979,7 @@ case 'addnewnote_assisted':
 //------------------------------------------------------------------------------
 //-- add Shared Note census event from the incoming variables using GEDFact Assistant
 case 'addnoteaction_assisted':
-	require './modules/GEDFact_assistant/_CENS/gedrec_append.php';
+	require PGV_ROOT.'modules/GEDFact_assistant/_CENS/gedrec_append.php';
 	break;
 	
 //------------------------------------------------------------------------------
@@ -1006,7 +1006,7 @@ case 'addmedia_links':
 		<input type="hidden" name="noteid" value="newnote" />			
 	<!--	<input type="hidden" name="pid" value="<?php // echo $pid; ?>" />		--> 
 		<?php
-		require './modules/GEDFact_assistant/MEDIA_ctrl.php';
+		require PGV_ROOT.'modules/GEDFact_assistant/MEDIA_ctrl.php';
 		?>
 	</form>
 	<?php
@@ -2043,9 +2043,9 @@ case 'paste':
 
 //------------------------------------------------------------------------------
 case 'reorder_media': // Sort page using Popup
-	require_once './js/prototype.js.htm';
-	require_once './js/scriptaculous.js.htm';
-	require_once './includes/media_reorder.php';
+	require_once PGV_ROOT.'js/prototype.js.htm';
+	require_once PGV_ROOT.'js/scriptaculous.js.htm';
+	require_once PGV_ROOT.'includes/media_reorder.php';
 	break;
 
 //------------------------------------------------------------------------------
@@ -2161,8 +2161,8 @@ case 'al_reorder_media_update': // Update sort using Album Page
 
 //------------------------------------------------------------------------------
 case 'reorder_children':
-	require_once './js/prototype.js.htm';
-	require_once './js/scriptaculous.js.htm';
+	require_once PGV_ROOT.'js/prototype.js.htm';
+	require_once PGV_ROOT.'js/scriptaculous.js.htm';
 	echo "<br /><b>", $pgv_lang["reorder_children"], "</b>";
 	print_help_link("reorder_children_help", "qm");
 	?>
@@ -2222,7 +2222,7 @@ case 'reorder_children':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily':
-	require_once 'includes/classes/class_family.php';
+	require_once PGV_ROOT.'includes/classes/class_family.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();
@@ -2363,7 +2363,7 @@ case 'changefamily':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily_update':
-	require_once 'includes/classes/class_family.php';
+	require_once PGV_ROOT.'includes/classes/class_family.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();
@@ -2573,8 +2573,8 @@ case 'reorder_update':
 	break;
 //------------------------------------------------------------------------------
 case 'reorder_fams':
-	require_once './js/prototype.js.htm';
-	require_once './js/scriptaculous.js.htm';
+	require_once PGV_ROOT.'js/prototype.js.htm';
+	require_once PGV_ROOT.'js/scriptaculous.js.htm';
 	echo "<br /><b>", $pgv_lang["reorder_families"], "</b>";
 	print_help_link("reorder_families_help", "qm");
 	?>
@@ -2649,7 +2649,7 @@ case 'reorder_fams_update':
 //-- for reuse of editing functions from forms
 case 'mod_edit_fact':
 	if (isset($_REQUEST['mod'])) $mod = $_REQUEST['mod'];
-	require_once './modules/'.$mod.'/'.$mod.'.php';
+	require_once PGV_ROOT.'modules/'.$mod.'/'.$mod.'.php';
 	$module = new $mod();
 	if (method_exists($module, "edit_fact")) {
 		$module->edit_fact();

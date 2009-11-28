@@ -26,14 +26,16 @@
 //-- security check, only allow access from module.php
 if(strstr($_SERVER['SCRIPT_NAME'], 'menu.php')){print "Now, why would you want to do that.  You're not hacking are you?";exit;}
 
-//require_once 'modules/gallery2/pgv.php';
+//require_once PGV_ROOT.'modules/gallery2/pgv.php';
 //mod_gallery2_load(getUserName());
 
 // Load PGV embeding language file
 global $language_settings, $LANGUAGE, $pgv_lang;
-require_once 'modules/gallery2/language/mod_en.php';
+require_once PGV_ROOT.'modules/gallery2/language/mod_en.php';
 // Load other language file if needed
-if($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists("modules/gallery2/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php")){require_once "modules/gallery2/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php";}
+if ($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists('./modules/gallery2/language/mod_'.$language_settings[$LANGUAGE]['lang_short_cut'].'.php')) {
+	require_once PGV_ROOT.'modules/gallery2/language/mod_'.$language_settings[$LANGUAGE]['lang_short_cut'].'.php';
+}
 
 class gallery2_ModuleMenu
 {

@@ -30,8 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once 'modules/research_assistant/forms/ra_form.php';
-require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_form.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_GeneratedTask.php';
 
 class ra_EditGeneratedTask extends ra_form 
 {

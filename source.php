@@ -25,8 +25,8 @@
 */
 
 require './config.php';
-require './includes/controllers/source_ctrl.php';
-require './includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/controllers/source_ctrl.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
@@ -41,11 +41,11 @@ print_header($controller->getPageTitle());
 
 // LightBox
 if (PGV_USE_LIGHTBOX) {
-	require './modules/lightbox/lb_defaultconfig.php';
-	if (file_exists('./modules/lightbox/lb_config.php')) {
-		require './modules/lightbox/lb_config.php';
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+		require PGV_ROOT.'modules/lightbox/lb_config.php';
 	}
-	require './modules/lightbox/functions/lb_call_js.php';
+	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 	loadLangFile('lightbox:lang');
 }
 
@@ -141,8 +141,8 @@ if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
 
 // Print the tasks table
-if (file_exists('./modules/research_assistant/research_assistant.php') && $SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
-	require_once './modules/research_assistant/research_assistant.php';
+if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) && file_exists(PGV_ROOT.'modules/research_assistant/research_assistant.php') {
+	require_once PGV_ROOT.'modules/research_assistant/research_assistant.php';
 	$mod=new ra_functions();
 	$mod->Init();
 	echo $mod->getSourceTasks($controller->sid, $controller->source->getFullName());

@@ -33,8 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_PRINT_PHP', '');
 
-require_once 'includes/functions/functions_charts.php';
-require_once 'includes/classes/class_menubar.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/classes/class_menubar.php';
 
 /**
 * print the information for an individual chart box
@@ -1132,7 +1132,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		$text = PrintReady($text);
 		// Check if Formatted Shared Note (using pipe "|" as delimiter ) --------------------
 		if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec) && strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
-			require 'modules/GEDFact_assistant/_CENS/census_note_decode.php';
+			require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php';
 		// Else if unformatted Shared Note --------------------------------------------------
 		}else if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec)) {
 			$text=$centitl.$text;

@@ -34,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once './includes/functions/functions_db.php';
+require_once PGV_ROOT.'includes/functions/functions_db.php';
 
 // Grab the global vars we need
 global $pgv_lang, $TBLPREFIX, $SOURCE_ID_PREFIX;

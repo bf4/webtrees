@@ -31,11 +31,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLIPPINGS_CTRL', '');
 
-require_once 'includes/classes/class_grampsexport.php';
-require_once 'includes/classes/class_person.php';
-require_once 'includes/functions/functions.php';
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/pclzip.lib.php';
+require_once PGV_ROOT.'includes/classes/class_grampsexport.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/functions/functions.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/pclzip.lib.php';
 
 function same_group($a, $b) {
 	if ($a['type'] == $b['type'])
@@ -423,7 +423,7 @@ class ClippingsControllerRoot extends BaseController {
 			if ($this->filetype == "gramps") {
 				// Sort the clippings cart because the export works better when the cart is sorted
 				usort($cart, "same_group");
-				require_once './includes/classes/class_geclippings.php';
+				require_once PGV_ROOT.'includes/classes/class_geclippings.php';
 				$gramps_Exp = new GEClippings();
 				$gramps_Exp->begin_xml();
 				$ct = count($cart);
@@ -782,8 +782,8 @@ class ClippingsControllerRoot extends BaseController {
 // -- end of class
 
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/clippings_ctrl_user.php')) {
-	require_once 'includes/controllers/clippings_ctrl_user.php';
+if (file_exists(PGV_ROOT.'includes/controllers/clippings_ctrl_user.php')) {
+	require_once PGV_ROOT.'includes/controllers/clippings_ctrl_user.php';
 } else {
 	class ClippingsController extends ClippingsControllerRoot {
 	}

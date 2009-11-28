@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_EDIT_PHP', '');
 
-require_once 'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 $NPFX_accept = array( 'Adm', 'Amb', 'Brig', 'Can', 'Capt', 'Chan', 'Chapln', 'Cmdr', 'Col', 'Cpl', 'Cpt', 'Dr', 'Gen', 'Gov', 'Hon', 'Lady', 'Lt', 'Mr', 'Mrs', 'Ms', 'Msgr', 'Pfc', 'Pres', 'Prof', 'Pvt', 'Rabbi', 'Rep', 'Rev', 'Sen', 'Sgt', 'Sir', 'Sr', 'Sra', 'Srta', 'Ven');
 $SPFX_accept = array('al', 'da', 'de', 'den', 'dem', 'der', 'di', 'du', 'el', 'la', 'van', 'von');
@@ -1572,7 +1572,9 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			echo "</div>\n";
 			echo "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"", $factarray["LATI"], " / ", $factarray["LONG"], "\" title=\"", $factarray["LATI"], " / ", $factarray["LONG"], "\" /></a>";
 			if ($SPLIT_PLACES) {
-				if (!function_exists("print_place_subfields")) require("includes/functions/functions_places.php");
+				if (!function_exists("print_place_subfields")) {
+					require PGV_ROOT.'includes/functions/functions_places.php';
+				}
 				setup_place_subfields($element_id);
 				print_place_subfields($element_id);
 			}

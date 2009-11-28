@@ -26,8 +26,8 @@
  */
 
 require './config.php';
-require './includes/controllers/advancedsearch_ctrl.php';
-require './includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/controllers/advancedsearch_ctrl.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $controller=new AdvancedSearchController();
 $controller->init();

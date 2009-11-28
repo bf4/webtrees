@@ -32,8 +32,8 @@
 
 require './config.php';
 
-require_once 'includes/classes/class_person.php';
-require_once 'includes/classes/class_family.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/classes/class_family.php';
 
 //Basic http auth needed for non browser authentication. If the user is not logged in and fails basic auth, nothing will be returned
 basicHTTPAuthenticateUser();

@@ -25,7 +25,7 @@
  */
 
 require './config.php';
-require 'includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 if (!PGV_USER_CAN_ACCEPT) {
 	header('Location: login.php?url=edit_changes.php');

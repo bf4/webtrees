@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_CHARTS_PHP', '');
 
-require_once 'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
 
 /**
  * print a table cell with sosa number

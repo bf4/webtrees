@@ -30,7 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require 'googlemap.php'; // gives access to googlemap functions
+require PGV_ROOT.'/modules/googlemap/googlemap.php'; // gives access to googlemap functions
 
 loadLangFile("googlemap:lang, googlemap:help_text");
 

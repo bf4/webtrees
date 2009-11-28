@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once 'includes/functions/functions_print_lists.php';
+require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 print_header($pgv_lang['shared_note_list']);
 echo '<div class="center"><h2>', $pgv_lang['shared_note_list'], '</h2>';

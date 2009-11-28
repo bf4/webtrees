@@ -33,7 +33,7 @@ if (!PGV_USER_IS_ADMIN) {
 
 loadLangFile('pgv_confighelp');
 
-require './includes/functions/functions_editlang.php';
+require PGV_ROOT.'includes/functions/functions_editlang.php';
 
 $action                =safe_GET('action');
 $file_type             =safe_GET('file_type');
@@ -745,9 +745,9 @@ default:
 
 //-- load file for language settings
 $Languages_Default = true;
-if (file_exists($INDEX_DIRECTORY."lang_settings.php")) {
+if (file_exists($INDEX_DIRECTORY.'lang_settings.php')) {
 	$DefaultSettings = $language_settings;    // Save default settings, so we can merge properly
-	require $INDEX_DIRECTORY."lang_settings.php";
+	require $INDEX_DIRECTORY.'lang_settings.php';
 	$ConfiguredSettings = $language_settings;  // Save configured settings, same reason
 	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings);  // Copy new langs into config
 	// Now copy new language settings into existing configuration

@@ -27,7 +27,7 @@
  */
 
 require './config.php';
-require_once './includes/controllers/media_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/media_ctrl.php';
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();

@@ -27,7 +27,7 @@
  */
 
 require './config.php';
-require './includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 	
 //-- page parameters and checking
 $linktoid	= safe_GET_xref('linktoid');
@@ -65,7 +65,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assis
 
 	print_simple_header($pgv_lang["link_media"]." ".$toitems);
 
-	if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 	//-- check for admin
 	$paramok =  PGV_USER_CAN_EDIT;

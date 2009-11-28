@@ -31,11 +31,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_REPOSITORY_CTRL_PHP', '');
 
-require_once 'includes/functions/functions_print_facts.php';
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/classes/class_repository.php';
-require_once 'includes/classes/class_menu.php';
-require_once 'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/classes/class_repository.php';
+require_once PGV_ROOT.'includes/classes/class_menu.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 $nonfacts = array();
 /**
@@ -338,12 +338,9 @@ class RepositoryControllerRoot extends BaseController {
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/repository_ctrl_user.php'))
-{
-	require_once 'includes/controllers/repository_ctrl_user.php';
-}
-else
-{
+if (file_exists(PGV_ROOT.'includes/controllers/repository_ctrl_user.php')) {
+	require_once PGV_ROOT.'includes/controllers/repository_ctrl_user.php';
+} else {
 	class RepositoryController extends RepositoryControllerRoot
 	{
 	}

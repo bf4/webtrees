@@ -28,8 +28,8 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_charts.php';
-require_once './includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
 
 function getRelationshipSentence($node, $pid1, $pid2) {
 	global $pgv_lang, $lang_short_cut, $LANGUAGE, $path_to_find;
@@ -486,13 +486,13 @@ $title_string .= $pgv_lang["relationship_chart"];
 // -- print html header information
 print_header($title_string);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 // Lbox additions if installed ---------------------------------------------------------------------------------------------
 if (PGV_USE_LIGHTBOX) {
-	require './modules/lightbox/lb_defaultconfig.php';
-	if (file_exists('modules/lightbox/lb_config.php')) require './modules/lightbox/lb_config.php';
-	require_once './modules/lightbox/functions/lb_call_js.php';
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) require PGV_ROOT.'modules/lightbox/lb_config.php';
+	require_once PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 

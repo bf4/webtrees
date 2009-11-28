@@ -775,7 +775,7 @@ class PGV_DB {
 		}
 		while ($current_version<$target_version) {
 			$next_version=$current_version+1;
-			require_once "{$schema_dir}db_schema_{$current_version}_{$next_version}.php";
+			require $schema_dir.'db_schema_'.$current_version.'_'.$next_version.'.php';
 			// The updatescript should update the version or throw an exception
 			$current_version=(int)get_site_setting($schema_name);
 			if ($current_version!=$next_version) {

@@ -31,8 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_REPOSITORY_PHP', '');
 
-require_once 'includes/classes/class_gedcomrecord.php';
-require_once 'includes/classes/class_serviceclient.php';
+require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 
 class Repository extends GedcomRecord {
 	// Get an instance of a Repository.  We either specify

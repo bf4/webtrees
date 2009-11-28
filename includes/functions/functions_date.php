@@ -30,7 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_DATE_PHP', '');
 
-require_once 'includes/classes/class_date.php';
+require_once PGV_ROOT.'includes/classes/class_date.php';
 
 /**
 * translate gedcom age string

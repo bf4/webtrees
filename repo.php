@@ -25,8 +25,8 @@
 */
 
 require './config.php';
-require './includes/controllers/repository_ctrl.php';
-require './includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/controllers/repository_ctrl.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();

@@ -34,8 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CHARTS_PHP', '');
 
-require_once 'includes/controllers/hourglass_ctrl.php';
-require_once 'includes/classes/class_treenav.php';
+require_once PGV_ROOT.'includes/controllers/hourglass_ctrl.php';
+require_once PGV_ROOT.'includes/classes/class_treenav.php';
 
 $PGV_BLOCKS["print_charts_block"]["name"]		= $pgv_lang["charts_block"];
 $PGV_BLOCKS["print_charts_block"]["descr"]		= "charts_block_descr";
@@ -181,7 +181,7 @@ function print_charts_block_config($config) {
 	if (empty($config["rootId"])) $config["rootId"] = $PEDIGREE_ROOT_ID;
 	if (empty($config['details'])) $config['details'] = 'no';
 
-	if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
 	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["chart_type"]; ?></td>
 	<td class="optionbox">

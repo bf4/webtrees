@@ -30,7 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_LOCALCLIENT_PHP', '');
 
-require_once 'includes/classes/class_serviceclient.php';
+require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 
 class LocalClient extends ServiceClient {
 	/**
@@ -76,7 +76,7 @@ class LocalClient extends ServiceClient {
 
 		//-- used to force an update on the first time linking a person
 		if ($firstLink) {
-			require_once './includes/functions/functions_edit.php';
+			require_once PGV_ROOT.'includes/functions/functions_edit.php';
 			$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0)
 			{

@@ -31,8 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_PERSON_PHP', '');
 
-require_once 'includes/classes/class_gedcomrecord.php';
-require_once 'includes/classes/class_event.php';
+require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once PGV_ROOT.'includes/classes/class_event.php';
 
 class Person extends GedcomRecord {
 	var $indifacts = array();

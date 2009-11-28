@@ -30,8 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_TREENAV_PHP', '');
 
-require_once './includes/classes/class_person.php';
-require_once './includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
 
 class TreeNav {
 	var $rootPerson = null;
@@ -187,10 +187,10 @@ class TreeNav {
 	*/
 	function setupJS() {
 		global $SERVER_URL;
-		require_once './js/prototype.js.htm';
-		require_once './js/behaviour.js.htm';
-		require_once './js/overlib.js.htm';
-		require_once './js/scriptaculous.js.htm';
+		require_once PGV_ROOT.'js/prototype.js.htm';
+		require_once PGV_ROOT.'js/behaviour.js.htm';
+		require_once PGV_ROOT.'js/overlib.js.htm';
+		require_once PGV_ROOT.'js/scriptaculous.js.htm';
 		?>
 	<script type="text/javascript" src="<?php print $SERVER_URL; ?>js/treenav.js"></script>
 	<script type="text/javascript">

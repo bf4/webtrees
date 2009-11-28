@@ -72,4 +72,4 @@ $PGV_SMTP_SSL = false;							//-- Use SSL for SMTP authorization
 $PGV_SMTP_FROM_NAME = "";						//-- Sender name
 
 $CONFIGURED = false;
-require_once 'includes/session.php';
+require_once './includes/session.php';
