@@ -46,25 +46,27 @@ function gen_spider_session_name($bot_name, $bot_language) {
 	$outname = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 	$bot_limit = strlen($bot_name);
-	if($bot_limit > 27)
-	$bot_limit = 27;
+	if($bot_limit > 27) {
+		$bot_limit = 27;
+	}
 	for($x=0; $x < $bot_limit; $x++) {
-		if(preg_match('/^[a-zA-Z0-9]+$/', $bot_name{$x}))
-		$outname{$x+2} = strtoupper($bot_name{$x});
-		else if ($bot_name{$x} == '.')
-		$outname{$x+2} = 'd';
-		else if ($bot_name{$x} == ':')
-		$outname{$x+2} = 'c';
-		else if ($bot_name{$x} == '/')
-		$outname{$x+2} = 'f';
-		else if ($bot_name{$x} == ' ')
-		$outname{$x+2} = 's';
-		else if ($bot_name{$x} == '-')
-		$outname{$x+2} = 't';
-		else if ($bot_name{$x} == '_')
-		$outname{$x+2} = 'u';
-		else
-		$outname{$x+2} = 'o';
+		if(preg_match('/^[a-zA-Z0-9]+$/', $bot_name{$x})) {
+			$outname{$x+2} = strtoupper($bot_name{$x});
+		} elseif ($bot_name{$x} == '.') {
+			$outname{$x+2} = 'd';
+		} elseif ($bot_name{$x} == ':') {
+			$outname{$x+2} = 'c';
+		} elseif ($bot_name{$x} == '/') {
+			$outname{$x+2} = 'f';
+		} elseif ($bot_name{$x} == ' ') {
+			$outname{$x+2} = 's';
+		} elseif ($bot_name{$x} == '-') {
+			$outname{$x+2} = 't';
+		} elseif ($bot_name{$x} == '_') {
+			$outname{$x+2} = 'u';
+		} else {
+			$outname{$x+2} = 'o';
+		}
 	}
 	return($outname);
 }

@@ -207,15 +207,21 @@ foreach ($language_settings as $key => $value) {
 }
 // Don't let incoming request change to an unsupported or inactive language
 if (isset($_REQUEST['NEWLANGUAGE'])) {
-	if (empty($pgv_lang_use[$_REQUEST['NEWLANGUAGE']])) unset($_REQUEST['NEWLANGUAGE']);
-	else if (!$pgv_lang_use[$_REQUEST['NEWLANGUAGE']]) unset($_REQUEST['NEWLANGUAGE']);
+	if (empty($pgv_lang_use[$_REQUEST['NEWLANGUAGE']])) {
+		unset($_REQUEST['NEWLANGUAGE']);
+	} elseif (!$pgv_lang_use[$_REQUEST['NEWLANGUAGE']]) {
+		unset($_REQUEST['NEWLANGUAGE']);
+}
 }
 
 /**
  * Cleanup some variables
  */
-if (!empty($_SERVER['PHP_SELF'])) $SCRIPT_NAME=$_SERVER['PHP_SELF'];
-else if (!empty($_SERVER['SCRIPT_NAME'])) $SCRIPT_NAME=$_SERVER['SCRIPT_NAME'];
+if (!empty($_SERVER['PHP_SELF'])) {
+	$SCRIPT_NAME=$_SERVER['PHP_SELF'];
+} elseif (!empty($_SERVER['SCRIPT_NAME'])) {
+	$SCRIPT_NAME=$_SERVER['SCRIPT_NAME'];
+}
 $SCRIPT_NAME = preg_replace('~/+~', '/', $SCRIPT_NAME);
 if (!empty($_SERVER['QUERY_STRING'])) $QUERY_STRING = $_SERVER['QUERY_STRING'];
 else $QUERY_STRING='';
@@ -285,14 +291,15 @@ require PGV_ROOT.'includes/authentication.php';
 // Determine browser type
 $BROWSERTYPE = 'other';
 if (!empty($_SERVER['HTTP_USER_AGENT'])) {
-	if (stristr($_SERVER['HTTP_USER_AGENT'], 'Opera'))
+	if (stristr($_SERVER['HTTP_USER_AGENT'], 'Opera')) {
 		$BROWSERTYPE = 'opera';
-	else if (stristr($_SERVER['HTTP_USER_AGENT'], 'Netscape'))
+	} elseif (stristr($_SERVER['HTTP_USER_AGENT'], 'Netscape')) {
 		$BROWSERTYPE = 'netscape';
-	else if (stristr($_SERVER['HTTP_USER_AGENT'], 'Gecko'))
+	} elseif (stristr($_SERVER['HTTP_USER_AGENT'], 'Gecko')) {
 		$BROWSERTYPE = 'mozilla';
-	else if (stristr($_SERVER['HTTP_USER_AGENT'], 'MSIE'))
+	} elseif (stristr($_SERVER['HTTP_USER_AGENT'], 'MSIE')) {
 		$BROWSERTYPE = 'msie';
+	}
 }
 
 //-- load up the code to check for spiders
@@ -481,9 +488,13 @@ foreach ($language_settings as $key => $value) {
 
 // -- Determine which of PGV's supported languages is topmost in the browser's language list
 if ((empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESSION['CLANGUAGE']) && empty($SEARCH_SPIDER)) {
-	if (isset($HTTP_ACCEPT_LANGUAGE)) $browserLangPrefs = $HTTP_ACCEPT_LANGUAGE;
-	else if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $browserLangPrefs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-	else $browserLangPrefs = 'en';
+	if (isset($HTTP_ACCEPT_LANGUAGE)) {
+		$browserLangPrefs = $HTTP_ACCEPT_LANGUAGE;
+	} elseif (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+		$browserLangPrefs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+	} else {
+		$browserLangPrefs = 'en';
+	}
 	// Seach list of supported languages for this Browser's preferred page languages
 	$browserLangList = preg_split('/(,\s*)|(;\s*)/', $browserLangPrefs);
 	if (empty($LANGUAGE)) $LANGUAGE = 'english';		// Use English if we can't match any of the browser's preferred languages

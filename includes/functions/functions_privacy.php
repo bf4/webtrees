@@ -400,11 +400,17 @@ function displayDetailsById($pid, $type = "INDI") {
 			$gedrec = find_gedcom_record($pid, $ged_id);
 			$resn = get_gedcom_value("RESN", 1, $gedrec);
 			if (!empty($resn)) {
-				if ($resn == "confidential") $ret = false;
-				else if ($resn=="privacy" && $pgv_USER_GEDCOM_ID != $pid) $ret = false;
-				else $ret = true;
+				if ($resn == "confidential") {
+					$ret = false;
+				} elseif ($resn=="privacy" && $pgv_USER_GEDCOM_ID != $pid) {
+					$ret = false;
+				} else {
+					$ret = true;
+				}
 				if (!$ret) {
-					if ($cache_privacy) $privacy_cache[$pkey] = $ret;
+					if ($cache_privacy) {
+						$privacy_cache[$pkey] = $ret;
+					}
 					return $ret;
 				}
 			}

@@ -365,8 +365,11 @@ function getRecentChanges() {
 				$disp = true;
 				switch($type) {
 					case 'INDI':
-						if (($filter=="living")&&(is_dead($gedrec)==1)) $disp = false;
-						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsById($gid);
+						if (($filter=="living")&&(is_dead($gedrec)==1)) {
+							$disp = false;
+						} elseif ($HIDE_LIVE_PEOPLE) {
+							$disp = displayDetailsById($gid);
+						}
 						break;
 					case 'FAM':
 						if ($filter=="living") {

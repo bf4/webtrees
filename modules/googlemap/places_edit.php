@@ -541,10 +541,16 @@ if ($action=="add") {
 					//delete leading zero
 					$pl_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row->pl_lati);
 					$pl_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row->pl_long);
-					if ($pl_lati >= 0) 		$row->pl_lati = abs($pl_lati);
-					else if ($pl_lati < 0) 	$row->pl_lati = "-".abs($pl_lati);
-					if ($pl_long >= 0) 		$row->pl_long = abs($pl_long);
-					else if ($pl_long < 0) 	$row->pl_long = "-".abs($pl_long);
+					if ($pl_lati >= 0) {
+						$row->pl_lati = abs($pl_lati);
+					} elseif ($pl_lati < 0) {
+						$row->pl_lati = "-".abs($pl_lati);
+					}
+					if ($pl_long >= 0) {
+						$row->pl_long = abs($pl_long);
+					} elseif ($pl_long < 0) {
+						$row->pl_long = "-".abs($pl_long);
+					}
 
 					echo "	 	 	 childplaces.push(new GMarker(new GLatLng(", $row->pl_lati, ", ", $row->pl_long, "), childicon));\n";
 					echo "			 GEvent.addListener(childplaces[", $i, "], \"click\", function() {\n";
@@ -742,14 +748,22 @@ if ($action=="add") {
 		<td class="descriptionbox"><?php print_help_link("PLE_PRECISION_help", "qm", "PLE_PRECISION");?><?php echo $pgv_lang["pl_precision"];?></td>
 		<?php
 			$exp = explode(".", $place_lati);
-			if (isset($exp[1])) $precision1 = strlen($exp[1]);
-			else $precision1 = -1;
+			if (isset($exp[1])) {
+				$precision1 = strlen($exp[1]);
+			} else {
+				$precision1 = -1;
+			}
 			$exp = explode(".", $place_long);
-			if (isset($exp[1])) $precision2 = strlen($exp[1]);
-			else $precision2 = -1;
+			if (isset($exp[1])) {
+				$precision2 = strlen($exp[1]);
+			} else {
+				$precision2 = -1;
+			}
 			($precision1 > $precision2) ? ($precision = $precision1) : ($precision = $precision2);
 			if ($precision == -1 ) ($level > 3) ? ($precision = 3) : ($precision = $level);
-			else if ($precision > 5) $precision = 5;
+			elseif ($precision > 5) {
+				$precision = 5;
+			}
 		?>
 		<td class="optionbox">
 			<input type="radio" id="new_prec_0" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_0) echo "checked=\"checked\"";?> value="<?php echo $GOOGLEMAP_PRECISION_0;?>" tabindex="<?php echo ++$i;?>" />

@@ -68,21 +68,35 @@ if ($p === false) {
 }
 $data = substr($data, $p);
 $p = strpos($data, "</map>");
-if ($p === false) return;
+if ($p === false) {
+	return;
+}
 $data = substr($data, 0, $p);
 // match : alt="text"
-     if (strpos($field, "PLAC_STAE")!==false) $found = preg_match_all("/setPlaceState\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
-else if (strpos($field, "PLAC_CNTY")!==false) $found = preg_match_all("/setPlaceCounty\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
-else if (strpos($field, "PLAC_CITY")!==false) $found = preg_match_all("/setPlaceCity\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
-if (!$found) $found = preg_match_all('/alt="([^"]+)"/', $data, $match, PREG_PATTERN_ORDER);
-if (!$found) return;
+if (strpos($field, "PLAC_STAE")!==false) {
+	$found = preg_match_all("/setPlaceState\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
+} elseif (strpos($field, "PLAC_CNTY")!==false) {
+	$found = preg_match_all("/setPlaceCounty\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
+} elseif (strpos($field, "PLAC_CITY")!==false) {
+	$found = preg_match_all("/setPlaceCity\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
+}
+if (!$found) {
+	$found = preg_match_all('/alt="([^"]+)"/', $data, $match, PREG_PATTERN_ORDER);
+}
+if (!$found) {
+	return;
+}
 // sort results
 $resu = $match[1];
 sort($resu);
 $resu = array_unique($resu);
 // add separator
 $data = "";
-foreach ($resu as $k=>$v) if ($v!="default") $data.=$v."|";
+foreach ($resu as $k=>$v) {
+	if ($v!="default") {
+		$data.=$v."|";
+	}
+}
 //$data = str_replace("\n", "|",$data);
 $data = trim($data,"|");
 print $data;

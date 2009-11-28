@@ -689,21 +689,25 @@ if ($view!="preview") {
 		}
 		if (($new_path)&&($path_to_find<$i+1)&&($check_node)) print " | <span class=\"error\">".($i+1)."</span>";
 		print "</td>";
-	}
-	else {
+	} else {
 		if ((!empty($pid1))&&(!empty($pid2))) {
-			if ((!displayDetailsById($pid1))&&(!showLivingNameById($pid1))) $disp = false;
-			else if ((!displayDetailsById($pid2))&&(!showLivingNameById($pid2))) $disp = false;
+			if ((!displayDetailsById($pid1))&&(!showLivingNameById($pid1))) {
+				$disp = false;
+			} elseif ((!displayDetailsById($pid2))&&(!showLivingNameById($pid2))) {
+				$disp = false;
+			}
 			if ($disp) {
-				print $pgv_lang["show_path"].": </td>";
-				print "\n\t\t<td class=\"optionbox\">";
-				print " <span class=\"error vmmiddle\">";
+				echo $pgv_lang["show_path"], ": </td>";
+				echo "\n\t\t<td class=\"optionbox\">";
+				echo " <span class=\"error vmmiddle\">";
 				$check_node = get_relationship($pid1, $pid2, $followspouse, 0, true, $path_to_find);
-				print ($check_node?"1":"&nbsp;".$pgv_lang["no_results"])."</span></td>";
+				echo $check_node ? "1" : "&nbsp;".$pgv_lang["no_results"], "</span></td>";
 				$prt = true;
 			}
 		}
-		if (!isset($prt)) print "&nbsp;</td><td class=\"optionbox\">&nbsp;</td>";
+		if (!isset($prt)) {
+			echo "&nbsp;</td><td class=\"optionbox\">&nbsp;</td>";
+		}
 	}
 ?>
 	<!-- // Empty space -->
@@ -718,32 +722,39 @@ if ($view!="preview") {
 	<td class="optionbox" id="followspousebox">
 	<input tabindex="6" type="checkbox" name="followspouse" value="1"
 	<?php
-	if ($followspouse) print " checked=\"checked\"";
-	print " onclick=\"document.people.path_to_find.value='-1';\""?> />
+	if ($followspouse) {
+		echo " checked=\"checked\"";
+	}
+	echo " onclick=\"document.people.path_to_find.value='-1';\""?> />
 	</td>
 	<?php
 	if ((!empty($pid1))&&(!empty($pid2))&&($disp)) {
-		print "</tr><tr>";
+		echo "</tr><tr>";
 		if (($disp)&&(!$check_node)) {
-			print "<td class=\"topbottombar wrap vmiddle center\" colspan=\"2\">";
-			if (isset($_SESSION["relationships"]))
-				if ($path_to_find==0) print "<span class=\"error\">".$pgv_lang["no_link_found"]."</span><br />";
-				else print "<span class=\"error\">".$pgv_lang["no_other_link_found"]."</span><br />";
+			echo "<td class=\"topbottombar wrap vmiddle center\" colspan=\"2\">";
+			if (isset($_SESSION["relationships"])) {
+				if ($path_to_find==0) {
+					echo "<span class=\"error\">", $pgv_lang["no_link_found"], "</span><br />";
+				} else {
+					echo "<span class=\"error\">", $pgv_lang["no_other_link_found"], "</span><br />";
+				}
+			}
 			if (!$followspouse) {
 				?>
 				<script language="JavaScript" type="text/javascript">
 				document.getElementById("followspousebox").className='facts_valuered';
 				</script>
 				<?php
-				print "<input class=\"error\" type=\"submit\" value=\"".$pgv_lang["follow_spouse"]."\" onclick=\"people.followspouse.checked='checked';\"/>";
+				echo "<input class=\"error\" type=\"submit\" value=\"", $pgv_lang["follow_spouse"], "\" onclick=\"people.followspouse.checked='checked';\"/>";
 			}
-			print "</td>";
+			echo "</td>";
+		} else {
+			echo "<td class=\"topbottombar vmiddle center\" colspan=\"2\"><input type=\"submit\" value=\"", $pgv_lang["next_path"], "\" onclick=\"document.people.path_to_find.value='", $path_to_find+1, "';\" /></td>\n";
 		}
-		else print "<td class=\"topbottombar vmiddle center\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["next_path"]."\" onclick=\"document.people.path_to_find.value='".($path_to_find+1)."';\" /></td>\n";
 		$pass = true;
 	}
 
-	if ($pass == false) print "</tr><tr><td colspan=\"2\" class=\"topbottombar wrap\">&nbsp;</td>";?>
+	if ($pass == false) echo "</tr><tr><td colspan=\"2\" class=\"topbottombar wrap\">&nbsp;</td>";?>
 
 	<!-- // Empty space -->
 	<td></td>
