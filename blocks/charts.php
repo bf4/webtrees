@@ -34,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CHARTS_PHP', '');
 
-include_once 'includes/controllers/hourglass_ctrl.php';
+require_once 'includes/controllers/hourglass_ctrl.php';
 require_once 'includes/classes/class_treenav.php';
 
 $PGV_BLOCKS["print_charts_block"]["name"]		= $pgv_lang["charts_block"];
@@ -48,7 +48,7 @@ $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	);
 
 function print_charts_block($block = true, $config="", $side, $index) {
-	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID, $PEDIGREE_FULL_DETAILS;
+	global $PGV_BLOCKS, $pgv_lang, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID, $PEDIGREE_FULL_DETAILS;
 	global $show_full, $bwidth, $bheight;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
@@ -98,7 +98,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	if ($PGV_BLOCKS["print_charts_block"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = str_replace("'", "\'", $GEDCOM);
+				$name = PGV_GEDCOM;
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -167,7 +167,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		$content=$pgv_lang['invalid_id'];
 	}
 
-	include(PGV_THEME_DIR."templates/block_small_temp.php");
+	require PGV_THEME_DIR.'templates/block_small_temp.php';
 	// Restore GEDCOM configuration
 	unset($show_full);
 	if (isset($saveShowFull)) $show_full = $saveShowFull;

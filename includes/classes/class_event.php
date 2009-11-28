@@ -284,22 +284,28 @@ class Event {
 		global $factarray, $factAbbrev;
 
 		if (is_null($this->label))
-			if (array_key_exists($this->tag, $factarray))
+			if (array_key_exists($this->tag, $factarray)) {
 				$this->label=$factarray[$this->tag];
-			else
+			} else {
 				$this->label=$this->tag;
+			}
 			// MARR_XXXX
 			if ($this->GetType()) {
 				$key = $this->tag."_".strtoupper($this->type);
-				if (array_key_exists($key, $factarray))
+				if (array_key_exists($key, $factarray)) {
 					$this->label=$factarray[$key];
+				}
 			}
 
-		if ($abbreviate)
-			if (isset ($factAbbrev[$this->tag])) return $factAbbrev[$this->tag];
-			else return UTF8_substr($this->label, 0, 1);
-		else
+		if ($abbreviate) {
+			if (isset ($factAbbrev[$this->tag])) {
+				return $factAbbrev[$this->tag];
+			} else {
+				return UTF8_substr($this->label, 0, 1);
+			}
+		} else {
 			return $this->label;
+		}
 	}
 
 	/**
@@ -399,13 +405,19 @@ class Event {
 		$adate = $a->getDate();
 		$bdate = $b->getDate();
 		//-- non-dated events should sort according to the preferred sort order
-		if (is_null($adate) && !is_null($a->sortDate)) $ret = $a->sortOrder - $b->sortOrder;
-		else if (is_null($bdate) && !is_null($b->sortDate)) $ret = $a->sortOrder - $b->sortOrder;
-		else $ret = GedcomDate::Compare($adate, $bdate);
+		if (is_null($adate) && !is_null($a->sortDate)) {
+			$ret = $a->sortOrder - $b->sortOrder;
+		} elseif (is_null($bdate) && !is_null($b->sortDate)) {
+			$ret = $a->sortOrder - $b->sortOrder;
+		} else {
+			$ret = GedcomDate::Compare($adate, $bdate);
+		}
 		if ($ret==0) {
 			$ret = $a->sortOrder - $b->sortOrder;
 			//-- if dates are the same they should be ordered by their fact type
-			if ($ret==0) $ret = Event::CompareType($a, $b);
+			if ($ret==0) {
+				$ret = Event::CompareType($a, $b);
+			}
 		}
 //		print "[".$a->getTag().":".$adate->isOK().":".$adate->MinJD()."-".$adate->MaxJD()." ".$b->getTag().":".$bdate->isOK().":".$bdate->MinJD()."-".$bdate->MaxJD()." ".$ret."] ";
 		return $ret;
@@ -492,16 +504,20 @@ class Event {
 		$btag = $b->getTag();
 
 		// Events not in the above list get mapped onto one that is.
-		if (!array_key_exists($atag, $factsort))
-			if (preg_match('/^(_(BIRT|MARR|DEAT|BURI)_)/', $atag, $match))
+		if (!array_key_exists($atag, $factsort)) {
+			if (preg_match('/^(_(BIRT|MARR|DEAT|BURI)_)/', $atag, $match)) {
 				$atag=$match[1];
-			else
+			} else {
 				$atag="_????_";
-		if (!array_key_exists($btag, $factsort))
-			if (preg_match('/^(_(BIRT|MARR|DEAT|BURI)_)/', $btag, $match))
+			}
+		}
+		if (!array_key_exists($btag, $factsort)) {
+			if (preg_match('/^(_(BIRT|MARR|DEAT|BURI)_)/', $btag, $match)) {
 				$btag=$match[1];
-			else
+			} else {
 				$btag="_????_";
+			}
+		}
 
 		//-- don't let dated after DEAT/BURI facts sort non-dated facts before DEAT/BURI
 		//-- treat dated after BURI facts as BURI instead

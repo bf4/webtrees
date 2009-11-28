@@ -150,6 +150,7 @@ $pgv_lang["confirm_remove_object"]		= "Ali res želite odstraniti ta objekt iz b
 $pgv_lang["create_repository"]			= "Ustvari skladišče";
 $pgv_lang["create_shared_note"]			= "Ustvari nov skupen zapisek";
 $pgv_lang["create_shared_note_assisted"]	= "S pomočnikom ustvari nov skupen zapisek";
+$pgv_lang["add_new_event_assisted"]		= "S pomočnikom ustvari nov dogodek";
 $pgv_lang["create_source"]			= "Izdelaj nov vir";
 $pgv_lang["current_person"]         		= "Isto kot tekoči";
 $pgv_lang["date"]				= "Datum";

@@ -59,7 +59,6 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	/*
 	 * Select GEDCOM
 	 */
-	$CURRENT_GEDCOM = $GEDCOM;
 	switch($config['gedcom']) {
 	case '__current__':
 		break;
@@ -86,12 +85,12 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	 */
 	if($config['compat'] == 1)
 	{
-		include_once 'includes/classes/class_stats_compat.php';
+		require_once 'includes/classes/class_stats_compat.php';
 		$stats = new stats_compat($GEDCOM);
 	}
 	elseif($config['ui'] == 1)
 	{
-		include_once 'includes/classes/class_stats_ui.php';
+		require_once 'includes/classes/class_stats_ui.php';
 		$stats = new stats_ui($GEDCOM);
 	}
 	else
@@ -128,7 +127,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	/*
 	 * Restore Current GEDCOM
 	 */
-	$GEDCOM = $CURRENT_GEDCOM;
+	$GEDCOM = PGV_GEDCOM;
 
 	/*
 	 * Start Of Output
@@ -144,7 +143,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 		if ($PGV_BLOCKS['print_htmlplus_block']['canconfig']) {
 			if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 				if ($ctype=="gedcom") {
-					$name = str_replace("'", "\'", $GEDCOM);
+					$name = PGV_GEDCOM;
 				} else {
 					$name = PGV_USER_NAME;
 				}
@@ -173,9 +172,9 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	}
 
 	if ($block) {
-		include(PGV_THEME_DIR."templates/block_small_temp.php");
+		require PGV_THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include(PGV_THEME_DIR."templates/block_main_temp.php");
+		require PGV_THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 
@@ -284,7 +283,7 @@ function print_htmlplus_block_config($config)
 	if($useFCK)
 	{
 		// use FCKeditor module
-		include_once('./modules/FCKeditor/fckeditor.php');
+		require_once './modules/FCKeditor/fckeditor.php';
 		$oFCKeditor = new FCKeditor('html') ;
 		$oFCKeditor->BasePath = './modules/FCKeditor/';
 		$oFCKeditor->Value = $config['html'];

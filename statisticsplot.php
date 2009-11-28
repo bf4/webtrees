@@ -562,7 +562,7 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 			}
 		}
 	}
-	$colors = array("0000FF","FFA0CB","9F00FF","FF7000","905030","FF0000","00FF00","F0F000");
+	$colors = array("0000FF", "FFA0CB", "9F00FF", "FF7000", "905030", "FF0000", "00FF00", "F0F000");
 	$colorstring = "chco=";
 	for($i=0; $i<$stop; $i++) {
 		if (isset($colors[$i])) {
@@ -590,9 +590,9 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	if ($percentage){
 		for($i=1; $i<11; $i++) {
 			if ($ymax < 11)
-				$imgurl .= round($ymax*$i/10,1)."|";
+				$imgurl .= round($ymax*$i/10, 1)."|";
 			else
-				$imgurl .= round($ymax*$i/10,0)."|";
+				$imgurl .= round($ymax*$i/10, 0)."|";
 		}
 		$imgurl .= "3:||%|";
 	}
@@ -620,7 +620,7 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 		}
 	}
 	echo "<center><div class=\"statistics_chart width80\">";
-	echo "<img src=\"".encode_url($imgurl)."\" width=\"950\" height=\"300\" border=\"0\" alt=\"".$mytitle."\" title=\"".$mytitle."\"/>";
+	echo "<img src=\"", encode_url($imgurl), "\" width=\"950\" height=\"300\" border=\"0\" alt=\"", $mytitle, "\" title=\"", $mytitle, "\"/>";
 	echo "</div></center><br /><br />";
 }
 
@@ -711,7 +711,7 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 	global $pgv_lang, $stats;
 
 	if (!function_exists($myfunc)) {
-		echo $myfunc." ".$pgv_lang["stplnoim"];
+		echo $myfunc, " ", $pgv_lang["stplnoim"];
 		exit;
 	}
 
@@ -827,13 +827,13 @@ function print_sources_stats_chart($type){
 	switch ($type) {
 	case '9':
 		echo '<div id="google_charts" class="center">';
-		echo '<b>'.$pgv_lang["stat_9_indi"].'</b><br /><br />';
+		echo '<b>', $pgv_lang["stat_9_indi"], '</b><br /><br />';
 		echo $stats->chartIndisWithSources($params);
 		echo '</div><br />';
 		break;
 	case '8':
 		echo '<div id="google_charts" class="center">';
-		echo '<b>'.$pgv_lang["stat_8_fam"].'</b><br /><br />';
+		echo '<b>', $pgv_lang["stat_8_fam"], '</b><br /><br />';
 		echo $stats->chartFamsWithSources($params);
 		echo '</div><br />';
 		break;
@@ -905,7 +905,7 @@ else {
 }
 
 print_header($pgv_lang["statistiek_list"]);
-echo "\n\t<center><h2>".$pgv_lang["statistiek_list"]."</h2>\n\t";
+echo "\n\t<center><h2>", $pgv_lang["statistiek_list"], "</h2>\n\t";
 echo "</center><br />";
 
 $nrpers = $_SESSION[$GEDCOM."nrpers"];
@@ -918,11 +918,11 @@ $nrfemale = $_SESSION[$GEDCOM."nrfemale"];
 
 //-- out of range values
 if (($y_as < 201) || ($y_as > 202)) {
-	echo $pgv_lang["stpl"].$y_as.$pgv_lang["stplnoim"]."<br/>";
+	echo $pgv_lang["stpl"], $y_as, $pgv_lang["stplnoim"], "<br/>";
 	exit;
 }
 if (($z_as < 300) || ($z_as > 302)) {
-	echo $pgv_lang["stpl"].$z_as.$pgv_lang["stplnoim"]."<br/>";
+	echo $pgv_lang["stpl"], $z_as, $pgv_lang["stplnoim"], "<br/>";
 	exit;
 }
 
@@ -932,37 +932,37 @@ $g_xas = "1,2,3,4,5,6,7,8,9,10,11,12"; //should not be needed. but just for mont
 switch ($x_as) {
 case '11':
 	//---------		nr,  type,	  xgiven,	zgiven,	title,				xtitle,		ytitle,	boundaries_x, boundaries-z, function
-	set_params(11,"IND", true,	false, "stat_11_mb",  "stplmonth",	$y_as,	$g_xas,	$zgp, "bimo");  //plot Month of birth
+	set_params(11, "IND", true, 	false, "stat_11_mb",  "stplmonth", 	$y_as, 	$g_xas, 	$zgp, "bimo");  //plot Month of birth
 	break;
 case '12':
-	set_params(12,"IND", true,	false, "stat_12_md",  "stplmonth",	$y_as,	$g_xas,	$zgp, "demo");  //plot Month of death
+	set_params(12, "IND", true, 	false, "stat_12_md",  "stplmonth", 	$y_as, 	$g_xas, 	$zgp, "demo");  //plot Month of death
 	break;
 case '13':
-	set_params(13,"FAM", true,	false, "stat_13_mm",  "stplmonth",	$y_as,	$g_xas,	$zgp, "mamo");  //plot Month of marriage
+	set_params(13, "FAM", true, 	false, "stat_13_mm",  "stplmonth", 	$y_as, 	$g_xas, 	$zgp, "mamo");  //plot Month of marriage
 	break;
 case '14':
-	set_params(14,"FAM", true,	false, "stat_14_mb1", "stplmonth",	$y_as,	$g_xas,	$zgp, "bimo1"); //plot Month of birth of first child in a relation
+	set_params(14, "FAM", true, 	false, "stat_14_mb1", "stplmonth", 	$y_as, 	$g_xas, 	$zgp, "bimo1"); //plot Month of birth of first child in a relation
 	break;
 case '15':
-	set_params(15,"FAM", true,	false, "stat_15_mm1", "stplmonth",	$y_as,	$g_xas,	$zgp, "mamo1"); //plot Month of first marriage
+	set_params(15, "FAM", true, 	false, "stat_15_mm1", "stplmonth", 	$y_as, 	$g_xas, 	$zgp, "mamo1"); //plot Month of first marriage
 	break;
 case '16':
-	set_params(16,"FAM", false,	false, "stat_16_mmb", "stplmarrbirth",$y_as,$xgm,	$zgp, "mamam"); //plot Months between marriage and first child
+	set_params(16, "FAM", false, 	false, "stat_16_mmb", "stplmarrbirth", $y_as, $xgm, 	$zgp, "mamam"); //plot Months between marriage and first child
 	break;
 case '17':
-	set_params(17,"IND", false,	false, "stat_17_arb", "stplage",	$y_as,	$xgl,	$zgp, "agbi");  //plot Age related to birth year
+	set_params(17, "IND", false, 	false, "stat_17_arb", "stplage", 	$y_as, 	$xgl, 	$zgp, "agbi");  //plot Age related to birth year
 	break;
 case '18':
-	set_params(18,"IND", false,	false, "stat_18_ard", "stplage",	$y_as,	$xgl,	$zgp, "agde");  //plot Age related to death year
+	set_params(18, "IND", false, 	false, "stat_18_ard", "stplage", 	$y_as, 	$xgl, 	$zgp, "agde");  //plot Age related to death year
 	break;
 case '19':
-	set_params(19,"IND", false,	false, "stat_19_arm", "stplage",	$y_as,	$xglm,	$zgp, "agma");  //plot Age in year of marriage
+	set_params(19, "IND", false, 	false, "stat_19_arm", "stplage", 	$y_as, 	$xglm, 	$zgp, "agma");  //plot Age in year of marriage
 	break;
 case '20':
-	set_params(20,"IND", false,	false, "stat_20_arm1","stplage",	$y_as,	$xglm,	$zgp, "agma1"); //plot Age in year of first marriage
+	set_params(20, "IND", false, 	false, "stat_20_arm1", "stplage", 	$y_as, 	$xglm, 	$zgp, "agma1"); //plot Age in year of first marriage
 	break;
 case '21':
-	set_params(21,"FAM", false,	false, "stat_21_nok", "stplnuch",	$y_as,	$xga,	$zgp, "nuch");  //plot Number of children
+	set_params(21, "FAM", false, 	false, "stat_21_nok", "stplnuch", 	$y_as, 	$xga, 	$zgp, "nuch");  //plot Number of children
 	break;
 case '1':
 	echo $stats->chartDistribution($chart_shows, $chart_type, $surname);
@@ -981,11 +981,11 @@ case '9':
 	print_sources_stats_chart($x_as);
 	break;
 default:
-	echo $pgv_lang["stpl"].$x_as.$pgv_lang["stplnoim"]."<br/>";
+	echo $pgv_lang["stpl"], $x_as, $pgv_lang["stplnoim"], "<br/>";
 	exit;
 }
 echo "<br /><div class =\"center noprint\">";
-echo "<input type=\"submit\" value=\"".$pgv_lang["back"]."\" onclick=\"javascript:history.go(-1);\" /><br /><br />";
+echo "<input type=\"submit\" value=\"", $pgv_lang["back"], "\" onclick=\"javascript:history.go(-1);\" /><br /><br />";
 echo "</div>\n";
 print_footer();
 ?>

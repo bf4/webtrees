@@ -104,8 +104,7 @@ function check_NN($names) {
 	}
 	if (count($names) == 2 && stristr($names[0], "@N.N") && stristr($names[1], "@N.N")){
 		$fullname = $pgv_lang["NN"]. " + ". $pgv_lang["NN"];
-	}
-	else {
+	} else {
 		for($i=0; $i<count($names); $i++) {
 			$lang = whatLanguage($names[$i]);
 			$unknown = false;
@@ -113,15 +112,23 @@ function check_NN($names) {
 				$unknown = true;
 				$names[$i] = preg_replace("/@N.N.?/", $unknownNN[$lang], trim($names[$i]));
 			}
-			if (stristr($names[$i], "@P.N")) $names[$i] = $unknownPN[$lang];
-			if ($i==1 && $unknown && count($names)==3) $fullname .= ", ";
-			else if ($i==2 && $unknown && count($names)==3) $fullname .= " + ";
-				else if ($i==2 && stristr($names[2], "Individual ") && count($names) == 3) $fullname .= " + ";
-			else if ($i==2 && count($names)>3) $fullname .= " + ";
-				else $fullname .= ", ";
-				$fullname .= trim($names[$i]);
+			if (stristr($names[$i], "@P.N")) {
+				$names[$i] = $unknownPN[$lang];
 			}
+			if ($i==1 && $unknown && count($names)==3) {
+				$fullname .= ", ";
+			} elseif ($i==2 && $unknown && count($names)==3) {
+				$fullname .= " + ";
+			} elseif ($i==2 && stristr($names[2], "Individual ") && count($names) == 3) {
+				$fullname .= " + ";
+			} elseif ($i==2 && count($names)>3) {
+				$fullname .= " + ";
+			} else {
+				$fullname .= ", ";
+			}
+			$fullname .= trim($names[$i]);
 		}
+	}
 	$fullname = trim($fullname);
 	if (substr($fullname,-1)==",") $fullname = substr($fullname,0,strlen($fullname)-1);
 	if (substr($fullname,0,2)==", ") $fullname = substr($fullname,2);

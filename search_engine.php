@@ -44,7 +44,7 @@ if ($rtl_stylesheet && $TEXT_DIRECTION=='rtl') {
 }
 echo '<meta name="robots" content="noindex,follow" />';
 echo '<meta name="generator" content="', PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL, '" />';
-echo '<title>'. $pgv_lang['label_search_engine_detected'], '</title>';
+echo '<title>', $pgv_lang['label_search_engine_detected'], '</title>';
 echo '</head><body>';
 echo '<div class="helptext">', $pgv_lang['search_engine_landing_page'];
 if ($SEARCH_SPIDER) {

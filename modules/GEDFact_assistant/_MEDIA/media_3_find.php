@@ -58,16 +58,16 @@ if ($subclick=='all') {
 	$all=true;
 }
 
-$embed = substr($choose,0,1)=="1";
-$chooseType = substr($choose,1);
+$embed = substr($choose, 0, 1)=="1";
+$chooseType = substr($choose, 1);
 if ($chooseType!="media" && $chooseType!="0file") {
 	$chooseType = "all";
 }
 
 //-- force the thumbnail directory to have the same layout as the media directory
 //-- Dots and slashes should be escaped for the preg_replace
-$srch = "/".addcslashes($MEDIA_DIRECTORY,'/.')."/";
-$repl = addcslashes($MEDIA_DIRECTORY."thumbs/",'/.');
+$srch = "/".addcslashes($MEDIA_DIRECTORY, '/.')."/";
+$repl = addcslashes($MEDIA_DIRECTORY."thumbs/", '/.');
 $thumbdir = stripcslashes(preg_replace($srch, $repl, $directory));
 
 //-- prevent script from accessing an area outside of the media directory
@@ -135,16 +135,16 @@ echo PGV_JS_START;
 
 	function pasteid(id, name, thumb) {
 		if(thumb) {
-			window.opener.<?php echo $callback; ?>(id,name,thumb);
+			window.opener.<?php echo $callback; ?>(id, name, thumb);
 			<?php if (!$multiple) echo "window.close();"; ?>
 		} else {
 			// GEDFact_assistant ========================
 			if (window.opener.document.getElementById('addlinkQueue')) {
-				window.opener.insertRowToTable(id,name);
+				window.opener.insertRowToTable(id, name);
 				// Check if Indi, Fam or source ===================
 				/*
 				if (id.match("I")=="I") {
-					var win01 = window.opener.window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+id, 'win01', 'top=50,left=600,width=420,height=650,resizable=1,scrollbars=1');
+					var win01 = window.opener.window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+id, 'win01', 'top=50, left=600, width=420, height=650, resizable=1, scrollbars=1');
 					if (window.focus) {win01.focus();}
 				}else if (id.match("F")=="F") {
 					// TODO --- alert('Opening Navigator with family id entered will come later');
@@ -157,8 +157,8 @@ echo PGV_JS_START;
 		}
 	}
 	var language_filter;
-	function paste_char(selected_char,language_filter,magnify) {
-		window.opener.paste_char(selected_char,language_filter,magnify);
+	function paste_char(selected_char, language_filter, magnify) {
+		window.opener.paste_char(selected_char, language_filter, magnify);
 		return false;
 	}
 	function setMagnify() {
@@ -246,12 +246,12 @@ if ($type == "indi") {
 /*
 	echo "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo $pgv_lang["name_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	echo $pgv_lang["name_contains"], " <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) echo $filter;
 	echo "\" />";
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo "<input type=\"submit\" value=\"".$pgv_lang["filter"]."\" /><br />";
+	echo "<input type=\"submit\" value=\"", $pgv_lang["filter"], "\" /><br />";
 	echo "</td></tr></table>";
 */
 	echo "</form></div>";
@@ -267,12 +267,12 @@ if ($type == "fam") {
 	echo "<input type=\"hidden\" name=\"multiple\" value=\"$multiple\" />";
 	echo "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo $pgv_lang["name_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	echo $pgv_lang["name_contains"], " <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) echo $filter;
 	echo "\" />";
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo "<input type=\"submit\" value=\"".$pgv_lang["filter"]."\" /><br />";
+	echo "<input type=\"submit\" value=\"", $pgv_lang["filter"], "\" /><br />";
 	echo "</td></tr></table>";
 	echo "</form></div>";
 }
@@ -281,30 +281,30 @@ if ($type == "fam") {
 if ($type == "media" && $MULTI_MEDIA) {
 	echo "<div align=\"center\">";
 	echo "<form name=\"filtermedia\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
-	echo "<input type=\"hidden\" name=\"choose\" value=\"".$choose."\" />";
-	echo "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\" />";
-	echo "<input type=\"hidden\" name=\"thumbdir\" value=\"".$thumbdir."\" />";
-	echo "<input type=\"hidden\" name=\"level\" value=\"".$level."\" />";
+	echo "<input type=\"hidden\" name=\"choose\" value=\"", $choose, "\" />";
+	echo "<input type=\"hidden\" name=\"directory\" value=\"", $directory, "\" />";
+	echo "<input type=\"hidden\" name=\"thumbdir\" value=\"", $thumbdir, "\" />";
+	echo "<input type=\"hidden\" name=\"level\" value=\"", $level, "\" />";
 	echo "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
 	echo "<input type=\"hidden\" name=\"type\" value=\"media\" />";
 	echo "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
 	echo "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 	echo "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo $pgv_lang["media_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	echo $pgv_lang["media_contains"], " <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) echo $filter;
 	echo "\" />";
-	print_help_link("simple_filter_help","qm");
+	print_help_link("simple_filter_help", "qm");
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" wstyle=\"padding: 5px;\">";
 	echo "<input type=\"checkbox\" name=\"showthumb\" value=\"true\"";
 	if( $showthumb) echo "checked=\"checked\"";
-	echo "onclick=\"javascript: this.form.submit();\" />".$pgv_lang["show_thumbnail"];
-	print_help_link("show_thumb_help","qm");
+	echo "onclick=\"javascript: this.form.submit();\" />", $pgv_lang["show_thumbnail"];
+	print_help_link("show_thumb_help", "qm");
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-	echo "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+	echo "<input type=\"submit\" name=\"search\" value=\"", $pgv_lang["filter"], "\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+	echo "<input type=\"submit\" name=\"all\" value=\"", $pgv_lang["display_all"], "\" onclick=\"this.form.subclick.value=this.name\" />";
 	echo "</td></tr></table>";
 	echo "</form></div>";
 }
@@ -319,13 +319,13 @@ if ($type == "place") {
 	echo "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 	echo "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo $pgv_lang["place_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	echo $pgv_lang["place_contains"], " <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) echo $filter;
 	echo "\" />";
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-	echo "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+	echo "<input type=\"submit\" name=\"search\" value=\"", $pgv_lang["filter"], "\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+	echo "<input type=\"submit\" name=\"all\" value=\"", $pgv_lang["display_all"], "\" onclick=\"this.form.subclick.value=this.name\" />";
 	echo "</td></tr></table>";
 	echo "</form></div>";
 }
@@ -340,13 +340,13 @@ if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 	echo "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 	echo "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo $pgv_lang["repo_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	echo $pgv_lang["repo_contains"], " <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) echo $filter;
 	echo "\" />";
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-	echo "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+	echo "<input type=\"submit\" name=\"search\" value=\"", $pgv_lang["filter"], "\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+	echo "<input type=\"submit\" name=\"all\" value=\"", $pgv_lang["display_all"], "\" onclick=\"this.form.subclick.value=this.name\" />";
 	echo "</td></tr></table>";
 	echo "</form></div>";
 }
@@ -361,13 +361,13 @@ if ($type == "note") {
 	echo "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 	echo "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo $pgv_lang["shared_note_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	echo $pgv_lang["shared_note_contains"], " <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) echo $filter;
 	echo "\" />";
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-	echo "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+	echo "<input type=\"submit\" name=\"search\" value=\"", $pgv_lang["filter"], "\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+	echo "<input type=\"submit\" name=\"all\" value=\"", $pgv_lang["display_all"], "\" onclick=\"this.form.subclick.value=this.name\" />";
 	echo "</td></tr></table>";
 	echo "</form></div>";
 }
@@ -382,13 +382,13 @@ if ($type == "source" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 	echo "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 	echo "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo $pgv_lang["source_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	echo $pgv_lang["source_contains"], " <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) echo $filter;
 	echo "\" />";
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	echo "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-	echo "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+	echo "<input type=\"submit\" name=\"search\" value=\"", $pgv_lang["filter"], "\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+	echo "<input type=\"submit\" name=\"all\" value=\"", $pgv_lang["display_all"], "\" onclick=\"this.form.subclick.value=this.name\" />";
 	echo "</td></tr></table>";
 	echo "</form></div>";
 }
@@ -399,19 +399,19 @@ if ($type == "specialchar") {
 	echo "<form name=\"filterspecialchar\" method=\"get\" action=\"find.php\">";
 	echo "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
 	echo "<input type=\"hidden\" name=\"type\" value=\"specialchar\" />";
-	echo "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
-	echo "<input type=\"hidden\" name=\"magnify\" value=\"".$magnify."\" />";
+	echo "<input type=\"hidden\" name=\"callback\" value=\"", $callback, "\" />";
+	echo "<input type=\"hidden\" name=\"magnify\" value=\"", $magnify, "\" />";
 	echo "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	echo "<tr><td class=\"list_label\" style=\"padding: 5px;\">";
 	echo "<select id=\"language_filter\" name=\"language_filter\" onchange=\"submit();\">";
-	echo "<option value=\"\">".$pgv_lang["change_lang"]."</option>";
+	echo "<option value=\"\">", $pgv_lang["change_lang"], "</option>";
 	$language_options = "";
 	foreach($specialchar_languages as $key=>$value) {
 		$language_options.= "<option value=\"$key\">$value</option>";
 	}
-	$language_options = str_replace("\"$language_filter\"","\"$language_filter\" selected",$language_options);
+	$language_options = str_replace("\"$language_filter\"", "\"$language_filter\" selected", $language_options);
 	echo $language_options;
-	echo "</select><br /><a href=\"javascript:;\" onclick=\"setMagnify()\">".$pgv_lang["magnify"]."</a>";
+	echo "</select><br /><a href=\"javascript:;\" onclick=\"setMagnify()\">", $pgv_lang["magnify"], "</a>";
 	echo "</td></tr></table>";
 	echo "</form></div>";
 }
@@ -420,7 +420,7 @@ echo "</td></tr>";
 echo "</table>"; // Close table with find options
 
 echo "<br />";
-echo "<a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br />";
+echo "<a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">", $pgv_lang["close_window"], "</a><br />";
 echo "<br />";
 
 if ($action=="filter") {
@@ -457,7 +457,7 @@ if ($action=="filter") {
 					}
 
 				
-				echo "</span><br><span class=\"list_item\">".$born." ".$indi->getbirthyear()."&nbsp;&nbsp;&nbsp;".$indi->getbirthplace()."</span></a></li>";
+				echo "</span><br><span class=\"list_item\">", $born, " ", $indi->getbirthyear(), "&nbsp;&nbsp;&nbsp;", $indi->getbirthplace(), "</span></a></li>";
 
 			echo "<hr />";
 			}
@@ -521,7 +521,7 @@ if ($action=="filter") {
 			echo "<td class=\"topbottombar\" colspan=\"2\">";
 				echo $pgv_lang["current_dir"];
 				echo "<br />";
-				echo substr($directory,0,-1);
+				echo substr($directory, 0, -1);
 			echo "</td>";
 		echo "</tr>";
 
@@ -530,14 +530,14 @@ if ($action=="filter") {
 			sort($dirs);
 			if ($level){
 				echo "<tr><td class=\"list_value $TEXT_DIRECTION\" colspan=\"2\">";
-				echo $uplink."</td></tr>";
+				echo $uplink, "</td></tr>";
 			}
 			echo "<tr><td class=\"descriptionbox $TEXT_DIRECTION\" colspan=\"2\">";
-			echo "<a href=\"".encode_url("find.php?directory={$directory}&thumbdir=".str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory)."&level={$level}{$thumbget}&external_links=http&type=media&choose={$choose}")."\">".$pgv_lang["external_objects"]."</a>";
+			echo "<a href=\"", encode_url("find.php?directory={$directory}&thumbdir=".str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory)."&level={$level}{$thumbget}&external_links=http&type=media&choose={$choose}"), "\">", $pgv_lang["external_objects"], "</a>";
 			echo "</td></tr>";
 			foreach ($dirs as $indexval => $dir) {
 				echo "<tr><td class=\"list_value $TEXT_DIRECTION\" colspan=\"2\">";
-				echo "<a href=\"".encode_url("find.php?directory={$directory}{$dir}/&thumbdir={$directory}{$dir}/&level=".($level+1)."{$thumbget}&type=media&choose={$choose}")."\"><span dir=\"ltr\">".$dir."</span></a>";
+				echo "<a href=\"", encode_url("find.php?directory={$directory}{$dir}/&thumbdir={$directory}{$dir}/&level=".($level+1)."{$thumbget}&type=media&choose={$choose}"), "\"><span dir=\"ltr\">", $dir, "</span></a>";
 				echo "</td></tr>";
 			}
 		}
@@ -550,7 +550,7 @@ if ($action=="filter") {
 		 */
 		if ($create=="thumbnail") {
 			$filename = $_REQUEST["file"];
-			generate_thumbnail($directory.$filename,$thumbdir.$filename);
+			generate_thumbnail($directory.$filename, $thumbdir.$filename);
 		}
 
 		echo "<br />";
@@ -586,34 +586,34 @@ if ($action=="filter") {
 						//-- thumbnail field
 						if ($showthumb) {
 							echo "<td class=\"list_value $TEXT_DIRECTION width10\">";
-							if (isset($media["THUMB"])) echo "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\"><img src=\"".filename_decode($media["THUMB"])."\" border=\"0\" width=\"50\" alt=\"\" /></a>";
+							if (isset($media["THUMB"])) echo "<a href=\"javascript:;\" onclick=\"return openImage('", rawurlencode($media["FILE"]), "', $imgwidth, $imgheight);\"><img src=\"", filename_decode($media["THUMB"]), "\" border=\"0\" width=\"50\" alt=\"\" /></a>";
 							else echo "&nbsp;";
 						}
 
 						//-- name and size field
 						echo "<td class=\"list_value $TEXT_DIRECTION\">";
 						if ($media["TITL"] != "") {
-							echo "<b>".PrintReady($media["TITL"])."</b>&nbsp;&nbsp;";
+							echo "<b>", PrintReady($media["TITL"]), "</b>&nbsp;&nbsp;";
 							if ($TEXT_DIRECTION=="rtl") echo getRLM();
-							echo "(".$media["XREF"].")";
+							echo "(", $media["XREF"], ")";
 							if ($TEXT_DIRECTION=="rtl") echo getRLM();
 							echo "<br />";
 						}
 						if (!$embed){
-							echo "<a href=\"javascript:;\" onclick=\"pasteid('".addslashes($media["FILE"])."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
+							echo "<a href=\"javascript:;\" onclick=\"pasteid('", addslashes($media["FILE"]), "');\"><span dir=\"ltr\">", $media["FILE"], "</span></a> -- ";
 						}
-						else echo "<a href=\"javascript:;\" onclick=\"pasteid('".$media["XREF"]."','".addslashes($media["TITL"])."','".addslashes($media["THUMB"])."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
-						echo "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">".$pgv_lang["view"]."</a><br />";
-						if (!$media["EXISTS"] && !isFileExternal($media["FILE"])) echo $media["FILE"]."<br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
+						else echo "<a href=\"javascript:;\" onclick=\"pasteid('", $media["XREF"], "','", addslashes($media["TITL"]), "','", addslashes($media["THUMB"]), "');\"><span dir=\"ltr\">", $media["FILE"], "</span></a> -- ";
+						echo "<a href=\"javascript:;\" onclick=\"return openImage('", rawurlencode($media["FILE"]), "', $imgwidth, $imgheight);\">", $pgv_lang["view"], "</a><br />";
+						if (!$media["EXISTS"] && !isFileExternal($media["FILE"])) echo $media["FILE"], "<br /><span class=\"error\">", $pgv_lang["file_not_exists"], "</span><br />";
 						else if (!isFileExternal($media["FILE"]) && !empty($imgsize[0])) {
-							echo "<br /><sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
+							echo "<br /><sub>&nbsp;&nbsp;", $pgv_lang["image_size"], " -- ", $imgsize[0], "x", $imgsize[1], "</sub><br />";
 						}
 						if ($media["LINKED"]) {
-							echo $pgv_lang["media_linked"]."<br />";
+							echo $pgv_lang["media_linked"], "<br />";
 							foreach ($media["LINKS"] as $indi => $type_record) {
 								if ($type_record!='INDI' && $type_record!='FAM' && $type_record!='SOUR' && $type_record!='OBJE') continue;
 								$record=GedcomRecord::getInstance($indi);
-								echo '<br /><a href="'.encode_url($record->getLinkUrl()).'">';
+								echo '<br /><a href="', encode_url($record->getLinkUrl()), '">';
 								switch($type_record) {
 								case 'INDI':
 									echo $pgv_lang['view_person'], ' - ';
@@ -670,10 +670,10 @@ if ($action=="filter") {
 				uasort($revplacelist, "stringsort");
 				echo "<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 				foreach($revplacelist as $place) {
-					echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".str_replace(array("'",'"'), array("\'",'&quot;'), $place)."');\">".PrintReady($place)."</a></li>";
+					echo "<li><a href=\"javascript:;\" onclick=\"pasteid('", str_replace(array("'", '"'), array("\'", '&quot;'), $place), "');\">", PrintReady($place), "</a></li>";
 				}
 				echo "</ul></td></tr>";
-				echo "<tr><td class=\"list_label\">".$pgv_lang["total_places"]." ".$ctplace;
+				echo "<tr><td class=\"list_label\">", $pgv_lang["total_places"], " ", $ctplace;
 				echo "</td></tr>";
 			}
 			else {
@@ -692,12 +692,12 @@ if ($action=="filter") {
 		if ($repo_list) {
 			echo "<td class=\"list_value_wrap\"><ul>";
 			foreach ($repo_list as $repo) {
-				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".$repo->getXref()."');\"><span class=\"list_item\">".$repo->getListName()."&nbsp;&nbsp;&nbsp;";
+				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('", $repo->getXref(), "');\"><span class=\"list_item\">", $repo->getListName(), "&nbsp;&nbsp;&nbsp;";
 				echo PGV_LPARENS.$repo->getXref().PGV_RPARENS;
 				echo "</span></a></li>";
 			}
 			echo "</ul></td></tr>";
-			echo "<tr><td class=\"list_label\">".$pgv_lang["repos_found"]." ".count($repo_list);
+			echo "<tr><td class=\"list_label\">", $pgv_lang["repos_found"], " ", count($repo_list);
 			echo "</td></tr>";
 		}
 		else {
@@ -760,8 +760,8 @@ if ($action=="filter") {
 			echo '<span class="largechars">';
 		}
 		foreach($lcspecialchars as $key=>$value) {
-			$value = str_replace("'","\'",$value);
-			echo "<a href=\"javascript:;\" onclick=\"return paste_char('$value','$language_filter','$magnify');\">";
+			$value = str_replace("'", "\'", $value);
+			echo "<a href=\"javascript:;\" onclick=\"return paste_char('$value', '$language_filter', '$magnify');\">";
 			echo $key;
 			echo "</span></a> ";
 		}
@@ -774,8 +774,8 @@ if ($action=="filter") {
 			echo '<span class="largechars">';
 		}
 		foreach($ucspecialchars as $key=>$value) {
-			$value = str_replace("'","\'",$value);
-			echo "<a href=\"javascript:;\" onclick=\"return paste_char('$value','$language_filter','$magnify');\">";
+			$value = str_replace("'", "\'", $value);
+			echo "<a href=\"javascript:;\" onclick=\"return paste_char('$value', '$language_filter', '$magnify');\">";
 			echo $key;
 			echo "</span></a> ";
 		}
@@ -788,8 +788,8 @@ if ($action=="filter") {
 			echo '<span class="largechars">';
 		}
 		foreach($otherspecialchars as $key=>$value) {
-			$value = str_replace("'","\'",$value);
-			echo "<a href=\"javascript:;\" onclick=\"return paste_char('$value','$language_filter','$magnify');\">";
+			$value = str_replace("'", "\'", $value);
+			echo "<a href=\"javascript:;\" onclick=\"return paste_char('$value', '$language_filter', '$magnify');\">";
 			echo $key;
 			echo "</span></a> ";
 		}

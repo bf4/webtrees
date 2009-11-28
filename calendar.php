@@ -211,13 +211,13 @@ if ($view!='preview') {
 	if ($filtersx=="M") {
 		echo Person::sexImage('M', 'large', 'vertical-align: middle', $pgv_lang['male']), ' | ';
 	} else {
-		echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=M&action={$action}")."\">";
+		echo "<a href=\"", encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=M&action={$action}"), "\">";
 		echo Person::sexImage('M', 'small', 'vertical-align: middle', $pgv_lang['male']), '</a> | ';
 	}
 	if ($filtersx=="F")
 		echo Person::sexImage('F', 'large', 'vertical-align: middle', $pgv_lang['female']), ' | ';
 	else {
-		echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=F&action={$action}")."\">";
+		echo "<a href=\"", encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=F&action={$action}"), "\">";
 		echo Person::sexImage('F', 'small', 'vertical-align: middle', $pgv_lang['female']), '</a>';
 	}
 	print "</td>";
@@ -278,44 +278,48 @@ if ($view!='preview') {
 	print '<tr><td class="topbottombar" colspan="8">';
 	print_help_link("day_month_help", "qm");
 
-	if ($action=='today')
+	if ($action=='today') {
 		print "<span class=\"error\">{$pgv_lang['viewday']}</span>";
-	else
+	} else {
 		print "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=today")."\">{$pgv_lang['viewday']}</a>";
-
-	if ($action=='calendar')
+	}
+	if ($action=='calendar') {
 		print " | <span class=\"error\">{$pgv_lang['viewmonth']}</span>";
-	else
+	} else {
 		print " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=calendar")."\">{$pgv_lang['viewmonth']}</a>";
-
-	if ($action=='year')
+	}
+	if ($action=='year') {
 		print " | <span class=\"error\">{$pgv_lang['viewyear']}</span>";
-	else
+	} else {
 		print " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=year")."\">{$pgv_lang['viewyear']}</a>";
+	}
 
 	foreach (array('gregorian', 'julian', 'jewish', 'french', 'hijri') as $newcal) {
 		$tmp=$cal_date->convert_to_cal($newcal);
-		if ($tmp->InValidRange())
-			if ($tmp->CALENDAR_ESCAPE()==$cal_date->CALENDAR_ESCAPE())
+		if ($tmp->InValidRange()) {
+			if ($tmp->CALENDAR_ESCAPE()==$cal_date->CALENDAR_ESCAPE()) {
 				print " | <span class=\"error\">{$pgv_lang['cal_'.$newcal]}</span>";
-			else {
+			} else {
 				$newcalesc=urlencode($tmp->CALENDAR_ESCAPE());
 				$tmpmonth=$tmp->FormatGedcomMonth();
 				print " | <a href=\"".encode_url("calendar.php?cal={$newcalesc}&day={$tmp->d}&month={$tmpmonth}&year={$tmp->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$pgv_lang['cal_'.$newcal]}</a>";
 			}
+		}
 	}
-	print "</td></tr>";
+	echo "</td></tr>";
 } // print preview
-print "</table>\n</form>\n";
+echo "</table>\n</form>\n";
 
 // Convert event filter option to a list of gedcom event codes
-if ($filterev=='all')
+if ($filterev=='all') {
 	$events='';
-else
-	if ($filterev=='bdm')
+} else {
+	if ($filterev=='bdm') {
 		$events='BIRT MARR DEAT';
-	else
+	} else {
 		$events=$filterev;
+	}
+}
 
 // Fetch data for day/month/year views
 switch ($action) {
@@ -498,37 +502,43 @@ case 'calendar':
 			print calendar_list_text($cal_facts[$d], "", "", false);
 			print "</div>";
 		}
-		print "</td>";
-		if (($d+$cal_date->minJD-$week_start) % $days_in_week==0)
-			print '</tr>';
+		echo "</td>";
+		if (($d+$cal_date->minJD-$week_start) % $days_in_week==0) {
+			echo '</tr>';
+		}
 	}
-	print '</table>';
+	echo '</table>';
 	break;
 }
 
 if ($view=="preview") {
 	// Print details of any filtering
 	$filters=array();
-	if ($filterof=='living')
+	if ($filterof=='living') {
 		$filters[]=$pgv_lang['living_only'];
-	if ($filterof=='recent')
+	}
+	if ($filterof=='recent') {
 		$filters[]=$pgv_lang['recent_events'];
-	if ($filtersx=='M')
+	}
+	if ($filtersx=='M') {
 		$filters[]=$pgv_lang["male"];
-	if ($filtersx=='F')
+	}
+	if ($filtersx=='F') {
 		$filters[]=$pgv_lang["female"];
-	if ($filterev=='bdm')
+	}
+	if ($filterev=='bdm') {
 		$filters[]=$pgv_lang['bdm'];
-	else
-		if ($filterev!='all')
+	} elseif ($filterev!='all') {
 			$filters[].=$factarray[$filterev];
+	}
 	$filtertext=implode(' - ', $filters);
-	if (!empty($filters))
+	if (!empty($filters)) {
 		$filtertext="({$pgv_lang['filter']}: {$filtertext})";
+	}
 	echo '<br />', get_gedcom_setting(PGV_GED_ID, 'title'), ' ', $filtertext;
 }
 // print "</table>";
-print "</div><br />";
+echo "</div><br />";
 print_footer();
 
 /////////////////////////////////////////////////////////////////////////////////

@@ -215,7 +215,7 @@ jQuery(document).ready(function(){
 			<?php echo $controller->getHighlightedObject(); ?>
 		<?php } ?>
 		</td><td valign="bottom">
-		<?php if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>".$pgv_lang["accept_successful"]."</b><br />"; ?>
+		<?php if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", $pgv_lang["accept_successful"], "</b><br />"; ?>
 		<?php if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 		<span class="name_head">
 		<?php
@@ -232,14 +232,14 @@ jQuery(document).ready(function(){
 			}
 		?>
 		</span><br /><br />
-		<?php if (strlen($controller->indi->getAddName()) > 0) echo "<span class=\"name_head\">".PrintReady($controller->indi->getAddName())."</span><br />"; ?>
+		<?php if (strlen($controller->indi->getAddName()) > 0) echo "<span class=\"name_head\">", PrintReady($controller->indi->getAddName()), "</span><br />"; ?>
 		
 		<table><tr>
 		<?php if ($controller->indi->canDisplayDetails()) { ?>
 		<?php
 			$col=0; $maxcols=7; // 4 with data and 3 spacers
 			$globalfacts=$controller->getGlobalFacts();
-			$nameSex = array('NAME','SEX');
+			$nameSex = array('NAME', 'SEX');
 			foreach ($globalfacts as $key=>$value) {
 				$fact = $value->getTag();
 				if (in_array($fact, $nameSex)) {
@@ -320,7 +320,7 @@ foreach($controller->modules as $mod) {
 			<?php
 				if (PGV_USER_GEDCOM_ID) {
 			?>
-			<a class="accesskeys" href="<?php echo "relationship.php?show_full=$showFull&amp;pid1=".PGV_USER_GEDCOM_ID."&amp;pid2=".$controller->pid;?>" title="<?php echo $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php echo $pgv_lang["relationship_to_me"] ?></a>
+			<a class="accesskeys" href="<?php echo "relationship.php?show_full=$showFull&amp;pid1=", PGV_USER_GEDCOM_ID, "&amp;pid2=", $controller->pid;?>" title="<?php echo $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php echo $pgv_lang["relationship_to_me"] ?></a>
 			<?php }
 			if ($controller->canShowGedcomRecord()) {
 			?>
@@ -388,7 +388,7 @@ echo PGV_JS_END;
 
 if ($SEARCH_SPIDER) {
 	if($SHOW_SPIDER_TAGLINE)
-		echo $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+		echo $pgv_lang["label_search_engine_detected"], ": ", $SEARCH_SPIDER;
 	echo "</div></body></html>";
 } else {
 	print_footer();

@@ -43,7 +43,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 	);
 
 function top10_pageviews($block=true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $INDEX_DIRECTORY, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_SOURCES, $TEXT_DIRECTION;
+	global $pgv_lang, $INDEX_DIRECTORY, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_SOURCES, $TEXT_DIRECTION;
 
 	if (empty($config)) {
 		$config = $PGV_BLOCKS["top10_pageviews"]["config"];
@@ -55,14 +55,14 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 		$CountSide = "left";
 	}
 
-	$PGV_COUNTER_FILENAME = $INDEX_DIRECTORY.$GEDCOM."pgv_counters.txt";
+	$PGV_COUNTER_FILENAME = $INDEX_DIRECTORY.PGV_GEDCOM."pgv_counters.txt";
 
 	$id = "top10hits";
 	$title = print_help_link("index_top10_pageviews_help", "qm", "", false, true);
 	if ($PGV_BLOCKS["top10_pageviews"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = str_replace("'", "\'", $GEDCOM);
+				$name = PGV_GEDCOM;
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -123,9 +123,9 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 	}
 
 	if ($block) {
-		include(PGV_THEME_DIR."templates/block_small_temp.php");
+		require PGV_THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include(PGV_THEME_DIR."templates/block_main_temp.php");
+		require PGV_THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 

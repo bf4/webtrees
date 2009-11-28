@@ -124,19 +124,46 @@
 
 .cens_sour_country {
 	float: left;
-	width: 10%;
+	width: 5.3em;
 	text-align: left;
+	padding-bottom: .2em;
+	margin-left: -0.4em;
+}
+
+.cens_sour_sour {
+	position: absolute;
+	margin-top: 3.4em;
+	float: left;
+	width: 12.5em;
+	text-align: left;
+	padding-bottom: 0em;
+}
+
+img {
+	margin-top:-.6em;
+}
+
+.cens_sour_obje {
+	position: absolute;
+	margin-top: 5.2em;
+	margin-left: 0.37em;
+	float: left;
+	width: 12.5em;
+	text-align: left;
+	padding-bottom: 0em;
 }
 
 .cens_sour_year {
 	float: left;
-	width: 10%;
+	width: 6.6em;
 	text-align: left;
+	margin-left: .25em;
+	padding-bottom: .2em;
 }
 
 .cens_sour_scs {
 	float: right;
-	width: 75%;
+	width: 74%;
 	}
 	
 .cens_sour select {
@@ -148,7 +175,11 @@
 	font-weight: normal;
 	font-size: 0.9em;
 	margin-top: 0.25em;
-	width: 77%;
+	width: 78%;
+}
+
+.spacer {
+	padding-top:.5em;
 }
 
 .cens_sour_1 {
@@ -158,9 +189,12 @@
 }
 
 .cens_sour_2 {
-	width: 20%;
+	width: 17%;
 	float: left;
 	margin-top: 0.25em;
+}
+#notes, #locality {
+	margin-top: 0.20em;
 }
 
 /* Census Text input area */

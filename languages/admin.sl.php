@@ -31,6 +31,25 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+$pgv_lang["module_admin"]		= "Upravljanje dodatkov";
+$pgv_lang["mod_admin_installed"]	= "Nameščeni dodatki";
+$pgv_lang["mod_admin_tabs"]		= "Uredi zavihke";
+$pgv_lang["mod_admin_menus"]		= "Uredi menije";
+$pgv_lang["mod_admin_intro"]		= "Spodaj je seznam vseh dodatkov v tej različici PhpGedView.  Dodatki so nameščeni s postavitvijo v imenik <i>modules</i>.  Tukaj lahko nastavite nivo dostopa za vsak GEDCOM in vsak dodatek.  Če dodatek vključuje zavihke za posamezno stran ali menije jim lahko nastavite še nivo dostopa in vrstni red.";
+$pgv_lang["mod_admin_active"]		= "Aktiven";
+$pgv_lang["mod_admin_name"]		= "Ime dodatka";
+$pgv_lang["mod_admin_description"]	= "Opis";
+$pgv_lang["mod_admin_version"]		= "Različica / PGV";
+$pgv_lang["mod_admin_hastab"]		= "Zavihek?";
+$pgv_lang["mod_admin_hasmenu"]		= "Meni?";
+$pgv_lang["mod_admin_access_level"]	= "Nivo dostopa";
+$pgv_lang["mod_admin_order"]		= "Vrstni red";
+$pgv_lang["mod_admin_config"]		= "Nastavitve dod";
+$pgv_lang["mod_admin_settings"]		= "Nastavitve dodatka";
+$pgv_lang["ret_module_admin"]		= "Vrni se na stran za upravljane dodatkov";
+$pgv_lang["ret_admin"]			= "Vrni se na stran za upravljanje";
+
 $pgv_lang["enter_comment"]		= "Tukaj lahko vstavite vaše komentarje.";
 $pgv_lang["upload_a_gedcom"] 		= "Naloži datoteko GEDCOM";
 $pgv_lang["start_entering"] 		= "Začni vnašati podatke";
@@ -212,7 +231,6 @@ $pgv_lang["admin_user_warnings"]		= "En ali več računov ima opozorila";
 $pgv_lang["admin_verification_waiting"] = "Uporabniški računi čakajo na odobritev upravitelja";
 $pgv_lang["administration"] 			= "Upravljanje";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]		= "Dovoli izbiro GEDCOM";
-$pgv_lang["ALLOW_REMEMBER_ME"]			= "Pokaži možnost <b>Zapomni si me</b> na prijavni strani";
 $pgv_lang["ALLOW_USER_THEMES"]			= "Dovoli uporabnikom izbiro teme po lastni želji";
 $pgv_lang["ansi_encoding_detected"] 	= "V datoteki je bil zaznan zapis v obliki ANSI. PhpGedView najbolje deluje z datotekami, zapisanimi v obliki UTF-8.";
 $pgv_lang["ansi_to_utf8"]				= "Pretvori ta GEDCOM-ov zapis v obliki ANSI v obliko UTF-8?";
@@ -334,7 +352,6 @@ $pgv_lang["performing_validation"]					= "Izvajam preverjanje GEDCOM-a...";
 $pgv_lang["pgsql"]							= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 			= "Napaka!!! Ne morem zapisati PhpGedView datoteko nastavitev.  Preverite datoteko in dovoljenje za pisanje v imenik ter poskusite ponovno.";
 $pgv_lang["PGV_MEMORY_LIMIT"]					= "Omejitev pomnilnika";
-$pgv_lang["pgv_registry"]						= "Poglejte druge PhpGedView spletne strani";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]				= "Pot za shranjevanje sej";
 $pgv_lang["PGV_SESSION_TIME"]					= "Časovna omejitev seje";
 $pgv_lang["PGV_SIMPLE_MAIL"] 					= "Uporabite enostavne poštne glavi in zunanjo pošto";

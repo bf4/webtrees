@@ -10,6 +10,9 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r6431 - r6476 from the trunk.  
+   Also added SOUR and OBJE fields to GEDFact assistant window. 
+   Still have to link these fields ... patience please (windmillway)
  - Changed: Copy Census event to multi indis now working (GEDFact_assistant/_CENS) (windmillway)
  - Merged: Merge changes r6416 - r6430 from the trunk. (windmillway)
  - Add new file modules/GEDFact_assistant/_CENS/gedrec_append.php to handle census event copying to multiple indis. (Requires Trunk svn 6430) (windmillway)
@@ -172,6 +175,13 @@ Version 4.2.x CA
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.2.3
+ - Fixed: [ 1953767 ] 4.1.5rel ... Negative #s in import statistics ( fisharebest )
+ - Update: PCLzip 2.8.2 (volschin)
+ - Update: TCPDF 4.8.016 (volschin)
+ - Fixed: [ 1738619 ] Deleting Gedcom file - Misc Entried Remain in DB (fisharebest)
+ - Fixed: [ 2881117 ] 4.2.2 Merge 2 Indis makes 2 clones in Fam record (fisharebest)
+ - Fixed: [ 2840835 ] Checker reports warning if CONT tag value is all spaces (fisharebest)
+ - Fixed: [ 2900966 ] batch update for death records (fisharebest)
  - Fixed: [ 2898717 ] No AGE field in LDS GUIs (fisharebest)
  - Fixed: Extended javascript change for dates like 21.12.1880 also with a prefix like AFT (volschin)
  - Fixed: Wrong uppercase javascript change for date phrases in brackets (volschin)

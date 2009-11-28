@@ -80,7 +80,7 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 		<?php if (!empty($META_PAGE_TYPE)) {?><meta name="page-type" content="<?php echo htmlspecialchars($META_PAGE_TYPE); ?>" /><?php } ?>
 		<?php if (!empty($META_ROBOTS)) {?><meta name="robots" content="<?php echo htmlspecialchars($META_ROBOTS); ?>" /><?php } ?>
 		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php echo htmlspecialchars($META_REVISIT); ?>" /><?php } ?>
-		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW." - ".PGV_PHPGEDVIEW_URL; ?>" />
+		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL; ?>" />
 	<?php } ?>
 	<?php echo $javascript; ?>
 	<?php echo $head; //-- additional header information ?>
@@ -96,10 +96,10 @@ else if ($view!='simple'){?>
 	  <td>
 	  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php
 			if ($TEXT_DIRECTION=="ltr") {
-				echo $PGV_IMAGE_DIR."/cabeza.jpg'); ";
+				echo $PGV_IMAGE_DIR,"/cabeza.jpg'); ";
 				echo "background-position:left top; ";
 			} else {
-				echo $PGV_IMAGE_DIR."/cabeza_rtl.jpg'); ";
+				echo $PGV_IMAGE_DIR,"/cabeza_rtl.jpg'); ";
 				echo "background-position:right top; ";
 			}
 			?>background-repeat:repeat-y; height:40px;">

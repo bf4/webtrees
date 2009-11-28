@@ -50,7 +50,7 @@ if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 }
 
 if (!$controller->note){
-	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
 	print_footer();
 	exit;
 }
@@ -60,13 +60,13 @@ else if ($controller->note->isMarkedDeleted()) {
 
 echo PGV_JS_START;
 echo 'function show_gedcom_record() {';
-echo ' var recwin=window.open("gedrecord.php?pid=', $controller->nid, '", "_blank", "top=0,left=0,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");';
+echo ' var recwin=window.open("gedrecord.php?pid=', $controller->nid, '", "_blank", "top=0, left=0, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");';
 echo '}';
 echo 'function showchanges() {';
 echo ' window.location="note.php?nid=', $controller->nid, '&show_changes=yes"';
 echo '}';
 echo 'function edit_note() {';
-echo ' var win04 = window.open("edit_interface.php?action=editnote&pid='.$linkToID.'", "win04", "top=70,left=70,width=620,height=500,resizable=1,scrollbars=1");';
+echo ' var win04 = window.open("edit_interface.php?action=editnote&pid=', $linkToID, '", "win04", "top=70, left=70, width=620, height=500, resizable=1, scrollbars=1");';
 echo ' if (window.focus) {win04.focus();}';
 echo '}';
 echo PGV_JS_END;
@@ -114,7 +114,7 @@ if (!$controller->isPrintPreview()) {
 	}
 }
 echo '</td></tr><tr><td colspan="2"><table class="facts_table">';
-echo '<tr class="'.$TEXT_DIRECTION.'"><td><table class="width100">';
+echo '<tr class="', $TEXT_DIRECTION, '"><td><table class="width100">';
 // Shared Note details ---------------------
 $noterec = find_gedcom_record($controller->nid, PGV_GED_ID);
 $nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
@@ -123,18 +123,18 @@ if ($nt==1) {
 }else{
 	$note = "No Text";
 }
-echo '<tr><td align="left" class="descriptionbox '.$TEXT_DIRECTION.'">';
+echo '<tr><td align="left" class="descriptionbox ', $TEXT_DIRECTION, '">';
 	echo '<center>';
 	if (!empty($PGV_IMAGES["notes"]["small"]) && $SHOW_FACT_ICONS)
-		echo '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"].'" alt="'.$pgv_lang["shared_note"].'" title="'.$pgv_lang["shared_note"].'" align="middle" /> ';
-	echo $pgv_lang["shared_note"]."</center>";
+		echo '<img src="', $PGV_IMAGE_DIR, "/", $PGV_IMAGES["notes"]["small"], '" alt="', $pgv_lang["shared_note"], '" title="', $pgv_lang["shared_note"], '" align="middle" /> ';
+	echo $pgv_lang["shared_note"], "</center>";
 	echo '<br /><br />';
 	if (PGV_USER_CAN_EDIT) {
 		echo "<a href=\"javascript: edit_note()\"> ";
 		echo $pgv_lang['edit'];
 		echo "</a>";
 	}
-	echo '</td><td class="optionbox wrap width80 '.$TEXT_DIRECTION.'">';
+	echo '</td><td class="optionbox wrap width80 ', $TEXT_DIRECTION, '">';
 	echo $note;
 	echo "<br />";
 echo "</td></tr>";
@@ -157,13 +157,13 @@ print_main_media($controller->nid);
 if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	print_add_new_fact($controller->nid, $notefacts, 'NOTE');
 	// new media
-	echo '<tr><td class="descriptionbox '.$TEXT_DIRECTION.'">';
+	echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
 	print_help_link('add_media_help', 'qm', 'add_media_lbl');
-	echo $pgv_lang['add_media_lbl'] . '</td>';
-	echo '<td class="optionbox '.$TEXT_DIRECTION.'">';
-	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
+	echo $pgv_lang['add_media_lbl'] , '</td>';
+	echo '<td class="optionbox ', $TEXT_DIRECTION, '">';
+	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
 	echo '<br />';
-	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->nid.'&linkto=note\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang['link_to_existing_media'].'</a>';
+	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid=', $controller->nid, '&linkto=note\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', $pgv_lang['link_to_existing_media'], '</a>';
 	echo '</td></tr>';
 }
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';

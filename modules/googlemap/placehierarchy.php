@@ -47,13 +47,13 @@ function get_place_list_loc($parent_id, $inactive=false) {
 	global $display, $TBLPREFIX;
 	if ($inactive) {
 		$rows=
-			PGV_DB::prepare("SELECT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
+			PGV_DB::prepare("SELECT pl_id, pl_place, pl_lati, pl_long, pl_zoom, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
 			->execute(array($parent_id))
 			->fetchAll();
 	} else {
 		$rows=
 			PGV_DB::prepare(
-				"SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon".
+				"SELECT DISTINCT pl_id, pl_place, pl_lati, pl_long, pl_zoom, pl_icon".
 				" FROM {$TBLPREFIX}placelocation".
 				" INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level={$TBLPREFIX}places.p_level".
 				" WHERE pl_parent_id=? ORDER BY pl_place"
@@ -139,7 +139,7 @@ function set_placeid_map($level, $parent) {
 		for ($i=1; $i<=$level; $i++) {
 			$fullplace .= $parent[$level-$i].", ";
 		}
-		$fullplace = substr($fullplace,0,-2);
+		$fullplace = substr($fullplace, 0, -2);
 		$levelm = get_p_id($fullplace);
 	}
 	return $levelm;
@@ -159,7 +159,7 @@ function set_levelm($level, $parent) {
 			else
 				$fullplace .= "Unknown, ";
 		}
-		$fullplace = substr($fullplace,0,-2);
+		$fullplace = substr($fullplace, 0, -2);
 		$levelm = get_placeid($fullplace);
 	}
 	return $levelm;
@@ -171,7 +171,7 @@ function create_map() {
 	//<!-- start of map display -->
 	echo "\n<br /><br />\n";
 	echo "<table class=\"width80\"><tr valign=\"top\"><td class=\"center\">";
-	echo "<div id=\"place_map\" style=\"border: 1px solid gray; width: ".$GOOGLEMAP_PH_XSIZE."px; height: ".$GOOGLEMAP_PH_YSIZE."px; ";
+	echo "<div id=\"place_map\" style=\"border: 1px solid gray; width: ", $GOOGLEMAP_PH_XSIZE, "px; height: ", $GOOGLEMAP_PH_YSIZE, "px; ";
 	echo "background-image: url('images/loading.gif'); background-position: center; background-repeat: no-repeat; overflow: hidden;\"></div>";
 	?>
 	<!-- Start of map scripts -->
@@ -179,15 +179,15 @@ function create_map() {
 	<script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
 	<?php
 	if (PGV_USER_IS_ADMIN) {
-		echo "<table style=\"width: ".$GOOGLEMAP_PH_XSIZE."px\">";
+		echo "<table style=\"width: ", $GOOGLEMAP_PH_XSIZE, "px\">";
 		echo "<tr><td align=\"left\">\n";
-		echo "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+		echo "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">", $pgv_lang["gm_manage"], "</a>";
 		echo "</td>\n";
 		echo "<td align=\"center\">\n";
-		echo "<a href=\"module.php?mod=googlemap&pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
+		echo "<a href=\"module.php?mod=googlemap&pgvaction=places\">", $pgv_lang["edit_place_locations"], "</a>";
 		echo "</td>\n";
 		echo "<td align=\"right\">\n";
-		echo "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
+		echo "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">", $pgv_lang["placecheck"], "</a>";
 		echo "</td></tr>\n";
 		echo "</table>\n";
 	}
@@ -233,7 +233,7 @@ function print_how_many_people($level, $parent) {
 			$place_count_fam=$place['count(*)'];
 		}
 	}
-	echo "<br /><br />".$pgv_lang["stat_individuals"].": ".$place_count_indi.", ".$pgv_lang["stat_families"].": ".$place_count_fam;
+	echo "<br /><br />", $pgv_lang["stat_individuals"], ": ", $place_count_indi, ", ", $pgv_lang["stat_families"], ": ", $place_count_fam;
 }
 
 function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $placelevels, $lastlevel=false){
@@ -246,24 +246,24 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			echo "	icon_type.shadowSize = new GSize(37, 34);\n";
 			echo "	icon_type.iconAnchor = new GPoint(6, 20);\n";
 			echo "	icon_type.infoWindowAnchor = new GPoint(5, 1);\n";
-		echo "var point = new GLatLng(0,0);\n";
+		echo "var point = new GLatLng(0, 0);\n";
 		if ($lastlevel)
-			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=".$level.$linklevels."'><br />";
+			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=", $level, $linklevels, "'><br />";
 		else {
-			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=".($level+1).$linklevels."&amp;parent[{$level}]=";
+			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=", ($level+1), $linklevels, "&amp;parent[{$level}]=";
 			if ($place2['place'] == "Unknown") echo "'><br />";
-			else echo urlencode($place2['place'])."'><br />";
+			else echo urlencode($place2['place']), "'><br />";
 		}
 		if (($place2["icon"] != NULL) && ($place2['icon'] != "")) {
-			echo "<img src=\'".$place2['icon']."'>&nbsp;&nbsp;";
+			echo "<img src=\'", $place2['icon'], "'>&nbsp;&nbsp;";
 		}
 		if ($lastlevel) {
-			$placename = substr($placelevels,2);
+			$placename = substr($placelevels, 2);
 			if ($place2['place'] == "Unknown")
-				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
+				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels, 2));
 				else echo $pgv_lang["pl_unknown"];
 			else
-				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
+				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels, 2));
 				else echo PrintReady(addslashes($place2['place']));
 		}
 		else {
@@ -283,10 +283,10 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 				$parent[$level]=$place2['place'];
 				print_how_many_people($level+1, $parent);
 			}
-		echo "<br />".$pgv_lang["gm_no_coord"];
+		echo "<br />", $pgv_lang["gm_no_coord"];
 		if (PGV_USER_IS_ADMIN)
-			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=".$levelm."&display=inactive'>".$pgv_lang["pl_edit"]."</a>";
-		echo "</div></td>\", icon_type, \"".PrintReady(addslashes($place2['place']))."\");\n";
+			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=", $levelm, "&display=inactive'>", $pgv_lang["pl_edit"], "</a>";
+		echo "</div></td>\", icon_type, \"", PrintReady(addslashes($place2['place'])), "\");\n";
 	}
 	else {
 		$lati = str_replace(array('N', 'S', ','), array('', '-', '.'), $place2['lati']);
@@ -301,31 +301,31 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			echo "var icon_type = new GIcon(G_DEFAULT_ICON);\n";
 		} else {
 			echo "var icon_type = new GIcon();\n";
-			echo "	icon_type.image = \"".$place2['icon']."\";\n";
+			echo "	icon_type.image = \"", $place2['icon'], "\";\n";
 			echo "	icon_type.shadow = \"modules/googlemap/flag_shadow.png\";\n";
 			echo "	icon_type.iconSize = new GSize(25, 15);\n";
 			echo "	icon_type.shadowSize = new GSize(35, 45);\n";
 			echo "	icon_type.iconAnchor = new GPoint(1, 45);\n";
 			echo "	icon_type.infoWindowAnchor = new GPoint(5, 1);\n";
 		}
-		echo "var point = new GLatLng({$lati},{$long});\n";
+		echo "var point = new GLatLng({$lati}, {$long});\n";
 		if ($lastlevel)
-			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=".$level.$linklevels."'><br />";
+			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=", $level, $linklevels, "'><br />";
 		else {
-			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=".($level+1).$linklevels."&amp;parent[{$level}]=";
+			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=", ($level+1), $linklevels, "&amp;parent[{$level}]=";
 			if ($place2['place'] == "Unknown") echo "'><br />";
-			else echo urlencode($place2['place'])."'><br />";
+			else echo urlencode($place2['place']), "'><br />";
 		}
 		if (($place2['icon'] != NULL) && ($place2['icon'] != "")) {
-			echo "<img src=\'".$place2['icon']."'>&nbsp;&nbsp;";
+			echo "<img src=\'", $place2['icon'], "'>&nbsp;&nbsp;";
 		}
 		if ($lastlevel) {
-			$placename = substr($placelevels,2);
+			$placename = substr($placelevels, 2);
 			if ($place2['place'] == "Unknown")
-				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
+				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels, 2));
 				else echo $pgv_lang["pl_unknown"];
 			else
-				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
+				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels, 2));
 				else echo PrintReady(addslashes($place2['place']));
 		}
 		else {
@@ -346,10 +346,10 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 				print_how_many_people($level+1, $parent);
 			}
 		if ($GOOGLEMAP_COORD == "false"){
-			echo "<br /><br /></div></td>\", icon_type, \"".PrintReady(addslashes($place2['place']))."\");\n";
+			echo "<br /><br /></div></td>\", icon_type, \"", PrintReady(addslashes($place2['place'])), "\");\n";
 		}
 		else {
-			echo "<br /><br />".$place2['lati'].", ".$place2['long']."</div></td>\", icon_type, \"".PrintReady(addslashes($place2['place']))."\");\n";
+			echo "<br /><br />", $place2['lati'], ", ", $place2['long'], "</div></td>\", icon_type, \"", PrintReady(addslashes($place2['place'])), "\");\n";
 		}
 	}
 	echo "place_map.addOverlay(marker);\n";
@@ -467,13 +467,13 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 
 		button1.onclick = function() { <?php
 			if ($numfound>1)
-				echo "place_map.setCenter(bounds.getCenter(),place_map.getBoundsZoomLevel(bounds));";
+				echo "place_map.setCenter(bounds.getCenter(), place_map.getBoundsZoomLevel(bounds));";
 			else if ($level==1)
-				echo "place_map.setCenter(bounds.getCenter(),place_map.getBoundsZoomLevel(bounds)-8);";
+				echo "place_map.setCenter(bounds.getCenter(), place_map.getBoundsZoomLevel(bounds)-8);";
 			else if ($level==2)
-				echo "place_map.setCenter(bounds.getCenter(),place_map.getBoundsZoomLevel(bounds)-5);";
+				echo "place_map.setCenter(bounds.getCenter(), place_map.getBoundsZoomLevel(bounds)-5);";
 			else
-				echo "place_map.setCenter(bounds.getCenter(),place_map.getBoundsZoomLevel(bounds)-3);";
+				echo "place_map.setCenter(bounds.getCenter(), place_map.getBoundsZoomLevel(bounds)-3);";
 			?>; return false; };
 		button2.onclick = function() { place_map.setMapType(G_NORMAL_MAP); return false; };
 		button3.onclick = function() { place_map.setMapType(G_SATELLITE_MAP); return false; };
@@ -505,7 +505,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	var place_map = new GMap2(document.getElementById("place_map"));
 	map_type = new Map_type();
 	place_map.addControl(map_type);
-	GEvent.addListener(place_map,'maptypechanged',function()
+	GEvent.addListener(place_map, 'maptypechanged', function()
 	{
 		map_type.refresh();
 	});
@@ -526,22 +526,22 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		$levelo=check_were_am_i($numls, $levelm);
 		if ($numfound<2 && ($level==1 || !(isset($levelo[($level-1)])))){
 			echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
-			echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+5);\n";
+			echo "	place_map.setCenter(new GLatLng(0, 0), zoomlevel+5);\n";
 		}
 		else if ($numfound<2 && !isset($levelo[($level-2)])){
 			echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
-			echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+6);\n";
+			echo "	place_map.setCenter(new GLatLng(0, 0), zoomlevel+6);\n";
 		}
 		else if ($level==2){
 			echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
-			echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+8);\n";
+			echo "	place_map.setCenter(new GLatLng(0, 0), zoomlevel+8);\n";
 		}
 		else if ($numfound<2 && $level>1){
 			echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
-			echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+10);\n";
+			echo "	place_map.setCenter(new GLatLng(0, 0), zoomlevel+10);\n";
 		}
 		else
-			echo "place_map.setCenter(new GLatLng(0,0),1);\n";
+			echo "place_map.setCenter(new GLatLng(0, 0), 1);\n";
 		if ($GOOGLEMAP_PH_WHEEL != "false") echo "place_map.enableScrollWheelZoom();\n";
 		echo "	place_map.setMapType($GOOGLEMAP_MAP_TYPE);\n";
 		?>
@@ -565,12 +565,12 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 							echo "icon_type.shadowSize = new GSize(37, 34);\n";
 							echo "icon_type.iconAnchor = new GPoint(6, 20);\n";
 							echo "icon_type.infoWindowAnchor = new GPoint(5, 1);\n";
-							echo "var point = new GLatLng(0,0);\n";
+							echo "var point = new GLatLng(0, 0);\n";
 							echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><b>";
-							echo substr($placelevels,2)."</b><br />".$pgv_lang["gm_no_coord"];
+							echo substr($placelevels, 2), "</b><br />", $pgv_lang["gm_no_coord"];
 							if (PGV_USER_IS_ADMIN)
-								echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>".$pgv_lang["pl_edit"]."</a>";
-							echo "<br /></div></td>\", icon_type, \"".$pgv_lang["pl_edit"]."\");\n";
+								echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>", $pgv_lang["pl_edit"], "</a>";
+							echo "<br /></div></td>\", icon_type, \"", $pgv_lang["pl_edit"], "\");\n";
 							echo "place_map.addOverlay(marker);\n";
 							echo "bounds.extend(point);\n";
 							break;
@@ -622,12 +622,12 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	else {
 		echo "var icon_type = new GIcon();\n";
 		echo "icon_type.image = \"modules/googlemap/marker_yellow.png\"";
-		echo "var point = new GLatLng(0,0);\n";
+		echo "var point = new GLatLng(0, 0);\n";
 		echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'>";
-		echo "<br />".$pgv_lang["gm_no_coord"];
+		echo "<br />", $pgv_lang["gm_no_coord"];
 		if (PGV_USER_IS_ADMIN)
-			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>".$pgv_lang["pl_edit"]."</a>";
-		echo "<br /></div></td>\", icon_type, \"".$pgv_lang["pl_edit"]."\");\n";
+			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>", $pgv_lang["pl_edit"], "</a>";
+		echo "<br /></div></td>\", icon_type, \"", $pgv_lang["pl_edit"], "\");\n";
 		echo "place_map.addOverlay(marker);\n";
 		echo "bounds.extend(point);\n";
 	}
@@ -636,10 +636,10 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	place_map.setCenter(bounds.getCenter());
 	<?php if ($GOOGLEMAP_PH_CONTROLS != "false") {?>
 		// hide controls
-		GEvent.addListener(place_map,'mouseout',function() {place_map.hideControls();});
+		GEvent.addListener(place_map, 'mouseout', function() {place_map.hideControls();});
 		// show controls
-		GEvent.addListener(place_map,'mouseover',function() {place_map.showControls();});
-		GEvent.trigger(place_map,'mouseout');
+		GEvent.addListener(place_map, 'mouseover', function() {place_map.showControls();});
+		GEvent.trigger(place_map, 'mouseout');
 		<?php
 	}
 	if ($numfound>1)

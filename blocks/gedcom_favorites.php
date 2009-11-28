@@ -40,7 +40,7 @@ $PGV_BLOCKS["print_gedcom_favorites"]["config"]   = array("cache"=>7);
 
 //-- print gedcom favorites
 function print_gedcom_favorites($block = true, $config="", $side, $index) {
-	global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $ctype, $TEXT_DIRECTION;
 	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE, $ENABLE_AUTOCOMPLETE;
 
 	// Override GEDCOM configuration temporarily
@@ -49,7 +49,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	$show_full = 1;
 	$PEDIGREE_FULL_DETAILS = 1;
 
-	$userfavs = getUserFavorites($GEDCOM);
+	$userfavs = getUserFavorites(PGV_GEDCOM);
 	if (!is_array($userfavs)) $userfavs = array();
 
 	$id = "gedcom_favorites";
@@ -158,8 +158,8 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= "<input type=\"hidden\" name=\"action\" value=\"addfav\" />\n";
 		$content .= "<input type=\"hidden\" name=\"ctype\" value=\"$ctype\" />\n";
 		$content .= "<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n";
-		$content .= "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
-		$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center $TEXT_DIRECTION\">";
+		$content .= "<input type=\"hidden\" name=\"ged\" value=\"".PGV_GEDCOM."\" />\n";
+		$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center {$TEXT_DIRECTION}\">";
 		$content .= "<tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
 		$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";
 
@@ -183,9 +183,10 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	}
 
 	if ($block) {
-		include(PGV_THEME_DIR."templates/block_small_temp.php");
+		// require $THEME_DIR.'templates/block_small_temp.php';
+		require PGV_THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include(PGV_THEME_DIR."templates/block_main_temp.php");
+		require PGV_THEME_DIR.'templates/block_main_temp.php';
 	}
 	// Restore GEDCOM configuration
 	unset($show_full);

@@ -57,7 +57,7 @@ require_once 'includes/functions/functions_mediadb.php';
  */
 function dir_is_writable($dir) {
 	$err_write = false;
-	$handle = @fopen(filename_decode($dir."x.y"),"w+");
+	$handle = @fopen(filename_decode($dir."x.y"), "w+");
 	if	($handle) {
 		$i = fclose($handle);
 		$err_write = true;
@@ -127,7 +127,7 @@ function move_files($path, $protect) {
 							move_file($filename, get_media_firewall_path($filename));
 						}
 						if ($MEDIA_FIREWALL_THUMBS) {
-							$thumbnail = thumbnail_file($filename,false);
+							$thumbnail = thumbnail_file($filename, false);
 							if (file_exists($thumbnail)) {
 								move_file($thumbnail, get_media_firewall_path($thumbnail));
 							}
@@ -138,7 +138,7 @@ function move_files($path, $protect) {
 						if (file_exists(get_media_firewall_path($filename))) {
 							move_file(get_media_firewall_path($filename), $filename);
 						}
-						$thumbnail = thumbnail_file($filename,false);
+						$thumbnail = thumbnail_file($filename, false);
 						if (file_exists(get_media_firewall_path($thumbnail))) {
 							move_file(get_media_firewall_path($thumbnail), $thumbnail);
 						}
@@ -261,7 +261,7 @@ function pasteid(id) {
 }
 
 function ilinkitem(mediaid, type) {
-	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=570,height=650,resizable=1,scrollbars=1');
+	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50, left=50, width=570, height=650, resizable=1, scrollbars=1');
 	return false;
 }
 
@@ -281,8 +281,8 @@ function checknames(frm) {
 
 function checkpath(folder) {
 	value = folder.value;
-	if (value.substr(value.length-1,1) == "/") value = value.substr(0, value.length-1);
-	if (value.substr(0,1) == "/") value = value.substr(1, value.length-1);
+	if (value.substr(value.length-1, 1) == "/") value = value.substr(0, value.length-1);
+	if (value.substr(0, 1) == "/") value = value.substr(1, value.length-1);
 	result = value.split("/");
 	if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS; ?>) {
 		alert('<?php print_text("max_media_depth"); ?>');
@@ -397,13 +397,13 @@ if (check_media_structure()) {
 			$resdir_fw = true;
 			$resthumb_fw = true;
 			if (file_exists(filename_decode($directory."index.php"))) @unlink(filename_decode($directory."index.php"));
-			if (@is_dir(filename_decode($directory))) $resdir = @rmdir(filename_decode(substr($directory,0,-1)));
+			if (@is_dir(filename_decode($directory))) $resdir = @rmdir(filename_decode(substr($directory, 0, -1)));
 			if (file_exists(filename_decode($thumbdir."index.php"))) @unlink(filename_decode($thumbdir."index.php"));
-			if (@is_dir(filename_decode($thumbdir))) $resthumb = @rmdir(filename_decode(substr($thumbdir,0,-1)));
+			if (@is_dir(filename_decode($thumbdir))) $resthumb = @rmdir(filename_decode(substr($thumbdir, 0, -1)));
 			if (file_exists(filename_decode($directory_fw."index.php"))) @unlink(filename_decode($directory_fw."index.php"));
-			if (@is_dir(filename_decode($directory_fw))) $resdir_fw = @rmdir(filename_decode(substr($directory_fw,0,-1)));
+			if (@is_dir(filename_decode($directory_fw))) $resdir_fw = @rmdir(filename_decode(substr($directory_fw, 0, -1)));
 			if (file_exists(filename_decode($thumbdir_fw."index.php"))) @unlink(filename_decode($thumbdir_fw."index.php"));
-			if (@is_dir(filename_decode($thumbdir_fw))) $resthumb_fw = @rmdir(filename_decode(substr($thumbdir_fw,0,-1)));
+			if (@is_dir(filename_decode($thumbdir_fw))) $resthumb_fw = @rmdir(filename_decode(substr($thumbdir_fw, 0, -1)));
 			if ($resdir && $resthumb && $resdir_fw && $resthumb_fw) {
 				print $pgv_lang["delete_dir_success"];
 				AddToLog($directory." -- ".$pgv_lang["delete_dir_success"]);
@@ -433,8 +433,8 @@ if (check_media_structure()) {
 		}
 
 		// Back up to this directory's parent
-		$i = strrpos(substr($directory,0,-1), '/');
-		$directory = trim(substr($directory,0,$i), '/').'/';
+		$i = strrpos(substr($directory, 0, -1), '/');
+		$directory = trim(substr($directory, 0, $i), '/').'/';
 		$action="filter";
 		print "</td></tr></table>";
 	}
@@ -456,17 +456,17 @@ if (check_media_structure()) {
 			foreach ($medialist as $key => $media) {
 				if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
 					// why doesn't this use thumbnail_file??
-					$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",check_media_depth($media["FILE"], "NOTRUNC"));
+					$thumbnail = str_replace("$MEDIA_DIRECTORY", $MEDIA_DIRECTORY."thumbs/", check_media_depth($media["FILE"], "NOTRUNC"));
 					if (!$media["THUMBEXISTS"]) {
-						if (generate_thumbnail($media["FILE"],$thumbnail)) {
+						if (generate_thumbnail($media["FILE"], $thumbnail)) {
 							print_text("thumb_genned");
-							AddToChangeLog(print_text("thumb_genned",0,1));
+							AddToChangeLog(print_text("thumb_genned", 0, 1));
 						}
 						else {
 							print "<span class=\"error\">";
 							print_text("thumbgen_error");
 							print "</span>";
-							AddToChangeLog(print_text("thumbgen_error",0,1));
+							AddToChangeLog(print_text("thumbgen_error", 0, 1));
 						}
 						print "<br />";
 					}
@@ -475,16 +475,16 @@ if (check_media_structure()) {
 		}
 		else if ($all != 'yes') {
 			if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
-				$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",check_media_depth($filename, "NOTRUNC"));
-				if (generate_thumbnail($filename,$thumbnail)) {
+				$thumbnail = str_replace("$MEDIA_DIRECTORY", $MEDIA_DIRECTORY."thumbs/", check_media_depth($filename, "NOTRUNC"));
+				if (generate_thumbnail($filename, $thumbnail)) {
 					print_text("thumb_genned");
-					AddToChangeLog(print_text("thumb_genned",0,1));
+					AddToChangeLog(print_text("thumb_genned", 0, 1));
 				}
 				else {
 					print "<span class=\"error\">";
 					print_text("thumbgen_error");
 					print "</span>";
-					AddToChangeLog(print_text("thumbgen_error",0,1));
+					AddToChangeLog(print_text("thumbgen_error", 0, 1));
 				}
 			}
 		}
@@ -496,7 +496,7 @@ if (check_media_structure()) {
 	if ($action == "moveprotected") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
-		if (strpos($filename,"../") !== false) {
+		if (strpos($filename, "../") !== false) {
 			// don't allow user to access directories outside of media dir
 			print "<div class=\"error\">".$pgv_lang["illegal_chars"]."</div>";
 		} else {
@@ -504,7 +504,7 @@ if (check_media_structure()) {
 				move_file($filename, get_media_firewall_path($filename));
 			}
 			if ($MEDIA_FIREWALL_THUMBS) {
-				$thumbnail = thumbnail_file($filename,false);
+				$thumbnail = thumbnail_file($filename, false);
 				if (file_exists($thumbnail)) {
 					move_file($thumbnail, get_media_firewall_path($thumbnail));
 				}
@@ -518,14 +518,14 @@ if (check_media_structure()) {
 	if ($action == "movestandard") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
-		if (strpos($filename,"../") !== false) {
+		if (strpos($filename, "../") !== false) {
 			// don't allow user to access directories outside of media dir
 			print "<div class=\"error\">".$pgv_lang["illegal_chars"]."</div>";
 		} else {
 			if (file_exists(get_media_firewall_path($filename))) {
 				move_file(get_media_firewall_path($filename), $filename);
 			}
-			$thumbnail = thumbnail_file($filename,false);
+			$thumbnail = thumbnail_file($filename, false);
 			if (file_exists(get_media_firewall_path($thumbnail))) {
 				move_file(get_media_firewall_path($thumbnail), $thumbnail);
 			}
@@ -539,7 +539,7 @@ if (check_media_structure()) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["move_protected"]."<br />";
-		move_files(substr($directory,0,-1), true);
+		move_files(substr($directory, 0, -1), true);
 		print "</td></tr></table>";
 		$action="filter";
 	}
@@ -549,7 +549,7 @@ if (check_media_structure()) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["move_standard"]."<br />";
-		move_files(substr(get_media_firewall_path($directory),0,-1), false);
+		move_files(substr(get_media_firewall_path($directory), 0, -1), false);
 		print "</td></tr></table>";
 		$action="filter";
 	}
@@ -558,8 +558,8 @@ if (check_media_structure()) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["setperms_fix"]."<br />";
-		set_perms(substr($directory,0,-1));
-		set_perms(substr(get_media_firewall_path($directory),0,-1));
+		set_perms(substr($directory, 0, -1));
+		set_perms(substr(get_media_firewall_path($directory), 0, -1));
 		print "</td></tr></table>";
 		$action="filter";
 	}
@@ -651,7 +651,7 @@ if (check_media_structure()) {
 				}
 
 				// Check if thumbnail exists. If so, delete it.
-				$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",$filename);
+				$thumbnail = str_replace("$MEDIA_DIRECTORY", $MEDIA_DIRECTORY."thumbs/", $filename);
 				$server_thumbnail = get_server_filename($thumbnail);
 				if (file_exists($server_thumbnail) && $allowDelete) {
 					if (@unlink($server_thumbnail)) {
@@ -678,13 +678,13 @@ if (check_media_structure()) {
 					$gedrec = remove_subrecord($gedrec, "OBJE", $xref, -1);
 					if (replace_gedrec($pid, $gedrec, true, $xref)) {
 						print_text("record_updated");
-						AddToChangeLog(print_text("record_updated",0,1));
+						AddToChangeLog(print_text("record_updated", 0, 1));
 					} else {
 						$finalResult = false;
 						print "<span class=\"error\">";
 						print_text("record_not_updated");
 						print "</span>";
-						AddToChangeLog(print_text("record_not_updated",0,1));
+						AddToChangeLog(print_text("record_not_updated", 0, 1));
 					}
 					print "<br />";
 				}
@@ -697,13 +697,13 @@ if (check_media_structure()) {
 					// Remove media object from gedcom
 					if (delete_gedrec($xref)) {
 						print_text("record_removed");
-						AddToChangeLog(print_text("record_removed",0,1));
+						AddToChangeLog(print_text("record_removed", 0, 1));
 					} else {
 						$finalResult = false;
 						print "<span class=\"error\">";
 						print_text("record_not_removed");
 						print "</span>";
-						AddToChangeLog(print_text("record_not_removed",0,1));
+						AddToChangeLog(print_text("record_not_removed", 0, 1));
 					}
 					print "<br />";
 
@@ -713,13 +713,13 @@ if (check_media_structure()) {
 						$objerec = preg_replace("/0 @.*@ OBJE/", "0 @".$xref."@ OBJE", $objerec);
 						if(append_gedrec($objerec)) {
 							print_text("record_added");
-							AddToChangeLog(print_text("record_added",0,1));
+							AddToChangeLog(print_text("record_added", 0, 1));
 						} else {
 							$finalResult = false;
 							print "<span class=\"error\">";
 							print_text("record_not_added");
 							print "</span>";
-							AddToChangeLog(print_text("record_not_added",0,1));
+							AddToChangeLog(print_text("record_not_added", 0, 1));
 						}
 						print "<br />";
 					}
@@ -747,27 +747,27 @@ if (check_media_structure()) {
 		// GEDFact assistant Add Media Links =======================
 		if (file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 			$menu->addLabel($pgv_lang["add_or_remove_links"]);
-			$menu->addOnclick("return ilinkitem('$mediaid','manage')");
+			$menu->addOnclick("return ilinkitem('$mediaid', 'manage')");
 			$menu->addClass("", "", "submenu");
 			$menu->addFlyout("left");
 			// Do not print submunu
 			
 		} else {
 			$menu->addLabel($pgv_lang["set_link"]);
-			$menu->addOnclick("return ilinkitem('$mediaid','person')");
+			$menu->addOnclick("return ilinkitem('$mediaid', 'person')");
 			$submenu = new Menu($pgv_lang["to_person"]);
 			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
-			$submenu->addOnclick("return ilinkitem('$mediaid','person')");
+			$submenu->addOnclick("return ilinkitem('$mediaid', 'person')");
 			$menu->addSubMenu($submenu);
 
 			$submenu = new Menu($pgv_lang["to_family"]);
 			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
-			$submenu->addOnclick("return ilinkitem('$mediaid','family')");
+			$submenu->addOnclick("return ilinkitem('$mediaid', 'family')");
 			$menu->addSubMenu($submenu);
 
 			$submenu = new Menu($pgv_lang["to_source"]);
 			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
-			$submenu->addOnclick("return ilinkitem('$mediaid','source')");
+			$submenu->addOnclick("return ilinkitem('$mediaid', 'source')");
 			$menu->addSubMenu($submenu);
 		}
 		$menu->printMenu();
@@ -783,25 +783,25 @@ if (check_media_structure()) {
 	<input type="hidden" name="all" value="true" />
 	<input type="hidden" name="subclick" />
 	<table class="fact_table center width75 <?php print $TEXT_DIRECTION; ?>">
-	<tr><td class="topbottombar" colspan="4"><?php print_help_link("manage_media_help","qm","manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
+	<tr><td class="topbottombar" colspan="4"><?php print_help_link("manage_media_help", "qm", "manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
 	<?php
 	if ($TEXT_DIRECTION=='ltr') $legendAlign = 'align="right"';
 	else $legendAlign = 'align="left"';
 	?>
 
 	<!-- // NOTE: Row 1 left: Sort sequence -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("sortby_help","qm", "sortby"); ?><?php print $pgv_lang["sortby"]; ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("sortby_help", "qm", "sortby"); ?><?php print $pgv_lang["sortby"]; ?></td>
 	<td class="optionbox wrap"><select name="sortby">
 		<option value="title" <?php if ($sortby=='title') print "selected=\"selected\"";?>><?php print $factarray["TITL"];?></option>
 		<option value="file" <?php if ($sortby=='file') print "selected=\"selected\"";?>><?php print $factarray["FILE"];?></option>
 	</select></td>
 
 	<!-- // NOTE: Row 1 right, Upload media files -->
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("upload_media_help","qm","upload_media"); print $pgv_lang["upload_media"]; ?></td>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("upload_media_help", "qm", "upload_media"); print $pgv_lang["upload_media"]; ?></td>
 	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".$pgv_lang["upload_media"]."</a>"; ?></td></tr>
 
 	<!-- // NOTE: Row 2 left: Filter options -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("simple_filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("simple_filter_help", "qm", "filter"); print $pgv_lang["filter"];?></td>
 	<td class="optionbox wrap">
 		<?php
 			// Directory pick list
@@ -825,10 +825,10 @@ if (check_media_structure()) {
 
 	<!-- // NOTE: Row 2 right: Add media -->
 	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
-	<td class="optionbox wrap"><a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a></td></tr>
+	<td class="optionbox wrap"><a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a></td></tr>
 
 	<!-- // NOTE: Row 3 left: Show thumbnails -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("show_thumb_help","qm", "show_thumbnail"); ?><?php print $pgv_lang["show_thumbnail"]; ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("show_thumb_help", "qm", "show_thumbnail"); ?><?php print $pgv_lang["show_thumbnail"]; ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="showthumb" value="true" <?php if ($showthumb) print "checked=\"checked\""; ?> onclick="submit();" /></td>
 
 	<!-- // NOTE: Row 3 right: Generate missing thumbnails -->
@@ -883,7 +883,7 @@ if (check_media_structure()) {
 			print "<td class=\"topbottombar\" colspan=\"2\">";
 				print $pgv_lang["current_dir"];
 				print "<br />";
-				print PrintReady(substr($directory,0,-1));
+				print PrintReady(substr($directory, 0, -1));
 
 				print "<br /><br />";
 				print "<form name=\"blah2\" action=\"media.php\" method=\"post\">";
@@ -895,11 +895,11 @@ if (check_media_structure()) {
 				print "<input type=\"hidden\" name=\"sortby\" value=\"{$sortby}\" />";
 			if ($USE_MEDIA_FIREWALL) {
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.action.value='movedirstandard';\" />";
-				print_help_link("move_mediadirs_help","qm","move_mediadirs");
+				print_help_link("move_mediadirs_help", "qm", "move_mediadirs");
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.action.value='movedirprotected';\" />";
 				print "<br />";
 			}
-				print_help_link("setperms_help","qm","setperms");
+				print_help_link("setperms_help", "qm", "setperms");
 				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_fix"]."\" onclick=\"this.form.action.value='setpermsfix';\" />";
 
 				print "</form>";
@@ -1013,7 +1013,7 @@ if (check_media_structure()) {
 							} else {
 								$tempURL .= 'showmediaform&filename='.encrypt($media['FILE']).'&linktoid=new';
 							}
-							echo "<a href=\"javascript:".$pgv_lang["edit"]."\" onclick=\"window.open('", encode_url($tempURL, false), "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">", $pgv_lang["edit"], "</a><br />";
+							echo "<a href=\"javascript:", $pgv_lang["edit"], "\" onclick=\"window.open('", encode_url($tempURL, false), "', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;\">", $pgv_lang["edit"], "</a><br />";
 
 							// Edit Raw
 							if ($media["XREF"] != "") {
@@ -1094,7 +1094,7 @@ if (check_media_structure()) {
 						$after    = substr(strstr($haystack, $needle), strlen($needle));
 						$worked   = str_replace("1 NOTE", "1 NOTE<br />", $after);
 						$final    = $before.$needle.$worked;
-						$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
+						$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)), ENT_COMPAT, 'UTF-8'));
 
 						// Get info on how to handle this media file
 						$mediaInfo = mediaFileInfo($media["FILE"], $media["THUMB"], $media["XREF"], $name, $notes);
@@ -1127,7 +1127,7 @@ if (check_media_structure()) {
 						}
 						if (!$isExternal && !$media["EXISTS"]) print "<span dir=\"ltr\">".PrintReady($media["FILE"])."</span><br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
 						else {
-							if (substr($mediaInfo['type'],0,4) == 'url_') $tempText = 'URL';
+							if (substr($mediaInfo['type'], 0, 4) == 'url_') $tempText = 'URL';
 							else $tempText = PrintReady($media["FILE"]);
 							if (!empty($media["XREF"])) {
 								echo '<a href="', 'mediaviewer.php?mid=', $media["XREF"], '"><span dir="ltr">', $tempText, '</span></a><br />';
@@ -1135,7 +1135,7 @@ if (check_media_structure()) {
 								echo '<span dir="ltr">', $tempText, '</span><br />';
 							}
 						}
-						if (substr($mediaInfo['type'],0,4) != 'url_' && !empty($imgsize[0])) {
+						if (substr($mediaInfo['type'], 0, 4) != 'url_' && !empty($imgsize[0])) {
 							print "<sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
 						}
 						print_fact_notes($media["GEDCOM"], 1);

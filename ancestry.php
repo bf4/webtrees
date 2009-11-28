@@ -49,11 +49,11 @@ if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 
 echo '<table><tr><td valign="middle">';
 if ($view=="preview") {
-	echo '<h2>', str_replace('#PEDIGREE_GENERATIONS#', $PEDIGREE_GENERATIONS, $pgv_lang['gen_ancestry_chart']) . ':';
+	echo '<h2>', str_replace('#PEDIGREE_GENERATIONS#', $PEDIGREE_GENERATIONS, $pgv_lang['gen_ancestry_chart']) , ':';
 } else {
-	echo '<h2>', $pgv_lang['ancestry_chart'] . ':';
+	echo '<h2>', $pgv_lang['ancestry_chart'], ':';
 }
-echo '<br />',PrintReady($controller->name);
+echo '<br />', PrintReady($controller->name);
 if ($controller->addname!="") {
 	echo '<br />', PrintReady($controller->addname);
 }
@@ -74,8 +74,8 @@ if ($view!="preview") {
 	print_help_link("rootid_help", "qm");
 	echo $pgv_lang['root_person']; ?></td>
 	<td class="optionbox vmiddle">
-	<input class="pedigree_form" type="text" name="rootid" id="rootid" size="3" value="<?php echo htmlentities($controller->rootid,ENT_COMPAT,'UTF-8'); ?>" />
-	<?php print_findindi_link("rootid",""); ?>
+	<input class="pedigree_form" type="text" name="rootid" id="rootid" size="3" value="<?php echo htmlentities($controller->rootid, ENT_COMPAT, 'UTF-8'); ?>" />
+	<?php print_findindi_link("rootid", ""); ?>
 	</td>
 
 	<!-- // NOTE: Box width -->
@@ -83,7 +83,7 @@ if ($view!="preview") {
 	<?php
 	print_help_link("box_width_help", "qm");
 	echo $pgv_lang['box_width']; ?></td>
-	<td class="optionbox vmiddle"><input type="text" size="3" name="box_width" value="<?php echo htmlentities($box_width,ENT_COMPAT,'UTF-8'); ?>" /> <b>%</b>
+	<td class="optionbox vmiddle"><input type="text" size="3" name="box_width" value="<?php echo htmlentities($box_width, ENT_COMPAT, 'UTF-8'); ?>" /> <b>%</b>
 	</td>
 
 	<!-- // NOTE: chart style -->
@@ -199,7 +199,7 @@ switch ($controller->chart_style) {
 case 0:
 	// List
 	$pidarr=array();
-	echo '<ul style="list-style: none; display: block;" id="ancestry_chart', ($TEXT_DIRECTION=='rtl' ? '_rtl' : ''), '">';
+	echo '<ul style="list-style: none; display: block;" id="ancestry_chart', $TEXT_DIRECTION=='rtl' ? '_rtl' : '', '">';
 	$controller->print_child_ascendancy($controller->rootid, 1, $OLD_PGENS-1);
 	echo '</ul>';
 	echo '<br />';

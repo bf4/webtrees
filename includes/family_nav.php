@@ -79,9 +79,9 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo "<a href=\"family.php?famid=".$famid."\">";
-				//echo "<b>". $pgv_lang["parent_family"] ."&nbsp;&nbsp;(".$famid.")</b>";
-				echo "<b>".$pgv_lang["parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				echo "<a href=\"family.php?famid=", $famid, "\">";
+				//echo "<b>", $pgv_lang["parent_family"] , "&nbsp;&nbsp;(", $famid, ")</b>";
+				echo "<b>", $pgv_lang["parent_family"], "&nbsp;&nbsp;</b><span class=\"age\">(", $famid, ")</span>";
 				echo "</a>";
 				?>
 				</td>
@@ -220,8 +220,8 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo "<a href=\"family.php?famid=".$famid."\">";
-				echo "<b>".$pgv_lang["step_parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				echo "<a href=\"family.php?famid=", $famid, "\">";
+				echo "<b>", $pgv_lang["step_parent_family"], "&nbsp;&nbsp;</b><span class=\"age\">(", $famid, ")</span>";
 				echo "</a>";
 				?>
 				</td>
@@ -359,8 +359,8 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo "<a href=\"family.php?famid=".$famid."\">";
-				echo "<b>".$pgv_lang["immediate_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				echo "<a href=\"family.php?famid=", $famid, "\">";
+				echo "<b>", $pgv_lang["immediate_family"], "&nbsp;&nbsp;</b><span class=\"age\">(", $famid, ")</span>";
 				echo "</a>";
 				?>
 				</td>
@@ -537,7 +537,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 		$step_parentlinks = false;
 	}
 
-	$tmp=array('M'=>'','F'=>'F', 'U'=>'NN');
+	$tmp=array('M'=>'', 'F'=>'F', 'U'=>'NN');
 	$isF=$tmp[$person->getSex()];
 	$spouselinks = "";
 	$parentlinks = "";

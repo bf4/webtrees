@@ -112,7 +112,6 @@ class batch_update {
 		}
 		$html.='</table></form>';
 		return $html.mod_print_footer();
-;
 	}
 
 	// Constructor - initialise variables and validate user-input

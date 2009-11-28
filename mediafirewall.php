@@ -113,10 +113,10 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 		echo "<!-- filler space so IE will display the custom 404 error -->";
 		echo "<!-- filler space so IE will display the custom 404 error -->";
 		echo "<!-- filler space so IE will display the custom 404 error -->";
-		echo "\n<div align=\"center\">".$line1."</div>\n";
+		echo "\n<div align=\"center\">", $line1, "</div>\n";
 		if ($line2) {
 			// line2 comes from url, wrap in PrintReady
-			echo "<div align=\"center\">".PrintReady($line2)."</div>\n";
+			echo "<div align=\"center\">", PrintReady($line2), "</div>\n";
 		}
 		echo "</body></html>\n";
 	}
@@ -186,7 +186,7 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 
 	# no errors if an invalid color string was passed in, just strange colors
 	$col=explode(",", $color);
-	$textcolor = @imagecolorallocate($im, $col[0],$col[1],$col[2]);
+	$textcolor = @imagecolorallocate($im, $col[0], $col[1], $col[2]);
 
 	// paranoia is good!  make sure all variables have a value
 	if (!isset($vpos) || ($vpos!="top" && $vpos!="middle" && $vpos!="bottom" && $vpos!="across")) $vpos = "middle";
@@ -207,19 +207,19 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 	// vertical and horizontal position of the text
 	switch ($vpos) {
 		case "top":
-			$taille=textlength($maxsize,$width,$text);
+			$taille=textlength($maxsize, $width, $text);
 			$pos_y=$height*0.15+$taille;
 			$pos_x=$width*0.15;
 			$rotation=0;
 			break;
 		case "middle":
-			$taille=textlength($maxsize,$width,$text);
+			$taille=textlength($maxsize, $width, $text);
 			$pos_y=($height+$taille)/2;
 			$pos_x=$width*0.15;
 			$rotation=0;
 			break;
 		case "bottom":
-			$taille=textlength($maxsize,$width,$text);
+			$taille=textlength($maxsize, $width, $text);
 			$pos_y=($height*.85-$taille);
 			$pos_x=$width*0.15;
 			$rotation=0;
@@ -227,26 +227,26 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 		case "across":
 			switch ($hpos) {
 				case "left":
-				$taille=textlength($maxsize,$hypoth,$text);
+				$taille=textlength($maxsize, $hypoth, $text);
 				$pos_y=($height*.85-$taille);
 				$taille_text=($taille-2)*(UTF8_strlen($text));
 				$pos_x=$width*0.15;
 				$rotation=$calc_angle;
 				break;
 				case "right":
-				$taille=textlength($maxsize,$hypoth,$text);
+				$taille=textlength($maxsize, $hypoth, $text);
 				$pos_y=($height*.15-$taille);
 				$pos_x=$width*0.85;
 				$rotation=$calc_angle+180;
 				break;
 				case "top2bottom":
-				$taille=textlength($maxsize,$height,$text);
+				$taille=textlength($maxsize, $height, $text);
 				$pos_y=($height*.15-$taille);
 				$pos_x=($width*.90-$taille);
 				$rotation=-90;
 				break;
 				case "bottom2top":
-				$taille=textlength($maxsize,$height,$text);
+				$taille=textlength($maxsize, $height, $text);
 				$pos_y = $height*0.85;
 				$pos_x = $width*0.15;
 				$rotation=90;
@@ -266,15 +266,15 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 	// don't use an 'else' here since imagettftextErrorHandler may have changed the value of $useTTF from true to false
 	if (!$useTTF) {
 		if ($rotation!=90) {
-			imagestring($im, 5, $pos_x, $pos_y, $text,$textcolor);
+			imagestring($im, 5, $pos_x, $pos_y, $text, $textcolor);
 		} else {
-			imagestringup($im, 5, $pos_x, $pos_y, $text,$textcolor);
+			imagestringup($im, 5, $pos_x, $pos_y, $text, $textcolor);
 		}
 	}
 
 }
 
-function textlength($t,$mxl,$text) {
+function textlength($t, $mxl, $text) {
 	$taille_c = $t;
 	$len = UTF8_strlen($text);
 	while (($taille_c-2)*($len) > $mxl) {
@@ -422,39 +422,39 @@ if ($debug_mediafirewall) {
 	header('ETag: "'.$etag.'"');
 
 	echo  '<table border="1">';
-	echo  '<tr><td>GEDCOM</td><td>'.PGV_GEDCOM.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>MEDIA_DIRECTORY_LEVELS</td><td>'.$MEDIA_DIRECTORY_LEVELS.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>$controller->pid</td><td>'.$controller->pid.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>Requested URL</td><td>'.urldecode($_SERVER['REQUEST_URI']).'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>serverFilename</td><td>'.$serverFilename.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>controller->mediaobject->getFilename()</td><td>'.$controller->mediaobject->getFilename().'</td><td>this is direct from the gedcom</td></tr>';
-	echo  '<tr><td>controller->mediaobject->getServerFilename()</td><td>'.$controller->mediaobject->getServerFilename().'</td><td></td></tr>';
-	echo  '<tr><td>controller->mediaobject->fileExists()</td><td>'.$controller->mediaobject->fileExists().'</td><td></td></tr>';
-	echo  '<tr><td>controller->mediaobject->getFiletype()</td><td>'.$controller->mediaobject->getFiletype().'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>mimetype</td><td>'.$mimetype.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>controller->mediaobject->getFilesize()</td><td>'.$controller->mediaobject->getFilesize().'</td><td>cannot use this</td></tr>';
-	echo  '<tr><td>filesize</td><td>'.@filesize($serverFilename).'</td><td>this is right</td></tr>';
-	echo  '<tr><td>controller->mediaobject->getThumbnail()</td><td>'.$controller->mediaobject->getThumbnail().'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>controller->mediaobject->canDisplayDetails()</td><td>'.$controller->mediaobject->canDisplayDetails().'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>controller->mediaobject->getFullName()</td><td>'.$controller->mediaobject->getFullName().'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>basename($serverFilename)</td><td>'.basename($serverFilename).'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>filetime</td><td>'.$filetime.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>filetimeHeader</td><td>'.$filetimeHeader.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>if_modified_since</td><td>'.$if_modified_since.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>if_none_match</td><td>'.$if_none_match.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>etag</td><td>'.$etag.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>etag_string</td><td>'.$etag_string.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>expireHeader</td><td>'.$expireHeader.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>protocol</td><td>'.$protocol.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>SHOW_NO_WATERMARK</td><td>'.$SHOW_NO_WATERMARK.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>PGV_USER_ACCESS_LEVEL</td><td>'.PGV_USER_ACCESS_LEVEL.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>usewatermark</td><td>'.$usewatermark.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>generatewatermark</td><td>'.$generatewatermark.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>watermarkfile</td><td>'.$watermarkfile.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>type</td><td>'.$type.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>WATERMARK_THUMB</td><td>'.$WATERMARK_THUMB.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>SAVE_WATERMARK_THUMB</td><td>'.$SAVE_WATERMARK_THUMB.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>SAVE_WATERMARK_IMAGE</td><td>'.$SAVE_WATERMARK_IMAGE.'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>GEDCOM</td><td>', PGV_GEDCOM, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>MEDIA_DIRECTORY_LEVELS</td><td>', $MEDIA_DIRECTORY_LEVELS, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>$controller->pid</td><td>', $controller->pid, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>Requested URL</td><td>', urldecode($_SERVER['REQUEST_URI']), '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>serverFilename</td><td>', $serverFilename, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>controller->mediaobject->getFilename()</td><td>', $controller->mediaobject->getFilename(), '</td><td>this is direct from the gedcom</td></tr>';
+	echo  '<tr><td>controller->mediaobject->getServerFilename()</td><td>', $controller->mediaobject->getServerFilename(), '</td><td></td></tr>';
+	echo  '<tr><td>controller->mediaobject->fileExists()</td><td>', $controller->mediaobject->fileExists(), '</td><td></td></tr>';
+	echo  '<tr><td>controller->mediaobject->getFiletype()</td><td>', $controller->mediaobject->getFiletype(), '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>mimetype</td><td>', $mimetype, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>controller->mediaobject->getFilesize()</td><td>', $controller->mediaobject->getFilesize(), '</td><td>cannot use this</td></tr>';
+	echo  '<tr><td>filesize</td><td>', @filesize($serverFilename), '</td><td>this is right</td></tr>';
+	echo  '<tr><td>controller->mediaobject->getThumbnail()</td><td>', $controller->mediaobject->getThumbnail(), '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>controller->mediaobject->canDisplayDetails()</td><td>', $controller->mediaobject->canDisplayDetails(), '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>controller->mediaobject->getFullName()</td><td>', $controller->mediaobject->getFullName(), '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>basename($serverFilename)</td><td>', basename($serverFilename), '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>filetime</td><td>', $filetime, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>filetimeHeader</td><td>', $filetimeHeader, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>if_modified_since</td><td>', $if_modified_since, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>if_none_match</td><td>', $if_none_match, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>etag</td><td>', $etag, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>etag_string</td><td>', $etag_string, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>expireHeader</td><td>', $expireHeader, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>protocol</td><td>', $protocol, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>SHOW_NO_WATERMARK</td><td>', $SHOW_NO_WATERMARK, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>PGV_USER_ACCESS_LEVEL</td><td>', PGV_USER_ACCESS_LEVEL, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>usewatermark</td><td>', $usewatermark, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>generatewatermark</td><td>', $generatewatermark, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>watermarkfile</td><td>', $watermarkfile, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>type</td><td>', $type, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>WATERMARK_THUMB</td><td>', $WATERMARK_THUMB, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>SAVE_WATERMARK_THUMB</td><td>', $SAVE_WATERMARK_THUMB, '</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>SAVE_WATERMARK_IMAGE</td><td>', $SAVE_WATERMARK_IMAGE, '</td><td>&nbsp;</td></tr>';
 	echo  '</table>';
 
 	echo '<pre>';

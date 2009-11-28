@@ -189,8 +189,8 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 
 			echo '<td class="facts_value" >';
 			echo '<table class="facts_table" width="100%" cellpadding="0"><tr><td >' . "\n";
-			echo "<div id=\"thumbcontainer".$kind."\">" . "\n";
-			echo "<ul class=\"section\" id=\"thumblist_".$kind."\">" . "\n\n";
+			echo "<div id=\"thumbcontainer", $kind, "\">" . "\n";
+			echo "<ul class=\"section\" id=\"thumblist_", $kind, "\">" . "\n\n";
 		}
 
 		// Album Reorder include =============================
@@ -244,7 +244,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 				$row['m_gedrec'] = $newrec;
 				$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
 				$ext = "";
-				if ($et>0) $ext = substr(trim($ematch[1]),1);
+				if ($et>0) $ext = substr(trim($ematch[1]), 1);
 				$row['m_ext'] = $ext;
 				$row['mm_gid'] = $pid;
 				$row['mm_gedrec'] = $rowm["mm_gedrec"];
@@ -296,8 +296,8 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 			echo '</td>';
 			echo '<td class="facts_value" >';
 			echo '<table class="facts_table" width="100%" cellpadding="0"><tr><td >' . "\n";
-			echo "<div id=\"thumbcontainer".$kind."\">" . "\n";
-			echo "<ul class=\"section\" id=\"thumblist_".$kind."\">" . "\n\n";
+			echo "<div id=\"thumbcontainer", $kind, "\">" . "\n";
+			echo "<ul class=\"section\" id=\"thumblist_", $kind, "\">" . "\n\n";
 			foreach ($current_objes as $media_id=>$value) {
 				while ($value>0) {
 					$objSubrec = array_pop($obje_links[$media_id]);
@@ -317,7 +317,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 							$row3['m_gedrec'] = $newrec;
 							$et = preg_match("/(\.\w+)$/", $row3['m_file'], $ematch);
 							$ext = "";
-							if ($et>0) $ext = substr(trim($ematch[1]),1);
+							if ($et>0) $ext = substr(trim($ematch[1]), 1);
 							$row3['m_ext'] = $ext;
 							$row3['mm_gid'] = $pid;
 							$row3['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
@@ -338,7 +338,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 						$et = preg_match("/(\.\w+)$/", $row3['m_file'], $ematch);
 						$ext = "";
 						if ($et>0) { 
-							$ext = substr(trim($ematch[1]),1);
+							$ext = substr(trim($ematch[1]), 1);
 						}
 						$row3['m_ext'] = $ext;
 						$row3['mm_gid'] = $pid;

@@ -50,7 +50,7 @@ $PGV_BLOCKS["print_block_givn_top10"]["config"]		= array(
  * Print First Names Block
  */
 function print_block_givn_top10($block=true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $TEXT_DIRECTION, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
+	global $pgv_lang, $TEXT_DIRECTION, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_givn_top10"]["config"];
 	if (isset($config["infoStyle"])) $infoStyle = $config["infoStyle"];  // "style1" or "style2"
@@ -58,7 +58,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	if (isset($config["showUnknown"])) $showUnknown = $config["showUnknown"];  // "yes" or "no"
 	else $showUnknown = "yes";
 
-	$stats=new Stats($GEDCOM);
+	$stats=new Stats(PGV_GEDCOM);
 
 	//Print block header
 
@@ -66,8 +66,11 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	$title = print_help_link("index_common_given_names_help", "qm","",false,true);
 	if ($PGV_BLOCKS["print_block_givn_top10"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
-			if ($ctype=="gedcom") $name = str_replace("'", "\'", $GEDCOM);
-			else $name = PGV_USER_NAME;
+			if ($ctype=="gedcom") {
+				$name = PGV_GEDCOM;
+			} else {
+				$name = PGV_USER_NAME;
+			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
 		}
@@ -109,9 +112,11 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	}
 	$content .=  "</div>";
 
-	if ($block) include(PGV_THEME_DIR."templates/block_small_temp.php");
-	else include(PGV_THEME_DIR."templates/block_main_temp.php");
-
+	if ($block) {
+		require PGV_THEME_DIR.'templates/block_small_temp.php';
+	} else {
+		require PGV_THEME_DIR.'templates/block_main_temp.php';
+	}
 }
 
 function print_block_givn_top10_config($config) {

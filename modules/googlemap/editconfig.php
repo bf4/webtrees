@@ -52,7 +52,7 @@ function print_level_config_table($level) {
 		<table class="facts_table">
 			<tr>
 				<td class="descriptionbox" colspan="2">
-					<?php echo $pgv_lang["gm_level"]." ".$level; ?>
+					<?php echo $pgv_lang["gm_level"], " ", $level; ?>
 				</td>
 			</tr>
 			<tr>
@@ -98,7 +98,7 @@ echo '<span class="subheaders">', $pgv_lang['configure_googlemap'], '</span>';
 
 if (!PGV_USER_IS_ADMIN) {
 	echo "<table class=\"facts_table\">";
-	echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
+	echo "<tr><td colspan=\"2\" class=\"facts_value\">", $pgv_lang["gm_admin_error"];
 	echo "</td></tr></table>";
 	echo "<br /><br /><br />";
 	print_footer();
@@ -164,7 +164,7 @@ $i = 0;
 <!--
 	var helpWin;
 	function helpPopup(which) {
-		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which, '_blank', 'left=50, top=50, width=500, height=320, resizable=1, scrollbars=1');
 		else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
 		return false;
 	}
@@ -357,12 +357,12 @@ $i = 0;
 		<td class="optionbox">
 			<?php echo $pgv_lang["gm_min"];?>: <select name="NEW_GOOGLEMAP_MIN_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
 			<?php for ($j=1; $j < 15; $j++) { ?>
-			<option value="<?php echo $j."\""; if ($GOOGLEMAP_MIN_ZOOM==$j) echo " selected=\"selected\""; echo ">".$j;?></option>
+			<option value="<?php echo $j, "\""; if ($GOOGLEMAP_MIN_ZOOM==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 			<?php } ?>
 			</select>
 			<?php echo $pgv_lang["gm_max"];?>: <select name="NEW_GOOGLEMAP_MAX_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
 			<?php for ($j=1; $j < 15; $j++) { ?>
-			<option value="<?php echo $j."\""; if ($GOOGLEMAP_MAX_ZOOM==$j) echo " selected=\"selected\""; echo ">".$j;?></option>
+			<option value="<?php echo $j, "\""; if ($GOOGLEMAP_MAX_ZOOM==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 			<?php } ?>
 			</select>
 		</td>
@@ -377,7 +377,7 @@ $i = 0;
 					<td><?php echo $pgv_lang["pl_country"];?>&nbsp;&nbsp;</td>
 					<td><select name="NEW_GOOGLEMAP_PRECISION_0" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
-						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_0==$j) echo " selected=\"selected\""; echo ">".$j;?></option>
+						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_0==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
 						</select>&nbsp;&nbsp;<?php echo $pgv_lang["gm_digits"];?>
 					</td>
@@ -386,7 +386,7 @@ $i = 0;
 					<td><?php echo $pgv_lang["pl_state"];?>&nbsp;&nbsp;</td>
 					<td><select name="NEW_GOOGLEMAP_PRECISION_1" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
-						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_1==$j) echo " selected=\"selected\""; echo ">".$j;?></option>
+						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_1==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
 						</select>&nbsp;&nbsp;<?php echo $pgv_lang["gm_digits"];?>
 					</td>
@@ -395,7 +395,7 @@ $i = 0;
 					<td><?php echo $pgv_lang["pl_city"];?>&nbsp;&nbsp;</td>
 					<td><select name="NEW_GOOGLEMAP_PRECISION_2" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
-						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_2==$j) echo " selected=\"selected\""; echo ">".$j;?></option>
+						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_2==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
 						</select>&nbsp;&nbsp;<?php echo $pgv_lang["gm_digits"];?>
 					</td>
@@ -403,7 +403,7 @@ $i = 0;
 				<tr><td><?php echo $pgv_lang["pl_neighborhood"];?>&nbsp;&nbsp;</td>
 					<td><select name="NEW_GOOGLEMAP_PRECISION_3" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
-						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_3==$j) echo " selected=\"selected\""; echo ">".$j;?></option>
+						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_3==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
 						</select>&nbsp;&nbsp;<?php echo $pgv_lang["gm_digits"];?>
 					</td>
@@ -411,7 +411,7 @@ $i = 0;
 				<tr><td><?php echo $pgv_lang["pl_house"];?>&nbsp;&nbsp;</td>
 					<td><select name="NEW_GOOGLEMAP_PRECISION_4" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
-						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_4==$j) echo " selected=\"selected\""; echo ">".$j;?></option>
+						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_4==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
 						</select>&nbsp;&nbsp;<?php echo $pgv_lang["gm_digits"];?>
 					</td>
@@ -419,7 +419,7 @@ $i = 0;
 				<tr><td><?php echo $pgv_lang["pl_max"];?>&nbsp;&nbsp;</td>
 					<td><select name="NEW_GOOGLEMAP_PRECISION_5" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
-						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_5==$j) echo " selected=\"selected\""; echo ">".$j;?></option>
+						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_5==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
 						</select>&nbsp;&nbsp;<?php echo $pgv_lang["gm_digits"];?>
 					</td>
@@ -485,7 +485,7 @@ $i = 0;
 if (empty($SEARCH_SPIDER)) {
 	print_footer();
 } else {
-	echo $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+	echo $pgv_lang["label_search_engine_detected"], ": ", $SEARCH_SPIDER;
 	echo "</div></body></html>";
 }
 

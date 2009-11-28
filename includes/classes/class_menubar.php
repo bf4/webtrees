@@ -106,10 +106,11 @@ class MenuBar
 
 		//-- main menu
 		$menu = new Menu($pgv_lang["mygedview"], "index.php?ctype=user", "down");
-		if (!empty($PGV_IMAGES["mygedview"]["large"]))
+		if (!empty($PGV_IMAGES["mygedview"]["large"])) {
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["large"]);
-		else if (!empty($PGV_IMAGES["gedcom"]["large"]))
+		} elseif (!empty($PGV_IMAGES["gedcom"]["large"])) {
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"]);
+		}
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_mygedview");
 		$menu->addAccesskey($pgv_lang["accesskey_home_page"]);
 
@@ -131,9 +132,13 @@ class MenuBar
 			// Determine whether the Quick Update form can be shown
 			$showQuickForm = false;
 			if ($USE_QUICK_UPDATE) {
-				if ($USE_QUICK_UPDATE==='1' && PGV_USER_IS_ADMIN) $showQuickForm = true;
-				else if ($USE_QUICK_UPDATE==='2' && PGV_USER_GEDCOM_ADMIN) $showQuickForm = true;
-				else if (($USE_QUICK_UPDATE==='3' || $USE_QUICK_UPDATE===true) && PGV_USER_CAN_EDIT) $showQuickForm = true;
+				if ($USE_QUICK_UPDATE==='1' && PGV_USER_IS_ADMIN) {
+					$showQuickForm = true;
+				} elseif ($USE_QUICK_UPDATE==='2' && PGV_USER_GEDCOM_ADMIN) {
+					$showQuickForm = true;
+				} elseif (($USE_QUICK_UPDATE==='3' || $USE_QUICK_UPDATE===true) && PGV_USER_CAN_EDIT) {
+					$showQuickForm = true;
+				}
 			}
 			if ($showQuickForm) {
 				//-- quick_update submenu
@@ -737,25 +742,42 @@ class MenuBar
 		$username = PGV_USER_NAME;
 		foreach($menuList as $file=>$label) {
 			$report = $reports[$file];
-			if (!isset($report["access"])) $report["access"] = $PRIV_PUBLIC;
+			if (!isset($report["access"])) {
+				$report["access"] = $PRIV_PUBLIC;
+			}
 			if ($report["access"]>=PGV_USER_ACCESS_LEVEL) {
-				if (!empty($report["title"][$LANGUAGE])) $label = $report["title"][$LANGUAGE];
-				else $label = implode("", $report["title"]);
+				if (!empty($report["title"][$LANGUAGE])) {
+					$label = $report["title"][$LANGUAGE];
+				} else {
+					$label = implode("", $report["title"]);
+				}
 				// indi report
-				if ($pid) $submenu = new Menu($label, encode_url("reportengine.php?ged={$GEDCOM}&action=setup&report={$report['file']}&pid={$pid}"));
+				if ($pid) {
+					$submenu = new Menu($label, encode_url("reportengine.php?ged={$GEDCOM}&action=setup&report={$report['file']}&pid={$pid}"));
+				}
 				// family report
-				else if ($famid) $submenu = new Menu($label, encode_url("reportengine.php?ged={$GEDCOM}&action=setup&report={$report['file']}&famid={$famid}"));
+				elseif ($famid) {
+					$submenu = new Menu($label, encode_url("reportengine.php?ged={$GEDCOM}&action=setup&report={$report['file']}&famid={$famid}"));
+				}
 				// default
-				else $submenu = new Menu($label, encode_url("reportengine.php?ged={$GEDCOM}&action=setup&report={$report['file']}"));
+				else {
+					$submenu = new Menu($label, encode_url("reportengine.php?ged={$GEDCOM}&action=setup&report={$report['file']}"));
+				}
 				if (isset($PGV_IMAGES["reports"]["small"]) && isset($PGV_IMAGES[$report["icon"]]["small"])) $iconfile=$PGV_IMAGE_DIR."/".$PGV_IMAGES[$report["icon"]]["small"];
 				if (isset($iconfile) && file_exists($iconfile)) $submenu->addIcon($iconfile);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_".$report["icon"]);
 				// indi report
-				if ($pid && $report["icon"]!="sfamily" && $report["icon"]!="place") $menu->addSubmenu($submenu);
+				if ($pid && $report["icon"]!="sfamily" && $report["icon"]!="place") {
+					$menu->addSubmenu($submenu);
+				}
 				// family report
-				else if ($famid && $report["icon"]=="sfamily") $menu->addSubmenu($submenu);
+				elseif ($famid && $report["icon"]=="sfamily") {
+					$menu->addSubmenu($submenu);
+				}
 				// default
-				else if ($style=="top") $menu->addSubmenu($submenu);
+				elseif (empty($pid) && empty($famid)) {
+					$menu->addSubmenu($submenu);
+				}
 			}
 		}
 		return $menu;

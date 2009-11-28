@@ -51,9 +51,9 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 	$content='<div class="center theme_form"><br />'.$theme_menu->getMenuAsDropdown().'<br /<br /></div>';
 
 	if ($style) {
-		include(PGV_THEME_DIR."templates/block_small_temp.php");
+		require PGV_THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include(PGV_THEME_DIR."templates/block_main_temp.php");
+		require PGV_THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 ?>

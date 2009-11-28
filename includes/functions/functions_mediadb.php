@@ -33,8 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_FUNCTIONS_MEDIADB_PHP', '');
 
 //-- Setup array of media types
-$MEDIATYPE = array("a11","acb","adc","adf","afm","ai","aiff","aif","amg","anm","ans","apd","asf","au","avi","awm","bga","bmp","bob","bpt","bw","cal","cel","cdr","cgm","cmp","cmv","cmx","cpi","cur","cut","cvs","cwk","dcs","dib","dmf","dng","doc","dsm","dxf","dwg","emf","enc","eps","fac","fax","fit","fla","flc","fli","fpx","ftk","ged","gif","gmf","hdf","iax","ica","icb","ico","idw","iff","img","jbg","jbig","jfif","jpe","jpeg","jp2","jpg","jtf","jtp","lwf","mac","mid","midi","miff","mki","mmm",".mod","mov","mp2","mp3","mpg","mpt","msk","msp","mus","mvi","nap","ogg","pal","pbm","pcc","pcd","pcf","pct","pcx","pdd","pdf","pfr","pgm","pic","pict","pk","pm3","pm4","pm5","png","ppm","ppt","ps","psd","psp","pxr","qt","qxd","ras","rgb","rgba","rif","rip","rla","rle","rpf","rtf","scr","sdc","sdd","sdw","sgi","sid","sng","swf","tga","tiff","tif","txt","text","tub","ul","vda","vis","vob","vpg","vst","wav","wdb","win","wk1","wks","wmf","wmv","wpd","wxf","wp4","wp5","wp6","wpg","wpp","xbm","xls","xpm","xwd","yuv","zgm");
-$BADMEDIA = array(".","..","CVS","thumbs","index.php","MediaInfo.txt", ".cvsignore", ".svn", "watermark");
+$MEDIATYPE = array("a11", "acb", "adc", "adf", "afm", "ai", "aiff", "aif", "amg", "anm", "ans", "apd", "asf", "au", "avi", "awm", "bga", "bmp", "bob", "bpt", "bw", "cal", "cel", "cdr", "cgm", "cmp", "cmv", "cmx", "cpi", "cur", "cut", "cvs", "cwk", "dcs", "dib", "dmf", "dng", "doc", "dsm", "dxf", "dwg", "emf", "enc", "eps", "fac", "fax", "fit", "fla", "flc", "fli", "fpx", "ftk", "ged", "gif", "gmf", "hdf", "iax", "ica", "icb", "ico", "idw", "iff", "img", "jbg", "jbig", "jfif", "jpe", "jpeg", "jp2", "jpg", "jtf", "jtp", "lwf", "mac", "mid", "midi", "miff", "mki", "mmm", ".mod", "mov", "mp2", "mp3", "mpg", "mpt", "msk", "msp", "mus", "mvi", "nap", "ogg", "pal", "pbm", "pcc", "pcd", "pcf", "pct", "pcx", "pdd", "pdf", "pfr", "pgm", "pic", "pict", "pk", "pm3", "pm4", "pm5", "png", "ppm", "ppt", "ps", "psd", "psp", "pxr", "qt", "qxd", "ras", "rgb", "rgba", "rif", "rip", "rla", "rle", "rpf", "rtf", "scr", "sdc", "sdd", "sdw", "sgi", "sid", "sng", "swf", "tga", "tiff", "tif", "txt", "text", "tub", "ul", "vda", "vis", "vob", "vpg", "vst", "wav", "wdb", "win", "wk1", "wks", "wmf", "wmv", "wpd", "wxf", "wp4", "wp5", "wp6", "wpg", "wpp", "xbm", "xls", "xpm", "xwd", "yuv", "zgm");
+$BADMEDIA = array(".", "..", "CVS", "thumbs", "index.php", "MediaInfo.txt", ".cvsignore", ".svn", "watermark");
 
 /*
 ****************************
@@ -328,7 +328,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					if ($currentdir && $directory != dirname($fileName) . "/")
 						break;
 					// if currentdir is false, then we are looking for all files recursively below $directory.  ignore anything outside of $directory
-					if (!$currentdir && strpos(dirname($fileName),$directory . "/") === false )
+					if (!$currentdir && strpos(dirname($fileName), $directory . "/") === false )
 						break;
 					$media["THUMB"] = thumbnail_file($fileName);
 					$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
@@ -689,7 +689,7 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 	if ($truncate == "NOTRUNC")
 		$truncate = "FRONT"; // **** temporary over-ride *****
 
-	if (strpos($_SERVER["SCRIPT_NAME"],"mediafirewall") > -1) {
+	if (strpos($_SERVER["SCRIPT_NAME"], "mediafirewall") > -1) {
 		// no extraneous output while displaying images
 		$noise = "QUIET";
 	}
@@ -958,7 +958,7 @@ function process_uploadMedia_form() {
 							$thumbnail = $thumbFolderName.$mediaFile;
 							$okThumb = generate_thumbnail($folderName.$mediaFile, $thumbnail, "OVERWRITE");
 							if (!$okThumb) {
-								$error .= print_text("thumbgen_error",0,1);
+								$error .= print_text("thumbgen_error", 0, 1);
 							} else {
 								print_text("thumb_genned");
 								print "<br />";
@@ -976,7 +976,7 @@ function process_uploadMedia_form() {
 				$imgsize = findImageSize($folderName.$mediaFile);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-				print "<a href=\"#\" onclick=\"return openImage('".encode_url($folderName.$mediaFile)."',$imgwidth, $imgheight);\">".$mediaFile."</a>";
+				print "<a href=\"#\" onclick=\"return openImage('".encode_url($folderName.$mediaFile)."', $imgwidth, $imgheight);\">".$mediaFile."</a>";
 				print"<br /><br />";
 			}
 		}
@@ -1028,7 +1028,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 	// Print 5 forms for uploading images
 	for($i=1; $i<6; $i++) {
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-			print_help_link("upload_media_file_help","qm", "upload_media");
+			print_help_link("upload_media_file_help", "qm", "upload_media");
 			echo $pgv_lang["media_file"];
 			echo '</td>';
 			echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
@@ -1038,7 +1038,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 		if ($thumbSupport != "") {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-				print_help_link("generate_thumb_help", "qm","generate_thumbnail");
+				print_help_link("generate_thumb_help", "qm", "generate_thumbnail");
 				echo $pgv_lang["auto_thumbnail"];
 				echo '</td><td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 				echo '<input type="checkbox" name="genthumb', $i, '" value="yes" checked="checked" tabindex="', $tab++, '" />';
@@ -1047,7 +1047,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 		}
 
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-			print_help_link("upload_thumbnail_file_help","qm", "upload_media");
+			print_help_link("upload_thumbnail_file_help", "qm", "upload_media");
 			echo $pgv_lang["thumbnail"];
 			echo '</td>';
 			echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
@@ -1057,12 +1057,12 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 		if (PGV_USER_GEDCOM_ADMIN) {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-				print_help_link("upload_server_file_help","qm", "upload_media");
+				print_help_link("upload_server_file_help", "qm", "upload_media");
 				echo $pgv_lang["server_file"];
 				echo '</td>';
 				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 				echo '<input name="filename', $i, '" type="text" tabindex="', $tab++, '" size="40" />';
-				if ($i==1) echo "<br /><sub>".$pgv_lang["server_file_advice"]."</sub>";
+				if ($i==1) echo "<br /><sub>", $pgv_lang["server_file_advice"], "</sub>";
 			echo '</td></tr>';
 		} else {
 			echo '<input type="hidden" name="filename', $i, '" value="" />';
@@ -1070,7 +1070,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 		if (PGV_USER_GEDCOM_ADMIN && $MEDIA_DIRECTORY_LEVELS>0) {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-				print_help_link("upload_server_folder_help","qm", "upload_media");
+				print_help_link("upload_server_folder_help", "qm", "upload_media");
 				echo $pgv_lang["server_folder"];
 				echo '</td>';
 				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
@@ -1082,7 +1082,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 				foreach ($mediaFolders as $f) {
 					if (!strpos($f, ".svn")) {    //Do not print subversion directories
 						// Strip $MEDIA_DIRECTORY from the folder name
-						if (substr($f,0,strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $f = substr($f, strlen($MEDIA_DIRECTORY));
+						if (substr($f, 0, strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $f = substr($f, strlen($MEDIA_DIRECTORY));
 						if ($f == '') $f = '/';
 						echo '<option value="', $f, '"';
 						echo '>', $f, "</option>\n";
@@ -1091,7 +1091,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 				print "</select></span>\n";
 				if (PGV_USER_IS_ADMIN) {
 					echo '<br /><span dir="ltr"><input name="folder', $i, '" type="text" size="40" value="" tabindex="', $tab++, '" onblur="checkpath(this)" /></span>';
-					if ($i==1) echo '<br /><sub>', print_text("server_folder_advice",0,1), '</sub>';
+					if ($i==1) echo '<br /><sub>', print_text("server_folder_advice", 0, 1), '</sub>';
 				} else echo '<input name="folder', $i, '" type="hidden" value="" />';
 			echo '</td></tr>';
 		} else {
@@ -1127,38 +1127,42 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH;
 
 	// NOTE: add a table and form to easily add new values to the table
-	print "<form method=\"post\" name=\"newmedia\" action=\"addmedia.php\" enctype=\"multipart/form-data\">\n";
-	print "<input type=\"hidden\" name=\"action\" value=\"$action\" />\n";
-	print "<input type=\"hidden\" name=\"ged\" value=\"".PGV_GEDCOM."\" />\n";
-	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
-	if (!empty($linktoid)) print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
-	print "<input type=\"hidden\" name=\"level\" value=\"$level\" />\n";
-	print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
-	print "<tr><td class=\"topbottombar\" colspan=\"2\">";
+	echo "<form method=\"post\" name=\"newmedia\" action=\"addmedia.php\" enctype=\"multipart/form-data\">\n";
+	echo "<input type=\"hidden\" name=\"action\" value=\"", $action, "\" />\n";
+	echo "<input type=\"hidden\" name=\"ged\" value=\"", PGV_GEDCOM, "\" />\n";
+	echo "<input type=\"hidden\" name=\"pid\" value=\"", $pid, "\" />\n";
+	if (!empty($linktoid)) {
+		echo "<input type=\"hidden\" name=\"linktoid\" value=\"", $linktoid, "\" />\n";
+	}
+	echo "<input type=\"hidden\" name=\"level\" value=\"", $level, "\" />\n";
+	echo "<table class=\"facts_table center ", $TEXT_DIRECTION, "\">\n";
+	echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
 	if ($action == "newentry") {
 		echo $pgv_lang["add_media"];
 	} else {
-		echo print_text('edit_media',0 , 1);
+		echo print_text('edit_media', 0 , 1);
 	}
-	print "</td></tr>";
-	print "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"" . $pgv_lang["save"] . "\" /></td></tr>";
+	echo "</td></tr>";
+	echo "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"", $pgv_lang["save"], "\" /></td></tr>";
 	if ($linktoid == "new" || ($linktoid == "" && $action != "update")) {
-		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, "wrap width25\">";
 		print_help_link("add_media_linkid", "qm");
-		print $pgv_lang["add_fav_enter_id"] . "</td>";
-		print "<td class=\"optionbox wrap\"><input type=\"text\" name=\"gid\" id=\"gid\" size=\"6\" value=\"\" />";
+		echo $pgv_lang["add_fav_enter_id"], "</td>";
+		echo "<td class=\"optionbox wrap\"><input type=\"text\" name=\"gid\" id=\"gid\" size=\"6\" value=\"\" />";
 		print_findindi_link("gid", "");
 		print_findfamily_link("gid");
 		print_findsource_link("gid");
-		print "<br /><sub>" . $pgv_lang["add_linkid_advice"] . "</sub></td></tr>\n";
+		echo "<br /><sub>", $pgv_lang["add_linkid_advice"], "</sub></td></tr>\n";
 	}
-	if (isset ($pgv_changes[$pid . "_" . PGV_GEDCOM]))
+	if (isset ($pgv_changes[$pid . "_" . PGV_GEDCOM])) {
 		$gedrec = find_updated_record($pid, PGV_GED_ID);
-	else
-		if (gedcom_record_type($pid, get_id_from_gedcom(PGV_GEDCOM)) == "OBJE")
+	} else {
+		if (gedcom_record_type($pid, get_id_from_gedcom(PGV_GEDCOM)) == "OBJE") {
 			$gedrec = find_media_record($pid, PGV_GED_ID);
-		else
+		} else {
 			$gedrec = "";
+		}
+	}
 
 	// 0 OBJE
 	// 1 FILE
@@ -1243,7 +1247,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "</td>\n";
 		print "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
 		if (PGV_USER_GEDCOM_ADMIN) {
-			print "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName,ENT_COMPAT,'UTF-8') . "\" size=\"40\"";
+			print "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName, ENT_COMPAT, 'UTF-8') . "\" size=\"40\"";
 			if ($isExternal)
 				print " />";
 			else
@@ -1256,7 +1260,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				print " alt=\"\" title=\"\" />";
 			} */
 			print $fileName;
-			print "<input name=\"filename\" type=\"hidden\" value=\"" . htmlentities($fileName,ENT_COMPAT,'UTF-8') . "\" size=\"40\" />";
+			print "<input name=\"filename\" type=\"hidden\" value=\"" . htmlentities($fileName, ENT_COMPAT, 'UTF-8') . "\" size=\"40\" />";
 		}
 		print "</td>";
 		print "</tr>\n";
@@ -1272,7 +1276,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			else $folder = '';
 		}
 		// Strip $MEDIA_DIRECTORY from the folder name
-		if (substr($folder,0,strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $folder = substr($folder, strlen($MEDIA_DIRECTORY));
+		if (substr($folder, 0, strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $folder = substr($folder, strlen($MEDIA_DIRECTORY));
 		echo $pgv_lang["server_folder"], '</td><td class="optionbox wrap">';
 		//-- don't let regular users change the location of media items
 		if ($action!='update' || PGV_USER_GEDCOM_ADMIN) {
@@ -1285,7 +1289,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			foreach ($mediaFolders as $f) {
 				if (!strpos($f, ".svn")) {    //Do not print subversion directories
 					// Strip $MEDIA_DIRECTORY from the folder name
-					if (substr($f,0,strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $f = substr($f, strlen($MEDIA_DIRECTORY));
+					if (substr($f, 0, strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $f = substr($f, strlen($MEDIA_DIRECTORY));
 					if ($f == '') $f = '/';
 					echo '<option value="', $f, '"';
 					if ($folder == $f && $f != '/')
@@ -1300,7 +1304,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		if (PGV_USER_IS_ADMIN) {
 			echo '<br /><span dir="ltr"><input type="text" name="folder" size="40" value="', $folder, '" onblur="checkpath(this)" /></span>';
 			if ($MEDIA_DIRECTORY_LEVELS>0) {
-				echo '<br /><sub>', print_text("server_folder_advice",0,1), '</sub>';
+				echo '<br /><sub>', print_text("server_folder_advice", 0, 1), '</sub>';
 			}
 			if ($gedfile == "FILE") {
 				echo '<br /><sub>', $pgv_lang["server_folder_advice2"], '</sub>';
@@ -1471,11 +1475,11 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		}
 	}
 	if (PGV_USER_IS_ADMIN) {
-		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
-		echo $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
-		echo $pgv_lang["no_update_CHAN"]."<br />\n";
+		echo $pgv_lang["no_update_CHAN"], "<br />\n";
 		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 		echo format_fact_date($event, false, true);
 		echo "</td></tr>\n";
@@ -1601,7 +1605,7 @@ function PrintMediaLinks($links, $size = "small") {
 		$name=$record->getFullname();
 		if (begRTLText($name) && $TEXT_DIRECTION == 'ltr') {
 			if ($SHOW_ID_NUMBERS) {
-				echo '('.$record->getXref().')&nbsp;&nbsp;';
+				echo '(', $record->getXref(), ')&nbsp;&nbsp;';
 			}
 			echo PrintReady($name);
 		} else {
@@ -1611,7 +1615,7 @@ function PrintMediaLinks($links, $size = "small") {
 				if ($TEXT_DIRECTION=='rtl') {
 					echo getRLM();
 				}
-				echo "(" . $record->getXref().')';
+				echo "(" , $record->getXref(), ')';
 				if ($TEXT_DIRECTION=='rtl') {
 					echo getRLM();
 				}
@@ -1708,11 +1712,11 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 	switch ($ims['mime']) {
 	case 'image/png':
 		if (!function_exists('imagecreatefrompng') || !function_exists('imagepng')) break;
-		$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+		$img = imagecreatetruecolor(($ims[0]-$right)-$left, ($ims[1]-$bottom)-$top);
 		$org_img = imagecreatefrompng($image);
 		$ims = @getimagesize($image);
-		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-		imagepng($img,$dest_image);
+		imagecopyresampled($img, $org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left, ($ims[1]-$bottom)-$top);
+		imagepng($img, $dest_image);
 		imagedestroy($img);
 		break;
 	case 'image/jpeg':
@@ -1720,26 +1724,26 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 		$img = imagecreatetruecolor($width, $height);
 		$org_img = imagecreatefromjpeg($image);
 		$ims = @getimagesize($image);
-		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-		imagejpeg($img,$dest_image,90);
+		imagecopyresampled($img, $org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left, ($ims[1]-$bottom)-$top);
+		imagejpeg($img, $dest_image, 90);
 		imagedestroy($img);
 		break;
 	case 'image/gif':
 		if (!function_exists('imagecreatefromgif') || !function_exists('imagegif')) break;
-		$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+		$img = imagecreatetruecolor(($ims[0]-$right)-$left, ($ims[1]-$bottom)-$top);
 		$org_img = imagecreatefromgif($image);
 		$ims = @getimagesize($image);
-		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-		imagegif($img,$dest_image);
+		imagecopyresampled($img, $org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left, ($ims[1]-$bottom)-$top);
+		imagegif($img, $dest_image);
 		imagedestroy($img);
 		break;
 /*  "wbmp" is NOT "Windows BMP" -- it's "Wireless BMP", a simple B&W bit mapped format
 		if (!function_exists('imagecreatefromwbmp') || !function_exists('imagewbmp')) break;
-		$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+		$img = imagecreatetruecolor(($ims[0]-$right)-$left, ($ims[1]-$bottom)-$top);
 		$org_img = imagecreatefromwbmp($image);
 		$ims = @getimagesize($image);
-		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-		imagewbmp($img,$dest_image);
+		imagecopyresampled($img, $org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left, ($ims[1]-$bottom)-$top);
+		imagewbmp($img, $dest_image);
 		imagedestroy($img);
 		break;
 */

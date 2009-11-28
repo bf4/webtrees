@@ -571,7 +571,7 @@ function reformat_record_import($rec) {
 * @param boolean $update whether or not this is an updated record that has been accepted
 */
 function import_record($gedrec, $ged_id, $update) {
-	global $xtype, $TBLPREFIX, $pgv_lang, $USE_RIN, $MAX_IDS, $fpnewged, $GENERATE_UIDS;
+	global $TBLPREFIX, $pgv_lang, $USE_RIN, $MAX_IDS, $fpnewged, $GENERATE_UIDS;
 
 	static $sql_insert_indi=null;
 	static $sql_insert_fam=null;
@@ -740,7 +740,7 @@ function import_record($gedrec, $ged_id, $update) {
 		fwrite($fpnewged, reformat_record_export($gedrec));
 	}
 
-	$xtype=$type; // Pass value back to uploadgedcom.php
+	return $type; // uploadgedcom.php needs this for the statistics
 }
 
 /**
@@ -1298,7 +1298,7 @@ function write_file() {
 	$logline = AddToLog($path." updated");
 	check_in($logline, basename($path), dirname($path));
 
-	return true;;
+	return true;
 }
 /**
 * Accpet changed gedcom record into database

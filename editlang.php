@@ -67,8 +67,8 @@ if (!isset($_SESSION['DEBUG_LANG'])) {
 }
 
 $QUERY_STRING = str_replace(array("&amp;", "&&"), "&", $QUERY_STRING);
-if (strpos($QUERY_STRING,"&dv=")) {
-	$QUERY_STRING = substr($QUERY_STRING,0,strpos($QUERY_STRING,"&dv="));
+if (strpos($QUERY_STRING, "&dv=")) {
+	$QUERY_STRING = substr($QUERY_STRING, 0, strpos($QUERY_STRING, "&dv="));
 }
 
 echo "<script language=\"JavaScript\" type=\"text/javascript\">";
@@ -192,7 +192,7 @@ case "edit" :
 	if ($file_type == "lang") {
 		echo " selected=\"selected\"";
 	}
-	echo ">"."lang.xx.php</option>";
+	echo ">", "lang.xx.php</option>";
 
 	echo "</select>";
 	echo "</td>";
@@ -475,7 +475,7 @@ case "export" :
 			$language_array = array_merge($language_array, read_export_file_into_array($pgv_language[$language2], "pgv_lang["));
 		}
 		$new_language_array = array();
-		$new_language_array_counter = 0;;
+		$new_language_array_counter = 0;
 
 		for ($z = 0, $zmax = sizeof($language_array); $z < $zmax; $z++) {
 			if (isset($language_array[$z][0])) {
@@ -514,7 +514,7 @@ case "export" :
 		for ($z = 0, $zmax = sizeof($new_language_array); $z < $zmax; $z++) {
 			if ($new_language_array[$z][0] != "config_help" and $new_language_array[$z][0] != "welcome_help") {
 				fwrite($fp, "<li>");
-				fwrite($fp, print_text($new_language_array[$z][1],0,2)."<br /><br /></li>");
+				fwrite($fp, print_text($new_language_array[$z][1], 0, 2)."<br /><br /></li>");
 			}
 		}
 
@@ -530,7 +530,7 @@ case "export" :
 		echo $pgv_lang["export_ok"];
 		echo "</strong><br />";
 		echo $pgv_lang["export_filename"];
-		echo " <a href=\"", $FileName."\">", $FileName, "</a>";
+		echo " <a href=\"", $FileName, "\">", $FileName, "</a>";
 	}
 	break;
 case "compare" :
@@ -822,7 +822,7 @@ foreach ($language_settings as $key=>$value) {
 	$DICTIONARY_SORT[$key]      =$value["DICTIONARY_SORT"];
 	$COLLATION[$key]            =$value["COLLATION"];
 	$DATE_FORMAT_array[$key]    =$value["DATE_FORMAT"];
-	$TIME_FORMAT_array[$key]    =$value["TIME_FORMAT"];;
+	$TIME_FORMAT_array[$key]    =$value["TIME_FORMAT"];
 	$WEEK_START_array[$key]     =$value["WEEK_START"];
 	$TEXT_DIRECTION_array[$key] =$value["TEXT_DIRECTION"];
 	$NAME_REVERSE_array[$key]   =$value["NAME_REVERSE"];
@@ -832,8 +832,8 @@ foreach ($language_settings as $key=>$value) {
 	$dDummy = $value["langcode"];
 	$ct = strpos($dDummy, ";");
 	while ($ct > 1) {
-		$shrtcut = substr($dDummy,0,$ct);
-		$dDummy = substr($dDummy,$ct+1);
+		$shrtcut = substr($dDummy, 0, $ct);
+		$dDummy = substr($dDummy, $ct+1);
 		$langcode[$shrtcut]    = $key;
 		$ct = strpos($dDummy, ";");
 	}

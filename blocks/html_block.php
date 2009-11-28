@@ -42,7 +42,7 @@ $PGV_BLOCKS["print_html_block"]["config"]		= array(
 );
 
 function print_html_block($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_IMAGES, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $ctype, $GEDCOM;
+	global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_IMAGES, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $ctype;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_html_block"]["config"];
 	if (!isset($HTML_BLOCK_COUNT)) $HTML_BLOCK_COUNT = 0;
@@ -69,7 +69,7 @@ function print_html_block($block=true, $config="", $side, $index) {
 	if ($PGV_BLOCKS["print_html_block"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = str_replace("'", "\'", $GEDCOM);
+				$name = PGV_GEDCOM;
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -78,15 +78,18 @@ function print_html_block($block=true, $config="", $side, $index) {
 		}
 	}
 
-	if ($block) include(PGV_THEME_DIR."templates/block_small_temp.php");
-	else include(PGV_THEME_DIR."templates/block_main_temp.php");
+	if ($block) {
+		require PGV_THEME_DIR.'templates/block_small_temp.php';
+	} else {
+		require PGV_THEME_DIR.'templates/block_main_temp.php';
+	}
 }
 
 function print_html_block_config($config) {
 	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
 	$useFCK = file_exists("./modules/FCKeditor/fckeditor.php");
 	if($useFCK){
-		include("./modules/FCKeditor/fckeditor.php");
+		require './modules/FCKeditor/fckeditor.php';
 	}
 	if (empty($config)) $config = $PGV_BLOCKS["print_html_block"]["config"];
 	if (empty($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_html_block"]["config"]["cache"];

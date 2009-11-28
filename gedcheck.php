@@ -807,7 +807,7 @@ $num_lines=count($gedfile);
 if ($num_lines>0) $gedfile[0]=preg_replace('/^'.PGV_UTF8_BOM.'/', '', $gedfile[0]);
 $context=array('GEDCOM'); $curr_xref='';
 foreach ($gedfile as $num=>$value) {
-	preg_match('/^(\s*)(\d*)(\s*)(@[^@#]+@)?(\s*)(\S*)(\s*)(.*)/', $value, $match);
+	preg_match('/^(\s*)(\d*)(\s*)(@[^@#]+@)?(\s*)(\S*)(\s?)(.*)/', $value, $match);
 	$whitespace1=$match[1];
 	$tag_level  =$match[2];
 	$whitespace2=$match[3];
@@ -859,43 +859,57 @@ foreach ($gedfile as $num=>$value) {
 
 			// Check tags at level N+1
 			$count_plus_one=array();
-			if ($err=='')
+			if ($err=='') {
 				for ($i=$num+1; $i<$num_lines; ++$i) {
 					preg_match('/^\s*(\d*)\s*(@[^@#]+@)?\s*(\S*)/', $gedfile[$i], $m);
-					if ($m[1]<=$tag_level)
+					if ($m[1]<=$tag_level) {
 						break;
-					if ($m[1]==$tag_level+1)
-						if (isset($count_plus_one[$m[3]]))
+					}
+					if ($m[1]==$tag_level+1) {
+						if (isset($count_plus_one[$m[3]])) {
 							$count_plus_one[$m[3]]++;
-						else
+						} else {
 							$count_plus_one[$m[3]]=1;
+						}
+					}
 				}
+			}
 
 			// Check min/max number of sub-tags at level N+1
-			if ($err=='')
-				foreach ($count_plus_one as $tag_plus_one=>$count_plus1)
-					if (isset($CONTEXT[$tmp.':'.$tag_plus_one]))
-						if ($count_plus1 > $CONTEXT_MAX[$tmp.':'.$tag_plus_one])
+			if ($err=='') {
+				foreach ($count_plus_one as $tag_plus_one=>$count_plus1) {
+					if (isset($CONTEXT[$tmp.':'.$tag_plus_one])) {
+						if ($count_plus1 > $CONTEXT_MAX[$tmp.':'.$tag_plus_one]) {
 							$err=too_many($tmp.':'.$tag_plus_one);
-						elseif ($count_plus1 < $CONTEXT_MIN[$tmp.':'.$tag_plus_one])
+						} elseif ($count_plus1 < $CONTEXT_MIN[$tmp.':'.$tag_plus_one]) {
 							$err=too_few($tmp.':'.$tag_plus_one);
+						}
+					}
+				}
+			}
 
 			// Check for missing subordinate tag (ignore custom tags)
-			if ($err=='' && isset($CONTEXT[$tmp]))
-				foreach ($CONTEXT_SUB[$tmp] as $sub_tag=>$full_sub_tag)
-					if ($CONTEXT_MIN[$full_sub_tag]>0 && !isset($count_plus_one[$sub_tag]))
+			if ($err=='' && isset($CONTEXT[$tmp])) {
+				foreach ($CONTEXT_SUB[$tmp] as $sub_tag=>$full_sub_tag) {
+					if ($CONTEXT_MIN[$full_sub_tag]>0 && !isset($count_plus_one[$sub_tag])) {
 						$err=missing($full_sub_tag);
+					}
+				}
+			}
 
 			if ($err_level>=$warning && $err=='') { // WARNING CHECKS - data
-				if ((strpos($tmp, '_')===false) && !preg_match('/^'.$CONTEXT[$tmp].'$/i', $tag_data))
+				if ((strpos($tmp, '_')===false) && !preg_match('/^'.$CONTEXT[$tmp].'$/i', $tag_data)) {
 					$err=invalid($pgv_lang['data']);
-				elseif ($tag_level=='0' && $xref!='' && !isset($used_xrefs[$xref.$tag])) $err=$pgv_lang['noref'];
-					if ($err_level>=$info && $err=='') { // INFOMATIONAL CHECKS - spacing
-						if ($whitespace1!=''  ||
-								$whitespace2!=' ' ||
-								$whitespace3==' ' && $xref=='' ||
-								$whitespace4==' ' && $tag=='')
-							$err=invalid($pgv_lang['spacing']);
+				} elseif ($tag_level=='0' && $xref!='' && !isset($used_xrefs[$xref.$tag])) {
+					$err=$pgv_lang['noref'];
+				}
+				if ($err_level>=$info && $err=='') { // INFOMATIONAL CHECKS - spacing
+					if ($whitespace1!=''  ||
+							$whitespace2!=' ' ||
+							$whitespace3==' ' && $xref=='' ||
+							$whitespace4==' ' && $tag=='') {
+						$err=invalid($pgv_lang['spacing']);
+							}
 				} // info
 			} // warning
 		} // error

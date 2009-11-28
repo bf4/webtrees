@@ -36,7 +36,7 @@ $controller->init();
 print_header($controller->getPageTitle());
 // completely prevent display if privacy dictates so
 if (!$controller->family){
-	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
 	print_footer();
 	exit;
 }
@@ -64,7 +64,7 @@ $show_full = "1";
 	function show_gedcom_record(shownew) {
 		fromfile="";
 		if (shownew=="yes") fromfile='&fromfile=1';
-		var recwin = window.open("gedrecord.php?pid=<?php print $controller->getFamilyID(); ?>"+fromfile, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
+		var recwin = window.open("gedrecord.php?pid=<?php print $controller->getFamilyID(); ?>"+fromfile, "_blank", "top=50, left=50, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");
 	}
 	function showchanges() {
 		window.location = 'family.php?famid=<?php print $controller->famid; ?>&show_changes=yes';

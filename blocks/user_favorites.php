@@ -111,7 +111,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 				$content .= "<a href=\"".$favorite["url"]."\">".PrintReady($favorite["title"])."</a>";
 				$content .= "<br />".PrintReady($favorite["note"]);
 			} else {
-				require $INDEX_DIRECTORY.$GEDCOM."_conf.php";
+				require $INDEX_DIRECTORY.$GEDCOM.'_conf.php';
 				$indirec = find_gedcom_record($favorite["gid"], PGV_GED_ID);
 				if ($favorite["type"]=="INDI") {
 					$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
@@ -139,7 +139,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 			$content .= "</div>";
 			$content .= "</td></tr>";
 			$GEDCOM = $mygedcom;
-			require $INDEX_DIRECTORY.$GEDCOM."_conf.php";
+			require $INDEX_DIRECTORY.$GEDCOM.'_conf.php';
 		}
 		$content .= "</table>";
 	}
@@ -184,9 +184,9 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$content .= "</form></div>";
 
 	if ($block) {
-		include(PGV_THEME_DIR."templates/block_small_temp.php");
+		require PGV_THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include(PGV_THEME_DIR."templates/block_main_temp.php");
+		require PGV_THEME_DIR.'templates/block_main_temp.php';
 	}
 	// Restore GEDCOM configuration
 	unset($show_full);

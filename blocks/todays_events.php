@@ -53,7 +53,7 @@ $PGV_BLOCKS["print_todays_events"]["config"]	= array(
 //-- this block prints a list of today's upcoming events of living people in your gedcom
 function print_todays_events($block=true, $config="", $side, $index) {
   global $pgv_lang, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
-  global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
+  global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 
   $block = true;		// Always restrict this block's height
 
@@ -80,7 +80,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
   if ($PGV_BLOCKS["print_todays_events"]["canconfig"]) {
 	if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = str_replace("'", "\'", $GEDCOM);
+				$name = PGV_GEDCOM;
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -105,9 +105,9 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	}
 
 	if ($block) {
-		include(PGV_THEME_DIR."templates/block_small_temp.php");
+		require PGV_THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include(PGV_THEME_DIR."templates/block_main_temp.php");
+		require PGV_THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 

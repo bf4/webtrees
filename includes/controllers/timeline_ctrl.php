@@ -268,12 +268,20 @@ class TimelineControllerRoot extends BaseController {
 							if ($wdate->isOK()) $agew=get_age_at_event(GedcomDate::GetAgeGedcom($wdate, $gdate), false);
 						}
 					}
-					if (!empty($ageh) && $ageh > 0)
-						if (empty($agew)) print '<span class="age"> '.PrintReady("({$pgv_lang["age"]} {$ageh})").'</span>';
-						else print '<span class="age"> '.PrintReady("({$pgv_lang["husb_age"]} {$ageh},").' ';
-					if (!empty($agew) && $agew > 0)
-						if (empty($ageh)) print '<span class="age"> '.PrintReady("({$pgv_lang["age"]} {$agew})").'</span>';
-						else print PrintReady("{$pgv_lang["wife_age"]} {$agew})").'</span>';
+					if (!empty($ageh) && $ageh > 0) {
+						if (empty($agew)) {
+							echo '<span class="age"> ', PrintReady("({$pgv_lang["age"]} {$ageh})"), '</span>';
+						} else {
+							echo '<span class="age"> ', PrintReady("({$pgv_lang["husb_age"]} {$ageh},"), ' ';
+						}
+					}
+					if (!empty($agew) && $agew > 0) {
+						if (empty($ageh)) {
+							echo '<span class="age"> ', PrintReady("({$pgv_lang["age"]} {$agew})"), '</span>';
+						} else {
+							echo PrintReady("{$pgv_lang["wife_age"]} {$agew})"), '</span>';
+						}
+					}
 				}
 				print " ".PrintReady($desc);
 				if ($SHOW_PEDIGREE_PLACES>0) {

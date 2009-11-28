@@ -54,7 +54,7 @@ function top_surname_sort($a, $b) {
 }
 
 function print_block_name_top10($block=true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SURNAME_LIST_STYLE;
+	global $pgv_lang, $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SURNAME_LIST_STYLE;
 
 	if (empty($config)) {
 		$config=$PGV_BLOCKS["print_block_name_top10"]["config"];
@@ -104,7 +104,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 	if ($PGV_BLOCKS["print_block_name_top10"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = str_replace("'", "\'", $GEDCOM);
+				$name = PGV_GEDCOM;
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -127,9 +127,9 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 	}
 
 	if ($block) {
-		include(PGV_THEME_DIR."templates/block_small_temp.php");
+		require PGV_THEME_DIR.'templates/block_small_temp.php';
 	} else {
-		include(PGV_THEME_DIR."templates/block_main_temp.php");
+		require PGV_THEME_DIR.'templates/block_main_temp.php';
 	}
 }
 

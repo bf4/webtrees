@@ -105,6 +105,7 @@ $PGV_IMAGES["statistic"]["small"] = "small/statistic.gif";
 $PGV_IMAGES["timeline"]["small"] = "small/timeline.gif";
 
 //- PGV buttons for data entry pages
+$PGV_IMAGES["addmedia"]["button"] = "buttons/addmedia.gif";
 $PGV_IMAGES["addrepository"]["button"] = "buttons/addrepository.gif";
 $PGV_IMAGES["addsource"]["button"] = "buttons/addsource.gif";
 $PGV_IMAGES["addnote"]["button"] = "buttons/addnote.gif";

@@ -862,13 +862,13 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 							if ($asc==-1) $liney=$yoffset+$Dbheight; else $liney=$yoffset-$lh;
 							$joinx = $xoffset-$xs;
 							$joiny = $liney-2-($asc-1)/2*$lh;
-							print "<div id=\"joina$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
+							echo "<div id=\"joina", $index, "\" style=\"position:absolute; ", $TEXT_DIRECTION=="ltr"?"left":"right", ":", $joinx + $Dbxspacing, "px; top:", $joiny + $Dbyspacing, "px; z-index:-100; \" align=\"center\"><img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["hline"]["other"], "\" align=\"left\" width=\"", $joinw, "\" height=\"", $joinh, "\" alt=\"\" /></div>\n";
 							$joinw = $xs/2+2;
 							$joinx = $joinx+$xs/2;
 							$joiny = $joiny+$asc*$lh;
-							print "<div id=\"joinb$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
+							echo "<div id=\"joinb", $index, "\" style=\"position:absolute; ", $TEXT_DIRECTION=="ltr"?"left":"right", ":", $joinx + $Dbxspacing, "px; top:", $joiny + $Dbyspacing, "px; z-index:-100; \" align=\"center\"><img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["hline"]["other"], "\" align=\"left\" width=\"", $joinw, "\" height=\"", $joinh, "\" alt=\"\" /></div>\n";
 						}
-						$previous2=$previous;;
+						$previous2=$previous;
 						$previous="parent";
 					}
 					else $yoffset += $Dbheight+$Dbyspacing+50;
@@ -889,7 +889,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 						$lw = $xs;
 						$linex = $xoffset-$lw;
 						$liney = $yoffset+$Dbheight/4;
-						$previous2=$previous;;
+						$previous2=$previous;
 						$previous="";
 					}
 				}
@@ -909,7 +909,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 						$lw = $xs;
 						$linex = $xoffset-$lw;
 						$liney = $yoffset+$Dbheight/4;
-						$previous2=$previous;;
+						$previous2=$previous;
 						$previous="";
 					}
 				}
@@ -947,7 +947,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 							$joiny = $joiny-$asc*$lh;
 							print "<div id=\"joinb$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
 						}
-						$previous2=$previous;;
+						$previous2=$previous;
 						$previous="child";
 					}
 					else $yoffset += $Dbheight+$Dbyspacing+50;

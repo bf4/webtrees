@@ -58,7 +58,7 @@ try {
 
 $target=$openinnew ? "target='_blank'" : "";
 
-echo "<div align=\"center\" style=\"width: 99%;\"><h1>".$pgv_lang["placecheck"]."</h1></div>";
+echo "<div align=\"center\" style=\"width: 99%;\"><h1>", $pgv_lang["placecheck"], "</h1></div>";
 
 //Start of User Defined options
 echo "<table border='0' width='100%' height='100px' overflow='auto';>";
@@ -66,25 +66,25 @@ echo "<form method='post' name='placecheck' action='module.php?mod=googlemap&amp
 echo "<tr valign='top'>";
 echo "<td>";
 echo "<table align='left'>";
-echo "<tr><td colspan='2'class='descriptionbox' align='center'><strong>".$pgv_lang['placecheck_options']."</strong></td></tr>";
+echo "<tr><td colspan='2'class='descriptionbox' align='center'><strong>", $pgv_lang['placecheck_options'], "</strong></td></tr>";
 //Option box to select gedcom
 echo "<tr><td class='descriptionbox'>{$pgv_lang["gedcom_file"]}</td>";
 echo "<td class='optionbox'><select name='gedcom_id'>";
 foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
-	echo '<option value="', $ged_id, '"', $ged_id==$gedcom_id?' selected="selected"':'', '>', htmlspecialchars($gedcom),'</option>';
+	echo '<option value="', $ged_id, '"', $ged_id==$gedcom_id?' selected="selected"':'', '>', htmlspecialchars($gedcom), '</option>';
 }
 echo "</select></td></tr>";
 //Option box for 'Open in new window'
 echo "<tr><td class='descriptionbox'>{$pgv_lang["open_link"]}</td>";
 echo "<td class='optionbox'><select name='openinnew'>";
-echo "<option value='0' ".($openinnew?" selected='selected'":"").">{$pgv_lang["same_win"]}</option>";
-echo "<option value='1' ".($openinnew?" selected='selected'":"").">{$pgv_lang["new_win"]}</option>";
+echo "<option value='0' ", $openinnew?" selected='selected'":"", ">{$pgv_lang["same_win"]}</option>";
+echo "<option value='1' ", $openinnew?" selected='selected'":"", ">{$pgv_lang["new_win"]}</option>";
 echo "</select></td></tr>";
 //Option box to select top level place within Gedcom
-echo "<tr><td class='descriptionbox'>".$pgv_lang['placecheck_top']."</td>";
+echo "<tr><td class='descriptionbox'>", $pgv_lang['placecheck_top'], "</td>";
 echo "<td class='optionbox'><select name='country'>";
-echo "<option value='XYZ' selected='selected'>".$pgv_lang['placecheck_select1']."</option>";
-echo "<option value='XYZ'>".$pgv_lang["all"]."</option>";
+echo "<option value='XYZ' selected='selected'>", $pgv_lang['placecheck_select1'], "</option>";
+echo "<option value='XYZ'>", $pgv_lang["all"], "</option>";
 $rows=
 	PGV_DB::prepare("SELECT pl_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_level=0 ORDER BY pl_place")
 	->fetchAssoc();
@@ -100,16 +100,16 @@ echo "</select></td></tr>";
 
 //Option box to select level one place within the selected top level
 if ($country!='XYZ') {
-	echo "<tr><td class='descriptionbox'>".$pgv_lang['placecheck_one']."</td>";
+	echo "<tr><td class='descriptionbox'>", $pgv_lang['placecheck_one'], "</td>";
 	echo "<td class='optionbox'><select name='state'>";
-	echo "<option value='XYZ' selected='selected'>".$pgv_lang['placecheck_select2']."</option>";
-	echo "<option value='XYZ'>".$pgv_lang["all"]."</option>";
+	echo "<option value='XYZ' selected='selected'>", $pgv_lang['placecheck_select2'], "</option>";
+	echo "<option value='XYZ'>", $pgv_lang["all"], "</option>";
 	$places=
 		PGV_DB::prepare("SELECT pl_place FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
 		->execute(array($par_id))
 		->fetchOneColumn();
 	foreach ($places as $place) {
-		echo "<option value='{$place}'".($place==$state?" selected='selected'":"").">{$place}</option>";
+		echo "<option value='{$place}'", $place==$state?" selected='selected'":"", ">{$place}</option>";
 	}
 	echo "</select></td></tr>";
 }
@@ -121,10 +121,10 @@ echo "<td>";
 echo "<table>";
 echo "<tr><td colspan='2' class='descriptionbox' align='center'>";
 print_help_link("PLACECHECK_FILTER_help", "qm", "PLACECHECK_FILTER");
-echo "<strong>".$pgv_lang["placecheck_filter_text"]."</strong></td></tr>";
+echo "<strong>", $pgv_lang["placecheck_filter_text"], "</strong></td></tr>";
 echo "<tr><td class='descriptionbox'>";
 print_help_link("PLACECHECK_MATCH_help", "qm", "PLACECHECK_MATCH");
-echo $pgv_lang["placecheck_match"]."</td>";
+echo $pgv_lang["placecheck_match"], "</td>";
 echo "<td class='optionbox'><input type=\"checkbox\" name=\"matching\" value=\"active\"";
 if($matching==1) {
 	echo " checked=\"checked\"";
@@ -136,11 +136,11 @@ echo "</td>";
 //Show Key table
 echo "<td rowspan='2'>";
 echo "<table align='right'>";
-echo "<tr><td colspan='4' align='center' class='descriptionbox'><strong>".$pgv_lang['placecheck_key']."</strong></td></tr>";
-echo "<tr><td class='facts_value error'>".$factarray["PLAC"]."</td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">".$pgv_lang['placecheck_key1']."</font></td></tr>";
-echo "<tr><td class='facts_value'><a>".$factarray["PLAC"]."</a></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">".$pgv_lang['placecheck_key2']."</font></td></tr>";
-echo "<tr><td class='facts_value'><strong>{$pgv_lang["pl_unknown"]}</font></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">".$pgv_lang['placecheck_key3']."</font></td></tr>";
-echo "<tr><td class='facts_value'><a>{$pgv_lang["pl_unknown"]}</a></td><td class='facts_value' align='center'>N55.0</td><td align='center' class='facts_value'>W75.0</td><td class='facts_value'><font size=\"-2\">".$pgv_lang['placecheck_key4']."</font></td></tr>";
+echo "<tr><td colspan='4' align='center' class='descriptionbox'><strong>", $pgv_lang['placecheck_key'], "</strong></td></tr>";
+echo "<tr><td class='facts_value error'>", $factarray["PLAC"], "</td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", $pgv_lang['placecheck_key1'], "</font></td></tr>";
+echo "<tr><td class='facts_value'><a>", $factarray["PLAC"], "</a></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", $pgv_lang['placecheck_key2'], "</font></td></tr>";
+echo "<tr><td class='facts_value'><strong>{$pgv_lang["pl_unknown"]}</font></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", $pgv_lang['placecheck_key3'], "</font></td></tr>";
+echo "<tr><td class='facts_value'><a>{$pgv_lang["pl_unknown"]}</a></td><td class='facts_value' align='center'>N55.0</td><td align='center' class='facts_value'>W75.0</td><td class='facts_value'><font size=\"-2\">", $pgv_lang['placecheck_key4'], "</font></td></tr>";
 echo "</table>";
 echo "</td>";
 echo "</tr>";
@@ -156,7 +156,7 @@ echo "<hr />";
 switch ($action) {
 case 'go':
 	//Identify gedcom file
-	echo "<strong>".$pgv_lang['placecheck_head'].": </strong>", htmlspecialchars(get_gedcom_setting($gedcom_id, 'title')), "<br /><br />";
+	echo "<strong>", $pgv_lang['placecheck_head'], ": </strong>", htmlspecialchars(get_gedcom_setting($gedcom_id, 'title')), "<br /><br />";
 	//Select all '2 PLAC ' tags in the file and create array
 	$place_list=array();
 	$ged_data=PGV_DB::prepare("SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_gedcom LIKE ? AND i_file=?")
@@ -211,12 +211,12 @@ case 'go':
 	<script language="JavaScript" type="text/javascript">
 	<!--
 	function edit_place_location(placeid) {
-		window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
+		window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=680, height=550, resizable=1, scrollbars=1');
 		return false;
 	}
 	
 	function add_place_location(placeid) {
-		window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
+		window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50, left=50, width=680, height=550, resizable=1, scrollbars=1');
 		return false;
 	}
 	function showchanges() {
@@ -225,7 +225,7 @@ case 'go':
 	
 	var helpWin;
 	function helpPopup(which) {
-		if ((!helpWin)||(helpWin.closed)) helpWin=window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+		if ((!helpWin)||(helpWin.closed)) helpWin=window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which, '_blank', 'left=50, top=50, width=500, height=320, resizable=1, scrollbars=1');
 		else helpWin.location='modules/googlemap/editconfig_help.php?help='+which;
 		return false;
 	}
@@ -245,17 +245,17 @@ case 'go':
 	$cols=0;
 	$span=$max*3+3;
 	echo "<table class='facts_table' width='100%'><tr>";
-	echo "<td rowspan='3' class='descriptionbox' align='center'><strong>".$pgv_lang['placecheck_gedheader']."</strong></td>";
-	echo "<td class='descriptionbox' colspan='".$span."' align='center'><strong>".$pgv_lang['placecheck_gm_header']."</strong></td></tr>";
+	echo "<td rowspan='3' class='descriptionbox' align='center'><strong>", $pgv_lang['placecheck_gedheader'], "</strong></td>";
+	echo "<td class='descriptionbox' colspan='", $span, "' align='center'><strong>", $pgv_lang['placecheck_gm_header'], "</strong></td></tr>";
 	echo "<tr>";
 	while ($cols<$max) {
-		echo "<td class='descriptionbox' colspan='3' align='center'><strong>".PrintReady($pgv_lang['gm_level'])."&nbsp;".$cols."</strong></td>";
+		echo "<td class='descriptionbox' colspan='3' align='center'><strong>", PrintReady($pgv_lang['gm_level']), "&nbsp;", $cols, "</strong></td>";
 		$cols++;
 	}
 	echo "</tr><tr>";
 	$cols=0;
 	while ($cols<$max) {
-		echo "<td class='descriptionbox' align='center'><strong>".$factarray["PLAC"]."</strong></td><td class='descriptionbox' align='center'><strong>".$pgv_lang["placecheck_lati"]."</strong><td class='descriptionbox' align='center'><strong>".$pgv_lang["placecheck_long"]."</strong></td></td>";
+		echo "<td class='descriptionbox' align='center'><strong>", $factarray["PLAC"], "</strong></td><td class='descriptionbox' align='center'><strong>", $pgv_lang["placecheck_lati"], "</strong><td class='descriptionbox' align='center'><strong>", $pgv_lang["placecheck_long"], "</strong></td></td>";
 		$cols++;
 	}
 	echo "</tr>";
@@ -360,12 +360,12 @@ case 'go':
 	}
 	
 	// echo final row of table
-	echo "<tr><td colspan=\"2\" class=\"list_label\">".$pgv_lang['placecheck_unique'].": ".$countrows."</td></tr></table><br /><br />";
+	echo "<tr><td colspan=\"2\" class=\"list_label\">", $pgv_lang['placecheck_unique'], ": ", $countrows, "</td></tr></table><br /><br />";
 	break;	
 default:
 	// Do not run until user selects a gedcom/place/etc.
 	// Instead, show some useful help info.
-	echo "<p>".$pgv_lang['placecheck_text']."</p><hr />";
+	echo "<p>", $pgv_lang['placecheck_text'], "</p><hr />";
 	break;	
 }
 
