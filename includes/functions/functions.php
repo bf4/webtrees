@@ -3735,7 +3735,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 
 	// -- Determine the correct URL to open this media file
  	while (true) {
-		if (file_exists("modules/lightbox/album.php")) {
+		if (PGV_USE_LIGHTBOX) {
 			// Lightbox is installed
 			include_once('modules/lightbox/lb_defaultconfig.php');
 			if (file_exists('modules/lightbox/lb_config.php')) {

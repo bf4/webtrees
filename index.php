@@ -311,7 +311,7 @@ if ($ctype=="user") {
 	print_header(get_gedcom_setting(PGV_GED_ID, 'title'));
 }
 
-if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+if (PGV_USE_LIGHTBOX) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');

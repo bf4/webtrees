@@ -46,7 +46,7 @@ print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
 if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 // LBox =====================================================================================
-if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+if (PGV_USE_LIGHTBOX) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
@@ -332,7 +332,7 @@ function print_td_person($n) {
 				$imgsize = findImageSize($object["file"]);
 				$imgwidth = $imgsize[0]+50;
 				$imgheight = $imgsize[1]+150;
-				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+				if (PGV_USE_LIGHTBOX) {
 					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . PGV_GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 				} else {
 					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";

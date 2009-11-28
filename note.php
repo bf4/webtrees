@@ -40,7 +40,7 @@ $linkToID=$controller->nid;
 print_header($controller->getPageTitle());
 
 // LightBox
-if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
+if (PGV_USE_LIGHTBOX) {
 	include './modules/lightbox/lb_defaultconfig.php';
 	if (file_exists('./modules/lightbox/lb_config.php')) {
 		include './modules/lightbox/lb_config.php';
