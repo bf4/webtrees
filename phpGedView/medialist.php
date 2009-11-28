@@ -52,9 +52,9 @@ echo "\n\t<div class=\"center\"><h2>", $pgv_lang["multi_title"], "</h2></div>\n\
 
 // Get Javascript variables from lb_config.php ---------------------------
 if (PGV_USE_LIGHTBOX) {
-	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include('modules/lightbox/functions/lb_call_js.php');
+	require('modules/lightbox/lb_defaultconfig.php');
+	if (file_exists('modules/lightbox/lb_config.php')) require('modules/lightbox/lb_config.php');
+	require('modules/lightbox/functions/lb_call_js.php');
 
 	if ($theme_name=="Minimal") {
 		// Force icon options to "text" when we're dealing with the Minimal theme
@@ -341,7 +341,7 @@ if ($ct>0) {
 
 					// ---------- Link Media to person, family or source  ---------------
 					echo "<td class=\"width33 wrap center font9\" valign=\"top\">";
-					include ("modules/lightbox/functions/lb_link.php");
+					require ("modules/lightbox/functions/lb_link.php");
 					echo "</td>";
 
 					// ---------- View Media Details (mediaviewer) --------------------
@@ -488,7 +488,7 @@ echo "\n</div>\n";
 // -- load up the slideshow code
 if (!PGV_USE_LIGHTBOX) {
 	if (file_exists("modules/slideshow/slideshow.php")) {
-		include_once("modules/slideshow/slideshow.php");
+		require_once("modules/slideshow/slideshow.php");
 	}
 }
 print_footer();

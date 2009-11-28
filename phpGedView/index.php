@@ -68,7 +68,7 @@ $PGV_BLOCKS = array();
 $d = dir("blocks");
 while (false !== ($entry = $d->read())) {
 	if (($entry!=".") && ($entry!="..") && ($entry!="CVS") && (preg_match("/\.php$/", $entry)>0)) {
-		include_once("blocks/".$entry);
+		require_once("blocks/".$entry);
 	}
 }
 $d->close();
@@ -87,7 +87,7 @@ if (file_exists("modules")) {
 				while (false !== ($entry = $d->read())) {
 					if (($entry!=".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")&&(preg_match("/\.php$/", $entry)>0)) {
 						$p=$path.'/'.$entry;
-						include_once($p);
+						require_once($p);
 					}
 				}
 			}
@@ -312,9 +312,9 @@ if ($ctype=="user") {
 }
 
 if (PGV_USE_LIGHTBOX) {
-	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include('modules/lightbox/functions/lb_call_js.php');
+	require('modules/lightbox/lb_defaultconfig.php');
+	if (file_exists('modules/lightbox/lb_config.php')) require('modules/lightbox/lb_config.php');
+	require('modules/lightbox/functions/lb_call_js.php');
 }
 
 echo PGV_JS_START;

@@ -77,7 +77,7 @@ class MenuBar
 		//-- Welcome Menu customization
 		$filename = "includes/extras/custom_welcome_menu.php";
 		if (file_exists($filename)) {
-			include $filename;
+			require $filename;
 		}
 
 		return $menu;
@@ -826,7 +826,7 @@ class MenuBar
 		while (false !== ($entry = $d->read())) {
 			if ($entry{0}!="." && $entry!="CVS" && is_dir("modules/$entry")) {
 				if (file_exists("modules/$entry/menu.php")) {
-					include_once("modules/$entry/menu.php");
+					require_once("modules/$entry/menu.php");
 					$menu_class = $entry."_ModuleMenu";
 					$obj = new $menu_class();
 					if (method_exists($obj, "getMenu")) {

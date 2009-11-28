@@ -256,13 +256,13 @@ if ($action=="update") {
 		fclose($fp);
 	}
 	// NOTE: load the new variables
-	include $INDEX_DIRECTORY.$GEDCOM."_priv.php";
+	require $INDEX_DIRECTORY.$GEDCOM."_priv.php";
 	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated");
  	$gedcomprivname = $GEDCOM."_priv.php";
  	check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
 
  	//-- delete the cache files for the welcome page blocks
-	include_once 'includes/index_cache.php';
+	require_once 'includes/index_cache.php';
 	clearCache();
 }
 ?>

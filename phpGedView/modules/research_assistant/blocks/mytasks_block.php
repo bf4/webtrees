@@ -35,7 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
 	loadLangFile("research_assistant:lang");
 
-	if (file_exists('modules/research_assistant/research_assistant.php')) include_once('modules/research_assistant/research_assistant.php');
+	if (file_exists('modules/research_assistant/research_assistant.php')) require_once('modules/research_assistant/research_assistant.php');
 
 	$PGV_BLOCKS["print_mytasks"]["name"] = $pgv_lang["mytasks_block"];
 	$PGV_BLOCKS["print_mytasks"]["descr"] = "mytasks_block_descr";

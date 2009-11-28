@@ -76,7 +76,7 @@ class LocalClient extends ServiceClient {
 
 		//-- used to force an update on the first time linking a person
 		if ($firstLink) {
-			include_once("includes/functions/functions_edit.php");
+			require_once("includes/functions/functions_edit.php");
 			$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0)
 			{

@@ -455,7 +455,7 @@ class MediaControllerRoot extends IndividualController{
 // -- end of class
 //-- load a user extended class if one exists
 if (file_exists('includes/controllers/media_ctrl_user.php')) {
-	include_once 'includes/controllers/media_ctrl_user.php';
+	require_once 'includes/controllers/media_ctrl_user.php';
 } else {
 	class MediaController extends MediaControllerRoot {
 	}

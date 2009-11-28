@@ -783,7 +783,7 @@ class ClippingsControllerRoot extends BaseController {
 
 //-- load a user extended class if one exists
 if (file_exists('includes/controllers/clippings_ctrl_user.php')) {
-	include_once 'includes/controllers/clippings_ctrl_user.php';
+	require_once 'includes/controllers/clippings_ctrl_user.php';
 } else {
 	class ClippingsController extends ClippingsControllerRoot {
 	}
