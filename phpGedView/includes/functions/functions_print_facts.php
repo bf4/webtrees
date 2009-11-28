@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_PRINT_FACTS_PHP', '');
 
-require_once 'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
 
 /**
  * Turn URLs in text into HTML links.  Insert breaks into long URLs
@@ -1233,8 +1233,8 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			$text = expand_urls($text);
 			$text = PrintReady($text)." <br />\n";
 			// If Census assistant installed, and if Formatted Shared Note (using pipe "|" as delimiter) -------
-			if ( strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
-				require 'modules/GEDFact_assistant/_CENS/census_note_decode.php';
+			if ( strstr($text, "|") && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php') ) {
+				require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php';
 			}
 		}
 		
@@ -1420,7 +1420,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			//-- check if we need to get the object from a remote location
 			$ct = preg_match("/(.*):(.*)/", $media_id, $match);
 			if ($ct>0) {
-				require_once 'includes/classes/class_serviceclient.php';
+				require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 				$client = ServiceClient::getInstance($match[1]);
 				if (!is_null($client)) {
 					$newrec = $client->getRemoteRecord($match[2]);
@@ -1672,11 +1672,11 @@ function print_main_media_row($rtype, $rowm, $pid) {
 // -----------------------------------------------------------------------------
 
 if (PGV_USE_LIGHTBOX) {
-	require_once 'modules/lightbox/functions/lightbox_print_media.php';
-	require_once 'modules/lightbox/functions/lightbox_print_media_row.php';
+	require_once PGV_ROOT.'modules/lightbox/functions/lightbox_print_media.php';
+	require_once PGV_ROOT.'modules/lightbox/functions/lightbox_print_media_row.php';
 }
 
-require_once 'includes/functions/functions_media_reorder.php';
+require_once PGV_ROOT.'includes/functions/functions_media_reorder.php';
 
 // -----------------------------------------------------------------------------
 //  End extra print_facts_functions for lightbox and reorder media

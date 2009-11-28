@@ -26,7 +26,7 @@
  * @version $Id$
  */
 require_once './config.php';
-require_once 'includes/controllers/individual_ctrl.php'; 
+require_once PGV_ROOT.'includes/controllers/individual_ctrl.php'; 
 $controller = new IndividualController(); 
 $controller->init(); 
 echo "<link href =\"modules/GEDFact_assistant/css/gf_styles.css\" 	rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />";

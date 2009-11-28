@@ -28,15 +28,15 @@
 
 require './config.php';
 
-require './includes/controllers/ancestry_ctrl.php';
-require './includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/controllers/ancestry_ctrl.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $controller=new AncestryController();
 $controller->init();
 
 print_header($controller->name . " " . $pgv_lang['ancestry_chart']);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 // LightBox
 if (PGV_USE_LIGHTBOX) {

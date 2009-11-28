@@ -31,8 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_ANCESTRY_CTRL_PHP', '');
 
-require_once 'includes/functions/functions_charts.php';
-require_once 'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
 
 loadLangFile("pgv_confighelp");
 
@@ -221,9 +221,9 @@ class AncestryControllerRoot extends BaseController {
 
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/ancestry_ctrl_user.php'))
+if (file_exists(PGV_ROOT.'includes/controllers/ancestry_ctrl_user.php'))
 {
-	require_once 'includes/controllers/ancestry_ctrl_user.php';
+	require_once PGV_ROOT.'includes/controllers/ancestry_ctrl_user.php';
 }
 else
 {

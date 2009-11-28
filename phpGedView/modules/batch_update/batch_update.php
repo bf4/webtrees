@@ -36,7 +36,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 
 loadLangFile('batch_update:lang');
-require 'includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 class batch_update {
 	var $plugin   =null; // Form parameter: chosen plugin
@@ -124,7 +124,7 @@ class batch_update {
 
 		// Don't do any processing until a plugin is chosen.
 		if ($this->plugin) {
-			require 'plugins/'.$this->plugin.'.php';
+			require PGV_ROOT.'/modules/batch_update/plugins/'.$this->plugin.'.php';
 			$this->PLUGIN=new plugin;
 			$this->PLUGIN->getOptions();
 			$this->getAllXrefs();

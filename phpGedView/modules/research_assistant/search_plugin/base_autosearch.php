@@ -30,7 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once 'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
 
 class Base_AutoSearch {
 	private $title =null;

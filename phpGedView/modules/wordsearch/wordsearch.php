@@ -93,7 +93,7 @@ class wordsearch
 		}
 
 		// get css values
-		require_once 'includes/cssparser.inc.php';
+		require_once PGV_ROOT.'includes/cssparser.inc.php';
 		$css = new cssparser();
 		$css->Parse($stylesheet);
 		$style = $css->GetSection('body');

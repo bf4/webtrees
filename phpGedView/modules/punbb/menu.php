@@ -31,9 +31,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 // Load PGV embeding language file
 global $language_settings, $LANGUAGE, $pgv_lang;
-require_once 'modules/punbb/language/mod_en.php';
+require_once PGV_ROOT.'modules/punbb/language/mod_en.php';
 // Load other language file if needed
-if($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists("modules/punbb/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php")){require_once "modules/punbb/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php";}
+if ($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists(PGV_ROOT.'modules/punbb/language/mod_'.$language_settings[$LANGUAGE]['lang_short_cut'].'.php')) {
+	require_once PGV_ROOT.'modules/punbb/language/mod_'.$language_settings[$LANGUAGE]['lang_short_cut'].'.php';
+}
 
 class punbb_ModuleMenu
 {

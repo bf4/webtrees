@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once 'modules/research_assistant/forms/ra_form.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_form.php';
 
 /**
  * Edit Folder class for the editfolder form
@@ -50,7 +50,7 @@ class ra_guide extends ra_form {
 		global $pgv_lang, $factarray, $PGV_DXHTMLTAB_COLORS;
 		$out = '';
 		ob_start();
-		require_once './js/dhtmlXTabbar.js.htm';
+		require_once PGV_ROOT.'js/dhtmlXTabbar.js.htm';
 		?>
 		<script language="JavaScript" type="text/javascript">
 		<!--

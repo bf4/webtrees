@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
 
 /**
  * split and center text by lines
@@ -430,7 +430,7 @@ $addname=$person->getAddName();
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["fan_chart"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);

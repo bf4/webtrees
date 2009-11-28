@@ -28,7 +28,7 @@ if (file_exists('./config.php')) require './config.php';
 else require './config.dist';
 
 loadLangFile("all");
-require ("includes/help_text_vars.php");
+require PGV_ROOT.'includes/help_text_vars.php';
 
 $help = safe_GET('help');		// Make sure this input variable isn't a script
 if (empty($help)) exit;			// Quit if this isn't a legitimate request for help

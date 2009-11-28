@@ -31,9 +31,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_PGV_SERVICELOGIC_CLASS_PHP', '');
 
-require_once 'webservice/genealogyService.php';
-require_once 'includes/functions/functions_edit.php';
-require_once 'includes/classes/class_gewebservice.php';
+require_once PGV_ROOT.'webservice/genealogyService.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require_once PGV_ROOT.'includes/classes/class_gewebservice.php';
 
 class PGVServiceLogic extends GenealogyService {
 

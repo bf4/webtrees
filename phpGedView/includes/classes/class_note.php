@@ -31,8 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_NOTE_PHP', '');
 
-require_once 'includes/classes/class_gedcomrecord.php';
-require_once 'includes/classes/class_serviceclient.php';
+require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 
 class Note extends GedcomRecord {
 	// Get an instance of a Shared note.  We either specify

@@ -34,9 +34,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_PRINT_LISTS_PHP', '');
 
-require_once 'includes/classes/class_person.php';
-require_once 'includes/functions/functions_places.php';
-require_once 'includes/cssparser.inc.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/functions/functions_places.php';
+require_once PGV_ROOT.'includes/cssparser.inc.php';
 
 /**
  * print a sortable table of individuals
@@ -53,8 +53,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-	require_once 'js/sorttable.js.htm';
-	require_once 'includes/classes/class_stats.php';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once PGV_ROOT.'includes/classes/class_stats.php';
 	$stats = new stats($GEDCOM);
 
 	// Bad data can cause "longest life" to be huge, blowing memory limits
@@ -452,9 +452,9 @@ function print_fam_table($datalist, $legend="", $option="") {
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-	require_once 'js/sorttable.js.htm';
-	require_once 'includes/classes/class_family.php';
-	require_once 'includes/classes/class_stats.php';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once PGV_ROOT.'includes/classes/class_family.php';
+	require_once PGV_ROOT.'includes/classes/class_stats.php';
 	$stats = new stats($GEDCOM);
 	$max_age = max($stats->oldestMarriageMaleAge(), $stats->oldestMarriageFemaleAge())+1;
 	//-- init chart data
@@ -831,8 +831,8 @@ function print_sour_table($datalist, $legend=null) {
 	if (count($datalist)<1) {
 		return;
 	}
-	require_once 'js/sorttable.js.htm';
-	require_once 'includes/classes/class_source.php';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once PGV_ROOT.'includes/classes/class_source.php';
 
 	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['source']['small'], '" align="middle" alt="" /> ';
 	if ($legend) {
@@ -968,8 +968,8 @@ function print_note_table($datalist, $legend=null) {
 	if (count($datalist)<1) {
 		return;
 	}
-	require_once 'js/sorttable.js.htm';
-	require_once 'includes/classes/class_note.php';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once PGV_ROOT.'includes/classes/class_note.php';
 
 	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['notes']['small'], '" align="middle" alt="" /> ';
 	if ($legend) {
@@ -1052,8 +1052,8 @@ function print_repo_table($repos, $legend='') {
 	if (!$repos) {
 		return;
 	}
-	require_once 'js/sorttable.js.htm';
-	require_once 'includes/classes/class_repository.php';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once PGV_ROOT.'includes/classes/class_repository.php';
 
 	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['repository']['small'], '" align="middle" alt="" />';
 	if ($legend) {
@@ -1113,8 +1113,8 @@ function print_media_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_MEDIA_FILENAME;
 
 	if (count($datalist)<1) return;
-	require_once 'js/sorttable.js.htm';
-	require_once 'includes/classes/class_media.php';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once PGV_ROOT.'includes/classes/class_media.php';
 
 	if ($legend == "") $legend = $pgv_lang["media"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -1255,7 +1255,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	}
 
 	// Requested style isn't "cloud".  In this case, we'll produce a sortable list.
-	require_once './js/sorttable.js.htm';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"", $table_id, "\" class=\"sortable list_table center\">";
@@ -1306,7 +1306,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 function format_surname_table($surnames, $type) {
 	global $pgv_lang, $factarray, $GEDCOM;
 
-	require_once 'js/sorttable.js.htm';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
 	$table_id ='ID'.floor(microtime()*1000000); // sorttable requires a unique ID
 	$html='<table id="'.$table_id.'" class="sortable list_table center">';
 	$html.='<tr><th></th>';
@@ -1520,8 +1520,8 @@ function format_surname_list($surnames, $style, $totals) {
 function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=true) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
-	require_once 'js/sorttable.js.htm';
-	require_once 'includes/classes/class_gedcomrecord.php';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
 	if (empty($total)) $total = $pgv_lang["total_changes"];
 	$indi = false;
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1633,8 +1633,8 @@ function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=
  */
 function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false, $sort_by_event=false) {
 	global $pgv_lang, $factarray, $TEXT_DIRECTION, $SERVER_URL;
-	require_once 'js/sorttable.js.htm';
-	require_once 'includes/classes/class_gedcomrecord.php';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 
 	// Did we have any output?  Did we skip anything?
@@ -2091,9 +2091,9 @@ function get_align($txt) {
  */
 function load_behaviour() {
 	global $pgv_lang;
-	require_once './js/prototype.js.htm';
-	require_once './js/behaviour.js.htm';
-	require_once './js/overlib.js.htm';
+	require_once PGV_ROOT.'js/prototype.js.htm';
+	require_once PGV_ROOT.'js/behaviour.js.htm';
+	require_once PGV_ROOT.'js/overlib.js.htm';
 ?>
 	<script type="text/javascript">
 	// <![CDATA[

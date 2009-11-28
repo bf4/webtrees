@@ -29,13 +29,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require "config.php";
-
 loadLangFile("pgv_confighelp, pgv_help, sitemap:help_text");
 
 if (isset($_REQUEST['help'])) $help=$_REQUEST['help'];
 
-require ("includes/help_text_vars.php");
+require PGV_ROOT.'includes/help_text_vars.php';
 print_simple_header($pgv_lang["config_help"]);
 print '<span class="helpheader">';
 print_text("config_help");

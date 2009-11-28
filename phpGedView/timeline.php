@@ -30,14 +30,14 @@
 
 require './config.php';
 
-require_once './includes/controllers/timeline_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/timeline_ctrl.php';
 
 $controller = new TimelineController();
 $controller->init();
 
 print_header($pgv_lang["timeline_title"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--

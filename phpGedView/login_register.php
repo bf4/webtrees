@@ -135,7 +135,7 @@ switch ($action) {
 				if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".$serverURL."\">".$serverURL."</a>";
 				else $mail_body .= $serverURL;
 
-				require_once './includes/functions/functions_mail.php';
+				require_once PGV_ROOT.'includes/functions/functions_mail.php';
 				pgvMail(get_user_setting($user_name, 'email'), $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail04_subject"]), $mail_body);
 
 				?>
@@ -429,7 +429,7 @@ switch ($action) {
 					$mail_body .= $pgv_lang["comments"].": " . $user_comments . "\r\n\r\n";
 					$mail_body .= $pgv_lang["mail01_line05"] . "  ";
 					$mail_body .= $pgv_lang["mail01_line06"] . "\r\n";
-					require_once './includes/functions/functions_mail.php';
+					require_once PGV_ROOT.'includes/functions/functions_mail.php';
 					pgvMail($user_email, $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail01_subject"]), $mail_body);
 
 					// switch language to webmaster settings

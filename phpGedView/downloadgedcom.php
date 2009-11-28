@@ -27,7 +27,7 @@
 
 require './config.php';
 
-require_once 'includes/functions/functions_export.php';
+require_once PGV_ROOT.'includes/functions/functions_export.php';
 
 // Validate user parameters
 if (!isset($_SESSION['exportConvPath'])) $_SESSION['exportConvPath'] = $MEDIA_DIRECTORY;
@@ -65,7 +65,7 @@ if ($action == 'download') {
 }
 
 if ($action == "download" && $zip == "yes") {
-	require "includes/pclzip.lib.php";
+	require PGV_ROOT.'includes/pclzip.lib.php';
 
 	$temppath = $INDEX_DIRECTORY . "tmp/";
 	$fileName = $ged;

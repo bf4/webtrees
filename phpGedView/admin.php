@@ -220,12 +220,12 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	</tr>
 <?php    }
 
-if (file_exists("modules")) {
+if (is_dir('./modules/')) {
 	$rep = opendir('./modules/');
 	while ($file = readdir($rep)) {
 			if(($file <> ".") && ($file <> "..") && (is_dir('./modules/'.$file))) {
-					if (file_exists("modules/".$file."/admin-config.php")) {
-							require "modules/".$file."/admin-config.php";
+					if (file_exists(PGV_ROOT.'modules/'.$file.'/admin-config.php')) {
+							require PGV_ROOT.'modules/'.$file.'/admin-config.php';
 					}
 			}
 	}

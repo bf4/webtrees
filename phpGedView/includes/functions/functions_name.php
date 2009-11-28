@@ -160,7 +160,7 @@ function DMSoundex($name) {
 
 	// If the code tables are not loaded, reload! Keep them global!
 	if (!defined('PGV_DMSOUNDS_UTF8_PHP')) {
-		require 'includes/dmsounds_UTF8.php';
+		require PGV_ROOT.'includes/dmsounds_UTF8.php';
 	}
 
 	// Apply special transformation rules to the input string

@@ -30,11 +30,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-if (file_exists('modules/googlemap/defaultconfig.php')) {
-	require("modules/googlemap/defaultconfig.php");
-	require "modules/googlemap/googlemap.php";
+if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
+	require PGV_ROOT.'modules/googlemap/defaultconfig.php';
+	require PGV_ROOT.'modules/googlemap/googlemap.php';
 }
-require_once 'includes/classes/class_stats.php';
+require_once PGV_ROOT.'includes/classes/class_stats.php';
 $stats = new stats($GEDCOM);
 
 function check_exist_table() {

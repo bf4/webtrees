@@ -27,7 +27,7 @@
 
 require './config.php';
 
-require 'includes/functions/functions_print_facts.php';
+require PGV_ROOT.'includes/functions/functions_print_facts.php';
 
 loadLangFile('pgv_confighelp, pgv_help');
 
@@ -126,7 +126,7 @@ $PRIVACY_MODULE = get_privacy_file();
 
 print_header($pgv_lang["privacy_header"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
 <table class="facts_table <?php print $TEXT_DIRECTION; ?>">
 	<tr>
@@ -256,13 +256,13 @@ if ($action=="update") {
 		fclose($fp);
 	}
 	// NOTE: load the new variables
-	require $INDEX_DIRECTORY.$GEDCOM."_priv.php";
+	require $INDEX_DIRECTORY.$GEDCOM.'_priv.php';
 	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated");
  	$gedcomprivname = $GEDCOM."_priv.php";
  	check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
 
  	//-- delete the cache files for the welcome page blocks
-	require_once 'includes/index_cache.php';
+	require_once PGV_ROOT.'includes/index_cache.php';
 	clearCache();
 }
 ?>

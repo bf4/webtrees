@@ -27,7 +27,7 @@
 */
 
 require './config.php';
-require './includes/controllers/individual_ctrl.php';
+require PGV_ROOT.'includes/controllers/individual_ctrl.php';
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
@@ -124,7 +124,7 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 		<?php
 		if($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 			//print indi counter only if displaying a non-private person
-			require './includes/hitcount.php';
+			require PGV_ROOT.'includes/hitcount.php';
 			echo "<br />{$pgv_lang["hit_count"]} {$hitCount}";
 		}
 		// if individual is a remote individual
@@ -242,9 +242,9 @@ function showchanges() {
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (PGV_USE_LIGHTBOX) {
-	require './modules/lightbox/lb_defaultconfig.php';
-	if (file_exists('./modules/lightbox/lb_config.php')) {
-		require './modules/lightbox/lb_config.php';
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+		require PGV_ROOT.'modules/lightbox/lb_config.php';
 	}
 	if ($theme_name=="Minimal") {
 		// Force icon options to "text" when we're dealing with the Minimal theme
@@ -252,7 +252,7 @@ if (PGV_USE_LIGHTBOX) {
 		if ($LB_AL_THUMB_LINKS!="none") { $LB_AL_THUMB_LINKS = "text"; }
 		if ($LB_ML_THUMB_LINKS!="none") { $LB_ML_THUMB_LINKS = "text"; }
 	}
-	require_once './modules/lightbox/functions/lb_indi_tabs_'.$mediatab.'.php';
+	require_once PGV_ROOT.'modules/lightbox/functions/lb_indi_tabs_'.$mediatab.'.php';
 } else {
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
@@ -412,7 +412,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (PGV_USE_LIGHTBOX) {
-	require_once './modules/lightbox/functions/lb_indi_doors_'.$mediatab.'.php';
+	require_once PGV_ROOT.'modules/lightbox/functions/lb_indi_doors_'.$mediatab.'.php';
 } else {
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
@@ -501,7 +501,7 @@ if ($MULTI_MEDIA) {
 	// For Reorder media ------------------------------------
 	if (PGV_USER_CAN_EDIT) {
 		echo "<center>";
-		require_once './includes/media_tab_head.php';
+		require_once PGV_ROOT.'includes/media_tab_head.php';
 		echo "</center>";
 	}
 	// -----------------------------------------------------------
@@ -538,7 +538,7 @@ if(empty($SEARCH_SPIDER)) {
 ?>
 <div id="tree_content">
 <?php
-	require_once './includes/classes/class_treenav.php';
+	require_once PGV_ROOT.'includes/classes/class_treenav.php';
 	if ($controller->default_tab==5) {
 		$inav = new TreeNav($controller->pid, 'treetab');
 	}
@@ -587,7 +587,7 @@ if (empty($SEARCH_SPIDER)) {
 		//Content Info ------------------------------------------------------------
 		echo "<div id=\"gg_map_content\">";
 		echo "<table border=\"0\" width=\"100%\" ><tr><td >";
-		require_once './modules/googlemap/gg_map_content.php';
+		require_once PGV_ROOT.'modules/googlemap/gg_map_content.php';
 		echo "</td>";
 		echo "</tr></table>";
 		echo "</div>";
@@ -614,9 +614,9 @@ if (PGV_USE_LIGHTBOX) {
 	// --------- Header include -------------
 	$mediacnt = $controller->get_media_count();
 	if ($mediacnt!=0) {
-		require_once 'modules/lightbox/functions/lb_head.php';
+		require_once PGV_ROOT.'modules/lightbox/functions/lb_head.php';
 	} else {
-		require_once 'modules/lightbox/functions/lb_head.php';
+		require_once PGV_ROOT.'modules/lightbox/functions/lb_head.php';
 		echo "<table class=\"facts_table\"><tr><td id=\"no_tab9\" colspan=\"2\" class=\"facts_value\">", $pgv_lang["no_tab4"], "</td></tr></table>";
 	}
 		

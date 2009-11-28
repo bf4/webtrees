@@ -28,7 +28,7 @@
  */
 
 require './config.php';
-require_once 'includes/classes/class_stats.php';
+require_once PGV_ROOT.'includes/classes/class_stats.php';
 /*
  * Initiate the stats object.
  */

@@ -99,7 +99,7 @@ function write_td_with_textdir_check(){
 /* ------------------------------------------------------------------------------------- */
 
 if ($action == "new_lang") {
-	require( "includes/lang_codes_std.php");
+	require PGV_ROOT.'includes/lang_codes_std.php';
 	$ln = strtolower($lng_codes[$new_shortcut][0]);
 
 	$d_LangName      = "lang_name_" . $ln;

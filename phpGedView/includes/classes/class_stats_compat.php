@@ -35,7 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_STATS_COMPAT_PHP', '');
 
-require_once 'includes/classes/class_stats.php';
+require_once PGV_ROOT.'includes/classes/class_stats.php';
 class stats_compat extends stats
 {
 ///////////////////////////////////////////////////////////////////////////////

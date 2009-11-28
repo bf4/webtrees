@@ -28,7 +28,7 @@ require './config.php';
 
 loadLangFile("pgv_confighelp");
 
-require  "includes/functions/functions_editlang.php";
+require  PGV_ROOT.'includes/functions/functions_editlang.php';
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again

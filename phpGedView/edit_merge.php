@@ -28,8 +28,8 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_edit.php';
-require_once './includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 $ged=$GEDCOM;
 $gid1=safe_POST_xref('gid1');
@@ -43,7 +43,7 @@ if (empty($keep2)) $keep2=array();
 
 print_header($pgv_lang["merge_records"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 //-- make sure they have accept access privileges
 if (!PGV_USER_CAN_ACCEPT) {

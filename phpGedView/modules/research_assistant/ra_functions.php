@@ -42,13 +42,15 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 loadLangFile("research_assistant:lang");
 
-require_once './modules/research_assistant/forms/ra_privacy.php';
-require_once './modules/research_assistant/forms/ra_RSFunction.php';
-require_once './modules/research_assistant/forms/ra_RSSingleFactClass.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_privacy.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_RSFunction.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_RSSingleFactClass.php';
 
 
-if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) require_once $INDEX_DIRECTORY.$GEDCOM."_ra_priv.php";
-define("BASEPATH", 'modules/research_assistant/');
+if (file_exists($INDEX_DIRECTORY.$GEDCOM.'_ra_priv.php')) {
+	require_once $INDEX_DIRECTORY.$GEDCOM.'_ra_priv.php';
+}
+define("BASEPATH", './modules/research_assistant/');
 $emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","CHAN","_SEPR","RESI", "DATA", "MAP");
 $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
 $nonplacfacts = array("ENDL","NCHI","SLGC","SLGS","SSN","CHAN","_UID");
@@ -987,7 +989,7 @@ class ra_functions {
 	function inferences() {
 		global $TBLPREFIX;
 
-		require_once './modules/research_assistant/ra_ViewInferencesArray.php';
+		require_once PGV_ROOT.'modules/research_assistant/ra_ViewInferencesArray.php';
 		$indilist = get_indilist_indis();
 
 		//various counts
@@ -1610,7 +1612,7 @@ class ra_functions {
 
 							<div id=\"searchdiv\">";
 							foreach($this->sites as $file=>$value) break;
-							require_once './modules/research_assistant/search_plugin/'.$file;
+							require_once PGV_ROOT.'modules/research_assistant/search_plugin/'.$file;
 							$autosearch=new AutoSearch();
 							$out .=  $autosearch->options();
 							$out .= "</div>
@@ -1619,8 +1621,8 @@ class ra_functions {
 					</td></tr></table>";
 
 		//beginning of FamilySearch results functionality
-		if (file_exists("modules/FamilySearch/RA_AutoMatch.php")) {
-			require_once './modules/FamilySearch/RA_AutoMatch.php';
+		if (file_exists(PGV_ROOT.'modules/FamilySearch/RA_AutoMatch.php')) {
+			require_once PGV_ROOT.'modules/FamilySearch/RA_AutoMatch.php';
 			$matcher = new RA_AutoMatch();
 			$out .= $matcher->generateResultsTable($person);
 			unset($matcher);

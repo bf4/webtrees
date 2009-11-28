@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once './includes/controllers/search_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/search_ctrl.php';
 
 /**
  * Main controller class for the search page.
@@ -457,7 +457,7 @@ class AdvancedSearchController extends SearchController {
 	function PrintResults() {
 		global $pgv_lang;
 
-		require_once 'includes/functions/functions_print_lists.php';
+		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 		$ret = true;
 		if (count($this->myindilist)>0) {
 			echo '<br /><div class="center">';
@@ -477,7 +477,7 @@ class AdvancedSearchController extends SearchController {
 // -- end of class
 
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/advancedsearch_ctrl_user.php')) {
-	require_once 'includes/controllers/advancedsearch_ctrl_user.php';
+if (file_exists(PGV_ROOT.'includes/controllers/advancedsearch_ctrl_user.php')) {
+	require_once PGV_ROOT.'includes/controllers/advancedsearch_ctrl_user.php';
 }
 ?>

@@ -30,7 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_MENUBAR_PHP', '');
 
-require_once 'includes/classes/class_menu.php';
+require_once PGV_ROOT.'includes/classes/class_menu.php';
 
 class MenuBar
 {
@@ -75,7 +75,7 @@ class MenuBar
 		}
 
 		//-- Welcome Menu customization
-		$filename = "includes/extras/custom_welcome_menu.php";
+		$filename = PGV_ROOT.'includes/extras/custom_welcome_menu.php';
 		if (file_exists($filename)) {
 			require $filename;
 		}
@@ -731,7 +731,7 @@ class MenuBar
 //			$menu->print_menu = null;
 			return $menu;
 		}
-		require "includes/extras/optional_menu.php";
+		require PGV_ROOT.'includes/extras/optional_menu.php';
 		return $menu;
 	}
 
@@ -821,12 +821,12 @@ class MenuBar
 	function getModuleMenus() {
 		if (!empty($this->modules)) return $this->modules;
 		$this->modules = array();
-		if (!file_exists("modules")) return $this->modules;
-		$d = dir("modules");
+		if (!file_exists(PGV_ROOT.'modules')) return $this->modules;
+		$d = dir(PGV_ROOT.'modules');
 		while (false !== ($entry = $d->read())) {
-			if ($entry{0}!="." && $entry!="CVS" && is_dir("modules/$entry")) {
-				if (file_exists("modules/$entry/menu.php")) {
-					require_once "modules/$entry/menu.php";
+			if ($entry{0}!="." && $entry!="CVS" && is_dir(PGV_ROOT.'modules/'.$entry)) {
+				if (file_exists(PGV_ROOT.'modules/'.$entry.'/menu.php')) {
+					require_once PGV_ROOT.'modules/'.$entry.'/menu.php';
 					$menu_class = $entry."_ModuleMenu";
 					$obj = new $menu_class();
 					if (method_exists($obj, "getMenu")) {

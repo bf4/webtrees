@@ -33,9 +33,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_PHP', '');
 
-require_once 'includes/classes/class_mutex.php';
-require_once 'includes/classes/class_media.php';
-require_once 'includes/functions/functions_UTF8.php';
+require_once PGV_ROOT.'includes/classes/class_mutex.php';
+require_once PGV_ROOT.'includes/classes/class_media.php';
+require_once PGV_ROOT.'includes/functions/functions_UTF8.php';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Extract, sanitise and validate FORM (POST), URL (GET) and COOKIE variables.
@@ -313,7 +313,7 @@ function load_privacy_file($ged_id=PGV_GED_ID) {
 	global $person_privacy, $user_privacy, $global_facts, $person_facts;
 
 	// Load default settings
-	require 'privacy.php';
+	require PGV_ROOT.'privacy.php';
 
 	// Load settings for the specified gedcom
 	$privacy_file=get_privacy_file(get_gedcom_from_id($ged_id));
@@ -1307,7 +1307,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 	//-- handle finding the media of remote objects
 	$ct = preg_match("/(.*):(.*)/", $pid, $match);
 	if ($ct>0) {
-		require_once 'includes/classes/class_serviceclient.php';
+		require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 		$client = ServiceClient::getInstance($match[1]);
 		if (!is_null($client)) {
 			$mt = preg_match_all('/\n\d OBJE @('.PGV_REGEX_XREF.')@/', $indirec, $matches, PREG_SET_ORDER);
@@ -2855,7 +2855,7 @@ function get_report_list($force=false) {
 	}
 	$d->close();
 
-	require_once './includes/reportheader.php';
+	require_once PGV_ROOT.'includes/reportheader.php';
 	$report_array = array();
 	if (!function_exists("xml_parser_create"))
 		return $report_array;
@@ -3387,8 +3387,8 @@ function loadLangFile($fileListNames="", $lang="") {
 	// In contrast to the preceding logic, we will NOT first load the English extra.xx.php
 	// file when trying for other languages.
 	//
-	if (file_exists("languages/lang.".$lang_short_cut[$lang].".extra.php")) {
-		require "languages/lang.".$lang_short_cut[$lang].".extra.php";
+	if (file_exists(PGV_ROOT.'languages/lang.'.$lang_short_cut[$lang].'.extra.php')) {
+		require PGV_ROOT.'languages/lang.'.$lang_short_cut[$lang].'.extra.php';
 	}
 	if (file_exists($extrafile[$lang])) {
 		require $extrafile[$lang];
@@ -3642,7 +3642,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
  *	have 52 different UTF8 characters all mapping to the same base character.  This will
  *	handle Vietnamese, which is by far the richest language in terms of diacritic marks.
  */
- 	require_once "includes/sort_tables_utf8.php";
+ 	require_once PGV_ROOT.'includes/sort_tables_utf8.php';
 }
 
 /**
@@ -3737,9 +3737,9 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
  	while (true) {
 		if (PGV_USE_LIGHTBOX) {
 			// Lightbox is installed
-			require_once './modules/lightbox/lb_defaultconfig.php';
-			if (file_exists('modules/lightbox/lb_config.php')) {
-				require_once './modules/lightbox/lb_config.php';
+			require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+			if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+				require_once PGV_ROOT.'modules/lightbox/lb_config.php';
 			}
 			switch ($type) {
 			case 'url_flv':
@@ -3918,8 +3918,8 @@ function pathinfo_utf($path) {
 }
 
 // optional extra file
-if (file_exists('includes/functions.extra.php')) {
-	require 'includes/functions.extra.php';
+if (file_exists(PGV_ROOT.'includes/functions.extra.php')) {
+	require PGV_ROOT.'includes/functions.extra.php';
 }
 
 ?>

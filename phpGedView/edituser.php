@@ -26,8 +26,8 @@
 
 require './config.php';
 
-require './includes/functions/functions_print_lists.php';
-include './includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
+include PGV_ROOT.'includes/functions/functions_edit.php';
 
 // prevent users with editing account disabled from being able to edit their account
 if (get_user_setting(PGV_USER_ID, 'editaccount')!='Y') {
@@ -140,7 +140,7 @@ if ($form_action=='update') {
 } else {
 	print_header($pgv_lang['user_admin']);
 
-	if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 }
 
 // Form validation

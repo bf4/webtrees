@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_EXPORT_PHP', '');
 
-require_once 'includes/classes/class_gedownloadgedcom.php';
+require_once PGV_ROOT.'includes/classes/class_gedownloadgedcom.php';
 
 // Tidy up a gedcom record on export, for compatibility/portability
 function reformat_record_export($rec) {

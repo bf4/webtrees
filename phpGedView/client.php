@@ -31,7 +31,7 @@
 
 require './config.php';
 
-require_once 'includes/functions/functions_edit.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
 
 header("Content-Type: text/plain; charset=$CHARACTER_SET");
 

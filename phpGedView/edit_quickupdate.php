@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_edit.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
 
 loadLangFile("pgv_editor");
 
@@ -50,7 +50,7 @@ if ($TEXT_DIRECTION=="rtl") $align="left";
 
 print_simple_header($pgv_lang["quick_update_title"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 //-- only allow logged in users to access this page
 if (!$ALLOW_EDIT_GEDCOM || !$USE_QUICK_UPDATE || !PGV_USER_ID) {

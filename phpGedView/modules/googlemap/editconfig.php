@@ -32,10 +32,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require 'modules/googlemap/defaultconfig.php';
+require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 
-if (file_exists('modules/googlemap/config.php')) {
-	require 'modules/googlemap/config.php';
+if (file_exists(PGV_ROOT.'modules/googlemap/config.php')) {
+	require PGV_ROOT.'modules/googlemap/config.php';
 }
 
 loadLangFile('pgv_lang, pgv_confighelp, pgv_help, googlemap:lang, googlemap:help_text');

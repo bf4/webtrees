@@ -29,10 +29,10 @@
 
 require './config.php';
 
-require_once 'includes/functions/functions.php';
-require_once 'includes/functions/functions_edit.php';
-require_once 'includes/functions/functions_import.php';
-require_once 'includes/classes/class_serviceclient.php';
+require_once PGV_ROOT.'includes/functions/functions.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 
 print_header($pgv_lang["title_manage_servers"]);
 //-- only allow gedcom admins here
@@ -46,9 +46,13 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 
 $banned = array();
-if (file_exists($INDEX_DIRECTORY."banned.php")) require($INDEX_DIRECTORY."banned.php");
+if (file_exists($INDEX_DIRECTORY.'banned.php')) {
+	require($INDEX_DIRECTORY.'banned.php');
+}
 $search_engines = array();
-if (file_exists($INDEX_DIRECTORY."search_engines.php")) require($INDEX_DIRECTORY."search_engines.php");
+if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
+	require($INDEX_DIRECTORY.'search_engines.php');
+}
 $remoteServers = get_server_list();
 
 $action = safe_GET('action');
@@ -127,7 +131,9 @@ if ($action=='addBanned') {
 		}
 	} else $errorBanned = $pgv_lang["error_ban_server"];
 
-	if (file_exists($INDEX_DIRECTORY."banned.php")) require($INDEX_DIRECTORY."banned.php");		// Refresh the $banned list
+	if (file_exists($INDEX_DIRECTORY.'banned.php')) {
+		require($INDEX_DIRECTORY.'banned.php');		// Refresh the $banned list
+	}
 	$action = 'showForm';
 }
 
@@ -158,7 +164,7 @@ if ($action=='deleteBanned') {
 		check_in($logline, "banned.php", $INDEX_DIRECTORY);
 	}
 
-	require($INDEX_DIRECTORY."banned.php");		// Refresh the $banned list
+	require $INDEX_DIRECTORY.'banned.php';		// Refresh the $banned list
 	$action = 'showForm';
 }
 
@@ -197,7 +203,9 @@ if ($action=='addSearch') {
 		}
 	} else $errorSearch = $pgv_lang["error_ban_server"];
 
-	if (file_exists($INDEX_DIRECTORY."search_engines.php")) require($INDEX_DIRECTORY."search_engines.php");		// refresh the $search_engines list
+	if (file_exists($INDEX_DIRECTORY.'search_engines.php')) {
+		require $INDEX_DIRECTORY.'search_engines.php';		// refresh the $search_engines list
+	}
 	$action = 'showForm';
 }
 
@@ -228,7 +236,7 @@ if ($action=='deleteSearch') {
 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);
 	}
 
-	require($INDEX_DIRECTORY."search_engines.php");		// refresh the $search_engines list
+	require $INDEX_DIRECTORY.'search_engines.php';		// refresh the $search_engines list
 	$action = 'showForm';
 }
 

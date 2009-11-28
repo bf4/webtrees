@@ -142,14 +142,14 @@ if ($action=="choose") {
 else if ($action=="setup") {
 	print_header($pgv_lang["enter_report_values"]);
 
-	if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 	//-- make sure the report exists
 	if (!file_exists($report)) {
 		print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span> ".$report."\n";
 	}
 	else {
-		require_once 'includes/reportheader.php';
+		require_once PGV_ROOT.'includes/reportheader.php';
 		$report_array = array();
 		//-- start the sax parser
 		$xml_parser = xml_parser_create();
@@ -321,11 +321,11 @@ else if ($action=="run") {
 	//-- load the report generator
 	switch ($output) {
 	case 'HTML':
-		require 'includes/classes/class_reporthtml.php';
+		require PGV_ROOT.'includes/classes/class_reporthtml.php';
 		break;
 	case 'PDF':
 	default:
-		require 'includes/classes/class_reportpdf.php';
+		require PGV_ROOT.'includes/classes/class_reportpdf.php';
 		break;
 	}
 

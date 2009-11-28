@@ -33,12 +33,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FAMILY_CTRL_PHP', '');
 
-require_once 'includes/functions/functions_print_facts.php';
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/functions/functions_charts.php';
-require_once 'includes/classes/class_family.php';
-require_once 'includes/classes/class_menu.php';
-require_once 'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/classes/class_family.php';
+require_once PGV_ROOT.'includes/classes/class_menu.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 class FamilyRoot extends BaseController {
 	var $user = null;
@@ -90,7 +90,7 @@ class FamilyRoot extends BaseController {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
-				require_once './includes/classes/class_serviceclient.php';
+				require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 				$service = ServiceClient::getInstance($servid);
 				if (!is_null($service)) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->famid."@ FAM\n1 RFN ".$this->famid, false);
@@ -505,8 +505,8 @@ class FamilyRoot extends BaseController {
 	}
 }
 
-if (file_exists('includes/controllers/family_ctrl_user.php')) {
-	require_once 'includes/controllers/family_ctrl_user.php';
+if (file_exists(PGV_ROOT.'includes/controllers/family_ctrl_user.php')) {
+	require_once PGV_ROOT.'includes/controllers/family_ctrl_user.php';
 } else {
 	class FamilyController extends FamilyRoot {
 	}

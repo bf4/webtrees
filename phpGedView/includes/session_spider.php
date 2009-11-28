@@ -169,10 +169,10 @@ if ($quitReason == "") {
 if ($quitReason != "") {
 	if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
 		//-- load common functions
-		require_once './includes/functions/functions.php';
+		require_once PGV_ROOT.'includes/functions/functions.php';
 		//-- load db specific functions
-		require_once './includes/functions/functions_db.php';
-		require_once './includes/authentication.php';      // -- load the authentication system
+		require_once PGV_ROOT.'includes/functions/functions_db.php';
+		require_once PGV_ROOT.'includes/authentication.php';      // -- load the authentication system
 		AddToLog("MSG>{$quitReason}; script terminated.");
 		AddToLog("UA>{$ua}<");
 		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
@@ -353,8 +353,8 @@ if (!empty($SEARCH_SPIDER)) {
  *   To return to normal, the admin MUST use a different IP to get to admin
  *   mode or edit search_engines.php by hand.
  */
-if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
-	require $INDEX_DIRECTORY."search_engines.php";
+if (file_exists($INDEX_DIRECTORY.'search_engines.php')) {
+	require $INDEX_DIRECTORY.'search_engines.php';
 	//loops through each ip in search_engines.php
 	foreach($search_engines as $value) {
 		//creates a regex foreach ip
@@ -411,7 +411,7 @@ if(!empty($SEARCH_SPIDER)) {
 		$spidercount = 1;
 		if ($logSpider) {
 			//adds a message to the log that a new spider session is starting
-			require_once './includes/authentication.php';      // -- Loaded early so AddToLog works
+			require_once PGV_ROOT.'includes/authentication.php';      // -- Loaded early so AddToLog works
 			AddToLog("New search engine encountered: ->".$outstr."<-");
 			AddToLog("UA>{$ua}<");
 			AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
@@ -421,7 +421,7 @@ if(!empty($SEARCH_SPIDER)) {
 		if($spiderdate != $_SESSION['last_spider_date']) {
 			//adds a message to the log that a new spider session is starting
 			if ($logSpider) {
-				require_once './includes/authentication.php';      // -- Loaded early so AddToLog works
+				require_once PGV_ROOT.'includes/authentication.php';      // -- Loaded early so AddToLog works
 				AddToLog("Returning search engine last seen ".$_SESSION['spider_count']." times on ".$_SESSION['last_spider_date']." from ".$_SESSION['last_spider_ip']." ->".$outstr."<-");
 			}
 			$_SESSION['last_spider_date'] = $spiderdate;

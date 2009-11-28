@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require_once 'includes/controllers/family_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/family_ctrl.php';
 
 $controller = new FamilyController();
 $controller->init();
@@ -48,9 +48,9 @@ else if (!$controller->family->canDisplayDetails()) {
 
 // LB added for Lightbox viewer ==============================================================
 if (PGV_USE_LIGHTBOX) {
-	require './modules/lightbox/lb_defaultconfig.php';
-	if (file_exists('modules/lightbox/lb_config.php')) require './modules/lightbox/lb_config.php';
-	require_once './modules/lightbox/functions/lb_call_js.php';
+	require PGV_ROOT.PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) require PGV_ROOT.'modules/lightbox/lb_config.php';
+	require_once PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // LB ======================================================================================
 

@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_REPORTHTML_PHP', '');
 
-require_once 'includes/classes/class_reportbase.php';
+require_once PGV_ROOT.'includes/classes/class_reportbase.php';
 
 /**
 * Main PGV Report Class for HTML
