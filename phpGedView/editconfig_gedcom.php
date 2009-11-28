@@ -216,7 +216,7 @@ if (isset($ged)) {
 }
 $USERLANG = $LANGUAGE;
 $temp = $THEME_DIR;
-require($gedcom_config);
+require $gedcom_config;
 if (!isset($_POST["GEDCOMLANG"])) {
 	$GEDCOMLANG = $LANGUAGE;
 } else {
@@ -269,7 +269,7 @@ if ($action=="update") {
 	$COMMON_NAMES_ADD = $_POST["NEW_COMMON_NAMES_ADD"];
 	$COMMON_NAMES_REMOVE = $_POST["NEW_COMMON_NAMES_REMOVE"];
 
-	require($INDEX_DIRECTORY."gedcoms.php");
+	require $INDEX_DIRECTORY."gedcoms.php";
 	$boolarray = array();
 	$boolarray["yes"]="true";
 	$boolarray["no"]="false";
@@ -583,7 +583,7 @@ if ($action=="update") {
 	}
 
 	//-- delete the cache files for the welcome page blocks
-	require_once("includes/index_cache.php");
+	require_once './includes/index_cache.php';
 	clearCache();
 
 	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated");

@@ -27,7 +27,7 @@
 
 require './config.php';
 
-require_once("includes/functions/functions_edit.php");
+require_once './includes/functions/functions_edit.php';
 
 if (!PGV_USER_IS_ADMIN) {
 	header("Location: login.php?url=dir_editor.php");
@@ -90,8 +90,8 @@ if(isset($_REQUEST["to_delete"])) {
 
 }
 
-require_once("js/prototype.js.htm");
-require_once("js/scriptaculous.js.htm");
+require_once './js/prototype.js.htm';
+require_once './js/scriptaculous.js.htm';
 
 ?>
 <script type="text/javascript">

@@ -27,7 +27,7 @@
 
 if(!defined('PGV_GALLERY2_INIT'))
 {
-	require_once('modules/gallery2/pgv.php');
+	require_once './modules/gallery2/pgv.php';
 	if(PGV_GALLERY2_INIT === false){header('Location: index.php'); print ' '; exit;}
 }
 

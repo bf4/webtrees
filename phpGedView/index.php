@@ -27,8 +27,8 @@
 
 require './config.php';
 
-require_once("includes/index_cache.php");
-require_once("includes/functions/functions_print_facts.php");  //--needed for the expand url function in some of the blocks
+require_once './includes/index_cache.php';
+require_once './includes/functions/functions_print_facts.php';  //--needed for the expand url function in some of the blocks
 
 if (!isset($CONFIGURED)) {
 	print "Unable to include the config.php file.  Make sure that . is in your PHP include path in the php.ini file.";
@@ -68,7 +68,7 @@ $PGV_BLOCKS = array();
 $d = dir("blocks");
 while (false !== ($entry = $d->read())) {
 	if (($entry!=".") && ($entry!="..") && ($entry!="CVS") && (preg_match("/\.php$/", $entry)>0)) {
-		require_once("blocks/".$entry);
+		require_once './blocks/'.$entry;
 	}
 }
 $d->close();
@@ -87,7 +87,7 @@ if (file_exists("modules")) {
 				while (false !== ($entry = $d->read())) {
 					if (($entry!=".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")&&(preg_match("/\.php$/", $entry)>0)) {
 						$p=$path.'/'.$entry;
-						require_once($p);
+						require_once $p;
 					}
 				}
 			}
@@ -312,9 +312,9 @@ if ($ctype=="user") {
 }
 
 if (PGV_USE_LIGHTBOX) {
-	require('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) require('modules/lightbox/lb_config.php');
-	require('modules/lightbox/functions/lb_call_js.php');
+	require './modules/lightbox/lb_defaultconfig.php';
+	if (file_exists('modules/lightbox/lb_config.php')) require './modules/lightbox/lb_config.php';
+	require './modules/lightbox/functions/lb_call_js.php';
 }
 
 echo PGV_JS_START;

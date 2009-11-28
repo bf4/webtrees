@@ -109,7 +109,7 @@ class ServiceClient extends GedcomRecord {
 		if (is_null($this->soapClient)) {
 			if (!class_exists('SoapClient') || $this->client_type=='PEAR:SOAP') {
 
-				require_once('SOAP/Client.php');
+				require_once './SOAP/Client.php';
 				//AddToLog('Using PEAR:SOAP library');
 				// get the wsdl and cache it
 				$wsdl = new SOAP_WSDL($this->url);
@@ -377,7 +377,7 @@ class ServiceClient extends GedcomRecord {
 	*/
 	function MergeForUpdateFamily($Family1,$Family2,$Familylist,&$FamilyListReturn){
 		global $pgv_changes, $GEDCOM;
-		require_once('includes/functions/functions_edit.php');
+		require_once './includes/functions/functions_edit.php';
 
 		//print "<br />In MergeForUpdateFamily ".$Family1." ".$Family2;
 		//print_r($Familylist);
@@ -745,7 +745,7 @@ class ServiceClient extends GedcomRecord {
 			$gedrec = preg_replace("/@([^#@\s]+)@/", "@".$this->xref.":$1@", $gedrec);
 			$gedrec = $this->checkIds($gedrec);
 			$localrec = $this->_merge($localrec, $gedrec);
-			require_once("includes/functions/functions_edit.php");
+			require_once './includes/functions/functions_edit.php';
 			$localrec = $this->UpdateFamily($localrec,$gedrec);
 			$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0) {
@@ -776,7 +776,7 @@ class ServiceClient extends GedcomRecord {
 			if ($ct>0) {
 				$pid = trim($match[1]);
 				if ($isStub) {
-					require_once("includes/functions/functions_edit.php");
+					require_once './includes/functions/functions_edit.php';
 					$localrec = $this->UpdateFamily($localrec,$gedrec);
 					replace_gedrec($pid,$localrec);
 				} else {
@@ -833,7 +833,7 @@ class ServiceClient extends GedcomRecord {
 						if (isset($pgv_changes[$pid."_".$GEDCOM])) $localrec = find_updated_record($pid, get_id_from_gedcom($GEDCOM));
 						$localrec = $this->_merge($localrec, $gedrec);
 						if ($isStub) {
-							require_once("includes/functions/functions_edit.php");
+							require_once './includes/functions/functions_edit.php';
 							$localrec = $this->UpdateFamily($localrec,$gedrec);
 							replace_gedrec($pid,$localrec);
 						} else {
@@ -901,7 +901,7 @@ class ServiceClient extends GedcomRecord {
 			if (!empty($url) && (strtolower($url)!=strtolower($SERVER_URL))) {
 				$server = new ServiceClient($gedrec);
 			} else {
-				require_once('includes/classes/class_localclient.php');
+				require_once './includes/classes/class_localclient.php';
 				$server = new LocalClient($gedrec);
 			}
 			$PGV_SERVERS[$id] = $server;

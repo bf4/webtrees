@@ -48,9 +48,9 @@ else if (!$controller->family->canDisplayDetails()) {
 
 // LB added for Lightbox viewer ==============================================================
 if (PGV_USE_LIGHTBOX) {
-	require('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) require('modules/lightbox/lb_config.php');
-	require_once('modules/lightbox/functions/lb_call_js.php');
+	require './modules/lightbox/lb_defaultconfig.php';
+	if (file_exists('modules/lightbox/lb_config.php')) require './modules/lightbox/lb_config.php';
+	require_once './modules/lightbox/functions/lb_call_js.php';
 }
 // LB ======================================================================================
 

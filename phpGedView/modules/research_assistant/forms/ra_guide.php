@@ -50,7 +50,7 @@ class ra_guide extends ra_form {
 		global $pgv_lang, $factarray, $PGV_DXHTMLTAB_COLORS;
 		$out = '';
 		ob_start();
-		require_once("js/dhtmlXTabbar.js.htm");
+		require_once './js/dhtmlXTabbar.js.htm';
 		?>
 		<script language="JavaScript" type="text/javascript">
 		<!--

@@ -171,7 +171,7 @@ if ($check == "cancel_upload") {
 }
 
 if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]) {
-	require_once ("includes/functions/functions_tools.php");
+	require_once './includes/functions/functions_tools.php';
 
 	$filechanged = false;
 	if (file_is_writeable(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path')) && (file_exists(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path')))) {
@@ -531,7 +531,7 @@ if ($verify == "validate_form") {
 	print "<span class=\"error\">$error</span>\n";
 
 	if ($import != true) {
-		require_once ("includes/functions/functions_tools.php");
+		require_once './includes/functions/functions_tools.php';
 
 		$l_BOMcleanup = false;
 		$l_headcleanup = false;

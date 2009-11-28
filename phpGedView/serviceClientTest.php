@@ -4,7 +4,7 @@
 require './config.php';
 
 ob_start();
-require_once('SOAP/Client.php');
+require_once './SOAP/Client.php';
 
 //-- put your URL here
 $url = 'http://localhost/pgv-svn/genservice.php?wsdl';
@@ -41,7 +41,7 @@ print "After getGedcomRecord<br />";
 
 //$person = $soap->getPersonByID($result->SID, "I1");
 //print_r($person);
-//require_once('includes/classes/class_grampsexport.php');
+//require_once './includes/classes/class_grampsexport.php';
 //$ge= new GrampsExport();
 //$ge->begin_xml();
 //$ge->create_family(find_family_record("F1", PGV_GED_ID), "F1", 1);
