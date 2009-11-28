@@ -46,14 +46,14 @@ if(!isset($_SERVER['QUERY_STRING']) || strstr($_SERVER['QUERY_STRING'],'wsdl')==
 		if ($ct>0) $_REQUEST['ged'] = trim($match[1]);
 
 		//AddToLog("Setting SID to ".$SID." ".$HTTP_RAW_POST_DATA);
-		require_once("includes/functions/functions_edit.php");
+		require_once './includes/functions/functions_edit.php';
 	}
 }
 
 /**
  * load up the service implementation
  */
-require_once('webservice/PGVServiceLogic.class.php');
+require_once './webservice/PGVServiceLogic.class.php';
 
 $genealogyServer = new PGVServiceLogic();
 //-- process the SOAP request

@@ -119,7 +119,7 @@ class IndividualControllerRoot extends BaseController {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
-				require_once('includes/classes/class_serviceclient.php');
+				require_once './includes/classes/class_serviceclient.php';
 				$service = ServiceClient::getInstance($servid);
 				if ($service != null) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\n1 RFN ".$this->pid, false);
@@ -204,7 +204,7 @@ class IndividualControllerRoot extends BaseController {
 					$servid = $parts[0];
 					$aliaid = $parts[1];
 					if (!empty($servid)&&!empty($aliaid)) {
-						require_once("includes/classes/class_serviceclient.php");
+						require_once './includes/classes/class_serviceclient.php';
 						$serviceClient = ServiceClient::getInstance($servid);
 						if (!is_null($serviceClient)) {
 							if (!empty($newrec)) $mergerec = $serviceClient->mergeGedcomRecord($aliaid, $newrec, true);
@@ -1420,7 +1420,7 @@ class IndividualControllerRoot extends BaseController {
 			<td valign="top">
 				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_details"]; ?></b><br /><br />
-				<?php require_once('includes/family_nav.php'); ?>
+				<?php require_once './includes/family_nav.php'; ?>
 				<br />
 				</td></tr></table>
 			</td></tr></table>
@@ -1535,7 +1535,7 @@ class IndividualControllerRoot extends BaseController {
 			<td valign="top">
 				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_notes"]; ?></b><br /><br />
-				<?php require_once('includes/family_nav.php'); ?>
+				<?php require_once 'includes/family_nav.php'; ?>
 				<br />
 				</td></tr></table>
 			</td></tr></table>
@@ -1647,7 +1647,7 @@ class IndividualControllerRoot extends BaseController {
 			<td valign="top">
 				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_sources"]; ?></b><br /><br />
-				<?php require_once('includes/family_nav.php'); ?>
+				<?php require_once 'includes/family_nav.php'; ?>
 				<br />
 				</td></tr></table>
 			</td></tr></table>
@@ -1740,7 +1740,7 @@ class IndividualControllerRoot extends BaseController {
 			<td valign="top">
 				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_media"]; ?></b><br /><br />
-				<?php require_once('includes/family_nav.php'); ?>
+				<?php require_once 'includes/family_nav.php'; ?>
 				<br />
 				</td></tr></table>
 			</td></tr></table>
@@ -1848,7 +1848,7 @@ class IndividualControllerRoot extends BaseController {
 			<td valign="top">
 				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 					<b><?php print $pgv_lang["view_fam_nav_relatives"]; ?></b><br /><br />
-					<?php require_once('includes/family_nav.php'); ?>
+					<?php require_once 'includes/family_nav.php'; ?>
 					<br />
 				</td></tr></table>
 			</td></tr></table>
@@ -1992,7 +1992,7 @@ class IndividualControllerRoot extends BaseController {
 
 		// LB Fix if no googlemaps ========================================================
 		if (file_exists("modules/googlemap/googlemap.php")) {
-			require_once('modules/googlemap/googlemap.php');
+			require_once 'modules/googlemap/googlemap.php';
 		}
 		// LB Fix in no googlemaps ========================================================
 
@@ -2037,7 +2037,7 @@ class IndividualControllerRoot extends BaseController {
 			?>
 			<table id="map_nav" class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_map"]; ?></b><br /><br />
-				<?php require_once('includes/family_nav.php'); ?>
+				<?php require_once './includes/family_nav.php'; ?>
 				<br />
 			</td></tr></table>
 			<?php
@@ -2064,7 +2064,7 @@ class IndividualControllerRoot extends BaseController {
 			?>
 			<table id="tree_nav" class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_tree"]; ?></b><br /><br />
-				<?php require_once('includes/family_nav.php'); ?>
+				<?php require_once './includes/family_nav.php'; ?>
 				<br />
 			</td></tr></table>
 			<?php
@@ -2115,7 +2115,7 @@ class IndividualControllerRoot extends BaseController {
 			print "</table>";
 		}else{
 			if (PGV_USE_LIGHTBOX) {
-				require_once('modules/lightbox/album.php');
+				require_once './modules/lightbox/album.php';
 			}
 		}
 
@@ -2126,7 +2126,7 @@ class IndividualControllerRoot extends BaseController {
 			<td valign="top">
 				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_album"]; ?></b><br /><br />
-				<?php require_once('includes/family_nav.php'); ?>
+				<?php require_once './includes/family_nav.php'; ?>
 				<br />
 				</td></tr></table>
 			</td></tr></table>
@@ -2173,7 +2173,7 @@ class IndividualControllerRoot extends BaseController {
 			print "</table>";
 		}else{
 			//if (PGV_USE_LIGHTBOX) {
-				//require_once('modules/lightbox/album.php');
+				//require_once './modules/lightbox/album.php';
 			print "<table class=\"facts_table\" cellpadding=\"0\">\n";
 			print "<tr><td class=\"facts_value\">";
 					echo "<h2><center>Spare Tab</center></h2>";
@@ -2196,7 +2196,7 @@ class IndividualControllerRoot extends BaseController {
 			<td valign="top">
 				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_spare"]; ?></b><br /><br />
-				<?php require_once('includes/family_nav.php'); ?>
+				<?php require_once './includes/family_nav.php'; ?>
 				<br />
 				</td></tr></table>
 			</td></tr></table>

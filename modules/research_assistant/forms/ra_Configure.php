@@ -41,8 +41,8 @@ loadLangFile("pgv_confighelp");
  
 global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;
 global $INDEX_DIRECTORY, $GEDCOM, $person_privacy;
-require_once("modules/research_assistant/forms/ra_privacy.php");
-if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) require_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
+require_once './modules/research_assistant/forms/ra_privacy.php';
+if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) require_once $INDEX_DIRECTORY.$GEDCOM."_ra_priv.php";
 
 if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
 

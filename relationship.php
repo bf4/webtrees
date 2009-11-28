@@ -490,9 +490,9 @@ if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 // Lbox additions if installed ---------------------------------------------------------------------------------------------
 if (PGV_USE_LIGHTBOX) {
-	require('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) require('modules/lightbox/lb_config.php');
-	require_once('modules/lightbox/functions/lb_call_js.php');
+	require './modules/lightbox/lb_defaultconfig.php';
+	if (file_exists('modules/lightbox/lb_config.php')) require './modules/lightbox/lb_config.php';
+	require_once './modules/lightbox/functions/lb_call_js.php';
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 

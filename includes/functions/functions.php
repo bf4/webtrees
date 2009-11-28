@@ -2855,7 +2855,7 @@ function get_report_list($force=false) {
 	}
 	$d->close();
 
-	require_once("includes/reportheader.php");
+	require_once './includes/reportheader.php';
 	$report_array = array();
 	if (!function_exists("xml_parser_create"))
 		return $report_array;
@@ -3451,8 +3451,8 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 	if ($forceLoad) {
 		$LANGUAGE = "english";
-		require($pgv_language[$LANGUAGE]);			// Load English
-		require($factsfile[$LANGUAGE]);
+		require $pgv_language[$LANGUAGE];			// Load English
+		require $factsfile[$LANGUAGE];
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
 		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
@@ -3463,20 +3463,20 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// Load functions that are specific to the active language
 		$file = "./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php";
 		if (file_exists($file)) {
-			require_once($file);
+			require_once $file;
 		}
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if (!$CONFIGURED || !PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
-				require($file);
+				require $file;
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if (!PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
-				require($file);
+				require $file;
 			}
 		}
 	}
@@ -3485,11 +3485,11 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$LANGUAGE = $desiredLanguage;
 		$file = $pgv_language[$LANGUAGE];
 		if (file_exists($file)) {
-			require($file);		// Load the requested language
+			require $file;  // Load the requested language
 		}
 		$file = $factsfile[$LANGUAGE];
 		if (file_exists($file)) {
-			require($file);
+			require $file;
 		}
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
@@ -3501,21 +3501,21 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// Load functions that are specific to the active language
 		$file = "./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php";
 		if (file_exists($file)) {
-			require_once($file);
+			require_once $file;
 		}
 
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if (!$CONFIGURED || !PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
-				require($file);
+				require $file;
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if (!PGV_DB::isConnected() || !adminUserExists() || PGV_USER_CAN_EDIT) {
-				require($file);
+				require $file;
 			}
 		}
 	}
@@ -3523,11 +3523,11 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	// load the extra language file
 	$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
 	if (file_exists($file)) {
-		require($file);
+		require $file;
 	}
 	$file = $extrafile[$LANGUAGE];
 	if (file_exists($file)) {
-		require($file);
+		require $file;
 	}
 
 	// Modify certain spellings if Ashkenazi pronounciations are in use.
@@ -3737,9 +3737,9 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
  	while (true) {
 		if (PGV_USE_LIGHTBOX) {
 			// Lightbox is installed
-			require_once('modules/lightbox/lb_defaultconfig.php');
+			require_once './modules/lightbox/lb_defaultconfig.php';
 			if (file_exists('modules/lightbox/lb_config.php')) {
-				require_once('modules/lightbox/lb_config.php');
+				require_once './modules/lightbox/lb_config.php';
 			}
 			switch ($type) {
 			case 'url_flv':

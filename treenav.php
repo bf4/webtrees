@@ -30,7 +30,7 @@
 
 require './config.php';
 
-require_once("includes/classes/class_treenav.php");
+require_once './includes/classes/class_treenav.php';
 
 $zoom = 0;
 $rootid = '';

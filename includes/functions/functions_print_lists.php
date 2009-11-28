@@ -1255,7 +1255,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	}
 
 	// Requested style isn't "cloud".  In this case, we'll produce a sortable list.
-	require_once("js/sorttable.js.htm");
+	require_once './js/sorttable.js.htm';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"", $table_id, "\" class=\"sortable list_table center\">";
@@ -2091,9 +2091,9 @@ function get_align($txt) {
  */
 function load_behaviour() {
 	global $pgv_lang;
-	require_once("js/prototype.js.htm");
-	require_once("js/behaviour.js.htm");
-	require_once("js/overlib.js.htm");
+	require_once './js/prototype.js.htm';
+	require_once './js/behaviour.js.htm';
+	require_once './js/overlib.js.htm';
 ?>
 	<script type="text/javascript">
 	// <![CDATA[

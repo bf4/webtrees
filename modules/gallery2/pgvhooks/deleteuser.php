@@ -30,8 +30,8 @@ if(file_exists("{$modinfo['Gallery2']['path']}/embed.php"))
 {
 	require_once "{$modinfo['Gallery2']['path']}/embed.php";
 	require_once 'modules/gallery2/G2EmbedDiscoveryUtilities.class';
-	require_once("{$modinfo['Gallery2']['path']}/modules/core/classes/GalleryCoreApi.class");
-	require_once("{$modinfo['Gallery2']['path']}/modules/core/classes/GallerySession.class");
+	require_once "{$modinfo['Gallery2']['path']}/modules/core/classes/GalleryCoreApi.class";
+	require_once "{$modinfo['Gallery2']['path']}/modules/core/classes/GallerySession.class";
 }
 
 class mod_gallery2_deleteuser

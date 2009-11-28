@@ -423,7 +423,7 @@ class ClippingsControllerRoot extends BaseController {
 			if ($this->filetype == "gramps") {
 				// Sort the clippings cart because the export works better when the cart is sorted
 				usort($cart, "same_group");
-				require_once("includes/classes/class_geclippings.php");
+				require_once './includes/classes/class_geclippings.php';
 				$gramps_Exp = new GEClippings();
 				$gramps_Exp->begin_xml();
 				$ct = count($cart);
