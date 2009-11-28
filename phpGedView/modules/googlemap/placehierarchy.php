@@ -259,43 +259,62 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		}
 		if ($lastlevel) {
 			$placename = substr($placelevels, 2);
-			if ($place2['place'] == "Unknown")
-				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels, 2));
-				else echo $pgv_lang["pl_unknown"];
-			else
-				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels, 2));
-				else echo PrintReady(addslashes($place2['place']));
-		}
-		else {
+			if ($place2['place'] == "Unknown") {
+				if ($GM_DISP_SHORT_PLACE == "false") {
+					echo addslashes(substr($placelevels, 2));
+				} else {
+					echo $pgv_lang["pl_unknown"];
+				}
+			} else {
+				if ($GM_DISP_SHORT_PLACE == "false") {
+					echo addslashes(substr($placelevels, 2));
+				} else {
+					echo PrintReady(addslashes($place2['place']));
+				}
+			}
+		} else {
 			$placename = $place2['place'].$placelevels;
-			if ($place2['place'] == "Unknown")
-				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
-				else echo $pgv_lang["pl_unknown"];
-			else
-				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($place2['place'].$placelevels));
-				else echo PrintReady(addslashes($place2['place']));
+			if ($place2['place'] == "Unknown") {
+				if ($GM_DISP_SHORT_PLACE == "false") {
+					echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
+				} else {
+					echo $pgv_lang["pl_unknown"];
+				}
+			} else {
+				if ($GM_DISP_SHORT_PLACE == "false") {
+					echo PrintReady(addslashes($place2['place'].$placelevels));
+				} else {
+					echo PrintReady(addslashes($place2['place']));
+				}
+			}
 		}
 		echo "</a>";
-		if ($GM_DISP_COUNT != "false")
-			if ($lastlevel)
+		if ($GM_DISP_COUNT != "false") {
+			if ($lastlevel) {
 				print_how_many_people($level, $parent);
-			else {
+			} else {
 				$parent[$level]=$place2['place'];
 				print_how_many_people($level+1, $parent);
 			}
+		}
 		echo "<br />", $pgv_lang["gm_no_coord"];
 		if (PGV_USER_IS_ADMIN)
 			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=", $levelm, "&display=inactive'>", $pgv_lang["pl_edit"], "</a>";
 		echo "</div></td>\", icon_type, \"", PrintReady(addslashes($place2['place'])), "\");\n";
-	}
-	else {
+	} else {
 		$lati = str_replace(array('N', 'S', ','), array('', '-', '.'), $place2['lati']);
 		$long = str_replace(array('E', 'W', ','), array('', '-', '.'), $place2['long']);
 		//delete leading zero
-		if ($lati >= 0) 	$lati = abs($lati);
-		else if ($lati < 0) $lati = "-".abs($lati);
-		if ($long >= 0) 	$long = abs($long);
-		else if ($long < 0) $long = "-".abs($long);
+		if ($lati >= 0) {
+			$lati = abs($lati);
+		} elseif ($lati < 0) {
+			$lati = "-".abs($lati);
+		}
+		if ($long >= 0) {
+			$long = abs($long);
+		} elseif ($long < 0) {
+			$long = "-".abs($long);
+		}
 		// flags by kiwi_pgv
 		if (($place2["icon"] == NULL) || ($place2['icon'] == "") || ($GOOGLEMAP_PH_MARKER != "G_FLAG")) {
 			echo "var icon_type = new GIcon(G_DEFAULT_ICON);\n";
@@ -309,46 +328,62 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			echo "	icon_type.infoWindowAnchor = new GPoint(5, 1);\n";
 		}
 		echo "var point = new GLatLng({$lati}, {$long});\n";
-		if ($lastlevel)
+		if ($lastlevel) {
 			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=", $level, $linklevels, "'><br />";
-		else {
+		} else {
 			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=", ($level+1), $linklevels, "&amp;parent[{$level}]=";
-			if ($place2['place'] == "Unknown") echo "'><br />";
-			else echo urlencode($place2['place']), "'><br />";
+			if ($place2['place'] == "Unknown") {
+				echo "'><br />";
+			} else {
+				echo urlencode($place2['place']), "'><br />";
+			}
 		}
 		if (($place2['icon'] != NULL) && ($place2['icon'] != "")) {
 			echo "<img src=\'", $place2['icon'], "'>&nbsp;&nbsp;";
 		}
 		if ($lastlevel) {
 			$placename = substr($placelevels, 2);
-			if ($place2['place'] == "Unknown")
-				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels, 2));
-				else echo $pgv_lang["pl_unknown"];
-			else
-				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels, 2));
-				else echo PrintReady(addslashes($place2['place']));
-		}
-		else {
+			if ($place2['place'] == "Unknown") {
+				if ($GM_DISP_SHORT_PLACE == "false") {
+					echo addslashes(substr($placelevels, 2));
+				} else {
+					echo $pgv_lang["pl_unknown"];
+				}
+			} else {
+				if ($GM_DISP_SHORT_PLACE == "false") {
+					echo addslashes(substr($placelevels, 2));
+				} else {
+					echo PrintReady(addslashes($place2['place']));
+				}
+			}
+		} else {
 			$placename = $place2['place'].$placelevels;
-			if ($place2['place'] == "Unknown")
-				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
-				else echo $pgv_lang["pl_unknown"];
-			else
-				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($place2['place'].$placelevels));
-				else echo PrintReady(addslashes($place2['place']));
+			if ($place2['place'] == "Unknown"){
+				if ($GM_DISP_SHORT_PLACE == "false") {
+					echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
+				} else {
+					echo $pgv_lang["pl_unknown"];
+				}
+			} else {
+				if ($GM_DISP_SHORT_PLACE == "false") {
+					echo PrintReady(addslashes($place2['place'].$placelevels));
+				} else {
+					echo PrintReady(addslashes($place2['place']));
+				}
+			}
 		}
 		echo "</a>";
-		if ($GM_DISP_COUNT != "false")
-			if ($lastlevel)
+		if ($GM_DISP_COUNT != "false") {
+			if ($lastlevel) {
 				print_how_many_people($level, $parent);
-			else {
+			} else {
 				$parent[$level]=$place2['place'];
 				print_how_many_people($level+1, $parent);
 			}
+		}
 		if ($GOOGLEMAP_COORD == "false"){
 			echo "<br /><br /></div></td>\", icon_type, \"", PrintReady(addslashes($place2['place'])), "\");\n";
-		}
-		else {
+		} else {
 			echo "<br /><br />", $place2['lati'], ", ", $place2['long'], "</div></td>\", icon_type, \"", PrintReady(addslashes($place2['place'])), "\");\n";
 		}
 	}
@@ -430,22 +465,26 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	Map_type.prototype.refresh = function()
 	{
 		this.button1.className = 'non_active';
-		if(this.place_map.getCurrentMapType() != G_NORMAL_MAP)
+		if(this.place_map.getCurrentMapType() != G_NORMAL_MAP) {
 			this.button2.className = 'non_active';
-		else
+		} else {
 			this.button2.className = 'active';
-		if(this.place_map.getCurrentMapType() != G_SATELLITE_MAP)
+		}
+		if(this.place_map.getCurrentMapType() != G_SATELLITE_MAP) {
 			this.button3.className = 'non_active';
-		else
+		} else {
 			this.button3.className = 'active';
-		if(this.place_map.getCurrentMapType() != G_HYBRID_MAP)
+		}
+		if(this.place_map.getCurrentMapType() != G_HYBRID_MAP) {
 			this.button4.className = 'non_active';
-		else
+		} else {
 			this.button4.className = 'active';
-		if(this.place_map.getCurrentMapType() != G_PHYSICAL_MAP)
+		}
+		if(this.place_map.getCurrentMapType() != G_PHYSICAL_MAP) {
 			this.button5.className = 'non_active';
-		else
+		} else {
 			this.button5.className = 'active';
+		}
 	}
 
 	Map_type.prototype.initialize = function(place_map)
@@ -466,14 +505,15 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		button5.innerHTML = '<?php echo $pgv_lang["gm_physical"]?>';
 
 		button1.onclick = function() { <?php
-			if ($numfound>1)
+			if ($numfound>1) {
 				echo "place_map.setCenter(bounds.getCenter(), place_map.getBoundsZoomLevel(bounds));";
-			else if ($level==1)
+			} elseif ($level==1) {
 				echo "place_map.setCenter(bounds.getCenter(), place_map.getBoundsZoomLevel(bounds)-8);";
-			else if ($level==2)
+			} elseif ($level==2) {
 				echo "place_map.setCenter(bounds.getCenter(), place_map.getBoundsZoomLevel(bounds)-5);";
-			else
+			} else {
 				echo "place_map.setCenter(bounds.getCenter(), place_map.getBoundsZoomLevel(bounds)-3);";
+			}
 			?>; return false; };
 		button2.onclick = function() { place_map.setMapType(G_NORMAL_MAP); return false; };
 		button3.onclick = function() { place_map.setMapType(G_SATELLITE_MAP); return false; };

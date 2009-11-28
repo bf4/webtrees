@@ -531,13 +531,15 @@ function build_indiv_map($indifacts, $famids) {
 					$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
 					if ($fact == "EVEN" || $fact=="FACT") {
 						$eventrec = get_sub_record(1, "2 TYPE", $factrec);
-						if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
-							if (isset($factarray[$match3[1]]))
+						if (preg_match("/\d TYPE (.*)/", $eventrec, $match3)) {
+							if (isset($factarray[$match3[1]])) {
 								$markers[$i]["fact"]=$factarray[$match3[1]];
-							else
+							} else {
 								$markers[$i]["fact"]=$match3[1];
-						else
+							}
+						} else {
 							$markers[$i]["fact"]=$factarray[$fact];
+						}
 					} else {
 						$markers[$i]["fact"]=$factarray[$fact];
 					}
@@ -569,13 +571,15 @@ function build_indiv_map($indifacts, $famids) {
 							$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
 							if ($fact == "EVEN" || $fact=="FACT") {
 								$eventrec = get_sub_record(1, "2 TYPE", $factrec);
-								if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
-									if (isset($factarray[$match3[1]]))
+								if (preg_match("/\d TYPE (.*)/", $eventrec, $match3)) {
+									if (isset($factarray[$match3[1]])) {
 										$markers[$i]["fact"]=$factarray[$match3[1]];
-									else
+									} else {
 										$markers[$i]["fact"]=$match3[1];
-								else
+									}
+								} else {
 									$markers[$i]["fact"]=$factarray[$fact];
+								}
 							} else {
 								$markers[$i]["fact"]=$factarray[$fact];
 							}

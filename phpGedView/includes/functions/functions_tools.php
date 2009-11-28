@@ -245,17 +245,17 @@ function need_date_cleanup()
 function changemonth($monval)
 {
 		if($monval=="01") return "JAN";
-		else if($monval=="02") return "FEB";
-		else if($monval=="03") return "MAR";
-		else if($monval=="04") return "APR";
-		else if($monval=="05") return "MAY";
-		else if($monval=="06") return "JUN";
-		else if($monval=="07") return "JUL";
-		else if($monval=="08") return "AUG";
-		else if($monval=="09") return "SEP";
-		else if($monval=="10") return "OCT";
-		else if($monval=="11") return "NOV";
-		else if($monval=="12") return "DEC";
+		elseif($monval=="02") return "FEB";
+		elseif($monval=="03") return "MAR";
+		elseif($monval=="04") return "APR";
+		elseif($monval=="05") return "MAY";
+		elseif($monval=="06") return "JUN";
+		elseif($monval=="07") return "JUL";
+		elseif($monval=="08") return "AUG";
+		elseif($monval=="09") return "SEP";
+		elseif($monval=="10") return "OCT";
+		elseif($monval=="11") return "NOV";
+		elseif($monval=="12") return "DEC";
 		return $monval;
 }
 

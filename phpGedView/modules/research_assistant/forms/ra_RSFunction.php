@@ -200,30 +200,41 @@ require_once PGV_ROOT.'includes/classes/class_person.php';
 							//Otherwise set $id to the husbands ID
 							else $id = $parents['HUSB'];
 							//if we didn't find an ID set the record to nothing
-							if (empty($id)) $record = '';
-							else {
+							if (empty($id)) {
+								$record = '';
+							} else {
 								//check and see if the person is in the indilist, if they are
 								//set $record to their gedcom
-								if (isset($indilist[$id]['gedcom'])) $record = $indilist[$id]['gedcom'];
+								if (isset($indilist[$id]['gedcom'])) {
+									$record = $indilist[$id]['gedcom'];
+								}
 								//otherwise null the $record
-								else $record = '';
+								else {
+									$record = '';
+								}
 							}
-						}
-						else {
+						} else {
 							$match = array();
 							//Try and get the ID of the TAG
 							$ct = preg_match("/1 $tag @(.*)@/", $record, $match);
 							//if nothing was returned set $record to nothings
-							if ($ct==0) $record = "";
-							else {
+							if ($ct==0) {
+								$record = "";
+							} else {
 								//set the ID to element in position 1
 								$id = $match[1];
 								//if the person exists in the indilist set the $record to them
-								if (isset($indilist[$id]['gedcom'])) $record = $indilist[$id]['gedcom'];
+								if (isset($indilist[$id]['gedcom'])) {
+									$record = $indilist[$id]['gedcom'];
+								}
 								//if the ID exists in the famlist set the record to that
-								else if (isset($famlist[$id]['gedcom'])) $record = $famlist[$id]['gedcom'];
+								elseif (isset($famlist[$id]['gedcom'])) {
+									$record = $famlist[$id]['gedcom'];
+								}
 								//otherwise try and find the gedcom record of the ID
-								else $record = find_gedcom_record($id, PGV_GED_ID);
+								else {
+									$record = find_gedcom_record($id, PGV_GED_ID);
+								}
 							}
 						}
 					}
@@ -421,9 +432,13 @@ require_once PGV_ROOT.'includes/classes/class_person.php';
 		$parts = explode(':', $input);
 		$out = "";
 		foreach($parts as $part) {
-			if (isset($factarray[$part])) $out .= $factarray[$part];
-			else if (isset($pgv_lang[$part])) $out .= $pgv_lang[$part];
-			else $out .= $part;
+			if (isset($factarray[$part])) {
+				$out .= $factarray[$part];
+			} elseif (isset($pgv_lang[$part])) {
+				$out .= $pgv_lang[$part];
+			} else {
+				$out .= $part;
+			}
 			$out .= " ";
 		}
 		return $out;

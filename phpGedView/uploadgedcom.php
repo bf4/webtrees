@@ -253,71 +253,81 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 }
 
 // NOTE: Change header depending on action
-if ($action == "upload_form") print_header($pgv_lang["upload_gedcom"]);
-else if ($action == "add_form") print_header($pgv_lang["add_gedcom"]);
-else if ($action == "add_new_form") print_header($pgv_lang["add_new_gedcom"]);
-else print_header($pgv_lang["ged_import"]);
+if ($action == "upload_form") {
+	print_header($pgv_lang["upload_gedcom"]);
+} elseif ($action == "add_form") {
+	print_header($pgv_lang["add_gedcom"]);
+} elseif ($action == "add_new_form") {
+	print_header($pgv_lang["add_new_gedcom"]);
+} else {
+	print_header($pgv_lang["ged_import"]);
+}
 
 // NOTE: Print form header
-print "<form enctype=\"multipart/form-data\" method=\"post\" name=\"configform\" action=\"uploadgedcom.php\">";
+echo "<form enctype=\"multipart/form-data\" method=\"post\" name=\"configform\" action=\"uploadgedcom.php\">";
 
 // NOTE: Print table header
-print "\n<table class=\"facts_table center $TEXT_DIRECTION\">";
+echo "\n<table class=\"facts_table center ", $TEXT_DIRECTION, "\">";
 
 // NOTE: Add GEDCOM form
 if ($action == "add_form") {
-	print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-	print "<a href=\"javascript: ";
-	if ($import_existing)
-	print $pgv_lang["ged_import"];
-	else
-	print $pgv_lang["add_gedcom"];
-	print "\" onclick=\"expand_layer('add-form');return false\"><img id=\"add-form_img\" src=\"".$PGV_IMAGE_DIR."/";
-	if ($startimport != "true")
-	print $PGV_IMAGES["minus"]["other"];
-	else
-	print $PGV_IMAGES["plus"]["other"];
-	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+	echo "<tr><td class=\"topbottombar ", $TEXT_DIRECTION, "\" colspan=\"2\">";
+	echo "<a href=\"javascript: ";
+	if ($import_existing) {
+		echo $pgv_lang["ged_import"];
+	} else {
+		echo $pgv_lang["add_gedcom"];
+	}
+	echo "\" onclick=\"expand_layer('add-form');return false\"><img id=\"add-form_img\" src=\"", $PGV_IMAGE_DIR, "/";
+	if ($startimport != "true") {
+		echo $PGV_IMAGES["minus"]["other"];
+	} else {
+		echo $PGV_IMAGES["plus"]["other"];
+	}
+	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	print_help_link("add_gedcom_help", "qm", "add_gedcom");
-	print "&nbsp;<a href=\"javascript: ";
-	if ($import_existing)
-	print $pgv_lang["ged_import"];
-	else
-	print $pgv_lang["add_gedcom"];
+	echo "&nbsp;<a href=\"javascript: ";
+	if ($import_existing) {
+		echo $pgv_lang["ged_import"];
+	} else {
+		echo $pgv_lang["add_gedcom"];
+	}
 	print "\" onclick=\"expand_layer('add-form');return false\">";
-	if ($import_existing)
-	print $pgv_lang["ged_import"];
-	else
-	print $pgv_lang["add_gedcom"];
-	print "</a>";
-	print "</td></tr>";
-	print "<tr><td class=\"optionbox\">";
-	print "<div id=\"add-form\" style=\"display: ";
-	if ($startimport != "true")
-	print "block ";
-	else
-	print "none ";
-	print "\">";
+	if ($import_existing) {
+		echo $pgv_lang["ged_import"];
+	} else {
+		echo $pgv_lang["add_gedcom"];
+	}
+	echo "</a>";
+	echo "</td></tr>";
+	echo "<tr><td class=\"optionbox\">";
+	echo "<div id=\"add-form\" style=\"display: ";
+	if ($startimport != "true") {
+		echo "block ";
+	} else {
+		echo "none ";
+	}
+	echo "\">";
 	?>
 	<input type="hidden" name="check" value="add" />
-	<input type="hidden" name="action" value="<?php print $action; ?>" />
-	<input type="hidden" name="import_existing" value="<?php print $import_existing; ?>" />
+	<input type="hidden" name="action" value="<?php echo $action; ?>" />
+	<input type="hidden" name="import_existing" value="<?php echo $import_existing; ?>" />
 	<table class="facts_table">
 	<?php
 
 	$i = 0;
 	if (!empty ($error)) {
-		print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-		print "<span class=\"error\">".$error."</span>\n";
-		print "</td></tr>";
+		echo "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
+		echo "<span class=\"error\">", $error, "</span>\n";
+		echo "</td></tr>";
 	}
 	?>
 	<tr>
 	<td class="descriptionbox width20 wrap">
 	<?php print_help_link("gedcom_path_help", "qm","gedcom_path");?>
-	<?php print $pgv_lang["gedcom_file"]; ?></td>
-	<td class="optionbox"><input type="text" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME) && strlen($GEDFILENAME) > 4) print get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path'); ?>"
-					size="60" dir ="ltr" tabindex="<?php $i++; print $i?>"	<?php if ((!$no_upload && isset($GEDFILENAME)) && (empty($error))) print "disabled "; ?> />
+	<?php echo $pgv_lang["gedcom_file"]; ?></td>
+	<td class="optionbox"><input type="text" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME) && strlen($GEDFILENAME) > 4) echo get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path'); ?>"
+					size="60" dir ="ltr" tabindex="<?php $i++; echo $i?>"	<?php if ((!$no_upload && isset($GEDFILENAME)) && (empty($error))) echo "disabled "; ?> />
 	</td>
 	</tr>
 	</table>
@@ -326,49 +336,54 @@ if ($action == "add_form") {
 <?php
 }
 // NOTE: Upload GEDCOM form
-else if ($action == "upload_form") {
-	print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-	print "<a href=\"javascript: ".$pgv_lang["upload_gedcom"]."\" onclick=\"expand_layer('upload_gedcom'); return false;\"><img id=\"upload_gedcom_img\" src=\"".$PGV_IMAGE_DIR."/";
-	if ($startimport != "true")
-	print $PGV_IMAGES["minus"]["other"];
-	else
-	print $PGV_IMAGES["plus"]["other"];
-	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+elseif ($action == "upload_form") {
+	echo "<tr><td class=\"topbottombar ", $TEXT_DIRECTION, "\" colspan=\"2\">";
+	echo "<a href=\"javascript: ", $pgv_lang["upload_gedcom"], "\" onclick=\"expand_layer('upload_gedcom'); return false;\"><img id=\"upload_gedcom_img\" src=\"", $PGV_IMAGE_DIR, "/";
+	if ($startimport != "true") {
+		echo $PGV_IMAGES["minus"]["other"];
+	} else {
+		echo $PGV_IMAGES["plus"]["other"];
+	}
+	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	print_help_link("upload_gedcom_help", "qm", "upload_gedcom");
-	print "&nbsp;<a href=\"javascript: ".$pgv_lang["upload_gedcom"]."\" onclick=\"expand_layer('upload_gedcom');return false\">".$pgv_lang["upload_gedcom"]."</a>";
-	print "</td></tr>";
-	print "<tr><td class=\"optionbox wrap\">";
-	print "<div id=\"upload_gedcom\" style=\"display: ";
-	if ($startimport != "true")
-	print "block ";
-	else
-	print "none ";
-	print "\">";
+	echo "&nbsp;<a href=\"javascript: ", $pgv_lang["upload_gedcom"], "\" onclick=\"expand_layer('upload_gedcom');return false\">", $pgv_lang["upload_gedcom"], "</a>";
+	echo "</td></tr>";
+	echo "<tr><td class=\"optionbox wrap\">";
+	echo "<div id=\"upload_gedcom\" style=\"display: ";
+	if ($startimport != "true") {
+		echo "block ";
+	} else {
+		echo "none ";
+	}
+	echo "\">";
 ?>
-<input type="hidden" name="action" value="<?php print $action; ?>" />
+<input type="hidden" name="action" value="<?php echo $action; ?>" />
 <input type="hidden" name="check" value="upload" />
 <table class="facts_table">
 <?php
 
 if (!empty ($error)) {
-	print "<span class=\"error\">".$error."</span><br />\n";
+	echo "<span class=\"error\">", $error, "</span><br />\n";
 	print_text("common_upload_errors");
-	print "<br />\n";
+	echo "<br />\n";
 }
 ?>
 <tr>
 <td class="descriptionbox width20 wrap">
-<?php print $pgv_lang["gedcom_file"];?></td>
+<?php echo $pgv_lang["gedcom_file"];?></td>
 <td class="optionbox" dir="ltr">
 <?php
 
-if (isset($GEDFILENAME)) print PrintReady($path.$GEDFILENAME);
-else if (isset($UPFILE)) print PrintReady($UPFILE["name"]);
-else {
-	print "<input name=\"UPFILE\" type=\"file\" size=\"60\" />";
-	if (!$filesize = ini_get('upload_max_filesize'))
-	$filesize = "2M";
-	print " ( ".$pgv_lang["max_upload_size"]." $filesize )";
+if (isset($GEDFILENAME)) {
+	echo PrintReady($path.$GEDFILENAME);
+} elseif (isset($UPFILE)) {
+	echo PrintReady($UPFILE["name"]);
+} else {
+	echo "<input name=\"UPFILE\" type=\"file\" size=\"60\" />";
+	if (!$filesize = ini_get('upload_max_filesize')) {
+		$filesize = "2M";
+	}
+	echo " ( ", $pgv_lang["max_upload_size"], " $filesize )";
 }
 ?>
 </td>
@@ -376,51 +391,53 @@ else {
 </table>
 <?php
 
-print "</div>";
-print "</td></tr>";
+echo "</div>";
+echo "</td></tr>";
 }
 // NOTE: Add new GEDCOM form
-else if ($action == "add_new_form") {
-	print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-	print "<a href=\"javascript: ".$pgv_lang["add_new_gedcom"]."\" onclick=\"expand_layer('add_new_gedcom');return false\"><img id=\"add_new_gedcom_img\" src=\"".$PGV_IMAGE_DIR."/";
-	if ($startimport != "true")
-	print $PGV_IMAGES["minus"]["other"];
-	else
-	print $PGV_IMAGES["plus"]["other"];
-	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+elseif ($action == "add_new_form") {
+	echo "<tr><td class=\"topbottombar ", $TEXT_DIRECTION, "\" colspan=\"2\">";
+	echo "<a href=\"javascript: ", $pgv_lang["add_new_gedcom"], "\" onclick=\"expand_layer('add_new_gedcom');return false\"><img id=\"add_new_gedcom_img\" src=\"", $PGV_IMAGE_DIR, "/";
+	if ($startimport != "true") {
+		echo $PGV_IMAGES["minus"]["other"];
+	} else {
+		echo $PGV_IMAGES["plus"]["other"];
+	}
+	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	print_help_link("add_gedcom_instructions", "qm", "add_new_gedcom");
-	print "&nbsp;<a href=\"javascript: ".$pgv_lang["add_new_gedcom"]."\" onclick=\"expand_layer('add_new_gedcom');return false\">".$pgv_lang["add_new_gedcom"]."</a>";
-	print "</td></tr>";
-	print "<tr><td class=\"optionbox\">";
-	print "<div id=\"add-form\" style=\"display: ";
-	if ($startimport != "true")
-	print "block ";
-	else
-	print "none ";
-	print "\">";
+	echo "&nbsp;<a href=\"javascript: ", $pgv_lang["add_new_gedcom"], "\" onclick=\"expand_layer('add_new_gedcom');return false\">", $pgv_lang["add_new_gedcom"], "</a>";
+	echo "</td></tr>";
+	echo "<tr><td class=\"optionbox\">";
+	echo "<div id=\"add-form\" style=\"display: ";
+	if ($startimport != "true") {
+		echo "block ";
+	} else {
+		echo "none ";
+	}
+	echo "\">";
 ?>
-<input type="hidden" name="action" value="<?php print $action; ?>" />
+<input type="hidden" name="action" value="<?php echo $action; ?>" />
 <input type="hidden" name="check" value="add_new" />
 <table class="facts_table">
 <?php
 
 if (!empty ($error)) {
-	print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-	print "<span class=\"error\">".$error."</span>\n";
-	print "</td></tr>";
+	echo "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
+	echo "<span class=\"error\">", $error, "</span>\n";
+	echo "</td></tr>";
 }
 ?>
 <tr>
 <td class="descriptionbox width20 wrap">
-<?php print $pgv_lang["gedcom_file"];?>
+<?php echo $pgv_lang["gedcom_file"];?>
 </td>
-<td class="optionbox"><input name="GEDFILENAME" type="text" value="<?php if (isset($GEDFILENAME)) print $path.$GEDFILENAME; ?>" size="60" <?php if (isset($GEDFILENAME) && !$no_upload) print "disabled"; ?> /></td>
+<td class="optionbox"><input name="GEDFILENAME" type="text" value="<?php if (isset($GEDFILENAME)) echo $path, $GEDFILENAME; ?>" size="60" <?php if (isset($GEDFILENAME) && !$no_upload) echo "disabled"; ?> /></td>
 </tr>
 </table>
 <?php
 
-print "</div>";
-print "</td></tr>";
+echo "</div>";
+echo "</td></tr>";
 }
 
 if ($verify == "verify_gedcom") {

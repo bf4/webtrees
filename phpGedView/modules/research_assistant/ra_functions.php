@@ -1314,14 +1314,22 @@ class ra_functions {
 											$compiled = "";
 											$tasktitle = "";
 
-											if (isset($factarray[$val[0]])) $tasktitle .= $factarray[$val[0]]." ";
-											else if (isset($pgv_lang[$val[0]])) $tasktitle .= $pgv_lang[$val[0]]." ";
-											else $tasktitle .= $val[0]." ";
+											if (isset($factarray[$val[0]])) {
+												$tasktitle .= $factarray[$val[0]]." ";
+											} elseif (isset($pgv_lang[$val[0]])) {
+												$tasktitle .= $pgv_lang[$val[0]]." ";
+											} else {
+												$tasktitle .= $val[0]." ";
+											}
 											//print_r($factarray);
 
-											if (isset($factarray[$val[1]])) $tasktitle .= $factarray[$val[1]];
-											else if (isset($pgv_lang[$val[1]])) $tasktitle .= $pgv_lang[$val[1]];
-											else $tasktitle .= $val[1];
+											if (isset($factarray[$val[1]])) {
+												$tasktitle .= $factarray[$val[1]];
+											} elseif (isset($pgv_lang[$val[1]])) {
+												$tasktitle .= $pgv_lang[$val[1]];
+											} else {
+												$tasktitle .= $val[1];
+											}
 											$taskid = $this->task_check($tasktitle, $person->getXref());
 											if (!$taskid) // if the task_check passes, create a check box
 												{

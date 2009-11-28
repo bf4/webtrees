@@ -148,10 +148,14 @@ function whatLanguage($string) {
 		$letter = substr($string, $index, $charLen);
 		$index += $charLen;
 
-		if ($letter==$skipTo) $skipTo = "";
-		else {
-			if ($letter=="&") $skipTo = ";";
-			else if ($letter=="<") $skipTo = ">";
+		if ($letter==$skipTo) {
+			$skipTo = "";
+		} else {
+			if ($letter=="&") {
+				$skipTo = ";";
+			} elseif ($letter=="<") {
+				$skipTo = ">";
+			}
 			if ($skipTo=="") {
 				$lang = whatAlphabet($letter);
 				if ($lang!="none") {
@@ -225,8 +229,11 @@ function bidi_text($text) {
 				else if (in_array($temp{strlen($temp)-1}, $special_chars)) {
 					$char = substr($temp, strlen($temp)-1);
 					$temp = substr($temp, 0, strlen($temp)-1);
-					if ($char=="[") $char = "]";
-					else if ($char=="(") $char = ")";
+					if ($char=="[") {
+						$char = "]";
+					} elseif ($char=="(") {
+						$char = ")";
+					}
 					array_push($parts, $temp);
 					array_push($parts, $char);
 				}
@@ -238,26 +245,33 @@ function bidi_text($text) {
 			if ($i < strlen($text)-1) {
 				$l = $text{$i+1};
 				if (in_array($l, $special_chars)) {
-					if ($l=="]") $l = "[";
-					else if ($l==")") $l = "(";
+					if ($l=="]") {
+						$l = "[";
+					} elseif ($l==")") {
+						$l = "(";
+					}
 					$temp = $l . $temp;
 					$i++;
 				}
 			}
 			array_push($parts, $temp);
 			$temp = "";
-		}
-		else if (ord($letter)==226) {
+		} elseif (ord($letter)==226) {
 			if ($i < strlen($text)-2) {
 				$l = $letter.$text{$i+1}.$text{$i+2};
 				$i += 2;
 				if (($l==PGV_UTF8_LRM)||($l==PGV_UTF8_RLM)) {
 					if (!empty($temp)) {
 						$last = array_pop($parts);
-						if ($temp{0}==")") $last = '(' . $last;
-						else if ($temp{0}=="(") $last = ')' . $last;
-						else if ($temp{0}=="]") $last = '[' . $last;
-						else if ($temp{0}=="[") $last = ']' . $last;
+						if ($temp{0}==")") {
+							$last = '(' . $last;
+						} elseif ($temp{0}=="(") {
+							$last = ')' . $last;
+						} elseif ($temp{0}=="]") {
+							$last = '[' . $last;
+						} elseif ($temp{0}=="[") {
+							$last = ']' . $last;
+						}
 						array_push($parts, $last);
 						$temp = "";
 					}
@@ -267,8 +281,11 @@ function bidi_text($text) {
 		else $temp .= $letter;
 	}
 	if (!empty($temp)) {
-		if (in_array(ord($temp{0}),$RTLOrd)) array_push($parts, $temp);
-		else array_push($parts, $temp);
+		if (in_array(ord($temp{0}),$RTLOrd)) {
+			array_push($parts, $temp);
+		} else {
+			array_push($parts, $temp);
+		}
 	}
 
 	//-- loop through and check if parenthesis are correct... if parenthesis were broken by
@@ -360,13 +377,18 @@ function hasLTRText($text) {
 	//--- Should have one fullspecial characters array in PGV -
 
 	for ($i=0; $i<strlen($text); $i++) {
-		if (in_array(ord(substr(trim($text),$i,2)),$RTLOrd) || in_array(ord(substr(trim($text),$i-1,2)),$RTLOrd)) $i++;
-	  	else {
-		  	if (substr($text,$i,26)=='<span class="starredname">') $i+=25;
-		  	else if (substr($text,$i,7)=="</span>") $i+=6;
-		  	else {
+		if (in_array(ord(substr(trim($text),$i,2)),$RTLOrd) || in_array(ord(substr(trim($text),$i-1,2)),$RTLOrd)) {
+			$i++;
+		} else {
+		  	if (substr($text,$i,26)=='<span class="starredname">') {
+		  		$i+=25;
+		  	} elseif (substr($text,$i,7)=="</span>") {
+		  		$i+=6;
+		  	} else {
 				$byte = substr(trim($text),$i,1);
-		    	if (!in_array($byte,$SpecialChar) && !in_array($byte,$SpecialPar) && !in_array($byte,$SpecialNum)) return true;
+		    	if (!in_array($byte,$SpecialChar) && !in_array($byte,$SpecialPar) && !in_array($byte,$SpecialNum)) {
+		    		return true;
+		    	}
 	    	}
 	    }
 	}

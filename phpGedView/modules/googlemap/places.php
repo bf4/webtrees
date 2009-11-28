@@ -152,8 +152,11 @@ function findFiles($path) {
 		$dir = dir($path);
 		while (false !== ($entry = $dir->read())) {
 			if ($entry!="." && $entry!=".." && $entry!=".svn") {
-				if (is_dir($path."/".$entry)) findFiles($path."/".$entry);
-				else if (strstr($entry, ".csv")!==false) $placefiles[] = preg_replace("~modules/googlemap/extra~", "", $path)."/".$entry;
+				if (is_dir($path."/".$entry)) {
+					findFiles($path."/".$entry);
+				} elseif (strstr($entry, ".csv")!==false) {
+					$placefiles[] = preg_replace("~modules/googlemap/extra~", "", $path)."/".$entry;
+				}
 			}
 		}
 		$dir->close();
@@ -372,8 +375,11 @@ if ($action=="ImportFile2") {
 	if (isset($_POST["cleardatabase"])) {
 		PGV_DB::exec("DELETE FROM {$TBLPREFIX}placelocation WHERE 1=1");
 	}
-	if (!empty($_FILES["placesfile"]["tmp_name"])) $lines = file($_FILES["placesfile"]["tmp_name"]);
-	else if (!empty($_REQUEST['localfile'])) $lines = file("modules/googlemap/extra".$_REQUEST['localfile']);
+	if (!empty($_FILES["placesfile"]["tmp_name"])) {
+		$lines = file($_FILES["placesfile"]["tmp_name"]);
+	} elseif (!empty($_REQUEST['localfile'])) {
+		$lines = file("modules/googlemap/extra".$_REQUEST['localfile']);
+	}
 	// Strip BYTE-ORDER-MARK, if present
 	if (!empty($lines[0]) && substr($lines[0], 0, 3)==PGV_UTF8_BOM) $lines[0]=substr($lines[0], 3);
 	asort($lines);
@@ -461,11 +467,9 @@ if ($action=="ImportFile2") {
 					$highestIndex = $highestIndex + 1;
 					if (($i+1) == count($parent)) {
 						$zoomlevel = $place["zoom"];
-					}
-					else if (isset($default_zoom_level[$i])) {
+					} elseif (isset($default_zoom_level[$i])) {
 						$zoomlevel = $default_zoom_level[$i];
-					}
-					else {
+					} else {
 						$zoomlevel = $GOOGLEMAP_MAX_ZOOM;
 					}
 					if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
@@ -475,10 +479,16 @@ if ($action=="ImportFile2") {
 						//delete leading zero
 						$pl_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $place["lati"]);
 						$pl_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $place["long"]);
-						if ($pl_lati >= 0) 		$place["lati"] = "N".abs($pl_lati);
-						else if ($pl_lati < 0) 	$place["lati"] = "S".abs($pl_lati);
-						if ($pl_long >= 0) 		$place["long"] = "E".abs($pl_long);
-						else if ($pl_long < 0) 	$place["long"] = "W".abs($pl_long);
+						if ($pl_lati >= 0) {
+							$place["lati"] = "N".abs($pl_lati);
+						} elseif ($pl_lati < 0) {
+							$place["lati"] = "S".abs($pl_lati);
+						}
+						if ($pl_long >= 0) {
+							$place["long"] = "E".abs($pl_long);
+						} elseif ($pl_long < 0) {
+							$place["long"] = "W".abs($pl_long);
+						}
 						PGV_DB::prepare("INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 							->execute(array($highestIndex, $parent_id, $i, $escparent, $place["long"], $place["lati"], $zoomlevel, $place["icon"]));
 					}
@@ -561,17 +571,19 @@ function delete_place(placeid) {
 echo "<span class=\"subheaders\">{$pgv_lang['edit_place_locations']}: </span>";
 $where_am_i=place_id_to_hierarchy($parent);
 foreach (array_reverse($where_am_i, true) as $id=>$place) {
-	if ($id==$parent)
-		if ($place != "Unknown")
+	if ($id==$parent) {
+		if ($place != "Unknown") {
 			echo PrintReady($place);
-		else
+		} else {
 			echo $pgv_lang["pl_unknown"];
-	else {
+		}
+	} else {
 		echo "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}&display={$display}\">";
-		if ($place != "Unknown")
+		if ($place != "Unknown") {
 			echo PrintReady($place), "</a>";
-		else
+		} else {
 			echo $pgv_lang["pl_unknown"], "</a>";
+		}
 	}
 	echo " - ";
 }

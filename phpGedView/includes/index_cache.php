@@ -88,9 +88,14 @@ function saveCachedBlock($block, $index, $content) {
 
 	//-- ignore cache when its life is not configured or when its life is zero
 	$cacheLife = 0;
-	if (isset($block[1]['cache'])) $cacheLife = $block[1]['cache'];
-	else if (isset($PGV_BLOCKS[$block[0]]['config']['cache'])) $cacheLife = $PGV_BLOCKS[$block[0]]['config']['cache'];
-	if ($cacheLife==0) return false;
+	if (isset($block[1]['cache'])) {
+		$cacheLife = $block[1]['cache'];
+	} elseif (isset($PGV_BLOCKS[$block[0]]['config']['cache'])) {
+		$cacheLife = $PGV_BLOCKS[$block[0]]['config']['cache'];
+	}
+	if ($cacheLife==0) {
+		return false;
+	}
 
 	$fname = $INDEX_DIRECTORY."/cache";
 	@mkdir($fname);

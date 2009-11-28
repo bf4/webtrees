@@ -144,8 +144,11 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 
 	// Find all helpvars, so we know what vars to check after the lang.xx file has been reloaded
 	foreach ($pgv_lang as $text => $value) {
-		if ($searchintext == "all") $helpvarnames[] = $text;
-		else if ((substr($text, -5) == "_help" && $value{0}!="_") || (substr($text, -4) == ".php")) $helpvarnames[] = $text;
+		if ($searchintext == "all") {
+			$helpvarnames[] = $text;
+		} elseif ((substr($text, -5) == "_help" && $value{0}!="_") || (substr($text, -4) == ".php")) {
+			$helpvarnames[] = $text;
+		}
 	}
 
 	// Split the search criteria if all or any is chosen. Otherwise, just fill the array with the sentence
