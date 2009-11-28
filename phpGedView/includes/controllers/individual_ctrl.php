@@ -393,7 +393,7 @@ class IndividualControllerRoot extends BaseController {
 					$mid = $firstmediarec['mid'];
 
 					$name = $this->indi->getFullName();
-					if (file_exists("modules/lightbox/album.php")) {
+					if (PGV_USE_LIGHTBOX) {
 						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "\">" . "\n";
 					}else
 
@@ -2114,7 +2114,7 @@ class IndividualControllerRoot extends BaseController {
 			print "</td></tr>";
 			print "</table>";
 		}else{
-			if (file_exists("modules/lightbox/album.php")) {
+			if (PGV_USE_LIGHTBOX) {
 				include_once('modules/lightbox/album.php');
 			}
 		}
@@ -2172,7 +2172,7 @@ class IndividualControllerRoot extends BaseController {
 			print "</td></tr>";
 			print "</table>";
 		}else{
-			//if (file_exists("modules/lightbox/album.php")) {
+			//if (PGV_USE_LIGHTBOX) {
 				//include_once('modules/lightbox/album.php');
 			print "<table class=\"facts_table\" cellpadding=\"0\">\n";
 			print "<tr><td class=\"facts_value\">";

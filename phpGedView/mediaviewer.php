@@ -53,7 +53,7 @@ global $tmb;
 
 // LBox =============================================================================
 // Get Javascript variables from lb_config.php ---------------------------
-if (file_exists("modules/lightbox/album.php")) {
+if (PGV_USE_LIGHTBOX) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
@@ -119,7 +119,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 					// attempt to get the image size
 					$imgwidth = $controller->mediaobject->getWidth()+40;
 					$imgheight = $controller->mediaobject->getHeight()+150;
-					if (file_exists("modules/lightbox/album.php")) $dwidth = 200;
+					if (PGV_USE_LIGHTBOX) $dwidth = 200;
 					else $dwidth = 300;
 					if ($imgwidth<$dwidth) $dwidth = $imgwidth;
 

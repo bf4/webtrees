@@ -241,7 +241,7 @@ function showchanges() {
 <?php } ?>
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
-if (file_exists("modules/lightbox/album.php")) {
+if (PGV_USE_LIGHTBOX) {
 	require './modules/lightbox/lb_defaultconfig.php';
 	if (file_exists('./modules/lightbox/lb_config.php')) {
 		require './modules/lightbox/lb_config.php';
@@ -304,7 +304,7 @@ function tempObj(tab, oXmlHttp) {
 				ResizeMap();
 			}
 			//-- initialize lightbox tabs if lightbox installed
-			<?php if (file_exists("modules/lightbox/album.php")) { ?>
+			<?php if (PGV_USE_LIGHTBOX) { ?>
 				// if (tabid[tab]=='lightbox2' || tabid[tab]=='facts' || tabid[tab]=='media' || tabid[tab]=='relatives') {
 				CB_Init();
 				// }
@@ -411,7 +411,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
-if (file_exists('./modules/lightbox/album.php')) {
+if (PGV_USE_LIGHTBOX) {
 	require_once './modules/lightbox/functions/lb_indi_doors_'.$mediatab.'.php';
 } else {
 ?>
@@ -604,51 +604,43 @@ if (empty($SEARCH_SPIDER)) {
 
 <!-- ========================== Start Tab 8 individual page ==== Album ======== -->
 <?php
-if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
-
-		// Header Info ---------------------------------------------------------------------
-		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-			echo "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >";
-			echo "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>";
-			echo "&nbsp;&nbsp;";
-			// ---------- Help link --------------------
-			print_help_link("lb_general_help", "qm", "lb_help", true);
-			// --------- Header include -------------
-			$mediacnt = $controller->get_media_count();
-			if ($mediacnt!=0) {
-				require_once 'modules/lightbox/functions/lb_head.php';
+if (PGV_USE_LIGHTBOX) {
+	// Header Info ---------------------------------------------------------------------
+	echo "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >";
+	echo "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>";
+	echo "&nbsp;&nbsp;";
+	// ---------- Help link --------------------
+	print_help_link("lb_general_help", "qm", "lb_help", true);
+	// --------- Header include -------------
+	$mediacnt = $controller->get_media_count();
+	if ($mediacnt!=0) {
+		require_once 'modules/lightbox/functions/lb_head.php';
+	} else {
+		require_once 'modules/lightbox/functions/lb_head.php';
+		echo "<table class=\"facts_table\"><tr><td id=\"no_tab9\" colspan=\"2\" class=\"facts_value\">", $pgv_lang["no_tab4"], "</td></tr></table>";
+	}
+		
+	// Content info ---------------------------------------------------
+	echo "<div id=\"lightbox2_content\">";
+	if ($mediacnt!=0) {
+		// LB Fix if googlemaps ========================================================
+		if (file_exists("modules/googlemap/googlemap.php")) {
+			if ($controller->default_tab==8 || !empty($SEARCH_SPIDER)) {
+				$controller->getTab(8) ;
 			} else {
-				require_once 'modules/lightbox/functions/lb_head.php';
-				echo "<table class=\"facts_table\"><tr><td id=\"no_tab9\" colspan=\"2\" class=\"facts_value\">", $pgv_lang["no_tab4"], "</td></tr></table>";
+				loading_message();
 			}
-		}else{
-			echo "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >";
+		} else {
+			if ($controller->default_tab==7 || !empty($SEARCH_SPIDER)) {
+				$controller->getTab(7) ;
+			} else {
+				loading_message();
+			}
 		}
-		
-		// Content info ---------------------------------------------------
-		echo "<div id=\"lightbox2_content\">";
-			if ($mediacnt!=0) {
-				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-					// LB Fix if googlemaps ========================================================
-					if (file_exists("modules/googlemap/googlemap.php")) {
-						if (($controller->default_tab==8)||(!empty($SEARCH_SPIDER))) {
-							$controller->getTab(8) ;
-						}else{
-							loading_message();
-						}
-					}else{
-						if (($controller->default_tab==7)||(!empty($SEARCH_SPIDER))) {
-							$controller->getTab(7) ;
-						}else{
-							loading_message();
-						}
-					}
-					// LB Fix if googlemaps ========================================================
-				}
-			}
-		echo "</div>";
-		
-		echo "</div>";
+		// LB Fix if googlemaps ========================================================
+	}
+	echo "</div>";
+	echo "</div>";
 }
 ?>
 

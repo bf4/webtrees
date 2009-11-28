@@ -53,7 +53,7 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 			<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required (Only if Lightbox installed)
-		if (is_dir('modules/lightbox/css')) {
+		if (PGV_USE_LIGHTBOX) {
 			if ($TEXT_DIRECTION=='rtl') {
 				echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
 				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';

@@ -694,4 +694,7 @@ if (substr(PHP_SAPI, 0, 3) == 'cgi') {  // cgi-mode, should only be writable by 
 	define('PGV_PERM_FILE', 0666);
 }
 
+// Lightbox needs custom integration in many places.  Only check for the module once.
+define('PGV_USE_LIGHTBOX', !$SEARCH_SPIDER && $MULTI_MEDIA && file_exists('modules/lightbox.php') && is_dir('modules/lightbox'));
+
 ?>

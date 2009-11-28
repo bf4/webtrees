@@ -664,11 +664,11 @@ function print_media_links($factrec, $level, $pid='') {
 				if ($isExternal || media_exists($thumbnail)) {
 
 					//LBox --------  change for Lightbox Album --------------------------------------------
-					if (file_exists("modules/lightbox/album.php") && preg_match("/\.(jpe?g|gif|png)$/i", $mainMedia)) {
+					if (PGV_USE_LIGHTBOX && preg_match("/\.(jpe?g|gif|png)$/i", $mainMedia)) {
 						$name = trim($row["m_titl"]);
 						echo "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
-					} else if (file_exists("modules/lightbox/album.php") && preg_match("/\.(pdf|avi|txt)$/i", $mainMedia)) {
-						if (file_exists("modules/lightbox/lb_config.php")) {
+					} else if (PGV_USE_LIGHTBOX && preg_match("/\.(pdf|avi|txt)$/i", $mainMedia)) {
+						if (PGV_USE_LIGHTBOX) {
 							include ('modules/lightbox/lb_config.php');
 						} else {
 							include ('modules/lightbox/lb_defaultconfig.php');
@@ -1671,7 +1671,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 //  Extra print_facts_functions for lightbox and reorder media
 // -----------------------------------------------------------------------------
 
-if (file_exists('modules/lightbox/functions/lightbox_print_media.php')) {
+if (PGV_USE_LIGHTBOX) {
 	require_once 'modules/lightbox/functions/lightbox_print_media.php';
 	require_once 'modules/lightbox/functions/lightbox_print_media_row.php';
 }

@@ -51,7 +51,7 @@ if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 echo "\n\t<div class=\"center\"><h2>", $pgv_lang["multi_title"], "</h2></div>\n\t";
 
 // Get Javascript variables from lb_config.php ---------------------------
-if (file_exists("modules/lightbox/album.php")) {
+if (PGV_USE_LIGHTBOX) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
@@ -318,7 +318,7 @@ if ($ct>0) {
 		echo ' alt="', PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')), '" title="', PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')), '" /></a>';
 		echo "</td>\n\t\t", '<td class="list_value_wrap" style="border: none;" width="100%">';
 
-		if (file_exists('modules/lightbox/album.php')) {
+		if (PGV_USE_LIGHTBOX) {
 			if (PGV_USER_CAN_EDIT) {
 
 				if ($LB_ML_THUMB_LINKS != "none") {
@@ -486,7 +486,7 @@ if ($ct>0) {
 }
 echo "\n</div>\n";
 // -- load up the slideshow code
-if (!file_exists("modules/lightbox/album.php")) {
+if (!PGV_USE_LIGHTBOX) {
 	if (file_exists("modules/slideshow/slideshow.php")) {
 		include_once("modules/slideshow/slideshow.php");
 	}

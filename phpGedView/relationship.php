@@ -489,7 +489,7 @@ print_header($title_string);
 if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 // Lbox additions if installed ---------------------------------------------------------------------------------------------
-if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+if (PGV_USE_LIGHTBOX) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include_once('modules/lightbox/functions/lb_call_js.php');

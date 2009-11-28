@@ -958,7 +958,7 @@ if (check_media_structure()) {
 
 		// display the images
 		if (count($medialist) && ($subclick=='search' || $subclick=='all')) {
-			if (file_exists("modules/lightbox/album.php")) {
+			if (PGV_USE_LIGHTBOX) {
 				// Get Lightbox config variables
 				if (file_exists("modules/lightbox/lb_config.php")) include('modules/lightbox/lb_config.php');
 				else include('modules/lightbox/lb_defaultconfig.php');

@@ -287,7 +287,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			$imgwidth = $imgsize[0]+50;
 			$imgheight = $imgsize[1]+150;
 
-			if (file_exists("modules/lightbox/album.php")) {
+			if (PGV_USE_LIGHTBOX) {
 				$thumbnail .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "\">";
 			} else if (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
 				$thumbnail .= "<a href=\"".encode_url("mediaviewer.php?mid=".$object['mid'])."\" >";
