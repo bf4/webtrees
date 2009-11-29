@@ -141,7 +141,7 @@ if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
 
 // Print the tasks table
-if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL && file_exists(PGV_ROOT.'modules/research_assistant/research_assistant.php') {
+if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL && file_exists(PGV_ROOT.'modules/research_assistant/research_assistant.php')) {
 	require_once PGV_ROOT.'modules/research_assistant/research_assistant.php';
 	$mod=new ra_functions();
 	$mod->Init();
