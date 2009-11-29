@@ -1470,7 +1470,7 @@ if ($action=="choosepid") {
 	$person=Person::getInstance($pid);
 	echo '<b>', PrintReady(stripLRMRLM($person->getFullName()));
 	if ($SHOW_ID_NUMBERS) {
-		echo PrintReady("&nbsp;&nbsp;(", $pid, ")");
+		echo PrintReady("&nbsp;&nbsp;(". $pid. ")");
 	}
 	echo '</b><br />';
 ?>

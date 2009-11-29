@@ -87,7 +87,7 @@ if ($action=="confighelp") {
 	require PGV_ROOT.'includes/functions/functions_editlang.php';
 	$helpindex = "config_help_help";
 	print_header($pgv_lang["config_help"]);
-	print "<h2 class=\"center\">".UTF8_strtoupper($pgv_lang["config_help"])."</h2><br />";
+	echo "<h2 class=\"center\">", UTF8_strtoupper($pgv_lang["config_help"]), "</h2><br />";
 	$language_array = array();
 	$language_array = read_export_file_into_array($confighelpfile[$LANGUAGE], "pgv_lang[");
 	$new_language_array = array();
@@ -104,7 +104,7 @@ if ($action=="confighelp") {
 		}
 	}
 
-	print "<ol>";
+	echo "<ol>";
 
 	for ($z = 0, $zmax = sizeof($new_language_array); $z < $zmax; $z++) {
 		for ($x = 0, $xmax = sizeof($language_array); $x < $xmax; $x++) {
@@ -127,7 +127,7 @@ if ($action=="confighelp") {
 	for ($z = 0, $zmax = sizeof($new_language_array); $z < $zmax; $z++) {
 		if ($new_language_array[$z][0] != "config_help" and $new_language_array[$z][0] != "welcome_help") {
 			echo '<li>';
-			echo print_text($new_language_array[$z][1],0,2) . "<br /><br /></li>\r\n";
+			echo print_text($new_language_array[$z][1], 0, 2), "<br /><br /></li>\r\n";
 		}
 	}
 	echo '</ol>';
