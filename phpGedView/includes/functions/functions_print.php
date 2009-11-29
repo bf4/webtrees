@@ -1701,7 +1701,11 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 
 	// Parentheses, braces, and brackets have been processed:
 	// Finish processing of "Highlight Start and "Highlight end"
-	$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $text);
+	if (!$InHeaders) {
+		$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $text);
+	} else {
+		$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "", ""), $text);
+	}
 	return $text;
 }
 /**
