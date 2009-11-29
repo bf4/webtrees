@@ -836,7 +836,7 @@ function print_sour_table($datalist, $legend=null) {
 
 	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['source']['small'], '" align="middle" alt="" /> ';
 	if ($legend) {
-		echo htmlspecialchars($legend);
+		echo $legend;
 	} else {
 		echo $pgv_lang['sources'];
 	}
@@ -971,7 +971,11 @@ function print_note_table($datalist, $legend=null) {
 	require_once PGV_ROOT.'js/sorttable.js.htm';
 	require_once PGV_ROOT.'includes/classes/class_note.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['notes']['small'], '" align="middle" alt="" /> ';
+	if (!empty($PGV_IMAGES["menu_note"]["small"])) {
+		echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["menu_note"]["small"], '" align="middle" alt="" /> ';
+	} else {
+		echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['notes']['small'], '" align="middle" alt="" /> ';
+	}
 	if ($legend) {
 		echo $legend;
 	} else {
