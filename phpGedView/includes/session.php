@@ -650,7 +650,7 @@ if ((strstr($SCRIPT_NAME, 'install.php')===false)
 }
 
 //-- load the user specific theme
-if (PGV_DB::isConnected() && PGV_USER_ID && !isset($_REQUEST['logout'])) {
+if (PGV_USER_ID) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
 		userUpdateLogin(PGV_USER_ID);
@@ -671,13 +671,12 @@ if (isset($_SESSION['theme_dir'])) {
 	}
 }
 
-if (empty($THEME_DIR)) {
-	$THEME_DIR='standard/';
-}
-if (!file_exists("{$THEME_DIR}theme.php")) {
+if (empty($THEME_DIR) || !file_exists("{$THEME_DIR}theme.php")) {
 	$THEME_DIR = 'themes/standard/';
 }
-require $THEME_DIR.'theme.php';
+define('PGV_THEME_DIR', realpath($THEME_DIR).DIRECTORY_SEPARATOR);
+
+require PGV_THEME_DIR.'theme.php';
 
 require PGV_ROOT.'includes/hitcount.php'; //--load the hit counter
 
