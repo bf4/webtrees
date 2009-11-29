@@ -166,10 +166,10 @@ function preview() {
 	str = NoteYear.value + " " + NoteCtry.value + " " + NoteTitl.value;
 	str += "\n";
 	if (Citation.value!="" && Citation.value!=null) {
-		str += Citation.value + "\n";
+	//	str += Citation.value + "\n";
 	}
 	if (Locality.value!="" && Locality.value!=null) {
-		str += Locality.value + "\n";
+	//	str += Locality.value + "\n";
 	}
 	str += "\n";
 	str += ".start_formatted_area.";

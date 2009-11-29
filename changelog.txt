@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Changed: GEDFact Census assistant now copies a Census event to all affected Indi's in the shared note created. (windmillway)
  - Merged: Merge changes r6431 - r6476 from the trunk.  
    Also added SOUR and OBJE fields to GEDFact assistant window. 
    Still have to link these fields ... patience please (windmillway)
