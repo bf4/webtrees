@@ -29,8 +29,13 @@
 require './config.php';
 
 if (!PGV_USER_GEDCOM_ADMIN) {
-	header("Location: login.php?url=admin.php");
-	exit;
+	if (PGV_USER_ID) {
+		header("Location: index.php");
+		exit;
+	} else {
+		header("Location: login.php?url=module.php?mod=sitemap");
+		exit;
+	}
 }
 
 loadLangFile("pgv_confighelp");
