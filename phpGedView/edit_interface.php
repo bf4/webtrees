@@ -1962,9 +1962,9 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 		}
 
 		if ($success) {
-			$success2 = $success && delete_gedrec($pid);
+			$success = $success && delete_gedrec($pid);
 		}
-		if ($success2) {
+		if ($success) {
 			echo "<br /><br />".$pgv_lang["gedrec_deleted"];
 			if ($action=="deletenote") {
 				$link="notelist.php";
@@ -1973,8 +1973,11 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 			}else if ($action=="deleterepo") {
 				$link="repolist.php";
 			}
-			echo PGV_JS_START, "edit_close('{$link}');", PGV_JS_END;
 		}
+		echo PGV_JS_START;
+		echo "alert('{$pid} {$pgv_lang["gedrec_deleted"]}');";
+		echo "edit_close('{$link}');";
+		echo PGV_JS_END;
 	}
 	break;
 //------------------------------------------------------------------------------
@@ -2090,7 +2093,9 @@ case 'reorder_media_update': // Update sort using popup
 		}else{
 			$link = "individual.php?pid=$pid&tab=3&show_changes=yes";
 		}
-		echo PGV_JS_START, "edit_close('{$link}');", PGV_JS_END;
+		echo PGV_JS_START;
+		echo "edit_close('{$link}');";
+		echo PGV_JS_END;
 	break;
 
 //------------------------------------------------------------------------------
@@ -2669,9 +2674,8 @@ if (empty($goto) || empty($link)) {
 	$link='';
 }
 
-// autoclose window when update successful and not previously closed with $success2 ==== 
-global $success2;
-if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG && !isset($success2)) {
+// autoclose window when update successful  ==== 
+if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG ) {
 	echo PGV_JS_START;
 	if ($action=="copy") {
 		echo "window.close();";
