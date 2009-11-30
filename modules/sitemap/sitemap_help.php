@@ -3,7 +3,7 @@
  * English Language Configure Help file for PHPGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,9 +35,9 @@ if (isset($_REQUEST['help'])) $help=$_REQUEST['help'];
 
 require PGV_ROOT.'includes/help_text_vars.php';
 print_simple_header($pgv_lang["config_help"]);
-print '<span class="helpheader">';
+echo '<span class="helpheader">';
 print_text("config_help");
-print '</span><br /><br /><span class="helptext">';
+echo '</span><br /><br /><span class="helptext">';
 if ($help == "help_contents_help") {
 		if (PGV_USER_IS_ADMIN) {
 		$help = "admin_help_contents_help";
@@ -50,12 +50,12 @@ else {
 	if ($help == "help_uploadgedcom.php") $help = "help_addgedcom.php";
 print_text($help);
 }
-print "</span><br /><br />";
-print "<a href=\"help_text.php?help=help_contents_help\"><b>";
+echo "</span><br /><br />";
+echo "<a href=\"help_text.php?help=help_contents_help\"><b>";
 print_text("help_contents");
-print "</b></a><br />";
-print "<a href=\"javascript:;\" onclick=\"window.close();\"><b>";
+echo "</b></a><br />";
+echo "<a href=\"javascript:;\" onclick=\"window.close();\"><b>";
 print_text("close_window");
-print "</b></a>";
+echo "</b></a>";
 print_simple_footer();
 ?>
