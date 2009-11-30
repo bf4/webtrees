@@ -33,10 +33,14 @@ loadLangFile("pgv_confighelp, sitemap:lang, sitemap:help_text");
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
-$uname = getUserName();
-if (empty($uname)) {
-	header("Location: login.php?url=module.php?mod=sitemap");
-	exit;
+if (!PGV_USER_IS_ADMIN) {
+	if (PGV_USER_ID) {
+		header("Location: index.php");
+		exit;
+	} else {
+		header("Location: login.php?url=module.php?mod=sitemap");
+		exit;
+	}
 }
 
 $action				= safe_REQUEST($_REQUEST, 'action', PGV_REGEX_XREF);
@@ -59,13 +63,14 @@ $famrec_update		= safe_REQUEST($_REQUEST, 'famrec_update', PGV_REGEX_XREF);
 $fam_lists			= safe_REQUEST($_REQUEST, 'fam_lists', PGV_REGEX_XREF);
 $famlist_priority	= safe_REQUEST($_REQUEST, 'famlist_priority', PGV_REGEX_XREF);
 $famlist_update		= safe_REQUEST($_REQUEST, 'famlist_update', PGV_REGEX_XREF);
+$no_private_links	= safe_REQUEST($_REQUEST, 'no_private_links', '1', '0');
 
 if ($action=="sendFiles") {
 	header('Content-Type: application/octet-stream');
 	header('Content-Disposition: attachment; filename="'.$filename.'"');
 
 	echo "<?xml version='1.0' encoding='UTF-8'?>\n";
-	echo "<?xml-stylesheet type=\"text/xsl\" href=\"".$SERVER_URL."modules/sitemap/gss.xsl\"?>\n";
+	echo "<?xml-stylesheet type=\"text/xsl\" href=\"", $SERVER_URL, "modules/sitemap/gss.xsl\"?>\n";
 	echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n"; 
 	echo "		xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"; 
 	echo "		xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\n"; 
@@ -73,23 +78,42 @@ if ($action=="sendFiles") {
 
 	if (isset($welcome)) {
 		echo "	<url>\n";
-		echo "		<loc>".$SERVER_URL."index.php?command=gedcom&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-		echo "		<changefreq>".$welcome_update."</changefreq>\n";
-		echo "		<priority>0.".$welcome_priority."</priority>\n";
+		echo "		<loc>", $SERVER_URL, "index.php?command=gedcom&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+		echo "		<changefreq>", $welcome_update, "</changefreq>\n";
+		echo "		<priority>0.", $welcome_priority, "</priority>\n";
 		echo "	</url>\n";
 	}
-
+	$oldGEDCOM = $GEDCOM;
+	$GEDCOM = $gedcom_name;
+	// Create a temporary userid
+	$sitemap_user_id = createTempUser('#SiteMap#', 'visitor', $gedcom_name);	// Create a temporary userid
+	// Temporarily become this user
+	$_SESSION["org_user"]=$_SESSION["pgv_user"];
+	$_SESSION["pgv_user"]='#SiteMap#';
 	if (isset($indi_rec)) {
 		$statement=PGV_DB::prepare("SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=?")->execute(array($index));
 		while ($row=$statement->fetch(PDO::FETCH_NUM)) {
-			echo "	<url>\n";
-			echo "		<loc>".$SERVER_URL."individual.php?pid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-			$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
-			if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
-				echo "		<lastmod>".date("Y-m-d", strtotime($datematch[1]))."</lastmod>\n";
-			echo "		<changefreq>".$indirec_update."</changefreq>\n";
-			echo "		<priority>0.".$indirec_priority."</priority>\n";
-			echo "	</url>\n";
+			if ($no_private_links) {
+				if (displayDetailsById($row[0], "INDI", true)) {
+					echo "	<url>\n";
+					echo "		<loc>", $SERVER_URL, "individual.php?pid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+					$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
+					if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
+						echo "		<lastmod>", date("Y-m-d", strtotime($datematch[1])), "</lastmod>\n";
+					echo "		<changefreq>", $indirec_update, "</changefreq>\n";
+					echo "		<priority>0.", $indirec_priority, "</priority>\n";
+					echo "	</url>\n";
+				}
+			} else {
+				echo "	<url>\n";
+				echo "		<loc>", $SERVER_URL, "individual.php?pid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+				$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
+				if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
+					echo "		<lastmod>", date("Y-m-d", strtotime($datematch[1])), "</lastmod>\n";
+				echo "		<changefreq>", $indirec_update, "</changefreq>\n";
+				echo "		<priority>0.", $indirec_priority, "</priority>\n";
+				echo "	</url>\n";
+			}
 		}
 		$statement->closeCursor();
 	}
@@ -97,14 +121,27 @@ if ($action=="sendFiles") {
 	if (isset($fam_rec)) {
 		$statement=PGV_DB::prepare("SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file=?")->execute(array($index));
 		while ($row=$statement->fetch(PDO::FETCH_NUM)) {
-			echo "	<url>\n";
-			echo "		<loc>".$SERVER_URL."family.php?famid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-			$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
-			if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
-				echo "		<lastmod>".date("Y-m-d", strtotime($datematch[1]))."</lastmod>\n";
-			echo "		<changefreq>".$famrec_update."</changefreq>\n";
-			echo "		<priority>0.".$famrec_priority."</priority>\n";
-			echo "	</url>\n";
+			if ($no_private_links) {
+				if (displayDetailsById($row[0], "FAM", true)) {
+					echo "	<url>\n";
+					echo "		<loc>", $SERVER_URL, "family.php?famid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+					$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
+					if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
+						echo "		<lastmod>", date("Y-m-d", strtotime($datematch[1])), "</lastmod>\n";
+					echo "		<changefreq>", $indirec_update, "</changefreq>\n";
+					echo "		<priority>0.", $indirec_priority, "</priority>\n";
+					echo "	</url>\n";
+				}
+			} else {
+				echo "	<url>\n";
+				echo "		<loc>", $SERVER_URL, "family.php?famid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+				$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
+				if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
+					echo "		<lastmod>", date("Y-m-d", strtotime($datematch[1])), "</lastmod>\n";
+				echo "		<changefreq>", $indirec_update, "</changefreq>\n";
+				echo "		<priority>0.", $indirec_priority, "</priority>\n";
+				echo "	</url>\n";
+			}
 		}
 		$statement->closeCursor();
 	}
@@ -113,9 +150,9 @@ if ($action=="sendFiles") {
 		foreach(get_indilist_salpha($SHOW_MARRIED_NAMES, true, $index) as $letter) {
 			if ($letter!='@') {
 				echo "	<url>\n";
-				echo "		<loc>".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-				echo "		<changefreq>".$famlist_update."</changefreq>\n";
-				echo "		<priority>0.".$famlist_priority."</priority>\n";
+				echo "		<loc>", $SERVER_URL, "famlist.php?alpha=", urlencode($letter), "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+				echo "		<changefreq>", $famlist_update, "</changefreq>\n";
+				echo "		<priority>0.", $famlist_priority, "</priority>\n";
 				echo "	</url>\n";
 			}
 		}
@@ -125,14 +162,18 @@ if ($action=="sendFiles") {
 		foreach (get_indilist_salpha($SHOW_MARRIED_NAMES, false, $index) as $letter) {
 			if ($letter!='@') {
 				echo "	<url>\n";
-				echo "		<loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-				echo "		<changefreq>".$indilist_update."</changefreq>\n";
-				echo "		<priority>0.".$indilist_priority."</priority>\n";
+				echo "		<loc>", $SERVER_URL, "indilist.php?alpha=", urlencode($letter), "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+				echo "		<changefreq>", $indilist_update, "</changefreq>\n";
+				echo "		<priority>0.", $indilist_priority, "</priority>\n";
 				echo "	</url>\n";
 			}
 		}
 	}
 	echo "</urlset>";
+	$_SESSION["pgv_user"]=$_SESSION["org_user"];
+	delete_user($sitemap_user_id);
+	AddToLog("deleted dummy user -> #SiteMap# <-");
+	$GEDCOM = $oldGEDCOM;
 	exit;
 }
 
@@ -141,7 +182,7 @@ if ($action=="sendIndex") {
 	header('Content-Disposition: attachment; filename="SitemapIndex.xml"');
 
 	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	echo "<?xml-stylesheet type=\"text/xsl\" href=\"".$SERVER_URL."modules/sitemap/gss.xsl\"?>\n";
+	echo "<?xml-stylesheet type=\"text/xsl\" href=\"", $SERVER_URL, "modules/sitemap/gss.xsl\"?>\n";
 	echo "<sitemapindex xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n";
 	echo "xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n";
 	echo "url=\"http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd\"\n";
@@ -152,8 +193,8 @@ if ($action=="sendIndex") {
 		foreach($filenames as $ged_index=>$ged_name) {
 			$xml_name = str_ireplace(".ged",".xml", $ged_name);
 			echo "	<sitemap>\n";
-			echo "		<loc>".$SERVER_URL."SM_".$xml_name."</loc>\n";
-			echo "		<lastmod>".date("Y-m-d")."</lastmod>\n ";
+			echo "		<loc>", $SERVER_URL, "SM_", $xml_name, "</loc>\n";
+			echo "		<lastmod>", date("Y-m-d"), "</lastmod>\n ";
 			echo "	</sitemap>\n";
 		}
 	}
@@ -186,45 +227,45 @@ if ($action=="generate") {
 	echo $pgv_lang["generate_sitemap"];
 	echo "</h3>\n";
 	echo "<table class=\"facts_table\">\n";
-	echo "<tr><td class=\"topbottombar\">".$pgv_lang["selected_item"]."</td></tr>\n";
-	if (isset($_POST["welcome_page"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["welcome_page"]."</td></tr>\n";
-	if (isset($_POST["indi_recs"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["sm_indi_info"]."</td></tr>\n";
-	if (isset($_POST["indi_list"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["sm_individual_list"]."</td></tr>\n";
-	if (isset($_POST["fam_recs"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["sm_family_info"]."</td></tr>\n";
-	if (isset($_POST["fam_list"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["sm_family_list"]."</td></tr>\n";
-//  if (isset($_POST["GEDCOM_Privacy"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["gedcoms_privacy"]."</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">", $pgv_lang["selected_item"], "</td></tr>\n";
+	if (isset($_POST["welcome_page"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["welcome_page"], "</td></tr>\n";
+	if (isset($_POST["indi_recs"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["sm_indi_info"], "</td></tr>\n";
+	if (isset($_POST["indi_list"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["sm_individual_list"], "</td></tr>\n";
+	if (isset($_POST["fam_recs"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["sm_family_info"], "</td></tr>\n";
+	if (isset($_POST["fam_list"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["sm_family_list"], "</td></tr>\n";
+	if (isset($_POST["GEDCOM_Privacy"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["gedcoms_privacy"], "</td></tr>\n";
 
-	echo "<tr><td class=\"topbottombar\">".$pgv_lang["gedcoms_selected"]."</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">", $pgv_lang["gedcoms_selected"], "</td></tr>\n";
 	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
-		if (isset($_POST["GEDCOM_{$ged_id}"])) echo "<tr><td class=\"optionbox\">".get_gedcom_setting($ged_id, 'title')."</td></tr>\n";
+		if (isset($_POST["GEDCOM_{$ged_id}"])) echo "<tr><td class=\"optionbox\">", get_gedcom_setting($ged_id, 'title'), "</td></tr>\n";
 	}
 
-	echo "<tr><td class=\"topbottombar\">".$pgv_lang["sitemaps_generated"]."</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">", $pgv_lang["sitemaps_generated"], "</td></tr>\n";
 	$filecounter = 0;
 	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 		if (isset($_POST["GEDCOM_{$ged_id}"])) {
 			$filecounter += 1;
 			$sitemapFilename = "SM_".str_ireplace(".ged",".xml",$gedcom);
-			echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=sitemap&action=sendFiles&index=".$ged_id."&gedcom_name=".$gedcom."&filename=".$sitemapFilename;
-			if (isset($_POST["welcome_page"])) echo "&welcome=true&welcome_priority=".$welcome_priority."&welcome_update=".$welcome_update;
-			if (isset($_POST["indi_recs"])) echo "&indi_rec=true&indirec_priority=".$indirec_priority."&indirec_update=".$indirec_update;
-			if (isset($_POST["indi_list"])) echo "&indi_lists=true&indilist_priority=".$indilist_priority."&indilist_update=".$indilist_update;
-			if (isset($_POST["fam_recs"])) echo "&fam_rec=true&famrec_priority=".$famrec_priority."&famrec_update=".$famrec_update;
-			if (isset($_POST["fam_list"])) echo "&fam_lists=true&famlist_priority=".$famlist_priority."&famlist_update=".$famlist_update;
-//		  if (isset($_POST["GEDCOM_Privacy"])) echo "&no_private_links=true";
-			echo "\">".$sitemapFilename."</a></td></tr>\n";
+			echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=sitemap&action=sendFiles&index=", $ged_id, "&gedcom_name=", $gedcom, "&filename=", $sitemapFilename;
+			if (isset($_POST["welcome_page"])) echo "&welcome=true&welcome_priority=", $welcome_priority, "&welcome_update=", $welcome_update;
+			if (isset($_POST["indi_recs"])) echo "&indi_rec=true&indirec_priority=", $indirec_priority, "&indirec_update=", $indirec_update;
+			if (isset($_POST["indi_list"])) echo "&indi_lists=true&indilist_priority=", $indilist_priority, "&indilist_update=", $indilist_update;
+			if (isset($_POST["fam_recs"])) echo "&fam_rec=true&famrec_priority=", $famrec_priority, "&famrec_update=", $famrec_update;
+			if (isset($_POST["fam_list"])) echo "&fam_lists=true&famlist_priority=", $famlist_priority, "&famlist_update=", $famlist_update;
+			if (isset($_POST["GEDCOM_Privacy"])) echo "&no_private_links=1";
+			echo "\">", $sitemapFilename, "</a></td></tr>\n";
 		}
 	}
 	if ($filecounter > 1) {
 		echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=sitemap&action=sendIndex";
 		foreach(get_all_gedcoms() as $ged_id=>$gedcom) {
 			if (isset($_POST["GEDCOM_{$ged_id}"])) {
-				echo "&filenames[".$ged_id."]=".$gedcom;
+				echo "&filenames[", $ged_id, "]=", $gedcom;
 			}
 		}
 		echo "\">SitemapIndex.xml</a></td></tr>\n";
 	}
-	echo "<tr><td class=\"topbottombar\">".$pgv_lang["sitemaps_placement"]."</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">", $pgv_lang["sitemaps_placement"], "</td></tr>\n";
 	echo "</table>\n";
 	echo "<br />\n";
 }
@@ -239,17 +280,24 @@ if ($action=="") {
 	<input type="hidden" name="action" value="generate" />
 	<table class="facts_table width100">
 		<tr>
-			<td class="descriptionbox wrap width50"><?php print_help_link("SM_GEDCOM_SELECT_help", "qm", "SM_GEDCOM_SELECT"); echo $pgv_lang["gedcoms_selected"];?></td>
+			<td class="descriptionbox wrap width30"><?php print_help_link("SM_GEDCOM_SELECT_help", "qm", "SM_GEDCOM_SELECT"); echo $pgv_lang["gedcoms_selected"];?></td>
 			<td class="optionbox" colspan="3">
 <?php
 	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
-		echo "				<input type=\"checkbox\" name=\"GEDCOM_".$ged_id."\" value=\"".$ged_id."\" tabindex=\"".$i++."\" checked>".get_gedcom_setting($ged_id, 'title')."<br />\n";
+		echo "				<input type=\"checkbox\" name=\"GEDCOM_", $ged_id, "\" value=\"", $ged_id, "\" tabindex=\"", $i++, "\" checked>", get_gedcom_setting($ged_id, 'title'), "<br />\n";
 	}
 ?>
 			</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap width50" rowspan="6">
+			<td class="descriptionbox wrap width30">
+			</td>
+			<td class="optionbox" colspan="3">
+				<input type="checkbox" name="GEDCOM_Privacy" tabindex="<?php $i++; echo $i?>" checked><?php echo $pgv_lang["gedcoms_privacy"];?>
+			</td>
+		</tr>
+		<tr>
+			<td class="descriptionbox wrap width30" rowspan="6">
 				<?php print_help_link("SM_ITEM_SELECT_help", "qm", "SM_ITEM_SELECT"); echo $pgv_lang["selected_item"];?>
 			</td>
 			<td class="topbottombar"><?php echo $pgv_lang["sm_item"];?></td>

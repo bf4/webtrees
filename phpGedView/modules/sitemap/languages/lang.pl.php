@@ -3,7 +3,7 @@
  * Polish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,14 +30,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Admin menu
-$pgv_lang["sitemap"]       			= "Mapa strony";
-$pgv_lang["generate_sitemap"]       = "Generuj pliki mapy strony";
+$pgv_lang["sitemap"]       			= "Mapa witryny";
+$pgv_lang["generate_sitemap"]       = "Generuj pliki mapy witryny";
 
 // Sitemap pages
-$pgv_lang["selected_item"]          = "Zaznacz pozycje, które mają być<br />zamieszczone w pliku mapy strony:";
-$pgv_lang["gedcoms_selected"]       = "Pliki GEDCOM do zamieszczenia<br />w pliku mapy strony:";
-$pgv_lang["sitemaps_generated"]     = "Następujące pliki mapy strony zostały wygenerowane i mogą być pobrane:";
-$pgv_lang["sitemaps_placement"]     = "Zamieść wszystkie pliki znajdujące się w katalogu głównym phpGedView.";
+$pgv_lang["selected_item"]          = "Pozycje, które mają być zamieszczone w pliku mapy witryny:";
+$pgv_lang["gedcoms_selected"]       = "Pliki GEDCOM do zamieszczenia w pliku mapy witryny:";
+$pgv_lang["sitemaps_generated"]     = "Następujące pliki mapy witryny zostały wygenerowane i mogą być pobrane:";
+$pgv_lang["sitemaps_placement"]     = "Zamieść wszystkie pliki mapy witryny w katalogu głównym phpGedView.";
 $pgv_lang["sm_indi_info"]			= "Informacje osobowe";
 $pgv_lang["sm_family_info"]			= "Informacje rodzinne";
 $pgv_lang["sm_individual_list"]		= "Lista osób";
@@ -45,14 +45,14 @@ $pgv_lang["sm_family_list"]			= "List rodzin";
 $pgv_lang["sm_item"]                = "Pozycje";
 $pgv_lang["sm_priority"]            = "Priorytet";
 $pgv_lang["sm_updates"]             = "Uaktualnienia";
-$pgv_lang["sm_always"]              = "zawsze";
-$pgv_lang["sm_hourly"]              = "godzinnie";
-$pgv_lang["sm_daily"]               = "dziennie";
-$pgv_lang["sm_weekly"]              = "tygodniowo";
-$pgv_lang["sm_monthly"]             = "miesięcznie";
-$pgv_lang["sm_yearly"]              = "rocznie";
+$pgv_lang["sm_always"]              = "ciągłe";
+$pgv_lang["sm_hourly"]              = "godzinne";
+$pgv_lang["sm_daily"]               = "dzienne";
+$pgv_lang["sm_weekly"]              = "tygodniowe";
+$pgv_lang["sm_monthly"]             = "miesięczne";
+$pgv_lang["sm_yearly"]              = "roczne";
 $pgv_lang["sm_never"]               = "nigdy";
 $pgv_lang["sm_generate"]            = "Generuj";
-$pgv_lang["gedcoms_privacy"]        = "Brak linków do prywatnych informacji";
+$pgv_lang["gedcoms_privacy"]        = "Brak odnośników do informacji prywatnych";
 
 ?>
