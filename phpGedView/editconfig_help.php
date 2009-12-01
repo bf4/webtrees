@@ -24,10 +24,10 @@
  * @subpackage Admin
  */
 
-if (file_exists(PGV_ROOT.'config.php')) {
-	require PGV_ROOT.'config.php';
+if (file_exists('./config.php')) {
+	require './config.php';
 } else {
-	require PGV_ROOT.'config.dist';
+	require './config.dist';
 }
 
 loadLangFile("all");
