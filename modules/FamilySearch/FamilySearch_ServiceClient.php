@@ -126,6 +126,10 @@ class FamilySearch_ServiceClient extends ServiceClient {
 		static $sql_insert_fam=null;
 		static $sql_insert_sour=null;
 		static $sql_insert_other=null;
+		static $sql_update_indi=null;
+		static $sql_update_fam=null;
+		static $sql_update_sour=null;
+		static $sql_update_other=null;
 		if (!$sql_insert_indi) {
 			$sql_insert_indi=PGV_DB::prepare(
 				"INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_isdead, i_sex, i_gedcom) VALUES (?,?,?,?,?,?)"
@@ -138,6 +142,18 @@ class FamilySearch_ServiceClient extends ServiceClient {
 			);
 			$sql_insert_other=PGV_DB::prepare(
 				"INSERT INTO {$TBLPREFIX}other (o_id, o_file, o_type, o_gedcom) VALUES (?,?,?,?)"
+			);
+			$sql_update_indi=PGV_DB::prepare(
+				"UPDATE {$TBLPREFIX}individuals set i_gedcom=?, i_sex=?, i_isdead=? where i_id=? and i_file=?"
+			);
+			$sql_update_fam=PGV_DB::prepare(
+				"UPDATE {$TBLPREFIX}families set f_gedcom=?, f_husb=?, f_wife=?, f_numchil=? where f_id=? and f_file=?"
+			);
+			$sql_update_sour=PGV_DB::prepare(
+				"UPDATE {$TBLPREFIX}sources set s_name=?, s_gedcom=? where s_id=? and s_file=?"
+			);
+			$sql_update_other=PGV_DB::prepare(
+				"UPDATE {$TBLPREFIX}other set o_gedcom=? where o_id=? and o_file=?"
 			);
 		}
 		
@@ -152,14 +168,20 @@ class FamilySearch_ServiceClient extends ServiceClient {
 			return;
 		}
 		
-		$ged_id=$GEDCOMS[$GEDCOM]["id"];
+		
+		$ged_id=get_id_from_gedcom($GEDCOM);
 		$xref  =$gid;
+		$update = false;
+		$oldrecord = find_gedcom_record($xref, $ged_id);
+		if ($oldrecord) $update = true;
 		
 		switch ($type) {
 		case 'INDI':
 			$sex = 'U';
 			if (preg_match('/\n1 SEX (.)/', $gedrec, $match)) $sex = $match[1];
-			$sql_insert_indi->execute(array($xref, $ged_id, $xref, is_dead($gedrec, '', true), $sex, $gedrec));
+			$isdead = is_dead($gedrec, '', true);
+			if (!$update) $sql_insert_indi->execute(array($xref, $ged_id, $xref, $isdead, $sex, $gedrec));
+			else $sql_update_indi->execute(array($gedrec, $sex, $isdead, $xref, $ged_id));
 			break;
 		case 'FAM':
 			if (preg_match('/\n1 HUSB @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
@@ -180,7 +202,8 @@ class FamilySearch_ServiceClient extends ServiceClient {
 			if (preg_match('/\n1 NCHI (\d+)/', $gedrec, $match)) {
 				$nchi=max($nchi, $match[1]);
 			}
-			$sql_insert_fam->execute(array($xref, $ged_id, $husb, $wife, $chil, $gedrec, $nchi));
+			if (!$update) $sql_insert_fam->execute(array($xref, $ged_id, $husb, $wife, $chil, $gedrec, $nchi));
+			else $sql_update_fam->execute(array($gedrec, $husb, $wife, $chil, $xref, $ged_id));
 			break;
 		case 'SOUR':
 			if (preg_match('/\n1 TITL (.+)/', $gedrec, $match)) {
@@ -195,11 +218,13 @@ class FamilySearch_ServiceClient extends ServiceClient {
 			} else {
 				$_dbid=null;
 			}
-			$sql_insert_sour->execute(array($xref, $ged_id, $name, $gedrec, $_dbid));
+			if (!$update) $sql_insert_sour->execute(array($xref, $ged_id, $name, $gedrec, $_dbid));
+			else $sql_update_sour->execute(array($name, $gedrec, $xref, $ged_id));
 			break;
 		default:
 			if (substr($type, 0, 1)!='_') {
-				$sql_insert_other->execute(array($xref, $ged_id, $type, $gedrec));
+				if (!$update) $sql_insert_other->execute(array($xref, $ged_id, $type, $gedrec));
+				else $sql_update_other->execute(array($gedrec, $xref, $ged_id));
 			}
 			break;
 		}
@@ -334,7 +359,7 @@ class FamilySearch_ServiceClient extends ServiceClient {
 				// If there are no changes between the local and remote copies
 				if ($person->getVersion()<=$version) {
 					if (isset($person->faultstring)) AddToLog($person->faultstring);
-					else AddToLog($person->message);
+					else if (isset($person->message)) AddToLog($person->message);
 					//-- update the last change time
 					$pos1 = strpos($localrec, "1 CHAN");
 					if ($pos1!==false) {
@@ -353,7 +378,6 @@ class FamilySearch_ServiceClient extends ServiceClient {
 						$newgedrec .= "2 _PGVU @".$this->xref."@";
 						$localrec .= $newgedrec;
 					}
-					if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 					$this->cacheRecordInDB($localrec);
 				}
 				// If changes have been made to the remote record

@@ -25,7 +25,7 @@ class FS_IndividualController extends IndividualControllerRoot {
 		$pid = $this->pid;
 
 		$this->default_tab = 0;
-		$indirec = find_gedcom_record($pid);
+		$indirec = find_gedcom_record($pid, get_id_from_gedcom($GEDCOM));
 
 		if (empty($indirec)) {
 			$ct = preg_match("/(\w+):(.+)/", $this->pid, $match);
