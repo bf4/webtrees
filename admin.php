@@ -178,7 +178,7 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		<td class="optionbox width50"><?php if (PGV_USER_IS_ADMIN) { print_help_link("help_dir_editor.php", "qm"); echo "<a href=\"dir_editor.php\">", $pgv_lang["index_dir_cleanup"], "</a>"; } ?>&nbsp;</td>
 		<td class="optionbox width50"><?php if ($d_pgv_changes != "") echo $d_pgv_changes; else echo "&nbsp;"; ?></td>
 	</tr>
-<?php if (PGV_USER_GEDCOM_ADMIN && is_dir('./modules/batch_update')) { ?>
+<?php if (PGV_USER_GEDCOM_ADMIN && is_dir(PGV_ROOT.'modules/batch_update')) { ?>
 	<tr>
 		<td class="optionbox with50"><?php print_help_link("batch_update_help", "qm"); ?><a href="module.php?mod=batch_update"><?php echo $pgv_lang["batch_update"]; ?></a></td>
 		<td class="optionbox width50">&nbsp;</td>
@@ -233,10 +233,10 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	</tr>
 <?php    }
 
-if (is_dir('./modules/')) {
-	$rep = opendir('./modules/');
+if (is_dir(PGV_ROOT.'modules/')) {
+	$rep = opendir(PGV_ROOT.'modules/');
 	while ($file = readdir($rep)) {
-		if(($file <> ".") && ($file <> "..") && (is_dir('./modules/'.$file))) {
+		if(($file <> ".") && ($file <> "..") && (is_dir(PGV_ROOT.'modules/'.$file))) {
 			if (file_exists(PGV_ROOT.'modules/'.$file.'/admin-config.php')) {
 				require PGV_ROOT.'modules/'.$file.'/admin-config.php';
 			}
