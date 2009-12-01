@@ -1966,18 +1966,7 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 		}
 		if ($success) {
 			echo "<br /><br />".$pgv_lang["gedrec_deleted"];
-			if ($action=="deletenote") {
-				$link="notelist.php";
-			}else if ($action=="deletesource") {
-				$link="sourcelist.php";
-			}else if ($action=="deleterepo") {
-				$link="repolist.php";
-			}
 		}
-		echo PGV_JS_START;
-		echo "alert('{$pid} {$pgv_lang["gedrec_deleted"]}');";
-		echo "edit_close('{$link}');";
-		echo PGV_JS_END;
 	}
 	break;
 //------------------------------------------------------------------------------
