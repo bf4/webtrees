@@ -46,6 +46,7 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["create_shared_note_assisted"]			01 Dec 2009				C
 *$pgv_lang["create_shared_note_assisted"]			18 Nov 2009				w
 +$pgv_lang["add_new_event_assisted"]				18 Nov 2009				A
 +$pgv_lang["to_note"]								30 Jun 2009				A
