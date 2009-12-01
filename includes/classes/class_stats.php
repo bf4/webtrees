@@ -2859,7 +2859,7 @@ class stats {
 			.' FROM'
 				." {$TBLPREFIX}families"
 			.' WHERE'
-				." f_file={$this->_ged_id}"
+				." f_file={$this->_ged_id} and f_id not like '%:%'"
 			.' ORDER BY'
 				.' tot DESC'
 		, 1);

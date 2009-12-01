@@ -326,7 +326,7 @@ class FamilySearch_ServiceClient extends ServiceClient {
 				
 				$version = get_gedcom_value("CHAN:VERS", 1, $localrec, '', false);
 
-				$xml = $this->soapClient->getRequestData($xref, getPersonById, '&names=none&genders=none&events=none', false);
+				$xml = $this->soapClient->getRequestData($xref, 'getPersonById', '&names=none&genders=none&events=none', false);
 				$this->xmlGed->parseXml($xml);
 				$person = $this->xmlGed->getPerson($xref);
 				if (is_null($person)) return $localrec;
