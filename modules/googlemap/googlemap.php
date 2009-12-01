@@ -57,9 +57,9 @@ if($SESSION_HIDE_GOOGLEMAP == "true") $_SESSION['hide_googlemap'] = true;
 if($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
 if($SESSION_HIDE_GOOGLEMAP == "empty") {
 	if((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
-	$SESSION_HIDE_GOOGLEMAP = "true";
+		$SESSION_HIDE_GOOGLEMAP = "true";
 	else
-	$SESSION_HIDE_GOOGLEMAP = "false";
+		$SESSION_HIDE_GOOGLEMAP = "false";
 }
 
 loadLangFile("googlemap:lang");
@@ -281,7 +281,7 @@ function print_address_structure_map($factrec, $level) {
 		if (!empty($cont)) $resultText .= str_replace(array(" ", "<br&nbsp;"), array("&nbsp;", "<br "), PrintReady($cont));
 		else {
 			if (strlen(trim($omatch[$i][1])) > 0) echo "<br />";
-			$cs = preg_match("/$nlevel ADR1 (.*)/", $arec, $cmatch);
+				$cs = preg_match("/$nlevel ADR1 (.*)/", $arec, $cmatch);
 			if ($cs>0) {
 				if ($cn==0) {
 					$resultText .= "<br />";
@@ -300,22 +300,22 @@ function print_address_structure_map($factrec, $level) {
 
 			if ($POSTAL_CODE) {
 				if (preg_match("/$nlevel CITY (.*)/", $arec, $cmatch))
-				$resultText.=" ".PrintReady($cmatch[1]);
+					$resultText.=" ".PrintReady($cmatch[1]);
 				if (preg_match("/$nlevel STAE (.*)/", $arec, $cmatch))
-				$resultText.=", ".PrintReady($cmatch[1]);
+					$resultText.=", ".PrintReady($cmatch[1]);
 				if (preg_match("/$nlevel POST (.*)/", $arec, $cmatch))
-				$resultText.="<br />".PrintReady($cmatch[1]);
+					$resultText.="<br />".PrintReady($cmatch[1]);
 			} else {
 				if (preg_match("/$nlevel POST (.*)/", $arec, $cmatch))
-				$resultText.="<br />".PrintReady($cmatch[1]);
+					$resultText.="<br />".PrintReady($cmatch[1]);
 				if (preg_match("/$nlevel CITY (.*)/", $arec, $cmatch))
-				$resultText.=" ".PrintReady($cmatch[1]);
+					$resultText.=" ".PrintReady($cmatch[1]);
 				if (preg_match("/$nlevel STAE (.*)/", $arec, $cmatch))
-				$resultText.=", ".PrintReady($cmatch[1]);
+					$resultText.=", ".PrintReady($cmatch[1]);
 			}
 		}
 		if (preg_match("/$nlevel CTRY (.*)/", $arec, $cmatch))
-		$resultText.="<br />".PrintReady($cmatch[1]);
+			$resultText.="<br />".PrintReady($cmatch[1]);
 		$resultText.= "<br />";
 		// Here we can examine the resultant text and remove empty tags
 		echo str_replace(chr(10), ' ' , $resultText);
@@ -441,8 +441,8 @@ function create_possible_place_names ($placename, $level) {
 
 function abbreviate($text) {
 	if (UTF8_strlen($text)>13) {
-		if (trim(UTF8_substr($text, 10, 1))!="")
-		$desc = UTF8_substr($text, 0, 11).".";
+		if (trim(UTF8_substr($text, 10, 1))!="") 
+			$desc = UTF8_substr($text, 0, 11).".";
 		else $desc = trim(UTF8_substr($text, 0, 11));
 	}
 	else $desc = $text;
@@ -460,9 +460,9 @@ function get_lati_long_placelocation ($place) {
 		$placelist = create_possible_place_names($parent[$i], $i+1);
 		foreach ($placelist as $key => $placename) {
 			$pl_id=
-			PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
-			->execute(array($i, $place_id, $placename))
-			->fetchOne();
+				PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
+				->execute(array($i, $place_id, $placename))
+				->fetchOne();
 			if (!empty($pl_id)) break;
 		}
 		if (empty($pl_id)) break;
@@ -470,9 +470,9 @@ function get_lati_long_placelocation ($place) {
 	}
 
 	$row=
-	PGV_DB::prepare("SELECT pl_lati, pl_long, pl_zoom, pl_icon, pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=? ORDER BY pl_place")
-	->execute(array($place_id))
-	->fetchOneRow();
+		PGV_DB::prepare("SELECT pl_lati, pl_long, pl_zoom, pl_icon, pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=? ORDER BY pl_place")
+		->execute(array($place_id))
+		->fetchOneRow();
 	if ($row) {
 		return array('lati'=>$row->pl_lati, 'long'=>$row->pl_long, 'zoom'=>$row->pl_zoom, 'icon'=>$row->pl_icon, 'level'=>$row->pl_level);
 	} else {
@@ -486,12 +486,9 @@ function setup_map() {
 		return;
 	}
 	?>
-<script
-	src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>"
-	type="text/javascript"></script>
-<script
-	src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
-<script type="text/javascript">
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
+	<script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
+	<script type="text/javascript">
 	// <![CDATA[
 		if (window.attachEvent) {
 			window.attachEvent("onunload", function() {
@@ -515,7 +512,7 @@ function setup_map() {
 function tool_tip_text($marker) {
 	$tool_tip=$marker['fact'];
 	if (!empty($marker['info']))
-	$tool_tip.=": {$marker['info']}";
+		$tool_tip.=": {$marker['info']}";
 	if (!empty($marker['name'])) {
 		$person=Person::getInstance($marker['name']);
 		if ($person && $person->canDisplayName()) {
@@ -533,49 +530,51 @@ function tool_tip_text($marker) {
 function create_indiv_buttons() {
 	global $pgv_lang;
 	?>
-<style type="text/css">
-#map_type {
-	margin: 0;
-	padding: 0;
-	font-family: Arial;
-	font-size: 10px;
-	list-style: none;
-}
-
-#map_type li {
-	display: block;
-	width: 70px;
-	text-align: center;
-	padding: 2px;
-	border: 1px solid black;
-	cursor: pointer;
-	float: left;
-	margin-left: 2px;
-}
-
-#map_type li.non_active {
-	background: white;
-	color: black;
-	font-weight: normal;
-}
-
-#map_type li.active {
-	background: gray;
-	color: white;
-	font-weight: bold;
-}
-
-#map_type li:hover {
-	background: #ddd;
-}
-
-#map_nav {
-	position: relative;
-	top: -484px;
-	left: 101%;
-}
-</style>
-<script type='text/javascript'>
+	<style type="text/css">
+	#map_type
+	{
+		margin: 0;
+		padding: 0;
+		font-family: Arial;
+		font-size: 10px;
+		list-style: none;
+	}
+	#map_type li
+	{
+		display: block;
+		width: 70px;
+		text-align: center;
+		padding: 2px;
+		border: 1px solid black;
+		cursor: pointer;
+		float: left;
+		margin-left: 2px;
+	}
+	#map_type li.non_active
+	{
+		background: white;
+		color: black;
+		font-weight: normal;
+	}
+	#map_type li.active
+	{
+		background: gray;
+		color: white;
+		font-weight: bold;
+	}
+	#map_type li:hover
+	{
+		background: #ddd;
+	}
+	#map_nav
+	{
+		position: relative;
+		top: -484px;
+		left: 101%;
+	}
+	
+	</style>
+	<script type='text/javascript'>
 	<!--
 	function Map_type() {}
 	Map_type.prototype = new GControl();
@@ -666,7 +665,7 @@ function build_indiv_map($indifacts, $famids) {
 		}
 		echo "\n\t</table>\n<br />";
 		?>
-<script type="text/javascript">
+		<script type="text/javascript">
 			document.getElementById("googlemap_left").innerHTML = document.getElementById("googlemap_content").innerHTML;
 			document.getElementById("googlemap_content").innerHTML = "";
 		</script>
@@ -878,7 +877,7 @@ function build_indiv_map($indifacts, $famids) {
 		}
 	} else {
 		?>
-<script type="text/javascript">
+		<script type="text/javascript">
 		function SetMarkersAndBounds () {
 			var bounds = new GLatLngBounds();
 		<?php

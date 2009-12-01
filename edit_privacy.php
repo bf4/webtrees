@@ -27,7 +27,7 @@
 
 require './config.php';
 
-require 'includes/functions/functions_print_facts.php';
+require PGV_ROOT.'includes/functions/functions_print_facts.php';
 
 loadLangFile('pgv_confighelp, pgv_help');
 
@@ -126,7 +126,7 @@ $PRIVACY_MODULE = get_privacy_file();
 
 print_header($pgv_lang["privacy_header"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
 <table class="facts_table <?php print $TEXT_DIRECTION; ?>">
 	<tr>
@@ -158,7 +158,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SHOW_SOURCES\s*=\s*.*;/', "\$SHOW_SOURCES = ".$_POST["v_SHOW_SOURCES"].";", $configtext);
 	$configtext = preg_replace('/\$MAX_ALIVE_AGE\s*=\s*".*";/', "\$MAX_ALIVE_AGE = \"".$_POST["v_MAX_ALIVE_AGE"]."\";", $configtext);
 	if ($MAX_ALIVE_AGE!=$_POST["v_MAX_ALIVE_AGE"]) reset_isdead(get_id_from_gedcom($ged));
-	if (file_exists("modules/research_assistant.php")) {
+	if (file_exists(PGV_ROOT.'modules/research_assistant.php')) {
 		$configtext = preg_replace('/\$SHOW_RESEARCH_ASSISTANT\s*=\s*.*;/', "\$SHOW_RESEARCH_ASSISTANT = ".$_POST["v_SHOW_RESEARCH_ASSISTANT"].";", $configtext);
 	}
 	$configtext = preg_replace('/\$SHOW_MULTISITE_SEARCH\s*=\s*.*;/', "\$SHOW_MULTISITE_SEARCH = ".$_POST["v_SHOW_MULTISITE_SEARCH"].";", $configtext);
@@ -256,13 +256,13 @@ if ($action=="update") {
 		fclose($fp);
 	}
 	// NOTE: load the new variables
-	include $INDEX_DIRECTORY.$GEDCOM."_priv.php";
+	require $INDEX_DIRECTORY.$GEDCOM.'_priv.php';
 	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated");
  	$gedcomprivname = $GEDCOM."_priv.php";
  	check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
 
  	//-- delete the cache files for the welcome page blocks
-	include_once 'includes/index_cache.php';
+	require_once PGV_ROOT.'includes/index_cache.php';
 	clearCache();
 }
 ?>
@@ -334,7 +334,7 @@ if ($action=="update") {
 				</td>
 			</tr>
 
-			<?php if (file_exists("modules/research_assistant.php")) { ?>
+			<?php if (file_exists(PGV_ROOT.'modules/research_assistant.php')) { ?>
 			<tr>
 				<td class="descriptionbox wrap">
 					<?php print_help_link("SHOW_RESEARCH_ASSISTANT_help", "qm", "SHOW_RESEARCH_ASSISTANT"); print $pgv_lang["SHOW_RESEARCH_ASSISTANT"]; ?>

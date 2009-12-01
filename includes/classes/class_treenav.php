@@ -30,8 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_TREENAV_PHP', '');
 
-require_once('includes/classes/class_person.php');
-require_once('includes/functions/functions_charts.php');
+require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
 
 class TreeNav {
 	var $rootPerson = null;
@@ -53,10 +53,12 @@ class TreeNav {
 		$SHOW_PRIVATE_RELATIONSHIPS = true;		// Interactive Tree doesn't work if this is "false"
 
 		if ($rootid!='none') {
+			$rootid = check_rootid($rootid);
 			$this->zoomLevel = $zoom;
 			$this->rootPerson = Person::getInstance($rootid);
 			if (is_null($this->rootPerson)) $this->rootPerson = new Person('');
 		}
+
 		$this->name = $name;
 		//-- handle AJAX requests
 		if (!empty($_REQUEST['navAjax'])) {

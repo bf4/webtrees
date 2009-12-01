@@ -35,7 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_STATS_UI_PHP', '');
 
-require_once 'includes/classes/class_stats.php';
+require_once PGV_ROOT.'includes/classes/class_stats.php';
 class stats_ui extends stats
 {
 ///////////////////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ class stats_ui extends stats
 				}
 				else {
 					if(displayDetailsById($favorite['gid'], $favorite['type'])) {
-						require "{$INDEX_DIRECTORY}{$GEDCOM}_conf.php";
+						require $INDEX_DIRECTORY.$GEDCOM.'_conf.php';
 
 						switch($favorite['type']) {
 							case 'INDI':
@@ -124,7 +124,7 @@ class stats_ui extends stats
 						}
 						if(!$isged) {
 							$GEDCOM = $mygedcom;
-							require "{$INDEX_DIRECTORY}{$GEDCOM}_conf.php";
+							require $INDEX_DIRECTORY.$GEDCOM.'_conf.php';
 						}
 					}
 				}

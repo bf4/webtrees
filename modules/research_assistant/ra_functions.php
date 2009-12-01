@@ -42,14 +42,16 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 loadLangFile("research_assistant:lang");
 
-include_once("modules/research_assistant/forms/ra_privacy.php");
-include_once("modules/research_assistant/forms/ra_RSFunction.php");
-require_once("modules/research_assistant/forms/ra_RSSingleFactClass.php");
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_privacy.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_RSFunction.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_RSSingleFactClass.php';
 
 global $GEDCOM, $INDEX_DIRECTORY, $SHOW_RESEARCH_ASSISTANT;
 
-if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
-define("BASEPATH", 'modules/research_assistant/');
+if (file_exists($INDEX_DIRECTORY.$GEDCOM.'_ra_priv.php')) {
+	require_once $INDEX_DIRECTORY.$GEDCOM.'_ra_priv.php';
+}
+define("BASEPATH", './modules/research_assistant/');
 $emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","CHAN","_SEPR","RESI", "DATA", "MAP");
 $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
 $nonplacfacts = array("ENDL","NCHI","SLGC","SLGS","SSN","CHAN","_UID");
@@ -307,7 +309,7 @@ class ra_functions {
 			// Display or show an error
 			if (file_exists($path)) {
 				// Load the form.
-				include_once $path;
+				require_once $path;
 				$form = new $name ();
 				$out = $form->display_form();
 				return $out;
@@ -352,7 +354,7 @@ class ra_functions {
 		// Print the form if it exists
 		if (is_file($filename)) {
 			ob_start();
-			include $filename;
+			require $filename;
 			$contents = ob_get_contents();
 			ob_end_clean();
 
@@ -787,7 +789,7 @@ class ra_functions {
 
 		if (file_exists($path)) {
 			// Perform the function
-			include_once $path;
+			require_once $path;
 			$form = new $name ();
 			$out = $form-> $func ($args);
 		}
@@ -992,7 +994,7 @@ class ra_functions {
 	function inferences() {
 		global $TBLPREFIX;
 
-		require_once("modules/research_assistant/ra_ViewInferencesArray.php");
+		require_once PGV_ROOT.'modules/research_assistant/ra_ViewInferencesArray.php';
 		$indilist = get_indilist_indis();
 
 		//various counts
@@ -1317,14 +1319,22 @@ class ra_functions {
 											$compiled = "";
 											$tasktitle = "";
 
-											if (isset($factarray[$val[0]])) $tasktitle .= $factarray[$val[0]]." ";
-											else if (isset($pgv_lang[$val[0]])) $tasktitle .= $pgv_lang[$val[0]]." ";
-											else $tasktitle .= $val[0]." ";
+											if (isset($factarray[$val[0]])) {
+												$tasktitle .= $factarray[$val[0]]." ";
+											} elseif (isset($pgv_lang[$val[0]])) {
+												$tasktitle .= $pgv_lang[$val[0]]." ";
+											} else {
+												$tasktitle .= $val[0]." ";
+											}
 											//print_r($factarray);
 
-											if (isset($factarray[$val[1]])) $tasktitle .= $factarray[$val[1]];
-											else if (isset($pgv_lang[$val[1]])) $tasktitle .= $pgv_lang[$val[1]];
-											else $tasktitle .= $val[1];
+											if (isset($factarray[$val[1]])) {
+												$tasktitle .= $factarray[$val[1]];
+											} elseif (isset($pgv_lang[$val[1]])) {
+												$tasktitle .= $pgv_lang[$val[1]];
+											} else {
+												$tasktitle .= $val[1];
+											}
 											$taskid = $this->task_check($tasktitle, $person->getXref());
 											if (!$taskid) // if the task_check passes, create a check box
 												{
@@ -1615,13 +1625,23 @@ class ra_functions {
 
 							<div id=\"searchdiv\">";
 							foreach($this->sites as $file=>$value) break;
-							include_once("modules/research_assistant/search_plugin/".$file);
+							require_once PGV_ROOT.'modules/research_assistant/search_plugin/'.$file;
 							$autosearch=new AutoSearch();
 							$out .=  $autosearch->options();
 							$out .= "</div>
 							</td></tr>\n
 							</table>\n
 					</td></tr></table>";
+					
+
+		//beginning of FamilySearch results functionality
+		if (file_exists(PGV_ROOT.'modules/FamilySearch/RA_AutoMatch.php')) {
+			require_once PGV_ROOT.'modules/FamilySearch/RA_AutoMatch.php';
+			$matcher = new RA_AutoMatch();
+		// **** Brian H commented out the folowing line after Trunk merge (01 Dec 2009) - it gives an error - (John F to fix??) ****
+			// $out .= $matcher->generateResultsTable($person);
+			unset($matcher);
+		}
 
 		//Beginning of the comments feature
 		if (!empty($_REQUEST['action']) && $_REQUEST['action']=='delete_comment' && !empty($_REQUEST['uc_id'])) {

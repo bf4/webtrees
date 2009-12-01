@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_USER_MESSAGES_PHP', '');
 
-require_once 'includes/functions/functions_print_facts.php';
+require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 
 $PGV_BLOCKS["print_user_messages"]["name"]		= $pgv_lang["user_messages_block"];
 $PGV_BLOCKS["print_user_messages"]["descr"]		= "user_messages_descr";

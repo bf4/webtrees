@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once 'modules/research_assistant/search_plugin/base_autosearch.php';
+require_once PGV_ROOT.'modules/research_assistant/search_plugin/base_autosearch.php';
 
 class AutoSearch extends Base_AutoSearch {
 	function AutoSearch() {

@@ -25,7 +25,7 @@
  */
 
 require './config.php';
-require './includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $type           =safe_GET('type', PGV_REGEX_ALPHA, 'indi');
 $filter         =safe_GET('filter');
@@ -85,7 +85,7 @@ if (empty($language_filter)) {
 		$language_filter=$lang_short_cut[$LANGUAGE];
 	}
 }
-require 'includes/specialchars.php';
+require PGV_ROOT.'includes/specialchars.php';
 // End variables for Find Special Character
 
 switch ($type) {

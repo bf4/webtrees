@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_GECLIPPINGS_PHP', '');
 
-require_once 'includes/classes/class_grampsexport.php';
+require_once PGV_ROOT.'includes/classes/class_grampsexport.php';
 
 class GEClippings extends GrampsExport {
 /**
@@ -192,7 +192,7 @@ class GEClippings extends GrampsExport {
 	*/
 	function create_lds_event($indirec, $eventName, $eventABV, $eParent) {
 		global $ePerson, $TEMPLE_CODES, $clipping;
-		require_once("includes/classes/class_person.php");
+		require_once PGV_ROOT.'includes/classes/class_person.php';
 		if (($hasldsevent = get_sub_record(1, "1 " . $eventABV, $indirec)) != null) {
 
 			// Create <lds_ord> and attaches the type attribute

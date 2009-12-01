@@ -32,9 +32,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_LIFESPAN_CTRL_PHP', '');
 
-require_once 'includes/functions/functions_charts.php';
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
 
 function compare_people($a, $b) {
 	return GedcomDate::Compare($a->getEstimatedBirthDate(), $b->getEstimatedBirthDate());
@@ -611,8 +611,8 @@ class LifespanControllerRoot extends BaseController {
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/timeline_ctrl_user.php')) {
-	include_once 'includes/controllers/timeline_ctrl_user.php';
+if (file_exists(PGV_ROOT.'includes/controllers/timeline_ctrl_user.php')) {
+	require_once PGV_ROOT.'includes/controllers/timeline_ctrl_user.php';
 } else {
 	class LifespanController extends LifespanControllerRoot {
 	}

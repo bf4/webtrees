@@ -30,14 +30,14 @@
 
 require './config.php';
 
-require_once './includes/controllers/timeline_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/timeline_ctrl.php';
 
 $controller = new TimelineController();
 $controller->init();
 
 print_header($pgv_lang["timeline_title"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -246,66 +246,72 @@ document.onmousemove = MM;
 document.onmouseup = MU;
 //-->
 </script>
-<h2><?php print $pgv_lang["timeline_chart"]; ?></h2>
+<h2><?php echo $pgv_lang["timeline_chart"]; ?></h2>
 <?php if (!$controller->isPrintPreview()) { ?><form name="people" action="timeline.php"><?php } ?>
 <?php
 $controller->checkPrivacy();
 ?>
-<table class="<?php print $TEXT_DIRECTION; ?>">
+<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<tr>
 	<?php
 	$i=0;
 	$count = count($controller->people);
 	$half = $count;
-	if ($count>5) $half = ceil($count/2);
-	if (!$controller->isPrintPreview()) $half++;
+	if ($count>5) {
+		$half = ceil($count/2);
+	}
+	if (!$controller->isPrintPreview()) {
+		$half++;
+	}
 	foreach($controller->people as $p=>$indi) {
 		$pid = $indi->getXref();
 		$col = $p % 6;
-		if ($i==$half) print "</tr><tr>";
+		if ($i==$half) {
+			echo "</tr><tr>";
+		}
 		$i++;
 		?>
-		<td class="person<?php print $col; ?>" style="padding: 5px;">
+		<td class="person<?php echo $col; ?>" style="padding: 5px;">
 		<?php
 		if ($indi && $indi->canDisplayDetails()) {
-			if ($indi->getSex()=="M")
+			if ($indi->getSex()=="M") {
 				echo $indi->getSexImage('large', '', $pgv_lang['male']);
-			else if ($indi->getSex()=="F")
+			} elseif ($indi->getSex()=="F") {
 				echo $indi->getSexImage('large', '', $pgv_lang['female']);
-			else
+			} else {
 				echo $indi->getSexImage('large', '', $pgv_lang['unknown']);
+			}
 		?>
- 			<a href="individual.php?pid=<?php print $pid; ?>">&nbsp;<?php print PrintReady($indi->getFullName()); ?><br />
- 			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) print PrintReady($addname); ?>
+ 			<a href="individual.php?pid=<?php echo $pid; ?>">&nbsp;<?php echo PrintReady($indi->getFullName()); ?><br />
+ 			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) echo PrintReady($addname); ?>
 			</a>
-			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid,ENT_COMPAT,'UTF-8'); ?>" />
+			<input type="hidden" name="pids[<?php echo $p; ?>]" value="<?php echo htmlentities($pid, ENT_COMPAT, 'UTF-8'); ?>" />
 			<?php if (!$controller->isPrintPreview()) {
-				print "<br />";
+				echo "<br />";
 				print_help_link("remove_person_help", "qm");
 				?>
-				<a href="timeline.php?<?php print $controller->pidlinks; ?>&amp;scale=<?php print $controller->scale; ?>&amp;remove=<?php print $pid;?>" >
-				<span class="details1"><?php print $pgv_lang["remove_person"]; ?></span></a>
+				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
+				<span class="details1"><?php echo $pgv_lang["remove_person"]; ?></span></a>
 			<?php if (!empty($controller->birthyears[$pid])) { ?>
 				<span class="details1"><br />
 				<?php print_help_link("show_age_marker_help", "qm"); ?>
-				<?php print $pgv_lang["show_age"]; ?>
-				<input type="checkbox" name="agebar<?php print $p; ?>" value="ON" onclick="showhide('agebox<?php print $p; ?>', this);" />
+				<?php echo $pgv_lang["show_age"]; ?>
+				<input type="checkbox" name="agebar<?php echo $p; ?>" value="ON" onclick="showhide('agebox<?php echo $p; ?>', this);" />
 				</span>
 			<?php }
 			} ?>
 			<br />
 		<?php
-		}
-		else {
+		} else {
 			print_privacy_error($CONTACT_EMAIL);
 			?>
-			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid,ENT_COMPAT,'UTF-8'); ?>" />
+			<input type="hidden" name="pids[<?php echo $p; ?>]" value="<?php echo htmlentities($pid, ENT_COMPAT, 'UTF-8'); ?>" />
 			<?php if (!$controller->isPrintPreview()) {
-				print "<br />";
+				echo "<br />";
 				print_help_link("remove_person_help", "qm");
 				?>
-				<a href="timeline.php?<?php print $controller->pidlinks; ?>&amp;scale=<?php print $controller->scale; ?>&amp;remove=<?php print $pid;?>" >
-				<span class="details1"><?php print $pgv_lang["remove_person"]; ?></span></a>
+				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
+				<span class="details1"><?php echo $pgv_lang["remove_person"]; ?></span></a>
 			<?php } ?>
 			<br />
 		<?php } ?>

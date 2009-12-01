@@ -27,7 +27,7 @@
 */
 
 require './config.php';
-require './includes/controllers/individual_ctrl.php';
+require PGV_ROOT.'includes/controllers/individual_ctrl.php';
 
 $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 
@@ -41,7 +41,12 @@ define('PGV_JQUERY_LOADED', 1);
 session_write_close();
 print_header($controller->getPageTitle());
 
-if (!$controller->indi->canDisplayName()) {
+if (!$controller->indi){
+	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
+	print_footer();
+	exit;
+}
+else if (!$controller->indi->canDisplayName()) {
 	print_privacy_error($CONTACT_EMAIL);
 	print_footer();
 	exit;
@@ -279,7 +284,7 @@ jQuery(document).ready(function(){
 		<?php
 		if($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 			//print indi counter only if displaying a non-private person
-			require './includes/hitcount.php';
+			require PGV_ROOT.'includes/hitcount.php';
 			echo "<br />{$pgv_lang["hit_count"]} {$hitCount}<br />";
 		}
 		// if individual is a remote individual

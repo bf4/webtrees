@@ -31,12 +31,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_INDIVIDUAL_CTRL_PHP', '');
 
-require_once 'includes/functions/functions_print_facts.php';
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/classes/class_menu.php';
-require_once 'includes/classes/class_person.php';
-require_once 'includes/classes/class_family.php';
-require_once 'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/classes/class_menu.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/classes/class_family.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 require_once 'includes/classes/class_module.php';
 
 // -- array of GEDCOM elements that will be found but should not be displayed
@@ -122,7 +122,7 @@ class IndividualControllerRoot extends BaseController {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
-				include_once('includes/classes/class_serviceclient.php');
+				require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 				$service = ServiceClient::getInstance($servid);
 				if ($service != null) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\n1 RFN ".$this->pid, false);
@@ -200,7 +200,7 @@ class IndividualControllerRoot extends BaseController {
 					$servid = $parts[0];
 					$aliaid = $parts[1];
 					if (!empty($servid)&&!empty($aliaid)) {
-						require_once("includes/classes/class_serviceclient.php");
+						require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 						$serviceClient = ServiceClient::getInstance($servid);
 						if (!is_null($serviceClient)) {
 							if (!empty($newrec)) $mergerec = $serviceClient->mergeGedcomRecord($aliaid, $newrec, true);
@@ -341,9 +341,14 @@ class IndividualControllerRoot extends BaseController {
 	* @return string the title of the page to go in the <title> tags
 	*/
 	function getPageTitle() {
-		global $pgv_lang, $GEDCOM;
-		$name = $this->indi->getFullName();
-		return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
+		global $pgv_lang;
+		if ($this->indi) {
+			$name = $this->indi->getFullName();
+			return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
+		}
+		else {
+			return $pgv_lang["unable_to_find_record"];
+		}
 	}
 
 	/**
@@ -417,7 +422,7 @@ class IndividualControllerRoot extends BaseController {
 					$mid = $firstmediarec['mid'];
 
 					$name = $this->indi->getFullName();
-					if (file_exists("modules/lightbox/album.php")) {
+					if (PGV_USE_LIGHTBOX) {
 						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "\">" . "\n";
 					}else
 
@@ -1036,10 +1041,10 @@ class IndividualControllerRoot extends BaseController {
 	* include GedFact controller
 	*/
 	function census_assistant() {
-		require 'modules/GEDFact_assistant/_CENS/census_1_ctrl.php';
+		require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php';
 	}
 	function medialink_assistant() {
-		require 'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php';
+		require PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php';
 	}
 // -----------------------------------------------------------------------------
 // End GedFact Assistant Functions
@@ -1051,9 +1056,9 @@ class IndividualControllerRoot extends BaseController {
 // -- end of class
 
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/individual_ctrl_user.php'))
+if (file_exists(PGV_ROOT.'includes/controllers/individual_ctrl_user.php'))
 {
-	include_once 'includes/controllers/individual_ctrl_user.php';
+	require_once PGV_ROOT.'includes/controllers/individual_ctrl_user.php';
 }
 else
 {

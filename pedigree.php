@@ -31,7 +31,7 @@
 
 require './config.php';
 
-require './includes/controllers/pedigree_ctrl.php';
+require PGV_ROOT.'includes/controllers/pedigree_ctrl.php';
 
 $controller = new PedigreeController();
 $controller->init();
@@ -39,15 +39,15 @@ $controller->init();
 // -- echo html header information
 print_header($controller->getPageTitle());
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 // LightBox
-if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
-	include './modules/lightbox/lb_defaultconfig.php';
-	if (file_exists('modules/lightbox/lb_config.php')) {
-		include './modules/lightbox/lb_config.php';
+if (PGV_USE_LIGHTBOX) {
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+		require PGV_ROOT.'modules/lightbox/lb_config.php';
 	}
-	include './modules/lightbox/functions/lb_call_js.php';
+	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 
 echo '<table><tr><td valign="middle">';

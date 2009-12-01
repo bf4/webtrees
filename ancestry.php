@@ -28,23 +28,23 @@
 
 require './config.php';
 
-require './includes/controllers/ancestry_ctrl.php';
-require './includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/controllers/ancestry_ctrl.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $controller=new AncestryController();
 $controller->init();
 
 print_header($controller->name . " " . $pgv_lang['ancestry_chart']);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 // LightBox
-if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
-	include './modules/lightbox/lb_defaultconfig.php';
-	if (file_exists('modules/lightbox/lb_config.php')) {
-		include './modules/lightbox/lb_config.php';
+if (PGV_USE_LIGHTBOX) {
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+		require PGV_ROOT.'modules/lightbox/lb_config.php';
 	}
-	include './modules/lightbox/functions/lb_call_js.php';
+	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 
 echo '<table><tr><td valign="middle">';

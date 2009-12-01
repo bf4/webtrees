@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_edit.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
 
 loadLangFile("pgv_editor");
 
@@ -50,7 +50,7 @@ if ($TEXT_DIRECTION=="rtl") $align="left";
 
 print_simple_header($pgv_lang["quick_update_title"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 //-- only allow logged in users to access this page
 if (!$ALLOW_EDIT_GEDCOM || !$USE_QUICK_UPDATE || !PGV_USER_ID) {
@@ -1470,7 +1470,7 @@ if ($action=="choosepid") {
 	$person=Person::getInstance($pid);
 	echo '<b>', PrintReady(stripLRMRLM($person->getFullName()));
 	if ($SHOW_ID_NUMBERS) {
-		echo PrintReady("&nbsp;&nbsp;(", $pid, ")");
+		echo PrintReady("&nbsp;&nbsp;(". $pid. ")");
 	}
 	echo '</b><br />';
 ?>
@@ -1801,7 +1801,7 @@ if ($person && !$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($F
 			<?php  if (empty($ADDR)) { ?><input type="hidden" name="ADDR" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADDR), ENT_COMPAT, 'UTF-8')); ?>" /><?php } ?>
 			<table>
 			<?php if (!empty($_NAME)) { ?><tr><td><?php echo $factarray["NAME"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($_NAME)) echo "dir=\"ltr\""; ?> name="_NAME" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($_NAME), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr><?php } ?>
-			<?php  if (!empty($ADDR)) { ?><tr><td><?php echo $factarray["ADDR"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) echo "dir=\"ltr\""; ?> name="ADDR" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADDR), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr><?php } ?>
+			<?php  if (!empty($ADDR)) { ?><tr><td><?php echo $factarray["ADDR"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) echo "dir=\"ltr\""; ?> name="ADDR" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags(preg_replace('~(.*)\n(.*)~', '${1}', $ADDR)), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr><?php } ?>
 			<tr><td><?php echo $factarray["ADR1"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) echo "dir=\"ltr\""; ?> name="ADR1" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADR1), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr>
 			<tr><td><?php echo $factarray["ADR2"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR2)) echo "dir=\"ltr\""; ?> name="ADR2" size="35" value="<?php echo PrintReady(htmlspecialchars(strip_tags($ADR2), ENT_COMPAT, 'UTF-8')); ?>" /></td></tr>
 			<tr><td><?php echo $factarray["CITY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CITY)) echo "dir=\"ltr\""; ?> name="CITY" value="<?php echo PrintReady(htmlspecialchars(strip_tags($CITY), ENT_COMPAT, 'UTF-8')); ?>" />

@@ -34,8 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CHARTS_PHP', '');
 
-require_once 'includes/controllers/hourglass_ctrl.php';
-require_once 'includes/classes/class_treenav.php';
+require_once PGV_ROOT.'includes/controllers/hourglass_ctrl.php';
+require_once PGV_ROOT.'includes/classes/class_treenav.php';
 
 $PGV_BLOCKS["print_charts_block"]["name"]		= $pgv_lang["charts_block"];
 $PGV_BLOCKS["print_charts_block"]["descr"]		= "charts_block_descr";
@@ -180,7 +180,7 @@ function print_charts_block_config($config) {
 	if (empty($config["rootId"])) $config["rootId"] = $PEDIGREE_ROOT_ID;
 	if (empty($config['details'])) $config['details'] = 'no';
 
-	if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
 	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["chart_type"]; ?></td>
 	<td class="optionbox">
@@ -188,7 +188,7 @@ function print_charts_block_config($config) {
 			<option value="pedigree"<?php if ($config["type"]=="pedigree") print " selected=\"selected\""; ?>><?php print $pgv_lang["index_header"]; ?></option>
 			<option value="descendants"<?php if ($config["type"]=="descendants") print " selected=\"selected\""; ?>><?php print $pgv_lang["descend_chart"]; ?></option>
 			<option value="hourglass"<?php if ($config["type"]=="hourglass") print " selected=\"selected\""; ?>><?php print $pgv_lang["hourglass_chart"]; ?></option>
-			<?php if (file_exists("includes/classes/class_treenav.php")) { ?>
+			<?php if (file_exists(PGV_ROOT.'includes/classes/class_treenav.php')) { ?>
 			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\""; ?>><?php print $pgv_lang["interactive_tree"]; ?></option>
 			<?php } ?>
 		</select>

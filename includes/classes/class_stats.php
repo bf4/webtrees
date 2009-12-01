@@ -35,7 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_STATS_PHP', '');
 
-require_once 'includes/functions/functions_print_lists.php';
+require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 // Methods not allowed to be used in a statistic
 define('STATS_NOT_ALLOWED', 'stats,getAllTags,getTags');

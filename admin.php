@@ -29,8 +29,13 @@
 require './config.php';
 
 if (!PGV_USER_GEDCOM_ADMIN) {
-	header("Location: login.php?url=admin.php");
-	exit;
+	if (PGV_USER_ID) {
+		header("Location: index.php");
+		exit;
+	} else {
+		header("Location: login.php?url=module.php?mod=sitemap");
+		exit;
+	}
 }
 
 require_once('includes/classes/class_module.php');
@@ -45,9 +50,13 @@ if (!isset($action)) $action="";
 print_header($pgv_lang["administration"]);
 
 $d_pgv_changes = "";
-if (count($pgv_changes) > 0) $d_pgv_changes = "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">" . $pgv_lang["accept_changes"] . "</a>\n";
+if (count($pgv_changes) > 0) {
+	$d_pgv_changes = "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">" . $pgv_lang["accept_changes"] . "</a>\n";
+}
 
-if (!isset($logfilename)) $logfilename = "";
+if (!isset($logfilename)) {
+	$logfilename = "";
+}
 $file_nr = 0;
 $dir_var = opendir ($INDEX_DIRECTORY);
 $dir_array = array();
@@ -65,13 +74,13 @@ if (count($dir_array)>0) {
 	$d_logfile_str .= $pgv_lang["view_logs"] . ": ";
 	$d_logfile_str .= "\n<select name=\"logfilename\">\n";
 	$ct = count($dir_array);
-	for($x = 0; $x < $file_nr; $x++)
-
-	{
+	for($x = 0; $x < $file_nr; $x++) {
 		$ct--;
 		$d_logfile_str .= "<option value=\"";
 		$d_logfile_str .= $dir_array[$ct];
-		if ($dir_array[$ct] == $logfilename) $d_logfile_str .= "\" selected=\"selected";
+		if ($dir_array[$ct] == $logfilename) {
+			$d_logfile_str .= "\" selected=\"selected";
+		}
 		$d_logfile_str .= "\">";
 		$d_logfile_str .= $dir_array[$ct];
 		$d_logfile_str .= "</option>\n";
@@ -86,10 +95,14 @@ $usermanual_filename = "docs/english/PGV-manual-en.html";
 $d_LangName = "lang_name_" . "english";
 $doc_lang = $pgv_lang[$d_LangName];
 $new_usermanual_filename = "docs/" . $languages[$LANGUAGE] . "/PGV-manual-" . $language_settings[$LANGUAGE]["lang_short_cut"] . ".html";
-if (file_exists($new_usermanual_filename)){$usermanual_filename = $new_usermanual_filename; $d_LangName = "lang_name_" . $languages[$LANGUAGE]; $doc_lang = $pgv_lang[$d_LangName];}
+if (file_exists($new_usermanual_filename)) {
+	$usermanual_filename = $new_usermanual_filename; $d_LangName = "lang_name_" . $languages[$LANGUAGE]; $doc_lang = $pgv_lang[$d_LangName];
+}
 
 $d_img_module_str = "&nbsp;";
-if (file_exists("img_editconfig.php")) $d_img_module_str = "<a href=\"img_editconfig.php?action=edit\">".$pgv_lang["img_admin_settings"]."</a><br />";
+if (file_exists("img_editconfig.php")) {
+	$d_img_module_str = "<a href=\"img_editconfig.php?action=edit\">".$pgv_lang["img_admin_settings"]."</a><br />";
+}
 
 $err_write = file_is_writeable("config.php");
 
@@ -230,125 +243,91 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		</table>
 	</div>
 	
-	<?php if (PGV_USER_CAN_EDIT) { ?>
-	<div id="unlinked">
-	<table class="center <?php print $TEXT_DIRECTION ?> width100">
-	<tr>                                                                                                                                             
-            <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["add_unlinked"]; ?></td>                            
-    </tr>
-	<tr>
-		<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_person_help", "qm"); ?><a
-			href="javascript: <?php print $pgv_lang["add_unlinked_person"]; ?>"
-			onclick="addnewchild(''); return false;"><?php print $pgv_lang["add_unlinked_person"]; ?></a></td>
-		<td class="optionbox width50"><?php print_help_link("edit_add_unlinked_source_help", "qm"); ?><a
-			href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?>"
-			onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a></td>
-	</tr>
-	<tr>
-		<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_note_help", "qm"); ?><a
-			href="javascript: <?php print $pgv_lang["add_unlinked_note"]; ?>"
-			onclick="addnewnote(''); return false;"><?php print $pgv_lang["add_unlinked_note"]; ?></a></td>
-		<td class="optionbox width50">&nbsp;</td>
-	</tr>
-	</table>
-	</div>
-	<?php } ?>
-	<?php if (PGV_USER_IS_ADMIN) { ?>
-	<div id="site">
-	<table class="center <?php print $TEXT_DIRECTION ?> width100">
-	<tr>                                                                                                                                             
-            <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["admin_site"]; ?></td>                            
-    </tr>
-	<tr>
-		<td class="optionbox width50"><?php print_help_link("help_editconfig.php", "qm"); ?><a
-			href="install.php?step=4"><?php print $pgv_lang["configuration"];?></a></td>
-		<td class="optionbox width50"><?php print_help_link("um_tool_help", "qm"); ?><a
-			href="usermigrate.php?proceed=migrate"><?php print $pgv_lang["um_header"];?></a></td>
-	</tr>
-	<tr>
-		<td class="optionbox width50"><?php print_help_link("help_useradmin.php", "qm"); ?><a
-			href="useradmin.php"><?php print $pgv_lang["user_admin"];?></a></td>
-		<td class="optionbox width50"><?php print_help_link("um_bu_help", "qm"); ?><a
-			href="usermigrate.php?proceed=backup"><?php print $pgv_lang["um_backup"];?></a></td>
-	</tr>
-	<tr>
-		<td class="optionbox width50"><?php print_help_link("help_faq.php", "qm"); ?><a
-			href="faq.php"><?php print $pgv_lang["faq_list"];?></a></td>
-		<td class="optionbox width50"><?php print_help_link("help_managesites", "qm"); ?><a
-			href="manageservers.php"><?php print $pgv_lang["link_manage_servers"];?></a></td>
-	</tr>
-	<tr>
-		<td class="optionbox width50"><?php print_help_link("help_changelanguage.php", "qm"); ?><a
-			href="changelanguage.php?action=editold"><?php print $pgv_lang["enable_disable_lang"];?></a>
-			<?php
-			if (!file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
-				print "<br /><span class=\"error\">";
-				print $pgv_lang["LANGUAGE_DEFAULT"];
-				print "</span>";
-			}
-			?></td>
-		<td class="optionbox width50"><?php print_help_link("add_new_language_help", "qm"); ?><a
-			href="changelanguage.php?action=addnew"><?php print $pgv_lang["add_new_language"];?></a>
-		</td>
-	</tr>
-	<tr>
-		<td class="optionbox width50"><?php print_help_link("help_editlang.php", "qm"); ?><a
-			href="editlang.php"><?php print $pgv_lang["translator_tools"];?></a>
-		</td>
-		<td class="optionbox width50"><?php print $d_logfile_str; ?></td>
-	</tr>
-	</table>
-	</div>
-	<?php } 
-
-
-
-	if (PGV_USER_IS_ADMIN || count($modules)>0) { ?>
-	<div id="modules">
-
-	<?php
-		// Added by BH ------------------------
-		echo $pgv_lang["loading"]; 
-		// ------------------------------------
-	?>
-	
-	<?php /*
-	// --------------------------------
-	MODIFIED BY NIGEL (section removed) 
-	// --------------------------------
-		<table class="center <?php //print $TEXT_DIRECTION ?> width100">
+	<?php if (PGV_USER_CAN_EDIT) { 
+		?>
+		<div id="unlinked">
+		<table class="center <?php print $TEXT_DIRECTION ?> width100">
 		<tr>                                                                                                                                             
-			<td colspan="2" class="topbottombar" style="text-align:center; "><?php //print $pgv_lang["module_admin"]; ?></td>                            
+			<td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["add_unlinked"]; ?></td>                            
 		</tr>
 		<tr>
-			<td class="optionbox width50"><a href="module_admin.php"><?php //print $pgv_lang["module_admin"]; ?></a></td>
-			<td class="optionbox width50"><!-- nothing here yet --><!--</td>
+			<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_person_help", "qm"); ?>
+				<a href="javascript: <?php print $pgv_lang["add_unlinked_person"]; ?> "onclick="addnewchild(''); return false;"><?php print $pgv_lang["add_unlinked_person"]; ?></a>
+			</td>
+			<td class="optionbox width50"><?php print_help_link("edit_add_unlinked_source_help", "qm"); ?>
+				<a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?> "onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a>
+			</td>
 		</tr>
-		<tr>                                                                                                                                             
-			<td colspan="2" class="topbottombar" style="text-align:center; "><?php //print $pgv_lang["mod_admin_settings"]; ?></td>                            
+		<tr>
+			<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_note_help", "qm"); ?><a
+				href="javascript: <?php print $pgv_lang["add_unlinked_note"]; ?> "onclick="addnewnote(''); return false;"><?php print $pgv_lang["add_unlinked_note"]; ?></a>
+			</td>
+			<td class="optionbox width50">
+				&nbsp;
+			</td>
 		</tr>
-		<?php /*
-			$i = 0;
-			foreach($modules as $mod) {
-				$link = $mod->getConfigLink();
-				if ($link) {
-					if ($i % 2 ==0) echo '<tr>';
-					echo '<td class="optionbox width50"><a href="'.$link.'">'.$mod->getName().'</a></td>';
-					// echo '<td class="optionbox width50"><!-- nothing here yet --></td>';
-					$i++;
-					if ($i % 2 ==0) echo '</tr>';
-				}
-			}
-			
-		?>
 		</table>
-	// ------------------------------------
-	// MODIFIED BY NIGEL (section remmoved) 
-	// ------------------------------------
-	*/ ?>
+		</div>
+		<?php 
+	} 
+	
+	if (PGV_USER_IS_ADMIN) { 
+		?>
+		<div id="site">
+		<table class="center <?php print $TEXT_DIRECTION ?> width100">
+		<tr>                                                                                                                                             
+            <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["admin_site"]; ?></td>                            
+		</tr>
+		<tr>
+			<td class="optionbox width50"><?php print_help_link("help_editconfig.php", "qm"); ?><a
+				href="install.php?step=4"><?php print $pgv_lang["configuration"];?></a></td>
+			<td class="optionbox width50"><?php print_help_link("um_tool_help", "qm"); ?><a
+				href="usermigrate.php?proceed=migrate"><?php print $pgv_lang["um_header"];?></a></td>
+		</tr>
+		<tr>
+			<td class="optionbox width50"><?php print_help_link("help_useradmin.php", "qm"); ?><a
+				href="useradmin.php"><?php print $pgv_lang["user_admin"];?></a></td>
+			<td class="optionbox width50"><?php print_help_link("um_bu_help", "qm"); ?><a
+				href="usermigrate.php?proceed=backup"><?php print $pgv_lang["um_backup"];?></a></td>
+		</tr>
+		<tr>
+			<td class="optionbox width50"><?php print_help_link("help_faq.php", "qm"); ?><a
+				href="faq.php"><?php print $pgv_lang["faq_list"];?></a></td>
+			<td class="optionbox width50"><?php print_help_link("help_managesites", "qm"); ?><a
+				href="manageservers.php"><?php print $pgv_lang["link_manage_servers"];?></a></td>
+		</tr>
+		<tr>
+			<td class="optionbox width50"><?php print_help_link("help_changelanguage.php", "qm"); ?><a
+				href="changelanguage.php?action=editold"><?php print $pgv_lang["enable_disable_lang"];?></a>
+				<?php
+				if (!file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
+					echo "<br /><span class=\"error\">";
+					echo $pgv_lang["LANGUAGE_DEFAULT"];
+					echo "</span>";
+				}
+				?></td>
+			<td class="optionbox width50"><?php print_help_link("add_new_language_help", "qm"); ?><a
+				href="changelanguage.php?action=addnew"><?php print $pgv_lang["add_new_language"];?></a>
+			</td>
+		</tr>
+		<tr>
+			<td class="optionbox width50"><?php print_help_link("help_editlang.php", "qm"); ?><a
+				href="editlang.php"><?php print $pgv_lang["translator_tools"];?></a>
+			</td>
+			<td class="optionbox width50"><?php print $d_logfile_str; ?></td>
+		</tr>
+		</table>
+		</div>
+		<?php
+	} 
 
-	</div>
-	<?php } ?>
+	if (PGV_USER_IS_ADMIN || count($modules)>0) {
+		echo '<div id="modules">';
+			// Added by BH ------------------------
+			echo $pgv_lang["loading"]; 
+			// ------------------------------------
+		echo '</div>';
+	} ?>
 
 </div>
 </td>

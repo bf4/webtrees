@@ -112,6 +112,6 @@ $menubar = new MenuBar();
 	</table>
 	<img align="middle" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" width="99%" height="3" alt="" />
 </div>
-<?php require './includes/accesskeyHeaders.php'; ?>
+<?php require PGV_ROOT.'includes/accesskeyHeaders.php'; ?>
 </div>
 <div id="content">

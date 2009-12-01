@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_EVENT_PHP', '');
 
-require_once("includes/classes/class_date.php");
+require_once PGV_ROOT.'includes/classes/class_date.php';
 
 /**
  * Event

@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
 
 /**
  * split and center text by lines
@@ -112,7 +112,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	}
 
 	// parse CSS file
-	include("includes/cssparser.inc.php");
+	require PGV_ROOT.'includes/cssparser.inc.php';
 	$css = new cssparser(false);
 	if ($view=="preview") $css->Parse($print_stylesheet);
 	else $css->Parse($stylesheet);
@@ -124,7 +124,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	$fontfile = str_replace(")", "", $fontfile);
 	if (!file_exists($fontfile)) {
 		if (!empty($fontfile)) print "<span class=\"error\">".$pgv_lang["fontfile_error"]." : $fontfile</span>";
-		$fontfile="./includes/fonts/DejaVuSans.ttf";
+		$fontfile=PGV_ROOT.'includes/fonts/DejaVuSans.ttf';
 	}
 	if ($fontfile{0}!='/') $fontfile = dirname(__FILE__) . "/" . $fontfile;
 	if (!file_exists($fontfile)) {
@@ -430,7 +430,7 @@ $addname=$person->getAddName();
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["fan_chart"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);

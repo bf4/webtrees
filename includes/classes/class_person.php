@@ -31,8 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_PERSON_PHP', '');
 
-require_once 'includes/classes/class_gedcomrecord.php';
-require_once 'includes/classes/class_event.php';
+require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
+require_once PGV_ROOT.'includes/classes/class_event.php';
 
 class Person extends GedcomRecord {
 	var $indifacts = array();
@@ -1385,8 +1385,8 @@ class Person extends GedcomRecord {
 		$dDate=$this->getEstimatedDeathDate();
 		if (!$bDate->isOK()) return;
 
-		if ($SHOW_RELATIVES_EVENTS && file_exists('languages/histo.'.$lang_short_cut[$LANGUAGE].'.php')) {
-			include('languages/histo.'.$lang_short_cut[$LANGUAGE].'.php');
+		if ($SHOW_RELATIVES_EVENTS && file_exists(PGV_ROOT.'languages/histo.'.$lang_short_cut[$LANGUAGE].'.php')) {
+			require PGV_ROOT.'languages/histo.'.$lang_short_cut[$LANGUAGE].'.php';
 			foreach ($histo as $indexval=>$hrec) {
 				$sdate=new GedcomDate(get_gedcom_value('DATE', 2, $hrec, '', false));
 				if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {

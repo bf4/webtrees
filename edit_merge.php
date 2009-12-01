@@ -28,8 +28,8 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_edit.php';
-require_once './includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 $ged=$GEDCOM;
 $gid1=safe_POST_xref('gid1');
@@ -43,11 +43,11 @@ if (empty($keep2)) $keep2=array();
 
 print_header($pgv_lang["merge_records"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 //-- make sure they have accept access privileges
 if (!PGV_USER_CAN_ACCEPT) {
-	print "<span class=\"error\">".$pgv_lang["access_denied"]."</span>";
+	echo "<span class=\"error\">", $pgv_lang["access_denied"], "</span>";
 	print_footer();
 	exit;
 }
@@ -55,13 +55,18 @@ if (!PGV_USER_CAN_ACCEPT) {
 if ($action!="choose") {
 	if ($gid1==$gid2 && $GEDCOM==$ged2) {
 		$action="choose";
-		print "<span class=\"error\">".$pgv_lang["same_ids"]."</span>\n";
-	}
-	else {
-		if (!isset($pgv_changes[$gid1."_".PGV_GEDCOM])) $gedrec1 = find_gedcom_record($gid1, PGV_GED_ID);
-		else $gedrec1 = find_updated_record($gid1, get_id_from_gedcom($GEDCOM));
-		if (!isset($pgv_changes[$gid2."_".$ged2])) $gedrec2 = find_gedcom_record($gid2, get_id_from_gedcom($ged2));
-		else $gedrec2 = find_updated_record($gid2, get_id_from_gedcom($ged2));
+		echo "<span class=\"error\">", $pgv_lang["same_ids"], "</span>\n";
+	} else {
+		if (!isset($pgv_changes[$gid1."_".PGV_GEDCOM])) {
+			$gedrec1 = find_gedcom_record($gid1, PGV_GED_ID);
+		} else {
+			$gedrec1 = find_updated_record($gid1, get_id_from_gedcom($GEDCOM));
+		}
+		if (!isset($pgv_changes[$gid2."_".$ged2])) {
+			$gedrec2 = find_gedcom_record($gid2, get_id_from_gedcom($ged2));
+		} else {
+			$gedrec2 = find_updated_record($gid2, get_id_from_gedcom($ged2));
+		}
 
 		// Fetch the original XREF - may differ in case from the supplied value
 		$tmp=new Person($gedrec1); $gid1=$tmp->getXref();
@@ -76,23 +81,27 @@ if ($action!="choose") {
 		} else {
 			$type1 = "";
 			$ct = preg_match("/0 @$gid1@ (.*)/", $gedrec1, $match);
-			if ($ct>0) $type1 = trim($match[1]);
+			if ($ct>0) {
+				$type1 = trim($match[1]);
+			}
 			$type2 = "";
 			$ct = preg_match("/0 @$gid2@ (.*)/", $gedrec2, $match);
 			if ($ct>0) $type2 = trim($match[1]);
 			if (!empty($type1) && ($type1!=$type2)) {
-				print "<span class=\"error\">".$pgv_lang["merge_same"]."</span>\n";
+				echo "<span class=\"error\">", $pgv_lang["merge_same"], "</span>\n";
 				$action="choose";
-			}
-			else {
+			} else {
 				$facts1 = array();
 				$facts2 = array();
 				$prev_tags = array();
 				$ct = preg_match_all("/\n1 (\w+)/", $gedrec1, $match, PREG_SET_ORDER);
 				for($i=0; $i<$ct; $i++) {
 					$fact = trim($match[$i][1]);
-					if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
-					else $prev_tags[$fact] = 1;
+					if (isset($prev_tags[$fact])) {
+						$prev_tags[$fact]++;
+					} else {
+						$prev_tags[$fact] = 1;
+					}
 					$subrec = get_sub_record(1, "1 $fact", $gedrec1, $prev_tags[$fact]);
 					$facts1[] = array("fact"=>$fact, "subrec"=>trim($subrec));
 				}
@@ -100,73 +109,80 @@ if ($action!="choose") {
 				$ct = preg_match_all("/\n1 (\w+)/", $gedrec2, $match, PREG_SET_ORDER);
 				for($i=0; $i<$ct; $i++) {
 					$fact = trim($match[$i][1]);
-					if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
-					else $prev_tags[$fact] = 1;
+					if (isset($prev_tags[$fact])) {
+						$prev_tags[$fact]++;
+					} else {
+						$prev_tags[$fact] = 1;
+					}
 					$subrec = get_sub_record(1, "1 $fact", $gedrec2, $prev_tags[$fact]);
 					$facts2[] = array("fact"=>$fact, "subrec"=>trim($subrec));
 				}
 				if ($action=="select") {
-					print "<h2>".$pgv_lang["merge_step2"]."</h2>\n";
-					print "<form method=\"post\" action=\"edit_merge.php\">\n";
-					print $pgv_lang["merge_facts_same"]."<br />\n";
-					print "<input type=\"hidden\" name=\"gid1\" value=\"$gid1\">\n";
-					print "<input type=\"hidden\" name=\"gid2\" value=\"$gid2\">\n";
-					print "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\">\n";
-					print "<input type=\"hidden\" name=\"ged2\" value=\"$ged2\">\n";
-					print "<input type=\"hidden\" name=\"action\" value=\"merge\">\n";
+					echo "<h2>", $pgv_lang["merge_step2"], "</h2>\n";
+					echo "<form method=\"post\" action=\"edit_merge.php\">\n";
+					echo $pgv_lang["merge_facts_same"], "<br />\n";
+					echo "<input type=\"hidden\" name=\"gid1\" value=\"", $gid1, "\">\n";
+					echo "<input type=\"hidden\" name=\"gid2\" value=\"", $gid2, "\">\n";
+					echo "<input type=\"hidden\" name=\"ged\" value=\"", $GEDCOM, "\">\n";
+					echo "<input type=\"hidden\" name=\"ged2\" value=\"", $ged2, "\">\n";
+					echo "<input type=\"hidden\" name=\"action\" value=\"merge\">\n";
 					$equal_count=0;
 					$skip1 = array();
 					$skip2 = array();
-					print "<table border=\"1\">\n";
+					echo "<table border=\"1\">\n";
 					foreach($facts1 as $i=>$fact1) {
 						foreach($facts2 as $j=>$fact2) {
 							if (UTF8_strtoupper($fact1["subrec"])==UTF8_strtoupper($fact2["subrec"])) {
 								$skip1[] = $i;
 								$skip2[] = $j;
 								$equal_count++;
-								print "<tr><td>";
-								if (isset($factarray[$fact1["fact"]])) print $factarray[$fact1["fact"]];
-								else print $fact1["fact"];
-								print "<input type=\"hidden\" name=\"keep1[]\" value=\"$i\" /></td>\n<td>".nl2br($fact1["subrec"])."</td></tr>\n";
+								echo "<tr><td>";
+								if (isset($factarray[$fact1["fact"]])) {
+									echo $factarray[$fact1["fact"]];
+								} else {
+									echo $fact1["fact"];
+								}
+								echo "<input type=\"hidden\" name=\"keep1[]\" value=\"", $i, "\" /></td>\n<td>", nl2br($fact1["subrec"]), "</td></tr>\n";
 							}
 						}
 					}
 					if ($equal_count==0) {
-						print "<tr><td>".$pgv_lang["no_matches_found"]."</td></tr>\n";
+						echo "<tr><td>", $pgv_lang["no_matches_found"], "</td></tr>\n";
 					}
-					print "</table><br /><br />\n";
-					print $pgv_lang["unmatching_facts"]."<br />\n";
-					print "<table class=\"list_table\">\n";
-					print "<tr><td class=\"list_label\">".$pgv_lang["record"]." $gid1</td><td class=\"list_label\">".$pgv_lang["record"]." $gid2</td></tr>\n";
-					print "<tr><td valign=\"top\" class=\"list_value\">\n";
-					print "<table border=\"1\">\n";
+					echo "</table><br /><br />\n";
+					echo $pgv_lang["unmatching_facts"], "<br />\n";
+					echo "<table class=\"list_table\">\n";
+					echo "<tr><td class=\"list_label\">", $pgv_lang["record"], " ", $gid1, "</td><td class=\"list_label\">", $pgv_lang["record"], " ", $gid2, "</td></tr>\n";
+					echo "<tr><td valign=\"top\" class=\"list_value\">\n";
+					echo "<table border=\"1\">\n";
 					foreach($facts1 as $i=>$fact1) {
 						if (($fact1["fact"]!="CHAN")&&(!in_array($i, $skip1))) {
-							print "<tr><td><input type=\"checkbox\" name=\"keep1[]\" value=\"$i\" checked=\"checked\" /></td>";
-							print "<td>".nl2br($fact1["subrec"])."</td></tr>\n";
+							echo "<tr><td><input type=\"checkbox\" name=\"keep1[]\" value=\"", $i, "\" checked=\"checked\" /></td>";
+							echo "<td>", nl2br($fact1["subrec"]), "</td></tr>\n";
 						}
 					}
-					print "</table>\n";
-					print "</td><td valign=\"top\" class=\"list_value\">\n";
-					print "<table border=\"1\">\n";
+					echo "</table>\n";
+					echo "</td><td valign=\"top\" class=\"list_value\">\n";
+					echo "<table border=\"1\">\n";
 					foreach($facts2 as $j=>$fact2) {
 						if (($fact2["fact"]!="CHAN")&&(!in_array($j, $skip2))) {
-							print "<tr><td><input type=\"checkbox\" name=\"keep2[]\" value=\"$j\" checked=\"checked\" /></td>";
-							print "<td>".nl2br($fact2["subrec"])."</td></tr>\n";
+							echo "<tr><td><input type=\"checkbox\" name=\"keep2[]\" value=\"", $j, "\" checked=\"checked\" /></td>";
+							echo "<td>", nl2br($fact2["subrec"]), "</td></tr>\n";
 						}
 					}
-					print "</table>\n";
-					print "</td></tr>\n";
-					print "</table>\n";
-					print "<input type=\"submit\" value=\"".$pgv_lang["merge_records"]."\">\n";
-					print "</form>\n";
-				}
-				else if ($action=="merge") {
+					echo "</table>";
+					echo "</td></tr>";
+					echo "</table>\n";
+					echo "<input type=\"submit\" value=\"", $pgv_lang["merge_records"], "\">\n";
+					echo "</form>\n";
+				} elseif ($action=="merge") {
 					$manual_save = true;
-					print "<h2>".$pgv_lang["merge_step3"]."</h2>\n";
+					echo "<h2>", $pgv_lang["merge_step3"], "</h2>\n";
 					if ($GEDCOM==$ged2) {
 						$success = delete_gedrec($gid2);
-						if ($success) print "<br />".$pgv_lang["gedrec_deleted"]."<br />\n";
+						if ($success) {
+							echo "<br />", $pgv_lang["gedrec_deleted"], "<br />\n";
+						}
 
 						//-- replace all the records that linked to gid2
 						$ids=fetch_all_links($gid2, PGV_GED_ID);
@@ -193,25 +209,27 @@ if ($action!="choose") {
 						if (isset($facts1[$i])) {
 							if (in_array($i, $keep1)) {
 								$newgedrec .= $facts1[$i]["subrec"]."\n";
-								print $pgv_lang["adding"]." ".$facts1[$i]["fact"]." ".$pgv_lang["from"]." $gid1<br />\n";
+								echo $pgv_lang["adding"], " ", $facts1[$i]["fact"], " ", $pgv_lang["from"], " ", $gid1, "<br />\n";
 							}
 						}
 						if (isset($facts2[$i])) {
 							if (in_array($i, $keep2)) {
 								$newgedrec .= $facts2[$i]["subrec"]."\n";
-								print $pgv_lang["adding"]." ".$facts2[$i]["fact"]." ".$pgv_lang["from"]." $gid2<br />\n";
+								echo $pgv_lang["adding"], " ", $facts2[$i]["fact"], " ", $pgv_lang["from"], " ", $gid2, "<br />\n";
 							}
 						}
 					}
 
 					replace_gedrec($gid1, $newgedrec);
-					if ($SYNC_GEDCOM_FILE) write_file();
+					if ($SYNC_GEDCOM_FILE) {
+						write_file();
+					}
 					write_changes();
 					$rec=GedcomRecord::getInstance($gid1);
 					$pid=$rec->getXrefLink(); // $pid is embedded in $pgv_lang['record_updated']
 					echo '<br />', print_text('record_updated', 0, 1), '<br />';
-					print "<br /><a href=\"edit_merge.php?action=choose\">".$pgv_lang["merge_more"]."</a><br />\n";
-					print "<br /><br /><br />\n";
+					echo "<br /><a href=\"edit_merge.php?action=choose\">", $pgv_lang["merge_more"], "</a><br />\n";
+					echo "<br /><br /><br />\n";
 				}
 			}
 		}
@@ -243,46 +261,50 @@ if ($action=="choose") {
 	//-->
 	</script>
 	<?php
-	print "<h2>".$pgv_lang["merge_step1"]."</h2>\n";
-	print "<form method=\"post\" name=\"merge\" action=\"edit_merge.php\">\n";
-	print "<input type=\"hidden\" name=\"action\" value=\"select\" />\n";
-	print $pgv_lang["select_gedcom_records"]."<br />\n";
-	print "\n\t\t<table class=\"list_table, $TEXT_DIRECTION\">\n\t\t<tr>";
-	print "<td class=\"list_label\">&nbsp;";
-	print $pgv_lang["merge_to"];
-	print "&nbsp;</td><td>";
-	print "<input type=\"text\" id=\"gid1\" name=\"gid1\" value=\"$gid1\" size=\"10\" tabindex=\"1\"/> ";
+	echo "<h2>", $pgv_lang["merge_step1"], "</h2>\n";
+	echo "<form method=\"post\" name=\"merge\" action=\"edit_merge.php\">\n";
+	echo "<input type=\"hidden\" name=\"action\" value=\"select\" />\n";
+	echo $pgv_lang["select_gedcom_records"], "<br />\n";
+	echo "\n\t\t<table class=\"list_table, ", $TEXT_DIRECTION, "\">\n\t\t<tr>";
+	echo "<td class=\"list_label\">&nbsp;";
+	echo $pgv_lang["merge_to"];
+	echo "&nbsp;</td><td>";
+	echo "<input type=\"text\" id=\"gid1\" name=\"gid1\" value=\"", $gid1, "\" size=\"10\" tabindex=\"1\"/> ";
 	echo '<script type="text/javascript">document.getElementById("gid1").focus();</script>';
-	print "<select name=\"ged\" tabindex=\"4\">\n";
+	echo "<select name=\"ged\" tabindex=\"4\">\n";
 	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-		print "<option value=\"$ged_name\"";
-		if (empty($ged) && $ged_id==PGV_GED_ID || !empty($ged) && $ged==$ged_name) print " selected=\"selected\"";
-		print ">".PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title')))."</option>\n";
+		echo "<option value=\"", $ged_name, "\"";
+		if (empty($ged) && $ged_id==PGV_GED_ID || !empty($ged) && $ged==$ged_name) {
+			echo " selected=\"selected\"";
+		}
+		echo ">", PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title'))), "</option>\n";
 	}
-	print "</select>\n";
-	print "<a href=\"javascript:iopen_find(document.merge.gid1, document.merge.ged);\" tabindex=\"6\"> ".$pgv_lang["find_individual"]."</a> |";
-	print " <a href=\"javascript:fopen_find(document.merge.gid1, document.merge.ged);\" tabindex=\"8\"> ".$pgv_lang["find_familyid"]."</a> |";
-	print " <a href=\"javascript:sopen_find(document.merge.gid1, document.merge.ged);\" tabindex=\"10\"> ".$pgv_lang["find_sourceid"]."</a>";
+	echo "</select>\n";
+	echo "<a href=\"javascript:iopen_find(document.merge.gid1, document.merge.ged);\" tabindex=\"6\"> ", $pgv_lang["find_individual"], "</a> |";
+	echo " <a href=\"javascript:fopen_find(document.merge.gid1, document.merge.ged);\" tabindex=\"8\"> ", $pgv_lang["find_familyid"], "</a> |";
+	echo " <a href=\"javascript:sopen_find(document.merge.gid1, document.merge.ged);\" tabindex=\"10\"> ", $pgv_lang["find_sourceid"], "</a>";
 	print_help_link("rootid_help", "qm");
-	print "</td></tr><tr><td class=\"list_label\">&nbsp;";
-	print $pgv_lang["merge_from"];
-	print "&nbsp;</td><td>";
-	print "<input type=\"text\" name=\"gid2\" value=\"$gid2\" size=\"10\" tabindex=\"2\"/> ";
-	print "<select name=\"ged2\" tabindex=\"5\">\n";
+	echo "</td></tr><tr><td class=\"list_label\">&nbsp;";
+	echo $pgv_lang["merge_from"];
+	echo "&nbsp;</td><td>";
+	echo "<input type=\"text\" name=\"gid2\" value=\"", $gid2, "\" size=\"10\" tabindex=\"2\"/> ";
+	echo "<select name=\"ged2\" tabindex=\"5\">\n";
 	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-		print "<option value=\"$ged_name\"";
-		if (empty($ged2) && $ged_id==PGV_GED_ID || !empty($ged2) && $ged2==$ged_name) print " selected=\"selected\"";
-		print ">".PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title')))."</option>\n";
+		echo "<option value=\"", $ged_name, "\"";
+		if (empty($ged2) && $ged_id==PGV_GED_ID || !empty($ged2) && $ged2==$ged_name) {
+			echo " selected=\"selected\"";
+		}
+		echo ">", PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title'))), "</option>\n";
 	}
-	print "</select>\n";
-	print "<a href=\"javascript:iopen_find(document.merge.gid2, document.merge.ged2);\" tabindex=\"7\"> ".$pgv_lang["find_individual"]."</a> |";
-	print "<a href=\"javascript:fopen_find(document.merge.gid2, document.merge.ged2);\" tabindex=\"9\"> ".$pgv_lang["find_familyid"]."</a> |";
-	print "<a href=\"javascript:sopen_find(document.merge.gid2, document.merge.ged2);\" tabindex=\"11\"> ".$pgv_lang["find_sourceid"]."</a>";
+	echo "</select>\n";
+	echo "<a href=\"javascript:iopen_find(document.merge.gid2, document.merge.ged2);\" tabindex=\"7\"> ", $pgv_lang["find_individual"], "</a> |";
+	echo "<a href=\"javascript:fopen_find(document.merge.gid2, document.merge.ged2);\" tabindex=\"9\"> ", $pgv_lang["find_familyid"], "</a> |";
+	echo "<a href=\"javascript:sopen_find(document.merge.gid2, document.merge.ged2);\" tabindex=\"11\"> ", $pgv_lang["find_sourceid"], "</a>";
 	print_help_link("rootid_help", "qm");
-	print "</td></tr><tr><td colspan=\"2\">";
-	print "<input type=\"submit\" value=\"".$pgv_lang["merge_records"]."\"  tabindex=\"3\"/>\n";
-	print "</td></tr></table>";
-	print "</form>\n";
+	echo "</td></tr><tr><td colspan=\"2\">";
+	echo "<input type=\"submit\" value=\"", $pgv_lang["merge_records"], "\"  tabindex=\"3\"/>\n";
+	echo "</td></tr></table>";
+	echo "</form>\n";
 }
 
 print_footer();

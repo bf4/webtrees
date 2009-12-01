@@ -26,9 +26,10 @@
 
 require './config.php';
 
-if (file_exists('modules/googlemap/placehierarchy.php'))
-	require("modules/googlemap/placehierarchy.php");
-require_once("includes/functions/functions_print_lists.php");
+if (file_exists(PGV_ROOT.'modules/googlemap/placehierarchy.php')) {
+	require PGV_ROOT.'modules/googlemap/placehierarchy.php';
+}
+require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 function case_in_array($value, $array) {
 	foreach($array as $key=>$val) {
@@ -134,12 +135,20 @@ if ($display=="hierarchy") {
 				}
 			}
  			echo "\">";
- 			if (trim($parent[$i])=="") echo $pgv_lang["unknown"];
-			else echo PrintReady($parent[$i]);
+ 			if (trim($parent[$i])=="") {
+ 				echo $pgv_lang["unknown"];
+ 			} else {
+ 				echo PrintReady($parent[$i]);
+ 			}
 			echo "</a>";
- 			if ($i>0) echo ", ";
- 			else if (($TEXT_DIRECTION=="rtl" && hasRtLText($parent[$i])) || ($TEXT_DIRECTION=="ltr" &&  !hasRtLText($parent[$i])))  echo ", ";
-			if (empty($num_place)) $num_place=$parent[$i];
+ 			if ($i>0) {
+ 				echo ", ";
+ 			} elseif (($TEXT_DIRECTION=="rtl" && hasRtLText($parent[$i])) || ($TEXT_DIRECTION=="ltr" &&  !hasRtLText($parent[$i]))) {
+ 				echo ", ";
+ 			}
+			if (empty($num_place)) {
+				$num_place=$parent[$i];
+			}
 		}
 	}
 	echo "<a href=\"?level=0\">";
@@ -269,11 +278,13 @@ if ($display=="hierarchy") {
 	}
 	for($j=0; $j<$level; $j++) {
 		$linklevels .= "&amp;parent[$j]=".urlencode($parent[$j]);
-		if ($use_googlemap)
-			if (trim($parent[$j])=="")
+		if ($use_googlemap) {
+			if (trim($parent[$j])=="") {
 				$placelevels = ", ".$pgv_lang["unknown"].$placelevels;
-			else
+			} else {
 				$placelevels = ", ".$parent[$j].$placelevels;
+			}
+		}
 	}
 	$i=0;
 	$ct1=count($placelist);
@@ -282,60 +293,82 @@ if ($display=="hierarchy") {
 	foreach ($placelist as $key => $value) {
 		if ($i==0) {
 			echo "\n\t<table class=\"list_table $TEXT_DIRECTION\"";
-			if ($TEXT_DIRECTION=="rtl") echo " dir=\"rtl\"";
+			if ($TEXT_DIRECTION=="rtl") {
+				echo " dir=\"rtl\"";
+			}
 			echo ">\n\t\t<tr>\n\t\t<td class=\"list_label\" ";
-			if ($ct1 > 20) echo "colspan=\"3\"";
-			else if ($ct1 > 4) echo "colspan=\"2\"";
+			if ($ct1 > 20) {
+				echo "colspan=\"3\"";
+			} elseif ($ct1 > 4) {
+				echo "colspan=\"2\"";
+			}
 			echo ">&nbsp;";
 			echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", $pgv_lang["search_place"], "\" alt=\"", $pgv_lang["search_place"], "\" />&nbsp;&nbsp;";
 			if ($level>0) {
 				echo " ", $pgv_lang["place_list_aft"], ": ";
 				echo PrintReady($num_place);
+			} else {
+				echo $pgv_lang["place_list"];
 			}
-			else echo $pgv_lang["place_list"];
 
 			echo "&nbsp;";
 			print_help_link("ppp_placelist_help", "qm", "place_list");
 			echo "</td></tr><tr><td class=\"list_value\"><ul>\n\t\t\t";
 		}
 
-		if (begRTLText($value))
+		if (begRTLText($value)) {
 			echo "<li class=\"rtl\" dir=\"rtl\"";
-		else echo "<li class=\"ltr\" dir=\"ltr\"";
-		echo " type=\"square\">\n<a href=\"?action=$action&amp;level=", ($level+1), $linklevels;
-		echo "&amp;parent[$level]=", urlencode($value), "\" class=\"list_item\">";
+		} else {
+			echo "<li class=\"ltr\" dir=\"ltr\"";
+		}
+		echo " type=\"square\">\n<a href=\"?action=", $action, "&amp;level=", $level+1, $linklevels;
+		echo "&amp;parent[", $level, "]=", urlencode($value), "\" class=\"list_item\">";
 
 		if (trim($value)=="") echo $pgv_lang["unknown"];
 		else echo PrintReady($value);
 		if ($use_googlemap) $place_names[$i]=trim($value);
 		echo "</a></li>\n";
 		if ($ct1 > 20){
-			if ($i == floor($ct1 / 3)) echo "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
-			if ($i == floor(($ct1 / 3) * 2)) echo "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
+			if ($i == floor($ct1 / 3)) {
+				echo "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
+			}
+			if ($i == floor(($ct1 / 3) * 2)) {
+				echo "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
+			}
+		} elseif ($ct1 > 4 && $i == floor($ct1 / 2)) {
+			echo "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
 		}
-		else if ($ct1 > 4 && $i == floor($ct1 / 2)) echo "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
 		$i++;
 	}
 	if ($i>0){
 		echo "\n\t\t</ul></td></tr>";
 		if (($action!="show")&&($level>0)) {
 			echo "<tr>\n\t\t<td class=\"list_label\" ";
-			if ($ct1 > 20) echo "colspan=\"3\"";
-			else if ($ct1 > 4) echo "colspan=\"2\"";
+			if ($ct1 > 20) {
+				echo "colspan=\"3\"";
+			} elseif ($ct1 > 4) {
+				echo "colspan=\"2\"";
+			}
 			echo ">\n\t";
 			echo $pgv_lang["view_records_in_place"];
 			print_help_link("ppp_view_records_help", "qm", "view_records_in_place");
 			echo "</td></tr><tr><td class=\"list_value\" ";
-			if ($ct1 > 20) echo "colspan=\"3\"";
-			else if ($ct1 > 4) echo "colspan=\"2\"";
+			if ($ct1 > 20) {
+				echo "colspan=\"3\"";
+			} elseif ($ct1 > 4) {
+				echo "colspan=\"2\"";
+			}
 			echo " style=\"text-align: center;\">";
-			echo "<a href=\"?action=show&amp;level=$level";
+			echo "<a href=\"?action=show&amp;level=", $level, "";
 			foreach($parent as $key=>$value) {
-				echo "&amp;parent[$key]=", urlencode(trim($value));
+				echo "&amp;parent[", $key, "]=", urlencode(trim($value));
 			}
 			echo "\"><span class=\"formField\">";
-			if (trim($value)=="") echo $pgv_lang["unknown"];
-			else echo PrintReady($value);
+			if (trim($value)=="") {
+				echo $pgv_lang["unknown"];
+			} else {
+				echo PrintReady($value);
+			}
 			echo "</span></a> ";
 			echo "</td></tr>";
 		}

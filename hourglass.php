@@ -30,7 +30,7 @@
 
 require './config.php';
 
-require_once './includes/controllers/hourglass_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/hourglass_ctrl.php';
 
 $controller = new HourglassController();
 $controller->init();
@@ -38,7 +38,7 @@ $controller->init();
 // -- print html header information
 print_header(PrintReady($controller->name)." ".$pgv_lang["hourglass_chart"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 if ($controller->view=="preview") {
 	print "<h2 style=\"text-align: center\">".$pgv_lang["hourglass_chart"].":&nbsp;&nbsp;&nbsp;".PrintReady($controller->name)."</h2>";
@@ -51,10 +51,12 @@ if ($controller->view=="preview") {
 $controller->setupJavascript();
 
 // LBox =====================================================================================
-if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include('modules/lightbox/functions/lb_call_js.php');
+if (PGV_USE_LIGHTBOX) {
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+		require PGV_ROOT.'modules/lightbox/lb_config.php';
+	}
+	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ==========================================================================================
 

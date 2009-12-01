@@ -76,7 +76,7 @@ if ($MULTI_MEDIA) {
 		'filter_video'		=>'no'
 	);
 
-	require_once 'includes/functions/functions_print_facts.php';
+	require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 
 	//-- function to display a random picture from the gedcom
 	function print_random_media($block = true, $config="", $side, $index) {
@@ -270,7 +270,7 @@ function openPic(filename, width, height) {
 -->
 </script><?php
 
-			if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+			if (PGV_USE_LIGHTBOX) {
 				// $content .= " ><a href=\"javascript:;\" onclick=\"return openPic('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
 				// $content .= " ><a href=\"javascript:;\" onclick=\"return openImage('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
 				// $content .= "><a href=\"" . $medialist[$value]["FILE"] . "\" rel=\"clearbox[general_4]\" title=\"" . $mediaid . "\">" . "\n";

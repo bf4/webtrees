@@ -29,7 +29,7 @@
 
 if(!defined('PGV_GALLERY2_INIT'))
 {
-	include_once('modules/gallery2/pgv.php');
+	require_once PGV_ROOT.'modules/gallery2/pgv.php';
 	if(PGV_GALLERY2_INIT === false){return;}
 }
 

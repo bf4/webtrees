@@ -28,7 +28,7 @@
  */
 
 require './config.php';
-require_once 'includes/classes/class_stats.php';
+require_once PGV_ROOT.'includes/classes/class_stats.php';
 /*
  * Initiate the stats object.
  */
@@ -577,9 +577,13 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	$title = substr($mytitle, 0, $titleLength);
 
 	$imgurl = "http://chart.apis.google.com/chart?cht=bvg&chs=950x300&chf=bg,s,ffffff00|c,s,ffffff00&chtt=".$title."&".$datastring."&".$colorstring."&chbh=";
-	if (count($ydata) > 3) $imgurl .= "5,1";
-	else if (count($ydata) < 2) $imgurl .= "45,1";
-	else $imgurl .= "20,3";
+	if (count($ydata) > 3) {
+		$imgurl .= "5,1";
+	} elseif (count($ydata) < 2) {
+		$imgurl .= "45,1";
+	} else {
+		$imgurl .= "20,3";
+	}
 	$imgurl .= "&chxt=x,x,y,y&chxl=0:|";
 	for($i=0; $i<count($xdata); $i++) {
 		$imgurl .= $xdata[$i]."|";
@@ -630,14 +634,15 @@ function calc_axis($xas_grenzen) {
 	//calculate xdata and zdata elements out of given POST values
 	$hulpar = explode(",", $xas_grenzen);
 	$i=1;
-	if ($x_as==21 && $hulpar[0]==1)
+	if ($x_as==21 && $hulpar[0]==1) {
 		$xdata[0] = 0;
-	else if ($x_as==16 && $hulpar[0]==0)
+	} elseif ($x_as==16 && $hulpar[0]==0) {
 		$xdata[0] = $pgv_lang["bef"];
-	else if ($x_as==16 && $hulpar[0]<0)
+	} elseif ($x_as==16 && $hulpar[0]<0) {
 		$xdata[0] = $pgv_lang["over"]." ".$hulpar[0];
-	else
+	} else {
 		$xdata[0] = $pgv_lang["less"]." ".$hulpar[0];
+	}
 	$xgrenzen[0] = $hulpar[0]-1;
 	while (isset($hulpar[$i])) {
 		$i1 = $i-1;
@@ -762,8 +767,7 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 		if ($xg == true) {
 			$xdata = $monthdata;
 			$xmax = 12;
-		}
-		else
+		} else
 			calc_axis($grenzen_xas);
 		if ($z_as != 300 && $z_as != 301)
 			calc_legend($grenzen_zas);
@@ -771,14 +775,14 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 		$percentage = false;
 		if ($y_as == 201) {
 			$percentage = false;
-			if ($current == 13 || $current == 15 || $current == 16 || $current == 21)
+			if ($current == 13 || $current == 15 || $current == 16 || $current == 21) {
 				$ytitle = $pgv_lang["statnfam"];
-			else if ($current == 14)
+			} elseif ($current == 14) {
 				$ytitle = $pgv_lang["stat_21_nok"];
-			else
+			} else {
 				$ytitle = $pgv_lang["statnnames"];
-		}
-		else if ($y_as == 202) {
+			}
+		} elseif ($y_as == 202) {
 			$percentage = true;
 			$ytitle = $pgv_lang["stplperc"];
 		}
@@ -788,17 +792,16 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 			$legend[0] = "all";
 			$zmax = 1;
 			$zgrenzen[0] = 100000;
-		}
-		else if ($z_as == 301) {
+		} elseif ($z_as == 301) {
 			$male_female = true;
 			$zgiven = true;
 			$legend[0] = $pgv_lang["male"];
 			$legend[1] = $pgv_lang["female"];
 			$zmax = 2;
 			$xtitle = $xtitle.$pgv_lang["stplmf"];
-		}
-		else if ($z_as == 302)
+		} elseif ($z_as == 302) {
 			$xtitle= $xtitle.$pgv_lang["stplipot"];
+		}
 		//-- reset the data array
 		for($i=0; $i<$zmax; $i++) {
 			for($j=0; $j<$xmax; $j++) {
@@ -808,7 +811,7 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 		$myfunc();
 		if ($indfam == "IND") {
 			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrpers;
-		} else if ($x_as==21) {
+		} elseif ($x_as==21) {
 			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$stats->totalChildren();
 		}
 		else {

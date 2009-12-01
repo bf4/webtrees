@@ -33,8 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once 'modules/research_assistant/forms/ra_form.php';
-require_once 'modules/research_assistant/forms/ra_RSFunction.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_form.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_RSFunction.php';
 
 /**
  * Edit Folder class for the editfolder form
@@ -53,25 +53,28 @@ class ra_ViewInferences extends ra_form {
 		if ($input=="FAMS:SPOUSE") $input = $pgv_lang["spouse"];
 		$parts = explode(':', $input);
 		$out = "";
-		
-			if(!empty($otherFact) && !empty($input))
-			{
-				if (isset($factarray[$input.":".$otherFact])) $out .= $factarray[$input.":".$otherFact];
-				else if (isset($pgv_lang[$input])) $out .= $pgv_lang[$input];
-				else $out .= $input;
+		if(!empty($otherFact) && !empty($input)) {
+			if (isset($factarray[$input.":".$otherFact])) {
+				$out .= $factarray[$input.":".$otherFact];
+			} elseif (isset($pgv_lang[$input])) {
+				$out .= $pgv_lang[$input];
+			} else {
+				$out .= $input;
+			}
+			$out .= " ";
+		} else {
+			if (isset($factarray[$input])) {
+				$out .= $factarray[$input];
+			} elseif (isset($pgv_lang[$input])) {
+				$out .= $pgv_lang[$input];
+			} else {
+				$out .= $input;
+			}
+			if(empty($input)) {
+				$out .= $pgv_lang["self"];
+			}
 			$out .= " ";
 		}
-			else
-			{
-				if (isset($factarray[$input])) $out .= $factarray[$input];
-				else if (isset($pgv_lang[$input])) $out .= $pgv_lang[$input];
-				else $out .= $input;
-				if(empty($input))
-				{
-					$out .= $pgv_lang["self"];
-				}
-				$out .= " ";
-			}
 		
 		return $out;
 	}

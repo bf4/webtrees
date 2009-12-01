@@ -102,6 +102,9 @@ define('PGV_JS_END',   "\n//]]>\n</script>\n");
 // Used in Google charts
 define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
 
+// For performance, it is quicker to refer to files using absolute paths
+define ('PGV_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
+
 // New setting, added to config.php in 4.2.0
 if (!isset($DB_UTF8_COLLATION)) {
 	$DB_UTF8_COLLATION=false;
@@ -138,7 +141,7 @@ if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 	) as $var) {
 		if (isset($_REQUEST[$var])) {
 			if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=='off') {
-				require_once 'includes/authentication.php';
+				require_once PGV_ROOT.'includes/authentication.php';
 				AddToLog('MSG>Configuration override detected; script terminated.');
 				AddToLog("UA>{$_SERVER['HTTP_USER_AGENT']}<");
 				AddToLog("URI>{$_SERVER['REQUEST_URI']}<");
@@ -179,11 +182,11 @@ if (!isset($_SERVER['REQUEST_URI']))  {
 }
 
 //-- load file for language settings
-require 'includes/lang_settings_std.php';
+require PGV_ROOT.'includes/lang_settings_std.php';
 $Languages_Default = true;
 if (!strstr($_SERVER['REQUEST_URI'], 'INDEX_DIRECTORY=') && file_exists($INDEX_DIRECTORY . 'lang_settings.php')) {
 	$DefaultSettings = $language_settings; // Save default settings, so we can merge properly
-	require "{$INDEX_DIRECTORY}lang_settings.php";
+	require $INDEX_DIRECTORY.'lang_settings.php';
 	$ConfiguredSettings = $language_settings; // Save configured settings, same reason
 	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings); // Copy new langs into config
 	// Now copy new language settings into existing configuration
@@ -204,15 +207,21 @@ foreach ($language_settings as $key => $value) {
 }
 // Don't let incoming request change to an unsupported or inactive language
 if (isset($_REQUEST['NEWLANGUAGE'])) {
-	if (empty($pgv_lang_use[$_REQUEST['NEWLANGUAGE']])) unset($_REQUEST['NEWLANGUAGE']);
-	else if (!$pgv_lang_use[$_REQUEST['NEWLANGUAGE']]) unset($_REQUEST['NEWLANGUAGE']);
+	if (empty($pgv_lang_use[$_REQUEST['NEWLANGUAGE']])) {
+		unset($_REQUEST['NEWLANGUAGE']);
+	} elseif (!$pgv_lang_use[$_REQUEST['NEWLANGUAGE']]) {
+		unset($_REQUEST['NEWLANGUAGE']);
+}
 }
 
 /**
  * Cleanup some variables
  */
-if (!empty($_SERVER['PHP_SELF'])) $SCRIPT_NAME=$_SERVER['PHP_SELF'];
-else if (!empty($_SERVER['SCRIPT_NAME'])) $SCRIPT_NAME=$_SERVER['SCRIPT_NAME'];
+if (!empty($_SERVER['PHP_SELF'])) {
+	$SCRIPT_NAME=$_SERVER['PHP_SELF'];
+} elseif (!empty($_SERVER['SCRIPT_NAME'])) {
+	$SCRIPT_NAME=$_SERVER['SCRIPT_NAME'];
+}
 $SCRIPT_NAME = preg_replace('~/+~', '/', $SCRIPT_NAME);
 if (!empty($_SERVER['QUERY_STRING'])) $QUERY_STRING = $_SERVER['QUERY_STRING'];
 else $QUERY_STRING='';
@@ -248,8 +257,8 @@ if (empty($PGV_MEMORY_LIMIT)) $PGV_MEMORY_LIMIT = '32M';
 @ini_set('memory_limit', $PGV_MEMORY_LIMIT);
 
 //--load common functions
-require 'includes/functions/functions.php';
-require 'includes/functions/functions_name.php';
+require  PGV_ROOT.'includes/functions/functions.php';
+require  PGV_ROOT.'includes/functions/functions_name.php';
 //-- set the error handler
 set_error_handler('pgv_error_handler');
 
@@ -257,17 +266,17 @@ set_error_handler('pgv_error_handler');
 $start_time = microtime(true);
 
 //-- load db specific functions
-require 'includes/functions/functions_db.php';
+require PGV_ROOT.'includes/functions/functions_db.php';
 
 // Connect to the database
-require 'includes/classes/class_pgv_db.php';
+require PGV_ROOT.'includes/classes/class_pgv_db.php';
 try {
 	// remove escape codes before using PW
 	$DBPASS=str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS);
 	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION);
 	unset($DBUSER, $DBPASS);
 	try {
-		PGV_DB::updateSchema('includes/db_schema/', 'PGV_SCHEMA_VERSION', PGV_SCHEMA_VERSION);
+		PGV_DB::updateSchema(PGV_ROOT.'includes/db_schema/', 'PGV_SCHEMA_VERSION', PGV_SCHEMA_VERSION);
 	} catch (PDOException $ex) {
 		// The schema update scripts should never fail.  If they do, there is no clean recovery.
 		die($ex);
@@ -277,23 +286,24 @@ try {
 }
 
 // -- load the authentication system, also logging
-require 'includes/authentication.php';
+require PGV_ROOT.'includes/authentication.php';
  
 // Determine browser type
 $BROWSERTYPE = 'other';
 if (!empty($_SERVER['HTTP_USER_AGENT'])) {
-	if (stristr($_SERVER['HTTP_USER_AGENT'], 'Opera'))
+	if (stristr($_SERVER['HTTP_USER_AGENT'], 'Opera')) {
 		$BROWSERTYPE = 'opera';
-	else if (stristr($_SERVER['HTTP_USER_AGENT'], 'Netscape'))
+	} elseif (stristr($_SERVER['HTTP_USER_AGENT'], 'Netscape')) {
 		$BROWSERTYPE = 'netscape';
-	else if (stristr($_SERVER['HTTP_USER_AGENT'], 'Gecko'))
+	} elseif (stristr($_SERVER['HTTP_USER_AGENT'], 'Gecko')) {
 		$BROWSERTYPE = 'mozilla';
-	else if (stristr($_SERVER['HTTP_USER_AGENT'], 'MSIE'))
+	} elseif (stristr($_SERVER['HTTP_USER_AGENT'], 'MSIE')) {
 		$BROWSERTYPE = 'msie';
+	}
 }
 
 //-- load up the code to check for spiders
-require 'includes/session_spider.php';
+require PGV_ROOT.'includes/session_spider.php';
 
 //-- start the php session
 $time = time()+$PGV_SESSION_TIME;
@@ -332,8 +342,8 @@ if (!$SEARCH_SPIDER && !isset($_SESSION['initiated'])) {
 
 // Import the gedcoms array
 // NOTE: this array is deprecated - use set/get_gedcom_setting()
-if (file_exists("{$INDEX_DIRECTORY}gedcoms.php")) {
-	require "{$INDEX_DIRECTORY}gedcoms.php";
+if (file_exists($INDEX_DIRECTORY.'gedcoms.php')) {
+	require $INDEX_DIRECTORY.'gedcoms.php';
 }
 if (!isset($GEDCOMS) || !is_array($GEDCOMS)) {
 	$GEDCOMS = array();
@@ -398,13 +408,13 @@ if (empty($PHPGEDVIEW_EMAIL)) {
 	$PHPGEDVIEW_EMAIL='phpgedview-noreply@'.preg_replace('/^www\./i', '', $_SERVER['SERVER_NAME']);
 }
 
-require 'includes/functions/functions_print.php';
-require 'includes/functions/functions_rtl.php';
+require PGV_ROOT.'includes/functions/functions_print.php';
+require PGV_ROOT.'includes/functions/functions_rtl.php';
 
 if ($MULTI_MEDIA) {
-	require 'includes/functions/functions_mediadb.php';
+	require PGV_ROOT.'includes/functions/functions_mediadb.php';
 }
-require 'includes/functions/functions_date.php';
+require PGV_ROOT.'includes/functions/functions_date.php';
 
 if (empty($PEDIGREE_GENERATIONS)) {
 	$PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
@@ -478,9 +488,13 @@ foreach ($language_settings as $key => $value) {
 
 // -- Determine which of PGV's supported languages is topmost in the browser's language list
 if ((empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESSION['CLANGUAGE']) && empty($SEARCH_SPIDER)) {
-	if (isset($HTTP_ACCEPT_LANGUAGE)) $browserLangPrefs = $HTTP_ACCEPT_LANGUAGE;
-	else if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $browserLangPrefs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-	else $browserLangPrefs = 'en';
+	if (isset($HTTP_ACCEPT_LANGUAGE)) {
+		$browserLangPrefs = $HTTP_ACCEPT_LANGUAGE;
+	} elseif (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+		$browserLangPrefs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+	} else {
+		$browserLangPrefs = 'en';
+	}
 	// Seach list of supported languages for this Browser's preferred page languages
 	$browserLangList = preg_split('/(,\s*)|(;\s*)/', $browserLangPrefs);
 	if (empty($LANGUAGE)) $LANGUAGE = 'english';		// Use English if we can't match any of the browser's preferred languages
@@ -520,11 +534,11 @@ if ($ENABLE_MULTI_LANGUAGE && empty($SEARCH_SPIDER)) {
 	}
 }
 
-require 'includes/templecodes.php';  //-- load in the LDS temple code translations
+require PGV_ROOT.'includes/templecodes.php';  //-- load in the LDS temple code translations
 
 //-- load the privacy functions
 load_privacy_file(PGV_GED_ID);
-require 'includes/functions/functions_privacy.php';
+require PGV_ROOT.'includes/functions/functions_privacy.php';
 
 // Define some constants to save calculating the same value repeatedly.
 define('PGV_USER_ID',           getUserId  ());
@@ -625,7 +639,7 @@ if ((strstr($SCRIPT_NAME, 'install.php')===false)
 
 	//-- load any editing changes
 	if (PGV_USER_CAN_EDIT && file_exists("{$INDEX_DIRECTORY}pgv_changes.php")) {
-		require "{$INDEX_DIRECTORY}pgv_changes.php";
+		require $INDEX_DIRECTORY.'pgv_changes.php';
 	} else {
 		$pgv_changes = array();
 	}
@@ -636,7 +650,7 @@ if ((strstr($SCRIPT_NAME, 'install.php')===false)
 }
 
 //-- load the user specific theme
-if (PGV_DB::isConnected() && PGV_USER_ID && !isset($_REQUEST['logout'])) {
+if (PGV_USER_ID) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
 		userUpdateLogin(PGV_USER_ID);
@@ -657,17 +671,15 @@ if (isset($_SESSION['theme_dir'])) {
 	}
 }
 
-if (empty($THEME_DIR)) {
-	$THEME_DIR='standard/';
-}
-if (!file_exists("{$THEME_DIR}theme.php")) {
+if (empty($THEME_DIR) || !file_exists("{$THEME_DIR}theme.php")) {
 	$THEME_DIR = 'themes/standard/';
 }
-require "{$THEME_DIR}theme.php";
 
 define('PGV_THEME_DIR', $THEME_DIR);
 
-require './includes/hitcount.php'; //--load the hit counter
+require PGV_THEME_DIR.'theme.php';
+
+require PGV_ROOT.'includes/hitcount.php'; //--load the hit counter
 
 if ($Languages_Default) {            // If Languages not yet configured
 	$pgv_lang_use['english'] = false;  //  disable English
@@ -695,5 +707,8 @@ if (substr(PHP_SAPI, 0, 3) == 'cgi') {  // cgi-mode, should only be writable by 
 	define('PGV_PERM_EXE',  0777);
 	define('PGV_PERM_FILE', 0666);
 }
+
+// Lightbox needs custom integration in many places.  Only check for the module once.
+define('PGV_USE_LIGHTBOX', !$SEARCH_SPIDER && $MULTI_MEDIA && file_exists(PGV_ROOT.'modules/lightbox.php') && is_dir(PGV_ROOT.'modules/lightbox'));
 
 ?>

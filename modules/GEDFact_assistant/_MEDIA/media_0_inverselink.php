@@ -58,7 +58,7 @@ if (PGV_USER_IS_ADMIN) {
 	echo $pgv_lang["no_login"];
 }
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 
 //-- check for admin

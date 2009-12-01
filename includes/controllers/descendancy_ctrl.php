@@ -31,12 +31,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_DESCENDANCY_PHP', '');
 
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
 
 loadLangFile("pgv_confighelp");
 
-require_once 'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
 
 // -- array of GEDCOM elements that will be found but should not be displayed
 $nonfacts[] = "FAMS";
@@ -346,9 +346,9 @@ function print_family_descendancy(&$person, &$family, $depth) {
 
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/descendancy_ctrl_user.php'))
+if (file_exists(PGV_ROOT.'includes/controllers/descendancy_ctrl_user.php'))
 {
-	include_once 'includes/controllers/descendancy_ctrl_user.php';
+	require_once PGV_ROOT.'includes/controllers/descendancy_ctrl_user.php';
 }
 else
 {

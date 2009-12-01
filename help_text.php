@@ -31,7 +31,7 @@ require './config.php';
 
 loadLangFile('pgv_help, pgv_admin, pgv_editor, research_assistant:lang, googlemap:lang, googlemap:help_text, lightbox:lang, lightbox:help_text, sitemap:lang, sitemap:help_text');
 
-require 'includes/help_text_vars.php';
+require PGV_ROOT.'includes/help_text_vars.php';
 
 print_simple_header($pgv_lang['help_header']);
 

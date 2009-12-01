@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_GEDOWNLOADGEDCOM_PHP', '');
 
-require_once 'includes/classes/class_grampsexport.php';
+require_once PGV_ROOT.'includes/classes/class_grampsexport.php';
 
 class GEDownloadGedcom extends GrampsExport
 {

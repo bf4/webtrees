@@ -30,9 +30,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_PEDIGREE_CTRL_PHP', '');
 
-require_once 'includes/functions/functions_charts.php';
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
 
 /**
  * Main controller class for the Ancestry page.
@@ -342,12 +342,9 @@ class PedigreeControllerRoot extends BaseController {
 
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/pedigree_ctrl_user.php'))
-{
-	include_once 'includes/controllers/pedigree_ctrl_user.php';
-}
-else
-{
+if (file_exists(PGV_ROOT.'includes/controllers/pedigree_ctrl_user.php')) {
+	require_once PGV_ROOT.'includes/controllers/pedigree_ctrl_user.php';
+} else {
 	class PedigreeController extends PedigreeControllerRoot
 	{
 	}

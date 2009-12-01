@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_PRINT_FACTS_PHP', '');
 
-require_once 'includes/classes/class_person.php';
+require_once PGV_ROOT.'includes/classes/class_person.php';
 
 /**
  * Turn URLs in text into HTML links.  Insert breaks into long URLs
@@ -664,11 +664,11 @@ function print_media_links($factrec, $level, $pid='') {
 				if ($isExternal || media_exists($thumbnail)) {
 
 					//LBox --------  change for Lightbox Album --------------------------------------------
-					if (file_exists("modules/lightbox/album.php") && preg_match("/\.(jpe?g|gif|png)$/i", $mainMedia)) {
+					if (PGV_USE_LIGHTBOX && preg_match("/\.(jpe?g|gif|png)$/i", $mainMedia)) {
 						$name = trim($row["m_titl"]);
 						echo "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
-					} else if (file_exists("modules/lightbox/album.php") && preg_match("/\.(pdf|avi|txt)$/i", $mainMedia)) {
-						if (file_exists("modules/lightbox/lb_config.php")) {
+					} else if (PGV_USE_LIGHTBOX && preg_match("/\.(pdf|avi|txt)$/i", $mainMedia)) {
+						if (PGV_USE_LIGHTBOX) {
 							include ('modules/lightbox/lb_config.php');
 						} else {
 							include ('modules/lightbox/lb_defaultconfig.php');
@@ -1221,7 +1221,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			$text ="";
 			if ($nt>0) {
 				// If Census assistant installed, enable hotspot link on shared note title ---------------------
-				if (file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php")) {
+				if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php')) {
 					$centitl  = str_replace("~~", "", trim($n1match[1]));
 					$centitl  = str_replace("<br />", "", $centitl);
 					$centitl  = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
@@ -1233,8 +1233,8 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			$text = expand_urls($text);
 			$text = PrintReady($text)." <br />\n";
 			// If Census assistant installed, and if Formatted Shared Note (using pipe "|" as delimiter) -------
-			if ( strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
-				require 'modules/GEDFact_assistant/_CENS/census_note_decode.php';
+			if ( strstr($text, "|") && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php') ) {
+				require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php';
 			}
 		}
 		
@@ -1420,7 +1420,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			//-- check if we need to get the object from a remote location
 			$ct = preg_match("/(.*):(.*)/", $media_id, $match);
 			if ($ct>0) {
-				require_once 'includes/classes/class_serviceclient.php';
+				require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 				$client = ServiceClient::getInstance($match[1]);
 				if (!is_null($client)) {
 					$newrec = $client->getRemoteRecord($match[2]);
@@ -1532,7 +1532,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		} else {
 			$file_type = 'local_';
 		}
-		if (preg_match("/\.flv$/i", $rowm['m_file']) && file_exists('modules/JWplayer/flvVideo.php')) {
+		if (preg_match("/\.flv$/i", $rowm['m_file']) && file_exists(PGV_ROOT.'modules/JWplayer/flvVideo.php')) {
 			$file_type .= 'flv';
 		} elseif (preg_match("/\.(jpg|jpeg|gif|png)$/i", $rowm['m_file'])) {
 			$file_type .= 'image';
@@ -1671,12 +1671,12 @@ function print_main_media_row($rtype, $rowm, $pid) {
 //  Extra print_facts_functions for lightbox and reorder media
 // -----------------------------------------------------------------------------
 
-if (file_exists('modules/lightbox/functions/lightbox_print_media.php')) {
-	require_once 'modules/lightbox/functions/lightbox_print_media.php';
-	require_once 'modules/lightbox/functions/lightbox_print_media_row.php';
+if (PGV_USE_LIGHTBOX) {
+	require_once PGV_ROOT.'modules/lightbox/functions/lightbox_print_media.php';
+	require_once PGV_ROOT.'modules/lightbox/functions/lightbox_print_media_row.php';
 }
 
-require_once 'includes/functions/functions_media_reorder.php';
+require_once PGV_ROOT.'includes/functions/functions_media_reorder.php';
 
 // -----------------------------------------------------------------------------
 //  End extra print_facts_functions for lightbox and reorder media

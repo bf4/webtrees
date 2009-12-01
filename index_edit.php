@@ -29,7 +29,7 @@
 
 require './config.php';
 
-require_once("includes/index_cache.php");
+require_once PGV_ROOT.'includes/index_cache.php';
 
 /**
  * Block definition array
@@ -99,7 +99,7 @@ $PGV_BLOCKS = array();
 $d = dir("blocks");
 while (false !== ($entry = $d->read())) {
 	if (($entry!=".") && ($entry!="..") && ($entry!="CVS") && (preg_match("/\.php$/", $entry)>0)) {
-		include_once("blocks/".$entry);
+		require_once PGV_ROOT.'blocks/'.$entry;
 	}
 }
 $d->close();
@@ -108,17 +108,17 @@ $d->close();
  *
  * Load List of Blocks in modules/XX/blocks directories
  */
-if (file_exists("modules")) {
-	$dir=dir("modules");
+if (file_exists(PGV_ROOT.'modules')) {
+	$dir=dir(PGV_ROOT.'modules');
 	while (false !== ($entry = $dir->read())) {
 		if (!strstr($entry,".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")) {
-			$path = 'modules/' . $entry.'/blocks';
+			$path = PGV_ROOT.'modules/' . $entry.'/blocks';
 			if (is_readable($path)) {
 				$d=dir($path);
 				while (false !== ($entry = $d->read())) {
 				if (($entry!=".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")&&(preg_match("/\.php$/", $entry)>0)) {
 						$p=$path.'/'.$entry;
-						include_once($p);
+						require_once $p;
 					}
 				}
 			}

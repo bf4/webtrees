@@ -32,7 +32,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 
 $search = @$_GET["search"];
-print "<title>PhpGedView : changelog (".htmlentities($search,ENT_COMPAT,'UTF-8').")</title>\n";
+echo "<title>PhpGedView : changelog (", htmlentities($search, ENT_COMPAT, 'UTF-8'), ")</title>\n";
 
 $text = file_get_contents("changelog.txt");
 $wait = @file_get_contents("changelog.local.txt");
@@ -61,5 +61,5 @@ $text = preg_replace("/ (\d{6,7}) /", " <a name=\\1 href=http://sourceforge.net/
 $text = preg_replace("/ \(([-\w]{4,13})\)\r\n/", " (<a name=\\1 href=?search=\\1>\\1</a>)\r\n", $text);
 $text = str_replace("  ", " ", $text);
 
-print "<pre>\n$text\n</pre>\n";
+echo "<pre>", $text, "</pre>";
 ?>

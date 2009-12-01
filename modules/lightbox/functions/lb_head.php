@@ -87,11 +87,10 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 <?php
 
 // Load Lightbox javascript and css files
-//include_once('modules/lightbox/functions/lb_call_js.php');
+// require_once PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 
 // Find if indi and family associated media exists and then count them ( $tot_med_ct)
-global $tot_med_ct;
-include_once ('includes/media_reorder_count.php');
+require_once PGV_ROOT.'includes/media_reorder_count.php';
 
 	// If in re-order mode do not show header links, but instead, show drag and drop title.
 	if (isset($reorder) && $reorder==1){

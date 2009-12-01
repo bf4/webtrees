@@ -33,8 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_PRINT_PHP', '');
 
-require_once 'includes/functions/functions_charts.php';
-require_once 'includes/classes/class_menubar.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/classes/class_menubar.php';
 
 /**
 * print the information for an individual chart box
@@ -118,22 +118,22 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					}
 				}
 				// NOTE: Zoom
-				if (file_exists("ancestry.php")) {
+				if (file_exists(PGV_ROOT.'ancestry.php')) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["ancestry_chart"];
 					$personlinks .= "<a href=\"".encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />";
 				}
-				if (file_exists("compact.php")) {
+				if (file_exists(PGV_ROOT.'compact.php')) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["compact_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["compact_chart"];
 					$personlinks .= "<a href=\"".encode_url("compact.php?rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />";
 				}
-				if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
+				if (file_exists(PGV_ROOT.'fanchart.php') and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["fan_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["fan_chart"];
 					$personlinks .= "<a href=\"".encode_url("fanchart.php?rootid={$pid}&PEDIGREE_GENERATIONS={$OLD_PGENS}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />";
 				}
-				if (file_exists("hourglass.php")) {
+				if (file_exists(PGV_ROOT.'hourglass.php')) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
 					$personlinks .= "<a href=\"".encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}&show_spouse={$show_spouse}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />";
@@ -287,7 +287,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			$imgwidth = $imgsize[0]+50;
 			$imgheight = $imgsize[1]+150;
 
-			if (file_exists("modules/lightbox/album.php")) {
+			if (PGV_USE_LIGHTBOX) {
 				$thumbnail .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "\">";
 			} else if (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
 				$thumbnail .= "<a href=\"".encode_url("mediaviewer.php?mid=".$object['mid'])."\" >";
@@ -1130,8 +1130,8 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!empty($text) || !empty($centitl)) {
 		$text = PrintReady($text);
 		// Check if Formatted Shared Note (using pipe "|" as delimiter ) --------------------
-		if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec) && strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
-			require 'modules/GEDFact_assistant/_CENS/census_note_decode.php';
+		if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec) && strstr($text, "|") && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php') ) {
+			require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php';
 		// Else if unformatted Shared Note --------------------------------------------------
 		}else if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec)) {
 			$text=$centitl.$text;
@@ -1703,7 +1703,11 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 
 	// Parentheses, braces, and brackets have been processed:
 	// Finish processing of "Highlight Start and "Highlight end"
-	$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $text);
+	if (!$InHeaders) {
+		$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $text);
+	} else {
+		$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "", ""), $text);
+	}
 	return $text;
 }
 /**

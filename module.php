@@ -80,11 +80,11 @@ switch($modinfo['Module']['type'])
 		{
 			$_REQUEST['pgvaction'] = 'index';
 		}
-		if (!file_exists('modules/'.$_REQUEST['mod'].'/'.$_REQUEST['pgvaction'].'.php'))
+		if (!file_exists(PGV_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['pgvaction'].'.php'))
 		{
 			$_REQUEST['pgvaction'] = 'index';
 		}
-		include_once 'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['pgvaction'].'.php';
+		require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['pgvaction'].'.php';
 		break;
 	}
 	case PGV_MOD_OO:
@@ -97,7 +97,7 @@ switch($modinfo['Module']['type'])
 		{
 			$_REQUEST['class'] = $_REQUEST['mod'];
 		}
-		include_once 'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['class'].'.php';
+		require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['class'].'.php';
 		$mod = new $_REQUEST['class']();
 		if (!method_exists($mod, $_REQUEST['method']))
 		{
@@ -138,8 +138,12 @@ switch($modinfo['Module']['type'])
  *	1. Load english language if exists.
  *	2. Load current language if exists.
  */
-		if(file_exists("modules/{$_REQUEST['mod']}/pgvlang/lang_{$modinfo['Module']['default_language']}.php")){include_once "modules/{$_REQUEST['mod']}/pgvlang/lang_{$modinfo['Module']['default_language']}.php";}
-		if($deflang != $modinfo['Module']['default_language'] && file_exists("modules/{$_REQUEST['mod']}/pgvlang/lang_{$deflang}.php")){include_once "modules/{$_REQUEST['mod']}/pgvlang/lang_{$deflang}.php";}
+		if (file_exists(PGV_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$modinfo['Module']['default_language'].'.php')) {
+			require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$modinfo['Module']['default_language'].'.php';
+		}
+		if ($deflang != $modinfo['Module']['default_language'] && file_exists('./modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$deflang.'.php')) {
+			require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$deflang.'.php';
+		}
 
 /*
  * Load & Initialize
@@ -147,7 +151,7 @@ switch($modinfo['Module']['type'])
  *	2. Create a module object.
  *	3. Initialize the module if needed.
  */
-		include_once "modules/{$_REQUEST['mod']}/{$_REQUEST['class']}.php";
+		require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/'.$_REQUEST['class'].'.php';
 		$mod = new $_REQUEST['class']();
 		if(method_exists($mod, 'init')){$mod->init();}
 /*

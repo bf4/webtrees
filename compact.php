@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once './includes/functions/functions_charts.php';
+require_once PGV_ROOT.'includes/functions/functions_charts.php';
 
 // Extract form variables
 $rootid    =safe_GET_xref('rootid');
@@ -43,13 +43,15 @@ $addname=$person->getAddName();
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
-if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include('modules/lightbox/functions/lb_call_js.php');
+if (PGV_USE_LIGHTBOX) {
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+		require PGV_ROOT.'modules/lightbox/lb_config.php';
+	}
+	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ==========================================================================================
 
@@ -332,7 +334,7 @@ function print_td_person($n) {
 				$imgsize = findImageSize($object["file"]);
 				$imgwidth = $imgsize[0]+50;
 				$imgheight = $imgsize[1]+150;
-				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+				if (PGV_USE_LIGHTBOX) {
 					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . PGV_GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 				} else {
 					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";

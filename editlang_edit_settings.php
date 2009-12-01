@@ -99,7 +99,7 @@ function write_td_with_textdir_check(){
 /* ------------------------------------------------------------------------------------- */
 
 if ($action == "new_lang") {
-	require( "includes/lang_codes_std.php");
+	require PGV_ROOT.'includes/lang_codes_std.php';
 	$ln = strtolower($lng_codes[$new_shortcut][0]);
 
 	$d_LangName      = "lang_name_" . $ln;
@@ -121,9 +121,9 @@ if ($action == "new_lang") {
 
 	// Suggest a suitable flag file
 	$temp = strtolower($lng_codes[$new_shortcut][1]).".gif";
-	if (file_exists("images/flags/".$temp)) {
+	if (file_exists(PGV_ROOT.'images/flags/'.$temp)) {
 		$flag = $temp;						// long name takes precedence
-	} else if (file_exists("images/flags/".$new_shortcut.".gif")) {
+	} else if (file_exists(PGV_ROOT.'images/flags/'.$new_shortcut.".gif")) {
 	$flag = $new_shortcut.".gif";		// use short name if long name doesn't exist
 	} else $flag = "new.gif";				// default if neither a long nor a short name exist
 	$flagsfile[$ln] = "images/flags/" . $flag;

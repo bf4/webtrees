@@ -25,7 +25,7 @@
 */
 
 require './config.php';
-require 'includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 loadLangFile("pgv_country");
 uasort($countries, "stringsort");
@@ -107,7 +107,7 @@ uasort($assorela, "stringsort");
 print_simple_header('Edit Interface');
 
 if ($ENABLE_AUTOCOMPLETE) {
-	require './js/autocomplete.js.htm';
+	require PGV_ROOT.'js/autocomplete.js.htm';
 }
 echo PGV_JS_START;
 ?>
@@ -968,7 +968,7 @@ case 'addnewnote_assisted':
 			<input id="pid_array" type="hidden" name="pid_array" value="none" />
 			<input id="pid" type="hidden" name="pid" value=<?php echo $pid; ?> />
 			<?php
-				include ('modules/GEDFact_assistant/CENS_ctrl.php');
+				require PGV_ROOT.'modules/GEDFact_assistant/CENS_ctrl.php';
 			?>
 		</form>
 	</div>
@@ -979,7 +979,7 @@ case 'addnewnote_assisted':
 //------------------------------------------------------------------------------
 //-- add Shared Note census event from the incoming variables using GEDFact Assistant
 case 'addnoteaction_assisted':
-	include ('modules/GEDFact_assistant/_CENS/gedrec_append.php');
+	require PGV_ROOT.'modules/GEDFact_assistant/_CENS/gedrec_append.php';
 	break;
 	
 //------------------------------------------------------------------------------
@@ -1006,7 +1006,7 @@ case 'addmedia_links':
 		<input type="hidden" name="noteid" value="newnote" />			
 	<!--	<input type="hidden" name="pid" value="<?php // echo $pid; ?>" />		--> 
 		<?php
-		include ('modules/GEDFact_assistant/MEDIA_ctrl.php');
+		require PGV_ROOT.'modules/GEDFact_assistant/MEDIA_ctrl.php';
 		?>
 	</form>
 	<?php
@@ -1962,18 +1962,10 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 		}
 
 		if ($success) {
-			$success2 = $success && delete_gedrec($pid);
+			$success = $success && delete_gedrec($pid);
 		}
-		if ($success2) {
+		if ($success) {
 			echo "<br /><br />".$pgv_lang["gedrec_deleted"];
-			if ($action=="deletenote") {
-				$link="notelist.php";
-			}else if ($action=="deletesource") {
-				$link="sourcelist.php";
-			}else if ($action=="deleterepo") {
-				$link="repolist.php";
-			}
-			echo PGV_JS_START, "edit_close('{$link}');", PGV_JS_END;
 		}
 	}
 	break;
@@ -2043,9 +2035,9 @@ case 'paste':
 
 //------------------------------------------------------------------------------
 case 'reorder_media': // Sort page using Popup
-	require_once("js/prototype.js.htm");
-	require_once("js/scriptaculous.js.htm");
-	include_once("includes/media_reorder.php");
+	require_once PGV_ROOT.'js/prototype.js.htm';
+	require_once PGV_ROOT.'js/scriptaculous.js.htm';
+	require_once PGV_ROOT.'includes/media_reorder.php';
 	break;
 
 //------------------------------------------------------------------------------
@@ -2090,7 +2082,9 @@ case 'reorder_media_update': // Update sort using popup
 		}else{
 			$link = "individual.php?pid=$pid&tab=3&show_changes=yes";
 		}
-		echo PGV_JS_START, "edit_close('{$link}');", PGV_JS_END;
+		echo PGV_JS_START;
+		echo "edit_close('{$link}');";
+		echo PGV_JS_END;
 	break;
 
 //------------------------------------------------------------------------------
@@ -2104,7 +2098,7 @@ case 'al_reset_media_update': // Reset sort using Album Page
 	}
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) echo "<br />", $pgv_lang["update_successful"], "<br /><br />";
-		if (!file_exists("modules/googlemap/defaultconfig.php")) {
+		if (!file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 			$tabno = "7";
 		}else{
 			$tabno = "8";
@@ -2145,7 +2139,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 	}
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) {
-		if (!file_exists("modules/googlemap/defaultconfig.php")) {
+		if (!file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 			$tabno = "7";
 		}else{
 			$tabno = "8";
@@ -2161,8 +2155,8 @@ case 'al_reorder_media_update': // Update sort using Album Page
 
 //------------------------------------------------------------------------------
 case 'reorder_children':
-	require_once("js/prototype.js.htm");
-	require_once("js/scriptaculous.js.htm");
+	require_once PGV_ROOT.'js/prototype.js.htm';
+	require_once PGV_ROOT.'js/scriptaculous.js.htm';
 	echo "<br /><b>", $pgv_lang["reorder_children"], "</b>";
 	print_help_link("reorder_children_help", "qm");
 	?>
@@ -2222,7 +2216,7 @@ case 'reorder_children':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily':
-	require_once 'includes/classes/class_family.php';
+	require_once PGV_ROOT.'includes/classes/class_family.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();
@@ -2363,7 +2357,7 @@ case 'changefamily':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily_update':
-	require_once 'includes/classes/class_family.php';
+	require_once PGV_ROOT.'includes/classes/class_family.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();
@@ -2573,8 +2567,8 @@ case 'reorder_update':
 	break;
 //------------------------------------------------------------------------------
 case 'reorder_fams':
-	require_once("js/prototype.js.htm");
-	require_once("js/scriptaculous.js.htm");
+	require_once PGV_ROOT.'js/prototype.js.htm';
+	require_once PGV_ROOT.'js/scriptaculous.js.htm';
 	echo "<br /><b>", $pgv_lang["reorder_families"], "</b>";
 	print_help_link("reorder_families_help", "qm");
 	?>
@@ -2649,7 +2643,7 @@ case 'reorder_fams_update':
 //-- for reuse of editing functions from forms
 case 'mod_edit_fact':
 	if (isset($_REQUEST['mod'])) $mod = $_REQUEST['mod'];
-	include_once('modules/'.$mod.'/'.$mod.'.php');
+	require_once PGV_ROOT.'modules/'.$mod.'/'.$mod.'.php';
 	$module = new $mod();
 	if (method_exists($module, "edit_fact")) {
 		$module->edit_fact();
@@ -2669,9 +2663,8 @@ if (empty($goto) || empty($link)) {
 	$link='';
 }
 
-// autoclose window when update successful and not previously closed with $success2 ==== 
-global $success2;
-if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG && !isset($success2)) {
+// autoclose window when update successful  ==== 
+if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG ) {
 	echo PGV_JS_START;
 	if ($action=="copy") {
 		echo "window.close();";

@@ -26,7 +26,7 @@
  */
 
 require './config.php';
-require_once 'includes/controllers/usermigrate_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/usermigrate_ctrl.php';
 
 $controller = new UserMigrateController();
 $controller->init();

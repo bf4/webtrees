@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_SEARCH_CTRL_PHP', '');
 
-require_once 'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
 
 /**
  * Main controller class for the search page.
@@ -485,7 +485,7 @@ class SearchControllerRoot extends BaseController {
 		AddToLog("Search And Replace old:".$oldquery." new:".$this->replace);
 		$manual_save = true;
 		// Include edit functions.
-		include_once("includes/functions/functions_edit.php");
+		require_once PGV_ROOT.'includes/functions/functions_edit.php';
 		// These contain the search query and the replace string
 		// $this->replace;
 		// $this->query;
@@ -670,7 +670,7 @@ class SearchControllerRoot extends BaseController {
 	 *
 	 */
 	function MultiSiteSearch() {
-		require_once ('includes/classes/class_serviceclient.php');
+		require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 
 		if (!empty ($this->Sites) && count($this->Sites) > 0) {
 			$this->myindilist = array ();
@@ -738,7 +738,7 @@ class SearchControllerRoot extends BaseController {
 	}
 
 	function printResults() {
-		include_once ("includes/functions/functions_print_lists.php");
+		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 		global $GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $global_facts;
 		//-- all privacy settings must be global if we are going to load up privacy files
 		global $SHOW_DEAD_PEOPLE,$SHOW_LIVING_NAMES,$SHOW_SOURCES,$MAX_ALIVE_AGE,$USE_RELATIONSHIP_PRIVACY,$MAX_RELATION_PATH_LENGTH;
@@ -851,7 +851,7 @@ class SearchControllerRoot extends BaseController {
 						$this->multiTotalResults = 0;
 						$somethingPrinted = true;
 						foreach ($this->multisiteResults as $key => $siteResults) {
-							include_once('includes/classes/class_serviceclient.php');
+							require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 							$serviceClient = ServiceClient :: getInstance($key);
 							$siteName = $serviceClient->getServiceTitle();
 							$siteURL = dirname($serviceClient->getURL());
@@ -1055,8 +1055,8 @@ class SearchControllerRoot extends BaseController {
 // -- end of class
 
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/search_ctrl_user.php')) {
-	include_once 'includes/controllers/search_ctrl_user.php';
+if (file_exists(PGV_ROOT.'includes/controllers/search_ctrl_user.php')) {
+	require_once PGV_ROOT.'includes/controllers/search_ctrl_user.php';
 } else {
 	class SearchController extends SearchControllerRoot {
 	}

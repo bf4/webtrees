@@ -130,7 +130,7 @@ switch ($action) {
 		print $pgv_lang["add_new_language"];
 		print "</td></tr>";
 
-		require( "includes/lang_codes_std.php");
+		require PGV_ROOT.'includes/lang_codes_std.php';
 		print "<tr><td class=\"facts_value center\"><select name=\"new_shortcut\">\n";
 
 		asort($lng_codes);		// Sort the language codes table into language name order

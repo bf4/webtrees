@@ -31,8 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_RSS_PHP', '');
 
-require_once 'includes/functions/functions_print_lists.php';
-require_once 'includes/classes/class_stats.php';
+require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once PGV_ROOT.'includes/classes/class_stats.php';
 
 $time = client_time();
 $day = date("j", $time);
@@ -365,8 +365,11 @@ function getRecentChanges() {
 				$disp = true;
 				switch($type) {
 					case 'INDI':
-						if (($filter=="living")&&(is_dead($gedrec)==1)) $disp = false;
-						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsById($gid);
+						if (($filter=="living")&&(is_dead($gedrec)==1)) {
+							$disp = false;
+						} elseif ($HIDE_LIVE_PEOPLE) {
+							$disp = displayDetailsById($gid);
+						}
 						break;
 					case 'FAM':
 						if ($filter=="living") {

@@ -34,9 +34,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_MEDIA_CTRL_PHP', '');
 
-require_once 'includes/controllers/individual_ctrl.php';
-require_once 'includes/classes/class_media.php';
-require_once 'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/controllers/individual_ctrl.php';
+require_once PGV_ROOT.'includes/classes/class_media.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 class MediaControllerRoot extends IndividualController{
 
@@ -226,14 +226,14 @@ class MediaControllerRoot extends IndividualController{
 			}
 
 			// main link displayed on page
-			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+			if (PGV_USER_GEDCOM_ADMIN && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 				$submenu = new Menu($pgv_lang["add_or_remove_links"]);
 			} else {	
 				$submenu = new Menu($pgv_lang["set_link"]);
 			}
 			
 			// GEDFact assistant Add Media Links =======================
-			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+			if (PGV_USER_GEDCOM_ADMIN && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 				$submenu->addOnclick("return ilinkitem('".$this->pid."','manage');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 				// Do not print ssubmunu
@@ -454,8 +454,8 @@ class MediaControllerRoot extends IndividualController{
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/media_ctrl_user.php')) {
-	include_once 'includes/controllers/media_ctrl_user.php';
+if (file_exists(PGV_ROOT.'includes/controllers/media_ctrl_user.php')) {
+	require_once PGV_ROOT.'includes/controllers/media_ctrl_user.php';
 } else {
 	class MediaController extends MediaControllerRoot {
 	}

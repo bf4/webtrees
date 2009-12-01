@@ -34,8 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_BLOCK_HTMLPLUS_PHP', '');
 
-require_once 'includes/functions/functions_print_lists.php';
-require_once 'includes/classes/class_stats.php';
+require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once PGV_ROOT.'includes/classes/class_stats.php';
 
 $PGV_BLOCKS['print_htmlplus_block']['name']			= $pgv_lang['htmlplus_block_name'];
 $PGV_BLOCKS['print_htmlplus_block']['descr']		= 'htmlplus_block_descr';
@@ -85,12 +85,12 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	 */
 	if($config['compat'] == 1)
 	{
-		require_once 'includes/classes/class_stats_compat.php';
+		require_once PGV_ROOT.'includes/classes/class_stats_compat.php';
 		$stats = new stats_compat($GEDCOM);
 	}
 	elseif($config['ui'] == 1)
 	{
-		require_once 'includes/classes/class_stats_ui.php';
+		require_once PGV_ROOT.'includes/classes/class_stats_ui.php';
 		$stats = new stats_ui($GEDCOM);
 	}
 	else
@@ -181,7 +181,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 function print_htmlplus_block_config($config)
 {
 	global $pgv_lang, $factarray, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings, $GEDCOM;
-	$useFCK = file_exists('./modules/FCKeditor/fckeditor.php');
+	$useFCK = file_exists(PGV_ROOT.'modules/FCKeditor/fckeditor.php');
 	$templates = array();
 	$d = dir('blocks/');
 	while(false !== ($entry = $d->read()))
@@ -283,7 +283,7 @@ function print_htmlplus_block_config($config)
 	if($useFCK)
 	{
 		// use FCKeditor module
-		require_once './modules/FCKeditor/fckeditor.php';
+		require_once PGV_ROOT.'modules/FCKeditor/fckeditor.php';
 		$oFCKeditor = new FCKeditor('html') ;
 		$oFCKeditor->BasePath = './modules/FCKeditor/';
 		$oFCKeditor->Value = $config['html'];

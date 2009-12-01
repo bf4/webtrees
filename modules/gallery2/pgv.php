@@ -31,10 +31,10 @@
 global $SERVER_URL, $language_settings, $LANGUAGE, $modinfo, $pgv_lang;
 
 // For block support
-if(!defined('PGV_MOD_SIMPLE')){$modinfo = parse_ini_file('modules/gallery2.php', true);}
+if(!defined('PGV_MOD_SIMPLE')){$modinfo = parse_ini_file(PGV_ROOT.'modules/gallery2.php', true);}
 
 // Gallery path sanity check
-if(!file_exists($modinfo['Gallery2']['path'])){$modinfo['Gallery2']['path'] = 'modules/gallery2';}
+if(!file_exists($modinfo['Gallery2']['path'])){$modinfo['Gallery2']['path'] = PGV_ROOT.'modules/gallery2';}
 
 // Check if gallery installed, if not then return false
 if(!file_exists("{$modinfo['Gallery2']['path']}/embed.php"))
@@ -45,16 +45,18 @@ if(!file_exists("{$modinfo['Gallery2']['path']}/embed.php"))
 define('PGV_GALLERY2_INIT', true);
 
 // Load the embeding API
-include_once "{$modinfo['Gallery2']['path']}/embed.php";
+require_once $modinfo['Gallery2']['path'].'/embed.php';
 
 // Load PGV embeding language file
-require_once 'modules/gallery2/language/mod_en.php';
+require_once PGV_ROOT.'modules/gallery2/language/mod_en.php';
 
 // Load other language file if needed
-if($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists("modules/gallery2/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php")){require_once "modules/gallery2/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php";}
+if ($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists(PGV_ROOT.'modules/gallery2/language/mod_'.$language_settings[$LANGUAGE]['lang_short_cut'].'.php')) {
+	require_once PGV_ROOT.'modules/gallery2/language/mod_'.$language_settings[$LANGUAGE]['lang_short_cut'].'.php';
+}
 
 // Load some tools for embeding ease of use
-require_once 'modules/gallery2/G2EmbedDiscoveryUtilities.class';
+require_once PGV_ROOT.'modules/gallery2/G2EmbedDiscoveryUtilities.class';
 
 function mod_gallery2_load($uid)
 {

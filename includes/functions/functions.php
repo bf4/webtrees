@@ -33,9 +33,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_PHP', '');
 
-require_once 'includes/classes/class_mutex.php';
-require_once 'includes/classes/class_media.php';
-require_once 'includes/functions/functions_UTF8.php';
+require_once PGV_ROOT.'includes/classes/class_mutex.php';
+require_once PGV_ROOT.'includes/classes/class_media.php';
+require_once PGV_ROOT.'includes/functions/functions_UTF8.php';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Extract, sanitise and validate FORM (POST), URL (GET) and COOKIE variables.
@@ -313,7 +313,7 @@ function load_privacy_file($ged_id=PGV_GED_ID) {
 	global $person_privacy, $user_privacy, $global_facts, $person_facts;
 
 	// Load default settings
-	require 'privacy.php';
+	require PGV_ROOT.'privacy.php';
 
 	// Load settings for the specified gedcom
 	$privacy_file=get_privacy_file(get_gedcom_from_id($ged_id));
@@ -489,7 +489,7 @@ function update_lang_settings() {
 
 	$Filename = $INDEX_DIRECTORY . "lang_settings.php";
 	if (!file_exists($Filename)) {
-		copy("includes/lang_settings_std.php", $Filename);
+		copy(PGV_ROOT.'includes/lang_settings_std.php', $Filename);
 	}
 
 	$error = "";
@@ -1311,7 +1311,7 @@ function find_highlighted_object($pid, $ged_id, $indirec) {
 	//-- handle finding the media of remote objects
 	$ct = preg_match("/(.*):(.*)/", $pid, $match);
 	if ($ct>0) {
-		require_once 'includes/classes/class_serviceclient.php';
+		require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 		$client = ServiceClient::getInstance($match[1]);
 		if (!is_null($client)) {
 			$mt = preg_match_all('/\n\d OBJE @('.PGV_REGEX_XREF.')@/', $indirec, $matches, PREG_SET_ORDER);
@@ -2740,8 +2740,8 @@ function get_theme_names() {
 	$themes = array();
 	$d = dir("themes");
 	while (false !== ($entry = $d->read())) {
-		if ($entry{0}!="." && $entry!="CVS" && !stristr($entry, "svn") && is_dir("themes/$entry") && file_exists("themes/$entry/theme.php")) {
-			$themefile = implode("", file("themes/$entry/theme.php"));
+		if ($entry{0}!="." && $entry!="CVS" && !stristr($entry, "svn") && is_dir(PGV_ROOT.'themes/'.$entry) && file_exists(PGV_ROOT.'themes/'.$entry.'/theme.php')) {
+			$themefile = implode("", file(PGV_ROOT.'themes/'.$entry.'/theme.php'));
 			$tt = preg_match("/theme_name\s+=\s+\"(.*)\";/", $themefile, $match);
 			if ($tt>0)
 				$themename = trim($match[1]);
@@ -2859,7 +2859,7 @@ function get_report_list($force=false) {
 	}
 	$d->close();
 
-	require_once("includes/reportheader.php");
+	require_once PGV_ROOT.'includes/reportheader.php';
 	$report_array = array();
 	if (!function_exists("xml_parser_create"))
 		return $report_array;
@@ -3391,8 +3391,8 @@ function loadLangFile($fileListNames="", $lang="") {
 	// In contrast to the preceding logic, we will NOT first load the English extra.xx.php
 	// file when trying for other languages.
 	//
-	if (file_exists("languages/lang.".$lang_short_cut[$lang].".extra.php")) {
-		require "languages/lang.".$lang_short_cut[$lang].".extra.php";
+	if (file_exists(PGV_ROOT.'languages/lang.'.$lang_short_cut[$lang].'.extra.php')) {
+		require PGV_ROOT.'languages/lang.'.$lang_short_cut[$lang].'.extra.php';
 	}
 	if (file_exists($extrafile[$lang])) {
 		require $extrafile[$lang];
@@ -3455,8 +3455,8 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 	if ($forceLoad) {
 		$LANGUAGE = "english";
-		require($pgv_language[$LANGUAGE]);			// Load English
-		require($factsfile[$LANGUAGE]);
+		require $pgv_language[$LANGUAGE];			// Load English
+		require $factsfile[$LANGUAGE];
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
 		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
@@ -3465,22 +3465,22 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
 
 		// Load functions that are specific to the active language
-		$file = "./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php";
+		$file = PGV_ROOT.'includes/extras/functions.'.$lang_short_cut[$LANGUAGE].'.php';
 		if (file_exists($file)) {
-			include_once($file);
+			require_once $file;
 		}
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if (!$CONFIGURED || !PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
-				include($file);
+				require $file;
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if (!PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
-				include($file);
+				require $file;
 			}
 		}
 	}
@@ -3489,11 +3489,11 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$LANGUAGE = $desiredLanguage;
 		$file = $pgv_language[$LANGUAGE];
 		if (file_exists($file)) {
-			include($file);		// Load the requested language
+			require $file;  // Load the requested language
 		}
 		$file = $factsfile[$LANGUAGE];
 		if (file_exists($file)) {
-			include($file);
+			require $file;
 		}
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
@@ -3503,35 +3503,35 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
 
 		// Load functions that are specific to the active language
-		$file = "./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php";
+		$file = PGV_ROOT.'includes/extras/functions.'.$lang_short_cut[$LANGUAGE].'.php';
 		if (file_exists($file)) {
-			include_once($file);
+			require_once $file;
 		}
 
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if (!$CONFIGURED || !PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
-				include($file);
+				require $file;
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if (!PGV_DB::isConnected() || !adminUserExists() || PGV_USER_CAN_EDIT) {
-				include($file);
+				require $file;
 			}
 		}
 	}
 
 	// load the extra language file
-	$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
+	$file = PGV_ROOT.'languages/lang.'.$lang_short_cut[$LANGUAGE].'.extra.php';
 	if (file_exists($file)) {
-		include($file);
+		require $file;
 	}
 	$file = $extrafile[$LANGUAGE];
 	if (file_exists($file)) {
-		include($file);
+		require $file;
 	}
 
 	// Modify certain spellings if Ashkenazi pronounciations are in use.
@@ -3646,7 +3646,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
  *	have 52 different UTF8 characters all mapping to the same base character.  This will
  *	handle Vietnamese, which is by far the richest language in terms of diacritic marks.
  */
- 	require_once "includes/sort_tables_utf8.php";
+ 	require_once PGV_ROOT.'includes/sort_tables_utf8.php';
 }
 
 /**
@@ -3739,11 +3739,11 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 
 	// -- Determine the correct URL to open this media file
  	while (true) {
-		if (file_exists("modules/lightbox/album.php")) {
+		if (PGV_USE_LIGHTBOX) {
 			// Lightbox is installed
-			include_once('modules/lightbox/lb_defaultconfig.php');
-			if (file_exists('modules/lightbox/lb_config.php')) {
-				include_once('modules/lightbox/lb_config.php');
+			require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+			if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+				require_once PGV_ROOT.'modules/lightbox/lb_config.php';
 			}
 			switch ($type) {
 			case 'url_flv':
@@ -3922,8 +3922,8 @@ function pathinfo_utf($path) {
 }
 
 // optional extra file
-if (file_exists('includes/functions.extra.php')) {
-	require 'includes/functions.extra.php';
+if (file_exists(PGV_ROOT.'includes/functions.extra.php')) {
+	require PGV_ROOT.'includes/functions.extra.php';
 }
 
 ?>

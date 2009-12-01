@@ -30,8 +30,8 @@
 
 require './config.php';
 
-require './includes/functions/functions_print_lists.php';
-require './includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 // TODO use GET/POST, rather than $_REQUEST
 // TODO decide what validation is required on these input parameters
@@ -88,7 +88,7 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	exit;
 }
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'/js/autocomplete.js.htm';
 echo PGV_JS_START;
 ?>
 	// Shared Notes =========================
@@ -395,7 +395,7 @@ if ($action=="newentry") {
 
 		$newged = handle_updates($newged);
 
-		require_once 'includes/classes/class_media.php';
+		require_once PGV_ROOT.'includes/classes/class_media.php';
 		$media_obje = new Media($newged);
 		$mediaid = Media::in_obje_list($media_obje);
 		if (!$mediaid) $mediaid = append_gedrec($newged, $linktoid);

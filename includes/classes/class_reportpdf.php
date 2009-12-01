@@ -38,8 +38,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 */
 define('PGV_CLASS_REPORTPDF_PHP', '');
 
-require_once 'includes/classes/class_reportbase.php';
-require_once 'tcpdf/tcpdf.php';
+require_once PGV_ROOT.'includes/classes/class_reportbase.php';
+require_once PGV_ROOT.'tcpdf/tcpdf.php';
 
 /**
 * Main PGV Report Class for PDF

@@ -33,9 +33,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_REMOTELINK_CTRL_PHP', '');
 
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/functions/functions_edit.php';
-require_once 'includes/classes/class_serviceclient.php';
+require_once PGV_ROOT.'includes/controllers/basecontrol.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 
 class RemoteLinkController extends BaseController {
 	var $pid=null;
@@ -63,6 +63,12 @@ class RemoteLinkController extends BaseController {
 
 	// Initialize the controller for the add remote link
 	function init() {
+		// Coming soon ???
+		$this->has_familysearch=file_exists(PGV_ROOT.'modules/FamilySearch/familySearchWrapper.php');
+		if ($this->has_familysearch) {;
+			require_once PGV_ROOT.'modules/FamilySearch/familySearchWrapper.php';
+		}
+
 		// The PID can come from a URL or a form
 		$this->pid=safe_REQUEST($_REQUEST, 'pid', PGV_REGEX_XREF);
 

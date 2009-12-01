@@ -35,8 +35,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Require our base class and db functions
-require_once 'modules/research_assistant/ra_functions.php';
-require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';
+require_once PGV_ROOT.'modules/research_assistant/ra_functions.php';
+require_once PGV_ROOT.'modules/research_assistant/forms/ra_GeneratedTask.php';
 
 require_once 'includes/classes/class_tab.php';
 
@@ -459,8 +459,8 @@ class research_assistant extends ra_functions {
 		else if ($_REQUEST['action']=='load_search_plugin') {
 			$out .= print_r($_REQUEST, true);
 			if (isset($_REQUEST['plugin'])) {
-				if (file_exists("modules/research_assistant/search_plugin/".$_REQUEST['plugin'])) { 
-					require_once 'modules/research_assistant/search_plugin/'.$_REQUEST['plugin'];
+				if (file_exists(PGV_ROOT.'modules/research_assistant/search_plugin/'.$_REQUEST['plugin'])) { 
+					require_once PGV_ROOT.'modules/research_assistant/search_plugin/'.$_REQUEST['plugin'];
 					$autosearch=new AutoSearch();
 					return $autosearch->options();
 				}
@@ -469,8 +469,8 @@ class research_assistant extends ra_functions {
 		else if ($_REQUEST['action']=='auto_search') {
 			$out .= print_r($_REQUEST, true);
 			if (isset($_REQUEST['searchtype'])) {
-				if (file_exists("modules/research_assistant/search_plugin/".$_REQUEST['searchtype'].'.php')) { 
-					require_once 'modules/research_assistant/search_plugin/'.$_REQUEST['searchtype'].'.php';
+				if (file_exists(PGV_ROOT.'modules/research_assistant/search_plugin/'.$_REQUEST['searchtype'].'.php')) { 
+					require_once PGV_ROOT.'modules/research_assistant/search_plugin/'.$_REQUEST['searchtype'].'.php';
 					$autosearch=new AutoSearch();
 					return $autosearch->process();
 				}
@@ -480,7 +480,7 @@ class research_assistant extends ra_functions {
 			ob_start();
 			// TODO this script should be properly integrated into ra_functions
 			global $SHOW_RESEARCH_ASSISTANT, $pgv_lang, $TBLPREFIX;
-			require_once 'modules/research_assistant/editcomment.php';
+			require_once PGV_ROOT.'modules/research_assistant/editcomment.php';
 			$out.=ob_get_clean();
 		}
 		// Default

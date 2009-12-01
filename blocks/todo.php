@@ -34,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_TODO_PHP', '');
 
-require_once 'includes/functions/functions_print_lists.php';
+require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $PGV_BLOCKS['print_todo']['name']     =$pgv_lang['todo_block'];
 $PGV_BLOCKS['print_todo']['descr']    ='todo_descr';
@@ -72,8 +72,8 @@ function print_todo($block=true, $config='', $side, $index) {
 	$title .= $pgv_lang['todo_block'];
 	$content = "";
 
-	require_once 'js/sorttable.js.htm';
-	require_once 'includes/classes/class_gedcomrecord.php';
+	require_once PGV_ROOT.'js/sorttable.js.htm';
+	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
 
 	$table_id = 'ID'.floor(microtime()*1000000); // sorttable requires a unique ID
 	$content .= '<table id="'.$table_id.'" class="sortable list_table center">';

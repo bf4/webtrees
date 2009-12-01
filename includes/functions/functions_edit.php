@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_EDIT_PHP', '');
 
-require_once 'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 $NPFX_accept = array( 'Adm', 'Amb', 'Brig', 'Can', 'Capt', 'Chan', 'Chapln', 'Cmdr', 'Col', 'Cpl', 'Cpt', 'Dr', 'Gen', 'Gov', 'Hon', 'Lady', 'Lt', 'Mr', 'Mrs', 'Ms', 'Msgr', 'Pfc', 'Pres', 'Prof', 'Pvt', 'Rabbi', 'Rep', 'Rev', 'Sen', 'Sgt', 'Sir', 'Sr', 'Sra', 'Srta', 'Ven');
 $SPFX_accept = array('al', 'da', 'de', 'den', 'dem', 'der', 'di', 'du', 'el', 'la', 'van', 'von');
@@ -1279,7 +1279,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			} elseif ($fact=="RESN") {
 				print_help_link($fact."_help", "qm");
 			} elseif ($fact=="NOTE" && $islink){
-				if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
+				if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
 					print_help_link("edit_add_GEDFact_ASSISTED_help", "qm");
 				}else{
 					print_help_link("edit_add_SHARED_NOTE_help", "qm");
@@ -1319,7 +1319,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		}
 	} else {
 		if ($fact=="NOTE" && $islink){
-			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
+			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
 			//	use $label (GEDFact Assistant); 
 			}else{
 				echo $pgv_lang["shared_note"];
@@ -1377,7 +1377,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page && action is ADD a new CENS event 
 		// Then show the add Shared note input field and the GEDFact assisted icon.
 		// If GEDFAct_assistant/_CENS/ module not installed  ... do not show 
-		if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $fact=="CENS") {
+		if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $fact=="CENS") {
 			$type_pid=GedcomRecord::getInstance($pid);
 			if ($type_pid->getType()=="INDI" && $action=="add" ) { 
 				add_simple_tag("2 SHARED_NOTE", "", "GEDFact Assistant");
@@ -1572,7 +1572,9 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			echo "</div>\n";
 			echo "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"", $factarray["LATI"], " / ", $factarray["LONG"], "\" title=\"", $factarray["LATI"], " / ", $factarray["LONG"], "\" /></a>";
 			if ($SPLIT_PLACES) {
-				if (!function_exists("print_place_subfields")) require("includes/functions/functions_places.php");
+				if (!function_exists("print_place_subfields")) {
+					require PGV_ROOT.'includes/functions/functions_places.php';
+				}
 				setup_place_subfields($element_id);
 				print_place_subfields($element_id);
 			}
@@ -1664,7 +1666,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		if ($fact=="NOTE" && $islink) {
 			// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
 			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons. 
-			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $action=="add" && $label=="GEDFact Assistant" && $pid) {
+			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $action=="add" && $label=="GEDFact Assistant" && $pid) {
 				$type_pid=GedcomRecord::getInstance($pid);
 				if ($type_pid->getType()=="INDI" ) { 
 					echo "&nbsp;&nbsp;&nbsp;", $pgv_lang["create_shared_note_assisted"];
@@ -2399,8 +2401,8 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$level1type = $type;
 	
 	// GEDFact_assistant ================================================
-	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
-			include ('modules/GEDFact_assistant/_CENS/census_query_2a.php');
+	if ($type=="CENS" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
+			require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
 	}
 	// ==================================================================
 	

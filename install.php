@@ -38,10 +38,13 @@
  */
 
 //-- load up the configuration or the default configuration
-if (file_exists('config.php')) require_once('config.php');
-else require_once('config.dist');
+if (file_exists(PGV_ROOT.'config.php')) {
+	require_once PGV_ROOT.'config.php';
+} else {
+	require_once PGV_ROOT.'config.dist';
+}
 
-require_once 'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 //-- if we are configured, then make sure that only admins access this page
 if (PGV_DB::isConnected() && adminUserExists() && !userIsAdmin()) {
@@ -291,7 +294,7 @@ switch($step) {
 
 				// Save the languages the user has chosen to have active on the website
 				$Filename = $INDEX_DIRECTORY . "lang_settings.php";
-				if (!file_exists($Filename)) copy("includes/lang_settings_std.php", $Filename);
+				if (!file_exists($Filename)) copy(PGV_ROOT.'includes/lang_settings_std.php', $Filename);
 
 				$NEW_LANGS = $_POST['NEW_LANGS'];
 				// Set the chosen languages to active
@@ -455,7 +458,7 @@ $errormsg = "";
 					$success = printAdminUserForm();
 					break;
 				case 8:
-					include_once('blocks/getting_started.php');
+					require_once PGV_ROOT.'blocks/getting_started.php';
 					getting_started_block(false,"",0,0);
 					break;
 				default:	// case 1
@@ -521,7 +524,7 @@ function checkEnvironment() {
 	//config.php file
 	print "<tr><td valign=\"top\">";
 	print $pgv_lang["checking_config.php"]."<br />";
-	if (!file_exists('config.php')) {
+	if (!file_exists(PGV_ROOT.'config.php')) {
 		print "<span class=\"error\">".$pgv_lang["config.php_missing"]."</span><br />".$pgv_lang["config.php_missing_instr"];
 	}
 	else if (!file_is_writeable('config.php')) {
@@ -742,6 +745,7 @@ function printConfigForm(){
 	$oldmemorylimit = @ini_get('memory_limit');
 	if ($oldmemorylimit > $PGV_MEMORY_LIMIT) $PGV_MEMORY_LIMIT = $oldmemorylimit;
 
+	require_once PGV_ROOT.'js/dhtmlXTabbar.js.htm';
 	?>
 	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>

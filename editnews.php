@@ -25,9 +25,9 @@
 
 require './config.php';
 
-$useFCK = file_exists("./modules/FCKeditor/fckeditor.php");
+$useFCK = file_exists(PGV_ROOT.'modules/FCKeditor/fckeditor.php');
 if($useFCK){
-	include("./modules/FCKeditor/fckeditor.php");
+	require PGV_ROOT.'modules/FCKeditor/fckeditor.php';
 }
 
 if (!PGV_USER_ID) {

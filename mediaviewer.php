@@ -29,7 +29,7 @@
 
 require './config.php';
 
-require_once 'includes/controllers/media_ctrl.php';
+require_once PGV_ROOT.'includes/controllers/media_ctrl.php';
 
 $controller = new MediaController();
 $controller->init();
@@ -53,10 +53,12 @@ global $tmb;
 
 // LBox =============================================================================
 // Get Javascript variables from lb_config.php ---------------------------
-if (file_exists("modules/lightbox/album.php")) {
-	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include('modules/lightbox/functions/lb_call_js.php');
+if (PGV_USE_LIGHTBOX) {
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+		require PGV_ROOT.'modules/lightbox/lb_config.php';
+	}
+	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // LBox  ============================================================================
 
@@ -119,7 +121,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 					// attempt to get the image size
 					$imgwidth = $controller->mediaobject->getWidth()+40;
 					$imgheight = $controller->mediaobject->getHeight()+150;
-					if (file_exists("modules/lightbox/album.php")) $dwidth = 200;
+					if (PGV_USE_LIGHTBOX) $dwidth = 200;
 					else $dwidth = 300;
 					if ($imgwidth<$dwidth) $dwidth = $imgwidth;
 
@@ -179,7 +181,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 			<br /><b><?php print $pgv_lang["relations_heading"]; ?></b><br /><br />
 			<?php
 				// PrintMediaLinks($links, "");
-				require_once 'includes/functions/functions_print_lists.php';
+				require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 				print_changes_table($links, $SHOW_LAST_CHANGE, $pgv_lang["total_links"]);
 			}	?>
 		</td>

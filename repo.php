@@ -25,8 +25,8 @@
 */
 
 require './config.php';
-require './includes/controllers/repository_ctrl.php';
-require './includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/controllers/repository_ctrl.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
@@ -40,12 +40,12 @@ $linkToID=$controller->rid;
 print_header($controller->getPageTitle());
 
 // LightBox
-if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
-	include './modules/lightbox/lb_defaultconfig.php';
-	if (file_exists('./modules/lightbox/lb_config.php')) {
-		include './modules/lightbox/lb_config.php';
+if (PGV_USE_LIGHTBOX) {
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+		require PGV_ROOT.'modules/lightbox/lb_config.php';
 	}
-	include './modules/lightbox/functions/lb_call_js.php';
+	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 	loadLangFile('lightbox:lang');
 }
 

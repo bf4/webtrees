@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_GEWEBSERVICE_PHP', '');
 
-require_once 'includes/classes/class_grampsexport.php';
+require_once PGV_ROOT.'includes/classes/class_grampsexport.php';
 
 class GEWebService extends GrampsExport
 {
@@ -193,7 +193,7 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 	*/
 	function create_lds_event($indirec, $eventName, $eventABV, $eParent) {
 		global $ePerson, $TEMPLE_CODES, $clipping, $eRoot;
-		require_once("includes/classes/class_person.php");
+		require_once PGV_ROOT.'includes/classes/class_person.php';
 		if (($hasldsevent = get_sub_record(1, "1 " . $eventABV, $indirec)) != null) {
 
 			// Create <lds_ord> and attaches the type attribute

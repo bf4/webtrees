@@ -44,11 +44,11 @@
 
 require './config.php';
 
-require_once 'includes/functions/functions_print_lists.php';
-require_once 'includes/functions/functions_print_facts.php';
-require_once 'includes/functions/functions_edit.php';
-require_once 'includes/functions/functions_import.php';
-require_once 'includes/functions/functions_mediadb.php';
+require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require_once PGV_ROOT.'includes/functions/functions_import.php';
+require_once PGV_ROOT.'includes/functions/functions_mediadb.php';
 
 /**
  * This functions checks if an existing directory is physically writeable
@@ -958,7 +958,7 @@ if (check_media_structure()) {
 
 		// display the images
 		if (count($medialist) && ($subclick=='search' || $subclick=='all')) {
-			if (file_exists("modules/lightbox/album.php")) {
+			if (PGV_USE_LIGHTBOX) {
 				// Get Lightbox config variables
 				if (file_exists("modules/lightbox/lb_config.php")) include('modules/lightbox/lb_config.php');
 				else include('modules/lightbox/lb_defaultconfig.php');

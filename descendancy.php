@@ -26,21 +26,23 @@
 
 require './config.php';
 
-require './includes/controllers/descendancy_ctrl.php';
-require './includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/controllers/descendancy_ctrl.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $controller=new DescendancyController();
 $controller->init();
 
 print_header($controller->name." ".$pgv_lang["descend_chart"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
-if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include('modules/lightbox/functions/lb_call_js.php');
+if (PGV_USE_LIGHTBOX) {
+	include PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+		include PGV_ROOT.'modules/lightbox/lb_config.php';
+	}
+	include PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ==========================================================================================
 

@@ -143,8 +143,8 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 			}
 		break;
 	case "style2": // Table style
-		require_once 'js/sorttable.js.htm';
-		require_once 'includes/classes/class_gedcomrecord.php';
+		require_once PGV_ROOT.'js/sorttable.js.htm';
+		require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
 		$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 		$content .= "<table id=\"{$table_id}\" class=\"sortable list_table center\">";
 		$content .= "<tr>";

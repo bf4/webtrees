@@ -51,7 +51,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 function GetGEDFromZIP($zipfile, $extract=true) {
 	GLOBAL $INDEX_DIRECTORY;
 
-	require_once "includes/pclzip.lib.php";
+	require_once PGV_ROOT.'includes/pclzip.lib.php';
 	$zip = new PclZip($zipfile);
 	// if it's not a valid zip, just return the filename
 	if (($list = $zip->listContent()) == 0) {
@@ -218,7 +218,7 @@ if (isset($ged)) {
 }
 $USERLANG = $LANGUAGE;
 $temp = $THEME_DIR;
-require($gedcom_config);
+require $gedcom_config;
 if (!isset($_POST["GEDCOMLANG"])) {
 	$GEDCOMLANG = $LANGUAGE;
 } else {
@@ -276,7 +276,7 @@ if ($action=="update") {
 		PGVModule::setDefaultTabs($gedcom_id);
 	}
 
-	require($INDEX_DIRECTORY."gedcoms.php");
+	require $INDEX_DIRECTORY.'gedcoms.php';
 	$boolarray = array();
 	$boolarray["yes"]="true";
 	$boolarray["no"]="false";
@@ -591,7 +591,7 @@ if ($action=="update") {
 	}
 
 	//-- delete the cache files for the welcome page blocks
-	include_once("includes/index_cache.php");
+	require_once PGV_ROOT.'includes/index_cache.php';
 	clearCache();
 
 	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated");
@@ -632,7 +632,7 @@ else if ($action=="replace") {
 //-- output starts here
 print_header($pgv_lang["gedconf_head"]);
 
-if ($ENABLE_AUTOCOMPLETE && $source=='') require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE && $source=='') require PGV_ROOT.'js/autocomplete.js.htm';
 
 if (!isset($GENERATE_UIDS)) $GENERATE_UIDS = false;
 $temp2 = $THEME_DIR;

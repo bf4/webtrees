@@ -58,7 +58,7 @@ if ($surn=='*') {
 //-- form
 print_header($pgv_lang["branch_list"]." - ".$surn);
 if ($ENABLE_AUTOCOMPLETE) {
-	require './js/autocomplete.js.htm';
+	require PGV_ROOT.'/js/autocomplete.js.htm';
 }
 ?>
 <form name="surnlist" id="surnlist" action="?">

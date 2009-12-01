@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r6477 - r6501 from the trunk. (windmillway)
  - Changed: Minor changes to prevent addition of none entered tags (e.g. OBJE) when entry fields are empty. (windmillway)
  - Changed: GEDFact Census assistant now copies a Census event to all affected Indi's in the shared note created. (windmillway)
  - Merged: Merge changes r6431 - r6476 from the trunk.  
@@ -177,7 +178,9 @@ Version 4.2.x CA
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.2.3
- - Fixed: [ 1953767 ] 4.1.5rel ... Negative #s in import statistics ( fisharebest )
+ - Fixed: [ 2563934 ] Sitemap module should only submit public URL's (wooc)
+ - Fixed: [ 2905609 ] Address handling in quickupdate (volschin)
+ - Fixed: [ 1953767 ] 4.1.5rel ... Negative #s in import statistics (fisharebest)
  - Update: PCLzip 2.8.2 (volschin)
  - Update: TCPDF 4.8.016 (volschin)
  - Fixed: [ 1738619 ] Deleting Gedcom file - Misc Entried Remain in DB (fisharebest)

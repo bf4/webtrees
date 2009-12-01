@@ -414,7 +414,7 @@ function addMessage($message) {
 	if ($message["from"]==$message["to"])
 		return false;
 
-	require_once('includes/functions/functions_mail.php');
+	require_once PGV_ROOT.'includes/functions/functions_mail.php';
 
 	if (!get_user_id($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails
