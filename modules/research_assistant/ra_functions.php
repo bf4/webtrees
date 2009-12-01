@@ -1633,16 +1633,6 @@ class ra_functions {
 							</table>\n
 					</td></tr></table>";
 					
-
-		//beginning of FamilySearch results functionality
-		if (file_exists(PGV_ROOT.'modules/FamilySearch/RA_AutoMatch.php')) {
-			require_once PGV_ROOT.'modules/FamilySearch/RA_AutoMatch.php';
-			$matcher = new RA_AutoMatch();
-		// **** Brian H commented out the folowing line after Trunk merge (01 Dec 2009) - it gives an error - (John F to fix??) ****
-			// $out .= $matcher->generateResultsTable($person);
-			unset($matcher);
-		}
-
 		//Beginning of the comments feature
 		if (!empty($_REQUEST['action']) && $_REQUEST['action']=='delete_comment' && !empty($_REQUEST['uc_id'])) {
 			PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_comments WHERE uc_id=?")
