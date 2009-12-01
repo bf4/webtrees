@@ -24,8 +24,11 @@
  * @subpackage Admin
  */
 
-if (file_exists('./config.php')) require './config.php';
-else require './config.dist';
+if (file_exists(PGV_ROOT.'config.php')) {
+	require PGV_ROOT.'config.php';
+} else {
+	require PGV_ROOT.'config.dist';
+}
 
 loadLangFile("all");
 require PGV_ROOT.'includes/help_text_vars.php';

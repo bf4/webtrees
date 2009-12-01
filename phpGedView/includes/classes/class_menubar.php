@@ -244,17 +244,17 @@ class MenuBar
 		// Build a sortable list of submenu items and then sort it in localized name order
 		$menuList = array();
 		$menuList["pedigree"] = $pgv_lang["pedigree_chart"];
-		if (file_exists("descendancy.php")) $menuList["descendancy"] = $pgv_lang["descend_chart"];
-		if (file_exists("ancestry.php")) $menuList["ancestry"] = $pgv_lang["ancestry_chart"];
-		if (file_exists("compact.php")) $menuList["compact"] = $pgv_lang["compact_chart"];
-		if (file_exists("fanchart.php") && function_exists("imagettftext")) $menuList["fanchart"] = $pgv_lang["fan_chart"];
-		if (file_exists("hourglass.php")) $menuList["hourglass"] = $pgv_lang["hourglass_chart"];
-		if (file_exists("familybook.php")) $menuList["familybook"] = $pgv_lang["familybook_chart"];
-		if (file_exists("timeline.php")) $menuList["timeline"] = $pgv_lang["timeline_chart"];
-		if (file_exists("lifespan.php")) $menuList["lifespan"] = $pgv_lang["lifespan_chart"];
-		if (file_exists("relationship.php")) $menuList["relationship"] = $pgv_lang["relationship_chart"];
-		if (file_exists("statistics.php")) $menuList["statistics"] = $pgv_lang["statistics"];
-		if (file_exists("treenav.php")) $menuList["treenav"] = $pgv_lang["interactive_tree"];
+		if (file_exists(PGV_ROOT.'descendancy.php')) $menuList["descendancy"] = $pgv_lang["descend_chart"];
+		if (file_exists(PGV_ROOT.'ancestry.php')) $menuList["ancestry"] = $pgv_lang["ancestry_chart"];
+		if (file_exists(PGV_ROOT.'compact.php')) $menuList["compact"] = $pgv_lang["compact_chart"];
+		if (file_exists(PGV_ROOT.'fanchart.php') && function_exists("imagettftext")) $menuList["fanchart"] = $pgv_lang["fan_chart"];
+		if (file_exists(PGV_ROOT.'hourglass.php')) $menuList["hourglass"] = $pgv_lang["hourglass_chart"];
+		if (file_exists(PGV_ROOT.'familybook.php')) $menuList["familybook"] = $pgv_lang["familybook_chart"];
+		if (file_exists(PGV_ROOT.'timeline.php')) $menuList["timeline"] = $pgv_lang["timeline_chart"];
+		if (file_exists(PGV_ROOT.'lifespan.php')) $menuList["lifespan"] = $pgv_lang["lifespan_chart"];
+		if (file_exists(PGV_ROOT.'relationship.php')) $menuList["relationship"] = $pgv_lang["relationship_chart"];
+		if (file_exists(PGV_ROOT.'statistics.php')) $menuList["statistics"] = $pgv_lang["statistics"];
+		if (file_exists(PGV_ROOT.'treenav.php')) $menuList["treenav"] = $pgv_lang["interactive_tree"];
 		asort($menuList);
 
 		// Produce the submenus in localized name order
@@ -477,13 +477,13 @@ class MenuBar
 		// Build a sortable list of submenu items and then sort it in localized name order
 		$menuList = array();
 		$menuList["individual"] = $pgv_lang["individual_list"];
-		if (file_exists("famlist.php")) $menuList["family"] = $pgv_lang["family_list"];
-		if (file_exists("branches.php")) $menuList["branches"] = $pgv_lang["branch_list"];
-		if (!$surname && file_exists("sourcelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["source"] = $pgv_lang["source_list"];
-		if (!$surname && file_exists("notelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["note"] = $pgv_lang["shared_note_list"];
-		if (!$surname && file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
-		if (!$surname && file_exists("placelist.php")) $menuList["places"] = $pgv_lang["place_list"];
-		if (!$surname && file_exists("medialist.php") && $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
+		if (file_exists(PGV_ROOT.'famlist.php')) $menuList["family"] = $pgv_lang["family_list"];
+		if (file_exists(PGV_ROOT.'branches.php')) $menuList["branches"] = $pgv_lang["branch_list"];
+		if (!$surname && file_exists(PGV_ROOT.'sourcelist.php') && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["source"] = $pgv_lang["source_list"];
+		if (!$surname && file_exists(PGV_ROOT.'notelist.php') && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["note"] = $pgv_lang["shared_note_list"];
+		if (!$surname && file_exists(PGV_ROOT.'repolist.php')) $menuList["repository"] = $pgv_lang["repo_list"];
+		if (!$surname && file_exists(PGV_ROOT.'placelist.php')) $menuList["places"] = $pgv_lang["place_list"];
+		if (!$surname && file_exists(PGV_ROOT.'medialist.php') && $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
 		asort($menuList);
 
 		// Produce the submenus in localized name order
@@ -580,7 +580,7 @@ class MenuBar
 	static function &getCalendarMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER, $GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		if ((!file_exists("calendar.php")) || (!empty($SEARCH_SPIDER))) {
+		if ((!file_exists(PGV_ROOT.'calendar.php')) || (!empty($SEARCH_SPIDER))) {
 			$menu = new Menu("", "", "");
 //			$menu->print_menu = null;
 			return $menu;
@@ -619,7 +619,7 @@ class MenuBar
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $LANGUAGE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		if ((!file_exists("reportengine.php")) || (!empty($SEARCH_SPIDER))) {
+		if ((!file_exists(PGV_ROOT.'reportengine.php')) || (!empty($SEARCH_SPIDER))) {
 			$menu = new Menu("", "", "");
 //			$menu->print_menu = null;
 			return $menu;
@@ -705,7 +705,7 @@ class MenuBar
 		global $ENABLE_CLIPPINGS_CART;
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		if ((!file_exists("clippings.php")) || (!empty($SEARCH_SPIDER))) {
+		if ((!file_exists(PGV_ROOT.'clippings.php')) || (!empty($SEARCH_SPIDER))) {
 			$menu = new Menu("", "", "");
 //			$menu->print_menu = null;
 			return $menu;
@@ -726,7 +726,7 @@ class MenuBar
 	static function &getOptionalMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		if (!file_exists("includes/extras/optional_menu.php") || !empty($SEARCH_SPIDER)) {
+		if (!file_exists(PGV_ROOT.'includes/extras/optional_menu.php') || !empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
 //			$menu->print_menu = null;
 			return $menu;
@@ -763,7 +763,7 @@ class MenuBar
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_MULTISITE_SEARCH, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		if ((!file_exists("search.php")) || (!empty($SEARCH_SPIDER))) {
+		if ((!file_exists(PGV_ROOT.'search.php')) || (!empty($SEARCH_SPIDER))) {
 			$menu = new Menu("", "", "");
 //			$menu->print_menu = null;
 			return $menu;
@@ -882,7 +882,7 @@ class MenuBar
 		$submenu->addOnclick("return helpPopup('help_contents_help');");
 		$menu->addSubmenu($submenu);
 		//-- faq sub menu
-		if (file_exists("faq.php")) {
+		if (file_exists(PGV_ROOT.'faq.php')) {
 			$submenu = new Menu($pgv_lang["faq_list"], "faq.php");
 			if (!empty($PGV_IMAGES["menu_help"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_help"]["small"]);
@@ -890,7 +890,7 @@ class MenuBar
 			$menu->addSubmenu($submenu);
 		}
 		//-- searchhelp sub menu
-		if (file_exists("searchhelp.php")) {
+		if (file_exists(PGV_ROOT.'searchhelp.php')) {
 			$submenu = new Menu($pgv_lang["hs_title"], "#");
 			if (!empty($PGV_IMAGES["search"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);

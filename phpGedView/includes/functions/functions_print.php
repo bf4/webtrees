@@ -118,22 +118,22 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					}
 				}
 				// NOTE: Zoom
-				if (file_exists("ancestry.php")) {
+				if (file_exists(PGV_ROOT.'ancestry.php')) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["ancestry_chart"];
 					$personlinks .= "<a href=\"".encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />";
 				}
-				if (file_exists("compact.php")) {
+				if (file_exists(PGV_ROOT.'compact.php')) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["compact_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["compact_chart"];
 					$personlinks .= "<a href=\"".encode_url("compact.php?rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />";
 				}
-				if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
+				if (file_exists(PGV_ROOT.'fanchart.php') and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["fan_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["fan_chart"];
 					$personlinks .= "<a href=\"".encode_url("fanchart.php?rootid={$pid}&PEDIGREE_GENERATIONS={$OLD_PGENS}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />";
 				}
-				if (file_exists("hourglass.php")) {
+				if (file_exists(PGV_ROOT.'hourglass.php')) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
 					$personlinks .= "<a href=\"".encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}&show_spouse={$show_spouse}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />";
@@ -1131,7 +1131,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!empty($text) || !empty($centitl)) {
 		$text = PrintReady($text);
 		// Check if Formatted Shared Note (using pipe "|" as delimiter ) --------------------
-		if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec) && strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
+		if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec) && strstr($text, "|") && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php') ) {
 			require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php';
 		// Else if unformatted Shared Note --------------------------------------------------
 		}else if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec)) {

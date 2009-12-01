@@ -176,9 +176,9 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 	// (fall back) if that is not available, you can insert basic monospaced text
 	if ($useTTF) {
 		// imagettftext is available, make sure the requested font exists
-		if (!isset($font)||($font=='')||!file_exists('includes/fonts/'.$font)) {
+		if (!isset($font)||($font=='')||!file_exists(PGV_ROOT.'includes/fonts/'.$font)) {
 			$font = 'DejaVuSans.ttf'; // this font ships with PGV
-			if (!file_exists('includes/fonts/'.$font)) {
+			if (!file_exists(PGV_ROOT.'includes/fonts/'.$font)) {
 				$useTTF = false;
 			}
 		}

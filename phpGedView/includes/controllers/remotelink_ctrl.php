@@ -65,7 +65,7 @@ class RemoteLinkController extends BaseController {
 	// Initialize the controller for the add remote link
 	function init() {
 		// Coming soon ???
-		$this->has_familysearch=file_exists('modules/FamilySearch/familySearchWrapper.php');
+		$this->has_familysearch=file_exists(PGV_ROOT.'modules/FamilySearch/familySearchWrapper.php');
 		if ($this->has_familysearch) {;
 			require_once PGV_ROOT.'modules/FamilySearch/familySearchWrapper.php';
 		}

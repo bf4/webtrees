@@ -485,7 +485,7 @@ function update_lang_settings() {
 
 	$Filename = $INDEX_DIRECTORY . "lang_settings.php";
 	if (!file_exists($Filename)) {
-		copy("includes/lang_settings_std.php", $Filename);
+		copy(PGV_ROOT.'includes/lang_settings_std.php', $Filename);
 	}
 
 	$error = "";
@@ -2736,8 +2736,8 @@ function get_theme_names() {
 	$themes = array();
 	$d = dir("themes");
 	while (false !== ($entry = $d->read())) {
-		if ($entry{0}!="." && $entry!="CVS" && !stristr($entry, "svn") && is_dir("themes/$entry") && file_exists("themes/$entry/theme.php")) {
-			$themefile = implode("", file("themes/$entry/theme.php"));
+		if ($entry{0}!="." && $entry!="CVS" && !stristr($entry, "svn") && is_dir(PGV_ROOT.'themes/'.$entry) && file_exists(PGV_ROOT.'themes/'.$entry.'/theme.php')) {
+			$themefile = implode("", file(PGV_ROOT.'themes/'.$entry.'/theme.php'));
 			$tt = preg_match("/theme_name\s+=\s+\"(.*)\";/", $themefile, $match);
 			if ($tt>0)
 				$themename = trim($match[1]);
@@ -3461,7 +3461,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
 
 		// Load functions that are specific to the active language
-		$file = "./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php";
+		$file = PGV_ROOT.'includes/extras/functions.'.$lang_short_cut[$LANGUAGE].'.php';
 		if (file_exists($file)) {
 			require_once $file;
 		}
@@ -3499,7 +3499,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
 
 		// Load functions that are specific to the active language
-		$file = "./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php";
+		$file = PGV_ROOT.'includes/extras/functions.'.$lang_short_cut[$LANGUAGE].'.php';
 		if (file_exists($file)) {
 			require_once $file;
 		}
@@ -3521,7 +3521,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	}
 
 	// load the extra language file
-	$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
+	$file = PGV_ROOT.'languages/lang.'.$lang_short_cut[$LANGUAGE].'.extra.php';
 	if (file_exists($file)) {
 		require $file;
 	}

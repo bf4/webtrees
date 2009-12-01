@@ -2109,7 +2109,7 @@ case 'al_reset_media_update': // Reset sort using Album Page
 	}
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) echo "<br />", $pgv_lang["update_successful"], "<br /><br />";
-		if (!file_exists("modules/googlemap/defaultconfig.php")) {
+		if (!file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 			$tabno = "7";
 		}else{
 			$tabno = "8";
@@ -2150,7 +2150,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 	}
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) {
-		if (!file_exists("modules/googlemap/defaultconfig.php")) {
+		if (!file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 			$tabno = "7";
 		}else{
 			$tabno = "8";

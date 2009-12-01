@@ -1221,7 +1221,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			$text ="";
 			if ($nt>0) {
 				// If Census assistant installed, enable hotspot link on shared note title ---------------------
-				if (file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php")) {
+				if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_note_decode.php')) {
 					$centitl  = str_replace("~~", "", trim($n1match[1]));
 					$centitl  = str_replace("<br />", "", $centitl);
 					$centitl  = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
@@ -1532,7 +1532,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		} else {
 			$file_type = 'local_';
 		}
-		if (preg_match("/\.flv$/i", $rowm['m_file']) && file_exists('modules/JWplayer/flvVideo.php')) {
+		if (preg_match("/\.flv$/i", $rowm['m_file']) && file_exists(PGV_ROOT.'modules/JWplayer/flvVideo.php')) {
 			$file_type .= 'flv';
 		} elseif (preg_match("/\.(jpg|jpeg|gif|png)$/i", $rowm['m_file'])) {
 			$file_type .= 'image';
