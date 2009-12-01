@@ -69,7 +69,7 @@ if (!function_exists("is_dead")) {
 * @param string $indirec the raw gedcom record
 * @return bool true if dead false if alive
 */
-function is_dead($indirec, $current_year='', $import=false) {
+function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 	global $CHECK_CHILD_DATES, $MAX_ALIVE_AGE, $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -84,7 +84,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 	if (empty($current_year)) {
 		// If we're not redefining this, then we can do a quick check for "1 DEAT Y"
 		if (preg_match('/\n1 ('.PGV_EVENTS_DEAT.') Y/', $indirec)) {
-			return update_isdead($pid, PGV_GED_ID, true);
+			if (!$sitemap) {
+				return update_isdead($pid, PGV_GED_ID, true);
+			} else {
+				return true;
+			}
 		}
 		// Base the calculations against the current year
 		$current_year=date('Y');
@@ -96,7 +100,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 		$date=new GedcomDate($date_match);
 		if ($date->isOK()) {
 			$death_year=$date->gregorianYear();
-			return update_isdead($pid, PGV_GED_ID, $death_year<=$current_year);
+			if (!$sitemap) {
+				return update_isdead($pid, PGV_GED_ID, $death_year<=$current_year);
+			} else {
+				return $death_year<=$current_year;
+			}
 		}
 	}
 
@@ -107,7 +115,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 		if ($date->isOK()) {
 			$event_year=$date->gregorianYear();
 			if ($current_year-$event_year >= $MAX_ALIVE_AGE) {
-				return update_isdead($pid, PGV_GED_ID, true);
+				if (!$sitemap) {
+					return update_isdead($pid, PGV_GED_ID, true);
+				} else {
+					return true;
+				}
 			}
 		}
 	}
@@ -132,7 +144,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 							$event_year=$date->gregorianYear();
 							// Assume fathers are no more than 40 years older than their children
 							if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
-								return update_isdead($pid, PGV_GED_ID, true);
+								if (!$sitemap) {
+									return update_isdead($pid, PGV_GED_ID, true);
+								} else {
+									return true;
+								}
 							}
 						}
 					}
@@ -145,7 +161,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 							$event_year=$date->gregorianYear();
 							// Assume fathers are no more than 40 years older than their children
 							if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
-								return update_isdead($pid, PGV_GED_ID, true);
+								if (!$sitemap) {
+									return update_isdead($pid, PGV_GED_ID, true);
+								} else {
+									return true;
+								}
 							}
 						}
 					}
@@ -165,7 +185,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 					$event_year=$date->gregorianYear();
 					// Assume marriage occurs after age of 10
 					if ($current_year-$event_year >= $MAX_ALIVE_AGE-10) {
-						return update_isdead($pid, PGV_GED_ID, true);
+						if (!$sitemap) {
+							return update_isdead($pid, PGV_GED_ID, true);
+						} else {
+							return true;
+						}
 					}
 				}
 			}
@@ -184,7 +208,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 						$event_year=$date->gregorianYear();
 						// Assume max age difference between spouses of 40 years
 						if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
-							return update_isdead($pid, PGV_GED_ID, true);
+							if (!$sitemap) {
+								return update_isdead($pid, PGV_GED_ID, true);
+							} else {
+								return true;
+							}
 						}
 					}
 				}
@@ -200,7 +228,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 					if ($date->isOK()) {
 						$event_year=$date->gregorianYear();
 						if ($current_year-$event_year >= $MAX_ALIVE_AGE-15) {
-							return update_isdead($pid, PGV_GED_ID, true);
+							if (!$sitemap) {
+								return update_isdead($pid, PGV_GED_ID, true);
+							} else {
+								return true;
+							}
 						}
 					}
 				}
@@ -217,7 +249,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 							if ($date->isOK()) {
 								$event_year=$date->gregorianYear();
 								if ($current_year-$event_year >= $MAX_ALIVE_AGE-30) {
-									return update_isdead($pid, PGV_GED_ID, true);
+									if (!$sitemap) {
+										return update_isdead($pid, PGV_GED_ID, true);
+									} else {
+										return true;
+									}
 								}
 							}
 						}
@@ -226,7 +262,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 			}
 		}
 	}
-	return update_isdead($pid, PGV_GED_ID, false);
+	if (!$sitemap) {
+		return update_isdead($pid, PGV_GED_ID, false);
+	} else {
+		return false;
+	}
 }
 }
 
@@ -301,7 +341,7 @@ function checkPrivacyByYear($pid) {
 *          - "REPO" record is a repository
 * @return boolean return true to show the persons details, return false to keep them private
 */
-function displayDetailsById($pid, $type = "INDI") {
+function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES, $INDEX_DIRECTORY;
@@ -522,7 +562,7 @@ function displayDetailsById($pid, $type = "INDI") {
 		}
 
 		$gedrec = find_person_record($pid, $ged_id);
-		$disp = is_dead($gedrec);
+		$disp = is_dead($gedrec, "", false, $sitemap);
 		if ($disp) {
 			if ($SHOW_DEAD_PEOPLE>=$pgv_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) {
