@@ -194,19 +194,28 @@ if ($idnums=="multi") {
 		$cens_NOTE_id=$xref_Note;
 		
 		
-		// New Census event to be added =========================================
+		// New Census event GEDlines to be created and added =====================
 		$new_cens_event_gedrec  = "\n";
 		$new_cens_event_gedrec .= "1 CENS"."\n";
 		$new_cens_event_gedrec .= "2 DATE ".$cens_DATE."\n";
-		$new_cens_event_gedrec .= "2 PLAC ".$cens_PLAC."\n";
-		// $new_cens_event_gedrec .= "2 ADDR ".$cens_ADDR."\n";
-		$new_cens_event_gedrec .= $cens_ADDR;
+		if ($cens_PLAC != "") {
+			$new_cens_event_gedrec .= "2 PLAC ".$cens_PLAC."\n";
+		}
+		if ($cens_ADDR != "") {
+			$new_cens_event_gedrec .= $cens_ADDR;
+		}
 		// $new_cens_event_gedrec .= "2 AGE  ".$cens_pid_AGE."\n";
-		$new_cens_event_gedrec .= "2 SOUR @".$cens_SOUR_id."@"."\n";
-		$new_cens_event_gedrec .= "3 PAGE ".$cens_SOUR_PAGE."\n";
-		$new_cens_event_gedrec .= "3 DATA"."\n";
+		if ($cens_SOUR_id != "") {
+			$new_cens_event_gedrec .= "2 SOUR @".$cens_SOUR_id."@"."\n";
+		}
+		if ($cens_SOUR_PAGE != "") {
+			$new_cens_event_gedrec .= "3 PAGE ".$cens_SOUR_PAGE."\n";
+		}
+		// $new_cens_event_gedrec .= "3 DATA"."\n";
 		$new_cens_event_gedrec .= "4 DATE ".$cens_SOUR_DATE."\n";
-		$new_cens_event_gedrec .= $cens_OBJE_level." OBJE @".$cens_OBJE_id."@"."\n";
+		if ($cens_OBJE_id != "") {
+			$new_cens_event_gedrec .= $cens_OBJE_level." OBJE @".$cens_OBJE_id."@"."\n";
+		}
 		$new_cens_event_gedrec .= $cens_NOTE_level." NOTE @".$cens_NOTE_id."@"."\n";
 
 		// Append New Census event to gedrec ==================================== 
