@@ -49,7 +49,9 @@ else if (!$controller->family->canDisplayDetails()) {
 // LB added for Lightbox viewer ==============================================================
 if (PGV_USE_LIGHTBOX) {
 	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) require PGV_ROOT.'modules/lightbox/lb_config.php';
+	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
+		require PGV_ROOT.'modules/lightbox/lb_config.php';
+	}
 	require_once PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // LB ======================================================================================
@@ -118,7 +120,7 @@ $show_full = "1";
 				<ul class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 		<?php } 
 					$menu = $controller->getChartsMenu(); $menu->printMenu();
-					if (file_exists('reports/familygroup.xml')) :
+					if (file_exists(PGV_ROOT.'reports/familygroup.xml')) :
 					?>
 				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 					<?php

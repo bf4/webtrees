@@ -26,8 +26,9 @@
 
 require './config.php';
 
-if (file_exists(PGV_ROOT.'modules/googlemap/placehierarchy.php'))
+if (file_exists(PGV_ROOT.'modules/googlemap/placehierarchy.php')) {
 	require PGV_ROOT.'modules/googlemap/placehierarchy.php';
+}
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 function case_in_array($value, $array) {

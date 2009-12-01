@@ -36,8 +36,8 @@ $linkto		= safe_GET     ('linkto', array('person', 'source', 'family', 'manage',
 $action		= safe_GET     ('action', PGV_REGEX_ALPHA, 'choose');
 
 // If GedFAct_assistant/_MEDIA/ installed ======================
-if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
-	include 'modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php';
+if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+	require PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php';
 } else {
 
 	if (empty($linktoid) || empty($linkto)) {

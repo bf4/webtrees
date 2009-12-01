@@ -1281,7 +1281,7 @@ class IndividualControllerRoot extends BaseController {
 
 // LB Fix for no googlemaps ==========================================================================
 
-		if (file_exists("modules/googlemap/defaultconfig.php")) {
+		if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 			$tab_array = array("facts", "notes", "sources", "media", "relatives", "tree", "research", "map", "lightbox", "spare", "nav");
 		}else{
 			$tab_array = array("facts", "notes", "sources", "media", "relatives", "tree", "research", "lightbox", "spare", "nav");
@@ -1381,7 +1381,7 @@ class IndividualControllerRoot extends BaseController {
 				<td class="descriptionbox rela">
 					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" />
 					<label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
-					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
+					<?php if (file_exists(PGV_ROOT.'languages/histo.'.$lang_short_cut[$LANGUAGE].'.php')) {?>
 						<input id="checkbox_histo" type="checkbox" <?php if ($EXPAND_HISTO_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_histo');" />
 						<label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
 					<?php }?>
@@ -1952,7 +1952,7 @@ class IndividualControllerRoot extends BaseController {
 	function print_research_tab() {
 		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $factarray, $templefacts, $nondatefacts, $nonplacfacts;
 		global $LANGUAGE, $lang_short_cut;
-		if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
+		if (file_exists(PGV_ROOT.'modules/research_assistant/research_assistant.php') && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
 			if (!$this->indi->canDisplayDetails()) { ?>
 				<table class="facts_table">
 			<tr><td class="facts_value">
@@ -2026,7 +2026,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 				$this->indi->add_family_facts(false);
 				// LB Fix if no googlemaps ========================================================
-				if (file_exists("modules/googlemap/googlemap.php")) {
+				if (file_exists(PGV_ROOT.'modules/googlemap/googlemap.php')) {
 					create_indiv_buttons();
 					build_indiv_map($this->getIndiFacts(), $famids);
 				}

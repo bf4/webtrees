@@ -88,7 +88,7 @@ function print_html_block($block=true, $config="", $side, $index) {
 
 function print_html_block_config($config) {
 	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
-	$useFCK = file_exists("./modules/FCKeditor/fckeditor.php");
+	$useFCK = file_exists(PGV_ROOT.'modules/FCKeditor/fckeditor.php');
 	if($useFCK){
 		require PGV_ROOT.'modules/FCKeditor/fckeditor.php';
 	}

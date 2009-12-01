@@ -182,7 +182,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 function print_htmlplus_block_config($config)
 {
 	global $pgv_lang, $factarray, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings, $GEDCOM;
-	$useFCK = file_exists('./modules/FCKeditor/fckeditor.php');
+	$useFCK = file_exists(PGV_ROOT.'modules/FCKeditor/fckeditor.php');
 	$templates = array();
 	$d = dir('blocks/');
 	while(false !== ($entry = $d->read()))

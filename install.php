@@ -38,8 +38,11 @@
  */
 
 //-- load up the configuration or the default configuration
-if (file_exists('./config.php')) require_once './config.php';
-else require_once './config.dist';
+if (file_exists(PGV_ROOT.'config.php')) {
+	require_once PGV_ROOT.'config.php';
+} else {
+	require_once PGV_ROOT.'config.dist';
+}
 
 require_once PGV_ROOT.'includes/functions/functions_import.php';
 
@@ -291,7 +294,7 @@ switch($step) {
 
 				// Save the languages the user has chosen to have active on the website
 				$Filename = $INDEX_DIRECTORY . "lang_settings.php";
-				if (!file_exists($Filename)) copy("includes/lang_settings_std.php", $Filename);
+				if (!file_exists($Filename)) copy(PGV_ROOT.'includes/lang_settings_std.php', $Filename);
 
 				$NEW_LANGS = $_POST['NEW_LANGS'];
 				// Set the chosen languages to active
@@ -521,7 +524,7 @@ function checkEnvironment() {
 	//config.php file
 	print "<tr><td valign=\"top\">";
 	print $pgv_lang["checking_config.php"]."<br />";
-	if (!file_exists('config.php')) {
+	if (!file_exists(PGV_ROOT.'config.php')) {
 		print "<span class=\"error\">".$pgv_lang["config.php_missing"]."</span><br />".$pgv_lang["config.php_missing_instr"];
 	}
 	else if (!file_is_writeable('config.php')) {

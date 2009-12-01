@@ -187,7 +187,7 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 				}
 				$menu = $menubar->getListsMenu($surname); 
 				$menu->printMenu();
-				if (file_exists("reports/individual.xml")) {?>
+				if (file_exists(PGV_ROOT.'reports/individual.xml')) {?>
 				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 					<?php
 					//-- get reports menu from menubar
@@ -257,7 +257,7 @@ if (PGV_USE_LIGHTBOX) {
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 
-	<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
+	<?php if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {?>
 	var tabid = new Array('0', 'facts', 'notes', 'sources', 'media', 'relatives', 'tree', 'researchlog', 'googlemap', 'spare');
 	var loadedTabs = new Array(false, false, false, false, false, false, false, false, false, false);
 	<?php }else{?>
@@ -423,8 +423,8 @@ if (PGV_USE_LIGHTBOX) {
 	<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php echo $pgv_lang["media"]?></a></dd>
 	<dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php echo $pgv_lang["relatives"]?></a></dd>
 	<dd id="door6"><a href="javascript:;" onclick="tabswitch(6); return false;" ><?php echo $pgv_lang["tree"]?></a></dd>
-	<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php echo $pgv_lang["research_assistant"]?></a></dd>
-	<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
+	<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php echo "!".$pgv_lang["research_assistant"]?></a></dd>
+	<?php if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {?>
 <!-- <dd id="door9"><a href="javascript:;" onclick="tabswitch(9); return false;" ><?php echo "Spare" ?></a></dd> -->
 	<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php echo $pgv_lang["googlemap"]?></a></dd>
 	<?php }else{?>
@@ -562,7 +562,7 @@ if(empty($SEARCH_SPIDER)) {
 	echo "<span class=\"subheaders\">", $pgv_lang["research_assistant"], "</span>";
 	echo "<div id=\"researchlog_content\">";
 
-	if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
+	if (file_exists(PGV_ROOT.'modules/research_assistant/research_assistant.php') && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
 		if (version_compare(PGV_VERSION, '4.1')<0) echo "<script src=\"compat.js\" language\"JavaScript\" type=\"text/javascript\"></script>";
 		echo "<script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>";
 		if ($controller->default_tab==6) $controller->getTab(6);
@@ -583,7 +583,7 @@ if(empty($SEARCH_SPIDER)) {
 if (empty($SEARCH_SPIDER)) {
 	echo "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >";
 	// Header Info ------------------------------------------------------------------------------------
-	if (file_exists("modules/googlemap/defaultconfig.php") ) {
+	if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php') ) {
 		//Content Info ------------------------------------------------------------
 		echo "<div id=\"gg_map_content\">";
 		echo "<table border=\"0\" width=\"100%\" ><tr><td >";
@@ -624,7 +624,7 @@ if (PGV_USE_LIGHTBOX) {
 	echo "<div id=\"lightbox2_content\">";
 	if ($mediacnt!=0) {
 		// LB Fix if googlemaps ========================================================
-		if (file_exists("modules/googlemap/googlemap.php")) {
+		if (file_exists(PGV_ROOT.'modules/googlemap/googlemap.php')) {
 			if ($controller->default_tab==8 || !empty($SEARCH_SPIDER)) {
 				$controller->getTab(8) ;
 			} else {
@@ -659,7 +659,7 @@ if(empty($SEARCH_SPIDER)) {
 		
 		echo "<div id='spare_content'>";
 			// Fix if no googlemaps ========================================================
-			if (file_exists("modules/googlemap/googlemap.php")) {
+			if (file_exists(PGV_ROOT.'modules/googlemap/googlemap.php')) {
 				if (($controller->default_tab==9)||(!empty($SEARCH_SPIDER))) {
 					$controller->getTab(9) ;
 				}else{

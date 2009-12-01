@@ -1279,7 +1279,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			} elseif ($fact=="RESN") {
 				print_help_link($fact."_help", "qm");
 			} elseif ($fact=="NOTE" && $islink){
-				if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
+				if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
 					print_help_link("edit_add_GEDFact_ASSISTED_help", "qm");
 				}else{
 					print_help_link("edit_add_SHARED_NOTE_help", "qm");
@@ -1319,7 +1319,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		}
 	} else {
 		if ($fact=="NOTE" && $islink){
-			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
+			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
 			//	use $label (GEDFact Assistant); 
 			}else{
 				echo $pgv_lang["shared_note"];
@@ -1377,7 +1377,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page && action is ADD a new CENS event 
 		// Then show the add Shared note input field and the GEDFact assisted icon.
 		// If GEDFAct_assistant/_CENS/ module not installed  ... do not show 
-		if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $fact=="CENS") {
+		if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $fact=="CENS") {
 			$type_pid=GedcomRecord::getInstance($pid);
 			if ($type_pid->getType()=="INDI" && $action=="add" ) { 
 				add_simple_tag("2 SHARED_NOTE", "", "GEDFact Assistant");
@@ -1666,7 +1666,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		if ($fact=="NOTE" && $islink) {
 			// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
 			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons. 
-			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $action=="add" && $label=="GEDFact Assistant" && $pid) {
+			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $action=="add" && $label=="GEDFact Assistant" && $pid) {
 				$type_pid=GedcomRecord::getInstance($pid);
 				if ($type_pid->getType()=="INDI" ) { 
 					echo "&nbsp;&nbsp;&nbsp;", $pgv_lang["create_shared_note_assisted"];
@@ -2401,8 +2401,8 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$level1type = $type;
 	
 	// GEDFact_assistant ================================================
-	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
-			include ('modules/GEDFact_assistant/_CENS/census_query_2a.php');
+	if ($type=="CENS" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
+			require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
 	}
 	// ==================================================================
 	

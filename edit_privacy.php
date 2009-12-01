@@ -158,7 +158,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SHOW_SOURCES\s*=\s*.*;/', "\$SHOW_SOURCES = ".$_POST["v_SHOW_SOURCES"].";", $configtext);
 	$configtext = preg_replace('/\$MAX_ALIVE_AGE\s*=\s*".*";/', "\$MAX_ALIVE_AGE = \"".$_POST["v_MAX_ALIVE_AGE"]."\";", $configtext);
 	if ($MAX_ALIVE_AGE!=$_POST["v_MAX_ALIVE_AGE"]) reset_isdead(get_id_from_gedcom($ged));
-	if (file_exists("modules/research_assistant.php")) {
+	if (file_exists(PGV_ROOT.'modules/research_assistant.php')) {
 		$configtext = preg_replace('/\$SHOW_RESEARCH_ASSISTANT\s*=\s*.*;/', "\$SHOW_RESEARCH_ASSISTANT = ".$_POST["v_SHOW_RESEARCH_ASSISTANT"].";", $configtext);
 	}
 	$configtext = preg_replace('/\$SHOW_MULTISITE_SEARCH\s*=\s*.*;/', "\$SHOW_MULTISITE_SEARCH = ".$_POST["v_SHOW_MULTISITE_SEARCH"].";", $configtext);
@@ -334,7 +334,7 @@ if ($action=="update") {
 				</td>
 			</tr>
 
-			<?php if (file_exists("modules/research_assistant.php")) { ?>
+			<?php if (file_exists(PGV_ROOT.'modules/research_assistant.php')) { ?>
 			<tr>
 				<td class="descriptionbox wrap">
 					<?php print_help_link("SHOW_RESEARCH_ASSISTANT_help", "qm", "SHOW_RESEARCH_ASSISTANT"); print $pgv_lang["SHOW_RESEARCH_ASSISTANT"]; ?>
