@@ -976,6 +976,7 @@ if ($stage == 1) {
 				echo '<pre class="error">', $ex->getMessage(), '</pre>';
 				// Don't let the error message disappear off the screen.
 				$autoContinue=false;
+				$record_type='UNKNOWN';
 			}
 
 			// Generate import statistics
