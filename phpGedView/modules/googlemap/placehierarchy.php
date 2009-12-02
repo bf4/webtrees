@@ -300,7 +300,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		echo "<br />", $pgv_lang["gm_no_coord"];
 		if (PGV_USER_IS_ADMIN)
 			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=", $levelm, "&display=inactive'>", $pgv_lang["pl_edit"], "</a>";
-		echo "</div></td>\", icon_type, \"", PrintReady(addslashes($place2['place'])), "\");\n";
+		echo "</div></td>\", icon_type, \"", str_replace(array('&lrm;', '&rlm;'), array(PGV_UTF8_LRM, PGV_UTF8_RLM), PrintReady(addslashes($place2['place']))), "\");\n";
 	} else {
 		$lati = str_replace(array('N', 'S', ','), array('', '-', '.'), $place2['lati']);
 		$long = str_replace(array('E', 'W', ','), array('', '-', '.'), $place2['long']);
@@ -381,11 +381,13 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 				print_how_many_people($level+1, $parent);
 			}
 		}
+		$temp=PrintReady(addslashes($place2['place']));
+		$temp=str_replace(array('&lrm;', '&rlm;'), array(PGV_UTF8_LRM, PGV_UTF8_RLM), $temp);
 		if ($GOOGLEMAP_COORD == "false"){
-			echo "<br /><br /></div></td>\", icon_type, \"", PrintReady(addslashes($place2['place'])), "\");\n";
-		} else {
-			echo "<br /><br />", $place2['lati'], ", ", $place2['long'], "</div></td>\", icon_type, \"", PrintReady(addslashes($place2['place'])), "\");\n";
-		}
+			echo "<br /><br /></div></td>\", icon_type, \"", $temp, "\");\n";
+		} else { 
+			echo "<br /><br />", $place2['lati'], ", ", $place2['long'], "</div></td>\", icon_type, \"", $temp, "\");\n";	
+		}		
 	}
 	echo "place_map.addOverlay(marker);\n";
 	echo "bounds.extend(point);\n";
