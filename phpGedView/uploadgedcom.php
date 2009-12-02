@@ -974,9 +974,11 @@ if ($stage == 1) {
 				// There is no safe way of handling these.  Just display them
 				// and let the user decide.
 				echo '<pre class="error">', $ex->getMessage(), '</pre>';
+				echo '<pre>', PGV_GEDCOM, ': ', PGV_GED_ID, '</pre>';
+				echo '<pre>', htmlspecialchars($indirec), '</pre>';
 				// Don't let the error message disappear off the screen.
 				$autoContinue=false;
-				$record_type='UNKNOWN';
+				$record_type=$pgv_lang['invalid'];
 			}
 
 			// Generate import statistics
