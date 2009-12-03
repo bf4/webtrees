@@ -43,6 +43,7 @@ VERSION 4.2.3 CA Branch
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["mod_admin_sidebars"]					30 Nov 2009				A
 +$pgv_lang["ret_admin"]								10 Oct 2009				A
 +$pgv_lang["ret_module_admin"]						10 Oct 2009				A
 +$pgv_lang["mod_admin_order"]						08 Oct 2009				A

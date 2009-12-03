@@ -378,8 +378,6 @@ if (count($ublocks["main"])!=0) {
 	} else {
 		print "<div id=\"index_full_blocks\">";
 	}
-	echo '<script src="js/jquery/jquery.min.js" type="text/javascript"></script>';
-	echo '<script type="text/javascript">jQuery.noConflict();</script>';
 	foreach($ublocks["main"] as $bindex=>$block) {
 		if (PGV_DEBUG) {
 			echo execution_stats();

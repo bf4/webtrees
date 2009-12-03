@@ -1,6 +1,6 @@
 <?php
 /**
- * Classes and libraries for individual tabs
+ * Classes and libraries for sidebars
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
@@ -29,15 +29,15 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_class_TAB_PHP', '');
+define('PGV_class_SIDEBAR_PHP', '');
 
 /**
- * Defines the base class for a tab on the individual page
- * Tabs are created by Modules through instances of the PGVModule class
+ * Defines the base class for a sidebar
+ * Sidebars are created by Modules through instances of the PGVModule class
  * @author jfinlay
  *
  */
-abstract class Tab {
+abstract class Sidebar {
 	protected $name;
 	protected $controller = null;
 	
@@ -47,10 +47,26 @@ abstract class Tab {
 	public function setController(&$c) {$this->controller = $c; }
 	
 	/**
+	 * Get the displayable title for this sidebar
+	 * @return string
+	 */
+	public function getTitle() {
+		global $pgv_lang;
+		return $pgv_lang[$this->name];
+	}
+	
+	/**
 	 * get the content of the tab
 	 * @return string
 	 */
 	public abstract function getContent();
+	
+	/**
+	 * get the content of the tab during an ajax callback
+	 * @return string
+	 */
+	public abstract function getAjaxContent();
+	
 	/**
 	 * does this tab have content
 	 * This method can be used to hide a tab for insufficient access rights or
@@ -59,28 +75,5 @@ abstract class Tab {
 	 */
 	public abstract function hasContent();
 	
-	/**
-	 * can this tab be loaded with AJAX
-	 * @return unknown_type
-	 */
-	public function canLoadAjax() { return true; }
-	/**
-	 * any content that needs to be loaded before ajax calls such as javascript
-	 * @return string
-	 */
-	public function getPreLoadContent() { return ""; }
-	/**
-	 * the javascript that needs to be called after every tab change, in order for this
-	 * tab to function properly
-	 * @return string	a string representation of the javascript
-	 */
-	public function getJSCallbackAllTabs() { return ""; }
-	/**
-	 * the javascript that needs to be called when changing just to this tab, in order for this
-	 * tab to function properly
-	 * @return string	a string representation of the javascript
-	 */
-
-	public function getJSCallback() { return ""; }
 } 
 ?>

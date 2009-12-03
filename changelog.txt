@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Added sidebar and some sidebar modules (yalnifj)
  - Merged: Merge changes r6477 - r6501 from the trunk. (windmillway)
  - Changed: Minor changes to prevent addition of none entered tags (e.g. OBJE) when entry fields are empty. (windmillway)
  - Changed: GEDFact Census assistant now copies a Census event to all affected Indi's in the shared note created. (windmillway)

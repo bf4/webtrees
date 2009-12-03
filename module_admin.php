@@ -75,12 +75,17 @@ if ($action=='update_mods') {
       $value = safe_POST($varname);
       if ($value>$mod->getAccessLevel($ged_id)) $value=$mod->getAccessLevel($ged_id);
       if ($value!=null) $mod->setTabEnabled($value, $ged_id);
+      
+      $varname = 'sidebaraccess-'.$mod->getName().'-'.$ged_id;
+      $value = safe_POST($varname);
+      if ($value>$mod->getAccessLevel($ged_id)) $value=$mod->getAccessLevel($ged_id);
+      if ($value!=null) $mod->setSidebarEnabled($value, $ged_id);
     }
 
     $value = safe_POST_integer('taborder-'.$mod->getName(), 0, 100, $mod->getTaborder());
-//    print $mod->getName()."=".$value." ";
     $mod->setTaborder($value);
     $mod->setMenuorder(safe_POST_integer('menuorder-'.$mod->getName(), 0, 100, $mod->getMenuorder()));
+    $mod->setSidebarorder(safe_POST_integer('sideorder-'.$mod->getName(), 0, 100, $mod->getSidebarorder()));
 	PGVModule::updateModule($mod);
   }
 }
@@ -97,72 +102,74 @@ print_header($pgv_lang["module_admin"]);
 }
 //-->
 </style>
-<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
-<link type="text/css" href="js/jquery/css/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
-<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
-<?php if ($TEXT_DIRECTION=='rtl') {?>
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
-<?php }?>
 <script type="text/javascript">
 //<![CDATA[
            
   function reindexMods(id) {
-	  $('#'+id+' input').each(
+	  jQuery('#'+id+' input').each(
 	  	function (index, value) {
 	    	value.value = index+1;
 	  	});
   }
   
-  $(document).ready(function(){
+  jQuery(document).ready(function(){
 	//-- tabs
-    $("#tabs").tabs();
+    jQuery("#tabs").tabs();
 
     //-- sortable menus and tabs tables
-    $("#menus_table, #tabs_table").sortable({items: '.sortme', forceHelperSize: true, forcePlaceholderSize: true, opacity: 0.7, cursor: 'move', axis: 'y'});
+    jQuery("#menus_table, #tabs_table, #sidebars_table").sortable({items: '.sortme', forceHelperSize: true, forcePlaceholderSize: true, opacity: 0.7, cursor: 'move', axis: 'y'});
 
     //-- update the order numbers after drag-n-drop sorting is complete
-    $('#menus_table').bind('sortupdate', function(event, ui) {
-			var id = $(this).attr('id');
+    jQuery('#menus_table').bind('sortupdate', function(event, ui) {
+			var id = jQuery(this).attr('id');
 			reindexMods(id);  		
   	  });
 
-    $('#tabs_table').bind('sortupdate', function(event, ui) {
-		var id = $(this).attr('id');
+    jQuery('#tabs_table').bind('sortupdate', function(event, ui) {
+		var id = jQuery(this).attr('id');
+		reindexMods(id);  		
+	  });
+
+    jQuery('#sidebars_table').bind('sortupdate', function(event, ui) {
+		var id = jQuery(this).attr('id');
 		reindexMods(id);  		
 	  });
     
     //-- enable the arrows buttons
-    $(".uarrow").click(function() {
-        var curr = $(this).parent().parent().get(0);
-        var prev = $(curr).prev();
-        if (prev) $(prev).insertAfter(curr);
+    jQuery(".uarrow").click(function() {
+        var curr = jQuery(this).parent().parent().get(0);
+        var prev = jQuery(curr).prev();
+        if (prev) jQuery(prev).insertAfter(curr);
         reindexMods('menus_table');
         reindexMods('tabs_table');
+        reindexMods('sidebars_table');
     });
 
-    $(".udarrow").click(function() {
-        var curr = $(this).parent().parent().get(0);
-        var prev = $(curr).parent().children().get(0);
-        if (prev) $(curr).insertBefore(prev);
+    jQuery(".udarrow").click(function() {
+        var curr = jQuery(this).parent().parent().get(0);
+        var prev = jQuery(curr).parent().children().get(0);
+        if (prev) jQuery(curr).insertBefore(prev);
         reindexMods('menus_table');
         reindexMods('tabs_table');
+        reindexMods('sidebars_table');
     });
 
-    $(".darrow").click(function() {
-        var curr = $(this).parent().parent().get(0);
-        var next = $(curr).next();
-        if (next) $(next).insertBefore(curr);
+    jQuery(".darrow").click(function() {
+        var curr = jQuery(this).parent().parent().get(0);
+        var next = jQuery(curr).next();
+        if (next) jQuery(next).insertBefore(curr);
         reindexMods('menus_table');
         reindexMods('tabs_table');
+        reindexMods('sidebars_table');
     });
 
-    $(".ddarrow").click(function() {
-	    var curr = $(this).parent().parent().get(0);
-	    var prev = $(curr).parent().children(":last").get(0);
-	    if (prev) $(curr).insertAfter(prev);
+    jQuery(".ddarrow").click(function() {
+	    var curr = jQuery(this).parent().parent().get(0);
+	    var prev = jQuery(curr).parent().children(":last").get(0);
+	    if (prev) jQuery(curr).insertAfter(prev);
 	    reindexMods('menus_table');
 	    reindexMods('tabs_table');
+	    reindexMods('sidebars_table');
 	});
   });
 //]]>
@@ -182,6 +189,7 @@ print_header($pgv_lang["module_admin"]);
 	<li><a href="#installed_tab"><span><?php echo $pgv_lang['mod_admin_installed']?></span></a></li>
 	<li><a href="#menus_tab"><span><?php echo $pgv_lang['mod_admin_menus']?></span></a></li>
 	<li><a href="#tabs_tab"><span><?php echo $pgv_lang['mod_admin_tabs']?></span></a></li>
+	<li><a href="#sidebars_tab"><span><?php echo $pgv_lang['mod_admin_sidebars']?></span></a></li>
 </ul>
 <div id="installed_tab">
 <!-- installed -->
@@ -315,6 +323,57 @@ foreach($modules as $mod) {
 	<?php
 		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 			$varname = 'tabaccess-'.$mod->getName().'-'.$ged_id;
+			?>
+			<tr><td><?php echo $ged_name ?></td><td>
+			<select id="<?php echo $varname?>" name="<?php echo $varname?>">
+				<?php write_access_option_numeric($mod->getTabEnabled($ged_id)) ?>
+			</select></td></tr>
+			<?php 
+		} 
+	?>
+	</table>
+	</td>
+	</tr>
+	<?php
+$order++; 
+}
+?>
+    </tbody>
+  </table>
+</div>
+<div id="sidebars_tab">
+<!-- sidebars -->
+<table id="sidebars_table" class="list_table">
+    <thead>
+      <tr>
+      <th class="list_label"><?php echo $pgv_lang['mod_admin_name']?></th>
+      <th class="list_label"><?php echo $pgv_lang['mod_admin_description']?></th>
+      <th class="list_label"><?php echo $pgv_lang['mod_admin_order']?></th>
+      <th class="list_label"><?php echo $pgv_lang['mod_admin_access_level']?></th>
+      </tr>
+    </thead>
+    <tbody>
+<?php
+uasort($modules, "PGVModule::compare_sidebar_order");
+$order = 1;
+foreach($modules as $mod) {
+	if(!$mod->hasSidebar()) continue;
+	if ($mod->getSidebarorder()==0) $mod->setSidebarorder($order);
+	?><tr class="sortme">
+	<td class="list_value"><?php echo $mod->getName()?></td>
+	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
+	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="sideorder-<?php echo $mod->getName() ?>" />
+		<br />
+		<img class="uarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"];?>" border="0" title="move up" />
+		<img class="udarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["udarrow"]["other"];?>" border="0" title="move to top" />
+		<img class="darrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"];?>" border="0" title="move down" />
+		<img class="ddarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["ddarrow"]["other"];?>" border="0" title="move to bottom" />
+	</td>
+	<td class="list_value_wrap">
+	<table>
+	<?php
+		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+			$varname = 'sidebaraccess-'.$mod->getName().'-'.$ged_id;
 			?>
 			<tr><td><?php echo $ged_name ?></td><td>
 			<select id="<?php echo $varname?>" name="<?php echo $varname?>">

@@ -60,13 +60,12 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 
 	if (PGV_USER_IS_ADMIN && $ENABLE_AUTOCOMPLETE) {
-		$content = '<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-		<script type="text/javascript" src="js/jquery/jquery.autocomplete.js"></script>
+		$content = '<script type="text/javascript" src="js/jquery/jquery.autocomplete.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery.ajaxQueue.js"></script>
 		<script type="text/javascript">
 		jQuery.noConflict(); // @see http://docs.jquery.com/Using_jQuery_with_Other_Libraries/
 		jQuery(document).ready(function($){
-			$("input[name^=gid]").autocomplete("autocomplete.php", {
+			jQuery("input[name^=gid]").autocomplete("autocomplete.php", {
 				extraParams: {field:"IFSRO"},
 				formatItem: function(row, i) {
 					return row[0] + " (" + row[1] + ")";

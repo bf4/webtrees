@@ -32,6 +32,29 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_class_MODULE_PHP', '');
 
 require_once('includes/classes/class_tab.php');
+require_once('includes/classes/class_sidebar.php');
+
+/**
+ * Temporary code to update database for people who already have an older pgv_module table
+ * This should not be moved to the trunk
+ */
+$schema_version = get_site_setting('PGV_SCHEMA_VERSION', 0);
+if ($schema_version==11) {
+	$schema_version_temp = get_site_setting('PGV_SCHEMA_VERSION_TEMP', 0);
+	if ($schema_version_temp==0) {
+		if (PGV_DB::table_exists("{$TBLPREFIX}module")) {
+			PGV_DB::exec("alter table {$TBLPREFIX}module add mod_sidebarorder ".PGV_DB::$INT1_TYPE);
+		}
+		//-- get the gedcom ids from the database
+		$gedids= PGV_DB::prepare("SELECT DISTINCT i_file FROM ${TBLPREFIX}individuals i_file")
+			->fetchOneColumn();
+		//-- set the default sidebars
+		foreach($gedids as $ged_id) {
+			PGVModule::setDefaultSidebars($ged_id);
+		}		
+		set_site_setting('PGV_SCHEMA_VERSION_TEMP', 1);
+	}
+}
 
 /**
  * abstract class that is to be overidden by implementing modules
@@ -43,8 +66,10 @@ abstract class PGVModule {
 	private $accessLevel = array();
 	private $menuEnabled = array();
 	private $tabEnabled = array();
+	private $sidebarEnabled = array();
 	private $taborder = 99;
 	private $menuorder = 99;
+	private $sidebarorder = 99;
 
 	// -- overide in base classes
 	protected $name = 'default name';
@@ -53,9 +78,11 @@ abstract class PGVModule {
 	protected $pgvVersion = '4.2.2';
 	protected $menu = null;
 	protected $tab = null;
+	protected $sidebar = null;
 	protected $configLink = null;
 
 	public static $default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives', 'all_tab');
+	public static $default_sidebars = array('descendancy', 'individuals', 'families');
 	public static $default_menus = array('page_menu');
 
 	/**
@@ -74,6 +101,7 @@ abstract class PGVModule {
 			$obj->setDescription($row->mod_description);
 			$obj->setTaborder($row->mod_taborder);
 			$obj->setMenuorder($row->mod_menuorder);
+			$obj->setSidebarorder($row->mod_sidebarorder);
 			return $obj;
 		}
 		return null;
@@ -85,6 +113,7 @@ abstract class PGVModule {
 	public function getDescription() { return $this->description; }
 	public function getTaborder() { return $this->taborder; }
 	public function getMenuorder() { return $this->menuorder; }
+	public function getSidebarorder() { return $this->sidebarorder; }
 	public function getVersion() { return $this->version; }
 	public function getPgvVersion() { return $this->pgvVersion; }
 	public function getAccessLevel($gedId = PGV_GED_ID) {
@@ -99,6 +128,10 @@ abstract class PGVModule {
 		if (!isset($this->tabEnabled[$gedId])) $this->tabEnabled[$gedId] = PGV_PRIV_PUBLIC;
 		return $this->tabEnabled[$gedId];
 	}
+	public function getSidebarEnabled($gedId = PGV_GED_ID) {
+		if (!isset($this->sidebarEnabled[$gedId])) $this->sidebarEnabled[$gedId] = PGV_PRIV_PUBLIC;
+		return $this->sidebarEnabled[$gedId];
+	}
 	public function getAccessLevelArray() {
 		return $this->accessLevel;
 	}
@@ -108,6 +141,9 @@ abstract class PGVModule {
 	public function getTabEnabledArray() {
 		return $this->tabEnabled;
 	}
+	public function getSidebarEnabledArray() {
+		return $this->sidebarEnabled;
+	}
 	public function setName($name) { $this->name = $name; }
 	public function setId($id) { $this->id = $id; }
 	public function setDescription($d) { $this->description = $d; }
@@ -115,6 +151,7 @@ abstract class PGVModule {
 	public function setPgvVersion($v) { $this->pgvVersion = $v; }
 	public function setMenuorder($o) { $this->menuorder = $o; }
 	public function setTaborder($o) { $this->taborder = $o; }
+	public function setSidebarorder($o) { $this->sidebarorder = $o; }
 
 	public function setAccessLevel($access, $gedId=PGV_GED_ID) {
 		$this->accessLevel[$gedId] = $access;
@@ -124,6 +161,9 @@ abstract class PGVModule {
 	}
 	public function setTabEnabled($access, $gedId=PGV_GED_ID) {
 		$this->tabEnabled[$gedId] = $access;
+	}
+	public function setSidebarEnabled($access, $gedId=PGV_GED_ID) {
+		$this->sidebarEnabled[$gedId] = $access;
 	}
 	public function setGeneralAccess($type, $access, $gedId) {
 		switch($type) {
@@ -135,6 +175,9 @@ abstract class PGVModule {
 				break;
 			case 'M':
 				$this->setMenuEnabled($access, $gedId);
+				break;
+			case 'S':
+				$this->setSidebarEnabled($access, $gedId);
 				break;
 		}
 	}
@@ -153,6 +196,14 @@ abstract class PGVModule {
 	public function hasMenu() { return false; }
 
 	/**
+	 * does this module implement a sidebar
+	 * should be overidden in extending classes
+	 * @return boolean
+	 */
+	public function hasSidebar() { return false; }
+
+
+	/**
 	 * does this module implement a menu
 	 * should be overidden in extending classes
 	 * @return boolean
@@ -160,16 +211,22 @@ abstract class PGVModule {
 	public function getConfigLink() { return $this->configLink; }
 
 	/**
-	 * get the menu for this tab
+	 * get the menu for this module
 	 * should be overidden in extending classes
 	 * @return Menu
 	 */
 	public function &getMenu() { return null; }
 	/**
-	 * get the tab for this
+	 * get the tab for this module
 	 * @return Tab
 	 */
 	public function &getTab() { return null; }
+
+	/**
+	 * get the sidebar for this module
+	 * @return Sidebar
+	 */
+	public function &getSidebar() { return null; }
 
 	static function compare_tab_order(&$a, &$b) {
 		return $a->getTaborder() - $b->getTaborder();
@@ -177,6 +234,10 @@ abstract class PGVModule {
 
 	static function compare_menu_order(&$a, &$b) {
 		return $a->getMenuorder() - $b->getMenuorder();
+	}
+
+	static function compare_sidebar_order(&$a, &$b) {
+		return $a->getSidebarorder() - $b->getSidebarorder();
 	}
 
 	static function compare_name(&$a, &$b) {
@@ -318,10 +379,10 @@ abstract class PGVModule {
 	static function updateModule(&$mod) {
 		global $TBLPREFIX;
 		if ($mod->getId()==0) {
-			$sql = "insert into {$TBLPREFIX}module (mod_id, mod_name, mod_description, mod_taborder, mod_menuorder) values(?,?,?,?,?)";
+			$sql = "insert into {$TBLPREFIX}module (mod_id, mod_name, mod_description, mod_taborder, mod_menuorder, mod_sidebarorder) values(?,?,?,?,?,?)";
 			$stmt = PGV_DB::prepare($sql);
 			$mod->setId(get_next_id("module","mod_id"));
-			$stmt->execute(array($mod->getId(),$mod->getName(), $mod->getDescription(), $mod->getTaborder(), $mod->getMenuorder()));
+			$stmt->execute(array($mod->getId(),$mod->getName(), $mod->getDescription(), $mod->getTaborder(), $mod->getMenuorder(), $mod->getSidebarorder()));
 			$sql = "insert into {$TBLPREFIX}module_privacy (mp_mod_id,mp_file,mp_access,mp_type) values(?,?,?,?)";
 			$stmt = PGV_DB::prepare($sql);
 			foreach ($mod->getAccessLevelArray() as $ged_id=>$mp) {
@@ -333,11 +394,14 @@ abstract class PGVModule {
 			foreach ($mod->getTabEnabledArray() as $ged_id=>$mp) {
 				$stmt->execute(array($mod->getId(), $ged_id, $mp, 'T'));
 			}
+			foreach ($mod->getSidebarEnabledArray() as $ged_id=>$mp) {
+				$stmt->execute(array($mod->getId(), $ged_id, $mp, 'S'));
+			}
 		}
 		else {
-			$sql = "UPDATE {$TBLPREFIX}module SET mod_name=?, mod_description=?, mod_taborder=?, mod_menuorder=? WHERE mod_id=?";
+			$sql = "UPDATE {$TBLPREFIX}module SET mod_name=?, mod_description=?, mod_taborder=?, mod_menuorder=?, mod_sidebarorder=? WHERE mod_id=?";
 			$stmt = PGV_DB::prepare($sql);
-			$stmt->execute(array($mod->getName(), $mod->getDescription(), $mod->getTaborder(), $mod->getMenuorder(), $mod->getId()));
+			$stmt->execute(array($mod->getName(), $mod->getDescription(), $mod->getTaborder(), $mod->getMenuorder(), $mod->getSidebarorder(), $mod->getId()));
 
 			//-- delete the old privacy settings
 			$sql = "delete from {$TBLPREFIX}module_privacy where mp_mod_id=?";
@@ -355,6 +419,9 @@ abstract class PGVModule {
 			}
 			foreach ($mod->getTabEnabledArray() as $ged_id=>$mp) {
 				$stmt->execute(array($mod->getId(), $ged_id, $mp, 'T'));
+			}
+			foreach ($mod->getSidebarEnabledArray() as $ged_id=>$mp) {
+				$stmt->execute(array($mod->getId(), $ged_id, $mp, 'S'));
 			}
 		}
 	}
@@ -393,5 +460,21 @@ abstract class PGVModule {
 		}
 	}
 
+	static function setDefaultSidebars($ged_id) {
+		$modules = PGVModule::getInstalledList();
+		$taborder = 0;
+		foreach(self::$default_sidebars as $modname) {
+			if (isset($modules[$modname])) {
+				$mod = $modules[$modname];
+				if ($mod->hasSidebar()) {
+					$mod->setSidebarorder($taborder);
+					$mod->setAccessLevel(PGV_PRIV_PUBLIC, $ged_id);
+					$mod->setSidebarEnabled(PGV_PRIV_PUBLIC, $ged_id);
+					PGVModule::updateModule($mod);
+					$taborder++;
+				}
+			}
+		}
+	}
 }
 ?>

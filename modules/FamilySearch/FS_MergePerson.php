@@ -195,24 +195,17 @@ if ($FS_CONFIG['family_search_copyall'] || !empty($_REQUEST['copyall'])) {
 }
 
 ?>
-<link type="text/css"
-	href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui-1.7.1.custom.css"
-	rel="Stylesheet" />
-<script
-	type="text/javascript" src="js/jquery/jquery.min.js"></script>
-<script
-	type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[
-	$('document').ready(function(){
-		$('#localfacts tr, #remotefacts tr').hover(
+	jQuery('document').ready(function(){
+		jQuery('#localfacts tr, #remotefacts tr').hover(
 			function() {
-				var tag = "."+$(this).attr("title")+" td";
-				$(tag).css("border-width", "3px");
+				var tag = "."+jQuery(this).attr("title")+" td";
+				jQuery(tag).css("border-width", "3px");
 			}, 
 			function(){
-				var tag = "."+$(this).attr("title")+" td";
-				$(tag).css("border", "");
+				var tag = "."+jQuery(this).attr("title")+" td";
+				jQuery(tag).css("border", "");
 			});
 	});
 
@@ -231,7 +224,7 @@ if ($FS_CONFIG['family_search_copyall'] || !empty($_REQUEST['copyall'])) {
 			var tr = document.getElementById(id);
 			var newhtml = '<tr title="'+tag+'" class="'+tag+'" id="copied='+id+'"><td class="optionbox"><a href="#" onclick="return copyLocal(\''+id+'\', \''+tag+'\');">Don\'t Copy</a></td>';
 			newhtml+=tr.innerHTML.substring(0,tr.innerHTML.lastIndexOf('<td')-1)+'</tr>';			
-			$('#remotefacts').append(newhtml);
+			jQuery('#remotefacts').append(newhtml);
 		}
 		return false;
 	}
@@ -252,7 +245,7 @@ if ($FS_CONFIG['family_search_copyall'] || !empty($_REQUEST['copyall'])) {
 			var newhtml = '<tr title="'+tag+'" class="'+tag+'" id="copied='+id+'">';
 			newhtml+=tr.innerHTML.substring(tr.innerHTML.indexOf('</td>')+5)
 			newhtml +='<td class="optionbox"><a href="#" onclick="return copyRemote(\''+id+'\', \''+tag+'\');">Don\'t Copy</a></td></tr>';			
-			$('#localfacts').append(newhtml);
+			jQuery('#localfacts').append(newhtml);
 		}
 		return false;
 	}

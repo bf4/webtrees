@@ -80,6 +80,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	<?php } ?>
 	<?php echo $javascript; ?>
 	<?php echo $head; //-- additional header information ?>
+	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
+	<link type="text/css" href="js/jquery/css/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+	<?php if ($TEXT_DIRECTION=='rtl') {?>
+		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+	<?php }?>
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>
 <!-- begin header section -->
@@ -107,8 +114,6 @@ function SetCookie(cookieName,cookieValue,nDays)
  document.cookie = cookieName+"="+escape(cookieValue)
                  + ";expires="+expire.toGMTString();
 	}
-
-
 </script>
 <div id="header" class="<?php echo $TEXT_DIRECTION; ?>">
 <table width="99%">

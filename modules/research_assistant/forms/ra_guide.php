@@ -51,13 +51,10 @@ class ra_guide extends ra_form {
 		$out = '';
 		ob_start();
 		?>
-		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
-		<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-		<script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
 		<script type="text/javascript">
 		//<![CDATA[
-		  $(document).ready(function(){
-		    $("#guide_tabbar").tabs();
+		  jQuery(document).ready(function(){
+		    jQuery("#guide_tabbar").tabs();
 		  });
 
 		var pastefield;

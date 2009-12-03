@@ -114,4 +114,5 @@ $menubar = new MenuBar();
 </div>
 <?php require PGV_ROOT.'includes/accesskeyHeaders.php'; ?>
 </div>
+<?php require './sidebar.php'; ?>
 <div id="content">

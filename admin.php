@@ -123,18 +123,10 @@ foreach(get_all_users() as $user_id=>$user_name) {
 
 echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_END;
 ?>
-<!-- <link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui-1.7.1.custom.css" rel="Stylesheet" /> -->
-<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
-<link type="text/css" href="js/jquery/css/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
-<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
-<?php if ($TEXT_DIRECTION=='rtl') {?>
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
-<?php }?>
 <script type="text/javascript">
 //<![CDATA[
-  $(document).ready(function(){
-    $("#tabs").tabs();
+  jQuery(document).ready(function(){
+    jQuery("#tabs").tabs();
   });
 //]]>
   </script>

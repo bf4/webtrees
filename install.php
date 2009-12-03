@@ -747,17 +747,10 @@ function printConfigForm(){
 
 	require_once PGV_ROOT.'js/dhtmlXTabbar.js.htm';
 	?>
-	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
-	<link type="text/css" href="js/jquery/css/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
-	<?php if ($TEXT_DIRECTION=='rtl') {?>
-		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
-	<?php }?>
 	<script type="text/javascript">
 	//<![CDATA[
-	  $(document).ready(function(){
-	    $("#conf_tabbar").tabs();
+	  jQuery(document).ready(function(){
+	    jQuery("#conf_tabbar").tabs();
 	  });
 	//]]>
 	  </script>

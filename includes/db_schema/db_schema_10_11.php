@@ -63,6 +63,7 @@ if (!self::table_exists("{$TBLPREFIX}module")) {
 		" mod_description	".self::$VARCHAR_TYPE."(255) NOT NULL,".
 		" mod_taborder		".self::$INT1_TYPE." NOT NULL, ".
 		" mod_menuorder		".self::$INT1_TYPE." NOT NULL, ".
+		" mod_sidebarorder	".self::$INT1_TYPE." NOT NULL, ".
 		" PRIMARY KEY (mod_id)".
 		") ".self::$UTF8_TABLE
 	);
@@ -92,6 +93,7 @@ $gedids=
 foreach($gedids as $ged_id) {
 	PGVModule::setDefaultTabs($ged_id);
 	PGVModule::setDefaultMenus($ged_id);
+	PGVModule::setDefaultSidebars($ged_id);
 }
 
 // Update the version to indicate sucess

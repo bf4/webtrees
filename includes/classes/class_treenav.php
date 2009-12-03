@@ -193,7 +193,6 @@ class TreeNav {
 		if (!defined('PGV_JQUERY_LOADED')) {
 			define('PGV_JQUERY_LOADED', 1);
 		?>
-	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<?php } ?>
 	<script type="text/javascript" src="<?php print $SERVER_URL; ?>js/treenav.js"></script>
 		<?php
