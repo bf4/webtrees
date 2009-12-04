@@ -382,23 +382,28 @@ class stats {
 		switch($type) {
 			default:
 			case 'all':
-				$per=round(100 * $total / ($this->totalIndividuals() + $this->totalFamilies() + $this->totalSources() + $this->totalOtherRecords()), 2);
+				$type = $this->totalIndividuals() + $this->totalFamilies() + $this->totalSources() + $this->totalOtherRecords();
 				break;
 			case 'individual':
-				$per=round(100 * $total / $this->totalIndividuals(), 2);
+				$type = $this->totalIndividuals();
 				break;
 			case 'family':
-				$per=round(100 * $total / $this->totalFamilies(), 2);
+				$type = $this->totalFamilies();
 				break;
 			case 'source':
-				$per=round(100 * $total / $this->totalSources(), 2);
+				$type = $this->totalSources();
 				break;
 			case 'note':
-				$per=round(100 * $total / $this->totalNotes(), 2);
+				$type = $this->totalNotes();
 				break;
 			case 'other':
-				$per=round(100 * $total / $this->totalOtherRecords(), 2);
+				$type = $this->totalOtherRecords();
 				break;
+		}
+		if ($type>0) {
+			$per = round(100 * $total / $type, 2);
+		} else {
+			$per = 0;
 		}
 		return $per;
 	}
@@ -435,9 +440,13 @@ class stats {
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 		$sizes = explode('x', $size);
 		$tot_indi = $this->totalIndividuals();
-		$tot_sindi = $this->totalIndisWithSources();
-		$tot_indi_per = round(100 *  ($tot_indi-$tot_sindi) / $tot_indi, 2);
-		$tot_sindi_per = round(100 * $tot_sindi / $tot_indi, 2);
+		if ($tot_indi==0) {
+			return '';
+		} else {
+			$tot_sindi = $this->totalIndisWithSources();
+			$tot_indi_per = round(100 *  ($tot_indi-$tot_sindi) / $tot_indi, 2);
+			$tot_sindi_per = round(100 * $tot_sindi / $tot_indi, 2);
+		}
 		$chd = self::_array_to_extended_encoding(array($tot_sindi_per, 100-$tot_sindi_per));
 		$chl =  $pgv_lang["with_sources"].' - '.round($tot_sindi_per,1).'%|'.
 				$pgv_lang["without_sources"].' - '.round($tot_indi_per,1).'%';
@@ -479,8 +488,7 @@ class stats {
 		$tot_fam = $this->totalFamilies();
 		$tot_sfam = $this->totalFamsWithSources();
 		if ($tot_fam==0) {
-			$tot_fam_per = 100;
-			$tot_sfam_per = 100;
+			return '';
 		} else {
 			$tot_fam_per = round(100 *  ($tot_fam-$tot_sfam) / $tot_fam, 2);
 			$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
@@ -708,7 +716,9 @@ class stats {
 		$tot_f = $this->totalSexFemalesPercentage();
 		$tot_m = $this->totalSexMalesPercentage();
 		$tot_u = $this->totalSexUnknownPercentage();
-		if ($tot_u > 0) {
+		if ($tot_f == 0 && $tot_m == 0 && $tot_u == 0) {
+			return '';
+		} else if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
 			$chl =
 				$pgv_lang['stat_unknown'].' - '.round($tot_u,1).'%|'.
@@ -719,8 +729,7 @@ class stats {
 				$pgv_lang['stat_females'].' ['.round($tot_f,1).'%], '.
 				$pgv_lang['stat_unknown'].' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_unknown},{$color_female},{$color_male}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
-		}
-		else {
+		} else {
 			$chd = self::_array_to_extended_encoding(array($tot_f, $tot_m));
 			$chl =
 				$pgv_lang['stat_females'].' - '.round($tot_f,1).'%|'.
@@ -785,7 +794,9 @@ class stats {
 		$tot_l = $this->totalLivingPercentage();
 		$tot_d = $this->totalDeceasedPercentage();
 		$tot_u = $this->totalMortalityUnknownPercentage();
-		if ($tot_u > 0) {
+		if ($tot_l == 0 && $tot_d == 0 && $tot_u == 0) {
+			return '';
+		} else if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
 			$chl =
 				$pgv_lang['total_unknown'].' - '.round($tot_u,1).'%|'.
@@ -796,8 +807,7 @@ class stats {
 				$pgv_lang['total_dead'].' ['.round($tot_d,1).'%], '.
 				$pgv_lang['total_unknown'].' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_unknown},{$color_living},{$color_dead}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
-		}
-		else {
+		} else {
 			$chd = self::_array_to_extended_encoding(array($tot_l, $tot_d));
 			$chl =
 				$pgv_lang['total_living'].' - '.round($tot_l,1).'%|'.
@@ -1119,6 +1129,9 @@ class stats {
 	function chartDistribution($chart_shows='world', $chart_type='', $surname='') {
 		global $pgv_lang, $pgv_lang_use, $countries;
 		global $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_CHART_COLOR3, $PGV_STATS_MAP_X, $PGV_STATS_MAP_Y;
+
+		if ($this->totalPlaces()==0) return '';
+
 		// PGV uses 3-letter ISO/chapman codes, but google uses 2-letter ISO codes.  There is not a 1:1
 		// mapping, so Wales/Scotland/England all become GB, etc.
 		if (!isset($iso3166)) {
@@ -1359,6 +1372,7 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
+						.'d_year!=0 AND '
 						."d_fact='BIRT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else if ($sex) {
@@ -1366,12 +1380,14 @@ class stats {
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
+						.'d_year!=0 AND '
 						."d_fact='BIRT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else {
 			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
+						.'d_year!=0 AND '
 						."d_fact='BIRT' AND "
 						."d_type='@#DGREGORIAN@'";
 		}
@@ -1423,6 +1439,7 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
+						.'d_year!=0 AND '
 						."d_fact='DEAT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else if ($sex) {
@@ -1430,12 +1447,14 @@ class stats {
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
+						.'d_year!=0 AND '
 						."d_fact='DEAT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else {
 			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
+						.'d_year!=0 AND '
 						."d_fact='DEAT' AND "
 						."d_type='@#DGREGORIAN@'";
 		}
@@ -2438,6 +2457,7 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
+						.'d_year!=0 AND '
 						."d_fact='MARR' AND "
 						."d_type='@#DGREGORIAN@'";
 						if ($year1>=0 && $year2>=0) {
@@ -2520,6 +2540,7 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
+						.'d_year!=0 AND '
 						."d_fact IN ('DIV', 'ANUL', '_SEPR') AND "
 						."d_type='@#DGREGORIAN@'";
 						if ($year1>=0 && $year2>=0) {

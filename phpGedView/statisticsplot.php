@@ -623,8 +623,11 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 			}
 		}
 	}
+	// in PHP 5.3.0 we can use
+	//$title = strstr($mytitle, '|', true);
+	$title = substr($mytitle, 0, strpos($mytitle, '|'));
 	echo "<center><div class=\"statistics_chart width80\">";
-	echo "<img src=\"", encode_url($imgurl), "\" width=\"950\" height=\"300\" border=\"0\" alt=\"", $mytitle, "\" title=\"", $mytitle, "\"/>";
+	echo "<img src=\"", encode_url($imgurl), "\" width=\"950\" height=\"300\" border=\"0\" alt=\"", $title, "\" title=\"", $title, "\"/>";
 	echo "</div></center><br /><br />";
 }
 
