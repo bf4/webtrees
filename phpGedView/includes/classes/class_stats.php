@@ -894,26 +894,52 @@ class stats {
 		$mediaTypes = "";
 		$chart_title = "";
 		$c = 0;
+		$max = 0;
 		foreach (self::$_media_types as $type) {
 			$count = $this->_totalMediaType($type);
-			if ($count != 0) {
-				$mediaCounts[] = round(100 * $count / $tot, 0);
-				$mediaTypes .= $pgv_lang['TYPE__'.$type];
-				$mediaTypes .= ' - '.$count.'|';
+			if ($count>0) {
+				$media[$type] = $count;
+				if ($count > $max) {
+					$max = $count;
+				}
 				$c += $count;
-				$chart_title .= $pgv_lang['TYPE__'.$type].' ['.$count.'], ';
 			}
 		}
-		$count = $this->_totalMediaType('unknown');
-		if ($count != 0) {
+		$count = $this->totalMediaUnknown();
+		if ($count>0) {
+			$media[$type] = $tot-$c;
+			if ($tot-$c > $max) {
+				$max = $count;
+			}
 			$mediaCounts[] = round(100 * $count / $tot, 0);
-			$mediaTypes .= $pgv_lang['unknown'];
-			$mediaTypes .= ' - '.($tot-$c).'|';
+			$mediaTypes .= $pgv_lang['unknown'].' - '.($tot-$c).'|';
 			$chart_title .= $pgv_lang['unknown'].' ['.($tot-$c).']';
 		}
-		else {
-			$chart_title = substr($chart_title,0,-2);
+		if (($max/$tot)>0.6 && count($media)>10) {
+			arsort($media);
+			$media = array_slice($media, 0, 10);
+			$c = $tot;
+			foreach ($media as $cm) {
+				$c -= $cm;
+			}
+			if (isset($media['other'])) {
+				$media['other'] += $c;
+			} else {
+				$media['other'] = $c;
+			}
 		}
+		asort($media);
+		foreach ($media as $type=>$count) {
+			$mediaCounts[] = round(100 * $count / $tot, 0);
+			if (isset($pgv_lang['TYPE__'.$type])) {
+				$mediaTypes .= $pgv_lang['TYPE__'.$type].' - '.$count.'|';
+				$chart_title .= $pgv_lang['TYPE__'.$type].' ['.$count.'], ';
+			} else {
+				$mediaTypes .= $pgv_lang['unknown'].' - '.$count.'|';
+				$chart_title .= $pgv_lang['unknown'].' ['.$count.'], ';
+			}
+		}
+		$chart_title = substr($chart_title,0,-2);
 		$chd = self::_array_to_extended_encoding($mediaCounts);
 		$chl = substr($mediaTypes,0,-1);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
@@ -1380,14 +1406,12 @@ class stats {
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
 						."d_fact='BIRT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else {
 			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
 						."d_fact='BIRT' AND "
 						."d_type='@#DGREGORIAN@'";
 		}
@@ -1447,14 +1471,12 @@ class stats {
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
 						."d_fact='DEAT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else {
 			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
 						."d_fact='DEAT' AND "
 						."d_type='@#DGREGORIAN@'";
 		}
@@ -3493,6 +3515,7 @@ class stats {
 		$sizes = explode('x', $size);
 		$tot_indi = $this->totalIndividuals();
 		$surnames = get_common_surnames($threshold);
+		if (count($surnames) <= 0) {return '';}
 		uasort($surnames, array('stats', '_name_total_rsort'));
 		$surnames = array_slice($surnames, 0, $maxtoshow);
 		$all_surnames = array();
@@ -3502,23 +3525,21 @@ class stats {
 			}
 			$all_surnames = array_merge($all_surnames, get_indilist_surns(UTF8_strtoupper($surname), '', false, false, PGV_GED_ID));
 		}
-		if (count($surnames) <= 0) {return '';}
 		$tot = 0;
+		$per = 0;
 		foreach ($surnames as $indexval=>$surname) {$tot += $surname['match'];}
 		$chart_title = "";
 		$chd = '';
 		$chl = array();
 		foreach ($all_surnames as $surn=>$surns) {
+			$count_per = 0;
 			foreach ($surns as $spfxsurn=>$indis) {
-				if ($tot==0) {
-					$per = 0;
-				} else {
-					$per = round(100 * count($indis) / $tot_indi, 0);
-				}
-				$chd .= self::_array_to_extended_encoding($per);
-				$chl[] = $spfxsurn.' - '.count($indis);
-				$chart_title .= $spfxsurn.' ['.count($indis).'], ';
+				$count_per += count($indis);
 			}
+			$per = round(100 * $count_per / $tot_indi, 0);
+			$chd .= self::_array_to_extended_encoding($per);
+			$chl[] = $spfxsurn.' - '.$count_per;
+			$chart_title .= $spfxsurn.' ['.$count_per.'], ';
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
