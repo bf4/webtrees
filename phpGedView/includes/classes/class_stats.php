@@ -1322,18 +1322,15 @@ class stats {
 	function commonCountriesList() {
 		global $TEXT_DIRECTION;
 		$countries = $this->_statsPlaces();
-		if (!is_array($countries)) return;
+		if (!is_array($countries)) return '';
 		$top10 = array();
 		$i = 1;
 		foreach ($countries as $country) {
-			$place = '<a href="'.encode_url(get_place_url($country['country'])).'" class="list_item" title="'.$country['country'].'">'.PrintReady($country['country']).'</a>';
-			$top10[]="\t<li>".PrintReady($place." [".$country['tot']."]")."</li>\n";
+			$place = '<a href="'.encode_url(get_place_url($country['country'])).'" class="list_item">'.PrintReady($country['country']).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$country['tot']."]")."</li>\n";
 			if ($i++==10) break;
 		}
 		$top10=join("\n", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
 		return "<ul>\n{$top10}</ul>\n";
 	}
 
@@ -1344,14 +1341,11 @@ class stats {
 		$i = 1;
 		arsort($places);
 		foreach ($places as $place=>$count) {
-			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
-			$top10[]="\t<li>".PrintReady($place." [".$count."]")."</li>\n";
+			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item">'.PrintReady($place).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
 			if ($i++==10) break;
 		}
 		$top10=join("\n", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
 		return "<ul>\n{$top10}</ul>\n";
 	}
 
@@ -1362,14 +1356,11 @@ class stats {
 		$i = 1;
 		arsort($places);
 		foreach ($places as $place=>$count) {
-			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
-			$top10[]="\t<li>".PrintReady($place." [".$count."]")."</li>\n";
+			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item">'.PrintReady($place).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
 			if ($i++==10) break;
 		}
 		$top10=join("\n", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
 		return "<ul>\n{$top10}</ul>\n";
 	}
 
@@ -1380,14 +1371,11 @@ class stats {
 		$i = 1;
 		arsort($places);
 		foreach ($places as $place=>$count) {
-			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
-			$top10[]="\t<li>".PrintReady($place." [".$count."]")."</li>\n";
+			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item">'.PrintReady($place).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
 			if ($i++==10) break;
 		}
 		$top10=join("\n", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
 		return "<ul>\n{$top10}</ul>\n";
 	}
 
