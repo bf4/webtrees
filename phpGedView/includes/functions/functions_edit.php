@@ -980,7 +980,7 @@ function print_calendar_popup($id, $asString=false) {
 	$text = $pgv_lang["select_date"];
 	if (isset($PGV_IMAGES["calendar"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["button"]."\" name=\"img".$id."\" id=\"img".$id."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	$out = '';
+	$out = ' ';
 	$out .= "<a href=\"javascript: ".$text."\" onclick=\"cal_toggleDate('caldiv".$id."', '".$id."'); return false;\">";
 	$out .= $Link;
 	$out .= "</a>\n";
