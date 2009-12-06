@@ -42,8 +42,6 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full; 
 		global $famid;
-		
-// print_simple_header("Census");
 
 		$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
 		if (!($controller->indi->isDead())) {
@@ -57,6 +55,5 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 
 		$controller->census_assistant();
 
-// include ('modules/research_assistant/forms/CensusUK1841.php');
 // print_footer();
 ?>

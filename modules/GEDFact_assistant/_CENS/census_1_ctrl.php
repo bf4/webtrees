@@ -59,6 +59,13 @@ $currpid=$pid;
 <script src="modules/GEDFact_assistant/_CENS/js/dynamicoptionlist.js" type="text/javascript"></script>
 
 <?php
+	// Debug =============================================================
+	echo PGV_JS_START;
+		// echo "parent_cls();";
+		// echo "var link3 = 'individual.php?pid=$pid&show_changes=yes';";
+		// echo "gparent_refr(link3);";
+	echo PGV_JS_END;
+	// Debug =============================================================
 
 	// Header of assistant window =====================================================
 	echo "<div class=\"cens_header\">";

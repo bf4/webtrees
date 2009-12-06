@@ -10,6 +10,8 @@
 
 
 Version 4.2.x CA
+ - Reverted: Removed SOUR and OBJE functions from GEDFact assistant window. 
+   Copy to multi Indi/Family id's will be done in the Add Census window. (Still to come) (windmillway)
  - Merged: Merge changes r64502 - r6528 from the trunk. (windmillway)
  - Added sidebar and some sidebar modules (yalnifj)
  - Merged: Merge changes r6477 - r6501 from the trunk. (windmillway)

@@ -594,6 +594,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 			<option value="USA" >USA</option>
 		</select>
 	</div>
+	<!--
 	<div class="cens_sour_sour" style="border: 0px solid yellow;" >
 	<?php
 	add_simple_tag("2 SOUR", "", "<a href=\"#\" title=\" Add a Source to the Census Event\" alt=\" Add a Source to the Census Event\">SOUR</a>");
@@ -604,6 +605,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 	add_simple_tag("2 OBJE", "", "<a href=\"#\" title=\" Add a Multimedia Object to the Census Event\" alt=\" Add a Multimedia Object to the Census Event\">OBJE</a>");
 	?>
 	</div>
+	-->
 	<div class="cens_sour_year">
 		<span><?php echo $pgv_lang["cens_year"]; ?><br /></span>
 		<select onchange =	"if( this.options[this.selectedIndex].value!='') {
@@ -615,25 +617,27 @@ global $pgv_lang, $TEXT_DIRECTION;
 	</div>
 	<div class="cens_sour_scs">
 		<div class="cens_sour_1">
-			<div class="cens_sour_2">Address:</div>
-			<input id="locality" name="locality" type="text" value="<?php echo "";?>" />
-		</div>
-		<div class="cens_sour_1">
 			<div class="cens_sour_2">Title:</div> 
 			<script type="text/javascript">
 				document.writeln('<input id="Titl" name="Titl" type="text" value="<?php echo "Census Transcription - ".$wholename." - Household";?>" />');
 			</script>
 		</div>
 		<div class="cens_sour_1">
+			<div class="cens_sour_2">Reference:</div>
+			<input id="citation" name="citation" type="text" value="<?php echo "";?>" />
+		</div>
+		<div class="cens_sour_1">
+			<div class="cens_sour_2">Locality:</div>
+			<input id="locality" name="locality" type="text" value="<?php echo "";?>" />
+		</div>
+		<div class="cens_sour_1">
 			<div class="cens_sour_2">Notes:</div>
 			<input id="notes" name="notes" type="text" value="<?php echo "";?>" />
 		</div>
-		<div class="cens_sour_1">
-			<div class="cens_sour_2">Citation:</div>
-			<input id="citation" name="citation" type="text" value="<?php echo "Enter Citation";?>" />
-		</div>
+		<!--
 		<div class="spacer">
 		</div>
+		-->
 	</div>				
 </div>
 			
