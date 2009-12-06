@@ -1038,7 +1038,7 @@ function print_addnewnote_link($element_id) {
 */
 function print_addnewnote_assisted_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
-	$text = $pgv_lang["add_new_event_assisted"];
+	$text = $pgv_lang["create_shared_note_assisted"];
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewnote_assisted(document.getElementById('", $element_id, "'), '", $pid, "' ); return false;\">";
@@ -1101,11 +1101,15 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $bdm, $PRIVACY_BY_RESN;
 	global $lang_short_cut, $LANGUAGE;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
-	global $action;
+	global $action, $event_add;
 	
+if (substr($tag, 0, strpos($tag, "CENS"))) {
+	$event_add="census_add";
+}
+
 	if (substr($tag, 0, strpos($tag, "PLAC"))) {
 		?>
-<script type="text/javascript">
+	<script type="text/javascript">
 		<!--
 		function valid_lati_long(field, pos, neg) {
 			// valid LATI or LONG according to Gedcom standard
@@ -1323,11 +1327,14 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		}
 	} else {
 		if ($fact=="NOTE" && $islink){
+			echo $pgv_lang["shared_note"];
+			/*
 			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
-			//	use $label (GEDFact Assistant); 
+				//	use $label (GEDFact Assistant); 
 			}else{
 				echo $pgv_lang["shared_note"];
 			}
+			*/
 		} else if (isset($pgv_lang[$fact])) {
 			echo $pgv_lang[$fact];
 		} else if (isset($factarray[$fact])) {
@@ -1351,6 +1358,14 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		echo "<input type=\"hidden\" name=\"glevels[]\" value=\"", $level, "\" />\n";
 		echo "<input type=\"hidden\" name=\"islink[]\" value=\"", $islink, "\" />\n";
 		echo "<input type=\"hidden\" name=\"tag[]\" value=\"", $fact, "\" />\n";
+
+		// Shared Notes Debug --------------------
+			// echo "<br />Label = ".$label;
+			// echo "<br />Level = ".$level;
+			// echo "<br />Link = ".$islink;
+			// echo "<br />Fact = ".$fact;
+			// echo "<br />Value = ".$value;
+		// End Debug -------------------
 	}
 	echo "\n</td>";
 
@@ -1377,7 +1392,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			echo " onclick=\"if (this.checked) ", $element_id, ".value='Y'; else ", $element_id, ".value=''; \" />";
 			echo $pgv_lang["yes"];
 		}
-
+/*
 		// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page && action is ADD a new CENS event 
 		// Then show the add Shared note input field and the GEDFact assisted icon.
 		// If GEDFAct_assistant/_CENS/ module not installed  ... do not show 
@@ -1388,7 +1403,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			}
 		}
 		// -----------------------------------------------------------------------------------------------------
-
+*/
 		
 	}
 	else if ($fact=="TEMP") {
@@ -1668,23 +1683,31 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 
 		// Shared Notes Icons ========================================
 		if ($fact=="NOTE" && $islink) {
+			// Print regular Shared Note icons ---------------------------
+			echo "&nbsp;&nbsp;";
+			print_findnote_link($element_id);
+			print_addnewnote_link($element_id);
+			if ($value!="") {
+				echo "&nbsp;&nbsp;&nbsp;";
+				print_editnote_link($value);
+			}
 			// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
 			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons. 
-			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $action=="add" && $label=="GEDFact Assistant" && $pid) {
-				$type_pid=GedcomRecord::getInstance($pid);
-				if ($type_pid->getType()=="INDI" ) { 
-					echo "&nbsp;&nbsp;&nbsp;", $pgv_lang["create_shared_note_assisted"];
-					print_addnewnote_assisted_link($element_id);
-				}
-			}else{
-				print_findnote_link($element_id);
-				print_addnewnote_link($element_id);
-				if ($value!="") {
-					echo "&nbsp;&nbsp;&nbsp;";
-					print_editnote_link($value);
+			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $action=="add" && $pid) {
+				// Check if a CENS event ---------------------------
+				if ($event_add=="census_add") {
+					$type_pid=GedcomRecord::getInstance($pid);
+					if ($type_pid->getType()=="INDI" ) { 
+						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+						echo $pgv_lang["shared_note_assisted"];
+						print_addnewnote_assisted_link($element_id);
+					}
 				}
 			}
 		}
+		echo "<br />";
+		// ===========================================================
 
 		if ($fact=="OBJE") { 
 			print_findmedia_link($element_id, "1media");
@@ -2323,8 +2346,8 @@ function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
 		$gedrec = find_gedcom_record($linktoid, PGV_GED_ID);
 	}
 	
-	//-- when deleting/umlinking a media link
-	//-- $linenum comes is an OBJE and the $mediaid to delete should be set
+	//-- when deleting/unlinking a media link
+	//-- $linenum comes as an OBJE and the $mediaid to delete should be set
 	if (!is_numeric($linenum)) {
 		$newged = remove_subrecord($gedrec, $linenum, $mediaid);
 	}else{

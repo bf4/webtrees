@@ -502,6 +502,7 @@ case 'add':
 	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
 	echo "<input type=\"hidden\" name=\"linenum\" value=\"new\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
+	echo "<input type=\"hidden\" id=\"pids_array\" name=\"pids_array\" value=\"no_array\" />\n";
 
 	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["add"], "\" /><br />\n";
 	echo "<table class=\"facts_table\">";
@@ -943,13 +944,19 @@ case 'addnoteaction':
 	if (PGV_DEBUG) {
 		echo "<pre>$newgedrec</pre>";
 	}
+	// $xref = "Test";
 	$xref = append_gedrec($newgedrec, $update_CHAN);
-	$link = "note.php?nid=$xref&show_changes=yes";
-	if ($xref) {
-		echo "<br /><br />\n", $pgv_lang["new_shared_note_created"], "<br /><br />";
-		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">", $pgv_lang["paste_id_into_field"], " <b>$xref</b></a>\n";
+	
+	// Not sure if next line is needed ?? BH ?? --------
+	// $link = "note.php?nid=$xref&show_changes=yes";
+	// -------------------------------------------------
+	
+	if ($xref != "none") {
+		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]." (".$xref.")<br /><br />";
+		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 		echo "<br /><br /><br /><br />";
-		}
+		echo "<br /><br /><br /><br />";
+	}
 	break;
 	
 //------------------------------------------------------------------------------
@@ -989,14 +996,12 @@ case 'addnewnote_assisted':
 	break;
 	
 //------------------------------------------------------------------------------
-//-- add Shared Note census event from the incoming variables using GEDFact Assistant
+//-- create a shared note assisted record from the incoming variables
 case 'addnoteaction_assisted':
-	require PGV_ROOT.'modules/GEDFact_assistant/_CENS/gedrec_append.php';
+	require PGV_ROOT.'modules/GEDFact_assistant/_CENS/addnoteaction_assisted.php';
 	break;
 	
-//------------------------------------------------------------------------------
 //-- add new Media Links
-
 case 'addmedia_links':
 	global $pid;
 	echo PGV_JS_START;
@@ -1024,7 +1029,6 @@ case 'addmedia_links':
 	<?php
 	break;
 
-//------------------------------------------------------------------------------
 //-- edit source
 case 'editsource':
 	init_calendar_popup();
@@ -1469,14 +1473,9 @@ case 'update':
 			echo "<br /><br />";
 			echo "<pre>$newged</pre>";
 		}
-		if ($idnums=="multi") {
-			$success  = "";
-			$success2 = (replace_gedrec($pid, $newged, $update_CHAN));
-		}else{
-			$success  = (replace_gedrec($pid, $newged, $update_CHAN));
-			$success2 = "";
-		}
-		if ($success2) {
+		
+		$success  = (replace_gedrec($pid, $newged, $update_CHAN));
+		if ($success) {
 			echo "<br /><br />", $pgv_lang["update_successful"], " - ", $pid;
 		}
 		
@@ -2070,7 +2069,9 @@ case 'reset_media_update': // Reset sort using popup
 		}
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
-	if ($success) echo "<br />", $pgv_lang["update_successful"], "<br /><br />";
+	if ($success) { 
+		echo "<br />", $pgv_lang["update_successful"], "<br /><br />";
+	}
 	break;
 
 //------------------------------------------------------------------------------
@@ -2693,7 +2694,8 @@ if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG ) {
 	if ($action=="copy") {
 		echo "window.close();";
 	} else if (isset($closeparent) && $closeparent=="yes" ) {
-		echo "window.opener.close(); window.opener.edit_close('{$link}'); window.close(); ";
+		// echo "window.opener.close(); window.opener.edit_close('{$link}'); window.close(); ";
+		echo "window.close(); ";
 	} else {
 		echo "edit_close('{$link}');";
 	}
@@ -2705,7 +2707,8 @@ if ($action == 'addmedia_links' || $action == 'addnewnote_assisted' ) {
 	// Do not print footer.
 	echo "<br /><div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">", $pgv_lang["close_window"], "</a></div>\n";
 }else if (isset($closeparent) && $closeparent=="yes" ) {
-	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');window.opener.close();\">", $pgv_lang["close_window"], "</a></div><br />\n";
+	// echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');window.opener.close();\">", $pgv_lang["close_window"], "</a></div><br />\n";
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">", $pgv_lang["close_window"], "</a></div><br />\n";
 	print_simple_footer();
 }else{
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">", $pgv_lang["close_window"], "</a></div><br />\n";
