@@ -10,11 +10,11 @@
 
 
 Version 4.2.x CA
+ - Info only: The message text for svn 6529 should read "Merge changes r6477 - r6528 from the trunk." (windmillway
  - Reverted: Removed SOUR and OBJE functions from GEDFact assistant window. 
    Copy to multi Indi/Family id's will be done in the Add Census window. (Still to come) (windmillway)
- - Merged: Merge changes r64502 - r6528 from the trunk. (windmillway)
+ - Merged: Merge changes r6477 - r6528 from the trunk. (windmillway) [edited]
  - Added sidebar and some sidebar modules (yalnifj)
- - Merged: Merge changes r6477 - r6501 from the trunk. (windmillway)
  - Changed: Minor changes to prevent addition of none entered tags (e.g. OBJE) when entry fields are empty. (windmillway)
  - Changed: GEDFact Census assistant now copies a Census event to all affected Indi's in the shared note created. (windmillway)
  - Merged: Merge changes r6431 - r6476 from the trunk.  
