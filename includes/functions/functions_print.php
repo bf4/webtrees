@@ -2265,7 +2265,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	// -- Add from clipboard
 	if (!empty($_SESSION["clipboard"])) {
 		$newRow = true;
-		foreach($_SESSION["clipboard"] as $key=>$fact) {
+		foreach(array_reverse($_SESSION["clipboard"], true) as $key=>$fact) {
 			if ($fact["type"]==$type || $fact["type"]=='all') {
 				if ($newRow) {
 					$newRow = false;

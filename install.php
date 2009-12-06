@@ -38,10 +38,10 @@
  */
 
 //-- load up the configuration or the default configuration
-if (file_exists(PGV_ROOT.'config.php')) {
-	require_once PGV_ROOT.'config.php';
+if (file_exists('./config.php')) {
+	require_once './config.php';
 } else {
-	require_once PGV_ROOT.'config.dist';
+	require_once './config.dist';
 }
 
 require_once PGV_ROOT.'includes/functions/functions_import.php';

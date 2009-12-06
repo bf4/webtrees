@@ -365,6 +365,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$PEDIGREE_ROOT_ID\s*=\s*".*";/', "\$PEDIGREE_ROOT_ID = \"".$_POST["NEW_PEDIGREE_ROOT_ID"]."\";", $configtext);
 	$configtext = preg_replace('/\$POSTAL_CODE\s*=\s*.*;/', "\$POSTAL_CODE = ".$boolarray[$_POST["NEW_POSTAL_CODE"]].";", $configtext);
 	$configtext = preg_replace('/\$PREFER_LEVEL2_SOURCES\s*=\s*.*;/', "\$PREFER_LEVEL2_SOURCES = \"".$_POST["NEW_PREFER_LEVEL2_SOURCES"]."\";", $configtext);
+	$configtext = preg_replace('/\$NO_UPDATE_CHAN\s*=\s*.*;/', "\$NO_UPDATE_CHAN = ".$boolarray[$_POST["NEW_NO_UPDATE_CHAN"]].";", $configtext);
 	$configtext = preg_replace('/\$QUICK_ADD_FACTS\s*=\s*".*";/', "\$QUICK_ADD_FACTS = \"".$_POST["NEW_QUICK_ADD_FACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$QUICK_ADD_FAMFACTS\s*=\s*".*";/', "\$QUICK_ADD_FAMFACTS = \"".$_POST["NEW_QUICK_ADD_FAMFACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$QUICK_REQUIRED_FACTS\s*=\s*".*";/', "\$QUICK_REQUIRED_FACTS = \"".$_POST["NEW_QUICK_REQUIRED_FACTS"]."\";", $configtext);
@@ -1952,6 +1953,15 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 				<option value="0" <?php if ($PREFER_LEVEL2_SOURCES==='0') print " selected=\"selected\""; ?>><?php print $pgv_lang["none"]; ?></option>
 				<option value="1" <?php if ($PREFER_LEVEL2_SOURCES==='1' || $PREFER_LEVEL2_SOURCES===true) print " selected=\"selected\""; ?>><?php print $pgv_lang["facts"]; ?></option>
 				<option value="2" <?php if ($PREFER_LEVEL2_SOURCES==='2' || $PREFER_LEVEL2_SOURCES===false) print " selected=\"selected\""; ?>><?php print $pgv_lang["record"]; ?></option>
+			</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN"); print $pgv_lang["no_update_CHAN"]; ?></td>
+		<td class="optionbox"><select name="NEW_NO_UPDATE_CHAN" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('no_update_CHAN_help');">
+				<option value="yes" <?php if ($NO_UPDATE_CHAN) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$NO_UPDATE_CHAN) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
 			</select>
 		</td>
 	</tr>

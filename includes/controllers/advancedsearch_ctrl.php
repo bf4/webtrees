@@ -78,6 +78,7 @@ class AdvancedSearchController extends SearchController {
 		$ofields = array("ADDR","ADDR:CITY","ADDR:STAE","ADDR:CTRY","ADDR:POST",
 			"AFN","EMAIL","FAX",
 			"CHR:DATE","CHR:PLAC",
+			"_BRTM:DATE","_BRTM:PLAC",
 			"BURI:DATE","BURI:PLAC",
 			"CREM:DATE","CREM:PLAC",
 			"ADOP:DATE","ADOP:PLAC",
@@ -106,7 +107,7 @@ class AdvancedSearchController extends SearchController {
 				$fact!='DEAT' &&
 				!in_array($fact, $ofields) &&
 				!in_array("{$fact}:DATE", $ofields) &&
-				!in_array("{$fact}:DATE", $ofields)
+				!in_array("{$fact}:PLAC", $ofields)
 			) {
 				$ofields[]=$fact;
 			}

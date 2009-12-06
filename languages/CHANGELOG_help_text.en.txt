@@ -43,6 +43,7 @@ VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["edit_add_GEDFact_ASSISTED_help"]		03 Dec 2009				C		help_text.en line 114
 +$pgv_lang["edit_add_GEDFact_ASSISTED_help"]		18 Nov 2009				A
 +$pgv_lang["RESN_help_title"]						16 Nov 2009				A
 *$pgv_lang["RESN_help"]								16 Nov 2009				w

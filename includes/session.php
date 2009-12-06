@@ -401,7 +401,9 @@ $PRIV_HIDE   = PGV_PRIV_HIDE;
 
 /**
  * Load GEDCOM configuration
+ * We need to load config_gedcom.php first
  */
+require_once PGV_ROOT.'config_gedcom.php';
 require get_config_file();
 
 if (empty($PHPGEDVIEW_EMAIL)) {
