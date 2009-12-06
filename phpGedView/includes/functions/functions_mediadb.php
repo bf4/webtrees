@@ -1124,7 +1124,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 function show_media_form($pid, $action = "newentry", $filename = "", $linktoid = "", $level = 1, $line = 0) {
 	global $pgv_lang, $factarray, $TEXT_DIRECTION, $WORD_WRAPPED_NOTES, $ADVANCED_NAME_FACTS;
 	global $pgv_changes, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
-	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH;
+	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH, $NO_UPDATE_CHAN;
 
 	// NOTE: add a table and form to easily add new values to the table
 	echo "<form method=\"post\" name=\"newmedia\" action=\"addmedia.php\" enctype=\"multipart/form-data\">\n";
@@ -1478,7 +1478,11 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
 		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
-		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		if ($NO_UPDATE_CHAN) {
+			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
+		} else {
+			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		}
 		echo $pgv_lang["no_update_CHAN"], "<br />\n";
 		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 		echo format_fact_date($event, false, true);

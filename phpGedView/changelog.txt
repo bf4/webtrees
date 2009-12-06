@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2131272 ] do not update CHAN not remembered (wooc)
  - Fixed: [ 2563934 ] Sitemap module should only submit public URL's (wooc)
  - Fixed: [ 2905609 ] Address handling in quickupdate (volschin)
  - Fixed: [ 1953767 ] 4.1.5rel ... Negative #s in import statistics (fisharebest)

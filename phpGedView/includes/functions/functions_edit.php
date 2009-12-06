@@ -453,7 +453,7 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $NAME_REVERSE;
 	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $REVERSED_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
-	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS;
+	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $NO_UPDATE_CHAN;
 
 	$bdm = ''; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
@@ -754,7 +754,11 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
 		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
-		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		if ($NO_UPDATE_CHAN) {
+			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
+		} else {
+			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		}
 		echo $pgv_lang["no_update_CHAN"], "<br />\n";
 		if (isset($famrec)) {
 			$event = new Event(get_sub_record(1, "1 CHAN", $famrec));

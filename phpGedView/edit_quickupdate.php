@@ -3187,7 +3187,11 @@ if (PGV_USER_IS_ADMIN) {
 	echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap\">";
 	print_help_link("no_update_CHAN_help", "qm");
 	echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
-	echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+	if ($NO_UPDATE_CHAN) {
+		echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
+	} else {
+		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+	}
 	echo $pgv_lang["no_update_CHAN"], "<br />\n";
 	echo "</td></tr>\n";
 	echo "</table>";
