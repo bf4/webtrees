@@ -1706,8 +1706,6 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 				}
 			}
 		}
-		echo "<br />";
-		// ===========================================================
 
 		if ($fact=="OBJE") { 
 			print_findmedia_link($element_id, "1media");
