@@ -112,19 +112,21 @@
 	
 	if ($xref != "none") {
 		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]." (".$xref.")<br /><br />";
-		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "<br /><br />";
+		echo " &nbsp;&nbsp;&nbsp; The Census event (when saved) will be linked to Indi id's: &nbsp;&nbsp;&nbsp;&nbsp; ". $pid_array;
+		echo "<br /><br />";
+		echo "<br /><br />";
+		echo "&nbsp;&nbsp;&nbsp; <a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 		echo "<br /><br /><br /><br />";
-
-		// DEBUG =============================================================================================================
-		/*
-		echo "------------ The following lines are only for info only at the moment ----------";
-		echo "<br /><br />";
-		echo " &nbsp;&nbsp;&nbsp; Census event will eventually be linked to Indi id's: &nbsp;&nbsp;&nbsp;&nbsp; ". $pid_array;
-		echo "<br /><br />";
-		// echo "Base ID = " . $pid;
-		echo "---------------------------------------------------------------------------------------";
-		*/
-		// DEBUG =============================================================================================================
+		
+		?>
+		<script>
+		// alert(parent.opener.document.addform.pids_array.value);
+		parent.opener.document.addform.pids_array.value="<?php echo $pid_array; ?>";
+		// parent.opener.document.addform2.pids2_array.value="<?php echo $pid_array; ?>";
+		// alert(parent.opener.document.addform2.pids2_array.value);
+		</script>
+		<?php
 
 		echo "<br /><br /><br /><br />";
 	}

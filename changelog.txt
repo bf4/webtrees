@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Changed: The Process of copying the Census Event to the multiple Indi id's stipulated in the assisted Shared Note window is now automated. Requires Trunk svn 6534 (windmillway)
  - Info only: The message text for svn 6529 should read "Merge changes r6477 - r6528 from the trunk." (windmillway
  - Reverted: Removed SOUR and OBJE functions from GEDFact assistant window. 
    Copy to multi Indi/Family id's will be done in the Add Census window. (Still to come) (windmillway)

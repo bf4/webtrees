@@ -193,6 +193,7 @@ function preview() {
 					continue;
 			}else{
 				if (i!=0) {
+					// pidList += '\'' + (pidList==''?'':' ') + tr.cells[1].childNodes[0].value + '\'';
 					pidList += (pidList==''?'':' ') + tr.cells[1].childNodes[0].value;
 				}
 			}
