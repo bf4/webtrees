@@ -136,6 +136,7 @@ $pgv_lang["changes_occurred"]			= "W tym wpisie dokonano następujących zmian:"
 $pgv_lang["confirm_remove"]				= "Czy na pewno chcesz usunąć tę osobę z rodziny?";
 $pgv_lang["confirm_remove_object"]		= "Czy na pewno chcesz usunąć ten obiekt z bazy danych?";
 $pgv_lang["create_repository"]			= "Utwórz repozytorium";
+$pgv_lang["shared_note_assisted"]       = "Za pomocą Asystenta";
 $pgv_lang["create_shared_note"]			= "Utwórz nową wspólną notatkę";
 $pgv_lang["create_shared_note_assisted"]= "Utwórz nową wspólną notatkę używając Asystenta";
 $pgv_lang["add_new_event_assisted"]		= "Utwórz nowe wydarzenie używając Asystenta";
