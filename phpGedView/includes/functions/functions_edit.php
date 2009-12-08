@@ -2363,6 +2363,12 @@ function create_add_form($fact) {
 	global $tags, $pgv_lang, $factarray, $FULL_SOURCES;
 
 	$tags = array();
+	
+	// GEDFact_assistant ================================================
+	if ($fact=="CENS" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
+			require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
+	}
+	// ==================================================================
 
 	// handle  MARRiage TYPE
 	if (substr($fact, 0, 5)=="MARR_") {
