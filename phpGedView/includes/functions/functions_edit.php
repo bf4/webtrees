@@ -1693,7 +1693,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			}
 			// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
 			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons. 
-			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $action=="add" && $pid) {
+			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && ($action=="add" || $action=="edit" ) && $pid) {
 				// Check if a CENS event ---------------------------
 				if ($event_add=="census_add") {
 					$type_pid=GedcomRecord::getInstance($pid);
