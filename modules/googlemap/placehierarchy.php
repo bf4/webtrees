@@ -601,7 +601,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 						}
 						else {
 							echo "var icon_type = new GIcon();\n";
-							echo "icon_type.image = \"modules/googlemap/marker_yellow.png\"\n";
+							echo "icon_type.image = \"modules/googlemap/marker_yellow.png\";\n";
 							echo "icon_type.shadow = \"modules/googlemap/shadow50.png\";\n";
 							echo "icon_type.iconSize = new GSize(20, 34);\n";
 							echo "icon_type.shadowSize = new GSize(37, 34);\n";
@@ -663,7 +663,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	}
 	else {
 		echo "var icon_type = new GIcon();\n";
-		echo "icon_type.image = \"modules/googlemap/marker_yellow.png\"";
+		echo "icon_type.image = \"modules/googlemap/marker_yellow.png\";\n";
 		echo "var point = new GLatLng(0, 0);\n";
 		echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'>";
 		echo "<br />", $pgv_lang["gm_no_coord"];

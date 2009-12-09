@@ -65,7 +65,7 @@ else {
 $xmlGed = new XmlGedcom();
 $xmlGed->setProxy($client);
 //-- get the first person and his ancestors in one shot
-$xml = $client->getPersonById($rootId, "ancestors=3");
+$xml = $client->getPersonById($rootId, "parents=summary");
 $xmlGed->parseXml($xml);
 //--get the first person 
 $arr = $xmlGed->getPersons();
@@ -137,12 +137,19 @@ function printPersonBox(&$person, $gen=4) {
 	$father = null;
 	$mother = null;
 	//-- get the person's default parents
-	$parents = $person->getParents();
-	if (isset($parents[1])) {
-		$father = getPerson($parents[1]->getRef());
-	}
-	if (isset($parents[0])) {
-		$mother = getPerson($parents[0]->getRef());
+	$families = $person->getFamilies();
+	foreach($families as $family) {
+		$parents = $family->getParents();
+		$found = false;
+		foreach($parents as $parent) if ($parent->getRef()==$person->getId()) $found = true; 
+		if (!$found) {
+			if (isset($parents[0])) {
+				$father = getPerson($parents[0]->getRef());
+			}
+			if (isset($parents[1])) {
+				$mother = getPerson($parents[1]->getRef());
+			}
+		}
 	}
 	//-- get the persons birth and death information
 	$birthDate = "";
@@ -165,13 +172,6 @@ function printPersonBox(&$person, $gen=4) {
 		$place = $assert->getPlace();
 		if (!is_null($place)) $deathPlace = $place->getOriginal();
 	}	
-	$assert = $person->getMarriageAssertion();
-	if (!is_null($assert)) {
-		$date = $assert->getDate();
-		if (!is_null($date)) $marriageDate = $date->getOriginal();
-		$place = $assert->getPlace();
-		if (!is_null($place)) $marriagePlace = $place->getOriginal();
-	}
 	//-- generate the HTML
 	?>
 	<table cellspacing="0" cellpadding="0" border="0">
@@ -180,7 +180,6 @@ function printPersonBox(&$person, $gen=4) {
 	<div id="<?php print $person->getId();?>" class="personbox">
 		<a class="name" href="pedigree.php?rootId=<?php print $person->getId();?>"><?php print $person->getPrimaryName()->getFullText(); ?></a><br />
 		<span class="label"><b>Birth:</b></span> <?php print $birthDate." ".$birthPlace; ?><br />
-		<span class="label"><b>Marriage:</b></span> <?php print $marriageDate." ".$marriagePlace; ?><br />
 		<span class="label"><b>Death:</b></span> <?php print $deathDate." ".$deathPlace; ?><br />
 	</div>
 	</td>

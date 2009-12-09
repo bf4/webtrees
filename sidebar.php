@@ -7,25 +7,23 @@ $action = safe_GET('action', PGV_REGEX_ALPHANUM, 'none');
 if ($action!='none') {
 	$sidebarmods = PGVModule::getActiveList('S', PGV_USER_ACCESS_LEVEL);
 	uasort($sidebarmods, "PGVModule::compare_sidebar_order");
-	
 	class tempController {
 		var $pid;
 		var $famid;
 	}
 	
+	$controller = new tempController();
+
 	$pid = safe_GET('pid', PGV_REGEX_XREF, '');
 	if (!empty($pid)) {
-		$controller = new tempController();
 		$controller->pid = $pid;
 	}
 	$pid = safe_GET('rootid', PGV_REGEX_XREF, '');
 	if (!empty($pid)) {
-		$controller = new tempController();
 		$controller->pid = $pid;
 	}
 	$famid = safe_GET('famid', PGV_REGEX_XREF, '');
 	if (!empty($famid)) {
-		$controller = new tempController();
 		$controller->famid = $famid;
 	}
 	
@@ -49,11 +47,12 @@ if ($action!='none') {
 		exit;
 	}
 	if ($action=='loadmod') {
-		$modName = safe_GET('mod', PGV_REGEX_ALPHANUM, '');
+		$modName = safe_GET('mod', PGV_REGEX_URL, '');
 		if (isset($sidebarmods[$modName])) {
 			$mod = $sidebarmods[$modName];
 			if ($mod->hasSidebar()) {
 				$sb = $mod->getSidebar();
+				if (isset($controller)) $sb->setController($controller);
 				echo $sb->getContent();
 			}
 		}
@@ -161,7 +160,7 @@ function openCallback() {
 			loadedMods[ui.oldHeader.attr('title')] = true;
 			var active = ui.newHeader.attr('title');
 			if (!loadedMods[active]) {
-				jQuery('#sb_content_'+active).load('sidebar.php?action=loadmod&mod='+active);
+				jQuery('#sb_content_'+active).load('sidebar.php?action=loadmod&mod='+active+'&pid=<?php echo $pid?>&famid=<?php echo $famid?>');
 			}
 		}
 	});

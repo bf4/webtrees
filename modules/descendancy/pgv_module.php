@@ -11,10 +11,6 @@ class descendancy_PGVModule extends PGVModule {
 
 	public function hasSidebar() { return true; }
 	
-	/**
-	 * get the tab for this
-	 * @return Tab
-	 */
 	public function &getSidebar() {
 		
 		if ($this->_sidebar==null) {

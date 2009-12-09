@@ -36,10 +36,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_MOD_FAMILY_NAV_PHP', '');
 
 require_once 'includes/classes/class_tab.php';
+require_once 'includes/classes/class_sidebar.php';
 require_once 'includes/functions/functions_charts.php';
+require_once 'includes/controllers/individual_ctrl.php';
 
 class family_nav_Tab extends Tab {
-
+	
 	public function hasContent() {
 		return true;
 	}
@@ -762,4 +764,49 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 
 // ==============================================================
 }
+
+
+class family_nav_Sidebar extends Sidebar { 
+
+	var $indi;
+	
+	public function getContent() {
+		global $pgv_lang;
+		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
+		$out = '<div id="sb_family_nav_content">';
+
+		if ($this->controller) {
+			$root = null;
+			if ($this->controller->pid) {
+				$root = Person::getInstance($this->controller->pid);
+			}
+			else if ($this->controller->famid) {
+				$fam = Family::getInstance($this->controller->famid);
+				if ($fam) $root = $fam->getHusband();
+				if (!$root) $root = $fam->getWife(); 
+			}
+			if ($root!=null) {
+				$this->indi = $root;
+				$tab = new family_nav_Tab();
+				$this->controller = new IndividualController();
+				$this->controller->indi=$root;
+				$this->controller->pid=$root->getXref();
+				$tab->setController($this->controller);
+				$out .= $tab->getContent();
+			}
+		}
+		$out .= '</div>';
+		return $out;
+	}
+
+	public function getAjaxContent() {
+		return "";
+	}
+
+	public function hasContent() {
+		return true;
+	}
+}
+
 ?>
