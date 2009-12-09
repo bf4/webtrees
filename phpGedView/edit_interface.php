@@ -49,7 +49,8 @@ $assist =safe_REQUEST($_REQUEST, 'assist',  PGV_REGEX_UNSAFE);
 $noteid =safe_REQUEST($_REQUEST, 'noteid',  PGV_REGEX_UNSAFE);
 
 $pid_array  =safe_REQUEST($_REQUEST, 'pid_array', PGV_REGEX_XREF);
-$pids_array =safe_REQUEST($_REQUEST, 'pids_array', PGV_REGEX_XREF);
+$pids_array_add =safe_REQUEST($_REQUEST, 'pids_array_add', PGV_REGEX_XREF);
+$pids_array_edit =safe_REQUEST($_REQUEST, 'pids_array_edit', PGV_REGEX_XREF);
 
 $update_CHAN=!safe_POST_bool('preserve_last_changed');
 
@@ -452,10 +453,11 @@ case 'editraw':
 //-- edit a fact record in a form
 case 'edit':
 	init_calendar_popup();
-	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
+	echo "<form name=\"editform\" method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
 	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
+	echo "<input type=\"hidden\" id=\"pids_array_edit\" name=\"pids_array_edit\" value=\"no_array\" />\n";
 	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["save"], "\" /><br />\n";
 
 	echo "<table class=\"facts_table\">";
@@ -503,7 +505,7 @@ case 'add':
 	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
 	echo "<input type=\"hidden\" name=\"linenum\" value=\"new\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
-	echo "<input type=\"hidden\" id=\"pids_array\" name=\"pids_array\" value=\"no_array\" />\n";
+	echo "<input type=\"hidden\" id=\"pids_array_add\" name=\"pids_array_add\" value=\"no_array\" />\n";
 
 	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["add"], "\" /><br />\n";
 	echo "<table class=\"facts_table\">";
@@ -1274,8 +1276,9 @@ case 'update':
 	 * If $cens_pids is not set, then the array created is just the current $pid.
 	 * -----------------------------------------------------------------------------
 	 */
-	if (isset($_REQUEST['pids_array'])) $pids_array = $_REQUEST['pids_array'];
-	
+	if (isset($_REQUEST['pids_array_add'])) $pids_array = $_REQUEST['pids_array_add'];
+	if (isset($_REQUEST['pids_array_edit'])) $pids_array = $_REQUEST['pids_array_edit'];
+
 	if (isset($pids_array) && $pids_array!="no_array") {
 		$cens_pids=explode(', ', $pids_array);
 	}

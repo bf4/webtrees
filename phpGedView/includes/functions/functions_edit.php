@@ -1359,13 +1359,14 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		echo "<input type=\"hidden\" name=\"islink[]\" value=\"", $islink, "\" />\n";
 		echo "<input type=\"hidden\" name=\"tag[]\" value=\"", $fact, "\" />\n";
 
-		// Shared Notes Debug --------------------
+		// Shared Notes Debug ------------------------------------------------ 
+		// Please leave until GEDFact assistant/_CENS is released - B.Holland 
 			// echo "<br />Label = ".$label;
 			// echo "<br />Level = ".$level;
-			// echo "<br />Link = ".$islink;
-			// echo "<br />Fact = ".$fact;
+			// echo "<br />Link  = ".$islink;
+			// echo "<br />Fact  = ".$fact;
 			// echo "<br />Value = ".$value;
-		// End Debug -------------------
+		// End Debug ---------------------------------------------------------
 	}
 	echo "\n</td>";
 
