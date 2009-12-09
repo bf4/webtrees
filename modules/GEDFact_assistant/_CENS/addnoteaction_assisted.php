@@ -106,10 +106,6 @@
 		echo "<br /><br /><br />";	
 	}
 	
-	// Not sure if next line is needed ?? BH ?? --------
-	// $link = "note.php?nid=$xref&show_changes=yes";
-	// -------------------------------------------------
-	
 	if ($xref != "none") {
 		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]." (".$xref.")<br /><br />";
 		echo "<br /><br />";
@@ -118,13 +114,25 @@
 		echo "<br /><br />";
 		echo "&nbsp;&nbsp;&nbsp; <a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 		echo "<br /><br /><br /><br />";
-		
+
 		?>
 		<script>
-		// alert(parent.opener.document.addform.pids_array.value);
-		parent.opener.document.addform.pids_array.value="<?php echo $pid_array; ?>";
-		// parent.opener.document.addform2.pids2_array.value="<?php echo $pid_array; ?>";
-		// alert(parent.opener.document.addform2.pids2_array.value);
+		if (parent.opener.document.getElementById("pids_array_edit") == null || parent.opener.document.getElementById("pids_array_edit") == 'undefined') {
+			//alert ("EDIT NOT HERE");
+		} else {
+		//	alert("WE ARE EDITING an EVENT");
+		//	alert(parent.opener.document.editform.pids_array_edit.value);
+			parent.opener.document.editform.pids_array_edit.value="<?php echo $pid_array; ?>";
+		//	alert(parent.opener.document.editform.pids_array_edit.value);
+		}
+		if (parent.opener.document.getElementById("pids_array_add") == null || parent.opener.document.getElementById("pids_array_add") == 'undefined') {
+			//alert ("ADD NOT HERE");
+		} else {
+		//	alert("WE ARE ADDING an EVENT");
+		//	alert(parent.opener.document.addform.pids_array_add.value);
+			parent.opener.document.addform.pids_array_add.value="<?php echo $pid_array; ?>";
+		//	alert(parent.opener.document.addform.pids_array_add.value);
+		}
 		</script>
 		<?php
 

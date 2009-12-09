@@ -26,18 +26,20 @@
  * @version $Id$
  */
  
- 	include('includes/functions/functions_print_lists.php');  //  *** NOTE THIS is necessary for the function below ***
+ global $TEXT_DIRECTION;
+ 
+ 	require PGV_ROOT.'includes/functions/functions_print_lists.php';  //  *** NOTE THIS is necessary for the function below ***
  
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("edit_add_SHARED_NOTE_help", "qm");
-		echo "Currently Linked to: <br />";
+		echo "Links: <br />";
 	echo "</td><td class=\"optionbox wrap\">\n";
 		// print_indi_list(fetch_linked_indi('N1', "NOTE", "1"));  //  *** NOTE THIS needs fixing to replace "N1" with a variable, or use another function ***
 		// include ('modules/GEDFact_assistant/_CENS/census_query_1b.php');
 	echo "</td></tr>\n";
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("edit_add_SHARED_NOTE_help", "qm");
-		echo "Add Other Links: <br />";
+		echo "Add Links: <br />";
 	echo "</td><td class=\"optionbox wrap\">\n";
 		// include ('modules/GEDFact_assistant/_CENS/census_query1.php');
 	echo "</td></tr>\n";
