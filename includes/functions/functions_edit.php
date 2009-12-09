@@ -1359,13 +1359,14 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		echo "<input type=\"hidden\" name=\"islink[]\" value=\"", $islink, "\" />\n";
 		echo "<input type=\"hidden\" name=\"tag[]\" value=\"", $fact, "\" />\n";
 
-		// Shared Notes Debug --------------------
+		// Shared Notes Debug ------------------------------------------------ 
+		// Please leave until GEDFact assistant/_CENS is released - B.Holland 
 			// echo "<br />Label = ".$label;
 			// echo "<br />Level = ".$level;
-			// echo "<br />Link = ".$islink;
-			// echo "<br />Fact = ".$fact;
+			// echo "<br />Link  = ".$islink;
+			// echo "<br />Fact  = ".$fact;
 			// echo "<br />Value = ".$value;
-		// End Debug -------------------
+		// End Debug ---------------------------------------------------------
 	}
 	echo "\n</td>";
 
@@ -1693,7 +1694,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			}
 			// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
 			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons. 
-			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $action=="add" && $pid) {
+			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && ($action=="add" || $action=="edit" ) && $pid) {
 				// Check if a CENS event ---------------------------
 				if ($event_add=="census_add") {
 					$type_pid=GedcomRecord::getInstance($pid);
@@ -2363,6 +2364,12 @@ function create_add_form($fact) {
 	global $tags, $pgv_lang, $factarray, $FULL_SOURCES;
 
 	$tags = array();
+	
+	// GEDFact_assistant ================================================
+	if ($fact=="CENS" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
+			require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
+	}
+	// ==================================================================
 
 	// handle  MARRiage TYPE
 	if (substr($fact, 0, 5)=="MARR_") {
