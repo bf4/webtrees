@@ -1780,7 +1780,7 @@ $pgv_lang["stat_first_event"]		= "אירוע ראשון";
 $pgv_lang["stat_last_event"]		= "אירוע אחרון";
 $pgv_lang["stat_places"]		= "מקומות";
 $pgv_lang["stat_birth_places"]	= "מקומות לידה";
-$pgv_lang["stat_marriage_places"]	= "מקומות נישואין";
+$pgv_lang["stat_marriage_places"]	= "מקומות נישואין"; //->hatuna?
 $pgv_lang["stat_death_places"]	= "מקומות פטירה";
 $pgv_lang["stat_countries"]		= "אירועים בארצות";
 
