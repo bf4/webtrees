@@ -44,16 +44,20 @@ if ($CONFIGURED && PGV_DB::table_exists($TBLPREFIX.'site_setting')) {
 	if ($schema_version==11) {
 		$schema_version_temp = get_site_setting('PGV_SCHEMA_VERSION_TEMP', 0);
 		if ($schema_version_temp==0) {
-			if (PGV_DB::table_exists("{$TBLPREFIX}module")) {
-				PGV_DB::exec("alter table {$TBLPREFIX}module add mod_sidebarorder ".PGV_DB::$INT1_TYPE);
-			}
-			//-- get the gedcom ids from the database
-			$gedids= PGV_DB::prepare("SELECT DISTINCT i_file FROM ${TBLPREFIX}individuals i_file")
-				->fetchOneColumn();
-			//-- set the default sidebars
-			foreach($gedids as $ged_id) {
-				PGVModule::setDefaultSidebars($ged_id);
-			}		
+			try {
+				if (PGV_DB::table_exists("{$TBLPREFIX}module")) {
+					PGV_DB::exec("alter table {$TBLPREFIX}module add mod_sidebarorder ".PGV_DB::$INT1_TYPE);
+				}
+				//-- get the gedcom ids from the database
+				$gedids= PGV_DB::prepare("SELECT DISTINCT i_file FROM ${TBLPREFIX}individuals i_file")
+					->fetchOneColumn();
+				//-- set the default sidebars
+				foreach($gedids as $ged_id) {
+					PGVModule::setDefaultSidebars($ged_id);
+				}	
+			} catch(PDOException $e) {
+				print $e->getMessage();
+			}	
 			set_site_setting('PGV_SCHEMA_VERSION_TEMP', 1);
 		}
 	}

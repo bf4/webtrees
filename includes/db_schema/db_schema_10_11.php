@@ -98,3 +98,5 @@ foreach($gedids as $ged_id) {
 
 // Update the version to indicate sucess
 set_site_setting($schema_name, $next_version);
+//-- set temp setting to prevent upgrade code
+set_site_setting('PGV_SCHEMA_VERSION_TEMP', 1);
