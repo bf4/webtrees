@@ -1684,9 +1684,9 @@ class stats {
 			$func($age, $show_years);
 			if ($person->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]</li>\n";
+					$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
 				} else {
-					$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]";
+					$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]");
 				}
 			}
 		}
@@ -1756,9 +1756,9 @@ class stats {
 			}
 			$func($age, $show_years);
 			if ($type == 'list') {
-				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]</li>\n";
+				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
 			} else {
-				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]";
+				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]");
 			}
 		}
 		if ($type == 'list') {
@@ -2294,9 +2294,9 @@ class stats {
 			if (($husb->getAllDeathDates() && $wife->getAllDeathDates()) || !$husb->isDead() || !$wife->isDead()) {
 				if ($family->canDisplayDetails()) {
 					if ($type == 'list') {
-						$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [".$age."]</li>\n";
+						$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [".$age."]")."</li>\n";
 					} else {
-						$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [".$age."]";
+						$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [".$age."]");
 					}
 				}
 				if (++$i==$total) break;
@@ -2371,9 +2371,9 @@ class stats {
 			$func($age, $show_years);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$age}]</li>\n";
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [".$age."]")."</li>\n";
 				} else {
-					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$age}]";
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [".$age."]");
 				}
 			}
 		}
@@ -2964,9 +2964,9 @@ class stats {
 			$family=Family::getInstance($rows[$c]['id']);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]</li>\n";
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]")."</li>\n";
 				} else {
-					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]";
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]");
 				}
 			}
 		}
@@ -3419,9 +3419,9 @@ class stats {
 			$family=Family::getInstance($row['id']);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$row['tot']} {$pgv_lang['grandchildren']}]</li>\n";
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$row['tot']} {$pgv_lang['grandchildren']}]")."</li>\n";
 				} else {
-					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$row['tot']} {$pgv_lang['grandchildren']}]";
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$row['tot']} {$pgv_lang['grandchildren']}]");
 				}
 			}
 		}
