@@ -23,7 +23,7 @@ class individuals_Sidebar extends Sidebar {
 		function searchQ() {
 			var query = jQuery("#sb_indi_name").attr("value");
 			if (query.length>1) {
-				jQuery("#sb_indi_content").load("sidebar.php?action=individuals&search="+query);
+				jQuery("#sb_indi_content").load("sidebar.php?sb_action=individuals&search="+query);
 			}
 		}
 		
@@ -45,7 +45,7 @@ class individuals_Sidebar extends Sidebar {
 				
 				if (!loadedNames[surname]) {
 					jQuery.ajax({
-					  url: "sidebar.php?action=individuals&alpha="+alpha+"&surname="+surname,
+					  url: "sidebar.php?sb_action=individuals&alpha="+alpha+"&surname="+surname,
 					  cache: false,
 					  success: function(html){
 					    jQuery("#sb_indi_"+surname+" div").html(html);
@@ -85,7 +85,7 @@ class individuals_Sidebar extends Sidebar {
 					$html=$letter;
 					break;
 			}
-			$html='<a href="sidebar.php?action=individuals&amp;alpha='.urlencode($letter).'" class="sb_indi_letter">'.$html.'</a>';
+			$html='<a href="sidebar.php?sb_action=individuals&amp;alpha='.urlencode($letter).'" class="sb_indi_letter">'.$html.'</a>';
 			$out .= $html." ";
 		}
 

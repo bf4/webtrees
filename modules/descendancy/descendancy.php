@@ -16,7 +16,7 @@ class descendancy_Sidebar extends Sidebar {
 		function dsearchQ() {
 			var query = jQuery("#sb_desc_name").attr("value");
 			if (query.length>1) {
-				jQuery("#sb_desc_content").load("sidebar.php?action=descendancy&search="+query);
+				jQuery("#sb_desc_content").load("sidebar.php?sb_action=descendancy&search="+query);
 			}
 		}
 		
@@ -79,7 +79,7 @@ class descendancy_Sidebar extends Sidebar {
 	public function getPersonLi(&$person, $generations=0) {
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$out = '';
-		$out .= '<li id="sb_desc_'.$person->getXref().'" class="sb_desc_indi_li"><a href="sidebar.php?action=descendancy&amp;pid='.$person->getXref().'" title="'.$person->getXref().'" class="sb_desc_indi">';
+		$out .= '<li id="sb_desc_'.$person->getXref().'" class="sb_desc_indi_li"><a href="sidebar.php?sb_action=descendancy&amp;pid='.$person->getXref().'" title="'.$person->getXref().'" class="sb_desc_indi">';
 		if ($generations>0) $out .= '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['minus']['other'].'" border="0" class="plusminus" />';
 		else $out .= '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['plus']['other'].'" border="0" class="plusminus" />';
 		$out .= $person->getSexImage().$person->getListName();
@@ -104,7 +104,7 @@ class descendancy_Sidebar extends Sidebar {
 		global $pgv_lang, $factarray;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$out = '';
-		$out .= '<li id="sb_desc_'.$family->getXref().'" class="sb_desc_indi_li"><a href="sidebar.php?action=descendancy&amp;famid='.$family->getXref().'" title="'.$family->getXref().'" class="sb_desc_indi">';
+		$out .= '<li id="sb_desc_'.$family->getXref().'" class="sb_desc_indi_li"><a href="sidebar.php?sb_action=descendancy&amp;famid='.$family->getXref().'" title="'.$family->getXref().'" class="sb_desc_indi">';
 		$out .= '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['minus']['other'].'" border="0" class="plusminus" />';
 		$out .= $person->getSexImage().$person->getListName();
 		

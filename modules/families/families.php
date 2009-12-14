@@ -23,7 +23,7 @@ class families_Sidebar extends Sidebar {
 		function searchQ() {
 			var query = jQuery("#sb_fam_name").attr("value");
 			if (query.length>1) {
-				jQuery("#sb_fam_content").load("sidebar.php?action=families&search="+query);
+				jQuery("#sb_fam_content").load("sidebar.php?sb_action=families&search="+query);
 			}
 		}
 		
@@ -45,7 +45,7 @@ class families_Sidebar extends Sidebar {
 				
 				if (!famloadedNames[surname]) {
 					jQuery.ajax({
-					  url: "sidebar.php?action=families&alpha="+alpha+"&surname="+surname,
+					  url: "sidebar.php?sb_action=families&alpha="+alpha+"&surname="+surname,
 					  cache: false,
 					  success: function(html){
 					    jQuery("#sb_fam_"+surname+" div").html(html);
@@ -85,7 +85,7 @@ class families_Sidebar extends Sidebar {
 					$html=$letter;
 					break;
 			}
-			$html='<a href="sidebar.php?action=families&amp;alpha='.urlencode($letter).'" class="sb_fam_letter">'.$html.'</a>';
+			$html='<a href="sidebar.php?sb_action=families&amp;alpha='.urlencode($letter).'" class="sb_fam_letter">'.$html.'</a>';
 			$out .= $html." ";
 		}
 

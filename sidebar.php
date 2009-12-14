@@ -2,7 +2,7 @@
 require_once('config.php');
 require_once('includes/classes/class_module.php');
 
-$action = safe_GET('action', PGV_REGEX_ALPHANUM, 'none');
+$action = safe_GET('sb_action', PGV_REGEX_ALPHANUM, 'none');
 //-- handle ajax calls
 if ($action!='none') {
 	$sidebarmods = PGVModule::getActiveList('S', PGV_USER_ACCESS_LEVEL);
@@ -160,7 +160,7 @@ function openCallback() {
 			loadedMods[ui.oldHeader.attr('title')] = true;
 			var active = ui.newHeader.attr('title');
 			if (!loadedMods[active]) {
-				jQuery('#sb_content_'+active).load('sidebar.php?action=loadmod&mod='+active+'&pid=<?php echo $pid?>&famid=<?php echo $famid?>');
+				jQuery('#sb_content_'+active).load('sidebar.php?sb_action=loadmod&mod='+active+'&pid=<?php echo $pid?>&famid=<?php echo $famid?>');
 			}
 		}
 	});
@@ -183,7 +183,7 @@ jQuery(document).ready(function() {
 			width: "350px"
 		}, 500);
 		if (!modsLoaded) {
-			jQuery('#sidebarAccordion').load('sidebar.php', 'action=loadMods&pid=<?php echo $pid?>&famid=<?php echo $famid?>', openCallback);
+			jQuery('#sidebarAccordion').load('sidebar.php', 'sb_action=loadMods&pid=<?php echo $pid?>&famid=<?php echo $famid?>', openCallback);
 			modsLoaded=true;
 		}
 		else jQuery("#sidebarAccordion").accordion("resize");
