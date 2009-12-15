@@ -650,12 +650,12 @@ if (PGV_USE_LIGHTBOX) {
 if(empty($SEARCH_SPIDER)) {
 	echo "<div id=\"spare\" class=\"tab_page\" style=\"display:none; border: solid transparent 0px;\" >";
 
-
-		echo "<span class=\"subheaders\">Spare Tab</span>";
-		echo "&nbsp;&nbsp;";
+// *** Section <span> sunheader temporarily removed as it will become redundant when new Tabs Management function is released ***
+//		echo "<span class=\"subheaders\">Spare Tab</span>";
+//		echo "&nbsp;&nbsp;";
 		
 		// ---------- Help link --------------------
-//		print_help_link("lb_general_help", "qm", "lb_help", true); // (Temp removed to stop Error log reporting when Lightbox not installed)
+		// print_help_link("lb_general_help", "qm", "lb_help", true); // (Temp removed to stop Error log reporting when Lightbox not installed)
 		
 		echo "<div id='spare_content'>";
 			// Fix if no googlemaps ========================================================
@@ -674,7 +674,6 @@ if(empty($SEARCH_SPIDER)) {
 			}
 			// end Fix if no googlemaps ========================================================
 		echo "</div>";
-
 
 	echo "</div>";
 }
