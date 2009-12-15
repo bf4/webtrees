@@ -53,7 +53,7 @@ if (!PGV_DB::table_exists("{$TBLPREFIX}placelocation")) {
 		" pl_icon      ".self::$VARCHAR_TYPE."(255)     NULL,".
 		" PRIMARY KEY                    (pl_id       ),".
 		" INDEX {$TBLPREFIX}pl_level     (pl_level    ),".
-		" INDEX {$TBLPREFIX}p            (pl_long     ),".
+		" INDEX {$TBLPREFIX}pl_long      (pl_long     ),".
 		" INDEX {$TBLPREFIX}pl_lati      (pl_lati     ),".
 		" INDEX {$TBLPREFIX}pl_name      (pl_place    ),".
 		" INDEX {$TBLPREFIX}pl_parent_id (pl_parent_id)".
