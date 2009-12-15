@@ -847,12 +847,14 @@ class stats {
 			if ($type=='unknown') {
 				// There has to be a better way then this :(
 				foreach (self::$_media_types as $t) {
-					$sql.=" AND m_gedrec NOT ".PGV_DB::$LIKE." ?";
+					$sql.=" AND (m_gedrec NOT ".PGV_DB::$LIKE." ? AND m_gedrec NOT ".PGV_DB::$LIKE." ?)";
 					$vars[]="%3 TYPE {$t}%";
+					$vars[]="%1 _TYPE {$t}%";
 				}
 			} else {
-				$sql.=" AND m_gedrec ".PGV_DB::$LIKE." ?";
+				$sql.=" AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
 				$vars[]="%3 TYPE {$type}%";
+				$vars[]="%1 _TYPE {$type}%";
 			}
 		}
 		return PGV_DB::prepare($sql)->execute($vars)->fetchOne();
@@ -907,13 +909,10 @@ class stats {
 		}
 		$count = $this->totalMediaUnknown();
 		if ($count>0) {
-			$media[$type] = $tot-$c;
+			$media['unknown'] = $tot-$c;
 			if ($tot-$c > $max) {
 				$max = $count;
 			}
-			$mediaCounts[] = round(100 * $count / $tot, 0);
-			$mediaTypes .= $pgv_lang['unknown'].' - '.($tot-$c).'|';
-			$chart_title .= $pgv_lang['unknown'].' ['.($tot-$c).']';
 		}
 		if (($max/$tot)>0.6 && count($media)>10) {
 			arsort($media);
