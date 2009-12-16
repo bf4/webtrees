@@ -14,15 +14,18 @@ if ($action!='none') {
 	
 	$controller = new tempController();
 
-	$pid = safe_GET('pid', PGV_REGEX_XREF, '');
+	$pid = safe_GET_xref('pid', '');
+	if (empty($pid)) $pid = safe_POST_xref('pid', '');
 	if (!empty($pid)) {
 		$controller->pid = $pid;
 	}
-	$pid = safe_GET('rootid', PGV_REGEX_XREF, '');
+	$pid = safe_GET_xref('rootid',  '');
+	if (empty($pid)) $pid = safe_POST_xref('rootid', '');
 	if (!empty($pid)) {
 		$controller->pid = $pid;
 	}
 	$famid = safe_GET('famid', PGV_REGEX_XREF, '');
+	if (empty($famid)) $famid = safe_POST('famid', PGV_REGEX_XREF, '');
 	if (!empty($famid)) {
 		$controller->famid = $famid;
 	}
@@ -75,6 +78,13 @@ if (isset($controller)) {
 	if (isset($controller->pid)) $pid = $controller->pid;
 	if (isset($controller->rootid)) $pid = $controller->rootid;
 	if (isset($controller->famid)) $famid = $controller->famid;
+} else {
+	$pid = safe_GET_xref('pid', '');
+	if (empty($pid)) $pid = safe_POST_xref('pid', '');
+	if (empty($pid)) $pid = safe_GET_xref('rootid',  '');
+	if (empty($pid)) $pid = safe_POST_xref('rootid', '');
+	$famid = safe_GET('famid', PGV_REGEX_XREF, '');
+	if (empty($famid)) $famid = safe_POST('famid', PGV_REGEX_XREF, '');
 }
 ?>
 <style type="text/css">

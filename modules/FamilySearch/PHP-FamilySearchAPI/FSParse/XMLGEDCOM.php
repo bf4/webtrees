@@ -143,6 +143,7 @@ class XmlGedcom {
 		$this->handler["XG_CHARACTERISTIC:VALUE"]["tag"] = "openEventValue";
 		$this->handler["XG_NAME:VALUE"]["tag"] = "openEventValue";
 		$this->handler["XG_GENDER:VALUE"]["tag"] = "openEventValue";
+		$this->handler["IDENTIFIER"]["tag"] = "openId";
 
 		$this->handler["NOTE"]["data"] = "dataNote";
 		$this->handler["CITATION"]["data"] = "dataCitation";
@@ -172,6 +173,7 @@ class XmlGedcom {
 		//-- for summary gender
 		$this->handler["GENDER"]["data"] = "valueGender";
 		$this->handler["SELECTED"]["data"] = "dataSelected";
+		$this->handler["IDENTIFIER"]["data"] = "dataId";
 
 		$this->handler["xg_gender"] = "valueGender";
 		$this->handler["xg_namepieces"] = "valuePieces";
@@ -514,7 +516,11 @@ class XmlGedcom {
 				
 			/* GEDCOM GUID */
 			else if ($fact=="_UID") {
-				$id = array('type'=>'GUID', 'id'=>$factObj->getDetail());
+				$id = array('type'=>'GEDCOM UID', 'id'=>$factObj->getDetail());
+				$NewXGPerson->addAlternateId($id);
+			}
+			else if ($fact=="AFN") {
+				$id = array('type'=>'Ancestral File Number', 'id'=>$factObj->getDetail());
 				$NewXGPerson->addAlternateId($id);
 			}
 			else {
@@ -794,7 +800,7 @@ class XmlGedcom {
 			$this->matches[$person->getId()] = $person;
 		}
 
-		if ($name!="ID" && isset($this->handler[$name]["tag"])) {
+		if ($name!="ID" && $name!="IDENTIFIER" && isset($this->handler[$name]["tag"])) {
 			array_pop($this->tagStack);  // pop top object off the stack when finished with it.
 		}
 	}
@@ -1224,9 +1230,11 @@ class XmlGedcom {
 		$this->error->setCode(trim($data));
 	}
 	function dataId($data) {
-		if (!is_null($this->tempId)) $this->tempId['id'] = trim($data);
-		$person = end($this->tagStack);
-		if (get_class($person)=="XG_Person") $person->addAlternateId($this->tempId);
+		if (!is_null($this->tempId)) {
+			$this->tempId['id'] = trim($data);
+			$person = end($this->tagStack);
+			if (get_class($person)=="XG_Person") $person->addAlternateId($this->tempId);
+		}
 	}
 
 	function dataLiving($data) {
@@ -1943,8 +1951,13 @@ class XG_Person extends XG_HasAssertions {
 
 		// add any alternate ids
 		foreach($this->altIds as $a=>$id) {
-			$gedcom .= "1 REFN ".$id['id']."\r\n";
-			$gedcom .= "2 TYPE ".$id['type']."\r\n";
+			if ($id['type']=='Ancestral File Number') {
+				$gedcom .= '1 AFN '.$id['id']."\r\n";
+			}
+			else {
+				$gedcom .= "1 REFN ".$id['id']."\r\n";
+				$gedcom .= "2 TYPE ".$id['type']."\r\n";
+			}
 		}
 
 		//add on the GEDCOM for each note and source for
