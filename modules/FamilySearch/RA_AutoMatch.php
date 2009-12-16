@@ -99,10 +99,23 @@ class RA_AutoMatch {
 		$count=0;
 		$people_array = $this->get_FS_results($person);
 
-		$out = "";
-		/**
-		 * This will set the column span for the initial row to display the checkbox if multiple matches are found.
-		 */
+		$out = '<script type="text/javascript">
+		<!--
+			var selectedCounter = 0;
+			function mergeboxChecked(chkbx) {
+				if (chkbx.checked) {
+					selectedCounter++;
+					jQuery("#mergebutton").attr("disabled","");
+				}
+				else {
+					selectedCounter--;
+					if (selectedCounter<1)
+						jQuery("#mergebutton").attr("disabled","disabled");
+				}
+				return true; 
+			}
+		//-->
+		</script>';
 		$out .= "<form action=\"module.php\" method=\"post\">
 			<input type=\"hidden\" name=\"mod\" value=\"FamilySearch\" />
 			<input type=\"hidden\" name=\"pid\" value=\"".$person->getXref()."\" />
@@ -157,13 +170,13 @@ class RA_AutoMatch {
 					$out .= "</td>";
 					$out .= "<td align=\"center\" valign=\"middle\">".$this->getStars($match->getScore())."</td>";
 					$temp=$match->getId();
-					$out .="<td align=\"center\" valign=\"middle\"><input type=\"checkbox\" name=\"merge[]\" value=\"".$temp."\" /></td> ";
+					$out .="<td align=\"center\" valign=\"middle\"><input type=\"checkbox\" class=\"mergebox\" onclick=\"return mergeboxChecked(this);\" name=\"merge[]\" value=\"".$temp."\" /></td> ";
 					$out .= "</tr>";
 				}
 				$count++;
 			}
 			$out .= "<tr class=\"optionbox\"><td align=\"center\" colspan=\"7\">";
-			if ($relatedFamilyCount>0) $out .= "<input type=\"submit\" name=\"Merge\" value=\"Merge Selected Records\">";
+			if ($relatedFamilyCount>0) $out .= "<input id=\"mergebutton\" type=\"submit\" name=\"Merge\" value=\"Merge Selected Records\" disabled=\"disabled\">";
 		}
 		if (!$this->match || count($people_array)==0 || $relatedFamilyCount==0){
 			$out .= "<tr class=\"optionbox\"><td align=\"center\" colspan=\"7\">";

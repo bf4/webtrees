@@ -213,7 +213,7 @@ class XmlGedcom {
 			$query = "families=$summary&events=$summary&children=all&properties=$summary&parents=$summary";
 			if ($summary=='all') $query.="&ordinances=all&names=all&genders=all&characteristics=all&identifiers=all&contributor=all";
 			$result = $this->proxy->getPersonById($id,$query);
-			//		print htmlentities($result);
+//					print htmlentities($result);
 			$this->parseXml($result);
 			if (!empty($this->error)) {
 				throw new Exception($this->error->getMessage());
@@ -850,6 +850,8 @@ class XmlGedcom {
 		$person->setModified($attrs["MODIFIED"]);
 		if (!empty($attrs["TEMPID"]))
 		$person->setTempId($attrs["TEMPID"]);
+		if (!empty($attrs["REQUESTEDID"]))
+		$person->setRequestedId($attrs["REQUESTEDID"]);
 		$last = end($this->tagStack);
 		if (method_exists($last, "setPerson")) $last->setPerson($person);
 		$this->tagStack[] = $person;

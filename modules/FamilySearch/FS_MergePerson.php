@@ -55,8 +55,6 @@ if (!$matcher->isLoggedIn()) {
 	exit;
 }
 
-print_header('FamilySearch Merge');
-
 global $nonfacts;
 $nonfacts = array("FAMS","FAMC","OBJE");
 $localPerson = Person::getInstance($pid);
@@ -65,6 +63,14 @@ $currentID = $matcher->getFSID($localPerson);
 if ($currentID && !in_array($currentID, $match)) $match[] = $currentID;
 
 $FSID = "";
+
+if (count($match)==0) {
+	header("Location: individual.php?pid=".$pid."&tab=FamilySearch&error=No+Records+Selected");
+	exit;
+}
+
+print_header('FamilySearch Merge');
+
 if (count($match)>1) {
 	$FSID = $matcher->combine($match);
 	if ($FSID=="ERROR") {

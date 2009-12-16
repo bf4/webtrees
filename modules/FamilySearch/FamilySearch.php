@@ -12,6 +12,11 @@ class FamilySearch_Tab extends Tab {
 
 		$FSAction = 'automatch';
 		if (isset($_REQUEST['FSAction'])) $FSAction = $_REQUEST['FSAction'];
+		
+		$error = safe_GET('error', PGV_REGEX_NOSCRIPT, '');
+		if (!empty($error)) {
+			$out .= '<p class="error">'.$error.'</p>';
+		}
 
 		//beginning of FamilySearch results functionality
 		$matcher = new RA_AutoMatch();
