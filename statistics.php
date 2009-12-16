@@ -43,44 +43,30 @@ $stats = new stats($GEDCOM);
 	if ($TEXT_DIRECTION=='rtl') $align='right';
 	else $align='left';
 ?>
-<script language="JavaScript" type="text/javascript">
-<!--
-var tab_count = 2;
-function switch_tab(tab) {
-	for(i=0; i<=tab_count+1; i++) {
-		var pagetab = document.getElementById('pagetab'+i);
-		var pagetabbottom = document.getElementById('pagetab'+i+'bottom');
-		var tabdiv = document.getElementById('tab'+i);
-		if (i==tab) {
-			pagetab.className='tab_cell_active';
-			tabdiv.style.display = 'block';
-			pagetabbottom.className='tab_active_bottom';
-		}
-		else {
-			pagetab.className='tab_cell_inactive';
-			tabdiv.style.display = 'none';
-			pagetabbottom.className='tab_inactive_bottom';
-		}
-	}
-}
-//-->
+<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
+<link type="text/css" href="js/jquery/css/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
+<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+<?php if ($TEXT_DIRECTION=='rtl') {?>
+<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+<?php }?>
+<script type="text/javascript">
+//<![CDATA[
+  jQuery.noConflict();
+  jQuery(document).ready(function(){
+  jQuery("#tabbar").tabs();
+  });
+//]]>
 </script>
-<table class="tabs_table center width90">
-	<tr>
-		<td id="pagetab0" class="tab_cell_active"><a href="javascript: <?php echo $pgv_lang["individuals"];?>" onclick="switch_tab(0); return false;"><?php echo $pgv_lang["individuals"];?></a></td>
-		<td id="pagetab1" class="tab_cell_inactive"><a href="javascript: <?php echo $pgv_lang["families"];?>" onclick="switch_tab(1); return false;"><?php echo $pgv_lang["families"];?></a></td>
-		<td id="pagetab2" class="tab_cell_inactive"><a href="javascript: <?php echo $pgv_lang["others"];?>" onclick="switch_tab(2); return false;"><?php echo $pgv_lang["others"];?></a></td>
-		<td id="pagetab3" class="tab_cell_inactive"><a href="javascript: <?php echo $pgv_lang["stat_own_charts"];?>" onclick="switch_tab(3); return false;"><?php echo $pgv_lang["stat_own_charts"];?></a></td>
-	</tr>
-	<tr>
-		<td id="pagetab0bottom" class="tab_active_bottom"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
-		<td id="pagetab1bottom" class="tab_inactive_bottom"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
-		<td id="pagetab2bottom" class="tab_inactive_bottom"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
-		<td id="pagetab3bottom" class="tab_inactive_bottom"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
-		<td class="tab_inactive_bottom_right" style="width:30%;"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
-	</tr>
-	<tr><td colspan="5">
-<div id="tab0" class="<?php echo $TEXT_DIRECTION; ?>">
+<div align="center">
+<div id="tabbar" class="width90">
+	<ul>
+		<li><a href="#pagetab0"><span><?php echo $pgv_lang["individuals"];?></span></a></li>
+		<li><a href="#pagetab1"><span><?php echo $pgv_lang["families"];?></span></a></li>
+		<li><a href="#pagetab2"><span><?php echo $pgv_lang["others"];?></span></a></li>
+		<li><a href="#pagetab3"><span><?php echo $pgv_lang["stat_own_charts"];?></span></a></li>
+	</ul>
+<div id="pagetab0" class="<?php echo $TEXT_DIRECTION; ?>">
 	<fieldset>
 		<legend><?php echo $pgv_lang["statnnames"], ': ', $stats->totalIndividuals();?></legend>
 			<table class="facts_table">
@@ -208,7 +194,7 @@ function switch_tab(tab) {
 	<br />
 </div>
 
-<div id="tab1" style="display: none;" class="<?php echo $TEXT_DIRECTION; ?>">
+<div id="pagetab1" class="<?php echo $TEXT_DIRECTION; ?>">
 	<fieldset>
 		<legend><?php echo $pgv_lang["statnfam"], ': ', $stats->totalFamilies();?></legend>
 			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["events"];?></b></div>
@@ -352,7 +338,7 @@ function switch_tab(tab) {
 	<br />
 </div>
 
-<div id="tab2" style="display: none;" class="<?php echo $TEXT_DIRECTION; ?>">
+<div id="pagetab2" class="<?php echo $TEXT_DIRECTION; ?>">
 	<fieldset>
 		<legend><?php echo $pgv_lang["stat_records"], ': ', $stats->totalRecords();?></legend>
 			<table class="facts_table">
@@ -438,7 +424,7 @@ function switch_tab(tab) {
 	<br />
 </div>
 
-<div id="tab3" style="display: none;" class="<?php echo $TEXT_DIRECTION; ?>">
+<div id="pagetab3" class="<?php echo $TEXT_DIRECTION; ?>">
 	<fieldset>
 	<legend><?php echo $pgv_lang["stat_create"]; ?></legend>
 	<?php 
@@ -772,9 +758,6 @@ $_SESSION["plotnp"]=$plotnp;
 	</div>
 </div>
 </div>
-</td>
-</tr>
-</table>
 <?php
 echo "<br/><br/>";
 print_footer();
