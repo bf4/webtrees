@@ -176,7 +176,10 @@ installing PHP applications.
 
 *A.  Upload Program Files:
 To install PhpGedView, unzip the compressed package and upload the files to 
-a directory on your web server.  Rename the config.dist file to config.php.
+a directory on your web server.  If you are using a SVN (development)
+version of PhpGedView, you will need to rename the config.dist file to
+config.php.  If you are using an official release, it will already have
+a config.php file.
 
 If you have limited space on your server, you can save space in the following ways:
 1.  Delete the themes from the themes folder that you do not plan to use.
