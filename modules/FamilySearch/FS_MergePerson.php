@@ -57,7 +57,7 @@ if (!$matcher->isLoggedIn()) {
 
 global $nonfacts;
 $nonfacts = array("FAMS","FAMC","OBJE");
-$localPerson = Person::getInstance($pid);
+$localPerson = Person::getInstance($pid, true, true);
 $currentID = $matcher->getFSID($localPerson);
 //-- make sure we always combine with the currently linked record
 if ($currentID && !in_array($currentID, $match)) $match[] = $currentID;

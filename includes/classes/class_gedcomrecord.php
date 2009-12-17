@@ -103,7 +103,7 @@ class GedcomRecord {
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
 	// been fetched previously).
-	static function &getInstance($data, $simple=true) {
+	static function &getInstance($data, $simple=true, $latest=false) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		if (is_array($data)) {
@@ -121,7 +121,11 @@ class GedcomRecord {
 
 		// Look for the record in the database
 		if (!is_array($data)) {
-			$data=fetch_gedcom_record($pid, $ged_id);
+			if ($latest && PGV_USER_CAN_EDIT) {
+				$data=find_updated_record($pid, $ged_id);
+				if (!$data) $data=fetch_gedcom_record($pid, $ged_id);
+			}
+			else $data=fetch_gedcom_record($pid, $ged_id);
 
 			// If we didn't find the record in the database, it may be remote
 			if (!$data && strpos($pid, ':')) {
