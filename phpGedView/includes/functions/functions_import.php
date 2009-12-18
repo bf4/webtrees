@@ -554,8 +554,7 @@ function reformat_record_import($rec) {
 			break;
 		case 'CONC':
 			// Merge CONC lines, to simplify access later on.
-			// For $n==1, we must be appending to a level 0 record, so add a space
-			$newrec.=($WORD_WRAPPED_NOTES || $n==1 ? ' ' : '').$data;
+			$newrec.=($WORD_WRAPPED_NOTES ? ' ' : '').$data;
 			break;
 		}
 	}
