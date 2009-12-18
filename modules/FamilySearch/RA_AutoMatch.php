@@ -97,6 +97,7 @@ class RA_AutoMatch {
 
 		$lineCount = 1;
 		$count=0;
+		$fsid = $this->getFSID($person);
 		$people_array = $this->get_FS_results($person);
 
 		$out = '<script type="text/javascript">
@@ -137,7 +138,7 @@ class RA_AutoMatch {
 			$relatedFamilyCount=0;
 
 			foreach($people_array as $match) {
-				if ($match->getScore() > 1)
+				if ($match->getScore() > 1 && $match->getPerson()->getID()!=$fsid)
 				{
 					$relatedFamilyCount++;
 
@@ -181,7 +182,7 @@ class RA_AutoMatch {
 		if (!$this->match || count($people_array)==0 || $relatedFamilyCount==0){
 			$out .= "<tr class=\"optionbox\"><td align=\"center\" colspan=\"7\">";
 			if (count($people_array)==0 || $relatedFamilyCount==0) $out .= "There are no FamilySearch results<br /><br />";
-			if (userGedcomAdmin(getUserName())) {
+			if (empty($fsid) && userGedcomAdmin(getUserName())) {
 				$out .= "<a href=\"module.php?mod=FamilySearch&amp;pgvaction=FS_AddPerson&amp;pid=".$person->getXref()."\">Add this person to FamilySearch</a>";
 			}
 			$out .= "</td></tr>";
