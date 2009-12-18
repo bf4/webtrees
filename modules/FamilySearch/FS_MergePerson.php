@@ -41,11 +41,9 @@ if (!PGV_USER_CAN_EDIT) {
 }
 
 $match = array();
-$people= array();
 
 if (isset($_POST['merge'])) $match = $_POST['merge'];
-if (isset($_POST['record'])) $recordNumber=$_POST['record'];
-$pid=safe_POST_xref("pid", '');
+$pid = safe_POST_xref("pid", '');
 $action = safe_POST('action', PGV_REGEX_ALPHANUM, '');
 
 $matcher = new RA_AutoMatch();
@@ -73,21 +71,23 @@ print_header('FamilySearch Merge');
 
 if (count($match)>1) {
 	$FSID = $matcher->combine($match);
-	if ($FSID=="ERROR") {
+	if (!$FSID) {
+		echo "There was a problem trying to combine the records:<br />";
 		echo $matcher->getXMLGed()->error->message;
+		print_footer();
+		exit;
 	}
 }
 else {
 	$FSID = $match[0];
 }
 
-$remotePerson = $matcher->getPGVPerson($FSID, false);
+$remotePerson = $matcher->getPGVPerson($FSID, false, true);
 $localfacts = $localPerson->getFacts($nonfacts);
 sort_facts($localfacts);
 $remotefacts = $remotePerson->getFacts($nonfacts);
 sort_facts($remotefacts);
 
-//print "<pre>".$remotePerson->getGedcomRecord()."</pre>";
 if ($action=='save') {
 	require_once("includes/functions/functions_edit.php");
 	$newlocal = trim($localPerson->getGedcomRecord());
@@ -158,7 +158,7 @@ if ($action=='save') {
 		<p class="error"><?php echo $matcher->getXMLGed()->error->message?></p>
 	<?php } ?>
 	<p>
-	<a href="individual.php?pid=<?php echo $pid;?>&amp;tab=FamilySearch">Go back to individual details for <?php echo $localPerson->getFullName()?></a>
+	<a href="individual.php?pid=<?php echo $pid;?>">Go back to individual details for <?php echo $localPerson->getFullName()?></a>
 	</p>
 	<?php 
 } // ------- end save action
@@ -249,7 +249,7 @@ if ($FS_CONFIG['family_search_copyall'] || !empty($_REQUEST['copyall'])) {
 			link.innerHTML = "Don't Copy";
 			var tr = document.getElementById(id);
 			var newhtml = '<tr title="'+tag+'" class="'+tag+'" id="copied='+id+'">';
-			newhtml+=tr.innerHTML.substring(tr.innerHTML.indexOf('</td>')+5)
+			newhtml+=tr.innerHTML.substring(tr.innerHTML.indexOf('</td>')+5);
 			newhtml +='<td class="optionbox"><a href="#" onclick="return copyRemote(\''+id+'\', \''+tag+'\');">Don\'t Copy</a></td></tr>';			
 			jQuery('#localfacts').append(newhtml);
 		}

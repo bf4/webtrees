@@ -204,11 +204,11 @@ class XmlGedcom {
 	 * @param string $id
 	 * @return XG_Person
 	 */
-	function &getPerson($id, $summary='summary') {
+	function &getPerson($id, $summary='summary', $ignoreCache=false) {
 		$person = null;
 		//print "|$id|";
 		//foreach($this->persons as $key=>$p) print "[$key] ";
-		if (isset($this->persons[$id])) {
+		if (!$ignoreCache && isset($this->persons[$id])) {
 			return $this->persons[$id];
 		}
 		if ($this->proxy!=null) {

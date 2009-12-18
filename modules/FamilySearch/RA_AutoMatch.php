@@ -242,8 +242,8 @@ class RA_AutoMatch {
 		Person::sexImage($sex{0}).$fsperson->getPrimaryName()->getFullText()." (".$fsperson->getID().")</a><br/>";
 		$out .= "<i>".$factarray['BIRT'].": ";
 		if ($birth) {
-			if ($birth->getDate()) $out .= $birth->getDate()->getOriginal();
-			if ($birth->getPlace()) $out .= $birth->getPlace()->getOriginal();
+			if ($birth->getDate()) $out .= " ".$birth->getDate()->getOriginal();
+			if ($birth->getPlace()) $out .= " ".$birth->getPlace()->getOriginal();
 		}
 		$out .= "<br/>";
 		$out .= $factarray['DEAT'].": ";
@@ -319,12 +319,13 @@ class RA_AutoMatch {
 
 		$xmlRecord.="</personas></person></persons>"; // Closes out the XML record
 		$xmlRecord.=$this->xmlFooter;
-		echo htmlentities($xmlRecord)."<p />"; 
+//	echo htmlentities($xmlRecord)."<p />"; 
 		/**
 		 * Performs the actual merge operation and saves the results of the merge
 		 * so we can display if it occured or not.
 		 */
 		$results=$proxy->mergePerson($xmlRecord);
+//	echo "Results: <p/>".htmlentities($results)."<p />"; // Placed here to aid in parsing the response XML
 		$xmlGed->parseXml($results);
 		$persons = $xmlGed->getPersons();
 		if (isset($persons["A"])) {
@@ -332,21 +333,19 @@ class RA_AutoMatch {
 			return $person->getID();
 		}
 
-		//	parse($results, $pid);
-		//echo "Results: <p/>".htmlentities($results)."<p />"; // Placed here to aid in parsing the response XML
 
 		return false;
 	}
 
-	function &getXG_Person($id, $summary=true) {
+	function &getXG_Person($id, $summary=true, $ignoreCache=false) {
 		$proxy = $this->getProxy();
 		$xmlged = $this->getXMLGed();
-		if ($summary) return $xmlged->getPerson($id);
-		else return $xmlged->getPerson($id, 'all');
+		if ($summary) return $xmlged->getPerson($id, 'summary', $ignoreCache);
+		else return $xmlged->getPerson($id, 'all', $ignoreCache);
 	}
 
-	function &getPGVPerson($id, $summary=true) {
-		$xgperson = $this->getXG_Person($id, $summary);
+	function &getPGVPerson($id, $summary=true, $ignoreCache=false) {
+		$xgperson = $this->getXG_Person($id, $summary, $ignoreCache);
 		$person = null;
 		if ($xgperson) {
 			$indirec = $xgperson->getIndiGedcom();

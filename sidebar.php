@@ -2,9 +2,9 @@
 require_once('config.php');
 require_once('includes/classes/class_module.php');
 
-$action = safe_GET('sb_action', PGV_REGEX_ALPHANUM, 'none');
+$sb_action = safe_GET('sb_action', PGV_REGEX_ALPHANUM, 'none');
 //-- handle ajax calls
-if ($action!='none') {
+if ($sb_action!='none') {
 	$sidebarmods = PGVModule::getActiveList('S', PGV_USER_ACCESS_LEVEL);
 	uasort($sidebarmods, "PGVModule::compare_sidebar_order");
 	class tempController {
@@ -30,7 +30,7 @@ if ($action!='none') {
 		$controller->famid = $famid;
 	}
 	
-	if ($action=='loadMods') {
+	if ($sb_action=='loadMods') {
 		$counter = 0;
 		foreach($sidebarmods as $mod) {
 			if ($mod->hasSidebar()) {
@@ -49,7 +49,7 @@ if ($action!='none') {
 		}
 		exit;
 	}
-	if ($action=='loadmod') {
+	if ($sb_action=='loadmod') {
 		$modName = safe_GET('mod', PGV_REGEX_URL, '');
 		if (isset($sidebarmods[$modName])) {
 			$mod = $sidebarmods[$modName];
@@ -61,8 +61,8 @@ if ($action!='none') {
 		}
 		exit;
 	}
-	if (isset($sidebarmods[$action])) {
-		$mod = $sidebarmods[$action];
+	if (isset($sidebarmods[$sb_action])) {
+		$mod = $sidebarmods[$sb_action];
 		if ($mod->hasSidebar()) {
 			$sb = $mod->getSidebar();
 			echo $sb->getAjaxContent();
