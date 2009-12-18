@@ -164,7 +164,7 @@ class relatives_Tab extends Tab {
 						}
 						if (!empty($place)) echo $place;
 					}
-					else if (get_sub_record(1, "1 _NMR", find_family_record($famid))) {
+					else if (get_sub_record(1, "1 _NMR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
@@ -173,7 +173,7 @@ class relatives_Tab extends Tab {
 						}
 						echo $factarray["_NMR"];
 					}
-					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid))) {
+					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
