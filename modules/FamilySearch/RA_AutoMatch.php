@@ -201,6 +201,10 @@ class RA_AutoMatch {
 		foreach($refns as $refn) {
 			if ($refn->getType()=='FamilySearch') $fsid = $refn->getDetail();
 		}
+		// always get the latest ID for this person
+		$cxg = $this->getXG_Person($fsid);
+		if ($cxg) $fsid = $cxg->getID();
+		
 		return $fsid;
 	}
 

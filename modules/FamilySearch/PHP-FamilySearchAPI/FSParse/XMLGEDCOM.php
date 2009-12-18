@@ -1954,6 +1954,9 @@ class XG_Person extends XG_HasAssertions {
 			if ($id['type']=='Ancestral File Number') {
 				$gedcom .= '1 AFN '.$id['id']."\r\n";
 			}
+			else if ($id['type']=='GEDCOM UID') {
+				$gedcom .= '1 _UID '.$id['id']."\r\n";
+			}
 			else {
 				$gedcom .= "1 REFN ".$id['id']."\r\n";
 				$gedcom .= "2 TYPE ".$id['type']."\r\n";
