@@ -15,7 +15,7 @@ class personal_facts_Tab extends Tab {
 
 		$out = "<span class=\"subheaders\">".$pgv_lang["personal_facts"]."</span><div id=\"facts_content\">";
 		//-- only need to add family facts on this tab
-		$this->controller->indi->add_family_facts();
+		if (!isset($this->controller->skipFamilyFacts)) $this->controller->indi->add_family_facts();
 
 		ob_start();
 		?>
@@ -32,7 +32,9 @@ class personal_facts_Tab extends Tab {
 					<td id="no_tab1" colspan="2" class="facts_value"><?php echo $pgv_lang["no_tab1"]?>
 					</td>
 				</tr>
-			<?php }?>
+			<?php }
+			if (!isset($this->controller->skipFamilyFacts)) {
+			?>
 			<tr id="row_top">
 				<td valign="top"></td>
 				<td class="descriptionbox rela">
@@ -43,9 +45,9 @@ class personal_facts_Tab extends Tab {
 						<label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
 					<?php }?>
 				</td>
-
 			</tr>
 			<?php
+			}
 			$yetdied=false;
 			$n_chil=1;
 			$n_gchi=1;

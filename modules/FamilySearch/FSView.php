@@ -4,6 +4,8 @@ require_once('modules/FamilySearch/RA_AutoMatch.php');
 
 $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 class FS_IndividualController extends IndividualControllerRoot {
+	var $skipFamilyFacts = true;
+	
 	function FS_IndividualController() {
 		parent::IndividualControllerRoot();
 	}
