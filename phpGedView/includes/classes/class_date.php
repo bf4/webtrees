@@ -198,7 +198,7 @@ class CalendarDate {
 	// bool $full: true=gedcom style, false=just years
 	// int $jd: date for calculation
 	// TODO: JewishDate needs to redefine this to cope with leap months
-	function GetAge($full, $jd) {
+	function GetAge($full, $jd, $warn_on_negative=true) {
 		global $action;
 		
 		if ($this->y==0 || $jd==0) {
@@ -210,10 +210,7 @@ class CalendarDate {
 		if ($this->minJD==$jd) {
 			return $full?'':'0';
 		}
-		// If using GEDFact assistant, use negative numbers
-		if ($action=='addnewnote_assisted') {
-			// return negative number
-		} else if ($jd<$this->minJD) {
+		if ($warn_on_negative && $jd<$this->minJD) {
 			return '<img alt="" src="images/warning.gif" />';
 		}
 		list($y,$m,$d)=$this->JDtoYMD($jd);
