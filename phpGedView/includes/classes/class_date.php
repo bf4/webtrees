@@ -199,16 +199,23 @@ class CalendarDate {
 	// int $jd: date for calculation
 	// TODO: JewishDate needs to redefine this to cope with leap months
 	function GetAge($full, $jd) {
+		global $action;
+		
 		if ($this->y==0 || $jd==0) {
 			return '';
 		}
 		if ($this->minJD < $jd && $this->maxJD > $jd) {
 			return '';
 		}
-		if ($this->minJD==$jd)
+		if ($this->minJD==$jd) {
 			return $full?'':'0';
-		if ($jd<$this->minJD)
+		}
+		// If using GEDFact assistant, use negative numbers
+		if ($action=='addnewnote_assisted') {
+			// return negative number
+		} else if ($jd<$this->minJD) {
 			return '<img alt="" src="images/warning.gif" />';
+		}
 		list($y,$m,$d)=$this->JDtoYMD($jd);
 		$dy=$y-$this->y;
 		$dm=$m-max($this->m,1);
