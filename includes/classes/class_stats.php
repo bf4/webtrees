@@ -423,12 +423,7 @@ class stats {
 
 	function totalIndisWithSources() {
 		global $TBLPREFIX, $DBTYPE;
-		if ($DBTYPE=='sqlite') {
-			// sqlite2 can't do subqueries or count distinct
-			$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id." AND i_gedcom LIKE '%SOUR @%'");
-		} else {
-			$rows=self::_runSQL("SELECT COUNT(DISTINCT i_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_id=l_from AND i_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
-		}
+		$rows=self::_runSQL("SELECT COUNT(DISTINCT i_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_id=l_from AND i_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
 		return $rows[0]['tot'];
 	}
 
@@ -469,12 +464,7 @@ class stats {
 
 	function totalFamsWithSources() {
 		global $TBLPREFIX, $DBTYPE;
-		if ($DBTYPE=='sqlite') {
-			// sqlite2 can't do subqueries or count distinct
-			$rows=self::_runSQL("SELECT COUNT(f_id) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id." AND f_gedcom LIKE '%SOUR @%'");
-		} else {
-			$rows=self::_runSQL("SELECT COUNT(DISTINCT f_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_id=l_from AND f_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
-		}
+		$rows=self::_runSQL("SELECT COUNT(DISTINCT f_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_id=l_from AND f_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
 		return $rows[0]['tot'];
 	}
 
@@ -548,23 +538,12 @@ class stats {
 			$opt="IN ({$qs})";
 			$vars=$params;
 			$distinct='';
-			$group_by='';
 		} else {
 			$opt ="IS NOT NULL";
 			$vars='';
 			$distinct='DISTINCT';
-			$group_by='GROUP BY n_surn';
 		}
 		$vars[]=$this->_ged_id;
-		if ($DBTYPE=="sqlite") {
-			// SQLITE2 does not support COUNT(DISTINCT ).
-			// Remove this when we move to SQLITE3
-			return count(
-				PGV_DB::prepare("SELECT n_surn FROM {$TBLPREFIX}name WHERE n_surn {$opt} AND n_file=? {$group_by}")
-				->execute($vars)
-				->fetchOneColumn()
-			);
-		}
 		return (int)
 			PGV_DB::prepare("SELECT COUNT({$distinct} n_surn) FROM {$TBLPREFIX}name WHERE n_surn {$opt} AND n_file=?")
 			->execute($vars)
@@ -578,23 +557,12 @@ class stats {
 			$opt="IN ({$qs})";
 			$vars=$params;
 			$distinct='';
-			$group_by='';
 		} else {
 			$opt ="IS NOT NULL";
 			$vars='';
 			$distinct='DISTINCT';
-			$group_by='GROUP BY n_givn';
 		}
 		$vars[]=$this->_ged_id;
-		if ($DBTYPE=="sqlite") {
-			// SQLITE2 does not support COUNT(DISTINCT ).
-			// Remove this when we move to SQLITE3
-			return count(
-				PGV_DB::prepare("SELECT n_givn FROM {$TBLPREFIX}name WHERE n_givn {$opt} AND n_file=? {$group_by}")
-				->execute($vars)
-				->fetchOneColumn()
-			);
-		}
 		return (int)
 			PGV_DB::prepare("SELECT COUNT({$distinct} n_givn) FROM {$TBLPREFIX}name WHERE n_givn {$opt} AND n_file=?")
 			->execute($vars)
@@ -966,59 +934,42 @@ class stats {
 			$dmod = 'MAX';
 			$life_dir = 'DESC';
 		}
-		switch ($DBTYPE) {
-			// Testing new style
-			default:
-			{
-				$rows=self::_runSQL(''
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' d2.d_year,'
+				.' d2.d_type,'
+				.' d2.d_fact,'
+				.' d2.d_gid'
+			.' FROM'
+				." {$TBLPREFIX}dates AS d2"
+			.' WHERE'
+				." d2.d_file={$this->_ged_id} AND"
+				." d2.d_fact IN ({$query_field}) AND"
+				.' d2.d_julianday1=('
 					.' SELECT'
-						.' d2.d_year,'
-						.' d2.d_type,'
-						.' d2.d_fact,'
-						.' d2.d_gid'
-					.' FROM'
-						." {$TBLPREFIX}dates AS d2"
-					.' WHERE'
-						." d2.d_file={$this->_ged_id} AND"
-						." d2.d_fact IN ({$query_field}) AND"
-						.' d2.d_julianday1=('
-							.' SELECT'
-								." {$dmod}(d1.d_julianday1)"
-							.' FROM'
-								." {$TBLPREFIX}dates AS d1"
-							.' WHERE'
-								." d1.d_file={$this->_ged_id} AND"
-								." d1.d_fact IN ({$query_field}) AND"
-								.' d1.d_julianday1!=0'
-						.' )'
-					.' ORDER BY'
-						." d_julianday1 {$life_dir}, d_type"
-				);
-				break;
-			}
-			// MySQL 4.0 can't handle nested queries, so we use the old style. Of course this hits the performance of PHP4 users a tiny bit, but it's the best we can do.
-			case 'mysql':
-			case 'sqlite':
-			{
-				$rows=self::_runSQL(''
-					.' SELECT'
-						.' d_year,'
-						.' d_type,'
-						.' d_fact,'
-						.' d_gid'
+						." {$dmod}(d_julianday1)"
 					.' FROM'
 						." {$TBLPREFIX}dates"
+					.' JOIN ('
+						.' SELECT'
+							.' d1.d_gid, MIN(d1.d_julianday1) as date'
+						.' FROM'
+							."  {$TBLPREFIX}dates AS d1"
+						.' WHERE'
+							." d1.d_fact IN ({$query_field}) AND"
+							." d1.d_file={$this->_ged_id} AND"
+							.' d1.d_julianday1!=0'
+						.' GROUP BY'
+							.' d1.d_gid'
+					.') AS d3'
 					.' WHERE'
 						." d_file={$this->_ged_id} AND"
 						." d_fact IN ({$query_field}) AND"
-						.' d_julianday1!=0'
-					.' ORDER BY'
-						." d_julianday1 {$life_dir},"
-						.' d_type ASC'
-				, 1);
-				break;
-			}
-		}
+						.' d_julianday1=date'
+				.' )'
+			.' ORDER BY'
+				." d_julianday1 {$life_dir}, d_type"
+		);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		$record=GedcomRecord::getInstance($row['d_gid']);
@@ -3149,11 +3100,9 @@ class stats {
 
 	function totalChildren() {
 		global $TBLPREFIX;
-
-		return
-			PGV_DB::prepare("SELECT SUM(f_numchil) FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}")
-			->execute(array($this->_ged_id))
-			->fetchOne();
+		$rows=self::_runSQL("SELECT SUM(f_numchil) AS tot FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}");
+		$row=$rows[0];
+		return $row['tot'];
 	}
 
 
