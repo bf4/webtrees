@@ -1236,23 +1236,23 @@ class GedcomDate {
 
 	// Calculate the number of full years between two events.
 	// Return the result as either a number of years (for indi lists, etc.)
-	static function GetAgeYears($d1, $d2=null) {
+	static function GetAgeYears($d1, $d2=null, $warn_on_negative=true) {
 		if (!is_object($d1)) return;
 		if (!is_object($d2))
-			return $d1->date1->GetAge(false, client_jd());
+			return $d1->date1->GetAge(false, client_jd(), $warn_on_negative );
 		else
-			return $d1->date1->GetAge(false, $d2->MinJD());
+			return $d1->date1->GetAge(false, $d2->MinJD(), $warn_on_negative);
 	}
 
 	// Calculate the years/months/days between two events
 	// Return a gedcom style age string: "1y 2m 3d" (for fact details)
-	static function GetAgeGedcom($d1, $d2=null) {
+	static function GetAgeGedcom($d1, $d2=null, $warn_on_negative=true) {
 		if (is_null($d2)) {
-			return $d1->date1->GetAge(true, client_jd());
+			return $d1->date1->GetAge(true, client_jd(), $warn_on_negative);
 		} else {
 			// If dates overlap, then can't calculate age.
 			if (GedcomDate::Compare($d1, $d2)) {
-				return $d1->date1->GetAge(true, $d2->MinJD());
+				return $d1->date1->GetAge(true, $d2->MinJD(), $warn_on_negative);
 			} if (GedcomDate::Compare($d1, $d2)==0 && $d1->date1->minJD==$d2->MinJD()) {
 				return '0d';
 			} else {
