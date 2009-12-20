@@ -10,7 +10,7 @@
 
 
 Version 4.2.3
- - Update: TCPDF 4.8.017 (volschin)
+ - Update: TCPDF 4.8.019 (volschin)
  - Fixed: [ 2131272 ] do not update CHAN not remembered (wooc)
  - Fixed: [ 2563934 ] Sitemap module should only submit public URL's (wooc)
  - Fixed: [ 2905609 ] Address handling in quickupdate (volschin)
