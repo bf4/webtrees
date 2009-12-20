@@ -626,7 +626,7 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	// in PHP 5.3.0 we can use
 	//$title = strstr($mytitle, '|', true);
 	$title = substr($mytitle, 0, strpos($mytitle, '|'));
-	echo "<center><div class=\"statistics_chart width80\">";
+	echo "<center><div class=\"statistics_chart\">";
 	echo "<img src=\"", encode_url($imgurl), "\" width=\"950\" height=\"300\" border=\"0\" alt=\"", $title, "\" title=\"", $title, "\"/>";
 	echo "</div></center><br /><br />";
 }
@@ -910,7 +910,7 @@ else {
 	unset($savedInput);
 }
 
-print_header($pgv_lang["statistiek_list"]);
+print_simple_header($pgv_lang["statistiek_list"]);
 echo "\n\t<center><h2>", $pgv_lang["statistiek_list"], "</h2>\n\t";
 echo "</center><br />";
 
@@ -991,7 +991,7 @@ default:
 	exit;
 }
 echo "<br /><div class =\"center noprint\">";
-echo "<input type=\"submit\" value=\"", $pgv_lang["back"], "\" onclick=\"javascript:history.go(-1);\" /><br /><br />";
+echo "<input type=\"button\" value=\"", $pgv_lang["close_window"], "\" onclick=\"window.close()\" /><br /><br />";
 echo "</div>\n";
-print_footer();
+print_simple_footer();
 ?>

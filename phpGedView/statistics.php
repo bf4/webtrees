@@ -482,6 +482,10 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 			box.style.display = "none";
 		}
 	}
+	function openPopup(){
+		window.open("", "_popup", "top=50, left=50, width=950, height=480, scrollbars=0, scrollable=0");
+		return true;
+	}
 //-->
 </script>
 <?php
@@ -502,7 +506,7 @@ $_SESSION[$GEDCOM."nrmale"] = $stats->totalSexMales();
 $_SESSION[$GEDCOM."nrfemale"] = $stats->totalSexFemales();
 
 echo "\n";
-echo '<form method="post" name="form" action="statisticsplot.php?action=newform">';
+echo '<form method="post" name="form" action="statisticsplot.php?action=newform" target="_popup" onsubmit="return openPopup()">';
 echo "\n";
 echo '<input type="hidden" name="action" value="update" />';
 echo "\n";

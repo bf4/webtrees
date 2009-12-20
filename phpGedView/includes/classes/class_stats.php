@@ -3469,13 +3469,20 @@ class stats {
 		$chl = array();
 		foreach ($all_surnames as $surn=>$surns) {
 			$count_per = 0;
+			$max_name = 0;
 			foreach ($surns as $spfxsurn=>$indis) {
-				$count_per += count($indis);
+				$per = count($indis);
+				$count_per += $per;
+				// select most common surname from all variants
+				if ($per>$max_name) {
+					$max_name = $per;
+					$top_name = $spfxsurn;
+				}
 			}
 			$per = round(100 * $count_per / $tot_indi, 0);
 			$chd .= self::_array_to_extended_encoding($per);
-			$chl[] = $spfxsurn.' - '.$count_per;
-			$chart_title .= $spfxsurn.' ['.$count_per.'], ';
+			$chl[] = $top_name.' - '.$count_per;
+			$chart_title .= $top_name.' ['.$count_per.'], ';
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
