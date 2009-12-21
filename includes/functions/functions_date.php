@@ -238,15 +238,15 @@ function default_edit_to_gedcom_date($datestr)
 	// \b prevents the german JULI matching @#DJULIAN@, etc.
 
 	foreach (array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec','vend','brum','frim','nivo','pluv','vent','germ','flor','prai','mess','ther','fruc','comp','tsh','csh','ksl','tvt','shv','nsn','iyr','svn','tmz','aav','ell','abt','aft','bef','bet','cal','est','from','int','to','b.c.') as $keyword) {
-		$datestr=preg_replace("/\b".str_replace('.','[.]?',$pgv_lang[$keyword])."\b/i", strtoupper($keyword), $datestr);
+		$datestr=preg_replace('/\b'.str_replace('.','[.]?',$pgv_lang[$keyword]).'\b/i', strtoupper($keyword), $datestr);
 	}
 
 	foreach (array('ads','adr_leap_year','adr','jan_1st','feb_1st','mar_1st','apr_1st','may_1st','jun_1st','jul_1st','aug_1st','sep_1st','oct_1st','nov_1st','dec_1st') as $keyword) {
-		$datestr=preg_replace("/\b".str_replace('.','[.]?',$pgv_lang[$keyword])."\b/i", strtoupper(substr($keyword,0,3)), $datestr);
+		$datestr=preg_replace('/\b'.str_replace('.','[.]?',$pgv_lang[$keyword]).'\b/i', strtoupper(substr($keyword,0,3)), $datestr);
 	}
 
 	foreach (array('and') as $keyword) {
-		$datestr=preg_replace("/\b".str_replace('.','[.]?',$pgv_lang[$keyword])."\b/i", strtoupper($keyword), $datestr);
+		$datestr=preg_replace('/\b'.str_replace('.','[.]?',$pgv_lang[$keyword]).'\b/i', strtoupper($keyword), $datestr);
 	}
 
 	return $datestr;
