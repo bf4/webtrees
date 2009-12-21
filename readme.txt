@@ -93,7 +93,7 @@ Database
     PhpGedView primarily supports MySQL, but has also been tested and shown to 
     work with Postgresql, SQLite, and SQL-Server. The versions required for 
     each of these databases is outlined below: 
-    MySQL 3.23+ 
+    MySQL 4.1+ 
     PostgresQL 8.0+ 
     SQLite available through PDO-SQLite which is included in PHP 5 
     MS SQL-Server 2003+ 
