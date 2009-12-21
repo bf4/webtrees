@@ -740,7 +740,7 @@ class MenuBar
 	* @return Menu the menu item
 	*/
 	static function &getPreviewMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SCRIPT_NAME, $QUERY_STRING, $pgv_lang;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SCRIPT_NAME, $QUERY_STRING, $pgv_lang, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
