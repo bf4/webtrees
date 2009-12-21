@@ -115,7 +115,7 @@ class IndividualControllerRoot extends BaseController {
 			$indirec = find_person_record($this->pid, PGV_GED_ID);
 		}
 		if (empty($indirec)) {
-			$ct = preg_match("/(\w+):(.+)/", $this->pid, $match);
+			$ct = preg_match('/(\w+):(.+)/', $this->pid, $match);
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
@@ -442,7 +442,7 @@ class IndividualControllerRoot extends BaseController {
 			echo '<span class="label">', $pgv_lang['name'], ': </span><br />';
 			echo PrintReady($dummy->getFullName()), '<br />';
 		}
-		$ct = preg_match_all("/\n2 (\w+) (.*)/", $factrec, $nmatch, PREG_SET_ORDER);
+		$ct = preg_match_all('/\n2 (\w+) (.*)/', $factrec, $nmatch, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
 			$fact = trim($nmatch[$i][1]);
 			if (($fact!="SOUR")&&($fact!="NOTE")) {

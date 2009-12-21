@@ -667,7 +667,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 	$searchTarget = "~[\r\n]".$tag."[\s]~";
 	$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 	if ($ct==0) {
-		$tag = preg_replace("/(\w+)/", "_$1", $tag);
+		$tag = preg_replace('/(\w+)/', "_$1", $tag);
 		$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 		if ($ct==0) {
 			return "";
