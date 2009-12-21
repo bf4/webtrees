@@ -881,9 +881,6 @@ class GedcomRecord {
 		$srec = $srec[0];
 		return get_sub_record('SOUR', 2, $srec);
 	}
-	function getEventSourcePage($event) {
-		return get_gedcom_value('PAGE', 3, getEventSource($event));
-	}
 
 	//////////////////////////////////////////////////////////////////////////////
 	// Get the last-change timestamp for this record - optionally wrapped in a
