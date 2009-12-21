@@ -128,7 +128,7 @@ class RemoteLinkController extends BaseController {
 			return null;
 		}
 			
-		if (preg_match("/\?wsdl$/", $url)==0) {
+		if (preg_match('/\?wsdl$/', $url)==0) {
 			$url.="?wsdl";
 		}
 

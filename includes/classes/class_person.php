@@ -1497,8 +1497,8 @@ class Person extends GedcomRecord {
 			foreach ($diff->indifacts as $newfact) {
 				$newfactrec = $newfact->getGedcomRecord();
 				//-- remove all whitespace for comparison
-				$tnf = preg_replace("/\s+/", " ", $newfactrec);
-				$tif = preg_replace("/\s+/", " ", $oldfactrec);
+				$tnf = preg_replace('/\s+/', ' ', $newfactrec);
+				$tif = preg_replace('/\s+/', ' ', $oldfactrec);
 				if ($tnf==$tif) {
 					$this->indifacts[$i] = $newfact; //-- make sure the correct linenumber is used
 					$found=true;
@@ -1514,8 +1514,8 @@ class Person extends GedcomRecord {
 		foreach ($diff->indifacts as $newfact) {
 			$found=false;
 			foreach ($this->indifacts as $fact) {
-				$tif = preg_replace("/\s+/", " ", $fact->getGedcomRecord());
-				$tnf = preg_replace("/\s+/", " ", $newfact->getGedcomRecord());
+				$tif = preg_replace('/\s+/', ' ', $fact->getGedcomRecord());
+				$tnf = preg_replace('/\s+/', ' ', $newfact->getGedcomRecord());
 				if ($tif==$tnf) {
 					$found=true;
 					break;

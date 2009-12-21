@@ -325,7 +325,7 @@ function AddToSearchLog($LogString, $allgeds) {
 		return;
 
 	//-- do not allow code to be written to the log file
-	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);
+	$LogString = preg_replace('/<\?.*\?>/', "*** CODE DETECTED ***", $LogString);
 
 	$oldged = $GEDCOM;
 	foreach($allgeds as $indexval => $value) {
@@ -368,7 +368,7 @@ function AddToChangeLog($LogString, $ged="") {
 	global $INDEX_DIRECTORY, $CHANGELOG_CREATE, $GEDCOM, $username, $SEARCHLOG_CREATE;
 
 	//-- do not allow code to be written to the log file
-	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);
+	$LogString = preg_replace('/<\?.*\?>/', "*** CODE DETECTED ***", $LogString);
 
 	if (empty($ged))
 		$ged = $GEDCOM;
