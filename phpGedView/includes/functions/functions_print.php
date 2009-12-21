@@ -1412,7 +1412,7 @@ function print_text($help, $level=0, $noprint=0){
 	$sub = "";
 	$pos1 = 0;
 	$pos2 = 0;
-	$ct = preg_match_all("/#([a-zA-Z0-9_.\-\[\]]+)#/", $sentence, $match, PREG_SET_ORDER);
+	$ct = preg_match_all('/#([a-zA-Z0-9_.\-\[\]]+)#/', $sentence, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
 		$value = "";
 		$newreplace = str_replace(array("[", "]"), array("['", "']"), $match[$i][1]);
