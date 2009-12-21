@@ -2221,7 +2221,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 				// to be cached.  We should store the level1 fact here (or somewhere)
 				if ($row['d_type']=='@#DJULIAN@') {
 					if ($row['d_year']<0) {
-						$year_regex=$row['d_year']." ?[Bb]\.? ?[Cc]\.\ ?";
+						$year_regex=$row['d_year'].' ?[Bb]\.? ?[Cc]\.\ ?';
 					} else {
 						$year_regex="({$row['d_year']}|".($row['d_year']-1)."\/".($row['d_year']%100).")";
 					}
@@ -2304,7 +2304,7 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 			// to be cached.  We should store the level1 fact here (or somewhere)
 			if ($row[8]=='@#DJULIAN@') {
 				if ($row[6]<0) {
-					$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
+					$year_regex=$row[6].' ?[Bb]\.? ?[Cc]\.\ ?';
 				} else {
 					$year_regex="({$row[6]}|".($row[6]-1)."\/".($row[6]%100).")";
 				}

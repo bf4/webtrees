@@ -41,12 +41,12 @@ function get_common_surnames($min) {
 	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE;
 
 	$topsurns=get_top_surnames(PGV_GED_ID, $min, 0);
-	foreach (preg_split("/[,;] /", $COMMON_NAMES_ADD) as $surname) {
+	foreach (preg_split('/[,;] /', $COMMON_NAMES_ADD) as $surname) {
 		if (!array_key_exists($surname, $topsurns)) {
 			$topsurns[$surname]=$min;
 		}
 	}
-	foreach (preg_split("/[,;] /", $COMMON_NAMES_REMOVE) as $surname) {
+	foreach (preg_split('/[,;] /', $COMMON_NAMES_REMOVE) as $surname) {
 		unset($topsurns[UTF8_strtoupper($surname)]);
 	}
 
@@ -54,7 +54,7 @@ function get_common_surnames($min) {
 	if (empty($topsurns) && $min>2) {
 		return get_common_surnames($min/2);
 	} else {
-		uksort($topsurns, "stringsort");
+		uksort($topsurns, 'stringsort');
 		foreach ($topsurns as $key=>$value) {
 			$topsurns[$key]=array('name'=>$key, 'match'=>$value);
 		}
@@ -72,9 +72,9 @@ function get_common_surnames($min) {
  * @return string	The updated name
  */
 function strip_prefix($lastname){
-	$name = preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^([a-z]{1,4}[\. \_\-\(\[])+/"), array(",",",",""), $lastname);
+	$name = preg_replace(array('/ [jJsS][rR]\.?,/', '/ I+,/', '/^([a-z]{1,4}[\. \_\-\(\[])+/'), array(',',',',''), $lastname);
 	$name = trim($name);
-	if ($name=="") return $lastname;
+	if ($name=='') return $lastname;
 	return $name;
 }
 
@@ -87,53 +87,53 @@ function check_NN($names) {
 	global $pgv_lang, $UNDERLINE_NAME_QUOTES;
 	global $unknownNN, $unknownPN;
 
-	$fullname = "";
+	$fullname = '';
 
 	if (!is_array($names)){
 		$lang = whatLanguage($names);
 		$NN = $unknownNN[$lang];
-		$names = preg_replace(array("~ /~","~/,~","~/~"), array(" ", ",", " "), $names);
-		$names = preg_replace(array("/@N.N.?/","/@P.N.?/"), array($unknownNN[$lang],$unknownPN[$lang]), trim($names));
+		$names = preg_replace(array('~ /~','~/,~','~/~'), array(' ', ',', ' '), $names);
+		$names = preg_replace(array('/@N.N.?/','/@P.N.?/'), array($unknownNN[$lang],$unknownPN[$lang]), trim($names));
 		//-- underline names with a * at the end
 		//-- see this forum thread http://sourceforge.net/forum/forum.php?thread_id=1223099&forum_id=185165
 		if ($UNDERLINE_NAME_QUOTES) {
-			$names = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $names);
+			$names = preg_replace('/"(.+)"/', '<span class="starredname">$1</span>', $names);
 		}
-		$names = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $names);
+		$names = preg_replace('/([^ ]+)\*/', '<span class="starredname">$1</span>', $names);
 		return $names;
 	}
-	if (count($names) == 2 && stristr($names[0], "@N.N") && stristr($names[1], "@N.N")){
-		$fullname = $pgv_lang["NN"]. " + ". $pgv_lang["NN"];
+	if (count($names) == 2 && stristr($names[0], '@N.N') && stristr($names[1], '@N.N')){
+		$fullname = $pgv_lang['NN']. ' + '. $pgv_lang['NN'];
 	} else {
 		for($i=0; $i<count($names); $i++) {
 			$lang = whatLanguage($names[$i]);
 			$unknown = false;
-			if (stristr($names[$i], "@N.N")) {
+			if (stristr($names[$i], '@N.N')) {
 				$unknown = true;
-				$names[$i] = preg_replace("/@N.N.?/", $unknownNN[$lang], trim($names[$i]));
+				$names[$i] = preg_replace('/@N.N.?/', $unknownNN[$lang], trim($names[$i]));
 			}
-			if (stristr($names[$i], "@P.N")) {
+			if (stristr($names[$i], '@P.N')) {
 				$names[$i] = $unknownPN[$lang];
 			}
 			if ($i==1 && $unknown && count($names)==3) {
-				$fullname .= ", ";
+				$fullname .= ', ';
 			} elseif ($i==2 && $unknown && count($names)==3) {
-				$fullname .= " + ";
-			} elseif ($i==2 && stristr($names[2], "Individual ") && count($names) == 3) {
-				$fullname .= " + ";
+				$fullname .= ' + ';
+			} elseif ($i==2 && stristr($names[2], 'Individual ') && count($names) == 3) {
+				$fullname .= ' + ';
 			} elseif ($i==2 && count($names)>3) {
-				$fullname .= " + ";
+				$fullname .= ' + ';
 			} else {
-				$fullname .= ", ";
+				$fullname .= ', ';
 			}
 			$fullname .= trim($names[$i]);
 		}
 	}
 	$fullname = trim($fullname);
-	if (substr($fullname,-1)==",") $fullname = substr($fullname,0,strlen($fullname)-1);
-	if (substr($fullname,0,2)==", ") $fullname = substr($fullname,2);
+	if (substr($fullname,-1)==',') $fullname = substr($fullname,0,strlen($fullname)-1);
+	if (substr($fullname,0,2)==', ') $fullname = substr($fullname,2);
 	$fullname = trim($fullname);
-	if (empty($fullname)) return $pgv_lang["NN"];
+	if (empty($fullname)) return $pgv_lang['NN'];
 
 	return $fullname;
 }
@@ -281,7 +281,7 @@ function soundex_dm($text) {
 	Character_Substitute($text);
 	$words=explode(' ', $text);
 	$soundex_array=array();
-	$combined = "";
+	$combined = '';
 	foreach ($words as $word) {
 		if ($word) {
 			$soundex_array=array_merge($soundex_array, DMSoundex($word));
@@ -290,7 +290,7 @@ function soundex_dm($text) {
 	if (count($words)>1) {
 		$soundex_array=array_merge($soundex_array, DMSoundex(strtr($text, ' ', '')));
 	}
-	return implode(":", array_unique($soundex_array));
+	return implode(':', array_unique($soundex_array));
 }
 
 ?>
