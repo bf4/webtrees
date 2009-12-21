@@ -221,7 +221,7 @@ class RemoteLinkController extends BaseController {
 	function checkExistingServer($url, $gedcom_id='') {
 		global $pgv_changes;
 		//-- get rid of the protocol
-		$turl = preg_replace("~^\w+://~", "", $url);
+		$turl = preg_replace('~^\w+://~', '', $url);
 		//-- check the existing server list
 		foreach ($this->server_list as $id=>$server) {
 			if (stristr($server['url'], $turl)) {

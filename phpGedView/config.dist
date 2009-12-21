@@ -29,8 +29,8 @@
  * @version $Id$
  */
 
-if (preg_match("/\Wconfig.php/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "Got your hand caught in the cookie jar.";
+if (preg_match('/\Wconfig.php/', $_SERVER['SCRIPT_NAME'])>0) {
+	print 'Got your hand caught in the cookie jar.';
 	exit;
 }
 

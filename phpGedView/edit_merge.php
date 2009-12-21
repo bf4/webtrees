@@ -94,7 +94,7 @@ if ($action!="choose") {
 				$facts1 = array();
 				$facts2 = array();
 				$prev_tags = array();
-				$ct = preg_match_all("/\n1 (\w+)/", $gedrec1, $match, PREG_SET_ORDER);
+				$ct = preg_match_all('/\n1 (\w+)/', $gedrec1, $match, PREG_SET_ORDER);
 				for($i=0; $i<$ct; $i++) {
 					$fact = trim($match[$i][1]);
 					if (isset($prev_tags[$fact])) {
@@ -106,7 +106,7 @@ if ($action!="choose") {
 					$facts1[] = array("fact"=>$fact, "subrec"=>trim($subrec));
 				}
 				$prev_tags = array();
-				$ct = preg_match_all("/\n1 (\w+)/", $gedrec2, $match, PREG_SET_ORDER);
+				$ct = preg_match_all('/\n1 (\w+)/', $gedrec2, $match, PREG_SET_ORDER);
 				for($i=0; $i<$ct; $i++) {
 					$fact = trim($match[$i][1]);
 					if (isset($prev_tags[$fact])) {
