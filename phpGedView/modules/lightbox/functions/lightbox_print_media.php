@@ -285,7 +285,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		$rows=PGV_DB::prepare($indiobjs)->execute($vars2)->fetchAll(PDO::FETCH_ASSOC);
 		$foundObjs = array();
 		$numindiobjs = count($rows);
-		
+
 		// Compare Items count in Database versus Item count in GEDCOM
 		if ($kind==5 && $ct!=$numindiobjs) {
 			// If any items are left in $current_objes list for this individual, put them into $kind 5 ("Not in DB") row
@@ -308,51 +308,63 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 						$client = ServiceClient::getInstance($match[1]);
 						if (!is_null($client)) {
 							$newrec = $client->getRemoteRecord($match[2]);
-							$row3['m_media'] = $media_id;
-							$row3['m_file'] = get_gedcom_value("FILE", 1, $newrec);
-							$row3['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
-							if (empty($row3['m_titl'])) {
-								$row3['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
+							$row['m_media'] = $media_id;
+							$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
+							$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
+							if (empty($row['m_titl'])) {
+								$row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
 							}
-							$row3['m_gedrec'] = $newrec;
-							$et = preg_match("/(\.\w+)$/", $row3['m_file'], $ematch);
+							$row['m_gedrec'] = $newrec;
+							$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
 							$ext = "";
 							if ($et>0) $ext = substr(trim($ematch[1]), 1);
-							$row3['m_ext'] = $ext;
-							$row3['mm_gid'] = $pid;
-							$row3['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+							$row['m_ext'] = $ext;
+							$row['mm_gid'] = $pid;
+							$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+							if ($newrec && isset($rowm['m_file'])) {
+								// -----
+							} else {
+								echo "<li class=\"li_new\" >";
+								echo "<center><table class=\"pic\" border=\"0\" ></center>";
+								echo "<tr><td align=\"center\" colspan=\"4\">";
+								echo $row['m_media'];
+								echo "</td></tr>";
+								
+								$res =  lightbox_print_media_row('new', $row, $pid);
+								$media_found = $media_found || $res;
+							}
 						}
 					} else {
-						$row3 = array();
+						$row = array();
 						$newrec = find_updated_record($media_id, $ged_id);
 						if (empty($newrec)) {
 							$newrec = find_media_record($media_id, $ged_id);
 						}
-						$row3['m_media'] = $media_id;
-						$row3['m_file'] = get_gedcom_value("FILE", 1, $newrec);
-						$row3['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
-						if (empty($row3['m_titl'])) {
-							$row3['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
+						$row['m_media'] = $media_id;
+						$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
+						$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
+						if (empty($row['m_titl'])) {
+							$row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
 						}
-						$row3['m_gedrec'] = $newrec;
-						$et = preg_match("/(\.\w+)$/", $row3['m_file'], $ematch);
+						$row['m_gedrec'] = $newrec;
+						$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
 						$ext = "";
 						if ($et>0) { 
 							$ext = substr(trim($ematch[1]), 1);
 						}
-						$row3['m_ext'] = $ext;
-						$row3['mm_gid'] = $pid;
-						$row3['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
-						if ($newrec && !isset($rowm['m_file'])) {
+						$row['m_ext'] = $ext;
+						$row['mm_gid'] = $pid;
+						$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+						if ($newrec && isset($rowm['m_file'])) {
 							// -----
 						} else {
 							echo "<li class=\"li_new\" >";
 							echo "<center><table class=\"pic\" border=\"0\" ></center>";
 							echo "<tr><td align=\"center\" colspan=\"4\">";
-							echo $row3['m_media'];
+							echo $row['m_media'];
 							echo "</td></tr>";
 							
-							$res =  lightbox_print_media_row('new', $row3, $pid);
+							$res =  lightbox_print_media_row('new', $row, $pid);
 							$media_found = $media_found || $res;
 						}
 					}
