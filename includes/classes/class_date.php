@@ -277,7 +277,7 @@ class CalendarDate {
 
 	// How many days in the current week
 	function DaysInWeek() {
-		return $this->NUM_DAYS_OF_WEEK();
+		return self::NUM_DAYS_OF_WEEK();
 	}
 
 	// Format a date
@@ -346,7 +346,7 @@ class CalendarDate {
 
 	function FormatLongWeekday() {
 		global $pgv_lang;
-		$day=$this->DAYS_OF_WEEK($this->minJD % $this->NUM_DAYS_OF_WEEK());
+		$day=$this->DAYS_OF_WEEK($this->minJD % self::NUM_DAYS_OF_WEEK());
 		if (isset($pgv_lang[$day]))
 			return $pgv_lang[$day];
 		return $day;
@@ -354,7 +354,7 @@ class CalendarDate {
 
 	function FormatShortWeekday() {
 		global $pgv_lang;
-		$day=$this->DAYS_OF_WEEK($this->minJD % $this->NUM_DAYS_OF_WEEK());
+		$day=$this->DAYS_OF_WEEK($this->minJD % self::NUM_DAYS_OF_WEEK());
 		if (isset($pgv_lang[$day.'_1st']))
 			return $pgv_lang[$day.'_1st'];
 		if (isset($pgv_lang[$day]))
@@ -377,7 +377,7 @@ class CalendarDate {
 	}
 
 	function FormatNumericWeekday() {
-		return ($this->minJD + 1) % $NUM_DAYS_OF_WEEK();
+		return ($this->minJD + 1) % self::NUM_DAYS_OF_WEEK();
 	}
 
 	function FormatDayOfYear() {
@@ -739,11 +739,11 @@ class HebrewDate extends JewishDate {
 	}
 
 	function FormatLongWeekday() {
-		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return self::$HEBREW_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortWeekday() {
-		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return self::$HEBREW_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortYear() {
@@ -941,11 +941,11 @@ class ArabicDate extends HijriDate {
 	}
 
 	function FormatLongWeekday() {
-		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return self::$ARABIC_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortWeekday() {
-		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return self::$ARABIC_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
 	}
 } // class ArabicDate
 
