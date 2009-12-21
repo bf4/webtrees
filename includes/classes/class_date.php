@@ -199,8 +199,6 @@ class CalendarDate {
 	// int $jd: date for calculation
 	// TODO: JewishDate needs to redefine this to cope with leap months
 	function GetAge($full, $jd, $warn_on_negative=true) {
-		global $action;
-		
 		if ($this->y==0 || $jd==0) {
 			return '';
 		}
