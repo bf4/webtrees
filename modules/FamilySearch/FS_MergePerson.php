@@ -32,8 +32,8 @@
 
 //chdir('../../');
 require_once('config.php');
-require_once('modules/FamilySearch/RA_AutoMatch.php');
-require_once("includes/functions/functions_print_facts.php");
+require_once(PGV_ROOT.'modules/FamilySearch/RA_AutoMatch.php');
+require_once(PGV_ROOT."includes/functions/functions_print_facts.php");
 
 if (!PGV_USER_CAN_EDIT) {
 	header('Location: index.php');
