@@ -89,7 +89,7 @@ sort_facts($localfacts);
 $remotefacts = $remotePerson->getFacts($nonfacts);
 sort_facts($remotefacts);
 
-if ($action=='save'&& empty($_REQUEST['copyall'])) {
+if ($action=='save' && empty($_REQUEST['copyall'])) {
 	require_once("includes/functions/functions_edit.php");
 	$newlocal = trim($localPerson->getGedcomRecord());
 	$newremote = trim($remotePerson->getGedcomRecord());
