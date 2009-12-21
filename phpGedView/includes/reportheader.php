@@ -24,12 +24,12 @@ define('PGV_REPORTHEADER_PHP', '');
  * @global array $elementHandler
  */
 $elementHandler = array();
-$elementHandler["PGVReport"]["start"]			= "PGVReportSHandler";
+$elementHandler["PGVReport"]["start"]		= "PGVReportSHandler";
 $elementHandler["PGVRvar"]["start"]			= "PGVRvarSHandler";
-$elementHandler["PGVRTitle"]["start"]			= "PGVRTitleSHandler";
+$elementHandler["PGVRTitle"]["start"]		= "PGVRTitleSHandler";
 $elementHandler["PGVRTitle"]["end"]			= "PGVRTitleEHandler";
-$elementHandler["PGVRDescription"]["end"]			= "PGVRDescriptionEHandler";
-$elementHandler["PGVRInput"]["start"]			= "PGVRInputSHandler";
+$elementHandler["PGVRDescription"]["end"]	= "PGVRDescriptionEHandler";
+$elementHandler["PGVRInput"]["start"]		= "PGVRInputSHandler";
 $elementHandler["PGVRInput"]["end"]			= "PGVRInputEHandler";
 
 $text = "";
@@ -46,10 +46,14 @@ $report_array = array();
  * @param array $attrs an array of key value pairs for the attributes
  */
 function startElement($parser, $name, $attrs) {
-	global $elementHandler, $processIfs, $processGedcoms, $processRepeats;
+// @deprecated
+//	global $elementHandler, $processIfs, $processGedcoms, $processRepeats;
+	global $elementHandler, $processIfs;
 
-	if (($processIfs==0 || $name=="PGVRif")) {
-		if (isset($elementHandler[$name]["start"])) call_user_func($elementHandler[$name]["start"], $attrs);
+	if (($processIfs==0) || ($name=="PGVRif")) {
+		if (isset($elementHandler[$name]["start"])) {
+			call_user_func($elementHandler[$name]["start"], $attrs);
+		}
 	}
 }
 
@@ -61,10 +65,14 @@ function startElement($parser, $name, $attrs) {
  * @param string $name the name of the xml element parsed
  */
 function endElement($parser, $name) {
-	global $elementHandler, $processIfs, $processGedcoms, $processRepeats;
+	// @deprecated
+//	global $elementHandler, $processIfs, $processGedcoms, $processRepeats;
+	global $elementHandler, $processIfs;
 
-	if (($processIfs==0 || $name=="PGVRif")) {
-		if (isset($elementHandler[$name]["end"])) call_user_func($elementHandler[$name]["end"]);
+	if (($processIfs==0) || ($name=="PGVRif")) {
+		if (isset($elementHandler[$name]["end"])) {
+			call_user_func($elementHandler[$name]["end"]);
+		}
 	}
 }
 
@@ -83,17 +91,21 @@ function characterData($parser, $data) {
 }
 
 function PGVReportSHandler($attrs) {
-	global $report_array;
-	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE;
+	global $report_array, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE;
 
 	$access = $PRIV_PUBLIC;
 	if (isset($attrs["access"])) {
-		if (isset($$attrs["access"])) $access = $$attrs["access"];
+		if (isset($$attrs["access"])) {
+			$access = $$attrs["access"];
+		}
 	}
 	$report_array["access"] = $access;
 
-	if (isset($attrs["icon"])) $report_array["icon"] = $attrs["icon"];
-	else $report_array["icon"] = "";
+	if (isset($attrs["icon"])) {
+		$report_array["icon"] = $attrs["icon"];
+	} else {
+		$report_array["icon"] = "";
+	}
 }
 
 function PGVRvarSHandler($attrs) {
@@ -101,18 +113,24 @@ function PGVRvarSHandler($attrs) {
 
 	$var = $attrs["var"];
 	if (!empty($var)) {
+		$match = array();
 		$tfact = $fact;
-		if ($fact=="EVEN") $tfact = $type;
-		$var = str_replace(array("[","]","@fact","@desc"), array("['","']",$tfact,$desc), $var);
+		if ($fact=="EVEN") {
+			$tfact = $type;
+		}
+		$var = str_replace(array("[", "]", "@fact", "@desc"), array("['", "']", $tfact, $desc), $var);
 		eval("if (!empty(\$$var)) \$var = \$$var;");
-		$ct = preg_match("/factarray\['(.*)'\]/", $var, $match);
-		if ($ct>0) $var = $match[1];
+		if (preg_match("/factarray\['(.*)'\]/", $var, $match)>0) {
+			$var = $match[1];
+		}
 		$text .= $var;
 	}
 }
 
 function PGVRTitleSHandler() {
-	global $report_array, $text;
+	// @deprecated
+//	global $report_array, $text;
+	global $text;
 
 	$text = "";
 }
@@ -142,29 +160,43 @@ function PGVRInputSHandler($attrs) {
 	$input["default"] = "";
 	$input["value"] = "";
 	$input["options"] = "";
-	if (isset($attrs["name"])) $input["name"] = $attrs["name"];
-	if (isset($attrs["type"])) $input["type"] = $attrs["type"];
-	if (isset($attrs["lookup"])) $input["lookup"] = $attrs["lookup"];
+	if (isset($attrs["name"])) {
+		$input["name"] = $attrs["name"];
+	}
+	if (isset($attrs["type"])) {
+		$input["type"] = $attrs["type"];
+	}
+	if (isset($attrs["lookup"])) {
+		$input["lookup"] = $attrs["lookup"];
+	}
 	if (isset($attrs["default"])) {
-		if ($attrs["default"]=="NOW") $input["default"] = date("d M Y");
-		else {
-			$ct = preg_match("/NOW\s*([+\-])\s*(\d+)/", $attrs['default'], $match);
-			if ($ct>0) {
+		if ($attrs["default"]=="NOW") {
+			$input["default"] = date("d M Y");
+		} else {
+			$match = array();
+			if (preg_match("/NOW\s*([+\-])\s*(\d+)/", $attrs['default'], $match)>0) {
 				$plus = 1;
-				if ($match[1]=="-") $plus = -1;
+				if ($match[1]=="-") {
+					$plus = -1;
+				}
 				$input["default"] = date("d M Y", time()+$plus*60*60*24*$match[2]);
+			} else {
+				$input["default"] = $attrs["default"];
 			}
-			else $input["default"] = $attrs["default"];
 		}
 	}
-	if (isset($attrs["options"])) $input["options"] = $attrs["options"];
+	if (isset($attrs["options"])) {
+		$input["options"] = $attrs["options"];
+	}
 }
 
 function PGVRInputEHandler() {
 	global $report_array, $text, $input;
 
 	$input["value"] = $text;
-	if (!isset($report_array["inputs"])) $report_array["inputs"] = array();
+	if (!isset($report_array["inputs"])) {
+		$report_array["inputs"] = array();
+	}
 	$report_array["inputs"][] = $input;
 	$text = "";
 }

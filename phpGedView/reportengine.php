@@ -26,7 +26,7 @@
  * @version $Id$
  */
 
-require './config.php';
+require_once "config.php";
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
@@ -34,8 +34,8 @@ session_write_close();
 //-- try to increase the time limit because reports can take a long time
 @set_time_limit($TIME_LIMIT*2);
 
-$famid=safe_GET('famid');
-$pid  =safe_GET('pid');
+$famid=safe_GET("famid");
+$pid  =safe_GET("pid");
 
 /**
  * function to get the values for the given tag
@@ -45,40 +45,65 @@ function get_tag_values($tag) {
 
 	$indexes = $tags[$tag];
 	$vals = array();
-	foreach($indexes as $indexval => $i) {
+	foreach($indexes as $i) {
 		$vals[] = $values[$i];
 	}
 	return $vals;
 }
 
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['report'])) $report = $_REQUEST['report'];
-if (isset($_REQUEST['output'])) $output = $_REQUEST['output'];
-if (isset($_REQUEST['vars'])) $vars = $_REQUEST['vars'];
-if (isset($_REQUEST['varnames'])) $varnames = $_REQUEST['varnames'];
-if (isset($_REQUEST['type'])) $type = $_REQUEST['type'];
-
-if (empty($action)) $action = "choose";
-if (!isset($report)) $report = "";
-if (!isset($output)) $output = "PDF";
-if (!isset($vars)) $vars = array();
-if (!isset($varnames)) $varnames = array();
-if (!isset($type)) $type = array();
+if (isset($_REQUEST["action"])) {
+	$action = $_REQUEST["action"];
+	if (empty($action)) {
+		$action = "choose";
+	}
+} else {
+	$action = "choose";
+}
+if (isset($_REQUEST["report"])) {
+	$report = $_REQUEST["report"];
+} else {
+	$report = "";
+}
+if (isset($_REQUEST["output"])) {
+	$output = $_REQUEST["output"];
+} else {
+	$output = "PDF";
+}
+if (isset($_REQUEST["vars"])) {
+	$vars = $_REQUEST["vars"];
+} else {
+	$vars = array();
+}
+if (isset($_REQUEST["varnames"])) {
+	$varnames = $_REQUEST["varnames"];
+} else {
+	$varnames = array();
+}
+if (isset($_REQUEST["type"])) {
+	$type = $_REQUEST["type"];
+} else {
+	$type = array();
+}
 
 //-- setup the arrays
 $newvars = array();
 foreach($vars as $name=>$var) {
 	$newvars[$name]["id"] = $var;
-	if (!empty($type[$name]) && (($type[$name]=="INDI")||($type[$name]=="FAM")||($type[$name]=="SOUR"))) {
+	if (!empty($type[$name]) && (($type[$name]=="INDI") || ($type[$name]=="FAM") || ($type[$name]=="SOUR"))) {
 		$gedcom = find_gedcom_record($var, PGV_GED_ID);
-		if (empty($gedcom)) $action="setup";
+		if (empty($gedcom)) {
+			$action="setup";
+		}
 		if ($type[$name]=="FAM") {
 			if (preg_match("/0 @.*@ INDI/", $gedcom)>0) {
 				$fams = find_sfamily_ids($var);
 				if (!empty($fams[0])) {
 					$gedcom = find_family_record($fams[0], PGV_GED_ID);
-					if (!empty($gedcom)) $vars[$name] = $fams[0];
-					else $action="setup";
+					if (!empty($gedcom)) {
+						$vars[$name] = $fams[0];
+					} else {
+						$action="setup";
+					}
 				}
 			}
 		}
@@ -86,6 +111,7 @@ foreach($vars as $name=>$var) {
 	}
 }
 $vars = $newvars;
+unset($newvars);
 
 foreach($varnames as $indexval => $name) {
 	if (!isset($vars[$name])) {
@@ -96,8 +122,11 @@ foreach($varnames as $indexval => $name) {
 $reports = get_report_list();
 if (!empty($report)) {
 	$r = basename($report);
-	if (!isset($reports[$r]["access"])) $action = "choose";
-	else if ($reports[$r]["access"]<PGV_USER_ACCESS_LEVEL) $action = "choose";
+	if (!isset($reports[$r]["access"])) {
+		$action = "choose";
+	} elseif ($reports[$r]["access"]<PGV_USER_ACCESS_LEVEL) {
+		$action = "choose";
+	}
 }
 
 //-- choose a report to run
@@ -116,40 +145,38 @@ if ($action=="choose") {
 	
 	print_header($pgv_lang["choose_report"]);
 
-	print "<br /><br />\n";
-	print "<form name=\"choosereport\" method=\"get\" action=\"reportengine.php\">\n";
-	print "<input type=\"hidden\" name=\"action\" value=\"setup\" />\n";
-	print "<input type=\"hidden\" name=\"output\" value=\"$output\" />\n";
-	print "<table class=\"facts_table width40 center $TEXT_DIRECTION\">";
-	print "<tr><td class=\"topbottombar\" colspan=\"2\">".$pgv_lang["choose_report"]."</td></tr>";
-	print "<tr><td class=\"descriptionbox wrap width33 vmiddle\">".$pgv_lang["select_report"]."</td>";
-	print "<td class=\"optionbox\">";
-	print "<select name=\"report\">\n";
+	echo "<br /><br />\n<form name=\"choosereport\" method=\"get\" action=\"reportengine.php\">\n";
+	echo "<input type=\"hidden\" name=\"action\" value=\"setup\" />\n";
+	echo "<input type=\"hidden\" name=\"output\" value=\"", $output, "\" />\n";
+	echo "<table class=\"facts_table width40 center ", $TEXT_DIRECTION, " \">";
+	echo "<tr><td class=\"topbottombar\" colspan=\"2\">", $pgv_lang["choose_report"], "</td></tr>";
+	echo "<tr><td class=\"descriptionbox wrap width33 vmiddle\">", $pgv_lang["select_report"], "</td>";
+	echo "<td class=\"optionbox\"><select onchange=\"this.form.submit();\" name=\"report\">\n";
 	foreach($reports as $file=>$report) {
-		if ($report["access"]>=PGV_USER_ACCESS_LEVEL)
-			print "<option value=\"".$report["file"]."\">".$report["title"][$LANGUAGE]."</option>\n";
+		if ($report["access"] >= PGV_USER_ACCESS_LEVEL) {
+			echo "<option value=\"", $report["file"], "\">", $report["title"][$LANGUAGE], "</option>\n";
+		}
 	}
-	print "</select></td></tr>\n";
-	print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["click_here"]."\" /></td></tr>";
-	print "</table>";
-	print "</form>\n";
-	print "<br /><br />\n";
+	echo "</select></td></tr>\n";
+	echo "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"", $pgv_lang["click_here"], "\" /></td></tr>";
+	echo "</table></form>\n<br /><br />\n";
 
 	print_footer();
 }
 
 //-- setup report to run
-else if ($action=="setup") {
+elseif ($action=="setup") {
 	print_header($pgv_lang["enter_report_values"]);
 
-	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
+	if ($ENABLE_AUTOCOMPLETE) {
+		require_once PGV_ROOT."js/autocomplete.js.htm";
+	}
 
 	//-- make sure the report exists
 	if (!file_exists($report)) {
-		print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span> ".$report."\n";
-	}
-	else {
-		require_once PGV_ROOT.'includes/reportheader.php';
+		echo "<span class=\"error\">", $pgv_lang["file_not_found"], "</span> ", $report, "\n";
+	} else {
+		require_once PGV_ROOT."includes/reportheader.php";
 		$report_array = array();
 		//-- start the sax parser
 		$xml_parser = xml_parser_create();
@@ -165,125 +192,146 @@ else if ($action=="setup") {
 			die("could not open XML input");
 		}
 		//-- read the file and parse it 4kb at a time
-		while ($data = fread($fp, 4096)) {
+		while (($data = fread($fp, 4096))) {
 			if (!xml_parse($xml_parser, $data, feof($fp))) {
 				die(sprintf($data."\nXML error: %s at line %d", xml_error_string(xml_get_error_code($xml_parser)), xml_get_current_line_number($xml_parser)));
 			}
 		}
 		xml_parser_free($xml_parser);
-
-		?>
-<script type="text/javascript">
-<!--
-var pastefield;
-function paste_id(value) {
-	pastefield.value=value;
-}
-//-->
-</script>
-		<?php
+		// Paste Found ID from a pop-up window
+		echo PGV_JS_START;
+			?>
+			var pastefield;
+			function paste_id(value) {
+				pastefield.value=value;
+			}
+			<?php
+		echo PGV_JS_END;
+		
 		init_calendar_popup();
-		print "<form name=\"setupreport\" method=\"get\" target=\"_blank\" action=\"reportengine.php\">\n";
-		print "<input type=\"hidden\" name=\"action\" value=\"run\" />\n";
-		print "<input type=\"hidden\" name=\"report\" value=\"$report\" />\n";
-		print "<input type=\"hidden\" name=\"download\" value=\"\" />\n";
-		//print "<input type=\"hidden\" name=\"output\" value=\"PDF\" />\n";
+		echo "<form name=\"setupreport\" method=\"get\" target=\"_blank\" action=\"reportengine.php\">\n";
+		echo "<input type=\"hidden\" name=\"action\" value=\"run\" />\n";
+		echo "<input type=\"hidden\" name=\"report\" value=\"", $report, "\" />\n";
+		echo "<input type=\"hidden\" name=\"download\" value=\"\" />\n";
 
-		print "<table class=\"facts_table width50 center $TEXT_DIRECTION\">";
-		print "<tr><td class=\"topbottombar\" colspan=\"2\">".$pgv_lang["enter_report_values"]."</td></tr>";
-		print "<tr><td class=\"descriptionbox width30 wrap\">".$pgv_lang["selected_report"]."</td><td class=\"optionbox\">".$report_array["title"]."</td></tr>\n";
+		echo "<table class=\"facts_table width50 center ", $TEXT_DIRECTION, " \">";
+		echo "<tr><td class=\"topbottombar\" colspan=\"2\">", $pgv_lang["enter_report_values"], "</td></tr>";
+		echo "<tr><td class=\"descriptionbox width30 wrap\">", $pgv_lang["selected_report"], "</td><td class=\"optionbox\">", $report_array["title"], "</td></tr>\n";
 
 		$doctitle = trim($report_array["title"]);
-		$firstrun = 0;
-		if (!isset($report_array["inputs"])) $report_array["inputs"] = array();
+		if (!isset($report_array["inputs"])) {
+			$report_array["inputs"] = array();
+		}
 		foreach($report_array["inputs"] as $indexval => $input) {
-			if ((($input["name"] == "sources") && ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL)) || ($input["name"] != "sources")) {
+			if ((($input["name"] == "sources") && ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL)) || ($input["name"] != "sources")) {
 				if (($input["name"] != "photos") || ($MULTI_MEDIA)) {
 					// url forced default value ?
 					if (isset($_REQUEST[$input["name"]])) {
 						$input["default"]=$_REQUEST[$input["name"]];
 						// update doc title for bookmarking
 						$doctitle .= " ";
-						if (strpos($input["name"],"date2")) $doctitle .= "-";
+						if (strpos($input["name"],"date2")!==false) {
+							$doctitle .= "-";
+						}
 						$doctitle .= $input["default"];
-						if (strpos($input["name"],"date1")) $doctitle .= "-";
+						if (strpos($input["name"],"date1")!==false) {
+							$doctitle .= "-";
+						}
 					}
-					print "<tr><td class=\"descriptionbox wrap\">\n";
-					print "<input type=\"hidden\" name=\"varnames[]\" value=\"".$input["name"]."\" />\n";
-					print $input["value"]."</td><td class=\"optionbox\">";
-					if (!isset($input["type"])) $input["type"] = "text";
-					if (!isset($input["default"])) $input["default"] = "";
+					echo "<tr><td class=\"descriptionbox wrap\">\n";
+					echo "<input type=\"hidden\" name=\"varnames[]\" value=\"", $input["name"], "\" />\n";
+					echo $input["value"], "</td><td class=\"optionbox\">";
+					if (!isset($input["type"])) {
+						$input["type"] = "text";
+					}
+					if (!isset($input["default"])) {
+						$input["default"] = "";
+					}
 					if (isset($input["lookup"])) {
 						if ($input["lookup"]=="INDI") {
-							if (!empty($pid)) $input["default"] = $pid;
-							else $input["default"] = check_rootid($input["default"]);
+							if (!empty($pid)) {
+								$input["default"] = $pid;
+							} else {
+								$input["default"] = check_rootid($input["default"]);
+							}
 						}
 						if ($input["lookup"]=="FAM") {
-							if (!empty($famid)) $input["default"] = $famid;
-							else {
+							if (!empty($famid)) {
+								$input["default"] = $famid;
+							} else {
 								$famid = find_sfamily_ids(check_rootid($input["default"]));
-								if (empty($famid)) $famid = find_family_ids(check_rootid($input["default"]));
-								if (isset($famid[0])) $input["default"] = $famid[0];
+								if (empty($famid)) {
+									$famid = find_family_ids(check_rootid($input["default"]));
+								}
+								if (isset($famid[0])) {
+									$input["default"] = $famid[0];
+								}
 							}
 						}
 						if ($input["lookup"]=="SOUR") {
-							if (!empty($sid)) $input["default"] = $sid;
+							if (!empty($sid)) {
+								$input["default"] = $sid;
+							}
 						}
 					}
 					if ($input["type"]=="text") {
-						print "<input type=\"text\" name=\"vars[".$input["name"]."]\" id=\"".$input["name"]."\" ";
-						print "value=\"".$input["default"]."\" ";
-						print " style=\"direction: ltr;\" ";
-						print "/>";
-					}
-					if ($firstrun == 0) {
-						?>
-						<script language="JavaScript" type="text/javascript">
-						<!--
-							//document.getElementById('<?php print $input["name"]; ?>').focus();
-						//-->
-						</script>
-						<?php
-						$firstrun++;
+						echo "<input type=\"text\" name=\"vars[", $input["name"], "]\" id=\"", $input["name"], "\" ";
+						echo "value=\"", $input["default"], "\" style=\"direction: ltr;\" />";
 					}
 					if ($input["type"]=="checkbox") {
-						print "<input type=\"checkbox\" name=\"vars[".$input["name"]."]\" id=\"".$input["name"]."\" value=\"1\"";
-						if ($input["default"]=="1") print " checked=\"checked\"";
-						print " />";
+						echo "<input type=\"checkbox\" name=\"vars[", $input["name"], "]\" id=\"", $input["name"], "\" value=\"1\"";
+						if ($input["default"]=="1") {
+							echo " checked=\"checked\"";
+						}
+						echo " />";
 					}
 					if ($input["type"]=="select") {
-						print "<select name=\"vars[".$input["name"]."]\" id=\"".$input["name"]."_var\">\n";
+						echo "<select name=\"vars[", $input["name"], "]\" id=\"", $input["name"], "_var\">\n";
 						$options = preg_split("/[, ]+/", $input["options"]);
 						foreach($options as $indexval => $option) {
-							print "\t<option value=\"$option\"";
-							if ($option==$input["default"]) print " selected=\"selected\"";
-							print ">";
-							if (isset($pgv_lang[$option])) print $pgv_lang[$option];
-							else if (isset($factarray[$option])) print $factarray[$option];
-							else print $option;
-							print "</option>\n";
+							echo "\t<option value=\"", $option, "\"";
+							if ($option==$input["default"]) {
+								echo " selected=\"selected\"";
+							}
+							echo ">";
+							if (isset($factarray[$option])) {
+								echo $factarray[$option];
+							} elseif (isset($pgv_lang[$option])) {
+								echo $pgv_lang[$option];
+							} else {
+								echo $option;
+							}
+							echo "</option>\n";
 						}
-						print "</select>\n";
+						echo "</select>\n";
 					}
 					if (isset($input["lookup"])) {
-						print "<input type=\"hidden\" name=\"type[".$input["name"]."]\" value=\"".$input["lookup"]."\" />";
-						if ($input["lookup"]=="FAM") print_findfamily_link("famid");
-						if ($input["lookup"]=="INDI") print_findindi_link("pid","");
-						if ($input["lookup"]=="PLAC") print_findplace_link($input["name"]);
-						if ($input["lookup"]=="DATE") {
+						echo "<input type=\"hidden\" name=\"type[", $input["name"], "]\" value=\"", $input["lookup"], "\" />";
+						if ($input["lookup"]=="INDI") {
+							print_findindi_link("pid","");
+						} elseif ($input["lookup"]=="PLAC") {
+							print_findplace_link($input["name"]);
+						} elseif ($input["lookup"]=="FAM") {
+							print_findfamily_link("famid");
+						} elseif ($input["lookup"]=="SOUR") {
+							print_findsource_link($input["name"]);
+						} elseif ($input["lookup"]=="DATE") {
 							$text = $pgv_lang["select_date"];
-							if (isset($PGV_IMAGES["calendar"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["button"]."\" name=\"a_".$input["name"]."\" id=\"a_".$input["name"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
-							else $Link = $text;
+							if (isset($PGV_IMAGES["calendar"]["button"])) {
+								$Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["button"]."\" name=\"a_".$input["name"]."\" id=\"a_".$input["name"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+							} else {
+								$Link = $text;
+							}
 
 							?>
-							<a href="javascript: <?php print $input["name"]; ?>" onclick="cal_toggleDate('div_<?php print $input["name"]; ?>', '<?php print $input["name"]; ?>'); return false;">
-							<?php print $Link;?>
+							<a href="javascript: <?php echo $input["name"]; ?>" onclick="cal_toggleDate('div_<?php echo $input["name"]; ?>', '<?php echo $input["name"]; ?>'); return false;">
+							<?php echo $Link;?>
 							</a>
-							<div id="div_<?php print $input["name"]; ?>" style="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></div>
+							<div id="div_<?php echo $input["name"]; ?>" style="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></div>
 							<?php
 						}
 					}
-					print "</td></tr>\n";
+					echo "</td></tr>\n";
 				}
 			}
 		}
@@ -291,42 +339,33 @@ function paste_id(value) {
 		<tr><td class="descriptionbox width30 wrap"></td>
 		<td class="optionbox">
 		<table><tr>
-		<td><img src="<?php echo isset($PGV_IMAGES["media"]["pdf"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["pdf"] : 'images/media/pdf.gif';?>" alt="PDF" title="PDF" /></td>
-		<td><img src="<?php echo isset($PGV_IMAGES["media"]["html"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["html"] : 'images/media/html.gif';?>" alt="HTML" title="HTML" /></td>
+		<td><img src="<?php echo isset($PGV_IMAGES["media"]["pdf"]) ? $PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["pdf"] : "images/media/pdf.gif";?>" alt="PDF" title="PDF" /></td>
+		<td><img src="<?php echo isset($PGV_IMAGES["media"]["html"]) ? $PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["html"] : "images/media/html.gif";?>" alt="HTML" title="HTML" /></td>
 		</tr><tr>
 		<td><center><input type="radio" name="output" value="PDF" checked="checked" /></center></td>
 		<td><center><input type="radio" name="output" value="HTML" <?php if ($output=="HTML") echo " checked=\"checked\"";?> /></center></td>
 		</tr></table>
 		</td></tr>
 		<?php
-		print "<tr><td class=\"topbottombar\" colspan=\"2\">";
-		print " <input type=\"submit\" value=\"".$pgv_lang["download_report"]."\" onclick=\"document.setupreport.elements['download'].value='1';\"/>";
-		print " <input type=\"submit\" value=\"".$pgv_lang["cancel"]."\" onclick=\"document.setupreport.elements['action'].value='setup';document.setupreport.target='';\"/>";
-		print "</td></tr>\n";
-		print "</table>\n";
-		print "</form>\n";
-		print "<br /><br />\n";
-		?>
-		<script language="JavaScript" type="text/javascript">
-		<!--
-			document.title = '<?php print $doctitle; ?>';
-		//-->
-		</script>
-		<?php
+		echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
+		echo " <input type=\"submit\" value=\"", $pgv_lang["download_report"], "\" onclick=\"document.setupreport.elements['download'].value='1';\"/>";
+		echo " <input type=\"submit\" value=\"", $pgv_lang["cancel"], "\" onclick=\"document.setupreport.elements['action'].value='setup';document.setupreport.target='';\"/>";
+		echo "</td></tr></table></form><br /><br />\n";
+		echo PGV_JS_START, "document.title = \"", $doctitle, "\"", PGV_JS_END;
 	}
 	print_footer();
 }
 //-- run the report
-else if ($action=="run") {
+elseif ($action=="run") {
 	//-- load the report generator
 	switch ($output) {
-	case 'HTML':
-		require PGV_ROOT.'includes/classes/class_reporthtml.php';
-		break;
-	case 'PDF':
-	default:
-		require PGV_ROOT.'includes/classes/class_reportpdf.php';
-		break;
+		case "HTML":
+			require_once PGV_ROOT."includes/classes/class_reporthtml.php";
+			break;
+		case "PDF":
+		default:
+			require_once PGV_ROOT."includes/classes/class_reportpdf.php";
+			break;
 	}
 
 	//-- start the sax parser
@@ -343,13 +382,12 @@ else if ($action=="run") {
 		die("could not open XML input");
 	}
 	//-- read the file and parse it 4kb at a time
-	while ($data = fread($fp, 4096)) {
+	while (($data = fread($fp, 4096))) {
 		if (!xml_parse($xml_parser, $data, feof($fp))) {
 			die(sprintf($data."\nXML error: %s at line %d", xml_error_string(xml_get_error_code($xml_parser)), xml_get_current_line_number($xml_parser)));
 		}
 	}
 	xml_parser_free($xml_parser);
-
 }
 
 ?>

@@ -31,14 +31,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_GEDCOMRECORD_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_person.php';
-require_once PGV_ROOT.'includes/classes/class_family.php';
-require_once PGV_ROOT.'includes/classes/class_source.php';
-require_once PGV_ROOT.'includes/classes/class_repository.php';
-require_once PGV_ROOT.'includes/classes/class_note.php';
-require_once PGV_ROOT.'includes/classes/class_media.php';
-require_once PGV_ROOT.'includes/classes/class_event.php';
-require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+require_once 'includes/classes/class_person.php';
+require_once 'includes/classes/class_family.php';
+require_once 'includes/classes/class_source.php';
+require_once 'includes/classes/class_repository.php';
+require_once 'includes/classes/class_note.php';
+require_once 'includes/classes/class_media.php';
+require_once 'includes/classes/class_event.php';
+require_once 'includes/classes/class_serviceclient.php';
 
 class GedcomRecord {
 	var $xref       =null;  // The record identifier
@@ -135,7 +135,7 @@ class GedcomRecord {
 
 			// If we didn't find the record in the database, it may be new/pending
 			if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
-				$data=find_updated_record($pid, $ged_id);
+				$data=find_updated_record($pid);
 				$fromfile=true;
 			}
 
@@ -354,7 +354,7 @@ class GedcomRecord {
 	*/
 	function undoChange() {
 		global $GEDCOM, $pgv_changes;
-		require_once PGV_ROOT.'includes/functions/functions_edit.php';
+		require_once 'includes/functions/functions_edit.php';
 		if (!PGV_USER_CAN_ACCEPT) {
 			return false;
 		}
