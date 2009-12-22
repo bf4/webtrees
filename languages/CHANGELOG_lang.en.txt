@@ -43,6 +43,9 @@ VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["missing_facts_report"]					22 Dec 2009				A
++$pgv_lang["sources_to_events"]						22 Dec 2009				A
++$pgv_lang["fact_sources_report"]					22 Dec 2009				A
 *$pgv_lang["total_unknown"]							27 Nov 2009				C
 *$pgv_lang["total_living"]							27 Nov 2009				C
 *$pgv_lang["total_dead"]							27 Nov 2009				C
