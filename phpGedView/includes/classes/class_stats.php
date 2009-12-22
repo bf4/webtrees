@@ -958,7 +958,7 @@ class stats {
 						.' WHERE'
 							." d1.d_fact IN ({$query_field}) AND"
 							." d1.d_file={$this->_ged_id} AND"
-							.' d1.d_julianday1!=0'
+							.' d1.d_julianday1<>0'
 						.' GROUP BY'
 							.' d1.d_gid'
 					.') AS d3'
@@ -1337,7 +1337,7 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
+						.'d_year<>0 AND '
 						."d_fact='BIRT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else if ($sex) {
@@ -1402,7 +1402,7 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
+						.'d_year<>0 AND '
 						."d_fact='DEAT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else if ($sex) {
@@ -1518,7 +1518,7 @@ class stats {
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
-				.' birth.d_julianday1!=0 AND'
+				.' birth.d_julianday1<>0 AND'
 				.' death.d_julianday1>birth.d_julianday2 AND'
 				.$sex_search
 			.' ORDER BY'
@@ -1607,7 +1607,7 @@ class stats {
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
-				.' birth.d_julianday1!=0 AND'
+				.' birth.d_julianday1<>0 AND'
 				.' death.d_julianday1>birth.d_julianday2'
 				.$sex_search
 			.' GROUP BY'
@@ -1681,7 +1681,7 @@ class stats {
 				." birth.d_file={$this->_ged_id} AND"
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
-				.' birth.d_julianday1!=0'
+				.' birth.d_julianday1<>0'
 				.$sex_search
 			.' GROUP BY'
 				.' id'
@@ -1750,7 +1750,7 @@ class stats {
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
-				.' birth.d_julianday1!=0 AND'
+				.' birth.d_julianday1<>0 AND'
 				.' death.d_julianday1>birth.d_julianday2'
 				.$sex_search
 		, 1);
@@ -1799,7 +1799,7 @@ class stats {
 					.' birth.d_file=indi.i_file AND'
 					." birth.d_fact='BIRT' AND"
 					." death.d_fact='DEAT' AND"
-					.' birth.d_julianday1!=0 AND'
+					.' birth.d_julianday1<>0 AND'
 					." birth.d_type='@#DGREGORIAN@' AND"
 					." death.d_type='@#DGREGORIAN@' AND"
 					.' death.d_julianday1>birth.d_julianday2'
@@ -1897,7 +1897,7 @@ class stats {
 					.' birth.d_file=indi.i_file AND'
 					." birth.d_fact='BIRT' AND"
 					." death.d_fact='DEAT' AND"
-					.' birth.d_julianday1!=0 AND'
+					.' birth.d_julianday1<>0 AND'
 					.' death.d_julianday1>birth.d_julianday2'
 					.$years
 					.$sex_search
@@ -1974,9 +1974,9 @@ class stats {
 				." {$TBLPREFIX}dates"
 			.' WHERE'
 				." d_file={$this->_ged_id} AND"
-				." d_gid!='HEAD' AND"
+				." d_gid<>'HEAD' AND"
 				." d_fact {$fact_query} AND"
-				.' d_julianday1!=0'
+				.' d_julianday1<>0'
 			.' ORDER BY'
 				." d_julianday1 {$direction}, d_type"
 		, 1);
@@ -2084,7 +2084,7 @@ class stats {
 				." fam.f_file = {$this->_ged_id} AND"
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." married.d_fact = 'MARR' AND"
-				.' birth.d_julianday1 != 0 AND'
+				.' birth.d_julianday1 <> 0 AND'
 				.' married.d_julianday2 > birth.d_julianday1 AND'
 				." i_sex='{$sex}'"
 			.' ORDER BY'
@@ -2151,7 +2151,7 @@ class stats {
 				.' married.d_gid = fam.f_id AND'
 				." married.d_fact = 'MARR' AND"
 				.' married.d_julianday1 < husbdeath.d_julianday2 AND'
-				.' married.d_julianday1 != 0'
+				.' married.d_julianday1 <> 0'
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
@@ -2173,7 +2173,7 @@ class stats {
 				.' married.d_gid = fam.f_id AND'
 				." married.d_fact = 'MARR' AND"
 				.' married.d_julianday1 < wifedeath.d_julianday2 AND'
-				.' married.d_julianday1 != 0'
+				.' married.d_julianday1 <> 0'
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
@@ -2195,7 +2195,7 @@ class stats {
 				.' divorced.d_gid = fam.f_id AND'
 				." divorced.d_fact IN ('DIV', 'ANUL', '_SEPR', '_DETS') AND"
 				.' married.d_julianday1 < divorced.d_julianday2 AND'
-				.' married.d_julianday1 != 0'
+				.' married.d_julianday1 <> 0'
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
@@ -2273,11 +2273,11 @@ class stats {
 		if ($age_dir=='DESC') {
 			$query1 = ' wifebirth.d_julianday2-husbbirth.d_julianday1 AS age';
 			$query2 = ' wifebirth.d_julianday2 >= husbbirth.d_julianday1 AND'
-					 .' husbbirth.d_julianday1 != 0';
+					 .' husbbirth.d_julianday1 <> 0';
 		} else {
 			$query1 = ' husbbirth.d_julianday2-wifebirth.d_julianday1 AS age';
 			$query2 = ' wifebirth.d_julianday1 < husbbirth.d_julianday2 AND'
-					 .' wifebirth.d_julianday1 != 0';
+					 .' wifebirth.d_julianday1 <> 0';
 		}
 		$rows=self::_runSQL(''
 			.' SELECT DISTINCT'
@@ -2367,7 +2367,7 @@ class stats {
 				." parentfamily.l_file = {$this->_ged_id} AND"
 				." birth.d_fact = 'BIRT' AND"
 				." childbirth.d_fact = 'BIRT' AND"
-				.' birth.d_julianday1 != 0 AND'
+				.' birth.d_julianday1 <> 0 AND'
 				.' childbirth.d_julianday2 > birth.d_julianday1'
 			.' ORDER BY'
 				." age {$age_dir}"
@@ -2418,7 +2418,7 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
+						.'d_year<>0 AND '
 						."d_fact='MARR' AND "
 						."d_type='@#DGREGORIAN@'";
 						if ($year1>=0 && $year2>=0) {
@@ -2447,7 +2447,7 @@ class stats {
 				.' married.d_gid = fam.f_id AND'
 				." fam.f_file = {$this->_ged_id} AND"
 				." married.d_fact = 'MARR' AND"
-				.' married.d_julianday2 != 0 AND'
+				.' married.d_julianday2 <> 0 AND'
 				.$years
 				.' (indi.i_id = fam.f_husb OR indi.i_id = fam.f_wife)'
 			.' ORDER BY fams, indi, age ASC';
@@ -2501,7 +2501,7 @@ class stats {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
+						.'d_year<>0 AND '
 						."d_fact IN ('DIV', 'ANUL', '_SEPR') AND "
 						."d_type='@#DGREGORIAN@'";
 						if ($year1>=0 && $year2>=0) {
@@ -2530,7 +2530,7 @@ class stats {
 				.' divorced.d_gid = fam.f_id AND'
 				." fam.f_file = {$this->_ged_id} AND"
 				." divorced.d_fact IN ('DIV', 'ANUL', '_SEPR') AND"
-				.' divorced.d_julianday2 != 0 AND'
+				.' divorced.d_julianday2 <> 0 AND'
 				.$years
 				.' (indi.i_id = fam.f_husb OR indi.i_id = fam.f_wife)'
 			.' ORDER BY fams, indi, age ASC';
@@ -2630,7 +2630,7 @@ class stats {
 					." fam.f_file = {$this->_ged_id} AND"
 					." birth.d_fact = 'BIRT' AND"
 					." married.d_fact = 'MARR' AND"
-					.' birth.d_julianday1 != 0 AND'
+					.' birth.d_julianday1 <> 0 AND'
 					." birth.d_type='@#DGREGORIAN@' AND"
 					." married.d_type='@#DGREGORIAN@' AND"
 					.' married.d_julianday2 > birth.d_julianday1'
@@ -2752,7 +2752,7 @@ class stats {
 					." fam.f_file = {$this->_ged_id} AND"
 					." birth.d_fact = 'BIRT' AND"
 					." married.d_fact = 'MARR' AND"
-					.' birth.d_julianday1 != 0 AND'
+					.' birth.d_julianday1 <> 0 AND'
 					.' married.d_julianday2 > birth.d_julianday1'
 					.$sex_search
 					.$years
@@ -2964,8 +2964,8 @@ class stats {
 				.' child2.d_gid = link2.l_to AND'
 				." child2.d_fact = 'BIRT' AND"
 				.' child1.d_julianday2 > child2.d_julianday2 AND'
-				.' child2.d_julianday2 != 0 AND'
-				.' child1.d_gid != child2.d_gid'
+				.' child2.d_julianday2 <> 0 AND'
+				.' child1.d_gid <> child2.d_gid'
 			.' ORDER BY'
 				." age DESC"
 		,$total);
@@ -3522,12 +3522,12 @@ class stats {
 			$sex_sql="i_sex='U'";
 			break;
 		case 'B':
-			$sex_sql="i_sex!='U'";
+			$sex_sql="i_sex<>'U'";
 			break;
 		}
 		$ged_id=get_id_from_gedcom($GEDCOM);
 
-		$rows=PGV_DB::prepare("SELECT n_givn, COUNT(*) AS num FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (n_id=i_id AND n_file=i_file) WHERE n_file={$ged_id} AND n_type!='_MARNM' AND n_givn NOT IN ('@P.N.', '') AND LENGTH(n_givn)>1 AND {$sex_sql} GROUP BY n_id, n_givn")
+		$rows=PGV_DB::prepare("SELECT n_givn, COUNT(*) AS num FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (n_id=i_id AND n_file=i_file) WHERE n_file={$ged_id} AND n_type<>'_MARNM' AND n_givn NOT IN ('@P.N.', '') AND LENGTH(n_givn)>1 AND {$sex_sql} GROUP BY n_id, n_givn")
 			->fetchAll();
 		$nameList=array();
 		foreach ($rows as $row) {

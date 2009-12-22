@@ -850,9 +850,11 @@ function update_dates($xref, $ged_id, $gedrec) {
 				$fact=$tmatch[1];
 			}
 			$date=new GedcomDate($match[2]);
-			$sql_insert_date->execute(array($date->date1->d, $date->date1->Format('O'), $date->date1->m, $date->date1->y, $date->date1->minJD, $date->date1->maxJD, $fact, $xref, $ged_id, $date->date1->CALENDAR_ESCAPE()));
+			// TODO: we cast JDs to (int) for the benefit of Postgres.  It may (or may not) give
+			// better overall performance if we change the code that generates them to force integer values.
+			$sql_insert_date->execute(array($date->date1->d, $date->date1->Format('O'), $date->date1->m, $date->date1->y, (int)$date->date1->minJD, (int)$date->date1->maxJD, $fact, $xref, $ged_id, $date->date1->CALENDAR_ESCAPE()));
 			if ($date->date2) {
-				$sql_insert_date->execute(array($date->date2->d, $date->date2->Format('O'), $date->date2->m, $date->date2->y, $date->date2->minJD, $date->date2->maxJD, $fact, $xref, $ged_id, $date->date2->CALENDAR_ESCAPE()));
+				$sql_insert_date->execute(array($date->date2->d, $date->date2->Format('O'), $date->date2->m, $date->date2->y, (int)$date->date2->minJD, (int)$date->date2->maxJD, $fact, $xref, $ged_id, $date->date2->CALENDAR_ESCAPE()));
 			}
 		}
 	}
