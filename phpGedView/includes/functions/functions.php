@@ -1924,7 +1924,7 @@ function sort_facts(&$arr) {
 	foreach($arr as $event) {
 		$event->sortOrder = $order;
 		$order++;
-		if ($event->getValue("DATE")==NULL) $nondated[] = $event;
+		if ($event->getValue("DATE")==NULL || !$event->getDate()->isOk()) $nondated[] = $event;
 		else $dated[] = $event;
 	}
 
