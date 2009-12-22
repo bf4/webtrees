@@ -1039,6 +1039,7 @@ class stats {
 			}
 			return $placelist;
 		}
+		// used by placehierarchy googlemap module
 		else if ($parent>0) {
 			if ($what=='INDI') {
 				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id";
@@ -1052,7 +1053,7 @@ class stats {
 			$rows=self::_runSQL(''
 				.' SELECT'
 				.' p_place AS place,'
-				.' COUNT(*)'
+				.' COUNT(*) AS tot'
 				.' FROM'
 					." {$TBLPREFIX}places"
 				." JOIN {$TBLPREFIX}placelinks ON pl_file=p_file AND p_id=pl_p_id"
