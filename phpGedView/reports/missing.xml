@@ -1,5 +1,5 @@
 <PGVReport access="PRIV_NONE" icon="indis">
-	<PGVRTitle>Missing relatives facts</PGVRTitle>
+	<PGVRTitle><PGVRvar var="pgv_lang[missing_facts_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of individuals who has missing information</PGVRDescription>
 	<PGVRInput name="pid" type="text" default="" lookup="INDI"><PGVRvar var="pgv_lang[enter_pid]"/></PGVRInput>
 	<PGVRInput name="relatives" type="select" default="direct-ancestors" options="child-family,spouse-family,direct-ancestors,ancestors,descendants,all"><PGVRvar var="pgv_lang[choose_relatives]"/></PGVRInput>
@@ -7,7 +7,7 @@
 	<PGVRInput name="pageSize" type="select" default="A4" options="A3,A4,letter,legal"><PGVRvar var="pgv_lang[page_size]"/></PGVRInput>
 	<PGVRInput name="fonts" type="select" default="dejavusans" options="arialunicid0,dejavusans,helvetica"><PGVRvar var="pgv_lang[font]"/></PGVRInput>
 	
-	<PGVRInput name="fsour" type="checkbox" default="0">Sources to the events</PGVRInput>
+	<PGVRInput name="fsour" type="checkbox" default="0"><PGVRvar var="pgv_lang[sources_to_events]" /></PGVRInput>
 	<PGVRInput name="fbirth" type="checkbox" default="1"><PGVRvar var="factarray[BIRT]"/></PGVRInput>
 	<PGVRInput name="fbapm" type="checkbox" default="1"><PGVRvar var="factarray[BAPM]"/> / <PGVRvar var="factarray[CHR]"/></PGVRInput>
 	<PGVRInput name="ffcom" type="checkbox" default="0"><PGVRvar var="factarray[FCOM]"/></PGVRInput>
@@ -38,7 +38,7 @@
 
 	<PGVRDoc pageSize="$pageSize">
 		<PGVRHeader>
-			<PGVRCell align="center" newline="1" style="header">Missing relatives facts</PGVRCell>
+			<PGVRCell align="center" newline="1" style="header"><PGVRvar var="pgv_lang[missing_facts_report]" /></PGVRCell>
 			<PGVRCell align="right" newline="1" style="pagenum"><PGVRvar var="pgv_lang[page]"/> <PGVRPageNum/> / <PGVRTotalPages/></PGVRCell>
 			<PGVRCell align="center" border="1" style="title" width="$name"><PGVRvar var="pgv_lang[name]" /></PGVRCell>
 			<PGVRCell align="center" border="1" newline="1" style="title"><PGVRvar var="factarray[EVEN]" /></PGVRCell>
