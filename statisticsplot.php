@@ -43,8 +43,8 @@ function bimo() {
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
 				if($month==$values['d_month']) {
-					fill_ydata(0, $key, $values['count(*)']);
-					$n1+=$values['count(*)'];
+					fill_ydata(0, $key, $values['total']);
+					$n1+=$values['total'];
 				}
 			}
 		}
@@ -55,12 +55,12 @@ function bimo() {
 			foreach ($months as $key=>$month) {
 				if($month==$values['d_month']) {
 					if ($values['i_sex']=='M') {
-						fill_ydata(0, $key, $values['count(*)']);
-						$n1+=$values['count(*)'];
+						fill_ydata(0, $key, $values['total']);
+						$n1+=$values['total'];
 					}
 					else if ($values['i_sex']=='F') {
-						fill_ydata(1, $key, $values['count(*)']);
-						$n1+=$values['count(*)'];
+						fill_ydata(1, $key, $values['total']);
+						$n1+=$values['total'];
 					}
 				}
 			}
@@ -73,8 +73,8 @@ function bimo() {
 			foreach ($num as $values) {
 				foreach ($months as $key=>$month) {
 					if($month==$values['d_month']) {
-						fill_ydata($boundary, $key, $values['count(*)']);
-						$n1+=$values['count(*)'];
+						fill_ydata($boundary, $key, $values['total']);
+						$n1+=$values['total'];
 					}
 				}
 			}
@@ -100,8 +100,8 @@ function demo() {
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
 				if($month==$values['d_month']) {
-					fill_ydata(0, $key, $values['count(*)']);
-					$n1+=$values['count(*)'];
+					fill_ydata(0, $key, $values['total']);
+					$n1+=$values['total'];
 				}
 			}
 		}
@@ -112,12 +112,12 @@ function demo() {
 			foreach ($months as $key=>$month) {
 				if($month==$values['d_month']) {
 					if ($values['i_sex']=='M') {
-						fill_ydata(0, $key, $values['count(*)']);
-						$n1+=$values['count(*)'];
+						fill_ydata(0, $key, $values['total']);
+						$n1+=$values['total'];
 					}
 					else if ($values['i_sex']=='F') {
-						fill_ydata(1, $key, $values['count(*)']);
-						$n1+=$values['count(*)'];
+						fill_ydata(1, $key, $values['total']);
+						$n1+=$values['total'];
 					}
 				}
 			}
@@ -130,8 +130,8 @@ function demo() {
 			foreach ($num as $values) {
 				foreach ($months as $key=>$month) {
 					if($month==$values['d_month']) {
-						fill_ydata($boundary, $key, $values['count(*)']);
-						$n1+=$values['count(*)'];
+						fill_ydata($boundary, $key, $values['total']);
+						$n1+=$values['total'];
 					}
 				}
 			}
@@ -149,8 +149,8 @@ function mamo() {
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
 				if($month==$values['d_month']) {
-					fill_ydata(0, $key, $values['count(*)']);
-					$n1+=$values['count(*)'];
+					fill_ydata(0, $key, $values['total']);
+					$n1+=$values['total'];
 				}
 			}
 		}
@@ -162,8 +162,8 @@ function mamo() {
 			foreach ($num as $values) {
 				foreach ($months as $key=>$month) {
 					if($month==$values['d_month']) {
-						fill_ydata($boundary, $key, $values['count(*)']);
-						$n1+=$values['count(*)'];
+						fill_ydata($boundary, $key, $values['total']);
+						$n1+=$values['total'];
 					}
 				}
 			}
@@ -436,20 +436,20 @@ function nuch() {
 	if ($z_as == 300) {
 		$num = $stats->statsChildren(false);
 		foreach ($num as $values) {
-			fill_ydata(0, $values['f_numchil'], $values['count(*)']);
-			$n1+=$values['f_numchil']*$values['count(*)'];
+			fill_ydata(0, $values['f_numchil'], $values['total']);
+			$n1+=$values['f_numchil']*$values['total'];
 		}
 	}
 	else if ($z_as == 301) {
 		$num = $stats->statsChildren(false, 'M');
 		foreach ($num as $values) {
-			fill_ydata(0, $values['num'], $values['count(*)']);
-			$n1+=$values['num']*$values['count(*)'];
+			fill_ydata(0, $values['num'], $values['total']);
+			$n1+=$values['num']*$values['total'];
 		}
 		$num = $stats->statsChildren(false, 'F');
 		foreach ($num as $values) {
-			fill_ydata(1, $values['num'], $values['count(*)']);
-			$n1+=$values['num']*$values['count(*)'];
+			fill_ydata(1, $values['num'], $values['total']);
+			$n1+=$values['num']*$values['total'];
 		}
 	}
 	else {
@@ -457,8 +457,8 @@ function nuch() {
 		foreach ($zgrenzen as $boundary) {
 			$num = $stats->statsChildren(false, 'BOTH', $zstart, $boundary);
 			foreach ($num as $values) {
-				fill_ydata($boundary, $values['f_numchil'], $values['count(*)']);
-				$n1+=$values['f_numchil']*$values['count(*)'];
+				fill_ydata($boundary, $values['f_numchil'], $values['total']);
+				$n1+=$values['f_numchil']*$values['total'];
 			}
 			$zstart=$boundary+1;
 		}
