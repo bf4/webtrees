@@ -150,7 +150,7 @@ class PGV_DB {
 			self::$INT3_TYPE    ='INTEGER';
 			self::$INT4_TYPE    ='INTEGER';
 			self::$INT8_TYPE    ='BIGINT';
-			self::$CHAR_TYPE    ='CHAR';
+			self::$CHAR_TYPE    ='VARCHAR'; // PG doesn't automatically TRIM(TRAILING ' ' FROM <col>) when selecting
 			self::$VARCHAR_TYPE ='VARCHAR';
 			self::$UNSIGNED     ='';
 			self::$LIKE         ='ILIKE';
