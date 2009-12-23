@@ -85,7 +85,7 @@ class individuals_Sidebar extends Sidebar {
 					$html=$letter;
 					break;
 			}
-			$html='<a href="sidebar.php?sb_action=individuals&amp;alpha='.urlencode($letter).'" class="sb_indi_letter">'.$html.'</a>';
+			$html='<a href="sidebar.php?sb_action=individuals&amp;alpha='.urlencode($letter).'" class="sb_indi_letter">'.PrintReady($html).'</a>';
 			$out .= $html." ";
 		}
 
@@ -131,10 +131,10 @@ class individuals_Sidebar extends Sidebar {
 		$private_count = 0;
 		foreach($indis as $person) {
 			if ($person->canDisplayName()) {
-				$out .= '<li><a href="'.encode_url($person->getLinkUrl()).'">'.$person->getSexImage().$person->getListName();
+				$out .= '<li><a href="'.encode_url($person->getLinkUrl()).'">'.$person->getSexImage().' '.$person->getListName().' ';
 				if ($person->canDisplayDetails()) {
 					$bd = $person->getBirthDeathYears(false,'');
-					if (!empty($bd)) $out .= ' ('.$bd.')';
+					if (!empty($bd)) $out .= PrintReady(' ('.$bd.')');
 				}
 				$out .= '</a></li>';
 			}
@@ -164,16 +164,16 @@ class individuals_Sidebar extends Sidebar {
 		foreach ($rows as $row) {
 			$person=Person::getInstance($row);
 			if ($person->canDisplayName()) {
-				$out .= '<li><a href="'.encode_url($person->getLinkUrl()).'">'.$person->getSexImage().$person->getListName();
+				$out .= '<li><a href="'.encode_url($person->getLinkUrl()).'">'.$person->getSexImage().' '.$person->getListName().' ';
 				if ($person->canDisplayDetails()) {
 					$bd = $person->getBirthDeathYears(false,'');
-					if (!empty($bd)) $out .= ' ('.$bd.')';
+					if (!empty($bd)) $out .= PrintReady(' ('.$bd.')');
 				}
 				$out .= '</a></li>';
 			}
 			else $private_count++;
 		}
-		if ($private_count>0) $out .= '<li>'.$pgv_lang['private'].' ('.$private_count.')</li>';
+		if ($private_count>0) $out .= '<li>'.PrintReady($pgv_lang['private'].' ('.$private_count.')').'</li>';
 		$out .= '</ul>';
 		return $out;
 	}

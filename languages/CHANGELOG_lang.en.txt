@@ -43,6 +43,7 @@ VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["add_name_to_cart"]						23 Dec 2009				A
 +$pgv_lang['descendancy']							03 Dec 2009				A
 *$pgv_lang["total_unknown"]							27 Nov 2009				C
 *$pgv_lang["total_living"]							27 Nov 2009				C

@@ -82,10 +82,10 @@ class descendancy_Sidebar extends Sidebar {
 		$out .= '<li id="sb_desc_'.$person->getXref().'" class="sb_desc_indi_li"><a href="sidebar.php?sb_action=descendancy&amp;pid='.$person->getXref().'" title="'.$person->getXref().'" class="sb_desc_indi">';
 		if ($generations>0) $out .= '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['minus']['other'].'" border="0" class="plusminus" />';
 		else $out .= '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES['plus']['other'].'" border="0" class="plusminus" />';
-		$out .= $person->getSexImage().$person->getListName();
+		$out .= $person->getSexImage().' '.$person->getListName().' ';
 		if ($person->canDisplayDetails()) {
 			$bd = $person->getBirthDeathYears(false,'');
-			if (!empty($bd)) $out .= ' ('.$bd.')';
+			if (!empty($bd)) $out .= PrintReady(' ('.$bd.')');
 		}
 		$out .= '</a> <a href="'.encode_url($person->getLinkUrl()).'"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['indi']['button'].'" border="0" alt="indi" /></a>';
 		if ($generations>0) {

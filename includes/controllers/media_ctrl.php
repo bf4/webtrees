@@ -317,7 +317,7 @@ class MediaControllerRoot extends IndividualController{
 		else {
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
-			$menu->addLink(encode_url("clippings.php?action=add&id={$this->pid}&type=obje"));
+			$menu->addLink(encode_url("module.php?mod=clippings&action=add&id={$this->pid}&type=obje"));
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		if ($this->canShowGedcomRecord()) {
@@ -330,7 +330,7 @@ class MediaControllerRoot extends IndividualController{
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->mediaobject->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
-			$submenu = new Menu($pgv_lang["add_to_cart"], encode_url("clippings.php?action=add&id={$this->pid}&type=obje"));
+			$submenu = new Menu($pgv_lang["add_to_cart"], encode_url("module.php?mod=clippings&action=add&id={$this->pid}&type=obje"));
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");

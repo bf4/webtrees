@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["mod_admin_hasside"]		= "Sidebar?";
 $pgv_lang["mod_admin_sidebars"]		= "Manage Sidebars";
 $pgv_lang["module_admin"]			= "Module Administration";
 $pgv_lang["mod_admin_installed"]	= "Installed Modules";

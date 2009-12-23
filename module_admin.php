@@ -203,6 +203,7 @@ print_header($pgv_lang["module_admin"]);
       <th class="list_label"><?php echo $pgv_lang['mod_admin_version']?></th>
       <th class="list_label"><?php echo $pgv_lang['mod_admin_hastab']?></th>
       <th class="list_label"><?php echo $pgv_lang['mod_admin_hasmenu']?></th>
+      <th class="list_label"><?php echo $pgv_lang['mod_admin_hasside']?></th>
       <th class="list_label"><?php echo $pgv_lang['mod_admin_access_level']?></th>
       </tr>
     </thead>
@@ -217,6 +218,7 @@ foreach($modules as $mod) {
 	<td class="list_value"><?php echo $mod->getVersion() . " / " . $mod->getPgvVersion() ?></td>
 	<td class="list_value"><?php if ($mod->hasTab()) echo $pgv_lang['yes']; else echo $pgv_lang['no'];?></td>
 	<td class="list_value"><?php if ($mod->hasMenu()) echo $pgv_lang['yes']; else echo $pgv_lang['no'];?></td>
+	<td class="list_value"><?php if ($mod->hasSidebar()) echo $pgv_lang['yes']; else echo $pgv_lang['no'];?></td>
 	<td class="list_value_wrap">
 	  <table>
 	<?php
@@ -377,7 +379,7 @@ foreach($modules as $mod) {
 			?>
 			<tr><td><?php echo $ged_name ?></td><td>
 			<select id="<?php echo $varname?>" name="<?php echo $varname?>">
-				<?php write_access_option_numeric($mod->getTabEnabled($ged_id)) ?>
+				<?php write_access_option_numeric($mod->getSidebarEnabled($ged_id)) ?>
 			</select></td></tr>
 			<?php 
 		} 

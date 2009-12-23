@@ -211,15 +211,6 @@ else { ?>
 										$menu->printMenu();
 										echo "</td>";
 									}
-									$menu = $menubar->getClippingsMenu();
-									if (!is_null($menu) && $menu->link != "") {
-										if (!is_null($menu)) {
-											echo '<td width="1">';
-											$menu->addLabel("", "none");
-											$menu->printMenu();
-											echo "</td>";
-										}
-									}
 									$menu = $menubar->getSearchMenu();
 									if ($menu->link != "") {
 										echo '<td width="1">';

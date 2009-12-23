@@ -85,7 +85,7 @@ class families_Sidebar extends Sidebar {
 					$html=$letter;
 					break;
 			}
-			$html='<a href="sidebar.php?sb_action=families&amp;alpha='.urlencode($letter).'" class="sb_fam_letter">'.$html.'</a>';
+			$html='<a href="sidebar.php?sb_action=families&amp;alpha='.urlencode($letter).'" class="sb_fam_letter">'.PrintReady($html).'</a>';
 			$out .= $html." ";
 		}
 
@@ -131,16 +131,16 @@ class families_Sidebar extends Sidebar {
 		$private_count = 0;
 		foreach($families as $family) {
 			if ($family->canDisplayName()) {
-				$out .= '<li><a href="'.encode_url($family->getLinkUrl()).'">'.$family->getFullName();
+				$out .= '<li><a href="'.encode_url($family->getLinkUrl()).'">'.$family->getFullName().' ';
 				if ($family->canDisplayDetails()) {
 					$bd = $family->getMarriageYear();
-					if (!empty($bd)) $out .= ' ('.$bd.')';
+					if (!empty($bd)) $out .= PrintReady(' ('.$bd.')');
 				}
 				$out .= '</a></li>';
 			}
 			else $private_count++;
 		}
-		if ($private_count>0) $out .= '<li>'.$pgv_lang['private'].' ('.$private_count.')</li>';
+		if ($private_count>0) $out .= '<li>'.PrintReady($pgv_lang['private'].' ('.$private_count.')').'</li>';
 		$out .= '</ul>';
 		return $out;
 	}
@@ -189,16 +189,16 @@ class families_Sidebar extends Sidebar {
 		foreach ($rows as $row) {
 			$family=Family::getInstance($row);
 			if ($family->canDisplayName()) {
-				$out .= '<li><a href="'.encode_url($family->getLinkUrl()).'">'.$family->getFullName();
+				$out .= '<li><a href="'.encode_url($family->getLinkUrl()).'">'.$family->getFullName().' ';
 				if ($family->canDisplayDetails()) {
 					$bd = $family->getMarriageYear();
-					if (!empty($bd)) $out .= ' ('.$bd.')';
+					if (!empty($bd)) $out .= PrintReady(' ('.$bd.')');
 				}
 				$out .= '</a></li>';
 			}
 			else $private_count++;
 		}
-		if ($private_count>0) $out .= '<li>'.$pgv_lang['private'].' ('.$private_count.')</li>';
+		if ($private_count>0) $out .= '<li>'.PrintReady($pgv_lang['private'].' ('.$private_count.')').'</li>';
 		$out .= '</ul>';
 		return $out;
 	}

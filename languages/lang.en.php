@@ -31,7 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang['descendancy'] 			= 'Descendants';
+$pgv_lang["add_name_to_cart"]		= "Add #NAME# to cart";
+$pgv_lang["descendancy"] 			= "Descendants";
 $pgv_lang["gedcomid"]				= "GEDCOM INDI record ID";
 $pgv_lang["sortby"]					= "Sequence";
 $pgv_lang["exact"]					= "Exact";

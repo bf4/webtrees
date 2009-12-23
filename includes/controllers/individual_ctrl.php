@@ -704,7 +704,7 @@ class IndividualControllerRoot extends BaseController {
 			else $menu->addOnclick("return show_gedcom_record('');");
 		} else {
 			if (!empty($PGV_IMAGES["clippings"]["small"])) $menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
-			$menu->addLink(encode_url("clippings.php?action=add&id={$this->pid}&type=indi"));
+			$menu->addLink(encode_url("module.php?mod=clippings&action=add&id={$this->pid}&type=indi"));
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		if ($SHOW_GEDCOM_RECORD) {
@@ -716,7 +716,7 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->indi->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
-			$submenu = new Menu($pgv_lang["add_to_cart"], encode_url("clippings.php?action=add&id={$this->pid}&type=indi"));
+			$submenu = new Menu($pgv_lang["add_to_cart"], encode_url("module.php?mod=clippings&action=add&id={$this->pid}&type=indi"));
 			if (!empty($PGV_IMAGES["clippings"]["small"])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);

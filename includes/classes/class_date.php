@@ -198,17 +198,19 @@ class CalendarDate {
 	// bool $full: true=gedcom style, false=just years
 	// int $jd: date for calculation
 	// TODO: JewishDate needs to redefine this to cope with leap months
-	function GetAge($full, $jd) {
+	function GetAge($full, $jd, $warn_on_negative=true) {
 		if ($this->y==0 || $jd==0) {
 			return '';
 		}
 		if ($this->minJD < $jd && $this->maxJD > $jd) {
 			return '';
 		}
-		if ($this->minJD==$jd)
+		if ($this->minJD==$jd) {
 			return $full?'':'0';
-		if ($jd<$this->minJD)
+		}
+		if ($warn_on_negative && $jd<$this->minJD) {
 			return '<img alt="" src="images/warning.gif" />';
+		}
 		list($y,$m,$d)=$this->JDtoYMD($jd);
 		$dy=$y-$this->y;
 		$dm=$m-max($this->m,1);
@@ -275,7 +277,7 @@ class CalendarDate {
 
 	// How many days in the current week
 	function DaysInWeek() {
-		return $this->NUM_DAYS_OF_WEEK();
+		return self::NUM_DAYS_OF_WEEK();
 	}
 
 	// Format a date
@@ -344,7 +346,7 @@ class CalendarDate {
 
 	function FormatLongWeekday() {
 		global $pgv_lang;
-		$day=$this->DAYS_OF_WEEK($this->minJD % $this->NUM_DAYS_OF_WEEK());
+		$day=$this->DAYS_OF_WEEK($this->minJD % self::NUM_DAYS_OF_WEEK());
 		if (isset($pgv_lang[$day]))
 			return $pgv_lang[$day];
 		return $day;
@@ -352,7 +354,7 @@ class CalendarDate {
 
 	function FormatShortWeekday() {
 		global $pgv_lang;
-		$day=$this->DAYS_OF_WEEK($this->minJD % $this->NUM_DAYS_OF_WEEK());
+		$day=$this->DAYS_OF_WEEK($this->minJD % self::NUM_DAYS_OF_WEEK());
 		if (isset($pgv_lang[$day.'_1st']))
 			return $pgv_lang[$day.'_1st'];
 		if (isset($pgv_lang[$day]))
@@ -375,7 +377,7 @@ class CalendarDate {
 	}
 
 	function FormatNumericWeekday() {
-		return ($this->minJD + 1) % $NUM_DAYS_OF_WEEK();
+		return ($this->minJD + 1) % self::NUM_DAYS_OF_WEEK();
 	}
 
 	function FormatDayOfYear() {
@@ -737,11 +739,11 @@ class HebrewDate extends JewishDate {
 	}
 
 	function FormatLongWeekday() {
-		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return self::$HEBREW_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortWeekday() {
-		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return self::$HEBREW_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortYear() {
@@ -939,11 +941,11 @@ class ArabicDate extends HijriDate {
 	}
 
 	function FormatLongWeekday() {
-		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return self::$ARABIC_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortWeekday() {
-		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return self::$ARABIC_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
 	}
 } // class ArabicDate
 
@@ -1232,23 +1234,23 @@ class GedcomDate {
 
 	// Calculate the number of full years between two events.
 	// Return the result as either a number of years (for indi lists, etc.)
-	static function GetAgeYears($d1, $d2=null) {
+	static function GetAgeYears($d1, $d2=null, $warn_on_negative=true) {
 		if (!is_object($d1)) return;
 		if (!is_object($d2))
-			return $d1->date1->GetAge(false, client_jd());
+			return $d1->date1->GetAge(false, client_jd(), $warn_on_negative );
 		else
-			return $d1->date1->GetAge(false, $d2->MinJD());
+			return $d1->date1->GetAge(false, $d2->MinJD(), $warn_on_negative);
 	}
 
 	// Calculate the years/months/days between two events
 	// Return a gedcom style age string: "1y 2m 3d" (for fact details)
-	static function GetAgeGedcom($d1, $d2=null) {
+	static function GetAgeGedcom($d1, $d2=null, $warn_on_negative=true) {
 		if (is_null($d2)) {
-			return $d1->date1->GetAge(true, client_jd());
+			return $d1->date1->GetAge(true, client_jd(), $warn_on_negative);
 		} else {
 			// If dates overlap, then can't calculate age.
 			if (GedcomDate::Compare($d1, $d2)) {
-				return $d1->date1->GetAge(true, $d2->MinJD());
+				return $d1->date1->GetAge(true, $d2->MinJD(), $warn_on_negative);
 			} if (GedcomDate::Compare($d1, $d2)==0 && $d1->date1->minJD==$d2->MinJD()) {
 				return '0d';
 			} else {

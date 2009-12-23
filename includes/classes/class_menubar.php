@@ -784,28 +784,6 @@ class MenuBar
 	}
 
 	/**
-	* get the clipping menu
-	* @return Menu the menu item
-	*/
-	static function &getClippingsMenu() {
-		global $ENABLE_CLIPPINGS_CART;
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
-		if ((!file_exists(PGV_ROOT.'clippings.php')) || (!empty($SEARCH_SPIDER))) {
-			$menu = new Menu("", "", "");
-//			$menu->print_menu = null;
-			return $menu;
-		}
-		if ($ENABLE_CLIPPINGS_CART <PGV_USER_ACCESS_LEVEL) return null;
-		//-- main clippings menu item
-		$menu = new Menu($pgv_lang["clippings_cart"], encode_url('clippings.php?ged='.$GEDCOM), "down");
-		if (!empty($PGV_IMAGES["clippings"]["large"]))
-			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_clippings");
-		return $menu;
-	}
-
-	/**
 	* get the optional site-specific menu
 	* @return Menu the menu item
 	*/
@@ -907,7 +885,9 @@ class MenuBar
 	function getModuleMenus() {
 		if (!empty($this->modules)) return $this->modules;
 		$this->modules = array();
-		foreach (PGVModule::getActiveList('M', PGV_USER_ACCESS_LEVEL) as $mod) {
+		$mods = PGVModule::getActiveList('M', PGV_USER_ACCESS_LEVEL);
+		uasort($mods, "PGVModule::compare_menu_order");
+		foreach ($mods as $mod) {
 			$menu = $mod->getMenu();
 			if ($menu) $this->modules[] = $mod->getMenu();
 		}

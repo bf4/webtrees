@@ -52,7 +52,8 @@ abstract class Sidebar {
 	 */
 	public function getTitle() {
 		global $pgv_lang;
-		return $pgv_lang[$this->name];
+		if (isset($pgv_lang[$this->name])) return $pgv_lang[$this->name];
+		else return $this->name;
 	}
 	
 	/**

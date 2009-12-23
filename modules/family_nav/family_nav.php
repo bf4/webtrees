@@ -42,6 +42,10 @@ require_once 'includes/controllers/individual_ctrl.php';
 
 class family_nav_Tab extends Tab {
 	
+	public function getLinkUrl(&$person) {
+		
+	}
+	
 	public function hasContent() {
 		return true;
 	}
@@ -74,7 +78,7 @@ class family_nav_Tab extends Tab {
 		}
 		';
 		echo PGV_JS_END;
-
+		
 	 // Start Family Nav Table ----------------------------
 		echo "<table class=\"nav_content\" cellpadding=\"0\">"; 
 		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;

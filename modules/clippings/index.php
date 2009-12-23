@@ -27,9 +27,7 @@
  * @version $Id$
  */
 
-require './config.php';
-
-require_once PGV_ROOT.'includes/controllers/clippings_ctrl.php';
+require_once PGV_ROOT.'modules/clippings/clippings_ctrl.php';
 loadlangfile('pgv_admin');		// we need some definitions from this file, even when not logged in as admin
 
 $controller = new ClippingsController();
@@ -52,7 +50,9 @@ if ($controller->action=='add') {
 	$person = GedcomRecord::getInstance($controller->id);
 	print "<b>".$person->getFullName()."</b>";
 	if ($controller->type=='fam') {?>
-		<form action="clippings.php" method="get">
+		<form action="module.php" method="get">
+		<input type="hidden" name="mod" value="clippings" />
+		<input type="hidden" name="pgv_action" value="index" />
 		<table>
 			<tr><td class="topbottombar"><?php print $pgv_lang["which_links"]?>
 			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
@@ -68,7 +68,9 @@ if ($controller->action=='add') {
 		</form>
 	<?php }
 	else if ($controller->type=='indi') {?>
-		<form action="clippings.php" method="get">
+		<form action="module.php" method="get">
+		<input type="hidden" name="mod" value="clippings" />
+		<input type="hidden" name="pgv_action" value="index" />
 		<table>
 			<tr><td class="topbottombar"><?php print $pgv_lang["which_p_links"]?>
 			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
@@ -87,7 +89,9 @@ if ($controller->action=='add') {
 		</table>
 		</form>
 	<?php } else if ($controller->type=='sour')  {?>
-		<form action="clippings.php" method="get">
+		<form action="module.php" method="get">
+		<input type="hidden" name="mod" value="clippings" />
+		<input type="hidden" name="pgv_action" value="index" />
 		<table>
 			<tr><td class="topbottombar"><?php print $pgv_lang["which_s_links"]?>
 			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
@@ -119,7 +123,9 @@ if ($ct==0) {
 		echo 'function paste_id(value) {pastefield.value=value;}';
 		echo PGV_JS_END;
 		?>
-		<form method="get" name="addin" action="clippings.php">
+		<form method="get" name="addin" action="module.php">
+		<input type="hidden" name="mod" value="clippings" />
+		<input type="hidden" name="pgv_action" value="index" />
 		<table>
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
@@ -149,7 +155,9 @@ if ($ct==0) {
 	print "\r\n\t\t<br /><br />".$pgv_lang["cart_is_empty"]."<br /><br />";
 } else {
 	if ($controller->action != 'download' && $controller->action != 'add') { ?>
-		<form method="get" action="clippings.php">
+		<form method="get" action="module.php">
+		<input type="hidden" name="mod" value="clippings" />
+		<input type="hidden" name="pgv_action" value="index" />
 		<input type="hidden" name="action" value="download" />
 		<table><tr><td class="width33" valign="top" rowspan="3">
 		<table>
@@ -241,7 +249,9 @@ if ($ct==0) {
 		}
 		//-->
 		</script>
-		<form method="get" name="addin" action="clippings.php">
+		<form method="get" name="addin" action="module.php">
+		<input type="hidden" name="mod" value="clippings" />
+		<input type="hidden" name="pgv_action" value="index" />
 		<table>
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
@@ -266,7 +276,7 @@ if ($ct==0) {
 
 
 	<?php } ?>
-	<br /><?php print_help_link("empty_cart_help", "qm");?><a href="clippings.php?action=empty"><?php print $pgv_lang["empty_cart"];?></a>
+	<br /><?php print_help_link("empty_cart_help", "qm");?><a href="module.php?mod=clippings&amp;pgv_action=index&amp;action=empty"><?php print $pgv_lang["empty_cart"];?></a>
 	</td></tr>
 
 	<tr><td class="topbottombar"><h2><?php print_help_link("clip_cart_help", "qm"); print $pgv_lang["clippings_cart"];?></h2></td></tr>
@@ -303,7 +313,7 @@ if ($ct==0) {
 			if ($record) echo '<a href="', encode_url($record->getLinkUrl()), '">', PrintReady($record->getListName()), '</a>';
 			?>
 			</td>
-			<td class="list_value center vmiddle"><a href="clippings.php?action=remove&amp;item=<?php echo $i;?>"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"];?>" border="0" alt="<?php echo $pgv_lang["remove"]?>" title="<?php echo $pgv_lang["remove"];?>" /></a></td>
+			<td class="list_value center vmiddle"><a href="module.php?mod=clippings&amp;action=remove&amp;item=<?php echo $i;?>"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"];?>" border="0" alt="<?php echo $pgv_lang["remove"]?>" title="<?php echo $pgv_lang["remove"];?>" /></a></td>
 		</tr>
 		<?php
 		}

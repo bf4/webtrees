@@ -89,7 +89,7 @@ abstract class PGVModule {
 	protected $configLink = null;
 
 	public static $default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives', 'all_tab');
-	public static $default_sidebars = array('descendancy', 'individuals', 'families');
+	public static $default_sidebars = array('descendancy', 'family_nav', 'clippings', 'individuals', 'families');
 	public static $default_menus = array('page_menu');
 
 	/**

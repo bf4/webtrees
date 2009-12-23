@@ -549,7 +549,7 @@ class ClippingsControllerRoot extends BaseController {
 		global $cart, $pgv_lang, $SHOW_SOURCES, $MULTI_MEDIA, $GEDCOM;
 		if (($clipping['id'] == false) || ($clipping['id'] == ""))
 		return false;
-
+		
 		if (!id_in_cart($clipping['id'])) {
 			$clipping['gedcom'] = $GEDCOM;
 			if ($clipping['type'] == "indi") {

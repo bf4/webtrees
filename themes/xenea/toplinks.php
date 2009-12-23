@@ -83,11 +83,6 @@ $menubar = new MenuBar();
 			$menu->printMenu();
 			print "\t</td>\n";
 		}
-		$menu = $menubar->getClippingsMenu();
-		if ((!is_null($menu)) && ($menu->link != "")) { ?>
-			<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>
-			<?php
-		}
 		$menu = $menubar->getSearchMenu();
 		if($menu->link != "") {
 			print "\t<td width=\"7%\" valign=\"top\">\n";

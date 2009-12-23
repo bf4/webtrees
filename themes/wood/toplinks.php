@@ -69,12 +69,6 @@ if($menu->link != "") {
 	$menu->addLabel("", "right");
 	$menu->printMenu();
 }
-$menu = $menubar->getClippingsMenu();
-if((!is_null($menu)) && ($menu->link != "")) {
-	print "<br />\n";
-	$menu->addLabel("", "right");
-	$menu->printMenu();
-}
 $menu = $menubar->getSearchMenu();
 if($menu->link != "") {
 	print "<br />\n";

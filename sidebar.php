@@ -29,6 +29,11 @@ if ($sb_action!='none') {
 	if (!empty($famid)) {
 		$controller->famid = $famid;
 	}
+	$sid = safe_GET('sid', PGV_REGEX_XREF, '');
+	if (empty($sid)) $sid = safe_POST('sid', PGV_REGEX_XREF, '');
+	if (!empty($sid)) {
+		$controller->sid = $sid;
+	}
 	
 	if ($sb_action=='loadMods') {
 		$counter = 0;
@@ -78,17 +83,23 @@ if (isset($controller)) {
 	if (isset($controller->pid)) $pid = $controller->pid;
 	if (isset($controller->rootid)) $pid = $controller->rootid;
 	if (isset($controller->famid)) $famid = $controller->famid;
+	if (isset($controller->sid)) $pid = $controller->sid;
 } else {
 	$pid = safe_GET_xref('pid', '');
 	if (empty($pid)) $pid = safe_POST_xref('pid', '');
 	if (empty($pid)) $pid = safe_GET_xref('rootid',  '');
 	if (empty($pid)) $pid = safe_POST_xref('rootid', '');
+	if (empty($pid)) $pid = safe_POST_xref('sid', '');
+	if (empty($pid)) $pid = safe_GET_xref('sid', '');
 	$famid = safe_GET('famid', PGV_REGEX_XREF, '');
 	if (empty($famid)) $famid = safe_POST('famid', PGV_REGEX_XREF, '');
 }
 ?>
 <style type="text/css">
 <!-- 
+<?php 
+//-- standard theme styles
+if ($TEXT_DIRECTION=='ltr') { ?>
 #sidebar {
 	position: absolute;
 	right: 1px;
@@ -98,18 +109,37 @@ if (isset($controller)) {
 	margin: 0px;
 	background-color: white;
 }
+#sidebar_controls {
+	position: relative;
+	float: left;
+	left: -13px;
+	z-index: 10;
+}
+<?php } 
+//-- RTL styles
+else { ?>
+#sidebar {
+	position: absolute;
+	left: 1px;
+	width: 0px;
+	height: 400px;
+	z-index: 100;
+	margin: 0px;
+	background-color: white;
+}
+#sidebar_controls {
+	position: relative;
+	float: right;
+	right: -13px;
+	z-index: 10;
+}
+<?php } ?>
 #sidebarAccordion {
 	display: none;
 }
 #sidebar_pin {
 	display: none;
 	padding: 1px;
-}
-#sidebar_controls {
-	position: relative;
-	float: left;
-	left: -13px;
-	z-index: 10;
 }
 .sb_indi_surname_li, .sb_fam_surname_li {
 	list-style-image: url('images/plus.gif');
@@ -152,6 +182,17 @@ if (isset($controller)) {
 
 #sidebar_open {
 	padding: 1px;
+}
+
+#sb_clippings_content li {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	white-space: nowrap;
+}
+#sb_clippings_content ul {
+	padding: 0px;
+	marging: 0px;
 }
 // -->
 </style>

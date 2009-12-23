@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Added Family Nav sidebar and Clippings sidebar, fixed sidebar rtl (yalnifj)
  - Merged: Merge changes r6538 - r6542 from the trunk. (windmillway)
  - Changed: Corrected logic when adding an assisted Shared Note when "Editing" an existing Census event. (windmillway)
  - Fixed: fix conflict with temp upgrade and initial install (yalnifj)

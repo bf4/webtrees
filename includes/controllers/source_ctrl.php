@@ -306,7 +306,7 @@ class SourceControllerRoot extends BaseController {
 		{
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
-			$menu->addLink(encode_url("clippings.php?action=add&id={$this->sid}&type=sour"));
+			$menu->addLink(encode_url("module.php?mod=clippings&action=add&id={$this->sid}&type=sour"));
 		}
 		if ($SHOW_GEDCOM_RECORD)
 		{
@@ -327,7 +327,7 @@ class SourceControllerRoot extends BaseController {
 		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL)
 		{
 				// other / add_to_cart
-				$submenu = new Menu($pgv_lang['add_to_cart'], encode_url("clippings.php?action=add&id={$this->sid}&type=sour"));
+				$submenu = new Menu($pgv_lang['add_to_cart'], encode_url("module.php?mod=clippings&action=add&id={$this->sid}&type=sour"));
 				if (!empty($PGV_IMAGES["clippings"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");

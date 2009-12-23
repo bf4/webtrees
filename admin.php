@@ -130,29 +130,29 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
   });
 //]]>
   </script>
-<table class="center <?php print $TEXT_DIRECTION ?> width90">
+<table class="center <?php echo $TEXT_DIRECTION ?> width90">
 	<tr>
 		<td colspan="2" class="center"><?php
 		echo '<h2>', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, '<br />', $pgv_lang['administration'], '</h2>';
-		print $pgv_lang["system_time"];
-		print " ".format_timestamp(time());
-		print "<br />".$pgv_lang["user_time"];
-		print " ".format_timestamp(client_time());
+		echo $pgv_lang["system_time"];
+		echo " ".format_timestamp(time());
+		echo "<br />".$pgv_lang["user_time"];
+		echo " ".format_timestamp(client_time());
 		if (PGV_USER_IS_ADMIN) {
 			if ($err_write) {
-				print "<br /><span class=\"error\">";
-				print $pgv_lang["config_still_writable"];
-				print "</span><br /><br />";
+				echo "<br /><span class=\"error\">";
+				echo $pgv_lang["config_still_writable"];
+				echo "</span><br /><br />";
 			}
 			if ($verify_msg) {
-				print "<br />";
-				print "<a href=\"".encode_url("useradmin.php?action=listusers&filter=admunver")."\" class=\"error\">".$pgv_lang["admin_verification_waiting"]."</a>";
-				print "<br /><br />";
+				echo "<br />";
+				echo "<a href=\"".encode_url("useradmin.php?action=listusers&filter=admunver")."\" class=\"error\">".$pgv_lang["admin_verification_waiting"]."</a>";
+				echo "<br /><br />";
 			}
 			if ($warn_msg) {
-				print "<br />";
-				print "<a href=\"".encode_url("useradmin.php?action=listusers&filter=warnings")."\" class=\"error\" >".$pgv_lang["admin_user_warnings"]."</a>";
-				print "<br /><br />";
+				echo "<br />";
+				echo "<a href=\"".encode_url("useradmin.php?action=listusers&filter=warnings")."\" class=\"error\" >".$pgv_lang["admin_user_warnings"]."</a>";
+				echo "<br /><br />";
 			}
 		}
 		?></td>
@@ -180,30 +180,30 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		<?php } ?>
 	</ul>
 	<div id="info">
-		<table class="center <?php print $TEXT_DIRECTION ?> width100">
+		<table class="center <?php echo $TEXT_DIRECTION ?> width100">
 			<tr>                                                                                                                                             
-	            <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["admin_info"]; ?></td>                            
+	            <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["admin_info"]; ?></td>                            
 	    	</tr>
 			<tr>
 				<td class="optionbox width50"><?php print_help_link("readmefile_help", "qm"); ?><a
 					href="readme.txt" target="manual"
-					title="<?php print $pgv_lang["view_readme"]; ?>"><?php print $pgv_lang["readme_documentation"];?></a></td>
+					title="<?php echo $pgv_lang["view_readme"]; ?>"><?php echo $pgv_lang["readme_documentation"];?></a></td>
 				<td class="optionbox width50"><?php print_help_link("phpinfo_help", "qm"); ?><a
 					href="pgvinfo.php?action=phpinfo"
-					title="<?php print $pgv_lang["show_phpinfo"]; ?>"><?php print $pgv_lang["phpinfo"];?></a></td>
+					title="<?php echo $pgv_lang["show_phpinfo"]; ?>"><?php echo $pgv_lang["phpinfo"];?></a></td>
 			</tr>
 			<tr>
 				<td class="optionbox width50"><?php print_help_link("config_help_help", "qm"); ?><a
-					href="pgvinfo.php?action=confighelp"><?php print $pgv_lang["config_help"];?></a></td>
+					href="pgvinfo.php?action=confighelp"><?php echo $pgv_lang["config_help"];?></a></td>
 				<td class="optionbox width50"><?php print_help_link("changelog_help", "qm"); ?><a
 					href="changelog.php" target="manual"
-					title="<?php print $pgv_lang["view_changelog"]; ?>"><?php print_text("changelog"); ?></a></td>
+					title="<?php echo $pgv_lang["view_changelog"]; ?>"><?php print_text("changelog"); ?></a></td>
 			</tr>
 			<?php /* 
 			// -----------------------------------------------------------------------
 			<tr>
 				<td class="optionbox width50"><?php print_help_link("registry_help", "qm"); ?><a
-					href="<?php echo PGV_REGISTRY_URL; ?>" target="_blank"><?php print $pgv_lang["pgv_registry"];?></a></td>
+					href="<?php echo PGV_REGISTRY_URL; ?>" target="_blank"><?php echo $pgv_lang["pgv_registry"];?></a></td>
 				<td class="optionbox width50">&nbsp;</td>
 			</tr>
 			// -----------------------------------------------------------------------
@@ -211,24 +211,24 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		</table>
 	</div>
 	<div id="gedcom">
-		<table class="center <?php print $TEXT_DIRECTION ?> width100">
+		<table class="center <?php echo $TEXT_DIRECTION ?> width100">
 			<tr>                                                                                                                                             
-	            <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["admin_geds"]; ?></td>                            
+	            <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["admin_geds"]; ?></td>                            
 	    	</tr>
 			<tr>
 				<td class="optionbox width50"><?php print_help_link("edit_gedcoms_help", "qm"); ?><a
-					href="editgedcoms.php"><?php print $pgv_lang["manage_gedcoms"];?></a></td>
+					href="editgedcoms.php"><?php echo $pgv_lang["manage_gedcoms"];?></a></td>
 				<td class="optionbox width50"><?php print_help_link("help_edit_merge.php", "qm"); ?><a
-					href="edit_merge.php"><?php print $pgv_lang["merge_records"]; ?></a></td>
+					href="edit_merge.php"><?php echo $pgv_lang["merge_records"]; ?></a></td>
 			</tr>
 			<tr>
-				<td class="optionbox width50"><?php if (PGV_USER_IS_ADMIN) { print_help_link("help_dir_editor.php", "qm"); print "<a href=\"dir_editor.php\">".$pgv_lang["index_dir_cleanup"]."</a>"; } ?>&nbsp;</td>
-				<td class="optionbox width50"><?php if ($d_pgv_changes != "") print $d_pgv_changes; else print "&nbsp;"; ?></td>
+				<td class="optionbox width50"><?php if (PGV_USER_IS_ADMIN) { print_help_link("help_dir_editor.php", "qm"); echo "<a href=\"dir_editor.php\">".$pgv_lang["index_dir_cleanup"]."</a>"; } ?>&nbsp;</td>
+				<td class="optionbox width50"><?php if ($d_pgv_changes != "") echo $d_pgv_changes; else echo "&nbsp;"; ?></td>
 			</tr>
 			<?php if (PGV_USER_GEDCOM_ADMIN && is_dir('./modules/batch_update')) { ?>
 			<tr>
 				<td class="optionbox with50"><?php print_help_link("batch_update_help", "qm"); ?><a
-					href="module.php?mod=batch_update"><?php print $pgv_lang["batch_update"]; ?></a></td>
+					href="module.php?mod=batch_update"><?php echo $pgv_lang["batch_update"]; ?></a></td>
 				<td class="optionbox width50">&nbsp;</td>
 			</tr>
 			<?php } ?>
@@ -238,21 +238,21 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	<?php if (PGV_USER_CAN_EDIT) { 
 		?>
 		<div id="unlinked">
-		<table class="center <?php print $TEXT_DIRECTION ?> width100">
+		<table class="center <?php echo $TEXT_DIRECTION ?> width100">
 		<tr>                                                                                                                                             
-			<td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["add_unlinked"]; ?></td>                            
+			<td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["add_unlinked"]; ?></td>                            
 		</tr>
 		<tr>
 			<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_person_help", "qm"); ?>
-				<a href="javascript: <?php print $pgv_lang["add_unlinked_person"]; ?> "onclick="addnewchild(''); return false;"><?php print $pgv_lang["add_unlinked_person"]; ?></a>
+				<a href="javascript: <?php echo $pgv_lang["add_unlinked_person"]; ?> "onclick="addnewchild(''); return false;"><?php echo $pgv_lang["add_unlinked_person"]; ?></a>
 			</td>
 			<td class="optionbox width50"><?php print_help_link("edit_add_unlinked_source_help", "qm"); ?>
-				<a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?> "onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a>
+				<a href="javascript: <?php echo $pgv_lang["add_unlinked_source"]; ?> "onclick="addnewsource(''); return false;"><?php echo $pgv_lang["add_unlinked_source"]; ?></a>
 			</td>
 		</tr>
 		<tr>
 			<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_note_help", "qm"); ?><a
-				href="javascript: <?php print $pgv_lang["add_unlinked_note"]; ?> "onclick="addnewnote(''); return false;"><?php print $pgv_lang["add_unlinked_note"]; ?></a>
+				href="javascript: <?php echo $pgv_lang["add_unlinked_note"]; ?> "onclick="addnewnote(''); return false;"><?php echo $pgv_lang["add_unlinked_note"]; ?></a>
 			</td>
 			<td class="optionbox width50">
 				&nbsp;
@@ -266,31 +266,31 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	if (PGV_USER_IS_ADMIN) { 
 		?>
 		<div id="site">
-		<table class="center <?php print $TEXT_DIRECTION ?> width100">
+		<table class="center <?php echo $TEXT_DIRECTION ?> width100">
 		<tr>                                                                                                                                             
-            <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["admin_site"]; ?></td>                            
+            <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["admin_site"]; ?></td>                            
 		</tr>
 		<tr>
 			<td class="optionbox width50"><?php print_help_link("help_editconfig.php", "qm"); ?><a
-				href="install.php?step=4"><?php print $pgv_lang["configuration"];?></a></td>
+				href="install.php?step=4"><?php echo $pgv_lang["configuration"];?></a></td>
 			<td class="optionbox width50"><?php print_help_link("um_tool_help", "qm"); ?><a
-				href="usermigrate.php?proceed=migrate"><?php print $pgv_lang["um_header"];?></a></td>
+				href="usermigrate.php?proceed=migrate"><?php echo $pgv_lang["um_header"];?></a></td>
 		</tr>
 		<tr>
 			<td class="optionbox width50"><?php print_help_link("help_useradmin.php", "qm"); ?><a
-				href="useradmin.php"><?php print $pgv_lang["user_admin"];?></a></td>
+				href="useradmin.php"><?php echo $pgv_lang["user_admin"];?></a></td>
 			<td class="optionbox width50"><?php print_help_link("um_bu_help", "qm"); ?><a
-				href="usermigrate.php?proceed=backup"><?php print $pgv_lang["um_backup"];?></a></td>
+				href="usermigrate.php?proceed=backup"><?php echo $pgv_lang["um_backup"];?></a></td>
 		</tr>
 		<tr>
 			<td class="optionbox width50"><?php print_help_link("help_faq.php", "qm"); ?><a
-				href="faq.php"><?php print $pgv_lang["faq_list"];?></a></td>
+				href="faq.php"><?php echo $pgv_lang["faq_list"];?></a></td>
 			<td class="optionbox width50"><?php print_help_link("help_managesites", "qm"); ?><a
-				href="manageservers.php"><?php print $pgv_lang["link_manage_servers"];?></a></td>
+				href="manageservers.php"><?php echo $pgv_lang["link_manage_servers"];?></a></td>
 		</tr>
 		<tr>
 			<td class="optionbox width50"><?php print_help_link("help_changelanguage.php", "qm"); ?><a
-				href="changelanguage.php?action=editold"><?php print $pgv_lang["enable_disable_lang"];?></a>
+				href="changelanguage.php?action=editold"><?php echo $pgv_lang["enable_disable_lang"];?></a>
 				<?php
 				if (!file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
 					echo "<br /><span class=\"error\">";
@@ -299,14 +299,14 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 				}
 				?></td>
 			<td class="optionbox width50"><?php print_help_link("add_new_language_help", "qm"); ?><a
-				href="changelanguage.php?action=addnew"><?php print $pgv_lang["add_new_language"];?></a>
+				href="changelanguage.php?action=addnew"><?php echo $pgv_lang["add_new_language"];?></a>
 			</td>
 		</tr>
 		<tr>
 			<td class="optionbox width50"><?php print_help_link("help_editlang.php", "qm"); ?><a
-				href="editlang.php"><?php print $pgv_lang["translator_tools"];?></a>
+				href="editlang.php"><?php echo $pgv_lang["translator_tools"];?></a>
 			</td>
-			<td class="optionbox width50"><?php print $d_logfile_str; ?></td>
+			<td class="optionbox width50"><?php echo $d_logfile_str; ?></td>
 		</tr>
 		</table>
 		</div>
@@ -326,16 +326,16 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 </tr></table>
 	<?php 
 	if (isset($logfilename) && ($logfilename != "")) {
-		print "<hr><table align=\"center\" width=\"70%\"><tr><td class=\"listlog\">";
-		print "<strong>";
-		print $pgv_lang["logfile_content"];
-		print " [" . $INDEX_DIRECTORY . $logfilename . "]</strong><br /><br />";
+		echo "<hr><table align=\"center\" width=\"70%\"><tr><td class=\"listlog\">";
+		echo "<strong>";
+		echo $pgv_lang["logfile_content"];
+		echo " [" . $INDEX_DIRECTORY . $logfilename . "]</strong><br /><br />";
 		$lines=file($INDEX_DIRECTORY . $logfilename);
 		$num = sizeof($lines);
 		for ($i = 0; $i < $num ; $i++) {
-			print $lines[$i] . "<br />";
+			echo $lines[$i] . "<br />";
 		}
-		print "</td></tr></table><hr>";
+		echo "</td></tr></table><hr>";
 	}
 	echo PGV_JS_START;
 	echo 'function manageservers() {';
