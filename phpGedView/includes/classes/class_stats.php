@@ -1334,21 +1334,21 @@ class stats {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
-			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						.'d_year<>0 AND '
 						."d_fact='BIRT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else if ($sex) {
-			$sql = "SELECT d_month, i_sex, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, i_sex, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						."d_fact='BIRT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else {
-			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						."d_fact='BIRT' AND "
@@ -1371,7 +1371,7 @@ class stats {
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
-				$tot += $values['count(*)'];
+				$tot += $values['total'];
 			}
 			// Beware divide by zero
 			if ($tot==0) return '';
@@ -1384,8 +1384,8 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
-				$centuries .= $century.' - '.$values['count(*)'].'|';
+				$counts[] = round(100 * $values['total'] / $tot, 0);
+				$centuries .= $century.' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
@@ -1399,21 +1399,21 @@ class stats {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
-			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						.'d_year<>0 AND '
 						."d_fact='DEAT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else if ($sex) {
-			$sql = "SELECT d_month, i_sex, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, i_sex, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						."d_fact='DEAT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else {
-			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						."d_fact='DEAT' AND "
@@ -1436,7 +1436,7 @@ class stats {
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
-				$tot += $values['count(*)'];
+				$tot += $values['total'];
 			}
 			// Beware divide by zero
 			if ($tot==0) return '';
@@ -1449,8 +1449,8 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
-				$centuries .= $century.' - '.$values['count(*)'].'|';
+				$counts[] = round(100 * $values['total'] / $tot, 0);
+				$centuries .= $century.' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
