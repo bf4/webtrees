@@ -3135,7 +3135,7 @@ class stats {
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chm=D,FF0000,0,0,3,1|{$chm}&amp;chd=e:{$chd}&amp;chco=0000FF&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_average_children"]."\" title=\"".$pgv_lang["stat_average_children"]."\" />";
 		} else {
 			if ($sex=='M') {
-				$sql = "SELECT num, COUNT(*) FROM "
+				$sql = "SELECT num, COUNT(*) AS total FROM "
 						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
 							."LEFT OUTER JOIN {$TBLPREFIX}individuals "
 							."ON l_from=i_id AND l_file=i_file AND i_sex='M' AND l_type='FAMC' "
@@ -3144,7 +3144,7 @@ class stats {
 						." GROUP BY num ORDER BY num ASC";
 			}
 			else if ($sex=='F') {
-				$sql = "SELECT num, COUNT(*) FROM "
+				$sql = "SELECT num, COUNT(*) AS total FROM "
 						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
 							."LEFT OUTER JOIN {$TBLPREFIX}individuals "
 							."ON l_from=i_id AND l_file=i_file AND i_sex='F' AND l_type='FAMC' "
@@ -3153,7 +3153,7 @@ class stats {
 						." GROUP BY num ORDER BY num ASC";
 			}
 			else {
-				$sql = "SELECT f_numchil, COUNT(*) FROM {$TBLPREFIX}families ";
+				$sql = "SELECT f_numchil, COUNT(*) AS total FROM {$TBLPREFIX}families ";
 				if ($year1>=0 && $year2>=0) {
 					$sql .= "AS fam LEFT JOIN {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
 						.' WHERE'
