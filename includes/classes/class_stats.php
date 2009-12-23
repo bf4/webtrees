@@ -935,40 +935,11 @@ class stats {
 			$life_dir = 'DESC';
 		}
 		$rows=self::_runSQL(''
-			.' SELECT'
-				.' d2.d_year,'
-				.' d2.d_type,'
-				.' d2.d_fact,'
-				.' d2.d_gid'
-			.' FROM'
-				." {$TBLPREFIX}dates AS d2"
-			.' WHERE'
-				." d2.d_file={$this->_ged_id} AND"
-				." d2.d_fact IN ({$query_field}) AND"
-				.' d2.d_julianday1=('
-					.' SELECT'
-						." {$dmod}(d_julianday1)"
-					.' FROM'
-						." {$TBLPREFIX}dates"
-					.' JOIN ('
-						.' SELECT'
-							.' d1.d_gid, MIN(d1.d_julianday1) as date'
-						.' FROM'
-							."  {$TBLPREFIX}dates AS d1"
-						.' WHERE'
-							." d1.d_fact IN ({$query_field}) AND"
-							." d1.d_file={$this->_ged_id} AND"
-							.' d1.d_julianday1<>0'
-						.' GROUP BY'
-							.' d1.d_gid'
-					.') AS d3'
-					.' WHERE'
-						." d_file={$this->_ged_id} AND"
-						." d_fact IN ({$query_field}) AND"
-						.' d_julianday1=date'
-				.' )'
-			.' ORDER BY'
-				." d_julianday1 {$life_dir}, d_type"
+			."SELECT d_year, d_type, d_fact, d_gid"
+			." FROM {$TBLPREFIX}dates"
+			." WHERE d_file={$this->_ged_id} AND d_fact IN ({$query_field}) AND d_julianday1<>0"
+			." ORDER BY d_julianday1 {$life_dir}, d_type",
+			1
 		);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
@@ -1671,7 +1642,7 @@ class stats {
 		$rows=self::_runSQL(''
 			.' SELECT'
 				.' birth.d_gid AS id,'
-				.' birth.d_julianday1 AS age'
+				.' MIN(birth.d_julianday1) AS age'
 			.' FROM'
 				." {$TBLPREFIX}dates AS birth,"
 				." {$TBLPREFIX}individuals AS indi"
@@ -2137,7 +2108,7 @@ class stats {
 		$hrows=self::_runSQL(''
 			.' SELECT DISTINCT'
 				.' fam.f_id AS family,'
-				.' husbdeath.d_julianday2-married.d_julianday1 AS age'
+				.' MIN(husbdeath.d_julianday2-married.d_julianday1) AS age'
 			.' FROM'
 				." {$TBLPREFIX}families AS fam"
 			.' LEFT JOIN'
@@ -2159,7 +2130,7 @@ class stats {
 		$wrows=self::_runSQL(''
 			.' SELECT DISTINCT'
 				.' fam.f_id AS family,'
-				.' wifedeath.d_julianday2-married.d_julianday1 AS age'
+				.' MIN(wifedeath.d_julianday2-married.d_julianday1) AS age'
 			.' FROM'
 				." {$TBLPREFIX}families AS fam"
 			.' LEFT JOIN'
@@ -2181,7 +2152,7 @@ class stats {
 		$drows=self::_runSQL(''
 			.' SELECT DISTINCT'
 				.' fam.f_id AS family,'
-				.' divorced.d_julianday2-married.d_julianday1 AS age'
+				.' MIN(divorced.d_julianday2-married.d_julianday1) AS age'
 			.' FROM'
 				." {$TBLPREFIX}families AS fam"
 			.' LEFT JOIN'
@@ -2271,11 +2242,11 @@ class stats {
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		if ($age_dir=='DESC') {
-			$query1 = ' wifebirth.d_julianday2-husbbirth.d_julianday1 AS age';
+			$query1 = ' MIN(wifebirth.d_julianday2-husbbirth.d_julianday1) AS age';
 			$query2 = ' wifebirth.d_julianday2 >= husbbirth.d_julianday1 AND'
 					 .' husbbirth.d_julianday1 <> 0';
 		} else {
-			$query1 = ' husbbirth.d_julianday2-wifebirth.d_julianday1 AS age';
+			$query1 = ' MIN(husbbirth.d_julianday2-wifebirth.d_julianday1) AS age';
 			$query2 = ' wifebirth.d_julianday1 < husbbirth.d_julianday2 AND'
 					 .' wifebirth.d_julianday1 <> 0';
 		}
@@ -2415,7 +2386,7 @@ class stats {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
-			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						.'d_year<>0 AND '
@@ -2452,7 +2423,7 @@ class stats {
 				.' (indi.i_id = fam.f_husb OR indi.i_id = fam.f_wife)'
 			.' ORDER BY fams, indi, age ASC';
 		} else {
-			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 				."WHERE "
 				."d_file={$this->_ged_id} AND "
 				."d_fact='MARR'";
@@ -2470,7 +2441,7 @@ class stats {
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
-				$tot += $values['count(*)'];
+				$tot += $values['total'];
 			}
 			// Beware divide by zero
 			if ($tot==0) return '';
@@ -2484,8 +2455,8 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
-				$centuries .= $century.' - '.$values['count(*)'].'|';
+				$counts[] = round(100 * $values['total'] / $tot, 0);
+				$centuries .= $century.' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
@@ -2498,7 +2469,7 @@ class stats {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
-			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						.'d_year<>0 AND '
@@ -2535,7 +2506,7 @@ class stats {
 				.' (indi.i_id = fam.f_husb OR indi.i_id = fam.f_wife)'
 			.' ORDER BY fams, indi, age ASC';
 		} else {
-			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 				."WHERE "
 				."d_file={$this->_ged_id} AND "
 				."d_fact IN ('DIV', 'ANUL', '_SEPR')";
@@ -2553,7 +2524,7 @@ class stats {
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
-				$tot += $values['count(*)'];
+				$tot += $values['total'];
 			}
 			// Beware divide by zero
 			if ($tot==0) return '';
@@ -2567,8 +2538,8 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
-				$centuries .= $century.' - '.$values['count(*)'].'|';
+				$counts[] = round(100 * $values['total'] / $tot, 0);
+				$centuries .= $century.' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
