@@ -1520,7 +1520,7 @@ $pgv_lang["cemetery_report"]		= "Raport o cmentarzach";
 $pgv_lang["burialplace"]			= "Nazwa miejscowości pochówku";
 $pgv_lang["fact_sources_report"]	= "Źródła wydarzeń";
 $pgv_lang["missing_facts_report"]	= "Brakujące informacje o krewnych";
-$pgv_lang["sources_to_events"]		= "Żródła wydarzeń";
+$pgv_lang["sources_to_events"]		= "Źródła wydarzeń";
 
 $pgv_lang["cleanup"]				= "Porządkowanie";
 
