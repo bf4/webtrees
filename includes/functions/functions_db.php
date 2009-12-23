@@ -2375,28 +2375,21 @@ function is_media_used_in_other_gedcom($file_name, $ged_id) {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_SITE_SETTING table
+// We can't cache/reuse prepared statements here, as we need to call these
+// functions after performing DDL statements, and these invalidate any
+// existing prepared statement handles in some databases.
 ////////////////////////////////////////////////////////////////////////////////
 function get_site_setting($site_setting_name, $default=null) {
 	global $TBLPREFIX;
-	static $statement=null;
 
-	if (is_null($statement)) {
-		$statement=PGV_DB::prepare("SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?");
-	}
-
-	return $statement->execute(array($site_setting_name))->fetchOne($default);
+	return PGV_DB::prepare(
+		"SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?"
+	)->execute(array($site_setting_name))->fetchOne($default);
 }
 function set_site_setting($site_setting_name, $site_setting_value) {
 	global $TBLPREFIX;
-	// We can't cache/reuse prepared statements here, as we need to call this
-	// function after performing DDL statements, and these invalidate any
-	// existing prepared statement handles in some databases.
 
-	$old_site_setting_value=
-		PGV_DB::prepare("SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?")
-		->execute(array($site_setting_name))
-		->fetchOne();
-
+	$old_site_setting_value=get_site_setting($site_setting_name);
 	if (is_null($old_site_setting_value)) {
 		// Value doesn't exist - insert
 		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
