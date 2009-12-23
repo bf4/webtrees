@@ -1523,6 +1523,9 @@ $pgv_lang["marrdate2"]					= "Ehedatenbereich Ende";
 $pgv_lang["sort_by"]					= "Sortieren nach";
 $pgv_lang["cemetery_report"]			= "Friedhofsbericht";
 $pgv_lang["burialplace"]				= "Beerdigungsort enthält";
+$pgv_lang["fact_sources_report"]		= "Quellenbericht";
+$pgv_lang["missing_facts_report"]		= "Bericht über fehlende Fakten";
+$pgv_lang["sources_to_events"]			= "Quellen";
 
 $pgv_lang["cleanup"]					= "Korrigieren";
 
