@@ -273,6 +273,8 @@ function soundex_std($text) {
 	if (count($words)>1) {
 		$soundex_array[]=soundex(strtr($text, ' ', ''));
 	}
+	// A varchar(255) column can only hold 51 4-character codes (plus 50 delimiters)
+	$soundex_array=array_slice($soundex_array, 0, 51);
 	return implode(':', array_unique($soundex_array));
 }
 
@@ -290,6 +292,8 @@ function soundex_dm($text) {
 	if (count($words)>1) {
 		$soundex_array=array_merge($soundex_array, DMSoundex(strtr($text, ' ', '')));
 	}
+	// A varchar(255) column can only hold 36 6-entries (plus 35 delimiters)
+	$soundex_array=array_slice($soundex_array, 0, 36);
 	return implode(':', array_unique($soundex_array));
 }
 
