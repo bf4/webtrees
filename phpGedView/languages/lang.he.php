@@ -1525,6 +1525,9 @@ $pgv_lang["marrdate2"]		= "סיום תחום תאריכי נישואין";
 $pgv_lang["sort_by"]			= "מיין לפי";
 $pgv_lang["cemetery_report"]		= "דו\"ח בתי קברות";
 $pgv_lang["burialplace"]		= "מקום קבורה מכיל";
+$pgv_lang["fact_sources_report"]	= "מקורות של עובדות";
+$pgv_lang["missing_facts_report"]	= "עובדות חסרות של קרובים";
+$pgv_lang["sources_to_events"]	= "מקורות לעובדות";
 
 $pgv_lang["cleanup"]			= "ניקיון";
 
