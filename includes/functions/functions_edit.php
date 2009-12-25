@@ -1802,12 +1802,19 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		add_simple_tag(($level+1)." SHARED_NOTE");
 		echo "</table></div>";
 	}
-	if ($tag=="ASSO") {
+	if ($tag=="ASSO" || $tag=="ASSO2") {
 		//-- Add a new ASSOciate
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso');\"><img id=\"newasso_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_asso"], "</a>";
-		print_help_link("edit_add_ASSO_help", "qm");
-		echo "<br />";
-		echo "<div id=\"newasso\" style=\"display: none;\">\n";
+		if ($tag=="ASSO") {
+			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso');\"><img id=\"newasso_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_asso"], "</a>";
+			print_help_link("edit_add_ASSO_help", "qm", "add_asso");
+			echo "<br />";
+			echo "<div id=\"newasso\" style=\"display: none;\">\n";
+		} else {
+			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso2');\"><img id=\"newasso2_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_asso"], "</a>";
+			print_help_link("edit_add_ASSO_help", "qm", "add_asso");
+			echo "<br />";
+			echo "<div id=\"newasso2\" style=\"display: none;\">\n";
+		}
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
 		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 ASSO
@@ -1881,7 +1888,6 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 // Add some empty tags to create a new fact
 function addSimpleTags($fact) {
 	global $ADVANCED_PLAC_FACTS, $factarray;
-
 	add_simple_tag("0 {$fact}");
 	add_simple_tag("0 DATE", $fact, fact_label("{$fact}:DATE"));
 	add_simple_tag("0 PLAC", $fact, fact_label("{$fact}:PLAC"));
@@ -2579,8 +2585,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 * Populates the global $tags array with any missing sub-tags.
 * @param string $level1tag the type of the level 1 gedcom record
 */
-function insert_missing_subtags($level1tag, $add_date=false)
-{
+function insert_missing_subtags($level1tag, $add_date=false) {
 	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $ADVANCED_NAME_FACTS, $factarray;
 	global $nondatefacts, $nonplacfacts;
 
