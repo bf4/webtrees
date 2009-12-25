@@ -2795,7 +2795,7 @@ function PGVRifSHandler($attrs) {
 	$condition = preg_replace("/\\$(\w+)/", "\$vars[\"$1\"][\"id\"]", $condition);
 	$condition = str_replace(array(" LT ", " GT "), array("<", ">"), $condition);
 	// Replace the first accurance only once of @fact:DATE or in any other combinations to the current fact, such as BIRT
-	$condition = str_replace("@fact", "@".$fact, $condition);
+	$condition = str_replace("@fact", $fact, $condition);
 	$match = array();
 	$count = preg_match_all("/@([\w:\.]+)/", $condition, $match, PREG_SET_ORDER);
 	$i = 0;
