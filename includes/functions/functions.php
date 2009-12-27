@@ -3738,9 +3738,6 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		if (PGV_USE_LIGHTBOX) {
 			// Lightbox is installed
 			require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-			if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
-				require_once PGV_ROOT.'modules/lightbox/lb_config.php';
-			}
 			switch ($type) {
 			case 'url_flv':
 				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');

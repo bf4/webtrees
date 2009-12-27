@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PHPGedView Development Team
+ * Copyright (C) 2002 to 2009  PHPGedView Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,65 +32,62 @@
 // -------------------------------------------------------
 
 if (!defined('PGV_PHPGEDVIEW')) {
-	header('HTTP/1.0 403 Forbidden');
-	exit;
+ header('HTTP/1.0 403 Forbidden');
+ exit;
 }
 
 global $mediatab,$LB_AL_HEAD_LINKS,$LB_AL_THUMB_LINKS,$LB_ML_THUMB_LINKS,$LB_SS_SPEED;
 global $LB_MUSIC_FILE,$LB_TRANSITION,$LB_URL_WIDTH,$LB_URL_HEIGHT,$GEDCOM;
 
-$mediatab = "1";  					// Individual Page Media Tab
-										// Set to 	0	to hide Media Tab on Indi page from All Users,
-										// Set to 	1	to show Media Tab on Indi page to All Users,  [Default]
+// Create LB tables, if not already present
+try {
+	PGV_DB::updateSchema('./modules/lightbox/db_schema/', 'LB_SCHEMA_VERSION', 1);
+} catch (PDOException $ex) {
+	// The schema update scripts should never fail.  If they do, there is no clean recovery.
+	die($ex);
+}
+
+// TODO: it will be more efficient to fetch all LB_% settings in a single DB query
+
+$mediatab=get_site_setting('LB_ENABLED', '1');  // Individual Page Media Tab
+          // Set to  0 to hide Media Tab on Indi page from All Users,
+          // Set to  1 to show Media Tab on Indi page to All Users,  [Default]
 
 
-$LB_AL_HEAD_LINKS = "both";			// Album Tab Page Header Links.
-										// Set to "icon"	to view icon links.
-										// Set to "text"	to view text links
-										// Set to "both"	to view both.  [Default]
+$LB_AL_HEAD_LINKS=get_site_setting('LB_AL_HEAD_LINKS', 'both');   // Album Tab Page Header Links.
+          // Set to 'icon' to view icon links.
+          // Set to 'text' to view text links
+          // Set to 'both' to view both.
 
-$LB_TT_BALLOON = "true"; 			// Album Tab Page - Above Thumbnail Links.
-										// Set to "true"	to view Tooltip Balloon. [Default]
-										// Set to "false"	to view Tooltip Normal.
+$LB_TT_BALLOON=get_site_setting('LB_TT_BALLOON', 'true');    // Album Tab Page - Above Thumbnail Links.
+          // Set to 'true' to view Tooltip Balloon.
+          // Set to 'false' to view Tooltip Normal.
 
-$LB_AL_THUMB_LINKS = "text"; 		// Album Tab Page - Below Thumbnail Links.
-										// Set to "icon"	to view icon links.
-										// Set to "text"	to view text links. [Default]
+$LB_AL_THUMB_LINKS=get_site_setting('LB_AL_THUMB_LINKS', 'text');   // Album Tab Page - Below Thumbnail Links.
+          // Set to 'icon' to view icon links.
+          // Set to 'text' to view text links. [Default]
 
-$LB_SS_SPEED = "6";					// SlideShow speed in seconds.  [Min 2  max 25]  [Default=4]
+$LB_SS_SPEED=get_site_setting('LB_SS_SPEED', '6');     // SlideShow speed in seconds.  [Min 2  max 25]
 
-$LB_MUSIC_FILE = "modules/lightbox/music/music.mp3";  // The music file. [mp3 only] [Default = modules/lightbox/music/music.mp3]
+$LB_MUSIC_FILE=get_site_setting('LB_MUSIC_FILE', 'modules/lightbox/music/music.mp3');  // The music file. [mp3 only]
 
-$LB_TRANSITION = "warp";			// Next or Prvious Image Transition effect
-										// Set to "none"		No transtion effect.
-										// Set to "normal"		Normal transtion effect.
-										// Set to "double"		Fast transition effect.
-										// Set to "warp"		Stretch transtition effect. [Default]
+$LB_TRANSITION=get_site_setting('LB_TRANSITION', 'warp');   // Next or Prvious Image Transition effect
+          // Set to 'none'  No transtion effect.
+          // Set to 'normal'  Normal transtion effect.
+          // Set to 'double'  Fast transition effect.
+          // Set to 'warp'  Stretch transtition effect. [Default]
 
-$LB_URL_WIDTH = "1000";				//  URL Window width in pixels. [default 1000]
+$LB_URL_WIDTH =get_site_setting('LB_URL_WIDTH',  '1000'); //  URL Window width in pixels
+$LB_URL_HEIGHT=get_site_setting('LB_URL_HEIGHT', '600'); //  URL Window height in pixels
 
-$LB_URL_HEIGHT = "600";				//  URL Window height in pixels. [default 600]
-
-$LB_ML_THUMB_LINKS = "text"; 		// MultiMedia List Page Thumbnail Links
-										// Set to "icon"	to view icon links.
-										// Set to "text"	to view text links. [Default]
-										// Set to "both"	to view both.
-										// Set to "none"	to view neither.
+$LB_ML_THUMB_LINKS = get_site_setting('LB_ML_THUMB_LINKS', 'text');   // MultiMedia List Page Thumbnail Links
+          // Set to 'icon' to view icon links.
+          // Set to 'text' to view text links. [Default]
+          // Set to 'both' to view both.
+          // Set to 'none' to view neither.
 
 // End Configuration Parameters -------------------------------------------------
 
-
-
-
-
-
-// Do not change parameters below this line -------------------------------------------
-
-	// Tab id no for Lightbox
-	if (file_exists("modules/googlemap/defaultconfig.php")) {
-		$tabno=8;
-	}else{
-		$tabno=7;
-	}
-
+// Tab id no for Lightbox
+$tabno=get_site_setting('GM_ENABLED') ? 8 : 7;
 ?>

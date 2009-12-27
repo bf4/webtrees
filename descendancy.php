@@ -39,9 +39,6 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 // LBox =====================================================================================
 if (PGV_USE_LIGHTBOX) {
 	include PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
-		include PGV_ROOT.'modules/lightbox/lb_config.php';
-	}
 	include PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ==========================================================================================
