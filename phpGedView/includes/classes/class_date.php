@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Classes for Gedcom Date/Calendar functionality.
  *
