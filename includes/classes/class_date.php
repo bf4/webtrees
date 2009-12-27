@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Classes for Gedcom Date/Calendar functionality.
  *
@@ -715,12 +715,12 @@ class JewishDate extends CalendarDate {
 // rather than the local language.
 ////////////////////////////////////////////////////////////////////////////////
 class HebrewDate extends JewishDate {
-	static $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב'", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
-	static $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
-
-	const ALAFIM="אלפים";
 	const GERSHAYIM="״";
 	const GERSH="׳";
+	const ALAFIM="אלפים";
+	
+	static $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב׳", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
+	static $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
 
 	function FormatDayZeros() {
 		return self::NumToHebrew($this->d);
@@ -733,7 +733,7 @@ class HebrewDate extends JewishDate {
 	function FormatLongMonth() {
 		$mon=$this->NUM_TO_MONTH($this->m);
 		if ($mon=='adr' && $this->IsLeapYear())
-			return "אדר א'";
+			return "אדר א׳";
 		else
 			return self::$HEBREW_MONTHS[$this->m];
 	}
