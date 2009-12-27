@@ -32,15 +32,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-// Create GM tables, if not already present
-// TODO: is there a better place to put this code?
-try {
-	PGV_DB::updateSchema('./modules/googlemap/db_schema/', 'GM_SCHEMA_VERSION', 2);
-} catch (PDOException $ex) {
-	// The schema update scripts should never fail.  If they do, there is no clean recovery.
-	die($ex);
-}
-
 require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 
 loadLangFile('pgv_lang, pgv_confighelp, pgv_help, googlemap:lang, googlemap:help_text');
