@@ -30,6 +30,16 @@ if (!defined('PGV_PHPGEDVIEW')) {
  exit;
 }
 
+// Create GM tables, if not already present
+try {
+	PGV_DB::updateSchema('./modules/googlemap/db_schema/', 'GM_SCHEMA_VERSION', 2);
+} catch (PDOException $ex) {
+	// The schema update scripts should never fail.  If they do, there is no clean recovery.
+	die($ex);
+}
+
+// TODO: it will be more efficient to fetch all GM_% settings in a single DB query
+
 $GOOGLEMAP_ENABLED     = get_site_setting('GM_ENABLED',     '0'); // Enable or disable Googlemap
 
 $GOOGLEMAP_API_KEY     = get_site_setting('GM_API_KEY',     'ABQIAAAAf5wooX9tR-_75IApQk3ELRRi_j0U6kJrkFvY4-OX2XYmEAa76BS4jUDCnrN8f4ShbgJ5JP2PChz8rA');  // Fill in your key here. Request key from http://www.google.com/apis/maps/
