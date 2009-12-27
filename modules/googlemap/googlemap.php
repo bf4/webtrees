@@ -30,8 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require('modules/googlemap/defaultconfig.php');
-if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
+require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 
 global $SESSION_HIDE_GOOGLEMAP;
 $SESSION_HIDE_GOOGLEMAP = "empty";
