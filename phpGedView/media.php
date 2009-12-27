@@ -960,9 +960,8 @@ if (check_media_structure()) {
 		if (count($medialist) && ($subclick=='search' || $subclick=='all')) {
 			if (PGV_USE_LIGHTBOX) {
 				// Get Lightbox config variables
-				if (file_exists("modules/lightbox/lb_config.php")) include('modules/lightbox/lb_config.php');
-				else include('modules/lightbox/lb_defaultconfig.php');
-				include('modules/lightbox/functions/lb_call_js.php');
+				require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+				require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 			}
 
 			// Sort the media list according to the user's wishes

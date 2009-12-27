@@ -491,7 +491,6 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 // Lbox additions if installed ---------------------------------------------------------------------------------------------
 if (PGV_USE_LIGHTBOX) {
 	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) require PGV_ROOT.'modules/lightbox/lb_config.php';
 	require_once PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ------------------------------------------------------------------------------------------------------------------------------

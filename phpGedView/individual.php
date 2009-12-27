@@ -243,9 +243,6 @@ function showchanges() {
 <?php
 if (PGV_USE_LIGHTBOX) {
 	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
-		require PGV_ROOT.'modules/lightbox/lb_config.php';
-	}
 	if ($theme_name=="Minimal") {
 		// Force icon options to "text" when we're dealing with the Minimal theme
 		if ($LB_AL_HEAD_LINKS!="none") { $LB_AL_HEAD_LINKS = "text"; }
