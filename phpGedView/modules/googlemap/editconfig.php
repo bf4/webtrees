@@ -32,11 +32,16 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require PGV_ROOT.'modules/googlemap/defaultconfig.php';
-
-if (file_exists(PGV_ROOT.'modules/googlemap/config.php')) {
-	require PGV_ROOT.'modules/googlemap/config.php';
+// Create GM tables, if not already present
+// TODO: is there a better place to put this code?
+try {
+	PGV_DB::updateSchema('./modules/googlemap/db_schema/', 'GM_SCHEMA_VERSION', 2);
+} catch (PDOException $ex) {
+	// The schema update scripts should never fail.  If they do, there is no clean recovery.
+	die($ex);
 }
+
+require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 
 loadLangFile('pgv_lang, pgv_confighelp, pgv_help, googlemap:lang, googlemap:help_text');
 
@@ -60,7 +65,7 @@ function print_level_config_table($level) {
 					<?php print_help_link("GM_NAME_PREFIX_help", "qm", "GM_NAME_PREFIX"); echo $pgv_lang["gm_name_prefix"];?>
 				</td>
 				<td>
-					<input type="text" name="NEW_NAME_PREFIX_<?php echo $level;?>" value="<?php echo $GM_PREFIX[$level];?>" size="20" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GM_NAME_PREFIX_help');" />
+					<input type="text" name="NEW_GM_PREFIX_<?php echo $level;?>" value="<?php echo $GM_PREFIX[$level];?>" size="20" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GM_NAME_PREFIX_help');" />
 				</td>
 			</tr>
 			<tr>
@@ -68,7 +73,7 @@ function print_level_config_table($level) {
 					<?php print_help_link("GM_NAME_POSTFIX_help", "qm", "GM_NAME_POSTFIX"); echo $pgv_lang["gm_name_postfix"];?>
 				</td>
 				<td>
-					<input type="text" name="NEW_NAME_POSTFIX_<?php echo $level;?>" value="<?php echo $GM_POSTFIX[$level];?>" size="20" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GM_NAME_POSTFIX_help');" />
+					<input type="text" name="NEW_GM_POSTFIX_<?php echo $level;?>" value="<?php echo $GM_POSTFIX[$level];?>" size="20" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GM_NAME_POSTFIX_help');" />
 				</td>
 			</tr>
 			<tr>
@@ -76,7 +81,7 @@ function print_level_config_table($level) {
 					<?php print_help_link("GM_NAME_PRE_POST_help", "qm", "GM_NAME_PRE_POST"); echo $pgv_lang["gm_name_pre_post"];?>
 				</td>
 				<td>
-					<select name="NEW_PRE_POST_LEVEL_<?php echo $level;?>" dir="ltr" tabindex="<?php $i++; echo $i?>" onchange="showSelectedLevels()">
+					<select name="NEW_GM_PRE_POST_MODE_<?php echo $level;?>" dir="ltr" tabindex="<?php $i++; echo $i?>" onchange="showSelectedLevels()">
 						<option value="0"<?php if ($GM_PRE_POST_MODE[$level] == 0) echo ' selected="selected"';?>><?php echo $pgv_lang["gm_pp_none"];?></option>
 						<option value="1"<?php if ($GM_PRE_POST_MODE[$level] == 1) echo ' selected="selected"';?>><?php echo $pgv_lang["gm_pp_n_pr_po_b"];?></option>
 						<option value="2"<?php if ($GM_PRE_POST_MODE[$level] == 2) echo ' selected="selected"';?>><?php echo $pgv_lang["gm_pp_n_po_pr_b"];?></option>
@@ -106,55 +111,40 @@ if (!PGV_USER_IS_ADMIN) {
 }
 
 if ($action=="update" && !isset($security_user)) {
-	$configtext = implode('', file("modules/googlemap/defaultconfig.php"));
-	$configtext = preg_replace('/\$GOOGLEMAP_ENABLED\s*=\s*".*";/', "\$GOOGLEMAP_ENABLED = \"".$_POST["NEW_GOOGLEMAP_ENABLE"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_API_KEY\s*=\s*".*";/', "\$GOOGLEMAP_API_KEY = \"".$_POST["NEW_GOOGLEMAP_API_KEY"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_MAP_TYPE\s*=\s*".*";/', "\$GOOGLEMAP_MAP_TYPE = \"".$_POST["NEW_GOOGLEMAP_MAP_TYPE"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_MIN_ZOOM\s*=\s*".*";/', "\$GOOGLEMAP_MIN_ZOOM = \"".$_POST["NEW_GOOGLEMAP_MIN_ZOOM"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_MAX_ZOOM\s*=\s*".*";/', "\$GOOGLEMAP_MAX_ZOOM = \"".$_POST["NEW_GOOGLEMAP_MAX_ZOOM"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_XSIZE\s*=\s*".*";/', "\$GOOGLEMAP_XSIZE = \"".$_POST["NEW_GOOGLEMAP_XSIZE"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_YSIZE\s*=\s*".*";/', "\$GOOGLEMAP_YSIZE = \"".$_POST["NEW_GOOGLEMAP_YSIZE"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PRECISION_0\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_0 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_0"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PRECISION_1\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_1 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_1"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PRECISION_2\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_2 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_2"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PRECISION_3\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_3 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_3"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PRECISION_4\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_4 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_4"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PRECISION_5\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_5 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_5"]."\";", $configtext);
-	$configtext = preg_replace('/\$GM_DEFAULT_TOP_VALUE\s*=\s*".*";/', "\$GM_DEFAULT_TOP_VALUE = \"".$_POST["NEW_DEFAULT_TOP_LEVEL"]."\";", $configtext);
-	$configtext = preg_replace('/\$GM_MAX_NOF_LEVELS\s*=\s*".*";/', "\$GM_MAX_NOF_LEVELS = \"".$_POST["NEW_LEVEL_COUNT"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_COORD\s*=\s*".*";/', "\$GOOGLEMAP_COORD = \"".$_POST["NEW_GOOGLEMAP_COORD"]."\";", $configtext);
-	//wooc place hierarchy
-	$configtext = preg_replace('/\$GOOGLEMAP_PLACE_HIERARCHY\s*=\s*".*";/', "\$GOOGLEMAP_PLACE_HIERARCHY = \"".$_POST["NEW_GOOGLEMAP_PLACE_HIERARCHY"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PH_XSIZE\s*=\s*".*";/', "\$GOOGLEMAP_PH_XSIZE = \"".$_POST["NEW_GOOGLEMAP_PH_XSIZE"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PH_YSIZE\s*=\s*".*";/', "\$GOOGLEMAP_PH_YSIZE = \"".$_POST["NEW_GOOGLEMAP_PH_YSIZE"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PH_MARKER\s*=\s*".*";/', "\$GOOGLEMAP_PH_MARKER = \"".$_POST["NEW_GOOGLEMAP_PH_MARKER"]."\";", $configtext);
-	$configtext = preg_replace('/\$GM_DISP_SHORT_PLACE\s*=\s*".*";/', "\$GM_DISP_SHORT_PLACE = \"".$_POST["NEW_GM_DISP_SHORT_PLACE"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PH_WHEEL\s*=\s*".*";/', "\$GOOGLEMAP_PH_WHEEL = \"".$_POST["NEW_GOOGLEMAP_PH_WHEEL"]."\";", $configtext);
-	$configtext = preg_replace('/\$GOOGLEMAP_PH_CONTROLS\s*=\s*".*";/', "\$GOOGLEMAP_PH_CONTROLS = \"".$_POST["NEW_GOOGLEMAP_PH_CONTROLS"]."\";", $configtext);
-	$configtext = preg_replace('/\$GM_DISP_COUNT\s*=\s*".*";/', "\$GM_DISP_COUNT = \"".$_POST["NEW_GM_DISP_COUNT"]."\";", $configtext);
+	set_site_setting('GM_ENABLED',           $_POST['NEW_GM_ENABLE']);
+	set_site_setting('GM_API_KEY',           $_POST['NEW_GM_API_KEY']);
+	set_site_setting('GM_MAP_TYPE',          $_POST['NEW_GM_MAP_TYPE']);
+	set_site_setting('GM_MIN_ZOOM',          $_POST['NEW_GM_MIN_ZOOM']);
+	set_site_setting('GM_MAX_ZOOM',          $_POST['NEW_GM_MAX_ZOOM']);
+	set_site_setting('GM_XSIZE',             $_POST['NEW_GM_XSIZE']);
+	set_site_setting('GM_YSIZE',             $_POST['NEW_GM_YSIZE']);
+	set_site_setting('GM_PRECISION_0',       $_POST['NEW_GM_PRECISION_0']);
+	set_site_setting('GM_PRECISION_1',       $_POST['NEW_GM_PRECISION_1']);
+	set_site_setting('GM_PRECISION_2',       $_POST['NEW_GM_PRECISION_2']);
+	set_site_setting('GM_PRECISION_3',       $_POST['NEW_GM_PRECISION_3']);
+	set_site_setting('GM_PRECISION_4',       $_POST['NEW_GM_PRECISION_4']);
+	set_site_setting('GM_PRECISION_5',       $_POST['NEW_GM_PRECISION_5']);
+	set_site_setting('GM_DEFAULT_TOP_VALUE', $_POST['NEW_GM_DEFAULT_TOP_LEVEL']);
+	set_site_setting('GM_MAX_NOF_LEVELS',    $_POST['NEW_GM_LEVEL_COUNT']);
+	set_site_setting('GM_COORD',             $_POST['NEW_GM_COORD']);
+	set_site_setting('GM_PLACE_HIERARCHY',   $_POST['NEW_GM_PLACE_HIERARCHY']);
+	set_site_setting('GM_PH_XSIZE',          $_POST['NEW_GM_PH_XSIZE']);
+	set_site_setting('GM_PH_YSIZE',          $_POST['NEW_GM_PH_YSIZE']);
+	set_site_setting('GM_PH_MARKER',         $_POST['NEW_GM_PH_MARKER']);
+	set_site_setting('GM_DISP_SHORT_PLACE',  $_POST['NEW_GM_DISP_SHORT_PLACE']);
+	set_site_setting('GM_PH_WHEEL',          $_POST['NEW_GM_PH_WHEEL']);
+	set_site_setting('GM_PH_CONTROLS',       $_POST['NEW_GM_PH_CONTROLS']);
+	set_site_setting('GM_DISP_COUNT',        $_POST['NEW_GM_DISP_COUNT']);
 
-	for($i = 1; $i <= 9; $i++) {
-		$configtext = preg_replace('/\$GM_PREFIX\['.$i.'\]\s*=\s*".*";/', '\$GM_PREFIX['.$i.'] = "'.$_POST["NEW_NAME_PREFIX_".$i].'";', $configtext);
-		$configtext = preg_replace('/\$GM_POSTFIX\['.$i.'\]\s*=\s*".*";/', '\$GM_POSTFIX['.$i.'] = "'.$_POST["NEW_NAME_POSTFIX_".$i].'";', $configtext);
-		$configtext = preg_replace('/\$GM_PRE_POST_MODE\['.$i.'\]\s*=\s*".*";/', '\$GM_PRE_POST_MODE['.$i.'] = "'.$_POST["NEW_PRE_POST_LEVEL_".$i].'";', $configtext);
+	for ($i=1; $i<=9; $i++) {
+		set_site_setting('GM_PREFIX_'.$i,        $_POST['NEW_GM_PREFIX_'.$i]);
+		set_site_setting('GM_POSTFIX_'.$i,       $_POST['NEW_GM_POSTFIX_'.$i]);
+		set_site_setting('GM_PRE_POST_MODE_'.$i, $_POST['NEW_GM_PRE_POST_MODE_'.$i]);
 	}
 
-	$res = @eval($configtext);
-	if ($res===false) {
-		$fp = fopen("modules/googlemap/config.php", "wb");
-		if (!$fp) {
-			echo "<span class=\"error\">";
-			echo $pgv_lang["pgv_config_write_error"];
-			echo "<br /></span>";
-		}
-		else {
-			fwrite($fp, $configtext);
-			fclose($fp);
-			$logline = AddToLog("Googlemap config updated");
-			// read the config file again, to set the vars
-			require("modules/googlemap/config.php");
-		}
-	}
+	AddToLog('Googlemap config updated');
+	// read the config file again, to set the vars
+	require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 }
 
 $i = 0;
@@ -177,47 +167,47 @@ $i = 0;
 	}
 
 	function showSelectedLevels() {
-		if (document.configform.NEW_LEVEL_COUNT.value >= 1) {
+		if (document.configform.NEW_GM_LEVEL_COUNT.value >= 1) {
 			document.getElementById('level1').style.display = 'block';
 		} else {
 			document.getElementById('level1').style.display = 'none';
 		}
-		if (document.configform.NEW_LEVEL_COUNT.value >= 2) {
+		if (document.configform.NEW_GM_LEVEL_COUNT.value >= 2) {
 			document.getElementById('level2').style.display = 'block';
 		} else {
 			document.getElementById('level2').style.display = 'none';
 		}
-		if (document.configform.NEW_LEVEL_COUNT.value >= 3) {
+		if (document.configform.NEW_GM_LEVEL_COUNT.value >= 3) {
 			document.getElementById('level3').style.display = 'block';
 		} else {
 			document.getElementById('level3').style.display = 'none';
 		}
-		if (document.configform.NEW_LEVEL_COUNT.value >= 4) {
+		if (document.configform.NEW_GM_LEVEL_COUNT.value >= 4) {
 			document.getElementById('level4').style.display = 'block';
 		} else {
 			document.getElementById('level4').style.display = 'none';
 		}
-		if (document.configform.NEW_LEVEL_COUNT.value >= 5) {
+		if (document.configform.NEW_GM_LEVEL_COUNT.value >= 5) {
 			document.getElementById('level5').style.display = 'block';
 		} else {
 			document.getElementById('level5').style.display = 'none';
 		}
-		if (document.configform.NEW_LEVEL_COUNT.value >= 6) {
+		if (document.configform.NEW_GM_LEVEL_COUNT.value >= 6) {
 			document.getElementById('level6').style.display = 'block';
 		} else {
 			document.getElementById('level6').style.display = 'none';
 		}
-		if (document.configform.NEW_LEVEL_COUNT.value >= 7) {
+		if (document.configform.NEW_GM_LEVEL_COUNT.value >= 7) {
 			document.getElementById('level7').style.display = 'block';
 		} else {
 			document.getElementById('level7').style.display = 'none';
 		}
-		if (document.configform.NEW_LEVEL_COUNT.value >= 8) {
+		if (document.configform.NEW_GM_LEVEL_COUNT.value >= 8) {
 			document.getElementById('level8').style.display = 'block';
 		} else {
 			document.getElementById('level8').style.display = 'none';
 		}
-		if (document.configform.NEW_LEVEL_COUNT.value >= 9) {
+		if (document.configform.NEW_GM_LEVEL_COUNT.value >= 9) {
 			document.getElementById('level9').style.display = 'block';
 		} else {
 			document.getElementById('level9').style.display = 'none';
@@ -234,20 +224,20 @@ $i = 0;
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_ENABLE_help", "qm", "GOOGLEMAP_ENABLE"); echo $pgv_lang["googlemap_enable"];?></td>
 		<td class="optionbox">
-			<select name="NEW_GOOGLEMAP_ENABLE" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_ENABLED_help');">
-				<option value="false" <?php if ($GOOGLEMAP_ENABLED=="false") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
-				<option value="true" <?php if ($GOOGLEMAP_ENABLED=="true") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
+			<select name="NEW_GM_ENABLE" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_ENABLED_help');">
+				<option value="0" <?php if ($GOOGLEMAP_ENABLED=="0") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
+				<option value="1" <?php if ($GOOGLEMAP_ENABLED=="1") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
 			</select>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_API_KEY_help", "qm", "GOOGLEMAP_API_KEY"); echo $pgv_lang["googlemapkey"];?></td>
-		<td class="optionbox"><input type="text" name="NEW_GOOGLEMAP_API_KEY" value="<?php echo $GOOGLEMAP_API_KEY;?>" size="60" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_API_KEY_help');" /></td>
+		<td class="optionbox"><input type="text" name="NEW_GM_API_KEY" value="<?php echo $GOOGLEMAP_API_KEY;?>" size="60" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_API_KEY_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_MAP_TYPE_help", "qm", "GOOGLEMAP_MAP_TYPE"); echo $pgv_lang["gm_map_type"];?></td>
 		<td class="optionbox">
-			<select name="NEW_GOOGLEMAP_MAP_TYPE" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_TYPE_help');">
+			<select name="NEW_GM_MAP_TYPE" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_TYPE_help');">
 				<option value="G_NORMAL_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_NORMAL_MAP") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["gm_map"];?></option>
 				<option value="G_SATELLITE_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_SATELLITE_MAP") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["gm_satellite"];?></option>
 				<option value="G_HYBRID_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_HYBRID_MAP") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["gm_hybrid"];?></option>
@@ -259,17 +249,17 @@ $i = 0;
 		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_MAP_SIZE_help", "qm", "GOOGLEMAP_MAP_SIZE"); echo $pgv_lang["gm_map_size"];?></td>
 		<td class="optionbox">
 			<?php echo $pgv_lang["gm_map_size_x"]; ?>
-			<input type="text" name="NEW_GOOGLEMAP_XSIZE" value="<?php echo $GOOGLEMAP_XSIZE;?>" size="10" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_SIZE_help');" />
+			<input type="text" name="NEW_GM_XSIZE" value="<?php echo $GOOGLEMAP_XSIZE;?>" size="10" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_SIZE_help');" />
 			<?php echo $pgv_lang["gm_map_size_y"]; ?>
-			<input type="text" name="NEW_GOOGLEMAP_YSIZE" value="<?php echo $GOOGLEMAP_YSIZE;?>" size="10" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_SIZE_help');" />
+			<input type="text" name="NEW_GM_YSIZE" value="<?php echo $GOOGLEMAP_YSIZE;?>" size="10" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_SIZE_help');" />
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_help", "qm", "GOOGLEMAP_PH"); echo $pgv_lang["gm_place_hierarchy"];?></td>
 		<td class="optionbox">
-			<select name="NEW_GOOGLEMAP_PLACE_HIERARCHY" tabindex="<?php $i++; echo $i?>;">
-				<option value="false" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="false") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
-				<option value="true" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="true") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
+			<select name="NEW_GM_PLACE_HIERARCHY" tabindex="<?php $i++; echo $i?>;">
+				<option value="0" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="0") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
+				<option value="1" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="1") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
 			</select>
 		</td>
 	</tr>
@@ -279,9 +269,9 @@ $i = 0;
 		</td>
 		<td class="optionbox">
 			<?php echo $pgv_lang["gm_map_size_x"]; ?>
-			<input type="text" name="NEW_GOOGLEMAP_PH_XSIZE" value="<?php echo $GOOGLEMAP_PH_XSIZE;?>" size="10" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PH_MAP_SIZE_help');" />
+			<input type="text" name="NEW_GM_PH_XSIZE" value="<?php echo $GOOGLEMAP_PH_XSIZE;?>" size="10" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PH_MAP_SIZE_help');" />
 			<?php echo $pgv_lang["gm_map_size_y"]; ?>
-			<input type="text" name="NEW_GOOGLEMAP_PH_YSIZE" value="<?php echo $GOOGLEMAP_PH_YSIZE;?>" size="10" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PH_MAP_SIZE_help');" />
+			<input type="text" name="NEW_GM_PH_YSIZE" value="<?php echo $GOOGLEMAP_PH_YSIZE;?>" size="10" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PH_MAP_SIZE_help');" />
 		</td>
 	</tr>
 	<tr>
@@ -289,7 +279,7 @@ $i = 0;
 			<?php print_help_link("GOOGLEMAP_PH_MARKER_help", "qm", "GOOGLEMAP_PH_MARKER"); echo $pgv_lang["gm_ph_marker_type"];?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_GOOGLEMAP_PH_MARKER" tabindex="<?php $i++; echo $i?>;">
+			<select name="NEW_GM_PH_MARKER" tabindex="<?php $i++; echo $i?>;">
 				<option value="G_DEFAULT_ICON" <?php if ($GOOGLEMAP_PH_MARKER=="G_DEFAULT_ICON") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["gm_standard_marker"];?></option>
 				<option value="G_FLAG" <?php if ($GOOGLEMAP_PH_MARKER=="G_FLAG") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["pl_flag"];?></option>
 			</select>
@@ -301,8 +291,8 @@ $i = 0;
 		</td>
 		<td class="optionbox">
 			<select name="NEW_GM_DISP_SHORT_PLACE" tabindex="<?php $i++; echo $i?>;">
-				<option value="false" <?php if ($GM_DISP_SHORT_PLACE=="false") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
-				<option value="true" <?php if ($GM_DISP_SHORT_PLACE=="true") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
+				<option value="0" <?php if ($GM_DISP_SHORT_PLACE=="0") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
+				<option value="1" <?php if ($GM_DISP_SHORT_PLACE=="1") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
 			</select>
 		</td>
 	</tr>
@@ -312,8 +302,8 @@ $i = 0;
 		</td>
 		<td class="optionbox">
 			<select name="NEW_GM_DISP_COUNT" tabindex="<?php $i++; echo $i?>;">
-				<option value="false" <?php if ($GM_DISP_COUNT=="false") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
-				<option value="true" <?php if ($GM_DISP_COUNT=="true") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
+				<option value="0" <?php if ($GM_DISP_COUNT=="0") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
+				<option value="1" <?php if ($GM_DISP_COUNT=="1") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
 			</select>
 		</td>
 	</tr>
@@ -322,9 +312,9 @@ $i = 0;
 			<?php print_help_link("GOOGLEMAP_PH_WHEEL_help", "qm", "GOOGLEMAP_PH_WHEEL"); echo $pgv_lang["gm_ph_wheel"];?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_GOOGLEMAP_PH_WHEEL" tabindex="<?php $i++; echo $i?>;">
-				<option value="false" <?php if ($GOOGLEMAP_PH_WHEEL=="false") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
-				<option value="true" <?php if ($GOOGLEMAP_PH_WHEEL=="true") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
+			<select name="NEW_GM_PH_WHEEL" tabindex="<?php $i++; echo $i?>;">
+				<option value="0" <?php if ($GOOGLEMAP_PH_WHEEL=="0") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
+				<option value="1" <?php if ($GOOGLEMAP_PH_WHEEL=="1") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
 			</select>
 		</td>
 	</tr>
@@ -333,9 +323,9 @@ $i = 0;
 			<?php print_help_link("GOOGLEMAP_PH_CONTROLS_help", "qm", "GOOGLEMAP_PH_CONTROLS"); echo $pgv_lang["gm_ph_controls"];?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_GOOGLEMAP_PH_CONTROLS" tabindex="<?php $i++; echo $i?>;">
-				<option value="false" <?php if ($GOOGLEMAP_PH_CONTROLS=="false") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
-				<option value="true" <?php if ($GOOGLEMAP_PH_CONTROLS=="true") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
+			<select name="NEW_GM_PH_CONTROLS" tabindex="<?php $i++; echo $i?>;">
+				<option value="0" <?php if ($GOOGLEMAP_PH_CONTROLS=="0") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
+				<option value="1" <?php if ($GOOGLEMAP_PH_CONTROLS=="1") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
 			</select>
 		</td>
 	</tr>
@@ -344,9 +334,9 @@ $i = 0;
 			<?php print_help_link("GOOGLEMAP_COORD_help", "qm", "GOOGLEMAP_COORD"); echo $pgv_lang["googlemap_coord"];?>
 		</td>
 		<td class="optionbox">
-			<select name="NEW_GOOGLEMAP_COORD" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_COORD_help');">
-				<option value="false" <?php if ($GOOGLEMAP_COORD=="false") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
-				<option value="true" <?php if ($GOOGLEMAP_COORD=="true") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
+			<select name="NEW_GM_COORD" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_COORD_help');">
+				<option value="0" <?php if ($GOOGLEMAP_COORD=="0") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
+				<option value="1" <?php if ($GOOGLEMAP_COORD=="1") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["yes"];?></option>
 			</select>
 		</td>
 	</tr>
@@ -355,12 +345,12 @@ $i = 0;
 			<?php print_help_link("GOOGLEMAP_MAP_ZOOM_help", "qm", "GOOGLEMAP_MAP_ZOOM"); echo $pgv_lang["gm_map_zoom"];?>
 		</td>
 		<td class="optionbox">
-			<?php echo $pgv_lang["gm_min"];?>: <select name="NEW_GOOGLEMAP_MIN_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
+			<?php echo $pgv_lang["gm_min"];?>: <select name="NEW_GM_MIN_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
 			<?php for ($j=1; $j < 15; $j++) { ?>
 			<option value="<?php echo $j, "\""; if ($GOOGLEMAP_MIN_ZOOM==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 			<?php } ?>
 			</select>
-			<?php echo $pgv_lang["gm_max"];?>: <select name="NEW_GOOGLEMAP_MAX_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
+			<?php echo $pgv_lang["gm_max"];?>: <select name="NEW_GM_MAX_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
 			<?php for ($j=1; $j < 15; $j++) { ?>
 			<option value="<?php echo $j, "\""; if ($GOOGLEMAP_MAX_ZOOM==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 			<?php } ?>
@@ -375,7 +365,7 @@ $i = 0;
 			<table>
 				<tr>
 					<td><?php echo $pgv_lang["pl_country"];?>&nbsp;&nbsp;</td>
-					<td><select name="NEW_GOOGLEMAP_PRECISION_0" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+					<td><select name="NEW_GM_PRECISION_0" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
 						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_0==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
@@ -384,7 +374,7 @@ $i = 0;
 				</tr>
 				<tr>
 					<td><?php echo $pgv_lang["pl_state"];?>&nbsp;&nbsp;</td>
-					<td><select name="NEW_GOOGLEMAP_PRECISION_1" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+					<td><select name="NEW_GM_PRECISION_1" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
 						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_1==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
@@ -393,7 +383,7 @@ $i = 0;
 				</tr>
 				<tr>
 					<td><?php echo $pgv_lang["pl_city"];?>&nbsp;&nbsp;</td>
-					<td><select name="NEW_GOOGLEMAP_PRECISION_2" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+					<td><select name="NEW_GM_PRECISION_2" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
 						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_2==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
@@ -401,7 +391,7 @@ $i = 0;
 					</td>
 				</tr>
 				<tr><td><?php echo $pgv_lang["pl_neighborhood"];?>&nbsp;&nbsp;</td>
-					<td><select name="NEW_GOOGLEMAP_PRECISION_3" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+					<td><select name="NEW_GM_PRECISION_3" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
 						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_3==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
@@ -409,7 +399,7 @@ $i = 0;
 					</td>
 				</tr>
 				<tr><td><?php echo $pgv_lang["pl_house"];?>&nbsp;&nbsp;</td>
-					<td><select name="NEW_GOOGLEMAP_PRECISION_4" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+					<td><select name="NEW_GM_PRECISION_4" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
 						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_4==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
@@ -417,7 +407,7 @@ $i = 0;
 					</td>
 				</tr>
 				<tr><td><?php echo $pgv_lang["pl_max"];?>&nbsp;&nbsp;</td>
-					<td><select name="NEW_GOOGLEMAP_PRECISION_5" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+					<td><select name="NEW_GM_PRECISION_5" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
 						<?php for ($j=0; $j < 10; $j++) { ?>
 						<option value="<?php echo $j;?>"<?php if ($GOOGLEMAP_PRECISION_5==$j) echo " selected=\"selected\""; echo ">", $j;?></option>
 						<?php } ?>
@@ -429,12 +419,12 @@ $i = 0;
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("GM_DEFAULT_LEVEL_0_help", "qm", "GM_DEFAULT_LEVEL_0"); echo $pgv_lang["gm_default_level0"];?></td>
-		<td class="optionbox"><input type="text" name="NEW_DEFAULT_TOP_LEVEL" value="<?php echo $GM_DEFAULT_TOP_VALUE;?>" size="20" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GM_DEFAULT_LEVEL_0_help');" /></td>
+		<td class="optionbox"><input type="text" name="NEW_GM_DEFAULT_TOP_LEVEL" value="<?php echo $GM_DEFAULT_TOP_VALUE;?>" size="20" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GM_DEFAULT_LEVEL_0_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("GM_NOF_LEVELS_help", "qm", "GM_NOF_LEVELS"); echo $pgv_lang["gm_nof_levels"];?></td>
 		<td class="optionbox">
-			<select name="NEW_LEVEL_COUNT" dir="ltr" tabindex="<?php $i++; echo $i?>" onchange="showSelectedLevels()">
+			<select name="NEW_GM_LEVEL_COUNT" dir="ltr" tabindex="<?php $i++; echo $i?>" onchange="showSelectedLevels()">
 				<option value="1"<?php if ($GM_MAX_NOF_LEVELS == 1) echo " selected=\"selected\"";?>>1</option>
 				<option value="2"<?php if ($GM_MAX_NOF_LEVELS == 2) echo " selected=\"selected\"";?>>2</option>
 				<option value="3"<?php if ($GM_MAX_NOF_LEVELS == 3) echo " selected=\"selected\"";?>>3</option>

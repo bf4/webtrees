@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-if (file_exists(PGV_ROOT.'modules/googlemap/config.php')) require PGV_ROOT.'modules/googlemap/config.php';
+require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 require $INDEX_DIRECTORY."pgv_changes.php";
 

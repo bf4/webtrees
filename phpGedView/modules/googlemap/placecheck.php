@@ -50,7 +50,7 @@ print_header($pgv_lang["placecheck"].' - '.$GEDCOM);
 // Create GM tables, if not already present
 // TODO: is there a better place to put this code?
 try {
-	PGV_DB::updateSchema('modules/googlemap/db_schema/', 'GM_SCHEMA_VERSION', 1);
+	PGV_DB::updateSchema('modules/googlemap/db_schema/', 'GM_SCHEMA_VERSION', 2);
 } catch (PDOException $ex) {
 	// The schema update scripts should never fail.  If they do, there is no clean recovery.
 	die($ex);
