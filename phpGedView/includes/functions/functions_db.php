@@ -2389,15 +2389,19 @@ function get_site_setting($site_setting_name, $default=null) {
 function set_site_setting($site_setting_name, $site_setting_value) {
 	global $TBLPREFIX;
 
-	$old_site_setting_value=get_site_setting($site_setting_name);
-	if (is_null($old_site_setting_value)) {
-		// Value doesn't exist - insert
-		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
-		->execute(array($site_setting_name, $site_setting_value));
-	} elseif ($old_site_setting_value!=$site_setting_value) {
-		// Value exists, and is different
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}site_setting SET site_setting_value=? WHERE site_setting_name=?")
-		->execute(array($site_setting_value, $site_setting_name));	
+	if (is_null($site_setting_value)) {
+		delete_site_setting($site_setting_name);
+	} else {
+		$old_site_setting_value=get_site_setting($site_setting_name);
+		if (is_null($old_site_setting_value)) {
+			// Value doesn't exist - insert
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
+			->execute(array($site_setting_name, $site_setting_value));
+		} elseif ($old_site_setting_value!=$site_setting_value) {
+			// Value exists, and is different
+			PGV_DB::prepare("UPDATE {$TBLPREFIX}site_setting SET site_setting_value=? WHERE site_setting_name=?")
+			->execute(array($site_setting_value, $site_setting_name));	
+		}
 	}
 }
 function delete_site_setting($site_setting_name) {
