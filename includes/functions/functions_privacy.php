@@ -82,8 +82,8 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 	// Allow "current year" to be modified, for countries where deaths do not become
 	// public until a certain time period has elapsed.
 	if (empty($current_year)) {
-		// If we're not redefining this, then we can do a quick check for "1 DEAT Y"
-		if (preg_match('/\n1 ('.PGV_EVENTS_DEAT.') Y/', $indirec)) {
+		// If we're not redefining this, then we can do a quick check for undated deaths
+		if (preg_match('/\n1 (?:'.PGV_EVENTS_DEAT.')(?: Y|(?:\n[2-9].+)*\n2 PLAC )/', $indirec)) {
 			if (!$sitemap) {
 				return update_isdead($pid, PGV_GED_ID, true);
 			} else {

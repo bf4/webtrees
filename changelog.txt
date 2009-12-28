@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: is_dead() was ignoring certain undated death events
 
 Version 4.2.3
  - Update: TCPDF 4.8.019 (volschin)
