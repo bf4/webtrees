@@ -47,7 +47,7 @@ class Media extends GedcomRecord {
 	var $filepropset   =false;
 
 	// Create a Media object from either raw GEDCOM data or a database row
-	function Media($data) {
+	function __construct($data) {
 		if (is_array($data)) {
 			// Construct from a row from the database
 			$this->title=$data['m_titl'];
@@ -62,7 +62,7 @@ class Media extends GedcomRecord {
 		}
 		if (empty($this->title)) $this->title = $this->file;
 
-		parent::GedcomRecord($data);
+		parent::__construct($data);
 	}
 
 	// Get an instance of a Media object  We either specify

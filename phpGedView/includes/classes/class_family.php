@@ -44,7 +44,7 @@ class Family extends GedcomRecord {
 	private $_isDivorced = null;
 
 	// Create a Family object from either raw GEDCOM data or a database row
-	function Family($data, $simple=true) {
+	function __construct($data, $simple=true) {
 		if (is_array($data)) {
 			// Construct from a row from the database
 			if ($data['f_husb']) {
@@ -84,7 +84,7 @@ class Family extends GedcomRecord {
 			list($this->husb, $this->wife)=array($this->wife, $this->husb);
 		}
 
-		parent::GedcomRecord($data);
+		parent::__construct($data);
 	}
 
 	// Get an instance of a Family.  We either specify

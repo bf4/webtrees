@@ -55,7 +55,7 @@ class Menu {
 	* @param string $pos The position of the label relative to the icon (right, left, top, bottom)
 	* @param string $flyout The direction where any submenus should appear relative to the menu item (right, down)
 	*/
-	function Menu($label=' ', $link='#', $pos='right', $flyout='down')
+	function __construct($label=' ', $link='#', $pos='right', $flyout='down')
 	{
 		$this->submenus = array();
 		$this->addLink($link);

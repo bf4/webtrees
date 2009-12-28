@@ -51,11 +51,11 @@ class ServiceClient extends GedcomRecord {
 	* contstructor to create a new ServiceClient object
 	* @param string $gedrec the SERV gedcom record
 	*/
-	function ServiceClient($gedrec) {
+	function __construct($gedrec) {
 		//parse url
 		//crate soap client class
 		//authenticate/get/set sid
-		parent::GedcomRecord($gedrec);
+		parent::__construct($gedrec);
 		//print "creating new service client ".$this->xref;
 		//get the url from the gedcom
 		$this->url = get_gedcom_value("URL",1,$gedrec);

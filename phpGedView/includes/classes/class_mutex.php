@@ -57,7 +57,7 @@ class Mutex {
 	 * @param boolane $acquire	whether or not to acquire the mutex after it is created
 	 * @return Mutex
 	 */
-	function Mutex($name, $acquire=false) {
+	function __construct($name, $acquire=false) {
 		global $TBLPREFIX;
 
 		if (!Mutex::checkDBCONN()) return false;

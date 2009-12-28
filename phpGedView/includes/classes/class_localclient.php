@@ -37,8 +37,8 @@ class LocalClient extends ServiceClient {
 	 * constructor
 	 * @param string $gedrec	the gedcom record
 	 */
-	function LocalClient($gedrec) {
-		parent::ServiceClient($gedrec);
+	function __construct($gedrec) {
+		parent::__construct($gedrec);
 		$this->type = "local";
 	}
 
