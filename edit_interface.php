@@ -424,7 +424,7 @@ case 'editraw':
 		if (PGV_USER_IS_ADMIN) {
 			echo "<table class=\"facts_table\">\n";
 			echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-			print_help_link("no_update_CHAN_help", "qm");
+			print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN");
 			echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 			if ($NO_UPDATE_CHAN) {
 				echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
@@ -464,7 +464,7 @@ case 'edit':
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN_help", "qm");
+		print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN");
 		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
@@ -516,7 +516,7 @@ case 'add':
 
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN_help", "qm");
+		print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN");
 		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
@@ -588,6 +588,20 @@ case 'addfamlink':
 		echo "<option value=\"sealing\" >", $pgv_lang["sealing"], "</option>";
 		echo "</select></td></tr>";
 	}
+	if (PGV_USER_IS_ADMIN) {
+		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
+		print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN");
+		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		if ($NO_UPDATE_CHAN) {
+			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
+		} else {
+			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		}
+		echo $pgv_lang["no_update_CHAN"], "<br />\n";
+		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+		echo format_fact_date($event, false, true);
+		echo "</td></tr>\n";
+	}
 	echo "</table>\n";
 	echo "<input type=\"submit\" value=\"", $pgv_lang["set_link"], "\" /><br />\n";
 	echo "</form>\n";
@@ -614,7 +628,29 @@ case 'linkspouse':
 	add_simple_tag("0 MARR");
 	add_simple_tag("0 DATE", "MARR");
 	add_simple_tag("0 PLAC", "MARR");
-	echo "</table>\n";
+	if (PGV_USER_IS_ADMIN) {
+		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
+		print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN");
+		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		if ($NO_UPDATE_CHAN) {
+			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
+		} else {
+			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		}
+		echo $pgv_lang["no_update_CHAN"], "<br />\n";
+		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+		echo format_fact_date($event, false, true);
+		echo "</td></tr>\n";
+	}
+	echo "</table>";
+	print_add_layer("ASSO");
+	// allow to add godfather and godmother for CHR fact or best man and bridesmaid  for MARR fact in one window
+	print_add_layer("ASSO2");
+	print_add_layer("SOUR");
+	print_add_layer("NOTE");
+	print_add_layer("SHARED_NOTE");
+	print_add_layer("OBJE");
+	print_add_layer("RESN");
 	echo "<input type=\"submit\" value=\"", $pgv_lang["set_link"], "\" /><br />\n";
 	echo "</form>\n";
 	break;
@@ -1069,7 +1105,7 @@ case 'editsource':
 	
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN_help", "qm");
+		print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN");
 		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
@@ -1135,7 +1171,7 @@ case 'editnote':
 			<?php $tabkey++; 
 			if (PGV_USER_IS_ADMIN) {
 			echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-			print_help_link("no_update_CHAN_help", "qm");
+			print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN");
 			echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 			if ($NO_UPDATE_CHAN) {
 				echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
@@ -2551,7 +2587,7 @@ case 'edit_family':
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN_help", "qm");
+		print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN");
 		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
