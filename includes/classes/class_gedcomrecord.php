@@ -106,6 +106,8 @@ class GedcomRecord {
 	static function &getInstance($data, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
+		$is_pending=false; // Did this record come from a pending edit
+
 		if (is_array($data)) {
 			$ged_id=$data['ged_id'];
 			$pid   =$data['xref'];
@@ -121,7 +123,27 @@ class GedcomRecord {
 
 		// Look for the record in the database
 		if (!is_array($data)) {
-			$data=fetch_gedcom_record($pid, $ged_id);
+			switch (get_class()) {
+			case 'Person':
+				$data=fetch_person_record($pid, $ged_id);
+				break;
+			case 'Family':
+				$data=fetch_family_record($pid, $ged_id);
+				break;
+			case 'Source':
+				$data=fetch_source_record($pid, $ged_id);
+				break;
+			case 'Media':
+				$data=fetch_media_record($pid, $ged_id);
+				break;
+			case 'Repository':
+			case 'Note':
+				$data=fetch_other_record($pid, $ged_id);
+				break;
+			default:
+				$data=fetch_gedcom_record($pid, $ged_id);
+				break;
+			}
 
 			// If we didn't find the record in the database, it may be remote
 			if (!$data && strpos($pid, ':')) {
@@ -136,7 +158,7 @@ class GedcomRecord {
 			// If we didn't find the record in the database, it may be new/pending
 			if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
 				$data=find_updated_record($pid, $ged_id);
-				$fromfile=true;
+				$is_pending=true;
 			}
 
 			// If we still didn't find it, it doesn't exist
@@ -146,44 +168,46 @@ class GedcomRecord {
 		}
 
 		// Create the object
-		if (is_array($data)) {
-			$type=$data['type'];
-		} elseif (preg_match('/^0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $data, $match)) {
-			$type=$match[1];
-		} else {
-			$type='';
+		$class_name=get_class();
+		if ($class_name=='GedcomRecord') {
+			if (is_array($data)) {
+				$type=$data['type'];
+			} elseif (preg_match('/^0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $data, $match)) {
+				$type=$match[1];
+			} else {
+				$type='';
+			}
+			switch($type) {
+			case 'INDI':
+				$class_name='Person';
+				break;
+			case 'FAM':
+				$class_name='Family';
+				break;
+			case 'SOUR':
+				$class_name='Source';
+				break;
+			case 'OBJE':
+				$class_name='Media';
+				break;
+			case 'REPO':
+				$class_name='Repository';
+				break;
+			case 'NOTE':
+				$class_name='Note';
+				break;
+			default:
+				$class_name='GedcomRecord';
+				break;
+			}
 		}
-		switch ($type) {
-		case 'INDI':
-			$object=new Person($data, $simple);
-			break;
-		case 'FAM':
-			$object=new Family($data, $simple);
-			break;
-		case 'SOUR':
-			$object=new Source($data, $simple);
-			break;
-		//BH ==================
-		case 'NOTE':
-			$object=new Note($data, $simple);
-			break;
-		case 'REPO':
-			$object=new Repository($data, $simple);
-			break;
-		case 'OBJE':
-			$object=new Media($data, $simple);
-			break;
-		default:
-			$object=new GedcomRecord($data, $simple);
-			break;
-		}
-		
-		// This is an object from the database, but we created it from raw gedcom
-		// rather than a database row.  Set the gedcom to indicate that it is not
-		// a dynamically created record.
+
+		$object=new $class_name($data, $simple);
+
+		// This is an object from the database, so indicate which gedcom it comes from.
 		$object->ged_id=$ged_id;
 
-		if (!empty($fromfile)) {
+		if ($is_pending) {
 			$object->setChanged(true);
 		}
 
