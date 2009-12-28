@@ -99,7 +99,7 @@ if ($surn) {
 	echo "</fieldset>";
 	if ($rootid) {
 		$person = Person::getInstance($rootid);
-		echo "<p class=\"center\">{$pgv_lang['rootid']} : <a title=\"{$person->xref}\" href=\"{$person->getLinkUrl()}\">{$person->getFullName()}</a>";
+		echo "<p class=\"center\">{$pgv_lang['rootid']} : <a title=\"", $person->getXref(), "\" href=\"{$person->getLinkUrl()}\">{$person->getFullName()}</a>";
 		echo "<br />{$pgv_lang["direct-ancestors"]} : ", count($_SESSION['user_ancestors']), "</p>";
 	}
 }
@@ -132,13 +132,13 @@ function print_fams($person, $famid=null) {
 	// current indi
 	echo "<li>";
 	$class = "";
-	$sosa = @array_search($person->xref, $_SESSION['user_ancestors']);
+	$sosa = @array_search($person->getXref(), $_SESSION['user_ancestors']);
 	if ($sosa) {
 		$class = "search_hit";
-		$sosa = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$person->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$person->xref}\">&nbsp;{$sosa}&nbsp;</a>".sosa_gen($sosa);
+		$sosa = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$person->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1=".$person->getXref()."\">&nbsp;{$sosa}&nbsp;</a>".sosa_gen($sosa);
 	}
 	$current = $person->getSexImage().
-		"<a target=\"_blank\" class=\"{$class}\" title=\"{$person->xref}\" href=\"{$person->getLinkUrl()}\">".PrintReady($person_name)."</a> ".
+		"<a target=\"_blank\" class=\"{$class}\" title=\"".$person->getXref()."\" href=\"{$person->getLinkUrl()}\">".PrintReady($person_name)."</a> ".
 		$person->getBirthDeathYears()." {$sosa}"; 
 	if ($famid && $person->getChildFamilyPedigree($famid)) {
 		$current = "<span class='red'>".$pgv_lang[$person->getChildFamilyPedigree($famid)]."</span> ".$current;
@@ -152,10 +152,10 @@ function print_fams($person, $famid=null) {
 		$spouse = $family->getSpouse($person);
 		if ($spouse) {
 			$class = "";
-			$sosa2 = @array_search($spouse->xref, $_SESSION['user_ancestors']);
+			$sosa2 = @array_search($spouse->getXref(), $_SESSION['user_ancestors']);
 			if ($sosa2) {
 				$class = "search_hit";
-				$sosa2 = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$spouse->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$spouse->xref}\">&nbsp;{$sosa2}&nbsp;</a>".sosa_gen($sosa2);
+				$sosa2 = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$spouse->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1=".$spouse->getXref()."\">&nbsp;{$sosa2}&nbsp;</a>".sosa_gen($sosa2);
 			}
 			if ($family->getMarriageYear()) {
 				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".PGV_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
@@ -177,14 +177,14 @@ function print_fams($person, $famid=null) {
 			}
 			list($surn2, $givn2) = explode(", ", $spouse_name.", x");
 			$txt .= $spouse->getSexImage().
-				"<a target=\"_blank\" class=\"{$class}\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">".PrintReady($givn2)."</a> ".
+				"<a target=\"_blank\" class=\"{$class}\" title=\"".$family->getXref()."\" href=\"{$family->getLinkUrl()}\">".PrintReady($givn2)."</a> ".
 				"<a class=\"{$class}\" title=\"{$surn2}\" href=\"javascript:document.surnlist.surn.value='{$surn2}';document.surnlist.submit();\">".PrintReady($surn2)."</a> ".
 				$spouse->getBirthDeathYears()." {$sosa2}";
 		}
 		echo $txt;
 		echo "<ol>";
 		foreach ($family->getChildren() as $c=>$child) {
-			print_fams($child, $family->xref);
+			print_fams($child, $family->getXref());
 		}
 		echo "</ol>";
 	}
