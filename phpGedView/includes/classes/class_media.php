@@ -65,65 +65,6 @@ class Media extends GedcomRecord {
 		parent::__construct($data);
 	}
 
-	// Get an instance of a Media object  We either specify
-	// an XREF (in the current gedcom), or we can provide a row
-	// from the database (if we anticipate the record hasn't
-	// been fetched previously).
-	static function &getInstance($data, $simple=true) {
-		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
-
-		if (is_array($data)) {
-			$ged_id=$data['ged_id'];
-			$pid   =$data['xref'];
-		} else {
-			$ged_id=get_id_from_gedcom($GEDCOM);
-			$pid   =$data;
-		}
-
-		// Check the cache first
-		if (isset($gedcom_record_cache[$pid][$ged_id])) {
-			return $gedcom_record_cache[$pid][$ged_id];
-		}
-
-		// Look for the record in the database
-		if (!is_array($data)) {
-			$data=fetch_media_record($pid, $ged_id);
-
-			// If we didn't find the record in the database, it may be remote
-			if (!$data && strpos($pid, ':')) {
-				list($servid, $remoteid)=explode(':', $pid);
-				$service=ServiceClient::getInstance($servid);
-				if ($service) {
-					// TYPE will be replaced with the type from the remote record
-					$data=$service->mergeGedcomRecord($remoteid, "0 @{$pid}@ TYPE\n1 RFN {$pid}", false);
-				}
-			}
-
-			// If we didn't find the record in the database, it may be new/pending
-			if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
-				$data=find_updated_record($pid, $ged_id);
-				$fromfile=true;
-			}
-
-			// If we still didn't find it, it doesn't exist
-			if (!$data) {
-				return null;
-			}
-		}
-
-		// Create the object
-		$object=new Media($data, $simple);
-		if (!empty($fromfile)) {
-			$object->setChanged(true);
-		}
-
-		// Store it in the cache
-		$gedcom_record_cache[$object->xref][$object->ged_id]=&$object;
-		//-- also store it using its reference id (sid:pid and local gedcom for remote links)
-		$gedcom_record_cache[$pid][$ged_id]=&$object;
-		return $object;
-	}
-
 	/**
 	 * get the media note
 	 * @return string
