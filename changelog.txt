@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: [ 2921858 ] Private marking in marriages (fisharebest)
  - Fixed: is_dead() was ignoring certain undated death events
 
 Version 4.2.3
