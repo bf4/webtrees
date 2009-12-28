@@ -50,7 +50,7 @@ class stats {
 
 	static $_xencoding = PGV_GOOGLE_CHART_ENCODING;
 
-	function stats($gedcom, $server_url='') {
+	function __construct($gedcom, $server_url='') {
 		self::$_not_allowed = explode(',', STATS_NOT_ALLOWED);
 		$this->_setGedcom($gedcom);
 		$this->_server_url = $server_url;

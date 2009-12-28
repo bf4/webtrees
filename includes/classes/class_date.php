@@ -55,7 +55,7 @@ class CalendarDate {
 	var $y, $m, $d;     // Numeric year/month/day
 	var $minJD, $maxJD; // Julian Day numbers
 
-	function CalendarDate($date) {
+	function __construct($date) {
 		// Construct from an integer (a julian day number)
 		if (is_numeric($date)) {
 			$this->minJD=$date;
@@ -981,7 +981,7 @@ class GedcomDate {
 	var $date2=null; // Optional second date
 	var $text =null; // Optional text, as included with an INTerpreted date
 
-	function GedcomDate($date) {
+	function __construct($date) {
 		// Extract any explanatory text
 		if (preg_match('/^(.*)( ?\(.*)$/', $date, $match)) {
 			$date=$match[1];

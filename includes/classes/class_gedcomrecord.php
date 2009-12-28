@@ -58,7 +58,7 @@ class GedcomRecord {
 	protected $_getSecondaryName=null;
 
 	// Create a GedcomRecord object from either raw GEDCOM data or a database row
-	function GedcomRecord($data, $simple=false) {
+	function __construct($data, $simple=false) {
 		if (is_array($data)) {
 			// Construct from a row from the database
 			$this->xref  =$data['xref'];
