@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: Sorting menu by gedcom filename instead of id (volschin)
  - Fixed: [ 2886694 ] add existing wife/husband SOUR etc (wooc)
  - Fixed: [ 2921858 ] Private marking in marriages (fisharebest)
  - Fixed: is_dead() was ignoring certain undated death events (fisharebest)
