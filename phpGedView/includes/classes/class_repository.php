@@ -41,7 +41,7 @@ class Repository extends GedcomRecord {
 
 	// Get an array of structures containing all the names in the record
 	public function getAllNames() {
-		return $parent::_getAllNames('NAME', 1);
+		return parent::_getAllNames('NAME', 1);
 	}
 }
 ?>
