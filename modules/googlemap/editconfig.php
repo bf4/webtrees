@@ -1,9 +1,9 @@
 <?php
 /**
-* Online UI for editing config.php site configuration variables
+* Online UI for editing site configuration variables
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+* Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,7 @@
 *
 * @package PhpGedView
 * @subpackage GoogleMap
-* @see config.php
-* $Id: editconfig.php 2698 2008-04-23 21:38:56Z wooc$
+* @version $Id$
 */
 
 if (!defined('PGV_PHPGEDVIEW')) {
