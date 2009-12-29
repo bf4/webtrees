@@ -93,7 +93,7 @@ class Family extends GedcomRecord {
 	 */
 	function getHusbId() {
 		if (!is_null($this->husb)) return $this->husb->getXref();
-		else return "";
+		else return '';
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Family extends GedcomRecord {
 	 */
 	function getWifeId() {
 		if (!is_null($this->wife)) return $this->wife->getXref();
-		else return "";
+		else return '';
 	}
 
 	/**
@@ -176,7 +176,7 @@ class Family extends GedcomRecord {
 	function loadChildren() {
 		if ($this->children_loaded) return;
 		$this->childrenIds = array();
-		$this->numChildren = preg_match_all("/1\s*CHIL\s*@(.*)@/", $this->gedrec, $smatch, PREG_SET_ORDER);
+		$this->numChildren = preg_match_all('/1\s*CHIL\s*@(.*)@/', $this->gedrec, $smatch, PREG_SET_ORDER);
 		for($i=0; $i<$this->numChildren; $i++) {
 			//-- get the childs ids
 			$chil = trim($smatch[$i][1]);
@@ -197,9 +197,9 @@ class Family extends GedcomRecord {
 
 		if ($this->numChildren!==false) return $this->numChildren;
 
-		$this->numChildren = get_gedcom_value("NCHI", 1, $this->gedrec);
-		if ($this->numChildren!="") return $this->numChildren.".";
-		$this->numChildren = preg_match_all("/1\s*CHIL\s*@(.*)@/", $this->gedrec, $smatch);
+		$this->numChildren = get_gedcom_value('NCHI', 1, $this->gedrec);
+		if ($this->numChildren!='') return $this->numChildren.'.';
+		$this->numChildren = preg_match_all('/1\s*CHIL\s*@(.*)@/', $this->gedrec, $smatch);
 		return $this->numChildren;
 	}
 
@@ -214,7 +214,7 @@ class Family extends GedcomRecord {
 			return $this;
 		}
 		if (PGV_USER_CAN_EDIT && $this->canDisplayDetails()) {
-			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
+			if (isset($pgv_changes[$this->xref.'_'.$GEDCOM])) {
 				$newrec = find_updated_record($this->xref, $this->ged_id);
 				if (!empty($newrec)) {
 					$newfamily = new Family($newrec);
@@ -254,7 +254,7 @@ class Family extends GedcomRecord {
 	 * parse marriage record
 	 */
 	function _parseMarriageRecord() {
-		$this->marriage = new Event(trim(get_sub_record(1, "1 MARR", $this->gedrec)), -1);
+		$this->marriage = new Event(trim(get_sub_record(1, '1 MARR', $this->gedrec)), -1);
 		$this->marriage->setParentObject($this);
 	}
 
@@ -304,7 +304,7 @@ class Family extends GedcomRecord {
 	 * get the marriage year
 	 * @return string
 	 */
-	function getMarriageYear($est = true, $cal = ""){
+	function getMarriageYear($est = true, $cal = ''){
 		// TODO - change the design to use julian days, not gregorian years.
 		$mdate = $this->getMarriageDate();
 		$mdate = $mdate->MinDate();
@@ -316,7 +316,7 @@ class Family extends GedcomRecord {
 	 * get the marriage month
 	 * @return string
 	 */
-	function getMarriageMonth($est = true, $cal = ""){
+	function getMarriageMonth($est = true, $cal = ''){
 		// TODO - change the design to use julian days, not gregorian years.
 		$mdate = $this->getMarriageDate();
 		$mdate=$mdate->MinDate();
@@ -364,10 +364,7 @@ class Family extends GedcomRecord {
 		return array();
 	}
 
-	/**
-	 * get the URL to link to this family
-	 * @string a url that can be used to link to this family
-	 */
+	// Generate a URL that links to this record
 	public function getLinkUrl() {
 		return parent::_getLinkUrl('family.php?famid=');
 	}

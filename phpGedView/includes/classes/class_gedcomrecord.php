@@ -234,7 +234,7 @@ class GedcomRecord {
 	}
 	/**
 	* get the object type
-	* @return string returns the type of this object "INDI","FAM", etc.
+	* @return string returns the type of this object 'INDI','FAM', etc.
 	*/
 	function getType() {
 		return $this->type;
@@ -285,14 +285,11 @@ class GedcomRecord {
 	* check if this object is equal to the given object
 	* @param GedcomRecord $obj
 	*/
-	function equals(&$obj) {
+	public function equals(&$obj) {
 		return !is_null($obj) && $this->xref==$obj->getXref();
 	}
 
-	/**
-	* get the URL to link to this record
-	* @string a url that can be used to link to this person
-	*/
+	// Generate a URL that links to this record
 	public function getLinkUrl() {
 		return $this->_getLinkUrl('gedcomrecord.php?pid=');
 	}
@@ -358,7 +355,7 @@ class GedcomRecord {
 			if ($target) {
 				$target='target="'.$target.'"';
 			}
-			return "<a href=\"".encode_url($this->getLinkUrl())."#content\" name=\"".preg_replace('/\D/','',$this->getXref())."\" $target>".$this->getXref()."</a>";
+			return '<a href="'.encode_url($this->getLinkUrl()).'#content" name="'.preg_replace('/\D/','',$this->getXref()).'" '.$target.'>'.$this->getXref().'</a>';
 		} else {
 			return $this->getXref();
 		}
@@ -430,7 +427,7 @@ class GedcomRecord {
 
 	// Convert a name record into sortable and listable versions.  This default
 	// should be OK for simple record types.  INDI records will need to redefine it.
-	function _addName($type, $value, $gedrec) {
+	protected function _addName($type, $value, $gedrec) {
 		$this->_getAllNames[]=array(
 			'type'=>$type,
 			'full'=>$value,
@@ -445,9 +442,9 @@ class GedcomRecord {
 	// Parameters: the level 1 fact containing the name.
 	// Return value: an array of name structures, each containing
 	// ['type'] = the gedcom fact, e.g. NAME, TITL, FONE, _HEB, etc.
-	// ['full'] = the name as specified in the record, e.g. "Vincent van Gogh" or "John Unknown"
-	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
-	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
+	// ['full'] = the name as specified in the record, e.g. 'Vincent van Gogh' or 'John Unknown'
+	// ['list'] = a version of the name as might appear in lists, e.g. 'van Gogh, Vincent' or 'Unknown, John'
+	// ['sort'] = a sortable version of the name (not for display), e.g. 'Gogh, Vincent' or '@N.N., John'
 	protected function _getAllNames($fact='!', $level=1) {
 		global $pgv_lang, $WORD_WRAPPED_NOTES;
 
@@ -861,7 +858,7 @@ class GedcomRecord {
 			$found = false;
 			foreach($diff->facts as $indexval => $newevent) {
 				$newfact = $newevent->getGedcomRecord();
-				$newfact=preg_replace("/\\\/", "/", $newfact);
+				$newfact=preg_replace("/\\\/", '/', $newfact);
 				if (trim($newfact)==trim($event->getGedcomRecord())) {
 					$found = true;
 					break;
@@ -876,7 +873,7 @@ class GedcomRecord {
 			$found = false;
 			foreach($this->facts as $indexval => $event) {
 				$newfact = $newevent->getGedcomRecord();
-				$newfact=preg_replace("/\\\/", "/", $newfact);
+				$newfact=preg_replace("/\\\/", '/', $newfact);
 				if (trim($newfact)==trim($event->getGedcomRecord())) {
 					$found = true;
 					break;

@@ -34,17 +34,14 @@ define('PGV_CLASS_REPOSITORY_PHP', '');
 require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
 
 class Repository extends GedcomRecord {
-	/**
-	 * get the URL to link to this repository
-	 * @string a url that can be used to link to this repository
-	 */
+	// Generate a URL that links to this record
 	public function getLinkUrl() {
 		return parent::_getLinkUrl('repo.php?rid=');
 	}
 
 	// Get an array of structures containing all the names in the record
 	public function getAllNames() {
-		return $this->_getAllNames('NAME', 1);
+		return $parent::_getAllNames('NAME', 1);
 	}
 }
 ?>

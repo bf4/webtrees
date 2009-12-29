@@ -34,28 +34,27 @@ define('PGV_CLASS_NOTE_PHP', '');
 require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
 
 class Note extends GedcomRecord {
-	/**
-	 * get the URL to link to this shared note
-	 * @string a url that can be used to link to this shared note
-	 */
+	// Generate a URL that links to this record
 	public function getLinkUrl() {
 		return parent::_getLinkUrl('note.php?nid=');
 	}
 
-	
-	// The "name" of a note record is the first line.  This can be
+	// The 'name' of a note record is the first line.  This can be
 	// somewhat unwieldy if lots of CONC records are used.  Limit to 100 chars
-	function _addName($type, $value, $gedrec) {
+	protected function _addName($type, $value, $gedrec) {
 		global $pgv_lang;
-		if (UTF8_strlen($value)<100) parent::_addName($type, $value, $gedrec);
-		else parent::_addName($type, UTF8_substr($value, 0, 100).$pgv_lang["ellipsis"], $gedrec);
+		if (UTF8_strlen($value)<100) {
+			parent::_addName($type, $value, $gedrec);
+		} else {
+			parent::_addName($type, UTF8_substr($value, 0, 100).$pgv_lang['ellipsis'], $gedrec);
+		}
 	}
 
 	// Get an array of structures containing all the names in the record
 	public function getAllNames() {
 		// Uniquely, the NOTE objects have data in their level 0 record.
 		// Hence the REGEX passed in the second parameter
-		return $this->_getAllNames('NOTE', "0 @".PGV_REGEX_XREF."@");
+		return parent::_getAllNames('NOTE', '0 @'.PGV_REGEX_XREF.'@');
 	}
 }
 ?>
