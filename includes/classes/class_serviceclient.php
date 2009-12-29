@@ -107,7 +107,7 @@ class ServiceClient extends GedcomRecord {
 	function authenticate() {
 		if (!empty($this->SID)) return $this->SID;
 		if (is_null($this->soapClient)) {
-			if (!class_exists('SoapClient') || $this->client_type=='PEAR:SOAP') {
+			if (!class_exists('Soap_Client') || $this->client_type=='PEAR:SOAP') {
 
 				require_once './SOAP/Client.php';
 				//AddToLog('Using PEAR:SOAP library');
@@ -119,7 +119,7 @@ class ServiceClient extends GedcomRecord {
 			} else {
 				//AddtoLog("Using SOAP Extension");
 				//-- don't use exceptions in PHP 4
-				$this->soapClient = new SoapClient($this->url, array('exceptions' => 0));
+				$this->soapClient = new Soap_Client($this->url, array('exceptions' => 0));
 			}
 		}
 		if ($this->soapClient!=null && !$this->isError($this->soapClient)) {
@@ -760,7 +760,7 @@ class ServiceClient extends GedcomRecord {
 			$this->authenticate();
 			if (!is_object($this->soapClient) || $this->isError($this->soapClient)) return false;
 			$result = $this->soapClient->getGedcomRecord($this->SID, $xref);
-			if (PEAR::isError($result) || isset($result->faultcode) || get_class($result)=='SOAP_Fault' || is_object($result)) {
+			if (PEAR::isError($result) || isset($result->faultcode) || is_object($result) && get_class($result)=='SOAP_Fault') {
 				if (isset($result->faultstring)) {
 					AddToLog($result->faultstring);
 					print $result->faultstring;
