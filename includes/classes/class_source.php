@@ -42,10 +42,7 @@ class Source extends GedcomRecord {
 		return get_gedcom_value('AUTH', 1, $this->gedrec, '', false);
 	}
 
-	/**
-	 * get the URL to link to this source
-	 * @string a url that can be used to link to this source
-	 */
+	// Generate a URL that links to this record
 	public function getLinkUrl() {
 		return parent::_getLinkUrl('source.php?sid=');
 	}

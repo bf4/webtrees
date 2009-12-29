@@ -146,7 +146,7 @@ class Media extends GedcomRecord {
 	 */
 	function getFilesize() {
 		if (!$this->filepropset) $this->setFileProperties();
-		return(sprintf("%.2f", @$this->filesizeraw/1024));
+		return sprintf('%.2f', @$this->filesizeraw/1024);
 	}
 
 	/**
@@ -163,7 +163,7 @@ class Media extends GedcomRecord {
 	 * @return string
 	 */
 	function getMediatype() {
-		$mediaType = strtolower(get_gedcom_value("FORM:TYPE", 2, $this->gedrec));
+		$mediaType = strtolower(get_gedcom_value('FORM:TYPE', 2, $this->gedrec));
 		return $mediaType;
 	}
 
@@ -218,7 +218,7 @@ class Media extends GedcomRecord {
 				// this is an image
 				$this->width =0+$imgsize[0];
 				$this->height=0+$imgsize[1];
-				$imageTypes  =array("","GIF","JPG","PNG","SWF","PSD","BMP","TIFF","TIFF","JPC","JP2","JPX","JB2","SWC","IFF","WBMP","XBM");
+				$imageTypes  =array('','GIF','JPG','PNG','SWF','PSD','BMP','TIFF','TIFF','JPC','JP2','JPX','JB2','SWC','IFF','WBMP','XBM');
 				$this->ext   =$imageTypes[0+$imgsize[2]];
 				$this->mime  =$imgsize['mime'];
 			}
@@ -226,7 +226,7 @@ class Media extends GedcomRecord {
 		if (!$this->mime) {
 			// this is not an image, OR the file doesn't exist OR it is a url
 			// set file type equal to the file extension - can't use parse_url because this may not be a full url
-			$exp = explode("?", $this->file);
+			$exp = explode('?', $this->file);
 			$pathinfo = pathinfo($exp[0]);
 			$this->ext = @strtoupper($pathinfo['extension']);
 			// all mimetypes we wish to serve with the media firewall must be added to this array.
@@ -238,7 +238,7 @@ class Media extends GedcomRecord {
 				if ($this->fileExists()) {
 					// alert the admin if we cannot determine the mime type of an existing file
 					// as the media firewall will be unable to serve this file properly
-					AddToLog($pgv_lang["unknown_mime"].' >'.$this->file.'<');
+					AddToLog($pgv_lang['unknown_mime'].' >'.$this->file.'<');
 				}
 			} else {
 				$this->mime=$mime[$this->ext];
@@ -247,10 +247,7 @@ class Media extends GedcomRecord {
 		$this->filepropset = true;
 	}
 
-	/**
-	 * get the URL to link to this object
-	 * @string a url that can be used to link to this object
-	 */
+	// Generate a URL that links to this record
 	public function getLinkUrl() {
 		return parent::_getLinkUrl('mediaviewer.php?mid=');
 	}
@@ -294,10 +291,10 @@ class Media extends GedcomRecord {
 	public function getAllNames() {
 		if (strpos($this->gedrec, "\n1 TITL ")) {
 			// Earlier gedcom versions had level 1 titles
-			return $this->_getAllNames('TITL', 1);
+			return parent::_getAllNames('TITL', 1);
 		} else {
 			// Later gedcom versions had level 2 titles
-			return $this->_getAllNames('TITL', 2);
+			return parent::_getAllNames('TITL', 2);
 		}
 	}
 
