@@ -35,18 +35,10 @@ require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
 
 class Source extends GedcomRecord {
 	/**
-	 * get the repository of this source record
-	 * @return string
-	 */
-	function getRepo() {
-		return get_gedcom_value('REPO', 1, $this->gedrec, '', false);
-	}
-
-	/**
 	 * get the author of this source record
 	 * @return string
 	 */
-	function getAuth() {
+	public function getAuth() {
 		return get_gedcom_value('AUTH', 1, $this->gedrec, '', false);
 	}
 
@@ -60,7 +52,7 @@ class Source extends GedcomRecord {
 
 	// Get an array of structures containing all the names in the record
 	public function getAllNames() {
-		return $this->_getAllNames('TITL', 1);
+		return parent::_getAllNames('TITL', 1);
 	}
 }
 ?>
