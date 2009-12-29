@@ -752,7 +752,7 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN_help", "qm");
+		print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN");
 		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
@@ -1283,17 +1283,17 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			if ($fact=="DATE") {
 				print_help_link("def_gedcom_date_help", "qm", "date");
 			} elseif ($fact=="FORM" && $upperlevel!='OBJE') {
-				print_help_link("PLAC_FORM_help", "qm");
+				print_help_link("edit_FORM_help", "qm", "media_format");
 			} elseif ($fact=="RESN") {
-				print_help_link($fact."_help", "qm");
+				print_help_link($fact."_help", "qm", "RESN_help_title");
 			} elseif ($fact=="NOTE" && $islink){
 				if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
-					print_help_link("edit_add_GEDFact_ASSISTED_help", "qm");
+					print_help_link("edit_add_GEDFact_ASSISTED_help", "qm", "GEDFact Assistant");
 				}else{
-					print_help_link("edit_add_SHARED_NOTE_help", "qm");
+					print_help_link("edit_add_SHARED_NOTE_help", "qm", "add_shared_note");
 				}
 			} else {
-				print_help_link("edit_".$fact."_help", "qm");
+				print_help_link("edit_".$fact."_help", "qm", $fact);
 			}
 		}
 		if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
@@ -1775,7 +1775,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="SOUR") {
 		//-- Add new source to fact
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_source"], "</a>";
-		print_help_link("edit_add_SOUR_help", "qm");
+		print_help_link("edit_add_SOUR_help", "qm", "add_source");
 		echo "<br />";
 		echo "<div id=\"newsource\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
@@ -1831,7 +1831,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		//-- Retrieve existing note or add new note to fact
 		$text = '';
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote');\"><img id=\"newnote_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_note"], "</a>";
-		print_help_link("edit_add_NOTE_help", "qm");
+		print_help_link("edit_add_NOTE_help", "qm", "add_note");
 		echo "<br />\n";
 		echo "<div id=\"newnote\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
@@ -1844,7 +1844,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		//-- Retrieve existing shared note or add new shared note to fact
 		$text = '';
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshared_note');\"><img id=\"newshared_note_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_shared_note"], "</a>";
-		print_help_link("edit_add_SHARED_NOTE_help", "qm");
+		print_help_link("edit_add_SHARED_NOTE_help", "qm", "add_shared_note");
 		echo "<br />\n";
 		echo "<div id=\"newshared_note\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
@@ -1857,7 +1857,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="OBJE") {
 		//-- Add new obje to fact
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newobje');\"><img id=\"newobje_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_obje"], "</a>";
-		print_help_link("add_media_help", "qm");
+		print_help_link("add_media_help", "qm", "add_obje");
 		echo "<br />";
 		echo "<div id=\"newobje\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
@@ -1873,7 +1873,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 			//-- Retrieve existing resn or add new resn to fact
 			$text = '';
 			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $factarray["RESN"], "</a>";
-			print_help_link("RESN_help", "qm");
+			print_help_link("RESN_help", "qm", "RESN_help_title");
 			echo "<br />\n";
 			echo "<div id=\"newresn\" style=\"display: none;\">\n";
 			if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
@@ -2277,7 +2277,7 @@ function print_quick_resn($name) {
 
 	if ($SHOW_QUICK_RESN) {
 		echo "<tr><td class=\"descriptionbox\">";
-		print_help_link("RESN_help", "qm");
+		print_help_link("RESN_help", "qm", "RESN_help_title");
 		echo $factarray["RESN"];
 		echo "</td>\n";
 		echo "<td class=\"optionbox\" colspan=\"3\">\n";

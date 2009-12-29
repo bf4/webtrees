@@ -1304,20 +1304,27 @@ function print_privacy_error($username) {
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
 	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
 
-loadLangFile('pgv_help');
+	loadLangFile('pgv_help,pgv_facts');
 
 	$output='';
 	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {
 		$output.=' <a class="help" tabindex="0" title="';
+		if (isset($pgv_lang[$show_desc])) {
+			$desc = $pgv_lang[$show_desc];
+		} else if (isset($factarray[$show_desc])) {
+			$desc = $factarray[$show_desc];
+		} else {
+			$show_desc = "";
+		}
 		if ($show_desc) {
-			$output.=$pgv_lang["help_header"].' '.$pgv_lang[$show_desc].'" href="javascript:// ';
+			$output.=$pgv_lang["help_header"].' '.$desc.'" href="javascript:// ';
 			if ($use_print_text) {
 				$output.=print_text($show_desc, 0, 1);
 			} else {
-				if (stristr($pgv_lang[$show_desc], "\"")) {
-					$output.=str_replace('\"', '\'', $pgv_lang[$show_desc]);
+				if (stristr($desc, "\"")) {
+					$output.=str_replace('\"', '\'', $desc);
 				} else {
-					$output.=strip_tags($pgv_lang[$show_desc]);
+					$output.=strip_tags($desc);
 				}
 			}
 		} else {
