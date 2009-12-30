@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: [ 2923224 ] Missing Space in Shared Note View GEDCOM Record (wooc)
  - Fixed: Sorting menu by gedcom filename instead of id (volschin)
  - Fixed: [ 2886694 ] add existing wife/husband SOUR etc (wooc)
  - Fixed: [ 2921858 ] Private marking in marriages (fisharebest)
