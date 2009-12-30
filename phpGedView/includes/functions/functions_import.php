@@ -550,7 +550,7 @@ function reformat_record_import($rec) {
 			if ($newrec) {
 				$newrec.="\n";
 			}
-			$newrec.=$level.' '.($level=='0' && $xref ? $xref.' ' : '').$tag.($data==='' ? '' : ' '.$data);
+			$newrec.=$level.' '.($level=='0' && $xref ? $xref.' ' : '').$tag.($data==='' && $tag!="NOTE" ? '' : ' '.$data);
 			break;
 		case 'CONC':
 			// Merge CONC lines, to simplify access later on.
