@@ -164,8 +164,8 @@ class LifespanControllerRoot extends BaseController {
 					if ($value != $remove) {
 						$this->pids[$key] = $value;
 						$person = Person::getInstance($value);
-
-						if ($person) {
+						// get_place_positions() returns families as well as individuals.
+						if ($person && $person->getType()=='INDI') {
 							$bdate = $person->getEstimatedBirthDate();
 							$ddate = $person->getEstimatedDeathDate();
 
