@@ -584,7 +584,7 @@ function addFavorite($favorite) {
 		$sql.=" fv_url=?";
 		$vars=array($favorite["url"]);
 	}
-	$sql.="AND fv_file=? AND fv_username=?";
+	$sql.=" AND fv_file=? AND fv_username=?";
 	$vars[]=$favorite["file"];
 	$vars[]=$favorite["username"];
 
