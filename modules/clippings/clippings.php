@@ -4,6 +4,8 @@ require_once 'includes/classes/class_sidebar.php';
 
 class clippings_Sidebar extends Sidebar {
 
+	var $clippingCtrl;
+	
 	public function getTitle() {
 		global $pgv_lang;
 		return $pgv_lang["clippings_cart"];
@@ -56,7 +58,7 @@ class clippings_Sidebar extends Sidebar {
 		$out .= '</ul>';
 		if (count($cart)>0) {
 			$out .= '<a href="sidebar.php?sb_action=clippings&amp;empty=true" class="remove_cart">'.$pgv_lang["empty_cart"].'</a>'.print_help_link("empty_cart_help", "qm",'',false,true);
-			$out .= '<a href="sidebar.php?sb_action=clippings&amp;download=true" class="add_cart">'.$pgv_lang['download'].'</a>';
+			$out .= '<br /><a href="sidebar.php?sb_action=clippings&amp;download=true" class="add_cart">'.$pgv_lang['download_now'].'</a>';
 		}
 		$out .= '<br />';
 		return $out;
@@ -171,7 +173,14 @@ class clippings_Sidebar extends Sidebar {
 	
 	public function downloadForm() {
 		global $pgv_lang, $TEXT_DIRECTION;
-		$out = '<form method="get" action="module.php">
+		$controller = $this->clippingCtrl;
+		$out = PGV_JS_START;
+		$out .= 'function cancelDownload() {
+				var link = "sidebar.php?sb_action=clippings";
+				jQuery("#sb_clippings_content").load(link);
+			}';
+		$out .= PGV_JS_END;
+		$out .= '<form method="get" action="module.php">
 		<input type="hidden" name="mod" value="clippings" />
 		<input type="hidden" name="pgv_action" value="index" />
 		<input type="hidden" name="action" value="download" />
@@ -235,18 +244,11 @@ class clippings_Sidebar extends Sidebar {
 		<td class="optionbox"><input type="checkbox" name="convert" value="yes" /></td></tr>
 
 		<tr><td class="descriptionbox width50 wrap">'. print_help_link("remove_tags_help", "qm", "", false, true).$pgv_lang["remove_custom_tags"].'</td>
-		<td class="optionbox"><input type="checkbox" name="remove" value="yes" checked="checked" /></td></tr>
-
-		<tr><td class="descriptionbox width50 wrap">'.print_help_link("convertPath_help", "qm", "", false, true). $pgv_lang["convertPath"].'</td>
-		<td class="list_value"><input type="text" name="conv_path" size="30" value="'.getLRM(). $controller->conv_path. getLRM().'" /></td></tr>
-
-		<tr><td class="descriptionbox width50 wrap">'.print_help_link("convertSlashes_help", "qm", "", false, true).$pgv_lang["convertSlashes"].'</td>
-		<td class="list_value">
-		<input type="radio" name="conv_slashes" value="forward" '.($controller->conv_slashes=='forward' ? "checked=\"checked\" ":'').'/>&nbsp;'.$pgv_lang["forwardSlashes"].'<br />
-		<input type="radio" name="conv_slashes" value="backward" '.($controller->conv_slashes=='backward' ? "checked=\"checked\" ":'').'/>&nbsp;'.$pgv_lang["backSlashes"].'
-		</td></tr>
+		<td class="optionbox"><input type="checkbox" name="remove" value="yes" checked="checked" />
+		<input type="hidden" name="conv_path" value="'.getLRM(). $controller->conv_path. getLRM().'" /></td></tr>
 
 		<tr><td class="topbottombar" colspan="2">
+		<input type="button" value="'.$pgv_lang["cancel"].'" onclick="cancelDownload();" />
 		<input type="submit" value="'.$pgv_lang["download_now"].'" />
 		</form>';
 		
@@ -257,6 +259,7 @@ class clippings_Sidebar extends Sidebar {
 		global $GEDCOM, $cart;
 		require_once PGV_ROOT.'modules/clippings/clippings_ctrl.php';
 		$controller = new ClippingsController();
+		$this->clippingCtrl = $controller;
 		$add = safe_GET_xref('add','');
 		$add1 = safe_GET_xref('add1','');
 		$remove = safe_GET('remove', PGV_REGEX_INTEGER, -1);
