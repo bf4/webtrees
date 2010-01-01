@@ -51,14 +51,15 @@ if (!PGV_DB::table_exists("{$TBLPREFIX}placelocation")) {
 		" pl_lati      ".self::$VARCHAR_TYPE."(30)      NULL,".
 		" pl_zoom      ".self::$INT4_TYPE."             NULL,".
 		" pl_icon      ".self::$VARCHAR_TYPE."(255)     NULL,".
-		" PRIMARY KEY                    (pl_id       ),".
-		" INDEX {$TBLPREFIX}pl_level     (pl_level    ),".
-		" INDEX {$TBLPREFIX}p            (pl_long     ),".
-		" INDEX {$TBLPREFIX}pl_lati      (pl_lati     ),".
-		" INDEX {$TBLPREFIX}pl_name      (pl_place    ),".
-		" INDEX {$TBLPREFIX}pl_parent_id (pl_parent_id)".
+		" PRIMARY KEY (pl_id)".
 		") ".self::$UTF8_TABLE
 	);
+	self::exec("CREATE INDEX {$TBLPREFIX}pl_level     ON {$TBLPREFIX}placelocation (pl_level    )");
+	self::exec("CREATE INDEX {$TBLPREFIX}pl_long      ON {$TBLPREFIX}placelocation (pl_long     )");
+	self::exec("CREATE INDEX {$TBLPREFIX}pl_lati      ON {$TBLPREFIX}placelocation (pl_lati     )");
+	self::exec("CREATE INDEX {$TBLPREFIX}pl_name      ON {$TBLPREFIX}placelocation (pl_place    )");
+	self::exec("CREATE INDEX {$TBLPREFIX}pl_parent_id ON {$TBLPREFIX}placelocation (pl_parent_id)");
+
 }
 
 // Update the version to indicate sucess

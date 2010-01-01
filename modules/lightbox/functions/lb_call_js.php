@@ -37,7 +37,6 @@ loadLangFile("lightbox:lang");
 
 // Get Javascript variables from lb_config.php ---------------------------
 //			require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-//			if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) require_once PGV_ROOT.'modules/lightbox/lb_config.php';
 //			if ($theme_name=="Minimal") {
 				// Force icon options to "text" when we're dealing with the Minimal theme
 //				if ($LB_AL_HEAD_LINKS!="none") $LB_AL_HEAD_LINKS = "text";

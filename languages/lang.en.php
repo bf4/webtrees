@@ -1524,6 +1524,9 @@ $pgv_lang["marrdate2"]				= "Marriage Date range end";
 $pgv_lang["sort_by"]				= "Sort by";
 $pgv_lang["cemetery_report"]		= "Cemetery Report";
 $pgv_lang["burialplace"]			= "Burial Place contains";
+$pgv_lang["fact_sources_report"]	= "Fact Sources";
+$pgv_lang["missing_facts_report"]	= "Missing relatives facts";
+$pgv_lang["sources_to_events"]		= "Sources to the events";
 
 $pgv_lang["cleanup"]				= "Cleanup";
 

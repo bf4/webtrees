@@ -47,7 +47,7 @@ class TreeNav {
 	* @param string $rootid the rootid of the person
 	* @param int $zoom The starting zoom level
 	*/
-	function TreeNav($rootid='', $name='nav', $zoom=0) {
+	function __construct($rootid='', $name='nav', $zoom=0) {
 		global $SHOW_PRIVATE_RELATIONSHIPS;
 
 		$SHOW_PRIVATE_RELATIONSHIPS = true;		// Interactive Tree doesn't work if this is "false"

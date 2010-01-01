@@ -31,14 +31,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_GEDCOMRECORD_PHP', '');
 
-require_once PGV_ROOT.'includes/classes/class_person.php';
-require_once PGV_ROOT.'includes/classes/class_family.php';
-require_once PGV_ROOT.'includes/classes/class_source.php';
-require_once PGV_ROOT.'includes/classes/class_repository.php';
-require_once PGV_ROOT.'includes/classes/class_note.php';
-require_once PGV_ROOT.'includes/classes/class_media.php';
-require_once PGV_ROOT.'includes/classes/class_event.php';
-require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
+require_once 'includes/classes/class_person.php';
+require_once 'includes/classes/class_family.php';
+require_once 'includes/classes/class_source.php';
+require_once 'includes/classes/class_repository.php';
+require_once 'includes/classes/class_note.php';
+require_once 'includes/classes/class_media.php';
+require_once 'includes/classes/class_event.php';
+require_once 'includes/classes/class_serviceclient.php';
 
 class GedcomRecord {
 	var $xref       =null;  // The record identifier
@@ -58,7 +58,7 @@ class GedcomRecord {
 	protected $_getSecondaryName=null;
 
 	// Create a GedcomRecord object from either raw GEDCOM data or a database row
-	function GedcomRecord($data, $simple=false) {
+	function __construct($data, $simple=false) {
 		if (is_array($data)) {
 			// Construct from a row from the database
 			$this->xref  =$data['xref'];
@@ -106,6 +106,8 @@ class GedcomRecord {
 	static function &getInstance($data, $simple=true, $latest=false) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
+		$is_pending=false; // Did this record come from a pending edit
+
 		if (is_array($data)) {
 			$ged_id=$data['ged_id'];
 			$pid   =$data['xref'];
@@ -125,7 +127,29 @@ class GedcomRecord {
 				$data=find_updated_record($pid, $ged_id);
 				if (!$data) $data=fetch_gedcom_record($pid, $ged_id);
 			}
-			else $data=fetch_gedcom_record($pid, $ged_id);
+			else {
+				switch (get_class()) {
+				case 'Person':
+					$data=fetch_person_record($pid, $ged_id);
+					break;
+				case 'Family':
+					$data=fetch_family_record($pid, $ged_id);
+					break;
+				case 'Source':
+					$data=fetch_source_record($pid, $ged_id);
+					break;
+				case 'Media':
+					$data=fetch_media_record($pid, $ged_id);
+					break;
+				case 'Repository':
+				case 'Note':
+					$data=fetch_other_record($pid, $ged_id);
+					break;
+				default:
+					$data=fetch_gedcom_record($pid, $ged_id);
+					break;
+				}
+			}
 
 			// If we didn't find the record in the database, it may be remote
 			if (!$data && strpos($pid, ':')) {
@@ -140,7 +164,7 @@ class GedcomRecord {
 			// If we didn't find the record in the database, it may be new/pending
 			if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
 				$data=find_updated_record($pid, $ged_id);
-				$fromfile=true;
+				$is_pending=true;
 			}
 
 			// If we still didn't find it, it doesn't exist
@@ -150,44 +174,46 @@ class GedcomRecord {
 		}
 
 		// Create the object
-		if (is_array($data)) {
-			$type=$data['type'];
-		} elseif (preg_match('/^0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $data, $match)) {
-			$type=$match[1];
-		} else {
-			$type='';
+		$class_name=get_class();
+		if ($class_name=='GedcomRecord') {
+			if (is_array($data)) {
+				$type=$data['type'];
+			} elseif (preg_match('/^0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $data, $match)) {
+				$type=$match[1];
+			} else {
+				$type='';
+			}
+			switch($type) {
+			case 'INDI':
+				$class_name='Person';
+				break;
+			case 'FAM':
+				$class_name='Family';
+				break;
+			case 'SOUR':
+				$class_name='Source';
+				break;
+			case 'OBJE':
+				$class_name='Media';
+				break;
+			case 'REPO':
+				$class_name='Repository';
+				break;
+			case 'NOTE':
+				$class_name='Note';
+				break;
+			default:
+				$class_name='GedcomRecord';
+				break;
+			}
 		}
-		switch ($type) {
-		case 'INDI':
-			$object=new Person($data, $simple);
-			break;
-		case 'FAM':
-			$object=new Family($data, $simple);
-			break;
-		case 'SOUR':
-			$object=new Source($data, $simple);
-			break;
-		//BH ==================
-		case 'NOTE':
-			$object=new Note($data, $simple);
-			break;
-		case 'REPO':
-			$object=new Repository($data, $simple);
-			break;
-		case 'OBJE':
-			$object=new Media($data, $simple);
-			break;
-		default:
-			$object=new GedcomRecord($data, $simple);
-			break;
-		}
-		
-		// This is an object from the database, but we created it from raw gedcom
-		// rather than a database row.  Set the gedcom to indicate that it is not
-		// a dynamically created record.
+
+		$object=new $class_name($data, $simple);
+
+		// This is an object from the database, so indicate which gedcom it comes from.
 		$object->ged_id=$ged_id;
 
-		if (!empty($fromfile)) {
+		if ($is_pending) {
 			$object->setChanged(true);
 		}
 
@@ -214,7 +240,7 @@ class GedcomRecord {
 	}
 	/**
 	* get the object type
-	* @return string returns the type of this object "INDI","FAM", etc.
+	* @return string returns the type of this object 'INDI','FAM', etc.
 	*/
 	function getType() {
 		return $this->type;
@@ -265,14 +291,11 @@ class GedcomRecord {
 	* check if this object is equal to the given object
 	* @param GedcomRecord $obj
 	*/
-	function equals(&$obj) {
+	public function equals(&$obj) {
 		return !is_null($obj) && $this->xref==$obj->getXref();
 	}
 
-	/**
-	* get the URL to link to this record
-	* @string a url that can be used to link to this person
-	*/
+	// Generate a URL that links to this record
 	public function getLinkUrl() {
 		return $this->_getLinkUrl('gedcomrecord.php?pid=');
 	}
@@ -338,7 +361,7 @@ class GedcomRecord {
 			if ($target) {
 				$target='target="'.$target.'"';
 			}
-			return "<a href=\"".encode_url($this->getLinkUrl())."#content\" name=\"".preg_replace('/\D/','',$this->getXref())."\" $target>".$this->getXref()."</a>";
+			return '<a href="'.encode_url($this->getLinkUrl()).'#content" name="'.preg_replace('/\D/','',$this->getXref()).'" '.$target.'>'.$this->getXref().'</a>';
 		} else {
 			return $this->getXref();
 		}
@@ -358,7 +381,7 @@ class GedcomRecord {
 	*/
 	function undoChange() {
 		global $GEDCOM, $pgv_changes;
-		require_once PGV_ROOT.'includes/functions/functions_edit.php';
+		require_once 'includes/functions/functions_edit.php';
 		if (!PGV_USER_CAN_ACCEPT) {
 			return false;
 		}
@@ -410,7 +433,7 @@ class GedcomRecord {
 
 	// Convert a name record into sortable and listable versions.  This default
 	// should be OK for simple record types.  INDI records will need to redefine it.
-	function _addName($type, $value, $gedrec) {
+	protected function _addName($type, $value, $gedrec) {
 		$this->_getAllNames[]=array(
 			'type'=>$type,
 			'full'=>$value,
@@ -425,9 +448,9 @@ class GedcomRecord {
 	// Parameters: the level 1 fact containing the name.
 	// Return value: an array of name structures, each containing
 	// ['type'] = the gedcom fact, e.g. NAME, TITL, FONE, _HEB, etc.
-	// ['full'] = the name as specified in the record, e.g. "Vincent van Gogh" or "John Unknown"
-	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
-	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
+	// ['full'] = the name as specified in the record, e.g. 'Vincent van Gogh' or 'John Unknown'
+	// ['list'] = a version of the name as might appear in lists, e.g. 'van Gogh, Vincent' or 'Unknown, John'
+	// ['sort'] = a sortable version of the name (not for display), e.g. 'Gogh, Vincent' or '@N.N., John'
 	protected function _getAllNames($fact='!', $level=1) {
 		global $pgv_lang, $WORD_WRAPPED_NOTES;
 
@@ -841,7 +864,7 @@ class GedcomRecord {
 			$found = false;
 			foreach($diff->facts as $indexval => $newevent) {
 				$newfact = $newevent->getGedcomRecord();
-				$newfact=preg_replace("/\\\/", "/", $newfact);
+				$newfact=preg_replace("/\\\/", '/', $newfact);
 				if (trim($newfact)==trim($event->getGedcomRecord())) {
 					$found = true;
 					break;
@@ -856,7 +879,7 @@ class GedcomRecord {
 			$found = false;
 			foreach($this->facts as $indexval => $event) {
 				$newfact = $newevent->getGedcomRecord();
-				$newfact=preg_replace("/\\\/", "/", $newfact);
+				$newfact=preg_replace("/\\\/", '/', $newfact);
 				if (trim($newfact)==trim($event->getGedcomRecord())) {
 					$found = true;
 					break;
@@ -884,9 +907,6 @@ class GedcomRecord {
 		}
 		$srec = $srec[0];
 		return get_sub_record('SOUR', 2, $srec);
-	}
-	function getEventSourcePage($event) {
-		return get_gedcom_value('PAGE', 3, getEventSource($event));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////

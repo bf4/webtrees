@@ -671,7 +671,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 	$searchTarget = "~[\r\n]".$tag."[\s]~";
 	$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 	if ($ct==0) {
-		$tag = preg_replace("/(\w+)/", "_$1", $tag);
+		$tag = preg_replace('/(\w+)/', "_$1", $tag);
 		$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 		if ($ct==0) {
 			return "";
@@ -3719,21 +3719,21 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	$result = array();
 
 	// -- Classify the incoming media file
-	if (preg_match("~^https?://~i", $fileName)) $type = "url_";
-	else $type = "local_";
-	if ((preg_match("/\.flv$/i", $fileName) || preg_match("~^https?://.*\.youtube\..*/watch\?~i", $fileName)) && is_dir(PGV_ROOT.'modules/JWplayer')) {
-		$type .= "flv";
-	} else if (preg_match("~^https?://picasaweb*\.google\..*/.*/~i", $fileName)) {
-		$type .= "picasa";
-	} else if (preg_match("/\.(jpg|jpeg|gif|png)$/i", $fileName)) {
-		$type .= "image";
-	} else if (preg_match("/\.(pdf|avi|txt)$/i", $fileName)) {
-		$type .= "page";
-	} else if (preg_match("/\.mp3$/i", $fileName)) {
-		$type .= "audio";
-	} else if (preg_match("/\.wmv$/i", $fileName)) {
-		$type .= "wmv";
-	} else $type .= "other";
+	if (preg_match('~^https?://~i', $fileName)) $type = 'url_';
+	else $type = 'local_';
+	if ((preg_match('/\.flv$/i', $fileName) || preg_match('~^https?://.*\.youtube\..*/watch\?~i', $fileName)) && is_dir(PGV_ROOT.'modules/JWplayer')) {
+		$type .= 'flv';
+	} else if (preg_match('~^https?://picasaweb*\.google\..*/.*/~i', $fileName)) {
+		$type .= 'picasa';
+	} else if (preg_match('/\.(jpg|jpeg|gif|png)$/i', $fileName)) {
+		$type .= 'image';
+	} else if (preg_match('/\.(pdf|avi|txt)$/i', $fileName)) {
+		$type .= 'page';
+	} else if (preg_match('/\.mp3$/i', $fileName)) {
+		$type .= 'audio';
+	} else if (preg_match('/\.wmv$/i', $fileName)) {
+		$type .= 'wmv';
+	} else $type .= 'other';
 	// $type is now: (url | local) _ (flv | picasa | image | page | audio | other)
 	$result['type'] = $type;
 
@@ -3742,9 +3742,6 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		if (PGV_USE_LIGHTBOX) {
 			// Lightbox is installed
 			require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-			if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
-				require_once PGV_ROOT.'modules/lightbox/lb_config.php';
-			}
 			switch ($type) {
 			case 'url_flv':
 				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');

@@ -47,10 +47,9 @@ else if (!$controller->family->canDisplayDetails()) {
 }
 
 // LB added for Lightbox viewer ==============================================================
-if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include_once('modules/lightbox/functions/lb_call_js.php');
+if (PGV_USE_LIGHTBOX) {
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require_once PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // LB ======================================================================================
 

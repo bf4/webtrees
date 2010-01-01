@@ -66,7 +66,10 @@ class MenuBar
 		$menu->addAccesskey($pgv_lang["accesskey_home_page"]);
 		//-- gedcom list
 		if ($ALLOW_CHANGE_GEDCOM && count(get_all_gedcoms())>1) {
-			foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+		$gedcomarray = get_all_gedcoms();
+		//-- sorting menu by gedcom filename 
+		asort($gedcomarray);
+			foreach ($gedcomarray as $ged_id=>$gedcom) {
 				$submenu = new Menu(PrintReady(get_gedcom_setting($ged_id, 'title'), true), encode_url('index.php?ctype=gedcom&ged='.$gedcom));
 				if (!empty($PGV_IMAGES["gedcom"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
@@ -804,7 +807,7 @@ class MenuBar
 	* @return Menu the menu item
 	*/
 	static function &getPreviewMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SCRIPT_NAME, $QUERY_STRING, $pgv_lang;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SCRIPT_NAME, $QUERY_STRING, $pgv_lang, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");

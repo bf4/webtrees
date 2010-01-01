@@ -9,10 +9,8 @@
  * You can extend PhpGedView to work with other systems by implementing the functions in this file.
  * Other possible options are to use LDAP for authentication.
  *
- * $Id$
- *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +25,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
  * @package PhpGedView
  * @subpackage DB
+ * @version $Id$
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -325,7 +325,7 @@ function AddToSearchLog($LogString, $allgeds) {
 		return;
 
 	//-- do not allow code to be written to the log file
-	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);
+	$LogString = preg_replace('/<\?.*\?>/', "*** CODE DETECTED ***", $LogString);
 
 	$oldged = $GEDCOM;
 	foreach($allgeds as $indexval => $value) {
@@ -368,7 +368,7 @@ function AddToChangeLog($LogString, $ged="") {
 	global $INDEX_DIRECTORY, $CHANGELOG_CREATE, $GEDCOM, $username, $SEARCHLOG_CREATE;
 
 	//-- do not allow code to be written to the log file
-	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);
+	$LogString = preg_replace('/<\?.*\?>/', "*** CODE DETECTED ***", $LogString);
 
 	if (empty($ged))
 		$ged = $GEDCOM;

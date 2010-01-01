@@ -93,7 +93,7 @@ Database
     PhpGedView primarily supports MySQL, but has also been tested and shown to 
     work with Postgresql, SQLite, and SQL-Server. The versions required for 
     each of these databases is outlined below: 
-    MySQL 3.23+ 
+    MySQL 4.1+ 
     PostgresQL 8.0+ 
     SQLite available through PDO-SQLite which is included in PHP 5 
     MS SQL-Server 2003+ 
@@ -176,7 +176,10 @@ installing PHP applications.
 
 *A.  Upload Program Files:
 To install PhpGedView, unzip the compressed package and upload the files to 
-a directory on your web server.  Rename the config.dist file to config.php.
+a directory on your web server.  If you are using a SVN (development)
+version of PhpGedView, you will need to rename the config.dist file to
+config.php.  If you are using an official release, it will already have
+a config.php file.
 
 If you have limited space on your server, you can save space in the following ways:
 1.  Delete the themes from the themes folder that you do not plan to use.

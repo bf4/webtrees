@@ -24,7 +24,7 @@
  * $Id$
  * @author windmillway
  */
-	if (file_exists("modules/googlemap/defaultconfig.php")) {
+	if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 //		print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
 		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
 

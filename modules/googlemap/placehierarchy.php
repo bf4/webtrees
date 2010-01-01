@@ -117,8 +117,8 @@ function get_p_id($place) {
 		$placelist = create_possible_place_names($par[$i], $i+1);
 		foreach ($placelist as $key => $placename) {
 			$pl_id=
-				PGV_DB::prepare("SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_place ".PGV_DB::$LIKE." ? ORDER BY p_place")
-				->execute(array($i, $place_id, $placename))
+				PGV_DB::prepare("SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_file=? AND p_place ".PGV_DB::$LIKE." ? ORDER BY p_place")
+				->execute(array($i, $place_id, PGV_GED_ID, $placename))
 				->fetchOne();
 			if (!empty($pl_id)) break;
 		}
@@ -225,12 +225,12 @@ function print_how_many_people($level, $parent) {
 	$fam = $stats->_statsPlaces('FAM', false, $p_id);
 	if (!empty($indi)) {
 		foreach ($indi as $place) {
-			$place_count_indi=$place['count(*)'];
+			$place_count_indi=$place['tot'];
 		}
 	}
 	if (!empty($fam)) {
 		foreach ($fam as $place) {
-			$place_count_fam=$place['count(*)'];
+			$place_count_fam=$place['tot'];
 		}
 	}
 	echo "<br /><br />", $pgv_lang["stat_individuals"], ": ", $place_count_indi, ", ", $pgv_lang["stat_families"], ": ", $place_count_fam;

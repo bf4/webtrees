@@ -668,11 +668,7 @@ function print_media_links($factrec, $level, $pid='') {
 						$name = trim($row["m_titl"]);
 						echo "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
 					} else if (PGV_USE_LIGHTBOX && preg_match("/\.(pdf|avi|txt)$/i", $mainMedia)) {
-						if (PGV_USE_LIGHTBOX) {
-							include ('modules/lightbox/lb_config.php');
-						} else {
-							include ('modules/lightbox/lb_defaultconfig.php');
-						}
+						require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
 						$name = trim($row["m_titl"]);
 						echo "<a href=\"" . $mainMedia . "\" rel='clearbox({$LB_URL_WIDTH}, {$LB_URL_HEIGHT}, click)' rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
 					// --------------------------------------------------------------------------------------

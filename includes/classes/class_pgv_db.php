@@ -140,8 +140,7 @@ class PGV_DB {
 				array(
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-					PDO::ATTR_CASE=>PDO::CASE_LOWER,
-					PDO::ATTR_AUTOCOMMIT=>true
+					PDO::ATTR_CASE=>PDO::CASE_LOWER
 				)
 			);
 			self::$AUTO_ID_TYPE ='SERIAL';
@@ -151,7 +150,7 @@ class PGV_DB {
 			self::$INT3_TYPE    ='INTEGER';
 			self::$INT4_TYPE    ='INTEGER';
 			self::$INT8_TYPE    ='BIGINT';
-			self::$CHAR_TYPE    ='CHAR';
+			self::$CHAR_TYPE    ='VARCHAR'; // PG doesn't automatically TRIM(TRAILING ' ' FROM <col>) when selecting
 			self::$VARCHAR_TYPE ='VARCHAR';
 			self::$UNSIGNED     ='';
 			self::$LIKE         ='ILIKE';

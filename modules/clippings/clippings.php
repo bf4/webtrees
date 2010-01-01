@@ -56,6 +56,7 @@ class clippings_Sidebar extends Sidebar {
 		$out .= '</ul>';
 		if (count($cart)>0) {
 			$out .= '<a href="sidebar.php?sb_action=clippings&amp;empty=true" class="remove_cart">'.$pgv_lang["empty_cart"].'</a>'.print_help_link("empty_cart_help", "qm",'',false,true);
+			$out .= '<a href="sidebar.php?sb_action=clippings&amp;download=true" class="add_cart">'.$pgv_lang['download'].'</a>';
 		}
 		$out .= '<br />';
 		return $out;
@@ -165,6 +166,90 @@ class clippings_Sidebar extends Sidebar {
 		</form>';
 		}
 		else return $this->getContent();
+		return $out;
+	}
+	
+	public function downloadForm() {
+		global $pgv_lang, $TEXT_DIRECTION;
+		$out = '<form method="get" action="module.php">
+		<input type="hidden" name="mod" value="clippings" />
+		<input type="hidden" name="pgv_action" value="index" />
+		<input type="hidden" name="action" value="download" />
+		<table>
+		<tr><td colspan="2" class="topbottombar"><h2>'.$pgv_lang["file_information"].'</h2></td></tr>
+		<tr>
+		<td class="descriptionbox width50 wrap">'.print_help_link("file_type_help", "qm", "", false, true). $pgv_lang["choose_file_type"].'</td>
+		<td class="optionbox">';
+		if ($TEXT_DIRECTION=='ltr') {
+			$out .= '<input type="radio" name="filetype" checked="checked" value="gedcom" />&nbsp;GEDCOM<br/><input type="radio" name="filetype" value="gramps" DISABLED />&nbsp;Gramps XML <!-- GRAMPS doesn\'t work right now -->';
+		} else {
+			$out .= 'GEDCOM&nbsp;'.getLRM().'<input type="radio" name="filetype" checked="checked" value="gedcom" />'.getLRM().'<br />Gramps XML&nbsp;'.getLRM().'<input type="radio" name="filetype" value="gramps" />'.getLRM();
+		}
+		$out .= '
+		</td></tr>
+
+		<tr><td class="descriptionbox width50 wrap">'.print_help_link("zip_help", "qm", "", false, true). $pgv_lang["zip_files"].'</td>
+		<td class="optionbox"><input type="checkbox" name="Zip" value="yes" checked="checked" /></td></tr>
+
+		<tr><td class="descriptionbox width50 wrap">'.print_help_link("include_media_help", "qm", "", false, true).$pgv_lang["include_media"].'</td>
+		<td class="optionbox"><input type="checkbox" name="IncludeMedia" value="yes" checked="checked" /></td></tr>
+		';
+		
+		// Determine the Privatize options available to this user
+		if (PGV_USER_IS_ADMIN) {
+			$radioPrivatizeNone = 'checked="checked" ';
+			$radioPrivatizeVisitor = '';
+			$radioPrivatizeUser = '';
+			$radioPrivatizeGedadmin = '';
+			$radioPrivatizeAdmin = '';
+		} else if (PGV_USER_GEDCOM_ADMIN) {
+			$radioPrivatizeNone = 'DISABLED ';
+			$radioPrivatizeVisitor = 'checked="checked" ';
+			$radioPrivatizeUser = '';
+			$radioPrivatizeGedadmin = '';
+			$radioPrivatizeAdmin = 'DISABLED ';
+		} else if (PGV_USER_ID) {
+			$radioPrivatizeNone = 'DISABLED ';
+			$radioPrivatizeVisitor = 'checked="checked" ';
+			$radioPrivatizeUser = '';
+			$radioPrivatizeGedadmin = 'DISABLED ';
+			$radioPrivatizeAdmin = 'DISABLED ';
+		} else {
+			$radioPrivatizeNone = 'DISABLED ';
+			$radioPrivatizeVisitor = 'checked="checked" DISABLED ';
+			$radioPrivatizeUser = 'DISABLED ';
+			$radioPrivatizeGedadmin = 'DISABLED ';
+			$radioPrivatizeAdmin = 'DISABLED ';
+		}
+		$out .= '
+		<tr><td class="descriptionbox width50 wrap">'.print_help_link("apply_privacy_help", "qm", "", false, true).$pgv_lang["apply_privacy"].'</td>
+		<td class="list_value">
+		<input type="radio" name="privatize_export" value="none" '.$radioPrivatizeNone.'/>&nbsp;'.$pgv_lang["none"].'<br />
+		<input type="radio" name="privatize_export" value="visitor" '.$radioPrivatizeVisitor.'/>&nbsp;'.$pgv_lang["visitor"].'<br />
+		<input type="radio" name="privatize_export" value="user" '.$radioPrivatizeUser.'/>&nbsp;'.$pgv_lang["user"].'<br />
+		<input type="radio" name="privatize_export" value="gedadmin" '.$radioPrivatizeGedadmin.'/>&nbsp;'.$pgv_lang["gedadmin"].'<br />
+		<input type="radio" name="privatize_export" value="admin" '.$radioPrivatizeAdmin.'/>&nbsp;'.$pgv_lang["siteadmin"].'
+		</td></tr>
+
+		<tr><td class="descriptionbox width50 wrap">'.print_help_link("utf8_ansi_help", "qm", "", false, true).$pgv_lang["utf8_to_ansi"].'</td>
+		<td class="optionbox"><input type="checkbox" name="convert" value="yes" /></td></tr>
+
+		<tr><td class="descriptionbox width50 wrap">'. print_help_link("remove_tags_help", "qm", "", false, true).$pgv_lang["remove_custom_tags"].'</td>
+		<td class="optionbox"><input type="checkbox" name="remove" value="yes" checked="checked" /></td></tr>
+
+		<tr><td class="descriptionbox width50 wrap">'.print_help_link("convertPath_help", "qm", "", false, true). $pgv_lang["convertPath"].'</td>
+		<td class="list_value"><input type="text" name="conv_path" size="30" value="'.getLRM(). $controller->conv_path. getLRM().'" /></td></tr>
+
+		<tr><td class="descriptionbox width50 wrap">'.print_help_link("convertSlashes_help", "qm", "", false, true).$pgv_lang["convertSlashes"].'</td>
+		<td class="list_value">
+		<input type="radio" name="conv_slashes" value="forward" '.($controller->conv_slashes=='forward' ? "checked=\"checked\" ":'').'/>&nbsp;'.$pgv_lang["forwardSlashes"].'<br />
+		<input type="radio" name="conv_slashes" value="backward" '.($controller->conv_slashes=='backward' ? "checked=\"checked\" ":'').'/>&nbsp;'.$pgv_lang["backSlashes"].'
+		</td></tr>
+
+		<tr><td class="topbottombar" colspan="2">
+		<input type="submit" value="'.$pgv_lang["download_now"].'" />
+		</form>';
+		
 		return $out;
 	}
 
@@ -289,6 +374,9 @@ class clippings_Sidebar extends Sidebar {
 		else if (isset($_REQUEST['empty'])) {
 			$cart = array ();
 			$_SESSION["cart"] = $cart;
+		}
+		else if (isset($_REQUEST['download'])) {
+			return $this->downloadForm();
 		}
 		if (isset($_SESSION["cart"])) $_SESSION["cart"]=$cart;
 		return $this->getCartList();

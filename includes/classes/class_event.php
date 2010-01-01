@@ -99,7 +99,7 @@ class Event {
 	 * @param int $lineNumber
 	 * @return Event
 	 */
-	function Event($subrecord, $lineNumber=-1) {
+	function __construct($subrecord, $lineNumber=-1) {
 		global $factarray;
 		if (preg_match('/^1 ('.PGV_REGEX_TAG.') *(.*)/', $subrecord, $match)) {
 			$this->tag=$match[1];

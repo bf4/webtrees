@@ -50,7 +50,7 @@ class stats {
 
 	static $_xencoding = PGV_GOOGLE_CHART_ENCODING;
 
-	function stats($gedcom, $server_url='') {
+	function __construct($gedcom, $server_url='') {
 		self::$_not_allowed = explode(',', STATS_NOT_ALLOWED);
 		$this->_setGedcom($gedcom);
 		$this->_server_url = $server_url;
@@ -423,12 +423,7 @@ class stats {
 
 	function totalIndisWithSources() {
 		global $TBLPREFIX, $DBTYPE;
-		if ($DBTYPE=='sqlite') {
-			// sqlite2 can't do subqueries or count distinct
-			$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id." AND i_gedcom LIKE '%SOUR @%'");
-		} else {
-			$rows=self::_runSQL("SELECT COUNT(DISTINCT i_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_id=l_from AND i_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
-		}
+		$rows=self::_runSQL("SELECT COUNT(DISTINCT i_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_id=l_from AND i_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
 		return $rows[0]['tot'];
 	}
 
@@ -469,12 +464,7 @@ class stats {
 
 	function totalFamsWithSources() {
 		global $TBLPREFIX, $DBTYPE;
-		if ($DBTYPE=='sqlite') {
-			// sqlite2 can't do subqueries or count distinct
-			$rows=self::_runSQL("SELECT COUNT(f_id) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id." AND f_gedcom LIKE '%SOUR @%'");
-		} else {
-			$rows=self::_runSQL("SELECT COUNT(DISTINCT f_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_id=l_from AND f_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
-		}
+		$rows=self::_runSQL("SELECT COUNT(DISTINCT f_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_id=l_from AND f_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
 		return $rows[0]['tot'];
 	}
 
@@ -548,23 +538,12 @@ class stats {
 			$opt="IN ({$qs})";
 			$vars=$params;
 			$distinct='';
-			$group_by='';
 		} else {
 			$opt ="IS NOT NULL";
 			$vars='';
 			$distinct='DISTINCT';
-			$group_by='GROUP BY n_surn';
 		}
 		$vars[]=$this->_ged_id;
-		if ($DBTYPE=="sqlite") {
-			// SQLITE2 does not support COUNT(DISTINCT ).
-			// Remove this when we move to SQLITE3
-			return count(
-				PGV_DB::prepare("SELECT n_surn FROM {$TBLPREFIX}name WHERE n_surn {$opt} AND n_file=? {$group_by}")
-				->execute($vars)
-				->fetchOneColumn()
-			);
-		}
 		return (int)
 			PGV_DB::prepare("SELECT COUNT({$distinct} n_surn) FROM {$TBLPREFIX}name WHERE n_surn {$opt} AND n_file=?")
 			->execute($vars)
@@ -578,23 +557,12 @@ class stats {
 			$opt="IN ({$qs})";
 			$vars=$params;
 			$distinct='';
-			$group_by='';
 		} else {
 			$opt ="IS NOT NULL";
 			$vars='';
 			$distinct='DISTINCT';
-			$group_by='GROUP BY n_givn';
 		}
 		$vars[]=$this->_ged_id;
-		if ($DBTYPE=="sqlite") {
-			// SQLITE2 does not support COUNT(DISTINCT ).
-			// Remove this when we move to SQLITE3
-			return count(
-				PGV_DB::prepare("SELECT n_givn FROM {$TBLPREFIX}name WHERE n_givn {$opt} AND n_file=? {$group_by}")
-				->execute($vars)
-				->fetchOneColumn()
-			);
-		}
 		return (int)
 			PGV_DB::prepare("SELECT COUNT({$distinct} n_givn) FROM {$TBLPREFIX}name WHERE n_givn {$opt} AND n_file=?")
 			->execute($vars)
@@ -847,12 +815,14 @@ class stats {
 			if ($type=='unknown') {
 				// There has to be a better way then this :(
 				foreach (self::$_media_types as $t) {
-					$sql.=" AND m_gedrec NOT ".PGV_DB::$LIKE." ?";
+					$sql.=" AND (m_gedrec NOT ".PGV_DB::$LIKE." ? AND m_gedrec NOT ".PGV_DB::$LIKE." ?)";
 					$vars[]="%3 TYPE {$t}%";
+					$vars[]="%1 _TYPE {$t}%";
 				}
 			} else {
-				$sql.=" AND m_gedrec ".PGV_DB::$LIKE." ?";
+				$sql.=" AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
 				$vars[]="%3 TYPE {$type}%";
+				$vars[]="%1 _TYPE {$type}%";
 			}
 		}
 		return PGV_DB::prepare($sql)->execute($vars)->fetchOne();
@@ -907,13 +877,10 @@ class stats {
 		}
 		$count = $this->totalMediaUnknown();
 		if ($count>0) {
-			$media[$type] = $tot-$c;
+			$media['unknown'] = $tot-$c;
 			if ($tot-$c > $max) {
 				$max = $count;
 			}
-			$mediaCounts[] = round(100 * $count / $tot, 0);
-			$mediaTypes .= $pgv_lang['unknown'].' - '.($tot-$c).'|';
-			$chart_title .= $pgv_lang['unknown'].' ['.($tot-$c).']';
 		}
 		if (($max/$tot)>0.6 && count($media)>10) {
 			arsort($media);
@@ -967,59 +934,13 @@ class stats {
 			$dmod = 'MAX';
 			$life_dir = 'DESC';
 		}
-		switch ($DBTYPE) {
-			// Testing new style
-			default:
-			{
-				$rows=self::_runSQL(''
-					.' SELECT'
-						.' d2.d_year,'
-						.' d2.d_type,'
-						.' d2.d_fact,'
-						.' d2.d_gid'
-					.' FROM'
-						." {$TBLPREFIX}dates AS d2"
-					.' WHERE'
-						." d2.d_file={$this->_ged_id} AND"
-						." d2.d_fact IN ({$query_field}) AND"
-						.' d2.d_julianday1=('
-							.' SELECT'
-								." {$dmod}(d1.d_julianday1)"
-							.' FROM'
-								." {$TBLPREFIX}dates AS d1"
-							.' WHERE'
-								." d1.d_file={$this->_ged_id} AND"
-								." d1.d_fact IN ({$query_field}) AND"
-								.' d1.d_julianday1!=0'
-						.' )'
-					.' ORDER BY'
-						." d_julianday1 {$life_dir}, d_type"
-				);
-				break;
-			}
-			// MySQL 4.0 can't handle nested queries, so we use the old style. Of course this hits the performance of PHP4 users a tiny bit, but it's the best we can do.
-			case 'mysql':
-			case 'sqlite':
-			{
-				$rows=self::_runSQL(''
-					.' SELECT'
-						.' d_year,'
-						.' d_type,'
-						.' d_fact,'
-						.' d_gid'
-					.' FROM'
-						." {$TBLPREFIX}dates"
-					.' WHERE'
-						." d_file={$this->_ged_id} AND"
-						." d_fact IN ({$query_field}) AND"
-						.' d_julianday1!=0'
-					.' ORDER BY'
-						." d_julianday1 {$life_dir},"
-						.' d_type ASC'
-				, 1);
-				break;
-			}
-		}
+		$rows=self::_runSQL(''
+			."SELECT d_year, d_type, d_fact, d_gid"
+			." FROM {$TBLPREFIX}dates"
+			." WHERE d_file={$this->_ged_id} AND d_fact IN ({$query_field}) AND d_julianday1<>0"
+			." ORDER BY d_julianday1 {$life_dir}, d_type",
+			1
+		);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		$record=GedcomRecord::getInstance($row['d_gid']);
@@ -1089,6 +1010,7 @@ class stats {
 			}
 			return $placelist;
 		}
+		// used by placehierarchy googlemap module
 		else if ($parent>0) {
 			if ($what=='INDI') {
 				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id";
@@ -1102,7 +1024,7 @@ class stats {
 			$rows=self::_runSQL(''
 				.' SELECT'
 				.' p_place AS place,'
-				.' COUNT(*)'
+				.' COUNT(*) AS tot'
 				.' FROM'
 					." {$TBLPREFIX}places"
 				." JOIN {$TBLPREFIX}placelinks ON pl_file=p_file AND p_id=pl_p_id"
@@ -1383,21 +1305,21 @@ class stats {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
-			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
+						.'d_year<>0 AND '
 						."d_fact='BIRT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else if ($sex) {
-			$sql = "SELECT d_month, i_sex, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, i_sex, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						."d_fact='BIRT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else {
-			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						."d_fact='BIRT' AND "
@@ -1420,7 +1342,7 @@ class stats {
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
-				$tot += $values['count(*)'];
+				$tot += $values['total'];
 			}
 			// Beware divide by zero
 			if ($tot==0) return '';
@@ -1433,8 +1355,8 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
-				$centuries .= $century.' - '.$values['count(*)'].'|';
+				$counts[] = round(100 * $values['total'] / $tot, 0);
+				$centuries .= $century.' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
@@ -1448,21 +1370,21 @@ class stats {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
-			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
+						.'d_year<>0 AND '
 						."d_fact='DEAT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else if ($sex) {
-			$sql = "SELECT d_month, i_sex, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, i_sex, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						."d_fact='DEAT' AND "
 						."d_type='@#DGREGORIAN@'";
 		} else {
-			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						."d_fact='DEAT' AND "
@@ -1485,7 +1407,7 @@ class stats {
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
-				$tot += $values['count(*)'];
+				$tot += $values['total'];
 			}
 			// Beware divide by zero
 			if ($tot==0) return '';
@@ -1498,8 +1420,8 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
-				$centuries .= $century.' - '.$values['count(*)'].'|';
+				$counts[] = round(100 * $values['total'] / $tot, 0);
+				$centuries .= $century.' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
@@ -1567,7 +1489,7 @@ class stats {
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
-				.' birth.d_julianday1!=0 AND'
+				.' birth.d_julianday1<>0 AND'
 				.' death.d_julianday1>birth.d_julianday2 AND'
 				.$sex_search
 			.' ORDER BY'
@@ -1656,7 +1578,7 @@ class stats {
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
-				.' birth.d_julianday1!=0 AND'
+				.' birth.d_julianday1<>0 AND'
 				.' death.d_julianday1>birth.d_julianday2'
 				.$sex_search
 			.' GROUP BY'
@@ -1684,9 +1606,9 @@ class stats {
 			$func($age, $show_years);
 			if ($person->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]</li>\n";
+					$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
 				} else {
-					$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]";
+					$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]");
 				}
 			}
 		}
@@ -1720,7 +1642,7 @@ class stats {
 		$rows=self::_runSQL(''
 			.' SELECT'
 				.' birth.d_gid AS id,'
-				.' birth.d_julianday1 AS age'
+				.' MIN(birth.d_julianday1) AS age'
 			.' FROM'
 				." {$TBLPREFIX}dates AS birth,"
 				." {$TBLPREFIX}individuals AS indi"
@@ -1730,7 +1652,7 @@ class stats {
 				." birth.d_file={$this->_ged_id} AND"
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
-				.' birth.d_julianday1!=0'
+				.' birth.d_julianday1<>0'
 				.$sex_search
 			.' GROUP BY'
 				.' id'
@@ -1756,9 +1678,9 @@ class stats {
 			}
 			$func($age, $show_years);
 			if ($type == 'list') {
-				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]</li>\n";
+				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
 			} else {
-				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$age."]";
+				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]");
 			}
 		}
 		if ($type == 'list') {
@@ -1799,7 +1721,7 @@ class stats {
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
-				.' birth.d_julianday1!=0 AND'
+				.' birth.d_julianday1<>0 AND'
 				.' death.d_julianday1>birth.d_julianday2'
 				.$sex_search
 		, 1);
@@ -1848,7 +1770,7 @@ class stats {
 					.' birth.d_file=indi.i_file AND'
 					." birth.d_fact='BIRT' AND"
 					." death.d_fact='DEAT' AND"
-					.' birth.d_julianday1!=0 AND'
+					.' birth.d_julianday1<>0 AND'
 					." birth.d_type='@#DGREGORIAN@' AND"
 					." death.d_type='@#DGREGORIAN@' AND"
 					.' death.d_julianday1>birth.d_julianday2'
@@ -1946,7 +1868,7 @@ class stats {
 					.' birth.d_file=indi.i_file AND'
 					." birth.d_fact='BIRT' AND"
 					." death.d_fact='DEAT' AND"
-					.' birth.d_julianday1!=0 AND'
+					.' birth.d_julianday1<>0 AND'
 					.' death.d_julianday1>birth.d_julianday2'
 					.$years
 					.$sex_search
@@ -2023,9 +1945,9 @@ class stats {
 				." {$TBLPREFIX}dates"
 			.' WHERE'
 				." d_file={$this->_ged_id} AND"
-				." d_gid!='HEAD' AND"
+				." d_gid<>'HEAD' AND"
 				." d_fact {$fact_query} AND"
-				.' d_julianday1!=0'
+				.' d_julianday1<>0'
 			.' ORDER BY'
 				." d_julianday1 {$direction}, d_type"
 		, 1);
@@ -2133,7 +2055,7 @@ class stats {
 				." fam.f_file = {$this->_ged_id} AND"
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." married.d_fact = 'MARR' AND"
-				.' birth.d_julianday1 != 0 AND'
+				.' birth.d_julianday1 <> 0 AND'
 				.' married.d_julianday2 > birth.d_julianday1 AND'
 				." i_sex='{$sex}'"
 			.' ORDER BY'
@@ -2186,7 +2108,7 @@ class stats {
 		$hrows=self::_runSQL(''
 			.' SELECT DISTINCT'
 				.' fam.f_id AS family,'
-				.' husbdeath.d_julianday2-married.d_julianday1 AS age'
+				.' MIN(husbdeath.d_julianday2-married.d_julianday1) AS age'
 			.' FROM'
 				." {$TBLPREFIX}families AS fam"
 			.' LEFT JOIN'
@@ -2200,7 +2122,7 @@ class stats {
 				.' married.d_gid = fam.f_id AND'
 				." married.d_fact = 'MARR' AND"
 				.' married.d_julianday1 < husbdeath.d_julianday2 AND'
-				.' married.d_julianday1 != 0'
+				.' married.d_julianday1 <> 0'
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
@@ -2208,7 +2130,7 @@ class stats {
 		$wrows=self::_runSQL(''
 			.' SELECT DISTINCT'
 				.' fam.f_id AS family,'
-				.' wifedeath.d_julianday2-married.d_julianday1 AS age'
+				.' MIN(wifedeath.d_julianday2-married.d_julianday1) AS age'
 			.' FROM'
 				." {$TBLPREFIX}families AS fam"
 			.' LEFT JOIN'
@@ -2222,7 +2144,7 @@ class stats {
 				.' married.d_gid = fam.f_id AND'
 				." married.d_fact = 'MARR' AND"
 				.' married.d_julianday1 < wifedeath.d_julianday2 AND'
-				.' married.d_julianday1 != 0'
+				.' married.d_julianday1 <> 0'
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
@@ -2230,7 +2152,7 @@ class stats {
 		$drows=self::_runSQL(''
 			.' SELECT DISTINCT'
 				.' fam.f_id AS family,'
-				.' divorced.d_julianday2-married.d_julianday1 AS age'
+				.' MIN(divorced.d_julianday2-married.d_julianday1) AS age'
 			.' FROM'
 				." {$TBLPREFIX}families AS fam"
 			.' LEFT JOIN'
@@ -2244,7 +2166,7 @@ class stats {
 				.' divorced.d_gid = fam.f_id AND'
 				." divorced.d_fact IN ('DIV', 'ANUL', '_SEPR', '_DETS') AND"
 				.' married.d_julianday1 < divorced.d_julianday2 AND'
-				.' married.d_julianday1 != 0'
+				.' married.d_julianday1 <> 0'
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
@@ -2294,9 +2216,9 @@ class stats {
 			if (($husb->getAllDeathDates() && $wife->getAllDeathDates()) || !$husb->isDead() || !$wife->isDead()) {
 				if ($family->canDisplayDetails()) {
 					if ($type == 'list') {
-						$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [".$age."]</li>\n";
+						$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [".$age."]")."</li>\n";
 					} else {
-						$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [".$age."]";
+						$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [".$age."]");
 					}
 				}
 				if (++$i==$total) break;
@@ -2320,13 +2242,13 @@ class stats {
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		if ($age_dir=='DESC') {
-			$query1 = ' wifebirth.d_julianday2-husbbirth.d_julianday1 AS age';
+			$query1 = ' MIN(wifebirth.d_julianday2-husbbirth.d_julianday1) AS age';
 			$query2 = ' wifebirth.d_julianday2 >= husbbirth.d_julianday1 AND'
-					 .' husbbirth.d_julianday1 != 0';
+					 .' husbbirth.d_julianday1 <> 0';
 		} else {
-			$query1 = ' husbbirth.d_julianday2-wifebirth.d_julianday1 AS age';
+			$query1 = ' MIN(husbbirth.d_julianday2-wifebirth.d_julianday1) AS age';
 			$query2 = ' wifebirth.d_julianday1 < husbbirth.d_julianday2 AND'
-					 .' wifebirth.d_julianday1 != 0';
+					 .' wifebirth.d_julianday1 <> 0';
 		}
 		$rows=self::_runSQL(''
 			.' SELECT DISTINCT'
@@ -2371,9 +2293,9 @@ class stats {
 			$func($age, $show_years);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$age}]</li>\n";
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [".$age."]")."</li>\n";
 				} else {
-					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$age}]";
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [".$age."]");
 				}
 			}
 		}
@@ -2416,7 +2338,7 @@ class stats {
 				." parentfamily.l_file = {$this->_ged_id} AND"
 				." birth.d_fact = 'BIRT' AND"
 				." childbirth.d_fact = 'BIRT' AND"
-				.' birth.d_julianday1 != 0 AND'
+				.' birth.d_julianday1 <> 0 AND'
 				.' childbirth.d_julianday2 > birth.d_julianday1'
 			.' ORDER BY'
 				." age {$age_dir}"
@@ -2464,10 +2386,10 @@ class stats {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
-			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
+						.'d_year<>0 AND '
 						."d_fact='MARR' AND "
 						."d_type='@#DGREGORIAN@'";
 						if ($year1>=0 && $year2>=0) {
@@ -2496,12 +2418,12 @@ class stats {
 				.' married.d_gid = fam.f_id AND'
 				." fam.f_file = {$this->_ged_id} AND"
 				." married.d_fact = 'MARR' AND"
-				.' married.d_julianday2 != 0 AND'
+				.' married.d_julianday2 <> 0 AND'
 				.$years
 				.' (indi.i_id = fam.f_husb OR indi.i_id = fam.f_wife)'
 			.' ORDER BY fams, indi, age ASC';
 		} else {
-			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 				."WHERE "
 				."d_file={$this->_ged_id} AND "
 				."d_fact='MARR'";
@@ -2519,7 +2441,7 @@ class stats {
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
-				$tot += $values['count(*)'];
+				$tot += $values['total'];
 			}
 			// Beware divide by zero
 			if ($tot==0) return '';
@@ -2533,8 +2455,8 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
-				$centuries .= $century.' - '.$values['count(*)'].'|';
+				$counts[] = round(100 * $values['total'] / $tot, 0);
+				$centuries .= $century.' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
@@ -2547,10 +2469,10 @@ class stats {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
-			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
-						.'d_year!=0 AND '
+						.'d_year<>0 AND '
 						."d_fact IN ('DIV', 'ANUL', '_SEPR') AND "
 						."d_type='@#DGREGORIAN@'";
 						if ($year1>=0 && $year2>=0) {
@@ -2579,12 +2501,12 @@ class stats {
 				.' divorced.d_gid = fam.f_id AND'
 				." fam.f_file = {$this->_ged_id} AND"
 				." divorced.d_fact IN ('DIV', 'ANUL', '_SEPR') AND"
-				.' divorced.d_julianday2 != 0 AND'
+				.' divorced.d_julianday2 <> 0 AND'
 				.$years
 				.' (indi.i_id = fam.f_husb OR indi.i_id = fam.f_wife)'
 			.' ORDER BY fams, indi, age ASC';
 		} else {
-			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+			$sql = "SELECT d_month, COUNT(*) AS total FROM {$TBLPREFIX}dates "
 				."WHERE "
 				."d_file={$this->_ged_id} AND "
 				."d_fact IN ('DIV', 'ANUL', '_SEPR')";
@@ -2602,7 +2524,7 @@ class stats {
 			$sizes = explode('x', $size);
 			$tot = 0;
 			foreach ($rows as $values) {
-				$tot += $values['count(*)'];
+				$tot += $values['total'];
 			}
 			// Beware divide by zero
 			if ($tot==0) return '';
@@ -2616,8 +2538,8 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
-				$centuries .= $century.' - '.$values['count(*)'].'|';
+				$counts[] = round(100 * $values['total'] / $tot, 0);
+				$centuries .= $century.' - '.$values['total'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
@@ -2679,7 +2601,7 @@ class stats {
 					." fam.f_file = {$this->_ged_id} AND"
 					." birth.d_fact = 'BIRT' AND"
 					." married.d_fact = 'MARR' AND"
-					.' birth.d_julianday1 != 0 AND'
+					.' birth.d_julianday1 <> 0 AND'
 					." birth.d_type='@#DGREGORIAN@' AND"
 					." married.d_type='@#DGREGORIAN@' AND"
 					.' married.d_julianday2 > birth.d_julianday1'
@@ -2801,7 +2723,7 @@ class stats {
 					." fam.f_file = {$this->_ged_id} AND"
 					." birth.d_fact = 'BIRT' AND"
 					." married.d_fact = 'MARR' AND"
-					.' birth.d_julianday1 != 0 AND'
+					.' birth.d_julianday1 <> 0 AND'
 					.' married.d_julianday2 > birth.d_julianday1'
 					.$sex_search
 					.$years
@@ -2964,9 +2886,9 @@ class stats {
 			$family=Family::getInstance($rows[$c]['id']);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]</li>\n";
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]")."</li>\n";
 				} else {
-					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]";
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]");
 				}
 			}
 		}
@@ -3013,8 +2935,8 @@ class stats {
 				.' child2.d_gid = link2.l_to AND'
 				." child2.d_fact = 'BIRT' AND"
 				.' child1.d_julianday2 > child2.d_julianday2 AND'
-				.' child2.d_julianday2 != 0 AND'
-				.' child1.d_gid != child2.d_gid'
+				.' child2.d_julianday2 <> 0 AND'
+				.' child1.d_gid <> child2.d_gid'
 			.' ORDER BY'
 				." age DESC"
 		,$total);
@@ -3150,11 +3072,9 @@ class stats {
 
 	function totalChildren() {
 		global $TBLPREFIX;
-
-		return
-			PGV_DB::prepare("SELECT SUM(f_numchil) FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}")
-			->execute(array($this->_ged_id))
-			->fetchOne();
+		$rows=self::_runSQL("SELECT SUM(f_numchil) AS tot FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}");
+		$row=$rows[0];
+		return $row['tot'];
 	}
 
 
@@ -3215,7 +3135,7 @@ class stats {
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chm=D,FF0000,0,0,3,1|{$chm}&amp;chd=e:{$chd}&amp;chco=0000FF&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_average_children"]."\" title=\"".$pgv_lang["stat_average_children"]."\" />";
 		} else {
 			if ($sex=='M') {
-				$sql = "SELECT num, COUNT(*) FROM "
+				$sql = "SELECT num, COUNT(*) AS total FROM "
 						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
 							."LEFT OUTER JOIN {$TBLPREFIX}individuals "
 							."ON l_from=i_id AND l_file=i_file AND i_sex='M' AND l_type='FAMC' "
@@ -3224,7 +3144,7 @@ class stats {
 						." GROUP BY num ORDER BY num ASC";
 			}
 			else if ($sex=='F') {
-				$sql = "SELECT num, COUNT(*) FROM "
+				$sql = "SELECT num, COUNT(*) AS total FROM "
 						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
 							."LEFT OUTER JOIN {$TBLPREFIX}individuals "
 							."ON l_from=i_id AND l_file=i_file AND i_sex='F' AND l_type='FAMC' "
@@ -3233,7 +3153,7 @@ class stats {
 						." GROUP BY num ORDER BY num ASC";
 			}
 			else {
-				$sql = "SELECT f_numchil, COUNT(*) FROM {$TBLPREFIX}families ";
+				$sql = "SELECT f_numchil, COUNT(*) AS total FROM {$TBLPREFIX}families ";
 				if ($year1>=0 && $year2>=0) {
 					$sql .= "AS fam LEFT JOIN {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
 						.' WHERE'
@@ -3419,9 +3339,9 @@ class stats {
 			$family=Family::getInstance($row['id']);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$row['tot']} {$pgv_lang['grandchildren']}]</li>\n";
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$row['tot']} {$pgv_lang['grandchildren']}]")."</li>\n";
 				} else {
-					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$row['tot']} {$pgv_lang['grandchildren']}]";
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$row['tot']} {$pgv_lang['grandchildren']}]");
 				}
 			}
 		}
@@ -3521,13 +3441,20 @@ class stats {
 		$chl = array();
 		foreach ($all_surnames as $surn=>$surns) {
 			$count_per = 0;
+			$max_name = 0;
 			foreach ($surns as $spfxsurn=>$indis) {
-				$count_per += count($indis);
+				$per = count($indis);
+				$count_per += $per;
+				// select most common surname from all variants
+				if ($per>$max_name) {
+					$max_name = $per;
+					$top_name = $spfxsurn;
+				}
 			}
 			$per = round(100 * $count_per / $tot_indi, 0);
 			$chd .= self::_array_to_extended_encoding($per);
-			$chl[] = $spfxsurn.' - '.$count_per;
-			$chart_title .= $spfxsurn.' ['.$count_per.'], ';
+			$chl[] = $top_name.' - '.$count_per;
+			$chart_title .= $top_name.' ['.$count_per.'], ';
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
@@ -3566,12 +3493,12 @@ class stats {
 			$sex_sql="i_sex='U'";
 			break;
 		case 'B':
-			$sex_sql="i_sex!='U'";
+			$sex_sql="i_sex<>'U'";
 			break;
 		}
 		$ged_id=get_id_from_gedcom($GEDCOM);
 
-		$rows=PGV_DB::prepare("SELECT n_givn, COUNT(*) AS num FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (n_id=i_id AND n_file=i_file) WHERE n_file={$ged_id} AND n_type!='_MARNM' AND n_givn NOT IN ('@P.N.', '') AND LENGTH(n_givn)>1 AND {$sex_sql} GROUP BY n_id, n_givn")
+		$rows=PGV_DB::prepare("SELECT n_givn, COUNT(*) AS num FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (n_id=i_id AND n_file=i_file) WHERE n_file={$ged_id} AND n_type<>'_MARNM' AND n_givn NOT IN ('@P.N.', '') AND LENGTH(n_givn)>1 AND {$sex_sql} GROUP BY n_id, n_givn")
 			->fetchAll();
 		$nameList=array();
 		foreach ($rows as $row) {

@@ -32,10 +32,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require( "modules/googlemap/defaultconfig.php" );
-if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
+require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 
-loadLangFile("pgv_lang, pgv_confighelp, pgv_help, pgv_facts, googlemap:lang, googlemap:help_text");
+loadLangFile('pgv_lang, pgv_confighelp, pgv_help, pgv_facts, googlemap:lang, googlemap:help_text');
 
 if (isset($_REQUEST['action']))	 $action=$_REQUEST['action'];
 if (isset($_REQUEST['parent']))	 $parent=$_REQUEST['parent'];
@@ -46,15 +45,6 @@ if (isset($_REQUEST['deleteRecord'])) $deleteRecord=$_REQUEST['deleteRecord'];
 if (!isset($action)) $action="";
 if (!isset($parent)) $parent=0;
 if (!isset($display)) $display="";
-
-// Create GM tables, if not already present
-// TODO: is there a better place to put this code?
-try {
-	PGV_DB::updateSchema('modules/googlemap/db_schema/', 'GM_SCHEMA_VERSION', 1);
-} catch (PDOException $ex) {
-	// The schema update scripts should never fail.  If they do, there is no clean recovery.
-	die($ex);
-}
 
 // Take a place id and find its place in the hierarchy
 // Input: place ID

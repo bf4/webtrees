@@ -44,7 +44,7 @@ class Family extends GedcomRecord {
 	private $_isDivorced = null;
 
 	// Create a Family object from either raw GEDCOM data or a database row
-	function Family($data, $simple=true) {
+	function __construct($data, $simple=true) {
 		if (is_array($data)) {
 			// Construct from a row from the database
 			if ($data['f_husb']) {
@@ -84,70 +84,7 @@ class Family extends GedcomRecord {
 			list($this->husb, $this->wife)=array($this->wife, $this->husb);
 		}
 
-		parent::GedcomRecord($data);
-	}
-
-	// Get an instance of a Family.  We either specify
-	// an XREF (in the current gedcom), or we can provide a row
-	// from the database (if we anticipate the record hasn't
-	// been fetched previously).
-	static function &getInstance($data, $simple=true, $latest=false) {
-		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
-
-		if (is_array($data)) {
-			$ged_id=$data['ged_id'];
-			$pid   =$data['xref'];
-		} else {
-			$ged_id=get_id_from_gedcom($GEDCOM);
-			$pid   =$data;
-		}
-
-		// Check the cache first
-		if (isset($gedcom_record_cache[$pid][$ged_id])) {
-			return $gedcom_record_cache[$pid][$ged_id];
-		}
-
-		// Look for the record in the database
-		if (!is_array($data)) {
-			if ($latest && PGV_USER_CAN_EDIT) {
-				$data=find_updated_record($pid, $ged_id);
-				if (!$data) $data=fetch_family_record($pid, $ged_id);
-			}
-			else $data=fetch_family_record($pid, $ged_id);
-
-			// If we didn't find the record in the database, it may be remote
-			if (!$data && strpos($pid, ':')) {
-				list($servid, $remoteid)=explode(':', $pid);
-				$service=ServiceClient::getInstance($servid);
-				if ($service) {
-					// TYPE will be replaced with the type from the remote record
-					$data=$service->mergeGedcomRecord($remoteid, "0 @{$pid}@ TYPE\n1 RFN {$pid}", false);
-				}
-			}
-
-			// If we didn't find the record in the database, it may be new/pending
-			if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
-				$data=find_updated_record($pid, $ged_id);
-				$fromfile=true;
-			}
-
-			// If we still didn't find it, it doesn't exist
-			if (!$data) {
-				return null;
-			}
-		}
-
-		// Create the object
-		$object=new Family($data, $simple);
-		if (!empty($fromfile)) {
-			$object->setChanged(true);
-		}
-
-		// Store it in the cache
-		$gedcom_record_cache[$object->xref][$object->ged_id]=&$object;
-		//-- also store it using its reference id (sid:pid and local gedcom for remote links)
-		$gedcom_record_cache[$pid][$ged_id]=&$object;
-		return $object;
+		parent::__construct($data);
 	}
 
 	/**
@@ -156,7 +93,7 @@ class Family extends GedcomRecord {
 	 */
 	function getHusbId() {
 		if (!is_null($this->husb)) return $this->husb->getXref();
-		else return "";
+		else return '';
 	}
 
 	/**
@@ -165,7 +102,7 @@ class Family extends GedcomRecord {
 	 */
 	function getWifeId() {
 		if (!is_null($this->wife)) return $this->wife->getXref();
-		else return "";
+		else return '';
 	}
 
 	/**
@@ -239,7 +176,7 @@ class Family extends GedcomRecord {
 	function loadChildren() {
 		if ($this->children_loaded) return;
 		$this->childrenIds = array();
-		$this->numChildren = preg_match_all("/1\s*CHIL\s*@(.*)@/", $this->gedrec, $smatch, PREG_SET_ORDER);
+		$this->numChildren = preg_match_all('/1\s*CHIL\s*@(.*)@/', $this->gedrec, $smatch, PREG_SET_ORDER);
 		for($i=0; $i<$this->numChildren; $i++) {
 			//-- get the childs ids
 			$chil = trim($smatch[$i][1]);
@@ -260,9 +197,9 @@ class Family extends GedcomRecord {
 
 		if ($this->numChildren!==false) return $this->numChildren;
 
-		$this->numChildren = get_gedcom_value("NCHI", 1, $this->gedrec);
-		if ($this->numChildren!="") return $this->numChildren.".";
-		$this->numChildren = preg_match_all("/1\s*CHIL\s*@(.*)@/", $this->gedrec, $smatch);
+		$this->numChildren = get_gedcom_value('NCHI', 1, $this->gedrec);
+		if ($this->numChildren!='') return $this->numChildren.'.';
+		$this->numChildren = preg_match_all('/1\s*CHIL\s*@(.*)@/', $this->gedrec, $smatch);
 		return $this->numChildren;
 	}
 
@@ -277,7 +214,7 @@ class Family extends GedcomRecord {
 			return $this;
 		}
 		if (PGV_USER_CAN_EDIT && $this->canDisplayDetails()) {
-			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
+			if (isset($pgv_changes[$this->xref.'_'.$GEDCOM])) {
 				$newrec = find_updated_record($this->xref, $this->ged_id);
 				if (!empty($newrec)) {
 					$newfamily = new Family($newrec);
@@ -317,7 +254,7 @@ class Family extends GedcomRecord {
 	 * parse marriage record
 	 */
 	function _parseMarriageRecord() {
-		$this->marriage = new Event(trim(get_sub_record(1, "1 MARR", $this->gedrec)), -1);
+		$this->marriage = new Event(trim(get_sub_record(1, '1 MARR', $this->gedrec)), -1);
 		$this->marriage->setParentObject($this);
 	}
 
@@ -367,7 +304,7 @@ class Family extends GedcomRecord {
 	 * get the marriage year
 	 * @return string
 	 */
-	function getMarriageYear($est = true, $cal = ""){
+	function getMarriageYear($est = true, $cal = ''){
 		// TODO - change the design to use julian days, not gregorian years.
 		$mdate = $this->getMarriageDate();
 		$mdate = $mdate->MinDate();
@@ -379,7 +316,7 @@ class Family extends GedcomRecord {
 	 * get the marriage month
 	 * @return string
 	 */
-	function getMarriageMonth($est = true, $cal = ""){
+	function getMarriageMonth($est = true, $cal = ''){
 		// TODO - change the design to use julian days, not gregorian years.
 		$mdate = $this->getMarriageDate();
 		$mdate=$mdate->MinDate();
@@ -427,10 +364,7 @@ class Family extends GedcomRecord {
 		return array();
 	}
 
-	/**
-	 * get the URL to link to this family
-	 * @string a url that can be used to link to this family
-	 */
+	// Generate a URL that links to this record
 	public function getLinkUrl() {
 		return parent::_getLinkUrl('family.php?famid=');
 	}

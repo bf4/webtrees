@@ -42,7 +42,6 @@ $reorder=safe_get('reorder', '1', '0');
 
 // Get Javascript variables from lb_config.php ---------------------------
 require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) require_once PGV_ROOT.'modules/lightbox/lb_config.php';
 //	require_once PGV_ROOT.'modules/lightbox/functions/browser_detection_php_ar.php';
 
 function cut_html($string)

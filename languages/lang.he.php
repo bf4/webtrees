@@ -1525,6 +1525,9 @@ $pgv_lang["marrdate2"]		= "סיום תחום תאריכי נישואין";
 $pgv_lang["sort_by"]			= "מיין לפי";
 $pgv_lang["cemetery_report"]		= "דו\"ח בתי קברות";
 $pgv_lang["burialplace"]		= "מקום קבורה מכיל";
+$pgv_lang["fact_sources_report"]	= "מקורות של עובדות";
+$pgv_lang["missing_facts_report"]	= "עובדות חסרות של קרובים";
+$pgv_lang["sources_to_events"]	= "מקורות לעובדות";
 
 $pgv_lang["cleanup"]			= "ניקיון";
 
@@ -1780,7 +1783,7 @@ $pgv_lang["stat_first_event"]		= "אירוע ראשון";
 $pgv_lang["stat_last_event"]		= "אירוע אחרון";
 $pgv_lang["stat_places"]		= "מקומות";
 $pgv_lang["stat_birth_places"]	= "מקומות לידה";
-$pgv_lang["stat_marriage_places"]	= "מקומות נישואין";
+$pgv_lang["stat_marriage_places"]	= "מקומות נישואין"; //->hatuna?
 $pgv_lang["stat_death_places"]	= "מקומות פטירה";
 $pgv_lang["stat_countries"]		= "אירועים בארצות";
 

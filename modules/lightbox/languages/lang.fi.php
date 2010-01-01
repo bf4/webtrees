@@ -34,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.2.2
-$pgv_lang["TYPE__notinDB"]			= "Ei tietokannassa<br /><br />TAI<br /><br />Kaksi kertaa<br />Gedcomissa";
+$pgv_lang["TYPE__notinDB"]			= "Ei tietokannassa";
 $pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
 
 

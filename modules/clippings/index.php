@@ -155,11 +155,11 @@ if ($ct==0) {
 	print "\r\n\t\t<br /><br />".$pgv_lang["cart_is_empty"]."<br /><br />";
 } else {
 	if ($controller->action != 'download' && $controller->action != 'add') { ?>
+		<table><tr><td class="width33" valign="top" rowspan="3">
 		<form method="get" action="module.php">
 		<input type="hidden" name="mod" value="clippings" />
 		<input type="hidden" name="pgv_action" value="index" />
 		<input type="hidden" name="action" value="download" />
-		<table><tr><td class="width33" valign="top" rowspan="3">
 		<table>
 		<tr><td colspan="2" class="topbottombar"><h2><?php print $pgv_lang["file_information"] ?></h2></td></tr>
 		<tr>
@@ -233,9 +233,9 @@ if ($ct==0) {
 
 		<tr><td class="topbottombar" colspan="2">
 		<input type="submit" value="<?php print $pgv_lang["download_now"]; ?>" />
-		</td></tr>
 		</form>
-
+		</td></tr>
+		</table>
 		</td></tr>
 		</table>
 		<br />

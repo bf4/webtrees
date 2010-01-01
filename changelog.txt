@@ -8,8 +8,8 @@
 	# $Id$
 =====================================================================
 
-
 Version 4.2.x CA
+ - Merged: Merge changes r6543 - r6645 from the trunk. (yalnifj)
  - Added Family Nav sidebar and Clippings sidebar, fixed sidebar rtl (yalnifj)
  - Merged: Merge changes r6538 - r6542 from the trunk. (windmillway)
  - Changed: Corrected logic when adding an assisted Shared Note when "Editing" an existing Census event. (windmillway)
@@ -188,7 +188,14 @@ Version 4.2.x CA
  - Added: New Shared Note List (from List Menu) and links to individual Shared Notes. (windmillway)
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
-Version 4.2.3
+Version 4.3.0 2009-12-29
+ - Fixed: Sorting menu by gedcom filename instead of id (volschin)
+ - Fixed: [ 2886694 ] add existing wife/husband SOUR etc (wooc)
+ - Fixed: [ 2921858 ] Private marking in marriages (fisharebest)
+ - Fixed: is_dead() was ignoring certain undated death events (fisharebest)
+
+Version 4.2.3 2009-12-29
+ - Update: TCPDF 4.8.019 (volschin)
  - Fixed: [ 2131272 ] do not update CHAN not remembered (wooc)
  - Fixed: [ 2563934 ] Sitemap module should only submit public URL's (wooc)
  - Fixed: [ 2905609 ] Address handling in quickupdate (volschin)

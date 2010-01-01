@@ -769,19 +769,19 @@ $pgv_lang["ther"]         				= "Thermidor";
 $pgv_lang["fruc"]         				= "Fructidor";
 $pgv_lang["comp"]         				= "jours complémentaires";
 
-$pgv_lang["tsh"]          				= "Tishri";
-$pgv_lang["csh"]          				= "Cheshvan";
-$pgv_lang["ksl"]          				= "Kislev";
-$pgv_lang["tvt"]          				= "Tevet";
-$pgv_lang["shv"]          				= "Shevat";
+$pgv_lang["tsh"]          				= "Tischri";
+$pgv_lang["csh"]          				= "Cheschwan";
+$pgv_lang["ksl"]          				= "Kislew";
+$pgv_lang["tvt"]          				= "Tewet";
+$pgv_lang["shv"]          				= "Schwat";
 $pgv_lang["adr"]          				= "Adar";
 $pgv_lang["adr_leap_year"]				= "Adar I";
 $pgv_lang["ads"]						= "Adar II";
 $pgv_lang["nsn"]          				= "Nisan";
-$pgv_lang["iyr"]          				= "Iyar";
-$pgv_lang["svn"]          				= "Sivan";
-$pgv_lang["tmz"]          				= "Tammuz";
-$pgv_lang["aav"]          				= "Av";
+$pgv_lang["iyr"]          				= "Ijar";
+$pgv_lang["svn"]          				= "Siwan";
+$pgv_lang["tmz"]          				= "Tammus";
+$pgv_lang["aav"]          				= "Aw";
 $pgv_lang["ell"]          				= "Elul";
 
 $pgv_lang["muhar"]						= "Muharram";
@@ -1523,6 +1523,9 @@ $pgv_lang["marrdate2"]					= "Ehedatenbereich Ende";
 $pgv_lang["sort_by"]					= "Sortieren nach";
 $pgv_lang["cemetery_report"]			= "Friedhofsbericht";
 $pgv_lang["burialplace"]				= "Beerdigungsort enthält";
+$pgv_lang["fact_sources_report"]		= "Quellenbericht";
+$pgv_lang["missing_facts_report"]		= "Bericht über fehlende Fakten";
+$pgv_lang["sources_to_events"]			= "Quellen";
 
 $pgv_lang["cleanup"]					= "Korrigieren";
 

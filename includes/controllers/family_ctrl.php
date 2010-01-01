@@ -86,7 +86,7 @@ class FamilyRoot extends BaseController {
 		$this->family = Family::getInstance($this->famid);
 
 		if (empty($this->famrec)) {
-			$ct = preg_match("/(\w+):(.+)/", $this->famid, $match);
+			$ct = preg_match('/(\w+):(.+)/', $this->famid, $match);
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);

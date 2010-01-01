@@ -2,9 +2,9 @@
 //============================================================+
 // File name   : tcpdf.php
 // Begin       : 2002-08-03
-// Last Update : 2009-11-21
+// Last Update : 2009-12-16
 // Author      : Nicola Asuni - info@tecnick.com - http://www.tcpdf.org
-// Version     : 4.8.016
+// Version     : 4.8.019
 // License     : GNU LGPL (http://www.gnu.org/copyleft/lesser.html)
 // 	----------------------------------------------------------------------------
 //  Copyright (C) 2002-2009  Nicola Asuni - Tecnick.com S.r.l.
@@ -104,7 +104,7 @@
 * <li>includes methods to publish some XHTML code, including forms;</li>
 * <li>includes graphic (geometric) and transformation methods;</li>
 * <li>includes Javascript and Forms support;</li>
-* <li>includes a method to print various barcode formats: CODE 39, ANSI MH10.8M-1983, USD-3, 3 of 9, CODE 93, USS-93, Standard 2 of 5, Interleaved 2 of 5, CODE 128 A/B/C, 2 and 5 Digits UPC-Based Extention, EAN 8, EAN 13, UPC-A, UPC-E, MSI, POSTNET, PLANET, RMS4CC (Royal Mail 4-state Customer Code), CBC (Customer Bar Code), KIX (Klant index - Customer index), Intelligent Mail Barcode, Onecode, USPS-B-3200, CODABAR, CODE 11, PHARMACODE, PHARMACODE TWO-TRACKS;</li>
+* <li>includes a method to print various barcode formats: CODE 39, ANSI MH10.8M-1983, USD-3, 3 of 9, CODE 93, USS-93, Standard 2 of 5, Interleaved 2 of 5, CODE 128 A/B/C, 2 and 5 Digits UPC-Based Extention, EAN 8, EAN 13, UPC-A, UPC-E, MSI, POSTNET, PLANET, RMS4CC (Royal Mail 4-state Customer Code), CBC (Customer Bar Code), KIX (Klant index - Customer index), Intelligent Mail Barcode, Onecode, USPS-B-3200, CODABAR, CODE 11, PHARMACODE, PHARMACODE TWO-TRACKS</li>
 * <li>includes methods to set Bookmarks and print a Table of Content;</li>
 * <li>includes methods to move and delete pages;</li>
 * <li>includes methods for automatic page header and footer management;</li>
@@ -128,7 +128,7 @@
  * @copyright 2002-2009 Nicola Asuni - Tecnick.com S.r.l (www.tecnick.com) Via Della Pace, 11 - 09044 - Quartucciu (CA) - ITALY - www.tecnick.com - info@tecnick.com
  * @link http://www.tcpdf.org
  * @license http://www.gnu.org/copyleft/lesser.html LGPL
- * @version 4.8.016
+ * @version 4.8.019
  */
 
 /**
@@ -152,14 +152,14 @@ if (!class_exists('TCPDF', false)) {
 	/**
 	 * define default PDF document producer
 	 */ 
-	define('PDF_PRODUCER', 'TCPDF 4.8.016 (http://www.tcpdf.org)');
+	define('PDF_PRODUCER', 'TCPDF 4.8.019 (http://www.tcpdf.org)');
 	
 	/**
 	* This is a PHP class for generating PDF documents without requiring external extensions.<br>
 	* TCPDF project (http://www.tcpdf.org) has been originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br>
 	* @name TCPDF
 	* @package com.tecnick.tcpdf
-	* @version 4.8.016
+	* @version 4.8.019
 	* @author Nicola Asuni - info@tecnick.com
 	* @link http://www.tcpdf.org
 	* @license http://www.gnu.org/copyleft/lesser.html LGPL
@@ -2670,6 +2670,8 @@ if (!class_exists('TCPDF', false)) {
 		 */
 		protected function setHeader() {
 			if ($this->print_header) {
+				$temp_thead = $this->thead;
+    			$temp_theadMargins = $this->theadMargins;
 				$lasth = $this->lasth;
 				$this->_out('q');
 				$this->rMargin = $this->original_rMargin;
@@ -2691,6 +2693,8 @@ if (!class_exists('TCPDF', false)) {
 				}
 				$this->_out('Q');
 				$this->lasth = $lasth;
+				$this->thead = $temp_thead;
+				$this->theadMargins = $temp_theadMargins;
 			}
 		}
 		
@@ -2707,6 +2711,8 @@ if (!class_exists('TCPDF', false)) {
 			$this->footerpos[$this->page] = $this->pagelen[$this->page];
 			$this->_out("\n");
 			if ($this->print_footer) {
+				$temp_thead = $this->thead;
+    			$temp_theadMargins = $this->theadMargins;
 				$lasth = $this->lasth;
 				$this->_out('q');
 				$this->rMargin = $this->original_rMargin;
@@ -2729,6 +2735,8 @@ if (!class_exists('TCPDF', false)) {
 				}
 				$this->_out('Q');
 				$this->lasth = $lasth;
+				$this->thead = $temp_thead;
+				$this->theadMargins = $temp_theadMargins;
 			}
 			// restore graphic settings
 			$this->setGraphicVars($gvars);
@@ -4316,7 +4324,7 @@ if (!class_exists('TCPDF', false)) {
 					$tmpstr = $this->UniArrSubString($uchars, $j, $i);
 					if ($firstline) {
 						$startx = $this->x;
-						$tmparr = array_slice($chars, $j, $i);
+						$tmparr = array_slice($chars, $j, ($i - $j));
 						if ($rtlmode) {
 							$tmparr = $this->utf8Bidi($tmparr, $tmpstr, $this->tmprtl);
 						}
@@ -4378,7 +4386,7 @@ if (!class_exists('TCPDF', false)) {
 					if ((($this->CurrentFont['type'] == 'TrueTypeUnicode') OR ($this->CurrentFont['type'] == 'cidfont0')) AND ($arabic)) {
 						// with bidirectional algorithm some chars may be changed affecting the line length
 						// *** very slow ***
-						$l = $this->GetArrStringWidth($this->utf8Bidi(array_slice($chars, $j, $i-$j+1), '', $this->tmprtl));
+						$l = $this->GetArrStringWidth($this->utf8Bidi(array_slice($chars, $j, ($i - $j)), '', $this->tmprtl));
 					} else {
 						$l += $this->GetCharWidth($c);
 					}
@@ -4399,7 +4407,7 @@ if (!class_exists('TCPDF', false)) {
 								$tmpstr = $this->UniArrSubString($uchars, $j, $i);
 								if ($firstline) {
 									$startx = $this->x;
-									$tmparr = array_slice($chars, $j, $i);
+									$tmparr = array_slice($chars, $j, ($i - $j));
 									if ($rtlmode) {
 										$tmparr = $this->utf8Bidi($tmparr, $tmpstr, $this->tmprtl);
 									}
@@ -4450,7 +4458,7 @@ if (!class_exists('TCPDF', false)) {
 							$tmpstr = $this->UniArrSubString($uchars, $j, ($sep + $endspace));
 							if ($firstline) {
 								$startx = $this->x;
-								$tmparr = array_slice($chars, $j, ($sep + $endspace));
+								$tmparr = array_slice($chars, $j, (($sep + $endspace) - $j));
 								if ($rtlmode) {
 									$tmparr = $this->utf8Bidi($tmparr, $tmpstr, $this->tmprtl);
 								}
@@ -4531,7 +4539,7 @@ if (!class_exists('TCPDF', false)) {
 				$tmpstr = $this->UniArrSubString($uchars, $j, $nb);
 				if ($firstline) {
 					$startx = $this->x;
-					$tmparr = array_slice($chars, $j, $nb);
+					$tmparr = array_slice($chars, $j, ($nb - $j));
 					if ($rtlmode) {
 						$tmparr = $this->utf8Bidi($tmparr, $tmpstr, $this->tmprtl);
 					}
@@ -4660,6 +4668,24 @@ if (!class_exists('TCPDF', false)) {
 		}
 		
 		/**
+		 * Return the image type given the file name and path
+		 * @param string $imgfile image file name
+		 * @return string image type
+		 * @since 4.8.017 (2009-11-27)
+		 */
+		public function getImageFileType($imgfile) {
+			$type = ''; // default type
+			$fileinfo = pathinfo($imgfile);
+			if (isset($fileinfo['extension']) AND (!$this->empty_string($fileinfo['extension']))) {
+				$type = strtolower($fileinfo['extension']);
+			}
+			if ($type == 'jpg') {
+				$type = 'jpeg';
+			}
+			return $type;
+		}
+
+		/**
 		* Puts an image in the page. 
 		* The upper-left corner must be given. 
 		* The dimensions can be specified in different ways:<ul>
@@ -4678,7 +4704,7 @@ if (!class_exists('TCPDF', false)) {
 		* @param string $type Image format. Possible values are (case insensitive): JPEG and PNG (whitout GD library) and all images supported by GD: GD, GD2, GD2PART, GIF, JPEG, PNG, BMP, XBM, XPM;. If not specified, the type is inferred from the file extension.
 		* @param mixed $link URL or identifier returned by AddLink().
 		* @param string $align Indicates the alignment of the pointer next to image insertion relative to image height. The value can be:<ul><li>T: top-right for LTR or top-left for RTL</li><li>M: middle-right for LTR or middle-left for RTL</li><li>B: bottom-right for LTR or bottom-left for RTL</li><li>N: next line</li></ul>
-		* @param boolean $resize If true resize (reduce) the image to fit $w and $h (requires GD library).
+		* @param mixed $resize If true resize (reduce) the image to fit $w and $h (requires GD or ImageMagick library); if false do not resize; if 2 force resize in all cases (upscaling and downscaling).
 		* @param int $dpi dot-per-inch resolution used on resize
 		* @param string $palign Allows to center or align the image on the current line. Possible values are:<ul><li>L : left align</li><li>C : center</li><li>R : right align</li><li>'' : empty string : left for LTR or right for RTL</li></ul>
 		* @param boolean $ismask true if this image is a mask, false otherwise
@@ -4730,23 +4756,29 @@ if (!class_exists('TCPDF', false)) {
 			$neww = round($w * $this->k * $dpi / $this->dpi);
 			$newh = round($h * $this->k * $dpi / $this->dpi);
 			// check if resize is necessary (resize is used only to reduce the image)
-			if (($neww * $newh) >= ($pixw * $pixh)) {
+			$newsize = ($neww * $newh);
+			$pixsize = ($pixw * $pixh);
+			if (intval($resize) == 2) {
+				$resize = true;
+			} elseif ($newsize >= $pixsize) {
 				$resize = false;
 			}
 			// check if image has been already added on document
-			if (!in_array($file, $this->imagekeys)) {
+			$newimage = true;
+			if (in_array($file, $this->imagekeys)) {
+				$newimage = false;
+				// get existing image data
+				$info = $this->getImageBuffer($file);
+				// check if the newer image is larger
+				$oldsize = ($info['w'] * $info['h']);
+				if ((($oldsize < $newsize) AND ($resize)) OR (($oldsize < $pixsize) AND (!$resize))) {
+					$newimage = true;
+				}
+			}
+			if ($newimage) {
 				//First use of image, get info
 				if ($type == '') {
-					$fileinfo = pathinfo($file);
-					if (isset($fileinfo['extension']) AND (!$this->empty_string($fileinfo['extension']))) {
-						$type = $fileinfo['extension'];
-					} else {
-						$this->Error('Image file has no extension and no type was specified: '.$file);
-					}
-				}
-				$type = strtolower($type);
-				if ($type == 'jpg') {
-					$type = 'jpeg';
+					$type = $this->getImageFileType($file);
 				}
 				$mqr = $this->get_mqr();
 				$this->set_mqr(false);
@@ -4800,14 +4832,15 @@ if (!class_exists('TCPDF', false)) {
 					// force grayscale
 					$info['cs'] = 'DeviceGray';
 				}
-				$info['i'] = $this->numimages + 1;
+				$info['i'] = $this->numimages;
+				if (!in_array($file, $this->imagekeys)) {
+					++$info['i'];
+				}
 				if ($imgmask !== false) {
 					$info['masked'] = $imgmask;
 				}
 				// add image to document
 				$this->setImageBuffer($file, $info);
-			} else {
-				$info = $this->getImageBuffer($file);
 			}
 			// Check whether we need a new page first as this does not fit
 			$prev_x = $this->x;
@@ -13424,8 +13457,8 @@ if (!class_exists('TCPDF', false)) {
 									$t_x = $this->lMargin - $this->endlinex;
 								}
 								$one_space_width = $this->GetStringWidth(chr(32));
-								$no = 0;
-								$ns = 0;
+								$no = 0; // spaces without trim
+								$ns = 0; // spaces with trim
 								$pmidtemp = $pmid;
 								// escape special characters
 								$pmidtemp = preg_replace('/[\\\][\(]/x', '\\#!#OP#!#', $pmidtemp);
@@ -13460,8 +13493,8 @@ if (!class_exists('TCPDF', false)) {
 									}
 									// calculate additional space to add to each space
 									$spacelen = $one_space_width;
-									$spacewidth = (($tw - $linew + (($no - $ns) * $spacelen)) / ($ns?$ns:1)) * $this->k;
-									$spacewidthu = -1000 * ($tw - $linew + ($no * $spacelen)) / ($ns?$ns:1) / $this->FontSize;
+									$spacewidth = ((($tw - $linew) + (($no - $ns) * $spacelen)) / ($ns?$ns:1)) * $this->k;
+									$spacewidthu = -1000 * (($tw - $linew) + ($ns * $spacelen)) / ($ns?$ns:1) / $this->FontSize;
 									$nsmax = $ns;
 									$ns = 0;
 									reset($lnstring);
@@ -14213,10 +14246,7 @@ if (!class_exists('TCPDF', false)) {
 								break;
 							}
 						}
-						$fileinfo = pathinfo($tag['attribute']['src']);
-						if (isset($fileinfo['extension']) AND (!$this->empty_string($fileinfo['extension']))) {
-							$type = strtolower($fileinfo['extension']);
-						}
+						$type = $this->getImageFileType($tag['attribute']['src']);
 						$prevy = $this->y;
 						$xpos = $this->GetX();
 						if (isset($dom[($key - 1)]) AND ($dom[($key - 1)]['value'] == ' ')) {
@@ -15623,12 +15653,12 @@ if (!class_exists('TCPDF', false)) {
 			}
 			if (!in_array($image, $this->imagekeys)) {
 				$this->imagekeys[] = $image;
+				++$this->numimages;
 			}
-			++$this->numimages;
 		}
 
         /**
-		* Set image buffer content.
+		* Set image buffer content for a specified sub-key.
 		* @param string $image image key
 		* @param string $key image sub-key
 		* @param array $data image data

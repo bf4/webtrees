@@ -150,14 +150,14 @@ function autocomplete_INDI($FILTER, $OPTION) {
 	}
 
 	$sql=
-		"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
+		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
 		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
 		" WHERE (i_id ".PGV_DB::$LIKE." ? OR n_sort ".PGV_DB::$LIKE." ?)".
 		" AND i_id=n_id AND i_file=n_file AND i_file=?".
 		" ORDER BY n_sort";
 	$rows=
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
-		->execute(array('INDI', "%{$FILTER}%", "%{$FILTER}%", PGV_GED_ID))
+		->execute(array("%{$FILTER}%", "%{$FILTER}%", PGV_GED_ID))
 		->fetchAll(PDO::FETCH_ASSOC);
 
 	$data=array();
@@ -225,7 +225,7 @@ function autocomplete_FAM($FILTER, $OPTION) {
 	//-- search for INDI names
 	$ids=array_keys(autocomplete_INDI($FILTER, $OPTION));
 
-	$vars=array('FAM');
+	$vars=array();
 	if (empty($ids)) {
 		//-- no match : search for FAM id
 		$where = "f_id ".PGV_DB::$LIKE." ?";
@@ -237,7 +237,7 @@ function autocomplete_FAM($FILTER, $OPTION) {
 		$vars=array_merge($vars, $ids, $ids);
 	}
 
-	$sql="SELECT ? AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families WHERE {$where} AND f_file=?";
+	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families WHERE {$where} AND f_file=?";
 	$vars[]=PGV_GED_ID;
 	$rows=
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)

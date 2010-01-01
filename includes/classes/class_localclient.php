@@ -2,7 +2,7 @@
 /**
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,8 +37,8 @@ class LocalClient extends ServiceClient {
 	 * constructor
 	 * @param string $gedrec	the gedcom record
 	 */
-	function LocalClient($gedrec) {
-		parent::ServiceClient($gedrec);
+	function __construct($gedrec) {
+		parent::__construct($gedrec);
 		$this->type = "local";
 	}
 

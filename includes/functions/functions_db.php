@@ -670,19 +670,17 @@ function count_all_records($ged_id) {
 
 	return
 		PGV_DB::prepare(
-			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}individuals WHERE i_file=?".
+			"SELECT 'INDI' AS type, COUNT(*) AS num FROM {$TBLPREFIX}individuals WHERE i_file=?".
 			" UNION ALL ".
-			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}families    WHERE f_file=?".
+			"SELECT 'FAM'  AS type, COUNT(*) AS num FROM {$TBLPREFIX}families    WHERE f_file=?".
 			" UNION ALL ".
-			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}other       WHERE o_file=?".
+			"SELECT 'SOUR' AS type, COUNT(*) AS num FROM {$TBLPREFIX}sources     WHERE s_file=?".
 			" UNION ALL ".
-			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}sources     WHERE s_file=?".
-			" UNION ALL ".
-			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}media       WHERE m_gedfile=?".
+			"SELECT 'OBJE' AS type, COUNT(*) AS num FROM {$TBLPREFIX}media       WHERE m_gedfile=?".
 			" UNION ALL ".
 			"SELECT o_type AS type, COUNT(*) as num FROM {$TBLPREFIX}other       WHERE o_file=? GROUP BY type"
 		)
-		->execute(array('INDI', $ged_id, 'FAM', $ged_id, 'NOTE', $ged_id, 'SOUR', $ged_id, 'OBJE', $ged_id, $ged_id))
+		->execute(array($ged_id, $ged_id, $ged_id, $ged_id, $ged_id))
 		->fetchAssoc();
 }
 
@@ -737,8 +735,8 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	$rows=
-		PGV_DB::prepare("SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array('INDI', $ged_id, $link, $xref))
+		PGV_DB::prepare("SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
 		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
@@ -751,8 +749,8 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	$rows=
-		PGV_DB::prepare("SELECT ? AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}link, {$TBLPREFIX}families f WHERE f_file=l_file AND f_id=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array('FAM', $ged_id, $link, $xref))
+		PGV_DB::prepare("SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}link, {$TBLPREFIX}families f WHERE f_file=l_file AND f_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
 		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
@@ -765,8 +763,8 @@ function fetch_linked_note($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	$rows=
-		PGV_DB::prepare("SELECT ? AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}other o WHERE o_file=l_file AND o_id=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array('NOTE', $ged_id, $link, $xref))
+		PGV_DB::prepare("SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}other o WHERE o_file=l_file AND o_id=l_from AND o_type='NOTE' AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
 		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
@@ -779,8 +777,8 @@ function fetch_linked_sour($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	$rows=
-		PGV_DB::prepare("SELECT ? AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}sources s WHERE s_file=l_file AND s_id=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array('SOUR', $ged_id, $link, $xref))
+		PGV_DB::prepare("SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}sources s WHERE s_file=l_file AND s_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
 		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
@@ -793,8 +791,8 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
 	$rows=
-		PGV_DB::prepare("SELECT ? AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM {$TBLPREFIX}link, {$TBLPREFIX}media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array('OBJE', $ged_id, $link, $xref))
+		PGV_DB::prepare("SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM {$TBLPREFIX}link, {$TBLPREFIX}media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
 		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
@@ -829,11 +827,11 @@ function fetch_person_record($xref, $ged_id) {
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
-			"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
+			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
 			"FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
 		);
 	}
-	return $statement->execute(array('INDI', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_family_record($xref, $ged_id) {
 	global $TBLPREFIX;
@@ -841,11 +839,11 @@ function fetch_family_record($xref, $ged_id) {
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
-			"SELECT ? AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+			"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
 			"FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?"
 		);
 	}
-	return $statement->execute(array('FAM', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_source_record($xref, $ged_id) {
 	global $TBLPREFIX;
@@ -853,11 +851,11 @@ function fetch_source_record($xref, $ged_id) {
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
-			"SELECT ? AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
+			"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
 			"FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
 		);
 	}
-	return $statement->execute(array('SOUR', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_note_record($xref, $ged_id) {
 	// Notes are (currently) stored in the other table
@@ -869,11 +867,11 @@ function fetch_media_record($xref, $ged_id) {
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
-			"SELECT ? AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
+			"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
 			"FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
 		);
 	}
-	return $statement->execute(array('OBJE', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_other_record($xref, $ged_id) {
 	global $TBLPREFIX;
@@ -1038,10 +1036,10 @@ function gedcom_record_type($xref, $ged_id) {
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
-			"SELECT ?      FROM {$TBLPREFIX}individuals WHERE i_id   =? AND i_file   =? UNION ALL ".
-			"SELECT ?      FROM {$TBLPREFIX}families    WHERE f_id   =? AND f_file   =? UNION ALL ".
-			"SELECT ?      FROM {$TBLPREFIX}sources     WHERE s_id   =? AND s_file   =? UNION ALL ".
-			"SELECT ?      FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
+			"SELECT 'INDI' FROM {$TBLPREFIX}individuals WHERE i_id   =? AND i_file   =? UNION ALL ".
+			"SELECT 'FAM'  FROM {$TBLPREFIX}families    WHERE f_id   =? AND f_file   =? UNION ALL ".
+			"SELECT 'SOUR' FROM {$TBLPREFIX}sources     WHERE s_id   =? AND s_file   =? UNION ALL ".
+			"SELECT 'OBJE' FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
 			"SELECT o_type FROM {$TBLPREFIX}other       WHERE o_id   =? AND o_file   =?"
 		);
 	}
@@ -1049,7 +1047,7 @@ function gedcom_record_type($xref, $ged_id) {
 	if (isset($gedcom_record_cache[$xref][$ged_id])) {
 		return $gedcom_record_cache[$xref][$ged_id]->getType();
 	} else {
-		return $statement->execute(array('INDI', $xref, $ged_id, 'FAM', $xref, $ged_id, 'SOUR', $xref, $ged_id, 'OBJE', $xref, $ged_id, $xref, $ged_id))->fetchOne();
+		return $statement->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
 	}
 }
 
@@ -1930,8 +1928,8 @@ function get_top_surnames($ged_id, $min, $max) {
 	// Use n_surn, rather than n_surname, as it is used to generate url's for
 	// the inid-list, etc.
 	return
-		PGV_DB::prepareLimit("SELECT n_surn, COUNT(n_surn) FROM {$TBLPREFIX}name WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn HAVING COUNT(n_surn)>=? ORDER BY 2 DESC", $max)
-		->execute(array($ged_id, '_MARNM', '@N.N.', '', '?', 'UNKNOWN', $min))
+		PGV_DB::prepareLimit("SELECT n_surn, COUNT(n_surn) FROM {$TBLPREFIX}name WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn HAVING COUNT(n_surn)>=".$min." ORDER BY 2 DESC", $max)
+		->execute(array($ged_id, '_MARNM', '@N.N.', '', '?', 'UNKNOWN'))
 		->fetchAssoc();
 }
 
@@ -2222,7 +2220,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 				// to be cached.  We should store the level1 fact here (or somewhere)
 				if ($row['d_type']=='@#DJULIAN@') {
 					if ($row['d_year']<0) {
-						$year_regex=$row['d_year']." ?[Bb]\.? ?[Cc]\.\ ?";
+						$year_regex=$row['d_year'].' ?[Bb]\.? ?[Cc]\.\ ?';
 					} else {
 						$year_regex="({$row['d_year']}|".($row['d_year']-1)."\/".($row['d_year']%100).")";
 					}
@@ -2305,7 +2303,7 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 			// to be cached.  We should store the level1 fact here (or somewhere)
 			if ($row[8]=='@#DJULIAN@') {
 				if ($row[6]<0) {
-					$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
+					$year_regex=$row[6].' ?[Bb]\.? ?[Cc]\.\ ?';
 				} else {
 					$year_regex="({$row[6]}|".($row[6]-1)."\/".($row[6]%100).")";
 				}
@@ -2378,36 +2376,33 @@ function is_media_used_in_other_gedcom($file_name, $ged_id) {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_SITE_SETTING table
+// We can't cache/reuse prepared statements here, as we need to call these
+// functions after performing DDL statements, and these invalidate any
+// existing prepared statement handles in some databases.
 ////////////////////////////////////////////////////////////////////////////////
 function get_site_setting($site_setting_name, $default=null) {
 	global $TBLPREFIX;
-	static $statement=null;
 
-	if (is_null($statement)) {
-		$statement=PGV_DB::prepare("SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?");
-	}
-
-	return $statement->execute(array($site_setting_name))->fetchOne($default);
+	return PGV_DB::prepare(
+		"SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?"
+	)->execute(array($site_setting_name))->fetchOne($default);
 }
 function set_site_setting($site_setting_name, $site_setting_value) {
 	global $TBLPREFIX;
-	// We can't cache/reuse prepared statements here, as we need to call this
-	// function after performing DDL statements, and these invalidate any
-	// existing prepared statement handles in some databases.
 
-	$old_site_setting_value=
-		PGV_DB::prepare("SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?")
-		->execute(array($site_setting_name))
-		->fetchOne();
-
-	if (is_null($old_site_setting_value)) {
-		// Value doesn't exist - insert
-		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
-		->execute(array($site_setting_name, $site_setting_value));
-	} elseif ($old_site_setting_value!=$site_setting_value) {
-		// Value exists, and is different
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}site_setting SET site_setting_value=? WHERE site_setting_name=?")
-		->execute(array($site_setting_value, $site_setting_name));	
+	if (is_null($site_setting_value)) {
+		delete_site_setting($site_setting_name);
+	} else {
+		$old_site_setting_value=get_site_setting($site_setting_name);
+		if (is_null($old_site_setting_value)) {
+			// Value doesn't exist - insert
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
+			->execute(array($site_setting_name, $site_setting_value));
+		} elseif ($old_site_setting_value!=$site_setting_value) {
+			// Value exists, and is different
+			PGV_DB::prepare("UPDATE {$TBLPREFIX}site_setting SET site_setting_value=? WHERE site_setting_name=?")
+			->execute(array($site_setting_value, $site_setting_name));	
+		}
 	}
 }
 function delete_site_setting($site_setting_name) {

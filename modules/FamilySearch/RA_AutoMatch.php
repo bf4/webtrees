@@ -241,7 +241,8 @@ class RA_AutoMatch {
 	function getPersonDetails(&$fsperson) {
 		global $factarray;
 		if (!$fsperson) debug_print_backtrace();
-		$sex = $fsperson->getGender()->getGender();
+		$sex = 'U';
+		if ($fsperson->getGender()) $sex = $fsperson->getGender()->getGender();
 		$birth = $fsperson->getBirthAssertion();
 		$death = $fsperson->getDeathAssertion();
 		$out = "<a href=\"javascript:;\" onclick=\"window.open('module.php?mod=FamilySearch&amp;pgvaction=FSView&amp;pid=".$this->getServerId().":I".$fsperson->getID()."', '_blank', 'top=50,left=50,width=650,height=450,scrollbars=1,resizable=1'); return false;\">".

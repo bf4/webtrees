@@ -53,9 +53,6 @@ $controller->setupJavascript();
 // LBox =====================================================================================
 if (PGV_USE_LIGHTBOX) {
 	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	if (file_exists(PGV_ROOT.'modules/lightbox/lb_config.php')) {
-		require PGV_ROOT.'modules/lightbox/lb_config.php';
-	}
 	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ==========================================================================================

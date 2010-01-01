@@ -79,7 +79,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo "<a href=\"family.php?famid=", $famid, "\">";
+				echo '<a href="', $family->getLinkUrl(), '">';
 				//echo "<b>", $pgv_lang["parent_family"] , "&nbsp;&nbsp;(", $famid, ")</b>";
 				echo "<b>", $pgv_lang["parent_family"], "&nbsp;&nbsp;</b><span class=\"age\">(", $famid, ")</span>";
 				echo "</a>";
@@ -220,7 +220,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo "<a href=\"family.php?famid=", $famid, "\">";
+				echo '<a href="', $family->getLinkUrl(), '">';
 				echo "<b>", $pgv_lang["step_parent_family"], "&nbsp;&nbsp;</b><span class=\"age\">(", $famid, ")</span>";
 				echo "</a>";
 				?>
@@ -359,7 +359,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo "<a href=\"family.php?famid=", $famid, "\">";
+				echo '<a href="', $family->getLinkUrl(), '">';
 				echo "<b>", $pgv_lang["immediate_family"], "&nbsp;&nbsp;</b><span class=\"age\">(", $famid, ")</span>";
 				echo "</a>";
 				?>

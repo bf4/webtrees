@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 // Added in VERSION 4.2.2
-$pgv_lang["TYPE__notinDB"]		= "לא במאגר הנתונים<br /><br />או<br /><br />כפול<br />ב-Gedcom"; 
+$pgv_lang["TYPE__notinDB"]		= "לא במאגר הנתונים"; 
 $pgv_lang["ROW_TYPE__notinDB"]	= $pgv_lang["TYPE__notinDB"];
 
 // Added in VERSION 4.1.6

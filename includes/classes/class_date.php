@@ -55,7 +55,7 @@ class CalendarDate {
 	var $y, $m, $d;     // Numeric year/month/day
 	var $minJD, $maxJD; // Julian Day numbers
 
-	function CalendarDate($date) {
+	function __construct($date) {
 		// Construct from an integer (a julian day number)
 		if (is_numeric($date)) {
 			$this->minJD=$date;
@@ -715,12 +715,12 @@ class JewishDate extends CalendarDate {
 // rather than the local language.
 ////////////////////////////////////////////////////////////////////////////////
 class HebrewDate extends JewishDate {
-	static $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב'", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
-	static $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
-
-	const ALAFIM="אלפים";
 	const GERSHAYIM="״";
 	const GERSH="׳";
+	const ALAFIM="אלפים";
+	
+	static $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב׳", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
+	static $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
 
 	function FormatDayZeros() {
 		return self::NumToHebrew($this->d);
@@ -733,7 +733,7 @@ class HebrewDate extends JewishDate {
 	function FormatLongMonth() {
 		$mon=$this->NUM_TO_MONTH($this->m);
 		if ($mon=='adr' && $this->IsLeapYear())
-			return "אדר א'";
+			return "אדר א׳";
 		else
 			return self::$HEBREW_MONTHS[$this->m];
 	}
@@ -981,7 +981,7 @@ class GedcomDate {
 	var $date2=null; // Optional second date
 	var $text =null; // Optional text, as included with an INTerpreted date
 
-	function GedcomDate($date) {
+	function __construct($date) {
 		// Extract any explanatory text
 		if (preg_match('/^(.*)( ?\(.*)$/', $date, $match)) {
 			$date=$match[1];

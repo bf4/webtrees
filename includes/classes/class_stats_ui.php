@@ -245,7 +245,7 @@ class stats_ui extends stats
 			foreach($usermessages as $k=>$message) {
 				if(isset($message['id'])){$k = $message['id'];}
 				$content .= "<tr>\n<td class=\"list_value_wrap\"><input type=\"checkbox\" id=\"cb_message{$k}\" name=\"message_id[]\" value=\"{$k}\" /></td>\n";
-				$showmsg = preg_replace("/(\w)\/(\w)/","\$1/<span style=\"font-size:1px;\"> </span>\$2", PrintReady($message['subject']));
+				$showmsg = preg_replace('/(\w)\/(\w)/',"\$1/<span style=\"font-size:1px;\"> </span>\$2", PrintReady($message['subject']));
 				$showmsg = str_replace("@","@<span style=\"font-size:1px;\"> </span>", $showmsg);
 				$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message{$k}'); return false;\"><b>{$showmsg}</b> <img id=\"message{$k}_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" title=\"\" /></a></td>\n";
 				if(!empty($message['created'])){$t = strtotime($message['created']);}else{$t = time();}

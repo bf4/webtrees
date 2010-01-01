@@ -115,7 +115,7 @@ class batch_update {
 	}
 
 	// Constructor - initialise variables and validate user-input
-	function batch_update() {
+	function __construct() {
 		$this->plugins=self::getPluginList();              // List of available plugins
 		$this->plugin =safe_GET('plugin', $this->plugins); // User parameters
 		$this->xref   =safe_GET('xref',   PGV_REGEX_XREF);

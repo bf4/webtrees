@@ -3,7 +3,7 @@
  * Controller for the Descendancy Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -284,13 +284,14 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		print "<li>";
 		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"".($Dindent+4)."\" border=\"0\" alt=\"\" />";
 		print "<span class=\"details1\" style=\"white-space: nowrap; \" >";
-		print "<a href=\"#\" onclick=\"expand_layer('".$famid.$personcount."'); return false;\" class=\"top\"><img id=\"".$famid.$personcount."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".$pgv_lang["view_family"]."\" /></a> ";
-		echo '<a href="', encode_url("family.php?famid={$famid}&ged={$GEDCOM}"), '" class="details1">';
+		print "<a href=\"#\" onclick=\"expand_layer('".$famid.$personcount."'); return false;\" class=\"top\"><img id=\"".$famid.$personcount."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".$pgv_lang["view_family"]."\" /></a>";
 		$marriage = $family->getMarriage();
-		if ($marriage->canShow()) $marriage->print_simple_fact();
-		else print $pgv_lang["private"];
-		echo "</a>";
-		print "</span>";
+		if ($marriage->canShow()) {
+			echo ' <a href="', encode_url($family->getLinkUrl()), '" class="details1">';
+			$marriage->print_simple_fact();
+			echo '</a>';
+		}
+		print '</span>';
 
 		// print spouse
 		print "<ul style=\"list-style: none; display: block;\" id=\"".$famid.$personcount."\">";

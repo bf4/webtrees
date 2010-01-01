@@ -3,7 +3,7 @@
 * Class used to access records and data on a remote server
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -51,11 +51,11 @@ class ServiceClient extends GedcomRecord {
 	* contstructor to create a new ServiceClient object
 	* @param string $gedrec the SERV gedcom record
 	*/
-	function ServiceClient($gedrec) {
+	function __construct($gedrec) {
 		//parse url
 		//crate soap client class
 		//authenticate/get/set sid
-		parent::GedcomRecord($gedrec);
+		parent::__construct($gedrec);
 		//print "creating new service client ".$this->xref;
 		//get the url from the gedcom
 		$this->url = get_gedcom_value("URL",1,$gedrec);
@@ -107,7 +107,7 @@ class ServiceClient extends GedcomRecord {
 	function authenticate() {
 		if (!empty($this->SID)) return $this->SID;
 		if (is_null($this->soapClient)) {
-			if (!class_exists('SoapClient') || $this->client_type=='PEAR:SOAP') {
+			if (!class_exists('Soap_Client') || $this->client_type=='PEAR:SOAP') {
 
 				require_once './SOAP/Client.php';
 				//AddToLog('Using PEAR:SOAP library');
@@ -119,7 +119,7 @@ class ServiceClient extends GedcomRecord {
 			} else {
 				//AddtoLog("Using SOAP Extension");
 				//-- don't use exceptions in PHP 4
-				$this->soapClient = new SoapClient($this->url, array('exceptions' => 0));
+				$this->soapClient = new Soap_Client($this->url, array('exceptions' => 0));
 			}
 		}
 		if ($this->soapClient!=null && !$this->isError($this->soapClient)) {
@@ -760,7 +760,7 @@ class ServiceClient extends GedcomRecord {
 			$this->authenticate();
 			if (!is_object($this->soapClient) || $this->isError($this->soapClient)) return false;
 			$result = $this->soapClient->getGedcomRecord($this->SID, $xref);
-			if (PEAR::isError($result) || isset($result->faultcode) || get_class($result)=='SOAP_Fault' || is_object($result)) {
+			if (PEAR::isError($result) || isset($result->faultcode) || is_object($result) && get_class($result)=='SOAP_Fault') {
 				if (isset($result->faultstring)) {
 					AddToLog($result->faultstring);
 					print $result->faultstring;
