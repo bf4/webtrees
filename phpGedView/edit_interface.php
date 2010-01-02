@@ -1797,7 +1797,7 @@ case 'linkspouseaction':
 				$famrec.=addNewFact('MARR');
 
 				if (safe_POST_bool('SOUR_FAM') || count($tagSOUR)>0) {
-					// before adding 2 SOUR it need to adds 1 MARR Y first
+					// before adding 2 SOUR it needs to add 1 MARR Y first
 					if (addNewFact('MARR')=='') {
 						$famrec .= "1 MARR Y\n";
 					}

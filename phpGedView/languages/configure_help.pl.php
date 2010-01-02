@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -710,6 +710,8 @@ $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />Ta stron
 $pgv_lang["more_help_advice"]			= "<br /><b>Dodatkowa pomoc</b><br />Dodatkowa pomoc jest dostępna po kliknięciu na znak zapytania <b>?</b> obok niektórych elementów na stronie.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Szerokość generowanych miniaturek";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />To jest szerokość (w pikselach), którą system zastosuje podczas automatycznego generowania miniaturek. Domyślna wartość to 100.<br />";
+$pgv_lang["USE_SILHOUETTE"]				= "Użyj obrazu sylwetki";
+$pgv_lang["USE_SILHOUETTE_help"]		= "~#pgv_lang[USE_SILHOUETTE]#~<br /><br />Używa obrazów sylwetki dla osbób, które nie mają ustawionego głównego obrazu (zdjęcia).<br />Przykładowy obraz sylwetki: <img class=\"headimg vmiddle\" src=\"images/buttons/head.gif\" alt=\"Obraz sylwetki\" title=\"Obraz sylwetki\" /><br />";
 $pgv_lang["SHOW_EST_LIST_DATES"]		="Pokaż przybliżone daty na listach i wykresach";
 $pgv_lang["SHOW_EST_LIST_DATES_help"]	= "~#pgv_lang[SHOW_EST_LIST_DATES]#~<br /><br />Ta opcja określa czy przybliżone daty urodzin i śmierci mają być pokazane zamiast pustych pól na listach i wykresach.<br />";
 $pgv_lang["SHOW_LIST_PLACES"]			= "Liczba poziomów miejsc widoczna na listach";

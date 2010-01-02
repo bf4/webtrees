@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Added: Silhouette images support (kiwi_pgv/wooc)
  - Fixed: [ 2923977 ] PGV 4.2.3 ... redirection via login (wooc)
  - Fixed: [ 2923747 ] Bug in authentication.php (fisharebest)
  - Fixed: [ 2923224 ] Missing Space in Shared Note View GEDCOM Record (wooc)
