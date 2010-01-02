@@ -587,12 +587,10 @@ if ($action == "listusers") {
 	<tr>
 	<?php if ($view != "preview") {
 	echo "<td class=\"descriptionbox wrap\">";
-	echo $pgv_lang["edit"], "</td>";
-	echo "<td class=\"descriptionbox wrap\">";
 	echo $pgv_lang["message"], "</td>";
 	} ?>
-	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["username"]; ?></a></td>
 	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortlname&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["full_name"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["username"]; ?></a></td>
 	<td class="descriptionbox wrap"><?php echo $pgv_lang["inc_languages"]; ?></td>
 	<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php echo $pgv_lang["privileges"]; ?>" onclick="<?php
 	$k = 1;
@@ -622,8 +620,6 @@ if ($action == "listusers") {
 		echo "<tr>\n";
 		if ($view != "preview") {
 			echo "\t<td class=\"optionbox wrap\">";
-			echo "<a href=\"", encode_url("useradmin.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\">", $pgv_lang["edit"], "</a></td>\n";
-			echo "\t<td class=\"optionbox wrap\">";
 			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
 				echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\">", $pgv_lang["message"], "</a>";
 			} else {
@@ -631,6 +627,11 @@ if ($action == "listusers") {
 			}
 			echo '</td>';
 		}
+		$userName = getUserFullName($user_id);
+		echo "\t<td class=\"optionbox wrap\"><a href=\"", encode_url("useradmin.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" title=\"", $pgv_lang["edit"], "\">", $userName;
+		if ($TEXT_DIRECTION=="ltr") echo getLRM();
+		else                        echo getRLM();
+		echo "</a></td>\n";
 		if (get_user_setting($user_id, "comment_exp")) {
 			if ((strtotime(get_user_setting($user_id, "comment_exp")) != "-1") && (strtotime(get_user_setting($user_id, "comment_exp")) < time("U"))) echo "\t<td class=\"optionbox red\">", $user_name;
 			else echo "\t<td class=\"optionbox wrap\">", $user_name;
@@ -641,9 +642,6 @@ if ($action == "listusers") {
 			echo "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}\" />";
 		}
 		echo "</td>\n";
-		$userName = getUserFullName($user_id);
-		if ($TEXT_DIRECTION=="ltr") echo "\t<td class=\"optionbox wrap\">", $userName, getLRM() , "</td>\n";
-		else                        echo "\t<td class=\"optionbox wrap\">", $userName, getRLM() , "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "<br /><img src=\"", $language_settings[get_user_setting($user_id, 'language')]["flagsfile"], "\" class=\"brightflag\" alt=\"", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "\" title=\"", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "\" /></td>\n";
 		echo "\t<td class=\"optionbox\">";
 		echo "<a href=\"javascript: ", $pgv_lang["privileges"], "\" onclick=\"expand_layer('user-geds", $k, "'); return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $PGV_IMAGE_DIR, "/";
@@ -658,7 +656,10 @@ if ($action == "listusers") {
 		if (get_user_setting($user_id, 'canadmin')=='Y') {
 			echo "<li class=\"warning\">", $pgv_lang["can_admin"], "</li>\n";
 		}
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		$all_gedcoms = get_all_gedcoms();
+		//-- sorting menu by gedcom filename 
+		asort($all_gedcoms);
+		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			$vval = get_user_gedcom_setting($user_id, $ged_id, 'canedit');
 			if ($vval == "") $vval = "none";
 			$uged = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
