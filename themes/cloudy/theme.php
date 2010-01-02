@@ -3,7 +3,7 @@
  * Cloudy theme
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,6 +176,9 @@ $PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
 $PGV_IMAGES["stop"]["other"] = "stop.gif";
+$PGV_IMAGES["default_image_M"]["other"] = "silhouette_male.gif";
+$PGV_IMAGES["default_image_F"]["other"] = "silhouette_female.gif";
+$PGV_IMAGES["default_image_U"]["other"] = "silhouette_unknown.gif";
 
 // - lifespan chart arrows
 $PGV_IMAGES["lsltarrow"]["other"] = "lsltarrow.gif";

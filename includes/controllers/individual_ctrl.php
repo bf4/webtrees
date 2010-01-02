@@ -3,7 +3,7 @@
 * Controller for the Individual Page
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
+* Copyright (C) 2002 to 2010 PGV Development Team. All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -343,12 +343,13 @@ class IndividualControllerRoot extends BaseController {
 	* @return boolean
 	*/
 	function canShowHighlightedObject() {
-		global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES;
+		global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE;
 
 		if (($this->indi->canDisplayDetails()) && ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES)) {
 			$firstmediarec = $this->indi->findHighlightedMedia();
 			if ($firstmediarec) return true;
 		}
+		if ($USE_SILHOUETTE) { return true; }
 		return false;
 	}
 	/**
@@ -372,7 +373,7 @@ class IndividualControllerRoot extends BaseController {
 	* @return string HTML string for the <img> tag
 	*/
 	function getHighlightedObject() {
-		global $USE_THUMBS_MAIN, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $GEDCOM;
+		global $USE_THUMBS_MAIN, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES, $USE_SILHOUETTE, $sex;
 		if ($this->canShowHighlightedObject()) {
 			$firstmediarec = $this->indi->findHighlightedMedia();
 			if (!empty($firstmediarec)) {
@@ -395,11 +396,9 @@ class IndividualControllerRoot extends BaseController {
 					$name = $this->indi->getFullName();
 					if (PGV_USE_LIGHTBOX) {
 						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_QUOTES, 'UTF-8')) . "\">" . "\n";
-					}else
-
-					if (!$USE_MEDIA_VIEWER && $imgsize) {
+					} else if (!$USE_MEDIA_VIEWER && $imgsize) {
 						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url(encrypt($firstmediarec["file"]))."', $imgwidth, $imgheight);\">";
-					}else{
+					} else {
 						$result .= "<a href=\"mediaviewer.php?mid={$mid}\">";
 					}
 					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))."\" alt=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))."\" />";
@@ -407,6 +406,22 @@ class IndividualControllerRoot extends BaseController {
 					return $result;
 				}
 			}
+		}
+		if ($USE_SILHOUETTE) {
+			$class = "\" width=\"".$THUMBNAIL_WIDTH;
+			$sex = $this->indi->getSex();
+			$result = "<img src=\"";
+			if ($sex == 'F') {
+				$result .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"];
+			} 
+			else if ($sex == 'M') {
+				$result .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"];
+			}
+			else {
+				$result .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"];
+			} 
+			$result .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
+			return $result;
 		}
 	}
 
