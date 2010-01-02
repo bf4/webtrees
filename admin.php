@@ -5,7 +5,7 @@
  * Provides links for administrators to get to other administrative areas of the site
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team
+ * Copyright (C) 2002 to 2010  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 		header("Location: index.php");
 		exit;
 	} else {
-		header("Location: login.php?url=module.php?mod=sitemap");
+		header("Location: login.php?url=admin.php");
 		exit;
 	}
 }
