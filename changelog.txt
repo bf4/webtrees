@@ -9,11 +9,12 @@
 =====================================================================
 
 Version 4.3.0
+ - Changed: UI for user list (volschin)
  - Added: Silhouette images support (kiwi_pgv/wooc)
  - Fixed: [ 2923977 ] PGV 4.2.3 ... redirection via login (wooc)
  - Fixed: [ 2923747 ] Bug in authentication.php (fisharebest)
  - Fixed: [ 2923224 ] Missing Space in Shared Note View GEDCOM Record (wooc)
- - Fixed: Sorting menu by gedcom filename instead of id (volschin)
+ - Fixed: Sorting by gedcom filename instead of id (volschin)
  - Fixed: [ 2886694 ] add existing wife/husband SOUR etc (wooc)
  - Fixed: [ 2921858 ] Private marking in marriages (fisharebest)
  - Fixed: is_dead() was ignoring certain undated death events (fisharebest)
