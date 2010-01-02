@@ -89,6 +89,11 @@ if (empty($ged)) {
 	$ged=$GEDCOM;
 }
 
+// Load all available gedcoms
+$all_gedcoms = get_all_gedcoms();
+//-- sorting by gedcom filename 
+asort($all_gedcoms);
+
 // Delete a user
 if ($action=='deleteuser') {
 	// don't delete ourselves
@@ -171,7 +176,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				set_user_setting($user_id, 'editaccount',          $editaccount);
 				set_user_setting($user_id, 'verified',             $verified);
 				set_user_setting($user_id, 'verified_by_admin',    $verified_by_admin);
-				foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+				foreach ($all_gedcoms as $ged_id=>$ged_name) {
 					set_user_gedcom_setting($user_id, $ged_id, 'gedcomid', safe_POST_xref('gedcomid'.$ged_id));
 					set_user_gedcom_setting($user_id, $ged_id, 'rootid',   safe_POST_xref('rootid'.$ged_id));
 					set_user_gedcom_setting($user_id, $ged_id, 'canedit',  safe_POST('canedit'.$ged_id,  $ALL_EDIT_OPTIONS));
@@ -204,7 +209,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				}
 				//-- update Gedcom record with new email address
 				if ($email_changed && $new_sync_gedcom=='Y') {
-					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+					foreach ($all_gedcoms as $ged_id=>$ged_name) {
 						$myid=get_user_gedcom_setting($username, $ged_id, 'gedcomid');
 						if ($myid) {
 							$OLDGEDCOM=$GEDCOM;
@@ -313,7 +318,7 @@ if ($action=="edituser") {
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
-	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		$varname='gedcomid'.$ged_id;
 		?>
 		<tr valign="top">
@@ -335,7 +340,7 @@ if ($action=="edituser") {
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
-	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		$varname='rootid'.$ged_id;
 		?>
 		<tr valign="top">
@@ -381,7 +386,7 @@ if ($action=="edituser") {
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
-	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		$varname = 'canedit'.$ged_id;
 		echo "<tr><td>$ged_name:&nbsp;&nbsp;</td><td>";
 		$tab++;
@@ -656,9 +661,6 @@ if ($action == "listusers") {
 		if (get_user_setting($user_id, 'canadmin')=='Y') {
 			echo "<li class=\"warning\">", $pgv_lang["can_admin"], "</li>\n";
 		}
-		$all_gedcoms = get_all_gedcoms();
-		//-- sorting menu by gedcom filename 
-		asort($all_gedcoms);
 		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			$vval = get_user_gedcom_setting($user_id, $ged_id, 'canedit');
 			if ($vval == "") $vval = "none";
@@ -788,7 +790,7 @@ if ($action == "createform") {
 
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			$varname='gedcomid'.$ged_id;
 			?>
 			<tr>
@@ -804,7 +806,7 @@ if ($action == "createform") {
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid_help", "qm", "rootid"); echo $pgv_lang["rootid"]; ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			$varname='rootid'.$ged_id;
 			?>
 			<tr>
@@ -823,7 +825,7 @@ if ($action == "createform") {
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit_help", "qm", "can_edit");echo $pgv_lang["can_edit"]; ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			$varname='canedit'.$ged_id;
 			$tab++;
 			echo "<tr><td>{$ged_name}:&nbsp;&nbsp;</td><td>";
@@ -1151,7 +1153,7 @@ if ($action == "cleanup2") {
 		if (get_user_setting($user_id, 'canadmin')=='Y') {
 			$adminusers++;
 		}
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin') {
 				$title=PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title')));
 				if (isset($gedadmin[$title])) {
