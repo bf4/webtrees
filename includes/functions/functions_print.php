@@ -299,37 +299,39 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				if (!$show_full) $thumbnail .= " style=\"display: none;\"";
 				if ($imgsize) $thumbnail .= " /></a>";
 				else $thumbnail .= " />";
-			} else if ($USE_SILHOUETTE && $show_full) {
+			} else if ($USE_SILHOUETTE) {
 				$class = "pedigree_image_portrait";
 				if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 				$sex = $person->getSex();
-				$thumbnail = "<img src=\"";
+				$thumbnail = "<img id=\"box-$boxID-thumb\" src=\"";
 				if ($sex == 'F') {
-					$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"];
+					$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"]."\"";
 				}
 				else if ($sex == 'M') {
-					$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"];
+					$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"]."\"";
 				}
 				else {
-					$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"];
-				} 
-				$thumbnail .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
+					$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"]."\"";
+				}
+				if (!$show_full) $thumbnail .= " style=\"display: none;\"";
+				$thumbnail .=" class=\"".$class."\" border=\"none\" alt=\"\" />";
 			}
-		} else if ($USE_SILHOUETTE && $show_full) {
+		} else if ($USE_SILHOUETTE) {
 			$class = "pedigree_image_portrait";
 			if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 			$sex = $person->getSex();
-			$thumbnail = "<img src=\"";
+			$thumbnail = "<img id=\"box-$boxID-thumb\" src=\"";
 			if ($sex == 'F') {
-				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"];
+				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"]."\"";
 			}
 			else if ($sex == 'M') {
-				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"];
+				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"]."\"";
 			}
 			else {
-				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"];
-			} 
-			$thumbnail .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
+				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"]."\"";
+			}
+			if (!$show_full) $thumbnail .= " style=\"display: none;\"";
+			$thumbnail .=" class=\"".$class."\" border=\"none\" alt=\"\" />";
 		}
 	}
 	//-- find additional name
