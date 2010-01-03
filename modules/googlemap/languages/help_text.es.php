@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -153,4 +153,19 @@ $pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Usar la rueda para acercar y alejar";
 $pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Aquí puede indicar si la rueda del #pgv_lang_es_mouse[mouse] se utiliza para acercar y alejar.";
 $pgv_lang["GOOGLEMAP_PH_CONTROLS"]		= "Ocultar los controles del mapa";
 $pgv_lang["GOOGLEMAP_PH_CONTROLS_help"]	= "~#pgv_lang[GOOGLEMAP_PH_CONTROLS]#~<br /><br />Esta opción permite ocultar los controles del mapa (por ejemplo, la opción de tipo de mapa) si el puntero está fuera del mapa.";
+
+// Pedigree map
+$pgv_lang["PEDIGREE_MAP_help1"]		= "Para utilizar el mapa";
+$pgv_lang["PEDIGREE_MAP_help2"]		= "~#pgv_lang[root_person]#~<br /><br />Seleccione la persona que desea como <strong>persona raíz</strong> introduciendo su ID o utilice el icono <strong>Encontrar ID</strong>.";
+$pgv_lang["PEDIGREE_MAP_help3"]		= "~#pgv_lang[generations]#~<br /><br />Fije el número de generaciones que desea ver.  Un máximo razonable sería 8, que mostraría hasta 255 personas.";
+$pgv_lang["PEDIGREE_MAP_help4"]		= "Haga clic en un nombre de la lista a la derecha o un icono en el mapa para mostrar un ventana de información en su lugar de nacimiento.";
+$pgv_lang["PEDIGREE_MAP_help5"]		= "Haga clic en los detalles en esa ventana de información para actualizar el mapa con esa persona como raíz.";
+
+$pgv_lang["PEDIGREE_MAP_clustersize"]		= "Tamaño del grupo";
+$pgv_lang["PEDIGREE_MAP_clustersize_help"]	= "~#pgv_lang[PEDIGREE_MAP_clustersize]#~<br /><br />El número de marcadores a colocar en un punto antes de pasar a mostrar un rastro de agujas en una línea hacia el noreste tras las generaciones más jóvenes.  El 'rastro' sólo es visible si se acerca mucho el mapa.";
+$pgv_lang["PEDIGREE_MAP_hidelines"]			= "Ocultar líneas";
+$pgv_lang["PEDIGREE_MAP_hidelines_help"]	= "~#pgv_lang[PEDIGREE_MAP_hidelines]#~<br /><br />Ocultar las líneas que conectan una persona a sus padres si existen en el mapa.";
+$pgv_lang["PEDIGREE_MAP_hideflags"]			= "Ocultar banderas";
+$pgv_lang["PEDIGREE_MAP_hideflags_help"]	= "~#pgv_lang[PEDIGREE_MAP_hideflags]#~<br /><br />Ocultar las banderas configuradas en el módulo googlemap.  Generalmente son las de países y provincias o estados.&nbsp; Sirven como pista visual de que los marcadores alrededor de la vabdera son del área general y no del punto del mapa específico.";
+$pgv_lang["PEDIGREE_MAP_help"]				= "~#pgv_lang[PEDIGREE_MAP_help1]#~<br /><br />#pgv_lang[PEDIGREE_MAP_help4]#<br />#pgv_lang[PEDIGREE_MAP_help5]#<br /><br />#pgv_lang[PEDIGREE_MAP_help2]#<br /><br />#pgv_lang[PEDIGREE_MAP_help3]#<br /><br />#pgv_lang[PEDIGREE_MAP_clustersize_help]#<br /><br />#pgv_lang[PEDIGREE_MAP_hidelines_help]#<br /><br />#pgv_lang[PEDIGREE_MAP_hideflags_help]#<br /><br />";
 ?>

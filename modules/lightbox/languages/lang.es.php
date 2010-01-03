@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.1.6
-$pgv_lang["TYPE__notinDB"]			= "No consta en la BD<br /><br />O<br /><br />Duplicado en<br />Gedcom";
+$pgv_lang["TYPE__notinDB"]			= "No consta en la BD";
 $pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
 
 
