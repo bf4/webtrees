@@ -3,7 +3,7 @@
  * Polish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,4 +150,24 @@ $pgv_lang["placecheck_filter_text"] = "Opcje filtrowania listy";
 $pgv_lang["placecheck_match"]		= "Dołącz identyczne miejsca: ";
 $pgv_lang["placecheck_lati"]		= "Szerokość";
 $pgv_lang["placecheck_long"]		= "Długość";
+
+// Pedigree map
+$pgv_lang["pedigree_map"]				= "Mapa rodowa";
+$pgv_lang["pm_grandparent"] 			= "Dziadek/Babcia";
+$pgv_lang["pm_grandmother"] 			= "Babcia";
+$pgv_lang["pm_grandparent"] 			= "Dziadek";
+$pgv_lang["pm_gt"] 						= "Pra";
+$pgv_lang["pm_zoom_in"]					= "Powiększ";
+$pgv_lang["pm_zoom_out"]				= "Zmniejsz";
+$pgv_lang["zoom_in_here"]				= "Powiększ&nbsp;tutaj";
+$pgv_lang["zoom_out_here"]				= "Zmniejsz&nbsp;tutaj";
+$pgv_lang["centre_map"]					= "Wycentruj&nbsp;mapę&nbsp;tutaj";
+$pgv_lang["pm_individuals_displayed"]	= "osób jest wyświetlonych spośród wszystkich";
+$pgv_lang["pm_missing_birth"]			= "nieznane współrzędne miejsca urodzenia:";
+$pgv_lang["pm_is"]						= "jest";
+$pgv_lang["pm_are"]						= "osób ma";
+$pgv_lang["pm_from"]					= "z";
+$pgv_lang["pm_for"]						= "-";
+$pgv_lang["pm_gens"]					= "pokoleń";
+$pgv_lang["pm_root"]					= "Główna osoba";
 ?>

@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Added: [ 1863843 ] Pedigree Google Map (kiwi_pgv/wooc)
  - Changed: UI for user list (volschin)
  - Added: Silhouette images support (kiwi_pgv/wooc)
  - Fixed: [ 2923977 ] PGV 4.2.3 ... redirection via login (wooc)
