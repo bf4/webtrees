@@ -68,7 +68,9 @@ class batch_update {
 			'<td class="list_label">'.$pgv_lang['gedcom_file'].'</td>'.
 			'<td class="optionbox wrap"><select name="GEDCOM" onchange="reset_reload();">';
 
-		foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+		$all_gedcoms=get_all_gedcoms();
+		asort($all_gedcoms);
+		foreach ($all_gedcoms as $ged_id=>$gedcom) {
 			$html.='<option value="'.$gedcom.'"'.($ged_id==PGV_GED_ID ? ' selected="selected"' : '').'>'.get_gedcom_setting($ged_id, 'title').'</option>';
 		}
 		$html.='</select></td></tr><tr valign="top"><td class="list_label">'.$pgv_lang['batch_update'].':</td><td class="optionbox wrap"><select name="plugin" onchange="reset_reload();">';
