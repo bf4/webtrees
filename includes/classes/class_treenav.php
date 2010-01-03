@@ -286,7 +286,7 @@ class TreeNav {
 		<?php $thumb = $this->getThumbnail($person); 
 		if (!empty($thumb)) {
 			echo $thumb;
-		} else if ($USE_SILHOUETTE) {
+		} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
 			$class = "pedigree_image_portrait";
 			if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 			$sex = $person->getSex();
@@ -336,7 +336,7 @@ class TreeNav {
 				<?php $thumb = $this->getThumbnail($spouse); 
 				if (!empty($thumb)) {
 					echo $thumb;
-				} else if ($USE_SILHOUETTE) {
+				} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
 					$class = "pedigree_image_portrait";
 					if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 					$sex = $spouse->getSex();

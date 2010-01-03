@@ -299,7 +299,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				if (!$show_full) $thumbnail .= " style=\"display: none;\"";
 				if ($imgsize) $thumbnail .= " /></a>";
 				else $thumbnail .= " />";
-			} else if ($USE_SILHOUETTE) {
+			} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
 				$class = "pedigree_image_portrait";
 				if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 				$sex = $person->getSex();
@@ -316,7 +316,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				if (!$show_full) $thumbnail .= " style=\"display: none;\"";
 				$thumbnail .=" class=\"".$class."\" border=\"none\" alt=\"\" />";
 			}
-		} else if ($USE_SILHOUETTE) {
+		} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
 			$class = "pedigree_image_portrait";
 			if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 			$sex = $person->getSex();

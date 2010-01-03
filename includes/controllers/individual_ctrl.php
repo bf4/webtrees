@@ -343,13 +343,13 @@ class IndividualControllerRoot extends BaseController {
 	* @return boolean
 	*/
 	function canShowHighlightedObject() {
-		global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE;
+		global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE, $PGV_IMAGES;
 
 		if (($this->indi->canDisplayDetails()) && ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES)) {
 			$firstmediarec = $this->indi->findHighlightedMedia();
 			if ($firstmediarec) return true;
 		}
-		if ($USE_SILHOUETTE) { return true; }
+		if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) { return true; }
 		return false;
 	}
 	/**
@@ -407,7 +407,7 @@ class IndividualControllerRoot extends BaseController {
 				}
 			}
 		}
-		if ($USE_SILHOUETTE) {
+		if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
 			$class = "\" width=\"".$THUMBNAIL_WIDTH;
 			$sex = $this->indi->getSex();
 			$result = "<img src=\"";

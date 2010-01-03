@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,6 +114,8 @@ $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />Auf dies
 $pgv_lang["more_help_advice"]			= "<br /><br /><b>Mehr Hilfe</b><br /><br />Wenn sie das <b>?</b> neben den Elementen klicken, können Sie mehr Hilfe erhalten.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Breite des erstellten Miniaturbildes";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />Automatisch erstellte Miniaturbilder werden in dieser Breite erstellt.  Die standardmäßige Breite ist 100px.<br />";
+$pgv_lang["USE_SILHOUETTE"]				= "Silhouetten verwenden";
+$pgv_lang["USE_SILHOUETTE_help"]		= "~#pgv_lang[USE_SILHOUETTE]#~<br /><br />Bestimmt, ob Silhouetten benutzt werden sollen, wenn fÃ¼r die jeweilige Person kein Hauptbild bestimmt ist.  Die Silhouetten richten sich nach dem Geschlecht der Person.<br /><br /><table><tr><td wrap valign=\"middle\">Diese Silhouette kÃ¶nnte benutzt werden, wenn das Geschlecht der Person unbekannt ist: </td><td><img src=\"images/silhouette_unknown.gif\" width=\"40\" alt=\"Silhouette image\" title=\"Silhouette image\" /></td></tr</table><br />";
 $pgv_lang["SHOW_SOURCES"]				= "Zeige Quellen";
 $pgv_lang["SHOW_SOURCES_help"]			= "~#pgv_lang[SHOW_SOURCES]#~<br /><br />Diese Option bestimmt, wem Quellen gezeigt werden dürfen.  Wenn der Benutzer keinen Zugriff zu Quellen hat, fehlt die Quellen-Option im Listen-Menü, und der Quellen-Ordner fehlt dann auch auf der Personen-Details Seite.<br />";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION_help"]	= "~#pgv_lang[REQUIRE_ADMIN_AUTH_REGISTRATION]#~<br /><br />Wenn die Option <b>#pgv_lang[USE_REGISTRATION_MODULE]#</b> auf <b>#pgv_lang[yes]#</b> gestellt ist, bestimmt diese weitere Option ob der Verwalter jeden Benutzerantrag genehmigen muss oder nicht.<br /><br />Die Wahl <b>#pgv_lang[yes]#</b> bestimmt, dass neue Benutzer ihren Antrag erst bestätigen müssen.  Nach dieser Bestätigung muss der Antrag noch vom Verwalter genehmigt werden.  Erst nach der dieser Genehmigung kann der neue Benutzer sich anmelden.<br /><br />Die Wahl <b>#pgv_lang[no]#</b> bestimmt, dass das Kästchen <b>#pgv_lang[verified_by_admin]#</b> automatisch angekreuzt ist, und dass sofort nach der Bestätigung des Anwärters dieser sich anmelden kann.  Die Genehmigung des Verwalters ist also automatisch.<br />";

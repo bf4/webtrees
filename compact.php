@@ -302,7 +302,7 @@ print_footer();
 
 function print_td_person($n) {
 	global $treeid, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
-	global $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE;
+	global $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE, $PGV_IMAGES;
 	global $showids, $showthumbs;
 
 	$text = "";
@@ -342,7 +342,7 @@ function print_td_person($n) {
 					$text .= "<img id=\"box-$pid\" src=\"".$whichFile."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))." - ".strip_tags(html_entity_decode($birth_date->Display(false)." - ".$death_date->Display(false),ENT_QUOTES,'UTF-8'))."\"";
 					if ($imgsize) $text .= " /></a>\n";
 					else $text .= " />\n";
-				} else if ($USE_SILHOUETTE) {
+				} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
 					$class = "pedigree_image_portrait";
 					if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 					$sex = $indi->getSex();
@@ -358,7 +358,7 @@ function print_td_person($n) {
 					} 
 					$text .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
 				}
-			} else if ($USE_SILHOUETTE) {
+			} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
 				$class = "pedigree_image_portrait";
 				if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 				$sex = $indi->getSex();
