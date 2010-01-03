@@ -31,9 +31,11 @@ require './config.php';
 
 loadLangFile("pgv_confighelp");
 
+$all_gedcoms=get_all_gedcoms();
+asort($all_gedcoms);
 $action     =safe_GET('action', array('delete', 'setdefault'));
-$ged        =safe_GET('ged',         get_all_gedcoms());
-$default_ged=safe_GET('default_ged', get_all_gedcoms());
+$ged        =safe_GET('ged',         $all_gedcoms);
+$default_ged=safe_GET('default_ged', $all_gedcoms);
 
 /**
  * Check if a gedcom file is downloadable over the internet
@@ -75,7 +77,7 @@ if ($action=="delete") {
 print_header($pgv_lang["gedcom_adm_head"]);
 print "<center>\n";
 
-if (($action=="setdefault") && in_array($default_ged, get_all_gedcoms())) {
+if (($action=="setdefault") && in_array($default_ged, $all_gedcoms)) {
 	set_site_setting('DEFAULT_GEDCOM', $default_ged);
 	$DEFAULT_GEDCOM=$default_ged;
 } else {
@@ -90,14 +92,14 @@ print "<br /><br />";
 <?php
 // Default gedcom choice
 print "<br />";
-if (PGV_USER_IS_ADMIN && count(get_all_gedcoms())>1) {
+if (PGV_USER_IS_ADMIN && count($all_gedcoms)>1) {
 	print_help_link("default_gedcom_help", "qm");
 	print $pgv_lang["DEFAULT_GEDCOM"]."&nbsp;";
 	print "<select name=\"default_ged\" class=\"header_select\" onchange=\"document.defaultform.submit();\">";
-	if (!in_array($DEFAULT_GEDCOM, get_all_gedcoms())) {
+	if (!in_array($DEFAULT_GEDCOM, $all_gedcoms)) {
 		echo '<option value="" selected="selected" onclick="document.defaultform.submit();">', htmlspecialchars($DEFAULT_GEDCOM), '</option>';
 	}
-	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		print "<option value=\"".urlencode($ged_name)."\"";
 		if ($DEFAULT_GEDCOM==$ged_name) print " selected=\"selected\"";
 		print " onclick=\"document.defaultform.submit();\">";
@@ -132,7 +134,7 @@ print "<table class=\"gedcom_table\">";
 $GedCount = 0;
 
 // Print the table of available GEDCOMs
-foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+foreach ($all_gedcoms as $ged_id=>$ged_name) {
 	if (userGedcomAdmin(PGV_USER_ID, $ged_id)) {
 		// Row 0: Separator line
 		if ($GedCount!=0) {

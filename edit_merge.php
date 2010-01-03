@@ -272,7 +272,9 @@ if ($action=="choose") {
 	echo "<input type=\"text\" id=\"gid1\" name=\"gid1\" value=\"", $gid1, "\" size=\"10\" tabindex=\"1\"/> ";
 	echo '<script type="text/javascript">document.getElementById("gid1").focus();</script>';
 	echo "<select name=\"ged\" tabindex=\"4\">\n";
-	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	$all_gedcoms=get_all_gedcoms();
+	asort($all_gedcoms);
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		echo "<option value=\"", $ged_name, "\"";
 		if (empty($ged) && $ged_id==PGV_GED_ID || !empty($ged) && $ged==$ged_name) {
 			echo " selected=\"selected\"";
@@ -289,7 +291,7 @@ if ($action=="choose") {
 	echo "&nbsp;</td><td>";
 	echo "<input type=\"text\" name=\"gid2\" value=\"", $gid2, "\" size=\"10\" tabindex=\"2\"/> ";
 	echo "<select name=\"ged2\" tabindex=\"5\">\n";
-	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		echo "<option value=\"", $ged_name, "\"";
 		if (empty($ged2) && $ged_id==PGV_GED_ID || !empty($ged2) && $ged2==$ged_name) {
 			echo " selected=\"selected\"";
