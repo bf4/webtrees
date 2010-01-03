@@ -1434,7 +1434,6 @@ $pgv_lang["recent_changes_descr"]		= "Der «Neueste Änderungen» Block listet a
 $pgv_lang["recent_changes_none"]		= "<b>Innerhalb der letzten #pgv_lang[global_num1]# Tage, gab es keine Änderungen.</b><br />";
 $pgv_lang["recent_changes_some"]		= "<b>In den letzten #pgv_lang[global_num1]# Tagen durchgeführte Änderungen</b><br />";
 $pgv_lang["show_empty_block"]			= "Soll der Block verborgen werden, wenn er leer ist?";
-$pgv_lang["show_pgvu"]			= "Wem soll die Spalte Benutzer angezeigt werden?";
 $pgv_lang["hide_block_warn"]			= "Wenn Sie einen leeren Block verbergen, können Sie seine Konfiguration erst dann wieder ändern, wenn er wieder sichtbar wird, weil er nicht mehr leer ist!";
 $pgv_lang["delete_selected_messages"]	= "Gewählte Nachrichten löschen";
 $pgv_lang["use_blocks_for_default"]		= "Diese Blöcke als Voreinstellung für alle Benutzer verwenden?";
