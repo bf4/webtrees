@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,26 +130,46 @@ $pgv_lang["pl_remove_location"]	= "¿Borrar esta ubicación?";
 $pgv_lang["pl_delete_error"]	= "Ubicación no borrada.  Esta ubicación tiene otras ubicaciones subordinadas";
 $pgv_lang["list_inactive"]		= "Haga clic aquí para mostrar los lugares inactivos";
 
-//Placecheck specific text
-$pgv_lang["placecheck"]			= "Comprobación de lugares";
-$pgv_lang["placecheck_text"]	= "Esto listará todos los sitios del archivo GEDCOM seleccionado. Por omisión NO SE INCLUIRÁN lugares que que corresponden completamente entre el archivo GEDCOM y las tablas GoogleMap";
-$pgv_lang["placecheck_top"]		= "Nivel más alto de la Jerarquía de Lugares";
-$pgv_lang["placecheck_one"]		= "Lugar de Nivel Uno";
-$pgv_lang["placecheck_select1"]	= "Seleccione el nivel más alto...";
-$pgv_lang["placecheck_select2"]	= "Seleccione siguiente nivel...";
-$pgv_lang["placecheck_key"]		= "Explicación de los colores usados a continuación";
-$pgv_lang["placecheck_key1"]	= "este lugar y sus coordenadas no existe en las tablas de GoogleMap";
-$pgv_lang["placecheck_key2"]	= "este sitio existe en las tablas de GoogleMap, pero no tiene coordenadas";
-$pgv_lang["placecheck_key3"]	= "este lugar está en blanco en su archivo GEDCOM. Debería agregarse a los sitios<br/>GoogleMap como \"desconocido\" con las coordenadas de su nivel superior<br/>antes de agregar ningún otro lugar al siguiente nivel";
-$pgv_lang["placecheck_key4"]	= "el nivel de este lugar está en blanco en su archivo GEDCOM, pero existe como 'desconocido'<br/>en la tabla de lugares GoogleMap con coordenadas. No se requiere ninguna acción<br/>hasta que el nivel que falta se pueda introducir";
-$pgv_lang["placecheck_head"]	= "Lista de lugares del archivo GEDCOM";
-$pgv_lang["placecheck_gedheader"] = "Datos de lugares en archivo GEDCOM<br/>(etiqueta 2 PLAC)";
-$pgv_lang["placecheck_gm_header"] = "Datos de la tabla de lugares GoogleMap";
-$pgv_lang["placecheck_unique"]	= "Total de lugares distintos";
-$pgv_lang["placecheck_zoom"]	= "Zoom=";
-$pgv_lang["placecheck_options"]	= "Listar opciones para la comprobación de lugares";
+// Placecheck specific text
+$pgv_lang["placecheck"]				= "Comprobación de lugares";
+$pgv_lang["placecheck_text"]		= "Esto listará todos los sitios del archivo GEDCOM seleccionado. Por omisión NO SE INCLUIRÁN lugares que que corresponden completamente entre el archivo GEDCOM y las tablas GoogleMap";
+$pgv_lang["placecheck_top"]			= "Nivel más alto de la Jerarquía de Lugares";
+$pgv_lang["placecheck_one"]			= "Lugar de Nivel Uno";
+$pgv_lang["placecheck_select1"]		= "Seleccione el nivel más alto...";
+$pgv_lang["placecheck_select2"]		= "Seleccione siguiente nivel...";
+$pgv_lang["placecheck_key"]			= "Explicación de los colores usados a continuación";
+$pgv_lang["placecheck_key1"]		= "este lugar y sus coordenadas no existe en las tablas de GoogleMap";
+$pgv_lang["placecheck_key2"]		= "este sitio existe en las tablas de GoogleMap, pero no tiene coordenadas";
+$pgv_lang["placecheck_key3"]		= "este lugar está en blanco en su archivo GEDCOM. Debería agregarse a los sitios<br/>GoogleMap como \"desconocido\" con las coordenadas de su nivel superior<br/>antes de agregar ningún otro lugar al siguiente nivel";
+$pgv_lang["placecheck_key4"]		= "el nivel de este lugar está en blanco en su archivo GEDCOM, pero existe como 'desconocido'<br/>en la tabla de lugares GoogleMap con coordenadas. No se requiere ninguna acción<br/>hasta que el nivel que falta se pueda introducir";
+$pgv_lang["placecheck_head"]		= "Lista de lugares del archivo GEDCOM";
+$pgv_lang["placecheck_gedheader"]	= "Datos de lugares en archivo GEDCOM<br/>(etiqueta 2 PLAC)";
+$pgv_lang["placecheck_gm_header"]	= "Datos de la tabla de lugares GoogleMap";
+$pgv_lang["placecheck_unique"]		= "Total de lugares distintos";
+$pgv_lang["placecheck_zoom"]		= "Zoom=";
+$pgv_lang["placecheck_options"]		= "Listar opciones para la comprobación de lugares";
 $pgv_lang["placecheck_filter_text"] = "Opciones de filtrado de listas";
-$pgv_lang["placecheck_match"] 	= "Incluir sitios que coincidan completamente -";
-$pgv_lang["placecheck_lati"] 	= "Latitud";
-$pgv_lang["placecheck_long"] 	= "Longitud";
+$pgv_lang["placecheck_match"] 		= "Incluir sitios que coincidan completamente -";
+$pgv_lang["placecheck_lati"] 		= "Latitud";
+$pgv_lang["placecheck_long"] 		= "Longitud";
+
+// Pedigree map
+$pgv_lang["pedigree_map"]				= "Mapa de ascendientes";
+$pgv_lang["pm_grandparent"] 			= "Abuelo o abuela";
+$pgv_lang["pm_grandmother"] 			= "Abuela";
+$pgv_lang["pm_grandparent"] 			= "Abuelo o abuela";
+$pgv_lang["pm_gt"] 						= "Bis";
+$pgv_lang["pm_zoom_in"]					= "Acercar";
+$pgv_lang["pm_zoom_out"]				= "Alejar";
+$pgv_lang["zoom_in_here"]				= "Acercar&nbsp;aquí";
+$pgv_lang["zoom_out_here"]				= "Alejar&nbsp;aquí";
+$pgv_lang["centre_map"]					= "Centrar&nbsp;el&nbsp;mapa&nbsp;aquí";
+$pgv_lang["pm_individuals_displayed"]	= "personas mostradas del total normal de";
+$pgv_lang["pm_missing_birth"]			= "faltan las coordenadas del lugar de nacimiento";
+$pgv_lang["pm_is"]						= "es";
+$pgv_lang["pm_are"]						= "son";
+$pgv_lang["pm_from"]					= "desde";
+$pgv_lang["pm_for"]						= "durante";
+$pgv_lang["pm_gens"]					= "generaciones";
+$pgv_lang["pm_root"]					= "Raíz";
 ?>
