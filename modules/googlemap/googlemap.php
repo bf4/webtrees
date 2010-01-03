@@ -3,7 +3,7 @@
  * Google map module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -303,7 +303,7 @@ function get_lati_long_placelocation ($place) {
 
 function setup_map() {
 	global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $pgv_lang;
-	if ($GOOGLEMAP_ENABLED == "false") {
+	if (!$GOOGLEMAP_ENABLED) {
 		return;
 	}
 	?>
@@ -474,7 +474,7 @@ function build_indiv_map($indifacts, $famids) {
 	global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 	global $GOOGLEMAP_ENABLED, $TBLPREFIX, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 
-	if ($GOOGLEMAP_ENABLED == "false") {
+	if (!$GOOGLEMAP_ENABLED) {
 		echo "<table class=\"facts_table\">\n";
 		echo "<tr><td colspan=\"2\" class=\"facts_value\">", $pgv_lang["gm_disabled"], "<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
 		echo "<script type=\"text/javascript\">\n";

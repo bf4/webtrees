@@ -3,7 +3,7 @@
  * Polish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,4 +151,19 @@ $pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Użyj rolki myszki do przybliżania/oddalan
 $pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Możesz określić czy rolka myszki będzie używana do przybliżania lub oddalania mapy.";
 $pgv_lang["GOOGLEMAP_PH_CONTROLS"]		= "Ukryj kontrolki mapy";
 $pgv_lang["GOOGLEMAP_PH_CONTROLS_help"]	= "~#pgv_lang[GOOGLEMAP_PH_CONTROLS]#~<br /><br />Możesz określić czy kontrolki mapy (np. wybór typu mapy) będą ukryte dopóki nie najedziesz myszką na mapę.";
+
+// Pedigree map
+$pgv_lang["PEDIGREE_MAP_help1"]		= "Używanie mapy";
+$pgv_lang["PEDIGREE_MAP_help2"]		= "~#pgv_lang[root_person]#~<br /><br />Wybierz osobę, która ma być <strong>główną osobą</strong> wprowadzając jej identyfikator lub używając ikony <strong>Znajdź ID</strong>.";
+$pgv_lang["PEDIGREE_MAP_help3"]		= "~#pgv_lang[generations]#~<br /><br />Wybierz liczbę pokoleń, jaką chcesz zobaczyć. Sensownym maksimum jest 8, które wyświetla 255 osób.";
+$pgv_lang["PEDIGREE_MAP_help4"]		= "Kliknij na imię po prawej stronie mapy lub na ikonę na mapie aby wyświetlić okno z informacjami dotyczącymi miejsca.";
+$pgv_lang["PEDIGREE_MAP_help5"]		= "Kliknij na szczegóły w wyświetlonym oknie z informacjami aby pokazać mapę z daną osobą jako główną.";
+
+$pgv_lang["PEDIGREE_MAP_clustersize"]		= "Wielkość klastra";
+$pgv_lang["PEDIGREE_MAP_clustersize_help"]	= "~#pgv_lang[PEDIGREE_MAP_clustersize]#~<br /><br />Liczba znaczników, które będą umieszczone w jednym punkcie, kolejne zostaną przesunięte na północny-wschód za pokoleniem młodszym. Przesunięcie jest zauważalne tylko przy dużych powiększeniach.";
+$pgv_lang["PEDIGREE_MAP_hidelines"]			= "Ukryj linie";
+$pgv_lang["PEDIGREE_MAP_hidelines_help"]	= "~#pgv_lang[PEDIGREE_MAP_hidelines]#~<br /><br />Ukrywa linie łączące dziecko z jego rodzicami jeśli są pokazani na mapie.";
+$pgv_lang["PEDIGREE_MAP_hideflags"]			= "Ukryj flagi";
+$pgv_lang["PEDIGREE_MAP_hideflags_help"]	= "~#pgv_lang[PEDIGREE_MAP_hideflags]#~<br /><br />Ukrywa flagi, które są skonfigurowane w module googlemap. Naogół używane są do oznaczenia państw i województw. Flagi pokazują obszar administracyjny znaczników zgrupowanych wokół nich.";
+$pgv_lang["PEDIGREE_MAP_help"]				= "~#pgv_lang[PEDIGREE_MAP_help1]#~<br /><br />#pgv_lang[PEDIGREE_MAP_help4]#<br />#pgv_lang[PEDIGREE_MAP_help5]#<br /><br />#pgv_lang[PEDIGREE_MAP_help2]#<br /><br />#pgv_lang[PEDIGREE_MAP_help3]#<br /><br />#pgv_lang[PEDIGREE_MAP_clustersize_help]#<br /><br />#pgv_lang[PEDIGREE_MAP_hidelines_help]#<br /><br />#pgv_lang[PEDIGREE_MAP_hideflags_help]#<br /><br />";
 ?>
