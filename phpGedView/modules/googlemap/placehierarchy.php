@@ -3,7 +3,7 @@
  * Displays a place hierachy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -240,8 +240,8 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 	global $GOOGLEMAP_COORD, $GOOGLEMAP_PH_MARKER, $GM_DISP_SHORT_PLACE, $GM_DISP_COUNT, $pgv_lang;
 	if (($place2['lati'] == NULL) || ($place2['long'] == NULL) || (($place2['lati'] == "0") && ($place2['long'] == "0"))) {
 		echo "var icon_type = new GIcon();\n";
-			echo "	icon_type.image = \"modules/googlemap/marker_yellow.png\";\n";
-			echo "	icon_type.shadow = \"modules/googlemap/shadow50.png\";\n";
+			echo "	icon_type.image = \"modules/googlemap/images/marker_yellow.png\";\n";
+			echo "	icon_type.shadow = \"modules/googlemap/images/shadow50.png\";\n";
 			echo "	icon_type.iconSize = new GSize(20, 34);\n";
 			echo "	icon_type.shadowSize = new GSize(37, 34);\n";
 			echo "	icon_type.iconAnchor = new GPoint(6, 20);\n";
@@ -260,13 +260,13 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		if ($lastlevel) {
 			$placename = substr($placelevels, 2);
 			if ($place2['place'] == "Unknown") {
-				if ($GM_DISP_SHORT_PLACE == "false") {
+				if (!$GM_DISP_SHORT_PLACE) {
 					echo addslashes(substr($placelevels, 2));
 				} else {
 					echo $pgv_lang["pl_unknown"];
 				}
 			} else {
-				if ($GM_DISP_SHORT_PLACE == "false") {
+				if (!$GM_DISP_SHORT_PLACE) {
 					echo addslashes(substr($placelevels, 2));
 				} else {
 					echo PrintReady(addslashes($place2['place']));
@@ -275,13 +275,13 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		} else {
 			$placename = $place2['place'].$placelevels;
 			if ($place2['place'] == "Unknown") {
-				if ($GM_DISP_SHORT_PLACE == "false") {
+				if (!$GM_DISP_SHORT_PLACE) {
 					echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
 				} else {
 					echo $pgv_lang["pl_unknown"];
 				}
 			} else {
-				if ($GM_DISP_SHORT_PLACE == "false") {
+				if (!$GM_DISP_SHORT_PLACE) {
 					echo PrintReady(addslashes($place2['place'].$placelevels));
 				} else {
 					echo PrintReady(addslashes($place2['place']));
@@ -289,7 +289,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			}
 		}
 		echo "</a>";
-		if ($GM_DISP_COUNT != "false") {
+		if ($GM_DISP_COUNT) {
 			if ($lastlevel) {
 				print_how_many_people($level, $parent);
 			} else {
@@ -321,7 +321,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		} else {
 			echo "var icon_type = new GIcon();\n";
 			echo "	icon_type.image = \"", $place2['icon'], "\";\n";
-			echo "	icon_type.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+			echo "	icon_type.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
 			echo "	icon_type.iconSize = new GSize(25, 15);\n";
 			echo "	icon_type.shadowSize = new GSize(35, 45);\n";
 			echo "	icon_type.iconAnchor = new GPoint(1, 45);\n";
@@ -344,13 +344,13 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		if ($lastlevel) {
 			$placename = substr($placelevels, 2);
 			if ($place2['place'] == "Unknown") {
-				if ($GM_DISP_SHORT_PLACE == "false") {
+				if (!$GM_DISP_SHORT_PLACE) {
 					echo addslashes(substr($placelevels, 2));
 				} else {
 					echo $pgv_lang["pl_unknown"];
 				}
 			} else {
-				if ($GM_DISP_SHORT_PLACE == "false") {
+				if (!$GM_DISP_SHORT_PLACE) {
 					echo addslashes(substr($placelevels, 2));
 				} else {
 					echo PrintReady(addslashes($place2['place']));
@@ -359,13 +359,13 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		} else {
 			$placename = $place2['place'].$placelevels;
 			if ($place2['place'] == "Unknown"){
-				if ($GM_DISP_SHORT_PLACE == "false") {
+				if (!$GM_DISP_SHORT_PLACE) {
 					echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
 				} else {
 					echo $pgv_lang["pl_unknown"];
 				}
 			} else {
-				if ($GM_DISP_SHORT_PLACE == "false") {
+				if (!$GM_DISP_SHORT_PLACE) {
 					echo PrintReady(addslashes($place2['place'].$placelevels));
 				} else {
 					echo PrintReady(addslashes($place2['place']));
@@ -373,7 +373,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			}
 		}
 		echo "</a>";
-		if ($GM_DISP_COUNT != "false") {
+		if ($GM_DISP_COUNT) {
 			if ($lastlevel) {
 				print_how_many_people($level, $parent);
 			} else {
@@ -383,7 +383,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		}
 		$temp=PrintReady(addslashes($place2['place']));
 		$temp=str_replace(array('&lrm;', '&rlm;'), array(PGV_UTF8_LRM, PGV_UTF8_RLM), $temp);
-		if ($GOOGLEMAP_COORD == "false"){
+		if (!$GOOGLEMAP_COORD){
 			echo "<br /><br /></div></td>\", icon_type, \"", $temp, "\");\n";
 		} else { 
 			echo "<br /><br />", $place2['lati'], ", ", $place2['long'], "</div></td>\", icon_type, \"", $temp, "\");\n";	
@@ -584,7 +584,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		}
 		else
 			echo "place_map.setCenter(new GLatLng(0, 0), 1);\n";
-		if ($GOOGLEMAP_PH_WHEEL != "false") echo "place_map.enableScrollWheelZoom();\n";
+		if ($GOOGLEMAP_PH_WHEEL) echo "place_map.enableScrollWheelZoom();\n";
 		echo "	place_map.setMapType($GOOGLEMAP_MAP_TYPE);\n";
 		?>
 		//create markers
@@ -601,8 +601,8 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 						}
 						else {
 							echo "var icon_type = new GIcon();\n";
-							echo "icon_type.image = \"modules/googlemap/marker_yellow.png\"\n";
-							echo "icon_type.shadow = \"modules/googlemap/shadow50.png\";\n";
+							echo "icon_type.image = \"modules/googlemap/images/marker_yellow.png\"\n";
+							echo "icon_type.shadow = \"modules/googlemap/images/shadow50.png\";\n";
 							echo "icon_type.iconSize = new GSize(20, 34);\n";
 							echo "icon_type.shadowSize = new GSize(37, 34);\n";
 							echo "icon_type.iconAnchor = new GPoint(6, 20);\n";
@@ -663,7 +663,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	}
 	else {
 		echo "var icon_type = new GIcon();\n";
-		echo "icon_type.image = \"modules/googlemap/marker_yellow.png\"";
+		echo "icon_type.image = \"modules/googlemap/images/marker_yellow.png\"";
 		echo "var point = new GLatLng(0, 0);\n";
 		echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'>";
 		echo "<br />", $pgv_lang["gm_no_coord"];
@@ -676,7 +676,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	?>
 	//end markers
 	place_map.setCenter(bounds.getCenter());
-	<?php if ($GOOGLEMAP_PH_CONTROLS != "false") {?>
+	<?php if ($GOOGLEMAP_PH_CONTROLS) {?>
 		// hide controls
 		GEvent.addListener(place_map, 'mouseout', function() {place_map.hideControls();});
 		// show controls

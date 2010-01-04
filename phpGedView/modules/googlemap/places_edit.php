@@ -3,7 +3,7 @@
  * Interface to edit place locations
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -345,7 +345,7 @@ if ($action=="add") {
 			else {
 				var flagicon = new GIcon();
 				flagicon.image = document.editplaces.icon.value;
-				flagicon.shadow = "modules/googlemap/flag_shadow.png";
+				flagicon.shadow = "modules/googlemap/images/flag_shadow.png";
 				flagicon.iconSize = new GSize(25, 15);
 				flagicon.shadowSize = new GSize(35, 45);
 				flagicon.iconAnchor = new GPoint(1, 45);
@@ -490,7 +490,7 @@ if ($action=="add") {
 					else {
 						var flagicon = new GIcon();
 						flagicon.image = document.editplaces.icon.value;
-						flagicon.shadow = "modules/googlemap/flag_shadow.png";
+						flagicon.shadow = "modules/googlemap/images/flag_shadow.png";
 						flagicon.iconSize = new GSize(25, 15);
 						flagicon.shadowSize = new GSize(35, 45);
 						flagicon.iconAnchor = new GPoint(1, 45);
@@ -566,8 +566,8 @@ if ($action=="add") {
 			if (($place_icon == NULL) || ($place_icon == "")) {
 				if (($place_lati == null) || ($place_long == null)) {?>
 					var icon_type = new GIcon();
-					icon_type.image = "modules/googlemap/marker_yellow.png";
-					icon_type.shadow = "modules/googlemap/shadow50.png";
+					icon_type.image = "modules/googlemap/images/marker_yellow.png";
+					icon_type.shadow = "modules/googlemap/images/shadow50.png";
 					icon_type.iconSize = new GSize(20, 34);
 					icon_type.shadowSize = new GSize(37, 34);
 					icon_type.iconAnchor = new GPoint(10, 34);
@@ -580,16 +580,16 @@ if ($action=="add") {
 			else { ?>
 			var flagicon = new GIcon();
 			flagicon.image = "<?php echo $place_icon;?>";
-			flagicon.shadow = "modules/googlemap/flag_shadow.png";
+			flagicon.shadow = "modules/googlemap/images/flag_shadow.png";
 			flagicon.iconSize = new GSize(25, 15);
 			flagicon.shadowSize = new GSize(35, 45);
 			flagicon.iconAnchor = new GPoint(1, 45);
 			flagicon.infoWindowAnchor = new GPoint(5, 1);
-<?php	 	    if (($place_lati == null) || ($place_long == null)) {?>
+<?php			if (($place_lati == null) || ($place_long == null)) {?>
 			map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati, ", ", $parent_long;?>), flagicon));
-<?php	 	    } else { ?>
+<?php			} else { ?>
 			map.addOverlay(new GMarker(new GLatLng(<?php echo $place_lati, ", ", $place_long;?>), flagicon));
-<?php	 	    }
+<?php			}
 			}
 		} ?>
 			// Our info window content
@@ -630,8 +630,8 @@ if ($action=="add") {
 
 	function createMarker(point, name, coordinates) {
 		var icon = new GIcon();
-		icon.image = "modules/googlemap/marker_yellow.png";
-		icon.shadow = "modules/googlemap/shadow50.png";
+		icon.image = "modules/googlemap/images/marker_yellow.png";
+		icon.shadow = "modules/googlemap/images/shadow50.png";
 		icon.iconSize = new GSize(20, 34);
 		icon.shadowSize = new GSize(37, 34);
 		icon.iconAnchor = new GPoint(10, 34);
