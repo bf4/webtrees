@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010 PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -205,16 +205,40 @@ $factarray["FAMS:SLGS:TEMP"] = "LDS Spouse Sealing Temple";
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Birth Place";
 $factarray["BIRT:DATE"] = "Birth Date";
+$factarray["BIRT:SOUR"] = "Birth Source";
 $factarray["DEAT:PLAC"] = "Death Place";
 $factarray["DEAT:DATE"] = "Death Date";
+$factarray["DEAT:SOUR"] = "Death Source";
 $factarray["CHR:PLAC"] = "Christening Place";
 $factarray["CHR:DATE"] = "Christening Date";
+$factarray["CHR:SOUR"] = "Christening Source";
+$factarray["CONF:PLAC"] = "Confirmation Place";
+$factarray["CONF:DATE"] = "Confirmation Date";
+$factarray["CONF:SOUR"] = "Confirmation Source";
 $factarray["BAPM:PLAC"] = "Baptism Place";
 $factarray["BAPM:DATE"] = "Baptism Date";
+$factarray["BAPM:SOUR"] = "Baptism Source";
+$factarray["BARM:PLAC"] = "Bar Mitzvah Place";
+$factarray["BARM:DATE"] = "Bar Mitzvah Date";
+$factarray["BARM:SOUR"] = "Bar Mitzvah Source";
+$factarray["BASM:PLAC"] = "Bas Mitzvah Place";
+$factarray["BASM:DATE"] = "Bas Mitzvah Date";
+$factarray["BASM:SOUR"] = "Bas Mitzvah Source";
 $factarray["BURI:PLAC"] = "Burial Place";
 $factarray["BURI:DATE"] = "Burial Date";
+$factarray["BURI:SOUR"] = "Burial Source";
+$factarray["FCOM:PLAC"] = "First Communion Place";
+$factarray["FCOM:DATE"] = "First Communion Date";
+$factarray["FCOM:SOUR"] = "First Communion Source";
+$factarray["MARB:PLAC"] = "Marriage Banns Place";
+$factarray["MARB:DATE"] = "Marriage Banns Date";
+$factarray["MARB:SOUR"] = "Marriage Banns Source";
 $factarray["MARR:PLAC"] = "Marriage Place";
 $factarray["MARR:DATE"] = "Marriage Date";
+$factarray["MARR:SOUR"] = "Marriage Source";
+$factarray["ENGA:PLAC"] = "Engagement Place";
+$factarray["ENGA:DATE"] = "Engagement Date";
+$factarray["ENGA:SOUR"] = "Engagement Source";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Medical";
