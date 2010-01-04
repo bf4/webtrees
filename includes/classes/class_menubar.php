@@ -258,7 +258,10 @@ class MenuBar
 		if (file_exists(PGV_ROOT.'relationship.php')) $menuList["relationship"] = $pgv_lang["relationship_chart"];
 		if (file_exists(PGV_ROOT.'statistics.php')) $menuList["statistics"] = $pgv_lang["statistics"];
 		if (file_exists(PGV_ROOT.'treenav.php')) $menuList["treenav"] = $pgv_lang["interactive_tree"];
-		if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) $menuList["pedigree_map"] = "Pedigree Map";//added for pedigree_map
+		if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php') && file_exists(PGV_ROOT.'modules/googlemap/googlemap.php')) {
+			require_once PGV_ROOT.'modules/googlemap/googlemap.php';
+			$menuList["pedigree_map"] = $pgv_lang["pedigree_map"];//added for pedigree_map
+		}
 		asort($menuList);
 
 		// Produce the submenus in localized name order
@@ -423,7 +426,7 @@ class MenuBar
 			case "pedigree_map":
 				//-- pedigree map
 				$link = 'module.php?mod=googlemap&pgvaction=pedigree_map';
-				if ($rootid) $link .= "?rootid=".$rootid;
+				if ($rootid) $link .= "&rootid=".$rootid;
 				$submenu = new Menu($pgv_lang["pedigree_map"], encode_url($link));
 				$submenu->addIcon('modules/googlemap/images/pedigree_map.gif');
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
