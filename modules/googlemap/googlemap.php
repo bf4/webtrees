@@ -710,7 +710,7 @@ function build_indiv_map($indifacts, $famids) {
 
 		echo "var icon = new GIcon();";
 		echo "icon.image = \"http://maps.google.com/intl/pl_ALL/mapfiles/marker.png\";";
-		echo "icon.shadow = \"modules/googlemap/shadow50.png\";";
+		echo "icon.shadow = \"modules/googlemap/images/shadow50.png\";";
 		echo "icon.iconAnchor = new GPoint(10, 34);";
 		echo "icon.infoWindowAnchor = new GPoint(5, 1);";
 
@@ -729,8 +729,8 @@ function build_indiv_map($indifacts, $famids) {
 					$markers[$j]["placed"] = "yes";
 					if (($markers[$j]["lati"] == NULL) || ($markers[$j]["lng"] == NULL) || (($markers[$j]["lati"] == "0") && ($markers[$j]["lng"] == "0"))) { 
 						echo "var Marker{$j}_flag = new GIcon();\n";
-						echo "	Marker{$j}_flag.image = \"modules/googlemap/marker_yellow.png\";\n";
-						echo "	Marker{$j}_flag.shadow = \"modules/googlemap/shadow50.png\";\n";
+						echo "	Marker{$j}_flag.image = \"modules/googlemap/images/marker_yellow.png\";\n";
+						echo "	Marker{$j}_flag.shadow = \"modules/googlemap/images/shadow50.png\";\n";
 						echo "	Marker{$j}_flag.iconSize = new GSize(20, 34);\n";
 						echo "	Marker{$j}_flag.shadowSize = new GSize(37, 34);\n";
 						echo "	Marker{$j}_flag.iconAnchor = new GPoint(10, 34);\n";
@@ -741,7 +741,7 @@ function build_indiv_map($indifacts, $famids) {
 					} else {
 						echo "var Marker{$j}_flag = new GIcon();\n";
 						echo "    Marker{$j}_flag.image = \"", $markers[$j]["icon"], "\";\n";
-						echo "    Marker{$j}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+						echo "    Marker{$j}_flag.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
 						echo "    Marker{$j}_flag.iconSize = new GSize(25, 15);\n";
 						echo "    Marker{$j}_flag.shadowSize = new GSize(35, 45);\n";
 						echo "    Marker{$j}_flag.iconAnchor = new GPoint(1, 45);\n";
@@ -775,7 +775,7 @@ function build_indiv_map($indifacts, $famids) {
 							echo '<br /><a href=\"module.php?mod=googlemap&pgvaction=places&display=inactive\">', $pgv_lang["pl_edit"], '</a>';
 						echo "\");\n";
 					}
-					else if ($GOOGLEMAP_COORD == "false"){
+					else if (!$GOOGLEMAP_COORD){
 						echo "\");\n";
 					} else {
 						echo "<br /><br />";
@@ -799,7 +799,7 @@ function build_indiv_map($indifacts, $famids) {
 					} else {
 						echo "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
 						echo "    Marker{$j}_{$markersindex}_flag.image = \"", $markers[$j]["icon"], "\";\n";
-						echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+						echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
 						echo "    Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
 						echo "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
 						echo "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
@@ -829,7 +829,7 @@ function build_indiv_map($indifacts, $famids) {
 						$date=new GedcomDate($markers[$j]["date"]);
 						echo "<br />", addslashes($date->Display(true));
 					}
-					if ($GOOGLEMAP_COORD == "false"){
+					if (!$GOOGLEMAP_COORD){
 						echo "\")";
 					} else {
 						echo "<br /><br />";
@@ -863,7 +863,7 @@ function build_indiv_map($indifacts, $famids) {
 								} else {
 									echo "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
 									echo "    Marker{$j}_{$markersindex}_flag.image = \"", $markers[$j]["icon"], "\";\n";
-									echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+									echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
 									echo "    Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
 									echo "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
 									echo "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
@@ -896,7 +896,7 @@ function build_indiv_map($indifacts, $famids) {
 								$date=new GedcomDate($markers[$k]["date"]);
 								echo "<br />", addslashes($date->Display(true));
 							}
-							if ($GOOGLEMAP_COORD == "false"){
+							if (!$GOOGLEMAP_COORD){
 								echo "\")";
 							} else {
 								echo "<br /><br />";

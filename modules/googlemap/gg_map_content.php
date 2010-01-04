@@ -3,7 +3,7 @@
  * Google map module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 
 		require_once PGV_ROOT.'modules/googlemap/googlemap.php';
 
-		if ($GOOGLEMAP_ENABLED == "false") {
+		if (!$GOOGLEMAP_ENABLED) {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
 			if (PGV_USER_IS_ADMIN) {

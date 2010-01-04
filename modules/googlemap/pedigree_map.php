@@ -36,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require PGV_ROOT."modules/googlemap/googlemap.php";
+require PGV_ROOT.'modules/googlemap/googlemap.php';
 require PGV_ROOT.'includes/controllers/pedigree_ctrl.php';
 
 loadLangFile("googlemap:lang, googlemap:help_text");
@@ -183,7 +183,7 @@ if (!$controller->isPrintPreview()) {
 			<tr>
 				<td class="optionbox">
 					<input class="pedigree_form" type="text" id="rootid" name="rootid" size="3" value="<?php echo $controller->rootid; ?>" />
-        			<?php print_findindi_link("rootid","");?>
+					<?php print_findindi_link("rootid","");?>
 				</td>
 				<td class="optionbox">
 					<select name="PEDIGREE_GENERATIONS">
@@ -209,18 +209,18 @@ if (!$controller->isPrintPreview()) {
 				</td>
 				<td class="optionbox">
 					<?php
-                	echo "<input name=\"hideflags\" type=\"checkbox\"";
+					echo "<input name=\"hideflags\" type=\"checkbox\"";
 					if ($hideflags) {echo " checked=\"checked\"";}
-                	echo " />";
+						echo " />";
 					?>
-                </td>
+				</td>
 				<td class="optionbox">
 					<?php
-                	echo "<input name=\"hidelines\" type=\"checkbox\""; 
+					echo "<input name=\"hidelines\" type=\"checkbox\""; 
 					if ($hidelines) {echo " checked=\"checked\"";}
-                	echo " />";
+					echo " />";
 					?>
-                </td>
+				</td>
 			</tr>
 			<tr>
 				<td class="topbottombar" colspan="5">
@@ -590,15 +590,15 @@ GEvent.addDomListener(pm_map.getContainer(), "DOMMouseScroll", wheelevent);
 pm_map.getContainer().onmousewheel = wheelevent;
 
 <?php
-// add the points      
+// add the points
 $curgen=1;
 $priv=0;
 $count=0;
 $event = "<img src='modules/googlemap/images/sq1.png' width='10' height='10'>" .
 	 "<strong>&nbsp;".$pgv_lang["pm_root"].":&nbsp;</strong>";
 $colored_line = array("1"=>"#FF0000","2"=>"#0000FF","3"=>"#00FF00",
-		      "4"=>"#FFFF00","5"=>"#00FFFF","6"=>"#FF00FF",
-		      "7"=>"#C0C0FF","8"=>"#808000");
+				"4"=>"#FFFF00","5"=>"#00FFFF","6"=>"#FF00FF",
+				"7"=>"#C0C0FF","8"=>"#808000");
 
 for ($i=0; $i<($controller->treesize); $i++) {
 	// moved up to grab the sex of the individuals
@@ -686,14 +686,14 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		// add thumbnail image
 		$image = "";
 		if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
-		  	$object = find_highlighted_object($pid, PGV_GED_ID, $indirec);
-		  	if (!empty($object["thumb"])) {
+			$object = find_highlighted_object($pid, PGV_GED_ID, $indirec);
+			if (!empty($object["thumb"])) {
 				$size = findImageSize($object["thumb"]);
 				$class = "pedigree_image_portrait";
 				if ($size[0]>$size[1]) $class = "pedigree_image_landscape";
 				if ($TEXT_DIRECTION=="rtl") $class .= "_rtl";
 				$image = "<img src='{$object["thumb"]}' vspace='0' hspace='0' class='{$class}' alt ='' title='' >";
-			}  else {
+			} else {
 			$class = "pedigree_image_portrait";
 			if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 			$sex = $person->getSex();
@@ -722,14 +722,14 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				if ((!$hideflags) && ($latlongval[$i]["icon"] != NULL)) {
 					$flags[$i] = $latlongval[$i]["icon"];
 					$ffile = strrchr($latlongval[$i]["icon"], '/');
-       	        			$ffile = substr($ffile,1, strpos($ffile, '.')-1);
-       	        			if (empty($flags[$ffile])) {
+					$ffile = substr($ffile,1, strpos($ffile, '.')-1);
+					if (empty($flags[$ffile])) {
 						$flags[$ffile] = $i; // Only generate the flag once
 						if (($lat[$i] != NULL) && ($lon[$i] != NULL)) {
 							echo "var point = new GLatLng(" . $lat[$i] . "," . $lon[$i]. ");\n";
 							echo "var Marker1_0_flag = new GIcon();\n";
-						    	echo "Marker1_0_flag.image = \"". $flags[$i]. "\";\n";
-							echo "Marker1_0_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+							echo "Marker1_0_flag.image = \"". $flags[$i]. "\";\n";
+							echo "Marker1_0_flag.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
 							echo "Marker1_0_flag.iconSize = new GSize(25, 15);\n";
 							echo "Marker1_0_flag.shadowSize = new GSize(35, 45);\n";
 							echo "Marker1_0_flag.iconAnchor = new GPoint(1, 45);\n";
@@ -876,7 +876,7 @@ document.getElementById("side_bar").innerHTML = side_bar_html;
       GEvent.addListener(pm_map, "click", function() {
         contextmenu.style.visibility="hidden";
       });
-	<?php if ($GOOGLEMAP_PH_CONTROLS != "false") {?>
+	<?php if ($GOOGLEMAP_PH_CONTROLS) {?>
 		// hide controls
 		GEvent.addListener(pm_map, 'mouseout', function() {pm_map.hideControls();});
 		// show controls
