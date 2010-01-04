@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@ $factarray["FAM"]	= "Rodzina";
 $factarray["FAMC"]	= "W rodzinie jako dziecko";
 $factarray["FAMF"]	= "Plik rodziny";
 $factarray["FAMS"]	= "Małżeństwo";
-$factarray["FCOM"]	= "Pierwsza Komunia";
+$factarray["FCOM"]	= "Pierwsza Komunia św.";
 $factarray["FILE"]	= "Plik zewnętrzny";
 $factarray["FORM"]	= "Format";
 $factarray["GIVN"]	= "Imiona";
@@ -207,16 +207,40 @@ $factarray["FAMS:SLGS:TEMP"]	= "Świątynia Mormońskiego Naznaczenia Małżonka
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Miejsce urodzenia";
 $factarray["BIRT:DATE"] = "Data urodzenia";
+$factarray["BIRT:SOUR"] = "Źródło urodzin";
 $factarray["DEAT:PLAC"] = "Miejsce śmierci";
 $factarray["DEAT:DATE"] = "Data śmierci";
+$factarray["DEAT:SOUR"] = "Źródło śmierci";
 $factarray["CHR:PLAC"]  = "Miejsce chrztu";
 $factarray["CHR:DATE"]  = "Data chrztu";
-$factarray["BAPM:PLAC"] = "Miejsce chrztu";
-$factarray["BAPM:DATE"] = "Data chrztu";
+$factarray["CHR:SOUR"]	= "Źródło chrztu";
+$factarray["CONF:PLAC"] = "Miejsce bierzmowania";
+$factarray["CONF:DATE"] = "Data bierzmowania";
+$factarray["CONF:SOUR"] = "Źródło bierzmowania";
+$factarray["BAPM:PLAC"] = "Miejsce chrztu baptystycznego";
+$factarray["BAPM:DATE"] = "Data chrztu baptystycznego";
+$factarray["BAPM:SOUR"] = "Źródło chrztu baptystycznego";
+$factarray["BARM:PLAC"] = "Miejsce bar micwy";
+$factarray["BARM:DATE"] = "Data bar micwy";
+$factarray["BARM:SOUR"] = "Źródło bar micwy";
+$factarray["BASM:PLAC"] = "Miejsce bas micwy";
+$factarray["BASM:DATE"] = "Data bas micwy";
+$factarray["BASM:SOUR"] = "Źródło bas micwy";
 $factarray["BURI:PLAC"] = "Miejsce pochówku";
 $factarray["BURI:DATE"] = "Data pochówku";
+$factarray["BURI:SOUR"] = "Źródło pochówku";
+$factarray["FCOM:PLAC"] = "Miejsce pierwszej Komunii św.";
+$factarray["FCOM:DATE"] = "Data pierwszej Komunii św.";
+$factarray["FCOM:SOUR"] = "Źródło pierwszej Komunii św.";
+$factarray["MARB:PLAC"] = "Miejsce zapowiedzi przedmałżeńskich";
+$factarray["MARB:DATE"] = "Data zapowiedzi przedmałżeńskich";
+$factarray["MARB:SOUR"] = "Źródło zapowiedzi przedmałżeńskich";
 $factarray["MARR:PLAC"] = "Miejsce ślubu";
 $factarray["MARR:DATE"] = "Data ślubu";
+$factarray["MARR:SOUR"] = "Źródło ślubu";
+$factarray["ENGA:PLAC"] = "Miejsce zaręczyn";
+$factarray["ENGA:DATE"] = "Data zaręczyn";
+$factarray["ENGA:SOUR"] = "Źródło zaręczyn";
 
 // Fakty specyficzne dla eksportu GedCom z programu Family Tree Maker
 $factarray["_MDCL"] = "Służba medyczna";
