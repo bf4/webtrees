@@ -36,8 +36,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require PGV_ROOT.'modules/googlemap/googlemap.php';
-require PGV_ROOT.'includes/controllers/pedigree_ctrl.php';
+require_once PGV_ROOT.'modules/googlemap/googlemap.php';
+require_once PGV_ROOT.'includes/controllers/pedigree_ctrl.php';
 
 loadLangFile("googlemap:lang, googlemap:help_text");
 
