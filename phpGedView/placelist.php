@@ -3,7 +3,7 @@
  * Displays a place hierachy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,11 +25,16 @@
  */
 
 require './config.php';
+require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+
+$use_googlemap = false;
 
 if (file_exists(PGV_ROOT.'modules/googlemap/placehierarchy.php')) {
 	require PGV_ROOT.'modules/googlemap/placehierarchy.php';
+	if (isset($GOOGLEMAP_ENABLED) && $GOOGLEMAP_ENABLED && isset($GOOGLEMAP_PLACE_HIERARCHY) && $GOOGLEMAP_PLACE_HIERARCHY) {
+		$use_googlemap = true;
+	}
 }
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 function case_in_array($value, $array) {
 	foreach($array as $key=>$val) {
@@ -44,11 +49,6 @@ $level = safe_GET('level');
 
 if (empty($action)) $action = "find";
 if (empty($display)) $display = "hierarchy";
-
-if (!isset($GOOGLEMAP_ENABLED) || $GOOGLEMAP_ENABLED == "false" || (!isset($GOOGLEMAP_PLACE_HIERARCHY) || $GOOGLEMAP_PLACE_HIERARCHY == "false")) {
-	$use_googlemap = false;
-}
-else $use_googlemap = true;
 
 if ($display=="hierarchy") print_header($pgv_lang["place_list"]);
 else print_header($pgv_lang["place_list2"]);
@@ -73,7 +73,7 @@ else {
 	else $parent = array_values($parent);
 }
 // Remove slashes
-foreach ($parent as $p => $child){
+foreach ($parent as $p => $child) {
 	$parent[$p] = stripLRMRLM($child);
 }
 
@@ -164,7 +164,7 @@ if ($display=="hierarchy") {
 	else {
 		// show clickable map if found
 		echo "\n\t<br /><br />\n\t<table class=\"width90\"><tr><td class=\"center\">";
-		if ($level>=1 and $level<=3) {
+		if ($level>=1 && $level<=3) {
 			$country = $parent[0];
 			if ($country == "\xD7\x99\xD7\xA9\xD7\xA8\xD7\x90\xD7\x9C") $country = "ISR"; // Israel hebrew name
 			$country = UTF8_strtoupper($country);

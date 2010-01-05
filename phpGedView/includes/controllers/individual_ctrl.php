@@ -2011,7 +2011,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		// LB Fix in no googlemaps ========================================================
 
-		if ($GOOGLEMAP_ENABLED == "false") {
+		if (!$GOOGLEMAP_ENABLED) {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
 			if (PGV_USER_IS_ADMIN) {
@@ -2186,7 +2186,7 @@ class IndividualControllerRoot extends BaseController {
 			print_privacy_error($CONTACT_EMAIL);
 			print "</td></tr>";
 			print "</table>";
-		}else{
+		}else {
 			//if (PGV_USE_LIGHTBOX) {
 				//require_once PGV_ROOT.'modules/lightbox/album.php';
 			print "<table class=\"facts_table\" cellpadding=\"0\">\n";
@@ -2209,7 +2209,7 @@ class IndividualControllerRoot extends BaseController {
 			?>
 			</td>
 			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
+				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_spare"]; ?></b><br /><br />
 				<?php require_once PGV_ROOT.'includes/family_nav.php'; ?>
 				<br />

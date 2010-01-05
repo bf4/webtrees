@@ -259,7 +259,7 @@ class MenuBar
 		if (file_exists(PGV_ROOT.'statistics.php')) $menuList["statistics"] = $pgv_lang["statistics"];
 		if (file_exists(PGV_ROOT.'treenav.php')) $menuList["treenav"] = $pgv_lang["interactive_tree"];
 		if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php') && file_exists(PGV_ROOT.'modules/googlemap/googlemap.php')) {
-			require_once PGV_ROOT.'modules/googlemap/googlemap.php';
+			loadLangFile('googlemap:lang');
 			$menuList["pedigree_map"] = $pgv_lang["pedigree_map"];//added for pedigree_map
 		}
 		asort($menuList);
@@ -939,6 +939,8 @@ class MenuBar
 		$menuitems = contact_menus();
 		foreach($menuitems as $menuitem) {
 			$submenu = new Menu($menuitem["label"], $menuitem["link"]);
+			if (!empty($PGV_IMAGES["mygedview"]["small"]))
+				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_contact");
 			if (!empty($menuitem["onclick"])) $submenu->addOnclick($menuitem["onclick"]);
 			$menu->addSubmenu($submenu);

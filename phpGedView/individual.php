@@ -5,7 +5,7 @@
 * Display all of the information about an individual
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -279,7 +279,7 @@ function tempObj(tab, oXmlHttp) {
 			if (tabid[tab]=='googlemap') {
 				if (!loadedTabs[tab]) {
 					loadMap();
-					<?php if ($GOOGLEMAP_PH_CONTROLS != "false") {?>
+					<?php if ($GOOGLEMAP_PH_CONTROLS) {?>
 					// hide controls
 					GEvent.addListener(map, 'mouseout', function()
 					{
@@ -580,7 +580,7 @@ if(empty($SEARCH_SPIDER)) {
 if (empty($SEARCH_SPIDER)) {
 	echo "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >";
 	// Header Info ------------------------------------------------------------------------------------
-	if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php') ) {
+	if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 		//Content Info ------------------------------------------------------------
 		echo "<div id=\"gg_map_content\">";
 		echo "<table border=\"0\" width=\"100%\" ><tr><td >";
