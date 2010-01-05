@@ -3,7 +3,7 @@
 * Class file for the tree navigator
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -203,7 +203,8 @@ class TreeNav {
 	* @param Person $person the person to print the details for
 	*/
 	function getDetails(&$person) {
-		global $pgv_lang, $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
+		global $pgv_lang, $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
+		global $TEXT_DIRECTION;
 
 		if (empty($person)) $person = $this->rootPerson;
 		//if (!$person->canDisplayDetails()) return;
@@ -241,7 +242,26 @@ class TreeNav {
 
 		?>
 		<span class="name1">
-		<?php print $this->getThumbnail($person); ?>
+		<?php $thumb = $this->getThumbnail($person); 
+		if (!empty($thumb)) {
+			echo $thumb;
+		} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
+			$class = "pedigree_image_portrait";
+			if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
+			$sex = $person->getSex();
+			$thumbnail = "<img src=\"";
+			if ($sex == 'F') {
+				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"];
+			}
+			else if ($sex == 'M') {
+				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"];
+			}
+			else {
+				$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"];
+			} 
+			$thumbnail .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
+			echo $thumbnail;
+		} ?>
 		<a href="<?php print $person->getLinkUrl(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><?php print $person->getSexImage().PrintReady($name); ?></a>
 		<img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
 		</span><br />
@@ -261,7 +281,7 @@ class TreeNav {
 				?>:</b>
 				<?php
 				echo $person->getDeathDate()->Display(), ' ', PrintReady($person->getDeathPlace());
-			} ?>
+			} else echo "<br />" ?>
 		</div>
 		<br />
 		<span class="name1"><?php
@@ -272,7 +292,26 @@ class TreeNav {
 				if ($SHOW_ID_NUMBERS)
 				$name.=" (".$spouse->getXref().")";
 				?>
-				<?php print $this->getThumbnail($spouse); ?>
+				<?php $thumb = $this->getThumbnail($spouse); 
+				if (!empty($thumb)) {
+					echo $thumb;
+				} else if ($USE_SILHOUETTE && isset($PGV_IMAGES["default_image_U"]["other"])) {
+					$class = "pedigree_image_portrait";
+					if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
+					$sex = $spouse->getSex();
+					$thumbnail = "<img src=\"";
+					if ($sex == 'F') {
+						$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"];
+					}
+					else if ($sex == 'M') {
+						$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"];
+					}
+					else {
+						$thumbnail .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"];
+					} 
+					$thumbnail .="\" class=\"".$class."\" border=\"none\" alt=\"\" />";
+					echo $thumbnail;
+				} ?>
 				<a href="<?php print $spouse->getLinkUrl(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;">
 				<?php print $spouse->getSexImage().PrintReady($name); ?></a>
 				<img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />

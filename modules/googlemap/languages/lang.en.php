@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,26 +127,46 @@ $pgv_lang["pl_remove_location"]	= "Remove this location?";
 $pgv_lang["pl_delete_error"]	= "Location not removed: this location contains sub-locations";
 $pgv_lang["list_inactive"]		= "Click here to show inactive places";
 
-//Placecheck specific text
-$pgv_lang["placecheck"]			= "Place Check";
-$pgv_lang["placecheck_text"]	= "This will list all the places from the selected GEDCOM file. By default this will NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables";
-$pgv_lang["placecheck_top"]		= "Top Level Place";
-$pgv_lang["placecheck_one"]		= "Level One Place";
-$pgv_lang["placecheck_select1"]	= "Select Top Level...";
-$pgv_lang["placecheck_select2"]	= "Select Next Level...";
-$pgv_lang["placecheck_key"]		= "Key to colors used below";
-$pgv_lang["placecheck_key1"]	= "this place and its coordinates do not exist in the GoogleMap tables";
-$pgv_lang["placecheck_key2"]	= "this place exists in the GoogleMap tables, but has no coordinates";
-$pgv_lang["placecheck_key3"]	= "this place level is blank in your GEDCOM file. It should be added to<br />GoogleMap places as \"unknown\" with coordinates from its parent<br />level before you add any place to the next level";
-$pgv_lang["placecheck_key4"]	= "this place level is blank in your GEDCOM file, but exists as 'unknown'<br />in the GoogleMap places table with coordinates. No action required<br />until the missing level can be entered";
-$pgv_lang["placecheck_head"]	= "Place list for GEDCOM file";
-$pgv_lang["placecheck_gedheader"] = "GEDCOM File Place Data<br />(2 PLAC tag)";
-$pgv_lang["placecheck_gm_header"] = "GoogleMap Places Table Data";
-$pgv_lang["placecheck_unique"]	= "Total unique places";
-$pgv_lang["placecheck_zoom"]	= "Zoom=";
-$pgv_lang["placecheck_options"]	= "PlaceCheck List Options";
+// Placecheck specific text
+$pgv_lang["placecheck"]				= "Place Check";
+$pgv_lang["placecheck_text"]		= "This will list all the places from the selected GEDCOM file. By default this will NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables";
+$pgv_lang["placecheck_top"]			= "Top Level Place";
+$pgv_lang["placecheck_one"]			= "Level One Place";
+$pgv_lang["placecheck_select1"]		= "Select Top Level...";
+$pgv_lang["placecheck_select2"]		= "Select Next Level...";
+$pgv_lang["placecheck_key"]			= "Key to colors used below";
+$pgv_lang["placecheck_key1"]		= "this place and its coordinates do not exist in the GoogleMap tables";
+$pgv_lang["placecheck_key2"]		= "this place exists in the GoogleMap tables, but has no coordinates";
+$pgv_lang["placecheck_key3"]		= "this place level is blank in your GEDCOM file. It should be added to<br />GoogleMap places as \"unknown\" with coordinates from its parent<br />level before you add any place to the next level";
+$pgv_lang["placecheck_key4"]		= "this place level is blank in your GEDCOM file, but exists as 'unknown'<br />in the GoogleMap places table with coordinates. No action required<br />until the missing level can be entered";
+$pgv_lang["placecheck_head"]		= "Place list for GEDCOM file";
+$pgv_lang["placecheck_gedheader"]	= "GEDCOM File Place Data<br />(2 PLAC tag)";
+$pgv_lang["placecheck_gm_header"]	= "GoogleMap Places Table Data";
+$pgv_lang["placecheck_unique"]		= "Total unique places";
+$pgv_lang["placecheck_zoom"]		= "Zoom=";
+$pgv_lang["placecheck_options"]		= "PlaceCheck List Options";
 $pgv_lang["placecheck_filter_text"] = "List filtering options";
-$pgv_lang["placecheck_match"] 	= "Include fully matched places: ";
-$pgv_lang["placecheck_lati"] 	= "Latitude";
-$pgv_lang["placecheck_long"] 	= "Longitude";
+$pgv_lang["placecheck_match"] 		= "Include fully matched places: ";
+$pgv_lang["placecheck_lati"] 		= "Latitude";
+$pgv_lang["placecheck_long"] 		= "Longitude";
+
+// Pedigree map
+$pgv_lang["pedigree_map"]				= "Pedigree Map";
+$pgv_lang["pm_grandparent"] 			= "Grandparent";
+$pgv_lang["pm_grandmother"] 			= "Grandmother";
+$pgv_lang["pm_grandparent"] 			= "Grandfather";
+$pgv_lang["pm_gt"] 						= "Gt";
+$pgv_lang["pm_zoom_in"]					= "Zoom&nbsp;in";
+$pgv_lang["pm_zoom_out"]				= "Zoom&nbsp;out";
+$pgv_lang["zoom_in_here"]				= "Zoom&nbsp;in&nbsp;here";
+$pgv_lang["zoom_out_here"]				= "Zoom&nbsp;out&nbsp;here";
+$pgv_lang["centre_map"]					= "Centre&nbsp;map&nbsp;here";
+$pgv_lang["pm_individuals_displayed"]	= "individuals displayed out of the normal total of";
+$pgv_lang["pm_missing_birth"]			= "missing birth place map coordinates";
+$pgv_lang["pm_is"]						= "is";
+$pgv_lang["pm_are"]						= "are";
+$pgv_lang["pm_from"]					= "from";
+$pgv_lang["pm_for"]						= "for";
+$pgv_lang["pm_gens"]					= "generations";
+$pgv_lang["pm_root"]					= "Root";
 ?>

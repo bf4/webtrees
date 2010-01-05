@@ -105,7 +105,7 @@ if ($TEXT_DIRECTION=='ltr') { ?>
 	right: 1px;
 	width: 0px;
 	height: 400px;
-	z-index: 100;
+	z-index: 50;
 	margin: 0px;
 	background-color: white;
 }
@@ -123,7 +123,7 @@ else { ?>
 	left: 1px;
 	width: 0px;
 	height: 400px;
-	z-index: 100;
+	z-index: 50;
 	margin: 0px;
 	background-color: white;
 }
@@ -196,6 +196,7 @@ else { ?>
 }
 // -->
 </style>
+<script type="text/javascript" src="js/jquery/jquery.scrollfollow.js"></script> 
 <script type="text/javascript">
 <!--
 jQuery.noConflict(); // @see http://docs.jquery.com/Using_jQuery_with_Other_Libraries/
@@ -217,14 +218,8 @@ function openCallback() {
 	});
 }
 jQuery(document).ready(function() {
-	jQuery('#sidebar').resizable({
-		resize: function() {
-			jQuery("#sidebarAccordion").accordion("resize");
-		},
-		minHeight: 200,
-		minWidth: 350,
-		maxWidth: 350
-	});
+
+	jQuery('#sidebar').scrollFollow();
 
 	var modsLoaded = false;
 	jQuery('#sidebar_open').toggle(function() {
@@ -259,4 +254,6 @@ jQuery(document).ready(function() {
 	<img src="<?php echo $PGV_IMAGE_DIR ?>/loading.gif" />
 </div>
 <span class="ui-icon ui-icon-grip-dotted-horizontal" style="margin:2px auto;"></span>
+</div>
+<div id="debug">
 </div>

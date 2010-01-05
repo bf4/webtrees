@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All right reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All right reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,4 +150,19 @@ $pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Use mouse wheel for zoom";
 $pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Here you can specify if the mouse wheel is enebled for zooming.";
 $pgv_lang["GOOGLEMAP_PH_CONTROLS"]		= "Hide map controls";
 $pgv_lang["GOOGLEMAP_PH_CONTROLS_help"]	= "~#pgv_lang[GOOGLEMAP_PH_CONTROLS]#~<br /><br />This option allow to hide map controls (i.e. the map type choice) if mouse is outside the map.";
+
+// Pedigree map
+$pgv_lang["PEDIGREE_MAP_help1"]		= "To use the map";
+$pgv_lang["PEDIGREE_MAP_help2"]		= "~#pgv_lang[root_person]#~<br /><br />Select the individual you want as <strong>root person</strong> either by entering their ID, or use the <strong>Find ID</strong> icon.";
+$pgv_lang["PEDIGREE_MAP_help3"]		= "~#pgv_lang[generations]#~<br /><br />Set the number of generations you want to see. A sensible maximum would be 8, as this still displays up to 255 people.";
+$pgv_lang["PEDIGREE_MAP_help4"]		= "Click on a name on the right or any icon on the map to display an information window at their birth place.";
+$pgv_lang["PEDIGREE_MAP_help5"]		= "Click on the details in that info window to re-draw the map with that person as the root.";
+
+$pgv_lang["PEDIGREE_MAP_clustersize"]		= "Cluster Size";
+$pgv_lang["PEDIGREE_MAP_clustersize_help"]	= "~#pgv_lang[PEDIGREE_MAP_clustersize]#~<br /><br />The number of markers to be placed at one point before a trail of pins is started in a north east line behind the younger generations.  The 'trail' is usually only visable at high zoom values.";
+$pgv_lang["PEDIGREE_MAP_hidelines"]			= "Hide lines";
+$pgv_lang["PEDIGREE_MAP_hidelines_help"]	= "~#pgv_lang[PEDIGREE_MAP_hidelines]#~<br /><br />Hide the lines connecting the child to each parent if they exist on the map.";
+$pgv_lang["PEDIGREE_MAP_hideflags"]			= "Hide flags";
+$pgv_lang["PEDIGREE_MAP_hideflags_help"]	= "~#pgv_lang[PEDIGREE_MAP_hideflags]#~<br /><br />Hide the flags that are configured in the googlemap module.  Ususally these are for countries and states.&nbsp; This serves as a visual queue that the markers around the flag are from the general area, and not the specific spot.";
+$pgv_lang["PEDIGREE_MAP_help"]				= "~#pgv_lang[PEDIGREE_MAP_help1]#~<br /><br />#pgv_lang[PEDIGREE_MAP_help4]#<br />#pgv_lang[PEDIGREE_MAP_help5]#<br /><br />#pgv_lang[PEDIGREE_MAP_help2]#<br /><br />#pgv_lang[PEDIGREE_MAP_help3]#<br /><br />#pgv_lang[PEDIGREE_MAP_clustersize_help]#<br /><br />#pgv_lang[PEDIGREE_MAP_hidelines_help]#<br /><br />#pgv_lang[PEDIGREE_MAP_hideflags_help]#<br /><br />";
 ?>

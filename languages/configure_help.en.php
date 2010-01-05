@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,8 +114,10 @@ $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />This pag
 $pgv_lang["more_help_advice"]			= "<br /><b>More help</b><br />More help is available by clicking the <b>?</b> next to items on the page.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Width of generated thumbnails";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />This is the width (in pixels) that the program will use when automatically generating thumbnails.  The default setting is 100.<br />";
-$pgv_lang["SHOW_SOURCES"]			= "Show sources";
-$pgv_lang["SHOW_SOURCES_help"]		= "~#pgv_lang[SHOW_SOURCES]#~<br /><br />Set the privacy access level for all Sources.  If the user does not have access to Sources, the Source list will be removed from the Lists menu and the Sources tab will not be shown on the Individual Details page.<br />";
+$pgv_lang["USE_SILHOUETTE"]				= "Use silhouettes";
+$pgv_lang["USE_SILHOUETTE_help"]		= "~#pgv_lang[USE_SILHOUETTE]#~<br /><br />Use silhouette images when no highlighted image for that person has been specified.  The images used are specific to the gender of the person in question.<br /><br /><table><tr><td wrap valign=\"middle\">This image might be used when the gender of the person is unknown: </td><td><img src=\"images/silhouette_unknown.gif\" width=\"40\" alt=\"Silhouette image\" title=\"Silhouette image\" /></td></tr</table><br />";
+$pgv_lang["SHOW_SOURCES"]				= "Show sources";
+$pgv_lang["SHOW_SOURCES_help"]			= "~#pgv_lang[SHOW_SOURCES]#~<br /><br />Set the privacy access level for all Sources.  If the user does not have access to Sources, the Source list will be removed from the Lists menu and the Sources tab will not be shown on the Individual Details page.<br />";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION_help"]	= "~#pgv_lang[REQUIRE_ADMIN_AUTH_REGISTRATION]#~<br /><br />If the option <b>#pgv_lang[USE_REGISTRATION_MODULE]#</b> is enabled this setting controls whether the admin must approve the registration.<br /><br />Setting this to <b>Yes</b> will require that all new users first verify themselves and then be approved by an admin before they can login.  With this setting on <b>No</b>, the <b>#pgv_lang[verified_by_admin]#</b> checkbox will be checked automatically when users verify their account, thus allowing an immediate login afterwards without admin intervention.<br />";
 $pgv_lang["SPLIT_PLACES"]		= "Split places in Edit mode";
 $pgv_lang["SPLIT_PLACES_help"]	= "~#pgv_lang[SPLIT_PLACES]#~<br /><br />Set this to <b>Yes</b> to split each place name by commas into subfields for easier editing.  Example :<br /><ol><li>Default mode<br /><u>Place</u>: Half Moon Bay, San Mateo, California, USA<br /><br /></li><li>Split mode<br /><u>Country</u>: USA<br /><u>State</u>: California<br/><u>County</u>: San Mateo<br/><u>City</u>: Half Moon Bay</li></ol>";

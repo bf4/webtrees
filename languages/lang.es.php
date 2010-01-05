@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1523,6 +1523,9 @@ $pgv_lang["marrdate2"]				= "Fin del rango de fechas de matrimonio";
 $pgv_lang["sort_by"]				= "Ordenar por";
 $pgv_lang["cemetery_report"]		= "Informe de cementerios";
 $pgv_lang["burialplace"]			= "El lugar de entierro contiene";
+$pgv_lang["fact_sources_report"]	= "Fuentes de los hechos";
+$pgv_lang["missing_facts_report"]	= "Hechos de parientes no identificados";
+$pgv_lang["sources_to_events"]		= "Fuentes de los eventos";
 
 $pgv_lang["cleanup"]				= "Limpieza";
 

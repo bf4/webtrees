@@ -8,7 +8,7 @@
  * in the $INDEX_DIRECTORY.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,6 +108,7 @@ $MEDIA_DIRECTORY = "media/";			// -- Directory where media files are stored
 $MEDIA_DIRECTORY_LEVELS = "0";			// -- the number of sub-directories to keep when getting names of media files
 $SHOW_HIGHLIGHT_IMAGES = true;			// -- show highlighted photos on pedigree tree and individual pages.
 $USE_THUMBS_MAIN = true;				// -- for the main image on the individual page, whether or not to use the full res image or the thumbnail
+$USE_SILHOUETTE = true;					// --  use silhouette images when the Person records haven't set a main image.
 $THUMBNAIL_WIDTH = "100";				// -- the width to use when automatically generating thumbnails
 $AUTO_GENERATE_THUMBS = true;			// -- whether PGV should try to automatically generate thumbnails
 $USE_MEDIA_VIEWER = true;				// -- If set to true, when a user clicks on an image they will be taken to the mediaviewer.php page.  If set to false a new window will open at imageview.php

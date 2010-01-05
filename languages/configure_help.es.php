@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -115,8 +115,10 @@ $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />Esta pá
 $pgv_lang["more_help_advice"]			= "<br /><b>Más ayuda</b><br />Puede obtener más ayuda haciendo clic en la <b>?</b> que aparece junto a los elementos de la página.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Anchura de las miniaturas generadas";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />Es la anchura (en pixels) a utilizar al generar automáticamente las miniaturas.  El valor predeterminado es 100.<br />";
-$pgv_lang["SHOW_SOURCES"]			= "Mostrar fuentes";
-$pgv_lang["SHOW_SOURCES_help"]		= "~#pgv_lang[SHOW_SOURCES]#~<br /><br />Fija el nivel de acceso a todas las Fuentes.  Si el usuario no tiene acceso a las Fuentes, la lista de Fuentes se eliminará del menú de Listas y no se mostrará la pestaña Fuentes en la página de información de Detalles de la Persona.<br />";
+$pgv_lang["USE_SILHOUETTE"]				= "Utilizar siluetas";
+$pgv_lang["USE_SILHOUETTE_help"]		= "~#pgv_lang[USE_SILHOUETTE]#~<br /><br />Utilizar imágenes de siluetas sin no se ha especificado una imagen resaltada para una persona.  Las imágenes utilizadas varían según el sexo de la persona en cuestión.<br /><br /><table><tr><td wrap valign=\"middle\">Esta imagen podría usarse si no se conoce el sexo de la persona: </td><td><img src=\"images/silhouette_unknown.gif\" width=\"40\" alt=\"Imagen silueta\" title=\"Imagen silueta\" /></td></tr</table><br />";
+$pgv_lang["SHOW_SOURCES"]				= "Mostrar fuentes";
+$pgv_lang["SHOW_SOURCES_help"]			= "~#pgv_lang[SHOW_SOURCES]#~<br /><br />Fija el nivel de acceso a todas las Fuentes.  Si el usuario no tiene acceso a las Fuentes, la lista de Fuentes se eliminará del menú de Listas y no se mostrará la pestaña Fuentes en la página de información de Detalles de la Persona.<br />";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION_help"]	= "~#pgv_lang[REQUIRE_ADMIN_AUTH_REGISTRATION]#~<br /><br />Si la opción <b>#pgv_lang[USE_REGISTRATION_MODULE]#</b> está activada este ajuste controla si el administrador debe aprobar el registro.<br /><br />Si se fija a <b>Sí</b> se requerirá que los nuevos usuarios primero verifiquen su dirección de correo electrónico y después sean aprobados por un administrador antes de poder entrar.  Con este ajuste fijado a <b>No</b>, la casilla <b>#pgv_lang[verified_by_admin]#</b> quedará marcada automáticamente en cuanto los usuarios verifiquen su cuenta, permitiéndoles de forma inmediata la entrada identificada sin intervención de un operador.<br />";
 $pgv_lang["SPLIT_PLACES"]		= "Partir lugares en modo edición";
 $pgv_lang["SPLIT_PLACES_help"]	= "~#pgv_lang[SPLIT_PLACES]#~<br /><br />Fije esto a <b>Sí</b> para partir cada lugar por las comas a subcampos para una más fácil edición.  Ejemplo :<br /><ol><li>Modo predeterminado<br /><u>Place</u>: Half Moon Bay, San Mateo, California, USA<br /><br /></li><li>Modo partido<br /><u>País</u>: USA<br /><u>Estado</u>: California<br/><u>Condado</u>: San Mateo<br/><u>Localidad</u>: Half Moon Bay</li></ol>";

@@ -3,7 +3,7 @@
  * French Language file for Google map module
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,6 @@ $pgv_lang["gm_pp_pr_po_n_b"]            = "Préfixe, suffixe, normal, les 2";
 $pgv_lang["gm_pp_po_pr_n_b"]            = "Suffixe, préfixe, normal, les 2";
 $pgv_lang["googlemap_coord"]            = "Afficher les coordonnées";
 
-
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]       = "Éditer les coordonnées du lieu";
 $pgv_lang["pl_no_places_found"]         = "Lieu introuvable";
@@ -133,4 +132,25 @@ $pgv_lang["placecheck_key2"]            = "ce lieu existe dans les tables Google
 #pgv_lang["placecheck_match"]           = "Include fully matched places -";
 $pgv_lang["placecheck_lati"] 		= "Latitude";
 $pgv_lang["placecheck_long"] 		= "Longitude";
+
+// Pedigree map
+$pgv_lang["pedigree_map"]				= "Carte d'ascendance";
+$pgv_lang["pm_grandparent"] 			= "Grand-parent";
+$pgv_lang["pm_grandmother"] 			= "Grand-mère";
+$pgv_lang["pm_grandparent"] 			= "Grand-père";
+$pgv_lang["pm_gt"] 						= "Ar.";
+$pgv_lang["pm_zoom_in"]					= "Augmenter&nbsp;le&nbsp;Zoom&nbsp";
+$pgv_lang["pm_zoom_out"]				= "Diminuer&nbsp;le&nbsp;Zoom&nbsp";
+$pgv_lang["zoom_in_here"]				= "Augmenter&nbsp;le&nbsp;Zoom&nbsp;ici";
+$pgv_lang["zoom_out_here"]				= "Diminuer&nbsp;le&nbsp;Zoom&nbsp;ici";
+$pgv_lang["centre_map"]					= "Centrer&nbsp;la&nbsp;carte&nbsp;ici";
+$pgv_lang["pm_individuals_displayed"]	= "individus affichés sur un nombre total de";
+$pgv_lang["pm_missing_birth"]			= "leurs coordonnées de lieu de naissance manquantes";
+$pgv_lang["pm_is"]						= "est";
+$pgv_lang["pm_are"]						= "ont";
+$pgv_lang["pm_from"]					= "de";
+$pgv_lang["pm_for"]						= "pour";
+$pgv_lang["pm_gens"]					= "générations";
+$pgv_lang["pm_root"]					= "Racine";
+
 ?>

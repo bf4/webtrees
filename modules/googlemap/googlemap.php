@@ -3,7 +3,7 @@
  * Google map module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,8 +90,7 @@ class googlemap_Tab extends Tab {
 	<tr>
 		<td><?php 
 		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
-
-		if ($GOOGLEMAP_ENABLED == "false") {
+		if (!$GOOGLEMAP_ENABLED) {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
 			if (PGV_USER_IS_ADMIN) {
@@ -112,7 +111,7 @@ class googlemap_Tab extends Tab {
 				$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
 				$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
 				$tNew = preg_replace("/&/", "&amp;", $tNew);
-				if($SESSION_HIDE_GOOGLEMAP == "true") {
+				if($SESSION_HIDE_GOOGLEMAP=="true") {
 					print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
 					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
 					print " ".$pgv_lang["activate"]."</a></span>\n";
@@ -133,7 +132,7 @@ class googlemap_Tab extends Tab {
 				print "function ResizeMap ()\n{\n}\n</script>\n";
 			}else{
 				if(empty($SEARCH_SPIDER)) {
-					if($SESSION_HIDE_GOOGLEMAP == "false") {
+					if($SESSION_HIDE_GOOGLEMAP=="false") {
 						print "<table width=\"100%\" border=\"0\" class=\"facts_table\">\n";
 						print "<tr><td valign=\"top\">\n";
 						print "<div id=\"googlemap_left\">\n";
@@ -197,14 +196,14 @@ class googlemap_Tab extends Tab {
 
 	public function hasContent() {
 		global $GOOGLEMAP_ENABLED;
-		if ($GOOGLEMAP_ENABLED == "false" && !PGV_USER_IS_ADMIN) return false;
+		if (!$GOOGLEMAP_ENABLED && !PGV_USER_IS_ADMIN) return false;
 		return true;
 	}
 
 	public function getJSCallback() {
 		global $GOOGLEMAP_PH_CONTROLS;
 		$out = "loadMap();\n";
-		if ($GOOGLEMAP_PH_CONTROLS != "false") {
+		if ($GOOGLEMAP_PH_CONTROLS) {
 			$out .= '// hide controls
 					GEvent.addListener(map,"mouseout",function()
 					{
@@ -475,7 +474,7 @@ function get_lati_long_placelocation ($place) {
 
 function setup_map() {
 	global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $pgv_lang;
-	if ($GOOGLEMAP_ENABLED == "false") {
+	if (!$GOOGLEMAP_ENABLED) {
 		return;
 	}
 	?>
@@ -646,7 +645,7 @@ function build_indiv_map($indifacts, $famids) {
 	global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 	global $GOOGLEMAP_ENABLED, $TBLPREFIX, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 
-	if ($GOOGLEMAP_ENABLED == "false") {
+	if (!$GOOGLEMAP_ENABLED) {
 		echo "<table class=\"facts_table\">\n";
 		echo "<tr><td colspan=\"2\" class=\"facts_value\">", $pgv_lang["gm_disabled"], "<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
 		echo "<script type=\"text/javascript\">\n";
@@ -702,13 +701,15 @@ function build_indiv_map($indifacts, $famids) {
 				$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
 				if ($fact == "EVEN" || $fact=="FACT") {
 					$eventrec = get_sub_record(1, "2 TYPE", $factrec);
-					if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
-					if (isset($factarray[$match3[1]]))
-					$markers[$i]["fact"]=$factarray[$match3[1]];
-					else
-					$markers[$i]["fact"]=$match3[1];
-					else
-					$markers[$i]["fact"]=$factarray[$fact];
+						if (preg_match("/\d TYPE (.*)/", $eventrec, $match3)) {
+							if (isset($factarray[$match3[1]])) {
+								$markers[$i]["fact"]=$factarray[$match3[1]];
+							} else {
+								$markers[$i]["fact"]=$match3[1];
+							}
+						} else {
+							$markers[$i]["fact"]=$factarray[$fact];
+						}
 				} else {
 					$markers[$i]["fact"]=$factarray[$fact];
 				}
@@ -740,13 +741,15 @@ function build_indiv_map($indifacts, $famids) {
 						$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
 						if ($fact == "EVEN" || $fact=="FACT") {
 							$eventrec = get_sub_record(1, "2 TYPE", $factrec);
-							if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
-							if (isset($factarray[$match3[1]]))
-							$markers[$i]["fact"]=$factarray[$match3[1]];
-							else
-							$markers[$i]["fact"]=$match3[1];
-							else
-							$markers[$i]["fact"]=$factarray[$fact];
+								if (preg_match("/\d TYPE (.*)/", $eventrec, $match3)) {
+									if (isset($factarray[$match3[1]])) {
+										$markers[$i]["fact"]=$factarray[$match3[1]];
+									} else {
+										$markers[$i]["fact"]=$match3[1];
+									}
+								} else {
+										$markers[$i]["fact"]=$factarray[$fact];
+								}
 						} else {
 							$markers[$i]["fact"]=$factarray[$fact];
 						}
@@ -880,7 +883,7 @@ function build_indiv_map($indifacts, $famids) {
 
 		echo "var icon = new GIcon();";
 		echo "icon.image = \"http://maps.google.com/intl/pl_ALL/mapfiles/marker.png\";";
-		echo "icon.shadow = \"modules/googlemap/shadow50.png\";";
+		echo "icon.shadow = \"modules/googlemap/images/shadow50.png\";";
 		echo "icon.iconAnchor = new GPoint(10, 34);";
 		echo "icon.infoWindowAnchor = new GPoint(5, 1);";
 
@@ -900,8 +903,8 @@ function build_indiv_map($indifacts, $famids) {
 					$markers[$j]["placed"] = "yes";
 					if (($markers[$j]["lati"] == NULL) || ($markers[$j]["lng"] == NULL) || (($markers[$j]["lati"] == "0") && ($markers[$j]["lng"] == "0"))) { 
 						echo "var Marker{$j}_flag = new GIcon();\n";
-						echo "	Marker{$j}_flag.image = \"modules/googlemap/marker_yellow.png\";\n";
-						echo "	Marker{$j}_flag.shadow = \"modules/googlemap/shadow50.png\";\n";
+						echo "	Marker{$j}_flag.image = \"modules/googlemap/images/marker_yellow.png\";\n";
+						echo "	Marker{$j}_flag.shadow = \"modules/googlemap/images/shadow50.png\";\n";
 						echo "	Marker{$j}_flag.iconSize = new GSize(20, 34);\n";
 						echo "	Marker{$j}_flag.shadowSize = new GSize(37, 34);\n";
 						echo "	Marker{$j}_flag.iconAnchor = new GPoint(10, 34);\n";
@@ -912,7 +915,7 @@ function build_indiv_map($indifacts, $famids) {
 					} else {
 						echo "var Marker{$j}_flag = new GIcon();\n";
 						echo "    Marker{$j}_flag.image = \"", $markers[$j]["icon"], "\";\n";
-						echo "    Marker{$j}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+						echo "    Marker{$j}_flag.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
 						echo "    Marker{$j}_flag.iconSize = new GSize(25, 15);\n";
 						echo "    Marker{$j}_flag.shadowSize = new GSize(35, 45);\n";
 						echo "    Marker{$j}_flag.iconAnchor = new GPoint(1, 45);\n";
@@ -946,7 +949,7 @@ function build_indiv_map($indifacts, $famids) {
 							echo '<br /><a href=\"module.php?mod=googlemap&pgvaction=places&display=inactive\">', $pgv_lang["pl_edit"], '</a>';
 						echo "\");\n";
 					}
-					else if ($GOOGLEMAP_COORD == "false"){
+					else if (!$GOOGLEMAP_COORD){
 						echo "\");\n";
 					} else {
 						echo "<br /><br />";
@@ -970,7 +973,7 @@ function build_indiv_map($indifacts, $famids) {
 					} else {
 						echo "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
 						echo "    Marker{$j}_{$markersindex}_flag.image = \"", $markers[$j]["icon"], "\";\n";
-						echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+						echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
 						echo "    Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
 						echo "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
 						echo "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
@@ -1000,7 +1003,7 @@ function build_indiv_map($indifacts, $famids) {
 						$date=new GedcomDate($markers[$j]["date"]);
 						echo "<br />", addslashes($date->Display(true));
 					}
-					if ($GOOGLEMAP_COORD == "false"){
+					if (!$GOOGLEMAP_COORD){
 						echo "\")";
 					} else {
 						echo "<br /><br />";
@@ -1034,7 +1037,7 @@ function build_indiv_map($indifacts, $famids) {
 								} else {
 									echo "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
 									echo "    Marker{$j}_{$markersindex}_flag.image = \"", $markers[$j]["icon"], "\";\n";
-									echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+									echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/images/flag_shadow.png\";\n";
 									echo "    Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
 									echo "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
 									echo "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
@@ -1067,7 +1070,7 @@ function build_indiv_map($indifacts, $famids) {
 								$date=new GedcomDate($markers[$k]["date"]);
 								echo "<br />", addslashes($date->Display(true));
 							}
-							if ($GOOGLEMAP_COORD == "false"){
+							if (!$GOOGLEMAP_COORD){
 								echo "\")";
 							} else {
 								echo "<br /><br />";

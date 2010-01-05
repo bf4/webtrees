@@ -43,6 +43,32 @@ VERSION 4.3.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$factarray["BAPM:SOUR"]							03 Jan 2010				A
++$factarray["BARM:DATE"]							03 Jan 2010				A
++$factarray["BARM:PLAC"]							03 Jan 2010				A
++$factarray["BARM:SOUR"]							03 Jan 2010				A
++$factarray["BASM:DATE"]							03 Jan 2010				A
++$factarray["BASM:PLAC"]							03 Jan 2010				A
++$factarray["BASM:SOUR"]							03 Jan 2010				A
++$factarray["BIRT:SOUR"]							03 Jan 2010				A
++$factarray["BURI:SOUR"]							03 Jan 2010				A
++$factarray["CHR:SOUR"]								03 Jan 2010				A
++$factarray["CONF:DATE"]							03 Jan 2010				A
++$factarray["CONF:PLAC"]							03 Jan 2010				A
++$factarray["CONF:SOUR"]							03 Jan 2010				A
++$factarray["DEAT:SOUR"]							03 Jan 2010				A
++$factarray["ENGA:DATE"]							03 Jan 2010				A
++$factarray["ENGA:PLAC"]							03 Jan 2010				A
++$factarray["ENGA:SOUR"]							03 Jan 2010				A
++$factarray["FCOM:DATE"]							03 Jan 2010				A
++$factarray["FCOM:PLAC"]							03 Jan 2010				A
++$factarray["FCOM:SOUR"]							03 Jan 2010				A
++$factarray["MARB:DATE"]							03 Jan 2010				A
++$factarray["MARB:PLAC"]							03 Jan 2010				A
++$factarray["MARB:SOUR"]							03 Jan 2010				A
++$factarray["MARR:SOUR"]							03 Jan 2010				A
+*$factarray["MARB"]									01 Jan 2010				S     Spelling mistake
+
 
 VERSION 4.2.1
 

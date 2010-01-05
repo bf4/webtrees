@@ -89,6 +89,11 @@ if (empty($ged)) {
 	$ged=$GEDCOM;
 }
 
+// Load all available gedcoms
+$all_gedcoms = get_all_gedcoms();
+//-- sorting by gedcom filename 
+asort($all_gedcoms);
+
 // Delete a user
 if ($action=='deleteuser') {
 	// don't delete ourselves
@@ -171,7 +176,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				set_user_setting($user_id, 'editaccount',          $editaccount);
 				set_user_setting($user_id, 'verified',             $verified);
 				set_user_setting($user_id, 'verified_by_admin',    $verified_by_admin);
-				foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+				foreach ($all_gedcoms as $ged_id=>$ged_name) {
 					set_user_gedcom_setting($user_id, $ged_id, 'gedcomid', safe_POST_xref('gedcomid'.$ged_id));
 					set_user_gedcom_setting($user_id, $ged_id, 'rootid',   safe_POST_xref('rootid'.$ged_id));
 					set_user_gedcom_setting($user_id, $ged_id, 'canedit',  safe_POST('canedit'.$ged_id,  $ALL_EDIT_OPTIONS));
@@ -204,7 +209,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				}
 				//-- update Gedcom record with new email address
 				if ($email_changed && $new_sync_gedcom=='Y') {
-					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+					foreach ($all_gedcoms as $ged_id=>$ged_name) {
 						$myid=get_user_gedcom_setting($username, $ged_id, 'gedcomid');
 						if ($myid) {
 							$OLDGEDCOM=$GEDCOM;
@@ -313,7 +318,7 @@ if ($action=="edituser") {
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
-	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		$varname='gedcomid'.$ged_id;
 		?>
 		<tr valign="top">
@@ -335,7 +340,7 @@ if ($action=="edituser") {
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
-	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		$varname='rootid'.$ged_id;
 		?>
 		<tr valign="top">
@@ -381,7 +386,7 @@ if ($action=="edituser") {
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
-	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		$varname = 'canedit'.$ged_id;
 		echo "<tr><td>$ged_name:&nbsp;&nbsp;</td><td>";
 		$tab++;
@@ -587,12 +592,10 @@ if ($action == "listusers") {
 	<tr>
 	<?php if ($view != "preview") {
 	echo "<td class=\"descriptionbox wrap\">";
-	echo $pgv_lang["edit"], "</td>";
-	echo "<td class=\"descriptionbox wrap\">";
 	echo $pgv_lang["message"], "</td>";
 	} ?>
-	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["username"]; ?></a></td>
 	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortlname&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["full_name"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["username"]; ?></a></td>
 	<td class="descriptionbox wrap"><?php echo $pgv_lang["inc_languages"]; ?></td>
 	<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php echo $pgv_lang["privileges"]; ?>" onclick="<?php
 	$k = 1;
@@ -622,8 +625,6 @@ if ($action == "listusers") {
 		echo "<tr>\n";
 		if ($view != "preview") {
 			echo "\t<td class=\"optionbox wrap\">";
-			echo "<a href=\"", encode_url("useradmin.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\">", $pgv_lang["edit"], "</a></td>\n";
-			echo "\t<td class=\"optionbox wrap\">";
 			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
 				echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\">", $pgv_lang["message"], "</a>";
 			} else {
@@ -631,6 +632,11 @@ if ($action == "listusers") {
 			}
 			echo '</td>';
 		}
+		$userName = getUserFullName($user_id);
+		echo "\t<td class=\"optionbox wrap\"><a href=\"", encode_url("useradmin.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" title=\"", $pgv_lang["edit"], "\">", $userName;
+		if ($TEXT_DIRECTION=="ltr") echo getLRM();
+		else                        echo getRLM();
+		echo "</a></td>\n";
 		if (get_user_setting($user_id, "comment_exp")) {
 			if ((strtotime(get_user_setting($user_id, "comment_exp")) != "-1") && (strtotime(get_user_setting($user_id, "comment_exp")) < time("U"))) echo "\t<td class=\"optionbox red\">", $user_name;
 			else echo "\t<td class=\"optionbox wrap\">", $user_name;
@@ -641,9 +647,6 @@ if ($action == "listusers") {
 			echo "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}\" />";
 		}
 		echo "</td>\n";
-		$userName = getUserFullName($user_id);
-		if ($TEXT_DIRECTION=="ltr") echo "\t<td class=\"optionbox wrap\">", $userName, getLRM() , "</td>\n";
-		else                        echo "\t<td class=\"optionbox wrap\">", $userName, getRLM() , "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "<br /><img src=\"", $language_settings[get_user_setting($user_id, 'language')]["flagsfile"], "\" class=\"brightflag\" alt=\"", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "\" title=\"", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "\" /></td>\n";
 		echo "\t<td class=\"optionbox\">";
 		echo "<a href=\"javascript: ", $pgv_lang["privileges"], "\" onclick=\"expand_layer('user-geds", $k, "'); return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $PGV_IMAGE_DIR, "/";
@@ -658,7 +661,7 @@ if ($action == "listusers") {
 		if (get_user_setting($user_id, 'canadmin')=='Y') {
 			echo "<li class=\"warning\">", $pgv_lang["can_admin"], "</li>\n";
 		}
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			$vval = get_user_gedcom_setting($user_id, $ged_id, 'canedit');
 			if ($vval == "") $vval = "none";
 			$uged = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
@@ -787,7 +790,7 @@ if ($action == "createform") {
 
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			$varname='gedcomid'.$ged_id;
 			?>
 			<tr>
@@ -803,7 +806,7 @@ if ($action == "createform") {
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid_help", "qm", "rootid"); echo $pgv_lang["rootid"]; ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			$varname='rootid'.$ged_id;
 			?>
 			<tr>
@@ -822,7 +825,7 @@ if ($action == "createform") {
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit_help", "qm", "can_edit");echo $pgv_lang["can_edit"]; ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			$varname='canedit'.$ged_id;
 			$tab++;
 			echo "<tr><td>{$ged_name}:&nbsp;&nbsp;</td><td>";
@@ -1150,7 +1153,7 @@ if ($action == "cleanup2") {
 		if (get_user_setting($user_id, 'canadmin')=='Y') {
 			$adminusers++;
 		}
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin') {
 				$title=PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title')));
 				if (isset($gedadmin[$title])) {

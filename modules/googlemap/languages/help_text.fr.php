@@ -3,7 +3,7 @@
  * French Language file for Google map module
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -134,4 +134,18 @@ $pgv_lang["GOOGLEMAP_PLACECHECK"]       = "Outil de vérification des lieux";
 #pgv_lang["PLACECHECK_MATCH"]           = "Include matched places";
 #pgv_lang["PLACECHECK_MATCH_help"]      = "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br />By default the list does NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables.<br/>Fully matched means all levels exist in both the gedcom file and the GoogleMap tables; and the GoogleMap places have coordinates for every level.<br/><br/>Check this block to include those matched places";
 
+// Pedigree map
+$pgv_lang["PEDIGREE_MAP_help1"]				= "Pour utiliser la carte";
+$pgv_lang["PEDIGREE_MAP_help2"]				= "~#pgv_lang[root_person]#~<br /><br />Sélectionnez l'individu que vous voulez en tant que <strong>personne racine</strong> ou bien en entrant son ID, ou bien en utilisant l'icône <strong>Choisir</strong>.";
+$pgv_lang["PEDIGREE_MAP_help3"]				= "~#pgv_lang[generations]#~<br /><br />Paramétrez le nombre de générations que vous voulez visualiser. Le nombre maximum raisonnable est de 8, car il est possible d'afficher au maximum 255 personnes.";
+$pgv_lang["PEDIGREE_MAP_help4"]				= "Cliquez sur un nom dans le bandeau de droite ou sur n'importe quelle icône affichée sur la carte pour afficher une fenêtre d'information sur leur lieu de naissance.";
+$pgv_lang["PEDIGREE_MAP_help5"]				= "Cliquez sur les détails dans cette fenêtre d'information pour redessiner la carte avec cette personne en tant que racine.";
+
+$pgv_lang["PEDIGREE_MAP_clustersize"]		= "Taille du cluster";
+$pgv_lang["PEDIGREE_MAP_clustersize_help"]	= "~#pgv_lang[PEDIGREE_MAP_clustersize]#~<br /><br />Représente le nombre de marqueurs (1,3 ou 5) qui doivent être placés sur un point de la carte avant qu'une trace de pins ne soit tracée vers les générations les plus jeunes.&nbsp La 'trace' n'est normalement visible que pour des valeurs de zoom élevées.";
+$pgv_lang["PEDIGREE_MAP_hidelines"]			= "Masquer les lignes";
+$pgv_lang["PEDIGREE_MAP_hidelines_help"]	= "~#pgv_lang[PEDIGREE_MAP_hidelines]#~<br /><br />Si vous cochez la case Masquer les lignes, vous faites disparaître les lignes reliant les enfants à chaque parent s'ils existent sur la carte.";
+$pgv_lang["PEDIGREE_MAP_hideflags"]			= "Masquer les drapeaux";
+$pgv_lang["PEDIGREE_MAP_hideflags_help"]	= "~#pgv_lang[PEDIGREE_MAP_hideflags]#~<br /><br />Si vous cochez la case Masquer les drapeaux, les drapeaux qui sont configurés dans le module googlemap seront masqués.  Normalement ces drapeaux existent pour les pays et les états. &nbsp; ";
+$pgv_lang["PEDIGREE_MAP_help"]				= "~#pgv_lang[PEDIGREE_MAP_help1]#~<br /><br />#pgv_lang[PEDIGREE_MAP_help4]#<br />#pgv_lang[PEDIGREE_MAP_help5]#<br /><br />#pgv_lang[PEDIGREE_MAP_help2]#<br /><br />#pgv_lang[PEDIGREE_MAP_help3]#<br /><br />#pgv_lang[PEDIGREE_MAP_clustersize_help]#<br /><br />#pgv_lang[PEDIGREE_MAP_hidelines_help]#<br /><br />#pgv_lang[PEDIGREE_MAP_hideflags_help]#<br /><br />";
 ?>

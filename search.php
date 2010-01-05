@@ -524,7 +524,8 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 		<td class="list_value" style="padding: 5px;" colspan="2">
 			<?php
 
-		$i = 0;
+		//-- sorting menu by gedcom filename 
+		asort($all_gedcoms);
 		foreach ($all_gedcoms as $ged_id=>$gedcom) {
 			$str = str_replace(array (".", "-", " "), array ("_", "_", "_"), $gedcom);
 			$controller->inputFieldNames[] = "$str";
@@ -532,7 +533,6 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 			if (isset ($_REQUEST["$str"]))
 				print "checked=\"checked\" ";
 			print "value=\"yes\" name=\"".$str."\""." /><span dir=$TEXT_DIRECTION>".PrintReady(get_gedcom_setting($ged_id, 'title'), true)."</span><br />";
-			$i ++;
 		}
 ?>
 		</td>

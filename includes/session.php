@@ -652,7 +652,7 @@ if ((strstr($SCRIPT_NAME, 'install.php')===false)
 }
 
 //-- load the user specific theme
-if (PGV_USER_ID) {
+if ($CONFIGURED && PGV_USER_ID) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
 		userUpdateLogin(PGV_USER_ID);

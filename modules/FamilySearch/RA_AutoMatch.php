@@ -45,7 +45,9 @@ class RA_AutoMatch {
 
 	function authenticate($username, $password) {
 		global $FS_CONFIG;
+		
 		$this->proxy = new FamilySearchProxy($FS_CONFIG['family_search_url'], $username, $password, $FS_CONFIG['family_search_key']);
+		$this->proxy->setAgent("PhpGedView-JohnFinlay");
 		$response = $this->proxy->authenticate();
 		//		print htmlentities($response);
 		//		print $this->proxy->sessionid;

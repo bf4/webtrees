@@ -46,14 +46,12 @@ require_once PGV_ROOT.'includes/cssparser.inc.php';
  * @param string $legend optional legend of the fieldset
  */
 function print_indi_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES, $MAX_ALIVE_AGE;
 
 	if ($option=="MARR_PLAC") return;
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
-	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once PGV_ROOT.'js/sorttable.js.htm';
 	require_once PGV_ROOT.'includes/classes/class_stats.php';
 	$stats = new stats($GEDCOM);
@@ -167,7 +165,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if (!$person->isDead()) $tdclass .= " alive";
 		if (!$person->getChildFamilyIds()) $tdclass .= " patriarch";
 		echo "<td class=\"", $tdclass, "\" align=\"", get_align($person->getListName()), "\">";
-		$names_html=array();
 		list($surn, $givn)=explode(',', $person->getSortName());
 		// If we're showing search results, then the highlighted name is not
 		// necessarily the person's primary name.
@@ -203,28 +200,24 @@ function print_indi_table($datalist, $legend="", $option="") {
 				$class='list_item';
 				$sex_image='';
 			}
-			$names_html[]='<a '.$title.' href="'.encode_url($person->getLinkUrl()).'" class="'.$class.'">'.PrintReady($name['list']).'</a>'.$sex_image;
+			echo '<a ', $title, ' href="', encode_url($person->getLinkUrl()), '" class="', $class, '">', PrintReady($name['list']), '</a>', $sex_image, "<br/>";
 		}
-		echo implode('<br/>', $names_html);
 		// Indi parents
-		echo $person->getPrimaryParentsNames("parents_$table_id details1", "none");
-		echo "</td>";
+		echo $person->getPrimaryParentsNames("parents_$table_id details1", 'none');
+		echo '</td>';
 		//-- GIVN/SURN
 		echo '<td style="display:none">', $givn, ',', $surn, '</td>';
 		echo '<td style="display:none">', $surn, ',', $givn, '</td>';
 		//-- SOSA
-		if ($option=="sosa") {
-			echo "<td class=\"list_value_wrap\">";
-			$sosa = $key;
-			$rootid = $datalist[1];
-			echo "<a href=\"", encode_url("relationship.php?pid1={$rootid}&pid2=".$person->getXref()), "\"".
-			" title=\"".$pgv_lang["relationship_chart"]."\"".
-			" name=\"{$sosa}\"".
-			" class=\"list_item name2\">".$sosa."</a>";
-			echo "</td>";
+		if ($option=='sosa') {
+			echo
+				'<td class="list_value_wrap"><a href="',
+				encode_url('relationship.php?pid1='.$datalist[1].'&pid2='.$person->getXref()),
+				'" title="', $pgv_lang['relationship_chart'], '"',
+				' name="', $key, '" class="list_item name2">', $key, '</a></td>';
 		}
 		//-- Birth date
-		echo "<td class=\"list_value_wrap\">";
+		echo '<td class="list_value_wrap">';
 		if ($birth_dates=$person->getAllBirthDates()) {
 			foreach ($birth_dates as $num=>$birth_date) {
 				if ($num) {
@@ -246,16 +239,17 @@ function print_indi_table($datalist, $legend="", $option="") {
 			}
 			$birth_dates[0]=new GedcomDate('');
 		}
-		echo "</td>";
+		echo '</td>';
 		//-- Birth anniversary
 		if ($tiny) {
-			echo "<td class=\"list_value_wrap rela\">";
+			echo '<td class="list_value_wrap rela">';
 			$bage =GedcomDate::GetAgeYears($birth_dates[0]);
-			if (empty($bage))
+			if (empty($bage)) {
 				echo "&nbsp;";
-			else
-				echo "<span class=\"age\">", $bage, "</span>";
-			echo "</td>";
+			} else {
+				echo '<span class="age">', $bage, '</span>';
+			}
+			echo '</td>';
 		}
 		//-- Birth place
 		echo '<td class="list_value_wrap">';
@@ -445,14 +439,12 @@ function print_indi_table($datalist, $legend="", $option="") {
  * @param string $legend optional legend of the fieldset
  */
 function print_fam_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $lang_short_cut, $LANGUAGE;
 
 	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
-	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once PGV_ROOT.'js/sorttable.js.htm';
 	require_once PGV_ROOT.'includes/classes/class_family.php';
 	require_once PGV_ROOT.'includes/classes/class_stats.php';

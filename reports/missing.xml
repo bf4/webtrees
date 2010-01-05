@@ -9,11 +9,17 @@
 	<PGVRInput name="fonts" type="select" default="dejavusans" options="arialunicid0,dejavusans,helvetica"><PGVRvar var="pgv_lang[font]"/></PGVRInput>
 	
 	<PGVRInput name="fsour" type="checkbox" default="0"><PGVRvar var="pgv_lang[sources_to_events]" /></PGVRInput>
-	<PGVRInput name="fbirth" type="checkbox" default="1"><PGVRvar var="factarray[BIRT]"/></PGVRInput>
-	<PGVRInput name="fbapm" type="checkbox" default="1"><PGVRvar var="factarray[BAPM]"/> / <PGVRvar var="factarray[CHR]"/></PGVRInput>
-	<PGVRInput name="ffcom" type="checkbox" default="0"><PGVRvar var="factarray[FCOM]"/></PGVRInput>
+	<PGVRInput name="fbirt" type="checkbox" default="1"><PGVRvar var="factarray[BIRT]"/></PGVRInput>
+	<PGVRInput name="fbapm" type="checkbox" default="0"><PGVRvar var="factarray[BAPM]"/> / <PGVRvar var="factarray[CHR]"/></PGVRInput>
+	<PGVRInput name="fbarm" type="checkbox" default="0"><PGVRvar var="factarray[BARM]"/></PGVRInput>
+	<PGVRInput name="fbasm" type="checkbox" default="0"><PGVRvar var="factarray[BASM]"/></PGVRInput>
 	<PGVRInput name="fconf" type="checkbox" default="0"><PGVRvar var="factarray[CONF]"/></PGVRInput>
+	<PGVRInput name="fenga" type="checkbox" default="0"><PGVRvar var="factarray[ENGA]"/></PGVRInput>
+	<PGVRInput name="ffcom" type="checkbox" default="0"><PGVRvar var="factarray[FCOM]"/></PGVRInput>
+	<PGVRInput name="fmarb" type="checkbox" default="0"><PGVRvar var="factarray[MARB]"/></PGVRInput>
+	<PGVRInput name="fmarr" type="checkbox" default="0"><PGVRvar var="factarray[MARR]"/></PGVRInput>
 	<PGVRInput name="fdeat" type="checkbox" default="1"><PGVRvar var="factarray[DEAT]"/></PGVRInput>
+	<PGVRInput name="fburi" type="checkbox" default="0"><PGVRvar var="factarray[BURI]"/></PGVRInput>
 	<PGVRInput name="freli" type="checkbox" default="0"><PGVRvar var="factarray[RELI]"/></PGVRInput>
 
 	<!-- Header -->
@@ -46,6 +52,11 @@
 			<PGVRCell align="center" border="1" newline="1" style="list_label"><PGVRvar var="factarray[EVEN]" /></PGVRCell>
 		</PGVRHeader>
 
+<!--	Start with BIRT GEDCOM tag.
+			Place any GEDCOM tags in GEDCOM alphabetic order here
+		End it with DEAT and BURI
+		Place any GEDCOM tags after DEAT/BURI witch has no additional subtags, such as RELI, in alphabetic order
+-->
 		<PGVRBody>
 
 			<PGVRRelatives id="$pid" group="$relatives" maxgen="$maxgen" sortby="NAME">
@@ -53,7 +64,7 @@
 				<PGVRSetVar name="nrrelatives" value="$nrrelatives + 1" />
 				<PGVRSetVar name="printname" value="0" />
 				<!-- Birth -->
-				<PGVRif condition="$fbirth=='1'">
+				<PGVRif condition="$fbirt=='1'">
 					<!-- Total Event Counter -->
 					<PGVRSetVar name="nrevent" value="$nrevent + 2" />
 					<PGVRif condition="@BIRT:DATE==''">
@@ -90,7 +101,7 @@
 								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
 								<PGVRSetVar name="printname" value="1" />
 							</PGVRif>
-							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BIRT]" /> <PGVRvar var="factarray[SOUR]" /></PGVRCell>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BIRT:SOUR]" /></PGVRCell>
 						</PGVRif>
 					</PGVRif>
 				</PGVRif>
@@ -135,7 +146,7 @@
 									<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
 									<PGVRSetVar name="printname" value="1" />
 								</PGVRif>
-								<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BAPM]" /> <PGVRvar var="factarray[SOUR]" /></PGVRCell>
+								<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BAPM:SOUR]" /></PGVRCell>
 							</PGVRif>
 						</PGVRif>
 						<PGVRSetVar name="printbapm" value="1" />
@@ -176,16 +187,16 @@
 									<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
 									<PGVRSetVar name="printname" value="1" />
 								</PGVRif>
-								<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[CHR]" /> <PGVRvar var="factarray[SOUR]" /></PGVRCell>
+								<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[CHR:SOUR]" /></PGVRCell>
 							</PGVRif>
 						</PGVRif>
 					</PGVRif>
 				</PGVRif>
 
-				<!-- FCOM -->
-				<PGVRif condition="$ffcom=='1'">
+				<!-- BARM - male only -->
+				<PGVRif condition="($fbarm=='1') and (@SEX=='M')">
 					<PGVRSetVar name="nrevent" value="$nrevent + 2" />
-					<PGVRif condition="@FCOM:DATE==''">
+					<PGVRif condition="@BARM:DATE==''">
 						<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
 						<PGVRif condition="$printname=='1'">
 							<PGVRCell style="list_value" width="$name"> </PGVRCell>
@@ -194,9 +205,9 @@
 							<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
 							<PGVRSetVar name="printname" value="1" />
 						</PGVRif>
-						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[FCOM]" /> <PGVRvar var="factarray[DATE]" /></PGVRCell>
+						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BARM:DATE]" /></PGVRCell>
 					</PGVRif>
-					<PGVRif condition="@FCOM:PLAC==''">
+					<PGVRif condition="@BARM:PLAC==''">
 						<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
 						<PGVRif condition="$printname=='1'">
 							<PGVRCell style="list_value" width="$name"> </PGVRCell>
@@ -205,11 +216,11 @@
 							<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
 							<PGVRSetVar name="printname" value="1" />
 						</PGVRif>
-						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[FCOM]" /> <PGVRvar var="factarray[PLAC]" /></PGVRCell>
+						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BARM:PLAC]" /></PGVRCell>
 					</PGVRif>
 					<PGVRif condition="$fsour=='1'">
 						<PGVRSetVar name="nrevent" value="$nrevent + 1" />
-						<PGVRif condition="@FCOM:SOUR==''">
+						<PGVRif condition="@BARM:SOUR==''">
 							<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
 							<PGVRif condition="$printname=='1'">
 								<PGVRCell style="list_value" width="$name"> </PGVRCell>
@@ -218,7 +229,48 @@
 								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
 								<PGVRSetVar name="printname" value="1" />
 							</PGVRif>
-							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[FCOM]" /> <PGVRvar var="factarray[SOUR]" /></PGVRCell>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BARM:SOUR]" /></PGVRCell>
+						</PGVRif>
+					</PGVRif>
+				</PGVRif>
+
+				<!-- BASM - female only -->
+				<PGVRif condition="($fbasm=='1') and (@SEX=='F')">
+					<PGVRSetVar name="nrevent" value="$nrevent + 2" />
+					<PGVRif condition="@BASM:DATE==''">
+						<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+						<PGVRif condition="$printname=='1'">
+							<PGVRCell style="list_value" width="$name"> </PGVRCell>
+						</PGVRif>
+						<PGVRif condition="$printname=='0'">
+							<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+							<PGVRSetVar name="printname" value="1" />
+						</PGVRif>
+						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BASM:DATE]" /></PGVRCell>
+					</PGVRif>
+					<PGVRif condition="@BASM:PLAC==''">
+						<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+						<PGVRif condition="$printname=='1'">
+							<PGVRCell style="list_value" width="$name"> </PGVRCell>
+						</PGVRif>
+						<PGVRif condition="$printname=='0'">
+							<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+							<PGVRSetVar name="printname" value="1" />
+						</PGVRif>
+						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BASM:PLAC]" /></PGVRCell>
+					</PGVRif>
+					<PGVRif condition="$fsour=='1'">
+						<PGVRSetVar name="nrevent" value="$nrevent + 1" />
+						<PGVRif condition="@BASM:SOUR==''">
+							<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+							<PGVRif condition="$printname=='1'">
+								<PGVRCell style="list_value" width="$name"> </PGVRCell>
+							</PGVRif>
+							<PGVRif condition="$printname=='0'">
+								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+								<PGVRSetVar name="printname" value="1" />
+							</PGVRif>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BASM:SOUR]" /></PGVRCell>
 						</PGVRif>
 					</PGVRif>
 				</PGVRif>
@@ -235,7 +287,7 @@
 							<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
 							<PGVRSetVar name="printname" value="1" />
 						</PGVRif>
-						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[CONF]" /> <PGVRvar var="factarray[DATE]" /></PGVRCell>
+						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[CONF:DATE]" /></PGVRCell>
 					</PGVRif>
 					<PGVRif condition="@CONF:PLAC==''">
 						<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
@@ -246,7 +298,7 @@
 							<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
 							<PGVRSetVar name="printname" value="1" />
 						</PGVRif>
-						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[CONF]" /> <PGVRvar var="factarray[PLAC]" /></PGVRCell>
+						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[CONF:PLAC]" /></PGVRCell>
 					</PGVRif>
 					<PGVRif condition="$fsour=='1'">
 						<PGVRSetVar name="nrevent" value="$nrevent + 1" />
@@ -259,9 +311,179 @@
 								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
 								<PGVRSetVar name="printname" value="1" />
 							</PGVRif>
-							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[CONF]" /> <PGVRvar var="factarray[SOUR]" /></PGVRCell>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[CONF:SOUR]" /></PGVRCell>
 						</PGVRif>
 					</PGVRif>
+				</PGVRif>
+
+				<!-- ENGA -->
+				<PGVRif condition="$fenga=='1'">
+					<PGVRSetVar name="nrevent" value="$nrevent + 2" />
+					<PGVRGedcom id="@FAMS">
+						<PGVRif condition="@ENGA:DATE==''">
+							<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+							<PGVRif condition="$printname=='1'">
+								<PGVRCell style="list_value" width="$name"> </PGVRCell>
+							</PGVRif>
+							<PGVRif condition="$printname=='0'">
+								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+								<PGVRSetVar name="printname" value="1" />
+							</PGVRif>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[ENGA:DATE]" /></PGVRCell>
+						</PGVRif>
+						<PGVRif condition="@ENGA:PLAC==''">
+							<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+							<PGVRif condition="$printname=='1'">
+								<PGVRCell style="list_value" width="$name"> </PGVRCell>
+							</PGVRif>
+							<PGVRif condition="$printname=='0'">
+								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+								<PGVRSetVar name="printname" value="1" />
+							</PGVRif>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[ENGA:PLAC]" /></PGVRCell>
+						</PGVRif>
+						<PGVRif condition="$fsour=='1'">
+							<PGVRSetVar name="nrevent" value="$nrevent + 1" />
+							<PGVRif condition="@ENGA:SOUR==''">
+								<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+								<PGVRif condition="$printname=='1'">
+									<PGVRCell style="list_value" width="$name"> </PGVRCell>
+								</PGVRif>
+								<PGVRif condition="$printname=='0'">
+									<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+									<PGVRSetVar name="printname" value="1" />
+								</PGVRif>
+								<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[ENGA:SOUR]" /></PGVRCell>
+							</PGVRif>
+						</PGVRif>
+					</PGVRGedcom>
+				</PGVRif>
+
+				<!-- FCOM -->
+				<PGVRif condition="$ffcom=='1'">
+					<PGVRSetVar name="nrevent" value="$nrevent + 2" />
+					<PGVRif condition="@FCOM:DATE==''">
+						<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+						<PGVRif condition="$printname=='1'">
+							<PGVRCell style="list_value" width="$name"> </PGVRCell>
+						</PGVRif>
+						<PGVRif condition="$printname=='0'">
+							<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+							<PGVRSetVar name="printname" value="1" />
+						</PGVRif>
+						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[FCOM:DATE]" /></PGVRCell>
+					</PGVRif>
+					<PGVRif condition="@FCOM:PLAC==''">
+						<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+						<PGVRif condition="$printname=='1'">
+							<PGVRCell style="list_value" width="$name"> </PGVRCell>
+						</PGVRif>
+						<PGVRif condition="$printname=='0'">
+							<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+							<PGVRSetVar name="printname" value="1" />
+						</PGVRif>
+						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[FCOM:PLAC]" /></PGVRCell>
+					</PGVRif>
+					<PGVRif condition="$fsour=='1'">
+						<PGVRSetVar name="nrevent" value="$nrevent + 1" />
+						<PGVRif condition="@FCOM:SOUR==''">
+							<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+							<PGVRif condition="$printname=='1'">
+								<PGVRCell style="list_value" width="$name"> </PGVRCell>
+							</PGVRif>
+							<PGVRif condition="$printname=='0'">
+								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+								<PGVRSetVar name="printname" value="1" />
+							</PGVRif>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[FCOM:SOUR]" /></PGVRCell>
+						</PGVRif>
+					</PGVRif>
+				</PGVRif>
+
+				<!-- MARB -->
+				<PGVRif condition="$fmarb=='1'">
+					<PGVRSetVar name="nrevent" value="$nrevent + 2" />
+					<PGVRGedcom id="@FAMS">
+						<PGVRif condition="@MARB:DATE==''">
+							<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+							<PGVRif condition="$printname=='1'">
+								<PGVRCell style="list_value" width="$name"> </PGVRCell>
+							</PGVRif>
+							<PGVRif condition="$printname=='0'">
+								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+								<PGVRSetVar name="printname" value="1" />
+							</PGVRif>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[MARB:DATE]" /></PGVRCell>
+						</PGVRif>
+						<PGVRif condition="@MARB:PLAC==''">
+							<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+							<PGVRif condition="$printname=='1'">
+								<PGVRCell style="list_value" width="$name"> </PGVRCell>
+							</PGVRif>
+							<PGVRif condition="$printname=='0'">
+								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+								<PGVRSetVar name="printname" value="1" />
+							</PGVRif>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[MARB:PLAC]" /></PGVRCell>
+						</PGVRif>
+						<PGVRif condition="$fsour=='1'">
+							<PGVRSetVar name="nrevent" value="$nrevent + 1" />
+							<PGVRif condition="@MARB:SOUR==''">
+								<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+								<PGVRif condition="$printname=='1'">
+									<PGVRCell style="list_value" width="$name"> </PGVRCell>
+								</PGVRif>
+								<PGVRif condition="$printname=='0'">
+									<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+									<PGVRSetVar name="printname" value="1" />
+								</PGVRif>
+								<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[MARB:SOUR]" /></PGVRCell>
+							</PGVRif>
+						</PGVRif>
+					</PGVRGedcom>
+				</PGVRif>
+
+				<!-- MARM -->
+				<PGVRif condition="$fmarr=='1'">
+					<PGVRSetVar name="nrevent" value="$nrevent + 2" />
+					<PGVRGedcom id="@FAMS">
+						<PGVRif condition="@MARR:DATE==''">
+							<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+							<PGVRif condition="$printname=='1'">
+								<PGVRCell style="list_value" width="$name"> </PGVRCell>
+							</PGVRif>
+							<PGVRif condition="$printname=='0'">
+								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+								<PGVRSetVar name="printname" value="1" />
+							</PGVRif>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[MARR:DATE]" /></PGVRCell>
+						</PGVRif>
+						<PGVRif condition="@MARR:PLAC==''">
+							<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+							<PGVRif condition="$printname=='1'">
+								<PGVRCell style="list_value" width="$name"> </PGVRCell>
+							</PGVRif>
+							<PGVRif condition="$printname=='0'">
+								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+								<PGVRSetVar name="printname" value="1" />
+							</PGVRif>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[MARR:PLAC]" /></PGVRCell>
+						</PGVRif>
+						<PGVRif condition="$fsour=='1'">
+							<PGVRSetVar name="nrevent" value="$nrevent + 1" />
+							<PGVRif condition="@MARR:SOUR==''">
+								<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+								<PGVRif condition="$printname=='1'">
+									<PGVRCell style="list_value" width="$name"> </PGVRCell>
+								</PGVRif>
+								<PGVRif condition="$printname=='0'">
+									<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+									<PGVRSetVar name="printname" value="1" />
+								</PGVRif>
+								<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[MARR:SOUR]" /></PGVRCell>
+							</PGVRif>
+						</PGVRif>
+					</PGVRGedcom>
 				</PGVRif>
 
 				<!-- DEAT -->
@@ -300,7 +522,48 @@
 								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
 								<PGVRSetVar name="printname" value="1" />
 							</PGVRif>
-							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[DEAT]" /> <PGVRvar var="factarray[SOUR]" /></PGVRCell>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[DEAT:SOUR]" /></PGVRCell>
+						</PGVRif>
+					</PGVRif>
+				</PGVRif>
+
+				<!-- BURI -->
+				<PGVRif condition="$fburi=='1'">
+					<PGVRSetVar name="nrevent" value="$nrevent + 2" />
+					<PGVRif condition="@BURI:DATE==''">
+						<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+						<PGVRif condition="$printname=='1'">
+							<PGVRCell style="list_value" width="$name"> </PGVRCell>
+						</PGVRif>
+						<PGVRif condition="$printname=='0'">
+							<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+							<PGVRSetVar name="printname" value="1" />
+						</PGVRif>
+						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BURI:DATE]" /></PGVRCell>
+					</PGVRif>
+					<PGVRif condition="@BURI:PLAC==''">
+						<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+						<PGVRif condition="$printname=='1'">
+							<PGVRCell style="list_value" width="$name"> </PGVRCell>
+						</PGVRif>
+						<PGVRif condition="$printname=='0'">
+							<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+							<PGVRSetVar name="printname" value="1" />
+						</PGVRif>
+						<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BURI:PLAC]" /></PGVRCell>
+					</PGVRif>
+					<PGVRif condition="$fsour=='1'">
+						<PGVRSetVar name="nrevent" value="$nrevent + 1" />
+						<PGVRif condition="@BURI:SOUR==''">
+							<PGVRSetVar name="nrmissingevent" value="$nrmissingevent + 1" />
+							<PGVRif condition="$printname=='1'">
+								<PGVRCell style="list_value" width="$name"> </PGVRCell>
+							</PGVRif>
+							<PGVRif condition="$printname=='0'">
+								<PGVRCell style="list_value" width="$name"><PGVRGetPersonName id="" /> - (<PGVRGedcomValue tag="@id" />)</PGVRCell>
+								<PGVRSetVar name="printname" value="1" />
+							</PGVRif>
+							<PGVRCell newline="1" style="list_value"><PGVRvar var="factarray[BURI:SOUR]" /></PGVRCell>
 						</PGVRif>
 					</PGVRif>
 				</PGVRif>

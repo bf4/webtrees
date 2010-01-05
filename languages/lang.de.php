@@ -484,7 +484,7 @@ $pgv_lang["parent_age"] 				= "Elternteiles Alter";
 $pgv_lang["father_age"]					= "Vaters Alter";
 $pgv_lang["mother_age"]					= "Mutters Alter";
 $pgv_lang["self"] 						= "Selbst";
-$pgv_lang["relatives"]					= "Direkte Verwandschaft";
+$pgv_lang["relatives"]					= "Direkte Verwandtschaft";
 $pgv_lang["relatives_events"]			= "Verwandten-Ereignisse";
 $pgv_lang["historical_facts"]			= "Geschichtliche Ereignisse";
 $pgv_lang["partner"] 					= "Partner";
@@ -504,7 +504,7 @@ $pgv_lang["no_tab1"]					= "Zu dieser Person gibt es keine Fakten.";
 $pgv_lang["no_tab2"]					= "Zu dieser Person gibt es keine Bemerkungen.";
 $pgv_lang["no_tab3"]					= "Zu dieser Person gibt es keine Quellenangaben.";
 $pgv_lang["no_tab4"]					= "Zu dieser Person gibt es keine Multimedia Objekte.";
-$pgv_lang["no_tab5"]					= "Zu dieser Person gibt es keine direkte Verwandschaft.";
+$pgv_lang["no_tab5"]					= "Zu dieser Person gibt es keine direkte Verwandtschaft.";
 $pgv_lang["no_tab6"]					= "Zu dieser Person gibt es keine Forschung Protokolle.";
 $pgv_lang["show_fact_sources"]			= "Zeige alle Quellen";
 $pgv_lang["show_fact_notes"]			= "Zeige alle Bemerke";
@@ -893,7 +893,7 @@ $pgv_lang["femalecousin"]				= "Cousine";
 $pgv_lang["malecousin"]					= "Cousin";
 $pgv_lang["relationship_to_me"]			= "Verwandtschaft zu mir";
 $pgv_lang["rela_husb"]					= "Verwandtschaft zum Ehemann";
-$pgv_lang["rela_wife"]					= "Verwandschaft zur Ehefrau";
+$pgv_lang["rela_wife"]					= "Verwandtschaft zur Ehefrau";
 $pgv_lang["next_path"]					= "Nächsten Pfad suchen";
 $pgv_lang["show_path"]					= "Pfad zeigen";
 $pgv_lang["line_up_generations"]		= "Personen gleicher Generation auf gleicher Ebene darstellen";
@@ -1627,8 +1627,8 @@ $pgv_lang["authenticated_feed"]			= "RSS Versorgung mit Verifizierung";
 
 //-- ASSOciates RELAtionship
 // After any change in the following list, please check $assokeys in edit_interface.php
-$pgv_lang["attendant"]					= "Begleiter";
-$pgv_lang["attending"]					= "Begleitender";
+$pgv_lang["attendant"]					= "Anwesender";
+$pgv_lang["attending"]					= "anwesend";
 $pgv_lang["best_man"]					= "Bester Freund";
 $pgv_lang["bridesmaid"]					= "Brautjungfer";
 $pgv_lang["buyer"]						= "Käufer";
