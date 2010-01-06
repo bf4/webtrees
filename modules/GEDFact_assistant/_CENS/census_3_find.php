@@ -111,8 +111,8 @@ switch ($type) {
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-	function pasterow(id, name, gend, yob, age, bpl) {
-		window.opener.insertRowToTable(id, name, '', gend, '', yob, age, 'Y', '', bpl);
+	function pasterow(id, name, fullmn, gend, yob, age, bpl) {
+		window.opener.insertRowToTable(id, name, fullmn, '', gend, '', yob, age, 'Y', '', bpl);
 		<?php if (!$multiple) print "window.close();"; ?>
 	}
 	
@@ -381,13 +381,24 @@ if ($action=="filter") {
 			print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 			usort($myindilist, array('GedcomRecord', 'Compare'));
 			foreach($myindilist as $indi ) {
+				// $married   = GedcomDate::Compare($marrdate, $censdate);
 				$nam = $indi->getAllNames();
-				$wholename = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surn'];
+				$wholename = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
+					$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
+					$givn  = rtrim($nam[0]['givn'],'*');
+					$surn  = $nam[0]['surname'];
+					if (isset($nam[1])) {
+						$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
+						$marn  = $nam[1]['surname'];
+					} else {
+						$fulmn = $fulln;
+					}
 				echo "<li><a href=\"javascript:;\" onclick=\"pasterow(
 					'".$indi->getXref()."' , 
 					'".$wholename."' ,
+					'".$fulmn."' ,
 					'".$indi->getSex()."' ,
-					'".$indi->getbirthyear()."' ,
+					'".(($indi->getBirthDate()->minJD()+$indi->getBirthDate()->maxJD())/2)."' ,
 					'".(1901-$indi->getbirthyear())."' ,
 					'".$indi->getbirthplace()."'); return false;\">
 					<b>".$indi->getFullName()."</b>&nbsp;&nbsp;&nbsp;";

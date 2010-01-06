@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2.x CA
+ - Added: A few more auto-fill functions for the GEDFact_assistant/_CENS/ edit fields. (windmillway)
  - Merged: Merge changes r6646 - r6671 from the trunk. (yalnifj)
  - Merged: Merge changes r6543 - r6645 from the trunk. (yalnifj)
  - Added Family Nav sidebar and Clippings sidebar, fixed sidebar rtl (yalnifj)

@@ -35,10 +35,29 @@ global $summary, $theme_name, $pgv_lang, $factarray, $censyear, $censdate;
  
 $pid = safe_get('pid');
 // echo $pid;
+
+/*
 $year = "1901";
-$censevent  = new Event("1 CENS\n2 DATE 03 MAR".$year."");
+$censevent  = new Event("1 CENS\n2 DATE 31 MAR ".$year."");
 $censdate   = $censevent->getDate();
+*/
+
+$censdate  = new GedcomDate("31 MAR 1901");
 $censyear   = $censdate->date1->y;
+
+// TEST ONLY ===============================================
+/*
+$censevent2  = new GedcomDate("31 MAR 1901");
+// Display date examples ----------------------------------- 
+$censdate2   = $censevent2->Display(false, 'j O E');
+$censyear2   = $censevent2->Display(false, 'E');
+// Use dates for calculation examples ----------------------
+$censyear   =  $censevent2->date1->y;$dif=10; 
+echo $censyear-$dif;
+
+*/
+// END TEST ================================================
+
 $ctry       = "UK";
 // $married    = GedcomDate::Compare($censdate, $marrdate);
 $married=-1;
@@ -57,6 +76,8 @@ if ($married>=0 && isset($nam[1])){
 $currpid=$pid;
 ?>
 <script src="modules/GEDFact_assistant/_CENS/js/dynamicoptionlist.js" type="text/javascript"></script>
+<script src="modules/GEDFact_assistant/_CENS/js/date.js" type="text/javascript"></script>
+
 
 <?php
 	// Debug =============================================================

@@ -26,6 +26,7 @@
  * @version $Id$
  */
 include 'modules/GEDFact_assistant/_CENS/js/census_5_input.js.php';
+
 ?>
 
 <div class="cens_data">

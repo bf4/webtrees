@@ -31,10 +31,43 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 global $pgv_lang, $TEXT_DIRECTION;
-
 ?>
-
 <script>
+	function getCenDate(cenyear) {
+		// UK CENSUS DATES
+			   if (cenyear == 1841) { var cendate = new Date(1841, 5, 06);    // 06 JUN 1841
+		} else if (cenyear == 1951) { var cendate = new Date(1851, 2, 30);    // 30 MAR 1851
+		} else if (cenyear == 1861) { var cendate = new Date(1861, 3, 07);    // 07 APR 1861
+		} else if (cenyear == 1871) { var cendate = new Date(1871, 3, 02);    // 02 APR 1871
+		} else if (cenyear == 1881) { var cendate = new Date(1881, 3, 03);    // 03 APR 1881
+		} else if (cenyear == 1891) { var cendate = new Date(1891, 3, 05);    // 05 APR 1891
+		} else if (cenyear == 1901) { var cendate = new Date(1901, 2, 31);    // 31 MAR 1901
+		} else if (cenyear == 1911) { var cendate = new Date(1911, 3, 02);    // 02 APR 1911
+		} else if (cenyear == 1921) { var cendate = new Date(1921, 3, 02);    // 02 APR 1921
+		// USA CENSUS DATES
+		} else if (cenyear == 1790) { var cendate = new Date(1790, 7, 02);    // 02 AUG 1790
+		} else if (cenyear == 1800) { var cendate = new Date(1800, 7, 04);    // 04 AUG 1800
+		} else if (cenyear == 1810) { var cendate = new Date(1810, 7, 06);    // 06 AUG 1810
+		} else if (cenyear == 1820) { var cendate = new Date(1820, 7, 07);    // 07 AUG 1820
+		} else if (cenyear == 1830) { var cendate = new Date(1830, 5, 01);    // 01 JUN 1830
+		} else if (cenyear == 1840) { var cendate = new Date(1840, 5, 01);    // 01 JUN 1840
+		} else if (cenyear == 1850) { var cendate = new Date(1850, 5, 01);    // 01 JUN 1850
+		} else if (cenyear == 1860) { var cendate = new Date(1860, 5, 01);    // 01 JUN 1860
+		} else if (cenyear == 1870) { var cendate = new Date(1870, 5, 01);    // 01 JUN 1870
+		} else if (cenyear == 1880) { var cendate = new Date(1880, 5, 01);    // 01 JUN 1880
+		} else if (cenyear == 1890) { var cendate = new Date(1890, 5, 01);    // 01 JUN 1890
+		} else if (cenyear == 1900) { var cendate = new Date(1900, 5, 01);    // 01 JUN 1900
+		} else if (cenyear == 1910) { var cendate = new Date(1910, 3, 15);    // 15 APR 1910
+		} else if (cenyear == 1920) { var cendate = new Date(1920, 0, 01);    // 01 JAN 1920
+		} else if (cenyear == 1930) { var cendate = new Date(1930, 3, 01);    // 01 APR 1930
+		} else if (cenyear == 1940) { var cendate = new Date(1940, 3, 01);    // 01 APR 1940
+		// Default Date
+		} else {
+			var cendate = new Date(1901, 2, 31); 
+		}
+		return cendate;
+	}
+
 	function findSource(field) {
 		pastefield = field;
 		findwin = window.open('find.php?type=source', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
@@ -65,27 +98,160 @@ global $pgv_lang, $TEXT_DIRECTION;
 	}
 	
 	function changeYear(cenyear) {
+		// var cenyear = cenyear;
 		var tbl = document.getElementById('tblSample');
 		if (tbl.rows.length==0) {
 			create_header();
 		}
 		changeAge(cenyear);
 		changeCols(cenyear);
-		// setPOB();
-		preview();
+		changeMC(cenyear);
 	}
 	
+	// Change Marital Condition and Years Married based on Census Year ======================
+	function changeMC(cenyear) {
+		var cendate = getCenDate(cenyear);
+		// Get Married Date from Input Fields and re-calculate Marital Condition ============
+		var tbl = document.getElementById('tblSample');
+		for(var i=1; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
+			var tr = tbl.rows[i];
+			for(var j=2; j<tr.cells.length; j++){
+				if (j!=4 && j!=15) { 
+					// 4 and 15 are the marital condition columns (fields)
+					// therefore miss out all cols except these marital condition cols
+					continue;
+				} else {
+					var marrcond = (tr.cells[j].childNodes[0].value);
+					var mdate	 = (tr.cells[69].childNodes[0].value); // marriage date in Julian format
+					var yrsmarr  = (tr.cells[16].childNodes[0].value); // years married
+					var dob      = (tr.cells[11].childNodes[0].value); // DOB
+					var agemarr  = (tr.cells[20].childNodes[0].value); // years married
+
+					var one_day   = 1000*60*60*24;
+					var one_month = (365.26*one_day)/12;
+					var one_year  = 365.26*one_day;
+
+					// If valid positive Julian date used, then use this ===========
+					if (mdate>1721060) {
+						IJD = Math.floor(mdate);
+						L = Math.floor(IJD + 68569);
+						N = Math.floor(4 * L / 146097);
+						L = L - Math.floor((146097*N + 3)/4);
+						I = Math.floor(4000*(L + 1)/1461001);
+						L = L - Math.floor(1461 * I / 4) + 31;
+						J = Math.floor(80 * L / 2447);
+						K = L - Math.floor(2447 * J / 80);
+						L = Math.floor(J/11);
+						J = J + 2 - 12*L;
+						I = 100*(N - 49) + I + L;
+						mdate = (I+", "+J+", "+K);
+					}
+					madate=new Date(mdate);
+
+					if (cendate > madate) {
+						yrsmarr = Math.floor((cendate-madate)/one_year);
+						agemarr = Math.floor((madate-jsdob)/one_year);
+						marrcond = "M";
+					}else{
+						yrsmarr = "-";
+						agemarr = "-";
+						marrcond = "S";
+					}
+				}
+				tr.cells[j].childNodes[0].value = marrcond;
+				tr.cells[16].childNodes[0].value = yrsmarr;
+				if (marrcond=="S" && cenyear=="1930") {
+					tr.cells[20].childNodes[0].value = "-";
+				}
+
+
+			}
+		}
+		
+	
+	
+	}
+
+	// Change Age based on Census Year =====================================================
 	function changeAge(cenyear) {
-		var curryr = document.getElementById('prevYear');
-		if (curryr.value !="") {
-			var currcenyear=curryr.value;
+		var base1901 = "<?php echo $censyear; ?>";
+		var prevyr = document.getElementById('prevYear');
+		if (prevyr.value !="") {
+			var prevcenyear=prevyr.value;
+		} else {
+			// alert("cenyear = "+cenyear+" ... prevcenyear = base_"+base1901); 
 		}
-		var base1901 ="<?php echo $censyear; ?>";
-		if (currcenyear) {
-			var agecorr = (currcenyear-cenyear);
-		}else{
-			var agecorr = (base1901-cenyear);
+
+		// Calculate census date from the census year selected
+		// var basecendate = new Date(1901, 2, 31);
+		// UK CENSUS DATES
+		       if (cenyear == 1841) { var cendate = new Date(1841, 5, 06);    // 06 JUN 1841
+		} else if (cenyear == 1951) { var cendate = new Date(1851, 2, 30);    // 30 MAR 1851
+		} else if (cenyear == 1861) { var cendate = new Date(1861, 3, 07);    // 07 APR 1861
+		} else if (cenyear == 1871) { var cendate = new Date(1871, 3, 02);    // 02 APR 1871
+		} else if (cenyear == 1881) { var cendate = new Date(1881, 3, 03);    // 03 APR 1881
+		} else if (cenyear == 1891) { var cendate = new Date(1891, 3, 05);    // 05 APR 1891
+		} else if (cenyear == 1901) { var cendate = new Date(1901, 2, 31);    // 31 MAR 1901
+		} else if (cenyear == 1911) { var cendate = new Date(1911, 3, 02);    // 02 APR 1911
+		} else if (cenyear == 1921) { var cendate = new Date(1921, 3, 02);    // 02 APR 1921
+		// USA CENSUS DATES
+		} else if (cenyear == 1790) { var cendate = new Date(1790, 7, 02);    // 02 AUG 1790
+		} else if (cenyear == 1800) { var cendate = new Date(1800, 7, 04);    // 04 AUG 1800
+		} else if (cenyear == 1810) { var cendate = new Date(1810, 7, 06);    // 06 AUG 1810
+		} else if (cenyear == 1820) { var cendate = new Date(1820, 7, 07);    // 07 AUG 1820
+		} else if (cenyear == 1830) { var cendate = new Date(1830, 5, 01);    // 01 JUN 1830
+		} else if (cenyear == 1840) { var cendate = new Date(1840, 5, 01);    // 01 JUN 1840
+		} else if (cenyear == 1850) { var cendate = new Date(1850, 5, 01);    // 01 JUN 1850
+		} else if (cenyear == 1860) { var cendate = new Date(1860, 5, 01);    // 01 JUN 1860
+		} else if (cenyear == 1870) { var cendate = new Date(1870, 5, 01);    // 01 JUN 1870
+		} else if (cenyear == 1880) { var cendate = new Date(1880, 5, 01);    // 01 JUN 1880
+		} else if (cenyear == 1890) { var cendate = new Date(1890, 5, 01);    // 01 JUN 1890
+		} else if (cenyear == 1900) { var cendate = new Date(1900, 5, 01);    // 01 JUN 1900
+		} else if (cenyear == 1910) { var cendate = new Date(1910, 3, 15);    // 15 APR 1910
+		} else if (cenyear == 1920) { var cendate = new Date(1920, 0, 01);    // 01 JAN 1920
+		} else if (cenyear == 1930) { var cendate = new Date(1930, 3, 01);    // 01 APR 1930
+		} else if (cenyear == 1940) { var cendate = new Date(1940, 3, 01);    // 01 APR 1940
+		// Default Date
+		} else {
+			var cendate = new Date(1901, 2, 31); 
 		}
+		
+		// UK PREVIOUS CENSUS DATES
+		       if (prevcenyear == 1841) { var prevcendate = new Date(1841, 5, 06);    // 06 JUN 1841
+		} else if (prevcenyear == 1951) { var prevcendate = new Date(1851, 2, 30);    // 30 MAR 1851
+		} else if (prevcenyear == 1861) { var prevcendate = new Date(1861, 3, 07);    // 07 APR 1861
+		} else if (prevcenyear == 1871) { var prevcendate = new Date(1871, 3, 02);    // 02 APR 1871
+		} else if (prevcenyear == 1881) { var prevcendate = new Date(1881, 3, 03);    // 03 APR 1881
+		} else if (prevcenyear == 1891) { var prevcendate = new Date(1891, 3, 05);    // 05 APR 1891
+		} else if (prevcenyear == 1901) { var prevcendate = new Date(1901, 2, 31);    // 31 MAR 1901
+		} else if (prevcenyear == 1911) { var prevcendate = new Date(1911, 3, 02);    // 02 APR 1911
+		// USA PREVIOUS CENSUS DATES
+		} else if (prevcenyear == 1790) { var prevcendate = new Date(1790, 7, 02);    // 02 AUG 1790
+		} else if (prevcenyear == 1800) { var prevcendate = new Date(1800, 7, 04);    // 04 AUG 1800
+		} else if (prevcenyear == 1810) { var prevcendate = new Date(1810, 7, 06);    // 06 AUG 1810
+		} else if (prevcenyear == 1820) { var prevcendate = new Date(1820, 7, 07);    // 07 AUG 1820
+		} else if (prevcenyear == 1830) { var prevcendate = new Date(1830, 5, 01);    // 01 JUN 1830
+		} else if (prevcenyear == 1840) { var prevcendate = new Date(1840, 5, 01);    // 01 JUN 1840
+		} else if (prevcenyear == 1850) { var prevcendate = new Date(1850, 5, 01);    // 01 JUN 1850
+		} else if (prevcenyear == 1860) { var prevcendate = new Date(1860, 5, 01);    // 01 JUN 1860
+		} else if (prevcenyear == 1870) { var prevcendate = new Date(1870, 5, 01);    // 01 JUN 1870
+		} else if (prevcenyear == 1880) { var prevcendate = new Date(1880, 5, 01);    // 01 JUN 1880
+		} else if (prevcenyear == 1890) { var prevcendate = new Date(1890, 5, 01);    // 01 JUN 1890
+		} else if (prevcenyear == 1900) { var prevcendate = new Date(1900, 5, 01);    // 01 JUN 1900
+		} else if (prevcenyear == 1910) { var prevcendate = new Date(1910, 3, 15);    // 15 APR 1910
+		} else if (prevcenyear == 1920) { var prevcendate = new Date(1920, 0, 01);    // 01 JAN 1920
+		} else if (prevcenyear == 1930) { var prevcendate = new Date(1930, 3, 01);    // 01 APR 1930
+		} else if (prevcenyear == 1940) { var prevcendate = new Date(1940, 3, 01);    // 01 APR 1940
+		// Default Date
+		} else {
+			var prevcendate = new Date(1901, 2, 31); 
+		}
+
+		var one_day   = 1000*60*60*24;
+		var one_month = (365.26*one_day)/12;
+		var one_year  = 365.26*one_day;
+
+		// Get Age from Input Fields and re-calculate =======================================
 		var tbl = document.getElementById('tblSample');
 		for(var i=1; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
 			var tr = tbl.rows[i];
@@ -97,8 +263,47 @@ global $pgv_lang, $TEXT_DIRECTION;
 					tr.cells[j].childNodes[0].value=null
 				}else{
 					var ageat1901 = (tr.cells[j].childNodes[0].value);
-					var newage=(ageat1901-agecorr);
-					// alert (newage);
+					var bage	  = (tr.cells[68].childNodes[0].value);
+
+					// If valid Julian date used, then use this instead ===========
+					if (bage>1721060) {
+						IJD = Math.floor(bage);
+						L = Math.floor(IJD + 68569);
+						N = Math.floor(4 * L / 146097);
+						L = L - Math.floor((146097*N + 3)/4);
+						I = Math.floor(4000*(L + 1)/1461001);
+						L = L - Math.floor(1461 * I / 4) + 31;
+						J = Math.floor(80 * L / 2447);
+						K = L - Math.floor(2447 * J / 80);
+						L = Math.floor(J/11);
+						J = J + 2 - 12*L;
+						I = 100*(N - 49) + I + L;
+						bage = (I+", "+J+", "+K);
+					}
+					
+					// Caculate Age on the selected Census Date ===================
+					bage2 = new Date(bage);
+					if (bage2 != "Invalid Date") {
+						var newage = (cendate-bage2);
+						if (Math.floor(newage/one_year) < 0) {
+							newage = "-";
+						} else if (Math.floor(newage/one_year) > 0) {
+							newage = Math.floor(newage/one_year);
+						} else if (Math.floor(newage/one_day) > 31) {
+							newage = Math.floor(newage/one_month)+"m";
+						} else if (Math.floor(newage/one_day) < 31) {
+							newage = Math.floor(newage/one_day)+"d";
+						} else if (Math.floor(newage/one_day) < 0)  {
+							newage = "-";
+						} else {
+							newage = "nn";
+						}
+						if (newage == "nn") {
+							newage = Math.floor(cendate-bage2/one_year);
+						}
+					} else {
+						newage = "-";
+					}
 					tr.cells[j].childNodes[0].value=newage;
 				}
 			}
@@ -114,10 +319,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 		prev.value = cenyear;
 	}
 	
-	
+	// Add or Remove columns ===========================
 	function changeCols(cenyear) {
-
-		// Add or Remove columns ===========================
 		var cens_ctry = document.getElementById('censCtry').value;
 		
 		var cols_0 = document.getElementsByName('col_0');
@@ -188,6 +391,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 		var cols_65 = document.getElementsByName('col_65');
 		var cols_66 = document.getElementsByName('col_66');
 		var cols_67 = document.getElementsByName('col_67');
+		var cols_68 = document.getElementsByName('col_68');
 
 
 		var flip_3 = "none";
@@ -255,6 +459,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 		var flip_65 = "none";
 		var flip_66 = "none";
 		var flip_67 = "none";
+		var flip_68 = "none";
 		
 		if (cens_ctry=="UK") {
 		
@@ -542,8 +747,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 			cols_65[i].style.display = flip_65;
 			cols_66[i].style.display = flip_66;
 			cols_67[i].style.display = flip_67;
+			cols_68[i].style.display = flip_68;
 		}
-		
 	}
 	
 /*
@@ -609,7 +814,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 	<div class="cens_sour_year">
 		<span><?php echo $pgv_lang["cens_year"]; ?><br /></span>
 		<select onchange =	"if( this.options[this.selectedIndex].value!='') {
-								changeYear(this.options[this.selectedIndex].value);
+								preview();
+								changeYear(this.options[this.selectedIndex].value); 
 							}" 
 			id="censYear" name="censYear">
 		</select>
