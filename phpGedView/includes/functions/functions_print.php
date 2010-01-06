@@ -874,21 +874,28 @@ function print_contact_links() { // This function is used by 3rd party themes.
 function contact_links() {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
 
-	$support_link=user_contact_link($WEBMASTER_EMAIL, $SUPPORT_METHOD);
-	$contact_link=user_contact_link($CONTACT_EMAIL,   $CONTACT_METHOD);
-	if (!$support_link) {
-		$support_link=$contact_link;
-	}
-	if (!$contact_link) {
-		$contact_link=$support_link;
-	}
-	if (!$support_link) {
+	$supportLink = user_contact_link($WEBMASTER_EMAIL, $SUPPORT_METHOD);
+	$contactLink = user_contact_link($CONTACT_EMAIL,   $CONTACT_METHOD);
+
+	if (!$supportLink && !$contactLink) {
 		return '';
 	}
-	if ($support_link==$contact_link) {
-		return '<div class="contact_links">'.$pgv_lang['for_all_contact'].' '.$support_link.'</div>';
+
+	if ($supportLink==$contactLink) {
+		return '<div class="contact_links">'.$pgv_lang['for_all_contact'].' '.$supportLink.'</div>';
 	} else {
-		return '<div class="contact_links">'.$pgv_lang['for_support'].' '.$support_link.'<br />'.$pgv_lang['for_contact'].' '.$contact_link.'</div>';
+		$returnText = '<div class="contact_links">';
+		if ($supportLink) {
+			$returnText .= $pgv_lang['for_support'].' '.$supportLink;
+			if ($contactLink) {
+				$returnText .= '<br />';
+			}
+		}
+		if ($contactLink) {
+			$returnText .= $pgv_lang['for_contact'].' '.$contactLink;
+		}
+		$returnText .= '</div>';
+		return $returnText;
 	}
 }
 
@@ -1917,7 +1924,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				echo " ", getLRM(), "($pid2)", getLRM();
 			}
 			if ($TEXT_DIRECTION == "ltr") {
-				echo getLRM(), "]</a>"; 
+				echo getLRM(), "]</a>";
 			} else {
 				echo getRLM(), "]</a>";
 			}
