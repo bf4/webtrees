@@ -793,9 +793,9 @@ function get_sosa_name($sosa) {
 			$addname = "";
 			$father = $pgv_lang["father"];
 			$mother = $pgv_lang["mother"];
-			$greatf = $pgv_lang["sosa_22"];
-			$greatm = $pgv_lang["sosa_21"];
-			$of = $pgv_lang["sosa_23"];
+			$greatf = $pgv_lang["sosa_greatfather"];
+			$greatm = $pgv_lang["sosa_greatmother"];
+			$of = $pgv_lang["sosa_of"];
 			$grandfather = $pgv_lang["sosa_4"];
 			$grandmother = $pgv_lang["sosa_5"];
 	//		$father = "Aba";
