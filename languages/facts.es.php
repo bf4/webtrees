@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ $factarray["FILE"]	= "Fichero externo";
 $factarray["FORM"]	= "Formato";
 $factarray["GIVN"]	= "Nombre de pila";
 $factarray["GRAD"]	= "Graduación";
-$factarray["HUSB"]  = "Esposo";
+$factarray["HUSB"]  	= "Esposo";
 $factarray["IDNO"]	= "Numero de identificación";
 $factarray["IMMI"]	= "Immigración";
 $factarray["LEGA"]	= "Herencia";
@@ -153,14 +153,14 @@ $factarray["TEXT"]	= "Texto";
 $factarray["TIME"]	= "Hora";
 $factarray["TITL"]	= "Título";
 $factarray["TYPE"]	= "Tipo";
-$factarray["WIFE"]  = "Esposa";
+$factarray["WIFE"]  	= "Esposa";
 $factarray["WILL"]	= "Testamento";
 $factarray["_EMAIL"]	= "Correo electrónico";
 $factarray["EMAIL"]	= "Correo electrónico";
 $factarray["_TODO"]	= "Pendiente de hacer";
 $factarray["_UID"]	= "Identificador universal";
 $factarray["_PRIM"]	= "Imagen resaltada";
-$factarray["_DBID"] = "ID en la base de datos enlazada";
+$factarray["_DBID"] 	= "ID en la base de datos enlazada";
 
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Fecha del cambio de estado";
@@ -209,23 +209,50 @@ $factarray["FAMS:SLGS:TEMP"] = "Templo del sellamiento SUD con el cónyuge";
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Lugar de nacimiento";
 $factarray["BIRT:DATE"] = "Fecha de nacimiento";
+$factarray["BIRT:SOUR"] = "Fuente para el nacimiento";
 $factarray["DEAT:PLAC"] = "Lugar de defunción";
 $factarray["DEAT:DATE"] = "Fecha de defunción";
+$factarray["DEAT:SOUR"] = "Fuente para la defunción";
 $factarray["CHR:PLAC"] = "Lugar del bautismo";
 $factarray["CHR:DATE"] = "Fecha de bautismo";
+$factarray["CHR:SOUR"] = "Fuente para el bautismo";
+$factarray["CONF:PLAC"] = "Lugar de la confirmación";
+$factarray["CONF:DATE"] = "Fecha de la confirmación";
+$factarray["CONF:SOUR"] = "Fuente para la confirmación";
 $factarray["BAPM:PLAC"] = "Lugar del bautismo adulto";
 $factarray["BAPM:DATE"] = "Fecha del bautismo adulto";
+$factarray["BAPM:SOUR"] = "Fuente para el bautismo";
+$factarray["_BRTM:PLAC"] = "Lugar del Brit Mila";
+$factarray["_BRTM:DATE"] = "Fecha del Brit Mila";
+$factarray["_BRTM:SOUR"] = "Fuente para el Brit Mila";
+$factarray["BARM:PLAC"] = "Lugar del Bar Mitzvah";
+$factarray["BARM:DATE"] = "Fecha del Bar Mitzvah";
+$factarray["BARM:SOUR"] = "Fuente para el Bar Mitzvah";
+$factarray["BASM:PLAC"] = "Lugar del Mitzvah Place";
+$factarray["BASM:DATE"] = "Fecha del Bas Mitzvah";
+$factarray["BASM:SOUR"] = "Fuente para el Bas Mitzvah";
 $factarray["BURI:PLAC"] = "Lugar del entierro";
 $factarray["BURI:DATE"] = "Fecha del entierro";
+$factarray["BURI:SOUR"] = "Fuente para el entierro";
+$factarray["FCOM:PLAC"] = "Lugar de la primera comunión";
+$factarray["FCOM:DATE"] = "Fecha de la primera comunión";
+$factarray["FCOM:SOUR"] = "Fuente para la primera comunión";
+$factarray["MARB:PLAC"] = "Lugar de las amonestaciones";
+$factarray["MARB:DATE"] = "Fecha de las amonestaciones";
+$factarray["MARB:SOUR"] = "Fuente para las amonestaciones";
 $factarray["MARR:PLAC"] = "Lugar del matrimonio";
 $factarray["MARR:DATE"] = "Fecha del matrimonio";
+$factarray["MARR:SOUR"] = "Fuente para el matrimonio";
+$factarray["ENGA:PLAC"] = "Lugar del compromiso";
+$factarray["ENGA:DATE"] = "Fecha del compromiso";
+$factarray["ENGA:SOUR"] = "Fuente para el compromiso";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Médico";
 $factarray["_DEG"]	= "Grado";
 $factarray["_MILT"]	= "Servicio Militar";
 $factarray["_SEPR"]	= "Separado";
-$factarray["_DETS"]	= "Fallecimiento de un cónyuge";
+$factarray["_DETS"]	= "Defunción de un cónyuge";
 $factarray["CITN"]	= "Ciudadanía";
 $factarray["_FA1"]	= "Acontecimiento 1";
 $factarray["_FA2"]	= "Acontecimiento 2";
@@ -309,7 +336,7 @@ $factarray["MARR_UNKNOWN"] = "Tipo desconocido de pareja";
 $factarray["_HNM"] = "Nombre hebreo";
 
 // Pseudo-facts for relatives
-$factarray["_DEAT_SPOU"] = "Fallecimiento de un cónyuge";
+$factarray["_DEAT_SPOU"] = "Defunción de un cónyuge";
 $factarray["_BURI_SPOU"] = "Entierro de un cónyuge";
 $factarray["_CREM_SPOU"] = "Incineración de un cónyuge";
 
