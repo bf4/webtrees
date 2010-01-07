@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: [ 2927240 ] 4.2.3 ... un-def var gid when importing (fisharebest)
  - Added: [ 1863843 ] Pedigree Google Map (kiwi_pgv/wooc)
  - Changed: UI for user list (volschin)
  - Added: Silhouette images support (kiwi_pgv/wooc)
