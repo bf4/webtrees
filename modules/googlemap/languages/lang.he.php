@@ -3,7 +3,7 @@
  * Hebrew Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -148,5 +148,25 @@ $pgv_lang["placecheck_options"]     	= "אופציות של רשימת בדיק�
 $pgv_lang["placecheck_filter_text"] 	= "תציג אופציות של הפילטר";
 $pgv_lang["placecheck_match"] 	= "כלול מקומות עם התאמה מלאה: ";
 $pgv_lang["placecheck_lati"] 		= "קו רוחב";
-$pgv_lang["placecheck_long"] 		= "קו אורך";
+$pgv_lang["placecheck_long"] 	= "קו אורך";
+
+// Pedigree map
+$pgv_lang["pedigree_map"]		= "מפת שושלת";
+$pgv_lang["pm_grandparent"] 	= "Grandparent";//@@
+$pgv_lang["pm_grandmother"] 	= "סבתא";
+$pgv_lang["pm_grandfather"] 		= "סבא";
+$pgv_lang["pm_gt"] 			= "Gt";//@@ cannot work correctly in languages
+$pgv_lang["pm_zoom_in"]		= "Zoom&nbsp;in";//@@
+$pgv_lang["pm_zoom_out"]		= "Zoom&nbsp;out";//@@
+$pgv_lang["zoom_in_here"]		= "Zoom&nbsp;in&nbsp;here";//@@
+$pgv_lang["zoom_out_here"]		= "Zoom&nbsp;out&nbsp;here";//@@
+$pgv_lang["centre_map"]		= "Centre&nbsp;map&nbsp;here";//@@
+$pgv_lang["pm_individuals_displayed"]	= "אנשים מוצגים מתוך מכסימום אפשרי של ";
+$pgv_lang["pm_missing_birth"]	= "קואורדינטות של מקום הלידה חסרות";
+$pgv_lang["pm_is"]			= "";
+$pgv_lang["pm_are"]			= "";
+$pgv_lang["pm_from"]			= "עבור";
+$pgv_lang["pm_for"]			= "עבור";
+$pgv_lang["pm_gens"]		= "דורות";
+$pgv_lang["pm_root"]			= "אדם המוצא";
 ?>
