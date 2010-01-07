@@ -548,22 +548,30 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, Y
 
 
 	// -- Temporary until insert variable are corrected ----------------
-		// var ibirthpl = '';
-		// var fbirthpl = '';
-		// var mbirthpl = '';
+		 var ibirthpl = '';
+	//	 var fbirthpl = '';
+	//	 var mbirthpl = '';
 	// -----------------------------------------------------------------
 
 		// Calculate birth places --------------------------------------
 		currcenyear = document.getElementById('censYear').value;
 		currcenctry = document.getElementById('censCtry').value;
-
+		
+		// DEBUG ==========================================================
+		// alert("IBP = "+birthpl+"\nFBP = "+fbirthpl+"\nMBP = "+mbirthpl);
+		// DEBUG ==========================================================
+		
 		if (num>0) {
 			birthpl  = birthpl.split(', ');
-			birthpl  = birthpl.reverse();
+			ibirthpl = birthpl.reverse();
 			fbirthpl = fbirthpl.split(', ');
 			fbirthpl = fbirthpl.reverse();
 			mbirthpl = mbirthpl.split(', ');
 			mbirthpl = mbirthpl.reverse();
+			
+		// DEBUG ==========================================================
+		// alert("IBP = "+birthpl+"\nFBP = "+fbirthpl+"\nMBP = "+mbirthpl);
+		// DEBUG ==========================================================
 		
 			// get Chapman Code for US ------------------
 			if (birthpl[0] == "United States" || birthpl[0] == "United States Of America" || birthpl[0] == "USA") {
@@ -588,12 +596,19 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, Y
 				var mbirthpl = getChapmanCode(mbirthpl[0]);
 			}
 
-			// get birthplace for UK --------------------
-			if (birthpl[1]==null || birthpl[2]==null) {
+			// get birthplace for UK (check all countries in UK) ------------------------------------------------------------------------------
+			if (birthpl[0]==null) {
 				birthpl = '-';
-			} else {
+			} else if (birthpl[0]!="England" && birthpl[0]!="Scotland" && birthpl[0]!="Wales" && birthpl[0]!="Northern Ireland" && birthpl[0]!="UK") {
+				birthpl = birthpl[0]+", "+birthpl[1];
+			}else {
 				birthpl = birthpl[1]+", "+birthpl[2];
 			}
+			
+		// DEBUG ==========================================================
+		// alert("IBP = "+birthpl+"\nFBP = "+fbirthpl+"\nMBP = "+mbirthpl);
+		// DEBUG ==========================================================
+		
 		}
 
 	var cyear_a=document.getElementById('censYear'); 

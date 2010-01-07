@@ -1331,7 +1331,24 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						$num = count($children);
 						$marrdate = $family->getMarriageDate();
 						
-						// Husband ------------------------------
+							$pHusbFBP = $husb->getXref();
+							$pHusbMBP = $wife->getXref();
+/*
+						//-- Build Husbands Parent Family --------------------------------------
+						$gparent=Person::getInstance($husb->getXref());
+						$parfams = $gparent->getChildFamilies();
+						foreach($parfams as $famid=>$pfamily) {
+							if (!is_null($pfamily)) {
+								$phusb = $pfamily->getHusband($gparent);
+								$pwife = $pfamily->getWife($gparent);
+							}
+							//$pHusbFBP = $phusb->getBirthPlace();
+							//$pHusbMBP = $pwife->getBirthPlace();
+							$pHusbFBP = $phusb->getXref();
+							$pHusbMBP = $pwife->getXref();
+						}
+*/
+						//-- Husband ------------------------------
 						if ($husb || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") { 
 								$title = $pgv_lang["familybook_chart"].": ".$famid;
@@ -1385,8 +1402,10 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$parentlinks .= "'Y'".",";													// Y/M/D	=	Age in Years/Months/Days
 									$parentlinks .= "''".",";													// occu 	=	Occupation
 									$parentlinks .= "'".PrintReady($husb->getBirthPlace())."'".",";				// birthpl	=	Individuals Birthplace
-									$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// fbirthpl	=	Fathers Birthplace
-									$parentlinks .= "'UNK, UNK, UNK, UNK'";										// mbirthpl	=	Mothers Birthplace
+									$parentlinks .= "'".$pHusbFBP."'".",";										// fbirthpl	=	Fathers Birthplace
+									$parentlinks .= "'".$pHusbMBP."'";											// mbirthpl	=	Mothers Birthplace
+									//$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// fbirthpl	=	Fathers Birthplace
+									//$parentlinks .= "'UNK, UNK, UNK, UNK'";										// mbirthpl	=	Mothers Birthplace
 									$parentlinks .= ");\">";
 									$parentlinks .= strip_tags(PrintReady($husb->getFullName()));
 									$parentlinks .= "</a>";
@@ -1397,8 +1416,22 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								$natdad = "yes";
 							}
 						}
-						
-						// Wife ------------------------------
+/*
+						//-- Build Wifes Parent Family --------------------------------------
+						$gparent=Person::getInstance($wife->getXref());
+						$parfams = $gparent->getChildFamilies();
+						foreach($parfams as $famid=>$pfamily) {
+							if (!is_null($pfamily)) {
+								$phusb = $pfamily->getHusband($gparent);
+								$pwife = $pfamily->getWife($gparent);
+							}
+							//$pWifeFBP = $phusb->getBirthPlace();
+							//$pWifeMBP = $pwife->getBirthPlace();
+							$pWifeFBP = $phusb->getXref();
+							$pWifeMBP = $pwife->getXref();
+						}
+*/
+						//-- Wife ------------------------------
 						if ($wife || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") { 
 								$title = $pgv_lang["familybook_chart"].": ".$famid;
@@ -1425,41 +1458,43 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$marn  = $nam[1]['surname'];
 									}
 									$parentlinks .= "<a href=\"javascript:insertRowToTable(";
-									$parentlinks .=	"'".PrintReady($wife->getXref())."',";						// pid		=	PID
-									$parentlinks .=	"'".strip_tags(PrintReady($fulln))."',";					// nam		=	Name
+									$parentlinks .=	"'".PrintReady($wife->getXref())."',";							// pid		=	PID
+									$parentlinks .=	"'".strip_tags(PrintReady($fulln))."',";						// nam		=	Name
 									if ($married>=0 && isset($nam[1])){
-										$parentlinks .= "'".strip_tags(PrintReady($fulmn))."',";				// mnam		=	Full Married Name
+										$parentlinks .= "'".strip_tags(PrintReady($fulmn))."',";					// mnam		=	Full Married Name
 									} else {
-										$parentlinks .= "'".strip_tags(PrintReady($fulln))."',";				// mnam		=	Full Name
+										$parentlinks .= "'".strip_tags(PrintReady($fulln))."',";					// mnam		=	Full Name
 									}
 									
 									if ($currpid=="Wife" || $currpid=="Husband") {
-										$parentlinks .= "'Mother in Law',";										// label	=	1st Gen Female Relationship
+										$parentlinks .= "'Mother in Law',";											// label	=	1st Gen Female Relationship
 									}else{
-										$parentlinks .= "'Grand-Mother',";										// label	=	2st Gen Female Relationship
+										$parentlinks .= "'Grand-Mother',";											// label	=	2st Gen Female Relationship
 									}
-									$parentlinks .=	"'".PrintReady($wife->getSex())."',";						// sex		=	Gender
-									$parentlinks .=	"'-'".",";													// cond		=	Condition (Married etc)
+									$parentlinks .=	"'".PrintReady($wife->getSex())."',";							// sex		=	Gender
+									$parentlinks .=	"'-'".",";														// cond		=	Condition (Married etc)
 									if ($marrdate) {
-										$parentlinks .= "'".(($marrdate->minJD()+$marrdate->maxJD())/2)."',";	// dom = Date of Marriage (Julian)
+										$parentlinks .= "'".(($marrdate->minJD()+$marrdate->maxJD())/2)."',";		// dom = Date of Marriage (Julian)
 									}
 									$parentlinks .= "'".(($wife->getBirthDate()->minJD()+$wife->getBirthDate()->maxJD())/2)."',";	// dob	=	Date of Birth
 									// $parentlinks .=	"'".PrintReady($wife->getbirthyear())."',";					// yob		=	Year of Birth
 									if ($wife->getbirthyear()>=1) {
-										$parentlinks .=	"'".PrintReady($censyear-$wife->getbirthyear())."',";	// age		= 	Census Year - Year of Birth
+										$parentlinks .=	"'".PrintReady($censyear-$wife->getbirthyear())."',";		// age		= 	Census Year - Year of Birth
 									}else{
-										$parentlinks .=	"''".",";												// age		= 	Undefined
+										$parentlinks .=	"''".",";													// age		= 	Undefined
 									}
-									$parentlinks .=	"'Y'".",";													// Y/M/D	=	Age in Years/Months/Days
-									$parentlinks .=	"''".",";													// occu 	=	Occupation
-									$parentlinks .= "'".PrintReady($wife->getBirthPlace())."'".",";				// birthpl	=	Individuals Birthplace
-									$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// fbirthpl	=	Fathers Birthplace
-									$parentlinks .= "'UNK, UNK, UNK, UNK'";										// mbirthpl	=	Mothers Birthplace
+									$parentlinks .=	"'Y'".",";														// Y/M/D	=	Age in Years/Months/Days
+									$parentlinks .=	"''".",";														// occu 	=	Occupation
+									$parentlinks .= "'".PrintReady($wife->getBirthPlace())."'".",";					// birthpl	=	Individuals Birthplace
+									//$parentlinks .= "'".$pWifeFBP."'".",";										// fbirthpl	=	Fathers Birthplace
+									//$parentlinks .= "'".$pWifeMBP."'";											// mbirthpl	=	Mothers Birthplace
+									$parentlinks .= "'UNK, UNK, UNK, UNK'".",";										// fbirthpl	=	Fathers Birthplace
+									$parentlinks .= "'UNK, UNK, UNK, UNK'";											// mbirthpl	=	Mothers Birthplace
 									$parentlinks .=	");\">";
 									if ($married>=0 && isset($nam[1])){
-										$parentlinks .= strip_tags(PrintReady($fulmn));			 										// Full Married Name
+										$parentlinks .= strip_tags(PrintReady($fulmn));			 					// Full Married Name
 									} else {
-										$parentlinks .= strip_tags(PrintReady($fulln));							 						// Full Name
+										$parentlinks .= strip_tags(PrintReady($fulln));							 	// Full Name
 									}
 									$parentlinks .= "</a>";
 								}else{
@@ -1564,7 +1599,21 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						}
 					}
 				}
-				
+				/*
+						//-- Build Spouses Parent Family --------------------------------------
+						$gparent=Person::getInstance($husb->getXref());
+						$spousefams = $gparent->getSpouseFamilies();
+						foreach($spousefams as $famid=>$pfamily) {
+							if (!is_null($pfamily)) {
+								$phusb = $pfamily->getHusb($gparent);
+								$pwife = $pfamily->getWife($gparent);
+							}
+							//$pSpouseFBP = $phusb->getBirthPlace();
+							//$pSpouseMBP = $pwife->getBirthPlace();
+							$pSpouseFBP = $phusb->getXref();
+							$pSpouseMBP = $pwife->getXref();
+						}
+				*/
 				// Spouse Families -------------------------------------- @var $family Family 
 				$fams = $person->getSpouseFamilies();
 				foreach($fams as $famid=>$family) {
@@ -1574,13 +1623,17 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						$num = count($children);
 						$marrdate = $family->getMarriageDate();
 						$married  = GedcomDate::Compare($censdate, $marrdate);
-						// Spouse ------------------------------
+
+
+
+						//-- Spouse ------------------------------
 						if ($spouse || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
 								$title = $pgv_lang["familybook_chart"].": ".$famid;
 							}else{
 								$title = $famid." :".$pgv_lang["familybook_chart"];
 							}
+
 							if ($spouse) {
 								if ($TEXT_DIRECTION=="ltr") { 
 									$title = $pgv_lang["indi_info"].": ".$spouse->getXref();
@@ -1635,6 +1688,8 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$spouselinks .=	"'Y'".",";														// Y/M/D	=	Age in Years/Months/Days
 									$spouselinks .=	"''".",";														// occu 	=	Occupation
 									$spouselinks .= "'".PrintReady($spouse->getBirthPlace())."'".",";				// birthpl	=	Individuals Birthplace
+									//$spouselinks .= "'".$pSpouseFBP."'".",";										// fbirthpl	=	Fathers Birthplace
+									//$spouselinks .= "'".$pSpouseMBP."'";											// mbirthpl	=	Mothers Birthplace
 									$spouselinks .= "'UNK, UNK, UNK, UNK'".",";										// fbirthpl	=	Fathers Birthplace
 									$spouselinks .= "'UNK, UNK, UNK, UNK'";											// mbirthpl	=	Mothers Birthplace
 									$spouselinks .=	");\">";

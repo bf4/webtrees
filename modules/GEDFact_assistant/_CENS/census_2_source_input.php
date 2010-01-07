@@ -796,7 +796,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 		</script>
 		<select id="censCtry" name="censCtry">
 			<option value="UK">UK</option>
-			<option value="USA" >USA</option>
+			<option value="USA">USA</option>
 		</select>
 	</div>
 	<!--
