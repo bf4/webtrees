@@ -1,6 +1,6 @@
 <?php
 /**
- * English Language file for PhpGedView.
+ * Hebrew Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2010  PGV Development Team. All right reserved.
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage GoogleMap
- * @version $Id: help_text.en.php 6661 2010-01-03 14:15:53Z wooc $
+ * @version $Id$
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
