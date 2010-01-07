@@ -710,7 +710,7 @@ function import_record($gedrec, $ged_id, $update) {
 		} elseif (preg_match('/\n1 ABBR (.+)/', $gedrec, $match)) {
 			$name=$match[1];
 		} else {
-			$name=$gid;
+			$name=$xref;
 		}
 		if (strpos($gedrec, "\n1 _DBID")) {
 			$_dbid='Y';
