@@ -33,7 +33,7 @@ require  PGV_ROOT.'includes/functions/functions_editlang.php';
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
 if (!PGV_USER_IS_ADMIN) {
-	print "Please close this window and do a Login in the former window first...";
+	echo "Please close this window and do a Login in the former window first...";
 	exit;
 }
 
@@ -91,70 +91,59 @@ case "lang":
 }
 
 if ($action != "save") {
-	print "<div align=\"center\"><center>";
-	print "<table class=\"facts_table\">";
-	print "  <tr>";
-	print "    <td class=\"facts_label03\">";
-	print_text("editlang_help");
-	print "    </td>";
-	print "  </tr>";
-	print "  <tr>";
-	print "    <td class=\"facts_value\" style=\"text-align:center; \">" . "(" . substr($lang_filename, strpos($lang_filename, "/") + 1) . ")" . "</td>";
-	print "  </tr>";
-	print "</table>";
+	echo '<div align="center"><center>';
+	echo '<table class="facts_table">';
+	echo '<tr><td class="facts_label03">', print_text("editlang_help"), '</td></tr>';
+	echo '<tr><td class="facts_value" style="text-align:center; ">', '(', substr($lang_filename, strpos($lang_filename, "/") + 1), ')', '</td></tr>';
+	echo '</table>';
 
-	print "<form name=\"Form1\" method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">";
-	print "<input type=\"hidden\" name=\"".session_name()."\" value=\"".session_id()."\" />";
-	print "<input type=\"hidden\" name=\"action\" value=\"save\" />";
-	print "<input type=\"hidden\" name=\"anchor\" value=\"".$anchor."\" />";
-	print "<input type=\"hidden\" name=\"language2\" value=\"" . $language2 . "\" />";
-	print "<input type=\"hidden\" name=\"ls01\" value=\"" . $ls01 . "\" />";
-	print "<input type=\"hidden\" name=\"ls02\" value=\"" . $ls02 . "\" />";
-	print "<input type=\"hidden\" name=\"file_type\" value=\"" . $file_type . "\" />";
+	echo '<form name="Form1" method="post" action="', $_SERVER['PHP_SELF'], '">';
+	echo '<input type="hidden" name="', session_name(), '" value="', session_id(), '"/>';
+	echo '<input type="hidden" name="action" value="save"/>';
+	echo '<input type="hidden" name="anchor" value="', $anchor, '"/>';
+	echo '<input type="hidden" name="language2" value="', $language2, '"/>';
+	echo '<input type="hidden" name="ls01" value="', $ls01, '"/>';
+	echo '<input type="hidden" name="ls02" value="', $ls02, '"/>';
+	echo '<input type="hidden" name="file_type" value="', $file_type, '"/>';
 
-	print "<table class=\"facts_table\">";
-	print "<tr>";
-	print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">";
+	echo '<table class="facts_table">';
+	echo '<tr><td class="facts_label03" style="color: blue; font-weight: bold; ">';
 	print_text("original_message");
-	print "</td>";
-	print "</tr>";
-	print "<tr>";
-	print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-	print "<strong style=\"color: red\">|</strong>" . mask_all(find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>";
-	print "</td>";
-	print "</tr>";
-	print "</table>";
-	print "<br />";
-	print "<table class=\"facts_table\">";
-	print "<tr>";
-	print "<td class=\"facts_label03\" style=\"color: red; font-weight: bold; \" >";
+	echo '</td></tr>';
+	echo '<tr>';
+	echo '<td class="facts_value" style="text-align:center; color: blue" >';
+	echo '<strong style="color: red">|</strong>', mask_all(find_in_file($ls01, $lang_filename_orig)), '<strong style="color: red">|</strong>';
+	echo '</td>';
+	echo '</tr>';
+	echo '</table>';
+	echo '<br />';
+	echo '<table class="facts_table">';
+	echo '<tr>';
+	echo '<td class="facts_label03" style="color: red; font-weight: bold; ">';
 	print_text("message_to_edit");
-	print "</td>";
-	print "</tr>";
-	print "<tr>";
-	print "<td class=\"facts_value\" style=\"text-align:center; \" >";
-	print "<textarea rows=\"10\" name=\"new_message\" cols=\"75\" style=\"color: red\" >";
-	if ($ls02>0) print mask_all(find_in_file($ls02, $lang_filename));
-	print "</textarea>";
-	print "</td>";
-	print "</tr>";
-	print "</table>";
-	print "<br />";
-	print "<table class=\"facts_table\">";
-	print "<tr>";
-	print "<td class=\"facts_value\" style=\"text-align:center; \" >";
-	print "<input type=\"submit\" value=\"";
-	print_text("lang_save");
-	print "\" />";
-	print "&nbsp;&nbsp;";
-	print "<input type=\"submit\" value=\"";
-	print_text("cancel");
-	print "\"" . " onclick=\"self.close()\" />";
-	print "</td>";
-	print "</tr>";
-	print "</table>";
-	print "</form>";
-	print "</center></div>";
+	echo '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td class="facts_value" style="text-align:center; ">';
+	echo '<textarea rows="10" name="new_message" cols="75" style="color: red">';
+	if ($ls02>0) {
+		echo mask_all(find_in_file($ls02, $lang_filename));
+	}
+	echo '</textarea>';
+	echo '</td>';
+	echo '</tr>';
+	echo '</table><br />';
+	echo '<table class="facts_table">';
+	echo '<tr>';
+	echo '<td class="facts_value" style="text-align:center; ">';
+	echo '<input type="submit" value="', print_text("lang_save"), '"/>';
+	echo '&nbsp;&nbsp;';
+	echo '<input type="submit" value="', print_text("cancel"), '"', ' onclick="self.close()" />';
+	echo '</td>';
+	echo '</tr>';
+	echo '</table>';
+	echo '</form>';
+	echo '</center></div>';
 }
 
 if ($action == "save") {
@@ -167,8 +156,11 @@ if ($action == "save") {
 	// $file_type defines which language file
 
 	//$new_message = safe_POST('new_message'); 	//generates errors while editing texts contains brackets
-	if (isset($_POST['new_message'])) $new_message = $_POST['new_message'];
-	else $new_message = '';
+	if (isset($_POST['new_message'])) {
+		$new_message = $_POST['new_message'];
+	} else {
+		$new_message = '';
+	}
 
 // session.php looks after getting rid of escaping slashes added to $_POST input when the PHP
 // configuration option "magic_quotes_gpc" is set "on".
@@ -260,8 +252,11 @@ if ($action == "save") {
 
 	$new_message_line = (-1);
 
-	if (isset($new_language_array[$ls02])) $dummyArray = $new_language_array[$ls02];
-	else $dummyArray = array();
+	if (isset($new_language_array[$ls02])) {
+		$dummyArray = $new_language_array[$ls02];
+	} else {
+		$dummyArray = array();
+	}
 
 	if ($ls02 < 1) {
 			$dummyArray = $english_language_array[$ls01];
@@ -290,80 +285,64 @@ if ($action == "save") {
 	@copy($new_language_file, $new_language_file . ".old");
 	$Write_Ok = write_array_into_file($new_language_file, $new_language_array, $new_message_line, $dummyArray[3]);
 
-	print "<div align=\"center\"><center>";
+	echo '<div align="center"><center>';
 
-	print "<table class=\"facts_table\">";
-	print "<tr>";
-	print "<td class=\"facts_label03\">";
-	print_text("savelang_help");
-	print "</td>";
-	print "</tr>";
-	print "<tr>";
-	print "<td class=\"facts_value\" style=\"text-align:center; \">" . "(" . substr($lang_filename, strpos($lang_filename, "/") + 1) . ")" . "</td>";
-	print "</tr>";
-	print "</table>";
+	echo '<table class="facts_table">';
+	echo '<tr><td class="facts_label03">', print_text("savelang_help"), '</td></tr>';
+	echo '<tr><td class="facts_value" style="text-align:center; ">', '(', substr($lang_filename, strpos($lang_filename, "/") + 1), ')', '</td></tr>';
+	echo '</table>';
 
-	print "<form name=\"Form2\" method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">";
-	print "<table class=\"facts_table\">";
-	print "<tr>";
-	if ($Write_Ok) print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">".print_text("original_message",0,1);
-	else {
-		print "<td class=\"warning\" >";
-		print str_replace("#lang_filename#", $lang_filename, $pgv_lang["lang_file_write_error"]) . "<br /><br />";
-	}
-	print "</td>";
-	print "</tr>";
+	echo '<form name="Form2" method="post" action="', $_SERVER['PHP_SELF'], '">';
+	echo '<table class="facts_table">';
+	echo '<tr>';
 	if ($Write_Ok) {
-		print "<tr>";
-		print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-		print "<strong style=\"color: red\">|</strong>".mask_all(find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>";
-		print "</td>";
-		print "</tr>";
+		echo '<td class="facts_label03" style="color: blue; font-weight: bold; ">', print_text("original_message", 0, 1);
+	} else {
+		echo '<td class="warning" >';
+		echo str_replace("#lang_filename#", $lang_filename, $pgv_lang["lang_file_write_error"]), '<br /><br />';
 	}
-	print "</table>";
+	echo '</td>';
+	echo '</tr>';
+	if ($Write_Ok) {
+		echo '<tr>';
+		echo '<td class="facts_value" style="text-align:center; color: blue" >';
+		echo '<strong style="color: red">|</strong>', mask_all(find_in_file($ls01, $lang_filename_orig)), '<strong style="color: red">|</strong>';
+		echo '</td>';
+		echo '</tr>';
+	}
+	echo '</table>';
 
 	if ($Write_Ok) {
-		print "<br />";
+		echo '<br />';
+		echo '<table class="facts_table">';
+		echo '<tr><td class="facts_label03" style="color: blue; font-weight: bold; ">', print_text("changed_message"), '</td></tr>';
 
-		print "<table class=\"facts_table\">";
-		print "<tr>";
-		print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">";
-		print_text("changed_message");
-		print "</td>";
-		print "</tr>";
-
-		print "<tr>";
-		print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-		print "<strong style=\"color: red; \">|</strong>" . mask_all($new_message) . "<strong style=\"color: red\">|</strong>";
-		print "</td>";
-		print "</tr>";
-		print "</table>";
-
-		print "<br />";
+		echo '<tr><td class="facts_value" style="text-align:center; color: blue" >';
+		echo '<strong style="color: red; ">|</strong>', mask_all($new_message), '<strong style="color: red">|</strong>';
+		echo '</td></tr>';
+		echo '</table>';
+		echo '<br />';
 	}
 
-	print "<table class=\"facts_table\">";
-	print "<tr>";
-	print "<td class=\"facts_value\" style=\"text-align:center; \" >";
+	echo '<table class="facts_table">';
+	echo '<tr><td class="facts_value" style="text-align:center; " >';
 	srand((double)microtime()*1000000);
-	print "<input type=\"submit\" value=\"" . $pgv_lang["close_window"] . "\"" . " onclick=\"window.opener.showchanges('&dv=".rand()."#".$anchor."'); self.close();\" />";
-	print "</td>";
-	print "</tr>";
+	// These 3 hidden variables has to be set or there will be a PHP ERROR message
+	echo '<input type="hidden" name="language2" value="', $language2, '"/>';
+	echo '<input type="hidden" name="file_type" value="', $file_type, '"/>';
+	echo '<input type="hidden" name="ls01" value="', $ls01, '"/>';
+	echo '<input type="submit" value="', $pgv_lang["close_window"], "\" onclick=\"window.opener.showchanges('&dv=", rand(), "#", $anchor, "'); self.close();\" />";
+	echo '</td></tr>';
 	if ($Write_Ok) {
-		print "<tr>";
-		print "<td class=\"facts_value\" style=\"text-align:center; \" >";
-		print "<br /><br /><input type=\"submit\" value=\"";
-		print_text("close_window_without_refresh");
-		print "\"" . " onclick=\"self.close();\" /><br /><br />";
-		print "<div class=\"error\">";
-		print_text("edit_lang_utility_warning");
-		print "</div></td>";
-		print "</tr>";
+		echo '<tr><td class="facts_value" style="text-align:center; " ><br /><br />';
+		echo '<input type="submit" value="', print_text("close_window_without_refresh"), '" onclick="self.close();" /><br /><br />';
+		echo '<div class="error">', print_text("edit_lang_utility_warning"), '</div>';
+		echo '</td></tr>';
 	}
-	print "</table>";
+	echo '</table>';
 
-	print "</form>";
-	print "</center></div>";
+	echo '</form>';
+	echo '</center></div>';
 
 	// if ls02 (the line of the translated sentence) variable has not been set, try to find the row in the translated file
 	if ($ls02 == "") {
