@@ -1692,7 +1692,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 				echo "&nbsp;&nbsp;&nbsp;";
 				print_editnote_link($value);
 			}
-			// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
+			// If GEDFact_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
 			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons. 
 			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && ($action=="add" || $action=="edit" ) && $pid) {
 				// Check if a CENS event ---------------------------
@@ -1701,7 +1701,9 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 					if ($type_pid->getType()=="INDI" ) { 
 						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+						echo "<a href=\"javascript:ADD;\" onclick=\"addnewnote_assisted(document.getElementById('", $element_id, "'), '", $pid, "' ); return false;\" title=\"".$pgv_lang["create_shared_note_assisted"]."\" alt=\"".$pgv_lang["create_shared_note_assisted"]."\">";
 						echo $pgv_lang["shared_note_assisted"];
+						echo "</a>";
 						print_addnewnote_assisted_link($element_id);
 					}
 				}
