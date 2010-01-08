@@ -34,9 +34,10 @@ global $pgv_lang, $TEXT_DIRECTION;
 ?>
 <script>
 	function getCenDate(cenyear) {
+		// Calculate census date from the census year selected
 		// UK CENSUS DATES
 			   if (cenyear == 1841) { var cendate = new Date(1841, 5, 06);    // 06 JUN 1841
-		} else if (cenyear == 1951) { var cendate = new Date(1851, 2, 30);    // 30 MAR 1851
+		} else if (cenyear == 1851) { var cendate = new Date(1851, 2, 30);    // 30 MAR 1851
 		} else if (cenyear == 1861) { var cendate = new Date(1861, 3, 07);    // 07 APR 1861
 		} else if (cenyear == 1871) { var cendate = new Date(1871, 3, 02);    // 02 APR 1871
 		} else if (cenyear == 1881) { var cendate = new Date(1881, 3, 03);    // 03 APR 1881
@@ -66,6 +67,40 @@ global $pgv_lang, $TEXT_DIRECTION;
 			var cendate = new Date(1901, 2, 31); 
 		}
 		return cendate;
+	}
+	
+	function getPrevCenDate(cenyear) {
+		// UK PREVIOUS CENSUS DATES
+		       if (prevcenyear == 1841) { var prevcendate = new Date(1841, 5, 06);    // 06 JUN 1841
+		} else if (prevcenyear == 1951) { var prevcendate = new Date(1851, 2, 30);    // 30 MAR 1851
+		} else if (prevcenyear == 1861) { var prevcendate = new Date(1861, 3, 07);    // 07 APR 1861
+		} else if (prevcenyear == 1871) { var prevcendate = new Date(1871, 3, 02);    // 02 APR 1871
+		} else if (prevcenyear == 1881) { var prevcendate = new Date(1881, 3, 03);    // 03 APR 1881
+		} else if (prevcenyear == 1891) { var prevcendate = new Date(1891, 3, 05);    // 05 APR 1891
+		} else if (prevcenyear == 1901) { var prevcendate = new Date(1901, 2, 31);    // 31 MAR 1901
+		} else if (prevcenyear == 1911) { var prevcendate = new Date(1911, 3, 02);    // 02 APR 1911
+		// USA PREVIOUS CENSUS DATES
+		} else if (prevcenyear == 1790) { var prevcendate = new Date(1790, 7, 02);    // 02 AUG 1790
+		} else if (prevcenyear == 1800) { var prevcendate = new Date(1800, 7, 04);    // 04 AUG 1800
+		} else if (prevcenyear == 1810) { var prevcendate = new Date(1810, 7, 06);    // 06 AUG 1810
+		} else if (prevcenyear == 1820) { var prevcendate = new Date(1820, 7, 07);    // 07 AUG 1820
+		} else if (prevcenyear == 1830) { var prevcendate = new Date(1830, 5, 01);    // 01 JUN 1830
+		} else if (prevcenyear == 1840) { var prevcendate = new Date(1840, 5, 01);    // 01 JUN 1840
+		} else if (prevcenyear == 1850) { var prevcendate = new Date(1850, 5, 01);    // 01 JUN 1850
+		} else if (prevcenyear == 1860) { var prevcendate = new Date(1860, 5, 01);    // 01 JUN 1860
+		} else if (prevcenyear == 1870) { var prevcendate = new Date(1870, 5, 01);    // 01 JUN 1870
+		} else if (prevcenyear == 1880) { var prevcendate = new Date(1880, 5, 01);    // 01 JUN 1880
+		} else if (prevcenyear == 1890) { var prevcendate = new Date(1890, 5, 01);    // 01 JUN 1890
+		} else if (prevcenyear == 1900) { var prevcendate = new Date(1900, 5, 01);    // 01 JUN 1900
+		} else if (prevcenyear == 1910) { var prevcendate = new Date(1910, 3, 15);    // 15 APR 1910
+		} else if (prevcenyear == 1920) { var prevcendate = new Date(1920, 0, 01);    // 01 JAN 1920
+		} else if (prevcenyear == 1930) { var prevcendate = new Date(1930, 3, 01);    // 01 APR 1930
+		} else if (prevcenyear == 1940) { var prevcendate = new Date(1940, 3, 01);    // 01 APR 1940
+		// Default Date
+		} else {
+			var prevcendate = new Date(1901, 2, 31); 
+		}
+		return prevcendate;
 	}
 
 	function findSource(field) {
@@ -98,14 +133,13 @@ global $pgv_lang, $TEXT_DIRECTION;
 	}
 	
 	function changeYear(cenyear) {
-		// var cenyear = cenyear;
 		var tbl = document.getElementById('tblSample');
 		if (tbl.rows.length==0) {
 			create_header();
 		}
-		changeAge(cenyear);
-		changeCols(cenyear);
-		changeMC(cenyear);
+		 changeAge(cenyear);
+		 changeCols(cenyear);
+		 changeMC(cenyear);
 	}
 	
 	// Change Marital Condition and Years Married based on Census Year ======================
@@ -163,13 +197,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 				if (marrcond=="S" && cenyear=="1930") {
 					tr.cells[20].childNodes[0].value = "-";
 				}
-
-
 			}
 		}
-		
-	
-	
 	}
 
 	// Change Age based on Census Year =====================================================
@@ -186,7 +215,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 		// var basecendate = new Date(1901, 2, 31);
 		// UK CENSUS DATES
 		       if (cenyear == 1841) { var cendate = new Date(1841, 5, 06);    // 06 JUN 1841
-		} else if (cenyear == 1951) { var cendate = new Date(1851, 2, 30);    // 30 MAR 1851
+		} else if (cenyear == 1851) { var cendate = new Date(1851, 2, 30);    // 30 MAR 1851
 		} else if (cenyear == 1861) { var cendate = new Date(1861, 3, 07);    // 07 APR 1861
 		} else if (cenyear == 1871) { var cendate = new Date(1871, 3, 02);    // 02 APR 1871
 		} else if (cenyear == 1881) { var cendate = new Date(1881, 3, 03);    // 03 APR 1881
@@ -215,7 +244,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 		} else {
 			var cendate = new Date(1901, 2, 31); 
 		}
-		
+
+/*
 		// UK PREVIOUS CENSUS DATES
 		       if (prevcenyear == 1841) { var prevcendate = new Date(1841, 5, 06);    // 06 JUN 1841
 		} else if (prevcenyear == 1951) { var prevcendate = new Date(1851, 2, 30);    // 30 MAR 1851
@@ -246,6 +276,9 @@ global $pgv_lang, $TEXT_DIRECTION;
 		} else {
 			var prevcendate = new Date(1901, 2, 31); 
 		}
+*/
+
+		var cendate = getCenDate(cenyear);
 
 		var one_day   = 1000*60*60*24;
 		var one_month = (365.26*one_day)/12;
@@ -253,6 +286,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 
 		// Get Age from Input Fields and re-calculate =======================================
 		var tbl = document.getElementById('tblSample');
+
 		for(var i=1; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
 			var tr = tbl.rows[i];
 			for(var j=2; j<tr.cells.length; j++){
@@ -262,9 +296,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 				}else if (tr.cells[j].childNodes[0].value=="") {
 					tr.cells[j].childNodes[0].value=null
 				}else{
-					var ageat1901 = (tr.cells[j].childNodes[0].value);
 					var bage	  = (tr.cells[68].childNodes[0].value);
-
 					// If valid Julian date used, then use this instead ===========
 					if (bage>1721060) {
 						IJD = Math.floor(bage);
@@ -280,7 +312,6 @@ global $pgv_lang, $TEXT_DIRECTION;
 						I = 100*(N - 49) + I + L;
 						bage = (I+", "+J+", "+K);
 					}
-					
 					// Caculate Age on the selected Census Date ===================
 					bage2 = new Date(bage);
 					if (bage2 != "Invalid Date") {

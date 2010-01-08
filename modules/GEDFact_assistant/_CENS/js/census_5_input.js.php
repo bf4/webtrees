@@ -256,7 +256,7 @@ function preview() {
 			// UK 1841 ===============
 			} else if (NoteYear.value=="1841") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=3 && j<=6) || j==8 || (j>=10 && j<=34) || (j>=36 && j<=51) || (j>=54 && j<=68) ) {  
+					if ( (j>=3 && j<=6) || j==8 || (j>=10 && j<=34) || (j>=36 && j<=51) || (j>=54 && j<=69) ) {  
 							continue;
 					}else{
 						if (i==0) {
@@ -521,7 +521,6 @@ function insertRowToTable(pid, nam,  mnam, label, gend, cond, dom, dob, age, YMD
 	if (hasLoaded) {
 		// calculate marriage status -----------------------
 		var cenyr = document.getElementById('censYear').value;
-		// alert(cond);
 		
 		var tbl = document.getElementById(TABLE_NAME);
 		var rowToInsertAt = tbl.tBodies[0].rows.length;
@@ -532,12 +531,14 @@ function insertRowToTable(pid, nam,  mnam, label, gend, cond, dom, dob, age, YMD
 			}
 		}
 		addRowToTable(rowToInsertAt, pid, nam, mnam, label, gend, cond, dom, dob, age, YMD, occu, birthpl, fbirthpl, mbirthpl);
+		
 		reorderRows(tbl, rowToInsertAt);
 		currcenyear = document.getElementById('censYear').value;
 		//var currcenctry = document.getElementById('censCtry').value; 
 		changeCols(currcenyear);
 		changeMC(currcenyear);
 		changeAge(currcenyear);
+		
 		preview();
 		
 	}
@@ -545,7 +546,6 @@ function insertRowToTable(pid, nam,  mnam, label, gend, cond, dom, dob, age, YMD
 
 // addRowToTable - Inserts at row 'num', or appends to the end if no arguments are passed in. Don't pass in empty strings.
 function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, YMD, occu, birthpl, fbirthpl, mbirthpl, cb, ra) {
-
 
 	// -- Temporary until insert variable are corrected ----------------
 		 var ibirthpl = '';
@@ -1361,28 +1361,28 @@ alert(agemarr);
 				txtInp_infirm1910.innerHTML = '<a href="#" alt="'+TTEditInfirm1910+'" title="'+TTEditInfirm1910+'">'+HeaderInfirm1910+'</a>';
 				txtInp_infirm1910.setAttribute('id', '.b.'+HeaderInfirm1910);
 		// Hidden Items ------------------------------------------------------
-
+/*
 		// 68. DOB -------------------------------------------------
 			var txt_DOB = document.createElement('div');
+				txt_DOB.setAttribute('type', 'text');
 				txt_DOB.setAttribute('class', 'descriptionbox');
 				txt_DOB.className= 'descriptionbox'; //Required for IE
+				txt_DOB.style.fontSize="10px";
 				txt_DOB.style.border='0px';
 				txt_DOB.innerHTML = 'DOB';
 				txt_DOB.setAttribute('id', '.b.DOB');
-				txt_DOB.setAttribute('type', 'text');
-				txt_DOB.style.fontSize="10px";
-				//txt_DOB.style.display="none";
+				// txt_DOB.style.display="none";
 		// 69. DOM -------------------------------------------------
 			var txt_DOM = document.createElement('div');
+				txt_DOM.setAttribute('type', 'text');
 				txt_DOM.setAttribute('class', 'descriptionbox');
 				txt_DOM.className= 'descriptionbox'; //Required for IE
+				txt_DOM.style.fontSize="10px";
 				txt_DOM.style.border='0px';
 				txt_DOM.innerHTML = 'DOM';
 				txt_DOM.setAttribute('id', '.b.DOM');
-				txt_DOM.setAttribute('type', 'text');
-				txt_DOM.style.fontSize="10px";
-				//txt_DOM.style.display="none";
-
+				// txt_DOM.style.display="none";
+*/
 		// 70. Text Del Button ------------------------------------------------- 
 			var txtInp_tdel = document.createElement('div');
 				txtInp_tdel.setAttribute('type', 'text');
@@ -2082,18 +2082,18 @@ alert(agemarr);
 				txtInp_DOB.setAttribute('type', 'text');
 				txtInp_DOB.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_68');
 				txtInp_DOB.setAttribute('size', '8');
-				//txtInp_DOB.setAttribute('maxlength', '2');
+				txtInp_DOB.setAttribute('maxlength', '20');
 				txtInp_DOB.setAttribute('value', dob); 
 				txtInp_DOB.style.color=txtcolor;
 				txtInp_DOB.style.fontSize="10px";
-				txtInp_DOB.style.width="1.4em";
+				txtInp_DOB.style.width="5.4em";
 				txtInp_DOB.type = "hidden";
 		// 69. DOM ------------------------------------------------------------
 			var txtInp_DOM = document.createElement('input');
 				txtInp_DOM.setAttribute('type', 'text');
 				txtInp_DOM.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_69');
 				txtInp_DOM.setAttribute('size', '8');
-				//txtInp_DOM.setAttribute('maxlength', '2');
+				txtInp_DOM.setAttribute('maxlength', '20');
 				txtInp_DOM.setAttribute('value', dom); 
 				txtInp_DOM.style.color=txtcolor;
 				txtInp_DOM.style.fontSize="10px";

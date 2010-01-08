@@ -111,12 +111,12 @@ switch ($type) {
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-	function pasterow(id, name, fullmn, gend, yob, age, bpl) {
+	function pasterow(id, name, fullmn, gend, dob, age, bpl) {
 		// =========================================================================================================================
 		// Example: This is what the current insertRowToTable() function requires 
 		// window opener.insertRowToTable(id, nam,  mnam, label, gend, cond, dom, dob, age, YMD, occu, birthpl, fbirthpl, mbirthpl);
 		// =========================================================================================================================
-		window.opener.insertRowToTable(id, name, fullmn, '', gend, '', yob, '', age, 'Y', '', bpl, '', '');
+		window.opener.insertRowToTable(id, name, fullmn, '', gend, '', '', dob, age, 'Y', '', bpl, '', '');
 		<?php if (!$multiple) print "window.close();"; ?>
 	}
 	
