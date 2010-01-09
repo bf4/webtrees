@@ -1041,7 +1041,7 @@ function print_favorite_selector($option=0) {
 		$menu->printMenu();
 		break;
 	default:
-		echo "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
+		echo "<form class=\"favorites_form\" name=\"favoriteform\" action=\"$SCRIPT_NAME";
 		echo "\" method=\"post\" onsubmit=\"return false;\">";
 		echo "<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='{$SCRIPT_NAME}", normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$gid}"), "';\">";
 		echo "<option value=\"\">", $pgv_lang["favorites"], "</option>";
