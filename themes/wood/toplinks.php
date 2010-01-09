@@ -105,6 +105,7 @@ if($menu->link != "") {
 print "<br />\n";
 print_user_links();
 print "<br />\n";
+print "<br />\n";
 
 if(empty($SEARCH_SPIDER)) {
 	print contact_links();

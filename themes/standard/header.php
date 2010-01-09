@@ -121,6 +121,7 @@ function SetCookie(cookieName,cookieValue,nDays)
 					<b>
 					<?php print_user_links(); ?>
 					<br />
+					<br />
 					<a href="<?php echo $HOME_SITE_URL; ?>"><?php echo $HOME_SITE_TEXT; ?></a>
 					</b>
 				</td>

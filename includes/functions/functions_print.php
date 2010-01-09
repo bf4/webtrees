@@ -791,7 +791,6 @@ function print_user_links() {
 			}
 		}
 	}
-	echo "<br />";
 }
 
 // Print a link to allow email/messaging contact with a user
