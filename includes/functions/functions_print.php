@@ -658,11 +658,9 @@ function print_footer() {
 	echo "<!-- begin footer -->";
 	if ($view!="preview") {
 		include($footerfile);
-		echo "<br />";
-	}
-	else {
+	} else {
 		include($print_footerfile);
-		echo "<div id=\"backprint\" style=\"text-align: center; width: 95%\"><br />";
+		echo "<div id=\"backprint\" style=\"text-align: center; width: 95%\">";
 		$backlink = $SCRIPT_NAME."?".get_query_string();
 		if (!$printlink) {
 			echo "<br /><a id=\"printlink\" href=\"javascript:;\" onclick=\"print(); return false;\">", $pgv_lang["print"], "</a><br />";
@@ -670,7 +668,6 @@ function print_footer() {
 		}
 		$printlink = true;
 		echo "</div>";
-		echo "<br />";
 	}
 	if (function_exists("load_behaviour")) {
 		load_behaviour();  // @see function_print_lists.php
@@ -688,7 +685,7 @@ function print_simple_footer() {
 	global $SHOW_STATS;
 
 	if ($SHOW_STATS || PGV_DEBUG) {
-		echo '<br />', execution_stats();
+		echo execution_stats();
 	}
 	if (PGV_DEBUG_SQL) {
 		echo PGV_DB::getQueryLog();
