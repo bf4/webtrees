@@ -537,8 +537,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	//-->
 	</script>'; */
 	}
-	$javascript.='<script language="JavaScript" type="text/javascript">
-		<!--
+	$javascript.=PGV_JS_START.'
 		/* setup some javascript variables */
 		var query = "'.$query_string.'";
 		var textDirection = "'.$TEXT_DIRECTION.'";
@@ -606,9 +605,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 
 	var whichhelp = \'help_'.basename($SCRIPT_NAME).'&action='.$action.'\';
 	//-->
-	</script>
-	<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
-	';
+	'.PGV_JS_END.'<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>';
 	$bodyOnLoad = '';
 	if ($view=="preview") $bodyOnLoad .= " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
 	$bodyOnLoad .= " onload=\"";
