@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -177,7 +177,6 @@ $pgv_lang["META_ROBOTS"]		= "Robotlar META tag";
 $pgv_lang["META_KEYWORDS"]		= "Anahtar kelimeler META tag";
 $pgv_lang["META_PAGE_TOPIC_descr"]	= "Şu anki aktif veritabanının başlığını kullanmak için burayı boş geçin.";
 $pgv_lang["META_TITLE"]		= "Başlık etiketini isimlendirme ekle";
-$pgv_lang["META_SURNAME_KEYWORDS"]		= "\"Yaygın soy isimleri\" Keywords META alanına ekle";
 $pgv_lang["ENABLE_RSS"]				= "RSS Etkinleştir";
 $pgv_lang["RSS_FORMAT"]				= "RSS Biçimi";
 $pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "GEDCOM dosyaların indirebilirmidir kontrol et";

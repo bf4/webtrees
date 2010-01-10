@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -175,7 +175,6 @@ $pgv_lang["admin_user_warnings"]		= "Uyarılar alan bir yada birden çok kullan�
 $pgv_lang["admin_verification_waiting"] = "Yönetici onayı bekleyen kullanıcı var";
 $pgv_lang["administration"]		= "Yönetim";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]		= "GEDCOM seçme izni ver";
-$pgv_lang["ALLOW_REMEMBER_ME"]			= "Giriş de <b>Beni anımsa</b> göster";
 $pgv_lang["ALLOW_USER_THEMES"]		= "Üye tema seçmesine izin ver";
 $pgv_lang["ansi_encoding_detected"] 	= "ANSI ile kotlanmış saptanan dosya. PhpGedView UTF-8 e dönüştürülen dosyalar en iyi şekilde çalışır.";
 $pgv_lang["ansi_to_utf8"]		= "ANSİ ile kodlanmış bu GEDCOM veritabanı UTF-8\'e dönüştürülsün mü?";
@@ -296,7 +295,6 @@ $pgv_lang["performing_validation"]				= "GEDCOM onaylaması yapılıyor...";
 $pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 			= "Hata!!! Php soy görüntüleme konfigürasyon dosyasına yazamıyorum. Lütfen dosya ve klasörün izinlerini kontrol edin.";
 $pgv_lang["PGV_MEMORY_LIMIT"]					= "Hafiza Kotası";
-$pgv_lang["pgv_registry"]		= "PhpGedView kullanan diğer sitelerin listesi";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]	= "Oturum (session) kaydetme yolu";
 $pgv_lang["PGV_SESSION_TIME"]		= "Oturum (session) zaman aşımı";
 $pgv_lang["PGV_SIMPLE_MAIL"] = "Basit email alma sistemi kullan";
@@ -471,4 +469,22 @@ $pgv_lang["gedcheck_sync"] = "Veritabanına yapılmış düzeltmeler #GLOBALS[ge
 $pgv_lang["id_empty"]				= "Bir bağlantı eklemek için ID alanı boş bırakılmaz.";
 $pgv_lang["no_update_CHANs"]		= "DEĞİŞİKLİK (Son Değişiklik) kayıtlarını güncelleme hayır";
 $pgv_lang["no_CHANs_update"]		= "Güncellenen kayıtlar (Son Değişiklik) değiştirme";
+$pgv_lang["module_admin"]			= "Modül Yönetimi";
+$pgv_lang["mod_admin_installed"]	= "Modüller Kuruldu";
+$pgv_lang["mod_admin_tabs"]			= "Sekmeler Yönetimi";
+$pgv_lang["mod_admin_menus"]		= "Menüler Yönetimi";
+$pgv_lang["add_indi_to_link_list"]	= "Link Listesine Eklemek için eklenecek kişi Adını tıkla.";
+$pgv_lang["search_add_links"]		= "Link Listesine Eklemek için eklenecek kişi için ara.";
+$pgv_lang["ret_admin"]				= "Yönetim sayfasına geri dön";
+$pgv_lang["ret_module_admin"]		= "Modül Yönetim sayfasına geri dön";
+$pgv_lang["mod_admin_settings"]		= "Modül Yapılandırma Ayarları";
+$pgv_lang["mod_admin_config"]		= "Mod Ayarları";
+$pgv_lang["mod_admin_order"]		= "Sıra";
+$pgv_lang["mod_admin_access_level"]	= "Erişim Seviyesi";
+$pgv_lang["mod_admin_hasmenu"]		= "Menü?";
+$pgv_lang["mod_admin_hastab"]		= "Sekme?";
+$pgv_lang["mod_admin_description"]	= "Açıklama";
+$pgv_lang["mod_admin_name"]			= "Modül Adı";
+$pgv_lang["mod_admin_active"]		= "Aktif";
+$pgv_lang["mod_admin_version"]		= "PGV / Versiyon";
 ?>

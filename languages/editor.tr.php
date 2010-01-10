@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -244,4 +244,6 @@ $pgv_lang["add_unlinked_note"]		= "Bağlantısız not ekle";
 $pgv_lang["create_shared_note_assisted"]	= "Yardımcıyı kullanarak yeni paylaşılan not oluştur";
 $pgv_lang["to_note"]				= "Paylaşılan Not";
 $pgv_lang["to_repository"]			= "Depoya";
+$pgv_lang["shared_note_assisted"]	= "Paylaşılmış Not kullanma Asistanı";
+$pgv_lang["add_new_event_assisted"]			= "Yeni hadise kullanma Asistanı oluştur";
 ?>
