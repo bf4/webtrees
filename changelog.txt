@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2.x CA
+ - Changed: Removed unnecessary media tab config, and tidied up code (windmillway)
  - Fixed: Corrected the 1851 UK Census date error, and fixed a few 'Find' errors in GEDFact_assistant/_CENS/ (windmillway)
  - Fixed: Corrected the Find function error in GEDFact_assistant/_CENS/ (windmillway)
  - Added: A few more auto-fill functions for the GEDFact_assistant/_CENS/ edit fields. (windmillway)

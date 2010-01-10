@@ -54,7 +54,8 @@ try {
 
 // TODO: it will be more efficient to fetch all LB_% settings in a single DB query
 
-$mediatab=get_site_setting('LB_ENABLED', '1');  // Individual Page Media Tab
+// No longer required due to Tab management ---------------------------------
+// $mediatab=get_site_setting('LB_ENABLED', '1');  // Individual Page Media Tab
           // Set to  0 to hide Media Tab on Indi page from All Users,
           // Set to  1 to show Media Tab on Indi page to All Users,  [Default]
 
