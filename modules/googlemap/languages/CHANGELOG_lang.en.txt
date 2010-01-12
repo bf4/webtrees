@@ -26,10 +26,10 @@ VERSION 4.3.0
 
 ?$pgv_lang["whatever"]							dd Monthname, year	  Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["pm_grandfather"] 					12 Jan 2010			A
 +$pgv_lang["pedigree_map"]						03 Jan 2010			A
 +$pgv_lang["pm_grandparent"]					03 Jan 2010			A
 +$pgv_lang["pm_grandmother"] 					03 Jan 2010			A
-+$pgv_lang["pm_grandparent"] 					03 Jan 2010			A
 +$pgv_lang["pm_gt"] 							03 Jan 2010			A
 +$pgv_lang["pm_zoom_in"]						03 Jan 2010			A
 +$pgv_lang["pm_zoom_out"]						03 Jan 2010			A
