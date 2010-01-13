@@ -26,6 +26,16 @@ VERSION 4.3.0
 
 ?$pgv_lang["whatever"]							dd Monthname, year	  Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["pm_missings"]						13 Jan 2010			A
+-$pgv_lang["pm_is"]								13 Jan 2010			D
+-$pgv_lang["pm_are"]							13 Jan 2010			D
+*$pgv_lang["pm_missing_birth"]					13 Jan 2010			A
++$pgv_lang["pm_2missing_births"]				13 Jan 2010			A
++$pgv_lang["pm_missing_births"]					13 Jan 2010			A
++$pgv_lang["pm_individual_private"]				13 Jan 2010			A
++$pgv_lang["pm_individuals_private"]			13 Jan 2010			A
++$pgv_lang["pm_individual_displayed"]			13 Jan 2010			A
++$pgv_lang["pm_2individuals_displayed"]			13 Jan 2010			A
 +$pgv_lang["pl_no_flags"] 						13 Jan 2010			A
 +$pgv_lang["pm_grandfather"] 					12 Jan 2010			A
 +$pgv_lang["pedigree_map"]						03 Jan 2010			A
