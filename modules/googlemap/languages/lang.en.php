@@ -122,6 +122,7 @@ $pgv_lang["pl_flag"]			= "Flag";
 $pgv_lang["flags_edit"]			= "Select flag";
 $pgv_lang["pl_change_flag"]		= "Change flag";
 $pgv_lang["pl_remove_flag"]		= "Remove flag";
+$pgv_lang["pl_no_flags"]		= "<b>The flags directory doesn't exist</b><br /><br />To make the flags work, copy the <b>flags</b> directory from <b>images</b> directory to <b>places</b> directory, or download the flags from the full version.";
 
 $pgv_lang["pl_remove_location"]	= "Remove this location?";
 $pgv_lang["pl_delete_error"]	= "Location not removed: this location contains sub-locations";

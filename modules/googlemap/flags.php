@@ -65,6 +65,12 @@ if(!isset($countrySelected)) $countrySelected="Countries";
 
 print_simple_header($pgv_lang["flags_edit"]);
 
+if (!is_dir('./places/flags/')) {
+	echo '<br /><div class="optionbox wrap">', $pgv_lang["pl_no_flags"], '</div><br />';
+	echo '<div class="center"><a href="javascript:;" onclick="window.close();">', $pgv_lang["close_window"], "</a></div><br />\n";
+	print_simple_footer();
+	exit;
+}
 $country = array();
 $rep = opendir('./places/flags/');
 while ($file = readdir($rep)) {

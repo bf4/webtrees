@@ -123,6 +123,7 @@ $pgv_lang["pl_flag"]				= "Flaga";
 $pgv_lang["flags_edit"]				= "Wybierz flagę";
 $pgv_lang["pl_change_flag"]			= "Zmień flagę";
 $pgv_lang["pl_remove_flag"]			= "Usuń flagę";
+$pgv_lang["pl_no_flags"]			= "<b>Brak folderu z flagami</b><br /><br />Do działania flag proszę skopiować folder <b>flags</b> z katalogu <b>images</b> do katalogu <b>places</b> lub skorzystać z <b>pełnej wersji PGV</b>.";
 
 $pgv_lang["pl_remove_location"]		= "Usunąć to miejsce?";
 $pgv_lang["pl_delete_error"]		= "Miejsce nie zostało usunięte: ta lokalizacja zawiera lokalizacje pochodne";
