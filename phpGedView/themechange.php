@@ -30,6 +30,7 @@ require './config.php';
 // Extract request variables
 $mytheme =safe_GET('mytheme');
 $frompage=safe_GET('frompage', PGV_REGEX_URL, 'index.php');
+$pid=safe_GET('pid');
 
 // Only change to a valid theme
 foreach (get_theme_names() as $themename=>$themedir) {
@@ -44,5 +45,9 @@ foreach (get_theme_names() as $themename=>$themedir) {
 }
 
 // Go back to where we came from
-header('Location: '.encode_url(decode_url($frompage), false));
+if ($pid) {
+	header('Location: '.encode_url(decode_url($frompage).'&pid='.$pid, false));
+} else {
+	header('Location: '.encode_url(decode_url($frompage), false));
+}
 ?>
