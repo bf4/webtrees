@@ -207,8 +207,8 @@ function createTempUser($userID, $rights, $gedcom) {
  */
 function remove_custom_tags($gedrec, $remove="no") {
 	if ($remove=="yes") {
-		//-- remove _PGVU
-		$gedrec = preg_replace("/\d _PGVU .*/", "", $gedrec);
+		//-- remove _PGV...
+		$gedrec = preg_replace("/\d _PGV.*/", "", $gedrec);
 		//-- remove _THUM
 		$gedrec = preg_replace("/\d _THUM .*/", "", $gedrec);
 	}

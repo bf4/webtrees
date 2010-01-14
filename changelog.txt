@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: [ 2930541 ] PGV custom  tags not being removed on download V4.2.3 (fisharebest)
  - Fixed: [ 2931697 ] 4.2.3 countries.csv ... Iraq is called IRN (fisharebest)
  - Fixed: [ 2927240 ] 4.2.3 ... un-def var gid when importing (fisharebest)
  - Added: [ 1863843 ] Pedigree Google Map (kiwi_pgv/wooc)
