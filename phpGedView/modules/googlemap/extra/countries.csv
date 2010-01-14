@@ -102,9 +102,9 @@ Level;Country;Longitude;Latitude;ZoomLevel;Icon
 0;IDN;E120;S5;5;places/flags/IDN.gif
 0;IND;E77;N20;4;places/flags/IND.gif
 0;IOT;E71.5;S6;5;places/flags/IOT.gif
-0;Iran;E53;N32;4;places/flags/IRN.gif
+0;IRN;E53;N32;4;places/flags/IRN.gif
 0;IRL;W8;N53;4;places/flags/IRL.gif
-0;IRN;E44;N33;4;places/flags/IRQ.gif
+0;IRQ;E44;N33;4;places/flags/IRQ.gif
 0;ISL;W18;N65;4;places/flags/ISL.gif
 0;ISR;E34.75;N31.5;4;places/flags/ISR.gif
 0;ITA;E12.8333;N42.8333;4;places/flags/ITA.gif
