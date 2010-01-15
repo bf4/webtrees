@@ -113,7 +113,7 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
-			self::$AUTO_ID_TYPE ='INTEGER UNSIGNED AUTO_INCREMENT';
+			self::$AUTO_ID_TYPE ='INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY';
 			self::$ID_TYPE      ='INTEGER UNSIGNED';
 			self::$INT1_TYPE    ='TINYINT';
 			self::$INT2_TYPE    ='SMALLINT';
@@ -143,7 +143,7 @@ class PGV_DB {
 					PDO::ATTR_CASE=>PDO::CASE_LOWER
 				)
 			);
-			self::$AUTO_ID_TYPE ='SERIAL';
+			self::$AUTO_ID_TYPE ='SERIAL PRIMARY KEY';
 			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='SMALLINT';
 			self::$INT2_TYPE    ='SMALLINT';
@@ -214,7 +214,7 @@ class PGV_DB {
 					)
 				);
 			}
-			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT';
+			self::$AUTO_ID_TYPE ='INTEGER PRIMARY KEY AUTOINCREMENT';
 			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
