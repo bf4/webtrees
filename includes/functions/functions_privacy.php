@@ -596,9 +596,9 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 		}
 	}
 	if ($type=="FAM") {
-		//-- check if we can display at least one parent
+		//-- check if we can display both parents
 		$parents = find_parents($pid);
-		$display = displayDetailsById($parents["HUSB"]) || displayDetailsById($parents["WIFE"]);
+		$display = displayDetailsById($parents["HUSB"]) && displayDetailsById($parents["WIFE"]);
 		$privacy_cache[$pkey] = $display;
 		return $display;
 	}
