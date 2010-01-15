@@ -146,7 +146,7 @@ if (!$controller->isPrintPreview()) {
 	//-->
 </script>
 </td><td width="50px">&nbsp;</td><td>
-	  <form name="people" method="get" action="module.php?mod=googlemap&amp;pgvaction=pedigree_map">
+	  <form name="people" method="get" action="module.php?ged=<?php echo $GEDCOM; ?>&amp;mod=googlemap&amp;pgvaction=pedigree_map">
 		<input type="hidden" name="mod" value="googlemap" />
 		<input type="hidden" name="pgvaction" value="pedigree_map" />
 		<table class="pedigree_table <?php echo $TEXT_DIRECTION; ?>" width="555">
@@ -796,7 +796,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				echo "var point = new GLatLng(" . $lat[$i] . "," . $lon[$i]. ");\n";
 				echo "var marker = createMarker(point, \"" . addslashes($name). "\",\n\t\"<div>".$dataleft.$datamid.$dataright."</div>\", \"";
 				echo "<div class='iwstyle'>";
-				echo "<a href='module.php?mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}";
+				echo "<a href='module.php?ged={$GEDCOM}&mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}";
 				if ($hideflags) echo "&hideflags=1";
 				if ($hidelines) echo "&hidelines=1";
 				if ($clustersize != 5) echo "&clustersize=". $clustersize; // ignoring the default of 5
