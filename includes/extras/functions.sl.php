@@ -2,7 +2,7 @@
 /**
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -197,8 +197,8 @@ function fact_NMR_localisation_sl($fact, &$fid) {
 ////////////////////////////////////////////////////////////////////////////////
 // Localise the relationships. Lokalizacja pokrewieñstwa.
 ////////////////////////////////////////////////////////////////////////////////
-function rela_localisation_sl(&$rela) {
+function rela_localisation_pl(&$rela, &$pid2) {
 
-	return " ".ucfirst($rela).": ";
+	return UTF8_ucfirst($rela);
 }
 ?>
