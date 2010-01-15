@@ -60,8 +60,7 @@ if (!self::table_exists("{$TBLPREFIX}module")) {
 		" mod_description  ".self::$VARCHAR_TYPE."(255) NOT NULL,".
 		" mod_taborder     ".self::$INT1_TYPE." NOT NULL, ".
 		" mod_menuorder    ".self::$INT1_TYPE." NOT NULL, ".
-		" mod_sidebarorder ".self::$INT1_TYPE." NOT NULL, ".
-		" PRIMARY KEY (mod_id)".
+		" mod_sidebarorder ".self::$INT1_TYPE." NOT NULL ".
 		") ".self::$UTF8_TABLE
 	);
 }
@@ -73,8 +72,7 @@ if (!self::table_exists("{$TBLPREFIX}module_privacy")) {
 		" mp_mod_id ".self::$ID_TYPE." NOT NULL,".
 		" mp_file   ".self::$COL_FILE." NOT NULL,".
 		" mp_access ".self::$INT1_TYPE." NOT NULL,".
-		" mp_type   ".self::$CHAR_TYPE."(1) NOT NULL,".
-		" PRIMARY KEY (mp_id)".
+		" mp_type   ".self::$CHAR_TYPE."(1) NOT NULL".
 		") ".self::$UTF8_TABLE
 	);
 	self::exec("CREATE INDEX {$TBLPREFIX}module_privacy_ix1 ON {$TBLPREFIX}module_privacy (mp_mod_id, mp_file, mp_access)");

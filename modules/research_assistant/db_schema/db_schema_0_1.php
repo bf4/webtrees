@@ -185,8 +185,7 @@ if (!self::table_exists("{$TBLPREFIX}factlookup")) {
 		" pl_lv4      ".self::$VARCHAR_TYPE."(255)     NULL,".
 		" pl_lv5      ".self::$VARCHAR_TYPE."(255)     NULL,".
 		" sour_id     ".self::$VARCHAR_TYPE."(255)     NULL,".
-		" comment     ".self::$VARCHAR_TYPE."(255)     NULL,".
-		" PRIMARY KEY (id)".
+		" comment     ".self::$VARCHAR_TYPE."(255)     NULL".
 		") ".self::$UTF8_TABLE
 	);
 	$statement=self::prepare("INSERT INTO {$TBLPREFIX}factlookup (description, startdate, enddate, gedcom_fact, pl_lv1) VALUES (?, ?, ?, ?, ?)");
