@@ -79,7 +79,7 @@ $level2_tags=array( // The order of the $keys is significant
 	'_PGVU'=>array('_TODO')
 );
 $STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
-$REVERSED_NAME_FACTS = array('NAME', 'NPFX', 'SPFX', 'SURN', 'NSFX', 'GIVN');
+$REVERSED_NAME_FACTS = array('NAME', 'NPFX', 'SPFX', 'SURN', 'GIVN', 'NSFX');
 
 //-- this function creates a new unique connection
 //-- and adds it to the connections file
@@ -626,17 +626,30 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 	// Populate any missing 2 XXXX fields from the 1 NAME field
 	$npfx_accept=implode('|', $NPFX_accept);
 	if (preg_match ("/((($npfx_accept)\.? +)*)([^\n\/\"]*)(\"(.*)\")? *\/(([a-z]{2,3} +)*)(.*)\/ *(.*)/i", $name_fields['NAME'], $name_bits)) {
-		if (empty($name_fields['NPFX'])) $name_fields['NPFX']=$name_bits[1];
-		if (!$NAME_REVERSE && empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
+		if (empty($name_fields['NPFX'])) {
+			$name_fields['NPFX']=$name_bits[1];
+		}
 		if (empty($name_fields['SPFX']) && empty($name_fields['SURN'])) {
 			$name_fields['SPFX']=trim($name_bits[7]);
 			$name_fields['SURN']=$name_bits[9];
 		}
-		if (empty($name_fields['NSFX'])) $name_fields['NSFX']=$name_bits[10];
-		if ($NAME_REVERSE && empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
+		if ($NAME_REVERSE) {
+			if (empty($name_fields['GIVN'])) {
+				$name_fields['GIVN']=$name_bits[10];
+			}
+		} else {
+			if (empty($name_fields['GIVN'])) {
+				$name_fields['GIVN']=$name_bits[4];
+			}
+			if (empty($name_fields['NSFX'])) {
+				var_dump($NAME_REVERSE);
+				$name_fields['NSFX']=$name_bits[10];
+		}
+		}
 		// Don't automatically create an empty NICK - it is an "advanced" field.
-		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m', $namerec))
+		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m', $namerec)) {
 			$name_fields['NICK']=$name_bits[6];
+		}
 	}
 
 	// Edit the standard name fields
