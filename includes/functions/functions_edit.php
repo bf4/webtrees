@@ -641,10 +641,6 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 			if (empty($name_fields['GIVN'])) {
 				$name_fields['GIVN']=$name_bits[4];
 			}
-			if (empty($name_fields['NSFX'])) {
-				var_dump($NAME_REVERSE);
-				$name_fields['NSFX']=$name_bits[10];
-		}
 		}
 		// Don't automatically create an empty NICK - it is an "advanced" field.
 		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m', $namerec)) {
