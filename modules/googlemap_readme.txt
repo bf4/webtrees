@@ -8,7 +8,7 @@ These are the instruction on getting your Googlemap interface to work:
    http://www.google.com/apis/maps/signup.html
 2. Go to the Googlemap configuration page. You can find this page under the
    Administration page.
-3. Set Enable Googlemap to ‘Yes’.
+3. Set Enable Googlemap to â€˜Yesâ€™.
 4. Enter the key in the input field, and click save.
 
 The map will only be shown if at least one fact has a place with coordinates
@@ -28,10 +28,10 @@ The correct way to do this is for a PLAC record:
 4 LATI <Latitude>
 (Make sure you use the "3 MAP" record after a PLAC record.)
 The MAP, LONG and LATI lines should be added directly after the PLAC line.
-In the ‘edit’ function pop-up window, there is a ‘+’ (plus sign) under ‘Place’
+In the â€˜editâ€™ function pop-up window, there is a â€˜+â€™ (plus sign) under â€˜Placeâ€™
 where you can select a country, state, county, and city that exists in your
-PhpGedview ‘place’ file. This can help avoid duplications by various spellings
-or versions of the same place. The PhpGedView configuration allows for ‘expanded’
+PhpGedview â€˜placeâ€™ file. This can help avoid duplications by various spellings
+or versions of the same place. The PhpGedView configuration allows for â€˜expandedâ€™
 editing if that option is selected.
 
 It is also possible to define a MAP record within a ADDR record, even though
@@ -63,7 +63,7 @@ text file (separated with ";"). Bulk additions can be performed by text file
 import (with reservations for specific place structure and spelling). 
 
 Using the tree structure mentioned above, we start to build location data
-from the top down – which, in 99% of cases, will mean starting by entering
+from the top down â€“ which, in 99% of cases, will mean starting by entering
 a country. When that is done, we move to the next layer (state, county,
 whatever is appropriate for your locale.) 
 
