@@ -52,18 +52,18 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_SCHEMA_10_11', '');
 
-require_once('includes/classes/class_module.php');
+require_once 'includes/classes/class_module.php';
 
 //-- create tables
 if (!self::table_exists("{$TBLPREFIX}module")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}module (".
-		" mod_id		".self::$AUTO_ID_TYPE." NOT NULL,".
-		" mod_name		".self::$VARCHAR_TYPE."(40) NOT NULL,".
-		" mod_description	".self::$VARCHAR_TYPE."(255) NOT NULL,".
-		" mod_taborder		".self::$INT1_TYPE." NOT NULL, ".
-		" mod_menuorder		".self::$INT1_TYPE." NOT NULL, ".
-		" mod_sidebarorder	".self::$INT1_TYPE." NOT NULL, ".
+		" mod_id           ".self::$AUTO_ID_TYPE." NOT NULL,".
+		" mod_name         ".self::$VARCHAR_TYPE."(40) NOT NULL,".
+		" mod_description  ".self::$VARCHAR_TYPE."(255) NOT NULL,".
+		" mod_taborder     ".self::$INT1_TYPE." NOT NULL, ".
+		" mod_menuorder    ".self::$INT1_TYPE." NOT NULL, ".
+		" mod_sidebarorder ".self::$INT1_TYPE." NOT NULL, ".
 		" PRIMARY KEY (mod_id)".
 		") ".self::$UTF8_TABLE
 	);
@@ -72,16 +72,16 @@ if (!self::table_exists("{$TBLPREFIX}module")) {
 if (!self::table_exists("{$TBLPREFIX}module_privacy")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}module_privacy (".
-		" mp_id			".self::$AUTO_ID_TYPE." NOT NULL,".
-		" mp_mod_id		".self::$ID_TYPE." NOT NULL,".
-		" mp_file		".self::$COL_FILE." NOT NULL,".
-		" mp_access		".self::$INT1_TYPE." NOT NULL,".
-		" mp_type		".self::$CHAR_TYPE."(1) NOT NULL,".
-		" PRIMARY KEY (mp_id),".
-		" INDEX mod_priv_indx (mp_mod_id, mp_file, mp_access),".
-		" INDEX mod_priv_mod_id (mp_mod_id, mp_access) ".
+		" mp_id     ".self::$AUTO_ID_TYPE." NOT NULL,".
+		" mp_mod_id ".self::$ID_TYPE." NOT NULL,".
+		" mp_file   ".self::$COL_FILE." NOT NULL,".
+		" mp_access ".self::$INT1_TYPE." NOT NULL,".
+		" mp_type   ".self::$CHAR_TYPE."(1) NOT NULL,".
+		" PRIMARY KEY (mp_id)".
 		") ".self::$UTF8_TABLE
 	);
+	self::exec("CREATE INDEX {$TBLPREFIX}module_privacy_ix1 ON {$TBLPREFIX}module_privacy (mp_mod_id, mp_file, mp_access)");
+	self::exec("CREATE INDEX {$TBLPREFIX}module_privacy_ix2 ON {$TBLPREFIX}module_privacy (mp_mod_id, mp_access)");
 }
 
 //-- get the gedcom ids from the database
