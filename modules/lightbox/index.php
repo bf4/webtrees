@@ -24,12 +24,7 @@
  * @author Brian Holland
  * $Id$
  */
-require_once PGV_ROOT.'includes\functions\functions.php';
-$pid = safe_REQUEST($_REQUEST, 'pid', PGV_REGEX_XREF);
-if ($pid) {
-	header("Location: module.php?mod=lightbox&pgvaction=lb_editconfig&pid=$pid");
-} else {
-	header("Location: module.php?mod=lightbox&pgvaction=lb_editconfig");
-}
+
+header("Location: ../../index.php");
 exit;
 ?>
