@@ -416,7 +416,9 @@ class MenuBar
 				//-- interactive tree
 				$link = "treenav.php?ged={$GEDCOM}&rootid={$rootid}";
 				$submenu = new Menu($pgv_lang["interactive_tree"], encode_url($link));
-				if (!empty($PGV_IMAGES["gedcom"]["small"]))
+				if (!empty($PGV_IMAGES["gedcom"]["tree"]))
+					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["tree"]);
+				else if (!empty($PGV_IMAGES["gedcom"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_gedcom");
 				$menu->addSubmenu($submenu);
@@ -554,7 +556,9 @@ class MenuBar
 			case "note":
 				//-- shared note
 				$submenu = new Menu($pgv_lang["shared_note_list"], encode_url('notelist.php?ged='.$GEDCOM));
-				if (!empty($PGV_IMAGES["notes"]["small"]))
+				if (!empty($PGV_IMAGES["menu_note"]["small"]))
+					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_note"]["small"]);
+				else if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_notes");
 				$menu->addSubmenu($submenu);
@@ -974,14 +978,16 @@ class MenuBar
 			isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 			$frompage = $_SERVER["SCRIPT_NAME"].decode_url($tqstring);
 			if (isset($_REQUEST['mod'])) {
-				if (!strstr("?", $frompage)) {
-					if (!strstr("%3F", $frompage)) ;
+				if (!strstr($frompage, "?")) {
+					if (!strstr($frompage, "%3F")) ;
 					else $frompage .= "?";
 				}
-				if (!strstr("&mod",$frompage)) $frompage .= "&mod=".$_REQUEST['mod'];
+				if (!strstr($frompage, "&mod") || !strstr($frompage, "?mod")) $frompage .= "&mod=".$_REQUEST['mod'];
 			}
 			if (substr($frompage,-1) == "?") $frompage = substr($frompage,0,-1);
 			if (substr($frompage,-1) == "&") $frompage = substr($frompage,0,-1);
+			// encode frompage address in other case we lost the all variables on theme change
+			$frompage = base64_encode($frompage);
 			$menu=new Menu($pgv_lang['change_theme']);
 			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu', "icon_small_theme");
 //			$menu->print_menu = null;
