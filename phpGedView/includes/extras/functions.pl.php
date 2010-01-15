@@ -2,7 +2,7 @@
 /**
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -421,8 +421,7 @@ function rela_localisation_pl(&$rela, &$pid2) {
 			}
 		}
 	}
-	
-	return " ".ucfirst($rela).": ";
+	return UTF8_ucfirst($rela);
 }
 
 function getRelationshipText_pl($relationshipDescription, $node, $pid1, $pid2) {
@@ -563,6 +562,9 @@ function getFirstRelationsName_pl($pid) {
 			else if (preg_match('/żka$/', $name)) {
 				$pname .= " ".preg_replace('/żka$/', 'żkiej', $name);
 			}
+			else if (preg_match('/ka"$/', $name)) {
+				$pname .= " ".preg_replace('/ka"$/', 'ki"', $name);
+			}
 			else if (preg_match('/ska]$/', $name)) {
 				$pname .= " ".preg_replace('/ska]$/', 'skiej]', $name);
 			}
@@ -581,11 +583,8 @@ function getFirstRelationsName_pl($pid) {
 			else if (preg_match('/a]$/', $name)) {
 				$pname .= " ".preg_replace('/a]$/','y]', $name);
 			}
-			else if (preg_match('/ka"$/', $name)) {
-				$pname .= " ".preg_replace('/ka"$/', 'ki"', $name);
-			}
 			else
-				$pname .= " ".preg_replace(array('/eja$/','/ja$/','/ia$/','/la$/','/ga$/','/ea$/','/a$/'), array('ei','ji','ii','li','gi','ei','y'), $name);
+				$pname .= " ".preg_replace(array('/eja$/','/ja$/','/ia$/','/la$/','/ga$/','/ea$/','/ka$/','/a$/'), array('ei','ji','ii','li','gi','ei','ki','y'), $name);
 		}
 	}
 	else {
