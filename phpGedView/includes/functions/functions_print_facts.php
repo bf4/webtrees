@@ -5,7 +5,7 @@
  * Various printing functions used to print fact records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -712,8 +712,8 @@ function print_media_links($factrec, $level, $pid='') {
 				}
 				if (preg_match('/2 DATE (.+)/', get_sub_record("FILE", 1, $row["m_gedrec"]), $match)) {
 					$media_date=new GedcomDate($match[1]);
-					$echo = $media_date->Display(true);
-					echo "\n\t\t\t<br /><span class=\"label\">", $factarray["DATE"], ": </span> ", $print;
+					$md = $media_date->Display(true);
+					echo "\n\t\t\t<br /><span class=\"label\">", $factarray["DATE"], ": </span> ", $md;
 				}
 				$ttype = preg_match("/".($nlevel+1)." TYPE (.*)/", $row["m_gedrec"], $match);
 				if ($ttype>0) {
@@ -1586,8 +1586,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		}
 		if (preg_match('/2 DATE (.+)/', get_sub_record("FILE", 1, $rowm["m_gedrec"]), $match)) {
 			$media_date=new GedcomDate($match[1]);
-			$echo = $media_date->Display(true);
-			echo "\n\t\t\t<br /><span class=\"label\">", $factarray["DATE"], ": </span> ", $print;
+			$md = $media_date->Display(true);
+			echo "\n\t\t\t<br /><span class=\"label\">", $factarray["DATE"], ": </span> ", $md;
 		}
 		$ttype = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
 		if ($ttype>0) {
