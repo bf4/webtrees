@@ -867,8 +867,8 @@ function print_contact_links() { // This function is used by 3rd party themes.
 function contact_links() {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
 
-	$supportLink = user_contact_link($WEBMASTER_EMAIL, $SUPPORT_METHOD);
-	$contactLink = user_contact_link($CONTACT_EMAIL,   $CONTACT_METHOD);
+	$supportLink = user_contact_link(get_user_id($WEBMASTER_EMAIL), $SUPPORT_METHOD);
+	$contactLink = user_contact_link(get_user_id($CONTACT_EMAIL),   $CONTACT_METHOD);
 
 	if (!$supportLink && !$contactLink) {
 		return '';
@@ -895,8 +895,8 @@ function contact_links() {
 function contact_menus() {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
 
-	$support_menu=user_contact_menu($WEBMASTER_EMAIL, $SUPPORT_METHOD);
-	$contact_menu=user_contact_menu($CONTACT_EMAIL,   $CONTACT_METHOD);
+	$support_menu=user_contact_menu(get_user_id($WEBMASTER_EMAIL), $SUPPORT_METHOD);
+	$contact_menu=user_contact_menu(get_user_id($CONTACT_EMAIL),   $CONTACT_METHOD);
 	if (!$support_menu) {
 		$support_menu=$contact_menu;
 	}
