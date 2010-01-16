@@ -47,7 +47,7 @@ if (file_exists('./config.php')) {
 require_once PGV_ROOT.'includes/functions/functions_import.php';
 
 //-- if we are configured, then make sure that only admins access this page
-if (PGV_DB::isConnected() && adminUserExists() && !userIsAdmin()) {
+if (PGV_DB::isConnected() && PGV_ADMIN_USER_EXISTS && !PGV_USER_IS_ADMIN) {
 	header("Location: login.php?url=install.php");
 	exit;
 }

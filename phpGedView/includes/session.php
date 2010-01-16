@@ -40,7 +40,7 @@ define('PGV_TRANSLATORS_URL', 'https://sourceforge.net/projects/phpgedview/forum
 
 // Enable debugging output?
 define('PGV_DEBUG',       false);
-define('PGV_DEBUG_SQL',   false);
+define('PGV_DEBUG_SQL',   true);
 define('PGV_DEBUG_PRIV',  false);
 
 // Error reporting
@@ -536,6 +536,7 @@ require PGV_ROOT.'includes/functions/functions_privacy.php';
 // Define some constants to save calculating the same value repeatedly.
 define('PGV_USER_ID',           getUserId  ());
 define('PGV_USER_NAME',         getUserName());
+define('PGV_ADMIN_USER_EXISTS', adminUserExists());
 define('PGV_USER_IS_ADMIN',     userIsAdmin       (PGV_USER_ID));
 define('PGV_USER_AUTO_ACCEPT',  userAutoAccept    (PGV_USER_ID));
 define('PGV_USER_GEDCOM_ADMIN', userGedcomAdmin   (PGV_USER_ID, PGV_GED_ID));
@@ -570,7 +571,7 @@ if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION['show_cont
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
 if ((strstr($SCRIPT_NAME, 'install.php')===false)
 	&&(strstr($SCRIPT_NAME, 'editconfig_help.php')===false)) {
-	if (!PGV_DB::isConnected() || !adminUserExists()) {
+	if (!PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS) {
 		header('Location: install.php');
 		exit;
 	}
