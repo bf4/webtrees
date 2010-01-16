@@ -2604,8 +2604,9 @@ function get_logged_in_users() {
 
 	return
 		PGV_DB::prepare(
-			"SELECT user_id, user_name FROM {$TBLPREFIX}user".
-			" JOIN {$TBLPREFIX}user_setting USING (user_id)".
+			"SELECT u.user_id, user_name".
+			" FROM {$TBLPREFIX}user u".
+			" JOIN {$TBLPREFIX}user_setting us USING (user_id)".
 			" WHERE setting_name=? AND setting_value=?"
 		)
 		->execute(array('loggedin', 'Y'))
