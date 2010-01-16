@@ -260,10 +260,12 @@ function UTF8_strtolower($text) {
  * Convert first letter of input string to upper case
  */
 function UTF8_ucfirst($text) {
-	$result = UTF8_strtoupper(UTF8_substr($text, 0, 1)).UTF8_substr($text, 1);
-	
-	if (is_array($text)) return $text;
-	else return $result;
+	$result = UTF8_str_split($text);
+
+	$result[0] = UTF8_strtoupper($result[0]);
+
+	if (is_array($text)) return $result;
+	else return implode('', $result);
 }
 
 
