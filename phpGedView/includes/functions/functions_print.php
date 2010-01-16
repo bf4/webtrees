@@ -1304,7 +1304,8 @@ function print_privacy_error($username) {
 	if ($username==$WEBMASTER_EMAIL) {
 		$method = $SUPPORT_METHOD;
 	}
-	if (!get_user_id($username)) {
+	$user_id=get_user_id($username);
+	if (!$user_id) {
 		$method = "mailto";
 	}
 	echo "<br /><span class=\"error\">", $pgv_lang["privacy_error"], " ";
@@ -1314,16 +1315,16 @@ function print_privacy_error($username) {
 	}
 	echo $pgv_lang["more_information"];
 	if ($method=="mailto") {
-		if (!get_user_id($username)) {
+		if (!$user_id) {
 			$email = $username;
 			$fullname = $username;
 		} else {
-			$email = get_user_setting($username, 'email');
-			$fullname=getUserFullName($username);
+			$email = get_user_setting($user_id, 'email');
+			$fullname=getUserFullName($user_id);
 		}
 		echo " <a href=\"mailto:$email\">", $fullname, "</a></span><br />";
 	} else {
-		$userName=getUserFullName($username);
+		$userName=getUserFullName($user_id);
 		echo " <a href=\"javascript:;\" onclick=\"message('$username', '$method'); return false;\">", $userName, "</a></span><br />";
 	}
 }
