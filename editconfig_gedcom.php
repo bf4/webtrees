@@ -254,12 +254,10 @@ if ($action=="update") {
 	
 	// Create the gedcom if it doesn't already exist
 	$ged_id=get_id_from_gedcom($FILE, true);
-	set_gedcom_setting($ged_id, 'gedcom',  $FILE);
 	set_gedcom_setting($ged_id, 'config',  $gedcom_config);
 	set_gedcom_setting($ged_id, 'privacy', $gedcom_privacy);
 	set_gedcom_setting($ged_id, 'title',   $gedcom_title);
 	set_gedcom_setting($ged_id, 'path',    $path.$GEDFILENAME);
-	set_gedcom_setting($ged_id, 'id',      $ged_id);
 	set_gedcom_setting($ged_id, 'pgv_ver', PGV_VERSION);
 
 	// Check that add/remove common surnames are separated by [,;] blank
@@ -269,7 +267,6 @@ if ($action=="update") {
 	$COMMON_NAMES_ADD = $_POST["NEW_COMMON_NAMES_ADD"];
 	$COMMON_NAMES_REMOVE = $_POST["NEW_COMMON_NAMES_REMOVE"];
 
-	require $INDEX_DIRECTORY.'gedcoms.php';
 	$boolarray = array();
 	$boolarray["yes"]="true";
 	$boolarray["no"]="false";

@@ -216,9 +216,6 @@ class UserMigrateControllerRoot extends BaseController {
 		// Backup gedcom settings
 		if (isset($_POST["um_gedsets"])) {
 
-			// Gedcoms file
-			if (file_exists($INDEX_DIRECTORY."gedcoms.php")) $this->flist[] = $INDEX_DIRECTORY."gedcoms.php";
-
 			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 				// Non-default config files
 				$conf=get_config_file($ged_name);
