@@ -134,18 +134,16 @@ function userUpdateLogin($user_id) {
  * @return string 	the username of the user or an empty string if the user is not logged in
  */
 
-// Currently, a User ID is the same as a User Name.  In the future, User IDs will
-// be numeric.  This function is part of the migration process.
-function getUserName() {
-	return get_user_name(getUserId());
-}
-
 function getUserId() {
 	if (isset($_SESSION) && !empty($_SESSION['pgv_user'])) {
 		return $_SESSION['pgv_user'];
 	} else {
-		return "";
+		return '';
 	}
+}
+
+function getUserName() {
+	return get_user_name(getUserId());
 }
 
 /**
@@ -167,7 +165,7 @@ function userIsAdmin($user_id=PGV_USER_ID) {
  * to change the configuration files for the currently active gedcom
  */
 function userGedcomAdmin($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
-	return userIsAdmin($user_id, $ged_id) || get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin';
+	return get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin' || userIsAdmin($user_id, $ged_id);
 }
 
 /**
