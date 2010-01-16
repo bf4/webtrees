@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: [ 2933020 ] 4.2.3 Bracketing issue in Russian (wooc)
  - Fixed: [ 2931733 } 4.2.3 Name entering and editing (fisharebest)
  - Fixed: [ 2930541 ] PGV custom  tags not being removed on download V4.2.3 (fisharebest)
  - Fixed: [ 2931697 ] 4.2.3 countries.csv ... Iraq is called IRN (fisharebest)

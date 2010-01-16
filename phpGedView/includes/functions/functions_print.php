@@ -1730,7 +1730,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 				$tempText .= $tempChar;
 			}
 			$thisLang = whatLanguage($tempText);
-			if (isset($TEXT_DIRECTION_array[$thisLang]) && ($TEXT_DIRECTION_array[$thisLang]=="ltr" || ($TEXT_DIRECTION=="ltr" && $TEXT_DIRECTION_array[$thisLang]=="rtl"))) {
+			if (isset($TEXT_DIRECTION_array[$thisLang]) && ($TEXT_DIRECTION_array[$thisLang]=="ltr" || ($TEXT_DIRECTION=="ltr" && $TEXT_DIRECTION_array[$thisLang]=="rtl")) && $thisLang!="russian" && $thisLang!="greek") {
 				$newText .= getRLM() . $thisChar . $tempText . $tempChar . getRLM();
 			} else {
 				$newText .= getLRM() . $thisChar . $tempText . $tempChar . getLRM();
