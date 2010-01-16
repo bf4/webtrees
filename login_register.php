@@ -535,6 +535,7 @@ switch ($action) {
 		AddToLog("User attempted to verify hashcode: ".$user_name);
 
 		// Change to the new user's language
+		$user_id=get_user_id($user_name);
 		$user_lang=get_user_setting($user_id, 'language');
 		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
 		$oldLanguage = $LANGUAGE;
