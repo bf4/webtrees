@@ -1068,7 +1068,7 @@ class MenuBar
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
 //			$menu->print_menu = NULL;
 
-			$userfavs=getUserFavorites(PGV_USER_ID);
+			$userfavs=getUserFavorites(PGV_USER_NAME);
 			$gedfavs=getUserFavorites($GEDCOM);
 
 			// User favorites

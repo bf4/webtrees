@@ -123,6 +123,9 @@ class GedcomRecord {
 
 		// Look for the record in the database
 		if (!is_array($data)) {
+			// TODO: The lack of late static binding in PHP5.3 means that
+			// get_class() doesn't return the class we are expecting, and
+			// we always fall through to the default case.
 			switch (get_class()) {
 			case 'Person':
 				$data=fetch_person_record($pid, $ged_id);
@@ -170,6 +173,9 @@ class GedcomRecord {
 		// Create the object
 		$class_name=get_class();
 		if ($class_name=='GedcomRecord') {
+			// TODO: The lack of late static binding in PHP5.3 means that
+			// get_class() doesn't return the class we are expecting, and
+			// we always fall through to the default case.
 			if (is_array($data)) {
 				$type=$data['type'];
 			} elseif (preg_match('/^0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $data, $match)) {
