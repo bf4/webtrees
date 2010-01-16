@@ -97,11 +97,8 @@ class MenuBar
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 		$showLayout = ($PEDIGREE_LAYOUT) ? 1 : 0;
 
-		$username = PGV_USER_NAME;
-		if (!$username) {
-			$menu = new Menu("", "", "");
-//			$menu->print_menu = null;
-			return $menu;
+		if (!PGV_USER_ID) {
+			return new Menu('', '', '');
 		}
 
 		//-- main menu
@@ -121,7 +118,7 @@ class MenuBar
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_mygedview");
 		$menu->addSubmenu($submenu);
 		//-- editaccount submenu
-		if (get_user_setting($username, 'editaccount')) {
+		if (get_user_setting(PGV_USER_ID, 'editaccount')) {
 			$submenu = new Menu($pgv_lang["editowndata"], "edituser.php");
 			if (!empty($PGV_IMAGES["mygedview"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
