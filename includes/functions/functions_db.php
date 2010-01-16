@@ -2432,6 +2432,11 @@ function get_all_gedcoms() {
 function get_gedcom_from_id($ged_id) {
 	global $GEDCOMS;
 
+	// No need to look up the default gedcom
+	if (defined('PGV_GED_ID') && defined('PGV_GEDCOM') && $ged_id==PGV_GED_ID) {
+		return PGV_GEDCOM;
+	}
+
 	if (isset($GEDCOMS[$ged_id])) {
 		return $ged_id;
 	}
@@ -2445,9 +2450,14 @@ function get_gedcom_from_id($ged_id) {
 }
 
 // Convert an (external) gedcom name to an (internal) gedcom ID.
-// Optionally create an entry for it if it does not exist.
+// Optionally create an entry for it, if it does not exist.
 function get_id_from_gedcom($ged_name, $create=false) {
 	global $GEDCOMS;
+
+	// No need to look up the default gedcom
+	if (defined('PGV_GED_ID') && defined('PGV_GEDCOM') && $ged_name==PGV_GEDCOM) {
+		return PGV_GED_ID;
+	}
 
 	if (array_key_exists($ged_name, $GEDCOMS)) {
 		return (int)$GEDCOMS[$ged_name]['id']; // Cast to (int) for safe use in SQL
