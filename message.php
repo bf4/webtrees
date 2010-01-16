@@ -183,9 +183,10 @@ if ($action=="compose") {
 	else print "return checkForm(this);";
 	print "\">\n";
 	print "<table>\n";
-	if (get_user_id($to)) {
-		$lang_temp = "lang_name_".get_user_setting($to, 'language');
-		$touserName = getUserFullName($to);
+	$to_user_id=get_user_id($to);
+	if ($to_user_id) {
+		$lang_temp = "lang_name_".get_user_setting($to_user_id, 'language');
+		$touserName = getUserFullName($to_user_id);
 		print "<tr><td></td><td>".str_replace("#TO_USER#", "<b>".$touserName."</b>", $pgv_lang["sending_to"])."<br />";
 		print str_replace("#USERLANG#", "<b>".$pgv_lang[$lang_temp]."</b>", $pgv_lang["preferred_lang"])."</td></tr>\n";
 	}
