@@ -228,6 +228,7 @@ if ($action!="choose") {
 					$rec=GedcomRecord::getInstance($gid1);
 					$pid=$rec->getXrefLink(); // $pid is embedded in $pgv_lang['record_updated']
 					echo '<br />', print_text('record_updated', 0, 1), '<br />';
+					$fav_count=update_favorites($gid2, $gid1);
 					echo "<br /><a href=\"edit_merge.php?action=choose\">", $pgv_lang["merge_more"], "</a><br />\n";
 					echo "<br /><br /><br />\n";
 				}

@@ -2763,4 +2763,21 @@ function get_user_from_gedcom_xref($ged_id, $xref) {
 		)->execute(array($ged_id, 'gedcomid', $xref))->fetchOne();
 }
 
+/**
+* update favorites regarding a merge of records
+*
+* @param string $xref_from id to update
+* @param string $xref_to id to update to
+* @param string $ged_id gedcom to update
+*/
+function update_favorites($xref_from, $xref_to, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+$ged_name=get_gedcom_from_id($ged_id);
+
+	return
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}favorites SET fv_gid=? WHERE fv_gid=? AND fv_file=?")
+		->execute(array($xref_to, $xref_from, $ged_name))
+		->rowCount();
+}
 ?>
