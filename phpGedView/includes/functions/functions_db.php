@@ -1900,25 +1900,26 @@ function delete_gedcom($ged_id) {
 
 	$ged=get_gedcom_from_id($ged_id);
 
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks              WHERE b_username=?")->execute(array($ged));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks              WHERE b_username=?")->execute(array($ged   ));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates               WHERE d_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}families            WHERE f_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites           WHERE fv_file   =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom              WHERE gedcom_id =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom_setting      WHERE gedcom_id =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individuals         WHERE i_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link                WHERE l_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media               WHERE m_gedfile =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping       WHERE mm_gedfile=?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}mutex         WHERE mx_name   =?")->execute(array($ged));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}module_privacy      WHERE mp_file   =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}mutex               WHERE mx_name   =?")->execute(array($ged   ));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name                WHERE n_file    =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news                WHERE n_username=?")->execute(array($ged));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news                WHERE n_username=?")->execute(array($ged   ));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid              WHERE ni_gedfile=?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}other               WHERE o_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks          WHERE pl_file   =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places              WHERE p_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources             WHERE s_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE gedcom_id =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom_setting      WHERE gedcom_id =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom              WHERE gedcom_id =?")->execute(array($ged_id));
 
 	if (isset($pgv_changes)) {
 		//-- erase any of the changes
@@ -1929,7 +1930,6 @@ function delete_gedcom($ged_id) {
 		}
 		write_changes();
 	}
-
 
 	if (get_site_setting('DEFAULT_GEDCOM')==$ged) {
 		set_site_setting('DEFAULT_GEDCOM', '');
