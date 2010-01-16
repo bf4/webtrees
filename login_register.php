@@ -94,13 +94,14 @@ switch ($action) {
 		$QUERY_STRING = "";
 		print_header($pgv_lang['lost_pw_reset']);
 		print "<div class=\"center\">";
-		if (!get_user_id($user_name)) {
+		$user_id=get_user_id($user_name);
+		if (!$user_id) {
 			AddToLog("New password requests for user ".$user_name." that does not exist");
 			print "<span class=\"warning\">";
 			print_text("user_not_found");
 			print "</span><br />";
 		} else {
-			if (get_user_setting($user_name, 'email')=='') {
+			if (get_user_setting($user_id, 'email')=='') {
 				AddToLog("Unable to send password to user ".$user_name." because they do not have an email address");
 				print "<span class=\"warning\">";
 				print_text("user_not_found");
@@ -114,13 +115,13 @@ switch ($action) {
 					$user_new_pw .= $passchars{$index};
 				}
 
-				set_user_password($user_name, crypt($user_new_pw));
-				set_user_setting($user_name, 'pwrequested', 1);
+				set_user_password($user_id, crypt($user_new_pw));
+				set_user_setting($user_id, 'pwrequested', 1);
 
 				// switch language to user settings
 				$oldLanguage = $LANGUAGE;
-				if ($LANGUAGE != get_user_setting($user_name, 'language')) loadLanguage(get_user_setting($user_name, 'language'));
-				$newuserName=getUserFullName($user_name);
+				if ($LANGUAGE != get_user_setting($user_id, 'language')) loadLanguage(get_user_setting($user_id, 'language'));
+				$newuserName=getUserFullName($user_id);
 
 				$mail_body = "";
 				$mail_body .= str_replace("#user_fullname#", $newuserName, $pgv_lang["mail04_line01"]) . "\r\n\r\n";
@@ -136,7 +137,7 @@ switch ($action) {
 				else $mail_body .= $serverURL;
 
 				require_once PGV_ROOT.'includes/functions/functions_mail.php';
-				pgvMail(get_user_setting($user_name, 'email'), $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail04_subject"]), $mail_body);
+				pgvMail(get_user_setting($user_id, 'email'), $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail04_subject"]), $mail_body);
 
 				?>
 				<table class="center facts_table">
