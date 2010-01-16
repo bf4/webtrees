@@ -3374,14 +3374,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || !PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
+			if (!$CONFIGURED || !PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_GEDCOM_ADMIN) {
 				require $file;
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
+			if (!PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
 				require $file;
 			}
 		}
@@ -3413,14 +3413,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || !PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
+			if (!$CONFIGURED || !PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_GEDCOM_ADMIN) {
 				require $file;
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!PGV_DB::isConnected() || !adminUserExists() || PGV_USER_CAN_EDIT) {
+			if (!PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_CAN_EDIT) {
 				require $file;
 			}
 		}
