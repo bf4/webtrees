@@ -47,7 +47,7 @@ define('PGV_DEBUG_PRIV',  false);
 define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Required version of database tables/columns/indexes/etc.
-define('PGV_SCHEMA_VERSION', 11);
+define('PGV_SCHEMA_VERSION', 12);
 
 // Environmental requirements
 define('PGV_REQUIRED_PHP_VERSION',     '5.2.0'); // 5.2.3 is recommended
@@ -338,15 +338,6 @@ if (!$SEARCH_SPIDER && !isset($_SESSION['initiated'])) {
 	$_SESSION['initiated']=true;
 } else {
 	// An existing session
-}
-
-// Import the gedcoms array
-// NOTE: this array is deprecated - use set/get_gedcom_setting()
-if (file_exists($INDEX_DIRECTORY.'gedcoms.php')) {
-	require $INDEX_DIRECTORY.'gedcoms.php';
-}
-if (!isset($GEDCOMS) || !is_array($GEDCOMS)) {
-	$GEDCOMS = array();
 }
 
 // Set the active GEDCOM

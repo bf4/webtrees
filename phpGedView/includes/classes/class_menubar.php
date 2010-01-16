@@ -56,27 +56,25 @@ class MenuBar
 	static function &getGedcomMenu() {
 		global $ALLOW_CHANGE_GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
+		if ($TEXT_DIRECTION=='rtl') $ff='_rtl'; else $ff='';
 		//-- main menu
-		$menu = new Menu($pgv_lang["welcome_page"], "index.php?ctype=gedcom", "down");
-		if (!empty($PGV_IMAGES["gedcom"]["large"]))
-			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
-		$menu->addAccesskey($pgv_lang["accesskey_home_page"]);
+		$menu = new Menu($pgv_lang['welcome_page'], 'index.php?ctype=gedcom', 'down');
+		if (!empty($PGV_IMAGES['gedcom']['large']))
+			$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", 'icon_large_gedcom');
+		$menu->addAccesskey($pgv_lang['accesskey_home_page']);
 		//-- gedcom list
-		if ($ALLOW_CHANGE_GEDCOM && count(get_all_gedcoms())>1) {
-		$gedcomarray = get_all_gedcoms();
-		//-- sorting menu by gedcom filename 
-		asort($gedcomarray);
-			foreach ($gedcomarray as $ged_id=>$gedcom) {
-				$submenu = new Menu(PrintReady(get_gedcom_setting($ged_id, 'title'), true), encode_url('index.php?ctype=gedcom&ged='.$gedcom));
-				if (!empty($PGV_IMAGES["gedcom"]["small"]))
-					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_gedcom");
+		$gedcom_titles=get_gedcom_titles();
+		if ($ALLOW_CHANGE_GEDCOM && count($gedcom_titles)>1) {
+			foreach ($gedcom_titles as $gedcom_title) {
+				$submenu = new Menu(PrintReady($gedcom_title->gedcom_title, true), encode_url('index.php?ctype=gedcom&ged='.$gedcom_title->gedcom_name));
+				if (!empty($PGV_IMAGES['gedcom']['small'])) {
+					$submenu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['small']);
+				}
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_gedcom');
 				$menu->addSubmenu($submenu);
 			}
 		}
-
 		//-- Welcome Menu customization
 		$filename = PGV_ROOT.'includes/extras/custom_welcome_menu.php';
 		if (file_exists($filename)) {
