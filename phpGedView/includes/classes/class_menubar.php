@@ -967,11 +967,10 @@ class MenuBar
 	static function &getThemeMenu() {
 		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang;
 
-		$current=$THEME_DIR;
-		foreach (get_theme_names() as $themedir) {
-			if ($themedir==get_user_setting(PGV_USER_ID, 'theme')) {
-				$current=$themedir;
-			}
+		$current=get_user_setting(PGV_USER_ID, 'theme');
+		$all_themes=get_theme_names();
+		if (!array_key_exists($current, $all_themes)) {
+			$current=$THEME_DIR;		
 		}
 
 		if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES && !$SEARCH_SPIDER) {
@@ -990,8 +989,7 @@ class MenuBar
 			$frompage = base64_encode($frompage);
 			$menu=new Menu($pgv_lang['change_theme']);
 			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu', "icon_small_theme");
-//			$menu->print_menu = null;
-			foreach (get_theme_names() as $themename=>$themedir) {
+			foreach ($all_themes as $themename=>$themedir) {
 				$submenu=new Menu($themename, encode_url("themechange.php?frompage={$frompage}&mytheme={$themedir}"));
 				if ($themedir==$current) {
 					$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
