@@ -2561,7 +2561,7 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 	} else {
 		return
 			PGV_DB::prepare(
-				"SELECT user_id, user_name FROM {$TBLPREFIX}user".
+				"SELECT u.user_id, user_name FROM {$TBLPREFIX}user u".
 				" JOIN {$TBLPREFIX}user_setting us1 USING (user_id)".
 				" JOIN {$TBLPREFIX}user_setting us2 USING (user_id)".
 				" WHERE us1.setting_name=? AND us2.setting_name=?".
