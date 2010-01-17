@@ -1481,8 +1481,8 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		if (''==$text) echo ' selected="selected"';
 		echo ">-</option>\n";
 		foreach (get_all_users('asc', 'username') as $user_id=>$user_name) {
-			echo "<option value=\"", $user_id, "\"";
-			if ($user_id==$text) echo " selected=\"selected\"";
+			echo "<option value=\"", $user_name, "\"";
+			if ($user_name==$text) echo " selected=\"selected\"";
 			echo ">", $user_name, "</option>\n";
 		}
 		echo "</select>\n";
