@@ -1553,6 +1553,7 @@ $pgv_lang["adding"]						= "Hinzufügen";
 $pgv_lang["updating_linked"]			= "Aktualisiere verbundene Datensätze";
 $pgv_lang["merge_more"]					= "Weitere Datensätze zusammenfügen.";
 $pgv_lang["same_ids"]					= "Sie haben zweimal die selbe ID eingegeben. Das Zusammenfügen ist nicht möglich.";
+$pgv_lang["updated_favorites"] 			= "Lesezeichen aktualisiert.";
 
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"]				= "Ahnendiagramm";
