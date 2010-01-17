@@ -623,6 +623,7 @@ function print_media_links($factrec, $level, $pid='') {
 	global $MULTI_MEDIA, $TEXT_DIRECTION, $TBLPREFIX;
 	global $pgv_lang, $factarray, $SEARCH_SPIDER, $view;
 	global $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
+	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 	global $GEDCOM, $SHOW_ID_NUMBERS;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 	if (!$MULTI_MEDIA) return;
