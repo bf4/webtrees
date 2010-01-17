@@ -370,21 +370,21 @@
 	} else if (location == 'WY' || location == 'Wyoming')				 { var ChapmanCode = 'WY'; 
 
 	// Canadian Provinces
-	} else if (location == 'AB' || 'Alberta')							 { var ChapmanCode = 'AB';
-	} else if (location == 'BC' || 'British Columbia')					 { var ChapmanCode = 'BC';
-	} else if (location == 'NL' || 'Labrador')							 { var ChapmanCode = 'NL';
-	} else if (location == 'MB' || 'Manitoba')							 { var ChapmanCode = 'MB';
-	} else if (location == 'NB' || 'New Brunswick')						 { var ChapmanCode = 'NB';
-	} else if (location == 'NL' || 'Newfoundland')						 { var ChapmanCode = 'NL';
-	} else if (location == 'NL' || 'Newfoundland and Labrador')			 { var ChapmanCode = 'NL';
-	} else if (location == 'NT' || 'Northwest Territories')				 { var ChapmanCode = 'NT';
-	} else if (location == 'NS' || 'Nova Scotia')						 { var ChapmanCode = 'NS';
-	} else if (location == 'NU' || 'Nunavut')							 { var ChapmanCode = 'NU';
-	} else if (location == 'ON' || 'Ontario')							 { var ChapmanCode = 'ON';
-	} else if (location == 'PE' || 'Prince Edward Island')				 { var ChapmanCode = 'PE';
-	} else if (location == 'QC' || 'Quebec')							 { var ChapmanCode = 'QC';
-	} else if (location == 'SK' || 'Saskatchewan')						 { var ChapmanCode = 'SK';
-	} else if (location == 'YT' || 'Yukon')								 { var ChapmanCode = 'YT';
+	} else if (location == 'AB' || location == 'Alberta')					 { var ChapmanCode = 'AB';
+	} else if (location == 'BC' || location == 'British Columbia')			 { var ChapmanCode = 'BC';
+	} else if (location == 'NL' || location == 'Labrador')					 { var ChapmanCode = 'NL';
+	} else if (location == 'MB' || location == 'Manitoba')					 { var ChapmanCode = 'MB';
+	} else if (location == 'NB' || location == 'New Brunswick')				 { var ChapmanCode = 'NB';
+	} else if (location == 'NL' || location == 'Newfoundland')				 { var ChapmanCode = 'NL';
+	} else if (location == 'NL' || location == 'Newfoundland and Labrador')	 { var ChapmanCode = 'NL';
+	} else if (location == 'NT' || location == 'Northwest Territories')		 { var ChapmanCode = 'NT';
+	} else if (location == 'NS' || location == 'Nova Scotia')				 { var ChapmanCode = 'NS';
+	} else if (location == 'NU' || location == 'Nunavut')					 { var ChapmanCode = 'NU';
+	} else if (location == 'ON' || location == 'Ontario')					 { var ChapmanCode = 'ON';
+	} else if (location == 'PE' || location == 'Prince Edward Island')		 { var ChapmanCode = 'PE';
+	} else if (location == 'QC' || location == 'Quebec')					 { var ChapmanCode = 'QC';
+	} else if (location == 'SK' || location == 'Saskatchewan')				 { var ChapmanCode = 'SK';
+	} else if (location == 'YT' || location == 'Yukon')						 { var ChapmanCode = 'YT';
 	
 	// Default ChapmanCode
 	} else {
