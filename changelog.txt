@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Update: jQuery.autocomplete plugin 1.1 (volschin)
  - Update: TCPDF 4.8.024 (volschin)
  - Fixed: Include change of favorites in merge of records (volschin)
  - Fixed: [ 2933020 ] 4.2.3 Bracketing issue in Russian (wooc)
