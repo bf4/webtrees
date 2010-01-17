@@ -132,14 +132,36 @@ global $pgv_lang, $TEXT_DIRECTION;
 		window.close();
 	}
 	
+	function changeCtry() {
+		// Change Year field Colour ----------------------------------------------
+		if (document.getElementById('censYear').value=="choose") {
+			document.getElementById('censYear').style.backgroundColor = "#ffaaaa";
+		} else {
+			document.getElementById('censYear').style.backgroundColor = "#ffffff";
+		}
+		return;
+	}
+	
 	function changeYear(cenyear) {
 		var tbl = document.getElementById('tblSample');
 		if (tbl.rows.length==0) {
 			create_header();
 		}
-		 changeAge(cenyear);
-		 changeCols(cenyear);
-		 changeMC(cenyear);
+		// Change Date field -----------------------------------------------------
+		var cendate = getCenDate(cenyear);
+		var cdate = cendate.format("dd NNN yyyy");
+		document.getElementById('censDate').value = cdate;
+		// Change Year field Colour ----------------------------------------------
+		if (document.getElementById('censYear').value=="choose") {
+			document.getElementById('censYear').style.backgroundColor = "#ffaaaa";
+		} else {
+			document.getElementById('censYear').style.backgroundColor = "#ffffff";
+		}
+		
+		changeAge(cenyear);
+		changeCols(cenyear);
+		changeMC(cenyear);
+		preview();
 	}
 	
 	// Change Marital Condition and Years Married based on Census Year ======================
@@ -147,7 +169,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 		var cendate = getCenDate(cenyear);
 		// Get Married Date from Input Fields and re-calculate Marital Condition ============
 		var tbl = document.getElementById('tblSample');
-		for(var i=1; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
+		for(var i=1; i<tbl.rows.length; i++) { // start at i=1 because we need to avoid header
 			var tr = tbl.rows[i];
 			for(var j=2; j<tr.cells.length; j++){
 				if (j!=4 && j!=15) { 
@@ -156,18 +178,21 @@ global $pgv_lang, $TEXT_DIRECTION;
 					continue;
 				} else {
 					var marrcond = (tr.cells[j].childNodes[0].value);
-					var mdate	 = (tr.cells[69].childNodes[0].value); // marriage date in Julian format
-					var yrsmarr  = (tr.cells[16].childNodes[0].value); // years married
-					var dob      = (tr.cells[11].childNodes[0].value); // DOB
-					var agemarr  = (tr.cells[20].childNodes[0].value); // years married
+					var dob      = (tr.cells[11].childNodes[0].value); // DOB Birth date in Julian Format
+					var yrsmarr  = (tr.cells[16].childNodes[0].value); // Years married
+					var agemarr  = (tr.cells[20].childNodes[0].value); // Age at 1st marriage
+					var dom		 = (tr.cells[69].childNodes[0].value); // DOM Marriage date in Julian format
+					var fullnam	 = (tr.cells[70].childNodes[0].value); // Full Name
+					var marrnam	 = (tr.cells[71].childNodes[0].value); // Married Name
+					var dod		 = (tr.cells[72].childNodes[0].value); // DOD Death date in Julian format
 
 					var one_day   = 1000*60*60*24;
 					var one_month = (365.26*one_day)/12;
 					var one_year  = 365.26*one_day;
-
-					// If valid positive Julian date used, then use this ===========
-					if (mdate>1721060) {
-						IJD = Math.floor(mdate);
+					
+					// Date of Birth (dob) - passed as Julian Date String
+					if (dob>1721060) {
+						IJD = Math.floor(dob);
 						L = Math.floor(IJD + 68569);
 						N = Math.floor(4 * L / 146097);
 						L = L - Math.floor((146097*N + 3)/4);
@@ -178,13 +203,50 @@ global $pgv_lang, $TEXT_DIRECTION;
 						L = Math.floor(J/11);
 						J = J + 2 - 12*L;
 						I = 100*(N - 49) + I + L;
-						mdate = (I+", "+J+", "+K);
+						dob = (I+', '+J+', '+K);
 					}
-					madate=new Date(mdate);
+					// Create Date of Birth object from passed string dob 
+					var jsdob = Date.parseString(dob, 'y, M, d');
+				
+					// Date of Marriage (dom) - passed as Julian Date String
+					if (dom>1721060) {
+						IJD = Math.floor(dom);
+						L = Math.floor(IJD + 68569);
+						N = Math.floor(4 * L / 146097);
+						L = L - Math.floor((146097*N + 3)/4);
+						I = Math.floor(4000*(L + 1)/1461001);
+						L = L - Math.floor(1461 * I / 4) + 31;
+						J = Math.floor(80 * L / 2447);
+						K = L - Math.floor(2447 * J / 80);
+						L = Math.floor(J/11);
+						J = J + 2 - 12*L;
+						I = 100*(N - 49) + I + L;
+						dom = (I+', '+J+', '+K);
+					}
+					// Create Date of Marriage object from passed string dom 
+					var jsdom = Date.parseString(dom, 'y, M, d');
+					
+					// Date of Death (dod) - passed as Julian Date String
+					if (dod>1721060) {
+						IJD = Math.floor(dod);
+						L = Math.floor(IJD + 68569);
+						N = Math.floor(4 * L / 146097);
+						L = L - Math.floor((146097*N + 3)/4);
+						I = Math.floor(4000*(L + 1)/1461001);
+						L = L - Math.floor(1461 * I / 4) + 31;
+						J = Math.floor(80 * L / 2447);
+						K = L - Math.floor(2447 * J / 80);
+						L = Math.floor(J/11);
+						J = J + 2 - 12*L;
+						I = 100*(N - 49) + I + L;
+						dod = (I+', '+J+', '+K);
+					}
+					// Create Date of Marriage object from passed string dom 
+					var jsdod = Date.parseString(dod, 'y, M, d');
 
-					if (cendate > madate) {
-						yrsmarr = Math.floor((cendate-madate)/one_year);
-						agemarr = Math.floor((madate-jsdob)/one_year);
+					if (cendate > jsdom) {
+						yrsmarr = Math.floor((cendate-jsdom)/one_year);
+						agemarr = Math.floor((jsdom-jsdob)/one_year);
 						marrcond = "M";
 					}else{
 						yrsmarr = "-";
@@ -192,11 +254,25 @@ global $pgv_lang, $TEXT_DIRECTION;
 						marrcond = "S";
 					}
 				}
+
 				tr.cells[j].childNodes[0].value = marrcond;
 				tr.cells[16].childNodes[0].value = yrsmarr;
+				
+				//-- If single and USA 1930, set Years married to "-" ------------------
 				if (marrcond=="S" && cenyear=="1930") {
 					tr.cells[20].childNodes[0].value = "-";
 				}
+				//-- If married or widowed set name to married name --------------------
+				if (marrcond=="M" || marrcond=="W") {
+					tr.cells[2].childNodes[0].value = marrnam; 
+				}
+				//-- If single or unmarried set name to birth (full) name --------------
+				if (marrcond=="S" || marrcond=="U") {
+					tr.cells[2].childNodes[0].value = fullnam;
+				}
+				
+				var age		 = (tr.cells[7].childNodes[0].value);  // Age
+				
 			}
 		}
 	}
@@ -210,73 +286,6 @@ global $pgv_lang, $TEXT_DIRECTION;
 		} else {
 			// alert("cenyear = "+cenyear+" ... prevcenyear = base_"+base1901); 
 		}
-
-		// Calculate census date from the census year selected
-		// var basecendate = new Date(1901, 2, 31);
-		// UK CENSUS DATES
-		       if (cenyear == 1841) { var cendate = new Date(1841, 5, 06);    // 06 JUN 1841
-		} else if (cenyear == 1851) { var cendate = new Date(1851, 2, 30);    // 30 MAR 1851
-		} else if (cenyear == 1861) { var cendate = new Date(1861, 3, 07);    // 07 APR 1861
-		} else if (cenyear == 1871) { var cendate = new Date(1871, 3, 02);    // 02 APR 1871
-		} else if (cenyear == 1881) { var cendate = new Date(1881, 3, 03);    // 03 APR 1881
-		} else if (cenyear == 1891) { var cendate = new Date(1891, 3, 05);    // 05 APR 1891
-		} else if (cenyear == 1901) { var cendate = new Date(1901, 2, 31);    // 31 MAR 1901
-		} else if (cenyear == 1911) { var cendate = new Date(1911, 3, 02);    // 02 APR 1911
-		} else if (cenyear == 1921) { var cendate = new Date(1921, 3, 02);    // 02 APR 1921
-		// USA CENSUS DATES
-		} else if (cenyear == 1790) { var cendate = new Date(1790, 7, 02);    // 02 AUG 1790
-		} else if (cenyear == 1800) { var cendate = new Date(1800, 7, 04);    // 04 AUG 1800
-		} else if (cenyear == 1810) { var cendate = new Date(1810, 7, 06);    // 06 AUG 1810
-		} else if (cenyear == 1820) { var cendate = new Date(1820, 7, 07);    // 07 AUG 1820
-		} else if (cenyear == 1830) { var cendate = new Date(1830, 5, 01);    // 01 JUN 1830
-		} else if (cenyear == 1840) { var cendate = new Date(1840, 5, 01);    // 01 JUN 1840
-		} else if (cenyear == 1850) { var cendate = new Date(1850, 5, 01);    // 01 JUN 1850
-		} else if (cenyear == 1860) { var cendate = new Date(1860, 5, 01);    // 01 JUN 1860
-		} else if (cenyear == 1870) { var cendate = new Date(1870, 5, 01);    // 01 JUN 1870
-		} else if (cenyear == 1880) { var cendate = new Date(1880, 5, 01);    // 01 JUN 1880
-		} else if (cenyear == 1890) { var cendate = new Date(1890, 5, 01);    // 01 JUN 1890
-		} else if (cenyear == 1900) { var cendate = new Date(1900, 5, 01);    // 01 JUN 1900
-		} else if (cenyear == 1910) { var cendate = new Date(1910, 3, 15);    // 15 APR 1910
-		} else if (cenyear == 1920) { var cendate = new Date(1920, 0, 01);    // 01 JAN 1920
-		} else if (cenyear == 1930) { var cendate = new Date(1930, 3, 01);    // 01 APR 1930
-		} else if (cenyear == 1940) { var cendate = new Date(1940, 3, 01);    // 01 APR 1940
-		// Default Date
-		} else {
-			var cendate = new Date(1901, 2, 31); 
-		}
-
-/*
-		// UK PREVIOUS CENSUS DATES
-		       if (prevcenyear == 1841) { var prevcendate = new Date(1841, 5, 06);    // 06 JUN 1841
-		} else if (prevcenyear == 1951) { var prevcendate = new Date(1851, 2, 30);    // 30 MAR 1851
-		} else if (prevcenyear == 1861) { var prevcendate = new Date(1861, 3, 07);    // 07 APR 1861
-		} else if (prevcenyear == 1871) { var prevcendate = new Date(1871, 3, 02);    // 02 APR 1871
-		} else if (prevcenyear == 1881) { var prevcendate = new Date(1881, 3, 03);    // 03 APR 1881
-		} else if (prevcenyear == 1891) { var prevcendate = new Date(1891, 3, 05);    // 05 APR 1891
-		} else if (prevcenyear == 1901) { var prevcendate = new Date(1901, 2, 31);    // 31 MAR 1901
-		} else if (prevcenyear == 1911) { var prevcendate = new Date(1911, 3, 02);    // 02 APR 1911
-		// USA PREVIOUS CENSUS DATES
-		} else if (prevcenyear == 1790) { var prevcendate = new Date(1790, 7, 02);    // 02 AUG 1790
-		} else if (prevcenyear == 1800) { var prevcendate = new Date(1800, 7, 04);    // 04 AUG 1800
-		} else if (prevcenyear == 1810) { var prevcendate = new Date(1810, 7, 06);    // 06 AUG 1810
-		} else if (prevcenyear == 1820) { var prevcendate = new Date(1820, 7, 07);    // 07 AUG 1820
-		} else if (prevcenyear == 1830) { var prevcendate = new Date(1830, 5, 01);    // 01 JUN 1830
-		} else if (prevcenyear == 1840) { var prevcendate = new Date(1840, 5, 01);    // 01 JUN 1840
-		} else if (prevcenyear == 1850) { var prevcendate = new Date(1850, 5, 01);    // 01 JUN 1850
-		} else if (prevcenyear == 1860) { var prevcendate = new Date(1860, 5, 01);    // 01 JUN 1860
-		} else if (prevcenyear == 1870) { var prevcendate = new Date(1870, 5, 01);    // 01 JUN 1870
-		} else if (prevcenyear == 1880) { var prevcendate = new Date(1880, 5, 01);    // 01 JUN 1880
-		} else if (prevcenyear == 1890) { var prevcendate = new Date(1890, 5, 01);    // 01 JUN 1890
-		} else if (prevcenyear == 1900) { var prevcendate = new Date(1900, 5, 01);    // 01 JUN 1900
-		} else if (prevcenyear == 1910) { var prevcendate = new Date(1910, 3, 15);    // 15 APR 1910
-		} else if (prevcenyear == 1920) { var prevcendate = new Date(1920, 0, 01);    // 01 JAN 1920
-		} else if (prevcenyear == 1930) { var prevcendate = new Date(1930, 3, 01);    // 01 APR 1930
-		} else if (prevcenyear == 1940) { var prevcendate = new Date(1940, 3, 01);    // 01 APR 1940
-		// Default Date
-		} else {
-			var prevcendate = new Date(1901, 2, 31); 
-		}
-*/
 
 		var cendate = getCenDate(cenyear);
 
@@ -296,25 +305,48 @@ global $pgv_lang, $TEXT_DIRECTION;
 				}else if (tr.cells[j].childNodes[0].value=="") {
 					tr.cells[j].childNodes[0].value=null
 				}else{
+					// Calculate Birth Year =======================================
 					var bage	  = (tr.cells[68].childNodes[0].value);
-					// If valid Julian date used, then use this instead ===========
+					// If valid Julian date used, then use this instead -----------
 					if (bage>1721060) {
-						IJD = Math.floor(bage);
-						L = Math.floor(IJD + 68569);
-						N = Math.floor(4 * L / 146097);
+						var IJD = Math.floor(bage);
+						var L = Math.floor(IJD + 68569);
+						var N = Math.floor(4 * L / 146097);
 						L = L - Math.floor((146097*N + 3)/4);
-						I = Math.floor(4000*(L + 1)/1461001);
+						var I = Math.floor(4000*(L + 1)/1461001);
 						L = L - Math.floor(1461 * I / 4) + 31;
-						J = Math.floor(80 * L / 2447);
-						K = L - Math.floor(2447 * J / 80);
+						var J = Math.floor(80 * L / 2447);
+						var K = L - Math.floor(2447 * J / 80);
 						L = Math.floor(J/11);
 						J = J + 2 - 12*L;
 						I = 100*(N - 49) + I + L;
-						bage = (I+", "+J+", "+K);
+						bage = (I+', '+J+', '+K);
 					}
-					// Caculate Age on the selected Census Date ===================
-					bage2 = new Date(bage);
-					if (bage2 != "Invalid Date") {
+					// Calculate Death Year =======================================
+					var dage	  = (tr.cells[72].childNodes[0].value);
+					// If valid Julian date used, then use this instead -----------
+					if (dage>1721060) {
+						var IJD = Math.floor(dage);
+						var L = Math.floor(IJD + 68569);
+						var N = Math.floor(4 * L / 146097);
+						L = L - Math.floor((146097*N + 3)/4);
+						var I = Math.floor(4000*(L + 1)/1461001);
+						L = L - Math.floor(1461 * I / 4) + 31;
+						var J = Math.floor(80 * L / 2447);
+						var K = L - Math.floor(2447 * J / 80);
+						L = Math.floor(J/11);
+						J = J + 2 - 12*L;
+						I = 100*(N - 49) + I + L;
+						dage = (I+', '+J+', '+K);
+					}
+					
+					// Caculate Age (or if Dead) on the selected Census Date ===================
+					var bage2 = Date.parseString(bage, 'y, M, d');
+					var dage2 = Date.parseString(dage, 'y, M, d');
+					
+					if (cendate > dage2) {
+						newage = "-";
+					} else if (bage2 != "Invalid Date") {
 						var newage = (cendate-bage2);
 						if (Math.floor(newage/one_year) < 0) {
 							newage = "-";
@@ -336,6 +368,19 @@ global $pgv_lang, $TEXT_DIRECTION;
 						newage = "-";
 					}
 					tr.cells[j].childNodes[0].value=newage;
+					
+					// Highlight in Pink the Name field and Age fields for any person not born or who died before census date -----
+					if (newage != "-") {
+						tr.cells[2].childNodes[0].style.background  = '#ffffff';
+						tr.cells[7].childNodes[0].style.background  = '#ffffff';
+						tr.cells[12].childNodes[0].style.background = '#ffffff';
+					}else{
+						// alert(tr.cells[2].childNodes[0].value+" - Not Born Yet");
+						tr.cells[2].childNodes[0].style.background  = '#ffaaaa';
+						tr.cells[7].childNodes[0].style.background  = '#ffaaaa';
+						tr.cells[12].childNodes[0].style.background = '#ffaaaa';
+					}
+
 				}
 			}
 		}
@@ -422,7 +467,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 		var cols_65 = document.getElementsByName('col_65');
 		var cols_66 = document.getElementsByName('col_66');
 		var cols_67 = document.getElementsByName('col_67');
-		var cols_68 = document.getElementsByName('col_68');
+		// var cols_68 = document.getElementsByName('col_68');
 
 
 		var flip_3 = "none";
@@ -490,7 +535,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 		var flip_65 = "none";
 		var flip_66 = "none";
 		var flip_67 = "none";
-		var flip_68 = "none";
+		// var flip_68 = "none";
 		
 		if (cens_ctry=="UK") {
 		
@@ -778,39 +823,9 @@ global $pgv_lang, $TEXT_DIRECTION;
 			cols_65[i].style.display = flip_65;
 			cols_66[i].style.display = flip_66;
 			cols_67[i].style.display = flip_67;
-			cols_68[i].style.display = flip_68;
+		//	cols_68[i].style.display = flip_68;
 		}
 	}
-	
-/*
-	// TEST FUNCTION =============================
-	function checkPOB() {
-		var cens_ctry = document.getElementById('censCtry').value;
-		var tbl = document.getElementById('tblSample');
-		for(var i=1; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
-			var tr = tbl.rows[i];
-			for(var j=2; j<tr.cells.length; j++){
-				if (j!=10 && j!=11 && j!=12) {
-					//	miss out all cols except the 3 birthplaces
-					continue;
-				//}else if (tr.cells[j].childNodes[0].value=="") {
-				//	tr.cells[j].childNodes[0].value=null
-				}else{
-					if (cens_ctry=="USA") {
-						tr.cells[10].childNodes[0].value="ENG";
-						tr.cells[11].childNodes[0].value="IN";
-						tr.cells[12].childNodes[0].value="OH";
-					}else{
-						tr.cells[10].childNodes[0].value=birthpl;
-						tr.cells[11].childNodes[0].value=birthpl;
-						tr.cells[12].childNodes[0].value=birthpl;
-					}
-				}
-			}
-		}
-	}
-	// ============================================
-*/
 	
 </script>
 
@@ -825,30 +840,22 @@ global $pgv_lang, $TEXT_DIRECTION;
 			censyear.forValue("UK").setDefaultOptions("choose");
 			censyear.forValue("USA").setDefaultOptions("choose");
 		</script>
-		<select id="censCtry" name="censCtry">
+		<select id="censCtry" name="censCtry" >
 			<option value="UK">UK</option>
 			<option value="USA">USA</option>
 		</select>
+		<br /><br />&nbsp;&nbsp; <?php echo $pgv_lang["date"]; ?>:&nbsp;&nbsp;&nbsp;&nbsp; 
+		<font size=2>
+			<input style="width:6em; background:#bbddff;" id="censDate" name="censDate" type="text" value="<?php echo "";?>" READONLY/>
+		</font>
 	</div>
-	<!--
-	<div class="cens_sour_sour" style="border: 0px solid yellow;" >
-	<?php
-	add_simple_tag("2 SOUR", "", "<a href=\"#\" title=\" Add a Source to the Census Event\" alt=\" Add a Source to the Census Event\">SOUR</a>");
-	?>
-	</div>
-	<div class="cens_sour_obje" style="border: 0px solid yellow;" >
-	<?php
-	add_simple_tag("2 OBJE", "", "<a href=\"#\" title=\" Add a Multimedia Object to the Census Event\" alt=\" Add a Multimedia Object to the Census Event\">OBJE</a>");
-	?>
-	</div>
-	-->
 	<div class="cens_sour_year">
 		<span><?php echo $pgv_lang["cens_year"]; ?><br /></span>
-		<select onchange =	"if( this.options[this.selectedIndex].value!='') {
-								preview();
-								changeYear(this.options[this.selectedIndex].value); 
-							}" 
-			id="censYear" name="censYear">
+		<select style = "background:#ffaaaa;";
+				onchange =	"if( this.options[this.selectedIndex].value!='') {
+								changeYear(this.options[this.selectedIndex].value);
+							}"
+				id="censYear" name="censYear">
 		</select>
 		<input type="hidden" id="prevYear" name="prevYear" value="" />&nbsp;&nbsp;&nbsp;
 	</div>

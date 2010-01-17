@@ -122,7 +122,7 @@ $currpid=$pid;
 	?>
 	<div class="optionbox cens_textinput">
 		<div class="cens_textinput_left">
-			<input type="button" value="<?php echo $pgv_lang["cens_add_insert"]; ?>" onclick="insertRowToTable('','','','','','','Age','','','');" />
+			<input type="button" value="<?php echo $pgv_lang["cens_add_insert"]; ?>" onclick="insertRowToTable('', '', '', '', '', '', '', '', 'Age', '', '', '', '', '');" />
 		</div>
 		<div class="cens_textinput_right">
 			<?php echo $pgv_lang["add"]; ?><br>
