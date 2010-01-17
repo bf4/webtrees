@@ -92,7 +92,7 @@ function print_todo($block=true, $config='', $side, $index) {
 		$record=GedcomRecord::getInstance($todo['id']);
 		if ($record && $record->canDisplayDetails()) {
 			$pgvu=get_gedcom_value('_PGVU', 2, $todo['factrec']);
-			if ($pgvu==PGV_USER_ID || !$pgvu && $config['show_unassigned']=='yes' || $pgvu && $config['show_other']=='yes') {
+			if ($pgvu==PGV_USER_NAME || !$pgvu && $config['show_unassigned']=='yes' || $pgvu && $config['show_other']=='yes') {
 				$content.='<tr valign="top">';
 				$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
 				$name=$record->getListName();
