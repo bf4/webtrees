@@ -1548,6 +1548,7 @@ $pgv_lang["adding"]				= "Dodawanie";
 $pgv_lang["updating_linked"]	= "Uaktualnianie powiązanego wpisu";
 $pgv_lang["merge_more"]			= "Scal więcej wpisów";
 $pgv_lang["same_ids"]			= "Wprowadzono jednakowe identyfikatory. Nie można scalać wpisu samego ze sobą.";
+$pgv_lang["updated_favorites"] 	= "uaktualniono ulubionych.";
 
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"]		= "Diagram przodków";
