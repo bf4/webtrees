@@ -57,7 +57,7 @@ $configuredlanguages = array();
 
 // Read GEDCOMS configuration and collect language data
 foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
-	require get_gedcom_setting($ged_id, 'config');
+	require get_config_file($gedcom);
 	$configuredlanguages["gedcom"][$LANGUAGE][$gedcom] = true;
 }
 // Read user configuration and collect language data
