@@ -207,7 +207,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 					}
 					// Create Date of Birth object from passed string dob 
 					var jsdob = Date.parseString(dob, 'y, M, d');
-				
+
 					// Date of Marriage (dom) - passed as Julian Date String
 					if (dom>1721060) {
 						IJD = Math.floor(dom);

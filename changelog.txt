@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2.x CA
+ - Changed: Corrected some anomalies when persons name is "unknown" (windmillway)
  - Changed: Added Death Date calculations and Highlighting to Edit fields in Census Assistant (windmillway)
  - Changed: Removed unnecessary media tab config, and tidied up code (windmillway)
  - Fixed: Corrected the 1851 UK Census date error, and fixed a few 'Find' errors in GEDFact_assistant/_CENS/ (windmillway)
