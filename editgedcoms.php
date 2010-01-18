@@ -225,7 +225,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 2  (file name & notices)
-		print getLRM() . get_gedcom_setting($ged_id, 'config');
+		print getLRM() . get_config_file($ged_name);
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 3  (Edit action)
@@ -244,7 +244,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 2  (file name & notices)
-		print getLRM() . get_gedcom_setting($ged_id, 'privacy');
+		print getLRM() . get_privacy_file($ged_name);
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 3  (Edit action)
