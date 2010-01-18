@@ -2668,6 +2668,19 @@ function get_user_name($user_id) {
 		->fetchOne();
 }
 
+function get_newest_registered_user() {
+	global $TBLPREFIX;
+
+	return PGV_DB::prepareLimit(
+		"SELECT u.user_id".
+		" FROM {$TBLPREFIX}user u".
+		" LEFT JOIN {$TBLPREFIX}user_setting us ON (u.user_id=us.user_id AND us.setting_name=?) ".
+		" ORDER BY us.setting_value DESC",
+		1
+	)->execute(array('reg_timestamp'))
+		->fetchOne();
+}
+
 function set_user_password($user_id, $password) {
 	global $TBLPREFIX;
 
