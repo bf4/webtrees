@@ -2584,9 +2584,8 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 			PGV_DB::prepare(
 				"SELECT u.user_id, user_name".
 				" FROM {$TBLPREFIX}user u".
-				" JOIN {$TBLPREFIX}user_setting us1 USING (user_id)".
-				" JOIN {$TBLPREFIX}user_setting us2 USING (user_id)".
-				" WHERE us1.setting_name=? AND us2.setting_name=?".
+				" LEFT JOIN {$TBLPREFIX}user_setting us1 ON (u.user_id=us1.user_id AND us1.setting_name=?)".
+				" LEFT JOIN {$TBLPREFIX}user_setting us2 ON (u.user_id=us2.user_id AND us2.setting_name=?)".
 				" ORDER BY us1.setting_value {$order}, us2.setting_value {$order}"
 			)->execute(array($key1, $key2))
 			->fetchAssoc();
