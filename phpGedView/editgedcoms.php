@@ -264,9 +264,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 
 		unset($SEARCHLOG_CREATE);
 		unset($CHANGELOG_CREATE);
-		if (file_exists(get_gedcom_setting($ged_id, 'config'))) {
-			require get_gedcom_setting($ged_id, 'config');
-		}
+		require get_config_file($ged_name);
 		print "<td valign=\"top\">";		// Column 2  (notices)
 		if (!isset($SEARCHLOG_CREATE)) {
 			print getLRM() . $pgv_lang["none"];
@@ -362,9 +360,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 }
 echo '</table></form></center>';
 
-if (file_exists(get_gedcom_setting(PGV_GED_ID, 'config'))) {
-	require get_gedcom_setting(PGV_GED_ID, 'config');
-}
+require get_config_file(PGV_GEDCOM);
 
 print_footer();
 ?>

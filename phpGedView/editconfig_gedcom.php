@@ -194,8 +194,8 @@ if (isset($ged)) {
 		if (!isset($gedcom_title)) {
 			$gedcom_title = get_gedcom_setting($ged_id, 'title');
 		}
-		$gedcom_config = get_gedcom_setting($ged_id, 'config');
-		$gedcom_privacy = get_gedcom_setting($ged_id, 'privacy');
+		$gedcom_config = get_config_file($ged);
+		$gedcom_privacy = get_privacy_file($ged);
 		$FILE = $ged;
 		$oldged = $ged;
 	} else {
