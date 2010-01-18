@@ -300,7 +300,7 @@ function print_place_subfields($element_id) {
 		$subtagid=$element_id."_".$i;
 		$subtagname=$element_id."_".$i;
 		$plac_label[$i]=trim($plac_label[$i]);
-		if (in_array($plac_label[$i], array("Country", "Pays", "Land", "Zeme", "�lke", "Pa�s", "Orsz�g", "Nazione", "Kraj", "Maa", $factarray["CTRY"]))) {
+		if (in_array(UTF8_ucfirst($plac_label[$i]), array("Country", "Pays", "Land", "Zeme", "Ülke", "País", "Ország", "Nazione", "Kraj", "Maa", $factarray["CTRY"]))) {
 			$cols="8";
 			$subtagname=$element_id."_PLAC_CTRY";
 			$icountry=$i;
