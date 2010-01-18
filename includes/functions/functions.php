@@ -1643,7 +1643,7 @@ function event_sort($a, $b) {
 
 function event_sort_name($a, $b) {
 	if ($a['jd']==$b['jd']) {
-		return compareStrings($a['name'], $b['name']);
+		return GedcomRecord::compare($a['record'], $b['record']);
 	} else {
 		return $a['jd']-$b['jd'];
 	}
