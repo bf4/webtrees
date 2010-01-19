@@ -2645,7 +2645,7 @@ function get_idle_users($time) {
 			" JOIN {$TBLPREFIX}user_setting us2 USING (user_id)".
 			" WHERE us1.setting_name=? AND us1.setting_value=? AND us2.setting_name=? AND us2.setting_value BETWEEN 1 AND ?"
 		)
-		->execute(array('logged_in', 'Y', 'sessiontime', $time))
+		->execute(array('loggedin', 'Y', 'sessiontime', $time))
 		->fetchAssoc();
 }
 
