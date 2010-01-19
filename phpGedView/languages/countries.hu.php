@@ -18,7 +18,7 @@
  *		TLS		Timor-Leste
  *		UMI		US Minor Outlying Islands
  *		VIR		US Virgin Islands		Chapman lists this as a state of the USA
- *		
+ *
  * These Chapman country codes do not appear in the list following:
  *		UEL		United Empire Loyalist		This is NOT a country or region, it's
  *											a group of people
@@ -34,7 +34,7 @@
  *		TMP		East Timor					Official name is TLS "Timor-Leste"
  *		HOL		Holland						Official name is NLD "Netherlands"
  *		ESM		Western Samoa				Official name is WSM "Samoa"
- *											
+ *
  * @package PhpGedView
  * @subpackage Languages
  */
@@ -238,7 +238,7 @@ $countries["PYF"]="Francia Polinézia";
 $countries["QAT"]="Katar";
 $countries["REU"]="Reunion";
 $countries["ROM"]="Románia";
-$countries["RUS"]="Orosz Föderáció";
+$countries["RUS"]="Orosz Federáció";
 $countries["RWA"]="Ruanda";
 $countries["SAU"]="Szaúd-Arábia";
 	$countries["SCG"]="Serbia and Montenegro";
@@ -261,7 +261,7 @@ $countries["SPM"]="St. Pierre és Miquelon";
 $countries["STP"]="Sao Tome és Principe";
 $countries["SUN"]="U.S.S.R. (Soviet Union)";
 $countries["SUR"]="Suriname";
-$countries["SVK"]="Szlovákia (Szlovák Köztársaság)";
+$countries["SVK"]="Szlovákia";
 $countries["SVN"]="Szlovénia";
 $countries["SWE"]="Svédország";
 $countries["SWZ"]="Szváziföld";
@@ -312,4 +312,13 @@ $altCountryNames["CCK"]="Keeling-szigetek";
 $altCountryNames["CIV"]="Elefántcsontpart";
 $altCountryNames["FLK"]="Malvin-szigetek";
 
+$countries["TRN"]="Erdély";
+$countries["AZR"]="Azori-szigetek";
+$countries["MDV"]="Maldív-szigetek";
+$countries["MNT"]="Montenegró";
+$countries["BWI"]="Brit Nyugat-India";
+$countries["WLS"]="Wales";
+$countries["SCG"]="Szerbia és Montenegró";
+$countries["PSE"]="Megszállt palesztin terület";
+$countries["WLS"]="Wales";
 ?>
