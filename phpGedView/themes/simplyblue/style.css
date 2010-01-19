@@ -5,7 +5,7 @@
  * To learn more about CSS visit http: //www.w3.org/TR/REC-CSS2/
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
  * @subpackage Themes
  * @version $Id$
  */
- 
+
 
 .something {
 	/*empty style to make sure that the BODY style is not ignored */
@@ -962,23 +962,6 @@ h4 {
 	font: 12px tahoma, arial, helvetica, sans-serif;
 }
 
-/*-- pseudo-class for fanchart: used on server-side to draw image --*/
-.fan_chart {
-	/*-- font-family must contain a server TTF file --*/
-	font-family: url(./includes/fonts/DejaVuSans.ttf);
-	font-size: 7px;
-	color: white;
-	background-color: #003050;
-}
-
-.fan_chart_box {
-	background-color: #6d629d;
-}
-
-.fan_chart_boxF {
-	background-color: #2f70d0;
-}
-
 .starredname {
 	text-decoration: underline;
 }
@@ -1261,7 +1244,7 @@ a.showit:hover span {
 #tree_nav {
 	position: relative;
 	top: -584px;
-	left: 90%;  
+	left: 90%;
 	z-index: 100;
 }
 
@@ -1347,15 +1330,15 @@ a.showit:hover span {
 	padding: 2px 5px;
 	cursor: default;
 	display: block;
-	/* 
-	if width will be 100% horizontal scrollbar will apear 
+	/*
+	if width will be 100% horizontal scrollbar will apear
 	when scroll mode will be used
 	*/
 	/*width: 100%;*/
 	font: menu;
 	font-size: 12px;
-	/* 
-	it is very important, if line-height not setted or setted 
+	/*
+	it is very important, if line-height not setted or setted
 	in relative units scroll will be broken in firefox
 	*/
 	line-height: 14px;
@@ -1378,14 +1361,14 @@ a.showit:hover span {
 
 /* Flyout menu Styles */
 .flyout {
-	color:#ffffff; 
+	color:#ffffff;
 	text-align: left;
 	margin-top: -20px;
 	right: 210px;
 	padding: 3px;
 }
 .flyoutrtl {
-	color:#ffffff; 
+	color:#ffffff;
 	text-align: right;
 	margin-top: -20px;
 	left: 210px;

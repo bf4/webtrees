@@ -186,6 +186,15 @@ $PGV_IMAGES["lsrtarrow"]["other"] = "lsrtarrow.gif";
 $PGV_IMAGES["lsdnarrow"]["other"] = "lsdnarrow.gif";
 $PGV_IMAGES["lsuparrow"]["other"] = "lsuparrow.gif";
 
+//-- Variables for the Fan chart
+$fanChart = array(
+	'font'		=> './includes/fonts/DejaVuSans.ttf',
+	'size'		=> '7px',
+	'color'		=> '#000000',
+	'bgColor'	=> '#eeeeee',
+	'bgMColor'	=> '#b1cff0',
+	'bgFcolor'	=> '#e9daf1'
+);
 
 //-- This section defines variables for the pedigree chart
 $bwidth = 225;		// -- width of boxes on pedigree chart
@@ -210,7 +219,7 @@ $CHARTS_CLOSE_HTML = true;                //-- should the charts, pedigree, desc
 $PGV_DXHTMLTAB_COLORS = "#f0f9ff,#c8e7ff";
 
 // --  The largest possible area for charts is 300,000 pixels. As the maximum height or width is 1000 pixels
-$PGV_STATS_S_CHART_X = "440"; 
+$PGV_STATS_S_CHART_X = "440";
 $PGV_STATS_S_CHART_Y = "125";
 $PGV_STATS_L_CHART_X = "900";
 // --  For map charts, the maximum size is 440 pixels wide by 220 pixels high

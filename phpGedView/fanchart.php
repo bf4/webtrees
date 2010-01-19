@@ -98,6 +98,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	global $name, $pgv_lang, $SHOW_ID_NUMBERS, $view, $TEXT_DIRECTION;
 	global $stylesheet, $print_stylesheet;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $LINK_ICONS, $GEDCOM, $SERVER_URL;
+	global $fanChart;
 
 	// check for GD 2.x library
 	if (!defined("IMG_ARC_PIE")) {
@@ -111,27 +112,42 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 		return false;
 	}
 
-	// parse CSS file
-	require PGV_ROOT.'includes/cssparser.inc.php';
-	$css = new cssparser(false);
-	if ($view=="preview") $css->Parse($print_stylesheet);
-	else $css->Parse($stylesheet);
+	if (empty($fanChart)) {
+		// For compatibility reasons only, parse CSS file
+		require PGV_ROOT.'includes/cssparser.inc.php';
+		$css = new cssparser(false);
+//		if ($view=="preview") $css->Parse($print_stylesheet);
+//		else $css->Parse($stylesheet);
+		$css->Parse($stylesheet);
 
-	// check for fontfile
-	$fontfile = $css->Get(".fan_chart","font-family");
-	$fontsize = $css->Get(".fan_chart","font-size");
-	$fontfile = str_replace("url(", "", $fontfile);
-	$fontfile = str_replace(")", "", $fontfile);
-	if (!file_exists($fontfile)) {
-		if (!empty($fontfile)) echo "<span class=\"error\">".$pgv_lang["fontfile_error"]." : $fontfile</span>";
-		$fontfile=PGV_ROOT.'includes/fonts/DejaVuSans.ttf';
+		$fanChart = array();
+		$fanChart['font'] = $css->Get('.fan_chart','font-family');
+		$fanChart['font'] = str_replace(array('url(', ')'), '', $fanChart['font']);
+		$fanChart['size'] = $css->Get('.fan_chart','font-size');
+		$fanChart['color'] = $css->Get('.fan_chart', 'color');
+		$fanChart['bgColor'] = $css->Get('.fan_chart', 'background-color');
+		$fanChart['bgMColor'] = $css->Get('.fan_chart_box', 'background-color');
+		$fanChart['bgFColor'] = $css->Get('.fan_chart_boxF', 'background-color');
 	}
-	if ($fontfile{0}!='/') $fontfile = dirname(__FILE__) . "/" . $fontfile;
-	if (!file_exists($fontfile)) {
-		echo "<span class=\"error\">".$pgv_lang["fontfile_error"]." : $fontfile</span>";
+
+	// Validate
+	if (empty($fanChart['font']) || !file_exists($fanChart['font'])) {
+		if (!empty($fanChart['font'])) echo '<span class="error">', $pgv_lang["fontfile_error"], ' : ', $fanChart['font']. '</span>';
+		$fanChart['font']=PGV_ROOT.'includes/fonts/DejaVuSans.ttf';
+	}
+	if ($fanChart['font']{0}!='/') $fanChart['font'] = dirname(__FILE__) . "/" . $fanChart['font'];
+	if (!file_exists($fanChart['font'])) {
+		echo '<span class="error">', $pgv_lang["fontfile_error"], ' : ', $fanChart['font']. '</span>';
 		return false;
 	}
-	if (intval($fontsize)<2) $fontsize = 7;
+
+	$fanChart['size'] = intval($fanChart['size']);
+	if ($fanChart['size']<2) $fanChart['size'] = 7;
+
+	if (empty($fanChart['color']) || $fanChart['color']{0}!='#') $fanChart['color'] = '#000000';
+	if (empty($fanChart['bgColor']) || $fanChart['bgColor']{0}!='#') $fanChart['bgColor'] = '#EEEEEE';
+	if (empty($fanChart['bgMColor']) || $fanChart['bgMColor']{0}!='#') $fanChart['bgMColor'] = '#D0D0AC';
+	if (empty($fanChart['bgFColor']) || $fanChart['bgFColor']{0}!='#') $fanChart['bgFColor'] = '#D0ACD0';
 
 	$treesize=count($treeid);
 	if ($treesize<1) return;
@@ -160,21 +176,10 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	ImageFilledRectangle ($image, 0, 0, $fanw, $fanh, $white);
 	ImageColorTransparent($image, $white);
 
-	$rgb = $css->Get(".fan_chart", "color");
-	if (empty($rgb)) $rgb = "#000000";
-	$color = ImageColorAllocate($image, hexdec(substr($rgb,1,2)), hexdec(substr($rgb,3,2)), hexdec(substr($rgb,5,2)));
-
-	$rgb = $css->Get(".fan_chart", "background-color");
-	if (empty($rgb)) $rgb = "#EEEEEE";
-	$bgcolor = ImageColorAllocate($image, hexdec(substr($rgb,1,2)), hexdec(substr($rgb,3,2)), hexdec(substr($rgb,5,2)));
-
-	$rgb = $css->Get(".fan_chart_box", "background-color");
-	if (empty($rgb)) $rgb = "#D0D0AC";
-	$bgcolorM = ImageColorAllocate($image, hexdec(substr($rgb,1,2)), hexdec(substr($rgb,3,2)), hexdec(substr($rgb,5,2)));
-
-	$rgb = $css->Get(".fan_chart_boxF", "background-color");
-	if (empty($rgb)) $rgb = "#D0ACD0";
-	$bgcolorF = ImageColorAllocate($image, hexdec(substr($rgb,1,2)), hexdec(substr($rgb,3,2)), hexdec(substr($rgb,5,2)));
+	$color = ImageColorAllocate($image, hexdec(substr($fanChart['color'],1,2)), hexdec(substr($fanChart['color'],3,2)), hexdec(substr($fanChart['color'],5,2)));
+	$bgcolor = ImageColorAllocate($image, hexdec(substr($fanChart['bgColor'],1,2)), hexdec(substr($fanChart['bgColor'],3,2)), hexdec(substr($fanChart['bgColor'],5,2)));
+	$bgcolorM = ImageColorAllocate($image, hexdec(substr($fanChart['bgMColor'],1,2)), hexdec(substr($fanChart['bgMColor'],3,2)), hexdec(substr($fanChart['bgMColor'],5,2)));
+	$bgcolorF = ImageColorAllocate($image, hexdec(substr($fanChart['bgFColor'],1,2)), hexdec(substr($fanChart['bgFColor'],3,2)), hexdec(substr($fanChart['bgFColor'],5,2)));
 
 	// imagemap
 	$imagemap="<map id=\"fanmap\" name=\"fanmap\">";
@@ -241,7 +246,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 //Do we still need?
 
 				// split and center text by lines
-				$wmax = floor($angle*7/$fontsize*$scale);
+				$wmax = floor($angle*7/$fanChart['size']*$scale);
 				$wmax = min($wmax, 35*$scale);
 				if ($gen==0) $wmax = min($wmax, 17*$scale);
 				$text = split_align_text($text, $wmax);
@@ -251,7 +256,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				if ($gen==0) $tangle=0;
 
 				// calculate text position
-				$bbox=ImageTtfBbox((double)$fontsize, 0, $fontfile, $text);
+				$bbox=ImageTtfBbox((double)$fanChart['size'], 0, $fanChart['font'], $text);
 				$textwidth = $bbox[4];
 				$deg = $deg1+.44;
 				if ($deg2-$deg1>40) $deg = $deg1+($deg2-$deg1)/11;
@@ -266,7 +271,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				if ($sosa==1) $ty-=$mr/2;
 
 				// print text
-				ImageTtfText($image, (double)$fontsize, $tangle, $tx, $ty, $color, $fontfile, $text);
+				ImageTtfText($image, (double)$fanChart['size'], $tangle, $tx, $ty, $color, $fanChart['font'], $text);
 
 				$imagemap .= "<area shape=\"poly\" coords=\"";
 				// plot upper points
