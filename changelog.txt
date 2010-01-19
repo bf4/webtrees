@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Changed: Fan chart font and colors moved from style.css to theme.php (canajun2eh)
  - Fixed: [ 2917682 ] ERROR 8 in access log (wooc)
  - Update: jQuery.autocomplete plugin 1.1 (volschin)
  - Update: TCPDF 4.8.024 (volschin)
