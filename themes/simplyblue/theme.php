@@ -168,7 +168,7 @@ $fanChart = array(
 	'color'		=> '#000000',
 	'bgColor'	=> '#003050',
 	'bgMColor'	=> '#6d629d',
-	'bgFcolor'	=> '#2f70d0'
+	'bgFColor'	=> '#2f70d0'
 );
 
 //-- This section defines variables for the pedigree chart
