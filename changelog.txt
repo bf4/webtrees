@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2.x CA
+ = Changed: More corrections/additions for GEDFact_assistant )windmillway)
  - Changed: Corrected some anomalies when persons name is "unknown" (windmillway)
  - Changed: Added Death Date calculations and Highlighting to Edit fields in Census Assistant (windmillway)
  - Changed: Removed unnecessary media tab config, and tidied up code (windmillway)
