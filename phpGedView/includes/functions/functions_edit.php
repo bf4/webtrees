@@ -1111,6 +1111,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $lang_short_cut, $LANGUAGE;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
 	global $action, $event_add;
+	global $CensDate;
 	
 if (substr($tag, 0, strpos($tag, "CENS"))) {
 	$event_add="census_add";
@@ -1629,7 +1630,16 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 
 	// popup links
 	if ($readOnly=='') {
-		if ($fact=="DATE") print_calendar_popup($element_id);
+		if ($fact=="DATE") {
+			print_calendar_popup($element_id);
+			// If GEDFact_assistant/_CENS/ module is installed -------------------------------------------------
+			if ($action=="add" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') ) {
+				if (isset($CensDate) && $CensDate=="yes") {
+					require_once PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_asst_date.php';
+				}
+			}
+			// -------------------------------------------------------------------------------------------------
+		}
 		if ($fact=="FAMC") print_findfamily_link($element_id, '');
 		if ($fact=="FAMS") print_findfamily_link($element_id, '');
 		if ($fact=="ASSO") print_findindi_link($element_id, '');
@@ -2384,7 +2394,7 @@ function create_add_form($fact) {
 	
 	// GEDFact_assistant ================================================
 	if ($fact=="CENS" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
-			require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
+		require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
 	}
 	// ==================================================================
 
