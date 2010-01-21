@@ -138,7 +138,7 @@ function getUserId() {
 	if (isset($_SESSION) && !empty($_SESSION['pgv_user'])) {
 		return $_SESSION['pgv_user'];
 	} else {
-		return '';
+		return 0;
 	}
 }
 
