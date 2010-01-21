@@ -251,13 +251,14 @@ function adminUserExists() {
 
 // Get the full name for a user
 function getUserFullName($user_id) {
-	global $NAME_REVERSE;
+	global $TBLPREFIX, $NAME_REVERSE;
 
-	if ($NAME_REVERSE) {
-		return get_user_setting($user_id, 'lastname' ).' '.get_user_setting($user_id, 'firstname');
-	} else {
-		return get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id, 'lastname' );
-	}
+	$sql=
+		"SELECT setting_value FROM {$TBLPREFIX}user_setting".
+		"	WHERE user_id=? AND setting_name IN (?,?)".
+		" ORDER BY setting_name ".($NAME_REVERSE ? 'DESC' : 'ASC');
+
+	return implode(' ', PGV_DB::prepare($sql)->execute(array($user_id, 'firstname', 'lastname'))->fetchOneColumn());
 }
 
 // Get the root person for this gedcom
