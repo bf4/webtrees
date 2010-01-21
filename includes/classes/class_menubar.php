@@ -209,7 +209,7 @@ class MenuBar
 	* get the menu for the charts
 	* @return Menu the menu item
 	*/
-	static function &getChartsMenu($rootid='',$myid='') {
+	static function &getChartsMenu($rootid='') {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
 
@@ -363,44 +363,53 @@ class MenuBar
 
 			case "relationship":
 				//-- relationship
-				$pids[] = $myid;
-				if ($rootid && empty($myid)) {
-					if (PGV_USER_ID) {
-						$pids[] = PGV_USER_GEDCOM_ID;
-						$pids[] = PGV_USER_ROOT_ID;
-					}
-				}
 				if ($rootid) {
-					foreach (getUserFavorites(PGV_USER_NAME) as $key=>$favorite) {
-						$pid = $favorite["gid"];
-						if (displayDetailsById($pid, $favorite["type"])) {
-							if ($favorite["type"]=="INDI" && $favorite["file"]==$GEDCOM) $pids[]=$pid;
+					// We are generating the "individual" menu
+					$pids=array(PGV_USER_GEDCOM_ID, PGV_USER_ROOT_ID);
+					if (PGV_USER_ID) {
+						foreach (getUserFavorites(PGV_USER_NAME) as $favorite) {
+							// An indi in this gedcom?
+							if ($favorite['type']=='INDI' && $favorite['file']==PGV_GEDCOM) {
+								$pids[]=$favorite['gid'];
+							}
 						}
 					}
-				}
-				$pids = array_unique($pids);
-				foreach ($pids as $key=>$pid) {
-					$person=Person::getInstance($pid);
-					if (($person && $pid!=$rootid) || empty($rootid)) {
-						$link = "relationship.php?ged=".$GEDCOM;
-						if ($rootid) {
-							$link .= "&pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1";
-							$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags($person->getFullName()));
-							$submenu = new Menu($label, encode_url($link));
-						} else {
-							$submenu = new Menu($pgv_lang["relationship_chart"], encode_url($link));
+					foreach (array_unique($pids) as $pid) {
+						if ($pid && $pid!=$rootid) {
+							$person=Person::getInstance($pid);
+							if ($person) {
+								$name=$person->getFullName();
+							} else {
+								$name=$pid;
+							}
+							$submenu = new Menu(
+								$pgv_lang["relationship_chart"].": ".PrintReady($name),
+								encode_url("relationship.php?pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1&ged=".PGV_GEDCOM)
+							);
+							if (!empty($PGV_IMAGES["relationship"]["small"])) {
+								$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"]);
+							}
+							$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_relationship");
+							$menu->addSubmenu($submenu);
 						}
-						if (!empty($PGV_IMAGES["relationship"]["small"]))
-							$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"]);
-						$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_relationship");
-						$menu->addSubmenu($submenu);
 					}
+				} else {
+					// We are generating the "toplinks" menu
+					$submenu = new Menu(
+						$pgv_lang["relationship_chart"],
+						encode_url("relationship.php?ged=".$GEDCOM)
+					);
+					if (!empty($PGV_IMAGES["relationship"]["small"])) {
+						$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"]);
+					}
+					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_relationship");
+					$menu->addSubmenu($submenu);
 				}
 				break;
 
 			case "statistics":
 				//-- statistics plot
-				$submenu = new Menu($pgv_lang["statistics"], "statistics.php");
+				$submenu = new Menu($pgv_lang["statistics"], encode_url("statistics.php?ged=".PGV_GEDCOM));
 				if (!empty($PGV_IMAGES["statistic"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["statistic"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_statistic");
