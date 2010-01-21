@@ -481,12 +481,14 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		$old_META_COPYRIGHT = $META_COPYRIGHT;
 		$old_META_DESCRIPTION = $META_DESCRIPTION;
 		$old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
-		$user_id=get_user_id($CONTACT_EMAIL);
-		if ($user_id) {
-			$cuserName=getUserFullName($user_id);
-			if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
-			if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
-			if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
+		if (empty($META_AUTHOR) || empty($META_PUBLISHER) || empty($META_COPYRIGHT)) {
+			$user_id=get_user_id($CONTACT_EMAIL);
+			if ($user_id) {
+				$cuserName=getUserFullName($user_id);
+				if (empty($META_AUTHOR   )) $META_AUTHOR    = $cuserName;
+				if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
+				if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
+			}
 		}
 		if (empty($META_DESCRIPTION)) {
 			$META_DESCRIPTION = $GEDCOM_TITLE;
