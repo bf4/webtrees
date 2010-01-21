@@ -143,7 +143,12 @@ function getUserId() {
 }
 
 function getUserName() {
-	return get_user_name(getUserId());
+	$user_id=getUserID();
+	if ($user_id) {
+		return get_user_name($user_id);
+	} else {
+		return null;
+	}
 }
 
 /**
