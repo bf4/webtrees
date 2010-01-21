@@ -1581,22 +1581,26 @@ $pgv_lang["sosa_13"]		= "סבתא רבתא";
 $pgv_lang["sosa_14"]		= "סבא רבא";
 $pgv_lang["sosa_15"]		= "סבתא רבתא";
 // 4th generation
-$pgv_lang["sosa_16"]               	= "N/A";
-$pgv_lang["sosa_17"]               	= "N/A";
-$pgv_lang["sosa_18"]               	= "N/A";
-$pgv_lang["sosa_19"]             		= "N/A";
-$pgv_lang["sosa_20"]               	= "N/A";
-$pgv_lang["sosa_21"]               	= " רבתא";
-$pgv_lang["sosa_22"]               	= " רבא";
-$pgv_lang["sosa_23"]               	= " של ";
-$pgv_lang["sosa_24"]               	= "N/A";
-$pgv_lang["sosa_25"]               	= "N/A";
-$pgv_lang["sosa_26"]               	= "N/A";
-$pgv_lang["sosa_27"]               	= "N/A";
-$pgv_lang["sosa_28"]               	= "N/A";
-$pgv_lang["sosa_29"]               	= "N/A";
-$pgv_lang["sosa_30"]               	= "N/A";
-$pgv_lang["sosa_31"]               	= "N/A";
+$pgv_lang["sosa_16"]              = "סבא של סבא";
+$pgv_lang["sosa_17"]             	= "סבתא של סבא";
+$pgv_lang["sosa_18"]             	= "סבא של סבא";
+$pgv_lang["sosa_19"]              = "סבתא של סבא";
+$pgv_lang["sosa_20"]              = "סבא של סבתא";
+$pgv_lang["sosa_21"]              = "סבתא של סבתא";
+$pgv_lang["sosa_22"]              = "סבא של סבתא";
+$pgv_lang["sosa_23"]              = "סבתא של סבתא";
+$pgv_lang["sosa_24"]              = "סבא של סבא";
+$pgv_lang["sosa_25"]              = "סבתא של סבא";
+$pgv_lang["sosa_26"]              = "סבא של סבא";
+$pgv_lang["sosa_27"]              = "סבתא של סבא";
+$pgv_lang["sosa_28"]              = "סבא של סבתא";
+$pgv_lang["sosa_29"]              = "סבתא של סבתא";
+$pgv_lang["sosa_30"]              = "סבא של סבתא";
+$pgv_lang["sosa_31"]              = "סבתא של סבתא";
+
+$pgv_lang["sosa_of"]              = " של ";
+$pgv_lang["sosa_greatfather"]              = " רבא ";
+$pgv_lang["sosa_greatmother"]            = " רבתא ";
 
 // for the general case of ancestors of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations

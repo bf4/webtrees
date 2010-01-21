@@ -711,7 +711,7 @@ $pgv_lang["more_help_advice"]			= "<br /><b>Dodatkowa pomoc</b><br />Dodatkowa p
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Szerokość generowanych miniaturek";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />To jest szerokość (w pikselach), którą system zastosuje podczas automatycznego generowania miniaturek. Domyślna wartość to 100.<br />";
 $pgv_lang["USE_SILHOUETTE"]				= "Użyj obrazu sylwetki";
-$pgv_lang["USE_SILHOUETTE_help"]		= "~#pgv_lang[USE_SILHOUETTE]#~<br /><br />Używa obrazów sylwetki dla osbób, które nie mają ustawionego głównego obrazu (zdjęcia).<br />Przykładowy obraz sylwetki: <img class=\"headimg vmiddle\" src=\"images/buttons/head.gif\" alt=\"Obraz sylwetki\" title=\"Obraz sylwetki\" /><br />";
+$pgv_lang["USE_SILHOUETTE_help"]		= "~#pgv_lang[USE_SILHOUETTE]#~<br /><br />Używa obrazów sylwetki dla osbób, które nie mają ustawionego głównego obrazu (zdjęcia). Obrazy sylwetki odzwierciedlają płeć osoby.<br /><br /><table><tr><td wrap valign=\"middle\">Ten obraz może być użyty kiedy nieznana jest płeć osoby: </td><td><img src=\"images/silhouette_unknown.gif\" width=\"40\" alt=\"Obraz sylwetki\" title=\"Obraz sylwetki\" /></td></tr></table><br />";
 $pgv_lang["SHOW_EST_LIST_DATES"]		="Pokaż przybliżone daty na listach i wykresach";
 $pgv_lang["SHOW_EST_LIST_DATES_help"]	= "~#pgv_lang[SHOW_EST_LIST_DATES]#~<br /><br />Ta opcja określa czy przybliżone daty urodzin i śmierci mają być pokazane zamiast pustych pól na listach i wykresach.<br />";
 $pgv_lang["SHOW_LIST_PLACES"]			= "Liczba poziomów miejsc widoczna na listach";

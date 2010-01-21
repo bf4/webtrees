@@ -5,7 +5,7 @@
  * To learn more about CSS visit http://www.w3.org/TR/REC-CSS2/
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and others.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -677,31 +677,17 @@ INPUT {
 	font-size: 12px;
 }
 
-/*-- pseudo-class for fanchart : used on server-side to draw image --*/
-.fan_chart {
-	/*-- font-family must contain a server TTF file --*/
-	font-family: url(./includes/fonts/DejaVuSans.ttf);
-	font-size: 7px;
-	color: #000000;
-	background-color : #ECD1A2;
-}
-.fan_chart_box {
-	background-color : #EAE0D4;
-}
-.fan_chart_boxF {
-	background-color : #FAF0E4;
-}
 /* Colors */
 .red {
 	color: #FF0000;
 }
 
 /* Text direction */
-.ltr { 
-	text-align: left; 
+.ltr {
+	text-align: left;
 }
-.rtl { 
-	text-align: right; 
+.rtl {
+	text-align: right;
 }
 
 /* Width settings */
@@ -726,17 +712,17 @@ INPUT {
 	font-size: 11px;
 }
 .lifespan_outer {
-	position: relative; 
+	position: relative;
 	width: auto;
-	height: auto; 
-	overflow: visible; 
+	height: auto;
+	overflow: visible;
 	border: none;
 }
 
 .lifespan_people {
-	position: absolute; 
-	width: auto; 
-	left: -10px; 
-	top: -60px; 
+	position: absolute;
+	width: auto;
+	left: -10px;
+	top: -60px;
 	z-index:1;
 }

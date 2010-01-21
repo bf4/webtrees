@@ -834,7 +834,7 @@ var CB_Close_Win		= CB_Close_Win;
 					} else if (CB_Rel.substring(0, 8) == "clearbox" &&
 						CB_Rel.charAt(8) == "(" &&
 						CB_Rel.charAt(CB_Rel.length - 1) == ")") {
-						if (CB_Rel.substring(9, CB_Rel.length - 1).split(",")[2] == "click") {
+						if (CB_Rel.substring(9, CB_Rel.length - 1).split(", ")[2] == "click") {
 							CB_Links[i].onclick = function () {CB_ClickURL(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("rev"));return false;};
 						} else {
 							CB_Links[i].onmouseover = function () {CB_ClickURL(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("rev"));return false;};
@@ -970,7 +970,7 @@ var CB_Close_Win		= CB_Close_Win;
 		CB_PrvNxt.display = "none";
 		CB_Cls.style.display = "block";
 		CB_Cls.onclick = function () { CB_BrBack_Close();return false; };
-		CB_Rel = CB_Clicked[0].split(",");
+		CB_Rel = CB_Clicked[0].split(", ");
 		// alert(CB_Clicked[0] + " and " + CB_Clicked[1] + " and " + CB_Clicked[2]);
 		CB_SetAllPositions();
 		CB_ImgWidth = parseInt(CB_Rel[0]);

@@ -5,7 +5,7 @@
 * This page will allow you to merge 2 gedcom records
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -228,6 +228,10 @@ if ($action!="choose") {
 					$rec=GedcomRecord::getInstance($gid1);
 					$pid=$rec->getXrefLink(); // $pid is embedded in $pgv_lang['record_updated']
 					echo '<br />', print_text('record_updated', 0, 1), '<br />';
+					$fav_count=update_favorites($gid2, $gid1);
+					if ($fav_count > 0) {
+						echo '<br />', $fav_count, ' ', $pgv_lang["updated_favorites"], '<br />';
+					}
 					echo "<br /><a href=\"edit_merge.php?action=choose\">", $pgv_lang["merge_more"], "</a><br />\n";
 					echo "<br /><br /><br />\n";
 				}

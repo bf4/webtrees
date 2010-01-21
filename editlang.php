@@ -71,7 +71,7 @@ if (strpos($QUERY_STRING, "&dv=")) {
 	$QUERY_STRING = substr($QUERY_STRING, 0, strpos($QUERY_STRING, "&dv="));
 }
 
-echo "<script language=\"JavaScript\" type=\"text/javascript\">";
+echo PGV_JS_START;
 echo "var helpWin;";
 echo "function helpPopup00(which) {";
 echo "if ((!helpWin)||(helpWin.closed)) {helpWin = window.open('editlang_edit.php?' + which, '_blank' , 'left=50, top=30, width=600, height=500, resizable=1, scrollbars=1'); helpWin.focus();}";
@@ -81,7 +81,7 @@ echo "}";
 echo "function showchanges(which2) {";
 echo "window.location = '$SCRIPT_NAME?$QUERY_STRING'+which2;";
 echo "}";
-echo "</script>";
+echo PGV_JS_END;
 
 echo "<div class=\"center\">";
 
@@ -100,7 +100,7 @@ echo "<script type='text/javascript' src='js/translate.js'></script>";
 
 switch ($action) {
 case "bom" :
-	echo "<table class=\"facts_table $TEXT_DIRECTION\" style=\"width:70%; \">";
+	echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\" style=\"width:70%; \">";
 	echo "<tr><td class=\"facts_label03\" colspan=\"2\">";
 	echo $pgv_lang["bom_check"];
 	echo "</td></tr>";
@@ -112,10 +112,10 @@ case "bom" :
 	echo "</b></a></td></tr></table>";
 	break;
 case "edit" :
-	echo "<form name=\"choose_form\" method=\"get\" action=\"$SCRIPT_NAME\">";
+	echo "<form name=\"choose_form\" method=\"get\" action=\"", $SCRIPT_NAME, "\">";
 	echo "<input type=\"hidden\" name=\"action\" value=\"edit\" />";
 	echo "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
-	echo "<table class=\"facts_table $TEXT_DIRECTION\" style=\"width:70%; \">";
+	echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\" style=\"width:70%; \">";
 	echo "<tr><td class=\"facts_label03\" colspan=\"4\">";
 	echo $pgv_lang["edit_lang_utility"];
 	echo "</td></tr>";
@@ -127,7 +127,7 @@ case "edit" :
 	echo "<br />";
 	echo "<select name=\"language2\">";
 	foreach ($Sorted_Langs as $key=>$value) {
-		echo "<option value=\"$key\"";
+		echo "<option value=\"", $key, "\"";
 		if ($key == $language2) {
 			echo " selected=\"selected\"";
 		}
@@ -279,7 +279,7 @@ case "edit" :
 		$new_language_array = array();
 		$new_language_array = read_complete_file_into_array($whichFile[$language2], $whichVars);
 
-		echo "<table class=\"facts_table $TEXT_DIRECTION\" style=\"width:70%; \">";
+		echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\" style=\"width:70%; \">";
 		echo "<tr><td class=\"facts_value center\" colspan=\"2\"><span class=\"subheaders\">", $pgv_lang["listing"], ":&nbsp;&nbsp;&nbsp;";
 		echo $whichFile["english"], "&nbsp;&nbsp;&nbsp;", $pgv_lang["and"], "&nbsp;&nbsp;&nbsp;", $whichFile[$language2];
 		echo "</span><br /><br />";
@@ -386,7 +386,7 @@ case "debug" :
 	echo "<form name=\"debug_form\" method=\"get\" action=\"editlang.php\">";
 	echo "<input type=\"hidden\" name=\"action\" value=\"debug\" />";
 	echo "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
-	echo "<table class=\"facts_table $TEXT_DIRECTION\" style=\"width:70%; \">";
+	echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\" style=\"width:70%; \">";
 	echo "<tr><td class=\"facts_label03\" colspan=\"3\">";
 	echo $pgv_lang["lang_debug"];
 	echo "</td></tr>";
@@ -408,10 +408,10 @@ case "debug" :
 	echo "</form>";
 	break;
 case "export" :
-	echo "<form name=\"export_form\" method=\"get\" action=\"$SCRIPT_NAME\">";
+	echo "<form name=\"export_form\" method=\"get\" action=\"", $SCRIPT_NAME, "\">";
 	echo "<input type=\"hidden\" name=\"action\" value=\"export\" />";
 	echo "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
-	echo "<table class=\"facts_table $TEXT_DIRECTION\" style=\"width:70%; \">";
+	echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\" style=\"width:70%; \">";
 	echo "<tr><td class=\"facts_label03\" colspan=\"3\">";
 	echo $pgv_lang["export_lang_utility"];
 	echo "</td></tr>";
@@ -423,7 +423,7 @@ case "export" :
 	echo "<br />";
 	echo "<select name=\"language2\">";
 	foreach ($Sorted_Langs as $key=>$value) {
-		echo "<option value=\"$key\"";
+		echo "<option value=\"", $key, "\"";
 		if ($key == $language2) {
 			echo " selected=\"selected\"";
 		}
@@ -534,10 +534,10 @@ case "export" :
 	}
 	break;
 case "compare" :
-	echo "<form name=\"langdiff_form\" method=\"get\" action=\"$SCRIPT_NAME\">";
+	echo "<form name=\"langdiff_form\" method=\"get\" action=\"", $SCRIPT_NAME, "\">";
 	echo "<input type=\"hidden\" name=\"action\" value=\"compare\" />";
 	echo "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
-	echo "<table class=\"facts_table $TEXT_DIRECTION\" style=\"width:70%; \">";
+	echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\" style=\"width:70%; \">";
 	echo "<tr><td class=\"facts_label03\" colspan=\"3\">";
 	echo $pgv_lang["compare_lang_utility"];
 	echo "</td></tr>";
@@ -549,7 +549,7 @@ case "compare" :
 	echo "<br />";
 	echo "<select name=\"language1\">";
 	foreach ($Sorted_Langs as $key=>$value) {
-		echo "<option value=\"$key\"";
+		echo "<option value=\"", $key, "\"";
 		if ($key == $language1) {
 			echo " selected=\"selected\"";
 		}
@@ -564,7 +564,7 @@ case "compare" :
 	echo "<br />";
 	echo "<select name=\"language2\">";
 	foreach ($Sorted_Langs as $key=>$value) {
-		echo "<option value=\"$key\"";
+		echo "<option value=\"", $key, "\"";
 		if ($key == $language2) {
 			echo " selected=\"selected\"";
 		}
@@ -648,7 +648,7 @@ case "compare" :
 				// ---- Look for additions
 				//      These are entries that exist in the first but don't exist in the second file
 				echo "<span class=\"subheaders\">", $pgv_lang["additions"], ":</span>";
-				echo "<table class=\"facts_table $TEXT_DIRECTION\">";
+				echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\">";
 				$count=0;
 				foreach($list1 as $key=>$value) {
 					$key2 = str_replace('"', "'", $key);		// Var name could be enclosed in apostrophes
@@ -666,7 +666,7 @@ case "compare" :
 				// ---- Look for subtractions
 				//      These are entries that exist in the second but don't exist in the first file
 				echo "<span class=\"subheaders\">", $pgv_lang["subtractions"], ":</span>";
-				echo "<table class=\"facts_table $TEXT_DIRECTION\">";
+				echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\">";
 				$count=0;
 				foreach($list2 as $key=>$value) {
 					$key2 = str_replace('"', "'", $key);		// Var name could be enclosed in apostrophes

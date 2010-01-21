@@ -424,7 +424,7 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 		$where[]='('.implode(' OR ', $includes).')';
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY case n_surn when '@N.N.' then 1 else 0 end, n_surn";
 
 	$list=array();
 	$rows=PGV_DB::prepare($sql)->fetchAll();
@@ -587,7 +587,7 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 		$where[]='('.implode(' OR ', $includes).')';
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_sort";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY case n_surn when '@N.N.' then 1 else 0 end, n_surn, case n_givn when '@P.N.' then 1 else 0 end, n_givn";
 
 	$list=array();
 	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -886,16 +886,37 @@ function fetch_other_record($xref, $ged_id) {
 	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_gedcom_record($xref, $ged_id) {
-	if ($row=fetch_person_record($xref, $ged_id)) {
-		return $row;
-	} elseif ($row=fetch_family_record($xref, $ged_id)) {
-		return $row;
-	} elseif ($row=fetch_source_record($xref, $ged_id)) {
-		return $row;
-	} elseif ($row=fetch_media_record($xref, $ged_id)) {
+	// We don't know the type of the record, so use the prefix to suggest the likely type.
+	global $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX, $MEDIA_ID_PREFIX;
+
+	if       (strpos($xref, $GEDCOM_ID_PREFIX)===0) {
+		$row=fetch_person_record($xref, $ged_id);
+	} elseif (strpos($xref, $FAM_ID_PREFIX   )===0) {
+		$row=fetch_family_record($xref, $ged_id);
+	} elseif (strpos($xref, $SOURCE_ID_PREFIX)===0) {
+		$row=fetch_source_record($xref, $ged_id);
+	} elseif (strpos($xref, $MEDIA_ID_PREFIX )===0) {
+		$row=fetch_media_record ($xref, $ged_id);
+	} else {
+		$row=fetch_other_record ($xref, $ged_id);
+	}
+
+	if ($row) {
+		// If we found it, good
 		return $row;
 	} else {
-		return fetch_other_record($xref, $ged_id);
+		// Otherwise, try the other types
+		if       (strpos($xref, $GEDCOM_ID_PREFIX)!==0 && $row=fetch_person_record($xref, $ged_id)) {
+			return $row;
+		} elseif (strpos($xref, $FAM_ID_PREFIX   )!==0 && $row=fetch_family_record($xref, $ged_id)) {
+			return $row;
+		} elseif (strpos($xref, $SOURCE_ID_PREFIX)!==0 && $row=fetch_source_record($xref, $ged_id)) {
+			return $row;
+		} elseif (strpos($xref, $MEDIA_ID_PREFIX )!==0 && $row=fetch_media_record ($xref, $ged_id)) {
+			return $row;
+		} else {
+			return fetch_other_record($xref, $ged_id);
+		}
 	}
 }
 
@@ -1879,22 +1900,26 @@ function delete_gedcom($ged_id) {
 
 	$ged=get_gedcom_from_id($ged_id);
 
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks        WHERE b_username=?")->execute(array($ged));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates         WHERE d_file    =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}families      WHERE f_file    =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites     WHERE fv_file   =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individuals   WHERE i_file    =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}mutex         WHERE mx_name   =?")->execute(array($ged));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name          WHERE n_file    =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news          WHERE n_username=?")->execute(array($ged));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}other         WHERE o_file    =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks    WHERE pl_file   =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places        WHERE p_file    =?")->execute(array($ged_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources       WHERE s_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks              WHERE b_username=?")->execute(array($ged   ));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates               WHERE d_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}families            WHERE f_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites           WHERE fv_file   =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom              WHERE gedcom_id =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom_setting      WHERE gedcom_id =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individuals         WHERE i_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link                WHERE l_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media               WHERE m_gedfile =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping       WHERE mm_gedfile=?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}module_privacy      WHERE mp_file   =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}mutex               WHERE mx_name   =?")->execute(array($ged   ));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name                WHERE n_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news                WHERE n_username=?")->execute(array($ged   ));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid              WHERE ni_gedfile=?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}other               WHERE o_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks          WHERE pl_file   =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places              WHERE p_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources             WHERE s_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE gedcom_id =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}module_privacy  WHERE mp_file =?")->execute(array($ged_id));
 
 	if (isset($pgv_changes)) {
@@ -1906,9 +1931,6 @@ function delete_gedcom($ged_id) {
 		}
 		write_changes();
 	}
-
-	unset($GEDCOMS[$ged]);
-	store_gedcoms();
 
 	if (get_site_setting('DEFAULT_GEDCOM')==$ged) {
 		set_site_setting('DEFAULT_GEDCOM', '');
@@ -2413,122 +2435,125 @@ function delete_site_setting($site_setting_name) {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_GEDCOM table
-// A future version of PGV will have a table PGV_GEDCOM, which will
-// contain the values currently stored the array $GEDCOMS[].
-//
-// Until then, we use this "logical" structure, but with the access functions
-// mapped onto the existing "physical" structure.
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_all_gedcoms() {
-	global $GEDCOMS;
+	global $TBLPREFIX;
+	
+	return
+		PGV_DB::prepare("SELECT gedcom_id, gedcom_name FROM {$TBLPREFIX}gedcom")
+		->fetchAssoc();
+}
 
-	$gedcoms=array();
-	foreach ($GEDCOMS as $key=>$value) {
-		$gedcoms[$value['id']]=$key;
-	}
-	return $gedcoms;
+function get_gedcom_titles() {
+	global $TBLPREFIX;
+	
+	return
+		PGV_DB::prepare(
+			"SELECT g.gedcom_id, g.gedcom_name, COALESCE(gs.setting_value, g.gedcom_name) AS gedcom_title".
+			" FROM {$TBLPREFIX}gedcom g".
+			" LEFT JOIN {$TBLPREFIX}gedcom_setting gs ON (g.gedcom_id=gs.gedcom_id AND gs.setting_name=?)".
+			" ORDER BY 3"
+		)
+		->execute(array('title'))
+		->fetchAll();
 }
 
 function get_gedcom_from_id($ged_id) {
-	global $GEDCOMS;
+	global $TBLPREFIX;
 
-	if (isset($GEDCOMS[$ged_id])) {
-		return $ged_id;
-	}
-	foreach ($GEDCOMS as $ged=>$gedarray) {
-		if ($gedarray['id']==$ged_id) {
-			return $ged;
-		}
+	// No need to look up the default gedcom
+	if (defined('PGV_GED_ID') && defined('PGV_GEDCOM') && $ged_id==PGV_GED_ID) {
+		return PGV_GEDCOM;
 	}
 
-	return $ged_id;
+	return
+		PGV_DB::prepare("SELECT gedcom_name FROM {$TBLPREFIX}gedcom WHERE gedcom_id=?")
+		->execute(array($ged_id))
+		->fetchOne();
 }
 
 // Convert an (external) gedcom name to an (internal) gedcom ID.
-// Optionally create an entry for it if it does not exist.
+// Optionally create an entry for it, if it does not exist.
 function get_id_from_gedcom($ged_name, $create=false) {
-	global $GEDCOMS;
+	global $TBLPREFIX;
 
-	if (array_key_exists($ged_name, $GEDCOMS)) {
-		return (int)$GEDCOMS[$ged_name]['id']; // Cast to (int) for safe use in SQL
-	} else {
-		if ($create) {
-			$ged_id=0;
-			foreach ($GEDCOMS as $gedarray) {
-				if ($gedarray['id']>$ged_id) {
-					$ged_id=$gedarray['id'];
-				}
-			}
-			$GEDCOMS[$ged_name]=array(
-				'gedcom'=>$ged_name,
-				'config'=>'',
-				'privacy'=>'',
-				'title'=>'',
-				'path'=>'',
-				'pgv_ver'=>'',
-				'id'=>'',
-				'imported'=>'',
-			);
-			return $ged_id+1;	
-		} else {
-			return null;
+	// No need to look up the default gedcom
+	if (defined('PGV_GED_ID') && defined('PGV_GEDCOM') && $ged_name==PGV_GEDCOM) {
+		return PGV_GED_ID;
+	}
+
+	if ($create) {
+		try {
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}gedcom (gedcom_name) VALUES (?)")
+				->execute(array($ged_name));
+		} catch (PDOException $ex) {
+			// The gedcom already exists - can't create
 		}
 	}
+
+	return
+		PGV_DB::prepare("SELECT gedcom_id FROM {$TBLPREFIX}gedcom WHERE gedcom_name=?")
+		->execute(array($ged_name))
+		->fetchOne();
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_GEDCOM_SETTING table
-// A future version of PGV will have a table PGV_GEDCOM_SETTING, which will
-// contain the values currently stored the array $GEDCOMS[].
-//
-// Until then, we use this "logical" structure, but with the access functions
-// mapped onto the existing "physical" structure.
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_gedcom_setting($ged_id, $parameter) {
-	global $GEDCOMS;
-	$ged_name=get_gedcom_from_id($ged_id);
-	if (array_key_exists($ged_name, $GEDCOMS) && array_key_exists($parameter, $GEDCOMS[$ged_name])) {
-		return $GEDCOMS[$ged_name][$parameter];
-	} else {
-		return null;
-	}
+function get_gedcom_setting($ged_id, $setting_name) {
+	global $TBLPREFIX;
+
+	return
+		PGV_DB::prepare("SELECT setting_value FROM {$TBLPREFIX}gedcom_setting WHERE gedcom_id=? AND setting_name=?")
+		->execute(array($ged_id, $setting_name))
+		->fetchOne();
 }
 
-function set_gedcom_setting($ged_id, $parameter, $value) {
-	global $GEDCOMS;
-	$ged_name=get_gedcom_from_id($ged_id);
-	if (!array_key_exists($ged_name, $GEDCOMS)) {
-		$GEDCOMS[$ged_name]=array();
+function set_gedcom_setting($ged_id, $setting_name, $setting_value) {
+	global $TBLPREFIX;
+
+	if (empty($setting_value)) {
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom_setting WHERE gedcom_id=? AND setting_name=?")
+			->execute(array($ged_id, $setting_name));
+	} else {
+		$current_value=get_gedcom_setting($ged_id, $setting_name);
+		if (is_null($current_value)) {
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}gedcom_setting (gedcom_id, setting_name, setting_value) VALUES (?, ?, ?)")
+				->execute(array($ged_id, $setting_name, $setting_value));
+		} elseif ($current_value!=$setting_value) {
+			PGV_DB::prepare("UPDATE {$TBLPREFIX}gedcom_setting SET setting_value=? WHERE gedcom_id=? AND setting_name=?")
+				->execute(array($setting_value, $ged_id, $setting_name));
+		} else {
+			// The value is unchanged
+		}
 	}
-	$GEDCOMS[$ged_name][$parameter]=$value;
-	store_gedcoms();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_USER table
 ////////////////////////////////////////////////////////////////////////////////
 
-$PGV_USERS_cache=array();
-
 function create_user($username, $password) {
 	global $TBLPREFIX;
 
 	try {
-		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}users (u_username, u_password) VALUES ('{$username}', '{$password}')")
-			->execute(array());
-		return $username;
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}user (user_name, password) VALUES (?, ?)")
+			->execute(array($username, $password));
 	} catch (PDOException $ex) {
-		return null;
+		// User already exists?
 	}
+	return
+		PGV_DB::prepare("SELECT user_id FROM {$TBLPREFIX}user WHERE user_name=?")
+		->execute(array($username))->fetchOne();
 }
 
 function rename_user($old_username, $new_username) {
 	global $TBLPREFIX;
 
-	PGV_DB::prepare("UPDATE {$TBLPREFIX}users     SET u_username=? WHERE u_username  =?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}user      SET user_name=?   WHERE user_name  =?")->execute(array($new_username, $old_username));
 	PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks    SET b_username =? WHERE b_username =?")->execute(array($new_username, $old_username));
 	PGV_DB::prepare("UPDATE {$TBLPREFIX}favorites SET fv_username=? WHERE fv_username=?")->execute(array($new_username, $old_username));
 	PGV_DB::prepare("UPDATE {$TBLPREFIX}messages  SET m_from     =? WHERE m_from     =?")->execute(array($new_username, $old_username));
@@ -2539,41 +2564,49 @@ function rename_user($old_username, $new_username) {
 function delete_user($user_id) {
 	global $TBLPREFIX;
 
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}users     WHERE u_username =?")->execute(array($user_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username =?")->execute(array($user_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username=?")->execute(array($user_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}messages  WHERE m_from=? OR m_to=?")->execute(array($user_id, $user_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news      WHERE n_username =?")->execute(array($user_id));
+	$user_name=get_user_name($user_id);
+
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user      WHERE user_id =?"        )->execute(array($user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username =?"     )->execute(array($user_name));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username=?"     )->execute(array($user_name));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}messages  WHERE m_from=? OR m_to=?")->execute(array($user_name, $user_name));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news      WHERE n_username =?"     )->execute(array($user_name));
 }
 
 function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 	global $TBLPREFIX;
 
-	return
-		PGV_DB::prepare("SELECT u_username, u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}")
-		->fetchAssoc();
+	if ($key1=='username') {
+		return
+			PGV_DB::prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user ORDER BY user_id")
+			->fetchAssoc();
+	} else {
+		return
+			PGV_DB::prepare(
+				"SELECT u.user_id, user_name".
+				" FROM {$TBLPREFIX}user u".
+				" LEFT JOIN {$TBLPREFIX}user_setting us1 ON (u.user_id=us1.user_id AND us1.setting_name=?)".
+				" LEFT JOIN {$TBLPREFIX}user_setting us2 ON (u.user_id=us2.user_id AND us2.setting_name=?)".
+				" ORDER BY us1.setting_value {$order}, us2.setting_value {$order}"
+			)->execute(array($key1, $key2))
+			->fetchAssoc();
+	}
 }
 
 function get_user_count() {
 	global $TBLPREFIX;
 
-	try {
-		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users")
+	return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}user")
 			->fetchOne();
-	}
-	catch (PDOException $ex) {
-		// We may call this function before creating the table, so must check for errors.
-		return null;
-	}
 }
 
 function get_admin_user_count() {
 	global $TBLPREFIX;
 
 	return
-		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin=?")
-		->bindValue(1, 'Y')
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}user_setting WHERE setting_name=? AND setting_value=?")
+		->execute(array('canadmin', 'Y'))
 		->fetchOne();
 }
 
@@ -2581,8 +2614,8 @@ function get_non_admin_user_count() {
 	global $TBLPREFIX;
 
 	return
-		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin<>?")
-		->bindValue(1, 'Y')
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}user_setting WHERE  setting_name=? AND setting_value<>?")
+		->execute(array('canadmin', 'Y'))
 		->fetchOne();
 }
 
@@ -2590,215 +2623,174 @@ function get_non_admin_user_count() {
 function get_logged_in_users() {
 	global $TBLPREFIX;
 
-	try {
-		return
-			PGV_DB::prepare(
-				"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=?"
-			)
-			->bindValue(1, 'Y')
-			->fetchAssoc();
-	}
-	catch (PDOException $ex) {
-		// We may call this function before creating the table, so must check for errors.
-		return array();
-	}
+	return
+		PGV_DB::prepare(
+			"SELECT u.user_id, user_name".
+			" FROM {$TBLPREFIX}user u".
+			" JOIN {$TBLPREFIX}user_setting us USING (user_id)".
+			" WHERE setting_name=? AND setting_value=?"
+		)
+		->execute(array('loggedin', 'Y'))
+		->fetchAssoc();
 }
 
 // Get a list of logged-in users who haven't been active recently
 function get_idle_users($time) {
 	global $TBLPREFIX;
 
-	try {
-		return
-			PGV_DB::prepare(
-				"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=? AND u_sessiontime BETWEEN 1 AND ?"
-			)
-			->bindValue(1, 'Y')
-			->bindValue(2, (int)$time)
-			->fetchAssoc();
-	}
-	catch (PDOException $ex) {
-		// We may call this function before creating the table, so must check for errors.
-		return array();
-	}
+	return
+		PGV_DB::prepare(
+			"SELECT u.user_id, user_name".
+			" FROM {$TBLPREFIX}user u".
+			" JOIN {$TBLPREFIX}user_setting us1 USING (user_id)".
+			" JOIN {$TBLPREFIX}user_setting us2 USING (user_id)".
+			" WHERE us1.setting_name=? AND us1.setting_value=? AND us2.setting_name=? AND us2.setting_value BETWEEN 1 AND ?"
+		)
+		->execute(array('loggedin', 'Y', 'sessiontime', $time))
+		->fetchAssoc();
 }
 
 // Get the ID for a username
-// (Currently ID is the same as username, but this will change in the future)
 function get_user_id($username) {
 	global $TBLPREFIX;
 
-	try {
-		return
-			PGV_DB::prepare(
-				"SELECT u_username FROM {$TBLPREFIX}users WHERE u_username=?"
-			)
-			->bindValue(1, $username)
-			->fetchOne();
-	}
-	catch (PDOException $ex) {
-		// We may call this function before creating the table, so must check for errors.
-		return null;
-	}
+	return PGV_DB::prepare("SELECT user_id FROM {$TBLPREFIX}user WHERE user_name=?")
+		->execute(array($username))
+		->fetchOne();
 }
 
 // Get the username for a user ID
-// (Currently ID is the same as username, but this will change in the future)
 function get_user_name($user_id) {
-	return $user_id;
+	global $TBLPREFIX;
+
+	return PGV_DB::prepare("SELECT user_name FROM {$TBLPREFIX}user WHERE user_id=?")
+		->execute(array($user_id))
+		->fetchOne();
+}
+
+function get_newest_registered_user() {
+	global $TBLPREFIX;
+
+	return PGV_DB::prepareLimit(
+		"SELECT u.user_id".
+		" FROM {$TBLPREFIX}user u".
+		" LEFT JOIN {$TBLPREFIX}user_setting us ON (u.user_id=us.user_id AND us.setting_name=?) ".
+		" ORDER BY us.setting_value DESC",
+		1
+	)->execute(array('reg_timestamp'))
+		->fetchOne();
 }
 
 function set_user_password($user_id, $password) {
 	global $TBLPREFIX;
 
-	PGV_DB::prepare(
-		"UPDATE {$TBLPREFIX}users SET u_password=? WHERE u_username=?"
-	)
-	->execute(array($password, $user_id));
-
-	global $PGV_USERS_cache;
-	if (isset($PGV_USERS_cache[$user_id])) {
-		unset($PGV_USERS_cache[$user_id]);
-	}
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}user SET password=? WHERE user_id=?")
+		->execute(array($password, $user_id));
 }
 
 function get_user_password($user_id) {
 	global $TBLPREFIX;
 
-	return
-		PGV_DB::prepare(
-			"SELECT u_password FROM {$TBLPREFIX}users WHERE u_username=?"
-		)
-		->bindValue(1, $user_id)
+	return PGV_DB::prepare("SELECT password FROM {$TBLPREFIX}user WHERE user_id=?")
+		->execute(array($user_id))
 		->fetchOne();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_USER_SETTING table
-// A future version of PGV will have a table PGV_USER_SETTING, which will
-// contain the values currently stored in columns in the table PGV_USERS.
-//
-// Until then, we use this "logical" structure, but with the access functions
-// mapped onto the existing "physical" structure.
-//
-// $parameter is one of the column names in PGV_USERS, without the u_ prefix.
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_setting($user_id, $parameter) {
+function get_user_setting($user_id, $setting_name) {
 	global $TBLPREFIX;
 
-	try {
-		return
-			PGV_DB::prepare("SELECT u_{$parameter} FROM {$TBLPREFIX}users WHERE u_username=?")
-			->execute(array($user_id))
-			->fetchOne();
-	} catch (PDOException $ex) {
-		return null;
-	}
+	return
+		PGV_DB::prepare("SELECT setting_value FROM {$TBLPREFIX}user_setting WHERE user_id=? AND setting_name=?")
+		->execute(array($user_id, $setting_name))
+		->fetchOne();
 }
 
-function set_user_setting($user_id, $parameter, $value) {
+function set_user_setting($user_id, $setting_name, $setting_value) {
 	global $TBLPREFIX;
 
-	PGV_DB::prepare("UPDATE {$TBLPREFIX}users SET u_{$parameter}=? WHERE u_username=?")
-		->execute(array($value, $user_id));
+	if (empty($setting_value)) {
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_setting WHERE user_id=? AND setting_name=?")
+			->execute(array($user_id, $setting_name));
+	} else {
+		$current_value=get_user_setting($user_id, $setting_name);
+		if (is_null($current_value)) {
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES (?, ?, ?)")
+				->execute(array($user_id, $setting_name, $setting_value));
+		} elseif ($current_value!=$setting_value) {
+			PGV_DB::prepare("UPDATE {$TBLPREFIX}user_setting SET setting_value=? WHERE user_id=? AND setting_name=?")
+				->execute(array($setting_value, $user_id, $setting_name));
+		} else {
+			// The value is unchanged
+		}
+	}
 }
 
 function admin_user_exists() {
-	global $TBLPREFIX;
-
-	try {
-		return
-			(bool)PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin=?")
-			->execute(array('Y'))
-			->fetchOne();
-	} catch (PDOException $ex) {
-		return false;
-	}
+	return get_admin_user_count()>0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_USER_GEDCOM_SETTING table
-// A future version of PGV will have a table PGV_USER_GEDCOM_SETTING, which will
-// contain the values currently stored in serialized arrays in columns in the
-// table PGV_USERS.
-//
-// Until then, we use this "logical" structure, but with the access functions
-// mapped onto the existing "physical" structure.
-//
-// $parameter is one of: "gedcomid", "rootid" and "canedit".
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_gedcom_setting($user_id, $ged_id, $parameter) {
-	$ged_name=get_gedcom_from_id($ged_id);
+function get_user_gedcom_setting($user_id, $ged_id, $setting_name) {
+	global $TBLPREFIX;
 
-	$tmp=get_user_setting($user_id, $parameter);
-	if (!is_string($tmp)) {
-		return null;
-	}
-	$tmp_array=unserialize($tmp);
-	if (!is_array($tmp_array)) {
-		return null;
-	}
-	if (array_key_exists($ged_name, $tmp_array)) {
-		// Convert old PGV3.1 values to PGV3.2 format
-		if ($parameter=='canedit') {
-			if ($tmp_array[$ged_name]=='yes') {
-				$tmp_array[$ged_name]=='edit';
-			}
-			if ($tmp_array[$ged_name]=='no') {
-				$tmp_array[$ged_name]=='access';
-			}
-		}
-		return $tmp_array[$ged_name];
-	} else {
-		return null;
-	}
+	return
+		PGV_DB::prepare("SELECT setting_value FROM {$TBLPREFIX}user_gedcom_setting WHERE user_id=? AND gedcom_id=? AND setting_name=?")
+		->execute(array($user_id, $ged_id, $setting_name))
+		->fetchOne();
 }
 
-function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
-	$ged_name=get_gedcom_from_id($ged_id);
+function set_user_gedcom_setting($user_id, $ged_id, $setting_name, $setting_value) {
+	global $TBLPREFIX;
 
-	$tmp=get_user_setting($user_id, $parameter);
-	if (is_string($tmp)) {
-		$tmp_array=unserialize($tmp);
-		if (!is_array($tmp_array)) {
-			$tmp_array=array();
+	if (empty($setting_value)) {
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE user_id=? AND gedcom_id=? AND setting_name=?")
+			->execute(array($user_id, $ged_id, $setting_name));
+	} else {
+		$current_value=get_user_gedcom_setting($user_id, $ged_id, $setting_name);
+		if (is_null($current_value)) {
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}user_gedcom_setting (user_id, gedcom_id, setting_name, setting_value) VALUES (?, ?, ?, ?)")
+				->execute(array($user_id, $ged_id, $setting_name, $setting_value));
+		} elseif ($current_value!=$setting_value) {
+			PGV_DB::prepare("UPDATE {$TBLPREFIX}user_gedcom_setting SET setting_value=? WHERE user_id=? AND gedcom_id=? AND setting_name=?")
+				->execute(array($setting_value, $user_id, $ged_id, $setting_name));
+		} else {
+			// The value is unchanged
 		}
-	} else {
-		$tmp_array=array();
-	}
-	if (empty($value)) {
-		// delete the value
-		unset($tmp_array[$ged_name]);
-	} else {
-		// update the value
-		$tmp_array[$ged_name]=$value;
-	}
-	set_user_setting($user_id, $parameter, serialize($tmp_array));
-
-	global $PGV_USERS_cache;
-	if (isset($PGV_USERS_cache[$user_id])) {
-		unset($PGV_USERS_cache[$user_id]);
 	}
 }
 
 function get_user_from_gedcom_xref($ged_id, $xref) {
 	global $TBLPREFIX;
 
-	$ged_name=get_gedcom_from_id($ged_id);
-
-	$rows=PGV_DB::prepare("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users")->fetchAll();
-	$username=false;
-	foreach ($rows as $row) {
-		if ($row->u_gedcomid) {
-			$tmp_array=unserialize($row->u_gedcomid);
-			if (array_key_exists($ged_name, $tmp_array) && $tmp_array[$ged_name]==$xref) {
-				return $row->u_username;
-			}
-		}
-	}
-	return null;
+	return
+		PGV_DB::prepare(
+			"SELECT user_id FROM {$TBLPREFIX}user_gedcom_setting".
+			" WHERE gedcom_id=? AND setting_name=? AND setting_value=?"
+		)->execute(array($ged_id, 'gedcomid', $xref))->fetchOne();
 }
 
+/**
+* update favorites regarding a merge of records
+*
+* @param string $xref_from id to update
+* @param string $xref_to id to update to
+* @param string $ged_id gedcom to update
+*/
+function update_favorites($xref_from, $xref_to, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+$ged_name=get_gedcom_from_id($ged_id);
+
+	return
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}favorites SET fv_gid=? WHERE fv_gid=? AND fv_file=?")
+		->execute(array($xref_to, $xref_from, $ged_name))
+		->rowCount();
+}
 ?>

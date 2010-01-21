@@ -5,7 +5,7 @@
  * Various printing functions used to print fact records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -439,7 +439,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			}
 			if ($fact!="ADDR") {
 				//-- catch all other facts that could be here
-				$special_facts = array("ADDR", "ALIA", "ASSO", "CEME", "CONC", "CONT", "DATE", "DESC", "EMAIL",
+				$special_facts = array("ADDR", "ALIA", "ASSO", "CEME", "CONT", "DATE", "DESC", "EMAIL",
 				"FAMC", "FAMS", "FAX", "NOTE", "OBJE", "PHON", "PLAC", "RESN", "SOUR", "STAT", "TEMP",
 				"TIME", "TYPE", "WWW", "_EMAIL", "_PGVU", "URL", "AGE", "_PGVS", "_PGVFS", "_RATID");
 				$ct = preg_match_all("/\n2 (\w+) (.*)/", $factrec, $match, PREG_SET_ORDER);
@@ -558,7 +558,6 @@ function print_fact_sources($factrec, $level, $return=false) {
 			$srec = get_sub_record($level, "$level SOUR ", $factrec, $j+1);
 			$srec = substr($srec, 6); // remove "2 SOUR"
 			$srec = str_replace("\n".($level+1)." CONT ", "<br/>", $srec); // remove n+1 CONT
-			$srec = str_replace("\n".($level+1)." CONC ", "", $srec); // remove n+1 CONC
 			$data .= "<br /><span class=\"label\">".$pgv_lang["source"].":</span> <span class=\"field\">".PrintReady($srec)."</span><br />";
 			$printDone = true;
 		}
@@ -624,6 +623,7 @@ function print_media_links($factrec, $level, $pid='') {
 	global $MULTI_MEDIA, $TEXT_DIRECTION, $TBLPREFIX;
 	global $pgv_lang, $factarray, $SEARCH_SPIDER, $view;
 	global $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
+	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 	global $GEDCOM, $SHOW_ID_NUMBERS;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 	if (!$MULTI_MEDIA) return;
@@ -713,8 +713,8 @@ function print_media_links($factrec, $level, $pid='') {
 				}
 				if (preg_match('/2 DATE (.+)/', get_sub_record("FILE", 1, $row["m_gedrec"]), $match)) {
 					$media_date=new GedcomDate($match[1]);
-					$echo = $media_date->Display(true);
-					echo "\n\t\t\t<br /><span class=\"label\">", $factarray["DATE"], ": </span> ", $print;
+					$md = $media_date->Display(true);
+					echo "\n\t\t\t<br /><span class=\"label\">", $factarray["DATE"], ": </span> ", $md;
 				}
 				$ttype = preg_match("/".($nlevel+1)." TYPE (.*)/", $row["m_gedrec"], $match);
 				if ($ttype>0) {
@@ -843,7 +843,6 @@ function print_address_structure($factrec, $level) {
 			}
 		}
 		if ($level>1) $resultText .= "</div>\n";
-		$resultText .= "<br />";
 		// Here we can examine the resultant text and remove empty tags
 		echo $resultText;
 	}
@@ -1096,12 +1095,11 @@ function getSourceStructure($srec) {
 		$i++;
 		for (; $i<count($subrecords); $i++) {
 			$nextTag = substr($subrecords[$i], 2, 4);
-			if ($nextTag!="CONC" && $nextTag!="CONT") {
+			if ($nextTag!="CONT") {
 				$i--;
 				break;
 			}
 			if ($nextTag=="CONT") $text .= "<br />";
-			if ($nextTag=="CONC" && $WORD_WRAPPED_NOTES) $text .= " ";
 			$text .= rtrim(substr($subrecords[$i], 7));
 		}
 		if ($tag=="TEXT") {
@@ -1589,8 +1587,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		}
 		if (preg_match('/2 DATE (.+)/', get_sub_record("FILE", 1, $rowm["m_gedrec"]), $match)) {
 			$media_date=new GedcomDate($match[1]);
-			$echo = $media_date->Display(true);
-			echo "\n\t\t\t<br /><span class=\"label\">", $factarray["DATE"], ": </span> ", $print;
+			$md = $media_date->Display(true);
+			echo "\n\t\t\t<br /><span class=\"label\">", $factarray["DATE"], ": </span> ", $md;
 		}
 		$ttype = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
 		if ($ttype>0) {

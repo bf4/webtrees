@@ -43,6 +43,9 @@ VERSION 4.3.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$factarray["_BRTM:PLAC"]							07 Jan 2010				A
++$factarray["_BRTM:DATE"]							07 Jan 2010				A
++$factarray["_BRTM:SOUR"]							07 Jan 2010				A
 +$factarray["BAPM:SOUR"]							03 Jan 2010				A
 +$factarray["BARM:DATE"]							03 Jan 2010				A
 +$factarray["BARM:PLAC"]							03 Jan 2010				A

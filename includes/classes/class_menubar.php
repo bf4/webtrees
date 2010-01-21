@@ -57,27 +57,25 @@ class MenuBar
 	static function &getGedcomMenu() {
 		global $ALLOW_CHANGE_GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 
-		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
+		if ($TEXT_DIRECTION=='rtl') $ff='_rtl'; else $ff='';
 		//-- main menu
-		$menu = new Menu($pgv_lang["welcome_page"], "index.php?ctype=gedcom", "down");
-		if (!empty($PGV_IMAGES["gedcom"]["large"]))
-			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
-		$menu->addAccesskey($pgv_lang["accesskey_home_page"]);
+		$menu = new Menu($pgv_lang['welcome_page'], 'index.php?ctype=gedcom', 'down');
+		if (!empty($PGV_IMAGES['gedcom']['large']))
+			$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", 'icon_large_gedcom');
+		$menu->addAccesskey($pgv_lang['accesskey_home_page']);
 		//-- gedcom list
-		if ($ALLOW_CHANGE_GEDCOM && count(get_all_gedcoms())>1) {
-		$gedcomarray = get_all_gedcoms();
-		//-- sorting menu by gedcom filename 
-		asort($gedcomarray);
-			foreach ($gedcomarray as $ged_id=>$gedcom) {
-				$submenu = new Menu(PrintReady(get_gedcom_setting($ged_id, 'title'), true), encode_url('index.php?ctype=gedcom&ged='.$gedcom));
-				if (!empty($PGV_IMAGES["gedcom"]["small"]))
-					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_gedcom");
+		$gedcom_titles=get_gedcom_titles();
+		if ($ALLOW_CHANGE_GEDCOM && count($gedcom_titles)>1) {
+			foreach ($gedcom_titles as $gedcom_title) {
+				$submenu = new Menu(PrintReady($gedcom_title->gedcom_title, true), encode_url('index.php?ctype=gedcom&ged='.$gedcom_title->gedcom_name));
+				if (!empty($PGV_IMAGES['gedcom']['small'])) {
+					$submenu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['small']);
+				}
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", '', 'icon_small_gedcom');
 				$menu->addSubmenu($submenu);
 			}
 		}
-
 		//-- Welcome Menu customization
 		$filename = PGV_ROOT.'includes/extras/custom_welcome_menu.php';
 		if (file_exists($filename)) {
@@ -100,11 +98,8 @@ class MenuBar
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 		$showLayout = ($PEDIGREE_LAYOUT) ? 1 : 0;
 
-		$username = PGV_USER_NAME;
-		if (!$username) {
-			$menu = new Menu("", "", "");
-//			$menu->print_menu = null;
-			return $menu;
+		if (!PGV_USER_ID) {
+			return new Menu('', '', '');
 		}
 
 		//-- main menu
@@ -124,7 +119,7 @@ class MenuBar
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_mygedview");
 		$menu->addSubmenu($submenu);
 		//-- editaccount submenu
-		if (get_user_setting($username, 'editaccount')) {
+		if (get_user_setting(PGV_USER_ID, 'editaccount')) {
 			$submenu = new Menu($pgv_lang["editowndata"], "edituser.php");
 			if (!empty($PGV_IMAGES["mygedview"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
@@ -269,8 +264,8 @@ class MenuBar
 		if (file_exists(PGV_ROOT.'relationship.php')) $menuList["relationship"] = $pgv_lang["relationship_chart"];
 		if (file_exists(PGV_ROOT.'statistics.php')) $menuList["statistics"] = $pgv_lang["statistics"];
 		if (file_exists(PGV_ROOT.'treenav.php')) $menuList["treenav"] = $pgv_lang["interactive_tree"];
-		if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php') && file_exists(PGV_ROOT.'modules/googlemap/googlemap.php')) {
-			require_once PGV_ROOT.'modules/googlemap/googlemap.php';
+		if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
+			loadLangFile('googlemap:lang');
 			$menuList["pedigree_map"] = $pgv_lang["pedigree_map"];//added for pedigree_map
 		}
 		asort($menuList);
@@ -471,7 +466,9 @@ class MenuBar
 				//-- interactive tree
 				$link = "treenav.php?ged={$GEDCOM}&rootid={$rootid}";
 				$submenu = new Menu($pgv_lang["interactive_tree"], encode_url($link));
-				if (!empty($PGV_IMAGES["gedcom"]["small"]))
+				if (!empty($PGV_IMAGES["gedcom"]["tree"]))
+					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["tree"]);
+				else if (!empty($PGV_IMAGES["gedcom"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_gedcom");
 				$menu->addSubmenu($submenu);
@@ -480,7 +477,7 @@ class MenuBar
 			//added for pedigree_map
 			case "pedigree_map":
 				//-- pedigree map
-				$link = 'module.php?mod=googlemap&pgvaction=pedigree_map';
+				$link = "module.php?ged={$GEDCOM}&mod=googlemap&pgvaction=pedigree_map";
 				if ($rootid) $link .= "&rootid=".$rootid;
 				$submenu = new Menu($pgv_lang["pedigree_map"], encode_url($link));
 				$submenu->addIcon('modules/googlemap/images/pedigree_map.gif');
@@ -625,7 +622,9 @@ class MenuBar
 			case "note":
 				//-- shared note
 				$submenu = new Menu($pgv_lang["shared_note_list"], encode_url('notelist.php?ged='.$GEDCOM));
-				if (!empty($PGV_IMAGES["notes"]["small"]))
+				if (!empty($PGV_IMAGES["menu_note"]["small"]))
+					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_note"]["small"]);
+				else if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_notes");
 				$menu->addSubmenu($submenu);
@@ -993,6 +992,8 @@ class MenuBar
 		$menuitems = contact_menus();
 		foreach($menuitems as $menuitem) {
 			$submenu = new Menu($menuitem["label"], $menuitem["link"]);
+			if (!empty($PGV_IMAGES["mygedview"]["small"]))
+				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_contact");
 			if (!empty($menuitem["onclick"])) $submenu->addOnclick($menuitem["onclick"]);
 			$menu->addSubmenu($submenu);
@@ -1015,29 +1016,29 @@ class MenuBar
 	static function &getThemeMenu() {
 		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $pgv_lang;
 
-		$current=PGV_THEME_DIR;
-		foreach (get_theme_names() as $themedir) {
-			if ($themedir==get_user_setting(PGV_USER_ID, 'theme')) {
-				$current=$themedir;
-			}
+		$current=get_user_setting(PGV_USER_ID, 'theme');
+		$all_themes=get_theme_names();
+		if (!array_key_exists($current, $all_themes)) {
+			$current=PGV_THEME_DIR;		
 		}
 
 		if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES && !$SEARCH_SPIDER) {
 			isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 			$frompage = $_SERVER["SCRIPT_NAME"].decode_url($tqstring);
 			if (isset($_REQUEST['mod'])) {
-				if (!strstr("?", $frompage)) {
-					if (!strstr("%3F", $frompage)) ;
+				if (!strstr($frompage, "?")) {
+					if (!strstr($frompage, "%3F")) ;
 					else $frompage .= "?";
 				}
-				if (!strstr("&mod",$frompage)) $frompage .= "&mod=".$_REQUEST['mod'];
+				if (!strstr($frompage, "&mod") || !strstr($frompage, "?mod")) $frompage .= "&mod=".$_REQUEST['mod'];
 			}
 			if (substr($frompage,-1) == "?") $frompage = substr($frompage,0,-1);
 			if (substr($frompage,-1) == "&") $frompage = substr($frompage,0,-1);
+			// encode frompage address in other case we lost the all variables on theme change
+			$frompage = base64_encode($frompage);
 			$menu=new Menu($pgv_lang['change_theme']);
 			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu', "icon_small_theme");
-//			$menu->print_menu = null;
-			foreach (get_theme_names() as $themename=>$themedir) {
+			foreach ($all_themes as $themename=>$themedir) {
 				$submenu=new Menu($themename, encode_url("themechange.php?frompage={$frompage}&mytheme={$themedir}"));
 				if ($themedir==$current) {
 					$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
@@ -1118,7 +1119,7 @@ class MenuBar
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
 //			$menu->print_menu = NULL;
 
-			$userfavs=getUserFavorites(PGV_USER_ID);
+			$userfavs=getUserFavorites(PGV_USER_NAME);
 			$gedfavs=getUserFavorites($GEDCOM);
 
 			// User favorites

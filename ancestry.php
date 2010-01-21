@@ -91,12 +91,10 @@ if ($view!="preview") {
 	</td>
 	<td rowspan="2" class="optionbox">
 	<input type="radio" name="chart_style" value="0"
-	<?php
-	if ($controller->chart_style=="0") {
-		echo ' checked="checked"';
-	}
-	echo ' onclick="statusDisable(\'cousins\');';
-	echo '" />', $pgv_lang["chart_list"];
+	<?php if ($controller->chart_style=="0") echo ' checked="checked"'; ?>
+	 onclick="statusDisable('cousins');" />
+	 <?php 
+	 echo $pgv_lang["chart_list"];
 	echo '<br /><input type="radio" name="chart_style" value="1"';
 	if ($controller->chart_style=="1") {
 		echo ' checked="checked"';

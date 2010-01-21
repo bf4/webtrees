@@ -62,11 +62,11 @@ if (!empty($_REQUEST['clustersize'])) {
 // The Cloudy theme resizes itself to max screen width, sometimes making
 // tables hard to construct for browser windows smaller that the screen
 // width.  Setting $cloudy_locked = 1/0 will/won't force a the map to use
-// the width chosen in the GoogleMap configuration.  All other themes 
-// float the width of the map to fill the browser width nicely. 
+// the width chosen in the GoogleMap configuration.  All other themes
+// float the width of the map to fill the browser width nicely.
 $cloudy_locked = 1;
 
-// Limit this to match available number of icons. 
+// Limit this to match available number of icons.
 // 8 generations equals 255 individuals
 $MAX_PEDIGREE_GENERATIONS = min($MAX_PEDIGREE_GENERATIONS, 8);
 
@@ -146,7 +146,7 @@ if (!$controller->isPrintPreview()) {
 	//-->
 </script>
 </td><td width="50px">&nbsp;</td><td>
-	  <form name="people" method="get" action="module.php?mod=googlemap&amp;pgvaction=pedigree_map">
+	  <form name="people" method="get" action="module.php?ged=<?php echo $GEDCOM; ?>&amp;mod=googlemap&amp;pgvaction=pedigree_map">
 		<input type="hidden" name="mod" value="googlemap" />
 		<input type="hidden" name="pgvaction" value="pedigree_map" />
 		<table class="pedigree_table <?php echo $TEXT_DIRECTION; ?>" width="555">
@@ -168,15 +168,15 @@ if (!$controller->isPrintPreview()) {
 					<?php echo $pgv_lang["PEDIGREE_MAP_clustersize"]; ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php 
+					<?php
 					print_help_link("PEDIGREE_MAP_hideflags_help", "qm", "PEDIGREE_MAP_help1");
 					echo $pgv_lang["PEDIGREE_MAP_hideflags"];
 					?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php 
-					print_help_link("PEDIGREE_MAP_hidelines_help", "qm", "PEDIGREE_MAP_help1"); 
-					echo $pgv_lang["PEDIGREE_MAP_hidelines"]; 
+					<?php
+					print_help_link("PEDIGREE_MAP_hidelines_help", "qm", "PEDIGREE_MAP_help1");
+					echo $pgv_lang["PEDIGREE_MAP_hidelines"];
 					?>
 				</td>
 			</tr>
@@ -216,7 +216,7 @@ if (!$controller->isPrintPreview()) {
 				</td>
 				<td class="optionbox">
 					<?php
-					echo "<input name=\"hidelines\" type=\"checkbox\""; 
+					echo "<input name=\"hidelines\" type=\"checkbox\"";
 					if ($hidelines) {echo " checked=\"checked\"";}
 					echo " />";
 					?>
@@ -248,21 +248,24 @@ for ($i=0; $i<($controller->treesize); $i++) {
 	if ($i+1 >= pow(2, $curgen)) {$curgen++;}
 	$person = Person::getInstance($controller->treeid[$i]);
 	if (!empty($person)) {
-	$pid = $controller->treeid[$i];
-	$name = $person->getFullName();
-	if ($name == $pgv_lang["private"]) $priv++;
+		$pid = $controller->treeid[$i];
+		$name = $person->getFullName();
+		if ($name == $pgv_lang["private"]) $priv++;
 		$place = $person->getBirthPlace();
 		if (empty($place)) {
 			$latlongval[$i] = NULL;
 		} else {
 			$latlongval[$i] = get_lati_long_placelocation($person->getBirthPlace());
+			if ($latlongval[$i] != NULL && $latlongval[$i]["lati"]=='0' && $latlongval[$i]["long"]=='0') {
+				$latlongval[$i] = NULL;
+			}
 		}
-		if ($latlongval[$i] != NULL){
+		if ($latlongval[$i] != NULL) {
 			$lat[$i] = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval[$i]["lati"]);
 			$lon[$i] = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval[$i]["long"]);
 			if (($lat[$i] != NULL) && ($lon[$i] != NULL)) {
 				$count++;
-			} 
+			}
 			else { // The place is in the table but has empty values
 				if (!empty($name)) {
 					if (!empty($missing)) $missing .= ",\n ";
@@ -320,34 +323,57 @@ echo "</table>\n";
 echo "<hr />";
 echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\">";
 echo "  <tr>";
-echo "    <td valign=\"top\">";
+echo "	<td valign=\"top\">";
 // print summary statistics
 	if (isset($curgen)){
 		$total=pow(2,$curgen)-1;
 		$miss=$total-$count-$priv;
 		echo "<strong>".$count."</strong>\n";
-		echo "&nbsp;".$pgv_lang["pm_individuals_displayed"]."&nbsp;\n";
+		if ($count == 1) {
+			echo " ".$pgv_lang["pm_individual_displayed"]." \n";
+		} else if ($count > 1 && $count < 5) {
+			echo " ".$pgv_lang["pm_2individuals_displayed"]." \n";
+		} else if ($count > 21 && substr($count, -1, 1) > 1 && substr($count, -1, 1) < 5 && substr($count, -2, 1) != 1) {
+			echo " ".$pgv_lang["pm_2individuals_displayed"]." \n";
+		} else {
+			echo " ".$pgv_lang["pm_individuals_displayed"]." \n";
+		}
 		echo "<strong>".$total."</strong>\n";
-		echo "&nbsp;".$pgv_lang["pm_from"]."&nbsp;\n";
+		echo " ".$pgv_lang["pm_from"]." \n";
 		echo "<strong>".$curgen."</strong>\n";
-		echo "&nbsp;".$pgv_lang["pm_gens"]."<br />\n";
+		echo " ".$pgv_lang["pm_gens"]."<br />\n";
 		echo "</td>\n";
 		echo "  </tr>\n";
 		echo "  <tr>\n";
-		echo "    <td valign=\"top\">\n";
+		echo "	<td valign=\"top\">\n";
 		if ($priv!=0) {
-			echo "<strong>".$priv."</strong>&nbsp;\n";
-			if ($priv == 1) {echo $pgv_lang["pm_is"];} else {echo $pgv_lang["pm_are"];};
-			echo "&nbsp;<strong>".$pgv_lang["private"]."</strong><br />\n";
+			echo "<strong>".$priv."</strong> \n";
+			if ($priv == 1) {
+				echo " ".$pgv_lang["pm_individual_private"]." \n";
+			} else {
+				echo " ".$pgv_lang["pm_individuals_private"]." \n";
+			}
 		}
 		if ($count+$priv != $total) {
-			echo "<strong>".$miscount."</strong>&nbsp;";
-			if ($miss == 1) {echo $pgv_lang["pm_is"];} else {echo $pgv_lang["pm_are"];};
-			echo "&nbsp;".$pgv_lang["pm_missing_birth"]."<br />\n";
+			if ($miscount == 1) {
+				echo "<strong>".$miscount."</strong> ";
+				echo " ".$pgv_lang["pm_missing_birth"]."<br />\n";
+			} else if ($miscount > 1 && $miscount < 5) {
+				echo "<strong>".$miscount."</strong> ";
+				echo " ".$pgv_lang["pm_2missing_births"]."<br />\n";
+			} else if ($miscount > 21 && substr($miscount, -1, 1) > 1 && substr($miscount, -1, 1) < 5 && substr($miscount, -2, 1) != 1) {
+				echo "<strong>".$miscount."</strong> ";
+				echo " ".$pgv_lang["pm_2missing_births"]."<br />\n";
+			} else if ($miscount == 0) {
+				echo " ".$pgv_lang["pm_missings"]."<br />\n";
+			} else {
+				echo "<strong>".$miscount."</strong> ";
+				echo " ".$pgv_lang["pm_missing_births"]."<br />\n";
+			}
 			echo $missing . "<br />\n";
 		}
 	}
-echo "    </td>\n";
+echo "	</td>\n";
 echo "  </tr>\n";
 echo "</table>\n";
 echo "</div>";
@@ -456,7 +482,7 @@ gicons["8L"] = new GIcon(gicons["LEFT"], "modules/googlemap/images/icon8L.png")
 gicons["8R"] = new GIcon(gicons["RIGHT"], "modules/googlemap/images/icon8R.png")
 gicons["8Ls"] = new GIcon(gicons["LEFTsmall"], "modules/googlemap/images/icon8Ls.png")
 gicons["8Rs"] = new GIcon(gicons["RIGHTsmall"], "modules/googlemap/images/icon8Rs.png")
-   
+
 // / A function to create the marker and set up the event window
 function createMarker(point, name, html, mhtml, icontype) {
 // === create a marker with the requested icon ===
@@ -574,19 +600,19 @@ pm_map.addControl(mini);
 // displays blank minimap - probably google api's bug
 //mini.hide();
 
-function wheelevent(e) 
-{ 
-	if (true){//document.getElementById("prevent").checked 
-	        if (!e){ 
-	                e = window.event 
-	        } 
-	if (e.preventDefault){ 
-	        e.preventDefault() 
-	} 
-e.returnValue = false; 
-}} 
+function wheelevent(e)
+{
+	if (true){//document.getElementById("prevent").checked
+			if (!e){
+					e = window.event
+			}
+	if (e.preventDefault){
+			e.preventDefault()
+	}
+	e.returnValue = false;
+}}
 
-GEvent.addDomListener(pm_map.getContainer(), "DOMMouseScroll", wheelevent); 
+GEvent.addDomListener(pm_map.getContainer(), "DOMMouseScroll", wheelevent);
 pm_map.getContainer().onmousewheel = wheelevent;
 
 <?php
@@ -620,12 +646,10 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		if ($curgen == 2) {
 			if ($sex == "F") {
 				$relationship = $pgv_lang["mother"];
-			} else { 
-				if ($sex == "M") { 
-					$relationship = $pgv_lang["father"];
-				} else { 
-					$relationship = $pgv_lang["parent"]; 
-				} 
+			} else if ($sex == "M") {
+				$relationship = $pgv_lang["father"];
+			} else {
+					$relationship = $pgv_lang["parent"];
 			}
 			$event = "<img src='modules/googlemap/images/sq2.png' width='10' height='10'>" .
 				 "<strong>&nbsp;".$relationship.":&nbsp;</strong>";
@@ -633,12 +657,10 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		if ($curgen == 3) {
 			if ($sex == "F") {
 				$relationship = $pgv_lang["pm_grandmother"];
-			} else { 
-				if ($sex == "M") { 
-					$relationship = $pgv_lang["pm_grandparent"];
-				} else { 
-					$relationship = $pgv_lang["pm_grandparent"]; 
-				} 
+			} else if ($sex == "M") {
+				$relationship = $pgv_lang["pm_grandfather"];
+			} else {
+				$relationship = $pgv_lang["pm_grandparent"];
 			}
 			// experiment
 			$sosa = "sosa_" . ($i+1);
@@ -650,11 +672,11 @@ for ($i=0; $i<($controller->treesize); $i++) {
 					$relationship = $pgv_lang[$sosa];
 				}
 			}
-			$event = "<img src='modules/googlemap/images/sq3.png' width='10' height='10'>" . 
+			$event = "<img src='modules/googlemap/images/sq3.png' width='10' height='10'>".
 				 "<strong>&nbsp;".$relationship.":&nbsp;</strong>";
 		}
 		if ($curgen > 3) {
-			$sosa = "sosa_" . ($i+1); 
+			$sosa = "sosa_" . ($i+1);
 			if (!empty($pgv_lang[$sosa])) { // use display language when available
 				if (function_exists($func)) {
 					// Localise the relationship
@@ -665,21 +687,25 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				$event = "<img src='modules/googlemap/images/sq".$curgen.".png' width='10'" .
 					 " height='10'><strong>&nbsp;".$relationship.":&nbsp;</strong>";
 			} else {
-				if ($sex == "F") {
-					$relationship = $pgv_lang["pm_grandmother"];
-				} else { 
-					if ($sex == "M") { 
-						$relationship = $pgv_lang["pm_grandparent"];
-					} else { 
+				$relationship = get_sosa_name($i+1);
+				if (!empty($relationship)) {
+					$event = "<img src='modules/googlemap/images/sq".$curgen.".png' width='10'" .
+					 " height='10'><strong>&nbsp;".$relationship.":&nbsp;</strong>";
+				} else {
+					if ($sex == "F") {
+						$relationship = $pgv_lang["pm_grandmother"];
+					} else if ($sex == "M") {
+						$relationship = $pgv_lang["pm_grandfather"];
+					} else {
 						$relationship = $pgv_lang["pm_grandparent"]; 
-					} 
+					}
+					$event = "<img src='modules/googlemap/images/sq".$curgen.".png' width='10'" .
+						 " height='10'><strong>&nbsp;".$pgv_lang["pm_gt"]."&nbsp;</strong>";
+					for ($x=1; $x<($curgen-3); $x++) {
+						$event .= "<strong>".$pgv_lang["pm_gt"]."&nbsp;</strong>";
+					}
+					$event .= "<strong>".$relationship.":&nbsp;</strong>";
 				}
-				$event = "<img src='modules/googlemap/images/sq".$curgen.".png' width='10'" .
-					 " height='10'><strong>&nbsp;".$pgv_lang["pm_gt"]."&nbsp;</strong>";
-				for ($x=1; $x<($curgen-3); $x++) {
-					$event .= "<strong>".$pgv_lang["pm_gt"]."&nbsp;</strong>";
-				}
-				$event .= "<strong>".$relationship.":&nbsp;</strong>";
 			}
 		}
 	
@@ -694,14 +720,14 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				if ($TEXT_DIRECTION=="rtl") $class .= "_rtl";
 				$image = "<img src='{$object["thumb"]}' vspace='0' hspace='0' class='{$class}' alt ='' title='' >";
 			} else {
-			$class = "pedigree_image_portrait";
-			if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
-			$sex = $person->getSex();
-			$image = "<img src=\'./";
-			if ($sex == 'F') { $image .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"]; } 
-			elseif ($sex == 'M') { $image .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"]; }
-				else { $image .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"]; } 
-			$image .="\' align=\'left\' class=\'".$class."\' border=\'none\' alt=\'\' />";
+				$class = "pedigree_image_portrait";
+				if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
+				$sex = $person->getSex();
+				$image = "<img src=\'./";
+				if ($sex == 'F') { $image .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_F"]["other"]; }
+				elseif ($sex == 'M') { $image .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_M"]["other"]; }
+				else { $image .= $PGV_IMAGE_DIR."/".$PGV_IMAGES["default_image_U"]["other"]; }
+				$image .="\' align=\'left\' class=\'".$class."\' border=\'none\' alt=\'\' />";
 			}
 		}
 		// end of add image
@@ -718,7 +744,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		if ($latlongval[$i] != NULL){
 			$lat[$i] = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval[$i]["lati"]);
 			$lon[$i] = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval[$i]["long"]);
-			if (($lat[$i] != NULL) && ($lon[$i] != NULL)) {
+			if (!($lat[$i] == NULL && $lon[$i] == NULL) && !($lat[$i] == 0 && $lon[$i] == 0)) {
 				if ((!$hideflags) && ($latlongval[$i]["icon"] != NULL)) {
 					$flags[$i] = $latlongval[$i]["icon"];
 					$ffile = strrchr($latlongval[$i]["icon"], '/');
@@ -744,8 +770,8 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				for ($k=0; $k<$i; $k++) {
 					if ($latlongval[$i] == $latlongval[$k]) {
 						if ($clustersize == 1) {
-							$lon[$i] = $lon[$i]+0.0025; 
-							$lat[$i] = $lat[$i]+0.0025; 
+							$lon[$i] = $lon[$i]+0.0025;
+							$lat[$i] = $lat[$i]+0.0025;
 						}
 						else {
 							$dups++;
@@ -759,9 +785,9 @@ for ($i=0; $i<($controller->treesize); $i++) {
 									$marker_number = "$curgen" . "Rs"; break;
 									}
 								case 5: //adjust position where markers have same coodinates
-								default: $marker_number = "$curgen"; 
-									$lon[$i] = $lon[$i]+0.0025; 
-									$lat[$i] = $lat[$i]+0.0025; 
+								default: $marker_number = "$curgen";
+									$lon[$i] = $lon[$i]+0.0025;
+									$lat[$i] = $lat[$i]+0.0025;
 									break;
 							}
 						 }
@@ -770,7 +796,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				echo "var point = new GLatLng(" . $lat[$i] . "," . $lon[$i]. ");\n";
 				echo "var marker = createMarker(point, \"" . addslashes($name). "\",\n\t\"<div>".$dataleft.$datamid.$dataright."</div>\", \"";
 				echo "<div class='iwstyle'>";
-				echo "<a href='module.php?mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}";
+				echo "<a href='module.php?ged={$GEDCOM}&mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}";
 				if ($hideflags) echo "&hideflags=1";
 				if ($hidelines) echo "&hidelines=1";
 				if ($clustersize != 5) echo "&clustersize=". $clustersize; // ignoring the default of 5
@@ -811,71 +837,71 @@ document.getElementById(lastlinkid).className = 'person_box:target';
 document.getElementById("side_bar").innerHTML = side_bar_html;
 
 // === create the context menu div ===
-      var contextmenu = document.createElement("div");
-      contextmenu.style.visibility="hidden";
-      contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["pm_zoom_in"];?>&nbsp;&nbsp;</div></a>'
-                            + '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["pm_zoom_out"];?>&nbsp;&nbsp;</div></a>'
-                            + '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["zoom_in_here"];?>&nbsp;&nbsp;</div></a>'
-                            + '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["zoom_out_here"];?>&nbsp;&nbsp;</div></a>'
-                            + '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["centre_map"];?>&nbsp;&nbsp;</div></a>';
-      pm_map.getContainer().appendChild(contextmenu);
+	  var contextmenu = document.createElement("div");
+	  contextmenu.style.visibility="hidden";
+	  contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["pm_zoom_in"];?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["pm_zoom_out"];?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["zoom_in_here"];?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["zoom_out_here"];?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["centre_map"];?>&nbsp;&nbsp;</div></a>';
+	  pm_map.getContainer().appendChild(contextmenu);
 
-      // === listen for singlerightclick ===
-      GEvent.addListener(pm_map,"singlerightclick",function(pixel,tile) {
-        // store the "pixel" info in case we need it later
-        // adjust the context menu location if near an egde
-        // create a GControlPosition
-        // apply it to the context menu, and make the context menu visible
-        clickedPixel = pixel;
-        var x=pixel.x;
-        var y=pixel.y;
-        if (x > pm_map.getSize().width - 120) { x = pm_map.getSize().width - 120 }
-        if (y > pm_map.getSize().height - 100) { y = pm_map.getSize().height - 100 }
-        var pos = new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(x,y));  
-        pos.apply(contextmenu);
-        contextmenu.style.visibility = "visible";
-      });
+	  // === listen for singlerightclick ===
+	  GEvent.addListener(pm_map,"singlerightclick",function(pixel,tile) {
+		// store the "pixel" info in case we need it later
+		// adjust the context menu location if near an egde
+		// create a GControlPosition
+		// apply it to the context menu, and make the context menu visible
+		clickedPixel = pixel;
+		var x=pixel.x;
+		var y=pixel.y;
+		if (x > pm_map.getSize().width - 120) { x = pm_map.getSize().width - 120 }
+		if (y > pm_map.getSize().height - 100) { y = pm_map.getSize().height - 100 }
+		var pos = new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(x,y));
+		pos.apply(contextmenu);
+		contextmenu.style.visibility = "visible";
+	  });
 
-      // === functions that perform the context menu options ===
-      function zoomIn() {
-        // perform the requested operation
-        pm_map.zoomIn();
-        // hide the context menu now that it has been used
-        contextmenu.style.visibility="hidden";
-      }      
-      function zoomOut() {
-        // perform the requested operation
-        pm_map.zoomOut();
-        // hide the context menu now that it has been used
-        contextmenu.style.visibility="hidden";
-      }      
-      function zoomInHere() {
-        // perform the requested operation
-        var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
-        pm_map.zoomIn(point,true);
-        // hide the context menu now that it has been used
-        contextmenu.style.visibility="hidden";
-      }      
-      function zoomOutHere() {
-        // perform the requested operation
-        var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
-        pm_map.setCenter(point,pm_map.getZoom()-1); // There is no pm_map.zoomOut() equivalent
-        // hide the context menu now that it has been used
-        contextmenu.style.visibility="hidden";
-      }      
-      function centreMapHere() {
-        // perform the requested operation
-        var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
-        pm_map.setCenter(point);
-        // hide the context menu now that it has been used
-        contextmenu.style.visibility="hidden";
-      }
+	  // === functions that perform the context menu options ===
+	  function zoomIn() {
+		// perform the requested operation
+		pm_map.zoomIn();
+		// hide the context menu now that it has been used
+		contextmenu.style.visibility="hidden";
+	  }
+	  function zoomOut() {
+		// perform the requested operation
+		pm_map.zoomOut();
+		// hide the context menu now that it has been used
+		contextmenu.style.visibility="hidden";
+	  }
+	  function zoomInHere() {
+		// perform the requested operation
+		var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
+		pm_map.zoomIn(point,true);
+		// hide the context menu now that it has been used
+		contextmenu.style.visibility="hidden";
+	  }
+	  function zoomOutHere() {
+		// perform the requested operation
+		var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
+		pm_map.setCenter(point,pm_map.getZoom()-1); // There is no pm_map.zoomOut() equivalent
+		// hide the context menu now that it has been used
+		contextmenu.style.visibility="hidden";
+	  }
+	  function centreMapHere() {
+		// perform the requested operation
+		var point = pm_map.fromContainerPixelToLatLng(clickedPixel)
+		pm_map.setCenter(point);
+		// hide the context menu now that it has been used
+		contextmenu.style.visibility="hidden";
+	  }
 
 
-      // === If the user clicks on the map, close the context menu ===
-      GEvent.addListener(pm_map, "click", function() {
-        contextmenu.style.visibility="hidden";
-      });
+	  // === If the user clicks on the map, close the context menu ===
+	  GEvent.addListener(pm_map, "click", function() {
+		contextmenu.style.visibility="hidden";
+	  });
 	<?php if ($GOOGLEMAP_PH_CONTROLS) {?>
 		// hide controls
 		GEvent.addListener(pm_map, 'mouseout', function() {pm_map.hideControls();});
@@ -888,21 +914,22 @@ document.getElementById("side_bar").innerHTML = side_bar_html;
 	echo "	pm_map.setMapType($GOOGLEMAP_MAP_TYPE);\n";
 	?>
 // End context menu creation
-
 }
 
-    else {
-      alert("Sorry, the Google Maps API is not compatible with this browser");
-    }
+	else {
+	  alert("Sorry, the Google Maps API is not compatible with this browser");
+	}
 
-    // This Javascript is based on code provided by the
-    // Blackpool Community Church Javascript Team
-    // http://www.commchurch.freeserve.co.uk/   
-    // http://econym.googlepages.com/index.htm
+	// This Javascript is based on code provided by the
+	// Blackpool Community Church Javascript Team
+	// http://www.commchurch.freeserve.co.uk/
+	// http://econym.googlepages.com/index.htm
 
 //]]>
 </script>
 <?php
-if ($controller->isPrintPreview()) echo "<br /><br /><br />\n";
+if ($controller->isPrintPreview()) {
+	echo "<br /><br /><br />\n";
+}
 print_footer();
 ?>

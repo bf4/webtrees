@@ -5,7 +5,7 @@
 * Display all of the information about an individual
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -222,8 +222,9 @@ jQuery(document).ready(function(){
 			echo "&nbsp;&nbsp;";
 			echo PrintReady("(".$controller->pid.")");
 			if (PGV_USER_IS_ADMIN) {
-				$pgvuser=get_user_from_gedcom_xref($GEDCOM, $controller->pid);
-				if ($pgvuser) {
+				$user_id=get_user_from_gedcom_xref(PGV_GED_ID, $controller->pid);
+				if ($user_id) {
+					$pgvuser=get_user_name($user_id);
 					echo "&nbsp;";
 					echo printReady("(<a href=\"useradmin.php?action=edituser&amp;username={$pgvuser}\">{$pgvuser}</a>)");
 				}

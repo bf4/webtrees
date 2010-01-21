@@ -26,7 +26,7 @@
 
 require './config.php';
 
-if (adminUserExists() && !PGV_USER_IS_ADMIN && $CONFIGURED) {
+if (PGV_ADMIN_USER_EXISTS && !PGV_USER_IS_ADMIN && $CONFIGURED) {
 	header('Location: admin.php');
 	exit;
 }

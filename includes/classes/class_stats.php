@@ -3737,36 +3737,34 @@ class stats {
 
 	static function _getLatestUserData($type='userid', $params=null) {
 		global $DATE_FORMAT, $TIME_FORMAT, $pgv_lang;
-		static $user = null;
+		static $user_id = null;
 
-		if($user === null) {
-			$users = get_all_users('DESC', 'reg_timestamp', 'username');
-			$user = array_shift($users);
-			unset($users);
+		if ($user_id === null) {
+			$user_id=get_newest_registered_user();
 		}
 
 		switch($type) {
 			default:
 			case 'userid':
-				return $user;
+				return $user_id;
 			case 'username':
-				return get_user_name($user);
+				return get_user_name($user_id);
 			case 'fullname':
-				return getUserFullName($user);
+				return getUserFullName($user_id);
 			case 'firstname':
-				return get_user_setting($user, 'firstname');
+				return get_user_setting($user_id, 'firstname');
 			case 'lastname':
-				return get_user_setting($user, 'lastname');
+				return get_user_setting($user_id, 'lastname');
 			case 'regdate':
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $DATE_FORMAT;}
-				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
+				return date($datestamp, get_user_setting($user_id, 'reg_timestamp'));
 			case 'regtime':
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $TIME_FORMAT;}
-				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
+				return date($datestamp, get_user_setting($user_id, 'reg_timestamp'));
 			case 'loggedin':
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$yes = $params[0];}else{$yes = $pgv_lang['yes'];}
 				if(is_array($params) && isset($params[1]) && $params[1] != ''){$no = $params[1];}else{$no = $pgv_lang['no'];}
-				return (get_user_setting($user, 'loggedin') == 'Y')?$yes:$no;
+				return (get_user_setting($user_id, 'loggedin') == 'Y')?$yes:$no;
 		}
 	}
 

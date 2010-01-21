@@ -66,13 +66,13 @@ $configuredlanguages = array();
 
 // Read GEDCOMS configuration and collect language data
 foreach (get_all_gedcoms() as $ged_id => $ged_name) {
-	require get_gedcom_setting($ged_id, 'config');
+	require get_config_file($ged_name);
 	if (!isset($configuredlanguages["gedcom"][$LANGUAGE][$ged_name])) {
 		$configuredlanguages["gedcom"][$LANGUAGE][$ged_name] = true;
 	}
 }
 // Restore the current settings
-require get_gedcom_setting(PGV_GED_ID, 'config');
+require get_config_file(PGV_GEDCOM);
 
 // Read user configuration and collect language data
 foreach (get_all_users() as $user_id=>$user_name) {

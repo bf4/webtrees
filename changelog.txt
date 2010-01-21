@@ -8,7 +8,9 @@
 	# $Id$
 =====================================================================
 
-Version 4.2.x CA
+Version 4.3.x CA
+ - Merged: Merging r6673 through r6788 from the trunk (yalnifj)
+ - Added favorites sidebar module (yalnifj)
  = Changed: More corrections/additions for GEDFact_assistant )windmillway)
  - Changed: Corrected some anomalies when persons name is "unknown" (windmillway)
  - Changed: Added Death Date calculations and Highlighting to Edit fields in Census Assistant (windmillway)
@@ -197,6 +199,16 @@ Version 4.2.x CA
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.3.0 2009-12-29
+ - Changed: Fan chart font and colors moved from style.css to theme.php (canajun2eh)
+ - Fixed: [ 2917682 ] ERROR 8 in access log (wooc)
+ - Update: jQuery.autocomplete plugin 1.1 (volschin)
+ - Update: TCPDF 4.8.024 (volschin)
+ - Fixed: Include change of favorites in merge of records (volschin)
+ - Fixed: [ 2933020 ] 4.2.3 Bracketing issue in Russian (wooc)
+ - Fixed: [ 2931733 } 4.2.3 Name entering and editing (fisharebest)
+ - Fixed: [ 2930541 ] PGV custom  tags not being removed on download V4.2.3 (fisharebest)
+ - Fixed: [ 2931697 ] 4.2.3 countries.csv ... Iraq is called IRN (fisharebest)
+ - Fixed: [ 2927240 ] 4.2.3 ... un-def var gid when importing (fisharebest)
  - Added: [ 1863843 ] Pedigree Google Map (kiwi_pgv/wooc)
  - Changed: UI for user list (volschin)
  - Added: Silhouette images support (kiwi_pgv/wooc)

@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -374,7 +374,6 @@ $pgv_lang["family_private"]		= "Bu ailenin detayları şahsidir. Kişisel detayl
 $pgv_lang["download"]			= "Yeni yaratılmış GEDCOM dosyasını yerel bilgisayarınıza indirebilmek için aşağıdaki bağlantıya farenin sağ tuşu ile basıp (MAC te Control-Click) \"Hedefi Farklı Kaydet...\" emrini seçin.";
 $pgv_lang["cart_is_empty"]		= "Kupür Taşıma Alanı Boştur";
 $pgv_lang["id"]				= "ID";
-$pgv_lang["ID"]				= "ID";
 $pgv_lang["name_description"]		= "İsim / Tanım";
 $pgv_lang["remove"]			= "Kaldır";
 $pgv_lang["empty_cart"]			= "Kupür Taşıma Alanı Boşalt";
@@ -1725,4 +1724,74 @@ $pgv_lang["stat_19_aarm"]		= "Ortalama yüzyılda evlilik yaşı";
 $pgv_lang["stat_18_aard"]		= "Ortalama yüzyılda ölüm yaşı";
 $pgv_lang["stat_7_marr"]		= "Yüzyılda evlilik";
 $pgv_lang["stat_6_death"]		= "Yüzyılda ölüm";
+$pgv_lang["stat_countries"]			= "Ülkelerdeki hadiseler";
+$pgv_lang["stat_death_places"]		= "Ölüm yeri";
+$pgv_lang["stat_marriage_places"]	= "Evlilik yeri";
+$pgv_lang["stat_birth_places"]		= "Doğum yeri";
+$pgv_lang["stat_places"]			= "Yerler";
+$pgv_lang["stat_last_event"]		= "Son hadise";
+$pgv_lang["stat_first_event"]		= "İlk hadise";
+$pgv_lang["stat_notes"]				= "Notlar";
+$pgv_lang["stat_records"]			= "Kayıtlar";
+$pgv_lang["events"]					= "Hadiseler";
+$pgv_lang["top_givennames"]			= "Üst belirlenmiş isimler";
+$pgv_lang["top_surnames"]			= "Üst soy isimler";
+$pgv_lang["statngivennames"]		= "Toplam belirlenmiş isimler";
+$pgv_lang["statnsurnames"]			= "Toplam soy isimler";
+$pgv_lang["stat_names"]				= "İsimler";
+$pgv_lang["stat_age_fm_spouse"]		= "Karı ve Koca arasındaki yaş";
+$pgv_lang["stat_age_fm_spouse"]		= "Karı ve Koca arasındaki yaş";
+$pgv_lang["stat_age_mf_spouse"]		= "Koca ve Karı arasındaki yaş";
+$pgv_lang["stat_top_age_siblings"]	= "Üst kardeşler arasındaki yaş";
+$pgv_lang["stat_age_siblings"]		= "Kardeşler arasındaki yaş";
+$pgv_lang["stat_age_difference"]	= "Yaş farkı";
+$pgv_lang["stat_largest_gfamilies"]	= "Engeniş büyük aile";
+$pgv_lang["stat_children_in_fam"]	= "Ailede çocuk";
+$pgv_lang["stat_oldest_mother"]		= "Büyük anne";
+$pgv_lang["stat_oldest_father"]		= "Büyük baba";
+$pgv_lang["stat_youngest_mother"]	= "Engenç anne";
+$pgv_lang["stat_youngest_father"]	= "Engeç baba";
+$pgv_lang["stat_childbirth_age"]	= "Çocuğu doğumundaki yaşı";
+$pgv_lang["stat_oldest_female"]		= "Enyaşlı kadın";
+$pgv_lang["stat_oldest_male"]		= "Enyaşlı erkek";
+$pgv_lang["stat_youngest_female"]	= "Engenç kadın";
+$pgv_lang["stat_youngest_male"]		= "Engenç erkek";
+$pgv_lang["stat_short_marr_age"]	= "Enkısa evlilik";
+$pgv_lang["stat_long_marr_age"]		= "Enuzun evlilik";
+$pgv_lang["stat_marr_age"]			= "Evliliğin süresi";
+$pgv_lang["stat_live_longest"]		= "Enyaşlı yaşayan insan";
+$pgv_lang["stat_lived_longest"]		= "Üst ölüm yaşı";
+$pgv_lang["stat_lifespan"]			= "Ömür";
+$pgv_lang["stat_last_death"]		= "Son ölüm";
+$pgv_lang["stat_last_divorce"]		= "Son boşanma";
+$pgv_lang["stat_last_marriage"]		= "Son evlilik";
+$pgv_lang["stat_last_birth"]		= "Son doğum";
+$pgv_lang["stat_first_death"]		= "Enerken ölüm";
+$pgv_lang["stat_first_divorce"]		= "Enerkenboşanma";
+$pgv_lang["stat_first_marriage"]	= "Enerken evlilik";
+$pgv_lang["stat_first_birth"]		= "Enerken doğum";
+$pgv_lang["stat_deaths"]			= "Toplam ölüm";
+$pgv_lang["stat_divorces"]			= "Toplam boşanma";
+$pgv_lang["stat_marriages"]			= "Toplam evlilik";
+$pgv_lang["stat_births"]			= "Toplam doğum";
+$pgv_lang["statndead"]				= "Toplam ölü";
+$pgv_lang["statnliving"]			= "Toplam yaşamı";
+$pgv_lang["stat_own_charts"]		= "Kendi çizelgeleri";
+$pgv_lang["stat_largest_families"] = "Engeniş aileler";
+$pgv_lang["stat_7_div"]			= "Yüzyılda boşanmalar";
+$pgv_lang["without_sources"]	= "Kaynaklar olmadan";
+$pgv_lang["with_sources"]		= "Kaynaklar ile";
+$pgv_lang["sources_to_events"]		= "Hadiselere kaynaklar";
+$pgv_lang["fact_sources_report"]	= "Gerçek Kaynaklar";
+$pgv_lang["descendancy_pronoun_f"]	= "Kadın ";
+$pgv_lang["descendancy_pronoun_m"]	= "Erkek ";
+$pgv_lang["fam_navigator"]			= "Aile Navigasyon";
+$pgv_lang["generation_number"]		= "Nesiller";
+$pgv_lang["ID"] 					= "ID";
+$pgv_lang["ahnentafel_married_post"]= "&nbsp;";
+$pgv_lang["missing_facts_report"]	= "Akrabalar gerçekleri eksik";
+$pgv_lang["ward"] = "Koğuş";
+$pgv_lang["brothers_wife"]		= "Elti"; // brother's wife
+$pgv_lang["cousin_in_law"]		= "Kuzen";
+$pgv_lang["grandchildren"]			= "torun";
 ?>

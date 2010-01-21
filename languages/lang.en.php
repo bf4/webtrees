@@ -1554,6 +1554,7 @@ $pgv_lang["adding"] 				= "Adding";
 $pgv_lang["updating_linked"]		= "Updating linked record";
 $pgv_lang["merge_more"] 			= "Merge more records.";
 $pgv_lang["same_ids"]				= "You entered the same IDs.  You cannot merge the same records.";
+$pgv_lang["updated_favorites"] 			= "favorites updated.";
 
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"] 		= "Ancestry Chart";

@@ -551,9 +551,18 @@ class IndividualControllerRoot extends BaseController {
 		global $pgv_lang, $sex;
 
 		if (!$event->canShowDetails()) return false;
+		$factrec = $event->getGedComRecord();
 		$sex = $event->getDetail();
 		if (empty($sex)) $sex = "U";
-		print "<td valign=\"top\"><span class=\"label\">".$pgv_lang["sex"].": </span><span class=\"field\">".$this->sexarray[$sex];
+		echo "<td valign=\"top\"";
+		if (strpos($factrec, "PGV_OLD")!==false) {
+			echo " class=\"namered\"";
+		}
+		if (strpos($factrec, "PGV_NEW")!==false) {
+			echo " class=\"nameblue\"";
+		}
+		echo ">";
+		print "<span class=\"label\">".$pgv_lang["sex"].": </span><span class=\"field\">".$this->sexarray[$sex];
 		if ($sex=='M') {
 			echo Person::sexImage('M', 'small', '', $pgv_lang['male']);
 		} elseif ($sex=='F') {
@@ -562,7 +571,7 @@ class IndividualControllerRoot extends BaseController {
 			echo Person::sexImage('U', 'small', '', $pgv_lang['unknown']);
 		}
 		if ($this->SEX_COUNT>1) {
-			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (strpos($event->getGedComRecord(), "PGV_OLD")===false)) {
+			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (strpos($factrec, "PGV_OLD")===false)) {
 				if ($event->getLineNumber()=="new") {
 					print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".$pgv_lang["edit"]."</a>";
 				} else {

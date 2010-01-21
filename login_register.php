@@ -94,13 +94,14 @@ switch ($action) {
 		$QUERY_STRING = "";
 		print_header($pgv_lang['lost_pw_reset']);
 		print "<div class=\"center\">";
-		if (!get_user_id($user_name)) {
+		$user_id=get_user_id($user_name);
+		if (!$user_id) {
 			AddToLog("New password requests for user ".$user_name." that does not exist");
 			print "<span class=\"warning\">";
 			print_text("user_not_found");
 			print "</span><br />";
 		} else {
-			if (get_user_setting($user_name, 'email')=='') {
+			if (get_user_setting($user_id, 'email')=='') {
 				AddToLog("Unable to send password to user ".$user_name." because they do not have an email address");
 				print "<span class=\"warning\">";
 				print_text("user_not_found");
@@ -114,13 +115,13 @@ switch ($action) {
 					$user_new_pw .= $passchars{$index};
 				}
 
-				set_user_password($user_name, crypt($user_new_pw));
-				set_user_setting($user_name, 'pwrequested', 1);
+				set_user_password($user_id, crypt($user_new_pw));
+				set_user_setting($user_id, 'pwrequested', 1);
 
 				// switch language to user settings
 				$oldLanguage = $LANGUAGE;
-				if ($LANGUAGE != get_user_setting($user_name, 'language')) loadLanguage(get_user_setting($user_name, 'language'));
-				$newuserName=getUserFullName($user_name);
+				if ($LANGUAGE != get_user_setting($user_id, 'language')) loadLanguage(get_user_setting($user_id, 'language'));
+				$newuserName=getUserFullName($user_id);
 
 				$mail_body = "";
 				$mail_body .= str_replace("#user_fullname#", $newuserName, $pgv_lang["mail04_line01"]) . "\r\n\r\n";
@@ -136,7 +137,7 @@ switch ($action) {
 				else $mail_body .= $serverURL;
 
 				require_once PGV_ROOT.'includes/functions/functions_mail.php';
-				pgvMail(get_user_setting($user_name, 'email'), $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail04_subject"]), $mail_body);
+				pgvMail(get_user_setting($user_id, 'email'), $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail04_subject"]), $mail_body);
 
 				?>
 				<table class="center facts_table">
@@ -424,13 +425,13 @@ switch ($action) {
 					$mail_body .= $pgv_lang["mail01_line04"] . "\r\n\r\n";
 					if ($TEXT_DIRECTION=="rtl") {
 						$mail_body .= "<a href=\"";
-						$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_name, 'reg_hashcode'))."&action=userverify\">";
+						$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify\">";
 					}
-					$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_name, 'reg_hashcode'))."&action=userverify";
+					$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify";
 					if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
 					$mail_body .= "\r\n";
 					$mail_body .= $pgv_lang["username"] . " " . $user_name . "\r\n";
-					$mail_body .= $pgv_lang["hashcode"] . " " . get_user_setting($user_name, 'reg_hashcode') . "\r\n\r\n";
+					$mail_body .= $pgv_lang["hashcode"] . " " . get_user_setting($user_id, 'reg_hashcode') . "\r\n\r\n";
 					$mail_body .= $pgv_lang["comments"].": " . $user_comments . "\r\n\r\n";
 					$mail_body .= $pgv_lang["mail01_line05"] . "  ";
 					$mail_body .= $pgv_lang["mail01_line06"] . "\r\n";
@@ -500,7 +501,8 @@ switch ($action) {
 
 		// Change to the new user's language
 		$oldLanguage = $LANGUAGE;
-		$user_lang=get_user_setting($user_name, 'language');
+		$user_id=get_user_id($user_name);
+		$user_lang=get_user_setting($user_id, 'language');
 		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
 
 		print_header($pgv_lang['user_verify']);
@@ -533,7 +535,8 @@ switch ($action) {
 		AddToLog("User attempted to verify hashcode: ".$user_name);
 
 		// Change to the new user's language
-		$user_lang=get_user_setting($user_name, 'language');
+		$user_id=get_user_id($user_name);
+		$user_lang=get_user_setting($user_id, 'language');
 		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
 		$oldLanguage = $LANGUAGE;
 
@@ -543,16 +546,16 @@ switch ($action) {
 		print "<tr><td class=\"topbottombar\">".$pgv_lang["user_verify"]."</td></tr>";
 		print "<tr><td class=\"optionbox\">";
 		print str_replace("#user_name#", $user_name, $pgv_lang["pls_note08"]);
-		if (get_user_id($user_name)) {
-			$pw_ok = (get_user_password($user_name) == crypt($user_password, get_user_password($user_name)));
-			$hc_ok = (get_user_setting($user_name, 'reg_hashcode') == $user_hashcode);
+		if ($user_id) {
+			$pw_ok = (get_user_password($user_id) == crypt($user_password, get_user_password($user_id)));
+			$hc_ok = (get_user_setting($user_id, 'reg_hashcode') == $user_hashcode);
 			if (($pw_ok) && ($hc_ok)) {
-				set_user_setting($user_name, 'verified', 'yes');
-				set_user_setting($user_name, 'pwrequested', '');
-				set_user_setting($user_name, 'reg_timestamp', date("U"));
-				set_user_setting($user_name, 'reg_hashcode', '');
+				set_user_setting($user_id, 'verified', 'yes');
+				set_user_setting($user_id, 'pwrequested', '');
+				set_user_setting($user_id, 'reg_timestamp', date("U"));
+				set_user_setting($user_id, 'reg_hashcode', '');
 				if (!$REQUIRE_ADMIN_AUTH_REGISTRATION) {
-					set_user_setting($user_name, 'verified_by_admin', 'yes');
+					set_user_setting($user_id, 'verified_by_admin', 'yes');
 				}
 				AddToLog("User verified: ".$user_name);
 

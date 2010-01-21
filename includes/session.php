@@ -47,7 +47,7 @@ define('PGV_DEBUG_PRIV',  false);
 define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Required version of database tables/columns/indexes/etc.
-define('PGV_SCHEMA_VERSION', 11);
+define('PGV_SCHEMA_VERSION', 12);
 
 // Environmental requirements
 define('PGV_REQUIRED_PHP_VERSION',     '5.2.0'); // 5.2.3 is recommended
@@ -340,15 +340,6 @@ if (!$SEARCH_SPIDER && !isset($_SESSION['initiated'])) {
 	// An existing session
 }
 
-// Import the gedcoms array
-// NOTE: this array is deprecated - use set/get_gedcom_setting()
-if (file_exists($INDEX_DIRECTORY.'gedcoms.php')) {
-	require $INDEX_DIRECTORY.'gedcoms.php';
-}
-if (!isset($GEDCOMS) || !is_array($GEDCOMS)) {
-	$GEDCOMS = array();
-}
-
 // Set the active GEDCOM
 if (isset($_REQUEST['ged'])) {
 	// .... from the URL or form action
@@ -545,13 +536,14 @@ require PGV_ROOT.'includes/functions/functions_privacy.php';
 // Define some constants to save calculating the same value repeatedly.
 define('PGV_USER_ID',           getUserId  ());
 define('PGV_USER_NAME',         getUserName());
-define('PGV_USER_IS_ADMIN',     userIsAdmin       (PGV_USER_ID));
-define('PGV_USER_AUTO_ACCEPT',  userAutoAccept    (PGV_USER_ID));
-define('PGV_USER_GEDCOM_ADMIN', userGedcomAdmin   (PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_CAN_ACCESS',   userCanAccess     (PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_CAN_EDIT',     userCanEdit       (PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_CAN_ACCEPT',   userCanAccept     (PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID, PGV_GED_ID));
+define('PGV_ADMIN_USER_EXISTS', adminUserExists());
+define('PGV_USER_IS_ADMIN',     userIsAdmin    (PGV_USER_ID));
+define('PGV_USER_AUTO_ACCEPT',  userAutoAccept (PGV_USER_ID));
+define('PGV_USER_GEDCOM_ADMIN', PGV_USER_IS_ADMIN     || userGedcomAdmin(PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_CAN_ACCEPT',   PGV_USER_GEDCOM_ADMIN || userCanAccept  (PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_CAN_EDIT',     PGV_USER_CAN_ACCEPT   || userCanEdit    (PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_CAN_ACCESS',   PGV_USER_CAN_EDIT     || userCanAccess  (PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel     (PGV_USER_ID, PGV_GED_ID));
 define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid'));
 define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid'));
 
@@ -579,7 +571,7 @@ if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION['show_cont
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
 if ((strstr($SCRIPT_NAME, 'install.php')===false)
 	&&(strstr($SCRIPT_NAME, 'editconfig_help.php')===false)) {
-	if (!PGV_DB::isConnected() || !adminUserExists()) {
+	if (!PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS) {
 		header('Location: install.php');
 		exit;
 	}

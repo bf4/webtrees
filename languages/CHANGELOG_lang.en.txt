@@ -43,6 +43,7 @@ VERSION 4.3.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["updated_favorites"]					17 Jan 2010				A
 
 VERSION 4.2.3
 

@@ -1,84 +1,74 @@
 README file for the Googlemap module for phpGedView
 
-Versions supported: V4.0 (preferred) and V3.3.8.
-
-The files in this archive should be extracted into you modules directory.
+The files in this archive should be extracted into your modules directory.
 
 These are the instruction on getting your Googlemap interface to work:
 
-If you are using version 3.3.8 of phpGedview you also need to do the
-following:
-1. Backup your individual.php in the PGV root
-2. Copy individual-3.3.8.php from the googlemap directory to PGV root.
-
-Next follow the following steps (both 3.3.8 and 4.0):
 1. Get your personal Google Map API key from
    http://www.google.com/apis/maps/signup.html
-2. Go to the Googlemap confiuration page. You can find this page under the
-   Map-tab on the individual page.
-3. Enter the key in the input field, and click save.
+2. Go to the Googlemap configuration page. You can find this page under the
+   Administration page.
+3. Set Enable Googlemap to ‘Yes’.
+4. Enter the key in the input field, and click save.
 
 The map will only be shown if at least one fact has a place with coordinates
 attached to it. Attaching a coordinate can be done through the generic
 place-location interface (located at the Googlamp configuration page) or by
 specifying a MAP record with an event.
 
-The coordinates for an event cannot be entered through the normal
-windows. You have to add it directly into the GEDCOM record. The correct
-way to do this is for a PLAC record:
+Adding places one by one to your GEDCOM file (not recommended):
+
+This method is included so that you may have an idea of how a GEDCOM stores
+place data. You do not need the Googlemap module to use this procedure.
+The co-ordinates for an event can only be added directly to a GEDCOM file. 
+The correct way to do this is for a PLAC record:
 2 PLAC <Placename>
 3 MAP
 4 LONG <Longitude>
 4 LATI <Latitude>
 (Make sure you use the "3 MAP" record after a PLAC record.)
 The MAP, LONG and LATI lines should be added directly after the PLAC line.
+In the ‘edit’ function pop-up window, there is a ‘+’ (plus sign) under ‘Place’
+where you can select a country, state, county, and city that exists in your
+PhpGedview ‘place’ file. This can help avoid duplications by various spellings
+or versions of the same place. The PhpGedView configuration allows for ‘expanded’
+editing if that option is selected.
 
 It is also possible to define a MAP record within a ADDR record, even though
 this is not according to the standard (these records are created by Legacy).
 
-Some special remarks for version 3.3.8:
-1. The Place-location pages look a bit empty. This is because the styles used to 
-   format the table are not defined in version 3.3.8. You can create these by
-   doing the following:
-   - In your themes/<selected theme> open style.css
-   - Search for ".facts_label"
-   - Copy the lines until the first "}"
-   - Insert these lines after the "}" and change ".facts_label" to 
-     ".descriptionbox"
-   - Change the font-size to 12.
-   - Repeat this for ".facts_value" (change ".factsvalue" to ".optionbox")
-2. To make the flags work, copy the flags directory from images to places, or
-   download the flags from version 4.0.
+Add a place using PhpGedView Googlemap module (recommended method):
 
+Forenote: the Google Map module is designed to work with locations in tree-like
+fashion. If we were to consider a suburb of London, the tree would take the
+order 'England, London, Hackney'. This is not how we enter place names in our
+family data, but it is how we manage the Google Map module. This will give
+access to useful place lookup features as we build up map information. It will
+help you find groups of people from the same locale. And it conforms to the
+GEDCOM specification, a feature of PhpGedView. 
 
-Contributers:
-- Norwegian translation: Geir Eikland (eikland)
-- German translation: Christian Helms (nolensvolens)
-- French translation: Thierry Durand (tdurand)
-- Hebrew translations: Meliza Amity (meliza)
-- Portugese translation: Clovis Bombardelli (cb-BR)
-- Countries and US-states CSV file: Glen Carreras (carrerasg)
-- Testing and additional comments: Mike Elliott (Colored Pixels), Nigel
-  Osborn (nigelo)
+And, BEFORE you start with any mapping endeavours, review your data. Make sure
+spelling is consistent, there are no 'almost' duplicates, places are in their
+right country, and the places you describe are in true tree fashion. Only then
+will the module make it easy for you to connect family data with Google Maps. 
 
-Changelog:
-Version 0.5:
-- Added extra table to store place-locations, included interface to add, edit
-  and remove items from this table
-- Norwegian language files
-- Possibility to add flags to locations
-- Process ADDR records
+This feature uses new database tables to store place text and location
+information. Existing places can be imported and location information can be
+added using graphic tools (zoom/click on map) or specific location data. 
 
-Version 0.4:
-- Improved privacy handling
-- German language file
-- Configuration using Googlemap configuration page
-- Accept LATI/LONG in both N/S or E/W and +/- notation
-- Max 4 events per marker, new marker will be created for other events
+The location information is held outside the GEDCOM (and can be shared between
+GEDCOMs in PGV) and location data is entered only once for each place. Backup
+of location data is available by export of each new place database table to a
+text file (separated with ";"). Bulk additions can be performed by text file
+import (with reservations for specific place structure and spelling). 
 
+Using the tree structure mentioned above, we start to build location data
+from the top down – which, in 99% of cases, will mean starting by entering
+a country. When that is done, we move to the next layer (state, county,
+whatever is appropriate for your locale.) 
 
-Version 0.3:
-- If more than 4 events at one place, then create new marker
-- Fixed including of language files
-- Added support for Version 4.0 Beta 7
-- Select correct tab in info-window when using the event-table
+To make the flags work in PGV basic, copy the flags directory from images to
+places, or download the flags from the full version.
+
+More information:
+http://wiki.phpgedview.net/en/index.php?title=How_to:Add_Google_maps

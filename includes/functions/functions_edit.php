@@ -79,7 +79,7 @@ $level2_tags=array( // The order of the $keys is significant
 	'_PGVU'=>array('_TODO')
 );
 $STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
-$REVERSED_NAME_FACTS = array('NAME', 'NPFX', 'SPFX', 'SURN', 'NSFX', 'GIVN');
+$REVERSED_NAME_FACTS = array('NAME', 'NPFX', 'SPFX', 'SURN', 'GIVN', 'NSFX');
 
 //-- this function creates a new unique connection
 //-- and adds it to the connections file
@@ -626,17 +626,26 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 	// Populate any missing 2 XXXX fields from the 1 NAME field
 	$npfx_accept=implode('|', $NPFX_accept);
 	if (preg_match ("/((($npfx_accept)\.? +)*)([^\n\/\"]*)(\"(.*)\")? *\/(([a-z]{2,3} +)*)(.*)\/ *(.*)/i", $name_fields['NAME'], $name_bits)) {
-		if (empty($name_fields['NPFX'])) $name_fields['NPFX']=$name_bits[1];
-		if (!$NAME_REVERSE && empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
+		if (empty($name_fields['NPFX'])) {
+			$name_fields['NPFX']=$name_bits[1];
+		}
 		if (empty($name_fields['SPFX']) && empty($name_fields['SURN'])) {
 			$name_fields['SPFX']=trim($name_bits[7]);
 			$name_fields['SURN']=$name_bits[9];
 		}
-		if (empty($name_fields['NSFX'])) $name_fields['NSFX']=$name_bits[10];
-		if ($NAME_REVERSE && empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
+		if ($NAME_REVERSE) {
+			if (empty($name_fields['GIVN'])) {
+				$name_fields['GIVN']=$name_bits[10];
+			}
+		} else {
+			if (empty($name_fields['GIVN'])) {
+				$name_fields['GIVN']=$name_bits[4];
+			}
+		}
 		// Don't automatically create an empty NICK - it is an "advanced" field.
-		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m', $namerec))
+		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m', $namerec)) {
 			$name_fields['NICK']=$name_bits[6];
+		}
 	}
 
 	// Edit the standard name fields
@@ -1102,6 +1111,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $lang_short_cut, $LANGUAGE;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
 	global $action, $event_add;
+	global $CensDate;
 	
 if (substr($tag, 0, strpos($tag, "CENS"))) {
 	$event_add="census_add";
@@ -1472,8 +1482,8 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		if (''==$text) echo ' selected="selected"';
 		echo ">-</option>\n";
 		foreach (get_all_users('asc', 'username') as $user_id=>$user_name) {
-			echo "<option value=\"", $user_id, "\"";
-			if ($user_id==$text) echo " selected=\"selected\"";
+			echo "<option value=\"", $user_name, "\"";
+			if ($user_name==$text) echo " selected=\"selected\"";
 			echo ">", $user_name, "</option>\n";
 		}
 		echo "</select>\n";
@@ -1620,7 +1630,16 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 
 	// popup links
 	if ($readOnly=='') {
-		if ($fact=="DATE") print_calendar_popup($element_id);
+		if ($fact=="DATE") {
+			print_calendar_popup($element_id);
+			// If GEDFact_assistant/_CENS/ module is installed -------------------------------------------------
+			if ($action=="add" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') ) {
+				if (isset($CensDate) && $CensDate=="yes") {
+					require_once PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_asst_date.php';
+				}
+			}
+			// -------------------------------------------------------------------------------------------------
+		}
 		if ($fact=="FAMC") print_findfamily_link($element_id, '');
 		if ($fact=="FAMS") print_findfamily_link($element_id, '');
 		if ($fact=="ASSO") print_findindi_link($element_id, '');
@@ -1692,7 +1711,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 				echo "&nbsp;&nbsp;&nbsp;";
 				print_editnote_link($value);
 			}
-			// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
+			// If GEDFact_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
 			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons. 
 			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && ($action=="add" || $action=="edit" ) && $pid) {
 				// Check if a CENS event ---------------------------
@@ -1701,7 +1720,9 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 					if ($type_pid->getType()=="INDI" ) { 
 						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+						echo "<a href=\"javascript:ADD;\" onclick=\"addnewnote_assisted(document.getElementById('", $element_id, "'), '", $pid, "' ); return false;\" title=\"".$pgv_lang["create_shared_note_assisted"]."\" alt=\"".$pgv_lang["create_shared_note_assisted"]."\">";
 						echo $pgv_lang["shared_note_assisted"];
+						echo "</a>";
 						print_addnewnote_assisted_link($element_id);
 					}
 				}
@@ -2373,7 +2394,7 @@ function create_add_form($fact) {
 	
 	// GEDFact_assistant ================================================
 	if ($fact=="CENS" && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
-			require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
+		require PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_query_2a.php';
 	}
 	// ==================================================================
 

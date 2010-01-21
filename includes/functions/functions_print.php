@@ -480,8 +480,9 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		$old_META_COPYRIGHT = $META_COPYRIGHT;
 		$old_META_DESCRIPTION = $META_DESCRIPTION;
 		$old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
-		if (get_user_id($CONTACT_EMAIL)) {
-			$cuserName=getUserFullName($CONTACT_EMAIL);
+		$user_id=get_user_id($CONTACT_EMAIL);
+		if ($user_id) {
+			$cuserName=getUserFullName($user_id);
 			if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
 			if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
 			if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
@@ -536,8 +537,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	//-->
 	</script>'; */
 	}
-	$javascript.='<script language="JavaScript" type="text/javascript">
-		<!--
+	$javascript.=PGV_JS_START.'
 		/* setup some javascript variables */
 		var query = "'.$query_string.'";
 		var textDirection = "'.$TEXT_DIRECTION.'";
@@ -605,9 +605,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 
 	var whichhelp = \'help_'.basename($SCRIPT_NAME).'&action='.$action.'\';
 	//-->
-	</script>
-	<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
-	';
+	'.PGV_JS_END.'<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>';
 	$bodyOnLoad = '';
 	if ($view=="preview") $bodyOnLoad .= " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
 	$bodyOnLoad .= " onload=\"";
@@ -660,11 +658,9 @@ function print_footer() {
 	echo "<!-- begin footer -->";
 	if ($view!="preview") {
 		include($footerfile);
-		echo "<br />";
-	}
-	else {
+	} else {
 		include($print_footerfile);
-		echo "<div id=\"backprint\" style=\"text-align: center; width: 95%\"><br />";
+		echo "<div id=\"backprint\" style=\"text-align: center; width: 95%\">";
 		$backlink = $SCRIPT_NAME."?".get_query_string();
 		if (!$printlink) {
 			echo "<br /><a id=\"printlink\" href=\"javascript:;\" onclick=\"print(); return false;\">", $pgv_lang["print"], "</a><br />";
@@ -672,7 +668,6 @@ function print_footer() {
 		}
 		$printlink = true;
 		echo "</div>";
-		echo "<br />";
 	}
 	if (function_exists("load_behaviour")) {
 		load_behaviour();  // @see function_print_lists.php
@@ -690,7 +685,7 @@ function print_simple_footer() {
 	global $SHOW_STATS;
 
 	if ($SHOW_STATS || PGV_DEBUG) {
-		echo '<br />', execution_stats();
+		echo execution_stats();
 	}
 	if (PGV_DEBUG_SQL) {
 		echo PGV_DB::getQueryLog();
@@ -793,7 +788,6 @@ function print_user_links() {
 			}
 		}
 	}
-	echo "<br />";
 }
 
 // Print a link to allow email/messaging contact with a user
@@ -873,29 +867,36 @@ function print_contact_links() { // This function is used by 3rd party themes.
 function contact_links() {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
 
-	$support_link=user_contact_link($WEBMASTER_EMAIL, $SUPPORT_METHOD);
-	$contact_link=user_contact_link($CONTACT_EMAIL,   $CONTACT_METHOD);
-	if (!$support_link) {
-		$support_link=$contact_link;
-	}
-	if (!$contact_link) {
-		$contact_link=$support_link;
-	}
-	if (!$support_link) {
+	$supportLink = user_contact_link(get_user_id($WEBMASTER_EMAIL), $SUPPORT_METHOD);
+	$contactLink = user_contact_link(get_user_id($CONTACT_EMAIL),   $CONTACT_METHOD);
+
+	if (!$supportLink && !$contactLink) {
 		return '';
 	}
-	if ($support_link==$contact_link) {
-		return '<div class="contact_links">'.$pgv_lang['for_all_contact'].' '.$support_link.'</div>';
+
+	if ($supportLink==$contactLink) {
+		return '<div class="contact_links">'.$pgv_lang['for_all_contact'].' '.$supportLink.'</div>';
 	} else {
-		return '<div class="contact_links">'.$pgv_lang['for_support'].' '.$support_link.'<br />'.$pgv_lang['for_contact'].' '.$contact_link.'</div>';
+		$returnText = '<div class="contact_links">';
+		if ($supportLink) {
+			$returnText .= $pgv_lang['for_support'].' '.$supportLink;
+			if ($contactLink) {
+				$returnText .= '<br />';
+			}
+		}
+		if ($contactLink) {
+			$returnText .= $pgv_lang['for_contact'].' '.$contactLink;
+		}
+		$returnText .= '</div>';
+		return $returnText;
 	}
 }
 
 function contact_menus() {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
 
-	$support_menu=user_contact_menu($WEBMASTER_EMAIL, $SUPPORT_METHOD);
-	$contact_menu=user_contact_menu($CONTACT_EMAIL,   $CONTACT_METHOD);
+	$support_menu=user_contact_menu(get_user_id($WEBMASTER_EMAIL), $SUPPORT_METHOD);
+	$contact_menu=user_contact_menu(get_user_id($CONTACT_EMAIL),   $CONTACT_METHOD);
 	if (!$support_menu) {
 		$support_menu=$contact_menu;
 	}
@@ -1040,7 +1041,7 @@ function print_favorite_selector($option=0) {
 		$menu->printMenu();
 		break;
 	default:
-		echo "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
+		echo "<form class=\"favorites_form\" name=\"favoriteform\" action=\"$SCRIPT_NAME";
 		echo "\" method=\"post\" onsubmit=\"return false;\">";
 		echo "<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='{$SCRIPT_NAME}", normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$gid}"), "';\">";
 		echo "<option value=\"\">", $pgv_lang["favorites"], "</option>";
@@ -1303,7 +1304,8 @@ function print_privacy_error($username, $print=true) {
 	if ($username==$WEBMASTER_EMAIL) {
 		$method = $SUPPORT_METHOD;
 	}
-	if (!get_user_id($username)) {
+	$user_id=get_user_id($username);
+	if (!$user_id) {
 		$method = "mailto";
 	}
 	$out = "<br /><span class=\"error\">". $pgv_lang["privacy_error"]. " ";
@@ -1314,16 +1316,16 @@ function print_privacy_error($username, $print=true) {
 	}
 	$out .= $pgv_lang["more_information"];
 	if ($method=="mailto") {
-		if (!get_user_id($username)) {
+		if (!$user_id) {
 			$email = $username;
 			$fullname = $username;
 		} else {
-			$email = get_user_setting($username, 'email');
-			$fullname=getUserFullName($username);
+			$email = get_user_setting($user_id, 'email');
+			$fullname=getUserFullName($user_id);
 		}
 		$out .= " <a href=\"mailto:$email\">". $fullname. "</a></span><br />";
 	} else {
-		$userName=getUserFullName($username);
+		$userName=getUserFullName($user_id);
 		$out .= " <a href=\"javascript:;\" onclick=\"message('$username', '$method'); return false;\">". $userName. "</a></span><br />";
 	}
 	if ($print) echo $out;
@@ -1731,7 +1733,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 				$tempText .= $tempChar;
 			}
 			$thisLang = whatLanguage($tempText);
-			if (isset($TEXT_DIRECTION_array[$thisLang]) && ($TEXT_DIRECTION_array[$thisLang]=="ltr" || ($TEXT_DIRECTION=="ltr" && $TEXT_DIRECTION_array[$thisLang]=="rtl"))) {
+			if (isset($TEXT_DIRECTION_array[$thisLang]) && ($TEXT_DIRECTION_array[$thisLang]=="ltr" || ($TEXT_DIRECTION=="ltr" && $TEXT_DIRECTION_array[$thisLang]=="rtl")) && $thisLang!="russian" && $thisLang!="greek") {
 				$newText .= getRLM() . $thisChar . $tempText . $tempChar . getRLM();
 			} else {
 				$newText .= getLRM() . $thisChar . $tempText . $tempChar . getLRM();
@@ -1842,7 +1844,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$func="rela_localisation_{$lang_short_cut[$LANGUAGE]}";
 				if (function_exists($func)) {
 					// Localise the relationship
-					echo $func($rela, $pid2);
+					echo ' ', $func($rela, $pid2), ': ';
 				} else {
 					echo " {$rela}: ";
 				}
@@ -1919,7 +1921,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				echo " ", getLRM(), "($pid2)", getLRM();
 			}
 			if ($TEXT_DIRECTION == "ltr") {
-				echo getLRM(), "]</a>"; 
+				echo getLRM(), "]</a>";
 			} else {
 				echo getRLM(), "]</a>";
 			}
@@ -2171,7 +2173,7 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 			}
 		}
 	} else {
-		$place='????';
+		$place='???';
 	}
 	$ctn=0;
 	if ($sub) {
@@ -2203,11 +2205,11 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 				$map_long=$match[1];
 				$html.=' <span class="label">'.$factarray['LONG'].': </span>'.$map_long;
 			}
-			if ($map_lati and $map_long) {
+			if ($map_lati && $map_long && empty($SEARCH_SPIDER)) {
 				$map_lati=trim(strtr($map_lati, "NSEW,�", " - -. ")); // S5,6789 ==> -5.6789
 				$map_long=trim(strtr($map_long, "NSEW,�", " - -. ")); // E3.456� ==> 3.456
 				$html.=' <a target="_BLANK" href="'.encode_url("http://www.mapquest.com/maps/map.adp?searchtype=address&formtype=latlong&latlongtype=decimal&latitude={$map_lati}&longitude={$map_long}").'"><img src="images/mapq.gif" border="0" alt="Mapquest &copy;" title="Mapquest &copy;" /></a>';
-				$html.=' <a target="_BLANK" href="'.encode_url("http://maps.google.com/maps?q={$map_lati}, {$map_long}($place)").'"><img src="images/bubble.gif" border="0" alt="Google Maps &copy;" title="Google Maps &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="'.encode_url("http://maps.google.com/maps?q={$map_lati},{$map_long}({$place})").'"><img src="images/bubble.gif" border="0" alt="Google Maps &copy;" title="Google Maps &copy;" /></a>';
 				$html.=' <a target="_BLANK" href="'.encode_url("http://www.multimap.com/map/browse.cgi?lat={$map_lati}&lon={$map_long}&scale=&icon=x").'"><img src="images/multim.gif" border="0" alt="Multimap &copy;" title="Multimap &copy;" /></a>';
 				$html.=' <a target="_BLANK" href="'.encode_url("http://www.terraserver.com/imagery/image_gx.asp?cpx={$map_long}&cpy={$map_lati}&res=30&provider_id=340").'"><img src="images/terrasrv.gif" border="0" alt="TerraServer &copy;" title="TerraServer &copy;" /></a>';
 			}

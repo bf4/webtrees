@@ -57,7 +57,7 @@ class stats_ui extends stats
 			$userfavs = getUserFavorites($GEDCOM);
 		}
 		else {
-			$userfavs = getUserFavorites(PGV_USER_ID);
+			$userfavs = getUserFavorites(PGV_USER_NAME);
 		}
 		$content = '';
 		if(!count($userfavs)) {
@@ -198,7 +198,7 @@ class stats_ui extends stats
 	static function userFavorites(){return self::_getFavorites(false);}
 
 	static function totalGedcomFavorites(){return count(getUserFavorites($GLOBALS['GEDCOM']));}
-	static function totalUserFavorites(){return count(getUserFavorites(PGV_USER_ID));}
+	static function totalUserFavorites(){return count(getUserFavorites(PGV_USER_NAME));}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Messages                                                                  //

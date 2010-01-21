@@ -327,104 +327,6 @@ function load_privacy_file($ged_id=PGV_GED_ID) {
 }
 
 /**
- * Store GEDCOMS array
- *
- * this function will store the <var>$GEDCOMS</var> array in the <var>$INDEX_DIRECTORY</var>/gedcoms.php
- * file.  The gedcoms.php file is included in session.php to create the <var>$GEDCOMS</var>
- * array with every page request.
- * @see session.php
- */
-function store_gedcoms() {
-	global $GEDCOMS, $pgv_lang, $INDEX_DIRECTORY, $COMMON_NAMES_THRESHOLD, $GEDCOM, $CONFIGURED;
-	global $IN_STORE_GEDCOMS;
-
-	if (!$CONFIGURED) {
-		return false;
-	}
-	//-- do not allow recursion into this function
-	if (isset($IN_STORE_GEDCOMS) && $IN_STORE_GEDCOMS==true) {
-		return false;
-	}
-	$IN_STORE_GEDCOMS = true;
-	$mutex = new Mutex("gedcoms.php");
-	$mutex->Wait();
-	$gedcomtext = "<?php\n//--START GEDCOM CONFIGURATIONS\n";
-	$gedcomtext .= "\$GEDCOMS = array();\n";
-	$maxid = 0;
-	foreach ($GEDCOMS as $name => $details) {
-		if (isset($details["id"]) && $details["id"] > $maxid) {
-			$maxid = $details["id"];
-		}
-	}
-	if ($maxid !=0) {
-		$maxid++;
-	}
-	reset($GEDCOMS);
-	//-- keep a local copy in case another function tries to change $GEDCOMS
-	$geds = $GEDCOMS;
-	foreach ($geds as $indexval => $GED) {
-		if (!isset($GED['gedcom']))   $GED['gedcom']='';
-		if (!isset($GED['config']))   $GED['config']='';
-		if (!isset($GED['privacy']))  $GED['privacy']='';
-		if (!isset($GED['title']))    $GED['title']='';
-		if (!isset($GED['path']))     $GED['path']='';
-		if (!isset($GED['pgv_ver']))  $GED['pgv_ver']='';
-		if (!isset($GED['id']))       $GED['id']='';
-		if (!isset($GED['imported'])) $GED['imported']='';
-		$GED["config"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["config"]);
-		if (isset($GED["privacy"])) {
-			$GED["privacy"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["privacy"]);
-		} else {
-			$GED["privacy"] = "privacy.php";
-		}
-		$GED["path"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["path"]);
-		$GED["title"] = preg_replace("/\"/", "\\\"", $GED["title"]);
-		$gedcomtext .= "\$gedarray = array();\n";
-		$gedcomtext .= "\$gedarray[\"gedcom\"] = \"".$GED["gedcom"]."\";\n";
-		$gedcomtext .= "\$gedarray[\"config\"] = \"".$GED["config"]."\";\n";
-		$gedcomtext .= "\$gedarray[\"privacy\"] = \"".$GED["privacy"]."\";\n";
-		$gedcomtext .= "\$gedarray[\"title\"] = \"".$GED["title"]."\";\n";
-		$gedcomtext .= "\$gedarray[\"path\"] = \"".$GED["path"]."\";\n";
-		$gedcomtext .= "\$gedarray[\"pgv_ver\"] = \"".$GED["pgv_ver"]."\";\n";
-		if (isset($GED["imported"])) {
-			$gedcomtext .= "\$gedarray[\"imported\"] = ".($GED["imported"]==false?'false':'true').";\n";
-		}
-		// TODO: Default GEDCOM is changed to last uploaded GEDCOM
-
-		// NOTE: Set the GEDCOM ID
-		if (!isset($GED["id"]) && $maxid == 0) {
-			$GED["id"] = 1;
-		} elseif (!isset($GED["id"]) && $maxid > 0) {
-			$GED["id"] = $maxid;
-			$maxid++;
-		} elseif (empty($GED["id"])) {
-			$GED["id"] = $maxid;
-			$maxid++;
-		}
-		//-- update the id in the original array
-		$geds[$GED["gedcom"]]['id'] = $GED['id'];
-
-		$gedcomtext .= "\$gedarray[\"id\"] = \"".$GED["id"]."\";\n";
-		$gedcomtext .= "\$GEDCOMS[\"".$GED["gedcom"]."\"] = \$gedarray;\n";
-	}
-	$GEDCOMS = $geds;
-	$gedcomtext .= "\n?".">";
-	$fp = @fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
-	if (!$fp) {
-		global $whichFile;
-		$whichFile = $INDEX_DIRECTORY."gedcoms.php";
-		print "<span class=\"error\">".print_text("gedcom_config_write_error", 0, 1)."<br /></span>\n";
-	} else {
-		fwrite($fp, $gedcomtext);
-		fclose($fp);
-		check_in("store_gedcoms() ->" . getUserName() ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
-	}
-	$mutex->Release();
-	$IN_STORE_GEDCOMS = false;
-	return true;
-}
-
-/**
  * Update the site configuration settings
  * New settings are passed in as an array of key value pairs
  * The key in the array should be the name of the setting to change
@@ -1741,7 +1643,7 @@ function event_sort($a, $b) {
 
 function event_sort_name($a, $b) {
 	if ($a['jd']==$b['jd']) {
-		return compareStrings($a['name'], $b['name']);
+		return GedcomRecord::compare($a['record'], $b['record']);
 	} else {
 		return $a['jd']-$b['jd'];
 	}
@@ -2742,7 +2644,7 @@ function get_theme_names() {
 	while (false !== ($entry = $d->read())) {
 		if ($entry{0}!="." && $entry!="CVS" && !stristr($entry, "svn") && is_dir(PGV_ROOT.'themes/'.$entry) && file_exists(PGV_ROOT.'themes/'.$entry.'/theme.php')) {
 			$themefile = implode("", file(PGV_ROOT.'themes/'.$entry.'/theme.php'));
-			$tt = preg_match("/theme_name\s+=\s+\"(.*)\";/", $themefile, $match);
+			$tt = preg_match("/theme_name\s*=\s*\"(.*)\";/", $themefile, $match);
 			if ($tt>0)
 				$themename = trim($match[1]);
 			else
@@ -3472,14 +3374,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || !PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
+			if (!$CONFIGURED || !PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_GEDCOM_ADMIN) {
 				require $file;
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
+			if (!PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
 				require $file;
 			}
 		}
@@ -3511,14 +3413,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || !PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
+			if (!$CONFIGURED || !PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_GEDCOM_ADMIN) {
 				require $file;
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!PGV_DB::isConnected() || !adminUserExists() || PGV_USER_CAN_EDIT) {
+			if (!PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS || PGV_USER_CAN_EDIT) {
 				require $file;
 			}
 		}
@@ -3744,28 +3646,28 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			require_once PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
 			switch ($type) {
 			case 'url_flv':
-				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'local_flv':
-				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'url_wmv':
-				$url = encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'local_audio':
 			case 'local_wmv':
-				$url = encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(500, 392, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'url_image':
 			case 'local_image':
-				$url = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			case 'url_picasa':
 			case 'url_page':
 			case 'url_other':
 			case 'local_page':
 			// case 'local_other':
-				$url = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH},{$LB_URL_HEIGHT},click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH}, {$LB_URL_HEIGHT}, click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "::" . htmlspecialchars($notes, ENT_COMPAT, 'UTF-8');
 				break 2;
 			}
 		}

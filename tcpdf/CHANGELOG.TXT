@@ -1,3 +1,19 @@
+4.8.024 (2010-01-15)
+	- Justification mode for HTML was fixed (Bug item #2932470).
+
+4.8.023 (2010-01-15)
+	- Bug item #2932470 "Some HTML entities breaks justification" was fixed.
+
+4.8.022 (2010-01-14)
+	- Source code documentation was fixed.
+
+4.8.021 (2010-01-03)
+	- A Bug relative to Table Of Content index was fixed.
+
+4.8.020 (2009-12-21)
+	- Bug item #2918545 "Display problem of the first row of a table with larger font" was fixed.
+	- A Bug relative to table rowspan mode was fixed.
+
 4.8.019 (2009-12-16)
 	- Bug item #2915684 "Image size" was fixed.
 	- Bug item #2914995 "Image jpeg quality" was fixed.

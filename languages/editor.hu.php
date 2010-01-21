@@ -116,7 +116,6 @@ $pgv_lang["file_success"]		= "Az állomány feltöltése sikeresen befejeződöt
 $pgv_lang["file_too_big"]		= "A feltölteni kívánt állomány elérte a maximális méretet";
 $pgv_lang["folder"]		 			= "Mappa a szerveren";
 $pgv_lang["gedcom_editing_disabled"]    = "A rendszer adminisztrátora nem engedélyezi ennek a GEDCOM-nak a szerkesztését.";
-$pgv_lang["gedcomid"]			= "A felhasználó azonosítója a GEDCOM-ban";
 $pgv_lang["gedrec_deleted"]		= "A GEDCOM-bejegyzést sikeresen töröltük";
 $pgv_lang["gen_thumb"]				= "Előnézet készítés";
 $pgv_lang["gender_search"]			= "Neme: ";
@@ -130,7 +129,6 @@ $pgv_lang["label_diff_server"]      = "Másik weboldal";
 $pgv_lang["label_location"]         = "Weboldal Helye";
 $pgv_lang["label_password_id2"]		= "Jelszó: ";
 $pgv_lang["label_rel_to_current"]   = "Kapcsolat az aktuális személyhez";
-$pgv_lang["label_remote_id"]        = "Külső személy azonosítószáma";
 $pgv_lang["label_same_server"]      = "Azonos weboldal";
 $pgv_lang["label_site"]             = "Weboldal";
 $pgv_lang["label_site_url"]         = "Weboldal URL:";
@@ -155,7 +153,6 @@ $pgv_lang["no_changes"]                 = "Jelenleg nincs olyan változás, mely
 $pgv_lang["no_upload"]				= "Média állományok feltöltése nem megengedett mert multi-média elemek használata nem megengedett vagy mert a média mappa nem irható.";
 $pgv_lang["paste_id_into_field"]	= "Illessze be a következő azonosítót a szerkesztett mezőkbe, hogy hivatkozhasson erre a forrásra.";
 $pgv_lang["paste_rid_into_field"]	= "Ragassza be ennek a Szervezet azonosítószámát az ön szerkesztési mezőjébe, hogy ez a Szervezet legyen a referencia";
-$pgv_lang["photo_replace"] = "Ki akar cserélni egy régi képet ezzel a képpel?";
 $pgv_lang["privacy_not_granted"]        = "Önnek ehhez nincs jogosultsága: ";
 $pgv_lang["privacy_prevented_editing"]  = "A diszkréciós beállítások alapján Ön nem szerkesztheti ezt a rekordot.";
 $pgv_lang["show_changes"]		= "A rekordot módosították. A változások megtekintéséhez kattintson ide.";
@@ -176,4 +173,13 @@ $pgv_lang["upload_successful"]		= "A feltöltés sikeres volt.";
 $pgv_lang["view_change_diff"]		= "Változások megtekintése";
 
 
+$pgv_lang["hebrew_givn"]			= "Héber keresztnevek";
+$pgv_lang["hebrew_surn"]			= "Héber családnevek";
+$pgv_lang["to_note"]				= "Közös jegyzethez";
+$pgv_lang["to_repository"]			= "Szervezethez";
+$pgv_lang["edit_repo"]				= "Szervezet szerkesztése";
+$pgv_lang["select_events"]			= "Válasszon eseményt";
+$pgv_lang["add_unlinked_note"]		= "Kapcsolat nélküli jegyzet hozzáadása";
+$pgv_lang["add_shared_note_lbl"]	= "Közös jegyzet hozzáadása";
+$pgv_lang["create_shared_note"]				= "Hozzunk létre egy új Közös jegyzetet";
 ?>

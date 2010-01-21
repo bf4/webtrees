@@ -3,7 +3,7 @@
  * Hebrew Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,9 +108,9 @@ $pgv_lang["pl_precision"]           	= "דיוק";
 $pgv_lang["pl_country"]             	= "ארץ";
 $pgv_lang["pl_countries"]		= "ארצות";
 $pgv_lang["pl_state"]               		= "מדינה";
-$pgv_lang["pl_county"]		= "מחוז"; //@@
+$pgv_lang["pl_county"]		= "מחוז";
 $pgv_lang["pl_city"]                		= "עיר";
-$pgv_lang["pl_place"]			= "מקום"; //@@
+$pgv_lang["pl_place"]			= "מקום";
 $pgv_lang["pl_neighborhood"]        	= "שכונה";
 $pgv_lang["pl_house"]               	= "בית";
 $pgv_lang["pl_max"]                 	= "מכסימלי";
@@ -148,5 +148,25 @@ $pgv_lang["placecheck_options"]     	= "אופציות של רשימת בדיק�
 $pgv_lang["placecheck_filter_text"] 	= "תציג אופציות של הפילטר";
 $pgv_lang["placecheck_match"] 	= "כלול מקומות עם התאמה מלאה: ";
 $pgv_lang["placecheck_lati"] 		= "קו רוחב";
-$pgv_lang["placecheck_long"] 		= "קו אורך";
+$pgv_lang["placecheck_long"] 	= "קו אורך";
+
+// Pedigree map
+$pgv_lang["pedigree_map"]		= "מפת שושלת";
+$pgv_lang["pm_grandparent"] 	= "סבא";
+$pgv_lang["pm_grandmother"] 	= "סבתא";
+$pgv_lang["pm_grandfather"] 		= "סבא";
+$pgv_lang["pm_gt"] 			= "Gt";//@@ cannot work correctly in languages
+$pgv_lang["pm_zoom_in"]		= "הגדל";
+$pgv_lang["pm_zoom_out"]		= "הקטן";
+$pgv_lang["zoom_in_here"]		= "הגדל&nbsp;כאן";
+$pgv_lang["zoom_out_here"]		= "הקטן&nbsp;כאן";
+$pgv_lang["centre_map"]		= "מרכז&nbsp;המפה&nbsp;כאן";
+$pgv_lang["pm_individuals_displayed"]	= "אנשים מוצגים מתוך מכסימום אפשרי של ";
+$pgv_lang["pm_missing_birth"]	= "קואורדינטות של מקום הלידה חסרות";
+$pgv_lang["pm_is"]			= "";
+$pgv_lang["pm_are"]			= "";
+$pgv_lang["pm_from"]			= "עבור";
+$pgv_lang["pm_for"]			= "עבור";
+$pgv_lang["pm_gens"]		= "דורות";
+$pgv_lang["pm_root"]			= "אדם המוצא";
 ?>

@@ -34,7 +34,7 @@ if (preg_match('/\Wconfig.php/', $_SERVER['SCRIPT_NAME'])>0) {
 	exit;
 }
 
-$DBTYPE = "mysql";								//-- type of database to connect when using the PEAR:DB module
+$DBTYPE = "mysql";								//-- type of database to connect when using the PHP/PDO
 $DBHOST = "localhost";							//-- Host where MySQL database is kept
 $DBPORT = "";									//-- Database port, leave blank for default
 $DBUSER = "root";								//-- MySQL database User Name
