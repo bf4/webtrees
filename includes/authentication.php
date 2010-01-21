@@ -263,7 +263,7 @@ function getUserFullName($user_id) {
 // Get the root person for this gedcom
 function getUserRootId($user_id, $ged_id) {
 	if ($user_id) {
-		get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid');
+		return get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid');
 	} else {
 		return getUserGedcomId($user_id, $ged_id);
 	}
@@ -272,7 +272,7 @@ function getUserRootId($user_id, $ged_id) {
 // Get the user's ID in the given gedcom
 function getUserGedcomId($user_id, $ged_id) {
 	if ($user_id) {
-		get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid');
+		return get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid');
 	} else {
 		return null;
 	}
