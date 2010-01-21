@@ -1,8 +1,8 @@
 <?php
 /**
- * MySQL User and Authentication functions
+ * User and Authentication functions
  *
- * This file contains the MySQL specific functions for working with users and authenticating them.
+ * This file contains functions for working with users and authenticating them.
  * It also handles the internal mail messages, favorites, news/journal, and storage of MyGedView
  * customizations.  Assumes that a database connection has already been established.
  *
@@ -10,7 +10,7 @@
  * Other possible options are to use LDAP for authentication.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,8 +51,8 @@ define('PGV_AUTHENTICATION_PHP', '');
  */
 function authenticateUser($user_name, $password, $basic=false) {
 	// If we were already logged in, log out first
-	if (PGV_USER_ID) {
-		userLogout(PGV_USER_ID);
+	if (getUserId()) {
+		userLogout(getUserId());
 	}
 
 	if ($user_id=get_user_id($user_name)) {
@@ -63,12 +63,12 @@ function authenticateUser($user_name, $password, $basic=false) {
 				//-- reset the user's session
 				$_SESSION = array();
 				$_SESSION['pgv_user'] = $user_id;
-				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful");
+				AddToLog(($basic ? 'Basic HTTP Authentication' :'Login'). ' Successful');
 				return $user_id;
 			}
 		}
 	}
-	AddToLog(($basic ? "Basic HTTP Authentication" : "Login") . " Failed ->" . $user_name ."<-");
+	AddToLog(($basic ? 'Basic HTTP Authentication' : 'Login').' Failed ->'.$user_name.'<-');
 	return false;
 }
 
@@ -103,15 +103,13 @@ function basicHTTPAuthenticateUser() {
  * @param string $user_id	logout a specific user
  */
 function userLogout($user_id) {
-	if ($user_id) {
-		set_user_setting($user_id, 'loggedin', 'N');
+	set_user_setting($user_id, 'loggedin', 'N');
 
-		AddToLog("Logout ".getUserName($user_id));
+	AddToLog('Logout '.getUserName($user_id));
 
-		// If we are logging ourself out, then end our session too.
-		if (isset($_SESSION['pgv_user']) && $_SESSION['pgv_user']==$user_id) {
-			session_destroy();
-		}
+	// If we are logging ourself out, then end our session too.
+	if (getUserId()==$user_id) {
+		session_destroy();
 	}
 }
 
@@ -126,26 +124,27 @@ function userUpdateLogin($user_id) {
 }
 
 /**
- * get the current username
+ * get the current user's ID and Name
  *
- * gets the username for the currently active user
- * 1. first checks the session
- * 2. then checks the remember cookie
- * @return string 	the username of the user or an empty string if the user is not logged in
+ * Returns 0 and NULL if we are not logged in.
+ * 
+ * If you want to embed PGV within a content management system, you would probably
+ * rewrite these functions to extract the data from the parent system, and then
+ * populate PGV's user/user_setting/user_gedcom_setting tables as appropriate.
+ *
  */
 
 function getUserId() {
-	if (isset($_SESSION) && !empty($_SESSION['pgv_user'])) {
-		return $_SESSION['pgv_user'];
-	} else {
+	if (empty($_SESSION['pgv_user'])) {
 		return 0;
+	} else {
+		return $_SESSION['pgv_user'];
 	}
 }
 
 function getUserName() {
-	$user_id=getUserID();
-	if ($user_id) {
-		return get_user_name($user_id);
+	if (getUserID()) {
+		return get_user_name(getUserID());
 	} else {
 		return null;
 	}
@@ -153,66 +152,62 @@ function getUserName() {
 
 /**
  * check if given username is an admin
- *
- * takes a username and checks if the
- * user has administrative privileges
- * to change the configuration files
  */
 function userIsAdmin($user_id=PGV_USER_ID) {
-	return get_user_setting($user_id, 'canadmin')=='Y';
+	if ($user_id) {
+		return get_user_setting($user_id, 'canadmin')=='Y';
+	} else {
+		return false;
+	}
 }
 
 /**
- * check if given username is an admin for the current gedcom
- *
- * takes a username and checks if the
- * user has administrative privileges
- * to change the configuration files for the currently active gedcom
+ * check if given username is an admin for the given gedcom
  */
 function userGedcomAdmin($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
-	return get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin' || userIsAdmin($user_id, $ged_id);
+	if ($user_id) {
+		return get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin' || userIsAdmin($user_id, $ged_id);
+	} else {
+		return false;
+	}
 }
 
 /**
  * check if the given user has access privileges on this gedcom
- *
- * takes a username and checks if the user has access privileges to view the private
- * gedcom data.
- * @param string $user_id the id of the user to check
- * @param string $ged_id the id of the gedcom to check
- * @return boolean true if user can access false if they cannot
  */
 function userCanAccess($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
-	if (get_user_setting($user_id, 'canadmin')=='Y')
-		return true;
-
-	$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
-	return $tmp=='admin' || $tmp=='accept' || $tmp=='edit' || $tmp=='access';
+	if ($user_id) {
+		if (userIsAdmin($user_id)) {
+			return true;
+		} else {
+			$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
+			return $tmp=='admin' || $tmp=='accept' || $tmp=='edit' || $tmp=='access';
+		}
+	} else {
+		return false;
+	}
 }
 
 /**
- * check if the given user has write privileges on this gedcom
- *
- * takes a username and checks if the user has write privileges to change
- * the gedcom data. First check if the administrator has turned on editing privileges for this gedcom
- * @param string $username the username of the user to check
- * @return boolean true if user can edit false if they cannot
+ * check if the given user has write privileges for the given gedcom
  */
 function userCanEdit($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $ALLOW_EDIT_GEDCOM;
 
-	if (!$ALLOW_EDIT_GEDCOM)
+	if ($ALLOW_EDIT_GEDCOM && $user_id) {
+		if (userIsAdmin($user_id)) {
+			return true;
+		} else {
+			$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
+			return $tmp=='admin' || $tmp=='accept' || $tmp=='edit';
+		}
+	} else {
 		return false;
-
-	if (get_user_setting($user_id, 'canadmin')=='Y')
-		return true;
-
-	$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
-	return $tmp=='admin' || $tmp=='accept' || $tmp=='edit';
+	}
 }
 
 /**
- * Can user accept changes
+ * check if the given user can accept changes for the given gedcom
  *
  * takes a username and checks if the user has write privileges to
  * change the gedcom data and accept changes
@@ -222,47 +217,64 @@ function userCanEdit($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 function userCanAccept($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $ALLOW_EDIT_GEDCOM;
 
-	// If we've disabled editing, an admin can still accept pending edits.
-	if (get_user_setting($user_id, 'canadmin')=='Y')
-		return true;
-
-	if (!$ALLOW_EDIT_GEDCOM)
+	if ($user_id) {
+		if ($ALLOW_EDIT_GEDCOM) {
+			$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
+			return $tmp=='admin' || $tmp=='accept';
+		} else {
+			// If we've disabled editing, an admin can still accept pending edits.
+			return userGedcomAdmin($user_id, $ged_id);
+		}
+	} else {
 		return false;
-
-	$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
-	return $tmp=='admin' || $tmp=='accept';
+	}
 }
 
 /**
  * Should user's changed automatically be accepted
- * @param string $username	the user name of the user to check
- * @return boolean 		true if the changes should automatically be accepted
  */
 function userAutoAccept($user_id=PGV_USER_ID) {
-	return get_user_setting($user_id, 'auto_accept')=='Y';
+	if ($user_id) {
+		return get_user_setting($user_id, 'auto_accept')=='Y';
+	} else {
+		return false;
+	}
 }
 
 /**
- * does an admin user exits
- *
- * Checks to see if an admin user has been created
- * @return boolean true if an admin user has been defined
+ * Does an admin user exist?  Used to redirect to install/config page
+ * during initial setup.
  */
 function adminUserExists() {
 	return admin_user_exists();
 }
 
 // Get the full name for a user
-function getUserFullName($user) {
+function getUserFullName($user_id) {
 	global $NAME_REVERSE;
 
-	$first_name=get_user_setting($user, 'firstname');
-	$last_name =get_user_setting($user, 'lastname' );
-
 	if ($NAME_REVERSE) {
-		return $last_name.' '.$first_name;
+		return get_user_setting($user_id, 'lastname' ).' '.get_user_setting($user_id, 'firstname');
 	} else {
-		return $first_name.' '.$last_name;
+		return get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id, 'lastname' );
+	}
+}
+
+// Get the root person for this gedcom
+function getUserRootId($user_id, $ged_id) {
+	if ($user_id) {
+		get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid');
+	} else {
+		return getUserGedcomId($user_id, $ged_id);
+	}
+}
+
+// Get the user's ID in the given gedcom
+function getUserGedcomId($user_id, $ged_id) {
+	if ($user_id) {
+		get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid');
+	} else {
+		return null;
 	}
 }
 

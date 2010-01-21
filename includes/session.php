@@ -3,7 +3,7 @@
  * Startup and session logic
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -533,19 +533,19 @@ require PGV_ROOT.'includes/templecodes.php';  //-- load in the LDS temple code t
 load_privacy_file(PGV_GED_ID);
 require PGV_ROOT.'includes/functions/functions_privacy.php';
 
-// Define some constants to save calculating the same value repeatedly.
-define('PGV_USER_ID',           getUserId  ());
-define('PGV_USER_NAME',         getUserName());
-define('PGV_ADMIN_USER_EXISTS', adminUserExists());
-define('PGV_USER_IS_ADMIN',     userIsAdmin    (PGV_USER_ID));
-define('PGV_USER_AUTO_ACCEPT',  userAutoAccept (PGV_USER_ID));
+// The curren't user's profile - from functions in authentication.php
+define('PGV_USER_ID',           getUserId     ());
+define('PGV_USER_NAME',         getUserName   ());
+define('PGV_USER_IS_ADMIN',     userIsAdmin   (PGV_USER_ID));
+define('PGV_USER_AUTO_ACCEPT',  userAutoAccept(PGV_USER_ID));
+define('PGV_ADMIN_USER_EXISTS', PGV_USER_IS_ADMIN     || adminUserExists());
 define('PGV_USER_GEDCOM_ADMIN', PGV_USER_IS_ADMIN     || userGedcomAdmin(PGV_USER_ID, PGV_GED_ID));
 define('PGV_USER_CAN_ACCEPT',   PGV_USER_GEDCOM_ADMIN || userCanAccept  (PGV_USER_ID, PGV_GED_ID));
 define('PGV_USER_CAN_EDIT',     PGV_USER_CAN_ACCEPT   || userCanEdit    (PGV_USER_ID, PGV_GED_ID));
 define('PGV_USER_CAN_ACCESS',   PGV_USER_CAN_EDIT     || userCanAccess  (PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel     (PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid'));
-define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid'));
+define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_GEDCOM_ID',    getUserGedcomId   (PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_ROOT_ID',      getUserRootId     (PGV_USER_ID, PGV_GED_ID));
 
 // If we are logged in, and logout=1 has been added to the URL, log out
 if (PGV_USER_ID && safe_GET_bool('logout')) {
