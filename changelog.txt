@@ -9,9 +9,10 @@
 =====================================================================
 
 Version 4.3.x CA
+ - Changed: More corrections/additions for GEDFact_assistant (windmillway)
  - Merged: Merging r6673 through r6788 from the trunk (yalnifj)
  - Added favorites sidebar module (yalnifj)
- = Changed: More corrections/additions for GEDFact_assistant )windmillway)
+ = Changed: More corrections/additions for GEDFact_assistant (windmillway)
  - Changed: Corrected some anomalies when persons name is "unknown" (windmillway)
  - Changed: Added Death Date calculations and Highlighting to Edit fields in Census Assistant (windmillway)
  - Changed: Removed unnecessary media tab config, and tidied up code (windmillway)

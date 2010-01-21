@@ -24,6 +24,16 @@
  * @subpackage Modules
  * @version $Id$
  */
+
+ /* Census Window - Census Date drop-down menu (census_asst_date.php ============ */
+  .UK {
+	background-color:#aaffaa; 
+	color:black;
+ }
+ .USA {
+	background-color:#aaccff; 
+	color:black;
+ }
  
  /* View Page - Census Shared column headers (census_note_decode.php) =========== */
 .note1 {
@@ -71,15 +81,35 @@
 	margin: 0 0.5em;
 }
 
-/* Search  and Add Family Members Area */
+/* Search and Add Family Members Area */
 .cens_search {
+	position: relative; 
 	float: left;
 	/*border: 0.3em outset;*/
 	margin: 0.5em 0 0 0.3em;
-	width: 21.5em;
-	height: 32.8em;
-	overflow: auto;
+	width: 40.2em;
+	height: 33.3em;
+	overflow: auto; 
+	margin-left: -17.9em;
+	/* border: 1px solid red; */
 }
+#navenclose {
+	/* border-left: 1px solid black; */
+	margin-left: 18.2em;
+	width: 23em;
+	/*border: 1px solid green;*/
+}
+.ltrnav {
+	position: absolute;
+	top:-1.4em;
+	right:-0.1em;
+}
+.rtlnav {
+	position: absolute;
+	top:-1.4em;
+	left:-0.1em;
+}
+
 
 /* Census Text Input Area */
 .cens_textinput {
@@ -205,6 +235,7 @@ img {
 	padding: 0.3em;
 	/*border: 0.3em outset;*/
 	margin-bottom: 0.3em;
+	margin-right: -0.17em;
 }
 
 .cens_text span {
@@ -230,3 +261,4 @@ textarea#NOTE {
 	margin: 0;
 	padding: 0;
 }
+

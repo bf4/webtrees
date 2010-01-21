@@ -5,7 +5,7 @@
  * Census information about an individual
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,24 +26,33 @@
  * @version $Id$
  */
  
- global $TEXT_DIRECTION;
+ global $TEXT_DIRECTION, $CensDate;
+ 
+ 	$CensDate="yes"; 
  
  	require PGV_ROOT.'includes/functions/functions_print_lists.php';  //  *** NOTE THIS is necessary for the function below ***
- 
+	
+// ***  LINKS tags --- This will be added later **** =========================================
+/*
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("edit_add_SHARED_NOTE_help", "qm");
 		echo "Links: <br />";
 	echo "</td><td class=\"optionbox wrap\">\n";
 		// print_indi_list(fetch_linked_indi('N1', "NOTE", "1"));  //  *** NOTE THIS needs fixing to replace "N1" with a variable, or use another function ***
 		// include ('modules/GEDFact_assistant/_CENS/census_query_1b.php');
+		echo "*** Not implemented yet ***";
 	echo "</td></tr>\n";
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("edit_add_SHARED_NOTE_help", "qm");
 		echo "Add Links: <br />";
 	echo "</td><td class=\"optionbox wrap\">\n";
 		// include ('modules/GEDFact_assistant/_CENS/census_query1.php');
+		echo "*** Not implemented yet ***";
 	echo "</td></tr>\n";
+*/
 
+
+// OLD CODE FROM HERE ON, NOT SURE WHETHER IT WILL BE NEEDED ================================
 /*
 	$linksAddLinks  =	 "";
 	$linksAddLinks .=	 "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";

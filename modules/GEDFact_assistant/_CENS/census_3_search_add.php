@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ?>
 
 
-	<table width="100%">
+	<table id="navenclose" class="optionbox" width="100%">
 		<?php
 
 		//-- Search Function ------------------------------------------------------------
@@ -143,10 +143,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							
 							?>
 							<tr>
-								<td align="left" class="optionbox">
+								<td align="left" class="optionbox" width="25%">
 									<font size=1>
 										<?php 
-										//  print $people["husb"]->getLabel(); 
+										//  print $people["husb"]->getLabel();
 										$menu->printMenu();
 										?>
 									</font>
@@ -251,7 +251,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$givn    = rtrim($nam[0]['givn'],'*');
 							$surn    = $nam[0]['surname'];
 							// Get wifes married name if available
-							if ($people["husb"]){
+							if (isset($people["husb"])) {
 								$husbnams = $people["husb"]->getAllNames();
 								if ($husbnams[0]['surname']=="@N.N." || $husbnams[0]['surname']=="") {
 									// Husband or his name is not known
@@ -657,7 +657,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$givn  = rtrim($nam[0]['givn'],'*');
 							$surn  = $nam[0]['surname'];
 							// Get wifes married name if available
-							if ($people["husb"]){
+							if (isset($people["husb"])){
 								$husbnams = $people["husb"]->getAllNames();
 								if ($husbnams[0]['surname']=="@N.N." || $husbnams[0]['surname']=="") {
 									// Husband or his name is not known
@@ -1045,7 +1045,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$givn    = rtrim($nam[0]['givn'],'*');
 							$surn    = $nam[0]['surname'];
 							// Get wifes married name if available
-							if ($people["husb"]){
+							if (isset($people["husb"])){
 								$husbnams = $people["husb"]->getAllNames();
 								if ($husbnams[0]['surname']=="@N.N." || $husbnams[0]['surname']=="") {
 									// Husband or his name is not known
@@ -1280,10 +1280,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 					?>
 						
 						</table>
-					</td>
+					<br /><br /><br />&nbsp;</td>
 				</tr>
 			</table>
-			
 			
 <?php
 // ==================================================================
@@ -1339,24 +1338,20 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 				//-- draw a box for the family popup
 				
 				if ($TEXT_DIRECTION=="rtl") {
-				$spouselinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position:absolute; top:-19px; left:-1px; \"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
+				$spouselinks .= "\n\t\t\t<table class=\"person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
 				$spouselinks .= "<font size=\"1\"><b>" . $pgv_lang['family'] . "</b><br /></font>";
-				$parentlinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position:absolute; top:-19px; left:-1px; \"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
+				$parentlinks .= "\n\t\t\t<table class=\"person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
 				$parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
-				$step_parentlinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position:absolute; top:-19px; left:-1px; \"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
+				$step_parentlinks .= "\n\t\t\t<table class=\"person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
 				$step_parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
 				}else{
-				$spouselinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position:absolute; top:-19px; right:-1px; \"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
+				$spouselinks .= "\n\t\t\t<table class=\"ltrnav person_box$isF\"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
 				$spouselinks .= "<font size=\"1\"><b>" . $pgv_lang['family'] . "</b><br /></font>";
-				$parentlinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position:absolute; top:-19px; right:-1px; \"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
+				$parentlinks .= "\n\t\t\t<table class=\"ltrnav person_box$isF\"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
 				$parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
-				$step_parentlinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position: absolute; top:-19px; right:-1px; \"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
+				$step_parentlinks .= "\n\t\t\t<table class=\"ltrnav person_box$isF\"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
 				$step_parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
 				}
-
-				//$spouselinks .= "<span class=\"flyout\"><b>".$pgv_lang['family']."</b></span><br />";
-				//$parentlinks .= "<span class=\"flyout\"><b>".$pgv_lang['parents']."</b></span><br />";
-				//$step_parentlinks .= "<span class=\"flyout\"><b>".$pgv_lang['parents']."</b></span><br />";
 
 				$persons       = "";
 				$person_parent = "";
@@ -1498,7 +1493,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$givn  = rtrim($nam[0]['givn'],'*');
 									$surn  = $nam[0]['surname'];
 									// Get wifes married name if available
-									if ($husb){
+									if (isset($husb)){
 										$husbnams = $husb->getAllNames();
 										if ($husbnams[0]['surname']=="@N.N." || $husbnams[0]['surname']=="") {
 											// Husband or his name is not known
@@ -1513,11 +1508,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}
 									$parentlinks .= "<a href=\"javascript:insertRowToTable(";
 									$parentlinks .=	"'".PrintReady($wife->getXref())."',";							// pid		=	PID
-									$parentlinks .=	"'".$fulln."',";												// nam		=	Name
+									$parentlinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
 									if (isset($nam[1])){
-										$parentlinks .= "'".($fulmn)."',";											// mnam		=	Full Married Name
+										$parentlinks .= "'".strip_tags($fulmn)."',";								// mnam		=	Full Married Name
 									} else {
-										$parentlinks .= "'".($fulln)."',";											// mnam		=	Full Name
+										$parentlinks .= "'".strip_tags($fulln)."',";								// mnam		=	Full Name
 									}
 									if ($currpid=="Wife" || $currpid=="Husband") {
 										$parentlinks .= "'Mother in Law',";											// label	=	1st Gen Female Relationship
@@ -1665,7 +1660,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$givn  = rtrim($nam[0]['givn'],'*');
 										$surn  = $nam[0]['surname'];
 									// Get wifes married name if available
-									if ($husb){
+									if (isset($husb)){
 										$husbnams = $husb->getAllNames();
 										if ($husbnams[0]['surname']=="@N.N." || $husbnams[0]['surname']=="") {
 											// Husband or his name is not known
@@ -1741,11 +1736,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}
 									$spouselinks .= "<a href=\"javascript:insertRowToTable(";
 									$spouselinks .=	"'".PrintReady($spouse->getXref())."',";						// pid		=	PID
-									$spouselinks .=	"'".PrintReady($fulln)."',";												// nam		=	Name
+									$spouselinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
 									if (isset($nam[1])){
-										$spouselinks .= "'".$fulmn."',";											// mnam		=	Full Married Name
+										$spouselinks .= "'".strip_tags($fulmn)."',";								// mnam		=	Full Married Name
 									} else {
-										$spouselinks .= "'".$fulln."',";											// mnam		=	Full Name
+										$spouselinks .= "'".strip_tags($fulln)."',";								// mnam		=	Full Name
 									}
 									if ($currpid=="Son" || $currpid=="Daughter") {
 										if ($spouse->getSex()=="M") {
@@ -1820,8 +1815,10 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								foreach ($child->getSpouseFamilies() as $childfamily) {
 									$marrdate=$childfamily->getMarriageDate();
 									$married = GedcomDate::Compare($censdate, $marrdate);
-									$chhusbnam = $childfamily->getHusband()->getAllNames();
-									$ChHusbName = $chhusbnam[0]['surname'];
+									if ($childfamily->getHusband()) {
+										$chhusbnam = $childfamily->getHusband()->getAllNames();
+										$ChHusbName = $chhusbnam[0]['surname'];
+									}
 								}
 								
 								// Childs Details -------------------------
@@ -1841,11 +1838,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									
 										$spouselinks .= "<a href=\"javascript:insertRowToTable(";
 										$spouselinks .=	"'".PrintReady($child->getXref())."',";						// pid		=	PID
-										$spouselinks .=	"'".$fulln."',";											// nam		=	Name
+										$spouselinks .=	"'".strip_tags($fulln)."',";								// nam		=	Name
 										if (isset($nam[1])){
-											$spouselinks .= "'".$fulmn."',";										// mnam		=	Full Married Name
+											$spouselinks .= "'".strip_tags($fulmn)."',";							// mnam		=	Full Married Name
 										} else {
-											$spouselinks .= "'".$fulln."',";										// mnam		=	Full Name
+											$spouselinks .= "'".strip_tags($fulln)."',";							// mnam		=	Full Name
 										}
 										if ($currpid=="Son" || $currpid=="Daughter") {
 											if ($child->getSex()=="M") {
@@ -1898,11 +1895,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									if ($child->canDisplayName()) {
 										$spouselinks .= "<a href=\"javascript:insertRowToTable(";
 										$spouselinks .=	"'".PrintReady($child->getXref())."',";						// pid		=	PID
-										$spouselinks .=	"'".$fulln."',";											// nam		=	Name
+										$spouselinks .=	"'".strip_tags($fulln)."',";								// nam		=	Name
 										if (isset($nam[1])){
-											$spouselinks .= "'".$fulmn."',";										// mnam		=	Full Married Name
+											$spouselinks .= "'".strip_tags($fulmn)."',";							// mnam		=	Full Married Name
 										} else {
-											$spouselinks .= "'".$fulln."',";										// mnam		=	Full Name
+											$spouselinks .= "'".strip_tags($fulln)."',";							// mnam		=	Full Name
 										}
 										if ($currpid=="Son" || $currpid=="Daughter") {
 											if ($child->getSex()=="M") {
