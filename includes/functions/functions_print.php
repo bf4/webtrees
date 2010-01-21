@@ -870,8 +870,19 @@ function print_contact_links() { // This function is used by 3rd party themes.
 function contact_links() {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
 
-	$supportLink = user_contact_link(get_user_id($WEBMASTER_EMAIL), $SUPPORT_METHOD);
-	$contactLink = user_contact_link(get_user_id($CONTACT_EMAIL),   $CONTACT_METHOD);
+	$webmaster_user_id=get_user_id($WEBMASTER_EMAIL);
+	if ($WEBMASTER_EMAIL==$CONTACT_EMAIL) {
+		$contact_user_id=$webmaster_user_id;
+	} else {
+		$contact_user_id=get_user_id($CONTACT_EMAIL);
+	}
+
+	$supportLink = user_contact_link($webmaster_user_id, $SUPPORT_METHOD);
+	if ($webmaster_user_id==$contact_user_id && $SUPPORT_METHOD==$CONTACT_METHOD) {
+		$contactLink = $supportLink;
+	} else {
+		$contactLink = user_contact_link($contact_user_id,   $CONTACT_METHOD);
+	}
 
 	if (!$supportLink && !$contactLink) {
 		return '';
@@ -898,8 +909,20 @@ function contact_links() {
 function contact_menus() {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
 
-	$support_menu=user_contact_menu(get_user_id($WEBMASTER_EMAIL), $SUPPORT_METHOD);
-	$contact_menu=user_contact_menu(get_user_id($CONTACT_EMAIL),   $CONTACT_METHOD);
+	$webmaster_user_id=get_user_id($WEBMASTER_EMAIL);
+	if ($WEBMASTER_EMAIL==$CONTACT_EMAIL) {
+		$contact_user_id=$webmaster_user_id;
+	} else {
+		$contact_user_id=get_user_id($CONTACT_EMAIL);
+	}
+
+	$support_menu=user_contact_menu($webmaster_user_id, $SUPPORT_METHOD);
+	if ($webmaster_user_id==$contact_user_id && $SUPPORT_METHOD==$CONTACT_METHOD) {
+		$contact_menu=$support_menu;
+	} else {
+		$contact_menu=user_contact_menu($contact_user_id,   $CONTACT_METHOD);
+	}
+
 	if (!$support_menu) {
 		$support_menu=$contact_menu;
 	}
