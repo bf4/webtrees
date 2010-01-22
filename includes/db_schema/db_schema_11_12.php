@@ -142,7 +142,9 @@ if (file_exists("{$INDEX_DIRECTORY}gedcoms.php")) {
 try {
 	self::exec("INSERT INTO {$TBLPREFIX}user (user_name, password) SELECT u_username, u_password FROM {$TBLPREFIX}users");
 } catch (PDOException $ex) {
-	// This should only fail if we've already done it
+	// This could only fail if;
+	// a) we've already done it (upgrade)
+	// b) it doesn't exist (new install)
 }
 
 try {
@@ -241,50 +243,59 @@ try {
 		" JOIN {$TBLPREFIX}user ON (user_name=u_username)"
 	);
 } catch (PDOException $ex) {
-	// This should only fail if we've already done it
+	// This could only fail if;
+	// a) we've already done it (upgrade)
+	// b) it doesn't exist (new install)
 }
 
-$user_gedcom_settings=
-	self::prepare(
-		"SELECT user_id, u_gedcomid, u_rootid, u_canedit".
-		" FROM {$TBLPREFIX}users".
-		" JOIN {$TBLPREFIX}user ON (user_name=u_username)"
-	)->fetchAll();
-foreach ($user_gedcom_settings as $setting) {
-	@$array=unserialize($setting->u_gedcomid);
-	if (is_array($array)) {
-		foreach ($array as $gedcom=>$value) {
-			$id=get_id_from_gedcom($gedcom);
-			if ($id) {
-				// Allow for old/invalid gedcom values in array
-				set_user_gedcom_setting($setting->user_id, $id, 'gedcomid', $value);
+try {
+	$user_gedcom_settings=
+		self::prepare(
+			"SELECT user_id, u_gedcomid, u_rootid, u_canedit".
+			" FROM {$TBLPREFIX}users".
+			" JOIN {$TBLPREFIX}user ON (user_name=u_username)"
+		)->fetchAll();
+	foreach ($user_gedcom_settings as $setting) {
+		@$array=unserialize($setting->u_gedcomid);
+		if (is_array($array)) {
+			foreach ($array as $gedcom=>$value) {
+				$id=get_id_from_gedcom($gedcom);
+				if ($id) {
+					// Allow for old/invalid gedcom values in array
+					set_user_gedcom_setting($setting->user_id, $id, 'gedcomid', $value);
+				}
+			}
+		}
+		@$array=unserialize($setting->u_rootid);
+		if (is_array($array)) {
+			foreach ($array as $gedcom=>$value) {
+				$id=get_id_from_gedcom($gedcom);
+				if ($id) {
+					// Allow for old/invalid gedcom values in array
+				 	set_user_gedcom_setting($setting->user_id, $id, 'rootid', $value);
+				}
+			}
+		}
+		@$array=unserialize($setting->u_canedit);
+		if (is_array($array)) {
+			foreach ($array as $gedcom=>$value) {
+				$id=get_id_from_gedcom($gedcom);
+				if ($id) {
+					// Allow for old/invalid gedcom values in array
+				 	set_user_gedcom_setting($setting->user_id, $id, 'canedit', $value);
+				}
 			}
 		}
 	}
-	@$array=unserialize($setting->u_rootid);
-	if (is_array($array)) {
-		foreach ($array as $gedcom=>$value) {
-			$id=get_id_from_gedcom($gedcom);
-			if ($id) {
-				// Allow for old/invalid gedcom values in array
-			 	set_user_gedcom_setting($setting->user_id, $id, 'rootid', $value);
-			}
-		}
-	}
-	@$array=unserialize($setting->u_canedit);
-	if (is_array($array)) {
-		foreach ($array as $gedcom=>$value) {
-			$id=get_id_from_gedcom($gedcom);
-			if ($id) {
-				// Allow for old/invalid gedcom values in array
-			 	set_user_gedcom_setting($setting->user_id, $id, 'canedit', $value);
-			}
-		}
-	}
-}
 
-// TODO: Uncomment this lines before the next release
-//self::exec("DROP TABLE {$TBLPREFIX}users");
+	// TODO: Uncomment this lines before the next release
+	//self::exec("DROP TABLE {$TBLPREFIX}users");
+
+} catch (PDOException $ex) {
+	// This could only fail if;
+	// a) we've already done it (upgrade)
+	// b) it doesn't exist (new install)
+}
 
 // Update the version to indicate sucess
 set_site_setting($schema_name, $next_version);
