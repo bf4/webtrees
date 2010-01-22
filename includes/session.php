@@ -389,12 +389,8 @@ $PRIV_USER   = PGV_PRIV_USER;
 $PRIV_NONE   = PGV_PRIV_NONE;
 $PRIV_HIDE   = PGV_PRIV_HIDE;
 
-/**
- * Load GEDCOM configuration
- * We need to load config_gedcom.php first
- */
-require_once PGV_ROOT.'config_gedcom.php';
-require get_config_file();
+require PGV_ROOT.'config_gedcom.php'; // Load default gedcom settings
+require get_config_file(PGV_GED_ID);  // Load current gedcom settings
 
 if (empty($PHPGEDVIEW_EMAIL)) {
 	$PHPGEDVIEW_EMAIL='phpgedview-noreply@'.preg_replace('/^www\./i', '', $_SERVER['SERVER_NAME']);

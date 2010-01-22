@@ -225,7 +225,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 2  (file name & notices)
-		print getLRM() . get_config_file($ged_name);
+		print getLRM() . get_config_file($ged_id);
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 3  (Edit action)
@@ -244,7 +244,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 2  (file name & notices)
-		print getLRM() . get_privacy_file($ged_name);
+		print getLRM() . get_privacy_file($ged_id);
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 3  (Edit action)
@@ -264,7 +264,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 
 		unset($SEARCHLOG_CREATE);
 		unset($CHANGELOG_CREATE);
-		require get_config_file($ged_name);
+		require get_config_file($ged_id);
 		print "<td valign=\"top\">";		// Column 2  (notices)
 		if (!isset($SEARCHLOG_CREATE)) {
 			print getLRM() . $pgv_lang["none"];
@@ -360,7 +360,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 }
 echo '</table></form></center>';
 
-require get_config_file(PGV_GEDCOM);
+require get_config_file(PGV_GED_ID);
 
 print_footer();
 ?>

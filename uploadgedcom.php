@@ -863,7 +863,7 @@ $temp = $THEME_DIR;
 $GEDCOM_FILE = get_gedcom_setting(get_id_from_gedcom($ged), 'path');
 $FILE = $ged;
 $TITLE = get_gedcom_setting(get_id_from_gedcom($ged), 'title');
-require get_config_file($ged);
+require get_config_file(get_id_from_gedcom($ged));
 if ($LANGUAGE <> $_SESSION["CLANGUAGE"])
 $LANGUAGE = $_SESSION["CLANGUAGE"];
 

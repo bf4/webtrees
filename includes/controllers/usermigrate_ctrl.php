@@ -168,7 +168,7 @@ class UserMigrateControllerRoot extends BaseController {
 
 			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 				//-- load the gedcom configuration settings
-				require get_config_file($ged_name);
+				require get_config_file($ged_id);
 
 				if (isset($_POST["um_gedcoms"])) {
 					//-- backup the original gedcom file
@@ -209,7 +209,7 @@ class UserMigrateControllerRoot extends BaseController {
 			}
 
 			//-- restore the old configuration file
-			require get_config_file(PGV_GEDCOM);
+			require get_config_file(PGV_GED_ID);
 			$this->flist[] = $INDEX_DIRECTORY."pgv_changes.php";
 		}
 
@@ -218,13 +218,13 @@ class UserMigrateControllerRoot extends BaseController {
 
 			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 				// Non-default config files
-				$conf=get_config_file($ged_name);
+				$conf=get_config_file($ged_id);
 				if ($conf!='config_gedcom.php') {
 					$this->flist[]=$conf;
 				}
 
 				// Non-default privacy file
-				$privacy=get_privacy_file($ged_name);
+				$privacy=get_privacy_file($ged_id);
 				if ($privacy!='privacy.php') {
 					$this->flist[]=$privacy;
 				}
