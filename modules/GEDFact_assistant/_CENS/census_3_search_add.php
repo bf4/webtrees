@@ -83,9 +83,21 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						<table width="100%" class="fact_table" cellspacing="0" border="0">
 							<tr>
 								<td align="center" colspan=3 class="descriptionbox">
-									<font size=1>
-									Click "H" to choose Head of family. <br />
-									Click Name to add person to Census.
+								<font size=1>
+								<?php
+								// Header text with "Head" button =================================================
+								if (isset($PGV_IMAGES["head"]["button"])) {
+									$headImg  = "<img class=\"headimg vmiddle\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["head"]["button"]."\" />";
+									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["head"]["button"]."\" alt=\"".$pgv_lang["click_choose_head_text"]."\" title=\"".$pgv_lang["click_choose_head_text"]."\" />";
+								} else {
+									$headImg  = "<img class=\"headimg vmiddle\" src=\"images/buttons/head.gif\" />";
+									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"images/buttons/head.gif\" alt=\"".$pgv_lang["click_choose_head_text"]."\" title=\"".$pgv_lang["click_choose_head_text"]."\" />";
+								}
+								global $tempStringHead;
+								$tempStringHead = PrintReady($headImg);
+								print_text("click_choose_head");
+								?>
+								</font>
 								</td>
 							</tr>
 
@@ -151,11 +163,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										?>
 									</font>
 								</td>
-								<td align="left" class="facts_value" style="display:block; background-color:#bb9900;">
+								<td align="left" class="facts_value" style="text-decoration:none;" >
 									<font size=1>
 										<?php 
 										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["husb"]->getXref()."&gedcom={$GEDCOM}")."\">";
-										print "H";
+										echo $headImg2;
 										print "</a>";
 										?>
 									</font>
@@ -280,11 +292,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									?>
 									</font>
 								</td>
-								<td align="left" class="facts_value" style="background-color:#bb9900;">
+								<td align="left" class="facts_value">
 									<font size=1>
 										<?php 
 										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["wife"]->getXref()."&gedcom={$GEDCOM}")."\">";
-										print "H";
+										print $headImg2;
 										print "</a>";
 										?>
 									</font>
@@ -403,11 +415,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											?>
 											</font>
 										</td>
-										<td align="left" class="facts_value" style="background-color:#bb9900;">
+										<td align="left" class="facts_value">
 											<font size=1>
 												<?php 
 												print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$child->getXref()."&gedcom={$GEDCOM}")."\">";
-												print "H";
+												print $headImg2;
 												print "</a>";
 												?>
 											</font>
@@ -551,11 +563,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									?>
 									</font>
 								</td>
-								<td align="left" class="facts_value" style="background-color:#bb9900;">
+								<td align="left" class="facts_value">
 									<font size=1>
 										<?php 
 										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["husb"]->getXref()."&gedcom={$GEDCOM}")."\">";
-										print "H";
+										print $headImg2;
 										print "</a>";
 										?>
 									</font>
@@ -692,11 +704,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									?>
 									</font>
 								</td>
-								<td align="left" class="facts_value" style="background-color:#bb9900;">
+								<td align="left" class="facts_value">
 									<font size=1>
 										<?php 
 										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["wife"]->getXref()."&gedcom={$GEDCOM}")."\">";
-										print "H";
+										print $headImg2;
 										print "</a>";
 										?>
 									</font>
@@ -804,11 +816,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										?>
 										</font>
 									</td>
-									<td align="left" class="facts_value" style="background-color:#bb9900;">
+									<td align="left" class="facts_value">
 										<font size=1>
 											<?php
 										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$child->getXref()."&gedcom={$GEDCOM}")."\">";
-											print "H";
+											print $headImg2;
 											print "</a>";
 											?>
 										</font>
@@ -941,11 +953,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										?>
 									</font>
 								</td>
-								<td align="left" class="facts_value" style="background-color:#bb9900;">
+								<td align="left" class="facts_value">
 									<font size=1>
 										<?php
 										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["husb"]->getXref()."&gedcom={$GEDCOM}")."\">";
-										print "H";
+										print $headImg2;
 										print "</a>";
 										?>
 									</font>
@@ -1079,11 +1091,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										?>
 									</font>
 								</td>
-								<td align="left" class="facts_value" style="background-color:#bb9900;">
+								<td align="left" class="facts_value">
 									<font size=1>
 										<?php 
 										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["wife"]->getXref()."&gedcom={$GEDCOM}")."\">";
-										print "H";
+										print $headImg2;
 										print "</a>";
 										?>
 									</font>
@@ -1197,11 +1209,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									?>
 									</font>
 								</td>
-								<td align="left" class="facts_value" style="background-color:#bb9900;">
+								<td align="left" class="facts_value">
 									<font size=1>
 										<?php
 										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$child->getXref()."&gedcom={$GEDCOM}")."\">";
-										print "H";
+										print $headImg2;
 										print "</a>";
 										?>
 									</font>
@@ -1338,11 +1350,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 				//-- draw a box for the family popup
 				
 				if ($TEXT_DIRECTION=="rtl") {
-				$spouselinks .= "\n\t\t\t<table class=\"person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
+				$spouselinks .= "\n\t\t\t<table class=\"rtlnav person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
 				$spouselinks .= "<font size=\"1\"><b>" . $pgv_lang['family'] . "</b><br /></font>";
-				$parentlinks .= "\n\t\t\t<table class=\"person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
+				$parentlinks .= "\n\t\t\t<table class=\"rtlnav person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
 				$parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
-				$step_parentlinks .= "\n\t\t\t<table class=\"person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
+				$step_parentlinks .= "\n\t\t\t<table class=\"rtlnav person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
 				$step_parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
 				}else{
 				$spouselinks .= "\n\t\t\t<table class=\"ltrnav person_box$isF\"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";

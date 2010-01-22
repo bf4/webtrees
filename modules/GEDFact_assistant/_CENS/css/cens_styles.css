@@ -46,9 +46,40 @@
 	white-space: nowrap;
 }
 
-
+/* "Head" button images */
+.headimg {
+margin-top:-4px;
+border:0;
+}
+.headimg2 {
+height:17px;
+border-style:none;
+margin:-3px;
+margin-left:0px;
+}
 
 /* Edit Page css ================================================================ */
+
+.cens_header_right {
+	float: right;
+	margin: 0 2em 0 0;
+}
+
+/* Container for Census & Source Information Area */
+.cens_container {
+	clear: both;
+	float: left;
+	width: 46.2em;
+	margin: 0.5em 0 0 0.3em;
+	padding: 0;
+	border: 0px solid yellow;
+}
+
+.cens_container span {
+	margin: 0 0.5em;
+}
+
+/* Search and Add Family Members Area */
  
 /* Header of assistant window */
 .cens_header {
@@ -63,41 +94,22 @@
 	font-weight: bold;
 }
 
-.cens_header_right {
-	float: right;
-	margin: 0 2em 0 0;
-}
-
-/* Container for Census & Source Information Area */
-.cens_container {
-	clear: both;
-	float: left;
-	width: 48em;
-	margin: 0.5em 0 0 0.3em;
-	padding: 0;
-}
-
-.cens_container span {
-	margin: 0 0.5em;
-}
-
-/* Search and Add Family Members Area */
 .cens_search {
 	position: relative; 
 	float: left;
 	/*border: 0.3em outset;*/
 	margin: 0.5em 0 0 0.3em;
 	width: 40.2em;
-	height: 33.3em;
-	overflow: auto; 
-	margin-left: -17.9em;
-	/* border: 1px solid red; */
+	height: 33.4em;
+	overflow: auto;
+	margin-left: -16.0em;
+	border: 0px solid red; 
 }
 #navenclose {
 	/* border-left: 1px solid black; */
-	margin-left: 18.2em;
-	width: 23em;
-	/*border: 1px solid green;*/
+	margin-left: 16.4em;
+	width: 22.2em;
+	border: 0px solid green; 
 }
 .ltrnav {
 	position: absolute;
@@ -106,8 +118,8 @@
 }
 .rtlnav {
 	position: absolute;
-	top:-1.4em;
-	left:-0.1em;
+	top:0.5em;
+	right:5.5em;
 }
 
 
