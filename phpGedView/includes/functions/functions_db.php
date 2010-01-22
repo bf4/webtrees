@@ -1896,7 +1896,7 @@ function find_rin_id($rin) {
 * @param string $ged  the filename of the gedcom to delete
 */
 function delete_gedcom($ged_id) {
-	global $TBLPREFIX, $pgv_changes, $GEDCOMS;
+	global $TBLPREFIX, $pgv_changes;
 
 	$ged=get_gedcom_from_id($ged_id);
 

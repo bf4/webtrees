@@ -64,7 +64,7 @@ print PGV_JS_END;
 // Create array with configured languages in gedcoms and users
 $configuredlanguages = array();
 
-// Read GEDCOMS configuration and collect language data
+// Read gedcom configuration and collect language data
 foreach (get_all_gedcoms() as $ged_id => $ged_name) {
 	require get_config_file($ged_name);
 	if (!isset($configuredlanguages["gedcom"][$LANGUAGE][$ged_name])) {
