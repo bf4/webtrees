@@ -2635,7 +2635,21 @@ function get_logged_in_users() {
 
 // Get a list of logged-in users who haven't been active recently
 function get_idle_users($time) {
-	global $TBLPREFIX;
+	global $TBLPREFIX, $DBTYPE;
+
+	// Convert string column to numeric
+	switch ($DBTYPE) {
+	case 'sqlite':
+	case 'pgsql':
+		$expr='CAST(us2.setting_value AS INTEGER)';
+		break;
+	case 'mysql':
+		$expr='CAST(us2.setting_value AS UNSIGNED)';
+		break;
+	default:
+		$expr='us2.setting_value';
+		break;
+	}
 
 	return
 		PGV_DB::prepare(
@@ -2643,7 +2657,8 @@ function get_idle_users($time) {
 			" FROM {$TBLPREFIX}user u".
 			" JOIN {$TBLPREFIX}user_setting us1 USING (user_id)".
 			" JOIN {$TBLPREFIX}user_setting us2 USING (user_id)".
-			" WHERE us1.setting_name=? AND us1.setting_value=? AND us2.setting_name=? AND us2.setting_value BETWEEN 1 AND ?"
+			" WHERE us1.setting_name=? AND us1.setting_value=? AND us2.setting_name=?".
+			" AND {$expr} BETWEEN 1 AND ?"
 		)
 		->execute(array('loggedin', 'Y', 'sessiontime', $time))
 		->fetchAssoc();
