@@ -1,7 +1,6 @@
 "Level";"Country";"State";"County";"Place";"Longitude";"Latitude";"ZoomLevel";"Icon"
 1;USA;Alabama;;;W86.8073;N32.799;7;places/USA/flags/AL.gif
 1;USA;Alaska;;;W152.2683;N61.385;4;places/USA/flags/AK.gif
-1;USA;American Samoa;;;W170.7197;S14.2417;7;places/USA/flags/AS.gif
 1;USA;Arizona;;;W111.3877;N33.7712;7;places/USA/flags/AZ.gif
 1;USA;Arkansas;;;W92.3809;N34.9513;7;places/USA/flags/AR.gif
 1;USA;California;;;W119.7462;N36.17;5;places/USA/flags/CA.gif
@@ -11,7 +10,6 @@
 1;USA;District of Columbia;;;W77.0262;N38.8964;9;places/USA/flags/DC.gif
 1;USA;Florida;;;W81.717;N27.8333;7;places/USA/flags/FL.gif
 1;USA;Georgia;;;W83.6487;N32.9866;7;places/USA/flags/GA.gif
-1;USA;Guam;;;E144.8;N13.5;9;places/USA/flags/GU.gif
 1;USA;Hawaii;;;W157.5311;N21.1098;7;places/USA/flags/HI.gif
 1;USA;Idaho;;;W114.5103;N44.2394;7;places/USA/flags/ID.gif
 1;USA;Illinois;;;W89.0022;N40.3363;7;places/USA/flags/IL.gif
@@ -36,12 +34,10 @@
 1;USA;New York;;;W74.9384;N42.1497;7;places/USA/flags/NY.gif
 1;USA;North Carolina;;;W79.8431;N35.6411;7;places/USA/flags/NC.gif
 1;USA;North Dakota;;;W99.793;N47.5362;7;places/USA/flags/ND.gif
-1;USA;Northern Mariana Islands;;;E145.7;N15.2;9;places/USA/flags/MP.gif
 1;USA;Ohio;;;W82.7755;N40.3736;7;places/USA/flags/OH.gif
 1;USA;Oklahoma;;;W96.9247;N35.5376;7;places/USA/flags/OK.gif
 1;USA;Oregon;;;W122.1269;N44.5672;7;places/USA/flags/OR.gif
 1;USA;Pennsylvania;;;W77.264;N40.5773;7;places/USA/flags/PA.gif
-1;USA;Puerto Rico;;;W66.335;N18.2766;7;places/USA/flags/PR.gif
 1;USA;Rhode Island;;;W71.5101;N41.6772;7;places/USA/flags/RI.gif
 1;USA;South Carolina;;;W80.9066;N33.8191;7;places/USA/flags/SC.gif
 1;USA;South Dakota;;;W99.4632;N44.2853;7;places/USA/flags/SD.gif
@@ -49,7 +45,6 @@
 1;USA;Texas;;;W97.6475;N31.106;7;places/USA/flags/TX.gif
 1;USA;Utah;;;W111.8535;N40.1135;7;places/USA/flags/UT.gif
 1;USA;Vermont;;;W72.7093;N44.0407;7;places/USA/flags/VT.gif
-1;USA;Virgin Islands;;;W64.8199;N18.0001;7;places/USA/flags/VI.gif
 1;USA;Virginia;;;W78.2057;N37.768;7;places/USA/flags/VA.gif
 1;USA;Washington;;;W121.5708;N47.3917;7;places/USA/flags/WA.gif
 1;USA;West Virginia;;;W80.9696;N38.468;7;places/USA/flags/WV.gif
