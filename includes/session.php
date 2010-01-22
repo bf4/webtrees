@@ -40,7 +40,7 @@ define('PGV_TRANSLATORS_URL', 'https://sourceforge.net/projects/phpgedview/forum
 
 // Enable debugging output?
 define('PGV_DEBUG',       false);
-define('PGV_DEBUG_SQL',   true);
+define('PGV_DEBUG_SQL',   false);
 define('PGV_DEBUG_PRIV',  false);
 
 // Error reporting
