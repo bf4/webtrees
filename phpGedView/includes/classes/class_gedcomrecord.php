@@ -103,7 +103,7 @@ class GedcomRecord {
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
 	// been fetched previously).
-	static function &getInstance($data, $simple=true) {
+	static function &getInstance($data) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$is_pending=false; // Did this record come from a pending edit
@@ -207,7 +207,7 @@ class GedcomRecord {
 			break;
 		}
 
-		$object=new $class_name($data, $simple);
+		$object=new $class_name($data);
 
 		// This is an object from the database, so indicate which gedcom it comes from.
 		$object->ged_id=$ged_id;

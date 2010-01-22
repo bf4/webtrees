@@ -62,10 +62,10 @@ class Family extends GedcomRecord {
 		} else {
 			// Construct from raw GEDCOM data
 			if (preg_match('/^1 HUSB @(.+)@/m', $data, $match)) {
-				$this->husb=Person::getInstance($match[1], $simple);
+				$this->husb=Person::getInstance($match[1]);
 			}
 			if (preg_match('/^1 WIFE @(.+)@/m', $data, $match)) {
-				$this->wife=Person::getInstance($match[1], $simple);
+				$this->wife=Person::getInstance($match[1]);
 			}
 			if (preg_match_all('/^1 CHIL @(.+)@/m', $data, $match)) {
 				$this->childrenIds=$match[1];
