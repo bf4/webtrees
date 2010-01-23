@@ -255,6 +255,9 @@ if (substr($SERVER_URL,-1)!='/') $SERVER_URL .= '/'; // make SURE that trailing 
 if (empty($PGV_MEMORY_LIMIT)) $PGV_MEMORY_LIMIT = '32M';
 @ini_set('memory_limit', $PGV_MEMORY_LIMIT);
 
+// Application configuration data - things that aren't (yet) user-editable
+require PGV_ROOT.'includes/config_data.php';
+
 //--load common functions
 require  PGV_ROOT.'includes/functions/functions.php';
 require  PGV_ROOT.'includes/functions/functions_name.php';
@@ -521,8 +524,6 @@ if ($ENABLE_MULTI_LANGUAGE && empty($SEARCH_SPIDER)) {
 		}
 	}
 }
-
-require PGV_ROOT.'includes/templecodes.php';  //-- load in the LDS temple code translations
 
 //-- load the privacy functions
 load_privacy_file(PGV_GED_ID);

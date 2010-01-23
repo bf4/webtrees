@@ -34,53 +34,6 @@ define('PGV_FUNCTIONS_EDIT_PHP', '');
 
 require_once PGV_ROOT.'includes/functions/functions_import.php';
 
-$NPFX_accept = array( 'Adm', 'Amb', 'Brig', 'Can', 'Capt', 'Chan', 'Chapln', 'Cmdr', 'Col', 'Cpl', 'Cpt', 'Dr', 'Gen', 'Gov', 'Hon', 'Lady', 'Lt', 'Mr', 'Mrs', 'Ms', 'Msgr', 'Pfc', 'Pres', 'Prof', 'Pvt', 'Rabbi', 'Rep', 'Rev', 'Sen', 'Sgt', 'Sir', 'Sr', 'Sra', 'Srta', 'Ven');
-$SPFX_accept = array('al', 'da', 'de', 'den', 'dem', 'der', 'di', 'du', 'el', 'la', 'van', 'von');
-$NSFX_accept = array( 'I', 'II', 'III', 'IV', 'V', 'VI', 'Jr', 'Junior', 'MD', 'PhD', 'Senior', 'Sr');
-$FILE_FORM_accept = array('avi', 'bmp', 'gif', 'jpeg', 'mp3', 'ole', 'pcx', 'png', 'tiff', 'wav');
-$emptyfacts = array('_HOL', '_NMR', '_SEPR', 'ADOP', 'ANUL', 'BAPL', 'BAPM', 'BARM', 'BASM',
-'BIRT', 'BLES', 'BURI', 'CENS', 'CHAN', 'CHR', 'CHRA', 'CONF', 'CONL', 'CREM',
-'DATA', 'DEAT', 'DIV', 'DIVF', 'EMIG', 'ENDL', 'ENGA', 'FCOM', 'GRAD',
-'HUSB', 'IMMI', 'MAP', 'MARB', 'MARC', 'MARL', 'MARR', 'MARS', 'NATU', 'ORDN',
-'PROB', 'RESI', 'RETI', 'SLGC', 'SLGS', 'WIFE', 'WILL');
-$templefacts = array('SLGC', 'SLGS', 'BAPL', 'ENDL', 'CONL');
-$nonplacfacts = array('ENDL', 'NCHI', 'SLGC', 'SLGS');
-$nondatefacts = array('ABBR', 'ADDR', 'AFN', 'AUTH', 'CHIL', 'EMAIL', 'FAX', 'HUSB', 'NAME', 'NCHI', 'NOTE', 'OBJE',
-'PHON', 'PUBL', 'REFN', 'REPO', 'SEX', 'SOUR', 'SSN', 'TEXT', 'TITL', 'WIFE', 'WWW', '_EMAIL');
-$typefacts = array(); //-- special facts that go on 2 TYPE lines
-
-// Next two vars used by insert_missing_subtags()
-$date_and_time=array('BIRT', 'DEAT'); // Tags with date and time
-$level2_tags=array( // The order of the $keys is significant
-	'_HEB' =>array('NAME', 'TITL'),
-	'ROMN' =>array('NAME', 'TITL'),
-	'TYPE' =>array('GRAD', 'EVEN', 'FACT', 'IDNO', 'MARR', 'ORDN', 'SSN'),
-	'AGNC' =>array('EDUC', 'GRAD', 'OCCU', 'RETI', 'ORDN'),
-	'CAUS' =>array('DEAT'),
-	'CALN' =>array('REPO'),
-	'CEME' =>array('BURI'), // CEME is NOT a valid 5.5.1 tag
-	'RELA' =>array('ASSO'),
-	'DATE' =>array('ANUL', 'CENS', 'DIV', 'DIVF', 'ENGA', 'MARB', 'MARC', 'MARR', 'MARL', 'MARS', 'RESI', 'EVEN', 'EDUC', 'OCCU', 'PROP', 'RELI', 'RESI', 'BIRT', 'CHR', 'DEAT', 'BURI', 'CREM', 'ADOP', 'BAPM', 'BARM', 'BASM', 'BLES', 'CHRA', 'CONF', 'FCOM', 'ORDN', 'NATU', 'EMIG', 'IMMI', 'CENS', 'PROB', 'WILL', 'GRAD', 'RETI', 'EVEN', 'BAPL', 'CONL', 'ENDL', 'SLGC', 'SLGS', '_TODO'),
-	'TEMP' =>array('BAPL', 'CONL', 'ENDL', 'SLGC', 'SLGS'),
-	'PLAC' =>array('ANUL', 'CENS', 'DIV', 'DIVF', 'ENGA', 'MARB', 'MARC', 'MARR', 'MARL', 'MARS', 'RESI', 'EVEN', 'EDUC', 'OCCU', 'PROP', 'RELI', 'RESI', 'BIRT', 'CHR', 'DEAT', 'BURI', 'CREM', 'ADOP', 'BAPM', 'BARM', 'BASM', 'BLES', 'CHRA', 'CONF', 'FCOM', 'ORDN', 'NATU', 'EMIG', 'IMMI', 'CENS', 'PROB', 'WILL', 'GRAD', 'RETI', 'EVEN', 'BAPL', 'CONL', 'ENDL', 'SLGC', 'SLGS', 'SSN'),
-	'STAT' =>array('BAPL', 'CONL', 'ENDL', 'SLGC', 'SLGS'),
-	'ADDR' =>array('BIRT', 'CHR', 'CHRA', 'DEAT', 'CREM', 'BURI', 'MARR', 'CENS', 'EDUC', 'GRAD', 'OCCU', 'PROP', 'ORDN', 'RESI', 'EVEN'),
-	'PHON' =>array('OCCU', 'RESI'),
-	'FAX'  =>array('OCCU', 'RESI'),
-	'URL'  =>array('OCCU', 'RESI'),
-	'EMAIL'=>array('OCCU', 'RESI'),
-	'AGE'  =>array('CENS', 'DEAT'),
-	'HUSB' =>array('MARR'),
-	'WIFE' =>array('MARR'),
-	'FAMC' =>array('ADOP', 'SLGC'),
-	'FILE' =>array('OBJE'),
-	'_PRIM'=>array('OBJE'),
-	'EVEN' =>array('DATA'),
-	'_PGVU'=>array('_TODO')
-);
-$STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
-$REVERSED_NAME_FACTS = array('NAME', 'NPFX', 'SPFX', 'SURN', 'GIVN', 'NSFX');
-
 //-- this function creates a new unique connection
 //-- and adds it to the connections file
 //-- it returns the connection identifier
