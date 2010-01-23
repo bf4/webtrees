@@ -812,12 +812,15 @@ class IndividualControllerRoot extends BaseController {
 			$labels["brother"] = $pgv_lang["halfbrother"];
 		}
 		if ($type=="spouse") {
-			if ($family->isDivorced()) {
+			if ($family->isNotMarried()) {
+				$labels["parent"] = $pgv_lang["partner"];
+				$labels["mother"] = $pgv_lang["partner"];
+				$labels["father"] = $pgv_lang["partner"];
+			} elseif ($family->isDivorced()) {
 				$labels["parent"] = $pgv_lang["ex-spouse"];
 				$labels["mother"] = $pgv_lang["ex-wife"];
 				$labels["father"] = $pgv_lang["ex-husband"];
-			}
-			else {
+			} else {
 				$marr_rec = $family->getMarriageRecord();
 				if (!empty($marr_rec)) {
 					$type = $family->getMarriageType();
@@ -825,16 +828,17 @@ class IndividualControllerRoot extends BaseController {
 						$labels["parent"] = $pgv_lang["spouse"];
 						$labels["mother"] = $pgv_lang["wife"];
 						$labels["father"] = $pgv_lang["husband"];
-					}
-					else {
-						if (isset($pgv_lang[$type])) $label = $pgv_lang[$type];
-						else $label = $pgv_lang["partner"];
+					} else {
+						if (isset($pgv_lang[$type])) {
+							$label = $pgv_lang[$type];
+						} else {
+							$label = $pgv_lang["partner"];
+						}
 						$labels["parent"] = $label;
 						$labels["mother"] = $label;
 						$labels["father"] = $label;
 					}
-				}
-				else {
+				} else {
 					$labels["parent"] = $pgv_lang["spouse"];
 					$labels["mother"] = $pgv_lang["wife"];
 					$labels["father"] = $pgv_lang["husband"];
