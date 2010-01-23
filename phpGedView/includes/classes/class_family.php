@@ -40,8 +40,9 @@ class Family extends GedcomRecord {
 	private $childrenIds = array();
 	private $marriage = null;
 	private $children_loaded = false;
-	private $numChildren = false;
-	private $_isDivorced = null;
+	private $numChildren   = false;
+	private $_isDivorced   = null;
+	private $_isNotMarried = null;
 
 	// Create a Family object from either raw GEDCOM data or a database row
 	function __construct($data, $simple=true) {
@@ -57,8 +58,10 @@ class Family extends GedcomRecord {
 				$this->childrenIds=explode(';', trim($data['f_chil'], ';'));
 			}
 			$this->numChildren=$data['f_numchil'];
-			// Check for divorce *before* we privatize the data so we can correctly label spouses/ex-spouses
+			// Check for divorce, etc. *before* we privatize the data so
+			// we can correctly label spouses/ex-spouses/partners
 			$this->_isDivorced=(bool)preg_match('/\n1 ('.PGV_EVENTS_DIV.')( Y|\n)/', $data['gedrec']);
+			$this->_isNotMarried=(bool)preg_match('/\n1 _NMR( Y|\n)/', $data['gedrec']);
 		} else {
 			// Construct from raw GEDCOM data
 			if (preg_match('/^1 HUSB @(.+)@/m', $data, $match)) {
@@ -75,8 +78,10 @@ class Family extends GedcomRecord {
 			} else {
 				$this->numChildren=count($this->childrenIds);
 			}
-			// Check for divorce *before* we privatize the data so we can correctly label spouses/ex-spouses
+			// Check for divorce, etc. *before* we privatize the data so
+			// we can correctly label spouses/ex-spouses/partners
 			$this->_isDivorced=(bool)preg_match('/\n1 ('.PGV_EVENTS_DIV.')( Y|\n)/', $data);
+			$this->_isNotMarried=(bool)preg_match('/\n1 _NMR( Y|\n)/', $data);
 		}
 
 		// Make sure husb/wife are the right way round.
@@ -277,12 +282,15 @@ class Family extends GedcomRecord {
 		return $this->marriage->getGedcomRecord();
 	}
 
-	// Return whether or not this family ended in a divorce.
+	// Return whether or not this family ended in a divorce or was never married.
 	// Note that this is calculated prior to privatizing the data, so we can
 	// always distinguish spouses from ex-spouses.  This apparant leaking of
 	// private data was discussed and agreed on the pgv forum.
 	function isDivorced() {
 		return $this->_isDivorced;
+	}
+	function isNotMarried() {
+		return $this->_isNotMarried;
 	}
 
 	/**
