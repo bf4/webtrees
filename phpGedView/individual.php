@@ -421,7 +421,7 @@ if (PGV_USE_LIGHTBOX) {
 	<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php echo $pgv_lang["media"]?></a></dd>
 	<dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php echo $pgv_lang["relatives"]?></a></dd>
 	<dd id="door6"><a href="javascript:;" onclick="tabswitch(6); return false;" ><?php echo $pgv_lang["tree"]?></a></dd>
-	<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php echo "!".$pgv_lang["research_assistant"]?></a></dd>
+	<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php echo $pgv_lang["research_assistant"]?></a></dd>
 	<?php if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {?>
 <!-- <dd id="door9"><a href="javascript:;" onclick="tabswitch(9); return false;" ><?php echo "Spare" ?></a></dd> -->
 	<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php echo $pgv_lang["googlemap"]?></a></dd>
