@@ -734,10 +734,14 @@ function count_linked_obje($xref, $link, $ged_id) {
 function fetch_linked_indi($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepare("SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array($ged_id, $link, $xref))
-		->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare(
+		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
+		" FROM {$TBLPREFIX}individuals".
+		" JOIN {$TBLPREFIX}link ON (i_file=l_file AND i_id=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (i_file=n_file AND i_id=n_id AND n_num=0)".
+		" WHERE i_file=? AND l_type=? AND l_to=?".
+		" ORDER BY n_sort"
+	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -748,10 +752,14 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 function fetch_linked_fam($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepare("SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}link, {$TBLPREFIX}families f WHERE f_file=l_file AND f_id=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array($ged_id, $link, $xref))
-		->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare(
+		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil".
+		" FROM {$TBLPREFIX}families".
+		" JOIN {$TBLPREFIX}link ON (f_file=l_file AND f_id=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (f_file=n_file AND f_id=n_id AND n_num=0)".
+		" WHERE f_file=? AND l_type=? AND l_to=?".
+		" ORDER BY n_sort"
+	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -762,10 +770,14 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 function fetch_linked_note($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepare("SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}other o WHERE o_file=l_file AND o_id=l_from AND o_type='NOTE' AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array($ged_id, $link, $xref))
-		->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare(
+		"SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec".
+		" FROM {$TBLPREFIX}other".
+		" JOIN {$TBLPREFIX}link ON (o_file=l_file AND o_id=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (o_file=n_file AND o_id=n_id AND n_num=0)".
+		" WHERE o_file=? AND o_type='NOTE' AND l_type=? AND l_to=?".
+		" ORDER BY n_sort"
+	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -776,10 +788,14 @@ function fetch_linked_note($xref, $link, $ged_id) {
 function fetch_linked_sour($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepare("SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}sources s WHERE s_file=l_file AND s_id=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array($ged_id, $link, $xref))
-		->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare(
+			"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec".
+			" FROM {$TBLPREFIX}sources".
+			" JOIN {$TBLPREFIX}link ON (s_file=l_file AND s_id=l_from)".
+			" LEFT JOIN {$TBLPREFIX}name ON (s_file=n_file AND s_id=n_id AND n_num=0)".
+			" WHERE s_file=? AND l_type=? AND l_to=?".
+			" ORDER BY n_sort"
+		)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -790,10 +806,14 @@ function fetch_linked_sour($xref, $link, $ged_id) {
 function fetch_linked_obje($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepare("SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM {$TBLPREFIX}link, {$TBLPREFIX}media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array($ged_id, $link, $xref))
-		->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare(
+		"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file".
+		" FROM {$TBLPREFIX}media".
+		" JOIN {$TBLPREFIX}link ON (m_gedfile=l_file AND m_media=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (m_gedfile=n_file AND m_media=n_id AND n_num=0)".
+		" WHERE m_gedfile=? AND l_type=? AND l_to=? AND n_num=?".
+		" ORDER BY n_sort"
+	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
