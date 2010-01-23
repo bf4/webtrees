@@ -773,7 +773,7 @@ if ($import == true) {
 }
 
 if ($startimport == "true") {
-	set_gedcom_setting(get_id_from_gedcom($ged), 'imported', false);
+	set_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'imported', false);
 
 	if (isset ($exectime)) {
 		$oldtime = time() - $exectime;
@@ -858,12 +858,12 @@ $stage = 0;
 if ((empty ($ged)) || (!get_id_from_gedcom($ged))) {
 	$ged = $GEDCOM;
 }
-
+$ged_id=get_id_from_gedcom($ged);
 $temp = $THEME_DIR;
-$GEDCOM_FILE = get_gedcom_setting(get_id_from_gedcom($ged), 'path');
+$GEDCOM_FILE = get_gedcom_setting($ged_id, 'path');
 $FILE = $ged;
-$TITLE = get_gedcom_setting(get_id_from_gedcom($ged), 'title');
-require get_config_file(get_id_from_gedcom($ged));
+$TITLE = get_gedcom_setting($ged_id, 'title');
+require get_config_file($ged_id);
 if ($LANGUAGE <> $_SESSION["CLANGUAGE"])
 $LANGUAGE = $_SESSION["CLANGUAGE"];
 
@@ -882,7 +882,7 @@ if ($stage == 0) {
 	$_SESSION["resumed"] = 0;
 	if (file_exists($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new"))
 	unlink($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new");
-	empty_database(get_id_from_gedcom($FILE), $keepmedia);
+	empty_database($ged_id, $keepmedia);
 	//-- erase any of the changes
 	foreach ($pgv_changes as $cid => $changes) {
 		if ($changes[0]["gedcom"] == $ged)
@@ -968,13 +968,13 @@ if ($stage == 1) {
 			}
 
 			try {
-				$record_type=import_record($indirec, PGV_GED_ID, false);
+				$record_type=import_record($indirec, $ged_id, false);
 			} catch (PDOException $ex) {
 				// Import errors are likely to be caused by duplicate records.
 				// There is no safe way of handling these.  Just display them
 				// and let the user decide.
 				echo '<pre class="error">', $ex->getMessage(), '</pre>';
-				echo '<pre>', PGV_GEDCOM, ': ', PGV_GED_ID, '</pre>';
+				echo '<pre>', PGV_GEDCOM, ': ', $ged_id, '</pre>';
 				echo '<pre>', htmlspecialchars($indirec), '</pre>';
 				// Don't let the error message disappear off the screen.
 				$autoContinue=false;
@@ -1145,9 +1145,9 @@ if ($stage == 1) {
 	}
 	print "</td></tr></table>";
 	// NOTE: Finished Links
-	import_max_ids(PGV_GED_ID, $MAX_IDS);
-	set_gedcom_setting(PGV_GED_ID, 'imported', true);
-	set_gedcom_setting(PGV_GED_ID, 'pgv_ver', PGV_VERSION);
+	import_max_ids($ged_id, $MAX_IDS);
+	set_gedcom_setting($ged_id, 'imported', true);
+	set_gedcom_setting($ged_id, 'pgv_ver', PGV_VERSION);
 	print "</td></tr>";
 
 	$record_count = 0;
