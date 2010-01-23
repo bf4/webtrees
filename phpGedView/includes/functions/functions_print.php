@@ -104,20 +104,25 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				else $title = $pid." :".$pgv_lang["pedigree_chart"];
 				$personlinks .= "<a href=\"".encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>";
 
+				if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
+					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_map"].": ".$pid;
+					else $title = $pid." :".$pgv_lang["pedigree_map"];
+					$personlinks .= "<br /><a href=\"".encode_url("module.php?mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["pedigree_map"]."</b></a>";
+				}
+				$username = PGV_USER_NAME;
+				if (!empty($username)) {
+					$myid=PGV_USER_GEDCOM_ID;
+					if ($myid && $myid!=$pid) {
+						if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
+						else $title = $pid." :".$pgv_lang["relationship_chart"];
+						$personlinks .= "<br /><a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$myid}&pid2={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&pretty=2&followspouse=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a>";
+					}
+				}
+
 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["descend_chart"].": ".$pid;
 				else $title = $pid." :".$pgv_lang["descend_chart"];
 				$personlinks .= "<br /><a href=\"".encode_url("descendancy.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />";
 
-				$username = PGV_USER_NAME;
-				if (!empty($username)) {
-					$myid=PGV_USER_GEDCOM_ID;
-					if ($myid) {
-						if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
-						else $title = $pid." :".$pgv_lang["relationship_chart"];
-						$personlinks .= "<a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$myid}&pid2={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&pretty=2&followspouse=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />";
-					}
-				}
-				// NOTE: Zoom
 				if (file_exists(PGV_ROOT.'ancestry.php')) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["ancestry_chart"];
@@ -137,6 +142,11 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
 					$personlinks .= "<a href=\"".encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}&show_spouse={$show_spouse}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />";
+				}
+				if (file_exists(PGV_ROOT.'treenav.php')) {
+					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["interactive_tree"].": ".$pid;
+					else $title = $pid." :".$pgv_lang["interactive_tree"];
+					$personlinks .= "<a href=\"".encode_url("treenav.php?rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["interactive_tree"]."</b></a><br />";
 				}
 
 				$fams = $person->getSpouseFamilies();
