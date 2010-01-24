@@ -290,33 +290,29 @@ function AddToLog($LogString, $savelangerror=false) {
 
 	$wroteLogString = false;
 
-	if ($LOGFILE_CREATE=="none") {
+	if ($LOGFILE_CREATE=='none') {
 		return;
 	}
 
 	if (isset($_SERVER['REMOTE_ADDR'])) {
 		$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 	} elseif ($argc>1) {
-		$REMOTE_ADDR = "cli";
+		$REMOTE_ADDR = 'cli';
 	}
-	if ($LOGFILE_CREATE !== "none" && $savelangerror === false) {
+	if ($LOGFILE_CREATE !== 'none' && $savelangerror === false) {
 		if (empty($LOGFILE_CREATE))
-			$LOGFILE_CREATE="daily";
-		if ($LOGFILE_CREATE=="daily")
-			$logfile = $INDEX_DIRECTORY."pgv-" . date("Ymd") . ".log";
-		if ($LOGFILE_CREATE=="weekly")
-			$logfile = $INDEX_DIRECTORY."pgv-" . date("Ym") . "-week" . date("W") . ".log";
-		if ($LOGFILE_CREATE=="monthly")
-			$logfile = $INDEX_DIRECTORY."pgv-" . date("Ym") . ".log";
-		if ($LOGFILE_CREATE=="yearly")
-			$logfile = $INDEX_DIRECTORY."pgv-" . date("Y") . ".log";
+			$LOGFILE_CREATE='daily';
+		if ($LOGFILE_CREATE=='daily')
+			$logfile = $INDEX_DIRECTORY.'pgv-' . date('Ymd') . '.log';
+		if ($LOGFILE_CREATE=='weekly')
+			$logfile = $INDEX_DIRECTORY.'pgv-' . date('Ym') . '-week' . date('W') . '.log';
+		if ($LOGFILE_CREATE=='monthly')
+			$logfile = $INDEX_DIRECTORY.'pgv-' . date('Ym') . '.log';
+		if ($LOGFILE_CREATE=='yearly')
+			$logfile = $INDEX_DIRECTORY.'pgv-' . date('Y') . '.log';
 		if (is_writable($INDEX_DIRECTORY)) {
-			$logline=
-				date("d.m.Y H:i:s")." - ".
-				$REMOTE_ADDR." - ".
-				(getUserId() ? getUserName() : 'Anonymous')." - ".
-				$LogString."\r\n";
-			$fp = fopen($logfile, "a");
+			$logline=date('d.m.Y H:i:s').' - '.$REMOTE_ADDR.' - '.(getUserId() ? getUserName() : 'Anonymous').' - '.$LogString.PGV_EOL;
+			$fp = fopen($logfile, 'a');
 			flock($fp, 2);
 			fputs($fp, $logline);
 			flock($fp, 3);
@@ -327,55 +323,59 @@ function AddToLog($LogString, $savelangerror=false) {
 	if ($wroteLogString)
 		return $logline;
 	else
-		return "";
+		return '';
 }
 
 //----------------------------------- AddToSearchLog
 //-- requires a string to add into the searchlog-file
 function AddToSearchLog($LogString, $allgeds) {
-	global $INDEX_DIRECTORY, $SEARCHLOG_CREATE, $GEDCOM, $username;
+	global $INDEX_DIRECTORY;
 
-	if (!isset($allgeds))
+	if (empty($allgeds))
 		return;
-	if (count($allgeds) == 0)
-		return;
+
+	$all_geds=get_all_gedcoms();
 
 	//-- do not allow code to be written to the log file
-	$LogString = preg_replace('/<\?.*\?>/', "*** CODE DETECTED ***", $LogString);
+	$LogString = preg_replace('/<\?.*\?>/', '*** CODE DETECTED ***', $LogString);
 
-	$oldged = $GEDCOM;
-	foreach($allgeds as $indexval => $value) {
-		$GEDCOM = $value;
-		include(get_config_file());
-		if ($SEARCHLOG_CREATE != "none") {
-			$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
-			if (empty($SEARCHLOG_CREATE))
-				$SEARCHLOG_CREATE="daily";
-			if ($SEARCHLOG_CREATE=="daily")
-				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ymd") . ".log";
-			if ($SEARCHLOG_CREATE=="weekly")
-				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ym") . "-week" . date("W") . ".log";
-			if ($SEARCHLOG_CREATE=="monthly")
-				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ym") . ".log";
-			if ($SEARCHLOG_CREATE=="yearly")
-				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Y") . ".log";
-			if (is_writable($INDEX_DIRECTORY)) {
-				$logline = "Date / Time: ".date("d.m.Y H:i:s") . " - IP: " . $REMOTE_ADDR . " - User: " .  PGV_USER_NAME . "<br />";
-				if (count($allgeds) == count(get_all_gedcoms()))
-					$logline .= "Searchtype: Global<br />";
-				else
-					$logline .= "Searchtype: Gedcom<br />";
-				$logline .= $LogString . "<br /><br />\r\n";
-				$fp = fopen($logfile, "a");
-				flock($fp, 2);
-				fputs($fp, $logline);
-				flock($fp, 3);
-				fclose($fp);
+	foreach ($allgeds as $ged_id=>$ged_name) {
+		if (count($all_geds)) {
+			// If we have more than one gedcom, then need to load the settings
+			require get_config_file($ged_id); // Note: load locally, not globally
+		}
+		switch ($SEARCHLOG_CREATE) {
+		case 'none':
+			continue;
+		case 'yearly':
+			$logfile=$INDEX_DIRECTORY.'srch-'.$ged_name.date('Y').'.log';
+			break;
+		case 'monthly':
+			$logfile=$INDEX_DIRECTORY.'srch-'.$ged_name.date('Ym').'.log';
+			break;
+		case 'weekly':
+			$logfile=$INDEX_DIRECTORY.'srch-'.$ged_name.date('Ym').'-week'.date('W').'.log';
+			break;
+		case 'daily':
+		default:
+			$logfile=$INDEX_DIRECTORY.'srch-'.$ged_name.date('Ymd').'.log';
+			break;
+		}
+		if (is_writable($INDEX_DIRECTORY)) {
+			$logline='Date / Time: '.date('d.m.Y H:i:s').' - IP: '.$_SERVER['REMOTE_ADDR'].' - User: '.PGV_USER_NAME.'<br />';
+			if (count($allgeds)==count($all_geds)) {
+				$logline.='Searchtype: Global<br />';
+			} else {
+				$logline.='Searchtype: Gedcom<br />';
 			}
+			$logline.=$LogString.'<br /><br />'.PGV_EOL;
+			$fp=fopen($logfile, 'a');
+			flock($fp, 2);
+			fputs($fp, $logline);
+			flock($fp, 3);
+			fclose($fp);
 		}
 	}
-	$GEDCOM = $oldged;
-	include(get_config_file());
 }
 
 //----------------------------------- AddToChangeLog
