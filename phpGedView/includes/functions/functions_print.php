@@ -1904,7 +1904,15 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$tmp=new Person($gedrec);
 				$birth_date=$tmp->getBirthDate();
 				$event_date=new GedcomDate($dmatch[1]);
-				$death_date=$tmp->getDeathDate();
+				// Can't use getDeathDate(), as this also gives BURI/CREM events, which
+				// wouldn't give the correct "days after death" result for people with
+				// no DEAT.
+				$death_event=$tmp->getFactByType('DEAT');
+				if ($death_event) {
+					$death_date=$death_event->getDate();
+				} else {
+					$death_date=new GedcomDate('');
+				}
 				$ageText = '';
 
 				if (!strstr($factrec, "_BIRT_") && !strstr($factrec, "_DEAT_") && GedcomDate::Compare($event_date, $death_date)>=0 && $tmp->isDead()) {
@@ -2084,7 +2092,15 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 			// age at event
 			else if ($fact!='CHAN' && $fact!='_TODO') {
 				$birth_date=$person->getBirthDate();
-				$death_date=$person->getDeathDate();
+				// Can't use getDeathDate(), as this also gives BURI/CREM events, which
+				// wouldn't give the correct "days after death" result for people with
+				// no DEAT.
+				$death_event=$person->getFactByType('DEAT');
+				if ($death_event) {
+					$death_date=$death_event->getDate();
+				} else {
+					$death_date=new GedcomDate('');
+				}
 				$ageText = '';
 				if ((GedcomDate::Compare($date, $death_date)<=0 || !$person->isDead()) || $fact=='DEAT') {
 					// Before death, print age
