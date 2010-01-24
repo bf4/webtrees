@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: [ 2928619 ] Burial w/o Death -> (on the date of death) (fisharebest)
  - Fixed: [ 1859794 ] individual titles (i.e. husband,wife) on Close relatives tab (fisharebest)
  - Fixed: [ 2934003 ] Pictures of other gedcom in Multimedia list (canajun2eh)
  - Changed: Fan chart font and colors moved from style.css to theme.php (canajun2eh)
