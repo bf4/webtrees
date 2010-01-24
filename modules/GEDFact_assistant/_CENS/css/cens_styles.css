@@ -24,13 +24,14 @@
  * @subpackage Modules
  * @version $Id$
  */
+ 
 
  /* Census Window - Census Date drop-down menu (census_asst_date.php ============ */
-  .UK {
+.UK {
 	background-color:#aaffaa; 
 	color:black;
  }
- .USA {
+.USA {
 	background-color:#aaccff; 
 	color:black;
  }
@@ -46,6 +47,45 @@
 	white-space: nowrap;
 }
 
+/* Navigator =================================================================== */
+/* Flyout Link Cell */
+
+ul {
+	margin-top:0em;
+	margin-bottom:-1em;
+}
+li {
+	margin-left:-1em;
+	margin-top:-1em;
+}
+#endul {
+	margin-top:-1.5em;
+}
+
+.linkcell a { 
+	display: block;
+	padding:  0.3em 0.3em 0.6em 0.3em;
+	margin: -0.3em -0.3em -0.6em -0.3em; 
+} 
+.linkcell a:hover{ 
+	/* background: #888888; */ 
+}
+a.linka {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0; 
+}
+
+/* Fly outs */
+.ltrnav {
+	position: absolute;
+	top:-1.6em;
+	left:5.9em;
+}
+.rtlnav {
+	position: absolute;
+	top:-1.5em;
+	right:5.5em;
+}
 /* "Head" button images */
 .headimg {
 margin-top:-4px;
@@ -58,8 +98,7 @@ margin:-3px;
 margin-left:0px;
 }
 
-/* Edit Page css ================================================================ */
-
+/* Edit Page css =============================================================== */
 .cens_header_right {
 	float: right;
 	margin: 0 2em 0 0;
@@ -79,7 +118,6 @@ margin-left:0px;
 	margin: 0 0.5em;
 }
 
-/* Search and Add Family Members Area */
  
 /* Header of assistant window */
 .cens_header {
@@ -97,29 +135,19 @@ margin-left:0px;
 .cens_search {
 	position: relative; 
 	float: left;
-	/*border: 0.3em outset;*/
-	margin: 0.5em 0 0 0.3em;
-	width: 40.2em;
-	height: 33.4em;
-	overflow: auto;
-	margin-left: -16.0em;
-	border: 0px solid red; 
+	margin: 0.5em 0 0 0.5em;
+	width: 23.1em;
+	height: 33.0em;
+	overflow: auto; 
+	/*border: 1px solid red; */
 }
 #navenclose {
-	/* border-left: 1px solid black; */
-	margin-left: 16.4em;
-	width: 22.2em;
-	border: 0px solid green; 
-}
-.ltrnav {
-	position: absolute;
-	top:-1.4em;
-	right:-0.1em;
-}
-.rtlnav {
-	position: absolute;
-	top:0.5em;
-	right:5.5em;
+	margin-left: -0.4em;
+	margin-top: -0.4em;
+	margin-bottom: -0.3em;
+	border-bottom: 0px;
+	width: 22.3em;
+	/* border: 1px solid green; */ 
 }
 
 
@@ -162,6 +190,7 @@ margin-left:0px;
 	border: 0.3em outset;*/
 	margin-bottom : 0.3em;
 	overflow: hidden;
+	width: 50.8em;
 }
 
 .cens_sour_country {
@@ -197,7 +226,7 @@ img {
 
 .cens_sour_year {
 	float: left;
-	width: 6.6em;
+	width: 3.6em; 
 	text-align: left;
 	margin-left: .25em;
 	padding-bottom: .2em;
@@ -248,6 +277,7 @@ img {
 	/*border: 0.3em outset;*/
 	margin-bottom: 0.3em;
 	margin-right: -0.17em;
+width: 50.7em;
 }
 
 .cens_text span {
@@ -260,7 +290,7 @@ textarea#NOTE {
 	overflow: auto;
 }
 
-/* Censys data Input area */
+/* Census data Input area */
 .cens_data {
 	width:100%;
 	height:12.46em;

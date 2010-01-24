@@ -113,7 +113,7 @@ $currpid=$pid;
 	
 	//-- Search  and Add Family Members Area ========================================== 
 	?><!--[if IE]><br /><![endif]--><?php
-	echo "<div class=\"cens_search\" style=\"overflow:-moz-scrollbars-horizontal;overflow-x:hidden;overflow-y:scroll;\">";
+	echo "<div class=\"optionbox cens_search\" style=\"overflow:-moz-scrollbars-horizontal;overflow-x:hidden;overflow-y:scroll;\">";
 		?>	<!--[if IE]><style>.cens_search{height:35.0em;}</style><![EndIf]-->
 			<!--[if lte IE 7]><style>.cens_search{margin-top:-0.7em;}</style><![EndIf]--><?php
 		include('modules/GEDFact_assistant/_CENS/census_3_search_add.php');

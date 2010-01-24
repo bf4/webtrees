@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.x CA
+ - Changed: More updates to GEDFact_assistant/_CENS/ - Mainly css orientated. (windmillway)
  - Changed: GedFact_assistant/_CENS/ - Added "Head" images to Navigator, and tidied up css. (windmillway)
  - Changed: More corrections/additions for GEDFact_assistant (windmillway)
  - Merged: Merging r6673 through r6788 from the trunk (yalnifj)

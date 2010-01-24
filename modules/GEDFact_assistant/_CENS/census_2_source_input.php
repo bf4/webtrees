@@ -829,8 +829,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 	
 </script>
 
-<div class="optionbox cens_sour" style="border: 0px solid red;">
-	<div class="cens_sour_country" style="border: 0px solid yellow;">
+<div class="optionbox cens_sour">
+	<div class="cens_sour_country">
 		<span><?php echo $pgv_lang["cens_country"]; ?><br /></span>
 		<script type="text/javascript">
 			var censyear = new DynamicOptionList();

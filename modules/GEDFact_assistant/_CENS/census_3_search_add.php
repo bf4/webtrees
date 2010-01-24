@@ -146,8 +146,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 								$marn  = $nam[1]['surname'];
 							}
-							$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
-							$menu->addClass("", "", "submenu");
+							$menu = new Menu($people["husb"]->getLabel()."\n");
 							$slabel  = print_pedigree_person_nav2($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $people["husb"]->getLabel(), $censdate);
 							$slabel .= $parentlinks;
 							$submenu = new Menu($slabel);
@@ -155,7 +154,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							
 							?>
 							<tr>
-								<td align="left" class="optionbox" width="25%">
+								<td align="left" class="linkcell optionbox" width="25%">
 									<font size=1>
 										<?php 
 										//  print $people["husb"]->getLabel();
@@ -276,15 +275,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							}else{
 								$fulmn = $fulln;
 							}
-							$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
-							$menu->addClass("", "", "submenu");
+							$menu = new Menu($people["wife"]->getLabel()."\n");
 							$slabel  = print_pedigree_person_nav2($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $people["wife"]->getLabel(), $censyear);
 							$slabel .= $parentlinks;
 							$submenu = new Menu($slabel);
 							$menu->addSubMenu($submenu);
 							?>
 							<tr>
-								<td align="left" class="optionbox">
+								<td align="left" class="linkcell optionbox">
 									<font size=1>
 									<?php 
 									//print $people["wife"]->getLabel(); 
@@ -392,8 +390,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									$marn  = $nam[1]['surname'];
 								}
 								
-								$menu = new Menu("&nbsp;" . $child->getLabel() . "&nbsp;". "\n");
-								$menu->addClass("", "", "submenu");
+								$menu = new Menu($child->getLabel()."\n");
 								$slabel  = print_pedigree_person_nav2($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $child->getLabel(), $censyear);
 								$slabel .= $spouselinks;
 								$submenu = new Menu($slabel);
@@ -404,7 +401,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								} else {
 									?>
 									<tr>
-										<td align="left" class="optionbox">
+										<td align="left" class="linkcell optionbox">
 											<font size=1>
 											<?php 
 											if ($child->getXref()==$pid) {
@@ -543,11 +540,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							}
 							$menu = new Menu();
 							if ($people["husb"]->getLabel() == ".") {
-								$menu->addLabel("&nbsp;" . $pgv_lang["stepdad"] . "&nbsp;". "\n");
+								$menu->addLabel($pgv_lang["stepdad"]."\n");
 							}else{
-								$menu->addLabel("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
+								$menu->addLabel($people["husb"]->getLabel()."\n");
 							}
-							$menu->addClass("", "", "submenu");
 							$slabel  = print_pedigree_person_nav2($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $people["husb"]->getLabel(), $censyear);
 							$slabel .= $parentlinks;
 							$submenu = new Menu($slabel);
@@ -556,7 +552,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 							?>
 							<tr>
-								<td align="left" class="optionbox">
+								<td align="left" class="linkcell optionbox">
 									<font size=1>
 									<?php 
 									$menu->printMenu(); 
@@ -684,11 +680,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							}
 							$menu = new Menu();
 							if ($people["wife"]->getLabel() == ".") {
-								$menu->addLabel("&nbsp;" . $pgv_lang["stepmom"] . "&nbsp;". "\n");
+								$menu->addLabel($pgv_lang["stepmom"]."\n");
 							}else{
-								$menu->addLabel("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
+								$menu->addLabel($people["wife"]->getLabel()."\n");
 							}
-							$menu->addClass("", "", "submenu");
 							$slabel  = print_pedigree_person_nav2($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $people["wife"]->getLabel(), $censyear);
 							$slabel .= $parentlinks;
 							$submenu = new Menu($slabel);
@@ -697,7 +692,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 							?>
 							<tr>
-								<td align="left" class="optionbox">
+								<td align="left" class="linkcell optionbox">
 									<font size=1>
 									<?php 
 									$menu->printMenu(); 
@@ -799,8 +794,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 									$marn  = $nam[1]['surname'];
 								}
-								$menu = new Menu("&nbsp;" . $child->getLabel() . "&nbsp;". "\n");
-								$menu->addClass("", "", "submenu");
+								$menu = new Menu($child->getLabel()."\n");
 								$slabel  = print_pedigree_person_nav2($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $child->getLabel(), $censyear);
 								$slabel .= $spouselinks;
 								$submenu = new Menu($slabel);
@@ -809,7 +803,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
 								?>
 								<tr>
-									<td align="left" class="optionbox">
+									<td align="left" class="linkcell optionbox">
 										<font size=1>
 										<?php 
 										$menu->printMenu(); 
@@ -932,8 +926,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 								$marn  = $nam[1]['surname'];
 							}
-							$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
-							$menu->addClass("", "", "submenu");
+							$menu = new Menu($people["husb"]->getLabel()."\n");
 							$slabel  = print_pedigree_person_nav2($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $people["husb"]->getLabel(), $censyear);
 							$slabel .= $parentlinks;
 							$submenu = new Menu($slabel);
@@ -942,7 +935,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 							?>
 							<tr class="fact_value">
-								<td align="left" nowrap="nowrap" class="optionbox<?php print $styleadd; ?>">
+								<td align="left" nowrap="nowrap" class="linkcell optionbox<?php print $styleadd; ?>">
 									<font size=1>
 										<?php
 										if ($people["husb"]->getXref()==$pid) {
@@ -1070,8 +1063,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							}else{
 								$fulmn = $fulln;
 							}
-							$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
-							$menu->addClass("", "", "submenu");
+							$menu = new Menu($people["wife"]->getLabel()."\n");
 							$slabel  = print_pedigree_person_nav2($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $people["wife"]->getLabel(), $censyear);
 							$slabel .= $parentlinks;
 							$submenu = new Menu($slabel);
@@ -1080,7 +1072,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 							?>
 							<tr>
-								<td align="left" nowrap="nowrap" class="optionbox<?php print $styleadd; ?>">
+								<td align="left" nowrap="nowrap" class="linkcell optionbox<?php print $styleadd; ?>">
 									<font size=1>
 										<?php
 										if ($people["wife"]->getXref()==$pid) {
@@ -1193,15 +1185,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								$fulmn = $fulln;
 								$marn  = $surn;
 							}
-							$menu = new Menu("&nbsp;" . $child->getLabel() . "&nbsp;". "\n");
-							$menu->addClass("", "", "submenu");
+							$menu = new Menu($child->getLabel()."\n");
 							$slabel = print_pedigree_person_nav2($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $child->getLabel(), $censyear);
 							$slabel .= $spouselinks;
 							$submenu = new Menu($slabel);
 							$menu->addSubmenu($submenu);
 							?>
 							<tr>
-								<td align="left" class="optionbox">
+								<td align="left" class="linkcell optionbox">
 									<font size=1>
 									<?php 
 										//print $child->getLabel();
@@ -1351,18 +1342,18 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 				
 				if ($TEXT_DIRECTION=="rtl") {
 				$spouselinks .= "\n\t\t\t<table class=\"rtlnav person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$spouselinks .= "<font size=\"1\"><b>" . $pgv_lang['family'] . "</b><br /></font>";
+				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b> (" .$person->getFullName(). ")<br />";
 				$parentlinks .= "\n\t\t\t<table class=\"rtlnav person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
+				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
 				$step_parentlinks .= "\n\t\t\t<table class=\"rtlnav person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$step_parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
+				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
 				}else{
 				$spouselinks .= "\n\t\t\t<table class=\"ltrnav person_box$isF\"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$spouselinks .= "<font size=\"1\"><b>" . $pgv_lang['family'] . "</b><br /></font>";
+				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b> (" .$person->getFullName(). ")<br />";
 				$parentlinks .= "\n\t\t\t<table class=\"ltrnav person_box$isF\"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
+				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
 				$step_parentlinks .= "\n\t\t\t<table class=\"ltrnav person_box$isF\"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$step_parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
+				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
 				}
 
 				$persons       = "";
@@ -1421,7 +1412,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$marn  = $nam[1]['surn'];
 									}
 									
-									$parentlinks .= "<a href=\"javascript:insertRowToTable(";
+									$parentlinks .= "<a class=\"linka\" href=\"javascript:insertRowToTable(";
 									$parentlinks .= "'".PrintReady($husb->getXref())."',";							// pid		=	PID
 									$parentlinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
 									if (isset($nam[1])){
@@ -1464,7 +1455,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								}else{
 									$parentlinks .= $pgv_lang["private"];
 								}
-								$parentlinks .= "<br />\n";
+								$parentlinks .= "\n";
 								$natdad = "yes";
 							}
 						}
@@ -1518,7 +1509,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}else{
 										$fulmn = $fulln;
 									}
-									$parentlinks .= "<a href=\"javascript:insertRowToTable(";
+									$parentlinks .= "<a class=\"linka\" href=\"javascript:insertRowToTable(";
 									$parentlinks .=	"'".PrintReady($wife->getXref())."',";							// pid		=	PID
 									$parentlinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
 									if (isset($nam[1])){
@@ -1561,7 +1552,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								}else{
 									$parentlinks .= $pgv_lang["private"];
 								}
-								$parentlinks .= "<br />\n";
+								$parentlinks .= "\n";
 								$natmom = "yes";
 							}
 						}
@@ -1628,7 +1619,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}else{
 										$parentlinks .= $pgv_lang["private"];
 									}
-									$parentlinks .= "<br />\n";
+									$parentlinks .= "\n";
 								}
 							}
 						}
@@ -1691,7 +1682,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}else{
 										$parentlinks .= $pgv_lang["private"];
 									}
-									$parentlinks .= "<br />\n";
+									$parentlinks .= "\n";
 								}
 							}
 						}
@@ -1797,7 +1788,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								}else{
 									$spouselinks .= $pgv_lang["private"];
 								}
-								$spouselinks .= "</a><br />\n";
+								$spouselinks .= "</a>\n";
 								if ($spouse->getFullName() != "") {
 									$persons = "Yes";
 								}
@@ -1805,6 +1796,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						}
 						
 						// Children -------------------------------------
+						$spouselinks .= "<ul>\n";
 						foreach($children as $c=>$child) {
 							$cpid = $child->getXref();
 							if ($child) {
@@ -1836,7 +1828,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								// Childs Details -------------------------
 								if ($TEXT_DIRECTION=="ltr") {
 									$title = $pgv_lang["indi_info"].": ".$cpid;
-									$spouselinks .= "\n\t\t\t\to&nbsp;&nbsp;";
+									$spouselinks .= "<li>";
 									if ($child->canDisplayName()) {
 										$nam   = $child->getAllNames();
 										$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
@@ -1901,9 +1893,10 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}else{ 
 										$spouselinks .= $pgv_lang["private"];
 									}
-									$spouselinks .= "<br />";
+									$spouselinks .= "</li>";
 								}else{
 									$title = $cpid." :".$pgv_lang["indi_info"];
+									$spouselinks .= "<li>";
 									if ($child->canDisplayName()) {
 										$spouselinks .= "<a href=\"javascript:insertRowToTable(";
 										$spouselinks .=	"'".PrintReady($child->getXref())."',";						// pid		=	PID
@@ -1960,10 +1953,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$spouselinks .= "o&nbsp;&nbsp;";
 										$spouselinks .= $pgv_lang["private"];
 									}
-									$spouselinks .= "<br />";
+									$spouselinks .= "</li>";
 								}
 							}
 						}
+						$spouselinks .= "</ul><p id=\"endul\" />\n";
 					}
 				}
 				?>
