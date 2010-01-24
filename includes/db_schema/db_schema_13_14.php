@@ -76,7 +76,6 @@ if (file_exists($INDEX_DIRECTORY.'banned.php')) {
 	if (!empty($banned) && is_array($banned)) {
 		foreach ($banned as $value) {
 			try {
-				var_dump($value);
 				if (is_array($value)) {
 					// New format: array(ip, comment)
 					$statement->execute(array($value[0], 'banned', $value[1]));
