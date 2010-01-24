@@ -72,43 +72,26 @@ function gen_spider_session_name($bot_name, $bot_language) {
 }
 
 
-/**
-  * Remote IP Address Banning
-  */
-if (file_exists($INDEX_DIRECTORY."banned.php")) {
-	require $INDEX_DIRECTORY.'banned.php';
-	//loops through each ip in banned.php
-	foreach($banned as $value) {
-		//creates a regex foreach ip
-		$ipRegEx = '';
-		if (is_array($value)) {
-			// New style: aa.bb.cc.dd,comment
-			$arrayIP = explode('*', $value[0]);
-			$comment = $value[1];
-		} else {
-			// Old style: aa.bb.cc.dd
-			$arrayIP = explode('*', $value);
-			$comment = '';
+// Block sites by IP address.
+// Convert user-friendly such as '123.45.*.*' into SQL '%' wildcards.
+// Note: you may need to blcok IPv6 addresses as well as IPv4 ones.
+try {
+	$banned_ip=PGV_DB::prepareLimit(
+		"SELECT ip_address, comment FROM {$TBLPREFIX}ip_address".
+		" WHERE category='banned' AND ? LIKE REPLACE(ip_address, '*', '%')",
+		1
+	)->execute(array($_SERVER['REMOTE_ADDR']))->fetchOneRow();
+	if ($banned_ip) {
+		$log_msg='session_spider.php blocked IP Address: '.$_SERVER['REMOTE_ADDR'].' by regex: '.$banned_ip->ip_address;
+		if ($banned_ip->comment) {
+			$log_msg.=' ('.$banned_ip->comment.')';
 		}
-		$ipRegEx .= $arrayIP[0];
-		if (count($arrayIP) > 1) {
-			for($i=1; $i < count($arrayIP); $i++) {
-				if($i == (count($arrayIP))) $ipRegEx .= "\d{0,3}";
-	 			else $ipRegEx .= "\d{0,3}".$arrayIP[$i];
-			}
-		}
-		//checks the remote ip address against each ip regex
-		if (preg_match('/^'.$ipRegEx.'/', $_SERVER['REMOTE_ADDR'])) {
-			//adds a message to the log and exits with an Access Denied header
-			if (empty($comment)) {
-				AddToLog("genservice.php blocked IP Address: ".$_SERVER['REMOTE_ADDR']." by regex: ".$ipRegEx);
-			} else {
-				AddToLog("genservice.php blocked IP Address: ".$_SERVER['REMOTE_ADDR']." by regex: ".$ipRegEx.' ('.$comment.')');
-			}
-			header("HTTP/1.1 403 Access Denied");
-			exit;
-		}
+		AddToLog($log_msg);
+		header('HTTP/1.1 403 Access Denied');
+		exit;
 	}
+} catch (PDOException $ex) {
+	// Initial installation?  Site Down?  Fail silently.
 }
 
 // Search Engines are treated special, and receive only core data, without the
@@ -347,48 +330,32 @@ if (!empty($SEARCH_SPIDER)) {
 	}
 }
 
-/**
- * Manual Search Engine IP Address tagging
- *   Allow an admin to mark IP addresses as known search engines even if
- *   they are not automatically detected above.   Setting his own IP address
- *   in this file allows him to see exactly what the search engine receives.
- *   To return to normal, the admin MUST use a different IP to get to admin
- *   mode or edit search_engines.php by hand.
- */
-if (file_exists($INDEX_DIRECTORY.'search_engines.php')) {
-	require $INDEX_DIRECTORY.'search_engines.php';
-	//loops through each ip in search_engines.php
-	foreach($search_engines as $value) {
-		//creates a regex foreach ip
-		$ipRegEx = '';
-		if (is_array($value)) {
-			// New style: aa.bb.cc.dd,comment
-			$arrayIP = explode('*', $value[0]);
-			$comment = $value[1];
-		} else {
-			// Old style: aa.bb.cc.dd
-			$arrayIP = explode('*', $value);
-			$comment = '';
-		}
-		$ipRegEx .= $arrayIP[0];
-		if (count($arrayIP) > 1) {
-			for($i=1; $i < count($arrayIP); $i++) {
-				if ($i == (count($arrayIP))) $ipRegEx .= "\d{0,3}";
- 				else $ipRegEx .= "\d{0,3}".$arrayIP[$i];
+// Manual Search Engine IP Address tagging
+//   Allow an admin to mark IP addresses as known search engines even if
+//   they are not automatically detected above.   Setting his own IP address
+//   in the ip_address table allows him to see exactly what the search engine receives.
+//   To return to normal, the admin MUST use a different IP to get to admin
+//   mode or update the table pgv_ip_address directly.
+try {
+	$search_engine=PGV_DB::prepareLimit(
+		"SELECT ip_address, comment FROM {$TBLPREFIX}ip_address".
+		" WHERE category='search-engine' AND ? LIKE REPLACE(ip_address, '*', '%')",
+		1
+	)->execute(array($_SERVER['REMOTE_ADDR']))->fetchOneRow();
+	if ($search_engine) {
+		if (empty($SEARCH_SPIDER)) {
+			if ($search_engine->comment) {
+				$SEARCH_SPIDER = 'Manual Search Engine entry of '.$_SERVER['REMOTE_ADDR'].' ('.$search_engine->comment.')';
+			} else {
+				$SEARCH_SPIDER = 'Manual Search Engine entry of '.$_SERVER['REMOTE_ADDR'];
 			}
 		}
-		//checks the remote ip address against each ip regex
-		if (preg_match('/^'.$ipRegEx.'/', $_SERVER['REMOTE_ADDR'])) {
-			if (empty($SEARCH_SPIDER)) {
-				if (empty($comment)) $SEARCH_SPIDER = "Manual Search Engine entry of ".$_SERVER['REMOTE_ADDR'];
-				else $SEARCH_SPIDER = "Manual Search Engine entry of ".$_SERVER['REMOTE_ADDR'].' ('.$comment.')';
-			}
-			$bot_name = "MAN".$_SERVER['REMOTE_ADDR'];
-			$bot_session = gen_spider_session_name($bot_name, "");
-			session_id($bot_session);
-			break;
-		}
+		$bot_name = 'MAN'.$_SERVER['REMOTE_ADDR'];
+		$bot_session = gen_spider_session_name($bot_name, '');
+		session_id($bot_session);
 	}
+} catch (PDOException $ex) {
+	// Initial installation?  Site Down?  Fail silently.
 }
 
 if((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) // user following a search engine listing in,
