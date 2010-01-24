@@ -210,7 +210,7 @@ function file_upload_error_text($error_code) {
  * @return string path to gedcom.ged_conf.php configuration file
  */
 function get_config_file($ged_id=PGV_GED_ID) {
-	global $GEDCOM, $INDEX_DIRECTORY;
+	global $INDEX_DIRECTORY;
 
 	$config=get_gedcom_setting($ged_id, 'config');
 	// Compatibility with non-php based storage, (PGV 4.3.0 onwards)
@@ -277,7 +277,7 @@ function get_privacy_file_version($privfile) {
  * @return string path to the privacy file
  */
 function get_privacy_file($ged_id=PGV_GED_ID) {
-	global $GEDCOM, $INDEX_DIRECTORY;
+	global $INDEX_DIRECTORY;
 
 	$privfile=get_gedcom_setting($ged_id, 'privacy');
 	// Compatibility with non-php based storage
