@@ -105,6 +105,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				$personlinks .= "<a href=\"".encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>";
 
 				if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
+					loadLangFile('googlemap:lang');
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_map"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["pedigree_map"];
 					$personlinks .= "<br /><a href=\"".encode_url("module.php?mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["pedigree_map"]."</b></a>";
