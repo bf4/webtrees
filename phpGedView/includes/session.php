@@ -47,7 +47,7 @@ define('PGV_DEBUG_PRIV',  false);
 define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Required version of database tables/columns/indexes/etc.
-define('PGV_SCHEMA_VERSION', 12);
+define('PGV_SCHEMA_VERSION', 13);
 
 // Environmental requirements
 define('PGV_REQUIRED_PHP_VERSION',     '5.2.0'); // 5.2.3 is recommended
@@ -669,7 +669,12 @@ define('PGV_THEME_DIR', $THEME_DIR);
 
 require PGV_THEME_DIR.'theme.php';
 
-require PGV_ROOT.'includes/hitcount.php'; //--load the hit counter
+// Page hit counter - load after theme, as we need theme formatting
+if ($SHOW_COUNTER && !$SEARCH_SPIDER) {
+	require PGV_ROOT.'includes/hitcount.php';
+} else {
+	$hitCount='';
+}
 
 if ($Languages_Default) {            // If Languages not yet configured
 	$pgv_lang_use['english'] = false;  //  disable English

@@ -231,14 +231,9 @@ class UserMigrateControllerRoot extends BaseController {
 			}
 		}
 
-		// Backup logfiles and counters
+		// Backup logfiles
 		if (isset($_POST["um_logs"])) {
 			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-
-				// Gedcom counters
-				if (file_exists($INDEX_DIRECTORY.$ged_name."pgv_counters.txt")) {
-					$this->flist[] = $INDEX_DIRECTORY.$ged_name."pgv_counters.txt";
-				}
 
 				// Gedcom searchlogs and changelogs
 				$dir_var = opendir ($INDEX_DIRECTORY);
