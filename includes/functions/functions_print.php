@@ -421,7 +421,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			}
 		}
 	global $THEME_DIR;
-	include($THEME_DIR."templates/personbox_template.php");
+	require $THEME_DIR.'templates/personbox_template.php';
 }
 
 /**
@@ -629,16 +629,14 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	}
 	$bodyOnLoad .= "\"";
 	if ($view!="preview") {
-		include($headerfile);
+		require $headerfile;
 		$META_AUTHOR = $old_META_AUTHOR;
 		$META_PUBLISHER = $old_META_PUBLISHER;
 		$META_COPYRIGHT = $old_META_COPYRIGHT;
 		$META_DESCRIPTION = $old_META_DESCRIPTION;
 		$META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
-	}
-	else {
-		//include($print_headerfile); // this not use CSS styles
-		include($headerfile);
+	} else {
+		require $headerfile;
 	}
 }
 
@@ -671,9 +669,9 @@ function print_footer() {
 	else $footer_count++;
 	echo "<!-- begin footer -->";
 	if ($view!="preview") {
-		include($footerfile);
+		require $footerfile;
 	} else {
-		include($print_footerfile);
+		require $print_footerfile;
 		echo "<div id=\"backprint\" style=\"text-align: center; width: 95%\">";
 		$backlink = $SCRIPT_NAME."?".get_query_string();
 		if (!$printlink) {

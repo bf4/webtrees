@@ -48,7 +48,7 @@ require_once PGV_ROOT.'js/scriptaculous.js.htm';
 
 <?php
 	// Find if indi and family associated media exists and then count them ( $tot_med_ct)
-	include ('includes/media_reorder_count.php');
+	require 'includes/media_reorder_count.php';
 
 	$gedrec = find_gedcom_record($pid, PGV_GED_ID);
 	$regexp = "/OBJE @(.*)@/";

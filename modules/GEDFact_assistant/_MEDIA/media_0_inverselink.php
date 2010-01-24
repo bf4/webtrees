@@ -156,7 +156,7 @@ global $pgv_lang;
 		echo '</td></tr>';
 		echo '<tr><td class="descriptionbox width20 wrap">', $pgv_lang["current_links"], '</td>';
 		echo '<td class="optionbox wrap">';
-			include ('modules/GEDFact_assistant/_MEDIA/media_query_1a.php');
+		require 'modules/GEDFact_assistant/_MEDIA/media_query_1a.php';
 		echo '</td></tr>';
 	}
 	
@@ -196,7 +196,7 @@ global $pgv_lang;
 	
 	echo '<br /><br />';
 	echo '<input type="hidden" name="idName" id="idName" size="36" value="Name of ID" />';
-	include ('modules/GEDFact_assistant/_MEDIA/media_query_2a.php');
+	require 'modules/GEDFact_assistant/_MEDIA/media_query_2a.php';
 	echo '</td></tr>';
 	// Admin Option CHAN log update override =======================
 	if (PGV_USER_IS_ADMIN) {
@@ -215,7 +215,7 @@ global $pgv_lang;
 	echo '<tr><td class="topbottombar" colspan="2">';
 	echo '<center><input type="submit" value="', $pgv_lang["save"], '" onclick="javascript:shiftlinks();" />';
 	echo '</center></td></tr>';
-	include ('modules/GEDFact_assistant/_MEDIA/media_7_parse_addLinksTbl.php');
+	require 'modules/GEDFact_assistant/_MEDIA/media_7_parse_addLinksTbl.php';
 	echo '</table>';
 	echo '</form>';
 	echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close(); winNav.close(); ">', $pgv_lang["close_window"], '</a><br /></center>';
