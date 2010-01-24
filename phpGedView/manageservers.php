@@ -239,6 +239,7 @@ function showSite(siteID) {
 	} else {
 		$sql.=" ORDER BY comment";
 	}
+	$index=0;
 	$search_engines=PGV_DB::prepare($sql)->fetchAssoc();
 	foreach ($search_engines as $ip_address=>$ip_comment) {
 		echo '<tr><td>';
@@ -247,8 +248,8 @@ function showSite(siteID) {
 		} else {
 			echo '<button name="deleteSearch" value="', $ip_address, '" type="submit">', $pgv_lang["remove"], '</button>';
 		}
-		echo '</td><td><span dir="ltr"><input type="text" name="address', $index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
-		echo '<td><input type="text" name="comment', $index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
+		echo '</td><td><span dir="ltr"><input type="text" name="address', ++$index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
+		echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
 	}
 	echo '<tr><td valign="top"><input name="action" type="hidden" value="addSearch"/>';
 	if (isset($PGV_IMAGES["add"]["other"])) {
@@ -299,8 +300,8 @@ function showSite(siteID) {
 		} else {
 			echo '<button name="deleteBanned" value="', $ip_address, '" type="submit">', $pgv_lang["remove"], '</button>';
 		}
-		echo '</td><td><span dir="ltr"><input type="text" name="address', $index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
-		echo '<td><input type="text" name="comment', $index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
+		echo '</td><td><span dir="ltr"><input type="text" name="address', ++$index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
+		echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
 	}
 	echo '<tr><td valign="top"><input name="action" type="hidden" value="addBanned"/>';
 	if (isset($PGV_IMAGES["add"]["other"])) {
