@@ -427,21 +427,26 @@ function addMessage($message) {
 	global $PHPGEDVIEW_EMAIL;
 
 	//-- do not allow users to send a message to themselves
-	if ($message["from"]==$message["to"])
+	if ($message["from"]==$message["to"]) {
 		return false;
+	}
+
+	$user_id_from=get_user_id($message['from']);
+	$user_id_to  =get_user_id($message['to']);
 
 	require_once PGV_ROOT.'includes/functions/functions_mail.php';
 
-	if (!get_user_name($message["to"])) {
-			//-- the to user must be a valid user in the system before it will send any mails
-			return false;
+	if (!$user_id_to) {
+		//-- the to user must be a valid user in the system before it will send any mails
+		return false;
 	}
 
 	// Switch to the "from" user's language
 	$oldLanguage = $LANGUAGE;
-	$from_lang=get_user_setting($message["from"], 'language');
-	if ($from_lang && $LANGUAGE!=$from_lang)
+	$from_lang=get_user_setting($user_id_from, 'language');
+	if ($from_lang && $LANGUAGE!=$from_lang) {
 		loadLanguage($from_lang);
+	}
 
 	//-- setup the message body for the "from" user
 	$email2 = $message["body"];
@@ -454,22 +459,22 @@ function addMessage($message) {
 	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
 	$subject2 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 	$from ="";
-	if (!get_user_id($message["from"])) {
+	if (!$user_id_from) {
 		$from = $message["from"];
 		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".$email2;
 		$fromFullName = $message["from"];
 	} else {
-		$fromFullName = getUserFullName($message['from']);
+		$fromFullName = getUserFullName($user_id_from);
 		if (!$PGV_SIMPLE_MAIL)
-			$from = hex4email($fromFullName,$CHARACTER_SET). " <".get_user_setting($message["from"], 'email').">";
+			$from = hex4email($fromFullName,$CHARACTER_SET). " <".get_user_setting($user_id_from, 'email').">";
 		else
-			$from = get_user_setting($message["from"], 'email');
+			$from = get_user_setting($user_id_from, 'email');
 		$email2 = $pgv_lang["message_email2"]."\r\n\r\n".$email2;
 
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
-		if (!get_user_id($message["from"])) {
+		if (!$user_id_from) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"])) {
 				$email1 .= $message["from_name"]."\r\n\r\n".$message["body"];
@@ -482,9 +487,9 @@ function addMessage($message) {
 		}
 		if (!isset($message["no_from"])) {
 			if (stristr($from, $PHPGEDVIEW_EMAIL)){
-				$from = get_user_setting($WEBMASTER_EMAIL, 'email');
+				$from = get_user_setting(get_user_id($WEBMASTER_EMAIL), 'email');
 			}
-			if (!get_user_id($message["from"])) {
+			if (!$user_id_from) {
 				$header2 = $PHPGEDVIEW_EMAIL;
 			} elseif (isset($to)) {
 				$header2 = $to;
@@ -496,14 +501,14 @@ function addMessage($message) {
 	}
 
 	//-- Load the "to" users language
-	$to_lang=get_user_setting($message["to"], 'language');
-	if ($to_lang && $LANGUAGE!=$to_lang)
+	$to_lang=get_user_setting($user_id_to, 'language');
+	if ($to_lang && $LANGUAGE!=$to_lang) {
 		loadLanguage($to_lang);
-
+	}
 	if (isset($message["from_name"]))
 		$message["body"] = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$message["body"];
 	//-- [ phpgedview-Feature Requests-1588353 ] Supress admin IP address in Outgoing PGV Email
-	if (!userIsAdmin(get_user_id($message["from"]))) {
+	if (!userIsAdmin($user_id_from)) {
 		if (!empty($message["url"]))
 			$message["body"] .= "\r\n\r\n--------------------------------------\r\n\r\n".$pgv_lang["viewing_url"]."\r\n".$SERVER_URL.$message["url"]."\r\n";
 		$message["body"] .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
@@ -518,7 +523,7 @@ function addMessage($message) {
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
-		if (!get_user_id($message["from"])) {
+		if (!$user_id_from) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"]))
 				$email1 .= $message["from_name"]."\r\n\r\n".$message["body"];
@@ -528,17 +533,17 @@ function addMessage($message) {
 			$email1 = $pgv_lang["message_email1"];
 			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
 		}
-		if (!get_user_name($message["to"])) {
+		if (!$user_id_to) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 		} else {
-			$toFullName=getUserFullName($message['to']);
+			$toFullName=getUserFullName($user_id_to);
 			if (!$PGV_SIMPLE_MAIL)
-				$to = hex4email($toFullName, $CHARACTER_SET). " <".get_user_setting($message["to"], 'email').">";
+				$to = hex4email($toFullName, $CHARACTER_SET). " <".get_user_setting($user_id_to, 'email').">";
 			else
-				$to = get_user_setting($message["to"], 'email');
+				$to = get_user_setting($user_id_to, 'email');
 		}
-		if (get_user_setting($message["to"], 'email'))
+		if (get_user_setting($user_id_to, 'email'))
 			pgvMail($to, $from, $subject1, $email1);
 	}
 
