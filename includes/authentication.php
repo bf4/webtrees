@@ -445,7 +445,7 @@ function addMessage($message) {
 	$oldLanguage = $LANGUAGE;
 	$from_lang=get_user_setting($user_id_from, 'language');
 	if ($from_lang && $LANGUAGE!=$from_lang) {
-		loadLanguage($from_lang);
+		loadLanguage($from_lang, true);
 	}
 
 	//-- setup the message body for the "from" user
@@ -503,7 +503,7 @@ function addMessage($message) {
 	//-- Load the "to" users language
 	$to_lang=get_user_setting($user_id_to, 'language');
 	if ($to_lang && $LANGUAGE!=$to_lang) {
-		loadLanguage($to_lang);
+		loadLanguage($to_lang, true);
 	}
 	if (isset($message["from_name"]))
 		$message["body"] = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$message["body"];
@@ -548,7 +548,7 @@ function addMessage($message) {
 	}
 
 	if ($LANGUAGE!=$oldLanguage)
-		loadLanguage($oldLanguage);			// restore language settings if needed
+		loadLanguage($oldLanguage, true);			// restore language settings if needed
 
 	return true;
 }
