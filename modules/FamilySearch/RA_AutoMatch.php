@@ -248,7 +248,9 @@ class RA_AutoMatch {
 		$birth = $fsperson->getBirthAssertion();
 		$death = $fsperson->getDeathAssertion();
 		$out = "<a href=\"javascript:;\" onclick=\"window.open('module.php?mod=FamilySearch&amp;pgvaction=FSView&amp;pid=".$this->getServerId().":I".$fsperson->getID()."', '_blank', 'top=50,left=50,width=650,height=450,scrollbars=1,resizable=1'); return false;\">".
-		Person::sexImage($sex{0}).$fsperson->getPrimaryName()->getFullText()." (".$fsperson->getID().")</a><br/>";
+		Person::sexImage($sex{0});
+		if ($fsperson->getPrimaryName()) $out .=$fsperson->getPrimaryName()->getFullText();
+		$out .= " (".$fsperson->getID().")</a><br/>";
 		$out .= "<i>".$factarray['BIRT'].": ";
 		if ($birth) {
 			if ($birth->getDate()) $out .= " ".$birth->getDate()->getOriginal();
