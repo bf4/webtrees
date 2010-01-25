@@ -132,7 +132,7 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 			$message["url"] = $url.'&amp;ged='.$GEDCOM;
 			if ($i>0) $message["no_from"] = true;
 			if (addMessage($message)){
-				if (get_user_id($to)) {
+				if (get_user_name($to)) {
 					print str_replace("#TO_USER#", "<b>".getUserFullName($to)."</b>", $pgv_lang["message_sent"]);
 					print "<br />";
 				} else {
