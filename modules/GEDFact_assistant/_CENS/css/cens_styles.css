@@ -50,17 +50,16 @@
 /* Navigator =================================================================== */
 /* Flyout Link Cell */
 
+/*
 ul {
 	margin-top:0em;
-	margin-bottom:-1em;
+	margin-bottom:0.5em;
 }
 li {
 	margin-left:-1em;
 	margin-top:-1em;
 }
-#endul {
-	margin-top:-1.5em;
-}
+*/
 
 .linkcell a { 
 	display: block;

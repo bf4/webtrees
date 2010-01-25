@@ -205,6 +205,7 @@
 	} else if (location == 'Namibia')									 { var ChapmanCode = 'NAM';
 	} else if (location == 'Nauru')										 { var ChapmanCode = 'NRU';
 	} else if (location == 'Nepal')										 { var ChapmanCode = 'NPL';
+	} else if (location == 'Nederland')									 { var ChapmanCode = 'NLD';
 	} else if (location == 'Netherlands')								 { var ChapmanCode = 'NLD';
 	} else if (location == 'Netherlands Antilles')						 { var ChapmanCode = 'ANT';
 	} else if (location == 'New Caledonia')								 { var ChapmanCode = 'NCL';
@@ -388,7 +389,7 @@
 	
 	// Default ChapmanCode
 	} else {
-		var ChapmanCode = 'Chapman code not available'; 
+		var ChapmanCode = '?NA'; 
 	}
 	return ChapmanCode;
 }

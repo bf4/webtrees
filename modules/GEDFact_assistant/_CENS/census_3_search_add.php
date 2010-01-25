@@ -73,7 +73,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 				<?php
 				//-- Add Family Members to Census  -------------------------------------------
-				global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
+				global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
 				global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
 				global $TEXT_DIRECTION, $GEDCOM; 
 				// echo "CENS = " . $censyear;
@@ -1194,9 +1194,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							<tr>
 								<td align="left" class="linkcell optionbox">
 									<font size=1>
-									<?php 
-										//print $child->getLabel();
-										$menu->printMenu();
+									<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+									$menu->printMenu();
+									if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 									?>
 									</font>
 								</td>
@@ -1796,7 +1796,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						}
 						
 						// Children -------------------------------------
-						$spouselinks .= "<ul>\n";
+						$spouselinks .= "<ul class=\"clist ".$TEXT_DIRECTION."\">\n";
 						foreach($children as $c=>$child) {
 							$cpid = $child->getXref();
 							if ($child) {
@@ -1826,138 +1826,77 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								}
 								
 								// Childs Details -------------------------
-								if ($TEXT_DIRECTION=="ltr") {
-									$title = $pgv_lang["indi_info"].": ".$cpid;
-									$spouselinks .= "<li>";
-									if ($child->canDisplayName()) {
-										$nam   = $child->getAllNames();
-										$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-										$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-										$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
-										$givn  = rtrim($nam[0]['givn'],'*');
-										$surn  = $nam[0]['surname'];
-										if (isset($nam[1]) && isset($ChHusbName)) {
-											$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$ChHusbName;
-										}
-									
-										$spouselinks .= "<a href=\"javascript:insertRowToTable(";
-										$spouselinks .=	"'".PrintReady($child->getXref())."',";						// pid		=	PID
-										$spouselinks .=	"'".strip_tags($fulln)."',";								// nam		=	Name
-										if (isset($nam[1])){
-											$spouselinks .= "'".strip_tags($fulmn)."',";							// mnam		=	Full Married Name
-										} else {
-											$spouselinks .= "'".strip_tags($fulln)."',";							// mnam		=	Full Name
-										}
-										if ($currpid=="Son" || $currpid=="Daughter") {
-											if ($child->getSex()=="M") {
-												$spouselinks .=	"'Grand-Son',";										// label	=	Male Relationship
-											}else{
-												$spouselinks .=	"'Grand-Daughter',";								// label	=	Female Relationship
-											}
-										}else{
-											if ($child->getSex()=="M") {
-												$spouselinks .=	"'Nephew',";										// label	=	Male Relationship
-											}else{
-												$spouselinks .=	"'Niece',";											// label	=	Female Relationship
-											}
-										}
-										$spouselinks .=	"'".PrintReady($child->getSex())."',";						// sex		=	Gender
-										$spouselinks .=	"''".",";													// cond		=	Condition (Married etc)
-										if ($marrdate) {
-											$spouselinks .= "'".(($marrdate->minJD()+$marrdate->maxJD())/2)."',";	// dom = Date of Marriage (Julian)
-										} else {
-											$spouselinks .=	"'nm'".",";
-										}
-										$spouselinks .= "'".(($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2)."',";	 // dob	=	Date of Birth
-										if ($child->getbirthyear()>=1) {
-											$spouselinks .=	"'".PrintReady($censyear-$child->getbirthyear())."',";	// age		= 	Census Year - Year of Birth
-										}else{
-											$spouselinks .=	"''".",";												// age		= 	Undefined
-										}
-										$spouselinks .= "'".(($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2)."',";	 // dod	=	Date of Death
-										$spouselinks .=	"''".",";													// occu 	=	Occupation
-										$spouselinks .= "'".PrintReady($child->getBirthPlace())."'".",";			// birthpl	=	Individuals Birthplace
-										if (isset($ChildFBP)) {
-											$spouselinks .= "'".$ChildFBP."'".",";									// fbirthpl	=	Fathers Birthplace
-										} else {
-											$spouselinks .= "'UNK, UNK, UNK, UNK'".",";								// fbirthpl	=	Fathers Birthplace Not Known
-										}
-										if (isset($ChildMBP)) {
-											$spouselinks .= "'".$ChildMBP."'";										// mbirthpl	=	Mothers Birthplace
-										} else {
-											$spouselinks .= "'UNK, UNK, UNK, UNK'";									// mbirthpl	=	Mothers Birthplace Not Known
-										}
-										$spouselinks .=	");\">";
-										$spouselinks .= PrintReady($child->getFullName());							// Full Name (Link)
-										$spouselinks .= "</a>";
-									}else{ 
-										$spouselinks .= $pgv_lang["private"];
+								$title = $pgv_lang["indi_info"].": ".$cpid;
+								// $spouselinks .= "\n\t\t\t\to&nbsp;&nbsp;";
+								$spouselinks .= "<li>\n";
+								if ($child->canDisplayName()) {
+									$nam   = $child->getAllNames();
+									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
+									$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
+									$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+									$givn  = rtrim($nam[0]['givn'],'*');
+									$surn  = $nam[0]['surname'];
+									if (isset($nam[1]) && isset($ChHusbName)) {
+										$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$ChHusbName;
 									}
-									$spouselinks .= "</li>";
-								}else{
-									$title = $cpid." :".$pgv_lang["indi_info"];
-									$spouselinks .= "<li>";
-									if ($child->canDisplayName()) {
-										$spouselinks .= "<a href=\"javascript:insertRowToTable(";
-										$spouselinks .=	"'".PrintReady($child->getXref())."',";						// pid		=	PID
-										$spouselinks .=	"'".strip_tags($fulln)."',";								// nam		=	Name
-										if (isset($nam[1])){
-											$spouselinks .= "'".strip_tags($fulmn)."',";							// mnam		=	Full Married Name
-										} else {
-											$spouselinks .= "'".strip_tags($fulln)."',";							// mnam		=	Full Name
-										}
-										if ($currpid=="Son" || $currpid=="Daughter") {
-											if ($child->getSex()=="M") {
-												$spouselinks .=	"'Grand-Son',";										// label	=	Male Relationship
-											}else{
-												$spouselinks .=	"'Grand-Daughter',";								// label	=	Female Relationship
-											}
-										}else{
-											if ($child->getSex()=="M") {
-												$spouselinks .=	"'Nephew',";										// label	=	Male Relationship
-											}else{
-												$spouselinks .=	"'Niece',";											// label	=	Female Relationship
-											}
-										}
-										$spouselinks .=	"'".PrintReady($child->getSex())."',";						// sex		=	Gender
-										$spouselinks .=	"'',";														// cond		=	Condition (Married etc)
-										if ($marrdate) {
-											$spouselinks .= "'".(($marrdate->minJD()+$marrdate->maxJD())/2)."',";	// dom		=	Date of Marriage (Julian)
-										}else{
-											$spouselinks .=	"'nm',";
-										}
-										$spouselinks .= "'".(($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2)."',";	 // dob	=	Date of Birth
-										if ($child->getbirthyear()>=1) {
-											$spouselinks .=	"'".PrintReady($censyear-$child->getbirthyear())."',";	// age		= 	Census Year - Year of Birth
-										}else{
-											$spouselinks .=	"''".",";												// age		= 	Undefined
-										}
-										$spouselinks .= "'".(($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2)."',";	 // dod	=	Date of Death
-										$spouselinks .=	"''".",";													// occu 	=	Occupation
-										$spouselinks .= "'".PrintReady($child->getBirthPlace())."'".",";			// birthpl	=	Individuals Birthplace
-										if (isset($ChildFBP)) {
-											$spouselinks .= "'".$ChildFBP."'".",";									// fbirthpl	=	Fathers Birthplace
-										} else {
-											$spouselinks .= "'UNK, UNK, UNK, UNK'".",";								// fbirthpl	=	Fathers Birthplace Not Known
-										}
-										if (isset($ChildMBP)) {
-											$spouselinks .= "'".$ChildMBP."'";										// mbirthpl	=	Mothers Birthplace
-										} else {
-											$spouselinks .= "'UNK, UNK, UNK, UNK'";									// mbirthpl	=	Mothers Birthplace Not Known
-										}
-										$spouselinks .=	");\">";
-										$spouselinks .= PrintReady($child->getFullName());							// Full Name (Link)
-										$spouselinks .= "</a>";
-										$spouselinks .= "&nbsp;&nbsp;o";
-									}else{ 
-										$spouselinks .= "o&nbsp;&nbsp;";
-										$spouselinks .= $pgv_lang["private"];
+								
+									$spouselinks .= "<a href=\"javascript:insertRowToTable(";
+									$spouselinks .=	"'".PrintReady($child->getXref())."',";						// pid		=	PID
+									$spouselinks .=	"'".strip_tags($fulln)."',";								// nam		=	Name
+									if (isset($nam[1])){
+										$spouselinks .= "'".strip_tags($fulmn)."',";							// mnam		=	Full Married Name
+									} else {
+										$spouselinks .= "'".strip_tags($fulln)."',";							// mnam		=	Full Name
 									}
-									$spouselinks .= "</li>";
+									if ($currpid=="Son" || $currpid=="Daughter") {
+										if ($child->getSex()=="M") {
+											$spouselinks .=	"'Grand-Son',";										// label	=	Male Relationship
+										}else{
+											$spouselinks .=	"'Grand-Daughter',";								// label	=	Female Relationship
+										}
+									}else{
+										if ($child->getSex()=="M") {
+											$spouselinks .=	"'Nephew',";										// label	=	Male Relationship
+										}else{
+											$spouselinks .=	"'Niece',";											// label	=	Female Relationship
+										}
+									}
+									$spouselinks .=	"'".PrintReady($child->getSex())."',";						// sex		=	Gender
+									$spouselinks .=	"''".",";													// cond		=	Condition (Married etc)
+									if ($marrdate) {
+										$spouselinks .= "'".(($marrdate->minJD()+$marrdate->maxJD())/2)."',";	// dom = Date of Marriage (Julian)
+									} else {
+										$spouselinks .=	"'nm'".",";
+									}
+									$spouselinks .= "'".(($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2)."',";	 // dob	=	Date of Birth
+									if ($child->getbirthyear()>=1) {
+										$spouselinks .=	"'".PrintReady($censyear-$child->getbirthyear())."',";	// age		= 	Census Year - Year of Birth
+									}else{
+										$spouselinks .=	"''".",";												// age		= 	Undefined
+									}
+									$spouselinks .= "'".(($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2)."',";	 // dod	=	Date of Death
+									$spouselinks .=	"''".",";													// occu 	=	Occupation
+									$spouselinks .= "'".PrintReady($child->getBirthPlace())."'".",";			// birthpl	=	Individuals Birthplace
+									if (isset($ChildFBP)) {
+										$spouselinks .= "'".$ChildFBP."'".",";									// fbirthpl	=	Fathers Birthplace
+									} else {
+										$spouselinks .= "'UNK, UNK, UNK, UNK'".",";								// fbirthpl	=	Fathers Birthplace Not Known
+									}
+									if (isset($ChildMBP)) {
+										$spouselinks .= "'".$ChildMBP."'";										// mbirthpl	=	Mothers Birthplace
+									} else {
+										$spouselinks .= "'UNK, UNK, UNK, UNK'";									// mbirthpl	=	Mothers Birthplace Not Known
+									}
+									$spouselinks .=	");\">";
+									$spouselinks .= PrintReady($child->getFullName());							// Full Name (Link)
+									$spouselinks .= "</a>";
+									$spouselinks .= "</li>\n";
+								}else{ 
+									$spouselinks .= $pgv_lang["private"];
 								}
 							}
 						}
-						$spouselinks .= "</ul><p id=\"endul\" />\n";
+						$spouselinks .= "</ul>\n";
 					}
 				}
 				?>

@@ -844,10 +844,14 @@ global $pgv_lang, $TEXT_DIRECTION;
 			<option value="UK">UK</option>
 			<option value="USA">USA</option>
 		</select>
-		<br /><br />&nbsp;&nbsp; <?php echo $pgv_lang["date"]; ?>:&nbsp;&nbsp;&nbsp;&nbsp; 
+	<div>
+		<table><tr><td nowrap="nowrap">
+		<br />&nbsp;<?php echo $pgv_lang["date"]; ?>:&nbsp;&nbsp; 
 		<font size=2>
 			<input style="width:6em; background:#bbddff;" id="censDate" name="censDate" type="text" value="<?php echo "";?>" READONLY/>
 		</font>
+		</td></tr></table>
+	</div>
 	</div>
 	<div class="cens_sour_year">
 		<span><?php echo $pgv_lang["cens_year"]; ?><br /></span>
@@ -878,10 +882,6 @@ global $pgv_lang, $TEXT_DIRECTION;
 			<div class="cens_sour_2">Notes:</div>
 			<input id="notes" name="notes" type="text" value="<?php echo "";?>" />
 		</div>
-		<!--
-		<div class="spacer">
-		</div>
-		-->
-	</div>				
+	</div>
 </div>
 			
