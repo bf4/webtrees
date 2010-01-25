@@ -120,7 +120,7 @@ switch ($action) {
 
 				// switch language to user settings
 				$oldLanguage = $LANGUAGE;
-				if ($LANGUAGE != get_user_setting($user_id, 'language')) loadLanguage(get_user_setting($user_id, 'language'));
+				if ($LANGUAGE != get_user_setting($user_id, 'language')) loadLanguage(get_user_setting($user_id, 'language'), true);
 				$newuserName=getUserFullName($user_id);
 
 				$mail_body = "";
@@ -146,7 +146,7 @@ switch ($action) {
 				<?php
 				AddToLog("Password request was sent to user: ".$user_name);
 
-				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage);   // Reset language
+				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage, true);   // Reset language
 			}
 		}
 		print "</div>";
@@ -413,7 +413,7 @@ switch ($action) {
 				if ($user_created_ok) {
 					// switch to the user's language
 					$oldLanguage = $LANGUAGE;
-					if ($LANGUAGE != $user_language) loadLanguage($user_language);
+					if ($LANGUAGE != $user_language) loadLanguage($user_language, true);
 
  					if ($NAME_REVERSE) $fullName = $user_lastname." ".$user_firstname;
 					else $fullName = $user_firstname." ".$user_lastname;
@@ -440,7 +440,7 @@ switch ($action) {
 
 					// switch language to webmaster settings
 					$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
-					if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang);
+					if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang, true);
 
 					$mail_body = "";
 					$mail_body .= $pgv_lang["mail02_line01"] . "\r\n\r\n";
@@ -469,7 +469,7 @@ switch ($action) {
 					addMessage($message);
 
 					// switch language to user's settings
-					if ($LANGUAGE != $user_language) loadLanguage($user_language);
+					if ($LANGUAGE != $user_language) loadLanguage($user_language, true);
 					?>
 					<table class="center facts_table">
 						<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print str_replace("#user_fullname#", $user_firstname." ".$user_lastname, $pgv_lang["thankyou"]);?><br /><br />
@@ -480,7 +480,7 @@ switch ($action) {
 						</td></tr>
 					</table>
 					<?php
-					if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage);		// Reset language
+					if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage, true);		// Reset language
 				}
 				print "</div>";
 			} else {
@@ -503,7 +503,7 @@ switch ($action) {
 		$oldLanguage = $LANGUAGE;
 		$user_id=get_user_id($user_name);
 		$user_lang=get_user_setting($user_id, 'language');
-		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
+		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang, true);
 
 		print_header($pgv_lang['user_verify']);
 		print "<div class=\"center\">";
@@ -537,7 +537,7 @@ switch ($action) {
 		// Change to the new user's language
 		$user_id=get_user_id($user_name);
 		$user_lang=get_user_setting($user_id, 'language');
-		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
+		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang, true);
 		$oldLanguage = $LANGUAGE;
 
 		print_header($pgv_lang['user_verify']); // <-- better verification of authentication code
@@ -561,11 +561,11 @@ switch ($action) {
 
 				// switch language to webmaster settings
 				$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
-				if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang);
+				if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang, true);
 
 				$mail_body = "";
 				$mail_body .= $pgv_lang["mail03_line01"] . "\r\n\r\n";
-				$mail_body .= str_replace(array("#newuser[username]#", "#newuser[fullname]#"), array($user_name, getUserFullName($user_name)), $pgv_lang["mail03_line02"]) . "\r\n\r\n";
+				$mail_body .= str_replace(array("#newuser[username]#", "#newuser[fullname]#"), array($user_name, getUserFullName($user_id)), $pgv_lang["mail03_line02"]) . "\r\n\r\n";
 				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= $pgv_lang["mail03_line03"] . "\r\n";
 				else $mail_body .= $pgv_lang["mail03_line03a"] . "\r\n";
 
@@ -588,7 +588,7 @@ switch ($action) {
 				$message["no_from"] = true;
 				addMessage($message);
 
-				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage);		// Reset language
+				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage, true);		// Reset language
 
 				print "<br /><br />".$pgv_lang["pls_note09"]."<br /><br />";
 				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print $pgv_lang["pls_note10"];
