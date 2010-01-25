@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: [ 2937064 ] Upgrade from 4.2.3 loses users/accounts (fisharebest)
  - Changed: Default sorting by lastname in user administration (volschin) 
  - Fixed: Sorting by username in user administration (volschin) 
  - Added: [ 1717787 ] Gedcomname.gedpgv_counters.txt in backup (fisharebest)
