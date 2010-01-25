@@ -832,7 +832,7 @@ function user_contact_link($user_id, $method=null) {
 	case 'mailto':
 		return "<a href='mailto:{$email}' {$access}>{$fullname}</a>";
 	default:
-		return "<a href='javascript:;' onclick='message(\"{$user_id}\", \"{$method}\");return false;' {$access}>{$fullname}</a>";
+		return "<a href='javascript:;' onclick='message(\"".get_user_name($user_id)."\", \"{$method}\");return false;' {$access}>{$fullname}</a>";
 	}
 }
 
@@ -863,7 +863,7 @@ function user_contact_menu($user_id, $method=null) {
 	case 'mailto':
 		return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>"mailto:{$email}");
 	default:
-		return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>'#', 'onclick'=>"message('{$user_id}', '{$method}');return false;");
+		return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>'#', 'onclick'=>"message('".get_user_name($user_id)."', '{$method}');return false;");
 	}
 }
 
