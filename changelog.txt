@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.3.0
+ - Changed: Default sorting by lastname in user administration (volschin) 
+ - Fixed: Sorting by username in user administration (volschin) 
  - Added: [ 1717787 ] Gedcomname.gedpgv_counters.txt in backup (fisharebest)
  - Added: [ 2677563 ] Counters in MySQL rather than in file. (fisharebest)
  - Fixed: [ 2928619 ] Burial w/o Death -> (on the date of death) (fisharebest)
