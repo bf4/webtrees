@@ -2598,7 +2598,7 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 
 	if ($key1=='username') {
 		return
-			PGV_DB::prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user ORDER BY user_id")
+			PGV_DB::prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user ORDER BY user_name")
 			->fetchAssoc();
 	} else {
 		return
