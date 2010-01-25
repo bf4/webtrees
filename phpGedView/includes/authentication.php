@@ -127,7 +127,7 @@ function userUpdateLogin($user_id) {
  * get the current user's ID and Name
  *
  * Returns 0 and NULL if we are not logged in.
- * 
+ *
  * If you want to embed PGV within a content management system, you would probably
  * rewrite these functions to extract the data from the parent system, and then
  * populate PGV's user/user_setting/user_gedcom_setting tables as appropriate.
@@ -432,7 +432,7 @@ function addMessage($message) {
 
 	require_once PGV_ROOT.'includes/functions/functions_mail.php';
 
-	if (!get_user_id($message["to"])) {
+	if (!get_user_name($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 	}
@@ -528,7 +528,7 @@ function addMessage($message) {
 			$email1 = $pgv_lang["message_email1"];
 			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
 		}
-		if (!get_user_id($message["to"])) {
+		if (!get_user_name($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 		} else {
