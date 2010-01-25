@@ -308,8 +308,6 @@ if (!empty($_SERVER['HTTP_USER_AGENT'])) {
 require PGV_ROOT.'includes/session_spider.php';
 
 //-- start the php session
-$time = time()+$PGV_SESSION_TIME;
-$date = date('D M j H:i:s T Y', $time);
 //-- set the path to the pgv site so that users cannot login on one site
 //-- and then automatically be logged in at another site on the same server
 $pgv_path = '/';
@@ -318,8 +316,7 @@ if (!empty($SCRIPT_NAME)) {
 	if (strstr($SERVER_URL, $dirname)!==false) $pgv_path = str_replace("\\", '/', $dirname);
 	unset($dirname);
 }
-session_set_cookie_params($date, $pgv_path);
-unset($date);
+session_set_cookie_params(date('D M j H:i:s T Y', time()+$PGV_SESSION_TIME), $pgv_path);
 unset($pgv_path);
 
 if ($PGV_SESSION_TIME>0) {
