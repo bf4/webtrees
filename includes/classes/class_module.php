@@ -264,8 +264,11 @@ abstract class PGVModule {
 			if ($row->mod_name!=$entry) {
 				$entry = $row->mod_name;
 				$mod = PGVModule::getInstance($row);
-				$modules[$entry] = $mod;
-				$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
+				if ($mod) {
+					$modules[$entry] = $mod;
+					$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
+				}
+				else AddToLog("Invalide module ".$entry);
 			}
 			else {
 				$mod = $modules[$entry];
@@ -289,8 +292,11 @@ abstract class PGVModule {
 			if ($row->mod_name!=$entry) {
 				$entry = $row->mod_name;
 				$mod = PGVModule::getInstance($row);
-				$modules[$entry] = $mod;
-				$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
+				if ($mod) { 
+					$modules[$entry] = $mod;
+					$mod->setGeneralAccess($row->mp_type, $row->mp_access, $row->mp_file);
+				}
+				else AddToLog("Invalide module ".$entry);
 			}
 			else {
 				$mod = $modules[$entry];

@@ -250,6 +250,7 @@ class IndividualControllerRoot extends BaseController {
 		$this->modules = PGVModule::getActiveList('T');
 		uasort($this->modules, "PGVModule::compare_tab_order");
 		$count = 0;
+		if (empty($this->default_tab)) $this->default_tab=0;
 		foreach($this->modules as $mod) {
 			if ($mod->hasTab()) {
 				$tab = $mod->getTab();

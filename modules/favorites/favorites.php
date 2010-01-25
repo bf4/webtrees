@@ -15,16 +15,6 @@ class favorites_Sidebar extends Sidebar {
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $GEDCOM;
 
-
-		$gid='';
-		if (PGV_USER_NAME && isset($this->controller)) {
-			if (!empty($this->controller->pid)) $gid = $this->controller->pid;
-			if (!empty($this->controller->famid)) $gid = $this->controller->famid;
-			if (!empty($this->controller->sid)) $gid = $this->controller->sid;
-			if (!empty($this->controller->mid)) $gid = $this->controller->mid;
-			if (!empty($this->controller->rid)) $gid = $this->controller->rid;
-		}
-
 		$out = '';
 
 		$out .= '<script type="text/javascript">
@@ -39,15 +29,22 @@ class favorites_Sidebar extends Sidebar {
 			</script>
 			<div id="sb_favorites_content">';
 		$out .= $this->getFavsList();
-		if ($gid!='') {
-			$out .= '<a class="load_href" href="sidebar.php?sb_action=favorites&amp;addfav='.$gid.'"><em>'.$pgv_lang['add_to_my_favorites'].'</em></a>';
-		}
 		$out .= '</div>';
 		return $out;
 	}
 
 	public function getFavsList() {
 		global $pgv_lang, $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES;
+
+		$gid='';
+		if (PGV_USER_NAME && isset($this->controller)) {
+			if (!empty($this->controller->pid)) $gid = $this->controller->pid;
+			if (!empty($this->controller->famid)) $gid = $this->controller->famid;
+			if (!empty($this->controller->sid)) $gid = $this->controller->sid;
+			if (!empty($this->controller->mid)) $gid = $this->controller->mid;
+			if (!empty($this->controller->rid)) $gid = $this->controller->rid;
+		}
+
 		$out ='';
 		$gedcomfavs = getUserFavorites($GEDCOM);
 		$userfavs = array();
@@ -60,6 +57,7 @@ class favorites_Sidebar extends Sidebar {
 				$out .= PrintReady($favorite["title"]);
 				$out .= '</a></li>';
 			} else {
+				if ($favorite["gid"]==$gid) $gid='';
 				$record=GedcomRecord::getInstance($favorite["gid"]);
 				if ($record && $record->canDisplayName()) {
 					$out .= '<li><a href="'.encode_url($record->getLinkUrl()).'">';
@@ -77,7 +75,36 @@ class favorites_Sidebar extends Sidebar {
 			}
 		}
 		$out .= '</ul>';
+		if ($gid!='') {
+			$out .= '<a class="load_href" href="sidebar.php?sb_action=favorites&amp;addfav='.$gid.'"><em>'.$pgv_lang['add_to_my_favorites'].'</em></a>';
+		}
 
+		if (count($gedcomfavs)>0) {
+			$out .= '<strong>'.$pgv_lang["gedcom_favorites"].'</strong>';
+			$out .= '<ul>';
+			foreach($gedcomfavs as $key=>$favorite) {
+				$GEDCOM = $favorite["file"];
+				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
+					$out .= '<li><a href="'.encode_url($favorite["url"]).'">';
+					$out .= PrintReady($favorite["title"]);
+					$out .= '</a></li>';
+				} else {
+					if ($favorite["gid"]==$gid) $gid='';
+					$record=GedcomRecord::getInstance($favorite["gid"]);
+					if ($record && $record->canDisplayName()) {
+						$out .= '<li><a href="'.encode_url($record->getLinkUrl()).'">';
+						$out .= PrintReady($record->getFullName());
+						if ($record->getType()=="INDI" && $record->canDisplayDetails()) {
+							$bd = $record->getBirthDeathYears(false,'');
+							if (!empty($bd)) $out .= ' '.PrintReady('('.$bd.')');
+						}
+						$out .= '</a>';
+						$out .= '</li>';
+					}
+				}
+			}
+		}
+		$out .= '</ul>';
 		return $out;
 	}
 
