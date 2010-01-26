@@ -157,7 +157,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
 			if ($SHOW_FACT_ICONS)
 				echo $eventObj->Icon(), ' ';
-			echo $factarray[$fact];
+			echo $label;
 			if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", $pgv_lang["number_sign"], $n_chil++;
 			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", $pgv_lang["number_sign"], $n_gchi++;
 			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", $pgv_lang["number_sign"], $n_ggch++;
@@ -455,8 +455,9 @@ function print_fact(&$eventObj, $noedit=false) {
 								$func($factref, $fact);
 							}
 						}
+						$label = $factref;
 						if (isset($factarray[$factref])) $label = $factarray[$factref];
-						else $label = $factref;
+						if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
 						if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif"))
 							//echo $eventObj->Icon(), ' '; // print incorrect fact icon !!!
 							echo "<img src=\"{$PGV_IMAGE_DIR}/facts/", $factref, ".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
