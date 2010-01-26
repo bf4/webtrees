@@ -6,7 +6,7 @@
  * routines and sorting functions.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3425,12 +3425,13 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	}
 
 	// Modify certain spellings if Ashkenazi pronounciations are in use.
-	if ($JEWISH_ASHKENAZ_PRONUNCIATION)
+	if ($JEWISH_ASHKENAZ_PRONUNCIATION) {
 		switch($lang_short_cut[$LANGUAGE]) {
 		case 'en':
 			$pgv_lang['csh']='Cheshvan';
 			$pgv_lang['tvt']='Teves';
 			break;
+		}
 	}
 
 	// Special formatting options; R selects conversion to a language-dependent calendar.
