@@ -1,6 +1,35 @@
 <?php
+/**
+ * Classes and libraries for module system
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2010 John Finlay
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Modules
+ * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
+ */
 
-require_once 'includes/classes/class_sidebar.php';
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+require_once PGV_ROOT.'includes/classes/class_sidebar.php';
 
 class favorites_Sidebar extends Sidebar {
 
@@ -79,7 +108,7 @@ class favorites_Sidebar extends Sidebar {
 			$out .= '<a class="load_href" href="sidebar.php?sb_action=favorites&amp;addfav='.$gid.'"><em>'.$pgv_lang['add_to_my_favorites'].'</em></a>';
 		}
 
-		if (count($gedcomfavs)>0) {
+		if (count($gedcomfavs)>0 || PGV_USER_IS_ADMIN) {
 			$out .= '<strong>'.$pgv_lang["gedcom_favorites"].'</strong>';
 			$out .= '<ul>';
 			foreach($gedcomfavs as $key=>$favorite) {
@@ -99,12 +128,22 @@ class favorites_Sidebar extends Sidebar {
 							if (!empty($bd)) $out .= ' '.PrintReady('('.$bd.')');
 						}
 						$out .= '</a>';
+						if (PGV_USER_GEDCOM_ADMIN) {
+							$out .= ' <a class="load_href" href="sidebar.php?sb_action=favorites&amp;remfav='.$favorite["id"].'">';
+							$out .= '<img src="'. $PGV_IMAGE_DIR. "/". $PGV_IMAGES["remove"]["other"].'" border="0" alt="'.$pgv_lang["remove"].'" title="'.$pgv_lang["remove"].'" />';
+							$out .= '</a>';
+						}
 						$out .= '</li>';
 					}
 				}
 			}
+			$out .= '</ul>';
+			if (PGV_USER_GEDCOM_ADMIN) {
+				if ($gid!='') {
+					$out .= '<a class="load_href" href="sidebar.php?sb_action=favorites&amp;addfav='.$gid.'&amp;user=gedcom"><em>'.$pgv_lang['add_to_my_favorites'].'</em></a>';
+				}
+			}
 		}
-		$out .= '</ul>';
 		return $out;
 	}
 
@@ -117,7 +156,10 @@ class favorites_Sidebar extends Sidebar {
 			$record = GedcomRecord::getInstance($gid);
 			if ($record) {
 				$favorite = array();
-				$favorite["username"] = PGV_USER_NAME;
+				$username = safe_GET('user', PGV_USER_NAME);
+				if (PGV_USER_GEDCOM_ADMIN && $username=='gedcom') $username = $GEDCOM;
+				else $username = PGV_USER_NAME;
+				$favorite["username"] = $username;
 				$favorite["gid"] = $gid;
 				$favorite["type"] = $record->getType();
 				$favorite["file"] = $GEDCOM;
