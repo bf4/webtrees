@@ -3,7 +3,7 @@
  * Interface to edit place locations
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010 PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,35 +33,12 @@ require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 require $INDEX_DIRECTORY."pgv_changes.php";
 
-loadLangFile("pgv_facts, googlemap:lang, googlemap:help_text");
+loadLangFile("pgv_facts, googlemap:lang, googlemap:help_text, pgv_country");
 
 if (isset($_REQUEST['countrySelected'])) $countrySelected = $_REQUEST['countrySelected'];
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 
-$saveLanguage = $LANGUAGE;
-$LANGUAGE = $deflang;
-loadLangFile("pgv_country");
-$LANGUAGE = $saveLanguage;
-
-if(!function_exists('scandir')) {
-	function scandir($dir, $sortorder = 0) {
-		if(is_dir($dir)) {
-			$dirlist = opendir($dir);
-			while( ($file = readdir($dirlist)) !== false) {
-				if(!is_dir($file)) {
-					$files[] = $file;
-				}
-			}
-			($sortorder == 0) ? asort($files) : rsort($files); // arsort was replaced with rsort
-		return $files;
-		} else {
-			return FALSE;
-			break;
-		}
-	}
-}
-
-if(!isset($countrySelected)) $countrySelected="Countries";
+if (!isset($countrySelected)) $countrySelected="Countries";
 
 print_simple_header($pgv_lang["flags_edit"]);
 
