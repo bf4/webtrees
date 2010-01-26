@@ -467,7 +467,7 @@ $pgv_lang["indi_info"]			= "מידע אישי";
 $pgv_lang["pedigree_chart"]		= "אילן יוחסין";
 $pgv_lang["individual"]			= "אדם";
 $pgv_lang["as_spouse"]		= "משפחה עם בן/בת זוג";
-$pgv_lang["privacy_error"]		= ".הנתונים הם פרטיים ולא ניתן להראות אותם";
+$pgv_lang["privacy_error"]		= "הנתונים הם פרטיים ולא ניתן להראות אותם.";
 $pgv_lang["more_information"]	= "לפרטים נוספים נא להתקשר אל ";
 $pgv_lang["given_name"]		= "שם פרטי:";
 $pgv_lang["surname"]			= "שם משפחה:";
@@ -1555,6 +1555,7 @@ $pgv_lang["adding"]        		= "מוסיף";
 $pgv_lang["updating_linked"]        	= "מעדכן רשומה קשורה";
 $pgv_lang["merge_more"]		= "מזג רשומות נוספות.";
 $pgv_lang["same_ids"]                        	= "הכנסת קוד זיהוי זהה. לא ניתן למזג רשומה זהה.";
+$pgv_lang["updated_favorites"] 	= "מועדפים עודכנו.";
 
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"] 		= "תרשים שושלת";
