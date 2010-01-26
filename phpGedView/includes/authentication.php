@@ -361,7 +361,6 @@ function AddToSearchLog($LogString, $allgeds) {
 			$logfile=$INDEX_DIRECTORY.'srch-'.$ged_name.date('Ymd').'.log';
 			break;
 		}
-		var_dump($logfile);
 		if (is_writable($INDEX_DIRECTORY)) {
 			$logline='Date / Time: '.date('d.m.Y H:i:s').' - IP: '.$_SERVER['REMOTE_ADDR'].' - User: '.PGV_USER_NAME.'<br />';
 			if (count($allgeds)==count($all_geds)) {
