@@ -3453,13 +3453,16 @@ class stats {
 			}
 			$per = round(100 * $count_per / $tot_indi, 0);
 			$chd .= self::_array_to_extended_encoding($per);
+			//ToDo: RTL names are often printed LTR when also LTR names are present
 			$chl[] = $top_name.' - '.$count_per;
-			$chart_title .= $top_name.' ['.$count_per.'], ';
+			$chart_title .= $top_name.' - '.$count_per.', ';
+			
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
 		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
-		$chart_title .= $pgv_lang["other"].' ['.($tot_indi-$tot).']';
+		$chart_title .= $pgv_lang["other"].' - '.($tot_indi-$tot);
+		
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
@@ -3613,13 +3616,16 @@ class stats {
 				$per = round(100 * $count / $tot_indi, 0);
 			}
 			$chd .= self::_array_to_extended_encoding($per);
+			//ToDo: RTL names are often printed LTR when also LTR names are present
 			$chl[] = $givn.' - '.$count;
-			$chart_title .= $givn.' ['.$count.'], ';
+			$chart_title .= $givn.' - '.$count.', ';
+			
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
 		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
-		$chart_title .= $pgv_lang["other"].' ['.($tot_indi-$tot).']';
+		$chart_title .= $pgv_lang["other"].' - '.($tot_indi-$tot);
+		
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
