@@ -501,8 +501,6 @@ if ((empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESSION['CLANGUAGE']
 $thisUser = getUserId();
 if ($thisUser) $LANGUAGE = get_user_setting($thisUser, 'language');
 
-$deflang = $LANGUAGE;
-
 // -- If the user previously selected a language from the menu, use that
 if (empty($SEARCH_SPIDER)) {
 	if (!empty($_SESSION['CLANGUAGE'])) {
