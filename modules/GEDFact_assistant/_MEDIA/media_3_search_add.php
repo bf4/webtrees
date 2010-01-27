@@ -1398,8 +1398,9 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 							}
 						}
 						
-						// Children ------------------------------   @var $child Person 
+						// Children ------------------------------   @var $child Person
 						$spouselinks .= "<div id='spouseFam'>";
+						$spouselinks .= "<ul class=\"clist ".$TEXT_DIRECTION."\">\n";
 						foreach($children as $c=>$child) {
 							$cpid = $child->getXref();
 							if ($child) {
@@ -1452,6 +1453,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$spouselinks .= "</li>\n";
 							}
 						}
+						$spouselinks .= "</ul>\n";
 						$spouselinks .= "</div>";
 					}
 				}

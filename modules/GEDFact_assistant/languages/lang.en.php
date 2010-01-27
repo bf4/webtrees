@@ -38,6 +38,8 @@ $pgv_lang["cens_year"]			= "Year";
 $pgv_lang["cens_preview"]		= "Click &quot;Preview&quot; to copy Edit Input Fields";
 $pgv_lang["cens_proposed"]		= "Proposed Census Text&nbsp;&nbsp;";
 $pgv_lang["cens_add_insert"]	= "Add/Insert Blank Row";
+$pgv_lang["enter_name"]			= "You must enter a name";
+
 
 
 // COMMON Census Parameters ================================================ 
