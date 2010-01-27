@@ -157,7 +157,7 @@ function autocomplete_INDI($FILTER, $OPTION) {
 		" ORDER BY n_sort";
 	$rows=
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
-		->execute(array("%{$FILTER}%", "%{$FILTER}%", PGV_GED_ID))
+		->execute(array("{$FILTER}%", "%{$FILTER}%", PGV_GED_ID))
 		->fetchAll(PDO::FETCH_ASSOC);
 
 	$data=array();
