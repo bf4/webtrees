@@ -189,7 +189,7 @@ function preview() {
 		
 		// Extract Indi id's from created list --------------------------------------
 		for(var y=1; y<tr.cells.length-3; y++) {
-			if ( y>=2 && y<=72) {
+			if ( y>=2 && y<=73) {
 					continue;
 			}else{
 				if (i!=0) {
@@ -201,10 +201,10 @@ function preview() {
 		
 		// Extract required columns for display based on Country and Year -----------
 		if (NoteCtry.value=="UK") {
-			// UK 1921 or 1911 ===============
-			if (NoteYear.value=="1921" || NoteYear.value=="1911") {
+			// UK 1911 or 1921 or 1931 ===============
+			if (NoteYear.value=="1911" || NoteYear.value=="1921" || NoteYear.value=="1931") {
 				for(var j=2; j<tr.cells.length-3; j++) {  
-					if (j==5 || j==6 || j==8 || (j>=10 && j<=15) || (j>=20 && j<=34) || j==36 || (j>=39 && j<=41) || (j>=43 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=72) ) {
+					if (j==5 || j==6 || j==8 || (j>=10 && j<=15) || (j>=20 && j<=34) || j==36 || (j>=39 && j<=41) || (j>=43 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=73) ) {
 							continue;
 					}else{
 						if (i==0) {
@@ -217,7 +217,7 @@ function preview() {
 			// UK 1901 ===============
 			} else if (NoteYear.value=="1901") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==5 || j==6 || j==8 || (j>=10 && j<=34) || j==36 || j==37 || (j>=39 && j<=41) || (j>=43 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=72) ) { 
+					if ( j==5 || j==6 || j==8 || (j>=10 && j<=34) || j==36 || j==37 || (j>=39 && j<=41) || (j>=43 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=73) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -230,7 +230,7 @@ function preview() {
 			// UK 1891 ===============
 			} else if (NoteYear.value=="1891") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==5 || j==6 || j==8 || (j>=10 && j<=34) || (j>=36 && j<=38) || j==41 || j==42 || (j>=44 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=72) ) { 
+					if ( j==5 || j==6 || j==8 || (j>=10 && j<=34) || (j>=36 && j<=38) || j==41 || j==42 || (j>=44 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=73) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -243,7 +243,7 @@ function preview() {
 			// UK 1951-1881 ============
 			} else if (NoteYear.value=="1851" || NoteYear.value=="1861" || NoteYear.value=="1871" || NoteYear.value=="1881") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==5 || j==6 || j==8 || (j>=10 && j<=34) || (j>=36 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=72) ) { 
+					if ( j==5 || j==6 || j==8 || (j>=10 && j<=34) || (j>=36 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=73) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -256,7 +256,7 @@ function preview() {
 			// UK 1841 ===============
 			} else if (NoteYear.value=="1841") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=3 && j<=6) || j==8 || (j>=10 && j<=34) || (j>=36 && j<=51) || (j>=54 && j<=72) ) {  
+					if ( (j>=3 && j<=6) || j==8 || (j>=10 && j<=34) || (j>=36 && j<=51) || (j>=54 && j<=73) ) {  
 							continue;
 					}else{
 						if (i==0) {
@@ -272,7 +272,7 @@ function preview() {
 			// USA 1930 ===============
 			if (NoteYear.value=="1930") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==4 || j==5 || j==7 || j==8 || j==11 || j==13 || j==14 || (j>=16 && j<=19) || (j>=21 && j<=45) || (j>=47 && j<=50) || j==52 || j==53 || j==63 || j==64 || j>=67 && j<=72 ) { 
+					if ( j==4 || j==5 || j==7 || j==8 || j==11 || j==13 || j==14 || (j>=16 && j<=19) || (j>=21 && j<=45) || (j>=47 && j<=50) || j==52 || j==53 || j==63 || j==64 || j>=67 && j<=73 ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -287,7 +287,7 @@ function preview() {
 			// USA 1920 ===============
 			else if (NoteYear.value=="1920") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==4 || (j>=6 && j<=8) || j==11 || j==13 || j==14 || (j>=16 && j<=30) || (j>=34 && j<=45) || (j>=47 && j<=50) || j==52 || j==53 || j==57 || j==58 || (j>=63 && j<=72) ) { 
+					if ( j==4 || (j>=6 && j<=8) || j==11 || j==13 || j==14 || (j>=16 && j<=30) || (j>=34 && j<=45) || (j>=47 && j<=50) || j==52 || j==53 || j==57 || j==58 || (j>=63 && j<=73) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -302,7 +302,7 @@ function preview() {
 			// USA 1910 ===============
 			else if (NoteYear.value=="1910") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=4 && j<=8) || j==11 || j==13 || j==14 || (j>=19 && j<=26) || j==33 || j==36 || (j>=39 && j<=42) || j==45 || j==47 || j==48 || (j>=50 && j<=64) || j==66 || j>=68 && j<=72 ) { 
+					if ( (j>=4 && j<=8) || j==11 || j==13 || j==14 || (j>=19 && j<=26) || j==33 || j==36 || (j>=39 && j<=42) || j==45 || j==47 || j==48 || (j>=50 && j<=64) || j==66 || j>=68 && j<=73 ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -316,7 +316,7 @@ function preview() {
 			// USA 1900 ===============
 			else if (NoteYear.value=="1900") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=4 && j<=7) || j==10 || j==13 || j==14 || (j>=19 && j<=26) || j==33 || j==34 || (j>=36 && j<=44) || j==47 || (j>=50 && j<=72) ) { 
+					if ( (j>=4 && j<=7) || j==10 || j==13 || j==14 || (j>=19 && j<=26) || j==33 || j==34 || (j>=36 && j<=44) || j==47 || (j>=50 && j<=73) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -330,7 +330,7 @@ function preview() {
 			// USA 1890 ===============
 			else if (NoteYear.value=="1890") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=4 && j<=7) || j==10 || j==11 || j==13 || j==14 || (j>=19 && j<=26) || j==31 || j==33 || j==34 || j==36 || j==37 || j==39 || j==40 || (j>=42 && j<=45) || j==47 || (j>=49 && j<=63) || (j>=65 && j<=72) ) { 
+					if ( (j>=4 && j<=7) || j==10 || j==11 || j==13 || j==14 || (j>=19 && j<=26) || j==31 || j==33 || j==34 || j==36 || j==37 || j==39 || j==40 || (j>=42 && j<=45) || j==47 || (j>=49 && j<=63) || (j>=65 && j<=73) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -344,7 +344,7 @@ function preview() {
 			// USA 1880 ===============
 			else if (NoteYear.value=="1880") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=3 && j<=7) || j==10 || j==11 || (j>=17 && j<=34) || (j>=37 && j<=44) || (j>=40 && j<=42) || j==46 || j==49 || j==50 || j==52 || j==53 || (j>=56 && j<=72) ) { 
+					if ( (j>=3 && j<=7) || j==10 || j==11 || (j>=17 && j<=34) || (j>=37 && j<=44) || (j>=40 && j<=42) || j==46 || j==49 || j==50 || j==52 || j==53 || (j>=56 && j<=73) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -358,7 +358,7 @@ function preview() {
 			// USA 1870 ===============
 			else if (NoteYear.value=="1870") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=3 && j<=6) || j==8 || (j>=11 && j<=20) || (j>=27 && j<=46) || (j>=48 && j<=62) || (j>=64 && j<=72) ) { 
+					if ( (j>=3 && j<=6) || j==8 || (j>=11 && j<=20) || (j>=27 && j<=46) || (j>=48 && j<=62) || (j>=64 && j<=73) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -372,7 +372,7 @@ function preview() {
 			// USA 1860 or 1850 ===============
 			else if (NoteYear.value=="1860" || NoteYear.value=="1850") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=3 && j<=6) || j==8 || (j>=11 && j<=20) || j==24 || j==25 || (j>=27 && j<=46) || (j>=48 && j<=62) || (j>=64 && j<=72) ) {
+					if ( (j>=3 && j<=6) || j==8 || (j>=11 && j<=20) || j==24 || j==25 || (j>=27 && j<=46) || (j>=48 && j<=62) || (j>=64 && j<=73) ) {
 							continue;
 					}else{
 						if (i==0) {
@@ -453,88 +453,89 @@ function myRowObject(	zero, one, two, three, four, five, six, seven, eight, nine
 						forty, fortyone, fortytwo, fortythree, fortyfour, fortyfive, fortysix, fortyseven, fortyeight, fortynine, 
 						fifty, fiftyone, fiftytwo, fiftythree, fiftyfour, fiftyfive, fiftysix, fiftyseven, fiftyeight, fiftynine, 
 						sixty, sixtyone, sixtytwo, sixtythree, sixtyfour, sixtyfive, sixtysix, sixtyseven, sixtyeight, sixtynine, 
-						seventy, seventyone, seventytwo,
+						seventy, seventyone, seventytwo, seventythree,
 						cb, ra, index2 
 					) 
 {
 						
-	this.zero		 = zero;		 // text object
-	this.one		 = one;			 // input text object
-	this.two		 = two;			 // input text object
-	this.three		 = three;		 // input text object
-	this.four		 = four;		 // input text object
-	this.five		 = five;		 // input text object
-	this.six		 = six;			 // input text object
-	this.seven		 = seven;		 // input text object
-	this.eight		 = eight;		 // input text object
-	this.nine		 = nine;		 // input text object
-	this.ten		 = ten;			 // input text object
-	this.eleven		 = eleven;		 // input text object
-	this.twelve		 = twelve;		 // input text object
-	this.thirteen	 = thirteen;	 // input text object
-	this.fourteen	 = fourteen;	 // input text object
-	this.fifteen	 = fifteen;		 // input text object
-	this.sixteen	 = sixteen;		 // input text object
-	this.seventeen	 = seventeen;	 // input text object
-	this.eighteen	 = eighteen;	 // input text object
-	this.nineteen	 = nineteen;	 // input text object
-	this.twenty		 = twenty;		 // input text object
-	this.twentyone	 = twentyone;	 // input text object
-	this.twentytwo	 = twentytwo;	 // input text object
-	this.twentythree = twentythree;	 // input text object
-	this.twentyfour	 = twentyfour;	 // input text object
-	this.twentyfive	 = twentyfive;	 // input text object
-	this.twentysix	 = twentysix;	 // input text object
-	this.twentyseven = twentyseven;	 // input text object
-	this.twentyeight = twentyeight;	 // input text object
-	this.twentynine	 = twentynine;	 // input text object
-	this.thirty		 = thirty;		 // input text object
-	this.thirtyone	 = thirtyone;	 // input text object
-	this.thirtytwo	 = thirtytwo;	 // input text object
-	this.thirtythree = thirtythree;	 // input text object
-	this.thirtyfour	 = thirtyfour;	 // input text object
-	this.thirtyfive	 = thirtyfive;	 // input text object
-	this.thirtysix	 = thirtysix;	 // input text object
-	this.thirtyseven = thirtyseven;	 // input text object
-	this.thirtyeight = thirtyeight;	 // input text object
-	this.thirtynine	 = thirtynine;	 // input text object
-	this.forty		 = forty;		 // input text object
-	this.fortyone	 = fortyone;	 // input text object
-	this.fortytwo	 = fortytwo;	 // input text object
-	this.fortythree	 = fortythree;	 // input text object
-	this.fortyfour	 = fortyfour;	 // input text object
-	this.fortyfive	 = fortyfive;	 // input text object
-	this.fortysix	 = fortysix;	 // input text object
-	this.fortyseven	 = fortyseven;	 // input text object
-	this.fortyeight	 = fortyeight;	 // input text object
-	this.fortynine	 = fortynine;	 // input text object
-	this.fifty		 = fifty;		 // input text object
-	this.fiftyone	 = fiftyone;	 // input text object
-	this.fiftytwo	 = fiftytwo;	 // input text object
-	this.fiftythree	 = fiftythree;	 // input text object
-	this.fiftyfour	 = fiftyfour;	 // input text object
-	this.fiftyfive	 = fiftyfive;	 // input text object
-	this.fiftysix	 = fiftysix;	 // input text object
-	this.fiftyseven	 = fiftyseven;	 // input text object
-	this.fiftyeight	 = fiftyeight;	 // input text object
-	this.fiftynine	 = fiftynine;	 // input text object
-	this.sixty		 = sixty;		 // input text object
-	this.sixtyone	 = sixtyone;	 // input text object
-	this.sixtytwo	 = sixtytwo;	 // input text object
-	this.sixtythree	 = sixtythree;	 // input text object
-	this.sixtyfour	 = sixtyfour;	 // input text object
-	this.sixtyfive	 = sixtyfive;	 // input text object
-	this.sixtysix	 = sixtysix;	 // input text object
-	this.sixtyseven	 = sixtyseven;	 // input text object
-	this.sixtyeight	 = sixtyeight;	 // input text object
-	this.sixtynine	 = sixtynine;	 // input text object
-	this.seventy	 = seventy;		 // input text object
-	this.seventyone	 = seventyone;	 // input text object
-	this.seventytwo	 = seventytwo;	 // input text object
+	this.zero			 = zero;		 // text object
+	this.one			 = one;			 // input text object
+	this.two			 = two;			 // input text object
+	this.three			 = three;		 // input text object
+	this.four			 = four;		 // input text object
+	this.five			 = five;		 // input text object
+	this.six			 = six;			 // input text object
+	this.seven			 = seven;		 // input text object
+	this.eight			 = eight;		 // input text object
+	this.nine			 = nine;		 // input text object
+	this.ten			 = ten;			 // input text object
+	this.eleven			 = eleven;		 // input text object
+	this.twelve			 = twelve;		 // input text object
+	this.thirteen		 = thirteen;	 // input text object
+	this.fourteen		 = fourteen;	 // input text object
+	this.fifteen		 = fifteen;		 // input text object
+	this.sixteen		 = sixteen;		 // input text object
+	this.seventeen		 = seventeen;	 // input text object
+	this.eighteen		 = eighteen;	 // input text object
+	this.nineteen		 = nineteen;	 // input text object
+	this.twenty			 = twenty;		 // input text object
+	this.twentyone		 = twentyone;	 // input text object
+	this.twentytwo		 = twentytwo;	 // input text object
+	this.twentythree	 = twentythree;	 // input text object
+	this.twentyfour		 = twentyfour;	 // input text object
+	this.twentyfive		 = twentyfive;	 // input text object
+	this.twentysix		 = twentysix;	 // input text object
+	this.twentyseven	 = twentyseven;	 // input text object
+	this.twentyeight	 = twentyeight;	 // input text object
+	this.twentynine		 = twentynine;	 // input text object
+	this.thirty			 = thirty;		 // input text object
+	this.thirtyone		 = thirtyone;	 // input text object
+	this.thirtytwo		 = thirtytwo;	 // input text object
+	this.thirtythree	 = thirtythree;	 // input text object
+	this.thirtyfour		 = thirtyfour;	 // input text object
+	this.thirtyfive		 = thirtyfive;	 // input text object
+	this.thirtysix		 = thirtysix;	 // input text object
+	this.thirtyseven	 = thirtyseven;	 // input text object
+	this.thirtyeight	 = thirtyeight;	 // input text object
+	this.thirtynine		 = thirtynine;	 // input text object
+	this.forty			 = forty;		 // input text object
+	this.fortyone		 = fortyone;	 // input text object
+	this.fortytwo		 = fortytwo;	 // input text object
+	this.fortythree		 = fortythree;	 // input text object
+	this.fortyfour		 = fortyfour;	 // input text object
+	this.fortyfive		 = fortyfive;	 // input text object
+	this.fortysix		 = fortysix;	 // input text object
+	this.fortyseven		 = fortyseven;	 // input text object
+	this.fortyeight		 = fortyeight;	 // input text object
+	this.fortynine		 = fortynine;	 // input text object
+	this.fifty			 = fifty;		 // input text object
+	this.fiftyone		 = fiftyone;	 // input text object
+	this.fiftytwo		 = fiftytwo;	 // input text object
+	this.fiftythree		 = fiftythree;	 // input text object
+	this.fiftyfour		 = fiftyfour;	 // input text object
+	this.fiftyfive		 = fiftyfive;	 // input text object
+	this.fiftysix		 = fiftysix;	 // input text object
+	this.fiftyseven		 = fiftyseven;	 // input text object
+	this.fiftyeight		 = fiftyeight;	 // input text object
+	this.fiftynine		 = fiftynine;	 // input text object
+	this.sixty			 = sixty;		 // input text object
+	this.sixtyone		 = sixtyone;	 // input text object
+	this.sixtytwo		 = sixtytwo;	 // input text object
+	this.sixtythree		 = sixtythree;	 // input text object
+	this.sixtyfour		 = sixtyfour;	 // input text object
+	this.sixtyfive		 = sixtyfive;	 // input text object
+	this.sixtysix		 = sixtysix;	 // input text object
+	this.sixtyseven		 = sixtyseven;	 // input text object
+	this.sixtyeight		 = sixtyeight;	 // input text object
+	this.sixtynine		 = sixtynine;	 // input text object
+	this.seventy		 = seventy;		 // input text object
+	this.seventyone		 = seventyone;	 // input text object
+	this.seventytwo		 = seventytwo;	 // input text object
+	this.seventythree	 = seventythree; // input text object
 	
-	this.cb			 = cb;			 // input checkbox object
-	this.ra			 = ra;			 // input radio object
-	this.index2		 = index2;		 // text object
+	this.cb				 = cb;			 // input checkbox object
+	this.ra				 = ra;			 // input radio object
+	this.index2			 = index2;		 // text object
 }
 
 function create_header() {
@@ -542,7 +543,7 @@ function create_header() {
 }
 
 // insertRowToTable - inserts a row into the table (and reorders)
-function insertRowToTable(pid, nam, mnam, label, gend, cond, dom, dob, age, dod, occu, birthpl, fbirthpl, mbirthpl) {
+function insertRowToTable(pid, nam, mnam, label, gend, cond, dom, dob, age, dod, occu, birthpl, fbirthpl, mbirthpl, chilBLD) {
 
 	if (hasLoaded) {
 		
@@ -558,7 +559,7 @@ function insertRowToTable(pid, nam, mnam, label, gend, cond, dom, dob, age, dod,
 			}
 		}
 		
-		addRowToTable(rowToInsertAt, pid, nam, mnam, label, gend, cond, dom, dob, age, dod, occu, birthpl, fbirthpl, mbirthpl);
+		addRowToTable(rowToInsertAt, pid, nam, mnam, label, gend, cond, dom, dob, age, dod, occu, birthpl, fbirthpl, mbirthpl, chilBLD);
 		
 		reorderRows(tbl, rowToInsertAt);
 		currcenyear = document.getElementById('censYear').value;
@@ -572,7 +573,7 @@ function insertRowToTable(pid, nam, mnam, label, gend, cond, dom, dob, age, dod,
 }
 
 // addRowToTable - Inserts at row 'num', or appends to the end if no arguments are passed in. Don't pass in empty strings.
-function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, dod, occu, birthpl, fbirthpl, mbirthpl, cb, ra) {
+function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, dod, occu, birthpl, fbirthpl, mbirthpl, chilBLD, cb, ra) {
 
 	// Check if Census year filled in -------------
 	// var cctry = document.getElementById('censCtry').value;
@@ -595,6 +596,48 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 	currcenctry = document.getElementById('censCtry').value;
 	if (num>0) {
 	
+	
+		// Calculate Children Born, Living, Died --------------------------
+		var chBLDarray = chilBLD.split('::');
+		var cendat = getCenDate(currcenyear);
+		var cdat   = calculateJD(cendat);
+		// Variables to be used ---------
+		var ChilBorn = chBLDarray.length;
+		var ChilLivg = "-";
+		var ChilDied = "-";
+		var chBLD = new Array();
+		var x;
+		var ALIVE=0;
+		var DEAD=0;
+		var NOTBORN=0;
+		for (x = 0; x<ChilBorn; x++) {
+			chBLD[x] = new Array();  // This declares each column in turn
+			chBLDarray2 = chBLDarray[x].split(', ');
+			var y;
+			for (y = 0; y<chBLDarray2.length; y++) {
+				chBLD[x][y] = chBLDarray2[y];
+				if (y==2 && (cdat>(chBLD[x][1]) && chBLD[x][1]!=0) && (chBLD[x][2]==0 || cdat<(chBLD[x][2]))) { 
+					ALIVE=ALIVE+1;
+				} else if (y==2 && cdat>(chBLD[x][2]) && (chBLD[x][2])!=0) { 
+					DEAD=DEAD+1;
+				} else if (y==2) { 
+					NOTBORN=NOTBORN+1;
+				}
+			}
+		}
+		var BORN = ALIVE+DEAD;
+		if (BORN == 0) {
+			BORN  = "-";
+			ALIVE = "-";
+			DEAD  = "-";
+		}
+		if (ALIVE == 0) {
+			ALIVE = "-";
+		}
+		if (DEAD == 0) {
+			DEAD = "-";
+		}
+
 		// Calculate birth places -----------------------------------------
 		 birthpl =  birthpl.split(', ');
 		ibirthpl =  birthpl.reverse();
@@ -741,23 +784,23 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 		var row = tbl.tBodies[0].insertRow(num);
 
 		// **A** Define Cells ===============================================
-		var cell_ = new Array(72);
-		for(var i=0; i<=72; i++){
+		var cell_ = new Array(73);
+		for(var i=0; i<=73; i++){
 				cell_[i] = row.insertCell(i);
 				cell_[i].setAttribute('id', 'col_'+i);
 				cell_[i].setAttribute('name', 'col_'+i);
 		}
 
 		if (iteration == 0) {
-			var cell_tdel = row.insertCell(73);		// text Del
-			var cell_tra  = row.insertCell(74);		// text Radio
+			var cell_tdel = row.insertCell(74);		// text Del
+			var cell_tra  = row.insertCell(75);		// text Radio
 		}else{
-			var cell_del = row.insertCell(73);		// Onclick = Delete Row
+			var cell_del = row.insertCell(74);		// Onclick = Delete Row
 				cell_del.setAttribute('align', 'center');
-			var cell_ra = row.insertCell(74);		// Radio button used for inserting a row, rather than adding at end of table)
+			var cell_ra = row.insertCell(75);		// Radio button used for inserting a row, rather than adding at end of table)
 		}
 		
-		var cell_index2 = row.insertCell(75);			// Item Number (#2)
+		var cell_index2 = row.insertCell(76);			// Item Number (#2)
 			cell_index2.setAttribute('id', 'index2');
 			cell_index2.setAttribute('name', 'index2');
 			cell_index2.setAttribute('align', 'center');
@@ -1394,9 +1437,10 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 		// 70. Fullname
 		// 71. Married Name
 		// 72. DOD date of Death (Julian) actual or rough (ABT, BET)
+		// 73. Textual Array of Chil (Nam DOB DOD) for ChilB, ChilL, ChilD
 		//
 
-		// Extra 1. Text Del Button ------------------------------------------------- 
+		// 74. Extra 1. Text Del Button ------------------------------------------------- 
 			var txtInp_tdel = document.createElement('div');
 				txtInp_tdel.setAttribute('type', 'text');
 				txtInp_tdel.setAttribute('class', 'descriptionbox');
@@ -1405,7 +1449,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_tdel.style.border='0px';
 				txtInp_tdel.innerHTML = 'Del';
 				txtInp_tdel.setAttribute('id', this);
-		// Extra 2. Text Radio Button ----------------------------------------------- 
+		// 75. Extra 2. Text Radio Button ----------------------------------------------- 
 			var txtInp_tra = document.createElement('div');
 				txtInp_tra.setAttribute('type', 'text');
 				txtInp_tra.setAttribute('class', 'descriptionbox');
@@ -1413,7 +1457,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_tra.style.fontSize="10px";
 				txtInp_tra.style.border='0px';
 				txtInp_tra.innerHTML = 'Ins';
-		// Extra 3. Item Number 2 -------------------------------------------------
+		// 76. Extra 3. Item Number 2 -------------------------------------------------
 			var txt_itemNo2 = document.createElement('div');
 				txt_itemNo2.setAttribute('class', 'descriptionbox');
 				txt_itemNo2.className= 'descriptionbox'; //Required for IE
@@ -1615,7 +1659,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_chilB.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_17');
 				txtInp_chilB.setAttribute('size', '1');
 				txtInp_chilB.setAttribute('maxlength', '2');
-				txtInp_chilB.setAttribute('value', '');
+				txtInp_chilB.setAttribute('value', BORN);
 				txtInp_chilB.style.color=txtcolor;
 				txtInp_chilB.style.fontSize="10px";
 				txtInp_chilB.style.width="1.4em";
@@ -1628,7 +1672,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_chilL.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_18');
 				txtInp_chilL.setAttribute('size', '1');
 				txtInp_chilL.setAttribute('maxlength', '2');
-				txtInp_chilL.setAttribute('value', '');
+				txtInp_chilL.setAttribute('value', ALIVE);
 				txtInp_chilL.style.color=txtcolor;
 				txtInp_chilL.style.fontSize="10px";
 				txtInp_chilL.style.width="1.4em";
@@ -1641,7 +1685,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_chilD.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_19');
 				txtInp_chilD.setAttribute('size', '1');
 				txtInp_chilD.setAttribute('maxlength', '2');
-				txtInp_chilD.setAttribute('value', '');
+				txtInp_chilD.setAttribute('value', DEAD);
 				txtInp_chilD.style.color=txtcolor;
 				txtInp_chilD.style.fontSize="10px";
 				txtInp_chilD.style.width="1.4em";
@@ -2155,14 +2199,25 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_DOD.style.fontSize="10px";
 				txtInp_DOD.style.width="1.4em";
 				txtInp_DOD.type = "hidden";
+		// 73. DOD ------------------------------------------------------------
+			var txtInp_ChBLD = document.createElement('input');
+				txtInp_ChBLD.setAttribute('type', 'text');
+				txtInp_ChBLD.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_73');
+				txtInp_ChBLD.setAttribute('size', '8');
+				txtInp_ChBLD.setAttribute('maxlength', '20');
+				txtInp_ChBLD.setAttribute('value', chilBLD); 
+				txtInp_ChBLD.style.color=txtcolor;
+				txtInp_ChBLD.style.fontSize="10px";
+				txtInp_ChBLD.style.width="1.4em";
+				txtInp_ChBLD.type = "hidden";
 
 		// Extra Cells for Navigation =========================================
-		// Extra 1. Delete Row Button -----------------------------------------
+		// 74. Extra 1. Delete Row Button -----------------------------------------
 			var btnEl = document.createElement('input');
 				btnEl.setAttribute('type', 'button');
 				btnEl.setAttribute('value', 'x');
 				btnEl.onclick = function () {deleteCurrentRow(this)};
-		// Extra 2. Insert row Radio button -----------------------------------
+		// 75. Extra 2. Insert row Radio button -----------------------------------
 			var raEl;
 				try {
 					raEl = document.createElement('<input type="radio" name="' + RADIO_NAME + '" value="' + iteration + '">');
@@ -2173,7 +2228,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 					raEl.setAttribute('name', RADIO_NAME );
 					raEl.setAttribute('value', iteration);
 				}
-		// Extra 3. Item Number -----------------------------------------------
+		// 76. Extra 3. Item Number -----------------------------------------------
 			var txt_itemNo2 = document.createTextNode(iteration);
 		}
 
@@ -2265,6 +2320,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 		cell_[70].appendChild(txtInp_FullName);		// Full Name
 		cell_[71].appendChild(txtInp_MarrName);		// Married Name
 		cell_[72].appendChild(txtInp_DOD);			// Date of Death
+		cell_[73].appendChild(txtInp_ChBLD);		// Text Array - Children Born/Living/Died 
 		}
 
 		// Extra Cells ========================================================
@@ -2287,7 +2343,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 										txtInp_emD, txtInp_mnsE, txtInp_emH, txtInp_emN, txtInp_wksU, txtInp_mnsU, txtInp_educ, txtInp_educpre1890, txtInp_eng1, txtInp_home,  
 										txtInp_birthpl2, txtInp_ibirthpl2, txtInp_bic, txtInp_boe, txtInp_fbirthpl2, txtInp_mbirthpl2, txtInp_lang, txtInp_yoi2, txtInp_na2, txtInp_eng2, 
 										txtInp_occu3, txtInp_ind2, txtInp_emp2, txtInp_infirm, txtInp_situ, txtInp_vet, txtInp_war, txtInp_infirm1910, txtInp_DOB, txtInp_DOM, 
-										txtInp_FullName, txtInp_MarrName, txtInp_DOD,
+										txtInp_FullName, txtInp_MarrName, txtInp_DOD, txtInp_ChBLD,
 										cbEl, raEl, txt_itemNo2
 									);
 	}
@@ -2331,9 +2387,8 @@ function reorderRows(tbl, startingIndex) {
 		if (tbl.tBodies[0].rows[startingIndex]) {
 			var count = startingIndex + ROW_BASE;
 			for (var i=startingIndex; i<tbl.tBodies[0].rows.length; i++) {
-				// CONFIG: next 2 lines are affected by myRowObject settings
+				// CONFIG: next line is affected by myRowObject settings
 				tbl.tBodies[0].rows[i].myRow.zero.data			 = count; // text - (left column item number)
-				// tbl.tBodies[0].rows[i].myRow.seventytwo.data	 = count; // text - (right column item number)
 				
 				// ------------------------------------------------------------
 				tbl.tBodies[0].rows[i].myRow.one.id				 = INPUT_NAME_PREFIX + count + '_1';  // input text
@@ -2414,6 +2469,7 @@ function reorderRows(tbl, startingIndex) {
 				tbl.tBodies[0].rows[i].myRow.seventy.id			 = INPUT_NAME_PREFIX + count + '_70';  // input text
 				tbl.tBodies[0].rows[i].myRow.seventyone.id		 = INPUT_NAME_PREFIX + count + '_71';  // input text
 				tbl.tBodies[0].rows[i].myRow.seventytwo.id		 = INPUT_NAME_PREFIX + count + '_72';  // input text
+				tbl.tBodies[0].rows[i].myRow.seventythree.id	 = INPUT_NAME_PREFIX + count + '_73';  // input text
 				// ------------------------------------------------------------
 				
 				// ------------------------------------------------------------
@@ -2496,6 +2552,7 @@ function reorderRows(tbl, startingIndex) {
 				tbl.tBodies[0].rows[i].myRow.seventy.name		 = INPUT_NAME_PREFIX + count + '_70';  // input text
 				tbl.tBodies[0].rows[i].myRow.seventyone.name	 = INPUT_NAME_PREFIX + count + '_71';  // input text
 				tbl.tBodies[0].rows[i].myRow.seventytwo.name	 = INPUT_NAME_PREFIX + count + '_72';  // input text
+				tbl.tBodies[0].rows[i].myRow.seventythree.name	 = INPUT_NAME_PREFIX + count + '_73';  // input text
 				
 				// ------------------------------------------------------------
 				tbl.tBodies[0].rows[i].myRow.ra.value = count; // input radio

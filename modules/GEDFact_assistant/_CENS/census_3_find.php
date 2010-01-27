@@ -111,12 +111,8 @@ switch ($type) {
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-	function pasterow(id, name, fullmn, gend, dob, age, bpl) {
-		// =========================================================================================================================
-		// Example: This is what the current insertRowToTable() function requires 
-		// window opener.insertRowToTable(id, nam,  mnam, label, gend, cond, dom, dob, age, YMD, occu, birthpl, fbirthpl, mbirthpl);
-		// =========================================================================================================================
-		window.opener.insertRowToTable(id, name, fullmn, '', gend, '', '', dob, age, 'Y', '', bpl, '', '');
+	function pasterow(id, nam, mnam, label, gend, cond, dom, dob, dod, occu, age, birthpl, fbirthpl, mbirthpl, chilBLD) {
+		window.opener.insertRowToTable(id, nam, mnam, label, gend, cond, dom, dob, dod, occu, age, birthpl, fbirthpl, mbirthpl, chilBLD);
 		<?php if (!$multiple) print "window.close();"; ?>
 	}
 	
@@ -377,7 +373,11 @@ print "<br />";
 
 if ($action=="filter") {
 	$filter = trim($filter);
-	// Output Individual
+	
+	
+	// ========================================================================
+	
+	// Output Individual's Details for GEDFact assistant ------
 	if ($type == "indi") {
 		print "<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
 		$myindilist=search_indis_names(array($filter), array(PGV_GED_ID), 'AND');
@@ -385,28 +385,90 @@ if ($action=="filter") {
 			print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 			usort($myindilist, array('GedcomRecord', 'Compare'));
 			foreach($myindilist as $indi ) {
-				// $married   = GedcomDate::Compare($marrdate, $censdate);
+
 				$nam = $indi->getAllNames();
 				$wholename = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-					$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-					$givn  = rtrim($nam[0]['givn'],'*');
-					$surn  = $nam[0]['surname'];
-					if (isset($nam[1])) {
-						$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
-						$marn  = $nam[1]['surname'];
-					} else {
-						$fulmn = $fulln;
+				$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
+				$givn  = rtrim($nam[0]['givn'],'*');
+				$surn  = $nam[0]['surname'];
+				if (isset($nam[1])) {
+					$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
+					$marn  = $nam[1]['surname'];
+				} else {
+					$fulmn = $fulln;
+				}
+
+				//-- Build Indi Parents Family to get FBP and MBP  -----------
+				$families = $indi->getChildFamilies();
+				foreach($families as $famid=>$family) {
+					if (!is_null($family)) {
+						$father = $family->getHusband();
+						$mother = $family->getWife();
+						if (!is_null($father)) { 
+							$FBP = $father->getBirthPlace(); 
+						}
+						if (!is_null($mother)) { 
+							$MBP = $mother->getBirthPlace(); 
+						}
+					} 
+				}
+				if (!isset($FBP)) { $FBP = "UNK, UNK, UNK, UNK"; }
+				if (!isset($MBP)) { $MBP = "UNK, UNK, UNK, UNK"; }
+				
+				//-- Build Indi Spouse Family to get marriage Date ----------
+				$families = $indi->getSpouseFamilies();
+				foreach($families as $famid=>$family) {
+					$marrdate = $family->getMarriageDate();
+					$children = $family->getChildren();
+				}
+				if (!isset($marrdate)) { $marrdate = ""; }
+
+				//-- Get Children's Name, DOB, DOD --------------------------
+				if (isset($children)) {
+					$chBLDarray = Array();
+					foreach ($children as $key=>$child) {
+						$chnam   = $child->getAllNames();
+						$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+						$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+						$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+						$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+						$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+						$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+						array_push($chBLDarray, $chBLD);
 					}
-				echo "<li><a href=\"javascript:;\" onclick=\"pasterow(
-					'".$indi->getXref()."' , 
-					'".$wholename."' ,
-					'".$fulmn."' ,
-					'".$indi->getSex()."' ,
-					'".(($indi->getBirthDate()->minJD()+$indi->getBirthDate()->maxJD())/2)."' ,
-					'".(1901-$indi->getbirthyear())."' ,
-					'".$indi->getbirthplace()."'); return false;\">
-					<b>".$indi->getFullName()."</b>&nbsp;&nbsp;&nbsp;";
-				echo "</span><br><span class=\"list_item\">Born ".$indi->getbirthyear()."&nbsp;&nbsp;&nbsp;".$indi->getbirthplace()."</span></a></li>";
+				}
+				if (isset($chBLDarray) && $indi->getSex()=="F") {
+					$chBLDarray = implode("::", $chBLDarray);
+				} else {
+					$chBLDarray = '';
+				}
+				
+				echo "<li>";
+					// ==============================================================================================================================
+					// NOTES = function pasterow(id, nam, mnam, label, gend, cond, dom, dob, age, dod, occu, birthpl, fbirthpl, mbirthpl, chilBLD) {
+					// ==============================================================================================================================
+					echo "<a href=\"javascript:;\" onclick=\"pasterow(";
+						echo "'".$indi->getXref()."', ";															 // id        - Indi Id 
+						echo "'".$fulln."', ";																		 // nam       - Name
+						echo "'".$fulmn."', ";																		 // mnam      - Married Name
+						echo "'-', ";																				 // label     - Relation to Head of Household
+						echo "'".$indi->getSex()."', ";																 // gend      - Sex
+						echo "'S', ";																				 // cond      - Marital Condition
+						echo "'".(($marrdate->minJD()+$marrdate->maxJD())/2)."', ";									 // dom       - Date of Marriage
+						echo "'".(($indi->getBirthDate()->minJD() + $indi->getBirthDate()->maxJD())/2)."' ,";		 // dob       - Date of Birth
+						echo "'".(1901-$indi->getbirthyear())."' ,";												 // ~age~     - Census Date minus YOB (Preliminary)
+						echo "'".(($indi->getDeathDate()->minJD() + $indi->getDeathDate()->maxJD())/2)."' ,";		 // dod       - Date of Death
+						echo "'', ";																				 // occu      - Occupation
+						echo "'".$indi->getbirthplace()."', ";														 // birthpl   - Birthplace
+						echo "'".$FBP."', ";																		 // fbirthpl  - Father's Birthplace
+						echo "'".$MBP."', ";																		 // mbirthpl  - Mother's Birthplace
+						echo "'".$chBLDarray."'";																	 // chilBLD   - Array of Children (name, birthdate, deathdate)
+						echo ");";
+						echo "return false;\">";
+					echo "<b>".$indi->getFullName()."</b>&nbsp;&nbsp;&nbsp;";										 // Name Link
+					echo "</span><br><span class=\"list_item\">Born ".$indi->getbirthyear()."&nbsp;&nbsp;&nbsp;".$indi->getbirthplace()."</span>";
+					echo "</a>";
+				echo "</li>";
 			echo "<hr />";
 			}
 			echo '</td></tr><tr><td class="list_label">', $pgv_lang['total_indis'], ' ', count($myindilist), '</tr></td>';
@@ -417,7 +479,10 @@ if ($action=="filter") {
 		}
 		print "</table>";
 	}
+	
+	// ========================================================================
 
+	
 	// Output Family
 	if ($type == "fam") {
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";

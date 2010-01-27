@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.x CA
+ - Changed: GEDFact_assistant/_CENS/ module - Added automatic fill in for Children Born/Alive/Died census edit columns. (windmillway)
  - Changed: More minor updates and tidyups to GEDFact_assistant/_CENS/ (windmillway)
  - Changed: More updates to GEDFact_assistant/_CENS/ - Mainly css orientated. (windmillway)
  - Changed: GedFact_assistant/_CENS/ - Added "Head" images to Navigator, and tidied up css. (windmillway)

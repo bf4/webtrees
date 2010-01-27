@@ -47,14 +47,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 					function findindi(persid) {
 						var findInput = document.getElementById('personid');
 							txt = findInput.value;
-						//if (txt=="") {
-						//	alert('Enter a name');
-						//	continue;
-						//}else{
+						if (txt=="") {
+							alert("<?php echo $pgv_lang["enter_name"]; ?>");
+						}else{
 							var win02 = window.open(
 								"module.php?mod=GEDFact_assistant&pgvaction=_CENS/census_3_find&callback=paste_id&action=filter&type=indi&multiple=&filter="+txt, "win02", "resizable=1, menubar=0, scrollbars=1, top=180, left=600, HEIGHT=400, WIDTH=450 ");
 							if (window.focus) {win02.focus();}
-						//}
+						}
 					}
 				</script>
 				<?php
@@ -78,6 +77,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 				global $TEXT_DIRECTION, $GEDCOM; 
 				// echo "CENS = " . $censyear;
 				?>
+				
 				<tr>
 					<td align="center" style="border: 0px solid transparent;">
 						<table width="100%" class="fact_table" cellspacing="0" border="0">
@@ -118,6 +118,22 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						$label = $this->indi->getChildFamilyLabel($family);
 						$people = $this->buildFamilyList($family, "parents");
 						$marrdate = $family->getMarriageDate();
+
+						//-- Get Parents Children's Name, DOB, DOD --------------------------
+						if (isset($people["children"])) {
+							$chBLDarray = Array();
+							foreach ($people["children"] as $key=>$child) {
+								$chnam   = $child->getAllNames();
+								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+								array_push($chBLDarray, $chBLD);
+							}
+						}
+
 						//-- Parents Husband -------------------
 						$styleadd = "";
 						if (isset($people["husb"])) {
@@ -222,6 +238,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											} else {
 												print PrintReady('UNK, UNK, UNK, UNK');									 // mbirthpl = Husband Mother's Place of Birth Not known
 											}
+										?>", "<?php
+											if (isset($chBLDarray) && $people["husb"]->getSex()=="F") {
+												$chBLDarray = implode("::", $chBLDarray);
+												echo PrintReady($chBLDarray);											 // Array of Children (name, birthdate, deathdate)
+											} else {
+												echo PrintReady('');
+											}
 										?>");'>
 										<?php
 											print PrintReady($people["husb"]->getFullName()); 							 // Full Name (Link)
@@ -238,10 +261,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							<?php
 						}
 
-						//-- Parents Wife -------------------
+						//-- Parents Wife ---------------------------------------------------------
 						if (isset($people["wife"])) {
 
-							//-- Parents Wifes Parent Family --------------------------------------
+							//-- Parents Wifes Parent Family ---------------------------
 							$gparent=Person::getInstance($people["wife"]->getXref());
 							$fams = $gparent->getChildFamilies();
 							foreach($fams as $famid=>$family) {
@@ -350,6 +373,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											} else {
 												print PrintReady('UNK, UNK, UNK, UNK');									 // mbirthpl = Wife Mother's Place of Birth Not known
 											}
+										?>", "<?php
+											if (isset($chBLDarray) && $people["wife"]->getSex()=="F") {
+												$chBLDarray = implode("::", $chBLDarray);
+												echo PrintReady($chBLDarray);											 // Array of Children (name, birthdate, deathdate)
+											} else {
+												echo PrintReady('');
+											}
 										?>");'>
 										<?php 
 											print PrintReady($people["wife"]->getFullName()); 							 // Full Name (Link)
@@ -368,11 +398,28 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 						//-- Parents Children -------------------
 						if (isset($people["children"])) {
-
-							//-- Parents Childrens Details --------------------------------------
+						
+							//-- Parent's Children's Details --------------------------------------
 							$elderdate = $family->getMarriageDate();
 							foreach($people["children"] as $key=>$child) {
-								// Get child's marriage status
+
+								// Get Child's Children's Name DOB DOD ----
+								$chBLDarray=Array();
+								foreach ($child->getSpouseFamilies() as $childfamily) {
+									$chchildren = $childfamily->getChildren();
+									foreach ($chchildren as $key=>$chchild) {
+										$chnam   = $chchild->getAllNames();
+										$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+										$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);				// Child's Full Name
+										$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+										$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+										$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+										array_push($chBLDarray, $chBLD);
+									}
+								}
+
+								// Get child's marriage status ----
 								$married="";
 								$marrdate="";
 								foreach ($child->getSpouseFamilies() as $childfamily) {
@@ -478,6 +525,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 														} else {
 															print PrintReady('UNK, UNK, UNK, UNK');								 // mbirthpl = Child Mother's Place of Birth Not known
 														}
+													?>", "<?php
+														if (isset($chBLDarray) && $child->getSex()=="F") {
+															$chBLDarray = implode("::", $chBLDarray);
+															echo PrintReady($chBLDarray);										 // Array of Children (name, birthdate, deathdate)
+														} else {
+															echo PrintReady('');
+														}
 													?>");'>
 													<?php
 														print PrintReady($child->getFullName());							 // Full Name (Link)
@@ -508,6 +562,21 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							echo "<tr><td><br /></td><td></td></tr>";
 						}
 						$marrdate = $family->getMarriageDate();
+
+						//-- Get Children's Name, DOB, DOD --------------------------
+						if (isset($people["children"])) {
+							$chBLDarray = Array();
+							foreach ($people["children"] as $key=>$child) {
+								$chnam   = $child->getAllNames();
+								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+								array_push($chBLDarray, $chBLD);
+							}
+						}
 
 						// Step Husband -----------------------------
 						$styleadd = "";
@@ -623,6 +692,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											} else {
 												print PrintReady('UNK, UNK, UNK, UNK');										 // mbirthpl = Step Husband Mother's Place of Birth Not known
 											}
+										?>", "<?php
+											if (isset($chBLDarray) && $people["husb"]->getSex()=="F") {
+												$chBLDarray = implode("::", $chBLDarray);
+												echo PrintReady($chBLDarray);												 // Array of Children (name, birthdate, deathdate)
+											} else {
+												echo PrintReady('');
+											}
 										?>");'>
 										<?php 
 											print PrintReady($people["husb"]->getFullName()); 								 // Full Name (Link)
@@ -655,7 +731,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								if ($phusb) { $WifeFBP = $phusb->getBirthPlace(); }
 								if ($pwife) { $WifeMBP = $pwife->getBirthPlace(); }
 							}
-						
+
 							//-- Step Wifes Details --------------------------------------
 							$married = GedcomDate::Compare($censdate, $marrdate);
 							$nam   = $people["wife"]->getAllNames();
@@ -714,20 +790,20 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									if ( ($people["wife"]->canDisplayDetails()) ) {
 									?>
 									<a href='javaScript:insertRowToTable("<?php
-											print PrintReady($people["wife"]->getXref()) ;								 // pid = PID
+											print PrintReady($people["wife"]->getXref()) ;									 // pid = PID
 										?>", "<?php 
-											echo $fulln;																 // nam = Full Name
+											echo $fulln;																	 // nam = Full Name
 										?>", "<?php 
 											if (isset($nam[1])){
-												echo $fulmn;															 // mnam = Full Married Name
+												echo $fulmn;																 // mnam = Full Married Name
 											}else{
-												echo $fulln;															 // mnam = Full Name
+												echo $fulln;																 // mnam = Full Name
 											}
 										?>", "<?php
 										if ($people["wife"]->getLabel() == ".") {
-											print PrintReady($pgv_lang["stepmom"]);										 // label = Relationship
+											print PrintReady($pgv_lang["stepmom"]);											 // label = Relationship
 										}else{
-											print PrintReady($people["wife"]->getLabel());								 // label = Relationship
+											print PrintReady($people["wife"]->getLabel());									 // label = Relationship
 										}
 										?>", "<?php
 											print PrintReady($people["wife"]->getSex());									 // gend = Gender
@@ -763,6 +839,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											} else {
 												print PrintReady('UNK, UNK, UNK, UNK');										 // mbirthpl = Step Wife Mother's Place of Birth Not known
 											}
+										?>", "<?php
+											if (isset($chBLDarray) && $people["wife"]->getSex()=="F") {
+												$chBLDarray = implode("::", $chBLDarray);
+												echo PrintReady($chBLDarray);												 // Array of Children (name, birthdate, deathdate)
+											} else {
+												echo PrintReady('');
+											}
 										?>");'>
 										<?php 
 											print PrintReady($people["wife"]->getFullName()); 								 // Full Name (Link)
@@ -784,6 +867,23 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						if (isset($people["children"])) {
 							$elderdate = $family->getMarriageDate();
 							foreach($people["children"] as $key=>$child) {
+							
+								// Get Child's Children
+								$chBLDarray=Array();
+								foreach ($child->getSpouseFamilies() as $childfamily) {
+									$chchildren = $childfamily->getChildren();
+									foreach ($chchildren as $key=>$chchild) {
+										$chnam   = $chchild->getAllNames();
+										$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+										$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);				// Child's Full Name
+										$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+										$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+										$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+										array_push($chBLDarray, $chBLD);
+									}
+								}
+							
 								$nam   = $child->getAllNames();
 								$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 								$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
@@ -866,6 +966,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 												} else {
 													print PrintReady('UNK, UNK, UNK, UNK');									 // mbirthpl = Child Mother's Place of Birth Not known
 												}
+											?>", "<?php
+												if (isset($chBLDarray) && $child->getSex()=="F") {
+													$chBLDarray = implode("::", $chBLDarray);
+													echo PrintReady($chBLDarray);											 // Array of Children (name, birthdate, deathdate)
+												} else {
+													echo PrintReady('');
+												}
 											?>");'>
 											<?php 
 												print PrintReady($child->getFullName()); 									 // Full Name (Link)
@@ -898,6 +1005,21 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$spousetag = 'HUSB';
 						}
 						$marrdate = $family->getMarriageDate();
+						
+						//-- Get Children's Name, DOB, DOD --------------------------
+						if (isset($people["children"])) {
+							$chBLDarray = Array();
+							foreach ($people["children"] as $key=>$child) {
+								$chnam   = $child->getAllNames();
+								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+								array_push($chBLDarray, $chBLD);
+							}
+						}
 
 						//-- Spouse Husband ---------------------------------------------------
 						if ( isset($people["husb"])) {
@@ -1009,6 +1131,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 												print PrintReady($HusbMBP);												 // mbirthpl = Husband Mother's Place of Birth
 											} else {
 												print PrintReady('UNK, UNK, UNK, UNK');									 // mbirthpl = Husband Mother's Place of Birth Not known
+											}
+										?>", "<?php
+											if (isset($chBLDarray) && $people["husb"]->getSex()=="F") {
+												$chBLDarray = implode("::", $chBLDarray);
+												echo PrintReady($chBLDarray);											 // Array of Children (name, birthdate, deathdate)
+											} else {
+												echo PrintReady('');
 											}
 										?>");'>
 										<?php 
@@ -1147,6 +1276,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											} else {
 												print PrintReady('UNK, UNK, UNK, UNK');									 // mbirthpl = Wife Mother's Place of Birth Not known
 											}
+										?>", "<?php
+											if (isset($chBLDarray) && $people["wife"]->getSex()=="F") {
+												$chBLDarray = implode("::", $chBLDarray);
+												echo PrintReady($chBLDarray);											 // Array of Children (name, birthdate, deathdate)
+											} else {
+												echo PrintReady('');
+											}
 										?>");'>
 										<?php 
 											print PrintReady($people["wife"]->getFullName()); 							 // Full Name (Link)
@@ -1172,6 +1308,24 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								$marrdate=$childfamily->getMarriageDate();
 								$married = GedcomDate::Compare($censdate, $marrdate);
 							}
+
+							// Get Child's Children
+							$chBLDarray=Array();
+							foreach ($child->getSpouseFamilies() as $childfamily) {
+								$chchildren = $childfamily->getChildren();
+								foreach ($chchildren as $key=>$chchild) {
+									$chnam   = $chchild->getAllNames();
+									$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+									$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+									$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);				// Child's Full Name
+									$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+									$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+									$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+									array_push($chBLDarray, $chBLD);
+								}
+							}
+
+							// Get Spouse child's details
 							$nam   = $child->getAllNames();
 							$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 							$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
@@ -1261,6 +1415,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 												print PrintReady($people["wife"]->getBirthPlace());						 // mbirthpl = Child Mother's Place of Birth
 											} else {
 												print PrintReady('UNK, UNK, UNK, UNK');									 // mbirthpl = Child Mother's Place of Birth Not known
+											}
+										?>", "<?php
+											if (isset($chBLDarray) && $child->getSex()=="F") {
+												$chBLDarray = implode("::", $chBLDarray);
+												echo PrintReady($chBLDarray);											 // Array of Children (name, birthdate, deathdate)
+											} else {
+												echo PrintReady('');
 											}
 										?>");'>
 										<?php 
@@ -1373,6 +1534,21 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						$num = count($children);
 						$marrdate = $family->getMarriageDate();
 
+						//-- Get Parent Children's Name, DOB, DOD --------------------------
+						if (isset($children)) {
+							$chBLDarray = Array();
+							foreach ($children as $key=>$child) {
+								$chnam   = $child->getAllNames();
+								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+								array_push($chBLDarray, $chBLD);
+							}
+						}
+
 						//-- Parent Husband ------------------------------
 						if ($husb || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") { 
@@ -1411,7 +1587,6 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surn'];
 										$marn  = $nam[1]['surn'];
 									}
-									
 									$parentlinks .= "<a class=\"linka\" href=\"javascript:insertRowToTable(";
 									$parentlinks .= "'".PrintReady($husb->getXref())."',";							// pid		=	PID
 									$parentlinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
@@ -1445,9 +1620,15 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// fbirthpl	=	Fathers Birthplace
 									}
 									if (isset($pHusbMBP)) {
-										$parentlinks .= "'".$pHusbMBP."'";											// mbirthpl	=	Mothers Birthplace
+										$parentlinks .= "'".$pHusbMBP."'".",";										// mbirthpl	=	Mothers Birthplace
 									} else {
-										$parentlinks .= "'UNK, UNK, UNK, UNK'";										// mbirthpl	=	Mothers Birthplace
+										$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// mbirthpl	=	Mothers Birthplace
+									}
+									if (isset($chBLDarray) && $husb->getSex()=="F") {
+										$chBLDarray = implode("::", $chBLDarray);
+										$parentlinks .= "'".$chBLDarray."'";										// Array of Children (name, birthdate, deathdate)
+									} else {
+										$parentlinks .= "''";
 									}
 									$parentlinks .= ");\">";
 									$parentlinks .= PrintReady($husb->getFullName());								// Full Name (Link)
@@ -1542,9 +1723,15 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// fbirthpl	=	Fathers Birthplace Not Known
 									}
 									if (isset($pWifeMBP)) {
-										$parentlinks .= "'".$pWifeMBP."'";											// mbirthpl	=	Mothers Birthplace
+										$parentlinks .= "'".$pWifeMBP."'".",";										// mbirthpl	=	Mothers Birthplace
 									} else {
-										$parentlinks .= "'UNK, UNK, UNK, UNK'";										// mbirthpl	=	Mothers Birthplace Not Known
+										$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// mbirthpl	=	Mothers Birthplace Not Known
+									}
+									if (isset($chBLDarray) && $wife->getSex()=="F") {
+										$chBLDarray = implode("::", $chBLDarray);
+										$parentlinks .= "'".$chBLDarray."'";										// Array of Children (name, birthdate, deathdate)
+									} else {
+										$parentlinks .= "''";
 									}
 									$parentlinks .=	");\">";
 									$parentlinks .= PrintReady($wife->getFullName());								// Full Name (Link)
@@ -1570,7 +1757,22 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						$children = $family->getChildren();
 						$num = count($children);
 						$marrdate = $family->getMarriageDate();
-						
+
+						//-- Get StepParent's Children's Name, DOB, DOD --------------------------
+						if (isset($children)) {
+							$chBLDarray = Array();
+							foreach ($children as $key=>$child) {
+								$chnam   = $child->getAllNames();
+								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+								array_push($chBLDarray, $chBLD);
+							}
+						}
+
 						//-- Step Husband --------------------------------------
 						if ($natdad == "yes") {
 						}else{
@@ -1612,10 +1814,52 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 											$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 											$marn  = $nam[1]['surname'];
 										}
-									
-										$parentlinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
-										$parentlinks .= PrintReady($husb->getFullName());								// Full Name (Link)
-										$parentlinks .= "</a>";
+									$parentlinks .= "<a class=\"linka\" href=\"javascript:insertRowToTable(";
+									$parentlinks .= "'".PrintReady($husb->getXref())."',";							// pid		=	PID
+									$parentlinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
+									if (isset($nam[1])){
+										$parentlinks .= "'".strip_tags($fulmn)."',";								// mnam		=	Full Married Name
+									} else {
+										$parentlinks .= "'".strip_tags($fulln)."',";	 							// mnam		=	Full Name
+									}
+									if ($currpid=="Wife" || $currpid=="Husband") {
+										$parentlinks .= "'Step Father-in-Law',";									// label	=	1st Gen Male Relationship
+									}else{
+										$parentlinks .= "'Step Grand-Father',";										// label	=	2st Gen Male Relationship
+									}
+									$parentlinks .= "'".PrintReady($husb->getSex())."',";							// sex	=	Gender
+									$parentlinks .= "''".",";														// cond	=	Condition (Married etc)
+									if ($marrdate) {
+										$parentlinks .= "'".(($marrdate->minJD()+$marrdate->maxJD())/2)."',";		// dom = Date of Marriage (Julian)
+									}
+									$parentlinks .= "'".(($husb->getBirthDate()->minJD()+$husb->getBirthDate()->maxJD())/2)."',";	// dob	=	Date of Birth
+									if ($husb->getbirthyear()>=1) {
+										$parentlinks .=	"'".PrintReady($censyear-$husb->getbirthyear())."',";		// age	= 	Census Year - Year of Birth
+									} else {
+										$parentlinks .= "''".",";													// age	= 	Undefined
+									}
+									$parentlinks .= "'".(($husb->getDeathDate()->minJD()+$husb->getDeathDate()->maxJD())/2)."',";	// dod	=	Date of Death
+									$parentlinks .= "''".",";														// occu 	=	Occupation
+									$parentlinks .= "'".PrintReady($husb->getBirthPlace())."'".",";					// birthpl	=	Individuals Birthplace
+									if (isset($pHusbFBP)) {
+										$parentlinks .= "'".$pHusbFBP."'".",";										// fbirthpl	=	Fathers Birthplace
+									} else {
+										$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// fbirthpl	=	Fathers Birthplace
+									}
+									if (isset($pHusbMBP)) {
+										$parentlinks .= "'".$pHusbMBP."'".",";										// mbirthpl	=	Mothers Birthplace
+									} else {
+										$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// mbirthpl	=	Mothers Birthplace
+									}
+									if (isset($chBLDarray) && $husb->getSex()=="F") {
+										$chBLDarray = implode("::", $chBLDarray);
+										$parentlinks .= "'".$chBLDarray."'";										// Array of Children (name, birthdate, deathdate)
+									} else {
+										$parentlinks .= "''";
+									}
+									$parentlinks .= ");\">";
+									$parentlinks .= PrintReady($husb->getFullName());								// Full Name (Link)
+									$parentlinks .= "</a>";
 									}else{
 										$parentlinks .= $pgv_lang["private"];
 									}
@@ -1676,9 +1920,52 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}else{
 										$fulmn = $fulln;
 									}
-										$parentlinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
-										$parentlinks .= PrintReady($wife->getFullName());								// Full Name (Link)
-										$parentlinks .= "</a>";
+									$parentlinks .= "<a class=\"linka\" href=\"javascript:insertRowToTable(";
+									$parentlinks .=	"'".PrintReady($wife->getXref())."',";							// pid		=	PID
+									$parentlinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
+									if (isset($nam[1])){
+										$parentlinks .= "'".strip_tags($fulmn)."',";								// mnam		=	Full Married Name
+									} else {
+										$parentlinks .= "'".strip_tags($fulln)."',";								// mnam		=	Full Name
+									}
+									if ($currpid=="Wife" || $currpid=="Husband") {
+										$parentlinks .= "'Step Mother-in-Law',";									// label	=	1st Gen Female Relationship
+									} else {
+										$parentlinks .= "'Step Grand-Mother',";										// label	=	2st Gen Female Relationship
+									}
+									$parentlinks .=	"'".PrintReady($wife->getSex())."',";							// sex		=	Gender
+									$parentlinks .=	"''".",";														// cond		=	Condition (Married etc)
+									if ($marrdate) {
+										$parentlinks .= "'".(($marrdate->minJD()+$marrdate->maxJD())/2)."',";		// dom = Date of Marriage (Julian)
+									}
+									$parentlinks .= "'".(($wife->getBirthDate()->minJD()+$wife->getBirthDate()->maxJD())/2)."',";	// dob	=	Date of Birth
+									if ($wife->getbirthyear()>=1) {
+										$parentlinks .=	"'".PrintReady($censyear-$wife->getbirthyear())."',";		// age		= 	Census Year - Year of Birth
+									} else {
+										$parentlinks .=	"''".",";													// age		= 	Undefined
+									}
+									$parentlinks .= "'".(($wife->getDeathDate()->minJD()+$wife->getDeathDate()->maxJD())/2)."',";	// dod	=	Date of Death
+									$parentlinks .=	"''".",";														// occu 	=	Occupation
+									$parentlinks .= "'".PrintReady($wife->getBirthPlace())."'".",";					// birthpl	=	Individuals Birthplace
+									if (isset($pWifeFBP)) {
+										$parentlinks .= "'".$pWifeFBP."'".",";										// fbirthpl	=	Fathers Birthplace
+									} else {
+										$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// fbirthpl	=	Fathers Birthplace Not Known
+									}
+									if (isset($pWifeMBP)) {
+										$parentlinks .= "'".$pWifeMBP."'".",";										// mbirthpl	=	Mothers Birthplace
+									} else {
+										$parentlinks .= "'UNK, UNK, UNK, UNK'".",";									// mbirthpl	=	Mothers Birthplace Not Known
+									}
+									if (isset($chBLDarray) && $wife->getSex()=="F") {
+										$chBLDarray = implode("::", $chBLDarray);
+										$parentlinks .= "'".$chBLDarray."'";										// Array of Children (name, birthdate, deathdate)
+									} else {
+										$parentlinks .= "''";
+									}
+									$parentlinks .=	");\">";
+									$parentlinks .= PrintReady($wife->getFullName());								// Full Name (Link)
+									$parentlinks .= "</a>";
 									}else{
 										$parentlinks .= $pgv_lang["private"];
 									}
@@ -1699,6 +1986,20 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						$marrdate = $family->getMarriageDate();
 						$married  = GedcomDate::Compare($censdate, $marrdate);
 
+						//-- Get Spouse's Children's Name, DOB, DOD --------------------------
+						if (isset($children)) {
+							$chBLDarray = Array();
+							foreach ($children as $key=>$child) {
+								$chnam   = $child->getAllNames();
+								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+								array_push($chBLDarray, $chBLD);
+							}
+						}
 						//-- Spouse -----------------------------------------
 						if ($spouse || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
@@ -1707,6 +2008,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								$title = $famid." :".$pgv_lang["familybook_chart"];
 							}
 							if ($spouse) {
+							
 								//-- Spouse Parents -----------------------------
 								$gparent=Person::getInstance($spouse->getXref());
 								$spousefams = $gparent->getChildFamilies();
@@ -1718,6 +2020,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									if ($phusb) { $pSpouseFBP = $phusb->getBirthPlace(); }
 									if ($pwife) { $pSpouseMBP = $pwife->getBirthPlace(); }
 								}
+
 								//-- Spouse Details -----------------------------
 								if ($TEXT_DIRECTION=="ltr") { 
 									$title = $pgv_lang["indi_info"].": ".$spouse->getXref();
@@ -1778,9 +2081,15 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$spouselinks .= "'UNK, UNK, UNK, UNK'".",";									// fbirthpl	=	Fathers Birthplace Not Known
 									}
 									if (isset($pSpouseMBP)) {
-										$spouselinks .= "'".$pSpouseMBP."'";										// mbirthpl	=	Mothers Birthplace
+										$spouselinks .= "'".$pSpouseMBP."'".",";									// mbirthpl	=	Mothers Birthplace
 									} else {
-										$spouselinks .= "'UNK, UNK, UNK, UNK'";										// mbirthpl	=	Mothers Birthplace Not Known
+										$spouselinks .= "'UNK, UNK, UNK, UNK'".",";									// mbirthpl	=	Mothers Birthplace Not Known
+									}
+									if (isset($chBLDarray) && $spouse->getSex()=="F") {
+										$chBLDarray = implode("::", $chBLDarray);
+										$spouselinks .= "'".$chBLDarray."'";										// Array of Children (name, birthdate, deathdate)
+									} else {
+										$spouselinks .= "''";
 									}
 									$spouselinks .=	");\">";
 									$spouselinks .= PrintReady($spouse->getFullName());								// Full Name (Link)
@@ -1801,6 +2110,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 							$cpid = $child->getXref();
 							if ($child) {
 								$persons="Yes";
+								
 								//-- Childs Parents ---------------------
 								$gparent=Person::getInstance($child->getXref());
 								$fams = $gparent->getChildFamilies();
@@ -1813,6 +2123,23 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									if ($husb) { $ChildFBP = $husb->getBirthPlace(); }
 									if ($wife) { $ChildMBP = $wife->getBirthPlace(); }
 								}
+
+								// Get Child's Children
+								$chBLDarray=Array();
+								foreach ($child->getSpouseFamilies() as $childfamily) {
+									$chchildren = $childfamily->getChildren();
+									foreach ($chchildren as $key=>$chchild) {
+										$chnam   = $chchild->getAllNames();
+										$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+										$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);				// Child's Full Name
+										$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+										$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+										$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
+										array_push($chBLDarray, $chBLD);
+									}
+								}
+
 								// Get Childs marriage status ------------
 								$married="";
 								$marrdate="";
@@ -1883,9 +2210,15 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$spouselinks .= "'UNK, UNK, UNK, UNK'".",";								// fbirthpl	=	Fathers Birthplace Not Known
 									}
 									if (isset($ChildMBP)) {
-										$spouselinks .= "'".$ChildMBP."'";										// mbirthpl	=	Mothers Birthplace
+										$spouselinks .= "'".$ChildMBP."'".",";									// mbirthpl	=	Mothers Birthplace
 									} else {
-										$spouselinks .= "'UNK, UNK, UNK, UNK'";									// mbirthpl	=	Mothers Birthplace Not Known
+										$spouselinks .= "'UNK, UNK, UNK, UNK'".",";								// mbirthpl	=	Mothers Birthplace Not Known
+									}
+									if (isset($chBLDarray) && $child->getSex()=="F") {
+										$chBLDarray = implode("::", $chBLDarray);
+										$spouselinks .= "'".$chBLDarray."'";									// Array of Children (name, birthdate, deathdate)
+									} else {
+										$spouselinks .= "''";
 									}
 									$spouselinks .=	");\">";
 									$spouselinks .= PrintReady($child->getFullName());							// Full Name (Link)

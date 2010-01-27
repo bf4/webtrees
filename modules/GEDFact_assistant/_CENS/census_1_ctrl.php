@@ -34,29 +34,9 @@
 global $summary, $theme_name, $pgv_lang, $factarray, $censyear, $censdate;
  
 $pid = safe_get('pid');
-// echo $pid;
-
-/*
-$year = "1901";
-$censevent  = new Event("1 CENS\n2 DATE 31 MAR ".$year."");
-$censdate   = $censevent->getDate();
-*/
 
 $censdate  = new GedcomDate("31 MAR 1901");
 $censyear   = $censdate->date1->y;
-
-// TEST ONLY ===============================================
-/*
-$censevent2  = new GedcomDate("31 MAR 1901");
-// Display date examples ----------------------------------- 
-$censdate2   = $censevent2->Display(false, 'j O E');
-$censyear2   = $censevent2->Display(false, 'E');
-// Use dates for calculation examples ----------------------
-$censyear   =  $censevent2->date1->y;$dif=10; 
-echo $censyear-$dif;
-
-*/
-// END TEST ================================================
 
 $ctry       = "UK";
 // $married    = GedcomDate::Compare($censdate, $marrdate);
@@ -102,7 +82,7 @@ $currpid=$pid;
 
 	//-- Census & Source Information Area ============================================= 
 	echo "<div class=\" cens_container\">";
-		echo "<span>";
+		echo "<span >";
 			include('modules/GEDFact_assistant/_CENS/census_2_source_input.php');
 		echo "</span>";
 		//-- Proposed Census Text Area ================================================
