@@ -39,7 +39,7 @@ $stats = new stats($GEDCOM);
 
 ?>
 	<h3 class="center"><?php echo $pgv_lang["statistics"]; ?></h3>
-	<?php global $pgv_lang, $TEXT_DIRECTION, $PGV_THEME_DIR;
+	<?php global $pgv_lang, $TEXT_DIRECTION;
 	if ($TEXT_DIRECTION=='rtl') $align='right';
 	else $align='left';
 ?>
