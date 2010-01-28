@@ -2832,9 +2832,6 @@ $ged_name=get_gedcom_from_id($ged_id);
 // Autocomplete functions
 ////////////////////////////////////////////////////////////////////////////////
 
-//-- database query
-define('PGV_AUTOCOMPLETE_LIMIT', 500);
-
 function get_autocomplete_INDI($FILTER, $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
 

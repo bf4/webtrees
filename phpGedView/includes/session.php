@@ -102,6 +102,9 @@ define('PGV_JS_END',   "\n//]]>\n</script>\n");
 // Used in Google charts
 define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
 
+// Maximum number of results in auto-complete fields
+define('PGV_AUTOCOMPLETE_LIMIT', 500);
+
 // For performance, it is quicker to refer to files using absolute paths
 define ('PGV_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
 
