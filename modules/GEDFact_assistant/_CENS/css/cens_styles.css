@@ -26,41 +26,8 @@
  */
  
 
- /* Census Window - Census Date drop-down menu (census_asst_date.php ============ */
-.UK {
-	background-color:#aaffaa; 
-	color:black;
- }
-.USA {
-	background-color:#aaccff; 
-	color:black;
- }
- 
- /* View Page - Census Shared column headers (census_note_decode.php) =========== */
-.note1 {
-	margin-left: -0.05em;
-}
-.note2 {
-	margin-left: -0.2em;
-}
-.notecell {
-	white-space: nowrap;
-}
-
-/* Navigator =================================================================== */
+/* Navigator =============================================================== */
 /* Flyout Link Cell */
-
-/*
-ul {
-	margin-top:0em;
-	margin-bottom:0.5em;
-}
-li {
-	margin-left:-1em;
-	margin-top:-1em;
-}
-*/
-
 .linkcell a { 
 	display: block;
 	padding:  0.3em 0.3em 0.6em 0.3em;
@@ -87,17 +54,17 @@ a.linka {
 }
 /* "Head" button images */
 .headimg {
-margin-top:-4px;
-border:0;
+	margin-top:-4px;
+	border:0;
 }
 .headimg2 {
-height:17px;
-border-style:none;
-margin:-3px;
-margin-left:0px;
+	height:17px;
+	border-style:none;
+	margin:-3px;
+	margin-left:0px;
 }
 
-/* Edit Page css =============================================================== */
+/* Edit Page css =========================================================== */
 .cens_header_right {
 	float: right;
 	margin: 0 2em 0 0;
@@ -112,11 +79,9 @@ margin-left:0px;
 	padding: 0;
 	border: 0px solid yellow;
 }
-
 .cens_container span {
 	margin: 0 0.5em;
 }
-
  
 /* Header of assistant window */
 .cens_header {
@@ -124,13 +89,11 @@ margin-left:0px;
 	margin-top: 0.5em;
 	height: 2.5em;
 }
-
 .cens_header_left {
 	float: left;
 	margin-left: 1.5em;
 	font-weight: bold;
 }
-
 .cens_search {
 	position: relative; 
 	float: left;
@@ -149,7 +112,6 @@ margin-left:0px;
 	/* border: 1px solid green; */ 
 }
 
-
 /* Census Text Input Area */
 .cens_textinput {
 	clear: both;
@@ -158,13 +120,11 @@ margin-left:0px;
 	margin: 0.4em 0 0 0.3em;
 	width: 69.8em;
 }
-
 .cens_textinput_left  {
 	float: left;
 	width: 90%;
 	text-align: center;
 }
-
 .cens_textinput_right  {
 	float: right;
 	font-size: 1em;
@@ -191,7 +151,6 @@ margin-left:0px;
 	overflow: hidden;
 	width: 50.8em;
 }
-
 .cens_sour_country {
 	float: left;
 	width: 5.3em;
@@ -199,7 +158,6 @@ margin-left:0px;
 	padding-bottom: .2em;
 	margin-left: -0.4em;
 }
-
 .cens_sour_sour {
 	position: absolute;
 	margin-top: 3.4em;
@@ -208,11 +166,9 @@ margin-left:0px;
 	text-align: left;
 	padding-bottom: 0em;
 }
-
 img {
 	margin-top:-.6em;
 }
-
 .cens_sour_obje {
 	position: absolute;
 	margin-top: 5.2em;
@@ -222,7 +178,6 @@ img {
 	text-align: left;
 	padding-bottom: 0em;
 }
-
 .cens_sour_year {
 	float: left;
 	width: 3.6em; 
@@ -230,34 +185,28 @@ img {
 	margin-left: .25em;
 	padding-bottom: .2em;
 }
-
 .cens_sour_scs {
 	float: right;
 	width: 74%;
-	}
-	
+}
 .cens_sour select {
 	font-weight: normal;
 	margin: 0 0.5em;
 }
-
 .cens_sour input {
 	font-weight: normal;
 	font-size: 0.9em;
 	margin-top: 0.25em;
 	width: 78%;
 }
-
 .spacer {
 	padding-top:.5em;
 }
-
 .cens_sour_1 {
 	width: 100%;
 	margin: 0;
 	padding: 0;
 }
-
 .cens_sour_2 {
 	width: 17%;
 	float: left;
@@ -268,7 +217,6 @@ img {
 }
 
 /* Census Text input area */
-
 .cens_text {
 	font-size: 0.9em;
 	text-align: left;
@@ -278,24 +226,20 @@ img {
 	margin-right: -0.17em;
 width: 50.7em;
 }
-
 .cens_text span {
 	margin: 0 1em 0 0.3em;
 }
-
 textarea#NOTE {
 	height: 20.6em;
 	width: 98.5%;
 	overflow: auto;
 }
-
 /* Census data Input area */
 .cens_data {
 	width:100%;
 	height:12.46em;
 	overflow:auto;
 }
-
 .cens_data table {
 	width: 68em;
 	border: 0;

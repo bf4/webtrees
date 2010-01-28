@@ -28,8 +28,12 @@
  
  // Load the GEDFact_assistant language files ==============
 	loadLangFile("GEDFact_assistant:lang");
-	echo "<link href =\"modules/GEDFact_assistant/_CENS/css/cens_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />";
+	
+ // Link the CSS file ======================================
+ ?>
+	<link href ="modules/GEDFact_assistant/_CENS/css/cens_core_called.css" rel="stylesheet" type="text/css" media="screen" />
  
+ <?php
 	$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
 	$text = str_replace("<br />.start_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td class=\"notecell\">&nbsp;", $text);
 	

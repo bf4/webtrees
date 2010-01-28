@@ -1,0 +1,59 @@
+/**
+ * Census Assistant CSS module for phpGedView
+ *
+ * CSS required for module files called by core files
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007 John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * @package PhpGedView
+ * @subpackage Modules
+ * @version $Id$
+ */
+ 
+/**
+ *  **** Important Note **** ******************************************************
+ *
+ *  This CSS is linked from the following PGV core called files.
+ *  Any name change to this file will require these files link items to be updated.
+ *  - modules/GEDFact_assistant/_CENS/census_asst_date.php
+ *  - modules/GEDFact_assistant/_CENS/cenus_note_decode.php
+ *
+ *  *******************************************************************************
+ */
+ 
+ 
+/* Census Window - Census Date drop-down menu (census_asst_date.php ======= */
+.UK {
+	background-color:#aaffaa; 
+	color:black;
+ }
+.USA {
+	background-color:#aaccff; 
+	color:black;
+ }
+ 
+/* View Page - Census Shared column headers (census_note_decode.php) ====== */
+.note1 {
+	margin-left: -0.05em;
+}
+.note2 {
+	margin-left: -0.2em;
+}
+.notecell {
+	white-space: nowrap;
+}

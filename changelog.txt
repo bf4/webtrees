@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.x CA
+ - Changed: GEDFact_assistant/ module - Minor css changes (windmillway)
  - Changed: GEDFact_assistant/ module - Language file updates, and use Menu as lists function on Manage Media function. (windmillway)
  - Changed: GEDFact_assistant/_CENS/ module - Added automatic fill in for Children Born/Alive/Died census edit columns. (windmillway)
  - Changed: More minor updates and tidyups to GEDFact_assistant/_CENS/ (windmillway)
