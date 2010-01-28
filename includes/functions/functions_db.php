@@ -2828,4 +2828,201 @@ $ged_name=get_gedcom_from_id($ged_id);
 		->execute(array($xref_to, $xref_from, $ged_name))
 		->rowCount();
 }
+////////////////////////////////////////////////////////////////////////////////
+// Autocomplete functions
+////////////////////////////////////////////////////////////////////////////////
+
+//-- database query
+define('PGV_AUTOCOMPLETE_LIMIT', 500);
+
+function get_autocomplete_INDI($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+
+	$sql=
+		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
+		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
+		" WHERE (i_id ".PGV_DB::$LIKE." ? OR n_sort ".PGV_DB::$LIKE." ?)".
+		" AND i_id=n_id AND i_file=n_file AND i_file=?".
+		" ORDER BY n_sort";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("{$FILTER}%", "%{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_FAM($vars, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+			 "FROM {$TBLPREFIX}families ".
+			 "WHERE {$where} AND f_file=?";
+	$vars[]=$ged_id;
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute($vars)
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_NOTE($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
+			 "FROM {$TBLPREFIX}other ".
+			 "WHERE o_gedcom ".PGV_DB::$LIKE." ? AND o_type='NOTE' AND o_file=?";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_SOUR($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
+			 "FROM {$TBLPREFIX}sources ".
+			 "WHERE (s_name ".PGV_DB::$LIKE." ? OR s_id ".PGV_DB::$LIKE." ?) AND s_file=? ORDER BY s_name";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", "{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_SOUR_TITL($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
+			 "FROM {$TBLPREFIX}sources ".
+			 "WHERE s_name ".PGV_DB::$LIKE." ? AND s_file=? ORDER BY s_name";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_INDI_BURI_CEME($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql=
+		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
+		"FROM {$TBLPREFIX}individuals ".
+		"WHERE i_gedcom ".PGV_DB::$LIKE." ? AND i_file=?";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%1 BURI%2 CEME %{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_INDI_SOUR_PAGE($FILTER, $OPTION, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
+			 "FROM {$TBLPREFIX}individuals ".
+			 "WHERE i_gedcom ".PGV_DB::$LIKE." ? AND i_file=?";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("% SOUR @{$OPTION}@% PAGE %{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_FAM_SOUR_PAGE($FILTER, $OPTION, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql=
+		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+		"FROM {$TBLPREFIX}families ".
+		"WHERE f_gedcom ".PGV_DB::$LIKE." ? AND f_file=?";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("% SOUR @{$OPTION}@% PAGE %{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_REPO($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql=
+		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}other ".
+		"WHERE (o_gedcom ".PGV_DB::$LIKE." ? OR o_id ".PGV_DB::$LIKE." ?) AND o_file=? AND o_type='REPO'";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%1 NAME %{$FILTER}%", "{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_REPO_NAME($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql=
+		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}other ".
+		"WHERE o_gedcom ".PGV_DB::$LIKE." ? AND o_file=? AND o_type='REPO'";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%1 NAME %{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_OBJE($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT m_media ".
+			 "FROM {$TBLPREFIX}media ".
+			 "WHERE (m_titl ".PGV_DB::$LIKE." ? OR m_media ".PGV_DB::$LIKE." ?) AND m_gedfile=?";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", "{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_SURN($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT DISTINCT n_surname ".
+			 "FROM {$TBLPREFIX}name ".
+			 "WHERE n_surname ".PGV_DB::$LIKE." ? AND n_file=? ORDER BY n_surname";
+	return 
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", $ged_id))
+		->fetchOneColumn();
+}
+
+function get_autocomplete_GIVN($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT DISTINCT n_givn ".
+			 "FROM {$TBLPREFIX}name ".
+			 "WHERE n_givn ".PGV_DB::$LIKE." ? AND n_file=? ORDER BY n_givn";
+	return 
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", $ged_id))
+		->fetchAll();
+}
+
+function get_autocomplete_PLAC($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT p_id, p_place, p_parent_id ".
+			 "FROM {$TBLPREFIX}places ".
+			 "WHERE p_place ".PGV_DB::$LIKE." ? AND p_file=? ORDER BY p_place";
+	return 
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", $ged_id))
+		->fetchAll();
+}
+
+function get_autocomplete_full_PLAC($vars, $qs, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+	
+	$vars[]=$ged_id;
+	$sql="SELECT p_id, p_place, p_parent_id ".
+			 "FROM {$TBLPREFIX}places ".
+			 "WHERE p_id IN ({$qs}) AND p_file=?";
+	return 
+		PGV_DB::prepare($sql)
+		->execute($vars)
+		->fetchAll();
+}
+
 ?>
