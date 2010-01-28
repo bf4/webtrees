@@ -105,6 +105,17 @@ define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop
 // Maximum number of results in auto-complete fields
 define('PGV_AUTOCOMPLETE_LIMIT', 500);
 
+// Privacy constants
+define('PGV_PRIV_PUBLIC',  2); // Allows non-authenticated public visitors to view the marked information
+define('PGV_PRIV_USER',    1); // Allows authenticated users to access the marked information
+define('PGV_PRIV_NONE',    0); // Allows admin users to access the marked information
+define('PGV_PRIV_HIDE',   -1); // Hide the item to all users including the admin
+// Older config files use variables instead of constants
+$PRIV_PUBLIC = PGV_PRIV_PUBLIC;
+$PRIV_USER   = PGV_PRIV_USER;
+$PRIV_NONE   = PGV_PRIV_NONE;
+$PRIV_HIDE   = PGV_PRIV_HIDE;
+
 // For performance, it is quicker to refer to files using absolute paths
 define ('PGV_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
 
@@ -270,10 +281,9 @@ set_error_handler('pgv_error_handler');
 //-- setup execution timer
 $start_time = microtime(true);
 
-//-- load db specific functions
-require PGV_ROOT.'includes/functions/functions_db.php';
 
 // Connect to the database
+require PGV_ROOT.'includes/functions/functions_db.php';
 require PGV_ROOT.'includes/classes/class_pgv_db.php';
 try {
 	// remove escape codes before using PW
@@ -290,7 +300,7 @@ try {
 	// Can't connect to the DB?  We'll get redirected to install.php later.....
 }
 
-// -- load the authentication system, also logging
+// The authentication interface includes logging - which may be to the database
 require PGV_ROOT.'includes/authentication.php';
  
 // Determine browser type
@@ -353,47 +363,42 @@ if (isset($_REQUEST['ged'])) {
 	// .... the most recently used one
 	$GEDCOM=$_SESSION['GEDCOM'];
 } else {
-	// .... the site default
-	try {
-		$GEDCOM=get_site_setting('DEFAULT_GEDCOM');
-	} catch (PDOException $ex) {
-		// The table won't exist during initial setup
-		$GEDCOM='';
-	}
+	// .... we'll need to query the DB to find one
+	$GEDCOM='';
 }
 
+require PGV_ROOT.'config_gedcom.php'; // Load default gedcom settings
+
 // Missing/invalid gedcom - pick any one!
-$ged_id=get_id_from_gedcom($GEDCOM);
-if (!$ged_id) {
-	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-		$GEDCOM=$ged_name;
-		if (get_gedcom_setting($ged_id, 'imported')) {
-			break;
+try {
+	// Does the requested GEDCOM exist?
+	$ged_id=get_id_from_gedcom($GEDCOM);
+	if (!$ged_id) {
+		// Try the site default
+		$GEDCOM=get_site_setting('DEFAULT_GEDCOM');
+		$ged_id=get_id_from_gedcom($GEDCOM);
+		// Try any one
+		if (!$ged_id) {
+			foreach (get_all_gedcoms() as $ged_id=>$GEDCOM) {
+				if (get_gedcom_setting($ged_id, 'imported')) {
+					break;
+				}
+			}
 		}
 	}
 	define('PGV_GEDCOM', $GEDCOM);
-	define('PGV_GED_ID', get_id_from_gedcom(PGV_GEDCOM));
-} else {
-	define('PGV_GEDCOM', $GEDCOM);
 	define('PGV_GED_ID', $ged_id);
+	load_privacy_file(PGV_GED_ID);
+	require get_config_file(PGV_GED_ID); // Load current gedcom settings
+} catch (PDOException $ex) {
+	// No DB available?
+	require 'privacy.php';
+	define('PGV_GEDCOM', '');
+	define('PGV_GED_ID', 0);
 }
 
 // Set our gedcom selection as a default for the next page
 $_SESSION['GEDCOM']=PGV_GEDCOM;
-
-// Privacy constants
-define('PGV_PRIV_PUBLIC',  2); // Allows non-authenticated public visitors to view the marked information
-define('PGV_PRIV_USER',    1); // Allows authenticated users to access the marked information
-define('PGV_PRIV_NONE',    0); // Allows admin users to access the marked information
-define('PGV_PRIV_HIDE',   -1); // Hide the item to all users including the admin
-// Older code uses variables instead of constants
-$PRIV_PUBLIC = PGV_PRIV_PUBLIC;
-$PRIV_USER   = PGV_PRIV_USER;
-$PRIV_NONE   = PGV_PRIV_NONE;
-$PRIV_HIDE   = PGV_PRIV_HIDE;
-
-require PGV_ROOT.'config_gedcom.php'; // Load default gedcom settings
-require get_config_file(PGV_GED_ID);  // Load current gedcom settings
 
 if (empty($PHPGEDVIEW_EMAIL)) {
 	$PHPGEDVIEW_EMAIL='phpgedview-noreply@'.preg_replace('/^www\./i', '', $_SERVER['SERVER_NAME']);
@@ -524,22 +529,26 @@ if ($ENABLE_MULTI_LANGUAGE && empty($SEARCH_SPIDER)) {
 }
 
 //-- load the privacy functions
-load_privacy_file(PGV_GED_ID);
 require PGV_ROOT.'includes/functions/functions_privacy.php';
 
 // The curren't user's profile - from functions in authentication.php
 define('PGV_USER_ID',           getUserId     ());
-define('PGV_USER_NAME',         getUserName   ());
-define('PGV_USER_IS_ADMIN',     userIsAdmin   (PGV_USER_ID));
-define('PGV_USER_AUTO_ACCEPT',  userAutoAccept(PGV_USER_ID));
-define('PGV_ADMIN_USER_EXISTS', PGV_USER_IS_ADMIN     || adminUserExists());
-define('PGV_USER_GEDCOM_ADMIN', PGV_USER_IS_ADMIN     || userGedcomAdmin(PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_CAN_ACCEPT',   PGV_USER_GEDCOM_ADMIN || userCanAccept  (PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_CAN_EDIT',     PGV_USER_CAN_ACCEPT   || userCanEdit    (PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_CAN_ACCESS',   PGV_USER_CAN_EDIT     || userCanAccess  (PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_GEDCOM_ID',    getUserGedcomId   (PGV_USER_ID, PGV_GED_ID));
-define('PGV_USER_ROOT_ID',      getUserRootId     (PGV_USER_ID, PGV_GED_ID));
+if (PGV_DB::isConnected()) {
+	define('PGV_USER_NAME',         getUserName   ());
+	define('PGV_USER_IS_ADMIN',     userIsAdmin   (PGV_USER_ID));
+	define('PGV_USER_AUTO_ACCEPT',  userAutoAccept(PGV_USER_ID));
+	define('PGV_ADMIN_USER_EXISTS', PGV_USER_IS_ADMIN     || adminUserExists());
+	define('PGV_USER_GEDCOM_ADMIN', PGV_USER_IS_ADMIN     || userGedcomAdmin(PGV_USER_ID, PGV_GED_ID));
+	define('PGV_USER_CAN_ACCEPT',   PGV_USER_GEDCOM_ADMIN || userCanAccept  (PGV_USER_ID, PGV_GED_ID));
+	define('PGV_USER_CAN_EDIT',     PGV_USER_CAN_ACCEPT   || userCanEdit    (PGV_USER_ID, PGV_GED_ID));
+	define('PGV_USER_CAN_ACCESS',   PGV_USER_CAN_EDIT     || userCanAccess  (PGV_USER_ID, PGV_GED_ID));
+	define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID, PGV_GED_ID));
+	define('PGV_USER_GEDCOM_ID',    getUserGedcomId   (PGV_USER_ID, PGV_GED_ID));
+	define('PGV_USER_ROOT_ID',      getUserRootId     (PGV_USER_ID, PGV_GED_ID));
+} else {
+	// No DB?  Just set the basics, for install.php
+	define('PGV_ADMIN_USER_EXISTS', false);
+}
 
 // If we are logged in, and logout=1 has been added to the URL, log out
 if (PGV_USER_ID && safe_GET_bool('logout')) {

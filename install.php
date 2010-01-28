@@ -146,7 +146,7 @@ $step = 1;
 if (isset($_REQUEST['step'])) $step = $_REQUEST['step'];
 else {
 	if (PGV_DB::isConnected()) $step = 3;
-	if (adminUserExists()) $step = 8;
+	if (PGV_ADMIN_USER_EXISTS) $step = 8;
 }
 if (isset($_REQUEST['prev'])) $step--;
 $errors = array();
