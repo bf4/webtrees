@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: [ 2939710 ] [6841?] Startup error (fisharebest)
  - Fixed: [ 2937064 ] Upgrade from 4.2.3 loses users/accounts (fisharebest)
  - Changed: Default sorting by lastname in user administration (volschin) 
  - Fixed: Sorting by username in user administration (volschin) 
