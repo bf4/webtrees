@@ -108,7 +108,7 @@ class favorites_Sidebar extends Sidebar {
 			$out .= '<a class="load_href" href="sidebar.php?sb_action=favorites&amp;addfav='.$gid.'"><em>'.$pgv_lang['add_to_my_favorites'].'</em></a>';
 		}
 
-		if (count($gedcomfavs)>0 || PGV_USER_IS_ADMIN) {
+		if (count($gedcomfavs)>0) {
 			$out .= '<strong>'.$pgv_lang["gedcom_favorites"].'</strong>';
 			$out .= '<ul>';
 			foreach($gedcomfavs as $key=>$favorite) {

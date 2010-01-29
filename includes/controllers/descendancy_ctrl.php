@@ -58,7 +58,6 @@ class DescendancyControllerRoot extends BaseController {
 	var $descPerson = null;
 
 	var $diffindi = null;
-	var $NAME_LINENUM = 1;
 	var $accept_success = false;
 	var $visibility = "visible";
 	var $position = "relative";

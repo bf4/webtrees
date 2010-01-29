@@ -71,7 +71,6 @@ class IndividualControllerRoot extends BaseController {
 	var $default_tab = 0;
 	var $indi = null;
 	var $diffindi = null;
-	var $NAME_LINENUM = 1;
 	var $accept_success = false;
 	var $visibility = "visible";
 	var $position = "relative";
@@ -84,6 +83,9 @@ class IndividualControllerRoot extends BaseController {
 	var $modules = array();
 	var $static_tab = null;
 	var $Fam_Navigator = 'YES';
+	var $NAME_LINENUM = 1;
+	var $SEX_LINENUM = null;
+	var $globalfacts = null;
 
 	/**
 	* constructor
@@ -292,6 +294,10 @@ class IndividualControllerRoot extends BaseController {
 				echo PGV_DB::getQueryLog();
 			}
 			exit;
+		}
+		
+		if (PGV_USER_CAN_EDIT) {
+			
 		}
 	}
 	//-- end of init function
@@ -596,7 +602,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
-		global $NAME_LINENUM, $SEX_LINENUM, $pgv_lang, $pgv_changes, $USE_QUICK_UPDATE;
+		global $pgv_lang, $pgv_changes, $USE_QUICK_UPDATE;
 		if ($TEXT_DIRECTION=="rtl") {
 			$ff="_rtl";
 		} else {
@@ -639,9 +645,11 @@ class IndividualControllerRoot extends BaseController {
 				$menu->addSubmenu($submenu);
 			}
 
+			//--make sure the totals are correct
+			$this->getGlobalFacts();
 			if ($this->total_names<2) {
 				$submenu = new Menu($pgv_lang["edit_name"]);
-				$submenu->addOnclick("return edit_name('".$this->pid."', $NAME_LINENUM);");
+				$submenu->addOnclick("return edit_name('".$this->pid."', $this->NAME_LINENUM);");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -653,8 +661,8 @@ class IndividualControllerRoot extends BaseController {
 
 			if ($this->SEX_COUNT<2) {
 				$submenu = new Menu($pgv_lang["edit_sex"]);
-				if ($SEX_LINENUM=="new") $submenu->addOnclick("return add_new_record('".$this->pid."', 'SEX');");
-				else $submenu->addOnclick("return edit_record('".$this->pid."', $SEX_LINENUM);");
+				if ($this->SEX_LINENUM=="new") $submenu->addOnclick("return add_new_record('".$this->pid."', 'SEX');");
+				else $submenu->addOnclick("return edit_record('".$this->pid."', $this->SEX_LINENUM);");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -763,21 +771,21 @@ class IndividualControllerRoot extends BaseController {
 	* @return array return the array of global facts
 	*/
 	function getGlobalFacts() {
-		global $NAME_LINENUM, $SEX_LINENUM;
-
-		$globalfacts = $this->indi->getGlobalFacts();
-		foreach ($globalfacts as $key => $value) {
-			$fact = $value->getTag();
-			if ($fact=="SEX") {
-				$this->SEX_COUNT++;
-				$SEX_LINENUM = $value->getLineNumber();
+		if ($this->globalfacts==null) {
+			$this->globalfacts = $this->indi->getGlobalFacts();
+			foreach ($this->globalfacts as $key => $value) {
+				$fact = $value->getTag();
+				if ($fact=="SEX") {
+					$this->SEX_COUNT++;
+					$this->SEX_LINENUM = $value->getLineNumber();
+				}
+				if ($fact=="NAME") {
+					$this->total_names++;
+					$this->NAME_LINENUM = $value->getLineNumber();
+				}
 			}
-			if ($fact=="NAME") {
-				$this->total_names++;
-				$NAME_LINENUM = $value->getLineNumber();
-			}
-			}
-		return $globalfacts;
+		}
+		return $this->globalfacts;
 	}
 	/**
 	* get the individual facts shown on tab 1
