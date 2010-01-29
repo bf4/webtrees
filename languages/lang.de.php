@@ -476,6 +476,7 @@ $pgv_lang["sex"]						= "Geschlecht";
 $pgv_lang["personal_facts"]				= "Persönliche Fakten und Details";
 $pgv_lang["type"]						= "Typ";
 $pgv_lang["parents"]					= "Eltern";
+$pgv_lang["gparents"]					= "Großeltern";
 $pgv_lang["siblings"]					= "Geschwister";
 $pgv_lang["father"]						= "Vater";
 $pgv_lang["mother"]						= "Mutter";
