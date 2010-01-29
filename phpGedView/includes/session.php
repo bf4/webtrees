@@ -39,9 +39,9 @@ define('PGV_PHPGEDVIEW_WIKI', 'http://wiki.phpgedview.net');
 define('PGV_TRANSLATORS_URL', 'https://sourceforge.net/projects/phpgedview/forums/forum/294245');
 
 // Enable debugging output?
-define('PGV_DEBUG',       false);
-define('PGV_DEBUG_SQL',   false);
-define('PGV_DEBUG_PRIV',  false);
+define('PGV_DEBUG',      false);
+define('PGV_DEBUG_SQL',  false);
+define('PGV_DEBUG_PRIV', false);
 
 // Error reporting
 define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
@@ -135,6 +135,7 @@ if (!isset($DBPORT)) {
 @error_reporting(0);
 
 // Check configuration issues that affect older versions of PHP
+// We can't use any PHP5 functions until after this point.
 if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 	// PHP too old?
 	if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
@@ -186,6 +187,9 @@ if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 	}
 }
 
+//-- setup execution timer
+$start_time=microtime(true);
+
 // Microsoft IIS servers don't set REQUEST_URI, so generate it for them.
 if (!isset($_SERVER['REQUEST_URI']))  {
 	$_SERVER['REQUEST_URI']=substr($_SERVER['PHP_SELF'], 1);
@@ -205,7 +209,9 @@ if (!strstr($_SERVER['REQUEST_URI'], 'INDEX_DIRECTORY=') && file_exists($INDEX_D
 	// Now copy new language settings into existing configuration
 	foreach ($DefaultSettings as $lang => $settings) {
 		foreach ($settings as $key => $value) {
-			if (!isset($language_settings[$lang][$key])) $language_settings[$lang][$key] = $value;
+			if (!isset($language_settings[$lang][$key])) {
+				$language_settings[$lang][$key] = $value;
+			}
 		}
 	}
 	unset($DefaultSettings);
@@ -224,7 +230,7 @@ if (isset($_REQUEST['NEWLANGUAGE'])) {
 		unset($_REQUEST['NEWLANGUAGE']);
 	} elseif (!$pgv_lang_use[$_REQUEST['NEWLANGUAGE']]) {
 		unset($_REQUEST['NEWLANGUAGE']);
-}
+	}
 }
 
 /**
@@ -236,10 +242,16 @@ if (!empty($_SERVER['PHP_SELF'])) {
 	$SCRIPT_NAME=$_SERVER['SCRIPT_NAME'];
 }
 $SCRIPT_NAME = preg_replace('~/+~', '/', $SCRIPT_NAME);
-if (!empty($_SERVER['QUERY_STRING'])) $QUERY_STRING = $_SERVER['QUERY_STRING'];
-else $QUERY_STRING='';
-$QUERY_STRING = str_replace(array('&','<'), array('&amp;','&lt;'), $QUERY_STRING);
-$QUERY_STRING = preg_replace('/show_context_help=(no|yes)/', '', $QUERY_STRING);
+
+if (empty($_SERVER['QUERY_STRING'])) {
+	$QUERY_STRING='';
+} else {
+	$QUERY_STRING=str_replace(
+		array('&','<', 'show_context_help=no', 'show_context_help=yes'),
+		array('&amp;','&lt;', '', ''),
+		$_SERVER['QUERY_STRING']
+	);
+}
 
 //-- if not configured then redirect to the configuration script
 if (!$CONFIGURED) {
@@ -277,9 +289,6 @@ require  PGV_ROOT.'includes/functions/functions.php';
 require  PGV_ROOT.'includes/functions/functions_name.php';
 //-- set the error handler
 set_error_handler('pgv_error_handler');
-
-//-- setup execution timer
-$start_time = microtime(true);
 
 
 // Connect to the database
