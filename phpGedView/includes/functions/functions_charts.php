@@ -3,7 +3,7 @@
  * Functions used for charts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -118,8 +118,9 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		$tempID = $wife->getXref();
 		if (!empty($tempID)) print "<a name=\"{$tempID}\"></a>\r\n";
 	}
-	print_family_header($famid);
-
+	if ($sosa != 0) {
+		print_family_header($famid);
+	}
 	// -- get the new record and parents if in editing show changes mode
 	if (PGV_USER_CAN_EDIT && isset($pgv_changes[$famid . "_" . $GEDCOM])) {
 		$newrec = find_updated_record($famid, $ged_id);
