@@ -206,9 +206,13 @@ define('PGV_SERVER_NAME',
 // SCRIPT_NAME should always be correct, but is not always present.
 // PHP_SELF should always be present, but may have trailing path: /path/to/script.php/FOO/BAR
 if (!empty($_SERVER['SCRIPT_NAME'])) {
-	define('PGV_SCRIPT_PATH', stristr($_SERVER['SCRIPT_NAME'], PGV_SCRIPT_NAME, true));
+	// PHP 5.3 only
+	//define('PGV_SCRIPT_PATH', stristr($_SERVER['SCRIPT_NAME'], PGV_SCRIPT_NAME, true));
+	define('PGV_SCRIPT_PATH', substr($_SERVER['SCRIPT_NAME'], 0, stripos($_SERVER['SCRIPT_NAME'], PGV_SCRIPT_NAME)));
 } elseif (!empty($_SERVER['PHP_SELF'])) {
-	define('PGV_SCRIPT_PATH', stristr($_SERVER['PHP_SELF'], PGV_SCRIPT_NAME, true));
+	// PHP 5.3 only
+	//define('PGV_SCRIPT_PATH', stristr($_SERVER['PHP_SELF'], PGV_SCRIPT_NAME, true));
+	define('PGV_SCRIPT_PATH', substr($_SERVER['PHP_SELF'], 0, stripos($_SERVER['PHP_SELF'], PGV_SCRIPT_NAME)));
 } else {
 	// No server settings - probably running as a command line script
 	define('PGV_SCRIPT_PATH', '/');
