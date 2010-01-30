@@ -24,15 +24,15 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'useradmin.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions_edit.php';
 
 loadLangFile('pgv_confighelp');
 
 // Only admin users can access this page
 if (!PGV_USER_IS_ADMIN) {
-	$loginURL = "$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING);
+	$loginURL = "$LOGIN_URL?url=".urlencode(PGV_SCRIPT_NAME."?".$QUERY_STRING);
 	header("Location: $loginURL");
 	exit;
 }

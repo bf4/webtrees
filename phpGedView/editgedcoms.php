@@ -27,6 +27,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'editgedcoms.php');
 require './config.php';
 
 loadLangFile("pgv_confighelp");

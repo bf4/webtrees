@@ -23,6 +23,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'printlog.php');
 require './config.php';
 
 //-- only allow admins

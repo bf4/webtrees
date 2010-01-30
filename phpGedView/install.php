@@ -37,6 +37,7 @@
  * 8. Get Started
  */
 
+define('PGV_SCRIPT_NAME', 'install.php');
 //-- load up the configuration or the default configuration
 if (file_exists('./config.php')) {
 	require_once './config.php';
@@ -263,7 +264,7 @@ switch($step) {
 			$config_array['CONFIGURED'] = true;
 			
 			// Clear the SERVER_URL when it's identical to the calculated value
-			$GUESS_URL = "http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/";
+			$GUESS_URL = PGV_SERVER_NAME.PGV_SCRIPT_PATH;
 			if (!isset($config_array['SERVER_URL'])) $config_array['SERVER_URL'] = '';
 			$config_array['SERVER_URL'] = rtrim(trim($config_array['SERVER_URL']),'/').'/';
 			if ($config_array['SERVER_URL'] == $GUESS_URL || $config_array['SERVER_URL'] == '/') $config_array['SERVER_URL'] = '';
@@ -319,6 +320,9 @@ switch($step) {
 		}
 		break;
 	case 7:
+		if (adminUserExists()) {
+			break;
+		}
 		$username =safe_POST('username', PGV_REGEX_USERNAME);
 		$pass1    =safe_POST('pass1', PGV_REGEX_PASSWORD);
 		$pass2    =safe_POST('pass2', PGV_REGEX_PASSWORD);
@@ -711,7 +715,7 @@ function printConfigForm(){
 	global $TEXT_DIRECTION, $PGV_DXHTMLTAB_COLORS, $PGV_STORE_MESSAGES, $USE_REGISTRATION_MODULE, $REQUIRE_ADMIN_AUTH_REGISTRATION;
 	global $ALLOW_CHANGE_GEDCOM, $PGV_SIMPLE_MAIL, $ALLOW_USER_THEMES, $LOGFILE_CREATE, $SERVER_URL;
 	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL, $PGV_SMTP_FROM_NAME;
-	global $LOGIN_URL, $SCRIPT_NAME, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
+	global $LOGIN_URL, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
 	global $BROWSERTYPE;		// MSIE and dhtmlXTabbar don't play friendly at the moment
 	global $pgv_lang;
@@ -765,7 +769,7 @@ function printConfigForm(){
 				<td class="optionbox wrap"><input type="text" name="NEW_SERVER_URL" value="<?php print $SERVER_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SERVER_URL_help');" size="50" />
 				<br /><?php
 					global $GUESS_URL;
-					$GUESS_URL = "http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/";
+					$GUESS_URL = PGV_SERVER_NAME.PGV_SCRIPT_PATH;
 					print_text("server_url_note");
 					?>
 				</td>

@@ -39,7 +39,7 @@ require_once PGV_ROOT.'modules/research_assistant/ra_functions.php';
 require_once PGV_ROOT.'modules/research_assistant/forms/ra_GeneratedTask.php';
 
 // If the user doesnt have access then take them to the index.
-if ($SHOW_RESEARCH_ASSISTANT < PGV_USER_ACCESS_LEVEL && preg_match("/index.php/", $SCRIPT_NAME)==0) {
+if ($SHOW_RESEARCH_ASSISTANT < PGV_USER_ACCESS_LEVEL && PGV_SCRIPT_NAME!='index.php') {
 	header("Location: index.php");
 	exit;
 }

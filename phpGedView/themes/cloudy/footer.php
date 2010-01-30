@@ -43,12 +43,12 @@ function hidebar()
 }
 JSCRIPT;
         $onload ="hidebar();";
-        if ((stristr($SCRIPT_NAME, "individual") ==false ))
+        if (PGV_SCRIPT_NAME!='individual.php')
         {
-                if (stristr($SCRIPT_NAME, "pedigree") or
-                (stristr($SCRIPT_NAME, "descendancy")) or
-                (stristr($SCRIPT_NAME, "timeline")) or
-                (stristr($SCRIPT_NAME, "relationship")))
+                if (PGV_SCRIPT_NAME=='pedigree.php' ||
+                PGV_SCRIPT_NAME=='descendancy.php' ||
+                PGV_SCRIPT_NAME=='timeline.php' ||
+                PGV_SCRIPT_NAME=='relationship.php')
                 {
                 echo "\n", <<<JSCRIPT
 function resize_content_div()
@@ -62,7 +62,7 @@ function resize_content_div()
                 var browserWidth = Math.max(document.body.clientWidth, 200);
 JSCRIPT;
                 $onload .="\n\tresize_content_div();";
-                if (stristr($SCRIPT_NAME, "pedigree") or stristr($SCRIPT_NAME, "descendancy"))
+                if (PGV_SCRIPT_NAME=='pedigree.php' || PGV_SCRIPT_NAME=='descendancy.php')
                 { // pedigree and descendancy height
                         echo "\t\ty = foot.offsetTop;\n";
                         //echo "\t\tz = parseInt(y);\n";
@@ -70,13 +70,13 @@ JSCRIPT;
                         //echo "\t\talert(y);\n";
                         echo "\t\tcont.style.height=(z.toString()+'px');\n";
 
-                } else if (strstr($SCRIPT_NAME, "timeline"))
+                } else if (PGV_SCRIPT_NAME=='timeline.php')
                 { // timeline height
                         global $endoffset;
                         if (!$endoffset) $endoffset=270;
                         echo "\t\ty='", $endoffset, "px';\n";
                         echo "\t\tcont.style.height=(y);\n";
-                } else if (strstr($SCRIPT_NAME, "relationship"))
+                } else if (PGV_SCRIPT_NAME=='relationship.php')
                 { // relationship height and width
                         global $maxyoffset, $xoffset, $Dbwidth, $xs;
                         $xoffset += $Dbwidth+$xs;
@@ -89,7 +89,7 @@ JSCRIPT;
                         echo "\t\tcont.style.width=x.toString()+'px';\n";
                         echo "\t\thead.style.width=x.toString()+'px';\n";
                 }
-                if (strstr($SCRIPT_NAME, "pedigree"))
+                if (PGV_SCRIPT_NAME=='pedigree.php')
                 { // pedigree width
                         global $bwidth, $bxspacing, $PEDIGREE_GENERATIONS, $talloffset, $Darrowwidth;
                         $xoffset = ($PEDIGREE_GENERATIONS * ($bwidth+(2*$bxspacing))) + (2*$Darrowwidth);
@@ -102,7 +102,7 @@ JSCRIPT;
                         echo "\t\thead.style.width=(x).toString()+'px';\n";
 
                 } // descendancy width
-                if (strstr($SCRIPT_NAME, "descendancy"))
+                if (PGV_SCRIPT_NAME=='descendancy.php')
                 {
                         global $maxxoffset;
                         $xoffset = ($maxxoffset+60);
@@ -113,7 +113,7 @@ JSCRIPT;
                         echo "\t\thead.style.width=x.toString()+'px';\n";
                 } //
                 echo "\n\t}\n}\n";
-        }  else if (stristr($SCRIPT_NAME, "index"))
+        }  else if (PGV_SCRIPT_NAME=='index.php')
         {
                 echo "\n";
                 echo "function resize_content_div()\n";
@@ -165,7 +165,7 @@ echo contact_links();
 echo '<br /><a href="', PGV_PHPGEDVIEW_URL, '" target="_blank"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['gedview']['other'], '" width="100" height="45" border="0" alt="', PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" title="', PGV_PHPGEDVIEW , PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" , '" /></a><br />';
 echo "\n\t<br />";
 print_help_link("preview_help", "qm");
-echo "<a href=\"$SCRIPT_NAME?view=preview&amp;", get_query_string(), "\">", $pgv_lang["print_preview"], "</a>";
+echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', $pgv_lang['print_preview'], '</a>';
 echo "<br />";
 if ($SHOW_STATS || PGV_DEBUG) {
 	echo execution_stats();

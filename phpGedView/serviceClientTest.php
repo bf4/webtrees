@@ -1,6 +1,7 @@
 <pre>
 <?php
 
+define('PGV_SCRIPT_NAME', 'serviceClientTest.php');
 require './config.php';
 
 ob_start();

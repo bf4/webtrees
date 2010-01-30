@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'export_gedcom.php');
 require './config.php';
 require_once PGV_ROOT.'includes/functions/functions_export.php';
 

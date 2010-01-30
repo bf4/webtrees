@@ -26,6 +26,7 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'individual.php');
 require './config.php';
 require PGV_ROOT.'includes/controllers/individual_ctrl.php';
 

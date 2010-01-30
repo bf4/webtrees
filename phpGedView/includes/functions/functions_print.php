@@ -46,7 +46,7 @@ require_once PGV_ROOT.'includes/classes/class_menubar.php';
 * @param int $count on some charts it is important to keep a count of how many boxes were printed
 */
 function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
-	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;
+	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $GEDCOM;
 	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	global $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
@@ -209,37 +209,37 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			if ($LINK_ICONS!="disabled") {
 				$click_link="javascript:;";
 				$whichChart="";
-				if (strpos($SCRIPT_NAME, "pedigree.php")!==false) {
+				if (PGV_SCRIPT_NAME=='pedigree.php') {
 					$click_link=encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}");
 					$whichChart="pedigree_chart";
 					$whichID=$pid;
 				}
 
-				if (strpos($SCRIPT_NAME, "hourglass.php")!==false) {
+				if (PGV_SCRIPT_NAME=='hourglass.php') {
 					$click_link=encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="hourglass_chart";
 					$whichID=$pid;
 				}
 
-				if (strpos($SCRIPT_NAME, "ancestry.php")!==false) {
+				if (PGV_SCRIPT_NAME=='ancestry.php') {
 					$click_link=encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="ancestry_chart";
 					$whichID=$pid;
 				}
 
-				if (strpos($SCRIPT_NAME, "descendancy.php")!==false) {
+				if (PGV_SCRIPT_NAME=='descendancy.php') {
 					$click_link=encode_url("descendancy.php?&show_full={$PEDIGREE_FULL_DETAILS}&pid={$pid}&agenerations={$generations}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="descend_chart";
 					$whichID=$pid;
 				}
 
-				if ((strpos($SCRIPT_NAME, "family.php")!==false)&&(!empty($famid))) {
+				if (PGV_SCRIPT_NAME=='family.php' && !empty($famid)) {
 					$click_link=encode_url("family.php?famid={$famid}&show_full=1&ged={$GEDCOM}");
 					$whichChart="familybook_chart";
 					$whichID=$famid;
 				}
 
-				if (strpos($SCRIPT_NAME, "individual.php")!==false) {
+				if (PGV_SCRIPT_NAME=='individual.php') {
 					$click_link=encode_url("individual.php?pid={$pid}&ged={$GEDCOM}");
 					$whichChart="indi_info";
 					$whichID=$pid;
@@ -443,25 +443,26 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	global $BROWSERTYPE, $SEARCH_SPIDER;
 	global $view, $cart;
 	global $CHARACTER_SET, $PGV_IMAGE_DIR, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
-	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage, $theme_name;
+	global $QUERY_STRING, $action, $query, $changelanguage, $theme_name;
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION, $REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
 	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE;
 
+	// TODO: Shouldn't this be in session.php?
 	// If not on allowed list, dump the spider onto the redirect page.
 	// This kills recognized spiders in their tracks.
 	// To stop unrecognized spiders, see META_ROBOTS below.
-	if (!empty($SEARCH_SPIDER)) {
+	if ($SEARCH_SPIDER) {
 		if (
-			!((strstr($SCRIPT_NAME, "/individual.php")) ||
-			(strstr($SCRIPT_NAME, "/indilist.php")) ||
-			(strstr($SCRIPT_NAME, "/login.php")) ||
-			(strstr($SCRIPT_NAME, "/family.php")) ||
-			(strstr($SCRIPT_NAME, "/famlist.php")) ||
-			(strstr($SCRIPT_NAME, "/help_text.php")) ||
-			(strstr($SCRIPT_NAME, "/source.php")) ||
-			(strstr($SCRIPT_NAME, "/search_engine.php")) ||
-			(strstr($SCRIPT_NAME, "/index.php")))
+			!(PGV_SCRIPT_NAME=='/individual.php' ||
+			PGV_SCRIPT_NAME=='/indilist.php' ||
+			PGV_SCRIPT_NAME=='/login.php' ||
+			PGV_SCRIPT_NAME=='/family.php' ||
+			PGV_SCRIPT_NAME=='/famlist.php' ||
+			PGV_SCRIPT_NAME=='/help_text.php' ||
+			PGV_SCRIPT_NAME=='/source.php' ||
+			PGV_SCRIPT_NAME=='/search_engine.php' ||
+			PGV_SCRIPT_NAME=='/index.php')
 		) {
 			header("Location: search_engine.php");
 			exit;
@@ -508,28 +509,6 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 			$META_PAGE_TOPIC = $GEDCOM_TITLE;
 		}
 
-		// Restrict good search engine spiders to the index page and the individual.php pages.
-		// Quick and dirty hack that will still leave some url only links in Google.
-		// Also ignored by crawlers like wget, so other checks have to be done too.
-		if (!empty($SEARCH_SPIDER)) {
-			if (
-				(strstr($SCRIPT_NAME, "/individual.php")) ||
-				(strstr($SCRIPT_NAME, "/indilist.php")) ||
-				(strstr($SCRIPT_NAME, "/family.php")) ||
-				(strstr($SCRIPT_NAME, "/famlist.php")) ||
-				(strstr($SCRIPT_NAME, "/help_text.php")) ||
-				(strstr($SCRIPT_NAME, "/source.php")) ||
-				(strstr($SCRIPT_NAME, "/search_engine.php")) ||
-				(strstr($SCRIPT_NAME, "/index.php"))
-			) {
-				// empty case is to index, follow anyways.
-				if (empty($META_ROBOTS)) {
-					$META_ROBOTS = "index,follow";
-				}
-			} else {
-				$META_ROBOTS ="noindex,nofollow";
-			}
-		}
 /*		$javascript .='<script language="JavaScript" type="text/javascript">
 	<!--
 	function hidePrint() {
@@ -557,7 +536,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		var textDirection = "'.$TEXT_DIRECTION.'";
 		var browserType = "'.$BROWSERTYPE.'";
 		var themeName = "'.strtolower($theme_name).'";
-		var SCRIPT_NAME = "'.$SCRIPT_NAME.'";
+		var SCRIPT_NAME = "'.PGV_SCRIPT_NAME.'";
 		/* keep the session id when opening new windows */
 		var sessionid = "'.session_id().'";
 		var sessionname = "'.session_name().'";
@@ -611,13 +590,13 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	}
 	$javascript .= '
 	function message(username, method, url, subject) {
-		if ((!url)||(url=="")) url=\''.urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING).'\';
+		if ((!url)||(url=="")) url=\''.urlencode(PGV_SCRIPT_NAME."?".$QUERY_STRING).'\';
 		if ((!subject)||(subject=="")) subject="";
 		window.open(\'message.php?to=\'+username+\'&method=\'+method+\'&url=\'+url+\'&subject=\'+subject+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\');
 		return false;
 	}
 
-	var whichhelp = \'help_'.basename($SCRIPT_NAME).'&action='.$action.'\';
+	var whichhelp = \'help_'.PGV_SCRIPT_NAME.'&action='.$action.'\';
 	//-->
 	'.PGV_JS_END.'<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>';
 	$bodyOnLoad = '';
@@ -660,7 +639,7 @@ function print_simple_header($title) {
 // -- print the html to close the page
 function print_footer() {
 	global $pgv_lang, $view;
-	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $ALLOW_CHANGE_GEDCOM, $printlink;
+	global $SHOW_STATS, $QUERY_STRING, $footerfile, $print_footerfile, $ALLOW_CHANGE_GEDCOM, $printlink;
 	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count;
 
 	$view = safe_get('view');
@@ -673,7 +652,7 @@ function print_footer() {
 	} else {
 		require $print_footerfile;
 		echo "<div id=\"backprint\" style=\"text-align: center; width: 95%\">";
-		$backlink = $SCRIPT_NAME."?".get_query_string();
+		$backlink = PGV_SCRIPT_NAME."?".get_query_string();
 		if (!$printlink) {
 			echo "<br /><a id=\"printlink\" href=\"javascript:;\" onclick=\"print(); return false;\">", $pgv_lang["print"], "</a><br />";
 			echo " <a id=\"printlinktwo\" href=\"javascript:;\" onclick=\"window.location='", $backlink, "'; return false;\">", $pgv_lang["cancel_preview"], "</a><br />";
@@ -781,7 +760,7 @@ function print_lang_form($option=0) {
 * this function will print login/logout links and other links based on user privileges
 */
 function print_user_links() {
-	global $pgv_lang, $SCRIPT_NAME, $QUERY_STRING, $GEDCOM;
+	global $pgv_lang, $QUERY_STRING, $GEDCOM;
 	global $LOGIN_URL, $SEARCH_SPIDER;
 
 	if (PGV_USER_ID) {
@@ -793,10 +772,10 @@ function print_user_links() {
 	} else {
 		$QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
 		if (empty($SEARCH_SPIDER)) {
-			if (basename($SCRIPT_NAME)=='login.php') {
+			if (PGV_SCRIPT_NAME=='login.php') {
 				echo "<a href=\"#\" class=\"link\">", $pgv_lang["login"], "</a>";
 			} else {
-				echo "<a href=\"$LOGIN_URL?url=", rawurlencode(basename($SCRIPT_NAME).decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM"))), "\" class=\"link\">", $pgv_lang["login"], "</a>";
+				echo "<a href=\"$LOGIN_URL?url=", rawurlencode(PGV_SCRIPT_NAME.decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM"))), "\" class=\"link\">", $pgv_lang["login"], "</a>";
 			}
 		}
 	}
@@ -956,7 +935,7 @@ function contact_menus() {
 
 //-- print user favorites
 function print_favorite_selector($option=0) {
-	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $INDEX_DIRECTORY, $QUERY_STRING;
+	global $pgv_lang, $GEDCOM, $SHOW_ID_NUMBERS, $INDEX_DIRECTORY, $QUERY_STRING;
 	global $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 	global $controller; // Pages with a controller can be added to the favorites
 
@@ -1007,7 +986,7 @@ function print_favorite_selector($option=0) {
 			$menu->addSubMenu($submenu);
 
 			if ($gid!='') {
-				$submenu = new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', encode_url($SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav&amp;gid='.$gid)), "right");
+				$submenu = new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', encode_url(PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav&amp;gid='.$gid)), "right");
 				$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
 				$menu->addSubMenu($submenu);
 			}
@@ -1076,9 +1055,9 @@ function print_favorite_selector($option=0) {
 		$menu->printMenu();
 		break;
 	default:
-		echo "<form class=\"favorites_form\" name=\"favoriteform\" action=\"$SCRIPT_NAME";
+		echo '<form class="favorites_form" name="favoriteform" action="', PGV_SCRIPT_NAME, '"';
 		echo "\" method=\"post\" onsubmit=\"return false;\">";
-		echo "<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='{$SCRIPT_NAME}", normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$gid}"), "';\">";
+		echo "<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='", PGV_SCRIPT_NAME, normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$gid}"), "';\">";
 		echo "<option value=\"\">", $pgv_lang["favorites"], "</option>";
 		if (PGV_USER_NAME) {
 			if (count($userfavs)>0 || $gid!='') {
@@ -1976,7 +1955,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			}
 		}
 		if ($linebr) echo "<br />";
-		if (substr($_SERVER["SCRIPT_NAME"], 1) == "pedigree.php") {
+		if (PGV_SCRIPT_NAME=='pedigree.php') {
 			echo "<br />";
 			if (function_exists('print_fact_sources')) print_fact_sources($assorec, $level+1);
 		}

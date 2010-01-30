@@ -92,7 +92,7 @@ class ClippingsControllerRoot extends BaseController {
 	}
 	//----------------beginning of function definitions for ClippingsControllerRoot
 	function init() {
-		global $PRIV_HIDE, $PRIV_PUBLIC, $ENABLE_CLIPPINGS_CART, $SCRIPT_NAME, $pgv_lang, $SERVER_URL, $CONTACT_EMAIL, $HOME_SITE_TEXT, $HOME_SITE_URL, $MEDIA_DIRECTORY;
+		global $PRIV_HIDE, $PRIV_PUBLIC, $ENABLE_CLIPPINGS_CART, $pgv_lang, $SERVER_URL, $CONTACT_EMAIL, $HOME_SITE_TEXT, $HOME_SITE_URL, $MEDIA_DIRECTORY;
 		global $GEDCOM, $CHARACTER_SET, $cart;
 
 		if (!isset ($ENABLE_CLIPPINGS_CART))
@@ -247,15 +247,6 @@ class ClippingsControllerRoot extends BaseController {
 		if ($this->action == 'download') {
 			usort($cart, "same_group");
 			if ($this->filetype == "gedcom") {
-				$path = substr($SCRIPT_NAME, 0, strrpos($SCRIPT_NAME, "/"));
-				if (empty ($path))
-				$path = "/";
-				if ($path[strlen($path) - 1] != "/")
-				$path .= "/";
-				if ($SERVER_URL[strlen($SERVER_URL) - 1] == "/") {
-					$dSERVER_URL = substr($SERVER_URL, 0, strlen($SERVER_URL) - 1);
-				} else
-				$dSERVER_URL = $SERVER_URL;
 				$media = array ();
 				$mediacount = 0;
 				$ct = count($cart);
@@ -317,10 +308,10 @@ class ClippingsControllerRoot extends BaseController {
 							}
 							$filetext .= trim($record) . "\n";
 							$filetext .= "1 SOUR @SPGV1@\n";
-							$filetext .= "2 PAGE " . $dSERVER_URL . "/individual.php?pid=" . $clipping['id'] . "\n";
+							$filetext .= "2 PAGE " . PGV_SERVER_HOST.PGV_SCRIPT_PATH . "individual.php?pid=" . $clipping['id'] . "\n";
 							$filetext .= "2 DATA\n";
 							$filetext .= "3 TEXT " . $pgv_lang["indi_downloaded_from"] . "\n";
-							$filetext .= "4 CONT " . $dSERVER_URL . "/individual.php?pid=" . $clipping['id'] . "\n";
+							$filetext .= "4 CONT " . PGV_SERVER_HOST.PGV_SCRIPT_PATH . "individual.php?pid=" . $clipping['id'] . "\n";
 							break;
 
 						case 'fam':
@@ -360,10 +351,10 @@ class ClippingsControllerRoot extends BaseController {
 
 							$filetext .= trim($record) . "\n";
 							$filetext .= "1 SOUR @SPGV1@\n";
-							$filetext .= "2 PAGE " . $dSERVER_URL . $path . "family.php?famid=" . $clipping['id'] . "\n";
+							$filetext .= "2 PAGE " . PGV_SERVER_HOST.PGV_SCRIPT_PATH . "family.php?famid=" . $clipping['id'] . "\n";
 							$filetext .= "2 DATA\n";
 							$filetext .= "3 TEXT " . $pgv_lang["family_downloaded_from"] . "\n";
-							$filetext .= "4 CONT " . $dSERVER_URL . "/family.php?famid=" . $clipping['id'] . "\n";
+							$filetext .= "4 CONT " . PGV_SERVER_HOST.PGV_SCRIPT_PATH . "family.php?famid=" . $clipping['id'] . "\n";
 							break;
 
 						case 'source':
@@ -378,7 +369,7 @@ class ClippingsControllerRoot extends BaseController {
 							}
 							$filetext .= trim($record) . "\n";
 							$filetext .= "1 NOTE " . $pgv_lang["source_downloaded_from"] . "\n";
-							$filetext .= "2 CONT " . $dSERVER_URL . "/source.php?sid=" . $clipping['id'] . "\n";
+							$filetext .= "2 CONT " . PGV_SERVER_HOST.PGV_SCRIPT_PATH . "source.php?sid=" . $clipping['id'] . "\n";
 							break;
 
 						default:

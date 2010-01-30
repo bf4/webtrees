@@ -24,6 +24,7 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'edit_interface.php');
 require './config.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 

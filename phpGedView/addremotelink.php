@@ -26,8 +26,8 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'addremotelink.php');
 require './config.php';
-
 require PGV_ROOT.'includes/controllers/remotelink_ctrl.php';
 
 $controller=new RemoteLinkController();

@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'message.php');
 require './config.php';
 
 loadLangFile("pgv_confighelp");

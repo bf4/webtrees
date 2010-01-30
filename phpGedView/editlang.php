@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'editlang.php');
 require './config.php';
 
 if (!PGV_USER_IS_ADMIN) {
@@ -79,7 +80,7 @@ echo "else helpWin.location = 'editlang_edit.php?' + which;";
 echo "return false;";
 echo "}";
 echo "function showchanges(which2) {";
-echo "window.location = '$SCRIPT_NAME?$QUERY_STRING'+which2;";
+echo "window.location = '", PGV_SCRIPT_NAME, "?$QUERY_STRING'+which2;";
 echo "}";
 echo PGV_JS_END;
 
@@ -112,7 +113,7 @@ case "bom" :
 	echo "</b></a></td></tr></table>";
 	break;
 case "edit" :
-	echo "<form name=\"choose_form\" method=\"get\" action=\"", $SCRIPT_NAME, "\">";
+	echo "<form name=\"choose_form\" method=\"get\" action=\"", PGV_SCRIPT_NAME, "\">";
 	echo "<input type=\"hidden\" name=\"action\" value=\"edit\" />";
 	echo "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
 	echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\" style=\"width:70%; \">";
@@ -408,7 +409,7 @@ case "debug" :
 	echo "</form>";
 	break;
 case "export" :
-	echo "<form name=\"export_form\" method=\"get\" action=\"", $SCRIPT_NAME, "\">";
+	echo "<form name=\"export_form\" method=\"get\" action=\"", PGV_SCRIPT_NAME, "\">";
 	echo "<input type=\"hidden\" name=\"action\" value=\"export\" />";
 	echo "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
 	echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\" style=\"width:70%; \">";
@@ -534,7 +535,7 @@ case "export" :
 	}
 	break;
 case "compare" :
-	echo "<form name=\"langdiff_form\" method=\"get\" action=\"", $SCRIPT_NAME, "\">";
+	echo "<form name=\"langdiff_form\" method=\"get\" action=\"", PGV_SCRIPT_NAME, "\">";
 	echo "<input type=\"hidden\" name=\"action\" value=\"compare\" />";
 	echo "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
 	echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\" style=\"width:70%; \">";

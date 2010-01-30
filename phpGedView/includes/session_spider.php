@@ -320,14 +320,10 @@ $bots_not_allowed = array(
 'clippings',
 'gedrecord.php'
 );
-if (!empty($SEARCH_SPIDER)) {
-	foreach($bots_not_allowed as $place) {
-		if (stripos($_SERVER['PHP_SELF'], $place)!==false) {
-			header("HTTP/1.0 403 Forbidden");
-			print "Sorry, this page is not available for search engine bots.";
-			exit;
-		}
-	}
+if ($SEARCH_SPIDER && !in_array(PGV_SCRIPT_NAME, $bots_not_allowed)) {
+	header("HTTP/1.0 403 Forbidden");
+	print "Sorry, this page is not available for search engine bots.";
+	exit;
 }
 
 // Manual Search Engine IP Address tagging

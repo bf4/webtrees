@@ -25,6 +25,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'addsearchlink.php');
 require './config.php';
 
 print_simple_header($pgv_lang["title_search_link"]);

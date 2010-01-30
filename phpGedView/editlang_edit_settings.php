@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'editlang_edit_settings.php');
 require './config.php';
 
 loadLangFile("pgv_confighelp");
@@ -620,7 +621,7 @@ if ($action == "save" or $action=="toggleActive") {
 			echo '<div class="center"><center>';
 		}
 		echo '<span class="error">', $pgv_lang[$error], '</span><br /><br />';
-		echo '<form name="Form2" method="post" action="', $SCRIPT_NAME, '">';
+		echo '<form name="Form2" method="post" action="', PGV_SCRIPT_NAME, '">';
 		echo '<table class="facts_table">';
 		echo '<tr><td class="facts_value" style="text-align:center; " >';
 		srand((double)microtime()*1000000);

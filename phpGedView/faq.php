@@ -26,6 +26,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'faq.php');
 require './config.php';
 
 loadLangFile("pgv_confighelp");

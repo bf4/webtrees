@@ -27,8 +27,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'index_edit.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/index_cache.php';
 
 /**

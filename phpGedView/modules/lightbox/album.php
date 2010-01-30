@@ -100,7 +100,7 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 		<center>
 		<button type="submit" title="<?php print $pgv_lang["reorder_media_save"];?>" onclick="saveOrder();" ><?php print $pgv_lang["save"];?></button>&nbsp;
 		<button type="submit" title="<?php print $pgv_lang["reorder_media_reset"];?>" onclick="document.reorder_form.action.value='al_reset_media_update'; document.reorder_form.submit();"><?php print $pgv_lang["reset"];?></button>&nbsp;
-		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo $_SERVER['PHP_SELF'] . "?pid=" . $pid . "&tab=" . $tabno; ?>'"><?php print $pgv_lang["cancel"];?></button>
+		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo PGV_SCRIPT_NAME, "?pid=", $pid, "&tab=", $tabno; ?>'"><?php print $pgv_lang["cancel"];?></button>
 <?php
 /*
 		// Debug ---------------------------------------------------------------------------

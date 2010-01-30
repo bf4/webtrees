@@ -156,7 +156,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
 		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 		if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-		$action=basename($_SERVER["SCRIPT_NAME"]);
+		$action=PGV_SCRIPT_NAME;
 		if (!empty($_REQUEST['action'])) $action .= ' '.$_REQUEST['action'];
 		AddToChangeLog($action.' '.$temp." Replacing gedcom record $gid ->" . PGV_USER_NAME ."<-");
 		return true;
@@ -200,7 +200,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
 		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 		if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-		$action=basename($_SERVER["SCRIPT_NAME"]);
+		$action=PGV_SCRIPT_NAME;
 		if (!empty($_REQUEST['action'])) $action .= ' '.$_REQUEST['action'];
 		AddToChangeLog($action.' '.$temp." Appending new $type record $xref ->" . PGV_USER_NAME ."<-");
 		return $xref;
@@ -244,7 +244,7 @@ function delete_gedrec($gid, $linkpid='') {
 	if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
 	if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 	if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-	$action=basename($_SERVER["SCRIPT_NAME"]);
+	$action=PGV_SCRIPT_NAME;
 	if (!empty($_REQUEST['action'])) $action .= ' '.$_REQUEST['action'];
 	AddToChangeLog($action.' '.$temp." Deleting gedcom record $gid ->" . PGV_USER_NAME ."<-");
 	return true;

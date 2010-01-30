@@ -24,6 +24,7 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'branches.php');
 require './config.php';
 
 //-- const

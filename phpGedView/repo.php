@@ -24,6 +24,7 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'repo.php');
 require './config.php';
 require PGV_ROOT.'includes/controllers/repository_ctrl.php';
 require PGV_ROOT.'includes/functions/functions_print_lists.php';

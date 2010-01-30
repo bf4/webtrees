@@ -25,8 +25,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'edit_privacy.php');
 require './config.php';
-
 require PGV_ROOT.'includes/functions/functions_print_facts.php';
 
 loadLangFile('pgv_confighelp, pgv_help');

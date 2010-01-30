@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'usermigrate.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/controllers/usermigrate_ctrl.php';
 
 $controller = new UserMigrateController();
