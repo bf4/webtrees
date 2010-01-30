@@ -424,7 +424,7 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 		$where[]='('.implode(' OR ', $includes).')';
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY case n_surn when '@N.N.' then 1 else 0 end, n_surn";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
 
 	$list=array();
 	$rows=PGV_DB::prepare($sql)->fetchAll();
@@ -587,7 +587,7 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 		$where[]='('.implode(' OR ', $includes).')';
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY case n_surn when '@N.N.' then 1 else 0 end, n_surn, case n_givn when '@P.N.' then 1 else 0 end, n_givn";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY CASE n_surn WHEN '@N.N.' THEN 1 ELSE 0 END, n_surn, CASE n_givn WHEN '@P.N.' THEN 1 ELSE 0 END, n_givn";
 
 	$list=array();
 	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
