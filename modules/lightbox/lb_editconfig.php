@@ -63,7 +63,7 @@ if (!PGV_USER_IS_ADMIN) {
 }
 
 if ($action=='update' && !isset($security_user)) {
-	set_site_setting('LB_ENABLED',        $_POST['NEW_mediatab']);
+//	set_site_setting('LB_ENABLED',        $_POST['NEW_mediatab']);				 // No longer required now due to Tab Management
 	set_site_setting('LB_AL_HEAD_LINKS',  $_POST['NEW_LB_AL_HEAD_LINKS']);
 	set_site_setting('LB_AL_THUMB_LINKS', $_POST['NEW_LB_AL_THUMB_LINKS']);
 	set_site_setting('LB_TT_BALLOON',     $_POST['NEW_LB_TT_BALLOON']);
