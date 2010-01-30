@@ -87,6 +87,7 @@ $pgv_lang["enter_email"]			= "You must enter an email address.";
 $pgv_lang["enter_fullname"] 		= "You must enter a first and last name.";
 $pgv_lang["name"]					= "Name";
 $pgv_lang["names"]					= "Names";
+$pgv_lang["recorded_here"]			= "recorded here";
 $pgv_lang["children"]				= "Children";
 $pgv_lang["lchildren"]				= "children";
 $pgv_lang["child"]					= "Child";

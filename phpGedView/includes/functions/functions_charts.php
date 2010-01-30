@@ -282,9 +282,22 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 
 	$family=Family::getInstance($famid);
 	$children=$family->getChildrenIds();
+	$numchil=$family->getNumberOfChildren();
 	print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"2\"><tr>";
 	if ($sosa>0) print "<td></td>";
-	print "<td><span class=\"subheaders\">".$pgv_lang["children"]."</span></td>";
+	print "<td><span class=\"subheaders\">".$pgv_lang["children"]."</span>";
+	if ($numchil>0) print "<span class=\"font11\">&nbsp;&nbsp;(".$numchil."&nbsp;".$pgv_lang["recorded_here"].")</span>";
+	print "<br />";
+	// moved to top of list, changed from style to class, and font12 added by Nigel
+	if ($view!="preview" && $sosa==0 && PGV_USER_CAN_EDIT && $numchil>6) {
+		print "<span class='nowrap font12'>";
+		print_help_link("add_child_help", "qm", "add_child_to_family");
+		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . $pgv_lang["add_child_to_family"] . "</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', $pgv_lang["son"     ])."]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', $pgv_lang["daughter"])."]</a>";
+		print "</span>";
+	}
+	print "</td>";
 	if ($sosa>0) print "<td></td><td></td>";
 	print "</tr>\n";
 
@@ -437,11 +450,12 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
    print "</table><br />";
 
    if ($view!="preview" && $sosa==0 && PGV_USER_CAN_EDIT) {
-	   print_help_link("add_child_help", "qm", "add_child_to_family");
+		print_help_link("add_child_help", "qm", "add_child_to_family");
+		print "<span class='nowrap; font12'>";
 		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . $pgv_lang["add_child_to_family"] . "</a>";
 		print "<span style='white-space:nowrap;'>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', $pgv_lang['son'     ])."]</a>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', $pgv_lang['daughter'])."]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', $pgv_lang["son"     ])."]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', $pgv_lang["daughter"])."]</a>";
 		print "</span>";
    }
 }
