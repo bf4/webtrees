@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'editconfig_help.php');
 if (file_exists('./config.php')) {
 	require './config.php';
 } else {

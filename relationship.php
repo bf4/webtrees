@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'relationship.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions_charts.php';
 require_once PGV_ROOT.'includes/classes/class_person.php';
 

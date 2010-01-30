@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'checklang.php');
 require './config.php';
 
 print_header("checklang");

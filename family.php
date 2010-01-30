@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'family.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/controllers/family_ctrl.php';
 
 $controller = new FamilyController();

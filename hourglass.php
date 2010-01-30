@@ -28,8 +28,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'hourglass.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/controllers/hourglass_ctrl.php';
 
 $controller = new HourglassController();

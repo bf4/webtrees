@@ -25,6 +25,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'search_advanced.php');
 require './config.php';
 require PGV_ROOT.'includes/controllers/advancedsearch_ctrl.php';
 require PGV_ROOT.'includes/functions/functions_print_lists.php';

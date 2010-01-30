@@ -25,8 +25,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'search.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/controllers/search_ctrl.php';
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 

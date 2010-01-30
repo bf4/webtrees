@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'placelist.php');
 require './config.php';
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 

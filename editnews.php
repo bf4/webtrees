@@ -23,6 +23,7 @@
  * @package PhpGedView
  */
 
+define('PGV_SCRIPT_NAME', 'editnews.php');
 require './config.php';
 
 $useFCK = file_exists(PGV_ROOT.'modules/FCKeditor/fckeditor.php');

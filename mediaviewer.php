@@ -27,8 +27,8 @@
  * @TODO use more theme specific CSS, allow a more fluid layout to take advantage of the page width
  */
 
+define('PGV_SCRIPT_NAME', 'mediaviewer.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/controllers/media_ctrl.php';
 
 $controller = new MediaController();

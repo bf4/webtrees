@@ -25,9 +25,9 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'dir_editor.php');
 require './config.php';
-
-require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 if (!PGV_USER_IS_ADMIN) {
 	header("Location: login.php?url=dir_editor.php");

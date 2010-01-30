@@ -25,8 +25,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'downloadgedcom.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions_export.php';
 
 // Validate user parameters

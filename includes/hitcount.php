@@ -29,9 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$page_name=basename($SCRIPT_NAME);
 // Only record hits for certain pages
-switch ($page_name) {
+switch (PGV_SCRIPT_NAME) {
 case 'index.php':
 	switch (safe_GET('ctype', '(user|gedcom)')) {
 	case 'user':
@@ -67,26 +66,26 @@ default:
 	$page_parameter='';
 	break;
 }
-if ($page_name && $page_parameter) {
+if ($page_parameter) {
 	$hitCount=PGV_DB::prepare(
 		"SELECT page_count FROM {$TBLPREFIX}hit_counter".
 		" WHERE gedcom_id=? AND page_name=? AND page_parameter=?"
-	)->execute(array(PGV_GED_ID, $page_name, $page_parameter))->fetchOne();
+	)->execute(array(PGV_GED_ID, PGV_SCRIPT_NAME, $page_parameter))->fetchOne();
 	
 	// Only record one hit per session
-	if ($page_parameter && empty($_SESSION['SESSION_PAGE_HITS'][$page_name.$page_parameter])) {
-		$_SESSION['SESSION_PAGE_HITS'][$page_name.$page_parameter]=true;
+	if ($page_parameter && empty($_SESSION['SESSION_PAGE_HITS'][PGV_SCRIPT_NAME.$page_parameter])) {
+		$_SESSION['SESSION_PAGE_HITS'][PGV_SCRIPT_NAME.$page_parameter]=true;
 		if (is_null($hitCount)) {
 			$hitCount=1;
 			PGV_DB::prepare(
 				"INSERT INTO {$TBLPREFIX}hit_counter (gedcom_id, page_name, page_parameter, page_count) VALUES (?, ?, ?, ?)"
-			)->execute(array(PGV_GED_ID, $page_name, $page_parameter, $hitCount));
+			)->execute(array(PGV_GED_ID, PGV_SCRIPT_NAME, $page_parameter, $hitCount));
 		} else {
 			$hitCount++;
 			PGV_DB::prepare(
 				"UPDATE {$TBLPREFIX}hit_counter SET page_count=?".
 				" WHERE gedcom_id=? AND page_name=? AND page_parameter=?"
-			)->execute(array($hitCount, PGV_GED_ID, $page_name, $page_parameter));
+			)->execute(array($hitCount, PGV_GED_ID, PGV_SCRIPT_NAME, $page_parameter));
 		}
 	}
 } else {

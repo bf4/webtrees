@@ -3025,7 +3025,7 @@ function CheckPageViews() {
 		return;
 
 	// The media firewall should not be throttled
-	if (strpos($_SERVER["SCRIPT_NAME"], "mediafirewall") > -1)
+	if (PGV_SCRIPT_NAME=='mediafirewall.php')
 		return;
 
 	if (!empty($_SESSION["pageviews"]["time"]) && !empty($_SESSION["pageviews"]["number"])) {

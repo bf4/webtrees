@@ -29,8 +29,8 @@
  * @subpackage Charts
  */
 
+define('PGV_SCRIPT_NAME', 'pedigree.php');
 require './config.php';
-
 require PGV_ROOT.'includes/controllers/pedigree_ctrl.php';
 
 $controller = new PedigreeController();

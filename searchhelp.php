@@ -25,6 +25,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'searchhelp.php');
 require './config.php';
 
 print_simple_header($pgv_lang["hs_title"]);
@@ -65,7 +66,7 @@ function checkfrm(frm) {
 </script>
 <?php
 // Print the form for input
-print "<form name=\"entersearch\" action=\"$SCRIPT_NAME\" method=\"post\" onsubmit=\"return checkfrm(this);\">";
+print '<form name="entersearch" action="'.PGV_SCRIPT_NAME.'" method="post" onsubmit="return checkfrm(this);">';
 print "<input name=\"action\" type=\"hidden\" value=\"search\" />";
 print "<table class=\"facts_table $TEXT_DIRECTION\">";
 print "<tr><td colspan=\"2\" class=\"topbottombar\">";

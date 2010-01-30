@@ -25,6 +25,7 @@
  * @author Patrick Kellum
  */
 
+define('PGV_SCRIPT_NAME', 'module.php');
 require './config.php';
 
 // Simple mod system, based on the older phpnuke/postnuke

@@ -24,6 +24,7 @@
  * @subpackage Charts
  */
 
+define('PGV_SCRIPT_NAME', 'gedrecord.php');
 require './config.php';
 
 require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';

@@ -25,6 +25,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'editconfig_gedcom.php');
 require './config.php';
 
 // editconfig.php and uploadgedcom.php make extensive use of
@@ -503,9 +504,6 @@ if ($action=="update") {
 
 		if (!$errors) {
 			// create/modify an htaccess file in the main media directory
-			$mediafirewall_path = dirname($SCRIPT_NAME)."/mediafirewall.php";
-			$mediafirewall_path = str_replace('//', '/', $mediafirewall_path); // remove duplicate slashes if PGV being run from root directory
-
 			$httext = "";
 			if (file_exists($MEDIA_DIRECTORY.".htaccess")) {
 				$httext = implode('', file($MEDIA_DIRECTORY.".htaccess"));
@@ -523,9 +521,9 @@ if ($action=="update") {
 			$httext .= "\n\tRewriteEngine On";
 			$httext .= "\n\tRewriteCond %{REQUEST_FILENAME} !-f";
 			$httext .= "\n\tRewriteCond %{REQUEST_FILENAME} !-d";
-			$httext .= "\n\tRewriteRule .* ".$mediafirewall_path." [L]";
+			$httext .= "\n\tRewriteRule .* ".PGV_SCRIPT_PATH."mediafirewall.php"." [L]";
 			$httext .= "\n</IfModule>";
-			$httext .= "\nErrorDocument\t404\t".$mediafirewall_path;
+			$httext .= "\nErrorDocument\t404\t".PGV_SCRIPT_PATH."mediafirewall.php";
 			$httext .= "\n########## END PGV MEDIA FIREWALL SECTION ##########";
 
 			$whichFile = $MEDIA_DIRECTORY.".htaccess";

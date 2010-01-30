@@ -41,7 +41,7 @@ echo "</div> <!-- closing div id=\"content\" -->";
 		title="<?php echo PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" ;?>" /></a><br />
 <br />
 <?php print_help_link("preview_help", "qm"); ?>
-<a href="<?php echo $SCRIPT_NAME, "?view=preview&amp;", get_query_string(); ?>"><?php echo $pgv_lang["print_preview"];?></a>
+<a href="<?php echo PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(); ?>"><?php echo $pgv_lang['print_preview']; ?></a>
 <br />
 <?php
 if ($SHOW_STATS || PGV_DEBUG) {

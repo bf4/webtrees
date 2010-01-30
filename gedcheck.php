@@ -26,6 +26,7 @@
 // @version $Id$
 //
 
+define('PGV_SCRIPT_NAME', 'gedcheck.php');
 require './config.php';
 
 // Must be an admin user to use this module

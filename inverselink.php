@@ -26,6 +26,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'inverselink.php');
 require './config.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 	

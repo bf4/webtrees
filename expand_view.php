@@ -23,7 +23,9 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'expand_view.php');
 require './config.php';
+
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 $pid = safe_GET_xref('pid');
 $person = Person::getInstance($pid);

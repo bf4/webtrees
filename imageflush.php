@@ -25,6 +25,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'imageflush.php');
 require './config.php';
 
 /**

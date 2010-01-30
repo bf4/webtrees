@@ -28,9 +28,9 @@
  * @subpackage Calendar
  */
 
+define('PGV_SCRIPT_NAME', 'calendar.php');
 require './config.php';
-
-require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 if (isset($_REQUEST['cal'])) $cal = $_REQUEST['cal'];
 if (isset($_REQUEST['day'])) $day = $_REQUEST['day'];

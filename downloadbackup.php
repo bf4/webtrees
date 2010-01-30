@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'downloadbackup.php');
 require './config.php';
 
 $fname=safe_GET('fname');

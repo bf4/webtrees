@@ -24,10 +24,9 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'medialist.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
-
 
 loadLangFile("lightbox:lang");
 

@@ -24,6 +24,7 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'autocomplete.php');
 require './config.php';
 header("Content-Type: text/plain; charset=$CHARACTER_SET");
 

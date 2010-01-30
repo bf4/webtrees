@@ -42,8 +42,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'indilist.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 // We show three different lists:

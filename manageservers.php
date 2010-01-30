@@ -27,8 +27,8 @@
 * @author rbennett
 */
 
+define('PGV_SCRIPT_NAME', 'manageservers.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions.php';
 require_once PGV_ROOT.'includes/functions/functions_edit.php';
 require_once PGV_ROOT.'includes/functions/functions_import.php';

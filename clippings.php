@@ -27,9 +27,10 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'clippings.php');
 require './config.php';
+require PGV_ROOT.'includes/controllers/clippings_ctrl.php';
 
-require_once PGV_ROOT.'includes/controllers/clippings_ctrl.php';
 loadlangfile('pgv_admin');		// we need some definitions from this file, even when not logged in as admin
 
 $controller = new ClippingsController();

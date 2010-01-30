@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'pgvinfo.php');
 require './config.php';
 
 if (!PGV_USER_GEDCOM_ADMIN) {
