@@ -605,17 +605,17 @@ if (PGV_SCRIPT_NAME!='install.php' && PGV_SCRIPT_NAME!='editconfig_help.php') {
 			// TODO: Update if digest auth is ever implemented
 			basicHTTPAuthenticateUser();
 		} else {
-			$url = basename($_SERVER['PHP_SELF']).'?'.$QUERY_STRING;
-			if (stristr($url, 'index.php')!==false) {
-				if (stristr($url, 'ctype=')===false) {
-					if ((!isset($_SERVER['HTTP_REFERER'])) || (stristr($_SERVER['HTTP_REFERER'],$SERVER_URL)===false)) $url .= '&ctype=gedcom';
-				}
+			if (PGV_SCRIPT_NAME=='index.php') {
+				$url='index.php?ctype=gedcom&ged='.PGV_GEDCOM;
+			} else {
+				$url=PGV_SCRIPT_NAME.'?'.$QUERY_STRING;
 			}
-			if (stristr($url, 'ged=')===false)  {
-				$url.='&ged='.$GEDCOM;
+			if ($LOGIN_URL) {
+				// Specify an absolute URL, as $LOGIN_URL could be anywhere
+				header('Location: '.$LOGIN_URL.'?url='.urlencode(PGV_SERVER_NAME.PGV_SCRIPT_PATH.$url));
+			} else {
+				header('Location: login.php?url='.urlencode($url));
 			}
-			$url = str_replace('?&', '?', $url);
-			header('Location: login.php?url='.urlencode($url));
 			exit;
 		}
 	}
