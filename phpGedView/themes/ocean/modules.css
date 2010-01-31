@@ -51,9 +51,9 @@
 	float: left;
 	margin: 0.5em 0 0 0.5em;
 	width: 23.1em;
-	height: 33.9em;
+	height: 34.25em;
 	overflow: auto; 
-	/*border: 1px solid red; */
+	/* border: 1px solid red; */
 }
 #navenclose {
 	margin-left: -0.4em;
@@ -61,7 +61,6 @@
 	margin-bottom: -0.3em;
 	border-bottom: 0px;
 	width: 22.3em;
-	/* border: 1px solid green; */ 
 }
 .linkcell a { 
 	display: block;
@@ -102,7 +101,6 @@ a.linka {
 	width: 46.2em;
 	margin: 0.5em 0 0 0.3em;
 	padding: 0;
-	border: 0px solid yellow;
 }
 .cens_container span {
 	margin: 0 0.5em;
@@ -202,7 +200,7 @@ a.linka {
 	/*border: 0.3em outset;*/
 	margin-bottom: 0.3em;
 	margin-right: -0.17em;
-width: 50.7em;
+	width: 50.7em;
 }
 .cens_text span {
 	margin: 0 1em 0 0.3em;
