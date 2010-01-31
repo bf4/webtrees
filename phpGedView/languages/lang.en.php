@@ -87,7 +87,6 @@ $pgv_lang["enter_email"]			= "You must enter an email address.";
 $pgv_lang["enter_fullname"] 		= "You must enter a first and last name.";
 $pgv_lang["name"]					= "Name";
 $pgv_lang["names"]					= "Names";
-$pgv_lang["recorded_here"]			= "recorded here";
 $pgv_lang["children"]				= "Children";
 $pgv_lang["lchildren"]				= "children";
 $pgv_lang["child"]					= "Child";
@@ -518,7 +517,8 @@ $pgv_lang["wife"]					= "Wife";
 $pgv_lang["marriage"]				= "Marriage:";
 $pgv_lang["lds_sealing"]			= "LDS Sealing:";
 $pgv_lang["marriage_license"]		= "Marriage License:";
-$pgv_lang["no_children"]			= "No recorded children";
+$pgv_lang["no_children"]			= "No known children";
+$pgv_lang["known_children"]			= "known children";
 $pgv_lang["childless_family"]		= "This family remained childless";
 $pgv_lang["parents_timeline"]		= "Show couple on timeline chart";
 
