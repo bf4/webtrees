@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ $dbname = explode("/", $DBNAME);
 $locked_by_context[] = end($dbname);
 
 print_header($pgv_lang["index_dir_cleanup"]);
-echo "<h3>", $pgv_lang["index_dir_cleanup"], "</h3>";
+echo "<h2>", $pgv_lang["index_dir_cleanup"], "</h2>";
 
 echo $pgv_lang['index_dir_cleanup_inst'];
 
