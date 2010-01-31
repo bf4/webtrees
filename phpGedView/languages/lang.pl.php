@@ -86,7 +86,6 @@ $pgv_lang["enter_email"]		= "Musisz podać adres email.";
 $pgv_lang["enter_fullname"]		= "Podaj imię i nazwisko.";
 $pgv_lang["name"]				= "Imię / Nazwisko";
 $pgv_lang["names"]				= "Imiona";
-$pgv_lang["recorded_here"]		= "w bazie";
 $pgv_lang["children"]			= "Dzieci";
 $pgv_lang["lchildren"]			= "dzieci";
 $pgv_lang["child"]				= "Dziecko";
@@ -516,7 +515,8 @@ $pgv_lang["wife"]				= "Żona";
 $pgv_lang["marriage"]			= "Małżeństwo:";
 $pgv_lang["lds_sealing"]		= "Naznaczenie mormońskie:";
 $pgv_lang["marriage_license"]	= "Akt ślubu:";
-$pgv_lang["no_children"]		= "Brak dzieci";
+$pgv_lang["no_children"]		= "Brak znanych dzieci";
+$pgv_lang["known_children"]		= "znanych dzieci";
 $pgv_lang["childless_family"]	= "Małżeństwo bezdzietne";
 $pgv_lang["parents_timeline"]	= "Pokaż parę na osi czasu";
 
