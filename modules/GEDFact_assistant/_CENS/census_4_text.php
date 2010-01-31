@@ -45,7 +45,7 @@ function help_window2(frm)  {
 
 <!--   ---- The proposed Census Text -------- -->
 <div class="optionbox cens_text">
-	<!-- <span style="top: 0em;></span> Needed to pull IE span to top of div -->
+<!--[if IE]><style>.cens_text{margin-top:-1.3em;}</style><![EndIf]-->
 	<span><input type="button" value="<?php echo $pgv_lang["page_help"]; ?>" onclick="javascript: help_window2(this.form)" /></span>
 	<span><?php echo $pgv_lang["cens_preview"]; ?></span>
 	<span><input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" /></span>
@@ -60,6 +60,9 @@ function help_window2(frm)  {
 	</span>
 	<div class="optionbox">
 		<textarea wrap="off" name="NOTE" id="NOTE"></textarea><br />
+		<?php if ($theme_name=="Minimal") { ?>
+			<!--[if IE]><style>textarea#NOTE{height: 18.1em;}</style><![EndIf]-->
+		<?php } ?>
 		<center>
 		<?php print_specialchar_link("NOTE",true); ?>
 		</center>

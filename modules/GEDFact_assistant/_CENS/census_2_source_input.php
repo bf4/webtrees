@@ -900,6 +900,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 </script>
 
 <div class="optionbox cens_sour">
+<!--[if IE]><style>.cens_sour{margin-top:-1.3em;}</style><![EndIf]-->
 	<div class="cens_sour_country">
 		<span><?php echo $pgv_lang["cens_country"]; ?><br /></span>
 		<script type="text/javascript">

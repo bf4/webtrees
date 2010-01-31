@@ -51,7 +51,7 @@
 	float: left;
 	margin: 0.5em 0 0 0.5em;
 	width: 23.1em;
-	height: 33.9em;
+	height: 34.25em;
 	overflow: auto; 
 	/*border: 1px solid red; */
 }
@@ -99,10 +99,10 @@ a.linka {
 .cens_container {
 	clear: both;
 	float: left;
-	width: 46.2em;
+	width: 50em;
 	margin: 0.5em 0 0 0.3em;
 	padding: 0;
-	border: 0px solid yellow;
+	/* border: 1px solid blue; */
 }
 .cens_container span {
 	margin: 0 0.5em;
@@ -131,7 +131,8 @@ a.linka {
 	border: 0.3em outset;*/
 	margin-bottom : 0.3em;
 	overflow: hidden;
-	width: 50.8em;
+	width: 55em;
+	/* border: 1px solid red; */
 }
 .cens_sour_country {
 	float: left;
@@ -202,7 +203,8 @@ a.linka {
 	/*border: 0.3em outset;*/
 	margin-bottom: 0.3em;
 	margin-right: -0.17em;
-width: 50.7em;
+	width: 55em;
+	
 }
 .cens_text span {
 	margin: 0 1em 0 0.3em;

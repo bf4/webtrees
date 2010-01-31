@@ -87,7 +87,7 @@
 
 
 		// Regular Field Highlighting (Use embolden) ------------
-		$text = str_replace(".b.", "<b />", $text); 
+		$text = str_replace(".b.", "<b>", $text); 
 		
 		// Replace "pipe" with </td><td> ------------------------
 		$text = str_replace("|", "&nbsp;&nbsp;</td><td class=\"notecell\">", $text);
