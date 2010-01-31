@@ -84,6 +84,7 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 	<?php } ?>
 	<?php echo $javascript; ?>
 	<?php echo $head; //-- additional header information ?>
+	<link type="text/css" href="<?php echo PGV_THEME_DIR?>modules.css" rel="Stylesheet" />
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>
 <!-- begin header section -->
