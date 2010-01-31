@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Fixed: [ 2943263 ] Logout ERROR 2 (fisharebest)
  - Added: modules.css file for all themes (windmillway)
  - Fixed: [ 2939710 ] [6841?] Startup error (fisharebest)
  - Fixed: [ 2937064 ] Upgrade from 4.2.3 loses users/accounts (fisharebest)
