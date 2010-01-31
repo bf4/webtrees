@@ -53,7 +53,7 @@
 	width: 23.1em;
 	height: 37.0em;
 	overflow: auto; 
-	/*border: 1px solid red; */
+	/* border: 1px solid red; */
 }
 #navenclose {
 	margin-left: -0.4em;
@@ -102,7 +102,7 @@ a.linka {
 	width: 46.2em;
 	margin: 0.5em 0 0 0.3em;
 	padding: 0;
-	border: 0px solid yellow;
+	/* border: 1px solid red; */
 }
 .cens_container span {
 	margin: 0 0.5em;
