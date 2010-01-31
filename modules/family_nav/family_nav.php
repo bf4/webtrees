@@ -97,7 +97,7 @@ class family_nav_Tab extends Tab {
 			<tr>
 				<td style="padding-bottom:4px;" align="center" colspan="2">
 				<?php
-				echo "<a style=\"padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
+				echo "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
 				echo "<b>".$pgv_lang["parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>";
 				//echo "<a href=\"family.php?famid=".$famid."\">";
@@ -132,7 +132,7 @@ class family_nav_Tab extends Tab {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]);?> nam">
 						<?php
-						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
+						print "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -167,7 +167,7 @@ class family_nav_Tab extends Tab {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
 						<?php
-						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
+						print "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -214,9 +214,9 @@ class family_nav_Tab extends Tab {
 							<?php
 							if ($pid == $child->getXref()) {
 								print "<span style=\"font: 12px tahoma, arial, helvetica, sans-serif;\">".PrintReady($child->getFullName())."</span>";
-								print "<br /><span style=\"font: 9px tahoma, arial, helvetica, sans-serif;\">" . $BirthYr . " - " . $DeathYr . "</span>";
+								print "<br /><span style=\"font:9px tahoma, arial, helvetica, sans-serif;\">" . $BirthYr . " - " . $DeathYr . "</span>";
 							}else{
-								print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
+								print "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
 								print PrintReady($child->getFullName());
 								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 								print "</a>";
@@ -286,7 +286,7 @@ class family_nav_Tab extends Tab {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?> nam">
 						<?php
-						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
+						print "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -329,7 +329,7 @@ class family_nav_Tab extends Tab {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
 						<?php
-						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
+						print "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -367,7 +367,7 @@ class family_nav_Tab extends Tab {
 						</td>
 						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
 							<?php
-							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
+							print "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -388,7 +388,7 @@ class family_nav_Tab extends Tab {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo "<a style=\"padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
+				echo "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
 				echo "<b>".$pgv_lang["immediate_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>";
 				//echo "<a href=\"family.php?famid=".$famid."\">";
@@ -436,7 +436,7 @@ class family_nav_Tab extends Tab {
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
+							print "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -476,7 +476,7 @@ class family_nav_Tab extends Tab {
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
+							print "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -514,7 +514,7 @@ class family_nav_Tab extends Tab {
 						</td>
 						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
 							<?php
-							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
+							print "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";

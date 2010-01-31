@@ -89,6 +89,7 @@ $menubar = new MenuBar();
 	<?php if ($TEXT_DIRECTION=='rtl') {?>
 		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
 	<?php }?>
+	<link type="text/css" href="<?php echo PGV_THEME_DIR?>modules.css" rel="Stylesheet" />
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>
 <!-- begin header section -->

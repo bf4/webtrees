@@ -419,6 +419,7 @@ if ($action=="filter") {
 				$families = $indi->getSpouseFamilies();
 				foreach($families as $famid=>$family) {
 					$marrdate = $family->getMarriageDate();
+					$marrdate = ($marrdate->minJD()+$marrdate->maxJD())/2;  // Julian
 					$children = $family->getChildren();
 				}
 				if (!isset($marrdate)) { $marrdate = ""; }
@@ -432,7 +433,9 @@ if ($action=="filter") {
 						$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
 						$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
 						$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
+						if (!isset($chdob)) { $chdob = ""; }
 						$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
+						if (!isset($chdod)) { $chdod = ""; }
 						$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
 						array_push($chBLDarray, $chBLD);
 					}
@@ -454,7 +457,7 @@ if ($action=="filter") {
 						echo "'-', ";																				 // label     - Relation to Head of Household
 						echo "'".$indi->getSex()."', ";																 // gend      - Sex
 						echo "'S', ";																				 // cond      - Marital Condition
-						echo "'".(($marrdate->minJD()+$marrdate->maxJD())/2)."', ";									 // dom       - Date of Marriage
+						echo "'".$marrdate."', ";																	 // dom       - Date of Marriage
 						echo "'".(($indi->getBirthDate()->minJD() + $indi->getBirthDate()->maxJD())/2)."' ,";		 // dob       - Date of Birth
 						echo "'".(1901-$indi->getbirthyear())."' ,";												 // ~age~     - Census Date minus YOB (Preliminary)
 						echo "'".(($indi->getDeathDate()->minJD() + $indi->getDeathDate()->maxJD())/2)."' ,";		 // dod       - Date of Death

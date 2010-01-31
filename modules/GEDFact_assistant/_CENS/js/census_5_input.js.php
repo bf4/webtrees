@@ -1385,6 +1385,17 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_emp2.style.border='0px';
 				txtInp_emp2.innerHTML = '<a href="#" alt="'+TTEditEmp+'" title="'+TTEditEmp+'">'+HeaderEmp+'</a>';
 				txtInp_emp2.setAttribute('id', '.b.'+HeaderEmp);
+		/*
+		// 63. Nationality (UK 1911) ----------------------------------------------------
+			var txtInp_infirm = document.createElement('div');
+				txtInp_infirm.setAttribute('type', 'text');
+				txtInp_infirm.setAttribute('class', 'descriptionbox');
+				txtInp_infirm.className= 'descriptionbox'; //Required for IE
+				txtInp_infirm.style.fontSize="10px";
+				txtInp_infirm.style.border='0px';
+				txtInp_infirm.innerHTML = '<a href="#" alt="'+TTEditN-ality+'" title="'+TTEditNality+'">'+HeaderN-ality+'</a>';
+				txtInp_infirm.setAttribute('id', '.b.'+HeaderN-ality);
+		*/
 		// 63. Infirmaties Infirm -------------------------------------------------------
 			var txtInp_infirm = document.createElement('div');
 				txtInp_infirm.setAttribute('type', 'text');
@@ -2096,6 +2107,16 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_emp2.setAttribute('value', ''); 
 				txtInp_emp2.style.color=txtcolor;
 				txtInp_emp2.style.fontSize="10px";
+		/*
+		// 63. Nationality (UK 1911) ------------------------------------------
+			var txtInp_emp2 = document.createElement('input');
+				txtInp_emp2.setAttribute('type', 'text');
+				txtInp_emp2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_63');
+				txtInp_emp2.setAttribute('size', '22');
+				txtInp_emp2.setAttribute('value', ''); 
+				txtInp_emp2.style.color=txtcolor;
+				txtInp_emp2.style.fontSize="10px";
+		*/
 		// 63. Infirmaties ----------------------------------------------------
 			var txtInp_infirm = document.createElement('input');
 				txtInp_infirm.setAttribute('type', 'text');
@@ -2307,6 +2328,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 		cell_[60].appendChild(txtInp_occu3);		// Occupation_3
 		cell_[61].appendChild(txtInp_ind2);			// Industry ind_2
 		cell_[62].appendChild(txtInp_emp2);			// Employ_2
+	//	cell_[63].appendChild(txtInp_N_ality);		// Nationality (UK 1911) - British, OR Naturalised, OR(French, German, Russian etc)
 		cell_[63].appendChild(txtInp_infirm);		// Infirmaties - up to 5 parameters x--xx etc
 		cell_[64].appendChild(txtInp_situ);			// Health Situation 1890 - Disease, Infimaties, Convict, Pauper etc
 		cell_[65].appendChild(txtInp_vet);			// Veteran ?

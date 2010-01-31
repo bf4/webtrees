@@ -34,8 +34,6 @@
 	}
 	</script>
 
-	<link href ="modules/GEDFact_assistant/_CENS/css/cens_core_called.css" rel="stylesheet" type="text/css" media="screen" />
-
 	<form id="censdates" name="censdates">
 		<select onchange =	"if (this.options[this.selectedIndex].value!='') {
 								addDate(this.options[this.selectedIndex].value);
