@@ -308,10 +308,10 @@ class ClippingsControllerRoot extends BaseController {
 							}
 							$filetext .= trim($record) . "\n";
 							$filetext .= "1 SOUR @SPGV1@\n";
-							$filetext .= "2 PAGE " . PGV_SERVER_HOST.PGV_SCRIPT_PATH . "individual.php?pid=" . $clipping['id'] . "\n";
+							$filetext .= "2 PAGE " . PGV_SERVER_NAME.PGV_SCRIPT_PATH . "individual.php?pid=" . $clipping['id'] . "\n";
 							$filetext .= "2 DATA\n";
 							$filetext .= "3 TEXT " . $pgv_lang["indi_downloaded_from"] . "\n";
-							$filetext .= "4 CONT " . PGV_SERVER_HOST.PGV_SCRIPT_PATH . "individual.php?pid=" . $clipping['id'] . "\n";
+							$filetext .= "4 CONT " . PGV_SERVER_NAME.PGV_SCRIPT_PATH . "individual.php?pid=" . $clipping['id'] . "\n";
 							break;
 
 						case 'fam':
@@ -351,10 +351,10 @@ class ClippingsControllerRoot extends BaseController {
 
 							$filetext .= trim($record) . "\n";
 							$filetext .= "1 SOUR @SPGV1@\n";
-							$filetext .= "2 PAGE " . PGV_SERVER_HOST.PGV_SCRIPT_PATH . "family.php?famid=" . $clipping['id'] . "\n";
+							$filetext .= "2 PAGE " . PGV_SERVER_NAME.PGV_SCRIPT_PATH . "family.php?famid=" . $clipping['id'] . "\n";
 							$filetext .= "2 DATA\n";
 							$filetext .= "3 TEXT " . $pgv_lang["family_downloaded_from"] . "\n";
-							$filetext .= "4 CONT " . PGV_SERVER_HOST.PGV_SCRIPT_PATH . "family.php?famid=" . $clipping['id'] . "\n";
+							$filetext .= "4 CONT " . PGV_SERVER_NAME.PGV_SCRIPT_PATH . "family.php?famid=" . $clipping['id'] . "\n";
 							break;
 
 						case 'source':
@@ -369,7 +369,7 @@ class ClippingsControllerRoot extends BaseController {
 							}
 							$filetext .= trim($record) . "\n";
 							$filetext .= "1 NOTE " . $pgv_lang["source_downloaded_from"] . "\n";
-							$filetext .= "2 CONT " . PGV_SERVER_HOST.PGV_SCRIPT_PATH . "source.php?sid=" . $clipping['id'] . "\n";
+							$filetext .= "2 CONT " . PGV_SERVER_NAME.PGV_SCRIPT_PATH . "source.php?sid=" . $clipping['id'] . "\n";
 							break;
 
 						default:
