@@ -515,8 +515,9 @@ $pgv_lang["wife"]				= "Żona";
 $pgv_lang["marriage"]			= "Małżeństwo:";
 $pgv_lang["lds_sealing"]		= "Naznaczenie mormońskie:";
 $pgv_lang["marriage_license"]	= "Akt ślubu:";
-$pgv_lang["no_children"]		= "Brak znanych dzieci";
-$pgv_lang["known_children"]		= "znanych dzieci";
+$pgv_lang["no_children"]		= "Brak dzieci";
+$pgv_lang["known_child"]		= "1 dziecko";
+$pgv_lang["known_children"]		= "dzieci";
 $pgv_lang["childless_family"]	= "Małżeństwo bezdzietne";
 $pgv_lang["parents_timeline"]	= "Pokaż parę na osi czasu";
 
