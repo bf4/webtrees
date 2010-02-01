@@ -286,7 +286,15 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"2\"><tr>";
 	if ($sosa>0) print "<td></td>";
 	print "<td><span class=\"subheaders\">".$pgv_lang["children"]."</span>";
-	if ($numchil>0) print "<span class=\"font11\">&nbsp;&nbsp;(".$numchil."&nbsp;".$pgv_lang["known_children"].")</span>";
+	echo '<span class="font11">&nbsp;&nbsp;', getLRM(), '(';
+	if ($numchil==0) {
+		echo $pgv_lang["no_children"];
+	} else if ($numchil==1) {
+		echo $pgv_lang["known_child"];
+	} else {
+		echo $numchil, '&nbsp;', $pgv_lang["known_children"];
+	}
+	echo ')', getLRM(), '</span>';
 	print "<br />";
 	// moved to top of list, changed from style to class, and font12 added by Nigel
 	if ($view!="preview" && $sosa==0 && PGV_USER_CAN_EDIT) {
@@ -438,7 +446,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 			if ($ct>0) $nchi = $match[1];
 		}
 		if ($nchi=="0") print "<img src=\"images/small/childless.gif\" alt=\"".$pgv_lang["childless_family"]."\" title=\"".$pgv_lang["childless_family"]."\" /> ".$pgv_lang["childless_family"];
-		else print $pgv_lang["no_children"];
+//		else print $pgv_lang["no_children"];
 		print "</td></tr>";
    }
    else {

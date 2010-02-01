@@ -3,7 +3,7 @@
  * German texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,7 +113,7 @@ $pgv_lang["accept_all"]				= "Alle Änderungen übernehmen";
 $pgv_lang["accept_gedcom"]			= "Entscheiden Sie für jede Änderung, ob Sie sie übernehmen oder verwerfen möchten.<br /><br />Um alle Änderungen auf einmal zu übernehmen, klicken Sie <b>«Alle Änderungen übernehmen»</b> in der Box unten.<br />Weitere Informationen über eine Änderung erhalten Sie über den Link <b>«Änderungen ansehen»</b> oder klicken Sie <b>«GEDCOM Datensatz ansehen»</b>, um die veränderte GEDCOM Datei anzusehen.";
 $pgv_lang["accept_successful"]		= "Änderungen erfolgreich in die Datenbank übernommen";
 $pgv_lang["add_child"]				= "Kind hinzufügen";
-$pgv_lang["add_child_to_family"]	= "Kind zu dieser Familie hinzufügen";
+$pgv_lang["add_child_to_family"]	= "Kind dieser Familie hinzufügen";
 $pgv_lang["add_fact"]				= "Neues Ereignis hinzufügen";
 $pgv_lang["add_father"]				= "Vater hinzufügen";
 $pgv_lang["add_husb"]				= "Ehemann hinzufügen";

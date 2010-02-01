@@ -43,6 +43,9 @@ VERSION 4.3.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["no_children"]							31 Jan 2010				w
++$pgv_lang["known_child"]							31 Jan 2010				A
+*$pgv_lang["known_children"]						31 Jan 2010				w
 -$pgv_lang["recorded_here"]							31 Jan 2010				D
 *$pgv_lang["no_children"]							31 Jan 2010				w
 +$pgv_lang["known_children"]						31 Jan 2010				w
