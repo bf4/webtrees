@@ -517,8 +517,9 @@ $pgv_lang["wife"]					= "Wife";
 $pgv_lang["marriage"]				= "Marriage:";
 $pgv_lang["lds_sealing"]			= "LDS Sealing:";
 $pgv_lang["marriage_license"]		= "Marriage License:";
-$pgv_lang["no_children"]			= "No known children";
-$pgv_lang["known_children"]			= "known children";
+$pgv_lang["no_children"]			= "No children";
+$pgv_lang["known_child"]			= "1 child";
+$pgv_lang["known_children"]			= "children";
 $pgv_lang["childless_family"]		= "This family remained childless";
 $pgv_lang["parents_timeline"]		= "Show couple on timeline chart";
 

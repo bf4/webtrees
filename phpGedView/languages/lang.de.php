@@ -518,8 +518,9 @@ $pgv_lang["wife"]						= "Ehefrau";
 $pgv_lang["marriage"]					= "Heirat:";
 $pgv_lang["lds_sealing"]				= "HLT Siegelung:";
 $pgv_lang["marriage_license"]			= "Ehe Erlaubnis:";
-$pgv_lang["no_children"]				= "Keine bekannte Kinder";
-$pgv_lang["known_children"]				= "bekannte Kinder";
+$pgv_lang["no_children"]				= "Keine Kinder";
+$pgv_lang["known_child"]				= "1 Kind";
+$pgv_lang["known_children"]				= "Kinder";
 $pgv_lang["childless_family"]			= "Diese Familie blieb kinderlos";
 $pgv_lang["parents_timeline"]			= "Ehepaar in Lebensspannen-Ansicht zeigen";
 
