@@ -512,47 +512,7 @@ function autocomplete_NAME($FILTER) {
 function autocomplete_PLAC($FILTER, $OPTION) {
 	global $USE_GEONAMES, $lang_short_cut, $LANGUAGE;
 
-	$rows=get_autocomplete_PLAC($FILTER);
-	$place=array();
-	$parent=array();
-	do {
-		foreach ($rows as $row) {
-			$place[$row->p_id] = $row->p_place;
-			$parent[$row->p_id] = $row->p_parent_id;
-		}
-		//-- search for missing parents
-		$missing = array();
-		foreach($parent as $k=>$v) {
-			if ($v && !isset($place[$v])) {
-				$missing[] = $v;
-			}
-		}
-		if (count($missing)==0) {
-			break;
-		}
-		$qs=implode(',', array_fill(0, count($missing), '?'));
-		$vars=$missing;
-		$rows=get_autocomplete_full_PLAC($vars, $qs);
-
-	} while (true);
-
-	//-- build place list
-	$place = array_reverse($place, true);
-	$data = array();
-	do {
-		$repeat = false;
-		foreach($place as $k=>$v) {
-			if ($parent[$k]==0) {
-				$data[$k] = $v;
-			} else {
-				if (isset($data[$parent[$k]])) {
-					$data[$k] = $v.", ".$data[$parent[$k]];
-				} else {
-					$repeat = true;
-				}
-			}
-		}
-	} while ($repeat);
+	$data=get_autocomplete_PLAC($FILTER);
 
 	//-- no match => perform a geoNames query if enabled
 	if (empty($data) && $USE_GEONAMES) {
