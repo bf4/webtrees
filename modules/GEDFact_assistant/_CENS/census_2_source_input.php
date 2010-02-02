@@ -997,12 +997,19 @@ global $pgv_lang, $TEXT_DIRECTION;
 
 		<div>
 			<table><tr><td nowrap="nowrap">
-			<br />&nbsp;<?php echo $pgv_lang["date"]; ?>:&nbsp;&nbsp; 
-			<font size=2>
-				<input style="width:6em; background:#bbddff;" id="censDate" name="censDate" type="text" value="<?php echo "";?>" READONLY/>
+			<br />
+			<?php
+				// echo "&nbsp;".$pgv_lang["date"].":&nbsp;&nbsp;"; 
+				echo "<font size=2>";
+			// Input renamed as type=hidden to hide the date field ----- //
+			// Note Input field is still required ---------------------- //
+			?>
+				<input type="hidden" style="width:6em; background:#bbddff;" id="censDate" name="censDate" type="text" value="<?php echo "";?>" READONLY/>
 			</font>
 			</td></tr></table>
 		</div>
+
+
 	</div>
 
 	<div class="cens_sour_year">
