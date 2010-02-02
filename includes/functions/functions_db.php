@@ -2848,9 +2848,20 @@ function get_autocomplete_INDI($FILTER, $ged_id=PGV_GED_ID) {
 		->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function get_autocomplete_FAM($vars, $ged_id=PGV_GED_ID) {
+function get_autocomplete_FAM($FILTER, $ids, $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
 
+	$vars=array();
+	if (empty($ids)) {
+		//-- no match : search for FAM id
+		$where = "f_id ".PGV_DB::$LIKE." ?";
+		$vars[]="%{$FILTER}%";
+	} else {
+		//-- search for spouses
+		$qs=implode(',', array_fill(0, count($ids), '?'));
+		$where = "(f_husb IN ($qs) OR f_wife IN ($qs))";
+		$vars=array_merge($vars, $ids, $ids);
+	}
 	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
 			 "FROM {$TBLPREFIX}families ".
 			 "WHERE {$where} AND f_file=?";
