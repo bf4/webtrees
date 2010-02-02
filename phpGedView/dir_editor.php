@@ -71,6 +71,16 @@ $locked_by_context = array("readme.txt", "index.php", "gedcoms.php");
 $dbname = explode("/", $DBNAME);
 $locked_by_context[] = end($dbname);
 
+// If we are storing the media in the index directory (this is the
+// default for the media firewall), then don't delete it.
+if (
+	$USE_MEDIA_FIREWALL &&
+	$MEDIA_FIREWALL_ROOTDIR==$INDEX_DIRECTORY &&
+	(substr($MEDIA_DIRECTORY, 0, 1)!='.')
+) {
+	$locked_by_context[]=trim($MEDIA_DIRECTORY, '/');
+}
+
 print_header($pgv_lang["index_dir_cleanup"]);
 echo "<h2>", $pgv_lang["index_dir_cleanup"], "</h2>";
 
