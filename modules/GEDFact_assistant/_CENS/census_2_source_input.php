@@ -147,6 +147,10 @@ global $pgv_lang, $TEXT_DIRECTION;
 	}
 
 	function changeYear(cenyear) {
+	
+		var cenctry=document.getElementById('censCtry').value;
+			// alert("Set Date is in the "+TheCenCtry+" --- "+"Now in "+cenctry);
+
 		var tbl = document.getElementById('tblSample');
 		if (tbl.rows.length==0) {
 			create_header();
@@ -161,12 +165,65 @@ global $pgv_lang, $TEXT_DIRECTION;
 		} else {
 			document.getElementById('censYear').style.backgroundColor = "#ffffff";
 		}
-		
 		changeAge(cenyear);
 		changeCols(cenyear);
 		changeMC(cenyear);
 		changeChBorn(cenyear)
 		preview();
+		
+		
+		// Toggle Countries when the preset UK Cens Date has been been used -------------
+		if (TheCenCtry=="UK") {
+			if (cenyear!=TheCenYear && cenctry!=TheCenCtry) {
+				// alert('IN THE USA');
+				censyear = new DynamicOptionList();
+				censyear.addDependentFields("censCtry","censYear");
+				censyear.forValue("UK").addOptions("choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921", "1931");
+				censyear.forValue("USA").addOptions("choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930", cenyear);
+				censyear.forValue("UK").setDefaultOptions("choose");
+				censyear.forValue("USA").setDefaultOptions(cenyear);
+				initDynamicOptionLists();
+				TheCenYear='';
+			}
+			if (TheCenYear=='' && cenctry==TheCenCtry) {
+				// alert('IN THE UK');
+				censyear = new DynamicOptionList();
+				censyear.addDependentFields("censCtry","censYear");
+				censyear.forValue("UK").addOptions("choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921", "1931", cenyear);
+				censyear.forValue("USA").addOptions("choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
+				censyear.forValue("UK").setDefaultOptions(cenyear);
+				censyear.forValue("USA").setDefaultOptions("choose");
+				initDynamicOptionLists();
+				TheCenYear='';
+			}
+		}
+		// Toggle Countries when the preset US Cens Date has been been used -------------
+		if (TheCenCtry=="USA") {
+			if (cenyear!=TheCenYear && cenctry!=TheCenCtry) {
+				// alert('NOW IN THE UK');
+				censyear = new DynamicOptionList();
+				censyear.addDependentFields("censCtry","censYear");
+				censyear.forValue("UK").addOptions("choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921", "1931", cenyear);
+				censyear.forValue("USA").addOptions("choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
+				censyear.forValue("UK").setDefaultOptions(cenyear);
+				censyear.forValue("USA").setDefaultOptions("choose");
+				initDynamicOptionLists();
+				TheCenYear='';
+			}
+			if (TheCenYear=='' && cenctry==TheCenCtry) {
+				// alert('NOW IN THE USA');
+				censyear = new DynamicOptionList();
+				censyear.addDependentFields("censCtry","censYear");
+				censyear.forValue("UK").addOptions("choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921", "1931");
+				censyear.forValue("USA").addOptions("choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930", cenyear);
+				censyear.forValue("UK").setDefaultOptions("choose");
+				censyear.forValue("USA").setDefaultOptions(cenyear);
+				initDynamicOptionLists();
+				TheCenYear='';
+			}
+		}
+
+
 	}
 	
 	// Change Marital Condition and Years Married based on Census Year ======================
@@ -356,7 +413,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 		} else {
 			// alert("cenyear = "+cenyear+" ... prevcenyear = base_"+base1901); 
 		}
-
+		
 		var cendate = getCenDate(cenyear);
 
 		var one_day   = 1000*60*60*24;
@@ -900,30 +957,54 @@ global $pgv_lang, $TEXT_DIRECTION;
 </script>
 
 <div class="optionbox cens_sour">
-<!--[if IE]><style>.cens_sour{margin-top:-1.3em;}</style><![EndIf]-->
 	<div class="cens_sour_country">
 		<span><?php echo $pgv_lang["cens_country"]; ?><br /></span>
+		<select id="censCtry" name="censCtry" >
+			<option id="UKOPT" value="UK">UK</option>
+			<option id="USOPT" value="USA">USA</option>
+		</select>
+		
 		<script type="text/javascript">
+		if (TheCenYear=='') {
 			var censyear = new DynamicOptionList();
 			censyear.addDependentFields("censCtry","censYear");
 			censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921", "1931");
 			censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
 			censyear.forValue("UK").setDefaultOptions("choose");
 			censyear.forValue("USA").setDefaultOptions("choose");
+		} 
+		else if (TheCenYear!='' && TheCenCtry=='UK') {
+			var censyear = new DynamicOptionList();
+			censyear.addDependentFields("censCtry","censYear");
+			censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921", "1931", TheCenYear);
+			censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
+			censyear.forValue("UK").setDefaultOptions(TheCenYear);
+			censyear.forValue("USA").setDefaultOptions("choose");
+			document.getElementById("UKOPT").defaultSelected = true;
+			document.getElementById("USOPT").defaultSelected = false;
+		} 
+		else if (TheCenYear!='' && TheCenCtry=='USA') {
+			var censyear = new DynamicOptionList();
+			censyear.addDependentFields("censCtry","censYear");
+			censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921", "1931");
+			censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930", TheCenYear);
+			censyear.forValue("UK").setDefaultOptions("choose");
+			censyear.forValue("USA").setDefaultOptions(TheCenYear);
+			document.getElementById("UKOPT").defaultSelected = false;
+			document.getElementById("USOPT").defaultSelected = true;
+		}
 		</script>
-		<select id="censCtry" name="censCtry" >
-			<option value="UK">UK</option>
-			<option value="USA">USA</option>
-		</select>
-	<div>
-		<table><tr><td nowrap="nowrap">
-		<br />&nbsp;<?php echo $pgv_lang["date"]; ?>:&nbsp;&nbsp; 
-		<font size=2>
-			<input style="width:6em; background:#bbddff;" id="censDate" name="censDate" type="text" value="<?php echo "";?>" READONLY/>
-		</font>
-		</td></tr></table>
+
+		<div>
+			<table><tr><td nowrap="nowrap">
+			<br />&nbsp;<?php echo $pgv_lang["date"]; ?>:&nbsp;&nbsp; 
+			<font size=2>
+				<input style="width:6em; background:#bbddff;" id="censDate" name="censDate" type="text" value="<?php echo "";?>" READONLY/>
+			</font>
+			</td></tr></table>
+		</div>
 	</div>
-	</div>
+
 	<div class="cens_sour_year">
 		<span><?php echo $pgv_lang["cens_year"]; ?><br /></span>
 		<select style = "background:#ffaaaa;";
@@ -934,6 +1015,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 		</select>
 		<input type="hidden" id="prevYear" name="prevYear" value="" />&nbsp;&nbsp;&nbsp;
 	</div>
+
 	<div class="cens_sour_scs">
 		<div class="cens_sour_1">
 			<div class="cens_sour_2">Title:</div> 

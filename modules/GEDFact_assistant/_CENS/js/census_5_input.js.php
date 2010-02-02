@@ -443,6 +443,9 @@ function fillInRows() {
 	// create_header();
 	// insertRowToTable();
 	// addRowToTable();
+	if (TheCenYear!='') {
+		changeYear(TheCenYear);
+	}
 }
 
 // myRowObject - an object for storing information about the table rows
@@ -761,7 +764,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 		} else {
 			iteration = num + ROW_BASE;
 		}
-		
+
 		// Initial Age Calculation based on 1901 Census Year input ============
 		// *** NOTE *** 
 		// *** This is then corrected when ChangeYear() function is run 

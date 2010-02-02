@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.x CA
+ - Added: Auto propagate Census Date info from Census window to Census Assistant window initial set-up. (windmillway)
  - Changed: Minor corrections to some theme modules.css. (windmillway)
  - Added: modules.css file for all themes. Moved GEDFact_assistant/_CENS css to modules.css (windmillway)
  - Changed: GEDFact_assistant/ module - Minor css changes (windmillway)

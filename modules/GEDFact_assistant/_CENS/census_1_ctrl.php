@@ -60,13 +60,11 @@ $currpid=$pid;
 
 
 <?php
-	// Debug =============================================================
 	echo PGV_JS_START;
-		// echo "parent_cls();";
-		// echo "var link3 = 'individual.php?pid=$pid&show_changes=yes';";
-		// echo "gparent_refr(link3);";
+		 echo "TheCenYear = window.opener.document.getElementById('setyear').value;";
+		 echo "TheCenCtry = window.opener.document.getElementById('setctry').value;"; 
 	echo PGV_JS_END;
-	// Debug =============================================================
+
 
 	// Header of assistant window =====================================================
 	echo "<div class=\"cens_header\">";
@@ -115,7 +113,11 @@ $currpid=$pid;
 		echo "</div>";
 		?> 
 	</div>
+	
 
+<script>
+
+</script>
 
 <script language="JavaScript" type="text/javascript">
  window.onLoad = initDynamicOptionLists();
