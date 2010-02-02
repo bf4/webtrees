@@ -1038,11 +1038,13 @@ case 'addnewnote_assisted':
 	echo PGV_JS_START;
 	?>
 		function check_form(frm) {
+			/*
 			if (frm.TITL.value=="") {
 				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
 				frm.TITL.focus();
 				return false;
 			}
+			*/
 			return true;
 		}
 	<?php
