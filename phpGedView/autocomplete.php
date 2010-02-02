@@ -211,19 +211,7 @@ function autocomplete_FAM($FILTER, $OPTION) {
 	//-- search for INDI names
 	$ids=array_keys(autocomplete_INDI($FILTER, $OPTION));
 
-	$vars=array();
-	if (empty($ids)) {
-		//-- no match : search for FAM id
-		$where = "f_id ".PGV_DB::$LIKE." ?";
-		$vars[]="%{$FILTER}%";
-	} else {
-		//-- search for spouses
-		$qs=implode(',', array_fill(0, count($ids), '?'));
-		$where = "(f_husb IN ($qs) OR f_wife IN ($qs))";
-		$vars=array_merge($vars, $ids, $ids);
-	}
-
-	$rows=get_autocomplete_FAM($vars);
+	$rows=get_autocomplete_FAM($FILTER, $ids);
 	$data=array();
 	foreach ($rows as $row) {
 		$family = Family::getInstance($row);
