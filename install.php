@@ -510,11 +510,11 @@ function checkEnvironment() {
 	print "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
 	$phpcheck = (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0);
 	if ($phpcheck) {
-		print "<tr><td valign=\"top\">";
-		print $pgv_lang["checking_php_version"]."<br />";
-		print "<span class=\"error\">".$pgv_lang["failed"]."</span><br />".$pgv_lang["pgv_requires_version"]."<br />";
-		print $pgv_lang["using_php_version"];
-		print "</td></tr>";
+		echo '<tr><td valign="top">';
+		echo $pgv_lang["checking_php_version"], '<br />';
+		echo '<span class="error">', $pgv_lang["failed"], '</span><br />';
+		echo print_text("pgv_requires_version", 0, 1), '<br />';
+		echo print_text("using_php_version", 0, 1), '</td></tr>';
 	}
 
 	// Check we have one or more PDO drivers available

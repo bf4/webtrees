@@ -3,7 +3,7 @@
  * Finnish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -375,7 +375,7 @@ $pgv_lang["config_saved"] = "Asetukset on tallennettu.";
 $pgv_lang["checking_errors"]		= "Tarkistetaan virheitä...";
 $pgv_lang["checking_php_version"]		= "Tarkistetaan tarvittava PHP-versio:";
 $pgv_lang["failed"]		= "Epäonnistui";
-$pgv_lang["pgv_requires_version"]		= "PhpGedView vaatii vähintään PHP-version ".PGV_REQUIRED_PHP_VERSION."";
+$pgv_lang["pgv_requires_version"]		= "PhpGedView vaatii vähintään PHP-version #PGV_REQUIRED_PHP_VERSION#";
 $pgv_lang["to_manage_users"] = "Hallinnoi käyttäjiä <a href=\"useradmin.php\">Käyttäjähallinta</a>-sivulla";
 $pgv_lang["no_db_extensions"]		= "Sinulla ei ole tuettuja tietokantalaajennuksia.";
 $pgv_lang["db_ext_support"]		= "Sinulla on #DBEXT#-tuki";
@@ -432,7 +432,7 @@ $pgv_lang["elapsedMinute2"]	=	"#pgv_lang[global_num1]# minuuttia";
 $pgv_lang["ged_export"] 						= "Vie";
 $pgv_lang["install_step_4"] = "Sivuston asetus";
 $pgv_lang["add_gedcom_from_path"] 	= "Lisää GEDCOM tiedoston paikasta";
-$pgv_lang["using_php_version"]		= "Käytät PHP-versiota ";
+$pgv_lang["using_php_version"]		= "Käytät PHP-versiota #PGV_ACTUAL_PHP_VERSION#";
 $pgv_lang["checking_db_support"]		= "Etsitään vähintään tietokannan tuki:";
 $pgv_lang["checking_db_support"]		= "Tarkistetaan tietokannan vähimmäistuki:";
 $pgv_lang["error_remove_site_linked"]			= "Etäpalvelinta ei voitu poistaa koska siihen on vielä yhteyksiä.";
