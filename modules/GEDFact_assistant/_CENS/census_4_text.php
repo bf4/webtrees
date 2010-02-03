@@ -50,7 +50,7 @@ function help_window2(frm)  {
 	<span><?php echo $pgv_lang["cens_preview"]; ?></span>
 	<span><input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" /></span>
 	<span><b><?php echo $pgv_lang["cens_proposed"]; ?></b></span>
-	<span><input type="submit" value="<?php echo $pgv_lang["save"]; ?>" onclick="preview();" /></span>
+	<span><input type="submit" value="<?php echo $pgv_lang["save"]; ?>" onclick="caSave();" /></span>
 	<br /><br />
 	<span class="descriptionbox width15 nowrap <?php $TEXT_DIRECTION; ?>">
 		<?php

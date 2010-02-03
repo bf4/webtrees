@@ -171,7 +171,6 @@ global $pgv_lang, $TEXT_DIRECTION;
 		changeChBorn(cenyear)
 		preview();
 		
-		
 		// Toggle Countries when the preset UK Cens Date has been been used -------------
 		if (TheCenCtry=="UK") {
 			if (cenyear!=TheCenYear && cenctry!=TheCenCtry) {
@@ -960,8 +959,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 	<div class="cens_sour_country">
 		<span><?php echo $pgv_lang["cens_country"]; ?><br /></span>
 		<select id="censCtry" name="censCtry" >
-			<option id="UKOPT" value="UK">UK</option>
-			<option id="USOPT" value="USA">USA</option>
+			<option id="UKOPT" name="UKOPT" value="UK">UK</option>
+			<option id="USOPT" name="USOPT" value="USA">USA</option>
 		</select>
 		
 		<script type="text/javascript">
@@ -980,8 +979,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 			censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
 			censyear.forValue("UK").setDefaultOptions(TheCenYear);
 			censyear.forValue("USA").setDefaultOptions("choose");
-			document.getElementById("UKOPT").defaultSelected = true;
-			document.getElementById("USOPT").defaultSelected = false;
+			document.getElementById("UKOPT").selected = true;
+			document.getElementById("USOPT").selected = false;
 		} 
 		else if (TheCenYear!='' && TheCenCtry=='USA') {
 			var censyear = new DynamicOptionList();
@@ -990,8 +989,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 			censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930", TheCenYear);
 			censyear.forValue("UK").setDefaultOptions("choose");
 			censyear.forValue("USA").setDefaultOptions(TheCenYear);
-			document.getElementById("UKOPT").defaultSelected = false;
-			document.getElementById("USOPT").defaultSelected = true;
+			document.getElementById("UKOPT").selected = false;
+			document.getElementById("USOPT").selected = true;
 		}
 		</script>
 

@@ -61,8 +61,8 @@ $currpid=$pid;
 
 <?php
 	echo PGV_JS_START;
-		 echo "TheCenYear = window.opener.document.getElementById('setyear').value;";
-		 echo "TheCenCtry = window.opener.document.getElementById('setctry').value;"; 
+		 echo "var TheCenYear = opener.document.getElementById('setyear').value;";
+		 echo "var TheCenCtry = opener.document.getElementById('setctry').value;"; 
 	echo PGV_JS_END;
 
 

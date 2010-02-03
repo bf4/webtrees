@@ -150,11 +150,20 @@ var ROW_BASE = 0; // first number (for display)
 var hasLoaded = false;
 
 
-// Load Other variables ==========================================================
+// Load Other variables =======================================================
 var NoteCtry = document.getElementById('censCtry');
 var NoteYear = document.getElementById('censYear');
 var NoteTitl = document.getElementById('Titl');
 
+// Functions ==================================================================
+function caSave() {
+	preview();
+	pastedate();
+}
+
+function pastedate() {
+	window.opener.pasteAsstDate(document.getElementById('censCtry').value, document.getElementById('censYear').value);
+}
 
 function preview() {
 	NoteCtry = document.getElementById('censCtry');
@@ -700,9 +709,18 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 			J = J + 2 - 12*L;
 			I = 100*(N - 49) + I + L;
 			dob = (I+', '+J+', '+K);
+			yob = I;
 		}
 		// Create Date of Birth object from passed string dob 
 		var jsdob = Date.parseString(dob, 'y, M, d');
+		// US Census - Create dob (month year) and Age at first marriage ------ 
+		if (jsdob != "Invalid Date" && jsdob != "" && jsdob != null) {
+			usdob = jsdob.format("NNN "+yob);
+			agemarr = Math.floor((jsdom-jsdob)/one_year);
+		} else {
+			usdob = '-';
+			agemarr = '-';
+		}
 		
 		// Date of Marriage (dom) - passed as Julian Date String --------------
 		if (dom>1721060) {
@@ -740,16 +758,6 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 		// Create Date of Marriage object from passed string dom 
 		var jsdod = Date.parseString(dod, 'y, M, d');
 		
-		// US Census - Create dob (month year) and Age at first marriage ------ 
-		if (jsdob != "Invalid Date" && jsdob != "" && jsdob != null) {
-			var I=I;
-			usdob = jsdob.format("NNN "+I);
-			agemarr = Math.floor((jsdom-jsdob)/one_year);
-		} else {
-			usdob = '-';
-			agemarr = '-';
-		}
-
 	}
 		
 		
