@@ -3,7 +3,7 @@
  * Danish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2010  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,4 +151,18 @@ $pgv_lang["GOOGLEMAP_PH_WHEEL_help"]    = "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /
 $pgv_lang["GOOGLEMAP_PH_CONTROLS"]              = "Skjul kort-kontroller";
 $pgv_lang["GOOGLEMAP_PH_CONTROLS_help"] = "~#pgv_lang[GOOGLEMAP_PH_CONTROLS]#~<br /><br />Denne indstilling lader dig skjule kort-kontrollerne (f.eks. korttype valget) hvis musen er uden for kortet.";
 
+// Pedigree map
+$pgv_lang["PEDIGREE_MAP_help1"]         = "Sådan bruges kortet";
+$pgv_lang["PEDIGREE_MAP_help2"]         = "~#pgv_lang[root_person]#~<br /><br />Vælg det individ du ønsker som <strong>rodperson</strong> enten ved at indtaste dennes ID eller ved bruge <strong>Find ID</strong> ikonet.";
+$pgv_lang["PEDIGREE_MAP_help3"]         = "~#pgv_lang[generations]#~<br /><br />Vælg det antal generationer du ønsker at se. Et fornuftigt maksimum er 8, da dette stadig vil vise op til 255 personer.";
+$pgv_lang["PEDIGREE_MAP_help4"]         = "Klik på et navn til højre eller på et ikon på kortet for at vise et informationsvindue ved deres fødselssted.";
+$pgv_lang["PEDIGREE_MAP_help5"]         = "Klik på detaljer i dette informationsvindue for at at gentegne kortet med denne person som rod.";
+
+$pgv_lang["PEDIGREE_MAP_clustersize"]           = "Klyngestørrelse";
+$pgv_lang["PEDIGREE_MAP_clustersize_help"]      = "~#pgv_lang[PEDIGREE_MAP_clustersize]#~<br /><br />Antallet af markører der skal vises på samme sted før en hale af markører startes i en nordøstlig linje bag de yngre generationer. Denne hale er normalt kun synlig ved store zoom værdier.";
+$pgv_lang["PEDIGREE_MAP_hidelines"]                     = "Skjul linjer";
+$pgv_lang["PEDIGREE_MAP_hidelines_help"]        = "~#pgv_lang[PEDIGREE_MAP_hidelines]#~<br /><br />Skjul de linjer der forbinder barnet til hver forælder hvis de eksistere på kortet.";
+$pgv_lang["PEDIGREE_MAP_hideflags"]                     = "Skjul flag";
+$pgv_lang["PEDIGREE_MAP_hideflags_help"]        = "~#pgv_lang[PEDIGREE_MAP_hideflags]#~<br /><br />Skjul de flag der er opsat i googlemap modulet. Normalt er de disse for lande og stater.&nbsp; Dette bruges som en visuelt hint om at markørene omkring flaget er fra dette område og ikke det nøjagtige punkt.";
+$pgv_lang["PEDIGREE_MAP_help"]                          = "~#pgv_lang[PEDIGREE_MAP_help1]#~<br /><br />#pgv_lang[PEDIGREE_MAP_help4]#<br />#pgv_lang[PEDIGREE_MAP_help5]#<br /><br />#pgv_lang[PEDIGREE_MAP_help2]#<br /><br />#pgv_lang[PEDIGREE_MAP_help3]#<br /><br />#pgv_lang[PEDIGREE_MAP_clustersize_help]#<br /><br />#pgv_lang[PEDIGREE_MAP_hidelines_help]#<br /><br />#pgv_lang[PEDIGREE_MAP_hideflags_help]#<br /><br />";
 ?>
