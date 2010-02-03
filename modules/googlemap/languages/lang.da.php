@@ -3,7 +3,7 @@
  * Danish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,28 +97,32 @@ $pgv_lang["pl_north_short"]         = "N";
 $pgv_lang["pl_south_short"]         = "S";
 $pgv_lang["pl_east_short"]          = "Ø";
 $pgv_lang["pl_west_short"]          = "V";
+$pgv_lang["pl_places_localfile"]    = "Serverfil indeholdende steder (CSV)";
 $pgv_lang["pl_places_filename"]     = "Fil indeholdende steder (CSV)";
 $pgv_lang["pl_clean_db"]            = "Fjern alle sted-placeringer før import?";
 $pgv_lang["pl_update_only"]         = "Opdater kun eksisterende steder?";
 $pgv_lang["pl_overwrite_data"]      = "Overskriv placeringsdata med data fra fil?";
-$pgv_lang["pl_no_places_found"]     = "Ingen steder fundet";
 $pgv_lang["pl_use_this_value"]      = "Brug denne værdi";
 $pgv_lang["pl_precision"]           = "Præcision";
 $pgv_lang["pl_country"]             = "Land";
 $pgv_lang["pl_countries"]           = "Lande";
-$pgv_lang["pl_state"]               = "Amt/stat";
+$pgv_lang["pl_state"]               = "Stat";
+$pgv_lang["pl_county"]              = "Amt";
 $pgv_lang["pl_city"]                = "By";
+$pgv_lang["pl_place"]               = "Sted";
 $pgv_lang["pl_neighborhood"]        = "Kvarter";
 $pgv_lang["pl_house"]               = "Hus";
 $pgv_lang["pl_max"]                 = "Maks.";
 $pgv_lang["pl_delete"]              = "Slet geografisk sted";
 $pgv_lang["pl_search_level"]            = "Søg på dette niveau";
 $pgv_lang["pl_search_all"]                      = "Søg alle";
+$pgv_lang["pl_unknown"]             = "Ukendt";
 
 $pgv_lang["pl_flag"]                = "Flag";
 $pgv_lang["flags_edit"]             = "Vælg flag";
 $pgv_lang["pl_change_flag"]         = "Skift flag";
 $pgv_lang["pl_remove_flag"]         = "Fjern flag";
+$pgv_lang["pl_no_flags"]                = "<b>Flagmappen findes ikke</b><br /><br />For at flagene skal virke, skal du kopiere <b>flags</b> mappen fra <b>images</b> mappen til <b>places</b> mappen, eller downloade flagene fra den fulde udgave.";
 
 $pgv_lang["pl_remove_location"]     = "Fjern dette sted?";
 $pgv_lang["pl_delete_error"]        = "Stedet ikke fjernet: dette sted indeholder under-steder";
@@ -132,10 +136,10 @@ $pgv_lang['placecheck_one']                     = "Niveau ét sted";
 $pgv_lang['placecheck_select1']         = "Vælg topniveau...";
 $pgv_lang['placecheck_select2']         = "Vælg næste niveau...";
 $pgv_lang['placecheck_key']                     = "Oversigt over nedenfor brugte farver";
-$pgv_lang['placecheck_key1']            = "<font size=\"-2\">dette sted og dets koordinater findes ikke i googlemap tabellerne</font>";
-$pgv_lang['placecheck_key2']            = "<font size=\"-2\">dette sted findes i googlemap tabellerne, men har ingen koordinater</font>";
-$pgv_lang['placecheck_key3']            = "<font size=\"-2\">dette stedniveau er blankt i din gedcomfil. Det bør tilføjes til googlemap<br/>steder som \"unknown\" med koordinater fra dens forældre niveau<br/>før du tilføjer noget sted til det næste niveau</font>";
-$pgv_lang['placecheck_key4']            = "<font size=\"-2\">dette stedniveau er blankt i din gedcomfil, men eksistere som 'unknown'<br/>i googlemap stedtabllen med koordinater. Der kræves ikke nogen<br/>handling før det manglende niveau kan indtastes</font>";
+$pgv_lang['placecheck_key1']            = "dette sted og dets koordinater findes ikke i googlemap tabellerne";
+$pgv_lang['placecheck_key2']            = "dette sted findes i googlemap tabellerne, men har ingen koordinater";
+$pgv_lang['placecheck_key3']            = "dette stedniveau er blankt i din gedcomfil. Det bør tilføjes til googlemap<br/>steder som \"unknown\" med koordinater fra dens forældre niveau<br/>før du tilføjer noget sted til det næste niveau";
+$pgv_lang['placecheck_key4']            = "dette stedniveau er blankt i din gedcomfil, men eksistere som 'unknown'<br/>i googlemap stedtabllen med koordinater. Der kræves ikke nogen<br/>handling før det manglende niveau kan indtastes";
 $pgv_lang["placecheck_head"]            = "Stedliste for GEDCOM-filen";
 $pgv_lang['placecheck_gedheader']       = "Gedcom-fil steddata<br/>(2 PLAC mærke)";
 $pgv_lang['placecheck_gm_header']       = "GoogleMap steder tabeldata";
@@ -146,4 +150,29 @@ $pgv_lang["placecheck_filter_text"] = "Vis filtrerings indstillinger";
 $pgv_lang["placecheck_match"]           = "Inkludér korrekt sammenkørte steder: ";
 $pgv_lang["placecheck_lati"] 		= "Breddegrad";
 $pgv_lang["placecheck_long"] 		= "Længdegrad";
+
+// Pedigree map
+$pgv_lang["pedigree_map"]                               = "Stamtræskort";
+$pgv_lang["pm_grandparent"]                     = "Bedsteforælder";
+$pgv_lang["pm_grandmother"]                     = "Bedstemor";
+$pgv_lang["pm_grandfather"]                     = "Bedstefar";
+$pgv_lang["pm_gt"]                                              = "Gt";
+$pgv_lang["pm_zoom_in"]                                 = "Zoom&nbsp;ind";
+$pgv_lang["pm_zoom_out"]                                = "Zoom&nbsp;ud";
+$pgv_lang["zoom_in_here"]                               = "Zoom&nbsp;ind&nbsp;her";
+$pgv_lang["zoom_out_here"]                              = "Zoom&nbsp;ud&nbsp;her";
+$pgv_lang["centre_map"]                                 = "Centrer&nbsp;kort&nbsp;her";
+$pgv_lang["pm_individual_displayed"]    = "individ vist ud af den normale total på";
+$pgv_lang["pm_2individuals_displayed"]  = "individer vist us af den normale total på";   // For Polish 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["pm_individuals_displayed"]   = "individer vist ud af den normale total på";
+$pgv_lang["pm_individual_private"]              = "individ er privat.";
+$pgv_lang["pm_individuals_private"]             = "individer er private.";
+$pgv_lang["pm_missing_birth"]                   = "individid mangler fødselssteds koordinater:";
+$pgv_lang["pm_2missing_births"]                 = "individer mangler fødselssteds koordinater:";       // For Polish 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["pm_missing_births"]                  = "individer mangler fødselssteds koordinater:";
+$pgv_lang["pm_missings"]                                = "Ingen slægtninge i databasen.";
+$pgv_lang["pm_from"]                                    = "fra";
+$pgv_lang["pm_for"]                                             = "for";
+$pgv_lang["pm_gens"]                                    = "generationer";
+$pgv_lang["pm_root"]                                    = "Rod";
 ?>
