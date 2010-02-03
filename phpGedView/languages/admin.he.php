@@ -3,7 +3,7 @@
  * Hebrew texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,8 +74,8 @@ $pgv_lang["config_saved"] 			= "התצורה נשמרה בהצלחה";
 $pgv_lang["checking_errors"]			= "בודק שגיאות...";
 $pgv_lang["checking_php_version"]		= "בודק גרסת ה-PHP הנדרשת:";
 $pgv_lang["failed"]				= "נכשל";
-$pgv_lang["pgv_requires_version"]		= "PhpGedView דורש גרסת PHP ".PGV_REQUIRED_PHP_VERSION." או גבוהה יותר.";
-$pgv_lang["using_php_version"]		= "הנך משתמש בגרסת PHP ".PHP_VERSION;
+$pgv_lang["pgv_requires_version"]		= "PhpGedView דורש גרסת PHP #PGV_REQUIRED_PHP_VERSION# או גבוהה יותר.";
+$pgv_lang["using_php_version"]		= "הנך משתמש בגרסת PHP #PGV_ACTUAL_PHP_VERSION#";
 $pgv_lang["checking_db_support"]		= "בודק תמיכה מינימלית של מאגר מידע:";
 $pgv_lang["no_db_extensions"]		= "אין לך אף אחת מהסיומות הנתמכות של מאגר המידע";
 $pgv_lang["db_ext_support"]			= "יש לך תמיכת #DBEXT#";

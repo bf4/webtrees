@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,8 +51,8 @@ $pgv_lang["config_saved"]               = "Configuration enregistrée";
 $pgv_lang["checking_errors"]            = "Recherche d'anomalies...";
 $pgv_lang["checking_php_version"]       = "Vérification de la version de PHP:";
 $pgv_lang["failed"]                     = "Echec";
-$pgv_lang["pgv_requires_version"]       = "Configuration minimale : PHP version ".PGV_REQUIRED_PHP_VERSION." ou +";
-$pgv_lang["using_php_version"]          = "Vous utilisez : PHP version ";
+$pgv_lang["pgv_requires_version"]       = "Configuration minimale : PHP version #PGV_REQUIRED_PHP_VERSION# ou +";
+$pgv_lang["using_php_version"]          = "Vous utilisez : PHP version #PGV_ACTUAL_PHP_VERSION#";
 $pgv_lang["checking_db_support"]        = "Vérification de la présence d'un système de base de données:";
 $pgv_lang["no_db_extensions"]           = "Aucune extension de base de données n'a été trouvée.";
 $pgv_lang["db_ext_support"]             = "Extension #DBEXT# trouvée";
