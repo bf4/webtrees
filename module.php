@@ -25,6 +25,7 @@
  * @author Patrick Kellum
  */
 
+define('PGV_SCRIPT_NAME', 'module.php');
 require './config.php';
 require_once('includes/classes/class_module.php');
 
@@ -141,8 +142,8 @@ switch($modinfo['Module']['type'])
 		if (file_exists(PGV_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$modinfo['Module']['default_language'].'.php')) {
 			require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$modinfo['Module']['default_language'].'.php';
 		}
-		if ($deflang != $modinfo['Module']['default_language'] && file_exists('./modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$deflang.'.php')) {
-			require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$deflang.'.php';
+		if ($LANGUAGE != $modinfo['Module']['default_language'] && file_exists('./modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$LANGUAGE.'.php')) {
+			require_once PGV_ROOT.'modules/'.$_REQUEST['mod'].'/pgvlang/lang_'.$LANGUAGE.'.php';
 		}
 
 /*

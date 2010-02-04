@@ -27,8 +27,8 @@
 * @author rbennett
 */
 
+define('PGV_SCRIPT_NAME', 'manageservers.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions.php';
 require_once PGV_ROOT.'includes/functions/functions_edit.php';
 require_once PGV_ROOT.'includes/functions/functions_import.php';
@@ -95,149 +95,31 @@ function validIP($address) {
 	return true;
 }
 
-
-/**
-* Adds an IP address to the banned.php file
-*/
-if ($action=='addBanned') {
+if ($action=='addBanned' || $action=='addSearch' || $action=='deleteBanned' || $action=='deleteSearch') {
 	if (validIP($address)) {
-		$bannedtext = "<?php\n//--List of banned IP addresses\n";
-		$bannedtext .= "\$banned = array();\n";
-		foreach ($banned as $value) {
-			if (!is_array($value)) $value = array($value, '');
-			if ($value[0]==$address) {
-				// We're replacing an existing entry
-				$address = '';
-				$value[1] = $comment;
-			}
-			$bannedtext .= "\$banned[] = array(\"".$value[0]."\",\"".$value[1]."\");\n";
+		// Even if we are adding a new record, we must delete the existing one first.
+		PGV_DB::prepare(
+			"DELETE FROM {$TBLPREFIX}ip_address WHERE ip_address=?"
+		)->execute(array($address));
+		if ($action=='addBanned') {
+			PGV_DB::prepare(
+				"INSERT INTO {$TBLPREFIX}ip_address (ip_address, category, comment) VALUES (?, ?, ?)"
+			)->execute(array($address, 'banned', $comment));
 		}
-		if (!empty($address)) {
-			// This is a new entry
-			$bannedtext .= "\$banned[] = array(\"".$address."\",\"".$comment."\");\n";
+		if ($action=='addSearch') {
+			PGV_DB::prepare(
+				"INSERT INTO {$TBLPREFIX}ip_address (ip_address, category, comment) VALUES (?, ?, ?)"
+			)->execute(array($address, 'search-engine', $comment));
 		}
-		$bannedtext .= "\n"."?>";
-
-		$fp = @fopen($INDEX_DIRECTORY."banned.php", "w");
-		if (!$fp) {
-			global $whichFile;
-			$whichFile = $INDEX_DIRECTORY."banned.php";
-			$errorBanned = print_text("gedcom_config_write_error",0,1);
-		} else {
-			fwrite($fp, $bannedtext);
-			fclose($fp);
-			$logline = AddToLog("banned.php updated");
-			check_in($logline, "banned.php", $INDEX_DIRECTORY);
-		}
-	} else $errorBanned = $pgv_lang["error_ban_server"];
-
-	if (file_exists($INDEX_DIRECTORY.'banned.php')) {
-		require($INDEX_DIRECTORY.'banned.php');		// Refresh the $banned list
-	}
-	$action = 'showForm';
-}
-
-/**
-* Removes an IP address from the banned.php file
-*/
-if ($action=='deleteBanned') {
-	$bannedtext = "<?php\n//--List of banned IP addresses\n";
-	$bannedtext .= "\$banned = array();\n";
-	foreach ($banned as $value) {
-		if (!is_array($value)) $value = array($value, '');
-		if ($value[0]!=$address) {
-			// We're not deleting this one
-			$bannedtext .= "\$banned[] = array(\"".$value[0]."\",\"".$value[1]."\");\n";
-		}
-	}
-	$bannedtext .= "\n"."?>";
-
-	$fp = @fopen($INDEX_DIRECTORY."banned.php", "w");
-	if (!$fp) {
-		global $whichFile;
-		$whichFile = $INDEX_DIRECTORY."banned.php";
-		$errorBanned = print_text("gedcom_config_write_error",0,1);
 	} else {
-		fwrite($fp, $bannedtext);
-		fclose($fp);
-		$logline = AddToLog("banned.php updated");
-		check_in($logline, "banned.php", $INDEX_DIRECTORY);
-	}
-
-	require $INDEX_DIRECTORY.'banned.php';		// Refresh the $banned list
-	$action = 'showForm';
-}
-
-/**
-* Adds an IP address to the search_engines.php file
-*/
-if ($action=='addSearch') {
-	if (validIP($address)) {
-		$searchtext = "<?php\n//--List of search engine IP addresses\n";
-		$searchtext .= "\$search_engines = array();\n";
-		foreach ($search_engines as $value) {
-			if (!is_array($value)) $value = array($value, '');
-			if ($value[0]==$address) {
-				// We're replacing an existing entry
-				$address = '';
-				$value[1] = $comment;
-			}
-			$searchtext .= "\$search_engines[] = array(\"".$value[0]."\",\"".$value[1]."\");\n";
+		if ($action=='addBanned') {
+			$errorBanned=$pgv_lang['error_ban_server'];
 		}
-		if (!empty($address)) {
-			// This is a new entry
-			$searchtext .= "\$search_engines[] = array(\"".$address."\",\"".$comment."\");\n";
-		}
-		$searchtext .= "\n"."?>";
-
-		$fp = @fopen($INDEX_DIRECTORY."search_engines.php", "w");
-		if (!$fp) {
-			global $whichFile;
-			$whichFile = $INDEX_DIRECTORY."search_engines.php";
-			$errorSearch = print_text("gedcom_config_write_error",0,1);
-		} else {
-			fwrite($fp, $searchtext);
-			fclose($fp);
-			$logline = AddToLog("search_engines.php updated");
-			check_in($logline, "search_engines.php", $INDEX_DIRECTORY);
-		}
-	} else $errorSearch = $pgv_lang["error_ban_server"];
-
-	if (file_exists($INDEX_DIRECTORY.'search_engines.php')) {
-		require $INDEX_DIRECTORY.'search_engines.php';		// refresh the $search_engines list
-	}
-	$action = 'showForm';
-}
-
-/**
-* Removes an IP address from the search_engines.php file
-*/
-if ($action=='deleteSearch') {
-	$searchtext = "<?php\n//--List of search engine IP addresses\n";
-	$searchtext .= "\$search_engines = array();\n";
-	foreach ($search_engines as $value) {
-		if (!is_array($value)) $value = array($value, '');
-		if ($value[0]!=$address) {
-			// We're not deleting this one
-			$searchtext .= "\$search_engines[] = array(\"".$value[0]."\",\"".$value[1]."\");\n";
+		if ($action=='addSearch') {
+			$errorSearch=$pgv_lang['error_ban_server'];
 		}
 	}
-	$searchtext .= "\n"."?>";
-
-	$fp = @fopen($INDEX_DIRECTORY."search_engines.php", "wb");
-	if (!$fp) {
-		global $whichFile;
-		$whichFile = $INDEX_DIRECTORY."search_engines.php";
-		$errorSearch = print_text("gedcom_config_write_error",0,1);
-	} else {
-		fwrite($fp, $searchtext);
-		fclose($fp);
-		$logline = AddToLog("search_engines.php updated");
-		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);
-	}
-
-	require $INDEX_DIRECTORY.'search_engines.php';		// refresh the $search_engines list
-	$action = 'showForm';
+	$action='showForm';
 }
 
 /**
@@ -351,66 +233,42 @@ function showSite(siteID) {
 		<td class="facts_value">
 			<table align="center">
 <?php
-	foreach ($search_engines as $index=>$value) {
-		if (!is_array($value)) $value = array($value, '');		// Old style without comment
-		?>
-			<tr>
-				<td>
-					<?php if (isset($PGV_IMAGES["remove"]["other"])) { ?>
-					<input type="image" src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"];?>" alt="<?php echo $pgv_lang['delete'];?>" name="deleteSearch" value="<?php echo $value[0];?>">
-					<?php } else { ?>
-					<button name="deleteSearch" value="<?php echo $value[0];?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
-					<?php } ?>
-					&nbsp;
-				</td>
-				<td>
-					<span dir="ltr">
-					<input type="text" name="address<?php echo $index;?>" size="16" value="<?php echo $value[0];?>" READONLY />
-					</span>
-					&nbsp;
-				</td>
-				<td>
-					<input type="text" name="comment<?php echo $index;?>" size="60" value="<?php echo $value[1];?>" READONLY />
-				</td>
-			</tr>
-<?php }?>
-			<tr>
-				<td valign="top">
-					<input name="action" type="hidden" value="addSearch"/>
-					<?php if (isset($PGV_IMAGES["add"]["other"])) { ?>
-					<input type="image" src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["add"]["other"];?>" alt="<?php echo $pgv_lang['add'];?>">
-					<?php } else { ?>
-					<input type="submit" value="<?php echo $pgv_lang['add'];?>" />
-					<?php } ?>
-					&nbsp;
-				</td>
-				<td valign="top">
-					<span dir="ltr">
-					<input type="text" id="txtAddIp" name="address" size="16"  value="<?php echo empty($errorSearch) ? '':$address;?>" />
-					</span>
-					&nbsp;
-				</td>
-				<td>
-					<input type="text" id="txtAddComment" name="comment" size="60"  value="" />
-					<br /><?php echo $pgv_lang["enter_comment"];?>
-				</td>
-			</tr>
-<?php
+	$sql="SELECT ip_address, comment FROM {$TBLPREFIX}ip_address WHERE category='search-engine'";
+	if ($DBTYPE=='mysql') {
+		$sql.=" ORDER BY INET_ATON(ip_address)";
+	} else {
+		$sql.=" ORDER BY comment";
+	}
+	$index=0;
+	$search_engines=PGV_DB::prepare($sql)->fetchAssoc();
+	foreach ($search_engines as $ip_address=>$ip_comment) {
+		echo '<tr><td>';
+		if (isset($PGV_IMAGES["remove"]["other"])) {
+			echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["remove"]["other"], '" alt="', $pgv_lang['delete'], '" name="deleteSearch" value="', $ip_address, '">';
+		} else {
+			echo '<button name="deleteSearch" value="', $ip_address, '" type="submit">', $pgv_lang["remove"], '</button>';
+		}
+		echo '</td><td><span dir="ltr"><input type="text" name="address', ++$index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
+		echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
+	}
+	echo '<tr><td valign="top"><input name="action" type="hidden" value="addSearch"/>';
+	if (isset($PGV_IMAGES["add"]["other"])) {
+		echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', $pgv_lang['add'], '">';
+	} else {
+		echo '<input type="submit" value="', $pgv_lang['add'], '" />';
+	}
+	echo '</td><td valign="top"><span dir="ltr"><input type="text" id="txtAddIp" name="address" size="16"  value="', empty($errorSearch) ? '':$address, '" /></span></td>';
+	echo '<td><input type="text" id="txtAddComment" name="comment" size="60"  value="" />';
+	echo '<br />', $pgv_lang["enter_comment"], '</td></tr>';
+
 	if (!empty($errorSearch)) {
 		print '<tr><td colspan="2"><span class="warning">';
 		print $errorSearch;
 		print '</span></td></tr>';
 		$errorSearch = '';
 	}
+	echo '</table></td></tr></table></form></td></tr></table>';
 ?>
-			</table>
-		</td>
-		</tr>
-	</table>
-	</form>
-	</td>
-</tr>
-</table>
 
 <!-- Banned IP address table -->
 <table class="width66" align="center">
@@ -428,66 +286,41 @@ function showSite(siteID) {
 		<td class="facts_value">
 			<table align="center">
 <?php
-	foreach ($banned as $index=>$value) {
-		if (!is_array($value)) $value = array($value, '');		// Old style without comment
-		?>
-			<tr>
-				<td>
-					<?php if (isset($PGV_IMAGES["remove"]["other"])) { ?>
-					<input type="image" src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"];?>" alt="<?php echo $pgv_lang['delete'];?>" name="deleteBanned" value="<?php echo $value[0];?>">
-					<?php } else { ?>
-					<button name="deleteBanned" value="<?php echo $value[0];?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
-					<?php } ?>
-					&nbsp;
-				</td>
-				<td>
-					<span dir="ltr">
-					<input type="text" name="address<?php echo $index;?>" size="16" value="<?php echo $value[0];?>" READONLY />
-					</span>
-					&nbsp;
-				</td>
-				<td>
-					<input type="text" name="comment<?php echo $index;?>" size="60" value="<?php echo $value[1];?>" READONLY />
-				</td>
-			</tr>
-<?php }?>
-			<tr>
-				<td valign="top">
-					<input name="action" type="hidden" value="addBanned"/>
-					<?php if (isset($PGV_IMAGES["add"]["other"])) { ?>
-					<input type="image" src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["add"]["other"];?>" alt="<?php echo $pgv_lang['add'];?>">
-					<?php } else { ?>
-					<input type="submit" value="<?php echo $pgv_lang['add'];?>" />
-					<?php } ?>
-					&nbsp;
-				</td>
-				<td valign="top">
-					<span dir="ltr">
-					<input type="text" id="txtAddIp" name="address" size="16"  value="<?php echo empty($errorBanned) ? '':$address;?>" />
-					</span>
-					&nbsp;
-				</td>
-				<td>
-					<input type="text" id="txtAddComment" name="comment" size="60"  value="" />
-					<br /><?php echo $pgv_lang["enter_comment"];?>
-				</td>
-			</tr>
-<?php
+	$sql="SELECT ip_address, comment FROM {$TBLPREFIX}ip_address WHERE category='banned'";
+	if ($DBTYPE=='mysql') {
+		$sql.=" ORDER BY INET_ATON(ip_address)";
+	} else {
+		$sql.=" ORDER BY comment";
+	}
+	$banned=PGV_DB::prepare($sql)->fetchAssoc();
+	foreach ($banned as $ip_address=>$ip_comment) {
+		echo '<tr><td>';
+		if (isset($PGV_IMAGES["remove"]["other"])) {
+			echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["remove"]["other"], '" alt="', $pgv_lang['delete'], '" name="deleteBanned" value="', $ip_address, '">';
+		} else {
+			echo '<button name="deleteBanned" value="', $ip_address, '" type="submit">', $pgv_lang["remove"], '</button>';
+		}
+		echo '</td><td><span dir="ltr"><input type="text" name="address', ++$index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
+		echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
+	}
+	echo '<tr><td valign="top"><input name="action" type="hidden" value="addBanned"/>';
+	if (isset($PGV_IMAGES["add"]["other"])) {
+		echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', $pgv_lang['add'], '">';
+	} else {
+		echo '<input type="submit" value="', $pgv_lang['add'], '" />';
+	}
+	echo '</td><td valign="top"><span dir="ltr"><input type="text" id="txtAddIp" name="address" size="16"  value="', empty($errorBanned) ? '':$address, '" /></span></td>';
+	echo '<td><input type="text" id="txtAddComment" name="comment" size="60"  value="" />';
+	echo '<br />', $pgv_lang["enter_comment"], '</td></tr>';
+
 	if (!empty($errorBanned)) {
 		print '<tr><td colspan="2"><span class="warning">';
 		print $errorBanned;
 		print '</span></td></tr>';
 		$errorBanned = '';
 	}
+	echo '</table></td></tr></table></form></td></tr></table>';
 ?>
-			</table>
-		</td>
-		</tr>
-	</table>
-	</form>
-	</td>
-</tr>
-</table>
 
 <!-- remote server list -->
 <table class="width66" align="center">

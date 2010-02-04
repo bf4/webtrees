@@ -39,7 +39,7 @@ class MenuBar
 	* get the home menu
 	* @return Menu the menu item
 	*/
-	static function &getHomeMenu() {
+	static function getHomeMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $HOME_SITE_URL, $HOME_SITE_TEXT, $pgv_lang;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		//-- main home menu item
@@ -54,7 +54,7 @@ class MenuBar
 	* get the menu with links to the gedcom portals
 	* @return Menu the menu item
 	*/
-	static function &getGedcomMenu() {
+	static function getGedcomMenu() {
 		global $ALLOW_CHANGE_GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 
 		if ($TEXT_DIRECTION=='rtl') $ff='_rtl'; else $ff='';
@@ -89,7 +89,7 @@ class MenuBar
 	* get the mygedview menu
 	* @return Menu the menu item
 	*/
-	static function &getMygedviewMenu() {
+	static function getMygedviewMenu() {
 		global $MEDIA_DIRECTORY, $MULTI_MEDIA;
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT, $USE_QUICK_UPDATE;
@@ -210,7 +210,7 @@ class MenuBar
 	* get the menu for the charts
 	* @return Menu the menu item
 	*/
-	static function &getChartsMenu($rootid='',$myid='') {
+	static function getChartsMenu($rootid='') {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
 		global $controller;
@@ -419,35 +419,45 @@ class MenuBar
 
 			case "relationship":
 				//-- relationship
-				$pids[] = $myid;
-				if ($rootid && empty($myid)) {
-					if (PGV_USER_ID) {
-						$pids[] = PGV_USER_GEDCOM_ID;
-						$pids[] = PGV_USER_ROOT_ID;
-					}
-				}
 				if ($rootid) {
-					foreach (getUserFavorites(PGV_USER_NAME) as $key=>$favorite) {
-						$pid = $favorite["gid"];
-						if (displayDetailsById($pid, $favorite["type"])) {
-							if ($favorite["type"]=="INDI" && $favorite["file"]==$GEDCOM) $pids[]=$pid;
+					// We are generating the "individual" menu
+					$pids=array(PGV_USER_GEDCOM_ID, PGV_USER_ROOT_ID);
+					if (PGV_USER_ID) {
+						foreach (getUserFavorites(PGV_USER_NAME) as $favorite) {
+							// An indi in this gedcom?
+							if ($favorite['type']=='INDI' && $favorite['file']==PGV_GEDCOM) {
+								$pids[]=$favorite['gid'];
+							}
 						}
 					}
-				}
-				$pids = array_unique($pids);
-				foreach ($pids as $key=>$pid) {
-					$person=Person::getInstance($pid);
-					$link = "relationship.php?ged=".$GEDCOM;
-					if ($rootid  && $person) {
-						$link .= "&pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1";
-						$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags($person->getFullName()));
-						$submenu = new Menu($label, encode_url($link));
-					} else {
-						if ($rootid) $link .= "&pid1=".$rootid;
-						$submenu = new Menu($pgv_lang["relationship_chart"], encode_url($link));
+					foreach (array_unique($pids) as $pid) {
+						if ($pid && $pid!=$rootid) {
+							$person=Person::getInstance($pid);
+							if ($person) {
+								$name=$person->getFullName();
+							} else {
+								$name=$pid;
+							}
+							$submenu = new Menu(
+								$pgv_lang["relationship_chart"].": ".PrintReady($name),
+								encode_url("relationship.php?pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1&ged=".PGV_GEDCOM)
+							);
+							if (!empty($PGV_IMAGES["relationship"]["small"])) {
+								$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"]);
+							}
+							$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_relationship");
+							$menu->addSubmenu($submenu);
+						}
 					}
-					if (!empty($PGV_IMAGES["relationship"]["small"]))
+				} else {
+					// We are generating the "toplinks" menu
+					$submenu = new Menu(
+						$pgv_lang["relationship_chart"],
+						encode_url("relationship.php?ged=".$GEDCOM)
+					);
+					if (!empty($PGV_IMAGES["relationship"]["small"])) {
 						$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"]);
+					}
 					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_relationship");
 					$menu->addSubmenu($submenu);
 				}
@@ -455,7 +465,7 @@ class MenuBar
 
 			case "statistics":
 				//-- statistics plot
-				$submenu = new Menu($pgv_lang["statistics"], "statistics.php");
+				$submenu = new Menu($pgv_lang["statistics"], encode_url("statistics.php?ged=".PGV_GEDCOM));
 				if (!empty($PGV_IMAGES["statistic"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["statistic"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_statistic");
@@ -464,7 +474,8 @@ class MenuBar
 
 			case "treenav":
 				//-- interactive tree
-				$link = "treenav.php?ged={$GEDCOM}&rootid={$rootid}";
+				$link = "treenav.php?ged={$GEDCOM}";
+				if ($rootid) $link .= "&rootid=".$rootid;
 				$submenu = new Menu($pgv_lang["interactive_tree"], encode_url($link));
 				if (!empty($PGV_IMAGES["gedcom"]["tree"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["tree"]);
@@ -494,7 +505,7 @@ class MenuBar
 	* get the menu for the lists
 	* @return Menu the menu item
 	*/
-	static function &getListsMenu($surname="") {
+	static function getListsMenu($surname="") {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_SOURCES, $MULTI_MEDIA, $SEARCH_SPIDER;
 		global $ALLOW_CHANGE_GEDCOM;
@@ -666,7 +677,7 @@ class MenuBar
 	* get the menu for the calendar
 	* @return Menu the menu item
 	*/
-	static function &getCalendarMenu() {
+	static function getCalendarMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER, $GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if ((!file_exists(PGV_ROOT.'calendar.php')) || (!empty($SEARCH_SPIDER))) {
@@ -704,7 +715,7 @@ class MenuBar
 	* get the reports menu
 	* @return Menu the menu item
 	*/
-	static function &getReportsMenu($pid="", $famid="") {
+	static function getReportsMenu($pid="", $famid="") {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $LANGUAGE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $SEARCH_SPIDER;
 		global $controller;
@@ -805,7 +816,7 @@ class MenuBar
 	* get the optional site-specific menu
 	* @return Menu the menu item
 	*/
-	static function &getOptionalMenu() {
+	static function getOptionalMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!file_exists(PGV_ROOT.'includes/extras/optional_menu.php') || !empty($SEARCH_SPIDER)) {
@@ -821,8 +832,8 @@ class MenuBar
 	* get the print_preview menu
 	* @return Menu the menu item
 	*/
-	static function &getPreviewMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SCRIPT_NAME, $QUERY_STRING, $pgv_lang, $SEARCH_SPIDER;
+	static function getPreviewMenu() {
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $QUERY_STRING, $pgv_lang, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
@@ -830,7 +841,7 @@ class MenuBar
 			return $menu;
 			}
 		//-- main print_preview menu item
-		$menu = new Menu($pgv_lang["print_preview"], $SCRIPT_NAME.normalize_query_string($QUERY_STRING."&amp;view=preview"), "down");
+		$menu = new Menu($pgv_lang["print_preview"], PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING."&amp;view=preview"), "down");
 		if (!empty($PGV_IMAGES["printer"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["printer"]["large"]);
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_printer");
@@ -841,7 +852,7 @@ class MenuBar
 	* get the search menu
 	* @return Menu the menu item
 	*/
-	static function &getSearchMenu() {
+	static function getSearchMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_MULTISITE_SEARCH, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
@@ -917,9 +928,9 @@ class MenuBar
 	* get the help menu
 	* @return Menu the menu item
 	*/
-	static function &getHelpMenu() {
+	static function getHelpMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
-		global $SHOW_CONTEXT_HELP, $SCRIPT_NAME, $QUERY_STRING, $helpindex, $action;
+		global $SHOW_CONTEXT_HELP, $QUERY_STRING, $helpindex, $action;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
@@ -931,7 +942,7 @@ class MenuBar
 		if (!empty($PGV_IMAGES["help"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["large"]);
 		if (empty($helpindex))
-			$menu->addOnclick("return helpPopup('help_".basename($SCRIPT_NAME)."&amp;action=".$action."');");
+			$menu->addOnclick("return helpPopup('help_".PGV_SCRIPT_NAME."&amp;action=".$action."');");
 		else
 			$menu->addOnclick("return helpPopup('".$helpindex."');");
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_help");
@@ -942,7 +953,7 @@ class MenuBar
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_help"]["small"]);
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_help");
 		if (empty($helpindex))
-			$submenu->addOnclick("return helpPopup('help_".basename($SCRIPT_NAME)."&amp;action=".$action."');");
+			$submenu->addOnclick("return helpPopup('help_".PGV_SCRIPT_NAME."&amp;action=".$action."');");
 		else
 			$submenu->addOnclick("return helpPopup('".$helpindex."');");
 		$menu->addSubmenu($submenu);
@@ -1001,9 +1012,9 @@ class MenuBar
 		//-- add show/hide context_help
 		$menu->addSeparator();
 		if ($_SESSION["show_context_help"])
-			$submenu = new Menu($pgv_lang["hide_context_help"], "$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;show_context_help=no"));
+			$submenu = new Menu($pgv_lang["hide_context_help"], PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING."&amp;show_context_help=no"));
 		else
-			$submenu = new Menu($pgv_lang["show_context_help"], "$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;show_context_help=yes"));
+			$submenu = new Menu($pgv_lang["show_context_help"], PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING."&amp;show_context_help=yes"));
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_help");
 		$menu->addSubmenu($submenu);
 		return $menu;
@@ -1013,7 +1024,7 @@ class MenuBar
 	* get the menu with links change to each theme
 	* @return Menu the menu item
 	*/
-	static function &getThemeMenu() {
+	static function getThemeMenu() {
 		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $pgv_lang;
 
 		$current=get_user_setting(PGV_USER_ID, 'theme');
@@ -1024,7 +1035,7 @@ class MenuBar
 
 		if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES && !$SEARCH_SPIDER) {
 			isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
-			$frompage = $_SERVER["SCRIPT_NAME"].decode_url($tqstring);
+			$frompage = PGV_SCRIPT_NAME.decode_url($tqstring);
 			if (isset($_REQUEST['mod'])) {
 				if (!strstr($frompage, "?")) {
 					if (!strstr($frompage, "%3F")) ;
@@ -1056,8 +1067,8 @@ class MenuBar
 	* get the menu with links to change language
 	* @return Menu the menu item
 	*/
-	static function &getLanguageMenu() {
-		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $pgv_lang, $pgv_lang_self, $language_settings, $flagsfile, $QUERY_STRING, $SCRIPT_NAME, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+	static function getLanguageMenu() {
+		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $pgv_lang, $pgv_lang_self, $language_settings, $flagsfile, $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
@@ -1074,7 +1085,7 @@ class MenuBar
 //			$menu->print_menu = null;
 			foreach ($language_settings as $lang=>$language) {
 				if ($language['pgv_lang_use'] && isset($language['pgv_lang_self']) && isset($language['pgv_language'])) {
-					$submenu=new Menu($language['pgv_lang_self'], $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang));
+					$submenu=new Menu($language['pgv_lang_self'], PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang));
 					if ($lang==$LANGUAGE) {
 						$submenu->addClass('activeflag', 'brightflag');
 					} else {
@@ -1097,11 +1108,11 @@ class MenuBar
 	* get the menu with links to the user/gedcom favorites
 	* @return Menu the menu item
 	*/
-	static function &getFavouritesMenu() {		// Don't break custom themes using the old name
+	static function getFavouritesMenu() {		// Don't break custom themes using the old name
 		return self::getFavoritesMenu();
 	}
-	static function &getFavoritesMenu() {
-		global $REQUIRE_AUTHENTICATION, $pgv_lang, $GEDCOM, $QUERY_STRING, $SCRIPT_NAME, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+	static function getFavoritesMenu() {
+		global $REQUIRE_AUTHENTICATION, $pgv_lang, $GEDCOM, $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 		global $SEARCH_SPIDER;
 		global $controller; // Pages with a controller can be added to the favorites
 
@@ -1148,7 +1159,7 @@ class MenuBar
 					default:
 						break 2;
 					}
-					$submenu=new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav&amp;gid='.$gid));
+					$submenu=new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav&amp;gid='.$gid));
 					$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
 					$menu->addSubMenu($submenu);
 					break;

@@ -29,9 +29,9 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'client.php');
 require './config.php';
-
-require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 header("Content-Type: text/plain; charset=$CHARACTER_SET");
 

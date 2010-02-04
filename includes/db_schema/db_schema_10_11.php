@@ -52,7 +52,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_SCHEMA_10_11', '');
 
-require_once 'includes/classes/class_module.php';
+require_once PGV_ROOT.'includes/classes/class_module.php';
 
 //-- create tables
 if (!self::table_exists("{$TBLPREFIX}module")) {
@@ -98,5 +98,3 @@ foreach($gedids as $ged_id) {
 
 // Update the version to indicate sucess
 set_site_setting($schema_name, $next_version);
-//-- set temp setting to prevent upgrade code
-set_site_setting('PGV_SCHEMA_VERSION_TEMP', 1);

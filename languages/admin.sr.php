@@ -3,7 +3,7 @@
  * Serbian Language file for PhpGedView.
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2009 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,8 +54,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["checking_errors"]		= "Checking for errors...";
 ##$pgv_lang["checking_php_version"]		= "Checking required PHP version:";
 ##$pgv_lang["failed"]		= "Failed";
-##$pgv_lang["pgv_requires_version"]		= "PhpGedView requires PHP version ".PGV_REQUIRED_PHP_VERSION." or higher.";
-##$pgv_lang["using_php_version"]		= "You are using PHP version ".PHP_VERSION;
+##$pgv_lang["pgv_requires_version"]		= "PhpGedView requires PHP version #PGV_REQUIRED_PHP_VERSION# or higher.";
+##$pgv_lang["using_php_version"]		= "You are using PHP version #PGV_ACTUAL_PHP_VERSION#";
 ##$pgv_lang["checking_db_support"]		= "Checking for minimum database support:";
 ##$pgv_lang["no_db_extensions"]		= "You do not have any of the supported database extensions.";
 ##$pgv_lang["db_ext_support"]		= "You have #DBEXT# support";

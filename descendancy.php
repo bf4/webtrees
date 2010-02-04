@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'descendancy.php');
 require './config.php';
-
 require PGV_ROOT.'includes/controllers/descendancy_ctrl.php';
 require PGV_ROOT.'includes/functions/functions_print_lists.php';
 
@@ -38,8 +38,8 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
 if (PGV_USE_LIGHTBOX) {
-	include PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
-	include PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
+	require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
+	require PGV_ROOT.'modules/lightbox/functions/lb_call_js.php';
 }
 // ==========================================================================================
 
@@ -53,7 +53,7 @@ if ($view!="preview") {
 	$show_famlink = true;
 	echo '</td><td width="50px">&nbsp;</td><td><form method="get" name="people" action="?">';
 	echo '<input type="hidden" name="show_full" value="', $controller->show_full, '" />';
-	echo '<table class="list_table', $TEXT_DIRECTION, '">';
+	echo '<table class="list_table ', $TEXT_DIRECTION, '">';
 	echo '<tr><td class="descriptionbox">';
 	print_help_link("desc_rootid_help", "qm", "root_person");
 	echo $pgv_lang["root_person"], "&nbsp;</td>";

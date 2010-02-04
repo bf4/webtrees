@@ -24,6 +24,7 @@
 * @subpackage Admin
 */
 
+define('PGV_SCRIPT_NAME', 'config_download.php');
 require './config.php';
 
 if (PGV_ADMIN_USER_EXISTS && !PGV_USER_IS_ADMIN && $CONFIGURED) {

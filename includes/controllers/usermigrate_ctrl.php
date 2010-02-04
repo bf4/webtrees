@@ -5,7 +5,7 @@
  * authenticate.php and xxxxxx.dat files (MySQL mode).
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010 PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ loadLangFile("pgv_confighelp");
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
-if (strstr($_SERVER['SCRIPT_NAME'], "usermigrate_cli.php")) {
+if (PGV_SCRIPT_NAME=='usermigrate_cli.php') {
 	if (PGV_USER_IS_ADMIN || !isset($argc)) {
 		header("Location: usermigrate.php");
 		exit;
@@ -168,7 +168,7 @@ class UserMigrateControllerRoot extends BaseController {
 
 			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 				//-- load the gedcom configuration settings
-				require get_config_file($ged_name);
+				require get_config_file($ged_id);
 
 				if (isset($_POST["um_gedcoms"])) {
 					//-- backup the original gedcom file
@@ -209,7 +209,7 @@ class UserMigrateControllerRoot extends BaseController {
 			}
 
 			//-- restore the old configuration file
-			require get_config_file(PGV_GEDCOM);
+			require get_config_file(PGV_GED_ID);
 			$this->flist[] = $INDEX_DIRECTORY."pgv_changes.php";
 		}
 
@@ -218,27 +218,22 @@ class UserMigrateControllerRoot extends BaseController {
 
 			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 				// Non-default config files
-				$conf=get_config_file($ged_name);
+				$conf=get_config_file($ged_id);
 				if ($conf!='config_gedcom.php') {
 					$this->flist[]=$conf;
 				}
 
 				// Non-default privacy file
-				$privacy=get_privacy_file($ged_name);
+				$privacy=get_privacy_file($ged_id);
 				if ($privacy!='privacy.php') {
 					$this->flist[]=$privacy;
 				}
 			}
 		}
 
-		// Backup logfiles and counters
+		// Backup logfiles
 		if (isset($_POST["um_logs"])) {
 			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-
-				// Gedcom counters
-				if (file_exists($INDEX_DIRECTORY.$ged_name."pgv_counters.txt")) {
-					$this->flist[] = $INDEX_DIRECTORY.$ged_name."pgv_counters.txt";
-				}
 
 				// Gedcom searchlogs and changelogs
 				$dir_var = opendir ($INDEX_DIRECTORY);

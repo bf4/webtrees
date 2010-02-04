@@ -103,7 +103,7 @@ class GedcomRecord {
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
 	// been fetched previously).
-	static function &getInstance($data, $simple=true, $latest=false) {
+	static function &getInstance($data, $latest=false) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$is_pending=false; // Did this record come from a pending edit
@@ -124,33 +124,37 @@ class GedcomRecord {
 		// Look for the record in the database
 		if (!is_array($data)) {
 			if ($latest && PGV_USER_CAN_EDIT) {
-				$data=find_updated_record($pid, $ged_id);
-				if (!$data) $data=fetch_gedcom_record($pid, $ged_id);
+				$data = find_updated_record($pid, $ged_id);
 			}
 			if (!$latest || !$data) {
-				// TODO: The lack of late static binding in PHP5.3 means that
-				// get_class() doesn't return the class we are expecting, and
-				// we always fall through to the default case.
-				switch (get_class()) {
-				case 'Person':
-					$data=fetch_person_record($pid, $ged_id);
-					break;
-				case 'Family':
-					$data=fetch_family_record($pid, $ged_id);
-					break;
-				case 'Source':
-					$data=fetch_source_record($pid, $ged_id);
-					break;
-				case 'Media':
-					$data=fetch_media_record($pid, $ged_id);
-					break;
-				case 'Repository':
-				case 'Note':
-					$data=fetch_other_record($pid, $ged_id);
-					break;
-				default:
+				if (version_compare(PHP_VERSION, '5.3', '>=')) {
+					// If we know what sort of object we are, we can query the table directly.
+					switch (get_called_class()) {
+					case 'Person':
+						$data=fetch_person_record($pid, $ged_id);
+						break;
+					case 'Family':
+						$data=fetch_family_record($pid, $ged_id);
+						break;
+					case 'Source':
+						$data=fetch_source_record($pid, $ged_id);
+						break;
+					case 'Media':
+						$data=fetch_media_record($pid, $ged_id);
+						break;
+					case 'Repository':
+					case 'Note':
+						$data=fetch_other_record($pid, $ged_id);
+						break;
+					default:
+						// Type unknown - try each of the five tables in turn....
+						$data=fetch_gedcom_record($pid, $ged_id);
+						break;
+					}
+				} else {
+					// Late-static-binding is unavailable in PHP 5.2, so we do not what what
+					// sort of object we are - try each of the five tables in turn....
 					$data=fetch_gedcom_record($pid, $ged_id);
-					break;
 				}
 			}
 
@@ -177,44 +181,38 @@ class GedcomRecord {
 		}
 
 		// Create the object
-		$class_name=get_class();
-		if ($class_name=='GedcomRecord') {
-			// TODO: The lack of late static binding in PHP5.3 means that
-			// get_class() doesn't return the class we are expecting, and
-			// we always fall through to the default case.
-			if (is_array($data)) {
-				$type=$data['type'];
-			} elseif (preg_match('/^0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $data, $match)) {
-				$type=$match[1];
-			} else {
-				$type='';
-			}
-			switch($type) {
-			case 'INDI':
-				$class_name='Person';
-				break;
-			case 'FAM':
-				$class_name='Family';
-				break;
-			case 'SOUR':
-				$class_name='Source';
-				break;
-			case 'OBJE':
-				$class_name='Media';
-				break;
-			case 'REPO':
-				$class_name='Repository';
-				break;
-			case 'NOTE':
-				$class_name='Note';
-				break;
-			default:
-				$class_name='GedcomRecord';
-				break;
-			}
+		if (is_array($data)) {
+			$type=$data['type'];
+		} elseif (preg_match('/^0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $data, $match)) {
+			$type=$match[1];
+		} else {
+			$type='';
+		}
+		switch($type) {
+		case 'INDI':
+			$class_name='Person';
+			break;
+		case 'FAM':
+			$class_name='Family';
+			break;
+		case 'SOUR':
+			$class_name='Source';
+			break;
+		case 'OBJE':
+			$class_name='Media';
+			break;
+		case 'REPO':
+			$class_name='Repository';
+			break;
+		case 'NOTE':
+			$class_name='Note';
+			break;
+		default:
+			$class_name='GedcomRecord';
+			break;
 		}
 
-		$object=new $class_name($data, $simple);
+		$object=new $class_name($data);
 
 		// This is an object from the database, so indicate which gedcom it comes from.
 		$object->ged_id=$ged_id;

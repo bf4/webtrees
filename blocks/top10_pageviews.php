@@ -43,7 +43,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 	);
 
 function top10_pageviews($block=true, $config="", $side, $index) {
-	global $pgv_lang, $INDEX_DIRECTORY, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_SOURCES, $TEXT_DIRECTION;
+	global $TBLPREFIX, $pgv_lang, $INDEX_DIRECTORY, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_COUNTER, $SHOW_SOURCES, $TEXT_DIRECTION;
 
 	if (empty($config)) {
 		$config = $PGV_BLOCKS["top10_pageviews"]["config"];
@@ -54,8 +54,6 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 	} else {
 		$CountSide = "left";
 	}
-
-	$PGV_COUNTER_FILENAME = $INDEX_DIRECTORY.PGV_GEDCOM."pgv_counters.txt";
 
 	$id = "top10hits";
 	$title = print_help_link("index_top10_pageviews_help", "qm", "", false, true);
@@ -74,33 +72,28 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 	$content = "";
 
 	// if the counter file does not exist then don't do anything
-	if (!file_exists($PGV_COUNTER_FILENAME)) {
+	if (!$SHOW_COUNTER) {
 		if (PGV_USER_IS_ADMIN) {
 			$content .= "<span class=\"error\">".$pgv_lang["top10_pageviews_msg"]."</span>";
 		}
 	} else {
 		// load the lines from the file
-		$lines = file($PGV_COUNTER_FILENAME);
-		$ids = array();
-		// loop through the lines and create an array of ids
-		foreach ($lines as $indexval => $line) {
-			$ct = preg_match("/@(.+)@\s*(\d+)/", $line, $match);
-			if ($ct>0) {
-				$id = trim($match[1]);
-				$count = trim($match[2]);
-				if (!empty($id)) $ids[$id] = $count;
-			}
-		}
+		$top10=PGV_DB::prepareLimit(
+			"SELECT page_parameter, page_count".
+			" FROM {$TBLPREFIX}hit_counter".
+			" WHERE gedcom_id=? AND page_name IN ('individual.php','family.php','source.php','repo.php','note.php','mediaviewer.php')".
+			" ORDER BY page_count DESC",
+			$config['num']
+		)->execute(array(PGV_GED_ID))->FetchAssoc();
 
-		if (count($ids)>0) {
-			arsort($ids);
+
+		if ($top10) {
 			if ($block) {
 				$content .= "<table width=\"90%\">";
 			} else {
 				$content .= "<table>";
 			}
-			$i=0;
-			foreach($ids as $id=>$count) {
+			foreach ($top10 as $id=>$count) {
 				$record=GedcomRecord::getInstance($id);
 				if ($record && $record->canDisplayDetails()) {
 					$content .= '<tr valign="top">';
@@ -112,9 +105,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 						$content .= '<td dir="ltr" align="right">['.$count.']</td>';
 					}
 					$content .= '</tr>';
-					$i++;
 				}
-				if ($i>=$config['num']) break;
 			}
 			$content .= "</table>";
 		} else {

@@ -589,6 +589,11 @@ class PGV_DB {
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'pgsql':
+			
+			return (bool)
+				PGV_DB::prepare("SELECT 1 FROM information_schema.tables WHERE table_catalog=? AND table_name=? AND table_type='BASE TABLE'")
+				->execute(array($DBNAME, $table))
+				->fetchOne();
 		case 'mssql':
 			// information_schema.tables is an ANSI standard.
 			return (bool)

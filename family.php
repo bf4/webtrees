@@ -5,7 +5,7 @@
  * You must supply a $famid value with the identifier for the family.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'family.php');
 require './config.php';
-
 require_once 'includes/controllers/family_ctrl.php';
 
 $controller = new FamilyController();
@@ -57,50 +57,27 @@ $PEDIGREE_FULL_DETAILS = "1";		// Override GEDCOM configuration
 $show_full = "1";
 
 ?>
-<?php if ($controller->family->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
+<?php if ($controller->family->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 <script language="JavaScript" type="text/javascript">
 <!--
 	function show_gedcom_record(shownew) {
 		fromfile="";
 		if (shownew=="yes") fromfile='&fromfile=1';
-		var recwin = window.open("gedrecord.php?pid=<?php print $controller->getFamilyID(); ?>"+fromfile, "_blank", "top=50, left=50, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");
+		var recwin = window.open("gedrecord.php?pid=<?php echo $controller->getFamilyID(); ?>"+fromfile, "_blank", "top=50, left=50, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");
 	}
 	function showchanges() {
-		window.location = 'family.php?famid=<?php print $controller->famid; ?>&show_changes=yes';
+		window.location = 'family.php?famid=<?php echo $controller->famid; ?>&show_changes=yes';
 	}
 //-->
 </script>
-<table>
+<table align="center" width="95%">
 	<tr>
 		<td>
 		<?php
-		print print_family_parents($controller->getFamilyID());
-		if (!$controller->isPrintPreview() && $controller->display && PGV_USER_CAN_EDIT) {
-		$husb = $controller->getHusband();
-		if (empty($husb)) { ?>
-			<?php print_help_link("edit_add_parent_help", "qm"); ?>
-			<a href="javascript <?php print $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('', 'HUSB', '<?php print $controller->famid; ?>');"><?php print $pgv_lang["add_father"]; ?></a><br />
-		<?php }
-		$wife = $controller->getWife();
-		if (empty($wife))  { ?>
-			<?php print_help_link("edit_add_parent_help", "qm"); ?>
-			<a href="javascript <?php print $pgv_lang["add_mother"]; ?>" onclick="return addnewparentfamily('', 'WIFE', '<?php print $controller->famid; ?>');"><?php print $pgv_lang["add_mother"]; ?></a><br />
-		<?php }
-		}
-		?></td>
-		<td valign="top" class="noprint">
-			<div class="accesskeys">
-			<?php
-				if (empty($SEARCH_SPIDER)) {
-				?>
-				<a class="accesskeys" href="<?php print 'timeline.php?pids[0]=' . $controller->parents['HUSB'].'&amp;pids[1]='.$controller->parents['WIFE'];?>" title="<?php print $pgv_lang['parents_timeline'] ?>" tabindex="-1" accesskey="<?php print $pgv_lang['accesskey_family_parents_timeline']; ?>"><?php print $pgv_lang['parents_timeline'] ?></a>
-				<a class="accesskeys" href="<?php print 'timeline.php?' . $controller->getChildrenUrlTimeline();?>" title="<?php print $pgv_lang["children_timeline"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang['accesskey_family_children_timeline']; ?>"><?php print $pgv_lang['children_timeline'] ?></a>
-				<a class="accesskeys" href="<?php print 'timeline.php?pids[0]=' .$controller->getHusband().'&amp;pids[1]='.$controller->getWife().'&amp;'.$controller->getChildrenUrlTimeline(2);?>" title="<?php print $pgv_lang['family_timeline'] ?>" tabindex="-1" accesskey="<?php print $pgv_lang['accesskey_family_timeline']; ?>"><?php print $pgv_lang['family_timeline'] ?></a>
-				<?php if ($SHOW_GEDCOM_RECORD) { ?>
-				<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php print $pgv_lang["view_gedcom"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_family_gedcom"]; ?>"><?php print $pgv_lang["view_gedcom"] ?></a>
-				<?php } ?>
-			<?php } ?>
-			</div>
+		print_family_header($controller->famid);
+		?>
+		</td>
+		<td>
 			<?php
 			if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview()) : 
 			if ($controller->accept_success)
@@ -112,13 +89,64 @@ $show_full = "1";
 		</td>
 	</tr>
 </table>
-<table class="width90">
-	<tr>
-		<td valign="top" style="width: <?php print $pbwidth?>px;">
+<table align="center" width="95%">
+	<tr valign="top">
+		<td align="left" valign="top" style="width: <?php echo $pbwidth+30 ?>px;"><!--//List of children//-->
 			<?php print_family_children($controller->getFamilyID());?>
 		</td>
-		<td valign="top">
-			<?php print_family_facts($controller->family);?>
+		<td> <!--//parents pedigree chart and Family Details//-->
+			<table align="left" width="100%">
+				<tr>
+					<td class="subheaders" valign="top"><?php echo $pgv_lang["parents"];?></td>
+					<td class="subheaders" valign="top"><?php echo $pgv_lang["gparents"];?></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<table><tr><td> <!--//parents pedigree chart //-->
+						<?php
+						echo print_family_parents($controller->getFamilyID());
+						if (!$controller->isPrintPreview() && $controller->display && PGV_USER_CAN_EDIT) {
+							$husb = $controller->getHusband();
+							if (empty($husb)) { ?>
+								<?php print_help_link("edit_add_parent_help", "qm"); ?>
+			<a href="javascript <?php echo $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('', 'HUSB', '<?php echo $controller->famid; ?>');"><?php echo $pgv_lang["add_father"]; ?></a><br />
+						<?php }
+							$wife = $controller->getWife();
+							if (empty($wife))  { ?>
+								<?php print_help_link("edit_add_parent_help", "qm"); ?>
+			<a href="javascript <?php echo $pgv_lang["add_mother"]; ?>" onclick="return addnewparentfamily('', 'WIFE', '<?php echo $controller->famid; ?>');"><?php echo $pgv_lang["add_mother"]; ?></a><br />
+						<?php }
+						}
+						?>
+						</td></tr></table>
+					</td>
+				</tr>
+				<tr>
+					<td align="left" colspan="2">
+						<br /><hr />
+						<?php print_family_facts($controller->family);?>
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td class="noprint"> <!--//blank cell for access keys//-->
+			<div class="accesskeys">
+			<?php
+				if (empty($SEARCH_SPIDER)) {
+				?>
+				<a class="accesskeys" href="<?php echo 'timeline.php?pids[0]=' . $controller->parents['HUSB'].'&amp;pids[1]='.$controller->parents['WIFE'];?>" title="<?php echo $pgv_lang['parents_timeline'] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang['accesskey_family_parents_timeline']; ?>"><?php echo $pgv_lang['parents_timeline'] ?></a>
+				<a class="accesskeys" href="<?php echo 'timeline.php?' . $controller->getChildrenUrlTimeline();?>" title="<?php echo $pgv_lang["children_timeline"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang['accesskey_family_children_timeline']; ?>"><?php echo $pgv_lang['children_timeline'] ?></a>
+				<a class="accesskeys" href="<?php echo 'timeline.php?pids[0]=' .$controller->getHusband().'&amp;pids[1]='.$controller->getWife().'&amp;'.$controller->getChildrenUrlTimeline(2);?>" title="<?php echo $pgv_lang['family_timeline'] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang['accesskey_family_timeline']; ?>"><?php echo $pgv_lang['family_timeline'] ?></a>
+					<?php if ($SHOW_GEDCOM_RECORD) { ?>
+				<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php echo $pgv_lang["view_gedcom"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_family_gedcom"]; ?>"><?php echo $pgv_lang["view_gedcom"] ?></a>
+					<?php } ?>
+			<?php } ?>
+			</div>
+			<?php
+				if ($controller->accept_success) {
+					echo "<b>".$pgv_lang["accept_successful"]."</b><br />";
+				}
+			?>
 		</td>
 	</tr>
 </table>
@@ -128,6 +156,6 @@ if(empty($SEARCH_SPIDER))
 	print_footer();
 else {
 	if($SHOW_SPIDER_TAGLINE)
-		print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
-	print "\n</div>\n\t</body>\n</html>";
+		echo $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+	echo "\n</div>\n\t</body>\n</html>";
 }

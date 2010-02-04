@@ -31,37 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_class_MODULE_PHP', '');
 
-require_once('includes/classes/class_tab.php');
-require_once('includes/classes/class_sidebar.php');
-
-/**
- * Temporary code to update database for people who already have an older pgv_module table
- * This should not be moved to the trunk
- */
-global $CONFIGURED, $TBLPREFIX;
-if ($CONFIGURED && PGV_DB::table_exists($TBLPREFIX.'site_setting')) {
-	$schema_version = get_site_setting('PGV_SCHEMA_VERSION', 0);
-	if ($schema_version==11) {
-		$schema_version_temp = get_site_setting('PGV_SCHEMA_VERSION_TEMP', 0);
-		if ($schema_version_temp==0) {
-			try {
-				if (PGV_DB::table_exists("{$TBLPREFIX}module")) {
-					PGV_DB::exec("alter table {$TBLPREFIX}module add mod_sidebarorder ".PGV_DB::$INT1_TYPE);
-				}
-				//-- get the gedcom ids from the database
-				$gedids= PGV_DB::prepare("SELECT DISTINCT i_file FROM ${TBLPREFIX}individuals i_file")
-					->fetchOneColumn();
-				//-- set the default sidebars
-				foreach($gedids as $ged_id) {
-					PGVModule::setDefaultSidebars($ged_id);
-				}	
-			} catch(PDOException $e) {
-				print $e->getMessage();
-			}	
-			set_site_setting('PGV_SCHEMA_VERSION_TEMP', 1);
-		}
-	}
-}
+require_once(PGV_ROOT.'includes/classes/class_tab.php');
+require_once(PGV_ROOT.'includes/classes/class_sidebar.php');
 
 /**
  * abstract class that is to be overidden by implementing modules

@@ -1,8 +1,8 @@
 =======================================================
     PhpGedView
 
-    Version 4.2
-    Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
+    Version 4.3
+    Copyright (C) 2002 to 2010 PGV Development Team. All rights reserved.
 
     This and other information can be found online at
     http://www.PhpGedView.net
@@ -38,7 +38,7 @@ CONTENTS
 LICENSE
 
 PhpGedView: Genealogy Viewer
-Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ you with all of the PHP functionality you should need.
 [VERY IMPORTANT] 
     You also need to install/enable PDO/mysql.
     This is a standard part of PHP, and allows PHP to connect to databases. 
-    PDO/mysql is a new requirement, effective from this version onwards. 
+    PDO/mysql is a new requirement, effective from 4.2.0 onwards. 
     It improves performance, fixes the sqlite compatibility issues, 
     and will allow a wider range of databases to be used.
 
@@ -343,10 +343,6 @@ If you need help or support visit  http://www.PhpGedView.net/support.php
 UPGRADING
 
 See http://wiki.phpgedview.net/en/index.php?title=Upgrading
-
-**Note to SQLite users: Unfortunately SQLite does not support the ALTER TABLE
-  SQL command.  This means that we must first drop the tables and recrate
-  them.  It is highly reccomended that you run the backup before upgrading.
 
 -------------------------------------------------------
 UPDATING GEDCOMS

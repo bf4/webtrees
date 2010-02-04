@@ -26,6 +26,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'mediafirewall.php');
 require './config.php';
 require_once PGV_ROOT.'includes/controllers/media_ctrl.php';
 

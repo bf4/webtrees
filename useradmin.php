@@ -24,15 +24,15 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'useradmin.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions_edit.php';
 
 loadLangFile('pgv_confighelp');
 
 // Only admin users can access this page
 if (!PGV_USER_IS_ADMIN) {
-	$loginURL = "$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING);
+	$loginURL = "$LOGIN_URL?url=".urlencode(PGV_SCRIPT_NAME."?".$QUERY_STRING);
 	header("Location: $loginURL");
 	exit;
 }
@@ -522,9 +522,6 @@ if ($action == "listusers") {
 		case "sortfname":
 			$users = get_all_users("asc", "firstname", "lastname");
 			break;
-		case "sortlname":
-			$users = get_all_users("asc", "lastname", "firstname");
-			break;
 		case "sortllgn":
 			$users = get_all_users("desc", "sessiontime");
 			break;
@@ -538,8 +535,11 @@ if ($action == "listusers") {
 			$users = get_all_users("asc", "verified_by_admin");
 			break;
 		case "sortusername":
-		default:
 			$users = get_all_users("asc", "username");
+			break;
+		case "sortlname":
+		default:
+			$users = get_all_users("asc", "lastname", "firstname");
 			break;
 	}
 
@@ -585,7 +585,7 @@ if ($action == "listusers") {
 	</td></tr>
 	<tr>
 	<?php if ($view!="preview") { ?>
-	<td colspan="6" class="topbottombar rtl"><a href="useradmin.php?action=createform"><?php echo $pgv_lang["add_user"]; ?></a></td>
+	<td colspan="5" class="topbottombar rtl"><a href="useradmin.php?action=createform"><?php echo $pgv_lang["add_user"]; ?></a></td>
 	<?php } ?>
 	<td colspan="<?php if ($view == "preview") echo "8"; else echo "5"; ?>" class="topbottombar rtl"><a href="useradmin.php"><?php if ($view != "preview") echo $pgv_lang["back_useradmin"]; else echo "&nbsp;"; ?></a></td>
 	</tr>

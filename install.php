@@ -37,6 +37,7 @@
  * 8. Get Started
  */
 
+define('PGV_SCRIPT_NAME', 'install.php');
 //-- load up the configuration or the default configuration
 if (file_exists('./config.php')) {
 	require_once './config.php';
@@ -146,7 +147,7 @@ $step = 1;
 if (isset($_REQUEST['step'])) $step = $_REQUEST['step'];
 else {
 	if (PGV_DB::isConnected()) $step = 3;
-	if (adminUserExists()) $step = 8;
+	if (PGV_ADMIN_USER_EXISTS) $step = 8;
 }
 if (isset($_REQUEST['prev'])) $step--;
 $errors = array();
@@ -263,7 +264,7 @@ switch($step) {
 			$config_array['CONFIGURED'] = true;
 			
 			// Clear the SERVER_URL when it's identical to the calculated value
-			$GUESS_URL = "http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/";
+			$GUESS_URL = PGV_SERVER_NAME.PGV_SCRIPT_PATH;
 			if (!isset($config_array['SERVER_URL'])) $config_array['SERVER_URL'] = '';
 			$config_array['SERVER_URL'] = rtrim(trim($config_array['SERVER_URL']),'/').'/';
 			if ($config_array['SERVER_URL'] == $GUESS_URL || $config_array['SERVER_URL'] == '/') $config_array['SERVER_URL'] = '';
@@ -319,6 +320,9 @@ switch($step) {
 		}
 		break;
 	case 7:
+		if (adminUserExists()) {
+			break;
+		}
 		$username =safe_POST('username', PGV_REGEX_USERNAME);
 		$pass1    =safe_POST('pass1', PGV_REGEX_PASSWORD);
 		$pass2    =safe_POST('pass2', PGV_REGEX_PASSWORD);
@@ -506,11 +510,11 @@ function checkEnvironment() {
 	print "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
 	$phpcheck = (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0);
 	if ($phpcheck) {
-		print "<tr><td valign=\"top\">";
-		print $pgv_lang["checking_php_version"]."<br />";
-		print "<span class=\"error\">".$pgv_lang["failed"]."</span><br />".$pgv_lang["pgv_requires_version"]."<br />";
-		print $pgv_lang["using_php_version"];
-		print "</td></tr>";
+		echo '<tr><td valign="top">';
+		echo $pgv_lang["checking_php_version"], '<br />';
+		echo '<span class="error">', $pgv_lang["failed"], '</span><br />';
+		echo print_text("pgv_requires_version", 0, 1), '<br />';
+		echo print_text("using_php_version", 0, 1), '</td></tr>';
 	}
 
 	// Check we have one or more PDO drivers available
@@ -711,7 +715,7 @@ function printConfigForm(){
 	global $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $USE_REGISTRATION_MODULE, $REQUIRE_ADMIN_AUTH_REGISTRATION;
 	global $ALLOW_CHANGE_GEDCOM, $PGV_SIMPLE_MAIL, $ALLOW_USER_THEMES, $LOGFILE_CREATE, $SERVER_URL;
 	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL, $PGV_SMTP_FROM_NAME;
-	global $LOGIN_URL, $SCRIPT_NAME, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
+	global $LOGIN_URL, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
 	global $pgv_lang;
 
@@ -779,7 +783,7 @@ function printConfigForm(){
 				<td class="optionbox wrap"><input type="text" name="NEW_SERVER_URL" value="<?php print $SERVER_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SERVER_URL_help');" size="50" />
 				<br /><?php
 					global $GUESS_URL;
-					$GUESS_URL = "http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/";
+					$GUESS_URL = PGV_SERVER_NAME.PGV_SCRIPT_PATH;
 					print_text("server_url_note");
 					?>
 				</td>

@@ -24,6 +24,7 @@
  * @subpackage EditLang
  */
 
+define('PGV_SCRIPT_NAME', 'editlang_edit.php');
 require './config.php';
 
 loadLangFile("pgv_confighelp");
@@ -97,7 +98,7 @@ if ($action != "save") {
 	echo '<tr><td class="facts_value" style="text-align:center; ">', '(', substr($lang_filename, strpos($lang_filename, "/") + 1), ')', '</td></tr>';
 	echo '</table>';
 
-	echo '<form name="Form1" method="post" action="', $_SERVER['PHP_SELF'], '">';
+	echo '<form name="Form1" method="post" action="', PGV_SCRIPT_NAME, '">';
 	echo '<input type="hidden" name="', session_name(), '" value="', session_id(), '"/>';
 	echo '<input type="hidden" name="action" value="save"/>';
 	echo '<input type="hidden" name="anchor" value="', $anchor, '"/>';
@@ -292,7 +293,7 @@ if ($action == "save") {
 	echo '<tr><td class="facts_value" style="text-align:center; ">', '(', substr($lang_filename, strpos($lang_filename, "/") + 1), ')', '</td></tr>';
 	echo '</table>';
 
-	echo '<form name="Form2" method="post" action="', $_SERVER['PHP_SELF'], '">';
+	echo '<form name="Form2" method="post" action="', PGV_SCRIPT_NAME, '">';
 	echo '<table class="facts_table">';
 	echo '<tr>';
 	if ($Write_Ok) {

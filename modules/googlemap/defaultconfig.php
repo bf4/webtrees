@@ -49,7 +49,7 @@ global $GM_MARKER_COLOR,$GM_MARKER_SIZE,$GM_PREFIX,$GM_POSTFIX,$GM_PRE_POST_MODE
 
 $GOOGLEMAP_ENABLED     = get_site_setting('GM_ENABLED',     '0'); // Enable or disable Googlemap
 
-$GOOGLEMAP_API_KEY     = get_site_setting('GM_API_KEY',     'ABQIAAAAf5wooX9tR-_75IApQk3ELRRi_j0U6kJrkFvY4-OX2XYmEAa76BS4jUDCnrN8f4ShbgJ5JP2PChz8rA');  // Fill in your key here. Request key from http://www.google.com/apis/maps/
+$GOOGLEMAP_API_KEY     = get_site_setting('GM_API_KEY',     'Fill in your key here. Request key from http://www.google.com/apis/maps/');  // Fill in your key here. Request key from http://www.google.com/apis/maps/
 
 $GOOGLEMAP_MAP_TYPE    = get_site_setting('GM_MAP_TYPE',    'G_NORMAL_MAP');  // possible values: G_PHYSICAL_MAP, G_NORMAL_MAP, G_SATELLITE_MAP or G_HYBRID_MAP.
 

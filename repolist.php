@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'repolist.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 print_header($pgv_lang['repo_list']);

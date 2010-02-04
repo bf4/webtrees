@@ -3,7 +3,7 @@
  * Italian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -103,8 +103,8 @@ $pgv_lang["failed"]		= "Fallito";
 $pgv_lang["config_not_saved"] = "*Le impostazioni non saranno salvate<br />fino al passo 6";
 $pgv_lang["db_tables_created"] = "Tabelle del Database create con successo";
 $pgv_lang["checking_errors"]		= "Ricerca di errori...";
-$pgv_lang["pgv_requires_version"]		= "PhpGedView richiede PHP versione ".PGV_REQUIRED_PHP_VERSION." o successiva.";
-$pgv_lang["using_php_version"]		= "Stai usanso PHP versione";
+$pgv_lang["pgv_requires_version"]		= "PhpGedView richiede PHP versione #PGV_REQUIRED_PHP_VERSION# o successiva.";
+$pgv_lang["using_php_version"]		= "Stai usanso PHP versione #PGV_ACTUAL_PHP_VERSION#";
 $pgv_lang["no_db_extensions"]		= "Non hai nessuna delle estensioni supportate di database.";
 $pgv_lang["db_ext_support"]		= "Hai il supporto a #DBTEXT#";
 $pgv_lang["config.php_missing"]		= "Il file config.php non è stato trovato.";

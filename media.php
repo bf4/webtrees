@@ -42,8 +42,8 @@
  *  $dirs = list of subdirectories within current directory.  Built with medialist.
  */
 
+define('PGV_SCRIPT_NAME', 'media.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 require_once PGV_ROOT.'includes/functions/functions_edit.php';
@@ -292,7 +292,7 @@ function checkpath(folder) {
 }
 
 function showchanges() {
-	window.location = '<?php print $SCRIPT_NAME."?show_changes=yes&directory=".$directory."&level=".$level."&filter=".$filter."&subclick=".$subclick; ?>';
+	window.location = '<?php echo PGV_SCRIPT_NAME."?show_changes=yes&directory=".$directory."&level=".$level."&filter=".$filter."&subclick=".$subclick; ?>';
 }
 
 //-->

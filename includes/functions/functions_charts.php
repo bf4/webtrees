@@ -3,7 +3,7 @@
  * Functions used for charts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -118,8 +118,9 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		$tempID = $wife->getXref();
 		if (!empty($tempID)) print "<a name=\"{$tempID}\"></a>\r\n";
 	}
-	print_family_header($famid);
-
+	if ($sosa != 0) {
+		print_family_header($famid);
+	}
 	// -- get the new record and parents if in editing show changes mode
 	if (PGV_USER_CAN_EDIT && isset($pgv_changes[$famid . "_" . $GEDCOM])) {
 		$newrec = find_updated_record($famid, $ged_id);
@@ -281,9 +282,32 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 
 	$family=Family::getInstance($famid);
 	$children=$family->getChildrenIds();
+	$numchil=$family->getNumberOfChildren();
 	print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"2\"><tr>";
 	if ($sosa>0) print "<td></td>";
-	print "<td><span class=\"subheaders\">".$pgv_lang["children"]."</span></td>";
+	print "<td><span class=\"subheaders\">".$pgv_lang["children"]."</span>";
+	echo '<span class="font11">&nbsp;&nbsp;', getLRM(), '(';
+	if ($numchil==0) {
+		echo $pgv_lang["no_children"];
+	} else if ($numchil==1) {
+		echo $pgv_lang["known_child"];
+	} else {
+		echo $numchil, '&nbsp;', $pgv_lang["known_children"];
+	}
+	echo ')', getLRM(), '</span>';
+	print "<br />";
+	// moved to top of list, changed from style to class, and font12 added by Nigel
+	if ($view!="preview" && $sosa==0 && PGV_USER_CAN_EDIT) {
+		print "<br />";
+		print "<span class='nowrap font12'>";
+		print_help_link("add_child_help", "qm", "add_child_to_family");
+		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . $pgv_lang["add_child_to_family"] . "</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', $pgv_lang["son"     ])."]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', $pgv_lang["daughter"])."]</a>";
+		print "</span>";
+		print "<br /><br />";
+	}
+	print "</td>";
 	if ($sosa>0) print "<td></td><td></td>";
 	print "</tr>\n";
 
@@ -422,7 +446,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 			if ($ct>0) $nchi = $match[1];
 		}
 		if ($nchi=="0") print "<img src=\"images/small/childless.gif\" alt=\"".$pgv_lang["childless_family"]."\" title=\"".$pgv_lang["childless_family"]."\" /> ".$pgv_lang["childless_family"];
-		else print $pgv_lang["no_children"];
+//		else print $pgv_lang["no_children"];
 		print "</td></tr>";
    }
    else {
@@ -434,15 +458,6 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	   print "</td></tr>\n";
    }
    print "</table><br />";
-
-   if ($view!="preview" && $sosa==0 && PGV_USER_CAN_EDIT) {
-	   print_help_link("add_child_help", "qm", "add_child_to_family");
-		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . $pgv_lang["add_child_to_family"] . "</a>";
-		print "<span style='white-space:nowrap;'>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', $pgv_lang['son'     ])."]</a>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', $pgv_lang['daughter'])."]</a>";
-		print "</span>";
-   }
 }
 /**
  * print the facts table for a family

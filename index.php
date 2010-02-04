@@ -25,8 +25,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'index.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/index_cache.php';
 require_once PGV_ROOT.'includes/functions/functions_print_facts.php';  //--needed for the expand url function in some of the blocks
 

@@ -24,6 +24,7 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'edit_interface.php');
 require './config.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 
@@ -1037,11 +1038,13 @@ case 'addnewnote_assisted':
 	echo PGV_JS_START;
 	?>
 		function check_form(frm) {
+			/*
 			if (frm.TITL.value=="") {
 				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
 				frm.TITL.focus();
 				return false;
 			}
+			*/
 			return true;
 		}
 	<?php

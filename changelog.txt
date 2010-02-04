@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.x CA
+ - Merged: Merging r6789 through r6911 from the trunk (yalnifj)
  - Added: GEDFact_assistant/_CENS/ module - Added paste-back of Final Census Date from Assistant window to Add Census Event window. (windmillway)
  - Changed: GEDFact_assistant/_CENS/ module - The date field on the Assistant window is now hidden. (windmillway)
  - Added: Auto propagate Census Date info from Census window to Census Assistant window initial set-up. (windmillway)
@@ -211,6 +212,19 @@ Version 4.3.x CA
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.3.0 2009-12-29
+ - Fixed: [ 2938600 ] 4.2.3 indi Map tab: no map & Java error (wooc)
+ - Fixed: [ 2943837 ] Placenames in Edit Interface in latest PGV (fisharebest)
+ - Fixed: [ 2943263 ] Logout ERROR 2 (fisharebest)
+ - Added: modules.css file for all themes (windmillway)
+ - Fixed: [ 2939710 ] [6841?] Startup error (fisharebest)
+ - Fixed: [ 2937064 ] Upgrade from 4.2.3 loses users/accounts (fisharebest)
+ - Changed: Default sorting by lastname in user administration (volschin) 
+ - Fixed: Sorting by username in user administration (volschin) 
+ - Added: [ 1717787 ] Gedcomname.gedpgv_counters.txt in backup (fisharebest)
+ - Added: [ 2677563 ] Counters in MySQL rather than in file. (fisharebest)
+ - Fixed: [ 2928619 ] Burial w/o Death -> (on the date of death) (fisharebest)
+ - Fixed: [ 1859794 ] individual titles (i.e. husband,wife) on Close relatives tab (fisharebest)
+ - Fixed: [ 2934003 ] Pictures of other gedcom in Multimedia list (canajun2eh)
  - Changed: Fan chart font and colors moved from style.css to theme.php (canajun2eh)
  - Fixed: [ 2917682 ] ERROR 8 in access log (wooc)
  - Update: jQuery.autocomplete plugin 1.1 (volschin)

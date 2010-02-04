@@ -26,6 +26,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'login.php');
 require './config.php';
 
 // Extract query parameters
@@ -106,11 +107,7 @@ if ($action=='login') {
 			$url='index.php';
 		}
 
-		$urlnew = $SERVER_URL;
-		if (substr($urlnew,-1,1)!="/") $urlnew .= "/";
 		$url = str_replace("logout=1", "", $url);
-		$url = $urlnew . $url;
-
 		$url .= "&";	// Simplify the preg_replace following
 		$url = preg_replace('/(&|\?)ged=.*&/', "$1", html_entity_decode(rawurldecode($url),ENT_COMPAT,'UTF-8'));	// Remove any existing &ged= parameter
 		if (substr($url, -1)=="&") $url = substr($url, 0, -1);

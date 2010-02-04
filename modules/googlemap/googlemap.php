@@ -1053,7 +1053,7 @@ function build_indiv_map($indifacts, $famids) {
 							$tabcounter = $tabcounter + 1;
 							echo "new GInfoWindowTab(\"", abbreviate($markers[$k]["fact"]), "\", \"<div class='iwstyle'>", $markers[$k]["fact"];
 							if (!empty($markers[$k]['info']))
-								echo ": {$markers[$k]['info']}";
+								echo ': ', addslashes($markers[$k]['info']);
 							if (!empty($markers[$k]["name"])) {
 								$person=Person::getInstance($markers[$k]['name']);
 								if ($person) {

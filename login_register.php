@@ -26,6 +26,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'login_register.php');
 require './config.php';
 
 loadLangFile("pgv_confighelp");
@@ -47,10 +48,6 @@ $user_hashcode  =safe_POST('user_hashcode');
 if (empty($action)) $action = safe_GET('action');
 if (empty($user_name)) $user_name = safe_GET('user_name', PGV_REGEX_USERNAME);
 if (empty($user_hashcode)) $user_hashcode = safe_GET('user_hashcode');
-
-// Remove trailing slash from server URL
-if (substr($SERVER_URL, -1) == "/") $serverURL = substr($SERVER_URL,0, -1);
-else $serverURL = $SERVER_URL;
 
 $message="";
 
@@ -120,7 +117,7 @@ switch ($action) {
 
 				// switch language to user settings
 				$oldLanguage = $LANGUAGE;
-				if ($LANGUAGE != get_user_setting($user_id, 'language')) loadLanguage(get_user_setting($user_id, 'language'));
+				if ($LANGUAGE != get_user_setting($user_id, 'language')) loadLanguage(get_user_setting($user_id, 'language'), true);
 				$newuserName=getUserFullName($user_id);
 
 				$mail_body = "";
@@ -133,11 +130,11 @@ switch ($action) {
 				$mail_body .= $pgv_lang["mail04_line04"] . "\r\n\r\n";
 				$mail_body .= print_text("mail04_line05", 0, 1) . "\r\n\r\n";
 
-				if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".$serverURL."\">".$serverURL."</a>";
-				else $mail_body .= $serverURL;
+				if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".PGV_SERVER_NAME.PGV_SCRIPT_PATH."\">".PGV_SERVER_NAME.PGV_SCRIPT_PATH."</a>";
+				else $mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH;
 
 				require_once PGV_ROOT.'includes/functions/functions_mail.php';
-				pgvMail(get_user_setting($user_id, 'email'), $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail04_subject"]), $mail_body);
+				pgvMail(get_user_setting($user_id, 'email'), $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail04_subject"]), $mail_body);
 
 				?>
 				<table class="center facts_table">
@@ -146,7 +143,7 @@ switch ($action) {
 				<?php
 				AddToLog("Password request was sent to user: ".$user_name);
 
-				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage);   // Reset language
+				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage, true);   // Reset language
 			}
 		}
 		print "</div>";
@@ -413,21 +410,21 @@ switch ($action) {
 				if ($user_created_ok) {
 					// switch to the user's language
 					$oldLanguage = $LANGUAGE;
-					if ($LANGUAGE != $user_language) loadLanguage($user_language);
+					if ($LANGUAGE != $user_language) loadLanguage($user_language, true);
 
  					if ($NAME_REVERSE) $fullName = $user_lastname." ".$user_firstname;
 					else $fullName = $user_firstname." ".$user_lastname;
 
 					$mail_body = "";
 					$mail_body .= str_replace("#user_fullname#", $fullName, $pgv_lang["mail01_line01"]) . "\r\n\r\n";
-					$mail_body .= str_replace("#user_email#", $user_email, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail01_line02"])) . "  ";
+					$mail_body .= str_replace("#user_email#", $user_email, str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail01_line02"])) . "  ";
 					$mail_body .= $pgv_lang["mail01_line03"] . "\r\n\r\n";
 					$mail_body .= $pgv_lang["mail01_line04"] . "\r\n\r\n";
 					if ($TEXT_DIRECTION=="rtl") {
 						$mail_body .= "<a href=\"";
-						$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify\">";
+						$mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify\">";
 					}
-					$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify";
+					$mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify";
 					if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
 					$mail_body .= "\r\n";
 					$mail_body .= $pgv_lang["username"] . " " . $user_name . "\r\n";
@@ -436,15 +433,15 @@ switch ($action) {
 					$mail_body .= $pgv_lang["mail01_line05"] . "  ";
 					$mail_body .= $pgv_lang["mail01_line06"] . "\r\n";
 					require_once PGV_ROOT.'includes/functions/functions_mail.php';
-					pgvMail($user_email, $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail01_subject"]), $mail_body);
+					pgvMail($user_email, $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail01_subject"]), $mail_body);
 
 					// switch language to webmaster settings
 					$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
-					if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang);
+					if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang, true);
 
 					$mail_body = "";
 					$mail_body .= $pgv_lang["mail02_line01"] . "\r\n\r\n";
-					$mail_body .= str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail02_line02"]) . "\r\n\r\n";
+					$mail_body .= str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail02_line02"]) . "\r\n\r\n";
 					$mail_body .= $pgv_lang["username"] . " " . $user_name . "\r\n";
 					if ($NAME_REVERSE) {
 						$mail_body .= $pgv_lang["lastname"] . " " . $user_lastname . "\r\n\r\n";
@@ -461,7 +458,7 @@ switch ($action) {
 					$message = array();
 					$message["to"]=$WEBMASTER_EMAIL;
 					$message["from"]=$user_email;
-					$message["subject"] = str_replace("#SERVER_NAME#", $serverURL, str_replace("#user_email#", $user_email, $pgv_lang["mail02_subject"]));
+					$message["subject"] = str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, str_replace("#user_email#", $user_email, $pgv_lang["mail02_subject"]));
 					$message["body"] = $mail_body;
 					$message["created"] = $time;
 					$message["method"] = $SUPPORT_METHOD;
@@ -469,7 +466,7 @@ switch ($action) {
 					addMessage($message);
 
 					// switch language to user's settings
-					if ($LANGUAGE != $user_language) loadLanguage($user_language);
+					if ($LANGUAGE != $user_language) loadLanguage($user_language, true);
 					?>
 					<table class="center facts_table">
 						<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print str_replace("#user_fullname#", $user_firstname." ".$user_lastname, $pgv_lang["thankyou"]);?><br /><br />
@@ -480,7 +477,7 @@ switch ($action) {
 						</td></tr>
 					</table>
 					<?php
-					if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage);		// Reset language
+					if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage, true);		// Reset language
 				}
 				print "</div>";
 			} else {
@@ -503,7 +500,7 @@ switch ($action) {
 		$oldLanguage = $LANGUAGE;
 		$user_id=get_user_id($user_name);
 		$user_lang=get_user_setting($user_id, 'language');
-		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
+		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang, true);
 
 		print_header($pgv_lang['user_verify']);
 		print "<div class=\"center\">";
@@ -537,7 +534,7 @@ switch ($action) {
 		// Change to the new user's language
 		$user_id=get_user_id($user_name);
 		$user_lang=get_user_setting($user_id, 'language');
-		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
+		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang, true);
 		$oldLanguage = $LANGUAGE;
 
 		print_header($pgv_lang['user_verify']); // <-- better verification of authentication code
@@ -561,34 +558,33 @@ switch ($action) {
 
 				// switch language to webmaster settings
 				$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
-				if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang);
+				if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang, true);
 
 				$mail_body = "";
 				$mail_body .= $pgv_lang["mail03_line01"] . "\r\n\r\n";
-				$mail_body .= str_replace(array("#newuser[username]#", "#newuser[fullname]#"), array($user_name, getUserFullName($user_name)), $pgv_lang["mail03_line02"]) . "\r\n\r\n";
+				$mail_body .= str_replace(array("#newuser[username]#", "#newuser[fullname]#"), array($user_name, getUserFullName($user_id)), $pgv_lang["mail03_line02"]) . "\r\n\r\n";
 				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= $pgv_lang["mail03_line03"] . "\r\n";
 				else $mail_body .= $pgv_lang["mail03_line03a"] . "\r\n";
 
-				$path = substr($SCRIPT_NAME, 0, strrpos($SCRIPT_NAME, "/"));
 				if ($TEXT_DIRECTION=="rtl") {
 					$mail_body .= "<a href=\"";
-					$mail_body .= "http://".$_SERVER['SERVER_NAME'] . $path."/useradmin.php?action=edituser&username=" . urlencode($user_name) . "\">";
+					$mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH."useradmin.php?action=edituser&username=" . urlencode($user_name) . "\">";
 				}
-				$mail_body .= "http://".$_SERVER['SERVER_NAME'] . $path."/useradmin.php?action=edituser&username=" . urlencode($user_name);
+				$mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH."useradmin.php?action=edituser&username=" . urlencode($user_name);
 				if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
 				$mail_body .= "\r\n";
 
 				$message = array();
 				$message["to"]=$WEBMASTER_EMAIL;
 				$message["from"]=$PHPGEDVIEW_EMAIL;
-				$message["subject"] = str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail03_subject"]);
+				$message["subject"] = str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail03_subject"]);
 				$message["body"] = $mail_body;
 				$message["created"] = $time;
 				$message["method"] = $SUPPORT_METHOD;
 				$message["no_from"] = true;
 				addMessage($message);
 
-				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage);		// Reset language
+				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage, true);		// Reset language
 
 				print "<br /><br />".$pgv_lang["pls_note09"]."<br /><br />";
 				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print $pgv_lang["pls_note10"];

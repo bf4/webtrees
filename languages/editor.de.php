@@ -3,7 +3,7 @@
  * German texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,12 +113,12 @@ $pgv_lang["accept_all"]				= "Alle Änderungen übernehmen";
 $pgv_lang["accept_gedcom"]			= "Entscheiden Sie für jede Änderung, ob Sie sie übernehmen oder verwerfen möchten.<br /><br />Um alle Änderungen auf einmal zu übernehmen, klicken Sie <b>«Alle Änderungen übernehmen»</b> in der Box unten.<br />Weitere Informationen über eine Änderung erhalten Sie über den Link <b>«Änderungen ansehen»</b> oder klicken Sie <b>«GEDCOM Datensatz ansehen»</b>, um die veränderte GEDCOM Datei anzusehen.";
 $pgv_lang["accept_successful"]		= "Änderungen erfolgreich in die Datenbank übernommen";
 $pgv_lang["add_child"]				= "Kind hinzufügen";
-$pgv_lang["add_child_to_family"]	= "Kind zu dieser Familie hinzufügen";
+$pgv_lang["add_child_to_family"]	= "Kind dieser Familie hinzufügen";
 $pgv_lang["add_fact"]				= "Neues Ereignis hinzufügen";
 $pgv_lang["add_father"]				= "Vater hinzufügen";
 $pgv_lang["add_husb"]				= "Ehemann hinzufügen";
 $pgv_lang["add_opf_child"]			= "Kind hinzufügen, um gleichzeitig eine Familie mit nur einem Elternteil zu erstellen";
-$pgv_lang["add_husb_to_family"]		= "Ehemann zu dieser Familie hinzufügen";
+$pgv_lang["add_husb_to_family"]		= "Ehemann dieser Familie hinzufügen";
 $pgv_lang["add_media"]				= "Neue Multimedia Datei hinzufügen";
 $pgv_lang["add_media_lbl"]			= "Multimedia Datei hinzufügen";
 $pgv_lang["add_mother"]				= "Mutter hinzufügen";
@@ -134,7 +134,7 @@ $pgv_lang["add_son_daughter"]		= "Sohn oder Tochter hinzufügen";
 $pgv_lang["add_source"]				= "Neue Quelle hinzufügen";
 $pgv_lang["add_source_lbl"]			= "Quelle hinzufügen";
 $pgv_lang["add_wife"]				= "Ehefrau hinzufügen";
-$pgv_lang["add_wife_to_family"]		= "Eine Ehefrau zu dieser Familie hinzufügen";
+$pgv_lang["add_wife_to_family"]		= "Eine Ehefrau dieser Familie hinzufügen";
 $pgv_lang["advanced_search_discription"] = "Erweiterte Internetseiten-Suche";
 $pgv_lang["auto_thumbnail"]			= "Automatisches Miniaturbild";
 $pgv_lang["basic_search"]			= "Suche";

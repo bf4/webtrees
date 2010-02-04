@@ -3,7 +3,7 @@
  * Displays a list of the multimedia objects
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,10 +24,9 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'medialist.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
-
 
 loadLangFile("lightbox:lang");
 
@@ -41,7 +40,14 @@ $sortby = safe_GET('sortby', 'file', 'title');
 $max = safe_GET('max', array('10', '20', '30', '40', '50', '75', '100', '125', '150', '200'), '20');
 $folder = safe_GET('folder');
 if (empty($folder)) $folder = $MEDIA_DIRECTORY;
-if (!isset($_SESSION["medialist"])) $search = "yes";
+
+if (empty($_SESSION['medialist_ged'])) $_SESSION['medialist_ged'] = PGV_GEDCOM;
+if ($_SESSION['medialist_ged'] != PGV_GEDCOM) {
+	$_SESSION['medialist_ged'] = PGV_GEDCOM;
+	unset($_SESSION['medialist']);
+}
+
+if (!isset($_SESSION['medialist'])) $search = "yes";
 
 $currentdironly = (isset($_REQUEST['subdirs']) && $_REQUEST['subdirs']=="on") ? false : true;
 print_header($pgv_lang["multi_title"]);

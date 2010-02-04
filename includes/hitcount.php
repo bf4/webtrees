@@ -29,92 +29,79 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-//only do counter stuff if counters are enabled
-if($SHOW_COUNTER)
-{
-	$PGV_COUNTER_FILENAME = $INDEX_DIRECTORY.$GEDCOM."pgv_counters.txt";
-	$PGV_COUNTER_NAME     = $GEDCOM."pgv_counter";
-	$PGV_INDI_COUNTER_NAME = $GEDCOM."pgv_indi_counter";
-
-	// if counter file doesn't exist create it
-	if(!file_exists($PGV_COUNTER_FILENAME))
-	{
-			$fp=fopen($PGV_COUNTER_FILENAME,"w");
-			fputs($fp,"0");
-			fclose($fp);
+// Only record hits for certain pages
+switch (PGV_SCRIPT_NAME) {
+case 'index.php':
+	switch (safe_GET('ctype', '(user|gedcom)')) {
+	case 'user':
+		$page_parameter='user:'.PGV_USER_ID;
+		break;
+	default:
+		$page_parameter='gedcom:'.PGV_GED_ID;
+		break;
 	}
-
-	if(isset($pid) && find_person_record($pid, PGV_GED_ID)) { //individual counter
-
-		// Capitalize ID to make sure we have a correct hitcount on the individual
-		$pid = strtoupper($pid);
-
-		//see if already viewed individual this session
-		if(isset($_SESSION[$PGV_INDI_COUNTER_NAME][$pid]))
-		{
-			$hitCount = $_SESSION[$PGV_INDI_COUNTER_NAME][$pid];
-		}
-		else //haven't viewed individual this session
-		{
-			$l_fcontents = file_get_contents($PGV_COUNTER_FILENAME);
-			$ct = preg_match_all ("/@$pid@\s(\d+)/",$l_fcontents,$matches);
-			if($ct>0) //found individual increment counter
-			{
-				$hitCount = $matches[1][0];
-				$hitCount = ((int)$hitCount) + 1;
-				$l_fcontents = preg_replace("/(@$pid@) (\d+)/","$1 $hitCount",$l_fcontents);
-				$fp=fopen($PGV_COUNTER_FILENAME,"r+");
-				fputs($fp,$l_fcontents);
-				fclose($fp);
-			}
-			else //first view of individual
-			{
-				$fp=fopen($PGV_COUNTER_FILENAME,"r+");
-				fseek($fp,0,SEEK_END);
-				fputs($fp,"\r\n@".$pid."@ 1");
-				fclose($fp);
-				$hitCount=1;
-			}
-			$_SESSION[$PGV_INDI_COUNTER_NAME][$pid] = $hitCount;
-		}
-	}
-	else //web site counter
-	{
-		// has user started a session on site yet
-		if(isset($_SESSION[$PGV_COUNTER_NAME]))
-		{
-			$hitCount = $_SESSION[$PGV_COUNTER_NAME];
-		}
-		else //new user so increment counter and save
-		{
-			$l_fcontents = file_get_contents($PGV_COUNTER_FILENAME);
-			$ct = preg_match ("/^(\d+)/",$l_fcontents,$matches);
-			if($ct)
-			{
-			$hitCount = $matches[0];
-			$hitCount = ((int)$hitCount) + 1;
-			$ct = preg_match("/^(\d+)@/",$l_fcontents,$matches);
-			if($ct) //found missing return & newline
-				$l_fcontents = preg_replace("/^(\d+)/","$hitCount\r\n",$l_fcontents);
-			else  //returns & newline exist
-				$l_fcontents = preg_replace("/^(\d+)/","$hitCount",$l_fcontents);
-				$fp=fopen($PGV_COUNTER_FILENAME,"r+");
-				fputs($fp,$l_fcontents);
-				fclose($fp);
-		}
-		else
-			$hitCount=0;
-			$_SESSION[$PGV_COUNTER_NAME]=$hitCount;
-		}
-	}
-
-	//replace the numbers with their images
-	if (array_key_exists('0', $PGV_IMAGES))
-		for($i=0;$i<10;$i++)
-			$hitCount = str_replace("$i","<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$i]["digit"]."\" alt=\"pgv_counter\" />","$hitCount");
-	else
-		$hitCount="<span class=\"hit-counter\">{$hitCount}</span>";
-
-	if ($TEXT_DIRECTION=="rtl") $hitCount = getLRM() . $hitCount . getLRM();
+	break;
+case 'individual.php':
+	$page_parameter=safe_GET('pid', PGV_REGEX_XREF);
+	break;
+case 'family.php':
+	$page_parameter=safe_GET('famid', PGV_REGEX_XREF);
+	break;
+case 'source.php':
+	$page_parameter=safe_GET('sid', PGV_REGEX_XREF);
+	break;
+case 'source.php':
+	$page_parameter=safe_GET('sid', PGV_REGEX_XREF);
+	break;
+case 'repo.php':
+	$page_parameter=safe_GET('rid', PGV_REGEX_XREF);
+	break;
+case 'note.php':
+	$page_parameter=safe_GET('nid', PGV_REGEX_XREF);
+	break;
+case 'mediaviewer.php':
+	$page_parameter=safe_GET('mid', PGV_REGEX_XREF);
+	break;
+default:
+	$page_parameter='';
+	break;
 }
-?>
+if ($page_parameter) {
+	$hitCount=PGV_DB::prepare(
+		"SELECT page_count FROM {$TBLPREFIX}hit_counter".
+		" WHERE gedcom_id=? AND page_name=? AND page_parameter=?"
+	)->execute(array(PGV_GED_ID, PGV_SCRIPT_NAME, $page_parameter))->fetchOne();
+	
+	// Only record one hit per session
+	if ($page_parameter && empty($_SESSION['SESSION_PAGE_HITS'][PGV_SCRIPT_NAME.$page_parameter])) {
+		$_SESSION['SESSION_PAGE_HITS'][PGV_SCRIPT_NAME.$page_parameter]=true;
+		if (is_null($hitCount)) {
+			$hitCount=1;
+			PGV_DB::prepare(
+				"INSERT INTO {$TBLPREFIX}hit_counter (gedcom_id, page_name, page_parameter, page_count) VALUES (?, ?, ?, ?)"
+			)->execute(array(PGV_GED_ID, PGV_SCRIPT_NAME, $page_parameter, $hitCount));
+		} else {
+			$hitCount++;
+			PGV_DB::prepare(
+				"UPDATE {$TBLPREFIX}hit_counter SET page_count=?".
+				" WHERE gedcom_id=? AND page_name=? AND page_parameter=?"
+			)->execute(array($hitCount, PGV_GED_ID, PGV_SCRIPT_NAME, $page_parameter));
+		}
+	}
+} else {
+	$hitCount=1;
+}
+
+//replace the numbers with their images
+if (array_key_exists('0', $PGV_IMAGES)) {
+	for ($i=0;$i<10;$i++) {
+		$hitCount = str_replace("$i","<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$i]["digit"]."\" alt=\"pgv_counter\" />","$hitCount");
+	}
+} else {
+	$hitCount="<span class=\"hit-counter\">{$hitCount}</span>";
+}
+
+if ($TEXT_DIRECTION=='rtl') {
+	$hitCount=getLRM().$hitCount.getLRM();
+}
+unset($page_name, $page_parameter);

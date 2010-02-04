@@ -20,7 +20,10 @@
  * @subpackage search
  * @version $Id$
  */
+
+define('PGV_SCRIPT_NAME', 'opensearch.php');
 require './config.php';
+
 header('Content-Type: application/opensearchdescription+xml; charset=utf-8');
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';

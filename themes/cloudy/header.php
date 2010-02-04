@@ -50,7 +50,7 @@ $menubar = new MenuBar();
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
 			<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
-		// Additional css files required (Only if Lightbox installed)
+		// Additional css files required
 		if (PGV_USE_LIGHTBOX) {
 			if ($TEXT_DIRECTION=='rtl') {
 				echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';

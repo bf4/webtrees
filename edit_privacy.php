@@ -25,8 +25,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'edit_privacy.php');
 require './config.php';
-
 require PGV_ROOT.'includes/functions/functions_print_facts.php';
 
 loadLangFile('pgv_confighelp, pgv_help');
@@ -122,7 +122,7 @@ function search_ID_details($checkVar, $outputVar) {
 }
 
 
-$PRIVACY_MODULE = get_privacy_file();
+$PRIVACY_MODULE = get_privacy_file(PGV_GED_ID);
 
 print_header($pgv_lang["privacy_header"]);
 

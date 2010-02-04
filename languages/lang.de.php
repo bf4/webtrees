@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reerved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reerved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -476,6 +476,7 @@ $pgv_lang["sex"]						= "Geschlecht";
 $pgv_lang["personal_facts"]				= "Persönliche Fakten und Details";
 $pgv_lang["type"]						= "Typ";
 $pgv_lang["parents"]					= "Eltern";
+$pgv_lang["gparents"]					= "Großeltern";
 $pgv_lang["siblings"]					= "Geschwister";
 $pgv_lang["father"]						= "Vater";
 $pgv_lang["mother"]						= "Mutter";
@@ -517,7 +518,9 @@ $pgv_lang["wife"]						= "Ehefrau";
 $pgv_lang["marriage"]					= "Heirat:";
 $pgv_lang["lds_sealing"]				= "HLT Siegelung:";
 $pgv_lang["marriage_license"]			= "Ehe Erlaubnis:";
-$pgv_lang["no_children"]				= "Keine Kinder eingetragen";
+$pgv_lang["no_children"]				= "Keine Kinder";
+$pgv_lang["known_child"]				= "1 Kind";
+$pgv_lang["known_children"]				= "Kinder";
 $pgv_lang["childless_family"]			= "Diese Familie blieb kinderlos";
 $pgv_lang["parents_timeline"]			= "Ehepaar in Lebensspannen-Ansicht zeigen";
 

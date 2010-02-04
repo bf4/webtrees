@@ -49,7 +49,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
  * Prints a block allowing the user review all changes pending approval
  */
 function review_changes_block($block = true, $config="", $side, $index) {
-	global $pgv_lang, $ctype, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $pgv_lang, $ctype, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $pgv_changes, $TEXT_DIRECTION, $SHOW_SOURCES, $PGV_BLOCKS;
 	global $PHPGEDVIEW_EMAIL;
 
@@ -81,7 +81,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					$message["subject"] = $pgv_lang["review_changes_subject"];
 					$message["body"] = $pgv_lang["review_changes_body"];
 					$message["method"] = get_user_setting($user_id, 'contactmethod');
-					$message["url"] = basename($SCRIPT_NAME)."?".html_entity_decode($QUERY_STRING);
+					$message["url"] = PGV_SCRIPT_NAME."?".html_entity_decode($QUERY_STRING);
 					$message["no_from"] = true;
 					addMessage($message);
 				}

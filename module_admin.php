@@ -24,8 +24,10 @@
  * @version $Id: admin.php 5151 2009-03-04 18:51:04Z canajun2eh $
  */
 
-require './config.php';
-require_once('includes/classes/class_module.php');
+define('PGV_SCRIPT_NAME', 'module_admin.php');
+require_once 'config.php';
+require_once(PGV_ROOT.'includes/classes/class_module.php');
+
 
 if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=module_admin.php");

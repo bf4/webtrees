@@ -30,8 +30,8 @@
  * @TODO use language files
  */
 
+define('PGV_SCRIPT_NAME', 'ical.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/classes/class_person.php';
 require_once PGV_ROOT.'includes/classes/class_family.php';
 

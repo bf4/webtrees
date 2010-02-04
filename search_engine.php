@@ -29,6 +29,7 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'search_engine.php');
 require './config.php';
 
 loadLangFile('pgv_help');

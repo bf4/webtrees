@@ -3,7 +3,7 @@
  * Norwegian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,8 +57,8 @@ $pgv_lang["config_saved"] = "Konfigurasjonen er lagret";
 $pgv_lang["checking_errors"]		= "Sjekker etter feil...";
 $pgv_lang["checking_php_version"]		= "Sjekker PHP-versjon som kreves:";
 $pgv_lang["failed"]		= "Feilet";
-$pgv_lang["pgv_requires_version"]		= "PhpGedView krever PHP versjon ".PGV_REQUIRED_PHP_VERSION." eller høyere.";
-$pgv_lang["using_php_version"]		= "Du bruker PHP versjon ".PHP_VERSION;
+$pgv_lang["pgv_requires_version"]		= "PhpGedView krever PHP versjon #PGV_REQUIRED_PHP_VERSION# eller høyere.";
+$pgv_lang["using_php_version"]		= "Du bruker PHP versjon #PGV_ACTUAL_PHP_VERSION#";
 $pgv_lang["checking_db_support"]		= "Sjekker minimum database-støtte:";
 $pgv_lang["no_db_extensions"]		= "Du har ingen av de støttede databasetilleggene.";
 $pgv_lang["db_ext_support"]		= "Du har #DBEXT#-støtte ";

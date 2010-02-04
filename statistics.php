@@ -6,7 +6,7 @@
  * age -> periodes of 10 years (different for 0-1,1-5,5-10,10-20 etc)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
  * @subpackage Lists
  */
 
+define('PGV_SCRIPT_NAME', 'statistics.php');
 require './config.php';
 require_once PGV_ROOT.'includes/classes/class_stats.php';
 
@@ -38,8 +39,8 @@ print_header($pgv_lang["statistics"]);
 $stats = new stats($GEDCOM);
 
 ?>
-	<h3 class="center"><?php echo $pgv_lang["statistics"]; ?></h3>
-	<?php global $pgv_lang, $TEXT_DIRECTION, $PGV_THEME_DIR;
+	<h2 class="center"><?php echo $pgv_lang["statistics"]; ?></h2>
+	<?php global $pgv_lang, $TEXT_DIRECTION;
 	if ($TEXT_DIRECTION=='rtl') $align='right';
 	else $align='left';
 ?>

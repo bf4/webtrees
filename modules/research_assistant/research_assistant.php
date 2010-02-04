@@ -38,7 +38,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 require_once PGV_ROOT.'modules/research_assistant/ra_functions.php';
 require_once PGV_ROOT.'modules/research_assistant/forms/ra_GeneratedTask.php';
 
-require_once 'includes/classes/class_tab.php';
+require_once PGV_ROOT.'includes/classes/class_tab.php';
 
 class research_assistant_Tab extends Tab {
 	

@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'changelanguage.php');
 require './config.php';
 
 loadLangFile("pgv_confighelp");
@@ -53,7 +54,7 @@ switch ($action) {
 print PGV_JS_START;
 print "var helpWin;";
 print "function showchanges() {";
-print "window.location = '{$_SERVER['PHP_SELF']}';";
+print "window.location = '".PGV_SCRIPT_NAME."';";
 print "}";
 print "function helpPopup03(which) {";
 print "location.href = 'editlang_edit_settings.php?' + which + '&new_shortcut=' + document.new_lang_form.new_shortcut.value;";
@@ -64,15 +65,15 @@ print PGV_JS_END;
 // Create array with configured languages in gedcoms and users
 $configuredlanguages = array();
 
-// Read GEDCOMS configuration and collect language data
+// Read gedcom configuration and collect language data
 foreach (get_all_gedcoms() as $ged_id => $ged_name) {
-	require get_config_file($ged_name);
+	require get_config_file($ged_id);
 	if (!isset($configuredlanguages["gedcom"][$LANGUAGE][$ged_name])) {
 		$configuredlanguages["gedcom"][$LANGUAGE][$ged_name] = true;
 	}
 }
 // Restore the current settings
-require get_config_file(PGV_GEDCOM);
+require get_config_file(PGV_GED_ID);
 
 // Read user configuration and collect language data
 foreach (get_all_users() as $user_id=>$user_name) {
@@ -121,7 +122,7 @@ print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\
 
 switch ($action) {
 	case "addnew" :
-		print "<form name=\"new_lang_form\" method=\"get\" action=\"$SCRIPT_NAME\">";
+		print '<form name="new_lang_form" method="get" action="' . PGV_SCRIPT_NAME . '">';
 		print "<input type=\"hidden\" name=\"" . session_name() . "\" value=\"" . session_id() . "\" />";
 		print "<input type=\"hidden\" name=\"action\" value=\"new_lang\" />";
 		print "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
@@ -157,7 +158,7 @@ switch ($action) {
 
 	case "editold" :
 	default :
-		print "<form name=\"lang_config_form\" method=\"get\" action=\"{$_SERVER['PHP_SELF']}\">";
+		print "<form name=\"lang_config_form\" method=\"get\" action=\"".PGV_SCRIPT_NAME."\">";
 		print "<input type=\"hidden\" name=\"" . session_name() . "\" value=\"" . session_id() . "\" />";
 		print "<input type=\"hidden\" name=\"action\" value=\"config_lang\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\" style=\"width:70%; \">";

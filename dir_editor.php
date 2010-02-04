@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,9 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'dir_editor.php');
 require './config.php';
-
-require_once PGV_ROOT.'includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 if (!PGV_USER_IS_ADMIN) {
 	header("Location: login.php?url=dir_editor.php");
@@ -71,8 +71,18 @@ $locked_by_context = array("readme.txt", "index.php", "gedcoms.php");
 $dbname = explode("/", $DBNAME);
 $locked_by_context[] = end($dbname);
 
+// If we are storing the media in the index directory (this is the
+// default for the media firewall), then don't delete it.
+if (
+	$USE_MEDIA_FIREWALL &&
+	$MEDIA_FIREWALL_ROOTDIR==$INDEX_DIRECTORY &&
+	(substr($MEDIA_DIRECTORY, 0, 1)!='.')
+) {
+	$locked_by_context[]=trim($MEDIA_DIRECTORY, '/');
+}
+
 print_header($pgv_lang["index_dir_cleanup"]);
-echo "<h3>", $pgv_lang["index_dir_cleanup"], "</h3>";
+echo "<h2>", $pgv_lang["index_dir_cleanup"], "</h2>";
 
 echo $pgv_lang['index_dir_cleanup_inst'];
 
@@ -113,11 +123,11 @@ function warnuser(cbox) {
 		$locked_with_warning = array("lang_settings.php", "pgv_changes.php");
 		//-- lock the GEDCOM and settings files
 		foreach(get_all_gedcoms() as $ged_id=>$ged_name){
-			$file=get_privacy_file($ged_name);
+			$file=get_privacy_file($ged_id);
 			if ($file!='privacy.php') {
 				$locked_by_context[] = str_replace($INDEX_DIRECTORY, "", $file);
 			}
-			$file=get_config_file($ged_name);
+			$file=get_config_file($ged_id);
 			if ($file!='config_gedcom.php') {
 				$locked_by_context[] = str_replace($INDEX_DIRECTORY, "", $file);
 			}

@@ -139,11 +139,11 @@ function print_user_messages($block=true, $config="", $side, $index) {
 		}
 		foreach (get_all_users() as $user_id=>$user_name) {
 			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'verified_by_admin')=='yes' && get_user_setting($user_id, 'contactmethod')!='none') {
-				$content .= "<option value=\"".$user_id."\">".PrintReady(getUserFullName($user_id))." ";
+				$content .= "<option value=\"".$user_name."\">".PrintReady(getUserFullName($user_id))." ";
 				if ($TEXT_DIRECTION=="ltr") {
-					$content .= stripLRMRLM(getLRM()." - ".$user_id.getLRM());
+					$content .= stripLRMRLM(getLRM()." - ".$user_name.getLRM());
 				} else {
-					$content .= stripLRMRLM(getRLM()." - ".$user_id.getRLM());
+					$content .= stripLRMRLM(getRLM()." - ".$user_name.getRLM());
 				}
 				$content .= "</option>";
 			}

@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'edit_changes.php');
 require './config.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 
@@ -47,7 +48,7 @@ print_simple_header($pgv_lang['review_changes']);
 		var recwin = window.open("gedrecord.php?fromfile=1&pid="+xref, "_blank", "top=50, left=50, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");
 	}
 	function showchanges() {
-		window.location = '<?php print $SCRIPT_NAME; ?>';
+		window.location = '<?php echo PGV_SCRIPT_NAME; ?>';
 	}
 
 	function show_diff(diffurl) {

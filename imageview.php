@@ -24,6 +24,7 @@
  * @subpackage Media
  */
 
+define('PGV_SCRIPT_NAME', 'imageview.php');
 require './config.php';
 
 $filename=decrypt(safe_GET('filename'));

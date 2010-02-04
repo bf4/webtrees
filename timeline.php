@@ -28,8 +28,8 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'timeline.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/controllers/timeline_ctrl.php';
 
 $controller = new TimelineController();
@@ -334,8 +334,8 @@ $controller->checkPrivacy();
 		$scalemod = round($controller->scale*.2) + 1;
 		?>
 		<td class="list_value" style="padding: 5px">
-			<a href="<?php print $SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other']; ?>" title="<?php print $pgv_lang["zoom_in"]; ?>" alt="<?php print $pgv_lang["zoom_in"]; ?>" border="0" /></a><br />
-			<a href="<?php print $SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other']; ?>" title="<?php print $pgv_lang["zoom_out"]; ?>" alt="<?php print $pgv_lang["zoom_out"]; ?>" border="0" /></a><br />
+			<a href="<?php echo PGV_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other']; ?>" title="<?php print $pgv_lang["zoom_in"]; ?>" alt="<?php print $pgv_lang["zoom_in"]; ?>" border="0" /></a><br />
+			<a href="<?php echo PGV_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other']; ?>" title="<?php print $pgv_lang["zoom_out"]; ?>" alt="<?php print $pgv_lang["zoom_out"]; ?>" border="0" /></a><br />
 			<input type="button" value="<?php print $pgv_lang['clear_chart']; ?>" onclick="window.location = 'timeline.php?clear=1';" />
 		</td>
 	<?php } ?>

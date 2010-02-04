@@ -3,7 +3,7 @@
  * Catalan texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -362,8 +362,8 @@ $pgv_lang["checking_errors"]		= "Cercant errors...";
 $pgv_lang["checking_php_version"]		= "Cercant la versió necessària de PHP:";
 $pgv_lang["checking_php_version"]		= "Comprovació requereix PHP versió:";
 $pgv_lang["failed"]		= "Error";
-$pgv_lang["pgv_requires_version"]		= "El PhpGedView requereix la versió de PHP ".PGV_REQUIRED_PHP_VERSION." o superior.";
-$pgv_lang["using_php_version"]		= "Esteu utilitzant la versió de PHP";
+$pgv_lang["pgv_requires_version"]		= "El PhpGedView requereix la versió de PHP #PGV_REQUIRED_PHP_VERSION# o superior.";
+$pgv_lang["using_php_version"]		= "Esteu utilitzant la versió de PHP #PGV_ACTUAL_PHP_VERSION#";
 $pgv_lang["checking_db_support"]		= "Comprovació del suport mínim per a la base de dades:";
 $pgv_lang["no_db_extensions"]		= "No disposeu de cap de les extensions suportades per la base de dades.";
 $pgv_lang["db_ext_support"]		= "Disposeu de suport  #DBEXT#";

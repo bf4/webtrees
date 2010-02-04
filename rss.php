@@ -26,6 +26,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'rss.php');
 require './config.php';
 
 if (isset($_SESSION["CLANGUAGE"])) $oldlang = $_SESSION["CLANGUAGE"];

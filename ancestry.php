@@ -26,8 +26,8 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'ancestry.php');
 require './config.php';
-
 require PGV_ROOT.'includes/controllers/ancestry_ctrl.php';
 require PGV_ROOT.'includes/functions/functions_print_lists.php';
 

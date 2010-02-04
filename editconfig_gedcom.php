@@ -25,6 +25,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'editconfig_gedcom.php');
 require './config.php';
 
 // editconfig.php and uploadgedcom.php make extensive use of
@@ -195,8 +196,8 @@ if (isset($ged)) {
 		if (!isset($gedcom_title)) {
 			$gedcom_title = get_gedcom_setting($ged_id, 'title');
 		}
-		$gedcom_config = get_config_file($ged);
-		$gedcom_privacy = get_privacy_file($ged);
+		$gedcom_config = get_config_file($ged_id);
+		$gedcom_privacy = get_privacy_file($ged_id);
 		$FILE = $ged;
 		$oldged = $ged;
 	} else {
@@ -511,9 +512,6 @@ if ($action=="update") {
 
 		if (!$errors) {
 			// create/modify an htaccess file in the main media directory
-			$mediafirewall_path = dirname($SCRIPT_NAME)."/mediafirewall.php";
-			$mediafirewall_path = str_replace('//', '/', $mediafirewall_path); // remove duplicate slashes if PGV being run from root directory
-
 			$httext = "";
 			if (file_exists($MEDIA_DIRECTORY.".htaccess")) {
 				$httext = implode('', file($MEDIA_DIRECTORY.".htaccess"));
@@ -531,9 +529,9 @@ if ($action=="update") {
 			$httext .= "\n\tRewriteEngine On";
 			$httext .= "\n\tRewriteCond %{REQUEST_FILENAME} !-f";
 			$httext .= "\n\tRewriteCond %{REQUEST_FILENAME} !-d";
-			$httext .= "\n\tRewriteRule .* ".$mediafirewall_path." [L]";
+			$httext .= "\n\tRewriteRule .* ".PGV_SCRIPT_PATH."mediafirewall.php"." [L]";
 			$httext .= "\n</IfModule>";
-			$httext .= "\nErrorDocument\t404\t".$mediafirewall_path;
+			$httext .= "\nErrorDocument\t404\t".PGV_SCRIPT_PATH."mediafirewall.php";
 			$httext .= "\n########## END PGV MEDIA FIREWALL SECTION ##########";
 
 			$whichFile = $MEDIA_DIRECTORY.".htaccess";
@@ -2087,7 +2085,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["contact_conf"]."\" onclick=\"exp
 			if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = PGV_USER_NAME;
 			foreach (get_all_users() as $user_id=>$user_name) {
 				if (get_user_setting($user_id, 'verified_by_admin')=="yes") {
-					print "<option value=\"".$user_id."\"";
+					print "<option value=\"".$user_name."\"";
 					if ($CONTACT_EMAIL==$user_name) print " selected=\"selected\"";
 					print ">".getUserFullName($user_id)." - ".$user_name."</option>\n";
 				}
@@ -2117,7 +2115,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["contact_conf"]."\" onclick=\"exp
 			if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = PGV_USER_NAME;
 			foreach (get_all_users() as $user_id=>$user_name) {
 				if (userIsAdmin($user_id)) {
-					print "<option value=\"".$user_id."\"";
+					print "<option value=\"".$user_name."\"";
 					if ($WEBMASTER_EMAIL==$user_name) print " selected=\"selected\"";
 					print ">".getUserFullName($user_id)." - ".$user_name."</option>\n";
 				}

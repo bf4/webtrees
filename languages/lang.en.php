@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -477,6 +477,7 @@ $pgv_lang["sex"]					= "Gender";
 $pgv_lang["personal_facts"] 		= "Personal Facts and Details";
 $pgv_lang["type"]					= "Type";
 $pgv_lang["parents"]				= "Parents";
+$pgv_lang["gparents"]				= "Grandparents";
 $pgv_lang["siblings"]				= "Siblings";
 $pgv_lang["father"] 				= "Father";
 $pgv_lang["mother"] 				= "Mother";
@@ -518,7 +519,9 @@ $pgv_lang["wife"]					= "Wife";
 $pgv_lang["marriage"]				= "Marriage:";
 $pgv_lang["lds_sealing"]			= "LDS Sealing:";
 $pgv_lang["marriage_license"]		= "Marriage License:";
-$pgv_lang["no_children"]			= "No recorded children";
+$pgv_lang["no_children"]			= "No children";
+$pgv_lang["known_child"]			= "1 child";
+$pgv_lang["known_children"]			= "children";
 $pgv_lang["childless_family"]		= "This family remained childless";
 $pgv_lang["parents_timeline"]		= "Show couple on timeline chart";
 
@@ -1560,8 +1563,8 @@ $pgv_lang["updated_favorites"] 			= "favorites updated.";
 $pgv_lang["ancestry_chart"] 		= "Ancestry Chart";
 $pgv_lang["gen_ancestry_chart"]		= "#PEDIGREE_GENERATIONS# Generation Ancestry Chart";
 $pgv_lang["chart_style"]			= "Chart style";
-$pgv_lang["chart_list"]			= "List";
-$pgv_lang["chart_booklet"]   	= "Booklet";
+$pgv_lang["chart_list"]				= "List";
+$pgv_lang["chart_booklet"]   		= "Booklet";
 $pgv_lang["show_cousins"]			= "Show cousins";
 // 1st generation
 $pgv_lang["sosa_2"] 				= "Father";

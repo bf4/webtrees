@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -473,6 +473,7 @@ $pgv_lang["sex"]				= "Płeć";
 $pgv_lang["personal_facts"]		= "Fakty i dane osoby";
 $pgv_lang["type"]				= "Typ";
 $pgv_lang["parents"] 			= "Rodzice";
+$pgv_lang["gparents"] 			= "Dziadkowie";
 $pgv_lang["siblings"] 			= "Rodzeństwo";
 $pgv_lang["father"] 			= "Ojciec";
 $pgv_lang["mother"] 			= "Matka";
@@ -515,6 +516,8 @@ $pgv_lang["marriage"]			= "Małżeństwo:";
 $pgv_lang["lds_sealing"]		= "Naznaczenie mormońskie:";
 $pgv_lang["marriage_license"]	= "Akt ślubu:";
 $pgv_lang["no_children"]		= "Brak dzieci";
+$pgv_lang["known_child"]		= "1 dziecko";
+$pgv_lang["known_children"]		= "dzieci";
 $pgv_lang["childless_family"]	= "Małżeństwo bezdzietne";
 $pgv_lang["parents_timeline"]	= "Pokaż parę na osi czasu";
 

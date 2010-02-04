@@ -24,10 +24,10 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'edituser.php');
 require './config.php';
-
 require PGV_ROOT.'includes/functions/functions_print_lists.php';
-include PGV_ROOT.'includes/functions/functions_edit.php';
+require PGV_ROOT.'includes/functions/functions_edit.php';
 
 // prevent users with editing account disabled from being able to edit their account
 if (get_user_setting(PGV_USER_ID, 'editaccount')!='Y') {

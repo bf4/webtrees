@@ -24,6 +24,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'message.php');
 require './config.php';
 
 loadLangFile("pgv_confighelp");
@@ -132,8 +133,9 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 			$message["url"] = $url.'&amp;ged='.$GEDCOM;
 			if ($i>0) $message["no_from"] = true;
 			if (addMessage($message)){
-				if (get_user_id($to)) {
-					print str_replace("#TO_USER#", "<b>".getUserFullName($to)."</b>", $pgv_lang["message_sent"]);
+				$to_user_id=get_user_id($to);
+				if ($to_user_id) {
+					print str_replace("#TO_USER#", "<b>".getUserFullName($to_user_id)."</b>", $pgv_lang["message_sent"]);
 					print "<br />";
 				} else {
 					AddToLog('Invalid TO user.'.$to.' Possible spam attack.');

@@ -26,8 +26,8 @@
 * @version $Id$
 */
 
+define('PGV_SCRIPT_NAME', 'edit_quickupdate.php');
 require './config.php';
-
 require_once PGV_ROOT.'includes/functions/functions_edit.php';
 
 loadLangFile("pgv_editor");

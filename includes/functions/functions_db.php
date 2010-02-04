@@ -424,7 +424,7 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 		$where[]='('.implode(' OR ', $includes).')';
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY case n_surn when '@N.N.' then 1 else 0 end, n_surn";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
 
 	$list=array();
 	$rows=PGV_DB::prepare($sql)->fetchAll();
@@ -587,7 +587,7 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 		$where[]='('.implode(' OR ', $includes).')';
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY case n_surn when '@N.N.' then 1 else 0 end, n_surn, case n_givn when '@P.N.' then 1 else 0 end, n_givn";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY CASE n_surn WHEN '@N.N.' THEN 1 ELSE 0 END, n_surn, CASE n_givn WHEN '@P.N.' THEN 1 ELSE 0 END, n_givn";
 
 	$list=array();
 	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -734,10 +734,14 @@ function count_linked_obje($xref, $link, $ged_id) {
 function fetch_linked_indi($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepare("SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array($ged_id, $link, $xref))
-		->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare(
+		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
+		" FROM {$TBLPREFIX}individuals".
+		" JOIN {$TBLPREFIX}link ON (i_file=l_file AND i_id=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (i_file=n_file AND i_id=n_id AND n_num=0)".
+		" WHERE i_file=? AND l_type=? AND l_to=?".
+		" ORDER BY n_sort"
+	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -748,10 +752,14 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 function fetch_linked_fam($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepare("SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}link, {$TBLPREFIX}families f WHERE f_file=l_file AND f_id=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array($ged_id, $link, $xref))
-		->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare(
+		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil".
+		" FROM {$TBLPREFIX}families".
+		" JOIN {$TBLPREFIX}link ON (f_file=l_file AND f_id=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (f_file=n_file AND f_id=n_id AND n_num=0)".
+		" WHERE f_file=? AND l_type=? AND l_to=?".
+		" ORDER BY n_sort"
+	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -762,10 +770,14 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 function fetch_linked_note($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepare("SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}other o WHERE o_file=l_file AND o_id=l_from AND o_type='NOTE' AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array($ged_id, $link, $xref))
-		->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare(
+		"SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec".
+		" FROM {$TBLPREFIX}other".
+		" JOIN {$TBLPREFIX}link ON (o_file=l_file AND o_id=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (o_file=n_file AND o_id=n_id AND n_num=0)".
+		" WHERE o_file=? AND o_type='NOTE' AND l_type=? AND l_to=?".
+		" ORDER BY n_sort"
+	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -776,10 +788,14 @@ function fetch_linked_note($xref, $link, $ged_id) {
 function fetch_linked_sour($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepare("SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}sources s WHERE s_file=l_file AND s_id=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array($ged_id, $link, $xref))
-		->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare(
+			"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec".
+			" FROM {$TBLPREFIX}sources".
+			" JOIN {$TBLPREFIX}link ON (s_file=l_file AND s_id=l_from)".
+			" LEFT JOIN {$TBLPREFIX}name ON (s_file=n_file AND s_id=n_id AND n_num=0)".
+			" WHERE s_file=? AND l_type=? AND l_to=?".
+			" ORDER BY n_sort"
+		)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -790,10 +806,14 @@ function fetch_linked_sour($xref, $link, $ged_id) {
 function fetch_linked_obje($xref, $link, $ged_id) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepare("SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM {$TBLPREFIX}link, {$TBLPREFIX}media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file=? AND l_type=? AND l_to=?")
-		->execute(array($ged_id, $link, $xref))
-		->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare(
+		"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file".
+		" FROM {$TBLPREFIX}media".
+		" JOIN {$TBLPREFIX}link ON (m_gedfile=l_file AND m_media=l_from)".
+		" LEFT JOIN {$TBLPREFIX}name ON (m_gedfile=n_file AND m_media=n_id AND n_num=0)".
+		" WHERE m_gedfile=? AND l_type=? AND l_to=? AND n_num=?".
+		" ORDER BY n_sort"
+	)->execute(array($ged_id, $link, $xref))->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
 	foreach ($rows as $row) {
@@ -1896,7 +1916,7 @@ function find_rin_id($rin) {
 * @param string $ged  the filename of the gedcom to delete
 */
 function delete_gedcom($ged_id) {
-	global $TBLPREFIX, $pgv_changes, $GEDCOMS;
+	global $TBLPREFIX, $pgv_changes;
 
 	$ged=get_gedcom_from_id($ged_id);
 
@@ -1921,6 +1941,7 @@ function delete_gedcom($ged_id) {
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources             WHERE s_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE gedcom_id =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}module_privacy  WHERE mp_file =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}hit_counter         WHERE gedcom_id =?")->execute(array($ged_id));
 
 	if (isset($pgv_changes)) {
 		//-- erase any of the changes
@@ -2578,7 +2599,7 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 
 	if ($key1=='username') {
 		return
-			PGV_DB::prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user ORDER BY user_id")
+			PGV_DB::prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user ORDER BY user_name")
 			->fetchAssoc();
 	} else {
 		return
@@ -2636,7 +2657,21 @@ function get_logged_in_users() {
 
 // Get a list of logged-in users who haven't been active recently
 function get_idle_users($time) {
-	global $TBLPREFIX;
+	global $TBLPREFIX, $DBTYPE;
+
+	// Convert string column to numeric
+	switch ($DBTYPE) {
+	case 'sqlite':
+	case 'pgsql':
+		$expr='CAST(us2.setting_value AS INTEGER)';
+		break;
+	case 'mysql':
+		$expr='CAST(us2.setting_value AS UNSIGNED)';
+		break;
+	default:
+		$expr='us2.setting_value';
+		break;
+	}
 
 	return
 		PGV_DB::prepare(
@@ -2644,7 +2679,8 @@ function get_idle_users($time) {
 			" FROM {$TBLPREFIX}user u".
 			" JOIN {$TBLPREFIX}user_setting us1 USING (user_id)".
 			" JOIN {$TBLPREFIX}user_setting us2 USING (user_id)".
-			" WHERE us1.setting_name=? AND us1.setting_value=? AND us2.setting_name=? AND us2.setting_value BETWEEN 1 AND ?"
+			" WHERE us1.setting_name=? AND us1.setting_value=? AND us2.setting_name=?".
+			" AND {$expr} BETWEEN 1 AND ?"
 		)
 		->execute(array('loggedin', 'Y', 'sessiontime', $time))
 		->fetchAssoc();
@@ -2793,4 +2829,262 @@ $ged_name=get_gedcom_from_id($ged_id);
 		->execute(array($xref_to, $xref_from, $ged_name))
 		->rowCount();
 }
+////////////////////////////////////////////////////////////////////////////////
+// Autocomplete functions
+////////////////////////////////////////////////////////////////////////////////
+
+function get_autocomplete_INDI($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+
+	$sql=
+		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
+		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
+		" WHERE (i_id ".PGV_DB::$LIKE." ? OR n_sort ".PGV_DB::$LIKE." ?)".
+		" AND i_id=n_id AND i_file=n_file AND i_file=?".
+		" ORDER BY n_sort";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("{$FILTER}%", "%{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_FAM($FILTER, $ids, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$vars=array();
+	if (empty($ids)) {
+		//-- no match : search for FAM id
+		$where = "f_id ".PGV_DB::$LIKE." ?";
+		$vars[]="%{$FILTER}%";
+	} else {
+		//-- search for spouses
+		$qs=implode(',', array_fill(0, count($ids), '?'));
+		$where = "(f_husb IN ($qs) OR f_wife IN ($qs))";
+		$vars=array_merge($vars, $ids, $ids);
+	}
+	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+			 "FROM {$TBLPREFIX}families ".
+			 "WHERE {$where} AND f_file=?";
+	$vars[]=$ged_id;
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute($vars)
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_NOTE($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
+			 "FROM {$TBLPREFIX}other ".
+			 "WHERE o_gedcom ".PGV_DB::$LIKE." ? AND o_type='NOTE' AND o_file=?";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_SOUR($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
+			 "FROM {$TBLPREFIX}sources ".
+			 "WHERE (s_name ".PGV_DB::$LIKE." ? OR s_id ".PGV_DB::$LIKE." ?) AND s_file=? ORDER BY s_name";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", "{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_SOUR_TITL($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
+			 "FROM {$TBLPREFIX}sources ".
+			 "WHERE s_name ".PGV_DB::$LIKE." ? AND s_file=? ORDER BY s_name";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_INDI_BURI_CEME($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql=
+		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
+		"FROM {$TBLPREFIX}individuals ".
+		"WHERE i_gedcom ".PGV_DB::$LIKE." ? AND i_file=?";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%1 BURI%2 CEME %{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_INDI_SOUR_PAGE($FILTER, $OPTION, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
+			 "FROM {$TBLPREFIX}individuals ".
+			 "WHERE i_gedcom ".PGV_DB::$LIKE." ? AND i_file=?";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("% SOUR @{$OPTION}@% PAGE %{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_FAM_SOUR_PAGE($FILTER, $OPTION, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql=
+		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+		"FROM {$TBLPREFIX}families ".
+		"WHERE f_gedcom ".PGV_DB::$LIKE." ? AND f_file=?";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("% SOUR @{$OPTION}@% PAGE %{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_REPO($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql=
+		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}other ".
+		"WHERE (o_gedcom ".PGV_DB::$LIKE." ? OR o_id ".PGV_DB::$LIKE." ?) AND o_file=? AND o_type='REPO'";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%1 NAME %{$FILTER}%", "{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_REPO_NAME($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql=
+		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}other ".
+		"WHERE o_gedcom ".PGV_DB::$LIKE." ? AND o_file=? AND o_type='REPO'";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%1 NAME %{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_OBJE($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT m_media ".
+			 "FROM {$TBLPREFIX}media ".
+			 "WHERE (m_titl ".PGV_DB::$LIKE." ? OR m_media ".PGV_DB::$LIKE." ?) AND m_gedfile=?";
+	return
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", "{$FILTER}%", $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_autocomplete_SURN($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT DISTINCT n_surname ".
+			 "FROM {$TBLPREFIX}name ".
+			 "WHERE n_surname ".PGV_DB::$LIKE." ? AND n_file=? ORDER BY n_surname";
+	return 
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", $ged_id))
+		->fetchOneColumn();
+}
+
+function get_autocomplete_GIVN($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+
+	$sql="SELECT DISTINCT n_givn ".
+			 "FROM {$TBLPREFIX}name ".
+			 "WHERE n_givn ".PGV_DB::$LIKE." ? AND n_file=? ORDER BY n_givn";
+	return 
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", $ged_id))
+		->fetchAll();
+}
+
+function get_autocomplete_PLAC($FILTER, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBTYPE;
+
+	// sqlite doesn't have a CONCAT() function
+	// TODO: mssql might use + instead
+	switch ($DBTYPE) {
+	case 'sqlite':
+		$sql=
+			"select p1.p_place".
+			" from pgv_places p1".
+			" where p1.p_place like ? and p1.p_parent_id=0 AND p1.p_file=?".
+			" union ".
+			"select p1.p_place || ', ' || p2.p_place".
+			" from pgv_places p1".
+			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" where p1.p_place like ? and p2.p_parent_id=0 AND p1.p_file=?".
+			" union ".
+			"select p1.p_place || ', ' || p2.p_place || ', ' || p3.p_place".
+			" from pgv_places p1".
+			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" where p1.p_place like ? and p3.p_parent_id=0 AND p1.p_file=?".
+			" union ".
+			"select p1.p_place || ', ' || p2.p_place || ', ' || p3.p_place || ', ' || p4.p_place".
+			" from pgv_places p1".
+			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" join pgv_places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
+			" where p1.p_place like ? and p4.p_parent_id=0 AND p1.p_file=?".
+			" union ".
+			"select p1.p_place || ', ' || p2.p_place || ', ' || p3.p_place || ', ' || p4.p_place || ', ' || p5.p_place".
+			" from pgv_places p1".
+			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" join pgv_places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
+			" join pgv_places p5 ON (p4.p_parent_id=p5.p_id AND p4.p_file=p5.p_file)".
+			" where p1.p_place like ? and p5.p_parent_id=0 AND p1.p_file=?";
+		break;
+	default:
+		$sql=
+			"select p1.p_place".
+			" from pgv_places p1".
+			" where p1.p_place like ? and p1.p_parent_id=0 AND p1.p_file=?".
+			" union ".
+			"select CONCAT(p1.p_place, ', ', p2.p_place)".
+			" from pgv_places p1".
+			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" where p1.p_place like ? and p2.p_parent_id=0 AND p1.p_file=?".
+			" union ".
+			"select CONCAT(p1.p_place, ', ', p2.p_place, ', ', p3.p_place)".
+			" from pgv_places p1".
+			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" where p1.p_place like ? and p3.p_parent_id=0 AND p1.p_file=?".
+			" union ".
+			"select CONCAT(p1.p_place, ', ', p2.p_place, ', ', p3.p_place, ', ', p4.p_place)".
+			" from pgv_places p1".
+			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" join pgv_places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
+			" where p1.p_place like ? and p4.p_parent_id=0 AND p1.p_file=?".
+			" union ".
+			"select CONCAT(p1.p_place, ', ', p2.p_place, ', ', p3.p_place, ', ', p4.p_place, ', ', p5.p_place)".
+			" from pgv_places p1".
+			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" join pgv_places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
+			" join pgv_places p5 ON (p4.p_parent_id=p5.p_id AND p4.p_file=p5.p_file)".
+			" where p1.p_place like ? and p5.p_parent_id=0 AND p1.p_file=?";
+		break;
+	}
+
+	return 
+		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+		->execute(array("%{$FILTER}%", $ged_id, "%{$FILTER}%", $ged_id, "%{$FILTER}%", $ged_id, "%{$FILTER}%", $ged_id, "%{$FILTER}%", $ged_id))
+		->fetchOneColumn();
+}
+
 ?>

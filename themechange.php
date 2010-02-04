@@ -25,6 +25,7 @@
  * @version $Id$
  */
 
+define('PGV_SCRIPT_NAME', 'themechange.php');
 require './config.php';
 
 // Extract request variables

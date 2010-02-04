@@ -1,6 +1,7 @@
 <?php
+if (!defined('PGV_SCRIPT_NAME')) define('PGV_SCRIPT_NAME', 'sidebar.php');
 require_once('config.php');
-require_once('includes/classes/class_module.php');
+require_once(PGV_ROOT.'includes/classes/class_module.php');
 
 $sb_action = safe_GET('sb_action', PGV_REGEX_ALPHANUM, 'none');
 //-- handle ajax calls

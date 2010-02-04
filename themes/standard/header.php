@@ -104,7 +104,7 @@ function switchMenu(openMe,closeMe)
 	    closeIt.style.display = 'none';
 	    openIt.style.display = '';
 		SetCookie("menu",document.getElementById(openMe).id.toString(),7);
-		window.location = '<?php echo $SCRIPT_NAME,"?",$QUERY_STRING; ?>';
+		window.location = '<?php echo PGV_SCRIPT_NAME,"?",$QUERY_STRING; ?>';
 	}
 function SetCookie(cookieName,cookieValue,nDays)
 	{

@@ -5,7 +5,7 @@
 * You must supply a $famid value with the identifier for the family.
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2010 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -239,8 +239,24 @@ class FamilyRoot extends BaseController {
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
+		$husb = $this->getHusband();
+		$wife = $this->getWife();
+		$link = '';
+		$c = 0;
+		if ($husb) {
+			$link .= 'pids[0]='.$husb;
+			$c++;
+			if ($wife) {
+				$link .= '&pids[1]='.$wife;
+				$c++;
+			}
+		} else if ($wife) {
+			$link .= 'pids[0]='.$wife;
+			$c++;
+		}
+
 		// charts menu
-		$menu = new Menu($pgv_lang['charts'], encode_url('timeline.php?pids[0]='.$this->getHusband().'&pids[1]='.$this->getWife()));
+		$menu = new Menu($pgv_lang['charts'], encode_url('timeline.php?'.$link));
 		if (!empty($PGV_IMAGES["timeline"]["small"])) {
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
 		}
@@ -258,7 +274,7 @@ class FamilyRoot extends BaseController {
 			switch ($menuType) {
 			case "parentTimeLine":
 				// charts / parents_timeline
-				$submenu = new Menu($pgv_lang['parents_timeline'], encode_url('timeline.php?pids[0]='.$this->getHusband().'&pids[1]='.$this->getWife()));
+				$submenu = new Menu($pgv_lang['parents_timeline'], encode_url('timeline.php?'.$link));
 				if (!empty($PGV_IMAGES["timeline"]["small"])) {
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
 				}
@@ -278,7 +294,7 @@ class FamilyRoot extends BaseController {
 
 			case "familyTimeLine":
 				// charts / family_timeline
-				$submenu = new Menu($pgv_lang['family_timeline'], encode_url('timeline.php?pids[0]='.$this->getHusband().'&pids[1]='.$this->getWife().'&'.$this->getChildrenUrlTimeline(2)));
+				$submenu = new Menu($pgv_lang['family_timeline'], encode_url('timeline.php?'.$link.'&'.$this->getChildrenUrlTimeline($c)));
 				if (!empty($PGV_IMAGES["timeline"]["small"])) {
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
 				}

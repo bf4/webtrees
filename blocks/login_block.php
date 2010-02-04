@@ -45,7 +45,7 @@ $PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>0);
  * Prints a block allowing the user to login to the site directly from the portal
  */
 function print_login_block($block = true, $config="", $side, $index) {
-	global $pgv_lang, $SCRIPT_NAME, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL;
+	global $pgv_lang, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL;
 	global $TEXT_DIRECTION;
 
 	if (PGV_USER_ID) {

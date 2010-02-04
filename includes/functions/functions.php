@@ -6,7 +6,7 @@
  * routines and sorting functions.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -209,17 +209,11 @@ function file_upload_error_text($error_code) {
  * this function returns the path to the currently active GEDCOM configuration file
  * @return string path to gedcom.ged_conf.php configuration file
  */
-function get_config_file($ged='') {
-	global $GEDCOM, $INDEX_DIRECTORY;
-
-	if ($ged) {
-		$ged_id=get_id_from_gedcom($ged);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
+function get_config_file($ged_id=PGV_GED_ID) {
+	global $INDEX_DIRECTORY;
 
 	$config=get_gedcom_setting($ged_id, 'config');
-	// Compatibility with non-php based storage
+	// Compatibility with non-php based storage, (PGV 4.3.0 onwards)
 	$config=str_replace('${INDEX_DIRECTORY}', $INDEX_DIRECTORY, $config);
 
 	if (!file_exists($config)) {
@@ -282,14 +276,8 @@ function get_privacy_file_version($privfile) {
  * Get the path to the privacy file for the currently active GEDCOM
  * @return string path to the privacy file
  */
-function get_privacy_file($ged='') {
-	global $GEDCOM, $INDEX_DIRECTORY;
-
-	if ($ged) {
-		$ged_id=get_id_from_gedcom($ged);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
+function get_privacy_file($ged_id=PGV_GED_ID) {
+	global $INDEX_DIRECTORY;
 
 	$privfile=get_gedcom_setting($ged_id, 'privacy');
 	// Compatibility with non-php based storage
@@ -316,7 +304,7 @@ function load_privacy_file($ged_id=PGV_GED_ID) {
 	require PGV_ROOT.'privacy.php';
 
 	// Load settings for the specified gedcom
-	$privacy_file=get_privacy_file(get_gedcom_from_id($ged_id));
+	$privacy_file=get_privacy_file($ged_id);
 	if (
 		$privacy_file &&
 		file_exists($privacy_file) &&
@@ -1174,7 +1162,7 @@ function find_updated_record($gid, $ged_id) {
 function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $pgv_changes;
 
-	if (!isset($pgv_changes) || !userCanAccept($user_id, $ged_id)) {
+	if (!isset($pgv_changes)) {
 		return false;
 	}
 
@@ -3037,7 +3025,7 @@ function CheckPageViews() {
 		return;
 
 	// The media firewall should not be throttled
-	if (strpos($_SERVER["SCRIPT_NAME"], "mediafirewall") > -1)
+	if (PGV_SCRIPT_NAME=='mediafirewall.php')
 		return;
 
 	if (!empty($_SESSION["pageviews"]["time"]) && !empty($_SESSION["pageviews"]["number"])) {
@@ -3437,12 +3425,13 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	}
 
 	// Modify certain spellings if Ashkenazi pronounciations are in use.
-	if ($JEWISH_ASHKENAZ_PRONUNCIATION)
+	if ($JEWISH_ASHKENAZ_PRONUNCIATION) {
 		switch($lang_short_cut[$LANGUAGE]) {
 		case 'en':
 			$pgv_lang['csh']='Cheshvan';
 			$pgv_lang['tvt']='Teves';
 			break;
+		}
 	}
 
 	// Special formatting options; R selects conversion to a language-dependent calendar.
