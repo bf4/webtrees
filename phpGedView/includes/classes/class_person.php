@@ -364,11 +364,18 @@ class Person extends GedcomRecord {
 						$min[]=$tmp->MaxJD()-365*1;
 						$max[]=$tmp->MinJD()+365*30;
 					}
-					if ($spouse=$family->getSpouse($this)) {
-						$tmp=$spouse->getBirthDate();
+					if ($parent=$family->getHusband()) {
+						$tmp=$parent->getBirthDate();
 						if (is_object($tmp) && $tmp->MinJD()) {
 							$min[]=$tmp->MaxJD()+365*15;
-							$max[]=$tmp->MinJD()+365*($this->getSex()=='F'?45:65);
+							$max[]=$tmp->MinJD()+365*65;
+						}
+					}
+					if ($parent=$family->getWife()) {
+						$tmp=$parent->getBirthDate();
+						if (is_object($tmp) && $tmp->MinJD()) {
+							$min[]=$tmp->MaxJD()+365*15;
+							$max[]=$tmp->MinJD()+365*45;
 						}
 					}
 					foreach ($family->getChildren() as $child) {
