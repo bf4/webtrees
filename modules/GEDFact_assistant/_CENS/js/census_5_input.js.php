@@ -711,17 +711,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 			dob = (I+', '+J+', '+K);
 			yob = I;
 		}
-		// Create Date of Birth object from passed string dob 
-		var jsdob = Date.parseString(dob, 'y, M, d');
-		// US Census - Create dob (month year) and Age at first marriage ------ 
-		if (jsdob != "Invalid Date" && jsdob != "" && jsdob != null) {
-			usdob = jsdob.format("NNN "+yob);
-			agemarr = Math.floor((jsdom-jsdob)/one_year);
-		} else {
-			usdob = '-';
-			agemarr = '-';
-		}
-		
+
 		// Date of Marriage (dom) - passed as Julian Date String --------------
 		if (dom>1721060) {
 			IJD = Math.floor(dom);
@@ -739,6 +729,17 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 		}
 		// Create Date of Marriage object from passed string dom 
 		var jsdom = Date.parseString(dom, 'y, M, d');
+		
+		// Create Date of Birth object and Age at First Marriage from passed string dob 
+		var jsdob = Date.parseString(dob, 'y, M, d');
+		// US Census - Create dob (month year) and Age at first marriage ------ 
+		if (jsdob != "Invalid Date" && jsdob != "" && jsdob != null) {
+			usdob = jsdob.format("NNN "+yob);
+			agemarr = Math.floor((jsdom-jsdob)/one_year);
+		} else {
+			usdob = '-';
+			agemarr = '-';
+		}
 		
 		// Date of Death (dod) - passed as Julian Date String --------------
 		if (dod>1721060) {
