@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Update: jQuery 1.4.1 (volschin)
  - Fixed: [ 2938600 ] 4.2.3 indi Map tab: no map & Java error (wooc)
  - Fixed: [ 2943837 ] Placenames in Edit Interface in latest PGV (fisharebest)
  - Fixed: [ 2943263 ] Logout ERROR 2 (fisharebest)
