@@ -6,7 +6,7 @@
 * to use an SQL database as its datastore.
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -2835,17 +2835,33 @@ $ged_name=get_gedcom_from_id($ged_id);
 function get_autocomplete_INDI($FILTER, $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
 
-
+	// search for ids first and request the exact id from FILTER and ids with one additional digit
 	$sql=
 		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
 		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-		" WHERE (i_id ".PGV_DB::$LIKE." ? OR n_sort ".PGV_DB::$LIKE." ?)".
+		" WHERE (i_id=? OR i_id ".PGV_DB::$LIKE." ?)".
 		" AND i_id=n_id AND i_file=n_file AND i_file=?".
-		" ORDER BY n_sort";
-	return
+		" ORDER BY i_id";
+	$rows=
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
-		->execute(array("{$FILTER}%", "%{$FILTER}%", $ged_id))
+		->execute(array("{$FILTER}", "{$FILTER}_", $ged_id))
 		->fetchAll(PDO::FETCH_ASSOC);
+	// if the number of rows is not zero, the input is an id and you don't need to search the names for
+	if (count($rows) ==0) {
+		$sql=
+			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
+			" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
+			" WHERE n_sort ".PGV_DB::$LIKE." ?".
+			" AND i_id=n_id AND i_file=n_file AND i_file=?".
+			" ORDER BY n_sort";
+		return
+			PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+			->execute(array("%{$FILTER}%", $ged_id))
+			->fetchAll(PDO::FETCH_ASSOC);
+	}
+	else {
+		return $rows;
+	}
 }
 
 function get_autocomplete_FAM($FILTER, $ids, $ged_id=PGV_GED_ID) {

@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.0
+ - Changed: Behaviour of autocomplete for INDI fields, input of an id grabs only the exact id and extends by a further digit, makes it much faster for large gedcoms (volschin)
  - Fixed: [ 2945678 ] [6910] Add new child/autocomplete (fisharebest)
  - Update: jQuery 1.4.1 (volschin)
  - Fixed: [ 2938600 ] 4.2.3 indi Map tab: no map & Java error (wooc)
