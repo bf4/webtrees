@@ -242,7 +242,7 @@ function is_dead($indirec, $current_year='', $import=false, $sitemap=false) {
 					preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', find_family_record($fams2_match, $ged_id), $chil2_matches);
 					foreach ($chil2_matches[1] as $chil2_match) {
 						$grandchildrec=find_person_record($chil2_match, $ged_id);
-						preg_match_all('/\n2 DATE (.+)/', $childrec, $date_matches);
+						preg_match_all('/\n2 DATE (.+)/', $grandchildrec, $date_matches);
 						// Assume grandchildren born after age of 30
 						foreach ($date_matches[1] as $date_match) {
 							$date=new GedcomDate($date_match);
