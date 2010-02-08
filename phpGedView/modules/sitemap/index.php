@@ -70,7 +70,7 @@ if ($action=="sendFiles") {
 	header('Content-Disposition: attachment; filename="'.$filename.'"');
 
 	echo "<?xml version='1.0' encoding='UTF-8'?>\n";
-	echo "<?xml-stylesheet type=\"text/xsl\" href=\"", $SERVER_URL, "modules/sitemap/gss.xsl\"?>\n";
+	echo "<?xml-stylesheet type=\"text/xsl\" href=\"", PGV_SERVER_NAME.PGV_SCRIPT_PATH, "modules/sitemap/gss.xsl\"?>\n";
 	echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n"; 
 	echo "		xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"; 
 	echo "		xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\n"; 
@@ -78,7 +78,7 @@ if ($action=="sendFiles") {
 
 	if (isset($welcome)) {
 		echo "	<url>\n";
-		echo "		<loc>", $SERVER_URL, "index.php?command=gedcom&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+		echo "		<loc>", PGV_SERVER_NAME, PGV_SCRIPT_PATH, "index.php?command=gedcom&amp;ged=", urlencode($gedcom_name), "</loc>\n";
 		echo "		<changefreq>", $welcome_update, "</changefreq>\n";
 		echo "		<priority>0.", $welcome_priority, "</priority>\n";
 		echo "	</url>\n";
@@ -96,7 +96,7 @@ if ($action=="sendFiles") {
 			if ($no_private_links) {
 				if (displayDetailsById($row[0], "INDI", true)) {
 					echo "	<url>\n";
-					echo "		<loc>", $SERVER_URL, "individual.php?pid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+					echo "		<loc>", PGV_SERVER_NAME, PGV_SCRIPT_PATH, "individual.php?pid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
 					$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
 					if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
 						echo "		<lastmod>", date("Y-m-d", strtotime($datematch[1])), "</lastmod>\n";
@@ -106,7 +106,7 @@ if ($action=="sendFiles") {
 				}
 			} else {
 				echo "	<url>\n";
-				echo "		<loc>", $SERVER_URL, "individual.php?pid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+				echo "		<loc>", PGV_SERVER_NAME, PGV_SCRIPT_PATH, "individual.php?pid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
 				$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
 				if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
 					echo "		<lastmod>", date("Y-m-d", strtotime($datematch[1])), "</lastmod>\n";
@@ -124,7 +124,7 @@ if ($action=="sendFiles") {
 			if ($no_private_links) {
 				if (displayDetailsById($row[0], "FAM", true)) {
 					echo "	<url>\n";
-					echo "		<loc>", $SERVER_URL, "family.php?famid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+					echo "		<loc>", PGV_SERVER_NAME, PGV_SCRIPT_PATH, "family.php?famid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
 					$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
 					if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
 						echo "		<lastmod>", date("Y-m-d", strtotime($datematch[1])), "</lastmod>\n";
@@ -134,7 +134,7 @@ if ($action=="sendFiles") {
 				}
 			} else {
 				echo "	<url>\n";
-				echo "		<loc>", $SERVER_URL, "family.php?famid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+				echo "		<loc>", PGV_SERVER_NAME, PGV_SCRIPT_PATH, "family.php?famid=", $row[0], "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
 				$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
 				if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
 					echo "		<lastmod>", date("Y-m-d", strtotime($datematch[1])), "</lastmod>\n";
@@ -150,7 +150,7 @@ if ($action=="sendFiles") {
 		foreach(get_indilist_salpha($SHOW_MARRIED_NAMES, true, $index) as $letter) {
 			if ($letter!='@') {
 				echo "	<url>\n";
-				echo "		<loc>", $SERVER_URL, "famlist.php?alpha=", urlencode($letter), "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+				echo "		<loc>", PGV_SERVER_NAME, PGV_SCRIPT_PATH, "famlist.php?alpha=", urlencode($letter), "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
 				echo "		<changefreq>", $famlist_update, "</changefreq>\n";
 				echo "		<priority>0.", $famlist_priority, "</priority>\n";
 				echo "	</url>\n";
@@ -162,7 +162,7 @@ if ($action=="sendFiles") {
 		foreach (get_indilist_salpha($SHOW_MARRIED_NAMES, false, $index) as $letter) {
 			if ($letter!='@') {
 				echo "	<url>\n";
-				echo "		<loc>", $SERVER_URL, "indilist.php?alpha=", urlencode($letter), "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
+				echo "		<loc>", PGV_SERVER_NAME, PGV_SCRIPT_PATH, "indilist.php?alpha=", urlencode($letter), "&amp;ged=", urlencode($gedcom_name), "</loc>\n";
 				echo "		<changefreq>", $indilist_update, "</changefreq>\n";
 				echo "		<priority>0.", $indilist_priority, "</priority>\n";
 				echo "	</url>\n";
@@ -182,7 +182,7 @@ if ($action=="sendIndex") {
 	header('Content-Disposition: attachment; filename="SitemapIndex.xml"');
 
 	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	echo "<?xml-stylesheet type=\"text/xsl\" href=\"", $SERVER_URL, "modules/sitemap/gss.xsl\"?>\n";
+	echo "<?xml-stylesheet type=\"text/xsl\" href=\"", PGV_SERVER_NAME, PGV_SCRIPT_PATH, "modules/sitemap/gss.xsl\"?>\n";
 	echo "<sitemapindex xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n";
 	echo "xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n";
 	echo "url=\"http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd\"\n";
@@ -193,7 +193,7 @@ if ($action=="sendIndex") {
 		foreach($filenames as $ged_index=>$ged_name) {
 			$xml_name = str_ireplace(".ged",".xml", $ged_name);
 			echo "	<sitemap>\n";
-			echo "		<loc>", $SERVER_URL, "SM_", $xml_name, "</loc>\n";
+			echo "		<loc>", PGV_SERVER_NAME, PGV_SCRIPT_PATH, "SM_", $xml_name, "</loc>\n";
 			echo "		<lastmod>", date("Y-m-d"), "</lastmod>\n ";
 			echo "	</sitemap>\n";
 		}
