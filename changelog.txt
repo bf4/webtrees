@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.x CA
+ - Fixed: GEDFact_assistant/_CENS/ module - Added addslashes() to escape double quotes in indi names. (windmillway)
  - Fixed: GEDFact_assistant/_CENS/ module - Fixed small bug with "Age when married" field (US 1930). (windmillway)
  - Merged: Merging r6789 through r6911 from the trunk (yalnifj)
  - Added: GEDFact_assistant/_CENS/ module - Added paste-back of Final Census Date from Assistant window to Add Census Event window. (windmillway)

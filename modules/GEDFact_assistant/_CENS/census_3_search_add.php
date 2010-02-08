@@ -195,12 +195,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<a href='javaScript:insertRowToTable("<?php 
 											print PrintReady($people["husb"]->getXref()) ;								 // pid = PID
 										?>", "<?php 
-											echo $fulln;																 // nam = Full Name
+											echo addslashes($fulln);													 // nam = Full Name
 										?>", "<?php 
 											if (isset($nam[1])){
-												echo $fulmn;															 // mnam = Full Married Name
+												echo addslashes($fulmn);												 // mnam = Full Married Name
 											}else{
-												echo $fulln;															 // mnam = Full Name
+												echo addslashes($fulln);												 // mnam = Full Name
 											}
 										?>", "<?php
 											print PrintReady($people["husb"]->getLabel());								 // label = Relationship
@@ -333,9 +333,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											echo $fulln																	 // nam = Full Name
 										?>", "<?php 
 											if (isset($nam[1])){
-												echo $fulmn;															 // mnam = Full Married Name
+												echo addslashes($fulmn);												 // mnam = Full Married Name
 											}else{
-												echo $fulln;															 // mnam = Full Name
+												echo addslashes($fulln);												 // mnam = Full Name
 											}
 										?>", "<?php
 											print PrintReady($people["wife"]->getLabel());								 // label = Relationship
@@ -476,12 +476,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 												<a href='javaScript:insertRowToTable("<?php 
 														print $child->getXref();											 // pid = PID
 													?>", "<?php 
-														echo $fulln;														 // nam = Full Name
+														echo addslashes($fulln);											 // nam = Full Name
 													?>", "<?php 
 														if (isset($nam[1])){
-															echo $fulmn;													 // mnam = Full Married Name
+															echo addslashes($fulmn);										 // mnam = Full Married Name
 														}else{
-															echo $fulln;													 // mnam = Full Name
+															echo addslashes($fulln);										 // mnam = Full Name
 														}
 													?>", "<?php
 														if ($child->getXref()==$pid) {
@@ -645,12 +645,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<a href='javaScript:insertRowToTable("<?php
 											print PrintReady($people["husb"]->getXref());									 // pid = PID
 										?>", "<?php 
-											echo $fulln;																	 // nam = Full Name
+											echo addslashes($fulln);														 // nam = Full Name
 										?>", "<?php 
 											if (isset($nam[1])){
-												echo $fulmn;																 // mnam = Full Married Name
+												echo addslashes($fulmn);													 // mnam = Full Married Name
 											}else{
-												echo $fulln;																 // mnam = Full Name
+												echo addslashes($fulln);													 // mnam = Full Name
 											}
 										?>", "<?php
 										if ($people["husb"]->getLabel() == ".") {
@@ -792,12 +792,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<a href='javaScript:insertRowToTable("<?php
 											print PrintReady($people["wife"]->getXref()) ;									 // pid = PID
 										?>", "<?php 
-											echo $fulln;																	 // nam = Full Name
+											echo addslashes($fulln);														 // nam = Full Name
 										?>", "<?php 
 											if (isset($nam[1])){
-												echo $fulmn;																 // mnam = Full Married Name
+												echo addslashes($fulmn);													 // mnam = Full Married Name
 											}else{
-												echo $fulln;																 // mnam = Full Name
+												echo addslashes($fulln);													 // mnam = Full Name
 											}
 										?>", "<?php
 										if ($people["wife"]->getLabel() == ".") {
@@ -927,12 +927,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										<a href='javaScript:insertRowToTable("<?php
 												print PrintReady($child->getXref()) ;										 // pid = PID
 											?>", "<?php 
-												echo $fulln;																 // nam = Full Name
+												echo addslashes($fulln);													 // nam = Full Name
 											?>", "<?php 
 												if (isset($nam[1])){
-													echo $fulmn;															 // mnam = Full Married Name
+													echo addslashes($fulmn);												 // mnam = Full Married Name
 												}else{
-													echo $fulln;															 // mnam = Full Name
+													echo addslashes($fulln);												 // mnam = Full Name
 												}
 											?>", "<?php
 												print PrintReady($child->getLabel());										 // label = Relationship
@@ -1085,12 +1085,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<a href='javaScript:insertRowToTable("<?php
 											print $people["husb"]->getXref() ;											 // pid = PID
 										?>", "<?php 
-											echo $fulln;																 // nam = Full Name
+											echo addslashes($fulln);													 // nam = Full Name
 										?>", "<?php 
 											if (isset($nam[1])){
-												echo $fulmn;															 // mnam = Full Married Name
+												echo addslashes($fulmn);												 // mnam = Full Married Name
 											}else{
-												echo $fulln;															 // mnam = Full Name
+												echo addslashes($fulln);												 // mnam = Full Name
 											}
 										?>", "<?php
 											if ($people["husb"]->getXref()==$pid) {
@@ -1174,6 +1174,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$married = GedcomDate::Compare($censdate, $marrdate);
 							$nam     = $people["wife"]->getAllNames();
 							$fulln   = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
+							//$fulln   = str_replace('"', '\"', $fulln);
 							$fulln   = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
 							$fulln   = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
 							$givn    = rtrim($nam[0]['givn'],'*');
@@ -1189,8 +1190,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							}
 							if (isset($nam[1]) && isset($husbnam)) {
 								$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$husbnam[0]['surname'];
+								//$fulmn   = str_replace('"', '\"', $fulmn);
 							}else{
 								$fulmn = $fulln;
+								//$fulmn   = str_replace('"', '\"', $fulmn);
 							}
 							$menu = new Menu($people["wife"]->getLabel()."\n");
 							$slabel  = print_pedigree_person_nav2($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $people["wife"]->getLabel(), $censyear);
@@ -1229,12 +1232,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										<a href='javaScript:insertRowToTable("<?php 
 												print $people["wife"]->getXref() ;										 // pid = PID
 										?>", "<?php 
-											echo $fulln;																 // nam = Full Name
+											echo addslashes($fulln);													 // nam = Full Name
 										?>", "<?php 
 											if (isset($nam[1])){
-												echo $fulmn;															 // mnam = Full Married Name
+												echo addslashes($fulmn);												 // mnam = Full Married Name
 											}else{
-												echo $fulln;															 // mnam = Full Name
+												echo addslashes($fulln);												 // mnam = Full Name
 											}
 										?>", "<?php
 											if ($people["wife"]->getXref()==$pid) {
@@ -1371,12 +1374,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<a href='javaScript:insertRowToTable("<?php 
 											print $child->getXref() ;													 // pid = PID
 										?>", "<?php 
-											echo $fulln;																 // nam = Full Name
+											echo addslashes($fulln);													 // nam = Full Name
 										?>", "<?php 
 											if (isset($nam[1])){
-												echo $fulmn;															 // mnam = Full Married Name
+												echo addslashes($fulmn);												 // mnam = Full Married Name
 											}else{
-												echo $fulln;															 // mnam = Full Name
+												echo addslashes($fulln);												 // mnam = Full Name
 											}
 										?>", "<?php
 											print PrintReady($child->getLabel());										 // label = Relationship
@@ -1589,11 +1592,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}
 									$parentlinks .= "<a class=\"linka\" href=\"javascript:insertRowToTable(";
 									$parentlinks .= "'".PrintReady($husb->getXref())."',";							// pid		=	PID
-									$parentlinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
+									$parentlinks .=	"'".addslashes(strip_tags($fulln))."',";						// nam		=	Name
 									if (isset($nam[1])){
-										$parentlinks .= "'".strip_tags($fulmn)."',";								// mnam		=	Full Married Name
+										$parentlinks .= "'".addslashes(strip_tags($fulmn))."',";					// mnam		=	Full Married Name
 									} else {
-										$parentlinks .= "'".strip_tags($fulln)."',";	 							// mnam		=	Full Name
+										$parentlinks .= "'".addslashes(strip_tags($fulln))."',";	 				// mnam		=	Full Name
 									}
 									if ($currpid=="Wife" || $currpid=="Husband") {
 										$parentlinks .= "'Father in Law',";											// label	=	1st Gen Male Relationship
@@ -1692,11 +1695,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}
 									$parentlinks .= "<a class=\"linka\" href=\"javascript:insertRowToTable(";
 									$parentlinks .=	"'".PrintReady($wife->getXref())."',";							// pid		=	PID
-									$parentlinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
+									$parentlinks .=	"'".addslashes(strip_tags($fulln))."',";						// nam		=	Name
 									if (isset($nam[1])){
-										$parentlinks .= "'".strip_tags($fulmn)."',";								// mnam		=	Full Married Name
+										$parentlinks .= "'".addslashes(strip_tags($fulmn))."',";					// mnam		=	Full Married Name
 									} else {
-										$parentlinks .= "'".strip_tags($fulln)."',";								// mnam		=	Full Name
+										$parentlinks .= "'".addslashes(strip_tags($fulln))."',";					// mnam		=	Full Name
 									}
 									if ($currpid=="Wife" || $currpid=="Husband") {
 										$parentlinks .= "'Mother in Law',";											// label	=	1st Gen Female Relationship
@@ -1816,11 +1819,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										}
 									$parentlinks .= "<a class=\"linka\" href=\"javascript:insertRowToTable(";
 									$parentlinks .= "'".PrintReady($husb->getXref())."',";							// pid		=	PID
-									$parentlinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
+									$parentlinks .=	"'".addslashes(strip_tags($fulln))."',";						// nam		=	Name
 									if (isset($nam[1])){
-										$parentlinks .= "'".strip_tags($fulmn)."',";								// mnam		=	Full Married Name
+										$parentlinks .= "'".addslashes(strip_tags($fulmn))."',";					// mnam		=	Full Married Name
 									} else {
-										$parentlinks .= "'".strip_tags($fulln)."',";	 							// mnam		=	Full Name
+										$parentlinks .= "'".addslashes(strip_tags($fulln))."',";					// mnam		=	Full Name
 									}
 									if ($currpid=="Wife" || $currpid=="Husband") {
 										$parentlinks .= "'Step Father-in-Law',";									// label	=	1st Gen Male Relationship
@@ -1922,11 +1925,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}
 									$parentlinks .= "<a class=\"linka\" href=\"javascript:insertRowToTable(";
 									$parentlinks .=	"'".PrintReady($wife->getXref())."',";							// pid		=	PID
-									$parentlinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
+									$parentlinks .=	"'".addslashes(strip_tags($fulln))."',";						// nam		=	Name
 									if (isset($nam[1])){
-										$parentlinks .= "'".strip_tags($fulmn)."',";								// mnam		=	Full Married Name
+										$parentlinks .= "'".addslashes(strip_tags($fulmn))."',";					// mnam		=	Full Married Name
 									} else {
-										$parentlinks .= "'".strip_tags($fulln)."',";								// mnam		=	Full Name
+										$parentlinks .= "'".addslashes(strip_tags($fulln))."',";					// mnam		=	Full Name
 									}
 									if ($currpid=="Wife" || $currpid=="Husband") {
 										$parentlinks .= "'Step Mother-in-Law',";									// label	=	1st Gen Female Relationship
@@ -2042,11 +2045,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}
 									$spouselinks .= "<a href=\"javascript:insertRowToTable(";
 									$spouselinks .=	"'".PrintReady($spouse->getXref())."',";						// pid		=	PID
-									$spouselinks .=	"'".strip_tags($fulln)."',";									// nam		=	Name
+									$spouselinks .=	"'".addslashes(strip_tags($fulln))."',";						// nam		=	Name
 									if (isset($nam[1])){
-										$spouselinks .= "'".strip_tags($fulmn)."',";								// mnam		=	Full Married Name
+										$spouselinks .= "'".addslashes(strip_tags($fulmn))."',";					// mnam		=	Full Married Name
 									} else {
-										$spouselinks .= "'".strip_tags($fulln)."',";								// mnam		=	Full Name
+										$spouselinks .= "'".addslashes(strip_tags($fulln))."',";					// mnam		=	Full Name
 									}
 									if ($currpid=="Son" || $currpid=="Daughter") {
 										if ($spouse->getSex()=="M") {
@@ -2169,11 +2172,11 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								
 									$spouselinks .= "<a href=\"javascript:insertRowToTable(";
 									$spouselinks .=	"'".PrintReady($child->getXref())."',";						// pid		=	PID
-									$spouselinks .=	"'".strip_tags($fulln)."',";								// nam		=	Name
+									$spouselinks .=	"'".addslashes(strip_tags($fulln))."',";					// nam		=	Name
 									if (isset($nam[1])){
-										$spouselinks .= "'".strip_tags($fulmn)."',";							// mnam		=	Full Married Name
+										$spouselinks .= "'".addslashes(strip_tags($fulmn))."',";				// mnam		=	Full Married Name
 									} else {
-										$spouselinks .= "'".strip_tags($fulln)."',";							// mnam		=	Full Name
+										$spouselinks .= "'".addslashes(strip_tags($fulln))."',";				// mnam		=	Full Name
 									}
 									if ($currpid=="Son" || $currpid=="Daughter") {
 										if ($child->getSex()=="M") {
