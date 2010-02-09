@@ -126,7 +126,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = addslashes($chfulln);													// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
 								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
@@ -330,7 +331,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<a href='javaScript:insertRowToTable("<?php
 											print $people["wife"]->getXref() ; 											 // pid = PID
 										?>", "<?php 
-											echo $fulln																	 // nam = Full Name
+											echo addslashes($fulln);													 // nam = Full Name
 										?>", "<?php 
 											if (isset($nam[1])){
 												echo addslashes($fulmn);												 // mnam = Full Married Name
@@ -411,7 +412,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										$chnam   = $chchild->getAllNames();
 										$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 										$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);				// Child's Full Name
+										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+										$chfulln = addslashes($chfulln);														// Child's Full Name// Child's Full Name
 										$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 										$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
 										$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
@@ -570,7 +572,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = addslashes($chfulln);													// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
 								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
@@ -876,7 +879,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										$chnam   = $chchild->getAllNames();
 										$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 										$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);				// Child's Full Name
+										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+										$chfulln = addslashes($chfulln);														// Child's Full Name
 										$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 										$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
 										$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
@@ -1013,7 +1017,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = addslashes($chfulln);													// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
 								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
@@ -1320,7 +1325,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									$chnam   = $chchild->getAllNames();
 									$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 									$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-									$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);				// Child's Full Name
+									$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+									$chfulln = addslashes($chfulln);														// Child's Full Name// Child's Full Name
 									$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 									$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
 									$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
@@ -1543,6 +1549,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 							foreach ($children as $key=>$child) {
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+								$chfulln = str_replace('"', "", $chfulln);											// Must remove quotes completely here
 								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
 								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
@@ -1767,6 +1774,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 							foreach ($children as $key=>$child) {
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+								$chfulln = str_replace('"', "", $chfulln);											// Must remove quotes completely here
 								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
 								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
@@ -1995,6 +2003,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 							foreach ($children as $key=>$child) {
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+								$chfulln = str_replace('"', "", $chfulln);											// Must remove quotes completely here
 								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
 								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
@@ -2134,6 +2143,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									foreach ($chchildren as $key=>$chchild) {
 										$chnam   = $chchild->getAllNames();
 										$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+										$chfulln = str_replace('"', "", $chfulln);												// Must remove quotes completely here
 										$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
 										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);				// Child's Full Name
 										$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)

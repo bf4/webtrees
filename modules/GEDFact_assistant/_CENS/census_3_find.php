@@ -389,10 +389,16 @@ if ($action=="filter") {
 				$nam = $indi->getAllNames();
 				$wholename = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 				$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
+				$fulln = str_replace('"', '\'', $fulln);									// Replace double quotes
+				$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
+				$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
 				$givn  = rtrim($nam[0]['givn'],'*');
 				$surn  = $nam[0]['surname'];
 				if (isset($nam[1])) {
 					$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
+					$fulmn = str_replace('"', '\'', $fulmn);								// Replace double quotes
+					$fulmn = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulmn);
+					$fulmn = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulmn);
 					$marn  = $nam[1]['surname'];
 				} else {
 					$fulmn = $fulln;
@@ -430,6 +436,7 @@ if ($action=="filter") {
 					foreach ($children as $key=>$child) {
 						$chnam   = $child->getAllNames();
 						$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
+						$chfulln = str_replace('"', "", $chfulln);											// Must remove quotes completely here
 						$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
 						$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
 						$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
@@ -450,10 +457,10 @@ if ($action=="filter") {
 					// ==============================================================================================================================
 					// NOTES = function pasterow(id, nam, mnam, label, gend, cond, dom, dob, age, dod, occu, birthpl, fbirthpl, mbirthpl, chilBLD) {
 					// ==============================================================================================================================
-					echo "<a href=\"javascript:;\" onclick=\"pasterow(";
+					echo "<a href=\"javascript:;\" onclick=\"window.opener.insertRowToTable(";
 						echo "'".$indi->getXref()."', ";															 // id        - Indi Id 
-						echo "'".$fulln."', ";																		 // nam       - Name
-						echo "'".$fulmn."', ";																		 // mnam      - Married Name
+						echo "'".addslashes(strip_tags($fulln))."', ";												 // nam       - Name
+						echo "'".addslashes(strip_tags($fulmn))."', ";												 // mnam      - Married Name
 						echo "'-', ";																				 // label     - Relation to Head of Household
 						echo "'".$indi->getSex()."', ";																 // gend      - Sex
 						echo "'S', ";																				 // cond      - Marital Condition
