@@ -30,7 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $footerscriptshown, $THEME_DIR, $BROWSERTYPE;
+global $footerscriptshown, $BROWSERTYPE;
 if (!$footerscriptshown) {
 
         echo <<<JSCRIPT
