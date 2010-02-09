@@ -1002,3 +1002,6 @@ font-size: 12px;
 	top: -60px;
 	z-index:1;
 }
+
+#header, #footer, .submenu, .sublinks_table, .door, .help, .alpha_index, .noprint {display:none !important;}
+form, button, input, tfoot>tr>td>label {display: none;} /* buttons and input are used out of forms in sortable tables*/
