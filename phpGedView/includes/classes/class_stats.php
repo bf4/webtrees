@@ -3826,8 +3826,8 @@ class stats {
 // Contact                                                                   //
 ///////////////////////////////////////////////////////////////////////////////
 
-	static function contactWebmaster() {return user_contact_link($GLOBALS['WEBMASTER_EMAIL'], $GLOBALS['SUPPORT_METHOD']);}
-	static function contactGedcom() {return user_contact_link($GLOBALS['CONTACT_EMAIL'], $GLOBALS['CONTACT_METHOD']);}
+	static function contactWebmaster() {return user_contact_link(get_user_id($GLOBALS['WEBMASTER_EMAIL']), $GLOBALS['SUPPORT_METHOD']);}
+	static function contactGedcom() {return user_contact_link(get_user_id($GLOBALS['CONTACT_EMAIL']), $GLOBALS['CONTACT_METHOD']);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Date & Time                                                               //
