@@ -476,6 +476,7 @@ $pgv_lang["sex"]					= "Sexo";
 $pgv_lang["personal_facts"] 		= "Detalles Personales";
 $pgv_lang["type"]					= "Tipo";
 $pgv_lang["parents"]				= "Padres";
+$pgv_lang["gparents"]				= "Abuelos";
 $pgv_lang["siblings"]				= "Hermanos/as";
 $pgv_lang["father"] 				= "Padre";
 $pgv_lang["mother"] 				= "Madre";
@@ -518,6 +519,8 @@ $pgv_lang["marriage"]				= "Matrimonio:";
 $pgv_lang["lds_sealing"]			= "Sellamiento SUD:";
 $pgv_lang["marriage_license"]		= "Licencia matrimonial:";
 $pgv_lang["no_children"]			= "No constan hijos";
+$pgv_lang["known_child"]			= "1 hijo consta";
+$pgv_lang["known_children"]			= "hijos constan";
 $pgv_lang["childless_family"]		= "Esta familia no tuvo hijos";
 $pgv_lang["parents_timeline"]		= "Mostrar la pareja en un cronograma";
 
@@ -1553,13 +1556,14 @@ $pgv_lang["adding"] 				= "Agregando";
 $pgv_lang["updating_linked"]		= "Actualizando registro vinculado";
 $pgv_lang["merge_more"] 			= "Mezclar más registros.";
 $pgv_lang["same_ids"]				= "Indicó el mismo ID ambas veces.  No puede mezclar un registro consigo mismo.";
+$pgv_lang["updated_favorites"] 			= "favoritos actualizados.";
 
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"] 		= "Diagrama de ascendencia";
 $pgv_lang["gen_ancestry_chart"]		= "Diagrama de ascendencia de #PEDIGREE_GENERATIONS# generaciones";
 $pgv_lang["chart_style"]			= "Estilo del diagrama";
-$pgv_lang["chart_list"]			= "Lista";
-$pgv_lang["chart_booklet"]   	= "Libreta";
+$pgv_lang["chart_list"]				= "Lista";
+$pgv_lang["chart_booklet"]   		= "Libreta";
 $pgv_lang["show_cousins"]			= "Mostrar primos";
 // 1st generation
 $pgv_lang["sosa_2"] 				= "Padre";
