@@ -79,7 +79,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo '<a href="', $family->getLinkUrl(), '">';
+				echo '<a href="', encode_url($family->getLinkUrl()), '">';
 				//echo "<b>", $pgv_lang["parent_family"] , "&nbsp;&nbsp;(", $famid, ")</b>";
 				echo "<b>", $pgv_lang["parent_family"], "&nbsp;&nbsp;</b><span class=\"age\">(", $famid, ")</span>";
 				echo "</a>";
@@ -89,7 +89,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<?php
 			if (isset($people["husb"])) {
 				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
-				if ($TEXT_DIRECTION=="ltr") { 
+				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
@@ -123,7 +123,7 @@ if (isset($_COOKIE['lastclick'])) {
 
 			if (isset($people["wife"])) {
 				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
-				if ($TEXT_DIRECTION=="ltr") { 
+				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
@@ -161,7 +161,7 @@ if (isset($_COOKIE['lastclick'])) {
 				if ($pid == $child->getXref() ){
 				}else{
 					$menu = new Menu($child->getLabel() . "\n");
-					if ($TEXT_DIRECTION=="ltr") { 
+					if ($TEXT_DIRECTION=="ltr") {
 						$menu->addClass("", "", "submenu flyout");
 					}else{
 						$menu->addClass("", "", "submenu flyoutrtl");
@@ -220,7 +220,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo '<a href="', $family->getLinkUrl(), '">';
+				echo '<a href="', encode_url($family->getLinkUrl()), '">';
 				echo "<b>", $pgv_lang["step_parent_family"], "&nbsp;&nbsp;</b><span class=\"age\">(", $famid, ")</span>";
 				echo "</a>";
 				?>
@@ -236,7 +236,7 @@ if (isset($_COOKIE['lastclick'])) {
 				}else{
 					$menu->addLabel("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
 				}
-				if ($TEXT_DIRECTION=="ltr") { 
+				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
@@ -279,7 +279,7 @@ if (isset($_COOKIE['lastclick'])) {
 				}else{
 					$menu->addLabel("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
 				}
-				if ($TEXT_DIRECTION=="ltr") { 
+				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
@@ -316,7 +316,7 @@ if (isset($_COOKIE['lastclick'])) {
 				$elderdate = $family->getMarriageDate();
 				foreach($people["children"] as $key=>$child) {
 					$menu = new Menu($child->getLabel() . "\n");
-					if ($TEXT_DIRECTION=="ltr") { 
+					if ($TEXT_DIRECTION=="ltr") {
 						$menu->addClass("", "", "submenu flyout");
 					}else{
 						$menu->addClass("", "", "submenu flyoutrtl");
@@ -359,7 +359,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo '<a href="', $family->getLinkUrl(), '">';
+				echo '<a href="', encode_url($family->getLinkUrl()), '">';
 				echo "<b>", $pgv_lang["immediate_family"], "&nbsp;&nbsp;</b><span class=\"age\">(", $famid, ")</span>";
 				echo "</a>";
 				?>
@@ -377,7 +377,7 @@ if (isset($_COOKIE['lastclick'])) {
 			$styleadd = "";
 			if ( isset($people["husb"]) && $spousetag == 'HUSB' ) {
 				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
-				if ($TEXT_DIRECTION=="ltr") { 
+				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
@@ -416,7 +416,7 @@ if (isset($_COOKIE['lastclick'])) {
 
 			if ( isset($people["wife"]) && $spousetag == 'WIFE') {
 				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
-				if ($TEXT_DIRECTION=="ltr") { 
+				if ($TEXT_DIRECTION=="ltr") {
 					$menu->addClass("", "", "submenu flyout");
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
@@ -457,7 +457,7 @@ if (isset($_COOKIE['lastclick'])) {
 			if (isset($people["children"])) {
 				foreach($people["children"] as $key=>$child) {
 					$menu = new Menu("&nbsp;" . $child->getLabel() . "&nbsp;". "\n");
-					if ($TEXT_DIRECTION=="ltr") { 
+					if ($TEXT_DIRECTION=="ltr") {
 						$menu->addClass("", "", "submenu flyout");
 					}else{
 						$menu->addClass("", "", "submenu flyoutrtl");
@@ -719,7 +719,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						$spouselinks .= "</ul>";
 					}
 				}
-				
+
 				if ($persons != "Yes") {
 					$spouselinks  .= "&nbsp;(".$pgv_lang['none'].")\n\t\t";
 				}
@@ -729,7 +729,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 				if ($person_step != "Yes") {
 					$step_parentlinks .= "&nbsp;(".$pgv_lang['unknown'].")\n\t\t";
 				}
-				
+
 			}
 		}
 	}
