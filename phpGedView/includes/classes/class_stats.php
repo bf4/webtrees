@@ -1584,7 +1584,7 @@ class stats {
 						$id = "&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"".$person->getLinkUrl()."\">".$person->getFullName()."{$id}</a>";
+				$result="<a href=\"".encode_url($person->getLinkUrl())."\">".$person->getFullName()."{$id}</a>";
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -1645,9 +1645,9 @@ class stats {
 			$func($age, $show_years);
 			if ($person->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
+					$top10[]="\t<li><a href=\"".encode_url($person->getLinkUrl())."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
 				} else {
-					$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]");
+					$top10[]="<a href=\"".encode_url($person->getLinkUrl())."\">".PrintReady($person->getFullName()."</a> [".$age."]");
 				}
 			}
 		}
@@ -1717,9 +1717,9 @@ class stats {
 			}
 			$func($age, $show_years);
 			if ($type == 'list') {
-				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
+				$top10[]="\t<li><a href=\"".encode_url($person->getLinkUrl())."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
 			} else {
-				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]");
+				$top10[]="<a href=\"".encode_url($person->getLinkUrl())."\">".PrintReady($person->getFullName()."</a> [".$age."]");
 			}
 		}
 		if ($type == 'list') {
@@ -2022,7 +2022,7 @@ class stats {
 						$id="&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"".$record->getLinkUrl()."\">".PrintReady($record->getFullName())."{$id}</a>";
+				$result="<a href=\"".encode_url($record->getLinkUrl())."\">".PrintReady($record->getFullName())."{$id}</a>";
 				break;
 			case 'place':
 				$result=format_fact_place($record->getFactByType($row['fact']), true, true, true);
@@ -2114,7 +2114,7 @@ class stats {
 				}
 				break;
 			case 'name':
-				$result="<a href=\"".$family->getLinkUrl()."\">".$person->getFullName().'</a>';
+				$result="<a href=\"".encode_url($family->getLinkUrl())."\">".$person->getFullName().'</a>';
 				break;
 			case 'age':
 				$age = $row['age'];
@@ -2395,7 +2395,7 @@ class stats {
 				}
 				break;
 			case 'name':
-				$result="<a href=\"".$person->getLinkUrl()."\">".$person->getFullName().'</a>';
+				$result="<a href=\"".encode_url($person->getLinkUrl())."\">".$person->getFullName().'</a>';
 				break;
 			case 'age':
 				$age = $row['age'];
@@ -3087,7 +3087,7 @@ class stats {
 				.' tot DESC'
 		, $total);
 		if (!isset($rows[0])) {return '';}
-		$tot = 0; 
+		$tot = 0;
 		foreach ($rows as $row) {$tot += $row['tot'];}
 		$chd = '';
 		$chl = array();
@@ -3232,7 +3232,7 @@ class stats {
 		return $row['tot'];
 	}
 
-	
+
 	function noChildrenFamiliesList($type='list') {
 		global $TBLPREFIX, $TEXT_DIRECTION;
 		$rows=self::_runSQL(''
@@ -3495,13 +3495,13 @@ class stats {
 			//ToDo: RTL names are often printed LTR when also LTR names are present
 			$chl[] = $top_name.' - '.$count_per;
 			$chart_title .= $top_name.' - '.$count_per.', ';
-			
+
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
 		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
 		$chart_title .= $pgv_lang["other"].' - '.($tot_indi-$tot);
-		
+
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
@@ -3658,13 +3658,13 @@ class stats {
 			//ToDo: RTL names are often printed LTR when also LTR names are present
 			$chl[] = $givn.' - '.$count;
 			$chart_title .= $givn.' - '.$count.', ';
-			
+
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
 		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
 		$chart_title .= $pgv_lang["other"].' - '.($tot_indi-$tot);
-		
+
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
