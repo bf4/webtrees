@@ -6,7 +6,7 @@
 * to use an SQL database as its datastore.
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -2836,17 +2836,33 @@ $ged_name=get_gedcom_from_id($ged_id);
 function get_autocomplete_INDI($FILTER, $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
 
-
+	// search for ids first and request the exact id from FILTER and ids with one additional digit
 	$sql=
 		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
 		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-		" WHERE (i_id ".PGV_DB::$LIKE." ? OR n_sort ".PGV_DB::$LIKE." ?)".
+		" WHERE (i_id=? OR i_id ".PGV_DB::$LIKE." ?)".
 		" AND i_id=n_id AND i_file=n_file AND i_file=?".
-		" ORDER BY n_sort";
-	return
+		" ORDER BY i_id";
+	$rows=
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
-		->execute(array("{$FILTER}%", "%{$FILTER}%", $ged_id))
+		->execute(array("{$FILTER}", "{$FILTER}_", $ged_id))
 		->fetchAll(PDO::FETCH_ASSOC);
+	// if the number of rows is not zero, the input is an id and you don't need to search the names for
+	if (count($rows) ==0) {
+		$sql=
+			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
+			" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
+			" WHERE n_sort ".PGV_DB::$LIKE." ?".
+			" AND i_id=n_id AND i_file=n_file AND i_file=?".
+			" ORDER BY n_sort";
+		return
+			PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
+			->execute(array("%{$FILTER}%", $ged_id))
+			->fetchAll(PDO::FETCH_ASSOC);
+	}
+	else {
+		return $rows;
+	}
 }
 
 function get_autocomplete_FAM($FILTER, $ids, $ged_id=PGV_GED_ID) {
@@ -3018,65 +3034,65 @@ function get_autocomplete_PLAC($FILTER, $ged_id=PGV_GED_ID) {
 	case 'sqlite':
 		$sql=
 			"select p1.p_place".
-			" from pgv_places p1".
+			" from {$TBLPREFIX}places p1".
 			" where p1.p_place like ? and p1.p_parent_id=0 AND p1.p_file=?".
 			" union ".
 			"select p1.p_place || ', ' || p2.p_place".
-			" from pgv_places p1".
-			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" from {$TBLPREFIX}places p1".
+			" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
 			" where p1.p_place like ? and p2.p_parent_id=0 AND p1.p_file=?".
 			" union ".
 			"select p1.p_place || ', ' || p2.p_place || ', ' || p3.p_place".
-			" from pgv_places p1".
-			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
-			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" from {$TBLPREFIX}places p1".
+			" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join {$TBLPREFIX}places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
 			" where p1.p_place like ? and p3.p_parent_id=0 AND p1.p_file=?".
 			" union ".
 			"select p1.p_place || ', ' || p2.p_place || ', ' || p3.p_place || ', ' || p4.p_place".
-			" from pgv_places p1".
-			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
-			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
-			" join pgv_places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
+			" from {$TBLPREFIX}places p1".
+			" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join {$TBLPREFIX}places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" join {$TBLPREFIX}places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
 			" where p1.p_place like ? and p4.p_parent_id=0 AND p1.p_file=?".
 			" union ".
 			"select p1.p_place || ', ' || p2.p_place || ', ' || p3.p_place || ', ' || p4.p_place || ', ' || p5.p_place".
-			" from pgv_places p1".
-			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
-			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
-			" join pgv_places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
-			" join pgv_places p5 ON (p4.p_parent_id=p5.p_id AND p4.p_file=p5.p_file)".
+			" from {$TBLPREFIX}places p1".
+			" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join {$TBLPREFIX}places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" join {$TBLPREFIX}places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
+			" join {$TBLPREFIX}places p5 ON (p4.p_parent_id=p5.p_id AND p4.p_file=p5.p_file)".
 			" where p1.p_place like ? and p5.p_parent_id=0 AND p1.p_file=?";
 		break;
 	default:
 		$sql=
 			"select p1.p_place".
-			" from pgv_places p1".
+			" from {$TBLPREFIX}places p1".
 			" where p1.p_place like ? and p1.p_parent_id=0 AND p1.p_file=?".
 			" union ".
 			"select CONCAT(p1.p_place, ', ', p2.p_place)".
-			" from pgv_places p1".
-			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" from {$TBLPREFIX}places p1".
+			" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
 			" where p1.p_place like ? and p2.p_parent_id=0 AND p1.p_file=?".
 			" union ".
 			"select CONCAT(p1.p_place, ', ', p2.p_place, ', ', p3.p_place)".
-			" from pgv_places p1".
-			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
-			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" from {$TBLPREFIX}places p1".
+			" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join {$TBLPREFIX}places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
 			" where p1.p_place like ? and p3.p_parent_id=0 AND p1.p_file=?".
 			" union ".
 			"select CONCAT(p1.p_place, ', ', p2.p_place, ', ', p3.p_place, ', ', p4.p_place)".
-			" from pgv_places p1".
-			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
-			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
-			" join pgv_places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
+			" from {$TBLPREFIX}places p1".
+			" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join {$TBLPREFIX}places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" join {$TBLPREFIX}places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
 			" where p1.p_place like ? and p4.p_parent_id=0 AND p1.p_file=?".
 			" union ".
 			"select CONCAT(p1.p_place, ', ', p2.p_place, ', ', p3.p_place, ', ', p4.p_place, ', ', p5.p_place)".
-			" from pgv_places p1".
-			" join pgv_places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
-			" join pgv_places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
-			" join pgv_places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
-			" join pgv_places p5 ON (p4.p_parent_id=p5.p_id AND p4.p_file=p5.p_file)".
+			" from {$TBLPREFIX}places p1".
+			" join {$TBLPREFIX}places p2 ON (p1.p_parent_id=p2.p_id AND p1.p_file=p2.p_file)".
+			" join {$TBLPREFIX}places p3 ON (p2.p_parent_id=p3.p_id AND p2.p_file=p3.p_file)".
+			" join {$TBLPREFIX}places p4 ON (p3.p_parent_id=p4.p_id AND p3.p_file=p4.p_file)".
+			" join {$TBLPREFIX}places p5 ON (p4.p_parent_id=p5.p_id AND p4.p_file=p5.p_file)".
 			" where p1.p_place like ? and p5.p_parent_id=0 AND p1.p_file=?";
 		break;
 	}

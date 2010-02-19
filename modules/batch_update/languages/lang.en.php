@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2008 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ $pgv_lang["bu_method"]="Search method";
 $pgv_lang["bu_exact"]="Exact text";
 $pgv_lang["bu_exact_desc"]="Match the exact text, even if it occurs in the middle of a word.";
 $pgv_lang["bu_words"]="Whole words only";
-$pgv_lang["bu_words_desc"]="Match the exact text, unless it occurs in the middle of a word";
+$pgv_lang["bu_words_desc"]="Match the exact text, unless it occurs in the middle of a word.";
 $pgv_lang["bu_wildcards"]="Wildcards";
 $pgv_lang["bu_wildcards_desc"]="Use a &laquo;?&raquo; to match a single character, use &laquo;*&raquo; to match zero or more characters.";
 $pgv_lang["bu_regex"]="Regular expression";
@@ -62,7 +62,7 @@ $pgv_lang["bu_death_y"]="Add missing death records";
 $pgv_lang["bu_death_y_desc"]="You can improve the performance of PGV by ensuring that all individuals have (where appropriate) an &laquo;end of life&raquo; event.";
 
 $pgv_lang["bu_married_names"]="Add missing married names";
-$pgv_lang["bu_married_names_desc"]="You can make it easier to search for married women by recording their married name.<br/>However not all women take their husband's surname, so beware of introducing incorrect data into your GEDCOM.";
+$pgv_lang["bu_married_names_desc"]="You can make it easier to search for married women by recording their married name.<br />However not all women take their husband's surname, so beware of introducing incorrect information into your database.";
 $pgv_lang["bu_surname_option"]="Surname Option";
 $pgv_lang["bu_surname_replace"]="Wife's surname replaced by husband's surname";
 $pgv_lang["bu_surname_add"]="Wife's maiden surname becomes new given name";
@@ -71,7 +71,7 @@ $pgv_lang["bu_name_format"]="Fix name slashes and spaces";
 $pgv_lang["bu_name_format_desc"]="Correct NAME records of the form 'John/DOE/' or 'John /DOE', as produced by older genealogy programs.";
 
 $pgv_lang["bu_duplicate_links"]="Remove duplicate links";
-$pgv_lang["bu_duplicate_links_desc"]="A common gedcom error is to have multiple links to the same record, for example listing the same child more than once in a family record.";
+$pgv_lang["bu_duplicate_links_desc"]="A common error is to have multiple links to the same record, for example listing the same child more than once in a family record.";
 
 $pgv_lang["bu_tmglatlon"]="Fix TMG latlon data";
 $pgv_lang["bu_tmglatlon_desc"]="Converts The Master Genealogist's proprietary lat/lon format to the GEDCOM 5.5.1 standard that PGV can read.  Note: changes are not highlighted in the final output shown below.";

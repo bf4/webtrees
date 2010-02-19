@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.x CA
+ - Merged: Merging r6912 through r6935 from the trunk. (windmillway)
  - Added: GEDFact_assistant/_CENS/ module - Help Link to Nigel's Wiki file (before merge from Trunk). (windmillway)
  - Fixed: GEDFact_assistant/_CENS/ module - Additional changes to escape double quotes in indi names. (windmillway)
  - Fixed: GEDFact_assistant/_CENS/ module - Added addslashes() to escape double quotes in indi names. (windmillway)
@@ -216,6 +217,10 @@ Version 4.3.x CA
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.3.0 2009-12-29
+ - Fixed: [ 2947598 ] Site Map missing the $SERVER_URLvar? (fisharebest)
+ - Changed: Behaviour of autocomplete for INDI fields, input of an id grabs only the exact id and extends by a further digit, makes it much faster for large gedcoms (volschin)
+ - Fixed: [ 2945678 ] [6910] Add new child/autocomplete (fisharebest)
+ - Update: jQuery 1.4.1 (volschin)
  - Fixed: [ 2938600 ] 4.2.3 indi Map tab: no map & Java error (wooc)
  - Fixed: [ 2943837 ] Placenames in Edit Interface in latest PGV (fisharebest)
  - Fixed: [ 2943263 ] Logout ERROR 2 (fisharebest)

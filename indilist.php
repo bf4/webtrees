@@ -171,7 +171,7 @@ if (!$SEARCH_SPIDER) {
 		$list[]='<a href="indilist.php?show_all=yes">'.$pgv_lang['all'].'</a>';
 	}
 }
-echo '<p class="center">';
+echo '<div class="alpha_index"><p class="center">';
 print_help_link('alpha_help', 'qm', 'alpha_index');
 print $pgv_lang["first_letter_iname"]."<br />";
 echo join(' | ', $list), '</p>';
@@ -202,6 +202,7 @@ if (!$SEARCH_SPIDER) {
 	print_help_link('name_list_help', 'qm');
 	echo '</p>';
 }
+echo '</div>';
 
 if ($showList) {
 	$surns=get_indilist_surns($surname, $alpha, $SHOW_MARRIED_NAMES, false, PGV_GED_ID);
@@ -264,10 +265,10 @@ if ($showList) {
 					print PrintReady(str_replace("#surname#", check_NN($surname), $pgv_lang['indis_with_surname']));
 					echo '</h2>';
 				}
-				echo '<p class="center">';
+				echo '<div class="alpha_index"><p class="center">';
 				print_help_link('alpha_help', 'qm', 'alpha_index');
 				echo $pgv_lang['first_letter_fname'], '<br />';
-				echo join(' | ', $list), '</p>';
+				echo join(' | ', $list), '</p></div>';
 			}
 		}
 		if ($showList) {

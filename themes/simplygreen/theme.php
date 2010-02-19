@@ -31,16 +31,16 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 $theme_name = "SimplyGreen";        //-- the name of this theme
 
-$stylesheet = $THEME_DIR."style.css";    //-- CSS level 2 stylesheet to use
-$rtl_stylesheet = $THEME_DIR."style_rtl.css";           //-- CSS level 2 stylesheet to use
-$print_stylesheet = $THEME_DIR."print.css";	//-- CSS level 2 print stylesheet to use
-$toplinks = $THEME_DIR."toplinks.php";    //-- File to display the icons and links to different sections
-$headerfile = $THEME_DIR."header.php";    //-- Header information for the site
-$footerfile = $THEME_DIR."footer.php";    //-- Footer information for the site
-$print_footerfile = $THEME_DIR."print_footer.php";    //-- Print Preview Footer information for the site
-$print_headerfile = $THEME_DIR."print_header.php";    //-- Print Preview Header information for the site
+$stylesheet = PGV_THEME_DIR."style.css";    //-- CSS level 2 stylesheet to use
+$rtl_stylesheet = PGV_THEME_DIR."style_rtl.css";           //-- CSS level 2 stylesheet to use
+$print_stylesheet = PGV_THEME_DIR."print.css";	//-- CSS level 2 print stylesheet to use
+$toplinks = PGV_THEME_DIR."toplinks.php";    //-- File to display the icons and links to different sections
+$headerfile = PGV_THEME_DIR."header.php";    //-- Header information for the site
+$footerfile = PGV_THEME_DIR."footer.php";    //-- Footer information for the site
+$print_footerfile = PGV_THEME_DIR."print_footer.php";    //-- Print Preview Footer information for the site
+$print_headerfile = PGV_THEME_DIR."print_header.php";    //-- Print Preview Header information for the site
 
-$PGV_IMAGE_DIR = $THEME_DIR."images";        //-- directory to look for images
+$PGV_IMAGE_DIR = PGV_THEME_DIR."images";        //-- directory to look for images
 
 $PGV_USE_HELPIMG = true;		// set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
 

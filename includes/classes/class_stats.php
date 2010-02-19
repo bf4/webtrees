@@ -6,7 +6,7 @@
 * about the GEDCOM.
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2010 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -941,6 +941,45 @@ class stats {
 			." ORDER BY d_julianday1 {$life_dir}, d_type",
 			1
 		);
+		//testing
+		/*
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' d2.d_year,'
+				.' d2.d_type,'
+				.' d2.d_fact,'
+				.' d2.d_gid'
+			.' FROM'
+				." {$TBLPREFIX}dates AS d2"
+			.' WHERE'
+				." d2.d_file={$this->_ged_id} AND"
+				." d2.d_fact IN ({$query_field}) AND"
+				.' d2.d_julianday1=('
+					.' SELECT'
+						." {$dmod}(d_julianday1)"
+					.' FROM'
+						." {$TBLPREFIX}dates"
+					.' JOIN ('
+						.' SELECT'
+							.' d1.d_gid, MIN(d1.d_julianday1) as date'
+						.' FROM'
+							."  {$TBLPREFIX}dates AS d1"
+						.' WHERE'
+							." d1.d_fact IN ({$query_field}) AND"
+							." d1.d_file={$this->_ged_id} AND"
+							.' d1.d_julianday1!=0'
+						.' GROUP BY'
+							.' d1.d_gid'
+					.') AS d3'
+					.' WHERE'
+						." d_file={$this->_ged_id} AND"
+						." d_fact IN ({$query_field}) AND"
+						.' d_julianday1=date'
+				.' )'
+			.' ORDER BY'
+				." d_julianday1 {$life_dir}, d_type"
+		);
+		*/
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		$record=GedcomRecord::getInstance($row['d_gid']);
@@ -1545,7 +1584,7 @@ class stats {
 						$id = "&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"".$person->getLinkUrl()."\">".$person->getFullName()."{$id}</a>";
+				$result="<a href=\"".encode_url($person->getLinkUrl())."\">".$person->getFullName()."{$id}</a>";
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -1606,9 +1645,9 @@ class stats {
 			$func($age, $show_years);
 			if ($person->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
+					$top10[]="\t<li><a href=\"".encode_url($person->getLinkUrl())."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
 				} else {
-					$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]");
+					$top10[]="<a href=\"".encode_url($person->getLinkUrl())."\">".PrintReady($person->getFullName()."</a> [".$age."]");
 				}
 			}
 		}
@@ -1678,9 +1717,9 @@ class stats {
 			}
 			$func($age, $show_years);
 			if ($type == 'list') {
-				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
+				$top10[]="\t<li><a href=\"".encode_url($person->getLinkUrl())."\">".PrintReady($person->getFullName()."</a> [".$age."]")."</li>\n";
 			} else {
-				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName()."</a> [".$age."]");
+				$top10[]="<a href=\"".encode_url($person->getLinkUrl())."\">".PrintReady($person->getFullName()."</a> [".$age."]");
 			}
 		}
 		if ($type == 'list') {
@@ -1836,7 +1875,7 @@ class stats {
 				$half = floor(count($counter)/2);
 				$chtt = substr_replace($pgv_lang["stat_18_aard"], '|', $counter[$half], 1);
 			}
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|N*f1*,000000,0,-1,11|N*f1*,000000,1,-1,11&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl={$pgv_lang["male"]}|{$pgv_lang["female"]}|{$pgv_lang["stat_avg_age_at_death"]}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_18_aard"]."\" title=\"".$pgv_lang["stat_18_aard"]."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|N*f1*,000000,0,-1,11,1|N*f1*,000000,1,-1,11,1&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl={$pgv_lang["male"]}|{$pgv_lang["female"]}|{$pgv_lang["stat_avg_age_at_death"]}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_18_aard"]."\" title=\"".$pgv_lang["stat_18_aard"]."\" />";
 		} else {
 			$sex_search = '';
 			$years = '';
@@ -1983,7 +2022,7 @@ class stats {
 						$id="&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"".$record->getLinkUrl()."\">".PrintReady($record->getFullName())."{$id}</a>";
+				$result="<a href=\"".encode_url($record->getLinkUrl())."\">".PrintReady($record->getFullName())."{$id}</a>";
 				break;
 			case 'place':
 				$result=format_fact_place($record->getFactByType($row['fact']), true, true, true);
@@ -2075,7 +2114,7 @@ class stats {
 				}
 				break;
 			case 'name':
-				$result="<a href=\"".$family->getLinkUrl()."\">".$person->getFullName().'</a>';
+				$result="<a href=\"".encode_url($family->getLinkUrl())."\">".$person->getFullName().'</a>';
 				break;
 			case 'age':
 				$age = $row['age'];
@@ -2356,7 +2395,7 @@ class stats {
 				}
 				break;
 			case 'name':
-				$result="<a href=\"".$person->getLinkUrl()."\">".$person->getFullName().'</a>';
+				$result="<a href=\"".encode_url($person->getLinkUrl())."\">".$person->getFullName().'</a>';
 				break;
 			case 'age':
 				$age = $row['age'];
@@ -2582,7 +2621,7 @@ class stats {
 			$sizes = explode('x', $size);
 			$rows=self::_runSQL(''
 				.' SELECT'
-					.' ROUND(AVG(married.d_julianday2-birth.d_julianday1-182.5)/365.25) AS age,'
+					.' ROUND(AVG(married.d_julianday2-birth.d_julianday1-182.5)/365.25,1) AS age,'
 					.' ROUND((married.d_year+49.1)/100) AS century,'
 					.' indi.i_sex AS sex'
 				.' FROM'
@@ -2636,31 +2675,31 @@ class stats {
 					if ($values['sex'] == "F") {
 						if (!$male) {
 							$countsm .= "0,";
-							$chmm .= 't0,000000,0,'.($i-1).',11|';
+							$chmm .= 't0,000000,0,'.($i-1).',11,1|';
 							$countsa .= $fage.",";
 						}
 						$countsf .= $chage.",";
-						$chmf .= 't'.$values['age'].',000000,1,'.$i.',11|';
+						$chmf .= 't'.$values['age'].',000000,1,'.$i.',11,1|';
 						$fage = $chage;
 						$male = false;
 					} else if ($values['sex'] == "M") {
 						$countsf .= "0,";
-						$chmf .= 't0,000000,1,'.$i.',11|';
+						$chmf .= 't0,000000,1,'.$i.',11,1|';
 						$countsm .= $chage.",";
-						$chmm .= 't'.$values['age'].',000000,0,'.$i.',11|';
+						$chmm .= 't'.$values['age'].',000000,0,'.$i.',11,1|';
 						$countsa .= $chage.",";
 					} else if ($values['sex'] == "U") {
 						$countsf .= "0,";
-						$chmf .= 't0,000000,1,'.$i.',11|';
+						$chmf .= 't0,000000,1,'.$i.',11,1|';
 						$countsm .= "0,";
-						$chmm .= 't0,000000,0,'.$i.',11|';
+						$chmm .= 't0,000000,0,'.$i.',11,1|';
 						$countsa .= "0,";
 					}
 					$i++;
 				}
 				else if ($values['sex'] == "M") {
 					$countsm .= $chage.",";
-					$chmm .= 't'.$values['age'].',000000,0,'.($i-1).',11|';
+					$chmm .= 't'.$values['age'].',000000,0,'.($i-1).',11,1|';
 					$countsa .= round(($fage+$chage)/2,1).",";
 					$male = true;
 				}
@@ -3048,7 +3087,7 @@ class stats {
 				.' tot DESC'
 		, $total);
 		if (!isset($rows[0])) {return '';}
-		$tot = 0; 
+		$tot = 0;
 		foreach ($rows as $row) {$tot += $row['tot'];}
 		$chd = '';
 		$chl = array();
@@ -3125,7 +3164,7 @@ class stats {
 				}
 				if ($max<=5) $counts[] = round($values['num']*819.2-1, 1);
 				else $counts[] = round($values['num']*409.6, 1);
-				$chm .= 't'.$values['num'].',000000,0,'.$i.',11|';
+				$chm .= 't'.$values['num'].',000000,0,'.$i.',11,1|';
 				$i++;
 			}
 			$chd = self::_array_to_extended_encoding($counts);
@@ -3193,7 +3232,7 @@ class stats {
 		return $row['tot'];
 	}
 
-	
+
 	function noChildrenFamiliesList($type='list') {
 		global $TBLPREFIX, $TEXT_DIRECTION;
 		$rows=self::_runSQL(''
@@ -3278,12 +3317,12 @@ class stats {
 				$chxl .= $values['century']."|";
 			}
 			$counts[] = round(4095*$values['count']/($max+1));
-			$chm .= 't'.$values['count'].',000000,0,'.$i.',11|';
+			$chm .= 't'.$values['count'].',000000,0,'.$i.',11,1|';
 			$i++;
 		}
 		$counts[] = round(4095*$unknown/($max+1));
 		$chd = self::_array_to_extended_encoding($counts);
-		$chm .= 't'.$unknown.',000000,0,'.$i.',11';
+		$chm .= 't'.$unknown.',000000,0,'.$i.',11,1';
 		$chxl .= $pgv_lang["no_date_fam"]."|1:||".$pgv_lang["century"]."|2:|0|";
 		$step = $max+1;
 		for ($d=floor($max+1); $d>0; $d--) {
@@ -3456,13 +3495,13 @@ class stats {
 			//ToDo: RTL names are often printed LTR when also LTR names are present
 			$chl[] = $top_name.' - '.$count_per;
 			$chart_title .= $top_name.' - '.$count_per.', ';
-			
+
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
 		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
 		$chart_title .= $pgv_lang["other"].' - '.($tot_indi-$tot);
-		
+
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
@@ -3619,13 +3658,13 @@ class stats {
 			//ToDo: RTL names are often printed LTR when also LTR names are present
 			$chl[] = $givn.' - '.$count;
 			$chart_title .= $givn.' - '.$count.', ';
-			
+
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
 		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
 		$chart_title .= $pgv_lang["other"].' - '.($tot_indi-$tot);
-		
+
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
@@ -3787,8 +3826,8 @@ class stats {
 // Contact                                                                   //
 ///////////////////////////////////////////////////////////////////////////////
 
-	static function contactWebmaster() {return user_contact_link($GLOBALS['WEBMASTER_EMAIL'], $GLOBALS['SUPPORT_METHOD']);}
-	static function contactGedcom() {return user_contact_link($GLOBALS['CONTACT_EMAIL'], $GLOBALS['CONTACT_METHOD']);}
+	static function contactWebmaster() {return user_contact_link(get_user_id($GLOBALS['WEBMASTER_EMAIL']), $GLOBALS['SUPPORT_METHOD']);}
+	static function contactGedcom() {return user_contact_link(get_user_id($GLOBALS['CONTACT_EMAIL']), $GLOBALS['CONTACT_METHOD']);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Date & Time                                                               //

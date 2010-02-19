@@ -359,11 +359,30 @@ class Person extends GedcomRecord {
 					$max[]=$tmp->MaxJD();
 				}
 				foreach ($this->getChildFamilies() as $family) {
+					$tmp=$family->getMarriageDate();
+					if (is_object($tmp) && $tmp->MinJD()) {
+						$min[]=$tmp->MaxJD()-365*1;
+						$max[]=$tmp->MinJD()+365*30;
+					}
+					if ($parent=$family->getHusband()) {
+						$tmp=$parent->getBirthDate();
+						if (is_object($tmp) && $tmp->MinJD()) {
+							$min[]=$tmp->MaxJD()+365*15;
+							$max[]=$tmp->MinJD()+365*65;
+						}
+					}
+					if ($parent=$family->getWife()) {
+						$tmp=$parent->getBirthDate();
+						if (is_object($tmp) && $tmp->MinJD()) {
+							$min[]=$tmp->MaxJD()+365*15;
+							$max[]=$tmp->MinJD()+365*45;
+						}
+					}
 					foreach ($family->getChildren() as $child) {
 						$tmp=$child->getBirthDate();
 						if ($tmp->MinJD()) {
-							$min[]=$tmp->MaxJD()-365*($this->getSex()=='F'?45:65);
-							$max[]=$tmp->MinJD()-365*15;
+							$min[]=$tmp->MaxJD()-365*30;
+							$max[]=$tmp->MinJD()+365*30;
 						}
 					}
 				}
@@ -378,6 +397,13 @@ class Person extends GedcomRecord {
 						if (is_object($tmp) && $tmp->MinJD()) {
 							$min[]=$tmp->MaxJD()-365*25;
 							$max[]=$tmp->MinJD()+365*25;
+						}
+					}
+					foreach ($family->getChildren() as $child) {
+						$tmp=$child->getBirthDate();
+						if ($tmp->MinJD()) {
+							$min[]=$tmp->MaxJD()-365*($this->getSex()=='F'?45:65);
+							$max[]=$tmp->MinJD()-365*15;
 						}
 					}
 				}
