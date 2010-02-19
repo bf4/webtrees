@@ -35,8 +35,8 @@ global $theme_name;
 
 <script>
 function help_window2(frm)  {
-	var aWindow = window.open('modules/GEDFact_assistant/_CENS/census_asst_help.php', 'TableAddRow2NewWindow',
-	'scrollbars=yes,menubar=yes,resizable=yes,location=no,toolbar=no,width=400,height=700');
+	var aWindow = window.open('http://wiki.phpgedview.net/en/index.php?title=GedFactAssistant_module#Sub-module:_Census_Assistant', 'HelpWindow',
+	'scrollbars=yes,menubar=no,resizable=yes,location=no,toolbar=no,width=900,height=700');
 	aWindow.focus();
 	// set the target to the blank window
 	frm.target = 'TableAddRow2NewWindow';

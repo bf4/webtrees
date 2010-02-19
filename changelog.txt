@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.3.x CA
+ - Added: GEDFact_assistant/_CENS/ module - Help Link to Nigel's Wiki file (before merge from Trunk). (windmillway)
  - Fixed: GEDFact_assistant/_CENS/ module - Additional changes to escape double quotes in indi names. (windmillway)
  - Fixed: GEDFact_assistant/_CENS/ module - Added addslashes() to escape double quotes in indi names. (windmillway)
  - Fixed: GEDFact_assistant/_CENS/ module - Fixed small bug with "Age when married" field (US 1930). (windmillway)
