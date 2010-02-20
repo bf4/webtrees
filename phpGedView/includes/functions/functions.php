@@ -1162,7 +1162,7 @@ function find_updated_record($gid, $ged_id) {
 function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $pgv_changes;
 
-	if (!isset($pgv_changes)) {
+	if (empty($pgv_changes) || !userCanAccept($user_id, $ged_id)) {
 		return false;
 	}
 

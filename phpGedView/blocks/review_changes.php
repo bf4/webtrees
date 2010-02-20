@@ -67,7 +67,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 				$users_with_changes=array();
 				foreach (get_all_users() as $user_id=>$user_name) {
 					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-						if (userCanAccept($user_id, $ged_id) && exists_pending_change($user_id, $ged_id)) {
+						if (exists_pending_change($user_id, $ged_id)) {
 							$users_with_changes[$user_id]=$user_name;
 							break;
 						}
@@ -81,7 +81,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					$message["subject"] = $pgv_lang["review_changes_subject"];
 					$message["body"] = $pgv_lang["review_changes_body"];
 					$message["method"] = get_user_setting($user_id, 'contactmethod');
-					$message["url"] = PGV_SCRIPT_NAME."?".html_entity_decode($QUERY_STRING);
+					$message["url"] = PGV_SERVER_NAME.PGV_SCRIPT_PATH;
 					$message["no_from"] = true;
 					addMessage($message);
 				}
