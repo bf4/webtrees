@@ -188,7 +188,6 @@ $pgv_lang["address_labels"]		= "Osoitetarrat";
 $pgv_lang["filter_address"]		= "Näytä osoitteet, jotka sisältävät:";
 $pgv_lang["address_list"]		= "Osoiteluettelo";
 $pgv_lang["index_edit_advice"]	= "Korosta aluenimeä ja klikkaa sitten nuolikuvaketta siirtääksesi aluetta haluttuun suuntaan.";
-$pgv_lang["changelog"]		= "Version #VERSION# muutoksia";
 $pgv_lang["html_block_descr"]	= "Tämä on yksinkertainen HTML-alue jonka voit sijoittaa sivullesi lisätäksesi minkä tahansa viestin.";
 $pgv_lang["html_block_sample_part1"] = "<p class=\"blockhc\"><b>Kirjoita otsikkosi tähän </b></p><br /><p>Klikkaa Konfiguraatio-painiketta.";
 $pgv_lang["html_block_sample_part2"] = "muuttaaksesi sen, mikä on tulostettu tähän.</p>";

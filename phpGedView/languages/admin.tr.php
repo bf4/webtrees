@@ -361,7 +361,6 @@ $pgv_lang["verified"]			= "Üye onayı";
 $pgv_lang["verified_by_admin"]		= "Yönetici onayı";
 $pgv_lang["verify_gedcom"]						= "GEDCOM Onayla";
 $pgv_lang["verify_upload_instructions"]			= "Aynı isimli bir GEDCOM dosya bulundu. Eğer devam etmeyi seçerseniz GEDCOM dosyası değiştirilecek, dosya o sizle yükledi ve dışalım işlemi tekrar başlatacak. Eğer tercih ederseniz eskiyi iptal etmek için GEDCOM değiştirilmemiş kalacak.";
-$pgv_lang["view_changelog"]						= "changelog.txt dosya görüntüle";
 $pgv_lang["view_logs"]			= "Sistemin günlük raporuna bak";
 $pgv_lang["view_readme"]						= "readme.txt dosya görüntüle";
 $pgv_lang["visibleonline"]		= "Çevrimiçinde diğer üyeler görsünmü?";

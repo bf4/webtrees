@@ -236,7 +236,6 @@ $pgv_lang["address_labels"]		= "Etikete z naslovi";
 $pgv_lang["filter_address"]		= "Pokaži naslove, ki vsebujejo:";
 $pgv_lang["address_list"]		= "Seznam naslovov";
 $pgv_lang["index_edit_advice"]		= "Označi ime sklopa in klikni na eno od puščičnih podob za prenos označenega sklopa v želeno smer.";
-$pgv_lang["changelog"]			= "#VERSION# različica spremembs";
 $pgv_lang["html_block_descr"]		= "To je preprost HTML-jev sklop, ki ga lahko namestite na svoje stran za dodajanje kakršnihkoli želenih sporočil.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Vnesi svoj naslov</b></p><br /><p>Klikni konfiguracijski gumb";
 $pgv_lang["html_block_sample_part2"]	= "za spremembo tu natisnjenih podatkov.</p>";

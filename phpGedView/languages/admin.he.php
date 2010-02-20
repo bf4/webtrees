@@ -421,7 +421,6 @@ $pgv_lang["verified"]			= "המשתמש אישר את רישומו";
 $pgv_lang["verified_by_admin"]	= "המשתמש אושר ע\"י המנהלן";
 $pgv_lang["verify_gedcom"]		= "אמת את ה-GEDCOM המעודכן";
 $pgv_lang["verify_upload_instructions"]	= "נימצא קובץ GEDCOM בעל שם זהה. אם תבחר להמשיך, קובץ ה-GEDCOM הישן יוחלף בקובץ שהעלית ותהליך היבוא יתחיל שוב. אם תבחר לבטל, קובץ ה-GEDCOM הישן יישאר כפי שהיה.";
-$pgv_lang["view_changelog"]		= "התבונן בקובץ השינויים changelog.txt";
 $pgv_lang["view_logs"]		= "התבונן בקבצי היומן";
 $pgv_lang["view_readme"]		= "התבונן בקובץ תיעוד readme.txt";
 $pgv_lang["visibleonline"]		= "גלוי למשתמשים אחרים בהיותו מחובר";

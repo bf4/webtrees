@@ -1067,7 +1067,6 @@ $pgv_lang["num_to_show"]					= "Elemek száma feltüntetése";
 $pgv_lang["html_block_sample_part2"]				= "megváltoztassa amit ide kiírt.</p>";
 $pgv_lang["html_block_sample_part1"]				= "<p class=\"blockhc\"><b>Írja ide a címet</b></p><br /><p>Kattintson a Konfiguráció gombra";
 $pgv_lang["html_block_descr"]					= "Ez egy egyszerű HTML Blokk amit az oldalra lehet tenni hogy, bármilyen saját üzenetet hozáadhasson.";
-$pgv_lang["changelog"]						= "Verzió #VERSION# változások";
 $pgv_lang["index_edit_advice"]					= "Jelöljön ki egy Blokkot és kattintson az egyik nyílra hogy, áthelyezze a kijelölt Blokkot a megadott irányba.";
 $pgv_lang["address_list"]					= "Cím Lista";
 $pgv_lang["filter_address"]					= "Címek mutatása ami ezt tartalmaz";

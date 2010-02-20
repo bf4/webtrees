@@ -186,7 +186,6 @@ $pgv_lang["filter_address"]			= "Vis adresser, der indeholder:";
 $pgv_lang["address_list"]			= "Adresseliste";
 $pgv_lang["autocomplete"]			= "Autofærdigør";
 $pgv_lang["index_edit_advice"]		= "Markér navnet på en ramme og klik på en af pilene for at flytte den markerede ramme i pilens retning.";
-$pgv_lang["changelog"]				= "Ændringer i version #VERSION#";
 $pgv_lang["html_block_descr"]		= "Dette er en simpel HTML blok, som du kan placere på din side for at vise en besked (i HTML-format).";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Anbring din titel her</b></p><br /><p>Klik på konfigurationsknappen";
 $pgv_lang["html_block_sample_part2"]	= " for at ændre det, der printes.</p>";

@@ -1020,7 +1020,6 @@ $pgv_lang["enter_comments"]			= "Xin cho biẽt liên hệ của bạn với tà
 $pgv_lang["days_to_show"]			= "Số ngày đặng trưng bày";
 $pgv_lang["config_block"]			= "Định hình thể của khối";
 $pgv_lang["num_to_show"]			= "Số món đặng trưng bày";
-$pgv_lang["changelog"]				= "Khác đổi của bản số #VERSION#";
 $pgv_lang["html_block_descr"]		= "Đây là một khối HTML bạn có thể để trong trang của bạn đặng thêm bất cứ thông báo nào bạn muốn.";
 $pgv_lang["html_block_name"]		= "Khối HTML";
 $pgv_lang["stat_most_children"]		= "Gia đình đông con nhất";

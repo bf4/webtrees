@@ -280,7 +280,6 @@ $pgv_lang["verified"]			= "Käyttäjä on vahvistanut itsensä";
 $pgv_lang["verified_by_admin"]	= "Ylläpitäjä on vahvistanut käyttäjän";
 $pgv_lang["verify_gedcom"]		= "Verifioi GEDCOM-tiedosto";
 $pgv_lang["verify_upload_instructions"] = "Jos päätät jatkaa, vanha GEDCOM-tiedosto korvataan lähettämälläsi tiedostolla ja tuontiprosessi alkaa uudestaan. Jos päätät perua, vanha GEDCOM jää entiselleen.";
-$pgv_lang["view_changelog"]		= "Näytä textlog.txt-tiedosto";
 $pgv_lang["view_logs"]		= "Näytä lokitiedot";
 $pgv_lang["view_readme"]		= "Näytä readme.txt-tiedosto";
 $pgv_lang["visibleonline"]		= "Näkyvissä muille käyttäjille online-tilassa.";

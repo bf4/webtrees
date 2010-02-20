@@ -216,7 +216,6 @@ $pgv_lang["filter_address"]				= "Toon adressen die bevatten:";
 $pgv_lang["address_list"]				= "Adreslijst";
 $pgv_lang["autocomplete"]				= "Auto-aanvullen";
 $pgv_lang["index_edit_advice"]			= "Selecteer een vaknaam en klik op een van de pijlen om het vak in de aangegeven richting te verplaatsen.";
-$pgv_lang["changelog"]					= "Versie #VERSION# aanpassingen";
 $pgv_lang["html_block_descr"]			= "Dit is een eenvoudig HTML-tekstvak waarin u uw eigen tekst kunt plaatsen.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Plaats hier de titel</b></p><br /><p>Klik op de knop \"Instellen\"";
 $pgv_lang["html_block_sample_part2"]	= "om aan te passen wat hier wordt weergegeven.</p>";

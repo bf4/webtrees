@@ -374,7 +374,6 @@ $pgv_lang["verified"]			= "Bruker har<br />bekreftet søknaden";
 $pgv_lang["verified_by_admin"]	= "Godkjent bruker<br />[av Admin]";
 $pgv_lang["verify_gedcom"]			= "Sjekk slektsfilen (GEDCOM)";
 $pgv_lang["verify_upload_instructions"]	= "Dersom du velger å fortsette, vil den eksisterende slektsfilen bli erstattet med den filen som du har valgt å laste opp. Den nye filen vil deretter bli importert inn i PhpGedView.<br />Velger du å avbryte, vil den eksisterende slektsfilen forbli uforandret.";
-$pgv_lang["view_changelog"]			= "Vis filen changelog.txt";
 $pgv_lang["view_logs"]				= "Vis logg-fil ";
 $pgv_lang["view_readme"]			= "Vis filen readme.txt";
 $pgv_lang["visibleonline"]			= "Vis andre at du er pålogget";

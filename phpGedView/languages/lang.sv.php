@@ -1274,7 +1274,6 @@ $pgv_lang["before_or_after"]	= "Placera räknare före eller efter namn?";
 $pgv_lang["before"]				= "före";
 $pgv_lang["after"]				= "efter";
 $pgv_lang["config_block"]		= "Konfigurationsområde";
-$pgv_lang["changelog"]			= "Ändringar i #VERSION#";
 $pgv_lang["index_edit_advice"]	= "Markera ett områdes namn, klicka sedan på en av pilikonerna för att flytta det markerade området i pilens riktning.";
 $pgv_lang["autocomplete"]		= "Autokompletera";
 $pgv_lang["filter_address"]		= "Visa adresser som innehåler:";

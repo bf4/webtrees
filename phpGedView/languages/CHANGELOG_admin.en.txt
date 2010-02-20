@@ -43,6 +43,7 @@ VERSION 4.3.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["view_changelog"]          20 Feb 2010               
 *$pgv_lang["pgv_requires_version"]					02 Feb 2010				w		Change made in *all* language files
 *$pgv_lang["using_php_version"]	 					02 Feb 2010				w		Change made in *all* language files
 

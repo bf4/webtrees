@@ -166,7 +166,7 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	</tr>
 	<tr>
 		<td class="optionbox width50"><?php print_help_link("config_help_help", "qm"); ?><a href="pgvinfo.php?action=confighelp"><?php echo $pgv_lang["config_help"];?></a></td>
-		<td class="optionbox width50"><?php print_help_link("changelog_help", "qm"); ?><a href="changelog.php" target="manual" title="<?php echo $pgv_lang["view_changelog"]; ?>"><?php print_text("changelog"); ?></a></td>
+		<td class="optionbox width50">&nbsp;</td>
 	</tr>
 	<tr>
 		<td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["admin_geds"]; ?></td>

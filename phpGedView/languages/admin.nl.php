@@ -177,7 +177,6 @@ $pgv_lang["verified"]					= "Registratie bevestigd";
 $pgv_lang["verified_by_admin"]			= "Registratie goedgekeurd";
 $pgv_lang["verify_gedcom"]		= "Gedcom verifieren";
 $pgv_lang["verify_upload_instructions"]		= "Als u kiest om door te gaan, wordt het oude GEDCOM-bestand overschreven door het GEDCOM-bestand dat u heeft ge-upload, en begint het importeren opnieuw. Als u Annuleren kiest blijft het oude GEDCOM-bestand intact.";
-$pgv_lang["view_changelog"]				= "Versie #VERSION# aanpassingen";
 $pgv_lang["view_logs"]					= "Bekijk log-bestanden";
 $pgv_lang["view_readme"]				= "README documentatie";
 $pgv_lang["visibleonline"]				= "Zichtbaar voor anderen als aangemeld";

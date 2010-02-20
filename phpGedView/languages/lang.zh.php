@@ -474,7 +474,6 @@ $pgv_lang["link_new_wife"]			= "用已有的个人当这人的妻子";
 $pgv_lang["address_labels"]			= "地址标签";
 $pgv_lang["filter_address"]			= "显示拥有这些的地址：";
 $pgv_lang["address_list"]			= "地址列表";
-$pgv_lang["changelog"]				= "版本 #VERSION# 的变化所在";
 $pgv_lang["html_block_name"]		= "网络编程语言HTML";
 $pgv_lang["htmlplus_block_name"]	= "网络高级编程语言HTML";
 $pgv_lang["htmlplus_block_templates"] = "格式表";

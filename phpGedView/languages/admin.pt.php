@@ -173,7 +173,6 @@ $pgv_lang["verified"]="Validou sua conta";
 $pgv_lang["verified_by_admin"]="Aprovado pelo Administrador";
 $pgv_lang["verify_gedcom"]="Checar GEDCOM";
 $pgv_lang["verify_upload_instructions"]="Um arquivo GEDCOM com este nome já existe. Se você escolher continuar, o arquivo GEDCOM do servidor será substituido pelo GEDCOM que será enviado e o processo de importação terá inicio logo após. Para manter o arquivo GEDCOM do servidor inalterado clique CANCELAR.";
-$pgv_lang["view_changelog"]="Exibir o arquivo changelog.txt";
 $pgv_lang["view_logs"]="Exibir Logs";
 $pgv_lang["view_readme"]="Leia o arquivo readme.txt";
 $pgv_lang["visibleonline"]="Visível para outros usuários quando on-line";
