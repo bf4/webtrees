@@ -21,7 +21,6 @@
 	<property name="module-punbb.dir" value="${dist.dir}/PGV-Module-punbb-${pgv.version}" />
 	<property name="module-research-assistant.dir" value="${dist.dir}/PGV-Module-research-assistant-${pgv.version}" />
 	<property name="module-sitemap.dir" value="${dist.dir}/PGV-Module-sitemap-${pgv.version}" />
-	<property name="module-slideshow.dir" value="${dist.dir}/PGV-Module-slideshow-${pgv.version}" />
 
 	<property name="demo.base.dir" value="${dist.dir}/DemoBase" />
 	<property name="demo.dir" value="${dist.dir}/PGV-Demo-${pgv.version}" />
@@ -103,8 +102,6 @@
 		<delete file="${module-research-assistant.dir}.zip" failonerror="false" />
 		<delete dir ="${module-sitemap.dir}" failonerror="false" />
 		<delete file="${module-sitemap.dir}.zip" failonerror="false" />
-		<delete dir ="${module-slideshow.dir}" failonerror="false" />
-		<delete file="${module-slideshow.dir}.zip" failonerror="false" />
 	</target>
 
 	<defaultexcludes add="**/*.cache" />
@@ -279,14 +276,6 @@
 		</copy>
 	</target>
 
-	<target name="package-module-slideshow">
-		<copy todir="${module-slideshow.dir}">
-			<fileset dir="./modules/">
-				<include name="slideshow*/**" />
-			</fileset>
-		</copy>
-	</target>
-
 	<target name="package-places">
 		<!-- places -->
 		<copy todir="${places.dir}">
@@ -318,7 +307,7 @@
 	</target>
 
 	<target name="package"
-		depends="package-all, package-basic, package-lang, package-themes, package-modules-all, package-places, package-demo, package-module-cms-interface, package-module-batch-update, package-module-fckeditor, package-module-gallery2, package-module-gedfact-assistant, package-module-googlemap, package-module-jwplayer, package-module-lightbox, package-module-punbb, package-module-research-assistant, package-module-sitemap, package-module-slideshow">
+		depends="package-all, package-basic, package-lang, package-themes, package-modules-all, package-places, package-demo, package-module-cms-interface, package-module-batch-update, package-module-fckeditor, package-module-gallery2, package-module-gedfact-assistant, package-module-googlemap, package-module-jwplayer, package-module-lightbox, package-module-punbb, package-module-research-assistant, package-module-sitemap">
 		<!--  default target which does everything -->
 	</target>
 	
@@ -341,7 +330,6 @@
 		<zip destfile="${module-punbb.dir}.zip" basedir="${module-punbb.dir}" update="true" />
 		<zip destfile="${module-research-assistant.dir}.zip" basedir="${module-research-assistant.dir}" update="true" />
 		<zip destfile="${module-sitemap.dir}.zip" basedir="${module-sitemap.dir}" update="true" />
-		<zip destfile="${module-slideshow.dir}.zip" basedir="${module-slideshow.dir}" update="true" />
 		
 	</target>
 </project>
