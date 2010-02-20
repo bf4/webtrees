@@ -204,7 +204,6 @@ $pgv_lang["filter_address"]			= "Arată adresele care conţin:";
 $pgv_lang["address_list"]			= "Lista de adrese";
 $pgv_lang["autocomplete"]			= "Autocompletare";
 $pgv_lang["index_edit_advice"]		= "Selectaţi un bloc din nume si apoi daţi click pe una din icoanele cu săgeţi pentru a muta blocul selectat în direcţia indicată.";
-$pgv_lang["changelog"]				= "Schimbările de la versiunea #VERSION#";
 $pgv_lang["html_block_descr"]		= "Acesta este un block HTML simplu pe care-l puteţi pune pe pagina dumneavoastră şi să adăugaţi ce mesaje doriţi.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Puneţi titlul aici</b></p><br /><p>Daţi click pe butonul de configurare";
 $pgv_lang["html_block_sample_part2"]	= "pentru a schimba ce este tipărit aici.</p>";

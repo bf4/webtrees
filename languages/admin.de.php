@@ -400,7 +400,6 @@ $pgv_lang["verified"]				= "Benutzer hat sich selber verifiziert";
 $pgv_lang["verified_by_admin"]		= "Benutzer wurde vom Verwalter freigegeben";
 $pgv_lang["verify_gedcom"]			= "GEDCOM prüfen";
 $pgv_lang["verify_upload_instructions"]	= "Eine gleichnamige GEDCOM-Datei existiert bereits. Wenn Sie fortfahren, wird die alte GEDCOM-Datei durch die neu hochgeladene Datei ersetzt und der Import-Prozess beginnt erneut. Wenn Sie abbrechen, bleibt die alte GEDCOM-Datei unverändert.";
-$pgv_lang["view_changelog"]			= "Datei changelog.txt ansehen";
 $pgv_lang["view_logs"]				= "Log Dateien ansehen";
 $pgv_lang["view_readme"]			= "Datei readme.txt ansehen";
 $pgv_lang["visibleonline"]			= "Für andere Benutzer sichtbar, wenn angemeldet";

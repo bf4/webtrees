@@ -231,7 +231,6 @@ $pgv_lang["address_labels"]             = "Étiquettes adresses";
 $pgv_lang["filter_address"]             = "Afficher les adresses contenant:";
 $pgv_lang["address_list"]               = "Liste adresse";
 $pgv_lang["index_edit_advice"]          = "Sélectionner un bloc puis cliquer sur une des flèches pour le déplacer";
-$pgv_lang["changelog"]                  = "Nouveautés de la version #VERSION#";
 $pgv_lang["html_block_descr"]           = "Bloc HTML simple pour afficher un message de votre choix.";
 $pgv_lang["html_block_sample_part1"]    = "<p class='blockhc'><b>Saisir le titre ici</b></p><br /><p>Cliquer sur le bouton Configuration";
 $pgv_lang["html_block_sample_part2"]    = "pour modifier ce texte</p>";

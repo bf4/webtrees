@@ -189,7 +189,6 @@ $pgv_lang["address_labels"]				= "Etiquetes de correu";
 $pgv_lang["filter_address"]				= "Mostra adreces que continguin:";
 $pgv_lang["address_list"]				= "Llistat d'adreces";
 $pgv_lang["index_edit_advice"]			= "Ressalteu un nom de bloc i desprès polseu una de les fletxes per moure el bloc vers la direcció indicada.";
-$pgv_lang["changelog"]					= "Canvis a la versió #VERSION#";
 $pgv_lang["html_block_descr"]				= "Aquest és un senzill un bloc HTML que podeu posar a la vostra pàgina i entrar-hi qualsevol tipus de missatge.";
 $pgv_lang["html_block_sample_part1"]		= "<p class=\"blockhc\"><b>Poseu el títol aquí</b></p><br /><p>Polseu el botó de configurar";
 $pgv_lang["html_block_sample_part2"]		= "per canviar el que s'ha imprès aquí.</p>";

@@ -419,7 +419,6 @@ $pgv_lang["verified"]							= "Uporabnik je potrdil sebe";
 $pgv_lang["verified_by_admin"]						= "Upravitelj odobril uporabnika";
 $pgv_lang["verify_gedcom"]						= "Preveri GEDCOM";
 $pgv_lang["verify_upload_instructions"]					= "GEDCOM datoteka z istime imenom že obstaja. Če boste nadaljevali, bo stara GEDCOM datoteka zamenjana z datoteko, ki ste jo naložili in postopek uvoza se bo začel. Če prekinete, bo stari GEDCOM ostal nespremenjen.";
-$pgv_lang["view_changelog"]						= "Poglej datoteko changelog.txt";
 $pgv_lang["view_logs"]							= "Poglej datoteke dnevnikov";
 $pgv_lang["view_readme"]						= "Poglej datoteko readme.txt";
 $pgv_lang["visibleonline"]						= "Viden drugim uporabnikom, ko je aktiven na spletni strani";

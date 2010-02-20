@@ -141,7 +141,6 @@ $pgv_lang["address_list"]="Lista de Endereços";
 $pgv_lang["autocomplete"]="Auto-completar";
 $pgv_lang["index_edit_advice"]="Clique em uma das setas para mover o Bloco selecionado na direção desejada.";
 $pgv_lang["importing_dates"]="Importando registros de Data";
-$pgv_lang["changelog"]="Modificações na Versão #VERSION#";
 $pgv_lang["html_block_descr"]="O bloco de HTML simples, permite que você inclua uma mensagem qualquer na sua página.";
 $pgv_lang["html_block_sample_part1"]="<p class=\"blockhc\"><b>Informe o título aqui</b></p><br /><p>Clique o botão configurar";
 $pgv_lang["html_block_sample_part2"]="para alterar o que está impresso aqui.</p>";

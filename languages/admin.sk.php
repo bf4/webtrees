@@ -277,7 +277,6 @@ $pgv_lang["verified"]			= "Uživateľ potvrdil registráciu";
 $pgv_lang["verified_by_admin"]		= "Uživateľ bol adminom povolený";
 $pgv_lang["verify_gedcom"]		= "Verifikácia GEDCOMu";
 $pgv_lang["verify_upload_instructions"]	= "Ak zvolíte Pokračovať, bude starý GEDCOM súbor nahradený novým súborom, ktorý ste nahrali, a importovanie začne znovu. Ak zvolíte Zrušiť, zostane starý súbor zachovaný.";
-$pgv_lang["view_changelog"]		= "Zobraziť changelog.txt súbor";
 $pgv_lang["view_logs"]			= "Zobraziť logfiles";
 $pgv_lang["view_readme"]		= "Zobraziť súbor readme.txt";
 $pgv_lang["visibleonline"]		= "Viditeľný pre iných uživateľov, keď je online";

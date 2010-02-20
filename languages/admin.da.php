@@ -288,7 +288,6 @@ $pgv_lang["verified"]			= "Bruger har<br />bekræftet ansøgningen";
 $pgv_lang["verified_by_admin"]	= "Bruger er godkendt<br />[af administrator]";
 $pgv_lang["verify_gedcom"]		= "Verificér GEDCOM";
 $pgv_lang["verify_upload_instructions"]	= "Hvis du vælger at fortsætte, vil den eksisterende GEDCOM-fil blive erstattet med den fil du har valgt at uploade. Den nye fil vil derefter blive importeret til PhpGedView.<br />Vælger du at afbryde, vil den eksisterende GEDCOM-fil forblive uændret.";
-$pgv_lang["view_changelog"]			= "Læs filen changelog.txt";
 $pgv_lang["view_logs"]				= "Vis log-fil ";
 $pgv_lang["view_readme"]			= "Læs readme.txt filen";
 $pgv_lang["visibleonline"]			= "Synlig for andre brugere der er logget ind";

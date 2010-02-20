@@ -298,7 +298,6 @@ $pgv_lang["verified"]					= "A felhasználó megerősítette jelentkezését";
 $pgv_lang["verified_by_admin"]				= "A felhasználót elfogadta az adminisztrátor";
 $pgv_lang["verify_gedcom"]				= "GEDCOM ellenőrzése";
 $pgv_lang["verify_upload_instructions"] 		= "Ha Ön a folytatás mellet dönt, a korábbi GEDCOM-állományt az Ön által feltöltöttre fogjuk lecserélni és az importálási folyamat újrakezdődik. Ha a megszakítást választja, a korábbi GEDCOM-állomány érintetlen marad.";
-$pgv_lang["view_changelog"]				= "changelog.txt megtekintése";
 $pgv_lang["view_logs"]					= "Napló-állományok megtekintése";
 $pgv_lang["view_readme"]				= "readme.txt állomány tekintése";
 $pgv_lang["visibleonline"]              		= "Bejelentkezés után látható";

@@ -279,7 +279,6 @@ $pgv_lang["verified"]			= "Användaren verifierade sig själv";
 $pgv_lang["verified_by_admin"]	= "Användare godkänd av admin";
 $pgv_lang["verify_gedcom"]		= "Verifiera GEDCOM";
 $pgv_lang["verify_upload_instructions"]	= "Om du väljer att fortsätta kommer den gamla GEDCOM-filen att ersättas med filen du har laddat upp och importprocessen kommer att börja igen. Om du väljer att avbryta kommer den gamla GEDCOM-filen att förbli oförändrad.";
-$pgv_lang["view_changelog"]		= "Visa changelog.txt-filen";
 $pgv_lang["view_logs"]			= "Visa loggfiler";
 $pgv_lang["view_readme"]			= "Visa readme.txt-fil";
 $pgv_lang["visibleonline"]		= "Synlig för andra användare när du är online";

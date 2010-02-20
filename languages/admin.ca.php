@@ -286,7 +286,6 @@ $pgv_lang["verified"]				= "Usuari autoconfirmat";
 $pgv_lang["verified_by_admin"]		= "Usuari autoritzat per l'administrador";
 $pgv_lang["verify_gedcom"]			= "Verifica el GEDCOM";
 $pgv_lang["verify_upload_instructions"]	= "S'ha trobat un fitxer GEDCOM amb el mateix nom. Si trieu continuar, l'antic serà substituït pel que haureu carregat i el procés d'importació s'iniciarà. Si escolliu cancel·lar, es mantindrà inalterat l'antic GEDCOM.";
-$pgv_lang["view_changelog"]			= "Veure el fitxer changelog.txt";
 $pgv_lang["view_logs"]				= "Mostra el fitxer de registre";
 $pgv_lang["view_readme"]			= "Veure el fitxer readme.txt";
 $pgv_lang["visibleonline"]			= "Visible a altres usuaris quan accediu";

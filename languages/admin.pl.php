@@ -387,7 +387,6 @@ $pgv_lang["verified"]				= "Potwierdzony przez siebie";
 $pgv_lang["verified_by_admin"]		= "Zatwierdzony przez administratora";
 $pgv_lang["verify_gedcom"]			= "Zatwierdź plik GEDCOM";
 $pgv_lang["verify_upload_instructions"]	= "Wykryto plik GEDCOM o tej samej nazwie. Jeśli będziesz kontynuować, starszy plik GEDCOM zostanie zastąpiony wgrywanym plikiem i importowanie rozpocznie się od nowa. Jeśli anulujesz, starszy plik GEDCOM pozostanie niezmieniony.";
-$pgv_lang["view_changelog"]			= "Zobacz plik changelog.txt";
 $pgv_lang["view_logs"]				= "Zobacz pliki loga";
 $pgv_lang["view_readme"]			= "Zobacz plik readme.txt";
 $pgv_lang["visibleonline"]			= "Widoczny dla innych użytkowników";

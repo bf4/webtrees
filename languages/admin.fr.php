@@ -362,7 +362,6 @@ $pgv_lang["verified"]                   = "Vérifié par l'utilisateur";
 $pgv_lang["verified_by_admin"]          = "Approuvé par l'administrateur";
 $pgv_lang["verify_gedcom"]              = "Validation du fichier GEDCOM";
 $pgv_lang["verify_upload_instructions"] = "En choisissant <b>Continuer</b> l'ancien GEDCOM sera remplacé par le nouveau fichier chargé. En choisissant <b>Annuler</b> l'ancien fichier GEDCOM restera inchangé.";
-$pgv_lang["view_changelog"]             = "Voir le journal des modifications «changelog.txt»";
 $pgv_lang["view_logs"]                  = "Voir le fichier journal";
 $pgv_lang["view_readme"]                = "Voir le fichier readme.txt";
 $pgv_lang["visibleonline"]              = "Visible par les autres utilisateurs";

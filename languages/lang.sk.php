@@ -1257,7 +1257,6 @@ $pgv_lang["locked"]			= "Nemeniť";
 $pgv_lang["privacy"]			= "Súkromný";
 $pgv_lang["number_sign"]		= "#";
 $pgv_lang["show_spouses"]		= "Zobrazenie manželov";
-$pgv_lang["changelog"]			= "Zmeny verzie #VERSION#";
 $pgv_lang["html_block_descr"]		= "Toto je jednoduchý HTML blok, ktorý môžete pridať na svoju stránku pre zobrazenie ľubovolných správ.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Sem vložte váš názov</b></p><br /><p>Kliknite na tlačítko konfigurácia";
 $pgv_lang["html_block_sample_part2"]	= "pre zmenu, ktorá je zobrazená tu.</p>";

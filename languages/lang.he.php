@@ -235,7 +235,6 @@ $pgv_lang["address_labels"]		= "מדבקות כתובת";
 $pgv_lang["filter_address"]		= "הראה כתובות המכילות:";
 $pgv_lang["address_list"]		= "רשימת כתובות";
 $pgv_lang["index_edit_advice"]	= "הדגש שם אזור ולחץ על אחד מצלמיות החץ כדי להעביר את האזור המודגש לכיוון המוצבע.";
-$pgv_lang["changelog"]		= "שינויי מהדורה #VERSION#";
 $pgv_lang["html_block_descr"]		= "זהו אזור HTML פשוט שתוכל לשים על הדף שלך ולהוסיף בו כל הודעה שתרצה.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>הכנס את הכותרת שלך כאו</b></p><br /><p>לחץ על כפתור הגדרת התצורה";
 $pgv_lang["html_block_sample_part2"]	= "כדי לראות מה שמודפס כאן.</p>";

@@ -618,7 +618,6 @@ $pgv_lang["reorder_families"]		= "Riordina le famiglie";
 $pgv_lang["sort_by_marriage"]		= "Ordina per data di matrimonio";
 $pgv_lang["quick_update_title"] = "Modifica veloce";
 $pgv_lang["other"]     = "Altro";
-$pgv_lang["changelog"]    = "Cambiamenti della versione #VERSION#";
 $pgv_lang["enter_comments"]   = "Per favore indica la tua relazione con i dati nel campo dei Commenti.";
 $pgv_lang["comments"]    = "Commenti";
 $pgv_lang["none"]     = "Nessuno";

@@ -223,7 +223,6 @@ $pgv_lang["filter_address"]			= "Perlihatkan alamat yang mengandung:";
 $pgv_lang["address_list"]			= "Daftar Alamat";
 $pgv_lang["autocomplete"]			= "Autokomplit";
 $pgv_lang["index_edit_advice"]			= "Highlight blok nama kemudian klik pada salah satu ikon panah untuk memindah blok terhighlight tersebut pada arah yang ditandakan.";
-$pgv_lang["changelog"]				= "Perubahan Versi #VERSION#";
 $pgv_lang["html_block_descr"]			= "Ini adalah blok HTML sederhana yang dapat Anda tempatkan pada halaman Anda untuk menambah pesan singkat apapun yang mungkin Anda inginkan.";
 $pgv_lang["html_block_sample_part1"]		= "<p class=\"blockhc\"><b>Letakkan judul Anda di sini</b></p><br /><p>Klik tombol pengaturan";
 $pgv_lang["html_block_sample_part2"]		= "untuk mengubah apa yang dicetak di sini.</p>";

@@ -299,7 +299,6 @@ $pgv_lang["title_manage_servers"]   			= "Gestione Siti";
 $pgv_lang["title_view_conns"]       			= "Vedere Connessioni";
 $pgv_lang["verify_gedcom"]						= "Verificare GEDCOM";
 $pgv_lang["view_readme"]						= "Visualizza file readme.txt";
-$pgv_lang["view_changelog"]						= "Visualizza file Changelog.txt";
 $pgv_lang["visitor"]							= "Visitatore";
 $pgv_lang["level"]        = "Livello";                   // Levels of checking
 $pgv_lang["critical"]     = "Critico";

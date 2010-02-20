@@ -30,7 +30,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["changelog"]			= "v#VERSION# sürümündeki değişiklikler";
 $pgv_lang["begins_with"]		= "İle başlayan";
 $pgv_lang["contains"]			= "İçerenler";
 $pgv_lang["sounds_like"]		= "Gibi araştır";

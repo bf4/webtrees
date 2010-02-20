@@ -891,7 +891,6 @@ $pgv_lang["please_wait"]			= "Palaukite kol Index failai yra perkuriami.";
 $pgv_lang["username"]				= "Naudotojo vardas";
 $pgv_lang["invalid_username"]		= "Naudotojo varde yra neleistinų simbolių";
 $pgv_lang["fullname"]				= "Pilnas vardas";
-$pgv_lang["changelog"]				= "Versijos #VERSION# Pasikeitimai";
 $pgv_lang["html_block_descr"]		= "Čia yra paprastas HTML blokas, kurį Jūs galite padėti į savo puslapį ir pridėti bet kokį pranešimą.";
 $pgv_lang["html_block_name"]		= "HTML blokas";
 $pgv_lang["num_to_show"]			= "Kiek įrašų rodyti";

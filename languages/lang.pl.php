@@ -233,7 +233,6 @@ $pgv_lang["address_labels"]		= "Etykiety adresowe";
 $pgv_lang["filter_address"]		= "Adres zawiera";
 $pgv_lang["address_list"]		= "Lista adresów";
 $pgv_lang["index_edit_advice"]	= "Zaznacz nazwę bloku, a następnie kliknij odpowiednią strzałkę aby przesunąć blok we wskazanym kierunku.";
-$pgv_lang["changelog"]			= "Zmiany w wersji #VERSION#";
 $pgv_lang["html_block_descr"]		 = "To jest prosty blok HTML, który możesz umieścić na swojej stronie aby dodać dowolny rodzaj wiadomości.";
 $pgv_lang["html_block_sample_part1"] = "<p class=\"blockhc\"><b>Tutaj umieść tytuł</b></p><br /><p>Wciśnij przycisk konfiguracji";
 $pgv_lang["html_block_sample_part2"] = "aby zmienić to, co będzie tu wyświelane.</p>";

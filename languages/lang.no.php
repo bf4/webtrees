@@ -226,7 +226,6 @@ $pgv_lang["filter_address"]			= "Vis adresser som inneholder:";
 $pgv_lang["address_list"]			= "Adresseliste";
 $pgv_lang["autocomplete"]			= "Auto-fullfør";
 $pgv_lang["index_edit_advice"]		= "Merk navnet til en ramme og klikk på en av pilene for å flytte rammen i ønket retning.";
-$pgv_lang["changelog"]				= "Endringer i versjon #VERSION#";
 $pgv_lang["html_block_descr"]		= "Dette er en enkel ramme som du kan legge på siden din for å vise en beskjed (i HTML-format).";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Sett inn tittelen din her</b></p><br /><p>Klikk på knappen for oppsett";
 $pgv_lang["html_block_sample_part2"]	= "for å endre det som skal stå her.</p>";

@@ -371,7 +371,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["verified_by_admin"]					= "User approved by Admin";
 ##$pgv_lang["verify_gedcom"]						= "Verify GEDCOM";
 ##$pgv_lang["verify_upload_instructions"]			= "A GEDCOM file with the same name has been found. If you choose to continue, the old GEDCOM file will be replaced with the file that you uploaded and the Import process will begin again.  If you choose to cancel, the old GEDCOM will remain unchanged.";
-##$pgv_lang["view_changelog"]						= "View changelog.txt file";
 ##$pgv_lang["view_logs"]							= "View log files";
 ##$pgv_lang["view_readme"]						= "View readme.txt file";
 ##$pgv_lang["visibleonline"]						= "Visible to other users when online";
