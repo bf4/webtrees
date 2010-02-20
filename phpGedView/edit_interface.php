@@ -5,6 +5,8 @@
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
+* Modifications Copyright (c) 2010 Greg Roach
+*
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation; either version 2 of the License, or
@@ -873,8 +875,7 @@ case 'addsourceaction':
 	}
 	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
 	if (!empty($PUBL)) {
-		$newlines = preg_split("/\r?\n/", $PUBL, -1, PREG_SPLIT_NO_EMPTY);
-		foreach ($newlines as $k=>$line){
+		foreach (preg_split("/\r?\n/", $PUBL) as $k=>$line){
 			if ( $k==0 ) {
 				$newgedrec .= "1 PUBL $line\n";
 			} else {
@@ -978,14 +979,11 @@ case 'addnoteaction':
 	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
 
 	if (!empty($NOTE)) {
-		$newlines = preg_split("/\r?\n/", $NOTE, -1);
-		for ($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 && count($newlines)>1) {
-				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
-			}else if ( $k==0 ) {
-				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n1 CONT\n";
+		foreach (preg_split("/\r?\n/", $NOTE) as $k=>$line) {
+			if ($k==0) {
+				$newgedrec = "0 @XREF@ NOTE {$line}\n";
 			} else {
-				$newgedrec .= "1 CONT $newlines[$k]\n";
+				$newgedrec .= "1 CONT {$line}\n";
 			}
 		}
 	}
@@ -999,8 +997,7 @@ case 'addnoteaction':
 	}
 	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
 	if (!empty($PUBL)) {
-		$newlines = preg_split("/\r?\n/", $PUBL, -1, PREG_SPLIT_NO_EMPTY);
-		foreach ($newlines as $k=>$line) {
+		foreach (preg_split("/\r?\n/", $PUBL) as $k=>$line) {
 			if ( $k==0 ) {
 				$newgedrec .= "1 PUBL $line\n";
 			} else {
@@ -1315,12 +1312,11 @@ case 'addrepoaction':
 		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
 	}
 	if (!empty($ADDR)) {
-		$newlines = preg_split("/\r?\n/", $ADDR, -1, PREG_SPLIT_NO_EMPTY);
-		foreach ($newlines as $k=>$line) {
+		foreach (preg_split("/\r?\n/", $ADDR) as $k=>$line) {
 			if ( $k==0 ) {
-				$newgedrec .= "1 ADDR $line\n";
+				$newgedrec .= "1 ADDR {$line}\n";
 			} else {
-				$newgedrec .= "2 CONT $line\n";
+				$newgedrec .= "2 CONT {$line}\n";
 			}
 		}
 	}
@@ -1470,12 +1466,11 @@ case 'update':
 
 			if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
 			if (!empty($NOTE)) {
-				$newlines = preg_split("/\r?\n/", $NOTE, -1 );
-				for ($k=0; $k<count($newlines); $k++) {
-					if ($k==0 && count($newlines)>1) {
-						$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
+				foreach (preg_split("/\r?\n/", $NOTE, -1 ) as $k=>$line) {
+					if ($k==0) {
+						$gedlines[$k] = "0 @{$pid}@ NOTE {$line}\n";
 					} else {
-						$gedlines[$k] = " 1 CONT $newlines[$k]\n";
+						$gedlines[$k] = "1 CONT {$line}\n";
 					}
 				}
 			}
@@ -1536,12 +1531,11 @@ case 'update':
 
 				if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
 				if (!empty($NOTE)) {
-					$newlines = preg_split("/\r?\n/", $NOTE, -1 );
-					for ($k=0; $k<count($newlines); $k++) {
-						if ($k==0 && count($newlines)>1) {
-							$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
+					foreach (preg_split("/\r?\n/", $NOTE) as $k=>$line) {
+						if ($k==0) {
+							$gedlines[$k] = "0 @{$pid}@ NOTE {$line}\n";
 						} else {
-							$gedlines[$k] = " 1 CONT $newlines[$k]\n";
+							$gedlines[$k] = "1 CONT {$line}\n";
 						}
 					}
 				}
