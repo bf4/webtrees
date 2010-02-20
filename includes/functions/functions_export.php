@@ -158,6 +158,7 @@ function createTempUser($userID, $rights, $gedcom) {
 		delete_user($tempUserID);
 		AddToLog("deleted dummy user -> {$userID} <-, which was not deleted in a previous session");
 	}
+	$ged_id=get_id_from_gedcom($gedcom);
 
 	$tempUserID=create_user($userID, md5(rand()));
 	if (!$tempUserID) return false;
@@ -169,26 +170,26 @@ function createTempUser($userID, $rights, $gedcom) {
 	switch ($rights) {
 	case 'admin':
 		set_user_setting($tempUserID, 'canadmin', 'Y');
-		set_user_gedcom_setting($tempUserID, $gedcom, 'canedit', 'admin');
+		set_user_gedcom_setting($tempUserID, $ged_id, 'canedit', 'admin');
 	case 'gedadmin':
 		set_user_setting($tempUserID, 'canadmin', 'N');
-		set_user_gedcom_setting($tempUserID, $gedcom, 'canedit', 'admin');
+		set_user_gedcom_setting($tempUserID, $ged_id, 'canedit', 'admin');
 		break;
 	case 'user':
 		set_user_setting($tempUserID, 'canadmin', 'N');
-		set_user_gedcom_setting($tempUserID, $gedcom, 'canedit', 'access');
+		set_user_gedcom_setting($tempUserID, $ged_id, 'canedit', 'access');
 		break;
 	case 'visitor':
 	default:
 		set_user_setting($tempUserID, 'canadmin', 'N');
-		set_user_gedcom_setting($tempUserID, $gedcom, 'canedit', 'none');
+		set_user_gedcom_setting($tempUserID, $ged_id, 'canedit', 'none');
 		break;
 	}
 	AddToLog("created dummy user -> {$userID} <- with level {$rights} to GEDCOM {$gedcom}");
 
 	// Save things in cache
 	$_SESSION["pgv_GEDCOM"]				= $gedcom;
-	$_SESSION["pgv_GED_ID"]				= get_id_from_gedcom($_SESSION["pgv_GEDCOM"]);
+	$_SESSION["pgv_GED_ID"]				= $ged_id;
 	$_SESSION["pgv_USER_ID"]			= $userID;
 	$_SESSION["pgv_USER_NAME"]			= 'Not Relevant';
 	$_SESSION["pgv_USER_GEDCOM_ADMIN"]	= userGedcomAdmin   ($_SESSION["pgv_USER_ID"], $_SESSION["pgv_GED_ID"]);
