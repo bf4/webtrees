@@ -2586,11 +2586,13 @@ function delete_user($user_id) {
 
 	$user_name=get_user_name($user_id);
 
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user      WHERE user_id =?"        )->execute(array($user_id));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username =?"     )->execute(array($user_name));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username=?"     )->execute(array($user_name));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}messages  WHERE m_from=? OR m_to=?")->execute(array($user_name, $user_name));
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news      WHERE n_username =?"     )->execute(array($user_name));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE user_id =?"        )->execute(array($user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_setting        WHERE user_id =?"        )->execute(array($user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user                WHERE user_id =?"        )->execute(array($user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks              WHERE b_username =?"     )->execute(array($user_name));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites           WHERE fv_username=?"     )->execute(array($user_name));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}messages            WHERE m_from=? OR m_to=?")->execute(array($user_name, $user_name));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news                WHERE n_username =?"     )->execute(array($user_name));
 }
 
 function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
