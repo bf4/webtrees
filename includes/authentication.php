@@ -166,7 +166,7 @@ function userIsAdmin($user_id=PGV_USER_ID) {
  */
 function userGedcomAdmin($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	if ($user_id) {
-		return get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin' || userIsAdmin($user_id, $ged_id);
+		return get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin' || userIsAdmin($user_id);
 	} else {
 		return false;
 	}
@@ -217,14 +217,13 @@ function userCanEdit($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 function userCanAccept($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $ALLOW_EDIT_GEDCOM;
 
-	if ($user_id) {
-		if ($ALLOW_EDIT_GEDCOM) {
-			$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
-			return $tmp=='admin' || $tmp=='accept';
-		} else {
-			// If we've disabled editing, an admin can still accept pending edits.
-			return userGedcomAdmin($user_id, $ged_id);
-		}
+	// An admin can always accept changes, even if editing is disabled
+	if (userGedcomAdmin($user_id, $ged_id)) {
+		return true;
+	}
+	if ($ALLOW_EDIT_GEDCOM) {
+		$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
+		return $tmp=='admin' || $tmp=='accept';
 	} else {
 		return false;
 	}
@@ -234,11 +233,7 @@ function userCanAccept($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
  * Should user's changed automatically be accepted
  */
 function userAutoAccept($user_id=PGV_USER_ID) {
-	if ($user_id) {
-		return get_user_setting($user_id, 'auto_accept')=='Y';
-	} else {
-		return false;
-	}
+	return get_user_setting($user_id, 'auto_accept')=='Y';
 }
 
 /**
