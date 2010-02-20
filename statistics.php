@@ -775,8 +775,6 @@ $_SESSION["plotnp"]=$plotnp;
 	</fieldset>
 	<br />
 	</div>
-</div>
-</div>
 </td>
 </tr>
 </table>
