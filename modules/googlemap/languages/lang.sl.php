@@ -146,4 +146,30 @@ $pgv_lang["placecheck_filter_text"] = "Seznam filtriranih možnosti";
 $pgv_lang["placecheck_match"] 		= "Vključi polno ujemajoča mesta: ";
 $pgv_lang["placecheck_lati"] 		= "Zemplepisna širina";
 $pgv_lang["placecheck_long"] 		= "Zemljepisna dolžina";
+
+// Pedigree map
+$pgv_lang["pedigree_map"]			= "Zemljevid sorodnikov";
+$pgv_lang["pm_grandparent"] 			= "Stari starši";
+$pgv_lang["pm_grandmother"] 			= "Babica";
+$pgv_lang["pm_grandfather"] 			= "Dedek";
+$pgv_lang["pm_gt"]						= "Gt";
+$pgv_lang["pm_zoom_in"]					= "Približaj";
+$pgv_lang["pm_zoom_out"]				= "Oddalji";
+$pgv_lang["zoom_in_here"]				= "Približaj&nbsp;tu";
+$pgv_lang["zoom_out_here"]				= "Oddalji&nbsp;tu";
+$pgv_lang["centre_map"]					= "Usredini&nbsp;zemljevid&nbsp;tu";
+$pgv_lang["pm_individual_displayed"]	= "oseba prikazano od skupno";
+$pgv_lang["pm_2individuals_displayed"]	= "osebi prikazani od skupno";	// For Polish 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["pm_individuals_displayed"]	= "oseb prikazanih od skupno";
+$pgv_lang["pm_individual_private"]		= "oseba je zasebna.";
+$pgv_lang["pm_individuals_private"]		= "oseb je zasebnih.";
+$pgv_lang["pm_missing_birth"]			= "osebi manjkajo koordinate rojstva na zamljevidu:";
+$pgv_lang["pm_2missing_births"]			= "osebam manjkajo koordinate rojstva na zamljevidu:";	// For Polish 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["pm_missing_births"]			= "osebam manjkajo koordinate rojstva na zamljevidu:";
+$pgv_lang["pm_missings"]				= "Ni prednikov v podatkovni bazi.";
+$pgv_lang["pm_from"]					= "od";
+$pgv_lang["pm_for"]						= "do";
+$pgv_lang["pm_gens"]					= "rodov";
+$pgv_lang["pm_root"]					= "Koren";
+
 ?>
