@@ -67,7 +67,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 				$users_with_changes=array();
 				foreach (get_all_users() as $user_id=>$user_name) {
 					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-						if (exists_pending_change($user_id, $ged_id)) {
+						if (userCanAccept($user_id, $ged_id) && exists_pending_change($user_id, $ged_id)) {
 							$users_with_changes[$user_id]=$user_name;
 							break;
 						}
