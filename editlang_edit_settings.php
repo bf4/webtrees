@@ -311,7 +311,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	if (isset($flag_i) && isset($flagfiles["path"][$flag_i])){
 		echo '<div style="display: inline; padding-left: 7px;">';
-		echo ' <img id="flag" src="', $flagfiles["path"][$flag_i], '" alt="" class="brightflag border1" /></div>\n';
+		echo ' <img id="flag" src="', $flagfiles["path"][$flag_i], '" alt="" class="brightflag border1" /></div>';
 	}
 	echo "</td>";
 	echo "</tr>";
