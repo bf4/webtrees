@@ -498,7 +498,7 @@ function print_fact(&$eventObj, $noedit=false) {
  */
 function print_submitter_info($sid) {
 	global $GEDCOM;
-	$ged_id=get_id_from_gedcom();
+	$ged_id=get_id_from_gedcom($GEDCOM);
 	$srec = find_gedcom_record($sid, $ged_id);
 	preg_match("/1 NAME (.*)/", $srec, $match);
 	// PAF creates REPO record without a name
