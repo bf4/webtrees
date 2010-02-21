@@ -247,6 +247,36 @@ $language_settings['english']=array(
 'COLLATION'=>'utf8_unicode_ci'
 );
 
+//-- settings for english
+$language_settings['english-gb']=array(
+'pgv_langname'=>'english-gb',
+'pgv_lang_use'=>true,
+'pgv_lang_self'=>'British English',
+'lang_short_cut'=>'en-gb',
+'langcode'=>'en;en-us;en-au;en-bz;en-ca;en-ie;en-jm;en-nz;en-ph;en-za;en-tt;en-gb;en-zw;',
+'pgv_language'=>'languages/lang.en-gb.php',
+'confighelpfile'=>'languages/configure_help.en-gb.php',
+'helptextfile'=>'languages/help_text.en-gb.php',
+'flagsfile'=>'images/flags/united kingdom.gif',
+'factsfile'=>'languages/facts.en-gb.php',
+'adminfile'=>'languages/admin.en-gb.php',
+'editorfile'=>'languages/editor.en-gb.php',
+'countryfile'=>'languages/countries.en-gb.php',
+'faqlistfile'=>'languages/faqlist.en-gb.php',
+'extrafile'=>'languages/extra.en-gb.php',
+'DATE_FORMAT'=>'D M Y',
+'TIME_FORMAT'=>'H:i:s',
+'WEEK_START'=>'1',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
+'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_unicode_ci'
+);
+
 //-- settings for spanish
 $language_settings['spanish']=array(
 'pgv_langname'=>'spanish',

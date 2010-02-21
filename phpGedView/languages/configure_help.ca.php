@@ -712,6 +712,6 @@ $pgv_lang["multi_letter_equiv_help"]	= "~#pgv_lang[multi_letter_equiv]#~<br /><b
 $pgv_lang["multi_letter_equiv"]		= "Equivalències de grups de lletres";
 $pgv_lang["collation"]		= "Seqüència de classificació de la base de dades";
 $pgv_lang["collation_help"]	= "~#pgv_lang[collation]#~<br /><br />Si empreu les regles pròpies de la base de dades per a ordenar-la, aquesta opció especifica la seqüència d'ordenació que cal emprar en aquest idioma. Cal que us assegureu que la vostra base de dades contempla totes les seqüències d'ordenació que planegeu emprar.<br /><br />L’ús de classificació per la base de dades es controla en els paràmetres de configuració del lloc.<br />";
-$pgv_lang["lang_name_english (uk)"]	= "Anglès (Regne Unit)";
-$pgv_lang["lang_name_english (us)"]	= "Anglès (EUA)";
+$pgv_lang["lang_name_english-gb"]	= "Anglès (Regne Unit)";
+$pgv_lang["lang_name_english-us"]	= "Anglès (EUA)";
 ?>
