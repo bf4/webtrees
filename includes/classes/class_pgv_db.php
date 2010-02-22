@@ -360,32 +360,6 @@ class PGV_DB {
 			self::$LONGTEXT_TYPE='TEXT';
 			self::$UTF8_TABLE   ='';
 			break;
-		case '4D': // This DSN has not been tested!
-			self::$pdo=new PDO(
-				"4D:host={$DBHOST};port={$DBPORT};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
-				array(
-					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-					PDO::ATTR_CASE=>PDO::CASE_LOWER,
-					PDO::ATTR_AUTOCOMMIT=>true
-				)
-			);
-			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
-			self::$ID_TYPE      ='INTEGER';
-			self::$INT1_TYPE    ='INTEGER';
-			self::$INT2_TYPE    ='INTEGER';
-			self::$INT3_TYPE    ='INTEGER';
-			self::$INT4_TYPE    ='INTEGER';
-			self::$INT8_TYPE    ='INTEGER';
-			self::$CHAR_TYPE    ='VARCHAR';
-			self::$VARCHAR_TYPE ='VARCHAR';
-			self::$UNSIGNED     ='';
-			self::$LIKE         ='LIKE';
-			self::$RANDOM       ='RANDOM()';
-			self::$TEXT_TYPE    ='TEXT';
-			self::$LONGTEXT_TYPE='TEXT';
-			self::$UTF8_TABLE   ='';
-			break;
 		}
 
 		// Assign the singleton
@@ -496,9 +470,6 @@ class PGV_DB {
 		case 'odbc':
 			// We don't know the underlying database, so this is only a guess
 			return "MOD($x,$y)";
-		case '4D':
-			// No MOD or TRUNC function - only ROUND
-			return "(({$x})-({$y})*ROUNDING(({$x})/({$y})-0.5))";
 		}
 	}
 
@@ -511,7 +482,6 @@ class PGV_DB {
 		case 'sqlite':
 		case 'sqlite2':
 		case 'pgsql':
-		case '4D':
 			return 'RANDOM()';
 		case 'mssql':
 			return 'NEWID()';
@@ -717,7 +687,6 @@ class PGV_DB {
 			case 'sqlite':
 			case 'sqlite2':
 			case 'pgsql':
-			case '4D':
 				$statement="{$statement} LIMIT {$n}";
 				break;
 			case 'mssql':
