@@ -255,7 +255,6 @@ $pgv_lang["ged_check"] 							= "Controllo";
 $pgv_lang["gedcom_config_write_error"]			= "ERRORE! <br /> Impossibile scrivere sul file <i> GLOBALS [whichFile] </ i>. Si prega di controllare le autorizzazioni per la corretta scrittura.";
 $pgv_lang["upload_replacement"]			= "Carica sostituzione";
 $pgv_lang["gedcom_downloadable"] 				= "Questo file GEDCOM è scaricabile su Internet! <br /> Si prega di consultare la sezione del SICUREZZA <a href=\"readme.txt\"><b>readme.txt</b></a> file per risolvere questo problema problema";
-$pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["label_added_servers"]				= "Server remoti";
 $pgv_lang["label_families"]         			= "Famiglie";
 $pgv_lang["label_gedcom_id2"]       			= "Database ID:";

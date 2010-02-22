@@ -158,7 +158,6 @@ $pgv_lang["gedcom_config_write_error"]	= "CH Y B A !!!<br />Nie je možné zapis
 $pgv_lang["gedcom_downloadable"] 	= "Tento GEDCOM môže byť stiahnutý po internete!<br />Prosím prečítajte si odstavec o BEZPEČNOSTI v súbore <a href=\"readme.txt\">readme.txt</a> a zjednajte nápravu";
 $pgv_lang["gedcom_file"]		= "Súbor GEDCOM:";
 $pgv_lang["gedcom_not_imported"]	= "Tento GEDCOM ešte nebol importovaný.";
-$pgv_lang["ibase"]			= "InterBase";
 $pgv_lang["img_admin_settings"]		= "Upraviť nastavenie nakladania z obrázkami";
 $pgv_lang["import_complete"]		= "Importovanie je hotové";
 $pgv_lang["import_marr_names"]		= "Import mien po sobáši";

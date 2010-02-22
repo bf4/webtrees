@@ -297,7 +297,6 @@ $pgv_lang["gedcom_config_write_error"]			= "N A P A K A !!!<br />Datoteke <i>#GL
 $pgv_lang["gedcom_downloadable"] 				= "Ta GEDCOM je možno prenesti preko interneta!<br />Poglejte odstavek o varnosti (SECURITY) v <a href=\"readme.txt\"><b>readme.txt</b></a> za rešitev tega problema";
 $pgv_lang["gedcom_file"]						= "GEDCOM datoteka:";
 $pgv_lang["gedcom_not_imported"]				= "Ta GEDCOM še ni bil uvožen.";
-$pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["img_admin_settings"] 				= "Urejaj nastavitve upravljanja s slikami";
 $pgv_lang["autoContinue"]					= "Samodejno pritisni gumb «Nadaljuj»";
 $pgv_lang["import_complete"]					= "Uvoz končan";

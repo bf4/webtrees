@@ -296,7 +296,6 @@ $pgv_lang["gedcom_config_write_error"]			= "E R R O R !!!<br />Could not write t
 $pgv_lang["gedcom_downloadable"]				= "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem";
 $pgv_lang["gedcom_file"]						= "GEDCOM File:";
 $pgv_lang["gedcom_not_imported"]				= "This GEDCOM has not yet been imported.";
-$pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["img_admin_settings"]					= "Edit Image Manipulation Configuration";
 $pgv_lang["autoContinue"]						= "Automatically press «Continue» button";
 $pgv_lang["import_complete"]					= "Import complete";
