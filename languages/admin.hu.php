@@ -326,7 +326,6 @@ $pgv_lang["sanity_warn5"]				= "A DOM XML könyvtár nem elérhető. A PhpGedVie
 $pgv_lang["msql"]								= "Mini SQL";
 $pgv_lang["mssql"]								= "Microsoft SQL Server";
 $pgv_lang["mysql"]								= "MySQL";
-$pgv_lang["oci8"]								= "Oracle 7+";
 $pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["sqlite"]								= "SQLite";
 $pgv_lang["tradition_polish"]		= "Lengyel";

@@ -343,7 +343,6 @@ $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["never"]								= "Nikoli";
 $pgv_lang["no_logs"]							= "Izključi beleženje";
 $pgv_lang["no_messaging"]						= "Nobenega načina kontakta";
-$pgv_lang["oci8"]								= "Oracle 7+";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;ogledov strani v&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]					= "Izvajam preverjanje GEDCOM-a...";
 $pgv_lang["pgsql"]							= "PostgreSQL";

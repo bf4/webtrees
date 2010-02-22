@@ -294,7 +294,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["never"]								= "Never";
 ##$pgv_lang["no_logs"]							= "Disable logging";
 ##$pgv_lang["no_messaging"]						= "No contact method";
-##$pgv_lang["oci8"]								= "Oracle 7+";
 ##$pgv_lang["page_views"]							= "&nbsp;&nbsp;page views in&nbsp;&nbsp;";
 ##$pgv_lang["performing_validation"]				= "Performing GEDCOM validation...";
 ##$pgv_lang["pgsql"]								= "PostgreSQL";

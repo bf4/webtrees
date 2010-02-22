@@ -297,7 +297,6 @@ $pgv_lang["mysqli"]						= "MySQL 4.1+ og PHP 5";
 $pgv_lang["never"]						= "Aldri";
 $pgv_lang["no_logs"]					= "Ingen logging";
 $pgv_lang["no_messaging"]				= "Ingen kontaktlink";
-$pgv_lang["oci8"]						= "Oracle 7+";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;siden vises i&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Sjekken er utført...!  Gjør de nødvendige valgene og klikk deretter på 'Rydd'";
 $pgv_lang["pgsql"]						= "PostgreSQL";

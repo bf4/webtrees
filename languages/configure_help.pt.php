@@ -110,7 +110,6 @@ $pgv_lang["dbase"]="dBase";
 $pgv_lang["msql"]="Mini SQL";
 $pgv_lang["mssql"]="Microsoft SQL server";
 $pgv_lang["mysqli"]="MySQL 4.1+ and PHP 5";
-$pgv_lang["oci8"]="Oracle 7+";
 $pgv_lang["pgsql"]="PostgreSQL";
 $pgv_lang["sqlite"]="SQLite";
 $pgv_lang["admin_gedcoms"]="Clique aqui para Administrar os GEDCOMs.";

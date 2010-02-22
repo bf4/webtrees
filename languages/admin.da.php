@@ -221,7 +221,6 @@ $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["never"]								= "Aldrig";
 $pgv_lang["no_logs"]							= "Deaktivér logning";
 $pgv_lang["no_messaging"]						= "Ingen kontaktmetode";
-$pgv_lang["oci8"]								= "Oracle 7+";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;sidevisninger for hver&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Valideringen er udført...! Foretag de nødvendige valg og klik derefter på 'Ryd'";
 $pgv_lang["pgsql"]								= "PostgreSQL";
