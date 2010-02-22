@@ -131,7 +131,6 @@ $pgv_lang["db_setup_bad"]				= "Der er en fejl i indstillingerne til din databas
 $pgv_lang["bad_host_user_pass"]			= "PhpGedView kunne ikke oprette en forbindelse til din databasevært. Check at du har angivet det korrekte navn på vært, brugernavn og adgangskode.";
 $pgv_lang["bad_database_name"]			= "PhpGedView kunne oprette en forbindelse til din databasevært, men fik ikke tilladelse til at bruge databasen med det navn du opgav. Check at databasen findes og at brugernavnet, du opgav, har de nødvendige rettigheder i denne database.";
 $pgv_lang["db"]						     	= "Database";
-$pgv_lang["dbase"]					   	= "dBase";
 $pgv_lang["current_gedcoms"]			= "Aktive slægtsdatabaser (GEDCOM-filer)";
 $pgv_lang["ged_gedcom"]					= "GEDCOM-fil";
 $pgv_lang["ged_title"]					= "Titel på slægtsdatabasen";

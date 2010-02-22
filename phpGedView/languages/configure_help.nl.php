@@ -91,7 +91,6 @@ $pgv_lang["config_help"]			= "Configuratie-informatie";
 $pgv_lang["index"]					= "Indexbestanden";
 $pgv_lang["mysql"]					= "MySQL";
 $pgv_lang["db"]						= "Database";
-$pgv_lang["dbase"]					= "dBase";
 $pgv_lang["mssql"]					= "Microsoft SQL Server";
 $pgv_lang["mysqli"]					= "MySQL 4.1+ met PHP5";
 $pgv_lang["pgsql"]					= "PostgreSQL";

@@ -171,7 +171,6 @@ $pgv_lang["db_setup_bad"]				= "התצורה הנוכחית שלך של מסד �
 $pgv_lang["bad_host_user_pass"]			= "PhpGedView was unable to make a connection to your MySQL database host.  Check the host, username, and password to make sure they are correct.";
 $pgv_lang["bad_database_name"]			= "PhpGedView made a connection to your database host, but was unable to use the database with the name you entered.  Check that the database exists and that the username you entered has the appropriate permissions on that database.";
 $pgv_lang["db"]					= "מסד נתונים";
-//$pgv_lang["dbase"]					= "dBase";
 $pgv_lang["current_gedcoms"]			= "GEDCOM-ים נוכחיים";
 $pgv_lang["ged_gedcom"]				= "קובץ GEDCOM";
 $pgv_lang["ged_title"]					= "כותרת GEDCOM";
