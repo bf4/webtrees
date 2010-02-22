@@ -286,7 +286,6 @@ $pgv_lang["error_url_blank"]					= "Por favor, no deje en blanco ni el título d
 $pgv_lang["error_view_info"]					= "Debe seleccionar la persona cuya información desee ver.";
 $pgv_lang["example_date"]						= "Ejemplo de fecha inválida en su GEDCOM:";
 $pgv_lang["example_place"]						= "Ejemplo de lugar inválido en su GEDCOM:";
-$pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["found_record"]						= "Registro encontrado";
 $pgv_lang["ged_download"]						= "Descargar";
 $pgv_lang["ged_import"]							= "Importar";

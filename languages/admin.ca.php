@@ -163,7 +163,6 @@ $pgv_lang["error_url_blank"]		= "No deixeu el títol del lloc remot o l'URL en b
 $pgv_lang["error_view_info"]       	= "Us cal seleccionar la persona quina informació voleu veure.";
 $pgv_lang["example_date"]			= "Exemple de dada incorrecta del vostre GEDCOM:";
 $pgv_lang["example_place"]			= "Exemple de lloc incorrecte del vostre GEDCOM:";
-$pgv_lang["fbsql"]					= "FrontBase";
 $pgv_lang["found_record"]			= "Registre localitzat";
 $pgv_lang["ged_download"]			= "Descarrega";
 $pgv_lang["ged_import"] 			= "Importa";

@@ -149,7 +149,6 @@ $pgv_lang["error_url_blank"]		= "Lämna inte sajt titel eller URL tom";
 $pgv_lang["error_view_info"]        = "Du måste välja personen som du vill visa information om.";
 $pgv_lang["example_date"]			= "Exempel på ogiltigt datum från din GEDCOM-fil:";
 $pgv_lang["example_place"]			= "Exempel på en felaktig ort från din GEDCOM:";
-$pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["found_record"]		= "Hittade poster";
 $pgv_lang["ged_download"]						= "Ladda ner";
 $pgv_lang["ged_import"]			= "Importera";

@@ -287,7 +287,6 @@ $pgv_lang["error_url_blank"]		= "נא לא להשאיר ריק את הכותרת
 $pgv_lang["error_view_info"]        	= "עליך לבחור את האדם שאת נתוניו ברצונך לראות.";
 $pgv_lang["example_date"]		= "דוגמא לתאריך שאינו בר-תוקף ב-GEDCOM שלך:";
 $pgv_lang["example_place"]		= "דוגמא למקומות שגויים מה-GEDCOM שלך:";
-$pgv_lang["fbsql"]			= "FrontBase";
 $pgv_lang["found_record"]		= "רשומה נמצאה";
 $pgv_lang["ged_download"]		= "הורד";
 $pgv_lang["ged_import"] 		= "ייבא";

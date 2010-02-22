@@ -165,7 +165,6 @@ $pgv_lang["error_url_blank"]	     	= "Lad venligst ikke URL (internetadresse) el
 $pgv_lang["error_view_info"]        = "Du skal vælge den person, hvis information du ønsker at se.";
 $pgv_lang["example_date"]			= "Eksempel på ugyldig dato fra din GEDCOM-fil:";
 $pgv_lang["example_place"]			= "Eksempel på ugyldig sted fra din GEDCOM-fil:";
-$pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["found_record"]		= "Poster fundet";
 $pgv_lang["ged_download"]						= "Hent (download)";
 $pgv_lang["ged_import"]			= "Importér";

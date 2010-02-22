@@ -92,7 +92,6 @@ $pgv_lang["index"]					= "Indexbestanden";
 $pgv_lang["mysql"]					= "MySQL";
 $pgv_lang["db"]						= "Database";
 $pgv_lang["dbase"]					= "dBase";
-$pgv_lang["fbsql"]					= "FrontBase";
 $pgv_lang["msql"]					= "Mini SQL";
 $pgv_lang["mssql"]					= "Microsoft SQL Server";
 $pgv_lang["mysqli"]					= "MySQL 4.1+ met PHP5";

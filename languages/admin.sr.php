@@ -236,7 +236,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["error_view_info"]       				= "You must select the person whose information you wish to view.";
 ##$pgv_lang["example_date"]						= "Example of invalid date from your GEDCOM:";
 ##$pgv_lang["example_place"]						= "Example of invalid place from your GEDCOM:";
-##$pgv_lang["fbsql"]								= "FrontBase";
 ##$pgv_lang["found_record"]						= "Found record";
 ##$pgv_lang["ged_download"]						= "Download";
 ##$pgv_lang["ged_import"] 						= "Import";
