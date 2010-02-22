@@ -267,7 +267,6 @@ $pgv_lang["error_url_blank"]		= "Bitte lassen Sie nicht den Titel oder die Adres
 $pgv_lang["error_view_info"]		= "Sie müssen die Person wählen, dessen Informationen Sie sehen möchten.";
 $pgv_lang["example_date"]			= "Beispiel eines ungültigen Datums aus Ihrer GEDCOM-Datei:";
 $pgv_lang["example_place"]			= "Beispiel eines ungültigen Ortes aus Ihrer GEDCOM-Datei:";
-$pgv_lang["fbsql"]					= "FrontBase";
 $pgv_lang["found_record"]			= "Datensatz gefunden";
 $pgv_lang["ged_download"]			= "Herunterladen";
 $pgv_lang["ged_import"]				= "Import";

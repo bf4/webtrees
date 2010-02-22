@@ -239,7 +239,6 @@ $pgv_lang["error_url_blank"]		= "Tittel og URL til eksternt nettsted må fylles 
 $pgv_lang["error_view_info"]        = "Du må velge personen som du ønsker å se opplysninger om.";
 $pgv_lang["example_date"]			= "Eksempel på ugyldig dato fra slektsfilen din:";
 $pgv_lang["example_place"]			= "Eksempel på ugyldig stedsnavn fra slektsfilen din:";
-$pgv_lang["fbsql"]						= "FrontBase";
 $pgv_lang["found_record"]		= "dataposter funnet";
 $pgv_lang["ged_download"]				= "Last ned (download)";
 $pgv_lang["ged_import"]			= "Importer";

@@ -286,7 +286,6 @@ $pgv_lang["error_url_blank"]					= "Prodim, da ne puščate naziv ali URL oddalj
 $pgv_lang["error_view_info"]       				= "Izbrati morate osebo za katero želite pogledati informacije.";
 $pgv_lang["example_date"]						= "Primer napačnega datuma v vašem GEDCOM-u:";
 $pgv_lang["example_place"]						= "primer napačnega kraja v vašem GEDCOM-u:";
-$pgv_lang["fbsql"]							= "FrontBase";
 $pgv_lang["found_record"]						= "Najden zapis";
 $pgv_lang["ged_download"]						= "Prenos";
 $pgv_lang["ged_import"] 						= "Uvoz";

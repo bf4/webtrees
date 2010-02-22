@@ -229,7 +229,6 @@ $pgv_lang["error_url_blank"]					= "Lütfen uzak server başlığı veya adresi 
 $pgv_lang["error_view_info"]       				= "Kişiel bilgiyi görüntülemek için kişiyi seçmelisiniz.";
 $pgv_lang["example_date"]		= "GEDCOM veritabanınızdan hatalı bir tarih biçiminin örneği:";
 $pgv_lang["example_place"]						= "GEDCOM'unuzda geçersiz yer örneği:";
-$pgv_lang["fbsql"]								= "Temel Yazı Tipi";
 $pgv_lang["found_record"]		= "Bulunan kayıt";
 $pgv_lang["ged_download"]						= "İndir";
 $pgv_lang["ged_import"]			= "İçeri aktar";

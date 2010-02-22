@@ -256,7 +256,6 @@ $pgv_lang["error_url_blank"]		= "Podaj tytuł lub adres URL zewnętrznej strony.
 $pgv_lang["error_view_info"]		= "Wybierz osobę, której szczegóły chcesz zobaczyć.";
 $pgv_lang["example_date"]			= "Przykład nieprawidłowej daty w twoim GEDCOM-ie:";
 $pgv_lang["example_place"]			= "Przykład nieprawidłowego miejsca w twoim GEDCOM-ie:";
-$pgv_lang["fbsql"]					= "FrontBase";
 $pgv_lang["found_record"]			= "Znalezionych wpisów";
 $pgv_lang["ged_download"]			= "Pobierz";
 $pgv_lang["ged_import"]				= "Importuj";

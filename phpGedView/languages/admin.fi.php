@@ -150,7 +150,6 @@ $pgv_lang["error_header_write"] 	= "GEDCOM-tiedosto <b>#GEDCOM#</b> ei ole kirjo
 $pgv_lang["error_siteauth_failed"]	= "Etäsivustolle kytkeytyminen epäonnistui";
 $pgv_lang["error_url_blank"]		= "Lisää myös joko etäsivuston nimi tai URL";
 $pgv_lang["error_view_info"]        	= "Katsoaksesi henkilön tietoja, henkilö on valittava.";
-$pgv_lang["fbsql"]			= "FrontBase";
 $pgv_lang["ged_download"]		= "Lataa";
 $pgv_lang["example_date"]		= "Esimerkki virheellisestä päivämäärämuodosta GEDCOM:issasi:";
 $pgv_lang["example_place"]		= "Esimerkki epäkelvosta paikasta GEDCOM-tiedostossasi:";

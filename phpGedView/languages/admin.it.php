@@ -249,7 +249,6 @@ $pgv_lang["error_remove_site_linked"]			= "Il server remoto non può essere rimo
 $pgv_lang["error_remote_duplicate"]				= "Questo database remoto è già in lista come <i> # GLOBALS [whichFile] </ i>";
 $pgv_lang["error_siteauth_failed"]				= "Impossibile autenticarsi al sito remoto";
 $pgv_lang["example_date"]						= "Esempio di data non valida dal tuo GEDCOM:";
-$pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["ged_download"]						= "Scaricare";
 $pgv_lang["ged_check"] 							= "Controllo";
 $pgv_lang["gedcom_config_write_error"]			= "ERRORE! <br /> Impossibile scrivere sul file <i> GLOBALS [whichFile] </ i>. Si prega di controllare le autorizzazioni per la corretta scrittura.";

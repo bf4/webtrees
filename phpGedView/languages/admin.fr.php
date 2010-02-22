@@ -228,7 +228,6 @@ $pgv_lang["error_url_blank"]            = "S'il vous plaît, ne laissez pas vide
 $pgv_lang["error_view_info"]            = "Vous devez sélectionner l'individu dont vous souhaitez visualiser les informations.";
 $pgv_lang["example_date"]               = "Exemple de date incorrecte dans votre GEDCOM";
 $pgv_lang["example_place"]              = "Exemple de lieu incorrect dans votre GEDCOM";
-$pgv_lang["fbsql"]                      = "FrontBase";
 $pgv_lang["found_record"]               = "enregistrements trouvés";
 $pgv_lang["ged_download"]               = "Télécharger (<i>Download</i>)";
 $pgv_lang["ged_import"]                 = "Importer";

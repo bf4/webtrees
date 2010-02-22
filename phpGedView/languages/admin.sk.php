@@ -148,7 +148,6 @@ $pgv_lang["error_url_blank"]		= "Prosím nenechajte názov a URL vzdialenej str�
 $pgv_lang["error_view_info"]        	= "Musíte vybrať osobu ktorej informácie chcete zobraziť.";
 $pgv_lang["example_date"]		= "Ukážka neplatného dátového formátu z vášho GEDCOMu:";
 $pgv_lang["example_place"]		= "Ukážka neplatného formátu miesta z vášho GEDCOMu:";
-$pgv_lang["fbsql"]			= "FrontBase";
 $pgv_lang["found_record"]		= "Nájdený záznam";
 $pgv_lang["ged_download"]		= "Stiahnúť";
 $pgv_lang["ged_import"]			= "Import";
