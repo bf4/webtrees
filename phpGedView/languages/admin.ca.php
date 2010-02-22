@@ -219,7 +219,6 @@ $pgv_lang["mysql"]					= "MySQL";
 $pgv_lang["never"]					= "Mai";
 $pgv_lang["no_logs"]				= "Desactiva el registre";
 $pgv_lang["no_messaging"]			= "Sense forma de contacte";
-$pgv_lang["oci8"]					= "Oracle 7+";
 $pgv_lang["page_views"]				= "&nbsp;&nbsp;mostra pàgina a&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Executant la validació del GEDCOM...";
 $pgv_lang["pgsql"]					= "PostgreSQL";

@@ -285,7 +285,6 @@ $pgv_lang["mysql"]                      = "MySQL";
 $pgv_lang["never"]                      = "Jamais";
 $pgv_lang["no_logs"]                    = "Journal désactivé";
 $pgv_lang["no_messaging"]               = "Messagerie désactivée";
-$pgv_lang["oci8"]                       = "Oracle 7+";
 $pgv_lang["page_views"]                 = "&nbsp;&nbsp;visites en &nbsp;&nbsp;";
 $pgv_lang["performing_validation"]      = "Validation du fichier GEDCOM";
 $pgv_lang["pgsql"]                      = "PostgreSQL";

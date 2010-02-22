@@ -311,7 +311,6 @@ $pgv_lang["mysql"]					= "MySQL";
 $pgv_lang["never"]					= "nigdy";
 $pgv_lang["no_logs"]				= "Wyłącz logowanie";
 $pgv_lang["no_messaging"]			= "Brak kontaktu";
-$pgv_lang["oci8"]					= "Oracle 7+";
 $pgv_lang["page_views"]				= "&nbsp;&nbsp;wizyt na stronie w ciągu&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Sprawdzanie poprawności pliku GEDCOM...";
 $pgv_lang["pgsql"]					= "PostgreSQL";

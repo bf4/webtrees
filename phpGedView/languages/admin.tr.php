@@ -286,7 +286,6 @@ $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["never"]								= "Şimdilik yok";
 $pgv_lang["no_logs"]							= "Giriş Devre dışı";
 $pgv_lang["no_messaging"]						= "İletişim metodu yok";
-$pgv_lang["oci8"]								= "En iyisi 7+";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;sayfa içinde görüntüle&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]				= "GEDCOM onaylaması yapılıyor...";
 $pgv_lang["pgsql"]								= "PostgreSQL";

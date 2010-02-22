@@ -62,7 +62,6 @@ $pgv_lang["dbase"]			= "dBase";
 $pgv_lang["msql"]			= "Mini SQL";
 $pgv_lang["mssql"]			= "Microsoft SQL Server";
 $pgv_lang["mysqli"]			= "MySQL 4.1+ a PHP 5";
-$pgv_lang["oci8"]			= "Oracle 7+";
 $pgv_lang["pgsql"]			= "PostgreSQL";
 $pgv_lang["sqlite"]			= "SQLite";
 $pgv_lang["admin_gedcoms"]		= "Pro administraci GEDCOM souborů klikněte sem.";

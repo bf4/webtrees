@@ -270,7 +270,6 @@ $pgv_lang["msql"]								= "Mini SQL";
 $pgv_lang["mssql"]								= "Microsoft SQL Server";
 $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["mysqli"]								= "MySQL 4.1 e PHP 5  ";
-$pgv_lang["oci8"]								= "Oracle 7  ";
 $pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 			= "Errore! Impossibile scrivere il file di configurazione PhpGedView. Si prega di controllare le autorizzazioni per file e directory e riprovare.";
 $pgv_lang["PGV_MEMORY_LIMIT"]					= "Memoria limite";

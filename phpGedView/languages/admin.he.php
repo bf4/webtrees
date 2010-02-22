@@ -344,7 +344,6 @@ $pgv_lang["mysql"]			= "MySQL";
 $pgv_lang["never"]			= "אף פעם לא";
 $pgv_lang["no_logs"]			= "נטרל בנית יומנים";
 $pgv_lang["no_messaging"]		= "אין שיטת קשר";
-$pgv_lang["oci8"]			= "Oracle 7+";
 $pgv_lang["page_views"]		= "&nbsp;&nbsp;תצפיות דף ב";
 $pgv_lang["performing_validation"]	= "ביצוע בדיקת GEDCOM, בחר באפשרויות הדרושות ולחץ על <b>ניקיון</b>.";
 $pgv_lang["pgsql"]			= "PostgreSQL";

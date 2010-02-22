@@ -211,7 +211,6 @@ $pgv_lang["mysql"]			= "MySQL";
 $pgv_lang["mssql"]			= "Microsoft SQL palvelin";
 $pgv_lang["msql"]			= "Mini SQL";
 $pgv_lang["monthly"]			= "Kuukausittain";
-$pgv_lang["oci8"]			= "Oracle 7+";
 $pgv_lang["page_views"]		= "&nbsp;&nbsp;sivun näyttö &nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Suoritetaan GEDCOM validointi...";
 $pgv_lang["pgsql"]			= "PostgreSQL";
