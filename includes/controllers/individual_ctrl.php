@@ -94,7 +94,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
-		global $USE_QUICK_UPDATE, $pid;
+		global $pid;
 		global $Fam_Navigator;
 
 		$this->sexarray["M"] = $pgv_lang["male"];
@@ -230,25 +230,9 @@ class IndividualControllerRoot extends BaseController {
 			$this->indi->diffMerge($this->diffindi);
 		}
 
-		//-- only allow editors or users who are editing their own individual or their immediate relatives
+		// TODO: review this logic - it was originally part of code that allowed non-edit users to edit their own records
 		if ($this->indi->canDisplayDetails()) {
 			$this->canedit = PGV_USER_CAN_EDIT;
-/* Disable self-editing completely until we have a GEDCOM config option to control this
-			if (!$this->canedit && $USE_QUICK_UPDATE) {
-				$my_id=PGV_USER_GEDCOM_ID;
-				if ($my_id) {
-					if ($this->pid==$my_id) $this->canedit=true;
-					else {
-						$famids = array_merge(find_sfamily_ids($my_id), find_family_ids($my_id));
-						foreach($famids as $indexval => $famid) {
-							if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid, $this->ged_id);
-							else $famrec = find_updated_record($famid, $this->ged_id);
-							if (preg_match("/1 (HUSB|WIFE|CHIL) @$this->pid@/", $famrec)>0) $this->canedit=true;
-						}
-					}
-				}
-			}
-*/
 		}
 
 		//-- handle ajax calls
@@ -566,7 +550,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
-		global $NAME_LINENUM, $SEX_LINENUM, $pgv_lang, $pgv_changes, $USE_QUICK_UPDATE;
+		global $NAME_LINENUM, $SEX_LINENUM, $pgv_lang, $pgv_changes;
 		if ($TEXT_DIRECTION=="rtl") {
 			$ff="_rtl";
 		} else {
@@ -578,26 +562,6 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
-		// Determine whether the Quick Update form can be shown
-		$showQuickForm = false;
-		if ($USE_QUICK_UPDATE) {
-			if ($USE_QUICK_UPDATE==='1' && PGV_USER_IS_ADMIN) {
-				$showQuickForm = true;
-			} elseif ($USE_QUICK_UPDATE==='2' && PGV_USER_GEDCOM_ADMIN) {
-				$showQuickForm = true;
-			} elseif (($USE_QUICK_UPDATE==='3' || $USE_QUICK_UPDATE===true) && PGV_USER_CAN_EDIT) {
-				$showQuickForm = true;
-			}
-		}
-		if ($showQuickForm) {
-			$submenu = new Menu($pgv_lang["quick_update_title"]);
-			$submenu->addOnclick("return quickEdit('".$this->pid."', '', '".$GEDCOM."');");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
-
-			$menu->addSeparator();
-		}
-
 		if (PGV_USER_CAN_EDIT) {
 			if (count($this->indi->getSpouseFamilyIds())>1) {
 				$submenu = new Menu($pgv_lang["reorder_families"]);

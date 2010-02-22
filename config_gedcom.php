@@ -166,11 +166,7 @@ $META_KEYWORDS		= "ancestry, genealogy, pedigree tree";		//-- any aditional keyw
 $META_TITLE			= "";			//-- optional text that can be added to the html page <title></title> line
 
 $CHART_BOX_TAGS		= "";		//-- optional comma seperated gedcom tags to show in chart boxes
-$USE_QUICK_UPDATE	= "1";		//-- who can use Quick Update: 0: nobody, 1: site admins, 2: GEDCOM admins, 3: editors
-$SHOW_QUICK_RESN	= false;	//-- whether or not to show RESN tags on the quick update form
-$QUICK_ADD_FACTS	= "BIRT,CHR,DEAT,BURI,CREM,ADOP,BAPM,BARM,BASM,BLES,CHRA,CONF,FCOM,ORDN,NATU,EMIG,IMMI,GRAD,BAPL,CONL,ENDL,SLGC,RELI";		//-- comma delimited list of facts that can be added on the quick update form
 $QUICK_REQUIRED_FACTS	= "BIRT,DEAT";	//-- comma delimited list of facts that will be required by default on the quick update
-$QUICK_ADD_FAMFACTS		= "MARR,DIV,SLGS";		//-- comma delimited list of facts that can be added on the quick update form for families
 $QUICK_REQUIRED_FAMFACTS	= "MARR";	//-- comma delimited list of facts that will be required by on the quick update for families
 $SEARCHLOG_CREATE = "none";	//-- save searches executed by users
 $CHANGELOG_CREATE = "monthly";	//-- log changes applied by users

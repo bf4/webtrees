@@ -67,7 +67,6 @@ $pgv_lang["add_husb_to_family"] 	= "Thêm chồng mới cho gia đình này";
 $pgv_lang["add_media"]				= "Thêm Môi Thể mới";
 $pgv_lang["add_media_lbl"]			= "Thêm Môi Thể";
 $pgv_lang["add_mother"] 			= "Thêm mẹ mới";
-$pgv_lang["add_new_chil"] = "Thêm người con mới";
 $pgv_lang["add_new_husb"]			= "Thêm chồng mới";
 $pgv_lang["add_new_wife"]			= "Thêm vợ mới";
 $pgv_lang["add_note"]				= "Thêm Lời Ghi mới";

@@ -79,7 +79,6 @@ $pgv_lang["add_husb_to_family"]		= "添加一個丈夫到这个家庭";
 $pgv_lang["add_media"]				= "添加媒体文件";
 $pgv_lang["add_media_lbl"]			= "添加媒体";
 $pgv_lang["add_mother"] 			= "添加母亲";
-$pgv_lang["add_new_chil"] = "添加儿女";
 $pgv_lang["add_new_husb"]		= "添加一個丈夫";
 $pgv_lang["add_new_wife"]		= "添加一個妻子";
 $pgv_lang["add_note"]			= "添加来源情况小笔记";

@@ -384,17 +384,13 @@ $pgv_lang["PRIVACY_BY_RESN"]		= "GEDCOM (RESN) Gizlilik kısıtlamasını kullan
 $pgv_lang["SHOW_LDS_AT_GLANCE"]		= "Çizge kutularında LDS kurallarının kodlarını göster";
 $pgv_lang["GEDCOM_DEFAULT_TAB"]		= "Şahısların bilgileri sayfasında gösterilecek ilk sekme";
 $pgv_lang["SHOW_MARRIED_NAMES"]		= "Şahıs listesinde evlilik isimlerini göster";
-$pgv_lang["SHOW_QUICK_RESN"]		= "#pgv_lang[quick_update_title]# formunda gizli alanları göster";
-$pgv_lang["USE_QUICK_UPDATE"]		= "#pgv_lang[quick_update_title]# formu kullan";
 $pgv_lang["SEARCHLOG_CREATE"]		= "Günlük-Aramaların kütüğü";
 $pgv_lang["CHANGELOG_CREATE"]		= "Değişen-Dosyaların kütüğü";
 $pgv_lang["CHART_BOX_TAGS"]		= "Çizgelerde gösterilecek diğer hadiseler";
 
 $pgv_lang["FAM_ID_PREFIX"]		= "Aile ID öneki";
 $pgv_lang["QUICK_REQUIRED_FAMFACTS"]			= "Ailelerden her zaman gerçekler hızlı güncelleştirmede gösterirler";
-$pgv_lang["QUICK_ADD_FAMFACTS"]			= "Hızlı güncelleştirmede göstermek için aileler için gerçekler";
 $pgv_lang["QUICK_REQUIRED_FACTS"]			= "Hızlı güncellemede gerçekler her zaman göster";
-$pgv_lang["QUICK_ADD_FACTS"]			= "Hızlı güncelleştirmede göstermek için gerçekler";
 $pgv_lang["AUTO_GENERATE_THUMBS"]			= "Otomatikman tırnak önizleme üret";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Üretilen tırnak önizleme genişliği";
 $pgv_lang["MEDIA_ID_PREFIX"]		= "Medya ID öneki";

@@ -70,7 +70,6 @@ $pgv_lang["add_husb_to_family"] 	= "Į šią šeimą pridėti vyrą";
 $pgv_lang["add_media"]				= "Pridėti naują media objektą";
 $pgv_lang["add_media_lbl"]			= "Pridėti media objektą";
 $pgv_lang["add_mother"] 			= "Pridėti naują motiną";
-$pgv_lang["add_new_chil"] = "Pridėti naują vaiką";
 $pgv_lang["add_new_husb"]			= "Pridėti naują vyrą";
 $pgv_lang["add_new_wife"]			= "Pridėti naują žmoną";
 $pgv_lang["add_note"]				= "Pridėti naują pastabą";

@@ -41,14 +41,22 @@ The above list of codes may be amended as new situations arise.
 
 VERSION 4.3.0
 
-?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
+?$pgv_lang["whatever"]                dd mon year  Change codes and comments
 ----------------------------------------------------------------------------------------
-*$pgv_lang["add_faq_pgvLangRefs"]					07 Feb 2010				W	Added example of a reference to a "PGV_..." constant
-*$pgv_lang["um_bu_logs"]							24 Jan 2010				W 
-*$pgv_lang["USE_SILHOUETTE_help"]					05 Jan 2010				w added missing '>'
-*$pgv_lang["USE_SILHOUETTE_help"]					03 Jan 2010				W
-+$pgv_lang["USE_SILHOUETTE"]						02 Jan 2010				A
-+$pgv_lang["USE_SILHOUETTE_help"]					02 Jan 2010				A
+-$pgv_lang["QUICK_ADD_FACTS"]         22 Feb 2010  D  This has already been deleted from all languages
+-$pgv_lang["QUICK_ADD_FACTS_help"]    22 Feb 2010  D  This has already been deleted from all languages
+-$pgv_lang["QUICK_ADD_FAMFACTS"]      22 Feb 2010  D  This has already been deleted from all languages
+-$pgv_lang["QUICK_ADD_FAMFACTS_help"] 22 Feb 2010  D  This has already been deleted from all languages
+-$pgv_lang["SHOW_QUICK_RESN"]         22 Feb 2010  D  This has already been deleted from all languages
+-$pgv_lang["SHOW_QUICK_RESN_help"]    22 Feb 2010  D  This has already been deleted from all languages
+-$pgv_lang["USE_QUICK_UPDATE"]        22 Feb 2010  D  This has already been deleted from all languages
+-$pgv_lang["USE_QUICK_UPDATE_help"]   22 Feb 2010  D  This has already been deleted from all languages
+*$pgv_lang["add_faq_pgvLangRefs"]     07 Feb 2010  W  Added example of a reference to a "PGV_..." constant
+*$pgv_lang["um_bu_logs"]              24 Jan 2010  W 
+*$pgv_lang["USE_SILHOUETTE_help"]     05 Jan 2010  w  added missing '>'
+*$pgv_lang["USE_SILHOUETTE_help"]     03 Jan 2010  W
++$pgv_lang["USE_SILHOUETTE"]          02 Jan 2010  A
++$pgv_lang["USE_SILHOUETTE_help"]     02 Jan 2010  A
 
 VERSION 4.2.3
 
