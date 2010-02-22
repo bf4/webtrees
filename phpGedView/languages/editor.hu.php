@@ -76,7 +76,6 @@ $pgv_lang["add_husb_to_family"]		= "Férj hozzáadása a családhoz";
 $pgv_lang["add_media"]			= "Új média-elem hozzáadása";
 $pgv_lang["add_media_lbl"]		= "Média hozzáadása";
 $pgv_lang["add_mother"]			= "Anya hozzáadása";
-$pgv_lang["add_new_chil"] = "Új gyermek hozzáadása";
 $pgv_lang["add_new_husb"]		= "Új férj hozzáadása";
 $pgv_lang["add_new_wife"]		= "Új feleség hozzáadása";
 $pgv_lang["add_note"]			= "Új megjegyzés hozzáfűzése";
@@ -173,8 +172,6 @@ $pgv_lang["upload_successful"]		= "A feltöltés sikeres volt.";
 $pgv_lang["view_change_diff"]		= "Változások megtekintése";
 
 
-$pgv_lang["hebrew_givn"]			= "Héber keresztnevek";
-$pgv_lang["hebrew_surn"]			= "Héber családnevek";
 $pgv_lang["to_note"]				= "Közös jegyzethez";
 $pgv_lang["to_repository"]			= "Szervezethez";
 $pgv_lang["edit_repo"]				= "Szervezet szerkesztése";

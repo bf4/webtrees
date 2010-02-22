@@ -2246,26 +2246,6 @@ function check_input_date($datestr) {
 	return trim($datestr);
 }
 
-function print_quick_resn($name) {
-	global $SHOW_QUICK_RESN, $align, $factarray, $pgv_lang, $tabkey;
-
-	if ($SHOW_QUICK_RESN) {
-		echo "<tr><td class=\"descriptionbox\">";
-		print_help_link("RESN_help", "qm", "RESN_help_title");
-		echo $factarray["RESN"];
-		echo "</td>\n";
-		echo "<td class=\"optionbox\" colspan=\"3\">\n";
-		echo "<select name=\"$name\" tabindex=\"", $tabkey, "\" ><option value=\"\"></option><option value=\"confidential\"";
-		$tabkey++;
-		echo ">", $pgv_lang["confidential"], "</option><option value=\"locked\"";
-		echo ">", $pgv_lang["locked"], "</option><option value=\"privacy\"";
-		echo ">", $pgv_lang["privacy"], "</option>";
-		echo "</select>\n";
-		echo "</td>\n";
-		echo "</tr>\n";
-	}
-}
-
 /**
 * Link Media ID to Indi, Family, or Source ID
 *

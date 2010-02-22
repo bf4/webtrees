@@ -43,8 +43,11 @@ occur in the respective language files.
 
 VERSION 4.3.0
 
-?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
+?$pgv_lang["whatever"]                dd mon year  Change codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["add_new_chil"]            22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["hebrew_givn"]             22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["hebrew_surn"]             22 Feb 2010  D  This has already been deleted from all files
 
 VERSION 4.2.3
 

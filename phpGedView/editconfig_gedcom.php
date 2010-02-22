@@ -357,8 +357,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$POSTAL_CODE\s*=\s*.*;/', "\$POSTAL_CODE = ".$boolarray[$_POST["NEW_POSTAL_CODE"]].";", $configtext);
 	$configtext = preg_replace('/\$PREFER_LEVEL2_SOURCES\s*=\s*.*;/', "\$PREFER_LEVEL2_SOURCES = \"".$_POST["NEW_PREFER_LEVEL2_SOURCES"]."\";", $configtext);
 	$configtext = preg_replace('/\$NO_UPDATE_CHAN\s*=\s*.*;/', "\$NO_UPDATE_CHAN = ".$boolarray[$_POST["NEW_NO_UPDATE_CHAN"]].";", $configtext);
-	$configtext = preg_replace('/\$QUICK_ADD_FACTS\s*=\s*".*";/', "\$QUICK_ADD_FACTS = \"".$_POST["NEW_QUICK_ADD_FACTS"]."\";", $configtext);
-	$configtext = preg_replace('/\$QUICK_ADD_FAMFACTS\s*=\s*".*";/', "\$QUICK_ADD_FAMFACTS = \"".$_POST["NEW_QUICK_ADD_FAMFACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$QUICK_REQUIRED_FACTS\s*=\s*".*";/', "\$QUICK_REQUIRED_FACTS = \"".$_POST["NEW_QUICK_REQUIRED_FACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$QUICK_REQUIRED_FAMFACTS\s*=\s*".*";/', "\$QUICK_REQUIRED_FAMFACTS = \"".$_POST["NEW_QUICK_REQUIRED_FAMFACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$REPO_FACTS_ADD\s*=\s*".*";/', "\$REPO_FACTS_ADD = \"".$_POST["NEW_REPO_FACTS_ADD"]."\";", $configtext);
@@ -387,7 +385,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SHOW_PARENTS_AGE\s*=\s*.*;/', "\$SHOW_PARENTS_AGE = ".$boolarray[$_POST["NEW_SHOW_PARENTS_AGE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_PEDIGREE_PLACES\s*=\s*".*";/', "\$SHOW_PEDIGREE_PLACES = \"".$_POST["NEW_SHOW_PEDIGREE_PLACES"]."\";", $configtext);
 	$configtext = preg_replace('/\$SHOW_LIST_PLACES\s*=\s*".*";/', "\$SHOW_LIST_PLACES = \"".$_POST["NEW_SHOW_LIST_PLACES"]."\";", $configtext);
-	$configtext = preg_replace('/\$SHOW_QUICK_RESN\s*=\s*.*;/', "\$SHOW_QUICK_RESN = ".$boolarray[$_POST["NEW_SHOW_QUICK_RESN"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_REGISTER_CAUTION\s*=\s*.*;/', "\$SHOW_REGISTER_CAUTION = ".$boolarray[$_POST["NEW_SHOW_REGISTER_CAUTION"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_RELATIVES_EVENTS\s*=\s*.*;/', "\$SHOW_RELATIVES_EVENTS = \"".$_POST["NEW_SHOW_RELATIVES_EVENTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$SHOW_SPIDER_TAGLINE\s*=\s*.*;/', "\$SHOW_SPIDER_TAGLINE = ".$boolarray[$_POST["NEW_SHOW_SPIDER_TAGLINE"]].";", $configtext);
@@ -405,7 +402,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SYNC_GEDCOM_FILE\s*=\s*.*;/', "\$SYNC_GEDCOM_FILE = ".$boolarray[$_POST["NEW_SYNC_GEDCOM_FILE"]].";", $configtext);
 	$configtext = preg_replace('/\$THUMBNAIL_WIDTH\s*=\s*".*";/', "\$THUMBNAIL_WIDTH = \"".$_POST["NEW_THUMBNAIL_WIDTH"]."\";", $configtext);
 	$configtext = preg_replace('/\$UNDERLINE_NAME_QUOTES\s*=\s*.*;/', "\$UNDERLINE_NAME_QUOTES = ".$boolarray[$_POST["NEW_UNDERLINE_NAME_QUOTES"]].";", $configtext);
-	$configtext = preg_replace('/\$USE_QUICK_UPDATE\s*=\s*.*;/', "\$USE_QUICK_UPDATE = \"".$_POST["NEW_USE_QUICK_UPDATE"]."\";", $configtext);
 	$configtext = preg_replace('/\$USE_RIN\s*=\s*.*;/', "\$USE_RIN = ".$boolarray[$_POST["NEW_USE_RIN"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_THUMBS_MAIN\s*=\s*.*;/', "\$USE_THUMBS_MAIN = ".$boolarray[$_POST["NEW_USE_THUMBS_MAIN"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_SILHOUETTE\s*=\s*.*;/', "\$USE_SILHOUETTE = ".$boolarray[$_POST["NEW_USE_SILHOUETTE"]].";", $configtext);
@@ -1871,34 +1867,8 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("USE_QUICK_UPDATE_help", "qm", "USE_QUICK_UPDATE", true); print print_text("USE_QUICK_UPDATE"); ?></td>
-		<td class="optionbox"><select name="NEW_USE_QUICK_UPDATE" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('USE_QUICK_UPDATE_help');">
-				<option value="0" <?php if (!$USE_QUICK_UPDATE) print "selected=\"selected\""; ?>><?php print $pgv_lang["nobody"]; ?></option>
-				<option value="1" <?php if ($USE_QUICK_UPDATE==='1') print "selected=\"selected\""; ?>><?php print $pgv_lang["site_admins"]; ?></option>
-				<option value="2" <?php if ($USE_QUICK_UPDATE==='2') print "selected=\"selected\""; ?>><?php print $pgv_lang["gedcom_admins"]; ?></option>
-				<option value="3" <?php if ($USE_QUICK_UPDATE===true || $USE_QUICK_UPDATE==='3') print "selected=\"selected\""; ?>><?php print $pgv_lang["editors"]; ?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("SHOW_QUICK_RESN_help", "qm", "SHOW_QUICK_RESN", true); print print_text("SHOW_QUICK_RESN"); ?></td>
-		<td class="optionbox"><select name="NEW_SHOW_QUICK_RESN" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('SHOW_QUICK_RESN_help');">
-				<option value="yes" <?php if ($SHOW_QUICK_RESN) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-				<option value="no" <?php if (!$SHOW_QUICK_RESN) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("QUICK_ADD_FACTS_help", "qm", "QUICK_ADD_FACTS"); print $pgv_lang["QUICK_ADD_FACTS"]; ?></td>
-		<td class="optionbox"><input type="text" name="NEW_QUICK_ADD_FACTS" value="<?php print $QUICK_ADD_FACTS; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('QUICK_ADD_FACTS_help');" /></td>
-	</tr>
-	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("QUICK_REQUIRED_FACTS_help", "qm", "QUICK_REQUIRED_FACTS"); print $pgv_lang["QUICK_REQUIRED_FACTS"]; ?></td>
 		<td class="optionbox"><input type="text" name="NEW_QUICK_REQUIRED_FACTS" value="<?php print $QUICK_REQUIRED_FACTS; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('QUICK_REQUIRED_FACTS_help');" /></td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("QUICK_ADD_FAMFACTS_help", "qm", "QUICK_ADD_FAMFACTS"); print $pgv_lang["QUICK_ADD_FAMFACTS"]; ?></td>
-		<td class="optionbox"><input type="text" name="NEW_QUICK_ADD_FAMFACTS" value="<?php print $QUICK_ADD_FAMFACTS; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('QUICK_ADD_FAMFACTS_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("QUICK_REQUIRED_FAMFACTS_help", "qm", "QUICK_REQUIRED_FAMFACTS"); print $pgv_lang["QUICK_REQUIRED_FAMFACTS"]; ?></td>

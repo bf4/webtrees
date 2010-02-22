@@ -41,18 +41,29 @@ The above list of codes may be amended as new situations arise.
 
 VERSION 4.3.0
 
-?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
+?$pgv_lang["whatever"]                  dd mon year  Change codes and comments
 ----------------------------------------------------------------------------------------
--$pgv_lang["changelog"]               20 Feb 2010               
-*$pgv_lang["no_children"]							31 Jan 2010				w
-+$pgv_lang["known_child"]							31 Jan 2010				A
-*$pgv_lang["known_children"]						31 Jan 2010				w
--$pgv_lang["recorded_here"]							31 Jan 2010				D
-*$pgv_lang["no_children"]							31 Jan 2010				w
-+$pgv_lang["known_children"]						31 Jan 2010				w
-+$pgv_lang["recorded_here"]							30 Jan 2010				A
-+$pgv_lang["gparents"]								29 Jan 2010				A
-+$pgv_lang["updated_favorites"]						17 Jan 2010				A
+-$pgv_lang["quick_update_instructions"] 22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["remove_child"]              22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["update_address"]            22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["select_fact"]               22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["update_fact"]               22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["update_fact_restricted"]    22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["roman_givn"]                22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["roman_surn"]                22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["update_name"]               22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["quick_update_instructions"] 22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["quick_update_title"]        22 Feb 2010  D  This has already been deleted from all files
+-$pgv_lang["changelog"]                 20 Feb 2010  D  This has already been deleted from all files
+*$pgv_lang["no_children"]               31 Jan 2010  w
++$pgv_lang["known_child"]               31 Jan 2010  A
+*$pgv_lang["known_children"]            31 Jan 2010  w
+-$pgv_lang["recorded_here"]             31 Jan 2010  D
+*$pgv_lang["no_children"]               31 Jan 2010  w
++$pgv_lang["known_children"]            31 Jan 2010  w
++$pgv_lang["recorded_here"]             30 Jan 2010  A
++$pgv_lang["gparents"]                  29 Jan 2010  A
++$pgv_lang["updated_favorites"]         17 Jan 2010  A
 
 VERSION 4.2.3
 
