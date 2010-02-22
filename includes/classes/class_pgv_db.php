@@ -308,32 +308,6 @@ class PGV_DB {
 			self::$LONGTEXT_TYPE='TEXT';
 			self::$UTF8_TABLE   ='';
 			break;
-		case 'oci': // This DSN has not been tested!
-			self::$pdo=new PDO(
-				"oci:dbname=//{$DBHOST}}:{$DBPORT}/{$DBNAME}", $DBUSER, $DBPASS,
-				array(
-					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-					PDO::ATTR_CASE=>PDO::CASE_LOWER,
-					PDO::ATTR_AUTOCOMMIT=>true
-				)
-			);
-			self::$AUTO_ID_TYPE ='INTEGER'; // No autoincrement columns available
-			self::$ID_TYPE      ='INTEGER';
-			self::$INT1_TYPE    ='INTEGER';
-			self::$INT2_TYPE    ='INTEGER';
-			self::$INT3_TYPE    ='INTEGER';
-			self::$INT4_TYPE    ='INTEGER';
-			self::$INT8_TYPE    ='INTEGER';
-			self::$CHAR_TYPE    ='VARCHAR';
-			self::$VARCHAR_TYPE ='VARCHAR';
-			self::$UNSIGNED     ='';
-			self::$LIKE         ='LIKE';
-			self::$RANDOM       ='RANDOM()';
-			self::$TEXT_TYPE    ='TEXT';
-			self::$LONGTEXT_TYPE='TEXT';
-			self::$UTF8_TABLE   ='';
-			break;
 		case 'odbc': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"odbc:$DBNAME", $DBUSER, $DBPASS,
@@ -462,7 +436,6 @@ class PGV_DB {
 		case 'mysql':
 		case 'pgsql':
 		case 'mssql':
-		case 'oci':
 		case 'ibm':
 		case 'firebird':
 		case 'informix':
@@ -485,8 +458,6 @@ class PGV_DB {
 			return 'RANDOM()';
 		case 'mssql':
 			return 'NEWID()';
-		case 'oci':
-			return 'DBMS_RANDOM.RANDOM';
 		case 'odbc':
 			// We don't know the underlying database, so there is little we can do.
 			return '1';
@@ -698,9 +669,6 @@ class PGV_DB {
 				break;
 			case 'ibm':
 				$statement="{$statement} FETCH FIRST {$n} ROWS ONLY";
-				break;
-			case 'oci':
-				$statement="SELECT * FROM ($statement) WHERE ROWNUM<={$n}";
 				break;
 			case 'odbc':
 				// We don't know the underlying database, so just return all rows :-(
