@@ -55,7 +55,6 @@ $pgv_lang["db_setup_bad"]               = "Din nuvarande databaskonfiguration ä
 $pgv_lang["bad_host_user_pass"]			= "PhpGedView kunde inte koppla sig till din databasvärd. Kontrollera att ditt värd, användarnamn och lösenord är korrekt. ";
 $pgv_lang["bad_database_name"]			= "PhpGedView kunde koppla sig till din databasvärd, men kunde inte använda databasnamnet du angav. Kontrollera att databasen existerar och att användarnamnet du angav har tillräckliga rättigheter för databasen.";
 $pgv_lang["db"]				= "Databas";
-$pgv_lang["dbase"]			= "dBase";
 $pgv_lang["current_gedcoms"]			= "Aktuell GEDCOM";
 $pgv_lang["ged_gedcom"]					= "GEDCOM-fil";
 $pgv_lang["ged_title"]					= "GEDCOM-titel";

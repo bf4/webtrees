@@ -56,7 +56,6 @@ $pgv_lang["db_setup_bad"]		= "Aktuálne nastavenie vašej databázy je zlé. Pro
 $pgv_lang["bad_host_user_pass"]		= "PhpGedView nebolo schopné naviazať spojenie z vašou MySQL databázou. Skontrolujte položky host, uživateľské_meno a heslo, abyste sa uistili, že ste všetko nastavili správne.";
 $pgv_lang["bad_database_name"]		= "PhpGedView vytvorilo spojenie s vašou MySQL databázou, ale nebolo schopné používať databázu s názvom, ktorý ste zadali. Skontrolujte, či táto databáza existuje a či uživateľ, ktorého uživateľské_meno ste zadali, má zodpovedajúce práva pre prácu s touto databázou.";
 $pgv_lang["db"]				= "Databáza";
-$pgv_lang["dbase"]			= "dBase";
 $pgv_lang["current_gedcoms"]		= "Súčasné GEDCOM súbory";
 $pgv_lang["ged_gedcom"]			= "Súbory GEDCOM";
 $pgv_lang["ged_title"]			= "Nadpis GEDCOMu";

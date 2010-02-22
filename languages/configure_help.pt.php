@@ -106,7 +106,6 @@ $pgv_lang["click_here_to_continue"]="Clique aqui para continuar.";
 $pgv_lang["config_help"]="Configuration Help";
 $pgv_lang["mysql"]="MySQL";
 $pgv_lang["db"]="Banco de Dados";
-$pgv_lang["dbase"]="dBase";
 $pgv_lang["mssql"]="Microsoft SQL server";
 $pgv_lang["mysqli"]="MySQL 4.1+ and PHP 5";
 $pgv_lang["pgsql"]="PostgreSQL";
