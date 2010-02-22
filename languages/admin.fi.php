@@ -162,7 +162,6 @@ $pgv_lang["gedcom_config_write_error"] = "V I R H E !!!<br />Ei pysty kirjoittam
 $pgv_lang["gedcom_downloadable"] 	= "Tämä GEDCOM-tiedosto on ladattavissa internetistä.<br />Katso TURVALLISUUS-osion <a href=\"readme.txt\">readme.txt</a> -tiedostosta korjataksesi tämän ongelman.";
 $pgv_lang["gedcom_file"]		= "GEDCOM-tiedosto:";
 $pgv_lang["gedcom_not_imported"]	= "Tätä GEDCOM:a ei ole vielä tuotu.";
-$pgv_lang["ibase"]			= "InterBase";
 $pgv_lang["img_admin_settings"] 	= "Muokkaa kuvankäsittelyn asetuksia";
 $pgv_lang["autoContinue"]		= "Paina automaattisesti «Continue»-painiketta.";
 $pgv_lang["import_complete"]		= "Tuonti onnistui";

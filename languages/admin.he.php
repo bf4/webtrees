@@ -298,7 +298,6 @@ $pgv_lang["gedcom_config_write_error"]	= "ש ג י א ה !!!<br />לא ניתן 
 $pgv_lang["gedcom_downloadable"] 	= "את קובץ ה-GEDCOM הזה ניתן להוריד דרך האינטרנט!<br />ראה את פרק ה-SECURITY של קובץ ה-<a href=\"readme.txt\"><b>readme.txt</b></a> כדי לפתור את הבעיה";
 $pgv_lang["gedcom_file"]		= "קובץ GEDCOM:";
 $pgv_lang["gedcom_not_imported"]	= "ה-GEDCOM הזה טרם יובא.";
-$pgv_lang["ibase"]			= "InterBase";
 $pgv_lang["img_admin_settings"]	= "ערוך תצורה של פעולה על תמונות";
 $pgv_lang["autoContinue"]		= "לחץ על כפתור «המשך» להמשכה בצורה אוטומטית";
 $pgv_lang["import_complete"]		= "הייבוא הסתיים";

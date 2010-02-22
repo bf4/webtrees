@@ -175,7 +175,6 @@ $pgv_lang["gedcom_config_write_error"] = "F E J L ! Kan ikke skrive til slægtsd
 $pgv_lang["gedcom_downloadable"]	= "<br />Besøgende på din hjemmeside kan downloade denne GEDCOM-fil!<br />Læs mere om det i readme.txt filen <a href=\"\".(file_exists('readme-dansk.txt')?\"readme-dansk.txt\":\"readme.txt\").\"\">readme\".(file_exists('readme-dansk.txt')?\"-dansk\":\"\").\".txt</a> i afsnittet 12. SIKKERHED / PRIVATLIV<br />for at finde en løsning på dette.";
 $pgv_lang["gedcom_file"]			= "GEDCOM-fil:";
 $pgv_lang["gedcom_not_imported"]				= "Denne GEDCOM-fil er endnu ikke importeret.";
-$pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["img_admin_settings"]		= "Ret indstillinger for billedbehandling";
 $pgv_lang["autoContinue"]						= "Automatisk tryk <<Fortsæt>> knappen";
 $pgv_lang["import_complete"]	= "Importeringen er færdig";

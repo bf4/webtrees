@@ -250,7 +250,6 @@ $pgv_lang["gedcom_config_write_error"]			= "F E I L !!!<br />Kunne ikke skrive t
 $pgv_lang["gedcom_downloadable"]	= "<br />Besøkende på nettstedet ditt kan laste ned (download) denne slektsfilen!<br />Les mer om dette i filen <a href=\"".(file_exists('readme-norsk.txt')?"readme-norsk.txt":"readme.txt")."\">readme".(file_exists('readme-norsk.txt')?"-norsk":"").".txt</a> i avsnittet 12. SIKKERHET / PERSONVERN<br />for å finne en løsning på dette.";
 $pgv_lang["gedcom_file"]			= "Slektsfil:";
 $pgv_lang["gedcom_not_imported"]		= "Denne GEDCOM-filen er ikke blitt importet enda.";
-$pgv_lang["ibase"]						= "InterBase";
 $pgv_lang["img_admin_settings"]		= "Endre innstillingene for bilde-behandling";
 $pgv_lang["autoContinue"]						= "Automatisk trykk på «Fortsett»-knappen";
 $pgv_lang["import_complete"]	= "Import ferdig";

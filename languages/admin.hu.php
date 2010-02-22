@@ -330,7 +330,6 @@ $pgv_lang["oci8"]								= "Oracle 7+";
 $pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["sqlite"]								= "SQLite";
 $pgv_lang["fbsql"]								= "FrontBase";
-$pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["tradition_polish"]		= "Lengyel";
 $pgv_lang["elapsedMinute1"]	=	"1 perc";
 $pgv_lang["elapsedHour1"]	=	"1 óra";

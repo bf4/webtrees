@@ -239,7 +239,6 @@ $pgv_lang["gedcom_config_write_error"]  = "E R R E U R ! ! !<br />Impossible d'�
 $pgv_lang["gedcom_downloadable"]        = "Ce fichier GEDCOM est téléchargeable par n'importe qui sur Internet!<br />Consultez la section SECURITY du fichier <a href=\"readme.txt\">readme.txt</a> pour corriger ce problème";
 $pgv_lang["gedcom_file"]                = "Fichier GEDCOM";
 $pgv_lang["gedcom_not_imported"]        = "Ce fichier GEDCOM n'a pas encore été chargé.";
-$pgv_lang["ibase"]                      = "InterBase";
 $pgv_lang["img_admin_settings"]         = "Configuration de l'éditeur d'images";
 $pgv_lang["autoContinue"]               = "Cliquer automatiquement sur le bouton «Continuer»";
 $pgv_lang["import_complete"]            = "Import terminé";

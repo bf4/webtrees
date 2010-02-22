@@ -278,7 +278,6 @@ $pgv_lang["gedcom_config_write_error"]	= "F E H L E R !!!<br />Die Datei <i>#GLO
 $pgv_lang["gedcom_downloadable"]	= "Diese GEDCOM-Datei könnte über das Internet heruntergeladen werden!<br />Bitte lesen Sie im Bereich «SECURITY» der Datei <a href=\"readme.txt\"><b>readme.txt</b></a> nach, wie Sie dieses Problem vermeiden können.";
 $pgv_lang["gedcom_file"]			= "GEDCOM-Datei:";
 $pgv_lang["gedcom_not_imported"]	= "Diese GEDCOM-Datei wurde noch nicht importiert.";
-$pgv_lang["ibase"]					= "InterBase";
 $pgv_lang["img_admin_settings"]		= "Bild-Veränderungs-Konfiguration bearbeiten";
 $pgv_lang["autoContinue"]			= "«Fortsetzen» Button automatisch drücken";
 $pgv_lang["import_complete"]		= "Import beendet";

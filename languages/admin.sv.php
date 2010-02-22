@@ -159,7 +159,6 @@ $pgv_lang["gedcom_config_write_error"]			= "FEL!!!<br />Kunde inte skriva till f
 $pgv_lang["gedcom_downloadable"] 	= "Denna GEDCOM-fil är nerladdningsbar över internet!<br />Var vänlig läs Säkerhetssektionen i <a href=\"readme.txt\">readme.txt</a> för att rätta till problemet";
 $pgv_lang["gedcom_file"]		= "GEDCOM-fil:";
 $pgv_lang["gedcom_not_imported"]				= "Denna GEDOM-fil har inte blivit importerad ännu.";
-$pgv_lang["ibase"]								= "Interbase";
 $pgv_lang["img_admin_settings"]	= "Ändra bildmanipuleringskonfigurationen";
 $pgv_lang["autoContinue"]						= "Tryck på knappen <<fortsätt>> automatiskt";
 $pgv_lang["import_complete"]	= "Importen är färdig";

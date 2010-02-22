@@ -240,7 +240,6 @@ $pgv_lang["gedcom_config_write_error"]	= "HATA!!! GEDCOM yapılandırma dosyası
 $pgv_lang["gedcom_downloadable"]	= "Bu GEDECOM dosyası İnternet üzerinden indirilebilinir!<br />Lütfen <a href=\"readme.txt\">readme.txt</a> dosyasının \"SECURITY\" bölümünü okuyup bu sorunu ortadan kaldırın.";
 $pgv_lang["gedcom_file"]		= "GEDCOM dosyası";
 $pgv_lang["gedcom_not_imported"]				= "Bu GEDCOM henüz içeri aktarımadı.";
-$pgv_lang["ibase"]								= "Esasgöm";
 $pgv_lang["img_admin_settings"] 				= "Resim işleme konfigürasyonunu düzenle";
 $pgv_lang["autoContinue"]						= "Otomatikman «Devam» butonu";
 $pgv_lang["import_complete"]		= "İçerik aktarım tamamlandı";

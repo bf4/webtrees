@@ -267,7 +267,6 @@ $pgv_lang["gedcom_config_write_error"]	= "Błąd! Nie można zapisać do pliku <
 $pgv_lang["gedcom_downloadable"]	= "Tego pliku GEDCOM nie można pobrać przez internet!<br />Zobacz sekcję BEZPIECZEŃSTWO w pliku <a href=\"readme.txt\"><b>readme.txt</b></a> aby naprawić ten problem";
 $pgv_lang["gedcom_file"]			= "Plik GEDCOM:";
 $pgv_lang["gedcom_not_imported"]	= "Ten plik GEDCOM nie został jeszcze zaimportowany.";
-$pgv_lang["ibase"]					= "InterBase";
 $pgv_lang["img_admin_settings"]		= "Zmień konfigurację manipulacji obrazami";
 $pgv_lang["autoContinue"]			= "Kontynuuj automatycznie";
 $pgv_lang["import_complete"]		= "Import zakończony";

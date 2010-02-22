@@ -173,7 +173,6 @@ $pgv_lang["gedcom_config_write_error"]	= "E R R O R !!!<br />No pot escriure's a
 $pgv_lang["gedcom_downloadable"] 	= "Aquest fitxer GEDCOM pot descarregar-se des d'Internet!<br />Llegiu la secció de SEGURETAT del fitxer <a href=\"readme.txt\"><b>readme.txt</b></a> per solucionar-ho";
 $pgv_lang["gedcom_file"]			= "Fitxer GEDCOM:";
 $pgv_lang["gedcom_not_imported"]	= "Aquest GEDCOM encara no s'ha importat.";
-$pgv_lang["ibase"]					= "InterBase";
 $pgv_lang["img_admin_settings"] 	= "Editeu la configuració de manipulació d'imatges";
 $pgv_lang["autoContinue"]						= "Polsa automàticament el botó «Continuar»";
 $pgv_lang["import_complete"]		= "Importació completada";
