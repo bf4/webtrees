@@ -230,32 +230,6 @@ class PGV_DB {
 			self::$LONGTEXT_TYPE='TEXT';
 			self::$UTF8_TABLE   ='';
 			break;
-		case 'firebird': // This DSN has not been tested!
-			self::$pdo=new PDO(
-				"firebird:host={$DBHOST};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
-				array(
-					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-					PDO::ATTR_CASE=>PDO::CASE_LOWER,
-					PDO::ATTR_AUTOCOMMIT=>true
-				)
-			);
-			self::$AUTO_ID_TYPE ='INTEGER'; // No autoincrement columns available
-			self::$ID_TYPE      ='INTEGER';
-			self::$INT1_TYPE    ='INTEGER';
-			self::$INT2_TYPE    ='INTEGER';
-			self::$INT3_TYPE    ='INTEGER';
-			self::$INT4_TYPE    ='INTEGER';
-			self::$INT8_TYPE    ='INTEGER';
-			self::$CHAR_TYPE    ='VARCHAR';
-			self::$VARCHAR_TYPE ='VARCHAR';
-			self::$UNSIGNED     ='';
-			self::$LIKE         ='LIKE';
-			self::$RANDOM       ='RANDOM()';
-			self::$TEXT_TYPE    ='VARCHAR(32767)';
-			self::$LONGTEXT_TYPE='BLOB SUB_TYPE TEXT';
-			self::$UTF8_TABLE   ='';
-			break;
 		case 'odbc': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"odbc:$DBNAME", $DBUSER, $DBPASS,
@@ -384,7 +358,6 @@ class PGV_DB {
 		case 'mysql':
 		case 'pgsql':
 		case 'mssql':
-		case 'firebird':
 			return "MOD($x,$y)";
 		case 'odbc':
 			// We don't know the underlying database, so this is only a guess
@@ -395,7 +368,6 @@ class PGV_DB {
 	public static function random_function() {
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'mysql':
-		case 'firebird':
 			return 'RAND()';
 		case 'sqlite':
 		case 'sqlite2':
@@ -604,9 +576,6 @@ class PGV_DB {
 				break;
 			case 'mssql':
 				$statement=preg_replace('/^\s*SELECT /i', "SELECT TOP {$n} ", $statement);
-				break;
-			case 'firebird':
-				$statement=preg_replace('/^\s*SELECT /i', "SELECT FIRST {$n} ", $statement);
 				break;
 			case 'odbc':
 				// We don't know the underlying database, so just return all rows :-(
