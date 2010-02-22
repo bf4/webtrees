@@ -202,7 +202,6 @@ $pgv_lang["month_before_day"]		= "Mesiac pred dňom (MM DD YYYY)";
 $pgv_lang["monthly"]			= "Mesačne";
 $pgv_lang["mssql"]			= "Microsoft SQL server";
 $pgv_lang["mysql"]			= "MySQL";
-$pgv_lang["mysqli"]			= "MySQL 4.1+ a PHP 5";
 $pgv_lang["never"]			= "Nikdy";
 $pgv_lang["no_logs"]			= "Zakázať prihlasovanie";
 $pgv_lang["no_messaging"]		= "Bez kontaktnej metódy";

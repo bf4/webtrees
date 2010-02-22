@@ -204,7 +204,6 @@ $pgv_lang["month_before_day"]		= "Månad före dag (MM DD ÅÅÅÅ)";
 $pgv_lang["monthly"]							= "Månatlig";
 $pgv_lang["mssql"]								= "Microsoft SQL server";
 $pgv_lang["mysql"]								= "MySQL";
-$pgv_lang["mysqli"]								= "MySQL 4.1+ och PHP 5";
 $pgv_lang["never"]								= "Aldrig";
 $pgv_lang["no_logs"]							= "Stäng av loggning";
 $pgv_lang["no_messaging"]						= "Ingen kontaktmetod";

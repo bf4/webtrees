@@ -92,7 +92,6 @@ $pgv_lang["index"]					= "Indexbestanden";
 $pgv_lang["mysql"]					= "MySQL";
 $pgv_lang["db"]						= "Database";
 $pgv_lang["mssql"]					= "Microsoft SQL Server";
-$pgv_lang["mysqli"]					= "MySQL 4.1+ met PHP5";
 $pgv_lang["pgsql"]					= "PostgreSQL";
 $pgv_lang["sqlite"]					= "SQLite";
 $pgv_lang["admin_gedcoms"]			= "Klik hier om de GEDCOM-bestanden te beheren.";

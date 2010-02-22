@@ -289,7 +289,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["monthly"]							= "Monthly";
 ##$pgv_lang["mssql"]								= "Microsoft SQL server";
 ##$pgv_lang["mysql"]								= "MySQL";
-##$pgv_lang["mysqli"]								= "MySQL 4.1+ and PHP 5";
 ##$pgv_lang["never"]								= "Never";
 ##$pgv_lang["no_logs"]							= "Disable logging";
 ##$pgv_lang["no_messaging"]						= "No contact method";

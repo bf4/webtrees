@@ -107,7 +107,6 @@ $pgv_lang["config_help"]="Configuration Help";
 $pgv_lang["mysql"]="MySQL";
 $pgv_lang["db"]="Banco de Dados";
 $pgv_lang["mssql"]="Microsoft SQL server";
-$pgv_lang["mysqli"]="MySQL 4.1+ and PHP 5";
 $pgv_lang["pgsql"]="PostgreSQL";
 $pgv_lang["sqlite"]="SQLite";
 $pgv_lang["admin_gedcoms"]="Clique aqui para Administrar os GEDCOMs.";
