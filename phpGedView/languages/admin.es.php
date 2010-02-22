@@ -380,7 +380,6 @@ $pgv_lang["SERVER_URL"]							= "URL de PhpGedView";
 $pgv_lang["show_phpinfo"]						= "Ver la página de información de PHP";
 $pgv_lang["siteadmin"]							= "Administrador del sitio";
 $pgv_lang["sqlite"]								= "SQLite";
-$pgv_lang["sybase"]								= "Sybase";
 $pgv_lang["sync_gedcom"]						= "Sincronizar los ajustes de usuario con los datos GEDCOM";
 $pgv_lang["system_time"]						= "Hora actual del sistema:";
 $pgv_lang["user_time"]							= "Hora actual del usuario:";

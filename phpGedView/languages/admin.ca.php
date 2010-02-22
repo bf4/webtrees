@@ -247,7 +247,6 @@ $pgv_lang["SERVER_URL"]				= "URL PhpGedView";
 $pgv_lang["show_phpinfo"]			= "Mostra la pàgina d'informació PHP";
 $pgv_lang["siteadmin"]				= "Administradors del lloc";
 $pgv_lang["sqlite"]					= "SQLite";
-$pgv_lang["sybase"]					= "Sybase";
 $pgv_lang["sync_gedcom"]			= "Sincronitza les dades d'usuari amb les del GEDCOM";
 $pgv_lang["system_time"]			= "Hora actual del servidor:";
 $pgv_lang["user_time"]				= "Hora actual de l'usuari:";

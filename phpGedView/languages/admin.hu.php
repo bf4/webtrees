@@ -332,7 +332,6 @@ $pgv_lang["sqlite"]								= "SQLite";
 $pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["ifx"]								= "Informix";
-$pgv_lang["sybase"]								= "Sybase";
 $pgv_lang["tradition_polish"]		= "Lengyel";
 $pgv_lang["elapsedMinute1"]	=	"1 perc";
 $pgv_lang["elapsedHour1"]	=	"1 óra";

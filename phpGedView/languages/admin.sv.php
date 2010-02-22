@@ -240,7 +240,6 @@ $pgv_lang["show_phpinfo"]						= "Visa PHP informationssida";
 $pgv_lang["siteadmin"]				= "Sajt-administratör";
 $pgv_lang["skip_cleanup"]		= "Hoppa över städning";
 $pgv_lang["sqlite"]								= "SQLite";
-$pgv_lang["sybase"]								= "Sybase";
 $pgv_lang["sync_gedcom"]						= "Synkronisera användarinställningar med GEDCOM-data";
 $pgv_lang["system_time"]						= "Nuvarande servertid:";
 $pgv_lang["user_time"]							= "Nuvarande användartid:";

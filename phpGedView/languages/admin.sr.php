@@ -332,7 +332,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["show_phpinfo"]						= "Show PHP information page";
 ##$pgv_lang["siteadmin"]							= "Site administrator";
 ##$pgv_lang["sqlite"]								= "SQLite";
-##$pgv_lang["sybase"]								= "Sybase";
 ##$pgv_lang["sync_gedcom"]						= "Synchronize User Settings with GEDCOM Data";
 ##$pgv_lang["system_time"]						= "Current Server Time:";
 ##$pgv_lang["user_time"]							= "Current User Time:";

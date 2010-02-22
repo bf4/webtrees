@@ -101,7 +101,6 @@ $pgv_lang["mysqli"]					= "MySQL 4.1+ met PHP5";
 $pgv_lang["oci8"]					= "Oracle 7+";
 $pgv_lang["pgsql"]					= "PostgreSQL";
 $pgv_lang["sqlite"]					= "SQLite";
-$pgv_lang["sybase"]					= "Sybase";
 $pgv_lang["admin_gedcoms"]			= "Klik hier om de GEDCOM-bestanden te beheren.";
 $pgv_lang["current_gedcoms"]		= "Huidige GEDCOM-bestanden";
 $pgv_lang["gedcom_adm_head"]		= "GEDCOM-beheer";
