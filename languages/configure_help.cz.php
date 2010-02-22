@@ -59,7 +59,6 @@ $pgv_lang["index"]			= "Index soubory";
 $pgv_lang["mysql"]			= "MySQL";
 $pgv_lang["db"]				= "Databáze";
 $pgv_lang["dbase"]			= "dBase";
-$pgv_lang["msql"]			= "Mini SQL";
 $pgv_lang["mssql"]			= "Microsoft SQL Server";
 $pgv_lang["mysqli"]			= "MySQL 4.1+ a PHP 5";
 $pgv_lang["pgsql"]			= "PostgreSQL";

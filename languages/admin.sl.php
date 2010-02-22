@@ -337,7 +337,6 @@ $pgv_lang["messaging2"]							= "Internno sporočanje z e-pošto";
 $pgv_lang["messaging3"]							= "PhpGedView pošilja e-pošto brez hranjenja";
 $pgv_lang["month_before_day"]					= "Dni pred dnem (MM DD YYYY)";
 $pgv_lang["monthly"]							= "Mesečno";
-$pgv_lang["msql"]								= "Mini SQL";
 $pgv_lang["mssql"]								= "Microsoft SQL server";
 $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["never"]								= "Nikoli";

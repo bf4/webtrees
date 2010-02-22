@@ -318,7 +318,6 @@ $pgv_lang["messaging2"]				= "Interne Nachrichten-Funktion und Mail";
 $pgv_lang["messaging3"]				= "PhpGedView sendet Mails ohne sie zu speichern";
 $pgv_lang["month_before_day"]		= "Monat vor Tag (MM DD YYYY)";
 $pgv_lang["monthly"]				= "Monatlich";
-$pgv_lang["msql"]					= "Mini SQL";
 $pgv_lang["mssql"]					= "Microsoft SQL server";
 $pgv_lang["mysql"]					= "MySQL";
 $pgv_lang["never"]					= "Nie";

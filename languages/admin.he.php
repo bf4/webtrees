@@ -338,7 +338,6 @@ $pgv_lang["messaging2"]		= "הודעות פנימיות עם דואר אלקטר
 $pgv_lang["messaging3"] 		= "PhpGedView שולח דואר אלקטרוני ללא אחסון";
 $pgv_lang["month_before_day"]	= "חודש לפני יום (MM DD YYYY)";
 $pgv_lang["monthly"]			= "חדשי";
-$pgv_lang["msql"]			= "Mini SQL";
 $pgv_lang["mssql"]			= "Microsoft SQL server";
 $pgv_lang["mysql"]			= "MySQL";
 $pgv_lang["never"]			= "אף פעם לא";
