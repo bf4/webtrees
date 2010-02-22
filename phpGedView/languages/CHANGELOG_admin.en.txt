@@ -43,6 +43,7 @@ VERSION 4.3.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["msql"]                    22 Feb 2010           D		Change made in *all* language files
 -$pgv_lang["oci8"]                    22 Feb 2010           D		Change made in *all* language files
 -$pgv_lang["fbsql"]                   22 Feb 2010           D		Change made in *all* language files
 -$pgv_lang["ibase"]                   22 Feb 2010           D		Change made in *all* language files

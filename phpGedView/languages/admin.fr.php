@@ -279,7 +279,6 @@ $pgv_lang["messaging2"]                 = "Messagerie interne par courriel";
 $pgv_lang["messaging3"]                 = "PhpGedView ne conserve pas les courriels envoyés";
 $pgv_lang["month_before_day"]           = "Mois Jour Année (MM JJ AAAA)";
 $pgv_lang["monthly"]                    = "Mensuel";
-$pgv_lang["msql"]                       = "Mini SQL";
 $pgv_lang["mssql"]                      = "Microsoft SQL Server";
 $pgv_lang["mysql"]                      = "MySQL";
 $pgv_lang["never"]                      = "Jamais";

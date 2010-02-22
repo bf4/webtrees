@@ -287,7 +287,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["messaging3"]							= "PhpGedView sends emails with no storage";
 ##$pgv_lang["month_before_day"]					= "Month before Day (MM DD YYYY)";
 ##$pgv_lang["monthly"]							= "Monthly";
-##$pgv_lang["msql"]								= "Mini SQL";
 ##$pgv_lang["mssql"]								= "Microsoft SQL server";
 ##$pgv_lang["mysql"]								= "MySQL";
 ##$pgv_lang["mysqli"]								= "MySQL 4.1+ and PHP 5";

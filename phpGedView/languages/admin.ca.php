@@ -213,7 +213,6 @@ $pgv_lang["messaging2"]				= "Missatgeria interna amb correu electrònic";
 $pgv_lang["messaging3"]				= "El PhpGedView envia correus electrònics sense emmagatzemar-los";
 $pgv_lang["month_before_day"]		= "Mes abans del dia (MM DD AAAA)";
 $pgv_lang["monthly"]				= "Mensualment";
-$pgv_lang["msql"]					= "Mini SQL";
 $pgv_lang["mssql"]					= "Servidor SQL Microsoft";
 $pgv_lang["mysql"]					= "MySQL";
 $pgv_lang["never"]					= "Mai";

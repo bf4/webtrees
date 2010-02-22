@@ -266,7 +266,6 @@ $pgv_lang["last_login"]							= "Ultimo ingresso";
 $pgv_lang["leave_blank"]						= "Lasciare in bianco la password se si desidera mantenere la password corrente.";
 $pgv_lang["link_manage_servers"]   				= "Gestione Siti";
 $pgv_lang["logfile_content"]					= "Contenuto del file di log";
-$pgv_lang["msql"]								= "Mini SQL";
 $pgv_lang["mssql"]								= "Microsoft SQL Server";
 $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["mysqli"]								= "MySQL 4.1 e PHP 5  ";

@@ -280,7 +280,6 @@ $pgv_lang["messaging2"]							= "PhpGedView dahili mesaj sistemi ve E-posta";
 $pgv_lang["messaging3"]							= "PhpGedView sunucuda Kaydetmeden E-postaları yolla";
 $pgv_lang["month_before_day"]		= "Önce ay sonra gün (AA GG SSSS)";
 $pgv_lang["monthly"]							= "Aylık";
-$pgv_lang["msql"]								= "Küçük SQL";
 $pgv_lang["mssql"]								= "Microsoft SQL sunucu";
 $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["never"]								= "Şimdilik yok";
