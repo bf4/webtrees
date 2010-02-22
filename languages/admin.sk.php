@@ -238,7 +238,6 @@ $pgv_lang["show_phpinfo"]		= "Zobraziť informačnú stránku PHP";
 $pgv_lang["siteadmin"]			= "Administrátor stránky";
 $pgv_lang["skip_cleanup"]		= "Preskočiť opravovanie";
 $pgv_lang["sqlite"]			= "SQLite";
-$pgv_lang["sybase"]			= "Sybase";
 $pgv_lang["sync_gedcom"]		= "Synchronizovať nastavenia užívateľa s GEDCOM údajmi";
 $pgv_lang["system_time"]		= "Aktuálny čas servera:";
 $pgv_lang["user_time"]			= "Aktuálny čas užívateľa:";

@@ -380,7 +380,6 @@ $pgv_lang["SERVER_URL"]							= "PhpGedView URL";
 $pgv_lang["show_phpinfo"]						= "Pokaži informacije o PHP";
 $pgv_lang["siteadmin"]							= "Upravitel spletne strani";
 $pgv_lang["sqlite"]							= "SQLite";
-$pgv_lang["sybase"]							= "Sybase";
 $pgv_lang["sync_gedcom"]						= "Sinhroniziraj uporabniške nastavitve z GEDCOM podatki";
 $pgv_lang["system_time"]						= "Trenutna ura strežnika:";
 $pgv_lang["user_time"]							= "Trenutna ura uporabnika:";

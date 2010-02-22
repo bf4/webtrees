@@ -335,7 +335,6 @@ $pgv_lang["SERVER_URL"] 				= "PhpGedView URL";
 $pgv_lang["show_phpinfo"]				= "Vis info om PHP";
 $pgv_lang["siteadmin"]				= "Administrator av nettstedet";
 $pgv_lang["sqlite"]						= "SQLite";
-$pgv_lang["sybase"]						= "Sybase";
 $pgv_lang["sync_gedcom"]		= "Kopier innstillingene for slektsbasen";
 $pgv_lang["system_time"]				= "Gjeldende systemtid:";
 $pgv_lang["user_time"]							= "Klokke for bruker:";

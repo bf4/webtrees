@@ -68,7 +68,6 @@ $pgv_lang["mysqli"]			= "MySQL 4.1+ a PHP 5";
 $pgv_lang["oci8"]			= "Oracle 7+";
 $pgv_lang["pgsql"]			= "PostgreSQL";
 $pgv_lang["sqlite"]			= "SQLite";
-$pgv_lang["sybase"]			= "Sybase";
 $pgv_lang["admin_gedcoms"]		= "Pro administraci GEDCOM souborů klikněte sem.";
 $pgv_lang["current_gedcoms"]		= "Současné GEDCOM soubory";
 $pgv_lang["gedcom_adm_head"]	= "Správa GEDCOMů";

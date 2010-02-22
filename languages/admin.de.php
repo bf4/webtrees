@@ -361,7 +361,6 @@ $pgv_lang["SERVER_URL"]				= "PhpGedView URL";
 $pgv_lang["show_phpinfo"]			= "PHPInfo-Seite zeigen";
 $pgv_lang["siteadmin"]				= "Verwalter";
 $pgv_lang["sqlite"]					= "SQLite";
-$pgv_lang["sybase"]					= "Sybase";
 $pgv_lang["sync_gedcom"]			= "Benutzer Einstellungen mit den GEDCOM Daten synchronisieren";
 $pgv_lang["system_time"]			= "Aktuelle Zeit des Systems:";
 $pgv_lang["user_time"]				= "Aktuelle Zeit beim Benutzer:";
