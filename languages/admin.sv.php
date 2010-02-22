@@ -160,7 +160,6 @@ $pgv_lang["gedcom_downloadable"] 	= "Denna GEDCOM-fil är nerladdningsbar över 
 $pgv_lang["gedcom_file"]		= "GEDCOM-fil:";
 $pgv_lang["gedcom_not_imported"]				= "Denna GEDOM-fil har inte blivit importerad ännu.";
 $pgv_lang["ibase"]								= "Interbase";
-$pgv_lang["ifx"]								= "Informix";
 $pgv_lang["img_admin_settings"]	= "Ändra bildmanipuleringskonfigurationen";
 $pgv_lang["autoContinue"]						= "Tryck på knappen <<fortsätt>> automatiskt";
 $pgv_lang["import_complete"]	= "Importen är färdig";

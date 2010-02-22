@@ -299,7 +299,6 @@ $pgv_lang["gedcom_downloadable"] 	= "את קובץ ה-GEDCOM הזה ניתן ל�
 $pgv_lang["gedcom_file"]		= "קובץ GEDCOM:";
 $pgv_lang["gedcom_not_imported"]	= "ה-GEDCOM הזה טרם יובא.";
 $pgv_lang["ibase"]			= "InterBase";
-$pgv_lang["ifx"]			= "Informix";
 $pgv_lang["img_admin_settings"]	= "ערוך תצורה של פעולה על תמונות";
 $pgv_lang["autoContinue"]		= "לחץ על כפתור «המשך» להמשכה בצורה אוטומטית";
 $pgv_lang["import_complete"]		= "הייבוא הסתיים";

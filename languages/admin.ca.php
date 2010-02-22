@@ -174,7 +174,6 @@ $pgv_lang["gedcom_downloadable"] 	= "Aquest fitxer GEDCOM pot descarregar-se des
 $pgv_lang["gedcom_file"]			= "Fitxer GEDCOM:";
 $pgv_lang["gedcom_not_imported"]	= "Aquest GEDCOM encara no s'ha importat.";
 $pgv_lang["ibase"]					= "InterBase";
-$pgv_lang["ifx"]					= "Informix";
 $pgv_lang["img_admin_settings"] 	= "Editeu la configuració de manipulació d'imatges";
 $pgv_lang["autoContinue"]						= "Polsa automàticament el botó «Continuar»";
 $pgv_lang["import_complete"]		= "Importació completada";
