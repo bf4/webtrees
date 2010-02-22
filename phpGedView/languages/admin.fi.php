@@ -163,7 +163,6 @@ $pgv_lang["gedcom_downloadable"] 	= "Tämä GEDCOM-tiedosto on ladattavissa inte
 $pgv_lang["gedcom_file"]		= "GEDCOM-tiedosto:";
 $pgv_lang["gedcom_not_imported"]	= "Tätä GEDCOM:a ei ole vielä tuotu.";
 $pgv_lang["ibase"]			= "InterBase";
-$pgv_lang["ifx"]			= "Informix";
 $pgv_lang["img_admin_settings"] 	= "Muokkaa kuvankäsittelyn asetuksia";
 $pgv_lang["autoContinue"]		= "Paina automaattisesti «Continue»-painiketta.";
 $pgv_lang["import_complete"]		= "Tuonti onnistui";

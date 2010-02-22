@@ -176,7 +176,6 @@ $pgv_lang["gedcom_downloadable"]	= "<br />Besøgende på din hjemmeside kan down
 $pgv_lang["gedcom_file"]			= "GEDCOM-fil:";
 $pgv_lang["gedcom_not_imported"]				= "Denne GEDCOM-fil er endnu ikke importeret.";
 $pgv_lang["ibase"]								= "InterBase";
-$pgv_lang["ifx"]								= "Informix";
 $pgv_lang["img_admin_settings"]		= "Ret indstillinger for billedbehandling";
 $pgv_lang["autoContinue"]						= "Automatisk tryk <<Fortsæt>> knappen";
 $pgv_lang["import_complete"]	= "Importeringen er færdig";

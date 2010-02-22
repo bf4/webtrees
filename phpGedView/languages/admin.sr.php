@@ -248,7 +248,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["gedcom_file"]						= "GEDCOM File:";
 ##$pgv_lang["gedcom_not_imported"]				= "This GEDCOM has not yet been imported.";
 ##$pgv_lang["ibase"]								= "InterBase";
-##$pgv_lang["ifx"]								= "Informix";
 ##$pgv_lang["img_admin_settings"] 				= "Edit Image Manipulation Configuration";
 ##$pgv_lang["autoContinue"]						= "Automatically press «Continue» button";
 ##$pgv_lang["import_complete"]					= "Import complete";

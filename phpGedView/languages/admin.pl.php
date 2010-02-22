@@ -268,7 +268,6 @@ $pgv_lang["gedcom_downloadable"]	= "Tego pliku GEDCOM nie można pobrać przez i
 $pgv_lang["gedcom_file"]			= "Plik GEDCOM:";
 $pgv_lang["gedcom_not_imported"]	= "Ten plik GEDCOM nie został jeszcze zaimportowany.";
 $pgv_lang["ibase"]					= "InterBase";
-$pgv_lang["ifx"]					= "Informix";
 $pgv_lang["img_admin_settings"]		= "Zmień konfigurację manipulacji obrazami";
 $pgv_lang["autoContinue"]			= "Kontynuuj automatycznie";
 $pgv_lang["import_complete"]		= "Import zakończony";

@@ -251,7 +251,6 @@ $pgv_lang["gedcom_downloadable"]	= "<br />Besøkende på nettstedet ditt kan las
 $pgv_lang["gedcom_file"]			= "Slektsfil:";
 $pgv_lang["gedcom_not_imported"]		= "Denne GEDCOM-filen er ikke blitt importet enda.";
 $pgv_lang["ibase"]						= "InterBase";
-$pgv_lang["ifx"]						= "Informix";
 $pgv_lang["img_admin_settings"]		= "Endre innstillingene for bilde-behandling";
 $pgv_lang["autoContinue"]						= "Automatisk trykk på «Fortsett»-knappen";
 $pgv_lang["import_complete"]	= "Import ferdig";
