@@ -3322,7 +3322,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	if ($DB_UTF8_COLLATION) {
 		switch ($DBTYPE) {
 		case 'mysql':
-		case 'mysqli':
 			$DBCOLLATE="COLLATE {$COLLATION[$LANGUAGE]}";
 			break;
 		default:
