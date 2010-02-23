@@ -11,9 +11,7 @@
 	<property name="modules-all.dir" value="${dist.dir}/PGV-Modules-All-${pgv.version}" />
 
 	<property name="module-batch-update.dir" value="${dist.dir}/PGV-Module-batch-update-${pgv.version}" />
-	<property name="module-cms-interface.dir" value="${dist.dir}/PGV-Module-cms-interface-${pgv.version}" />
 	<property name="module-fckeditor.dir" value="${dist.dir}/PGV-Module-fckeditor-${pgv.version}" />
-	<property name="module-gallery2.dir" value="${dist.dir}/PGV-Module-gallery2-${pgv.version}" />
 	<property name="module-gedfact-assistant.dir" value="${dist.dir}/PGV-Module-gedfact-assistant-${pgv.version}" />
 	<property name="module-googlemap.dir" value="${dist.dir}/PGV-Module-googlemap-${pgv.version}" />
 	<property name="module-jwplayer.dir" value="${dist.dir}/PGV-Module-jwplayer-${pgv.version}" />
@@ -82,12 +80,8 @@
 		<delete file="${demo.dir}.zip" failonerror="false" />
 		<delete dir ="${module-batch-update.dir}" failonerror="false" />
 		<delete file="${module-batch-update.dir}.zip" failonerror="false" />
-		<delete dir ="${module-cms-interface.dir}" failonerror="false" />
-		<delete file="${module-cms-interface.dir}.zip" failonerror="false" />
 		<delete dir ="${module-fckeditor.dir}" failonerror="false" />
 		<delete file="${module-fckeditor.dir}.zip" failonerror="false" />
-		<delete dir ="${module-gallery2.dir}" failonerror="false" />
-		<delete file="${module-gallery2.dir}.zip" failonerror="false" />
 		<delete dir ="${module-gedfact-assistant.dir}" failonerror="false" />
 		<delete file="${module-gedfact-assistant.dir}.zip" failonerror="false" />
 		<delete dir ="${module-googlemap.dir}" failonerror="false" />
@@ -196,26 +190,10 @@
 		</copy>
 	</target>
 
-	<target name="package-module-cms-interface">
-		<copy todir="${module-cms-interface.dir}">
-			<fileset dir="./modules/">
-				<include name="cms_interface*/**" />
-			</fileset>
-		</copy>
-	</target>
-
 	<target name="package-module-fckeditor">
 		<copy todir="${module-fckeditor.dir}">
 			<fileset dir="./modules/">
 				<include name="FCKeditor*/**" />
-			</fileset>
-		</copy>
-	</target>
-
-	<target name="package-module-gallery2">
-		<copy todir="${module-gallery2.dir}">
-			<fileset dir="./modules/">
-				<include name="gallery2*/**" />
 			</fileset>
 		</copy>
 	</target>
@@ -307,7 +285,7 @@
 	</target>
 
 	<target name="package"
-		depends="package-all, package-basic, package-lang, package-themes, package-modules-all, package-places, package-demo, package-module-cms-interface, package-module-batch-update, package-module-fckeditor, package-module-gallery2, package-module-gedfact-assistant, package-module-googlemap, package-module-jwplayer, package-module-lightbox, package-module-punbb, package-module-research-assistant, package-module-sitemap">
+		depends="package-all, package-basic, package-lang, package-themes, package-modules-all, package-places, package-demo, package-module-batch-update, package-module-fckeditor, package-module-gedfact-assistant, package-module-googlemap, package-module-jwplayer, package-module-lightbox, package-module-punbb, package-module-research-assistant, package-module-sitemap">
 		<!--  default target which does everything -->
 	</target>
 	
@@ -320,9 +298,7 @@
 		<zip destfile="${modules-all.dir}.zip" basedir="${modules-all.dir}" update="true" />
 		<zip destfile="${demo.dir}.zip" basedir="${demo.dir}" update="true" />
 		<zip destfile="${module-batch-update.dir}.zip" basedir="${module-batch-update.dir}" update="true" />
-		<zip destfile="${module-cms-interface.dir}.zip" basedir="${module-cms-interface.dir}" update="true" />
 		<zip destfile="${module-fckeditor.dir}.zip" basedir="${module-fckeditor.dir}" update="true" />
-		<zip destfile="${module-gallery2.dir}.zip" basedir="${module-gallery2.dir}" update="true" />
 		<zip destfile="${module-gedfact-assistant.dir}.zip" basedir="${module-gedfact-assistant.dir}" update="true" />
 		<zip destfile="${module-googlemap.dir}.zip" basedir="${module-googlemap.dir}" update="true" />
 		<zip destfile="${module-jwplayer.dir}.zip" basedir="${module-jwplayer.dir}" update="true" />
