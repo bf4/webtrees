@@ -323,7 +323,6 @@ $pgv_lang["date_time"]					= "Dátum és idő";
 $pgv_lang["ip_address"]					= "IP cím";
 $pgv_lang["sanity_warn6"]				= "A Calendar könyvtár nem elérhető. A PhpGedView továbbra is funkcionál, de néhány funkció úgy mint más naptárformátumokba konvertálás mint például Héber vagy Francia nem fog működni e nélkül. További információért látogasson el ide: <a href=\'http://www.php.net/manual/en/ref.calendar.php\'>http://www.php.net/manual/en/ref.calendar.php</a>.";
 $pgv_lang["sanity_warn5"]				= "A DOM XML könyvtár nem elérhető. A PhpGedView továbbra is funkcionál, de néhány funkció úgy mint Gramps Export a metszési kosárban, letöltés, és web szerviz nem fog működni e nélkül. További információért látogasson el ide: <a href=\'http://www.php.net/manual/en/ref.domxml.php\'>http://www.php.net/manual/en/ref.domxml.php</a>.";
-$pgv_lang["mssql"]								= "Microsoft SQL Server";
 $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["sqlite"]								= "SQLite";
 $pgv_lang["tradition_polish"]		= "Lengyel";

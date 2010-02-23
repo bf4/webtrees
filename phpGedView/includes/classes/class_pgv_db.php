@@ -134,32 +134,6 @@ class PGV_DB {
 				self::$UTF8_TABLE   ='';
 			}
 			break;
-		case 'mssql':
-			self::$pdo=new PDO(
-				"mssql:host={$DBHOST};dbname={$DBNAME}".($DBPORT ? ",{$DBPORT}" : ''), $DBUSER, $DBPASS,
-				array(
-					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-					PDO::ATTR_CASE=>PDO::CASE_LOWER,
-					PDO::ATTR_AUTOCOMMIT=>true
-				)
-			);
-			self::$AUTO_ID_TYPE ='INTEGER IDENTITY';
-			self::$ID_TYPE      ='INTEGER';
-			self::$INT1_TYPE    ='INTEGER';
-			self::$INT2_TYPE    ='INTEGER';
-			self::$INT3_TYPE    ='INTEGER';
-			self::$INT4_TYPE    ='INTEGER';
-			self::$INT8_TYPE    ='INTEGER';
-			self::$CHAR_TYPE    ='VARCHAR';
-			self::$VARCHAR_TYPE ='VARCHAR';
-			self::$UNSIGNED     ='';
-			self::$LIKE         ='LIKE';
-			self::$RANDOM       ='NEWID';
-			self::$TEXT_TYPE    ='TEXT';
-			self::$LONGTEXT_TYPE='TEXT';
-			self::$UTF8_TABLE   ='';
-			break;
 		case 'sqlite':
 			try {
 				self::$pdo=new PDO(
@@ -302,7 +276,6 @@ class PGV_DB {
 		case 'sqlite2':
 			return "(($x)%($y))";
 		case 'mysql':
-		case 'mssql':
 			return "MOD($x,$y)";
 		}
 	}
@@ -314,8 +287,6 @@ class PGV_DB {
 		case 'sqlite':
 		case 'sqlite2':
 			return 'RANDOM()';
-		case 'mssql':
-			return 'NEWID()';
 		}
 	}
 
@@ -329,7 +300,6 @@ class PGV_DB {
 		case 'mysql':
 			// Mysql 4.x does not support the information schema
 			return PGV_DB::prepare("SHOW TABLES")->fetchOneColumn();
-		case 'mssql':
 		default:
 			// information_schema.tables is an ANSI standard.
 			return
@@ -353,7 +323,6 @@ class PGV_DB {
 		case 'mysql':
 			// Mysql 4.x does not support the information schema
 			return PGV_DB::prepare("DESC {$table}")->fetchOneColumn();
-		case 'mssql':
 		default:
 			// information_schema.tables is an ANSI standard.
 			return
@@ -379,12 +348,6 @@ class PGV_DB {
 		global $DBNAME;
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mssql':
-			// information_schema.tables is an ANSI standard.
-			return (bool)
-				PGV_DB::prepare("SELECT 1 FROM information_schema.tables WHERE table_schema=? AND table_name=?")
-				->execute(array($DBNAME, $table))
-				->fetchOne();
 		case 'sqlite':
 		case 'sqlite2':
 			// SQLITE doesn't support the ANSI standard information_schema
@@ -409,12 +372,6 @@ class PGV_DB {
 		global $DBNAME;
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mssql':
-			// information_schema.columns is an ANSI standard.
-			return (bool)
-				PGV_DB::prepare("SELECT 1 FROM information_schema.columns WHERE table_schema=? AND table_name=? AND column_name=?")
-				->execute(array($DBNAME, $table, $column))
-				->fetchOne();
 		case 'sqlite':
 		case 'sqlite2':
 			// SQLITE doesn't support the ANSI standard information_schema
@@ -501,9 +458,6 @@ class PGV_DB {
 			case 'sqlite':
 			case 'sqlite2':
 				$statement="{$statement} LIMIT {$n}";
-				break;
-			case 'mssql':
-				$statement=preg_replace('/^\s*SELECT /i', "SELECT TOP {$n} ", $statement);
 				break;
 			}
 		}

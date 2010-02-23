@@ -215,7 +215,6 @@ $pgv_lang["messaging2"]							= "Interne beskeder med e-post";
 $pgv_lang["messaging3"]							= "PhpGedView sender emails uden at gemme";
 $pgv_lang["month_before_day"]		= "Måned før dag (MM DD YYYY)";
 $pgv_lang["monthly"]							= "Månedlig";
-$pgv_lang["mssql"]								= "Microsoft SQL server";
 $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["never"]								= "Aldrig";
 $pgv_lang["no_logs"]							= "Deaktivér logning";

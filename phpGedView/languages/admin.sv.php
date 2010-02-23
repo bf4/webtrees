@@ -202,7 +202,6 @@ $pgv_lang["messaging2"]							= "Intern meddelandehantering med epost";
 $pgv_lang["messaging3"]							= "PhpGedView skickar epost utan att spara dem";
 $pgv_lang["month_before_day"]		= "Månad före dag (MM DD ÅÅÅÅ)";
 $pgv_lang["monthly"]							= "Månatlig";
-$pgv_lang["mssql"]								= "Microsoft SQL server";
 $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["never"]								= "Aldrig";
 $pgv_lang["no_logs"]							= "Stäng av loggning";
