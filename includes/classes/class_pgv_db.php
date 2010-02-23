@@ -134,48 +134,6 @@ class PGV_DB {
 				self::$UTF8_TABLE   ='';
 			}
 			break;
-		case 'sqlite':
-			try {
-				self::$pdo=new PDO(
-					"sqlite:{$DBNAME}", null, null,
-					array(
-						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-						PDO::ATTR_CASE=>PDO::CASE_LOWER
-					)
-				);
-				// Check if we can connect to the database
-				// If not, we may have a sqlite2 database from PhpGedView 4.2.1 or earlier
-				PGV_DB::exec("pragma table_info(sqlite_master)");
-
-				PGV_DB::exec('PRAGMA encoding="UTF-8"');
-			} catch (PDOException $ex) {
-				// Couldn't connect using sqlite3 - try sqlite2
-				self::$pdo=new PDO(
-					"sqlite2:{$DBNAME}", null, null,
-					array(
-						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-						PDO::ATTR_CASE=>PDO::CASE_LOWER
-					)
-				);
-			}
-			self::$AUTO_ID_TYPE ='INTEGER PRIMARY KEY AUTOINCREMENT';
-			self::$ID_TYPE      ='INTEGER';
-			self::$INT1_TYPE    ='INTEGER';
-			self::$INT2_TYPE    ='INTEGER';
-			self::$INT3_TYPE    ='INTEGER';
-			self::$INT4_TYPE    ='INTEGER';
-			self::$INT8_TYPE    ='INTEGER';
-			self::$CHAR_TYPE    ='VARCHAR';
-			self::$VARCHAR_TYPE ='VARCHAR';
-			self::$UNSIGNED     ='';
-			self::$LIKE         ='LIKE';
-			self::$RANDOM       ='RANDOM()';
-			self::$TEXT_TYPE    ='TEXT';
-			self::$LONGTEXT_TYPE='TEXT';
-			self::$UTF8_TABLE   ='';
-			break;
 		}
 
 		// Assign the singleton
@@ -272,9 +230,6 @@ class PGV_DB {
 		// TODO: When we get a d_leap_year column in the pgv_dates table, we will
 		// no longer need this function.
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'sqlite':
-		case 'sqlite2':
-			return "(($x)%($y))";
 		case 'mysql':
 			return "MOD($x,$y)";
 		}
@@ -284,9 +239,6 @@ class PGV_DB {
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'mysql':
 			return 'RAND()';
-		case 'sqlite':
-		case 'sqlite2':
-			return 'RANDOM()';
 		}
 	}
 
@@ -306,13 +258,6 @@ class PGV_DB {
 				PGV_DB::prepare("SELECT table_name FROM information_schema.tables WHERE table_schema=? ORDER BY table_name")
 				->execute(array($DBNAME))
 				->fetchOneColumn();
-		case 'sqlite':
-		case 'sqlite2':
-			// SQLITE doesn't support the ANSI standard information_schema
-			return
-				PGV_DB::prepare("SELECT name FROM sqlite_master WHERE type=? ORDER BY name")
-				->execute(array('table'))
-				->fetchOneColumn();
 		}
 	}
 
@@ -329,18 +274,6 @@ class PGV_DB {
 				PGV_DB::prepare("SELECT column_name FROM information_schema.columns WHERE table_schema=? AND table_name=?")
 				->execute(array($DBNAME, $table))
 				->fetchOneColumn();
-		case 'sqlite':
-		case 'sqlite2':
-			// SQLITE doesn't support the ANSI standard information_schema
-			$rows=
-				PGV_DB::prepare("pragma table_info('{$table}')")
-				->execute(array())
-				->fetchAll();
-			$columns=array();
-			foreach ($rows as $row) {
-				$columns[]=$row->name;
-			}
-			return $columns;
 		}
 	}
 
@@ -348,13 +281,6 @@ class PGV_DB {
 		global $DBNAME;
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'sqlite':
-		case 'sqlite2':
-			// SQLITE doesn't support the ANSI standard information_schema
-			return (bool)
-				PGV_DB::prepare("SELECT 1 FROM sqlite_master WHERE type=? AND name=?")
-				->execute(array('table', $table))
-				->fetchOne();
 		case 'mysql':
 			// Mysql 4.x does not support the information schema
 		default:
@@ -372,18 +298,6 @@ class PGV_DB {
 		global $DBNAME;
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'sqlite':
-		case 'sqlite2':
-			// SQLITE doesn't support the ANSI standard information_schema
-			$rows=
-				PGV_DB::prepare("pragma table_info({$table})")
-				->fetchAll();
-			foreach ($rows as $row) {
-				if ($row->name==$column) {
-					return true;
-				}
-			}
-			return false;
 		case 'mysql':
 			// Mysql 4.x does not support the information schema
 		default:
@@ -401,11 +315,11 @@ class PGV_DB {
 	// FUNCTIONALITY ENHANCEMENTS
 	//////////////////////////////////////////////////////////////////////////////
 
-	// Don't list sqlite2 as an available driver.  It is no good for PhpGedView
+	// Deprecated function.  We only support MySQL
 	public static function getAvailableDrivers() {
 		$array=PDO::getAvailableDrivers();
 		foreach ($array as $key=>$value) {
-			if ($value=='sqlite2') {
+			if ($value!='mysql') {
 				unset($array[$key]);
 			}
 		}
@@ -455,8 +369,6 @@ class PGV_DB {
 		if ($n) {
 			switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 			case 'mysql':
-			case 'sqlite':
-			case 'sqlite2':
 				$statement="{$statement} LIMIT {$n}";
 				break;
 			}

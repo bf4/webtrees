@@ -102,7 +102,6 @@ $pgv_lang["click_here_to_continue"]="Clique aqui para continuar.";
 $pgv_lang["config_help"]="Configuration Help";
 $pgv_lang["mysql"]="MySQL";
 $pgv_lang["db"]="Banco de Dados";
-$pgv_lang["sqlite"]="SQLite";
 $pgv_lang["admin_gedcoms"]="Clique aqui para Administrar os GEDCOMs.";
 $pgv_lang["current_gedcoms"]="GEDCOMs Cadastrados";
 $pgv_lang["gedcom_adm_head"]="Gerenciar GEDCOM";

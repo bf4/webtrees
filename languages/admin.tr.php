@@ -314,7 +314,6 @@ $pgv_lang["select_an_option"]		= "Aşağıdaki seçeneklerden birini seçin:";
 $pgv_lang["SERVER_URL"]			= "PhpGedView URL adresi";
 $pgv_lang["show_phpinfo"]						= "PHP bilgi sayfasını göster";
 $pgv_lang["siteadmin"]							= "Site yönetimi";
-$pgv_lang["sqlite"]								= "SQLite";
 $pgv_lang["sync_gedcom"]						= "GEDCOM verisi ile kullanıcı ayarlarını senkronize et";
 $pgv_lang["system_time"]						= "Sunucunun Geçerli Zamanı: ";
 $pgv_lang["user_time"]							= "Kullanıcının Gerçerli Zamanı: ";

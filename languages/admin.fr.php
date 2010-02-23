@@ -315,7 +315,6 @@ $pgv_lang["select_an_option"]           = "Choisir l'une des options ci-dessous"
 $pgv_lang["SERVER_URL"]                 = "URL du serveur";
 $pgv_lang["show_phpinfo"]               = "Voir la page PHPInfo ";
 $pgv_lang["siteadmin"]                  = "Administrateur du site";
-$pgv_lang["sqlite"]                     = "SQLite";
 $pgv_lang["sync_gedcom"]                = "Synchroniser avec les données GEDCOM";
 $pgv_lang["system_time"]                = "Heure du serveur";
 $pgv_lang["user_time"]                  = "Heure du navigateur";
