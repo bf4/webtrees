@@ -345,7 +345,6 @@ $pgv_lang["no_logs"]			= "נטרל בנית יומנים";
 $pgv_lang["no_messaging"]		= "אין שיטת קשר";
 $pgv_lang["page_views"]		= "&nbsp;&nbsp;תצפיות דף ב";
 $pgv_lang["performing_validation"]	= "ביצוע בדיקת GEDCOM, בחר באפשרויות הדרושות ולחץ על <b>ניקיון</b>.";
-$pgv_lang["pgsql"]			= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"]	= "שגיאה בכתיבת קובץ התצורה של PhpGedView. בדוק את ההרשאות של הקובץ והתיקייה ונסה שנית.";
 $pgv_lang["PGV_MEMORY_LIMIT"] 	= "גודל הזיכרון המוקצה ל-PHP";
 //$pgv_lang["pgv_registry"]		= "התבונן באתרים אחרים המשתמשים ב-PhpGedView";

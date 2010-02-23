@@ -212,7 +212,6 @@ $pgv_lang["mssql"]			= "Microsoft SQL palvelin";
 $pgv_lang["monthly"]			= "Kuukausittain";
 $pgv_lang["page_views"]		= "&nbsp;&nbsp;sivun näyttö &nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Suoritetaan GEDCOM validointi...";
-$pgv_lang["pgsql"]			= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 	= "Virhe!!! PhpGedView Ei pysty kirjoittamaan asetustiedostoon. Tarkista tiedoston sekä kansion oikeudet ja kokeile uudestaan. ";
 $pgv_lang["PGV_MEMORY_LIMIT"]	= "Muistiraja";
 //$pgv_lang["pgv_registry"]		= "Näytä muita PhpGedView verkkopaikkoja";

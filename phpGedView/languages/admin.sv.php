@@ -209,7 +209,6 @@ $pgv_lang["no_logs"]							= "Stäng av loggning";
 $pgv_lang["no_messaging"]						= "Ingen kontaktmetod";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;Sidvisningar under&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Genomför GEDCOM-validering...";
-$pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 			= "FEL!!! Kan inte skriva till PhpGedViews konfigurationfil. Kontrollera fil och katalogrättigheter och försök igen.";
 $pgv_lang["PGV_MEMORY_LIMIT"]					= "Minnesgräns";
 $pgv_lang["pgv_registry"]		= "Visa andra PhpGedView-sajter";

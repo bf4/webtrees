@@ -33,7 +33,7 @@ Additional codes, to help Translators, follow the date as follows:
 	p - Punctuation change  (doesn't affect translation)
 	M - Moved to another file
 	R - keyword was renamed (no translation changes required)
-	S - Spelling change		(doesn't affect translation)
+	S - Spelling change (doesn't affect translation)
 	w - Minor wording change
 	W - Major wording change or completely new text
 
@@ -41,17 +41,18 @@ The above list of codes may be amended as new situations arise.
 
 VERSION 4.3.0
 
-?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
+?$pgv_lang["whatever"]                dd mon year  Change codes and comments
 ----------------------------------------------------------------------------------------
--$pgv_lang["msql"]                    22 Feb 2010           D		Change made in *all* language files
--$pgv_lang["oci8"]                    22 Feb 2010           D		Change made in *all* language files
--$pgv_lang["fbsql"]                   22 Feb 2010           D		Change made in *all* language files
--$pgv_lang["ibase"]                   22 Feb 2010           D		Change made in *all* language files
--$pgv_lang["ifx"]                     22 Feb 2010           D		Change made in *all* language files
--$pgv_lang["sybase"]                  22 Feb 2010           D		Change made in *all* language files
--$pgv_lang["view_changelog"]          20 Feb 2010           D		Change made in *all* language files
-*$pgv_lang["pgv_requires_version"]					02 Feb 2010				w		Change made in *all* language files
-*$pgv_lang["using_php_version"]	 					02 Feb 2010				w		Change made in *all* language files
+-$pgv_lang["pgsql"]                   23 Feb 2010  D  Change made in *all* language files
+-$pgv_lang["msql"]                    22 Feb 2010  D  Change made in *all* language files
+-$pgv_lang["oci8"]                    22 Feb 2010  D  Change made in *all* language files
+-$pgv_lang["fbsql"]                   22 Feb 2010  D  Change made in *all* language files
+-$pgv_lang["ibase"]                   22 Feb 2010  D  Change made in *all* language files
+-$pgv_lang["ifx"]                     22 Feb 2010  D  Change made in *all* language files
+-$pgv_lang["sybase"]                  22 Feb 2010  D  Change made in *all* language files
+-$pgv_lang["view_changelog"]          20 Feb 2010  D  Change made in *all* language files
+*$pgv_lang["pgv_requires_version"]    02 Feb 2010  w  Change made in *all* language files
+*$pgv_lang["using_php_version"]       02 Feb 2010  w  Change made in *all* language files
 
 VERSION 4.2.3
 

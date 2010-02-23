@@ -2665,7 +2665,6 @@ function get_idle_users($time) {
 	// Convert string column to numeric
 	switch ($DBTYPE) {
 	case 'sqlite':
-	case 'pgsql':
 		$expr='CAST(us2.setting_value AS INTEGER)';
 		break;
 	case 'mysql':

@@ -207,7 +207,6 @@ $pgv_lang["no_logs"]			= "Zakázať prihlasovanie";
 $pgv_lang["no_messaging"]		= "Bez kontaktnej metódy";
 $pgv_lang["page_views"]			= "&nbsp;&nbsp;page views in&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Vykonávanie validácie (skontrolovanie) GEDCOMu, vyberte potrebné možnosti a kliknite na 'Pokračovať'";
-$pgv_lang["pgsql"]			= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 	= "Chyba!!! Nie je možné zapisovať do konfiguračného súboru PhpGedView. Prosím skontrolujte oprávnenia pre súbor a adresár a skuste zápis znovu.";
 $pgv_lang["PGV_MEMORY_LIMIT"]		= "Maximálna veľkosť pamäte";
 $pgv_lang["pgv_registry"]		= "Zobraziť iné weby používajúce PhpGedView";

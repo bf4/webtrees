@@ -220,7 +220,6 @@ $pgv_lang["no_logs"]				= "Desactiva el registre";
 $pgv_lang["no_messaging"]			= "Sense forma de contacte";
 $pgv_lang["page_views"]				= "&nbsp;&nbsp;mostra pàgina a&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Executant la validació del GEDCOM...";
-$pgv_lang["pgsql"]					= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] = "Error!!! No pot escriure's al fitxer de configuració del PhpGedView. Reviseu les propietats dels fitxer i del directori i torneu-hi.";
 $pgv_lang["PGV_MEMORY_LIMIT"]		= "Llindar de memòria";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]	= "Camí per desar les Sessions";
