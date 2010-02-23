@@ -305,7 +305,6 @@ $pgv_lang["messaging2"]				= "Wewnętrzna komunikacja przez email";
 $pgv_lang["messaging3"]				= "PhpGedView wysyła emaile bez zachowywania";
 $pgv_lang["month_before_day"]		= "Miesiąc przed dniem (MM DD RRRR)";
 $pgv_lang["monthly"]				= "Co miesiąc";
-$pgv_lang["mssql"]					= "Microsoft SQL Server";
 $pgv_lang["mysql"]					= "MySQL";
 $pgv_lang["never"]					= "nigdy";
 $pgv_lang["no_logs"]				= "Wyłącz logowanie";

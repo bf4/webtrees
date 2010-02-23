@@ -58,7 +58,6 @@ $pgv_lang["config_help"]				= "Βοήθεια Προσαρμογών";
 $pgv_lang["index"]						= "Αρχεία Ευρετηρίων";
 $pgv_lang["mysql"]						= "MySQL";
 $pgv_lang["db"]							= "Βάση Δεδομένων";
-$pgv_lang["mssql"]						= "Microsoft SQL Server";
 $pgv_lang["sqlite"]						= "SQLite";
 $pgv_lang["admin_gedcoms"]				= "Επιλέξτε εδώ για την διαχείριση GEDCOMS.";
 $pgv_lang["current_gedcoms"]			= "Υπάρχοντα GEDCOMs";

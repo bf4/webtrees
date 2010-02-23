@@ -3031,7 +3031,6 @@ function get_autocomplete_PLAC($FILTER, $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX, $DBTYPE;
 
 	// sqlite doesn't have a CONCAT() function
-	// TODO: mssql might use + instead
 	switch ($DBTYPE) {
 	case 'sqlite':
 		$sql=

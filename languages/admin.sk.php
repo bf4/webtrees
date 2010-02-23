@@ -200,7 +200,6 @@ $pgv_lang["messaging2"]			= "Interné správy s e-mailami";
 $pgv_lang["messaging3"]			= "PhpGedView odosiela maily bez ukladania";
 $pgv_lang["month_before_day"]		= "Mesiac pred dňom (MM DD YYYY)";
 $pgv_lang["monthly"]			= "Mesačne";
-$pgv_lang["mssql"]			= "Microsoft SQL server";
 $pgv_lang["mysql"]			= "MySQL";
 $pgv_lang["never"]			= "Nikdy";
 $pgv_lang["no_logs"]			= "Zakázať prihlasovanie";
