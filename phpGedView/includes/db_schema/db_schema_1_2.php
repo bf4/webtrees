@@ -40,8 +40,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_SCHEMA_1_2', '');
 
-$sqlite=($DRIVER_NAME=="sqlite" || $DRIVER_NAME=="sqlite2");
-
 if (!self::table_exists("{$TBLPREFIX}messages")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}messages (".
@@ -56,8 +54,7 @@ if (!self::table_exists("{$TBLPREFIX}messages")) {
 	);
 	self::exec("CREATE INDEX {$TBLPREFIX}messages_to ON {$TBLPREFIX}messages (m_to)");
 }
-if (!self::table_exists("{$TBLPREFIX}favorites") || $sqlite && !self::column_exists("{$TBLPREFIX}favorites", 'fv_note')) {
-	if ($sqlite && self::table_exists("{$TBLPREFIX}favorites")) self::exec("DROP TABLE {$TBLPREFIX}favorites");
+if (!self::table_exists("{$TBLPREFIX}favorites")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}favorites (".
 		" fv_id       ".self::$INT4_TYPE."         NOT NULL,".
@@ -79,8 +76,7 @@ if (!self::table_exists("{$TBLPREFIX}favorites") || $sqlite && !self::column_exi
 		self::exec("ALTER TABLE {$TBLPREFIX}favorites ADD fv_note  ".self::$TEXT_TYPE."         NULL");
 	}
 }
-if (!self::table_exists("{$TBLPREFIX}blocks") || $sqlite && !self::column_exists("{$TBLPREFIX}blocks", 'b_config')) {
-	if ($sqlite && self::table_exists("{$TBLPREFIX}blocks")) self::exec("DROP TABLE {$TBLPREFIX}blocks");
+if (!self::table_exists("{$TBLPREFIX}blocks")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}blocks (".
 		" b_id       ".self::$INT4_TYPE."         NOT NULL,".

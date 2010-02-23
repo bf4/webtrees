@@ -41,12 +41,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_SCHEMA_2_3', '');
 
-$sqlite=($DRIVER_NAME=="sqlite" || $DRIVER_NAME=="sqlite2");
-
-if (!self::table_exists("{$TBLPREFIX}individuals") || $sqlite && (!self::column_exists("{$TBLPREFIX}individuals", 'i_rin') || self::column_exists("{$TBLPREFIX}individuals", 'i_letter') || self::column_exists("{$TBLPREFIX}individuals", 'i_surname') || self::column_exists("{$TBLPREFIX}individuals", 'i_name') || !self::column_exists("{$TBLPREFIX}individuals", 'i_sex'))) {
-	if ($sqlite && self::table_exists("{$TBLPREFIX}individuals")) {
-		self::exec("DROP TABLE {$TBLPREFIX}individuals");
-	}
+if (!self::table_exists("{$TBLPREFIX}individuals")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}individuals (".
 		" i_id     ".self::$COL_XREF."      NOT NULL,".
@@ -77,10 +72,7 @@ if (!self::table_exists("{$TBLPREFIX}individuals") || $sqlite && (!self::column_
 		self::exec("ALTER TABLE {$TBLPREFIX}individuals ADD i_sex ".self::$CHAR_TYPE."(1) NOT NULL DEFAULT 'U'");
 	}
 }
-if (!self::table_exists("{$TBLPREFIX}families") || $sqlite && (self::column_exists("{$TBLPREFIX}families", 'f_name') || !self::column_exists("{$TBLPREFIX}families", 'f_numchil'))) {
-	if ($sqlite && self::table_exists("{$TBLPREFIX}families")) {
-		self::exec("DROP TABLE {$TBLPREFIX}families");
-	}
+if (!self::table_exists("{$TBLPREFIX}families")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}families (".
 		" f_id      ".self::$COL_XREF."      NOT NULL,".
@@ -105,10 +97,7 @@ if (!self::table_exists("{$TBLPREFIX}families") || $sqlite && (self::column_exis
 		self::exec("ALTER TABLE {$TBLPREFIX}families ADD f_numchil ".self::$INT4_TYPE." NULL");
 	}
 }
-if (!self::table_exists("{$TBLPREFIX}places") || $sqlite && (self::column_exists("{$TBLPREFIX}places", 'p_gid') || !self::column_exists("{$TBLPREFIX}places", 'p_std_soundex') || !self::column_exists("{$TBLPREFIX}places", 'p_dm_soundex'))) {
-	if ($sqlite && self::table_exists("{$TBLPREFIX}places")) {
-		self::exec("DROP TABLE {$TBLPREFIX}places");
-	}
+if (!self::table_exists("{$TBLPREFIX}places")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}places (".
 		" p_id          ".self::$INT4_TYPE."         NOT NULL,".
@@ -153,10 +142,7 @@ if (!self::table_exists("{$TBLPREFIX}placelinks")) {
 if (self::table_exists("{$TBLPREFIX}names")) {
 	self::exec("DROP TABLE {$TBLPREFIX}names", false);
 }
-if (!self::table_exists("{$TBLPREFIX}dates") || $sqlite && (!self::column_exists("{$TBLPREFIX}dates", 'd_mon') || !self::column_exists("{$TBLPREFIX}dates", 'd_julianday1'))) {
-	if ($sqlite && self::table_exists("{$TBLPREFIX}dates")) {
-		self::exec("DROP TABLE {$TBLPREFIX}dates");
-	}
+if (!self::table_exists("{$TBLPREFIX}dates")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}dates (".
 		" d_day        ".self::$COL_DAY."      NOT NULL,".
@@ -260,10 +246,7 @@ if (!self::table_exists("{$TBLPREFIX}other")) {
 	self::exec("CREATE INDEX {$TBLPREFIX}other_id   ON {$TBLPREFIX}other (o_id  )");
 	self::exec("CREATE INDEX {$TBLPREFIX}other_file ON {$TBLPREFIX}other (o_file)");
 }
-if (!self::table_exists("{$TBLPREFIX}sources") || $sqlite && (!self::column_exists("{$TBLPREFIX}sources", 's_dbid'))) {
-	if ($sqlite && self::table_exists("{$TBLPREFIX}sources")) {
-		self::exec("DROP TABLE {$TBLPREFIX}sources");
-	}
+if (!self::table_exists("{$TBLPREFIX}sources")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}sources (".
 		" s_id     ".self::$COL_XREF."          NOT NULL,".
