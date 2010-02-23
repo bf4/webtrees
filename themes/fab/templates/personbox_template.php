@@ -6,8 +6,7 @@
 // $name, $classfacts, $genderImage, $BirthDeath, $isF, $outBoxAdd,
 // $addname, $showid, $float
 //
-// PhpGedView: Genealogy Viewer
-// Copyright (C) 2010 Greg Roach.  All rights reserved.
+// Copyright (c) 2010 Greg Roach
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

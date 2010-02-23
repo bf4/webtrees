@@ -7,6 +7,8 @@
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
+* Modifications Copyright (c) 2010 Greg Roach
+*
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation; either version 2 of the License, or
@@ -233,12 +235,7 @@ function showSite(siteID) {
 		<td class="facts_value">
 			<table align="center">
 <?php
-	$sql="SELECT ip_address, comment FROM {$TBLPREFIX}ip_address WHERE category='search-engine'";
-	if ($DBTYPE=='mysql') {
-		$sql.=" ORDER BY INET_ATON(ip_address)";
-	} else {
-		$sql.=" ORDER BY comment";
-	}
+	$sql="SELECT ip_address, comment FROM {$TBLPREFIX}ip_address WHERE category='search-engine' ORDER BY INET_ATON(ip_address)";
 	$index=0;
 	$search_engines=PGV_DB::prepare($sql)->fetchAssoc();
 	foreach ($search_engines as $ip_address=>$ip_comment) {
@@ -286,12 +283,7 @@ function showSite(siteID) {
 		<td class="facts_value">
 			<table align="center">
 <?php
-	$sql="SELECT ip_address, comment FROM {$TBLPREFIX}ip_address WHERE category='banned'";
-	if ($DBTYPE=='mysql') {
-		$sql.=" ORDER BY INET_ATON(ip_address)";
-	} else {
-		$sql.=" ORDER BY comment";
-	}
+	$sql="SELECT ip_address, comment FROM {$TBLPREFIX}ip_address WHERE category='banned' ORDER BY INET_ATON(ip_address)";
 	$banned=PGV_DB::prepare($sql)->fetchAssoc();
 	foreach ($banned as $ip_address=>$ip_comment) {
 		echo '<tr><td>';
