@@ -51,8 +51,8 @@ define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 define('PGV_SCHEMA_VERSION', 14);
 
 // Environmental requirements
-define('PGV_REQUIRED_PHP_VERSION',     '5.2.0'); // 5.2.3 is recommended
-define('PGV_REQUIRED_MYSQL_VERSION',   '4.1');   // Not enforced
+define('PGV_REQUIRED_PHP_VERSION',     '5.2.0');  // 5.2.3 is recommended
+define('PGV_REQUIRED_MYSQL_VERSION',   '5.0.13'); // For: prepared statements within stored procedures
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 define('PGV_ACTUAL_PHP_VERSION',       PHP_VERSION);	// Function print_text() needs this
 
