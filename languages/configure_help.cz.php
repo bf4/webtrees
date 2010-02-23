@@ -59,7 +59,6 @@ $pgv_lang["index"]			= "Index soubory";
 $pgv_lang["mysql"]			= "MySQL";
 $pgv_lang["db"]				= "Databáze";
 $pgv_lang["mssql"]			= "Microsoft SQL Server";
-$pgv_lang["pgsql"]			= "PostgreSQL";
 $pgv_lang["sqlite"]			= "SQLite";
 $pgv_lang["admin_gedcoms"]		= "Pro administraci GEDCOM souborů klikněte sem.";
 $pgv_lang["current_gedcoms"]		= "Současné GEDCOM soubory";

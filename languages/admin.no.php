@@ -297,7 +297,6 @@ $pgv_lang["no_logs"]					= "Ingen logging";
 $pgv_lang["no_messaging"]				= "Ingen kontaktlink";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;siden vises i&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Sjekken er utført...!  Gjør de nødvendige valgene og klikk deretter på 'Rydd'";
-$pgv_lang["pgsql"]						= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"]		= "Feil!!! Kan ikke skrive til konfigurasjonsfilen til PhpGedView. Sjekk fil- og katalog-rettigheter og prøv igjen.";
 $pgv_lang["PGV_MEMORY_LIMIT"]			= "Maks Minnegrense";
 $pgv_lang["pgv_registry"]			= "Vis andre nettsteder som bruker PhpGedView";

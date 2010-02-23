@@ -343,7 +343,6 @@ $pgv_lang["no_logs"]							= "Disable logging";
 $pgv_lang["no_messaging"]						= "No contact method";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;page views in&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]				= "Performing GEDCOM validation...";
-$pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"]				= "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again.";
 $pgv_lang["PGV_MEMORY_LIMIT"]					= "Memory limit";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]				= "Session save path";

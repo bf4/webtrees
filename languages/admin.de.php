@@ -325,7 +325,6 @@ $pgv_lang["no_logs"]				= "Logging deaktivieren";
 $pgv_lang["no_messaging"]			= "keine Nachrichten-Funktion";
 $pgv_lang["page_views"]				= "&nbsp;&nbsp;Seiten innerhalb&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "GEDCOM Überprüfung wird durchgeführt, bitte wählen Sie die gewünschten Optionen und klicken Sie auf <b>Korrigieren</b>";
-$pgv_lang["pgsql"]					= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"]	= "Fehler!!! Die PhpGedView-Konfigurationsdatei kann nicht geschrieben werden. Bitte Lese- und Schreib-Berechtigungen überprüfen und neu versuchen.";
 $pgv_lang["PGV_MEMORY_LIMIT"]		= "Max. Speicher Begrenzung";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]	= "Pfad für die Session-Speicherung";

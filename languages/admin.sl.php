@@ -344,7 +344,6 @@ $pgv_lang["no_logs"]							= "Izključi beleženje";
 $pgv_lang["no_messaging"]						= "Nobenega načina kontakta";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;ogledov strani v&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]					= "Izvajam preverjanje GEDCOM-a...";
-$pgv_lang["pgsql"]							= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 			= "Napaka!!! Ne morem zapisati PhpGedView datoteko nastavitev.  Preverite datoteko in dovoljenje za pisanje v imenik ter poskusite ponovno.";
 $pgv_lang["PGV_MEMORY_LIMIT"]					= "Omejitev pomnilnika";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]				= "Pot za shranjevanje sej";

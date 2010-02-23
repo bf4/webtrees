@@ -222,7 +222,6 @@ $pgv_lang["no_logs"]							= "Deaktivér logning";
 $pgv_lang["no_messaging"]						= "Ingen kontaktmetode";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;sidevisninger for hver&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Valideringen er udført...! Foretag de nødvendige valg og klik derefter på 'Ryd'";
-$pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 			= "Fejl!!! Kan ikke skrive til PhpGedView konfigurationsfilen. Kontrollér venligst fil og mappe skriverettigheder og prøv så igen.";
 $pgv_lang["PGV_MEMORY_LIMIT"]					= "Hukommelsesbegrænsning";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]				= "Sti til at gemme session";

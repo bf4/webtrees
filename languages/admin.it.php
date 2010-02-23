@@ -268,7 +268,6 @@ $pgv_lang["link_manage_servers"]   				= "Gestione Siti";
 $pgv_lang["logfile_content"]					= "Contenuto del file di log";
 $pgv_lang["mssql"]								= "Microsoft SQL Server";
 $pgv_lang["mysql"]								= "MySQL";
-$pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 			= "Errore! Impossibile scrivere il file di configurazione PhpGedView. Si prega di controllare le autorizzazioni per file e directory e riprovare.";
 $pgv_lang["PGV_MEMORY_LIMIT"]					= "Memoria limite";
 $pgv_lang["PGV_SESSION_TIME"]					= "Timeout sessione";

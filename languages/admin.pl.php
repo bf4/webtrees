@@ -312,7 +312,6 @@ $pgv_lang["no_logs"]				= "Wyłącz logowanie";
 $pgv_lang["no_messaging"]			= "Brak kontaktu";
 $pgv_lang["page_views"]				= "&nbsp;&nbsp;wizyt na stronie w ciągu&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Sprawdzanie poprawności pliku GEDCOM...";
-$pgv_lang["pgsql"]					= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] = "Błąd! Nie można zapisywać do pliku konfiguracyjnego PhpGedView. Sprawdź uprawnienia pliku i katalogu i spróbuj ponownie.";
 $pgv_lang["PGV_MEMORY_LIMIT"]		= "Limit pamięci";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]	= "Ścieżka zapisu sesji";

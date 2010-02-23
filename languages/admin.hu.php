@@ -325,7 +325,6 @@ $pgv_lang["sanity_warn6"]				= "A Calendar könyvtár nem elérhető. A PhpGedVi
 $pgv_lang["sanity_warn5"]				= "A DOM XML könyvtár nem elérhető. A PhpGedView továbbra is funkcionál, de néhány funkció úgy mint Gramps Export a metszési kosárban, letöltés, és web szerviz nem fog működni e nélkül. További információért látogasson el ide: <a href=\'http://www.php.net/manual/en/ref.domxml.php\'>http://www.php.net/manual/en/ref.domxml.php</a>.";
 $pgv_lang["mssql"]								= "Microsoft SQL Server";
 $pgv_lang["mysql"]								= "MySQL";
-$pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["sqlite"]								= "SQLite";
 $pgv_lang["tradition_polish"]		= "Lengyel";
 $pgv_lang["elapsedMinute1"]	=	"1 perc";

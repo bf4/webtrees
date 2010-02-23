@@ -344,7 +344,6 @@ $pgv_lang["no_logs"]							= "Registro de usuarios desactivado";
 $pgv_lang["no_messaging"]						= "Ningún método de contacto";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;visualizaciones de páginas en&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]				= "Realizando validación del GEDCOM...";
-$pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"]				= "¡¡¡Error!!! No se pudo escribir el archivo de configuración de PhpGedView.  Por favor, compruebe los permisos de archivo y directorio y pruebe nuevamente.";
 $pgv_lang["PGV_MEMORY_LIMIT"]					= "Límite máximo de memoria.";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]				= "Ruta para Guardar Sesión:";

@@ -287,7 +287,6 @@ $pgv_lang["no_logs"]							= "Giriş Devre dışı";
 $pgv_lang["no_messaging"]						= "İletişim metodu yok";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;sayfa içinde görüntüle&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]				= "GEDCOM onaylaması yapılıyor...";
-$pgv_lang["pgsql"]								= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 			= "Hata!!! Php soy görüntüleme konfigürasyon dosyasına yazamıyorum. Lütfen dosya ve klasörün izinlerini kontrol edin.";
 $pgv_lang["PGV_MEMORY_LIMIT"]					= "Hafiza Kotası";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]	= "Oturum (session) kaydetme yolu";

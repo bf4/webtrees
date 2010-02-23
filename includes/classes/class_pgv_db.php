@@ -134,34 +134,6 @@ class PGV_DB {
 				self::$UTF8_TABLE   ='';
 			}
 			break;
-		case 'pgsql':
-			self::$pdo=new PDO(
-				"pgsql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS,
-				array(
-					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-					PDO::ATTR_CASE=>PDO::CASE_LOWER
-				)
-			);
-			self::$AUTO_ID_TYPE ='SERIAL PRIMARY KEY';
-			self::$ID_TYPE      ='INTEGER';
-			self::$INT1_TYPE    ='SMALLINT';
-			self::$INT2_TYPE    ='SMALLINT';
-			self::$INT3_TYPE    ='INTEGER';
-			self::$INT4_TYPE    ='INTEGER';
-			self::$INT8_TYPE    ='BIGINT';
-			self::$CHAR_TYPE    ='VARCHAR'; // PG doesn't automatically TRIM(TRAILING ' ' FROM <col>) when selecting
-			self::$VARCHAR_TYPE ='VARCHAR';
-			self::$UNSIGNED     ='';
-			self::$LIKE         ='ILIKE';
-			self::$RANDOM       ='RANDOM()';
-			self::$TEXT_TYPE    ='TEXT';
-			self::$LONGTEXT_TYPE='TEXT';
-			self::$UTF8_TABLE   ='';
-			if ($DB_UTF8_COLLATION) {
-				self::$pdo->exec("SET NAMES 'UTF8'");
-			}
-			break;
 		case 'mssql':
 			self::$pdo=new PDO(
 				"mssql:host={$DBHOST};dbname={$DBNAME}".($DBPORT ? ",{$DBPORT}" : ''), $DBUSER, $DBPASS,
@@ -330,7 +302,6 @@ class PGV_DB {
 		case 'sqlite2':
 			return "(($x)%($y))";
 		case 'mysql':
-		case 'pgsql':
 		case 'mssql':
 			return "MOD($x,$y)";
 		}
@@ -342,7 +313,6 @@ class PGV_DB {
 			return 'RAND()';
 		case 'sqlite':
 		case 'sqlite2':
-		case 'pgsql':
 			return 'RANDOM()';
 		case 'mssql':
 			return 'NEWID()';
@@ -359,7 +329,6 @@ class PGV_DB {
 		case 'mysql':
 			// Mysql 4.x does not support the information schema
 			return PGV_DB::prepare("SHOW TABLES")->fetchOneColumn();
-		case 'pgsql':
 		case 'mssql':
 		default:
 			// information_schema.tables is an ANSI standard.
@@ -384,7 +353,6 @@ class PGV_DB {
 		case 'mysql':
 			// Mysql 4.x does not support the information schema
 			return PGV_DB::prepare("DESC {$table}")->fetchOneColumn();
-		case 'pgsql':
 		case 'mssql':
 		default:
 			// information_schema.tables is an ANSI standard.
@@ -411,12 +379,6 @@ class PGV_DB {
 		global $DBNAME;
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'pgsql':
-			
-			return (bool)
-				PGV_DB::prepare("SELECT 1 FROM information_schema.tables WHERE table_catalog=? AND table_name=? AND table_type='BASE TABLE'")
-				->execute(array($DBNAME, $table))
-				->fetchOne();
 		case 'mssql':
 			// information_schema.tables is an ANSI standard.
 			return (bool)
@@ -447,7 +409,6 @@ class PGV_DB {
 		global $DBNAME;
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'pgsql':
 		case 'mssql':
 			// information_schema.columns is an ANSI standard.
 			return (bool)
@@ -539,7 +500,6 @@ class PGV_DB {
 			case 'mysql':
 			case 'sqlite':
 			case 'sqlite2':
-			case 'pgsql':
 				$statement="{$statement} LIMIT {$n}";
 				break;
 			case 'mssql':
