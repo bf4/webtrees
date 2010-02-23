@@ -14,7 +14,7 @@
  * seconds, for systems with low timeout values.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2009 Greg Roach
+ * Copyright (c) 2009-2010 Greg Roach
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

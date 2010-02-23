@@ -1,11 +1,10 @@
 <?php
 // FAB theme
 //
-// PhpGedView: Genealogy Viewer
-// Copyright (C) 2010 Greg Roach.  All rights reserved.
+// Copyright (c) 2010 Greg Roach
 //
-// Based on standard theme, which is Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
-
+// Based on standard theme, which is Copyright (C) 2002 to 2010  PGV Development Team.
+//
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or

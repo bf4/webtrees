@@ -6,8 +6,7 @@
 // $title - the title of the block
 // $content - the content of the block
 //
-// PhpGedView: Genealogy Viewer
-// Copyright (C) 2010 Greg Roach.  All rights reserved.
+// Copyright (c) 2010 Greg Roach
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

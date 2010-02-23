@@ -6,7 +6,7 @@
 // See documentation at http://wiki.phpgedview.net/en/index.php?title=PGV_Database_Functions
 //
 // phpGedView: Genealogy Viewer
-// Copyright (C) 2009-2010 Greg Roach (fisharebest)
+// Copyright (c) 2009-2010 Greg Roach
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
