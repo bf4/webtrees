@@ -2421,28 +2421,17 @@ function get_site_setting($site_setting_name, $default=null) {
 		"SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?"
 	)->execute(array($site_setting_name))->fetchOne($default);
 }
+
 function set_site_setting($site_setting_name, $site_setting_value) {
 	global $TBLPREFIX;
 
-	if (is_null($site_setting_value)) {
-		delete_site_setting($site_setting_name);
+	if (empty($site_setting_value)) {
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?")
+			->execute(array($site_setting_name));
 	} else {
-		$old_site_setting_value=get_site_setting($site_setting_name);
-		if (is_null($old_site_setting_value)) {
-			// Value doesn't exist - insert
-			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
+		PGV_DB::prepare("REPLACE INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
 			->execute(array($site_setting_name, $site_setting_value));
-		} elseif ($old_site_setting_value!=$site_setting_value) {
-			// Value exists, and is different
-			PGV_DB::prepare("UPDATE {$TBLPREFIX}site_setting SET site_setting_value=? WHERE site_setting_name=?")
-			->execute(array($site_setting_value, $site_setting_name));	
-		}
 	}
-}
-function delete_site_setting($site_setting_name) {
-	global $TBLPREFIX;
-	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?")
-		->execute(array($site_setting_name));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2531,16 +2520,8 @@ function set_gedcom_setting($ged_id, $setting_name, $setting_value) {
 		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}gedcom_setting WHERE gedcom_id=? AND setting_name=?")
 			->execute(array($ged_id, $setting_name));
 	} else {
-		$current_value=get_gedcom_setting($ged_id, $setting_name);
-		if (is_null($current_value)) {
-			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}gedcom_setting (gedcom_id, setting_name, setting_value) VALUES (?, ?, ?)")
-				->execute(array($ged_id, $setting_name, $setting_value));
-		} elseif ($current_value!=$setting_value) {
-			PGV_DB::prepare("UPDATE {$TBLPREFIX}gedcom_setting SET setting_value=? WHERE gedcom_id=? AND setting_name=?")
-				->execute(array($setting_value, $ged_id, $setting_name));
-		} else {
-			// The value is unchanged
-		}
+		PGV_DB::prepare("REPLACE INTO {$TBLPREFIX}gedcom_setting (gedcom_id, setting_name, setting_value) VALUES (?, ?, ?)")
+			->execute(array($ged_id, $setting_name, $setting_value));
 	}
 }
 
@@ -2741,16 +2722,8 @@ function set_user_setting($user_id, $setting_name, $setting_value) {
 		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_setting WHERE user_id=? AND setting_name=?")
 			->execute(array($user_id, $setting_name));
 	} else {
-		$current_value=get_user_setting($user_id, $setting_name);
-		if (is_null($current_value)) {
-			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES (?, ?, ?)")
-				->execute(array($user_id, $setting_name, $setting_value));
-		} elseif ($current_value!=$setting_value) {
-			PGV_DB::prepare("UPDATE {$TBLPREFIX}user_setting SET setting_value=? WHERE user_id=? AND setting_name=?")
-				->execute(array($setting_value, $user_id, $setting_name));
-		} else {
-			// The value is unchanged
-		}
+		PGV_DB::prepare("REPLACE INTO {$TBLPREFIX}user_setting (user_id, setting_name, setting_value) VALUES (?, ?, ?)")
+			->execute(array($user_id, $setting_name, $setting_value));
 	}
 }
 
@@ -2778,16 +2751,8 @@ function set_user_gedcom_setting($user_id, $ged_id, $setting_name, $setting_valu
 		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE user_id=? AND gedcom_id=? AND setting_name=?")
 			->execute(array($user_id, $ged_id, $setting_name));
 	} else {
-		$current_value=get_user_gedcom_setting($user_id, $ged_id, $setting_name);
-		if (is_null($current_value)) {
-			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}user_gedcom_setting (user_id, gedcom_id, setting_name, setting_value) VALUES (?, ?, ?, ?)")
-				->execute(array($user_id, $ged_id, $setting_name, $setting_value));
-		} elseif ($current_value!=$setting_value) {
-			PGV_DB::prepare("UPDATE {$TBLPREFIX}user_gedcom_setting SET setting_value=? WHERE user_id=? AND gedcom_id=? AND setting_name=?")
-				->execute(array($setting_value, $user_id, $ged_id, $setting_name));
-		} else {
-			// The value is unchanged
-		}
+		PGV_DB::prepare("REPLACE INTO {$TBLPREFIX}user_gedcom_setting (user_id, gedcom_id, setting_name, setting_value) VALUES (?, ?, ?, ?)")
+			->execute(array($user_id, $ged_id, $setting_name, $setting_value));
 	}
 }
 
