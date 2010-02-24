@@ -101,31 +101,6 @@ if ($form_action=='update') {
 			set_user_setting(PGV_USER_ID, 'defaulttab',    $form_default_tab);
 			set_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid', $form_rootid);
 
-			// update gedcom record with new email address
-			if (get_user_setting(PGV_USER_ID, 'sync_gedcom')=='Y') {
-				if ($form_email!=$old_email) {
-					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-						$myid=get_user_gedcom_setting(PGV_USER_ID, $ged_id, 'gedcomid');
-						if ($myid) {
-							$OLDGEDCOM=$GEDCOM;
-							$GEDCOM=$ged_name;
-							$person=Person::getInstance($myid);
-							if ($person) {
-								if (preg_match('/\d _?EMAIL/', $person->getGedcomRecord())) {
-									replace_gedrec($myid, preg_replace("/(\n\d _?EMAIL).*/", '$1 '.$form_email, $person->getGedcomRecord()));
-								} else {
-									replace_gedrec($myid, $person->getGedcomRecord()."\n1 EMAIL ".$form_email);
-								}
-							}
-							$GEDCOM=$OLDGEDCOM;
-						}
-					}
-				}
-				if ($form_firstname!=$old_firstname || $form_lastname!=$old_lastname) {
-					// update gedcom record with new name
-					// Is this functionality required?
-				}
-			}
 			// Change username
 			if ($form_username!=PGV_USER_NAME) {
 				AddToLog('User renamed to ->'.$form_username.'<-');

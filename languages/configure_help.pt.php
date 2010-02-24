@@ -91,7 +91,6 @@ $pgv_lang["about_user"]="Primeiro crie a conta do Administrador, pois é ele que
 $pgv_lang["can_admin"]="Pode Administrar";
 $pgv_lang["can_edit"]="Nível de Acesso";
 $pgv_lang["access"]="Acessar";
-$pgv_lang["sync_gedcom"]="Sincronizar os dados do Usuário com os dados do Banco de Dados (GEDCOM)";
 $pgv_lang["user_relationship_priv"]="Restringir o acesso a pessoas relacionadas ao usuário";
 $pgv_lang["add_user"]="Adicionar um novo Usuário";
 $pgv_lang["current_users"]="Usuários Cadastrados";

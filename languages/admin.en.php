@@ -373,7 +373,6 @@ $pgv_lang["select_an_option"]					= "Select an option below:";
 $pgv_lang["SERVER_URL"]							= "PhpGedView URL";
 $pgv_lang["show_phpinfo"]						= "Show PHP information page";
 $pgv_lang["siteadmin"]							= "Site administrator";
-$pgv_lang["sync_gedcom"]						= "Synchronize User Settings with GEDCOM Data";
 $pgv_lang["system_time"]						= "Current Server Time:";
 $pgv_lang["user_time"]							= "Current User Time:";
 $pgv_lang["TBLPREFIX"]							= "Database Table Prefix";

@@ -43,6 +43,7 @@ VERSION 4.3.0
 
 ?$pgv_lang["whatever"]                    dd mon year  Change codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["useradmin_sync_gedcom_help"]  24 Feb 2010  D  This has already been deleted from all files
 -$pgv_lang["quick_update_marriage_help"]  22 Feb 2010  D  This has already been deleted from all files
 -$pgv_lang["quick_update_child_help"]     22 Feb 2010  D  This has already been deleted from all files
 -$pgv_lang["quick_update_spouse_help"]    22 Feb 2010  D  This has already been deleted from all files

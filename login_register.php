@@ -391,7 +391,6 @@ switch ($action) {
 						set_user_setting($user_id, 'max_relation_path',    $MAX_RELATION_PATH_LENGTH);
 						set_user_setting($user_id, 'auto_accept',          'N');
 						set_user_setting($user_id, 'canadmin',             'N');
-						set_user_setting($user_id, 'sync_gedcom',          'N');
 						set_user_setting($user_id, 'loggedin',             'N');
 						set_user_setting($user_id, 'sessiontime',          '0');
 						if (!empty($user_gedcomid)) {

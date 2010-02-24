@@ -204,7 +204,6 @@ $pgv_lang["USE_REGISTRATION_MODULE"]			= "A látogatók kérhetnek regisztráci�
 $pgv_lang["TBLPREFIX"]					= "Adatbázis tábla előtag";
 $pgv_lang["user_time"]					= "Jelenlegi felhasználói idő:";
 $pgv_lang["system_time"]				= "Jelenlegi szerver idő:";
-$pgv_lang["sync_gedcom"]				= "Felhasználói adatok szinkronizálása a GEDCOM adattal";
 $pgv_lang["usr_unset_rootid"]				= "Gyökér azonosító feloldása a következőnél";
 $pgv_lang["usr_unset_rights"]				= "Gedcom jog feloldása a következőnél";
 $pgv_lang["usr_unset_gedcomid"]				= "GEDCOM azonosító feloldása";

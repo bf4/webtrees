@@ -243,7 +243,6 @@ $pgv_lang["select_an_option"]		= "Vælg en af følgende:";
 $pgv_lang["SERVER_URL"]							= "PhpGedView URL";
 $pgv_lang["show_phpinfo"]						= "Vis PHP informationssiden";
 $pgv_lang["siteadmin"]				= "Administrator af hjemmesiden";
-$pgv_lang["sync_gedcom"]						= "Synkronisér brugerindstillinger med GEDCOM data";
 $pgv_lang["system_time"]						= "Nuværende tid på serveren:";
 $pgv_lang["user_time"]							= "Nuværende tid ved brugeren:";
 $pgv_lang["TBLPREFIX"]							= "Databasetabel præfiks";

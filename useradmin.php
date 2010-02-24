@@ -76,7 +76,6 @@ $new_default_tab         =safe_POST('new_default_tab',          array_keys($ALL_
 $new_comment             =safe_POST('new_comment',              PGV_REGEX_UNSAFE);
 $new_comment_exp         =safe_POST('new_comment_exp'           );
 $new_max_relation_path   =safe_POST_integer('new_max_relation_path', 1, $MAX_RELATION_PATH_LENGTH, 2);
-$new_sync_gedcom         =safe_POST('new_sync_gedcom',          'Y',   'N');
 $new_relationship_privacy=safe_POST('new_relationship_privacy', 'Y',   'N');
 $new_auto_accept         =safe_POST('new_auto_accept',          'Y',   'N');
 $canadmin                =safe_POST('canadmin',                 'Y',   'N');
@@ -168,7 +167,6 @@ if ($action=='createuser' || $action=='edituser2') {
 				set_user_setting($user_id, 'comment',              $new_comment);
 				set_user_setting($user_id, 'comment_exp',          $new_comment_exp);
 				set_user_setting($user_id, 'max_relation_path',    $new_max_relation_path);
-				set_user_setting($user_id, 'sync_gedcom',          $new_sync_gedcom);
 				set_user_setting($user_id, 'relationship_privacy', $new_relationship_privacy);
 				set_user_setting($user_id, 'auto_accept',          $new_auto_accept);
 				set_user_setting($user_id, 'canadmin',             $canadmin);
@@ -206,25 +204,6 @@ if ($action=='createuser' || $action=='edituser2') {
 					$message["created"]="";
 					$message["method"]="messaging2";
 					addMessage($message); */
-				}
-				//-- update Gedcom record with new email address
-				if ($email_changed && $new_sync_gedcom=='Y') {
-					foreach ($all_gedcoms as $ged_id=>$ged_name) {
-						$myid=get_user_gedcom_setting($username, $ged_id, 'gedcomid');
-						if ($myid) {
-							$OLDGEDCOM=$GEDCOM;
-							$GEDCOM=$ged_name;
-							$person=Person::getInstance($myid);
-							if ($person) {
-								if (preg_match('/\d _?EMAIL/', $person->getGedcomRecord())) {
-									replace_gedrec($myid, preg_replace("/(\n\d _?EMAIL).*/", '$1 '.$emailaddress, $person->getGedcomRecord()));
-								} else {
-									replace_gedrec($myid, $person->getGedcomRecord()."\n1 EMAIL ".$emailaddress);
-								}
-							}
-							$GEDCOM=$OLDGEDCOM;
-						}
-					}
 				}
 				// Reload the form cleanly, to allow the user to verify their changes
 				header("Location: ".encode_url("useradmin.php?action=edituser&username={$username}&ged={$ged}", false));
@@ -359,10 +338,6 @@ if ($action=="edituser") {
 		<?php
 	} ?></table>
 	</td>
-	</tr>
-	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_sync_gedcom_help", "qm", "sync_gedcom"); echo $pgv_lang["sync_gedcom"]; ?></td>
-	<td class="optionbox wrap"><input type="checkbox" name="new_sync_gedcom" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'sync_gedcom')=="Y") echo "checked=\"checked\""; ?> /></td>
 	</tr>
 	<tr>
 	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin_help", "qm", "can_admin"); echo $pgv_lang["can_admin"]; ?></td>
@@ -819,8 +794,6 @@ if ($action == "createform") {
 		echo "</table>";
 		?>
 		</td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_sync_gedcom_help", "qm", "sync_gedcom"); echo $pgv_lang["sync_gedcom"]; ?></td>
-		<td class="optionbox wrap"><input type="checkbox" name="new_sync_gedcom" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin_help", "qm", "can_admin"); echo $pgv_lang["can_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit_help", "qm", "can_edit");echo $pgv_lang["can_edit"]; ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">

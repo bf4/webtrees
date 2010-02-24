@@ -376,7 +376,6 @@ $pgv_lang["select_an_option"]	= "בחר באפשרות:";
 $pgv_lang["SERVER_URL"]		= "URL של PhpGedView";
 $pgv_lang["show_phpinfo"]		= "הראה דף מידע על PHP";
 $pgv_lang["siteadmin"]		= "מנהלן אתר";
-$pgv_lang["sync_gedcom"]		= "סנכרן הגדרות משתמש עם נתוני GEDCOM";
 $pgv_lang["system_time"]		= "הזמן הנוכחי של השרת:";
 $pgv_lang["user_time"]		= "הזמן הנוכחי של המשתמש :";
 $pgv_lang["TBLPREFIX"]		= "קידומת שמות קבצי מסד הנתונים";

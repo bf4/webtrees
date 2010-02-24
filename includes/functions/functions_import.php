@@ -1378,34 +1378,6 @@ function accept_changes($cid) {
 			}
 		}
 
-		if ($change["type"] != "delete") {
-			//-- synchronize the gedcom record with any user account
-			$username = get_user_from_gedcom_xref($GEDCOM, $gid);
-			if ($username && get_user_setting($username, 'sync_gedcom')=='Y') {
-				$firstname = get_gedcom_value("GIVN", 2, $gedrec);
-				$lastname = get_gedcom_value("SURN", 2, $gedrec);
-				if (empty ($lastname)) {
-					$fullname = get_gedcom_value("NAME", 1, $gedrec, "", false);
-					$ct = preg_match("~(.*)/(.*)/~", $fullname, $match);
-					if ($ct > 0) {
-						$firstname = $match[1];
-						$lastname = $match[2];
-					} else
-						$firstname = $fullname;
-				}
-				//-- SEE [ 1753047 ] Email/sync with account
-				$email = get_gedcom_value("EMAIL", 1, $gedrec);
-				if (empty($email)) {
-					$email = get_gedcom_value("_EMAIL", 1, $gedrec);
-				}
-				if (!empty($email)) {
-					set_user_setting($username, 'email', $email);
-				}
-				set_user_setting($username, 'firstname', $firstname);
-				set_user_setting($username, 'lastname',  $lastname);
-			}
-		}
-
 		unset ($pgv_changes[$cid]);
 		if (!isset($manual_save) || $manual_save==false) {
 			write_changes();

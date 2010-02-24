@@ -466,10 +466,10 @@ function um_export($proceed) {
 	$authtext="<?php\n\n\$users=array();\n\n";
 	foreach (get_all_users() as $user_id=>$username) {
 		$authtext .="\$user=array();\n";
-		foreach (array('username', 'firstname', 'lastname', 'gedcomid', 'rootid', 'password','canadmin', 'canedit', 'email', 'verified','verified_by_admin', 'language', 'pwrequested', 'reg_timestamp','reg_hashcode', 'theme', 'loggedin', 'sessiontime', 'contactmethod', 'visibleonline', 'editaccount', 'defaulttab','comment', 'comment_exp', 'sync_gedcom', 'relationship_privacy', 'max_relation_path', 'auto_accept') as $ukey) {
+		foreach (array('username', 'firstname', 'lastname', 'gedcomid', 'rootid', 'password','canadmin', 'canedit', 'email', 'verified','verified_by_admin', 'language', 'pwrequested', 'reg_timestamp','reg_hashcode', 'theme', 'loggedin', 'sessiontime', 'contactmethod', 'visibleonline', 'editaccount', 'defaulttab','comment', 'comment_exp', 'relationship_privacy', 'max_relation_path', 'auto_accept') as $ukey) {
 			$value=get_user_setting($user_id, $ukey);
 			// Convert Y/N/yes/no to bools
-			if (in_array($ukey, array('canadmin', 'loggedin', 'visibleonline', 'editaccount', 'sync_gedcom', 'relationship_privacy', 'auto_accept'))) {
+			if (in_array($ukey, array('canadmin', 'loggedin', 'visibleonline', 'editaccount', 'relationship_privacy', 'auto_accept'))) {
 				$value=($value=='Y');
 			}
 			if (in_array($ukey, array('verified', 'verified_by_admin'))) {

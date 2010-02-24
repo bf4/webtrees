@@ -285,7 +285,6 @@ $pgv_lang["reading_file"]						= "Lettura di file GEDCOM";
 $pgv_lang["remove_ip"] 							= "Rimuovere IP";
 $pgv_lang["SERVER_URL"]							= "PhpGedView URL";
 $pgv_lang["show_phpinfo"]						= "Visualizza pagina di informazioni PHP";
-$pgv_lang["sync_gedcom"]						= "Sincronizzare Impostazioni utente con dati GEDCOM";
 $pgv_lang["TBLPREFIX"]							= "Tabella Prefisso Database";
 $pgv_lang["title_manage_servers"]   			= "Gestione Siti";
 $pgv_lang["title_view_conns"]       			= "Vedere Connessioni";
