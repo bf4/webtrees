@@ -2205,7 +2205,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 					$where.=" AND d_day={$anniv->d}";
 				}
 				if ($anniv->IsLeapYear()) {
-					$where.=" AND (d_mon=6 AND ".PGV_DB::mod_function("7*d_year+1","19")."<7)";
+					$where.=" AND (d_mon=6 AND MOD(7*d_year+1, 19)<7)";
 				} else {
 					$where.=" AND (d_mon=6 OR d_mon=7)";
 				}
@@ -2218,7 +2218,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 				} else {
 					$where.=" AND d_day={$anniv->d}";
 				}
-				$where.=" AND (d_mon=6 AND ".PGV_DB::mod_function("7*d_year+1","19").">=7 OR d_mon=7)";
+				$where.=" AND (d_mon=6 AND MOD(7*d_year+1, 19)>=7 OR d_mon=7)";
 				break;
 			case 8: // 1 NSN includes 30 ADR, if this year is non-leap
 				if ($anniv->d==1) {
