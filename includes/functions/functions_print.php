@@ -475,7 +475,12 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 
 	$title = PrintReady(stripLRMRLM(strip_tags($title.$metaTitle), TRUE));
 
-	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
+	if ($view=='simple') {
+		// The simple view needs to work without a database - for use during installation
+		$GEDCOM_TITLE=PGV_PHPGEDVIEW;
+	} else {
+		$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
+	}
 	if ($ENABLE_RSS){
 		$applicationType = "application/rss+xml";
 		if ($RSS_FORMAT == "ATOM" || $RSS_FORMAT == "ATOM0.3"){
@@ -487,7 +492,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
 	else
 		$query_string = $QUERY_STRING;
-	if ($view!="preview") {
+	if ($view!='preview' && $view!='simple') {
 		$old_META_AUTHOR = $META_AUTHOR;
 		$old_META_PUBLISHER = $META_PUBLISHER;
 		$old_META_COPYRIGHT = $META_COPYRIGHT;
@@ -563,8 +568,6 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		arrows[3] = new Image();
 		arrows[3].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"].'";
 	';
-	if (PGV_USER_CAN_EDIT) {
-
 	$javascript .= 'function delete_record(pid, linenum, mediaid) {
 		if (!mediaid) mediaid="";
 		if (confirm(\''.$pgv_lang["check_delete"].'\')) {
@@ -587,7 +590,6 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		return false;
 	}
 	';
-	}
 	$javascript .= '
 	function message(username, method, url, subject) {
 		if ((!url)||(url=="")) url=\''.urlencode(PGV_SCRIPT_NAME."?".$QUERY_STRING).'\';
@@ -607,7 +609,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		$bodyOnLoad .= " maxscroll = document.documentElement.scrollLeft;";
 	}
 	$bodyOnLoad .= "\"";
-	if ($view!="preview") {
+	if ($view!='preview' && $view!='simple') {
 		require $headerfile;
 		$META_AUTHOR = $old_META_AUTHOR;
 		$META_PUBLISHER = $old_META_PUBLISHER;
