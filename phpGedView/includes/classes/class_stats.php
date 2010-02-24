@@ -8,6 +8,8 @@
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2010 PGV Development Team.  All rights reserved.
 *
+* Modifications Copyright (c) 2010 Greg Roach
+*
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation; either version 2 of the License, or
@@ -815,12 +817,12 @@ class stats {
 			if ($type=='unknown') {
 				// There has to be a better way then this :(
 				foreach (self::$_media_types as $t) {
-					$sql.=" AND (m_gedrec NOT ".PGV_DB::$LIKE." ? AND m_gedrec NOT ".PGV_DB::$LIKE." ?)";
+					$sql.=" AND (m_gedrec NOT LIKE ? AND m_gedrec NOT LIKE ?)";
 					$vars[]="%3 TYPE {$t}%";
 					$vars[]="%1 _TYPE {$t}%";
 				}
 			} else {
-				$sql.=" AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+				$sql.=" AND (m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 				$vars[]="%3 TYPE {$type}%";
 				$vars[]="%1 _TYPE {$type}%";
 			}

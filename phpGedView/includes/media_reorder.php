@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -126,11 +128,11 @@ require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 		$vars[]=$media_id;
 		$i++;
 	}
-	$sqlmm .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+	$sqlmm .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile";
 	$vars[]=PGV_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
-		$sqlmm .= "AND mm_gedrec ".PGV_DB::$LIKE." ?";
+		$sqlmm .= " AND mm_gedrec LIKE ?";
 		$vars[]="{$level} OBJE%";
 	}
 

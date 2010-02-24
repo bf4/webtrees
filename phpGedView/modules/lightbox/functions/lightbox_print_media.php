@@ -7,6 +7,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -120,7 +122,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	$vars[]=PGV_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
-		$sqlmm .= "AND mm_gedrec ".PGV_DB::$LIKE." ?";
+		$sqlmm .= "AND mm_gedrec LIKE ?";
 		$vars[]="$level OBJE%";
 	}
 
@@ -128,7 +130,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	switch ($kind) {
 	case 1:
 		$tt=$pgv_lang["ROW_TYPE__photo"];
-		$sqlmm.="AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$sqlmm.="AND (m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE photo%';
 		$vars[]='%TYPE map%';
 		$vars[]='%TYPE painting%';
@@ -136,7 +138,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		break;
 	case 2:
 		$tt=$pgv_lang["ROW_TYPE__document"];
-		$sqlmm.="AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$sqlmm.="AND (m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE card%';
 		$vars[]='%TYPE certificate%';
 		$vars[]='%TYPE document%';
@@ -146,14 +148,14 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		break;
 	case 3:
 		$tt=$pgv_lang["ROW_TYPE__census"];
-		$sqlmm.="AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$sqlmm.="AND (m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE electronic%';
 		$vars[]='%TYPE fiche%';
 		$vars[]='%TYPE film%';
 		break;
 	case 4:
 		$tt=$pgv_lang["ROW_TYPE__other"];
-		$sqlmm.="AND (m_gedrec NOT ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$sqlmm.="AND (m_gedrec NOT LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE %';
 		$vars[]='%TYPE coat%';
 		$vars[]='%TYPE book%';

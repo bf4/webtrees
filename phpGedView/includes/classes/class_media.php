@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -261,7 +263,7 @@ class Media extends GedcomRecord {
 		global $TBLPREFIX;
 
 		return
-			PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file=? AND m_titl ".PGV_DB::$LIKE." ? AND m_gedfile=?")
+			PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file=? AND m_titl LIKE ? AND m_gedfile=?")
 			->execute(array($obje->file, $obje->title, PGV_GED_ID))
 			->fetchOne();
 	}

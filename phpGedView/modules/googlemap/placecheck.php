@@ -6,6 +6,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License or,
@@ -286,7 +288,7 @@ case 'go':
 			$placelist=create_possible_place_names($levels[$z], $z+1); // add the necessary prefix/postfix values to the place name
 			foreach ($placelist as $key=>$placename) {
 				$row=
-					PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
+					PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place LIKE ? ORDER BY pl_place")
 					->execute(array($z, $id, $placename))
 					->fetchOneRow(PDO::FETCH_ASSOC);
 				if (!empty($row['pl_id'])) {

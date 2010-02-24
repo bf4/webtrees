@@ -6,6 +6,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -313,7 +315,7 @@ require_once PGV_ROOT.'includes/classes/class_person.php';
 			}
 		}
 		$rows=
-			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities WHERE pr_file=? AND pr_f_lvl ".PGV_DB::$LIKE." ? ORDER BY (pr_matches/pr_count) DESC")
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities WHERE pr_file=? AND pr_f_lvl LIKE ? ORDER BY (pr_matches/pr_count) DESC")
 			->execute(array(PGV_GED_ID, "{$factType}%"))
 			->fetchAll();
 

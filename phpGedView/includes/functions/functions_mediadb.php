@@ -6,6 +6,8 @@
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
+* Modifications Copyright (c) 2010 Greg Roach
+*
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation; either version 2 of the License, or
@@ -190,7 +192,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			->fetchAll();
 	} else {
 		$rows=
-			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file ".PGV_DB::$LIKE." ? OR m_file ".PGV_DB::$LIKE." ?) ORDER BY m_id desc")
+			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file LIKE ? OR m_file LIKE ?) ORDER BY m_id desc")
 			->execute(array(PGV_GED_ID, "%{$myDir}%", "%://%"))
 			->fetchAll();
 	}
@@ -1637,7 +1639,7 @@ function PrintMediaLinks($links, $size = "small") {
 function get_media_id_from_file($filename){
 	global $TBLPREFIX;
 	return
-		PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB::$LIKE." ?")
+		PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file LIKE ?")
 		->execute(array("%{$filename}"))
 		->fetchOne();
 }
