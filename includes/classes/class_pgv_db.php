@@ -226,38 +226,6 @@ class PGV_DB {
 	//////////////////////////////////////////////////////////////////////////////
 	// INTERROGATE DATA DICTIONARY
 	//////////////////////////////////////////////////////////////////////////////
-	public static function all_tables() {
-		global $DBNAME;
-
-		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mysql':
-			// Mysql 4.x does not support the information schema
-			return PGV_DB::prepare("SHOW TABLES")->fetchOneColumn();
-		default:
-			// information_schema.tables is an ANSI standard.
-			return
-				PGV_DB::prepare("SELECT table_name FROM information_schema.tables WHERE table_schema=? ORDER BY table_name")
-				->execute(array($DBNAME))
-				->fetchOneColumn();
-		}
-	}
-
-	public static function all_columns($table) {
-		global $DBNAME;
-
-		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mysql':
-			// Mysql 4.x does not support the information schema
-			return PGV_DB::prepare("DESC {$table}")->fetchOneColumn();
-		default:
-			// information_schema.tables is an ANSI standard.
-			return
-				PGV_DB::prepare("SELECT column_name FROM information_schema.columns WHERE table_schema=? AND table_name=?")
-				->execute(array($DBNAME, $table))
-				->fetchOneColumn();
-		}
-	}
-
 	public static function table_exists($table) {
 		global $DBNAME;
 
