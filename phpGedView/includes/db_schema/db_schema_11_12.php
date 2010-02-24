@@ -226,10 +226,6 @@ try {
 		" FROM {$TBLPREFIX}users".
 		" JOIN {$TBLPREFIX}user ON (user_name=u_username)".
 		" UNION ALL".
-		"	SELECT user_id, 'sync_gedcom', u_sync_gedcom".
-		" FROM {$TBLPREFIX}users".
-		" JOIN {$TBLPREFIX}user ON (user_name=u_username)".
-		" UNION ALL".
 		"	SELECT user_id, 'relationship_privacy', u_relationship_privacy".
 		" FROM {$TBLPREFIX}users".
 		" JOIN {$TBLPREFIX}user ON (user_name=u_username)".

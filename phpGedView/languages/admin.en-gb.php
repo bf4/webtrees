@@ -26,5 +26,4 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["gedcheck_sync"]="Edits made to the database are not synchronised to the file #GLOBALS[ged]#.  The file contents may be out-of-date.  You can synchronise it with the database now by performing an <b><a \"#GLOBALS[ged_link]#\">export</a></b>.";
-$pgv_lang["sync_gedcom"]="Synchronise User Settings with GEDCOM Data";
 $pgv_lang["unsync_warning"]="This GEDCOM file is <em>not</em> synchronised with the database.  It may not contain the latest version of your data.  To re-import from the database rather than the file, you should download and re-upload.";

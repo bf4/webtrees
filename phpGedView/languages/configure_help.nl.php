@@ -58,7 +58,6 @@ $pgv_lang["can_admin"]				= "Mag beheren";
 $pgv_lang["can_edit"]				= "Mag wijzigen";
 $pgv_lang["access"]					= "Toegang";
 $pgv_lang["user_relationship_priv"]	= "Toegang beperken tot verwante personen";
-$pgv_lang["sync_gedcom"]		= "Gebruikersgegevens met genealogiegegevens synchroniseren";
 $pgv_lang["add_user"]				= "Toevoegen van een nieuwe gebruiker";
 $pgv_lang["current_users"]			= "Lijst gebruikers";
 $pgv_lang["back_useradmin"]			= "Terug naar Beheer gebruikers";

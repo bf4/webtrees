@@ -235,7 +235,6 @@ $pgv_lang["SERVER_URL"]		= "PhpGedView URL";
 $pgv_lang["show_phpinfo"]		= "Näytä PHP informaatio sivu";
 $pgv_lang["siteadmin"]		= "Palvelun ylläpitäjä";
 //$pgv_lang["skip_cleanup"]		= "Ohita siivous";
-$pgv_lang["sync_gedcom"]		= "Synkronoidaan käyttäjä asetukset GEDCOM datan kanssa";
 $pgv_lang["user_time"]		= "Nykyinen käyttäjän aika:";
 $pgv_lang["TBLPREFIX"]		= "Tietokantataulun etuliite";
 $pgv_lang["themecustomization"]	= "Teeman muokkaus";

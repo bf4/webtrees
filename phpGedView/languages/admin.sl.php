@@ -374,7 +374,6 @@ $pgv_lang["select_an_option"]						= "Izberi spodnje možnosti:";
 $pgv_lang["SERVER_URL"]							= "PhpGedView URL";
 $pgv_lang["show_phpinfo"]						= "Pokaži informacije o PHP";
 $pgv_lang["siteadmin"]							= "Upravitel spletne strani";
-$pgv_lang["sync_gedcom"]						= "Sinhroniziraj uporabniške nastavitve z GEDCOM podatki";
 $pgv_lang["system_time"]						= "Trenutna ura strežnika:";
 $pgv_lang["user_time"]							= "Trenutna ura uporabnika:";
 $pgv_lang["TBLPREFIX"]							= "Predpona tabel v bazi podatkov";

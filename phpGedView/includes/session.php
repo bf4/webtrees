@@ -50,7 +50,7 @@ define('PGV_DEBUG_PRIV', false);
 define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Required version of database tables/columns/indexes/etc.
-define('PGV_SCHEMA_VERSION', 14);
+define('PGV_SCHEMA_VERSION', 15);
 
 // Environmental requirements
 define('PGV_REQUIRED_PHP_VERSION',     '5.2.0');  // 5.2.3 is recommended

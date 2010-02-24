@@ -306,7 +306,6 @@ class UserMigrateControllerRoot extends BaseController {
 				}
 				if (!isset($user["comment"])) $user["comment"] = '';
 				if (!isset($user["comment_exp"])) $user["comment_exp"] = '';
-				if (!isset($user["sync_gedcom"])) $user["sync_gedcom"] = 'N';
 				if (!isset($user["relationship_privacy"])) $user["relationship_privacy"] = 'N';
 				if (!isset($user["max_relation_path"])) $user["max_relation_path"] = '2';
 				if (!isset($user["auto_accept"])) $user["auto_accept"] = 'N';
@@ -327,7 +326,6 @@ class UserMigrateControllerRoot extends BaseController {
 					set_user_setting($user_id, 'loggedin'    ,         $user["loggedin"]);
 					set_user_setting($user_id, 'sessiontime'    ,      $user["sessiontime"]);
 					set_user_setting($user_id, 'max_relation_path',    $user["max_relation_path"]);
-					set_user_setting($user_id, 'sync_gedcom',          $user["sync_gedcom"] ? 'Y' : 'N');
 					set_user_setting($user_id, 'relationship_privacy', $user["relationship_privacy"] ? 'Y' : 'N');
 					set_user_setting($user_id, 'auto_accept',          $user["auto_accept"] ? 'Y' : 'N');
 					set_user_setting($user_id, 'canadmin',             $user["canadmin"] ? 'Y' : 'N');

@@ -340,7 +340,6 @@ switch($step) {
 					set_user_setting($user_id, 'visibleonline',        'Y');
 					set_user_setting($user_id, 'editaccount',          'Y');
 					set_user_setting($user_id, 'defaulttab',           '0');
-					set_user_setting($user_id, 'sync_gedcom',          'N');
 					set_user_setting($user_id, 'relationship_privacy', 'N');
 					set_user_setting($user_id, 'max_relation_path',    '2');
 					set_user_setting($user_id, 'auto_accept',          'N');
