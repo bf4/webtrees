@@ -122,7 +122,6 @@ class PGV_DB {
 			self::$CHAR_TYPE    ='CHAR';
 			self::$VARCHAR_TYPE ='VARCHAR';
 			self::$UNSIGNED     ='UNSIGNED';
-			self::$RANDOM       ='RAND()';
 			self::$TEXT_TYPE    ='TEXT';
 			self::$LONGTEXT_TYPE='LONGTEXT';
 			if ($DB_UTF8_COLLATION) {

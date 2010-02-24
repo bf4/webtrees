@@ -187,7 +187,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	if ($random) {
 		$rows=
-			PGV_DB::prepareLimit("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY ".PGV_DB::$RANDOM, 5)
+			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY RAND() LIMIT 5")
 			->execute(array(PGV_GED_ID))
 			->fetchAll();
 	} else {
