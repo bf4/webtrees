@@ -224,25 +224,6 @@ class PGV_DB {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	// SQL Compatibility
-	//////////////////////////////////////////////////////////////////////////////
-	public static function mod_function($x, $y) {
-		// TODO: When we get a d_leap_year column in the pgv_dates table, we will
-		// no longer need this function.
-		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mysql':
-			return "MOD($x,$y)";
-		}
-	}
-
-	public static function random_function() {
-		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mysql':
-			return 'RAND()';
-		}
-	}
-
-	//////////////////////////////////////////////////////////////////////////////
 	// INTERROGATE DATA DICTIONARY
 	//////////////////////////////////////////////////////////////////////////////
 	public static function all_tables() {
