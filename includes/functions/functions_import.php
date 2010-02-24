@@ -763,7 +763,7 @@ function update_places($gid, $ged_id, $gedrec) {
 			"INSERT INTO {$TBLPREFIX}places (p_id, p_place, p_level, p_parent_id, p_file, p_std_soundex, p_dm_soundex) VALUES (?,?,?,?,?,?,?)"
 		);
 		$sql_select_places=PGV_DB::prepare(
-			"SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_file=? AND p_parent_id=? AND p_place ".PGV_DB::$LIKE." ?"
+			"SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_file=? AND p_parent_id=? AND p_place LIKE ?"
 		);
 	}
 

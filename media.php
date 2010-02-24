@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -599,7 +601,7 @@ if (check_media_structure()) {
 		//-- figure out how many levels are in this file
 		$mlevels = preg_split("~[/\\\]~", $filename);
 
-		$statement=PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB::$LIKE." ?")->execute(array("%{$myFile}"));
+		$statement=PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}media WHERE m_file LIKE ?")->execute(array("%{$myFile}"));
 		while ($row=$statement->fetch(PDO::FETCH_ASSOC)) {
 			$rlevels = preg_split("~[/\\\]~", $row["m_file"]);
 			//-- make sure we only delete a file at the same level of directories

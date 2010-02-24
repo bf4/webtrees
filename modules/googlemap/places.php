@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -279,7 +281,7 @@ if ($action=="ImportGedcom") {
 				$escparent = "Unknown";
 			}
 			$row=
-				PGV_DB::prepare("SELECT pl_id, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ?")
+				PGV_DB::prepare("SELECT pl_id, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place LIKE ?")
 				->execute(array($i, $parent_id, $escparent))
 				->fetchOneRow();
 			if ($i < count($parent)-1) {
@@ -449,7 +451,7 @@ if ($action=="ImportFile2") {
 				$escparent = "Unknown";
 			}
 			$row=
-				PGV_DB::prepare("SELECT pl_id, pl_long, pl_lati, pl_zoom, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
+				PGV_DB::prepare("SELECT pl_id, pl_long, pl_lati, pl_zoom, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place LIKE ? ORDER BY pl_place")
 				->execute(array($i, $parent_id, $escparent))
 				->fetchOneRow();
 			if (empty($row)) {       // this name does not yet exist: create entry

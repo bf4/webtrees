@@ -272,10 +272,10 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	$include='';
 	$digraphs=db_collation_digraphs();
 	foreach (array_unique($digraphs) as $digraph) { // Multi-character digraphs
-		$exclude.=" AND n_sort NOT ".PGV_DB::$LIKE." '{$digraph}%' {$DBCOLLATE}";
+		$exclude.=" AND n_sort NOT LIKE '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB::$LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort LIKE '{$from}%' {$DBCOLLATE} GROUP BY 1";
 	}
 	$alphas=
 		PGV_DB::prepare("SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1")
@@ -329,9 +329,9 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 		$join.=" AND n_type!='_MARNM'";
 	}
 	if ($surn) {
-		$join.=" AND n_sort ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn},%");
+		$join.=" AND n_sort LIKE ".PGV_DB::quote("{$surn},%");
 	} elseif ($salpha) {
-		$join.=" AND n_sort ".PGV_DB::$LIKE." ".PGV_DB::quote("{$salpha}%,%");
+		$join.=" AND n_sort LIKE ".PGV_DB::quote("{$salpha}%,%");
 	}
 
 	if ($DB_UTF8_COLLATION) {
@@ -344,10 +344,10 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	$include='';
 	$digraphs=db_collation_digraphs();
 	foreach (array_unique($digraphs) as $digraph) { // Multi-character digraphs
-		$exclude.=" AND n_sort NOT ".PGV_DB::$LIKE." '{$digraph}%' {$DBCOLLATE}";
+		$exclude.=" AND n_sort NOT LIKE '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB::$LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort LIKE '{$from}%' {$DBCOLLATE} GROUP BY 1";
 	}
 	$alphas=
 		PGV_DB::prepare("SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1")
@@ -404,17 +404,17 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 	$includes=array();
 	if ($surn) {
 		// Match a surname
-		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn}");
+		$includes[]="n_surn {$DBCOLLATE} LIKE ".PGV_DB::quote("{$surn}");
 	} elseif ($salpha==',') {
 		// Match a surname-less name
 		$includes[]="n_surn {$DBCOLLATE} = ''";
 	} elseif ($salpha) {
 		// Match a surname initial
 		foreach ($s_incl as $s) {
-			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
+			$includes[]="n_surn {$DBCOLLATE} LIKE ".PGV_DB::quote("{$s}%");
 		}
 		foreach ($s_excl as $s) {
-			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
+			$where[]="n_surn {$DBCOLLATE} NOT LIKE ".PGV_DB::quote("{$s}%");
 		}
 	} else {
 		// Match all individuals
@@ -460,17 +460,17 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 	$includes=array();
 	if ($surn) {
 		// Match a surname
-		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn}");
+		$includes[]="n_surn {$DBCOLLATE} LIKE ".PGV_DB::quote("{$surn}");
 	} elseif ($salpha==',') {
 		// Match a surname-less name
 		$includes[]="n_surn {$DBCOLLATE} = ''";
 	} elseif ($salpha) {
 		// Match a surname initial
 		foreach ($s_incl as $s) {
-			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
+			$includes[]="n_surn {$DBCOLLATE} LIKE ".PGV_DB::quote("{$s}%");
 		}
 		foreach ($s_excl as $s) {
-			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
+			$where[]="n_surn {$DBCOLLATE} NOT LIKE ".PGV_DB::quote("{$s}%");
 		}
 	} else {
 		// Match all individuals
@@ -534,52 +534,52 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 		// Match a surname, with or without a given initial
 		if ($galpha) {
 			foreach ($g_incl as $g) {
-				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn},{$g}%");
+				$includes[]="n_sort {$DBCOLLATE} LIKE ".PGV_DB::quote("{$surn},{$g}%");
 			}
 			foreach ($g_excl as $g) {
-				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn},{$g}%");
+				$where[]="n_sort {$DBCOLLATE} NOT LIKE ".PGV_DB::quote("{$surn},{$g}%");
 			}
 		} else {
-			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn},%");
+			$includes[]="n_sort {$DBCOLLATE} LIKE ".PGV_DB::quote("{$surn},%");
 		}
 	} elseif ($salpha==',') {
 		// Match a surname-less name, with or without a given initial
 		if ($galpha) {
 			foreach ($g_incl as $g) {
-				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote(",{$g}%");
+				$includes[]="n_sort {$DBCOLLATE} LIKE ".PGV_DB::quote(",{$g}%");
 			}
 			foreach ($g_excl as $g) {
-				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote(",{$g}%");
+				$where[]="n_sort {$DBCOLLATE} NOT LIKE ".PGV_DB::quote(",{$g}%");
 			}
 		} else {
-			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote(",%");
+			$includes[]="n_sort {$DBCOLLATE} LIKE ".PGV_DB::quote(",%");
 		}
 	} elseif ($salpha) {
 		// Match a surname initial, with or without a given initial
 		if ($galpha) {
 			foreach ($g_excl as $g) {
 				foreach ($s_excl as $s) {
-					$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%,{$g}%");
+					$includes[]="n_sort {$DBCOLLATE} LIKE ".PGV_DB::quote("{$s}%,{$g}%");
 				}
 			}
 			foreach ($g_excl as $g) {
 				foreach ($s_excl as $s) {
-					$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%,{$g}%");
+					$where[]="n_sort {$DBCOLLATE} NOT LIKE ".PGV_DB::quote("{$s}%,{$g}%");
 				}
 			}
 		} else {
 			foreach ($s_incl as $s) {
-				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
+				$includes[]="n_sort {$DBCOLLATE} LIKE ".PGV_DB::quote("{$s}%");
 			}
 			foreach ($s_excl as $s) {
-				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
+				$where[]="n_sort {$DBCOLLATE} NOT LIKE ".PGV_DB::quote("{$s}%");
 			}
 		}
 	} elseif ($galpha) {
 		// Match all surnames with a given initial
-		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("%,{$galpha}%");
+		$includes[]="n_sort {$DBCOLLATE} LIKE ".PGV_DB::quote("%,{$galpha}%");
 		foreach ($g_excl as $g) {
-			$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$g}%");
+			$where[]="n_sort {$DBCOLLATE} NOT LIKE ".PGV_DB::quote("{$g}%");
 		}
 	} else {
 		// Match all individuals
@@ -1042,33 +1042,23 @@ function find_media_record($xref, $ged_id) {
 */
 function find_gedcom_record($xref, $ged_id) {
 	global $TBLPREFIX;
-	static $statement1=null, $statement2=null;
+	static $statement=null;
 
-	if (is_null($statement1)) {
-		$statement1=PGV_DB::prepare(
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
 			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id   =? AND i_file   =? UNION ALL ".
 			"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id   =? AND f_file   =? UNION ALL ".
 			"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id   =? AND s_file   =? UNION ALL ".
 			"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
 			"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id   =? AND o_file   =?"
 		);
-		$statement2=PGV_DB::prepare(
-			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND i_file   =? UNION ALL ".
-			"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND f_file   =? UNION ALL ".
-			"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND s_file   =? UNION ALL ".
-			"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media ".PGV_DB::$LIKE." ? ESCAPE '@' AND m_gedfile=? UNION ALL ".
-			"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND o_file   =?"
-		);
 	}
 	
 	// Exact match on xref?
-	$gedcom=$statement1->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
-	if (!$gedcom) {
-		// Not found.  Maybe i123 instead of I123 on a DB with a case-sensitive collation?
-		$gedcom=$statement2->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
-	}
-
-	return $gedcom;
+	return
+		$statement
+		->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))
+		->fetchOne();
 }
 
 // Find the type of a gedcom record. Check the cache before querying the database.
@@ -1259,9 +1249,9 @@ function search_indis($query, $geds, $match, $skip) {
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="i_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
+			$querysql[]="i_gedcom LIKE ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]="(i_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR i_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR i_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
+			$querysql[]="(i_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR i_gedcom LIKE ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR i_gedcom LIKE ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
 		}
 	}
 
@@ -1324,9 +1314,9 @@ function search_indis_names($query, $geds, $match) {
 	$querysql=array();
 	foreach ($query as $q) {
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
+			$querysql[]="n_full LIKE ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]="(n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
+			$querysql[]="(n_full LIKE ".PGV_DB::quote("%{$q}%")." OR n_full LIKE ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR n_full LIKE ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
 		}
 	}
 	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
@@ -1396,19 +1386,19 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 	}
 	if ($firstname && $givn_sdx) {
 		foreach ($givn_sdx as $k=>$v) {
-			$givn_sdx[$k]="n_soundex_givn_{$field} ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$v}%");
+			$givn_sdx[$k]="n_soundex_givn_{$field} LIKE ".PGV_DB::quote("%{$v}%");
 	}
 		$sql.=' AND ('.implode(' OR ', $givn_sdx).')';
 		}
 	if ($lastname && $surn_sdx) {
 		foreach ($surn_sdx as $k=>$v) {
-			$surn_sdx[$k]="n_soundex_surn_{$field} ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$v}%");
+			$surn_sdx[$k]="n_soundex_surn_{$field} LIKE ".PGV_DB::quote("%{$v}%");
 		}
 		$sql.=' AND ('.implode(' OR ', $surn_sdx).')';
 			}
 	if ($place && $plac_sdx) {
 		foreach ($plac_sdx as $k=>$v) {
-			$plac_sdx[$k]="p_{$field}_soundex ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$v}%");
+			$plac_sdx[$k]="p_{$field}_soundex LIKE ".PGV_DB::quote("%{$v}%");
 		}
 		$sql.=' AND ('.implode(' OR ', $plac_sdx).')';
 	}
@@ -1555,9 +1545,9 @@ function search_fams($query, $geds, $match, $skip) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
 
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="f_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
+			$querysql[]="f_gedcom LIKE ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]="(f_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR f_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR f_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
+			$querysql[]="(f_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR f_gedcom LIKE ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR f_gedcom LIKE ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
 		}
 	}
 
@@ -1621,9 +1611,9 @@ function search_fams_names($query, $geds, $match) {
 	$querysql=array();
 	foreach ($query as $q) {
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="(husb.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR wife.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%").")";
+			$querysql[]="(husb.n_full LIKE ".PGV_DB::quote("%{$q}%")." OR wife.n_full LIKE ".PGV_DB::quote("%{$q}%").")";
 		} else {
-			$querysql[]="(husb.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR wife.n_full ".PGV_DB::$LIKE." '%{$q}%' OR husb.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR husb.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%"))." OR wife.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR wife.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
+			$querysql[]="(husb.n_full LIKE ".PGV_DB::quote("%{$q}%")." OR wife.n_full LIKE '%{$q}%' OR husb.n_full LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR husb.n_full LIKE ".PGV_DB::quote(UTF8_strtolower("%{$q}%"))." OR wife.n_full LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR wife.n_full LIKE ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1676,9 +1666,9 @@ function search_sources($query, $geds, $match, $skip) {
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]='s_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
+			$querysql[]="s_gedcom LIKE ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]='(s_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR s_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR s_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
+			$querysql[]="(s_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR s_gedcom LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR s_gedcom LIKE ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1746,9 +1736,9 @@ function search_notes($query, $geds, $match, $skip) {
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]='o_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
+			$querysql[]="o_gedcom LIKE ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]='(o_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR o_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR o_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
+			$querysql[]="(o_gedcom LIKE ".PGV_DB::quote("%{$q}%")." OR o_gedcom LIKE ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR o_gedcom LIKE ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1806,7 +1796,7 @@ function get_place_parent_id($parent, $level) {
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=PGV_DB::prepare("SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_place ".PGV_DB::$LIKE." ? AND p_file=?");
+		$statement=PGV_DB::prepare("SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_place LIKE ? AND p_file=?");
 	}
 
 	$parent_id=0;
@@ -1862,7 +1852,7 @@ function get_place_positions($parent, $level='') {
 	} else {
 		//-- we don't know the level so get the any matching place
 		return
-			PGV_DB::prepare("SELECT DISTINCT pl_gid FROM {$TBLPREFIX}placelinks, {$TBLPREFIX}places WHERE p_place ".PGV_DB::$LIKE." ? AND p_file=pl_file AND p_id=pl_p_id AND p_file=?")
+			PGV_DB::prepare("SELECT DISTINCT pl_gid FROM {$TBLPREFIX}placelinks, {$TBLPREFIX}places WHERE p_place LIKE ? AND p_file=pl_file AND p_id=pl_p_id AND p_file=?")
 			->execute(array($parent, PGV_GED_ID))
 			->fetchOneColumn();
 	}
@@ -2413,7 +2403,7 @@ function is_media_used_in_other_gedcom($file_name, $ged_id) {
 	global $TBLPREFIX;
 
 	return
-		(bool)PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB::$LIKE." ? AND m_gedfile<>?")
+		(bool)PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}media WHERE m_file LIKE ? AND m_gedfile<>?")
 		->execute(array("%{$file_name}", $ged_id))
 		->fetchOne();
 }
@@ -2839,7 +2829,7 @@ function get_autocomplete_INDI($FILTER, $ged_id=PGV_GED_ID) {
 	$sql=
 		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
 		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-		" WHERE (i_id=? OR i_id ".PGV_DB::$LIKE." ?)".
+		" WHERE (i_id=? OR i_id LIKE ?)".
 		" AND i_id=n_id AND i_file=n_file AND i_file=?".
 		" ORDER BY i_id";
 	$rows=
@@ -2851,7 +2841,7 @@ function get_autocomplete_INDI($FILTER, $ged_id=PGV_GED_ID) {
 		$sql=
 			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
 			" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-			" WHERE n_sort ".PGV_DB::$LIKE." ?".
+			" WHERE n_sort LIKE ?".
 			" AND i_id=n_id AND i_file=n_file AND i_file=?".
 			" ORDER BY n_sort";
 		return
@@ -2870,7 +2860,7 @@ function get_autocomplete_FAM($FILTER, $ids, $ged_id=PGV_GED_ID) {
 	$vars=array();
 	if (empty($ids)) {
 		//-- no match : search for FAM id
-		$where = "f_id ".PGV_DB::$LIKE." ?";
+		$where = "f_id LIKE ?";
 		$vars[]="%{$FILTER}%";
 	} else {
 		//-- search for spouses
@@ -2893,7 +2883,7 @@ function get_autocomplete_NOTE($FILTER, $ged_id=PGV_GED_ID) {
 
 	$sql="SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
 			 "FROM {$TBLPREFIX}other ".
-			 "WHERE o_gedcom ".PGV_DB::$LIKE." ? AND o_type='NOTE' AND o_file=?";
+			 "WHERE o_gedcom LIKE ? AND o_type='NOTE' AND o_file=?";
 	return
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("%{$FILTER}%", $ged_id))
@@ -2905,7 +2895,7 @@ function get_autocomplete_SOUR($FILTER, $ged_id=PGV_GED_ID) {
 
 	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
 			 "FROM {$TBLPREFIX}sources ".
-			 "WHERE (s_name ".PGV_DB::$LIKE." ? OR s_id ".PGV_DB::$LIKE." ?) AND s_file=? ORDER BY s_name";
+			 "WHERE (s_name LIKE ? OR s_id LIKE ?) AND s_file=? ORDER BY s_name";
 	return
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("%{$FILTER}%", "{$FILTER}%", $ged_id))
@@ -2917,7 +2907,7 @@ function get_autocomplete_SOUR_TITL($FILTER, $ged_id=PGV_GED_ID) {
 
 	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
 			 "FROM {$TBLPREFIX}sources ".
-			 "WHERE s_name ".PGV_DB::$LIKE." ? AND s_file=? ORDER BY s_name";
+			 "WHERE s_name LIKE ? AND s_file=? ORDER BY s_name";
 	return
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("%{$FILTER}%", $ged_id))
@@ -2930,7 +2920,7 @@ function get_autocomplete_INDI_BURI_CEME($FILTER, $ged_id=PGV_GED_ID) {
 	$sql=
 		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
 		"FROM {$TBLPREFIX}individuals ".
-		"WHERE i_gedcom ".PGV_DB::$LIKE." ? AND i_file=?";
+		"WHERE i_gedcom LIKE ? AND i_file=?";
 	return
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("%1 BURI%2 CEME %{$FILTER}%", $ged_id))
@@ -2942,7 +2932,7 @@ function get_autocomplete_INDI_SOUR_PAGE($FILTER, $OPTION, $ged_id=PGV_GED_ID) {
 
 	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
 			 "FROM {$TBLPREFIX}individuals ".
-			 "WHERE i_gedcom ".PGV_DB::$LIKE." ? AND i_file=?";
+			 "WHERE i_gedcom LIKE ? AND i_file=?";
 	return
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("% SOUR @{$OPTION}@% PAGE %{$FILTER}%", $ged_id))
@@ -2955,7 +2945,7 @@ function get_autocomplete_FAM_SOUR_PAGE($FILTER, $OPTION, $ged_id=PGV_GED_ID) {
 	$sql=
 		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
 		"FROM {$TBLPREFIX}families ".
-		"WHERE f_gedcom ".PGV_DB::$LIKE." ? AND f_file=?";
+		"WHERE f_gedcom LIKE ? AND f_file=?";
 	return
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("% SOUR @{$OPTION}@% PAGE %{$FILTER}%", $ged_id))
@@ -2968,7 +2958,7 @@ function get_autocomplete_REPO($FILTER, $ged_id=PGV_GED_ID) {
 	$sql=
 		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
 		"FROM {$TBLPREFIX}other ".
-		"WHERE (o_gedcom ".PGV_DB::$LIKE." ? OR o_id ".PGV_DB::$LIKE." ?) AND o_file=? AND o_type='REPO'";
+		"WHERE (o_gedcom LIKE ? OR o_id LIKE ?) AND o_file=? AND o_type='REPO'";
 	return
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("%1 NAME %{$FILTER}%", "{$FILTER}%", $ged_id))
@@ -2981,7 +2971,7 @@ function get_autocomplete_REPO_NAME($FILTER, $ged_id=PGV_GED_ID) {
 	$sql=
 		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
 		"FROM {$TBLPREFIX}other ".
-		"WHERE o_gedcom ".PGV_DB::$LIKE." ? AND o_file=? AND o_type='REPO'";
+		"WHERE o_gedcom LIKE ? AND o_file=? AND o_type='REPO'";
 	return
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("%1 NAME %{$FILTER}%", $ged_id))
@@ -2993,7 +2983,7 @@ function get_autocomplete_OBJE($FILTER, $ged_id=PGV_GED_ID) {
 
 	$sql="SELECT m_media ".
 			 "FROM {$TBLPREFIX}media ".
-			 "WHERE (m_titl ".PGV_DB::$LIKE." ? OR m_media ".PGV_DB::$LIKE." ?) AND m_gedfile=?";
+			 "WHERE (m_titl LIKE ? OR m_media LIKE ?) AND m_gedfile=?";
 	return
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("%{$FILTER}%", "{$FILTER}%", $ged_id))
@@ -3005,7 +2995,7 @@ function get_autocomplete_SURN($FILTER, $ged_id=PGV_GED_ID) {
 
 	$sql="SELECT DISTINCT n_surname ".
 			 "FROM {$TBLPREFIX}name ".
-			 "WHERE n_surname ".PGV_DB::$LIKE." ? AND n_file=? ORDER BY n_surname";
+			 "WHERE n_surname LIKE ? AND n_file=? ORDER BY n_surname";
 	return 
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("%{$FILTER}%", $ged_id))
@@ -3017,7 +3007,7 @@ function get_autocomplete_GIVN($FILTER, $ged_id=PGV_GED_ID) {
 
 	$sql="SELECT DISTINCT n_givn ".
 			 "FROM {$TBLPREFIX}name ".
-			 "WHERE n_givn ".PGV_DB::$LIKE." ? AND n_file=? ORDER BY n_givn";
+			 "WHERE n_givn LIKE ? AND n_file=? ORDER BY n_givn";
 	return 
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("%{$FILTER}%", $ged_id))

@@ -53,7 +53,6 @@ class PGV_DB {
 	public static $CHAR_TYPE    =null;
 	public static $VARCHAR_TYPE =null;
 	public static $UNSIGNED     =null;
-	public static $LIKE         =null;
 	public static $RANDOM       =null;
 	public static $TEXT_TYPE    =null;
 	public static $LONGTEXT_TYPE=null;
@@ -123,7 +122,6 @@ class PGV_DB {
 			self::$CHAR_TYPE    ='CHAR';
 			self::$VARCHAR_TYPE ='VARCHAR';
 			self::$UNSIGNED     ='UNSIGNED';
-			self::$LIKE         ='LIKE';
 			self::$RANDOM       ='RAND()';
 			self::$TEXT_TYPE    ='TEXT';
 			self::$LONGTEXT_TYPE='LONGTEXT';

@@ -5,6 +5,8 @@
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
+* Modifications Copyright (c) 2010 Greg Roach
+*
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation; either version 2 of the License, or
@@ -241,7 +243,7 @@ class Census1800 extends ra_form {
 	function processSimpleCitation() {
 		global $TBLPREFIX;
 		//-- delete any old census records
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}taskfacts WHERE tf_t_id=? AND tf_factrec ".PGV_DB::$LIKE." ?")->execute(array($_REQUEST['taskid'], '1 CENS%'));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}taskfacts WHERE tf_t_id=? AND tf_factrec LIKE ?")->execute(array($_REQUEST['taskid'], '1 CENS%'));
 
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";

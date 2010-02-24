@@ -1329,7 +1329,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	$vars[]=PGV_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
-		$sqlmm .= "AND mm_gedrec ".PGV_DB::$LIKE." ?";
+		$sqlmm .= "AND mm_gedrec LIKE ?";
 		$vars[]="{$level} OBJE%";
 	}
 

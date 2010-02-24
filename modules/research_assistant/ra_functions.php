@@ -6,6 +6,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -110,7 +112,7 @@ class ra_functions {
 			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE startdate<=? AND enddate>=?";
 			$vars=array($endDate, $startDate);
 		} else {
-			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE startdate<=? AND enddate>=? AND gedcom_fact ".PGV_DB::$LIKE." ?";
+			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE startdate<=? AND enddate>=? AND gedcom_fact LIKE ?";
 			$vars=array($endDate, $startDate, "%{$factLookingFor}%");
 		}
 
@@ -124,7 +126,7 @@ class ra_functions {
 				$numOfParts=count($parts) -1;
 				for ($i=0; ($i<count($parts) && $i<5); $i++) {
 					if (!empty($parts[$numOfParts])) {
-						$sql.=" AND pl_lv".($i+1)." ".PGV_DB::$LIKE." ?";
+						$sql.=" AND pl_lv".($i+1)." LIKE ?";
 						$vars[]='%'.$parts[$numOfParts].'%';
 					}
 					$numOfParts--;
