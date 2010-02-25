@@ -122,26 +122,6 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 
 
 	if($ENABLE_RSS) {
-		// basic auth is broken in all apps besides browsers, so I am disabling it for now.
-		/*if (empty($auth) || $auth != "basic"){
-			if(!PGV_USER_ID){ //not logged in.
-				$item = new FeedItem();
-				$item->title = $pgv_lang["login"];
-				$authURL= $syndURL . "&auth=basic";
-				$item->link = $authURL;
-				//$item->guid = $item->link;
-				$authDesc = str_replace("#AUTH_URL#", $authURL, $pgv_lang["feed_login"]);
-				$item->description = $authDesc;
-				$item->descriptionHtmlSyndicated = true; //optional
-				$item->date = time();
-				$item->source = $SERVER_URL;
-				$item->author = $author;
-				$item->authorURL = $feed->link;
-				$item->category = $pgv_lang["genealogy"];
-				$feed->addItem($item);
-			}
-		}*/
-
 		// determine if to show parts of feed based on their exsistance in the blocks on index.php
 		$blocks=  getBlocks(PGV_GEDCOM);
 		$main = $blocks["main"];
