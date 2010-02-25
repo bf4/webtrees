@@ -363,7 +363,6 @@ $pgv_lang["security_no_create"]		= "Avviso di sicurezza: Non è possibile creare
 $pgv_lang["security_not_exist"]		= "Avviso di sicurezza: Il file <b><i>index.php</i></b> non esiste in ";
 $pgv_lang["about_user"]					= "È necessario prima creare il tuo utente principale amministrativeo. Questo utente avrà i privilegi necessari per aggiornare il file di configurazione, visualizzare i dati privati e creare altri utenti.";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]		= "Permetti il cambio GEDCOM";
-$pgv_lang["ALLOW_REMEMBER_ME"]			= "Mostra l'opzione <b>Ricordami</b> nella pagina di accesso";
 $pgv_lang["config_help"]						= "Aiuto di Configurazione";
 $pgv_lang["comment"]							= "Commenti dell'Amministratore sull'utente";
 $pgv_lang["comment_exp"]						= "Avvisi dell'Amministratore alla data";

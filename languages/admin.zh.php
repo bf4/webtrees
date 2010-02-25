@@ -53,7 +53,6 @@ $pgv_lang["admin_site"]					= "网站管理";
 $pgv_lang["admin_approved"]		= "Your account at #SERVER_NAME# has been approved";
 $pgv_lang["administration"]		= "管理";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]		= "可以换其它家谱";
-$pgv_lang["ALLOW_REMEMBER_ME"]			= "在登陆页显示 <b>记住我</b> ";
 $pgv_lang["ALLOW_USER_THEMES"]			= "用户可以选择自己的背景主题";
 $pgv_lang["ansi_to_utf8"]		= "轉換這個ANSI (ISO-8859-1) 編碼GEDCOM 成UTF-8?";
 $pgv_lang["apply_privacy"]				= "设置隐私？";

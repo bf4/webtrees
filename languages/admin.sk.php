@@ -97,7 +97,6 @@ $pgv_lang["admin_user_warnings"]	= "Jeden, alebo viacero užívateľov má upozo
 $pgv_lang["admin_verification_waiting"] = "Užívateľské účty čakajúce na verifikáciu administrátorom";
 $pgv_lang["administration"]		= "Administrácia";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]	= "Povoliť prepínanie medzi GEDCOM súbormi";
-$pgv_lang["ALLOW_REMEMBER_ME"]		= "Zobraziť voľbu <b>Uložiť v tomto počítači?</b> na prihlasovacej stránke.";
 $pgv_lang["ALLOW_USER_THEMES"]		= "Umožniť uživateľom vybrať si vlastný motív";
 $pgv_lang["ansi_encoding_detected"]	= "Rozoznané kódovanie ANSI. PhpGedView pracuje najlepšie zo súbormi s kódovaním UTF-8.";
 $pgv_lang["ansi_to_utf8"]		= "Previesť kódovanie v tomto GEDCOM súbore z ANSI (ISO-8859-1) na UTF-8?";

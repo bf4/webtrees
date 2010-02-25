@@ -185,7 +185,6 @@ $pgv_lang["admin_user_warnings"]		= "En eller flere brukerkontoer har advarsler"
 $pgv_lang["admin_verification_waiting"] = "Brukerkonto(er) på vent for godkjenning av admin";
 $pgv_lang["administration"]			= "Administrasjon";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"] 		= "Tillat bytting av slektsbaser";
-$pgv_lang["ALLOW_REMEMBER_ME"]			= "Vis valget <b>Husk meg</b> på siden Logg inn";
 $pgv_lang["ALLOW_USER_THEMES"] 			= "Tillat brukere å velge<br />deres egen stil";
 $pgv_lang["ansi_encoding_detected"]	= "Oppdaget ANSI tekstkoding.  PhpGedView fungerer best med filer som er kodet med UTF-8.";
 $pgv_lang["ansi_to_utf8"]			= "Konvertere fra ANSI til UTF-8 tegnsett?";

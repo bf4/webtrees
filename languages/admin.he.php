@@ -232,7 +232,6 @@ $pgv_lang["admin_user_warnings"]	= "לאחד או יותר משתמשים יש �
 $pgv_lang["admin_verification_waiting"] 	= "על המנהלן לאשר קוד/י משתמש.";
 $pgv_lang["administration"]		= "ניהול";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]	= "הרשה מעבר בין GEDCOM-ים";
-//$pgv_lang["ALLOW_REMEMBER_ME"]	= "הראה את האופציה <b>זכור אותי</b> על דף ההתחברות";
 $pgv_lang["ALLOW_USER_THEMES"]	= "אפשר למשתמשים לבחור עיצוב";
 $pgv_lang["ansi_encoding_detected"]	= "הקובץ במבנה PhpGedView .ANSI עובד הכי טוב עם קבצים במבנה UTF-8.";
 $pgv_lang["ansi_to_utf8"]		= "הסב קובץ GEDCOM זה מ-ANSI ל-UTF-8?";
