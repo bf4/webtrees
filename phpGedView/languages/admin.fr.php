@@ -174,7 +174,6 @@ $pgv_lang["admin_user_warnings"]        = "Un ou plusieurs comptes ont un averti
 $pgv_lang["admin_verification_waiting"] = "Comptes en attente de vérification par l'administrateur";
 $pgv_lang["administration"]             = "Administration";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]        = "Autoriser le choix du fichier GEDCOM";
-$pgv_lang["ALLOW_REMEMBER_ME"]          = "Autoriser l'option «Rester connecté»";
 $pgv_lang["ALLOW_USER_THEMES"]          = "Permettre aux utilisateurs de choisir leur propre thème";
 $pgv_lang["ansi_encoding_detected"]     = "Ce fichier est au format ANSI. PhpGedView recommande le format UTF-8.";
 $pgv_lang["ansi_to_utf8"]               = "Convertir ce fichier GEDCOM format ANSI en format UTF-8 ?";

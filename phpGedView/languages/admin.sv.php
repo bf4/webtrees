@@ -97,7 +97,6 @@ $pgv_lang["admin_user_warnings"]		= "Ett eller flera användarkonton har varning
 $pgv_lang["admin_verification_waiting"] = "Användarkonton som väntar på att verifieras av administratören";
 $pgv_lang["administration"]		= "Administration";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]		= "Tillåt byte av GEDCOM";
-$pgv_lang["ALLOW_REMEMBER_ME"]			= "Visa <b>Kom ihåg mig</b> val på inloggningssidan";
 $pgv_lang["ALLOW_USER_THEMES"]			= "Tillåt användare att välja sitt eget tema";
 $pgv_lang["ansi_encoding_detected"]	= "ANSIkodning upptäckt i filen. PhpGedView fungerar bäst med teckenkodningen UTF-8.";
 $pgv_lang["ansi_to_utf8"]		= "Konvertera denna ANSI(iso-8859-1) kodade GEDCOM till UTF-8?";

@@ -182,7 +182,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["admin_verification_waiting"] = "User accounts awaiting verification by admin";
 ##$pgv_lang["administration"] 			= "Administration";
 ##$pgv_lang["ALLOW_CHANGE_GEDCOM"]		= "Allow GEDCOM switching";
-##$pgv_lang["ALLOW_REMEMBER_ME"]			= "Show <b>Remember Me</b> option on Login page";
 ##$pgv_lang["ALLOW_USER_THEMES"]			= "Allow users to select their own theme";
 ##$pgv_lang["ansi_encoding_detected"] 	= "ANSI file encoding detected.	PhpGedView works best with files encoded in UTF-8.";
 ##$pgv_lang["ansi_to_utf8"]				= "Convert this ANSI encoded GEDCOM to UTF-8?";

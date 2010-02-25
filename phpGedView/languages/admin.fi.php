@@ -99,7 +99,6 @@ $pgv_lang["admin_user_warnings"]	= "Yhdellä tai useammalla tilillä on varoitus
 $pgv_lang["admin_verification_waiting"] = "Käyttäjätilit odottavat ylläpidon varmennusta";
 $pgv_lang["admin_site"]		= "Sivuston ylläpito";
 $pgv_lang["administration"]		= "Järjestelmänhallinta";
-//$pgv_lang["ALLOW_REMEMBER_ME"] = "Näytä <b>Muista minut</b> valinta kirjautumissivulla";
 $pgv_lang["ALLOW_USER_THEMES"] = "Salli käyttäjien valita itselleen oma teema";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"] = "Salli GEDCOM:n vaihto";
 $pgv_lang["ansi_encoding_detected"] = "Havaittiin ANSI tiedostokoodaus. PhpGedView toimii parhaiten, kun tiedostot on koodattu UTF-8-muotoon.";

@@ -65,7 +65,6 @@ $pgv_lang["THUMBNAIL_WIDTH"]="Largura das Miniaturas geradas";
 $pgv_lang["SHOW_SOURCES"]="Exibir Fontes";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"]="Registro dos novos usuários deverão ser aprovados pelo administrador";
 $pgv_lang["SPLIT_PLACES"]="Na edição, \"quebre\" os Locais";
-$pgv_lang["ALLOW_REMEMBER_ME"]="Exibir a opção <b>Lembre-se de Mim</b> na página de identificação";
 $pgv_lang["UNDERLINE_NAME_QUOTES"]="Sublinhe nomes entre aspas";
 $pgv_lang["PRIVACY_BY_RESN"]="Respeitar e Usar a restrição a priovacidade do GEDCOM (RESN)";
 $pgv_lang["GEDCOM_DEFAULT_TAB"]="A ficha que será exibida primeiro na página da pessoa";
