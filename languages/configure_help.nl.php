@@ -528,7 +528,6 @@ $pgv_lang["um_nofav"]				= "Er zijn geen favorieten aanwezig in het systeem.";
 $pgv_lang["um_nonews"]				= "Er zijn geen nieuwsberichten aanwezig in het systeem.";
 $pgv_lang["um_noblocks"]			= "Er zijn geen indelingsdefinities aanwezig in het systeem.";
 $pgv_lang["um_index_sql"]			= "Dit programma importeert de gegevens uit het \"authenticate.php\" bestand en uit de .dat bestanden in uw indexmap, in uw database.<br />";
-$pgv_lang["um_mixedmode"]			= "U gebruikt PhpGedView in SQL-modus, maar u gebruikt de autenticatiemodule van de index-modus.<br /><br />Alle gebruikersgegevens, favorieten, vakdefinities voor de Welkomst- en MyGedView-pagina's, berichten en nieuwsberichten worden al opgeslagen in een formaat dat in de index-modus kan worden gebruikt.<br />U kunt nu naar index-modus overschakelen, het migreren van gebruikersinformatie is niet noodzakelijk.<br />";
 $pgv_lang["um_noaction"]			= "Er zijn nu geen handelingen nodig om de gebruikersinformatie naar SQL-modus over te zetten.<br />Zodra u bent overgeschakeld naar SQL-modus, kunt u dit programma opnieuw starten om alle gebruikersgegevens in uw SQL-database te importeren.<br />U dient het bestand \"authenticate.php\" en de .dat bestanden <b>niet</b> uit uw indexmap te verwijderen bij het overschakelen.<br />";
 $pgv_lang["um_import"]				= "Import";
 $pgv_lang["um_export"]				= "Export";

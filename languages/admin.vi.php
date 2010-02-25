@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -124,7 +126,5 @@ $pgv_lang["view_logs"]				= "Xem tập tin nhật ký";
 $pgv_lang["view_readme"]			= "Xem tập tin readme.txt";
 $pgv_lang["visibleonline"]			= "Xem thấy được bởi những người dùng khác khi nào trực tuyến";
 $pgv_lang["visitor"]				= "Khách";
-$pgv_lang["you_may_login"]			= "bởi quản lý của website này. Bây giờ có thể bạn truy nhập website PhpGedView bằng mối dưới này.";
-
 
 ?>

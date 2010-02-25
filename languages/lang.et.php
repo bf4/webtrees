@@ -263,10 +263,7 @@ $pgv_lang["box_width"] 		= "laius";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Ei leia perekonda, mille ID on";
-$pgv_lang["unable_to_find_indi"]	= "Ei leia isikut, kelle ID on";
 $pgv_lang["unable_to_find_record"]	= "Ei leia kiret, mille ID on";
-$pgv_lang["unable_to_find_source"]	= "Ei leia allikat, mille ID on";
-$pgv_lang["unable_to_find_repo"]	= "Ei leia hoidlat, mille ID on";
 $pgv_lang["repo_name"]		= "Hoidla nimi:";
 $pgv_lang["address"]			= "Aadress:";
 $pgv_lang["phone"]			= "Telefon:";
@@ -562,7 +559,6 @@ $pgv_lang["import_gedcom"]			= "Impordi GEDCOM fail";
 $pgv_lang["duplicate_username"] 		= "Korduv kasutajanimi. Sellise kasutajanimega kasutaja on juba olemas.  Vali uus kasutajanimi.";
 $pgv_lang["gedcomid"]			= "GEDCOM INDI kirje ID";
 $pgv_lang["enter_gedcomid"] 			= "Sisesta GEDCOM ID.";
-$pgv_lang["user_info"]			= "Minu kasutajainfo";
 $pgv_lang["rootid"] 				= "Esivanemate puu algab";
 $pgv_lang["download_gedcom"]			= "Laadi GEDCOM fail alla";
 $pgv_lang["upload_gedcom"]			= "Laadi GEDCOM üles";
@@ -577,8 +573,6 @@ $pgv_lang["gedadmin"]			= "GEDCOM administraator";
 $pgv_lang["siteadmin"]			= "Veebiadministraator";
 $pgv_lang["apply_privacy"]			= "Rakenda privaatsusseaded?";
 $pgv_lang["choose_priv"]			= "Vali privaatsuse tase:";
-$pgv_lang["user_manual"]			= "PhpGedView kasutusjuhend";
-$pgv_lang["upgrade"]				= "Uuenda PhpGedView";
 $pgv_lang["view_logs"]			= "Vaata logifaile";
 $pgv_lang["validate_gedcom"]			= "Kontrolli GEDCOM";
 $pgv_lang["pgv_registry"]			= "Vaata teisi saite, mis kasutavad programmi PhpGedView";

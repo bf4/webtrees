@@ -183,7 +183,5 @@ $pgv_lang["view_logs"]					= "Bekijk log-bestanden";
 $pgv_lang["view_readme"]				= "README documentatie";
 $pgv_lang["visibleonline"]				= "Zichtbaar voor anderen als aangemeld";
 $pgv_lang["visitor"]					= "Bezoeker";
-$pgv_lang["you_may_login"]				= " door de Beheerder. U kunt nu aanloggen op de website door op de onderstaande koppeling te klikken.";
-
 
 ?>

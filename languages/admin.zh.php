@@ -167,8 +167,6 @@ $pgv_lang["all_rec"]      = "所有记录";
 $pgv_lang["missing"]      = "丢失";
 $pgv_lang["data"]         = "纪录";
 $pgv_lang["SURNAME_TRADITION"] = "姓放在前后";
-$pgv_lang["you_may_login"]		= " by the site administrator.  You may now login to the PhpGedView Site by going to the link below:";
-
 
 $pgv_lang["associated_files"]		= "有联系的文件：";
 $pgv_lang["warn_file_delete"]		= "这个文件有重要的语言设置或等待改变的数据。你肯等要删除它吗？";
