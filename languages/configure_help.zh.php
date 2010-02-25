@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -149,6 +151,5 @@ $pgv_lang["POSTAL_CODE"]  = "邮编号码位置";
 $pgv_lang["SUBLIST_TRIGGER_I"]		= "最多姓";
 $pgv_lang["SUBLIST_TRIGGER_F"]		= "最多的姓";
 $pgv_lang["SURNAME_LIST_STYLE"]		= "姓列表的格式";
-$pgv_lang["NAME_FROM_GEDCOM"]		= "从家铺文件中读取姓名";
 $pgv_lang["SHOW_LAST_CHANGE"]		= "选择家谱记录近期改变的日期";
 ?>

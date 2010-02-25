@@ -49,7 +49,6 @@ $pgv_lang["SHOW_NO_WATERMARK"]			= "Kdo lahko gleda slike brez vodnega tiska?";
 $pgv_lang["WATERMARK_THUMB"]			= "Sličicam dodaj vodni tisk?";
 $pgv_lang["SAVE_WATERMARK_THUMB"]		= "Shrani sličice z vodnim tiskom na strežniku?";
 $pgv_lang["SAVE_WATERMARK_IMAGE"]		= "Shrani fotografije z vodnim tiskom na strežniku?";
-$pgv_lang["DBPERSIST"]				= "Uporabi trajne povezave na bazo podatkov";
 $pgv_lang["INDI_FACTS_ADD"] 			= "Dejstva Dodaj osebo";
 $pgv_lang["INDI_FACTS_UNIQUE"] 			= "Dejstva Posebnosti osebe";
 $pgv_lang["INDI_FACTS_QUICK"] 			= "Kratka dejstva osebe";
@@ -232,7 +231,6 @@ $pgv_lang["META_PAGE_TYPE"]		= "META oznaka tipa strani";
 $pgv_lang["META_ROBOTS"]		= "META oznaka za robote";
 $pgv_lang["META_REVISIT"]		= "Kako pogosto naj spletni pajki preverijo META oznaka";
 $pgv_lang["META_KEYWORDS"]		= "META oznaka ključnih besed";
-$pgv_lang["META_SURNAME_KEYWORDS"]		= "Dodaj pogoste priimke v META polje ključnih besed";
 $pgv_lang["META_TITLE"]				= "Dodaj k TITLE oznaki";
 
 $pgv_lang["ENABLE_RSS"]				= "Vključi RSS";

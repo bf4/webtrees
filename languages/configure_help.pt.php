@@ -36,8 +36,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["COMMIT_COMMAND_help"]="~#pgv_lang[COMMIT_COMMAND]#~<br /><br />Deixe em branco caso não queira utilizar um sistema de controle de versão tal como o CVS para salvar as alterações e configurações do seu GEDCOM, caso contrário as opções são <b>cvs</b> e <b>svn</b>.<br />";
 $pgv_lang["SHOW_MULTISITE_SEARCH_help"]="~#pgv_lang[SHOW_MULTISITE_SEARCH]#~<br /><br />Esta opção restringe ou não o uso da pesquisa Multi-Site aos usuários identificados. A pesquisa Multi-Site procura a informação nos sites cadastrados em \"Gerenciar Sites\" e nos sites remotos.<br />";
 $pgv_lang["SHOW_MULTISITE_SEARCH"]="Exibir Pesquisa Multi-Site";
-$pgv_lang["DBPERSIST"]="Usar conexão permanente com o Banco de Dados";
-$pgv_lang["DBPERSIST_help"]="Define se a conexão do PhpGedView com o Banco de Dados é perene.<br /><br />Em caso afirmativo, o PhpGedView reutiliza as conexões com o banco de dados agilizando a montagem das páginas. Entretanto isso pode ocasionar êrros se o limite máximo de seu servidor for baixo. Na dúvida responda <b>Não</b>.<br />";
 $pgv_lang["INDI_FACTS_ADD"]="Fatos/Eventos da Pessoa";
 $pgv_lang["INDI_FACTS_ADD_help"]="~#pgv_lang[INDI_FACTS_ADD]#~<br /><br />Esta é a lista de fatos que os usuários podem adicionar às pessoas da árvore. Você pode criar novos tipos ou remover alguns deles conforme sua necessidade. Tipos de fatos que aperecem nesta lista não devem aparecer na lista <i>#pgv_lang[INDI_FACTS_UNIQUE]#</i>.<br />";
 $pgv_lang["INDI_FACTS_UNIQUE"]="Fatos Singulares da Pessoa";
