@@ -173,7 +173,6 @@ $pgv_lang["keep"]			= "שמור";
 $pgv_lang["unlink"]			= "מחק קישור";
 $pgv_lang["nav"]			= "נווט";
 $pgv_lang["fam_nav"]			= "נווט משפחה";
-$pgv_lang["remove"]			= "הסר";
 $pgv_lang["keep_link"]		= "שמור קישור ברשימה";
 $pgv_lang["remove_link"]		= "הסר קישור מרשימה";
 $pgv_lang["open_nav"]		= "פתח נווט משפחה";

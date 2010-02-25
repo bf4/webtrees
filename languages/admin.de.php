@@ -155,7 +155,6 @@ $pgv_lang["keep"]					= "Behalten";
 $pgv_lang["unlink"]					= "Löschen";
 $pgv_lang["nav"]					= "Lotse";
 $pgv_lang["fam_nav"]				= "Familienlotse";
-$pgv_lang["remove"]					= "Entfernen";
 $pgv_lang["keep_link"]				= "Verbindung behalten";
 $pgv_lang["remove_link"]			= "Verbindung löschen";
 $pgv_lang["open_nav"]				= "Familienlotse starten";

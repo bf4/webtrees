@@ -439,7 +439,6 @@ $pgv_lang["enter_pid_or_name"]		= "Bireysel numarası ya da isim girin";
 $pgv_lang["add_or_remove_links"]	= "Link yönetimi";
 $pgv_lang["keep"]					= "Sakla";
 $pgv_lang["unlink"]					= "Linksiz";
-$pgv_lang["remove"]					= "Kaldır";
 $pgv_lang["keep_link"]				= "Liste içindeki link sakla";
 $pgv_lang["link_exists"]			= "Bu link zaten mevcut";
 $pgv_lang["id_not_valid"]			= "Geçerli bir Kişisel, Aile veya Kaynak Kimliği yok";

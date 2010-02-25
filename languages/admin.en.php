@@ -173,7 +173,6 @@ $pgv_lang["keep"]					= "Keep";
 $pgv_lang["unlink"]					= "Unlink";
 $pgv_lang["nav"]					= "Navigator";
 $pgv_lang["fam_nav"]				= "Family Navigator";
-$pgv_lang["remove"]					= "Remove";
 $pgv_lang["keep_link"]				= "Keep Link in list";
 $pgv_lang["remove_link"]			= "Remove Link from list";
 $pgv_lang["open_nav"]				= "Open Family Navigator";

@@ -145,7 +145,6 @@ $pgv_lang["keep"]					= "Zachowaj";
 $pgv_lang["unlink"]					= "Usuń";
 $pgv_lang["nav"]					= "Nawigator";
 $pgv_lang["fam_nav"]				= "Nawigator rodziny";
-$pgv_lang["remove"]					= "Usuń";
 $pgv_lang["keep_link"]				= "Zachowaj powiązanie na liście";
 $pgv_lang["remove_link"]			= "Usuń powiązanie z listy";
 $pgv_lang["open_nav"]				= "Otwórz nawigator rodziny";

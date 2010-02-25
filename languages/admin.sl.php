@@ -174,7 +174,6 @@ $pgv_lang["keep"]					= "Ohrani";
 $pgv_lang["unlink"]					= "Razkleni";
 $pgv_lang["nav"]					= "Pregledovalnik";
 $pgv_lang["fam_nav"]				= "Družinski pregledovalnik";
-$pgv_lang["remove"]					= "Odstrani";
 $pgv_lang["keep_link"]				= "Ohrani povezavo na seznamu";
 $pgv_lang["remove_link"]			= "Odstrani povezavo s seznama";
 $pgv_lang["open_nav"]				= "Odpri družinski pregledovalnik";

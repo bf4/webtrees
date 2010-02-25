@@ -436,7 +436,6 @@ $pgv_lang["keep"]					= "Conserva";
 $pgv_lang["unlink"]					= "Desvincula";
 $pgv_lang["nav"]					= "Navegador";
 $pgv_lang["fam_nav"]				= "Navegador familiar";
-$pgv_lang["remove"]					= "Suprimeix";
 $pgv_lang["keep_link"]				= "Manté l'enllaç a la llista";
 $pgv_lang["remove_link"]			= "Elimina l'enllaç de la llista";
 $pgv_lang["open_nav"]				= "Obre el navegador familiar";

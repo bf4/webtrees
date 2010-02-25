@@ -423,7 +423,6 @@ $pgv_lang["add_or_remove_links"]	= "Håndtér links";
 $pgv_lang["keep"]					= "Behold";
 $pgv_lang["fam_nav"]				= "Familie-navigator";
 $pgv_lang["nav"]					= "Navigator";
-$pgv_lang["remove"]					= "Fjern";
 $pgv_lang["keep_link"]				= "Behold link i listen";
 $pgv_lang["remove_link"]			= "Fjern link fra listen";
 $pgv_lang["open_nav"]				= "Åben familie-navigatoren";
