@@ -696,7 +696,6 @@ $pgv_lang["heading_researchlog"]	= "Log-файлы (архив, статисти
 $pgv_lang["heading_researchloglang"]	= "Языковые log-файлы (архив, статистика):";
 $pgv_lang["heading_language"]		= "Файлы языков";
 $pgv_lang["copied_success"]		= "Копирование удачно завершено";
-$pgv_lang["backup_copied_success"]	= "Архивное копирование завершена успешно.";
 $pgv_lang["process_error"]		= "Проблема с этой страницей. Более новая версия не найдена.";
 $pgv_lang["upgrade_completed"]		= "Обновление успешно завершено";
 $pgv_lang["start_using_upgrad"]		= "Нажмите сюда, чтобы начать использовать версию";

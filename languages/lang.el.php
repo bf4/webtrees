@@ -699,7 +699,6 @@ $pgv_lang["heading_docs"]						= "Εγχειρίδια:";
 $pgv_lang["heading_researchlog"]				= "Research Log files:";
 $pgv_lang["heading_researchloglang"]			= "Research Log language files:";
 $pgv_lang["copied_success"]						= "copied successfully.";
-$pgv_lang["backup_copied_success"]				= "backup file created successfully.";
 $pgv_lang["process_error"]						= "There is a problem processing the page. A newer version cannot be determined.";
 $pgv_lang["upgrade_completed"]					= "Upgrade Completed Successfully";
 $pgv_lang["start_using_upgrad"]					= "Click here to begin using version";
