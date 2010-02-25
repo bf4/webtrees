@@ -456,8 +456,6 @@ $pgv_lang["never"]									= "Ποτέ";
 $pgv_lang["um_header"]								= "User Information Migration Tool";
 $pgv_lang["um_proceed"]								= "Proceed with export of user data files?<br /><br />";
 $pgv_lang["um_creating"]							= "Creating";
-$pgv_lang["um_sql_index1"]							= "This tool will create .dat files in your index directory:";
-$pgv_lang["um_sql_index2"]							= "After succesful creation, you can switch to index mode with all current users and their messages, favorites, news and MyGedview layout available.<br />Note: After switching to index mode it will be neccessary to import your GEDCOM files(s) again.<br /><br />";
 $pgv_lang["um_file_create_fail1"]					= "Creation of new file failed, a file with that name already exists:";
 $pgv_lang["um_file_create_fail2"]					= "Cannot create";
 $pgv_lang["um_file_create_fail3"]					= "Check access rights on this directory.";
@@ -467,9 +465,5 @@ $pgv_lang["um_nomsg"]								= "No messages seem to be present in the system.";
 $pgv_lang["um_nofav"]								= "No favorites seem to be present in the system.";
 $pgv_lang["um_nonews"]								= "No news seems to be present in the system.";
 $pgv_lang["um_noblocks"]							= "No blocks seems to be present in the system.";
-$pgv_lang["um_index_sql1"]							= "This tool will create a set of SQL queries in your index directory:";
-$pgv_lang["um_index_sql2"]							= "These files can be run as a query on your SQL database, after installation of or switching to the SQL version of PhpGedView.<br /><br />After switching to SQL mode, you will have to import your GEDCOM files again.";
-$pgv_lang["um_query_not_created"]					= "Query is not created.";
-
 
 ?>

@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -105,7 +107,5 @@ $pgv_lang["verified_by_admin"]					= "User Approved by Admin";
 $pgv_lang["verify_upload_instructions"]			= "If you choose to continue, the old GEDCOM file will be replaced with the file that you uploaded and the import process will begin again.  If you choose to cancel, the old GEDCOM will remain unchanged.";
 $pgv_lang["view_logs"]							= "View logfiles";
 $pgv_lang["visibleonline"]						= "Visible to other users when online";
-$pgv_lang["you_may_login"]						= " by the site administrator.  You may now login to the PhpGedView Site by going to the link below:";
-
 
 ?>

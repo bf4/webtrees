@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -120,7 +122,5 @@ $pgv_lang["view_logs"]				= "Žiūrėti log failus";
 $pgv_lang["view_readme"]			= "Žiūrėti readme.txt failą";
 $pgv_lang["visibleonline"]			= "Kai prisijungęs, matomas kitiems naudotojams";
 $pgv_lang["visitor"]				= "Lankytojas";
-$pgv_lang["you_may_login"]			= "puslapio administratoriaus. Dabar Jūs galite prisijungti prie PhpGedView naudojant nuorodą:";
-
 
 ?>

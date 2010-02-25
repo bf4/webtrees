@@ -461,8 +461,6 @@ $pgv_lang["never"]					= "Nikdy";
 $pgv_lang["um_header"] = "Nástroj pro přesun informací o uživatelích";
 $pgv_lang["um_proceed"] = "Pokračovat v exportu uživatelských datových souborů?<br /><br />";
 $pgv_lang["um_creating"] = "Kopírování";
-$pgv_lang["um_sql_index1"] = "Tento nástroj vytvoří ve vaší složce index soubory s příponou .dat.";
-$pgv_lang["um_sql_index2"] = "Po úspěšném zkopírování se můžete přepnout do režimu Index (z režimu Databáze), přičemž všichni nynější uživatelé, jejich zprávy, oblíbené, novinky a vzhled MyGedView zůstanou dostupné.<br />Pozor: Po přepnutí do režimu Index bude nezbytné znovu importovat GEDCOM soubory.<br /><br />";
 $pgv_lang["um_file_create_fail1"] = "Nebylo možné vytvořit nový soubor; soubor s tímto názvem již existuje:";
 $pgv_lang["um_file_create_fail2"] = "Není možné zkopírovat";
 $pgv_lang["um_file_create_fail3"] = "Zkontrolujte přístupová práva k této složce.";
@@ -472,7 +470,4 @@ $pgv_lang["um_nomsg"] = "Zdá se, že v tuto chvíli v systému nejsou žádné 
 $pgv_lang["um_nofav"] = "Zdá se, že v tuto chvíli nejsou v systému žádné oblíbené,";
 $pgv_lang["um_nonews"] = "Zdá se, že v tuto chvíli nejsou v systému žádné novinky.";
 $pgv_lang["um_noblocks"] = "Zdá se, že v tuto chvíli nejsou v systému žádné bloky.";
-$pgv_lang["um_index_sql1"] = "Tento nástroj vytvoří ve vaší složce index sadu SQL dotazů:";
-$pgv_lang["um_index_sql2"] = "Po instalaci nebo přepnutí PhpGedView do verze SQL, mohou být tyto soubory použity jako požadavky na vaši SQL databázi.<br /><br />Po přepnutí do režimu SQL, budete muset znovu importovat vaše GEDCOM soubory.";
-$pgv_lang["um_query_not_created"] = "Dotaz (SQL) nebyl vytvořen.";
 ?>

@@ -179,7 +179,5 @@ $pgv_lang["view_logs"]="Exibir Logs";
 $pgv_lang["view_readme"]="Leia o arquivo readme.txt";
 $pgv_lang["visibleonline"]="Visível para outros usuários quando on-line";
 $pgv_lang["visitor"]="Visitante";
-$pgv_lang["you_may_login"]=" pelo administrador do site. Agora você pode acessar o  Site clicando no link abaixo:";
-
 
 ?>

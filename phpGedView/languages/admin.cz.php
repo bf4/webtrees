@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -108,7 +110,5 @@ $pgv_lang["verified_by_admin"]		= "Uživatel byl adminem povolen";
 $pgv_lang["verify_upload_instructions"]	= "Zvolíte-li pokračování, bude starý GEDCOM soubor nahrazen novým souborem, který jste nahráli, a importování začne znovu. Zvolíte-li konec, zůstane starý soubor zachován.";
 $pgv_lang["view_logs"]			= "Zobrazit logfiles";
 $pgv_lang["visibleonline"]			= "Viditelný pro jiné uživatele, když je online";
-$pgv_lang["you_may_login"]		= " administrátorem stránek. Nyní se můžete odkazem níže přihlásit do systému PhpGedView:";
-
 
 ?>
