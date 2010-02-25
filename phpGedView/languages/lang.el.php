@@ -289,7 +289,6 @@ $pgv_lang["unable_to_create_index"]				= "Αδύνατο να δημιουργη
 $pgv_lang["indi_complete"]						= "Individual Index file update complete.";
 $pgv_lang["family_complete"]					= "Family Index file update complete.";
 $pgv_lang["source_complete"]					= "Source Index file update complete.";
-$pgv_lang["tables_exist"]						= "PhpGedView Tables already exist in the database";
 $pgv_lang["drop_tables"]						= "Διαγραφή των υπαρχόντων πινάκων της βάσης δεδομένων";
 $pgv_lang["import_multiple"]					= "Import and work with multiple GEDCOMs";
 $pgv_lang["explain_options"]					= "If you choose to drop the tables all of the data will be replaced with this GEDCOM.<br />If you choose to import and work with multiple GEDCOMs, PhpGedView will erase any data that was imported using a GEDCOM with the same file name.  This option allows you to store multiple GEDCOM data in the same tables and easily switch between them.";
@@ -459,7 +458,6 @@ $pgv_lang["all_people"]							= "Όλα τα άτομα";
 $pgv_lang["living_only"]						= "Ζωντανά άτομα";
 $pgv_lang["recent_events"]						= "Πρόσφατα έτη (&lt; 100 έτη)";
 $pgv_lang["day_not_set"]						= "Δεν ορίστηκε ημέρα";
-$pgv_lang["year_error"]							= "Sorry, dates before 1970 are not supported.";
 //-- upload media messages
 //-- user self registration module
 //$pgv_lang["no_pw_or_account"]					= "If you have no account yet, or lost your password, just click the <b>Login</b> button";
@@ -658,7 +656,6 @@ $pgv_lang["inc_themes"]							= " Themes";
 $pgv_lang["inc_docs"]							= " Manuals";
 $pgv_lang["inc_privacy"]						= " Privacy file(s)";
 $pgv_lang["inc_backup"]							= " Create backup";
-$pgv_lang["upgrade_help"]						= " Help me";
 $pgv_lang["cannot_read"]						= "Cannot read file:";
 $pgv_lang["not_configured"]						= "You do not have PhpGedView configured yet.";
 $pgv_lang["location_upgrade"]					= "Please fill in the location of your upgrade files.";

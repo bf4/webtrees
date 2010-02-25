@@ -304,7 +304,6 @@ $pgv_lang["file_read_error"]						= "E R R O R !!! Could not read privacy-file!"
 $pgv_lang["general_settings"]						= "General Privacy settings";
 $pgv_lang["person_privacy_settings"]				= "Person Privacy settings";
 $pgv_lang["edit_exist_person_privacy_settings"]		= "Edit existing settings for Person Privacy ";
-$pgv_lang["user_privacy_settings"]					= "User Privacy settings";
 $pgv_lang["edit_exist_user_privacy_settings"]		= "Edit existing settings for User Privacy";
 $pgv_lang["global_facts_settings"]					= "Global Fact Privacy settings";
 $pgv_lang["edit_exist_global_facts_settings"]		= "Edit existing settings for Global Fact Privacy";

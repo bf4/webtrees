@@ -1484,14 +1484,11 @@ $pgv_lang["statsubmit"]			= "Vis diagram";
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]	= "Statistikplot";
 $pgv_lang["stpl"]			 	= "...";
-$pgv_lang["stplGDno"]			= "Grafisk programpakke (GD) er ikke tilgængelig i PHP 4. Kontakt venligst administratoren for din hjemmesideserver";
-$pgv_lang["stpljpgraphno"]		= "JPgraph moduler findes ikke i mappen <i>phpgedview/jpgraph/</i>.  Hent dem venligst hos http://www.aditus.nu/jpgraph/jpdownload.php<br> <h3>Installer først JPgraph i mappen <i>phpgedview/jpgraph/</i></h3><br>";
 $pgv_lang["stplinfo"]			= "diagraminformation:";
 $pgv_lang["stpltype"]			= "type:";
 $pgv_lang["stplnoim"]			= " ikke tilgængelig:";
 $pgv_lang["stplmf"]			 	= " / mand-kvinde";
 $pgv_lang["stplipot"]			= " / pr. tidsenhed";
-$pgv_lang["stplgzas"]			= "grænser på z-akse:";
 $pgv_lang["stplmonth"]			= "måned";
 $pgv_lang["stplnumbers"]		= "antal for en familie";
 $pgv_lang["stplage"]			= "alder";

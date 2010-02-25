@@ -282,7 +282,6 @@ $pgv_lang["unable_to_create_index"]		= "Není možné vytvořit soubor index. Uj
 $pgv_lang["indi_complete"]			= "Aktualizace souboru s rejstříkem osob je hotova.";
 $pgv_lang["family_complete"]			= "Aktualizace souboru s rejstříkem rodin je hotova.";
 $pgv_lang["source_complete"]			= "Aktualizace souboru s rejstříkem zdrojů je hotova.";
-$pgv_lang["tables_exist"]			= "Tabulky PhpGedView již v databázi existují.";
 $pgv_lang["drop_tables"]			= "Smazat nynější tabulky";
 $pgv_lang["import_multiple"]			= "Importovat a pracovat s více GEDCOM soubory";
 $pgv_lang["explain_options"]			= "Jestliže zvolíte možnost \"smazat tabulky\", všechna budou nahrazena tímto GEDCOM souborem.<br />Pokud zvolíte \"importovat a pracovat s GEDCOM soubory\", PhpGedView smaže jakákoliv data, která byla importována ze stejnojmenného GEDCOM souboru. Tato volba vám umožňuje ukládat data z více GEDCOM souborů ve stejných tabulkách a jednoduše mezi nimi přepínat.";
@@ -454,7 +453,6 @@ $pgv_lang["all_people"]			= "Všichni lidé";
 $pgv_lang["living_only"]		= "Žijící lidé";
 $pgv_lang["recent_events"]		= "Nedávné události (&lt; 100 let)";
 $pgv_lang["day_not_set"]			= "Datum nezadáno";
-$pgv_lang["year_error"]			= "Data před rokem 1970 bohužel nejsou podporována.";
 //-- upload media messages
 $pgv_lang["lost_password"]		= "Zapomněli jste své heslo?";
 //-- user self registration module
@@ -653,7 +651,6 @@ $pgv_lang["inc_themes"]			= " Motivy";
 $pgv_lang["inc_docs"]			= " Manuály";
 $pgv_lang["inc_privacy"]		= " Soubory privátního nastavení";
 $pgv_lang["inc_backup"]			= " Vytvořit zálohu";
-$pgv_lang["upgrade_help"]		= " Pomoc";
 $pgv_lang["cannot_read"]		= "Nelze číst soubor:";
 $pgv_lang["not_configured"]		= "Ještě jste si PhpGedView nenakonfigurovali.";
 $pgv_lang["location_upgrade"]	= "Prosím vyplňte umístění svých aktualizovaných souborů.";

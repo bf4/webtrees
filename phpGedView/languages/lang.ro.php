@@ -1543,14 +1543,11 @@ $pgv_lang["statsubmit"]			 = "arată graficul";
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]	 = "Graficul statisticilor";
 $pgv_lang["stpl"]			 	 = "...";
-$pgv_lang["stplGDno"]			 = "Librăria pentru afişat grafice nu este instalată pe server. Vă rugăm contactaţi administratorul de sistem.";
-$pgv_lang["stpljpgraphno"]		 = "Librăria JPgraph nu este instalată în PhpGedView. Vă rugăm să o descărcaţi de la http://www.aditus.nu/jpgraph/jpdownload.php<br /> şi să o copiaţi în subdirectorul <i>jpgraph/</i> pe server.";
 $pgv_lang["stplinfo"]			 = "informaţiile despre grafic:";
 $pgv_lang["stpltype"]			 = "tipul:";
 $pgv_lang["stplnoim"]			 = " nu este implementat:";
 $pgv_lang["stplmf"]			 = " / bărbat-femeie";
 $pgv_lang["stplipot"]			 = " / pe perioada de timp";
-$pgv_lang["stplgzas"]			 = "limitele axei Z:";
 $pgv_lang["stplmonth"]			 = "luna";
 $pgv_lang["stplnumbers"]		 = "numerele pentru o familie";
 $pgv_lang["stplage"]			 = "vârsta";

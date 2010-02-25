@@ -709,7 +709,6 @@ $pgv_lang["all_people"] 			= "Kõik inimesed";
 $pgv_lang["living_only"]			= "Elavad inimesed";
 $pgv_lang["recent_events"]			= "Viimased aastad (< 100 a)";
 $pgv_lang["day_not_set"]			= "Päeva pole valitud";
-$pgv_lang["year_error"] 			= "Vabandame, kuupäevi enne 1970 me ei toeta.";
 
 //-- user self registration module
 //$pgv_lang["no_pw_or_account"] 		= "Kui sul ei ole kontot või oled unustanud parooli siis vajuta <b>Login</b> nuppu";
@@ -1128,13 +1127,11 @@ $pgv_lang["witness"] = "Tunnistaja";
 
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]	= "Statistilised graafikud";
-$pgv_lang["stpljpgraphno"]	= "JPgraph moodulid pole kättesaadavad kaustas <i>phpgedview/jpgraph/</i>. Nende saamiseks kasuta linki http://www.aditus.nu/jpgraph/jpdownload.php<br /> <h3>Kõigepealt installeeri JPgraph kausta <i>phpgedview/jpgraph/</i></h3><br />";
 $pgv_lang["stplinfo"]		= "graafiku informatsioon:";
 $pgv_lang["stpltype"]		= "tüüp:";
 $pgv_lang["stplnoim"]	= " pole realiseeritud:";
 $pgv_lang["stplmf"]		= " / mees-naine";
 $pgv_lang["stplipot"]		= " / ajavahemiku kohta";
-$pgv_lang["stplgzas"]		= "serva z-telg:";
 $pgv_lang["stplmonth"]	= "kuu";
 $pgv_lang["stplnumbers"]	= "arvud perekonna kohta";
 $pgv_lang["stplage"]		= "vanus";
