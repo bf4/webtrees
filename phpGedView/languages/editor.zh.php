@@ -112,7 +112,6 @@ $pgv_lang["delete_file"]			= "删除文件";
 $pgv_lang["delete_repo"]			= "删除Repository";
 $pgv_lang["directory_not_empty"]	= "文件夹不是空的。";
 $pgv_lang["directory_not_exist"]	= "文件夹不存在。";
-$pgv_lang["family"]			= "家";
 $pgv_lang["file_missing"]		= "文件未被接受。 向上作用的負載再。";
 $pgv_lang["file_partial"]		= "文件部份地只被上裝了, 請嘗試再";
 $pgv_lang["file_success"]		= "文件成功地被上裝";

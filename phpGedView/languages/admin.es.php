@@ -174,7 +174,6 @@ $pgv_lang["keep"]					= "Mantener";
 $pgv_lang["unlink"]					= "Desvincular";
 $pgv_lang["nav"]					= "Navegador";
 $pgv_lang["fam_nav"]				= "Navegador de familias";
-$pgv_lang["remove"]					= "Borrar";
 $pgv_lang["keep_link"]				= "Mantener el vínculo en la lista";
 $pgv_lang["remove_link"]			= "Borrar el vínculo de la lista";
 $pgv_lang["open_nav"]				= "Abrir el navegador de familias";

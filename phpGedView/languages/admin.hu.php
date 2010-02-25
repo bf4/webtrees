@@ -384,7 +384,6 @@ $pgv_lang["associated_files"]		= "Kapcsolódó fájlok:";
 $pgv_lang["deleted_files"]          = "Törölt fájlok:";
 $pgv_lang["gedcom_admins"]			= "GEDCOM rendszergazdák";
 $pgv_lang["site_admins"]			= "Hónlap rendszergazdák";
-$pgv_lang["remove"]					= "Eltávolít";
 $pgv_lang["enter_name"]				= "Adja meg a nevét";
 $pgv_lang["PGV_SMTP_HELO"]						= "Küldő domain név";
 $pgv_lang["gedcheck_nothing"] = "Nincs hiba találat ezen a szinten.";

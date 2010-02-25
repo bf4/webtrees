@@ -446,7 +446,6 @@ $pgv_lang["keep"]					= "Pidä";
 $pgv_lang["nav"]					= "Navigaattori";
 $pgv_lang["fam_nav"]				= "Perhenavigaattori";
 $pgv_lang["nav"]					= "";
-$pgv_lang["remove"]					= "Poista";
 $pgv_lang["open_nav"]				= "Avaa perhenavigaattori";
 $pgv_lang["keep_link"]				= "Pidä liitos listalla";
 $pgv_lang["remove_link"]			= "Poista liitos listalta";

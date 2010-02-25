@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -85,7 +87,6 @@ $pgv_lang["do_not_change"]						= "不要改";
 $pgv_lang["download_gedcom"]		= "下載家谱文件";
 $pgv_lang["download_here"]						= "下载文件";
 $pgv_lang["editaccount"]						= "用户可以改自己的信息";
-$pgv_lang["duplicate_username"]		= "复制用戶名。  一名用戶與那用戶名已經存在。  請回去和選擇其它用戶名。";
 $pgv_lang["empty_dataset"]		= "覆盖旧的信息吗？";
 $pgv_lang["enable_disable_lang"]				= "设置语言";
 $pgv_lang["found_record"]		= "被查找的記錄";
