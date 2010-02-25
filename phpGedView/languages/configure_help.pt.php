@@ -69,7 +69,6 @@ $pgv_lang["GEDCOM_DEFAULT_TAB"]="A ficha que será exibida primeiro na página d
 $pgv_lang["SHOW_MARRIED_NAMES"]="Exibir nome de casada na lista de Pessoas";
 $pgv_lang["CHART_BOX_TAGS"]="Outros fatos a exibir nos gráficos";
 $pgv_lang["configure"]="Configurar PhpGedView";
-$pgv_lang["standard_conf"]="Opções das Configurações Padrão";
 $pgv_lang["advanced_conf"]="Opções das Configurações Avançadas";
 $pgv_lang["media_conf"]="Mídias";
 $pgv_lang["accpriv_conf"]="Acesso e Privacidade";

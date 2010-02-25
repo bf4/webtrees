@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["configure"]					= "Διαμόρφωση PhpGedView";
-$pgv_lang["standard_conf"]				= "Βασικές Επιλογές Διαμόρφωσης";
 $pgv_lang["advanced_conf"]				= "Προχωρημένες Επιλογές Διαμόρφωσης";
 $pgv_lang["meta_conf"]					= "META Tag Επιλογές Διαμόρφωσης";
 $pgv_lang["configure_head"]				= "PhpGedView Διαμόρφωση";

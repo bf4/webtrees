@@ -98,8 +98,6 @@ $pgv_lang["start_at_parents"]	= "Starta vid föräldrarna";
 $pgv_lang["charts"]				= "Tavlor";
 $pgv_lang["lists"]				= "Listor";
 $pgv_lang["welcome_page"]		= "Välkomstsidan";
-$pgv_lang["max_generation"]		= "Det maximala antalet generationer i antavlan är #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"]		= "Det minsta antalet generationer i antavlan är 3.";
 $pgv_lang["box_width"] 			= "Boxvidd";
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Kan inte hitta familj med id";
@@ -1058,7 +1056,6 @@ $pgv_lang["stat_202_perc"]		= "procent";
 $pgv_lang["stat_300_none"]		= "inga";
 $pgv_lang["stat_301_mf"]		= "man/kvinna";
 $pgv_lang["stat_302_cgp"]		= "perioder. kontrollera axelvärden för perioder (z-axeln)";
-$pgv_lang["statmess1"]			= "<b>Fyll i nästa rad i förhållande till tidigare inställningar på x-axeln eller z-axeln</b>";
 $pgv_lang["statar_xgp"]			= "Axelvärden för perioder (x-axeln):";
 $pgv_lang["statar_xgl"]			= "axelvärden för ålder (x-axeln):";
 $pgv_lang["statar_xgm"]			= "axelvärden för månad (x-axeln):";

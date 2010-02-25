@@ -96,7 +96,6 @@ $pgv_lang["reading_file"]			= "Čtení souboru GEDCOM";
 $pgv_lang["readme_documentation"]	= "README dokumentace";
 $pgv_lang["rootid"]			= "Střen (proband) vývodu";
 $pgv_lang["select_an_option"]		= "Vyberte jednu z možností:";
-$pgv_lang["skip_cleanup"]			= "Přeskočit opravování";
 $pgv_lang["update_myaccount"]		= "Aktualizovat můj účet";
 $pgv_lang["update_user"]		= "Aktualizovat uživatelský účet";
 $pgv_lang["upload_gedcom"]		= "Nahrát GEDCOM";

@@ -229,7 +229,6 @@ $pgv_lang["select_an_option"]		= "Vyberte jednu z možností:";
 $pgv_lang["SERVER_URL"]			= "URL PhpGedView";
 $pgv_lang["show_phpinfo"]		= "Zobraziť informačnú stránku PHP";
 $pgv_lang["siteadmin"]			= "Administrátor stránky";
-$pgv_lang["skip_cleanup"]		= "Preskočiť opravovanie";
 $pgv_lang["system_time"]		= "Aktuálny čas servera:";
 $pgv_lang["user_time"]			= "Aktuálny čas užívateľa:";
 $pgv_lang["TBLPREFIX"]			= "Prefix pred názvami tabuliek v databáze";

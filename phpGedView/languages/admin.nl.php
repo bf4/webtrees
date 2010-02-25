@@ -161,7 +161,6 @@ $pgv_lang["remove_ip"] 			= "Verwijder IP adres";
 $pgv_lang["rootid"]						= "Startpersoon van de kwartierstaat";
 $pgv_lang["select_an_option"]			= "Selecteer een optie:";
 $pgv_lang["siteadmin"]					= "Site-beheerder";
-$pgv_lang["skip_cleanup"]				= "Opschonen overslaan";
 $pgv_lang["time_limit"]					= "Tijdslimiet:";
 $pgv_lang["title_manage_servers"]   	= "Beheer sites";
 $pgv_lang["title_view_conns"]       = "Bekijk verbindingen";

@@ -1473,7 +1473,6 @@ $pgv_lang["stat_202_perc"]		= "procent";
 $pgv_lang["stat_300_none"]		= "ingen";
 $pgv_lang["stat_301_mf"]		= "mand/kvinde";
 $pgv_lang["stat_302_cgp"]		= "perioder. Check akse-værdier (z-akse)";
-$pgv_lang["statmess1"]			= "<b>Udfyld kun næste rækker for tidligere værdier for x-akse eller z-akse</b>";
 $pgv_lang["statar_xgp"]			= "akse-værdier for perioder (x-akse):";
 $pgv_lang["statar_xgl"]			= "akse-værdier for alder    (x-akse):";
 $pgv_lang["statar_xgm"]			= "akse-værdier for måned    (x-akse):";

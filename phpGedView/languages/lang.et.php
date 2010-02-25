@@ -257,8 +257,6 @@ $pgv_lang["start_at_parents"]		= "Alusta vanematest";
 $pgv_lang["charts"] 			= "Tabelid";
 $pgv_lang["lists"]			= "Nimekirjad";
 $pgv_lang["welcome_page"]		= "Avalehekülg";
-$pgv_lang["max_generation"] 		= "Maksimaalne esivanemate puu põlvkondade arv on #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"] 		= "Minimaalne esivanemate puu põlvkondade arv on 3.";
 $pgv_lang["box_width"] 		= "laius";
 
 //-- FUNCTIONS FILE MESSAGES
@@ -267,7 +265,6 @@ $pgv_lang["unable_to_find_record"]	= "Ei leia kiret, mille ID on";
 $pgv_lang["repo_name"]		= "Hoidla nimi:";
 $pgv_lang["address"]			= "Aadress:";
 $pgv_lang["phone"]			= "Telefon:";
-$pgv_lang["source_name"]		= "Allika nimi:";
 $pgv_lang["title"]			= "Pealkiri";
 $pgv_lang["author"] 			= "Autor:";
 $pgv_lang["publication"]		= "Avaldatud:";
@@ -317,7 +314,6 @@ $pgv_lang["as_spouse"]			= "Perekond abielus";
 $pgv_lang["as_child"]			= "Perekond vanematega";
 $pgv_lang["view_gedcom"]			= "Vaata GEDCOMi kirjet";
 $pgv_lang["add_to_cart"]			= "Lisa väljalõigete korvi";
-$pgv_lang["still_living_error"] 			= "See isik on praegu elus või pole tema sünni- või surmaaega salvestatud. Elavate inimeste kohta on kõik andmed avalikkuse eest peidetud.<br />Täiendava invormatsiooni saamiseks võta ühendust";
 $pgv_lang["privacy_error"]			= "Selle isiku detailisem info on privaatne.<br />";
 $pgv_lang["more_information"]			= "Täiendava informatsioni saamiseks võtke ühendust";
 $pgv_lang["name"]				= "Nimi";
@@ -432,7 +428,6 @@ $pgv_lang["search_asso_text"]		= "Näita seotud isikuid/perekondi";
 $pgv_lang["results_per_page"]		= "Tulemusi leheküljel";
 
 //-- SOURCELIST FILE MESSAGES
-$pgv_lang["sources_found"]		= "Allikat leitud:";
 $pgv_lang["titles_found"]		= "Pealkirjad";
 $pgv_lang["find_source"]		= "Leia allikas";
 
@@ -578,7 +573,6 @@ $pgv_lang["validate_gedcom"]			= "Kontrolli GEDCOM";
 $pgv_lang["pgv_registry"]			= "Vaata teisi saite, mis kasutavad programmi PhpGedView";
 $pgv_lang["add_media_records"]		= "Lisa meedia";
 $pgv_lang["manage_media_files"]		= "Halda meedia faile";
-$pgv_lang["link_media_records"]		= "Seo meedia";
 $pgv_lang["add_media_button"]			= "Lisa Media";
 
 //-- Relationship chart messages
@@ -925,10 +919,8 @@ $pgv_lang["change_id"]		= "Muuda isiku ID:";
 $pgv_lang["example_place"]		= "Sobimatu koha näidis GEDCOM failist:";
 $pgv_lang["example_date"]		= "Sobimatu kuupäeva näide GEDCOM failist:";
 $pgv_lang["add_media_tool"] 		= "Meedia lisamine";
-$pgv_lang["launch_media_tool"]		= "Meedia lisamise abivahendi käivitamiseks vajuta siia.";
 $pgv_lang["add_media_descr"]		= "See vahend lisab meedia OBJE tagid to andmebaasi.  Sulge aken, kui lõpetad meedia lisamise.";
 $pgv_lang["inject_media_tool"]		= "Lisa meedia GEDCOM faili";
-$pgv_lang["media_table_created"]	= "Tabeli <i>media</i> uuendamine õnnestus.";
 $pgv_lang["click_to_add_media"] 	= "Eespool loetletud meedia lisamiseks GEDCOM-ile #GEDCOM# vajuta siia.";
 $pgv_lang["adds_completed"] 		= "Meedia lisamine GEDCOM failile õnnestus.";
 $pgv_lang["ansi_encoding_detected"] 	= "Leiti ANSI kodeering. PhpGedView töötab paremini UTF-8 kodeeringuga.";
@@ -1008,7 +1000,6 @@ $pgv_lang["marrdate2"]		= "Abielud kuni kuupäevani";
 $pgv_lang["sort_by"]			= "Järjesta";
 
 $pgv_lang["cleanup"]			= "Puhasta";
-$pgv_lang["skip_cleanup"]		= "Jäta puhastamine vahele";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
 $pgv_lang["dynasty_list"]		= "Perekondade ülevaade";

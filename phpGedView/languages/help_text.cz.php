@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -282,7 +284,6 @@ $pgv_lang["invalid_header_help"]		= "~NEPLATNÁ HLAVIČKA GEDCOM~<br />Soubor GE
 $pgv_lang["macfile_detected_help"]		= "~ROZPOZNÁN SOUBOR PRO MACINSTOSH~<br />PhpGedView zjistilo, že váš soubor GEDCOM byl vytvořen na počítači Macintosh. Soubory pro Macintosh obsahují jiná ukončení řádků (r) než Unix (n) nebo Windows (rn). Funkce PHP, které používá systém PhpGedView, umí pracovat pouze se soubory pro Unix nebo DOS. Když kliknete na tlačítko Pokračovat, váš soubor bude převeden na soubor pro DOS.<br />";
 $pgv_lang["cleanup_places_help"]		= "~OPRAVA MÍST~<br />PhpGedView zjistilo že ve vašem souboru GEDCOM jsou místa přiřazena k údajům, kde by podle specifikace neměla být. Takovéto soubory vytváří mnoho genealogických programů, jako např. Family Tree Maker. PhpGedView s těmito soubory umí pracovat, ale některá nesprávně zařazená místa se zobrazí ve vaší hierarchii míst. <br /><br />Například, váš GEDCOM může obsahovat následující záznam<br />1 SSN<br />2 PLAC 123-45-6789<br />Podle specifikace GEDCOM by tento údaj měl být zobrazen jako<br />1 SSN 123-45-6789<br />Jestliže zvolíte Ano, PhpGedView automaticky vyhledá a opraví všechny tyto chyby v zakončení.<br />";
 $pgv_lang["empty_lines_detected_help"]	= "~NALEZENY PRÁZDNÉ ŘÁDKY~<br />PhpGedView zjistilo, že ve vašem GEDCOMu jsou prázdné řádky. Tyto řádky mohou způsobit chyby, a proto budou odstraněny ještě před importem GEDCOMu.<br />";
-$pgv_lang["skip_cleanup_help"]			= "~PŘESKOČENÍ ČIŠTĚNÍ~<br />Je silně doporučeno povolit PhpGedView před importováním opravit váš GEDCOM soubor. Nestane-li se tak, některé funkce možná nebudou pracovat správně.<br /><br />Ale, pokud chcete, můžete kliknout na toto tlačítko, soubor se nebude opravovat a bude naimportován tak, jak je.<br />";
 $pgv_lang["help_editconfig.php"]		="~KONFIGURACE PhpGedView~<br /><br />Na této stránce musíte v případě, že jste právě nainstalovali PhpGedView na svůj server a poprvé jej spouštíte, zvolit globální nastavení programu.<br />#pgv_lang[review_readme]#<br /><br />Poněvadž toto nastavení je <b>globální</b>, platí pro celý program a pro všechny GEDCOMy v něm používané.<br />Pro každý GEDCOM si však můžete vytvořit vlastní nastavení.<br />Jelikož se nacházíte na stránce Konfigurace, můžete kliknout na odkaz pro administraci GEDCOMů (hned nad formulářem).<br />Na všech ostatních stránkách najdete tento odkaz v menu, pod ikonou MyGedView.";
 
 //-- Add new GEDCOM
