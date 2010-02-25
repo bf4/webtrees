@@ -304,7 +304,6 @@ $pgv_lang["file_read_error"]			= "C H Y B A !!! Nejde číst soubor s nastavení
 $pgv_lang["general_settings"]			= "Obecné nastavení privátnosti";
 $pgv_lang["person_privacy_settings"]		= "Položka privátního nastavení";
 $pgv_lang["edit_exist_person_privacy_settings"]	= "Upravit existující nastavení osobní privátnosti";
-$pgv_lang["user_privacy_settings"]		= "Nastavení uživatelské privátnosti";
 $pgv_lang["edit_exist_user_privacy_settings"]	= "Upravit existující nastavení uživatelské privátnosti";
 $pgv_lang["global_facts_settings"]		= "Nastavení privátnosti globálních údajů";
 $pgv_lang["edit_exist_global_facts_settings"]	= "Upravit existující nastavení privátnosti globálních údajů";

@@ -167,7 +167,6 @@ $pgv_lang["ah12_help"]="_GEDCOM: Importar";
 $pgv_lang["ah13_help"]="_GEDCOM: Carregar";
 $pgv_lang["simple_filter_help"]		= "~#pgv_lang[filter]#~<br /><br />Filtro de pesquisa simples, baseado nos caracteres informados, onde curingas não são aceitos.<br /><br />";
 $pgv_lang["show_thumb_help"]		= "~#pgv_lang[show_thumbnail]#~<br /><br />Marque esta opção para exibir as Miniaturas.<br /><br />";
-$pgv_lang["year_help"]				= "~#pgv_lang[alive_in_year]#~<br /><br />Informe o ano em que as pessoas, que você procura, estavam vivas.<br /><br />";
 $pgv_lang["help_faq.php"]="~Perguntas mais Frequentes~<br />#pgv_lang[text_faq_help]#<br />";
 $pgv_lang["text_faq_help"]="A página de FAQs (Perguntas mais frequentes), contém uma lista de perguntas e respostas sobre o uso deste site genealógico.<br /><br />O Administrador do site é responsável pelo conteúdo e ordenação desta lista.";
 $pgv_lang["hs_title_help"]="<center>~#pgv_lang[hs_title]#~</center><br />#pgv_lang[hs_intro]#<br /><br />#pgv_lang[hs_keyword_advice]#<br /><br />#pgv_lang[hs_searchhow_advice]#<br /><br />#pgv_lang[hs_searchin_advice]#";

@@ -1602,14 +1602,11 @@ $pgv_lang["statsubmit"]			 	= "perlihatkan plot";
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]			= "Plot Statistik";
 $pgv_lang["stpl"]			 	= "...";
-$pgv_lang["stplGDno"]			 	= "Librari Tampilan Grafik tidak terpasang pada server. Silakan hubungi administrator sistem Anda.";
-$pgv_lang["stpljpgraphno"]			= "Librari JPgraph tidak terpassang pada PhpGedView. Silakan unduh dari http://www.aditus.nu/jpgraph/jpdownload.php<br /> dan kemudian salin ke subdirectori <i>jpgraph/</i> pada server.";
 $pgv_lang["stplinfo"]			 	= "informasi plotting:";
 $pgv_lang["stpltype"]			 	= "jenis:";
 $pgv_lang["stplnoim"]			 	= " tidak diterapkan:";
 $pgv_lang["stplmf"]			 	= " / lelaki-perempuan";
 $pgv_lang["stplipot"]			 	= " / tiap periodewaktu";
-$pgv_lang["stplgzas"]			 	= "batas aksis Z:";
 $pgv_lang["stplmonth"]			 	= "bulan";
 $pgv_lang["stplnumbers"]		 	= "jumlah untuk keluarga";
 $pgv_lang["stplage"]			 	= "umur";
