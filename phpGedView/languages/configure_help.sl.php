@@ -137,7 +137,6 @@ $pgv_lang["CALENDAR_FORMAT"]		= "Oblika koledarja";
 $pgv_lang["DISPLAY_JEWISH_THOUSANDS"]	= "Prikaži hebrejske tisočice";
 $pgv_lang["DISPLAY_JEWISH_GERESHAYIM"]		= "Prikaži hebrejski Gershayim";
 $pgv_lang["JEWISH_ASHKENAZ_PRONUNCIATION"]	= "Židovska Ashkenaz izgovorjava";
-$pgv_lang["USE_RTL_FUNCTIONS"]			= "Uporabi obdelavo RTL";
 $pgv_lang["DEFAULT_PEDIGREE_GENERATIONS"]	= "Število rodov";
 $pgv_lang["MAX_PEDIGREE_GENERATIONS"]		= "Največje število rodov presnikov";
 $pgv_lang["MAX_DESCENDANCY_GENERATIONS"]	= "Največje število rodov potomcev";

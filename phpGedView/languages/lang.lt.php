@@ -582,7 +582,6 @@ $pgv_lang["heading_image"]			= "Paveikslų failai:";
 $pgv_lang["heading_theme"]			= "Temos failai:";
 $pgv_lang["heading_docs"]			= "Žinynai:";
 $pgv_lang["copied_success"] 		= "nukopijuotas sėkmingai.";
-$pgv_lang["backup_copied_success"]	= "archyvinės kopijos failas sukurtas sėkmingai.";
 $pgv_lang["inc_docs"]				= "Žinynai";
 $pgv_lang["inc_themes"] 			= "Temos";
 $pgv_lang["inc_index"]				= "Indeksų failai";

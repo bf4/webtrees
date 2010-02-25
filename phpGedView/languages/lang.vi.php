@@ -694,7 +694,6 @@ $pgv_lang["heading_docs"]			= "Chỉ dẫn sử dụng:";
 $pgv_lang["heading_researchlog"]	= "Tập tin nhật ký chuyện đã Nghiên Cứu";
 $pgv_lang["heading_researchloglang"]= "Tập tin nhật ký ngôn ngữ đã Nghiên Cứu";
 $pgv_lang["copied_success"] 		= "Thành công chép.";
-$pgv_lang["backup_copied_success"]	= "tập tin dự phòng tạo ra tốt đẹp.";
 $pgv_lang["process_error"]			= "Có trục trặc khảo sát trang. Không thể xác định là bản mới hơn.";
 $pgv_lang["upgrade_completed"]		= "Nâng cấp hoàn tất tốt đẹp.";
 $pgv_lang["start_using_upgrad"] 	= "Nhấn vào đây đặng  bắt đầu dùng bản số";
