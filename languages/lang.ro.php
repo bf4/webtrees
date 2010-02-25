@@ -346,8 +346,6 @@ $pgv_lang["landscape"]				= "Peisaj";
 $pgv_lang["start_at_parents"]		= "Începe la părinţi";
 $pgv_lang["charts"] 				= "Diagrame";
 $pgv_lang["lists"]					= "Liste";
-$pgv_lang["max_generation"] 		= "Numărul maxim de generaţii în arborele genealogic este #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"] 		= "Numărul minim de generaţii în arborele genealogic este 3.";
 $pgv_lang["box_width"] 				= "Lăţimea cutiei";
 
 //-- FUNCTIONS FILE MESSAGES
@@ -1531,7 +1529,6 @@ $pgv_lang["stat_202_perc"]		 = "procentaje";
 $pgv_lang["stat_300_none"]		 = "nimic";
 $pgv_lang["stat_301_mf"]		 = "sex";
 $pgv_lang["stat_302_cgp"]		 = "perioade de date";
-$pgv_lang["statmess1"]			 = "<b>Următoarele intrări sunt in relaţie cu parametrii graficului de mai sus pentru axele X şi Z</b>";
 $pgv_lang["statar_xgp"]			 = "Limitele axei X (perioadele):";
 $pgv_lang["statar_xgl"]			 = "Limitele axei X (vârste):";
 $pgv_lang["statar_xgm"]			 = "Limitele axei X (luna):";

@@ -93,7 +93,6 @@ $pgv_lang["reading_file"]						= "Επεξεργασία Αρχείου GEDCOM";
 $pgv_lang["readme_documentation"]				= "README Κείμενο Τεκμηρίωσης";
 $pgv_lang["rootid"]								= "Pedigree Chart Root Person";
 $pgv_lang["select_an_option"]					= "Επιλέξτε ένα από τα ακόλουθα:";
-$pgv_lang["skip_cleanup"]						= "Skip Cleanup";
 $pgv_lang["update_myaccount"]					= "Update MyAccount";
 $pgv_lang["update_user"]						= "Ενημέρωση Λογαριασμού Χρήστη";
 $pgv_lang["upload_gedcom"]						= "Αποστολή Αρχείου GEDCOM";

@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 //-- ZPRÁVY KONFIGURAČNÍHO SOUBORU
 $pgv_lang["configure"]			= "Konfigurace PhpGedView";
-$pgv_lang["standard_conf"]		= "Standardní nastavení";
 $pgv_lang["advanced_conf"]		= "Rozšířené nastavení";
 $pgv_lang["meta_conf"]			= "Konfigurační možnosti META tagů";
 $pgv_lang["configure_head"]		= "Nastavení PhpGedView";

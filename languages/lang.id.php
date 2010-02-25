@@ -1590,7 +1590,6 @@ $pgv_lang["stat_202_perc"]			= "persentase";
 $pgv_lang["stat_300_none"]			= "tidak ada";
 $pgv_lang["stat_301_mf"]			= "jender";
 $pgv_lang["stat_302_cgp"]			= "periode tanggal";
-$pgv_lang["statmess1"]			 	= "<b>Isian berikut berhubungan dengan parameter plot di atas untuk aksis X dan Z </b>";
 $pgv_lang["statar_xgp"]			 	= "batas aksis X (periode):";
 $pgv_lang["statar_xgl"]			 	= "batas aksis X (umur):";
 $pgv_lang["statar_xgm"]			 	= "batas aksis X (bulan):";

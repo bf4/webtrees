@@ -5,6 +5,8 @@
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
+ * Modifications Copyright (c) 2010 Greg Roach
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -307,7 +309,6 @@ $pgv_lang["invalid_header_help"]			= "~INVALID GEDCOM HEADER~<br />A GEDCOM file
 $pgv_lang["macfile_detected_help"]			= "~MACINSTOSH FILE DETECTED~<br />PhpGedView detected that your GEDCOM file was created on a Macintosh computer.  Macintosh files use different line endings (r) than Unix (n) or Windows (rn).  The PHP functions used by PhpGedView require that the GEDCOM files be Unix or DOS files.  When you click the cleanup button, your file will be converted to a DOS file.<br />";
 $pgv_lang["cleanup_places_help"]			= "~CLEANUP PLACES~<br />PhpGedView detected that your GEDCOM file uses places on GEDCOM tags that should not have places.  Many genealogy programs, such as Family Tree Maker, will create this type of GEDCOM file.  PhpGedView will work with these GEDCOM files, but some invalid places will show up in your place hierarchy.  <br /><br />For example, your GEDCOM may have the following encoding<br />1 SSN<br />2 PLAC 123-45-6789<br />According to the GEDCOM specification this should really be shown as<br />1 SSN 123-45-6789<br />If you select Yes, PhpGedView will automatically detect and correct these encoding errors.<br />";
 $pgv_lang["empty_lines_detected_help"]		= "~EMPTY LINES DETECTED~<br />PhpGedView has detected that there are empty lines in your GEDCOM file.  These lines may cause errors and will be removed from the GEDCOM before it is imported.<br />";
-$pgv_lang["skip_cleanup_help"]				= "~SKIP CLEANUP~<br />It is highly reccommended that you allow PGV to cleanup your GEDCOM before it is imported, otherwise some of the functions may not work properly.<br /><br />But if you would like, you may click this button to skip the cleanup step and continue importing the GEDCOM as it is.<br />";
 
 //-- Edit Config
 $pgv_lang["help_editconfig.php"]			= "~CONFIGURE  PhpGedView~<br /><br />On this page you have to set the global settings for the program, when you have just installed PhpGedView on your server, and are running it for the first time.<br />#pgv_lang[review_readme]#<br /><br />As these settings are <b>global</b>, they are for the whole program and for all GEDCOM files, you are using within the program.<br />For each GEDCOM file you can make seperate settings.<br />Since you are here on the Configuration Page, you can click the link to Administer GEDCOMs, just above the form.<br />From anywhere else in the program, you will find the link in the menu, under the MyGedView Icon.";

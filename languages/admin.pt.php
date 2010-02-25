@@ -157,7 +157,6 @@ $pgv_lang["remove_ip"]="Excluir IP";
 $pgv_lang["rootid"]="Pessoa raiz da Árvore Genealógica";
 $pgv_lang["select_an_option"]="Escolha uma opção abaixo:";
 $pgv_lang["siteadmin"]="Admistrador do Site";
-$pgv_lang["skip_cleanup"]="Não Limpar";
 $pgv_lang["time_limit"]="Limite de Tempo:";
 $pgv_lang["title_manage_servers"]="Gerenciar Sites";
 $pgv_lang["title_view_conns"]="Exibir Conexões";

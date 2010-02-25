@@ -97,7 +97,6 @@ $pgv_lang["reading_file"]		= "Считывание файла GEDCOM";
 $pgv_lang["readme_documentation"]	= "Документация README";
 $pgv_lang["rootid"]			= "Начинать с персоны по восходящему дереву";
 $pgv_lang["select_an_option"]		= "Выбор опции:";
-$pgv_lang["skip_cleanup"]			= "Пропустить очистку";
 $pgv_lang["update_myaccount"]	= "Обновить Учётную Запись";
 $pgv_lang["update_user"]		= "Применить к пользователю";
 $pgv_lang["upload_gedcom"]		= "Выгрузить файл GEDCOM";

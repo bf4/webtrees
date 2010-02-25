@@ -107,7 +107,6 @@ $pgv_lang["reading_file"]			= "Đang đọc tập tin GEDCOM";
 $pgv_lang["readme_documentation"]	= "Tài liệu về chương trình này";
 $pgv_lang["rootid"] 				= "Người Bắt Đầu Dòng Giống";
 $pgv_lang["select_an_option"]		= "Chọn một món dưới đây";
-$pgv_lang["skip_cleanup"]			= "Khỏi thu dọn";
 $pgv_lang["time_limit"]				= "Hạn chế thời gian:";
 $pgv_lang["update_myaccount"]		= "Hiện Đại Hoá Tài Khoản của Tôi";
 $pgv_lang["update_user"]			= "Hiện Đại Hoá Tài Khoản Thành Viên";

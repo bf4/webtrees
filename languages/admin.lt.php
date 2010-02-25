@@ -105,7 +105,6 @@ $pgv_lang["readme_documentation"]	= "README dokumentacija";
 $pgv_lang["rootid"] 				= "Kilmės medžio pagrindinis asmuo";
 $pgv_lang["select_an_option"]		= "Pasirinkite iš sąrašo:";
 $pgv_lang["siteadmin"]				= "Svetainės administratorius";
-$pgv_lang["skip_cleanup"]			= "Praleisti išvalymą";
 $pgv_lang["time_limit"]				= "Laiko apribojimas:";
 $pgv_lang["title_manage_servers"]   = "Valdyti svetaines";
 $pgv_lang["update_myaccount"]		= "Atnaujinti mano prisijungimo informaciją";

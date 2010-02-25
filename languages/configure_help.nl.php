@@ -35,7 +35,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["configure"]				= "Instellen PhpGedView";
-$pgv_lang["standard_conf"]			= "Standaard configuratieopties";
 $pgv_lang["advanced_conf"]			= "Extra configuratieopties";
 $pgv_lang["gedcom_conf"]			= "Basisinstellingen";
 $pgv_lang["media_conf"]				= "Multimedia";

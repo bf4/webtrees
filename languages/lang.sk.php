@@ -91,8 +91,6 @@ $pgv_lang["start_at_parents"]		= "Začať u rodičov";
 $pgv_lang["charts"]			= "Schémy";
 $pgv_lang["lists"]			= "Zoznamy";
 $pgv_lang["welcome_page"]		= "Úvodná stránka";
-$pgv_lang["max_generation"]		= "Maximálny počet generácií  je #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"]		= "Minimálny počet generácií je 3.";
 $pgv_lang["box_width"] 			= "Šírka rámčeka";
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Nie je možné nájsť rodinu s ID";
@@ -1090,7 +1088,6 @@ $pgv_lang["stat_201_num"]		= "Spočítať";
 $pgv_lang["stat_202_perc"]		= "Percentá";
 $pgv_lang["stat_301_mf"]		= "Muži / ženy";
 $pgv_lang["stat_302_cgp"]		= "Obdobie. Skontrolujte hodnoty pre obdobie osy Z.";
-$pgv_lang["statmess1"]			= "<b>Upravte nasledujúce riadky súvisiace s nastavením pre osu X alebo osu Z</b>";
 $pgv_lang["statar_xgp"]			= "hodnoty pre periody (os X):";
 $pgv_lang["statar_xgl"]			= "hodnoty pre vek (os X):";
 $pgv_lang["statar_xgm"]			= "hodnoty pre mesiac (os X):";
