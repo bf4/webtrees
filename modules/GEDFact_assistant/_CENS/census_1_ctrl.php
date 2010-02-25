@@ -2,7 +2,7 @@
 /**
  * Census Assistant Control module for phpGedView
  *
- * Census information about an individual
+ * Census transcription information about an individual
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
