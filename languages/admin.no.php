@@ -298,7 +298,6 @@ $pgv_lang["page_views"]							= "&nbsp;&nbsp;siden vises i&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Sjekken er utført...!  Gjør de nødvendige valgene og klikk deretter på 'Rydd'";
 $pgv_lang["pgv_config_write_error"]		= "Feil!!! Kan ikke skrive til konfigurasjonsfilen til PhpGedView. Sjekk fil- og katalog-rettigheter og prøv igjen.";
 $pgv_lang["PGV_MEMORY_LIMIT"]			= "Maks Minnegrense";
-$pgv_lang["pgv_registry"]			= "Vis andre nettsteder som bruker PhpGedView";
 $pgv_lang["PGV_SESSION_SAVE_PATH"] 		= "Logg-lagrings-sti";
 $pgv_lang["PGV_SESSION_TIME"] 			= "Logg-inn timeout";
 $pgv_lang["PGV_SIMPLE_MAIL"]			= "Bruk enkel epost-hode i eksterne epost-meldinger";

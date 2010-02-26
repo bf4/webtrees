@@ -199,7 +199,6 @@ $pgv_lang["no_temple"]				= "Nici un templu - Ordonanţă de viaţă";
 $pgv_lang["no_upload"]				= "Uploadarea fişierelor media nu este permisă deoarece articolele multimedia au fost dezactivate sau pentru că directorul media nu are drept de scriere.";
 $pgv_lang["paste_id_into_field"]	= "Lipiţi următorul ID în câmpurile dumneavoastră de editare pentru a referi înregistrarea proaspăt creată ";
 $pgv_lang["paste_rid_into_field"]	= "Lipiţi următorul ID de depozit în campurile dumneavoastră de editare pentru a referi acest depozit ";
-$pgv_lang["photo_replace"] 			= "Doriţi să înlocuiţi o fotografie mai veche cu aceasta ?";
 $pgv_lang["privacy_not_granted"]	= "Nu aveţi acces la";
 $pgv_lang["privacy_prevented_editing"]	= "Setările de confidenţialitate vă împiedică să modificaţi această înregistrare.";
 $pgv_lang["record_marked_deleted"]		= "Această înregistrare a fost marcata pentru ştergere după aprobarea administratorului.";

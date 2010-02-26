@@ -189,7 +189,6 @@ $pgv_lang["no_temple"]					= "Geen Temple - Living Ordinance";
 $pgv_lang["no_upload"]					= "Het uploaden van multimediabestanden is niet toegestaan omdat gebruik van multimedia is uitgeschakeld, of omdat u in de multimediamap geen schrijfrechten heeft.";
 $pgv_lang["paste_id_into_field"]		= "Plak dit bron-ID in de invoervelden voor verwijzing naar deze bron ";
 $pgv_lang["paste_rid_into_field"]		= "Plak het ID van de bewaarplaats in uw invoerpagina om de verwijzing naar de bewaarplaats over te nemen ";
-$pgv_lang["photo_replace"]				= "Wilt u een bestaande afbeelding vervangen door deze?";
 $pgv_lang["privacy_not_granted"]		= "U heeft geen toegang tot";
 $pgv_lang["privacy_prevented_editing"]	= "Volgens de privacy-instellingen heeft u geen rechten om deze gegevens te wijzigen.";
 $pgv_lang["record_marked_deleted"]		= "Dit record wordt verwijderd na goedkeuring door de beheerder.";

@@ -98,7 +98,6 @@ $pgv_lang["macfile_detected"]		= "Nhận thấy là tập tin mẫu Macintosh. S
 $pgv_lang["merge_records"]			= "Hoà Ký Lục vào cùng nhau";
 $pgv_lang["month_before_day"]		= "Tháng trước ngày (TT NN NNNN)";
 $pgv_lang["performing_validation"]	= "Đang hợp lệ hóa GEDCOM; xin kén chọn món cần thiết và nhấn vào <b>Thu Dọn</b>.";
-$pgv_lang["pgv_registry"]			= "Viếng những nơi khác dùng PhpGedView";
 $pgv_lang["phpinfo"]				= "Nhận biết PHP";
 $pgv_lang["place_cleanup_detected"] = "Cách ghi những nơi không đúng. Phải hiệu chỉnh những sự sai lầm này.<br />Cái ví dụ sau đây bày tỏ cái nơi viết xai lầm đã tìm thấy:";
 $pgv_lang["please_be_patient"]		= "Xin kiên nhẩn";

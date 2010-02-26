@@ -85,7 +85,6 @@ $pgv_lang["macfile_detected"]					= "Macintosh file detected.  On cleanup your f
 $pgv_lang["merge_records"]						= "Merge Records";
 $pgv_lang["month_before_day"]					= "Μήνας πριν από Ημέρα (ΜΜ ΗΗ ΕΕΕΕ)";
 $pgv_lang["performing_validation"]				= "Performing GEDCOM validation, select the necessary options then click 'Cleanup'";
-$pgv_lang["pgv_registry"]						= "Εμφάνιση άλλων σελίδων που χρησιμοποιούν την εφαρμογή PhpGedView";
 $pgv_lang["place_cleanup_detected"]				= "Invalid place encodings were detected.  These errors should be fixed.  The following sample shows the invalid place that was detected: ";
 $pgv_lang["please_be_patient"]					= "ΠΑΡΑΚΑΛΩ ΥΠΟΜΟΝΗ";
 $pgv_lang["reading_file"]						= "Επεξεργασία Αρχείου GEDCOM";

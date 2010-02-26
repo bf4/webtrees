@@ -186,7 +186,6 @@ $pgv_lang["no_temple"]="No Temple - Living Ordinance";
 $pgv_lang["no_upload"]="O envio de Mídia não é permitido porque esta opção está desabilitada ou porque a pasta de Mídia não possui permissão de escrita.";
 $pgv_lang["paste_id_into_field"]="Paste the following source ID into your editing fields to reference this source ";
 $pgv_lang["paste_rid_into_field"]="Para referenciar esta Reposição, Cole a ID da Reposição nos campos de edição ";
-$pgv_lang["photo_replace"]="Substituir foto anterior por esta?";
 $pgv_lang["privacy_not_granted"]="Você não tem acesso para";
 $pgv_lang["privacy_prevented_editing"]="As configurações de privacidade impedem você de alterar esse registro.";
 $pgv_lang["record_marked_deleted"]="Este registro foi marcado para ser excluido após a aprovação do Administrador.";

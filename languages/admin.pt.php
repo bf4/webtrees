@@ -146,7 +146,6 @@ $pgv_lang["macfile_detected"]="Detectado arquivo Macintosh.  Na 'Limpeza' seu ar
 $pgv_lang["merge_records"]="Consolidar Registros";
 $pgv_lang["month_before_day"]="Mês antes do Dia (MM DD YYYY)";
 $pgv_lang["performing_validation"]="Validando o arquivo GEDCOM...";
-$pgv_lang["pgv_registry"]="Exibir outros sites usando PhpGedView";
 $pgv_lang["phpinfo"]="Informações do PHP";
 $pgv_lang["place_cleanup_detected"]="Detectado codificação inválida de Local.  Esses erros precisariam ser corrigidos.  O exemplo seguinte mostra o local inválido que foi detectado: ";
 $pgv_lang["please_be_patient"]="Por Favor, seja paciente !!!";

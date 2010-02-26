@@ -114,7 +114,6 @@ $pgv_lang["no_temple"]				= "Không có Đền - Sắc lệnh ở chung";
 $pgv_lang["no_upload"]				= "Không được quyền gửi lên tập tin môi thể vì những món đa môi thể bị cấm hoặc là không có quyền viết vào mục lục môi thể.";
 $pgv_lang["paste_id_into_field"]	= "Dán Nhận Diện Nguồn này vào vùng biên soạn đặng chỉ tới Nguồn này";
 $pgv_lang["paste_rid_into_field"]	= "Dán Nhận Diện Nơi Tàng Trữ này vào vùng biên soạn đặng chỉ tới Nơi Tàng Trữ này";
-$pgv_lang["photo_replace"] = "Có muốn đổi hình cũ với cái này không?";
 $pgv_lang["privacy_not_granted"]	= "Không có quyền đổi đặc quyền cho";
 $pgv_lang["privacy_prevented_editing"]	= "Theo mực kín đáo, bạn không có quyền sửa chửa ký lục này.";
 $pgv_lang["show_changes"]			= "Ký lục này đã cập nhật. Nhấn vào đây để xem.";

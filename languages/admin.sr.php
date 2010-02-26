@@ -295,7 +295,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["performing_validation"]				= "Performing GEDCOM validation...";
 ##$pgv_lang["pgv_config_write_error"] 			= "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again.";
 ##$pgv_lang["PGV_MEMORY_LIMIT"]					= "Memory limit";
-##$pgv_lang["pgv_registry"]						= "View other sites using PhpGedView";
 ##$pgv_lang["PGV_SESSION_SAVE_PATH"]				= "Session save path";
 ##$pgv_lang["PGV_SESSION_TIME"]					= "Session timeout";
 ##$pgv_lang["PGV_SIMPLE_MAIL"] 					= "Use simple mail headers in external mails";
