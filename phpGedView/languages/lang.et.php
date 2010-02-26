@@ -133,13 +133,10 @@ $pgv_lang["total_living"]			= "Kokku elavaid";
 $pgv_lang["total_dead"]			= "Kokku surnuid";
 $pgv_lang["total_not_born"]			= "Kokku veel sündimata";
 $pgv_lang["remove_custom_tags"]		= "Eemalda kohandatud PGV tagid? (näiteks. _PGVU, _THUM)";
-$pgv_lang["download_zipped"]			= "Laadi GEDCOM alla ZIP failina?";
 $pgv_lang["remember_me"]			= "Mäleta mind sellel arvutil";
 $pgv_lang["fams_with_surname"]	= "Perekonnanime #surname# kandvad perekonnad";
 $pgv_lang["support_contact"]		= "Tehnilise abi kontakt";
 $pgv_lang["genealogy_contact"]		= "Genealoogia kontakt";
-$pgv_lang["continue_import"]		= "Jätka importi";
-$pgv_lang["importing_places"]		= "Kohtade import";
 $pgv_lang["common_upload_errors"]	= "See viga tähendab, et tõenäoliselt ületas üles laaditav fail teenusepakkuja poolt võimaldatud liimiidi.  PHP vaikimisi limiit on 2MB.  Võta ühendust oma teenusepakkuja tehnilise toega, et suurendada seda piiri php.ini failis või laadi see fail üles FTP abil.  Kasuta linki leheküljel <a href=\"uploadgedcom.php?action=add_form\"><b>Lisa GEDCOM</b></a> Ftp abil üleslaaditud GEDCOM-i lisamseks.";
 $pgv_lang["total_memory_usage"]	= "Kasutatud kogumälu:";
 $pgv_lang["mothers_family_with"]	= "Ema perekond abikaasaga: ";
@@ -154,9 +151,7 @@ $pgv_lang["sort_by_marriage"]		= "Järjesta abiellumise kuupäeva järgi";
 $pgv_lang["reorder_families"]		= "Järjesta perekonnad";
 $pgv_lang["indis_with_surname"]	= "Perekonnanime #surname# kandvad isikud";
 $pgv_lang["first_letter_fname"]		= "Vali täht, millega algavaid perekonnanimesid soovid näha.";
-$pgv_lang["import_marr_names"]	= "Impordi nimed peale abiellumist";
 $pgv_lang["marr_name_import_instr"]	= "Vajuta allolevat nuppu ainult siis kui soovid, et phpGedView tuletaks GEDCOMis olevatele naistele nimed peale abiellumist. See võimaldab otsida ja loetleda naisi nede abielujärgsete nimedega.  <i>Märkus: Abielujärgseid nimesid näidatakse ainult siis kui see on GEDCOMis seadistatud. <b>Abielujärgste nimede tuletamine on valikuline.</b></i>";
-$pgv_lang["calc_marr_names"]		= "Abielujärgsete nimede tuletamine";
 $pgv_lang["total_names"]		= "Kokku nimesid";
 $pgv_lang["top10_pageviews_nohits"]	= "Ei ole ühtegi vaatamist.";
 $pgv_lang["top10_pageviews_msg"]	= "vaatamiste loendurid peavad olema GEDCOMis seadistatud, Sektsioonis Kuva ja paigutus alajaotuses Peida ja näita.";
@@ -185,7 +180,6 @@ $pgv_lang["record_copied"]		= "Lõikeluda kopeeritud kirje";
 $pgv_lang["copy"]			= "Kopeeri";
 $pgv_lang["cut"]			= "Lõika";
 $pgv_lang["indis_charts"]		= "Isiku valikud";
-$pgv_lang["edit_indi"] 		= "Muuda isikut";
 $pgv_lang["locked"]			= "Ära muuda";
 $pgv_lang["privacy"]			= "Privaatsus";
 $pgv_lang["number_sign"]		= "#";
@@ -207,7 +201,6 @@ $pgv_lang["header"] 			= "Päis";
 
 //-- CONFIG FILE MESSAGES
 $pgv_lang["login_head"] 		= "PhpGedView kasutaja sisselogimine";
-$pgv_lang["error_title"]		= "VIGA: Ei saa avada GEDCOM faili";
 $pgv_lang["error_header"]		= "GEDCOM fail, <b>#GEDCOM#</b>, ei asu määratud paigas.";
 $pgv_lang["error_header_write"] 	= "GEDCOM faili, <b>#GEDCOM#</b>, ei saa kirjutada. Kontrolli faili atrribuute ja juurdepääsuõigusi.";
 $pgv_lang["for_support"]		= "Tehnilise abi saamiseks võta ühendust";
@@ -215,7 +208,6 @@ $pgv_lang["for_contact"]		= "Genealoogilistes küsimustes võta ühendust";
 $pgv_lang["for_all_contact"]		= "Tehnilistes või genealoogilistes küsimustes võta ühendust";
 $pgv_lang["build_title"]		= "Indeksfailide koostamine";
 $pgv_lang["build_error"]		= "GEDCOM fail on uuendatud.";
-$pgv_lang["choose_gedcom"]		= "Vali GEDCOM andmebaas";
 $pgv_lang["username"]		= "Kasutajanimi";
 $pgv_lang["invalid_username"]		= "Kasutajanimi sisaldab sobimatuid sümboleid";
 $pgv_lang["firstname"]		= "Eesnimi";
@@ -259,9 +251,7 @@ $pgv_lang["box_width"] 		= "laius";
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Ei leia perekonda, mille ID on";
 $pgv_lang["unable_to_find_record"]	= "Ei leia kiret, mille ID on";
-$pgv_lang["address"]			= "Aadress:";
 $pgv_lang["title"]			= "Pealkiri";
-$pgv_lang["author"] 			= "Autor:";
 $pgv_lang["publication"]		= "Avaldatud:";
 $pgv_lang["call_number"]		= "Telefoninumber:";
 $pgv_lang["living"] 			= "Elus";
@@ -380,7 +370,6 @@ $pgv_lang["next"]			= "Järgmine &gt;";
 $pgv_lang["file_not_found"] 		= "Faili ei leitud.";
 $pgv_lang["medialist_show"] 		= "Näita";
 $pgv_lang["per_page"]		= "media objects per page";
-$pgv_lang["delete_directory"]		= "Kustuta kaust";
 $pgv_lang["remove_object"]		= "Eemalda objekt";
 
 //-- SEARCH FILE MESSAGES
@@ -541,13 +530,11 @@ $pgv_lang["no_auth_needed"]			= "Sisselogimine pole nõutud";
 $pgv_lang["import_gedcom"]			= "Impordi GEDCOM fail";
 $pgv_lang["duplicate_username"] 		= "Korduv kasutajanimi. Sellise kasutajanimega kasutaja on juba olemas.  Vali uus kasutajanimi.";
 $pgv_lang["gedcomid"]			= "GEDCOM INDI kirje ID";
-$pgv_lang["enter_gedcomid"] 			= "Sisesta GEDCOM ID.";
 $pgv_lang["rootid"] 				= "Esivanemate puu algab";
 $pgv_lang["download_gedcom"]			= "Laadi GEDCOM fail alla";
 $pgv_lang["upload_gedcom"]			= "Laadi GEDCOM üles";
 $pgv_lang["add_new_gedcom"] 		= "Loo uus GEDCOM";
 $pgv_lang["gedcom_file"]			= "GEDCOM fail:";
-$pgv_lang["enter_filename"] 			= "Pead sisestama GEDCOM faili nime.";
 $pgv_lang["file_not_exists"]			= "Ei leia sisestatud faili.";
 $pgv_lang["visitor"]				= "Külastaja";
 $pgv_lang["user"]				= "Autenditud kasutaja";
@@ -725,8 +712,6 @@ $pgv_lang["enter_email"]			= "Pead sisestama e-maili aadressi.";
 
 $pgv_lang["mail04_line01"]			= "Tere #user_fullname# ...";
 $pgv_lang["editowndata"]			= "Minu kasutajakonto";
-$pgv_lang["datachanged"]			= "Kasutaja info on muudetud";
-$pgv_lang["datachanged_name"]		= "Pead oma uue kasutajanimega uuesti sisselogima.";
 $pgv_lang["myuserdata"] 			= "Minu konto";
 $pgv_lang["user_theme"] 			= "Minu teema";
 $pgv_lang["mgv"]				= "Minu GedView";
@@ -892,7 +877,6 @@ $pgv_lang["block_not_configure"]	= "Seda blokki ei saa seadistada.";
 
 //-- validate GEDCOM
 $pgv_lang["performing_validation"]	= "GEDCOM faili kontrollimine...";
-$pgv_lang["changed_places"] 		= "Leiti vigased koha kodeeringud. Puhastatud koha kirjed seatakse vastavusse GEDCOM 5.5 spetsifikatsiooniga. Näide GEDCOM failist:";
 $pgv_lang["invalid_dates"]		= "Leiti vigased kuupäevad, puhastamise käigus teisendatakse need formaati DD MMM YYYY (st. 1 JAN 2004).";
 $pgv_lang["valid_gedcom"]		= "GEDCOM on vigadeta. Puhastamine pole vajalik.";
 $pgv_lang["optional_tools"] 		= "Enne importimist võid käivitada järgmised valikulised vahendid.";
@@ -906,8 +890,6 @@ $pgv_lang["example_date"]		= "Sobimatu kuupäeva näide GEDCOM failist:";
 $pgv_lang["add_media_tool"] 		= "Meedia lisamine";
 $pgv_lang["add_media_descr"]		= "See vahend lisab meedia OBJE tagid to andmebaasi.  Sulge aken, kui lõpetad meedia lisamise.";
 $pgv_lang["inject_media_tool"]		= "Lisa meedia GEDCOM faili";
-$pgv_lang["click_to_add_media"] 	= "Eespool loetletud meedia lisamiseks GEDCOM-ile #GEDCOM# vajuta siia.";
-$pgv_lang["adds_completed"] 		= "Meedia lisamine GEDCOM failile õnnestus.";
 $pgv_lang["ansi_encoding_detected"] 	= "Leiti ANSI kodeering. PhpGedView töötab paremini UTF-8 kodeeringuga.";
 $pgv_lang["invalid_header"] 		= "Avastati read enne GEDCOM-i päist <b>0&nbsp;HEAD</b>.  Puhastamise käigus need read kustutatakse.";
 $pgv_lang["macfile_detected"]		= "Tuvastati Macintosh-i fail. Puhastamise käigus teisendatakse see DOS-formaati.";
@@ -987,7 +969,6 @@ $pgv_lang["sort_by"]			= "Järjesta";
 $pgv_lang["cleanup"]			= "Puhasta";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
-$pgv_lang["dynasty_list"]		= "Perekondade ülevaade";
 $pgv_lang["patriarch_list"] 		= "Patriarhide nimekiri";
 $pgv_lang["statistics"] 		= "Statistika";
 

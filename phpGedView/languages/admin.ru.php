@@ -50,7 +50,6 @@ $pgv_lang["created_places_fail"]	= "Невозможно создать табл
 $pgv_lang["folder_created"]		= "Создать папку";
 $pgv_lang["add_gedcom"]			= "Добавить файл GEDCOM";
 $pgv_lang["add_new_gedcom"]		= "Создать новый файл GEDCOM";
-$pgv_lang["admin_approved"]		= "Ваш вход на #SERVER_NAME# одобрен";
 $pgv_lang["admin_gedcom"]			= "Администрирование GEDCOM";
 $pgv_lang["administration"]		= "Администратор";
 $pgv_lang["ansi_encoding_detected"]	= "Обнаружена кодировка ANSI. PhpGedView работает наилучшим образом с файлами в кодировке UTF-8.";

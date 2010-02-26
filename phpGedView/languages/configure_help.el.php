@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["configure"]					= "Διαμόρφωση PhpGedView";
-$pgv_lang["advanced_conf"]				= "Προχωρημένες Επιλογές Διαμόρφωσης";
 $pgv_lang["meta_conf"]					= "META Tag Επιλογές Διαμόρφωσης";
 $pgv_lang["configure_head"]				= "PhpGedView Διαμόρφωση";
 $pgv_lang["gedconf_head"]				= "GEDCOM Διαμόρφωση";
@@ -105,7 +104,6 @@ $pgv_lang["TBLPREFIX"]					= "Πρόθεμα Πινάκων Βάσης Δεδο�
 $pgv_lang["TBLPREFIX_help"]				= "A prefix to append to the tables created by PhpGedView.  By changing this value you can setup multiple PhpGedView sites to use the same database but different tables.";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]		= "Allow GEDCOM Switching";
 $pgv_lang["ALLOW_CHANGE_GEDCOM_help"]	= "Setting this value to <b>Yes</b> allows your site visitors <b>and</b> users to have the option of changing GEDCOMs if you have a multiple GEDCOM environment setup.<br /><br />Setting it to <b>No</b> disables GEDCOM switching for both visitors <b>and</b> logged in users.";
-$pgv_lang["GEDCOM"]						= "Τοποθεσία και όνομα αρχείου GEDCOM";
 $pgv_lang["gedcom_path_help"]			= "First upload your GEDCOM file to a location accessible by php on your server.  Then enter the path and file name like: <b>./index/name.ged</b>.<br /><br />See the <a href=\"readme.txt\">Readme.txt</a> file for more help.";
 $pgv_lang["CHARACTER_SET"]				= "Κωδικοποίηση Χαρακτήρων (encoding)";
 $pgv_lang["CHARACTER_SET_help"]			= "This is the character set of your GEDCOM file.  UTF-8 is the default and should work for almost all sites.  If you export your GEDCOM using ibm windows encoding, then you should put WINDOWS here.<br /><br />NOTE: PHP does NOT support UNICODE (UTF-16) so don't try it and complain to the PHP folks :-)";
@@ -292,8 +290,6 @@ $pgv_lang["add_new_pp_setting"]						= "Add new setting for Person Privacy";
 $pgv_lang["add_new_up_setting"]						= "Add new setting for User Privacy";
 $pgv_lang["add_new_gf_setting"]						= "Add new setting for Global Fact Privacy";
 $pgv_lang["add_new_pf_setting"]						= "Add new setting for Person Facts Privacy";
-$pgv_lang["add_new_pf_setting_indi"]				= "Add new setting for Person Facts Privacy for individuals";
-$pgv_lang["add_new_pf_setting_source"]				= "Add new setting for Person Facts Privacy for sources";
 $pgv_lang["file_read_error"]						= "E R R O R !!! Could not read privacy-file!";
 $pgv_lang["general_settings"]						= "General Privacy settings";
 $pgv_lang["person_privacy_settings"]				= "Person Privacy settings";
@@ -405,8 +401,6 @@ $pgv_lang["lang_shortcut_help"]						= "This code defines the shortcut which is 
 $pgv_lang["lang_langcode"]							= "Language detection codes";
 $pgv_lang["lang_langcode_help"]						= "This codes enables PhpGedView to detect the language setting of the browser which the actual user is using to view your PhpGedView pages. They need to be seperated by a semikolon ';'";
 $pgv_lang["lang_filename"]							= "Αρχείου Γλώσσας";
-$pgv_lang["config_filename"]						= "Configure-Help Filename";
-$pgv_lang["facts_filename"]							= "Facts file";
 $pgv_lang["help_filename"]							= "Αρχείο Βοήθειας";
 $pgv_lang["flagsfile"]								= "Όνομα αρχείου σημαίας";
 $pgv_lang["flagsfile_help"]							= "Name and path of the national flag imagefile for the selected language.";

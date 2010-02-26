@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 //-- ZPRÁVY KONFIGURAČNÍHO SOUBORU
 $pgv_lang["configure"]			= "Konfigurace PhpGedView";
-$pgv_lang["advanced_conf"]		= "Rozšířené nastavení";
 $pgv_lang["meta_conf"]			= "Konfigurační možnosti META tagů";
 $pgv_lang["configure_head"]		= "Nastavení PhpGedView";
 $pgv_lang["gedconf_head"]		= "Nastavení GEDCOMu";
@@ -105,7 +104,6 @@ $pgv_lang["last_login"]			= "Naposledy přihlášen(a)";
 $pgv_lang["server_url_note"]	= "Toto by měl být odkaz na vaši složku s PhpGedView. Toto nastavení byste měli měnit jedině v případě, pokud jste si jistí tím, co děláte. PhpGedView nastavilo SERVER_URL na #GUESS_URL#";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]	= "Povolit přepínání mezi GEDCOM soubory";
 $pgv_lang["ALLOW_CHANGE_GEDCOM_help"]	= "Nastavíte-li tuto hodnotu na <b>Ano</b>, povolíte tím návštěvníkům vašich stránek možnost přepnout mezi GEDCOM soubory, máte-li jich více.<br /><br />Je-li nastaveno <b>Ne</b>, ani návštěvníci, <b>ani</b> přihlášení uživatelé nebudou moci přepínat mezi GEDCOM soubory.";
-$pgv_lang["GEDCOM"]			= "Cesta ke GEDCOM souboru (včetně názvu souboru)";
 $pgv_lang["gedcom_path_help"]		= "Nejprve nahrajte GEDCOM soubor do umístění přístupného php na vašem serveru.  Pak zadejte cestu a název tohoto souboru jako: <b>./index/jmeno.ged</b>.<br /><br />Podívejte se do souboru <a href=\"readme.txt\">Readme.txt</a> pro další nápovědu.";
 $pgv_lang["CHARACTER_SET"]		= "Znaková sada (kódování)";
 $pgv_lang["CHARACTER_SET_help"]		= "Toto je znaková sada vašeho GEDCOM souboru.  UTF-8 je implicitní hodnota a měla by fungovat většině uživatelům.  Jestliže exportujete váš GEDCOM soubor s kódováním windows, pak byste sem měli napsat WINDOWS.<br /><br />POZOR: PHP NEPODPORUJE kódování UNICODE (UTF-16), takže to ani nezkoušejte. Stěžovat si můžete autorům PHP :-)";
@@ -292,8 +290,6 @@ $pgv_lang["add_new_pp_setting"]			= "Přidat nové nastavení osobní privátnos
 $pgv_lang["add_new_up_setting"]			= "Přidat nové nastavení uživatelské privátnosti";
 $pgv_lang["add_new_gf_setting"]			= "Přidat nové nastavení privátnosti globálních údajů";
 $pgv_lang["add_new_pf_setting"]			= "Přidat nové nastavení privátnosti osobních údajů";
-$pgv_lang["add_new_pf_setting_indi"]		= "Přidat nové nastavení privátnosti osobních údajů pro jednotlivce";
-$pgv_lang["add_new_pf_setting_source"]		= "Přidat nové nastavení privátnosti osobních údajů pro prameny";
 $pgv_lang["file_read_error"]			= "C H Y B A !!! Nejde číst soubor s nastavením privátnosti!";
 $pgv_lang["general_settings"]			= "Obecné nastavení privátnosti";
 $pgv_lang["person_privacy_settings"]		= "Položka privátního nastavení";
@@ -411,8 +407,6 @@ $pgv_lang["lang_shortcut_help"]		= "Tento kód definuje zkratku, kterou použív
 $pgv_lang["lang_langcode"]		= "Kód pro rozpoznání jazyka";
 $pgv_lang["lang_langcode_help"]		= "Tento kód umožňuje PhpGedView rozpoznat jazykové nastavení prohlížeče, který aktuální uživatel používá k prohlížení vašich stránek PhpGedView. Jednotlivé kódy musí být odděleny středníkem ';'";
 $pgv_lang["lang_filename"]		= "Jazykový soubor";
-$pgv_lang["config_filename"]		= "Soubor typu configure-help";
-$pgv_lang["facts_filename"]		= "Soubor údajů";
 $pgv_lang["help_filename"]		= "Soubor nápovědy";
 $pgv_lang["flagsfile"]			= "Soubor s vlajkou";
 $pgv_lang["flagsfile_help"]		= "Název a cesta k obrázku s národní vlajku pro označený jazyk.";

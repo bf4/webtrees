@@ -34,7 +34,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["age_differences"]		= "Arată diferenţele de date";
-$pgv_lang["date_of_entry"]			= "Data intrării în sursele originale";
 $pgv_lang["multi_site_search"] 		= "Căutare pe mai multe site-uri";
 $pgv_lang["switch_lifespan"]		= "Arată diagrama cu durata de viaţă";
 $pgv_lang["switch_timeline"]		= "Arată diagrama cu linia temporală";
@@ -1382,7 +1381,6 @@ $pgv_lang["sort_by"]				= "Sortează după";
 $pgv_lang["cleanup"]				= "Curăţenie";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
-$pgv_lang["dynasty_list"]			= "Prezentare generală a familiilor";
 $pgv_lang["patriarch_list"] 		= "Lista de patriarhi";
 $pgv_lang["statistics"] 			= "Statistici";
 

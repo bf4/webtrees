@@ -965,7 +965,6 @@ $pgv_lang["marrdate1"]			= "Rozsah dátumu sobášov začína";
 $pgv_lang["marrdate2"]			= "Rozsah dátumu sobášov končí";
 $pgv_lang["sort_by"]			= "Zoradené podľa";
 $pgv_lang["cleanup"]			= "Opraviť";
-$pgv_lang["dynasty_list"]		= "Prehľad rodín";
 $pgv_lang["patriarch_list"]		= "Zoznam praotcov";
 $pgv_lang["statistics"]			= "Štatistika";
 $pgv_lang["merge_same"] 		= "Záznamy nie sú rovnakého typu. Nie je možné zlúčit záznamy rôznych typov.";
@@ -1437,6 +1436,5 @@ $pgv_lang["changedate1"]			= "Konečný dátum rozsahu zmien";
 $pgv_lang["changedate2"]			= "Počiatočný dátum rozsahu zmien";
 $pgv_lang["switch_timeline"]		= "Zobraziť 'Časovú osu'";
 $pgv_lang["switch_lifespan"]		= "Zobraziť Graf dĺžky života";
-$pgv_lang["date_of_entry"]		= "Dátum záznamu v originálnom zdroji";
 $pgv_lang["multi_site_search"] 		= "Mnoho stránkové hľadanie";
 ?>

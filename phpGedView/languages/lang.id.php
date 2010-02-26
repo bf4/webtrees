@@ -51,7 +51,6 @@ $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["showUnknown"]			= "Munculkan jender yang tidak diketahui";
 $pgv_lang["count"]				= "Jumlah";
 $pgv_lang["age_differences"]			= "Munculkan Perbedaan Tanggal";
-$pgv_lang["date_of_entry"]			= "Tanggal masukan pada sumber asli";
 $pgv_lang["multi_site_search"] 			= "Pencarian Banyak Situs";
 $pgv_lang["switch_lifespan"]			= "Munculkan Bagan Selang hidup";
 $pgv_lang["switch_timeline"]			= "Munculkan Bagan Garis waktu";
