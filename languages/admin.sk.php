@@ -36,7 +36,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["user"]			= "Autorizovaný uživateľ";
 $pgv_lang["thumbnail_deleted"]		= "Súbor náhľadu bol úspešne zmazaný.";
 $pgv_lang["thumbnail_not_deleted"]	= "Súbor náhľadu nemôže byť zmazaný.";
-$pgv_lang["step2"]			= "Krok 2 z 4:";
 $pgv_lang["refresh"]			= "Obnoviť";
 $pgv_lang["move_file_success"]		= "Súbory medií a náhľadov boli úspešne presunuté.";
 $pgv_lang["media_folder_corrupt"]	= "Adresár médií je vadný.";

@@ -36,7 +36,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["user"]					= "Inloggade användare";
 $pgv_lang["thumbnail_deleted"]		= "Miniatyrbild raderades.";
 $pgv_lang["thumbnail_not_deleted"]	= "Miniatyrbild kunde inte raderas.";
-$pgv_lang["step2"]				= "Steg 2 av 4:";
 $pgv_lang["refresh"]				= "Ladda om";
 $pgv_lang["move_file_success"]		= "Media- och miniatyrfiler flyttades korrekt.";
 $pgv_lang["media_folder_corrupt"]	= "Mediamappen är skadad.";

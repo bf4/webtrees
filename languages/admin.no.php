@@ -127,7 +127,6 @@ $pgv_lang["site_admins"]			= "Nettstedadministratorer";
 $pgv_lang["nobody"]					= "Ingen";
 $pgv_lang["thumbnail_deleted"]		= "Miniatyrbilde-fil er nå slettet.";
 $pgv_lang["thumbnail_not_deleted"]	= "Klarte ikke å slette miniatyrbilde-fil.";
-$pgv_lang["step2"]					= "Del 2 av 4:";
 $pgv_lang["refresh"]			= "Oppdater";
 $pgv_lang["move_file_success"]	= "Media- og miniatyrbilde-filer er nå flyttet.";
 $pgv_lang["media_folder_corrupt"]	= "Det er en feil med mediamappen.";

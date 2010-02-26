@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["step2"]				= "Шаг 2 из 5:";
 $pgv_lang["gedcom_deleted"]		= "GEDCOM [#GED#] удалён.";
 $pgv_lang["full_name"]			= "Полное имя";
 $pgv_lang["error_header"] 		= "Файл GEDCOM, \$GEDCOM, отсутствует в заданном оглавлении.";

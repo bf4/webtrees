@@ -193,7 +193,6 @@ $pgv_lang["folder_update_ok"]				= "De folder #folder_name# is geupdate.";
 $pgv_lang["folder_added"]					= "De folder #folder_name# is toegevoegd.";
 
 //-- RA_SEARCH MESSAGES
-$pgv_lang["search_results"]					= "Zoekresultaten";
 $pgv_lang["nothing_found"]					= "Er zijn geen logs gevonden die aan de zoekcriteria voldoen.";
 
 //-- ERROR MESSAGES

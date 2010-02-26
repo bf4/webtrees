@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["user"]					= "Pasisveikinęs vartotojas";
-$pgv_lang["step2"]					= "Žingsnis 2 iš 4:";
 $pgv_lang["gedadmin"]				= "GEDCOM administratorius";
 $pgv_lang["full_name"]				= "Pilnas vardas";
 $pgv_lang["error_header"]			= "GEDCOM failas , <b>#GEDCOM#</b>,  nurodytoje vietoje neegzistuoja.";

@@ -146,7 +146,6 @@ $pgv_lang["site_admins"]			= "Upravitelji spletne strani";
 $pgv_lang["nobody"]				= "Nihče";
 $pgv_lang["thumbnail_deleted"]			= "Sličica je bila uspešno izbrisana.";
 $pgv_lang["thumbnail_not_deleted"]		= "Sličice ni bilo mogoče izbrisati.";
-$pgv_lang["step2"]				= "Korak 2 od 4:";
 $pgv_lang["refresh"]				= "Osveži";
 $pgv_lang["move_file_success"]			= "Datoteke fotografij in sličic so bile uspešno premeščene.";
 $pgv_lang["media_folder_corrupt"]	= "Imenik fotografij je pokvarjen.";

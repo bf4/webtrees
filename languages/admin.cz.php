@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["step2"]				= "Krok 2 z 4:";
 $pgv_lang["gedcom_deleted"]		= "GEDCOM soubor [#GED#] byl úspěšně smazán.";
 $pgv_lang["full_name"]			= "Celé jméno";
 $pgv_lang["error_header"] 		= "Soubor GEDCOM, [#GEDCOM#], není na zadaném místě.";

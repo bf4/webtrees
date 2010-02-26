@@ -37,7 +37,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["user"]			= "Tunnistettu käyttäjä";
 $pgv_lang["thumbnail_deleted"]	= "Pienoiskuvatiedosto poistettu.";
 $pgv_lang["thumbnail_not_deleted"]	= "Pienoiskuvatiedostoa ei voitu poistaa.";
-$pgv_lang["step2"]			= "Vaihe 2/4:";
 $pgv_lang["refresh"]			= "Näytön päivitys";
 $pgv_lang["move_file_success"]	= "Media- ja pienoiskuvatiedostot on poistettu.";
 $pgv_lang["media_folder_corrupt"]	= "Mediakansio on viallinen.";

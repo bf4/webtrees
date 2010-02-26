@@ -32,7 +32,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["step2"]								= "Βήμα 2 από 4:";
 $pgv_lang["gedcom_deleted"]						= "GEDCOM [#GED#] succesfully deleted.";
 $pgv_lang["full_name"]							= "Ονοματεπώνυμο";
 $pgv_lang["error_header"]						= "Το αρχείο GEDCOM, [#GEDCOM#], δεν υπάρχει στο συγκεκριμένο χώρο.";

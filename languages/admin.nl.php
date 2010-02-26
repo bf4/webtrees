@@ -38,7 +38,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["user"]						= "Aangemelde gebruiker";
 $pgv_lang["thumbnail_deleted"]		= "Miniweergave verwijderd.";
 $pgv_lang["thumbnail_not_deleted"]	= "Miniweergave kan niet worden verwijderd.";
-$pgv_lang["step2"]						= "Stap 2 van 4:";
 $pgv_lang["refresh"]					= "Ververs";
 $pgv_lang["move_file_success"]			= "Multimedia- en miniweergavebestanden succesvol verplaatst.";
 $pgv_lang["media_folder_corrupt"]		= "De multimediamap is corrupt.";

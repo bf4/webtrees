@@ -191,7 +191,6 @@ $pgv_lang["folder_update_ok"]           = "Le dossier #folder_name# a été mis 
 $pgv_lang["folder_added"]               = "Le dossier #folder_name# a été ajouté.";
 
 //-- RA_SEARCH MESSAGES
-#pgv_lang["search_results"]             = "Search Results";
 #pgv_lang["nothing_found"]              = "No matching logs found.";
 
 //-- ERROR MESSAGES
