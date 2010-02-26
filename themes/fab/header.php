@@ -75,6 +75,9 @@ echo
 echo
 	$javascript, $head, '</head><body id="body" ', $bodyOnLoad, '>';
 flush(); // Allow the browser to start fetching external stylesheets, javascript, etc.
+?> 
+<link type="text/css" href="<?php echo PGV_THEME_DIR?>modules.css" rel="Stylesheet" />
+<?php
 echo '<div id="header" class="block">'; // Every page has a header
 if ($view!='simple') {
 	echo
