@@ -503,8 +503,6 @@ $pgv_lang["help_contents_gedcom_places"]	= "Steder i slektsbasen (Ged)";
 
 //-- Admin Help Contents Items
 $pgv_lang["admin_help_contents_head_help"]	="<b>Emner i hjelp<br /><br />Emner for Administrator</b> lagt til i begynnelsen av listen.<br /><br />";
-$pgv_lang["ah1_help"]					="_Oppgradere";
-//$pgv_lang["ah2_help"]					="_PhpGedView-innstillinger";
 $pgv_lang["ah3_help"]					="_GEDCOM: Legg til kontra Hente (upload)";
 $pgv_lang["ah4_help"]					="_GEDCOM: Konfigurasjonsfil";
 $pgv_lang["ah5_help"]					="_GEDCOM: Standard";
@@ -524,11 +522,9 @@ $pgv_lang["ah18_help"]					="_Administrasjon";
 $pgv_lang["ah19_help"]					="_GEDCOM: MediaVerktøy";
 $pgv_lang["ah20_help"]					="_GEDCOM: Endre ID til person(er) til ...";
 $pgv_lang["ah21_help"]					= "_Språk-filer";
-//           22 is in the help_text_vars.php
 $pgv_lang["ah23_help"]				= "_Oppsett for støttede språk";
 $pgv_lang["ah24_help"]				= "_Konvertering (SQL <<-->> Index)";
 $pgv_lang["ah25_help"]				= "_PhpGedView sikkerhetskopi";
-##$pgv_lang["ah26_help"]				= "_FAQ List: Edit";
 
 //--Statistics Help
 ##$pgv_lang["help_statisticsplot.php"] = "~Statistics Plot~<br /><br />This is the result page, showing the graphical plot of the statistics from your database as defined by the inputs on the previous page.<br /><br />";

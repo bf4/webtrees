@@ -696,7 +696,6 @@ $pgv_lang["media_dir_2"]			= "Medieobjektet er i standard medie mappen";
 $pgv_lang["media_dir_1"]			= "Medieobjektet er placeret på en ekstern server";
 $pgv_lang["apx"]				= "ca.";
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]		= "Opbyg indeksene påny";
 $pgv_lang["password_mismatch"]		= "De to adgangskoder er forskellige.";
 $pgv_lang["enter_username"]			= "Du skal opgive et brugernavn.";
 $pgv_lang["enter_password"]			= "Du skal opgive en adgangskode.";

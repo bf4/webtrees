@@ -709,7 +709,6 @@ $pgv_lang["cir"]		= "circa";
 $pgv_lang["apx"]		= "aprox.";
 
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]		= "Reconstruieşte indexurile";
 $pgv_lang["password_mismatch"]		= "Parolele nu corespund.";
 $pgv_lang["enter_username"] 		= "Trebuie să introduceţi un nume de utilizator.";
 $pgv_lang["enter_password"] 		= "Trebuie să introduceţi o parolă.";

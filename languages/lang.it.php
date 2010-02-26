@@ -379,7 +379,6 @@ $pgv_lang["remove_person"]			= "Rimuovi questa persona";
 $pgv_lang["show_age"]					= "Mostrare il marcatore d'età";
 $pgv_lang["from"]			= "da";
 $pgv_lang["to"]				= "fino a";
-$pgv_lang["rebuild_indexes"]		= "Ricostruisci l'indice";
 $pgv_lang["utf8_to_ansi"]			= "Vuoi convertire da UTF-8 a ANSI (ISO-8859-1)?";
 $pgv_lang["no_login"]				= "impossibile autenticare l'utente";
 $pgv_lang["edit"]					= "Modifica";

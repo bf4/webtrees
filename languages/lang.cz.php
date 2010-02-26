@@ -92,7 +92,6 @@ $pgv_lang["box_width"] 				= "Šířka rámečku";
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Není možné nalézt rodinu s id";
 $pgv_lang["unable_to_find_record"]	= "Není možné nalézt záznam s id";
-$pgv_lang["repo_name"]			= "Název pramene:";
 $pgv_lang["address"]			= "Adresa:";
 $pgv_lang["phone"]			= "Telefon:";
 $pgv_lang["title"]			= "Nadpis";
@@ -350,7 +349,6 @@ $pgv_lang["to"]				= "do";
 $pgv_lang["cir"]			= "asi";
 $pgv_lang["apx"]			= "přibl.";
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]		= "Přepsat Indexy";
 $pgv_lang["user_admin"]			= "Správa uživatelů";
 $pgv_lang["password_mismatch"]		= "Hesla se neshodují.";
 $pgv_lang["enter_username"]		= "Musíte vložit uživatelské jméno.";

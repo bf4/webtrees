@@ -758,7 +758,6 @@ $pgv_lang["cir"]					= "Sekitar";
 $pgv_lang["apx"]					= "Kira-kira";
 
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]				= "Buatkembali indeks";
 $pgv_lang["password_mismatch"]				= "Sandi tidak cocok.";
 $pgv_lang["enter_username"] 				= "Anda harus memasukkan nama pengguna.";
 $pgv_lang["enter_password"] 				= "Anda harus memasukkan sandi.";
