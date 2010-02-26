@@ -35,7 +35,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["configure"]				= "Instellen PhpGedView";
-$pgv_lang["advanced_conf"]			= "Extra configuratieopties";
 $pgv_lang["gedcom_conf"]			= "Basisinstellingen";
 $pgv_lang["media_conf"]				= "Multimedia";
 $pgv_lang["accpriv_conf"]			= "Toegang en privacy";
@@ -338,8 +337,6 @@ $pgv_lang["add_new_pp_setting"]		= "Nieuwe privacy instelling voor persoon toevo
 $pgv_lang["add_new_up_setting"]		= "Nieuwe privacy instelling voor gebruiker toevoegen";
 $pgv_lang["add_new_gf_setting"]		= "Nieuwe algemene instelling voor gegevens toevoegen";
 $pgv_lang["add_new_pf_setting"]		= "Nieuwe specifieke instelling voor gegevens toevoegen";
-$pgv_lang["add_new_pf_setting_source"]		= "Voeg nieuwe instelling toe voor gegevens van een bron";
-$pgv_lang["add_new_pf_setting_indi"]		= "Voeg nieuwe instelling toe voor gegevens van een persoon";
 $pgv_lang["file_read_error"]		= "F O U T !!! Kan het Privacybestand niet lezen!";
 $pgv_lang["general_privacy"]		= "Algemene privacy-instellingen";
 $pgv_lang["person_privacy"]			= "Privacy instellingen voor een persoon";

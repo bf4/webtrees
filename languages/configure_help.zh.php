@@ -31,9 +31,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-//-- CONFIGURE FILE MESSAGES
-$pgv_lang["configure"]			= "Configure PhpGedView";
-
 //-- edit privacy messages
 $pgv_lang["edit_privacy"]		= "Configuration of the privacy-file";
 $pgv_lang["SHOW_LIVING_NAMES"]			= "显示健在人员名单";
@@ -54,7 +51,6 @@ $pgv_lang["no_content"]			= "沒有內容";
 $pgv_lang["editlang"]			= "编辑";
 $pgv_lang["editlang_help"]		= "~#pgv_lang[editlang]#~<br /><br />编辑语言文件的信息<br />";
 $pgv_lang["savelang"]			= "保存";
-$pgv_lang["cancel"]			= "取消";
 $pgv_lang["savelang_help"]		= "#pgv_lang[savelang]#~<br /><br />保存信息到语言文件。<br />";
 $pgv_lang["original_message"]		= "原始的消息";
 $pgv_lang["message_to_edit"]		= "编辑的信息";

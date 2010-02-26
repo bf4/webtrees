@@ -32,7 +32,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 //-- GENERAL HELP MESSAGES
-$pgv_lang["date_of_entry"]		= "Datum i orginalkälla";
 $pgv_lang["multi_site_search"] 		= "Multisajtsökning";
 $pgv_lang["differences"]			= "Skillnader";
 $pgv_lang["charts_block"]			= "Diagramområde";
@@ -560,7 +559,6 @@ $pgv_lang["marrdate2"]				= "Vigsel slutdatum";
 $pgv_lang["deathplace"]				= "Dödsort innehåller";
 $pgv_lang["sort_by"]			= "Sortera beroende på";
 $pgv_lang["cleanup"]			= "Städa upp";
-$pgv_lang["dynasty_list"]		= "Översikt över familjer";
 $pgv_lang["patriarch_list"]		= "Patriarklista";
 $pgv_lang["statistics"]			= "Statistik";
 $pgv_lang["merge_same"]         = "Posterna är inte av samma typ. Kan inte slå ihop poster som inte är samma typ.";

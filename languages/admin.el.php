@@ -49,7 +49,6 @@ $pgv_lang["created_places_fail"]				= "Unable to create <i>Places</i> table.";
 $pgv_lang["folder_created"]						= "Δημιουργήθηκε Φάκελος";
 $pgv_lang["add_gedcom"]							= "Προσθήκη GEDCOM";
 $pgv_lang["add_new_gedcom"]						= "Δημιουργία Νέου Αρχείου GEDCOM";
-$pgv_lang["admin_approved"]						= "Your account at #SERVER_NAME# has been approved";
 $pgv_lang["admin_gedcom"]						= "Διαχείριση GEDCOM";
 $pgv_lang["administration"]						= "Διαχείριση";
 $pgv_lang["ansi_encoding_detected"]				= "ANSI File Encoding detected.   PhpGedView works best with files encoded in UTF-8.";

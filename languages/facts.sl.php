@@ -459,11 +459,6 @@ $factAbbrev["BIRT"]		= "R";
 $factAbbrev["MARR"]		= "P";
 $factAbbrev["DEAT"]		= "S";
 
- */
+*/
 
-$factarray["_WEB"] = "Spletna stran";
-$factarray["_DCAUSE"] = "Vzrok smrti";
-$factarray["Address-skupni"] = "Skupni naslov";
-$factarray["address-share"] = "Skupni naslov";
-$factarray["Phone Number-shared"] = "Skupna tel. številka";
 ?>

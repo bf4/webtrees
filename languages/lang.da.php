@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["date_of_entry"]				= "Indtastningsdato i original kilde";
 $pgv_lang["genealogy"]					= "slægtsforskning";
 $pgv_lang["activate"]					= "Aktivér";
 $pgv_lang["deactivate"]					= "Deaktivér";
@@ -1330,7 +1329,6 @@ $pgv_lang["marrdate2"]				= "Ægteskabsdato interval slut";
 $pgv_lang["sort_by"]			= "Sorteret efter";
 $pgv_lang["cleanup"]			= "Ryd op";
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
-$pgv_lang["dynasty_list"]		= "Liste over familier";
 $pgv_lang["patriarch_list"]		= "Stamfædreliste";
 $pgv_lang["statistics"]			= "Statistik";
 //-- Merge Records
