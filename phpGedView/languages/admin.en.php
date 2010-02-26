@@ -145,7 +145,6 @@ $pgv_lang["site_admins"]			= "Site Administrators";
 $pgv_lang["nobody"]					= "Nobody";
 $pgv_lang["thumbnail_deleted"]		= "Thumbnail file successfully deleted.";
 $pgv_lang["thumbnail_not_deleted"]	= "Thumbnail file could not be deleted.";
-$pgv_lang["step2"]					= "Step 2 of 4:";
 $pgv_lang["refresh"]				= "Refresh";
 $pgv_lang["move_file_success"]		= "Media and thumbnail files successfully moved.";
 $pgv_lang["media_folder_corrupt"]	= "The media folder is corrupted.";

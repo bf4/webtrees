@@ -37,7 +37,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["user"]					= "Autentikus felhasználó";
 $pgv_lang["thumbnail_deleted"]				= "Előnézet állomány sikeresen törölve.";
 $pgv_lang["thumbnail_not_deleted"]			= "Előnézet állományt nem lehetett kitörölni.";
-$pgv_lang["step2"]					= "2. lépés a 4-ből:";
 $pgv_lang["refresh"]					= "Frissítés";
 $pgv_lang["move_file_success"]				= "Média és előnézet állomány sikeresen átrakva.";
 $pgv_lang["media_folder_corrupt"]			= "A média mappa hibás.";

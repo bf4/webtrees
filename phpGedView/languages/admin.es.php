@@ -146,7 +146,6 @@ $pgv_lang["site_admins"]			= "Administradores del sitio";
 $pgv_lang["nobody"]					= "Nadie";
 $pgv_lang["thumbnail_deleted"]		= "Archivo de miniatura borrado con éxito.";
 $pgv_lang["thumbnail_not_deleted"]	= "No se pudo borrar el archivo de miniatura.";
-$pgv_lang["step2"]					= "Paso 2 de 4:";
 $pgv_lang["refresh"]				= "Refrescar";
 $pgv_lang["move_file_success"]		= "Archivos principal y miniatura movidos con éxito.";
 $pgv_lang["media_folder_corrupt"]	= "La carpeta de archivos audiovisuales está corrupta.";

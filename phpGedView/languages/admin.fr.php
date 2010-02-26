@@ -116,7 +116,6 @@ $pgv_lang["query"]                      = "Requête";
 $pgv_lang["user"]                       = "Utilisateur authentifié";
 $pgv_lang["thumbnail_deleted"]          = "Vignette supprimée.";
 $pgv_lang["thumbnail_not_deleted"]      = "Ce fichier vignette est protégé et ne peut pas être supprimé sans autorisation.";
-$pgv_lang["step2"]                      = "Étape 2/4 :";
 $pgv_lang["refresh"]                    = "Rafraîchir";
 $pgv_lang["move_file_success"]          = "Le fichier MultiMédia et la vignette ont été déplacés.";
 $pgv_lang["media_folder_corrupt"]       = "Le dossier MultiMédia est corrompu.";

@@ -57,7 +57,6 @@ $pgv_lang["query"]					= "Forespørgsel";
 $pgv_lang["user"]					= "Godkendt bruger";
 $pgv_lang["thumbnail_deleted"]		= "Miniaturebilledet blev slettet.";
 $pgv_lang["thumbnail_not_deleted"]	= "Miniaturebilledet kunne ikke slettes.";
-$pgv_lang["step2"]					= "Del 2 af 4:";
 $pgv_lang["refresh"]				= "Opdater";
 $pgv_lang["move_file_success"]		= "Mediefiler og miniaturebilleder blev flyttet.";
 $pgv_lang["media_folder_corrupt"]	= "Folderen med mediefiler er ødelagt.";

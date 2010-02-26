@@ -144,7 +144,6 @@ $pgv_lang["site_admins"]		= "מנהלני אתר";
 $pgv_lang["nobody"]			= "אף אחד"; 
 $pgv_lang["thumbnail_deleted"]	= "קובץ תמונה מזערית נמחק בהצלחה.";
 $pgv_lang["thumbnail_not_deleted"]	= "לא ניתן למחוק את קובץ התמונה המזערית.";
-$pgv_lang["step2"]			= "שלב 2 מתוך 4:";
 $pgv_lang["refresh"]			= "רענן";
 $pgv_lang["move_file_success"]	= "קובצי מדיה והתמונה המזערית הועברו בהצלחה.";
 $pgv_lang["media_folder_corrupt"]	= "תיקיית המדיה מקולקלת.";

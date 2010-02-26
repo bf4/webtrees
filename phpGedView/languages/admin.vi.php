@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["step2"]					= "Bước 2 của  4:";
 $pgv_lang["gedcom_deleted"] 		= "GEDCOM [#GED#] xoá bỏ tốt lành.";
 $pgv_lang["full_name"]				= "Tên Toàn Diện";
 $pgv_lang["error_header"]			= "Cái tập tin GEDCOM, <b>#GEDCOM#</b>, không có ở nơi chỉ định.";

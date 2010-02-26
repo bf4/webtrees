@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["step2"]					= "Passo 2 di 4:";
 $pgv_lang["full_name"]				= "Nome completo";
 $pgv_lang["error_header"]   = "Il file GEDCOM, <b>#GEDCOM#</b>, non esiste nella posizione specificata.";
 $pgv_lang["manage_gedcoms"]			= "Amministra il GEDCOM e la Privacy";

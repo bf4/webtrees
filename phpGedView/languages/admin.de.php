@@ -127,7 +127,6 @@ $pgv_lang["site_admins"]			= "Site-Verwalter";
 $pgv_lang["nobody"]					= "Niemand";
 $pgv_lang["thumbnail_deleted"]		= "Miniaturbild wurde gelöscht.";
 $pgv_lang["thumbnail_not_deleted"]	= "Miniaturbild konnte nicht gelöscht werden.";
-$pgv_lang["step2"]					= "Schritt 2 von 4:";
 $pgv_lang["refresh"]				= "Erneuern";
 $pgv_lang["move_file_success"]		= "Medien- und Miniaturbilddateien wurden entfernt.";
 $pgv_lang["media_folder_corrupt"]	= "Das Medienverzeichnis ist defekt.";

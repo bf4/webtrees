@@ -119,7 +119,6 @@ $pgv_lang["query"]					= "Sorgula";
 $pgv_lang["user"]					= "Onaylanmış kullanıcı";
 $pgv_lang["thumbnail_deleted"]		= "Tırnak önizleme dosya başarılı biçimde silindi.";
 $pgv_lang["thumbnail_not_deleted"]	= "Tırnak önizleme dosyası silinemiyor.";
-$pgv_lang["step2"]			= "4 adımdan 2'ncisi:";
 $pgv_lang["refresh"]				= "Yenile";
 $pgv_lang["move_file_success"]		= "Media ve tırnak önizleme dosyalar başarılı biimde taşındı.";
 $pgv_lang["media_folder_corrupt"]	= "Media klasörü bozuk.";

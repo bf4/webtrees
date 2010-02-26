@@ -35,7 +35,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["user"]="Usuário Autenticado";
 $pgv_lang["thumbnail_deleted"]="Miniatura excluída com sucesso.";
 $pgv_lang["thumbnail_not_deleted"]="Não foi possível excluir a Miniatura.";
-$pgv_lang["step2"]="Passo 2 de 4:";
 $pgv_lang["refresh"]="Atualizar";
 $pgv_lang["move_file_success"]="Mídia e Miniatura movidas com sucesso.";
 $pgv_lang["media_folder_corrupt"]="A pasta de Mídias está corrompida.";

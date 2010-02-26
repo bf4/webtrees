@@ -226,7 +226,6 @@ $pgv_lang["top_level"]				= "Horní úroveň";
 $pgv_lang["form"]				= "Místa jsou zapsána ve tvaru: ";
 $pgv_lang["default_form"]			= "město, kraj, stát, země";
 $pgv_lang["default_form_info"]			= "(Default)";
-$pgv_lang["gedcom_form_info"]			= "(GEDCOM)";
 $pgv_lang["unknown"]				= "Neznám(a)";
 $pgv_lang["individuals"]			= "Osoby";
 $pgv_lang["view_records_in_place"]	= "Zobrazit všechny záznamy spojené s tímto místem";
@@ -273,7 +272,6 @@ $pgv_lang["flushing"]				= "Obsah paměti";
 $pgv_lang["exec_time"]				= "Celkový čas:";
 $pgv_lang["unable_to_create_index"]		= "Není možné vytvořit soubor index. Ujistěte se, že máte práva zápisu do složky PhpGedView. Stávající nastavení práv můžete obnovit po zapsání souborů.";
 $pgv_lang["indi_complete"]			= "Aktualizace souboru s rejstříkem osob je hotova.";
-$pgv_lang["family_complete"]			= "Aktualizace souboru s rejstříkem rodin je hotova.";
 $pgv_lang["drop_tables"]			= "Smazat nynější tabulky";
 $pgv_lang["import_multiple"]			= "Importovat a pracovat s více GEDCOM soubory";
 $pgv_lang["explain_options"]			= "Jestliže zvolíte možnost \"smazat tabulky\", všechna budou nahrazena tímto GEDCOM souborem.<br />Pokud zvolíte \"importovat a pracovat s GEDCOM soubory\", PhpGedView smaže jakákoliv data, která byla importována ze stejnojmenného GEDCOM souboru. Tato volba vám umožňuje ukládat data z více GEDCOM souborů ve stejných tabulkách a jednoduše mezi nimi přepínat.";
@@ -281,7 +279,6 @@ $pgv_lang["path_to_gedcom"]			= "Zadejte cestu k vašemu GEDCOM souboru:";
 $pgv_lang["gedcom_title"]			= "Zadejte nadpis popisující data v tomto GEDCOM souboru";
 $pgv_lang["index_complete"]			= "Rejstřík je hotov.";
 $pgv_lang["processed_for"]			= "Zpracován soubor pro ";
-$pgv_lang["run_tools"]				= "Chcete spustit jeden z následujících nástrojů ještě před importováním GEDCOM souboru:";
 $pgv_lang["addmedia"]				= "Nástroj přidání médií";
 $pgv_lang["dateconvert"]			= "Konverze dat";
 $pgv_lang["sec"]				= "s";
@@ -374,9 +371,6 @@ $pgv_lang["add_gedcom_instructions"]	= "Zadejte název pro tento nový GEDCOM so
 $pgv_lang["utf8_to_ansi"]		= "Chcete změnit kódování v tomto GEDCOM souboru z UTF-8 na ANSI (ISO-8859-1)?";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-$pgv_lang["step1"]				= "Krok 1 z 4:";
-$pgv_lang["step3"]				= "Krok 3 z 4:";
-$pgv_lang["step4"]				= "Krok 4 z 4:";
 $pgv_lang["cancel_upload"]			= "Ukončit nahrávání";
 //-- Relationship chart messages
 $pgv_lang["relationship_chart"]		= "Schéma vztahů";
@@ -497,7 +491,6 @@ $pgv_lang["mail04_line04"]		= "Teď prosím klikněte na odkaz dole, přihlaste 
 $pgv_lang["mail04_subject"]		= "Data požadována na #SERVER_NAME#";
 $pgv_lang["pwreqinfo"]			= "Nazdar...<br /><br />Na adresu (#user[email]#) byl zaslán e-mail s novým heslem.<br /><br />Prosím zkontrolujte svou e-mailovou schránku, zprávu byste měli obdržet během několika minut.<br /><br />Doporučení:<br /><br />Potom, co zažádáte o e-mail, měli byste se na tyto stránky přihlásit se svým novým heslem a změnit si jej, abyste uchovali svá data v tajnosti.";
 $pgv_lang["editowndata"]		= "Můj účet";
-$pgv_lang["savedata"]			= "Uložit změněná data";
 $pgv_lang["datachanged"]		= "Uživatelská data byla změněna!";
 $pgv_lang["datachanged_name"]		= "Možná bude potřeba, abyste se přihlásili znovu (se svým novým uživatelským jménem).";
 $pgv_lang["myuserdata"]			= "Můj účet";
@@ -652,15 +645,7 @@ $pgv_lang["privacy_open_error"] 	= "Objevila se chyba během otevírání soubor
 $pgv_lang["privacy_write_error"]	= "CHYBA!!! Není možné zapisovat do souboru [#PRIVACY_MODULE#].<br />Ujistěte se, že máte práva zápisu do souboru.<br />Současné nastavení práv může být po provedení zápisu do souboru obnoveno.";
 $pgv_lang["privacy_update_ok"]		= "Soubor privátního nastavení: [#PRIVACY_MODULE#] byl úspěšně aktualizován.";
 $pgv_lang["privacy_uptodate"]		= "Váš [#PRIVACY_MODULE#] soubor je zastaralý.";
-$pgv_lang["heading_privacy"]		= "Soubory privátního nastavení:";
-$pgv_lang["heading_phpgedview"]		= "Soubory PhpGedView:";
-$pgv_lang["heading_image"]		= "Obrázkové soubory:";
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$pgv_lang["heading_index"] 		= "Index soubory:";
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$pgv_lang["heading_language"]		= "Jazykové soubory:";
-$pgv_lang["heading_theme"]		= "Soubory motivů:";
-$pgv_lang["heading_docs"]		= "Manuály:";
 $pgv_lang["copied_success"]		= "úspěšně zkopírováno.";
 $pgv_lang["process_error"]		= "Během zpracovávání této stránky se objevila chyba. Není možné zjistit novou verzi.";
 //-- validate GEDCOM
@@ -714,7 +699,6 @@ $pgv_lang["excel_list"]			= "Převést následující řádky do EXCEL formátu 
 $pgv_lang["excel_tab"]			= "tabulka:";
 $pgv_lang["excel_create"]		= "se vytvoří ze souboru:";
 $pgv_lang["patriarch_list"]		= "Seznam praotců";
-$pgv_lang["slk_list"]			= "Seznam EXCEL SLK";
 $pgv_lang["statistics"]			= "Statistika";
 $pgv_lang["merge_same"] 			= "Záznamy nejsou stejného typu. Není možné sloučit záznamu rozdílných typů.";
 $pgv_lang["merge_step1"]			= "Slučování - krok 1 ze 3";

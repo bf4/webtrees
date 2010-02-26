@@ -117,7 +117,6 @@ $pgv_lang["site_admins"]			= "Administratorzy strony";
 $pgv_lang["nobody"]					= "Nikt";
 $pgv_lang["thumbnail_deleted"]		= "Plik miniaturek został usunięty.";
 $pgv_lang["thumbnail_not_deleted"]	= "Usuwanie pliku miniaturek nie powiodło się.";
-$pgv_lang["step2"]					= "Krok 2 z 4:";
 $pgv_lang["refresh"]				= "Odśwież";
 $pgv_lang["move_file_success"]		= "Przenoszenie plików multimediów i miniaturek zakończone pomyślnie.";
 $pgv_lang["media_folder_corrupt"]	= "Katalog z multimediami jest uszkodzony.";

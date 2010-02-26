@@ -55,7 +55,6 @@ $pgv_lang["query"]					= "Pregunta";
 $pgv_lang["user"]					= "Usuari amb accés";
 $pgv_lang["thumbnail_deleted"]		= "Eliminat correctament el fitxer miniatura";
 $pgv_lang["thumbnail_not_deleted"]	= "No s'ha pogut eliminar el fitxer miniatura";
-$pgv_lang["step2"]					= "Pas 2 de 4:";
 $pgv_lang["refresh"]				= "Refresca";
 $pgv_lang["move_file_success"]		= "S'han canviat correctament els fitxers multimèdia i les miniatures.";
 $pgv_lang["media_folder_corrupt"]	= "S'ha malmès la carpeta de multimèdia.";
