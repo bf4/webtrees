@@ -515,7 +515,6 @@ $pgv_lang["help_contents_gedcom_places"]	= "Orte in der GEDCOM-Datei";
 
 //-- Admin Help Contents Items
 $pgv_lang["admin_help_contents_head_help"]	= "<b>HILFE INHALT<br /><br />HILFE FÜR VERWALTER</b> wurde der Liste vorangestellt.<br /><br />";
-// $pgv_lang["ah1_help"]				= "_Upgrade";
 $pgv_lang["ah2_help"]					= "_PhpGedView konfigurieren";
 $pgv_lang["ah3_help"]					= "_GEDCOM: Hinzufügen oder Upload";
 $pgv_lang["ah4_help"]					= "_GEDCOM: Konfigurations-Datei";
@@ -536,7 +535,6 @@ $pgv_lang["ah18_help"]					= "_Verwaltung";
 $pgv_lang["ah19_help"]					= "_GEDCOM: Multimedia-Tool";
 $pgv_lang["ah20_help"]					= "_GEDCOM: Persönliche ID ändern in ...";
 $pgv_lang["ah21_help"]					= "_Sprach-Dateien";
-//           22 is in the help_text_vars.php
 $pgv_lang["ah23_help"]					= "_Unterstützte Sprachen konfigurieren";
 $pgv_lang["ah24_help"]					= "_Benutzer-Informationen übertragen (Index -->> SQL)";
 $pgv_lang["ah25_help"]					= "_PhpGedView Sicherheits-Kopie";

@@ -261,7 +261,6 @@ $pgv_lang["box_width"] 		= "laius";
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Ei leia perekonda, mille ID on";
 $pgv_lang["unable_to_find_record"]	= "Ei leia kiret, mille ID on";
-$pgv_lang["repo_name"]		= "Hoidla nimi:";
 $pgv_lang["address"]			= "Aadress:";
 $pgv_lang["phone"]			= "Telefon:";
 $pgv_lang["title"]			= "Pealkiri";
@@ -519,7 +518,6 @@ $pgv_lang["select_an_option"]			= "Tee järgnevad valikud:";
 $pgv_lang["readme_documentation"]		= "README dokumentatsioon";
 $pgv_lang["view_readme"]			= "Vaata faili readme.txt";
 $pgv_lang["configuration"]			= "Konfigureerimine";
-$pgv_lang["rebuild_indexes"]			= "Indeksite uuestiloomine";
 $pgv_lang["user_admin"] 			= "Kasutajate administreerimine";
 $pgv_lang["user_created"]			= "Kasutaja loomine õnnestus.";
 $pgv_lang["user_create_error"]			= "Kasutajat ei saa lisada.  Proovi uuesti.";

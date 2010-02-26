@@ -96,7 +96,6 @@ $pgv_lang["landscape"]			= "宽图表";
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "無法找到家庭";
 $pgv_lang["unable_to_find_record"]	= "無法查找記錄";
-$pgv_lang["repo_name"]			= "程式庫名字:";
 $pgv_lang["address"]			= "地址:";
 $pgv_lang["phone"]			= "电话:";
 $pgv_lang["title"]			= "题目:";
@@ -390,7 +389,6 @@ $pgv_lang["10"]			= "十";
 $pgv_lang["100"]		= "百";
 $pgv_lang["1000"]		= "千";
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]		= "重新创建网页连接点";
 $pgv_lang["user_admin"]			= "用戶管理";
 $pgv_lang["manage_media"]			= "管理媒体";
 $pgv_lang["stat_users"]				= "总用户";

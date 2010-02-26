@@ -442,7 +442,6 @@ $pgv_lang["help_contents_gedcom_info"]  = "Informations du fichier GEDCOM";
 $pgv_lang["help_contents_gedcom_places"]= "Lieux du fichier GEDCOM";
 //-- Admin Help Contents Items
 $pgv_lang["admin_help_contents_head_help"]= "<b>Sommaire<br /><br /><span class=\"error\"><small>Note : l'aide pour les fonctions <u>administrateur</u> est en début de liste.</small></span></b><br /><br />";
-// $pgv_lang["ah1_help"]                = "_Upgrade";
 $pgv_lang["ah2_help"]                   = "_Configurer PhpGedView";
 $pgv_lang["ah3_help"]                   = "_GEDCOM : Ajouter vs Charger";
 $pgv_lang["ah4_help"]                   = "_GEDCOM : Fichier de Configuration";
@@ -463,7 +462,6 @@ $pgv_lang["ah18_help"]                  = "_Administration";
 $pgv_lang["ah19_help"]                  = "_GEDCOM : Outils Média";
 $pgv_lang["ah20_help"]                  = "_GEDCOM : Conversion ID en RIN";
 $pgv_lang["ah21_help"]                  = "_Fichiers de langues";
-//           22 is in the help_text_vars.php
 $pgv_lang["ah23_help"]                  = "_Configuration des langues supportées";
 $pgv_lang["ah24_help"]                  = "_Migration des informations de l'utilisateur (Index -->> SQL)";
 $pgv_lang["ah25_help"]                  = "_Sauvegarde (backup) de PhpGedView ";

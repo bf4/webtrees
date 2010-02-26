@@ -69,7 +69,6 @@ $pgv_lang["edit_ASSO_help"]			= "~#factarray[ASSO]#~<br /><br />Angiv tilhørend
 $pgv_lang["edit_RELA_help"]			= "~#factarray[RELA]#~<br /><br />Vælg en benævnelse fra listen. Hvis du vælger <b>Gudfar</b>, så betyder det: <i>Denne person er Gudfar til den viste person</i>.<br /><br />";
 $pgv_lang["show_spouse_help"]		= "~#pgv_lang[show_spouses]#~<br /><br />Som standard vises ægtefæller til efterkommere ikke, fordi det gør slægtstræet vanskeligere at læse og/eller forstå.  - Men du har her muligheden for at vise ægtefæller i slægtstræet ved at afmærke denne checkboks.<br /><br />";
 $pgv_lang["reorder_families_help"]	= "~#pgv_lang[reorder_families]#~<br /><br />Familier på fanebladet: <b>#pgv_lang[relatives]#</b> bliver vist i den rækkefølge, de er gemt i slægtsdatabasen.  Familierne er ikke sorteret efter vielsesdato fordi denne dato ofte er ukendt i modsætning til rækkefølgen af vielser.<br /><br />Dette valg giver dig mulighed for at ændre rækkefølgen for, hvordan de skal vises på denne side for #pgv_lang[relatives]#.  Hvis du ønsker at sortere familierne efter vielsesdato, kan du klikke på knappen for automatisk sortering.<br /><br />";
-$pgv_lang["import_marr_names_help"]	= "~#pgv_lang[import_marr_names]#~<br /><br />Hvis du vælger at tilføje efternavnet som gift (giftenavnet), vil PhpGedView checke alle kvinder i din slægtsdatabase og automatisk tilføje navnet til eventuelle ægtefæller som en tillægsoplysning til pigenavnet.  Herved kan du søge efter disse kvinder udfra både giftenavn og pigenavn.<br /><br />Dette valg vil også give dig mulighed for at vise giftenavn i personlisten, hvis du har aktiveret valget <b>#pgv_lang[SHOW_MARRIED_NAMES]#</b> under indstillinger af GEDCOM-konfigurationen.<br /><br />";
 $pgv_lang["edit_TYPE_help"]			= "~#factarray[TYPE]#~<br /><br />Feltet: <b>#factarray[TYPE]#</b> giver dig mulighed for at angive en brugerdefineret begivenhed.  Feltet er ikke bundet til et format, så der er frit slag mht. hvad indholdet skal være.<br /><br />";
 $pgv_lang["edit_TEMP_help"]			= "~#factarray[TEMP]#~<br /><br />I dette felt kan du anføre, hvor LDS (Mormoner) ordineringen fandt sted.<br /><br />";
 $pgv_lang["edit_STAT_help"]			= "~#factarray[STAT]#~<br /><br />Dette felt er et valgfrit statusfelt og anvendes for det meste til at angive, hvor langt en person er kommet i LDS (Mormoner) TempleReady ordineringsprogrammet.<br /><br />";
@@ -438,7 +437,6 @@ $pgv_lang["help_contents_gedcom_places"]	= "Steder i slægtsdatabasen (GEDCOM-fi
 
 //-- Admin Help Contents Items 
 $pgv_lang["admin_help_contents_head_help"]	="<b>Emner i hjælp<br /><br />Emner for Administrator</b> tilføjet i starten af listen.<br /><br />";
-// $pgv_lang["ah1_help"]					="_Opgradere";
 $pgv_lang["ah2_help"]					="_PhpGedView indstillinger";
 $pgv_lang["ah3_help"]					="_GEDCOM: Tilføje kontra uploade";
 $pgv_lang["ah4_help"]					="_GEDCOM: Konfigurationsfil";
@@ -459,7 +457,6 @@ $pgv_lang["ah18_help"]					="_Administration";
 $pgv_lang["ah19_help"]					="_GEDCOM: Medieværktøj";
 $pgv_lang["ah20_help"]					="_GEDCOM: Ændre ID for person(er) til ...";
 $pgv_lang["ah21_help"]					= "_Sprogfiler";
-//           22 is in the help_text_vars.php
 $pgv_lang["ah23_help"]				= "_Konfigurer understøttede sprog";
 $pgv_lang["ah24_help"]				= "_Bruger Information flet sammen (Index --&gt;&gt; SQL)";
 $pgv_lang["ah25_help"]				= "_PhpGedView backup";
@@ -471,11 +468,6 @@ $pgv_lang["simple_filter_help"]		= "~#pgv_lang[filter]#~<br /><br />Enkelt søge
 $pgv_lang["show_thumb_help"]		= "~#pgv_lang[show_thumbnail]#~<br /><br />Miniaturebilleder vil blive vist, hvis du sætter et mærke i denne checkboks.<br /><br />";
 $pgv_lang["new_dir_help"]			= "~#pgv_lang[add_directory]#~<br /><br />Som en administrator kan du oprette den mappestruktur du har behov for, for at få styr på dine mediefiler. Ved at oprette mapper via denne side, sikrer du at der bliver oprettet undermapper til miniaturebilleder, og at der oprettes en tilhørende index.php i hver mappe.<br /><br />Klik på denne valgmulighed for at angive navnet på den mappe, du ønsker at oprette.<br /><br />";
 $pgv_lang["find_media_help"]		= "~#pgv_lang[find_media]#~<br /><br />Her har du muligheden for at søge i mappestrukturen for at finde den medie-fil, du ønsker at lave et link til.<br /><br />";
-
-//-- Add / Edit Media Help
-
-//-- Alive in Year Help 
-$pgv_lang["alive_in_year_help"]		= "~#pgv_lang[alive_in_year]#~<br /><br />Her vil du se de personer, der sandsynligvis er i live i det valgte år.<br /><br />Når der er angivet bestemte datoer for fødsel og død for personer, vil disse blive vist, hvis det valgte år ligger indenfor deres levetid.<br /><br />Angiv et andet år og klik på knappen <b>#pgv_lang[view]#</b> for at se, hvem der levede i dette år.  Under listen vil du også se tællere for #pgv_lang[total_living]#, #pgv_lang[total_dead]# og #pgv_lang[total_not_born]#.<br /><br />";
 
 //--Repository Help 
 $pgv_lang["help_repolist.php"]		= "~#pgv_lang[repo_list]#~<br /><br />En liste over opbevaringssteder eller arkiver bliver vist på denne side.<br />Navnene er vist i alfabetisk rækkefølge.<br /><br /><b>Opbevaringssted</b><br />Uden opbevaringssteder for kilder kan vi ikke lave slægtsdatabasen. Der er en kilde til al den information der er gemt her, og kilderne opbevares på et opbevaringssted. Opbevaringssteder kan være en person, en persons arkiv, en institution, en offentlig database, et offentligt eller kirkeligt arkiv, en Internetkilde, osv. For at få adgang til en kilde, så ønsker vi at vide hvor og på hvilket sted den befinder sig. Al nødvendig information til at finde en kilde bør gemmes i en liste over opbevaringssteder.<br /><br />Et opbevaringssted kan knyttes til mange kilder.<br /><br />";

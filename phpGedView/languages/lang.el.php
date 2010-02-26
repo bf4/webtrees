@@ -102,7 +102,6 @@ $pgv_lang["box_width"]							= "Μήκος κουτιού";
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]				= "Δεν βρέθηκε οικογένεια με ID";
 $pgv_lang["unable_to_find_record"]				= "Δεν βρέθηκε εγγραφή με ID";
-$pgv_lang["repo_name"]							= "Όνομα Αποθηκοφυλακίου:";
 $pgv_lang["address"]							= "Διεύθυνση:";
 $pgv_lang["phone"]								= "Τηλέφωνο:";
 $pgv_lang["title"]								= "Τίτλος:";
@@ -357,7 +356,6 @@ $pgv_lang["to"]									= "έως";
 $pgv_lang["cir"]								= "circa";
 $pgv_lang["apx"]								= "περ.";
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]					= "Rebuild Indexes";
 $pgv_lang["user_admin"]							= "Διαχείριση χρηστών";
 $pgv_lang["password_mismatch"]					= "Οι κωδικοί δεν ταυτίζονται.";
 $pgv_lang["enter_username"]						= "Πρέπει να εισάγετε όνομα χρήστη.";

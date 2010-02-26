@@ -422,7 +422,6 @@ $pgv_lang["to"]					= "till";
 $pgv_lang["cir"]				= "cirka";
 $pgv_lang["apx"]				= "ungefär";
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]	= "Återskapa indexfilerna";
 $pgv_lang["user_admin"]			= "Användaradministration";
 $pgv_lang["password_mismatch"]	= "Lösenorden stämmer inte överens.";
 $pgv_lang["enter_username"]		= "Du måste mata in ett användarnamn.";
