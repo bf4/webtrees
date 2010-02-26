@@ -214,7 +214,6 @@ $pgv_lang["no_temple"]			= "Ingen Tempel-Living tilordning";
 $pgv_lang["no_upload"]			= "Klarte ikke å laste opp (upload) mediafiler fordi multi-media-filer ikke er aktivert eller fordi mediamappen/-katalogen ikke har skriverettighet.";
 $pgv_lang["paste_id_into_field"]= "Legg inn følgende kilde-ID inn i endringsfeltet som en referanse til denne kilden ";
 $pgv_lang["paste_rid_into_field"]	= "Lim inn følgende ID for oppbevaringsstedet til aktuelle koblings-feltet for ulike kilder: ";
-$pgv_lang["photo_replace"] 			= "Ønsker du å erstatte et eldre bilde med dette?";
 $pgv_lang["privacy_not_granted"]	= "Du har ikke tilgang til";
 $pgv_lang["privacy_prevented_editing"]	= "På grunn av hensyn til personvern, kan du ikke endre opplysningene.";
 $pgv_lang["record_marked_deleted"]		= "Denne oppføringen er merket for sletting og venter på godkjenning av admin.";

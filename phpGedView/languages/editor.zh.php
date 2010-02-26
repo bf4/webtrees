@@ -133,7 +133,6 @@ $pgv_lang["media_file"]			= "媒体文件";
 $pgv_lang["must_provide"]		= "您必須提供 ";
 $pgv_lang["name_search"]			= "名字：";
 $pgv_lang["no_temple"]			= "沒有寺廟。 居住的法令";
-$pgv_lang["photo_replace"] = "您想要用這一個替換一張更舊的相片嗎?";
 $pgv_lang["show_changes"]		= "這個記錄被更新了。  點擊這裡顯示更改。";
 $pgv_lang["thumb_genned"]			= "指圖自動生成了。";
 $pgv_lang["thumbgen_error"]			= "無法生成指圖為 ";

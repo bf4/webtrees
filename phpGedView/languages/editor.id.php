@@ -213,7 +213,6 @@ $pgv_lang["no_temple"]					= "Tidak ada Kuil - Ordinansi Hidup";
 $pgv_lang["no_upload"]					= "Pengunggahan berkas media tidak diperbolehkan karena item multi-media dinonaktifkan atau karena direktori media tidak dapat ditulisi.";
 $pgv_lang["paste_id_into_field"]			= "Tempel ID beriktu ke field suntingan Anda untuk merujuk rekaman yang baru diciptakan ";
 $pgv_lang["paste_rid_into_field"]			= "Tempel ID Repositori berikut ke field suntingan Anda untuk merujuk Repositori ini ";
-$pgv_lang["photo_replace"]				= "Apakah Anda ingin mengganti foto lama dengan foto ini?";
 $pgv_lang["privacy_not_granted"]			= "Anda tidak mempunyai akses ke";
 $pgv_lang["privacy_prevented_editing"]			= "Setelan privasi mencegah Anda menyunting rekaman ini.";
 $pgv_lang["record_marked_deleted"]			= "Rekaman ini telah ditandai untuk penghapusan atas persetujuan admin.";

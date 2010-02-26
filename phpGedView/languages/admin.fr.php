@@ -287,7 +287,6 @@ $pgv_lang["page_views"]                 = "&nbsp;&nbsp;visites en &nbsp;&nbsp;";
 $pgv_lang["performing_validation"]      = "Validation du fichier GEDCOM";
 $pgv_lang["pgv_config_write_error"]     = "Impossible d'écrire dans le fichier de configuration PhpGedView. Vérifier les droits d'accès et réessayer.";
 $pgv_lang["PGV_MEMORY_LIMIT"]           = "Limite de mémoire";
-$pgv_lang["pgv_registry"]               = "Voir les autres sites web utilisant PhpGedView";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]      = "Répertoire des sauvegardes de sessions";
 $pgv_lang["PGV_SESSION_TIME"]           = "Limite de durée d'une session";
 $pgv_lang["PGV_SIMPLE_MAIL"]            = "Utiliser un en-tête simple pour les courriels";

@@ -150,7 +150,6 @@ $pgv_lang["macfile_detected"]			= "Het bestand is in Macintosh-formaat. Bij het 
 $pgv_lang["merge_records"]				= "Gegevens samenvoegen";
 $pgv_lang["month_before_day"]			= "Maand voor dag (MM DD YYYY)";
 $pgv_lang["performing_validation"]		= "GEDCOM-validatie wordt uitgevoerd, selecteer de benodigde opties en klik op \"Opschonen\"";
-$pgv_lang["pgv_registry"]				= "Andere websites met PhpGedView";
 $pgv_lang["phpinfo"]					= "Toon PHP-informatie";
 $pgv_lang["place_cleanup_detected"]		= "Foutieve locatiecoderingen aanwezig. Deze fouten moeten hersteld worden. Het volgende bestandsdeel geeft de foutieve locatiecodering aan:";
 $pgv_lang["please_be_patient"]			= "EVEN GEDULD A.U.B.";

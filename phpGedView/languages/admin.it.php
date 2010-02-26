@@ -61,7 +61,6 @@ $pgv_lang["gedcom_file"]		= "File GEDCOM:";
 $pgv_lang["import_complete"]		= "Importazione completata";
 $pgv_lang["inc_languages"]		= "Lingue";
 $pgv_lang["merge_records"]   = "Fondi dati";
-$pgv_lang["pgv_registry"]			= "Visualizza altri siti che utilizzano PhpGedView";
 $pgv_lang["please_be_patient"]		= "UN ATTIMO DI PAZIENZA PER FAVORE";
 $pgv_lang["readme_documentation"]	= "File README";
 $pgv_lang["select_an_option"]		= "Seleziona un'opzione:";

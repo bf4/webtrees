@@ -96,7 +96,6 @@ $pgv_lang["label_username_id"]		= "Naudotojas";
 $pgv_lang["logfile_content"]		= "Log failo turinys";
 $pgv_lang["merge_records"]			= "Sujungti įrašus";
 $pgv_lang["performing_validation"]	= "Atliekamas GEDCOM patikrinimas...";
-$pgv_lang["pgv_registry"]			= "Žiūrėti kitus puslapius, kurie naudoja PhpGedView";
 $pgv_lang["phpinfo"]				= "PHP informacija";
 $pgv_lang["please_be_patient"]		= "Kantrybės";
 $pgv_lang["reading_file"]			= "Skaitome GEDCOM failą";

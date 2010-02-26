@@ -124,7 +124,6 @@ $pgv_lang["new_repo_created"]		= "Nauja saugykla sukurta";
 $pgv_lang["new_source_created"] 	= "Naujas šaltinis sukurtas sėkmingai.";
 $pgv_lang["no_changes"] 			= "Šiuo metu nėra pakeitimų, kuriuos reikia peržiūrėti.";
 $pgv_lang["no_upload"]				= "Media failų užkrovimas negalimas nes multi-media įrašai yra uždrausti arba media direktorija nėra įrašoma.";
-$pgv_lang["photo_replace"] = "Ar norite pakeisti senesnę nuotrauką į naują?";
 $pgv_lang["privacy_not_granted"]	= "Jūs neturite priėjimo prie";
 $pgv_lang["thumb_genned"]			= "Mažas paveiksliukas automatiškai sugeneruotas.";
 $pgv_lang["thumbgen_error"]			= "Negalima sugeneruoti mažo paveiksliuko iš ";

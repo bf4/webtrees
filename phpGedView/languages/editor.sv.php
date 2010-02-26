@@ -189,7 +189,6 @@ $pgv_lang["no_temple"]			= "Inget tempel - Living Ordinance";
 $pgv_lang["no_upload"]			= "Uppladdning av media filer är inte tillåten eftersom multimediaartiklar är avstängt eller så är mediamappen inte skrivbar.";
 $pgv_lang["paste_id_into_field"]= "Klistra in följande källid in i ditt redigeringsfält för att referera till denna källa  ";
 $pgv_lang["paste_rid_into_field"]	= "Klistra in följande arkivid i ditt redigeringsfält för att referera till detta arkiv ";
-$pgv_lang["photo_replace"] 		= "Vill du byta ut ett äldre foto med detta?";
 $pgv_lang["privacy_not_granted"]= "Du har inte access till";
 $pgv_lang["privacy_prevented_editing"]	= "Integritetsinställningarna hindrar dig från att redigera denna post.";
 $pgv_lang["record_marked_deleted"]		= "Denna post har markerats för radering efter godkännande av administratören.";

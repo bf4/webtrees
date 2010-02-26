@@ -194,7 +194,6 @@ $pgv_lang["no_temple"]			= "No Temple - Living Ordinance";
 $pgv_lang["no_upload"]			= "Nie je povolené načítať súbory médií, pretože nie sú povolené multimediálne položky v konfigurácii, alebo zložka Media je chránená proti zápisu.";
 $pgv_lang["paste_id_into_field"]	= "Vložte toto ID zdroja do políčok, z ktorých sa chcete odvolávať na tento zdroj.";
 $pgv_lang["paste_rid_into_field"]	= "Vložte toto ID prameňa do políčok, z ktorých sa chcete odvolávať na tento prameň.";
-$pgv_lang["photo_replace"] 		= "Chcete prepísať starú fotku touto novou?";
 $pgv_lang["privacy_not_granted"]	= "Nemáte prístup k";
 $pgv_lang["privacy_prevented_editing"]	= "Nastavenie utajenia vám neumožňuje upravovať tento záznam.";
 $pgv_lang["record_marked_deleted"]	= "Tento záznam je označený na zmazanie, po schválení administrátorom.";

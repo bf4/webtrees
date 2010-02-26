@@ -88,7 +88,6 @@ $pgv_lang["macfile_detected"]	= "Byl nalezen soubor pro Macintosh. Při čiště
 $pgv_lang["merge_records"]			= "Sloučit záznamy";
 $pgv_lang["month_before_day"]		= "Měsíc před dnem (MM DD YYYY)";
 $pgv_lang["performing_validation"]	= "Provádění validace (zkontrolování) GEDCOMu, vyberte potřebné možnosti a klikněte na 'Pokračovat'";
-$pgv_lang["pgv_registry"]		= "Zobrazit jiné weby používající PhpGedView";
 $pgv_lang["place_cleanup_detected"]	= "Bylo rozpoznáno špatné kódování míst. Tyto chyby by měly být opraveny. Následující příklad ukazuje jedno z nesprávně zapsaných míst:";
 $pgv_lang["please_be_patient"]			= "PROSÍM O STRPENÍ";
 $pgv_lang["reading_file"]			= "Čtení souboru GEDCOM";
