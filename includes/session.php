@@ -235,6 +235,9 @@ if (!isset($_SERVER['REQUEST_URI']))  {
 	}
 }
 
+require PGV_ROOT.'includes/classes/class_i18n.php';
+i18n::setLocale();
+
 //-- load file for language settings
 require PGV_ROOT.'includes/lang_settings_std.php';
 $Languages_Default = true;

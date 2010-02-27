@@ -1,0 +1,22 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Fab\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-27 23:23-0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: translate;plural:1,2\n"
+"Plural-Forms: nplurals=2;plural=(n!=1)\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../includes/classes/class_i18n.php:73
+msgid "en"
+msgstr "English"
+
