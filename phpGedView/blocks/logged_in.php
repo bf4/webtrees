@@ -73,27 +73,17 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 
 	$id = "logged_in_users";
 	$title = print_help_link("index_loggedin_help", "qm", "", false, true);
-	$title .= $pgv_lang["users_logged_in"];
-	$content = "<table width=\"90%\">";
-	$LoginUsers = count($loggedusers);
-	if (($LoginUsers == 0) and ($NumAnonymous == 0)) {
-		$content .= "<tr><td><b>" . $pgv_lang["no_login_users"] . "</b></td></tr>";
+	$title.=i18n::translate('Users Logged In');
+	$content='<table width="90%">';
+	$LoginUsers=count($loggedusers);
+	if ($LoginUsers==0 && $NumAnonymous==0) {
+		$content.='<tr><td><b>' . i18n::translate('No logged-in and no anonymous users') . '</b></td></tr>';
 	}
-	$Advisory = "anon_user";
-	if ($NumAnonymous > 1) {
-		$Advisory .= "s";
+	if ($NumAnonymous>0) {
+		$content.='<tr><td><b>' . i18n::plural('%d anonymous logged-in user', '%d anonymous logged-in users', $NumAnonymous, $NumAnonymous) . '</b></td></tr>';
 	}
-	if ($NumAnonymous > 0) {
-		$pgv_lang["global_num1"] = $NumAnonymous; // Make it visible
-		$content .= "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
-	}
-	$Advisory = "login_user";
-	if ($LoginUsers > 1) {
-		$Advisory .= "s";
-	}
-	if ($LoginUsers > 0) {
-		$pgv_lang["global_num1"] = $LoginUsers; // Make it visible
-		$content .= "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
+	if ($LoginUsers>0) {
+		$content.='<tr><td><b>' . i18n::plural('%d logged-in user', '%d logged-in users', $LoginUsers, $LoginUsers) . '</b></td></tr>';
 	}
 	if (PGV_USER_ID) {
 		foreach ($loggedusers as $user_id=>$user_name) {

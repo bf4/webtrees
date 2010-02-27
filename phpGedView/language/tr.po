@@ -1,0 +1,158 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Fab\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-27 23:49-0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: translate;plural:1,2\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../blocks/logged_in.php:76
+msgid "Users Logged In"
+msgstr ""
+
+#: ../blocks/logged_in.php:80
+msgid "No logged-in and no anonymous users"
+msgstr ""
+
+#: ../blocks/logged_in.php:83
+#, php-format
+msgid "%d anonymous logged-in user"
+msgid_plural "%d anonymous logged-in users"
+msgstr[0] ""
+
+#: ../blocks/logged_in.php:86
+#, php-format
+msgid "%d logged-in user"
+msgid_plural "%d logged-in users"
+msgstr[0] ""
+
+#: ../includes/classes/class_i18n.php:75
+msgid "ar"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:76
+msgid "ca"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:77
+msgid "cz"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:78
+msgid "da"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:79
+msgid "de"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:80
+msgid "el"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:81
+msgid "en"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:82
+msgid "en-gb"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:83
+msgid "es"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:84
+msgid "es-ar"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:85
+msgid "et"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:86
+msgid "fi"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:87
+msgid "fr"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:88
+msgid "he"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:89
+msgid "hu"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:90
+msgid "id"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:91
+msgid "it"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:92
+msgid "lt"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:93
+msgid "nl"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:94
+msgid "no"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:95
+msgid "pl"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:96
+msgid "pt"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:97
+msgid "ro"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:98
+msgid "ru"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:99
+msgid "sk"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:100
+msgid "sl"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:101
+msgid "sv"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:102
+msgid "tr"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:103
+msgid "vi"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:104
+msgid "zh"
+msgstr ""
+
