@@ -84,10 +84,8 @@ if (($action=="setdefault") && in_array($default_ged, $all_gedcoms)) {
 } else {
 	$DEFAULT_GEDCOM=get_site_setting('DEFAULT_GEDCOM');
 }
-
-print "<br /><br />";
 ?>
-<span class="subheaders"><?php print_text("current_gedcoms"); ?></span><br />
+<h2><?php print_text("current_gedcoms"); ?></h2>
 <form name="defaultform" method="get" action="editgedcoms.php">
 <input type="hidden" name="action" value="setdefault" />
 <?php
@@ -140,7 +138,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		// Row 0: Separator line
 		if ($GedCount!=0) {
 			print "<tr>";
-			print "<td colspan=\"6\">";
+			print "<td colspan=\"7\">";
 			print "<br /><hr class=\"gedcom_table\" /><br />";
 			print "</td>";
 			print "</tr>";
@@ -150,7 +148,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		// Row 1: Heading
 		print "<tr>";
 		print "<td colspan=\"1\" class=\"list_label\">".$pgv_lang["ged_title"]."</td>";
-		print "<td colspan=\"6\" class=\"list_value_wrap\">";
+		print "<td colspan=\"7\" class=\"list_value_wrap\">";
 		if ($DEFAULT_GEDCOM==$ged_name) print "<span class=\"label\">";
 		print PrintReady(get_gedcom_setting($ged_id, 'title'))."&nbsp;&nbsp;";
 		if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$ged_id.")" . getRLM();
