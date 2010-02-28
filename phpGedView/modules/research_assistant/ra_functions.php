@@ -832,7 +832,7 @@ class ra_functions {
 	 * @return mixed
 	 */
 	function getMissinginfo(& $person) {
-		global $factarray, $templefacts, $nondatefacts, $nonplacfacts, $pgv_lang;
+		global $templefacts, $nondatefacts, $nonplacfacts, $pgv_lang;
 
 		$perId = $person->getXref();
 
@@ -1236,7 +1236,6 @@ class ra_functions {
 	function tab(&$person) {
 		// Start our engines.
 		global $pgv_lang, $TBLPREFIX;
-		global $factarray;
 
 		if (!is_object($person)) return "";
 		$bdate = $person->getEstimatedBirthDate();
@@ -1316,22 +1315,8 @@ class ra_functions {
 											$compiled = "";
 											$tasktitle = "";
 
-											if (isset($factarray[$val[0]])) {
-												$tasktitle .= $factarray[$val[0]]." ";
-											} elseif (isset($pgv_lang[$val[0]])) {
-												$tasktitle .= $pgv_lang[$val[0]]." ";
-											} else {
-												$tasktitle .= $val[0]." ";
-											}
-											//print_r($factarray);
+											$tasktitle=i18n::translate($val[0]).' '.i18n::translate($val[1]);
 
-											if (isset($factarray[$val[1]])) {
-												$tasktitle .= $factarray[$val[1]];
-											} elseif (isset($pgv_lang[$val[1]])) {
-												$tasktitle .= $pgv_lang[$val[1]];
-											} else {
-												$tasktitle .= $val[1];
-											}
 											$taskid = $this->task_check($tasktitle, $person->getXref());
 											if (!$taskid) // if the task_check passes, create a check box
 												{
@@ -1796,7 +1781,7 @@ class ra_functions {
 	 */
 	function edit_fact() {
 		global $templefacts, $nondatefacts, $nonplacfacts;
-		global $factarray, $pgv_lang, $tag, $MULTI_MEDIA;
+		global $pgv_lang, $tag, $MULTI_MEDIA;
 
 		if ($_REQUEST['ctype']=='add' && !empty($_REQUEST['fact'])) {
 			$fact = $_REQUEST['fact'];
@@ -1849,7 +1834,7 @@ class ra_functions {
 			if (!empty($_REQUEST['type'])) $type = $_REQUEST['type'];
 			else $type='indi';
 			//print "<pre>$factrec</pre>";
-			print '<script type="text/javascript">window.opener.paste_edit_data(\''.preg_replace("/\r?\n/", "\\r\\n", $factrec).'\', \''.$factarray[$tag[0]].'\', \''.$type.'\'); window.close();</script>';
+			print '<script type="text/javascript">window.opener.paste_edit_data(\''.preg_replace("/\r?\n/", "\\r\\n", $factrec).'\', \''.i18n::translate($tag[0]).'\', \''.$type.'\'); window.close();</script>';
 		}
 	}
 

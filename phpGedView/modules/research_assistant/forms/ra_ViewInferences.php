@@ -46,37 +46,21 @@ require_once PGV_ROOT.'modules/research_assistant/forms/ra_RSFunction.php';
 class ra_ViewInferences extends ra_form {
 	
 	function getPartsTranslation($input,$otherFact = "") {
-		global $factarray, $pgv_lang;
+		global $pgv_lang;
 	
 		if ($input=="FAMC:HUSB") $input = $pgv_lang["father"];
 		if ($input=="FAMC:WIFE") $input = $pgv_lang["mother"];
 		if ($input=="FAMS:SPOUSE") $input = $pgv_lang["spouse"];
 		$parts = explode(':', $input);
-		$out = "";
 		if(!empty($otherFact) && !empty($input)) {
-			if (isset($factarray[$input.":".$otherFact])) {
-				$out .= $factarray[$input.":".$otherFact];
-			} elseif (isset($pgv_lang[$input])) {
-				$out .= $pgv_lang[$input];
-			} else {
-				$out .= $input;
-			}
-			$out .= " ";
+			return i18n::translate($input.":".$otherFact).' ';
 		} else {
-			if (isset($factarray[$input])) {
-				$out .= $factarray[$input];
-			} elseif (isset($pgv_lang[$input])) {
-				$out .= $pgv_lang[$input];
-			} else {
-				$out .= $input;
-			}
 			if(empty($input)) {
-				$out .= $pgv_lang["self"];
+				return $pgv_lang['self'].' ';
+			} else {
+				return i18n::translate($input).' ';
 			}
-			$out .= " ";
 		}
-		
-		return $out;
 	}
     /**
      * content 
@@ -92,7 +76,7 @@ class ra_ViewInferences extends ra_form {
      * The percentage of matches for this fact
      */
 	function contents() {
-		global $TBLPREFIX, $LANGUAGE, $factarray, $pgv_lang;
+		global $TBLPREFIX, $LANGUAGE, $pgv_lang;
 
 		$out = "<table class=\"width80\" align=\"center\"><tr><td><p>".$pgv_lang["ViewProbExplanation"]."</p></td></tr></table>";
 		if(isset($_REQUEST['pid']))
@@ -239,7 +223,7 @@ class ra_ViewInferences extends ra_form {
 					}
 					if(!empty($tempVar))
 					{
-					$out .=  "<td class=\"optionbox\"><b>".$factarray[$compoundFact].":</b> ".$tempVar."</td>";
+					$out .=  "<td class=\"optionbox\"><b>".i18n::translate($compoundFact).":</b> ".$tempVar."</td>";
 					}
 					else
 					{
