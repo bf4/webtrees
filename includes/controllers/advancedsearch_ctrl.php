@@ -142,25 +142,23 @@ class AdvancedSearchController extends SearchController {
 	}
 
 	function getLabel($tag) {
-		global $factarray, $pgv_lang;
-		foreach (array('SDX', 'SDX_DM', 'SDX_STD', 'EXACT', 'BEGINS', 'CONTAINS') as $keyword) {
-			$factarray["NAME:GIVN:$keyword"] = $factarray["GIVN"];
-			$factarray["NAME:SURN:$keyword"] = $factarray["SURN"];
-		}
-		if (isset($factarray[$tag])) return $factarray[$tag];
-		if (isset($pgv_lang[$tag])) return $pgv_lang[$tag];
-		$label = "";
-		$parts = preg_split("/:/", $tag);
-		foreach($parts as $part) {
-			if (isset($factarray[$part])) {
-				$label .= $factarray[$part]." ";
-			} elseif (isset($pgv_lang[$part])) {
-				$label .= $pgv_lang[$part]." ";
-			} else {
-				$label .= $part." ";
+		if (i18n::translate($tag)==$tag) {
+			// No translation
+			if (substr($tag, 0, 10)=='NAME:GIVN:') {
+				return i18n::translate('GIVN');
 			}
+			if (substr($tag, 0, 10)=='NAME:SURN:') {
+				return i18n::translate('SURN');
+			}
+			// TODO: this logic is repeated elsewhere.
+			$parts=explode(':', $tag);
+			foreach ($parts as &$part) {
+				$part=i18n::translate($part);
+			}
+			return implode(' ', $tag);
+		} else {
+			return i18n::translate($tag);
 		}
-		return $label;
 	}
 
 	function reorderFields() {
