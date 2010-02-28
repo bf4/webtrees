@@ -226,7 +226,7 @@ function getGedcomNews() {
 		$year = date("Y", $news["date"]);
 		$data = "";
 
-		// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News title
+		// Look for $pgv_lang and $GLOBALS substitutions in the News title
 		$newsTitle = print_text($news["title"], 0, 2);
 		$ct = preg_match("/#(.+)#/", $newsTitle, $match);
 		if ($ct>0) {
@@ -236,7 +236,7 @@ function getGedcomNews() {
 
 		$itemArray[1] = iso8601_date($news["date"]);
 
-		// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News text
+		// Look for $pgv_lang and $GLOBALS substitutions in the News text
 		$newsText = print_text($news["text"], 0, 2);
 		$ct = preg_match("/#(.+)#/", $newsText, $match);
 		if ($ct>0) {
@@ -329,7 +329,7 @@ function getTop10Surnames() {
 * @TODO use date of most recent change instead of curent time
 */
 function getRecentChanges() {
-	global $pgv_lang, $factarray, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $pgv_lang, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
 	global $objectlist, $SERVER_URL;
 
@@ -420,7 +420,7 @@ function getRecentChanges() {
 				if ($SHOW_ID_NUMBERS) {
 					$recentText .= ' '.PGV_LPARENS.$gid.PGV_RPARENS;
 				}
-				$recentText.='</a> '.$factarray['CHAN'].' - '.$record->LastChangeTimestamp(false).'</li>';
+				$recentText.='</a> '.i18n::translate('CHAN').' - '.$record->LastChangeTimestamp(false).'</li>';
 			}
 		}
 	}

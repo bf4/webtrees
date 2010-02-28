@@ -591,9 +591,9 @@ echo "</form>";
 $placelist=get_place_list_loc($parent);
 
 echo "<table class=\"facts_table\"><tr>";
-echo "<th class=\"descriptionbox\">{$factarray['PLAC']}</th>";
-echo "<th class=\"descriptionbox\">{$factarray['LATI']}</th>";
-echo "<th class=\"descriptionbox\">{$factarray['LONG']}</th>";
+echo "<th class=\"descriptionbox\">", i18n::translate('PLAC'), "</th>";
+echo "<th class=\"descriptionbox\">", i18n::translate('LATI'), "</th>";
+echo "<th class=\"descriptionbox\">", i18n::translate('LONG'), "</th>";
 echo "<th class=\"descriptionbox\">{$pgv_lang['pl_zoom_factor']}</th>";
 echo "<th class=\"descriptionbox\">{$pgv_lang['pl_place_icon']}</th>";
 echo "<th class=\"descriptionbox\" colspan=\"2\">";
