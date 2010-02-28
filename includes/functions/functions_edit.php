@@ -405,7 +405,7 @@ function undo_change($cid, $index) {
 * @param string $famtag how the new person is added to the family
 */
 function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag="CHIL", $sextag='') {
-	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
+	global $pgv_lang, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $NAME_REVERSE;
 	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $REVERSED_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $NO_UPDATE_CHAN;
@@ -1051,14 +1051,14 @@ function print_addnewsource_link($element_id) {
 *
 * @param string $tag fact record to edit (eg 2 DATE xxxxx)
 * @param string $upperlevel optional upper level tag (eg BIRT)
-* @param string $label An optional label to echo instead of the default from the $factarray
+* @param string $label An optional label to echo instead of the default
 * @param string $readOnly optional, when "READONLY", fact data can't be changed
 * @param string $noClose optional, when "NOCLOSE", final "</td></tr>" won't be printed
 * (so that additional text can be printed in the box)
 * @param boolean $rowDisplay True to have the row displayed by default, false to hide it by default
 */
 function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose='', $rowDisplay=true) {
-	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
 	global $assorela, $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION, $pgv_changes;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
@@ -1292,7 +1292,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		}
 	} else {
 		if ($fact=="NOTE" && $islink){
-			echo $pgv_lang["shared_note"];
+			echo i18n::translate('SHARED_NOTE');
 			/*
 			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
 				//	use $label (GEDFact Assistant); 
@@ -1300,12 +1300,8 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 				echo $pgv_lang["shared_note"];
 			}
 			*/
-		} else if (isset($pgv_lang[$fact])) {
-			echo $pgv_lang[$fact];
-		} else if (isset($factarray[$fact])) {
-			echo $factarray[$fact];
-		}else{
-			echo $fact;
+		} else {
+			echo i18n::translate($fact);
 		}
 	}
 	echo "\n";
@@ -1384,9 +1380,9 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 	}
 	else if ($fact=="ADOP") {
 		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >";
-		foreach (array("BOTH"=>$factarray["HUSB"]."+".$factarray["WIFE"],
-										"HUSB"=>$factarray["HUSB"],
-										"WIFE"=>$factarray["WIFE"]) as $k=>$v) {
+		foreach (array("BOTH"=>i18n::translate('HUSB')."+".i18n::translate('WIFE'),
+										"HUSB"=>i18n::translate('HUSB'),
+										"WIFE"=>i18n::translate('WIFE')) as $k=>$v) {
 			echo "<option value='$k'";
 			if ($value==$k)
 				echo " selected=\"selected\"";
@@ -1397,7 +1393,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 	else if ($fact=="PEDI") {
 		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >";
 		foreach (array(''       =>$pgv_lang["unknown"],
-										"birth"  =>$factarray["BIRT"],
+										"birth"  =>i18n::translate('BIRT'),
 										"adopted"=>$pgv_lang["adopted"],
 										"foster" =>$pgv_lang["foster"],
 										"sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
@@ -1555,7 +1551,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			print_specialchar_link($element_id, false);
 			print_findplace_link($element_id);
 			echo "</div>\n";
-			echo "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"", $factarray["LATI"], " / ", $factarray["LONG"], "\" title=\"", $factarray["LATI"], " / ", $factarray["LONG"], "\" /></a>";
+			echo "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"", i18n::translate('LATI'), " / ", i18n::translate('LONG'), "\" title=\"", i18n::translate('LATI'), " / ", i18n::translate('LONG'), "\" /></a>";
 			if ($SPLIT_PLACES) {
 				if (!function_exists("print_place_subfields")) {
 					require PGV_ROOT.'includes/functions/functions_places.php';
@@ -1578,7 +1574,8 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			$a=strtolower($key);
 			$b=strtolower($value);
 			if (@strpos($a, $b)!==false or @strpos($b, $a)!==false) echo " selected=\"selected\"";
-			echo ">", $factarray["MARR_".strtoupper($key)], "</option>\n";
+			$tmp="MARR_".strtoupper($key);
+			echo ">", i18n::translate($tmp), "</option>\n";
 		}
 		echo "</select>";
 	}
@@ -1624,7 +1621,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 						foreach ($matches[1] as $match) {
 							if (!in_array($match, explode('|', PGV_EVENTS_DEAT))) {
 								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
-								echo $factarray[$match];
+								echo i18n::translate($match);
 							}
 						}
 					}
@@ -1634,7 +1631,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 						foreach ($matches[1] as $match) {
 							if (in_array($match, explode('|', PGV_EVENTS_DEAT))) {
 								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
-								echo $factarray[$match];
+								echo i18n::translate($match);
 							}
 						}
 					}
@@ -1645,7 +1642,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
 						foreach ($matches[1] as $match) {
 							echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
-							echo $factarray[$match];
+							echo i18n::translate($match);
 						}
 					}
 				}
@@ -1744,7 +1741,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 * @param string $tag Gedcom tag name
 */
 function print_add_layer($tag, $level=2, $printSaveButton=true) {
-	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_DIRECTORY, $TEXT_DIRECTION, $PRIVACY_BY_RESN;
 	global $gedrec, $FULL_SOURCES;
 	global $islink;
@@ -1768,7 +1765,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		add_simple_tag(($level+2)." $text");
 		if ($FULL_SOURCES) {
 			// 4 DATE
-			add_simple_tag(($level+2)." DATE", '', $factarray["DATA:DATE"]);
+			add_simple_tag(($level+2)." DATE", '', i18n::translate('DATA:DATE'));
 			// 3 QUAY
 			add_simple_tag(($level+1)." QUAY");
 		}
@@ -1848,7 +1845,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		} else {
 			//-- Retrieve existing resn or add new resn to fact
 			$text = '';
-			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $factarray["RESN"], "</a>";
+			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('RESN'), "</a>";
 			print_help_link("RESN_help", "qm", "RESN_help_title");
 			echo "<br />\n";
 			echo "<div id=\"newresn\" style=\"display: none;\">\n";
@@ -1863,7 +1860,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 
 // Add some empty tags to create a new fact
 function addSimpleTags($fact) {
-	global $ADVANCED_PLAC_FACTS, $factarray;
+	global $ADVANCED_PLAC_FACTS;
 	add_simple_tag("0 {$fact}");
 	add_simple_tag("0 DATE", $fact, fact_label("{$fact}:DATE"));
 	add_simple_tag("0 PLAC", $fact, fact_label("{$fact}:PLAC"));
@@ -2323,7 +2320,7 @@ function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
 * @param string $fact the new fact we are adding
 */
 function create_add_form($fact) {
-	global $tags, $pgv_lang, $factarray, $FULL_SOURCES;
+	global $tags, $pgv_lang, $FULL_SOURCES;
 
 	$tags = array();
 	
@@ -2354,7 +2351,7 @@ function create_add_form($fact) {
 			add_simple_tag("2 PAGE");
 			add_simple_tag("3 TEXT");
 			if ($FULL_SOURCES) {
-				add_simple_tag("3 DATE", '', $factarray["DATA:DATE"]);
+				add_simple_tag("3 DATE", '', i18n::translate('DATA:DATE'));
 				add_simple_tag("2 QUAY");
 			}
 		}
@@ -2369,7 +2366,7 @@ function create_add_form($fact) {
 * @param string $level0type the type of the level 0 gedcom record
 */
 function create_edit_form($gedrec, $linenum, $level0type) {
-	global $WORD_WRAPPED_NOTES, $pgv_lang, $factarray;
+	global $WORD_WRAPPED_NOTES, $pgv_lang;
 	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
 	global $lang_short_cut, $LANGUAGE, $FULL_SOURCES, $TEXT_DIRECTION;
 	// global $TEXT_DIRECTION, $TBLPREFIX, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $SERVER_URL;
@@ -2515,7 +2512,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
 		}
 		if ($level==2 && $type=='STAT' && in_array($level1type, $templefacts) && !in_array('DATE', $subtags)) {
-			add_simple_tag("3 DATE", '', $factarray['STAT:DATE']);
+			add_simple_tag("3 DATE", '', i18n::translate('STAT:DATE'));
 		}
 
 		$i++;
@@ -2542,7 +2539,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 * @param string $level1tag the type of the level 1 gedcom record
 */
 function insert_missing_subtags($level1tag, $add_date=false) {
-	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $ADVANCED_NAME_FACTS, $factarray;
+	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $ADVANCED_NAME_FACTS;
 	global $nondatefacts, $nonplacfacts;
 
 	// handle  MARRiage TYPE
@@ -2588,7 +2585,7 @@ function insert_missing_subtags($level1tag, $add_date=false) {
 					break;
 				case "STAT":
 					if (in_array($level1tag, $templefacts))
-						add_simple_tag("3 DATE", '', $factarray['STAT:DATE']);
+						add_simple_tag("3 DATE", '', i18n::translate('STAT:DATE'));
 					break;
 				case "DATE":
 					if (in_array($level1tag, $date_and_time))
@@ -2740,18 +2737,15 @@ function delete_family($pid, $gedrec='') {
 // Create a label for editing tags, such as BIRT:DATE, BIRT:PLAC:_HEB
 // or PLAC:FONE.  Use specific labels, if available.  Use general ones if not.
 function fact_label($tag) {
-	global $factarray;
-
-	while ($tag) {
-		if (array_key_exists($tag, $factarray)) {
-			return $factarray[$tag];
-		} elseif (strpos($tag, ':')) {
-			list(, $tag)=explode(':', $tag, 2);
-		} else {
-			return '';
+	if (i18n::translate($tag)<>$tag) {
+		return i18n::translate($tag);
+	} else {
+		$parts=explode(':', $tag);
+		foreach ($parts as &$part) {
+			$part=i18n::translate($part);
 		}
+		return implode(' ', $parts);
 	}
-	return '';
 }
 
 ?>
