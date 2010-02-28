@@ -58,6 +58,5 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 
 		$controller->medialink_assistant();
 
-// include ('modules/research_assistant/forms/CensusUK1841.php');
 // print_footer();
 ?>

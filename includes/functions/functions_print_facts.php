@@ -115,12 +115,6 @@ function print_fact(&$eventObj, $noedit=false) {
 	if ($resn_tag == "1") $resn_value = $match[1];
 	// Assume that all recognised tags are translated.
 	if ($fact!=i18n::translate($fact)) {
-		//-- check if this is a fact created by the research assistant and modify the
-		//---- edit links to forward editing to the RA plugin if it was created there
-		$et = preg_match("/\d _RATID (.*)/", $factrec, $ematch);
-		if ($et>0) {
-			$taskid = trim($ematch[1]);
-		}
 		// -- handle generic facts
 		if ($fact!="EVEN" && $fact!="FACT" && $fact!="OBJE") {
 			if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA" || $fact == "_INTE") {
@@ -162,20 +156,10 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", $pgv_lang["number_sign"], $n_ggch++;
 			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
 				$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
-				if (empty($taskid)) {
-					$menu->addOnclick("return edit_record('$pid', $linenum);");
-				}
-				else {
-					$menu->addLink(encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}"));
-				}
+				$menu->addOnclick("return edit_record('$pid', $linenum);");
 				$menu->addClass("", "", "submenu");
 				$submenu = new Menu($pgv_lang["edit"], "#", "right");
-				if (empty($taskid)) {
-					$submenu->addOnclick("return edit_record('$pid', $linenum);");
-				}
-				else {
-					$submenu->addLink(encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}"));
-				}
+				$submenu->addOnclick("return edit_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
 
@@ -217,21 +201,11 @@ function print_fact(&$eventObj, $noedit=false) {
 			echo i18n::translate($factref);
 			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
 				$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
-				if (empty($taskid)) {
-					$menu->addOnclick("return edit_record('$pid', $linenum);");
-				}
-				else {
-					$menu->addLink(encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}"));
-				}
+				$menu->addOnclick("return edit_record('$pid', $linenum);");
 				$menu->addClass("", "", "submenu");
 
 				$submenu = new Menu($pgv_lang["edit"], "#", "right");
-				if (empty($taskid)) {
-					$submenu->addOnclick("return edit_record('$pid', $linenum);");
-				}
-				else {
-					$submenu->addLink(encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}"));
-				}
+				$submenu->addOnclick("return edit_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
 
@@ -335,7 +309,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				} elseif (strstr('FILE ', $fact.' ')) {
 					if ($SHOW_MEDIA_FILENAME || PGV_USER_GEDCOM_ADMIN) echo getLRM(), $event, ' ' , getLRM();
 				} elseif ($event!='Y') {
-					if (!strstr('ADDR _RATID _CREM ', substr($fact, 0, 5).' ')) {
+					if (!strstr('ADDR _CREM ', substr($fact, 0, 5).' ')) {
 						if ($factref=='file_size' || $factref=='image_size') {
 							echo PrintReady($rawEvent);
 						} else {
@@ -425,7 +399,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				//-- catch all other facts that could be here
 				$special_facts = array("ADDR", "ALIA", "ASSO", "CEME", "CONT", "DATE", "DESC", "EMAIL",
 				"FAMC", "FAMS", "FAX", "NOTE", "OBJE", "PHON", "PLAC", "RESN", "SOUR", "STAT", "TEMP",
-				"TIME", "TYPE", "WWW", "_EMAIL", "_PGVU", "URL", "AGE", "_PGVS", "_PGVFS", "_RATID");
+				"TIME", "TYPE", "WWW", "_EMAIL", "_PGVU", "URL", "AGE", "_PGVS", "_PGVFS");
 				$ct = preg_match_all("/\n2 (\w+) (.*)/", $factrec, $match, PREG_SET_ORDER);
 				if ($ct>0) echo "<br />";
 				for($i=0; $i<$ct; $i++) {
