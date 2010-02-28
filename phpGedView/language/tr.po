@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 11:25-0000\n"
+"POT-Creation-Date: 2010-02-28 12:16-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -15,6 +15,64 @@ msgstr ""
 "X-Poedit-KeywordsList: translate;plural:1,2\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../branches.php:32
+#: ../calendar.php:253
+msgid "MARR"
+msgstr "Nikâh"
+
+#: ../branches.php:70
+msgid "SURN"
+msgstr "Soy isim"
+
+#: ../calendar.php:238
+msgid "BIRT"
+msgstr "Doğum"
+
+#: ../calendar.php:241
+msgid "CHR"
+msgstr "Vaftiz"
+
+#: ../calendar.php:244
+msgid "CHRA"
+msgstr "Erişkin vaftizi"
+
+#: ../calendar.php:247
+msgid "BAPM"
+msgstr "Vaftiz"
+
+#: ../calendar.php:250
+msgid "_COML"
+msgstr "Umumi Hukuk Evliliği"
+
+#: ../calendar.php:256
+msgid "_SEPR"
+msgstr "Ayrılmış"
+
+#: ../calendar.php:259
+msgid "DIV"
+msgstr "Boşanma"
+
+#: ../calendar.php:262
+msgid "DEAT"
+msgstr "Vefat"
+
+#: ../calendar.php:265
+msgid "BURI"
+msgstr "Defin"
+
+#: ../calendar.php:268
+msgid "IMMI"
+msgstr "İçine göç ettiği ülke"
+
+#: ../calendar.php:271
+msgid "EMIG"
+msgstr "İçinden göç ettiği ülke"
+
+#: ../search_advanced.php:223
+#: ../search_advanced.php:260
+msgid "GIVN"
+msgstr "İsim"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
@@ -159,1422 +217,1327 @@ msgstr ""
 #. I18N: This is the country/chapman code for "Unknown"
 #: ../language/_countries.php:36
 msgid "???"
-msgstr ""
+msgstr "Bilinmeyen"
 
 #. I18N: This is the country/chapman code for "Aruba"
 #: ../language/_countries.php:38
 msgid "ABW"
-msgstr ""
+msgstr "Aruba"
 
 #. I18N: This is the country/chapman code for "Acadia"
 #: ../language/_countries.php:40
 msgid "ACA"
-msgstr ""
+msgstr "Acadia"
 
 #. I18N: This is the country/chapman code for "Afghanistan"
 #: ../language/_countries.php:42
-#, fuzzy
 msgid "AFG"
-msgstr "Geçmiş Dosya Numara (AFN)"
+msgstr "Afganistan"
 
 #. I18N: This is the country/chapman code for "Angola"
 #: ../language/_countries.php:44
-#, fuzzy
 msgid "AGO"
-msgstr "Yaşı"
+msgstr "Angola"
 
 #. I18N: This is the country/chapman code for "Anguilla"
 #: ../language/_countries.php:46
-#, fuzzy
 msgid "AIA"
-msgstr "Takma adı"
+msgstr "Anguilla"
 
 #. I18N: This is the country/chapman code for "Aland Islands"
 #: ../language/_countries.php:48
-#, fuzzy
 msgid "ALA"
-msgstr "Takma adı"
+msgstr "Oland Adaları"
 
 #. I18N: This is the country/chapman code for "Albania"
 #: ../language/_countries.php:50
 msgid "ALB"
-msgstr ""
+msgstr "Arnavutluk"
 
 #. I18N: This is the country/chapman code for "Andorra"
 #: ../language/_countries.php:52
-#, fuzzy
 msgid "AND"
-msgstr "Geçmiş Dosya Numara (AFN)"
+msgstr "Andorra"
 
 #. I18N: This is the country/chapman code for "Netherlands Antilles"
 #: ../language/_countries.php:54
-#, fuzzy
 msgid "ANT"
-msgstr "Geçmiş Dosya Numara (AFN)"
+msgstr "Hollanda Antilleri"
 
 #. I18N: This is the country/chapman code for "United Arab Emirates"
 #: ../language/_countries.php:56
-#, fuzzy
 msgid "ARE"
-msgstr "Yaşı"
+msgstr "Birleşik Arap Emirlikleri"
 
 #. I18N: This is the country/chapman code for "Argentina"
 #: ../language/_countries.php:58
-#, fuzzy
 msgid "ARG"
-msgstr "Yaşı"
+msgstr "Arjantin"
 
 #. I18N: This is the country/chapman code for "Armenia"
 #: ../language/_countries.php:60
-#, fuzzy
 msgid "ARM"
-msgstr "Koca"
+msgstr "Ermenistan"
 
 #. I18N: This is the country/chapman code for "American Samoa"
 #: ../language/_countries.php:62
-#, fuzzy
 msgid "ASM"
-msgstr "Aile"
+msgstr "Amerikan Samoa"
 
 #. I18N: This is the country/chapman code for "Antarctica"
 #: ../language/_countries.php:64
-#, fuzzy
 msgid "ATA"
-msgstr "Veri"
+msgstr "Antarktika"
 
 #. I18N: This is the country/chapman code for "French Southern Territories"
 #: ../language/_countries.php:66
-#, fuzzy
 msgid "ATF"
-msgstr "Geçmiş Dosya Numara (AFN)"
+msgstr "Fransız Güney Toprakları"
 
 #. I18N: This is the country/chapman code for "Antigua and Barbuda"
 #: ../language/_countries.php:68
-#, fuzzy
 msgid "ATG"
-msgstr "Yaşı"
+msgstr "Antigua ve Barbuda"
 
 #. I18N: This is the country/chapman code for "Australia"
 #: ../language/_countries.php:70
-#, fuzzy
 msgid "AUS"
-msgstr "Vefat nedeni"
+msgstr "Avustralya"
 
 #. I18N: This is the country/chapman code for "Austria"
 #: ../language/_countries.php:72
-#, fuzzy
 msgid "AUT"
-msgstr "Yazar"
+msgstr "Avusturya"
 
 #. I18N: This is the country/chapman code for "Azerbaijan"
 #: ../language/_countries.php:74
-#, fuzzy
 msgid "AZE"
-msgstr "Yaşı"
+msgstr "Azerbaycan"
 
 #. I18N: This is the country/chapman code for "Azores"
 #: ../language/_countries.php:76
 msgid "AZR"
-msgstr ""
+msgstr "Asor adalar"
 
 #. I18N: This is the country/chapman code for "Burundi"
 #: ../language/_countries.php:78
-#, fuzzy
 msgid "BDI"
-msgstr "Boşanma"
+msgstr "Burundi"
 
 #. I18N: This is the country/chapman code for "Belgium"
 #: ../language/_countries.php:80
 msgid "BEL"
-msgstr ""
+msgstr "Belçika"
 
 #. I18N: This is the country/chapman code for "Benin"
 #: ../language/_countries.php:82
 msgid "BEN"
-msgstr ""
+msgstr "Benin"
 
 #. I18N: This is the country/chapman code for "Burkina Faso"
 #: ../language/_countries.php:84
-#, fuzzy
 msgid "BFA"
-msgstr "Aile"
+msgstr "Burkina Faso"
 
 #. I18N: This is the country/chapman code for "Bangladesh"
 #: ../language/_countries.php:86
 msgid "BGD"
-msgstr ""
+msgstr "Bangladeş"
 
 #. I18N: This is the country/chapman code for "Bulgaria"
 #: ../language/_countries.php:88
 msgid "BGR"
-msgstr ""
+msgstr "Bulgaristan"
 
 #. I18N: This is the country/chapman code for "Bahrain"
 #: ../language/_countries.php:90
-#, fuzzy
 msgid "BHR"
-msgstr "Vaftiz"
+msgstr "Bahreyn"
 
 #. I18N: This is the country/chapman code for "Bahamas"
 #: ../language/_countries.php:92
 msgid "BHS"
-msgstr ""
+msgstr "Bahamalar"
 
 #. I18N: This is the country/chapman code for "Bosnia and Herzegovina"
 #: ../language/_countries.php:94
 msgid "BIH"
-msgstr ""
+msgstr "Bosna-Hersek"
 
 #. I18N: This is the country/chapman code for "Belarus"
 #: ../language/_countries.php:96
 msgid "BLR"
-msgstr ""
+msgstr "Beyaz Rusya"
 
 #. I18N: This is the country/chapman code for "Belize"
 #: ../language/_countries.php:98
 msgid "BLZ"
-msgstr ""
+msgstr "Belize"
 
 #. I18N: This is the country/chapman code for "Bermuda"
 #: ../language/_countries.php:100
 msgid "BMU"
-msgstr ""
+msgstr "Bermuda"
 
 #. I18N: This is the country/chapman code for "Bolivia"
 #: ../language/_countries.php:102
 msgid "BOL"
-msgstr ""
+msgstr "Bolivya"
 
 #. I18N: This is the country/chapman code for "Brazil"
 #: ../language/_countries.php:104
 msgid "BRA"
-msgstr ""
+msgstr "Brezilya"
 
 #. I18N: This is the country/chapman code for "Barbados"
 #: ../language/_countries.php:106
 msgid "BRB"
-msgstr ""
+msgstr "Barbados"
 
 #. I18N: This is the country/chapman code for "Brunei Darussalam"
 #: ../language/_countries.php:108
-#, fuzzy
 msgid "BRN"
-msgstr "Kayıt dosya numarası"
+msgstr "Brunei"
 
 #. I18N: This is the country/chapman code for "Bhutan"
 #: ../language/_countries.php:110
 msgid "BTN"
-msgstr ""
+msgstr "Bhutan"
 
 #. I18N: This is the country/chapman code for "Bouvet Island"
 #: ../language/_countries.php:112
 msgid "BVT"
-msgstr ""
+msgstr "Bouvet Adası"
 
 #. I18N: This is the country/chapman code for "Botswana"
 #: ../language/_countries.php:114
 msgid "BWA"
-msgstr ""
+msgstr "Botsvana"
 
 #. I18N: This is the country/chapman code for "British West Indies"
 #: ../language/_countries.php:116
 msgid "BWI"
-msgstr ""
+msgstr "İngiliz Bati Hint Adaları"
 
 #. I18N: This is the country/chapman code for "Central African Republic"
 #: ../language/_countries.php:118
-#, fuzzy
 msgid "CAF"
-msgstr "Geçmiş Dosya Numara (AFN)"
+msgstr "Orta Afrika Cumhuriyeti"
 
 #. I18N: This is the country/chapman code for "Canada"
 #: ../language/_countries.php:120
-#, fuzzy
 msgid "CAN"
-msgstr "Telefon numarası"
+msgstr "Kanada"
 
 #. I18N: This is the country/chapman code for "Cape Colony"
 #: ../language/_countries.php:122
-#, fuzzy
 msgid "CAP"
-msgstr "Harıta"
+msgstr "Pelerin Sömürgesi"
 
 #. I18N: This is the country/chapman code for "Catalonia"
 #: ../language/_countries.php:124
-#, fuzzy
 msgid "CAT"
-msgstr "Kast / Sosyal Durumlar"
+msgstr "Katalonya"
 
 #. I18N: This is the country/chapman code for "Cocos (Keeling) Islands"
 #: ../language/_countries.php:126
 msgid "CCK"
-msgstr ""
+msgstr "Cocos Adaları"
 
 #. I18N: This is the country/chapman code for "Switzerland"
 #: ../language/_countries.php:128
-#, fuzzy
 msgid "CHE"
-msgstr "Vaftiz"
+msgstr "İsviçre"
 
 #. I18N: This is the country/chapman code for "Channel Islands"
 #: ../language/_countries.php:130
-#, fuzzy
 msgid "CHI"
-msgstr "Çocuk"
+msgstr "Kanal Adaları"
 
 #. I18N: This is the country/chapman code for "Chile"
 #: ../language/_countries.php:132
-#, fuzzy
 msgid "CHL"
-msgstr "Çocuk"
+msgstr "Şili"
 
 #. I18N: This is the country/chapman code for "China"
 #: ../language/_countries.php:134
-#, fuzzy
 msgid "CHN"
-msgstr "Son değişiklik"
+msgstr "Çin"
 
 #. I18N: This is the country/chapman code for "Cote d'Ivoire"
 #: ../language/_countries.php:136
-#, fuzzy
 msgid "CIV"
-msgstr "Boşanma"
+msgstr "Fildişi Sahili"
 
 #. I18N: This is the country/chapman code for "Cameroon"
 #: ../language/_countries.php:138
-#, fuzzy
 msgid "CMR"
-msgstr "Vaftiz"
+msgstr "Kamerun"
 
 #. I18N: This is the country/chapman code for "Congo (Kinshasa)"
 #: ../language/_countries.php:140
 msgid "COD"
-msgstr ""
+msgstr "Kongo (Kinshasa)"
 
 #. I18N: This is the country/chapman code for "Congo (Brazzaville)"
 #: ../language/_countries.php:142
 msgid "COG"
-msgstr ""
+msgstr "Kongo (Brazzaville)"
 
 #. I18N: This is the country/chapman code for "Cook Islands"
 #: ../language/_countries.php:144
 msgid "COK"
-msgstr ""
+msgstr "Cook Adası"
 
 #. I18N: This is the country/chapman code for "Colombia"
 #: ../language/_countries.php:146
-#, fuzzy
 msgid "COL"
-msgstr "LDS kilisesine kabul edinme ayini"
+msgstr "Kolombia"
 
 #. I18N: This is the country/chapman code for "Comoros"
 #: ../language/_countries.php:148
-#, fuzzy
 msgid "COM"
-msgstr "Açıklama"
+msgstr "Komor Adaları"
 
 #. I18N: This is the country/chapman code for "Cape Verde"
 #: ../language/_countries.php:150
 msgid "CPV"
-msgstr ""
+msgstr "Kap Verd"
 
 #. I18N: This is the country/chapman code for "Costa Rica"
 #: ../language/_countries.php:152
-#, fuzzy
 msgid "CRI"
-msgstr "Vaftiz"
+msgstr "Kosta Rika"
 
 #. I18N: This is the country/chapman code for "Czechoslovakia"
 #: ../language/_countries.php:154
 msgid "CSK"
-msgstr ""
+msgstr "Çekoslovakya"
 
 #. I18N: This is the country/chapman code for "Cuba"
 #: ../language/_countries.php:156
 msgid "CUB"
-msgstr ""
+msgstr "Küba"
 
 #. I18N: This is the country/chapman code for "Christmas Island"
 #: ../language/_countries.php:158
-#, fuzzy
 msgid "CXR"
-msgstr "Vaftiz"
+msgstr "Chrıstmas Adası"
 
 #. I18N: This is the country/chapman code for "Cayman Islands"
 #: ../language/_countries.php:160
 msgid "CYM"
-msgstr ""
+msgstr "Cayman Adaları"
 
 #. I18N: This is the country/chapman code for "Cyprus"
 #: ../language/_countries.php:162
 msgid "CYP"
-msgstr ""
+msgstr "Kıbrıs"
 
 #. I18N: This is the country/chapman code for "Czech Republic"
 #: ../language/_countries.php:164
 msgid "CZE"
-msgstr ""
+msgstr "Çek Cumhuriyeti"
 
 #. I18N: This is the country/chapman code for "Germany"
 #: ../language/_countries.php:166
 msgid "DEU"
-msgstr ""
+msgstr "Almanya"
 
 #. I18N: This is the country/chapman code for "Djibouti"
 #: ../language/_countries.php:168
-#, fuzzy
 msgid "DJI"
-msgstr "Boşanma"
+msgstr "Cibuti"
 
 #. I18N: This is the country/chapman code for "Dominica"
 #: ../language/_countries.php:170
-#, fuzzy
 msgid "DMA"
-msgstr "Harıta"
+msgstr "Dominik"
 
 #. I18N: This is the country/chapman code for "Denmark"
 #: ../language/_countries.php:172
 msgid "DNK"
-msgstr ""
+msgstr "Danimarka"
 
 #. I18N: This is the country/chapman code for "Dominican Republic"
 #: ../language/_countries.php:174
 msgid "DOM"
-msgstr ""
+msgstr "Dominik Cumhuriyeti"
 
 #. I18N: This is the country/chapman code for "Algeria"
 #: ../language/_countries.php:176
 msgid "DZA"
-msgstr ""
+msgstr "Cezayir"
 
 #. I18N: This is the country/chapman code for "Ecuador"
 #: ../language/_countries.php:178
 msgid "ECU"
-msgstr ""
+msgstr "Ekvator"
 
 #. I18N: This is the country/chapman code for "Egypt"
 #: ../language/_countries.php:180
 msgid "EGY"
-msgstr ""
+msgstr "Mısır"
 
 #. I18N: This is the country/chapman code for "Eire"
 #: ../language/_countries.php:182
 msgid "EIR"
-msgstr ""
+msgstr "Irlanda"
 
 #. I18N: This is the country/chapman code for "England"
 #: ../language/_countries.php:184
-#, fuzzy
 msgid "ENG"
-msgstr "Nişan"
+msgstr "İngiltere"
 
 #. I18N: This is the country/chapman code for "Eritrea"
 #: ../language/_countries.php:186
-#, fuzzy
 msgid "ERI"
-msgstr "Kayıt kişisel numarası"
+msgstr "Eritre"
 
 #. I18N: This is the country/chapman code for "Western Sahara"
 #: ../language/_countries.php:188
 msgid "ESH"
-msgstr ""
+msgstr "Batı Sahra"
 
 #. I18N: This is the country/chapman code for "Spain"
 #: ../language/_countries.php:190
 msgid "ESP"
-msgstr ""
+msgstr "İspanya"
 
 #. I18N: This is the country/chapman code for "Estonia"
 #: ../language/_countries.php:192
-#, fuzzy
 msgid "EST"
-msgstr "Gidilecek yer"
+msgstr "Estonya"
 
 #. I18N: This is the country/chapman code for "Ethiopia"
 #: ../language/_countries.php:194
 msgid "ETH"
-msgstr ""
+msgstr "Etiyopya"
 
 #. I18N: This is the country/chapman code for "Finland"
 #: ../language/_countries.php:196
-#, fuzzy
 msgid "FIN"
-msgstr "Geçmiş Dosya Numara (AFN)"
+msgstr "Finlandiya"
 
 #. I18N: This is the country/chapman code for "Fiji"
 #: ../language/_countries.php:198
 msgid "FJI"
-msgstr ""
+msgstr "Fiji"
 
 #. I18N: This is the country/chapman code for "Flanders"
 #: ../language/_countries.php:200
 msgid "FLD"
-msgstr ""
+msgstr "Flandra"
 
 #. I18N: This is the country/chapman code for "Falkland Islands"
 #: ../language/_countries.php:202
 msgid "FLK"
-msgstr ""
+msgstr "Falkland Adaları"
 
 #. I18N: This is the country/chapman code for "France"
 #: ../language/_countries.php:204
-#, fuzzy
 msgid "FRA"
-msgstr "Aile"
+msgstr "Fransa"
 
 #. I18N: This is the country/chapman code for "Faeroe Islands"
 #: ../language/_countries.php:206
 msgid "FRO"
-msgstr ""
+msgstr "Faroe Adaları"
 
 #. I18N: This is the country/chapman code for "Micronesia"
 #: ../language/_countries.php:208
-#, fuzzy
 msgid "FSM"
-msgstr "Aile"
+msgstr "Mikronezya"
 
 #. I18N: This is the country/chapman code for "Gabon"
 #: ../language/_countries.php:210
 msgid "GAB"
-msgstr ""
+msgstr "Gabon"
 
 #. I18N: This is the country/chapman code for "United Kingdom"
 #: ../language/_countries.php:212
 msgid "GBR"
-msgstr ""
+msgstr "İngiltere"
 
 #. I18N: This is the country/chapman code for "Georgia"
 #: ../language/_countries.php:214
-#, fuzzy
 msgid "GEO"
-msgstr "Yaşı"
+msgstr "Gürcistan"
 
 #. I18N: This is the country/chapman code for "Ghana"
 #: ../language/_countries.php:216
 msgid "GHA"
-msgstr ""
+msgstr "Gana"
 
 #. I18N: This is the country/chapman code for "Gibraltar"
 #: ../language/_countries.php:218
 msgid "GIB"
-msgstr ""
+msgstr "Cebelitarık"
 
 #. I18N: This is the country/chapman code for "Guinea"
 #: ../language/_countries.php:220
-#, fuzzy
 msgid "GIN"
-msgstr "İsim"
+msgstr "Gine"
 
 #. I18N: This is the country/chapman code for "Guadeloupe"
 #: ../language/_countries.php:222
 msgid "GLP"
-msgstr ""
+msgstr "Guadalup"
 
 #. I18N: This is the country/chapman code for "Gambia"
 #: ../language/_countries.php:224
 msgid "GMB"
-msgstr ""
+msgstr "Gambiya"
 
 #. I18N: This is the country/chapman code for "Guinea-Bissau"
 #: ../language/_countries.php:226
 msgid "GNB"
-msgstr ""
+msgstr "Gine Bissau"
 
 #. I18N: This is the country/chapman code for "Equatorial Guinea"
 #: ../language/_countries.php:228
 msgid "GNQ"
-msgstr ""
+msgstr "Ekvator Ginesi"
 
 #. I18N: This is the country/chapman code for "Greece"
 #: ../language/_countries.php:230
 msgid "GRC"
-msgstr ""
+msgstr "Yunanistan"
 
 #. I18N: This is the country/chapman code for "Grenada"
 #: ../language/_countries.php:232
-#, fuzzy
 msgid "GRD"
-msgstr "Mezuniyet"
+msgstr "Grenada"
 
 #. I18N: This is the country/chapman code for "Greenland"
 #: ../language/_countries.php:234
-#, fuzzy
 msgid "GRL"
-msgstr "Web URL"
+msgstr "Grönland"
 
 #. I18N: This is the country/chapman code for "Guatemala"
 #: ../language/_countries.php:236
 msgid "GTM"
-msgstr ""
+msgstr "Guatemala"
 
 #. I18N: This is the country/chapman code for "French Guiana"
 #: ../language/_countries.php:238
 msgid "GUF"
-msgstr ""
+msgstr "Fransız Guyanası"
 
 #. I18N: This is the country/chapman code for "Guam"
 #: ../language/_countries.php:240
 msgid "GUM"
-msgstr ""
+msgstr "Guam"
 
 #. I18N: This is the country/chapman code for "Guyana"
 #: ../language/_countries.php:242
 msgid "GUY"
-msgstr ""
+msgstr "Guyana"
 
 #. I18N: This is the country/chapman code for "Hong Kong"
 #: ../language/_countries.php:244
 msgid "HKG"
-msgstr ""
+msgstr "Hong-Kong"
 
 #. I18N: This is the country/chapman code for "Heard Island and McDonald Islands"
 #: ../language/_countries.php:246
 msgid "HMD"
-msgstr ""
+msgstr "Heard Adası ve McDonald Adaları"
 
 #. I18N: This is the country/chapman code for "Honduras"
 #: ../language/_countries.php:248
 msgid "HND"
-msgstr ""
+msgstr "Honduras"
 
 #. I18N: This is the country/chapman code for "Croatia"
 #: ../language/_countries.php:250
-#, fuzzy
 msgid "HRV"
-msgstr "Vaftiz"
+msgstr "Hırvatistan"
 
 #. I18N: This is the country/chapman code for "Haiti"
 #: ../language/_countries.php:252
 msgid "HTI"
-msgstr ""
+msgstr "Haiti"
 
 #. I18N: This is the country/chapman code for "Hungary"
 #: ../language/_countries.php:254
 msgid "HUN"
-msgstr ""
+msgstr "Macaristan"
 
 #. I18N: This is the country/chapman code for "Indonesia"
 #: ../language/_countries.php:256
-#, fuzzy
 msgid "IDN"
-msgstr "GEDCOM varitabanı içindeki tanıtım numarası"
+msgstr "Endonezya"
 
 #. I18N: This is the country/chapman code for "India"
 #: ../language/_countries.php:258
-#, fuzzy
 msgid "IND"
-msgstr "Kayıt kişisel numarası"
+msgstr "Hindistan"
 
 #. I18N: This is the country/chapman code for "Isle of Man"
 #: ../language/_countries.php:260
 msgid "IOM"
-msgstr ""
+msgstr "Man Adası"
 
 #. I18N: This is the country/chapman code for "British Indian Ocean Territory"
 #: ../language/_countries.php:262
 msgid "IOT"
-msgstr ""
+msgstr "İngiliz Hindistan Okyanus Toprakları"
 
 #. I18N: This is the country/chapman code for "Ireland"
 #: ../language/_countries.php:264
-#, fuzzy
 msgid "IRL"
-msgstr "Web URL"
+msgstr "İrlanda"
 
 #. I18N: This is the country/chapman code for "Iran"
 #: ../language/_countries.php:266
-#, fuzzy
 msgid "IRN"
-msgstr "Kayıt dosya numarası"
+msgstr "İran"
 
 #. I18N: This is the country/chapman code for "Iraq"
 #: ../language/_countries.php:268
 msgid "IRQ"
-msgstr ""
+msgstr "Irak"
 
 #. I18N: This is the country/chapman code for "Iceland"
 #: ../language/_countries.php:270
 msgid "ISL"
-msgstr ""
+msgstr "İzlanda"
 
 #. I18N: This is the country/chapman code for "Israel"
 #: ../language/_countries.php:272
 msgid "ISR"
-msgstr ""
+msgstr "Israil"
 
 #. I18N: This is the country/chapman code for "Italy"
 #: ../language/_countries.php:274
 msgid "ITA"
-msgstr ""
+msgstr "İtalya"
 
 #. I18N: This is the country/chapman code for "Jamaica"
 #: ../language/_countries.php:276
-#, fuzzy
 msgid "JAM"
-msgstr "Aile"
+msgstr "Jamaika"
 
 #. I18N: This is the country/chapman code for "Jordan"
 #: ../language/_countries.php:278
 msgid "JOR"
-msgstr ""
+msgstr "Ürdün"
 
 #. I18N: This is the country/chapman code for "Japan"
 #: ../language/_countries.php:280
 msgid "JPN"
-msgstr ""
+msgstr "Japonya"
 
 #. I18N: This is the country/chapman code for "Kazakhstan"
 #: ../language/_countries.php:282
 msgid "KAZ"
-msgstr ""
+msgstr "Kazakistan"
 
 #. I18N: This is the country/chapman code for "Kenya"
 #: ../language/_countries.php:284
 msgid "KEN"
-msgstr ""
+msgstr "Kenya"
 
 #. I18N: This is the country/chapman code for "Kyrgyzstan"
 #: ../language/_countries.php:286
 msgid "KGZ"
-msgstr ""
+msgstr "Kırgısiztan"
 
 #. I18N: This is the country/chapman code for "Cambodia"
 #: ../language/_countries.php:288
 msgid "KHM"
-msgstr ""
+msgstr "Kamboçya"
 
 #. I18N: This is the country/chapman code for "Kiribati"
 #: ../language/_countries.php:290
 msgid "KIR"
-msgstr ""
+msgstr "Kırıbatı"
 
 #. I18N: This is the country/chapman code for "Saint Kitts and Nevis"
 #: ../language/_countries.php:292
 msgid "KNA"
-msgstr ""
+msgstr "Saint Kitts ve Nevis"
 
 #. I18N: This is the country/chapman code for "Korea"
 #: ../language/_countries.php:294
 msgid "KOR"
-msgstr ""
+msgstr "Güney Kore"
 
 #. I18N: This is the country/chapman code for "Kuwait"
 #: ../language/_countries.php:296
 msgid "KWT"
-msgstr ""
+msgstr "Kuveyt"
 
 #. I18N: This is the country/chapman code for "Laos"
 #: ../language/_countries.php:298
 msgid "LAO"
-msgstr ""
+msgstr "Lao Demokratik Halk Cumhuriyeti"
 
 #. I18N: This is the country/chapman code for "Lebanon"
 #: ../language/_countries.php:300
 msgid "LBN"
-msgstr ""
+msgstr "Lübnan"
 
 #. I18N: This is the country/chapman code for "Liberia"
 #: ../language/_countries.php:302
 msgid "LBR"
-msgstr ""
+msgstr "Liberya"
 
 #. I18N: This is the country/chapman code for "Libya"
 #: ../language/_countries.php:304
 msgid "LBY"
-msgstr ""
+msgstr "Libya"
 
 #. I18N: This is the country/chapman code for "Saint Lucia"
 #: ../language/_countries.php:306
 msgid "LCA"
-msgstr ""
+msgstr "Saint Lucia"
 
 #. I18N: This is the country/chapman code for "Liechtenstein"
 #: ../language/_countries.php:308
 msgid "LIE"
-msgstr ""
+msgstr "Lihtenstayn"
 
 #. I18N: This is the country/chapman code for "Sri Lanka"
 #: ../language/_countries.php:310
 msgid "LKA"
-msgstr ""
+msgstr "Sri Lanka"
 
 #. I18N: This is the country/chapman code for "Lesotho"
 #: ../language/_countries.php:312
 msgid "LSO"
-msgstr ""
+msgstr "Lesotho"
 
 #. I18N: This is the country/chapman code for "Lithuania"
 #: ../language/_countries.php:314
 msgid "LTU"
-msgstr ""
+msgstr "Litvanya"
 
 #. I18N: This is the country/chapman code for "Luxembourg"
 #: ../language/_countries.php:316
 msgid "LUX"
-msgstr ""
+msgstr "Lüksemburg"
 
 #. I18N: This is the country/chapman code for "Latvia"
 #: ../language/_countries.php:318
 msgid "LVA"
-msgstr ""
+msgstr "Letonya"
 
 #. I18N: This is the country/chapman code for "Macau"
 #: ../language/_countries.php:320
-#, fuzzy
 msgid "MAC"
-msgstr "Evlilik kontratı"
+msgstr "Makao"
 
 #. I18N: This is the country/chapman code for "Morocco"
 #: ../language/_countries.php:322
-#, fuzzy
 msgid "MAR"
-msgstr "Yasaklanılan Evlilik"
+msgstr "Fas"
 
 #. I18N: This is the country/chapman code for "Monaco"
 #: ../language/_countries.php:324
 msgid "MCO"
-msgstr ""
+msgstr "Monaco"
 
 #. I18N: This is the country/chapman code for "Moldova"
 #: ../language/_countries.php:326
-#, fuzzy
 msgid "MDA"
-msgstr "Harıta"
+msgstr "Moldovya"
 
 #. I18N: This is the country/chapman code for "Madagascar"
 #: ../language/_countries.php:328
 msgid "MDG"
-msgstr ""
+msgstr "Madagaskar"
 
 #. I18N: This is the country/chapman code for "Maldives"
 #: ../language/_countries.php:330
-#, fuzzy
 msgid "MDV"
-msgstr "Boşanma"
+msgstr "Maldiv Adaları"
 
 #. I18N: This is the country/chapman code for "Mexico"
 #: ../language/_countries.php:332
-#, fuzzy
 msgid "MEX"
-msgstr "Cinsiyet"
+msgstr "Meksika"
 
 #. I18N: This is the country/chapman code for "Marshall Islands"
 #: ../language/_countries.php:334
 msgid "MHL"
-msgstr ""
+msgstr "Marshall Adaları"
 
 #. I18N: This is the country/chapman code for "Macedonia"
 #: ../language/_countries.php:336
 msgid "MKD"
-msgstr ""
+msgstr "Makedonya"
 
 #. I18N: This is the country/chapman code for "Mali"
 #: ../language/_countries.php:338
-#, fuzzy
 msgid "MLI"
-msgstr "Askerlik"
+msgstr "Mali"
 
 #. I18N: This is the country/chapman code for "Malta"
 #: ../language/_countries.php:340
-#, fuzzy
 msgid "MLT"
-msgstr "Askerlik görevi"
+msgstr "Malta"
 
 #. I18N: This is the country/chapman code for "Myanmar"
 #: ../language/_countries.php:342
-#, fuzzy
 msgid "MMR"
-msgstr "Evlilik sayısı"
+msgstr "Myanmar / Burma"
 
 #. I18N: This is the country/chapman code for "Mongolia"
 #: ../language/_countries.php:344
 msgid "MNG"
-msgstr ""
+msgstr "Moğolistan"
 
 #. I18N: This is the country/chapman code for "Northern Mariana Islands"
 #: ../language/_countries.php:346
-#, fuzzy
 msgid "MNP"
-msgstr "Harıta"
+msgstr "Mariyan Adaları"
 
 #. I18N: This is the country/chapman code for "Montenegro"
 #: ../language/_countries.php:348
 msgid "MNT"
-msgstr ""
+msgstr "Karadağ"
 
 #. I18N: This is the country/chapman code for "Mozambique"
 #: ../language/_countries.php:350
 msgid "MOZ"
-msgstr ""
+msgstr "Mozambik"
 
 #. I18N: This is the country/chapman code for "Mauritania"
 #: ../language/_countries.php:352
-#, fuzzy
 msgid "MRT"
-msgstr "Evlilik sayısı"
+msgstr "Moritanya"
 
 #. I18N: This is the country/chapman code for "Montserrat"
 #: ../language/_countries.php:354
-#, fuzzy
 msgid "MSR"
-msgstr "Evlilik sayısı"
+msgstr "Montserrat"
 
 #. I18N: This is the country/chapman code for "Martinique"
 #: ../language/_countries.php:356
 msgid "MTQ"
-msgstr ""
+msgstr "Martinik"
 
 #. I18N: This is the country/chapman code for "Mauritius"
 #: ../language/_countries.php:358
 msgid "MUS"
-msgstr ""
+msgstr "Mauritus"
 
 #. I18N: This is the country/chapman code for "Malawi"
 #: ../language/_countries.php:360
 msgid "MWI"
-msgstr ""
+msgstr "Malavi"
 
 #. I18N: This is the country/chapman code for "Malaysia"
 #: ../language/_countries.php:362
 msgid "MYS"
-msgstr ""
+msgstr "Malezya"
 
 #. I18N: This is the country/chapman code for "Mayotte"
 #: ../language/_countries.php:364
 msgid "MYT"
-msgstr ""
+msgstr "Mayotte"
 
 #. I18N: This is the country/chapman code for "Namibia"
 #: ../language/_countries.php:366
-#, fuzzy
 msgid "NAM"
-msgstr "Soy isim"
+msgstr "Namibya"
 
 #. I18N: This is the country/chapman code for "New Caledonia"
 #: ../language/_countries.php:368
 msgid "NCL"
-msgstr ""
+msgstr "Yeni Kaledonya"
 
 #. I18N: This is the country/chapman code for "Niger"
 #: ../language/_countries.php:370
-#, fuzzy
 msgid "NER"
-msgstr "Evlilik sayısı"
+msgstr "Nijer"
 
 #. I18N: This is the country/chapman code for "Norfolk Island"
 #: ../language/_countries.php:372
 msgid "NFK"
-msgstr ""
+msgstr "Norfolk Adaları"
 
 #. I18N: This is the country/chapman code for "Nigeria"
 #: ../language/_countries.php:374
-#, fuzzy
 msgid "NGA"
-msgstr "Nişan"
+msgstr "Nijerya"
 
 #. I18N: This is the country/chapman code for "Nicaragua"
 #: ../language/_countries.php:376
-#, fuzzy
 msgid "NIC"
-msgstr "Lakabı"
+msgstr "Nikaragua"
 
 #. I18N: This is the country/chapman code for "Northern Ireland"
 #: ../language/_countries.php:378
-#, fuzzy
 msgid "NIR"
-msgstr "Evlilik sayısı"
+msgstr "Kuzey İrlanda"
 
 #. I18N: This is the country/chapman code for "Niue"
 #: ../language/_countries.php:380
 msgid "NIU"
-msgstr ""
+msgstr "Niue Adaları"
 
 #. I18N: This is the country/chapman code for "Netherlands"
 #: ../language/_countries.php:382
 msgid "NLD"
-msgstr ""
+msgstr "Hollanda"
 
 #. I18N: This is the country/chapman code for "Norway"
 #: ../language/_countries.php:384
-#, fuzzy
 msgid "NOR"
-msgstr "Evlilik sayısı"
+msgstr "Norveç"
 
 #. I18N: This is the country/chapman code for "Nepal"
 #: ../language/_countries.php:386
 msgid "NPL"
-msgstr ""
+msgstr "Nepal"
 
 #. I18N: This is the country/chapman code for "Nauru"
 #: ../language/_countries.php:388
-#, fuzzy
 msgid "NRU"
-msgstr "Evlilik sayısı"
+msgstr "Nauru Adası"
 
 #. I18N: This is the country/chapman code for "Neutral Zone"
 #: ../language/_countries.php:390
 msgid "NTZ"
-msgstr ""
+msgstr "Tarafsız Bölge"
 
 #. I18N: This is the country/chapman code for "New Zealand"
 #: ../language/_countries.php:392
 msgid "NZL"
-msgstr ""
+msgstr "Yeni Zelanda"
 
 #. I18N: This is the country/chapman code for "Oman"
 #: ../language/_countries.php:394
-#, fuzzy
 msgid "OMN"
-msgstr "Latince"
+msgstr "Umman"
 
 #. I18N: This is the country/chapman code for "Pakistan"
 #: ../language/_countries.php:396
 msgid "PAK"
-msgstr ""
+msgstr "Pakistan"
 
 #. I18N: This is the country/chapman code for "Panama"
 #: ../language/_countries.php:398
-#, fuzzy
 msgid "PAN"
-msgstr "Geçmiş Dosya Numara (AFN)"
+msgstr "Panama"
 
 #. I18N: This is the country/chapman code for "Pitcairn"
 #: ../language/_countries.php:400
 msgid "PCN"
-msgstr ""
+msgstr "Pıtcaırn Adası"
 
 #. I18N: This is the country/chapman code for "Peru"
 #: ../language/_countries.php:402
 msgid "PER"
-msgstr ""
+msgstr "Peru"
 
 #. I18N: This is the country/chapman code for "Philippines"
 #: ../language/_countries.php:404
 msgid "PHL"
-msgstr ""
+msgstr "Filipinler"
 
 #. I18N: This is the country/chapman code for "Palau"
 #: ../language/_countries.php:406
 msgid "PLW"
-msgstr ""
+msgstr "Palau"
 
 #. I18N: This is the country/chapman code for "Papua New Guinea"
 #: ../language/_countries.php:408
 msgid "PNG"
-msgstr ""
+msgstr "Papua Yeni Gine"
 
 #. I18N: This is the country/chapman code for "Poland"
 #: ../language/_countries.php:410
 msgid "POL"
-msgstr ""
+msgstr "Polonya"
 
 #. I18N: This is the country/chapman code for "Puerto Rico"
 #: ../language/_countries.php:412
-#, fuzzy
 msgid "PRI"
-msgstr "Tercih edilen fotoğraf"
+msgstr "Porto Riko"
 
 #. I18N: This is the country/chapman code for "North Korea"
 #: ../language/_countries.php:414
 msgid "PRK"
-msgstr ""
+msgstr "Kuzey Kore"
 
 #. I18N: This is the country/chapman code for "Portugal"
 #: ../language/_countries.php:416
 msgid "PRT"
-msgstr ""
+msgstr "Portekiz"
 
 #. I18N: This is the country/chapman code for "Paraguay"
 #: ../language/_countries.php:418
 msgid "PRY"
-msgstr ""
+msgstr "Paraguay"
 
 #. I18N: This is the country/chapman code for "Occupied Palestinian Territory"
 #: ../language/_countries.php:420
-#, fuzzy
 msgid "PSE"
-msgstr "Cinsiyet"
+msgstr "Filistin"
 
 #. I18N: This is the country/chapman code for "French Polynesia"
 #: ../language/_countries.php:422
 msgid "PYF"
-msgstr ""
+msgstr "Fransız Polenazyası"
 
 #. I18N: This is the country/chapman code for "Qatar"
 #: ../language/_countries.php:424
 msgid "QAT"
-msgstr ""
+msgstr "Katar"
 
 #. I18N: This is the country/chapman code for "Reunion"
 #: ../language/_countries.php:426
 msgid "REU"
-msgstr ""
+msgstr "Reunyon"
 
 #. I18N: This is the country/chapman code for "Romania"
 #: ../language/_countries.php:428
-#, fuzzy
 msgid "ROM"
-msgstr "Latince"
+msgstr "Romanya"
 
 #. I18N: This is the country/chapman code for "Russia"
 #: ../language/_countries.php:430
 msgid "RUS"
-msgstr ""
+msgstr "Rusya Federasyonu"
 
 #. I18N: This is the country/chapman code for "Rwanda"
 #: ../language/_countries.php:432
 msgid "RWA"
-msgstr ""
+msgstr "Ruanda"
 
 #. I18N: This is the country/chapman code for "Saudi Arabia"
 #: ../language/_countries.php:434
 msgid "SAU"
-msgstr ""
+msgstr "Suudi Arabistan"
 
 #. I18N: This is the country/chapman code for "Serbia and Montenegro"
 #: ../language/_countries.php:436
 msgid "SCG"
-msgstr ""
+msgstr "Yugoslavya"
 
 #. I18N: This is the country/chapman code for "Scotland"
 #: ../language/_countries.php:438
 msgid "SCT"
-msgstr ""
+msgstr "Iskoçya"
 
 #. I18N: This is the country/chapman code for "Sudan"
 #: ../language/_countries.php:440
-#, fuzzy
 msgid "SDN"
-msgstr "Sosyal sigorta numarası"
+msgstr "Sudan"
 
 #. I18N: This is the country/chapman code for "At Sea"
 #: ../language/_countries.php:442
-#, fuzzy
 msgid "SEA"
-msgstr "Cinsiyet"
+msgstr "Denizde"
 
 #. I18N: This is the country/chapman code for "Senegal"
 #: ../language/_countries.php:444
-#, fuzzy
 msgid "SEN"
-msgstr "Cinsiyet"
+msgstr "Senegal"
 
 #. I18N: This is the country/chapman code for "Serbia"
 #: ../language/_countries.php:446
-#, fuzzy
 msgid "SER"
-msgstr "Uzak Server"
+msgstr "Sırbistan"
 
 #. I18N: This is the country/chapman code for "Singapore"
 #: ../language/_countries.php:448
 msgid "SGP"
-msgstr ""
+msgstr "Singapur"
 
 #. I18N: This is the country/chapman code for "South Georgia and the South Sandwich Islands"
 #: ../language/_countries.php:450
-#, fuzzy
 msgid "SGS"
-msgstr "LDS Eş Mühürlemesi"
+msgstr "Güney Gürcistan ve Güney Sandviç Adaları"
 
 #. I18N: This is the country/chapman code for "Saint Helena"
 #: ../language/_countries.php:452
-#, fuzzy
 msgid "SHN"
-msgstr "Sosyal sigorta numarası"
+msgstr "Saint Helena"
 
 #. I18N: This is the country/chapman code for "Sicily"
 #: ../language/_countries.php:454
 msgid "SIC"
-msgstr ""
+msgstr "Sicilya"
 
 #. I18N: This is the country/chapman code for "Svalbard and Jan Mayen Islands"
 #: ../language/_countries.php:456
 msgid "SJM"
-msgstr ""
+msgstr "Svalbard ve Jan Mayen Adaları"
 
 #. I18N: This is the country/chapman code for "Solomon Islands"
 #: ../language/_countries.php:458
 msgid "SLB"
-msgstr ""
+msgstr "Solomon Adaları"
 
 #. I18N: This is the country/chapman code for "Sierra Leone"
 #: ../language/_countries.php:460
-#, fuzzy
 msgid "SLE"
-msgstr "Cinsiyet"
+msgstr "Sierra Leone"
 
 #. I18N: This is the country/chapman code for "El Salvador"
 #: ../language/_countries.php:462
 msgid "SLV"
-msgstr ""
+msgstr "El Salvador"
 
 #. I18N: This is the country/chapman code for "San Marino"
 #: ../language/_countries.php:464
-#, fuzzy
 msgid "SMR"
-msgstr "Evlilik sayısı"
+msgstr "San Marino"
 
 #. I18N: This is the country/chapman code for "Somalia"
 #: ../language/_countries.php:466
 msgid "SOM"
-msgstr ""
+msgstr "Somali"
 
 #. I18N: This is the country/chapman code for "Saint Pierre and Miquelon"
 #: ../language/_countries.php:468
 msgid "SPM"
-msgstr ""
+msgstr "Saint Piyer ve Mikelon"
 
 #. I18N: This is the country/chapman code for "Sao and Principe"
 #: ../language/_countries.php:470
 msgid "STP"
-msgstr ""
+msgstr "Sao Tome ve Prinsip"
 
 #. I18N: This is the country/chapman code for "USSR"
 #: ../language/_countries.php:472
-#, fuzzy
 msgid "SUN"
-msgstr "Teslim"
+msgstr "SSCB"
 
 #. I18N: This is the country/chapman code for "Suriname"
 #: ../language/_countries.php:474
-#, fuzzy
 msgid "SUR"
-msgstr "Kaynak"
+msgstr "Surinam"
 
 #. I18N: This is the country/chapman code for "Slovakia"
 #: ../language/_countries.php:476
 msgid "SVK"
-msgstr ""
+msgstr "Slovak Cumhuriyeti"
 
 #. I18N: This is the country/chapman code for "Slovenia"
 #: ../language/_countries.php:478
-#, fuzzy
 msgid "SVN"
-msgstr "Sosyal sigorta numarası"
+msgstr "Slovenya"
 
 #. I18N: This is the country/chapman code for "Sweden"
 #: ../language/_countries.php:480
-#, fuzzy
 msgid "SWE"
-msgstr "Cinsiyet"
+msgstr "İsveç"
 
 #. I18N: This is the country/chapman code for "Swaziland"
 #: ../language/_countries.php:482
 msgid "SWZ"
-msgstr ""
+msgstr "Svaziland"
 
 #. I18N: This is the country/chapman code for "Seychelles"
 #: ../language/_countries.php:484
 msgid "SYC"
-msgstr ""
+msgstr "Seyşel Adaları"
 
 #. I18N: This is the country/chapman code for "Syrian Arab Republic"
 #: ../language/_countries.php:486
 msgid "SYR"
-msgstr ""
+msgstr "Suriye"
 
 #. I18N: This is the country/chapman code for "Turks and Caicos Islands"
 #: ../language/_countries.php:488
 msgid "TCA"
-msgstr ""
+msgstr "Turks ve Caıcos Adaları"
 
 #. I18N: This is the country/chapman code for "Chad"
 #: ../language/_countries.php:490
 msgid "TCD"
-msgstr ""
+msgstr "Çad"
 
 #. I18N: This is the country/chapman code for "Togo"
 #: ../language/_countries.php:492
 msgid "TGO"
-msgstr ""
+msgstr "Togo"
 
 #. I18N: This is the country/chapman code for "Thailand"
 #: ../language/_countries.php:494
 msgid "THA"
-msgstr ""
+msgstr "Tayland"
 
 #. I18N: This is the country/chapman code for "Tajikistan"
 #: ../language/_countries.php:496
 msgid "TJK"
-msgstr ""
+msgstr "Tacikistan"
 
 #. I18N: This is the country/chapman code for "Tokelau"
 #: ../language/_countries.php:498
 msgid "TKL"
-msgstr ""
+msgstr "Tokelau"
 
 #. I18N: This is the country/chapman code for "Turkmenistan"
 #: ../language/_countries.php:500
 msgid "TKM"
-msgstr ""
+msgstr "Türkmenistan"
 
 #. I18N: This is the country/chapman code for "Timor-Leste"
 #: ../language/_countries.php:502
 msgid "TLS"
-msgstr ""
+msgstr "Timor-Leste Demokratik Cumhuriyeti"
 
 #. I18N: This is the country/chapman code for "Tonga"
 #: ../language/_countries.php:504
 msgid "TON"
-msgstr ""
+msgstr "Tonga"
 
 #. I18N: This is the country/chapman code for "Transylvania"
 #: ../language/_countries.php:506
-#, fuzzy
 msgid "TRN"
-msgstr "Kayıt dosya numarası"
+msgstr "Transilvanya"
 
 #. I18N: This is the country/chapman code for "Trinidad and Tobago"
 #: ../language/_countries.php:508
 msgid "TTO"
-msgstr ""
+msgstr "Trinidad ve Tobago"
 
 #. I18N: This is the country/chapman code for "Tunisia"
 #: ../language/_countries.php:510
 msgid "TUN"
-msgstr ""
+msgstr "Tunus"
 
 #. I18N: This is the country/chapman code for "Turkey"
 #: ../language/_countries.php:512
-#, fuzzy
 msgid "TUR"
-msgstr "Web URL"
+msgstr "Türkiye"
 
 #. I18N: This is the country/chapman code for "Tuvalu"
 #: ../language/_countries.php:514
 msgid "TUV"
-msgstr ""
+msgstr "Tuvalu"
 
 #. I18N: This is the country/chapman code for "Taiwan"
 #: ../language/_countries.php:516
 msgid "TWN"
-msgstr ""
+msgstr "Tayvan"
 
 #. I18N: This is the country/chapman code for "Tanzania"
 #: ../language/_countries.php:518
 msgid "TZA"
-msgstr ""
+msgstr "Tanzanya"
 
 #. I18N: This is the country/chapman code for "Uganda"
 #: ../language/_countries.php:520
 msgid "UGA"
-msgstr ""
+msgstr "Uganda"
 
 #. I18N: This is the country/chapman code for "Ukraine"
 #: ../language/_countries.php:522
-#, fuzzy
 msgid "UKR"
-msgstr "Web URL"
+msgstr "Ukrayna"
 
 #. I18N: This is the country/chapman code for "US Minor Outlying Islands"
 #: ../language/_countries.php:524
 msgid "UMI"
-msgstr ""
+msgstr "ABD Minor Outlying Adaları"
 
 #. I18N: This is the country/chapman code for "Uruguay"
 #: ../language/_countries.php:526
-#, fuzzy
 msgid "URY"
-msgstr "Web URL"
+msgstr "Uruguay"
 
 #. I18N: This is the country/chapman code for "USA"
 #: ../language/_countries.php:528
 msgid "USA"
-msgstr ""
+msgstr "Amerika Birleşik Devletleri"
 
 #. I18N: This is the country/chapman code for "Uzbekistan"
 #: ../language/_countries.php:530
 msgid "UZB"
-msgstr ""
+msgstr "Özbekistan"
 
 #. I18N: This is the country/chapman code for "Vatican City"
 #: ../language/_countries.php:532
 msgid "VAT"
-msgstr ""
+msgstr "Vatikan"
 
 #. I18N: This is the country/chapman code for "Saint Vincent and the Grenadines"
 #: ../language/_countries.php:534
 msgid "VCT"
-msgstr ""
+msgstr "Saint Vincent ve Grenadinler"
 
 #. I18N: This is the country/chapman code for "Venezuela"
 #: ../language/_countries.php:536
-#, fuzzy
 msgid "VEN"
-msgstr "Hadise"
+msgstr "Venezüella"
 
 #. I18N: This is the country/chapman code for "British Virgin Islands"
 #: ../language/_countries.php:538
 msgid "VGB"
-msgstr ""
+msgstr "İngiliz Vırgın Adası"
 
 #. I18N: This is the country/chapman code for "US Virgin Islands"
 #: ../language/_countries.php:540
 msgid "VIR"
-msgstr ""
+msgstr "ABD Vırgın Adası"
 
 #. I18N: This is the country/chapman code for "Viet Nam"
 #: ../language/_countries.php:542
-#, fuzzy
 msgid "VNM"
-msgstr "Evlilik sayısı"
+msgstr "Vietnam"
 
 #. I18N: This is the country/chapman code for "Vanuatu"
 #: ../language/_countries.php:544
 msgid "VUT"
-msgstr ""
+msgstr "Vanuatu"
 
 #. I18N: This is the country/chapman code for "West Africa"
 #: ../language/_countries.php:546
-#, fuzzy
 msgid "WAF"
-msgstr "Geçmiş Dosya Numara (AFN)"
+msgstr "Batı Afrika"
 
 #. I18N: This is the country/chapman code for "Wallis and Futuna Islands"
 #: ../language/_countries.php:548
 msgid "WLF"
-msgstr ""
+msgstr "Vallis Fununa Adaları"
 
 #. I18N: This is the country/chapman code for "Wales"
 #: ../language/_countries.php:550
 msgid "WLS"
-msgstr ""
+msgstr "Galler"
 
 #. I18N: This is the country/chapman code for "Samoa"
 #: ../language/_countries.php:552
 msgid "WSM"
-msgstr ""
+msgstr "Samoa"
 
 #. I18N: This is the country/chapman code for "Yemen"
 #: ../language/_countries.php:554
 msgid "YEM"
-msgstr ""
+msgstr "Yemen"
 
 #. I18N: This is the country/chapman code for "Yugoslavia"
 #: ../language/_countries.php:556
 msgid "YUG"
-msgstr ""
+msgstr "Yugoslavya"
 
 #. I18N: This is the country/chapman code for "South Africa"
 #: ../language/_countries.php:558
-#, fuzzy
 msgid "ZAF"
-msgstr "Geçmiş Dosya Numara (AFN)"
+msgstr "Güney Afrika"
 
 #. I18N: This is the country/chapman code for "Zaire"
 #: ../language/_countries.php:560
 msgid "ZAR"
-msgstr ""
+msgstr "Zaire"
 
 #. I18N: This is the country/chapman code for "Zambia"
 #: ../language/_countries.php:562
 msgid "ZMB"
-msgstr ""
+msgstr "Zambia"
 
 #. I18N: This is the country/chapman code for "Zimbabwe"
 #: ../language/_countries.php:564
 msgid "ZWE"
-msgstr ""
+msgstr "Zimbabve"
 
 #. I18N: This is an abbreviation for the label "Baptism", to be used on genealogy charts
 #: ../language/_facts.php:36
@@ -1681,11 +1644,6 @@ msgstr "Yazar"
 msgid "BAPL"
 msgstr "LDS vaftizi"
 
-#. I18N: This is the GEDCOM label for "Baptism"
-#: ../language/_facts.php:81
-msgid "BAPM"
-msgstr "Vaftiz"
-
 #. I18N: This is the GEDCOM label for "Baptism Date"
 #: ../language/_facts.php:83
 msgid "BAPM:DATE"
@@ -1741,11 +1699,6 @@ msgstr ""
 msgid "BASM:SOUR"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Birth"
-#: ../language/_facts.php:105
-msgid "BIRT"
-msgstr "Doğum"
-
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: ../language/_facts.php:107
 msgid "BIRT:DATE"
@@ -1770,11 +1723,6 @@ msgstr "Kutsama"
 #: ../language/_facts.php:115
 msgid "BLOB"
 msgstr "'Binary' veri nesnesi"
-
-#. I18N: This is the GEDCOM label for "Burial"
-#: ../language/_facts.php:117
-msgid "BURI"
-msgstr "Defin"
 
 #. I18N: This is the GEDCOM label for "Burial Date"
 #: ../language/_facts.php:119
@@ -1831,11 +1779,6 @@ msgstr "Karakter kümesi"
 msgid "CHIL"
 msgstr "Çocuk"
 
-#. I18N: This is the GEDCOM label for "Christening"
-#: ../language/_facts.php:141
-msgid "CHR"
-msgstr "Vaftiz"
-
 #. I18N: This is the GEDCOM label for "Christening Date"
 #: ../language/_facts.php:143
 msgid "CHR:DATE"
@@ -1850,11 +1793,6 @@ msgstr "Vaftiz eden yer "
 #: ../language/_facts.php:147
 msgid "CHR:SOUR"
 msgstr ""
-
-#. I18N: This is the GEDCOM label for "Adult Christening"
-#: ../language/_facts.php:149
-msgid "CHRA"
-msgstr "Erişkin vaftizi"
 
 #. I18N: This is the GEDCOM label for "Citizenship"
 #: ../language/_facts.php:151
@@ -1931,11 +1869,6 @@ msgstr "Orijinal kaynak giriş tarihi"
 msgid "DATE"
 msgstr "Tarih"
 
-#. I18N: This is the GEDCOM label for "Death"
-#: ../language/_facts.php:181
-msgid "DEAT"
-msgstr "Vefat"
-
 #. I18N: This is the GEDCOM label for "Death Date"
 #: ../language/_facts.php:183
 msgid "DEAT:DATE"
@@ -1966,11 +1899,6 @@ msgstr "Neslinden Olanlar İlgilendirirler"
 msgid "DEST"
 msgstr "Gidilecek yer"
 
-#. I18N: This is the GEDCOM label for "Divorce"
-#: ../language/_facts.php:195
-msgid "DIV"
-msgstr "Boşanma"
-
 #. I18N: This is the GEDCOM label for "Divorce filed"
 #: ../language/_facts.php:197
 msgid "DIVF"
@@ -1995,11 +1923,6 @@ msgstr "E-posta adresi:"
 #: ../language/_facts.php:205
 msgid "EMAL"
 msgstr "Email Adresi"
-
-#. I18N: This is the GEDCOM label for "Emigration"
-#: ../language/_facts.php:207
-msgid "EMIG"
-msgstr "İçinden göç ettiği ülke"
 
 #. I18N: This is the GEDCOM label for "LDS Endowment"
 #: ../language/_facts.php:209
@@ -2221,11 +2144,6 @@ msgstr "Fonetik"
 msgid "FORM"
 msgstr "Biçim"
 
-#. I18N: This is the GEDCOM label for "Given Names"
-#: ../language/_facts.php:297
-msgid "GIVN"
-msgstr "İsim"
-
 #. I18N: This is the GEDCOM label for "Graduation"
 #: ../language/_facts.php:299
 msgid "GRAD"
@@ -2240,11 +2158,6 @@ msgstr "Koca"
 #: ../language/_facts.php:303
 msgid "IDNO"
 msgstr "GEDCOM varitabanı içindeki tanıtım numarası"
-
-#. I18N: This is the GEDCOM label for "Immigration"
-#: ../language/_facts.php:305
-msgid "IMMI"
-msgstr "İçine göç ettiği ülke"
 
 #. I18N: This is the GEDCOM label for "Latitude"
 #: ../language/_facts.php:307
@@ -2295,11 +2208,6 @@ msgstr "Evlilik kontratı"
 #: ../language/_facts.php:325
 msgid "MARL"
 msgstr "Evlilik Lisansı"
-
-#. I18N: This is the GEDCOM label for "Marriage"
-#: ../language/_facts.php:327
-msgid "MARR"
-msgstr "Nikâh"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: ../language/_facts.php:329
@@ -2605,11 +2513,6 @@ msgstr "Gönderen"
 #: ../language/_facts.php:449
 msgid "SUBN"
 msgstr "Teslim"
-
-#. I18N: This is the GEDCOM label for "Surname"
-#: ../language/_facts.php:451
-msgid "SURN"
-msgstr "Soy isim"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: ../language/_facts.php:453
@@ -2965,11 +2868,6 @@ msgstr "Erkek veya Kız yeğenin vaftizi"
 #: ../language/_facts.php:593
 msgid "_CHR_SIBL"
 msgstr "Kardeşin vaftizi"
-
-#. I18N: This is the GEDCOM label for "Common Law Marriage"
-#: ../language/_facts.php:595
-msgid "_COML"
-msgstr "Umumi Hukuk Evliliği"
 
 #. I18N: This is the GEDCOM label for "Cremation of a child"
 #: ../language/_facts.php:597
@@ -3475,11 +3373,6 @@ msgstr "Kalıcı numarası"
 #: ../language/_facts.php:797
 msgid "_SCBK"
 msgstr "Kupür"
-
-#. I18N: This is the GEDCOM label for "Separated"
-#: ../language/_facts.php:799
-msgid "_SEPR"
-msgstr "Ayrılmış"
 
 #. I18N: This is the GEDCOM label for "Slide Show"
 #: ../language/_facts.php:801

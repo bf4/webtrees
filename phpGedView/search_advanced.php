@@ -220,7 +220,7 @@ print_header($pgv_lang["advanced_search"]);
 					</tr>
 					<tr>
 						<td class="list_label">
-							<?php print $factarray["GIVN"]; ?>
+							<?php echo i18n::translate('GIVN'); ?>
 						</td>
 						<td class="list_value">
 							<input type="text" name="values[<?php print $j; ?>]" value="<?php print $controller->getValue($controller->getIndex('FAMC:HUSB:NAME:GIVN:'.$fatherGivnOption)); ?>" />
@@ -235,7 +235,7 @@ print_header($pgv_lang["advanced_search"]);
 					<tr>
 						<?php $j++; ?>
 						<td class="list_label">
-							<?php print $factarray["SURN"]; ?>
+							<?php echo i18n::translate('SURN'); ?>
 						</td>
 						<td class="list_value">
 							<input type="text" name="values[<?php print $j; ?>]" value="<?php print $controller->getValue($controller->getIndex('FAMC:HUSB:NAME:SURN:'.$fatherSurnOption)); ?>" />
@@ -257,7 +257,7 @@ print_header($pgv_lang["advanced_search"]);
 					</tr>
 					<tr>
 						<td class="list_label">
-							<?php print $factarray["GIVN"]; ?>
+							<?php echo i18n::translate('GIVN'); ?>
 						</td>
 						<td class="list_value">
 							<input type="text" name="values[<?php print $j; ?>]" value="<?php print $controller->getValue($controller->getIndex('FAMC:WIFE:NAME:GIVN:'.$motherGivnOption)); ?>" />
@@ -272,7 +272,7 @@ print_header($pgv_lang["advanced_search"]);
 					</tr>
 					<tr>
 						<td class="list_label">
-							<?php print $factarray["SURN"]; ?>
+							<?php echo i18n::translate('SURN'); ?>
 						</td>
 						<td class="list_value">
 							<input type="text" name="values[<?php print $j; ?>]" value="<?php print $controller->getValue($controller->getIndex('FAMC:WIFE:NAME:SURN:'.$motherSurnOption)); ?>" />

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 11:32-0000\n"
+"POT-Creation-Date: 2010-02-28 12:24-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -15,6 +15,64 @@ msgstr ""
 "X-Poedit-KeywordsList: translate;plural:1,2\n"
 "Plural-Forms: nplurals = 6; plural = n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : (n % 100 >= 3 && n % 100 <= 10) ? 3 : (n % 100 >= 11 && n % 100 <= 99) || (n % 100 == 1) || (n % 100 ==2) ? 4 : 5;\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../branches.php:32
+#: ../calendar.php:253
+msgid "MARR"
+msgstr "زواج"
+
+#: ../branches.php:70
+msgid "SURN"
+msgstr "إسم العائلة"
+
+#: ../calendar.php:238
+msgid "BIRT"
+msgstr "الوِدة"
+
+#: ../calendar.php:241
+msgid "CHR"
+msgstr ""
+
+#: ../calendar.php:244
+msgid "CHRA"
+msgstr ""
+
+#: ../calendar.php:247
+msgid "BAPM"
+msgstr ""
+
+#: ../calendar.php:250
+msgid "_COML"
+msgstr ""
+
+#: ../calendar.php:256
+msgid "_SEPR"
+msgstr ""
+
+#: ../calendar.php:259
+msgid "DIV"
+msgstr ""
+
+#: ../calendar.php:262
+msgid "DEAT"
+msgstr "الموت"
+
+#: ../calendar.php:265
+msgid "BURI"
+msgstr ""
+
+#: ../calendar.php:268
+msgid "IMMI"
+msgstr ""
+
+#: ../calendar.php:271
+msgid "EMIG"
+msgstr ""
+
+#: ../search_advanced.php:223
+#: ../search_advanced.php:260
+msgid "GIVN"
+msgstr "اِسم الخاص"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
@@ -175,13 +233,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Afghanistan"
 #: ../language/_countries.php:42
-#, fuzzy
 msgid "AFG"
 msgstr "عمر"
 
 #. I18N: This is the country/chapman code for "Angola"
 #: ../language/_countries.php:44
-#, fuzzy
 msgid "AGO"
 msgstr "عمر"
 
@@ -212,13 +268,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "United Arab Emirates"
 #: ../language/_countries.php:56
-#, fuzzy
 msgid "ARE"
 msgstr "عمر"
 
 #. I18N: This is the country/chapman code for "Argentina"
 #: ../language/_countries.php:58
-#, fuzzy
 msgid "ARG"
 msgstr "عمر"
 
@@ -244,7 +298,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Antigua and Barbuda"
 #: ../language/_countries.php:68
-#, fuzzy
 msgid "ATG"
 msgstr "عمر"
 
@@ -260,7 +313,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Azerbaijan"
 #: ../language/_countries.php:74
-#, fuzzy
 msgid "AZE"
 msgstr "عمر"
 
@@ -611,7 +663,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Georgia"
 #: ../language/_countries.php:214
-#, fuzzy
 msgid "GEO"
 msgstr "عمر"
 
@@ -627,7 +678,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Guinea"
 #: ../language/_countries.php:220
-#, fuzzy
 msgid "GIN"
 msgstr "اِسم الخاص"
 
@@ -883,7 +933,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Morocco"
 #: ../language/_countries.php:322
-#, fuzzy
 msgid "MAR"
 msgstr "زواج"
 
@@ -1259,13 +1308,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "USSR"
 #: ../language/_countries.php:472
-#, fuzzy
 msgid "SUN"
 msgstr "إسم العائلة"
 
 #. I18N: This is the country/chapman code for "Suriname"
 #: ../language/_countries.php:474
-#, fuzzy
 msgid "SUR"
 msgstr "إسم العائلة"
 
@@ -1599,11 +1646,6 @@ msgstr ""
 msgid "BAPL"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Baptism"
-#: ../language/_facts.php:81
-msgid "BAPM"
-msgstr ""
-
 #. I18N: This is the GEDCOM label for "Baptism Date"
 #: ../language/_facts.php:83
 msgid "BAPM:DATE"
@@ -1659,11 +1701,6 @@ msgstr ""
 msgid "BASM:SOUR"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Birth"
-#: ../language/_facts.php:105
-msgid "BIRT"
-msgstr "الوِدة"
-
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: ../language/_facts.php:107
 msgid "BIRT:DATE"
@@ -1687,11 +1724,6 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Binary Data Object"
 #: ../language/_facts.php:115
 msgid "BLOB"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Burial"
-#: ../language/_facts.php:117
-msgid "BURI"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Burial Date"
@@ -1749,11 +1781,6 @@ msgstr ""
 msgid "CHIL"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Christening"
-#: ../language/_facts.php:141
-msgid "CHR"
-msgstr ""
-
 #. I18N: This is the GEDCOM label for "Christening Date"
 #: ../language/_facts.php:143
 msgid "CHR:DATE"
@@ -1767,11 +1794,6 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Christening Source"
 #: ../language/_facts.php:147
 msgid "CHR:SOUR"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Adult Christening"
-#: ../language/_facts.php:149
-msgid "CHRA"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Citizenship"
@@ -1849,11 +1871,6 @@ msgstr ""
 msgid "DATE"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Death"
-#: ../language/_facts.php:181
-msgid "DEAT"
-msgstr "الموت"
-
 #. I18N: This is the GEDCOM label for "Death Date"
 #: ../language/_facts.php:183
 msgid "DEAT:DATE"
@@ -1884,11 +1901,6 @@ msgstr ""
 msgid "DEST"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Divorce"
-#: ../language/_facts.php:195
-msgid "DIV"
-msgstr ""
-
 #. I18N: This is the GEDCOM label for "Divorce filed"
 #: ../language/_facts.php:197
 msgid "DIVF"
@@ -1912,11 +1924,6 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../language/_facts.php:205
 msgid "EMAL"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Emigration"
-#: ../language/_facts.php:207
-msgid "EMIG"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "LDS Endowment"
@@ -2139,11 +2146,6 @@ msgstr ""
 msgid "FORM"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Given Names"
-#: ../language/_facts.php:297
-msgid "GIVN"
-msgstr "اِسم الخاص"
-
 #. I18N: This is the GEDCOM label for "Graduation"
 #: ../language/_facts.php:299
 msgid "GRAD"
@@ -2157,11 +2159,6 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Identification Number"
 #: ../language/_facts.php:303
 msgid "IDNO"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Immigration"
-#: ../language/_facts.php:305
-msgid "IMMI"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Latitude"
@@ -2213,11 +2210,6 @@ msgstr ""
 #: ../language/_facts.php:325
 msgid "MARL"
 msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage"
-#: ../language/_facts.php:327
-msgid "MARR"
-msgstr "زواج"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: ../language/_facts.php:329
@@ -2523,11 +2515,6 @@ msgstr ""
 #: ../language/_facts.php:449
 msgid "SUBN"
 msgstr ""
-
-#. I18N: This is the GEDCOM label for "Surname"
-#: ../language/_facts.php:451
-msgid "SURN"
-msgstr "إسم العائلة"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: ../language/_facts.php:453
@@ -2882,11 +2869,6 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Christening of sibling"
 #: ../language/_facts.php:593
 msgid "_CHR_SIBL"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Common Law Marriage"
-#: ../language/_facts.php:595
-msgid "_COML"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Cremation of a child"
@@ -3392,11 +3374,6 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Scrapbook"
 #: ../language/_facts.php:797
 msgid "_SCBK"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Separated"
-#: ../language/_facts.php:799
-msgid "_SEPR"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Slide Show"

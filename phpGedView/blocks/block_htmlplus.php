@@ -50,7 +50,7 @@ $PGV_BLOCKS['print_htmlplus_block']['config']		= array(
 );
 
 function print_htmlplus_block($block=true, $config='', $side, $index) {
-	global $ctype, $factarray, $GEDCOM, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_ID_NUMBERS;
+	global $ctype, $GEDCOM, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_ID_NUMBERS;
 	// config sanity check
 	if (empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if (!isset($config[$k])){$config[$k] = $v;}}}
 
@@ -181,7 +181,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 
 function print_htmlplus_block_config($config)
 {
-	global $pgv_lang, $factarray, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings, $GEDCOM;
+	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings, $GEDCOM;
 	$useFCK = file_exists(PGV_ROOT.'modules/FCKeditor/fckeditor.php');
 	$templates = array();
 	$d = dir('blocks/');
@@ -213,7 +213,7 @@ function print_htmlplus_block_config($config)
 	$config['title'] = htmlentities($config['title'], ENT_COMPAT, 'UTF-8');
 	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_title_help', 'qm_ah', '', false, true)
-		."{$factarray['TITL']}</td>\n"
+		."{$pgv_lang['TITL']}</td>\n"
 		."\t\t<td class=\"optionbox\"><input type=\"text\" name=\"title\" size=\"30\" value=\"{$config['title']}\" /></td>\n\t</tr>\n"
 	;
 
