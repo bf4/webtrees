@@ -243,6 +243,7 @@ textarea#NOTE {
 	height:14.0em;
 	overflow:scroll;
 }
+
 .cens_data table {
 	width: 100%;
 	border: 0;
@@ -252,8 +253,16 @@ textarea#NOTE {
 
 .cens_data input {
 	padding: 0.1em;
-	margin-top: -0.5em;
-	margin-bottom: 0.1em;
+	margin-top: 0em;
+	margin-bottom: 0.2em;
+	margin-left:0;
+	margin-right:0;
+}
+
+.cens_data button {
+	padding: 0em;
+	margin-top: -0.18em;
+	height: 1.5em;
 }
 
 /* xxxxxxxxxx - module ===================================================== */

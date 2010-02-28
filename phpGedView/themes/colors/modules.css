@@ -51,7 +51,7 @@
 	float: left;
 	margin: 0.5em 0 0 0.5em;
 	width: 23.1em;
-	height: 33.9em;  /* customize height maybe change to 37.0 */
+	height: 34.0em;  /* customize height maybe change to 37.0 */
 	overflow: auto; 
 	/*border: 1px solid red; */
 }
@@ -203,13 +203,13 @@ a.linka {
 	/*border: 0.3em outset;*/
 	margin-bottom: 0.3em;
 	margin-right: -0.17em;
-width: 50.7em;
+	width: 50.7em;
 }
 .cens_text span {
 	margin: 0 1em 0 0.3em;
 }
 textarea#NOTE {
-	height: 20.6em;
+	height: 18.2em;
 	width: 98.5%;
 	overflow: auto;
 }
@@ -242,7 +242,7 @@ textarea#NOTE {
 /* Census data Input area */
 .cens_data {
 	width:100%;
-	height:12.46em;
+	height:14.46em;
 	overflow:auto;
 	/* height:14.0em;
 	overflow:scroll; */
@@ -252,6 +252,16 @@ textarea#NOTE {
 	border: 0;
 	margin: 0;
 	padding: 0;
+}
+
+.cens_data input {
+	padding: 0.15em;
+	margin-top: 0em;
+	margin-bottom: -0.3em;
+}
+
+.cens_data button {
+	padding: 0em;
 }
 
 /* xxxxxxxxxx - module ===================================================== */
