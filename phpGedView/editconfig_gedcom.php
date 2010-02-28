@@ -1534,21 +1534,42 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_layout_conf"]."\" onclick=
 			<input type="hidden" name="NEW_SHOW_RELATIVES_EVENTS" value="<?php echo $SHOW_RELATIVES_EVENTS; ?>" />
 			<table>
 <?php
-$previous="_DEAT_";
-foreach ($factarray as $factkey=>$factlabel) {
-	$f6=substr($factkey, 0, 6);
-	if ($f6=="_BIRT_" or $f6=="_MARR_" or $f6=="_DEAT_" or $f6=="_FAMC_") {
-		if ($f6=="_BIRT_" or $f6=="_FAMC_") print "<tr>";
-		if ($f6=="_MARR_" and $previous!="_BIRT_") print "<tr><td>&nbsp;</td>";
-		if ($f6=="_DEAT_" and $previous=="_DEAT_") print "<tr><td>&nbsp;</td>";
-		if ($f6=="_DEAT_" and $previous!="_MARR_") print "<td>&nbsp;</td>";
-		print "\n<td><input type=\"checkbox\" name=\"SHOW_RELATIVES_EVENTS_checkbox\" value=\"".$factkey."\"";
-		if (strstr($SHOW_RELATIVES_EVENTS, $factkey)) print " checked=\"checked\"";
-		print " onchange=\"var old=document.configform.NEW_SHOW_RELATIVES_EVENTS.value; if (this.checked) old+=','+this.value; else old=old.replace(/".$factkey."/g,''); old=old.replace(/[,]+/gi,','); old=old.replace(/^[,]/gi,''); old=old.replace(/[,]$/gi,''); document.configform.NEW_SHOW_RELATIVES_EVENTS.value=old\" ";
-		print " /> ".$factlabel."</td>";
-		if ($f6=="_DEAT_" || $f6=="_FAMC_") print "</tr>";
-		$previous=$f6;
+$rel_events=array(
+	array(null,         null,         '_DEAT_SPOU'),
+	array('_BIRT_CHIL', '_MARR_CHIL', '_DEAT_CHIL'),
+	array('_BIRT_GCHI', '_MARR_GCHI', '_DEAT_GCHI'),
+	array('_BIRT_GGCH', '_MARR_GGCH', '_DEAT_GGCH'),
+	array(null,         '_MARR_FATH', '_DEAT_FATH'),
+	array(null,         '_MARR_FAMC', null),
+	array(null,         '_MARR_MOTH', '_DEAT_MOTH'),
+	array('_BIRT_SIBL', '_MARR_SIBL', '_DEAT_SIBL'),
+	array('_BIRT_HSIB', '_MARR_HSIB', '_DEAT_HSIB'),
+	array('_BIRT_NEPH', '_MARR_NEPH', '_DEAT_NEPH'),
+	array(null,         null,         '_DEAT_GPAR'),
+	array(null,         null,         '_DEAT_GGPA'),
+	array('_BIRT_FSIB', '_MARR_FSIB', '_DEAT_FSIB'),
+	array('_BIRT_MSIB', '_MARR_MSIB', '_DEAT_MSIB'),
+	array('_BIRT_COUS', '_MARR_COUS', '_DEAT_COUS'),
+	array('_FAMC_EMIG', null,         null),
+	array('_FAMC_RESI', null,         null),
+);
+foreach ($rel_events as $row) {
+	echo '<tr>';
+	foreach ($row as $col) {
+		echo '<td>';
+		if (is_null($col)) {
+			echo '&nbsp;';
+		} else {
+			echo "<input type=\"checkbox\" name=\"SHOW_RELATIVES_EVENTS_checkbox\" value=\"".$col."\"";
+			if (strstr($SHOW_RELATIVES_EVENTS, $col)) {
+				echo " checked=\"checked\"";
+			}
+			echo " onchange=\"var old=document.configform.NEW_SHOW_RELATIVES_EVENTS.value; if (this.checked) old+=','+this.value; else old=old.replace(/".$col."/g,''); old=old.replace(/[,]+/gi,','); old=old.replace(/^[,]/gi,''); old=old.replace(/[,]$/gi,''); document.configform.NEW_SHOW_RELATIVES_EVENTS.value=old\" /> ";
+			echo i18n::translate($col);
+		}
+		echo '</td>';
 	}
+	echo '</td>';
 }
 ?>
 			</table>

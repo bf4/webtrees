@@ -136,12 +136,7 @@ if ($action!="choose") {
 								$skip1[] = $i;
 								$skip2[] = $j;
 								$equal_count++;
-								echo "<tr><td>";
-								if (isset($factarray[$fact1["fact"]])) {
-									echo $factarray[$fact1["fact"]];
-								} else {
-									echo $fact1["fact"];
-								}
+								echo "<tr><td>", i18n::translate($fact1['fact']);
 								echo "<input type=\"hidden\" name=\"keep1[]\" value=\"", $i, "\" /></td>\n<td>", nl2br($fact1["subrec"]), "</td></tr>\n";
 							}
 						}
