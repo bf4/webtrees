@@ -8,7 +8,7 @@ File->Preferences->Parsers->PHP->Edit
 
 Language: PHP
 List of extensions: *.php
-Parser command: xgettext --force-po -o %o %C %K %F -L php
+Parser command: xgettext --force-po -o %o %C %K %F -L php -cI18N
 An item in keywords list: -k%k
 An item in input files list: %f
 Source code charset: --from-code=%c
