@@ -47,7 +47,7 @@ class ra_guide extends ra_form {
 	{
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		// Obtain the global vars needed
-		global $pgv_lang, $factarray, $PGV_DXHTMLTAB_COLORS;
+		global $pgv_lang, $PGV_DXHTMLTAB_COLORS;
 		$out = '';
 		ob_start();
 		require_once PGV_ROOT.'js/dhtmlXTabbar.js.htm';
@@ -89,7 +89,7 @@ class ra_guide extends ra_form {
 						<input type="hidden" value="" name="PLACE"/>
 						<input type="hidden" value="" name="PARTOF"/>
 					
-						<?php print $factarray['PLAC']; ?> <input type="text" value="" name="prePLACE" /><br />
+						<?php print i18n::translate('PLAC'); ?> <input type="text" value="" name="prePLACE" /><br />
 						<?php print $pgv_lang["part_of"]; ?> <input type="text" value="" name="prePARTOF" /><br />
 						<input type="submit" value="<?php print $pgv_lang['search']; ?>" />
 					</form>

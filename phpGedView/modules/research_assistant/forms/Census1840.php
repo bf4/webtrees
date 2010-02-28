@@ -80,7 +80,7 @@ class Census1840 extends ra_form {
 	 * override method from ra_form.php
 	 */
     function simpleCitationForm($citation) {
-		global $pgv_lang, $factarray;
+		global $pgv_lang;
 		if (empty($_POST['data']))
 			$data = array();
 		if (empty($_REQUEST['row']))
@@ -105,7 +105,7 @@ class Census1840 extends ra_form {
 
 //        Start of Table
 		$out = '<tr>
-			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
+			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).i18n::translate('OBJE').'</td>
 			<td class="optionbox" colspan="5"><input type="hidden" name="OBJE" id="OBJE" value="'.$citation['ts_obje'].'"/>';
 			$out .= "<div id=\"censusPicDiv\" style=\"display";
 			if(!empty($citation['ts_obje']))
