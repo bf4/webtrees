@@ -1622,7 +1622,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_yob.setAttribute('value', usdob);
 				txtInp_yob.style.color=txtcolor;
 				txtInp_yob.style.fontSize="10px";
-				txtInp_yob.style.width="4.5em";
+				txtInp_yob.style.width="5em";
 		// 12. Age_2 -----------------------------------------------------------
 			var txtInp_age2 = document.createElement('input');
 				txtInp_age2.setAttribute('type', 'text');
@@ -2181,12 +2181,12 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 			var txtInp_DOB = document.createElement('input');
 				txtInp_DOB.setAttribute('type', 'text');
 				txtInp_DOB.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_68');
-				txtInp_DOB.setAttribute('size', '8');
+				txtInp_DOB.setAttribute('size', '9');
 				txtInp_DOB.setAttribute('maxlength', '20');
 				txtInp_DOB.setAttribute('value', dob); 
 				txtInp_DOB.style.color=txtcolor;
 				txtInp_DOB.style.fontSize="10px";
-				txtInp_DOB.style.width="5.4em";
+				txtInp_DOB.style.width="5.6em";
 				txtInp_DOB.type = "hidden";
 		// 69. DOM ------------------------------------------------------------
 			var txtInp_DOM = document.createElement('input');
@@ -2246,9 +2246,14 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 
 		// Extra Cells for Navigation =========================================
 		// 74. Extra 1. Delete Row Button -----------------------------------------
-			var btnEl = document.createElement('input');
-				btnEl.setAttribute('type', 'button');
-				btnEl.setAttribute('value', 'x');
+			//var btnEl = document.createElement('input');
+			//	btnEl.setAttribute('type', 'button');
+			//	btnEl.setAttribute('value', 'x');
+			//	btnEl.onclick = function () {deleteCurrentRow(this)};
+			var btnEl = document.createElement('button');
+			  var btnEltext = document.createTextNode('X');
+				btnEl.style.color='red';
+				btnEl.appendChild(btnEltext);
 				btnEl.onclick = function () {deleteCurrentRow(this)};
 		// 75. Extra 2. Insert row Radio button -----------------------------------
 			var raEl;
