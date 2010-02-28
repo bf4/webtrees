@@ -1935,30 +1935,6 @@ class IndividualControllerRoot extends BaseController {
 		if (isset($saved_show_full)) $show_full = $saved_show_full;
 	}
 
-
-	function print_research_tab() {
-		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $templefacts, $nondatefacts, $nonplacfacts;
-		global $LANGUAGE, $lang_short_cut;
-		if (file_exists(PGV_ROOT.'modules/research_assistant/research_assistant.php') && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
-			if (!$this->indi->canDisplayDetails()) { ?>
-				<table class="facts_table">
-			<tr><td class="facts_value">
-			<?php print_privacy_error($CONTACT_EMAIL); ?>
-			</td></tr>
-			</table>
-			<br />
-			<?php
-			} else {
-				require_once PGV_ROOT.'modules/research_assistant/research_assistant.php';
-				$mod = new ra_functions();
-				$mod->init();
-				$out = $mod->tab($this->indi);
-				print $out;
-			}
-		}
-		else print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>\n";
-	}
-
 	function print_map_tab() {
 		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $LANGUAGE;

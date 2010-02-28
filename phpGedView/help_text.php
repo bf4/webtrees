@@ -30,7 +30,7 @@
 define('PGV_SCRIPT_NAME', 'help_text.php');
 require './config.php';
 
-loadLangFile('pgv_help, pgv_admin, pgv_editor, research_assistant:lang, googlemap:lang, googlemap:help_text, lightbox:lang, lightbox:help_text, sitemap:lang, sitemap:help_text');
+loadLangFile('pgv_help, pgv_admin, pgv_editor, googlemap:lang, googlemap:help_text, lightbox:lang, lightbox:help_text, sitemap:lang, sitemap:help_text');
 
 require PGV_ROOT.'includes/help_text_vars.php';
 

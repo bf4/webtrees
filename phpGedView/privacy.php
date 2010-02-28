@@ -100,19 +100,6 @@ $SHOW_SOURCES = $PRIV_PUBLIC;
 $MAX_ALIVE_AGE      = "120";
 
 /**
- * Set the access level for the research assistant add-on module
- *
- * Sets the access level required to view the research assistant add-on module.
- * Can be one of the PRIV access levels:
- *		- <var>$PRIV_HIDE</var>
- *		- <var>$PRIV_PUBLIC</var>
- *		- <var>$PRIV_USER</var>
- *		- <var>$PRIV_NONE</var>
- * The default settings is set to <var>$PRIV_USER</var> allowing only authenticated users to have access.
- * @global integer $SHOW_RESEARCH_ASSISTANT
- */
-$SHOW_RESEARCH_ASSISTANT = $PRIV_USER;
-/**
  * Set the access level for the clippings cart
  *
  * Sets the access level required to view the clippings cart.

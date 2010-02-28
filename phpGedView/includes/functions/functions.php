@@ -297,7 +297,7 @@ function load_privacy_file($ged_id=PGV_GED_ID) {
 
 	// Load the privacy settings into global scope
 	global $SHOW_DEAD_PEOPLE, $SHOW_LIVING_NAMES, $SHOW_SOURCES, $MAX_ALIVE_AGE;
-	global $SHOW_RESEARCH_ASSISTANT, $ENABLE_CLIPPINGS_CART, $SHOW_MULTISITE_SEARCH;
+	global $ENABLE_CLIPPINGS_CART, $SHOW_MULTISITE_SEARCH;
 	global $USE_RELATIONSHIP_PRIVACY, $MAX_RELATION_PATH_LENGTH, $CHECK_MARRIAGE_RELATIONS;
 	global $PRIVACY_BY_YEAR, $PRIVACY_BY_RESN, $SHOW_PRIVATE_RELATIONSHIPS;
 	global $person_privacy, $user_privacy, $global_facts, $person_facts;

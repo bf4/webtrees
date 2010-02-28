@@ -138,14 +138,6 @@ if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 }
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
 
-// Print the tasks table
-if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL && file_exists(PGV_ROOT.'modules/research_assistant/research_assistant.php')) {
-	require_once PGV_ROOT.'modules/research_assistant/research_assistant.php';
-	$mod=new ra_functions();
-	$mod->Init();
-	echo $mod->getSourceTasks($controller->sid, $controller->source->getFullName());
-}
-
 // Individuals linked to this source
 if ($controller->source->countLinkedIndividuals()) {
 	print_indi_table($controller->source->fetchLinkedIndividuals(), $controller->source->getFullName());
