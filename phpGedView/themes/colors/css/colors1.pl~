@@ -1,0 +1,263 @@
+#!/usr/bin/perl
+$fname = "ash.css";
+#  Updated Feb 17, 2010
+#
+#  aquamarine
+$ofile = "aquamarine.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+2385c2
+    $row =~ s/Ash Theme              /Aquamerine Theme       /; #  Title
+    $row =~ s/5d6779/007e94/; 						#  Header
+    $row =~ s/background:#2a2b2d/background:#085360/; 		#  Toplinks
+    $row =~ s/ededee/dcf2f9/; 						#  Base
+    $row =~ s/494949/696969/; 						#  D-Text
+    $row =~ s/ffffff/ffffff/; 						#  L-Text
+    $row =~ s/2f416f/000000/; 						#  Links
+    $row =~ s/2a2b2d/fc6d1d/; 						#  Alerts
+    print OFILE $row;  
+} 
+close (IFILE);
+close (OFILE);
+
+#  belgianchocolate
+$ofile = "belgianchocolate.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Belgian Chocolate Theme/; #  Title
+    $row =~ s/5d6779/971702/; 						#  Header
+    $row =~ s/background:#2a2b2d/background:#331900/; 			#  Toplinks
+    $row =~ s/ededee/f6edd5/; 									#  Base
+    $row =~ s/494949/494949/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/6c420e/; 									#  Links
+    $row =~ s/2a2b2d/971702/; 									#  Alerts
+    print OFILE $row;  
+} 
+close (IFILE);
+close (OFILE);
+
+#  bluelagoon
+$ofile = "bluelagoon.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Blue Lagoon Theme      /; #  Title
+    $row =~ s/5d6779/5ab5ee/; 									#  Header
+    $row =~ s/background:#2a2b2d/background:#2385c2/; 			#  Toplinks
+    $row =~ s/ededee/e6f5ff/; 									#  Base
+    $row =~ s/494949/494949/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/027ac6/; 									#  Links
+    $row =~ s/2a2b2d/2385c2/; 									#  Alerts
+    print OFILE $row;  
+} 
+close (IFILE);
+close (OFILE);
+
+#  bluemarine
+$ofile = "bluemarine.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Blue Marine Theme      /; #  Title
+    $row =~ s/5d6779/6598cb/; 									#  Header
+    $row =~ s/background:#2a2b2d/background:#98badd/; 			#  Toplinks
+    $row =~ s/ededee/e0e7ff/; 									#  Base
+    $row =~ s/494949/000000/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/336699/; 									#  Links
+    $row =~ s/2a2b2d/6598cb/; 									#  Alerts
+    print OFILE $row;   
+} 
+close (IFILE);
+close (OFILE);
+
+#  coldday
+$ofile = "coldday.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Cold Day Theme         /; #  Title
+    $row =~ s/5d6779/1a1575/; 									#  Header
+    $row =~ s/background:#2a2b2d/background:#4d91ff/; 			#  Toplinks
+    $row =~ s/ededee/e6e1ff/; 									#  Base
+    $row =~ s/494949/000000/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/434f8c/; 									#  Links
+    $row =~ s/2a2b2d/4d91ff/; 									#  Alerts
+    print OFILE $row;   
+} 
+close (IFILE);
+close (OFILE);
+
+#  greembeam,
+$ofile = "greenbeam.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Green Beam Theme       /; #  Title
+    $row =~ s/5d6779/03961e/; 									#  Header
+    $row =~ s/background:#2a2b2d/background:#7be000/; 			#  Toplinks
+    $row =~ s/ededee/f1f0f4/; 									#  Base
+    $row =~ s/494949/494949/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/0c7a00/; 									#  Links
+    $row =~ s/2a2b2d/03961e/; 									#  Alerts
+    print OFILE $row;   
+} 
+close (IFILE);
+close (OFILE);
+
+#  mediterraino
+$ofile = "mediterraino.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Mediterriano Theme     /; #  Title
+    $row =~ s/5d6779/a30f42/; 									#  Header
+    $row =~ s/background:#2a2b2d/background:#fc6d1d/; 			#  Toplinks
+    $row =~ s/ededee/fef9dc/; 									#  Base
+    $row =~ s/494949/494949/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/a9290a/; 									#  Links
+    $row =~ s/2a2b2d/fc6d1d/; 									#  Alerts
+    print OFILE $row;   
+} 
+close (IFILE);
+close (OFILE);
+
+#  mercury
+$ofile = "mercury.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Mercury Theme          /; #  Title
+    $row =~ s/5d6779/d4d4d4/; 						#  Header
+    $row =~ s/background:#2a2b2d/background:#a9adbc/; 					#  Toplinks
+    $row =~ s/ededee/f0f2f5/; 									#  Base
+    $row =~ s/494949/707070/; 									#  D-Text
+    $row =~ s/ffffff/707070/; 									#  L-Text
+    $row =~ s/2f416f/3f728d/; 									#  Links
+    $row =~ s/2a2b2d/a9adbc/; 									#  Alerts
+    print OFILE $row;   
+} 
+close (IFILE);
+close (OFILE);
+
+#  nocturnal
+$ofile = "nocturnal.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Nocturnal Theme        /; #  Title
+    $row =~ s/5d6779/0a2352/; 						#  Header
+    $row =~ s/background:#2a2b2d/background:#9fa8d5/; 					#  Toplinks
+    $row =~ s/ededee/e0e1f0/; 									#  Base
+    $row =~ s/494949/494949/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/5b5faa/; 									#  Links
+    $row =~ s/2a2b2d/0a2352/; 									#  Alerts
+    print OFILE $row;   
+} 
+close (IFILE);
+close (OFILE);
+
+#  olivia
+$ofile = "olivia.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Olivia Theme           /; #  Title
+    $row =~ s/5d6779/7db323/; 						#  Header
+    $row =~ s/background:#2a2b2d/background:#b5d52a/; 					#  Toplinks
+    $row =~ s/ededee/eef9dc/; 									#  Base
+    $row =~ s/494949/191a19/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/6a9915/; 									#  Links
+    $row =~ s/2a2b2d/fc6d1d/; 									#  Alerts
+    print OFILE $row;   
+} 
+close (IFILE);
+close (OFILE);
+
+#  pinkplastic
+$ofile = "pinkplastic.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Pink Plastic Theme     /; #  Title
+    $row =~ s/5d6779/f41063/; 						#  Header
+    $row =~ s/background:#2a2b2d/background:#f391c6/; 					#  Toplinks
+    $row =~ s/ededee/fbdaed/; 									#  Base
+    $row =~ s/494949/7d7373/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/1b1a13/; 									#  Links
+    $row =~ s/2a2b2d/fc6d1d/; 									#  Alerts
+    print OFILE $row;   
+} 
+close (IFILE);
+close (OFILE);
+
+#  shinnytomato
+$ofile = "shinnytomato.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Shinny Tomato Theme    /; #  Title
+    $row =~ s/5d6779/f21107/; 						#  Header
+    $row =~ s/background:#2a2b2d/background:#a1443a/; 					#  Toplinks
+    $row =~ s/ededee/f0eaf0/; 									#  Base
+    $row =~ s/494949/515d52/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/c70000/; 									#  Links
+    $row =~ s/2a2b2d/fc6d1d/; 									#  Alerts
+    print OFILE $row;   
+} 
+close (IFILE);
+close (OFILE);
+
+# tealtop
+$ofile = "tealtop.css";
+open (IFILE,$fname) || die "Can't Open File: $fname\n";
+open (OFILE,">$ofile") || die "Can't Open File: $ofile\n";
+
+while ($row = <IFILE>) {
+
+    $row =~ s/Ash Theme              /Teal Top Theme         /; #  Title
+    $row =~ s/5d6779/34775a/; 						#  Header
+    $row =~ s/background:#2a2b2d/background:#52bf90/; 					#  Toplinks
+    $row =~ s/ededee/d2f4e6/; 									#  Base
+    $row =~ s/494949/2d2d2d/; 									#  D-Text
+    $row =~ s/ffffff/ffffff/; 									#  L-Text
+    $row =~ s/2f416f/1b5f41/; 									#  Links
+    $row =~ s/2a2b2d/fc6d1d/; 									#  Alerts
+    print OFILE $row;   
+} 
+close (IFILE);
+close (OFILE);
