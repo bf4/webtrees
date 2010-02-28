@@ -1124,7 +1124,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 * @param int    $line  The line number in the GEDCOM record where this media item belongs
 */
 function show_media_form($pid, $action = "newentry", $filename = "", $linktoid = "", $level = 1, $line = 0) {
-	global $pgv_lang, $factarray, $TEXT_DIRECTION, $WORD_WRAPPED_NOTES, $ADVANCED_NAME_FACTS;
+	global $pgv_lang, $TEXT_DIRECTION, $WORD_WRAPPED_NOTES, $ADVANCED_NAME_FACTS;
 	global $pgv_changes, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
 	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH, $NO_UPDATE_CHAN;
 
@@ -1424,7 +1424,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 					add_simple_tag($sourceLevel ." SOUR ". $sourceSOUR);
 					add_simple_tag(($sourceLevel+1) ." PAGE ". $sourcePAGE);
 					add_simple_tag(($sourceLevel+2) ." TEXT ". $sourceTEXT);
-					add_simple_tag(($sourceLevel+2) ." DATE ". $sourceDATE, "", $factarray["DATA:DATE"]);
+					add_simple_tag(($sourceLevel+2) ." DATE ". $sourceDATE, "", i18n::translate('DATA:DATE'));
 					add_simple_tag(($sourceLevel+1) ." QUAY ". $sourceQUAY);
 					$sourceSOUR = "";
 				}
@@ -1472,7 +1472,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			add_simple_tag($sourceLevel ." SOUR ". $sourceSOUR);
 			add_simple_tag(($sourceLevel+1) ." PAGE ". $sourcePAGE);
 			add_simple_tag(($sourceLevel+2) ." TEXT ". $sourceTEXT);
-			add_simple_tag(($sourceLevel+2) ." DATE ". $sourceDATE, "", $factarray["DATA:DATE"]);
+			add_simple_tag(($sourceLevel+2) ." DATE ". $sourceDATE, "", i18n::translate('DATA:DATE'));
 			add_simple_tag(($sourceLevel+1) ." QUAY ". $sourceQUAY);
 		}
 	}

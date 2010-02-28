@@ -2710,8 +2710,6 @@ function PGVRFactsEHandler() {
 * @param array $attrs an array of key value pairs for the attributes
 */
 function PGVRSetVarSHandler($attrs) {
-	// @deprecated
-//	global $vars, $gedrec, $gedrecStack, $pgv_lang, $factarray, $fact, $desc, $type, $generation;
 	global $vars, $gedrec, $pgv_lang, $factarray, $fact, $desc, $type, $generation;
 
 	if (empty($attrs["name"])) {

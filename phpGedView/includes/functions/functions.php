@@ -1343,15 +1343,7 @@ function extract_filename($fullpath) {
  * Function to sort GEDCOM fact tags based on their tanslations
  */
 function factsort($a, $b) {
-	global $factarray;
-
-	if (array_key_exists($a, $factarray)) {
-		$a=$factarray[$a];
-	}
-	if (array_key_exists($b, $factarray)) {
-		$b=$factarray[$b];
-	}
-	return stringsort($a, $b);
+	return stringsort(i18n::translate($a), i18n::translate($b));
 }
 /**
  * Function to sort place names array

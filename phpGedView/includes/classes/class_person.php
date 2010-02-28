@@ -798,7 +798,7 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getSpouseFamilyLabel(&$family) {
-		global $factarray, $pgv_lang;
+		global $pgv_lang;
 
 		$label = $pgv_lang['family_with'] . ' ';
 		if (is_null($family)) {
@@ -808,7 +808,7 @@ class Person extends GedcomRecord {
 		if (preg_match('/2 PEDI (.*)/', $famlink, $fmatch)) {
 			$temp = $fmatch[1];
 			if ($temp=='birth') {
-				$label = $factarray['BIRT'].' ';
+				$label = i18n::translate('BIRT').' ';
 			} elseif (isset($pgv_lang[$temp])) {
 				$label = $pgv_lang[$temp].' ';
 			}
@@ -956,7 +956,7 @@ class Person extends GedcomRecord {
 	* @return records added to indifacts array
 	*/
 	function add_parents_facts(&$person, $sosa=1) {
-		global $SHOW_RELATIVES_EVENTS, $factarray;
+		global $SHOW_RELATIVES_EVENTS;
 
 		if (is_null($person)) return;
 		if (!$SHOW_RELATIVES_EVENTS) return;
@@ -1076,7 +1076,7 @@ class Person extends GedcomRecord {
 	* @return records added to indifacts array
 	*/
 	function add_children_facts(&$family, $option='_CHIL', $except='') {
-		global $SHOW_RELATIVES_EVENTS, $factarray;
+		global $SHOW_RELATIVES_EVENTS;
 
 		if ($option=='1') $option='_SIBL';
 		if ($option=='2') $option='_FSIB';
@@ -1288,7 +1288,7 @@ class Person extends GedcomRecord {
 	* @return records added to indifacts array
 	*/
 	function add_spouse_facts(&$spouse, $famrec='') {
-		global $SHOW_RELATIVES_EVENTS, $factarray;
+		global $SHOW_RELATIVES_EVENTS;
 
 		// do not show if divorced
 		if (preg_match('/\n1 (?:'.PGV_EVENTS_DIV.')\b/', $famrec)) {
@@ -1371,7 +1371,7 @@ class Person extends GedcomRecord {
 	*
 	*/
 	function add_asso_facts() {
-		global $factarray, $pgv_lang;
+		global $pgv_lang;
 
 		$associates=array_merge(
 			fetch_linked_indi($this->getXref(), 'ASSO', $this->ged_id),
@@ -1393,19 +1393,15 @@ class Person extends GedcomRecord {
 					}
 					// add an event record
 					$factrec = "1 EVEN\n2 TYPE ".$label.'<br/>[ <span class="details_label">';
-					if (isset($pgv_lang[strtolower($rela)])) {
-						$factrec .= $pgv_lang[strtolower($rela)].'</span> ]';
-					} elseif (isset($factarray[$rela])) {
-						$factrec .= $factarray[$rela].'</span> ]';
-					}
-					$factrec.="\n".$sdate."\n".get_sub_record(2, '2 PLAC', $srec);
+					$factrec .= i18n::translate($rela);
+					$factrec.='</span> ]'.$sdate."\n".get_sub_record(2, '2 PLAC', $srec);
 					if (!$event->canShow()) $factrec .= "\n2 RESN privacy";
 					if ($associate->getType()=='FAM') {
 						$famrec = find_family_record($associate->getXref(), $this->ged_id);
 						if ($famrec) {
 							$parents = find_parents_in_record($famrec);
-							if ($parents['HUSB']) $factrec .= "\n2 ASSO @".$parents['HUSB'].'@'; //\n3 RELA ".$factarray[$fact];
-							if ($parents['WIFE']) $factrec .= "\n2 ASSO @".$parents['WIFE'].'@'; //\n3 RELA ".$factarray[$fact];
+							if ($parents['HUSB']) $factrec .= "\n2 ASSO @".$parents['HUSB'].'@';
+							if ($parents['WIFE']) $factrec .= "\n2 ASSO @".$parents['WIFE'].'@';
 						}
 					} elseif ($fact=='BIRT') {
 						$sex = $associate->getSex();
