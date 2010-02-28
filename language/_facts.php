@@ -1,7 +1,7 @@
 <?php
 /**
- * This is a dummy PHP file.  It is never included in a script, and
- * it is not included in a distribution.
+ * This is a dummy PHP file.  It is not included by another script, and
+ * it does not need to be included in a distribution.
  *
  * xgettext will scan this file, adding the strings to the .PO files,
  * thus allowing us to use them in the code as variables. e.g.
