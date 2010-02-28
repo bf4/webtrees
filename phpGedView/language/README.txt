@@ -1,6 +1,6 @@
 How to edit language files
 
-1) Download and install POEdit from www.poedit.com
+1) Download and install POEdit from www.poedit.net
 
 2) Configure as follows:
 
