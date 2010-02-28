@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 11:29-0000\n"
+"POT-Creation-Date: 2010-02-28 12:22-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -15,6 +15,64 @@ msgstr ""
 "X-Poedit-KeywordsList: translate;plural:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../branches.php:32
+#: ../calendar.php:253
+msgid "MARR"
+msgstr "Abiellunud"
+
+#: ../branches.php:70
+msgid "SURN"
+msgstr "Perekonnanimi"
+
+#: ../calendar.php:238
+msgid "BIRT"
+msgstr "Sündinud"
+
+#: ../calendar.php:241
+msgid "CHR"
+msgstr ""
+
+#: ../calendar.php:244
+msgid "CHRA"
+msgstr ""
+
+#: ../calendar.php:247
+msgid "BAPM"
+msgstr ""
+
+#: ../calendar.php:250
+msgid "_COML"
+msgstr ""
+
+#: ../calendar.php:256
+msgid "_SEPR"
+msgstr ""
+
+#: ../calendar.php:259
+msgid "DIV"
+msgstr ""
+
+#: ../calendar.php:262
+msgid "DEAT"
+msgstr "Surnud"
+
+#: ../calendar.php:265
+msgid "BURI"
+msgstr ""
+
+#: ../calendar.php:268
+msgid "IMMI"
+msgstr "Sisseränne"
+
+#: ../calendar.php:271
+msgid "EMIG"
+msgstr ""
+
+#: ../search_advanced.php:223
+#: ../search_advanced.php:260
+msgid "GIVN"
+msgstr "Eesnimed"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
@@ -175,13 +233,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Afghanistan"
 #: ../language/_countries.php:42
-#, fuzzy
 msgid "AFG"
 msgstr "Vanus"
 
 #. I18N: This is the country/chapman code for "Angola"
 #: ../language/_countries.php:44
-#, fuzzy
 msgid "AGO"
 msgstr "Vanus"
 
@@ -212,25 +268,21 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "United Arab Emirates"
 #: ../language/_countries.php:56
-#, fuzzy
 msgid "ARE"
 msgstr "Vanus"
 
 #. I18N: This is the country/chapman code for "Argentina"
 #: ../language/_countries.php:58
-#, fuzzy
 msgid "ARG"
 msgstr "Vanus"
 
 #. I18N: This is the country/chapman code for "Armenia"
 #: ../language/_countries.php:60
-#, fuzzy
 msgid "ARM"
 msgstr "Perekond"
 
 #. I18N: This is the country/chapman code for "American Samoa"
 #: ../language/_countries.php:62
-#, fuzzy
 msgid "ASM"
 msgstr "Perekond"
 
@@ -246,7 +298,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Antigua and Barbuda"
 #: ../language/_countries.php:68
-#, fuzzy
 msgid "ATG"
 msgstr "Vanus"
 
@@ -262,7 +313,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Azerbaijan"
 #: ../language/_countries.php:74
-#, fuzzy
 msgid "AZE"
 msgstr "Vanus"
 
@@ -288,7 +338,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Burkina Faso"
 #: ../language/_countries.php:84
-#, fuzzy
 msgid "BFA"
 msgstr "Perekond"
 
@@ -379,7 +428,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Canada"
 #: ../language/_countries.php:120
-#, fuzzy
 msgid "CAN"
 msgstr "Viimati muudetud"
 
@@ -405,7 +453,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Channel Islands"
 #: ../language/_countries.php:130
-#, fuzzy
 msgid "CHI"
 msgstr "Laste arv"
 
@@ -416,7 +463,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "China"
 #: ../language/_countries.php:134
-#, fuzzy
 msgid "CHN"
 msgstr "Viimati muudetud"
 
@@ -427,7 +473,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Cameroon"
 #: ../language/_countries.php:138
-#, fuzzy
 msgid "CMR"
 msgstr "Abielude arv"
 
@@ -453,7 +498,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Comoros"
 #: ../language/_countries.php:148
-#, fuzzy
 msgid "COM"
 msgstr "Märkus"
 
@@ -544,7 +588,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "England"
 #: ../language/_countries.php:184
-#, fuzzy
 msgid "ENG"
 msgstr "Kihlus"
 
@@ -595,7 +638,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "France"
 #: ../language/_countries.php:204
-#, fuzzy
 msgid "FRA"
 msgstr "Perekond"
 
@@ -606,7 +648,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Micronesia"
 #: ../language/_countries.php:208
-#, fuzzy
 msgid "FSM"
 msgstr "Perekond"
 
@@ -622,7 +663,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Georgia"
 #: ../language/_countries.php:214
-#, fuzzy
 msgid "GEO"
 msgstr "Vanus"
 
@@ -638,7 +678,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Guinea"
 #: ../language/_countries.php:220
-#, fuzzy
 msgid "GIN"
 msgstr "Eesnimed"
 
@@ -674,7 +713,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Greenland"
 #: ../language/_countries.php:234
-#, fuzzy
 msgid "GRL"
 msgstr "Veebiaadress"
 
@@ -750,7 +788,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Ireland"
 #: ../language/_countries.php:264
-#, fuzzy
 msgid "IRL"
 msgstr "Veebiaadress"
 
@@ -781,7 +818,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Jamaica"
 #: ../language/_countries.php:276
-#, fuzzy
 msgid "JAM"
 msgstr "Perekond"
 
@@ -897,7 +933,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Morocco"
 #: ../language/_countries.php:322
-#, fuzzy
 msgid "MAR"
 msgstr "Abiellunud"
 
@@ -923,7 +958,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Mexico"
 #: ../language/_countries.php:332
-#, fuzzy
 msgid "MEX"
 msgstr "Sugu"
 
@@ -939,7 +973,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Mali"
 #: ../language/_countries.php:338
-#, fuzzy
 msgid "MLI"
 msgstr "Sõjaväelane"
 
@@ -950,7 +983,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Myanmar"
 #: ../language/_countries.php:342
-#, fuzzy
 msgid "MMR"
 msgstr "Abielude arv"
 
@@ -976,13 +1008,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Mauritania"
 #: ../language/_countries.php:352
-#, fuzzy
 msgid "MRT"
 msgstr "Abielude arv"
 
 #. I18N: This is the country/chapman code for "Montserrat"
 #: ../language/_countries.php:354
-#, fuzzy
 msgid "MSR"
 msgstr "Abielude arv"
 
@@ -1013,7 +1043,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Namibia"
 #: ../language/_countries.php:366
-#, fuzzy
 msgid "NAM"
 msgstr "Nimi"
 
@@ -1024,7 +1053,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Niger"
 #: ../language/_countries.php:370
-#, fuzzy
 msgid "NER"
 msgstr "Abielude arv"
 
@@ -1035,19 +1063,16 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Nigeria"
 #: ../language/_countries.php:374
-#, fuzzy
 msgid "NGA"
 msgstr "Kihlus"
 
 #. I18N: This is the country/chapman code for "Nicaragua"
 #: ../language/_countries.php:376
-#, fuzzy
 msgid "NIC"
 msgstr "Hüüdnimi"
 
 #. I18N: This is the country/chapman code for "Northern Ireland"
 #: ../language/_countries.php:378
-#, fuzzy
 msgid "NIR"
 msgstr "Abielude arv"
 
@@ -1063,7 +1088,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Norway"
 #: ../language/_countries.php:384
-#, fuzzy
 msgid "NOR"
 msgstr "Abielude arv"
 
@@ -1074,7 +1098,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Nauru"
 #: ../language/_countries.php:388
-#, fuzzy
 msgid "NRU"
 msgstr "Abielude arv"
 
@@ -1155,7 +1178,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Occupied Palestinian Territory"
 #: ../language/_countries.php:420
-#, fuzzy
 msgid "PSE"
 msgstr "Sugu"
 
@@ -1206,25 +1228,21 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Sudan"
 #: ../language/_countries.php:440
-#, fuzzy
 msgid "SDN"
 msgstr "Isikukood"
 
 #. I18N: This is the country/chapman code for "At Sea"
 #: ../language/_countries.php:442
-#, fuzzy
 msgid "SEA"
 msgstr "Sugu"
 
 #. I18N: This is the country/chapman code for "Senegal"
 #: ../language/_countries.php:444
-#, fuzzy
 msgid "SEN"
 msgstr "Sugu"
 
 #. I18N: This is the country/chapman code for "Serbia"
 #: ../language/_countries.php:446
-#, fuzzy
 msgid "SER"
 msgstr "Teine server"
 
@@ -1235,13 +1253,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "South Georgia and the South Sandwich Islands"
 #: ../language/_countries.php:450
-#, fuzzy
 msgid "SGS"
 msgstr "Isikukood"
 
 #. I18N: This is the country/chapman code for "Saint Helena"
 #: ../language/_countries.php:452
-#, fuzzy
 msgid "SHN"
 msgstr "Isikukood"
 
@@ -1262,7 +1278,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Sierra Leone"
 #: ../language/_countries.php:460
-#, fuzzy
 msgid "SLE"
 msgstr "Sugu"
 
@@ -1273,7 +1288,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "San Marino"
 #: ../language/_countries.php:464
-#, fuzzy
 msgid "SMR"
 msgstr "Abielude arv"
 
@@ -1294,13 +1308,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "USSR"
 #: ../language/_countries.php:472
-#, fuzzy
 msgid "SUN"
 msgstr "Perekonnanimi"
 
 #. I18N: This is the country/chapman code for "Suriname"
 #: ../language/_countries.php:474
-#, fuzzy
 msgid "SUR"
 msgstr "Allikas"
 
@@ -1311,13 +1323,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Slovenia"
 #: ../language/_countries.php:478
-#, fuzzy
 msgid "SVN"
 msgstr "Isikukood"
 
 #. I18N: This is the country/chapman code for "Sweden"
 #: ../language/_countries.php:480
-#, fuzzy
 msgid "SWE"
 msgstr "Sugu"
 
@@ -1398,7 +1408,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Turkey"
 #: ../language/_countries.php:512
-#, fuzzy
 msgid "TUR"
 msgstr "Veebiaadress"
 
@@ -1424,7 +1433,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Ukraine"
 #: ../language/_countries.php:522
-#, fuzzy
 msgid "UKR"
 msgstr "Veebiaadress"
 
@@ -1435,7 +1443,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Uruguay"
 #: ../language/_countries.php:526
-#, fuzzy
 msgid "URY"
 msgstr "Veebiaadress"
 
@@ -1461,7 +1468,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Venezuela"
 #: ../language/_countries.php:536
-#, fuzzy
 msgid "VEN"
 msgstr "Sündmus"
 
@@ -1477,7 +1483,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Viet Nam"
 #: ../language/_countries.php:542
-#, fuzzy
 msgid "VNM"
 msgstr "Abielude arv"
 
@@ -1641,11 +1646,6 @@ msgstr ""
 msgid "BAPL"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Baptism"
-#: ../language/_facts.php:81
-msgid "BAPM"
-msgstr ""
-
 #. I18N: This is the GEDCOM label for "Baptism Date"
 #: ../language/_facts.php:83
 msgid "BAPM:DATE"
@@ -1701,11 +1701,6 @@ msgstr ""
 msgid "BASM:SOUR"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Birth"
-#: ../language/_facts.php:105
-msgid "BIRT"
-msgstr "Sündinud"
-
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: ../language/_facts.php:107
 msgid "BIRT:DATE"
@@ -1729,11 +1724,6 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Binary Data Object"
 #: ../language/_facts.php:115
 msgid "BLOB"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Burial"
-#: ../language/_facts.php:117
-msgid "BURI"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Burial Date"
@@ -1791,11 +1781,6 @@ msgstr ""
 msgid "CHIL"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Christening"
-#: ../language/_facts.php:141
-msgid "CHR"
-msgstr ""
-
 #. I18N: This is the GEDCOM label for "Christening Date"
 #: ../language/_facts.php:143
 msgid "CHR:DATE"
@@ -1809,11 +1794,6 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Christening Source"
 #: ../language/_facts.php:147
 msgid "CHR:SOUR"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Adult Christening"
-#: ../language/_facts.php:149
-msgid "CHRA"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Citizenship"
@@ -1891,11 +1871,6 @@ msgstr ""
 msgid "DATE"
 msgstr "Kuupäev"
 
-#. I18N: This is the GEDCOM label for "Death"
-#: ../language/_facts.php:181
-msgid "DEAT"
-msgstr "Surnud"
-
 #. I18N: This is the GEDCOM label for "Death Date"
 #: ../language/_facts.php:183
 msgid "DEAT:DATE"
@@ -1926,11 +1901,6 @@ msgstr ""
 msgid "DEST"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Divorce"
-#: ../language/_facts.php:195
-msgid "DIV"
-msgstr ""
-
 #. I18N: This is the GEDCOM label for "Divorce filed"
 #: ../language/_facts.php:197
 msgid "DIVF"
@@ -1955,11 +1925,6 @@ msgstr ""
 #: ../language/_facts.php:205
 msgid "EMAL"
 msgstr "e-maili aadress"
-
-#. I18N: This is the GEDCOM label for "Emigration"
-#: ../language/_facts.php:207
-msgid "EMIG"
-msgstr ""
 
 #. I18N: This is the GEDCOM label for "LDS Endowment"
 #: ../language/_facts.php:209
@@ -2181,11 +2146,6 @@ msgstr ""
 msgid "FORM"
 msgstr "Formaat"
 
-#. I18N: This is the GEDCOM label for "Given Names"
-#: ../language/_facts.php:297
-msgid "GIVN"
-msgstr "Eesnimed"
-
 #. I18N: This is the GEDCOM label for "Graduation"
 #: ../language/_facts.php:299
 msgid "GRAD"
@@ -2200,11 +2160,6 @@ msgstr "Mees"
 #: ../language/_facts.php:303
 msgid "IDNO"
 msgstr ""
-
-#. I18N: This is the GEDCOM label for "Immigration"
-#: ../language/_facts.php:305
-msgid "IMMI"
-msgstr "Sisseränne"
 
 #. I18N: This is the GEDCOM label for "Latitude"
 #: ../language/_facts.php:307
@@ -2255,11 +2210,6 @@ msgstr ""
 #: ../language/_facts.php:325
 msgid "MARL"
 msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage"
-#: ../language/_facts.php:327
-msgid "MARR"
-msgstr "Abiellunud"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: ../language/_facts.php:329
@@ -2565,11 +2515,6 @@ msgstr ""
 #: ../language/_facts.php:449
 msgid "SUBN"
 msgstr ""
-
-#. I18N: This is the GEDCOM label for "Surname"
-#: ../language/_facts.php:451
-msgid "SURN"
-msgstr "Perekonnanimi"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: ../language/_facts.php:453
@@ -2924,11 +2869,6 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Christening of sibling"
 #: ../language/_facts.php:593
 msgid "_CHR_SIBL"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Common Law Marriage"
-#: ../language/_facts.php:595
-msgid "_COML"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Cremation of a child"
@@ -3435,11 +3375,6 @@ msgstr ""
 #: ../language/_facts.php:797
 msgid "_SCBK"
 msgstr "Väljalõigete raamat"
-
-#. I18N: This is the GEDCOM label for "Separated"
-#: ../language/_facts.php:799
-msgid "_SEPR"
-msgstr ""
 
 #. I18N: This is the GEDCOM label for "Slide Show"
 #: ../language/_facts.php:801

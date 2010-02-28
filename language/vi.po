@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 11:24-0000\n"
+"POT-Creation-Date: 2010-02-28 12:16-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -15,6 +15,64 @@ msgstr ""
 "X-Poedit-KeywordsList: translate;plural:1,2\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../branches.php:32
+#: ../calendar.php:253
+msgid "MARR"
+msgstr "Hôn Lể"
+
+#: ../branches.php:70
+msgid "SURN"
+msgstr "Tên Họ"
+
+#: ../calendar.php:238
+msgid "BIRT"
+msgstr "Sinh"
+
+#: ../calendar.php:241
+msgid "CHR"
+msgstr "Lể Rửa Tội"
+
+#: ../calendar.php:244
+msgid "CHRA"
+msgstr "Lể Rửa Tội Cho Người Lớn"
+
+#: ../calendar.php:247
+msgid "BAPM"
+msgstr "Bí Tích Rửa Tội"
+
+#: ../calendar.php:250
+msgid "_COML"
+msgstr "Common Law marriage"
+
+#: ../calendar.php:256
+msgid "_SEPR"
+msgstr "Ly Thân"
+
+#: ../calendar.php:259
+msgid "DIV"
+msgstr "Ly Dị"
+
+#: ../calendar.php:262
+msgid "DEAT"
+msgstr "Tử"
+
+#: ../calendar.php:265
+msgid "BURI"
+msgstr "Lể An Táng"
+
+#: ../calendar.php:268
+msgid "IMMI"
+msgstr "Nhập Cảnh"
+
+#: ../calendar.php:271
+msgid "EMIG"
+msgstr "Di Cư"
+
+#: ../search_advanced.php:223
+#: ../search_advanced.php:260
+msgid "GIVN"
+msgstr "Tên Gọi"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
@@ -173,25 +231,21 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Afghanistan"
 #: ../language/_countries.php:42
-#, fuzzy
 msgid "AFG"
 msgstr "Hệ Số Gia Phả(AFN)"
 
 #. I18N: This is the country/chapman code for "Angola"
 #: ../language/_countries.php:44
-#, fuzzy
 msgid "AGO"
 msgstr "Tuổi"
 
 #. I18N: This is the country/chapman code for "Anguilla"
 #: ../language/_countries.php:46
-#, fuzzy
 msgid "AIA"
 msgstr "Tên Gọi Là"
 
 #. I18N: This is the country/chapman code for "Aland Islands"
 #: ../language/_countries.php:48
-#, fuzzy
 msgid "ALA"
 msgstr "Tên Gọi Là"
 
@@ -202,73 +256,61 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Andorra"
 #: ../language/_countries.php:52
-#, fuzzy
 msgid "AND"
 msgstr "Hệ Số Gia Phả(AFN)"
 
 #. I18N: This is the country/chapman code for "Netherlands Antilles"
 #: ../language/_countries.php:54
-#, fuzzy
 msgid "ANT"
 msgstr "Hệ Số Gia Phả(AFN)"
 
 #. I18N: This is the country/chapman code for "United Arab Emirates"
 #: ../language/_countries.php:56
-#, fuzzy
 msgid "ARE"
 msgstr "Tuổi"
 
 #. I18N: This is the country/chapman code for "Argentina"
 #: ../language/_countries.php:58
-#, fuzzy
 msgid "ARG"
 msgstr "Tuổi"
 
 #. I18N: This is the country/chapman code for "Armenia"
 #: ../language/_countries.php:60
-#, fuzzy
 msgid "ARM"
 msgstr "Bar Mitzvah"
 
 #. I18N: This is the country/chapman code for "American Samoa"
 #: ../language/_countries.php:62
-#, fuzzy
 msgid "ASM"
 msgstr "Bas Mitzvah"
 
 #. I18N: This is the country/chapman code for "Antarctica"
 #: ../language/_countries.php:64
-#, fuzzy
 msgid "ATA"
 msgstr "Tài Liệu"
 
 #. I18N: This is the country/chapman code for "French Southern Territories"
 #: ../language/_countries.php:66
-#, fuzzy
 msgid "ATF"
 msgstr "Hệ Số Gia Phả(AFN)"
 
 #. I18N: This is the country/chapman code for "Antigua and Barbuda"
 #: ../language/_countries.php:68
-#, fuzzy
 msgid "ATG"
 msgstr "Tuổi"
 
 #. I18N: This is the country/chapman code for "Australia"
 #: ../language/_countries.php:70
-#, fuzzy
 msgid "AUS"
 msgstr "Nguyên Do"
 
 #. I18N: This is the country/chapman code for "Austria"
 #: ../language/_countries.php:72
-#, fuzzy
 msgid "AUT"
 msgstr "Tác Gỉa"
 
 #. I18N: This is the country/chapman code for "Azerbaijan"
 #: ../language/_countries.php:74
-#, fuzzy
 msgid "AZE"
 msgstr "Tuổi"
 
@@ -279,7 +321,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Burundi"
 #: ../language/_countries.php:78
-#, fuzzy
 msgid "BDI"
 msgstr "Ly Dị"
 
@@ -295,7 +336,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Burkina Faso"
 #: ../language/_countries.php:84
-#, fuzzy
 msgid "BFA"
 msgstr "Gia Đình"
 
@@ -311,7 +351,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Bahrain"
 #: ../language/_countries.php:90
-#, fuzzy
 msgid "BHR"
 msgstr "Lể Rửa Tội"
 
@@ -357,7 +396,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Brunei Darussalam"
 #: ../language/_countries.php:108
-#, fuzzy
 msgid "BRN"
 msgstr "Hồ-sơ số"
 
@@ -383,25 +421,21 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Central African Republic"
 #: ../language/_countries.php:118
-#, fuzzy
 msgid "CAF"
 msgstr "Hệ Số Gia Phả(AFN)"
 
 #. I18N: This is the country/chapman code for "Canada"
 #: ../language/_countries.php:120
-#, fuzzy
 msgid "CAN"
 msgstr "Call Number"
 
 #. I18N: This is the country/chapman code for "Cape Colony"
 #: ../language/_countries.php:122
-#, fuzzy
 msgid "CAP"
 msgstr "Bản Đồ"
 
 #. I18N: This is the country/chapman code for "Catalonia"
 #: ../language/_countries.php:124
-#, fuzzy
 msgid "CAT"
 msgstr "Giai Cấp trong Xả Hội"
 
@@ -412,37 +446,31 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Switzerland"
 #: ../language/_countries.php:128
-#, fuzzy
 msgid "CHE"
 msgstr "Lể Rửa Tội"
 
 #. I18N: This is the country/chapman code for "Channel Islands"
 #: ../language/_countries.php:130
-#, fuzzy
 msgid "CHI"
 msgstr "Con"
 
 #. I18N: This is the country/chapman code for "Chile"
 #: ../language/_countries.php:132
-#, fuzzy
 msgid "CHL"
 msgstr "Con"
 
 #. I18N: This is the country/chapman code for "China"
 #: ../language/_countries.php:134
-#, fuzzy
 msgid "CHN"
 msgstr "Cập Nhật Hóa"
 
 #. I18N: This is the country/chapman code for "Cote d'Ivoire"
 #: ../language/_countries.php:136
-#, fuzzy
 msgid "CIV"
 msgstr "Ly Dị"
 
 #. I18N: This is the country/chapman code for "Cameroon"
 #: ../language/_countries.php:138
-#, fuzzy
 msgid "CMR"
 msgstr "Lể Rửa Tội"
 
@@ -463,13 +491,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Colombia"
 #: ../language/_countries.php:146
-#, fuzzy
 msgid "COL"
 msgstr "Bí-tích Thêm Sức của LDS"
 
 #. I18N: This is the country/chapman code for "Comoros"
 #: ../language/_countries.php:148
-#, fuzzy
 msgid "COM"
 msgstr "Phê Bình"
 
@@ -480,7 +506,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Costa Rica"
 #: ../language/_countries.php:152
-#, fuzzy
 msgid "CRI"
 msgstr "Lể Rửa Tội"
 
@@ -496,7 +521,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Christmas Island"
 #: ../language/_countries.php:158
-#, fuzzy
 msgid "CXR"
 msgstr "Lể Rửa Tội"
 
@@ -522,13 +546,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Djibouti"
 #: ../language/_countries.php:168
-#, fuzzy
 msgid "DJI"
 msgstr "Ly Dị"
 
 #. I18N: This is the country/chapman code for "Dominica"
 #: ../language/_countries.php:170
-#, fuzzy
 msgid "DMA"
 msgstr "Bản Đồ"
 
@@ -564,13 +586,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "England"
 #: ../language/_countries.php:184
-#, fuzzy
 msgid "ENG"
 msgstr "Lể Đính-Hôn"
 
 #. I18N: This is the country/chapman code for "Eritrea"
 #: ../language/_countries.php:186
-#, fuzzy
 msgid "ERI"
 msgstr "Số lý-lịch"
 
@@ -586,7 +606,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Estonia"
 #: ../language/_countries.php:192
-#, fuzzy
 msgid "EST"
 msgstr "Mục Tiêu"
 
@@ -597,7 +616,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Finland"
 #: ../language/_countries.php:196
-#, fuzzy
 msgid "FIN"
 msgstr "Hệ Số Gia Phả(AFN)"
 
@@ -618,7 +636,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "France"
 #: ../language/_countries.php:204
-#, fuzzy
 msgid "FRA"
 msgstr "Gia Đình"
 
@@ -629,7 +646,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Micronesia"
 #: ../language/_countries.php:208
-#, fuzzy
 msgid "FSM"
 msgstr "Gia Đình"
 
@@ -645,7 +661,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Georgia"
 #: ../language/_countries.php:214
-#, fuzzy
 msgid "GEO"
 msgstr "Tuổi"
 
@@ -661,7 +676,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Guinea"
 #: ../language/_countries.php:220
-#, fuzzy
 msgid "GIN"
 msgstr "Tên Gọi"
 
@@ -692,7 +706,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Grenada"
 #: ../language/_countries.php:232
-#, fuzzy
 msgid "GRD"
 msgstr "Tốt Nghiệp"
 
@@ -738,7 +751,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Croatia"
 #: ../language/_countries.php:250
-#, fuzzy
 msgid "HRV"
 msgstr "Lể Rửa Tội"
 
@@ -754,13 +766,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Indonesia"
 #: ../language/_countries.php:256
-#, fuzzy
 msgid "IDN"
 msgstr "Số Căn Cước"
 
 #. I18N: This is the country/chapman code for "India"
 #: ../language/_countries.php:258
-#, fuzzy
 msgid "IND"
 msgstr "Số lý-lịch"
 
@@ -781,7 +791,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Iran"
 #: ../language/_countries.php:266
-#, fuzzy
 msgid "IRN"
 msgstr "Hồ-sơ số"
 
@@ -807,7 +816,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Jamaica"
 #: ../language/_countries.php:276
-#, fuzzy
 msgid "JAM"
 msgstr "Gia Đình"
 
@@ -918,13 +926,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Macau"
 #: ../language/_countries.php:320
-#, fuzzy
 msgid "MAC"
 msgstr "Giấy Giá Thú"
 
 #. I18N: This is the country/chapman code for "Morocco"
 #: ../language/_countries.php:322
-#, fuzzy
 msgid "MAR"
 msgstr "Rao Hôn-Phối"
 
@@ -935,7 +941,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Moldova"
 #: ../language/_countries.php:326
-#, fuzzy
 msgid "MDA"
 msgstr "Bản Đồ"
 
@@ -946,13 +951,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Maldives"
 #: ../language/_countries.php:330
-#, fuzzy
 msgid "MDV"
 msgstr "Ly Dị"
 
 #. I18N: This is the country/chapman code for "Mexico"
 #: ../language/_countries.php:332
-#, fuzzy
 msgid "MEX"
 msgstr "Phái"
 
@@ -968,19 +971,16 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Mali"
 #: ../language/_countries.php:338
-#, fuzzy
 msgid "MLI"
 msgstr "Quân Dịch"
 
 #. I18N: This is the country/chapman code for "Malta"
 #: ../language/_countries.php:340
-#, fuzzy
 msgid "MLT"
 msgstr "Nghỉa Vụ Quân-Đội"
 
 #. I18N: This is the country/chapman code for "Myanmar"
 #: ../language/_countries.php:342
-#, fuzzy
 msgid "MMR"
 msgstr "Lập Gia Đình Bao Nhiêu Lần"
 
@@ -991,7 +991,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Northern Mariana Islands"
 #: ../language/_countries.php:346
-#, fuzzy
 msgid "MNP"
 msgstr "Bản Đồ"
 
@@ -1007,13 +1006,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Mauritania"
 #: ../language/_countries.php:352
-#, fuzzy
 msgid "MRT"
 msgstr "Lập Gia Đình Bao Nhiêu Lần"
 
 #. I18N: This is the country/chapman code for "Montserrat"
 #: ../language/_countries.php:354
-#, fuzzy
 msgid "MSR"
 msgstr "Lập Gia Đình Bao Nhiêu Lần"
 
@@ -1044,7 +1041,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Namibia"
 #: ../language/_countries.php:366
-#, fuzzy
 msgid "NAM"
 msgstr "Tên"
 
@@ -1055,7 +1051,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Niger"
 #: ../language/_countries.php:370
-#, fuzzy
 msgid "NER"
 msgstr "Lập Gia Đình Bao Nhiêu Lần"
 
@@ -1066,19 +1061,16 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Nigeria"
 #: ../language/_countries.php:374
-#, fuzzy
 msgid "NGA"
 msgstr "Lể Đính-Hôn"
 
 #. I18N: This is the country/chapman code for "Nicaragua"
 #: ../language/_countries.php:376
-#, fuzzy
 msgid "NIC"
 msgstr "Biệt Danh"
 
 #. I18N: This is the country/chapman code for "Northern Ireland"
 #: ../language/_countries.php:378
-#, fuzzy
 msgid "NIR"
 msgstr "Lập Gia Đình Bao Nhiêu Lần"
 
@@ -1094,7 +1086,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Norway"
 #: ../language/_countries.php:384
-#, fuzzy
 msgid "NOR"
 msgstr "Lập Gia Đình Bao Nhiêu Lần"
 
@@ -1105,7 +1096,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Nauru"
 #: ../language/_countries.php:388
-#, fuzzy
 msgid "NRU"
 msgstr "Lập Gia Đình Bao Nhiêu Lần"
 
@@ -1121,7 +1111,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Oman"
 #: ../language/_countries.php:394
-#, fuzzy
 msgid "OMN"
 msgstr "Tên Ngoại Ngữ"
 
@@ -1132,7 +1121,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Panama"
 #: ../language/_countries.php:398
-#, fuzzy
 msgid "PAN"
 msgstr "Hệ Số Gia Phả(AFN)"
 
@@ -1168,7 +1156,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Puerto Rico"
 #: ../language/_countries.php:412
-#, fuzzy
 msgid "PRI"
 msgstr "Tận dụng ảnh này"
 
@@ -1189,7 +1176,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Occupied Palestinian Territory"
 #: ../language/_countries.php:420
-#, fuzzy
 msgid "PSE"
 msgstr "Phái"
 
@@ -1210,7 +1196,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Romania"
 #: ../language/_countries.php:428
-#, fuzzy
 msgid "ROM"
 msgstr "Tên Ngoại Ngữ"
 
@@ -1241,25 +1226,21 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Sudan"
 #: ../language/_countries.php:440
-#, fuzzy
 msgid "SDN"
 msgstr "Số An-Sinh Xả-Hội"
 
 #. I18N: This is the country/chapman code for "At Sea"
 #: ../language/_countries.php:442
-#, fuzzy
 msgid "SEA"
 msgstr "Phái"
 
 #. I18N: This is the country/chapman code for "Senegal"
 #: ../language/_countries.php:444
-#, fuzzy
 msgid "SEN"
 msgstr "Phái"
 
 #. I18N: This is the country/chapman code for "Serbia"
 #: ../language/_countries.php:446
-#, fuzzy
 msgid "SER"
 msgstr "Server ở xa"
 
@@ -1270,13 +1251,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "South Georgia and the South Sandwich Islands"
 #: ../language/_countries.php:450
-#, fuzzy
 msgid "SGS"
 msgstr "Niêm Phong LDS Chồng/Vợ"
 
 #. I18N: This is the country/chapman code for "Saint Helena"
 #: ../language/_countries.php:452
-#, fuzzy
 msgid "SHN"
 msgstr "Số An-Sinh Xả-Hội"
 
@@ -1297,7 +1276,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Sierra Leone"
 #: ../language/_countries.php:460
-#, fuzzy
 msgid "SLE"
 msgstr "Phái"
 
@@ -1308,7 +1286,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "San Marino"
 #: ../language/_countries.php:464
-#, fuzzy
 msgid "SMR"
 msgstr "Lập Gia Đình Bao Nhiêu Lần"
 
@@ -1329,13 +1306,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "USSR"
 #: ../language/_countries.php:472
-#, fuzzy
 msgid "SUN"
 msgstr "Đệ Trình"
 
 #. I18N: This is the country/chapman code for "Suriname"
 #: ../language/_countries.php:474
-#, fuzzy
 msgid "SUR"
 msgstr "Căn Nguyên"
 
@@ -1346,13 +1321,11 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Slovenia"
 #: ../language/_countries.php:478
-#, fuzzy
 msgid "SVN"
 msgstr "Số An-Sinh Xả-Hội"
 
 #. I18N: This is the country/chapman code for "Sweden"
 #: ../language/_countries.php:480
-#, fuzzy
 msgid "SWE"
 msgstr "Phái"
 
@@ -1418,7 +1391,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Transylvania"
 #: ../language/_countries.php:506
-#, fuzzy
 msgid "TRN"
 msgstr "Hồ-sơ số"
 
@@ -1494,7 +1466,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Venezuela"
 #: ../language/_countries.php:536
-#, fuzzy
 msgid "VEN"
 msgstr "Sự Kiện"
 
@@ -1510,7 +1481,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "Viet Nam"
 #: ../language/_countries.php:542
-#, fuzzy
 msgid "VNM"
 msgstr "Lập Gia Đình Bao Nhiêu Lần"
 
@@ -1521,7 +1491,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "West Africa"
 #: ../language/_countries.php:546
-#, fuzzy
 msgid "WAF"
 msgstr "Hệ Số Gia Phả(AFN)"
 
@@ -1552,7 +1521,6 @@ msgstr ""
 
 #. I18N: This is the country/chapman code for "South Africa"
 #: ../language/_countries.php:558
-#, fuzzy
 msgid "ZAF"
 msgstr "Hệ Số Gia Phả(AFN)"
 
@@ -1676,11 +1644,6 @@ msgstr "Tác Gỉa"
 msgid "BAPL"
 msgstr "Bí Tích Rửa Tội Của LDS"
 
-#. I18N: This is the GEDCOM label for "Baptism"
-#: ../language/_facts.php:81
-msgid "BAPM"
-msgstr "Bí Tích Rửa Tội"
-
 #. I18N: This is the GEDCOM label for "Baptism Date"
 #: ../language/_facts.php:83
 msgid "BAPM:DATE"
@@ -1736,11 +1699,6 @@ msgstr ""
 msgid "BASM:SOUR"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Birth"
-#: ../language/_facts.php:105
-msgid "BIRT"
-msgstr "Sinh"
-
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: ../language/_facts.php:107
 msgid "BIRT:DATE"
@@ -1765,11 +1723,6 @@ msgstr "Được Ban Phép Lành"
 #: ../language/_facts.php:115
 msgid "BLOB"
 msgstr "Binary Data Object"
-
-#. I18N: This is the GEDCOM label for "Burial"
-#: ../language/_facts.php:117
-msgid "BURI"
-msgstr "Lể An Táng"
 
 #. I18N: This is the GEDCOM label for "Burial Date"
 #: ../language/_facts.php:119
@@ -1826,11 +1779,6 @@ msgstr "Bộ Chử"
 msgid "CHIL"
 msgstr "Con"
 
-#. I18N: This is the GEDCOM label for "Christening"
-#: ../language/_facts.php:141
-msgid "CHR"
-msgstr "Lể Rửa Tội"
-
 #. I18N: This is the GEDCOM label for "Christening Date"
 #: ../language/_facts.php:143
 msgid "CHR:DATE"
@@ -1845,11 +1793,6 @@ msgstr ""
 #: ../language/_facts.php:147
 msgid "CHR:SOUR"
 msgstr ""
-
-#. I18N: This is the GEDCOM label for "Adult Christening"
-#: ../language/_facts.php:149
-msgid "CHRA"
-msgstr "Lể Rửa Tội Cho Người Lớn"
 
 #. I18N: This is the GEDCOM label for "Citizenship"
 #: ../language/_facts.php:151
@@ -1926,11 +1869,6 @@ msgstr ""
 msgid "DATE"
 msgstr "Ngày"
 
-#. I18N: This is the GEDCOM label for "Death"
-#: ../language/_facts.php:181
-msgid "DEAT"
-msgstr "Tử"
-
 #. I18N: This is the GEDCOM label for "Death Date"
 #: ../language/_facts.php:183
 msgid "DEAT:DATE"
@@ -1961,11 +1899,6 @@ msgstr "Tâm Ý Của Các Con Cháu"
 msgid "DEST"
 msgstr "Mục Tiêu"
 
-#. I18N: This is the GEDCOM label for "Divorce"
-#: ../language/_facts.php:195
-msgid "DIV"
-msgstr "Ly Dị"
-
 #. I18N: This is the GEDCOM label for "Divorce filed"
 #: ../language/_facts.php:197
 msgid "DIVF"
@@ -1990,11 +1923,6 @@ msgstr "Địa chỉ thư điện tử"
 #: ../language/_facts.php:205
 msgid "EMAL"
 msgstr "Địa chỉ thư điện tử"
-
-#. I18N: This is the GEDCOM label for "Emigration"
-#: ../language/_facts.php:207
-msgid "EMIG"
-msgstr "Di Cư"
 
 #. I18N: This is the GEDCOM label for "LDS Endowment"
 #: ../language/_facts.php:209
@@ -2216,11 +2144,6 @@ msgstr "Ngữ âm"
 msgid "FORM"
 msgstr "Khổ"
 
-#. I18N: This is the GEDCOM label for "Given Names"
-#: ../language/_facts.php:297
-msgid "GIVN"
-msgstr "Tên Gọi"
-
 #. I18N: This is the GEDCOM label for "Graduation"
 #: ../language/_facts.php:299
 msgid "GRAD"
@@ -2235,11 +2158,6 @@ msgstr "Chồng"
 #: ../language/_facts.php:303
 msgid "IDNO"
 msgstr "Số Căn Cước"
-
-#. I18N: This is the GEDCOM label for "Immigration"
-#: ../language/_facts.php:305
-msgid "IMMI"
-msgstr "Nhập Cảnh"
 
 #. I18N: This is the GEDCOM label for "Latitude"
 #: ../language/_facts.php:307
@@ -2290,11 +2208,6 @@ msgstr "Giấy Giá Thú"
 #: ../language/_facts.php:325
 msgid "MARL"
 msgstr "Giấy Phép Hôn-Nhân"
-
-#. I18N: This is the GEDCOM label for "Marriage"
-#: ../language/_facts.php:327
-msgid "MARR"
-msgstr "Hôn Lể"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: ../language/_facts.php:329
@@ -2600,11 +2513,6 @@ msgstr "Người Đệ Trình"
 #: ../language/_facts.php:449
 msgid "SUBN"
 msgstr "Đệ Trình"
-
-#. I18N: This is the GEDCOM label for "Surname"
-#: ../language/_facts.php:451
-msgid "SURN"
-msgstr "Tên Họ"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: ../language/_facts.php:453
@@ -2960,11 +2868,6 @@ msgstr ""
 #: ../language/_facts.php:593
 msgid "_CHR_SIBL"
 msgstr ""
-
-#. I18N: This is the GEDCOM label for "Common Law Marriage"
-#: ../language/_facts.php:595
-msgid "_COML"
-msgstr "Common Law marriage"
 
 #. I18N: This is the GEDCOM label for "Cremation of a child"
 #: ../language/_facts.php:597
@@ -3470,11 +3373,6 @@ msgstr "Permanent Number"
 #: ../language/_facts.php:797
 msgid "_SCBK"
 msgstr "Sổ Ghi"
-
-#. I18N: This is the GEDCOM label for "Separated"
-#: ../language/_facts.php:799
-msgid "_SEPR"
-msgstr "Ly Thân"
 
 #. I18N: This is the GEDCOM label for "Slide Show"
 #: ../language/_facts.php:801

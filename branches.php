@@ -28,6 +28,7 @@ define('PGV_SCRIPT_NAME', 'branches.php');
 require './config.php';
 
 //-- const
+$fact='MARR';
 define('PGV_ICON_RINGS', '<img src="images/small/rings.gif" alt="'.i18n::translate('MARR').'" title="'.i18n::translate('MARR').'" />');
 define('PGV_ICON_BRANCHES', "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["patriarch"]["small"]."\" alt=\"\" align=\"middle\" />");
 
@@ -66,7 +67,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 	<table class="center facts_table width50">
 		<tr>
 			<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>">
-				<?php print_help_link("surname_help", "qm", "surname"); echo $factarray["SURN"]; ?></td>
+				<?php print_help_link("surname_help", "qm", "surname"); echo i18n::translate('SURN'); ?></td>
 			<td class="optionbox <?php echo $TEXT_DIRECTION; ?>">
 				<input type="text" name="surn" id="SURN" value="<?php echo $surn?>" />
 				<input type="hidden" name="ged" id="ged" value="<?php echo $ged?>" />
