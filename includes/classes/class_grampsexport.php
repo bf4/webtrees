@@ -86,7 +86,7 @@ class GrampsExport {
  * The methods adds all the root elements and appends them to a DOMDocument.
  */
 	function begin_xml() {
-		global $pgv_lang, $factarray;//, $eventsArray, $dom, $ePeople, $this->eFams, $eSources, $ePlaces, $eObject;
+		global $pgv_lang; //, $eventsArray, $dom, $ePeople, $this->eFams, $eSources, $ePlaces, $eObject;
 		$user = PGV_USER_NAME;
 
 		$this->dom = new DomDocument("1.0", "UTF-8");
@@ -232,15 +232,13 @@ class GrampsExport {
 	  * @param int $done - whether the method is called from the GrampsExport($done=1) or a sub-class
 	  */
 		function create_event($personrec, $event, $eventRec,$done=1) {
-		global $factarray;
 			$eventID = $this->generateHandle();
 			$eventHandle = $eventID;
 			$eEvent = $this->dom->createElement("event");
 			$eType = $this->dom->createElement("type");
 			$eTypeText = $this->dom->createTextNode($event);
 			$eTypeText = $eType->appendChild($eTypeText);
-			$eEvent->appendChild($eType);//$factarray[$event])
-		//	$eEvent->setAttribute("type", $factarray[$event]);
+			$eEvent->appendChild($eType);
 		$eEvent->setAttribute("id", $eventID);
 		$eEvent->setAttribute("handle", $eventHandle);
 		$eEvent->setAttribute("change", time());

@@ -244,7 +244,7 @@ class TreeNav {
 	* @param Person $person the person to print the details for
 	*/
 	function getDetails(&$person) {
-		global $pgv_lang, $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
+		global $pgv_lang, $SHOW_ID_NUMBERS, $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
 		global $TEXT_DIRECTION;
 
 		if (empty($person)) $person = $this->rootPerson;
@@ -307,22 +307,12 @@ class TreeNav {
 		<img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
 		</span><br />
 		<div class="details1 indent">
-			<b><?php
-				if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
-				else print UTF8_substr($factarray['BIRT'], 0, 1);
-				?>:</b>
-				<?php
-				echo $person->getBirthDate()->Display(), ' ', PrintReady($person->getBirthPlace());
-				?>
-			<br />
-			<b><?php
-			if ($person->isDead()) {
-				if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-				else print UTF8_substr($factarray['DEAT'], 0, 1);
-				?>:</b>
-				<?php
-				echo $person->getDeathDate()->Display(), ' ', PrintReady($person->getDeathPlace());
-			} else echo "<br />" ?>
+			<?php
+				echo '<b>', i18n::translate('ABBREV_BIRT'), '</b> ', $person->getBirthDate()->Display(), ' ', PrintReady($person->getBirthPlace()), '<br />';
+				if ($person->isDead()) {
+					echo '<b>', i18n::translate('ABBREV_DEAT'), '</b> ', $person->getDeathDate()->Display(), ' ', PrintReady($person->getDeathPlace());
+				}
+			?>
 		</div>
 		<br />
 		<span class="name1"><?php
@@ -358,40 +348,18 @@ class TreeNav {
 				<img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
 				<br />
 				<div class="details1 indent">
-				<b><?php
-					if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
-					else print UTF8_substr($factarray['BIRT'], 0, 1);
-					?>:</b>
-				<?php
-				echo $spouse->getBirthDate()->Display(), ' ', PrintReady($spouse->getBirthPlace());
-				?>
-				<br />
-				<b><?php
-					if (isset ($factAbbrev["MARR"])) print $factAbbrev["MARR"];
-					else print UTF8_substr($factarray['MARR'], 0, 1);
-					?>:</b>
-				<?php
-					$mdate = $family->getMarriageDate();
-					if (!is_null($mdate)) print $mdate->Display()." ";
-					$place='';
-					$place = $family->getMarriagePlace();
-					if (!empty($place)) print PrintReady($place); ?>
-					<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a>
-				<br />
-				<b><?php
-				if ($spouse->isDead()) {
-					if (isset ($factAbbrev["DEAT"])) {
-						echo $factAbbrev["DEAT"];
-					} else {
-						echo UTF8_substr($factarray['DEAT'], 0, 1);
-					}
-					?>:</b>
 					<?php
-					echo $spouse->getDeathDate()->Display(), ' ', PrintReady($spouse->getDeathPlace());
+						echo '<b>', i18n::translate('ABBREV_BIRT'), '</b> ', $spouse->getBirthDate()->Display(), ' ', PrintReady($spouse->getBirthPlace()), '<br />';
+						echo '<b>', i18n::translate('ABBREV_MARR'), '</b> ', $family->getMarriageDate()->Display(), ' ', $family->getMarriagePlace();
+					?>
+					<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a><br />
+					<?php
+						if ($spouse->isDead()) {
+							echo '<b>', i18n::translate('ABBREV_DEAT'), '</b> ', $spouse->getDeathDate()->Display(), ' ', PrintReady($spouse->getDeathPlace()), '<br />';
 				} ?>
 				</div>
 				<?php
-			} else print "<br />\n";
+			}
 		}
 		?>
 		</span>

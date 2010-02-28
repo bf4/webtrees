@@ -44,7 +44,7 @@ class stats_ui extends stats
 
 	static function _getFavorites($isged=true) {
 		global $GEDCOM, $pgv_lang;
-		global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION, $INDEX_DIRECTORY;
+		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION, $INDEX_DIRECTORY;
 		global $show_full, $PEDIGREE_FULL_DETAILS;
 
 		// Override GEDCOM configuration temporarily
@@ -399,7 +399,7 @@ class stats_ui extends stats
 			}
 			$content .= "<div class=\"news_box\" id=\"{$news['anchor']}\">\n";
 
-			// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News title
+			// Look for $pgv_lang and $GLOBALS substitutions in the News title
 			$newsTitle = print_text($news['title'], 0, 2);
 			$ct = preg_match("/#(.+)#/", $newsTitle, $match);
 			if($ct > 0) {
@@ -410,7 +410,7 @@ class stats_ui extends stats
 			$content .= "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n";
 			$content .= "<span class=\"news_date\">".format_timestamp($news['date'])."</span><br /><br />\n";
 
-			// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News text
+			// Look for $pgv_lang and $GLOBALS substitutions in the News text
 			$newsText = print_text($news['text'], 0, 2);
 			$ct = preg_match("/#(.+)#/", $newsText, $match);
 			if($ct > 0) {
