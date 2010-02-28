@@ -100,7 +100,6 @@ class Event {
 	 * @return Event
 	 */
 	function __construct($subrecord, $lineNumber=-1) {
-		global $factarray;
 		if (preg_match('/^1 ('.PGV_REGEX_TAG.') *(.*)/', $subrecord, $match)) {
 			$this->tag=$match[1];
 			$this->detail=$match[2];
@@ -315,7 +314,7 @@ class Event {
 	 * @param boolean $anchor	whether to add anchor to date and place
 	 */
 	function print_simple_fact($return=false, $anchor=false) {
-		global $pgv_lang, $SHOW_PEDIGREE_PLACES, $factarray, $ABBREVIATE_CHART_LABELS;
+		global $pgv_lang, $SHOW_PEDIGREE_PLACES, $ABBREVIATE_CHART_LABELS;
 
 		if (!$this->canShow()) return "";
 		$data = "";

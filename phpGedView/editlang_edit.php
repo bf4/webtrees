@@ -52,10 +52,6 @@ print_simple_header($pgv_lang["editlang"]);
 echo PGV_JS_START, "self.focus();", PGV_JS_END;
 
 switch ($file_type) {
-case "facts":
-	$lang_filename = $factsfile[$language2];
-	$lang_filename_orig = $factsfile["english"];
-	break;
 case "configure_help":
 	$lang_filename = $confighelpfile[$language2];
 	$lang_filename_orig = $confighelpfile["english"];
@@ -71,10 +67,6 @@ case "admin":
 case "editor":
 	$lang_filename = $editorfile[$language2];
 	$lang_filename_orig = $editorfile["english"];
-	break;
-case "countries":
-	$lang_filename = $countryfile[$language2];
-	$lang_filename_orig = $countryfile["english"];
 	break;
 case "faqlist":
 	$lang_filename = $faqlistfile[$language2];
@@ -167,15 +159,6 @@ if ($action == "save") {
 // configuration option "magic_quotes_gpc" is set "on".
 
 	switch ($file_type) {
-	case "facts":
-		// read facts.en.php file into array
-		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($factsfile["english"], '$factarray[');
-		// read facts.xx.php file into array
-		$new_language_array = array();
-		$new_language_file =  $factsfile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, '$factarray[');
-		break;
 	case "configure_help":
 		// read configure_help.en.php file into array
 		$english_language_array = array();
@@ -212,15 +195,6 @@ if ($action == "save") {
 		$new_language_file =  $editorfile[$language2];
 		$new_language_array = read_complete_file_into_array($new_language_file, '$pgv_lang[');
 		break;
-	case "countries":
-		// read countries.en.php file into array
-		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($countryfile["english"], '$countries[');
-		// read countries.xx.php file into array
-		$new_language_array = array();
-		$new_language_file =  $countryfile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, '$countries[');
-		break;
 	case "faqlist":
 		// read faqlist.en.php file into array
 		$english_language_array = array();
@@ -233,11 +207,11 @@ if ($action == "save") {
 	case "extra":
 		// read extra.en.php file into array
 		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($extrafile["english"], '$pgv_lang[', '$factarray[', '$countries[', '$faqlist[');
+		$english_language_array = read_complete_file_into_array($extrafile["english"], '$pgv_lang[', '$faqlist[');
 		// read extra.xx.php file into array
 		$new_language_array = array();
 		$new_language_file =  $extrafile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, '$pgv_lang[', '$factarray[', '$countries[', '$faqlist[');
+		$new_language_array = read_complete_file_into_array($new_language_file, '$pgv_lang[', '$faqlist[');
 		break;
 	case "lang":
 	default:
