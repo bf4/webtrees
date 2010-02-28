@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_FUNCTIONS_PLACE_PHP', '');
 
 function get_plac_label() {
-	global $pgv_lang, $factarray;
+	global $pgv_lang;
 	global $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -43,7 +43,7 @@ function get_plac_label() {
 	if (empty($HEAD_PLAC_FORM)) $HEAD_PLAC_FORM = $pgv_lang["default_form"];
 	$plac_label = explode(',', $HEAD_PLAC_FORM);
 	$plac_label = array_reverse($plac_label);
-	if ($HEAD_PLAC_FORM == $pgv_lang["default_form"]) $plac_label[0] = $factarray["CTRY"];
+	if ($HEAD_PLAC_FORM == $pgv_lang["default_form"]) $plac_label[0] = i18n::translate('CTRY');
 
 	return $plac_label;
 }
@@ -51,7 +51,7 @@ function get_plac_label() {
 function setup_place_subfields($element_id) {
 	global $pgv_lang, $PGV_PLACES_SETUP;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
-	global $countries, $factarray;
+	global $countries;
 
 	if (!empty($PGV_PLACES_SETUP)) return;
 	$PGV_PLACES_SETUP = true;
@@ -282,7 +282,7 @@ function setup_place_subfields($element_id) {
  */
 function print_place_subfields($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
-	global $countries, $factarray;
+	global $countries;
 
 	//if ($element_id=="DEAT_PLAC") return; // known bug - waiting for a patch
 	$plac_label = get_plac_label();
@@ -300,7 +300,7 @@ function print_place_subfields($element_id) {
 		$subtagid=$element_id."_".$i;
 		$subtagname=$element_id."_".$i;
 		$plac_label[$i]=trim($plac_label[$i]);
-		if (in_array(UTF8_ucfirst($plac_label[$i]), array("Country", "Pays", "Land", "Zeme", "Ülke", "País", "Ország", "Nazione", "Kraj", "Maa", $factarray["CTRY"]))) {
+		if (in_array(UTF8_ucfirst($plac_label[$i]), array("Country", "Pays", "Land", "Zeme", "Ülke", "País", "Ország", "Nazione", "Kraj", "Maa", i18n::translate('CTRY')))) {
 			$cols="8";
 			$subtagname=$element_id."_PLAC_CTRY";
 			$icountry=$i;

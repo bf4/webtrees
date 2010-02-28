@@ -45,7 +45,7 @@ require_once PGV_ROOT.'includes/cssparser.inc.php';
  * @param string $legend optional legend of the fieldset
  */
 function print_indi_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $pgv_lang, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES, $MAX_ALIVE_AGE;
 
 	if ($option=="MARR_PLAC") return;
@@ -65,7 +65,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	//-- fieldset
 	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") {
 		$filter=$legend;
-		$legend=$factarray[substr($option, 0, 4)]." @ ".$legend;
+		$legend=i18n::translate(substr($option, 0, 4))." @ ".$legend;
 	}
 	if ($legend == "") $legend = $pgv_lang["individuals"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -92,13 +92,13 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo $pgv_lang["leaves"], "</button> ";
 	echo "<br />";
 	echo "<button type=\"button\" class=\"BIRT_YES\" title=\"", $pgv_lang["button_BIRT_YES"], "\" >";
-	echo $factarray["BIRT"], "&gt;100</button> ";
+	echo i18n::translate('BIRT'), "&gt;100</button> ";
 	echo "<button type=\"button\" class=\"BIRT_Y100\" title=\"", $pgv_lang["button_BIRT_Y100"], "\" >";
-	echo $factarray["BIRT"], "&lt;=100</button> ";
+	echo i18n::translate('BIRT'), "&lt;=100</button> ";
 	echo "<button type=\"button\" class=\"DEAT_YES\" title=\"", $pgv_lang["button_DEAT_YES"], "\" >";
-	echo $factarray["DEAT"], "&gt;100</button> ";
+	echo i18n::translate('DEAT'), "&gt;100</button> ";
 	echo "<button type=\"button\" class=\"DEAT_Y100\" title=\"", $pgv_lang["button_DEAT_Y100"], "\" >";
-	echo $factarray["DEAT"], "&lt;=100</button> ";
+	echo i18n::translate('DEAT'), "&lt;=100</button> ";
 	echo "<button type=\"button\" class=\"reset\" title=\"", $pgv_lang["button_reset"], "\" >";
 	echo $pgv_lang["reset"], "</button> ";
 	//-- table header
@@ -106,19 +106,19 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<thead><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
-	echo '<th class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this, 2)">', $factarray['NAME'], '</a></th>';
+	echo '<th class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this, 2)">', i18n::translate('NAME'), '</a></th>';
 	echo "<th class=\"list_label\" style=\"display:none\">GIVN</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">SURN</th>";
 	if ($option=="sosa") echo "<th class=\"list_label\">Sosa</th>";
-	echo "<th class=\"list_label\">", $factarray["BIRT"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('BIRT'), "</th>";
 	if ($tiny) echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"", $pgv_lang["anniversary"], "\" title=\"", $pgv_lang["anniversary"], "\" border=\"0\" /></td>";
-	echo "<th class=\"list_label\">", $factarray["PLAC"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('PLAC'), "</th>";
 	if ($tiny) echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"", $pgv_lang["children"], "\" title=\"", $pgv_lang["children"], "\" border=\"0\" /></th>";
-	echo "<th class=\"list_label\">", $factarray["DEAT"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('DEAT'), "</th>";
 	if ($tiny) echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"", $pgv_lang["anniversary"], "\" title=\"", $pgv_lang["anniversary"], "\" border=\"0\" /></td>";
-	echo "<th class=\"list_label\">", $factarray["AGE"], "</th>";
-	echo "<th class=\"list_label\">", $factarray["PLAC"], "</th>";
-	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">", $factarray["CHAN"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('AGE'), "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('PLAC'), "</th>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">", i18n::translate('CHAN'), "</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">SEX</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">BIRT</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">DEAT</th>";
@@ -187,7 +187,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 				continue;
 			}
 			if ($title=$name['type']=='_MARNM') {
-				$title='title="'.$factarray['_MARNM'].'"';
+				$title='title="'.i18n::translate('_MARNM').'"';
 			} else {
 				$title='';
 			}
@@ -389,7 +389,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // INDI:ID
 	echo "<td class=\"list_label\">"; // NAME
 	if (count($unique_indis)>1) {
-		echo '<a href="javascript:;" onclick="sortByOtherCol(this, 1)"><img src="images/topdown.gif" alt="" border="0" /> ', $factarray["GIVN"], '</a><br />';
+		echo '<a href="javascript:;" onclick="sortByOtherCol(this, 1)"><img src="images/topdown.gif" alt="" border="0" /> ', i18n::translate('GIVN'), '</a><br />';
 	}
 	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">", $pgv_lang["show_parents"], "</label><br />";
 	echo $pgv_lang['total_indis'], ' : ', count($unique_indis);
@@ -438,7 +438,7 @@ function print_indi_table($datalist, $legend="", $option="") {
  * @param string $legend optional legend of the fieldset
  */
 function print_fam_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $pgv_lang, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $lang_short_cut, $LANGUAGE;
 
 	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
@@ -456,7 +456,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	//-- fieldset
 	if ($option=="MARR_PLAC") {
 		$filter=$legend;
-		$legend=$factarray["MARR"]." @ ".$legend;
+		$legend=i18n::translate('MARR')." @ ".$legend;
 	}
 	if ($legend == "") $legend = $pgv_lang["families"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -478,13 +478,13 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo $pgv_lang["leaves"], "</button> ";
 	echo "<br />";
 	echo "<button type=\"button\" class=\"MARR_U\" title=\"", $pgv_lang["button_MARR_U"], "\" >";
-	echo $factarray["MARR"], " ?</button> ";
+	echo i18n::translate('MARR'), " ?</button> ";
 	echo "<button type=\"button\" class=\"MARR_YES\" title=\"", $pgv_lang["button_MARR_YES"], "\" >";
-	echo $factarray["MARR"], "&gt;100</button> ";
+	echo i18n::translate('MARR'), "&gt;100</button> ";
 	echo "<button type=\"button\" class=\"MARR_Y100\" title=\"", $pgv_lang["button_MARR_Y100"], "\" >";
-	echo $factarray["MARR"], "&lt;=100</button> ";
+	echo i18n::translate('MARR'), "&lt;=100</button> ";
 	echo "<button type=\"button\" class=\"MARR_DIV\" title=\"", $pgv_lang["button_MARR_DIV"], "\" >";
-	echo $factarray["DIV"], "</button> ";
+	echo i18n::translate('DIV'), "</button> ";
 	echo "<button type=\"button\" class=\"reset\" title=\"", $pgv_lang["button_reset"], "\" >";
 	echo $pgv_lang["reset"], "</button> ";
 	//-- table header
@@ -493,18 +493,18 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">FAM</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
-	echo "<th class=\"list_label\">", $factarray["NAME"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('NAME'), "</th>";
 	echo "<th style=\"display:none\">HUSB:GIVN</th>";
-	echo "<th class=\"list_label\">", $factarray["AGE"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('AGE'), "</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
-	echo "<th class=\"list_label\">", $factarray["NAME"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('NAME'), "</th>";
 	echo "<th style=\"display:none\">WIFE:GIVN</th>";
-	echo "<th class=\"list_label\">", $factarray["AGE"], "</th>";
-	echo "<th class=\"list_label\">", $factarray["MARR"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('AGE'), "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('MARR'), "</th>";
 	if ($tiny) echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"", $pgv_lang["anniversary"], "\" title=\"", $pgv_lang["anniversary"], "\" border=\"0\" /></td>";
-	echo "<th class=\"list_label\">", $factarray["PLAC"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('PLAC'), "</th>";
 	if ($tiny) echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"", $pgv_lang["children"], "\" title=\"", $pgv_lang["children"], "\" border=\"0\" /></th>";
-	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">", $factarray["CHAN"], "</th>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">", i18n::translate('CHAN'), "</th>";
 	echo "<th style=\"display:none\">MARR</th>";
 	echo "<th style=\"display:none\">DEAT</th>";
 	echo "<th style=\"display:none\">TREE</th>";
@@ -663,7 +663,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 				// Localise the _NMR facts
 				$func("_NMR", $family->getXref());
 			}
-			echo '<div>', $factarray["_NMR"], '<a name="9999999"></a></div>';
+			echo '<div>', i18n::translate('_NMR'), '<a name="9999999"></a></div>';
 		} else if (get_sub_record(1, "1 _NMAR", $family->getGedcomRecord())) {
 			// Allow special processing for different languages
 			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
@@ -671,7 +671,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 				// Localise the _NMR facts
 				$func("_NMAR", $family->getXref());
 			}
-			echo '<div>', $factarray["_NMAR"], '<a name="9999999"></a></div>';
+			echo '<div>', i18n::translate('_NMAR'), '<a name="9999999"></a></div>';
 		} else {
 			$factdetail = explode(' ', trim($family->getMarriageRecord()));
 			if (isset($factdetail)) {
@@ -772,7 +772,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // HUSB:ID
 	echo "<td class=\"list_label\">"; // HUSB:NAME
 	if ($num>1) {
-		echo '<a href="javascript:;" onclick="sortByOtherCol(this, 1)"><img src="images/topdown.gif" alt="" border="0" /> ', $factarray["GIVN"], '</a><br />';
+		echo '<a href="javascript:;" onclick="sortByOtherCol(this, 1)"><img src="images/topdown.gif" alt="" border="0" /> ', i18n::translate('GIVN'), '</a><br />';
 	}
 	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">", $pgv_lang["show_parents"], "</label><br />";
 	echo $pgv_lang["total_fams"], " : ", $num;
@@ -782,7 +782,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "<td></td>"; // HUSB:AGE
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // WIFE:ID
 	echo "<td class=\"list_label\" style=\"vertical-align: top;\">"; // WIFE:NAME
-	echo '<a href="javascript:;" onclick="sortByOtherCol(this, 1)"><img src="images/topdown.gif" alt="" border="0" /> ', $factarray["GIVN"], '</a><br />';
+	echo '<a href="javascript:;" onclick="sortByOtherCol(this, 1)"><img src="images/topdown.gif" alt="" border="0" /> ', i18n::translate('GIVN'), '</a><br />';
 	echo "</td>";
 	echo "<td style=\"display:none\">WIFE:GIVN</td>";
 	echo "<td></td>"; // WIFE:AGE
@@ -817,7 +817,7 @@ function print_fam_table($datalist, $legend="", $option="") {
  * @param string $legend optional legend of the fieldset
  */
 function print_sour_table($datalist, $legend=null) {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $pgv_lang, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) {
@@ -839,15 +839,15 @@ function print_sour_table($datalist, $legend=null) {
 	if ($SHOW_ID_NUMBERS) {
 		echo '<th class="list_label rela">SOUR</th>';
 	}
-	echo '<th class="list_label">', $factarray['TITL'], '</th>';
-	echo '<td class="list_label t2" style="display:none;">', $factarray['TITL'], ' 2</td>';
-	echo '<th class="list_label">', $factarray['AUTH'], '</th>';
+	echo '<th class="list_label">', i18n::translate('TITL'), '</th>';
+	echo '<td class="list_label t2" style="display:none;">', i18n::translate('TITL'), ' 2</td>';
+	echo '<th class="list_label">', i18n::translate('AUTH'), '</th>';
 	echo '<th class="list_label">', $pgv_lang['individuals'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['families'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['media'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['shared_notes'], '</th>';
 	if ($SHOW_LAST_CHANGE) {
-		echo '<th class="list_label rela">', $factarray['CHAN'], '</th>';
+		echo '<th class="list_label rela">', i18n::translate('CHAN'), '</th>';
 	}
 	echo '</tr>';
 	//-- table body
@@ -954,7 +954,7 @@ T2;
  * @param string $legend optional legend of the fieldset
  */
 function print_note_table($datalist, $legend=null) {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $pgv_lang, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) {
@@ -980,13 +980,13 @@ function print_note_table($datalist, $legend=null) {
 	if ($SHOW_ID_NUMBERS) {
 		echo '<th class="list_label rela">NOTE</th>';
 	}
-	echo '<th class="list_label">', $factarray['TITL'], '</th>';
+	echo '<th class="list_label">', i18n::translate('TITL'), '</th>';
 	echo '<th class="list_label">', $pgv_lang['individuals'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['families'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['media'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['sources'], '</th>';
 	if ($SHOW_LAST_CHANGE) {
-		echo '<th class="list_label rela">', $factarray['CHAN'], '</th>';
+		echo '<th class="list_label rela">', i18n::translate('CHAN'), '</th>';
 	}
 	echo '</tr>';
 	//-- table body
@@ -1042,7 +1042,7 @@ function print_note_table($datalist, $legend=null) {
  * @param string $legend optional legend of the fieldset
  */
 function print_repo_table($repos, $legend='') {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $pgv_lang, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 
 	if (!$repos) {
@@ -1064,10 +1064,10 @@ function print_repo_table($repos, $legend='') {
 	if ($SHOW_ID_NUMBERS) {
 		echo '<th class="list_label rela">REPO</th>';
 	}
-	echo '<th class="list_label">', $factarray['NAME'], '</th>';
+	echo '<th class="list_label">', i18n::translate('NAME'), '</th>';
 	echo '<th class="list_label">', $pgv_lang['sources'], '</th>';
 	if ($SHOW_LAST_CHANGE) {
-		echo '<th class="list_label rela">', $factarray['CHAN'], '</th>';
+		echo '<th class="list_label rela">', i18n::translate('CHAN'), '</th>';
 	}
 	echo '</tr>';
 	//-- table body
@@ -1105,7 +1105,7 @@ function print_repo_table($repos, $legend='') {
  * @param string $legend optional legend of the fieldset
  */
 function print_media_table($datalist, $legend="") {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $pgv_lang, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_MEDIA_FILENAME;
 
 	if (count($datalist)<1) return;
@@ -1121,11 +1121,11 @@ function print_media_table($datalist, $legend="") {
 	echo "<tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">OBJE</th>";
-	echo "<th class=\"list_label\">", $factarray["TITL"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('TITL'), "</th>";
 	echo "<th class=\"list_label\">", $pgv_lang["individuals"], "</th>";
 	echo "<th class=\"list_label\">", $pgv_lang["families"], "</th>";
 	echo "<th class=\"list_label\">", $pgv_lang["sources"], "</th>";
-	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">", $factarray["CHAN"], "</th>";
+	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">", i18n::translate('CHAN'), "</th>";
 	echo "</tr>\n";
 	//-- table body
 	$n = 0;
@@ -1199,7 +1199,7 @@ function print_media_table($datalist, $legend="") {
  * @param string $listFormat presentation style: "style2 = sortable list, "style3" = cloud
  */
 function print_surn_table($datalist, $target="INDI", $listFormat="") {
-	global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
+	global $pgv_lang, $GEDCOM, $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
 	global $SURNAME_LIST_STYLE;
 	if (count($datalist)<1) return;
 
@@ -1257,7 +1257,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	echo "<table id=\"", $table_id, "\" class=\"sortable list_table center\">";
 	echo "<tr>";
 	echo "<td></td>";
-	echo "<th class=\"list_label\">", $factarray["SURN"], "</th>";
+	echo "<th class=\"list_label\">", i18n::translate('SURN'), "</th>";
 	echo "<th class=\"list_label\">";
 	if ($target=="FAM") echo $pgv_lang["spouses"]; else echo $pgv_lang["individuals"];
 	echo "</th>";
@@ -1300,13 +1300,13 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 // @param $surnames array (of SURN, of array of SPFX_SURN, of array of PID)
 // @param $type string, indilist or famlist
 function format_surname_table($surnames, $type) {
-	global $pgv_lang, $factarray, $GEDCOM;
+	global $pgv_lang, $GEDCOM;
 
 	require_once PGV_ROOT.'js/sorttable.js.htm';
 	$table_id ='ID'.floor(microtime()*1000000); // sorttable requires a unique ID
 	$html='<table id="'.$table_id.'" class="sortable list_table center">';
 	$html.='<tr><th></th>';
-	$html.='<th class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this, 1)">'.$factarray['SURN'].'</a></th>';
+	$html.='<th class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this, 1)">'.i18n::translate('SURN').'</a></th>';
 	$html.='<th style="display:none;">SURN</th>'; // hidden column for sorting surnames
 	$html.='<th class="list_label">';
 	if ($type=='famlist') {
@@ -1514,7 +1514,7 @@ function format_surname_list($surnames, $style, $totals) {
  * @param array $datalist contain records that were extracted from the database.
  */
 function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=true) {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	require_once PGV_ROOT.'js/sorttable.js.htm';
 	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
@@ -1529,9 +1529,9 @@ function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=
 	echo "<th class=\"list_label\">", $pgv_lang["record"], "</th>";
 	echo "<th style=\"display:none\">GIVN</th>";
 	if ($showChange) {
-		echo "<th class=\"list_label\">", $factarray["CHAN"], "</th>";
+		echo "<th class=\"list_label\">", i18n::translate('CHAN'), "</th>";
 		if ($show_pgvu) {
-			echo "<th class=\"list_label\">", $factarray["_PGVU"], "</th>";
+			echo "<th class=\"list_label\">", i18n::translate('_PGVU'), "</th>";
 		}
 	}
 	echo "</tr>\n";
@@ -1604,7 +1604,7 @@ function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	if ($n>1 && $indi) {
-		echo '<a href="javascript:;" onclick="sortByOtherCol(this, 1)"><img src="images/topdown.gif" alt="" border="0" /> ', $factarray["GIVN"], '</a><br />';
+		echo '<a href="javascript:;" onclick="sortByOtherCol(this, 1)"><img src="images/topdown.gif" alt="" border="0" /> ', i18n::translate('GIVN'), '</a><br />';
 	}
 	if ($indi) {
 		echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">", $pgv_lang["show_parents"], "</label><br />";
@@ -1628,7 +1628,7 @@ function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=
  * @param array $datalist contain records that were extracted from the database.
  */
 function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false, $sort_by_event=false) {
-	global $pgv_lang, $factarray, $TEXT_DIRECTION, $SERVER_URL;
+	global $pgv_lang, $TEXT_DIRECTION, $SERVER_URL;
 	require_once PGV_ROOT.'js/sorttable.js.htm';
 	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1678,9 +1678,9 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 			$return .= "<tr>";
 			$return .= "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 			$return .= "<th style=\"display:none\">GIVN</th>";
-			$return .= "<th class=\"list_label\">".$factarray["DATE"]."</th>";
+			$return .= "<th class=\"list_label\">".i18n::translate('DATE')."</th>";
 			$return .= "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
-			$return .= "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
+			$return .= "<th class=\"list_label\">".i18n::translate('EVEN')."</th>";
 			$return .= "</tr>\n";
 		}
 
@@ -1737,12 +1737,12 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		if ($allow_download) {
 			// hCalendar:dtstart and hCalendar:summary
 			$return .= "<abbr class=\"dtstart\" title=\"".strip_tags($value['date']->Display(false, 'Ymd', array()))."\"></abbr>";
-			$return .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$value['fact']]." : ".PrintReady(strip_tags($record->getFullName()))."\"></abbr>";
+			$return .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".i18n::translate($value['fact'])." : ".PrintReady(strip_tags($record->getFullName()))."\"></abbr>";
 		}
 		$return .= "</td>";
 		//-- Event name
 		$return .= "<td class=\"list_value_wrap\">";
-		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item url\">".$factarray[$value['fact']]."</a>"; // hCalendar:url
+		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item url\">".i18n::translate($value['fact'])."</a>"; // hCalendar:url
 		$return .= "&nbsp;</td>";
 
 		$return .= "</tr>\n";
@@ -1813,7 +1813,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
  * This performs the same function as print_events_table(), but formats the output differently.
  */
 function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $sort_by_event=false) {
-	global $pgv_lang, $factarray, $TEXT_DIRECTION;
+	global $pgv_lang, $TEXT_DIRECTION;
 
 	// Did we have any output?  Did we skip anything?
 	$output = 0;
@@ -1873,7 +1873,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 	foreach($filtered_events as $value) {
 		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
 		$return .= "<br /><div class=\"indent\">";
-		$return .= $factarray[$value['fact']].' - '.$value['date']->Display(true);
+		$return .= i18n::translate($value['fact']).' - '.$value['date']->Display(true);
 		if ($value['anniv']!=0) $return .= " (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
 		if (!empty($value['plac'])) $return .= " - <a href=\"".encode_url(get_place_url($value['plac']))."\">".$value['plac']."</a>";
 		$return .= "</div>";

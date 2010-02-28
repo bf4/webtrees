@@ -154,12 +154,9 @@ function print_fact(&$eventObj, $noedit=false) {
 			else $rowID = "row_".$styleadd;
 			echo "\n\t\t<tr class=\"", $rowID, "\">";
 			echo "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
-			$label = $factref;
-			if (isset($factarray[$factref])) $label = $factarray[$factref];
-			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
 			if ($SHOW_FACT_ICONS)
 				echo $eventObj->Icon(), ' ';
-			echo $label;
+			echo i18n::translate($factref);
 			if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", $pgv_lang["number_sign"], $n_chil++;
 			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", $pgv_lang["number_sign"], $n_gchi++;
 			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", $pgv_lang["number_sign"], $n_ggch++;
@@ -214,13 +211,10 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
 			echo "\n\t\t<tr class=\"", $rowID, "\">";
-			$label = $factref;
-			if (isset($factarray[$factref])) $label = $factarray[$factref];
-			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
 			echo "<td class=\"descriptionbox $styleadd center width20\">";
 			if ($SHOW_FACT_ICONS)
 				echo $eventObj->Icon(), ' ';
-			echo $label;
+			echo i18n::translate($factref);
 			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
 				$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
 				if (empty($taskid)) {
@@ -389,26 +383,26 @@ function print_fact(&$eventObj, $noedit=false) {
 			print_asso_rela_record($pid, $factrec, true, gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)));
 			// -- find _PGVU field
 			$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
-			if ($ct>0) echo " - ", $factarray["_PGVU"], ": ", $match[1];
+			if ($ct>0) echo " - ", i18n::translate('_PGVU'), ": ", $match[1];
 			// -- Find RESN tag
 			if (isset($resn_value)) {
 				echo "<img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
 				print_help_link("RESN_help", "qm", "RESN_help_title");
 			}
 			if (preg_match("/\n2 FAMC @(.+)@/", $factrec, $match)) {
-				echo "<br/><span class=\"label\">", $factarray["FAMC"], ":</span> ";
+				echo "<br/><span class=\"label\">", i18n::translate('FAMC'), ":</span> ";
 				$family=Family::getInstance($match[1]);
 				echo "<a href=\"", encode_url($family->getLinkUrl()), "\">", $family->getFullName(), "</a>";
 				if (preg_match("/\n3 ADOP (HUSB|WIFE|BOTH)/", UTF8_strtoupper($factrec), $match)) {
-					echo '<br/><span class="indent"><span class="label">', $factarray['ADOP'], ':</span> ';
+					echo '<br/><span class="indent"><span class="label">', i18n::translate('ADOP'), ':</span> ';
 					echo '<span class="field">';
 					switch ($match[1]) {
 					case 'HUSB':
 					case 'WIFE':
-						echo $factarray[$match[1]];
+						echo i18n::translate($match[1]);
 						break;
 					case 'BOTH':
-						echo $factarray['HUSB'], '+', $factarray['WIFE'];
+						echo i18n::translate('HUSB'), '+', i18n::translate('WIFE');
 						break;
 					}
 					echo '</span></span>';

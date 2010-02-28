@@ -276,7 +276,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
  * @param string $label optional indi label (descendancy booklet)
  */
 function print_family_children($famid, $childid = "", $sosa = 0, $label="", $personcount="1") {
-	global $pgv_lang, $factarray, $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
+	global $pgv_lang, $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $show_changes, $pgv_changes, $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -467,7 +467,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
  */
 function print_family_facts(&$family, $sosa = 0) {
 	global $pgv_lang, $pbwidth, $pbheight, $view;
-	global $nonfacts, $factarray;
+	global $nonfacts;
 	global $TEXT_DIRECTION, $GEDCOM, $SHOW_ID_NUMBERS;
 	global $show_changes, $pgv_changes;
 	global $linkToID;
