@@ -46,7 +46,7 @@ $PGV_BLOCKS['print_yahrzeit']['config']   =array(
 
 // this block prints a list of upcoming yahrzeit events of people in your gedcom
 function print_yahrzeit($block=true, $config='', $side, $index) {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $pgv_lang, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 	global $DAYS_TO_SHOW_LIMIT, $SHOW_MARRIED_NAMES, $SERVER_URL;
 
@@ -148,11 +148,11 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 		$content .= "<table id=\"{$table_id}\" class=\"sortable list_table center\">";
 		$content .= "<tr>";
-		$content .= "<th class=\"list_label\">{$factarray['NAME']}</th>";
+		$content .= "<th class=\"list_label\">".i18n::translate('NAME')."</th>";
 		$content .= "<th style=\"display:none\">GIVN</th>";
-		$content .= "<th class=\"list_label\">{$factarray['DATE']}</th>";
+		$content .= "<th class=\"list_label\">".i18n::translate('DATE')."</th>";
 		$content .= "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"{$pgv_lang['anniversary']}\" title=\"{$pgv_lang['anniversary']}\" border=\"0\" /></th>";
-		$content .= "<th class=\"list_label\">{$factarray['_YART']}</th>";
+		$content .= "<th class=\"list_label\">".i18n::translate('_YART')."</th>";
 		$content .= "</tr>";
 
 		$count=0;
@@ -199,7 +199,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 					// hCalendar:dtstart and hCalendar:summary
 					//TODO does this work??
 					$content .= "<abbr class=\"dtstart\" title=\"".strip_tags($yahrzeit['date']->Display(false,'Ymd',array()))."\"></abbr>";
-					$content .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$yahrzeit['fact']]." : ".PrintReady(strip_tags($ind->getFullName()))."\"></abbr>";
+					$content .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".i18n::translate($yahrzeit['fact'])." : ".PrintReady(strip_tags($ind->getFullName()))."\"></abbr>";
 				}
 
 				// upcomming yahrzeit dates
@@ -214,7 +214,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		// table footer
 		$content .= "<tr class=\"sortbottom\">";
 		$content .= "<td class=\"list_label\">";
-		$content .= '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+		$content .= '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.i18n::translate('GIVN').'</a><br />';
 		$content .= $pgv_lang["total_names"].": ".$count;
 		if ($hidden) {
 			$content .= "<br /><span class=\"warning\">{$pgv_lang['hidden']} : {$hidden}</span>";

@@ -303,7 +303,7 @@ var oldMx = 0;
 			<td align="center"><?php print $pgv_lang["timeline_scrollSpeed"];?></td>
 				<td align="center"><?php print $pgv_lang["timeline_beginYear"];?></td>
 				<td align="center"><?php print $pgv_lang["timeline_endYear"];?></td>
-				<td align="center"><?php print $factarray["PLAC"];?></td>
+				<td align="center"><?php print i18n::translate('PLAC');?></td>
 		</tr>
 		<tr>
 

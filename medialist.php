@@ -123,8 +123,8 @@ if ($search == "yes") {
 	<!-- // NOTE: Row 1, left: Sort sequence -->
 	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("sortby_help", "qm", "sortby"); ?><?php echo $pgv_lang["sortby"]; ?></td>
 	<td class="optionbox wrap"><select name="sortby">
-		<option value="title" <?php if ($sortby=='title') echo "selected=\"selected\"";?>><?php echo $factarray["TITL"];?></option>
-		<option value="file" <?php if ($sortby=='file') echo "selected=\"selected\"";?>><?php echo $factarray["FILE"];?></option>
+		<option value="title" <?php if ($sortby=='title') echo "selected=\"selected\"";?>><?php echo i18n::translate('TITL'); ?></option>
+		<option value="file" <?php if ($sortby=='file') echo "selected=\"selected\"";?>><?php echo i18n::translate('FILE'); ?></option>
 	</select></td>
 
 	<!-- // NOTE: Row 1, right: Objects per page -->

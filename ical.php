@@ -97,7 +97,7 @@ function generateChildDescendancyIcal(&$person, $depth) {
  * @param int $depth the descendancy depth to show
  */
 function generateFamilyDescendancyIcal(&$person, &$family, $depth) {
-	global $pgv_lang, $factarray;
+	global $pgv_lang;
 	global $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent, $personcount;
 	global $icalEvents;
 	if (is_null($family)) return;
