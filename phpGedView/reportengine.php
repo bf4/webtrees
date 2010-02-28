@@ -294,15 +294,7 @@ elseif ($action=="setup") {
 							if ($option==$input["default"]) {
 								echo " selected=\"selected\"";
 							}
-							echo ">";
-							if (isset($factarray[$option])) {
-								echo $factarray[$option];
-							} elseif (isset($pgv_lang[$option])) {
-								echo $pgv_lang[$option];
-							} else {
-								echo $option;
-							}
-							echo "</option>\n";
+							echo '>', i18n::translate($option), '</option>';
 						}
 						echo "</select>\n";
 					}

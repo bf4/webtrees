@@ -48,7 +48,7 @@ $PGV_BLOCKS['print_todo']['config']   =array(
 
 // this block prints a list of _TODO events in your gedcom
 function print_todo($block=true, $config='', $side, $index) {
-	global $pgv_lang, $factarray, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
+	global $pgv_lang, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 
 	$block=true; // Always restrict this block's height
 
@@ -78,12 +78,12 @@ function print_todo($block=true, $config='', $side, $index) {
 	$table_id = 'ID'.floor(microtime()*1000000); // sorttable requires a unique ID
 	$content .= '<table id="'.$table_id.'" class="sortable list_table center">';
 	$content .= '<tr>';
-	$content .= '<th class="list_label">'.$factarray['DATE'].'</th>';
+	$content .= '<th class="list_label">'.i18n::translate('DATE').'</th>';
 	$content .= '<th class="list_label">'.$pgv_lang['record'].'</th>';
 	if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
 		$content .= '<th class="list_label">'.$pgv_lang['username'].'</th>';
 	}
-	$content .= '<th class="list_label">'.$factarray['TEXT'].'</th>';
+	$content .= '<th class="list_label">'.i18n::translate('TEXT').'</th>';
 	$content .= '</tr>';
 
 	$found=false;

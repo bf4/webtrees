@@ -322,7 +322,7 @@ function openPic(filename, width, height) {
 
 
 	function print_random_media_config($config) {
-		global $pgv_lang, $factarray, $PGV_BLOCKS, $TEXT_DIRECTION;
+		global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION;
 
 		$defaultConfig = $PGV_BLOCKS['print_random_media']['config'];
 		if (empty($config)) $config = $defaultConfig;
@@ -349,7 +349,7 @@ function openPic(filename, width, height) {
 	<tr>
 	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_filter_help", "qm"); print $pgv_lang["filter"]; ?></td>
 		<td class="optionbox">
-			<center><b><?php print $factarray["FORM"]; ?></b></center>
+			<center><b><?php echo i18n::translate('FORM'); ?></b></center>
 			<table class="width100">
 				<tr>
 			<td class="width33"><input type="checkbox" value="yes"
@@ -396,7 +396,7 @@ function openPic(filename, width, height) {
 				</tr>
 			</table>
 			<br />
-			<center><b><?php print $factarray["TYPE"]; ?></b></center>
+			<center><b><?php echo i18n::translate('TYPE'); ?></b></center>
 			<table class="width100">
 				<tr>
 				<?php
