@@ -105,9 +105,6 @@ class Event {
 			$this->detail=$match[2];
 			$this->lineNumber=$lineNumber;
 			$this->gedcomRecord=$subrecord;
-			// Store 1 EVEN/2 TYPE XXXX as a XXXX event.  Makes subsequent processing easier.
-			if (($this->tag=='EVEN' || $this->tag=='FACT') && preg_match('/2 TYPE (\w+)/', $subrecord, $match) && array_key_exists($match[1], $factarray))
-				$this->tag=$match[1];
 		}
 	}
 
@@ -280,30 +277,10 @@ class Event {
 	}
 
 	function getLabel($abbreviate=false) {
-		global $factarray, $factAbbrev;
-
-		if (is_null($this->label))
-			if (array_key_exists($this->tag, $factarray)) {
-				$this->label=$factarray[$this->tag];
-			} else {
-				$this->label=$this->tag;
-			}
-			// MARR_XXXX
-			if ($this->GetType()) {
-				$key = $this->tag."_".strtoupper($this->type);
-				if (array_key_exists($key, $factarray)) {
-					$this->label=$factarray[$key];
-				}
-			}
-
 		if ($abbreviate) {
-			if (isset ($factAbbrev[$this->tag])) {
-				return $factAbbrev[$this->tag];
-			} else {
-				return UTF8_substr($this->label, 0, 1);
-			}
+			return i18n::translate('ABBREV_'.$this->tag);
 		} else {
-			return $this->label;
+			return i18n::translate($this->tag);
 		}
 	}
 
