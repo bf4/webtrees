@@ -122,6 +122,9 @@ $PRIV_HIDE   = PGV_PRIV_HIDE;
 // For performance, it is quicker to refer to files using absolute paths
 define ('PGV_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
 
+// Add the Zend library to the include path
+set_include_path(realpath(PGV_ROOT.'/library').PATH_SEPARATOR.get_include_path());
+
 // New setting, added to config.php in 4.2.0
 if (!isset($DB_UTF8_COLLATION)) {
 	$DB_UTF8_COLLATION=false;
