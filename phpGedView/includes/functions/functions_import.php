@@ -836,7 +836,7 @@ function update_places($gid, $ged_id, $gedrec) {
 
 // extract all the dates from the given record and insert them into the database
 function update_dates($xref, $ged_id, $gedrec) {
-	global $TBLPREFIX, $factarray;
+	global $TBLPREFIX;
 
 	static $sql_insert_date=null;
 	if (!$sql_insert_date) {
@@ -848,7 +848,7 @@ function update_dates($xref, $ged_id, $gedrec) {
 	if (strpos($gedrec, '2 DATE ') && preg_match_all("/\n1 (\w+).*(?:\n[2-9].*)*(?:\n2 DATE (.+))(?:\n[2-9].*)*/", $gedrec, $matches, PREG_SET_ORDER)) {
 		foreach ($matches as $match) {
 			$fact=$match[1];
-			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE (\w+)/", $match[0], $tmatch) && array_key_exists($tmatch[1], $factarray)) {
+			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE ([A-Z]{3,5})/", $match[0], $tmatch)) {
 				$fact=$tmatch[1];
 			}
 			$date=new GedcomDate($match[2]);
