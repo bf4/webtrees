@@ -329,7 +329,7 @@ class LifespanControllerRoot extends BaseController {
 
 	//method used to place the person boxes onto the timeline
 	function fillTL($ar, $int, $top) {
-		global $maxX, $zindex, $pgv_lang, $factarray, $factAbbrev;
+		global $maxX, $zindex, $pgv_lang, $factAbbrev;
 
 		$zindex = count($ar);
 
@@ -469,12 +469,7 @@ class LifespanControllerRoot extends BaseController {
 							$fact = $val->getType();
 						}
 						$place = $val->getPlace();
-						$trans = $fact;
-						if (isset($factarray[$fact])) {
-							$trans = $factarray[$fact];
-						} elseif (isset($pgv_lang[$fact])) {
-							$trans = $pgv_lang[$fact];
-						}
+						$trans = i18n::translate($fact);
 						if (isset($eventinformation[$evntwdth])) {
 							$eventinformation[$evntwdth] .= "<br />\n".$trans."<br />\n".strip_tags($date->Display(false, '', NULL, false))." ".$place;
 						} else {
@@ -501,24 +496,19 @@ class LifespanControllerRoot extends BaseController {
 					}
 					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
 					echo "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>";
-					if (isset ($factAbbrev["BIRT"])) {
-						echo $factAbbrev["BIRT"];
-					} else {
-						echo UTF8_substr($factarray["BIRT"], 0, 1);
-					}
+					echo i18n::translate('ABBREV_BIRT');
 					if (!$birthReal) {
 						echo "*";
 					}
-					echo "</b><span>", $value->getSexImage(), $indiName, "<br/>", $factarray["BIRT"], " ", strip_tags($bdate->Display(false)), " ", PrintReady($value->getBirthPlace()), "</span></a></td>" ,
+					echo "</b><span>", $value->getSexImage(), $indiName, "<br/>", i18n::translate('BIRT'), " ", strip_tags($bdate->Display(false)), " ", PrintReady($value->getBirthPlace()), "</span></a></td>" ,
 						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"", encode_url($value->getLinkUrl()), "\">", $value->getSexImage(), $indiName, ":  $lifespan </a></td>" ,
 						"\n\t\t<td width=\"15\">";
 					if ($value->isDead()) {
 						if ($deathReal || $value->isDead()) {
 							print "<a class=\"showit\" href=\"#\"><b>";
-							if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-							else print UTF8_substr($factarray["DEAT"], 0, 1);
+							echo i18n::translate('ABBREV_DEAT');
 							if (!$deathReal) print "*";
-							print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+							print "</b><span>".$value->getSexImage().$indiName."<br/>".i18n::translate('DEAT')." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 						}
 					}
 					print "</td></tr></table>";
@@ -538,19 +528,17 @@ class LifespanControllerRoot extends BaseController {
 						}
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
 						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>";
-						if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
-						else print UTF8_substr($factarray["BIRT"], 0, 1);
+						echo i18n::translate('ABBREV_BIRT');
 						if (!$birthReal) print "*";
-						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
+						print "</b><span>".$value->getSexImage().$indiName."<br/>".i18n::translate('BIRT')." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"<td align=\"left\" width=\"100%\"><a href=\"".encode_url($value->getLinkUrl())."\">".$value->getSexImage().$indiName."</a></td>" .
 						"\n\t\t<td width=\"15\">";
 						if ($value->isDead()) {
 							if ($deathReal || $value->isDead()) {
 								print "<a class=\"showit\" href=\"#\"><b>";
-								if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-								else print UTF8_substr($factarray["DEAT"], 0, 1);
+								echo i18n::translate('ABBREV_DEAT');
 								if (!$deathReal) print "*";
-								print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+								print "</b><span>".$value->getSexImage().$indiName."<br/>".i18n::translate('DEAT')." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 							}
 						}
 						print "</td></tr></table>";
@@ -561,15 +549,14 @@ class LifespanControllerRoot extends BaseController {
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
 						print "<a class=\"showit\" href=\"".encode_url($value->getLinkUrl())."\"><b>";
 						if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
-						else print UTF8_substr($factarray["BIRT"], 0, 1);
-						if (!$birthReal) print "*";
-						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
+						echo i18n::translate('ABBREV_BIRT');
+						print "</b><span>".$value->getSexImage().$indiName."<br/>".i18n::translate('BIRT')." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
 							$text = explode("-fact,", $val);
 							$val = $text[1];
 							print $val."<br />\n";
 						}
-						if ($value->isDead() && $deathReal) print $factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace());
+						if ($value->isDead() && $deathReal) print i18n::translate('DEAT')." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace());
 						print "</span></a>";
 						echo '</div>';
 					}

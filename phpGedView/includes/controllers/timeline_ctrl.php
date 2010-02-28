@@ -177,7 +177,7 @@ class TimelineControllerRoot extends BaseController {
 
 	function print_time_fact($event) {
 		global $basexoffset, $baseyoffset, $factcount, $TEXT_DIRECTION;
-		global $factarray, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
+		global $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
 		global $familyfacts, $GEDCOM;
 		/* @var $event Event */
 		$factrec = $event->getGedComRecord();
@@ -239,7 +239,7 @@ class TimelineControllerRoot extends BaseController {
 					if (function_exists($func) && get_class($indi)=="Person") {
 						// Localise the facts
 						$func($fact, $indi->getXref());
-						print $factarray[$fact];
+						print i18n::translate($fact);
 					}
 					else print $event->getLabel();
 				}
