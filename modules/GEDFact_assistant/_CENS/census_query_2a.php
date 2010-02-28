@@ -90,7 +90,7 @@
  
 /*
 function print_indi_list($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES;
 
 	if ($option=="MARR_PLAC") return;
@@ -115,7 +115,7 @@ function print_indi_list($datalist, $legend="", $option="") {
 	echo "<thead><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">&nbsp; INDI &nbsp;</th>";
-	echo '<th class="list_label">'.$factarray['NAME'].'</th>';
+	echo '<th class="list_label">'.i18n::translate('NAME').'</th>';
 	echo "<th class=\"list_label\">&nbsp;".$pgv_lang["add"]."&nbsp; </th>";
 	echo "</tr></thead>\n";
 
@@ -187,7 +187,7 @@ function print_indi_list($datalist, $legend="", $option="") {
 				continue;
 			}
 			if ($title=$name['type']=='_MARNM') {
-				$title='title="'.$factarray['_MARNM'].'"';
+				$title='title="'.i18n::translate('_MARNM').'"';
 			} else {
 				$title='';
 			}

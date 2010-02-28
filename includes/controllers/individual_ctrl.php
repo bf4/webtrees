@@ -456,13 +456,7 @@ class IndividualControllerRoot extends BaseController {
 					}
 				}
 				echo "\n\t\t\t<span class=\"label\">";
-				if (isset($pgv_lang[$fact])) {
-					print $pgv_lang[$fact];
-				} elseif (isset($factarray[$fact])) {
-					echo $factarray[$fact];
-				} else {
-					echo $fact;
-				}
+				echo i18n::translate($fact);
 				echo ":</span><span class=\"field\"> ";
 				if (isset($nmatch[$i][2])) {
 					$name = trim($nmatch[$i][2]);
@@ -1146,7 +1140,6 @@ class IndividualControllerRoot extends BaseController {
 				<td class="facts_label"><br />
 				</td>
 				<td class="facts_value<?php echo $styleadd ?>">
-					<?php //echo "<span class=\"details_label\">", $factarray["NCHI"], ": </span>", $family->getNumberOfChildren(), "<br />";?>
 					<?php 
 					if ($date && $date->isOK() || $place) {
 						$marr_type = "MARR_".strtoupper($family->getMarriageType());

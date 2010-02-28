@@ -31,7 +31,7 @@
 	exit;
 }
 
-global $summary, $theme_name, $pgv_lang, $factarray, $censyear, $censdate;
+global $summary, $theme_name, $pgv_lang, $censyear, $censdate;
  
 $pid = safe_get('pid');
 
