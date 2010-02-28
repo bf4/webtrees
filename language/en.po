@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 17:41-0000\n"
+"POT-Creation-Date: 2010-02-28 18:00-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -141,10 +141,6 @@ msgstr "Web Home Page"
 msgid "PLAC"
 msgstr "Place"
 
-#: ../media.php:797
-msgid "title"
-msgstr ""
-
 #: ../media.php:798
 #: ../medialist.php:127
 msgid "FILE"
@@ -197,11 +193,6 @@ msgstr "Text"
 #: ../blocks/yahrzeit.php:155
 msgid "_YART"
 msgstr "Yahrzeit"
-
-#: ../includes/classes/class_event.php:281
-#, fuzzy
-msgid "ABBREV_"
-msgstr "c."
 
 #: ../includes/classes/class_treenav.php:311
 #: ../includes/classes/class_treenav.php:352
@@ -3386,7 +3377,7 @@ msgstr "British English"
 msgid "es"
 msgstr "Spanish"
 
-#. I18N: This is the RFC5646 language code for Latin-American SPanish
+#. I18N: This is the RFC5646 language code for Latin-American Spanish
 #: ../language/_languages.php:54
 msgid "es-ar"
 msgstr "Latin-American Spanish"
@@ -3436,10 +3427,10 @@ msgstr "Lithuanian"
 msgid "nl"
 msgstr "Dutch"
 
-#. I18N: This is the RFC5646 language code for Norwegian
+#. I18N: This is the RFC5646 language code for Norwegian (Nynorksk)
 #: ../language/_languages.php:74
-msgid "no"
-msgstr "Norwegian"
+msgid "nn"
+msgstr "Norwegian (Nynorksk)"
 
 #. I18N: This is the RFC5646 language code for Polish
 #: ../language/_languages.php:76
@@ -3496,7 +3487,9 @@ msgstr "Vietnamese"
 msgid "zh"
 msgstr "Chinese"
 
-#: ../modules/research_assistant/forms/ra_ViewInferences.php:56
-msgid ":"
-msgstr ""
+#, fuzzy
+#~ msgid "ABBREV_"
+#~ msgstr "c."
 
+#~ msgid "no"
+#~ msgstr "Norwegian"
