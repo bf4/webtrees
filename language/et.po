@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 09:41-0000\n"
+"POT-Creation-Date: 2010-02-28 11:11-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -191,12 +191,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Abbreviation"
 #: ../language/_facts.php:48
 msgid "ABBR"
-msgstr ""
+msgstr "Lühend"
 
 #. I18N: This is the GEDCOM label for "Address"
 #: ../language/_facts.php:50
 msgid "ADDR"
-msgstr ""
+msgstr "Aadress"
 
 #. I18N: This is the GEDCOM label for "Adoption"
 #: ../language/_facts.php:52
@@ -206,7 +206,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Address 1"
 #: ../language/_facts.php:54
 msgid "ADR1"
-msgstr ""
+msgstr "Aadress 1"
 
 #. I18N: This is the GEDCOM label for "Address 2"
 #: ../language/_facts.php:56
@@ -221,7 +221,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Age"
 #: ../language/_facts.php:60
 msgid "AGE"
-msgstr ""
+msgstr "Vanus"
 
 #. I18N: This is the GEDCOM label for "Agency"
 #: ../language/_facts.php:62
@@ -236,7 +236,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Ancestors"
 #: ../language/_facts.php:66
 msgid "ANCE"
-msgstr ""
+msgstr "Esivanemad"
 
 #. I18N: This is the GEDCOM label for "Ancestors Interest"
 #: ../language/_facts.php:68
@@ -326,7 +326,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Birth"
 #: ../language/_facts.php:102
 msgid "BIRT"
-msgstr ""
+msgstr "Sündinud"
 
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: ../language/_facts.php:104
@@ -401,7 +401,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Last Change"
 #: ../language/_facts.php:132
 msgid "CHAN"
-msgstr ""
+msgstr "Viimati muudetud"
 
 #. I18N: This is the GEDCOM label for "Character Set"
 #: ../language/_facts.php:134
@@ -451,7 +451,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Comment"
 #: ../language/_facts.php:152
 msgid "COMM"
-msgstr ""
+msgstr "Märkus"
 
 #. I18N: This is the GEDCOM label for "Confirmation"
 #: ../language/_facts.php:154
@@ -496,7 +496,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Country"
 #: ../language/_facts.php:170
 msgid "CTRY"
-msgstr ""
+msgstr "Riik"
 
 #. I18N: This is the GEDCOM label for "Data"
 #: ../language/_facts.php:172
@@ -511,12 +511,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Date"
 #: ../language/_facts.php:176
 msgid "DATE"
-msgstr ""
+msgstr "Kuupäev"
 
 #. I18N: This is the GEDCOM label for "Death"
 #: ../language/_facts.php:178
 msgid "DEAT"
-msgstr ""
+msgstr "Surnud"
 
 #. I18N: This is the GEDCOM label for "Death Date"
 #: ../language/_facts.php:180
@@ -536,7 +536,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Descendants"
 #: ../language/_facts.php:186
 msgid "DESC"
-msgstr ""
+msgstr "Järeltulijad"
 
 #. I18N: This is the GEDCOM label for "Descendants Interest"
 #: ../language/_facts.php:188
@@ -576,7 +576,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../language/_facts.php:202
 msgid "EMAL"
-msgstr ""
+msgstr "e-maili aadress"
 
 #. I18N: This is the GEDCOM label for "Emigration"
 #: ../language/_facts.php:204
@@ -591,7 +591,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Engagement"
 #: ../language/_facts.php:208
 msgid "ENGA"
-msgstr ""
+msgstr "Kihlus"
 
 #. I18N: This is the GEDCOM label for "Engagement Date"
 #: ../language/_facts.php:210
@@ -611,22 +611,22 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Event"
 #: ../language/_facts.php:216
 msgid "EVEN"
-msgstr ""
+msgstr "Sündmus"
 
 #. I18N: This is the GEDCOM label for "Fact"
 #: ../language/_facts.php:218
 msgid "FACT"
-msgstr ""
+msgstr "Fakt"
 
 #. I18N: This is the GEDCOM label for "Family"
 #: ../language/_facts.php:220
 msgid "FAM"
-msgstr ""
+msgstr "Perekond"
 
 #. I18N: This is the GEDCOM label for "Family as a Child"
 #: ../language/_facts.php:222
 msgid "FAMC"
-msgstr ""
+msgstr "Perekond lapsena"
 
 #. I18N: This is the GEDCOM label for "Father's Birthplace"
 #: ../language/_facts.php:224
@@ -696,7 +696,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Family as a Spouse"
 #: ../language/_facts.php:250
 msgid "FAMS"
-msgstr ""
+msgstr "Perekond abielus"
 
 #. I18N: This is the GEDCOM label for "Spouse Census Date"
 #: ../language/_facts.php:252
@@ -766,7 +766,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "FAX"
 #: ../language/_facts.php:278
 msgid "FAX"
-msgstr ""
+msgstr "Faks"
 
 #. I18N: This is the GEDCOM label for "First Communion"
 #: ../language/_facts.php:280
@@ -801,12 +801,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Format"
 #: ../language/_facts.php:292
 msgid "FORM"
-msgstr ""
+msgstr "Formaat"
 
 #. I18N: This is the GEDCOM label for "Given Names"
 #: ../language/_facts.php:294
 msgid "GIVN"
-msgstr ""
+msgstr "Eesnimed"
 
 #. I18N: This is the GEDCOM label for "Graduation"
 #: ../language/_facts.php:296
@@ -816,7 +816,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Husband"
 #: ../language/_facts.php:298
 msgid "HUSB"
-msgstr ""
+msgstr "Mees"
 
 #. I18N: This is the GEDCOM label for "Identification Number"
 #: ../language/_facts.php:300
@@ -826,7 +826,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Immigration"
 #: ../language/_facts.php:302
 msgid "IMMI"
-msgstr ""
+msgstr "Sisseränne"
 
 #. I18N: This is the GEDCOM label for "Latitude"
 #: ../language/_facts.php:304
@@ -881,7 +881,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage"
 #: ../language/_facts.php:324
 msgid "MARR"
-msgstr ""
+msgstr "Abiellunud"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: ../language/_facts.php:326
@@ -901,22 +901,22 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Civil Marriage"
 #: ../language/_facts.php:332
 msgid "MARR_CIVIL"
-msgstr ""
+msgstr "Ilmalik abielu"
 
 #. I18N: This is the GEDCOM label for "Registered Partnership"
 #: ../language/_facts.php:334
 msgid "MARR_PARTNERS"
-msgstr ""
+msgstr "Registreeritud partnerlus"
 
 #. I18N: This is the GEDCOM label for "Religious Marriage"
 #: ../language/_facts.php:336
 msgid "MARR_RELIGIOUS"
-msgstr ""
+msgstr "Kiriklik abielu"
 
 #. I18N: This is the GEDCOM label for "Marriage Type unknown"
 #: ../language/_facts.php:338
 msgid "MARR_UNKNOWN"
-msgstr ""
+msgstr "Abielu tüüp teadmata"
 
 #. I18N: This is the GEDCOM label for "Marriage Settlement"
 #: ../language/_facts.php:340
@@ -931,7 +931,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Name"
 #: ../language/_facts.php:344
 msgid "NAME"
-msgstr ""
+msgstr "Nimi"
 
 #. I18N: This is the GEDCOM label for "Phonetic Name"
 #: ../language/_facts.php:346
@@ -951,7 +951,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Nationality"
 #: ../language/_facts.php:352
 msgid "NATI"
-msgstr ""
+msgstr "Kodakondsus"
 
 #. I18N: This is the GEDCOM label for "Naturalization"
 #: ../language/_facts.php:354
@@ -961,42 +961,42 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Number of Children"
 #: ../language/_facts.php:356
 msgid "NCHI"
-msgstr ""
+msgstr "Laste arv"
 
 #. I18N: This is the GEDCOM label for "Nickname"
 #: ../language/_facts.php:358
 msgid "NICK"
-msgstr ""
+msgstr "Hüüdnimi"
 
 #. I18N: This is the GEDCOM label for "Number of Marriages"
 #: ../language/_facts.php:360
 msgid "NMR"
-msgstr ""
+msgstr "Abielude arv"
 
 #. I18N: This is the GEDCOM label for "Note"
 #: ../language/_facts.php:362
 msgid "NOTE"
-msgstr ""
+msgstr "Märkused"
 
 #. I18N: This is the GEDCOM label for "Prefix"
 #: ../language/_facts.php:364
 msgid "NPFX"
-msgstr ""
+msgstr "Eesliide"
 
 #. I18N: This is the GEDCOM label for "Suffix"
 #: ../language/_facts.php:366
 msgid "NSFX"
-msgstr ""
+msgstr "Järelliide"
 
 #. I18N: This is the GEDCOM label for "Multimedia Object"
 #: ../language/_facts.php:368
 msgid "OBJE"
-msgstr ""
+msgstr "Multimeedia objekt"
 
 #. I18N: This is the GEDCOM label for "Occupation"
 #: ../language/_facts.php:370
 msgid "OCCU"
-msgstr ""
+msgstr "Amet"
 
 #. I18N: This is the GEDCOM label for "Ordinance"
 #: ../language/_facts.php:372
@@ -1011,12 +1011,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Citation Details"
 #: ../language/_facts.php:376
 msgid "PAGE"
-msgstr ""
+msgstr "Tsitaadi detailid"
 
 #. I18N: This is the GEDCOM label for "Pedigree"
 #: ../language/_facts.php:378
 msgid "PEDI"
-msgstr ""
+msgstr "Esivanemate puu"
 
 #. I18N: This is the GEDCOM label for "Phone"
 #: ../language/_facts.php:380
@@ -1026,7 +1026,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Place"
 #: ../language/_facts.php:382
 msgid "PLAC"
-msgstr ""
+msgstr "Koht"
 
 #. I18N: This is the GEDCOM label for "Phonetic Place"
 #: ../language/_facts.php:384
@@ -1061,12 +1061,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Publication"
 #: ../language/_facts.php:396
 msgid "PUBL"
-msgstr ""
+msgstr "Avaldatud"
 
 #. I18N: This is the GEDCOM label for "Quality of Data"
 #: ../language/_facts.php:398
 msgid "QUAY"
-msgstr ""
+msgstr "Andmete kvaliteet"
 
 #. I18N: This is the GEDCOM label for "Reference Number"
 #: ../language/_facts.php:400
@@ -1076,22 +1076,22 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Relationship"
 #: ../language/_facts.php:402
 msgid "RELA"
-msgstr ""
+msgstr "Sugulus"
 
 #. I18N: This is the GEDCOM label for "Religion"
 #: ../language/_facts.php:404
 msgid "RELI"
-msgstr ""
+msgstr "Usk"
 
 #. I18N: This is the GEDCOM label for "Repository"
 #: ../language/_facts.php:406
 msgid "REPO"
-msgstr ""
+msgstr "Hoidla"
 
 #. I18N: This is the GEDCOM label for "Residence"
 #: ../language/_facts.php:408
 msgid "RESI"
-msgstr ""
+msgstr "Elukoht"
 
 #. I18N: This is the GEDCOM label for "Restriction"
 #: ../language/_facts.php:410
@@ -1126,12 +1126,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Remote Server"
 #: ../language/_facts.php:422
 msgid "SERV"
-msgstr ""
+msgstr "Teine server"
 
 #. I18N: This is the GEDCOM label for "Gender"
 #: ../language/_facts.php:424
 msgid "SEX"
-msgstr ""
+msgstr "Sugu"
 
 #. I18N: This is the GEDCOM label for "Shared Note"
 #: ../language/_facts.php:426
@@ -1151,7 +1151,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Source"
 #: ../language/_facts.php:432
 msgid "SOUR"
-msgstr ""
+msgstr "Allikas"
 
 #. I18N: This is the GEDCOM label for "Surname Prefix"
 #: ../language/_facts.php:434
@@ -1161,7 +1161,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Social Security Number"
 #: ../language/_facts.php:436
 msgid "SSN"
-msgstr ""
+msgstr "Isikukood"
 
 #. I18N: This is the GEDCOM label for "State"
 #: ../language/_facts.php:438
@@ -1191,27 +1191,27 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Surname"
 #: ../language/_facts.php:448
 msgid "SURN"
-msgstr ""
+msgstr "Perekonnanimi"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: ../language/_facts.php:450
 msgid "TEMP"
-msgstr ""
+msgstr "Pühakoda"
 
 #. I18N: This is the GEDCOM label for "Text"
 #: ../language/_facts.php:452
 msgid "TEXT"
-msgstr ""
+msgstr "Tekst"
 
 #. I18N: This is the GEDCOM label for "Time"
 #: ../language/_facts.php:454
 msgid "TIME"
-msgstr ""
+msgstr "Kellaaeg"
 
 #. I18N: This is the GEDCOM label for "Title"
 #: ../language/_facts.php:456
 msgid "TITL"
-msgstr ""
+msgstr "Pealkiri"
 
 #. I18N: This is the GEDCOM label for "Phonetic Title"
 #: ../language/_facts.php:458
@@ -1231,22 +1231,22 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Type"
 #: ../language/_facts.php:464
 msgid "TYPE"
-msgstr ""
+msgstr "Tüüp"
 
 #. I18N: This is the GEDCOM label for "Web URL"
 #: ../language/_facts.php:466
 msgid "URL"
-msgstr ""
+msgstr "Veebiaadress"
 
 #. I18N: This is the GEDCOM label for "Wife"
 #: ../language/_facts.php:468
 msgid "WIFE"
-msgstr ""
+msgstr "Naine"
 
 #. I18N: This is the GEDCOM label for "Will"
 #: ../language/_facts.php:470
 msgid "WILL"
-msgstr ""
+msgstr "Testament"
 
 #. I18N: This is the GEDCOM label for "Web Home Page"
 #: ../language/_facts.php:472
@@ -1301,22 +1301,22 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Adopted by Father"
 #: ../language/_facts.php:492
 msgid "_ADPF"
-msgstr ""
+msgstr "Lapsendanud isa"
 
 #. I18N: This is the GEDCOM label for "Adopted by Mother"
 #: ../language/_facts.php:494
 msgid "_ADPM"
-msgstr ""
+msgstr "Lapsendanud ema"
 
 #. I18N: This is the GEDCOM label for "Also known as"
 #: ../language/_facts.php:496
 msgid "_AKA"
-msgstr ""
+msgstr "Tuntud ka kui"
 
 #. I18N: This is the GEDCOM label for "Also known as"
 #: ../language/_facts.php:498
 msgid "_AKAN"
-msgstr ""
+msgstr "Tuntud ka kui"
 
 #. I18N: This is the GEDCOM label for "Baptism of a child"
 #: ../language/_facts.php:500
@@ -1366,27 +1366,27 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Bibliography"
 #: ../language/_facts.php:518
 msgid "_BIBL"
-msgstr ""
+msgstr "Bibliograafia"
 
 #. I18N: This is the GEDCOM label for "Birth of a child"
 #: ../language/_facts.php:520
 msgid "_BIRT_CHIL"
-msgstr ""
+msgstr "Lapse sünd"
 
 #. I18N: This is the GEDCOM label for "Birth of a first cousin"
 #: ../language/_facts.php:522
 msgid "_BIRT_COUS"
-msgstr ""
+msgstr "Tädi / onu lapse sünd"
 
 #. I18N: This is the GEDCOM label for "Birth of father's sibling"
 #: ../language/_facts.php:524
 msgid "_BIRT_FSIB"
-msgstr ""
+msgstr "Isapoolse tädi / onu sünd"
 
 #. I18N: This is the GEDCOM label for "Birth of a grandchild"
 #: ../language/_facts.php:526
 msgid "_BIRT_GCHI"
-msgstr ""
+msgstr "Lapselapse sünd"
 
 #. I18N: This is the GEDCOM label for "Birth of a great-grandchild"
 #: ../language/_facts.php:528
@@ -1396,12 +1396,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Birth of half-sibling"
 #: ../language/_facts.php:530
 msgid "_BIRT_HSIB"
-msgstr ""
+msgstr "Poolõe / -venna sünd"
 
 #. I18N: This is the GEDCOM label for "Birth of mother's sibling"
 #: ../language/_facts.php:532
 msgid "_BIRT_MSIB"
-msgstr ""
+msgstr "Emapoolse tädi / onu sünd"
 
 #. I18N: This is the GEDCOM label for "Birth of a nephew or niece"
 #: ../language/_facts.php:534
@@ -1411,7 +1411,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Birth of sibling"
 #: ../language/_facts.php:536
 msgid "_BIRT_SIBL"
-msgstr ""
+msgstr "Õe  / venna sünd"
 
 #. I18N: This is the GEDCOM label for "Brit Mila"
 #: ../language/_facts.php:538
@@ -1631,27 +1631,27 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Death of a child"
 #: ../language/_facts.php:624
 msgid "_DEAT_CHIL"
-msgstr ""
+msgstr "Lapse surm"
 
 #. I18N: This is the GEDCOM label for "Death of a first cousin"
 #: ../language/_facts.php:626
 msgid "_DEAT_COUS"
-msgstr ""
+msgstr "Tädi / onu lapse surm"
 
 #. I18N: This is the GEDCOM label for "Death of father"
 #: ../language/_facts.php:628
 msgid "_DEAT_FATH"
-msgstr ""
+msgstr "Isa surm"
 
 #. I18N: This is the GEDCOM label for "Death of father's sibling"
 #: ../language/_facts.php:630
 msgid "_DEAT_FSIB"
-msgstr ""
+msgstr "Isapoolse tädi / onu surm"
 
 #. I18N: This is the GEDCOM label for "Death of a grandchild"
 #: ../language/_facts.php:632
 msgid "_DEAT_GCHI"
-msgstr ""
+msgstr "Lapselapse surm"
 
 #. I18N: This is the GEDCOM label for "Death of a great-grandchild"
 #: ../language/_facts.php:634
@@ -1666,22 +1666,22 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Death of a grand-parent"
 #: ../language/_facts.php:638
 msgid "_DEAT_GPAR"
-msgstr ""
+msgstr "Vana-vanema surm"
 
 #. I18N: This is the GEDCOM label for "Death of half-sibling"
 #: ../language/_facts.php:640
 msgid "_DEAT_HSIB"
-msgstr ""
+msgstr "Poolõe / -venna surm"
 
 #. I18N: This is the GEDCOM label for "Death of mother"
 #: ../language/_facts.php:642
 msgid "_DEAT_MOTH"
-msgstr ""
+msgstr "Ema surm"
 
 #. I18N: This is the GEDCOM label for "Death of mother's sibling"
 #: ../language/_facts.php:644
 msgid "_DEAT_MSIB"
-msgstr ""
+msgstr "Emapoolse tädi / onu surm"
 
 #. I18N: This is the GEDCOM label for "Death of a nephew or niece"
 #: ../language/_facts.php:646
@@ -1691,12 +1691,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Death of sibling"
 #: ../language/_facts.php:648
 msgid "_DEAT_SIBL"
-msgstr ""
+msgstr "Poolõe / -venna surm"
 
 #. I18N: This is the GEDCOM label for "Death of spouse"
 #: ../language/_facts.php:650
 msgid "_DEAT_SPOU"
-msgstr ""
+msgstr "Abikaasa surm"
 
 #. I18N: This is the GEDCOM label for "Degree"
 #: ../language/_facts.php:652
@@ -1716,7 +1716,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Eye Color"
 #: ../language/_facts.php:658
 msgid "_EYEC"
-msgstr ""
+msgstr "Silmavärv"
 
 #. I18N: This is the GEDCOM label for "Fact 1"
 #: ../language/_facts.php:660
@@ -1796,7 +1796,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Funeral"
 #: ../language/_facts.php:690
 msgid "_FNRL"
-msgstr ""
+msgstr "Matus"
 
 #. I18N: This is the GEDCOM label for "Relationship to Father"
 #: ../language/_facts.php:692
@@ -1806,27 +1806,27 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "GEDCOM File"
 #: ../language/_facts.php:694
 msgid "_GEDF"
-msgstr ""
+msgstr "GEDCOM fail"
 
 #. I18N: This is the GEDCOM label for "Hair Color"
 #: ../language/_facts.php:696
 msgid "_HAIR"
-msgstr ""
+msgstr "Juuksevärv"
 
 #. I18N: This is the GEDCOM label for "Hebrew"
 #: ../language/_facts.php:698
 msgid "_HEB"
-msgstr ""
+msgstr "Heebrea"
 
 #. I18N: This is the GEDCOM label for "Height"
 #: ../language/_facts.php:700
 msgid "_HEIG"
-msgstr ""
+msgstr "Pikkus"
 
 #. I18N: This is the GEDCOM label for "Hebrew Name"
 #: ../language/_facts.php:702
 msgid "_HNM"
-msgstr ""
+msgstr "Heebrea nimi"
 
 #. I18N: This is the GEDCOM label for "Holocaust"
 #: ../language/_facts.php:704
@@ -1901,12 +1901,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage Intention"
 #: ../language/_facts.php:732
 msgid "_MARI"
-msgstr ""
+msgstr "Abielu plaan"
 
 #. I18N: This is the GEDCOM label for "Married Name"
 #: ../language/_facts.php:734
 msgid "_MARNM"
-msgstr ""
+msgstr "Nimi peale abiellumist"
 
 #. I18N: This is the GEDCOM label for "Married Surname"
 #: ../language/_facts.php:736
@@ -1916,12 +1916,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage of a child"
 #: ../language/_facts.php:738
 msgid "_MARR_CHIL"
-msgstr ""
+msgstr "Lapse abielu"
 
 #. I18N: This is the GEDCOM label for "Marriage of a first cousin"
 #: ../language/_facts.php:740
 msgid "_MARR_COUS"
-msgstr ""
+msgstr "Tädi / onu lapse abielu"
 
 #. I18N: This is the GEDCOM label for "Marriage of parents"
 #: ../language/_facts.php:742
@@ -1931,17 +1931,17 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage of father"
 #: ../language/_facts.php:744
 msgid "_MARR_FATH"
-msgstr ""
+msgstr "Isa abielu"
 
 #. I18N: This is the GEDCOM label for "Marriage of father's sibling"
 #: ../language/_facts.php:746
 msgid "_MARR_FSIB"
-msgstr ""
+msgstr "Isapoolse tädi / onu abiellumine"
 
 #. I18N: This is the GEDCOM label for "Marriage of a grandchild"
 #: ../language/_facts.php:748
 msgid "_MARR_GCHI"
-msgstr ""
+msgstr "Lapselapse abielu"
 
 #. I18N: This is the GEDCOM label for "Marriage of a great-grandchild"
 #: ../language/_facts.php:750
@@ -1951,17 +1951,17 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage of half-sibling"
 #: ../language/_facts.php:752
 msgid "_MARR_HSIB"
-msgstr ""
+msgstr "Poolõe / -venna abielu"
 
 #. I18N: This is the GEDCOM label for "Marriage of mother"
 #: ../language/_facts.php:754
 msgid "_MARR_MOTH"
-msgstr ""
+msgstr "Ema abiellumine"
 
 #. I18N: This is the GEDCOM label for "Marriage of mother's sibling"
 #: ../language/_facts.php:756
 msgid "_MARR_MSIB"
-msgstr ""
+msgstr "Emapoolse tädi / onu abiellumine"
 
 #. I18N: This is the GEDCOM label for "Marriage of a nephew or niece"
 #: ../language/_facts.php:758
@@ -1971,12 +1971,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage of sibling"
 #: ../language/_facts.php:760
 msgid "_MARR_SIBL"
-msgstr ""
+msgstr "Õe / venna abiellumine"
 
 #. I18N: This is the GEDCOM label for "Marriage Bond"
 #: ../language/_facts.php:762
 msgid "_MBON"
-msgstr ""
+msgstr "Abieluside"
 
 #. I18N: This is the GEDCOM label for "Medical"
 #: ../language/_facts.php:764
@@ -1986,7 +1986,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Medical Condition"
 #: ../language/_facts.php:766
 msgid "_MEDC"
-msgstr ""
+msgstr "Tervis"
 
 #. I18N: This is the GEDCOM label for "Marriage Ending Status"
 #: ../language/_facts.php:768
@@ -1996,7 +1996,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Military"
 #: ../language/_facts.php:770
 msgid "_MILI"
-msgstr ""
+msgstr "Sõjaväelane"
 
 #. I18N: This is the GEDCOM label for "Military Service"
 #: ../language/_facts.php:772
@@ -2026,22 +2026,22 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Not living"
 #: ../language/_facts.php:782
 msgid "_NLIV"
-msgstr ""
+msgstr "Surnud"
 
 #. I18N: This is the GEDCOM label for "Never married"
 #: ../language/_facts.php:784
 msgid "_NMAR"
-msgstr ""
+msgstr "Pole abielus olnud"
 
 #. I18N: This is the GEDCOM label for "Not married"
 #: ../language/_facts.php:786
 msgid "_NMR"
-msgstr ""
+msgstr "Vallaline"
 
 #. I18N: This is the GEDCOM label for "by"
 #: ../language/_facts.php:788
 msgid "_PGVU"
-msgstr ""
+msgstr "Viimati muutis"
 
 #. I18N: This is the GEDCOM label for "Highlighted Image"
 #: ../language/_facts.php:790
@@ -2056,7 +2056,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Scrapbook"
 #: ../language/_facts.php:794
 msgid "_SCBK"
-msgstr ""
+msgstr "Väljalõigete raamat"
 
 #. I18N: This is the GEDCOM label for "Separated"
 #: ../language/_facts.php:796
@@ -2066,22 +2066,22 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Slide Show"
 #: ../language/_facts.php:798
 msgid "_SSHOW"
-msgstr ""
+msgstr "Slaidišõu"
 
 #. I18N: This is the GEDCOM label for "Marriage Status"
 #: ../language/_facts.php:800
 msgid "_STAT"
-msgstr ""
+msgstr "Abielu staatus"
 
 #. I18N: This is the GEDCOM label for "Short Version"
 #: ../language/_facts.php:802
 msgid "_SUBQ"
-msgstr ""
+msgstr "Lühiversioon"
 
 #. I18N: This is the GEDCOM label for "Always use main image?"
 #: ../language/_facts.php:804
 msgid "_THUM"
-msgstr ""
+msgstr "Kas kasutada seda kujutust pisipildina?"
 
 #. I18N: This is the GEDCOM label for "To Do Item"
 #: ../language/_facts.php:806
@@ -2091,7 +2091,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Media Type"
 #: ../language/_facts.php:808
 msgid "_TYPE"
-msgstr ""
+msgstr "Meedia tüüp"
 
 #. I18N: This is the GEDCOM label for "Globally unique Identifier"
 #: ../language/_facts.php:810
@@ -2106,7 +2106,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Weight"
 #: ../language/_facts.php:814
 msgid "_WEIG"
-msgstr ""
+msgstr "Kaal"
 
 #. I18N: This is the GEDCOM label for "Yahrzeit"
 #: ../language/_facts.php:816

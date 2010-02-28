@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 09:44-0000\n"
+"POT-Creation-Date: 2010-02-28 11:07-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -193,82 +193,82 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Abbreviation"
 #: ../language/_facts.php:48
 msgid "ABBR"
-msgstr ""
+msgstr "Сокращение"
 
 #. I18N: This is the GEDCOM label for "Address"
 #: ../language/_facts.php:50
 msgid "ADDR"
-msgstr ""
+msgstr "Адрес"
 
 #. I18N: This is the GEDCOM label for "Adoption"
 #: ../language/_facts.php:52
 msgid "ADOP"
-msgstr ""
+msgstr "Усыновление"
 
 #. I18N: This is the GEDCOM label for "Address 1"
 #: ../language/_facts.php:54
 msgid "ADR1"
-msgstr ""
+msgstr "Адрес 1"
 
 #. I18N: This is the GEDCOM label for "Address 2"
 #: ../language/_facts.php:56
 msgid "ADR2"
-msgstr ""
+msgstr "Адрес 2"
 
 #. I18N: This is the GEDCOM label for "Ancestral File Number (AFN)"
 #: ../language/_facts.php:58
 msgid "AFN"
-msgstr ""
+msgstr "Номер прародителя (положение в генеалогическом древе)"
 
 #. I18N: This is the GEDCOM label for "Age"
 #: ../language/_facts.php:60
 msgid "AGE"
-msgstr ""
+msgstr "Возраст"
 
 #. I18N: This is the GEDCOM label for "Agency"
 #: ../language/_facts.php:62
 msgid "AGNC"
-msgstr ""
+msgstr "Учреждение"
 
 #. I18N: This is the GEDCOM label for "Alias"
 #: ../language/_facts.php:64
 msgid "ALIA"
-msgstr ""
+msgstr "Иначе"
 
 #. I18N: This is the GEDCOM label for "Ancestors"
 #: ../language/_facts.php:66
 msgid "ANCE"
-msgstr ""
+msgstr "Предки"
 
 #. I18N: This is the GEDCOM label for "Ancestors Interest"
 #: ../language/_facts.php:68
 msgid "ANCI"
-msgstr ""
+msgstr "Предки представляют интерес"
 
 #. I18N: This is the GEDCOM label for "Annulment"
 #: ../language/_facts.php:70
 msgid "ANUL"
-msgstr ""
+msgstr "Признание брака недействительным"
 
 #. I18N: This is the GEDCOM label for "Associate"
 #: ../language/_facts.php:72
 msgid "ASSO"
-msgstr ""
+msgstr "Знакомые"
 
 #. I18N: This is the GEDCOM label for "Author"
 #: ../language/_facts.php:74
 msgid "AUTH"
-msgstr ""
+msgstr "Автор"
 
 #. I18N: This is the GEDCOM label for "LDS Baptism"
 #: ../language/_facts.php:76
 msgid "BAPL"
-msgstr ""
+msgstr "Крещение у мормонов"
 
 #. I18N: This is the GEDCOM label for "Baptism"
 #: ../language/_facts.php:78
 msgid "BAPM"
-msgstr ""
+msgstr "Крещение"
 
 #. I18N: This is the GEDCOM label for "Baptism Date"
 #: ../language/_facts.php:80
@@ -288,7 +288,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Bar Mitzvah"
 #: ../language/_facts.php:86
 msgid "BARM"
-msgstr ""
+msgstr "Бар-мицва"
 
 #. I18N: This is the GEDCOM label for "Bar Mitzvah Date"
 #: ../language/_facts.php:88
@@ -308,7 +308,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Bas Mitzvah"
 #: ../language/_facts.php:94
 msgid "BASM"
-msgstr ""
+msgstr "Бас-мицва"
 
 #. I18N: This is the GEDCOM label for "Bas Mitzvah Date"
 #: ../language/_facts.php:96
@@ -328,7 +328,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Birth"
 #: ../language/_facts.php:102
 msgid "BIRT"
-msgstr ""
+msgstr "Рождение"
 
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: ../language/_facts.php:104
@@ -348,17 +348,17 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Blessing"
 #: ../language/_facts.php:110
 msgid "BLES"
-msgstr ""
+msgstr "Благословение"
 
 #. I18N: This is the GEDCOM label for "Binary Data Object"
 #: ../language/_facts.php:112
 msgid "BLOB"
-msgstr ""
+msgstr "Бинарный объект данных"
 
 #. I18N: This is the GEDCOM label for "Burial"
 #: ../language/_facts.php:114
 msgid "BURI"
-msgstr ""
+msgstr "Захоронение"
 
 #. I18N: This is the GEDCOM label for "Burial Date"
 #: ../language/_facts.php:116
@@ -378,17 +378,17 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Call Number"
 #: ../language/_facts.php:122
 msgid "CALN"
-msgstr ""
+msgstr "Шифр"
 
 #. I18N: This is the GEDCOM label for "Caste / Social Status"
 #: ../language/_facts.php:124
 msgid "CAST"
-msgstr ""
+msgstr "Каста или сословие"
 
 #. I18N: This is the GEDCOM label for "Cause of an event"
 #: ../language/_facts.php:126
 msgid "CAUS"
-msgstr ""
+msgstr "Причина смерти"
 
 #. I18N: This is the GEDCOM label for "Cemetery"
 #: ../language/_facts.php:128
@@ -398,27 +398,27 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Census"
 #: ../language/_facts.php:130
 msgid "CENS"
-msgstr ""
+msgstr "Перепись"
 
 #. I18N: This is the GEDCOM label for "Last Change"
 #: ../language/_facts.php:132
 msgid "CHAN"
-msgstr ""
+msgstr "Последнее изменение"
 
 #. I18N: This is the GEDCOM label for "Character Set"
 #: ../language/_facts.php:134
 msgid "CHAR"
-msgstr ""
+msgstr "Кодировка"
 
 #. I18N: This is the GEDCOM label for "Child"
 #: ../language/_facts.php:136
 msgid "CHIL"
-msgstr ""
+msgstr "Ребёнок"
 
 #. I18N: This is the GEDCOM label for "Christening"
 #: ../language/_facts.php:138
 msgid "CHR"
-msgstr ""
+msgstr "Крещение"
 
 #. I18N: This is the GEDCOM label for "Christening Date"
 #: ../language/_facts.php:140
@@ -438,17 +438,17 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Adult Christening"
 #: ../language/_facts.php:146
 msgid "CHRA"
-msgstr ""
+msgstr "Крещение взрослого"
 
 #. I18N: This is the GEDCOM label for "Citizenship"
 #: ../language/_facts.php:148
 msgid "CITN"
-msgstr ""
+msgstr "Гражданство"
 
 #. I18N: This is the GEDCOM label for "City"
 #: ../language/_facts.php:150
 msgid "CITY"
-msgstr ""
+msgstr "Населённый пункт"
 
 #. I18N: This is the GEDCOM label for "Comment"
 #: ../language/_facts.php:152
@@ -458,7 +458,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Confirmation"
 #: ../language/_facts.php:154
 msgid "CONF"
-msgstr ""
+msgstr "Конфирмация"
 
 #. I18N: This is the GEDCOM label for "Confirmation Date"
 #: ../language/_facts.php:156
@@ -478,32 +478,32 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "LDS Confirmation"
 #: ../language/_facts.php:162
 msgid "CONL"
-msgstr ""
+msgstr "Конфирмация у мормонов"
 
 #. I18N: This is the GEDCOM label for "Copyright"
 #: ../language/_facts.php:164
 msgid "COPR"
-msgstr ""
+msgstr "Авторские права"
 
 #. I18N: This is the GEDCOM label for "Corporation / Company"
 #: ../language/_facts.php:166
 msgid "CORP"
-msgstr ""
+msgstr "Фирма"
 
 #. I18N: This is the GEDCOM label for "Cremation"
 #: ../language/_facts.php:168
 msgid "CREM"
-msgstr ""
+msgstr "Кремация"
 
 #. I18N: This is the GEDCOM label for "Country"
 #: ../language/_facts.php:170
 msgid "CTRY"
-msgstr ""
+msgstr "Страна"
 
 #. I18N: This is the GEDCOM label for "Data"
 #: ../language/_facts.php:172
 msgid "DATA"
-msgstr ""
+msgstr "Данные"
 
 #. I18N: This is the GEDCOM label for "Date of entry in original source"
 #: ../language/_facts.php:174
@@ -513,12 +513,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Date"
 #: ../language/_facts.php:176
 msgid "DATE"
-msgstr ""
+msgstr "Дата"
 
 #. I18N: This is the GEDCOM label for "Death"
 #: ../language/_facts.php:178
 msgid "DEAT"
-msgstr ""
+msgstr "Кончина"
 
 #. I18N: This is the GEDCOM label for "Death Date"
 #: ../language/_facts.php:180
@@ -538,42 +538,42 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Descendants"
 #: ../language/_facts.php:186
 msgid "DESC"
-msgstr ""
+msgstr "Потомки"
 
 #. I18N: This is the GEDCOM label for "Descendants Interest"
 #: ../language/_facts.php:188
 msgid "DESI"
-msgstr ""
+msgstr "Потомки представляют интерес"
 
 #. I18N: This is the GEDCOM label for "Destination"
 #: ../language/_facts.php:190
 msgid "DEST"
-msgstr ""
+msgstr "Назначение"
 
 #. I18N: This is the GEDCOM label for "Divorce"
 #: ../language/_facts.php:192
 msgid "DIV"
-msgstr ""
+msgstr "Развод"
 
 #. I18N: This is the GEDCOM label for "Divorce filed"
 #: ../language/_facts.php:194
 msgid "DIVF"
-msgstr ""
+msgstr "Дело о разводе"
 
 #. I18N: This is the GEDCOM label for "Description"
 #: ../language/_facts.php:196
 msgid "DSCR"
-msgstr ""
+msgstr "Приметы"
 
 #. I18N: This is the GEDCOM label for "Education"
 #: ../language/_facts.php:198
 msgid "EDUC"
-msgstr ""
+msgstr "Образование"
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../language/_facts.php:200
 msgid "EMAIL"
-msgstr ""
+msgstr "Адрес электронной почты (e-mail)"
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../language/_facts.php:202
@@ -583,17 +583,17 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Emigration"
 #: ../language/_facts.php:204
 msgid "EMIG"
-msgstr ""
+msgstr "Эмиграция"
 
 #. I18N: This is the GEDCOM label for "LDS Endowment"
 #: ../language/_facts.php:206
 msgid "ENDL"
-msgstr ""
+msgstr "LDS Endowment"
 
 #. I18N: This is the GEDCOM label for "Engagement"
 #: ../language/_facts.php:208
 msgid "ENGA"
-msgstr ""
+msgstr "Помолвка"
 
 #. I18N: This is the GEDCOM label for "Engagement Date"
 #: ../language/_facts.php:210
@@ -613,7 +613,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Event"
 #: ../language/_facts.php:216
 msgid "EVEN"
-msgstr ""
+msgstr "Событие"
 
 #. I18N: This is the GEDCOM label for "Fact"
 #: ../language/_facts.php:218
@@ -623,12 +623,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Family"
 #: ../language/_facts.php:220
 msgid "FAM"
-msgstr ""
+msgstr "Семья"
 
 #. I18N: This is the GEDCOM label for "Family as a Child"
 #: ../language/_facts.php:222
 msgid "FAMC"
-msgstr ""
+msgstr "Семья в детстве"
 
 #. I18N: This is the GEDCOM label for "Father's Birthplace"
 #: ../language/_facts.php:224
@@ -693,12 +693,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Family File"
 #: ../language/_facts.php:248
 msgid "FAMF"
-msgstr ""
+msgstr "Семейный файл у мормонов"
 
 #. I18N: This is the GEDCOM label for "Family as a Spouse"
 #: ../language/_facts.php:250
 msgid "FAMS"
-msgstr ""
+msgstr "Семья в браке"
 
 #. I18N: This is the GEDCOM label for "Spouse Census Date"
 #: ../language/_facts.php:252
@@ -773,7 +773,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "First Communion"
 #: ../language/_facts.php:280
 msgid "FCOM"
-msgstr ""
+msgstr "Первое причастие"
 
 #. I18N: This is the GEDCOM label for "First Communion Date"
 #: ../language/_facts.php:282
@@ -793,7 +793,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "External File"
 #: ../language/_facts.php:288
 msgid "FILE"
-msgstr ""
+msgstr "Внешний файл"
 
 #. I18N: This is the GEDCOM label for "Phonetic"
 #: ../language/_facts.php:290
@@ -803,32 +803,32 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Format"
 #: ../language/_facts.php:292
 msgid "FORM"
-msgstr ""
+msgstr "Формат"
 
 #. I18N: This is the GEDCOM label for "Given Names"
 #: ../language/_facts.php:294
 msgid "GIVN"
-msgstr ""
+msgstr "Имя, отчество (имена)"
 
 #. I18N: This is the GEDCOM label for "Graduation"
 #: ../language/_facts.php:296
 msgid "GRAD"
-msgstr ""
+msgstr "Образование (диплом)"
 
 #. I18N: This is the GEDCOM label for "Husband"
 #: ../language/_facts.php:298
 msgid "HUSB"
-msgstr ""
+msgstr "Супруг"
 
 #. I18N: This is the GEDCOM label for "Identification Number"
 #: ../language/_facts.php:300
 msgid "IDNO"
-msgstr ""
+msgstr "Идентификационный номер"
 
 #. I18N: This is the GEDCOM label for "Immigration"
 #: ../language/_facts.php:302
 msgid "IMMI"
-msgstr ""
+msgstr "Иммиграция"
 
 #. I18N: This is the GEDCOM label for "Latitude"
 #: ../language/_facts.php:304
@@ -838,7 +838,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Legatee"
 #: ../language/_facts.php:306
 msgid "LEGA"
-msgstr ""
+msgstr "Наследник"
 
 #. I18N: This is the GEDCOM label for "Longitude"
 #: ../language/_facts.php:308
@@ -853,7 +853,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage Banns"
 #: ../language/_facts.php:312
 msgid "MARB"
-msgstr ""
+msgstr "Объявление о браке"
 
 #. I18N: This is the GEDCOM label for "Marriage Banns Date"
 #: ../language/_facts.php:314
@@ -873,17 +873,17 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage Contract"
 #: ../language/_facts.php:320
 msgid "MARC"
-msgstr ""
+msgstr "Брачный контракт"
 
 #. I18N: This is the GEDCOM label for "Marriage Licence"
 #: ../language/_facts.php:322
 msgid "MARL"
-msgstr ""
+msgstr "Разрешение на брак"
 
 #. I18N: This is the GEDCOM label for "Marriage"
 #: ../language/_facts.php:324
 msgid "MARR"
-msgstr ""
+msgstr "Брак"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: ../language/_facts.php:326
@@ -923,7 +923,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage Settlement"
 #: ../language/_facts.php:340
 msgid "MARS"
-msgstr ""
+msgstr "Соглашение о браке"
 
 #. I18N: This is the GEDCOM label for "Media Type"
 #: ../language/_facts.php:342
@@ -933,7 +933,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Name"
 #: ../language/_facts.php:344
 msgid "NAME"
-msgstr ""
+msgstr "Фамилия, имя, отчество (имена)"
 
 #. I18N: This is the GEDCOM label for "Phonetic Name"
 #: ../language/_facts.php:346
@@ -953,82 +953,82 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Nationality"
 #: ../language/_facts.php:352
 msgid "NATI"
-msgstr ""
+msgstr "Национальность"
 
 #. I18N: This is the GEDCOM label for "Naturalization"
 #: ../language/_facts.php:354
 msgid "NATU"
-msgstr ""
+msgstr "Натурализация"
 
 #. I18N: This is the GEDCOM label for "Number of Children"
 #: ../language/_facts.php:356
 msgid "NCHI"
-msgstr ""
+msgstr "Число детей"
 
 #. I18N: This is the GEDCOM label for "Nickname"
 #: ../language/_facts.php:358
 msgid "NICK"
-msgstr ""
+msgstr "Прозвище"
 
 #. I18N: This is the GEDCOM label for "Number of Marriages"
 #: ../language/_facts.php:360
 msgid "NMR"
-msgstr ""
+msgstr "Число браков"
 
 #. I18N: This is the GEDCOM label for "Note"
 #: ../language/_facts.php:362
 msgid "NOTE"
-msgstr ""
+msgstr "Примечание"
 
 #. I18N: This is the GEDCOM label for "Prefix"
 #: ../language/_facts.php:364
 msgid "NPFX"
-msgstr ""
+msgstr "Титул (приставка)"
 
 #. I18N: This is the GEDCOM label for "Suffix"
 #: ../language/_facts.php:366
 msgid "NSFX"
-msgstr ""
+msgstr "Суффикс"
 
 #. I18N: This is the GEDCOM label for "Multimedia Object"
 #: ../language/_facts.php:368
 msgid "OBJE"
-msgstr ""
+msgstr "Объект"
 
 #. I18N: This is the GEDCOM label for "Occupation"
 #: ../language/_facts.php:370
 msgid "OCCU"
-msgstr ""
+msgstr "Род занятий"
 
 #. I18N: This is the GEDCOM label for "Ordinance"
 #: ../language/_facts.php:372
 msgid "ORDI"
-msgstr ""
+msgstr "Посвящение у мормонов"
 
 #. I18N: This is the GEDCOM label for "Ordination"
 #: ../language/_facts.php:374
 msgid "ORDN"
-msgstr ""
+msgstr "Посвящение в сан"
 
 #. I18N: This is the GEDCOM label for "Citation Details"
 #: ../language/_facts.php:376
 msgid "PAGE"
-msgstr ""
+msgstr "Местонахождение цитаты"
 
 #. I18N: This is the GEDCOM label for "Pedigree"
 #: ../language/_facts.php:378
 msgid "PEDI"
-msgstr ""
+msgstr "Восходящее древо"
 
 #. I18N: This is the GEDCOM label for "Phone"
 #: ../language/_facts.php:380
 msgid "PHON"
-msgstr ""
+msgstr "Телефон"
 
 #. I18N: This is the GEDCOM label for "Place"
 #: ../language/_facts.php:382
 msgid "PLAC"
-msgstr ""
+msgstr "Место"
 
 #. I18N: This is the GEDCOM label for "Phonetic Place"
 #: ../language/_facts.php:384
@@ -1048,32 +1048,32 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Postal Code"
 #: ../language/_facts.php:390
 msgid "POST"
-msgstr ""
+msgstr "Почтовый код"
 
 #. I18N: This is the GEDCOM label for "Probate"
 #: ../language/_facts.php:392
 msgid "PROB"
-msgstr ""
+msgstr "Утверждение завещания"
 
 #. I18N: This is the GEDCOM label for "Property"
 #: ../language/_facts.php:394
 msgid "PROP"
-msgstr ""
+msgstr "Собственность"
 
 #. I18N: This is the GEDCOM label for "Publication"
 #: ../language/_facts.php:396
 msgid "PUBL"
-msgstr ""
+msgstr "Публикация"
 
 #. I18N: This is the GEDCOM label for "Quality of Data"
 #: ../language/_facts.php:398
 msgid "QUAY"
-msgstr ""
+msgstr "Качество данных"
 
 #. I18N: This is the GEDCOM label for "Reference Number"
 #: ../language/_facts.php:400
 msgid "REFN"
-msgstr ""
+msgstr "Ссылка"
 
 #. I18N: This is the GEDCOM label for "Relationship"
 #: ../language/_facts.php:402
@@ -1083,42 +1083,42 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Religion"
 #: ../language/_facts.php:404
 msgid "RELI"
-msgstr ""
+msgstr "Вероисповедание"
 
 #. I18N: This is the GEDCOM label for "Repository"
 #: ../language/_facts.php:406
 msgid "REPO"
-msgstr ""
+msgstr "Архив"
 
 #. I18N: This is the GEDCOM label for "Residence"
 #: ../language/_facts.php:408
 msgid "RESI"
-msgstr ""
+msgstr "Место проживания"
 
 #. I18N: This is the GEDCOM label for "Restriction"
 #: ../language/_facts.php:410
 msgid "RESN"
-msgstr ""
+msgstr "Ограниченный доступ"
 
 #. I18N: This is the GEDCOM label for "Retirement"
 #: ../language/_facts.php:412
 msgid "RETI"
-msgstr ""
+msgstr "Отставка"
 
 #. I18N: This is the GEDCOM label for "Record File Number"
 #: ../language/_facts.php:414
 msgid "RFN"
-msgstr ""
+msgstr "Номер записи в файле"
 
 #. I18N: This is the GEDCOM label for "Record ID Number"
 #: ../language/_facts.php:416
 msgid "RIN"
-msgstr ""
+msgstr "Идентификационный номер"
 
 #. I18N: This is the GEDCOM label for "Role"
 #: ../language/_facts.php:418
 msgid "ROLE"
-msgstr ""
+msgstr "Роль"
 
 #. I18N: This is the GEDCOM label for "Romanized"
 #: ../language/_facts.php:420
@@ -1133,7 +1133,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Gender"
 #: ../language/_facts.php:424
 msgid "SEX"
-msgstr ""
+msgstr "Пол"
 
 #. I18N: This is the GEDCOM label for "Shared Note"
 #: ../language/_facts.php:426
@@ -1143,37 +1143,37 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "LDS Child Sealing"
 #: ../language/_facts.php:428
 msgid "SLGC"
-msgstr ""
+msgstr "LDS Child Sealing"
 
 #. I18N: This is the GEDCOM label for "LDS Spouse Sealing"
 #: ../language/_facts.php:430
 msgid "SLGS"
-msgstr ""
+msgstr "LDS Spouse Sealing"
 
 #. I18N: This is the GEDCOM label for "Source"
 #: ../language/_facts.php:432
 msgid "SOUR"
-msgstr ""
+msgstr "Источник"
 
 #. I18N: This is the GEDCOM label for "Surname Prefix"
 #: ../language/_facts.php:434
 msgid "SPFX"
-msgstr ""
+msgstr "Префикс к фамилии"
 
 #. I18N: This is the GEDCOM label for "Social Security Number"
 #: ../language/_facts.php:436
 msgid "SSN"
-msgstr ""
+msgstr "Номер социального страхования"
 
 #. I18N: This is the GEDCOM label for "State"
 #: ../language/_facts.php:438
 msgid "STAE"
-msgstr ""
+msgstr "Штат"
 
 #. I18N: This is the GEDCOM label for "Status"
 #: ../language/_facts.php:440
 msgid "STAT"
-msgstr ""
+msgstr "Статус"
 
 #. I18N: This is the GEDCOM label for "Status Change Date"
 #: ../language/_facts.php:442
@@ -1183,37 +1183,37 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Submitter"
 #: ../language/_facts.php:444
 msgid "SUBM"
-msgstr ""
+msgstr "Податель"
 
 #. I18N: This is the GEDCOM label for "Submission"
 #: ../language/_facts.php:446
 msgid "SUBN"
-msgstr ""
+msgstr "Подача"
 
 #. I18N: This is the GEDCOM label for "Surname"
 #: ../language/_facts.php:448
 msgid "SURN"
-msgstr ""
+msgstr "Фамилия"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: ../language/_facts.php:450
 msgid "TEMP"
-msgstr ""
+msgstr "Храм мормонов"
 
 #. I18N: This is the GEDCOM label for "Text"
 #: ../language/_facts.php:452
 msgid "TEXT"
-msgstr ""
+msgstr "Текст"
 
 #. I18N: This is the GEDCOM label for "Time"
 #: ../language/_facts.php:454
 msgid "TIME"
-msgstr ""
+msgstr "Время"
 
 #. I18N: This is the GEDCOM label for "Title"
 #: ../language/_facts.php:456
 msgid "TITL"
-msgstr ""
+msgstr "Заглавие"
 
 #. I18N: This is the GEDCOM label for "Phonetic Title"
 #: ../language/_facts.php:458
@@ -1233,7 +1233,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Type"
 #: ../language/_facts.php:464
 msgid "TYPE"
-msgstr ""
+msgstr "Вид"
 
 #. I18N: This is the GEDCOM label for "Web URL"
 #: ../language/_facts.php:466
@@ -1243,12 +1243,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Wife"
 #: ../language/_facts.php:468
 msgid "WIFE"
-msgstr ""
+msgstr "Супруга"
 
 #. I18N: This is the GEDCOM label for "Will"
 #: ../language/_facts.php:470
 msgid "WILL"
-msgstr ""
+msgstr "Завещание"
 
 #. I18N: This is the GEDCOM label for "Web Home Page"
 #: ../language/_facts.php:472
@@ -1303,22 +1303,22 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Adopted by Father"
 #: ../language/_facts.php:492
 msgid "_ADPF"
-msgstr ""
+msgstr "Усыновлён/удочерена отцом"
 
 #. I18N: This is the GEDCOM label for "Adopted by Mother"
 #: ../language/_facts.php:494
 msgid "_ADPM"
-msgstr ""
+msgstr "Усыновлён/удочерена матерью"
 
 #. I18N: This is the GEDCOM label for "Also known as"
 #: ../language/_facts.php:496
 msgid "_AKA"
-msgstr ""
+msgstr "Иначе"
 
 #. I18N: This is the GEDCOM label for "Also known as"
 #: ../language/_facts.php:498
 msgid "_AKAN"
-msgstr ""
+msgstr "Также известен как"
 
 #. I18N: This is the GEDCOM label for "Baptism of a child"
 #: ../language/_facts.php:500
@@ -1418,7 +1418,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Brit Mila"
 #: ../language/_facts.php:538
 msgid "_BRTM"
-msgstr ""
+msgstr "Обрезание"
 
 #. I18N: This is the GEDCOM label for "Brit Mila Date"
 #: ../language/_facts.php:540
@@ -1553,7 +1553,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Common Law Marriage"
 #: ../language/_facts.php:592
 msgid "_COML"
-msgstr ""
+msgstr "Законный брак"
 
 #. I18N: This is the GEDCOM label for "Cremation of a child"
 #: ../language/_facts.php:594
@@ -1703,87 +1703,87 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Degree"
 #: ../language/_facts.php:652
 msgid "_DEG"
-msgstr ""
+msgstr "Звание, чин"
 
 #. I18N: This is the GEDCOM label for "Death of One Spouse"
 #: ../language/_facts.php:654
 msgid "_DETS"
-msgstr ""
+msgstr "Смерть супруга"
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../language/_facts.php:656
 msgid "_EMAIL"
-msgstr ""
+msgstr "Адрес электронной почты (e-mail)"
 
 #. I18N: This is the GEDCOM label for "Eye Color"
 #: ../language/_facts.php:658
 msgid "_EYEC"
-msgstr ""
+msgstr "Цвет глаз"
 
 #. I18N: This is the GEDCOM label for "Fact 1"
 #: ../language/_facts.php:660
 msgid "_FA1"
-msgstr ""
+msgstr "Факт 1"
 
 #. I18N: This is the GEDCOM label for "Fact 10"
 #: ../language/_facts.php:662
 msgid "_FA10"
-msgstr ""
+msgstr "Факт 10"
 
 #. I18N: This is the GEDCOM label for "Fact 11"
 #: ../language/_facts.php:664
 msgid "_FA11"
-msgstr ""
+msgstr "Факт 11"
 
 #. I18N: This is the GEDCOM label for "Fact 12"
 #: ../language/_facts.php:666
 msgid "_FA12"
-msgstr ""
+msgstr "Факт 12"
 
 #. I18N: This is the GEDCOM label for "Fact 13"
 #: ../language/_facts.php:668
 msgid "_FA13"
-msgstr ""
+msgstr "Факт 13"
 
 #. I18N: This is the GEDCOM label for "Fact 2"
 #: ../language/_facts.php:670
 msgid "_FA2"
-msgstr ""
+msgstr "Факт 2"
 
 #. I18N: This is the GEDCOM label for "Fact 3"
 #: ../language/_facts.php:672
 msgid "_FA3"
-msgstr ""
+msgstr "Факт 3"
 
 #. I18N: This is the GEDCOM label for "Fact 4"
 #: ../language/_facts.php:674
 msgid "_FA4"
-msgstr ""
+msgstr "Факт 4"
 
 #. I18N: This is the GEDCOM label for "Fact 5"
 #: ../language/_facts.php:676
 msgid "_FA5"
-msgstr ""
+msgstr "Факт 5"
 
 #. I18N: This is the GEDCOM label for "Fact 6"
 #: ../language/_facts.php:678
 msgid "_FA6"
-msgstr ""
+msgstr "Факт 6"
 
 #. I18N: This is the GEDCOM label for "Fact 7"
 #: ../language/_facts.php:680
 msgid "_FA7"
-msgstr ""
+msgstr "Факт 7"
 
 #. I18N: This is the GEDCOM label for "Fact 8"
 #: ../language/_facts.php:682
 msgid "_FA8"
-msgstr ""
+msgstr "Факт 8"
 
 #. I18N: This is the GEDCOM label for "Fact 9"
 #: ../language/_facts.php:684
 msgid "_FA9"
-msgstr ""
+msgstr "Факт 9"
 
 #. I18N: This is the GEDCOM label for "Emigration of parents"
 #: ../language/_facts.php:686
@@ -1798,12 +1798,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Funeral"
 #: ../language/_facts.php:690
 msgid "_FNRL"
-msgstr ""
+msgstr "Захоронение"
 
 #. I18N: This is the GEDCOM label for "Relationship to Father"
 #: ../language/_facts.php:692
 msgid "_FREL"
-msgstr ""
+msgstr "Родство по отцовской линии"
 
 #. I18N: This is the GEDCOM label for "GEDCOM File"
 #: ../language/_facts.php:694
@@ -1813,7 +1813,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Hair Color"
 #: ../language/_facts.php:696
 msgid "_HAIR"
-msgstr ""
+msgstr "Цвет волос"
 
 #. I18N: This is the GEDCOM label for "Hebrew"
 #: ../language/_facts.php:698
@@ -1823,7 +1823,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Height"
 #: ../language/_facts.php:700
 msgid "_HEIG"
-msgstr ""
+msgstr "Рост"
 
 #. I18N: This is the GEDCOM label for "Hebrew Name"
 #: ../language/_facts.php:702
@@ -1838,7 +1838,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Interred"
 #: ../language/_facts.php:706
 msgid "_INTE"
-msgstr ""
+msgstr "Погребение в фамильном склепе"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of a child"
 #: ../language/_facts.php:708
@@ -1903,12 +1903,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage Intention"
 #: ../language/_facts.php:732
 msgid "_MARI"
-msgstr ""
+msgstr "Помолвка"
 
 #. I18N: This is the GEDCOM label for "Married Name"
 #: ../language/_facts.php:734
 msgid "_MARNM"
-msgstr ""
+msgstr "Фамилия в браке:"
 
 #. I18N: This is the GEDCOM label for "Married Surname"
 #: ../language/_facts.php:736
@@ -1978,17 +1978,17 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage Bond"
 #: ../language/_facts.php:762
 msgid "_MBON"
-msgstr ""
+msgstr "Оглашение вступающих в брак"
 
 #. I18N: This is the GEDCOM label for "Medical"
 #: ../language/_facts.php:764
 msgid "_MDCL"
-msgstr ""
+msgstr "Medical"
 
 #. I18N: This is the GEDCOM label for "Medical Condition"
 #: ../language/_facts.php:766
 msgid "_MEDC"
-msgstr ""
+msgstr "Медицинское состояние"
 
 #. I18N: This is the GEDCOM label for "Marriage Ending Status"
 #: ../language/_facts.php:768
@@ -1998,17 +1998,17 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Military"
 #: ../language/_facts.php:770
 msgid "_MILI"
-msgstr ""
+msgstr "Военная служба"
 
 #. I18N: This is the GEDCOM label for "Military Service"
 #: ../language/_facts.php:772
 msgid "_MILT"
-msgstr ""
+msgstr "Военная служба"
 
 #. I18N: This is the GEDCOM label for "Relationship to Mother"
 #: ../language/_facts.php:774
 msgid "_MREL"
-msgstr ""
+msgstr "Родство по материнской линии"
 
 #. I18N: This is the GEDCOM label for "Marriage Beginning Status"
 #: ../language/_facts.php:776
@@ -2028,17 +2028,17 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Not living"
 #: ../language/_facts.php:782
 msgid "_NLIV"
-msgstr ""
+msgstr "Кончина"
 
 #. I18N: This is the GEDCOM label for "Never married"
 #: ../language/_facts.php:784
 msgid "_NMAR"
-msgstr ""
+msgstr "Никогда не состоял(а) в браке"
 
 #. I18N: This is the GEDCOM label for "Not married"
 #: ../language/_facts.php:786
 msgid "_NMR"
-msgstr ""
+msgstr "Не женат/не замужем"
 
 #. I18N: This is the GEDCOM label for "by"
 #: ../language/_facts.php:788
@@ -2053,7 +2053,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Permanent Number"
 #: ../language/_facts.php:792
 msgid "_PRMN"
-msgstr ""
+msgstr "Постоянны"
 
 #. I18N: This is the GEDCOM label for "Scrapbook"
 #: ../language/_facts.php:794
@@ -2063,7 +2063,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Separated"
 #: ../language/_facts.php:796
 msgid "_SEPR"
-msgstr ""
+msgstr "В разводе"
 
 #. I18N: This is the GEDCOM label for "Slide Show"
 #: ../language/_facts.php:798
@@ -2088,7 +2088,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "To Do Item"
 #: ../language/_facts.php:806
 msgid "_TODO"
-msgstr ""
+msgstr "К исполнению"
 
 #. I18N: This is the GEDCOM label for "Media Type"
 #: ../language/_facts.php:808
@@ -2098,7 +2098,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Globally unique Identifier"
 #: ../language/_facts.php:810
 msgid "_UID"
-msgstr ""
+msgstr "Универсальный идентификатор"
 
 #. I18N: This is the GEDCOM label for "Web URL"
 #: ../language/_facts.php:812
@@ -2108,12 +2108,12 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Weight"
 #: ../language/_facts.php:814
 msgid "_WEIG"
-msgstr ""
+msgstr "Вес"
 
 #. I18N: This is the GEDCOM label for "Yahrzeit"
 #: ../language/_facts.php:816
 msgid "_YART"
-msgstr ""
+msgstr "Поминание умерших (в еврейской религии)"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of a child"
 #: ../language/_facts.php:818
