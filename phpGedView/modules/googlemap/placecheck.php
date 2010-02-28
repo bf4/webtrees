@@ -130,8 +130,8 @@ echo "</td>";
 echo "<td rowspan='2'>";
 echo "<table align='right'>";
 echo "<tr><td colspan='4' align='center' class='descriptionbox'><strong>", $pgv_lang['placecheck_key'], "</strong></td></tr>";
-echo "<tr><td class='facts_value error'>", $factarray["PLAC"], "</td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", $pgv_lang['placecheck_key1'], "</font></td></tr>";
-echo "<tr><td class='facts_value'><a>", $factarray["PLAC"], "</a></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", $pgv_lang['placecheck_key2'], "</font></td></tr>";
+echo "<tr><td class='facts_value error'>", i18n::translate('PLAC'), "</td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", $pgv_lang['placecheck_key1'], "</font></td></tr>";
+echo "<tr><td class='facts_value'><a>", i18n::translate('PLAC'), "</a></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", $pgv_lang['placecheck_key2'], "</font></td></tr>";
 echo "<tr><td class='facts_value'><strong>{$pgv_lang["pl_unknown"]}</font></td><td class='facts_value error' align='center '><strong>X</strong></td><td align='center' class='facts_value error'><strong>X</strong></td><td class='facts_value'><font size=\"-2\">", $pgv_lang['placecheck_key3'], "</font></td></tr>";
 echo "<tr><td class='facts_value'><a>{$pgv_lang["pl_unknown"]}</a></td><td class='facts_value' align='center'>N55.0</td><td align='center' class='facts_value'>W75.0</td><td class='facts_value'><font size=\"-2\">", $pgv_lang['placecheck_key4'], "</font></td></tr>";
 echo "</table>";
@@ -248,7 +248,7 @@ case 'go':
 	echo "</tr><tr>";
 	$cols=0;
 	while ($cols<$max) {
-		echo "<td class='descriptionbox' align='center'><strong>", $factarray["PLAC"], "</strong></td><td class='descriptionbox' align='center'><strong>", $pgv_lang["placecheck_lati"], "</strong><td class='descriptionbox' align='center'><strong>", $pgv_lang["placecheck_long"], "</strong></td></td>";
+		echo "<td class='descriptionbox' align='center'><strong>", i18n::translate('PLAC'), "</strong></td><td class='descriptionbox' align='center'><strong>", $pgv_lang["placecheck_lati"], "</strong><td class='descriptionbox' align='center'><strong>", $pgv_lang["placecheck_long"], "</strong></td></td>";
 		$cols++;
 	}
 	echo "</tr>";

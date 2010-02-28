@@ -265,7 +265,7 @@ function print_child_descendancy(&$person, $depth) {
  * @param int $depth the descendancy depth to show
  */
 function print_family_descendancy(&$person, &$family, $depth) {
-	global $pgv_lang, $factarray;
+	global $pgv_lang;
 	global $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent, $personcount;
 
 	if (is_null($family)) return;
@@ -322,12 +322,12 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		$children = $family->getChildren();
 		print "<tr><td colspan=\"3\" class=\"details1\" >&nbsp;&nbsp;";
 		if ($children) {
-			print $factarray["NCHI"].": ".count($children);
+			print i18n::translate('NCHI').": ".count($children);
 		} else {
 			// Distinguish between no children (NCHI 0) and no recorded
 			// children (no CHIL records)
 			if (strpos($family->getGedcomRecord(), "\n1 NCHI 0")) {
-				print $factarray["NCHI"].": ".count($children);
+				print i18n::translate('NCHI').": ".count($children);
 			} else {
 				print $pgv_lang["no_children"];
 			}

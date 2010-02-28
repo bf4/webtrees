@@ -82,7 +82,6 @@ function print_fact_place_map($factrec) {
 
 function print_address_structure_map($factrec, $level) {
 	global $pgv_lang;
-	global $factarray;
 	global $WORD_WRAPPED_NOTES;
 	global $POSTAL_CODE;
 
@@ -146,25 +145,25 @@ function print_address_structure_map($factrec, $level) {
 	$resultText = "<table>";
 	$ct = preg_match_all("/$level PHON (.*)/", $factrec, $omatch, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		$resultText .= "<tr><td><span class=\"label\"><b>".$factarray["PHON"].": </b></span></td><td><span class=\"field\">";
+		$resultText .= "<tr><td><span class=\"label\"><b>".i18n::translate('PHON').": </b></span></td><td><span class=\"field\">";
 		$resultText .= getLRM() . $omatch[$i][1]. getLRM();
 		$resultText .= "</span></td></tr>";
 	}
 	$ct = preg_match_all("/$level FAX (.*)/", $factrec, $omatch, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		$resultText .= "<tr><td><span class=\"label\"><b>".$factarray["FAX"].": </b></span></td><td><span class=\"field\">";
+		$resultText .= "<tr><td><span class=\"label\"><b>".i18n::translate('FAX').": </b></span></td><td><span class=\"field\">";
 		$resultText .= getLRM() . $omatch[$i][1] . getLRM();
 		$resultText .= "</span></td></tr>";
 	}
 	$ct = preg_match_all("/$level EMAIL (.*)/", $factrec, $omatch, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		$resultText .= "<tr><td><span class=\"label\"><b>".$factarray["EMAIL"].": </b></span></td><td><span class=\"field\">";
+		$resultText .= "<tr><td><span class=\"label\"><b>".i18n::translate('EMAIL').": </b></span></td><td><span class=\"field\">";
 		$resultText .= "<a href=\"mailto:".$omatch[$i][1]."\">".$omatch[$i][1]."</a>";
 		$resultText .= "</span></td></tr>";
 	}
 	$ct = preg_match_all("/$level (WWW|URL) (.*)/", $factrec, $omatch, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		$resultText .= "<tr><td><span class=\"label\"><b>".$factarray["URL"].": </b></span></td><td><span class=\"field\">";
+		$resultText .= "<tr><td><span class=\"label\"><b>".i18n::translate('URL').": </b></span></td><td><span class=\"field\">";
 		$resultText .= "<a href=\"".$omatch[$i][2]."\" target=\"_blank\">".$omatch[$i][2]."</a>";
 		$resultText .= "</span></td></tr>";
 	}
@@ -473,7 +472,7 @@ function create_indiv_buttons() {
 
 function build_indiv_map($indifacts, $famids) {
 	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
-	global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
+	global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 	global $GOOGLEMAP_ENABLED, $TBLPREFIX, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 
 	if (!$GOOGLEMAP_ENABLED) {
@@ -533,16 +532,12 @@ function build_indiv_map($indifacts, $famids) {
 					if ($fact == "EVEN" || $fact=="FACT") {
 						$eventrec = get_sub_record(1, "2 TYPE", $factrec);
 						if (preg_match("/\d TYPE (.*)/", $eventrec, $match3)) {
-							if (isset($factarray[$match3[1]])) {
-								$markers[$i]["fact"]=$factarray[$match3[1]];
-							} else {
-								$markers[$i]["fact"]=$match3[1];
-							}
+							$markers[$i]["fact"]=i18n::translate($match3[1]);
 						} else {
-							$markers[$i]["fact"]=$factarray[$fact];
+							$markers[$i]["fact"]=i18n::translate($fact);
 						}
 					} else {
-						$markers[$i]["fact"]=$factarray[$fact];
+						$markers[$i]["fact"]=i18n::translate($fact);
 					}
 					if (!empty($fact_data) && $fact_data!='Y')
 						$markers[$i]["info"] = $fact_data;
@@ -573,16 +568,12 @@ function build_indiv_map($indifacts, $famids) {
 							if ($fact == "EVEN" || $fact=="FACT") {
 								$eventrec = get_sub_record(1, "2 TYPE", $factrec);
 								if (preg_match("/\d TYPE (.*)/", $eventrec, $match3)) {
-									if (isset($factarray[$match3[1]])) {
-										$markers[$i]["fact"]=$factarray[$match3[1]];
-									} else {
-										$markers[$i]["fact"]=$match3[1];
-									}
+									$markers[$i]["fact"]=i18n::translate($match3[1]);
 								} else {
-									$markers[$i]["fact"]=$factarray[$fact];
+									$markers[$i]["fact"]=i18n::translate($fact);
 								}
 							} else {
-								$markers[$i]["fact"]=$factarray[$fact];
+								$markers[$i]["fact"]=i18n::translate($fact);
 							}
 							if (!empty($fact_data) && $fact_data!='Y')
 								$markers[$i]["info"] = $fact_data;
@@ -635,7 +626,7 @@ function build_indiv_map($indifacts, $famids) {
 												$markers[$i]["fact"] = $pgv_lang["son"];
 												$markers[$i]["class"]  = "person_box";
 											} else {
-												$markers[$i]["fact"]     = $factarray["CHIL"];
+												$markers[$i]["fact"]     = i18n::translate('CHIL');
 												$markers[$i]["class"]    = "person_boxNN";
 											}
 										$markers[$i]["placerec"] = $placerec;
@@ -660,7 +651,7 @@ function build_indiv_map($indifacts, $famids) {
 											if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
 												$i = $i + 1;
 												$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
-												$markers[$i]["fact"]     = $factarray["CHIL"];
+												$markers[$i]["fact"]     = i18n::translate('CHIL');
 												$markers[$i]["class"]    = "option_boxNN";
 												if (strpos($srec, "\n1 SEX F")!==false) {
 													$markers[$i]["fact"] = $pgv_lang["daughter"];

@@ -446,13 +446,9 @@ if ($action=="filter") {
 					<b>".$indi->getFullName()."</b>&nbsp;&nbsp;&nbsp;";
 					
 					if ($ABBREVIATE_CHART_LABELS) {
-						if (isset ($factAbbrev["BIRT"])) {
-							$born = $factAbbrev["BIRT"];
-						} else { 
-							$born = UTF8_substr($factarray["BIRT"], 0, 1);
-						}
+						$born=i18n::translate('ABBREV_BIRT');
 					} else {
-						$born = $factarray["BIRT"];
+						$born=i18n::translate('BIRT');
 					}
 
 				
