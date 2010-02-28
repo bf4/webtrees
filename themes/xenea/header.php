@@ -50,7 +50,7 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 		<link rel="stylesheet" href="<?php echo $stylesheet; ?>" type="text/css" media="all" />
 		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
-			<link rel="stylesheet" href="<?php echo PGV_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+			<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required (Only if Lightbox installed)
 		if (PGV_USE_LIGHTBOX) {
@@ -84,6 +84,13 @@ $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMA
 	<?php } ?>
 	<?php echo $javascript; ?>
 	<?php echo $head; //-- additional header information ?>
+	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
+	<link type="text/css" href="js/jquery/css/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+	<?php if ($TEXT_DIRECTION=='rtl') {?>
+		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+	<?php }?>
 	<link type="text/css" href="<?php echo PGV_THEME_DIR?>modules.css" rel="Stylesheet" />
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>

@@ -42,4 +42,5 @@ if ($BROWSERTYPE == "opera")
 else
         print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" id=\"container\" width=\"100%\" ><tr><td valign=\"top\" width=\"100%\"  id=\"cellcontainer\">";
 ?>
+<?php require './sidebar.php'; ?>
 <div id="content">
