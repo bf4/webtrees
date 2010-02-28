@@ -28,7 +28,7 @@ define('PGV_SCRIPT_NAME', 'branches.php');
 require './config.php';
 
 //-- const
-define('PGV_ICON_RINGS', "<img src=\"images/small/rings.gif\" alt=\"{$factarray["MARR"]}\" title=\"{$factarray["MARR"]}\" />");
+define('PGV_ICON_RINGS', '<img src="images/small/rings.gif" alt="'.i18n::translate('MARR').'" title="'.i18n::translate('MARR').'" />');
 define('PGV_ICON_BRANCHES', "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["patriarch"]["small"]."\" alt=\"\" align=\"middle\" />");
 
 //-- args
