@@ -68,39 +68,4 @@ class i18n {
 		array_splice($args, 0, 3, array($string));
 		return call_user_func_array('sprintf', $args);
 	}
-
-	// These are here temporarily to allow Zend_Translate to work without issuing a notice.
-	// They won't be needed (here) once we've plugged in a Zend_Locale object....
-	static private function dummy() {
-		i18n::translate('ar');
-		i18n::translate('ca');
-		i18n::translate('cz');
-		i18n::translate('da');
-		i18n::translate('de');
-		i18n::translate('el');
-		i18n::translate('en');
-		i18n::translate('en-gb');
-		i18n::translate('es');
-		i18n::translate('es-ar');
-		i18n::translate('et');
-		i18n::translate('fi');
-		i18n::translate('fr');
-		i18n::translate('he');
-		i18n::translate('hu');
-		i18n::translate('id');
-		i18n::translate('it');
-		i18n::translate('lt');
-		i18n::translate('nl');
-		i18n::translate('no');
-		i18n::translate('pl');
-		i18n::translate('pt');
-		i18n::translate('ro');
-		i18n::translate('ru');
-		i18n::translate('sk');
-		i18n::translate('sl');
-		i18n::translate('sv');
-		i18n::translate('tr');
-		i18n::translate('vi');
-		i18n::translate('zh');
-	}
 }
