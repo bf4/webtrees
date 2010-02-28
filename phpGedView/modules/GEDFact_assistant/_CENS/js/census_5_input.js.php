@@ -1532,6 +1532,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_nam.setAttribute('value', nam);
 				txtInp_nam.style.color=txtcolor;
 				txtInp_nam.style.fontSize="10px";
+				txtInp_nam.style.width="14em";
 		// 3. Relationship_1 --------------------------------------------------
 			var txtInp_label = document.createElement('input');
 				txtInp_label.setAttribute('type', 'text');
@@ -1540,6 +1541,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_label.setAttribute('value', label);
 				txtInp_label.style.color=txtcolor;
 				txtInp_label.style.fontSize="10px";
+				txtInp_label.style.width="7em";
 		// 4. Conditition_1 ---------------------------------------------------
 			var txtInp_cond = document.createElement('input');
 				txtInp_cond.setAttribute('type', 'text');
@@ -1733,6 +1735,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_occu.setAttribute('value', ''); 
 				txtInp_occu.style.color=txtcolor;
 				txtInp_occu.style.fontSize="10px";
+				txtInp_occu.style.width="11em";
 		// 22. Assets_2 -------------------------------------------
 			var txtInp_assets2 = document.createElement('input');
 				txtInp_assets2.setAttribute('type', 'text');
@@ -1750,6 +1753,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_birthpl.setAttribute('value', birthpl); 
 				txtInp_birthpl.style.color=txtcolor;
 				txtInp_birthpl.style.fontSize="10px";
+				txtInp_birthpl.style.width="13em";
 		// 24. Parentage - x-x = Father foreign born Y/N and Mother foreign born Y/N --
 			var txtInp_parent = document.createElement('input');
 				txtInp_parent.setAttribute('type', 'text');
@@ -1865,6 +1869,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_occu2.setAttribute('value', ''); 
 				txtInp_occu2.style.color=txtcolor;
 				txtInp_occu2.style.fontSize="10px";
+				txtInp_occu2.style.width="11em";
 		// 36. Health ----------------------------------------------------------
 			var txtInp_health = document.createElement('input');
 				txtInp_health.setAttribute('type', 'text');
@@ -1890,6 +1895,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_emp1.setAttribute('value', ''); 
 				txtInp_emp1.style.color=txtcolor;
 				txtInp_emp1.style.fontSize="10px";
+				txtInp_emp1.style.width="7em";
 		// 39. Employer EmR ----------------------------------------------------
 			var txtInp_emR = document.createElement('input');
 				txtInp_emR.setAttribute('type', 'text');
@@ -2007,6 +2013,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_birthpl2.setAttribute('value', birthpl); 
 				txtInp_birthpl2.style.color=txtcolor;
 				txtInp_birthpl2.style.fontSize="10px";
+				txtInp_birthpl2.style.width="13em";
 		// 51. POB_2 Indi Birth Place_2 ----------------------------------------
 			var txtInp_ibirthpl2 = document.createElement('input');
 				txtInp_ibirthpl2.setAttribute('type', 'text');
@@ -2103,6 +2110,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_occu3.setAttribute('value', ''); 
 				txtInp_occu3.style.color=txtcolor;
 				txtInp_occu3.style.fontSize="10px";
+				txtInp_occu3.style.width="11em";
 		// 61. Industry_2 -----------------------------------------------------
 			var txtInp_ind2 = document.createElement('input');
 				txtInp_ind2.setAttribute('type', 'text');
@@ -2119,6 +2127,7 @@ function addRowToTable(num, pid, nam, mnam, label, gend, cond, dom, dob, age2, d
 				txtInp_emp2.setAttribute('value', ''); 
 				txtInp_emp2.style.color=txtcolor;
 				txtInp_emp2.style.fontSize="10px";
+				txtInp_emp2.style.width="7em";
 		/*
 		// 63. Nationality (UK 1911) ------------------------------------------
 			var txtInp_emp2 = document.createElement('input');

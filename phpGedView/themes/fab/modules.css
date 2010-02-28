@@ -251,7 +251,7 @@ textarea#NOTE {
 	padding: 0;
 }
 
-.cens_data input {
+.cens_data input, .cens_data div {
 	padding: 0.1em;
 	margin-top: 0em;
 	margin-bottom: 0.2em;
