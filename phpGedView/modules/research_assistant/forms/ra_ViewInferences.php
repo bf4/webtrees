@@ -53,7 +53,8 @@ class ra_ViewInferences extends ra_form {
 		if ($input=="FAMS:SPOUSE") $input = $pgv_lang["spouse"];
 		$parts = explode(':', $input);
 		if(!empty($otherFact) && !empty($input)) {
-			return i18n::translate($input.":".$otherFact).' ';
+			$tag=$input.":".$otherFact;
+			return i18n::translate($tag).' ';
 		} else {
 			if(empty($input)) {
 				return $pgv_lang['self'].' ';
