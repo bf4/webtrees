@@ -65,7 +65,7 @@ class i18n {
 	static public function plural(/* var_args */) {
 		$args=func_get_args();
 		$string=self::$translation_adapter->plural($args[0], $args[1], $args[2]);
-		$args=array_splice($args, 0, 3, array($string));
+		array_splice($args, 0, 3, array($string));
 		return call_user_func_array('sprintf', $args);
 	}
 
