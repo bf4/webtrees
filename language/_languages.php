@@ -6,8 +6,8 @@
  * xgettext will scan this file, adding the strings to the .PO files,
  * thus allowing us to use them in the code as variables. e.g.
  *
- * $fact='BIRT';
- * echo i18n::translate($fact);
+ * $lang='en-gb';
+ * echo i18n::translate($lang);
  *
  * IMPORTANT: take care that these codes don't conflict with other
  * lists/categories/strings
