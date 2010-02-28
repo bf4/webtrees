@@ -365,9 +365,7 @@ else if (strstr($action, "addopfchild")) {
 	echo "<b>", $pgv_lang["add_opf_child"], "</b>";
 }
 else {
-	if (isset($factarray[$type])) {
-		echo "<b>", $factarray[$type], "</b>";
-	}
+	echo "<b>", i18n::translate($type), "</b>";
 }
 //------------------------------------------------------------------------------
 switch ($action) {
@@ -582,10 +580,10 @@ case 'addfamlink':
 	print_findfamily_link("famid");
 	echo "\n</td></tr>";
 	if ($famtag=="CHIL") {
-		echo "<tr><td class=\"facts_label\">", $factarray["PEDI"], "</td>";
+		echo "<tr><td class=\"facts_label\">", i18n::translate('PEDI'), "</td>";
 		echo "<td class=\"facts_value\"><select name=\"pedigree\">";
 		echo "<option value=\"\"></option>";
-		echo "<option value=\"birth\" >", $factarray["BIRT"], "</option>";
+		echo "<option value=\"birth\" >", i18n::translate('BIRT'), "</option>";
 		echo "<option value=\"adopted\" >", $pgv_lang["adopted"], "</option>";
 		echo "<option value=\"foster\" >", $pgv_lang["foster"], "</option>";
 		echo "<option value=\"sealing\" >", $pgv_lang["sealing"], "</option>";
@@ -753,7 +751,7 @@ case 'addnewsource':
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				alert('<?php echo $pgv_lang["must_provide"].i18n::translate('TITL'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -767,32 +765,32 @@ case 'addnewsource':
 		<input type="hidden" name="action" value="addsourceaction" />
 		<input type="hidden" name="pid" value="newsour" />
 		<table class="facts_table">
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ABBR_help", "qm", "ABBR"); echo $factarray["ABBR"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ABBR_help", "qm", "ABBR"); echo i18n::translate('ABBR'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ABBR" id="ABBR" value="" size="40" maxlength="255" /> <?php print_specialchar_link("ABBR", false); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_TITL_help", "qm", "TITL"); echo $factarray["TITL"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_TITL_help", "qm", "TITL"); echo i18n::translate('TITL'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="TITL" id="TITL" value="" size="60" /> <?php print_specialchar_link("TITL", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit__HEB_help", "qm", "_HEB"); echo $factarray["_HEB"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit__HEB_help", "qm", "_HEB"); echo i18n::translate('_HEB'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="_HEB" id="_HEB" value="" size="60" /> <?php print_specialchar_link("_HEB", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ROMN_help", "qm", "ROMN"); echo $factarray["ROMN"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ROMN_help", "qm", "ROMN"); echo i18n::translate('ROMN'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ROMN" id="ROMN" value="" size="60" /> <?php print_specialchar_link("ROMN", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_AUTH_help", "qm", "AUTH"); echo $factarray["AUTH"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_AUTH_help", "qm", "AUTH"); echo i18n::translate('AUTH'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="AUTH" id="AUTH" value="" size="40" maxlength="255" /> <?php print_specialchar_link("AUTH", false); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_PUBL_help", "qm", "PUBL"); echo $factarray["PUBL"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_PUBL_help", "qm", "PUBL"); echo i18n::translate('PUBL'); ?></td>
 			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="PUBL" id="PUBL" rows="5" cols="60"></textarea><br /><?php print_specialchar_link("PUBL", true); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_help", "qm", "edit_repo"); echo $factarray["REPO"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_help", "qm", "edit_repo"); echo i18n::translate('REPO'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); print_addnewrepository_link("REPO"); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_CALN_help", "qm", "CALN"); echo $factarray["CALN"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_CALN_help", "qm", "CALN"); echo i18n::translate('CALN'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
 		<?php
 			if (PGV_USER_IS_ADMIN) {
@@ -821,12 +819,12 @@ case 'addnewsource':
 					<?php
 					$parts = explode(',', $INDI_FACTS_ADD);
 					foreach ($parts as $p=>$key) {
-						?><option value="<?php echo $key; ?>"><?php echo $factarray[$key]. " ($key)"; ?></option>
+						?><option value="<?php echo $key; ?>"><?php echo i18n::translate($key). " ($key)"; ?></option>
 					<?php
 					}
 					$parts = explode(',', $FAM_FACTS_ADD);
 					foreach ($parts as $p=>$key) {
-						?><option value="<?php echo $key; ?>"><?php echo $factarray[$key]. " ($key)"; ?></option>
+						?><option value="<?php echo $key; ?>"><?php echo i18n::translate($key). " ($key)"; ?></option>
 					<?php
 					}
 					?>
@@ -904,7 +902,7 @@ case 'addnewnote':
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				alert('<?php echo $pgv_lang["must_provide"].i18n::translate('TITL'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -1037,7 +1035,7 @@ case 'addnewnote_assisted':
 		function check_form(frm) {
 			/*
 			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				alert('<?php echo $pgv_lang["must_provide"].i18n::translate('TITL'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -1076,7 +1074,7 @@ case 'addmedia_links':
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				alert('<?php echo $pgv_lang["must_provide"].i18n::translate('TITL'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -1163,7 +1161,7 @@ case 'editnote':
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				alert('<?php echo $pgv_lang["must_provide"].i18n::translate('TITL'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -1226,7 +1224,7 @@ case 'addnewrepository':
 	?>
 		function check_form(frm) {
 			if (frm.NAME.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"], " ", $factarray["NAME"]; ?>');
+				alert('<?php echo $pgv_lang["must_provide"], " ", i18n::translate('NAME'); ?>');
 				frm.NAME.focus();
 				return false;
 			}
@@ -1242,32 +1240,32 @@ case 'addnewrepository':
 		<input type="hidden" name="action" value="addrepoaction" />
 		<input type="hidden" name="pid" value="newrepo" />
 		<table class="facts_table">
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_NAME_help", "qm", "REPO"); echo $factarray["NAME"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_NAME_help", "qm", "REPO"); echo i18n::translate('NAME'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="NAME" id="NAME" value="" size="40" maxlength="255" /> <?php print_specialchar_link("NAME", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit__HEB_help", "qm", "_HEB"); echo $factarray["_HEB"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit__HEB_help", "qm", "_HEB"); echo i18n::translate('_HEB'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="_HEB" id="_HEB" value="" size="40" maxlength="255" /> <?php print_specialchar_link("_HEB", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ROMN_help", "qm", "ROMN"); echo $factarray["ROMN"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ROMN_help", "qm", "ROMN"); echo i18n::translate('ROMN'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ROMN" id="ROMN" value="" size="40" maxlength="255" /> <?php print_specialchar_link("ROMN", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ADDR_help", "qm", "ADDR"); echo $factarray["ADDR"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ADDR_help", "qm", "ADDR"); echo i18n::translate('ADDR'); ?></td>
 			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="ADDR" id="ADDR" rows="5" cols="60"></textarea><?php print_specialchar_link("ADDR", true); ?> </td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_PHON_help", "qm", "PHON"); echo $factarray["PHON"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_PHON_help", "qm", "PHON"); echo i18n::translate('PHON'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="PHON" id="PHON" value="" size="40" maxlength="255" /> </td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_FAX_help", "qm", "FAX"); echo $factarray["FAX"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_FAX_help", "qm", "FAX"); echo i18n::translate('FAX'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="FAX" id="FAX" value="" size="40" /></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_EMAIL_help", "qm", "emailadress"); echo $factarray["EMAIL"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_EMAIL_help", "qm", "emailadress"); echo i18n::translate('EMAIL'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="EMAIL" id="EMAIL" value="" size="40" maxlength="255" /></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_URL_help", "qm", "WWW"); echo $factarray["WWW"]; ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_URL_help", "qm", "WWW"); echo i18n::translate('WWW'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="WWW" id="WWW" value="" size="40" maxlength="255" /> </td></tr>
 		<?php
 			if (PGV_USER_IS_ADMIN) {

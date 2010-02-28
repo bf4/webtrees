@@ -419,7 +419,7 @@ class IndividualControllerRoot extends BaseController {
 	* @param Event $event the event object
 	*/
 	function print_name_record(&$event) {
-		global $pgv_lang, $factarray, $UNDERLINE_NAME_QUOTES, $NAME_REVERSE;
+		global $pgv_lang, $UNDERLINE_NAME_QUOTES, $NAME_REVERSE;
 		global $lang_short_cut, $LANGUAGE;
 
 		if (!$event->canShowDetails()) {
@@ -751,7 +751,7 @@ class IndividualControllerRoot extends BaseController {
 	* @return array an array of Person that will be used to iterate through on the indivudal.php page
 	*/
 	function buildFamilyList(&$family, $type) {
-		global $factarray, $pgv_lang;
+		global $pgv_lang;
 		$people = array();
 		if (!is_object($family)) return $people;
 		$labels = array();
@@ -943,7 +943,7 @@ class IndividualControllerRoot extends BaseController {
 				$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
 				if ($pedi) {
 					if ($pedi=="birth") {
-						$label .= " (".$factarray["BIRT"].")";
+						$label .= " (".i18n::translate('BIRT').")";
 					} elseif (isset($pgv_lang[$pedi])) {
 						$label .= " (".$pgv_lang[$pedi].")";
 					}
@@ -1022,7 +1022,7 @@ class IndividualControllerRoot extends BaseController {
 	* @return html table rows
 	*/
 	function printParentsRows(&$family, &$people, $type) {
-		global $personcount, $pgv_changes, $pgv_lang, $factarray;
+		global $personcount, $pgv_changes, $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $lang_short_cut, $LANGUAGE;
 		$elderdate = "";
@@ -1143,10 +1143,10 @@ class IndividualControllerRoot extends BaseController {
 					<?php 
 					if ($date && $date->isOK() || $place) {
 						$marr_type = "MARR_".strtoupper($family->getMarriageType());
-						if (isset($factarray[$marr_type])) {
-							echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>";
+						if (i18n::translate($marr_type)!=$marr_type) {
+							echo "<span class=\"details_label\">", i18n::translate($marr_type), ": </span>";
 						} else {
-							echo "<span class=\"details_label\">", $factarray["MARR"], ": </span>", $family->getMarriageType();
+							echo "<span class=\"details_label\">", i18n::translate('MARR'), ": </span>", $family->getMarriageType();
 						}
 						if ($date) {
 							echo $date->Display(false);
@@ -1164,7 +1164,7 @@ class IndividualControllerRoot extends BaseController {
 							// Localise the _NMR facts
 							$func("_NMR", $famid);
 						}
-						echo $factarray["_NMR"];
+						echo i18n::translate('_NMR');
 					} elseif (get_sub_record(1, "1 _NMAR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
@@ -1172,7 +1172,7 @@ class IndividualControllerRoot extends BaseController {
 							// Localise the _NMR facts
 							$func("_NMAR", $famid);
 						}
-						echo $factarray["_NMAR"];
+						echo i18n::translate('_NMAR');
 					} elseif ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						echo "<a href=\"#\" onclick=\"return add_new_record('", $famid, "', 'MARR');\">", $pgv_lang['add_marriage'], "</a>";
 					} else {
@@ -1182,18 +1182,18 @@ class IndividualControllerRoot extends BaseController {
 						} else {
 							$marr_type = "MARR";
 						}
-						if (isset($factarray[$marr_type])) {
+						if (i18n::translate($marr_type)!=$marr_type) {
 							if (isset($factdetail)) {
 								if (count($factdetail) == 3) {
 									if (strtoupper($factdetail[2]) == "Y") {
-										echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>", $pgv_lang["yes"];
+										echo "<span class=\"details_label\">", i18n::translate($marr_type), ": </span>", $pgv_lang["yes"];
 									} elseif (strtoupper($factdetail[2]) == "N") {
-										echo "<span class=\"details_label\">", $factarray[$marr_type], ": </span>", $pgv_lang["no"];
+										echo "<span class=\"details_label\">", i18n::translate($marr_type), ": </span>", $pgv_lang["no"];
 									}
 								}
 							}
 						} else {
-							echo "<span class=\"details_label\">", $factarray["MARR"], ": </span>", $family->getMarriageType();
+							echo "<span class=\"details_label\">", i18n::translate('MARR'), ": </span>", $family->getMarriageType();
 						}
 					}
 					?>
@@ -1211,7 +1211,7 @@ class IndividualControllerRoot extends BaseController {
 	* @return html table rows
 	*/
 	function printChildrenRows(&$family, &$people, $type) {
-		global $personcount, $pgv_lang, $factarray;
+		global $personcount, $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$elderdate = $family->getMarriageDate();
 		foreach($people["children"] as $key=>$child) {
@@ -1435,7 +1435,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function print_notes_tab() {
-		global $pgv_lang, $factarray, $CONTACT_EMAIL;
+		global $pgv_lang, $CONTACT_EMAIL;
 		global $SHOW_LEVEL2_NOTES;
 		global $Fam_Navigator, $NAV_NOTES;
 
@@ -1740,7 +1740,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function print_relatives_tab() {
-		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
+		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full, $personcount;
 
@@ -1937,7 +1937,7 @@ class IndividualControllerRoot extends BaseController {
 
 
 	function print_research_tab() {
-		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $factarray, $templefacts, $nondatefacts, $nonplacfacts;
+		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $templefacts, $nondatefacts, $nonplacfacts;
 		global $LANGUAGE, $lang_short_cut;
 		if (file_exists(PGV_ROOT.'modules/research_assistant/research_assistant.php') && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
 			if (!$this->indi->canDisplayDetails()) { ?>
@@ -1963,7 +1963,7 @@ class IndividualControllerRoot extends BaseController {
 		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $LANGUAGE;
 		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
-		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
+		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
 
@@ -2039,7 +2039,7 @@ class IndividualControllerRoot extends BaseController {
 		//-- the tree is already ajax enabled
 
 	/*
-		global $pgv_lang, $pgv_changes, $factarray, $view;
+		global $pgv_lang, $pgv_changes, $view;
 		// Show or Hide Navigator -----------
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
@@ -2067,7 +2067,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function print_lightbox_tab() {
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
-		global $pgv_lang, $pgv_changes, $factarray, $view;
+		global $pgv_lang, $pgv_changes, $view;
 		global $GEDCOM, $MEDIATYPE, $pgv_changes;
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
@@ -2128,7 +2128,7 @@ class IndividualControllerRoot extends BaseController {
 	function print_spare_tab() {
 	/*
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
-		global $pgv_lang, $pgv_changes, $factarray, $view;
+		global $pgv_lang, $pgv_changes, $view;
 		global $GEDCOM, $MEDIATYPE;
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $mgedrec ;

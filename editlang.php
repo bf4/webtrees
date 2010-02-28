@@ -153,12 +153,6 @@ case "edit" :
 	}
 	echo ">configure_help.xx.php</option>";
 
-	echo "<option value=\"countries\"";
-	if ($file_type == "countries") {
-		echo " selected=\"selected\"";
-	}
-	echo ">countries.xx.php</option>";
-
 	echo "<option value=\"editor\"";
 	if ($file_type == "editor") {
 		echo " selected=\"selected\"";
@@ -170,12 +164,6 @@ case "edit" :
 		echo " selected=\"selected\"";
 	}
 	echo ">extra.xx.php</option>";
-
-	echo "<option value=\"facts\"";
-	if ($file_type == "facts") {
-		echo " selected=\"selected\"";
-	}
-	echo ">facts.xx.php</option>";
 
 	echo "<option value=\"faqlist\"";
 	if ($file_type == "faqlist") {
@@ -235,10 +223,6 @@ case "edit" :
 	echo "</form>";
 	if ($execute) {
 		switch ($file_type) {
-		case "facts":
-			$whichFile = $factsfile;
-			$whichVars = '$factarray[';
-			break;
 		case "configure_help":
 			$whichFile = $confighelpfile;
 			$whichVars = '$pgv_lang[';
@@ -255,17 +239,13 @@ case "edit" :
 			$whichFile = $editorfile;
 			$whichVars = '$pgv_lang[';
 			break;
-		case "countries":
-			$whichFile = $countryfile;
-			$whichVars = '$countries[';
-			break;
 		case "faqlist":
 			$whichFile = $faqlistfile;
 			$whichVars = '$faqlist[';
 			break;
 		case "extra":
 			$whichFile = $extrafile;
-			$whichVars = array('$pgv_lang[', '$factarray[', '$countries[', '$faqlist[');
+			$whichVars = array('$pgv_lang[', '$faqlist[');
 			break;
 		case "lang":
 		default:
@@ -509,7 +489,7 @@ case "export" :
 		//   so that function print_text will substitute text in the correct language
 		$savedLanguage = $LANGUAGE;
 		$LANGUAGE = $language2;
-		loadLangFile("pgv_lang, pgv_admin, pgv_editor, pgv_facts, pgv_help, pgv_confighelp");
+		loadLangFile("pgv_lang, pgv_admin, pgv_editor, pgv_help, pgv_confighelp");
 		$LANGUAGE = $savedLanguage;
 
 		for ($z = 0, $zmax = sizeof($new_language_array); $z < $zmax; $z++) {
@@ -521,7 +501,7 @@ case "export" :
 
 		// Restore language to original setting -- we're done
 		if ($language2!=$LANGUAGE) {      // Only necessary when languages differ
-			loadLangFile("pgv_lang, pgv_admin, pgv_editor, pgv_facts, pgv_help, pgv_confighelp");
+			loadLangFile("pgv_lang, pgv_admin, pgv_editor, pgv_help, pgv_confighelp");
 		}
 
 		fwrite($fp, "</ol>");
@@ -584,12 +564,8 @@ case "compare" :
 	echo "</table>";
 	echo "</form>";
 	if ($execute) {
-		foreach(array("admin", "configure_help", "countries", "editor", "extra", "facts", "faqlist", "help_text", "lang") as $file_type) {
+		foreach(array("admin", "configure_help", "editor", "extra", "faqlist", "help_text", "lang") as $file_type) {
 			switch ($file_type) {
-			case "facts":
-				$whichFile = $factsfile;
-				$whichVars = "factarray[";
-				break;
 			case "configure_help":
 				$whichFile = $confighelpfile;
 				$whichVars = "pgv_lang[";
@@ -606,17 +582,13 @@ case "compare" :
 				$whichFile = $editorfile;
 				$whichVars = "pgv_lang[";
 				break;
-			case "countries":
-				$whichFile = $countryfile;
-				$whichVars = "countries[";
-				break;
 			case "faqlist":
 				$whichFile = $faqlistfile;
 				$whichVars = "faqlist[";
 				break;
 			case "extra":
 				$whichFile = $extrafile;
-				$whichVars = array("pgv_lang[", "factarray[", "countries[", "faqlist[");
+				$whichVars = array("pgv_lang[", "faqlist[");
 				break;
 			case "lang":
 			default:
@@ -778,8 +750,6 @@ $pgv_language         =array();
 $confighelpfile       =array();
 $helptextfile         =array();
 $flagsfile            =array();
-$factsfile            =array();
-$factsarray           =array();
 $adminfile            =array();
 $editorfile           =array();
 $faqlistfile          =array();
@@ -811,7 +781,6 @@ foreach ($language_settings as $key=>$value) {
 	$confighelpfile[$key]       =$value["confighelpfile"];
 	$helptextfile[$key]         =$value["helptextfile"];
 	$flagsfile[$key]            =$value["flagsfile"];
-	$factsfile[$key]            =$value["factsfile"];
 	$adminfile[$key]            =$value["adminfile"];
 	$editorfile[$key]           =$value["editorfile"];
 	$faqlistfile[$key]          =$value["faqlistfile"];
