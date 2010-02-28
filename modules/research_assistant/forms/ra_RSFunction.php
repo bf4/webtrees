@@ -397,7 +397,7 @@ require_once PGV_ROOT.'includes/classes/class_person.php';
 
 	function getGlobalinferences()
 	{
-		global $TBLPREFIX, $LANGUAGE, $factarray, $pgv_lang;
+		global $TBLPREFIX, $LANGUAGE, $pgv_lang;
 
 		$rows=
 			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities WHERE pr_file=? ORDER BY (pr_matches/pr_count) DESC")
@@ -427,21 +427,14 @@ require_once PGV_ROOT.'includes/classes/class_person.php';
 	}
 
 	function getPartsTranslation($input) {
-		global $factarray, $pgv_lang;
+		global $pgv_lang;
 		if ($input=="FAMC:HUSB") $input = "father";
 		if ($input=="FAMC:WIFE") $input = "mother";
 		if ($input=="FAMS:SPOUSE") $input = "spouse";
 		$parts = explode(':', $input);
-		$out = "";
+		$out = '';
 		foreach($parts as $part) {
-			if (isset($factarray[$part])) {
-				$out .= $factarray[$part];
-			} elseif (isset($pgv_lang[$part])) {
-				$out .= $pgv_lang[$part];
-			} else {
-				$out .= $part;
-			}
-			$out .= " ";
+			$out.=i18n::translate($part).' ';
 		}
 		return $out;
 	}

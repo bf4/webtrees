@@ -466,8 +466,6 @@ class FormBuilder extends ra_form {
 	{
 		$temp = 'function editFactsForm($printButton = true)
 	{
-		global $factarray;
-
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
 		$out = parent::editFactsForm(false);

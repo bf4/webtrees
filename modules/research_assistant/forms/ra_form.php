@@ -30,7 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $LANGUAGE, $factarray;
+global $LANGUAGE;
 require_once PGV_ROOT.'includes/classes/class_person.php';
 
 /**
@@ -180,25 +180,25 @@ class ra_form {
     }
 
     function simpleCitationForm($citation) {
-			global $pgv_lang, $factarray;
+			global $pgv_lang;
 			$out = '<tr>
-			<td class="descriptionbox">'.print_help_link("edit_PAGE_help", "qm",'',false,true).$factarray['PAGE'].'</td>
+			<td class="descriptionbox">'.print_help_link("edit_PAGE_help", "qm",'',false,true).i18n::translate('PAGE').'</td>
 			<td class="optionbox"><input type="text" name="PAGE" value="'.$citation["ts_page"].'" /></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox">'.print_help_link("edit_TEXT_help", "qm",'',false,true).$factarray['TEXT'].'</td>
+			<td class="descriptionbox">'.print_help_link("edit_TEXT_help", "qm",'',false,true).i18n::translate('TEXT').'</td>
 			<td class="optionbox"><textarea name="TEXT" rows="5" cols="55">'.$citation['ts_text'].'</textarea></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox">'.print_help_link("edit_DATE_help", "qm",'',false,true).$factarray["DATA:DATE"].'</td>
+			<td class="descriptionbox">'.print_help_link("edit_DATE_help", "qm",'',false,true).i18n::translate('DATA:DATE').'</td>
 			<td class="optionbox"><input type="text" name="DATE" id="date" onblur="valid_date(this);" value="'.$citation['ts_date'].'" />'.print_calendar_popup('date', true).'</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox">'.print_help_link("edit_QUAY_help", "qm",'',false,true).$factarray['QUAY'].'</td>
+			<td class="descriptionbox">'.print_help_link("edit_QUAY_help", "qm",'',false,true).i18n::translate('QUAY').'</td>
 			<td class="optionbox"><input type="text" name="QUAY" value="'.$citation['ts_quay'].'" /></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
+			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).i18n::translate('OBJE').'</td>
 			<td class="optionbox"><input type="text" name="OBJE" id="OBJE" size="5" value="'.$citation['ts_obje'].'"/>';
 		$out .= print_findmedia_link("OBJE", true, '', true);
 		$out .= '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\'OBJE\'); window.open(\'addmedia.php?action=showmediaform\', \'\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
@@ -210,7 +210,7 @@ class ra_form {
      * displays the form for editing the source citation information
      */
     function sourceCitationForm($colspan=3, $showpeople=true) {
-		global $pgv_lang, $factarray;
+		global $pgv_lang;
 
 		$citation = $this->getSourceCitationData();
 		$task = ra_functions::getTask($_REQUEST['taskid']);
@@ -395,7 +395,7 @@ class ra_form {
      * display the form for adding and editing facts
      */
     function editFactsForm($printButton = true) {
-		global $pgv_lang, $INDI_FACTS_ADD, $factarray, $FAM_FACTS_ADD,$FAM_FACTS_UNIQUE;
+		global $pgv_lang, $INDI_FACTS_ADD, $FAM_FACTS_ADD,$FAM_FACTS_UNIQUE;
 		$task = ra_functions::getTask($_REQUEST['taskid']);
 		$out = <<<END_OUT
 		<tr>
@@ -409,7 +409,7 @@ END_OUT;
 
 			$facts = preg_split("/[, ;:]+/", $INDI_FACTS_ADD, -1, PREG_SPLIT_NO_EMPTY);
 			foreach($facts as $f=>$fact) {
-				$out .= '<option value="'.$fact.'">'.$factarray[$fact]. ' ['.$fact.']</option>';
+				$out .= '<option value="'.$fact.'">'.i18n::translate($fact). ' ['.$fact.']</option>';
 			}
 			$out .= <<<END_OUT
 
@@ -446,7 +446,7 @@ END_OUT;
 					$out .= "facts[$i] = '".preg_replace("/\r?\n/", "\\r\\n",$fact['tf_factrec'])."';\r\n";
 					$ct = preg_match("/1 (\w+)/", $fact['tf_factrec'], $match);
 					$factname = trim($match[1]);
-					if (isset($factarray[$factname])) $factname = $factarray[$factname];
+					$factname = i18n::translate($factname);
 					$out .= "factnames[".$i."] = '".$factname."';\r\n";
 					$out .= "facttypes[".$i."] = '".$fact['tf_type']."';\r\n";
 					$peopleList = "";
@@ -732,7 +732,7 @@ END_OUT;
 
 			$facts = preg_split("/[, ;:]+/", $FAM_FACTS_ADD.",".$FAM_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
 			foreach($facts as $f=>$fact) {
-				$out .= '<option value="'.$fact.'">'.$factarray[$fact]. ' ['.$fact.']</option>';
+				$out .= '<option value="'.$fact.'">'.i18n::translate($fact). ' ['.$fact.']</option>';
 			}
 			$out .= <<<END_OUT
 
@@ -763,7 +763,7 @@ END_OUT;
      * process the added/edited facts
      */
     function processFactsForm() {
-		global $pgv_lang, $TBLPREFIX, $factarray;
+		global $pgv_lang, $TBLPREFIX;
 		//-- generate the text for the citation
 		$citation = $this->getSourceCitationData();
 		$citationTxt = "";

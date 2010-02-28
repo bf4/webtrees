@@ -96,7 +96,7 @@ return false;}return true;}
 	 * override method from ra_form.php
 	 */
     function simpleCitationForm($citation) {
-		global $pgv_lang, $factarray;
+		global $pgv_lang;
 		if (empty($_POST['data']))
 			$data = array();
 		if (empty($_REQUEST['row'])) {
@@ -123,7 +123,7 @@ return false;}return true;}
 
 //        Start of Table
 		$out = '<tr>
-			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
+			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).i18n::translate('OBJE').'</td>
 			<td class="optionbox" colspan="5"><input type="hidden" name="OBJE" id="OBJE" value="'.$citation['ts_obje'].'"/>';
 			$out .= "<div id=\"censusPicDiv\" style=\"display";
 			if(!empty($citation['ts_obje']))
@@ -386,7 +386,7 @@ $out .= '</tr>
 
 	function editFactsForm($printButton = true)
 	{
-		global $factarray, $pgv_lang;
+		global $pgv_lang;
 
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
@@ -419,7 +419,7 @@ $out .= '</tr>
 					if($completeFact)
 					{
 						$out .='<tr>';
-						$out .="<td class=\"optionbox\">".$factarray[$value['factType']]." ".$value['date']."</td>";
+						$out .="<td class=\"optionbox\">".i18n::translate($value['factType'])." ".$value['date']."</td>";
 						$out .="<td class=\"optionbox\">".$value["Person"]."</td>";
 						$out .="<td class=\"optionbox\">".$value["Reason"]."</td>";
 						$out .="<td class=\"optionbox\">".'<INPUT type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
