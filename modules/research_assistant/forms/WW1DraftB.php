@@ -90,7 +90,7 @@ return false;}return true;}
 	 * override method from ra_form.php
 	 */
 	function simpleCitationForm($citation) {
-		global $pgv_lang, $factarray;
+		global $pgv_lang;
 		if (empty($_POST['data']))
 		$data = array();
 		if (empty($_REQUEST['row'])) {
@@ -116,7 +116,7 @@ return false;}return true;}
 		if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
 
 		$out = '<tr>
-			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
+			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).i18n::translate('OBJE').'</td>
 			<td class="optionbox" colspan="5"><input type="text" name="OBJE" id="OBJE" size="5" value="'.$citation['ts_obje'].'"/>';
 		$out .= print_findmedia_link("OBJE", true, '', true);
 		$out .= '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\'OBJE\'); window.open(\'addmedia.php?action=showmediaform\', \'\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
@@ -435,7 +435,7 @@ return false;}return true;}
 
 	function editFactsForm($printButton = true)
 	{
-		global $factarray, $pgv_lang;
+		global $pgv_lang;
 
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
@@ -467,7 +467,7 @@ return false;}return true;}
 					if($completeFact)
 					{
 						$out .='<tr>';
-						$out .="<td class=\"optionbox\">".$factarray[$value['factType']]." ".$value['date']."</td>";
+						$out .="<td class=\"optionbox\">".i18n::translate($value['factType'])." ".$value['date']."</td>";
 						$out .="<td class=\"optionbox\">".$value["Person"]."</td>";
 						$out .="<td class=\"optionbox\">".$value["Reason"]."</td>";
 						$out .="<td class=\"optionbox\">".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
