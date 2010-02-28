@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 09:29-0000\n"
+"POT-Creation-Date: 2010-02-28 11:12-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -601,702 +601,702 @@ msgstr "Engagement Date"
 #. I18N: This is the GEDCOM label for "Engagement Place"
 #: ../language/_facts.php:212
 msgid "ENGA:PLAC"
-msgstr ""
+msgstr "Engagement Place"
 
 #. I18N: This is the GEDCOM label for "Engagement Source"
 #: ../language/_facts.php:214
 msgid "ENGA:SOUR"
-msgstr ""
+msgstr "Engagement Source"
 
 #. I18N: This is the GEDCOM label for "Event"
 #: ../language/_facts.php:216
 msgid "EVEN"
-msgstr ""
+msgstr "Event"
 
 #. I18N: This is the GEDCOM label for "Fact"
 #: ../language/_facts.php:218
 msgid "FACT"
-msgstr ""
+msgstr "Fact"
 
 #. I18N: This is the GEDCOM label for "Family"
 #: ../language/_facts.php:220
 msgid "FAM"
-msgstr ""
+msgstr "Family"
 
 #. I18N: This is the GEDCOM label for "Family as a Child"
 #: ../language/_facts.php:222
 msgid "FAMC"
-msgstr ""
+msgstr "Family as a Child"
 
 #. I18N: This is the GEDCOM label for "Father's Birthplace"
 #: ../language/_facts.php:224
 msgid "FAMC:HUSB:BIRT:PLAC"
-msgstr ""
+msgstr "Father's Birthplace"
 
 #. I18N: This is the GEDCOM label for "Paternal Grandfather's Given Name"
 #: ../language/_facts.php:226
 msgid "FAMC:HUSB:FAMC:HUSB:GIVN"
-msgstr ""
+msgstr "Paternal Grandfather's Given Name"
 
 #. I18N: This is the GEDCOM label for "Paternal Grandmother's Given Name"
 #: ../language/_facts.php:228
 msgid "FAMC:HUSB:FAMC:WIFE:GIVN"
-msgstr ""
+msgstr "Paternal Grandmother's Given Name"
 
 #. I18N: This is the GEDCOM label for "Father's Given Name"
 #: ../language/_facts.php:230
 msgid "FAMC:HUSB:GIVN"
-msgstr ""
+msgstr "Father's Given Name"
 
 #. I18N: This is the GEDCOM label for "Father's Occupation"
 #: ../language/_facts.php:232
 msgid "FAMC:HUSB:OCCU"
-msgstr ""
+msgstr "Father's Occupation"
 
 #. I18N: This is the GEDCOM label for "Father's Surname"
 #: ../language/_facts.php:234
 msgid "FAMC:HUSB:SURN"
-msgstr ""
+msgstr "Father's Surname"
 
 #. I18N: This is the GEDCOM label for "Parents' Marriage Place"
 #: ../language/_facts.php:236
 msgid "FAMC:MARR:PLAC"
-msgstr ""
+msgstr "Parents' Marriage Place"
 
 #. I18N: This is the GEDCOM label for "Mother's Birthplace"
 #: ../language/_facts.php:238
 msgid "FAMC:WIFE:BIRT:PLAC"
-msgstr ""
+msgstr "Mother's Birthplace"
 
 #. I18N: This is the GEDCOM label for "Maternal Grandfather's Given Name"
 #: ../language/_facts.php:240
 msgid "FAMC:WIFE:FAMC:HUSB:GIVN"
-msgstr ""
+msgstr "Maternal Grandfather's Given Name"
 
 #. I18N: This is the GEDCOM label for "Maternal Grandmother's Given Name"
 #: ../language/_facts.php:242
 msgid "FAMC:WIFE:FAMC:WIFE:GIVN"
-msgstr ""
+msgstr "Maternal Grandmother's Given Name"
 
 #. I18N: This is the GEDCOM label for "Mother's Given Name"
 #: ../language/_facts.php:244
 msgid "FAMC:WIFE:GIVN"
-msgstr ""
+msgstr "Mother's Given Name"
 
 #. I18N: This is the GEDCOM label for "Mother's Surname"
 #: ../language/_facts.php:246
 msgid "FAMC:WIFE:SURN"
-msgstr ""
+msgstr "Mother's Surname"
 
 #. I18N: This is the GEDCOM label for "Family File"
 #: ../language/_facts.php:248
 msgid "FAMF"
-msgstr ""
+msgstr "Family File"
 
 #. I18N: This is the GEDCOM label for "Family as a Spouse"
 #: ../language/_facts.php:250
 msgid "FAMS"
-msgstr ""
+msgstr "Family as a Spouse"
 
 #. I18N: This is the GEDCOM label for "Spouse Census Date"
 #: ../language/_facts.php:252
 msgid "FAMS:CENS:DATE"
-msgstr ""
+msgstr "Spouse Census Date"
 
 #. I18N: This is the GEDCOM label for "Spouse Census Place"
 #: ../language/_facts.php:254
 msgid "FAMS:CENS:PLAC"
-msgstr ""
+msgstr "Spouse Census Place"
 
 #. I18N: This is the GEDCOM label for "Child's Birth Place"
 #: ../language/_facts.php:256
 msgid "FAMS:CHIL:BIRT:PLAC"
-msgstr ""
+msgstr "Child's Birth Place"
 
 #. I18N: This is the GEDCOM label for "Spouse Divorce Date"
 #: ../language/_facts.php:258
 msgid "FAMS:DIV:DATE"
-msgstr ""
+msgstr "Spouse Divorce Date"
 
 #. I18N: This is the GEDCOM label for "Spouse Divorce Place"
 #: ../language/_facts.php:260
 msgid "FAMS:DIV:PLAC"
-msgstr ""
+msgstr "Spouse Divorce Place"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: ../language/_facts.php:262
 msgid "FAMS:MARR:DATE"
-msgstr ""
+msgstr "Marriage Date"
 
 #. I18N: This is the GEDCOM label for "Marriage Place"
 #: ../language/_facts.php:264
 msgid "FAMS:MARR:PLAC"
-msgstr ""
+msgstr "Marriage Place"
 
 #. I18N: This is the GEDCOM label for "Spouse Note"
 #: ../language/_facts.php:266
 msgid "FAMS:NOTE"
-msgstr ""
+msgstr "Spouse Note"
 
 #. I18N: This is the GEDCOM label for "LDS Spouse Sealing Date"
 #: ../language/_facts.php:268
 msgid "FAMS:SLGS:DATE"
-msgstr ""
+msgstr "LDS Spouse Sealing Date"
 
 #. I18N: This is the GEDCOM label for "LDS Spouse Sealing Place"
 #: ../language/_facts.php:270
 msgid "FAMS:SLGS:PLAC"
-msgstr ""
+msgstr "LDS Spouse Sealing Place"
 
 #. I18N: This is the GEDCOM label for "LDS Spouse Sealing Temple"
 #: ../language/_facts.php:272
 msgid "FAMS:SLGS:TEMP"
-msgstr ""
+msgstr "LDS Spouse Sealing Temple"
 
 #. I18N: This is the GEDCOM label for "Spouse's Birth Place"
 #: ../language/_facts.php:274
 msgid "FAMS:SPOUSE:BIRT:PLAC"
-msgstr ""
+msgstr "Spouse's Birth Place"
 
 #. I18N: This is the GEDCOM label for "Spouse's Death Place"
 #: ../language/_facts.php:276
 msgid "FAMS:SPOUSE:DEAT:PLAC"
-msgstr ""
+msgstr "Spouse's Death Place"
 
 #. I18N: This is the GEDCOM label for "FAX"
 #: ../language/_facts.php:278
 msgid "FAX"
-msgstr ""
+msgstr "FAX"
 
 #. I18N: This is the GEDCOM label for "First Communion"
 #: ../language/_facts.php:280
 msgid "FCOM"
-msgstr ""
+msgstr "First Communion"
 
 #. I18N: This is the GEDCOM label for "First Communion Date"
 #: ../language/_facts.php:282
 msgid "FCOM:DATE"
-msgstr ""
+msgstr "First Communion Date"
 
 #. I18N: This is the GEDCOM label for "First Communion Place"
 #: ../language/_facts.php:284
 msgid "FCOM:PLAC"
-msgstr ""
+msgstr "First Communion Place"
 
 #. I18N: This is the GEDCOM label for "First Communion Source"
 #: ../language/_facts.php:286
 msgid "FCOM:SOUR"
-msgstr ""
+msgstr "First Communion Source"
 
 #. I18N: This is the GEDCOM label for "External File"
 #: ../language/_facts.php:288
 msgid "FILE"
-msgstr ""
+msgstr "External File"
 
 #. I18N: This is the GEDCOM label for "Phonetic"
 #: ../language/_facts.php:290
 msgid "FONE"
-msgstr ""
+msgstr "Phonetic"
 
 #. I18N: This is the GEDCOM label for "Format"
 #: ../language/_facts.php:292
 msgid "FORM"
-msgstr ""
+msgstr "Format"
 
 #. I18N: This is the GEDCOM label for "Given Names"
 #: ../language/_facts.php:294
 msgid "GIVN"
-msgstr ""
+msgstr "Given Names"
 
 #. I18N: This is the GEDCOM label for "Graduation"
 #: ../language/_facts.php:296
 msgid "GRAD"
-msgstr ""
+msgstr "Graduation"
 
 #. I18N: This is the GEDCOM label for "Husband"
 #: ../language/_facts.php:298
 msgid "HUSB"
-msgstr ""
+msgstr "Husband"
 
 #. I18N: This is the GEDCOM label for "Identification Number"
 #: ../language/_facts.php:300
 msgid "IDNO"
-msgstr ""
+msgstr "Identification Number"
 
 #. I18N: This is the GEDCOM label for "Immigration"
 #: ../language/_facts.php:302
 msgid "IMMI"
-msgstr ""
+msgstr "Immigration"
 
 #. I18N: This is the GEDCOM label for "Latitude"
 #: ../language/_facts.php:304
 msgid "LATI"
-msgstr ""
+msgstr "Latitude"
 
 #. I18N: This is the GEDCOM label for "Legatee"
 #: ../language/_facts.php:306
 msgid "LEGA"
-msgstr ""
+msgstr "Legatee"
 
 #. I18N: This is the GEDCOM label for "Longitude"
 #: ../language/_facts.php:308
 msgid "LONG"
-msgstr ""
+msgstr "Longitude"
 
 #. I18N: This is the GEDCOM label for "Map"
 #: ../language/_facts.php:310
 msgid "MAP"
-msgstr ""
+msgstr "Map"
 
 #. I18N: This is the GEDCOM label for "Marriage Banns"
 #: ../language/_facts.php:312
 msgid "MARB"
-msgstr ""
+msgstr "Marriage Banns"
 
 #. I18N: This is the GEDCOM label for "Marriage Banns Date"
 #: ../language/_facts.php:314
 msgid "MARB:DATE"
-msgstr ""
+msgstr "Marriage Banns Date"
 
 #. I18N: This is the GEDCOM label for "Marriage Banns Place"
 #: ../language/_facts.php:316
 msgid "MARB:PLAC"
-msgstr ""
+msgstr "Marriage Banns Place"
 
 #. I18N: This is the GEDCOM label for "Marriage Banns Source"
 #: ../language/_facts.php:318
 msgid "MARB:SOUR"
-msgstr ""
+msgstr "Marriage Banns Source"
 
 #. I18N: This is the GEDCOM label for "Marriage Contract"
 #: ../language/_facts.php:320
 msgid "MARC"
-msgstr ""
+msgstr "Marriage Contract"
 
 #. I18N: This is the GEDCOM label for "Marriage Licence"
 #: ../language/_facts.php:322
 msgid "MARL"
-msgstr ""
+msgstr "Marriage Licence"
 
 #. I18N: This is the GEDCOM label for "Marriage"
 #: ../language/_facts.php:324
 msgid "MARR"
-msgstr ""
+msgstr "Marriage"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: ../language/_facts.php:326
 msgid "MARR:DATE"
-msgstr ""
+msgstr "Marriage Date"
 
 #. I18N: This is the GEDCOM label for "Marriage Place"
 #: ../language/_facts.php:328
 msgid "MARR:PLAC"
-msgstr ""
+msgstr "Marriage Place"
 
 #. I18N: This is the GEDCOM label for "Marriage Source"
 #: ../language/_facts.php:330
 msgid "MARR:SOUR"
-msgstr ""
+msgstr "Marriage Source"
 
 #. I18N: This is the GEDCOM label for "Civil Marriage"
 #: ../language/_facts.php:332
 msgid "MARR_CIVIL"
-msgstr ""
+msgstr "Civil Marriage"
 
 #. I18N: This is the GEDCOM label for "Registered Partnership"
 #: ../language/_facts.php:334
 msgid "MARR_PARTNERS"
-msgstr ""
+msgstr "Registered Partnership"
 
 #. I18N: This is the GEDCOM label for "Religious Marriage"
 #: ../language/_facts.php:336
 msgid "MARR_RELIGIOUS"
-msgstr ""
+msgstr "Religious Marriage"
 
 #. I18N: This is the GEDCOM label for "Marriage Type unknown"
 #: ../language/_facts.php:338
 msgid "MARR_UNKNOWN"
-msgstr ""
+msgstr "Marriage Type unknown"
 
 #. I18N: This is the GEDCOM label for "Marriage Settlement"
 #: ../language/_facts.php:340
 msgid "MARS"
-msgstr ""
+msgstr "Marriage Settlement"
 
 #. I18N: This is the GEDCOM label for "Media Type"
 #: ../language/_facts.php:342
 msgid "MEDI"
-msgstr ""
+msgstr "Media Type"
 
 #. I18N: This is the GEDCOM label for "Name"
 #: ../language/_facts.php:344
 msgid "NAME"
-msgstr ""
+msgstr "Name"
 
 #. I18N: This is the GEDCOM label for "Phonetic Name"
 #: ../language/_facts.php:346
 msgid "NAME:FONE"
-msgstr ""
+msgstr "Phonetic Name"
 
 #. I18N: This is the GEDCOM label for "Romanized Name"
 #: ../language/_facts.php:348
 msgid "NAME:ROMN"
-msgstr ""
+msgstr "Romanized Name"
 
 #. I18N: This is the GEDCOM label for "Name in Hebrew"
 #: ../language/_facts.php:350
 msgid "NAME:_HEB"
-msgstr ""
+msgstr "Name in Hebrew"
 
 #. I18N: This is the GEDCOM label for "Nationality"
 #: ../language/_facts.php:352
 msgid "NATI"
-msgstr ""
+msgstr "Nationality"
 
 #. I18N: This is the GEDCOM label for "Naturalization"
 #: ../language/_facts.php:354
 msgid "NATU"
-msgstr ""
+msgstr "Naturalization"
 
 #. I18N: This is the GEDCOM label for "Number of Children"
 #: ../language/_facts.php:356
 msgid "NCHI"
-msgstr ""
+msgstr "Number of Children"
 
 #. I18N: This is the GEDCOM label for "Nickname"
 #: ../language/_facts.php:358
 msgid "NICK"
-msgstr ""
+msgstr "Nickname"
 
 #. I18N: This is the GEDCOM label for "Number of Marriages"
 #: ../language/_facts.php:360
 msgid "NMR"
-msgstr ""
+msgstr "Number of Marriages"
 
 #. I18N: This is the GEDCOM label for "Note"
 #: ../language/_facts.php:362
 msgid "NOTE"
-msgstr ""
+msgstr "Note"
 
 #. I18N: This is the GEDCOM label for "Prefix"
 #: ../language/_facts.php:364
 msgid "NPFX"
-msgstr ""
+msgstr "Prefix"
 
 #. I18N: This is the GEDCOM label for "Suffix"
 #: ../language/_facts.php:366
 msgid "NSFX"
-msgstr ""
+msgstr "Suffix"
 
 #. I18N: This is the GEDCOM label for "Multimedia Object"
 #: ../language/_facts.php:368
 msgid "OBJE"
-msgstr ""
+msgstr "Multimedia Object"
 
 #. I18N: This is the GEDCOM label for "Occupation"
 #: ../language/_facts.php:370
 msgid "OCCU"
-msgstr ""
+msgstr "Occupation"
 
 #. I18N: This is the GEDCOM label for "Ordinance"
 #: ../language/_facts.php:372
 msgid "ORDI"
-msgstr ""
+msgstr "Ordinance"
 
 #. I18N: This is the GEDCOM label for "Ordination"
 #: ../language/_facts.php:374
 msgid "ORDN"
-msgstr ""
+msgstr "Ordination"
 
 #. I18N: This is the GEDCOM label for "Citation Details"
 #: ../language/_facts.php:376
 msgid "PAGE"
-msgstr ""
+msgstr "Citation Details"
 
 #. I18N: This is the GEDCOM label for "Pedigree"
 #: ../language/_facts.php:378
 msgid "PEDI"
-msgstr ""
+msgstr "Pedigree"
 
 #. I18N: This is the GEDCOM label for "Phone"
 #: ../language/_facts.php:380
 msgid "PHON"
-msgstr ""
+msgstr "Phone"
 
 #. I18N: This is the GEDCOM label for "Place"
 #: ../language/_facts.php:382
 msgid "PLAC"
-msgstr ""
+msgstr "Place"
 
 #. I18N: This is the GEDCOM label for "Phonetic Place"
 #: ../language/_facts.php:384
 msgid "PLAC:FONE"
-msgstr ""
+msgstr "Phonetic Place"
 
 #. I18N: This is the GEDCOM label for "Romanized Place"
 #: ../language/_facts.php:386
 msgid "PLAC:ROMN"
-msgstr ""
+msgstr "Romanized Place"
 
 #. I18N: This is the GEDCOM label for "Place in Hebrew"
 #: ../language/_facts.php:388
 msgid "PLAC:_HEB"
-msgstr ""
+msgstr "Place in Hebrew"
 
 #. I18N: This is the GEDCOM label for "Postal Code"
 #: ../language/_facts.php:390
 msgid "POST"
-msgstr ""
+msgstr "Postal Code"
 
 #. I18N: This is the GEDCOM label for "Probate"
 #: ../language/_facts.php:392
 msgid "PROB"
-msgstr ""
+msgstr "Probate"
 
 #. I18N: This is the GEDCOM label for "Property"
 #: ../language/_facts.php:394
 msgid "PROP"
-msgstr ""
+msgstr "Property"
 
 #. I18N: This is the GEDCOM label for "Publication"
 #: ../language/_facts.php:396
 msgid "PUBL"
-msgstr ""
+msgstr "Publication"
 
 #. I18N: This is the GEDCOM label for "Quality of Data"
 #: ../language/_facts.php:398
 msgid "QUAY"
-msgstr ""
+msgstr "Quality of Data"
 
 #. I18N: This is the GEDCOM label for "Reference Number"
 #: ../language/_facts.php:400
 msgid "REFN"
-msgstr ""
+msgstr "Reference Number"
 
 #. I18N: This is the GEDCOM label for "Relationship"
 #: ../language/_facts.php:402
 msgid "RELA"
-msgstr ""
+msgstr "Relationship"
 
 #. I18N: This is the GEDCOM label for "Religion"
 #: ../language/_facts.php:404
 msgid "RELI"
-msgstr ""
+msgstr "Religion"
 
 #. I18N: This is the GEDCOM label for "Repository"
 #: ../language/_facts.php:406
 msgid "REPO"
-msgstr ""
+msgstr "Repository"
 
 #. I18N: This is the GEDCOM label for "Residence"
 #: ../language/_facts.php:408
 msgid "RESI"
-msgstr ""
+msgstr "Residence"
 
 #. I18N: This is the GEDCOM label for "Restriction"
 #: ../language/_facts.php:410
 msgid "RESN"
-msgstr ""
+msgstr "Restriction"
 
 #. I18N: This is the GEDCOM label for "Retirement"
 #: ../language/_facts.php:412
 msgid "RETI"
-msgstr ""
+msgstr "Retirement"
 
 #. I18N: This is the GEDCOM label for "Record File Number"
 #: ../language/_facts.php:414
 msgid "RFN"
-msgstr ""
+msgstr "Record File Number"
 
 #. I18N: This is the GEDCOM label for "Record ID Number"
 #: ../language/_facts.php:416
 msgid "RIN"
-msgstr ""
+msgstr "Record ID Number"
 
 #. I18N: This is the GEDCOM label for "Role"
 #: ../language/_facts.php:418
 msgid "ROLE"
-msgstr ""
+msgstr "Role"
 
 #. I18N: This is the GEDCOM label for "Romanized"
 #: ../language/_facts.php:420
 msgid "ROMN"
-msgstr ""
+msgstr "Romanized"
 
 #. I18N: This is the GEDCOM label for "Remote Server"
 #: ../language/_facts.php:422
 msgid "SERV"
-msgstr ""
+msgstr "Remote Server"
 
 #. I18N: This is the GEDCOM label for "Gender"
 #: ../language/_facts.php:424
 msgid "SEX"
-msgstr ""
+msgstr "Gender"
 
 #. I18N: This is the GEDCOM label for "Shared Note"
 #: ../language/_facts.php:426
 msgid "SHARED_NOTE"
-msgstr ""
+msgstr "Shared Note"
 
 #. I18N: This is the GEDCOM label for "LDS Child Sealing"
 #: ../language/_facts.php:428
 msgid "SLGC"
-msgstr ""
+msgstr "LDS Child Sealing"
 
 #. I18N: This is the GEDCOM label for "LDS Spouse Sealing"
 #: ../language/_facts.php:430
 msgid "SLGS"
-msgstr ""
+msgstr "LDS Spouse Sealing"
 
 #. I18N: This is the GEDCOM label for "Source"
 #: ../language/_facts.php:432
 msgid "SOUR"
-msgstr ""
+msgstr "Source"
 
 #. I18N: This is the GEDCOM label for "Surname Prefix"
 #: ../language/_facts.php:434
 msgid "SPFX"
-msgstr ""
+msgstr "Surname Prefix"
 
 #. I18N: This is the GEDCOM label for "Social Security Number"
 #: ../language/_facts.php:436
 msgid "SSN"
-msgstr ""
+msgstr "Social Security Number"
 
 #. I18N: This is the GEDCOM label for "State"
 #: ../language/_facts.php:438
 msgid "STAE"
-msgstr ""
+msgstr "State"
 
 #. I18N: This is the GEDCOM label for "Status"
 #: ../language/_facts.php:440
 msgid "STAT"
-msgstr ""
+msgstr "Status"
 
 #. I18N: This is the GEDCOM label for "Status Change Date"
 #: ../language/_facts.php:442
 msgid "STAT:DATE"
-msgstr ""
+msgstr "Status Change Date"
 
 #. I18N: This is the GEDCOM label for "Submitter"
 #: ../language/_facts.php:444
 msgid "SUBM"
-msgstr ""
+msgstr "Submitter"
 
 #. I18N: This is the GEDCOM label for "Submission"
 #: ../language/_facts.php:446
 msgid "SUBN"
-msgstr ""
+msgstr "Submission"
 
 #. I18N: This is the GEDCOM label for "Surname"
 #: ../language/_facts.php:448
 msgid "SURN"
-msgstr ""
+msgstr "Surname"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: ../language/_facts.php:450
 msgid "TEMP"
-msgstr ""
+msgstr "Temple"
 
 #. I18N: This is the GEDCOM label for "Text"
 #: ../language/_facts.php:452
 msgid "TEXT"
-msgstr ""
+msgstr "Text"
 
 #. I18N: This is the GEDCOM label for "Time"
 #: ../language/_facts.php:454
 msgid "TIME"
-msgstr ""
+msgstr "Time"
 
 #. I18N: This is the GEDCOM label for "Title"
 #: ../language/_facts.php:456
 msgid "TITL"
-msgstr ""
+msgstr "Title"
 
 #. I18N: This is the GEDCOM label for "Phonetic Title"
 #: ../language/_facts.php:458
 msgid "TITL:FONE"
-msgstr ""
+msgstr "Phonetic Title"
 
 #. I18N: This is the GEDCOM label for "Romanized Title"
 #: ../language/_facts.php:460
 msgid "TITL:ROMN"
-msgstr ""
+msgstr "Romanized Title"
 
 #. I18N: This is the GEDCOM label for "Title in Hebrew"
 #: ../language/_facts.php:462
 msgid "TITL:_HEB"
-msgstr ""
+msgstr "Title in Hebrew"
 
 #. I18N: This is the GEDCOM label for "Type"
 #: ../language/_facts.php:464
 msgid "TYPE"
-msgstr ""
+msgstr "Type"
 
 #. I18N: This is the GEDCOM label for "Web URL"
 #: ../language/_facts.php:466
 msgid "URL"
-msgstr ""
+msgstr "Web URL"
 
 #. I18N: This is the GEDCOM label for "Wife"
 #: ../language/_facts.php:468
 msgid "WIFE"
-msgstr ""
+msgstr "Wife"
 
 #. I18N: This is the GEDCOM label for "Will"
 #: ../language/_facts.php:470
 msgid "WILL"
-msgstr ""
+msgstr "Will"
 
 #. I18N: This is the GEDCOM label for "Web Home Page"
 #: ../language/_facts.php:472
 msgid "WWW"
-msgstr ""
+msgstr "Web Home Page"
 
 #. I18N: This is the GEDCOM label for "Adoption of a child"
 #: ../language/_facts.php:474
 msgid "_ADOP_CHIL"
-msgstr ""
+msgstr "Adoption of a child"
 
 #. I18N: This is the GEDCOM label for "Adoption of a first cousin"
 #: ../language/_facts.php:476
 msgid "_ADOP_COUS"
-msgstr ""
+msgstr "Adoption of a first cousin"
 
 #. I18N: This is the GEDCOM label for "Adoption of father's sibling"
 #: ../language/_facts.php:478
 msgid "_ADOP_FSIB"
-msgstr ""
+msgstr "Adoption of father's sibling"
 
 #. I18N: This is the GEDCOM label for "Adoption of a grandchild"
 #: ../language/_facts.php:480
 msgid "_ADOP_GCHI"
-msgstr ""
+msgstr "Adoption of a grandchild"
 
 #. I18N: This is the GEDCOM label for "Adoption of a great-grandchild"
 #: ../language/_facts.php:482
 msgid "_ADOP_GGCH"
-msgstr ""
+msgstr "Adoption of a great-grandchild"
 
 #. I18N: This is the GEDCOM label for "Adoption of half-sibling"
 #: ../language/_facts.php:484
 msgid "_ADOP_HSIB"
-msgstr ""
+msgstr "Adoption of half-sibling"
 
 #. I18N: This is the GEDCOM label for "Adoption of mother's sibling"
 #: ../language/_facts.php:486
 msgid "_ADOP_MSIB"
-msgstr ""
+msgstr "Adoption of mother's sibling"
 
 #. I18N: This is the GEDCOM label for "Adoption of a nephew or niece"
 #: ../language/_facts.php:488
 msgid "_ADOP_NEPH"
-msgstr ""
+msgstr "Adoption of a nephew or niece"
 
 #. I18N: This is the GEDCOM label for "Adoption of sibling"
 #: ../language/_facts.php:490
 msgid "_ADOP_SIBL"
-msgstr ""
+msgstr "Adoption of sibling"
 
 #. I18N: This is the GEDCOM label for "Adopted by Father"
 #: ../language/_facts.php:492
@@ -1311,850 +1311,850 @@ msgstr "Adopted by Mother"
 #. I18N: This is the GEDCOM label for "Also known as"
 #: ../language/_facts.php:496
 msgid "_AKA"
-msgstr ""
+msgstr "Also known as"
 
 #. I18N: This is the GEDCOM label for "Also known as"
 #: ../language/_facts.php:498
 msgid "_AKAN"
-msgstr ""
+msgstr "Also known as"
 
 #. I18N: This is the GEDCOM label for "Baptism of a child"
 #: ../language/_facts.php:500
 msgid "_BAPM_CHIL"
-msgstr ""
+msgstr "Baptism of a child"
 
 #. I18N: This is the GEDCOM label for "Baptism of a first cousin"
 #: ../language/_facts.php:502
 msgid "_BAPM_COUS"
-msgstr ""
+msgstr "Baptism of a first cousin"
 
 #. I18N: This is the GEDCOM label for "Baptism of father's sibling"
 #: ../language/_facts.php:504
 msgid "_BAPM_FSIB"
-msgstr ""
+msgstr "Baptism of father's sibling"
 
 #. I18N: This is the GEDCOM label for "Baptism of a grandchild"
 #: ../language/_facts.php:506
 msgid "_BAPM_GCHI"
-msgstr ""
+msgstr "Baptism of a grandchild"
 
 #. I18N: This is the GEDCOM label for "Baptism of a great-grandchild"
 #: ../language/_facts.php:508
 msgid "_BAPM_GGCH"
-msgstr ""
+msgstr "Baptism of a great-grandchild"
 
 #. I18N: This is the GEDCOM label for "Baptism of half-sibling"
 #: ../language/_facts.php:510
 msgid "_BAPM_HSIB"
-msgstr ""
+msgstr "Baptism of half-sibling"
 
 #. I18N: This is the GEDCOM label for "Baptism of mother's sibling"
 #: ../language/_facts.php:512
 msgid "_BAPM_MSIB"
-msgstr ""
+msgstr "Baptism of mother's sibling"
 
 #. I18N: This is the GEDCOM label for "Baptism of a nephew or niece"
 #: ../language/_facts.php:514
 msgid "_BAPM_NEPH"
-msgstr ""
+msgstr "Baptism of a nephew or niece"
 
 #. I18N: This is the GEDCOM label for "Baptism of sibling"
 #: ../language/_facts.php:516
 msgid "_BAPM_SIBL"
-msgstr ""
+msgstr "Baptism of sibling"
 
 #. I18N: This is the GEDCOM label for "Bibliography"
 #: ../language/_facts.php:518
 msgid "_BIBL"
-msgstr ""
+msgstr "Bibliography"
 
 #. I18N: This is the GEDCOM label for "Birth of a child"
 #: ../language/_facts.php:520
 msgid "_BIRT_CHIL"
-msgstr ""
+msgstr "Birth of a child"
 
 #. I18N: This is the GEDCOM label for "Birth of a first cousin"
 #: ../language/_facts.php:522
 msgid "_BIRT_COUS"
-msgstr ""
+msgstr "Birth of a first cousin"
 
 #. I18N: This is the GEDCOM label for "Birth of father's sibling"
 #: ../language/_facts.php:524
 msgid "_BIRT_FSIB"
-msgstr ""
+msgstr "Birth of father's sibling"
 
 #. I18N: This is the GEDCOM label for "Birth of a grandchild"
 #: ../language/_facts.php:526
 msgid "_BIRT_GCHI"
-msgstr ""
+msgstr "Birth of a grandchild"
 
 #. I18N: This is the GEDCOM label for "Birth of a great-grandchild"
 #: ../language/_facts.php:528
 msgid "_BIRT_GGCH"
-msgstr ""
+msgstr "Birth of a great-grandchild"
 
 #. I18N: This is the GEDCOM label for "Birth of half-sibling"
 #: ../language/_facts.php:530
 msgid "_BIRT_HSIB"
-msgstr ""
+msgstr "Birth of half-sibling"
 
 #. I18N: This is the GEDCOM label for "Birth of mother's sibling"
 #: ../language/_facts.php:532
 msgid "_BIRT_MSIB"
-msgstr ""
+msgstr "Birth of mother's sibling"
 
 #. I18N: This is the GEDCOM label for "Birth of a nephew or niece"
 #: ../language/_facts.php:534
 msgid "_BIRT_NEPH"
-msgstr ""
+msgstr "Birth of a nephew or niece"
 
 #. I18N: This is the GEDCOM label for "Birth of sibling"
 #: ../language/_facts.php:536
 msgid "_BIRT_SIBL"
-msgstr ""
+msgstr "Birth of sibling"
 
 #. I18N: This is the GEDCOM label for "Brit Mila"
 #: ../language/_facts.php:538
 msgid "_BRTM"
-msgstr ""
+msgstr "Brit Mila"
 
 #. I18N: This is the GEDCOM label for "Brit Mila Date"
 #: ../language/_facts.php:540
 msgid "_BRTM:DATE"
-msgstr ""
+msgstr "Brit Mila Date"
 
 #. I18N: This is the GEDCOM label for "Brit Mila Place"
 #: ../language/_facts.php:542
 msgid "_BRTM:PLAC"
-msgstr ""
+msgstr "Brit Mila Place"
 
 #. I18N: This is the GEDCOM label for "Brit Mila Source"
 #: ../language/_facts.php:544
 msgid "_BRTM:SOUR"
-msgstr ""
+msgstr "Brit Mila Source"
 
 #. I18N: This is the GEDCOM label for "Burial of a child"
 #: ../language/_facts.php:546
 msgid "_BURI_CHIL"
-msgstr ""
+msgstr "Burial of a child"
 
 #. I18N: This is the GEDCOM label for "Burial of a first cousin"
 #: ../language/_facts.php:548
 msgid "_BURI_COUS"
-msgstr ""
+msgstr "Burial of a first cousin"
 
 #. I18N: This is the GEDCOM label for "Burial of father"
 #: ../language/_facts.php:550
 msgid "_BURI_FATH"
-msgstr ""
+msgstr "Burial of father"
 
 #. I18N: This is the GEDCOM label for "Burial of father's sibling"
 #: ../language/_facts.php:552
 msgid "_BURI_FSIB"
-msgstr ""
+msgstr "Burial of father's sibling"
 
 #. I18N: This is the GEDCOM label for "Burial of a grandchild"
 #: ../language/_facts.php:554
 msgid "_BURI_GCHI"
-msgstr ""
+msgstr "Burial of a grandchild"
 
 #. I18N: This is the GEDCOM label for "Burial of a great-grandchild"
 #: ../language/_facts.php:556
 msgid "_BURI_GGCH"
-msgstr ""
+msgstr "Burial of a great-grandchild"
 
 #. I18N: This is the GEDCOM label for "Burial of a great-grand-parent"
 #: ../language/_facts.php:558
 msgid "_BURI_GGPA"
-msgstr ""
+msgstr "Burial of a great-grand-parent"
 
 #. I18N: This is the GEDCOM label for "Burial of a grand-parent"
 #: ../language/_facts.php:560
 msgid "_BURI_GPAR"
-msgstr ""
+msgstr "Burial of a grand-parent"
 
 #. I18N: This is the GEDCOM label for "Burial of half-sibling"
 #: ../language/_facts.php:562
 msgid "_BURI_HSIB"
-msgstr ""
+msgstr "Burial of half-sibling"
 
 #. I18N: This is the GEDCOM label for "Burial of mother"
 #: ../language/_facts.php:564
 msgid "_BURI_MOTH"
-msgstr ""
+msgstr "Burial of mother"
 
 #. I18N: This is the GEDCOM label for "Burial of mother's sibling"
 #: ../language/_facts.php:566
 msgid "_BURI_MSIB"
-msgstr ""
+msgstr "Burial of mother's sibling"
 
 #. I18N: This is the GEDCOM label for "Burial of a nephew or niece"
 #: ../language/_facts.php:568
 msgid "_BURI_NEPH"
-msgstr ""
+msgstr "Burial of a nephew or niece"
 
 #. I18N: This is the GEDCOM label for "Burial of sibling"
 #: ../language/_facts.php:570
 msgid "_BURI_SIBL"
-msgstr ""
+msgstr "Burial of sibling"
 
 #. I18N: This is the GEDCOM label for "Burial of spouse"
 #: ../language/_facts.php:572
 msgid "_BURI_SPOU"
-msgstr ""
+msgstr "Burial of spouse"
 
 #. I18N: This is the GEDCOM label for "Christening of a child"
 #: ../language/_facts.php:574
 msgid "_CHR_CHIL"
-msgstr ""
+msgstr "Christening of a child"
 
 #. I18N: This is the GEDCOM label for "Christening of a first cousin"
 #: ../language/_facts.php:576
 msgid "_CHR_COUS"
-msgstr ""
+msgstr "Christening of a first cousin"
 
 #. I18N: This is the GEDCOM label for "Christening of father's sibling"
 #: ../language/_facts.php:578
 msgid "_CHR_FSIB"
-msgstr ""
+msgstr "Christening of father's sibling"
 
 #. I18N: This is the GEDCOM label for "Christening of a grandchild"
 #: ../language/_facts.php:580
 msgid "_CHR_GCHI"
-msgstr ""
+msgstr "Christening of a grandchild"
 
 #. I18N: This is the GEDCOM label for "Christening of a great-grandchild"
 #: ../language/_facts.php:582
 msgid "_CHR_GGCH"
-msgstr ""
+msgstr "Christening of a great-grandchild"
 
 #. I18N: This is the GEDCOM label for "Christening of half-sibling"
 #: ../language/_facts.php:584
 msgid "_CHR_HSIB"
-msgstr ""
+msgstr "Christening of half-sibling"
 
 #. I18N: This is the GEDCOM label for "Christening of mother's sibling"
 #: ../language/_facts.php:586
 msgid "_CHR_MSIB"
-msgstr ""
+msgstr "Christening of mother's sibling"
 
 #. I18N: This is the GEDCOM label for "Christening of a nephew or niece"
 #: ../language/_facts.php:588
 msgid "_CHR_NEPH"
-msgstr ""
+msgstr "Christening of a nephew or niece"
 
 #. I18N: This is the GEDCOM label for "Christening of sibling"
 #: ../language/_facts.php:590
 msgid "_CHR_SIBL"
-msgstr ""
+msgstr "Christening of sibling"
 
 #. I18N: This is the GEDCOM label for "Common Law Marriage"
 #: ../language/_facts.php:592
 msgid "_COML"
-msgstr ""
+msgstr "Common Law Marriage"
 
 #. I18N: This is the GEDCOM label for "Cremation of a child"
 #: ../language/_facts.php:594
 msgid "_CREM_CHIL"
-msgstr ""
+msgstr "Cremation of a child"
 
 #. I18N: This is the GEDCOM label for "Cremation of a first cousin"
 #: ../language/_facts.php:596
 msgid "_CREM_COUS"
-msgstr ""
+msgstr "Cremation of a first cousin"
 
 #. I18N: This is the GEDCOM label for "Cremation of father"
 #: ../language/_facts.php:598
 msgid "_CREM_FATH"
-msgstr ""
+msgstr "Cremation of father"
 
 #. I18N: This is the GEDCOM label for "Cremation of father's sibling"
 #: ../language/_facts.php:600
 msgid "_CREM_FSIB"
-msgstr ""
+msgstr "Cremation of father's sibling"
 
 #. I18N: This is the GEDCOM label for "Cremation of a grandchild"
 #: ../language/_facts.php:602
 msgid "_CREM_GCHI"
-msgstr ""
+msgstr "Cremation of a grandchild"
 
 #. I18N: This is the GEDCOM label for "Cremation of a great-grandchild"
 #: ../language/_facts.php:604
 msgid "_CREM_GGCH"
-msgstr ""
+msgstr "Cremation of a great-grandchild"
 
 #. I18N: This is the GEDCOM label for "Cremation of a great-grand-parent"
 #: ../language/_facts.php:606
 msgid "_CREM_GGPA"
-msgstr ""
+msgstr "Cremation of a great-grand-parent"
 
 #. I18N: This is the GEDCOM label for "Cremation of a grand-parent"
 #: ../language/_facts.php:608
 msgid "_CREM_GPAR"
-msgstr ""
+msgstr "Cremation of a grand-parent"
 
 #. I18N: This is the GEDCOM label for "Cremation of half-sibling"
 #: ../language/_facts.php:610
 msgid "_CREM_HSIB"
-msgstr ""
+msgstr "Cremation of half-sibling"
 
 #. I18N: This is the GEDCOM label for "Cremation of mother"
 #: ../language/_facts.php:612
 msgid "_CREM_MOTH"
-msgstr ""
+msgstr "Cremation of mother"
 
 #. I18N: This is the GEDCOM label for "Cremation of mother's sibling"
 #: ../language/_facts.php:614
 msgid "_CREM_MSIB"
-msgstr ""
+msgstr "Cremation of mother's sibling"
 
 #. I18N: This is the GEDCOM label for "Cremation of a nephew or niece"
 #: ../language/_facts.php:616
 msgid "_CREM_NEPH"
-msgstr ""
+msgstr "Cremation of a nephew or niece"
 
 #. I18N: This is the GEDCOM label for "Cremation of sibling"
 #: ../language/_facts.php:618
 msgid "_CREM_SIBL"
-msgstr ""
+msgstr "Cremation of sibling"
 
 #. I18N: This is the GEDCOM label for "Cremation of spouse"
 #: ../language/_facts.php:620
 msgid "_CREM_SPOU"
-msgstr ""
+msgstr "Cremation of spouse"
 
 #. I18N: This is the GEDCOM label for "Linked database ID"
 #: ../language/_facts.php:622
 msgid "_DBID"
-msgstr ""
+msgstr "Linked database ID"
 
 #. I18N: This is the GEDCOM label for "Death of a child"
 #: ../language/_facts.php:624
 msgid "_DEAT_CHIL"
-msgstr ""
+msgstr "Death of a child"
 
 #. I18N: This is the GEDCOM label for "Death of a first cousin"
 #: ../language/_facts.php:626
 msgid "_DEAT_COUS"
-msgstr ""
+msgstr "Death of a first cousin"
 
 #. I18N: This is the GEDCOM label for "Death of father"
 #: ../language/_facts.php:628
 msgid "_DEAT_FATH"
-msgstr ""
+msgstr "Death of father"
 
 #. I18N: This is the GEDCOM label for "Death of father's sibling"
 #: ../language/_facts.php:630
 msgid "_DEAT_FSIB"
-msgstr ""
+msgstr "Death of father's sibling"
 
 #. I18N: This is the GEDCOM label for "Death of a grandchild"
 #: ../language/_facts.php:632
 msgid "_DEAT_GCHI"
-msgstr ""
+msgstr "Death of a grandchild"
 
 #. I18N: This is the GEDCOM label for "Death of a great-grandchild"
 #: ../language/_facts.php:634
 msgid "_DEAT_GGCH"
-msgstr ""
+msgstr "Death of a great-grandchild"
 
 #. I18N: This is the GEDCOM label for "Death of a great-grand-parent"
 #: ../language/_facts.php:636
 msgid "_DEAT_GGPA"
-msgstr ""
+msgstr "Death of a great-grand-parent"
 
 #. I18N: This is the GEDCOM label for "Death of a grand-parent"
 #: ../language/_facts.php:638
 msgid "_DEAT_GPAR"
-msgstr ""
+msgstr "Death of a grand-parent"
 
 #. I18N: This is the GEDCOM label for "Death of half-sibling"
 #: ../language/_facts.php:640
 msgid "_DEAT_HSIB"
-msgstr ""
+msgstr "Death of half-sibling"
 
 #. I18N: This is the GEDCOM label for "Death of mother"
 #: ../language/_facts.php:642
 msgid "_DEAT_MOTH"
-msgstr ""
+msgstr "Death of mother"
 
 #. I18N: This is the GEDCOM label for "Death of mother's sibling"
 #: ../language/_facts.php:644
 msgid "_DEAT_MSIB"
-msgstr ""
+msgstr "Death of mother's sibling"
 
 #. I18N: This is the GEDCOM label for "Death of a nephew or niece"
 #: ../language/_facts.php:646
 msgid "_DEAT_NEPH"
-msgstr ""
+msgstr "Death of a nephew or niece"
 
 #. I18N: This is the GEDCOM label for "Death of sibling"
 #: ../language/_facts.php:648
 msgid "_DEAT_SIBL"
-msgstr ""
+msgstr "Death of sibling"
 
 #. I18N: This is the GEDCOM label for "Death of spouse"
 #: ../language/_facts.php:650
 msgid "_DEAT_SPOU"
-msgstr ""
+msgstr "Death of spouse"
 
 #. I18N: This is the GEDCOM label for "Degree"
 #: ../language/_facts.php:652
 msgid "_DEG"
-msgstr ""
+msgstr "Degree"
 
 #. I18N: This is the GEDCOM label for "Death of One Spouse"
 #: ../language/_facts.php:654
 msgid "_DETS"
-msgstr ""
+msgstr "Death of One Spouse"
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../language/_facts.php:656
 msgid "_EMAIL"
-msgstr ""
+msgstr "Email Address"
 
 #. I18N: This is the GEDCOM label for "Eye Color"
 #: ../language/_facts.php:658
 msgid "_EYEC"
-msgstr ""
+msgstr "Eye Color"
 
 #. I18N: This is the GEDCOM label for "Fact 1"
 #: ../language/_facts.php:660
 msgid "_FA1"
-msgstr ""
+msgstr "Fact 1"
 
 #. I18N: This is the GEDCOM label for "Fact 10"
 #: ../language/_facts.php:662
 msgid "_FA10"
-msgstr ""
+msgstr "Fact 10"
 
 #. I18N: This is the GEDCOM label for "Fact 11"
 #: ../language/_facts.php:664
 msgid "_FA11"
-msgstr ""
+msgstr "Fact 11"
 
 #. I18N: This is the GEDCOM label for "Fact 12"
 #: ../language/_facts.php:666
 msgid "_FA12"
-msgstr ""
+msgstr "Fact 12"
 
 #. I18N: This is the GEDCOM label for "Fact 13"
 #: ../language/_facts.php:668
 msgid "_FA13"
-msgstr ""
+msgstr "Fact 13"
 
 #. I18N: This is the GEDCOM label for "Fact 2"
 #: ../language/_facts.php:670
 msgid "_FA2"
-msgstr ""
+msgstr "Fact 2"
 
 #. I18N: This is the GEDCOM label for "Fact 3"
 #: ../language/_facts.php:672
 msgid "_FA3"
-msgstr ""
+msgstr "Fact 3"
 
 #. I18N: This is the GEDCOM label for "Fact 4"
 #: ../language/_facts.php:674
 msgid "_FA4"
-msgstr ""
+msgstr "Fact 4"
 
 #. I18N: This is the GEDCOM label for "Fact 5"
 #: ../language/_facts.php:676
 msgid "_FA5"
-msgstr ""
+msgstr "Fact 5"
 
 #. I18N: This is the GEDCOM label for "Fact 6"
 #: ../language/_facts.php:678
 msgid "_FA6"
-msgstr ""
+msgstr "Fact 6"
 
 #. I18N: This is the GEDCOM label for "Fact 7"
 #: ../language/_facts.php:680
 msgid "_FA7"
-msgstr ""
+msgstr "Fact 7"
 
 #. I18N: This is the GEDCOM label for "Fact 8"
 #: ../language/_facts.php:682
 msgid "_FA8"
-msgstr ""
+msgstr "Fact 8"
 
 #. I18N: This is the GEDCOM label for "Fact 9"
 #: ../language/_facts.php:684
 msgid "_FA9"
-msgstr ""
+msgstr "Fact 9"
 
 #. I18N: This is the GEDCOM label for "Emigration of parents"
 #: ../language/_facts.php:686
 msgid "_FAMC_EMIG"
-msgstr ""
+msgstr "Emigration of parents"
 
 #. I18N: This is the GEDCOM label for "Residence of parents"
 #: ../language/_facts.php:688
 msgid "_FAMC_RESI"
-msgstr ""
+msgstr "Residence of parents"
 
 #. I18N: This is the GEDCOM label for "Funeral"
 #: ../language/_facts.php:690
 msgid "_FNRL"
-msgstr ""
+msgstr "Funeral"
 
 #. I18N: This is the GEDCOM label for "Relationship to Father"
 #: ../language/_facts.php:692
 msgid "_FREL"
-msgstr ""
+msgstr "Relationship to Father"
 
 #. I18N: This is the GEDCOM label for "GEDCOM File"
 #: ../language/_facts.php:694
 msgid "_GEDF"
-msgstr ""
+msgstr "GEDCOM File"
 
 #. I18N: This is the GEDCOM label for "Hair Color"
 #: ../language/_facts.php:696
 msgid "_HAIR"
-msgstr ""
+msgstr "Hair Color"
 
 #. I18N: This is the GEDCOM label for "Hebrew"
 #: ../language/_facts.php:698
 msgid "_HEB"
-msgstr ""
+msgstr "Hebrew"
 
 #. I18N: This is the GEDCOM label for "Height"
 #: ../language/_facts.php:700
 msgid "_HEIG"
-msgstr ""
+msgstr "Height"
 
 #. I18N: This is the GEDCOM label for "Hebrew Name"
 #: ../language/_facts.php:702
 msgid "_HNM"
-msgstr ""
+msgstr "Hebrew Name"
 
 #. I18N: This is the GEDCOM label for "Holocaust"
 #: ../language/_facts.php:704
 msgid "_HOL"
-msgstr ""
+msgstr "Holocaust"
 
 #. I18N: This is the GEDCOM label for "Interred"
 #: ../language/_facts.php:706
 msgid "_INTE"
-msgstr ""
+msgstr "Interred"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of a child"
 #: ../language/_facts.php:708
 msgid "_MARB_CHIL"
-msgstr ""
+msgstr "Marriage Bann of a child"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of a first cousin"
 #: ../language/_facts.php:710
 msgid "_MARB_COUS"
-msgstr ""
+msgstr "Marriage Bann of a first cousin"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of parents"
 #: ../language/_facts.php:712
 msgid "_MARB_FAMC"
-msgstr ""
+msgstr "Marriage Bann of parents"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of father"
 #: ../language/_facts.php:714
 msgid "_MARB_FATH"
-msgstr ""
+msgstr "Marriage Bann of father"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of father's sibling"
 #: ../language/_facts.php:716
 msgid "_MARB_FSIB"
-msgstr ""
+msgstr "Marriage Bann of father's sibling"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of a grandchild"
 #: ../language/_facts.php:718
 msgid "_MARB_GCHI"
-msgstr ""
+msgstr "Marriage Bann of a grandchild"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of a great-grandchild"
 #: ../language/_facts.php:720
 msgid "_MARB_GGCH"
-msgstr ""
+msgstr "Marriage Bann of a great-grandchild"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of half-sibling"
 #: ../language/_facts.php:722
 msgid "_MARB_HSIB"
-msgstr ""
+msgstr "Marriage Bann of half-sibling"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of mother"
 #: ../language/_facts.php:724
 msgid "_MARB_MOTH"
-msgstr ""
+msgstr "Marriage Bann of mother"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of mother's sibling"
 #: ../language/_facts.php:726
 msgid "_MARB_MSIB"
-msgstr ""
+msgstr "Marriage Bann of mother's sibling"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of a nephew or niece"
 #: ../language/_facts.php:728
 msgid "_MARB_NEPH"
-msgstr ""
+msgstr "Marriage Bann of a nephew or niece"
 
 #. I18N: This is the GEDCOM label for "Marriage Bann of sibling"
 #: ../language/_facts.php:730
 msgid "_MARB_SIBL"
-msgstr ""
+msgstr "Marriage Bann of sibling"
 
 #. I18N: This is the GEDCOM label for "Marriage Intention"
 #: ../language/_facts.php:732
 msgid "_MARI"
-msgstr ""
+msgstr "Marriage Intention"
 
 #. I18N: This is the GEDCOM label for "Married Name"
 #: ../language/_facts.php:734
 msgid "_MARNM"
-msgstr ""
+msgstr "Married Name"
 
 #. I18N: This is the GEDCOM label for "Married Surname"
 #: ../language/_facts.php:736
 msgid "_MARNM_SURN"
-msgstr ""
+msgstr "Married Surname"
 
 #. I18N: This is the GEDCOM label for "Marriage of a child"
 #: ../language/_facts.php:738
 msgid "_MARR_CHIL"
-msgstr ""
+msgstr "Marriage of a child"
 
 #. I18N: This is the GEDCOM label for "Marriage of a first cousin"
 #: ../language/_facts.php:740
 msgid "_MARR_COUS"
-msgstr ""
+msgstr "Marriage of a first cousin"
 
 #. I18N: This is the GEDCOM label for "Marriage of parents"
 #: ../language/_facts.php:742
 msgid "_MARR_FAMC"
-msgstr ""
+msgstr "Marriage of parents"
 
 #. I18N: This is the GEDCOM label for "Marriage of father"
 #: ../language/_facts.php:744
 msgid "_MARR_FATH"
-msgstr ""
+msgstr "Marriage of father"
 
 #. I18N: This is the GEDCOM label for "Marriage of father's sibling"
 #: ../language/_facts.php:746
 msgid "_MARR_FSIB"
-msgstr ""
+msgstr "Marriage of father's sibling"
 
 #. I18N: This is the GEDCOM label for "Marriage of a grandchild"
 #: ../language/_facts.php:748
 msgid "_MARR_GCHI"
-msgstr ""
+msgstr "Marriage of a grandchild"
 
 #. I18N: This is the GEDCOM label for "Marriage of a great-grandchild"
 #: ../language/_facts.php:750
 msgid "_MARR_GGCH"
-msgstr ""
+msgstr "Marriage of a great-grandchild"
 
 #. I18N: This is the GEDCOM label for "Marriage of half-sibling"
 #: ../language/_facts.php:752
 msgid "_MARR_HSIB"
-msgstr ""
+msgstr "Marriage of half-sibling"
 
 #. I18N: This is the GEDCOM label for "Marriage of mother"
 #: ../language/_facts.php:754
 msgid "_MARR_MOTH"
-msgstr ""
+msgstr "Marriage of mother"
 
 #. I18N: This is the GEDCOM label for "Marriage of mother's sibling"
 #: ../language/_facts.php:756
 msgid "_MARR_MSIB"
-msgstr ""
+msgstr "Marriage of mother's sibling"
 
 #. I18N: This is the GEDCOM label for "Marriage of a nephew or niece"
 #: ../language/_facts.php:758
 msgid "_MARR_NEPH"
-msgstr ""
+msgstr "Marriage of a nephew or niece"
 
 #. I18N: This is the GEDCOM label for "Marriage of sibling"
 #: ../language/_facts.php:760
 msgid "_MARR_SIBL"
-msgstr ""
+msgstr "Marriage of sibling"
 
 #. I18N: This is the GEDCOM label for "Marriage Bond"
 #: ../language/_facts.php:762
 msgid "_MBON"
-msgstr ""
+msgstr "Marriage Bond"
 
 #. I18N: This is the GEDCOM label for "Medical"
 #: ../language/_facts.php:764
 msgid "_MDCL"
-msgstr ""
+msgstr "Medical"
 
 #. I18N: This is the GEDCOM label for "Medical Condition"
 #: ../language/_facts.php:766
 msgid "_MEDC"
-msgstr ""
+msgstr "Medical Condition"
 
 #. I18N: This is the GEDCOM label for "Marriage Ending Status"
 #: ../language/_facts.php:768
 msgid "_MEND"
-msgstr ""
+msgstr "Marriage Ending Status"
 
 #. I18N: This is the GEDCOM label for "Military"
 #: ../language/_facts.php:770
 msgid "_MILI"
-msgstr ""
+msgstr "Military"
 
 #. I18N: This is the GEDCOM label for "Military Service"
 #: ../language/_facts.php:772
 msgid "_MILT"
-msgstr ""
+msgstr "Military Service"
 
 #. I18N: This is the GEDCOM label for "Relationship to Mother"
 #: ../language/_facts.php:774
 msgid "_MREL"
-msgstr ""
+msgstr "Relationship to Mother"
 
 #. I18N: This is the GEDCOM label for "Marriage Beginning Status"
 #: ../language/_facts.php:776
 msgid "_MSTAT"
-msgstr ""
+msgstr "Marriage Beginning Status"
 
 #. I18N: This is the GEDCOM label for "Mailing Name"
 #: ../language/_facts.php:778
 msgid "_NAME"
-msgstr ""
+msgstr "Mailing Name"
 
 #. I18N: This is the GEDCOM label for "Namesake"
 #: ../language/_facts.php:780
 msgid "_NAMS"
-msgstr ""
+msgstr "Namesake"
 
 #. I18N: This is the GEDCOM label for "Not living"
 #: ../language/_facts.php:782
 msgid "_NLIV"
-msgstr ""
+msgstr "Not living"
 
 #. I18N: This is the GEDCOM label for "Never married"
 #: ../language/_facts.php:784
 msgid "_NMAR"
-msgstr ""
+msgstr "Never married"
 
 #. I18N: This is the GEDCOM label for "Not married"
 #: ../language/_facts.php:786
 msgid "_NMR"
-msgstr ""
+msgstr "Not married"
 
 #. I18N: This is the GEDCOM label for "by"
 #: ../language/_facts.php:788
 msgid "_PGVU"
-msgstr ""
+msgstr "by"
 
 #. I18N: This is the GEDCOM label for "Highlighted Image"
 #: ../language/_facts.php:790
 msgid "_PRIM"
-msgstr ""
+msgstr "Highlighted Image"
 
 #. I18N: This is the GEDCOM label for "Permanent Number"
 #: ../language/_facts.php:792
 msgid "_PRMN"
-msgstr ""
+msgstr "Permanent Number"
 
 #. I18N: This is the GEDCOM label for "Scrapbook"
 #: ../language/_facts.php:794
 msgid "_SCBK"
-msgstr ""
+msgstr "Scrapbook"
 
 #. I18N: This is the GEDCOM label for "Separated"
 #: ../language/_facts.php:796
 msgid "_SEPR"
-msgstr ""
+msgstr "Separated"
 
 #. I18N: This is the GEDCOM label for "Slide Show"
 #: ../language/_facts.php:798
 msgid "_SSHOW"
-msgstr ""
+msgstr "Slide Show"
 
 #. I18N: This is the GEDCOM label for "Marriage Status"
 #: ../language/_facts.php:800
 msgid "_STAT"
-msgstr ""
+msgstr "Marriage Status"
 
 #. I18N: This is the GEDCOM label for "Short Version"
 #: ../language/_facts.php:802
 msgid "_SUBQ"
-msgstr ""
+msgstr "Short Version"
 
 #. I18N: This is the GEDCOM label for "Always use main image?"
 #: ../language/_facts.php:804
 msgid "_THUM"
-msgstr ""
+msgstr "Always use main image?"
 
 #. I18N: This is the GEDCOM label for "To Do Item"
 #: ../language/_facts.php:806
 msgid "_TODO"
-msgstr ""
+msgstr "To Do Item"
 
 #. I18N: This is the GEDCOM label for "Media Type"
 #: ../language/_facts.php:808
 msgid "_TYPE"
-msgstr ""
+msgstr "Media Type"
 
 #. I18N: This is the GEDCOM label for "Globally unique Identifier"
 #: ../language/_facts.php:810
 msgid "_UID"
-msgstr ""
+msgstr "Globally unique Identifier"
 
 #. I18N: This is the GEDCOM label for "Web URL"
 #: ../language/_facts.php:812
 msgid "_URL"
-msgstr ""
+msgstr "Web URL"
 
 #. I18N: This is the GEDCOM label for "Weight"
 #: ../language/_facts.php:814
 msgid "_WEIG"
-msgstr ""
+msgstr "Weight"
 
 #. I18N: This is the GEDCOM label for "Yahrzeit"
 #: ../language/_facts.php:816
 msgid "_YART"
-msgstr ""
+msgstr "Yahrzeit"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of a child"
 #: ../language/_facts.php:818
 msgid "__BRTM_CHIL"
-msgstr ""
+msgstr "Brit Mila of a child"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of a first cousin"
 #: ../language/_facts.php:820
 msgid "__BRTM_COUS"
-msgstr ""
+msgstr "Brit Mila of a first cousin"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of father's sibling"
 #: ../language/_facts.php:822
 msgid "__BRTM_FSIB"
-msgstr ""
+msgstr "Brit Mila of father's sibling"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of a grandchild"
 #: ../language/_facts.php:824
 msgid "__BRTM_GCHI"
-msgstr ""
+msgstr "Brit Mila of a grandchild"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of a great-grandchild"
 #: ../language/_facts.php:826
 msgid "__BRTM_GGCH"
-msgstr ""
+msgstr "Brit Mila of a great-grandchild"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of half-sibling"
 #: ../language/_facts.php:828
 msgid "__BRTM_HSIB"
-msgstr ""
+msgstr "Brit Mila of half-sibling"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of mother's sibling"
 #: ../language/_facts.php:830
 msgid "__BRTM_MSIB"
-msgstr ""
+msgstr "Brit Mila of mother's sibling"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of a nephew"
 #: ../language/_facts.php:832
 msgid "__BRTM_NEPH"
-msgstr ""
+msgstr "Brit Mila of a nephew"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of sibling"
 #: ../language/_facts.php:834
 msgid "__BRTM_SIBL"
-msgstr ""
+msgstr "Brit Mila of sibling"
 

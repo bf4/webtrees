@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 09:36-0000\n"
+"POT-Creation-Date: 2010-02-28 11:03-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -221,7 +221,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Age"
 #: ../language/_facts.php:60
 msgid "AGE"
-msgstr ""
+msgstr "عمر"
 
 #. I18N: This is the GEDCOM label for "Agency"
 #: ../language/_facts.php:62
@@ -326,7 +326,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Birth"
 #: ../language/_facts.php:102
 msgid "BIRT"
-msgstr ""
+msgstr "الوِدة"
 
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: ../language/_facts.php:104
@@ -516,7 +516,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Death"
 #: ../language/_facts.php:178
 msgid "DEAT"
-msgstr ""
+msgstr "الموت"
 
 #. I18N: This is the GEDCOM label for "Death Date"
 #: ../language/_facts.php:180
@@ -806,7 +806,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Given Names"
 #: ../language/_facts.php:294
 msgid "GIVN"
-msgstr ""
+msgstr "اِسم الخاص"
 
 #. I18N: This is the GEDCOM label for "Graduation"
 #: ../language/_facts.php:296
@@ -881,7 +881,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Marriage"
 #: ../language/_facts.php:324
 msgid "MARR"
-msgstr ""
+msgstr "زواج"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: ../language/_facts.php:326
@@ -1191,7 +1191,7 @@ msgstr ""
 #. I18N: This is the GEDCOM label for "Surname"
 #: ../language/_facts.php:448
 msgid "SURN"
-msgstr ""
+msgstr "إسم العائلة"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: ../language/_facts.php:450
