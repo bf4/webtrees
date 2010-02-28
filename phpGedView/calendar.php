@@ -235,40 +235,40 @@ if ($view!='preview') {
 	echo ">".$pgv_lang["all"]."</option>";
 	echo "<option value=\"BIRT\"";
 	if ($filterev == "BIRT") echo " selected=\"selected\"";
-	echo ">".$factarray["BIRT"]."</option>";
+	echo ">".i18n::translate('BIRT')."</option>";
 	echo "<option value=\"CHR\"";
 	if ($filterev == "CHR") echo " selected=\"selected\"";
-	echo ">".$factarray["CHR"]."</option>";
+	echo ">".i18n::translate('CHR')."</option>";
 	echo "<option value=\"CHRA\"";
 	if ($filterev == "CHRA") echo " selected=\"selected\"";
-	echo ">".$factarray["CHRA"]."</option>";
+	echo ">".i18n::translate('CHRA')."</option>";
 	echo "<option value=\"BAPM\"";
 	if ($filterev == "BAPM") echo " selected=\"selected\"";
-	echo ">".$factarray["BAPM"]."</option>";
+	echo ">".i18n::translate('BAPM')."</option>";
 	echo "<option value=\"_COML\"";
 	if ($filterev == "_COML") echo " selected=\"selected\"";
-	echo ">".$factarray["_COML"]."</option>";
+	echo ">".i18n::translate('_COML')."</option>";
 	echo "<option value=\"MARR\"";
 	if ($filterev == "MARR") echo " selected=\"selected\"";
-	echo ">".$factarray["MARR"]."</option>";
+	echo ">".i18n::translate('MARR')."</option>";
 	echo "<option value=\"_SEPR\"";
 	if ($filterev == "_SEPR") echo " selected=\"selected\"";
-	echo ">".$factarray["_SEPR"]."</option>";
+	echo ">".i18n::translate('_SEPR')."</option>";
 	echo "<option value=\"DIV\"";
 	if ($filterev == "DIV") echo " selected=\"selected\"";
-	echo ">".$factarray["DIV"]."</option>";
+	echo ">".i18n::translate('DIV')."</option>";
 	echo "<option value=\"DEAT\"";
 	if ($filterev == "DEAT") echo " selected=\"selected\"";
-	echo ">".$factarray["DEAT"]."</option>";
+	echo ">".i18n::translate('DEAT')."</option>";
 	echo "<option value=\"BURI\"";
 	if ($filterev == "BURI") echo " selected=\"selected\"";
-	echo ">".$factarray["BURI"]."</option>";
+	echo ">".i18n::translate('BURI')."</option>";
 	echo "<option value=\"IMMI\"";
 	if ($filterev == "IMMI") echo " selected=\"selected\"";
-	echo ">".$factarray["IMMI"]."</option>";
+	echo ">".i18n::translate('IMMI')."</option>";
 	echo "<option value=\"EMIG\"";
 	if ($filterev == "EMIG") echo " selected=\"selected\"";
-	echo ">".$factarray["EMIG"]."</option>";
+	echo ">".i18n::translate('EMIG')."</option>";
 	echo "<option value=\"EVEN\"";
 	if ($filterev == "EVEN") echo " selected=\"selected\"";
 	echo ">".$pgv_lang["custom_event"]."</option>";
@@ -529,7 +529,7 @@ if ($view=="preview") {
 	if ($filterev=='bdm') {
 		$filters[]=$pgv_lang['bdm'];
 	} elseif ($filterev!='all') {
-			$filters[].=$factarray[$filterev];
+			$filters[].=i18n::translate($filterev);
 	}
 	$filtertext=implode(' - ', $filters);
 	if (!empty($filters)) {
@@ -582,8 +582,8 @@ function apply_filter($facts, $filterof, $filtersx) {
 // the place.
 ////////////////////////////////////////////////////////////////////////////////
 function calendar_fact_text($fact, $show_places) {
-	global $factarray, $pgv_lang, $TEXT_DIRECTION;
-	$text=$factarray[$fact['fact']].' - '.$fact['date']->Display(true, "", array());
+	global $pgv_lang, $TEXT_DIRECTION;
+	$text=i18n::translate($fact['fact']).' - '.$fact['date']->Display(true, "", array());
 	if ($fact['anniv']>0)
 		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.str_replace('#year_var#', $fact['anniv'], $pgv_lang['year_anniversary']).')</span>';
 	if ($show_places && !empty($fact['plac']))
