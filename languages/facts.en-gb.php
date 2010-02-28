@@ -31,6 +31,7 @@ $factarray['WWW']='URL';
 $factarray['_UID']='Unique ID';
 $factarray["NAME:ROMN"]="Romanised Name";
 $factarray["PLAC:ROMN"]="Romanised Place";
+$factarray["NATU"]= "Naturalisation";
 $factarray["ROMN"]="Romanised";
 $factarray["TITL:ROMN"]="Romanised Title";
 $factarray["_EYEC"]="Eye Colour";
