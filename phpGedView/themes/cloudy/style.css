@@ -1671,6 +1671,7 @@ a.showit:hover span {
 }
 /* End of Flyout Menu styles*/
 
+/* The following two overriding classes MUST appear at the end of the entire CSS file. */
 .nowrap {
 	white-space: nowrap;
 }
@@ -1691,13 +1692,9 @@ ul.clist {
 
 .statistics_chart {
 	text-align: center;
+	text-align: center;
 }
 
 .gchart{
 	border: 1px solid #84beff;
-}
-
-.execution_stats {
-	padding-top: 12px;
-	text-align: center;
 }

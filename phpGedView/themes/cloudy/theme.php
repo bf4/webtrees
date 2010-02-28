@@ -176,6 +176,8 @@ $PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
 $PGV_IMAGES["stop"]["other"] = "stop.gif";
+$PGV_IMAGES["pin-out"]["other"] = "pin-out.png";
+$PGV_IMAGES["pin-in"]["other"] = "pin-in.png";
 $PGV_IMAGES["default_image_M"]["other"] = "silhouette_male.gif";
 $PGV_IMAGES["default_image_F"]["other"] = "silhouette_female.gif";
 $PGV_IMAGES["default_image_U"]["other"] = "silhouette_unknown.gif";
@@ -216,7 +218,6 @@ $Dindent = 15;		// -- width to indent descendancy boxes
 $Darrowwidth = 30;	// -- additional width to include for the up arrows
 
 $CHARTS_CLOSE_HTML = true;                //-- should the charts, pedigree, descendacy, etc close the HTML on the page
-$PGV_DXHTMLTAB_COLORS = "#f0f9ff,#c8e7ff";
 
 // --  The largest possible area for charts is 300,000 pixels. As the maximum height or width is 1000 pixels
 $PGV_STATS_S_CHART_X = "440";

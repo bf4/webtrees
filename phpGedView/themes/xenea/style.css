@@ -443,6 +443,11 @@ a:hover .nameZoom {
 	height: 32px;
 }
 
+.menuitem_hover .icon {
+	width: 32px;
+	height: 32px;
+}
+
 .submenu .icon {
 	vertical-align: middle;
 	width: 25px;
@@ -1428,12 +1433,8 @@ ul.clist {
 
 .statistics_chart {
 	text-align: center;
-}
-
-.gchart {
-}
-
-.execution_stats {
-	padding-top: 12px;
 	text-align: center;
+}
+
+.gchart{
 }

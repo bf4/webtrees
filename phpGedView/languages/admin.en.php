@@ -32,7 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
+$pgv_lang["mod_admin_hasside"]		= "Sidebar?";
+$pgv_lang["mod_admin_sidebars"]		= "Manage Sidebars";
 $pgv_lang["module_admin"]			= "Module Administration";
 $pgv_lang["mod_admin_installed"]	= "Installed Modules";
 $pgv_lang["mod_admin_tabs"]			= "Manage Tabs";
