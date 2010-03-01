@@ -893,17 +893,16 @@ class MenuBar
 	* get an array of module menu objects
 	* @return array
 	*/
-	function getModuleMenus() {
-		if (!empty($this->modules)) return $this->modules;
-		$this->modules = array();
+	static function getModuleMenus() {
+		$modules = array();
 		$mods = PGVModule::getActiveList('M', PGV_USER_ACCESS_LEVEL);
 		uasort($mods, "PGVModule::compare_menu_order");
 		foreach ($mods as $mod) {
 			$menu = $mod->getMenu();
-			if ($menu) $this->modules[] = $mod->getMenu();
-							}
+			if ($menu) $modules[] = $mod->getMenu();
+		}
 
-		return $this->modules;
+		return $modules;
 	}
 
 	/**
