@@ -41,8 +41,15 @@ require_once PGV_ROOT.'library/Zend/Translate.php';
 
 class i18n {
 	static private $translation_adapter;
+	static private $alphabet;
+	static private $collation;
+	static private $long_date_format;
+	static private $short_date_format;
+	static private $time_format_hm;
+	static private $time_format_hms;
 	static private $list_separator;
-	static private $list_separator_last;
+	static private $text_direction;
+
 
 	static public function setLocale($locale='auto') {
 		self::$translation_adapter=new Zend_Translate(
@@ -51,7 +58,25 @@ class i18n {
 			$locale,
 			array('scan'=>Zend_Translate::LOCALE_FILENAME)
 		);
+		// By using specially named strings to store language parameters, we can store all the
+		// settings, translations and other support for each language in one file.
+		// This makes it simple for users to add/remove/share languages.
+
+		// I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C D E F G CH H I ..."
+		self::$alphabet=i18n::translate('LANGUAGE_ALPHABET');
+		// I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
+		self::$text_direction=i18n::translate('LANGUAGE_TEXT_DIRECTION');
+		// I18N: This is the name of the MySQL utf8 collation sequence for this language.  See http://dev.mysql.com/doc/refman/5.1/en/se-db2-collations.html
+		self::$collation=i18n::translate('LANGUAGE_COLLATION');
+		// I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
+		self::$long_date_format=i18n::translate('LANGUAGE_LONG_DATE_FORMAT');
+		// I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes
+		self::$short_date_format=i18n::translate('LANGUAGE_SHORT_DATE_FORMAT');
+		// I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
+		self::$time_format_hm=i18n::translate('LANGUAGE_TIME_FORMAT_HM');
 		// I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
+		self::$time_format_hms=i18n::translate('LANGUAGE_TIME_FORMAT_HMS');
+		// I18N: This is the format string for times with hours and seconds, such as 10:23pm.  See http://php.net/date for codes
 		self::$list_separator=i18n::translate('LANGUAGE_LIST_SEPARATOR');
 		// I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
 		self::$list_separator_last=i18n::translate('LANGUAGE_LIST_SEPARATOR_LAST');
@@ -77,6 +102,15 @@ class i18n {
 		$string=self::$translation_adapter->plural($args[0], $args[1], $args[2]);
 		array_splice($args, 0, 3, array($string));
 		return call_user_func_array('sprintf', $args);
+	}
+
+	// Determine whether a message has a translation in the current language.
+	// if (i18n::is_translated('_CUSTOM_FACT'))
+	static public function is_translated($string) {
+		return i18n::translate($string)!=$string;
+	}
+	static public function is_not_translated($string) {
+		return i18n::translate($string)==$string;
 	}
 
 	// Convert an array to a list.  For example
