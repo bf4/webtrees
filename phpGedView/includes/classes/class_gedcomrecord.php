@@ -671,7 +671,7 @@ class GedcomRecord {
 				case 1:
 					return '<br /><i>'.$event->getLabel().' '.format_fact_date($event).format_fact_place($event).'</i>';
 				case 2:
-					return '<span class="label">'.$event->getLabel().':</span> <span class="field">'.format_fact_date($event).format_fact_place($event).'</span><br />';
+					return '<dt class="label">'.$event->getLabel().'</dt><dd class="field">'.format_fact_date($event).format_fact_place($event).'</dd>';
 				}
 			}
 		}

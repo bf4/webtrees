@@ -479,7 +479,7 @@ class IndividualControllerRoot extends BaseController {
 		$linenum = $event->getLineNumber();
 
 		$this->name_count++;
-		echo "<td valign=\"top\"";
+		echo "\n<div id=\"nameparts", $this->name_count, '"';
 		if (strpos($factrec, "PGV_OLD")!==false) {
 			echo " class=\"namered\"";
 		}
@@ -494,6 +494,7 @@ class IndividualControllerRoot extends BaseController {
 			echo PrintReady($dummy->getFullName()), '<br />';
 		}
 		$ct = preg_match_all('/\n2 (\w+) (.*)/', $factrec, $nmatch, PREG_SET_ORDER);
+		echo "\n\t\t<dl>";
 		for($i=0; $i<$ct; $i++) {
 			$fact = trim($nmatch[$i][1]);
 			if (($fact!="SOUR")&&($fact!="NOTE")) {
@@ -505,7 +506,7 @@ class IndividualControllerRoot extends BaseController {
 						$func($fact, $this->pid);
 					}
 				}
-				echo "\n\t\t\t<span class=\"label\">";
+				echo "\n\t\t\t<dt class=\"label\">";
 				if (isset($pgv_lang[$fact])) {
 					print $pgv_lang[$fact];
 				} elseif (isset($factarray[$fact])) {
@@ -513,7 +514,7 @@ class IndividualControllerRoot extends BaseController {
 				} else {
 					echo $fact;
 				}
-				echo ":</span><span class=\"field\"> ";
+				echo "</dt><dd class=\"field\">";
 				if (isset($nmatch[$i][2])) {
 					$name = trim($nmatch[$i][2]);
 					$name = preg_replace("'/,'", ",", $name);
@@ -524,9 +525,10 @@ class IndividualControllerRoot extends BaseController {
 					$name=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $name);
 					echo PrintReady($name);
 				}
-				echo " </span><br />";
+				echo "</dd>";
 			}
 		}
+		echo "\n\t\t</dl>";
 		if ($this->total_names>1 && !$this->isPrintPreview() && $this->userCanEdit() && !strpos($factrec, 'PGV_OLD')) {
 			echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">", $pgv_lang["edit_name"], "</a> | ";
 			echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", $pgv_lang["delete_name"], "</a>\n";
@@ -544,7 +546,7 @@ class IndividualControllerRoot extends BaseController {
 			print_fact_notes($factrec, 2);
 			echo "</div><br />";
 		}
-		echo "</td>\n";
+		echo "\n</div>\n";
 	}
 
 	/**
@@ -561,15 +563,15 @@ class IndividualControllerRoot extends BaseController {
 		$factrec = $event->getGedComRecord();
 		$sex = $event->getDetail();
 		if (empty($sex)) $sex = "U";
-		echo "<td valign=\"top\"";
+		echo "<div id=\"sex\"";
 		if (strpos($factrec, "PGV_OLD")!==false) {
 			echo " class=\"namered\"";
 		}
 		if (strpos($factrec, "PGV_NEW")!==false) {
 			echo " class=\"nameblue\"";
 		}
-		echo ">";
-		print "<span class=\"label\">".$pgv_lang["sex"].": </span><span class=\"field\">".$this->sexarray[$sex];
+		echo "><dl>";
+		print "<dt class=\"label\">".$pgv_lang["sex"]."</dt><dd class=\"field\">".$this->sexarray[$sex];
 		if ($sex=='M') {
 			echo Person::sexImage('M', 'small', '', $pgv_lang['male']);
 		} elseif ($sex=='F') {
@@ -587,14 +589,14 @@ class IndividualControllerRoot extends BaseController {
 				}
 			}
 		}
-		print "<br /></span>";
+		print "</dd></dl>";
 		// -- find sources
-		print "&nbsp;&nbsp;&nbsp;";
+//		print "&nbsp;&nbsp;&nbsp;";
 		print_fact_sources($event->getGedComRecord(), 2);
 		//-- find the notes
-		print "&nbsp;&nbsp;&nbsp;";
+//		print "&nbsp;&nbsp;&nbsp;";
 		print_fact_notes($event->getGedComRecord(), 2);
-		print "</td>";
+		print "</div>";
 	}
 	/**
 	* get the edit menu
