@@ -32,6 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+$pgv_lang["add_name_to_cart"]		= "Add #NAME# to cart";
 
 $pgv_lang["gedcomid"]				= "GEDCOM INDI record ID";
 $pgv_lang["sortby"]					= "Sequence";
