@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 12:20-0000\n"
+"POT-Creation-Date: 2010-03-01 22:55-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -12,67 +12,3504 @@ msgstr ""
 "X-Poedit-Language: Hungarian\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-KeywordsList: translate;plural:1,2\n"
+"X-Poedit-KeywordsList: translate;noop;plural:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
 
+#. I18N: This is the country/chapman code for "Unknown"
+#: _countries.php:36
+msgid "???"
+msgstr "Ismeretlen"
+
+#. I18N: This is the country/chapman code for "Aruba"
+#: _countries.php:38
+msgid "ABW"
+msgstr "Aruba"
+
+#. I18N: This is the country/chapman code for "Acadia"
+#: _countries.php:40
+msgid "ACA"
+msgstr "Akadia"
+
+#. I18N: This is the country/chapman code for "Afghanistan"
+#: _countries.php:42
+msgid "AFG"
+msgstr "Afganisztán"
+
+#. I18N: This is the country/chapman code for "Angola"
+#: _countries.php:44
+msgid "AGO"
+msgstr "Angola"
+
+#. I18N: This is the country/chapman code for "Anguilla"
+#: _countries.php:46
+msgid "AIA"
+msgstr "Anguilla"
+
+#. I18N: This is the country/chapman code for "Aland Islands"
+#: _countries.php:48
+msgid "ALA"
+msgstr "Åland-szigetek"
+
+#. I18N: This is the country/chapman code for "Albania"
+#: _countries.php:50
+msgid "ALB"
+msgstr "Albánia"
+
+#. I18N: This is the country/chapman code for "Andorra"
+#: _countries.php:52
+msgid "AND"
+msgstr "Andorra"
+
+#. I18N: This is the country/chapman code for "Netherlands Antilles"
+#: _countries.php:54
+msgid "ANT"
+msgstr "Holland Antillák"
+
+#. I18N: This is the country/chapman code for "United Arab Emirates"
+#: _countries.php:56
+msgid "ARE"
+msgstr "Egyesült Arab Emirátusok"
+
+#. I18N: This is the country/chapman code for "Argentina"
+#: _countries.php:58
+msgid "ARG"
+msgstr "Argentína"
+
+#. I18N: This is the country/chapman code for "Armenia"
+#: _countries.php:60
+msgid "ARM"
+msgstr "Örményország"
+
+#. I18N: This is the country/chapman code for "American Samoa"
+#: _countries.php:62
+msgid "ASM"
+msgstr "Amerikai Szamoa"
+
+#. I18N: This is the country/chapman code for "Antarctica"
+#: _countries.php:64
+msgid "ATA"
+msgstr "Antarktisz"
+
+#. I18N: This is the country/chapman code for "French Southern Territories"
+#: _countries.php:66
+msgid "ATF"
+msgstr "Francia Déli Területek"
+
+#. I18N: This is the country/chapman code for "Antigua and Barbuda"
+#: _countries.php:68
+msgid "ATG"
+msgstr "Antigua és Barbuda"
+
+#. I18N: This is the country/chapman code for "Australia"
+#: _countries.php:70
+msgid "AUS"
+msgstr "Ausztrália"
+
+#. I18N: This is the country/chapman code for "Austria"
+#: _countries.php:72
+msgid "AUT"
+msgstr "Ausztria"
+
+#. I18N: This is the country/chapman code for "Azerbaijan"
+#: _countries.php:74
+msgid "AZE"
+msgstr "Azerbajdzsán"
+
+#. I18N: This is the country/chapman code for "Azores"
+#: _countries.php:76
+msgid "AZR"
+msgstr "Azori-szigetek"
+
+#. I18N: This is the country/chapman code for "Burundi"
+#: _countries.php:78
+msgid "BDI"
+msgstr "Burundi"
+
+#. I18N: This is the country/chapman code for "Belgium"
+#: _countries.php:80
+msgid "BEL"
+msgstr "Belgium"
+
+#. I18N: This is the country/chapman code for "Benin"
+#: _countries.php:82
+msgid "BEN"
+msgstr "Benin"
+
+#. I18N: This is the country/chapman code for "Burkina Faso"
+#: _countries.php:84
+msgid "BFA"
+msgstr "Burkina Faso"
+
+#. I18N: This is the country/chapman code for "Bangladesh"
+#: _countries.php:86
+msgid "BGD"
+msgstr "Banglades"
+
+#. I18N: This is the country/chapman code for "Bulgaria"
+#: _countries.php:88
+msgid "BGR"
+msgstr "Bulgária"
+
+#. I18N: This is the country/chapman code for "Bahrain"
+#: _countries.php:90
+msgid "BHR"
+msgstr "Bahrein"
+
+#. I18N: This is the country/chapman code for "Bahamas"
+#: _countries.php:92
+msgid "BHS"
+msgstr "Bahama-szigetek"
+
+#. I18N: This is the country/chapman code for "Bosnia and Herzegovina"
+#: _countries.php:94
+msgid "BIH"
+msgstr "Bosznia-Hercegovina"
+
+#. I18N: This is the country/chapman code for "Belarus"
+#: _countries.php:96
+msgid "BLR"
+msgstr "Belorusszia"
+
+#. I18N: This is the country/chapman code for "Belize"
+#: _countries.php:98
+msgid "BLZ"
+msgstr "Belize"
+
+#. I18N: This is the country/chapman code for "Bermuda"
+#: _countries.php:100
+msgid "BMU"
+msgstr "Bermuda"
+
+#. I18N: This is the country/chapman code for "Bolivia"
+#: _countries.php:102
+msgid "BOL"
+msgstr "Bolívia"
+
+#. I18N: This is the country/chapman code for "Brazil"
+#: _countries.php:104
+msgid "BRA"
+msgstr "Brazília"
+
+#. I18N: This is the country/chapman code for "Barbados"
+#: _countries.php:106
+msgid "BRB"
+msgstr "Barbados"
+
+#. I18N: This is the country/chapman code for "Brunei Darussalam"
+#: _countries.php:108
+msgid "BRN"
+msgstr "Brunei Darussalam"
+
+#. I18N: This is the country/chapman code for "Bhutan"
+#: _countries.php:110
+msgid "BTN"
+msgstr "Bhután"
+
+#. I18N: This is the country/chapman code for "Bouvet Island"
+#: _countries.php:112
+msgid "BVT"
+msgstr "Bouvet-sziget"
+
+#. I18N: This is the country/chapman code for "Botswana"
+#: _countries.php:114
+msgid "BWA"
+msgstr "Botswana"
+
+#. I18N: This is the country/chapman code for "British West Indies"
+#: _countries.php:116
+msgid "BWI"
+msgstr "Brit Nyugat-India"
+
+#. I18N: This is the country/chapman code for "Central African Republic"
+#: _countries.php:118
+msgid "CAF"
+msgstr "Közép-Afrikai Köztársaság"
+
+#. I18N: This is the country/chapman code for "Canada"
+#: _countries.php:120
+msgid "CAN"
+msgstr "Kanada"
+
+#. I18N: This is the country/chapman code for "Cape Colony"
+#: _countries.php:122
+msgid "CAP"
+msgstr "Cape Colony"
+
+#. I18N: This is the country/chapman code for "Catalonia"
+#: _countries.php:124
+msgid "CAT"
+msgstr "Szociális/társadalmi státusz"
+
+#. I18N: This is the country/chapman code for "Cocos (Keeling) Islands"
+#: _countries.php:126
+msgid "CCK"
+msgstr "Kókusz-szigetek"
+
+#. I18N: This is the country/chapman code for "Switzerland"
+#: _countries.php:128
+msgid "CHE"
+msgstr "Svájc"
+
+#. I18N: This is the country/chapman code for "Channel Islands"
+#: _countries.php:130
+msgid "CHI"
+msgstr "Channel Islands"
+
+#. I18N: This is the country/chapman code for "Chile"
+#: _countries.php:132
+msgid "CHL"
+msgstr "Chile"
+
+#. I18N: This is the country/chapman code for "China"
+#: _countries.php:134
+msgid "CHN"
+msgstr "Kína"
+
+#. I18N: This is the country/chapman code for "Cote d'Ivoire"
+#: _countries.php:136
+msgid "CIV"
+msgstr "Côte d'Ivoire"
+
+#. I18N: This is the country/chapman code for "Cameroon"
+#: _countries.php:138
+msgid "CMR"
+msgstr "Kamerun"
+
+#. I18N: This is the country/chapman code for "Congo (Kinshasa)"
+#: _countries.php:140
+msgid "COD"
+msgstr "Kongói Demokratikus Köztársaság"
+
+#. I18N: This is the country/chapman code for "Congo (Brazzaville)"
+#: _countries.php:142
+msgid "COG"
+msgstr "Kongó (Brazzaville)"
+
+#. I18N: This is the country/chapman code for "Cook Islands"
+#: _countries.php:144
+msgid "COK"
+msgstr "Cook-szigetek"
+
+#. I18N: This is the country/chapman code for "Colombia"
+#: _countries.php:146
+msgid "COL"
+msgstr "Kolumbia"
+
+#. I18N: This is the country/chapman code for "Comoros"
+#: _countries.php:148
+msgid "COM"
+msgstr "Comore-szigetek"
+
+#. I18N: This is the country/chapman code for "Cape Verde"
+#: _countries.php:150
+msgid "CPV"
+msgstr "Zöld-foki-szigetek"
+
+#. I18N: This is the country/chapman code for "Costa Rica"
+#: _countries.php:152
+msgid "CRI"
+msgstr "Costa Rica"
+
+#. I18N: This is the country/chapman code for "Czechoslovakia"
+#: _countries.php:154
+msgid "CSK"
+msgstr "Csehszlovákia"
+
+#. I18N: This is the country/chapman code for "Cuba"
+#: _countries.php:156
+msgid "CUB"
+msgstr "Kuba"
+
+#. I18N: This is the country/chapman code for "Christmas Island"
+#: _countries.php:158
+msgid "CXR"
+msgstr "Karácsony-sziget"
+
+#. I18N: This is the country/chapman code for "Cayman Islands"
+#: _countries.php:160
+msgid "CYM"
+msgstr "Kajmán-szigetek"
+
+#. I18N: This is the country/chapman code for "Cyprus"
+#: _countries.php:162
+msgid "CYP"
+msgstr "Ciprus"
+
+#. I18N: This is the country/chapman code for "Czech Republic"
+#: _countries.php:164
+msgid "CZE"
+msgstr "Cseh Köztársaság"
+
+#. I18N: This is the country/chapman code for "Germany"
+#: _countries.php:166
+msgid "DEU"
+msgstr "Németország"
+
+#. I18N: This is the country/chapman code for "Djibouti"
+#: _countries.php:168
+msgid "DJI"
+msgstr "Dzsibuti"
+
+#. I18N: This is the country/chapman code for "Dominica"
+#: _countries.php:170
+msgid "DMA"
+msgstr "Dominika"
+
+#. I18N: This is the country/chapman code for "Denmark"
+#: _countries.php:172
+msgid "DNK"
+msgstr "Dánia"
+
+#. I18N: This is the country/chapman code for "Dominican Republic"
+#: _countries.php:174
+msgid "DOM"
+msgstr "Dominikai Köztársaság"
+
+#. I18N: This is the country/chapman code for "Algeria"
+#: _countries.php:176
+msgid "DZA"
+msgstr "Algéria"
+
+#. I18N: This is the country/chapman code for "Ecuador"
+#: _countries.php:178
+msgid "ECU"
+msgstr "Ecuador"
+
+#. I18N: This is the country/chapman code for "Egypt"
+#: _countries.php:180
+msgid "EGY"
+msgstr "Egyiptom"
+
+#. I18N: This is the country/chapman code for "Eire"
+#: _countries.php:182
+msgid "EIR"
+msgstr "Eire"
+
+#. I18N: This is the country/chapman code for "England"
+#: _countries.php:184
+msgid "ENG"
+msgstr "Anglia"
+
+#. I18N: This is the country/chapman code for "Eritrea"
+#: _countries.php:186
+msgid "ERI"
+msgstr "Eritrea"
+
+#. I18N: This is the country/chapman code for "Western Sahara"
+#: _countries.php:188
+msgid "ESH"
+msgstr "Nyugat Szahara"
+
+#. I18N: This is the country/chapman code for "Spain"
+#: _countries.php:190
+msgid "ESP"
+msgstr "Spanyolország"
+
+#. I18N: This is the country/chapman code for "Estonia"
+#: _countries.php:192
+msgid "EST"
+msgstr "Észtország"
+
+#. I18N: This is the country/chapman code for "Ethiopia"
+#: _countries.php:194
+msgid "ETH"
+msgstr "Etiópia"
+
+#. I18N: This is the country/chapman code for "Finland"
+#: _countries.php:196
+msgid "FIN"
+msgstr "Finnország"
+
+#. I18N: This is the country/chapman code for "Fiji"
+#: _countries.php:198
+msgid "FJI"
+msgstr "Fidzsi"
+
+#. I18N: This is the country/chapman code for "Flanders"
+#: _countries.php:200
+msgid "FLD"
+msgstr "Flanders"
+
+#. I18N: This is the country/chapman code for "Falkland Islands"
+#: _countries.php:202
+msgid "FLK"
+msgstr "Falkland-szigetek"
+
+#. I18N: This is the country/chapman code for "France"
+#: _countries.php:204
+msgid "FRA"
+msgstr "Franciaország"
+
+#. I18N: This is the country/chapman code for "Faeroe Islands"
+#: _countries.php:206
+msgid "FRO"
+msgstr "Feröer-szigetek"
+
+#. I18N: This is the country/chapman code for "Micronesia"
+#: _countries.php:208
+msgid "FSM"
+msgstr "Mikronéziai Szövetségi Államok"
+
+#. I18N: This is the country/chapman code for "Gabon"
+#: _countries.php:210
+msgid "GAB"
+msgstr "Gabon"
+
+#. I18N: This is the country/chapman code for "United Kingdom"
+#: _countries.php:212
+msgid "GBR"
+msgstr "Egyesült Királyság"
+
+#. I18N: This is the country/chapman code for "Georgia"
+#: _countries.php:214
+msgid "GEO"
+msgstr "Georgia"
+
+#. I18N: This is the country/chapman code for "Ghana"
+#: _countries.php:216
+msgid "GHA"
+msgstr "Ghána"
+
+#. I18N: This is the country/chapman code for "Gibraltar"
+#: _countries.php:218
+msgid "GIB"
+msgstr "Gibraltár"
+
+#. I18N: This is the country/chapman code for "Guinea"
+#: _countries.php:220
+msgid "GIN"
+msgstr "Guinea"
+
+#. I18N: This is the country/chapman code for "Guadeloupe"
+#: _countries.php:222
+msgid "GLP"
+msgstr "Guadeloupe"
+
+#. I18N: This is the country/chapman code for "Gambia"
+#: _countries.php:224
+msgid "GMB"
+msgstr "Gambia"
+
+#. I18N: This is the country/chapman code for "Guinea-Bissau"
+#: _countries.php:226
+msgid "GNB"
+msgstr "Bissau-Guinea"
+
+#. I18N: This is the country/chapman code for "Equatorial Guinea"
+#: _countries.php:228
+msgid "GNQ"
+msgstr "Egyenlítõi Guinea"
+
+#. I18N: This is the country/chapman code for "Greece"
+#: _countries.php:230
+msgid "GRC"
+msgstr "Görögország"
+
+#. I18N: This is the country/chapman code for "Grenada"
+#: _countries.php:232
+msgid "GRD"
+msgstr "Grenada"
+
+#. I18N: This is the country/chapman code for "Greenland"
+#: _countries.php:234
+msgid "GRL"
+msgstr "Grönland"
+
+#. I18N: This is the country/chapman code for "Guatemala"
+#: _countries.php:236
+msgid "GTM"
+msgstr "Guatemala"
+
+#. I18N: This is the country/chapman code for "French Guiana"
+#: _countries.php:238
+msgid "GUF"
+msgstr "Francia Guyana"
+
+#. I18N: This is the country/chapman code for "Guam"
+#: _countries.php:240
+msgid "GUM"
+msgstr "Guam"
+
+#. I18N: This is the country/chapman code for "Guyana"
+#: _countries.php:242
+msgid "GUY"
+msgstr "Guyana"
+
+#. I18N: This is the country/chapman code for "Hong Kong"
+#: _countries.php:244
+msgid "HKG"
+msgstr "Hongkong"
+
+#. I18N: This is the country/chapman code for "Heard Island and McDonald Islands"
+#: _countries.php:246
+msgid "HMD"
+msgstr "Heard- és McDonald-szigetek"
+
+#. I18N: This is the country/chapman code for "Honduras"
+#: _countries.php:248
+msgid "HND"
+msgstr "Honduras"
+
+#. I18N: This is the country/chapman code for "Croatia"
+#: _countries.php:250
+msgid "HRV"
+msgstr "Horvátország"
+
+#. I18N: This is the country/chapman code for "Haiti"
+#: _countries.php:252
+msgid "HTI"
+msgstr "Haiti"
+
+#. I18N: This is the country/chapman code for "Hungary"
+#: _countries.php:254
+msgid "HUN"
+msgstr "Magyarország"
+
+#. I18N: This is the country/chapman code for "Indonesia"
+#: _countries.php:256
+msgid "IDN"
+msgstr "Indonézia"
+
+#. I18N: This is the country/chapman code for "India"
+#: _countries.php:258
+msgid "IND"
+msgstr "India"
+
+#. I18N: This is the country/chapman code for "Isle of Man"
+#: _countries.php:260
+msgid "IOM"
+msgstr ""
+
+#. I18N: This is the country/chapman code for "British Indian Ocean Territory"
+#: _countries.php:262
+msgid "IOT"
+msgstr "Brit Indiai-óceáni Terület"
+
+#. I18N: This is the country/chapman code for "Ireland"
+#: _countries.php:264
+msgid "IRL"
+msgstr "Írország"
+
+#. I18N: This is the country/chapman code for "Iran"
+#: _countries.php:266
+msgid "IRN"
+msgstr "Irán"
+
+#. I18N: This is the country/chapman code for "Iraq"
+#: _countries.php:268
+msgid "IRQ"
+msgstr "Irak"
+
+#. I18N: This is the country/chapman code for "Iceland"
+#: _countries.php:270
+msgid "ISL"
+msgstr "Izland"
+
+#. I18N: This is the country/chapman code for "Israel"
+#: _countries.php:272
+msgid "ISR"
+msgstr "Izrael"
+
+#. I18N: This is the country/chapman code for "Italy"
+#: _countries.php:274
+msgid "ITA"
+msgstr "Olaszország"
+
+#. I18N: This is the country/chapman code for "Jamaica"
+#: _countries.php:276
+msgid "JAM"
+msgstr "Jamaica"
+
+#. I18N: This is the country/chapman code for "Jordan"
+#: _countries.php:278
+msgid "JOR"
+msgstr "Jordánia"
+
+#. I18N: This is the country/chapman code for "Japan"
+#: _countries.php:280
+msgid "JPN"
+msgstr "Japán"
+
+#. I18N: This is the country/chapman code for "Kazakhstan"
+#: _countries.php:282
+msgid "KAZ"
+msgstr "Kazahsztán"
+
+#. I18N: This is the country/chapman code for "Kenya"
+#: _countries.php:284
+msgid "KEN"
+msgstr "Kenya"
+
+#. I18N: This is the country/chapman code for "Kyrgyzstan"
+#: _countries.php:286
+msgid "KGZ"
+msgstr "Kirgizisztán"
+
+#. I18N: This is the country/chapman code for "Cambodia"
+#: _countries.php:288
+msgid "KHM"
+msgstr "Kambodzsa"
+
+#. I18N: This is the country/chapman code for "Kiribati"
+#: _countries.php:290
+msgid "KIR"
+msgstr "Kiribati"
+
+#. I18N: This is the country/chapman code for "Saint Kitts and Nevis"
+#: _countries.php:292
+msgid "KNA"
+msgstr "Saint Kitts és Nevis"
+
+#. I18N: This is the country/chapman code for "Korea"
+#: _countries.php:294
+msgid "KOR"
+msgstr "Koreai Köztársaság"
+
+#. I18N: This is the country/chapman code for "Kuwait"
+#: _countries.php:296
+msgid "KWT"
+msgstr "Kuvait"
+
+#. I18N: This is the country/chapman code for "Laos"
+#: _countries.php:298
+msgid "LAO"
+msgstr "Lao Népi Demokratikus Köztársaság"
+
+#. I18N: This is the country/chapman code for "Lebanon"
+#: _countries.php:300
+msgid "LBN"
+msgstr "Libanon"
+
+#. I18N: This is the country/chapman code for "Liberia"
+#: _countries.php:302
+msgid "LBR"
+msgstr "Libéria"
+
+#. I18N: This is the country/chapman code for "Libya"
+#: _countries.php:304
+msgid "LBY"
+msgstr "Líbia"
+
+#. I18N: This is the country/chapman code for "Saint Lucia"
+#: _countries.php:306
+msgid "LCA"
+msgstr "Szent Lucia"
+
+#. I18N: This is the country/chapman code for "Liechtenstein"
+#: _countries.php:308
+msgid "LIE"
+msgstr "Liechtenstein"
+
+#. I18N: This is the country/chapman code for "Sri Lanka"
+#: _countries.php:310
+msgid "LKA"
+msgstr "SríLanka"
+
+#. I18N: This is the country/chapman code for "Lesotho"
+#: _countries.php:312
+msgid "LSO"
+msgstr "Lesotho"
+
+#. I18N: This is the country/chapman code for "Lithuania"
+#: _countries.php:314
+msgid "LTU"
+msgstr "Észtország"
+
+#. I18N: This is the country/chapman code for "Luxembourg"
+#: _countries.php:316
+msgid "LUX"
+msgstr "Luxemburg"
+
+#. I18N: This is the country/chapman code for "Latvia"
+#: _countries.php:318
+msgid "LVA"
+msgstr "Litvánia"
+
+#. I18N: This is the country/chapman code for "Macau"
+#: _countries.php:320
+msgid "MAC"
+msgstr "Makaó"
+
+#. I18N: This is the country/chapman code for "Morocco"
+#: _countries.php:322
+msgid "MAR"
+msgstr "Marokkó"
+
+#. I18N: This is the country/chapman code for "Monaco"
+#: _countries.php:324
+msgid "MCO"
+msgstr "Monaco"
+
+#. I18N: This is the country/chapman code for "Moldova"
+#: _countries.php:326
+msgid "MDA"
+msgstr "Moldva"
+
+#. I18N: This is the country/chapman code for "Madagascar"
+#: _countries.php:328
+msgid "MDG"
+msgstr "Madagaszkár"
+
+#. I18N: This is the country/chapman code for "Maldives"
+#: _countries.php:330
+msgid "MDV"
+msgstr "Maldív-szigetek"
+
+#. I18N: This is the country/chapman code for "Mexico"
+#: _countries.php:332
+msgid "MEX"
+msgstr "Mexikó"
+
+#. I18N: This is the country/chapman code for "Marshall Islands"
+#: _countries.php:334
+msgid "MHL"
+msgstr "Marshall-szigetek"
+
+#. I18N: This is the country/chapman code for "Macedonia"
+#: _countries.php:336
+msgid "MKD"
+msgstr "Macedónia"
+
+#. I18N: This is the country/chapman code for "Mali"
+#: _countries.php:338
+msgid "MLI"
+msgstr "Mali"
+
+#. I18N: This is the country/chapman code for "Malta"
+#: _countries.php:340
+msgid "MLT"
+msgstr "Málta"
+
+#. I18N: This is the country/chapman code for "Myanmar"
+#: _countries.php:342
+msgid "MMR"
+msgstr "Myanmar"
+
+#. I18N: This is the country/chapman code for "Mongolia"
+#: _countries.php:344
+msgid "MNG"
+msgstr "Mongólia"
+
+#. I18N: This is the country/chapman code for "Northern Mariana Islands"
+#: _countries.php:346
+msgid "MNP"
+msgstr "Észak-Mariana-szigetek"
+
+#. I18N: This is the country/chapman code for "Montenegro"
+#: _countries.php:348
+msgid "MNT"
+msgstr "Montenegró"
+
+#. I18N: This is the country/chapman code for "Mozambique"
+#: _countries.php:350
+msgid "MOZ"
+msgstr "Mozambik"
+
+#. I18N: This is the country/chapman code for "Mauritania"
+#: _countries.php:352
+msgid "MRT"
+msgstr "Mauritánia"
+
+#. I18N: This is the country/chapman code for "Montserrat"
+#: _countries.php:354
+msgid "MSR"
+msgstr "Montserrat"
+
+#. I18N: This is the country/chapman code for "Martinique"
+#: _countries.php:356
+msgid "MTQ"
+msgstr "Martinique"
+
+#. I18N: This is the country/chapman code for "Mauritius"
+#: _countries.php:358
+msgid "MUS"
+msgstr "Mauritius"
+
+#. I18N: This is the country/chapman code for "Malawi"
+#: _countries.php:360
+msgid "MWI"
+msgstr "Malawi"
+
+#. I18N: This is the country/chapman code for "Malaysia"
+#: _countries.php:362
+msgid "MYS"
+msgstr "Malajzia"
+
+#. I18N: This is the country/chapman code for "Mayotte"
+#: _countries.php:364
+msgid "MYT"
+msgstr "Mayotte"
+
+#. I18N: This is the country/chapman code for "Namibia"
+#: _countries.php:366
+msgid "NAM"
+msgstr "Namíbia"
+
+#. I18N: This is the country/chapman code for "New Caledonia"
+#: _countries.php:368
+msgid "NCL"
+msgstr "Új-Kaledónia"
+
+#. I18N: This is the country/chapman code for "Niger"
+#: _countries.php:370
+msgid "NER"
+msgstr "Niger"
+
+#. I18N: This is the country/chapman code for "Norfolk Island"
+#: _countries.php:372
+msgid "NFK"
+msgstr "Norfolk-sziget"
+
+#. I18N: This is the country/chapman code for "Nigeria"
+#: _countries.php:374
+msgid "NGA"
+msgstr "Nigéria"
+
+#. I18N: This is the country/chapman code for "Nicaragua"
+#: _countries.php:376
+msgid "NIC"
+msgstr "Nicaragua"
+
+#. I18N: This is the country/chapman code for "Northern Ireland"
+#: _countries.php:378
+msgid "NIR"
+msgstr "Észak Írország"
+
+#. I18N: This is the country/chapman code for "Niue"
+#: _countries.php:380
+msgid "NIU"
+msgstr "Niue"
+
+#. I18N: This is the country/chapman code for "Netherlands"
+#: _countries.php:382
+msgid "NLD"
+msgstr "Hollandia"
+
+#. I18N: This is the country/chapman code for "Norway"
+#: _countries.php:384
+msgid "NOR"
+msgstr "Norvégia"
+
+#. I18N: This is the country/chapman code for "Nepal"
+#: _countries.php:386
+msgid "NPL"
+msgstr "Nepál"
+
+#. I18N: This is the country/chapman code for "Nauru"
+#: _countries.php:388
+msgid "NRU"
+msgstr "Nauru"
+
+#. I18N: This is the country/chapman code for "Neutral Zone"
+#: _countries.php:390
+msgid "NTZ"
+msgstr "Semleges Zona"
+
+#. I18N: This is the country/chapman code for "New Zealand"
+#: _countries.php:392
+msgid "NZL"
+msgstr "Új-Zéland"
+
+#. I18N: This is the country/chapman code for "Oman"
+#: _countries.php:394
+msgid "OMN"
+msgstr "Omán"
+
+#. I18N: This is the country/chapman code for "Pakistan"
+#: _countries.php:396
+msgid "PAK"
+msgstr "Pakisztán"
+
+#. I18N: This is the country/chapman code for "Panama"
+#: _countries.php:398
+msgid "PAN"
+msgstr "Panama"
+
+#. I18N: This is the country/chapman code for "Pitcairn"
+#: _countries.php:400
+msgid "PCN"
+msgstr "Pitcairn"
+
+#. I18N: This is the country/chapman code for "Peru"
+#: _countries.php:402
+msgid "PER"
+msgstr "Peru"
+
+#. I18N: This is the country/chapman code for "Philippines"
+#: _countries.php:404
+msgid "PHL"
+msgstr "Fülöp-szigetek"
+
+#. I18N: This is the country/chapman code for "Palau"
+#: _countries.php:406
+msgid "PLW"
+msgstr "Palau"
+
+#. I18N: This is the country/chapman code for "Papua New Guinea"
+#: _countries.php:408
+msgid "PNG"
+msgstr "Pápua Új-Guinea"
+
+#. I18N: This is the country/chapman code for "Poland"
+#: _countries.php:410
+msgid "POL"
+msgstr "Lengyelország"
+
+#. I18N: This is the country/chapman code for "Puerto Rico"
+#: _countries.php:412
+msgid "PRI"
+msgstr "Puerto Rico"
+
+#. I18N: This is the country/chapman code for "North Korea"
+#: _countries.php:414
+msgid "PRK"
+msgstr "Koreai Népi Demokratikus Köztársaság"
+
+#. I18N: This is the country/chapman code for "Portugal"
+#: _countries.php:416
+msgid "PRT"
+msgstr "Portugália"
+
+#. I18N: This is the country/chapman code for "Paraguay"
+#: _countries.php:418
+msgid "PRY"
+msgstr "Paraguay"
+
+#. I18N: This is the country/chapman code for "Occupied Palestinian Territory"
+#: _countries.php:420
+msgid "PSE"
+msgstr "Megszállt palesztin terület"
+
+#. I18N: This is the country/chapman code for "French Polynesia"
+#: _countries.php:422
+msgid "PYF"
+msgstr "Francia Polinézia"
+
+#. I18N: This is the country/chapman code for "Qatar"
+#: _countries.php:424
+msgid "QAT"
+msgstr "Katar"
+
+#. I18N: This is the country/chapman code for "Reunion"
+#: _countries.php:426
+msgid "REU"
+msgstr "Reunion"
+
+#. I18N: This is the country/chapman code for "Romania"
+#: _countries.php:428
+msgid "ROM"
+msgstr "Románia"
+
+#. I18N: This is the country/chapman code for "Russia"
+#: _countries.php:430
+msgid "RUS"
+msgstr "Orosz Federáció"
+
+#. I18N: This is the country/chapman code for "Rwanda"
+#: _countries.php:432
+msgid "RWA"
+msgstr "Ruanda"
+
+#. I18N: This is the country/chapman code for "Saudi Arabia"
+#: _countries.php:434
+msgid "SAU"
+msgstr "Szaúd-Arábia"
+
+#. I18N: This is the country/chapman code for "Serbia and Montenegro"
+#: _countries.php:436
+msgid "SCG"
+msgstr "Szerbia és Montenegró"
+
+#. I18N: This is the country/chapman code for "Scotland"
+#: _countries.php:438
+msgid "SCT"
+msgstr "Skócia"
+
+#. I18N: This is the country/chapman code for "Sudan"
+#: _countries.php:440
+msgid "SDN"
+msgstr "Szudán"
+
+#. I18N: This is the country/chapman code for "At Sea"
+#: _countries.php:442
+msgid "SEA"
+msgstr "Tengeren"
+
+#. I18N: This is the country/chapman code for "Senegal"
+#: _countries.php:444
+msgid "SEN"
+msgstr "Szenegál"
+
+#. I18N: This is the country/chapman code for "Serbia"
+#: _countries.php:446
+msgid "SER"
+msgstr "Szerbia"
+
+#. I18N: This is the country/chapman code for "Singapore"
+#: _countries.php:448
+msgid "SGP"
+msgstr "Szingapúr"
+
+#. I18N: This is the country/chapman code for "South Georgia and the South Sandwich Islands"
+#: _countries.php:450
+msgid "SGS"
+msgstr "Dél-Georgia és a Dél-Sandwich-szigetek"
+
+#. I18N: This is the country/chapman code for "Saint Helena"
+#: _countries.php:452
+msgid "SHN"
+msgstr "Szent Ilona"
+
+#. I18N: This is the country/chapman code for "Sicily"
+#: _countries.php:454
+msgid "SIC"
+msgstr "Sicilia"
+
+#. I18N: This is the country/chapman code for "Svalbard and Jan Mayen Islands"
+#: _countries.php:456
+msgid "SJM"
+msgstr "Svalbard- és Jan Mayen-szigetek"
+
+#. I18N: This is the country/chapman code for "Solomon Islands"
+#: _countries.php:458
+msgid "SLB"
+msgstr "Salamon-szigetek"
+
+#. I18N: This is the country/chapman code for "Sierra Leone"
+#: _countries.php:460
+msgid "SLE"
+msgstr "Sierra Leone"
+
+#. I18N: This is the country/chapman code for "El Salvador"
+#: _countries.php:462
+msgid "SLV"
+msgstr "El Salvador"
+
+#. I18N: This is the country/chapman code for "San Marino"
+#: _countries.php:464
+msgid "SMR"
+msgstr "San Marino"
+
+#. I18N: This is the country/chapman code for "Somalia"
+#: _countries.php:466
+msgid "SOM"
+msgstr "Szomália"
+
+#. I18N: This is the country/chapman code for "Saint Pierre and Miquelon"
+#: _countries.php:468
+msgid "SPM"
+msgstr "St. Pierre és Miquelon"
+
+#. I18N: This is the country/chapman code for "Sao and Principe"
+#: _countries.php:470
+msgid "STP"
+msgstr "Sao Tome és Principe"
+
+#. I18N: This is the country/chapman code for "USSR"
+#: _countries.php:472
+msgid "SUN"
+msgstr "U.S.S.R. (Soviet Union)"
+
+#. I18N: This is the country/chapman code for "Suriname"
+#: _countries.php:474
+msgid "SUR"
+msgstr "Suriname"
+
+#. I18N: This is the country/chapman code for "Slovakia"
+#: _countries.php:476
+msgid "SVK"
+msgstr "Szlovákia"
+
+#. I18N: This is the country/chapman code for "Slovenia"
+#: _countries.php:478
+msgid "SVN"
+msgstr "Szlovénia"
+
+#. I18N: This is the country/chapman code for "Sweden"
+#: _countries.php:480
+msgid "SWE"
+msgstr "Svédország"
+
+#. I18N: This is the country/chapman code for "Swaziland"
+#: _countries.php:482
+msgid "SWZ"
+msgstr "Szváziföld"
+
+#. I18N: This is the country/chapman code for "Seychelles"
+#: _countries.php:484
+msgid "SYC"
+msgstr "Seychelle-szigetek"
+
+#. I18N: This is the country/chapman code for "Syrian Arab Republic"
+#: _countries.php:486
+msgid "SYR"
+msgstr "Szíriai Arab Köztársaság"
+
+#. I18N: This is the country/chapman code for "Turks and Caicos Islands"
+#: _countries.php:488
+msgid "TCA"
+msgstr "Turks- és Caicos-szigetek"
+
+#. I18N: This is the country/chapman code for "Chad"
+#: _countries.php:490
+msgid "TCD"
+msgstr "Csád"
+
+#. I18N: This is the country/chapman code for "Togo"
+#: _countries.php:492
+msgid "TGO"
+msgstr "Togo"
+
+#. I18N: This is the country/chapman code for "Thailand"
+#: _countries.php:494
+msgid "THA"
+msgstr "Thaiföld"
+
+#. I18N: This is the country/chapman code for "Tajikistan"
+#: _countries.php:496
+msgid "TJK"
+msgstr "Tádzsikisztán"
+
+#. I18N: This is the country/chapman code for "Tokelau"
+#: _countries.php:498
+msgid "TKL"
+msgstr "Tokelau"
+
+#. I18N: This is the country/chapman code for "Turkmenistan"
+#: _countries.php:500
+msgid "TKM"
+msgstr "Türkmenisztán"
+
+#. I18N: This is the country/chapman code for "Timor-Leste"
+#: _countries.php:502
+msgid "TLS"
+msgstr "Kelet-Timor"
+
+#. I18N: This is the country/chapman code for "Tonga"
+#: _countries.php:504
+msgid "TON"
+msgstr "Tonga"
+
+#. I18N: This is the country/chapman code for "Transylvania"
+#: _countries.php:506
+msgid "TRN"
+msgstr "Erdély"
+
+#. I18N: This is the country/chapman code for "Trinidad and Tobago"
+#: _countries.php:508
+msgid "TTO"
+msgstr "Trinidad és Tobago"
+
+#. I18N: This is the country/chapman code for "Tunisia"
+#: _countries.php:510
+msgid "TUN"
+msgstr "Tunézia"
+
+#. I18N: This is the country/chapman code for "Turkey"
+#: _countries.php:512
+msgid "TUR"
+msgstr "Törökország"
+
+#. I18N: This is the country/chapman code for "Tuvalu"
+#: _countries.php:514
+msgid "TUV"
+msgstr "Tuvalu"
+
+#. I18N: This is the country/chapman code for "Taiwan"
+#: _countries.php:516
+msgid "TWN"
+msgstr "Tajvan"
+
+#. I18N: This is the country/chapman code for "Tanzania"
+#: _countries.php:518
+msgid "TZA"
+msgstr "Tanzániai Egyesült Köztársaság"
+
+#. I18N: This is the country/chapman code for "Uganda"
+#: _countries.php:520
+msgid "UGA"
+msgstr "Uganda"
+
+#. I18N: This is the country/chapman code for "Ukraine"
+#: _countries.php:522
+msgid "UKR"
+msgstr "Ukrajna"
+
+#. I18N: This is the country/chapman code for "US Minor Outlying Islands"
+#: _countries.php:524
+msgid "UMI"
+msgstr "Egyesült Államok külsõ szigetei"
+
+#. I18N: This is the country/chapman code for "Uruguay"
+#: _countries.php:526
+msgid "URY"
+msgstr "Uruguay"
+
+#. I18N: This is the country/chapman code for "USA"
+#: _countries.php:528
+msgid "USA"
+msgstr "Egyesült Államok"
+
+#. I18N: This is the country/chapman code for "Uzbekistan"
+#: _countries.php:530
+msgid "UZB"
+msgstr "Üzbegisztán"
+
+#. I18N: This is the country/chapman code for "Vatican City"
+#: _countries.php:532
+msgid "VAT"
+msgstr "Vatikán"
+
+#. I18N: This is the country/chapman code for "Saint Vincent and the Grenadines"
+#: _countries.php:534
+msgid "VCT"
+msgstr "Saint Vincent és Grenadines"
+
+#. I18N: This is the country/chapman code for "Venezuela"
+#: _countries.php:536
+msgid "VEN"
+msgstr "Venezuela"
+
+#. I18N: This is the country/chapman code for "British Virgin Islands"
+#: _countries.php:538
+msgid "VGB"
+msgstr "Brit Virgin-szigetek"
+
+#. I18N: This is the country/chapman code for "US Virgin Islands"
+#: _countries.php:540
+msgid "VIR"
+msgstr "Amerikai Virgin-szigetek"
+
+#. I18N: This is the country/chapman code for "Viet Nam"
+#: _countries.php:542
+msgid "VNM"
+msgstr "Vietnám"
+
+#. I18N: This is the country/chapman code for "Vanuatu"
+#: _countries.php:544
+msgid "VUT"
+msgstr "Vanuatu"
+
+#. I18N: This is the country/chapman code for "West Africa"
+#: _countries.php:546
+msgid "WAF"
+msgstr "Nyugat Africa"
+
+#. I18N: This is the country/chapman code for "Wallis and Futuna Islands"
+#: _countries.php:548
+msgid "WLF"
+msgstr "Wallis és Futuna"
+
+#. I18N: This is the country/chapman code for "Wales"
+#: _countries.php:550
+msgid "WLS"
+msgstr "Wales"
+
+#. I18N: This is the country/chapman code for "Samoa"
+#: _countries.php:552
+msgid "WSM"
+msgstr "Szamoa"
+
+#. I18N: This is the country/chapman code for "Yemen"
+#: _countries.php:554
+msgid "YEM"
+msgstr "Jemen"
+
+#. I18N: This is the country/chapman code for "Yugoslavia"
+#: _countries.php:556
+msgid "YUG"
+msgstr "Jugoszlávia"
+
+#. I18N: This is the country/chapman code for "South Africa"
+#: _countries.php:558
+msgid "ZAF"
+msgstr "Dél-Afrika"
+
+#. I18N: This is the country/chapman code for "Zaire"
+#: _countries.php:560
+msgid "ZAR"
+msgstr "Zaire"
+
+#. I18N: This is the country/chapman code for "Zambia"
+#: _countries.php:562
+msgid "ZMB"
+msgstr "Zambia"
+
+#. I18N: This is the country/chapman code for "Zimbabwe"
+#: _countries.php:564
+msgid "ZWE"
+msgstr "Zimbabwe"
+
+#. I18N: This is an abbreviation for the label "Baptism", to be used on genealogy charts
+#: _facts.php:36
+msgid "ABBREV_BAPM"
+msgstr ""
+
+#. I18N: This is an abbreviation for the label "Birth", to be used on genealogy charts
+#: _facts.php:38
+msgid "ABBREV_BIRT"
+msgstr ""
+
+#. I18N: This is an abbreviation for the label "Burial", to be used on genealogy charts
+#: _facts.php:40
+msgid "ABBREV_BURI"
+msgstr ""
+
+#. I18N: This is an abbreviation for the label "Christening", to be used on genealogy charts
+#: _facts.php:42
+msgid "ABBREV_CHR"
+msgstr ""
+
+#. I18N: This is an abbreviation for the label "Death", to be used on genealogy charts
+#: _facts.php:44
+msgid "ABBREV_DEAT"
+msgstr ""
+
+#. I18N: This is an abbreviation for the label "Marriage", to be used on genealogy charts
+#: _facts.php:46
+msgid "ABBREV_MARR"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Abbreviation"
+#: _facts.php:51
+msgid "ABBR"
+msgstr "Rövidítés"
+
+#. I18N: This is the GEDCOM label for "Address"
+#: _facts.php:53
+msgid "ADDR"
+msgstr "Lakcím"
+
+#. I18N: This is the GEDCOM label for "Adoption"
+#: _facts.php:55
+msgid "ADOP"
+msgstr "Örökbefogadás"
+
+#. I18N: This is the GEDCOM label for "Address 1"
+#: _facts.php:57
+msgid "ADR1"
+msgstr "Lakcím 1"
+
+#. I18N: This is the GEDCOM label for "Address 2"
+#: _facts.php:59
+msgid "ADR2"
+msgstr "Lakcím 2"
+
+#. I18N: This is the GEDCOM label for "Ancestral File Number (AFN)"
+#: _facts.php:61
+msgid "AFN"
+msgstr "Ősi Állomány Szám (angol AFN)"
+
+#. I18N: This is the GEDCOM label for "Age"
+#: _facts.php:63
+msgid "AGE"
+msgstr "Életkor"
+
+#. I18N: This is the GEDCOM label for "Agency"
+#: _facts.php:65
+msgid "AGNC"
+msgstr "Képviselet"
+
+#. I18N: This is the GEDCOM label for "Alias"
+#: _facts.php:67
+msgid "ALIA"
+msgstr "Úgyis mint"
+
+#. I18N: This is the GEDCOM label for "Ancestors"
+#: _facts.php:69
+msgid "ANCE"
+msgstr "Ősök"
+
+#. I18N: This is the GEDCOM label for "Ancestors Interest"
+#: _facts.php:71
+msgid "ANCI"
+msgstr "Ősök érdeklődése"
+
+#. I18N: This is the GEDCOM label for "Annulment"
+#: _facts.php:73
+msgid "ANUL"
+msgstr "Házasság felbontása"
+
+#. I18N: This is the GEDCOM label for "Associate"
+#: _facts.php:75
+msgid "ASSO"
+msgstr "Kapcsolódó személyek"
+
+#. I18N: This is the GEDCOM label for "Author"
+#: _facts.php:77
+msgid "AUTH"
+msgstr "Szerző"
+
+#. I18N: This is the GEDCOM label for "LDS Baptism"
+#: _facts.php:79
+msgid "BAPL"
+msgstr "UNSZ-keresztség"
+
+#. I18N: This is the GEDCOM label for "Baptism"
+#: _facts.php:81
+#: ../calendar.php:247
+msgid "BAPM"
+msgstr "Keresztelés"
+
+#. I18N: This is the GEDCOM label for "Baptism Date"
+#: _facts.php:83
+msgid "BAPM:DATE"
+msgstr "Keresztelés dátuma"
+
+#. I18N: This is the GEDCOM label for "Baptism Place"
+#: _facts.php:85
+msgid "BAPM:PLAC"
+msgstr "Keresztelés helye"
+
+#. I18N: This is the GEDCOM label for "Baptism Source"
+#: _facts.php:87
+msgid "BAPM:SOUR"
+msgstr "Keresztelés Forrás"
+
+#. I18N: This is the GEDCOM label for "Bar Mitzvah"
+#: _facts.php:89
+msgid "BARM"
+msgstr "Bar Mitzvah"
+
+#. I18N: This is the GEDCOM label for "Bar Mitzvah Date"
+#: _facts.php:91
+msgid "BARM:DATE"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Bar Mitzvah Place"
+#: _facts.php:93
+msgid "BARM:PLAC"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Bar Mitzvah Source"
+#: _facts.php:95
+msgid "BARM:SOUR"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Bas Mitzvah"
+#: _facts.php:97
+msgid "BASM"
+msgstr "Bas Mitzvah"
+
+#. I18N: This is the GEDCOM label for "Bas Mitzvah Date"
+#: _facts.php:99
+msgid "BASM:DATE"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Bas Mitzvah Place"
+#: _facts.php:101
+msgid "BASM:PLAC"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Bas Mitzvah Source"
+#: _facts.php:103
+msgid "BASM:SOUR"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Birth"
+#: _facts.php:105
+#: ../calendar.php:238
+msgid "BIRT"
+msgstr "Született"
+
+#. I18N: This is the GEDCOM label for "Birth Date"
+#: _facts.php:107
+msgid "BIRT:DATE"
+msgstr "Születési dátum"
+
+#. I18N: This is the GEDCOM label for "Birth Place"
+#: _facts.php:109
+msgid "BIRT:PLAC"
+msgstr "Születési helye"
+
+#. I18N: This is the GEDCOM label for "Birth Source"
+#: _facts.php:111
+msgid "BIRT:SOUR"
+msgstr "Születési Forrás"
+
+#. I18N: This is the GEDCOM label for "Blessing"
+#: _facts.php:113
+msgid "BLES"
+msgstr "Megáldás"
+
+#. I18N: This is the GEDCOM label for "Binary Data Object"
+#: _facts.php:115
+msgid "BLOB"
+msgstr "Bináris adatok"
+
+#. I18N: This is the GEDCOM label for "Burial"
+#: _facts.php:117
+#: ../calendar.php:265
+msgid "BURI"
+msgstr "Temetés"
+
+#. I18N: This is the GEDCOM label for "Burial Date"
+#: _facts.php:119
+msgid "BURI:DATE"
+msgstr "Temetkezés dátuma"
+
+#. I18N: This is the GEDCOM label for "Burial Place"
+#: _facts.php:121
+msgid "BURI:PLAC"
+msgstr "Temetkezés helye"
+
+#. I18N: This is the GEDCOM label for "Burial Source"
+#: _facts.php:123
+msgid "BURI:SOUR"
+msgstr "Temetkezés Forrás"
+
+#. I18N: This is the GEDCOM label for "Call Number"
+#: _facts.php:125
+msgid "CALN"
+msgstr "Gyűjtemény azonosító"
+
+#. I18N: This is the GEDCOM label for "Caste / Social Status"
+#: _facts.php:127
+msgid "CAST"
+msgstr "Szociális/társadalmi státusz"
+
+#. I18N: This is the GEDCOM label for "Cause of an event"
+#: _facts.php:129
+msgid "CAUS"
+msgstr "A halál oka"
+
+#. I18N: This is the GEDCOM label for "Cemetery"
+#: _facts.php:131
+msgid "CEME"
+msgstr "Temető"
+
+#. I18N: This is the GEDCOM label for "Census"
+#: _facts.php:133
+msgid "CENS"
+msgstr "Összeírás"
+
+#. I18N: This is the GEDCOM label for "Last Change"
+#: _facts.php:135
+msgid "CHAN"
+msgstr "Utolsó módosítás"
+
+#. I18N: This is the GEDCOM label for "Character Set"
+#: _facts.php:137
+msgid "CHAR"
+msgstr "Kódkészlet"
+
+#. I18N: This is the GEDCOM label for "Child"
+#: _facts.php:139
+msgid "CHIL"
+msgstr "Gyermek"
+
+#. I18N: This is the GEDCOM label for "Christening"
+#: _facts.php:141
+#: ../calendar.php:241
+msgid "CHR"
+msgstr "Katolikus Keresztelés"
+
+#. I18N: This is the GEDCOM label for "Christening Date"
+#: _facts.php:143
+msgid "CHR:DATE"
+msgstr "Katolikus Keresztelés dátuma"
+
+#. I18N: This is the GEDCOM label for "Christening Place"
+#: _facts.php:145
+msgid "CHR:PLAC"
+msgstr "Katolikus Keresztelés helye"
+
+#. I18N: This is the GEDCOM label for "Christening Source"
+#: _facts.php:147
+msgid "CHR:SOUR"
+msgstr "Katolikus Keresztelés Forrás"
+
+#. I18N: This is the GEDCOM label for "Adult Christening"
+#: _facts.php:149
+#: ../calendar.php:244
+msgid "CHRA"
+msgstr "Felnőtt kori keresztség"
+
+#. I18N: This is the GEDCOM label for "Citizenship"
+#: _facts.php:151
+msgid "CITN"
+msgstr "Állampolgárság"
+
+#. I18N: This is the GEDCOM label for "City"
+#: _facts.php:153
+msgid "CITY"
+msgstr "Város"
+
+#. I18N: This is the GEDCOM label for "Comment"
+#: _facts.php:155
+msgid "COMM"
+msgstr "Megjegyzés"
+
+#. I18N: This is the GEDCOM label for "Confirmation"
+#: _facts.php:157
+msgid "CONF"
+msgstr "Konfirmáció"
+
+#. I18N: This is the GEDCOM label for "Confirmation Date"
+#: _facts.php:159
+msgid "CONF:DATE"
+msgstr "Konfirmáció dátuma"
+
+#. I18N: This is the GEDCOM label for "Confirmation Place"
+#: _facts.php:161
+msgid "CONF:PLAC"
+msgstr "Konfirmáció helye"
+
+#. I18N: This is the GEDCOM label for "Confirmation Source"
+#: _facts.php:163
+msgid "CONF:SOUR"
+msgstr "Konfirmáció Forrás"
+
+#. I18N: This is the GEDCOM label for "LDS Confirmation"
+#: _facts.php:165
+msgid "CONL"
+msgstr "UNSZ-konfirmáció"
+
+#. I18N: This is the GEDCOM label for "Copyright"
+#: _facts.php:167
+msgid "COPR"
+msgstr "Copyright"
+
+#. I18N: This is the GEDCOM label for "Corporation / Company"
+#: _facts.php:169
+msgid "CORP"
+msgstr "Vállalat/Intézmény"
+
+#. I18N: This is the GEDCOM label for "Cremation"
+#: _facts.php:171
+msgid "CREM"
+msgstr "Hamvasztás"
+
+#. I18N: This is the GEDCOM label for "Country"
+#: _facts.php:173
+msgid "CTRY"
+msgstr "Ország"
+
+#. I18N: This is the GEDCOM label for "Data"
+#: _facts.php:175
+msgid "DATA"
+msgstr "Adat"
+
+#. I18N: This is the GEDCOM label for "Date of entry in original source"
+#: _facts.php:177
+msgid "DATA:DATE"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Date"
+#: _facts.php:179
+msgid "DATE"
+msgstr "Dátum"
+
+#. I18N: This is the GEDCOM label for "Death"
+#: _facts.php:181
+#: ../calendar.php:262
+msgid "DEAT"
+msgstr "Elhunyt"
+
+#. I18N: This is the GEDCOM label for "Death Date"
+#: _facts.php:183
+msgid "DEAT:DATE"
+msgstr "Halálesetének dátuma"
+
+#. I18N: This is the GEDCOM label for "Death Place"
+#: _facts.php:185
+msgid "DEAT:PLAC"
+msgstr "Halálesetének helye"
+
+#. I18N: This is the GEDCOM label for "Death Source"
+#: _facts.php:187
+msgid "DEAT:SOUR"
+msgstr "Haláleset Forrás"
+
+#. I18N: This is the GEDCOM label for "Descendants"
+#: _facts.php:189
+msgid "DESC"
+msgstr "Leszármazottak"
+
+#. I18N: This is the GEDCOM label for "Descendants Interest"
+#: _facts.php:191
+msgid "DESI"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Destination"
+#: _facts.php:193
+msgid "DEST"
+msgstr "Cél"
+
+#. I18N: This is the GEDCOM label for "Divorce"
+#: _facts.php:195
+#: ../calendar.php:259
+msgid "DIV"
+msgstr "Válás"
+
+#. I18N: This is the GEDCOM label for "Divorce filed"
+#: _facts.php:197
+msgid "DIVF"
+msgstr "Válási akta"
+
+#. I18N: This is the GEDCOM label for "Description"
+#: _facts.php:199
+msgid "DSCR"
+msgstr "Leírás"
+
+#. I18N: This is the GEDCOM label for "Education"
+#: _facts.php:201
+msgid "EDUC"
+msgstr "Végzettség"
+
+#. I18N: This is the GEDCOM label for "Email Address"
+#: _facts.php:203
+msgid "EMAIL"
+msgstr "Email-cím"
+
+#. I18N: This is the GEDCOM label for "Email Address"
+#: _facts.php:205
+msgid "EMAL"
+msgstr "Email cím"
+
+#. I18N: This is the GEDCOM label for "Emigration"
+#: _facts.php:207
+#: ../calendar.php:271
+msgid "EMIG"
+msgstr "Kivándorlás"
+
+#. I18N: This is the GEDCOM label for "LDS Endowment"
+#: _facts.php:209
+msgid "ENDL"
+msgstr "UNSZ-szertartás (Endowment)"
+
+#. I18N: This is the GEDCOM label for "Engagement"
+#: _facts.php:211
+msgid "ENGA"
+msgstr "Eljegyzés"
+
+#. I18N: This is the GEDCOM label for "Engagement Date"
+#: _facts.php:213
+msgid "ENGA:DATE"
+msgstr "Eljegyzés dátuma"
+
+#. I18N: This is the GEDCOM label for "Engagement Place"
+#: _facts.php:215
+msgid "ENGA:PLAC"
+msgstr "Eljegyzés helye"
+
+#. I18N: This is the GEDCOM label for "Engagement Source"
+#: _facts.php:217
+msgid "ENGA:SOUR"
+msgstr "Eljegyzés Forrás"
+
+#. I18N: This is the GEDCOM label for "Event"
+#: _facts.php:219
+msgid "EVEN"
+msgstr "Esemény"
+
+#. I18N: This is the GEDCOM label for "Fact"
+#: _facts.php:221
+msgid "FACT"
+msgstr "Tény"
+
+#. I18N: This is the GEDCOM label for "Family"
+#: _facts.php:223
+msgid "FAM"
+msgstr "Család"
+
+#. I18N: This is the GEDCOM label for "Family as a Child"
+#: _facts.php:225
+msgid "FAMC"
+msgstr "Családtagok (gyermekként)"
+
+#. I18N: This is the GEDCOM label for "Father's Birthplace"
+#: _facts.php:227
+msgid "FAMC:HUSB:BIRT:PLAC"
+msgstr "Apa születési helye"
+
+#. I18N: This is the GEDCOM label for "Paternal Grandfather's Given Name"
+#: _facts.php:229
+msgid "FAMC:HUSB:FAMC:HUSB:GIVN"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Paternal Grandmother's Given Name"
+#: _facts.php:231
+msgid "FAMC:HUSB:FAMC:WIFE:GIVN"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Father's Given Name"
+#: _facts.php:233
+msgid "FAMC:HUSB:GIVN"
+msgstr "Apa keresztneve"
+
+#. I18N: This is the GEDCOM label for "Father's Occupation"
+#: _facts.php:235
+msgid "FAMC:HUSB:OCCU"
+msgstr "Apa foglalkozása"
+
+#. I18N: This is the GEDCOM label for "Father's Surname"
+#: _facts.php:237
+msgid "FAMC:HUSB:SURN"
+msgstr "Apa vezetékneve"
+
+#. I18N: This is the GEDCOM label for "Parents' Marriage Place"
+#: _facts.php:239
+msgid "FAMC:MARR:PLAC"
+msgstr "Szülők házasságkötésének helye"
+
+#. I18N: This is the GEDCOM label for "Mother's Birthplace"
+#: _facts.php:241
+msgid "FAMC:WIFE:BIRT:PLAC"
+msgstr "Anya születési helye"
+
+#. I18N: This is the GEDCOM label for "Maternal Grandfather's Given Name"
+#: _facts.php:243
+msgid "FAMC:WIFE:FAMC:HUSB:GIVN"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Maternal Grandmother's Given Name"
+#: _facts.php:245
+msgid "FAMC:WIFE:FAMC:WIFE:GIVN"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Mother's Given Name"
+#: _facts.php:247
+msgid "FAMC:WIFE:GIVN"
+msgstr "Anya keresztneve"
+
+#. I18N: This is the GEDCOM label for "Mother's Surname"
+#: _facts.php:249
+msgid "FAMC:WIFE:SURN"
+msgstr "Anya vezetékneve"
+
+#. I18N: This is the GEDCOM label for "Family File"
+#: _facts.php:251
+msgid "FAMF"
+msgstr "UNSZ családi akta"
+
+#. I18N: This is the GEDCOM label for "Family as a Spouse"
+#: _facts.php:253
+msgid "FAMS"
+msgstr "Családtagok (házastársként)"
+
+#. I18N: This is the GEDCOM label for "Spouse Census Date"
+#: _facts.php:255
+msgid "FAMS:CENS:DATE"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Spouse Census Place"
+#: _facts.php:257
+msgid "FAMS:CENS:PLAC"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Child's Birth Place"
+#: _facts.php:259
+msgid "FAMS:CHIL:BIRT:PLAC"
+msgstr "Gyermek születési hely"
+
+#. I18N: This is the GEDCOM label for "Spouse Divorce Date"
+#: _facts.php:261
+msgid "FAMS:DIV:DATE"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Spouse Divorce Place"
+#: _facts.php:263
+msgid "FAMS:DIV:PLAC"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Date"
+#: _facts.php:265
+msgid "FAMS:MARR:DATE"
+msgstr "Házasságkötés dátuma"
+
+#. I18N: This is the GEDCOM label for "Marriage Place"
+#: _facts.php:267
+msgid "FAMS:MARR:PLAC"
+msgstr "Házasságkötés helye"
+
+#. I18N: This is the GEDCOM label for "Spouse Note"
+#: _facts.php:269
+msgid "FAMS:NOTE"
+msgstr "Házastárs jegyzet"
+
+#. I18N: This is the GEDCOM label for "LDS Spouse Sealing Date"
+#: _facts.php:271
+msgid "FAMS:SLGS:DATE"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "LDS Spouse Sealing Place"
+#: _facts.php:273
+msgid "FAMS:SLGS:PLAC"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "LDS Spouse Sealing Temple"
+#: _facts.php:275
+msgid "FAMS:SLGS:TEMP"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Spouse's Birth Place"
+#: _facts.php:277
+msgid "FAMS:SPOUSE:BIRT:PLAC"
+msgstr "Házastárs születési helye"
+
+#. I18N: This is the GEDCOM label for "Spouse's Death Place"
+#: _facts.php:279
+msgid "FAMS:SPOUSE:DEAT:PLAC"
+msgstr "Házastárs halálának helye"
+
+#. I18N: This is the GEDCOM label for "FAX"
+#: _facts.php:281
+msgid "FAX"
+msgstr "Fax"
+
+#. I18N: This is the GEDCOM label for "First Communion"
+#: _facts.php:283
+msgid "FCOM"
+msgstr "Elsőáldozás"
+
+#. I18N: This is the GEDCOM label for "First Communion Date"
+#: _facts.php:285
+msgid "FCOM:DATE"
+msgstr "Elsőáldozás dátuma"
+
+#. I18N: This is the GEDCOM label for "First Communion Place"
+#: _facts.php:287
+msgid "FCOM:PLAC"
+msgstr "Elsőáldozás helye"
+
+#. I18N: This is the GEDCOM label for "First Communion Source"
+#: _facts.php:289
+msgid "FCOM:SOUR"
+msgstr "Elsőáldozás Forrás"
+
+#. I18N: This is the GEDCOM label for "External File"
+#: _facts.php:291
+msgid "FILE"
+msgstr "Külső adatállomány"
+
+#. I18N: This is the GEDCOM label for "Phonetic"
+#: _facts.php:293
+msgid "FONE"
+msgstr "Fonetikus"
+
+#. I18N: This is the GEDCOM label for "Format"
+#: _facts.php:295
+msgid "FORM"
+msgstr "Formátum"
+
+#. I18N: This is the GEDCOM label for "Given Names"
+#: _facts.php:297
+msgid "GIVN"
+msgstr "Keresztnév"
+
+#. I18N: This is the GEDCOM label for "Graduation"
+#: _facts.php:299
+msgid "GRAD"
+msgstr "Felsőfokú végzettség"
+
+#. I18N: This is the GEDCOM label for "Husband"
+#: _facts.php:301
+msgid "HUSB"
+msgstr "Férj"
+
+#. I18N: This is the GEDCOM label for "Identification Number"
+#: _facts.php:303
+msgid "IDNO"
+msgstr "Azonosítószám"
+
+#. I18N: This is the GEDCOM label for "Immigration"
+#: _facts.php:305
+#: ../calendar.php:268
+msgid "IMMI"
+msgstr "Bevándorlás"
+
+#. I18N: This is the GEDCOM label for "Latitude"
+#: _facts.php:307
+msgid "LATI"
+msgstr "Szélességi fok"
+
+#. I18N: This is the GEDCOM label for "Legatee"
+#: _facts.php:309
+msgid "LEGA"
+msgstr "Végrendeleti örökös"
+
+#. I18N: This is the GEDCOM label for "Longitude"
+#: _facts.php:311
+msgid "LONG"
+msgstr "Hosszúsági fok"
+
+#. I18N: This is the GEDCOM label for "Map"
+#: _facts.php:313
+msgid "MAP"
+msgstr "Térkép"
+
+#. I18N: This is the GEDCOM label for "Marriage Banns"
+#: _facts.php:315
+msgid "MARB"
+msgstr "Eljegyzés kihirdetése"
+
+#. I18N: This is the GEDCOM label for "Marriage Banns Date"
+#: _facts.php:317
+msgid "MARB:DATE"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Banns Place"
+#: _facts.php:319
+msgid "MARB:PLAC"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Banns Source"
+#: _facts.php:321
+msgid "MARB:SOUR"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Contract"
+#: _facts.php:323
+msgid "MARC"
+msgstr "Házassági szerződés"
+
+#. I18N: This is the GEDCOM label for "Marriage Licence"
+#: _facts.php:325
+msgid "MARL"
+msgstr "Házassági engedély"
+
+#. I18N: This is the GEDCOM label for "Marriage"
+#: _facts.php:327
 #: ../branches.php:32
 #: ../calendar.php:253
 msgid "MARR"
 msgstr "Házasság"
 
+#. I18N: This is the GEDCOM label for "Marriage Date"
+#: _facts.php:329
+msgid "MARR:DATE"
+msgstr "Házasságkötés dátuma"
+
+#. I18N: This is the GEDCOM label for "Marriage Place"
+#: _facts.php:331
+msgid "MARR:PLAC"
+msgstr "Házasságkötés helye"
+
+#. I18N: This is the GEDCOM label for "Marriage Source"
+#: _facts.php:333
+msgid "MARR:SOUR"
+msgstr "Házasságkötés Forrás"
+
+#. I18N: This is the GEDCOM label for "Civil Marriage"
+#: _facts.php:335
+msgid "MARR_CIVIL"
+msgstr "Polgári esküvő"
+
+#. I18N: This is the GEDCOM label for "Registered Partnership"
+#: _facts.php:337
+msgid "MARR_PARTNERS"
+msgstr "Élettársi kapcsolat"
+
+#. I18N: This is the GEDCOM label for "Religious Marriage"
+#: _facts.php:339
+msgid "MARR_RELIGIOUS"
+msgstr "Egyházi esküvő"
+
+#. I18N: This is the GEDCOM label for "Marriage Type unknown"
+#: _facts.php:341
+msgid "MARR_UNKNOWN"
+msgstr "Házassági típus nem ismert"
+
+#. I18N: This is the GEDCOM label for "Marriage Settlement"
+#: _facts.php:343
+msgid "MARS"
+msgstr "Házasság előtti szerződés"
+
+#. I18N: This is the GEDCOM label for "Media Type"
+#: _facts.php:345
+msgid "MEDI"
+msgstr "Médiatípus"
+
+#. I18N: This is the GEDCOM label for "Name"
+#: _facts.php:347
+msgid "NAME"
+msgstr "Név"
+
+#. I18N: This is the GEDCOM label for "Phonetic Name"
+#: _facts.php:349
+msgid "NAME:FONE"
+msgstr "Fonetikus neve"
+
+#. I18N: This is the GEDCOM label for "Romanized Name"
+#: _facts.php:351
+msgid "NAME:ROMN"
+msgstr "Katolizált neve"
+
+#. I18N: This is the GEDCOM label for "Name in Hebrew"
+#: _facts.php:353
+msgid "NAME:_HEB"
+msgstr "Héber neve"
+
+#. I18N: This is the GEDCOM label for "Nationality"
+#: _facts.php:355
+msgid "NATI"
+msgstr "Nemzetiség"
+
+#. I18N: This is the GEDCOM label for "Naturalization"
+#: _facts.php:357
+msgid "NATU"
+msgstr "Honosítás"
+
+#. I18N: This is the GEDCOM label for "Number of Children"
+#: _facts.php:359
+msgid "NCHI"
+msgstr "Gyermekek száma"
+
+#. I18N: This is the GEDCOM label for "Nickname"
+#: _facts.php:361
+msgid "NICK"
+msgstr "Becenév"
+
+#. I18N: This is the GEDCOM label for "Number of Marriages"
+#: _facts.php:363
+msgid "NMR"
+msgstr "Házasságkötések száma"
+
+#. I18N: This is the GEDCOM label for "Note"
+#: _facts.php:365
+msgid "NOTE"
+msgstr "Jegyzet"
+
+#. I18N: This is the GEDCOM label for "Prefix"
+#: _facts.php:367
+msgid "NPFX"
+msgstr "Előtag"
+
+#. I18N: This is the GEDCOM label for "Suffix"
+#: _facts.php:369
+msgid "NSFX"
+msgstr "Utótag"
+
+#. I18N: This is the GEDCOM label for "Multimedia Object"
+#: _facts.php:371
+msgid "OBJE"
+msgstr "Multimédia-elem"
+
+#. I18N: This is the GEDCOM label for "Occupation"
+#: _facts.php:373
+msgid "OCCU"
+msgstr "Foglalkozás"
+
+#. I18N: This is the GEDCOM label for "Ordinance"
+#: _facts.php:375
+msgid "ORDI"
+msgstr "UNSZ-szertartás"
+
+#. I18N: This is the GEDCOM label for "Ordination"
+#: _facts.php:377
+msgid "ORDN"
+msgstr "Pappá szentelés"
+
+#. I18N: This is the GEDCOM label for "Citation Details"
+#: _facts.php:379
+msgid "PAGE"
+msgstr "Hivatkozás"
+
+#. I18N: This is the GEDCOM label for "Pedigree"
+#: _facts.php:381
+msgid "PEDI"
+msgstr "Felmenő rokonság"
+
+#. I18N: This is the GEDCOM label for "Phone"
+#: _facts.php:383
+msgid "PHON"
+msgstr "Telefon"
+
+#. I18N: This is the GEDCOM label for "Place"
+#: _facts.php:385
+msgid "PLAC"
+msgstr "Helyszín"
+
+#. I18N: This is the GEDCOM label for "Phonetic Place"
+#: _facts.php:387
+msgid "PLAC:FONE"
+msgstr "Fonetikus helység"
+
+#. I18N: This is the GEDCOM label for "Romanized Place"
+#: _facts.php:389
+msgid "PLAC:ROMN"
+msgstr "Katolizált helység"
+
+#. I18N: This is the GEDCOM label for "Place in Hebrew"
+#: _facts.php:391
+msgid "PLAC:_HEB"
+msgstr "Héber helység"
+
+#. I18N: This is the GEDCOM label for "Postal Code"
+#: _facts.php:393
+msgid "POST"
+msgstr "Irányítószám"
+
+#. I18N: This is the GEDCOM label for "Probate"
+#: _facts.php:395
+msgid "PROB"
+msgstr "Végrendelet hitelesítése"
+
+#. I18N: This is the GEDCOM label for "Property"
+#: _facts.php:397
+msgid "PROP"
+msgstr "Tulajdon"
+
+#. I18N: This is the GEDCOM label for "Publication"
+#: _facts.php:399
+msgid "PUBL"
+msgstr "Publikáció"
+
+#. I18N: This is the GEDCOM label for "Quality of Data"
+#: _facts.php:401
+msgid "QUAY"
+msgstr "Adat-megbízhatóság"
+
+#. I18N: This is the GEDCOM label for "Reference Number"
+#: _facts.php:403
+msgid "REFN"
+msgstr "Hivatkozási szám"
+
+#. I18N: This is the GEDCOM label for "Relationship"
+#: _facts.php:405
+msgid "RELA"
+msgstr "Kapcsolat"
+
+#. I18N: This is the GEDCOM label for "Religion"
+#: _facts.php:407
+msgid "RELI"
+msgstr "Vallás"
+
+#. I18N: This is the GEDCOM label for "Repository"
+#: _facts.php:409
+msgid "REPO"
+msgstr "Szervezet"
+
+#. I18N: This is the GEDCOM label for "Residence"
+#: _facts.php:411
+msgid "RESI"
+msgstr "Lakhely"
+
+#. I18N: This is the GEDCOM label for "Restriction"
+#: _facts.php:413
+msgid "RESN"
+msgstr "Korlátozás"
+
+#. I18N: This is the GEDCOM label for "Retirement"
+#: _facts.php:415
+msgid "RETI"
+msgstr "Nyugdíjazás"
+
+#. I18N: This is the GEDCOM label for "Record File Number"
+#: _facts.php:417
+msgid "RFN"
+msgstr "Adat állomány-azonosító"
+
+#. I18N: This is the GEDCOM label for "Record ID Number"
+#: _facts.php:419
+msgid "RIN"
+msgstr "Adat azonosítószáma"
+
+#. I18N: This is the GEDCOM label for "Role"
+#: _facts.php:421
+msgid "ROLE"
+msgstr "Szerep"
+
+#. I18N: This is the GEDCOM label for "Romanized"
+#: _facts.php:423
+msgid "ROMN"
+msgstr "Katolizált"
+
+#. I18N: This is the GEDCOM label for "Remote Server"
+#: _facts.php:425
+msgid "SERV"
+msgstr "Távoli szerver"
+
+#. I18N: This is the GEDCOM label for "Gender"
+#: _facts.php:427
+msgid "SEX"
+msgstr "Neme"
+
+#. I18N: This is the GEDCOM label for "Shared Note"
+#: _facts.php:429
+msgid "SHARED_NOTE"
+msgstr "Közös jegyzetek"
+
+#. I18N: This is the GEDCOM label for "LDS Child Sealing"
+#: _facts.php:431
+msgid "SLGC"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "LDS Spouse Sealing"
+#: _facts.php:433
+msgid "SLGS"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Source"
+#: _facts.php:435
+msgid "SOUR"
+msgstr "Forrás"
+
+#. I18N: This is the GEDCOM label for "Surname Prefix"
+#: _facts.php:437
+msgid "SPFX"
+msgstr "Vezetéknév előtagja"
+
+#. I18N: This is the GEDCOM label for "Social Security Number"
+#: _facts.php:439
+msgid "SSN"
+msgstr "Társadalombiztosítási azonosító"
+
+#. I18N: This is the GEDCOM label for "State"
+#: _facts.php:441
+msgid "STAE"
+msgstr "Állam"
+
+#. I18N: This is the GEDCOM label for "Status"
+#: _facts.php:443
+msgid "STAT"
+msgstr "Státusz"
+
+#. I18N: This is the GEDCOM label for "Status Change Date"
+#: _facts.php:445
+msgid "STAT:DATE"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Submitter"
+#: _facts.php:447
+msgid "SUBM"
+msgstr "Adatszolgáltató"
+
+#. I18N: This is the GEDCOM label for "Submission"
+#: _facts.php:449
+msgid "SUBN"
+msgstr "Beadvány"
+
+#. I18N: This is the GEDCOM label for "Surname"
+#: _facts.php:451
 #: ../branches.php:70
 msgid "SURN"
 msgstr "Vezetéknév"
 
-#: ../calendar.php:238
-msgid "BIRT"
-msgstr "Született"
+#. I18N: This is the GEDCOM label for "Temple"
+#: _facts.php:453
+msgid "TEMP"
+msgstr "Templom"
 
-#: ../calendar.php:241
-msgid "CHR"
-msgstr "Katolikus Keresztelés"
+#. I18N: This is the GEDCOM label for "Text"
+#: _facts.php:455
+msgid "TEXT"
+msgstr "Szöveg"
 
-#: ../calendar.php:244
-msgid "CHRA"
-msgstr "Felnőtt kori keresztség"
+#. I18N: This is the GEDCOM label for "Time"
+#: _facts.php:457
+msgid "TIME"
+msgstr "Idő"
 
-#: ../calendar.php:247
-msgid "BAPM"
-msgstr "Keresztelés"
+#. I18N: This is the GEDCOM label for "Title"
+#: _facts.php:459
+msgid "TITL"
+msgstr "Cím"
 
+#. I18N: This is the GEDCOM label for "Phonetic Title"
+#: _facts.php:461
+msgid "TITL:FONE"
+msgstr "Fonetikus Címe"
+
+#. I18N: This is the GEDCOM label for "Romanized Title"
+#: _facts.php:463
+msgid "TITL:ROMN"
+msgstr "Katolizált Címe"
+
+#. I18N: This is the GEDCOM label for "Title in Hebrew"
+#: _facts.php:465
+msgid "TITL:_HEB"
+msgstr "Héber Címe"
+
+#. I18N: This is the GEDCOM label for "Type"
+#: _facts.php:467
+msgid "TYPE"
+msgstr "Típus"
+
+#. I18N: This is the GEDCOM label for "Web URL"
+#: _facts.php:469
+msgid "URL"
+msgstr "Webcím"
+
+#. I18N: This is the GEDCOM label for "Wife"
+#: _facts.php:471
+msgid "WIFE"
+msgstr "Feleség"
+
+#. I18N: This is the GEDCOM label for "Will"
+#: _facts.php:473
+msgid "WILL"
+msgstr "Végrendelet"
+
+#. I18N: This is the GEDCOM label for "Web Home Page"
+#: _facts.php:475
+msgid "WWW"
+msgstr "Honlap"
+
+#. I18N: This is the GEDCOM label for "Adoption of a child"
+#: _facts.php:477
+msgid "_ADOP_CHIL"
+msgstr "Gyermek örökbefogadása"
+
+#. I18N: This is the GEDCOM label for "Adoption of a first cousin"
+#: _facts.php:479
+msgid "_ADOP_COUS"
+msgstr "Első unokatestvér örökbefogadása"
+
+#. I18N: This is the GEDCOM label for "Adoption of father's sibling"
+#: _facts.php:481
+msgid "_ADOP_FSIB"
+msgstr "Apa testvérének örökbefogadása"
+
+#. I18N: This is the GEDCOM label for "Adoption of a grandchild"
+#: _facts.php:483
+msgid "_ADOP_GCHI"
+msgstr "Unoka örökbefogadása"
+
+#. I18N: This is the GEDCOM label for "Adoption of a great-grandchild"
+#: _facts.php:485
+msgid "_ADOP_GGCH"
+msgstr "Dédunoka örökbefogadása"
+
+#. I18N: This is the GEDCOM label for "Adoption of half-sibling"
+#: _facts.php:487
+msgid "_ADOP_HSIB"
+msgstr "Féltestvér örökbefogadása"
+
+#. I18N: This is the GEDCOM label for "Adoption of mother's sibling"
+#: _facts.php:489
+msgid "_ADOP_MSIB"
+msgstr "Anya testvérének örökbefogadása"
+
+#. I18N: This is the GEDCOM label for "Adoption of a nephew or niece"
+#: _facts.php:491
+msgid "_ADOP_NEPH"
+msgstr "Unokaöcs vagy unokahúg örökbefogadása"
+
+#. I18N: This is the GEDCOM label for "Adoption of sibling"
+#: _facts.php:493
+msgid "_ADOP_SIBL"
+msgstr "Testvér örökbefogadása"
+
+#. I18N: This is the GEDCOM label for "Adopted by Father"
+#: _facts.php:495
+msgid "_ADPF"
+msgstr "Az apa örökbefogadta"
+
+#. I18N: This is the GEDCOM label for "Adopted by Mother"
+#: _facts.php:497
+msgid "_ADPM"
+msgstr "Az anya örökbefogadta"
+
+#. I18N: This is the GEDCOM label for "Also known as"
+#: _facts.php:499
+msgid "_AKA"
+msgstr "Úgyis mint"
+
+#. I18N: This is the GEDCOM label for "Also known as"
+#: _facts.php:501
+msgid "_AKAN"
+msgstr "Úgyis mint"
+
+#. I18N: This is the GEDCOM label for "Baptism of a child"
+#: _facts.php:503
+msgid "_BAPM_CHIL"
+msgstr "Gyermek keresztelése"
+
+#. I18N: This is the GEDCOM label for "Baptism of a first cousin"
+#: _facts.php:505
+msgid "_BAPM_COUS"
+msgstr "Első unokatestvér keresztelése"
+
+#. I18N: This is the GEDCOM label for "Baptism of father's sibling"
+#: _facts.php:507
+msgid "_BAPM_FSIB"
+msgstr "Apa testvérének keresztelése"
+
+#. I18N: This is the GEDCOM label for "Baptism of a grandchild"
+#: _facts.php:509
+msgid "_BAPM_GCHI"
+msgstr "Unoka keresztelése"
+
+#. I18N: This is the GEDCOM label for "Baptism of a great-grandchild"
+#: _facts.php:511
+msgid "_BAPM_GGCH"
+msgstr "Dédunoka keresztelése"
+
+#. I18N: This is the GEDCOM label for "Baptism of half-sibling"
+#: _facts.php:513
+msgid "_BAPM_HSIB"
+msgstr "Féltestvér keresztelése"
+
+#. I18N: This is the GEDCOM label for "Baptism of mother's sibling"
+#: _facts.php:515
+msgid "_BAPM_MSIB"
+msgstr "Anya testvérének keresztelése"
+
+#. I18N: This is the GEDCOM label for "Baptism of a nephew or niece"
+#: _facts.php:517
+msgid "_BAPM_NEPH"
+msgstr "Unokaöcs vagy unokahúg keresztelése"
+
+#. I18N: This is the GEDCOM label for "Baptism of sibling"
+#: _facts.php:519
+msgid "_BAPM_SIBL"
+msgstr "Testvér keresztelése"
+
+#. I18N: This is the GEDCOM label for "Bibliography"
+#: _facts.php:521
+msgid "_BIBL"
+msgstr "Irodalomjegyzék"
+
+#. I18N: This is the GEDCOM label for "Birth of a child"
+#: _facts.php:523
+msgid "_BIRT_CHIL"
+msgstr "Gyermek születése"
+
+#. I18N: This is the GEDCOM label for "Birth of a first cousin"
+#: _facts.php:525
+msgid "_BIRT_COUS"
+msgstr "Első unokatestvér születése"
+
+#. I18N: This is the GEDCOM label for "Birth of father's sibling"
+#: _facts.php:527
+msgid "_BIRT_FSIB"
+msgstr "Apa testvérének születése"
+
+#. I18N: This is the GEDCOM label for "Birth of a grandchild"
+#: _facts.php:529
+msgid "_BIRT_GCHI"
+msgstr "Unoka születése"
+
+#. I18N: This is the GEDCOM label for "Birth of a great-grandchild"
+#: _facts.php:531
+msgid "_BIRT_GGCH"
+msgstr "Dédunoka születése"
+
+#. I18N: This is the GEDCOM label for "Birth of half-sibling"
+#: _facts.php:533
+msgid "_BIRT_HSIB"
+msgstr "Féltestvér születése"
+
+#. I18N: This is the GEDCOM label for "Birth of mother's sibling"
+#: _facts.php:535
+msgid "_BIRT_MSIB"
+msgstr "Anya testvérének születése"
+
+#. I18N: This is the GEDCOM label for "Birth of a nephew or niece"
+#: _facts.php:537
+msgid "_BIRT_NEPH"
+msgstr "Unokaöcs vagy unokahúg születése"
+
+#. I18N: This is the GEDCOM label for "Birth of sibling"
+#: _facts.php:539
+msgid "_BIRT_SIBL"
+msgstr "Testvér születése"
+
+#. I18N: This is the GEDCOM label for "Brit Mila"
+#: _facts.php:541
+msgid "_BRTM"
+msgstr "Körülmetélés"
+
+#. I18N: This is the GEDCOM label for "Brit Mila Date"
+#: _facts.php:543
+msgid "_BRTM:DATE"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Brit Mila Place"
+#: _facts.php:545
+msgid "_BRTM:PLAC"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Brit Mila Source"
+#: _facts.php:547
+msgid "_BRTM:SOUR"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Burial of a child"
+#: _facts.php:549
+msgid "_BURI_CHIL"
+msgstr "Gyermek temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of a first cousin"
+#: _facts.php:551
+msgid "_BURI_COUS"
+msgstr "Első unokatestvér temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of father"
+#: _facts.php:553
+msgid "_BURI_FATH"
+msgstr "Apa temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of father's sibling"
+#: _facts.php:555
+msgid "_BURI_FSIB"
+msgstr "Apa testvérének temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of a grandchild"
+#: _facts.php:557
+msgid "_BURI_GCHI"
+msgstr "Unoka temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of a great-grandchild"
+#: _facts.php:559
+msgid "_BURI_GGCH"
+msgstr "Dédunoka temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of a great-grand-parent"
+#: _facts.php:561
+msgid "_BURI_GGPA"
+msgstr "Dédnagyszülő temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of a grand-parent"
+#: _facts.php:563
+msgid "_BURI_GPAR"
+msgstr "Nagyszülő temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of half-sibling"
+#: _facts.php:565
+msgid "_BURI_HSIB"
+msgstr "Féltestvér temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of mother"
+#: _facts.php:567
+msgid "_BURI_MOTH"
+msgstr "Anya temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of mother's sibling"
+#: _facts.php:569
+msgid "_BURI_MSIB"
+msgstr "Anya testvérének temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of a nephew or niece"
+#: _facts.php:571
+msgid "_BURI_NEPH"
+msgstr "Unokaöcs vagy unokahúg temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of sibling"
+#: _facts.php:573
+msgid "_BURI_SIBL"
+msgstr "Testvér temetése"
+
+#. I18N: This is the GEDCOM label for "Burial of spouse"
+#: _facts.php:575
+msgid "_BURI_SPOU"
+msgstr "Házastárs temetése"
+
+#. I18N: This is the GEDCOM label for "Christening of a child"
+#: _facts.php:577
+msgid "_CHR_CHIL"
+msgstr "Gyermek katolikus keresztelése"
+
+#. I18N: This is the GEDCOM label for "Christening of a first cousin"
+#: _facts.php:579
+msgid "_CHR_COUS"
+msgstr "Első unokatestvér katolikus keresztelése"
+
+#. I18N: This is the GEDCOM label for "Christening of father's sibling"
+#: _facts.php:581
+msgid "_CHR_FSIB"
+msgstr "Apa testvérének katolikus keresztelése"
+
+#. I18N: This is the GEDCOM label for "Christening of a grandchild"
+#: _facts.php:583
+msgid "_CHR_GCHI"
+msgstr "Unoka katolikus keresztelése"
+
+#. I18N: This is the GEDCOM label for "Christening of a great-grandchild"
+#: _facts.php:585
+msgid "_CHR_GGCH"
+msgstr "Dédunoka katolikus keresztelése"
+
+#. I18N: This is the GEDCOM label for "Christening of half-sibling"
+#: _facts.php:587
+msgid "_CHR_HSIB"
+msgstr "Féltestvér katolikus keresztelése"
+
+#. I18N: This is the GEDCOM label for "Christening of mother's sibling"
+#: _facts.php:589
+msgid "_CHR_MSIB"
+msgstr "Anya testvérének katolikus keresztelése"
+
+#. I18N: This is the GEDCOM label for "Christening of a nephew or niece"
+#: _facts.php:591
+msgid "_CHR_NEPH"
+msgstr "Unokaöcs vagy unokahúg katolikus keresztelése"
+
+#. I18N: This is the GEDCOM label for "Christening of sibling"
+#: _facts.php:593
+msgid "_CHR_SIBL"
+msgstr "Testvér katolikus keresztelése"
+
+#. I18N: This is the GEDCOM label for "Common Law Marriage"
+#: _facts.php:595
 #: ../calendar.php:250
 msgid "_COML"
 msgstr "Általános polgári házasság"
 
+#. I18N: This is the GEDCOM label for "Cremation of a child"
+#: _facts.php:597
+msgid "_CREM_CHIL"
+msgstr "Gyermek hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of a first cousin"
+#: _facts.php:599
+msgid "_CREM_COUS"
+msgstr "Első unokatestvér hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of father"
+#: _facts.php:601
+msgid "_CREM_FATH"
+msgstr "Apa hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of father's sibling"
+#: _facts.php:603
+msgid "_CREM_FSIB"
+msgstr "Apa testvérének hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of a grandchild"
+#: _facts.php:605
+msgid "_CREM_GCHI"
+msgstr "Unoka hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of a great-grandchild"
+#: _facts.php:607
+msgid "_CREM_GGCH"
+msgstr "Dédunoka hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of a great-grand-parent"
+#: _facts.php:609
+msgid "_CREM_GGPA"
+msgstr "Dédnagyszülő hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of a grand-parent"
+#: _facts.php:611
+msgid "_CREM_GPAR"
+msgstr "Nagyszülő hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of half-sibling"
+#: _facts.php:613
+msgid "_CREM_HSIB"
+msgstr "Féltestvér hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of mother"
+#: _facts.php:615
+msgid "_CREM_MOTH"
+msgstr "Anya hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of mother's sibling"
+#: _facts.php:617
+msgid "_CREM_MSIB"
+msgstr "Anya testvérének hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of a nephew or niece"
+#: _facts.php:619
+msgid "_CREM_NEPH"
+msgstr "Unokaöcs vagy unokahúg hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of sibling"
+#: _facts.php:621
+msgid "_CREM_SIBL"
+msgstr "Testvér hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Cremation of spouse"
+#: _facts.php:623
+msgid "_CREM_SPOU"
+msgstr "Házastárs hamvasztása"
+
+#. I18N: This is the GEDCOM label for "Linked database ID"
+#: _facts.php:625
+msgid "_DBID"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Death of a child"
+#: _facts.php:627
+msgid "_DEAT_CHIL"
+msgstr "Gyermek halála"
+
+#. I18N: This is the GEDCOM label for "Death of a first cousin"
+#: _facts.php:629
+msgid "_DEAT_COUS"
+msgstr "Első unokatestvér halála"
+
+#. I18N: This is the GEDCOM label for "Death of father"
+#: _facts.php:631
+msgid "_DEAT_FATH"
+msgstr "Apa halála"
+
+#. I18N: This is the GEDCOM label for "Death of father's sibling"
+#: _facts.php:633
+msgid "_DEAT_FSIB"
+msgstr "Apa testvérének halála"
+
+#. I18N: This is the GEDCOM label for "Death of a grandchild"
+#: _facts.php:635
+msgid "_DEAT_GCHI"
+msgstr "Unoka halála"
+
+#. I18N: This is the GEDCOM label for "Death of a great-grandchild"
+#: _facts.php:637
+msgid "_DEAT_GGCH"
+msgstr "Dédunoka halála"
+
+#. I18N: This is the GEDCOM label for "Death of a great-grand-parent"
+#: _facts.php:639
+msgid "_DEAT_GGPA"
+msgstr "Dédnagyszülő halála"
+
+#. I18N: This is the GEDCOM label for "Death of a grand-parent"
+#: _facts.php:641
+msgid "_DEAT_GPAR"
+msgstr "Nagyszülő halála"
+
+#. I18N: This is the GEDCOM label for "Death of half-sibling"
+#: _facts.php:643
+msgid "_DEAT_HSIB"
+msgstr "Féltestvér halála"
+
+#. I18N: This is the GEDCOM label for "Death of mother"
+#: _facts.php:645
+msgid "_DEAT_MOTH"
+msgstr "Anya halála"
+
+#. I18N: This is the GEDCOM label for "Death of mother's sibling"
+#: _facts.php:647
+msgid "_DEAT_MSIB"
+msgstr "Anya testvérének halála"
+
+#. I18N: This is the GEDCOM label for "Death of a nephew or niece"
+#: _facts.php:649
+msgid "_DEAT_NEPH"
+msgstr "Unokaöcs vagy unokahúg halála"
+
+#. I18N: This is the GEDCOM label for "Death of sibling"
+#: _facts.php:651
+msgid "_DEAT_SIBL"
+msgstr "Testvér halála"
+
+#. I18N: This is the GEDCOM label for "Death of spouse"
+#: _facts.php:653
+msgid "_DEAT_SPOU"
+msgstr "Házastárs halála"
+
+#. I18N: This is the GEDCOM label for "Degree"
+#: _facts.php:655
+msgid "_DEG"
+msgstr "Fokozat"
+
+#. I18N: This is the GEDCOM label for "Death of One Spouse"
+#: _facts.php:657
+msgid "_DETS"
+msgstr "Egyik házastárs halála"
+
+#. I18N: This is the GEDCOM label for "Email Address"
+#: _facts.php:659
+msgid "_EMAIL"
+msgstr "Email-cím"
+
+#. I18N: This is the GEDCOM label for "Eye Color"
+#: _facts.php:661
+msgid "_EYEC"
+msgstr "Szemszín"
+
+#. I18N: This is the GEDCOM label for "Fact 1"
+#: _facts.php:663
+msgid "_FA1"
+msgstr "1. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 10"
+#: _facts.php:665
+msgid "_FA10"
+msgstr "10. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 11"
+#: _facts.php:667
+msgid "_FA11"
+msgstr "11. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 12"
+#: _facts.php:669
+msgid "_FA12"
+msgstr "12. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 13"
+#: _facts.php:671
+msgid "_FA13"
+msgstr "13. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 2"
+#: _facts.php:673
+msgid "_FA2"
+msgstr "2. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 3"
+#: _facts.php:675
+msgid "_FA3"
+msgstr "3. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 4"
+#: _facts.php:677
+msgid "_FA4"
+msgstr "4. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 5"
+#: _facts.php:679
+msgid "_FA5"
+msgstr "5. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 6"
+#: _facts.php:681
+msgid "_FA6"
+msgstr "6. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 7"
+#: _facts.php:683
+msgid "_FA7"
+msgstr "7. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 8"
+#: _facts.php:685
+msgid "_FA8"
+msgstr "8. tény"
+
+#. I18N: This is the GEDCOM label for "Fact 9"
+#: _facts.php:687
+msgid "_FA9"
+msgstr "9. tény"
+
+#. I18N: This is the GEDCOM label for "Emigration of parents"
+#: _facts.php:689
+msgid "_FAMC_EMIG"
+msgstr "Szülők kivándorlása"
+
+#. I18N: This is the GEDCOM label for "Residence of parents"
+#: _facts.php:691
+msgid "_FAMC_RESI"
+msgstr "Szülők lakóhelye"
+
+#. I18N: This is the GEDCOM label for "Funeral"
+#: _facts.php:693
+msgid "_FNRL"
+msgstr "Temetés"
+
+#. I18N: This is the GEDCOM label for "Relationship to Father"
+#: _facts.php:695
+msgid "_FREL"
+msgstr "Kapcsolat az Apához"
+
+#. I18N: This is the GEDCOM label for "GEDCOM File"
+#: _facts.php:697
+msgid "_GEDF"
+msgstr "GEDCOM Állomány"
+
+#. I18N: This is the GEDCOM label for "Hair Color"
+#: _facts.php:699
+msgid "_HAIR"
+msgstr "Hajszín"
+
+#. I18N: This is the GEDCOM label for "Hebrew"
+#: _facts.php:701
+msgid "_HEB"
+msgstr "Héber"
+
+#. I18N: This is the GEDCOM label for "Height"
+#: _facts.php:703
+msgid "_HEIG"
+msgstr "Magasság"
+
+#. I18N: This is the GEDCOM label for "Hebrew Name"
+#: _facts.php:705
+msgid "_HNM"
+msgstr "Héber Név"
+
+#. I18N: This is the GEDCOM label for "Holocaust"
+#: _facts.php:707
+msgid "_HOL"
+msgstr "Tűzáldozat"
+
+#. I18N: This is the GEDCOM label for "Interred"
+#: _facts.php:709
+msgid "_INTE"
+msgstr "Interred"
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of a child"
+#: _facts.php:711
+msgid "_MARB_CHIL"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of a first cousin"
+#: _facts.php:713
+msgid "_MARB_COUS"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of parents"
+#: _facts.php:715
+msgid "_MARB_FAMC"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of father"
+#: _facts.php:717
+msgid "_MARB_FATH"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of father's sibling"
+#: _facts.php:719
+msgid "_MARB_FSIB"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of a grandchild"
+#: _facts.php:721
+msgid "_MARB_GCHI"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of a great-grandchild"
+#: _facts.php:723
+msgid "_MARB_GGCH"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of half-sibling"
+#: _facts.php:725
+msgid "_MARB_HSIB"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of mother"
+#: _facts.php:727
+msgid "_MARB_MOTH"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of mother's sibling"
+#: _facts.php:729
+msgid "_MARB_MSIB"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of a nephew or niece"
+#: _facts.php:731
+msgid "_MARB_NEPH"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Bann of sibling"
+#: _facts.php:733
+msgid "_MARB_SIBL"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Marriage Intention"
+#: _facts.php:735
+msgid "_MARI"
+msgstr "Házassági szándék"
+
+#. I18N: This is the GEDCOM label for "Married Name"
+#: _facts.php:737
+msgid "_MARNM"
+msgstr "Házasult név"
+
+#. I18N: This is the GEDCOM label for "Married Surname"
+#: _facts.php:739
+msgid "_MARNM_SURN"
+msgstr "Házasult vezetéknév"
+
+#. I18N: This is the GEDCOM label for "Marriage of a child"
+#: _facts.php:741
+msgid "_MARR_CHIL"
+msgstr "Gyermek házasságkötése"
+
+#. I18N: This is the GEDCOM label for "Marriage of a first cousin"
+#: _facts.php:743
+msgid "_MARR_COUS"
+msgstr "Első unokatestvér házassága"
+
+#. I18N: This is the GEDCOM label for "Marriage of parents"
+#: _facts.php:745
+msgid "_MARR_FAMC"
+msgstr "Szülő házasságkötése"
+
+#. I18N: This is the GEDCOM label for "Marriage of father"
+#: _facts.php:747
+msgid "_MARR_FATH"
+msgstr "Apa házassága"
+
+#. I18N: This is the GEDCOM label for "Marriage of father's sibling"
+#: _facts.php:749
+msgid "_MARR_FSIB"
+msgstr "Apa testvérének házassága"
+
+#. I18N: This is the GEDCOM label for "Marriage of a grandchild"
+#: _facts.php:751
+msgid "_MARR_GCHI"
+msgstr "Unoka házasságkötése"
+
+#. I18N: This is the GEDCOM label for "Marriage of a great-grandchild"
+#: _facts.php:753
+msgid "_MARR_GGCH"
+msgstr "Dédunoka házasságkötése"
+
+#. I18N: This is the GEDCOM label for "Marriage of half-sibling"
+#: _facts.php:755
+msgid "_MARR_HSIB"
+msgstr "Féltestvér házassága"
+
+#. I18N: This is the GEDCOM label for "Marriage of mother"
+#: _facts.php:757
+msgid "_MARR_MOTH"
+msgstr "Anya házassága"
+
+#. I18N: This is the GEDCOM label for "Marriage of mother's sibling"
+#: _facts.php:759
+msgid "_MARR_MSIB"
+msgstr "Anya testvérének házassága"
+
+#. I18N: This is the GEDCOM label for "Marriage of a nephew or niece"
+#: _facts.php:761
+msgid "_MARR_NEPH"
+msgstr "Unokaöcs vagy unokahúg házasságkötése"
+
+#. I18N: This is the GEDCOM label for "Marriage of sibling"
+#: _facts.php:763
+msgid "_MARR_SIBL"
+msgstr "Testvér házassága"
+
+#. I18N: This is the GEDCOM label for "Marriage Bond"
+#: _facts.php:765
+msgid "_MBON"
+msgstr "Marriage bond"
+
+#. I18N: This is the GEDCOM label for "Medical"
+#: _facts.php:767
+msgid "_MDCL"
+msgstr "Orvosi adatok"
+
+#. I18N: This is the GEDCOM label for "Medical Condition"
+#: _facts.php:769
+msgid "_MEDC"
+msgstr "Egészségi állapot"
+
+#. I18N: This is the GEDCOM label for "Marriage Ending Status"
+#: _facts.php:771
+msgid "_MEND"
+msgstr "Házasság végzési státusza"
+
+#. I18N: This is the GEDCOM label for "Military"
+#: _facts.php:773
+msgid "_MILI"
+msgstr "Katonai szolgálat"
+
+#. I18N: This is the GEDCOM label for "Military Service"
+#: _facts.php:775
+msgid "_MILT"
+msgstr "Katonai szolgálat"
+
+#. I18N: This is the GEDCOM label for "Relationship to Mother"
+#: _facts.php:777
+msgid "_MREL"
+msgstr "Kapcsolat az Anyához"
+
+#. I18N: This is the GEDCOM label for "Marriage Beginning Status"
+#: _facts.php:779
+msgid "_MSTAT"
+msgstr "Házasság kezdési státusza"
+
+#. I18N: This is the GEDCOM label for "Mailing Name"
+#: _facts.php:781
+msgid "_NAME"
+msgstr "Levelezési név"
+
+#. I18N: This is the GEDCOM label for "Namesake"
+#: _facts.php:783
+msgid "_NAMS"
+msgstr "Névadója"
+
+#. I18N: This is the GEDCOM label for "Not living"
+#: _facts.php:785
+msgid "_NLIV"
+msgstr "Nincs életben"
+
+#. I18N: This is the GEDCOM label for "Never married"
+#: _facts.php:787
+msgid "_NMAR"
+msgstr "Soha nem házasodott meg"
+
+#. I18N: This is the GEDCOM label for "Not married"
+#: _facts.php:789
+msgid "_NMR"
+msgstr "Nem házas"
+
+#. I18N: This is the GEDCOM label for "by"
+#: _facts.php:791
+msgid "_PGVU"
+msgstr "Utoljára módosította"
+
+#. I18N: This is the GEDCOM label for "Highlighted Image"
+#: _facts.php:793
+msgid "_PRIM"
+msgstr "Kijelölt kép"
+
+#. I18N: This is the GEDCOM label for "Permanent Number"
+#: _facts.php:795
+msgid "_PRMN"
+msgstr "Ideiglenes szám"
+
+#. I18N: This is the GEDCOM label for "Scrapbook"
+#: _facts.php:797
+msgid "_SCBK"
+msgstr "Gyűjtő könyv"
+
+#. I18N: This is the GEDCOM label for "Separated"
+#: _facts.php:799
 #: ../calendar.php:256
 msgid "_SEPR"
 msgstr "Különélés"
 
-#: ../calendar.php:259
-msgid "DIV"
-msgstr "Válás"
+#. I18N: This is the GEDCOM label for "Slide Show"
+#: _facts.php:801
+msgid "_SSHOW"
+msgstr "Dia vetítés"
 
-#: ../calendar.php:262
-msgid "DEAT"
-msgstr "Elhunyt"
+#. I18N: This is the GEDCOM label for "Marriage Status"
+#: _facts.php:803
+msgid "_STAT"
+msgstr "Házassági státusz"
 
-#: ../calendar.php:265
-msgid "BURI"
-msgstr "Temetés"
+#. I18N: This is the GEDCOM label for "Short Version"
+#: _facts.php:805
+msgid "_SUBQ"
+msgstr "Rövid változat"
 
-#: ../calendar.php:268
-msgid "IMMI"
-msgstr "Bevándorlás"
+#. I18N: This is the GEDCOM label for "Always use main image?"
+#: _facts.php:807
+msgid "_THUM"
+msgstr "Használjuk ezt a képet bélyegképként?"
 
-#: ../calendar.php:271
-msgid "EMIG"
-msgstr "Kivándorlás"
+#. I18N: This is the GEDCOM label for "To Do Item"
+#: _facts.php:809
+msgid "_TODO"
+msgstr "Tennivalók"
 
-#: ../search_advanced.php:223
-#: ../search_advanced.php:260
-msgid "GIVN"
-msgstr "Keresztnév"
+#. I18N: This is the GEDCOM label for "Media Type"
+#: _facts.php:811
+msgid "_TYPE"
+msgstr "Média típus"
+
+#. I18N: This is the GEDCOM label for "Globally unique Identifier"
+#: _facts.php:813
+msgid "_UID"
+msgstr "Általános azonosító"
+
+#. I18N: This is the GEDCOM label for "Web URL"
+#: _facts.php:815
+msgid "_URL"
+msgstr "Web URL"
+
+#. I18N: This is the GEDCOM label for "Weight"
+#: _facts.php:817
+msgid "_WEIG"
+msgstr "Testsúly"
+
+#. I18N: This is the GEDCOM label for "Yahrzeit"
+#: _facts.php:819
+msgid "_YART"
+msgstr "Jarzeit"
+
+#. I18N: This is the GEDCOM label for "Brit Mila of a child"
+#: _facts.php:821
+msgid "__BRTM_CHIL"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Brit Mila of a first cousin"
+#: _facts.php:823
+msgid "__BRTM_COUS"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Brit Mila of father's sibling"
+#: _facts.php:825
+msgid "__BRTM_FSIB"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Brit Mila of a grandchild"
+#: _facts.php:827
+msgid "__BRTM_GCHI"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Brit Mila of a great-grandchild"
+#: _facts.php:829
+msgid "__BRTM_GGCH"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Brit Mila of half-sibling"
+#: _facts.php:831
+msgid "__BRTM_HSIB"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Brit Mila of mother's sibling"
+#: _facts.php:833
+msgid "__BRTM_MSIB"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Brit Mila of a nephew"
+#: _facts.php:835
+msgid "__BRTM_NEPH"
+msgstr ""
+
+#. I18N: This is the GEDCOM label for "Brit Mila of sibling"
+#: _facts.php:837
+msgid "__BRTM_SIBL"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Arabic
+#: _languages.php:36
+msgid "ar"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Catalan
+#: _languages.php:38
+msgid "ca"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Czech
+#: _languages.php:40
+msgid "cz"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Danish
+#: _languages.php:42
+msgid "da"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for German
+#: _languages.php:44
+msgid "de"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Greek
+#: _languages.php:46
+msgid "el"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for English
+#: _languages.php:48
+msgid "en"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for British English
+#: _languages.php:50
+msgid "en-gb"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Spanish
+#: _languages.php:52
+msgid "es"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Latin-American Spanish
+#: _languages.php:54
+msgid "es-ar"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Estonian
+#: _languages.php:56
+msgid "et"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Finnish
+#: _languages.php:58
+msgid "fi"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for French
+#: _languages.php:60
+msgid "fr"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Hebrew
+#: _languages.php:62
+msgid "he"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Hungarian
+#: _languages.php:64
+msgid "hu"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Indonesian
+#: _languages.php:66
+msgid "id"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Italian
+#: _languages.php:68
+msgid "it"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Lithuanian
+#: _languages.php:70
+msgid "lt"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Dutch
+#: _languages.php:72
+msgid "nl"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Norwegian (Nynorsk)
+#: _languages.php:74
+msgid "nn"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Polish
+#: _languages.php:76
+msgid "pl"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Portuguese
+#: _languages.php:78
+msgid "pt"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Romanian
+#: _languages.php:80
+msgid "ro"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Russian
+#: _languages.php:82
+msgid "ru"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Slovakian
+#: _languages.php:84
+msgid "sk"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Slovenian
+#: _languages.php:86
+msgid "sl"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Serbian
+#: _languages.php:88
+msgid "sr"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Swedish
+#: _languages.php:90
+msgid "sv"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Turkish
+#: _languages.php:92
+msgid "tr"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Vietnamese
+#: _languages.php:94
+msgid "vi"
+msgstr ""
+
+#. I18N: This is the RFC5646 language code for Chinese
+#: _languages.php:96
+msgid "zh"
+msgstr ""
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
@@ -96,3378 +3533,48 @@ msgid_plural "%d logged-in users"
 msgstr[0] ""
 msgstr[1] ""
 
+#. I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C CS D DZ DZS E F G GY ..."
+#: ../includes/classes/class_i18n.php:67
+msgid "LANGUAGE_ALPHABET"
+msgstr "A B C CS D DZ DZS E F G GY H I J K L LY M N NY O Ö P Q R S SZ T TY U Ü V W X Y Z ZS"
+
+#. I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
+#: ../includes/classes/class_i18n.php:69
+msgid "LANGUAGE_TEXT_DIRECTION"
+msgstr "ltr"
+
+#. I18N: This is the name of the MySQL utf8 collation sequence for this language.  See http://dev.mysql.com/doc/refman/5.1/en/se-db2-collations.html
+#: ../includes/classes/class_i18n.php:71
+msgid "LANGUAGE_COLLATION"
+msgstr "utf8_hungarian_ci"
+
+#. I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
+#: ../includes/classes/class_i18n.php:73
+msgid "LANGUAGE_LONG_DATE_FORMAT"
+msgstr "%Y. %F %j."
+
+#. I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:75
-msgid "ar"
-msgstr ""
+msgid "LANGUAGE_SHORT_DATE_FORMAT"
+msgstr "%Y. %F %j."
 
-#: ../includes/classes/class_i18n.php:76
-msgid "ca"
-msgstr ""
-
+#. I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:77
-msgid "cz"
-msgstr ""
+msgid "LANGUAGE_TIME_FORMAT_HM"
+msgstr "%g:%i"
 
-#: ../includes/classes/class_i18n.php:78
-msgid "da"
-msgstr ""
-
+#. I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
 #: ../includes/classes/class_i18n.php:79
-msgid "de"
-msgstr ""
+msgid "LANGUAGE_TIME_FORMAT_HMS"
+msgstr "%g:%i:%s%a"
 
-#: ../includes/classes/class_i18n.php:80
-msgid "el"
-msgstr ""
-
+#. I18N: This is the format string for times with hours and seconds, such as 10:23pm.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:81
-msgid "en"
-msgstr ""
+msgid "LANGUAGE_LIST_SEPARATOR"
+msgstr ", "
 
-#: ../includes/classes/class_i18n.php:82
-msgid "en-gb"
-msgstr ""
-
+#. I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
 #: ../includes/classes/class_i18n.php:83
-msgid "es"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:84
-msgid "es-ar"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:85
-msgid "et"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:86
-msgid "fi"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:87
-msgid "fr"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:88
-msgid "he"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:89
-msgid "hu"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:90
-msgid "id"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:91
-msgid "it"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:92
-msgid "lt"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:93
-msgid "nl"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:94
-msgid "no"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:95
-msgid "pl"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:96
-msgid "pt"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:97
-msgid "ro"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:98
-msgid "ru"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:99
-msgid "sk"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:100
-msgid "sl"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:101
-msgid "sv"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:102
-msgid "tr"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:103
-msgid "vi"
-msgstr ""
-
-#: ../includes/classes/class_i18n.php:104
-msgid "zh"
-msgstr ""
-
-#. I18N: This is the country/chapman code for "Unknown"
-#: ../language/_countries.php:36
-msgid "???"
-msgstr "Ismeretlen"
-
-#. I18N: This is the country/chapman code for "Aruba"
-#: ../language/_countries.php:38
-msgid "ABW"
-msgstr "Aruba"
-
-#. I18N: This is the country/chapman code for "Acadia"
-#: ../language/_countries.php:40
-msgid "ACA"
-msgstr "Akadia"
-
-#. I18N: This is the country/chapman code for "Afghanistan"
-#: ../language/_countries.php:42
-msgid "AFG"
-msgstr "Afganisztán"
-
-#. I18N: This is the country/chapman code for "Angola"
-#: ../language/_countries.php:44
-msgid "AGO"
-msgstr "Angola"
-
-#. I18N: This is the country/chapman code for "Anguilla"
-#: ../language/_countries.php:46
-msgid "AIA"
-msgstr "Anguilla"
-
-#. I18N: This is the country/chapman code for "Aland Islands"
-#: ../language/_countries.php:48
-msgid "ALA"
-msgstr "Åland-szigetek"
-
-#. I18N: This is the country/chapman code for "Albania"
-#: ../language/_countries.php:50
-msgid "ALB"
-msgstr "Albánia"
-
-#. I18N: This is the country/chapman code for "Andorra"
-#: ../language/_countries.php:52
-msgid "AND"
-msgstr "Andorra"
-
-#. I18N: This is the country/chapman code for "Netherlands Antilles"
-#: ../language/_countries.php:54
-msgid "ANT"
-msgstr "Holland Antillák"
-
-#. I18N: This is the country/chapman code for "United Arab Emirates"
-#: ../language/_countries.php:56
-msgid "ARE"
-msgstr "Egyesült Arab Emirátusok"
-
-#. I18N: This is the country/chapman code for "Argentina"
-#: ../language/_countries.php:58
-msgid "ARG"
-msgstr "Argentína"
-
-#. I18N: This is the country/chapman code for "Armenia"
-#: ../language/_countries.php:60
-msgid "ARM"
-msgstr "Örményország"
-
-#. I18N: This is the country/chapman code for "American Samoa"
-#: ../language/_countries.php:62
-msgid "ASM"
-msgstr "Amerikai Szamoa"
-
-#. I18N: This is the country/chapman code for "Antarctica"
-#: ../language/_countries.php:64
-msgid "ATA"
-msgstr "Antarktisz"
-
-#. I18N: This is the country/chapman code for "French Southern Territories"
-#: ../language/_countries.php:66
-msgid "ATF"
-msgstr "Francia Déli Területek"
-
-#. I18N: This is the country/chapman code for "Antigua and Barbuda"
-#: ../language/_countries.php:68
-msgid "ATG"
-msgstr "Antigua és Barbuda"
-
-#. I18N: This is the country/chapman code for "Australia"
-#: ../language/_countries.php:70
-msgid "AUS"
-msgstr "Ausztrália"
-
-#. I18N: This is the country/chapman code for "Austria"
-#: ../language/_countries.php:72
-msgid "AUT"
-msgstr "Ausztria"
-
-#. I18N: This is the country/chapman code for "Azerbaijan"
-#: ../language/_countries.php:74
-msgid "AZE"
-msgstr "Azerbajdzsán"
-
-#. I18N: This is the country/chapman code for "Azores"
-#: ../language/_countries.php:76
-msgid "AZR"
-msgstr "Azori-szigetek"
-
-#. I18N: This is the country/chapman code for "Burundi"
-#: ../language/_countries.php:78
-msgid "BDI"
-msgstr "Burundi"
-
-#. I18N: This is the country/chapman code for "Belgium"
-#: ../language/_countries.php:80
-msgid "BEL"
-msgstr "Belgium"
-
-#. I18N: This is the country/chapman code for "Benin"
-#: ../language/_countries.php:82
-msgid "BEN"
-msgstr "Benin"
-
-#. I18N: This is the country/chapman code for "Burkina Faso"
-#: ../language/_countries.php:84
-msgid "BFA"
-msgstr "Burkina Faso"
-
-#. I18N: This is the country/chapman code for "Bangladesh"
-#: ../language/_countries.php:86
-msgid "BGD"
-msgstr "Banglades"
-
-#. I18N: This is the country/chapman code for "Bulgaria"
-#: ../language/_countries.php:88
-msgid "BGR"
-msgstr "Bulgária"
-
-#. I18N: This is the country/chapman code for "Bahrain"
-#: ../language/_countries.php:90
-msgid "BHR"
-msgstr "Bahrein"
-
-#. I18N: This is the country/chapman code for "Bahamas"
-#: ../language/_countries.php:92
-msgid "BHS"
-msgstr "Bahama-szigetek"
-
-#. I18N: This is the country/chapman code for "Bosnia and Herzegovina"
-#: ../language/_countries.php:94
-msgid "BIH"
-msgstr "Bosznia-Hercegovina"
-
-#. I18N: This is the country/chapman code for "Belarus"
-#: ../language/_countries.php:96
-msgid "BLR"
-msgstr "Belorusszia"
-
-#. I18N: This is the country/chapman code for "Belize"
-#: ../language/_countries.php:98
-msgid "BLZ"
-msgstr "Belize"
-
-#. I18N: This is the country/chapman code for "Bermuda"
-#: ../language/_countries.php:100
-msgid "BMU"
-msgstr "Bermuda"
-
-#. I18N: This is the country/chapman code for "Bolivia"
-#: ../language/_countries.php:102
-msgid "BOL"
-msgstr "Bolívia"
-
-#. I18N: This is the country/chapman code for "Brazil"
-#: ../language/_countries.php:104
-msgid "BRA"
-msgstr "Brazília"
-
-#. I18N: This is the country/chapman code for "Barbados"
-#: ../language/_countries.php:106
-msgid "BRB"
-msgstr "Barbados"
-
-#. I18N: This is the country/chapman code for "Brunei Darussalam"
-#: ../language/_countries.php:108
-msgid "BRN"
-msgstr "Brunei Darussalam"
-
-#. I18N: This is the country/chapman code for "Bhutan"
-#: ../language/_countries.php:110
-msgid "BTN"
-msgstr "Bhután"
-
-#. I18N: This is the country/chapman code for "Bouvet Island"
-#: ../language/_countries.php:112
-msgid "BVT"
-msgstr "Bouvet-sziget"
-
-#. I18N: This is the country/chapman code for "Botswana"
-#: ../language/_countries.php:114
-msgid "BWA"
-msgstr "Botswana"
-
-#. I18N: This is the country/chapman code for "British West Indies"
-#: ../language/_countries.php:116
-msgid "BWI"
-msgstr "Brit Nyugat-India"
-
-#. I18N: This is the country/chapman code for "Central African Republic"
-#: ../language/_countries.php:118
-msgid "CAF"
-msgstr "Közép-Afrikai Köztársaság"
-
-#. I18N: This is the country/chapman code for "Canada"
-#: ../language/_countries.php:120
-msgid "CAN"
-msgstr "Kanada"
-
-#. I18N: This is the country/chapman code for "Cape Colony"
-#: ../language/_countries.php:122
-msgid "CAP"
-msgstr "Cape Colony"
-
-#. I18N: This is the country/chapman code for "Catalonia"
-#: ../language/_countries.php:124
-msgid "CAT"
-msgstr "Szociális/társadalmi státusz"
-
-#. I18N: This is the country/chapman code for "Cocos (Keeling) Islands"
-#: ../language/_countries.php:126
-msgid "CCK"
-msgstr "Kókusz-szigetek"
-
-#. I18N: This is the country/chapman code for "Switzerland"
-#: ../language/_countries.php:128
-msgid "CHE"
-msgstr "Svájc"
-
-#. I18N: This is the country/chapman code for "Channel Islands"
-#: ../language/_countries.php:130
-msgid "CHI"
-msgstr "Channel Islands"
-
-#. I18N: This is the country/chapman code for "Chile"
-#: ../language/_countries.php:132
-msgid "CHL"
-msgstr "Chile"
-
-#. I18N: This is the country/chapman code for "China"
-#: ../language/_countries.php:134
-msgid "CHN"
-msgstr "Kína"
-
-#. I18N: This is the country/chapman code for "Cote d'Ivoire"
-#: ../language/_countries.php:136
-msgid "CIV"
-msgstr "Côte d'Ivoire"
-
-#. I18N: This is the country/chapman code for "Cameroon"
-#: ../language/_countries.php:138
-msgid "CMR"
-msgstr "Kamerun"
-
-#. I18N: This is the country/chapman code for "Congo (Kinshasa)"
-#: ../language/_countries.php:140
-msgid "COD"
-msgstr "Kongói Demokratikus Köztársaság"
-
-#. I18N: This is the country/chapman code for "Congo (Brazzaville)"
-#: ../language/_countries.php:142
-msgid "COG"
-msgstr "Kongó (Brazzaville)"
-
-#. I18N: This is the country/chapman code for "Cook Islands"
-#: ../language/_countries.php:144
-msgid "COK"
-msgstr "Cook-szigetek"
-
-#. I18N: This is the country/chapman code for "Colombia"
-#: ../language/_countries.php:146
-msgid "COL"
-msgstr "Kolumbia"
-
-#. I18N: This is the country/chapman code for "Comoros"
-#: ../language/_countries.php:148
-msgid "COM"
-msgstr "Comore-szigetek"
-
-#. I18N: This is the country/chapman code for "Cape Verde"
-#: ../language/_countries.php:150
-msgid "CPV"
-msgstr "Zöld-foki-szigetek"
-
-#. I18N: This is the country/chapman code for "Costa Rica"
-#: ../language/_countries.php:152
-msgid "CRI"
-msgstr "Costa Rica"
-
-#. I18N: This is the country/chapman code for "Czechoslovakia"
-#: ../language/_countries.php:154
-msgid "CSK"
-msgstr "Csehszlovákia"
-
-#. I18N: This is the country/chapman code for "Cuba"
-#: ../language/_countries.php:156
-msgid "CUB"
-msgstr "Kuba"
-
-#. I18N: This is the country/chapman code for "Christmas Island"
-#: ../language/_countries.php:158
-msgid "CXR"
-msgstr "Karácsony-sziget"
-
-#. I18N: This is the country/chapman code for "Cayman Islands"
-#: ../language/_countries.php:160
-msgid "CYM"
-msgstr "Kajmán-szigetek"
-
-#. I18N: This is the country/chapman code for "Cyprus"
-#: ../language/_countries.php:162
-msgid "CYP"
-msgstr "Ciprus"
-
-#. I18N: This is the country/chapman code for "Czech Republic"
-#: ../language/_countries.php:164
-msgid "CZE"
-msgstr "Cseh Köztársaság"
-
-#. I18N: This is the country/chapman code for "Germany"
-#: ../language/_countries.php:166
-msgid "DEU"
-msgstr "Németország"
-
-#. I18N: This is the country/chapman code for "Djibouti"
-#: ../language/_countries.php:168
-msgid "DJI"
-msgstr "Dzsibuti"
-
-#. I18N: This is the country/chapman code for "Dominica"
-#: ../language/_countries.php:170
-msgid "DMA"
-msgstr "Dominika"
-
-#. I18N: This is the country/chapman code for "Denmark"
-#: ../language/_countries.php:172
-msgid "DNK"
-msgstr "Dánia"
-
-#. I18N: This is the country/chapman code for "Dominican Republic"
-#: ../language/_countries.php:174
-msgid "DOM"
-msgstr "Dominikai Köztársaság"
-
-#. I18N: This is the country/chapman code for "Algeria"
-#: ../language/_countries.php:176
-msgid "DZA"
-msgstr "Algéria"
-
-#. I18N: This is the country/chapman code for "Ecuador"
-#: ../language/_countries.php:178
-msgid "ECU"
-msgstr "Ecuador"
-
-#. I18N: This is the country/chapman code for "Egypt"
-#: ../language/_countries.php:180
-msgid "EGY"
-msgstr "Egyiptom"
-
-#. I18N: This is the country/chapman code for "Eire"
-#: ../language/_countries.php:182
-msgid "EIR"
-msgstr "Eire"
-
-#. I18N: This is the country/chapman code for "England"
-#: ../language/_countries.php:184
-msgid "ENG"
-msgstr "Anglia"
-
-#. I18N: This is the country/chapman code for "Eritrea"
-#: ../language/_countries.php:186
-msgid "ERI"
-msgstr "Eritrea"
-
-#. I18N: This is the country/chapman code for "Western Sahara"
-#: ../language/_countries.php:188
-msgid "ESH"
-msgstr "Nyugat Szahara"
-
-#. I18N: This is the country/chapman code for "Spain"
-#: ../language/_countries.php:190
-msgid "ESP"
-msgstr "Spanyolország"
-
-#. I18N: This is the country/chapman code for "Estonia"
-#: ../language/_countries.php:192
-msgid "EST"
-msgstr "Észtország"
-
-#. I18N: This is the country/chapman code for "Ethiopia"
-#: ../language/_countries.php:194
-msgid "ETH"
-msgstr "Etiópia"
-
-#. I18N: This is the country/chapman code for "Finland"
-#: ../language/_countries.php:196
-msgid "FIN"
-msgstr "Finnország"
-
-#. I18N: This is the country/chapman code for "Fiji"
-#: ../language/_countries.php:198
-msgid "FJI"
-msgstr "Fidzsi"
-
-#. I18N: This is the country/chapman code for "Flanders"
-#: ../language/_countries.php:200
-msgid "FLD"
-msgstr "Flanders"
-
-#. I18N: This is the country/chapman code for "Falkland Islands"
-#: ../language/_countries.php:202
-msgid "FLK"
-msgstr "Falkland-szigetek"
-
-#. I18N: This is the country/chapman code for "France"
-#: ../language/_countries.php:204
-msgid "FRA"
-msgstr "Franciaország"
-
-#. I18N: This is the country/chapman code for "Faeroe Islands"
-#: ../language/_countries.php:206
-msgid "FRO"
-msgstr "Feröer-szigetek"
-
-#. I18N: This is the country/chapman code for "Micronesia"
-#: ../language/_countries.php:208
-msgid "FSM"
-msgstr "Mikronéziai Szövetségi Államok"
-
-#. I18N: This is the country/chapman code for "Gabon"
-#: ../language/_countries.php:210
-msgid "GAB"
-msgstr "Gabon"
-
-#. I18N: This is the country/chapman code for "United Kingdom"
-#: ../language/_countries.php:212
-msgid "GBR"
-msgstr "Egyesült Királyság"
-
-#. I18N: This is the country/chapman code for "Georgia"
-#: ../language/_countries.php:214
-msgid "GEO"
-msgstr "Georgia"
-
-#. I18N: This is the country/chapman code for "Ghana"
-#: ../language/_countries.php:216
-msgid "GHA"
-msgstr "Ghána"
-
-#. I18N: This is the country/chapman code for "Gibraltar"
-#: ../language/_countries.php:218
-msgid "GIB"
-msgstr "Gibraltár"
-
-#. I18N: This is the country/chapman code for "Guinea"
-#: ../language/_countries.php:220
-msgid "GIN"
-msgstr "Guinea"
-
-#. I18N: This is the country/chapman code for "Guadeloupe"
-#: ../language/_countries.php:222
-msgid "GLP"
-msgstr "Guadeloupe"
-
-#. I18N: This is the country/chapman code for "Gambia"
-#: ../language/_countries.php:224
-msgid "GMB"
-msgstr "Gambia"
-
-#. I18N: This is the country/chapman code for "Guinea-Bissau"
-#: ../language/_countries.php:226
-msgid "GNB"
-msgstr "Bissau-Guinea"
-
-#. I18N: This is the country/chapman code for "Equatorial Guinea"
-#: ../language/_countries.php:228
-msgid "GNQ"
-msgstr "Egyenlítõi Guinea"
-
-#. I18N: This is the country/chapman code for "Greece"
-#: ../language/_countries.php:230
-msgid "GRC"
-msgstr "Görögország"
-
-#. I18N: This is the country/chapman code for "Grenada"
-#: ../language/_countries.php:232
-msgid "GRD"
-msgstr "Grenada"
-
-#. I18N: This is the country/chapman code for "Greenland"
-#: ../language/_countries.php:234
-msgid "GRL"
-msgstr "Grönland"
-
-#. I18N: This is the country/chapman code for "Guatemala"
-#: ../language/_countries.php:236
-msgid "GTM"
-msgstr "Guatemala"
-
-#. I18N: This is the country/chapman code for "French Guiana"
-#: ../language/_countries.php:238
-msgid "GUF"
-msgstr "Francia Guyana"
-
-#. I18N: This is the country/chapman code for "Guam"
-#: ../language/_countries.php:240
-msgid "GUM"
-msgstr "Guam"
-
-#. I18N: This is the country/chapman code for "Guyana"
-#: ../language/_countries.php:242
-msgid "GUY"
-msgstr "Guyana"
-
-#. I18N: This is the country/chapman code for "Hong Kong"
-#: ../language/_countries.php:244
-msgid "HKG"
-msgstr "Hongkong"
-
-#. I18N: This is the country/chapman code for "Heard Island and McDonald Islands"
-#: ../language/_countries.php:246
-msgid "HMD"
-msgstr "Heard- és McDonald-szigetek"
-
-#. I18N: This is the country/chapman code for "Honduras"
-#: ../language/_countries.php:248
-msgid "HND"
-msgstr "Honduras"
-
-#. I18N: This is the country/chapman code for "Croatia"
-#: ../language/_countries.php:250
-msgid "HRV"
-msgstr "Horvátország"
-
-#. I18N: This is the country/chapman code for "Haiti"
-#: ../language/_countries.php:252
-msgid "HTI"
-msgstr "Haiti"
-
-#. I18N: This is the country/chapman code for "Hungary"
-#: ../language/_countries.php:254
-msgid "HUN"
-msgstr "Magyarország"
-
-#. I18N: This is the country/chapman code for "Indonesia"
-#: ../language/_countries.php:256
-msgid "IDN"
-msgstr "Indonézia"
-
-#. I18N: This is the country/chapman code for "India"
-#: ../language/_countries.php:258
-msgid "IND"
-msgstr "India"
-
-#. I18N: This is the country/chapman code for "Isle of Man"
-#: ../language/_countries.php:260
-msgid "IOM"
-msgstr ""
-
-#. I18N: This is the country/chapman code for "British Indian Ocean Territory"
-#: ../language/_countries.php:262
-msgid "IOT"
-msgstr "Brit Indiai-óceáni Terület"
-
-#. I18N: This is the country/chapman code for "Ireland"
-#: ../language/_countries.php:264
-msgid "IRL"
-msgstr "Írország"
-
-#. I18N: This is the country/chapman code for "Iran"
-#: ../language/_countries.php:266
-msgid "IRN"
-msgstr "Irán"
-
-#. I18N: This is the country/chapman code for "Iraq"
-#: ../language/_countries.php:268
-msgid "IRQ"
-msgstr "Irak"
-
-#. I18N: This is the country/chapman code for "Iceland"
-#: ../language/_countries.php:270
-msgid "ISL"
-msgstr "Izland"
-
-#. I18N: This is the country/chapman code for "Israel"
-#: ../language/_countries.php:272
-msgid "ISR"
-msgstr "Izrael"
-
-#. I18N: This is the country/chapman code for "Italy"
-#: ../language/_countries.php:274
-msgid "ITA"
-msgstr "Olaszország"
-
-#. I18N: This is the country/chapman code for "Jamaica"
-#: ../language/_countries.php:276
-msgid "JAM"
-msgstr "Jamaica"
-
-#. I18N: This is the country/chapman code for "Jordan"
-#: ../language/_countries.php:278
-msgid "JOR"
-msgstr "Jordánia"
-
-#. I18N: This is the country/chapman code for "Japan"
-#: ../language/_countries.php:280
-msgid "JPN"
-msgstr "Japán"
-
-#. I18N: This is the country/chapman code for "Kazakhstan"
-#: ../language/_countries.php:282
-msgid "KAZ"
-msgstr "Kazahsztán"
-
-#. I18N: This is the country/chapman code for "Kenya"
-#: ../language/_countries.php:284
-msgid "KEN"
-msgstr "Kenya"
-
-#. I18N: This is the country/chapman code for "Kyrgyzstan"
-#: ../language/_countries.php:286
-msgid "KGZ"
-msgstr "Kirgizisztán"
-
-#. I18N: This is the country/chapman code for "Cambodia"
-#: ../language/_countries.php:288
-msgid "KHM"
-msgstr "Kambodzsa"
-
-#. I18N: This is the country/chapman code for "Kiribati"
-#: ../language/_countries.php:290
-msgid "KIR"
-msgstr "Kiribati"
-
-#. I18N: This is the country/chapman code for "Saint Kitts and Nevis"
-#: ../language/_countries.php:292
-msgid "KNA"
-msgstr "Saint Kitts és Nevis"
-
-#. I18N: This is the country/chapman code for "Korea"
-#: ../language/_countries.php:294
-msgid "KOR"
-msgstr "Koreai Köztársaság"
-
-#. I18N: This is the country/chapman code for "Kuwait"
-#: ../language/_countries.php:296
-msgid "KWT"
-msgstr "Kuvait"
-
-#. I18N: This is the country/chapman code for "Laos"
-#: ../language/_countries.php:298
-msgid "LAO"
-msgstr "Lao Népi Demokratikus Köztársaság"
-
-#. I18N: This is the country/chapman code for "Lebanon"
-#: ../language/_countries.php:300
-msgid "LBN"
-msgstr "Libanon"
-
-#. I18N: This is the country/chapman code for "Liberia"
-#: ../language/_countries.php:302
-msgid "LBR"
-msgstr "Libéria"
-
-#. I18N: This is the country/chapman code for "Libya"
-#: ../language/_countries.php:304
-msgid "LBY"
-msgstr "Líbia"
-
-#. I18N: This is the country/chapman code for "Saint Lucia"
-#: ../language/_countries.php:306
-msgid "LCA"
-msgstr "Szent Lucia"
-
-#. I18N: This is the country/chapman code for "Liechtenstein"
-#: ../language/_countries.php:308
-msgid "LIE"
-msgstr "Liechtenstein"
-
-#. I18N: This is the country/chapman code for "Sri Lanka"
-#: ../language/_countries.php:310
-msgid "LKA"
-msgstr "SríLanka"
-
-#. I18N: This is the country/chapman code for "Lesotho"
-#: ../language/_countries.php:312
-msgid "LSO"
-msgstr "Lesotho"
-
-#. I18N: This is the country/chapman code for "Lithuania"
-#: ../language/_countries.php:314
-msgid "LTU"
-msgstr "Észtország"
-
-#. I18N: This is the country/chapman code for "Luxembourg"
-#: ../language/_countries.php:316
-msgid "LUX"
-msgstr "Luxemburg"
-
-#. I18N: This is the country/chapman code for "Latvia"
-#: ../language/_countries.php:318
-msgid "LVA"
-msgstr "Litvánia"
-
-#. I18N: This is the country/chapman code for "Macau"
-#: ../language/_countries.php:320
-msgid "MAC"
-msgstr "Makaó"
-
-#. I18N: This is the country/chapman code for "Morocco"
-#: ../language/_countries.php:322
-msgid "MAR"
-msgstr "Marokkó"
-
-#. I18N: This is the country/chapman code for "Monaco"
-#: ../language/_countries.php:324
-msgid "MCO"
-msgstr "Monaco"
-
-#. I18N: This is the country/chapman code for "Moldova"
-#: ../language/_countries.php:326
-msgid "MDA"
-msgstr "Moldva"
-
-#. I18N: This is the country/chapman code for "Madagascar"
-#: ../language/_countries.php:328
-msgid "MDG"
-msgstr "Madagaszkár"
-
-#. I18N: This is the country/chapman code for "Maldives"
-#: ../language/_countries.php:330
-msgid "MDV"
-msgstr "Maldív-szigetek"
-
-#. I18N: This is the country/chapman code for "Mexico"
-#: ../language/_countries.php:332
-msgid "MEX"
-msgstr "Mexikó"
-
-#. I18N: This is the country/chapman code for "Marshall Islands"
-#: ../language/_countries.php:334
-msgid "MHL"
-msgstr "Marshall-szigetek"
-
-#. I18N: This is the country/chapman code for "Macedonia"
-#: ../language/_countries.php:336
-msgid "MKD"
-msgstr "Macedónia"
-
-#. I18N: This is the country/chapman code for "Mali"
-#: ../language/_countries.php:338
-msgid "MLI"
-msgstr "Mali"
-
-#. I18N: This is the country/chapman code for "Malta"
-#: ../language/_countries.php:340
-msgid "MLT"
-msgstr "Málta"
-
-#. I18N: This is the country/chapman code for "Myanmar"
-#: ../language/_countries.php:342
-msgid "MMR"
-msgstr "Myanmar"
-
-#. I18N: This is the country/chapman code for "Mongolia"
-#: ../language/_countries.php:344
-msgid "MNG"
-msgstr "Mongólia"
-
-#. I18N: This is the country/chapman code for "Northern Mariana Islands"
-#: ../language/_countries.php:346
-msgid "MNP"
-msgstr "Észak-Mariana-szigetek"
-
-#. I18N: This is the country/chapman code for "Montenegro"
-#: ../language/_countries.php:348
-msgid "MNT"
-msgstr "Montenegró"
-
-#. I18N: This is the country/chapman code for "Mozambique"
-#: ../language/_countries.php:350
-msgid "MOZ"
-msgstr "Mozambik"
-
-#. I18N: This is the country/chapman code for "Mauritania"
-#: ../language/_countries.php:352
-msgid "MRT"
-msgstr "Mauritánia"
-
-#. I18N: This is the country/chapman code for "Montserrat"
-#: ../language/_countries.php:354
-msgid "MSR"
-msgstr "Montserrat"
-
-#. I18N: This is the country/chapman code for "Martinique"
-#: ../language/_countries.php:356
-msgid "MTQ"
-msgstr "Martinique"
-
-#. I18N: This is the country/chapman code for "Mauritius"
-#: ../language/_countries.php:358
-msgid "MUS"
-msgstr "Mauritius"
-
-#. I18N: This is the country/chapman code for "Malawi"
-#: ../language/_countries.php:360
-msgid "MWI"
-msgstr "Malawi"
-
-#. I18N: This is the country/chapman code for "Malaysia"
-#: ../language/_countries.php:362
-msgid "MYS"
-msgstr "Malajzia"
-
-#. I18N: This is the country/chapman code for "Mayotte"
-#: ../language/_countries.php:364
-msgid "MYT"
-msgstr "Mayotte"
-
-#. I18N: This is the country/chapman code for "Namibia"
-#: ../language/_countries.php:366
-msgid "NAM"
-msgstr "Namíbia"
-
-#. I18N: This is the country/chapman code for "New Caledonia"
-#: ../language/_countries.php:368
-msgid "NCL"
-msgstr "Új-Kaledónia"
-
-#. I18N: This is the country/chapman code for "Niger"
-#: ../language/_countries.php:370
-msgid "NER"
-msgstr "Niger"
-
-#. I18N: This is the country/chapman code for "Norfolk Island"
-#: ../language/_countries.php:372
-msgid "NFK"
-msgstr "Norfolk-sziget"
-
-#. I18N: This is the country/chapman code for "Nigeria"
-#: ../language/_countries.php:374
-msgid "NGA"
-msgstr "Nigéria"
-
-#. I18N: This is the country/chapman code for "Nicaragua"
-#: ../language/_countries.php:376
-msgid "NIC"
-msgstr "Nicaragua"
-
-#. I18N: This is the country/chapman code for "Northern Ireland"
-#: ../language/_countries.php:378
-msgid "NIR"
-msgstr "Észak Írország"
-
-#. I18N: This is the country/chapman code for "Niue"
-#: ../language/_countries.php:380
-msgid "NIU"
-msgstr "Niue"
-
-#. I18N: This is the country/chapman code for "Netherlands"
-#: ../language/_countries.php:382
-msgid "NLD"
-msgstr "Hollandia"
-
-#. I18N: This is the country/chapman code for "Norway"
-#: ../language/_countries.php:384
-msgid "NOR"
-msgstr "Norvégia"
-
-#. I18N: This is the country/chapman code for "Nepal"
-#: ../language/_countries.php:386
-msgid "NPL"
-msgstr "Nepál"
-
-#. I18N: This is the country/chapman code for "Nauru"
-#: ../language/_countries.php:388
-msgid "NRU"
-msgstr "Nauru"
-
-#. I18N: This is the country/chapman code for "Neutral Zone"
-#: ../language/_countries.php:390
-msgid "NTZ"
-msgstr "Semleges Zona"
-
-#. I18N: This is the country/chapman code for "New Zealand"
-#: ../language/_countries.php:392
-msgid "NZL"
-msgstr "Új-Zéland"
-
-#. I18N: This is the country/chapman code for "Oman"
-#: ../language/_countries.php:394
-msgid "OMN"
-msgstr "Omán"
-
-#. I18N: This is the country/chapman code for "Pakistan"
-#: ../language/_countries.php:396
-msgid "PAK"
-msgstr "Pakisztán"
-
-#. I18N: This is the country/chapman code for "Panama"
-#: ../language/_countries.php:398
-msgid "PAN"
-msgstr "Panama"
-
-#. I18N: This is the country/chapman code for "Pitcairn"
-#: ../language/_countries.php:400
-msgid "PCN"
-msgstr "Pitcairn"
-
-#. I18N: This is the country/chapman code for "Peru"
-#: ../language/_countries.php:402
-msgid "PER"
-msgstr "Peru"
-
-#. I18N: This is the country/chapman code for "Philippines"
-#: ../language/_countries.php:404
-msgid "PHL"
-msgstr "Fülöp-szigetek"
-
-#. I18N: This is the country/chapman code for "Palau"
-#: ../language/_countries.php:406
-msgid "PLW"
-msgstr "Palau"
-
-#. I18N: This is the country/chapman code for "Papua New Guinea"
-#: ../language/_countries.php:408
-msgid "PNG"
-msgstr "Pápua Új-Guinea"
-
-#. I18N: This is the country/chapman code for "Poland"
-#: ../language/_countries.php:410
-msgid "POL"
-msgstr "Lengyelország"
-
-#. I18N: This is the country/chapman code for "Puerto Rico"
-#: ../language/_countries.php:412
-msgid "PRI"
-msgstr "Puerto Rico"
-
-#. I18N: This is the country/chapman code for "North Korea"
-#: ../language/_countries.php:414
-msgid "PRK"
-msgstr "Koreai Népi Demokratikus Köztársaság"
-
-#. I18N: This is the country/chapman code for "Portugal"
-#: ../language/_countries.php:416
-msgid "PRT"
-msgstr "Portugália"
-
-#. I18N: This is the country/chapman code for "Paraguay"
-#: ../language/_countries.php:418
-msgid "PRY"
-msgstr "Paraguay"
-
-#. I18N: This is the country/chapman code for "Occupied Palestinian Territory"
-#: ../language/_countries.php:420
-msgid "PSE"
-msgstr "Megszállt palesztin terület"
-
-#. I18N: This is the country/chapman code for "French Polynesia"
-#: ../language/_countries.php:422
-msgid "PYF"
-msgstr "Francia Polinézia"
-
-#. I18N: This is the country/chapman code for "Qatar"
-#: ../language/_countries.php:424
-msgid "QAT"
-msgstr "Katar"
-
-#. I18N: This is the country/chapman code for "Reunion"
-#: ../language/_countries.php:426
-msgid "REU"
-msgstr "Reunion"
-
-#. I18N: This is the country/chapman code for "Romania"
-#: ../language/_countries.php:428
-msgid "ROM"
-msgstr "Románia"
-
-#. I18N: This is the country/chapman code for "Russia"
-#: ../language/_countries.php:430
-msgid "RUS"
-msgstr "Orosz Federáció"
-
-#. I18N: This is the country/chapman code for "Rwanda"
-#: ../language/_countries.php:432
-msgid "RWA"
-msgstr "Ruanda"
-
-#. I18N: This is the country/chapman code for "Saudi Arabia"
-#: ../language/_countries.php:434
-msgid "SAU"
-msgstr "Szaúd-Arábia"
-
-#. I18N: This is the country/chapman code for "Serbia and Montenegro"
-#: ../language/_countries.php:436
-msgid "SCG"
-msgstr "Szerbia és Montenegró"
-
-#. I18N: This is the country/chapman code for "Scotland"
-#: ../language/_countries.php:438
-msgid "SCT"
-msgstr "Skócia"
-
-#. I18N: This is the country/chapman code for "Sudan"
-#: ../language/_countries.php:440
-msgid "SDN"
-msgstr "Szudán"
-
-#. I18N: This is the country/chapman code for "At Sea"
-#: ../language/_countries.php:442
-msgid "SEA"
-msgstr "Tengeren"
-
-#. I18N: This is the country/chapman code for "Senegal"
-#: ../language/_countries.php:444
-msgid "SEN"
-msgstr "Szenegál"
-
-#. I18N: This is the country/chapman code for "Serbia"
-#: ../language/_countries.php:446
-msgid "SER"
-msgstr "Szerbia"
-
-#. I18N: This is the country/chapman code for "Singapore"
-#: ../language/_countries.php:448
-msgid "SGP"
-msgstr "Szingapúr"
-
-#. I18N: This is the country/chapman code for "South Georgia and the South Sandwich Islands"
-#: ../language/_countries.php:450
-msgid "SGS"
-msgstr "Dél-Georgia és a Dél-Sandwich-szigetek"
-
-#. I18N: This is the country/chapman code for "Saint Helena"
-#: ../language/_countries.php:452
-msgid "SHN"
-msgstr "Szent Ilona"
-
-#. I18N: This is the country/chapman code for "Sicily"
-#: ../language/_countries.php:454
-msgid "SIC"
-msgstr "Sicilia"
-
-#. I18N: This is the country/chapman code for "Svalbard and Jan Mayen Islands"
-#: ../language/_countries.php:456
-msgid "SJM"
-msgstr "Svalbard- és Jan Mayen-szigetek"
-
-#. I18N: This is the country/chapman code for "Solomon Islands"
-#: ../language/_countries.php:458
-msgid "SLB"
-msgstr "Salamon-szigetek"
-
-#. I18N: This is the country/chapman code for "Sierra Leone"
-#: ../language/_countries.php:460
-msgid "SLE"
-msgstr "Sierra Leone"
-
-#. I18N: This is the country/chapman code for "El Salvador"
-#: ../language/_countries.php:462
-msgid "SLV"
-msgstr "El Salvador"
-
-#. I18N: This is the country/chapman code for "San Marino"
-#: ../language/_countries.php:464
-msgid "SMR"
-msgstr "San Marino"
-
-#. I18N: This is the country/chapman code for "Somalia"
-#: ../language/_countries.php:466
-msgid "SOM"
-msgstr "Szomália"
-
-#. I18N: This is the country/chapman code for "Saint Pierre and Miquelon"
-#: ../language/_countries.php:468
-msgid "SPM"
-msgstr "St. Pierre és Miquelon"
-
-#. I18N: This is the country/chapman code for "Sao and Principe"
-#: ../language/_countries.php:470
-msgid "STP"
-msgstr "Sao Tome és Principe"
-
-#. I18N: This is the country/chapman code for "USSR"
-#: ../language/_countries.php:472
-msgid "SUN"
-msgstr "U.S.S.R. (Soviet Union)"
-
-#. I18N: This is the country/chapman code for "Suriname"
-#: ../language/_countries.php:474
-msgid "SUR"
-msgstr "Suriname"
-
-#. I18N: This is the country/chapman code for "Slovakia"
-#: ../language/_countries.php:476
-msgid "SVK"
-msgstr "Szlovákia"
-
-#. I18N: This is the country/chapman code for "Slovenia"
-#: ../language/_countries.php:478
-msgid "SVN"
-msgstr "Szlovénia"
-
-#. I18N: This is the country/chapman code for "Sweden"
-#: ../language/_countries.php:480
-msgid "SWE"
-msgstr "Svédország"
-
-#. I18N: This is the country/chapman code for "Swaziland"
-#: ../language/_countries.php:482
-msgid "SWZ"
-msgstr "Szváziföld"
-
-#. I18N: This is the country/chapman code for "Seychelles"
-#: ../language/_countries.php:484
-msgid "SYC"
-msgstr "Seychelle-szigetek"
-
-#. I18N: This is the country/chapman code for "Syrian Arab Republic"
-#: ../language/_countries.php:486
-msgid "SYR"
-msgstr "Szíriai Arab Köztársaság"
-
-#. I18N: This is the country/chapman code for "Turks and Caicos Islands"
-#: ../language/_countries.php:488
-msgid "TCA"
-msgstr "Turks- és Caicos-szigetek"
-
-#. I18N: This is the country/chapman code for "Chad"
-#: ../language/_countries.php:490
-msgid "TCD"
-msgstr "Csád"
-
-#. I18N: This is the country/chapman code for "Togo"
-#: ../language/_countries.php:492
-msgid "TGO"
-msgstr "Togo"
-
-#. I18N: This is the country/chapman code for "Thailand"
-#: ../language/_countries.php:494
-msgid "THA"
-msgstr "Thaiföld"
-
-#. I18N: This is the country/chapman code for "Tajikistan"
-#: ../language/_countries.php:496
-msgid "TJK"
-msgstr "Tádzsikisztán"
-
-#. I18N: This is the country/chapman code for "Tokelau"
-#: ../language/_countries.php:498
-msgid "TKL"
-msgstr "Tokelau"
-
-#. I18N: This is the country/chapman code for "Turkmenistan"
-#: ../language/_countries.php:500
-msgid "TKM"
-msgstr "Türkmenisztán"
-
-#. I18N: This is the country/chapman code for "Timor-Leste"
-#: ../language/_countries.php:502
-msgid "TLS"
-msgstr "Kelet-Timor"
-
-#. I18N: This is the country/chapman code for "Tonga"
-#: ../language/_countries.php:504
-msgid "TON"
-msgstr "Tonga"
-
-#. I18N: This is the country/chapman code for "Transylvania"
-#: ../language/_countries.php:506
-msgid "TRN"
-msgstr "Erdély"
-
-#. I18N: This is the country/chapman code for "Trinidad and Tobago"
-#: ../language/_countries.php:508
-msgid "TTO"
-msgstr "Trinidad és Tobago"
-
-#. I18N: This is the country/chapman code for "Tunisia"
-#: ../language/_countries.php:510
-msgid "TUN"
-msgstr "Tunézia"
-
-#. I18N: This is the country/chapman code for "Turkey"
-#: ../language/_countries.php:512
-msgid "TUR"
-msgstr "Törökország"
-
-#. I18N: This is the country/chapman code for "Tuvalu"
-#: ../language/_countries.php:514
-msgid "TUV"
-msgstr "Tuvalu"
-
-#. I18N: This is the country/chapman code for "Taiwan"
-#: ../language/_countries.php:516
-msgid "TWN"
-msgstr "Tajvan"
-
-#. I18N: This is the country/chapman code for "Tanzania"
-#: ../language/_countries.php:518
-msgid "TZA"
-msgstr "Tanzániai Egyesült Köztársaság"
-
-#. I18N: This is the country/chapman code for "Uganda"
-#: ../language/_countries.php:520
-msgid "UGA"
-msgstr "Uganda"
-
-#. I18N: This is the country/chapman code for "Ukraine"
-#: ../language/_countries.php:522
-msgid "UKR"
-msgstr "Ukrajna"
-
-#. I18N: This is the country/chapman code for "US Minor Outlying Islands"
-#: ../language/_countries.php:524
-msgid "UMI"
-msgstr "Egyesült Államok külsõ szigetei"
-
-#. I18N: This is the country/chapman code for "Uruguay"
-#: ../language/_countries.php:526
-msgid "URY"
-msgstr "Uruguay"
-
-#. I18N: This is the country/chapman code for "USA"
-#: ../language/_countries.php:528
-msgid "USA"
-msgstr "Egyesült Államok"
-
-#. I18N: This is the country/chapman code for "Uzbekistan"
-#: ../language/_countries.php:530
-msgid "UZB"
-msgstr "Üzbegisztán"
-
-#. I18N: This is the country/chapman code for "Vatican City"
-#: ../language/_countries.php:532
-msgid "VAT"
-msgstr "Vatikán"
-
-#. I18N: This is the country/chapman code for "Saint Vincent and the Grenadines"
-#: ../language/_countries.php:534
-msgid "VCT"
-msgstr "Saint Vincent és Grenadines"
-
-#. I18N: This is the country/chapman code for "Venezuela"
-#: ../language/_countries.php:536
-msgid "VEN"
-msgstr "Venezuela"
-
-#. I18N: This is the country/chapman code for "British Virgin Islands"
-#: ../language/_countries.php:538
-msgid "VGB"
-msgstr "Brit Virgin-szigetek"
-
-#. I18N: This is the country/chapman code for "US Virgin Islands"
-#: ../language/_countries.php:540
-msgid "VIR"
-msgstr "Amerikai Virgin-szigetek"
-
-#. I18N: This is the country/chapman code for "Viet Nam"
-#: ../language/_countries.php:542
-msgid "VNM"
-msgstr "Vietnám"
-
-#. I18N: This is the country/chapman code for "Vanuatu"
-#: ../language/_countries.php:544
-msgid "VUT"
-msgstr "Vanuatu"
-
-#. I18N: This is the country/chapman code for "West Africa"
-#: ../language/_countries.php:546
-msgid "WAF"
-msgstr "Nyugat Africa"
-
-#. I18N: This is the country/chapman code for "Wallis and Futuna Islands"
-#: ../language/_countries.php:548
-msgid "WLF"
-msgstr "Wallis és Futuna"
-
-#. I18N: This is the country/chapman code for "Wales"
-#: ../language/_countries.php:550
-msgid "WLS"
-msgstr "Wales"
-
-#. I18N: This is the country/chapman code for "Samoa"
-#: ../language/_countries.php:552
-msgid "WSM"
-msgstr "Szamoa"
-
-#. I18N: This is the country/chapman code for "Yemen"
-#: ../language/_countries.php:554
-msgid "YEM"
-msgstr "Jemen"
-
-#. I18N: This is the country/chapman code for "Yugoslavia"
-#: ../language/_countries.php:556
-msgid "YUG"
-msgstr "Jugoszlávia"
-
-#. I18N: This is the country/chapman code for "South Africa"
-#: ../language/_countries.php:558
-msgid "ZAF"
-msgstr "Dél-Afrika"
-
-#. I18N: This is the country/chapman code for "Zaire"
-#: ../language/_countries.php:560
-msgid "ZAR"
-msgstr "Zaire"
-
-#. I18N: This is the country/chapman code for "Zambia"
-#: ../language/_countries.php:562
-msgid "ZMB"
-msgstr "Zambia"
-
-#. I18N: This is the country/chapman code for "Zimbabwe"
-#: ../language/_countries.php:564
-msgid "ZWE"
-msgstr "Zimbabwe"
-
-#. I18N: This is an abbreviation for the label "Baptism", to be used on genealogy charts
-#: ../language/_facts.php:36
-msgid "ABBREV_BAPM"
-msgstr ""
-
-#. I18N: This is an abbreviation for the label "Birth", to be used on genealogy charts
-#: ../language/_facts.php:38
-msgid "ABBREV_BIRT"
-msgstr ""
-
-#. I18N: This is an abbreviation for the label "Burial", to be used on genealogy charts
-#: ../language/_facts.php:40
-msgid "ABBREV_BURI"
-msgstr ""
-
-#. I18N: This is an abbreviation for the label "Christening", to be used on genealogy charts
-#: ../language/_facts.php:42
-msgid "ABBREV_CHR"
-msgstr ""
-
-#. I18N: This is an abbreviation for the label "Death", to be used on genealogy charts
-#: ../language/_facts.php:44
-msgid "ABBREV_DEAT"
-msgstr ""
-
-#. I18N: This is an abbreviation for the label "Marriage", to be used on genealogy charts
-#: ../language/_facts.php:46
-msgid "ABBREV_MARR"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Abbreviation"
-#: ../language/_facts.php:51
-msgid "ABBR"
-msgstr "Rövidítés"
-
-#. I18N: This is the GEDCOM label for "Address"
-#: ../language/_facts.php:53
-msgid "ADDR"
-msgstr "Lakcím"
-
-#. I18N: This is the GEDCOM label for "Adoption"
-#: ../language/_facts.php:55
-msgid "ADOP"
-msgstr "Örökbefogadás"
-
-#. I18N: This is the GEDCOM label for "Address 1"
-#: ../language/_facts.php:57
-msgid "ADR1"
-msgstr "Lakcím 1"
-
-#. I18N: This is the GEDCOM label for "Address 2"
-#: ../language/_facts.php:59
-msgid "ADR2"
-msgstr "Lakcím 2"
-
-#. I18N: This is the GEDCOM label for "Ancestral File Number (AFN)"
-#: ../language/_facts.php:61
-msgid "AFN"
-msgstr "Ősi Állomány Szám (angol AFN)"
-
-#. I18N: This is the GEDCOM label for "Age"
-#: ../language/_facts.php:63
-msgid "AGE"
-msgstr "Életkor"
-
-#. I18N: This is the GEDCOM label for "Agency"
-#: ../language/_facts.php:65
-msgid "AGNC"
-msgstr "Képviselet"
-
-#. I18N: This is the GEDCOM label for "Alias"
-#: ../language/_facts.php:67
-msgid "ALIA"
-msgstr "Úgyis mint"
-
-#. I18N: This is the GEDCOM label for "Ancestors"
-#: ../language/_facts.php:69
-msgid "ANCE"
-msgstr "Ősök"
-
-#. I18N: This is the GEDCOM label for "Ancestors Interest"
-#: ../language/_facts.php:71
-msgid "ANCI"
-msgstr "Ősök érdeklődése"
-
-#. I18N: This is the GEDCOM label for "Annulment"
-#: ../language/_facts.php:73
-msgid "ANUL"
-msgstr "Házasság felbontása"
-
-#. I18N: This is the GEDCOM label for "Associate"
-#: ../language/_facts.php:75
-msgid "ASSO"
-msgstr "Kapcsolódó személyek"
-
-#. I18N: This is the GEDCOM label for "Author"
-#: ../language/_facts.php:77
-msgid "AUTH"
-msgstr "Szerző"
-
-#. I18N: This is the GEDCOM label for "LDS Baptism"
-#: ../language/_facts.php:79
-msgid "BAPL"
-msgstr "UNSZ-keresztség"
-
-#. I18N: This is the GEDCOM label for "Baptism Date"
-#: ../language/_facts.php:83
-msgid "BAPM:DATE"
-msgstr "Keresztelés dátuma"
-
-#. I18N: This is the GEDCOM label for "Baptism Place"
-#: ../language/_facts.php:85
-msgid "BAPM:PLAC"
-msgstr "Keresztelés helye"
-
-#. I18N: This is the GEDCOM label for "Baptism Source"
-#: ../language/_facts.php:87
-msgid "BAPM:SOUR"
-msgstr "Keresztelés Forrás"
-
-#. I18N: This is the GEDCOM label for "Bar Mitzvah"
-#: ../language/_facts.php:89
-msgid "BARM"
-msgstr "Bar Mitzvah"
-
-#. I18N: This is the GEDCOM label for "Bar Mitzvah Date"
-#: ../language/_facts.php:91
-msgid "BARM:DATE"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Bar Mitzvah Place"
-#: ../language/_facts.php:93
-msgid "BARM:PLAC"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Bar Mitzvah Source"
-#: ../language/_facts.php:95
-msgid "BARM:SOUR"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Bas Mitzvah"
-#: ../language/_facts.php:97
-msgid "BASM"
-msgstr "Bas Mitzvah"
-
-#. I18N: This is the GEDCOM label for "Bas Mitzvah Date"
-#: ../language/_facts.php:99
-msgid "BASM:DATE"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Bas Mitzvah Place"
-#: ../language/_facts.php:101
-msgid "BASM:PLAC"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Bas Mitzvah Source"
-#: ../language/_facts.php:103
-msgid "BASM:SOUR"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Birth Date"
-#: ../language/_facts.php:107
-msgid "BIRT:DATE"
-msgstr "Születési dátum"
-
-#. I18N: This is the GEDCOM label for "Birth Place"
-#: ../language/_facts.php:109
-msgid "BIRT:PLAC"
-msgstr "Születési helye"
-
-#. I18N: This is the GEDCOM label for "Birth Source"
-#: ../language/_facts.php:111
-msgid "BIRT:SOUR"
-msgstr "Születési Forrás"
-
-#. I18N: This is the GEDCOM label for "Blessing"
-#: ../language/_facts.php:113
-msgid "BLES"
-msgstr "Megáldás"
-
-#. I18N: This is the GEDCOM label for "Binary Data Object"
-#: ../language/_facts.php:115
-msgid "BLOB"
-msgstr "Bináris adatok"
-
-#. I18N: This is the GEDCOM label for "Burial Date"
-#: ../language/_facts.php:119
-msgid "BURI:DATE"
-msgstr "Temetkezés dátuma"
-
-#. I18N: This is the GEDCOM label for "Burial Place"
-#: ../language/_facts.php:121
-msgid "BURI:PLAC"
-msgstr "Temetkezés helye"
-
-#. I18N: This is the GEDCOM label for "Burial Source"
-#: ../language/_facts.php:123
-msgid "BURI:SOUR"
-msgstr "Temetkezés Forrás"
-
-#. I18N: This is the GEDCOM label for "Call Number"
-#: ../language/_facts.php:125
-msgid "CALN"
-msgstr "Gyűjtemény azonosító"
-
-#. I18N: This is the GEDCOM label for "Caste / Social Status"
-#: ../language/_facts.php:127
-msgid "CAST"
-msgstr "Szociális/társadalmi státusz"
-
-#. I18N: This is the GEDCOM label for "Cause of an event"
-#: ../language/_facts.php:129
-msgid "CAUS"
-msgstr "A halál oka"
-
-#. I18N: This is the GEDCOM label for "Cemetery"
-#: ../language/_facts.php:131
-msgid "CEME"
-msgstr "Temető"
-
-#. I18N: This is the GEDCOM label for "Census"
-#: ../language/_facts.php:133
-msgid "CENS"
-msgstr "Összeírás"
-
-#. I18N: This is the GEDCOM label for "Last Change"
-#: ../language/_facts.php:135
-msgid "CHAN"
-msgstr "Utolsó módosítás"
-
-#. I18N: This is the GEDCOM label for "Character Set"
-#: ../language/_facts.php:137
-msgid "CHAR"
-msgstr "Kódkészlet"
-
-#. I18N: This is the GEDCOM label for "Child"
-#: ../language/_facts.php:139
-msgid "CHIL"
-msgstr "Gyermek"
-
-#. I18N: This is the GEDCOM label for "Christening Date"
-#: ../language/_facts.php:143
-msgid "CHR:DATE"
-msgstr "Katolikus Keresztelés dátuma"
-
-#. I18N: This is the GEDCOM label for "Christening Place"
-#: ../language/_facts.php:145
-msgid "CHR:PLAC"
-msgstr "Katolikus Keresztelés helye"
-
-#. I18N: This is the GEDCOM label for "Christening Source"
-#: ../language/_facts.php:147
-msgid "CHR:SOUR"
-msgstr "Katolikus Keresztelés Forrás"
-
-#. I18N: This is the GEDCOM label for "Citizenship"
-#: ../language/_facts.php:151
-msgid "CITN"
-msgstr "Állampolgárság"
-
-#. I18N: This is the GEDCOM label for "City"
-#: ../language/_facts.php:153
-msgid "CITY"
-msgstr "Város"
-
-#. I18N: This is the GEDCOM label for "Comment"
-#: ../language/_facts.php:155
-msgid "COMM"
-msgstr "Megjegyzés"
-
-#. I18N: This is the GEDCOM label for "Confirmation"
-#: ../language/_facts.php:157
-msgid "CONF"
-msgstr "Konfirmáció"
-
-#. I18N: This is the GEDCOM label for "Confirmation Date"
-#: ../language/_facts.php:159
-msgid "CONF:DATE"
-msgstr "Konfirmáció dátuma"
-
-#. I18N: This is the GEDCOM label for "Confirmation Place"
-#: ../language/_facts.php:161
-msgid "CONF:PLAC"
-msgstr "Konfirmáció helye"
-
-#. I18N: This is the GEDCOM label for "Confirmation Source"
-#: ../language/_facts.php:163
-msgid "CONF:SOUR"
-msgstr "Konfirmáció Forrás"
-
-#. I18N: This is the GEDCOM label for "LDS Confirmation"
-#: ../language/_facts.php:165
-msgid "CONL"
-msgstr "UNSZ-konfirmáció"
-
-#. I18N: This is the GEDCOM label for "Copyright"
-#: ../language/_facts.php:167
-msgid "COPR"
-msgstr "Copyright"
-
-#. I18N: This is the GEDCOM label for "Corporation / Company"
-#: ../language/_facts.php:169
-msgid "CORP"
-msgstr "Vállalat/Intézmény"
-
-#. I18N: This is the GEDCOM label for "Cremation"
-#: ../language/_facts.php:171
-msgid "CREM"
-msgstr "Hamvasztás"
-
-#. I18N: This is the GEDCOM label for "Country"
-#: ../language/_facts.php:173
-msgid "CTRY"
-msgstr "Ország"
-
-#. I18N: This is the GEDCOM label for "Data"
-#: ../language/_facts.php:175
-msgid "DATA"
-msgstr "Adat"
-
-#. I18N: This is the GEDCOM label for "Date of entry in original source"
-#: ../language/_facts.php:177
-msgid "DATA:DATE"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Date"
-#: ../language/_facts.php:179
-msgid "DATE"
-msgstr "Dátum"
-
-#. I18N: This is the GEDCOM label for "Death Date"
-#: ../language/_facts.php:183
-msgid "DEAT:DATE"
-msgstr "Halálesetének dátuma"
-
-#. I18N: This is the GEDCOM label for "Death Place"
-#: ../language/_facts.php:185
-msgid "DEAT:PLAC"
-msgstr "Halálesetének helye"
-
-#. I18N: This is the GEDCOM label for "Death Source"
-#: ../language/_facts.php:187
-msgid "DEAT:SOUR"
-msgstr "Haláleset Forrás"
-
-#. I18N: This is the GEDCOM label for "Descendants"
-#: ../language/_facts.php:189
-msgid "DESC"
-msgstr "Leszármazottak"
-
-#. I18N: This is the GEDCOM label for "Descendants Interest"
-#: ../language/_facts.php:191
-msgid "DESI"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Destination"
-#: ../language/_facts.php:193
-msgid "DEST"
-msgstr "Cél"
-
-#. I18N: This is the GEDCOM label for "Divorce filed"
-#: ../language/_facts.php:197
-msgid "DIVF"
-msgstr "Válási akta"
-
-#. I18N: This is the GEDCOM label for "Description"
-#: ../language/_facts.php:199
-msgid "DSCR"
-msgstr "Leírás"
-
-#. I18N: This is the GEDCOM label for "Education"
-#: ../language/_facts.php:201
-msgid "EDUC"
-msgstr "Végzettség"
-
-#. I18N: This is the GEDCOM label for "Email Address"
-#: ../language/_facts.php:203
-msgid "EMAIL"
-msgstr "Email-cím"
-
-#. I18N: This is the GEDCOM label for "Email Address"
-#: ../language/_facts.php:205
-msgid "EMAL"
-msgstr "Email cím"
-
-#. I18N: This is the GEDCOM label for "LDS Endowment"
-#: ../language/_facts.php:209
-msgid "ENDL"
-msgstr "UNSZ-szertartás (Endowment)"
-
-#. I18N: This is the GEDCOM label for "Engagement"
-#: ../language/_facts.php:211
-msgid "ENGA"
-msgstr "Eljegyzés"
-
-#. I18N: This is the GEDCOM label for "Engagement Date"
-#: ../language/_facts.php:213
-msgid "ENGA:DATE"
-msgstr "Eljegyzés dátuma"
-
-#. I18N: This is the GEDCOM label for "Engagement Place"
-#: ../language/_facts.php:215
-msgid "ENGA:PLAC"
-msgstr "Eljegyzés helye"
-
-#. I18N: This is the GEDCOM label for "Engagement Source"
-#: ../language/_facts.php:217
-msgid "ENGA:SOUR"
-msgstr "Eljegyzés Forrás"
-
-#. I18N: This is the GEDCOM label for "Event"
-#: ../language/_facts.php:219
-msgid "EVEN"
-msgstr "Esemény"
-
-#. I18N: This is the GEDCOM label for "Fact"
-#: ../language/_facts.php:221
-msgid "FACT"
-msgstr "Tény"
-
-#. I18N: This is the GEDCOM label for "Family"
-#: ../language/_facts.php:223
-msgid "FAM"
-msgstr "Család"
-
-#. I18N: This is the GEDCOM label for "Family as a Child"
-#: ../language/_facts.php:225
-msgid "FAMC"
-msgstr "Családtagok (gyermekként)"
-
-#. I18N: This is the GEDCOM label for "Father's Birthplace"
-#: ../language/_facts.php:227
-msgid "FAMC:HUSB:BIRT:PLAC"
-msgstr "Apa születési helye"
-
-#. I18N: This is the GEDCOM label for "Paternal Grandfather's Given Name"
-#: ../language/_facts.php:229
-msgid "FAMC:HUSB:FAMC:HUSB:GIVN"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Paternal Grandmother's Given Name"
-#: ../language/_facts.php:231
-msgid "FAMC:HUSB:FAMC:WIFE:GIVN"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Father's Given Name"
-#: ../language/_facts.php:233
-msgid "FAMC:HUSB:GIVN"
-msgstr "Apa keresztneve"
-
-#. I18N: This is the GEDCOM label for "Father's Occupation"
-#: ../language/_facts.php:235
-msgid "FAMC:HUSB:OCCU"
-msgstr "Apa foglalkozása"
-
-#. I18N: This is the GEDCOM label for "Father's Surname"
-#: ../language/_facts.php:237
-msgid "FAMC:HUSB:SURN"
-msgstr "Apa vezetékneve"
-
-#. I18N: This is the GEDCOM label for "Parents' Marriage Place"
-#: ../language/_facts.php:239
-msgid "FAMC:MARR:PLAC"
-msgstr "Szülők házasságkötésének helye"
-
-#. I18N: This is the GEDCOM label for "Mother's Birthplace"
-#: ../language/_facts.php:241
-msgid "FAMC:WIFE:BIRT:PLAC"
-msgstr "Anya születési helye"
-
-#. I18N: This is the GEDCOM label for "Maternal Grandfather's Given Name"
-#: ../language/_facts.php:243
-msgid "FAMC:WIFE:FAMC:HUSB:GIVN"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Maternal Grandmother's Given Name"
-#: ../language/_facts.php:245
-msgid "FAMC:WIFE:FAMC:WIFE:GIVN"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Mother's Given Name"
-#: ../language/_facts.php:247
-msgid "FAMC:WIFE:GIVN"
-msgstr "Anya keresztneve"
-
-#. I18N: This is the GEDCOM label for "Mother's Surname"
-#: ../language/_facts.php:249
-msgid "FAMC:WIFE:SURN"
-msgstr "Anya vezetékneve"
-
-#. I18N: This is the GEDCOM label for "Family File"
-#: ../language/_facts.php:251
-msgid "FAMF"
-msgstr "UNSZ családi akta"
-
-#. I18N: This is the GEDCOM label for "Family as a Spouse"
-#: ../language/_facts.php:253
-msgid "FAMS"
-msgstr "Családtagok (házastársként)"
-
-#. I18N: This is the GEDCOM label for "Spouse Census Date"
-#: ../language/_facts.php:255
-msgid "FAMS:CENS:DATE"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Spouse Census Place"
-#: ../language/_facts.php:257
-msgid "FAMS:CENS:PLAC"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Child's Birth Place"
-#: ../language/_facts.php:259
-msgid "FAMS:CHIL:BIRT:PLAC"
-msgstr "Gyermek születési hely"
-
-#. I18N: This is the GEDCOM label for "Spouse Divorce Date"
-#: ../language/_facts.php:261
-msgid "FAMS:DIV:DATE"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Spouse Divorce Place"
-#: ../language/_facts.php:263
-msgid "FAMS:DIV:PLAC"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Date"
-#: ../language/_facts.php:265
-msgid "FAMS:MARR:DATE"
-msgstr "Házasságkötés dátuma"
-
-#. I18N: This is the GEDCOM label for "Marriage Place"
-#: ../language/_facts.php:267
-msgid "FAMS:MARR:PLAC"
-msgstr "Házasságkötés helye"
-
-#. I18N: This is the GEDCOM label for "Spouse Note"
-#: ../language/_facts.php:269
-msgid "FAMS:NOTE"
-msgstr "Házastárs jegyzet"
-
-#. I18N: This is the GEDCOM label for "LDS Spouse Sealing Date"
-#: ../language/_facts.php:271
-msgid "FAMS:SLGS:DATE"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "LDS Spouse Sealing Place"
-#: ../language/_facts.php:273
-msgid "FAMS:SLGS:PLAC"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "LDS Spouse Sealing Temple"
-#: ../language/_facts.php:275
-msgid "FAMS:SLGS:TEMP"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Spouse's Birth Place"
-#: ../language/_facts.php:277
-msgid "FAMS:SPOUSE:BIRT:PLAC"
-msgstr "Házastárs születési helye"
-
-#. I18N: This is the GEDCOM label for "Spouse's Death Place"
-#: ../language/_facts.php:279
-msgid "FAMS:SPOUSE:DEAT:PLAC"
-msgstr "Házastárs halálának helye"
-
-#. I18N: This is the GEDCOM label for "FAX"
-#: ../language/_facts.php:281
-msgid "FAX"
-msgstr "Fax"
-
-#. I18N: This is the GEDCOM label for "First Communion"
-#: ../language/_facts.php:283
-msgid "FCOM"
-msgstr "Elsőáldozás"
-
-#. I18N: This is the GEDCOM label for "First Communion Date"
-#: ../language/_facts.php:285
-msgid "FCOM:DATE"
-msgstr "Elsőáldozás dátuma"
-
-#. I18N: This is the GEDCOM label for "First Communion Place"
-#: ../language/_facts.php:287
-msgid "FCOM:PLAC"
-msgstr "Elsőáldozás helye"
-
-#. I18N: This is the GEDCOM label for "First Communion Source"
-#: ../language/_facts.php:289
-msgid "FCOM:SOUR"
-msgstr "Elsőáldozás Forrás"
-
-#. I18N: This is the GEDCOM label for "External File"
-#: ../language/_facts.php:291
-msgid "FILE"
-msgstr "Külső adatállomány"
-
-#. I18N: This is the GEDCOM label for "Phonetic"
-#: ../language/_facts.php:293
-msgid "FONE"
-msgstr "Fonetikus"
-
-#. I18N: This is the GEDCOM label for "Format"
-#: ../language/_facts.php:295
-msgid "FORM"
-msgstr "Formátum"
-
-#. I18N: This is the GEDCOM label for "Graduation"
-#: ../language/_facts.php:299
-msgid "GRAD"
-msgstr "Felsőfokú végzettség"
-
-#. I18N: This is the GEDCOM label for "Husband"
-#: ../language/_facts.php:301
-msgid "HUSB"
-msgstr "Férj"
-
-#. I18N: This is the GEDCOM label for "Identification Number"
-#: ../language/_facts.php:303
-msgid "IDNO"
-msgstr "Azonosítószám"
-
-#. I18N: This is the GEDCOM label for "Latitude"
-#: ../language/_facts.php:307
-msgid "LATI"
-msgstr "Szélességi fok"
-
-#. I18N: This is the GEDCOM label for "Legatee"
-#: ../language/_facts.php:309
-msgid "LEGA"
-msgstr "Végrendeleti örökös"
-
-#. I18N: This is the GEDCOM label for "Longitude"
-#: ../language/_facts.php:311
-msgid "LONG"
-msgstr "Hosszúsági fok"
-
-#. I18N: This is the GEDCOM label for "Map"
-#: ../language/_facts.php:313
-msgid "MAP"
-msgstr "Térkép"
-
-#. I18N: This is the GEDCOM label for "Marriage Banns"
-#: ../language/_facts.php:315
-msgid "MARB"
-msgstr "Eljegyzés kihirdetése"
-
-#. I18N: This is the GEDCOM label for "Marriage Banns Date"
-#: ../language/_facts.php:317
-msgid "MARB:DATE"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Banns Place"
-#: ../language/_facts.php:319
-msgid "MARB:PLAC"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Banns Source"
-#: ../language/_facts.php:321
-msgid "MARB:SOUR"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Contract"
-#: ../language/_facts.php:323
-msgid "MARC"
-msgstr "Házassági szerződés"
-
-#. I18N: This is the GEDCOM label for "Marriage Licence"
-#: ../language/_facts.php:325
-msgid "MARL"
-msgstr "Házassági engedély"
-
-#. I18N: This is the GEDCOM label for "Marriage Date"
-#: ../language/_facts.php:329
-msgid "MARR:DATE"
-msgstr "Házasságkötés dátuma"
-
-#. I18N: This is the GEDCOM label for "Marriage Place"
-#: ../language/_facts.php:331
-msgid "MARR:PLAC"
-msgstr "Házasságkötés helye"
-
-#. I18N: This is the GEDCOM label for "Marriage Source"
-#: ../language/_facts.php:333
-msgid "MARR:SOUR"
-msgstr "Házasságkötés Forrás"
-
-#. I18N: This is the GEDCOM label for "Civil Marriage"
-#: ../language/_facts.php:335
-msgid "MARR_CIVIL"
-msgstr "Polgári esküvő"
-
-#. I18N: This is the GEDCOM label for "Registered Partnership"
-#: ../language/_facts.php:337
-msgid "MARR_PARTNERS"
-msgstr "Élettársi kapcsolat"
-
-#. I18N: This is the GEDCOM label for "Religious Marriage"
-#: ../language/_facts.php:339
-msgid "MARR_RELIGIOUS"
-msgstr "Egyházi esküvő"
-
-#. I18N: This is the GEDCOM label for "Marriage Type unknown"
-#: ../language/_facts.php:341
-msgid "MARR_UNKNOWN"
-msgstr "Házassági típus nem ismert"
-
-#. I18N: This is the GEDCOM label for "Marriage Settlement"
-#: ../language/_facts.php:343
-msgid "MARS"
-msgstr "Házasság előtti szerződés"
-
-#. I18N: This is the GEDCOM label for "Media Type"
-#: ../language/_facts.php:345
-msgid "MEDI"
-msgstr "Médiatípus"
-
-#. I18N: This is the GEDCOM label for "Name"
-#: ../language/_facts.php:347
-msgid "NAME"
-msgstr "Név"
-
-#. I18N: This is the GEDCOM label for "Phonetic Name"
-#: ../language/_facts.php:349
-msgid "NAME:FONE"
-msgstr "Fonetikus neve"
-
-#. I18N: This is the GEDCOM label for "Romanized Name"
-#: ../language/_facts.php:351
-msgid "NAME:ROMN"
-msgstr "Katolizált neve"
-
-#. I18N: This is the GEDCOM label for "Name in Hebrew"
-#: ../language/_facts.php:353
-msgid "NAME:_HEB"
-msgstr "Héber neve"
-
-#. I18N: This is the GEDCOM label for "Nationality"
-#: ../language/_facts.php:355
-msgid "NATI"
-msgstr "Nemzetiség"
-
-#. I18N: This is the GEDCOM label for "Naturalization"
-#: ../language/_facts.php:357
-msgid "NATU"
-msgstr "Honosítás"
-
-#. I18N: This is the GEDCOM label for "Number of Children"
-#: ../language/_facts.php:359
-msgid "NCHI"
-msgstr "Gyermekek száma"
-
-#. I18N: This is the GEDCOM label for "Nickname"
-#: ../language/_facts.php:361
-msgid "NICK"
-msgstr "Becenév"
-
-#. I18N: This is the GEDCOM label for "Number of Marriages"
-#: ../language/_facts.php:363
-msgid "NMR"
-msgstr "Házasságkötések száma"
-
-#. I18N: This is the GEDCOM label for "Note"
-#: ../language/_facts.php:365
-msgid "NOTE"
-msgstr "Jegyzet"
-
-#. I18N: This is the GEDCOM label for "Prefix"
-#: ../language/_facts.php:367
-msgid "NPFX"
-msgstr "Előtag"
-
-#. I18N: This is the GEDCOM label for "Suffix"
-#: ../language/_facts.php:369
-msgid "NSFX"
-msgstr "Utótag"
-
-#. I18N: This is the GEDCOM label for "Multimedia Object"
-#: ../language/_facts.php:371
-msgid "OBJE"
-msgstr "Multimédia-elem"
-
-#. I18N: This is the GEDCOM label for "Occupation"
-#: ../language/_facts.php:373
-msgid "OCCU"
-msgstr "Foglalkozás"
-
-#. I18N: This is the GEDCOM label for "Ordinance"
-#: ../language/_facts.php:375
-msgid "ORDI"
-msgstr "UNSZ-szertartás"
-
-#. I18N: This is the GEDCOM label for "Ordination"
-#: ../language/_facts.php:377
-msgid "ORDN"
-msgstr "Pappá szentelés"
-
-#. I18N: This is the GEDCOM label for "Citation Details"
-#: ../language/_facts.php:379
-msgid "PAGE"
-msgstr "Hivatkozás"
-
-#. I18N: This is the GEDCOM label for "Pedigree"
-#: ../language/_facts.php:381
-msgid "PEDI"
-msgstr "Felmenő rokonság"
-
-#. I18N: This is the GEDCOM label for "Phone"
-#: ../language/_facts.php:383
-msgid "PHON"
-msgstr "Telefon"
-
-#. I18N: This is the GEDCOM label for "Place"
-#: ../language/_facts.php:385
-msgid "PLAC"
-msgstr "Helyszín"
-
-#. I18N: This is the GEDCOM label for "Phonetic Place"
-#: ../language/_facts.php:387
-msgid "PLAC:FONE"
-msgstr "Fonetikus helység"
-
-#. I18N: This is the GEDCOM label for "Romanized Place"
-#: ../language/_facts.php:389
-msgid "PLAC:ROMN"
-msgstr "Katolizált helység"
-
-#. I18N: This is the GEDCOM label for "Place in Hebrew"
-#: ../language/_facts.php:391
-msgid "PLAC:_HEB"
-msgstr "Héber helység"
-
-#. I18N: This is the GEDCOM label for "Postal Code"
-#: ../language/_facts.php:393
-msgid "POST"
-msgstr "Irányítószám"
-
-#. I18N: This is the GEDCOM label for "Probate"
-#: ../language/_facts.php:395
-msgid "PROB"
-msgstr "Végrendelet hitelesítése"
-
-#. I18N: This is the GEDCOM label for "Property"
-#: ../language/_facts.php:397
-msgid "PROP"
-msgstr "Tulajdon"
-
-#. I18N: This is the GEDCOM label for "Publication"
-#: ../language/_facts.php:399
-msgid "PUBL"
-msgstr "Publikáció"
-
-#. I18N: This is the GEDCOM label for "Quality of Data"
-#: ../language/_facts.php:401
-msgid "QUAY"
-msgstr "Adat-megbízhatóság"
-
-#. I18N: This is the GEDCOM label for "Reference Number"
-#: ../language/_facts.php:403
-msgid "REFN"
-msgstr "Hivatkozási szám"
-
-#. I18N: This is the GEDCOM label for "Relationship"
-#: ../language/_facts.php:405
-msgid "RELA"
-msgstr "Kapcsolat"
-
-#. I18N: This is the GEDCOM label for "Religion"
-#: ../language/_facts.php:407
-msgid "RELI"
-msgstr "Vallás"
-
-#. I18N: This is the GEDCOM label for "Repository"
-#: ../language/_facts.php:409
-msgid "REPO"
-msgstr "Szervezet"
-
-#. I18N: This is the GEDCOM label for "Residence"
-#: ../language/_facts.php:411
-msgid "RESI"
-msgstr "Lakhely"
-
-#. I18N: This is the GEDCOM label for "Restriction"
-#: ../language/_facts.php:413
-msgid "RESN"
-msgstr "Korlátozás"
-
-#. I18N: This is the GEDCOM label for "Retirement"
-#: ../language/_facts.php:415
-msgid "RETI"
-msgstr "Nyugdíjazás"
-
-#. I18N: This is the GEDCOM label for "Record File Number"
-#: ../language/_facts.php:417
-msgid "RFN"
-msgstr "Adat állomány-azonosító"
-
-#. I18N: This is the GEDCOM label for "Record ID Number"
-#: ../language/_facts.php:419
-msgid "RIN"
-msgstr "Adat azonosítószáma"
-
-#. I18N: This is the GEDCOM label for "Role"
-#: ../language/_facts.php:421
-msgid "ROLE"
-msgstr "Szerep"
-
-#. I18N: This is the GEDCOM label for "Romanized"
-#: ../language/_facts.php:423
-msgid "ROMN"
-msgstr "Katolizált"
-
-#. I18N: This is the GEDCOM label for "Remote Server"
-#: ../language/_facts.php:425
-msgid "SERV"
-msgstr "Távoli szerver"
-
-#. I18N: This is the GEDCOM label for "Gender"
-#: ../language/_facts.php:427
-msgid "SEX"
-msgstr "Neme"
-
-#. I18N: This is the GEDCOM label for "Shared Note"
-#: ../language/_facts.php:429
-msgid "SHARED_NOTE"
-msgstr "Közös jegyzetek"
-
-#. I18N: This is the GEDCOM label for "LDS Child Sealing"
-#: ../language/_facts.php:431
-msgid "SLGC"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "LDS Spouse Sealing"
-#: ../language/_facts.php:433
-msgid "SLGS"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Source"
-#: ../language/_facts.php:435
-msgid "SOUR"
-msgstr "Forrás"
-
-#. I18N: This is the GEDCOM label for "Surname Prefix"
-#: ../language/_facts.php:437
-msgid "SPFX"
-msgstr "Vezetéknév előtagja"
-
-#. I18N: This is the GEDCOM label for "Social Security Number"
-#: ../language/_facts.php:439
-msgid "SSN"
-msgstr "Társadalombiztosítási azonosító"
-
-#. I18N: This is the GEDCOM label for "State"
-#: ../language/_facts.php:441
-msgid "STAE"
-msgstr "Állam"
-
-#. I18N: This is the GEDCOM label for "Status"
-#: ../language/_facts.php:443
-msgid "STAT"
-msgstr "Státusz"
-
-#. I18N: This is the GEDCOM label for "Status Change Date"
-#: ../language/_facts.php:445
-msgid "STAT:DATE"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Submitter"
-#: ../language/_facts.php:447
-msgid "SUBM"
-msgstr "Adatszolgáltató"
-
-#. I18N: This is the GEDCOM label for "Submission"
-#: ../language/_facts.php:449
-msgid "SUBN"
-msgstr "Beadvány"
-
-#. I18N: This is the GEDCOM label for "Temple"
-#: ../language/_facts.php:453
-msgid "TEMP"
-msgstr "Templom"
-
-#. I18N: This is the GEDCOM label for "Text"
-#: ../language/_facts.php:455
-msgid "TEXT"
-msgstr "Szöveg"
-
-#. I18N: This is the GEDCOM label for "Time"
-#: ../language/_facts.php:457
-msgid "TIME"
-msgstr "Idő"
-
-#. I18N: This is the GEDCOM label for "Title"
-#: ../language/_facts.php:459
-msgid "TITL"
-msgstr "Cím"
-
-#. I18N: This is the GEDCOM label for "Phonetic Title"
-#: ../language/_facts.php:461
-msgid "TITL:FONE"
-msgstr "Fonetikus Címe"
-
-#. I18N: This is the GEDCOM label for "Romanized Title"
-#: ../language/_facts.php:463
-msgid "TITL:ROMN"
-msgstr "Katolizált Címe"
-
-#. I18N: This is the GEDCOM label for "Title in Hebrew"
-#: ../language/_facts.php:465
-msgid "TITL:_HEB"
-msgstr "Héber Címe"
-
-#. I18N: This is the GEDCOM label for "Type"
-#: ../language/_facts.php:467
-msgid "TYPE"
-msgstr "Típus"
-
-#. I18N: This is the GEDCOM label for "Web URL"
-#: ../language/_facts.php:469
-msgid "URL"
-msgstr "Webcím"
-
-#. I18N: This is the GEDCOM label for "Wife"
-#: ../language/_facts.php:471
-msgid "WIFE"
-msgstr "Feleség"
-
-#. I18N: This is the GEDCOM label for "Will"
-#: ../language/_facts.php:473
-msgid "WILL"
-msgstr "Végrendelet"
-
-#. I18N: This is the GEDCOM label for "Web Home Page"
-#: ../language/_facts.php:475
-msgid "WWW"
-msgstr "Honlap"
-
-#. I18N: This is the GEDCOM label for "Adoption of a child"
-#: ../language/_facts.php:477
-msgid "_ADOP_CHIL"
-msgstr "Gyermek örökbefogadása"
-
-#. I18N: This is the GEDCOM label for "Adoption of a first cousin"
-#: ../language/_facts.php:479
-msgid "_ADOP_COUS"
-msgstr "Első unokatestvér örökbefogadása"
-
-#. I18N: This is the GEDCOM label for "Adoption of father's sibling"
-#: ../language/_facts.php:481
-msgid "_ADOP_FSIB"
-msgstr "Apa testvérének örökbefogadása"
-
-#. I18N: This is the GEDCOM label for "Adoption of a grandchild"
-#: ../language/_facts.php:483
-msgid "_ADOP_GCHI"
-msgstr "Unoka örökbefogadása"
-
-#. I18N: This is the GEDCOM label for "Adoption of a great-grandchild"
-#: ../language/_facts.php:485
-msgid "_ADOP_GGCH"
-msgstr "Dédunoka örökbefogadása"
-
-#. I18N: This is the GEDCOM label for "Adoption of half-sibling"
-#: ../language/_facts.php:487
-msgid "_ADOP_HSIB"
-msgstr "Féltestvér örökbefogadása"
-
-#. I18N: This is the GEDCOM label for "Adoption of mother's sibling"
-#: ../language/_facts.php:489
-msgid "_ADOP_MSIB"
-msgstr "Anya testvérének örökbefogadása"
-
-#. I18N: This is the GEDCOM label for "Adoption of a nephew or niece"
-#: ../language/_facts.php:491
-msgid "_ADOP_NEPH"
-msgstr "Unokaöcs vagy unokahúg örökbefogadása"
-
-#. I18N: This is the GEDCOM label for "Adoption of sibling"
-#: ../language/_facts.php:493
-msgid "_ADOP_SIBL"
-msgstr "Testvér örökbefogadása"
-
-#. I18N: This is the GEDCOM label for "Adopted by Father"
-#: ../language/_facts.php:495
-msgid "_ADPF"
-msgstr "Az apa örökbefogadta"
-
-#. I18N: This is the GEDCOM label for "Adopted by Mother"
-#: ../language/_facts.php:497
-msgid "_ADPM"
-msgstr "Az anya örökbefogadta"
-
-#. I18N: This is the GEDCOM label for "Also known as"
-#: ../language/_facts.php:499
-msgid "_AKA"
-msgstr "Úgyis mint"
-
-#. I18N: This is the GEDCOM label for "Also known as"
-#: ../language/_facts.php:501
-msgid "_AKAN"
-msgstr "Úgyis mint"
-
-#. I18N: This is the GEDCOM label for "Baptism of a child"
-#: ../language/_facts.php:503
-msgid "_BAPM_CHIL"
-msgstr "Gyermek keresztelése"
-
-#. I18N: This is the GEDCOM label for "Baptism of a first cousin"
-#: ../language/_facts.php:505
-msgid "_BAPM_COUS"
-msgstr "Első unokatestvér keresztelése"
-
-#. I18N: This is the GEDCOM label for "Baptism of father's sibling"
-#: ../language/_facts.php:507
-msgid "_BAPM_FSIB"
-msgstr "Apa testvérének keresztelése"
-
-#. I18N: This is the GEDCOM label for "Baptism of a grandchild"
-#: ../language/_facts.php:509
-msgid "_BAPM_GCHI"
-msgstr "Unoka keresztelése"
-
-#. I18N: This is the GEDCOM label for "Baptism of a great-grandchild"
-#: ../language/_facts.php:511
-msgid "_BAPM_GGCH"
-msgstr "Dédunoka keresztelése"
-
-#. I18N: This is the GEDCOM label for "Baptism of half-sibling"
-#: ../language/_facts.php:513
-msgid "_BAPM_HSIB"
-msgstr "Féltestvér keresztelése"
-
-#. I18N: This is the GEDCOM label for "Baptism of mother's sibling"
-#: ../language/_facts.php:515
-msgid "_BAPM_MSIB"
-msgstr "Anya testvérének keresztelése"
-
-#. I18N: This is the GEDCOM label for "Baptism of a nephew or niece"
-#: ../language/_facts.php:517
-msgid "_BAPM_NEPH"
-msgstr "Unokaöcs vagy unokahúg keresztelése"
-
-#. I18N: This is the GEDCOM label for "Baptism of sibling"
-#: ../language/_facts.php:519
-msgid "_BAPM_SIBL"
-msgstr "Testvér keresztelése"
-
-#. I18N: This is the GEDCOM label for "Bibliography"
-#: ../language/_facts.php:521
-msgid "_BIBL"
-msgstr "Irodalomjegyzék"
-
-#. I18N: This is the GEDCOM label for "Birth of a child"
-#: ../language/_facts.php:523
-msgid "_BIRT_CHIL"
-msgstr "Gyermek születése"
-
-#. I18N: This is the GEDCOM label for "Birth of a first cousin"
-#: ../language/_facts.php:525
-msgid "_BIRT_COUS"
-msgstr "Első unokatestvér születése"
-
-#. I18N: This is the GEDCOM label for "Birth of father's sibling"
-#: ../language/_facts.php:527
-msgid "_BIRT_FSIB"
-msgstr "Apa testvérének születése"
-
-#. I18N: This is the GEDCOM label for "Birth of a grandchild"
-#: ../language/_facts.php:529
-msgid "_BIRT_GCHI"
-msgstr "Unoka születése"
-
-#. I18N: This is the GEDCOM label for "Birth of a great-grandchild"
-#: ../language/_facts.php:531
-msgid "_BIRT_GGCH"
-msgstr "Dédunoka születése"
-
-#. I18N: This is the GEDCOM label for "Birth of half-sibling"
-#: ../language/_facts.php:533
-msgid "_BIRT_HSIB"
-msgstr "Féltestvér születése"
-
-#. I18N: This is the GEDCOM label for "Birth of mother's sibling"
-#: ../language/_facts.php:535
-msgid "_BIRT_MSIB"
-msgstr "Anya testvérének születése"
-
-#. I18N: This is the GEDCOM label for "Birth of a nephew or niece"
-#: ../language/_facts.php:537
-msgid "_BIRT_NEPH"
-msgstr "Unokaöcs vagy unokahúg születése"
-
-#. I18N: This is the GEDCOM label for "Birth of sibling"
-#: ../language/_facts.php:539
-msgid "_BIRT_SIBL"
-msgstr "Testvér születése"
-
-#. I18N: This is the GEDCOM label for "Brit Mila"
-#: ../language/_facts.php:541
-msgid "_BRTM"
-msgstr "Körülmetélés"
-
-#. I18N: This is the GEDCOM label for "Brit Mila Date"
-#: ../language/_facts.php:543
-msgid "_BRTM:DATE"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Brit Mila Place"
-#: ../language/_facts.php:545
-msgid "_BRTM:PLAC"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Brit Mila Source"
-#: ../language/_facts.php:547
-msgid "_BRTM:SOUR"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Burial of a child"
-#: ../language/_facts.php:549
-msgid "_BURI_CHIL"
-msgstr "Gyermek temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of a first cousin"
-#: ../language/_facts.php:551
-msgid "_BURI_COUS"
-msgstr "Első unokatestvér temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of father"
-#: ../language/_facts.php:553
-msgid "_BURI_FATH"
-msgstr "Apa temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of father's sibling"
-#: ../language/_facts.php:555
-msgid "_BURI_FSIB"
-msgstr "Apa testvérének temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of a grandchild"
-#: ../language/_facts.php:557
-msgid "_BURI_GCHI"
-msgstr "Unoka temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of a great-grandchild"
-#: ../language/_facts.php:559
-msgid "_BURI_GGCH"
-msgstr "Dédunoka temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of a great-grand-parent"
-#: ../language/_facts.php:561
-msgid "_BURI_GGPA"
-msgstr "Dédnagyszülő temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of a grand-parent"
-#: ../language/_facts.php:563
-msgid "_BURI_GPAR"
-msgstr "Nagyszülő temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of half-sibling"
-#: ../language/_facts.php:565
-msgid "_BURI_HSIB"
-msgstr "Féltestvér temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of mother"
-#: ../language/_facts.php:567
-msgid "_BURI_MOTH"
-msgstr "Anya temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of mother's sibling"
-#: ../language/_facts.php:569
-msgid "_BURI_MSIB"
-msgstr "Anya testvérének temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of a nephew or niece"
-#: ../language/_facts.php:571
-msgid "_BURI_NEPH"
-msgstr "Unokaöcs vagy unokahúg temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of sibling"
-#: ../language/_facts.php:573
-msgid "_BURI_SIBL"
-msgstr "Testvér temetése"
-
-#. I18N: This is the GEDCOM label for "Burial of spouse"
-#: ../language/_facts.php:575
-msgid "_BURI_SPOU"
-msgstr "Házastárs temetése"
-
-#. I18N: This is the GEDCOM label for "Christening of a child"
-#: ../language/_facts.php:577
-msgid "_CHR_CHIL"
-msgstr "Gyermek katolikus keresztelése"
-
-#. I18N: This is the GEDCOM label for "Christening of a first cousin"
-#: ../language/_facts.php:579
-msgid "_CHR_COUS"
-msgstr "Első unokatestvér katolikus keresztelése"
-
-#. I18N: This is the GEDCOM label for "Christening of father's sibling"
-#: ../language/_facts.php:581
-msgid "_CHR_FSIB"
-msgstr "Apa testvérének katolikus keresztelése"
-
-#. I18N: This is the GEDCOM label for "Christening of a grandchild"
-#: ../language/_facts.php:583
-msgid "_CHR_GCHI"
-msgstr "Unoka katolikus keresztelése"
-
-#. I18N: This is the GEDCOM label for "Christening of a great-grandchild"
-#: ../language/_facts.php:585
-msgid "_CHR_GGCH"
-msgstr "Dédunoka katolikus keresztelése"
-
-#. I18N: This is the GEDCOM label for "Christening of half-sibling"
-#: ../language/_facts.php:587
-msgid "_CHR_HSIB"
-msgstr "Féltestvér katolikus keresztelése"
-
-#. I18N: This is the GEDCOM label for "Christening of mother's sibling"
-#: ../language/_facts.php:589
-msgid "_CHR_MSIB"
-msgstr "Anya testvérének katolikus keresztelése"
-
-#. I18N: This is the GEDCOM label for "Christening of a nephew or niece"
-#: ../language/_facts.php:591
-msgid "_CHR_NEPH"
-msgstr "Unokaöcs vagy unokahúg katolikus keresztelése"
-
-#. I18N: This is the GEDCOM label for "Christening of sibling"
-#: ../language/_facts.php:593
-msgid "_CHR_SIBL"
-msgstr "Testvér katolikus keresztelése"
-
-#. I18N: This is the GEDCOM label for "Cremation of a child"
-#: ../language/_facts.php:597
-msgid "_CREM_CHIL"
-msgstr "Gyermek hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of a first cousin"
-#: ../language/_facts.php:599
-msgid "_CREM_COUS"
-msgstr "Első unokatestvér hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of father"
-#: ../language/_facts.php:601
-msgid "_CREM_FATH"
-msgstr "Apa hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of father's sibling"
-#: ../language/_facts.php:603
-msgid "_CREM_FSIB"
-msgstr "Apa testvérének hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of a grandchild"
-#: ../language/_facts.php:605
-msgid "_CREM_GCHI"
-msgstr "Unoka hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of a great-grandchild"
-#: ../language/_facts.php:607
-msgid "_CREM_GGCH"
-msgstr "Dédunoka hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of a great-grand-parent"
-#: ../language/_facts.php:609
-msgid "_CREM_GGPA"
-msgstr "Dédnagyszülő hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of a grand-parent"
-#: ../language/_facts.php:611
-msgid "_CREM_GPAR"
-msgstr "Nagyszülő hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of half-sibling"
-#: ../language/_facts.php:613
-msgid "_CREM_HSIB"
-msgstr "Féltestvér hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of mother"
-#: ../language/_facts.php:615
-msgid "_CREM_MOTH"
-msgstr "Anya hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of mother's sibling"
-#: ../language/_facts.php:617
-msgid "_CREM_MSIB"
-msgstr "Anya testvérének hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of a nephew or niece"
-#: ../language/_facts.php:619
-msgid "_CREM_NEPH"
-msgstr "Unokaöcs vagy unokahúg hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of sibling"
-#: ../language/_facts.php:621
-msgid "_CREM_SIBL"
-msgstr "Testvér hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Cremation of spouse"
-#: ../language/_facts.php:623
-msgid "_CREM_SPOU"
-msgstr "Házastárs hamvasztása"
-
-#. I18N: This is the GEDCOM label for "Linked database ID"
-#: ../language/_facts.php:625
-msgid "_DBID"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Death of a child"
-#: ../language/_facts.php:627
-msgid "_DEAT_CHIL"
-msgstr "Gyermek halála"
-
-#. I18N: This is the GEDCOM label for "Death of a first cousin"
-#: ../language/_facts.php:629
-msgid "_DEAT_COUS"
-msgstr "Első unokatestvér halála"
-
-#. I18N: This is the GEDCOM label for "Death of father"
-#: ../language/_facts.php:631
-msgid "_DEAT_FATH"
-msgstr "Apa halála"
-
-#. I18N: This is the GEDCOM label for "Death of father's sibling"
-#: ../language/_facts.php:633
-msgid "_DEAT_FSIB"
-msgstr "Apa testvérének halála"
-
-#. I18N: This is the GEDCOM label for "Death of a grandchild"
-#: ../language/_facts.php:635
-msgid "_DEAT_GCHI"
-msgstr "Unoka halála"
-
-#. I18N: This is the GEDCOM label for "Death of a great-grandchild"
-#: ../language/_facts.php:637
-msgid "_DEAT_GGCH"
-msgstr "Dédunoka halála"
-
-#. I18N: This is the GEDCOM label for "Death of a great-grand-parent"
-#: ../language/_facts.php:639
-msgid "_DEAT_GGPA"
-msgstr "Dédnagyszülő halála"
-
-#. I18N: This is the GEDCOM label for "Death of a grand-parent"
-#: ../language/_facts.php:641
-msgid "_DEAT_GPAR"
-msgstr "Nagyszülő halála"
-
-#. I18N: This is the GEDCOM label for "Death of half-sibling"
-#: ../language/_facts.php:643
-msgid "_DEAT_HSIB"
-msgstr "Féltestvér halála"
-
-#. I18N: This is the GEDCOM label for "Death of mother"
-#: ../language/_facts.php:645
-msgid "_DEAT_MOTH"
-msgstr "Anya halála"
-
-#. I18N: This is the GEDCOM label for "Death of mother's sibling"
-#: ../language/_facts.php:647
-msgid "_DEAT_MSIB"
-msgstr "Anya testvérének halála"
-
-#. I18N: This is the GEDCOM label for "Death of a nephew or niece"
-#: ../language/_facts.php:649
-msgid "_DEAT_NEPH"
-msgstr "Unokaöcs vagy unokahúg halála"
-
-#. I18N: This is the GEDCOM label for "Death of sibling"
-#: ../language/_facts.php:651
-msgid "_DEAT_SIBL"
-msgstr "Testvér halála"
-
-#. I18N: This is the GEDCOM label for "Death of spouse"
-#: ../language/_facts.php:653
-msgid "_DEAT_SPOU"
-msgstr "Házastárs halála"
-
-#. I18N: This is the GEDCOM label for "Degree"
-#: ../language/_facts.php:655
-msgid "_DEG"
-msgstr "Fokozat"
-
-#. I18N: This is the GEDCOM label for "Death of One Spouse"
-#: ../language/_facts.php:657
-msgid "_DETS"
-msgstr "Egyik házastárs halála"
-
-#. I18N: This is the GEDCOM label for "Email Address"
-#: ../language/_facts.php:659
-msgid "_EMAIL"
-msgstr "Email-cím"
-
-#. I18N: This is the GEDCOM label for "Eye Color"
-#: ../language/_facts.php:661
-msgid "_EYEC"
-msgstr "Szemszín"
-
-#. I18N: This is the GEDCOM label for "Fact 1"
-#: ../language/_facts.php:663
-msgid "_FA1"
-msgstr "1. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 10"
-#: ../language/_facts.php:665
-msgid "_FA10"
-msgstr "10. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 11"
-#: ../language/_facts.php:667
-msgid "_FA11"
-msgstr "11. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 12"
-#: ../language/_facts.php:669
-msgid "_FA12"
-msgstr "12. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 13"
-#: ../language/_facts.php:671
-msgid "_FA13"
-msgstr "13. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 2"
-#: ../language/_facts.php:673
-msgid "_FA2"
-msgstr "2. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 3"
-#: ../language/_facts.php:675
-msgid "_FA3"
-msgstr "3. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 4"
-#: ../language/_facts.php:677
-msgid "_FA4"
-msgstr "4. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 5"
-#: ../language/_facts.php:679
-msgid "_FA5"
-msgstr "5. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 6"
-#: ../language/_facts.php:681
-msgid "_FA6"
-msgstr "6. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 7"
-#: ../language/_facts.php:683
-msgid "_FA7"
-msgstr "7. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 8"
-#: ../language/_facts.php:685
-msgid "_FA8"
-msgstr "8. tény"
-
-#. I18N: This is the GEDCOM label for "Fact 9"
-#: ../language/_facts.php:687
-msgid "_FA9"
-msgstr "9. tény"
-
-#. I18N: This is the GEDCOM label for "Emigration of parents"
-#: ../language/_facts.php:689
-msgid "_FAMC_EMIG"
-msgstr "Szülők kivándorlása"
-
-#. I18N: This is the GEDCOM label for "Residence of parents"
-#: ../language/_facts.php:691
-msgid "_FAMC_RESI"
-msgstr "Szülők lakóhelye"
-
-#. I18N: This is the GEDCOM label for "Funeral"
-#: ../language/_facts.php:693
-msgid "_FNRL"
-msgstr "Temetés"
-
-#. I18N: This is the GEDCOM label for "Relationship to Father"
-#: ../language/_facts.php:695
-msgid "_FREL"
-msgstr "Kapcsolat az Apához"
-
-#. I18N: This is the GEDCOM label for "GEDCOM File"
-#: ../language/_facts.php:697
-msgid "_GEDF"
-msgstr "GEDCOM Állomány"
-
-#. I18N: This is the GEDCOM label for "Hair Color"
-#: ../language/_facts.php:699
-msgid "_HAIR"
-msgstr "Hajszín"
-
-#. I18N: This is the GEDCOM label for "Hebrew"
-#: ../language/_facts.php:701
-msgid "_HEB"
-msgstr "Héber"
-
-#. I18N: This is the GEDCOM label for "Height"
-#: ../language/_facts.php:703
-msgid "_HEIG"
-msgstr "Magasság"
-
-#. I18N: This is the GEDCOM label for "Hebrew Name"
-#: ../language/_facts.php:705
-msgid "_HNM"
-msgstr "Héber Név"
-
-#. I18N: This is the GEDCOM label for "Holocaust"
-#: ../language/_facts.php:707
-msgid "_HOL"
-msgstr "Tűzáldozat"
-
-#. I18N: This is the GEDCOM label for "Interred"
-#: ../language/_facts.php:709
-msgid "_INTE"
-msgstr "Interred"
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of a child"
-#: ../language/_facts.php:711
-msgid "_MARB_CHIL"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of a first cousin"
-#: ../language/_facts.php:713
-msgid "_MARB_COUS"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of parents"
-#: ../language/_facts.php:715
-msgid "_MARB_FAMC"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of father"
-#: ../language/_facts.php:717
-msgid "_MARB_FATH"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of father's sibling"
-#: ../language/_facts.php:719
-msgid "_MARB_FSIB"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of a grandchild"
-#: ../language/_facts.php:721
-msgid "_MARB_GCHI"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of a great-grandchild"
-#: ../language/_facts.php:723
-msgid "_MARB_GGCH"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of half-sibling"
-#: ../language/_facts.php:725
-msgid "_MARB_HSIB"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of mother"
-#: ../language/_facts.php:727
-msgid "_MARB_MOTH"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of mother's sibling"
-#: ../language/_facts.php:729
-msgid "_MARB_MSIB"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of a nephew or niece"
-#: ../language/_facts.php:731
-msgid "_MARB_NEPH"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Bann of sibling"
-#: ../language/_facts.php:733
-msgid "_MARB_SIBL"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Marriage Intention"
-#: ../language/_facts.php:735
-msgid "_MARI"
-msgstr "Házassági szándék"
-
-#. I18N: This is the GEDCOM label for "Married Name"
-#: ../language/_facts.php:737
-msgid "_MARNM"
-msgstr "Házasult név"
-
-#. I18N: This is the GEDCOM label for "Married Surname"
-#: ../language/_facts.php:739
-msgid "_MARNM_SURN"
-msgstr "Házasult vezetéknév"
-
-#. I18N: This is the GEDCOM label for "Marriage of a child"
-#: ../language/_facts.php:741
-msgid "_MARR_CHIL"
-msgstr "Gyermek házasságkötése"
-
-#. I18N: This is the GEDCOM label for "Marriage of a first cousin"
-#: ../language/_facts.php:743
-msgid "_MARR_COUS"
-msgstr "Első unokatestvér házassága"
-
-#. I18N: This is the GEDCOM label for "Marriage of parents"
-#: ../language/_facts.php:745
-msgid "_MARR_FAMC"
-msgstr "Szülő házasságkötése"
-
-#. I18N: This is the GEDCOM label for "Marriage of father"
-#: ../language/_facts.php:747
-msgid "_MARR_FATH"
-msgstr "Apa házassága"
-
-#. I18N: This is the GEDCOM label for "Marriage of father's sibling"
-#: ../language/_facts.php:749
-msgid "_MARR_FSIB"
-msgstr "Apa testvérének házassága"
-
-#. I18N: This is the GEDCOM label for "Marriage of a grandchild"
-#: ../language/_facts.php:751
-msgid "_MARR_GCHI"
-msgstr "Unoka házasságkötése"
-
-#. I18N: This is the GEDCOM label for "Marriage of a great-grandchild"
-#: ../language/_facts.php:753
-msgid "_MARR_GGCH"
-msgstr "Dédunoka házasságkötése"
-
-#. I18N: This is the GEDCOM label for "Marriage of half-sibling"
-#: ../language/_facts.php:755
-msgid "_MARR_HSIB"
-msgstr "Féltestvér házassága"
-
-#. I18N: This is the GEDCOM label for "Marriage of mother"
-#: ../language/_facts.php:757
-msgid "_MARR_MOTH"
-msgstr "Anya házassága"
-
-#. I18N: This is the GEDCOM label for "Marriage of mother's sibling"
-#: ../language/_facts.php:759
-msgid "_MARR_MSIB"
-msgstr "Anya testvérének házassága"
-
-#. I18N: This is the GEDCOM label for "Marriage of a nephew or niece"
-#: ../language/_facts.php:761
-msgid "_MARR_NEPH"
-msgstr "Unokaöcs vagy unokahúg házasságkötése"
-
-#. I18N: This is the GEDCOM label for "Marriage of sibling"
-#: ../language/_facts.php:763
-msgid "_MARR_SIBL"
-msgstr "Testvér házassága"
-
-#. I18N: This is the GEDCOM label for "Marriage Bond"
-#: ../language/_facts.php:765
-msgid "_MBON"
-msgstr "Marriage bond"
-
-#. I18N: This is the GEDCOM label for "Medical"
-#: ../language/_facts.php:767
-msgid "_MDCL"
-msgstr "Orvosi adatok"
-
-#. I18N: This is the GEDCOM label for "Medical Condition"
-#: ../language/_facts.php:769
-msgid "_MEDC"
-msgstr "Egészségi állapot"
-
-#. I18N: This is the GEDCOM label for "Marriage Ending Status"
-#: ../language/_facts.php:771
-msgid "_MEND"
-msgstr "Házasság végzési státusza"
-
-#. I18N: This is the GEDCOM label for "Military"
-#: ../language/_facts.php:773
-msgid "_MILI"
-msgstr "Katonai szolgálat"
-
-#. I18N: This is the GEDCOM label for "Military Service"
-#: ../language/_facts.php:775
-msgid "_MILT"
-msgstr "Katonai szolgálat"
-
-#. I18N: This is the GEDCOM label for "Relationship to Mother"
-#: ../language/_facts.php:777
-msgid "_MREL"
-msgstr "Kapcsolat az Anyához"
-
-#. I18N: This is the GEDCOM label for "Marriage Beginning Status"
-#: ../language/_facts.php:779
-msgid "_MSTAT"
-msgstr "Házasság kezdési státusza"
-
-#. I18N: This is the GEDCOM label for "Mailing Name"
-#: ../language/_facts.php:781
-msgid "_NAME"
-msgstr "Levelezési név"
-
-#. I18N: This is the GEDCOM label for "Namesake"
-#: ../language/_facts.php:783
-msgid "_NAMS"
-msgstr "Névadója"
-
-#. I18N: This is the GEDCOM label for "Not living"
-#: ../language/_facts.php:785
-msgid "_NLIV"
-msgstr "Nincs életben"
-
-#. I18N: This is the GEDCOM label for "Never married"
-#: ../language/_facts.php:787
-msgid "_NMAR"
-msgstr "Soha nem házasodott meg"
-
-#. I18N: This is the GEDCOM label for "Not married"
-#: ../language/_facts.php:789
-msgid "_NMR"
-msgstr "Nem házas"
-
-#. I18N: This is the GEDCOM label for "by"
-#: ../language/_facts.php:791
-msgid "_PGVU"
-msgstr "Utoljára módosította"
-
-#. I18N: This is the GEDCOM label for "Highlighted Image"
-#: ../language/_facts.php:793
-msgid "_PRIM"
-msgstr "Kijelölt kép"
-
-#. I18N: This is the GEDCOM label for "Permanent Number"
-#: ../language/_facts.php:795
-msgid "_PRMN"
-msgstr "Ideiglenes szám"
-
-#. I18N: This is the GEDCOM label for "Scrapbook"
-#: ../language/_facts.php:797
-msgid "_SCBK"
-msgstr "Gyűjtő könyv"
-
-#. I18N: This is the GEDCOM label for "Slide Show"
-#: ../language/_facts.php:801
-msgid "_SSHOW"
-msgstr "Dia vetítés"
-
-#. I18N: This is the GEDCOM label for "Marriage Status"
-#: ../language/_facts.php:803
-msgid "_STAT"
-msgstr "Házassági státusz"
-
-#. I18N: This is the GEDCOM label for "Short Version"
-#: ../language/_facts.php:805
-msgid "_SUBQ"
-msgstr "Rövid változat"
-
-#. I18N: This is the GEDCOM label for "Always use main image?"
-#: ../language/_facts.php:807
-msgid "_THUM"
-msgstr "Használjuk ezt a képet bélyegképként?"
-
-#. I18N: This is the GEDCOM label for "To Do Item"
-#: ../language/_facts.php:809
-msgid "_TODO"
-msgstr "Tennivalók"
-
-#. I18N: This is the GEDCOM label for "Media Type"
-#: ../language/_facts.php:811
-msgid "_TYPE"
-msgstr "Média típus"
-
-#. I18N: This is the GEDCOM label for "Globally unique Identifier"
-#: ../language/_facts.php:813
-msgid "_UID"
-msgstr "Általános azonosító"
-
-#. I18N: This is the GEDCOM label for "Web URL"
-#: ../language/_facts.php:815
-msgid "_URL"
-msgstr "Web URL"
-
-#. I18N: This is the GEDCOM label for "Weight"
-#: ../language/_facts.php:817
-msgid "_WEIG"
-msgstr "Testsúly"
-
-#. I18N: This is the GEDCOM label for "Yahrzeit"
-#: ../language/_facts.php:819
-msgid "_YART"
-msgstr "Jarzeit"
-
-#. I18N: This is the GEDCOM label for "Brit Mila of a child"
-#: ../language/_facts.php:821
-msgid "__BRTM_CHIL"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Brit Mila of a first cousin"
-#: ../language/_facts.php:823
-msgid "__BRTM_COUS"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Brit Mila of father's sibling"
-#: ../language/_facts.php:825
-msgid "__BRTM_FSIB"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Brit Mila of a grandchild"
-#: ../language/_facts.php:827
-msgid "__BRTM_GCHI"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Brit Mila of a great-grandchild"
-#: ../language/_facts.php:829
-msgid "__BRTM_GGCH"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Brit Mila of half-sibling"
-#: ../language/_facts.php:831
-msgid "__BRTM_HSIB"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Brit Mila of mother's sibling"
-#: ../language/_facts.php:833
-msgid "__BRTM_MSIB"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Brit Mila of a nephew"
-#: ../language/_facts.php:835
-msgid "__BRTM_NEPH"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Brit Mila of sibling"
-#: ../language/_facts.php:837
-msgid "__BRTM_SIBL"
-msgstr ""
+msgid "LANGUAGE_LIST_SEPARATOR_LAST"
+msgstr ", "
 

@@ -63,24 +63,24 @@ class i18n {
 		// settings, translations and other support for each language in one file.
 		// This makes it simple for users to add/remove/share languages.
 
-		// I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C D E F G CH H I ..."
-		self::$alphabet=i18n::translate('LANGUAGE_ALPHABET');
+		// I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C CS D DZ DZS E F G GY ..."
+		self::$alphabet=i18n::noop('LANGUAGE_ALPHABET');
 		// I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
-		self::$text_direction=i18n::translate('LANGUAGE_TEXT_DIRECTION');
+		self::$text_direction=i18n::noop('LANGUAGE_TEXT_DIRECTION');
 		// I18N: This is the name of the MySQL utf8 collation sequence for this language.  See http://dev.mysql.com/doc/refman/5.1/en/se-db2-collations.html
-		self::$collation=i18n::translate('LANGUAGE_COLLATION');
+		self::$collation=i18n::noop('LANGUAGE_COLLATION');
 		// I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
-		//self::$long_date_format=i18n::translate('LANGUAGE_LONG_DATE_FORMAT');
+		self::$long_date_format=i18n::noop('LANGUAGE_LONG_DATE_FORMAT');
 		// I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes
-		//self::$short_date_format=i18n::translate('LANGUAGE_SHORT_DATE_FORMAT');
+		self::$short_date_format=i18n::noop('LANGUAGE_SHORT_DATE_FORMAT');
 		// I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
-		//self::$time_format_hm=i18n::translate('LANGUAGE_TIME_FORMAT_HM');
+		self::$time_format_hm=i18n::noop('LANGUAGE_TIME_FORMAT_HM');
 		// I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
-		//self::$time_format_hms=i18n::translate('LANGUAGE_TIME_FORMAT_HMS');
+		self::$time_format_hms=i18n::noop('LANGUAGE_TIME_FORMAT_HMS');
 		// I18N: This is the format string for times with hours and seconds, such as 10:23pm.  See http://php.net/date for codes
-		self::$list_separator=i18n::translate('LANGUAGE_LIST_SEPARATOR');
+		self::$list_separator=i18n::noop('LANGUAGE_LIST_SEPARATOR');
 		// I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
-		self::$list_separator_last=i18n::translate('LANGUAGE_LIST_SEPARATOR_LAST');
+		self::$list_separator_last=i18n::noop('LANGUAGE_LIST_SEPARATOR_LAST');
 	}
 
 	// echo i18n::translate('Hello World!');
@@ -93,6 +93,13 @@ class i18n {
 		// This will ensure that non/weakly direction characters in the main string
 		// are displayed correctly by the browser's BIDI algorithm.
 		return call_user_func_array('sprintf', $args);
+	}
+
+	// Similar to translate, but do perform "no operation" on it.
+	// This is necessary to fetch a format string (containing % characters) without
+	// performing sustitution of arguments.
+	static private function noop($string) {
+		return self::$translation_adapter->_($string);
 	}
 
 	// echo i18n::plural('There is an error', 'There are errors', $num_errors);
