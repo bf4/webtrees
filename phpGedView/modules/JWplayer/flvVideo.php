@@ -5,7 +5,7 @@
  * Display flv video media Items using JW Player in PGV
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2007 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@
 <?php
 global $pgv_lang, $pid, $GEDCOM ;
 global $flvVideo, $SERVER_URL;
-$flvVideo=decrypt(safe_GET('flvVideo'));
+$flvVideo="../../".decrypt(safe_GET('flvVideo'));
 $preview="";
 ?>
 
