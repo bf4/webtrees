@@ -106,7 +106,7 @@ $pgv_lang["TYPE__footnotes"] = "Medya notları";
 
 $pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
 $pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
-$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__census"] 		= "Nüfus sayımı";
 $pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
 $pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 

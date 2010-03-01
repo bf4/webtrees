@@ -64,7 +64,7 @@ $pgv_lang["TYPE__footnotes"]            = "Notes de pied-de-page";
 
 $pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
 $pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
-$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__census"] 		= "Recensement";
 $pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
 $pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
