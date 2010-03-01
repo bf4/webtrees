@@ -61,41 +61,6 @@ if (PGV_USE_LIGHTBOX) {
 
 loadLangFile("lightbox:lang");
 
-//The following lines of code are used to print the menu box on the top right hand corner
-if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controller->pid)&&!empty($filename)) {
-	if (PGV_USER_CAN_EDIT || $controller->canShowOtherMenu()) { ?>
-		<?php if (!$PGV_MENUS_AS_LISTS) {?>
-		<table class="sublinks_table <?php echo $TEXT_DIRECTION; ?> noprint" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
-			<tr>
-				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php print $pgv_lang["media_options"]; ?></td>
-			</tr>
-			<tr>
-		<?php } else { ?>
-		<div id="optionsmenu" class="sublinks_table">
-			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["media_options"]; ?></div>
-		<?php } 
-				if (PGV_USER_CAN_EDIT) {
-				?>
-				<<?php if (!$PGV_MENUS_AS_LISTS) {?>td<?php } else { ?>ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-					<?php $menu = $controller->getEditMenu(); $menu->printMenu(); ?>
-				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td<?php } else { ?>ul<?php }?>>
-				<?php }
-				if ($controller->canShowOtherMenu()) {
-				?>
-				<<?php if (!$PGV_MENUS_AS_LISTS) {?>td<?php } else { ?>ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php $menu = $controller->getOtherMenu(); $menu->printMenu(); ?>
-				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td<?php } else { ?>ul<?php }?>>
-				<?php }	?>
-		<?php if (!$PGV_MENUS_AS_LISTS) {?>
-			</tr>
-		</table><br />
-		<?php } else { ?>
-		</div>
-		<?php } 
-	}
-}
-
-
 //The next set of code draws the table that displays information about the person
 ?>
 <table width="70%">
