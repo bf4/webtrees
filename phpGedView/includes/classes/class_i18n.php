@@ -41,6 +41,8 @@ require_once PGV_ROOT.'library/Zend/Translate.php';
 
 class i18n {
 	static private $translation_adapter;
+	static private $list_separator;
+	static private $list_separator_last;
 
 	static public function setLocale($locale='auto') {
 		self::$translation_adapter=new Zend_Translate(
@@ -49,6 +51,10 @@ class i18n {
 			$locale,
 			array('scan'=>Zend_Translate::LOCALE_FILENAME)
 		);
+		// I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
+		self::$list_separator=i18n::translate('LANGUAGE_LIST_SEPARATOR');
+		// I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
+		self::$list_separator_last=i18n::translate('LANGUAGE_LIST_SEPARATOR_LAST');
 	}
 
 	// echo i18n::translate('Hello World!');
@@ -56,6 +62,10 @@ class i18n {
 	static public function translate(/* var_args */) {
 		$args=func_get_args();
 		$args[0]=self::$translation_adapter->_($args[0]);
+		// TODO: for each embedded string, if the text-direction is the opposite of the
+		// page language, then wrap it in &ltr; on LTR pages and &rtl; on RTL pages.
+		// This will ensure that non/weakly direction characters in the main string
+		// are displayed correctly by the browser's BIDI algorithm.
 		return call_user_func_array('sprintf', $args);
 	}
 
@@ -67,5 +77,23 @@ class i18n {
 		$string=self::$translation_adapter->plural($args[0], $args[1], $args[2]);
 		array_splice($args, 0, 3, array($string));
 		return call_user_func_array('sprintf', $args);
+	}
+
+	// Convert an array to a list.  For example
+	// array("red", "green", "yellow", "blue") => "red, green, yellow and blue"
+	static public function make_list($array) {
+		// TODO: for each array element, if the text-direction is the opposite of the
+		// page language, then wrap it in &ltr; on LTR pages and &rtl; on RTL pages.
+		// This will ensure that non/weakly direction characters in the main string
+		// are displayed correctly by the browser's BIDI algorithm.
+		$n=count($array);
+		switch ($n) {
+		case 0:
+			return '';
+		case 1:
+			return $array(0);
+		default:
+			return implode(self::$list_separator, array_slice($array, 0, $n-1)).self::$list_separator_last.$array[$n-1];
+		}
 	}
 }
