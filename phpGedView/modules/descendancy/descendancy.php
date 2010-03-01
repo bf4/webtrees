@@ -131,7 +131,7 @@ class descendancy_Sidebar extends Sidebar {
 	}
 	
 	public function getFamilyLi(&$family, &$person, $generations=0) {
-		global $pgv_lang, $factarray;
+		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$out = '';
 		$out .= '<li id="sb_desc_'.$family->getXref().'" class="sb_desc_indi_li"><a href="sidebar.php?sb_action=descendancy&amp;famid='.$family->getXref().'" title="'.$family->getXref().'" class="sb_desc_indi">';
@@ -140,7 +140,7 @@ class descendancy_Sidebar extends Sidebar {
 		
 		$marryear = $family->getMarriageYear();
 		if (!empty($marryear)) {
-			$out .= ' ('.$factarray['MARR'].' '.$marryear.')';
+			$out .= ' ('.i18n::translate('MARR').' '.$marryear.')';
 		}
 		$out .= '</a> <a href="'.encode_url($person->getLinkUrl()).'"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['indi']['button'].'" border="0" alt="indi" /></a>';
 		$out .= '<a href="'.encode_url($family->getLinkUrl()).'"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['family']['button'].'" border="0" alt="family" /></a>';
