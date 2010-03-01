@@ -48,6 +48,7 @@ class i18n {
 	static private $time_format_hm;
 	static private $time_format_hms;
 	static private $list_separator;
+	static private $list_separator_last;
 	static private $text_direction;
 
 
@@ -69,13 +70,13 @@ class i18n {
 		// I18N: This is the name of the MySQL utf8 collation sequence for this language.  See http://dev.mysql.com/doc/refman/5.1/en/se-db2-collations.html
 		self::$collation=i18n::translate('LANGUAGE_COLLATION');
 		// I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
-		self::$long_date_format=i18n::translate('LANGUAGE_LONG_DATE_FORMAT');
+		//self::$long_date_format=i18n::translate('LANGUAGE_LONG_DATE_FORMAT');
 		// I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes
-		self::$short_date_format=i18n::translate('LANGUAGE_SHORT_DATE_FORMAT');
+		//self::$short_date_format=i18n::translate('LANGUAGE_SHORT_DATE_FORMAT');
 		// I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
-		self::$time_format_hm=i18n::translate('LANGUAGE_TIME_FORMAT_HM');
+		//self::$time_format_hm=i18n::translate('LANGUAGE_TIME_FORMAT_HM');
 		// I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
-		self::$time_format_hms=i18n::translate('LANGUAGE_TIME_FORMAT_HMS');
+		//self::$time_format_hms=i18n::translate('LANGUAGE_TIME_FORMAT_HMS');
 		// I18N: This is the format string for times with hours and seconds, such as 10:23pm.  See http://php.net/date for codes
 		self::$list_separator=i18n::translate('LANGUAGE_LIST_SEPARATOR');
 		// I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
