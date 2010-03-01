@@ -83,6 +83,7 @@ $menubar = new MenuBar();
 		$menu->printMenu();
 		echo "</td>";
 	}
+	/* Removed by Greg 01-MAR-2010.  Not sure whether this is part of something to come, or something that has gone
 	$menu = $menubar->getClippingsMenu();
 	if(!is_null($menu) && $menu->link != "") {
 		if (!is_null($menu)) {
@@ -92,6 +93,7 @@ $menubar = new MenuBar();
 			echo "</td>";
 		}
 	}
+	 */
 	$menu = $menubar->getSearchMenu();
 	if($menu->link != "") {
 		echo "<td>";
