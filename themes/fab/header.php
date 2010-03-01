@@ -141,13 +141,12 @@ if ($view!='simple') {
 			MenuBar::getListsMenu(),
 			MenuBar::getCalendarMenu(),
 			MenuBar::getReportsMenu(),
-			MenuBar::getClippingsMenu(),
 			MenuBar::getSearchMenu(),
 			MenuBar::getOptionalMenu()
 		);
-		foreach (MenuBar::getModuleMenus() as $menu) {
-			$menu_items[]=$menu;
-		}
+//		foreach (MenuBar::getModuleMenus() as $menu) {  TEMPORARILY DISABLED DuE TO ERROR MESSAGE
+//			$menu_items[]=$menu;
+//		}
 
 		// Help menu
 		global $helpindex, $action;

@@ -73,41 +73,8 @@ echo '<span class="name_head">', PrintReady(htmlspecialchars($controller->source
 if ($SHOW_ID_NUMBERS) {
 	echo ' ', getLRM(), '(', $controller->sid, ')', getLRM();
 }
-echo '</span><br /></td><td valign="top" class="noprint">';
-if (!$controller->isPrintPreview()) {
-	$editmenu=$controller->getEditMenu();
-	$othermenu=$controller->getOtherMenu();
-	if ($editmenu || $othermenu) {
-		if (!$PGV_MENUS_AS_LISTS) {
-			echo '<table class="sublinks_table" cellspacing="4" cellpadding="0">';
-			echo '<tr><td class="list_label ', $TEXT_DIRECTION, '" colspan="2">', $pgv_lang['source_menu'], '</td></tr>';
-			echo '<tr>';
-		} else { 
-			echo '<div id="optionsmenu" class="sublinks_table">';
-			echo '<div class="list_label ', $TEXT_DIRECTION, '">', $pgv_lang["source_menu"], '</div>';
-		} 
-		if ($editmenu) {
-			if (!$PGV_MENUS_AS_LISTS) {
-				echo '<td class="sublinks_cell ', $TEXT_DIRECTION, '">', $editmenu->printMenu(), '</td>';
-			} else { 
-				echo '<ul class="sublinks_cell ', $TEXT_DIRECTION, '">', $editmenu->printMenu(), '</ul>';
-			}
-		}
-		if ($othermenu) {
-			if (!$PGV_MENUS_AS_LISTS) {
-				echo '<td class="sublinks_cell ', $TEXT_DIRECTION, '">', $othermenu->printMenu(), '</td>';
-			} else { 
-				echo '<ul class="sublinks_cell ', $TEXT_DIRECTION, '">', $editmenu->printMenu(), '</ul>';
-			}
-		}
-		if (!$PGV_MENUS_AS_LISTS) {
-			echo '</tr></table>';
-		} else { 
-			echo '</div>';
-		}
-	}
-}
-echo '</td></tr><tr><td colspan="2"><table class="facts_table">';
+echo '</span><br />';
+echo '<table class="facts_table">';
 
 $sourcefacts=$controller->source->getFacts();
 foreach ($sourcefacts as $fact) {
