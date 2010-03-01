@@ -39,7 +39,7 @@ $headerfile=$THEME_DIR.'header.php';
 $footerfile=$THEME_DIR.'footer.php';
 
 $PGV_USE_HELPIMG=false;
-$PGV_IMAGE_DIR=PGV_THEME_DIR."images";		//-- directory to look for images
+$PGV_IMAGE_DIR = "images";		//-- directory to look for images
 $PGV_MENU_LOCATION="top";
 
 //-- variables for image names
