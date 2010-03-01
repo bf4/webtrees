@@ -70,7 +70,7 @@ $languages=array(
 	'lt'   =>i18n::translate('lt'),
 	// I18N: This is the RFC5646 language code for Dutch
 	'nl'   =>i18n::translate('nl'),
-	// I18N: This is the RFC5646 language code for Norwegian (Nynorksk)
+	// I18N: This is the RFC5646 language code for Norwegian (Nynorsk)
 	'nn'   =>i18n::translate('nn'),
 	// I18N: This is the RFC5646 language code for Polish
 	'pl'   =>i18n::translate('pl'),

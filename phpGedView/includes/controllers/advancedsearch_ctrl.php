@@ -142,7 +142,7 @@ class AdvancedSearchController extends SearchController {
 	}
 
 	function getLabel($tag) {
-		if (i18n::translate($tag)==$tag) {
+		if (i18n::is_not_translated($tag)) {
 			// No translation
 			if (substr($tag, 0, 10)=='NAME:GIVN:') {
 				return i18n::translate('GIVN');

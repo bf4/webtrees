@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-01 18:44-0000\n"
+"POT-Creation-Date: 2010-03-01 21:35-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -195,13 +195,43 @@ msgstr "Text"
 msgid "_YART"
 msgstr "Yahrzeit"
 
+#. I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C D E F G CH H I ..."
+#: ../includes/classes/class_i18n.php:65
+msgid "LANGUAGE_ALPHABET"
+msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+
+#. I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
+#: ../includes/classes/class_i18n.php:67
+msgid "LANGUAGE_TEXT_DIRECTION"
+msgstr "LTR"
+
+#. I18N: This is the name of the MySQL utf8 collation sequence for this language.  See http://dev.mysql.com/doc/refman/5.1/en/se-db2-collations.html
+#: ../includes/classes/class_i18n.php:69
+msgid "LANGUAGE_COLLATION"
+msgstr "utf8_unicode_ci"
+
+#. I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
+#: ../includes/classes/class_i18n.php:71
+msgid "LANGUAGE_LONG_DATE_FORMAT"
+msgstr "%j %F %Y"
+
+#. I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes
+#: ../includes/classes/class_i18n.php:73
+msgid "LANGUAGE_SHORT_DATE_FORMAT"
+msgstr "%j %M %Y"
+
+#. I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
+#: ../includes/classes/class_i18n.php:75
+msgid "LANGUAGE_TIME_FORMAT"
+msgstr "%H:%I:%S"
+
 #. I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
-#: ../includes/classes/class_i18n.php:55
+#: ../includes/classes/class_i18n.php:77
 msgid "LANGUAGE_LIST_SEPARATOR"
 msgstr ", "
 
 #. I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
-#: ../includes/classes/class_i18n.php:57
+#: ../includes/classes/class_i18n.php:79
 msgid "LANGUAGE_LIST_SEPARATOR_LAST"
 msgstr " and "
 
@@ -3446,7 +3476,7 @@ msgstr ""
 msgid "nl"
 msgstr ""
 
-#. I18N: This is the RFC5646 language code for Norwegian (Nynorksk)
+#. I18N: This is the RFC5646 language code for Norwegian (Nynorsk)
 #: ../language/_languages.php:74
 msgid "nn"
 msgstr ""
