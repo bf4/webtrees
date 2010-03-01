@@ -209,15 +209,17 @@ jQuery(document).ready(function(){
 </style>
 <div id="indi_main_blocks">
 <div id="indi_top">
-		<table><tr><td>
-		<?php if ($controller->canShowHighlightedObject()) { ?>
-			<?php echo $controller->getHighlightedObject(); ?>
-		<?php } ?>
-		</td><td valign="bottom">
-		<?php if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", $pgv_lang["accept_successful"], "</b><br />"; ?>
-		<?php if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
-		<span class="name_head">
+		<div id="indi_mainimage">
+		<?php if ($controller->canShowHighlightedObject()) {
+			echo $controller->getHighlightedObject();
+		} ?>
+		</div>
+		<div id="indi_name">
 		<?php
+		if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", $pgv_lang["accept_successful"], "</b><br />";
+		if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; 
+		?>
+		<span class="name_head"><?php
 		if ($TEXT_DIRECTION=="rtl") echo "&nbsp;";
 			echo PrintReady($controller->indi->getFullName());
 			echo "&nbsp;&nbsp;";
@@ -230,11 +232,10 @@ jQuery(document).ready(function(){
 					echo printReady("(<a href=\"useradmin.php?action=edituser&amp;username={$pgvuser}\">{$pgvuser}</a>)");
 				}
 			}
-		?>
-		</span><br /><br />
+		?></span><br /><br />
 		<?php if (strlen($controller->indi->getAddName()) > 0) echo "<span class=\"name_head\">", PrintReady($controller->indi->getAddName()), "</span><br />"; ?>
 		
-		<table><tr>
+		<div id="indi_details">
 		<?php if ($controller->indi->canDisplayDetails()) { ?>
 		<?php
 			$col=0; $maxcols=7; // 4 with data and 3 spacers
@@ -244,14 +245,13 @@ jQuery(document).ready(function(){
 				$fact = $value->getTag();
 				if (in_array($fact, $nameSex)) {
 						if ($col>0) {
-							echo "<td width=\"10\"><br /></td>";
 							++$col;
 						}
 					if ($fact=="SEX") $controller->print_sex_record($value);
 					if ($fact=="NAME") $controller->print_name_record($value);
 						++$col;
 						if ($col==$maxcols) {
-							echo "</tr><tr>";
+							echo '</div><div id="indi_eventdetails">';
 							$col=0;
 						}
 					}
@@ -263,7 +263,7 @@ jQuery(document).ready(function(){
 				$bdate=$controller->indi->getBirthDate();
 				$age = GedcomDate::GetAgeGedcom($bdate);
 				if ($age!="")
-					$summary.= "<span class=\"label\">".$pgv_lang["age"].":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
+					$summary.= "<dt class=\"label\">".$pgv_lang["age"]."</dt><dd class=\"field\">".get_age_at_event($age, true)."</dd>";
 			}
 			$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
 			if ($SHOW_LDS_AT_GLANCE) {
@@ -271,16 +271,17 @@ jQuery(document).ready(function(){
 			}
 			if ($summary) {
 				++$col;
-				echo '<td width="10"><br /></td><td valign="top" colspan="', $maxcols-$col, '">', $summary, '</td>';
+				echo '<div id="mainfacts">', "\n\t<dl>\n", $summary, "\n\t</dl>\n</div>\n";
 			}
 		?>
-		</tr>
-		</table>
+		</div>
+	</div><div class="clearfloat"></div>
+		<div id="hitcounter">
 		<?php
 		if($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 			//print indi counter only if displaying a non-private person
 			require PGV_ROOT.'includes/hitcount.php';
-			echo "<br />{$pgv_lang["hit_count"]} {$hitCount}<br />";
+			echo "{$pgv_lang["hit_count"]} {$hitCount}\n</div>";
 		}
 		// if individual is a remote individual
 		// if information for this information is based on a remote site
@@ -298,10 +299,8 @@ jQuery(document).ready(function(){
 			echo("This is a local individual.");*/
 	}
 	?>
-	<br />
-	
-	</td>
-	</tr></table>
+	</div>
+	</div>
 <?php
 foreach($controller->modules as $mod) {
 	if ($mod->hasTab() && $mod->getTab()) {
