@@ -613,25 +613,6 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
-		// Determine whether the Quick Update form can be shown
-		$showQuickForm = false;
-		if ($USE_QUICK_UPDATE) {
-			if ($USE_QUICK_UPDATE==='1' && PGV_USER_IS_ADMIN) {
-				$showQuickForm = true;
-			} elseif ($USE_QUICK_UPDATE==='2' && PGV_USER_GEDCOM_ADMIN) {
-				$showQuickForm = true;
-			} elseif (($USE_QUICK_UPDATE==='3' || $USE_QUICK_UPDATE===true) && PGV_USER_CAN_EDIT) {
-				$showQuickForm = true;
-			}
-		}
-		if ($showQuickForm) {
-			$submenu = new Menu($pgv_lang["quick_update_title"]);
-			$submenu->addOnclick("return quickEdit('".$this->pid."', '', '".$GEDCOM."');");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
-
-			$menu->addSeparator();
-		}
 
 		if (PGV_USER_CAN_EDIT) {
 			if (count($this->indi->getSpouseFamilyIds())>1) {
