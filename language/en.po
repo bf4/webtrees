@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 18:00-0000\n"
+"POT-Creation-Date: 2010-03-01 18:43-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -194,13 +194,28 @@ msgstr "Text"
 msgid "_YART"
 msgstr "Yahrzeit"
 
+#. I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
+#: ../includes/classes/class_i18n.php:55
+msgid "LANGUAGE_LIST_SEPARATOR"
+msgstr ", "
+
+#. I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
+#: ../includes/classes/class_i18n.php:57
+msgid "LANGUAGE_LIST_SEPARATOR_LAST"
+msgstr " and "
+
 #: ../includes/classes/class_treenav.php:311
 #: ../includes/classes/class_treenav.php:352
+#: ../includes/controllers/lifespan_ctrl.php:499
+#: ../includes/controllers/lifespan_ctrl.php:531
+#: ../includes/controllers/lifespan_ctrl.php:552
 msgid "ABBREV_BIRT"
 msgstr "b."
 
 #: ../includes/classes/class_treenav.php:313
 #: ../includes/classes/class_treenav.php:358
+#: ../includes/controllers/lifespan_ctrl.php:509
+#: ../includes/controllers/lifespan_ctrl.php:539
 msgid "ABBREV_DEAT"
 msgstr "d."
 
@@ -213,91 +228,107 @@ msgstr "m."
 msgid "NCHI"
 msgstr "Number of Children"
 
-#: ../includes/controllers/individual_ctrl.php:1167
-msgid "_NMR"
-msgstr "Not married"
+#: ../includes/functions/functions_edit.php:1295
+#: ../includes/functions/functions_print_facts.php:1115
+msgid "SHARED_NOTE"
+msgstr "Shared Note"
 
-#: ../includes/controllers/individual_ctrl.php:1175
-msgid "_NMAR"
-msgstr "Never married"
+#: ../includes/functions/functions_edit.php:1383
+#: ../includes/functions/functions_edit.php:1384
+#: ../includes/functions/functions_print_facts.php:370
+msgid "HUSB"
+msgstr "Husband"
 
+#: ../includes/functions/functions_edit.php:1383
+#: ../includes/functions/functions_edit.php:1385
+#: ../includes/functions/functions_print_facts.php:370
+msgid "WIFE"
+msgstr "Wife"
+
+#: ../includes/functions/functions_edit.php:1554
+msgid "LATI"
+msgstr "Latitude"
+
+#: ../includes/functions/functions_edit.php:1554
+msgid "LONG"
+msgstr "Longitude"
+
+#: ../includes/functions/functions_edit.php:1768
+#: ../includes/functions/functions_edit.php:2354
 #: ../includes/functions/functions_mediadb.php:1427
 #: ../includes/functions/functions_mediadb.php:1475
-#: ../includes/functions/functions_print_facts.php:1019
+#: ../includes/functions/functions_print_facts.php:993
 msgid "DATA:DATE"
 msgstr "Date of entry in original source"
+
+#: ../includes/functions/functions_edit.php:1848
+msgid "RESN"
+msgstr "Restriction"
+
+#: ../includes/functions/functions_edit.php:2515
+#: ../includes/functions/functions_edit.php:2588
+msgid "STAT:DATE"
+msgstr "Status Change Date"
 
 #: ../includes/functions/functions_places.php:46
 #: ../includes/functions/functions_places.php:303
 msgid "CTRY"
 msgstr "Country"
 
-#: ../includes/functions/functions_print_facts.php:363
-#: ../includes/functions/functions_print_facts.php:364
+#: ../includes/functions/functions_print_facts.php:337
+#: ../includes/functions/functions_print_facts.php:338
 msgid "CEME"
 msgstr "Cemetery"
 
-#: ../includes/functions/functions_print_facts.php:377
+#: ../includes/functions/functions_print_facts.php:351
 #: ../includes/functions/functions_print_lists.php:1534
 msgid "_PGVU"
 msgstr "by"
 
-#: ../includes/functions/functions_print_facts.php:384
+#: ../includes/functions/functions_print_facts.php:358
 msgid "FAMC"
 msgstr "Family as a Child"
 
-#: ../includes/functions/functions_print_facts.php:388
+#: ../includes/functions/functions_print_facts.php:362
 msgid "ADOP"
 msgstr "Adoption"
 
-#: ../includes/functions/functions_print_facts.php:396
-msgid "HUSB"
-msgstr "Husband"
-
-#: ../includes/functions/functions_print_facts.php:396
-msgid "WIFE"
-msgstr "Wife"
-
-#: ../includes/functions/functions_print_facts.php:863
+#: ../includes/functions/functions_print_facts.php:837
 msgid "URL"
 msgstr "Web URL"
 
-#: ../includes/functions/functions_print_facts.php:947
-#: ../includes/functions/functions_print_facts.php:997
+#: ../includes/functions/functions_print_facts.php:921
+#: ../includes/functions/functions_print_facts.php:971
 #: ../includes/functions/functions_print_lists.php:1683
 msgid "EVEN"
 msgstr "Event"
 
-#: ../includes/functions/functions_print_facts.php:949
-#: ../includes/functions/functions_print_facts.php:999
+#: ../includes/functions/functions_print_facts.php:923
+#: ../includes/functions/functions_print_facts.php:973
 msgid "ROLE"
 msgstr "Role"
 
-#: ../includes/functions/functions_print_facts.php:993
+#: ../includes/functions/functions_print_facts.php:967
 msgid "PAGE"
 msgstr "Citation Details"
 
-#: ../includes/functions/functions_print_facts.php:1029
+#: ../includes/functions/functions_print_facts.php:1003
 msgid "QUAY"
 msgstr "Quality of Data"
 
-#: ../includes/functions/functions_print_facts.php:1141
-msgid "SHARED_NOTE"
-msgstr "Shared Note"
-
-#: ../includes/functions/functions_print_facts.php:1143
+#: ../includes/functions/functions_print_facts.php:1117
 msgid "NOTE"
 msgstr "Note"
 
-#: ../includes/functions/functions_print_facts.php:1461
+#: ../includes/functions/functions_print_facts.php:1435
 msgid "OBJE"
 msgstr "Multimedia Object"
 
-#: ../includes/functions/functions_print_facts.php:1617
+#: ../includes/functions/functions_print_facts.php:1591
 msgid "_PRIM"
 msgstr "Highlighted Image"
 
-#: ../includes/functions/functions_print_facts.php:1627
+#: ../includes/functions/functions_print_facts.php:1601
 msgid "_THUM"
 msgstr "Always use main image?"
 
@@ -314,13 +345,20 @@ msgstr "Age"
 #: ../includes/functions/functions_print_lists.php:1070
 #: ../includes/functions/functions_print_lists.php:1128
 #: ../includes/functions/functions_print_lists.php:1532
-#: ../includes/functions/functions_rss.php:423
 msgid "CHAN"
 msgstr "Last Change"
 
 #: ../includes/functions/functions_print_lists.php:190
 msgid "_MARNM"
 msgstr "Married Name"
+
+#: ../includes/functions/functions_print_lists.php:666
+msgid "_NMR"
+msgstr "Not married"
+
+#: ../includes/functions/functions_print_lists.php:674
+msgid "_NMAR"
+msgstr "Never married"
 
 #. I18N: This is the country/chapman code for "Unknown"
 #: ../language/_countries.php:36
@@ -2162,20 +2200,10 @@ msgstr "Graduation"
 msgid "IDNO"
 msgstr "Identification Number"
 
-#. I18N: This is the GEDCOM label for "Latitude"
-#: ../language/_facts.php:307
-msgid "LATI"
-msgstr "Latitude"
-
 #. I18N: This is the GEDCOM label for "Legatee"
 #: ../language/_facts.php:309
 msgid "LEGA"
 msgstr "Legatee"
-
-#. I18N: This is the GEDCOM label for "Longitude"
-#: ../language/_facts.php:311
-msgid "LONG"
-msgstr "Longitude"
 
 #. I18N: This is the GEDCOM label for "Map"
 #: ../language/_facts.php:313
@@ -2367,11 +2395,6 @@ msgstr "Religion"
 msgid "RESI"
 msgstr "Residence"
 
-#. I18N: This is the GEDCOM label for "Restriction"
-#: ../language/_facts.php:413
-msgid "RESN"
-msgstr "Restriction"
-
 #. I18N: This is the GEDCOM label for "Retirement"
 #: ../language/_facts.php:415
 msgid "RETI"
@@ -2431,11 +2454,6 @@ msgstr "State"
 #: ../language/_facts.php:443
 msgid "STAT"
 msgstr "Status"
-
-#. I18N: This is the GEDCOM label for "Status Change Date"
-#: ../language/_facts.php:445
-msgid "STAT:DATE"
-msgstr "Status Change Date"
 
 #. I18N: This is the GEDCOM label for "Submitter"
 #: ../language/_facts.php:447
