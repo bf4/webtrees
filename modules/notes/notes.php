@@ -35,7 +35,7 @@ class notes_Tab extends Tab {
 	protected $noteCount = null;
 
 	public function getContent() {
-		global $pgv_lang, $factarray, $CONTACT_EMAIL, $FACT_COUNT;
+		global $pgv_lang, $CONTACT_EMAIL, $FACT_COUNT;
 		global $SHOW_LEVEL2_NOTES;
 		global $NAV_NOTES;
 

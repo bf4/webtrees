@@ -469,7 +469,7 @@ class IndividualControllerRoot extends BaseController {
 	* @param Event $event the event object
 	*/
 	function print_name_record(&$event) {
-		global $pgv_lang, $factarray, $UNDERLINE_NAME_QUOTES, $NAME_REVERSE;
+		global $pgv_lang, $UNDERLINE_NAME_QUOTES, $NAME_REVERSE;
 		global $lang_short_cut, $LANGUAGE;
 
 		if (!$event->canShowDetails()) {
@@ -507,13 +507,7 @@ class IndividualControllerRoot extends BaseController {
 					}
 				}
 				echo "\n\t\t\t<dt class=\"label\">";
-				if (isset($pgv_lang[$fact])) {
-					print $pgv_lang[$fact];
-				} elseif (isset($factarray[$fact])) {
-					echo $factarray[$fact];
-				} else {
-					echo $fact;
-				}
+				echo i18n::translate($fact);
 				echo "</dt><dd class=\"field\">";
 				if (isset($nmatch[$i][2])) {
 					$name = trim($nmatch[$i][2]);
@@ -836,7 +830,7 @@ class IndividualControllerRoot extends BaseController {
 	* @return array an array of Person that will be used to iterate through on the indivudal.php page
 	*/
 	function buildFamilyList(&$family, $type) {
-		global $factarray, $pgv_lang;
+		global $pgv_lang;
 		$people = array();
 		if (!is_object($family)) return $people;
 		$labels = array();
@@ -1027,11 +1021,7 @@ class IndividualControllerRoot extends BaseController {
 				$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $children[$i]->gedrec);
 				$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
 				if ($pedi) {
-					if ($pedi=="birth") {
-						$label .= " (".$factarray["BIRT"].")";
-					} elseif (isset($pgv_lang[$pedi])) {
-						$label .= " (".$pgv_lang[$pedi].")";
-					}
+					$label.=i18n::translate($pedi);
 				}
 				$children[$i]->setLabel($label);
 			}

@@ -796,7 +796,7 @@ function showFactDetails($fact, $pid) {
 * @return string the privatized gedcom record
 */
 function privatize_gedcom($gedrec) {
-	global $pgv_lang, $factarray, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
+	global $pgv_lang, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
 
 	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')(.*)/', $gedrec, $match)) {
@@ -820,7 +820,7 @@ function privatize_gedcom($gedrec) {
 			// Check each of the sub facts for access
 			if (preg_match_all('/\n1 ('.PGV_REGEX_TAG.').*(?:\n[2-9].*)*/', $gedrec, $matches, PREG_SET_ORDER)) {
 				foreach ($matches as $match) {
-					if (($match[1]=='FACT' || $match[1]=='EVEN') && preg_match('/\n2 TYPE (\w+)/', $match[0], $tmatch) && array_key_exists($tmatch[1], $factarray)) {
+					if (($match[1]=='FACT' || $match[1]=='EVEN') && preg_match('/\n2 TYPE ([A-Z]{3,5})/', $match[0], $tmatch)) {
 						$tag=$tmatch[1];
 					} else {
 						$tag=$match[1];
