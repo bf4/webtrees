@@ -39,8 +39,7 @@ $headerfile=$THEME_DIR.'header.php';
 $footerfile=$THEME_DIR.'footer.php';
 
 $PGV_USE_HELPIMG=false;
-
-$PGV_IMAGE_DIR="images";		//-- directory to look for images
+$PGV_IMAGE_DIR=PGV_THEME_DIR."images";		//-- directory to look for images
 $PGV_MENU_LOCATION="top";
 
 //-- variables for image names
@@ -164,6 +163,8 @@ $PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
 $PGV_IMAGES["stop"]["other"] = "stop.gif";
+$PGV_IMAGES["pin-out"]["other"] = "pin-out.png";
+$PGV_IMAGES["pin-in"]["other"] = "pin-in.png";
 $PGV_IMAGES["default_image_M"]["other"] = "silhouette_male.gif";
 $PGV_IMAGES["default_image_F"]["other"] = "silhouette_female.gif";
 $PGV_IMAGES["default_image_U"]["other"] = "silhouette_unknown.gif";
