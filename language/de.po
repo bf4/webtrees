@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 12:23-0000\n"
+"POT-Creation-Date: 2010-03-01 22:53+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
+"Last-Translator: Veit Olschinski <lp@olschinski.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -69,6 +69,83 @@ msgstr "Einwanderung"
 msgid "EMIG"
 msgstr "Auswanderung"
 
+#: ../edit_interface.php:583
+msgid "PEDI"
+msgstr "Ahnentafel"
+
+#: ../edit_interface.php:754
+#: ../edit_interface.php:771
+#: ../edit_interface.php:905
+#: ../edit_interface.php:1038
+#: ../edit_interface.php:1077
+#: ../edit_interface.php:1164
+msgid "TITL"
+msgstr "Titel"
+
+#: ../edit_interface.php:768
+msgid "ABBR"
+msgstr "Abkürzung"
+
+#: ../edit_interface.php:775
+#: ../edit_interface.php:1247
+msgid "_HEB"
+msgstr "Hebräisch"
+
+#: ../edit_interface.php:780
+#: ../edit_interface.php:1252
+msgid "ROMN"
+msgstr "Romanisiert"
+
+#: ../edit_interface.php:784
+msgid "AUTH"
+msgstr "Verfasser"
+
+#: ../edit_interface.php:787
+msgid "PUBL"
+msgstr "Veröffentlichung"
+
+#: ../edit_interface.php:790
+msgid "REPO"
+msgstr "Aufbewahrungsort"
+
+#: ../edit_interface.php:793
+msgid "CALN"
+msgstr "Signatur"
+
+#: ../edit_interface.php:1227
+#: ../edit_interface.php:1243
+msgid "NAME"
+msgstr "Name"
+
+#: ../edit_interface.php:1256
+msgid "ADDR"
+msgstr "Adresse"
+
+#: ../edit_interface.php:1259
+msgid "PHON"
+msgstr "Telefon"
+
+#: ../edit_interface.php:1262
+msgid "FAX"
+msgstr "FAX"
+
+#: ../edit_interface.php:1265
+msgid "EMAIL"
+msgstr "E-Mail-Adresse"
+
+#: ../edit_interface.php:1268
+msgid "WWW"
+msgstr "Internetseite"
+
+#: ../lifespan.php:306
+msgid "PLAC"
+msgstr "Ort"
+
+#: ../media.php:798
+#: ../medialist.php:127
+msgid "FILE"
+msgstr "Datei"
+
 #: ../search_advanced.php:223
 #: ../search_advanced.php:260
 msgid "GIVN"
@@ -76,145 +153,213 @@ msgstr "Vornamen"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Angemeldete Benutzer"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
-msgstr ""
+msgstr "Keine angemeldeten Benutzer und keine Gäste"
 
 #: ../blocks/logged_in.php:83
 #, php-format
 msgid "%d anonymous logged-in user"
 msgid_plural "%d anonymous logged-in users"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Gast"
+msgstr[1] "%d Gäste"
 
 #: ../blocks/logged_in.php:86
 #, php-format
 msgid "%d logged-in user"
 msgid_plural "%d logged-in users"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d angemeldeter Benutzer"
+msgstr[1] "%d angemeldete Benutzer"
 
-#: ../includes/classes/class_i18n.php:75
-msgid "ar"
+#: ../blocks/random_media.php:352
+msgid "FORM"
+msgstr "Format"
+
+#: ../blocks/random_media.php:399
+msgid "TYPE"
+msgstr "Typ"
+
+#: ../blocks/todo.php:81
+#: ../blocks/yahrzeit.php:153
+msgid "DATE"
+msgstr "Datum"
+
+#: ../blocks/todo.php:86
+msgid "TEXT"
+msgstr "Text"
+
+#: ../blocks/yahrzeit.php:155
+msgid "_YART"
+msgstr "Yartzeit"
+
+#. I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
+#: ../includes/classes/class_i18n.php:55
+msgid "LANGUAGE_LIST_SEPARATOR"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:76
-msgid "ca"
+#. I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
+#: ../includes/classes/class_i18n.php:57
+msgid "LANGUAGE_LIST_SEPARATOR_LAST"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:77
-msgid "cz"
+#: ../includes/classes/class_treenav.php:311
+#: ../includes/classes/class_treenav.php:352
+#: ../includes/controllers/lifespan_ctrl.php:499
+#: ../includes/controllers/lifespan_ctrl.php:531
+#: ../includes/controllers/lifespan_ctrl.php:552
+msgid "ABBREV_BIRT"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:78
-msgid "da"
+#: ../includes/classes/class_treenav.php:313
+#: ../includes/classes/class_treenav.php:358
+#: ../includes/controllers/lifespan_ctrl.php:509
+#: ../includes/controllers/lifespan_ctrl.php:539
+msgid "ABBREV_DEAT"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:79
-msgid "de"
+#: ../includes/classes/class_treenav.php:353
+msgid "ABBREV_MARR"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:80
-msgid "el"
-msgstr ""
+#: ../includes/controllers/descendancy_ctrl.php:325
+#: ../includes/controllers/descendancy_ctrl.php:330
+msgid "NCHI"
+msgstr "Anzahl Kinder"
 
-#: ../includes/classes/class_i18n.php:81
-msgid "en"
-msgstr ""
+#: ../includes/functions/functions_edit.php:1295
+#: ../includes/functions/functions_print_facts.php:1115
+msgid "SHARED_NOTE"
+msgstr "Gemeinsame Bemerkung"
 
-#: ../includes/classes/class_i18n.php:82
-msgid "en-gb"
-msgstr ""
+#: ../includes/functions/functions_edit.php:1383
+#: ../includes/functions/functions_edit.php:1384
+#: ../includes/functions/functions_print_facts.php:370
+msgid "HUSB"
+msgstr "Ehemann"
 
-#: ../includes/classes/class_i18n.php:83
-msgid "es"
-msgstr ""
+#: ../includes/functions/functions_edit.php:1383
+#: ../includes/functions/functions_edit.php:1385
+#: ../includes/functions/functions_print_facts.php:370
+msgid "WIFE"
+msgstr "Ehefrau"
 
-#: ../includes/classes/class_i18n.php:84
-msgid "es-ar"
-msgstr ""
+#: ../includes/functions/functions_edit.php:1554
+msgid "LATI"
+msgstr "Breitengrad"
 
-#: ../includes/classes/class_i18n.php:85
-msgid "et"
-msgstr ""
+#: ../includes/functions/functions_edit.php:1554
+msgid "LONG"
+msgstr "Längengrad"
 
-#: ../includes/classes/class_i18n.php:86
-msgid "fi"
-msgstr ""
+#: ../includes/functions/functions_edit.php:1768
+#: ../includes/functions/functions_edit.php:2354
+#: ../includes/functions/functions_mediadb.php:1427
+#: ../includes/functions/functions_mediadb.php:1475
+#: ../includes/functions/functions_print_facts.php:993
+msgid "DATA:DATE"
+msgstr "Datum des Eintrages in der ursprünglichen Quelle"
 
-#: ../includes/classes/class_i18n.php:87
-msgid "fr"
-msgstr ""
+#: ../includes/functions/functions_edit.php:1848
+msgid "RESN"
+msgstr "Beschränkung"
 
-#: ../includes/classes/class_i18n.php:88
-msgid "he"
-msgstr ""
+#: ../includes/functions/functions_edit.php:2515
+#: ../includes/functions/functions_edit.php:2588
+msgid "STAT:DATE"
+msgstr "Datum der Statusänderung"
 
-#: ../includes/classes/class_i18n.php:89
-msgid "hu"
-msgstr ""
+#: ../includes/functions/functions_places.php:46
+#: ../includes/functions/functions_places.php:303
+msgid "CTRY"
+msgstr "Land"
 
-#: ../includes/classes/class_i18n.php:90
-msgid "id"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:337
+#: ../includes/functions/functions_print_facts.php:338
+msgid "CEME"
+msgstr "Friedhof"
 
-#: ../includes/classes/class_i18n.php:91
-msgid "it"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:351
+#: ../includes/functions/functions_print_lists.php:1534
+msgid "_PGVU"
+msgstr "von"
 
-#: ../includes/classes/class_i18n.php:92
-msgid "lt"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:358
+msgid "FAMC"
+msgstr "Familie des Kindes"
 
-#: ../includes/classes/class_i18n.php:93
-msgid "nl"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:362
+msgid "ADOP"
+msgstr "Adoption"
 
-#: ../includes/classes/class_i18n.php:94
-msgid "no"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:837
+msgid "URL"
+msgstr "Internet-Adresse"
 
-#: ../includes/classes/class_i18n.php:95
-msgid "pl"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:921
+#: ../includes/functions/functions_print_facts.php:971
+#: ../includes/functions/functions_print_lists.php:1683
+msgid "EVEN"
+msgstr "Ereignis"
 
-#: ../includes/classes/class_i18n.php:96
-msgid "pt"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:923
+#: ../includes/functions/functions_print_facts.php:973
+msgid "ROLE"
+msgstr "Rolle"
 
-#: ../includes/classes/class_i18n.php:97
-msgid "ro"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:967
+msgid "PAGE"
+msgstr "Zitat Einzelheiten"
 
-#: ../includes/classes/class_i18n.php:98
-msgid "ru"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:1003
+msgid "QUAY"
+msgstr "Datenqualität"
 
-#: ../includes/classes/class_i18n.php:99
-msgid "sk"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:1117
+msgid "NOTE"
+msgstr "Bemerkung"
 
-#: ../includes/classes/class_i18n.php:100
-msgid "sl"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:1435
+msgid "OBJE"
+msgstr "Multimedia Objekt"
 
-#: ../includes/classes/class_i18n.php:101
-msgid "sv"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:1591
+msgid "_PRIM"
+msgstr "Bevorzugtes Bild"
 
-#: ../includes/classes/class_i18n.php:102
-msgid "tr"
-msgstr ""
+#: ../includes/functions/functions_print_facts.php:1601
+msgid "_THUM"
+msgstr "Immer das Hauptbild verwenden?"
 
-#: ../includes/classes/class_i18n.php:103
-msgid "vi"
-msgstr ""
+#: ../includes/functions/functions_print_lists.php:119
+#: ../includes/functions/functions_print_lists.php:498
+#: ../includes/functions/functions_print_lists.php:502
+msgid "AGE"
+msgstr "Alter"
 
-#: ../includes/classes/class_i18n.php:104
-msgid "zh"
-msgstr ""
+#: ../includes/functions/functions_print_lists.php:121
+#: ../includes/functions/functions_print_lists.php:507
+#: ../includes/functions/functions_print_lists.php:850
+#: ../includes/functions/functions_print_lists.php:989
+#: ../includes/functions/functions_print_lists.php:1070
+#: ../includes/functions/functions_print_lists.php:1128
+#: ../includes/functions/functions_print_lists.php:1532
+#: ../includes/functions/functions_rss.php:423
+msgid "CHAN"
+msgstr "Letzte Änderung"
+
+#: ../includes/functions/functions_print_lists.php:190
+msgid "_MARNM"
+msgstr "Ehename"
+
+#: ../includes/functions/functions_print_lists.php:666
+msgid "_NMR"
+msgstr "unverheiratet"
+
+#: ../includes/functions/functions_print_lists.php:674
+msgid "_NMAR"
+msgstr "nie verheiratet"
 
 #. I18N: This is the country/chapman code for "Unknown"
 #: ../language/_countries.php:36
@@ -1546,11 +1691,6 @@ msgstr "Zimbabwe"
 msgid "ABBREV_BAPM"
 msgstr ""
 
-#. I18N: This is an abbreviation for the label "Birth", to be used on genealogy charts
-#: ../language/_facts.php:38
-msgid "ABBREV_BIRT"
-msgstr ""
-
 #. I18N: This is an abbreviation for the label "Burial", to be used on genealogy charts
 #: ../language/_facts.php:40
 msgid "ABBREV_BURI"
@@ -1560,31 +1700,6 @@ msgstr ""
 #: ../language/_facts.php:42
 msgid "ABBREV_CHR"
 msgstr ""
-
-#. I18N: This is an abbreviation for the label "Death", to be used on genealogy charts
-#: ../language/_facts.php:44
-msgid "ABBREV_DEAT"
-msgstr ""
-
-#. I18N: This is an abbreviation for the label "Marriage", to be used on genealogy charts
-#: ../language/_facts.php:46
-msgid "ABBREV_MARR"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Abbreviation"
-#: ../language/_facts.php:51
-msgid "ABBR"
-msgstr "Abkürzung"
-
-#. I18N: This is the GEDCOM label for "Address"
-#: ../language/_facts.php:53
-msgid "ADDR"
-msgstr "Adresse"
-
-#. I18N: This is the GEDCOM label for "Adoption"
-#: ../language/_facts.php:55
-msgid "ADOP"
-msgstr "Adoption"
 
 #. I18N: This is the GEDCOM label for "Address 1"
 #: ../language/_facts.php:57
@@ -1600,11 +1715,6 @@ msgstr "Adresse 2"
 #: ../language/_facts.php:61
 msgid "AFN"
 msgstr "Ancestral File Nummer"
-
-#. I18N: This is the GEDCOM label for "Age"
-#: ../language/_facts.php:63
-msgid "AGE"
-msgstr "Alter"
 
 #. I18N: This is the GEDCOM label for "Agency"
 #: ../language/_facts.php:65
@@ -1635,11 +1745,6 @@ msgstr "Annullierung"
 #: ../language/_facts.php:75
 msgid "ASSO"
 msgstr "Beziehung"
-
-#. I18N: This is the GEDCOM label for "Author"
-#: ../language/_facts.php:77
-msgid "AUTH"
-msgstr "Verfasser"
 
 #. I18N: This is the GEDCOM label for "LDS Baptism"
 #: ../language/_facts.php:79
@@ -1741,11 +1846,6 @@ msgstr "Beerdigung: Ort"
 msgid "BURI:SOUR"
 msgstr "Beerdigung: Quelle"
 
-#. I18N: This is the GEDCOM label for "Call Number"
-#: ../language/_facts.php:125
-msgid "CALN"
-msgstr "Signatur"
-
 #. I18N: This is the GEDCOM label for "Caste / Social Status"
 #: ../language/_facts.php:127
 msgid "CAST"
@@ -1756,20 +1856,10 @@ msgstr "Stand"
 msgid "CAUS"
 msgstr "Todesursache"
 
-#. I18N: This is the GEDCOM label for "Cemetery"
-#: ../language/_facts.php:131
-msgid "CEME"
-msgstr "Friedhof"
-
 #. I18N: This is the GEDCOM label for "Census"
 #: ../language/_facts.php:133
 msgid "CENS"
 msgstr "Volkszählung"
-
-#. I18N: This is the GEDCOM label for "Last Change"
-#: ../language/_facts.php:135
-msgid "CHAN"
-msgstr "Letzte Änderung"
 
 #. I18N: This is the GEDCOM label for "Character Set"
 #: ../language/_facts.php:137
@@ -1851,25 +1941,10 @@ msgstr "Firma"
 msgid "CREM"
 msgstr "Einäscherung"
 
-#. I18N: This is the GEDCOM label for "Country"
-#: ../language/_facts.php:173
-msgid "CTRY"
-msgstr "Land"
-
 #. I18N: This is the GEDCOM label for "Data"
 #: ../language/_facts.php:175
 msgid "DATA"
 msgstr "Daten"
-
-#. I18N: This is the GEDCOM label for "Date of entry in original source"
-#: ../language/_facts.php:177
-msgid "DATA:DATE"
-msgstr "Datum des Eintrages in der ursprünglichen Quelle"
-
-#. I18N: This is the GEDCOM label for "Date"
-#: ../language/_facts.php:179
-msgid "DATE"
-msgstr "Datum"
 
 #. I18N: This is the GEDCOM label for "Death Date"
 #: ../language/_facts.php:183
@@ -1917,11 +1992,6 @@ msgid "EDUC"
 msgstr "Ausbildung"
 
 #. I18N: This is the GEDCOM label for "Email Address"
-#: ../language/_facts.php:203
-msgid "EMAIL"
-msgstr "E-Mail-Adresse"
-
-#. I18N: This is the GEDCOM label for "Email Address"
 #: ../language/_facts.php:205
 msgid "EMAL"
 msgstr "E-Mail Adresse"
@@ -1951,11 +2021,6 @@ msgstr "Verlobung: Ort"
 msgid "ENGA:SOUR"
 msgstr "Verlobung: Quelle"
 
-#. I18N: This is the GEDCOM label for "Event"
-#: ../language/_facts.php:219
-msgid "EVEN"
-msgstr "Ereignis"
-
 #. I18N: This is the GEDCOM label for "Fact"
 #: ../language/_facts.php:221
 msgid "FACT"
@@ -1965,11 +2030,6 @@ msgstr "Ereignis"
 #: ../language/_facts.php:223
 msgid "FAM"
 msgstr "Familie"
-
-#. I18N: This is the GEDCOM label for "Family as a Child"
-#: ../language/_facts.php:225
-msgid "FAMC"
-msgstr "Familie des Kindes"
 
 #. I18N: This is the GEDCOM label for "Father's Birthplace"
 #: ../language/_facts.php:227
@@ -2106,11 +2166,6 @@ msgstr "Geburtsort des Ehepartners"
 msgid "FAMS:SPOUSE:DEAT:PLAC"
 msgstr "Todesort des Ehepartners"
 
-#. I18N: This is the GEDCOM label for "FAX"
-#: ../language/_facts.php:281
-msgid "FAX"
-msgstr "FAX"
-
 #. I18N: This is the GEDCOM label for "First Communion"
 #: ../language/_facts.php:283
 msgid "FCOM"
@@ -2131,50 +2186,25 @@ msgstr "Erste Kommunion: Ort"
 msgid "FCOM:SOUR"
 msgstr "Erste Kommunion: Quelle"
 
-#. I18N: This is the GEDCOM label for "External File"
-#: ../language/_facts.php:291
-msgid "FILE"
-msgstr "Datei"
-
 #. I18N: This is the GEDCOM label for "Phonetic"
 #: ../language/_facts.php:293
 msgid "FONE"
 msgstr "Phonetisch"
-
-#. I18N: This is the GEDCOM label for "Format"
-#: ../language/_facts.php:295
-msgid "FORM"
-msgstr "Format"
 
 #. I18N: This is the GEDCOM label for "Graduation"
 #: ../language/_facts.php:299
 msgid "GRAD"
 msgstr "Schulabschluß"
 
-#. I18N: This is the GEDCOM label for "Husband"
-#: ../language/_facts.php:301
-msgid "HUSB"
-msgstr "Ehemann"
-
 #. I18N: This is the GEDCOM label for "Identification Number"
 #: ../language/_facts.php:303
 msgid "IDNO"
 msgstr "ID-Nummer"
 
-#. I18N: This is the GEDCOM label for "Latitude"
-#: ../language/_facts.php:307
-msgid "LATI"
-msgstr "Breitengrad"
-
 #. I18N: This is the GEDCOM label for "Legatee"
 #: ../language/_facts.php:309
 msgid "LEGA"
 msgstr "Erbe"
-
-#. I18N: This is the GEDCOM label for "Longitude"
-#: ../language/_facts.php:311
-msgid "LONG"
-msgstr "Längengrad"
 
 #. I18N: This is the GEDCOM label for "Map"
 #: ../language/_facts.php:313
@@ -2256,11 +2286,6 @@ msgstr "Ehevereinbarung"
 msgid "MEDI"
 msgstr "Multimedia Typ"
 
-#. I18N: This is the GEDCOM label for "Name"
-#: ../language/_facts.php:347
-msgid "NAME"
-msgstr "Name"
-
 #. I18N: This is the GEDCOM label for "Phonetic Name"
 #: ../language/_facts.php:349
 msgid "NAME:FONE"
@@ -2286,11 +2311,6 @@ msgstr "Nationalität"
 msgid "NATU"
 msgstr "Einbürgerung"
 
-#. I18N: This is the GEDCOM label for "Number of Children"
-#: ../language/_facts.php:359
-msgid "NCHI"
-msgstr "Anzahl Kinder"
-
 #. I18N: This is the GEDCOM label for "Nickname"
 #: ../language/_facts.php:361
 msgid "NICK"
@@ -2301,11 +2321,6 @@ msgstr "Spitzname"
 msgid "NMR"
 msgstr "Anzahl Heiraten"
 
-#. I18N: This is the GEDCOM label for "Note"
-#: ../language/_facts.php:365
-msgid "NOTE"
-msgstr "Bemerkung"
-
 #. I18N: This is the GEDCOM label for "Prefix"
 #: ../language/_facts.php:367
 msgid "NPFX"
@@ -2315,11 +2330,6 @@ msgstr "Präfix"
 #: ../language/_facts.php:369
 msgid "NSFX"
 msgstr "Namenszusatz"
-
-#. I18N: This is the GEDCOM label for "Multimedia Object"
-#: ../language/_facts.php:371
-msgid "OBJE"
-msgstr "Multimedia Objekt"
 
 #. I18N: This is the GEDCOM label for "Occupation"
 #: ../language/_facts.php:373
@@ -2335,26 +2345,6 @@ msgstr "Heilige Handlung"
 #: ../language/_facts.php:377
 msgid "ORDN"
 msgstr "Ordination"
-
-#. I18N: This is the GEDCOM label for "Citation Details"
-#: ../language/_facts.php:379
-msgid "PAGE"
-msgstr "Zitat Einzelheiten"
-
-#. I18N: This is the GEDCOM label for "Pedigree"
-#: ../language/_facts.php:381
-msgid "PEDI"
-msgstr "Ahnentafel"
-
-#. I18N: This is the GEDCOM label for "Phone"
-#: ../language/_facts.php:383
-msgid "PHON"
-msgstr "Telefon"
-
-#. I18N: This is the GEDCOM label for "Place"
-#: ../language/_facts.php:385
-msgid "PLAC"
-msgstr "Ort"
 
 #. I18N: This is the GEDCOM label for "Phonetic Place"
 #: ../language/_facts.php:387
@@ -2386,16 +2376,6 @@ msgstr "Testamentsbestätigung"
 msgid "PROP"
 msgstr "Besitz"
 
-#. I18N: This is the GEDCOM label for "Publication"
-#: ../language/_facts.php:399
-msgid "PUBL"
-msgstr "Veröffentlichung"
-
-#. I18N: This is the GEDCOM label for "Quality of Data"
-#: ../language/_facts.php:401
-msgid "QUAY"
-msgstr "Datenqualität"
-
 #. I18N: This is the GEDCOM label for "Reference Number"
 #: ../language/_facts.php:403
 msgid "REFN"
@@ -2411,20 +2391,10 @@ msgstr "Verwandtschaft"
 msgid "RELI"
 msgstr "Religion"
 
-#. I18N: This is the GEDCOM label for "Repository"
-#: ../language/_facts.php:409
-msgid "REPO"
-msgstr "Aufbewahrungsort"
-
 #. I18N: This is the GEDCOM label for "Residence"
 #: ../language/_facts.php:411
 msgid "RESI"
 msgstr "Wohnort"
-
-#. I18N: This is the GEDCOM label for "Restriction"
-#: ../language/_facts.php:413
-msgid "RESN"
-msgstr "Beschränkung"
 
 #. I18N: This is the GEDCOM label for "Retirement"
 #: ../language/_facts.php:415
@@ -2441,16 +2411,6 @@ msgstr "Datensatznummer"
 msgid "RIN"
 msgstr "Daten ID-Nummer"
 
-#. I18N: This is the GEDCOM label for "Role"
-#: ../language/_facts.php:421
-msgid "ROLE"
-msgstr "Rolle"
-
-#. I18N: This is the GEDCOM label for "Romanized"
-#: ../language/_facts.php:423
-msgid "ROMN"
-msgstr "Romanisiert"
-
 #. I18N: This is the GEDCOM label for "Remote Server"
 #: ../language/_facts.php:425
 msgid "SERV"
@@ -2460,11 +2420,6 @@ msgstr "Fremder Server"
 #: ../language/_facts.php:427
 msgid "SEX"
 msgstr "Geschlecht"
-
-#. I18N: This is the GEDCOM label for "Shared Note"
-#: ../language/_facts.php:429
-msgid "SHARED_NOTE"
-msgstr "Gemeinsame Bemerkung"
 
 #. I18N: This is the GEDCOM label for "LDS Child Sealing"
 #: ../language/_facts.php:431
@@ -2501,11 +2456,6 @@ msgstr "Bundesland/Staat"
 msgid "STAT"
 msgstr "Status"
 
-#. I18N: This is the GEDCOM label for "Status Change Date"
-#: ../language/_facts.php:445
-msgid "STAT:DATE"
-msgstr "Datum der Statusänderung"
-
 #. I18N: This is the GEDCOM label for "Submitter"
 #: ../language/_facts.php:447
 msgid "SUBM"
@@ -2521,20 +2471,10 @@ msgstr "Übermittlung"
 msgid "TEMP"
 msgstr "HLT-Tempel"
 
-#. I18N: This is the GEDCOM label for "Text"
-#: ../language/_facts.php:455
-msgid "TEXT"
-msgstr "Text"
-
 #. I18N: This is the GEDCOM label for "Time"
 #: ../language/_facts.php:457
 msgid "TIME"
 msgstr "Uhrzeit"
-
-#. I18N: This is the GEDCOM label for "Title"
-#: ../language/_facts.php:459
-msgid "TITL"
-msgstr "Titel"
 
 #. I18N: This is the GEDCOM label for "Phonetic Title"
 #: ../language/_facts.php:461
@@ -2551,30 +2491,10 @@ msgstr "Titel (romanisiert)"
 msgid "TITL:_HEB"
 msgstr "Titel (hebräisch)"
 
-#. I18N: This is the GEDCOM label for "Type"
-#: ../language/_facts.php:467
-msgid "TYPE"
-msgstr "Typ"
-
-#. I18N: This is the GEDCOM label for "Web URL"
-#: ../language/_facts.php:469
-msgid "URL"
-msgstr "Internet-Adresse"
-
-#. I18N: This is the GEDCOM label for "Wife"
-#: ../language/_facts.php:471
-msgid "WIFE"
-msgstr "Ehefrau"
-
 #. I18N: This is the GEDCOM label for "Will"
 #: ../language/_facts.php:473
 msgid "WILL"
 msgstr "Testament"
-
-#. I18N: This is the GEDCOM label for "Web Home Page"
-#: ../language/_facts.php:475
-msgid "WWW"
-msgstr "Internetseite"
 
 #. I18N: This is the GEDCOM label for "Adoption of a child"
 #: ../language/_facts.php:477
@@ -3131,11 +3051,6 @@ msgstr "GEDCOM Datei"
 msgid "_HAIR"
 msgstr "Haarfarbe"
 
-#. I18N: This is the GEDCOM label for "Hebrew"
-#: ../language/_facts.php:701
-msgid "_HEB"
-msgstr "Hebräisch"
-
 #. I18N: This is the GEDCOM label for "Height"
 #: ../language/_facts.php:703
 msgid "_HEIG"
@@ -3220,11 +3135,6 @@ msgstr "Geschwister: Aufgebot"
 #: ../language/_facts.php:735
 msgid "_MARI"
 msgstr "Eheabsicht"
-
-#. I18N: This is the GEDCOM label for "Married Name"
-#: ../language/_facts.php:737
-msgid "_MARNM"
-msgstr "Ehename"
 
 #. I18N: This is the GEDCOM label for "Married Surname"
 #: ../language/_facts.php:739
@@ -3346,26 +3256,6 @@ msgstr "Namensvetter"
 msgid "_NLIV"
 msgstr "nicht lebend"
 
-#. I18N: This is the GEDCOM label for "Never married"
-#: ../language/_facts.php:787
-msgid "_NMAR"
-msgstr "nie verheiratet"
-
-#. I18N: This is the GEDCOM label for "Not married"
-#: ../language/_facts.php:789
-msgid "_NMR"
-msgstr "unverheiratet"
-
-#. I18N: This is the GEDCOM label for "by"
-#: ../language/_facts.php:791
-msgid "_PGVU"
-msgstr "von"
-
-#. I18N: This is the GEDCOM label for "Highlighted Image"
-#: ../language/_facts.php:793
-msgid "_PRIM"
-msgstr "Bevorzugtes Bild"
-
 #. I18N: This is the GEDCOM label for "Permanent Number"
 #: ../language/_facts.php:795
 msgid "_PRMN"
@@ -3391,11 +3281,6 @@ msgstr "Ehestand"
 msgid "_SUBQ"
 msgstr "Kurzfassung"
 
-#. I18N: This is the GEDCOM label for "Always use main image?"
-#: ../language/_facts.php:807
-msgid "_THUM"
-msgstr "Immer das Hauptbild verwenden?"
-
 #. I18N: This is the GEDCOM label for "To Do Item"
 #: ../language/_facts.php:809
 msgid "_TODO"
@@ -3420,11 +3305,6 @@ msgstr "Internet-Adresse"
 #: ../language/_facts.php:817
 msgid "_WEIG"
 msgstr "Gewicht"
-
-#. I18N: This is the GEDCOM label for "Yahrzeit"
-#: ../language/_facts.php:819
-msgid "_YART"
-msgstr "Yartzeit"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of a child"
 #: ../language/_facts.php:821
@@ -3470,4 +3350,159 @@ msgstr "Neffe/Nichte: Brit mila"
 #: ../language/_facts.php:837
 msgid "__BRTM_SIBL"
 msgstr "Geschwister: Brit mila"
+
+#. I18N: This is the RFC5646 language code for Arabic
+#: ../language/_languages.php:36
+msgid "ar"
+msgstr "Arabisch"
+
+#. I18N: This is the RFC5646 language code for Catalan
+#: ../language/_languages.php:38
+msgid "ca"
+msgstr "Katalanisch"
+
+#. I18N: This is the RFC5646 language code for Czech
+#: ../language/_languages.php:40
+msgid "cz"
+msgstr "Tschechisch"
+
+#. I18N: This is the RFC5646 language code for Danish
+#: ../language/_languages.php:42
+msgid "da"
+msgstr "Dänisch"
+
+#. I18N: This is the RFC5646 language code for German
+#: ../language/_languages.php:44
+msgid "de"
+msgstr "Deutsch"
+
+#. I18N: This is the RFC5646 language code for Greek
+#: ../language/_languages.php:46
+msgid "el"
+msgstr "Griechisch"
+
+#. I18N: This is the RFC5646 language code for English
+#: ../language/_languages.php:48
+msgid "en"
+msgstr "Englisch"
+
+#. I18N: This is the RFC5646 language code for British English
+#: ../language/_languages.php:50
+msgid "en-gb"
+msgstr "Englisch (britisch)"
+
+#. I18N: This is the RFC5646 language code for Spanish
+#: ../language/_languages.php:52
+msgid "es"
+msgstr "Spanisch"
+
+#. I18N: This is the RFC5646 language code for Latin-American Spanish
+#: ../language/_languages.php:54
+msgid "es-ar"
+msgstr "Spanisch (argentinisch)"
+
+#. I18N: This is the RFC5646 language code for Estonian
+#: ../language/_languages.php:56
+msgid "et"
+msgstr "Estnisch"
+
+#. I18N: This is the RFC5646 language code for Finnish
+#: ../language/_languages.php:58
+msgid "fi"
+msgstr "Finnisch"
+
+#. I18N: This is the RFC5646 language code for French
+#: ../language/_languages.php:60
+msgid "fr"
+msgstr "Französisch"
+
+#. I18N: This is the RFC5646 language code for Hebrew
+#: ../language/_languages.php:62
+msgid "he"
+msgstr "Hebräisch"
+
+#. I18N: This is the RFC5646 language code for Hungarian
+#: ../language/_languages.php:64
+msgid "hu"
+msgstr "Ungarisch"
+
+#. I18N: This is the RFC5646 language code for Indonesian
+#: ../language/_languages.php:66
+msgid "id"
+msgstr "Indonesisch"
+
+#. I18N: This is the RFC5646 language code for Italian
+#: ../language/_languages.php:68
+msgid "it"
+msgstr "Italienisch"
+
+#. I18N: This is the RFC5646 language code for Lithuanian
+#: ../language/_languages.php:70
+msgid "lt"
+msgstr "Litauisch"
+
+#. I18N: This is the RFC5646 language code for Dutch
+#: ../language/_languages.php:72
+msgid "nl"
+msgstr "Niederländisch"
+
+#. I18N: This is the RFC5646 language code for Norwegian (Nynorsk)
+#: ../language/_languages.php:74
+msgid "nn"
+msgstr "Norwegisch (Nynorsk)"
+
+#. I18N: This is the RFC5646 language code for Polish
+#: ../language/_languages.php:76
+msgid "pl"
+msgstr "Polnisch"
+
+#. I18N: This is the RFC5646 language code for Portuguese
+#: ../language/_languages.php:78
+msgid "pt"
+msgstr "Portugiesisch"
+
+#. I18N: This is the RFC5646 language code for Romanian
+#: ../language/_languages.php:80
+msgid "ro"
+msgstr "Rumänisch"
+
+#. I18N: This is the RFC5646 language code for Russian
+#: ../language/_languages.php:82
+msgid "ru"
+msgstr "Russisch"
+
+#. I18N: This is the RFC5646 language code for Slovakian
+#: ../language/_languages.php:84
+msgid "sk"
+msgstr "Slowakisch"
+
+#. I18N: This is the RFC5646 language code for Slovenian
+#: ../language/_languages.php:86
+msgid "sl"
+msgstr "Slowenisch"
+
+#. I18N: This is the RFC5646 language code for Serbian
+#: ../language/_languages.php:88
+msgid "sr"
+msgstr "Serbisch"
+
+#. I18N: This is the RFC5646 language code for Swedish
+#: ../language/_languages.php:90
+msgid "sv"
+msgstr "Schwedisch"
+
+#. I18N: This is the RFC5646 language code for Turkish
+#: ../language/_languages.php:92
+msgid "tr"
+msgstr "Türkisch"
+
+#. I18N: This is the RFC5646 language code for Vietnamese
+#: ../language/_languages.php:94
+msgid "vi"
+msgstr "Vietnamesisch"
+
+#. I18N: This is the RFC5646 language code for Chinese
+#: ../language/_languages.php:96
+msgid "zh"
+msgstr "Chinesisch"
 
