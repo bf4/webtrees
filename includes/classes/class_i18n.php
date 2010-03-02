@@ -138,4 +138,15 @@ class i18n {
 			return implode(self::$list_separator, array_slice($array, 0, $n-1)).self::$list_separator_last.$array[$n-1];
 		}
 	}
+
+	// Provide a (one letter) abbreviation of a fact name for charts, etc.
+	static public function fact_abbreviation($fact) {
+		$abbrev='ABBREV_'.$fact;
+		if (i18n::is_translated($abbrev)) {
+			echo i18n::translate($abbrev);
+		} else {
+			// Just use the first letter of the full fact
+			echo UTF8_substr(i18n::translate($fact), 0, 1);
+		}
+	}
 }

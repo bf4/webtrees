@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-01 22:49-0000\n"
+"POT-Creation-Date: 2010-03-02 23:40-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -16,6 +16,85 @@ msgstr ""
 "Plural-Forms: nplurals=2;plural=(n!=1);\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
+
+#. I18N: This is the GEDCOM label for "Marriage"
+#: ../branches.php:32
+#: ../calendar.php:253
+#: _facts.php:327
+msgid "MARR"
+msgstr "Avioliitto"
+
+#. I18N: This is the GEDCOM label for "Surname"
+#: ../branches.php:70
+#: _facts.php:451
+msgid "SURN"
+msgstr "Sukunimi"
+
+#. I18N: This is the GEDCOM label for "Birth"
+#: ../calendar.php:238
+#: _facts.php:105
+msgid "BIRT"
+msgstr "Syntymä"
+
+#. I18N: This is the GEDCOM label for "Christening"
+#: ../calendar.php:241
+#: _facts.php:141
+msgid "CHR"
+msgstr "Ristiminen"
+
+#. I18N: This is the GEDCOM label for "Adult Christening"
+#: ../calendar.php:244
+#: _facts.php:149
+msgid "CHRA"
+msgstr "Aikuiskaste"
+
+#. I18N: This is the GEDCOM label for "Baptism"
+#: ../calendar.php:247
+#: _facts.php:81
+msgid "BAPM"
+msgstr "Kaste"
+
+#. I18N: This is the GEDCOM label for "Common Law Marriage"
+#: ../calendar.php:250
+#: _facts.php:595
+msgid "_COML"
+msgstr "Avoliitto"
+
+#. I18N: This is the GEDCOM label for "Separated"
+#: ../calendar.php:256
+#: _facts.php:799
+msgid "_SEPR"
+msgstr "Asumusero"
+
+#. I18N: This is the GEDCOM label for "Divorce"
+#: ../calendar.php:259
+#: _facts.php:195
+msgid "DIV"
+msgstr "Avioero"
+
+#. I18N: This is the GEDCOM label for "Death"
+#: ../calendar.php:262
+#: _facts.php:181
+msgid "DEAT"
+msgstr "Kuolema"
+
+#. I18N: This is the GEDCOM label for "Burial"
+#: ../calendar.php:265
+#: _facts.php:117
+msgid "BURI"
+msgstr "Hautaaminen"
+
+#. I18N: This is the GEDCOM label for "Immigration"
+#: ../calendar.php:268
+#: _facts.php:305
+msgid "IMMI"
+msgstr "Maahanmuutto"
+
+#. I18N: This is the GEDCOM label for "Emigration"
+#: ../calendar.php:271
+#: _facts.php:207
+msgid "EMIG"
+msgstr "Maastamuutto"
 
 #. I18N: This is the country/chapman code for "Unknown"
 #: _countries.php:36
@@ -1447,12 +1526,6 @@ msgstr "Tekijä"
 msgid "BAPL"
 msgstr "MAP kaste"
 
-#. I18N: This is the GEDCOM label for "Baptism"
-#: _facts.php:81
-#: ../calendar.php:247
-msgid "BAPM"
-msgstr "Kaste"
-
 #. I18N: This is the GEDCOM label for "Baptism Date"
 #: _facts.php:83
 msgid "BAPM:DATE"
@@ -1508,12 +1581,6 @@ msgstr ""
 msgid "BASM:SOUR"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Birth"
-#: _facts.php:105
-#: ../calendar.php:238
-msgid "BIRT"
-msgstr "Syntymä"
-
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: _facts.php:107
 msgid "BIRT:DATE"
@@ -1538,12 +1605,6 @@ msgstr "Siunaus"
 #: _facts.php:115
 msgid "BLOB"
 msgstr "Binääridataobjekti"
-
-#. I18N: This is the GEDCOM label for "Burial"
-#: _facts.php:117
-#: ../calendar.php:265
-msgid "BURI"
-msgstr "Hautaaminen"
 
 #. I18N: This is the GEDCOM label for "Burial Date"
 #: _facts.php:119
@@ -1600,12 +1661,6 @@ msgstr "Merkistö"
 msgid "CHIL"
 msgstr "Lapsi"
 
-#. I18N: This is the GEDCOM label for "Christening"
-#: _facts.php:141
-#: ../calendar.php:241
-msgid "CHR"
-msgstr "Ristiminen"
-
 #. I18N: This is the GEDCOM label for "Christening Date"
 #: _facts.php:143
 msgid "CHR:DATE"
@@ -1620,12 +1675,6 @@ msgstr "Ristiäispaikka"
 #: _facts.php:147
 msgid "CHR:SOUR"
 msgstr ""
-
-#. I18N: This is the GEDCOM label for "Adult Christening"
-#: _facts.php:149
-#: ../calendar.php:244
-msgid "CHRA"
-msgstr "Aikuiskaste"
 
 #. I18N: This is the GEDCOM label for "Citizenship"
 #: _facts.php:151
@@ -1702,12 +1751,6 @@ msgstr "Kirjauspäivä alkuperäisessä lähteessä"
 msgid "DATE"
 msgstr "Päiväys"
 
-#. I18N: This is the GEDCOM label for "Death"
-#: _facts.php:181
-#: ../calendar.php:262
-msgid "DEAT"
-msgstr "Kuolema"
-
 #. I18N: This is the GEDCOM label for "Death Date"
 #: _facts.php:183
 msgid "DEAT:DATE"
@@ -1738,12 +1781,6 @@ msgstr "Jälkeläisten selvitys"
 msgid "DEST"
 msgstr "Vastaanottaja"
 
-#. I18N: This is the GEDCOM label for "Divorce"
-#: _facts.php:195
-#: ../calendar.php:259
-msgid "DIV"
-msgstr "Avioero"
-
 #. I18N: This is the GEDCOM label for "Divorce filed"
 #: _facts.php:197
 msgid "DIVF"
@@ -1768,12 +1805,6 @@ msgstr "Sähköpostiosoite"
 #: _facts.php:205
 msgid "EMAL"
 msgstr "Sähköpostiosoite"
-
-#. I18N: This is the GEDCOM label for "Emigration"
-#: _facts.php:207
-#: ../calendar.php:271
-msgid "EMIG"
-msgstr "Maastamuutto"
 
 #. I18N: This is the GEDCOM label for "LDS Endowment"
 #: _facts.php:209
@@ -2015,12 +2046,6 @@ msgstr "Mies"
 msgid "IDNO"
 msgstr "Henkilönumero"
 
-#. I18N: This is the GEDCOM label for "Immigration"
-#: _facts.php:305
-#: ../calendar.php:268
-msgid "IMMI"
-msgstr "Maahanmuutto"
-
 #. I18N: This is the GEDCOM label for "Latitude"
 #: _facts.php:307
 msgid "LATI"
@@ -2070,13 +2095,6 @@ msgstr "Avioliittosopimus"
 #: _facts.php:325
 msgid "MARL"
 msgstr "Avioliittolupa"
-
-#. I18N: This is the GEDCOM label for "Marriage"
-#: _facts.php:327
-#: ../branches.php:32
-#: ../calendar.php:253
-msgid "MARR"
-msgstr "Avioliitto"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: _facts.php:329
@@ -2382,12 +2400,6 @@ msgstr "Lähettäjä/toimittaja"
 #: _facts.php:449
 msgid "SUBN"
 msgstr "Lähetys/toimitus"
-
-#. I18N: This is the GEDCOM label for "Surname"
-#: _facts.php:451
-#: ../branches.php:70
-msgid "SURN"
-msgstr "Sukunimi"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: _facts.php:453
@@ -2743,12 +2755,6 @@ msgstr "Sisaruksen lapsen ristiminen"
 #: _facts.php:593
 msgid "_CHR_SIBL"
 msgstr "Sisaruksen ristiminen"
-
-#. I18N: This is the GEDCOM label for "Common Law Marriage"
-#: _facts.php:595
-#: ../calendar.php:250
-msgid "_COML"
-msgstr "Avoliitto"
 
 #. I18N: This is the GEDCOM label for "Cremation of a child"
 #: _facts.php:597
@@ -3255,12 +3261,6 @@ msgstr "Pysyvä numero"
 msgid "_SCBK"
 msgstr "Leikekirja"
 
-#. I18N: This is the GEDCOM label for "Separated"
-#: _facts.php:799
-#: ../calendar.php:256
-msgid "_SEPR"
-msgstr "Asumusero"
-
 #. I18N: This is the GEDCOM label for "Slide Show"
 #: _facts.php:801
 msgid "_SSHOW"
@@ -3359,37 +3359,37 @@ msgstr "Sisaruksen Brit mila"
 #. I18N: This is the RFC5646 language code for Arabic
 #: _languages.php:36
 msgid "ar"
-msgstr ""
+msgstr "Arabia"
 
 #. I18N: This is the RFC5646 language code for Catalan
 #: _languages.php:38
 msgid "ca"
-msgstr ""
+msgstr "Katalaani (Valencia)"
 
 #. I18N: This is the RFC5646 language code for Czech
 #: _languages.php:40
 msgid "cz"
-msgstr ""
+msgstr "Tšekki"
 
 #. I18N: This is the RFC5646 language code for Danish
 #: _languages.php:42
 msgid "da"
-msgstr ""
+msgstr "Tanska"
 
 #. I18N: This is the RFC5646 language code for German
 #: _languages.php:44
 msgid "de"
-msgstr ""
+msgstr "Saksa"
 
 #. I18N: This is the RFC5646 language code for Greek
 #: _languages.php:46
 msgid "el"
-msgstr ""
+msgstr "Kreikka"
 
 #. I18N: This is the RFC5646 language code for English
 #: _languages.php:48
 msgid "en"
-msgstr ""
+msgstr "Englanti"
 
 #. I18N: This is the RFC5646 language code for British English
 #: _languages.php:50
@@ -3399,117 +3399,117 @@ msgstr ""
 #. I18N: This is the RFC5646 language code for Spanish
 #: _languages.php:52
 msgid "es"
-msgstr ""
+msgstr "Espanja"
 
 #. I18N: This is the RFC5646 language code for Latin-American Spanish
 #: _languages.php:54
 msgid "es-ar"
-msgstr ""
+msgstr "Espanja (Latinalainen Amerikka)"
 
 #. I18N: This is the RFC5646 language code for Estonian
 #: _languages.php:56
 msgid "et"
-msgstr ""
+msgstr "Eesti"
 
 #. I18N: This is the RFC5646 language code for Finnish
 #: _languages.php:58
 msgid "fi"
-msgstr ""
+msgstr "Suomi"
 
 #. I18N: This is the RFC5646 language code for French
 #: _languages.php:60
 msgid "fr"
-msgstr ""
+msgstr "Ranska"
 
 #. I18N: This is the RFC5646 language code for Hebrew
 #: _languages.php:62
 msgid "he"
-msgstr ""
+msgstr "Heprea"
 
 #. I18N: This is the RFC5646 language code for Hungarian
 #: _languages.php:64
 msgid "hu"
-msgstr ""
+msgstr "Unkari"
 
 #. I18N: This is the RFC5646 language code for Indonesian
 #: _languages.php:66
 msgid "id"
-msgstr ""
+msgstr "Indonesia"
 
 #. I18N: This is the RFC5646 language code for Italian
 #: _languages.php:68
 msgid "it"
-msgstr ""
+msgstr "Italia"
 
 #. I18N: This is the RFC5646 language code for Lithuanian
 #: _languages.php:70
 msgid "lt"
-msgstr ""
+msgstr "Liettua"
 
 #. I18N: This is the RFC5646 language code for Dutch
 #: _languages.php:72
 msgid "nl"
-msgstr ""
+msgstr "Hollanti"
 
 #. I18N: This is the RFC5646 language code for Norwegian (Nynorsk)
 #: _languages.php:74
 msgid "nn"
-msgstr ""
+msgstr "Norja"
 
 #. I18N: This is the RFC5646 language code for Polish
 #: _languages.php:76
 msgid "pl"
-msgstr ""
+msgstr "Puola"
 
 #. I18N: This is the RFC5646 language code for Portuguese
 #: _languages.php:78
 msgid "pt"
-msgstr ""
+msgstr "Portugali"
 
 #. I18N: This is the RFC5646 language code for Romanian
 #: _languages.php:80
 msgid "ro"
-msgstr ""
+msgstr "Romania"
 
 #. I18N: This is the RFC5646 language code for Russian
 #: _languages.php:82
 msgid "ru"
-msgstr ""
+msgstr "Venäjä"
 
 #. I18N: This is the RFC5646 language code for Slovakian
 #: _languages.php:84
 msgid "sk"
-msgstr ""
+msgstr "Slovakia"
 
 #. I18N: This is the RFC5646 language code for Slovenian
 #: _languages.php:86
 msgid "sl"
-msgstr ""
+msgstr "Slovenia"
 
 #. I18N: This is the RFC5646 language code for Serbian
 #: _languages.php:88
 msgid "sr"
-msgstr ""
+msgstr "Serbia (Latinalaiset aakkoset)"
 
 #. I18N: This is the RFC5646 language code for Swedish
 #: _languages.php:90
 msgid "sv"
-msgstr ""
+msgstr "Ruotsi"
 
 #. I18N: This is the RFC5646 language code for Turkish
 #: _languages.php:92
 msgid "tr"
-msgstr ""
+msgstr "Turkki"
 
 #. I18N: This is the RFC5646 language code for Vietnamese
 #: _languages.php:94
 msgid "vi"
-msgstr ""
+msgstr "Vietnam"
 
 #. I18N: This is the RFC5646 language code for Chinese
 #: _languages.php:96
 msgid "zh"
-msgstr ""
+msgstr "Kiina"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"

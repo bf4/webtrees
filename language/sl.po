@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-01 23:13-0000\n"
+"POT-Creation-Date: 2010-03-02 23:44-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -16,6 +16,85 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
+
+#. I18N: This is the GEDCOM label for "Marriage"
+#: ../branches.php:32
+#: ../calendar.php:253
+#: _facts.php:327
+msgid "MARR"
+msgstr "Poroka"
+
+#. I18N: This is the GEDCOM label for "Surname"
+#: ../branches.php:70
+#: _facts.php:451
+msgid "SURN"
+msgstr "Priimek"
+
+#. I18N: This is the GEDCOM label for "Birth"
+#: ../calendar.php:238
+#: _facts.php:105
+msgid "BIRT"
+msgstr "Rojstvo"
+
+#. I18N: This is the GEDCOM label for "Christening"
+#: ../calendar.php:241
+#: _facts.php:141
+msgid "CHR"
+msgstr "Krst"
+
+#. I18N: This is the GEDCOM label for "Adult Christening"
+#: ../calendar.php:244
+#: _facts.php:149
+msgid "CHRA"
+msgstr "Krst odraslega"
+
+#. I18N: This is the GEDCOM label for "Baptism"
+#: ../calendar.php:247
+#: _facts.php:81
+msgid "BAPM"
+msgstr "Krst"
+
+#. I18N: This is the GEDCOM label for "Common Law Marriage"
+#: ../calendar.php:250
+#: _facts.php:595
+msgid "_COML"
+msgstr "Civilna poroka"
+
+#. I18N: This is the GEDCOM label for "Separated"
+#: ../calendar.php:256
+#: _facts.php:799
+msgid "_SEPR"
+msgstr "Ločen/a"
+
+#. I18N: This is the GEDCOM label for "Divorce"
+#: ../calendar.php:259
+#: _facts.php:195
+msgid "DIV"
+msgstr "Ločitev"
+
+#. I18N: This is the GEDCOM label for "Death"
+#: ../calendar.php:262
+#: _facts.php:181
+msgid "DEAT"
+msgstr "Smrt"
+
+#. I18N: This is the GEDCOM label for "Burial"
+#: ../calendar.php:265
+#: _facts.php:117
+msgid "BURI"
+msgstr "Pogreb"
+
+#. I18N: This is the GEDCOM label for "Immigration"
+#: ../calendar.php:268
+#: _facts.php:305
+msgid "IMMI"
+msgstr "Priselitev"
+
+#. I18N: This is the GEDCOM label for "Emigration"
+#: ../calendar.php:271
+#: _facts.php:207
+msgid "EMIG"
+msgstr "Izselitev"
 
 #. I18N: This is the country/chapman code for "Unknown"
 #: _countries.php:36
@@ -1447,12 +1526,6 @@ msgstr "Avtor"
 msgid "BAPL"
 msgstr "LDS krst"
 
-#. I18N: This is the GEDCOM label for "Baptism"
-#: _facts.php:81
-#: ../calendar.php:247
-msgid "BAPM"
-msgstr "Krst"
-
 #. I18N: This is the GEDCOM label for "Baptism Date"
 #: _facts.php:83
 msgid "BAPM:DATE"
@@ -1508,12 +1581,6 @@ msgstr ""
 msgid "BASM:SOUR"
 msgstr ""
 
-#. I18N: This is the GEDCOM label for "Birth"
-#: _facts.php:105
-#: ../calendar.php:238
-msgid "BIRT"
-msgstr "Rojstvo"
-
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: _facts.php:107
 msgid "BIRT:DATE"
@@ -1538,12 +1605,6 @@ msgstr "Blagoslov"
 #: _facts.php:115
 msgid "BLOB"
 msgstr "Podatki binarne oblike"
-
-#. I18N: This is the GEDCOM label for "Burial"
-#: _facts.php:117
-#: ../calendar.php:265
-msgid "BURI"
-msgstr "Pogreb"
 
 #. I18N: This is the GEDCOM label for "Burial Date"
 #: _facts.php:119
@@ -1600,12 +1661,6 @@ msgstr "Nabor znakov"
 msgid "CHIL"
 msgstr "Otrok"
 
-#. I18N: This is the GEDCOM label for "Christening"
-#: _facts.php:141
-#: ../calendar.php:241
-msgid "CHR"
-msgstr "Krst"
-
 #. I18N: This is the GEDCOM label for "Christening Date"
 #: _facts.php:143
 msgid "CHR:DATE"
@@ -1620,12 +1675,6 @@ msgstr "Kraj krsta"
 #: _facts.php:147
 msgid "CHR:SOUR"
 msgstr ""
-
-#. I18N: This is the GEDCOM label for "Adult Christening"
-#: _facts.php:149
-#: ../calendar.php:244
-msgid "CHRA"
-msgstr "Krst odraslega"
 
 #. I18N: This is the GEDCOM label for "Citizenship"
 #: _facts.php:151
@@ -1702,12 +1751,6 @@ msgstr "Date of entry in original source"
 msgid "DATE"
 msgstr "Datum"
 
-#. I18N: This is the GEDCOM label for "Death"
-#: _facts.php:181
-#: ../calendar.php:262
-msgid "DEAT"
-msgstr "Smrt"
-
 #. I18N: This is the GEDCOM label for "Death Date"
 #: _facts.php:183
 msgid "DEAT:DATE"
@@ -1738,12 +1781,6 @@ msgstr "Poklic potomcev"
 msgid "DEST"
 msgstr "Destinacija"
 
-#. I18N: This is the GEDCOM label for "Divorce"
-#: _facts.php:195
-#: ../calendar.php:259
-msgid "DIV"
-msgstr "Ločitev"
-
 #. I18N: This is the GEDCOM label for "Divorce filed"
 #: _facts.php:197
 msgid "DIVF"
@@ -1768,12 +1805,6 @@ msgstr "E-poštni naslov"
 #: _facts.php:205
 msgid "EMAL"
 msgstr "E-poštni naslov"
-
-#. I18N: This is the GEDCOM label for "Emigration"
-#: _facts.php:207
-#: ../calendar.php:271
-msgid "EMIG"
-msgstr "Izselitev"
 
 #. I18N: This is the GEDCOM label for "LDS Endowment"
 #: _facts.php:209
@@ -2015,12 +2046,6 @@ msgstr "Mož"
 msgid "IDNO"
 msgstr "Identifikacijska številka"
 
-#. I18N: This is the GEDCOM label for "Immigration"
-#: _facts.php:305
-#: ../calendar.php:268
-msgid "IMMI"
-msgstr "Priselitev"
-
 #. I18N: This is the GEDCOM label for "Latitude"
 #: _facts.php:307
 msgid "LATI"
@@ -2070,13 +2095,6 @@ msgstr "Poročna pogodba"
 #: _facts.php:325
 msgid "MARL"
 msgstr "Poročni list"
-
-#. I18N: This is the GEDCOM label for "Marriage"
-#: _facts.php:327
-#: ../branches.php:32
-#: ../calendar.php:253
-msgid "MARR"
-msgstr "Poroka"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: _facts.php:329
@@ -2382,12 +2400,6 @@ msgstr "Predlagatelj"
 #: _facts.php:449
 msgid "SUBN"
 msgstr "Predlog"
-
-#. I18N: This is the GEDCOM label for "Surname"
-#: _facts.php:451
-#: ../branches.php:70
-msgid "SURN"
-msgstr "Priimek"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: _facts.php:453
@@ -2743,12 +2755,6 @@ msgstr "Krst nečaka ali nečakinje"
 #: _facts.php:593
 msgid "_CHR_SIBL"
 msgstr "Krst brata/sestre"
-
-#. I18N: This is the GEDCOM label for "Common Law Marriage"
-#: _facts.php:595
-#: ../calendar.php:250
-msgid "_COML"
-msgstr "Civilna poroka"
 
 #. I18N: This is the GEDCOM label for "Cremation of a child"
 #: _facts.php:597
@@ -3255,12 +3261,6 @@ msgstr "Trajna številka"
 msgid "_SCBK"
 msgstr "Knjiga izrezkov"
 
-#. I18N: This is the GEDCOM label for "Separated"
-#: _facts.php:799
-#: ../calendar.php:256
-msgid "_SEPR"
-msgstr "Ločen/a"
-
 #. I18N: This is the GEDCOM label for "Slide Show"
 #: _facts.php:801
 msgid "_SSHOW"
@@ -3379,7 +3379,7 @@ msgstr ""
 #. I18N: This is the RFC5646 language code for German
 #: _languages.php:44
 msgid "de"
-msgstr ""
+msgstr "Nemščina"
 
 #. I18N: This is the RFC5646 language code for Greek
 #: _languages.php:46
@@ -3389,7 +3389,7 @@ msgstr ""
 #. I18N: This is the RFC5646 language code for English
 #: _languages.php:48
 msgid "en"
-msgstr ""
+msgstr "Angleščina"
 
 #. I18N: This is the RFC5646 language code for British English
 #: _languages.php:50
@@ -3439,7 +3439,7 @@ msgstr ""
 #. I18N: This is the RFC5646 language code for Italian
 #: _languages.php:68
 msgid "it"
-msgstr ""
+msgstr "Italjanščina"
 
 #. I18N: This is the RFC5646 language code for Lithuanian
 #: _languages.php:70
@@ -3484,7 +3484,7 @@ msgstr ""
 #. I18N: This is the RFC5646 language code for Slovenian
 #: _languages.php:86
 msgid "sl"
-msgstr ""
+msgstr "Slovenščina"
 
 #. I18N: This is the RFC5646 language code for Serbian
 #: _languages.php:88

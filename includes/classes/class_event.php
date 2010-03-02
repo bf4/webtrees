@@ -278,11 +278,10 @@ class Event {
 
 	function getLabel($abbreviate=false) {
 		if ($abbreviate) {
-			$tag='ABBREV_'.$this->tag;
+			return i18n::fact_abbreviation($this->tag);
 		} else {
-			$tag=$this->tag;
+			return i18n::translate($this->tag);
 		}
-		return i18n::translate($tag);
 	}
 
 	/**

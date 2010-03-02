@@ -32,17 +32,17 @@
  */
 
 $factAbbrev=array(
-	// I18N: This is an abbreviation for the label "Baptism", to be used on genealogy charts
+	// I18N: This is a one/two character abbreviation for the label "Baptism", to be used on genealogy charts
 	'ABBREV_BAPM'=>i18n::translate('ABBREV_BAPM'),
-	// I18N: This is an abbreviation for the label "Birth", to be used on genealogy charts
+	// I18N: This is a one/two character abbreviation for the label "Birth", to be used on genealogy charts
 	'ABBREV_BIRT'=>i18n::translate('ABBREV_BIRT'),
-	// I18N: This is an abbreviation for the label "Burial", to be used on genealogy charts
+	// I18N: This is a one/two character abbreviation for the label "Burial", to be used on genealogy charts
 	'ABBREV_BURI'=>i18n::translate('ABBREV_BURI'),
-	// I18N: This is an abbreviation for the label "Christening", to be used on genealogy charts
+	// I18N: This is a one/two character abbreviation for the label "Christening", to be used on genealogy charts
 	'ABBREV_CHR' =>i18n::translate('ABBREV_CHR'),
-	// I18N: This is an abbreviation for the label "Death", to be used on genealogy charts
+	// I18N: This is a one/two character abbreviation for the label "Death", to be used on genealogy charts
 	'ABBREV_DEAT'=>i18n::translate('ABBREV_DEAT'),
-	// I18N: This is an abbreviation for the label "Marriage", to be used on genealogy charts
+	// I18N: This is a one/two character abbreviation for the label "Marriage", to be used on genealogy charts
 	'ABBREV_MARR'=>i18n::translate('ABBREV_MARR'),
 );
 

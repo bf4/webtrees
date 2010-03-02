@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-02 22:55-0000\n"
+"POT-Creation-Date: 2010-03-02 23:39-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -3360,157 +3360,157 @@ msgstr "Brit Mila of sibling"
 #. I18N: This is the RFC5646 language code for Arabic
 #: _languages.php:36
 msgid "ar"
-msgstr ""
+msgstr "Arabic"
 
 #. I18N: This is the RFC5646 language code for Catalan
 #: _languages.php:38
 msgid "ca"
-msgstr ""
+msgstr "Catalan (Valencian)"
 
 #. I18N: This is the RFC5646 language code for Czech
 #: _languages.php:40
 msgid "cz"
-msgstr ""
+msgstr "Czech"
 
 #. I18N: This is the RFC5646 language code for Danish
 #: _languages.php:42
 msgid "da"
-msgstr ""
+msgstr "Danish"
 
 #. I18N: This is the RFC5646 language code for German
 #: _languages.php:44
 msgid "de"
-msgstr ""
+msgstr "German"
 
 #. I18N: This is the RFC5646 language code for Greek
 #: _languages.php:46
 msgid "el"
-msgstr ""
+msgstr "Greek"
 
 #. I18N: This is the RFC5646 language code for English
 #: _languages.php:48
 msgid "en"
-msgstr ""
+msgstr "English"
 
 #. I18N: This is the RFC5646 language code for British English
 #: _languages.php:50
 msgid "en-gb"
-msgstr ""
+msgstr "English (UK)"
 
 #. I18N: This is the RFC5646 language code for Spanish
 #: _languages.php:52
 msgid "es"
-msgstr ""
+msgstr "Spanish"
 
 #. I18N: This is the RFC5646 language code for Latin-American Spanish
 #: _languages.php:54
 msgid "es-ar"
-msgstr ""
+msgstr "Spanish (Latin America)"
 
 #. I18N: This is the RFC5646 language code for Estonian
 #: _languages.php:56
 msgid "et"
-msgstr ""
+msgstr "Estonian"
 
 #. I18N: This is the RFC5646 language code for Finnish
 #: _languages.php:58
 msgid "fi"
-msgstr ""
+msgstr "Finnish"
 
 #. I18N: This is the RFC5646 language code for French
 #: _languages.php:60
 msgid "fr"
-msgstr ""
+msgstr "French"
 
 #. I18N: This is the RFC5646 language code for Hebrew
 #: _languages.php:62
 msgid "he"
-msgstr ""
+msgstr "Hebrew"
 
 #. I18N: This is the RFC5646 language code for Hungarian
 #: _languages.php:64
 msgid "hu"
-msgstr ""
+msgstr "Hungarian"
 
 #. I18N: This is the RFC5646 language code for Indonesian
 #: _languages.php:66
 msgid "id"
-msgstr ""
+msgstr "Indonesian"
 
 #. I18N: This is the RFC5646 language code for Italian
 #: _languages.php:68
 msgid "it"
-msgstr ""
+msgstr "Italian"
 
 #. I18N: This is the RFC5646 language code for Lithuanian
 #: _languages.php:70
 msgid "lt"
-msgstr ""
+msgstr "Lithuanian"
 
 #. I18N: This is the RFC5646 language code for Dutch
 #: _languages.php:72
 msgid "nl"
-msgstr ""
+msgstr "Dutch"
 
 #. I18N: This is the RFC5646 language code for Norwegian (Nynorsk)
 #: _languages.php:74
 msgid "nn"
-msgstr ""
+msgstr "Norwegian"
 
 #. I18N: This is the RFC5646 language code for Polish
 #: _languages.php:76
 msgid "pl"
-msgstr ""
+msgstr "Polish"
 
 #. I18N: This is the RFC5646 language code for Portuguese
 #: _languages.php:78
 msgid "pt"
-msgstr ""
+msgstr "Portuguese"
 
 #. I18N: This is the RFC5646 language code for Romanian
 #: _languages.php:80
 msgid "ro"
-msgstr ""
+msgstr "Romanian"
 
 #. I18N: This is the RFC5646 language code for Russian
 #: _languages.php:82
 msgid "ru"
-msgstr ""
+msgstr "Russian"
 
 #. I18N: This is the RFC5646 language code for Slovakian
 #: _languages.php:84
 msgid "sk"
-msgstr ""
+msgstr "Slovak"
 
 #. I18N: This is the RFC5646 language code for Slovenian
 #: _languages.php:86
 msgid "sl"
-msgstr ""
+msgstr "Slovenian"
 
 #. I18N: This is the RFC5646 language code for Serbian
 #: _languages.php:88
 msgid "sr"
-msgstr ""
+msgstr "Serbian"
 
 #. I18N: This is the RFC5646 language code for Swedish
 #: _languages.php:90
 msgid "sv"
-msgstr ""
+msgstr "Swedish"
 
 #. I18N: This is the RFC5646 language code for Turkish
 #: _languages.php:92
 msgid "tr"
-msgstr ""
+msgstr "Turkish"
 
 #. I18N: This is the RFC5646 language code for Vietnamese
 #: _languages.php:94
 msgid "vi"
-msgstr ""
+msgstr "Vietnamese"
 
 #. I18N: This is the RFC5646 language code for Chinese
 #: _languages.php:96
 msgid "zh"
-msgstr ""
+msgstr "Chinese"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
@@ -3579,11 +3579,9 @@ msgstr ", "
 msgid "LANGUAGE_LIST_SEPARATOR_LAST"
 msgstr " and "
 
-#: ../includes/controllers/lifespan_ctrl.php:491
-#: ../includes/controllers/lifespan_ctrl.php:526
 #, fuzzy
-msgid "ABBREV_"
-msgstr "c."
+#~ msgid "ABBREV_"
+#~ msgstr "c."
 
 #~ msgid "Arabic"
 #~ msgstr "Arabic"
