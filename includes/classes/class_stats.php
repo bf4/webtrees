@@ -147,7 +147,7 @@ class stats {
 	* Get tags and their parsed results.
 	*/
 	function getTags($text) {
-		global $pgv_lang, $factarray;
+		global $pgv_lang;
 		static $funcs;
 
 		// Retrive all class methods
@@ -207,10 +207,10 @@ class stats {
 				$new_values[] = print_text($pgv_lang[$tags[$i]], 0, 2);
 			}
 			// factarray
-			elseif (isset($factarray[$tags[$i]]))
+			elseif (i18n::is_translated($tags[$i]))
 			{
 				$new_tags[] = "#{$full_tag}#";
-				$new_values[] = $factarray[$tags[$i]];
+				$new_values[] = i18n::translate($tags[$i]);
 			}
 			// GLOBALS
 			elseif (isset($GLOBALS[$tags[$i]]))

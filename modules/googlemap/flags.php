@@ -33,7 +33,7 @@ require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 require $INDEX_DIRECTORY."pgv_changes.php";
 
-loadLangFile("pgv_facts, googlemap:lang, googlemap:help_text, pgv_country");
+loadLangFile("googlemap:lang, googlemap:help_text, pgv_country");
 
 if (isset($_REQUEST['countrySelected'])) $countrySelected = $_REQUEST['countrySelected'];
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];

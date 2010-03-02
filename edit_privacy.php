@@ -47,6 +47,14 @@ $PRIVACY_CONSTANTS=array(
 
 $action=safe_POST('action', 'update');
 
+$all_tags=array_unique(array_merge(
+	explode(',', $INDI_FACTS_ADD),
+	explode(',', $FAM_FACTS_ADD),
+	explode(',', $NOTE_FACTS_ADD),
+	explode(',', $SOUR_FACTS_ADD),
+	explode(',', $REPO_FACTS_ADD)
+));
+
 $v_new_person_privacy_access_ID		= safe_POST('v_new_person_privacy_access_ID',		PGV_REGEX_XREF);
 $v_new_person_privacy_access_option	= safe_POST('v_new_person_privacy_access_option',	$PRIVACY_CONSTANTS);
 $v_person_privacy_del				= safe_POST('v_person_privacy_del',					'1');
@@ -58,14 +66,14 @@ $v_new_user_privacy_access_option	= safe_POST('v_new_user_privacy_access_option'
 $v_user_privacy_del					= safe_POST('v_user_privacy_del',					'1');
 $v_user_privacy						= safe_POST('v_user_privacy');
 
-$v_new_global_facts_abbr			= safe_POST('v_new_global_facts_abbr',				array_keys($factarray));
+$v_new_global_facts_abbr			= safe_POST('v_new_global_facts_abbr',				$all_tags);
 $v_new_global_facts_choice			= safe_POST('v_new_global_facts_choice',			array('show', 'details'));
 $v_new_global_facts_access_option	= safe_POST('v_new_global_facts_access_option',		$PRIVACY_CONSTANTS);
 $v_global_facts_del					= safe_POST('v_global_facts_del',					'1');
 $v_global_facts						= safe_POST('v_global_facts');
 
 $v_new_person_facts_access_ID		= safe_POST('v_new_person_facts_access_ID',			PGV_REGEX_XREF);
-$v_new_person_facts_abbr			= safe_POST('v_new_person_facts_abbr',				array_keys($factarray));
+$v_new_person_facts_abbr			= safe_POST('v_new_person_facts_abbr',				$all_tags);
 $v_new_person_facts_choice			= safe_POST('v_new_person_facts_choice',			array('show', 'details'));
 $v_new_person_facts_access_option	= safe_POST('v_new_person_facts_access_option',		$PRIVACY_CONSTANTS);
 $v_person_facts_del					= safe_POST('v_person_facts_del',					'1');
@@ -623,12 +631,12 @@ if ($action=="update") {
 				<select size="1" name="v_new_global_facts_abbr">
 				<?php
 				print "<option value=\"\">".$pgv_lang["choose"]."</option>";
-				foreach ($factarray as $tag=>$label) {
+				foreach ($all_tags as $tag) {
 					print "<option";
 					print " value=\"";
 					print $tag;
 					print "\">";
-					print $tag . " - " . str_replace("<br />", " ", $label);
+					print $tag . " - " . i18n::translate($tag);
 					print "</option>";
 				}
 				?>
@@ -668,8 +676,7 @@ if ($action=="update") {
 			</td>
 			<td class="optionbox">
 				<?php
-				if (isset($factarray[$tag])) print $factarray[$tag];
-				else print $tag;
+				echo i18n::translate($tag);
 				?>
 			</td>
 			<td class="optionbox">
@@ -725,12 +732,12 @@ if ($action=="update") {
 			<td class="optionbox">
 				<select size="1" name="v_new_person_facts_abbr">
 				<?php
-				foreach ($factarray as $tag=>$label) {
+				foreach ($all_tags as $tag) {
 					print "<option";
 					print " value=\"";
 					print $tag;
 					print "\">";
-					print $tag . " - " . str_replace("<br />", " ", $label);
+					print $tag . " - " . i18n::translate($tag);
 					print "</option>";
 				}
 				?>
@@ -776,7 +783,7 @@ if ($action=="update") {
 				<?php search_ID_details($id, 2); ?>
 			</td>
 			<td class="optionbox">
-				<?php print $tag. " - ".$factarray[$tag]; ?>
+				<?php print $tag. " - ".i18n::translate($tag); ?>
 			</td>
 			<td class="optionbox">
 				<?php

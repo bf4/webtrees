@@ -2476,7 +2476,7 @@ function PGVRvarSHandler($attrs) {
 //	global $currentElement, $gedrec, $gedrecStack, $type, $parser;
 	global $currentElement, $type, $parser;
 	// Retrievable variables
-	global $desc, $fact, $pgv_lang, $factarray, $language_settings, $vars;
+	global $desc, $fact, $pgv_lang, $language_settings, $vars;
 
 	if (empty($attrs["var"])) {
 		die("<strong>REPORT ERROR PGVRvar: </strong> The attribute \"var=\" is missing or not set in the XML file on line: ".xml_get_current_line_number($parser));
@@ -2516,7 +2516,7 @@ function PGVRvarSHandler($attrs) {
 * @param array $attrs an array of key value pairs for the attributes
 */
 function PGVRvarLetterSHandler($attrs) {
-	global $currentElement, $factarray, $factAbbrev, $fact, $desc;
+	global $currentElement, $fact, $desc;
 
 	if (empty($attrs["var"])) {
 		die("<strong>REPORT ERROR PGVRvarLetter: </strong> The attribute \"var=\" is missing or not set in the XML file.");
@@ -2525,14 +2525,10 @@ function PGVRvarLetterSHandler($attrs) {
 	$var = $attrs["var"];
 	if (!empty($var)) {
 		$abbrev = substr(strrchr(substr($var, 0, -1), "["), 1);
-		if (isset ($factAbbrev[$abbrev])) {
-			$letter = $factAbbrev[$abbrev];
-		} else {
-			$tfact = $fact;
-			$var = str_replace(array("[", "]", "@fact", "@desc"), array("['", "']", $tfact, $desc), $var);
-			eval("if (!empty(\$$var)) \$var = \$$var;");
-			$letter = UTF8_substr($var, 0, 1);
-		}
+		$tfact = $fact;
+		$var = str_replace(array("[", "]", "@fact", "@desc"), array("['", "']", $tfact, $desc), $var);
+		eval("if (!empty(\$$var)) \$var = \$$var;");
+		$letter = UTF8_substr($var, 0, 1);
 		$currentElement->addText($letter);
 	}
 }
@@ -2710,7 +2706,7 @@ function PGVRFactsEHandler() {
 * @param array $attrs an array of key value pairs for the attributes
 */
 function PGVRSetVarSHandler($attrs) {
-	global $vars, $gedrec, $pgv_lang, $factarray, $fact, $desc, $type, $generation;
+	global $vars, $gedrec, $pgv_lang, $fact, $desc, $type, $generation;
 
 	if (empty($attrs["name"])) {
 		die("<strong>REPORT ERROR PGVRvar: </strong> The attribute \"name=\" is missing or not set in the XML file");
