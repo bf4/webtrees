@@ -135,7 +135,6 @@ if ($action == "new_lang") {
 	$flagsfile[$ln] = "images/flags/" . $flag;
 	$v_flagsfile=$flagsfile[$ln];
 
-	$factsfile[$ln]    = "languages/facts.".$new_shortcut.".php";
 	$DATE_FORMAT_array[$ln]  = "j F Y";
 	$TIME_FORMAT_array[$ln]  = "h:i:s";
 	$WEEK_START_array[$ln]  = "1";
@@ -576,7 +575,6 @@ if ($action == "save") {
 		$pgv_language[$ln]    = "languages/lang.".$v_lang_shortcut.".php";
 		$confighelpfile[$ln]  = "languages/configure_help.".$v_lang_shortcut.".php";
 		$helptextfile[$ln]    = "languages/help_text.".$v_lang_shortcut.".php";
-		$factsfile[$ln]    = "languages/facts.".$v_lang_shortcut.".php";
 		$adminfile[$ln]    = "languages/admin.".$v_lang_shortcut.".php";
 		$editorfile[$ln]    = "languages/editor.".$v_lang_shortcut.".php";
 		$countryfile[$ln]    = "languages/countries.".$v_lang_shortcut.".php";

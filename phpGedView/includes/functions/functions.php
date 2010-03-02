@@ -375,7 +375,7 @@ function update_site_config($newconfig, $return = false) {
 
 // Save the languages the user has chosen to have active on the website
 function update_lang_settings() {
-	global $INDEX_DIRECTORY, $language_settings, $languages, $pgv_language, $lang_short_cut, $pgv_lang_self, $pgv_lang_use, $confighelpfile, $helptextfile, $factsfile;
+	global $INDEX_DIRECTORY, $language_settings, $languages, $pgv_language, $lang_short_cut, $pgv_lang_self, $pgv_lang_use, $confighelpfile, $helptextfile;
 	global $flagsfile, $adminfile, $countryfile, $faqlistfile, $extrafile, $ALPHABET_lower, $ALPHABET_upper, $DATE_FORMAT_array, $editorfile, $lang_langcode;
 	global $DICTIONARY_SORT, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV, $NAME_REVERSE_array, $TEXT_DIRECTION_array, $TIME_FORMAT_array, $WEEK_START_array, $COLLATION;
 
@@ -413,7 +413,6 @@ function update_lang_settings() {
 				fwrite($fp, "'confighelpfile'=>'{$confighelpfile[$key]}',".PGV_EOL);
 				fwrite($fp, "'helptextfile'=>'{$helptextfile[$key]}',".PGV_EOL);
 				fwrite($fp, "'flagsfile'=>'{$flagsfile[$key]}',".PGV_EOL);
-				fwrite($fp, "'factsfile'=>'{$factsfile[$key]}',".PGV_EOL);
 				fwrite($fp, "'adminfile'=>'{$adminfile[$key]}',".PGV_EOL);
 				fwrite($fp, "'editorfile'=>'{$editorfile[$key]}',".PGV_EOL);
 				fwrite($fp, "'countryfile'=>'{$countryfile[$key]}',".PGV_EOL);
@@ -3202,7 +3201,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  *		loadLangFile("YYY:XXX");
  */
 function loadLangFile($fileListNames="", $lang="") {
-	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
+	global $pgv_language, $confighelpfile, $helptextfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
 	global $LANGUAGE, $lang_short_cut, $lng_codes, $lng_synonyms;
 	global $pgv_lang, $countries, $altCountryNames, $faqlist;
 	if (empty($lang)) $lang=$LANGUAGE;
@@ -3296,7 +3295,7 @@ function loadLangFile($fileListNames="", $lang="") {
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $LANGUAGE, $lang_short_cut;
 	global $pgv_lang, $countries, $altCountryNames, $faqlist;
-	global $pgv_language, $factsfile, $adminfile, $editorfile, $extrafile, $pgv_lang_self;
+	global $pgv_language, $adminfile, $editorfile, $extrafile, $pgv_lang_self;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
 	global $TIME_FORMAT, $TIME_FORMAT_array;
@@ -3333,7 +3332,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	if ($forceLoad) {
 		$LANGUAGE = "english";
 		require $pgv_language[$LANGUAGE];			// Load English
-		require $factsfile[$LANGUAGE];
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
 		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
@@ -3367,10 +3365,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$file = $pgv_language[$LANGUAGE];
 		if (file_exists($file)) {
 			require $file;  // Load the requested language
-		}
-		$file = $factsfile[$LANGUAGE];
-		if (file_exists($file)) {
-			require $file;
 		}
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
