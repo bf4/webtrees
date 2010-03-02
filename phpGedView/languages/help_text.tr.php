@@ -112,5 +112,5 @@ $pgv_lang["readme_help"]			= "Daha çok bilgi için <a href=\"readme.txt\" targe
 $pgv_lang["menu_help_help"]			= "~Help Menu~<br />#pgv_lang[help_help_items]#";
 $pgv_lang["index_portal_head_help"]		= "<div class=\"name_head\"><center><b>HOŞ GELDİN SAYFA</b></center></div><br />";
 $pgv_lang["sortby_help"]			= "~#pgv_lang[sortby]#~<br />Sırada hangi listeyi görmek istiyorsanız seçin.<br /><br />";
-$pgv_lang["edit_ASSO_help"]		= "~#factarray[ASSO]#~<br /><br />Birleştirilecek GEDCOM ID girin.<br /><br />";
+$pgv_lang["edit_ASSO_help"]		= "~İş Arkadaşı~<br /><br />Birleştirilecek GEDCOM ID girin.<br /><br />";
 ?>
