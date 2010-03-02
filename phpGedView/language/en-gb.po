@@ -1346,32 +1346,32 @@ msgstr "Zimbabwe"
 #. I18N: This is an abbreviation for the label "Baptism", to be used on genealogy charts
 #: _facts.php:36
 msgid "ABBREV_BAPM"
-msgstr ""
+msgstr "ba."
 
 #. I18N: This is an abbreviation for the label "Birth", to be used on genealogy charts
 #: _facts.php:38
 msgid "ABBREV_BIRT"
-msgstr ""
+msgstr "b."
 
 #. I18N: This is an abbreviation for the label "Burial", to be used on genealogy charts
 #: _facts.php:40
 msgid "ABBREV_BURI"
-msgstr ""
+msgstr "bu."
 
 #. I18N: This is an abbreviation for the label "Christening", to be used on genealogy charts
 #: _facts.php:42
 msgid "ABBREV_CHR"
-msgstr ""
+msgstr "c."
 
 #. I18N: This is an abbreviation for the label "Death", to be used on genealogy charts
 #: _facts.php:44
 msgid "ABBREV_DEAT"
-msgstr ""
+msgstr "d."
 
 #. I18N: This is an abbreviation for the label "Marriage", to be used on genealogy charts
 #: _facts.php:46
 msgid "ABBREV_MARR"
-msgstr ""
+msgstr "m."
 
 #. I18N: This is the GEDCOM label for "Abbreviation"
 #: _facts.php:51
@@ -3514,25 +3514,25 @@ msgstr ""
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Users Logged In"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
-msgstr ""
+msgstr "No logged-in and no anonymous users"
 
 #: ../blocks/logged_in.php:83
 #, php-format
 msgid "%d anonymous logged-in user"
 msgid_plural "%d anonymous logged-in users"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d anonymous logged-in user"
+msgstr[1] "%d anonymous logged-in users"
 
 #: ../blocks/logged_in.php:86
 #, php-format
 msgid "%d logged-in user"
 msgid_plural "%d logged-in users"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d logged-in user"
+msgstr[1] "%d logged-in users"
 
 #. I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C CS D DZ DZS E F G GY ..."
 #: ../includes/classes/class_i18n.php:67
@@ -3561,15 +3561,13 @@ msgstr "%j %M %Y"
 
 #. I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:77
-#, fuzzy
 msgid "LANGUAGE_TIME_FORMAT_HM"
-msgstr "%H:%I:%S"
+msgstr "%H:%i"
 
 #. I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
 #: ../includes/classes/class_i18n.php:79
-#, fuzzy
 msgid "LANGUAGE_TIME_FORMAT_HMS"
-msgstr "%H:%I:%S"
+msgstr "%H:%i:%s"
 
 #. I18N: This is the format string for times with hours and seconds, such as 10:23pm.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:81
