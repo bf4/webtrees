@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-01 23:30-0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
+"Last-Translator: Veit Olschinski <lp@olschinski.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3309,7 +3309,7 @@ msgstr "Gewicht"
 #. I18N: This is the GEDCOM label for "Yahrzeit"
 #: _facts.php:819
 msgid "_YART"
-msgstr "Yartzeit"
+msgstr "Jahrzeit"
 
 #. I18N: This is the GEDCOM label for "Brit Mila of a child"
 #: _facts.php:821
@@ -3556,7 +3556,7 @@ msgstr "%j. %F %Y"
 #. I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:75
 msgid "LANGUAGE_SHORT_DATE_FORMAT"
-msgstr "%j. %F %Y"
+msgstr "%j.%n.%Y"
 
 #. I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
 #: ../includes/classes/class_i18n.php:77
