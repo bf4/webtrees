@@ -32,6 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+require_once('includes/classes/class_tab.php');
+
 require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 
 global $SESSION_HIDE_GOOGLEMAP;
@@ -56,6 +58,175 @@ if($SESSION_HIDE_GOOGLEMAP == "empty") {
 }
 
 loadLangFile("googlemap:lang");
+
+class googlemap_Tab extends Tab {
+
+	public function getPreLoadContent() {
+		$out = '';
+		ob_start();
+		setup_map();
+		$out.=ob_get_contents();
+		ob_end_clean();
+		return $out;
+	}
+
+	public function canLoadAjax() { return true; }
+
+	public function getContent() {
+		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $LANGUAGE;
+		global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
+		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
+		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD, $GOOGLEMAP_PH_CONTROLS;
+		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
+
+		$out = "";
+		ob_start();
+
+		// Header Info ------------------------------------------------------------------------------------
+		if (file_exists("modules/googlemap/defaultconfig.php") ) {
+			//Content Info ------------------------------------------------------------
+			?>
+<div id="gg_map_content">
+<table border="0" width="100%">
+	<tr>
+		<td><?php 
+		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
+		if (!$GOOGLEMAP_ENABLED) {
+			print "<table class=\"facts_table\">\n";
+			print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
+			if (PGV_USER_IS_ADMIN) {
+				print "<tr><td align=\"center\" colspan=\"2\">\n";
+				print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+				print "</td>";
+				print "</tr>\n";
+			}
+			print "\n\t</table>\n<br />";
+			?> <script language="JavaScript" type="text/javascript">
+			<!--
+				function ResizeMap () {}
+				function SetMarkersAndBounds () {}
+			//-->
+			</script> <?php
+		}else{
+			if(empty($SEARCH_SPIDER)) {
+				$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
+				$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
+				$tNew = preg_replace("/&/", "&amp;", $tNew);
+				if($SESSION_HIDE_GOOGLEMAP=="true") {
+					print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
+					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
+					print " ".$pgv_lang["activate"]."</a></span>\n";
+				} else {
+					print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
+					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
+					print " ".$pgv_lang["deactivate"]."</a></span>\n";
+				}
+			}
+
+			if (!$this->controller->indi->canDisplayName()) {
+				print "\n\t<table class=\"facts_table\">";
+				print "<tr><td class=\"facts_value\">";
+				print_privacy_error($CONTACT_EMAIL);
+				print "</td></tr>";
+				print "\n\t</table>\n<br />";
+				print "<script type=\"text/javascript\">\n";
+				print "function ResizeMap ()\n{\n}\n</script>\n";
+			}else{
+				if(empty($SEARCH_SPIDER)) {
+					if($SESSION_HIDE_GOOGLEMAP=="false") {
+						print "<table width=\"100%\" border=\"0\" class=\"facts_table\">\n";
+						print "<tr><td valign=\"top\">\n";
+						print "<div id=\"googlemap_left\">\n";
+						print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
+						print "<div id=\"map_pane\" style=\"border: 1px solid gray; color:black; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
+						if (PGV_USER_IS_ADMIN) {
+							print "<table width=\"100%\"><tr>\n";
+							print "<td width=\"33%\" align=\"left\">\n";
+							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+							print "</td>\n";
+							print "<td width=\"33%\" align=\"center\">\n";
+							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
+							print "</td>\n";
+							print "<td width=\"33%\" align=\"right\">\n";
+							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
+							print "</td>\n";
+							print "</tr></table>\n";
+						}
+						print "</div>\n";
+						print "</td>\n";
+						print "<td valign=\"top\" width=\"30%\">\n";
+						print "<div id=\"googlemap_content\">\n";
+						//setup_map();
+
+						$famids = array();
+						$families = $this->controller->indi->getSpouseFamilies();
+						foreach($families as $famid=>$family) {
+							$famids[] = $family->getXref();
+						}
+						$this->controller->indi->add_family_facts(false);
+						create_indiv_buttons();
+						build_indiv_map($this->controller->getIndiFacts(), $famids);
+						print "</div>\n";
+						print "</td>";
+
+						print "</tr></table>\n";
+
+					}
+				}
+			}
+		}
+		// start
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
+		// end
+		?>
+		</td>
+	</tr>
+</table>
+</div>
+</td></tr></table></div>
+		<?php
+		} else {
+			$out .= "<div id=\"googlemap_content\" class=\"tab_page\" style=\"display:block; \" >";
+			$out .= "MAPS NOT INSTALLED";
+			$out .= "</div>";
+		}
+		$out .= ob_get_contents();
+		ob_end_clean();
+		return $out;
+	}
+
+	public function hasContent() {
+		global $GOOGLEMAP_ENABLED;
+		if (!$GOOGLEMAP_ENABLED && !PGV_USER_IS_ADMIN) return false;
+		return true;
+	}
+
+	public function getJSCallback() {
+		global $GOOGLEMAP_PH_CONTROLS;
+		$out = "loadMap();\n";
+		if ($GOOGLEMAP_PH_CONTROLS) {
+			$out .= '// hide controls
+					GEvent.addListener(map,"mouseout",function()
+					{
+						map.hideControls();
+					});
+					// show controls
+					GEvent.addListener(map,"mouseover",function()
+					{
+						map.showControls();
+					});
+					GEvent.trigger(map,"mouseout");
+					';
+
+		}
+		$out.='map.setMapType(GOOGLEMAP_MAP_TYPE);
+				SetMarkersAndBounds();
+				ResizeMap();
+				';
+		return $out;
+	}
+}
 
 // functions copied from print_fact_place
 function print_fact_place_map($factrec) {
@@ -683,7 +854,9 @@ function build_indiv_map($indifacts, $famids) {
 
 	if ($i == 0) {
 		echo "<table class=\"facts_table\">\n";
-		echo "<tr><td colspan=\"2\" class=\"facts_value\">", $pgv_lang["no_gmtab"], "<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
+		echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_gmtab"];
+		//echo "<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script>";
+		echo "</td></tr>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "function ResizeMap ()\n{\n}\n</script>\n";
 		if (PGV_USER_IS_ADMIN) {
@@ -707,6 +880,7 @@ function build_indiv_map($indifacts, $famids) {
 		echo "icon.iconAnchor = new GPoint(10, 34);";
 		echo "icon.infoWindowAnchor = new GPoint(5, 1);";
 
+		echo "\nmarkers.clear();\n";
 		$indexcounter = 0;
 		for ($j=1; $j<=$i; $j++) {
 			// Use @ because some installations give warnings (but not errors?) about UTF-8
