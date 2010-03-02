@@ -161,35 +161,33 @@ function num_people_localisation_sl(&$count) {
 // Localise the _AKAN, _AKA, ALIA and _INTE facts. Lokalizacja dejstev _AKAN, _AKA, ALIA i _INTE.
 ///////////////////////////////////////////////////////////////////////////////////////////
 function fact_AKA_localisation_sl(&$fact, &$pid) {
-	global $factarray;
 
 	$person = Person::getInstance($pid);
 	$sex = $person->getSex();
 	if ($fact == "_INTE") {
-		if ($sex == "M")      $factarray[$fact] = "Pokopan"; // moški
-		else if ($sex == "F") $factarray[$fact] = "Pokopana"; // ženska
+		if ($sex == "M")      $fact = "Pokopan"; // moški
+		else if ($sex == "F") $fact = "Pokopana"; // ženska
 	}
 	else {
-		if ($sex == "M")      $factarray[$fact] = "Znan tudi kot"; // moški
-		else if ($sex == "F") $factarray[$fact] = "Znana tudi kot "; // ženska
+		if ($sex == "M")      $fact = "Znan tudi kot"; // moški
+		else if ($sex == "F") $fact = "Znana tudi kot "; // ženska
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Localise the _NMR facts. Lokalizacja dejstev _NMR.
 ///////////////////////////////////////////////////////////////////////////////////////////
 function fact_NMR_localisation_sl($fact, &$fid) {
-	global $factarray;
 
 	$family = Family::getInstance($fid);
 	$husb = $family->getHusband();
 	$wife = $family->getWife();
 	if ($fact == "_NMR") {
-		if (empty($wife) && !empty($husb))	$factarray[$fact] = "Samski"; // moški
-		else if (empty($husb) && !empty($wife))	$factarray[$fact] = "Samska"; // ženska
+		if (empty($wife) && !empty($husb))	$fact = "Samski"; // moški
+		else if (empty($husb) && !empty($wife))	$fact = "Samska"; // ženska
 	}
 	else if ($fact == "_NMAR") {
-		if (empty($wife) && !empty($husb))	$factarray[$fact] = "Nikoli poroèen"; // moški
-		else if (empty($husb) && !empty($wife))	$factarray[$fact] = "Nikoli poroèena"; // ženska
+		if (empty($wife) && !empty($husb))	$fact = "Nikoli poroèen"; // moški
+		else if (empty($husb) && !empty($wife))	$fact = "Nikoli poroèena"; // ženska
 	}
 }
 
