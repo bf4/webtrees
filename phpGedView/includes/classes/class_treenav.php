@@ -308,9 +308,9 @@ class TreeNav {
 		</span><br />
 		<div class="details1 indent">
 			<?php
-				echo '<b>', i18n::translate('ABBREV_BIRT'), '</b> ', $person->getBirthDate()->Display(), ' ', PrintReady($person->getBirthPlace()), '<br />';
+				echo '<b>', i18n::fact_abbreviation('BIRT'), '</b> ', $person->getBirthDate()->Display(), ' ', PrintReady($person->getBirthPlace()), '<br />';
 				if ($person->isDead()) {
-					echo '<b>', i18n::translate('ABBREV_DEAT'), '</b> ', $person->getDeathDate()->Display(), ' ', PrintReady($person->getDeathPlace());
+					echo '<b>', i18n::fact_abbreviation('DEAT'), '</b> ', $person->getDeathDate()->Display(), ' ', PrintReady($person->getDeathPlace());
 				}
 			?>
 		</div>
@@ -349,13 +349,13 @@ class TreeNav {
 				<br />
 				<div class="details1 indent">
 					<?php
-						echo '<b>', i18n::translate('ABBREV_BIRT'), '</b> ', $spouse->getBirthDate()->Display(), ' ', PrintReady($spouse->getBirthPlace()), '<br />';
-						echo '<b>', i18n::translate('ABBREV_MARR'), '</b> ', $family->getMarriageDate()->Display(), ' ', $family->getMarriagePlace();
+						echo '<b>', i18n::fact_abbreviation('BIRT'), '</b> ', $spouse->getBirthDate()->Display(), ' ', PrintReady($spouse->getBirthPlace()), '<br />';
+						echo '<b>', i18n::fact_abbreviation('MARR'), '</b> ', $family->getMarriageDate()->Display(), ' ', $family->getMarriagePlace();
 					?>
 					<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a><br />
 					<?php
 						if ($spouse->isDead()) {
-							echo '<b>', i18n::translate('ABBREV_DEAT'), '</b> ', $spouse->getDeathDate()->Display(), ' ', PrintReady($spouse->getDeathPlace()), '<br />';
+							echo '<b>', i18n::fact_abbreviation('DEAT'), '</b> ', $spouse->getDeathDate()->Display(), ' ', PrintReady($spouse->getDeathPlace()), '<br />';
 				} ?>
 				</div>
 				<?php
