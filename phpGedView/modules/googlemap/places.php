@@ -36,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 
-loadLangFile('pgv_lang, pgv_confighelp, pgv_help, pgv_facts, googlemap:lang, googlemap:help_text');
+loadLangFile('pgv_lang, pgv_confighelp, pgv_help, googlemap:lang, googlemap:help_text');
 
 if (isset($_REQUEST['action']))	 $action=$_REQUEST['action'];
 if (isset($_REQUEST['parent']))	 $parent=$_REQUEST['parent'];

@@ -241,7 +241,7 @@ elseif ($action=="setup") {
 					}
 					echo "<tr><td class=\"descriptionbox wrap\">\n";
 					echo "<input type=\"hidden\" name=\"varnames[]\" value=\"", $input["name"], "\" />\n";
-					echo $input["value"], "</td><td class=\"optionbox\">";
+					echo i18n::translate($input["value"]), "</td><td class=\"optionbox\">";
 					if (!isset($input["type"])) {
 						$input["type"] = "text";
 					}

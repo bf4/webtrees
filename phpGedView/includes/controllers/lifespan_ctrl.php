@@ -329,7 +329,7 @@ class LifespanControllerRoot extends BaseController {
 
 	//method used to place the person boxes onto the timeline
 	function fillTL($ar, $int, $top) {
-		global $maxX, $zindex, $pgv_lang, $factAbbrev;
+		global $maxX, $zindex, $pgv_lang;
 
 		$zindex = count($ar);
 
@@ -487,8 +487,8 @@ class LifespanControllerRoot extends BaseController {
 						$text = explode("-fact, ", $val);
 						$fact = $text[0];
 						$val = $text[1];
-						if (isset ($factAbbrev[$fact])) {
-							echo $factAbbrev[$fact];
+						if (i18n::is_translated($fact)) {
+							echo i18n::translate('ABBREV_'.$fact);
 						} else {
 							echo UTF8_substr($val, 0, 1);
 						}
@@ -522,8 +522,11 @@ class LifespanControllerRoot extends BaseController {
 							$text = explode("-fact,", $val);
 							$fact = $text[0];
 							$val = $text[1];
-							if (isset ($factAbbrev[$fact])) print $factAbbrev[$fact];
-							else print UTF8_substr($val, 0, 1);
+							if (i18n::is_translated($fact)) {
+								echo i18n::translate('ABBREV_'.$fact);
+							} else {
+								echo UTF8_substr($val, 0, 1);
+							}
 							print "</b><span>".PrintReady($val)."</span></a></div>";
 						}
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
@@ -548,7 +551,6 @@ class LifespanControllerRoot extends BaseController {
 
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
 						print "<a class=\"showit\" href=\"".encode_url($value->getLinkUrl())."\"><b>";
-						if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
 						echo i18n::translate('ABBREV_BIRT');
 						print "</b><span>".$value->getSexImage().$indiName."<br/>".i18n::translate('BIRT')." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){

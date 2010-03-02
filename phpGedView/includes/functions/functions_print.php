@@ -48,7 +48,7 @@ require_once PGV_ROOT.'includes/classes/class_menubar.php';
 * @param int $count on some charts it is important to keep a count of how many boxes were printed
 */
 function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
-	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $GEDCOM;
+	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $ZOOM_BOXES, $LINK_ICONS, $view, $GEDCOM;
 	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	global $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
@@ -1245,7 +1245,6 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 */
 function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 	global $pgv_lang;
-	global $factarray;
 	global $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -1357,15 +1356,13 @@ function print_privacy_error($username) {
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
 	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
 
-	loadLangFile('pgv_help,pgv_facts');
+	loadLangFile('pgv_help');
 
 	$output='';
 	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {
 		$output.=' <a class="help" tabindex="0" title="';
 		if (isset($pgv_lang[$show_desc])) {
 			$desc = $pgv_lang[$show_desc];
-		} else if (isset($factarray[$show_desc])) {
-			$desc = $factarray[$show_desc];
 		} else {
 			$show_desc = "";
 		}
@@ -1425,7 +1422,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 * @param int $noprint The switch if the text needs to be printed or returned
 */
 function print_text($help, $level=0, $noprint=0){
-	global $pgv_lang, $factarray, $faqlist, $COMMON_NAMES_THRESHOLD;
+	global $pgv_lang, $faqlist, $COMMON_NAMES_THRESHOLD;
 	global $INDEX_DIRECTORY, $LANGUAGE;
 	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
 	global $repeat, $thumbnail, $xref, $pid;
@@ -1502,7 +1499,6 @@ function print_help_index($help){
 	$sub = "";
 	$pos1 = 0;
 	$pos2 = 0;
-	$admcol=false;
 	$ch=0;
 	$help_sorted = array();
 	$var="";
@@ -1516,13 +1512,7 @@ function print_help_index($help){
 			$items = explode(',', $pgv_lang[$sub]);
 			$var = $pgv_lang[$items[1]];
 		}
-		$sub = str_replace(array("factarray[", "]"), array("", ""), $replace);
-		if (isset($factarray[$sub])) {
-			$items = explode(',', $factarray[$sub]);
-			$var = $factarray[$items[1]];
-		}
 		if (substr($var, 0, 1)=="_") {
-			$admcol=true;
 			$ch++;
 		}
 		$replace_text = "<a href=\"".encode_url("help_text.php?help=".$items[0])."\">".$var."</a><br />";
@@ -1787,7 +1777,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 * @param string $linebr optional linebreak
 */
 function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
-	global $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
+	global $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
 	global $PEDIGREE_FULL_DETAILS, $LANGUAGE, $lang_short_cut;
 
 	// get ASSOciate(s) ID(s)
@@ -1814,8 +1804,8 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				} else {
 					if (isset($pgv_lang[$key])) {
 						$rela = $pgv_lang[$key];
-					} elseif (isset($factarray[strtoupper($key)])) {
-						$rela = $factarray[strtoupper($key)];
+					} elseif (i18n::is_translated(strtoupper($key))) {
+						$rela = i18n::translate(strtoupper($key));
 					} else {
 						$rela = $rmatch[1];
 					}
@@ -1864,7 +1854,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					echo " {$rela}: ";
 				}
 			} else {
-				$rela = $factarray["RELA"]; // default
+				$rela = i18n::translate('RELA'); // default
 			}
 
 		// ASSOciate ID link
@@ -1971,7 +1961,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 * @param string $pid child ID
 */
 function format_parents_age($pid, $birth_date=null) {
-	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE;
+	global $pgv_lang, $SHOW_PARENTS_AGE;
 
 	$html='';
 	if ($SHOW_PARENTS_AGE) {
@@ -1995,7 +1985,7 @@ function format_parents_age($pid, $birth_date=null) {
 						// Highlight mothers who die in childbirth or shortly afterwards
 						if ($deatdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()+90) {
 							$class='parentdeath';
-							$title=$factarray['_DEAT_MOTH'];
+							$title=i18n::translate('_DEAT_MOTH');
 						} else {
 							$title=$pgv_lang['mother_age'];
 						}
@@ -2004,7 +1994,7 @@ function format_parents_age($pid, $birth_date=null) {
 						// Highlight fathers who die before the birth
 						if ($deatdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()) {
 							$class='parentdeath';
-							$title=$factarray['_DEAT_FATH'];
+							$title=i18n::translate('_DEAT_FATH');
 						} else {
 							$title=$pgv_lang['father_age'];
 						}
@@ -2035,7 +2025,7 @@ function format_parents_age($pid, $birth_date=null) {
 * @param boolean $time option to print TIME value
 */
 function format_fact_date(&$eventObj, $anchor=false, $time=false) {
-	global $factarray, $pgv_lang, $pid, $SEARCH_SPIDER;
+	global $pgv_lang, $pid, $SEARCH_SPIDER;
 	global $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -2148,7 +2138,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 		}
 	}
 	// print gedcom ages
-	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age) {
+	foreach (array(i18n::translate('AGE')=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age) {
 		if ($age!='') {
 			$html.=' <span class="label">'.$label.':</span> <span class="age">'.PrintReady(get_age_at_event($age, false)).'</span>';
 		}
@@ -2164,7 +2154,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 * @param boolean $lds option to print LDS TEMPle and STATus
 */
 function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
-	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $pgv_lang, $factarray, $SEARCH_SPIDER;
+	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $pgv_lang, $SEARCH_SPIDER;
 	if ($eventObj==null) return '';
 	if (!is_object($eventObj)) {
 		pgv_error_handler("2", "Object was not sent in, please use Event object", __FILE__, __LINE__);
@@ -2227,13 +2217,13 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 			$cts = preg_match('/\d LATI (.*)/', $placerec, $match);
 			if ($cts>0) {
 				$map_lati=$match[1];
-				$html.='<br /><span class="label">'.$factarray['LATI'].': </span>'.$map_lati;
+				$html.='<br /><span class="label">'.i18n::translate('LATI').': </span>'.$map_lati;
 			}
 			$map_long="";
 			$cts = preg_match('/\d LONG (.*)/', $placerec, $match);
 			if ($cts>0) {
 				$map_long=$match[1];
-				$html.=' <span class="label">'.$factarray['LONG'].': </span>'.$map_long;
+				$html.=' <span class="label">'.i18n::translate('LONG').': </span>'.$map_long;
 			}
 			if ($map_lati && $map_long && empty($SEARCH_SPIDER)) {
 				$map_lati=trim(strtr($map_lati, "NSEW,�", " - -. ")); // S5,6789 ==> -5.6789
@@ -2264,7 +2254,7 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 			$html.='<br />'.$pgv_lang['status'].': '.trim($match[1]);
 			if (preg_match('/3 DATE (.*)/', $factrec, $match)) {
 				$date=new GedcomDate($match[1]);
-				$html.=', '.$factarray['STAT:DATE'].': '.$date->Display(false);
+				$html.=', '.i18n::translate('STAT:DATE').': '.$date->Display(false);
 			}
 		}
 	}
@@ -2276,7 +2266,7 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 * @param string $key indi pid
 */
 function format_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
-	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
+	global $pgv_lang, $LANGUAGE, $TEXT_DIRECTION;
 
 	$html='';
 	$person = GedcomRecord::getInstance($key);
@@ -2328,7 +2318,7 @@ function CheckFactUnique($uniquefacts, $recfacts, $type) {
 * @param string $type the type of record INDI, FAM, SOUR etc
 */
 function print_add_new_fact($id, $usedfacts, $type) {
-	global $factarray, $pgv_lang, $TEXT_DIRECTION;
+	global $pgv_lang, $TEXT_DIRECTION;
 	global $INDI_FACTS_ADD,    $FAM_FACTS_ADD,    $NOTE_FACTS_ADD,    $SOUR_FACTS_ADD,    $REPO_FACTS_ADD;
 	global $INDI_FACTS_UNIQUE, $FAM_FACTS_UNIQUE, $NOTE_FACTS_UNIQUE, $SOUR_FACTS_UNIQUE, $REPO_FACTS_UNIQUE;
 	global $INDI_FACTS_QUICK,  $FAM_FACTS_QUICK,  $NOTE_FACTS_QUICK,  $SOUR_FACTS_QUICK,  $REPO_FACTS_QUICK;
@@ -2346,11 +2336,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 					echo '<td class="optionbox wrap"><form method="get" name="newFromClipboard" action="" onsubmit="return false;">';
 					echo '<select id="newClipboardFact" name="newClipboardFact">';
 				}
-				if (array_key_exists($fact['fact'], $factarray)) {
-					$fact_type=$factarray[$fact['fact']];
-				} else {
-					$fact_type=$fact['fact'];
-				}
+				$fact_type=i18n::translate($fact['fact']);
 				echo '<option value="clipboard_', $key, '">', $fact_type;
 				// TODO use the event class to store/parse the clipboard events
 				if (preg_match('/^2 DATE (.+)/m', $fact['factrec'], $match)) {
@@ -2411,12 +2397,12 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	echo "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
 	echo "<select id=\"newfact\" name=\"newfact\">\n";
 	foreach($addfacts as $indexval => $fact) {
-		echo PrintReady(stripLRMRLM("\t<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>\n"));
+		echo '<option value="', $fact, '">', i18n::translate($fact), " [".$fact."]</option>";
 	}
 	if (($type == "INDI") || ($type == "FAM")) echo "<option value=\"EVEN\">", $pgv_lang["custom_event"], " [EVEN]</option>";
 	echo "\n</select>\n";
 	echo "&nbsp;&nbsp;<input type=\"button\" value=\"", $pgv_lang["add"], "\" onclick=\"add_record('$id', 'newfact');\" /> ";
-	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">", $factarray["$v"], "</a></small>&nbsp;";
+	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">", i18n::translate($v), "</a></small>&nbsp;";
 	echo "</form>";
 	echo "</td></tr>";
 }

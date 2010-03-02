@@ -65,7 +65,7 @@ class relatives_Tab extends Tab {
 	* @return html table rows
 	*/
 	function printParentsRows(&$family, &$people, $type) {
-		global $personcount, $pgv_changes, $pgv_lang, $factarray;
+		global $personcount, $pgv_changes, $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $lang_short_cut, $LANGUAGE;
 		$elderdate = "";
@@ -183,11 +183,11 @@ class relatives_Tab extends Tab {
 				<td class="facts_label"><br />
 				</td>
 				<td class="facts_value<?php print $styleadd ?>">
-					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
+					<?php //echo "<span class=\"details_label\">".i18n::translate('NCHI').": </span>".$family->getNumberOfChildren()."<br />";?>
 					<?php if ($date && $date->isOK() || $place) {
 						$marr_type = "MARR_".strtoupper($family->getMarriageType());
-						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>";
-						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
+						if (i18n::is_translated($marr_type)) echo "<span class=\"details_label\">".i18n::translate($marr_type).": </span>";
+						else echo "<span class=\"details_label\">".i18n::translate('MARR').": </span>".$family->getMarriageType();
 						if ($date) {
 							echo $date->Display(false);
 							if (!empty($place)) echo ' -- ';
@@ -201,7 +201,7 @@ class relatives_Tab extends Tab {
 							// Localise the _NMR facts
 							$func("_NMR", $famid);
 						}
-						echo $factarray["_NMR"];
+						echo i18n::translate('_NMR');
 					}
 					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
@@ -210,7 +210,7 @@ class relatives_Tab extends Tab {
 							// Localise the _NMR facts
 							$func("_NMAR", $famid);
 						}
-						echo $factarray["_NMAR"];
+						echo i18n::translate('_NMAR');
 					}
 					else if ($family->getMarriageRecord()=="" && $this->controller->canedit) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$famid."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
@@ -221,15 +221,15 @@ class relatives_Tab extends Tab {
 							$marr_type = "MARR_".strtoupper($family->getMarriageType());
 						else
 							$marr_type = "MARR";
-						if (isset($factarray[$marr_type])) {
+						if (i18n::is_translated($marr_type)) {
 							if (isset($factdetail))
 								if (count($factdetail) == 3)
 									if (strtoupper($factdetail[2]) == "Y")
-										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["yes"];
+										echo "<span class=\"details_label\">".i18n::translate($marr_type).": </span>".$pgv_lang["yes"];
 									else if (strtoupper($factdetail[2]) == "N")
-										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["no"];
+										echo "<span class=\"details_label\">".i18n::translate($marr_type).": </span>".$pgv_lang["no"];
 						}
-						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
+						else echo "<span class=\"details_label\">".i18n::translate('MARR').": </span>".$family->getMarriageType();
 					}
 					?>
 				</td>
@@ -246,7 +246,7 @@ class relatives_Tab extends Tab {
 	* @return html table rows
 	*/
 	function printChildrenRows(&$family, &$people, $type) {
-		global $personcount, $pgv_lang, $factarray;
+		global $personcount, $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$elderdate = $family->getMarriageDate();
 		foreach($people["children"] as $key=>$child) {
@@ -300,7 +300,7 @@ class relatives_Tab extends Tab {
 	}
 	
 	public function getContent() {
-		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
+		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full, $personcount;
 

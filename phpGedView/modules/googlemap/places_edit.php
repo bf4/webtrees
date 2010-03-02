@@ -33,7 +33,7 @@ require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 require $INDEX_DIRECTORY."pgv_changes.php";
 
-loadLangFile("pgv_facts, googlemap:lang, googlemap:help_text");
+loadLangFile("googlemap:lang, googlemap:help_text");
 
 if (isset($_REQUEST['placeid'])) $placeid = $_REQUEST['placeid'];
 if (isset($_REQUEST['place_name'])) $place_name = $_REQUEST['place_name'];
