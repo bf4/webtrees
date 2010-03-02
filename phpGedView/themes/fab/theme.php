@@ -205,7 +205,6 @@ $Dindent = 15;			// -- width to indent descendancy boxes
 $Darrowwidth = 15;		// -- additional width to include for the up arrows
 
 $CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc close the HTML on the page
-$PGV_DXHTMLTAB_COLORS = "#d6e0ea,white";
 
 // --  The largest possible area for charts is 300,000 pixels. As the maximum height or width is 1000 pixels
 $PGV_STATS_S_CHART_X = "440"; 
