@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-01 22:41-0000\n"
+"POT-Creation-Date: 2010-03-02 22:55-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -17,6 +17,85 @@ msgstr ""
 "X-Poedit-Country: UNITED KINGDOM\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
+
+#. I18N: This is the GEDCOM label for "Marriage"
+#: ../branches.php:32
+#: ../calendar.php:253
+#: _facts.php:327
+msgid "MARR"
+msgstr "Marriage"
+
+#. I18N: This is the GEDCOM label for "Surname"
+#: ../branches.php:70
+#: _facts.php:451
+msgid "SURN"
+msgstr "Surname"
+
+#. I18N: This is the GEDCOM label for "Birth"
+#: ../calendar.php:238
+#: _facts.php:105
+msgid "BIRT"
+msgstr "Birth"
+
+#. I18N: This is the GEDCOM label for "Christening"
+#: ../calendar.php:241
+#: _facts.php:141
+msgid "CHR"
+msgstr "Christening"
+
+#. I18N: This is the GEDCOM label for "Adult Christening"
+#: ../calendar.php:244
+#: _facts.php:149
+msgid "CHRA"
+msgstr "Adult Christening"
+
+#. I18N: This is the GEDCOM label for "Baptism"
+#: ../calendar.php:247
+#: _facts.php:81
+msgid "BAPM"
+msgstr "Baptism"
+
+#. I18N: This is the GEDCOM label for "Common Law Marriage"
+#: ../calendar.php:250
+#: _facts.php:595
+msgid "_COML"
+msgstr "Common Law Marriage"
+
+#. I18N: This is the GEDCOM label for "Separated"
+#: ../calendar.php:256
+#: _facts.php:799
+msgid "_SEPR"
+msgstr "Separated"
+
+#. I18N: This is the GEDCOM label for "Divorce"
+#: ../calendar.php:259
+#: _facts.php:195
+msgid "DIV"
+msgstr "Divorce"
+
+#. I18N: This is the GEDCOM label for "Death"
+#: ../calendar.php:262
+#: _facts.php:181
+msgid "DEAT"
+msgstr "Death"
+
+#. I18N: This is the GEDCOM label for "Burial"
+#: ../calendar.php:265
+#: _facts.php:117
+msgid "BURI"
+msgstr "Burial"
+
+#. I18N: This is the GEDCOM label for "Immigration"
+#: ../calendar.php:268
+#: _facts.php:305
+msgid "IMMI"
+msgstr "Immigration"
+
+#. I18N: This is the GEDCOM label for "Emigration"
+#: ../calendar.php:271
+#: _facts.php:207
+msgid "EMIG"
+msgstr "Emigration"
 
 #. I18N: This is the country/chapman code for "Unknown"
 #: _countries.php:36
@@ -1448,12 +1527,6 @@ msgstr "Author"
 msgid "BAPL"
 msgstr "LDS Baptism"
 
-#. I18N: This is the GEDCOM label for "Baptism"
-#: _facts.php:81
-#: ../calendar.php:247
-msgid "BAPM"
-msgstr "Baptism"
-
 #. I18N: This is the GEDCOM label for "Baptism Date"
 #: _facts.php:83
 msgid "BAPM:DATE"
@@ -1509,12 +1582,6 @@ msgstr "Bas Mitzvah Place"
 msgid "BASM:SOUR"
 msgstr "Bas Mitzvah Source"
 
-#. I18N: This is the GEDCOM label for "Birth"
-#: _facts.php:105
-#: ../calendar.php:238
-msgid "BIRT"
-msgstr "BIRT"
-
 #. I18N: This is the GEDCOM label for "Birth Date"
 #: _facts.php:107
 msgid "BIRT:DATE"
@@ -1539,12 +1606,6 @@ msgstr "Blessing"
 #: _facts.php:115
 msgid "BLOB"
 msgstr "Binary Data Object"
-
-#. I18N: This is the GEDCOM label for "Burial"
-#: _facts.php:117
-#: ../calendar.php:265
-msgid "BURI"
-msgstr "Burial"
 
 #. I18N: This is the GEDCOM label for "Burial Date"
 #: _facts.php:119
@@ -1601,12 +1662,6 @@ msgstr "Character Set"
 msgid "CHIL"
 msgstr "Child"
 
-#. I18N: This is the GEDCOM label for "Christening"
-#: _facts.php:141
-#: ../calendar.php:241
-msgid "CHR"
-msgstr "Christening"
-
 #. I18N: This is the GEDCOM label for "Christening Date"
 #: _facts.php:143
 msgid "CHR:DATE"
@@ -1621,12 +1676,6 @@ msgstr "Christening Place"
 #: _facts.php:147
 msgid "CHR:SOUR"
 msgstr "Christening Source"
-
-#. I18N: This is the GEDCOM label for "Adult Christening"
-#: _facts.php:149
-#: ../calendar.php:244
-msgid "CHRA"
-msgstr "Adult Christening"
 
 #. I18N: This is the GEDCOM label for "Citizenship"
 #: _facts.php:151
@@ -1703,12 +1752,6 @@ msgstr "Date of entry in original source"
 msgid "DATE"
 msgstr "Date"
 
-#. I18N: This is the GEDCOM label for "Death"
-#: _facts.php:181
-#: ../calendar.php:262
-msgid "DEAT"
-msgstr "Death"
-
 #. I18N: This is the GEDCOM label for "Death Date"
 #: _facts.php:183
 msgid "DEAT:DATE"
@@ -1739,12 +1782,6 @@ msgstr "Descendants Interest"
 msgid "DEST"
 msgstr "Destination"
 
-#. I18N: This is the GEDCOM label for "Divorce"
-#: _facts.php:195
-#: ../calendar.php:259
-msgid "DIV"
-msgstr "Divorce"
-
 #. I18N: This is the GEDCOM label for "Divorce filed"
 #: _facts.php:197
 msgid "DIVF"
@@ -1769,12 +1806,6 @@ msgstr "Email Address"
 #: _facts.php:205
 msgid "EMAL"
 msgstr "Email Address"
-
-#. I18N: This is the GEDCOM label for "Emigration"
-#: _facts.php:207
-#: ../calendar.php:271
-msgid "EMIG"
-msgstr "Emigration"
 
 #. I18N: This is the GEDCOM label for "LDS Endowment"
 #: _facts.php:209
@@ -1959,7 +1990,7 @@ msgstr "Spouse's Death Place"
 #. I18N: This is the GEDCOM label for "FAX"
 #: _facts.php:281
 msgid "FAX"
-msgstr "FAX"
+msgstr "FAX Number"
 
 #. I18N: This is the GEDCOM label for "First Communion"
 #: _facts.php:283
@@ -2016,12 +2047,6 @@ msgstr "Husband"
 msgid "IDNO"
 msgstr "Identification Number"
 
-#. I18N: This is the GEDCOM label for "Immigration"
-#: _facts.php:305
-#: ../calendar.php:268
-msgid "IMMI"
-msgstr "Immigration"
-
 #. I18N: This is the GEDCOM label for "Latitude"
 #: _facts.php:307
 msgid "LATI"
@@ -2071,13 +2096,6 @@ msgstr "Marriage Contract"
 #: _facts.php:325
 msgid "MARL"
 msgstr "Marriage Licence"
-
-#. I18N: This is the GEDCOM label for "Marriage"
-#: _facts.php:327
-#: ../branches.php:32
-#: ../calendar.php:253
-msgid "MARR"
-msgstr "Marriage"
 
 #. I18N: This is the GEDCOM label for "Marriage Date"
 #: _facts.php:329
@@ -2207,7 +2225,7 @@ msgstr "Ordination"
 #. I18N: This is the GEDCOM label for "Citation Details"
 #: _facts.php:379
 msgid "PAGE"
-msgstr "AGE"
+msgstr "Page"
 
 #. I18N: This is the GEDCOM label for "Pedigree"
 #: _facts.php:381
@@ -2383,12 +2401,6 @@ msgstr "Submitter"
 #: _facts.php:449
 msgid "SUBN"
 msgstr "Submission"
-
-#. I18N: This is the GEDCOM label for "Surname"
-#: _facts.php:451
-#: ../branches.php:70
-msgid "SURN"
-msgstr "Surname"
 
 #. I18N: This is the GEDCOM label for "Temple"
 #: _facts.php:453
@@ -2613,7 +2625,7 @@ msgstr "Birth of sibling"
 #. I18N: This is the GEDCOM label for "Brit Mila"
 #: _facts.php:541
 msgid "_BRTM"
-msgstr "BIRT"
+msgstr "Brit Mila"
 
 #. I18N: This is the GEDCOM label for "Brit Mila Date"
 #: _facts.php:543
@@ -2744,12 +2756,6 @@ msgstr "Christening of a nephew or niece"
 #: _facts.php:593
 msgid "_CHR_SIBL"
 msgstr "Christening of sibling"
-
-#. I18N: This is the GEDCOM label for "Common Law Marriage"
-#: _facts.php:595
-#: ../calendar.php:250
-msgid "_COML"
-msgstr "Common Law Marriage"
 
 #. I18N: This is the GEDCOM label for "Cremation of a child"
 #: _facts.php:597
@@ -3256,12 +3262,6 @@ msgstr "Permanent Number"
 msgid "_SCBK"
 msgstr "Scrapbook"
 
-#. I18N: This is the GEDCOM label for "Separated"
-#: _facts.php:799
-#: ../calendar.php:256
-msgid "_SEPR"
-msgstr "Separated"
-
 #. I18N: This is the GEDCOM label for "Slide Show"
 #: _facts.php:801
 msgid "_SSHOW"
@@ -3578,6 +3578,12 @@ msgstr ", "
 #: ../includes/classes/class_i18n.php:83
 msgid "LANGUAGE_LIST_SEPARATOR_LAST"
 msgstr " and "
+
+#: ../includes/controllers/lifespan_ctrl.php:491
+#: ../includes/controllers/lifespan_ctrl.php:526
+#, fuzzy
+msgid "ABBREV_"
+msgstr "c."
 
 #~ msgid "Arabic"
 #~ msgstr "Arabic"
