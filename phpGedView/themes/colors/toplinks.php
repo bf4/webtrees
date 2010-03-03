@@ -3,7 +3,7 @@
  * Toplinks for Colors theme
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2010  PGV Development Team.  All rights reserved.
+ * Copyright (c) 2002 to 2009  John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Themes/Colors
- * @version $Id$
+ * @subpackage Themes
+ * @version $Id: toplinks.php 3.0709 2009-07-09 petersra $
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -83,17 +83,6 @@ $menubar = new MenuBar();
 		$menu->printMenu();
 		echo "</td>";
 	}
-	/* Removed by Greg 01-MAR-2010.  Not sure whether this is part of something to come, or something that has gone
-	$menu = $menubar->getClippingsMenu();
-	if(!is_null($menu) && $menu->link != "") {
-		if (!is_null($menu)) {
-			echo "<td>";
-			$menu->addLabel("", "none");
-			$menu->printMenu();
-			echo "</td>";
-		}
-	}
-	 */
 	$menu = $menubar->getSearchMenu();
 	if($menu->link != "") {
 		echo "<td>";
@@ -138,6 +127,6 @@ $menubar = new MenuBar();
 	</tr>
 	</table>
 <?php require './includes/accesskeyHeaders.php'; ?>
-
+<?php require './sidebar.php'; ?>
 <!-- close div for div id="header" -->
-<?php echo "<div id=\"content\">"; ?>
+<div id="content">
