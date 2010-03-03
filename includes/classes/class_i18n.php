@@ -51,7 +51,8 @@ class i18n {
 	static private $list_separator_last;
 	static private $text_direction;
 
-
+	// Initialise the translation adapter with a locale setting.
+	// 'auto' means look at the HTTP_ACCEPT_LANGUAGE value.
 	static public function setLocale($locale='auto') {
 		self::$translation_adapter=new Zend_Translate(
 			'gettext',
@@ -59,6 +60,7 @@ class i18n {
 			$locale,
 			array('scan'=>Zend_Translate::LOCALE_FILENAME)
 		);
+
 		// By using specially named strings to store language parameters, we can store all the
 		// settings, translations and other support for each language in one file.
 		// This makes it simple for users to add/remove/share languages.
@@ -83,11 +85,20 @@ class i18n {
 		self::$list_separator_last=i18n::noop('LANGUAGE_LIST_SEPARATOR_LAST');
 	}
 
+	static public function getLocale() {
+		return self::$translation_adapter->getLocale();
+	}
+
 	// echo i18n::translate('Hello World!');
 	// echo i18n::translate('The %s sat on the mat', 'cat');
 	static public function translate(/* var_args */) {
 		$args=func_get_args();
 		$args[0]=self::$translation_adapter->_($args[0]);
+		foreach ($args as &$arg) {
+			if (is_array($arg)) {
+				$arg=i18n::make_list($arg);
+			}
+		}
 		// TODO: for each embedded string, if the text-direction is the opposite of the
 		// page language, then wrap it in &ltr; on LTR pages and &rtl; on RTL pages.
 		// This will ensure that non/weakly direction characters in the main string
@@ -147,6 +158,62 @@ class i18n {
 		} else {
 			// Just use the first letter of the full fact
 			echo UTF8_substr(i18n::translate($fact), 0, 1);
+		}
+	}
+
+	// Convert a GEDCOM age string into translated_text
+	// NB: The import function will have normalised this, so we don't need
+	// to worry about badly formatted strings
+	static public function gedcom_age($string) {
+		switch ($string) {
+		case 'STILLBORN':
+			// I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (stillborn)
+			return i18n::translate('(stillborn)');
+		case 'INFANT':
+			// I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (in infancy)
+			return i18n::translate('(in infancy)');
+		case 'CHILD':
+			// I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (in childhood)
+			return i18n::translate('(in childhood)');
+		}
+		$age=array();
+		if (preg_match('/(\d+)y/', $string, $match)) {
+			// I18N: Part of an age string. e.g 5 years, 4 months and 3 days
+			$years=$match[1];
+			$age[]=i18n::plural('%d year', '%d years', $years, $years);
+		} else {
+			$years=-1;
+		}
+		if (preg_match('/(\d+)m/', $string, $match)) {
+			// I18N: Part of an age string. e.g 5 years, 4 months and 3 days
+			$age[]=i18n::plural('%d month', '%d months', $match[1], $match[1]);
+		}
+		if (preg_match('/(\d+)w/', $string, $match)) {
+			// I18N: Part of an age string. e.g 7 weeks and 3 days
+			$age[]=i18n::plural('%d week', '%d weeks', $match[1], $match[1]);
+		}
+		if (preg_match('/(\d+)d/', $string, $match)) {
+			// I18N: Part of an age string. e.g 5 years, 4 months and 3 days
+			$age[]=i18n::plural('%d day', '%d days', $match[1], $match[1]);
+		}
+		// If an age is just a number of years, only show the number
+		if (count($age)==1 && $years>=0) {
+			$age=$years;
+		}
+		if ($age) {
+			if (!substr_compare($string, '<', 0, 1)) {
+				// I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged less than 21 years)
+				return i18n::translate('(aged less than %s)', $age);
+			} elseif (!substr_compare($string, '>', 0, 1)) {
+				// I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged more than 21 years)
+				return i18n::translate('(aged more than %s)', $age);
+			} else {
+				// I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged 43 years)			
+				return i18n::translate('(aged %s)', $age);
+			}
+		} else {
+			// Not a valid string?
+			return i18n::translate('(aged %s)', $string);
 		}
 	}
 }
