@@ -3513,11 +3513,11 @@ msgstr "Kinesisk"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Brukere som er pålogget"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
-msgstr ""
+msgstr "Ingen brukere er pålogget"
 
 #: ../blocks/logged_in.php:83
 #, php-format

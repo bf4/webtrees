@@ -3513,7 +3513,7 @@ msgstr "Китайский"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Пользователи, работающие сейчас на сайте"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
