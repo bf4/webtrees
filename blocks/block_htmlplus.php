@@ -213,7 +213,7 @@ function print_htmlplus_block_config($config)
 	$config['title'] = htmlentities($config['title'], ENT_COMPAT, 'UTF-8');
 	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_title_help', 'qm_ah', '', false, true)
-		."{$pgv_lang['TITL']}</td>\n"
+		.i18n::translate('TITL')."</td>"
 		."\t\t<td class=\"optionbox\"><input type=\"text\" name=\"title\" size=\"30\" value=\"{$config['title']}\" /></td>\n\t</tr>\n"
 	;
 
