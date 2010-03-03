@@ -1,6 +1,6 @@
 /**
  ** Style for the Ash Theme              
- ** SVN 6928
+ ** Version 4.1407
  */
 
 .something {
@@ -39,7 +39,6 @@ padding:0px;
 background:#5d6779;
 color: #ffffff;
 }
-
 /*	Define TopLink Color				*/
 
 #toplinks {
@@ -102,6 +101,17 @@ body,
 color:#494949;
 }
 
+/*	Local Fixes							 */
+
+.maxHeight {
+max-height:400px;
+height:auto!important;
+}
+/*
+div.small_inner_block {
+font-size: 13px;
+}
+*/
 /*		Begin Colors layout				 */
 /*		TopLinks Layout Begin			 */
 
@@ -212,6 +222,10 @@ color: red;
 .flyoutrtl, .flyoutrtl a {
 background: #fff;
 color: #000;
+}
+
+#researchlog_content a {
+color: #fff;
 }
 
 tfoot label  {
@@ -1596,6 +1610,7 @@ width: 8em;
 } 
 
 .statistics_chart{
+text-align: center;
 } 
 
 .gchart{
@@ -1606,3 +1621,43 @@ border: 1px solid #999;
 padding-top: 12px;
 text-align: center;
 } 
+/* ca branch */
+
+dl {
+	margin-bottom:20px;
+}
+
+dt {
+	float:left; 
+	font-weight:bold;
+	margin-right:10px;
+	clear:both; 
+}
+
+#indi_details dt:after { content: ":"; }
+
+#facts_content dd {
+	float:left;
+	width: 70%;
+}
+
+#indi_mainimage, #nameparts1, #nameparts2, #nameparts3, #nameparts4, #sex, #mainfacts {
+	float:left;
+	margin-right:15px;
+}
+
+#hitcounter {
+	display: block;
+	width: 100%;
+	margin-bottom:10px;
+}
+
+.clearfloat {
+	clear: both;
+}
+
+#indi_details {
+	display: block;
+	width: 100%;
+}
+
