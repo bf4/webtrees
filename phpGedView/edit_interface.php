@@ -30,9 +30,6 @@ define('PGV_SCRIPT_NAME', 'edit_interface.php');
 require './config.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 
-loadLangFile("pgv_country");
-uasort($countries, "stringsort");
-
 // TODO work out whether to use GET/POST for these
 // TODO decide what (if any) validation is required on these parameters
 $action =safe_REQUEST($_REQUEST, 'action',  PGV_REGEX_UNSAFE);

@@ -51,7 +51,6 @@ function get_plac_label() {
 function setup_place_subfields($element_id) {
 	global $pgv_lang, $PGV_PLACES_SETUP;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
-	global $countries;
 
 	if (!empty($PGV_PLACES_SETUP)) return;
 	$PGV_PLACES_SETUP = true;
@@ -141,8 +140,8 @@ function setup_place_subfields($element_id) {
 			if (elt.value=='\u05d9\u05e9\u05e8\u05d0\u05dc') ctry='ISR'; // Israel hebrew name
 			else if (ctry.length==3) elt.value=ctry;
 			if (ctry=='') ctry='???';
-			<?php foreach ($countries as $alpha3=>$country) { ?>
-			else if (ctry=='<?php print addslashes(UTF8_strtoupper($country)) ?>') ctry='<?php print $alpha3 ?>';
+			<?php global $iso3166; foreach (array_keys($iso3166) as $alpha3) { ?>
+			else if (ctry=='<?php print addslashes(i18n::translate($alpha3)) ?>') ctry='<?php print $alpha3 ?>';
 			<?php } ?>
 			else if (ctry.length!=3) ctry=ctry.substr(0,3);
 			pdir='places/'+ctry+'/';
@@ -281,8 +280,7 @@ function setup_place_subfields($element_id) {
  * @param string $element_id	id of PLAC input element in the form
  */
 function print_place_subfields($element_id) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
-	global $countries;
+	global $pgv_lang, $iso3166, $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
 
 	//if ($element_id=="DEAT_PLAC") return; // known bug - waiting for a patch
 	$plac_label = get_plac_label();
@@ -332,10 +330,10 @@ function print_place_subfields($element_id) {
 			print "<select id=\"".$subtagid."_select\" name=\"".$subtagname."_select\" class=\"submenuitem\"";
 			print " onchange=\"setPlaceCountry(this.value, '".$element_id."');\"";
 			print " >\n";
-			print "<option value=\"???\">??? : ".$countries["???"]."</option>\n";
-			foreach ($countries as $alpha3=>$country) {
+			print "<option value=\"???\">??? : ".i18n::translate('???')."</option>\n";
+			foreach (array_keys($iso3166) as $alpha3) {
 				if ($alpha3!="???") {
-					$txt=$alpha3." : ".$country;
+					$txt=$alpha3." : ".i18n::translate($alpha3);
 					if (UTF8_strlen($txt)>32) $txt = UTF8_substr($txt, 0, 32).$pgv_lang["ellipsis"];
 					print "<option value=\"".$alpha3."\">".$txt."</option>\n";
 				}

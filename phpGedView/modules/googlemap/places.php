@@ -363,7 +363,10 @@ if ($action=="ImportFile") {
 }
 
 if ($action=="ImportFile2") {
-	loadLangFile('pgv_country');
+	$country_names=array();
+	foreach ($iso3166 as $key=>$value) {
+		$country_names[$key]=i18n::translate($key);
+	}
 	if (isset($_POST["cleardatabase"])) {
 		PGV_DB::exec("DELETE FROM {$TBLPREFIX}placelocation WHERE 1=1");
 	}
@@ -392,8 +395,8 @@ if ($action=="ImportFile2") {
 			for ($ii=$fields-4; $ii>1; $ii--) {
 				if ($fieldrec[0] > $ii-2) $placelist[$j]["place"] .= $fieldrec[$ii].",";
 			}
-			foreach ($countries as $countrycode => $countryname) {
-				if (UTF8_strtoupper($countrycode) == UTF8_strtoupper($fieldrec[1])) {
+			foreach ($country_names as $countrycode => $countryname) {
+				if ($countrycode == strtoupper($fieldrec[1])) {
 					$fieldrec[1] = $countryname;
 					break;
 				}
