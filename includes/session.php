@@ -439,6 +439,41 @@ if (empty($PEDIGREE_GENERATIONS)) {
 	$PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
 }
 
+// First time here?  Scan for available languages, to make a list to choose from.
+require PGV_ROOT.'includes/classes/class_i18n.php';
+if (true || empty($_SESSION['ALL_LANGUAGES'])) {
+	$_SESSION['ALL_LANGUAGES']=array();
+	if ($SEARCH_SPIDER) {
+		// Search engines only ever get the default language
+	} else {
+		// Users will be able to choose from a list
+		$d=opendir(PGV_ROOT.'language');
+		while (($f=readdir($d))!==false) {
+			if (preg_match('/^([a-z][a-z](?:-[a-z][a-z])?).mo$/', $f, $match)) {
+				i18n::setLocale($match[1]);
+				$_SESSION['ALL_LANGUAGES'][$match[1]]=i18n::translate($match[1]);
+			}
+		}
+		closedir($d);
+		asort($_SESSION['ALL_LANGUAGES']);
+		unset($f, $d);
+	}
+}
+if (isset($_GET['lang']) && array_key_exists($_GET['lang'], $_SESSION['ALL_LANGUAGES'])) {
+	// A request to change language?
+	i18n::setLocale($_GET['lang']);
+} else {
+	if (isset($_SESSION['USER_LANGUAGE'])) {
+		// A previously selected language? Use it.
+		i18n::setLocale($_SESSION['USER_LANGUAGE']);
+	} else {
+		// Default language, from HTTP_ACCEPT_LANGUAGE
+		i18n::setLocale('auto');
+	}
+}
+// Remember our language selection
+$_SESSION['USER_LANGUAGE']=i18n::getLocale();
+
 /* Re-build the various language-related arrays
  *  Note:
  *  This code existed in both lang_settings_std.php and in lang_settings.php.
@@ -548,8 +583,6 @@ if ($ENABLE_MULTI_LANGUAGE && empty($SEARCH_SPIDER)) {
 		}
 	}
 }
-require PGV_ROOT.'includes/classes/class_i18n.php';
-i18n::setLocale($lang_short_cut[$LANGUAGE]);
 
 //-- load the privacy functions
 require PGV_ROOT.'includes/functions/functions_privacy.php';

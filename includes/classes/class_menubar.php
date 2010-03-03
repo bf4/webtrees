@@ -1049,7 +1049,7 @@ class MenuBar
 	* @return Menu the menu item
 	*/
 	static function getLanguageMenu() {
-		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $pgv_lang, $pgv_lang_self, $language_settings, $flagsfile, $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $pgv_lang, $pgv_lang_self, $language_settings, $flagsfile, $lang_short_cut, $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
@@ -1066,7 +1066,7 @@ class MenuBar
 //			$menu->print_menu = null;
 			foreach ($language_settings as $lang=>$language) {
 				if ($language['pgv_lang_use'] && isset($language['pgv_lang_self']) && isset($language['pgv_language'])) {
-					$submenu=new Menu($language['pgv_lang_self'], PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang));
+					$submenu=new Menu($language['pgv_lang_self'], PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang.'&amp;lang='.$lang_short_cut[$lang]));
 					if ($lang==$LANGUAGE) {
 						$submenu->addClass('activeflag', 'brightflag');
 					} else {
