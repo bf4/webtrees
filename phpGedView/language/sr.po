@@ -3513,11 +3513,11 @@ msgstr ""
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Prijavljeni korisnici"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
-msgstr ""
+msgstr "Nijedan korisnik nije prijavljen"
 
 #: ../blocks/logged_in.php:83
 #, php-format

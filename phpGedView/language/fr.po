@@ -3513,11 +3513,11 @@ msgstr "Chinois"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Utilisateurs connectés"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
-msgstr ""
+msgstr "Aucun utilisateur connecté"
 
 #: ../blocks/logged_in.php:83
 #, php-format

@@ -2444,7 +2444,7 @@ msgstr "类型"
 #. I18N: This is the GEDCOM label for "Web URL"
 #: _facts.php:469
 msgid "URL"
-msgstr ""
+msgstr "网络地址"
 
 #. I18N: This is the GEDCOM label for "Wife"
 #: _facts.php:471
@@ -3513,7 +3513,7 @@ msgstr "中文"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "用戶被登陆"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"

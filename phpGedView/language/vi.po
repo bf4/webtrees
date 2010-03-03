@@ -3513,11 +3513,11 @@ msgstr ""
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Thành viên trực tuyến"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
-msgstr ""
+msgstr "Không ai trực tuyến và không có thành viên vô danh"
 
 #: ../blocks/logged_in.php:83
 #, php-format

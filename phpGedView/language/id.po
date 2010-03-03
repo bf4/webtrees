@@ -3513,11 +3513,11 @@ msgstr ""
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Pengguna yang Tercatatmasuk"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
-msgstr ""
+msgstr "Tidak ada pengguna yang tercatatmasuk maupun anonim"
 
 #: ../blocks/logged_in.php:83
 #, php-format

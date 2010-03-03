@@ -3513,11 +3513,11 @@ msgstr "Xinès"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Visitants"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
-msgstr ""
+msgstr "Ni usuaris amb accés ni anònims"
 
 #: ../blocks/logged_in.php:83
 #, php-format

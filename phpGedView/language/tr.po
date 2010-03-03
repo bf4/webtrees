@@ -3513,11 +3513,11 @@ msgstr "Çince"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Bağlı bulunan diğer ziyaretçiler"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
-msgstr ""
+msgstr "Kayıtlı veya gizli kullanıcılar yok"
 
 #: ../blocks/logged_in.php:83
 #, php-format

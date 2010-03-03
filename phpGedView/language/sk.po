@@ -3513,11 +3513,11 @@ msgstr "Čínština"
 
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
-msgstr ""
+msgstr "Prihlásení uživatelia"
 
 #: ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
-msgstr ""
+msgstr "Žiadny prihlásení a anonymní uživatelia"
 
 #: ../blocks/logged_in.php:83
 #, php-format
