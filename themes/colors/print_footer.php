@@ -3,7 +3,7 @@
  * Print Footer for Colors theme 
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2010  PGV Development Team.  All rights reserved.
+ * Copyright (c) 2002 to 2009  John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Themes/Colors
- * @version $Id$
+ * @subpackage Themes
+ * @version $Id: print_footer.php 3.0709 2009-07-09 petersra $
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
