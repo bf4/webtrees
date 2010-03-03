@@ -3203,9 +3203,9 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 function loadLangFile($fileListNames="", $lang="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
 	global $LANGUAGE, $lang_short_cut, $lng_codes, $lng_synonyms;
-	global $pgv_lang, $countries, $altCountryNames, $faqlist;
+	global $pgv_lang, $faqlist;
 	if (empty($lang)) $lang=$LANGUAGE;
-	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
+	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_admin, pgv_editor, pgv_faqlib";
 
 	// Empty list or "all" means "load complete file set"
 	if (empty($fileListNames) || $fileListNames=="all")
@@ -3237,10 +3237,6 @@ function loadLangFile($fileListNames="", $lang="") {
 		case "pgv_editor":
 			$fileName1 = $editorfile["english"];
 			$fileName2 = $editorfile[$lang];
-			break;
-		case "pgv_country":
-			$fileName1 = $countryfile["english"];
-			$fileName2 = $countryfile[$lang];
 			break;
 		case "pgv_faqlib":
 			$fileName1 = $faqlistfile["english"];
@@ -3294,7 +3290,7 @@ function loadLangFile($fileListNames="", $lang="") {
  */
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $LANGUAGE, $lang_short_cut;
-	global $pgv_lang, $countries, $altCountryNames, $faqlist;
+	global $pgv_lang, $faqlist;
 	global $pgv_language, $adminfile, $editorfile, $extrafile, $pgv_lang_self;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
@@ -3325,8 +3321,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 	// Make sure we start with a clean slate
 	$pgv_lang = $pgv_lang_self;
-	$countries = array();
-	$altCountryNames = array();
 	$faqlist = array();
 
 	if ($forceLoad) {

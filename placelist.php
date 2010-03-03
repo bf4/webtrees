@@ -171,10 +171,10 @@ if ($display=="hierarchy") {
 			$country = UTF8_strtoupper($country);
 			if (strlen($country)!=3) {
 				// search country code using current language countries table
-				loadLangFile('pgv_country');
-				foreach ($countries as $countrycode => $countryname) {
-					if (UTF8_strtoupper($countryname) == $country) {
-						$country = $countrycode;
+				// TODO: use translations from all languages
+				foreach (array_keys($iso3166) as $alpha3) {
+					if (UTF8_strtoupper(i18n::translate($alpha3)) == $country) {
+						$country = $alpha3;
 						break;
 					}
 				}

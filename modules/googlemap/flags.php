@@ -33,7 +33,7 @@ require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 require PGV_ROOT.'includes/functions/functions_edit.php';
 require $INDEX_DIRECTORY."pgv_changes.php";
 
-loadLangFile("googlemap:lang, googlemap:help_text, pgv_country");
+loadLangFile("googlemap:lang, googlemap:help_text");
 
 if (isset($_REQUEST['countrySelected'])) $countrySelected = $_REQUEST['countrySelected'];
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
@@ -143,7 +143,7 @@ function getHelp(which) {
 				$rep = opendir('./places/'.$country[$i].'/');
 				while ($file = readdir($rep)) {
 					if (stristr($file, "flags")) {
-						$countryList[$country[$i]] = $countries[$country[$i]];
+						$countryList[$country[$i]] = i18n::translate($country[$i]);
 					}
 				}
 				closedir($rep);
@@ -180,14 +180,7 @@ function getHelp(which) {
 	for ($i = 0; $i < count($flags); $i++) {
 		if ($countrySelected == "Countries") {
 			$tempstr = "<td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"".$flags[$i]."\"  title=\"";
-			if (array_key_exists( $country[$i], $countries))
-				$tempstr .=$countries[$country[$i]];
-			else if ($flags[$i]=="blank") {
-				$tempstr .=$countries["???"];
-				$flags[$i]="???";
-			}
-			else
-				$tempstr .= $flags[$i];
+			$tempstr.=i18n::translate($country[$i]);
 			echo $tempstr, "\">&nbsp;&nbsp;", $flags[$i], "</input></td>\n";
 		}
 		else {
