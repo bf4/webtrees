@@ -38,43 +38,72 @@ try {
 }
 
 // TODO: it will be more efficient to fetch all GM_% settings in a single DB query
-
+global $GOOGLEMAP_ENABLED;
 $GOOGLEMAP_ENABLED     = get_site_setting('GM_ENABLED',     '0'); // Enable or disable Googlemap
 
+global $GOOGLEMAP_API_KEY;
 $GOOGLEMAP_API_KEY     = get_site_setting('GM_API_KEY',     'Fill in your key here. Request key from http://www.google.com/apis/maps/');  // Fill in your key here. Request key from http://www.google.com/apis/maps/
 
+global $GOOGLEMAP_MAP_TYPE;
 $GOOGLEMAP_MAP_TYPE    = get_site_setting('GM_MAP_TYPE',    'G_NORMAL_MAP');  // possible values: G_PHYSICAL_MAP, G_NORMAL_MAP, G_SATELLITE_MAP or G_HYBRID_MAP.
 
+global $GOOGLEMAP_MIN_ZOOM;
 $GOOGLEMAP_MIN_ZOOM    = get_site_setting('GM_MIN_ZOOM',    '2');  // min zoom level
+global $GOOGLEMAP_MAX_ZOOM;
 $GOOGLEMAP_MAX_ZOOM    = get_site_setting('GM_MAX_ZOOM',    '13'); // max zoom level
 
+global $GOOGLEMAP_XSIZE;
 $GOOGLEMAP_XSIZE       = get_site_setting('GM_XSIZE',       '600');      // X-size of Google map
+global $GOOGLEMAP_YSIZE; 
 $GOOGLEMAP_YSIZE       = get_site_setting('GM_YSIZE',       '400');      // Y-size of Google map
 
+global $GOOGLEMAP_PRECISION_0;
 $GOOGLEMAP_PRECISION_0 = get_site_setting('GM_PRECISION_0', '0');  // Country level
+global $GOOGLEMAP_PRECISION_1;
 $GOOGLEMAP_PRECISION_1 = get_site_setting('GM_PRECISION_1', '1');  // State level
+global $GOOGLEMAP_PRECISION_2;
 $GOOGLEMAP_PRECISION_2 = get_site_setting('GM_PRECISION_2', '2');  // City level
+global $GOOGLEMAP_PRECISION_3;
 $GOOGLEMAP_PRECISION_3 = get_site_setting('GM_PRECISION_3', '3');  // Neighborhood level
+global $GOOGLEMAP_PRECISION_4;
 $GOOGLEMAP_PRECISION_4 = get_site_setting('GM_PRECISION_4', '4');  // House level
+global $GOOGLEMAP_PRECISION_5;
 $GOOGLEMAP_PRECISION_5 = get_site_setting('GM_PRECISION_5', '9');  // Max prcision level
 
+global $GM_MAX_NOF_LEVELS;
 $GM_MAX_NOF_LEVELS     = get_site_setting('GM_MAX_NOF_LEVELS',    '4'); // Max nr of levels to use in Googlemap
+global $GM_DEFAULT_TOP_VALUE;
 $GM_DEFAULT_TOP_VALUE  = get_site_setting('GM_DEFAULT_TOP_VALUE', '' ); // Default value, inserted when no location can be found
 
+global $GOOGLEMAP_COORD;
 $GOOGLEMAP_COORD       = get_site_setting('GM_COORD',             '0'); // Enable or disable Display Map Co-ordinates
 
 //Place Hierarchy
+global $GOOGLEMAP_PLACE_HIERARCHY;
 $GOOGLEMAP_PLACE_HIERARCHY=get_site_setting('GM_PLACE_HIERARCHY',  '1'     ); // Enable or disable Display Map in place herarchy
+global $GOOGLEMAP_PH_XSIZE; 
 $GOOGLEMAP_PH_XSIZE       =get_site_setting('GM_PH_XSIZE',         '500'   ); // X-size of Place Hierarchy Google map
+global $GOOGLEMAP_PH_YSIZE;
 $GOOGLEMAP_PH_YSIZE       =get_site_setting('GM_PH_YSIZE',         '350'   ); // Y-size of Place Hierarchy Google map
+global $GOOGLEMAP_PH_MARKER;
 $GOOGLEMAP_PH_MARKER      =get_site_setting('GM_PH_MARKER',        'G_FLAG'); // Possible values: G_FLAG = Flag, G_DEFAULT_ICON = Standard icon
+global $GM_DISP_SHORT_PLACE;
 $GM_DISP_SHORT_PLACE      =get_site_setting('GM_DISP_SHORT_PLACE', '0'); // Display full place name or only the actual level name
+global $GM_DISP_COUNT;
 $GM_DISP_COUNT            =get_site_setting('GM_DISP_COUNT',       '0'); // Display the count of individuals and families connected to the place
+global $GOOGLEMAP_PH_WHEEL;
 $GOOGLEMAP_PH_WHEEL       =get_site_setting('GM_PH_WHEEL',         '0'); // Use mouse wheel for zooming
+global $GOOGLEMAP_PH_CONTROLS;
 $GOOGLEMAP_PH_CONTROLS    =get_site_setting('GM_PH_CONTROLS',      '1'); // Hide map controls when mouse is out
 
 
 // Configuration-options per location-level
+global $GM_MARKER_COLOR;
+global $GM_MARKER_SIZE;
+global $GM_PREFIX;
+global $GM_POSTFIX;
+global $GM_PRE_POST_MODE;
+
 $GM_MARKER_COLOR [1]=get_site_setting('GM_MARKER_COLOR_1',  'Red'  ); // Marker to be used
 $GM_MARKER_SIZE  [1]=get_site_setting('GM_MARKER_SIZE_1',   'Large'); // 'Small' or 'Large'
 $GM_PREFIX       [1]=get_site_setting('GM_PREFIX_1',        ''     ); // Text to be placed in front of the name
