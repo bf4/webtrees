@@ -181,7 +181,7 @@ $PGV_IMAGES["lsuparrow"]["other"] = "lsuparrow.gif";
 
 //-- Variables for the Fan chart
 $fanChart = array(
-	'font'		=> './includes/fonts/DejaVuSans.ttf',
+	'font'		=> PGV_ROOT.'includes/fonts/DejaVuSans.ttf',
 	'size'		=> '7px',
 	'color'		=> '#000000',
 	'bgColor'	=> '#eeeeee',

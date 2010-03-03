@@ -112,30 +112,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 		return false;
 	}
 
-	if (empty($fanChart)) {
-		// For compatibility reasons only, parse CSS file
-		require PGV_ROOT.'includes/cssparser.inc.php';
-		$css = new cssparser(false);
-//		if ($view=="preview") $css->Parse($print_stylesheet);
-//		else $css->Parse($stylesheet);
-		$css->Parse($stylesheet);
-
-		$fanChart = array();
-		$fanChart['font'] = $css->Get('.fan_chart','font-family');
-		$fanChart['font'] = str_replace(array('url(', ')'), '', $fanChart['font']);
-		$fanChart['size'] = $css->Get('.fan_chart','font-size');
-		$fanChart['color'] = $css->Get('.fan_chart', 'color');
-		$fanChart['bgColor'] = $css->Get('.fan_chart', 'background-color');
-		$fanChart['bgMColor'] = $css->Get('.fan_chart_box', 'background-color');
-		$fanChart['bgFColor'] = $css->Get('.fan_chart_boxF', 'background-color');
-	}
-
 	// Validate
-	if (empty($fanChart['font']) || !file_exists($fanChart['font'])) {
-		if (!empty($fanChart['font'])) echo '<span class="error">', $pgv_lang["fontfile_error"], ' : ', $fanChart['font']. '</span>';
-		$fanChart['font']=PGV_ROOT.'includes/fonts/DejaVuSans.ttf';
-	}
-	if ($fanChart['font']{0}!='/') $fanChart['font'] = dirname(__FILE__) . "/" . $fanChart['font'];
 	if (!file_exists($fanChart['font'])) {
 		echo '<span class="error">', $pgv_lang["fontfile_error"], ' : ', $fanChart['font']. '</span>';
 		return false;
