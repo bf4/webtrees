@@ -56,9 +56,10 @@ class i18n {
 	static public function setLocale($locale='auto') {
 		self::$translation_adapter=new Zend_Translate(
 			'gettext',
-			PGV_ROOT.'language',
-			$locale,
-			array('scan'=>Zend_Translate::LOCALE_FILENAME)
+			PGV_ROOT.'language/'.$locale.'.mo',
+			$locale
+			// NOTE: although scanning for files is useful, it is *very* slow.
+			//array('scan'=>Zend_Translate::LOCALE_FILENAME)
 		);
 
 		// By using specially named strings to store language parameters, we can store all the
