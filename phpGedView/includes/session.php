@@ -122,8 +122,10 @@ $PRIV_HIDE   = PGV_PRIV_HIDE;
 // For performance, it is quicker to refer to files using absolute paths
 define ('PGV_ROOT', realpath(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR);
 
-// Add the Zend library to the include path
-set_include_path(realpath(PGV_ROOT.'/library').PATH_SEPARATOR.get_include_path());
+// Invoke the Zend Framework Autoloader, so we can use Zend_XXXXX classes
+set_include_path(PGV_ROOT.'library'.PATH_SEPARATOR.get_include_path());
+require_once 'Zend/Loader/Autoloader.php';
+Zend_Loader_Autoloader::getInstance();
 
 // New setting, added to config.php in 4.2.0
 if (!isset($DB_UTF8_COLLATION)) {
@@ -449,13 +451,12 @@ if (empty($_SESSION['ALL_LANGUAGES'])) {
 		// Users will be able to choose from a list
 		$d=opendir(PGV_ROOT.'language');
 		while (($f=readdir($d))!==false) {
-			if (preg_match('/^([a-z][a-z](?:-[a-z][a-z])?).mo$/', $f, $match)) {
-				i18n::setLocale($match[1]);
-				$_SESSION['ALL_LANGUAGES'][$match[1]]=i18n::translate($match[1]);
+			if (preg_match('/^([a-zA-Z0-9_]+).mo$/', $f, $match)) {
+				$_SESSION['ALL_LANGUAGES'][$match[1]]=Zend_Locale::getTranslation($match[1], 'language', $match[1]);
 			}
 		}
 		closedir($d);
-		asort($_SESSION['ALL_LANGUAGES']);
+		ksort($_SESSION['ALL_LANGUAGES']);
 		unset($f, $d);
 	}
 }
