@@ -441,39 +441,33 @@ if (empty($PEDIGREE_GENERATIONS)) {
 	$PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
 }
 
-// First time here?  Scan for available languages, to make a list to choose from.
-require PGV_ROOT.'includes/classes/class_i18n.php';
-if (empty($_SESSION['ALL_LANGUAGES'])) {
-	$_SESSION['ALL_LANGUAGES']=array();
-	if ($SEARCH_SPIDER) {
-		// Search engines only ever get the default language
-	} else {
-		// Users will be able to choose from a list
-		$d=opendir(PGV_ROOT.'language');
-		while (($f=readdir($d))!==false) {
-			if (preg_match('/^([a-zA-Z0-9_]+).mo$/', $f, $match)) {
-				$_SESSION['ALL_LANGUAGES'][$match[1]]=Zend_Locale::getTranslation($match[1], 'language', $match[1]);
-			}
-		}
-		closedir($d);
-		ksort($_SESSION['ALL_LANGUAGES']);
-		unset($f, $d);
+// Language selection
+if (isset($_GET['lang'])) {
+	try {
+		// Request to change language?
+		$locale=Zend_Locale::findLocale($_GET['lang']);
+		// Remember this choice.
+		$_SESSION['USER_LANGUAGE']=$locale;
+	} catch (Zend_Locale_Exception $ex) {
+		// Request for an invalid language? Revert to default.
+		$locale=Zend_Locale::findLocale('auto');
 	}
-}
-if (isset($_GET['lang']) && array_key_exists($_GET['lang'], $_SESSION['ALL_LANGUAGES'])) {
-	// A request to change language?
-	i18n::setLocale($_GET['lang']);
+} elseif (isset($_SESSION['USER_LANGUAGE'])) {
+	// Previously selected language
+	$locale=$_SESSION['USER_LANGUAGE'];
 } else {
-	if (isset($_SESSION['USER_LANGUAGE'])) {
-		// A previously selected language? Use it.
-		i18n::setLocale($_SESSION['USER_LANGUAGE']);
-	} else {
-		// Default language, from HTTP_ACCEPT_LANGUAGE
-		i18n::setLocale('auto');
-	}
+	// Default language
+	$locale=Zend_Locale::findLocale('auto');
 }
+$translate=new Zend_Translate('gettext', PGV_ROOT.'language/'.$locale.'.mo');
+Zend_Registry::set('Zend_Locale',    $locale);
+Zend_Registry::set('Zend_Translate', $translate);
+unset ($locale, $translate);
+
+require PGV_ROOT.'includes/classes/class_i18n.php';
+i18n::init();
+
 // Remember our language selection
-$_SESSION['USER_LANGUAGE']=i18n::getLocale();
 
 /* Re-build the various language-related arrays
  *  Note:

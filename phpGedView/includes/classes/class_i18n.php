@@ -40,7 +40,6 @@ define('PGV_CLASS_I18N_PHP', '');
 require_once PGV_ROOT.'library/Zend/Translate.php';
 
 class i18n {
-	static private $translation_adapter;
 	static private $alphabet;
 	static private $collation;
 	static private $long_date_format;
@@ -53,15 +52,7 @@ class i18n {
 
 	// Initialise the translation adapter with a locale setting.
 	// 'auto' means look at the HTTP_ACCEPT_LANGUAGE value.
-	static public function setLocale($locale='auto') {
-		self::$translation_adapter=new Zend_Translate(
-			'gettext',
-			PGV_ROOT.'language',
-			$locale,
-			// NOTE: although scanning for files is useful, this is *very* slow.
-			array('scan'=>Zend_Translate::LOCALE_FILENAME)
-		);
-
+	static public function init() {
 		// By using specially named strings to store language parameters, we can store all the
 		// settings, translations and other support for each language in one file.
 		// This makes it simple for users to add/remove/share languages.
@@ -86,15 +77,11 @@ class i18n {
 		self::$list_separator_last=i18n::noop('LANGUAGE_LIST_SEPARATOR_LAST');
 	}
 
-	static public function getLocale() {
-		return self::$translation_adapter->getLocale();
-	}
-
 	// echo i18n::translate('Hello World!');
 	// echo i18n::translate('The %s sat on the mat', 'cat');
 	static public function translate(/* var_args */) {
 		$args=func_get_args();
-		$args[0]=self::$translation_adapter->_($args[0]);
+		$args[0]=Zend_Registry::get('Zend_Translate')->_($args[0]);
 		foreach ($args as &$arg) {
 			if (is_array($arg)) {
 				$arg=i18n::make_list($arg);
@@ -111,7 +98,7 @@ class i18n {
 	// This is necessary to fetch a format string (containing % characters) without
 	// performing sustitution of arguments.
 	static private function noop($string) {
-		return self::$translation_adapter->_($string);
+		return Zend_Registry::get('Zend_Translate')->_($string);
 	}
 
 	// echo i18n::plural('There is an error', 'There are errors', $num_errors);
@@ -119,7 +106,7 @@ class i18n {
 	// echo i18n::plural('There is %$1d %$2s cat', 'There are %$1d %$2s cats', $num, $num, $colour);
 	static public function plural(/* var_args */) {
 		$args=func_get_args();
-		$string=self::$translation_adapter->plural($args[0], $args[1], $args[2]);
+		$string=Zend_Registry::get('Zend_Translate')->plural($args[0], $args[1], $args[2]);
 		array_splice($args, 0, 3, array($string));
 		return call_user_func_array('sprintf', $args);
 	}
