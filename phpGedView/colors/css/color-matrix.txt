@@ -1,0 +1,22 @@
+Color Style Matrix 2010/02/09
+
+         Aqua-            Belgian    Blue    Blue     Cold     Green    Medit-                              Pink    Shinny    Teal
+        marine     Ash   Chocolate  Lagoon  Marine    Day      Bean    erranio  Mercury Nocturnal Olivia   Plastic  Tomato    Top
+
+Header  #007e94  #5d6779  #971702   #5ab5ee #6598cb  #1a1575  #03961e  #a30f42  #d4d4d4  #0a2352  #7db323  #f41063  #f21107  #34775a
+Toplinks#085360  #2a2b2d  #331900   #2385c2 #98badd  #4d91ff  #7be000  #fc6d1d  #a9adbc  #9fa8d5  #b5d52a  #f391c6  #a1443a  #52bf90
+Base    #dcf2f9  #ededee  #f6edd5   #e6f5ff #e0e7ff  #e6e1ff  #f1f0f4  #fef9dc  #f0f2f5  #e0e1f0  #eef9dc  #fbdaed  #f0eaf0  #d2f4e6
+
+D-Text  #696969  #494949  #494949   #494949 #000000  #000000  #494949  #494949  #707070  #494949  #191a19  #7d7373  #515d52  #2d2d2d
+L-Text  #ffffff  #ffffff  #ffffff   #ffffff #ffffff  #ffffff  #ffffff  #ffffff  #707070  #ffffff  #ffffff  #ffffff  #ffffff  #ffffff  
+
+Links   #000000  #2f416f  #6c420e   #027ac6 #336699  #434f8c  #0c7a00  #a9290a  #3f728d  #5b5faa  #6a9915  #1b1a13  #c70000  #1b5f41
+Alert   #fc6d1d  #2a2b2d  #971702   #2385c2 #6598cb  #4d91ff  #03961e  #fc6d1d  #a9adbc  #0a2352  #fc6d1d  #fc6d1d  #fc6d1d  #fc6d1d
+
+* Header: page header and some labels            
+* Toplinks: toplinks and some headers            
+* Base: very light color used as a background color in some tables            
+* D-Text: text color on light background
+* L-Text: text color on dark background
+* Links: a link text color
+* Alert: warning, errors, and alerts
