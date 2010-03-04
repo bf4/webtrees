@@ -5,14 +5,14 @@
 .ui-widget-content a 						{ color:#2a416f; }
 .ui-widget-content a:hover 					{ color:#2f416f; text-decoration:underline;}
 
-.ui-tabs .ui-tabs-nav 						{ padding: .3em .3em 0 .3em; border-color:#888888; background: #9DA5B4; }
+.ui-tabs .ui-tabs-nav 						{ padding: .3em .em 0 .3em; border-color:#888888; background: #9DA5B4; }
 .ui-tabs .ui-tabs-nav li 					{ font-size:1em; bottom:0px; margin:0 0.15em 0 0.1em; border-color:#888888; background: #efefee;}
 .ui-tabs .ui-tabs-nav li a 					{ color:#555555; padding: .2em .3em .2em .3em;  }
 .ui-tabs .ui-tabs-nav li:hover				{ color:yellow; background: #ededee;}
 .ui-tabs .ui-tabs-nav li a:hover			{ color:#2f416f; text-decoration:underline;}
 
-.ui-tabs-nav li.ui-tabs-selected  	 		{ color:2f416f; padding-top:0px; top:1px; bottom:0px; border-color: #888888; border-bottom-width: 0 !important; background:#fff;}
-.ui-tabs-nav li.ui-tabs-selected a	 		{ font-weight:600; color:2f416f; }
+.ui-tabs-nav li.ui-tabs-selected  	 	{ color:2f416f; padding-top:0px; top:1px; bottom:0px; border-color: #888888; border-bottom-width: 0 !important; background:#fff;}
+.ui-tabs-nav li.ui-tabs-selected a	 		{ font-weight:600; color:2f416f;}
 .ui-tabs-nav li.ui-tabs-selected a:hover	{ font-weight:600; color:2f416f; background:#fff; }
 .ui-tabs-nav li.ui-tabs-selected:hover		{ background:#efefee; }
 .ui-tabs .ui-tabs-panel	 					{ background:#fff; }
@@ -50,9 +50,10 @@
 /* Interaction states ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #efefef url(images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
 .ui-state-active {border: 1px solid #5d6779; }
+
 /* Navigator & Flyout menu Styles --------*/
 .nam a:hover{
-color:red;
+color:#2a416f;
 }
 .nav_content {
 	width:240px;
