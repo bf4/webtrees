@@ -441,7 +441,7 @@ if (empty($PEDIGREE_GENERATIONS)) {
 
 // First time here?  Scan for available languages, to make a list to choose from.
 require PGV_ROOT.'includes/classes/class_i18n.php';
-if (true || empty($_SESSION['ALL_LANGUAGES'])) {
+if (empty($_SESSION['ALL_LANGUAGES'])) {
 	$_SESSION['ALL_LANGUAGES']=array();
 	if ($SEARCH_SPIDER) {
 		// Search engines only ever get the default language
