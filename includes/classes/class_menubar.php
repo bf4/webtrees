@@ -1063,7 +1063,18 @@ class MenuBar
 			$menu=new Menu($pgv_lang['change_lang'], '#', 'down');
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 
-//			$menu->print_menu = null;
+
+/* NEW CODE FOR USE WHEN WE SWITCH TO GETTEXT
+		$d=opendir(PGV_ROOT.'language');
+		while (($f=readdir($d))!==false) {
+			if (preg_match('/^([a-zA-Z0-9_]+).mo$/', $f, $m)) {
+				$_SESSION['ALL_LANGUAGES'][$m[1]]=Zend_Locale::getTranslation($m[1], 'language', $m[1]);
+			}
+		}
+		closedir($d);
+		ksort($_SESSION['ALL_LANGUAGES']);
+*/			
+
 			foreach ($language_settings as $lang=>$language) {
 				if ($language['pgv_lang_use'] && isset($language['pgv_lang_self']) && isset($language['pgv_language'])) {
 					$submenu=new Menu($language['pgv_lang_self'], PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang.'&amp;lang='.$lang_short_cut[$lang]));
