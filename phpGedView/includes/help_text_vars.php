@@ -104,7 +104,6 @@ $pgv_lang["index_htmlplus_ahelp"]		= "#pgv_lang[index_htmlplus_help]##pgv_lang[s
 $pgv_lang["help_admin.php"]			="~#pgv_lang[administration]#~</b><br /><br />#pgv_lang[admin_help]#<br /><br />#pgv_lang[readme_help]#";
 
 //-- Language editor and configuration
-$pgv_lang["help_editlang.php"]			="#pgv_lang[lang_edit_help]#<br /><br />#pgv_lang[translation_forum_help]#<br /><br />#pgv_lang[bom_check_help]#<br /><br />#pgv_lang[edit_lang_utility_help]#<br /><br />#pgv_lang[export_lang_utility_help]#<br /><br />#pgv_lang[compare_lang_utility_help]#<br /><br />#pgv_lang[add_new_language_help]#<br /><br />#pgv_lang[more_help]#";
 $pgv_lang["help_changelanguage.php"]			="#pgv_lang[config_lang_utility_help]##pgv_lang[more_help]#";
 
 //-- User Migrate and Backup tool
@@ -229,7 +228,7 @@ $pgv_lang["ah17"]	= "help_useradmin.php,ah17_help";
 $pgv_lang["ah18"]	= "help_admin.php,ah18_help";
 $pgv_lang["ah19"]	= "";
 $pgv_lang["ah20"]	= "change_indi2id_help,ah20_help";
-$pgv_lang["ah21"]	= "help_editlang.php,ah21_help";
+$pgv_lang["ah21"]	= "";
 $pgv_lang["ah22_help"]	= "_Readme.txt";
 $pgv_lang["ah22"]	= "readme_help,ah22_help";
 $pgv_lang["ah23"]	= "help_changelanguage.php,ah23_help";

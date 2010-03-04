@@ -627,7 +627,7 @@ if (PGV_SCRIPT_NAME!='install.php' && PGV_SCRIPT_NAME!='editconfig_help.php') {
 		exit;
 	}
 
-	if (!get_gedcom_setting(PGV_GED_ID, 'imported') && !in_array(PGV_SCRIPT_NAME, array('editconfig_gedcom.php', 'help_text.php', 'editconfig_help.php', 'editgedcoms.php', 'downloadgedcom.php', 'uploadgedcom.php', 'login.php', 'admin.php', 'config_download.php', 'addnewgedcom.php', 'validategedcom.php', 'addmedia.php', 'importgedcom.php', 'client.php', 'edit_privacy.php', 'gedcheck.php', 'printlog.php', 'editlang.php', 'editlang_edit.php' ,'useradmin.php', 'export_gedcom.php', 'edit_changes.php'))) {
+	if (!get_gedcom_setting(PGV_GED_ID, 'imported') && !in_array(PGV_SCRIPT_NAME, array('editconfig_gedcom.php', 'help_text.php', 'editconfig_help.php', 'editgedcoms.php', 'downloadgedcom.php', 'uploadgedcom.php', 'login.php', 'admin.php', 'config_download.php', 'addnewgedcom.php', 'validategedcom.php', 'addmedia.php', 'importgedcom.php', 'client.php', 'edit_privacy.php', 'gedcheck.php', 'printlog.php', 'useradmin.php', 'export_gedcom.php', 'edit_changes.php'))) {
 		header('Location: editgedcoms.php');
 		exit;
 	}
