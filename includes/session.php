@@ -459,7 +459,8 @@ if (isset($_GET['lang'])) {
 	// Default language
 	$locale=Zend_Locale::findLocale('auto');
 }
-$translate=new Zend_Translate('gettext', PGV_ROOT.'language/'.$locale.'.mo');
+// Look for a language file to match the requested locale
+$translate=new Zend_Translate('gettext', PGV_ROOT.'language/', $locale, array('scan'=>Zend_Translate::LOCALE_FILENAME, 'disableNotices'=>true));
 Zend_Registry::set('Zend_Locale',    $locale);
 Zend_Registry::set('Zend_Translate', $translate);
 unset ($locale, $translate);
