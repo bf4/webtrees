@@ -193,11 +193,6 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 					href="pgvinfo.php?action=phpinfo"
 					title="<?php echo $pgv_lang["show_phpinfo"]; ?>"><?php echo $pgv_lang["phpinfo"];?></a></td>
 			</tr>
-			<tr>
-				<td class="optionbox width50"><?php print_help_link("config_help_help", "qm", "config_help"); ?><a
-					href="pgvinfo.php?action=confighelp"><?php echo $pgv_lang["config_help"];?></a></td>
-				<td class="optionbox width50"></td>
-			</tr>
 		</table>
 	</div>
 	<div id="gedcom">
@@ -293,9 +288,7 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 			</td>
 		</tr>
 		<tr>
-			<td class="optionbox width50"><?php print_help_link("help_editlang.php", "qm", "translator_tools"); ?><a
-				href="editlang.php"><?php echo $pgv_lang["translator_tools"];?></a>
-			</td>
+			<td class="optionbox width50">&nbsp;</td>
 			<td class="optionbox width50"><?php echo $d_logfile_str; ?></td>
 		</tr>
 		</table>

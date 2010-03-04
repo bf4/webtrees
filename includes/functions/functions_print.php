@@ -1427,12 +1427,6 @@ function print_text($help, $level=0, $noprint=0){
 	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
 	global $repeat, $thumbnail, $xref, $pid;
 
-	// $_SESSION['DEBUG_LANG'] is set in editlang.php
-	$DEBUG_LANG=isset($_SESSION['DEBUG_LANG']) && $_SESSION['DEBUG_LANG'];
-
-	if ($DEBUG_LANG) {
-		echo "[LANG_DEBUG] Variable called: ", $help, "<br /><br />";
-	}
 	$sentence = false;
 	if ($level>0) {
 		// Map legacy global variables (e.g. $VERSION) onto their replacement constants (e.g. PGV_VERSION)
