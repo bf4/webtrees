@@ -1450,9 +1450,6 @@ function print_text($help, $level=0, $noprint=0){
 			if (isset($pgv_lang[$help])) {
 				$sentence = $pgv_lang[$help];
 			} else {
-				if ($DEBUG_LANG) {
-					echo "[LANG_DEBUG] Variable not present: ", $help, "<br /><br />";
-				}
 				$sentence = $pgv_lang["help_not_exist"];
 			}
 		}
@@ -1467,9 +1464,6 @@ function print_text($help, $level=0, $noprint=0){
 	for($i=0; $i<$ct; $i++) {
 		$value = "";
 		$newreplace = str_replace(array("[", "]"), array("['", "']"), $match[$i][1]);
-		if ($DEBUG_LANG) {
-			echo "[LANG_DEBUG] Embedded variable: ", $match[$i][1], "<br /><br />";
-		}
 		$value = print_text($newreplace, $level+1);
 		if ($value!==false) {
 			$sentence = str_replace($match[$i][0], $value, $sentence);
