@@ -55,7 +55,7 @@ $update_CHAN=!safe_POST_bool('preserve_last_changed');
 $filename = decrypt($filename);
 $oldFilename = decrypt($oldFilename);
 
-print_simple_header($pgv_lang["add_media_tool"]);
+print_simple_header(i18n::translate('Add a new Media item'));
 $disp = true;
 if (empty($pid) && !empty($mid)) $pid = $mid;
 if (!empty($pid)) {

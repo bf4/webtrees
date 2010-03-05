@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-02 23:38-0000\n"
+"POT-Creation-Date: 2010-03-05 07:33-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -16,6 +16,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
+
+#: ../addmedia.php:58
+msgid "Add a new Media item"
+msgstr "Neue Multimedia Datei hinzufügen"
+
+#. I18N: This is the country/chapman code for "England"
+#: ../auto-translate.php:11
+#: _countries.php:184
+msgid "ENG"
+msgstr "England"
 
 #. I18N: This is the GEDCOM label for "Marriage"
 #: ../branches.php:32
@@ -465,11 +475,6 @@ msgstr "Ägypten"
 #: _countries.php:182
 msgid "EIR"
 msgstr "Eire"
-
-#. I18N: This is the country/chapman code for "England"
-#: _countries.php:184
-msgid "ENG"
-msgstr "England"
 
 #. I18N: This is the country/chapman code for "Eritrea"
 #: _countries.php:186
@@ -1421,32 +1426,32 @@ msgstr "Sambia"
 msgid "ZWE"
 msgstr "Zimbabwe"
 
-#. I18N: This is an abbreviation for the label "Baptism", to be used on genealogy charts
+#. I18N: This is a one/two character abbreviation for the label "Baptism", to be used on genealogy charts
 #: _facts.php:36
 msgid "ABBREV_BAPM"
 msgstr ""
 
-#. I18N: This is an abbreviation for the label "Birth", to be used on genealogy charts
+#. I18N: This is a one/two character abbreviation for the label "Birth", to be used on genealogy charts
 #: _facts.php:38
 msgid "ABBREV_BIRT"
 msgstr ""
 
-#. I18N: This is an abbreviation for the label "Burial", to be used on genealogy charts
+#. I18N: This is a one/two character abbreviation for the label "Burial", to be used on genealogy charts
 #: _facts.php:40
 msgid "ABBREV_BURI"
 msgstr ""
 
-#. I18N: This is an abbreviation for the label "Christening", to be used on genealogy charts
+#. I18N: This is a one/two character abbreviation for the label "Christening", to be used on genealogy charts
 #: _facts.php:42
 msgid "ABBREV_CHR"
 msgstr ""
 
-#. I18N: This is an abbreviation for the label "Death", to be used on genealogy charts
+#. I18N: This is a one/two character abbreviation for the label "Death", to be used on genealogy charts
 #: _facts.php:44
 msgid "ABBREV_DEAT"
 msgstr ""
 
-#. I18N: This is an abbreviation for the label "Marriage", to be used on genealogy charts
+#. I18N: This is a one/two character abbreviation for the label "Marriage", to be used on genealogy charts
 #: _facts.php:46
 msgid "ABBREV_MARR"
 msgstr ""
@@ -3356,161 +3361,6 @@ msgstr "Neffe/Nichte: Brit mila"
 msgid "__BRTM_SIBL"
 msgstr "Geschwister: Brit mila"
 
-#. I18N: This is the RFC5646 language code for Arabic
-#: _languages.php:36
-msgid "ar"
-msgstr "Arabisch"
-
-#. I18N: This is the RFC5646 language code for Catalan
-#: _languages.php:38
-msgid "ca"
-msgstr "Katalanisch"
-
-#. I18N: This is the RFC5646 language code for Czech
-#: _languages.php:40
-msgid "cz"
-msgstr "Tschechisch"
-
-#. I18N: This is the RFC5646 language code for Danish
-#: _languages.php:42
-msgid "da"
-msgstr "Dänisch"
-
-#. I18N: This is the RFC5646 language code for German
-#: _languages.php:44
-msgid "de"
-msgstr "Deutsch"
-
-#. I18N: This is the RFC5646 language code for Greek
-#: _languages.php:46
-msgid "el"
-msgstr "Griechisch"
-
-#. I18N: This is the RFC5646 language code for English
-#: _languages.php:48
-msgid "en"
-msgstr "Englisch"
-
-#. I18N: This is the RFC5646 language code for British English
-#: _languages.php:50
-msgid "en-gb"
-msgstr "Englisch (britisch)"
-
-#. I18N: This is the RFC5646 language code for Spanish
-#: _languages.php:52
-msgid "es"
-msgstr "Spanisch"
-
-#. I18N: This is the RFC5646 language code for Latin-American Spanish
-#: _languages.php:54
-msgid "es-ar"
-msgstr "Spanisch (argentinisch)"
-
-#. I18N: This is the RFC5646 language code for Estonian
-#: _languages.php:56
-msgid "et"
-msgstr "Estnisch"
-
-#. I18N: This is the RFC5646 language code for Finnish
-#: _languages.php:58
-msgid "fi"
-msgstr "Finnisch"
-
-#. I18N: This is the RFC5646 language code for French
-#: _languages.php:60
-msgid "fr"
-msgstr "Französisch"
-
-#. I18N: This is the RFC5646 language code for Hebrew
-#: _languages.php:62
-msgid "he"
-msgstr "Hebräisch"
-
-#. I18N: This is the RFC5646 language code for Hungarian
-#: _languages.php:64
-msgid "hu"
-msgstr "Ungarisch"
-
-#. I18N: This is the RFC5646 language code for Indonesian
-#: _languages.php:66
-msgid "id"
-msgstr "Indonesisch"
-
-#. I18N: This is the RFC5646 language code for Italian
-#: _languages.php:68
-msgid "it"
-msgstr "Italienisch"
-
-#. I18N: This is the RFC5646 language code for Lithuanian
-#: _languages.php:70
-msgid "lt"
-msgstr "Litauisch"
-
-#. I18N: This is the RFC5646 language code for Dutch
-#: _languages.php:72
-msgid "nl"
-msgstr "Niederländisch"
-
-#. I18N: This is the RFC5646 language code for Norwegian (Nynorsk)
-#: _languages.php:74
-msgid "nn"
-msgstr "Norwegisch (Nynorsk)"
-
-#. I18N: This is the RFC5646 language code for Polish
-#: _languages.php:76
-msgid "pl"
-msgstr "Polnisch"
-
-#. I18N: This is the RFC5646 language code for Portuguese
-#: _languages.php:78
-msgid "pt"
-msgstr "Portugiesisch"
-
-#. I18N: This is the RFC5646 language code for Romanian
-#: _languages.php:80
-msgid "ro"
-msgstr "Rumänisch"
-
-#. I18N: This is the RFC5646 language code for Russian
-#: _languages.php:82
-msgid "ru"
-msgstr "Russisch"
-
-#. I18N: This is the RFC5646 language code for Slovakian
-#: _languages.php:84
-msgid "sk"
-msgstr "Slowakisch"
-
-#. I18N: This is the RFC5646 language code for Slovenian
-#: _languages.php:86
-msgid "sl"
-msgstr "Slowenisch"
-
-#. I18N: This is the RFC5646 language code for Serbian
-#: _languages.php:88
-msgid "sr"
-msgstr "Serbisch"
-
-#. I18N: This is the RFC5646 language code for Swedish
-#: _languages.php:90
-msgid "sv"
-msgstr "Schwedisch"
-
-#. I18N: This is the RFC5646 language code for Turkish
-#: _languages.php:92
-msgid "tr"
-msgstr "Türkisch"
-
-#. I18N: This is the RFC5646 language code for Vietnamese
-#: _languages.php:94
-msgid "vi"
-msgstr "Vietnamesisch"
-
-#. I18N: This is the RFC5646 language code for Chinese
-#: _languages.php:96
-msgid "zh"
-msgstr "Chinesisch"
-
 #: ../blocks/logged_in.php:76
 msgid "Users Logged In"
 msgstr "Angemeldete Benutzer"
@@ -3534,47 +3384,204 @@ msgstr[0] "%d angemeldeter Benutzer"
 msgstr[1] "%d angemeldete Benutzer"
 
 #. I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C CS D DZ DZS E F G GY ..."
-#: ../includes/classes/class_i18n.php:67
+#: ../includes/classes/class_i18n.php:61
 msgid "LANGUAGE_ALPHABET"
 msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 
 #. I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
-#: ../includes/classes/class_i18n.php:69
+#: ../includes/classes/class_i18n.php:63
 msgid "LANGUAGE_TEXT_DIRECTION"
 msgstr "ltr"
 
 #. I18N: This is the name of the MySQL utf8 collation sequence for this language.  See http://dev.mysql.com/doc/refman/5.1/en/se-db2-collations.html
-#: ../includes/classes/class_i18n.php:71
+#: ../includes/classes/class_i18n.php:65
 msgid "LANGUAGE_COLLATION"
 msgstr "utf8_unicode_ci"
 
 #. I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:73
+#: ../includes/classes/class_i18n.php:67
 msgid "LANGUAGE_LONG_DATE_FORMAT"
 msgstr "%j. %F %Y"
 
 #. I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:75
+#: ../includes/classes/class_i18n.php:69
 msgid "LANGUAGE_SHORT_DATE_FORMAT"
 msgstr "%j.%n.%Y"
 
 #. I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:77
+#: ../includes/classes/class_i18n.php:71
 msgid "LANGUAGE_TIME_FORMAT_HM"
 msgstr "%H:%i"
 
 #. I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
-#: ../includes/classes/class_i18n.php:79
+#: ../includes/classes/class_i18n.php:73
 msgid "LANGUAGE_TIME_FORMAT_HMS"
 msgstr "%H:%i:%s"
 
 #. I18N: This is the format string for times with hours and seconds, such as 10:23pm.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:81
+#: ../includes/classes/class_i18n.php:75
 msgid "LANGUAGE_LIST_SEPARATOR"
 msgstr ", "
 
 #. I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
-#: ../includes/classes/class_i18n.php:83
+#: ../includes/classes/class_i18n.php:77
 msgid "LANGUAGE_LIST_SEPARATOR_LAST"
 msgstr ", "
 
+#. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (stillborn)
+#: ../includes/classes/class_i18n.php:159
+msgid "(stillborn)"
+msgstr ""
+
+#. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (in infancy)
+#: ../includes/classes/class_i18n.php:162
+msgid "(in infancy)"
+msgstr ""
+
+#. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (in childhood)
+#: ../includes/classes/class_i18n.php:165
+msgid "(in childhood)"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:171
+#, php-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
+#: ../includes/classes/class_i18n.php:177
+#, php-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#. I18N: Part of an age string. e.g 7 weeks and 3 days
+#: ../includes/classes/class_i18n.php:181
+#, php-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
+#: ../includes/classes/class_i18n.php:185
+#, php-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged less than 21 years)
+#: ../includes/classes/class_i18n.php:194
+#, php-format
+msgid "(aged less than %s)"
+msgstr ""
+
+#. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged more than 21 years)
+#: ../includes/classes/class_i18n.php:197
+#, php-format
+msgid "(aged more than %s)"
+msgstr ""
+
+#. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged 43 years)
+#: ../includes/classes/class_i18n.php:200
+#: ../includes/classes/class_i18n.php:204
+#, php-format
+msgid "(aged %s)"
+msgstr ""
+
+#~ msgid "ar"
+#~ msgstr "Arabisch"
+
+#~ msgid "ca"
+#~ msgstr "Katalanisch"
+
+#~ msgid "cz"
+#~ msgstr "Tschechisch"
+
+#~ msgid "da"
+#~ msgstr "Dänisch"
+
+#~ msgid "de"
+#~ msgstr "Deutsch"
+
+#~ msgid "el"
+#~ msgstr "Griechisch"
+
+#~ msgid "en"
+#~ msgstr "Englisch"
+
+#~ msgid "en-gb"
+#~ msgstr "Englisch (britisch)"
+
+#~ msgid "es"
+#~ msgstr "Spanisch"
+
+#~ msgid "es-ar"
+#~ msgstr "Spanisch (argentinisch)"
+
+#~ msgid "et"
+#~ msgstr "Estnisch"
+
+#~ msgid "fi"
+#~ msgstr "Finnisch"
+
+#~ msgid "fr"
+#~ msgstr "Französisch"
+
+#~ msgid "he"
+#~ msgstr "Hebräisch"
+
+#~ msgid "hu"
+#~ msgstr "Ungarisch"
+
+#~ msgid "id"
+#~ msgstr "Indonesisch"
+
+#~ msgid "it"
+#~ msgstr "Italienisch"
+
+#~ msgid "lt"
+#~ msgstr "Litauisch"
+
+#~ msgid "nl"
+#~ msgstr "Niederländisch"
+
+#~ msgid "nn"
+#~ msgstr "Norwegisch (Nynorsk)"
+
+#~ msgid "pl"
+#~ msgstr "Polnisch"
+
+#~ msgid "pt"
+#~ msgstr "Portugiesisch"
+
+#~ msgid "ro"
+#~ msgstr "Rumänisch"
+
+#~ msgid "ru"
+#~ msgstr "Russisch"
+
+#~ msgid "sk"
+#~ msgstr "Slowakisch"
+
+#~ msgid "sl"
+#~ msgstr "Slowenisch"
+
+#~ msgid "sr"
+#~ msgstr "Serbisch"
+
+#~ msgid "sv"
+#~ msgstr "Schwedisch"
+
+#~ msgid "tr"
+#~ msgstr "Türkisch"
+
+#~ msgid "vi"
+#~ msgstr "Vietnamesisch"
+
+#~ msgid "zh"
+#~ msgstr "Chinesisch"
