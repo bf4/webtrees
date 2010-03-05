@@ -107,14 +107,25 @@ if ($TEXT_DIRECTION=='ltr') { ?>
 	width: 0px;
 	height: 400px;
 	z-index: 50;
-	margin: 0px;
-	background-color: white;
+	margin-top: 4px;
+	background-color: #dddddd;
 }
 #sidebar_controls {
-	position: relative;
+	position: absolute;
 	float: left;
-	left: -13px;
+	left: -19px;
+	margin-top: 0px;
+	height:80px;
+	width: 15px;
 	z-index: 10;
+	background-color: #dddddd; 
+}
+#sidebar_open img {
+	padding-top: 30px;
+	padding-bottom: 30px; 
+	margin-left: 0px;
+	height: 14px;
+	background-color: #dddddd;
 }
 <?php } 
 //-- RTL styles
@@ -123,20 +134,37 @@ else { ?>
 	position: absolute;
 	left: 1px;
 	width: 0px;
-	height: 400px;
+	height: 100%;
 	z-index: 50;
 	margin: 0px;
 	background-color: white;
 }
 #sidebar_controls {
-	position: relative;
+	position: absolute;
 	float: right;
-	right: -13px;
+	left: -17px;
+	margin-top: 0px;
+	height:70px;
+	width: 16px;
 	z-index: 10;
+	background-color: white;
+}
+#sidebar_open img {
+	padding-top: 34px;
+	padding-bottom: 32px;
+	margin-right: -3px;
 }
 <?php } ?>
+
+
+#sidebar_open {
+	padding: 0px;
+}
+
+
 #sidebarAccordion {
-	display: none;
+	/* display: none; */
+	margin-top: -1px;
 }
 #sidebar_pin {
 	display: none;
@@ -181,10 +209,6 @@ else { ?>
 	margin: 0px;
 }
 
-#sidebar_open {
-	padding: 1px;
-}
-
 #sb_clippings_content li {
 	list-style: none;
 	margin: 0px;
@@ -224,10 +248,10 @@ jQuery(document).ready(function() {
 
 	var modsLoaded = false;
 	jQuery('#sidebar_open').toggle(function() {
-		jQuery('#sidebar_open img').attr('src', '<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['minus']['other'];?>');
+		jQuery('#sidebar_open img').attr('src', '<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other'];?>');
 		jQuery('#sidebar').animate({
 			right: "0px",
-			width: "350px"
+			width: "310px"
 		}, 500);
 		if (!modsLoaded) {
 			jQuery('#sidebarAccordion').load('sidebar.php', 'sb_action=loadMods&pid=<?php echo $pid?>&famid=<?php echo $famid?>', openCallback);
@@ -236,7 +260,7 @@ jQuery(document).ready(function() {
 		else jQuery("#sidebarAccordion").accordion("resize");
 		jQuery('#sidebarAccordion').show();
 	}, function() {
-		jQuery('#sidebar_open img').attr('src', '<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['plus']['other'];?>');
+		jQuery('#sidebar_open img').attr('src', '<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['ldarrow']['other'];?>');
 		jQuery('#sidebar').css('left', '');
 		jQuery('#sidebar').animate({
 			right: "0px",
@@ -247,14 +271,14 @@ jQuery(document).ready(function() {
 //-->
 </script>
 <div id="sidebar">
-<div id="sidebar_controls" class="ui-accordion-header ui-helper-reset ui-state-active ui-corner-top ui-state-focus">
-<a id="sidebar_open" href="#open"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['plus']['other'];?>" border="0" alt=""/></a>
-<a id="sidebar_pin" href="#pin"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
-</div>
-<div id="sidebarAccordion">
-	<img src="<?php echo $PGV_IMAGE_DIR ?>/loading.gif" />
-</div>
-<span class="ui-icon ui-icon-grip-dotted-horizontal" style="margin:2px auto;"></span>
+	<div id="sidebar_controls" class="ui-accordion-header ui-helper-reset ui-state-active ui-corner-top ui-state-focus">
+		<a id="sidebar_open" href="#open"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['ldarrow']['other'];?>" border="0" alt=""/></a>
+		<a id="sidebar_pin" href="#pin"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
+	</div>
+	<div id="sidebarAccordion">
+		<img src="<?php echo $PGV_IMAGE_DIR ?>/loading.gif" />
+	</div>
+	<span class="ui-icon ui-icon-grip-dotted-horizontal" style="margin:2px auto;"></span>
 </div>
 <div id="debug">
 </div>
