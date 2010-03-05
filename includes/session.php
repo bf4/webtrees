@@ -446,24 +446,26 @@ if (isset($_GET['lang'])) {
 	try {
 		// Request to change language?
 		$locale=Zend_Locale::findLocale($_GET['lang']);
-		// Remember this choice.
-		$_SESSION['USER_LANGUAGE']=$locale;
 	} catch (Zend_Locale_Exception $ex) {
-		// Request for an invalid language? Revert to default.
+		// Invalid locale? Revert to default.
 		$locale=Zend_Locale::findLocale('auto');
 	}
-} elseif (isset($_SESSION['USER_LANGUAGE'])) {
+	// Remember this choice.
+	$_SESSION['Zend_Locale']=$locale;
+} elseif (isset($_SESSION['Zend_Locale'])) {
 	// Previously selected language
-	$locale=$_SESSION['USER_LANGUAGE'];
+	$locale=Zend_Locale::findLocale($_SESSION['Zend_Locale']);
 } else {
 	// Default language
 	$locale=Zend_Locale::findLocale('auto');
+	$_SESSION['Zend_Locale']=$locale;
 }
-// Look for a language file to match the requested locale
+// Load language
 $translate=new Zend_Translate('gettext', PGV_ROOT.'language/', $locale, array('scan'=>Zend_Translate::LOCALE_FILENAME, 'disableNotices'=>true));
+// Make the locale and translation adapter available to the rest of the Zend Framework
 Zend_Registry::set('Zend_Locale',    $locale);
 Zend_Registry::set('Zend_Translate', $translate);
-unset ($locale, $translate);
+unset($locale, $translate);
 
 require PGV_ROOT.'includes/classes/class_i18n.php';
 i18n::init();
