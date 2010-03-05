@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-KeywordsList: translate;noop;plural:1,2\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
@@ -3376,7 +3376,6 @@ msgid_plural "%d anonymous logged-in users"
 msgstr[0] "%d zalogowany anoniomowo użytkownik"
 msgstr[1] "%d zalogowanych anoniomowo użytkowników"
 msgstr[2] "%d zalogowanych anoniomowo użytkowników"
-msgstr[3] "%d zalogowanych anoniomowo użytkowników"
 
 #: ../blocks/logged_in.php:86
 #, php-format
@@ -3385,7 +3384,6 @@ msgid_plural "%d logged-in users"
 msgstr[0] "%d zalogowany użytkownik"
 msgstr[1] "%d zalogowanych użytkowników"
 msgstr[2] "%d zalogowanych użytkowników"
-msgstr[3] "%d zalogowanych użytkowników"
 
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
 #: ../includes/session.php:476
@@ -3454,7 +3452,6 @@ msgid_plural "%d years"
 msgstr[0] "%d rok"
 msgstr[1] "%d lata"
 msgstr[2] "%d lat"
-msgstr[3] "%d lat"
 
 #. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
 #: ../includes/classes/class_i18n.php:175
@@ -3464,7 +3461,6 @@ msgid_plural "%d months"
 msgstr[0] "%d miesiąc"
 msgstr[1] "%d miesiące"
 msgstr[2] "%d miesięcy"
-msgstr[3] "%d miesięcy"
 
 #. I18N: Part of an age string. e.g 7 weeks and 3 days
 #: ../includes/classes/class_i18n.php:179
@@ -3474,7 +3470,6 @@ msgid_plural "%d weeks"
 msgstr[0] "%d tydzień"
 msgstr[1] "%d tygodnie"
 msgstr[2] "%d tygodni"
-msgstr[3] "%d tygodni"
 
 #. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
 #: ../includes/classes/class_i18n.php:183
@@ -3484,7 +3479,6 @@ msgid_plural "%d days"
 msgstr[0] "%d dzień"
 msgstr[1] "%d dni"
 msgstr[2] "%d dni"
-msgstr[3] "%d dni"
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged less than 21 years)
 #: ../includes/classes/class_i18n.php:192
