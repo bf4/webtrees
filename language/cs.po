@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../addmedia.php:58
 msgid "Add a new Media item"
-msgstr ""
+msgstr "Přidat do médií novou položku"
 
 #. I18N: This is the country/chapman code for "England"
 #: ../auto-translate.php:11
