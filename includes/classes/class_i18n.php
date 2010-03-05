@@ -40,7 +40,6 @@ define('PGV_CLASS_I18N_PHP', '');
 require_once PGV_ROOT.'library/Zend/Translate.php';
 
 class i18n {
-	static private $alphabet;
 	static private $collation;
 	static private $long_date_format;
 	static private $short_date_format;
@@ -57,8 +56,6 @@ class i18n {
 		// settings, translations and other support for each language in one file.
 		// This makes it simple for users to add/remove/share languages.
 
-		// I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C CS D DZ DZS E F G GY ..."
-		self::$alphabet=i18n::noop('LANGUAGE_ALPHABET');
 		// I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
 		self::$text_direction=i18n::noop('LANGUAGE_TEXT_DIRECTION');
 		// I18N: This is the name of the MySQL utf8 collation sequence for this language.  See http://dev.mysql.com/doc/refman/5.1/en/se-db2-collations.html

@@ -248,63 +248,70 @@ function db_collation_digraphs() {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_salpha($marnm, $fams, $ged_id) {
-	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+	// TODO: this is quite slow.  Are the counts really useful, or would a "limit 1" be better
+	// TODO: this isn't picking up the collation_connection setting. Do we *really* need to add a collation suffix to every literal string?
+	global $TBLPREFIX;
 
-	$ged_id=(int)$ged_id;
+	// I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C CS D DZ DZS E F G GY H ..."  You may use upper/lowers case, such as "D Dz Dzs".
+	$alphabet=explode(' ', i18n::translate('A B C D E F G H I J K L M N O P Q R S T U V W X Y Z'));
 
-	if ($fams) {
-		$tables="{$TBLPREFIX}name, {$TBLPREFIX}individuals, {$TBLPREFIX}link";
-		$join="n_file={$ged_id} AND i_file=n_file AND i_id=n_id AND l_file=n_file AND l_from=n_id AND l_type='FAMS'";
-	} else {
-		$tables="{$TBLPREFIX}name, {$TBLPREFIX}individuals";
-		$join="n_file={$ged_id} AND i_file=n_file AND i_id=n_id";
-	}
-	if (!$marnm) {
-		$join.=" AND n_type!='_MARNM'";
-	}
-	if ($DB_UTF8_COLLATION) {
-		$column="SUBSTR(n_sort {$DBCOLLATE}, 1, 1)";
-	} else {
-		$column="SUBSTR(n_sort {$DBCOLLATE}, 1, 3)";
-	}
-
-	$exclude='';
-	$include='';
-	$digraphs=db_collation_digraphs();
-	foreach (array_unique($digraphs) as $digraph) { // Multi-character digraphs
-		$exclude.=" AND n_sort NOT LIKE '{$digraph}%' {$DBCOLLATE}";
-	}
-	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort LIKE '{$from}%' {$DBCOLLATE} GROUP BY 1";
-	}
-	$alphas=
-		PGV_DB::prepare("SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1")
-		->fetchOneColumn();
-
-	$list=array();
-	foreach ($alphas as $alpha) {
-		if ($DB_UTF8_COLLATION) {
-			$letter=$alpha;
+	$alphas=array();
+	// This logic relies on the database's collation rules to ensure that accented letters
+	// and digraphs appear in the correct listing.
+	foreach ($alphabet as $letter) {
+		$query="SELECT COUNT(DISTINCT i_id) FROM {$TBLPREFIX}individuals";
+		if ($marnm) {
+			$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
 		} else {
-			$letter=UTF8_strtoupper(UTF8_substr($alpha,0,1));
+			$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file AND n_type!='_MARNM')";
 		}
-		$list[$letter]=$letter;
+		if ($fams) {
+			$query.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
+		}
+		$where=array();
+		foreach ($alphabet as $letter2) {
+			if ($letter==$letter2) {
+				$where[]="n_surn LIKE '{$letter2}%'";
+			} else {
+				$where[]="n_surn NOT LIKE '{$letter2}%'";
+			}
+		}
+		$query.=" WHERE ".implode(" AND ", $where);
+		$alphas[$letter]=PGV_DB::prepare($query)->fetchOne();
 	}
-
-	// If we didn't sort in the DB, sort ourselves
-	if (!$DB_UTF8_COLLATION) {
-		uasort($list, 'stringsort');
+	// Now repeat for all letters not in our alphabet.
+	// This includes "@" (unknown) and "," (none)
+	$query=
+		"SELECT LEFT(n_surn, 1), COUNT(DISTINCT i_id)".
+		" FROM {$TBLPREFIX}individuals";
+	if ($marnm) {
+		$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+	} else {
+		$query.=" JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file AND n_type!='_MARNM')";
 	}
-	// sorting puts "," and "@" first, so force them to the end
-	if (in_array(',', $list)) {
-		unset($list[',']);
-		$list[',']=',';
+	if ($fams) {
+		$query.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 	}
-	if (in_array('@', $list)) {
-		unset($list['@']);
-		$list['@']='@';
+	$where=array();
+	foreach ($alphabet as $letter) {
+		$where[]="n_surn NOT LIKE '{$letter}%'";
 	}
-	return $list;
+	$query.=" WHERE ".implode(" AND ", $where)." GROUP BY LEFT(n_surn, 1)";
+	foreach (PGV_DB::prepare($query)->fetchAssoc() as $letter=>$count) {
+		$alphas[$letter]=$count;
+	}
+	// Force "," and "@" first to the end of the list
+	if (array_key_exists(',', $alphas)) {
+		$count=$alphas[','];
+		unset($alphas[',']);
+		$alphas[',']=$count;
+	}
+	if (array_key_exists('@', $alphas)) {
+		$count=$alphas['@'];
+		unset($alphas['@']);
+		$alphas['@']=$count;
+	}
+	return $alphas;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -317,6 +324,8 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+
+	$alphabet=explode(' ', i18n::translate('A B C D E F G H I J K L M N O P Q R S T U V W X Y Z'));
 
 	if ($fams) {
 		$tables="{$TBLPREFIX}name, {$TBLPREFIX}individuals, {$TBLPREFIX}link";
