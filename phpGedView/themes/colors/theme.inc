@@ -1,5 +1,5 @@
 <?php
-// @version  theme.inc 3.0709 2009-07-09 petersra $
+// @version $Id:$
 
 $SHARED_THEME_DIR = "themes/colors/";
 

@@ -3,7 +3,7 @@
  * Print Header for Colors theme
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (c) 2002 to 2009  John Finlay and others.  All rights reserved.
+ * Copyright (C) 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: print_header.php 3.0709 2009-07-09 petersra $
+ * @version $Id$
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {

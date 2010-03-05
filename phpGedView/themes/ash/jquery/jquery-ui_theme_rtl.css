@@ -1,4 +1,5 @@
 /* jquery css THEME adjustments for RTL */
+/* @version $Id$ */
 
 /* Tabs --------------------------------*/
 .ui-tabs { direction: rtl; }

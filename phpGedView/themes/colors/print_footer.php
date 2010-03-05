@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: print_footer.php 3.0709 2009-07-09 petersra $
+ * @version $Id$
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
