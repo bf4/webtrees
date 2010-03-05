@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-05 07:33-0000\n"
+"POT-Creation-Date: 2010-03-05 19:11-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -3383,67 +3383,67 @@ msgid_plural "%d logged-in users"
 msgstr[0] "%d angemeldeter Benutzer"
 msgstr[1] "%d angemeldete Benutzer"
 
-#. I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C CS D DZ DZS E F G GY ..."
-#: ../includes/classes/class_i18n.php:61
-msgid "LANGUAGE_ALPHABET"
-msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+#. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
+#: ../includes/session.php:476
+msgid "utf8_unicode_ci"
+msgstr "utf8_unicode_ci"
 
 #. I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
-#: ../includes/classes/class_i18n.php:63
+#: ../includes/classes/class_i18n.php:61
 msgid "LANGUAGE_TEXT_DIRECTION"
 msgstr "ltr"
 
 #. I18N: This is the name of the MySQL utf8 collation sequence for this language.  See http://dev.mysql.com/doc/refman/5.1/en/se-db2-collations.html
-#: ../includes/classes/class_i18n.php:65
+#: ../includes/classes/class_i18n.php:63
 msgid "LANGUAGE_COLLATION"
 msgstr "utf8_unicode_ci"
 
 #. I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:67
+#: ../includes/classes/class_i18n.php:65
 msgid "LANGUAGE_LONG_DATE_FORMAT"
 msgstr "%j. %F %Y"
 
 #. I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:69
+#: ../includes/classes/class_i18n.php:67
 msgid "LANGUAGE_SHORT_DATE_FORMAT"
 msgstr "%j.%n.%Y"
 
 #. I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:71
+#: ../includes/classes/class_i18n.php:69
 msgid "LANGUAGE_TIME_FORMAT_HM"
 msgstr "%H:%i"
 
 #. I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
-#: ../includes/classes/class_i18n.php:73
+#: ../includes/classes/class_i18n.php:71
 msgid "LANGUAGE_TIME_FORMAT_HMS"
 msgstr "%H:%i:%s"
 
 #. I18N: This is the format string for times with hours and seconds, such as 10:23pm.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:75
+#: ../includes/classes/class_i18n.php:73
 msgid "LANGUAGE_LIST_SEPARATOR"
 msgstr ", "
 
 #. I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
-#: ../includes/classes/class_i18n.php:77
+#: ../includes/classes/class_i18n.php:75
 msgid "LANGUAGE_LIST_SEPARATOR_LAST"
 msgstr ", "
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (stillborn)
-#: ../includes/classes/class_i18n.php:159
+#: ../includes/classes/class_i18n.php:157
 msgid "(stillborn)"
 msgstr ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (in infancy)
-#: ../includes/classes/class_i18n.php:162
+#: ../includes/classes/class_i18n.php:160
 msgid "(in infancy)"
 msgstr ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (in childhood)
-#: ../includes/classes/class_i18n.php:165
+#: ../includes/classes/class_i18n.php:163
 msgid "(in childhood)"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:171
+#: ../includes/classes/class_i18n.php:169
 #, php-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3451,7 +3451,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
-#: ../includes/classes/class_i18n.php:177
+#: ../includes/classes/class_i18n.php:175
 #, php-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3459,7 +3459,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: Part of an age string. e.g 7 weeks and 3 days
-#: ../includes/classes/class_i18n.php:181
+#: ../includes/classes/class_i18n.php:179
 #, php-format
 msgid "%d week"
 msgid_plural "%d weeks"
@@ -3467,7 +3467,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
-#: ../includes/classes/class_i18n.php:185
+#: ../includes/classes/class_i18n.php:183
 #, php-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3475,113 +3475,27 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged less than 21 years)
-#: ../includes/classes/class_i18n.php:194
+#: ../includes/classes/class_i18n.php:192
 #, php-format
 msgid "(aged less than %s)"
 msgstr ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged more than 21 years)
-#: ../includes/classes/class_i18n.php:197
+#: ../includes/classes/class_i18n.php:195
 #, php-format
 msgid "(aged more than %s)"
 msgstr ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged 43 years)
-#: ../includes/classes/class_i18n.php:200
-#: ../includes/classes/class_i18n.php:204
+#: ../includes/classes/class_i18n.php:198
+#: ../includes/classes/class_i18n.php:202
 #, php-format
 msgid "(aged %s)"
 msgstr ""
 
-#~ msgid "ar"
-#~ msgstr "Arabisch"
+#. I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C CS D DZ DZS E F G GY H ..."  You may use upper/lowers case, such as "D Dz Dzs".
+#: ../includes/functions/functions_db.php:256
+#: ../includes/functions/functions_db.php:328
+msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 
-#~ msgid "ca"
-#~ msgstr "Katalanisch"
-
-#~ msgid "cz"
-#~ msgstr "Tschechisch"
-
-#~ msgid "da"
-#~ msgstr "Dänisch"
-
-#~ msgid "de"
-#~ msgstr "Deutsch"
-
-#~ msgid "el"
-#~ msgstr "Griechisch"
-
-#~ msgid "en"
-#~ msgstr "Englisch"
-
-#~ msgid "en-gb"
-#~ msgstr "Englisch (britisch)"
-
-#~ msgid "es"
-#~ msgstr "Spanisch"
-
-#~ msgid "es-ar"
-#~ msgstr "Spanisch (argentinisch)"
-
-#~ msgid "et"
-#~ msgstr "Estnisch"
-
-#~ msgid "fi"
-#~ msgstr "Finnisch"
-
-#~ msgid "fr"
-#~ msgstr "Französisch"
-
-#~ msgid "he"
-#~ msgstr "Hebräisch"
-
-#~ msgid "hu"
-#~ msgstr "Ungarisch"
-
-#~ msgid "id"
-#~ msgstr "Indonesisch"
-
-#~ msgid "it"
-#~ msgstr "Italienisch"
-
-#~ msgid "lt"
-#~ msgstr "Litauisch"
-
-#~ msgid "nl"
-#~ msgstr "Niederländisch"
-
-#~ msgid "nn"
-#~ msgstr "Norwegisch (Nynorsk)"
-
-#~ msgid "pl"
-#~ msgstr "Polnisch"
-
-#~ msgid "pt"
-#~ msgstr "Portugiesisch"
-
-#~ msgid "ro"
-#~ msgstr "Rumänisch"
-
-#~ msgid "ru"
-#~ msgstr "Russisch"
-
-#~ msgid "sk"
-#~ msgstr "Slowakisch"
-
-#~ msgid "sl"
-#~ msgstr "Slowenisch"
-
-#~ msgid "sr"
-#~ msgstr "Serbisch"
-
-#~ msgid "sv"
-#~ msgstr "Schwedisch"
-
-#~ msgid "tr"
-#~ msgstr "Türkisch"
-
-#~ msgid "vi"
-#~ msgstr "Vietnamesisch"
-
-#~ msgid "zh"
-#~ msgstr "Chinesisch"

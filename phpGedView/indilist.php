@@ -84,10 +84,6 @@ $SHOW_MARRIED_NAMES=($show_marnm=='yes');
 
 // Fetch a list of the initial letters of all surnames in the database
 $initials=get_indilist_salpha($SHOW_MARRIED_NAMES, false, PGV_GED_ID);
-// If there are no individuals in the database, do something sensible
-if (!$initials) {
-	$initials[]='@';
-}
 
 // Make sure selections are consistent.
 // i.e. can't specify show_all and surname at the same time.
@@ -139,7 +135,7 @@ print_header($pgv_lang['individual_list'].' : '.$legend);
 echo '<h2 class="center">', $pgv_lang['individual_list'], '</h2>';
 
 // Print a selection list of initial letters
-foreach ($initials as $letter) {
+foreach ($initials as $letter=>$count) {
 	switch ($letter) {
 	case '@':
 		$html=$pgv_lang['NN'];
@@ -151,16 +147,18 @@ foreach ($initials as $letter) {
 		$html=$letter;
 		break;
 	}
-	if ($showList && $letter==$alpha && $show_all=='no') {
-		if ($surname) {
-			$html='<a href="indilist.php?alpha='.urlencode($letter).'" class="warning">'.$html.'</a>';
+	if ($count) {
+		if ($showList && $letter==$alpha && $show_all=='no') {
+			if ($surname) {
+				$html='<a href="indilist.php?alpha='.urlencode($letter).'" class="warning">'.$html.'</a>';
+			} else {
+				$html='<span class="warning">'.$html.'</span>';
+			}
 		} else {
-			$html='<span class="warning">'.$html.'</span>';
+			$html='<a href="indilist.php?alpha='.urlencode($letter).'">'.$html.'</a>';
 		}
-	} else {
-		$html='<a href="indilist.php?alpha='.urlencode($letter).'">'.$html.'</a>';
 	}
-	$list[] = $html;
+	$list[]=$html;
 }
 
 // Search spiders don't get the "show all" option as the other links give them everything.

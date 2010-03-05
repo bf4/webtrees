@@ -470,6 +470,15 @@ unset($locale, $translate);
 require PGV_ROOT.'includes/classes/class_i18n.php';
 i18n::init();
 
+// Tell the database to sort/compare using the language's preferred collatation settings
+try {
+	// I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
+	PGV_DB::exec("SET NAMES utf8 COLLATE '".i18n::translate('utf8_unicode_ci')."'");
+} catch (PDOException $ex) {
+	// Always set a unicode collation
+	PGV_DB::exec("SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");
+}
+
 // Remember our language selection
 
 /* Re-build the various language-related arrays
