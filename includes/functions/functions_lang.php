@@ -37,8 +37,8 @@ define('PGV_FUNCTIONS_LANG_PHP', '');
  */
 function Character_Substitute($input)
 {
-	$stringsToReplace = array("/AE/", "/ae/", "/OE/", "/oe/", "/UE/", "/ue/", "/ss/");
-	$replacements =     array("Ä",   "Ä",   "Ö",   "ö",   "Ü",   "ü",   "ß");
+	$stringsToReplace = array("/AE/", "/ae/", "/OE/", "/oe/", "/UE/", "/ue/", "/ss/", "/SS/");
+	$replacements =     array("Ä",   "ä",   "Ö",   "ö",   "Ü",   "ü",   "ß",   "ß");
 
 	preg_replace($stringsToReplace, $replacements, $input);
 }
