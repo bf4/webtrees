@@ -203,7 +203,7 @@ $pgv_lang["update_successful"]="Atualização bem sucedida";
 $pgv_lang["upload"]="Enviar/Upload";
 $pgv_lang["upload_error"]="Um erro ocorreu durante o envio do arquivo GEDCOM.";
 $pgv_lang["upload_media"]="Enviar arquivos de Mídia";
-$pgv_lang["upload_media_help"]="~#pgv_lang[upload_media]#~<br /><br />Selecione os arquivos de seu computador a serem enviados para o servidor. Todos os arquivos serão gravados na pasta <b>#MEDIA_DIRECTORY#</b> ou em uma de suas sub-pastas.<br /><br />Nomes de pasta especificados serão concatenados com #MEDIA_DIRECTORY#. Exemplo, #MEDIA_DIRECTORY#minhafamilia. A pasta de miniaturas é criada automaticamente caso não exista.<br />";
+$pgv_lang["upload_media_help"]="~Enviar arquivos de Mídia~<br /><br />Selecione os arquivos de seu computador a serem enviados para o servidor. Todos os arquivos serão gravados na pasta <b>#MEDIA_DIRECTORY#</b> ou em uma de suas sub-pastas.<br /><br />Nomes de pasta especificados serão concatenados com #MEDIA_DIRECTORY#. Exemplo, #MEDIA_DIRECTORY#minhafamilia. A pasta de miniaturas é criada automaticamente caso não exista.<br />";
 $pgv_lang["upload_successful"]="Enviado com sucesso";
 $pgv_lang["view_change_diff"]="Exibir Diferenças";
 

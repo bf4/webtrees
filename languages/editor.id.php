@@ -231,7 +231,7 @@ $pgv_lang["upload"]					= "Unggah";
 $pgv_lang["upload_error"]				= "Ada kesalahan pengunggahan berkas Anda.";
 $pgv_lang["copy_error"]					= "Berkas #GLOBALS[whichFile2]# tidak dapat disalin dari #GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]				= "Unggah berkas Media";
-$pgv_lang["upload_media_help"]				= "~#pgv_lang[upload_media]#~<br /><br />Pilih berkas dari komputer lokal Anda untuk diunggah ke server Anda. Semua berkas akan diunggah ke directori <b>#MEDIA_DIRECTORY#</b> atau ke salah satu sub-direktorinya.<br /><br />Nama folder yang Anda tentukan akan diterapkan ke #MEDIA_DIRECTORY#. Misalnya, #MEDIA_DIRECTORY#myfamily. Jika tidak ada, direktori thumbnail otomatis akan diciptakan.";
+$pgv_lang["upload_media_help"]				= "~Unggah berkas Media~<br /><br />Pilih berkas dari komputer lokal Anda untuk diunggah ke server Anda. Semua berkas akan diunggah ke directori <b>#MEDIA_DIRECTORY#</b> atau ke salah satu sub-direktorinya.<br /><br />Nama folder yang Anda tentukan akan diterapkan ke #MEDIA_DIRECTORY#. Misalnya, #MEDIA_DIRECTORY#myfamily. Jika tidak ada, direktori thumbnail otomatis akan diciptakan.";
 $pgv_lang["upload_successful"]				= "Pengunggahan berhasil.";
 $pgv_lang["view_change_diff"]				= "Tampilkan Perbedaan Perubahan";
 

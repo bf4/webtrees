@@ -245,6 +245,6 @@ $pgv_lang["record_marked_deleted"]		= "Questo record è stato marcato per essere
 $pgv_lang["thumbgen_error"]			= "Anteprima #thumbnail# non può essere generata automaticamente.";
 $pgv_lang["thumbnail"]				= "Anteprima da caricare";
 $pgv_lang["copy_error"]				= "Il file #GLOBALS[whichFile2]# non può essere copiato da #GLOBALS[whichFile1]#";
-$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Seleziona i file da caricare nel server dal tuo computer. Tutti i file saranno caricati nella cartella <b>#MEDIA_DIRECTORY#</b> o in una delle sue sottocartelle.<br /><br />I nomi cartella che specificherai saranno aggiunti a #MEDIA_DIRECTORY#. Per esempio, #MEDIA_DIRECTORY#miafamiglia. Se la cartella anteprima non esiste, viene creata automaticamente.";
+$pgv_lang["upload_media_help"]		= "~Carica file multimediale~<br /><br />Seleziona i file da caricare nel server dal tuo computer. Tutti i file saranno caricati nella cartella <b>#MEDIA_DIRECTORY#</b> o in una delle sue sottocartelle.<br /><br />I nomi cartella che specificherai saranno aggiunti a #MEDIA_DIRECTORY#. Per esempio, #MEDIA_DIRECTORY#miafamiglia. Se la cartella anteprima non esiste, viene creata automaticamente.";
 $pgv_lang["upload_successful"]		= "Caricato con successo.";
 ?>

@@ -1204,7 +1204,7 @@ $pgv_lang["mail04_line01"]		= "Hei #user_fullname# ...";
 $pgv_lang["mail04_line02"]		= "Det ble bestilt et nytt passord til brukernavnet ditt!";
 $pgv_lang["mail04_line03"]		= "Anbefaling:";
 $pgv_lang["mail04_line04"]		= "Vennligst klikk på linken under. Logg deg inn med det nye passordet. Du bør så angi et nytt passord for å verne om sikkerheten til dataene dine.";
-$pgv_lang["mail04_line05"]		= "Etter at du har logget deg inn, velg da '#pgv_lang[myuserdata]#' i menyen '#pgv_lang[mygedview]#' og angi et nytt passord i feltet for å endre passordet ditt.";
+$pgv_lang["mail04_line05"]		= "Etter at du har logget deg inn, velg da 'Min konto' i menyen 'Min GedView' og angi et nytt passord i feltet for å endre passordet ditt.";
 $pgv_lang["mail04_subject"]		= "Data anmodning fra #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]			= "Hei...<br /><br />En epost med det nye passordet ble sendt til epost-adressen (#user[email]#).<br /><br />Vær vennlig å sjekk epost-kontoen din om noen minutter.<br /><br />Anbefaling:<br /><br />Etter at du har mottatt eposten, bør du logge deg inn på dette nettstedet med ditt nye passord og endre det. Dette bør gjøres for å verne om sikkerheten til dataene din.";
@@ -1694,8 +1694,8 @@ $pgv_lang["definitions"]		= "Definisjoner";
 //-- Index_edit
 $pgv_lang["block_desc"]			= "Beskrivelse av rammer";
 $pgv_lang["click_here"]			= "Klikk her for å fortsette";
-$pgv_lang["click_here_help"]	= "~#pgv_lang[click_here]#~<br /><br />Klikk på denne knappen for godkjenne endringer du har lagret tidligere.";
-$pgv_lang["block_summaries"]	= "~#pgv_lang[block_desc]#~<br /><br />Her er en kort beskrivelse for hver av de rammene du har valgt for sidene #pgv_lang[welcome]# eller #pgv_lang[mygedview]#.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"]	= "~Klikk her for å fortsette~<br /><br />Klikk på denne knappen for godkjenne endringer du har lagret tidligere.";
+$pgv_lang["block_summaries"]	= "~Beskrivelse av rammer~<br /><br />Her er en kort beskrivelse for hver av de rammene du har valgt for sidene Velkommen eller Min GedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>Navn</b></td><td class='list_value'><b>Beskrivelse</b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

@@ -1079,7 +1079,7 @@ $pgv_lang["mail04_line01"]		= "Hei #user_fullname#...";
 $pgv_lang["mail04_line02"]		= "Uusi salasana on pyydetty käyttäjätunnuksellesi!";
 $pgv_lang["mail04_line03"]		= "Suosittelu:";
 $pgv_lang["mail04_line04"]		= "Klikkaa aihe-linkkiä, kirjoittaudu sisään uudella salasanalla ja vaihda salasana niin että tietosuoja säilyy.";
-$pgv_lang["mail04_line05"]		= "Kirjauduttuasi, valitse linkki '#pgv_lang[myuserdata]#' '#pgv_lang[mygedview]#'-valikosta ja täytä salasanakentät vaihtaaksesi salasanasi.";
+$pgv_lang["mail04_line05"]		= "Kirjauduttuasi, valitse linkki 'Käyttäjätilini' 'OmaGedView'-valikosta ja täytä salasanakentät vaihtaaksesi salasanasi.";
 $pgv_lang["mail04_subject"]		= "Tietopyyntö koneelta #SERVER_NAME#";
 $pgv_lang["pwreqinfo"]		= "Hei...<br /><br />Sähköposti, jossa on uusi salasana, on lähetetty osoitteeseen <b>#user[email]#</b>.<br /><br />Tutki sähköpostitiliäsi parin minuutin kuluttua. Sinun tulisi saada posti siihen mennessä.<br /><br />Suosittelu:<br />Saatuasi sähköpostisi sinun tulee kirjoittautua ja muuttaa salasanasi lisätäksesi tietosuoja kokonaisuutta.";
 $pgv_lang["editowndata"]		= "Käyttäjätilini";
@@ -1205,7 +1205,7 @@ $pgv_lang["gedcom_favorites_descr"] 	= "GEDCOM suosikit -alue mahdollistaa yllä
 $pgv_lang["gedcom_stats_block"]	= "GEDCOM tilastotieto";
 $pgv_lang["gedcom_stats_descr"] 	= "GEDCOM tilastotietoalue näyttää kävijälle joitakin GEDCOMia koskevia perustietoja kuten luontipäivämäärän ja montako henkilöä siinä on.";
 $pgv_lang["gedcom_stats_show_surnames"] = "Näytä tavalliset sukunimet?";
-$pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Voit muokata sivua asettelemalla alueita haluamallasi tavalla.<br /><br /> Sivu on jaettu kahteen osastoon: <b>pääosastoon</b> ja <b>oikeanpuoleiseen</p> osastoon. <b>Pääosaston</p> alueet näkyvät suurempina ja sijoittuvat sivun otsakkeen alle. <b>Oikeanpuoleinen</b> osasto alkaa otsakkeen oikealla puolella ja jatkuu alaspäin sivun oikeaa laitaa.<br /><br /> Jokaisella osastolla on oma luettelonsa niistä alueista jotka kirjoitetaan sivulle siinä järjestyksessä kun ne on lueteltu. Voit lisätä, poistaa ja järjestää uudelleen alueita haluamallasi tavalla.<br /><br />Jos jokin alue on tyhjä, täyttävät muut alueet vapaan tila koko sivun leveydeltä.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "~Muokkaa oma portaalisi <br /> Muokkaa GEDCOM-portaalia~<br /><br />Voit muokata sivua asettelemalla alueita haluamallasi tavalla.<br /><br /> Sivu on jaettu kahteen osastoon: <b>pääosastoon</b> ja <b>oikeanpuoleiseen</p> osastoon. <b>Pääosaston</p> alueet näkyvät suurempina ja sijoittuvat sivun otsakkeen alle. <b>Oikeanpuoleinen</b> osasto alkaa otsakkeen oikealla puolella ja jatkuu alaspäin sivun oikeaa laitaa.<br /><br /> Jokaisella osastolla on oma luettelonsa niistä alueista jotka kirjoitetaan sivulle siinä järjestyksessä kun ne on lueteltu. Voit lisätä, poistaa ja järjestää uudelleen alueita haluamallasi tavalla.<br /><br />Jos jokin alue on tyhjä, täyttävät muut alueet vapaan tila koko sivun leveydeltä.<br /><br />";
 $pgv_lang["login_block"]		= "Sisäänkirjautuminen";
 $pgv_lang["login_descr"]		= "Sisäänkirjautumisalue hyväksyy käyttäjätunnuksen ja salasanan sisäänkirjautumista varten.";
 $pgv_lang["theme_select_block"]     	= "Teemavalinta";
@@ -1557,8 +1557,8 @@ $pgv_lang["definitions"]		= "Määritelmiä";
 //-- Index_edit
 $pgv_lang["block_desc"]		= "Alueiden kuvaukset";
 $pgv_lang["click_here"]		= "Klikkaa tästä jatkaaksesi";
-$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Klikkaa tätä painiketta toteuttaaksesi aiemmin tallentamasi muutokset.<br /><br />Sinut viedään takaisin joko sivulle #pgv_lang[welcome]# tai #pgv_lang[mygedview]#, mutta muutoksiasi ei ehkä näytetä. Voit joutua käyttämään sivun lataamista uudelleen nähdäksesi muutoksesi kunnolla.";
-$pgv_lang["block_summaries"]	= "~#pgv_lang[block_desc]#~<br /><br />Tässä on lyhyt selostus jokaisesta alueesta, jonka voit sijoittaa #pgv_lang[welcome]#- tai #pgv_lang[mygedview]#-sivulle.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"]		= "~Klikkaa tästä jatkaaksesi~<br /><br />Klikkaa tätä painiketta toteuttaaksesi aiemmin tallentamasi muutokset.<br /><br />Sinut viedään takaisin joko sivulle Tervetuloa tai OmaGedView, mutta muutoksiasi ei ehkä näytetä. Voit joutua käyttämään sivun lataamista uudelleen nähdäksesi muutoksesi kunnolla.";
+$pgv_lang["block_summaries"]	= "~Alueiden kuvaukset~<br /><br />Tässä on lyhyt selostus jokaisesta alueesta, jonka voit sijoittaa Tervetuloa- tai OmaGedView-sivulle.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nimi</b></td><td class='list_value'><b>Kuvaus</b></td></tr>&nbsp;</table><br /><br />";
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 
 //-- Find page

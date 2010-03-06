@@ -1219,7 +1219,7 @@ $pgv_lang["registernew"]			= "Confirmación de una nueva cuenta";
 $pgv_lang["user_verify"]			= "Verificación de usuario";
 $pgv_lang["send"]					= "Enviar";
 
-$pgv_lang["pls_note07"] 			= "~#pgv_lang[user_verify]#~<br /><br />Para confirmar su petición de cuente, introduzca por favor su identificador, su contraseña y el código de verificación que ha recibido por correo electrónico.";
+$pgv_lang["pls_note07"] 			= "~Verificación de usuario~<br /><br />Para confirmar su petición de cuente, introduzca por favor su identificador, su contraseña y el código de verificación que ha recibido por correo electrónico.";
 $pgv_lang["pls_note08"] 			= "Se han comprobado los datos del usuario <b>#user_name#</b>.";
 
 $pgv_lang["mail03_line01"]			= "Hola Administrador ...";
@@ -1241,7 +1241,7 @@ $pgv_lang["mail04_line01"]			= "Hola #user_fullname# ...";
 $pgv_lang["mail04_line02"]			= "Ha sido solicitada una nueva contraseña para su identificador de usuario.";
 $pgv_lang["mail04_line03"]			= "Recomendación:";
 $pgv_lang["mail04_line04"]			= "Ahora, por favor, seleccione el siguiente vínculo, entre con la nueva contraseña y cámbiela para preservar la seguridad de sus datos.";
-$pgv_lang["mail04_line05"]			= "Una vez haya entrado, seleccione el vínculo '#pgv_lang[myuserdata]#' del menú '#pgv_lang[mygedview]#' y rellene los campos de contraseña para cambiar su contraseña por una de su elección.";
+$pgv_lang["mail04_line05"]			= "Una vez haya entrado, seleccione el vínculo 'Mi cuenta' del menú 'MiGedView' y rellene los campos de contraseña para cambiar su contraseña por una de su elección.";
 $pgv_lang["mail04_subject"] 		= "Solicitud de datos en #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]				= "Hola...<br /><br />Se ha enviado un correo a la dirección (#user[email]#) incluyendo la nueva contraseña.<br /><br />Por favor, revise su cuenta de correo porque el mensaje debería de llegarle en los próximos minutos.<br /><br />Recomendación:<br /><br />Después de recibir el mensaje, debería acceder a este sitio con su nueva contraseña y cambiarla preservar la seguridad de sus datos.";
@@ -1309,7 +1309,7 @@ $pgv_lang["no_messages"]			= "No tiene mensajes pendientes.";
 $pgv_lang["clicking_ok"]			= "Seleccionando OK, se abrirá otra ventana donde contactar con #user[fullname]#";
 $pgv_lang["favorites"]				= "Favoritos";
 $pgv_lang["my_favorites"]			= "Mis favoritos";
-$pgv_lang["no_favorites"]			= "No tiene a nadie seleccionado en Favoritos.<br /><br />Para agregar una persona, familia o fuente a Favoritos,  haga clic en el vínculo <b>#pgv_lang[add_favorite]#</b> para que se muestren algunos campos en los que puede introducir o bien puede buscar un número de ID.  En vez de un número ID, puede introducir una URL y un título.";
+$pgv_lang["no_favorites"]			= "No tiene a nadie seleccionado en Favoritos.<br /><br />Para agregar una persona, familia o fuente a Favoritos,  haga clic en el vínculo <b>Agregar un nuevo favorito</b> para que se muestren algunos campos en los que puede introducir o bien puede buscar un número de ID.  En vez de un número ID, puede introducir una URL y un título.";
 $pgv_lang["add_to_my_favorites"]	= "Agregar a Favoritos";
 $pgv_lang["gedcom_favorites"]		= "Favoritos de este GEDCOM";
 $pgv_lang["no_gedcom_favorites"]	= "Por el momento no se han seleccionado Favoritos. El Administrador puede agregar Favoritos para mostrarse al comienzo.";
@@ -1609,7 +1609,7 @@ $pgv_lang["gd_library"]				= "Problema en la configuración del servidor PHP: se
 $pgv_lang["gd_freetype"]			= "Problema en la configuración del servidor PHP: se necesita la biblioteca FreeType para utilizar las fuentes TrueType.";
 $pgv_lang["gd_helplink"]			= "http://www.php.net/gd";
 $pgv_lang["fontfile_error"]			= "No se encontró el archivo de fuente en el servidor PHP";
-$pgv_lang["fanchart_IE"]			= "No es posible con su navegador imprimir directamente esta diagrama en abanico. Use el botón derecho del #pgv_lang[pgv_lang_es_mouse]# para guardarla e imprimirla posteriormente.";
+$pgv_lang["fanchart_IE"]			= "No es posible con su navegador imprimir directamente esta diagrama en abanico. Use el botón derecho del ratón para guardarla e imprimirla posteriormente.";
 
 //-- RSS Feed
 $pgv_lang["rss_descr"]				= "Noticias y vínculos del sitio #GEDCOM_TITLE#";
@@ -1823,8 +1823,8 @@ $pgv_lang["definitions"]			= "Definiciones";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Descripciones de los bloques";
 $pgv_lang["click_here"]				= "Haga clic aquí para continuar";
-$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Haga clic en este botón para guardar sus cambios.<br /><br />Se le enviará a la página de #pgv_lang[welcome]# o de #pgv_lang[mygedview]#, pero sus cambios puede que no se muestren.  Puede ser necesario que utilice la función de Recargar Página de su navegador para ver los cambios correctamente.";
-$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />He aquí una corta descripción de los cada uno de los bloques que puede colocar en las páginas de #pgv_lang[welcome]# o #pgv_lang[mygedview]#.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"]		= "~Haga clic aquí para continuar~<br /><br />Haga clic en este botón para guardar sus cambios.<br /><br />Se le enviará a la página de Bienvenido o de MiGedView, pero sus cambios puede que no se muestren.  Puede ser necesario que utilice la función de Recargar Página de su navegador para ver los cambios correctamente.";
+$pgv_lang["block_summaries"]		= "~Descripciones de los bloques~<br /><br />He aquí una corta descripción de los cada uno de los bloques que puede colocar en las páginas de Bienvenido o MiGedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nombre</b></td><td class='list_value'><b>Descripción</b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

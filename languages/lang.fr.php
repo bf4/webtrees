@@ -1234,7 +1234,7 @@ $pgv_lang["mail04_line01"]              = "Bonjour #user_fullname# ...";
 $pgv_lang["mail04_line02"]              = "Un nouveau mot de passe a été demandé pour votre compte!";
 $pgv_lang["mail04_line03"]              = "Recommandation:";
 $pgv_lang["mail04_line04"]              = "Cliquez maintenant sur le lien ci-dessous, connectez-vous avec le nouveau mot de passe et, par précaution, changez-le immediatement.";
-$pgv_lang["mail04_line05"]              = "Pour changer votre mot de passe une fois connecté, cliquez le lien '#pgv_lang[myuserdata]#' dans le menu '#pgv_lang[mygedview]#' et remplissez les champs concernant le mot de passe.";
+$pgv_lang["mail04_line05"]              = "Pour changer votre mot de passe une fois connecté, cliquez le lien 'Mon compte' dans le menu 'Mon portail' et remplissez les champs concernant le mot de passe.";
 $pgv_lang["mail04_subject"]             = "Demande d'informations pour #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]                  = "Bonjour...<br /><br />Un message a été envoyé à l'adresse (#user[email]#) avec le nouveau mot de passe.<br /><br />Merci de vérifier votre messagerie car vous devriez recevoir ce message dans les prochaines minutes.<br /><br />Recommandation:<br /><br />Après avoir récupéré ce message, connectez-vous à ce site et changez votre mot de passe pour conserver l'integrité de vos données.";
@@ -1815,8 +1815,8 @@ $pgv_lang["definitions"]                = "Définitions";
 //-- Index_edit
 $pgv_lang["block_desc"]                 = "Description du bloc";
 $pgv_lang["click_here"]                 = "Continuer";
-$pgv_lang["click_here_help"]            = "~#pgv_lang[click_here]#~<br /><br />Cliquez sur ce bouton pour conserver vos changements.<br /><br />On vous mène à la page #pgv_lang[welcome]# ou #pgv_lang[mygedview]#, mais il se peut que vos changements ne vous sont pas montrés.  Dans ce cas, utilisez la fonction «Rafraichir page» de votre viseur.";
-$pgv_lang["block_summaries"]            = "~#pgv_lang[block_desc]#~<br /><br />Voici une brève description de chacun des blocs qui vous pouvez placer sur les pages #pgv_lang[welcome]# ou #pgv_lang[mygedview]#.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"]            = "~Continuer~<br /><br />Cliquez sur ce bouton pour conserver vos changements.<br /><br />On vous mène à la page Bienvenue ou Mon portail, mais il se peut que vos changements ne vous sont pas montrés.  Dans ce cas, utilisez la fonction «Rafraichir page» de votre viseur.";
+$pgv_lang["block_summaries"]            = "~Description du bloc~<br /><br />Voici une brève description de chacun des blocs qui vous pouvez placer sur les pages Bienvenue ou Mon portail.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nom</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]		= "&nbsp;";
 

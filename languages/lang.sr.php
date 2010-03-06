@@ -1205,7 +1205,7 @@ $pgv_lang["lost_pw_reset"]			= "Zahtev za novu lozinku";
 ##$pgv_lang["mail04_line02"]			= "A new password was requested for your user name.";
 ##$pgv_lang["mail04_line03"]			= "Recommendation:";
 ##$pgv_lang["mail04_line04"]			= "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure.";
-##$pgv_lang["mail04_line05"]			= "After you have logged in, select the «#pgv_lang[editowndata]#» link under the «#pgv_lang[mygedview]#» menu and fill in the password fields to change your password.";
+##$pgv_lang["mail04_line05"]			= "After you have logged in, select the «Moj nalog» link under the «Moj portal» menu and fill in the password fields to change your password.";
 ##$pgv_lang["mail04_subject"] 		= "Data request at #SERVER_NAME#";
 
 ##$pgv_lang["pwreqinfo"]				= "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>#user[email]#</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security.";
@@ -1270,7 +1270,7 @@ $pgv_lang["mygedview_desc"] 		= "Stranica Moj portal omogućava da sebi obeleži
 ##$pgv_lang["clicking_ok"]			= "When you click OK, another window will open and you may contact #user[fullname]#";
 ##$pgv_lang["favorites"]				= "Favorites";
 ##$pgv_lang["my_favorites"]			= "My Favorites";
-##$pgv_lang["no_favorites"]			= "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>#pgv_lang[add_favorite]#</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.";
+##$pgv_lang["no_favorites"]			= "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Dodaj novu omiljenu/često posećivanu stranicu</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.";
 ##$pgv_lang["add_to_my_favorites"]	= "Add to My Favorites";
 ##$pgv_lang["gedcom_favorites"]		= "This GEDCOM's Favorites";
 ##$pgv_lang["no_gedcom_favorites"]	= "At this moment there are no selected Favorites.	The admin can add Favorites to display at startup.";
@@ -1334,7 +1334,7 @@ $pgv_lang["random_media_events"]	= "Događaji";
 ##$pgv_lang["gedcom_stats_block"] 	= "GEDCOM Statistics";
 ##$pgv_lang["gedcom_stats_descr"] 	= "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration.";
 ##$pgv_lang["gedcom_stats_show_surnames"]	= "Show common surnames?";
-##$pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />You can customize the page by positioning the blocks on the page the way that you want them.<br /><br />The page is divided into <b>Main</b> and <b>Right</b> sections.	The <b>Main</b> section blocks appear larger and under the page title.  The <b>Right</b> section starts to the right of the title and goes down the right side of the page.<br /><br />Each section has its own list of blocks that will be printed on the page in the order they are listed.  You can add, remove, and reorder the blocks however you like.<br /><br />When one of the block lists is empty, the remaining blocks will take up the whole width of the page.<br /><br />";
+##$pgv_lang["portal_config_intructions"]	= "~Modifikuj svoj portal <br /> Modifikuj ovu početnu stranicu~<br /><br />You can customize the page by positioning the blocks on the page the way that you want them.<br /><br />The page is divided into <b>Main</b> and <b>Right</b> sections.	The <b>Main</b> section blocks appear larger and under the page title.  The <b>Right</b> section starts to the right of the title and goes down the right side of the page.<br /><br />Each section has its own list of blocks that will be printed on the page in the order they are listed.  You can add, remove, and reorder the blocks however you like.<br /><br />When one of the block lists is empty, the remaining blocks will take up the whole width of the page.<br /><br />";
 $pgv_lang["login_block"]			= "Prijava";
 ##$pgv_lang["login_descr"]			= "The Login block accepts a user name and password for users to login.";
 ##$pgv_lang["theme_select_block"] 	= "Theme Select";
@@ -1696,8 +1696,8 @@ $pgv_lang["both_dead"]					= "Oboje mrtvi ";
 //-- Index_edit
 ##$pgv_lang["block_desc"]				= "Block Descriptions";
 $pgv_lang["click_here"]				= "Klikni ovde da nastaviš";
-##$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Click this button to save your changes.<br /><br />You will be returned to the #pgv_lang[welcome]# or #pgv_lang[mygedview]# page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly.";
-##$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Here is a short description of each of the blocks you can place on the #pgv_lang[welcome]# or #pgv_lang[mygedview]# page.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+##$pgv_lang["click_here_help"]		= "~Klikni ovde da nastaviš~<br /><br />Click this button to save your changes.<br /><br />You will be returned to the Dobrodošli or Moj portal page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly.";
+##$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Here is a short description of each of the blocks you can place on the Dobrodošli or Moj portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Ime</b></td><td class='list_value'><b>Opis</b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 
@@ -1834,7 +1834,7 @@ $pgv_lang["no_gedcom_favorites"]	= "Trenutno često posećivane stranice nisu up
 $pgv_lang["gedcom_created_on"]		= "Ovaj rodoslov je napravljen započet <b>#CREATED_DATE#</b>";
 $pgv_lang["favorites"]				= "Omiljene stranice";
 $pgv_lang["my_favorites"]			= "Moje omiljene stranice";
-$pgv_lang["no_favorites"]			= "Niste izabrali nijednu omiljenu stranicu ili upis.<br /><br />Da dodate pojedinačni upis, upis porodice, ili izvora podataka kliknite na <b>#pgv_lang[add_favorite]#</b> link da vam se otvore polja gde ih možete uneti ili ih pretraživati da nađete njihov identifikacioni broj. Umesto identifikacionog broja možete uneti URL ili naslov traženog parametra.";
+$pgv_lang["no_favorites"]			= "Niste izabrali nijednu omiljenu stranicu ili upis.<br /><br />Da dodate pojedinačni upis, upis porodice, ili izvora podataka kliknite na <b>Dodaj novu omiljenu/često posećivanu stranicu</b> link da vam se otvore polja gde ih možete uneti ili ih pretraživati da nađete njihov identifikacioni broj. Umesto identifikacionog broja možete uneti URL ili naslov traženog parametra.";
 $pgv_lang["add_to_my_favorites"]	= "Dodaj u moje omiljene stranice";
 $pgv_lang["add_favorite"]			= "Dodaj novu omiljenu/često posećivanu stranicu";
 $pgv_lang["add_fav_enter_note"]		= "Eventualno napravi belešku o ovoj stranici";

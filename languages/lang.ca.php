@@ -1063,7 +1063,7 @@ $pgv_lang["registernew"]		= "Confirmació de permís";
 $pgv_lang["user_verify"]		= "Verificació d'usuari";
 $pgv_lang["send"]				= "Envia";
 
-$pgv_lang["pls_note07"] 		= "~#pgv_lang[user_verify]#~<br /><br />Per verificar la vostra petició, escriviu el nom d'usuari, la contrasenya i el codi de verificació que heu rebut per correu electrònic.";
+$pgv_lang["pls_note07"] 		= "~Verificació d'usuari~<br /><br />Per verificar la vostra petició, escriviu el nom d'usuari, la contrasenya i el codi de verificació que heu rebut per correu electrònic.";
 $pgv_lang["pls_note08"] 		= "S'han comprovat les dades de l'usuari #user_name#.";
 
 $pgv_lang["mail03_line01"]		= "Hola Administrador ...";
@@ -1085,7 +1085,7 @@ $pgv_lang["mail04_line01"]		= "Hola #user_fullname# ...";
 $pgv_lang["mail04_line02"]		= "S'ha demanat una nova contrasenya per al vostre usuari.";
 $pgv_lang["mail04_line03"]		= "Recomanació:";
 $pgv_lang["mail04_line04"]		= "Polseu a l'enllaç de sota o enganxeu-lo al vostre navegador, entrant amb la nova contrasenya i canvia-la immediatament per mantenir assegurada la integritat de les vostres dades.";
-$pgv_lang["mail04_line05"]		= "Un cop dins, seleccioneu l'enllaç '#pgv_lang[myuserdata]#' sota el menú '#pgv_lang[mygedview]#' i escriviu al camp corresponent la vostra nova contrasenya.";
+$pgv_lang["mail04_line05"]		= "Un cop dins, seleccioneu l'enllaç 'Dades de registre' sota el menú 'Portal MyGedView' i escriviu al camp corresponent la vostra nova contrasenya.";
 $pgv_lang["mail04_subject"] 		= "Sol·licitud de dades a #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]			= "Hola...<br /><br />S'ha enviat un correu electrònic amb la vostra nova contrasenya a (#user[email]#).<br /><br />Reviseu el vostre correu: heu de rebre el nostre missatge aviat.<br /><br />Recomanació:<br />Us caldrà accedir a aquest lloc amb la nova contrasenya tant aviat com us sigui possible i canvia-la per mantenir les vostres dades segures.";
@@ -1149,7 +1149,7 @@ $pgv_lang["no_messages"]		= "No hi ha correu pendent.";
 $pgv_lang["clicking_ok"]		= "Quan polseu SI, s'obrirà una nova finestra i podreu contactar amb #user[fullname]#";
 $pgv_lang["favorites"]			= "Favorits";
 $pgv_lang["my_favorites"]		= "Els meus favorits";
-$pgv_lang["no_favorites"]		= "No teniu favorits seleccionats.<br /><br />Per afegir una persona, una família o una font als vostres favorits, polseu a l'enllaç <b>#pgv_lang[add_favorite]#</b> i apareixerà un camp on hi podeu entrar o cercar números d'ID. Per comptes de números d'ID també podeu entrar una adreces URL amb el seu títol.";
+$pgv_lang["no_favorites"]		= "No teniu favorits seleccionats.<br /><br />Per afegir una persona, una família o una font als vostres favorits, polseu a l'enllaç <b>Afegiu un nou favorit</b> i apareixerà un camp on hi podeu entrar o cercar números d'ID. Per comptes de números d'ID també podeu entrar una adreces URL amb el seu títol.";
 $pgv_lang["add_to_my_favorites"]	= "Afegeix-ho als meus favorits";
 $pgv_lang["gedcom_favorites"]		= "Favorits d'aquest GEDCOM";
 $pgv_lang["no_gedcom_favorites"]	= "No hi ha persones seleccionades a Favorits. L'Administrador pot afegir-ne per veure-les al començament.";
@@ -1208,7 +1208,7 @@ $pgv_lang["gedcom_favorites_descr"]		= "El Bloc de Favorits GEDCOM permet a l'Ad
 $pgv_lang["gedcom_stats_block"] 		= "Estadístiques GEDCOM";
 $pgv_lang["gedcom_stats_descr"]		= "El Bloc d'Estadístiques GEDCOM mostra al visitant informació bàsica sobre el fitxer GEDCOM com per exemple com i quan s'ha generat i el nombre de persones que conté.<br /><br />Disposa també d'una llista dels cognoms més habituals. Podeu configurar-lo per a que no us els mostri o treure'n i posar-n'hi. També podeu fixar-hi el llindars.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Mostrar els cognoms més comuns?";
-$pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Aquí podeu personalitzar la pàgina situant els blocs de la forma que vulgueu.<br /><br />La pàgina es divideix en dues seccions <b>Principal</b> i <b>Dreta</b>. La secció <b>Principal</b> apareix allargassada i sota el títol de pàgina.  La secció <b>Dreta</b> comença a la dreta del títol i baixa per la banda dreta de la pàgina.<br /><br />Cada secció té el seu propi llistat de blocs que es mostrarà a la pàgina en l'ordre que hi hagi al llistat. Podeu afegir, treure i reordenar els blocs com us plagui.<br /><br />Quan un dels blocs es buit, la resta de blocs es desplaça prenent tot l'ample de la pàgina.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "~Personalitzeu el Portal MyGedView <br /> Personalitzeu la Pàgina d'Inici~<br /><br />Aquí podeu personalitzar la pàgina situant els blocs de la forma que vulgueu.<br /><br />La pàgina es divideix en dues seccions <b>Principal</b> i <b>Dreta</b>. La secció <b>Principal</b> apareix allargassada i sota el títol de pàgina.  La secció <b>Dreta</b> comença a la dreta del títol i baixa per la banda dreta de la pàgina.<br /><br />Cada secció té el seu propi llistat de blocs que es mostrarà a la pàgina en l'ordre que hi hagi al llistat. Podeu afegir, treure i reordenar els blocs com us plagui.<br /><br />Quan un dels blocs es buit, la resta de blocs es desplaça prenent tot l'ample de la pàgina.<br /><br />";
 $pgv_lang["login_block"]			= "Accés";
 $pgv_lang["login_descr"]			= "El Bloc d'accés permet entrar el Nom d'Usuari i la Contrasenya per a l'accés d'usuaris.";
 $pgv_lang["theme_select_block"] 		= "Selector de presentació";
@@ -1527,8 +1527,8 @@ $pgv_lang["definitions"]		= "Definicions";
 //-- Index_edit
 $pgv_lang["block_desc"]			= "Descripció dels blocs";
 $pgv_lang["click_here"]			= "Polseu aquí per continuar";
-$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Polseu aquest botó per desar els canvis.<br /><br />Retornareu a la pàgina #pgv_lang[welcome]# o a #pgv_lang[mygedview]#, però no veureu els canvis. Us cal emprar la funció Actualitza del navegador per veure'ls correctament.";
-$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Heus aquí una breu descripció de cada un dels blocs que podeu posar a la pàgina #pgv_lang[welcome]# o a la #pgv_lang[mygedview]# .<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"]		= "~Polseu aquí per continuar~<br /><br />Polseu aquest botó per desar els canvis.<br /><br />Retornareu a la pàgina Benvingut o a Portal MyGedView, però no veureu els canvis. Us cal emprar la funció Actualitza del navegador per veure'ls correctament.";
+$pgv_lang["block_summaries"]		= "~Descripció dels blocs~<br /><br />Heus aquí una breu descripció de cada un dels blocs que podeu posar a la pàgina Benvingut o a la Portal MyGedView .<br /><table border='1' align='center'><tr><td class='list_value'><b>Nom</b></td><td class='list_value'><b></b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

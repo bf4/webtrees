@@ -1215,7 +1215,7 @@ $pgv_lang["registernew"]		= "Potwierdzenie założenia nowego konta";
 $pgv_lang["user_verify"]		= "Weryfikacja użytkownika";
 $pgv_lang["send"]				= "Wyślij";
 
-$pgv_lang["pls_note07"]			= "~#pgv_lang[user_verify]#~<br /><br />Aby potwierdzić chęć przystąpienia, proszę o podanie swojego loginu, hasła oraz kodu potwierdzającego otrzymanego emailem.";
+$pgv_lang["pls_note07"]			= "~Weryfikacja użytkownika~<br /><br />Aby potwierdzić chęć przystąpienia, proszę o podanie swojego loginu, hasła oraz kodu potwierdzającego otrzymanego emailem.";
 $pgv_lang["pls_note08"]			= "Informacje o użytkowniku #user_name# zostały potwierdzone.";
 
 $pgv_lang["mail03_line01"]		= "Witaj Administratorze ...";
@@ -1237,7 +1237,7 @@ $pgv_lang["mail04_line01"]		= "Witaj #user_fullname# ...";
 $pgv_lang["mail04_line02"]		= "Otrzymaliśmy zamówienie na nowe hasło dla twojego konta.";
 $pgv_lang["mail04_line03"]		= "Zalecenie:";
 $pgv_lang["mail04_line04"]		= "Kliknij na odnośnik poniżej lub wklej go do przeglądarki, zaloguj się korzystając z nowego hasła i od razu zmień je dla bezpieczeństwa swoich danych.";
-$pgv_lang["mail04_line05"]		= "Aby zmienić hasło, po zalogowaniu wybierz odnośnik «#pgv_lang[editowndata]#» w menu «#pgv_lang[mygedview]#» i wypełnij pola hasła.";
+$pgv_lang["mail04_line05"]		= "Aby zmienić hasło, po zalogowaniu wybierz odnośnik «Moje konto» w menu «Mój portal» i wypełnij pola hasła.";
 $pgv_lang["mail04_subject"]		= "Prośba o dane na #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]			= "Witaj...<br /><br />Email z twoim nowym hasłem został wysłany na adres #user[email]#<br /><br />Sprawdź pocztę; wiadomość powinna dojść w ciągu kilku minut.<br /><br />Ze względów bezpieczeństwa zaleca się, żeby jak najszybciej po otrzymaniu emaila zalogować się i zmienić hasło.";
@@ -1304,7 +1304,7 @@ $pgv_lang["no_messages"]			= "Brak wiadomości.";
 $pgv_lang["clicking_ok"]			= "Kliknij OK aby otworzyć nowe okno, które umożliwi ci skontaktowanie się z #user[fullname]#";
 $pgv_lang["favorites"]				= "Ulubione";
 $pgv_lang["my_favorites"]			= "Moje ulubione";
-$pgv_lang["no_favorites"]			= "Brak ulubionych elementów.<br /><br />Aby dodać osobę, rodzinę lub źródło do ulubionych, kliknij na odnośnik <b>#pgv_lang[add_favorite]#</b> aby wyświetlić pola, w które możesz wprowadzić lub wyszukać identyfikator. Zamiast identyfikatora możesz wpisać adres URL i tytuł.";
+$pgv_lang["no_favorites"]			= "Brak ulubionych elementów.<br /><br />Aby dodać osobę, rodzinę lub źródło do ulubionych, kliknij na odnośnik <b>Dodaj do ulubionych</b> aby wyświetlić pola, w które możesz wprowadzić lub wyszukać identyfikator. Zamiast identyfikatora możesz wpisać adres URL i tytuł.";
 $pgv_lang["add_to_my_favorites"]	= "Dodaj do ulubionych";
 $pgv_lang["gedcom_favorites"]		= "Ulubione GEDCOM";
 $pgv_lang["no_gedcom_favorites"]	= "W tej chwili brak ulubionych elementów. Administrator może dodać elementy ulubione.";
@@ -1368,7 +1368,7 @@ $pgv_lang["gedcom_favorites_descr"]	= "Blok ulubionych GEDCOM pozwala administra
 $pgv_lang["gedcom_stats_block"]		= "Statystyki GEDCOM";
 $pgv_lang["gedcom_stats_descr"]		= "Blok statystyk GEDCOM wyświetla kilka podstawowych informacji o bazie danych, takich jak data utworzenia i liczba występujących w niej osób.<br /><br />Zawiera także listę najczęściej występujących nazwisk. Możesz wyłączyć pokazywanie tej listy oraz dodawać lub usuwać nazwiska z listy. Możesz ustawić próg występowania dla tej listy w konfiguracji GEDCOM.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Pokazać najczęstsze nazwiska?";
-$pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Możesz dostosować stronę zmieniając układ bloków.<br /><br />Strona podzielona jest na dwie części: <b>Główną</b> i <b>Prawą</b>. Bloki części <b>Głównej</b> są wyświetlane jako większe i umieszczone pod tytułem strony. Część <b>Prawa</b> zaczyna się po prawej stronie tytułu i znajduje się po prawej stronie.<br /><br />Każda część ma własną listę bloków, które będą wyświetlane na stronie w kolejności, w jakiej występują na liście. Możesz dowolnie dodawać, usuwać i zmieniać kolejność bloków.<br /><br />Kiedy jednen z bloków jest pusty, pozostałe bloki zapełnią całą szerokość strony.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "~Dostosuj portal <br /> Dostosuj stronę główną~<br /><br />Możesz dostosować stronę zmieniając układ bloków.<br /><br />Strona podzielona jest na dwie części: <b>Główną</b> i <b>Prawą</b>. Bloki części <b>Głównej</b> są wyświetlane jako większe i umieszczone pod tytułem strony. Część <b>Prawa</b> zaczyna się po prawej stronie tytułu i znajduje się po prawej stronie.<br /><br />Każda część ma własną listę bloków, które będą wyświetlane na stronie w kolejności, w jakiej występują na liście. Możesz dowolnie dodawać, usuwać i zmieniać kolejność bloków.<br /><br />Kiedy jednen z bloków jest pusty, pozostałe bloki zapełnią całą szerokość strony.<br /><br />";
 $pgv_lang["login_block"]			= "Logowanie";
 $pgv_lang["login_descr"]			= "Blok logowania służy do wprowadzania loginu i hasła przez użytkowników w celu zalogowania.";
 $pgv_lang["theme_select_block"]		= "Wybór motywu";
@@ -1819,8 +1819,8 @@ $pgv_lang["definitions"]	= "Definicje";
 //-- Index_edit
 $pgv_lang["block_desc"]		= "Opisy bloków";
 $pgv_lang["click_here"]		= "Dalej";
-$pgv_lang["click_here_help"] = "~#pgv_lang[click_here]#~<br /><br />Kliknij ten przycisk aby zapisać zmiany.<br /><br />Zostaniesz przekierowany(a) na stronę #pgv_lang[welcome]# lub #pgv_lang[mygedview]#, ale twoje zmiany mogą nie być widoczne. Aby je zobaczyć, prawdopodobnie trzeba będzie odświeżyć stronę za pomocą odpowiedniej funkcji Twojej przeglądarki.";
-$pgv_lang["block_summaries"] = "~#pgv_lang[block_desc]#~<br /><br />Oto krótki opis każdego z bloków, które możesz umieszczać na stronie #pgv_lang[welcome]# lub #pgv_lang[mygedview]#.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"] = "~Dalej~<br /><br />Kliknij ten przycisk aby zapisać zmiany.<br /><br />Zostaniesz przekierowany(a) na stronę Witaj, lub Mój portal, ale twoje zmiany mogą nie być widoczne. Aby je zobaczyć, prawdopodobnie trzeba będzie odświeżyć stronę za pomocą odpowiedniej funkcji Twojej przeglądarki.";
+$pgv_lang["block_summaries"] = "~Opisy bloków~<br /><br />Oto krótki opis każdego z bloków, które możesz umieszczać na stronie Witaj, lub Mój portal.<br /><table border='1' align='center'><tr><td class='list_value'><b>Imię / Nazwisko</b></td><td class='list_value'><b>Opis</b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"] = "&nbsp;";
 

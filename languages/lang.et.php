@@ -762,7 +762,7 @@ $pgv_lang["no_messages"]		= "Sul ei ole lugemata kirju.";
 $pgv_lang["clicking_ok"]		= "Kui vajutad OK, siis avaneb teine aken, kus saad ühenduse kasutajaga #user[fullname]#";
 $pgv_lang["favorites"]		= "Lemmikud";
 $pgv_lang["my_favorites"]		= "Minu lemmikud";
-$pgv_lang["no_favorites"]		= "Sul ei ole valitud ühtegi lemmikut.<br /><br />Isiku, perekonna või allika lisamiseks oma lemmikute hulka vajuta linki <b>#pgv_lang[add_favorite]#</b>, mis avab väljad ID numbri sisestamiseks või valimiseks. ID numbri asemel võid sisestada URL-i ja pealkirja.";
+$pgv_lang["no_favorites"]		= "Sul ei ole valitud ühtegi lemmikut.<br /><br />Isiku, perekonna või allika lisamiseks oma lemmikute hulka vajuta linki <b>Lisa uus lemmik</b>, mis avab väljad ID numbri sisestamiseks või valimiseks. ID numbri asemel võid sisestada URL-i ja pealkirja.";
 $pgv_lang["add_to_my_favorites"]	= "Lisa oma lemmikute hulka";
 $pgv_lang["gedcom_favorites"]		= "Selle GEDCOM lemmikud";
 $pgv_lang["no_gedcom_favorites"]	= "Praegu ei ole ühtegi lemmikut valitud. Alustuseks saab lemmikuid lisada administraator.";
@@ -818,7 +818,7 @@ $pgv_lang["gedcom_favorites_descr"] 	= "Selle GEDCOMi lemmikud võimaldab admini
 $pgv_lang["gedcom_stats_block"] 	= "GEDCOMi statistika";
 $pgv_lang["gedcom_stats_descr"] 	= "GEDCOM statistika blokk näitab külastajale andmebaasi põhiinfot, näiteks millal andmebaas loodi ja kui palju inimesi on selles.<br /><br />Samuti on seal sagedamini esinevate perekonnanimde loend. Selle bloki konfigureerimisel saab perekonnanimede näitamise ära jätta ja samuti saab sellesse loendisse nimesid lisada ja sealt nimesid eemaldada.  Võid ka määrata nimede esinemissageduse, sellesse loendisse ilmumiseks.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Näita sagedamini esinevaid perekonnanimesid.";
-$pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />saad muuta seda lehekulge, paigutades blokke selliseslt nagu neid näha tahad.<br /><br />Lehekülg on jagatud <b>Põhi-</b> ja <b>paremaks</b> sektsiooniks.	<b>Põhisektsiooni</b> blokid on suuremad ja paiknevad lehekülje pealkirja all.  The <b>Parem</b> sektsioon algab pealkirjast paremal ja paikneb lehekülje paremas servas ülalt alla.<br /><br />Kummalgi sektsioonil on oma blokkide nimekiri, mis sellele lehele näidatud järjekorras paigutatakse.  Blokke võid lisada, eemaldada ja ümber paigutada, kuidas soovid.<br /><br /> Kui üks nimekiri on tühi, siis võtab ülejäänud blokkide loend enda alla terve lehekülje laiuse.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "~Kohanda minu GedView portaali <br /> Kohanda selle GEDCOM avalehekülge~<br /><br />saad muuta seda lehekulge, paigutades blokke selliseslt nagu neid näha tahad.<br /><br />Lehekülg on jagatud <b>Põhi-</b> ja <b>paremaks</b> sektsiooniks.	<b>Põhisektsiooni</b> blokid on suuremad ja paiknevad lehekülje pealkirja all.  The <b>Parem</b> sektsioon algab pealkirjast paremal ja paikneb lehekülje paremas servas ülalt alla.<br /><br />Kummalgi sektsioonil on oma blokkide nimekiri, mis sellele lehele näidatud järjekorras paigutatakse.  Blokke võid lisada, eemaldada ja ümber paigutada, kuidas soovid.<br /><br /> Kui üks nimekiri on tühi, siis võtab ülejäänud blokkide loend enda alla terve lehekülje laiuse.<br /><br />";
 $pgv_lang["login_block"]		= "Logi sisse";
 $pgv_lang["login_descr"]		= "Sisselogimise blokis saab sisestada kasutajanime ja parooli, et sisse logida.";
 $pgv_lang["theme_select_block"] 	= "Teema valik";
@@ -1110,8 +1110,8 @@ $pgv_lang["definitions"]			= "Definitsioonid";
 $pgv_lang["description"]			= "Kirjeldus";
 $pgv_lang["block_desc"]			= "Ploki kirjeldus";
 $pgv_lang["click_here"]			= "Jätkamiseks vajuta siis";
-$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Muudatuste salvestamiseks vajuta siia.<br /><br />Satud tagasi leheküljele #pgv_lang[welcome]# või leheküljele #pgv_lang[mygedview]#, Kuid muudatused võivad sealt puududa.  Muudatuste nägemiseks pead kasutama brauseri värskendamise funktsiooni (refresh).";
-$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Lühidalt on kirjeldatud iga blokki, mida saad paigutada lehtedele #pgv_lang[welcome]# või #pgv_lang[mygedview]#.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"]		= "~Jätkamiseks vajuta siis~<br /><br />Muudatuste salvestamiseks vajuta siia.<br /><br />Satud tagasi leheküljele Tere,  või leheküljele Minu GedView portaal, Kuid muudatused võivad sealt puududa.  Muudatuste nägemiseks pead kasutama brauseri värskendamise funktsiooni (refresh).";
+$pgv_lang["block_summaries"]		= "~Ploki kirjeldus~<br /><br />Lühidalt on kirjeldatud iga blokki, mida saad paigutada lehtedele Tere,  või Minu GedView portaal.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nimi</b></td><td class='list_value'><b>Kirjeldus</b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

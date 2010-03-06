@@ -1153,7 +1153,7 @@ $pgv_lang["registernew"]			= "Konfirmasi Akun Baru";
 $pgv_lang["user_verify"]			= "Verifikasi pengguna";
 $pgv_lang["send"]					= "Kirim";
 
-$pgv_lang["pls_note07"] 			= "~#pgv_lang[user_verify]#~<br /><br />Untuk mengonfirmasi permintaan akun Anda, silakan ketik nama pengguna, sandi, dan kode verifikasi yang Anda terima lewat email.";
+$pgv_lang["pls_note07"] 			= "~Verifikasi pengguna~<br /><br />Untuk mengonfirmasi permintaan akun Anda, silakan ketik nama pengguna, sandi, dan kode verifikasi yang Anda terima lewat email.";
 $pgv_lang["pls_note08"] 			= "Data untuk pengguna <b>#user_name#</b> telah diperiksa.";
 
 $pgv_lang["mail03_line01"]			= "Halo Administrator ...";
@@ -1175,7 +1175,7 @@ $pgv_lang["mail04_line01"]			= "Halo #user_fullname# ...";
 $pgv_lang["mail04_line02"]			= "Sandi baru telah diminta untuk nama pengguna Anda.";
 $pgv_lang["mail04_line03"]			= "Rekomendasi:";
 $pgv_lang["mail04_line04"]			= "Silakan klik pada pranala di bawah atau temaple pada perambah Anda, catatmasuk dengan sandi yang baru, dan segera ganti untuk menjaga integritas keamanan data Anda.";
-$pgv_lang["mail04_line05"]			= "Setelah Anda tercatatmasuk, pilih pranala «#pgv_lang[editowndata]#» di bawah menu «#pgv_lang[mygedview]#» dan isilah isian sandi untuk mengubah sandi Anda.";
+$pgv_lang["mail04_line05"]			= "Setelah Anda tercatatmasuk, pilih pranala «Akun Saya» di bawah menu «Portal GedViewSaya» dan isilah isian sandi untuk mengubah sandi Anda.";
 $pgv_lang["mail04_subject"] 			= "Permintaan data di #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]				= "Halo...<br /><br />Email dengan sandi baru Anda telah terkirim ke alamat yang kami miliki pada berkas untuk <b>#user[email]#</b>.<br /><br />Silakan periksa akun email Anda; Anda seharusnya segera menerima pesan kami.<br /><br />Rekomendasi:<br />Anda sebaiknya mencatatmasuk ke situs ini dengan sandi baru Anda secepat mungkin, dan Anda sebaiknya mengubah sandi Anda untuk mempertahankam keamanan data Anda.";
@@ -1240,7 +1240,7 @@ $pgv_lang["no_messages"]			= "Anda tidak mempunyai pesan tertunda.";
 $pgv_lang["clicking_ok"]			= "Saat Anda mengklik Oke, jendela lain akan terbuka dan Anda dapat menghubungi #user[fullname]#";
 $pgv_lang["favorites"]				= "Favorit";
 $pgv_lang["my_favorites"]			= "Favorit Saya";
-$pgv_lang["no_favorites"]			= "Anda belum memilih favorit apapun.<br /><br />Untuk menambah individu, keluarga, atau sumber ke favorit Anda, klik pada pranala <b>#pgv_lang[add_favorite]#</b> untuk menampilkan beberapa isian di mana Anda dapat memasukkan atau mencari nomor ID. Selain nomor ID, Anda dapat memasukkan URL atau judul.";
+$pgv_lang["no_favorites"]			= "Anda belum memilih favorit apapun.<br /><br />Untuk menambah individu, keluarga, atau sumber ke favorit Anda, klik pada pranala <b>Tambah kesukaan baru</b> untuk menampilkan beberapa isian di mana Anda dapat memasukkan atau mencari nomor ID. Selain nomor ID, Anda dapat memasukkan URL atau judul.";
 $pgv_lang["add_to_my_favorites"]		= "Tambahkan ke Favorit Saya";
 $pgv_lang["gedcom_favorites"]			= "Favorit GEDCOM Ini";
 $pgv_lang["no_gedcom_favorites"]		= "Saat ini tidak ada Favorit terpilih.	Admin dapat menambah Favorit untuk ditampilkan saat permulaan.";
@@ -1304,7 +1304,7 @@ $pgv_lang["gedcom_favorites_descr"] 		= "Blok Favorit GEDCOM memberi Administrat
 $pgv_lang["gedcom_stats_block"] 		= "Statistik GEDCOM";
 $pgv_lang["gedcom_stats_descr"] 		= "Blok Statistik GEDCOM memperlihatkan kepada pengunjung beberapa informasi dasar tentang basisdata, seperti kapan pembuatannya dan berapa orang kandungannya.<br /><br />Ia juga mempunyai daftar marga yang paling sering. Anda dapat mengatur blok ini agar tidak memperlihatkan Daftar marga yang sering, dan Anda juga dapat mengatur GEDCOM untuk membuang atau menambah nama ke daftar ini. Anda dapat menetapkan batas tampilan untuk daftar ini pada pengaturan GEDCOM.";
 $pgv_lang["gedcom_stats_show_surnames"]		= "Perlihatkan marga umum?";
-$pgv_lang["portal_config_intructions"]		= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Anda dapat mengatur halaman dengan meletakkan blok pada halaman sebagaimana Anda inginkan.<br /><br />Halaman terbagi atas bagian <b>Utama</b> dan <b>Kanan</b>. Blok bagian <b>Utama</b> tampak lebih besar dan di bawah judul halaman. Bagian <b>Kanan</b> bermula dari kanan judul ke sisi bawah kanan halaman.<br /><br />Setiap bagian mempunyai daftar bloknya masing-masing yang akan dicetak pada halaman dengan urutan sebagaimana dalam daftar. Anda dapat menambah, membuang, dan menyusun blok semau Anda.<br /><br />Saat salah satu daftar blok kosong, blok yang tersisa akan mengambil lebar halaman yang tersisa.<br /><br />";
+$pgv_lang["portal_config_intructions"]		= "~Atur Portal GedViewSaya <br /> Atur Halaman-depan-GEDCOM ini~<br /><br />Anda dapat mengatur halaman dengan meletakkan blok pada halaman sebagaimana Anda inginkan.<br /><br />Halaman terbagi atas bagian <b>Utama</b> dan <b>Kanan</b>. Blok bagian <b>Utama</b> tampak lebih besar dan di bawah judul halaman. Bagian <b>Kanan</b> bermula dari kanan judul ke sisi bawah kanan halaman.<br /><br />Setiap bagian mempunyai daftar bloknya masing-masing yang akan dicetak pada halaman dengan urutan sebagaimana dalam daftar. Anda dapat menambah, membuang, dan menyusun blok semau Anda.<br /><br />Saat salah satu daftar blok kosong, blok yang tersisa akan mengambil lebar halaman yang tersisa.<br /><br />";
 $pgv_lang["login_block"]			= "Catatmasuk";
 $pgv_lang["login_descr"]			= "Blok Catatmasuk menerima nama pengguna dan sandi bagi pengguna untuk mencatatmasuk.";
 $pgv_lang["theme_select_block"] 		= "Pilih Tema";
@@ -1626,8 +1626,8 @@ $pgv_lang["definitions"]			= "Definisi";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Uraian Blok";
 $pgv_lang["click_here"]				= "Klik di sini untuk melanjutkan";
-$pgv_lang["click_here_help"]			= "~#pgv_lang[click_here]#~<br /><br />Klik tombol ini untuk menyimpan perubahan Anda.<br /><br />Anda akan kembali ke halaman #pgv_lang[welcome]# atau #pgv_lang[mygedview]#, namun perubahan Anda mungkin tidak diperlihatkan. Anda mungkin perlu untuk menggunakan fungsi Muatkembali Halaman dari perambah Anda untuk menampilkan perubahan Anda dengan benar.";
-$pgv_lang["block_summaries"]			= "~#pgv_lang[block_desc]#~<br /><br />Berikut adalah uraian singkat dari tiap blok yang dapat Anda tempatkan pada halaman #pgv_lang[welcome]# atau #pgv_lang[mygedview]#.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"]			= "~Klik di sini untuk melanjutkan~<br /><br />Klik tombol ini untuk menyimpan perubahan Anda.<br /><br />Anda akan kembali ke halaman Selamat Datang atau Portal GedViewSaya, namun perubahan Anda mungkin tidak diperlihatkan. Anda mungkin perlu untuk menggunakan fungsi Muatkembali Halaman dari perambah Anda untuk menampilkan perubahan Anda dengan benar.";
+$pgv_lang["block_summaries"]			= "~Uraian Blok~<br /><br />Berikut adalah uraian singkat dari tiap blok yang dapat Anda tempatkan pada halaman Selamat Datang atau Portal GedViewSaya.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nama</b></td><td class='list_value'><b>Uraian</b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]		= "&nbsp;";
 
