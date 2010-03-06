@@ -139,10 +139,10 @@ class i18n {
 	static public function fact_abbreviation($fact) {
 		$abbrev='ABBREV_'.$fact;
 		if (i18n::is_translated($abbrev)) {
-			echo i18n::translate($abbrev);
+			return i18n::translate($abbrev);
 		} else {
 			// Just use the first letter of the full fact
-			echo UTF8_substr(i18n::translate($fact), 0, 1);
+			return UTF8_substr(i18n::translate($fact), 0, 1);
 		}
 	}
 
