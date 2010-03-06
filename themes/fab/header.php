@@ -178,6 +178,11 @@ if ($view!='simple') {
 	unset($menu_items, $n, $menu);
 	echo '</ul></div>';
 }
-require './sidebar.php';
+<?php
+	global $controller;
+	if (method_exists($controller, 'getOtherMenu')) {	
+		require './sidebar.php'; 
+	}
+?>
 echo '</div><div id="content">';
 flush(); // Allow the browser to format the header/menus while we generate the page

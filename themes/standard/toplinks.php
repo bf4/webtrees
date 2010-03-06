@@ -109,5 +109,10 @@ $menubar = new MenuBar();
 </div>
 <?php require PGV_ROOT.'includes/accesskeyHeaders.php'; ?>
 </div>
-<?php require './sidebar.php'; ?>
+<?php
+	global $controller;
+	if (method_exists($controller, 'getOtherMenu')) {	
+		require './sidebar.php'; 
+	}
+?>
 <div id="content">
