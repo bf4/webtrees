@@ -54,7 +54,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 function GetGEDFromZIP($zipfile, $extract=true) {
 	GLOBAL $INDEX_DIRECTORY;
 
-	require_once PGV_ROOT.'includes/pclzip.lib.php';
+	require_once PGV_ROOT.'library/pclzip.lib.php';
 	$zip = new PclZip($zipfile);
 	// if it's not a valid zip, just return the filename
 	if (($list = $zip->listContent()) == 0) {

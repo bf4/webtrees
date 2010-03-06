@@ -255,7 +255,7 @@ class UserMigrateControllerRoot extends BaseController {
 
 		// Make the zip
 		if (count($this->flist) > 0) {
-			require_once PGV_ROOT.'includes/pclzip.lib.php';
+			require_once PGV_ROOT.'library/pclzip.lib.php';
 			$this->buname = date("YmdHis").".zip";
 			$this->fname = $INDEX_DIRECTORY.$this->buname;
 			$comment = "Created by ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT." on ".date("r").".";
