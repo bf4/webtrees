@@ -65,7 +65,7 @@ if ($action == 'download') {
 }
 
 if ($action == "download" && $zip == "yes") {
-	require PGV_ROOT.'includes/pclzip.lib.php';
+	require PGV_ROOT.'library/pclzip.lib.php';
 
 	$temppath = $INDEX_DIRECTORY . "tmp/";
 	$fileName = $ged;

@@ -32,7 +32,7 @@ header("Content-Type: text/plain; charset=$CHARACTER_SET");
 session_write_close();
 
 //-- args
-$FILTER=safe_GET('q', PGV_REGEX_UNSAFE); // we can search on '"><& etc.
+$FILTER=safe_GET('term', PGV_REGEX_UNSAFE); // we can search on '"><& etc.
 $FILTER=UTF8_strtoupper($FILTER);
 $OPTION=safe_GET('option');
 $FORMAT=safe_GET('fmt');

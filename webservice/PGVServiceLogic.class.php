@@ -52,7 +52,7 @@ class PGVServiceLogic extends GenealogyService {
 			$libs .= 'zlib,';
 		}
 		//pgv zip
-		if (file_exists('includes/pclzip.lib.php')) {
+		if (file_exists('library/pclzip.lib.php')) {
 			$libs .= 'zip,';
 		}
 		//trim the string

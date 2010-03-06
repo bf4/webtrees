@@ -115,7 +115,7 @@ function pgvMail($to, $from, $subject, $message) {
 	}
 	// if SMTP mail is set active AND we have SMTP settings available, use the PHPMailer classes
 	if ($PGV_SMTP_ACTIVE  && ( $PGV_SMTP_HOST && $PGV_SMTP_PORT ) ) {
-		require_once PGV_ROOT.'includes/class.phpmailer.php';
+		require_once PGV_ROOT.'library/phpmailer/class.phpmailer.php';
 		$mail_object = new PHPMailer();
 		$mail_object->IsSMTP();
 		$mail_object->SetLanguage('en','languages/');

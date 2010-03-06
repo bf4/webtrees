@@ -35,7 +35,7 @@ require_once PGV_ROOT.'includes/classes/class_grampsexport.php';
 require_once PGV_ROOT.'includes/classes/class_person.php';
 require_once PGV_ROOT.'includes/functions/functions.php';
 require_once PGV_ROOT.'includes/controllers/basecontrol.php';
-require_once PGV_ROOT.'includes/pclzip.lib.php';
+require_once PGV_ROOT.'library/pclzip.lib.php';
 
 function same_group($a, $b) {
 	if ($a['type'] == $b['type'])
