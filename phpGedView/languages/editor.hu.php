@@ -93,7 +93,7 @@ $pgv_lang["basic_search"]			= "keres";
 $pgv_lang["birthdate_search"]		= "Születési dátum: ";
 $pgv_lang["birthplace_search"]		= "Születési hely: ";
 $pgv_lang["change"]					= "Változtat";
-$pgv_lang["change_family_instr"]	= "Használja ezt az oldalt hogy változtasson vagy töröljön családtagokat.<br /><br />Minden családtagnál használhatja a Változtat linket hogy válasszon egy másik személyt a helyében. Az Eltávolít linket használhatja hogy a személyt eltávolítsa a családból.<br /><br />Miután készen van a változtatásokkal, nyomja meg a Mentés gombot, hogy elmentse a változtatásokat.<br />";
+$pgv_lang["change_family_instr"]	= "Használja ezt az oldalt hogy változtasson vagy töröljön családtagokat.<br /><br />Minden családtagnál használhatja a Változtat linket hogy válasszon egy másik személyt a helyében. Az Eltávolít linket használhatja hogy a személyt eltávolítsa a családból.<br /><br />Miután készen van a változtatásokkal, nyomja meg a Mentés gombot, hogy elmentse a változtatásokat.";
 $pgv_lang["change_family_members"]	= "Családtagok változtatása";
 $pgv_lang["changes_occurred"]		= "A következő változások történtek ezen a személyen:";
 $pgv_lang["confirm_remove"]			= "Biztosan el akarja távolítani ezt a személyt ebből a családból?";
@@ -169,7 +169,7 @@ $pgv_lang["update_successful"]		= "A frissítés sikeresen megtörtént";
 $pgv_lang["upload"]					= "Feltöltés";
 $pgv_lang["upload_error"]		= "Hiba történt az Ön GEDCOM-állományának feltöltése közben.";
 $pgv_lang["upload_media"]		= "Média állomány feltöltése";
-$pgv_lang["upload_media_help"]		= "~Média állomány feltöltése~<br /><br />Válasszon állományokat a számítógépéről amit a szerverre fel akar tölteni. Minden álomány a <b>#MEDIA_DIRECTORY#</b> mappába lesz feltöltve vagy az alatta levő mappába.<br /><br />Az ön által választott mappa név a #MEDIA_DIRECTORY# -hoz lesz kapcsolva. Például, #MEDIA_DIRECTORY#csaladom. Ha az előnézet mappa nem létezik akkor létre lesz hozva.";
+$pgv_lang["upload_media_help"]		= "Válasszon állományokat a számítógépéről amit a szerverre fel akar tölteni. Minden álomány a <b>#MEDIA_DIRECTORY#</b> mappába lesz feltöltve vagy az alatta levő mappába.<br /><br />Az ön által választott mappa név a #MEDIA_DIRECTORY# -hoz lesz kapcsolva. Például, #MEDIA_DIRECTORY#csaladom. Ha az előnézet mappa nem létezik akkor létre lesz hozva.";
 $pgv_lang["upload_successful"]		= "A feltöltés sikeres volt.";
 $pgv_lang["view_change_diff"]		= "Változások megtekintése";
 

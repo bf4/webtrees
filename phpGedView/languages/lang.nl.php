@@ -187,7 +187,7 @@ $pgv_lang["familybook_chart"]			= "Familieboek";
 $pgv_lang["descent_steps"]				= "Nakomelingen stappen";
 
 $pgv_lang["cancel"]						= "Afbreken";
-$pgv_lang["cookie_help"]				= "Deze site gebruikt \"cookies\" om uw aanmelding vast te houden.<br /><br />Het gebruik van \"cookies\" is niet toegestaan in uw windows-verkenner, waardoor u niet kunt aanmelden. Raadpleeg de Help-informatie van uw windows-verkenner om het gebruik van \"cookies\" toe te staan.<br />";
+$pgv_lang["cookie_help"]				= "Deze site gebruikt \"cookies\" om uw aanmelding vast te houden.<br /><br />Het gebruik van \"cookies\" is niet toegestaan in uw windows-verkenner, waardoor u niet kunt aanmelden. Raadpleeg de Help-informatie van uw windows-verkenner om het gebruik van \"cookies\" toe te staan.";
 
 //Individual
 $pgv_lang["indi_is_remote"]				= "De informatie over deze persoon is afkomstig van een gekoppelde site.";
@@ -262,7 +262,7 @@ $pgv_lang["remember_me"]				= "Onthoudt mij op deze PC?";
 $pgv_lang["fams_with_surname"]			= "Gezinnen met achternaam #surname#";
 $pgv_lang["support_contact"]			= "Contactpersoon technische hulp";
 $pgv_lang["genealogy_contact"]			= "Contactpersoon genealogie";
-$pgv_lang["common_upload_errors"]		= "Deze foutboodschap betekent waarschijnlijk dat het bestand dat u probeert te uploaden, groter is dan het maximum dat de beheerder van de webserver heeft ingesteld. Standaard is de maximum grootte 2Mb. U kunt contact opnemen met de beheerder van de webserver om hem de limiet te laten verhogen, of u kunt het bestand met behulp van een FTP-programma uploaden.<br />Gebruik de functie <a href=\"uploadgedcom.php?action=add_form\">GEDCOM-bestand toevoegen</a> om een bestand in PhpGedView toe te voegen, dat u met zo'n programma heeft ge-upload.<br />";
+$pgv_lang["common_upload_errors"]		= "Deze foutboodschap betekent waarschijnlijk dat het bestand dat u probeert te uploaden, groter is dan het maximum dat de beheerder van de webserver heeft ingesteld. Standaard is de maximum grootte 2Mb. U kunt contact opnemen met de beheerder van de webserver om hem de limiet te laten verhogen, of u kunt het bestand met behulp van een FTP-programma uploaden.<br />Gebruik de functie <a href=\"uploadgedcom.php?action=add_form\">GEDCOM-bestand toevoegen</a> om een bestand in PhpGedView toe te voegen, dat u met zo'n programma heeft ge-upload.";
 $pgv_lang["total_memory_usage"]			= "Totaal geheugengebruik:";
 $pgv_lang["mothers_family_with"]		= "Moeders gezin met ";
 $pgv_lang["fathers_family_with"]		= "Vaders gezin met ";
@@ -430,7 +430,7 @@ $pgv_lang["indi_info"]				= "Persoonsinformatie";
 $pgv_lang["pedigree_chart"]			= "Kwartierstaat";
 $pgv_lang["individual"]				= "Persoon";
 $pgv_lang["as_spouse"]				= "Gezin met partner";
-$pgv_lang["privacy_error"]			= "Details van deze persoon zijn privé.<br />";
+$pgv_lang["privacy_error"]			= "Details van deze persoon zijn privé.";
 $pgv_lang["more_information"]		= "Neem voor meer informatie contact op met ";
 $pgv_lang["given_name"]				= "Voornaam:";
 $pgv_lang["surname"]				= "Achternaam:";
@@ -1185,7 +1185,7 @@ $pgv_lang["mail02_subject"]				= "Er is een verzoek gedaan op ( #SERVER_NAME# ) 
 $pgv_lang["hashcode"]					= "Verificatiecode:";
 $pgv_lang["thankyou"]					= "Hallo #user_fullname# ...<br />Dank voor uw registratie";
 $pgv_lang["pls_note06"]					= "U ontvangt een bevestigingsbericht naar het emailadres ( #user_email# ). Met de gegevens in dit bericht kunt u uw gebruikersnaam activeren. Als dit niet binnen zeven dagen gebeurt, wordt uw aanvraag verwijderd. U kunt dan opnieuw een gebruikersnaam aanvragen. Om aan te melden op deze site heeft u altijd een gebruikersnaam en wachtwoord nodig.";
-$pgv_lang["pls_note06a"] 				= "Er wordt nu een bevestiging verzonden naar het e-mailadres ( #user_email# ). U dient uw aanvraag te bevestigen, volg hiervoor de instructies in het e-mailbericht. Als u uw aanvraag niet binnen zeven dagen bevestigt, komt uw aanvraag automatisch te vervallen. U moet dan opnieuw een aanvraag indienen.<br /><br />Nadat u uw aanvraag heeft bevestigd, kunt u zich aanmelden als gebruiker op de website. Gebruik hiervoor uw gebruikersnaam en wachtwoord.<br /><br />";
+$pgv_lang["pls_note06a"] 				= "Er wordt nu een bevestiging verzonden naar het e-mailadres ( #user_email# ). U dient uw aanvraag te bevestigen, volg hiervoor de instructies in het e-mailbericht. Als u uw aanvraag niet binnen zeven dagen bevestigt, komt uw aanvraag automatisch te vervallen. U moet dan opnieuw een aanvraag indienen.<br /><br />Nadat u uw aanvraag heeft bevestigd, kunt u zich aanmelden als gebruiker op de website. Gebruik hiervoor uw gebruikersnaam en wachtwoord.";
 
 $pgv_lang["registernew"]				= "Bevestiging nieuwe gebruiker";
 $pgv_lang["user_verify"]				= "Verificatie gebruiker";
@@ -1226,7 +1226,7 @@ $pgv_lang["passwordlength"]				= "Het wachtwoord moet uit minimaal 6 karakters b
 $pgv_lang["welcome_text_auth_mode_1"]		= "<b>WELKOM OP DEZE GENEALOGIE WEBSITE</b><br /><br />Toegang tot deze website is voorbehouden aan bezoekers die hiervoor zijn geautoriseerd.<br />Als u al beschikt over een gebruikersnaam en wachtwoord, dan kunt u zich op deze pagina aanmelden.<br /><br />Als u nog geen gebruikersnaam en wachtwoord heeft, kunt u er met behulp van de onderstaande koppeling een aanvragen.<br />Na verificatie van de door u verstrekte informatie zal de sitebeheerder uw gebruikersnaam activeren.<br />Zodra activering heeft plaatsgevonden, ontvangt u hierover een e-mailbericht.";
 $pgv_lang["welcome_text_auth_mode_2"]		= "<b>WELKOM OP DEZE GENEALOGIE WEBSITE</b><br /><br />Toegang tot deze website is voorbehouden aan bezoekers die hiervoor zijn <b>geautoriseerd</b>.<br />Als u al beschikt over een gebruikersnaam en wachtwoord, dan kunt u zich op deze pagina aanmelden.<br /><br />Als u nog geen gebruikersnaam en wachtwoord heeft, kunt u er met behulp van de onderstaande koppeling een aanvragen.<br />Na verificatie van de door u verstrekte informatie kan de sitebeheerder uw aanvraag toekennen of afwijzen.<br />Zodra uw aanvraag wordt toegekend, ontvangt u hierover een e-mailbericht.";
 $pgv_lang["welcome_text_auth_mode_3"]		= "<b>WELKOM OP DEZE GENEALOGIE WEBSITE</b><br /><br />Toegang tot deze website is voorbehouden aan <b>familieleden</b><br /><br />Als u al beschikt over een gebruikersnaam en wachtwoord, dan kunt u zich op deze pagina aanmelden.<br /><br />Als u nog geen gebruikersnaam en wachtwoord heeft, kunt u er met behulp van de onderstaande koppeling een aanvragen.<br />Na verificatie van de door u verstrekte informatie kan de sitebeheerder uw aanvraag toekennen of afwijzen.<br />Zodra uw aanvraag wordt toegekend, ontvangt u hierover een e-mailbericht.";
-$pgv_lang["welcome_text_cust_head"]			= "<b>WELKOM OP DEZE GENEALOGIE WEBSITE</b><br /><br />Toegang is voorbehouden aan gebruikers die beschikken over een gebruikersnaam en wachtwoord voor deze site.<br />";
+$pgv_lang["welcome_text_cust_head"]			= "<b>WELKOM OP DEZE GENEALOGIE WEBSITE</b><br /><br />Toegang is voorbehouden aan gebruikers die beschikken over een gebruikersnaam en wachtwoord voor deze site.";
 $pgv_lang["acceptable_use"]			= "<div class=\"largeError\">Belangrijk bericht:</div><div class=\"error\">Door dit formulier in te vullen en te verzenden, gaat u akkoord met:<ul><li>de privacy van nog levende personen, die op onze site voorkomen, te respecteren;</li><li>en in het onderstaande tekstvak, uit te leggen aan wie u verwant bent, of ons van informatie te voorzien over iemand, die op onze site vermeld zou moeten staan.</li></ul></div>";
 
 //-- mygedview page
@@ -1392,8 +1392,8 @@ $pgv_lang["reset_default_blocks"]		= "Terug naar standaardindeling";
 $pgv_lang["recent_changes"]				= "Recente wijzigingen";
 $pgv_lang["recent_changes_block"]		= "Recente wijzigingen";
 $pgv_lang["recent_changes_descr"]		= "In het vak \"Recente wijzigingen\" treft u een overzicht aan van alle wijzigingen die in de afgelopen maand zijn aangebracht. De wijzigingen worden getoond aan de hand van de informatie hierover in de persoons- en gezinsinformatie.";
-$pgv_lang["recent_changes_none"]		= "<b>Geen wijzigingen in de afgelopen #pgv_lang[global_num1]# dagen.</b><br />";
-$pgv_lang["recent_changes_some"]		= "<b>Wijzigingen in de afgelopen #pgv_lang[global_num1]# dagen</b><br />";
+$pgv_lang["recent_changes_none"]		= "<b>Geen wijzigingen in de afgelopen #pgv_lang[global_num1]# dagen.</b>";
+$pgv_lang["recent_changes_some"]		= "<b>Wijzigingen in de afgelopen #pgv_lang[global_num1]# dagen</b>";
 $pgv_lang["show_empty_block"]			= "Vak verbergen wanneer het leeg is?";
 $pgv_lang["hide_block_warn"]			= "Als u een leeg vak verbergt, kun u de instellingen ervan niet wijzigen totdat het niet leeg en dus weer zichtbaar is.";
 $pgv_lang["delete_selected_messages"]			= "Verwijder geselecteerde berichten";
@@ -1700,8 +1700,8 @@ $pgv_lang["definitions"]			= "Definities";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Vakbeschrijvingen";
 $pgv_lang["click_here"]				= "Klik hier om door te gaan";
-$pgv_lang["click_here_help"]		= "~Klik hier om door te gaan~<br /><br />Klik op deze knop om de wijzigingen aan te brengen die eerder zijn opgeslagen.<br /><br />";
-$pgv_lang["block_summaries"]		= "~Vakbeschrijvingen~<br /><br />Hier volgt een korte beschrijving van de vakken die u kunt toevoegen aan de Welkom of de MyGedView pagina.<br /><center><table border='1'><tr><td class='list_value'><b>Naam</b></td><td class='list_value'><b>Omschrijving</b></td></tr>&nbsp;</table></center><br /><br />";
+$pgv_lang["click_here_help"]		= "Klik op deze knop om de wijzigingen aan te brengen die eerder zijn opgeslagen.";
+$pgv_lang["block_summaries"]		= "Hier volgt een korte beschrijving van de vakken die u kunt toevoegen aan de Welkom of de MyGedView pagina.<br /><center><table border='1'><tr><td class='list_value'><b>Naam</b></td><td class='list_value'><b>Omschrijving</b></td></tr>&nbsp;</table></center>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

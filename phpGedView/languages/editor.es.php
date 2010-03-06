@@ -144,7 +144,7 @@ $pgv_lang["basic_search_discription"] = "Búsqueda básica del sitio";
 $pgv_lang["birthdate_search"]		= "Fecha de nacimiento: ";
 $pgv_lang["birthplace_search"]		= "Lugar de nacimiento: ";
 $pgv_lang["change"]					= "Cambiar";
-$pgv_lang["change_family_instr"]	= "Utilice esta página para cambiar o eliminar miembros de esta familia.<br /><br />Para cada miembro de esta familia, puede usar el vínculo Cambiar para escoger otra persona diferente para ese papel en la familia. También puede utilizar el vínculo Borrar para eliminar esa persona de la familia.<br /><br />Cuando haya terminado de cambiar los miembros de la familia, haga clic en el botón Guardar para guardar los cambios.<br />";
+$pgv_lang["change_family_instr"]	= "Utilice esta página para cambiar o eliminar miembros de esta familia.<br /><br />Para cada miembro de esta familia, puede usar el vínculo Cambiar para escoger otra persona diferente para ese papel en la familia. También puede utilizar el vínculo Borrar para eliminar esa persona de la familia.<br /><br />Cuando haya terminado de cambiar los miembros de la familia, haga clic en el botón Guardar para guardar los cambios.";
 $pgv_lang["change_family_members"]	= "Modificar los miembros de la familia";
 $pgv_lang["changes_occurred"]		= "Este registro tuvo los cambios siguientes:";
 $pgv_lang["confirm_remove"]			= "¿Está seguro de que quiere desvincular esta persona de la familia?";
@@ -243,7 +243,7 @@ $pgv_lang["upload"]					= "Subir";
 $pgv_lang["upload_error"]			= "Hubo un error al subir su archivo.";
 $pgv_lang["copy_error"]				= "No se pudo copiar al archivo #GLOBALS[whichFile2]# el contenido del archivo #GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]			= "Subir archivos audiovisuales";
-$pgv_lang["upload_media_help"]		= "~Subir archivos audiovisuales~<br /><br />Seleccione los archivos de su equipo local a subir a su servidor.  Todos los archivos se subirán al directorio <b>#MEDIA_DIRECTORY#</b> o a uno de sus subdirectorios.<br /><br />Los nombres de carpeta que indique se añadirán a #MEDIA_DIRECTORY#. Por ejemplo, #MEDIA_DIRECTORY#myfamily. Si no existe el directorio de miniaturas, se creará automáticamente.";
+$pgv_lang["upload_media_help"]		= "Seleccione los archivos de su equipo local a subir a su servidor.  Todos los archivos se subirán al directorio <b>#MEDIA_DIRECTORY#</b> o a uno de sus subdirectorios.<br /><br />Los nombres de carpeta que indique se añadirán a #MEDIA_DIRECTORY#. Por ejemplo, #MEDIA_DIRECTORY#myfamily. Si no existe el directorio de miniaturas, se creará automáticamente.";
 $pgv_lang["upload_successful"]		= "Proceso completo";
 $pgv_lang["view_change_diff"]		= "Ver modificaciones";
 

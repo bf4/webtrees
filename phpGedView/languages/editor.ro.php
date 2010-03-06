@@ -128,7 +128,7 @@ $pgv_lang["basic_search_discription"] = "Cautare de bază pe site";
 $pgv_lang["birthdate_search"]		= "Data naşterii: ";
 $pgv_lang["birthplace_search"]		= "Locul naşterii: ";
 $pgv_lang["change"]					= "Schimbă";
-$pgv_lang["change_family_instr"]	= "Folosiţi această pagină pentru a schimba sau a şterge membri familiei.<br /><br />Pentru fiecare membru din familie, puteţi folosi linkul Modifică pentru a alege o persoană diferită care să umple acel rol în familie.  Puteţi de-asemenea să folosiţi linkul Şterge pentru a şterge acea persoană din familie.<br /><br />Când aţi terminat de modificat membri familiei, daţi click pe butonul Salvează pentru a salva schimbările.<br />";
+$pgv_lang["change_family_instr"]	= "Folosiţi această pagină pentru a schimba sau a şterge membri familiei.<br /><br />Pentru fiecare membru din familie, puteţi folosi linkul Modifică pentru a alege o persoană diferită care să umple acel rol în familie.  Puteţi de-asemenea să folosiţi linkul Şterge pentru a şterge acea persoană din familie.<br /><br />Când aţi terminat de modificat membri familiei, daţi click pe butonul Salvează pentru a salva schimbările.";
 $pgv_lang["change_family_members"]	= "Modifică membri familiei";
 $pgv_lang["changes_occurred"]		= "Următoarele schimbări au fost făcute pentru această înregistrare:";
 $pgv_lang["confirm_remove"]			= "Sunteţi sigur(ă) că doriţi să ştergeţi această persoană din familie ?";
@@ -216,7 +216,7 @@ $pgv_lang["update_successful"]		= "Actualizare reuşită";
 $pgv_lang["upload"]					= "Upload";
 $pgv_lang["upload_error"]			= "A existat o eroare la uploadarea fişierului dumneavoastră.";
 $pgv_lang["upload_media"]			= "Uploadează fişiere media";
-$pgv_lang["upload_media_help"]		= "~Uploadează fişiere media~<br /><br />Selectaţi fişiere de pe calculatorul dumneavoastră pentru a putea fi uploadate pe serverul dumneavoastră.  Toate fişierele for fi uploadate în directorul <b>#MEDIA_DIRECTORY#</b> sau unul din subdirectoarele lui.<br /><br />Numele directoarelor specificate vor fi adăugate la #MEDIA_DIRECTORY#. De exemplu, #MEDIA_DIRECTORY#familia_mea. Dacă directorul pentru thumbnailuri nu există, este creat automat.";
+$pgv_lang["upload_media_help"]		= "Selectaţi fişiere de pe calculatorul dumneavoastră pentru a putea fi uploadate pe serverul dumneavoastră.  Toate fişierele for fi uploadate în directorul <b>#MEDIA_DIRECTORY#</b> sau unul din subdirectoarele lui.<br /><br />Numele directoarelor specificate vor fi adăugate la #MEDIA_DIRECTORY#. De exemplu, #MEDIA_DIRECTORY#familia_mea. Dacă directorul pentru thumbnailuri nu există, este creat automat.";
 $pgv_lang["upload_successful"]		= "Upload reuşit.";
 $pgv_lang["view_change_diff"]		= "Vezi diferenţele modificării";
 

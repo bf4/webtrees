@@ -118,7 +118,7 @@ $pgv_lang["basic_search_discription"] = "Standard sajtsökning";
 $pgv_lang["birthdate_search"]		= "Födelsedatum: ";
 $pgv_lang["birthplace_search"]		= "Födelseort: ";
 $pgv_lang["change"]					= "Ändra";
-$pgv_lang["change_family_instr"]	= "Använd denna sida att lägga till eller tabort familjemedlemmar.<br /><br />För varje medlem i familjen kan du använda ändra länken för att välja en annan person att ta platsen i familjen. Du kan också tabortlänken för att tabort personen från familjen.<br /><br />När du är klar med ändringarna av familjemedlemmarna ska du klicka på spara-knappen för att spara ändringarna.<br />";
+$pgv_lang["change_family_instr"]	= "Använd denna sida att lägga till eller tabort familjemedlemmar.<br /><br />För varje medlem i familjen kan du använda ändra länken för att välja en annan person att ta platsen i familjen. Du kan också tabortlänken för att tabort personen från familjen.<br /><br />När du är klar med ändringarna av familjemedlemmarna ska du klicka på spara-knappen för att spara ändringarna.";
 $pgv_lang["change_family_members"]	= "Ändra familjemedlemmar";
 $pgv_lang["changes_occurred"]	= "Följande ändringar har gjorts för denna person:";
 $pgv_lang["confirm_remove"]			= "Är du säker på att du vill ta bort denna person ifrån familjen?";
@@ -206,7 +206,7 @@ $pgv_lang["update_successful"]	= "Uppdatering genomförd";
 $pgv_lang["upload"]					= "Ladda upp";
 $pgv_lang["upload_error"]		= "Det uppstod ett fel vid uppladdningen av din fil.";
 $pgv_lang["upload_media"]		= "Ladda upp mediafiler";
-$pgv_lang["upload_media_help"]	= "~Ladda upp mediafiler~<br /><br />Välj filer från din lokala dator som ska laddas upp till din server. Alla filer kommer att laddas upp till mappen <b>#MEDIA_DIRECTORY#</b> eller til en av dess undermappar.<br /><br />Mappnamnen som du angav kommer att läggas till #MEDIA_DIRECTORY#. T.ex. #MEDIA_DIRECTORY#myfamily. Om miniatyrbildsmappen inte finns kommer den att skapas automatiskt.";
+$pgv_lang["upload_media_help"]	= "Välj filer från din lokala dator som ska laddas upp till din server. Alla filer kommer att laddas upp till mappen <b>#MEDIA_DIRECTORY#</b> eller til en av dess undermappar.<br /><br />Mappnamnen som du angav kommer att läggas till #MEDIA_DIRECTORY#. T.ex. #MEDIA_DIRECTORY#myfamily. Om miniatyrbildsmappen inte finns kommer den att skapas automatiskt.";
 $pgv_lang["upload_successful"]	= "Uppladdning lyckades";
 $pgv_lang["view_change_diff"]	= "Visa förändringar";
 

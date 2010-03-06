@@ -97,7 +97,7 @@ $pgv_lang["associated_files"]		= "Tilhørende filer:";
 $pgv_lang["remove_all_files"]		= "Slett alle unødvendige filer";
 $pgv_lang["warn_file_delete"]		= "Denne filen inneholder viktige data slik som språkvalg eller endringer som venter på godkjenning.  Er du sikker på at du vil slette denne filen?";
 $pgv_lang["deleted_files"]          = "Slettede filer:";
-$pgv_lang["index_dir_cleanup_inst"]	= "For å slette en fil eller en undermappe fra Index-mappen,  dra og slipp den på papirkurven eller huk den av.  Klikk Slett-knappen for å fjerne de merkede filene permanent.<br /><br />Filer merket med <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> er påkrevet for normal bruk av systemet og kan ikke slettes.<br />Filer merket med <img src=\"./images/RESN_locked.gif\" alt=\"\" /> inneholder viktige innstillinger eller ventende endringer og må ikke slettes uten at du er HELT sikker på hva du gjør.<br /><br />";
+$pgv_lang["index_dir_cleanup_inst"]	= "For å slette en fil eller en undermappe fra Index-mappen,  dra og slipp den på papirkurven eller huk den av.  Klikk Slett-knappen for å fjerne de merkede filene permanent.<br /><br />Filer merket med <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> er påkrevet for normal bruk av systemet og kan ikke slettes.<br />Filer merket med <img src=\"./images/RESN_locked.gif\" alt=\"\" /> inneholder viktige innstillinger eller ventende endringer og må ikke slettes uten at du er HELT sikker på hva du gjør.";
 $pgv_lang["index_dir_cleanup"]		= "Opprydning i Indexmappen";
 $pgv_lang["clear_cache_succes"]		= "Hurtigminne-filen er slettet.";
 $pgv_lang["clear_cache"]			= "Rens hurtigminne-filen";

@@ -119,7 +119,7 @@ $pgv_lang["basic_search_discription"] = "Eenvoudig zoeken";
 $pgv_lang["birthdate_search"]		= "Geboortedatum: ";
 $pgv_lang["birthplace_search"]		= "Geboorteplaats: ";
 $pgv_lang["change"]						= "Wijzig";
-$pgv_lang["change_family_instr"]	= "Op deze pagina kunt u gezinsleden wijzigen en verwijderen.<br /><br />Voor ieder gezinslid kunt u de koppeling \"Wijzig\" gebruiken om en ander persoon de desbetreffende rol binnen het gezin te geven. U kunt ook de koppeling \"Verwijderen\"gebruiken om de persoon uit het gezin te verwijderen.<br /><br />Als u klaar bent met aanpassen van de gezinsleden, kunt u de wijzigingen opslaan met de \"Opslaan\"-knop.<br />";
+$pgv_lang["change_family_instr"]	= "Op deze pagina kunt u gezinsleden wijzigen en verwijderen.<br /><br />Voor ieder gezinslid kunt u de koppeling \"Wijzig\" gebruiken om en ander persoon de desbetreffende rol binnen het gezin te geven. U kunt ook de koppeling \"Verwijderen\"gebruiken om de persoon uit het gezin te verwijderen.<br /><br />Als u klaar bent met aanpassen van de gezinsleden, kunt u de wijzigingen opslaan met de \"Opslaan\"-knop.";
 $pgv_lang["change_family_members"]		= "Wijzig gezinsleden";
 $pgv_lang["changes_occurred"]			= "De volgende wijzigingen zijn voorgekomen voor deze persoon:";
 $pgv_lang["confirm_remove"]				= "Weet u zeker dat u deze persoon uit het gezin wilt verwijderen?";
@@ -205,7 +205,7 @@ $pgv_lang["update_successful"]			= "Bijwerken geslaagd.";
 $pgv_lang["upload"]						= "Upload";
 $pgv_lang["upload_error"]				= "Er is een fout opgetreden bij het uploaden van het bestand.";
 $pgv_lang["upload_media"]				= "Uploaden mediabestanden";
-$pgv_lang["upload_media_help"]			= "Selecteer de bestanden op uw computer die u naar de server wilt uploaden. Alle bestanden worden geplaatst in de map <b>#MEDIA_DIRECTORY#</b> of een van de submappen.<br /><br />Mapnamen die u specificeert worden toegevoegd aan #MEDIA_DIRECTORY#, bijvoorbeeld #MEDIA_DIRECTORY#fotoos. Als de map voor miniweergaves niet bestaat, wordt deze automatisch aangemaakt.<br /><br />";
+$pgv_lang["upload_media_help"]			= "Selecteer de bestanden op uw computer die u naar de server wilt uploaden. Alle bestanden worden geplaatst in de map <b>#MEDIA_DIRECTORY#</b> of een van de submappen.<br /><br />Mapnamen die u specificeert worden toegevoegd aan #MEDIA_DIRECTORY#, bijvoorbeeld #MEDIA_DIRECTORY#fotoos. Als de map voor miniweergaves niet bestaat, wordt deze automatisch aangemaakt.";
 $pgv_lang["upload_successful"]			= "Upload geslaagd";
 $pgv_lang["view_change_diff"]			= "Toon wijzigingen";
 

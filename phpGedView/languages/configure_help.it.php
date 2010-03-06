@@ -44,7 +44,7 @@ $pgv_lang["DBNAME"] = "Nome Database";
 $pgv_lang["server_url_note"]	= "Questo dovrebbe essere l'URL alla cartella di PhpGedView. Dovresti cambiarlo solo se sai quello che stai facendo. PhpGedView ha determinato che questo valore dovrebbe essere: <b>#GUESS_URL#</b>";
 $pgv_lang["LANGUAGE"] = "Lingua";
 $pgv_lang["LOGFILE_CREATE"]		= "Archivia file di log";
-$pgv_lang["return_editconfig"]		= "Potrai tornare a questa configurazione in qualunque momento andando con il tuo browser su <i>edit_config.php</i> o cliccando il link per la <b>Configurazione</b> sulla pagina <b></b>.<br />";
+$pgv_lang["return_editconfig"]		= "Potrai tornare a questa configurazione in qualunque momento andando con il tuo browser su <i>edit_config.php</i> o cliccando il link per la <b>Configurazione</b> sulla pagina <b></b>.";
 $pgv_lang["save_config"] 	= "Salva configurazione";
 $pgv_lang["save_changed_settings"]		= "Salva cambiamenti";
 
@@ -81,8 +81,8 @@ $pgv_lang["add_new_lang_button"]	= "Aggiungi nuova lingua";
 $pgv_lang["hide_translated"]		= "Nascondi tradotti";
 $pgv_lang["um_files_exist"] = "Uno o più file esistono già. Vuoi sovrascriverli?";
 
-$pgv_lang["welcome_new2"]			= "<br /><br />Se stai vedendo questa pagina, hai correttamente installato PhpGedView sul tuo server e sei pronto per iniziare a configurarlo secondo le tue esigenze.<br />";
-$pgv_lang["welcome_new_help"]		= "~Benvenuto nel tuo nuovo sito web PhpGedView.~<br /><br />Se stai vedendo questa pagina, hai correttamente installato PhpGedView sul tuo server e sei pronto per iniziare a configurarlo secondo le tue esigenze.<br />Questa pagina di Aiuto ti guiderà attraverso il processo di configurazione. Mentre completerai i diversi campi, questa finestra ti darà informazioni sul campo che stai completando. Puoi chiudere questa finestra; per aprire di nuovo fare clic su uno dei \"?\"  punti interrogativi accanto al nome del campo. <br />";
+$pgv_lang["welcome_new2"]			= "<br /><br />Se stai vedendo questa pagina, hai correttamente installato PhpGedView sul tuo server e sei pronto per iniziare a configurarlo secondo le tue esigenze.";
+$pgv_lang["welcome_new_help"]		= "Se stai vedendo questa pagina, hai correttamente installato PhpGedView sul tuo server e sei pronto per iniziare a configurarlo secondo le tue esigenze.<br />Questa pagina di Aiuto ti guiderà attraverso il processo di configurazione. Mentre completerai i diversi campi, questa finestra ti darà informazioni sul campo che stai completando. Puoi chiudere questa finestra; per aprire di nuovo fare clic su uno dei \"?\"  punti interrogativi accanto al nome del campo. ";
 $pgv_lang["upload_path"]			= "File da caricare";
 $pgv_lang["gedcom_path"]			= "Percorso e nome del GEDCOM sul server";
 $pgv_lang["ged_title"]			= "Titolo del GEDCOM";

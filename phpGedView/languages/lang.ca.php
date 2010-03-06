@@ -1056,14 +1056,14 @@ $pgv_lang["mail02_subject"]		= "Nou registre a #SERVER_NAME#";
 
 $pgv_lang["hashcode"]			= "Codi de Verificació:";
 $pgv_lang["thankyou"]			= "Hola #user_fullname# ...<br />Gràcies per enregistrar-vos";
-$pgv_lang["pls_note06"] 		= "Ara rebreu un correu electrònic de confirmació a l'adreça ( #user_email# ). Us caldrà confirmar la vostra petició seguint les instruccions del correu electrònic. Si no ho feu, passada una setmana la petició serà automàticament rebutjada i us caldria tornar a demanar-la.<br /><br />Desprès de seguir les instruccions del correu electrònic de confirmació, caldrà que l'administrador autoritzi la comanda abans de poder accedir planament.<br /><br />Per accedir a aquest lloc cal conèixer el nom d'usuari i la contrasenya.<br /><br />";
-$pgv_lang["pls_note06a"] 		= "Ara rebreu un correu electrònic de confirmació a l'adreça ( #user_email# ). Us caldrà confirmar la vostra petició seguint les instruccions del correu electrònic. Si no ho feu, passada una setmana la petició ser automàticament rebutjada i us caldria tornar a demanar-la.<br /><br />Desprès de seguir les instruccions del correu electrònic, tindreu lliure accés.  Per a fer-ho cal conèixer el nom d'usuari i la contrasenya<br /><br />";
+$pgv_lang["pls_note06"] 		= "Ara rebreu un correu electrònic de confirmació a l'adreça ( #user_email# ). Us caldrà confirmar la vostra petició seguint les instruccions del correu electrònic. Si no ho feu, passada una setmana la petició serà automàticament rebutjada i us caldria tornar a demanar-la.<br /><br />Desprès de seguir les instruccions del correu electrònic de confirmació, caldrà que l'administrador autoritzi la comanda abans de poder accedir planament.<br /><br />Per accedir a aquest lloc cal conèixer el nom d'usuari i la contrasenya.";
+$pgv_lang["pls_note06a"] 		= "Ara rebreu un correu electrònic de confirmació a l'adreça ( #user_email# ). Us caldrà confirmar la vostra petició seguint les instruccions del correu electrònic. Si no ho feu, passada una setmana la petició ser automàticament rebutjada i us caldria tornar a demanar-la.<br /><br />Desprès de seguir les instruccions del correu electrònic, tindreu lliure accés.  Per a fer-ho cal conèixer el nom d'usuari i la contrasenya";
 
 $pgv_lang["registernew"]		= "Confirmació de permís";
 $pgv_lang["user_verify"]		= "Verificació d'usuari";
 $pgv_lang["send"]				= "Envia";
 
-$pgv_lang["pls_note07"] 		= "~Verificació d'usuari~<br /><br />Per verificar la vostra petició, escriviu el nom d'usuari, la contrasenya i el codi de verificació que heu rebut per correu electrònic.";
+$pgv_lang["pls_note07"] 		= "Per verificar la vostra petició, escriviu el nom d'usuari, la contrasenya i el codi de verificació que heu rebut per correu electrònic.";
 $pgv_lang["pls_note08"] 		= "S'han comprovat les dades de l'usuari #user_name#.";
 
 $pgv_lang["mail03_line01"]		= "Hola Administrador ...";
@@ -1098,7 +1098,7 @@ $pgv_lang["passwordlength"]		= "La contrasenya ha de tenir com a mínim 6 caràc
 $pgv_lang["welcome_text_auth_mode_1"]	= "<center><b>Benvingut a aquest lloc web de genealogia</b></center><br />L'accés és permès a qualsevol usuari enregistrat.<br /><br />Si ja disposeu d'autorització, accediu per aquesta pàgina. Si no, podeu demanar-la polsant a l'enllaç apropiat de sota.<br /><br />Un cop verificada la vostra comanda, l'administrador del lloc us activarà el registre.  Rebreu un correu electrònic quan la hagi estat aprovada.";
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Benvingut a aquest lloc web de genealogia</b></center><br />L'accés és permès solament a usuaris <u>autoritzats</u>.<br /><br />Si ja disposeu d'autorització podeu accedir per aquesta pàgina. Si no, podeu demanar-la polsant a l'enllaç apropiat d'aquí sota.<br /><br />Un cop verificada la vostra informació l'administrador pot autoritzar-ho o no.  Rebreu un correu electrònic quan la comanda hagi estat aprovada.";
 $pgv_lang["welcome_text_auth_mode_3"]	= "<center><b>Benvingut a aquest lloc web de genealogia</b></center><br />L'accés és permès solament a <u>membres de la família</u>.<br /><br />Si ja disposeu d'autorització podeu accedir per aquesta pàgina. Si no, podeu demanar-la polsant a l'enllaç apropiat d'aquí sota.<br /><br />Un cop verificada la vostra informació l'administrador pot autoritzar-ho o no.  Rebreu un correu electrònic quan la comanda hagi estat aprovada.";
-$pgv_lang["welcome_text_cust_head"] 	= "<center><b>Benvingut a aquest lloc web de genealogia</b></center><br />L'accés és limitat a usuaris que disposin de registre i contrasenya.<br />";
+$pgv_lang["welcome_text_cust_head"] 	= "<center><b>Benvingut a aquest lloc web de genealogia</b></center><br />L'accés és limitat a usuaris que disposin de registre i contrasenya.";
 $pgv_lang["acceptable_use"]			= "<div class=\"largeError\">Advertiment:</div><div class=\"error\">Emplenant i lliurant aquest formulari, us comprometeu a:<ul><li>protegir la privadesa de la gent viva detallada en aquest lloc</li><li>i, en el requadre inferior, explicar-nos quina relació o parentiu teniu amb les persones que hi apareixen, o fornir-nos informació d'alguna d'elles.</li></ul></div>";
 
 //-- mygedview page
@@ -1164,7 +1164,7 @@ $pgv_lang["message_email3"]		= "Missatge enviat a l'Administrador PhpGedView:";
 $pgv_lang["viewing_url"]		= "Missatge redactat des d'aquesta pàgina: ";
 $pgv_lang["messaging2_help"]		= "Un cop enviat el missatge en rebreu una còpia per correu electrònic.";
 $pgv_lang["random_picture"]		= "Fitxer a l'atzar";
-$pgv_lang["message_instructions"]	= "<b>Atenció! </b> La informació privada de persones vives solament pot lliurar-se a familiars i amics.  Sereu interrogat sobre els vostres vincles de parentiu abans de rebre dades privades.  Algunes informacions sobre persones difuntes també poden resultat privades.  En aquest cas, és degut a que no hi ha informació coneguda d'aquesta persona per a determinar si és o no viva i probablement no tenim cap altra informació sobre ella.<br /><br />Abans de fer la consulta, verifiqueu que esteu demanant per la persona correcta comprovant dates, llocs i parents.  Si feu canvis a les dades genealògiques, inclogueu les fonts d'on les heu tretes.<br /><br />";
+$pgv_lang["message_instructions"]	= "<b>Atenció! </b> La informació privada de persones vives solament pot lliurar-se a familiars i amics.  Sereu interrogat sobre els vostres vincles de parentiu abans de rebre dades privades.  Algunes informacions sobre persones difuntes també poden resultat privades.  En aquest cas, és degut a que no hi ha informació coneguda d'aquesta persona per a determinar si és o no viva i probablement no tenim cap altra informació sobre ella.<br /><br />Abans de fer la consulta, verifiqueu que esteu demanant per la persona correcta comprovant dates, llocs i parents.  Si feu canvis a les dades genealògiques, inclogueu les fonts d'on les heu tretes.";
 $pgv_lang["sending_to"]			= "Aquest missatge s'enviarà a #TO_USER#";
 $pgv_lang["preferred_lang"]	 	= "Aquest usuari prefereix rebrer el correu en #USERLANG#";
 $pgv_lang["gedcom_created_using"]	= "Fitxer GEDCOM generat amb <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b>";
@@ -1208,7 +1208,7 @@ $pgv_lang["gedcom_favorites_descr"]		= "El Bloc de Favorits GEDCOM permet a l'Ad
 $pgv_lang["gedcom_stats_block"] 		= "Estadístiques GEDCOM";
 $pgv_lang["gedcom_stats_descr"]		= "El Bloc d'Estadístiques GEDCOM mostra al visitant informació bàsica sobre el fitxer GEDCOM com per exemple com i quan s'ha generat i el nombre de persones que conté.<br /><br />Disposa també d'una llista dels cognoms més habituals. Podeu configurar-lo per a que no us els mostri o treure'n i posar-n'hi. També podeu fixar-hi el llindars.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Mostrar els cognoms més comuns?";
-$pgv_lang["portal_config_intructions"]	= "~Personalitzeu el Portal MyGedView <br /> Personalitzeu la Pàgina d'Inici~<br /><br />Aquí podeu personalitzar la pàgina situant els blocs de la forma que vulgueu.<br /><br />La pàgina es divideix en dues seccions <b>Principal</b> i <b>Dreta</b>. La secció <b>Principal</b> apareix allargassada i sota el títol de pàgina.  La secció <b>Dreta</b> comença a la dreta del títol i baixa per la banda dreta de la pàgina.<br /><br />Cada secció té el seu propi llistat de blocs que es mostrarà a la pàgina en l'ordre que hi hagi al llistat. Podeu afegir, treure i reordenar els blocs com us plagui.<br /><br />Quan un dels blocs es buit, la resta de blocs es desplaça prenent tot l'ample de la pàgina.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "Aquí podeu personalitzar la pàgina situant els blocs de la forma que vulgueu.<br /><br />La pàgina es divideix en dues seccions <b>Principal</b> i <b>Dreta</b>. La secció <b>Principal</b> apareix allargassada i sota el títol de pàgina.  La secció <b>Dreta</b> comença a la dreta del títol i baixa per la banda dreta de la pàgina.<br /><br />Cada secció té el seu propi llistat de blocs que es mostrarà a la pàgina en l'ordre que hi hagi al llistat. Podeu afegir, treure i reordenar els blocs com us plagui.<br /><br />Quan un dels blocs es buit, la resta de blocs es desplaça prenent tot l'ample de la pàgina.";
 $pgv_lang["login_block"]			= "Accés";
 $pgv_lang["login_descr"]			= "El Bloc d'accés permet entrar el Nom d'Usuari i la Contrasenya per a l'accés d'usuaris.";
 $pgv_lang["theme_select_block"] 		= "Selector de presentació";
@@ -1260,8 +1260,8 @@ $pgv_lang["reset_default_blocks"]		= "Restaura els blocs per defecte";
 $pgv_lang["recent_changes"] 			= "Canvis recents";
 $pgv_lang["recent_changes_block"]		= "Canvis recents";
 $pgv_lang["recent_changes_descr"]		= "El bloc de Canvis recents llista els canvis que s'han fet a la base de dades el darrer mes per tenir-vos-en al corrent. Els canvis es detecten automàticament emprant l'etiqueta CHAN definida a l'estàndard GEDCOM.";
-$pgv_lang["recent_changes_none"]		= "<b>No hi ha canvis d'ençà els darrers #pgv_lang[global_num1]# dies.</b><br />";
-$pgv_lang["recent_changes_some"]		= "<b>Canvis fets els darrers #pgv_lang[global_num1]# dies</b><br />";
+$pgv_lang["recent_changes_none"]		= "<b>No hi ha canvis d'ençà els darrers #pgv_lang[global_num1]# dies.</b>";
+$pgv_lang["recent_changes_some"]		= "<b>Canvis fets els darrers #pgv_lang[global_num1]# dies</b>";
 $pgv_lang["show_empty_block"]			= "Cal amagar aquest bloc quan és buit?";
 $pgv_lang["hide_block_warn"]			= "Si amagueu un bloc buit no podreu canviar-ne la configuració fins que no torni a ésser visible perquè torna a haver-hi quelcom.";
 $pgv_lang["delete_selected_messages"]	= "Esborra els missatges seleccionats";
@@ -1527,8 +1527,8 @@ $pgv_lang["definitions"]		= "Definicions";
 //-- Index_edit
 $pgv_lang["block_desc"]			= "Descripció dels blocs";
 $pgv_lang["click_here"]			= "Polseu aquí per continuar";
-$pgv_lang["click_here_help"]		= "~Polseu aquí per continuar~<br /><br />Polseu aquest botó per desar els canvis.<br /><br />Retornareu a la pàgina Benvingut o a Portal MyGedView, però no veureu els canvis. Us cal emprar la funció Actualitza del navegador per veure'ls correctament.";
-$pgv_lang["block_summaries"]		= "~Descripció dels blocs~<br /><br />Heus aquí una breu descripció de cada un dels blocs que podeu posar a la pàgina Benvingut o a la Portal MyGedView .<br /><table border='1' align='center'><tr><td class='list_value'><b>Nom</b></td><td class='list_value'><b></b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"]		= "Polseu aquest botó per desar els canvis.<br /><br />Retornareu a la pàgina Benvingut o a Portal MyGedView, però no veureu els canvis. Us cal emprar la funció Actualitza del navegador per veure'ls correctament.";
+$pgv_lang["block_summaries"]		= "Heus aquí una breu descripció de cada un dels blocs que podeu posar a la pàgina Benvingut o a la Portal MyGedView .<br /><table border='1' align='center'><tr><td class='list_value'><b>Nom</b></td><td class='list_value'><b></b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

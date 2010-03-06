@@ -1212,14 +1212,14 @@ $pgv_lang["mail02_subject"] 		= "New registration at #SERVER_NAME#";
 
 $pgv_lang["hashcode"]				= "Verification code:";
 $pgv_lang["thankyou"]				= "Hello #user_fullname# ...<br />Thank you for your registration.";
-$pgv_lang["pls_note06"] 			= "We will now send a confirmation email to the address <b>#user_email#</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password.<br /><br />";
-$pgv_lang["pls_note06a"] 			= "We will now send a confirmation email to the address <b>#user_email#</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password.<br /><br />";
+$pgv_lang["pls_note06"] 			= "We will now send a confirmation email to the address <b>#user_email#</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password.";
+$pgv_lang["pls_note06a"] 			= "We will now send a confirmation email to the address <b>#user_email#</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password.";
 
 $pgv_lang["registernew"]			= "New Account confirmation";
 $pgv_lang["user_verify"]			= "User verification";
 $pgv_lang["send"]					= "Send";
 
-$pgv_lang["pls_note07"] 			= "~User verification~<br /><br />To confirm your account request, please type in your user name, your password, and the verification code you received by email.";
+$pgv_lang["pls_note07"] 			= "To confirm your account request, please type in your user name, your password, and the verification code you received by email.";
 $pgv_lang["pls_note08"] 			= "The data for the user <b>#user_name#</b> was checked.";
 
 $pgv_lang["mail03_line01"]			= "Hello Administrator ...";
@@ -1254,7 +1254,7 @@ $pgv_lang["passwordlength"] 		= "Passwords must contain at least 6 characters.";
 $pgv_lang["welcome_text_auth_mode_1"]	= "<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don't have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.";
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorized</u> users only.<br /><br />If you have a user account you can login on this page.  If you don't have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved.";
 $pgv_lang["welcome_text_auth_mode_3"]	= "<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>family members only</u>.<br /><br />If you have a user account you can login on this page.  If you don't have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying the information you provide, the administrator will either approve or decline your request for an account.  You will receive an email when your request is approved.";
-$pgv_lang["welcome_text_cust_head"] 	= "<center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website.<br />";
+$pgv_lang["welcome_text_cust_head"] 	= "<center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website.";
 $pgv_lang["acceptable_use"]			= "<div class=\"largeError\">Notice:</div><div class=\"error\">By completing and submitting this form, you agree:<ul><li>to protect the privacy of living people listed on our site;</li><li>and in the text box below, to explain to whom you are related, or to provide us with information on someone who should be listed on our site.</li></ul></div>";
 
 
@@ -1324,7 +1324,7 @@ $pgv_lang["message_email3"] 		= "You sent the following message to a PhpGedView 
 $pgv_lang["viewing_url"]			= "This message was sent while viewing the following URL: ";
 $pgv_lang["messaging2_help"]		= "When you send this message you will receive a copy sent via email to the address you provided.";
 $pgv_lang["random_picture"] 		= "Random Picture";
-$pgv_lang["message_instructions"]	= "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data.<br /><br />";
+$pgv_lang["message_instructions"]	= "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data.";
 $pgv_lang["sending_to"] 			= "This message will be sent to #TO_USER#";
 $pgv_lang["preferred_lang"] 		= "This user prefers to receive messages in #USERLANG#";
 $pgv_lang["gedcom_created_using"]	= "This GEDCOM was created using <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b>";
@@ -1373,7 +1373,7 @@ $pgv_lang["gedcom_favorites_descr"] = "The GEDCOM Favorites block gives the admi
 $pgv_lang["gedcom_stats_block"] 	= "GEDCOM Statistics";
 $pgv_lang["gedcom_stats_descr"] 	= "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Show common surnames?";
-$pgv_lang["portal_config_intructions"]	= "~Customize MyGedView Portal <br /> Customize this GEDCOM Welcome page~<br /><br />You can customize the page by positioning the blocks on the page the way that you want them.<br /><br />The page is divided into <b>Main</b> and <b>Right</b> sections.	The <b>Main</b> section blocks appear larger and under the page title.  The <b>Right</b> section starts to the right of the title and goes down the right side of the page.<br /><br />Each section has its own list of blocks that will be printed on the page in the order they are listed.  You can add, remove, and reorder the blocks however you like.<br /><br />When one of the block lists is empty, the remaining blocks will take up the whole width of the page.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "You can customize the page by positioning the blocks on the page the way that you want them.<br /><br />The page is divided into <b>Main</b> and <b>Right</b> sections.	The <b>Main</b> section blocks appear larger and under the page title.  The <b>Right</b> section starts to the right of the title and goes down the right side of the page.<br /><br />Each section has its own list of blocks that will be printed on the page in the order they are listed.  You can add, remove, and reorder the blocks however you like.<br /><br />When one of the block lists is empty, the remaining blocks will take up the whole width of the page.";
 $pgv_lang["login_block"]			= "Login";
 $pgv_lang["login_descr"]			= "The Login block accepts a user name and password for users to login.";
 $pgv_lang["theme_select_block"] 	= "Theme Select";
@@ -1425,8 +1425,8 @@ $pgv_lang["reset_default_blocks"]	= "Reset to Default Blocks";
 $pgv_lang["recent_changes"] 		= "Recent Changes";
 $pgv_lang["recent_changes_block"]	= "Recent Changes";
 $pgv_lang["recent_changes_descr"]	= "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard.";
-$pgv_lang["recent_changes_none"]	= "<b>There have been no changes within the last #pgv_lang[global_num1]# days.</b><br />";
-$pgv_lang["recent_changes_some"]	= "<b>Changes made within the last #pgv_lang[global_num1]# days</b><br />";
+$pgv_lang["recent_changes_none"]	= "<b>There have been no changes within the last #pgv_lang[global_num1]# days.</b>";
+$pgv_lang["recent_changes_some"]	= "<b>Changes made within the last #pgv_lang[global_num1]# days</b>";
 $pgv_lang["show_empty_block"]		= "Should this block be hidden when it is empty?";
 $pgv_lang["hide_block_warn"]		= "If you hide an empty block, you will not be able to change its configuration until it becomes visible by no longer being empty.";
 $pgv_lang["delete_selected_messages"]	= "Delete Selected Messages";
@@ -1823,8 +1823,8 @@ $pgv_lang["definitions"]			= "Definitions";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Block Descriptions";
 $pgv_lang["click_here"]				= "Click here to continue";
-$pgv_lang["click_here_help"]		= "~Click here to continue~<br /><br />Click this button to save your changes.<br /><br />You will be returned to the Welcome or MyGedView Portal page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly.";
-$pgv_lang["block_summaries"]		= "~Block Descriptions~<br /><br />Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"]		= "Click this button to save your changes.<br /><br />You will be returned to the Welcome or MyGedView Portal page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly.";
+$pgv_lang["block_summaries"]		= "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

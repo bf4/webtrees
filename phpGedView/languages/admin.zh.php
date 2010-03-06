@@ -168,7 +168,7 @@ $pgv_lang["SURNAME_TRADITION"] = "姓放在前后";
 $pgv_lang["associated_files"]		= "有联系的文件：";
 $pgv_lang["warn_file_delete"]		= "这个文件有重要的语言设置或等待改变的数据。你肯等要删除它吗？";
 $pgv_lang["deleted_files"]          = "被删除的文件：";
-$pgv_lang["index_dir_cleanup_inst"]	= "如果想删除次文件夹的文件，请把它们拉到垃圾箱或者把它打上钩。按下删除便永久删除此文件。<br /><br />有<img src=\"./images/RESN_confidential.gif\" /> 标签的文件不能被删除，因为它被系统用。<br /> 有<img src=\"./images/RESN_locked.gif\" /> 标签的文件有重要的设置或等待改变的数据，所以建议不要删除。<br /><br />";
+$pgv_lang["index_dir_cleanup_inst"]	= "如果想删除次文件夹的文件，请把它们拉到垃圾箱或者把它打上钩。按下删除便永久删除此文件。<br /><br />有<img src=\"./images/RESN_confidential.gif\" /> 标签的文件不能被删除，因为它被系统用。<br /> 有<img src=\"./images/RESN_locked.gif\" /> 标签的文件有重要的设置或等待改变的数据，所以建议不要删除。";
 $pgv_lang["sanity_err0"]			= "错误：";
 $pgv_lang["sanity_warn0"]			= "警告：";
 $pgv_lang["refresh"]				= "刷新";

@@ -309,7 +309,7 @@ $pgv_lang["reading_file"]		= "GEDCOM dosyası okunuyor";
 $pgv_lang["readme_documentation"]	= "Beni oku dokümanı";
 $pgv_lang["remove_ip"] 							= "IP Kaldır";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"]		= "Üyeleri yönetici onaylar";
-$pgv_lang["review_readme"]		= "Bu PhpGedView yazılımını yapılandırmaya devam etmeden önce <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> dosyasını okumanızı tavsiye ederiz.<br /><br />";
+$pgv_lang["review_readme"]		= "Bu PhpGedView yazılımını yapılandırmaya devam etmeden önce <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> dosyasını okumanızı tavsiye ederiz.";
 $pgv_lang["seconds"]							= "&nbsp;&nbsp;ikincileri";
 $pgv_lang["select_an_option"]		= "Aşağıdaki seçeneklerden birini seçin:";
 $pgv_lang["SERVER_URL"]			= "PhpGedView URL adresi";
