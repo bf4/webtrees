@@ -106,22 +106,25 @@ var tabCache = new Array();
 var pinned = false;
 function enable_static_tab() {
 	jQuery(".static_tab").addClass("static_tab_<?php echo $TEXT_DIRECTION;?>");
-    jQuery(".static_tab_content").removeClass("ui-tabs-hide");
-    jQuery(".static_tab_content").removeClass("ui-tabs-panel");
-    // jQuery(".static_tab_content").removeClass("ui-widget-content");
-    jQuery(".static_tab_content").addClass("ui-corner-all");
-    var top = jQuery(".static_tab").offset().top+jQuery(".static_tab").height();
+	jQuery(".static_tab_content").removeClass("ui-tabs-hide");
+	jQuery(".static_tab_content").removeClass("ui-tabs-panel");
+	// jQuery(".static_tab_content").removeClass("ui-widget-content");
+	jQuery(".static_tab_content").addClass("ui-corner-all");
+	var top = jQuery(".static_tab").offset().top+jQuery(".static_tab").height();
 	jQuery(".static_tab_content").css("top", top+"px");
 	jQuery(".static_tab_content").addClass("static_tab_content_<?php echo $TEXT_DIRECTION;?>");
 	if (!pinned) jQuery(".static_tab_content").hide();
 }
 
 jQuery(document).ready(function(){
+	// TODO: change images directory when the common images will be deleted.
+	// jQuery('#tabs').tabs({ spinner: '<img src=\"<?php echo $PGV_IMAGE_DIR; ?>/loading.gif\" height=\"18\" border=\"0\" />' });
+	jQuery('#tabs').tabs({ spinner: '<img src=\"images/loading.gif\" height=\"18\" border=\"0\" />' });
 	jQuery("#tabs").tabs({ cache: true, selected: <?php echo $controller->default_tab?> });
 	var $tabs = jQuery('#tabs');
-    jQuery('#tabs').bind('tabsshow', function(event, ui) {
-    	selectedTab = ui.tab.name;
-    	tabCache[selectedTab] = true;
+	jQuery('#tabs').bind('tabsshow', function(event, ui) {
+		selectedTab = ui.tab.name;
+		tabCache[selectedTab] = true;
 
 	<?php
 	foreach($controller->modules as $mod) {
@@ -140,54 +143,54 @@ jQuery(document).ready(function(){
 	});
 	// static tab changes
 	<?php if ($controller->static_tab){?>
-    jQuery('#tabs').bind('tabsselect', function(event, ui) {
-        	if (ui.panel.id=='<?php echo $controller->static_tab->getName();?>') {
-            	if (!pinned) {
-	        		if (jQuery(".static_tab_content").css("display")=="none") {
-	            			jQuery(".static_tab_content").show();
-	            			<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
-	            			$modjs = $controller->static_tab->getTab()->getJSCallback();
-	            			echo $modjs;
-	            			?>
-	        		}
-	        		else jQuery(".static_tab_content").hide();
-            	}
-	            return false;
-        	}
-    });
+	jQuery('#tabs').bind('tabsselect', function(event, ui) {
+			if (ui.panel.id=='<?php echo $controller->static_tab->getName();?>') {
+				if (!pinned) {
+					if (jQuery(".static_tab_content").css("display")=="none") {
+							jQuery(".static_tab_content").show();
+							<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
+							$modjs = $controller->static_tab->getTab()->getJSCallback();
+							echo $modjs;
+							?>
+					}
+					else jQuery(".static_tab_content").hide();
+				}
+				return false;
+			}
+	});
 	enable_static_tab();
 
 	jQuery('#pin').toggle(
-   		   	function() {
-   	   		   	jQuery('#pin img').attr('src', '<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['pin-in']['other'];?>');
-   	   		   	var newwidth = jQuery('.static_tab').position().left-40;
-   	   		   	<?php if ($TEXT_DIRECTION=='rtl') {?>
-   	   		   	newwidth = jQuery('.static_tab').width() + 40;
-   	   			newwidth = jQuery('#tabs').width() - newwidth;
-   	   		   	<?php } ?>
+			function() {
+				jQuery('#pin img').attr('src', '<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['pin-in']['other'];?>');
+				var newwidth = jQuery('.static_tab').position().left-40;
+				<?php if ($TEXT_DIRECTION=='rtl') {?>
+				newwidth = jQuery('.static_tab').width() + 40;
+				newwidth = jQuery('#tabs').width() - newwidth;
+				<?php } ?>
 				// --- NOTE: --- REM next line to avoid the "page shift" when Navigator is pinned. (Purely a preference choice)
-   	   		 	jQuery('#tabs > div').css('width', newwidth+'px');
-   	   		   	jQuery('.static_tab_content').show();
-	   	   		<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
+				jQuery('#tabs > div').css('width', newwidth+'px');
+				jQuery('.static_tab_content').show();
+				<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
 				$modjs = $controller->static_tab->getTab()->getJSCallback();
 				echo $modjs;
 				?>
-   	   		   	pinned = true;
-   	   			jQuery.get('individual.php?pid=<?php echo $controller->pid;?>&action=ajax&pin=true');
-   		   	},
-   		   	function() {
-   		   		jQuery('#pin img').attr('src', '<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['pin-out']['other'];?>');
-   		   		jQuery('#tabs div').css('width', '');
-   		   		jQuery('.static_tab_content').hide();
-   		   		pinned = false;
-   		   		jQuery.get('individual.php?pid=<?php echo $controller->pid;?>&action=ajax&pin=false');
-   		   	});
-	   	<?php  if (isset($_SESSION['PGV_pin']) && $_SESSION['PGV_pin']) { ?>
-	   		jQuery('#pin').click();
-	   	<?php }
-   	}
-   	
-   	$tabcount = 0;
+				pinned = true;
+				jQuery.get('individual.php?pid=<?php echo $controller->pid;?>&action=ajax&pin=true');
+			},
+			function() {
+				jQuery('#pin img').attr('src', '<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['pin-out']['other'];?>');
+				jQuery('#tabs div').css('width', '');
+				jQuery('.static_tab_content').hide();
+				pinned = false;
+				jQuery.get('individual.php?pid=<?php echo $controller->pid;?>&action=ajax&pin=false');
+			});
+		<?php  if (isset($_SESSION['PGV_pin']) && $_SESSION['PGV_pin']) { ?>
+			jQuery('#pin').click();
+		<?php }
+	}
+	
+	$tabcount = 0;
 	foreach($controller->modules as $mod) {
 		if ($mod!=$controller->static_tab && $mod->hasTab()) {
 			if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {
@@ -197,11 +200,11 @@ jQuery(document).ready(function(){
 			if ($mod->getTab()->hasContent()) $tabcount++; 
 		}
 	}
-   	?>
+	?>
 });
 
 //]]>
-  </script>
+</script>
 <style type="text/css">
 #pin {
 	float: <?php echo $TEXT_DIRECTION=='rtl'?'left':'right';?>;
