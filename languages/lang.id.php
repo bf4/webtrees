@@ -1146,14 +1146,14 @@ $pgv_lang["mail02_subject"] 			= "Pendaftaraan baru di #SERVER_NAME#";
 
 $pgv_lang["hashcode"]				= "Kode verifikasi:";
 $pgv_lang["thankyou"]				= "Halo #user_fullname# ...<br />Terima kasih atas pendaftaran Anda.";
-$pgv_lang["pls_note06"] 			= "Sekarang Kami akan mengirim email konfirmasi ke alamat <b>#user_email#</b>. Anda harus memverifikasi permintaan akun Anda dengan mengikuti petunjuk pada email konfirmasi. Jika Anda tidak mengonfirmasi permintaan akun Anda selama tujuh hari, pengajuan Anda otomatis akan ditolak. Anda harus mengajukan lagi.<br /><br />Setelah Anda mengikuti petunjuk di email konfirmasi, administrator masih harus menyetujui permintaan Anda sebelum akun Anda dapat digunakan.<br /><br />Untuk tercatatmasuk ke situs ini, Anda harus mengetahui nama pengguna dan sandi Anda.<br /><br />";
-$pgv_lang["pls_note06a"] 			= "Sekarang Kami akan mengirim email konfirmasi ke alamat <b>#user_email#</b>. Anda harus memverifikasi permintaan akun Anda dengan mengikuti petunjuk pada email konfirmasi. Jika Anda tidak mengonfirmasi permintaan akun Anda selama tujuh hari, pengajuan Anda otomatis akan ditolak. Anda harus mengajukan lagi.<br /><br />Setelah Anda mengikuti petunjuk di email konfirmasi, Anda dapat tercatatmasuk. Untuk tercatatmasuk ke situs ini, Anda harus mengetahui nama pengguna dan sandi Anda.<br /><br />";
+$pgv_lang["pls_note06"] 			= "Sekarang Kami akan mengirim email konfirmasi ke alamat <b>#user_email#</b>. Anda harus memverifikasi permintaan akun Anda dengan mengikuti petunjuk pada email konfirmasi. Jika Anda tidak mengonfirmasi permintaan akun Anda selama tujuh hari, pengajuan Anda otomatis akan ditolak. Anda harus mengajukan lagi.<br /><br />Setelah Anda mengikuti petunjuk di email konfirmasi, administrator masih harus menyetujui permintaan Anda sebelum akun Anda dapat digunakan.<br /><br />Untuk tercatatmasuk ke situs ini, Anda harus mengetahui nama pengguna dan sandi Anda.";
+$pgv_lang["pls_note06a"] 			= "Sekarang Kami akan mengirim email konfirmasi ke alamat <b>#user_email#</b>. Anda harus memverifikasi permintaan akun Anda dengan mengikuti petunjuk pada email konfirmasi. Jika Anda tidak mengonfirmasi permintaan akun Anda selama tujuh hari, pengajuan Anda otomatis akan ditolak. Anda harus mengajukan lagi.<br /><br />Setelah Anda mengikuti petunjuk di email konfirmasi, Anda dapat tercatatmasuk. Untuk tercatatmasuk ke situs ini, Anda harus mengetahui nama pengguna dan sandi Anda.";
 
 $pgv_lang["registernew"]			= "Konfirmasi Akun Baru";
 $pgv_lang["user_verify"]			= "Verifikasi pengguna";
 $pgv_lang["send"]					= "Kirim";
 
-$pgv_lang["pls_note07"] 			= "~Verifikasi pengguna~<br /><br />Untuk mengonfirmasi permintaan akun Anda, silakan ketik nama pengguna, sandi, dan kode verifikasi yang Anda terima lewat email.";
+$pgv_lang["pls_note07"] 			= "Untuk mengonfirmasi permintaan akun Anda, silakan ketik nama pengguna, sandi, dan kode verifikasi yang Anda terima lewat email.";
 $pgv_lang["pls_note08"] 			= "Data untuk pengguna <b>#user_name#</b> telah diperiksa.";
 
 $pgv_lang["mail03_line01"]			= "Halo Administrator ...";
@@ -1188,7 +1188,7 @@ $pgv_lang["passwordlength"] 			= "Sandi harus mengandung setidaknya 6 karakter."
 $pgv_lang["welcome_text_auth_mode_1"]		= "<center><b>Selamat datang di Situsweb genealogi ini</b></center><br />Akses ke situs ini diizinkan bagi setiap pengunjung yang mempunyai akun pengguna.<br /><br />Jika Anda memiliki akun pengguna, Anda dapat mencatatmasuk pada halaman ini. Jika Anda tidak mempunyai akun pengguna, Anda dapat mengajukan satu dengan mengklik pranala yang bersesuaian di bawah.<br /><br />Setelah memverifikasi pengajuan Anda, administrator situs akan mengaktifkan akun Anda. Anda akan menerima email saat pengajuan Anda diterima.";
 $pgv_lang["welcome_text_auth_mode_2"]		= "<center><b>Selamat datang di Situsweb genealogi ini</b></center><br />Akses ke situs ini hanya diizinkan bagi <u>pengguna terotorisasi</u> saja.<br /><br />Jika Anda memiliki akun pengguna, Anda dapat mencatatmasuk pada halaman ini. Jika Anda tidak mempunyai akun pengguna, Anda dapat mengajukan satu dengan mengklik pranala yang bersesuaian di bawah.<br /><br />Setelah memverifikasi informasi Anda, administrator akan menerima atau menolak pengajuan akun Anda. Anda akan menerima pesan email saat pengajuan Anda diterima.";
 $pgv_lang["welcome_text_auth_mode_3"]		= "<center><b>Selamat datang di Situsweb genealogi ini</b></center><br />Akses ke situs ini hanya diizinkan bagi <u>anggota keluarga</u> saja.<br /><br />Jika Anda memiliki akun pengguna, Anda dapat mencatatmasuk pada halaman ini. Jika Anda tidak mempunyai akun pengguna, Anda dapat mengajukan satu dengan mengklik pranala yang bersesuaian di bawah.<br /><br />Setelah memverifikasi informasi yang Anda sediakan, administrator akan menerima atau menolak permintaan akun Anda. Anda akan menerima email saat permintaan Anda diterima.";
-$pgv_lang["welcome_text_cust_head"] 		= "<center><b>Selamat datang di Situsweb genealogi ini</b></center><br />Akses diizinkan bagi pengguna yang mempunyai akun dan sandi untuk situsweb ini.<br />";
+$pgv_lang["welcome_text_cust_head"] 		= "<center><b>Selamat datang di Situsweb genealogi ini</b></center><br />Akses diizinkan bagi pengguna yang mempunyai akun dan sandi untuk situsweb ini.";
 $pgv_lang["acceptable_use"]			= "<div class=\"largeError\">Perhatian:</div><div class=\"error\">Dengan melengkapi dan mengirim formulir ini, Anda setuju:<ul><li>untuk melindungi privasi orang yang hidup yang terdaftar di situs kami;</li><li>dan isilah kotak teks di bawah, untuk menjelaskan kepada siapa Anda terhubung, atau menyediakan kami informasi tentang seseorang yang sebaiknya terdaftar pada situs kami.</li></ul></div>";
 
 
@@ -1255,7 +1255,7 @@ $pgv_lang["message_email3"] 			= "Anda telah mengirim pesan berikut ke administr
 $pgv_lang["viewing_url"]			= "Pesan ini telah terkirim saat menampilkan URL berikut: ";
 $pgv_lang["messaging2_help"]			= "Saat Anda mengirim pesan ini, Anda akan menerima salinan yang dikirim lewat email ke alamat yang Anda sediakan.";
 $pgv_lang["random_picture"] 			= "Gambar Acak";
-$pgv_lang["message_instructions"]		= "<b>Untuk Diperhatikan:</b> Informasi pribadi individu yang hidup hanya akan diberikan kepada kerabat keluarga dan teman dekat. Anda akan diminta untuk memverifikasi hubungan Anda sebelum Anda menerima data pribadi apapun. Kadangkala informasi orang yang meninggal dapat juga bersifat pribadi. Jika ini masalahnya, hal ini karena tidak ada cukup informasi mengenai orang tersebut untuk menentukan apakah ia hidup atau tidak, dan kami mungkin tidak mempunyai informasi lebih lanjut tentang orang ini.<br /><br />Sebelum mengajukan pertanyaan, pastikan bahwa Anda menanyakan tentang orang yang benar dengan memeriksa tanggal, tempat, dan kerabat dekat. Jika Anda mengirimkan perubahan  terhadap data genealogis, silakan menyebutkan sumber Anda mendapatkan data.<br /><br />";
+$pgv_lang["message_instructions"]		= "<b>Untuk Diperhatikan:</b> Informasi pribadi individu yang hidup hanya akan diberikan kepada kerabat keluarga dan teman dekat. Anda akan diminta untuk memverifikasi hubungan Anda sebelum Anda menerima data pribadi apapun. Kadangkala informasi orang yang meninggal dapat juga bersifat pribadi. Jika ini masalahnya, hal ini karena tidak ada cukup informasi mengenai orang tersebut untuk menentukan apakah ia hidup atau tidak, dan kami mungkin tidak mempunyai informasi lebih lanjut tentang orang ini.<br /><br />Sebelum mengajukan pertanyaan, pastikan bahwa Anda menanyakan tentang orang yang benar dengan memeriksa tanggal, tempat, dan kerabat dekat. Jika Anda mengirimkan perubahan  terhadap data genealogis, silakan menyebutkan sumber Anda mendapatkan data.";
 $pgv_lang["sending_to"] 			= "Pesan ini akan dikirim ke #TO_USER#";
 $pgv_lang["preferred_lang"] 			= "Pengguna ini memilih untuk menerima pesan dalam #USERLANG#";
 $pgv_lang["gedcom_created_using"]		= "GEDCOM ini dibuat menggunakan <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b>";
@@ -1304,7 +1304,7 @@ $pgv_lang["gedcom_favorites_descr"] 		= "Blok Favorit GEDCOM memberi Administrat
 $pgv_lang["gedcom_stats_block"] 		= "Statistik GEDCOM";
 $pgv_lang["gedcom_stats_descr"] 		= "Blok Statistik GEDCOM memperlihatkan kepada pengunjung beberapa informasi dasar tentang basisdata, seperti kapan pembuatannya dan berapa orang kandungannya.<br /><br />Ia juga mempunyai daftar marga yang paling sering. Anda dapat mengatur blok ini agar tidak memperlihatkan Daftar marga yang sering, dan Anda juga dapat mengatur GEDCOM untuk membuang atau menambah nama ke daftar ini. Anda dapat menetapkan batas tampilan untuk daftar ini pada pengaturan GEDCOM.";
 $pgv_lang["gedcom_stats_show_surnames"]		= "Perlihatkan marga umum?";
-$pgv_lang["portal_config_intructions"]		= "~Atur Portal GedViewSaya <br /> Atur Halaman-depan-GEDCOM ini~<br /><br />Anda dapat mengatur halaman dengan meletakkan blok pada halaman sebagaimana Anda inginkan.<br /><br />Halaman terbagi atas bagian <b>Utama</b> dan <b>Kanan</b>. Blok bagian <b>Utama</b> tampak lebih besar dan di bawah judul halaman. Bagian <b>Kanan</b> bermula dari kanan judul ke sisi bawah kanan halaman.<br /><br />Setiap bagian mempunyai daftar bloknya masing-masing yang akan dicetak pada halaman dengan urutan sebagaimana dalam daftar. Anda dapat menambah, membuang, dan menyusun blok semau Anda.<br /><br />Saat salah satu daftar blok kosong, blok yang tersisa akan mengambil lebar halaman yang tersisa.<br /><br />";
+$pgv_lang["portal_config_intructions"]		= "Anda dapat mengatur halaman dengan meletakkan blok pada halaman sebagaimana Anda inginkan.<br /><br />Halaman terbagi atas bagian <b>Utama</b> dan <b>Kanan</b>. Blok bagian <b>Utama</b> tampak lebih besar dan di bawah judul halaman. Bagian <b>Kanan</b> bermula dari kanan judul ke sisi bawah kanan halaman.<br /><br />Setiap bagian mempunyai daftar bloknya masing-masing yang akan dicetak pada halaman dengan urutan sebagaimana dalam daftar. Anda dapat menambah, membuang, dan menyusun blok semau Anda.<br /><br />Saat salah satu daftar blok kosong, blok yang tersisa akan mengambil lebar halaman yang tersisa.";
 $pgv_lang["login_block"]			= "Catatmasuk";
 $pgv_lang["login_descr"]			= "Blok Catatmasuk menerima nama pengguna dan sandi bagi pengguna untuk mencatatmasuk.";
 $pgv_lang["theme_select_block"] 		= "Pilih Tema";
@@ -1356,8 +1356,8 @@ $pgv_lang["reset_default_blocks"]		= "Kembalikan ke Blok Default";
 $pgv_lang["recent_changes"] 			= "Perubahan Terkini";
 $pgv_lang["recent_changes_block"]		= "Perubahan Terkini";
 $pgv_lang["recent_changes_descr"]		= "Blok Perubahan Terkini akan mendaftar semua perubahan yang dibuat pada basisdata selama sebulan terakhir. Blok ini dapat membantu Anda tetap mengikuti perubahan yang dibuat. Perubahan dideteksi otomatis, menggunakan tag CHAN yang didefinisikan dalam standar GEDCOM.";
-$pgv_lang["recent_changes_none"]		= "<b>Tidak ada perubahan selama #pgv_lang[global_num1]# hari terakhir.</b><br />";
-$pgv_lang["recent_changes_some"]		= "<b>Perubahan dibuat selama #pgv_lang[global_num1]# hari terakhir</b><br />";
+$pgv_lang["recent_changes_none"]		= "<b>Tidak ada perubahan selama #pgv_lang[global_num1]# hari terakhir.</b>";
+$pgv_lang["recent_changes_some"]		= "<b>Perubahan dibuat selama #pgv_lang[global_num1]# hari terakhir</b>";
 $pgv_lang["show_empty_block"]			= "Apakah sebaiknya blok ini tersembunyi ketika kosong?";
 $pgv_lang["hide_block_warn"]			= "Jika Anda menyembunyikan blok kosong, Anda tidak akan dapat mengubah pengaturannya hingga tampak karena tidak kosong lagi.";
 $pgv_lang["delete_selected_messages"]		= "Hapus Pesan Terpilih";
@@ -1626,8 +1626,8 @@ $pgv_lang["definitions"]			= "Definisi";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Uraian Blok";
 $pgv_lang["click_here"]				= "Klik di sini untuk melanjutkan";
-$pgv_lang["click_here_help"]			= "~Klik di sini untuk melanjutkan~<br /><br />Klik tombol ini untuk menyimpan perubahan Anda.<br /><br />Anda akan kembali ke halaman Selamat Datang atau Portal GedViewSaya, namun perubahan Anda mungkin tidak diperlihatkan. Anda mungkin perlu untuk menggunakan fungsi Muatkembali Halaman dari perambah Anda untuk menampilkan perubahan Anda dengan benar.";
-$pgv_lang["block_summaries"]			= "~Uraian Blok~<br /><br />Berikut adalah uraian singkat dari tiap blok yang dapat Anda tempatkan pada halaman Selamat Datang atau Portal GedViewSaya.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nama</b></td><td class='list_value'><b>Uraian</b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"]			= "Klik tombol ini untuk menyimpan perubahan Anda.<br /><br />Anda akan kembali ke halaman Selamat Datang atau Portal GedViewSaya, namun perubahan Anda mungkin tidak diperlihatkan. Anda mungkin perlu untuk menggunakan fungsi Muatkembali Halaman dari perambah Anda untuk menampilkan perubahan Anda dengan benar.";
+$pgv_lang["block_summaries"]			= "Berikut adalah uraian singkat dari tiap blok yang dapat Anda tempatkan pada halaman Selamat Datang atau Portal GedViewSaya.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nama</b></td><td class='list_value'><b>Uraian</b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]		= "&nbsp;";
 

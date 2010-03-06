@@ -138,7 +138,7 @@ $pgv_lang["basic_search_discription"] = "Enkelt søk på nettsteder";
 $pgv_lang["birthdate_search"]		= "Fødselsdato: ";
 $pgv_lang["birthplace_search"]		= "Fødselssted: ";
 $pgv_lang["change"]					= "Endre";
-$pgv_lang["change_family_instr"]	= "Bruk denne siden til å endre eller fjerne familiemedlemmer.<br /><br />For hvert medlem i familien kan du bruke valget Endre for å velge en annen person som skal ta denne rollen i familien.  Du kan også bruke valget Fjern for å fjerne denne personen fra familien.<br /><br />Når du er ferdig med å gjøre endringer for familiemedlemmene, klikker du på knappen Lagre for å lagre endringene.<br />";
+$pgv_lang["change_family_instr"]	= "Bruk denne siden til å endre eller fjerne familiemedlemmer.<br /><br />For hvert medlem i familien kan du bruke valget Endre for å velge en annen person som skal ta denne rollen i familien.  Du kan også bruke valget Fjern for å fjerne denne personen fra familien.<br /><br />Når du er ferdig med å gjøre endringer for familiemedlemmene, klikker du på knappen Lagre for å lagre endringene.";
 $pgv_lang["change_family_members"]	= "Bytt medlemmer av familien";
 $pgv_lang["changes_occurred"]	= "Følgende endring(er) er gjort for denne personen:";
 $pgv_lang["confirm_remove"]			= "Er du sikker på at du vil fjerne koblingen til familien for denne personen?";
@@ -232,7 +232,7 @@ $pgv_lang["upload"]				= "Hent (last opp)";
 $pgv_lang["upload_error"]			= "Det oppstod en FEIL under henting (opplasting) av filen din.";
 $pgv_lang["copy_error"]				= "Filen #GLOBALS[whichFile2]# kunne ikke kopieres fra #GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]		= "Hent (upload) bilde- / mediefiler";
-$pgv_lang["upload_media_help"]		= "~Hent (upload) bilde- / mediefiler~<br /><br />Velg en fil fra din lokale PC <b>#MEDIA_DIRECTORY#</b> eller i en av undermappene til denne.<br /><br />Navn på mapper du angir vil bli lagt til #MEDIA_DIRECTORY#. (Eksempel: #MEDIA_DIRECTORY#minfamilie)<br />Dersom mappen for miniatyrbilder ikke finnes fra før, vil denne bli lagd automatisk.";
+$pgv_lang["upload_media_help"]		= "Velg en fil fra din lokale PC <b>#MEDIA_DIRECTORY#</b> eller i en av undermappene til denne.<br /><br />Navn på mapper du angir vil bli lagt til #MEDIA_DIRECTORY#. (Eksempel: #MEDIA_DIRECTORY#minfamilie)<br />Dersom mappen for miniatyrbilder ikke finnes fra før, vil denne bli lagd automatisk.";
 $pgv_lang["upload_successful"]	= "Overføring (opplasting) er utført";
 $pgv_lang["view_change_diff"]	= "Vis endring(er), forskjell(er)";
 

@@ -135,7 +135,7 @@ $pgv_lang["basic_search"]			= "pretraga";
 $pgv_lang["birthdate_search"]		= "Datum rođenja: ";
 ##$pgv_lang["birthplace_search"]		= "Birth Place: ";
 ##$pgv_lang["change"]					= "Change";
-##$pgv_lang["change_family_instr"]	= "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes.<br />";
+##$pgv_lang["change_family_instr"]	= "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes.";
 $pgv_lang["change_family_members"]	= "Promeni članove porodice";
 ##$pgv_lang["changes_occurred"]		= "The following changes were made to this record:";
 ##$pgv_lang["confirm_remove"]			= "Are you sure you want to remove this person from the family?";
@@ -229,7 +229,7 @@ $pgv_lang["update_successful"]		= "Uspešno ažurirano";
 ##$pgv_lang["upload_error"]			= "There was an error uploading your file.";
 ##$pgv_lang["copy_error"]				= "The file #GLOBALS[whichFile2]# could not be copied from #GLOBALS[whichFile1]#";
 ##$pgv_lang["upload_media"]			= "Upload Media files";
-##$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically.";
+##$pgv_lang["upload_media_help"]		= "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically.";
 ##$pgv_lang["upload_successful"]		= "Upload successful.";
 ##$pgv_lang["view_change_diff"]		= "View Change Diff";
 

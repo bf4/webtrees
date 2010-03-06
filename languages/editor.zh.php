@@ -98,7 +98,7 @@ $pgv_lang["basic_search_discription"] = "简单搜索";
 $pgv_lang["birthdate_search"]		= "出生日：";
 $pgv_lang["birthplace_search"]		= "出生地：";
 $pgv_lang["change"]					= "改变";
-$pgv_lang["change_family_instr"]	= "用此页改变或删除家庭成员。<br /><br /> 每个人都可以用改变连接替换为其它人。你可以用删除连接把此人从家庭抽出。<br /><br />但你完成后，请按保存以保存变化。<br />";
+$pgv_lang["change_family_instr"]	= "用此页改变或删除家庭成员。<br /><br /> 每个人都可以用改变连接替换为其它人。你可以用删除连接把此人从家庭抽出。<br /><br />但你完成后，请按保存以保存变化。";
 $pgv_lang["change_family_members"]	= "改变家庭成员";
 $pgv_lang["changes_occurred"]		= "以下更改發生對這單個:";
 $pgv_lang["create_repository"]		= "创建新的档案";
@@ -145,7 +145,7 @@ $pgv_lang["update_successful"]		= "更新成功";
 $pgv_lang["upload"]					= "上载";
 $pgv_lang["upload_error"]		= "上载错误。";
 $pgv_lang["upload_media"]		= "上载多媒体文件";
-$pgv_lang["upload_media_help"]		= "~上载多媒体文件~<br /><br />选择上载的文件。所有文件会上载到 <b>#MEDIA_DIRECTORY#</b> 或其分目录。<br /><br />这些文件名会到#MEDIA_DIRECTORY#。 例如，#MEDIA_DIRECTORY#myfamily。 如果制图目录不存在，会被自动创建。";
+$pgv_lang["upload_media_help"]		= "选择上载的文件。所有文件会上载到 <b>#MEDIA_DIRECTORY#</b> 或其分目录。<br /><br />这些文件名会到#MEDIA_DIRECTORY#。 例如，#MEDIA_DIRECTORY#myfamily。 如果制图目录不存在，会被自动创建。";
 $pgv_lang["upload_successful"]		= "向上作用的負載";
 $pgv_lang["view_change_diff"]		= "观看更改差額";
 

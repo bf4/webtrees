@@ -1216,14 +1216,14 @@ $pgv_lang["mail02_subject"] 			= "Nova registracija na strežniku #SERVER_NAME#"
 
 $pgv_lang["hashcode"]				= "Koda za preverjanje:";
 $pgv_lang["thankyou"]				= "Zdravo, #user_fullname# ...<br />Zahvaljujemo se, da ste se registrirali.";
-$pgv_lang["pls_note06"] 			= "Na elektronski naslov <b>#user_email# vam bomo poslali potrdilo</b>. Zahtevek po računu morate potrditi po navodilih, ki jih boste dobili po elektronski pošti. Če računa ne potrdite v tednu dni, bo vaša prijava samodejno zavrnjena. Morali se boste ponovno prijaviti.<br /><br />Po izpolnitvi navodil v elektronskem sporočilu bo upravitelj moral vaš zahtevek najprej odobriti, šele potem boste lahko uporabljali račun.<br /><br />Za prijavo na to stran sta potrebna uporabniško ime in geslo.<br /><br />";
-$pgv_lang["pls_note06a"] 			= "Zdaj vam bomo poslali sporočilo s potrdilom  na elektronski naslov <b>#user_email#</b>. Zahtevek po računu morate potarditi po navodilih, ki jih boste prejeli po elektronski pošti. Če računa ne potrdite v tednu dni, bo vaša prijava samodejno zavrnjenja. Morali se boste ponovno prijaviti.<br /><br />Po izpolnitvi navodil v elektronskem sporočilu bo upravitelj moral vaš zahtevek najprej odobriti, šele potem boste lahko uporabljali račun. Za prijavo na to stran sta potrebna uporabniško ime in geslo.<br /><br />";
+$pgv_lang["pls_note06"] 			= "Na elektronski naslov <b>#user_email# vam bomo poslali potrdilo</b>. Zahtevek po računu morate potrditi po navodilih, ki jih boste dobili po elektronski pošti. Če računa ne potrdite v tednu dni, bo vaša prijava samodejno zavrnjena. Morali se boste ponovno prijaviti.<br /><br />Po izpolnitvi navodil v elektronskem sporočilu bo upravitelj moral vaš zahtevek najprej odobriti, šele potem boste lahko uporabljali račun.<br /><br />Za prijavo na to stran sta potrebna uporabniško ime in geslo.";
+$pgv_lang["pls_note06a"] 			= "Zdaj vam bomo poslali sporočilo s potrdilom  na elektronski naslov <b>#user_email#</b>. Zahtevek po računu morate potarditi po navodilih, ki jih boste prejeli po elektronski pošti. Če računa ne potrdite v tednu dni, bo vaša prijava samodejno zavrnjenja. Morali se boste ponovno prijaviti.<br /><br />Po izpolnitvi navodil v elektronskem sporočilu bo upravitelj moral vaš zahtevek najprej odobriti, šele potem boste lahko uporabljali račun. Za prijavo na to stran sta potrebna uporabniško ime in geslo.";
 
 $pgv_lang["registernew"]			= "Potrditev novega računa";
 $pgv_lang["user_verify"]			= "Preverjanje uporabnika";
 $pgv_lang["send"]					= "Pošlji";
 
-$pgv_lang["pls_note07"] 			= "~Preverjanje uporabnika~<br /><br />Za potrditev zahtevka po računu vtipkajte svoje uporabniško ime, geslo in kodo za preverjanje, ki ste jo prejeli po elektronski pošti.";
+$pgv_lang["pls_note07"] 			= "Za potrditev zahtevka po računu vtipkajte svoje uporabniško ime, geslo in kodo za preverjanje, ki ste jo prejeli po elektronski pošti.";
 $pgv_lang["pls_note08"] 			= "Podatki za uporabnika z imenom <b>#user_name#</b> so preverjeni.";
 
 $pgv_lang["mail03_line01"]			= "Zdravo, upravljalec ...";
@@ -1258,7 +1258,7 @@ $pgv_lang["passwordlength"] 			= "Geslo mora vsebovati vsaj šest znakov.";
 $pgv_lang["welcome_text_auth_mode_1"]		= "<center><b>Lepo pozdravljeni na naši rodoslovni spletni strani</b></center><br />Dostop je dovoljen obiskovalcem z uporabniškim računom.<br /><br />Če imate uporabniški račun, lahko že vstopite. Če ga še nimate, lahko zanj zaprosite tako, da kliknete na ustrezno povezavo spodaj.<br /><br />Po potrditvi prijavnice bo upravitelj strani aktiviral vaš račun. O odobritvi vaše prijave boste obveščeni po elektronski pošti.";
 $pgv_lang["welcome_text_auth_mode_2"]		= "<center><b>Lepo pozdravljeni na naši rodoslovni spletni strani</b></center><br />Dostop je dovoljen samo <u>prijavljenim</u> uporabnikom.<br /><br />Če imate uporabniški račun, lahko že vstopite. Če ga še nimate, lahko zanj zaprosite tako, da kliknete na ustrezno povezavo spodaj.<br /><br />Po pregledu podatkov se bo upravitelj odločil, ali bo vašo prijavo odobril ali zavrnil. O odobritvi vaše prijave boste obveščeni po elektronski pošti.";
 $pgv_lang["welcome_text_auth_mode_3"]		= "<center><b>Lepo pozdravljeni na naši rodoslovni spletni strani</b></center><br />Dostop je dovoljen <u>samo družinskim članom</u>.<br /><br />Če imate uporabniški račun, lahko že vstopite. Če ga še nimate, lahko zanj zaprosite tako, da kliknete na ustrezno povezavo spodaj.<br /><br />Po potrditvi posredovanih podatkov bo upravitelj vaš zahtevek za račun odobril ali pa zavrnil. O odobritvi zahtevka boste obveščeni po elektronski pošti.";
-$pgv_lang["welcome_text_cust_head"] 		= "<center><b>Lepo pozdravljeni na naši rodoslovni spletni strani</b></center><br />Dostop je dovolje uporabnikom, ki imajo odprt uporabniški račun in geslo za to spletno stran.<br />";
+$pgv_lang["welcome_text_cust_head"] 		= "<center><b>Lepo pozdravljeni na naši rodoslovni spletni strani</b></center><br />Dostop je dovolje uporabnikom, ki imajo odprt uporabniški račun in geslo za to spletno stran.";
 $pgv_lang["acceptable_use"]			= "<div class=\"largeError\">Opozorilo:</div><div class=\"error\">Z vlogo izpolnjenega obrazca se strinjate,<ul><li>da boste varovali zasebnost živečih oseb na seznamu spletne strani,</li><li>v spodnjem okvirčku pa navedite osebo, s katero ste v sorodu, ali pa nam posredujte podatke o osebi, ki naj bi jo uvrstili na seznam naše spletne strani.</li></ul></div>";
 
 
@@ -1328,7 +1328,7 @@ $pgv_lang["message_email3"] 			= "Naslednje sporočilo ste poslali PhpGedViewupr
 $pgv_lang["viewing_url"]			= "To sporočilo je bilo poslano med gledanjem naslednjega URL: ";
 $pgv_lang["messaging2_help"]			= "Ko boste poslali to sporočilo, boste sprejeli kopijo po pošti na naslov, ki ste ga posredovali.";
 $pgv_lang["random_picture"] 		= "Naključna slika";
-$pgv_lang["message_instructions"]	= "<b>Pomnite:</b> Zasebni podatki živečih ljudi bodo vidni le sorodnikom in prijateljem. Vprašani boste za vašo povezavo preden boste sprejeli zasebne podatke. Včasih so lahko zasebni tudi podatki umrlih. To je lahko tudi zato, ker ni dovolj infomracij o osebi, da bi lahko ugotovili ali je živa ali mrtva.<br /><br />Preden vprašate, preverite ali sprašujete za pravo osebo s tem da preverite datume, kraje in bližnje sorodnike.  Če vpišete rodoslovne popravke navedite tudi vire, kje ste podatke pridobili..<br /><br />";
+$pgv_lang["message_instructions"]	= "<b>Pomnite:</b> Zasebni podatki živečih ljudi bodo vidni le sorodnikom in prijateljem. Vprašani boste za vašo povezavo preden boste sprejeli zasebne podatke. Včasih so lahko zasebni tudi podatki umrlih. To je lahko tudi zato, ker ni dovolj infomracij o osebi, da bi lahko ugotovili ali je živa ali mrtva.<br /><br />Preden vprašate, preverite ali sprašujete za pravo osebo s tem da preverite datume, kraje in bližnje sorodnike.  Če vpišete rodoslovne popravke navedite tudi vire, kje ste podatke pridobili..";
 $pgv_lang["sending_to"] 			= "To sporočilo bo poslano uporabniku #TO_USER#";
 $pgv_lang["preferred_lang"] 		= "Ta uporabnik najraje sprejema sporočila v jeziku #USERLANG#";
 $pgv_lang["gedcom_created_using"]	= "Ta GEDCOM je bil izdelan z <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b>";
@@ -1377,7 +1377,7 @@ $pgv_lang["gedcom_favorites_descr"] = "Sklop GEDCOM-ove najljubše osebe daje up
 $pgv_lang["gedcom_stats_block"] 	= "GEDCOM-ovi statistični podatki";
 $pgv_lang["gedcom_stats_descr"] 	= "Sklop GEDCOM-ovi statistični podatki kaže obiskovalcu osnovne podatke o podatkovnih bazah, npr. kdaj je bila ustvarjena in koliko ljudi vključuje.<br /><br />Vsebuje tudi seznam najpogostejših priimkov. Sklop lahko nastavite tako, da ne prikazuje seznama najpogostejših priimkov, GEDCOM pa lahko nastavite tudi tako, da s seznama odstranite ali dodate priimke. V GEDCOM-ovih nastavitvah lahko določite mejno število pojavitev za ta seznam.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Pokaži pogoste priimke?";
-$pgv_lang["portal_config_intructions"]	= "~Priredi MyGedView portal <br /> Priredi to GEDCOM-ovo pozdravno stran~<br /><br />Mesta posameznih sklopov na strani lahko prilagodite svojim željam.<br /><br />Stran je razdeljena na <b>glavne</b> in <b>desne</b> razdelke.	<b>Glavni</b> sklopi se pojavljajo v večjih sklopih neposredno pod naslovom strani. <b>Desni</b> razdelek se začne ob desni strani naslova in sega do dna strani.<br /><br />Vsak razdelek ima svoj seznam sklopov, ki bodo natisnjeni na strani v navedenem zaporedju. Sklope lahko dodate, odstranite ali prerazporedite po svojih željah. <br />Če kakšen od sklopov ostane nekoriščen, drugi sklopi zavzamejo celotno širino strani.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "Mesta posameznih sklopov na strani lahko prilagodite svojim željam.<br /><br />Stran je razdeljena na <b>glavne</b> in <b>desne</b> razdelke.	<b>Glavni</b> sklopi se pojavljajo v večjih sklopih neposredno pod naslovom strani. <b>Desni</b> razdelek se začne ob desni strani naslova in sega do dna strani.<br /><br />Vsak razdelek ima svoj seznam sklopov, ki bodo natisnjeni na strani v navedenem zaporedju. Sklope lahko dodate, odstranite ali prerazporedite po svojih željah. <br />Če kakšen od sklopov ostane nekoriščen, drugi sklopi zavzamejo celotno širino strani.";
 $pgv_lang["login_block"]			= "Prijava";
 $pgv_lang["login_descr"]			= "Sklop Prijava sprejme uporabnikovo ime in geslo in tako omogoči uporabniku vstop.";
 $pgv_lang["theme_select_block"] 	= "Izbira teme";
@@ -1429,8 +1429,8 @@ $pgv_lang["reset_default_blocks"]	= "Povrni na privzete sklope.";
 $pgv_lang["recent_changes"] 		= "Zadnje spremembe";
 $pgv_lang["recent_changes_block"]	= "Zadnje spremembe";
 $pgv_lang["recent_changes_descr"]	= "Sklop Zadnje spremembe bo izpisal vse spremembe, ki so bile narejene v bazi zadnji mesec. Ta sklop vam pomaga slediti narejenim spremembam. Spremembe so zaznane samodejno z oznako CHAN, ki je definirana v standardu GEDCOM.";
-$pgv_lang["recent_changes_none"]	= "<b>V zadnjih #pgv_lang[global_num1]# dneh ni bilo sprememb.</b><br />";
-$pgv_lang["recent_changes_some"]	= "<b>Spremembe v zadnjih #pgv_lang[global_num1]# dneh</b><br />";
+$pgv_lang["recent_changes_none"]	= "<b>V zadnjih #pgv_lang[global_num1]# dneh ni bilo sprememb.</b>";
+$pgv_lang["recent_changes_some"]	= "<b>Spremembe v zadnjih #pgv_lang[global_num1]# dneh</b>";
 $pgv_lang["show_empty_block"]		= "Naj bo ta sklop skrit, kadar je prazen?";
 $pgv_lang["hide_block_warn"]		= "Če skrijete prazen sklop, ne boste mogli spreminjati njegih nastavitev, dokler ne bo spet viden z vpisom podatkov.";
 $pgv_lang["delete_selected_messages"]	= "Izbriši izbrana sporočila";
@@ -1827,8 +1827,8 @@ $pgv_lang["definitions"]			= "Definicije";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Označi opise";
 $pgv_lang["click_here"]				= "Klikni za nadaljevanje";
-$pgv_lang["click_here_help"]		= "~Klikni za nadaljevanje~<br /><br />Kliknite ta gumb za shranitev sprememb.<br /><br />Čeprav se boste vrnili na Zdravo, ali Uporabnikov portal stran, vaših sprememb mogoče ne bo videti. Za ustrezen prikaz sprememb boste mogoče morali uporabiti funkcijo ponovnega nalaganja na vašem brskalniku.";
-$pgv_lang["block_summaries"]		= "~Označi opise~<br /><br />Tu je kratek opis posameznih blokov, ki jih lahko postavite na Zdravo, ali Uporabnikov portal stran.<br /><table border='1' align='center'><tr><td class='list_value'><b>Ime</b></td><td class='list_value'><b>Opis</b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"]		= "Kliknite ta gumb za shranitev sprememb.<br /><br />Čeprav se boste vrnili na Zdravo, ali Uporabnikov portal stran, vaših sprememb mogoče ne bo videti. Za ustrezen prikaz sprememb boste mogoče morali uporabiti funkcijo ponovnega nalaganja na vašem brskalniku.";
+$pgv_lang["block_summaries"]		= "Tu je kratek opis posameznih blokov, ki jih lahko postavite na Zdravo, ali Uporabnikov portal stran.<br /><table border='1' align='center'><tr><td class='list_value'><b>Ime</b></td><td class='list_value'><b>Opis</b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

@@ -1212,14 +1212,14 @@ $pgv_lang["mail02_subject"] 		= "Nuevo registro en #SERVER_NAME#";
 
 $pgv_lang["hashcode"]				= "Código de verificación:";
 $pgv_lang["thankyou"]				= "Hola #user_fullname# ...<br />Gracias por registrarse";
-$pgv_lang["pls_note06"] 			= "Ahora enviaremos un correo de confirmación a la dirección <b>#user_email#</b>. Debe verificar su solicitud de cuenta siguiendo las instrucciones que se dan en ese correo.  Si no confirma su solicitud de cuenta en siete días, su solicitud se rechazará automáticamente.  Tendrá que hacer una nueva solicitud.<br /><br />Después de haber seguido las instrucciones del correo de confirmación, el administrador aún habrá de aprobar la solicitud antes de que puede utilizarse su cuenta.<br /><br />Para entrar a este sitio, necesitará conocer su identificador y su contraseña.<br /><br />";
-$pgv_lang["pls_note06a"] 			= "Ahora recibirá un mensaje de correo electrónico para confirmar su dirección de correo <b>#user_email#</b>. Siga las instrucciones en ese mensaje de correo para completar la verificación y activar su cuenta. Si no lo hace antes de siete días, se borrará su solicitud automáticamente.  En ese caso, tendrá que repetir el proceso con una nueva solicitud.<br /><br />Cuando haya seguido los pasos indicados en ese mensaje de correo, podrá entrar. Para entrar, necesitará hacer uso de su usuario y su contraseña.<br /><br />";
+$pgv_lang["pls_note06"] 			= "Ahora enviaremos un correo de confirmación a la dirección <b>#user_email#</b>. Debe verificar su solicitud de cuenta siguiendo las instrucciones que se dan en ese correo.  Si no confirma su solicitud de cuenta en siete días, su solicitud se rechazará automáticamente.  Tendrá que hacer una nueva solicitud.<br /><br />Después de haber seguido las instrucciones del correo de confirmación, el administrador aún habrá de aprobar la solicitud antes de que puede utilizarse su cuenta.<br /><br />Para entrar a este sitio, necesitará conocer su identificador y su contraseña.";
+$pgv_lang["pls_note06a"] 			= "Ahora recibirá un mensaje de correo electrónico para confirmar su dirección de correo <b>#user_email#</b>. Siga las instrucciones en ese mensaje de correo para completar la verificación y activar su cuenta. Si no lo hace antes de siete días, se borrará su solicitud automáticamente.  En ese caso, tendrá que repetir el proceso con una nueva solicitud.<br /><br />Cuando haya seguido los pasos indicados en ese mensaje de correo, podrá entrar. Para entrar, necesitará hacer uso de su usuario y su contraseña.";
 
 $pgv_lang["registernew"]			= "Confirmación de una nueva cuenta";
 $pgv_lang["user_verify"]			= "Verificación de usuario";
 $pgv_lang["send"]					= "Enviar";
 
-$pgv_lang["pls_note07"] 			= "~Verificación de usuario~<br /><br />Para confirmar su petición de cuente, introduzca por favor su identificador, su contraseña y el código de verificación que ha recibido por correo electrónico.";
+$pgv_lang["pls_note07"] 			= "Para confirmar su petición de cuente, introduzca por favor su identificador, su contraseña y el código de verificación que ha recibido por correo electrónico.";
 $pgv_lang["pls_note08"] 			= "Se han comprobado los datos del usuario <b>#user_name#</b>.";
 
 $pgv_lang["mail03_line01"]			= "Hola Administrador ...";
@@ -1324,7 +1324,7 @@ $pgv_lang["message_email3"] 		= "Vd. envió el siguiente mensaje a un administra
 $pgv_lang["viewing_url"]			= "Este mensaje se envió mientras se visitaba la URL: ";
 $pgv_lang["messaging2_help"]		= "Cuando envíe este mensaje recibirá una copia del mismo en la dirección de correo suministrada.";
 $pgv_lang["random_picture"] 		= "Imagen al azar";
-$pgv_lang["message_instructions"]	= "<b>AVISO:</b> La información privada de las personas vivas solamente se facilitará a familiares cercanos y amigos íntimos.  Se le solicitará su relación de parentesco para poder recibir datos privados.  En ocasiones la información sobre personas ya fallecidas también puede ser privada.  Esto es así cuando no hay información suficiente para determinar con seguridad si estas personas están vivas o no, por otra parte probablemente no dispongamos de más información sobre ellas.<br /><br />Antes de hacer una solicitud, revise todos los datos de la persona, fechas, lugares y detalles personales para asegurarse de que efectivamente sea la persona de su interés.  Si está enviando modificaciones sobre los datos genealógicos, no se olvide de incluir las fuentes de donde obtuvo la información.<br /><br />";
+$pgv_lang["message_instructions"]	= "<b>AVISO:</b> La información privada de las personas vivas solamente se facilitará a familiares cercanos y amigos íntimos.  Se le solicitará su relación de parentesco para poder recibir datos privados.  En ocasiones la información sobre personas ya fallecidas también puede ser privada.  Esto es así cuando no hay información suficiente para determinar con seguridad si estas personas están vivas o no, por otra parte probablemente no dispongamos de más información sobre ellas.<br /><br />Antes de hacer una solicitud, revise todos los datos de la persona, fechas, lugares y detalles personales para asegurarse de que efectivamente sea la persona de su interés.  Si está enviando modificaciones sobre los datos genealógicos, no se olvide de incluir las fuentes de donde obtuvo la información.";
 $pgv_lang["sending_to"] 			= "Este mensaje se enviará a #TO_USER#";
 $pgv_lang["preferred_lang"] 		= "Este usuario prefiere recibir mensajes en #USERLANG#";
 $pgv_lang["gedcom_created_using"]	= "Este GEDCOM se creó usando <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b>";
@@ -1425,8 +1425,8 @@ $pgv_lang["reset_default_blocks"]	= "Reestablecer los bloques por omisión";
 $pgv_lang["recent_changes"] 		= "Cambios recientes";
 $pgv_lang["recent_changes_block"]	= "Cambios recientes";
 $pgv_lang["recent_changes_descr"]	= "El Bloque de modificaciones recientes indicará todos los cambios realizados al GEDCOM en el último mes. Este bloque lo ayudará a mantenerse actualizado con las modificaciones realizadas. Los cambios se detectan automáticamente por la etiquete CHAN definida en el estándar GEDCOM.";
-$pgv_lang["recent_changes_none"]	= "<b>No ha habido cambios en los últimos #pgv_lang[global_num1]# días.</b><br />";
-$pgv_lang["recent_changes_some"]	= "<b>Cambios habidos en los últimos #pgv_lang[global_num1]# días</b><br />";
+$pgv_lang["recent_changes_none"]	= "<b>No ha habido cambios en los últimos #pgv_lang[global_num1]# días.</b>";
+$pgv_lang["recent_changes_some"]	= "<b>Cambios habidos en los últimos #pgv_lang[global_num1]# días</b>";
 $pgv_lang["show_empty_block"]		= "¿Debe ocultarse este bloque si está vacío?";
 $pgv_lang["hide_block_warn"]		= "Si oculta un bloque vacío, no podrá cambiar su configuración hasta que tenga datos nuevos que hagan que sea visible otra vez.";
 $pgv_lang["delete_selected_messages"]	= "Eliminar los mensajes seleccionados";
@@ -1823,8 +1823,8 @@ $pgv_lang["definitions"]			= "Definiciones";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Descripciones de los bloques";
 $pgv_lang["click_here"]				= "Haga clic aquí para continuar";
-$pgv_lang["click_here_help"]		= "~Haga clic aquí para continuar~<br /><br />Haga clic en este botón para guardar sus cambios.<br /><br />Se le enviará a la página de Bienvenido o de MiGedView, pero sus cambios puede que no se muestren.  Puede ser necesario que utilice la función de Recargar Página de su navegador para ver los cambios correctamente.";
-$pgv_lang["block_summaries"]		= "~Descripciones de los bloques~<br /><br />He aquí una corta descripción de los cada uno de los bloques que puede colocar en las páginas de Bienvenido o MiGedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nombre</b></td><td class='list_value'><b>Descripción</b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"]		= "Haga clic en este botón para guardar sus cambios.<br /><br />Se le enviará a la página de Bienvenido o de MiGedView, pero sus cambios puede que no se muestren.  Puede ser necesario que utilice la función de Recargar Página de su navegador para ver los cambios correctamente.";
+$pgv_lang["block_summaries"]		= "He aquí una corta descripción de los cada uno de los bloques que puede colocar en las páginas de Bienvenido o MiGedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nombre</b></td><td class='list_value'><b>Descripción</b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

@@ -393,7 +393,7 @@ $pgv_lang["as_spouse"]	= "Oma perhe";
 $pgv_lang["as_child"]		= "Vanhempien perhe";
 $pgv_lang["view_gedcom"]	= "Näytä GEDCOM-tietue";
 $pgv_lang["add_to_cart"]	= "Lisää leikekoriin";
-$pgv_lang["privacy_error"]	= "Tämän henkilön tiedot on suojattu.<br />";
+$pgv_lang["privacy_error"]	= "Tämän henkilön tiedot on suojattu.";
 $pgv_lang["more_information"]= "Lisätietoja varten on yhteyshenkilö";
 $pgv_lang["given_name"]	= "Etunimi:";
 $pgv_lang["surname"]		= "Sukunimi:";
@@ -1056,8 +1056,8 @@ $pgv_lang["mail02_line04a"]		= "Sinulle ilmoitetaan sähköpostitse, kun tämä 
 $pgv_lang["mail02_subject"]		= "Uusi kirjoittautuminen koneella #SERVER_NAME#";
 $pgv_lang["hashcode"]		= "Vahvistuskoodi:";
 $pgv_lang["thankyou"]			= "Hei #user_fullname# ...<br />Kiitos rekisteröinnistäsi";
-$pgv_lang["pls_note06"]		= "Tulet saamaan koodin sähköpostissa osoitteeseen (#user_email#). Käytä viesti tilisi vahvistukseen. Tilisi pyyhitään seitsemän päivän kuluttua jos et vahvista sitä (voit sen jälkeen rekisteröidä tilin uudelleen). Kirjautuminen sivuille vaatii käyttäjätunnuksen ja salasanan.<br /><br />";
-$pgv_lang["pls_note06a"] 		= "Lähetämme nyt varmistusviestin osoitteeseen <b>#user_email#</b>. Sinun on varmistettava käyttäjätilipyyntösi noudattamalla viestin ohjeita. Mikäli et varmista tiliäsi seitsemän vuorokauden kuluessa, pyyntösi hylätään automaattisesti. Sen jälkeen sinun on tehtävä uusi anomus.<br /><br />Toimittuasi viestin edellyttämällä tavalla, voit kirjautua järjestelmään. Voidaksesi kirjautua tänne, sinun on tiedettävä käyttäjätunnuksesi ja salasanasi.<br /><br />";
+$pgv_lang["pls_note06"]		= "Tulet saamaan koodin sähköpostissa osoitteeseen (#user_email#). Käytä viesti tilisi vahvistukseen. Tilisi pyyhitään seitsemän päivän kuluttua jos et vahvista sitä (voit sen jälkeen rekisteröidä tilin uudelleen). Kirjautuminen sivuille vaatii käyttäjätunnuksen ja salasanan.";
+$pgv_lang["pls_note06a"] 		= "Lähetämme nyt varmistusviestin osoitteeseen <b>#user_email#</b>. Sinun on varmistettava käyttäjätilipyyntösi noudattamalla viestin ohjeita. Mikäli et varmista tiliäsi seitsemän vuorokauden kuluessa, pyyntösi hylätään automaattisesti. Sen jälkeen sinun on tehtävä uusi anomus.<br /><br />Toimittuasi viestin edellyttämällä tavalla, voit kirjautua järjestelmään. Voidaksesi kirjautua tänne, sinun on tiedettävä käyttäjätunnuksesi ja salasanasi.";
 $pgv_lang["registernew"]		= "Uuden käyttäjätilin vahvistus";
 $pgv_lang["user_verify"]		= "Käyttäjävahvistus";
 $pgv_lang["send"]			= "Lähetä";
@@ -1091,7 +1091,7 @@ $pgv_lang["passwordlength"]		= "Salasanassa pitää olla vähintään 6 merkkiä
 $pgv_lang["welcome_text_auth_mode_1"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Jokaisella käyttäjällä, jolla on käyttäjätili, on pääsy tänne.<br /><br />Mikäli sinulla on käyttäjätili, voit kirjautua tältä sivulta. Mikäli sinulla ei ole käyttäjätiliä, voit pyytää sellaisen klikkaamalla alla olevaa linkkiä.<br /><br />Todennettuaan pyyntösi ylläpitäjä aktivoi käyttäjätilisi. Saat sähköpostiviestin kun pyyntösi on hyväksytty. ";
 $pgv_lang["welcome_text_auth_mode_2"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun.</b></center><br />Pääsy näille sivuille on sallittu vain niille käyttäjille, joille on annettu <b>käyttöoikeus</b>.<br /><br />Mikäli sinulla jo on käyttäjätili, voit kirjautua järjestelmään tällä sivulla. Mikäli sinulla ei ole käyttäjätiliä, voit pyytää sellaista klikkaamalla asianomaista linkkiä tällä sivulla.<br /><br />Varmistuttuaan antamistasi tiedoista ylläpitäjä joko hyväksyy tai hylkää pyyntösi. Tulet saamaan sähköpostiviestin kun pyyntösi on hyväksytty.";
 $pgv_lang["welcome_text_auth_mode_3"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Pääsy tänne on sallittu ainoastaan <u>sukulaisille</u>.<br /><br />Mikäli sinulla on käyttäjätili voit kirjautua sivustolle. Mikäli sinulla ei vielä ole käyttäjätiliä, voit pyytää sellaista klikkaamalla asianomaista linkkiä tällä sivulla.<br /><br />Tarkistettuaan tietosi sivun ylläpitäjä joko hyväksyy tai hylkää pyyntösi. Saat sähköpostiviestin kun pyyntösi on hyväksytty.";
-$pgv_lang["welcome_text_cust_head"]	= "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Pääsy on sallittu käyttäjille, joilla on käyttäjätunnus ja salasana tähän verkkopalveluun.<br />";
+$pgv_lang["welcome_text_cust_head"]	= "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Pääsy on sallittu käyttäjille, joilla on käyttäjätunnus ja salasana tähän verkkopalveluun.";
 $pgv_lang["acceptable_use"]		= "<div class=\"largeError\">Huomautus:</div><div class=\"error\">Täyttämällä ja lähettämällä tämän lomakkeen sitoudut:<ul><li>suojaamaan sivustoillamme esiintyvien elävien henkilöiden yksityisyyden;</li><li>ja kertomaan alla olevassa tekstikentässä kenelle olet sukua tai toimittamaan meille tietoa henkilöstä, jonka tulisi olla sivustollamme.</li></ul></div>";
 //-- mygedview page
 $pgv_lang["welcome"]			= "Tervetuloa";
@@ -1157,7 +1157,7 @@ $pgv_lang["message_email3"]	= "Olet lähettänyt seuraavan viestin PhpGedView ha
 $pgv_lang["viewing_url"]		= "Tämä viesti lähetettiin seuraavasta urlistä: ";
 $pgv_lang["messaging2_help"]	= "Kun lähetät tämän viestin, saat siitä kopion edellä antamaasi sähköpostiosoitteeseen.";
 $pgv_lang["random_picture"]		= "Satunnainen kuva";
-$pgv_lang["message_instructions"]	= "<b>Huomaa:</b> Yksityistä tietoa elävistä henkilöistä annetaan ainoastaan sukulaisille ja läheisille ystäville. Sinun on pyydettäessä osoitettava sukulaisuutesi. Toisinaan voivat kuolleidenkin henkilöiden tiedot olla yksityisiä. Näin voi olla siinä tapauksessa, että kyseisestä henkilöstä ei valitettavasti ole riittävästi tietoja käytettävissämme.<br /><br />Ennen kuin esität kysymyksiä, ole hyvä ja tarkista henkilön oikeellisuus päivämääristä, paikoista ja lähisukulaisista. Jos lähetät muutoksia tai lisäyksiä sukutietoihin, niin ilmoitathan myös lähteen, josta tieto on peräisin.<br /><br />";
+$pgv_lang["message_instructions"]	= "<b>Huomaa:</b> Yksityistä tietoa elävistä henkilöistä annetaan ainoastaan sukulaisille ja läheisille ystäville. Sinun on pyydettäessä osoitettava sukulaisuutesi. Toisinaan voivat kuolleidenkin henkilöiden tiedot olla yksityisiä. Näin voi olla siinä tapauksessa, että kyseisestä henkilöstä ei valitettavasti ole riittävästi tietoja käytettävissämme.<br /><br />Ennen kuin esität kysymyksiä, ole hyvä ja tarkista henkilön oikeellisuus päivämääristä, paikoista ja lähisukulaisista. Jos lähetät muutoksia tai lisäyksiä sukutietoihin, niin ilmoitathan myös lähteen, josta tieto on peräisin.";
 $pgv_lang["sending_to"]		= "Tämän viestin vastaanottaja on: #TO_USER#";
 $pgv_lang["preferred_lang"]	 	= "Suosituskieli tälle vastaanottajalle on: #USERLANG#";
 $pgv_lang["gedcom_created_using"]	= "Tämä GEDCOM on luotu ohjelmalla: <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b>";
@@ -1205,7 +1205,7 @@ $pgv_lang["gedcom_favorites_descr"] 	= "GEDCOM suosikit -alue mahdollistaa yllä
 $pgv_lang["gedcom_stats_block"]	= "GEDCOM tilastotieto";
 $pgv_lang["gedcom_stats_descr"] 	= "GEDCOM tilastotietoalue näyttää kävijälle joitakin GEDCOMia koskevia perustietoja kuten luontipäivämäärän ja montako henkilöä siinä on.";
 $pgv_lang["gedcom_stats_show_surnames"] = "Näytä tavalliset sukunimet?";
-$pgv_lang["portal_config_intructions"]	= "~Muokkaa oma portaalisi <br /> Muokkaa GEDCOM-portaalia~<br /><br />Voit muokata sivua asettelemalla alueita haluamallasi tavalla.<br /><br /> Sivu on jaettu kahteen osastoon: <b>pääosastoon</b> ja <b>oikeanpuoleiseen</p> osastoon. <b>Pääosaston</p> alueet näkyvät suurempina ja sijoittuvat sivun otsakkeen alle. <b>Oikeanpuoleinen</b> osasto alkaa otsakkeen oikealla puolella ja jatkuu alaspäin sivun oikeaa laitaa.<br /><br /> Jokaisella osastolla on oma luettelonsa niistä alueista jotka kirjoitetaan sivulle siinä järjestyksessä kun ne on lueteltu. Voit lisätä, poistaa ja järjestää uudelleen alueita haluamallasi tavalla.<br /><br />Jos jokin alue on tyhjä, täyttävät muut alueet vapaan tila koko sivun leveydeltä.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "Voit muokata sivua asettelemalla alueita haluamallasi tavalla.<br /><br /> Sivu on jaettu kahteen osastoon: <b>pääosastoon</b> ja <b>oikeanpuoleiseen</p> osastoon. <b>Pääosaston</p> alueet näkyvät suurempina ja sijoittuvat sivun otsakkeen alle. <b>Oikeanpuoleinen</b> osasto alkaa otsakkeen oikealla puolella ja jatkuu alaspäin sivun oikeaa laitaa.<br /><br /> Jokaisella osastolla on oma luettelonsa niistä alueista jotka kirjoitetaan sivulle siinä järjestyksessä kun ne on lueteltu. Voit lisätä, poistaa ja järjestää uudelleen alueita haluamallasi tavalla.<br /><br />Jos jokin alue on tyhjä, täyttävät muut alueet vapaan tila koko sivun leveydeltä.";
 $pgv_lang["login_block"]		= "Sisäänkirjautuminen";
 $pgv_lang["login_descr"]		= "Sisäänkirjautumisalue hyväksyy käyttäjätunnuksen ja salasanan sisäänkirjautumista varten.";
 $pgv_lang["theme_select_block"]     	= "Teemavalinta";
@@ -1256,8 +1256,8 @@ $pgv_lang["default_news_text"]	= "Tätä sukututkimussivustoa käyttää  <a hre
 $pgv_lang["recent_changes"]		= "Viimeiset muutokset";
 $pgv_lang["recent_changes_block"]	= "Viimeiset muutokset";
 $pgv_lang["recent_changes_descr"]	= "Viimeisten muutosten alueella luetteloidaan GEDCOM-tiedostoon tehdyt muutokset viimeisen kuukauden aikana. Tämä alue pitää sinut ajan tasalla tehtyjen muutosten suhteen. Muutokset havaitaan CHAN-merkitsimen avulla.";
-$pgv_lang["recent_changes_none"]	= "<b>Ei muutoksia viimeisen #pgv_lang[global_num1]# päivän aikana.</b><br />";
-$pgv_lang["recent_changes_some"]	= "<b>Muutoksia viimeisten #pgv_lang[global_num1]# päivän aikana</b><br />";
+$pgv_lang["recent_changes_none"]	= "<b>Ei muutoksia viimeisen #pgv_lang[global_num1]# päivän aikana.</b>";
+$pgv_lang["recent_changes_some"]	= "<b>Muutoksia viimeisten #pgv_lang[global_num1]# päivän aikana</b>";
 $pgv_lang["show_empty_block"]	= "Tulisiko tämän alueen olla piilossa kun se on tyhjä?";
 $pgv_lang["hide_block_warn"]		= "Mikäli piilotat tyhjän alueen, et voi muuttaa sen asetusta, ennen kuin se taas tulee näkyviin sisältäessään tietoa.";
 $pgv_lang["delete_selected_messages"]	= "Poista merkityt viestit";
@@ -1557,8 +1557,8 @@ $pgv_lang["definitions"]		= "Määritelmiä";
 //-- Index_edit
 $pgv_lang["block_desc"]		= "Alueiden kuvaukset";
 $pgv_lang["click_here"]		= "Klikkaa tästä jatkaaksesi";
-$pgv_lang["click_here_help"]		= "~Klikkaa tästä jatkaaksesi~<br /><br />Klikkaa tätä painiketta toteuttaaksesi aiemmin tallentamasi muutokset.<br /><br />Sinut viedään takaisin joko sivulle Tervetuloa tai OmaGedView, mutta muutoksiasi ei ehkä näytetä. Voit joutua käyttämään sivun lataamista uudelleen nähdäksesi muutoksesi kunnolla.";
-$pgv_lang["block_summaries"]	= "~Alueiden kuvaukset~<br /><br />Tässä on lyhyt selostus jokaisesta alueesta, jonka voit sijoittaa Tervetuloa- tai OmaGedView-sivulle.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nimi</b></td><td class='list_value'><b>Kuvaus</b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"]		= "Klikkaa tätä painiketta toteuttaaksesi aiemmin tallentamasi muutokset.<br /><br />Sinut viedään takaisin joko sivulle Tervetuloa tai OmaGedView, mutta muutoksiasi ei ehkä näytetä. Voit joutua käyttämään sivun lataamista uudelleen nähdäksesi muutoksesi kunnolla.";
+$pgv_lang["block_summaries"]	= "Tässä on lyhyt selostus jokaisesta alueesta, jonka voit sijoittaa Tervetuloa- tai OmaGedView-sivulle.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nimi</b></td><td class='list_value'><b>Kuvaus</b></td></tr>&nbsp;</table>";
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 
 //-- Find page

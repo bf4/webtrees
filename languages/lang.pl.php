@@ -1215,7 +1215,7 @@ $pgv_lang["registernew"]		= "Potwierdzenie założenia nowego konta";
 $pgv_lang["user_verify"]		= "Weryfikacja użytkownika";
 $pgv_lang["send"]				= "Wyślij";
 
-$pgv_lang["pls_note07"]			= "~Weryfikacja użytkownika~<br /><br />Aby potwierdzić chęć przystąpienia, proszę o podanie swojego loginu, hasła oraz kodu potwierdzającego otrzymanego emailem.";
+$pgv_lang["pls_note07"]			= "Aby potwierdzić chęć przystąpienia, proszę o podanie swojego loginu, hasła oraz kodu potwierdzającego otrzymanego emailem.";
 $pgv_lang["pls_note08"]			= "Informacje o użytkowniku #user_name# zostały potwierdzone.";
 
 $pgv_lang["mail03_line01"]		= "Witaj Administratorze ...";
@@ -1250,7 +1250,7 @@ $pgv_lang["passwordlength"]		= "Hasło musi zawierać przynajmniej 6 znaków.";
 $pgv_lang["welcome_text_auth_mode_1"]	= "<center><b>Witaj na naszej stronie genealogicznej</b></center><br /><br />Dostęp do tej strony mają wszystkie osoby posiadające konto użytkownika.<br />Jeżeli już masz swoje konto, zaloguj się.<br /><br />Jeśli nie posiadasz jeszcze konta, załóż je klikając na odpowiedni odnośnik poniżej. Po weryfikacji danych administrator aktywuje twoje konto. Otrzymasz email z powiadomieniem o aktywacji.";
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Witaj na naszej stronie genealogicznej</b></center><br /><br />Dostęp do tej strony mają tylko <b>autoryzowani</b> użytkownicy.<br />Jeżeli masz już swoje konto, zaloguj się.<br /><br />Jeśli nie posiadasz jeszcze konta, załóż je klikając na odpowiedni odnośnik poniżej.<br />Po weryfikacji danych administrator przyjmie lub odrzuci twoje zgłoszenie.<br />Otrzymasz email z powiadomieniem o akceptacji.";
 $pgv_lang["welcome_text_auth_mode_3"]	= "<center><b>Witaj na naszej stronie genealogicznej</b></center><br />Dostęp do tej strony mają jedynie <b>członkowie rodziny</b>. Jeżeli już masz swoje konto, zaloguj się.<br /><br />Jeśli nie posiadasz jeszcze konta, załóż je klikając na odpowiedni odnośnik poniżej.<br />Po weryfikacji danych administrator przyjmie lub odrzuci twoje zgłoszenie.<br />Otrzymasz email z powiadomieniem o akceptacji.";
-$pgv_lang["welcome_text_cust_head"]		= "<center><b>Witaj na naszej stronie genealogicznej</b></center><br />Dostęp do tej strony ma każdy, kto posiada konto i hasło do tej strony.<br />";
+$pgv_lang["welcome_text_cust_head"]		= "<center><b>Witaj na naszej stronie genealogicznej</b></center><br />Dostęp do tej strony ma każdy, kto posiada konto i hasło do tej strony.";
 $pgv_lang["acceptable_use"]				= "<div class=\"largeError\">Uwaga:</div><div class=\"error\">Wypełniając i wysyłając do nas ten formularz zobowiązujesz się do:<ul><li>ochrony prywatności osób żyjących występujących na naszej stronie</li><li>wyjaśnienia w polu niżej, z kim jesteś spokrewniony, lub dostarczenia informacji na temat osoby, która powinna zostać dodana do naszej strony.</li></ul></div>";
 
 //-- mygedview page
@@ -1319,7 +1319,7 @@ $pgv_lang["message_email3"]			= "Została wysłana następująca wiadomość do 
 $pgv_lang["viewing_url"]			= "Ta wiadomość została wysłana podczas przeglądania następującego adresu URL: ";
 $pgv_lang["messaging2_help"]		= "Po wysłaniu tej wiadomości otrzymasz jej kopię na podany adres email.";
 $pgv_lang["random_picture"]			= "Losowe zdjęcie";
-$pgv_lang["message_instructions"]	= "<b>Uwaga:</b> Informacje na temat osób żyjących są udostępniane jedynie członkom rodziny i bliskim znajomym. Przed uzyskaniem jakichkolwiek danych konieczne jest zweryfikowanie swojego pokrewieństwa. Czasem informacje o osobach zmarłych również mogą być ukryte, najczęściej kiedy brak informacji, czy dana osoba ta żyje, czy nie.<br /><br />Przed zadaniem pytania sprawdź czy interesujesz się właściwą osobą, sprawdzając daty, miejsca i bliskich krewnych. Jeśli wysyłasz nowe dane genealogiczne, dołącz także informacje o źródłach pochodzenia tych danych.<br /><br />";
+$pgv_lang["message_instructions"]	= "<b>Uwaga:</b> Informacje na temat osób żyjących są udostępniane jedynie członkom rodziny i bliskim znajomym. Przed uzyskaniem jakichkolwiek danych konieczne jest zweryfikowanie swojego pokrewieństwa. Czasem informacje o osobach zmarłych również mogą być ukryte, najczęściej kiedy brak informacji, czy dana osoba ta żyje, czy nie.<br /><br />Przed zadaniem pytania sprawdź czy interesujesz się właściwą osobą, sprawdzając daty, miejsca i bliskich krewnych. Jeśli wysyłasz nowe dane genealogiczne, dołącz także informacje o źródłach pochodzenia tych danych.";
 $pgv_lang["sending_to"]				= "Tą wiadomość otrzyma #TO_USER#.";
 $pgv_lang["preferred_lang"]	 		= "Ten użytkownik preferuje język #USERLANG# w wiadomościach.";
 $pgv_lang["gedcom_created_using"]	= "Plik GEDCOM utworzony przez <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b>";
@@ -1368,7 +1368,7 @@ $pgv_lang["gedcom_favorites_descr"]	= "Blok ulubionych GEDCOM pozwala administra
 $pgv_lang["gedcom_stats_block"]		= "Statystyki GEDCOM";
 $pgv_lang["gedcom_stats_descr"]		= "Blok statystyk GEDCOM wyświetla kilka podstawowych informacji o bazie danych, takich jak data utworzenia i liczba występujących w niej osób.<br /><br />Zawiera także listę najczęściej występujących nazwisk. Możesz wyłączyć pokazywanie tej listy oraz dodawać lub usuwać nazwiska z listy. Możesz ustawić próg występowania dla tej listy w konfiguracji GEDCOM.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Pokazać najczęstsze nazwiska?";
-$pgv_lang["portal_config_intructions"]	= "~Dostosuj portal <br /> Dostosuj stronę główną~<br /><br />Możesz dostosować stronę zmieniając układ bloków.<br /><br />Strona podzielona jest na dwie części: <b>Główną</b> i <b>Prawą</b>. Bloki części <b>Głównej</b> są wyświetlane jako większe i umieszczone pod tytułem strony. Część <b>Prawa</b> zaczyna się po prawej stronie tytułu i znajduje się po prawej stronie.<br /><br />Każda część ma własną listę bloków, które będą wyświetlane na stronie w kolejności, w jakiej występują na liście. Możesz dowolnie dodawać, usuwać i zmieniać kolejność bloków.<br /><br />Kiedy jednen z bloków jest pusty, pozostałe bloki zapełnią całą szerokość strony.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "Możesz dostosować stronę zmieniając układ bloków.<br /><br />Strona podzielona jest na dwie części: <b>Główną</b> i <b>Prawą</b>. Bloki części <b>Głównej</b> są wyświetlane jako większe i umieszczone pod tytułem strony. Część <b>Prawa</b> zaczyna się po prawej stronie tytułu i znajduje się po prawej stronie.<br /><br />Każda część ma własną listę bloków, które będą wyświetlane na stronie w kolejności, w jakiej występują na liście. Możesz dowolnie dodawać, usuwać i zmieniać kolejność bloków.<br /><br />Kiedy jednen z bloków jest pusty, pozostałe bloki zapełnią całą szerokość strony.";
 $pgv_lang["login_block"]			= "Logowanie";
 $pgv_lang["login_descr"]			= "Blok logowania służy do wprowadzania loginu i hasła przez użytkowników w celu zalogowania.";
 $pgv_lang["theme_select_block"]		= "Wybór motywu";
@@ -1420,8 +1420,8 @@ $pgv_lang["reset_default_blocks"]	= "Przywróć domyślne bloki";
 $pgv_lang["recent_changes"]			= "Ostatnie zmiany";
 $pgv_lang["recent_changes_block"]	= "Blok ostatnich zmian";
 $pgv_lang["recent_changes_descr"]	= "Blok ostatnich zmian wyświelna listę modyfikacji, którym uległa baza danych w ciągu ostatniego miesiąca. Ten blok ma za zadanie pomóc ci być na bieżąco z wprowadzanymi zmianami. Zmiany są wykrywane automatycznie na podstawie znacznika CHAN, określonego w standardzie GEDCOM.";
-$pgv_lang["recent_changes_none"]	= "<b>Brak zmian w ciągu ostatnich #pgv_lang[global_num1]# dni.</b><br />";
-$pgv_lang["recent_changes_some"]	= "<b>Zmiany dokonane w ciągu ostatnich #pgv_lang[global_num1]# dni</b><br />";
+$pgv_lang["recent_changes_none"]	= "<b>Brak zmian w ciągu ostatnich #pgv_lang[global_num1]# dni.</b>";
+$pgv_lang["recent_changes_some"]	= "<b>Zmiany dokonane w ciągu ostatnich #pgv_lang[global_num1]# dni</b>";
 $pgv_lang["show_empty_block"]		= "Ukryj pusty blok";
 $pgv_lang["hide_block_warn"]		= "Jeśli ukryjesz pusty blok, nie będziesz w stanie zmienić jego konfiguracji do momentu gdy pojawi się w nim zawartość i stanie się widoczny.";
 $pgv_lang["delete_selected_messages"]	= "Usuń zaznaczone wiadomości";
@@ -1819,8 +1819,8 @@ $pgv_lang["definitions"]	= "Definicje";
 //-- Index_edit
 $pgv_lang["block_desc"]		= "Opisy bloków";
 $pgv_lang["click_here"]		= "Dalej";
-$pgv_lang["click_here_help"] = "~Dalej~<br /><br />Kliknij ten przycisk aby zapisać zmiany.<br /><br />Zostaniesz przekierowany(a) na stronę Witaj, lub Mój portal, ale twoje zmiany mogą nie być widoczne. Aby je zobaczyć, prawdopodobnie trzeba będzie odświeżyć stronę za pomocą odpowiedniej funkcji Twojej przeglądarki.";
-$pgv_lang["block_summaries"] = "~Opisy bloków~<br /><br />Oto krótki opis każdego z bloków, które możesz umieszczać na stronie Witaj, lub Mój portal.<br /><table border='1' align='center'><tr><td class='list_value'><b>Imię / Nazwisko</b></td><td class='list_value'><b>Opis</b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"] = "Kliknij ten przycisk aby zapisać zmiany.<br /><br />Zostaniesz przekierowany(a) na stronę Witaj, lub Mój portal, ale twoje zmiany mogą nie być widoczne. Aby je zobaczyć, prawdopodobnie trzeba będzie odświeżyć stronę za pomocą odpowiedniej funkcji Twojej przeglądarki.";
+$pgv_lang["block_summaries"] = "Oto krótki opis każdego z bloków, które możesz umieszczać na stronie Witaj, lub Mój portal.<br /><table border='1' align='center'><tr><td class='list_value'><b>Imię / Nazwisko</b></td><td class='list_value'><b>Opis</b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"] = "&nbsp;";
 

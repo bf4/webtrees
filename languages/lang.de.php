@@ -458,7 +458,7 @@ $pgv_lang["indi_info"]					= "Persönliche Informationen";
 $pgv_lang["pedigree_chart"]				= "Stammbaum";
 $pgv_lang["individual"]					= "Person";
 $pgv_lang["as_spouse"]					= "Familiendaten als Ehepartner";
-$pgv_lang["privacy_error"]				= "Details sind vertraulich und dürfen deshalb nicht gezeigt werden.<br />";
+$pgv_lang["privacy_error"]				= "Details sind vertraulich und dürfen deshalb nicht gezeigt werden.";
 $pgv_lang["more_information"]			= "Für weitere Informationen wenden Sie sich an:";
 $pgv_lang["given_name"]					= "Vorname:";
 $pgv_lang["surname"]					= "Nachname:";
@@ -1212,14 +1212,14 @@ $pgv_lang["mail02_subject"]				= "Neue Anmeldung bei #SERVER_NAME#";
 
 $pgv_lang["hashcode"]					= "Verifizierungscode:";
 $pgv_lang["thankyou"]					= "Hallo #user_fullname# ...<br />Danke für Ihren Antrag.";
-$pgv_lang["pls_note06"]					= "Ihnen wird nun eine Bestätigungsmail an die Adresse <b>#user_email#</b> geschickt.  Sie müssen den in der Mail enthaltenen Anweisungen folgen, um Ihren Benutzernamen zu aktivieren. Falls Sie innerhalb von 7 Tagen nicht reagieren, wird Ihr Antrag automatisch abgewiesen.  Sie müssen dann erneut antragen.<br /><br />Wenn Sie den Anweisungen in der Bestätigungsmail gefolgt sind, muss der Verwalter Ihren Benutzernamen noch freischalten, bevor Sie ihn benutzen können.<br /><br />Um sich auf dieser Webseite anzumelden, benötigen Sie Ihren Benutzernamen und Ihr Kennwort.<br /><br />";
-$pgv_lang["pls_note06a"]				= "Ihnen wird nun eine Bestätigungsmail an die Adresse <b>#user_email#</b> geschickt. Sie müssen den in der Mail enthaltenen Anweisungen folgen, um Ihren Benutzernamen zu aktivieren. Falls Sie innerhalb von 7 Tagen nicht reagieren, wird Ihr Antrag automatisch abgewiesen. Sie müssen dann erneut antragen.<br /><br />Wenn Sie den Anweisungen in der Bestätigungs Mail gefolgt sind, können Sie sich sofort auf dieser Webseite anmelden. Dazu benötigen Sie Ihren Benutzernamen und Ihr Kennwort.<br /><br />";
+$pgv_lang["pls_note06"]					= "Ihnen wird nun eine Bestätigungsmail an die Adresse <b>#user_email#</b> geschickt.  Sie müssen den in der Mail enthaltenen Anweisungen folgen, um Ihren Benutzernamen zu aktivieren. Falls Sie innerhalb von 7 Tagen nicht reagieren, wird Ihr Antrag automatisch abgewiesen.  Sie müssen dann erneut antragen.<br /><br />Wenn Sie den Anweisungen in der Bestätigungsmail gefolgt sind, muss der Verwalter Ihren Benutzernamen noch freischalten, bevor Sie ihn benutzen können.<br /><br />Um sich auf dieser Webseite anzumelden, benötigen Sie Ihren Benutzernamen und Ihr Kennwort.";
+$pgv_lang["pls_note06a"]				= "Ihnen wird nun eine Bestätigungsmail an die Adresse <b>#user_email#</b> geschickt. Sie müssen den in der Mail enthaltenen Anweisungen folgen, um Ihren Benutzernamen zu aktivieren. Falls Sie innerhalb von 7 Tagen nicht reagieren, wird Ihr Antrag automatisch abgewiesen. Sie müssen dann erneut antragen.<br /><br />Wenn Sie den Anweisungen in der Bestätigungs Mail gefolgt sind, können Sie sich sofort auf dieser Webseite anmelden. Dazu benötigen Sie Ihren Benutzernamen und Ihr Kennwort.";
 
 $pgv_lang["registernew"]				= "Verifizierung der neuen Benutzerdaten";
 $pgv_lang["user_verify"]				= "Benutzer Verifizierung";
 $pgv_lang["send"]						= "Absenden";
 
-$pgv_lang["pls_note07"]					= "~Benutzer Verifizierung~<br /><br />Um Ihren Antrag zu bestätigen, geben Sie bitte nun Ihren Benutzernamen, Ihr Kennwort und den Verifizierungscode ein, den Sie per Mail erhalten haben.";
+$pgv_lang["pls_note07"]					= "Um Ihren Antrag zu bestätigen, geben Sie bitte nun Ihren Benutzernamen, Ihr Kennwort und den Verifizierungscode ein, den Sie per Mail erhalten haben.";
 $pgv_lang["pls_note08"]					= "Die Eingaben für den Benutzer <b>#user_name#</b> wurden überprüft.";
 
 $pgv_lang["mail03_line01"]				= "Hallo Verwalter ...";
@@ -1254,7 +1254,7 @@ $pgv_lang["passwordlength"]				= "Das Kennwort muss mindestens 6 Zeichen lang se
 $pgv_lang["welcome_text_auth_mode_1"]	= "<center><b>Willkommen auf dieser Genealogie Webseite</b></center><br />Den Zugriff auf diese Seite erhält jeder Benutzer, der einen Zugang beantragt hat.<br /><br />Wenn Sie bereits einen Benutzernamen haben, können Sie sich auf dieser Seite anmelden. Wenn Sie noch keinen Zugang besitzen, können Sie diesen beantragen, indem Sie auf den entsprechenden Link klicken.<br /><br />Sobald Ihre Angaben überprüft sind, wird der Verwalter Ihren Zugang freigeben. Sie werden dann eine Bestätigungsungsmail erhalten.";
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Willkommen auf dieser Genealogie Webseite</b></center><br />Der Zugriff auf diese Seite ist nur <u>autorisierten</u> Benutzern erlaubt.<br /><br />Wenn Sie bereits einen Benutzernamen haben, können Sie sich auf dieser Seite anmelden. Wenn Sie noch keinen Zugang besitzen, können Sie diesen beantragen, indem Sie auf den entsprechenden Link klicken.<br /><br />Sobald Ihre Angaben überprüft sind, wird der Verwalter Ihrem Antrag zustimmen (oder ihn ablehnen). Sie werden eine Mail mit dem Antragsergebnis erhalten.";
 $pgv_lang["welcome_text_auth_mode_3"]	= "<center><b>Willkommen auf dieser Genealogie Webseite</b></center><br />Den Zugriff auf diese Seite erhalten <u>nur Familienmitglieder</u>.<br /><br />Wenn Sie bereits einen Benutzernamen haben, können Sie sich auf dieser Seite anmelden. Wenn Sie noch keinen Zugang besitzen, können Sie diesen beantragen, indem Sie auf den entsprechenden Link klicken.<br /><br />Sobald Ihre Angaben überprüft sind, wird der Verwalter Ihrem Antrag zustimmen (oder ihn ablehnen).<br />Sie werden eine Mail mit dem Antragsergebnis erhalten.";
-$pgv_lang["welcome_text_cust_head"]		= "<center><b>Willkommen auf dieser Genealogie Webseite</b></center><br />Der Zugriff ist Benutzern vorbehalten, die einen Benutzernamen und ein Kennwort für diese Webseite haben.<br />";
+$pgv_lang["welcome_text_cust_head"]		= "<center><b>Willkommen auf dieser Genealogie Webseite</b></center><br />Der Zugriff ist Benutzern vorbehalten, die einen Benutzernamen und ein Kennwort für diese Webseite haben.";
 $pgv_lang["acceptable_use"]				= "<div class=\"largeError\">Bitte beachten Sie:</div><div class=\"error\">Indem Sie dieses ausgefüllte Formular einsenden, bestätigen Sie Ihr Einverständnis mit den folgenden Bedingungen:<ul><li>daß Sie immer Informationen über lebende Personen, die in dieser Datenbank vorkommen, vertraulich halten;</li><li>und daß Sie in der unten stehenden Textbox Ihre Verwandtschaft zu Personen in dieser Datenbank erklären oder uns Informationen über Personen, die in dieser Datenbank vorkommen sollten aber dort fehlen, mitteilen.</li></ul></div>";
 
 
@@ -1324,7 +1324,7 @@ $pgv_lang["message_email3"]				= "Sie haben die folgende Nachricht an einen PhpG
 $pgv_lang["viewing_url"]				= "Diese Nachricht wurde gesendet als die folgende Seite aufgerufen wurde: ";
 $pgv_lang["messaging2_help"]			= "Wenn Sie diese Nachricht senden, erhalten Sie eine Kopie an die von Ihnen angegebene Adresse.";
 $pgv_lang["random_picture"]				= "Zufällig ausgewähltes Bild";
-$pgv_lang["message_instructions"]		= "<b>Bitte beachten:</b> Private Informationen von lebenden Personen werden nur Familienangehörigen und nahen Freunden zugänglich gemacht. Bevor Sie irgendwelche persönlichen Daten ansehen können, müssen Sie Ihren Verwandtschaftsgrad belegen. Es kann auch vorkommen, dass bestimmte Daten von bereits verstorbenen Personen vertraulich sind. Dies kann der Fall sein, wenn nicht genügend Informationen vorhanden sind, um sicher zu belegen, ob die Person noch lebt oder verstorben ist.<br /><br />Bevor Sie Fragen stellen, überprüfen Sie bitte, dass Sie über die richtige Person fragen, indem Sie Orte, Zeitangaben und Verwandte prüfen. Falls Sie Änderungen der genealogischen Daten übermitteln, geben Sie bitte auch die Quelle an, von der Sie Ihre Informationen bezogen haben.<br /><br />";
+$pgv_lang["message_instructions"]		= "<b>Bitte beachten:</b> Private Informationen von lebenden Personen werden nur Familienangehörigen und nahen Freunden zugänglich gemacht. Bevor Sie irgendwelche persönlichen Daten ansehen können, müssen Sie Ihren Verwandtschaftsgrad belegen. Es kann auch vorkommen, dass bestimmte Daten von bereits verstorbenen Personen vertraulich sind. Dies kann der Fall sein, wenn nicht genügend Informationen vorhanden sind, um sicher zu belegen, ob die Person noch lebt oder verstorben ist.<br /><br />Bevor Sie Fragen stellen, überprüfen Sie bitte, dass Sie über die richtige Person fragen, indem Sie Orte, Zeitangaben und Verwandte prüfen. Falls Sie Änderungen der genealogischen Daten übermitteln, geben Sie bitte auch die Quelle an, von der Sie Ihre Informationen bezogen haben.";
 $pgv_lang["sending_to"]					= "Diese Nachricht wird an #TO_USER# gesendet";
 $pgv_lang["preferred_lang"]				= "Dieser Nutzer bevorzugt Nachrichten in #USERLANG#";
 $pgv_lang["gedcom_created_using"]		= "Diese GEDCOM Datei wurde mit <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b> ";
@@ -1373,7 +1373,7 @@ $pgv_lang["gedcom_favorites_descr"]		= "Der «GEDCOM Lesezeichen» Block gibt de
 $pgv_lang["gedcom_stats_block"]			= "GEDCOM Statistiken";
 $pgv_lang["gedcom_stats_descr"]			= "Der «GEDCOM Statistiken» Block zeigt dem Besucher einige Informationen über die GEDCOM Datei, z.B. wann sie erstellt wurde und wie viele Personen sie umfasst.<br /><br />Es kann auch eine Liste der am häufigsten vorkommenden Namen gezeigt werden. Zu dieser Liste können Namen hinzugefügt oder daraus Namen unterdrückt werden. Der Häufigkeitswert, ab wann ein Name in dieser Liste auftaucht, kann in der GEDCOM Konfiguration eingestellt werden.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Häufig vorkommende Nachnamen zeigen?";
-$pgv_lang["portal_config_intructions"]	= "~Mein GedView Portal anpassen <br /> Stammbaum Begrüßungs Seite anpassen~<br /><br />Sie können die Seite Ihren Wünschen anpassen, indem Sie die Positionen der einzelnen Blöcke angeben.<br /><br />Die Seite ist in die Bereiche <b>Hauptbereich</b> und <b>Rechts</b> aufgeteilt. Die Blöcke im <b>Hauptbereich</b> erscheinen breiter und setzen sich links auf der Seite nach unten fort. Der Bereich <b>Rechts</b> setzt sich rechts auf der Seite nach unten fort.<br /><br />Jeder Bereich hat seine eigene Liste von Blöcken, die dort in der Reihenfolge ihrer Nennung gezeigt werden. Sie können Blöcke hinzufügen, entfernen oder umsortieren, wie es Ihnen beliebt.<br /><br />Wenn eine der beiden Listen leer ist werden die Blöcke des anderen Bereiches auf der vollen Seitenbreite dargestellt.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "Sie können die Seite Ihren Wünschen anpassen, indem Sie die Positionen der einzelnen Blöcke angeben.<br /><br />Die Seite ist in die Bereiche <b>Hauptbereich</b> und <b>Rechts</b> aufgeteilt. Die Blöcke im <b>Hauptbereich</b> erscheinen breiter und setzen sich links auf der Seite nach unten fort. Der Bereich <b>Rechts</b> setzt sich rechts auf der Seite nach unten fort.<br /><br />Jeder Bereich hat seine eigene Liste von Blöcken, die dort in der Reihenfolge ihrer Nennung gezeigt werden. Sie können Blöcke hinzufügen, entfernen oder umsortieren, wie es Ihnen beliebt.<br /><br />Wenn eine der beiden Listen leer ist werden die Blöcke des anderen Bereiches auf der vollen Seitenbreite dargestellt.";
 $pgv_lang["login_block"]				= "Login";
 $pgv_lang["login_descr"]				= "Der «Login» Block ermöglicht Benutzern das Anmelden auf dieser Seite.";
 $pgv_lang["theme_select_block"]			= "Theme Auswahl";
@@ -1425,8 +1425,8 @@ $pgv_lang["reset_default_blocks"]		= "Zurückstellen zur Block Standard-Auswahl"
 $pgv_lang["recent_changes"]				= "Neueste Änderungen";
 $pgv_lang["recent_changes_block"]		= "Neueste Änderungen";
 $pgv_lang["recent_changes_descr"]		= "Der «Neueste Änderungen» Block listet alle Änderungen, die an der GEDCOM Datei in der letzten Zeit vorgenommen wurden. Dieser Block kann Ihnen helfen, diese jüngsten Veränderungen zu verfolgen. Die Änderungen werden automatisch anhand des «CHAN» tags erkannt.";
-$pgv_lang["recent_changes_none"]		= "<b>Innerhalb der letzten #pgv_lang[global_num1]# Tage, gab es keine Änderungen.</b><br />";
-$pgv_lang["recent_changes_some"]		= "<b>In den letzten #pgv_lang[global_num1]# Tagen durchgeführte Änderungen</b><br />";
+$pgv_lang["recent_changes_none"]		= "<b>Innerhalb der letzten #pgv_lang[global_num1]# Tage, gab es keine Änderungen.</b>";
+$pgv_lang["recent_changes_some"]		= "<b>In den letzten #pgv_lang[global_num1]# Tagen durchgeführte Änderungen</b>";
 $pgv_lang["show_empty_block"]			= "Soll der Block verborgen werden, wenn er leer ist?";
 $pgv_lang["hide_block_warn"]			= "Wenn Sie einen leeren Block verbergen, können Sie seine Konfiguration erst dann wieder ändern, wenn er wieder sichtbar wird, weil er nicht mehr leer ist!";
 $pgv_lang["delete_selected_messages"]	= "Gewählte Nachrichten löschen";
@@ -1823,8 +1823,8 @@ $pgv_lang["definitions"]				= "Definitionen";
 //-- Index_edit
 $pgv_lang["block_desc"]					= "Block Beschreibungen";
 $pgv_lang["click_here"]					= "Fortsetzen";
-$pgv_lang["click_here_help"]			= "~Fortsetzen~<br /><br />Klicken Sie diesen Button, um die zuvor gespeicherten Änderungen zu verwenden.<br /><br />Sie werden zu der Willkommen oder Mein GedView Portal Seite zurückgenommen, aber es kann sein, dass Ihre Änderungen nicht gezeigt werden. Sie können dann die «Seite Erneuern» Funktion Ihres Browsers benutzen um Ihre Änderungen richtig zu sehen.";
-$pgv_lang["block_summaries"]			= "~Block Beschreibungen~<br /><br />Hier finden Sie eine kurze Beschreibung aller Blöcke, die Sie auf die Willkommen oder Mein GedView Portal Seite stellen können.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Beschreibung</b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"]			= "Klicken Sie diesen Button, um die zuvor gespeicherten Änderungen zu verwenden.<br /><br />Sie werden zu der Willkommen oder Mein GedView Portal Seite zurückgenommen, aber es kann sein, dass Ihre Änderungen nicht gezeigt werden. Sie können dann die «Seite Erneuern» Funktion Ihres Browsers benutzen um Ihre Änderungen richtig zu sehen.";
+$pgv_lang["block_summaries"]			= "Hier finden Sie eine kurze Beschreibung aller Blöcke, die Sie auf die Willkommen oder Mein GedView Portal Seite stellen können.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Beschreibung</b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]		= "&nbsp;";
 

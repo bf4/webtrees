@@ -436,7 +436,7 @@ $pgv_lang["indi_info"]			= "Person-opplysninger";
 $pgv_lang["pedigree_chart"]		= "Anetre";
 $pgv_lang["individual"]			= "Person";
 $pgv_lang["as_spouse"]			= "Familie med ektefelle/partner";
-$pgv_lang["privacy_error"]		= "Opplysninger om denne personen er privat.<br />";
+$pgv_lang["privacy_error"]		= "Opplysninger om denne personen er privat.";
 $pgv_lang["more_information"]	= "For mer informasjon, kontakt";
 $pgv_lang["given_name"]			= "Fornavn:";
 $pgv_lang["surname"]			= "Etternavn:";
@@ -1175,8 +1175,8 @@ $pgv_lang["mail02_subject"]		= "Ny registrering på #SERVER_NAME#";
 
 $pgv_lang["hashcode"]			= "Kontrollkode:";
 $pgv_lang["thankyou"]			= "Hei #user_fullname# og takk for søknaden din om å få en brukerkonto.";
-$pgv_lang["pls_note06"]			= "Du vil nå få tilsendt en bekreftelses-epost til adressen ( #user_email# ).<br />Ved hjelp av denne e-posten kan du aktivere kontoen din. Dersom du ikke aktiverer kontoen din innen 7 dager, vil den bli slettet (du kan registrere kontoen igjen etter de 7 dagene, om du ønsker det). For å logge deg inn på dette nettstedet, kreves det at du oppgir et brukernavn og passord.<br /><br /><br /><br />";
-$pgv_lang["pls_note06a"] 		= "Vi vil nå sende en bekreftelse på e-post til adressen ( #user_email# ). Du må bekrefte ønske ditt om å få en konto ved å følge instruksene i i e-posten. Dersom du ikke bekrefter ønsket om å få en konto innen 7 dager, vil ønsket om en konto bli avslått automatisk.  Dersom senere ønsker å få en ny konto, må du søke på nytt.<br /><br />Etter at du har fulgt instruksjonene i bekreftelses-e-posten, kan du logge deg inn.  For å logge deg inn på denne nettsiden, kreves det at du oppgir brukernavnrt og passordet ditt.<br /><br />";
+$pgv_lang["pls_note06"]			= "Du vil nå få tilsendt en bekreftelses-epost til adressen ( #user_email# ).<br />Ved hjelp av denne e-posten kan du aktivere kontoen din. Dersom du ikke aktiverer kontoen din innen 7 dager, vil den bli slettet (du kan registrere kontoen igjen etter de 7 dagene, om du ønsker det). For å logge deg inn på dette nettstedet, kreves det at du oppgir et brukernavn og passord.";
+$pgv_lang["pls_note06a"] 		= "Vi vil nå sende en bekreftelse på e-post til adressen ( #user_email# ). Du må bekrefte ønske ditt om å få en konto ved å følge instruksene i i e-posten. Dersom du ikke bekrefter ønsket om å få en konto innen 7 dager, vil ønsket om en konto bli avslått automatisk.  Dersom senere ønsker å få en ny konto, må du søke på nytt.<br /><br />Etter at du har fulgt instruksjonene i bekreftelses-e-posten, kan du logge deg inn.  For å logge deg inn på denne nettsiden, kreves det at du oppgir brukernavnrt og passordet ditt.";
 
 $pgv_lang["registernew"]		= "Bekreftelse av ny konto";
 $pgv_lang["user_verify"]		= "Bruker-godkjenning";
@@ -1217,7 +1217,7 @@ $pgv_lang["passwordlength"]		= "Passordet må inneholde minst 6 tegn.";
 $pgv_lang["welcome_text_auth_mode_1"]	= "<center><h3><b>Velkommen til disse slektssidene !</b></h3>PS! - <i>Sidene er tilgjengelig for <b>alle</b> besøkende som har en brukerkonto.</i><br />Har du en brukerkonto, kan du logge deg inn under.<br /><br />Dersom du ikke har en brukerkonto enda, kan du søke om å få en<br />ved å klikke på linken \"Søke om brukerkonto\".<br />Etter å ha sjekket informasjonen i søknaden, vil administratoren til nettstedet aktivere kontoen din.<br />Du vil motta en e-post når den er godkjent.</center>";
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><h3><b>Velkommen til disse slektssidene !</b></h3>PS! - <i>Sidene er <b>bare</b> tilgjengelig for <b>registrerte</b> brukere!</i><br />Har du en brukerkonto, kan du logge deg inn under.<br /><br />Dersom du ikke har en konto enda, kan søke om å få opprettet en konto<br />ved å klikke på linken \"Søke om brukerkonto\".<br />Etter å ha sjekket informasjonen i søknaden din,<br />kan administratoren til nettstedet enten godkjenne eller avslå den.<br />Du vil motta en e-post med beskjed dersom søknaden din blir akseptert.</center>";
 $pgv_lang["welcome_text_auth_mode_3"]	= "<center><h3><b>Velkommen til disse slektssidene !</b></h3>PS! - <i>Sidene er <b>bare</b> tilgjengelig for <b>medlemmer av familien</b>.</i><br />Har du en brukerkonto, kan du logge deg inn under.<br /><br />Dersom du ikke har en konto enda, kan søke om å få opprettet en konto<br />ved å klikke på linken \"Søke om brukerkonto\".<br />Etter å ha sjekket informasjonen i søknaden din,<br />kan administratoren til nettstedet enten godkjenne eller avslå den.<br />Du vil motta en e-post dersom den blir godkjent.</center>";
-$pgv_lang["welcome_text_cust_head"]		= "<center><h3><b>Velkommen til disse slektssidene !</b></h3>PS! - <i>Sidene er <b>bare</b> tilgjengelig for brukere som har <b>gyldig</b> brukernavn og passord.</i></center><br />";
+$pgv_lang["welcome_text_cust_head"]		= "<center><h3><b>Velkommen til disse slektssidene !</b></h3>PS! - <i>Sidene er <b>bare</b> tilgjengelig for brukere som har <b>gyldig</b> brukernavn og passord.</i></center>";
 $pgv_lang["acceptable_use"]			="<div class=\"largeError\">Viktig:</div><div class=\"error\">Ved å fylle ut og sende inn dette skjemaet, bekrefter du at du:<ul><li>beskytte privatlivets fred og pesonvernet til de levende personer som er nevnt på dette nettstedet;</li><li>og i tekstfeltet nedenfor, forklar hvem du har slektskap til,eller bidra med informasjon om hvem som skal eller bør være nevnt.</li></ul></div>";
 
 
@@ -1284,9 +1284,9 @@ $pgv_lang["message_email3"]			= "Du sendte følgende beskjed til administratoren
 $pgv_lang["viewing_url"]			= "Denne beskjed ble sendt da du var på følgende url: ";
 $pgv_lang["messaging2_help"]		= "Når du sender denne beskjeden, vil du også motta en kopi til den epost-adressen din som du har oppgitt.";
 $pgv_lang["random_picture"]			= "Tilfeldig utvalgt bilde / medie";
-$pgv_lang["message_instructions"]	= "<b>PS:</b> Privat informasjon om levende personer vil bare bli gitt til slektninger og nære venner.  Du vil bli spurt om å bekrefte din tilknytning / slektskap før du vil få se private data.  Av og til kan informasjon om døde personer også være private.  Hvis dette er tilfelle, er det på grunn av at det ikke funnet nok informasjon om personen til å avgjøre om vedkommende lever eller ikke, eller andre opplysninger om personen.<br /><br />Før du gjør en foresprsel, vennligst sjekk opp at det er riktig person ved å se på datoer, steder og nære slektninger.  Dersom du legger inn endringer i slektsdataene, vær vennlig å oppgi kildene der du fant dataene.<br /><br />";
+$pgv_lang["message_instructions"]	= "<b>PS:</b> Privat informasjon om levende personer vil bare bli gitt til slektninger og nære venner.  Du vil bli spurt om å bekrefte din tilknytning / slektskap før du vil få se private data.  Av og til kan informasjon om døde personer også være private.  Hvis dette er tilfelle, er det på grunn av at det ikke funnet nok informasjon om personen til å avgjøre om vedkommende lever eller ikke, eller andre opplysninger om personen.<br /><br />Før du gjør en foresprsel, vennligst sjekk opp at det er riktig person ved å se på datoer, steder og nære slektninger.  Dersom du legger inn endringer i slektsdataene, vær vennlig å oppgi kildene der du fant dataene.";
 $pgv_lang["sending_to"]				= "- Beskjeden vil bli sendt til #TO_USER#";
-$pgv_lang["preferred_lang"]	 		= "- som ønsker at du skriver beskjeden på #USERLANG#<br />";
+$pgv_lang["preferred_lang"]	 		= "- som ønsker at du skriver beskjeden på #USERLANG#";
 $pgv_lang["gedcom_created_using"]	= "Denne slektsfila (GEDCOM) ble laget med <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b>";
 $pgv_lang["gedcom_created_on"]		= "Denne slektsfila (GEDCOM) ble laget den <b>#CREATED_DATE#</b>";
 $pgv_lang["gedcom_created_on2"] 	= " den <b>#CREATED_DATE#</b>";
@@ -1333,7 +1333,7 @@ $pgv_lang["gedcom_favorites_descr"]	= "Rammen for Favoritter gir administrator p
 $pgv_lang["gedcom_stats_block"]		= "Rammen Statistikk for slektsbasen";
 $pgv_lang["gedcom_stats_descr"]		= "Rammen for statistikk viser besøkende en del basis-informasjon om slektsfilen, slik som når den ble lagd og hvor mange personer, familier og kilder som finnes i slektsbasen.<br /><br />Den har også en liste med de etternavnene som er registrert flest ganger i slektsbasen.  Du kan velge om du vil vise disse etternavnene i rammen eller ikke.<br />Du kan også velge at visse navn ikke skal vises i listen eller legge legge til navn som du mener bør være med (selv om de ikke fyller kravet om å være med i listen).<br />Du kan angi antall ganger et navn må være registrert for å vises i listen i konfigurasjonsfilen for slektsbasen.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Vise Mest brukte etternavn?";
-$pgv_lang["portal_config_intructions"]	= "Her kan du tilpasse siden ved å bestemme hvor de ulike rammene på siden skal plasseres.<br />Siden er delt opp i to seksjoner, 'Hoved'-seksjonen og 'Høyre' seksjon.<br />'Hoved'-seksjonen er tildelt en større bredde og kommer under velkomsttittel på siden.<br />Den 'høyre' seksjonen begynner til høyre for tittelen og fremstår som en mer hurtiginformasjons-blokk.<br />Hver seksjon har sin egen liste med rammer som vil bli vist på siden i den rekkefølgen som de er listet.<br />Du kan legge til, fjerne og omorganisere rammene slik du ønsker det.<br /><br />Dersom listen for en av seksjonene er tom, vil de andre rammene bruke hele bredden på siden.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "Her kan du tilpasse siden ved å bestemme hvor de ulike rammene på siden skal plasseres.<br />Siden er delt opp i to seksjoner, 'Hoved'-seksjonen og 'Høyre' seksjon.<br />'Hoved'-seksjonen er tildelt en større bredde og kommer under velkomsttittel på siden.<br />Den 'høyre' seksjonen begynner til høyre for tittelen og fremstår som en mer hurtiginformasjons-blokk.<br />Hver seksjon har sin egen liste med rammer som vil bli vist på siden i den rekkefølgen som de er listet.<br />Du kan legge til, fjerne og omorganisere rammene slik du ønsker det.<br /><br />Dersom listen for en av seksjonene er tom, vil de andre rammene bruke hele bredden på siden.";
 $pgv_lang["login_block"]			= "Rammen Logg inn";
 $pgv_lang["login_descr"]			= "Rammen for 'Logg inn' skriver et brukernavn og passord for brukere slik at de kan logg seg inn.";
 $pgv_lang["theme_select_block"]		= "Rammen Velg stil";
@@ -1384,8 +1384,8 @@ $pgv_lang["reset_default_blocks"]	= "Tilbakestill til standardrammer";
 $pgv_lang["recent_changes"]			= "Siste endringer";
 $pgv_lang["recent_changes_block"]	= "Rammen Siste endringer";
 $pgv_lang["recent_changes_descr"]	= "Rammen <i>Siste endringer</i> vil vise en liste med alle endringer som er gjort i slektsbasen/-filen den siste måneden.  Denne rammen kan hjelpe deg til å holde deg oppdatert med de endringene som er gjort.  Endringene som vises er knyttet til CHAN-merket (tag).";
-$pgv_lang["recent_changes_none"]	= "<b>Det har ikke vært gjort noen endringer de siste #pgv_lang[global_num1]# dagene.</b><br />";
-$pgv_lang["recent_changes_some"]	= "<b>Endringer gjort de siste #pgv_lang[global_num1]# dagene</b><br />";
+$pgv_lang["recent_changes_none"]	= "<b>Det har ikke vært gjort noen endringer de siste #pgv_lang[global_num1]# dagene.</b>";
+$pgv_lang["recent_changes_some"]	= "<b>Endringer gjort de siste #pgv_lang[global_num1]# dagene</b>";
 $pgv_lang["show_empty_block"]		= "Ikke vise denne rammen dersom den er tom?";
 $pgv_lang["hide_block_warn"]		= "Dersom du velger å ikke vise en tom ramme, vil du heller ikke kunne endre oppsettet for rammen før den vises igjen ved at den ikke lenger er tom.";
 $pgv_lang["delete_selected_messages"]	= "Slett beskjeder som er merket";
@@ -1694,8 +1694,8 @@ $pgv_lang["definitions"]		= "Definisjoner";
 //-- Index_edit
 $pgv_lang["block_desc"]			= "Beskrivelse av rammer";
 $pgv_lang["click_here"]			= "Klikk her for å fortsette";
-$pgv_lang["click_here_help"]	= "~Klikk her for å fortsette~<br /><br />Klikk på denne knappen for godkjenne endringer du har lagret tidligere.";
-$pgv_lang["block_summaries"]	= "~Beskrivelse av rammer~<br /><br />Her er en kort beskrivelse for hver av de rammene du har valgt for sidene Velkommen eller Min GedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>Navn</b></td><td class='list_value'><b>Beskrivelse</b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"]	= "Klikk på denne knappen for godkjenne endringer du har lagret tidligere.";
+$pgv_lang["block_summaries"]	= "Her er en kort beskrivelse for hver av de rammene du har valgt for sidene Velkommen eller Min GedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>Navn</b></td><td class='list_value'><b>Beskrivelse</b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

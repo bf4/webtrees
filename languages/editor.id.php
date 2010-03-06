@@ -137,7 +137,7 @@ $pgv_lang["basic_search_discription"] 			= "Pencarian situs dasar";
 $pgv_lang["birthdate_search"]				= "Tanggal lahir: ";
 $pgv_lang["birthplace_search"]				= "Tempat lahir: ";
 $pgv_lang["change"]					= "Perubahan";
-$pgv_lang["change_family_instr"]			= "Gunakan halaman ini untuk mengubah atau atau membuang anggota keluarga.<br /><br />Untuk tiap anggota dalam keluarga, Anda dapat menggunakan Ubah kaitan untuk memilih orang yang berbeda untuk mengisi peran tersebut dalam keluarga. Anda juga dapat menggunakan Buang kaitan untuk membuang orang itu dari keluarga.<br /><br />Jika Anda selesai mengubah anggota keluarga, klik tombol Simpan untuk menyimpan perubahan.<br />";
+$pgv_lang["change_family_instr"]			= "Gunakan halaman ini untuk mengubah atau atau membuang anggota keluarga.<br /><br />Untuk tiap anggota dalam keluarga, Anda dapat menggunakan Ubah kaitan untuk memilih orang yang berbeda untuk mengisi peran tersebut dalam keluarga. Anda juga dapat menggunakan Buang kaitan untuk membuang orang itu dari keluarga.<br /><br />Jika Anda selesai mengubah anggota keluarga, klik tombol Simpan untuk menyimpan perubahan.";
 $pgv_lang["change_family_members"]			= "Ganti Anggota Keluarga";
 $pgv_lang["changes_occurred"]				= "Perubahan berikut dibuat terhadap rekaman ini:";
 $pgv_lang["confirm_remove"]				= "Apakah Anda yakin ingin membuang orang ini dari keluarga?";
@@ -231,7 +231,7 @@ $pgv_lang["upload"]					= "Unggah";
 $pgv_lang["upload_error"]				= "Ada kesalahan pengunggahan berkas Anda.";
 $pgv_lang["copy_error"]					= "Berkas #GLOBALS[whichFile2]# tidak dapat disalin dari #GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]				= "Unggah berkas Media";
-$pgv_lang["upload_media_help"]				= "~Unggah berkas Media~<br /><br />Pilih berkas dari komputer lokal Anda untuk diunggah ke server Anda. Semua berkas akan diunggah ke directori <b>#MEDIA_DIRECTORY#</b> atau ke salah satu sub-direktorinya.<br /><br />Nama folder yang Anda tentukan akan diterapkan ke #MEDIA_DIRECTORY#. Misalnya, #MEDIA_DIRECTORY#myfamily. Jika tidak ada, direktori thumbnail otomatis akan diciptakan.";
+$pgv_lang["upload_media_help"]				= "Pilih berkas dari komputer lokal Anda untuk diunggah ke server Anda. Semua berkas akan diunggah ke directori <b>#MEDIA_DIRECTORY#</b> atau ke salah satu sub-direktorinya.<br /><br />Nama folder yang Anda tentukan akan diterapkan ke #MEDIA_DIRECTORY#. Misalnya, #MEDIA_DIRECTORY#myfamily. Jika tidak ada, direktori thumbnail otomatis akan diciptakan.";
 $pgv_lang["upload_successful"]				= "Pengunggahan berhasil.";
 $pgv_lang["view_change_diff"]				= "Tampilkan Perbedaan Perubahan";
 

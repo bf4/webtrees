@@ -67,7 +67,7 @@ $pgv_lang["QUICK_REQUIRED_FAMFACTS"]		= "Dejstva za družine, ki se vedno prika�
 $pgv_lang["QUICK_REQUIRED_FACTS"]		= "Zahtevana dejstva za prikaz pri Hitri obnovitvi";
 $pgv_lang["USE_GEONAMES"]			= "Uporabi podatkovno bazo GeoNames";
 $pgv_lang["AUTO_GENERATE_THUMBS"]		= "Samodejno izdelaj sličice";
-$pgv_lang["more_help_advice"]			= "<br /><b>Več pomoči</b><br />Več pomoč je na voljo s klikom na <b>?</b> poleg navedkov na strani.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><b>Več pomoči</b><br />Več pomoč je na voljo s klikom na <b>?</b> poleg navedkov na strani.";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Širina izdelanih sličic";
 $pgv_lang["SHOW_SOURCES"]			= "Pokaži vire";
 $pgv_lang["SPLIT_PLACES"]			= "Razdeli mesta v urejevalnem načinu";
@@ -237,14 +237,14 @@ $pgv_lang["RSS_FORMAT"]				= "RSS oblika";
 $pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "Preveri ali je možno prenesti GEDCOM datoteke";
 $pgv_lang["gedcom_download_secure"]	= "#GEDCOM# ni mogoče prenesti.";
 
-$pgv_lang["welcome_new2"]			= "<br /><br />Ker vidite to stran to pomeni, da sete uspešno namestili PhpGedView na vaš strežnik in da lahko začnete z nastavljanjem po vaših zahtevah.<br />";
-$pgv_lang["return_editconfig"]		= "Na to nastavitev se lahko vedno vrnete s postavitvijo vašega brskalnika na <i>editconfig.php</i> ali s klikom na povezavo <b>Nastavitve</b> na strani <b>PhpGedView upravljanja</b><br />";
-$pgv_lang["return_editconfig_gedcom"]	= "Na to nastavitev se lahko vedno vrnete s postavitvijo vašega brskalnika na <b>Uredi</b> v tabeli <b>Trenutni GEDCOM-i</b> na strani <b>Upravljanje GEDCOM-ov</b> ali s postavitvijo vašega brskalnika na <i>editconfig_gedcom.php</i>.<br />";
+$pgv_lang["welcome_new2"]			= "<br /><br />Ker vidite to stran to pomeni, da sete uspešno namestili PhpGedView na vaš strežnik in da lahko začnete z nastavljanjem po vaših zahtevah.";
+$pgv_lang["return_editconfig"]		= "Na to nastavitev se lahko vedno vrnete s postavitvijo vašega brskalnika na <i>editconfig.php</i> ali s klikom na povezavo <b>Nastavitve</b> na strani <b>PhpGedView upravljanja</b>";
+$pgv_lang["return_editconfig_gedcom"]	= "Na to nastavitev se lahko vedno vrnete s postavitvijo vašega brskalnika na <b>Uredi</b> v tabeli <b>Trenutni GEDCOM-i</b> na strani <b>Upravljanje GEDCOM-ov</b> ali s postavitvijo vašega brskalnika na <i>editconfig_gedcom.php</i>.";
 $pgv_lang["save_config"] 		= "Shrani nastavitve";
 $pgv_lang["download_gedconf"]		= "Prenesi GEDCOM nastavitve.";
 $pgv_lang["not_writable"]		= "Zaznali smo, da vaša datoteka nastavitev ni pisljiva s PHP-jem.  Lahko pa uporabite gumb <b>Prenesi datoteko #GLOBALS[whichFile]#</b> za shranitev vaših nastavitev v datoteko, ki jo lahko naložite ročno.";
 $pgv_lang["upload_to_index"]		= "Naloži datoteko v imenik index: ";
-$pgv_lang["import_sql"]			= "SQL datotek so bile najdene v imeniku index. Ker verjetno izvirajo iz orodja za migracijo, imate moznost uvoza podatkov v vaši bazo podatkov. Ali želite poskusiti uvoziti te datoteke v bazo podatkov? Vsi obstoječi podatki, ki se naveujejo na uporabnike bodo izgubljeni(uporabniki, novice, priljubljene, izgled sklopov in sporočila).<br /><br />Če boste izbrali nadaljevanje, bo PhpGedView poskusil uvoziti podatke. Če to ne bo uspelo, boste bili vprašani za izdelavo računa upravitelja.<br />";
+$pgv_lang["import_sql"]			= "SQL datotek so bile najdene v imeniku index. Ker verjetno izvirajo iz orodja za migracijo, imate moznost uvoza podatkov v vaši bazo podatkov. Ali želite poskusiti uvoziti te datoteke v bazo podatkov? Vsi obstoječi podatki, ki se naveujejo na uporabnike bodo izgubljeni(uporabniki, novice, priljubljene, izgled sklopov in sporočila).<br /><br />Če boste izbrali nadaljevanje, bo PhpGedView poskusil uvoziti podatke. Če to ne bo uspelo, boste bili vprašani za izdelavo računa upravitelja.";
 
 //-- edit privacy messages
 $pgv_lang["edit_privacy"]			= "Uredi zasebnost";
@@ -371,7 +371,7 @@ $pgv_lang["configured_languages"]	= "Uporabljeni jeziki";
 
 //-- User Migration Tool messages
 $pgv_lang["um_header"] = "Orodje za prenos podatkov uporabnikov";
-$pgv_lang["um_proceed"] = "Izberite možnost ali kliknite na spodnjo povezavo za vrnitev v meni upravitelja<br />";
+$pgv_lang["um_proceed"] = "Izberite možnost ali kliknite na spodnjo povezavo za vrnitev v meni upravitelja";
 $pgv_lang["um_creating"] = "Izdelava";
 $pgv_lang["um_file_create_fail1"] = "Izdelava nove datoteke ni uspela. Datoteka s tem imenom že obstaja:";
 $pgv_lang["um_file_create_fail2"] = "Ne morem izdelati";
@@ -382,7 +382,7 @@ $pgv_lang["um_nomsg"] = "Nobenih sporočil ni prsotnih na tem sistemu.";
 $pgv_lang["um_nofav"] = "Nobenih priljubljenih ni prsotnih na tem sistemu.";
 $pgv_lang["um_nonews"] = "Nobenih novic ni prsotnih na tem sistemu.";
 $pgv_lang["um_noblocks"] = "Nobenih sklopov ni prsotnih na tem sistemu.";
-$pgv_lang["um_index_sql"] = "To orodje bo uvozilo <i>authenticate.php</i> in druge <i>.dat</i> datotek iz imenika index v vašo bazo podatkov.<br />";
+$pgv_lang["um_index_sql"] = "To orodje bo uvozilo <i>authenticate.php</i> in druge <i>.dat</i> datotek iz imenika index v vašo bazo podatkov.";
 $pgv_lang["um_import"] = "Uvoz";
 $pgv_lang["um_export"] = "Izvoz";
 
@@ -397,7 +397,7 @@ $pgv_lang["um_imp_fail"] = "Uvoz ni uspel";
 $pgv_lang["um_backup"] = "Rezervna kopija";
 $pgv_lang["um_zip_succ"] = "Datoteka ZIP je bila uspešno izdelana.";
 $pgv_lang["um_zip_dl"] = "Prenesi ZIP stisnjeno datoteko rezervne kopije ";
-$pgv_lang["um_bu_explain"] = "To orodje lahko naredi rezervno kopijo različnih podatkov PhpGedView-a.<br /><br />Potatki, ki jih izberete se združijo v datoteko ZIP, ki jo lahko poberete s klikom na povezavo na dnu strani po tem, ko je se datoteka ZIP uspešno naredi.<br /><br />Datoteka ZIP bo ostala v imeniku Index dokler jo ne boste ročno izbrisali..<br />";
+$pgv_lang["um_bu_explain"] = "To orodje lahko naredi rezervno kopijo različnih podatkov PhpGedView-a.<br /><br />Potatki, ki jih izberete se združijo v datoteko ZIP, ki jo lahko poberete s klikom na povezavo na dnu strani po tem, ko je se datoteka ZIP uspešno naredi.<br /><br />Datoteka ZIP bo ostala v imeniku Index dokler jo ne boste ročno izbrisali..";
 $pgv_lang["um_bu_config"] = "PhpGedView datoteka nastavitev";
 $pgv_lang["um_bu_gedcoms"] = "GEDCOM datoteke";
 $pgv_lang["um_bu_gedsets"] = "GEDCOM nastavitve, Datoteki nastavitev in zasebnosti";

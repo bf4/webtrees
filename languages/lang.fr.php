@@ -452,7 +452,7 @@ $pgv_lang["indi_info"]                  = "Informations de l'individu";
 $pgv_lang["pedigree_chart"]             = "Arbre d'ascendance";
 $pgv_lang["individual"]                 = "Individu";
 $pgv_lang["as_spouse"]                  = "Conjoint et enfants";
-$pgv_lang["privacy_error"]              = "Respect de la vie privée : les détails de cet enregistrement ne sont pas affichés.<br />";
+$pgv_lang["privacy_error"]              = "Respect de la vie privée : les détails de cet enregistrement ne sont pas affichés.";
 $pgv_lang["more_information"]           = "Pour plus d'informations contacter";
 $pgv_lang["given_name"]                 = "Prénom";
 $pgv_lang["surname"]                    = "Nom de famille";
@@ -551,7 +551,7 @@ $pgv_lang["backSlashes"]				= "anti-oblique : \\";
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]                = "Liens trouvés avec ces lieux";
 $pgv_lang["top_level"]                  = " [sommaire] ";
-$pgv_lang["form"]                       = "Les lieux sont classés dans cet ordre:<br />";
+$pgv_lang["form"]                       = "Les lieux sont classés dans cet ordre:";
 $pgv_lang["default_form"]               = "Ville, Département ou District, Région ou Etat, Pays";
 $pgv_lang["default_form_info"]          = "(par défaut)";
 $pgv_lang["unknown"]                    = "(vide)";
@@ -1247,7 +1247,7 @@ $pgv_lang["passwordlength"]             = "Le mot de passe doit contenir au moin
 $pgv_lang["welcome_text_auth_mode_1"]   = "<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est autorisé à tous les visiteurs ayant un compte.<br /><br />Si vous avez déjà un compte, vous pouvez vous connecter. Sinon, remplissez le formulaire.<br /><br />Après vérification, l'administrateur activera votre compte. Vous recevrez un message d'information.";
 $pgv_lang["welcome_text_auth_mode_2"]   = "<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est réservé aux utilisateurs <u>autorisés</u>.<br /><br />Si vous avez déjà un compte, vous pouvez vous connecter. >Sinon, remplissez le formulaire.<br /><br />Après vérification, l'administrateur acceptera ou refusera votre demande. Vous recevrez un message d'information.";
 $pgv_lang["welcome_text_auth_mode_3"]   = "<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est réservé aux utilisateurs <u>membres de la famille</u>.<br /><br />Si vous avez déjà un compte, vous pouvez vous connecter. Sinon, remplissez le formulaire.<br /><br />Après vérification, l'administrateur acceptera ou refusera votre demande. Vous recevrez un message d'information.";
-$pgv_lang["welcome_text_cust_head"]     = "<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est autorisé aux utilisateurs ayant un compte et un mot de passe.<br />";
+$pgv_lang["welcome_text_cust_head"]     = "<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est autorisé aux utilisateurs ayant un compte et un mot de passe.";
 $pgv_lang["acceptable_use"]             = "<div class=\"largeError\">Attention:</div><div class=\"error\">En renseignant et en soumettant ce formulaire, vous acceptez:<ul><li>de protéger la vie privée des personnes vivantes qui sont renseignées sur notre site;</li><li>et dans la boîte textuelle ci-dessous, vous acceptez ou bien d'expliquer avec qui vous avez un lien de parenté, ou alors vous nous communiquez des informations sur une personne qui devrait apparaître sur notre site.</li></ul></div>";
 
 
@@ -1316,7 +1316,7 @@ $pgv_lang["message_email3"]             = "Vous avez envoyé le message suivant 
 $pgv_lang["viewing_url"]                = "Ce message a été envoyé depuis l'URL ";
 $pgv_lang["messaging2_help"]            = "Lorsque vous envoyez un message, une copie vous est automatiquement adressée.";
 $pgv_lang["random_picture"]             = "Une image au hasard";
-$pgv_lang["message_instructions"]       = "<b>Respect de la vie privée:</b> Les informations sur une personne vivante ne seront envoyées qu'aux proches pouvant justifier d'un lien de parenté.<br /><br />Si vous proposez un ajout ou une correction, merci d'indiquer les sources de vos informations.<br /><br />";
+$pgv_lang["message_instructions"]       = "<b>Respect de la vie privée:</b> Les informations sur une personne vivante ne seront envoyées qu'aux proches pouvant justifier d'un lien de parenté.<br /><br />Si vous proposez un ajout ou une correction, merci d'indiquer les sources de vos informations.";
 $pgv_lang["sending_to"]                 = "Ce message va être envoyé à #TO_USER#";
 $pgv_lang["preferred_lang"]             = "Cet utilisateur préfère recevoir les messages en #USERLANG#";
 $pgv_lang["gedcom_created_using"]       = "Fichier GEDCOM créé avec <b>#SOFTWARE# #VERSION#</b>.";
@@ -1417,8 +1417,8 @@ $pgv_lang["reset_default_blocks"]       = "Retour aux blocs par défaut";
 $pgv_lang["recent_changes"]             = "Modifications récentes";
 $pgv_lang["recent_changes_block"]       = "Bloc «Modifications récentes»";
 $pgv_lang["recent_changes_descr"]       = "Le bloc «Modifications récentes» affiche toutes les modifications de la base GEDCOM sur les #pgv_lang[global_num1]# derniers jours. Il vous aidera à suivre les changements réalisés (marqueur 'CHAN').";
-$pgv_lang["recent_changes_none"]        = "<b>Aucune modification enregistrée ces #pgv_lang[global_num1]# derniers jours.</b><br />";
-$pgv_lang["recent_changes_some"]        = "<b>Modifications enregistrées ces #pgv_lang[global_num1]# derniers jours</b><br />";
+$pgv_lang["recent_changes_none"]        = "<b>Aucune modification enregistrée ces #pgv_lang[global_num1]# derniers jours.</b>";
+$pgv_lang["recent_changes_some"]        = "<b>Modifications enregistrées ces #pgv_lang[global_num1]# derniers jours</b>";
 $pgv_lang["show_empty_block"]           = "Toujours afficher ce bloc même s'il est vide ?";
 $pgv_lang["hide_block_warn"]            = "Si vous cachez un bloc vide, vous ne le pourrez le reconfigurer que lorsqu'il redeviendra visible en n'étant plus vide.";
 $pgv_lang["delete_selected_messages"]   = "Supprimer les messages sélectionnés";
@@ -1815,8 +1815,8 @@ $pgv_lang["definitions"]                = "Définitions";
 //-- Index_edit
 $pgv_lang["block_desc"]                 = "Description du bloc";
 $pgv_lang["click_here"]                 = "Continuer";
-$pgv_lang["click_here_help"]            = "~Continuer~<br /><br />Cliquez sur ce bouton pour conserver vos changements.<br /><br />On vous mène à la page Bienvenue ou Mon portail, mais il se peut que vos changements ne vous sont pas montrés.  Dans ce cas, utilisez la fonction «Rafraichir page» de votre viseur.";
-$pgv_lang["block_summaries"]            = "~Description du bloc~<br /><br />Voici une brève description de chacun des blocs qui vous pouvez placer sur les pages Bienvenue ou Mon portail.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nom</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"]            = "Cliquez sur ce bouton pour conserver vos changements.<br /><br />On vous mène à la page Bienvenue ou Mon portail, mais il se peut que vos changements ne vous sont pas montrés.  Dans ce cas, utilisez la fonction «Rafraichir page» de votre viseur.";
+$pgv_lang["block_summaries"]            = "Voici une brève description de chacun des blocs qui vous pouvez placer sur les pages Bienvenue ou Mon portail.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nom</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]		= "&nbsp;";
 

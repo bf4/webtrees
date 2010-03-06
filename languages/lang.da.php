@@ -373,7 +373,7 @@ $pgv_lang["indi_info"]			= "Personoplysninger";
 $pgv_lang["pedigree_chart"]		= "Anetræ";
 $pgv_lang["individual"]				= "Individ";
 $pgv_lang["as_spouse"]			= "Familie med ægtefælle/partner";
-$pgv_lang["privacy_error"]		= "Oplysninger om denne person er privat.<br />";
+$pgv_lang["privacy_error"]		= "Oplysninger om denne person er privat.";
 $pgv_lang["more_information"]	= "For yderligere information, kontakt";
 $pgv_lang["given_name"]			= "Fornavn(e)";
 $pgv_lang["surname"]			= "Efternavn";
@@ -1049,8 +1049,8 @@ $pgv_lang["mail02_line04a"]		= "Du vil blive informeret via e-mail, når nye bru
 $pgv_lang["mail02_subject"]		= "Ny registrering på #SERVER_NAME#";
 $pgv_lang["hashcode"]			= "Kontrolkode:";
 $pgv_lang["thankyou"]			= "Hej #user_fullname# og tak for din ansøgning om at få en brugerkonto.";
-$pgv_lang["pls_note06"]			= "Der vil nu blive sendt en bekræftelse via e-mail til adressen <b>#user_email#</b>. Du skal bekræfte din ansøgning om en konto ved at følge vejledningen i e-mailen. Hvis du ikke bekræfter din tilmelding inden for 7 dage, vil ansøgningen automatisk blive afvist, og du skal derefter ansøge igen.<br /><br />Efter du har fulgt vejledningen i emailen, skal en administrator også godkende din ansøgning før din konto kan bruges.<br /><br />For at logge ind på denne hjemmeside skal du huske dit brugernavn og adgangskode.<br /><br />";
-$pgv_lang["pls_note06a"] 		= "Vil vil nu sende en bekræftelse via email til emailadressen <b>#user_email#</b>. Du skal godkende din kontoforespørgsel ved at følge vejledningen i emailen. Hvis du ikke bekræfter din tilmelding inden for 7 dage, vil forespørgsel automatisk blive afvist. Du skal derefter ansøge igen.<br /><br />Efter du har fulgt vejledningen i emailen, kan du logge ind.<br /><br />For at logge ind på dette hjemmeside skal du huske dit brugernavn og adgangskode<br /><br />";
+$pgv_lang["pls_note06"]			= "Der vil nu blive sendt en bekræftelse via e-mail til adressen <b>#user_email#</b>. Du skal bekræfte din ansøgning om en konto ved at følge vejledningen i e-mailen. Hvis du ikke bekræfter din tilmelding inden for 7 dage, vil ansøgningen automatisk blive afvist, og du skal derefter ansøge igen.<br /><br />Efter du har fulgt vejledningen i emailen, skal en administrator også godkende din ansøgning før din konto kan bruges.<br /><br />For at logge ind på denne hjemmeside skal du huske dit brugernavn og adgangskode.";
+$pgv_lang["pls_note06a"] 		= "Vil vil nu sende en bekræftelse via email til emailadressen <b>#user_email#</b>. Du skal godkende din kontoforespørgsel ved at følge vejledningen i emailen. Hvis du ikke bekræfter din tilmelding inden for 7 dage, vil forespørgsel automatisk blive afvist. Du skal derefter ansøge igen.<br /><br />Efter du har fulgt vejledningen i emailen, kan du logge ind.<br /><br />For at logge ind på dette hjemmeside skal du huske dit brugernavn og adgangskode";
 $pgv_lang["registernew"]		= "Bekræftelse af ny konto";
 $pgv_lang["user_verify"]		= "Brugergodkendelse";
 $pgv_lang["send"]				= "Send";
@@ -1083,7 +1083,7 @@ $pgv_lang["passwordlength"]		= "Adgangskoden skal indeholde mindst 6 tegn.";
 $pgv_lang["welcome_text_auth_mode_1"]	= "<center><b>Velkommen til disse slægtssider !</b><br />Siderne er kun tilgængelig for besøgende med en brugerkonto.<br />Har du en brugerkonto, kan du logge dig ind herunder.<br /><br />Hvis du ikke har en brugerkonto endnu, kan du søge om at få en<br />ved at klikke på linket <i>Ansøg om brugerkonto</i> neden for.<br />Efter at have godkendt din ansøgning, vil administratoren af hjemmesiden aktivere din konto.<br />Du vil modtage en e-mail når du kan komme ind på siden med dit brugernavn og kodeord.</center>";
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Velkommen til disse slægtssider !</b><br />Siderne er kun tilgængelig for <i>registrerede</i> brugere med en konto.<br />Har du en brugerkonto, kan du logge dig ind herunder.<br /><br />Hvis du ikke har en brugerkonto endnu, kan du søge om at få en<br />ved at klikke på linket Ansøg om brugerkonto.<br />Efter at have godkendt din ansøgning, vil administratoren af hjemmesiden aktivere din konto.<br />Du vil modtage en e-mail når du kan komme ind på siden med dit brugernavn og kodeord.</center>";
 $pgv_lang["welcome_text_auth_mode_3"]	= "<center><b>Velkommen til disse slægtssider !</b><br />Siderne er kun tilgængelig for <i>familliemedlemmer</i>.<br />Har du en brugerkonto, kan du logge dig ind herunder.<br /><br />Hvis du ikke har en brugerkonto endnu, kan du søge om at få en<br />ved at klikke på linket Ansøg om brugerkonto.<br />Efter at have godkendt din ansøgning, vil administratoren af hjemmesiden aktivere din konto.<br />Du vil modtage en e-mail når du kan komme ind på siden med dit brugernavn og kodeord.</center>";
-$pgv_lang["welcome_text_cust_head"]		= "<center><b>Velkommen til disse slægtssider !</b><br />Siderne er <i>kun</i> tilgængelig for brugere som har gyldigt brugernavn og adgangskode.</center><br />";
+$pgv_lang["welcome_text_cust_head"]		= "<center><b>Velkommen til disse slægtssider !</b><br />Siderne er <i>kun</i> tilgængelig for brugere som har gyldigt brugernavn og adgangskode.</center>";
 $pgv_lang["acceptable_use"]			= "<div class=\"largeError\">Bemærk:</div><div class=\"error\">Ved at udfylde of indsende denne formular, accepterer du:<ul><li>at beskytte privatlivets fred for levende menesker der vises på dette sted;</li><li>og forklare i den nedenstående tekstboks, hvem du er relateret til eller give os oplysninger om nogen der burde vises på vores sted.</li></ul></div>";
 //-- mygedview page
 $pgv_lang["upcoming_events"]	= "Kommende begivenheder";
@@ -1148,9 +1148,9 @@ $pgv_lang["message_email3"]		= "Du sendte følgende besked til administratoren a
 $pgv_lang["viewing_url"]		= "Denne besked blev sendt, da du var på følgende fuldstændige internetadresse (URL): ";
 $pgv_lang["messaging2_help"]	= "Når du sender denne besked, vil du også modtage en kopi på den e-mail-adresse du har opgivet.";
 $pgv_lang["random_picture"]		= "Tilfældigt udvalgt billede";
-$pgv_lang["message_instructions"]	= "<b>Bemærk:</b> Privat information om levende personer vil kun blive givet til slægtninge og nære venner.  Det er påkrævet at du godtgør din tilknytning / slægtskab til personen, før du får adgang til at se private data.  Til tider vil information om døde personer også være private, hvis der ikke er fundet nok information om personen til at afgøre om vedkommende lever endnu.<br /><br />Før du sender eventuelle spørgsmål, så check venligst at det er den rigtige person du spørger om ved at se på datoer, steder og nære slægtninge.  Hvis du har adgang til at ændre i slægtsdataene, så oplys venligst hvilker kilder du har dataene fra.<br /><br />";
+$pgv_lang["message_instructions"]	= "<b>Bemærk:</b> Privat information om levende personer vil kun blive givet til slægtninge og nære venner.  Det er påkrævet at du godtgør din tilknytning / slægtskab til personen, før du får adgang til at se private data.  Til tider vil information om døde personer også være private, hvis der ikke er fundet nok information om personen til at afgøre om vedkommende lever endnu.<br /><br />Før du sender eventuelle spørgsmål, så check venligst at det er den rigtige person du spørger om ved at se på datoer, steder og nære slægtninge.  Hvis du har adgang til at ændre i slægtsdataene, så oplys venligst hvilker kilder du har dataene fra.";
 $pgv_lang["sending_to"]			= "Beskeden bliver sendt til #TO_USER#";
-$pgv_lang["preferred_lang"]	 	= "Denne bruger foretrækker at få beskeder på #USERLANG# <br /><br />";
+$pgv_lang["preferred_lang"]	 	= "Denne bruger foretrækker at få beskeder på #USERLANG# ";
 $pgv_lang["gedcom_created_using"]	= "Denne slægtsdatabase blev sidst opdateret ved hjælp af <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b>";
 $pgv_lang["gedcom_created_on"]	= "Slægtsdatabasen blev oprettet d.<b>#DATE#</b>.";
 $pgv_lang["gedcom_created_on2"]	= ", den <b>#CREATED_DATE#</b>.";
@@ -1197,7 +1197,7 @@ $pgv_lang["gedcom_favorites_descr"]	= "Favoritter i Slægtsdatabasen giver admin
 $pgv_lang["gedcom_stats_block"]	= "Statistik for Slægtsdatabasen";
 $pgv_lang["gedcom_stats_descr"]	= "Statistik for Slægtsdatabasen viser en del grundlæggende information om slægtsfilen, såsom hvornår den blev oprettet, og hvor mange personer, familier, begivenheder og kilder der findes i den. Den har ydermere en liste med oftest forekommende efternavne.<br /><br /><br />Administratoren kan indstille om og hvor mange efternavne, der skal vises.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Vis oftest forekommende efternavne?";
-$pgv_lang["portal_config_intructions"]	= "~Tilpas <em>Mine Sider</em> <br /> Tilpas denne velkomstside~<br /><br />Du kan tilpasse siden ved at anbringe rammerne på siden, som du har lyst.<br /><br />Siden er inddelt i <b>Hovedsektionen</b> og <b>Højresektionen</b>.	<b>Hovedsektionens</b> rammer er større og vises under sidens titel.  <b>Højresektionen</b> begynder til højre for titlen og går ned i højre side.<br /><br />Hver sektion har sit eget indhold med rammer, der vil blive vist på siden i den rækkefølge de er vist i listen.  Du kan tilføje, fjerne og sætte rammerne i rækkefølge, som du har lyst.<br /><br />Når en af listerne er tom, vil den anden ramme optage hele bredden af siden.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "Du kan tilpasse siden ved at anbringe rammerne på siden, som du har lyst.<br /><br />Siden er inddelt i <b>Hovedsektionen</b> og <b>Højresektionen</b>.	<b>Hovedsektionens</b> rammer er større og vises under sidens titel.  <b>Højresektionen</b> begynder til højre for titlen og går ned i højre side.<br /><br />Hver sektion har sit eget indhold med rammer, der vil blive vist på siden i den rækkefølge de er vist i listen.  Du kan tilføje, fjerne og sætte rammerne i rækkefølge, som du har lyst.<br /><br />Når en af listerne er tom, vil den anden ramme optage hele bredden af siden.";
 $pgv_lang["login_block"]		= "Log ind";
 $pgv_lang["login_descr"]		= "I &quot;log ind&quot;-feltet kan brugere skrive deres brugernavn og kodeord for at få adgang til deres konto på siden.";
 $pgv_lang["theme_select_block"]	= "Vælg Udseende";
@@ -1248,8 +1248,8 @@ $pgv_lang["reset_default_blocks"]	= "Indstil til standard rammer";
 $pgv_lang["recent_changes"]			= "Seneste Ændringer";
 $pgv_lang["recent_changes_block"]	= "Seneste Ændringer";
 $pgv_lang["recent_changes_descr"]	= "Rammen <i>Seneste Ændringer</i> viser en liste over alle de ændringer, der er udført i slægtsdatabasen indenfor den sidste måned.  Rammen kan hjælpe dig med  at holde dig opdateret med ændringer, der er foretaget.  ";
-$pgv_lang["recent_changes_none"]	= "<b>Der er ingen ændringer sket i de sidste #pgv_lang[global_num1]# dage.</b><br />";
-$pgv_lang["recent_changes_some"]	= "<b>Ændringer foretaget indenfor de sidste #pgv_lang[global_num1]# dage</b><br />";
+$pgv_lang["recent_changes_none"]	= "<b>Der er ingen ændringer sket i de sidste #pgv_lang[global_num1]# dage.</b>";
+$pgv_lang["recent_changes_some"]	= "<b>Ændringer foretaget indenfor de sidste #pgv_lang[global_num1]# dage</b>";
 $pgv_lang["show_empty_block"]		= "Skal denne ramme skjules når den er tom?";
 $pgv_lang["hide_block_warn"]		= "Hvis du skjuler en tom ramme, vil du ikke kunne ændre opsætningen af den før den bliver synlig igen (ved ikke længere at være tom).";
 $pgv_lang["delete_selected_messages"]	= "Slet valgte beskeder";
@@ -1506,8 +1506,8 @@ $pgv_lang["definitions"]			= "Definitioner";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Beskrivelse af rammer";
 $pgv_lang["click_here"]				= "Klik her for at fortsætte";
-$pgv_lang["click_here_help"]		= "~Klik her for at fortsætte~<br /><br />Klik på denne knap for at gemme dine ændringer.<br /><br />Du vil blive sendt tilbage til en af siderne:<b>Velkommen eller Mine Sider</b>, men dine ændringer bliver muligvis ikke vist.  Du skal muligvis klikke på din browsers opdateringsknap (Reload/Refresh) for at se ændringerne.";
-$pgv_lang["block_summaries"]		= "~Beskrivelse af rammer~<br /><br />Her gives en kort beskrivelse af hver af de rammer du kan placere på Velkommen eller Mine Sider siden.<br /><table border='1' align='center'><tr><td class='list_value'><b>Navn</b></td><td class='list_value'><b>Beskrivelse</b></td></tr>&nbsp;</table><br /><br />";
+$pgv_lang["click_here_help"]		= "Klik på denne knap for at gemme dine ændringer.<br /><br />Du vil blive sendt tilbage til en af siderne:<b>Velkommen eller Mine Sider</b>, men dine ændringer bliver muligvis ikke vist.  Du skal muligvis klikke på din browsers opdateringsknap (Reload/Refresh) for at se ændringerne.";
+$pgv_lang["block_summaries"]		= "Her gives en kort beskrivelse af hver af de rammer du kan placere på Velkommen eller Mine Sider siden.<br /><table border='1' align='center'><tr><td class='list_value'><b>Navn</b></td><td class='list_value'><b>Beskrivelse</b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 //-- Find page

@@ -191,7 +191,7 @@ $pgv_lang["PGV_SIMPLE_MAIL"] 		= "Egyszerű levélfejléc a külső e-mailekben"
 $pgv_lang["PGV_SESSION_TIME"] 		= "Munkamenet lejárata";
 $pgv_lang["privileges"]					= "Jogosultságok";
 $pgv_lang["PGV_SESSION_SAVE_PATH"] 		= "Munkamenet állományainak elérési útja";
-$pgv_lang["review_readme"]				= "Ajánlott elolvasni a <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> fájlt, mielőtt folytatja a PhpGedView beállítását.<br /><br />";
+$pgv_lang["review_readme"]				= "Ajánlott elolvasni a <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> fájlt, mielőtt folytatja a PhpGedView beállítását.";
 $pgv_lang["seconds"]					= "&nbsp;&nbsp;másodperc";
 $pgv_lang["show_phpinfo"]				= "PHP információs oldal mutatása";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"] 		= "Az adminisztrátornak el kell fogadnia az új regisztrációkat";

@@ -135,7 +135,7 @@ $pgv_lang["basic_search_discription"]   = "Recherche basique";
 $pgv_lang["birthdate_search"]           = "Date de naissance : ";
 $pgv_lang["birthplace_search"]          = "Lieu de naissance : ";
 $pgv_lang["change"]                     = "Changer";
-$pgv_lang["change_family_instr"]        = "Utilisez cette page pour modifier ou supprimer un membre de la famille.<br /><br />Pour chaque membre de la famille, vous pouvez utiliser le lien «Modifier» pour choisir un individu différent pour remplir ce rôle (père, mère ...) dans la famille. Vous pouvez également utiliser le lien «supprimer» pour supprimer cet individu de cette famille.<br /><br />Quand vous avez terminé les modifications des membres de la famille, cliquez sur le bouton «sauver (enregistrer)» pour sauvegarder vos modifications.<br />";
+$pgv_lang["change_family_instr"]        = "Utilisez cette page pour modifier ou supprimer un membre de la famille.<br /><br />Pour chaque membre de la famille, vous pouvez utiliser le lien «Modifier» pour choisir un individu différent pour remplir ce rôle (père, mère ...) dans la famille. Vous pouvez également utiliser le lien «supprimer» pour supprimer cet individu de cette famille.<br /><br />Quand vous avez terminé les modifications des membres de la famille, cliquez sur le bouton «sauver (enregistrer)» pour sauvegarder vos modifications.";
 $pgv_lang["change_family_members"]      = "Modifier les membres de la famille";
 $pgv_lang["changes_occurred"]           = "Les modifications suivantes ont été faites pour cet individu";
 $pgv_lang["confirm_remove"]             = "Confirmez-vous la suppression de cette personne de la famille ?";
@@ -231,7 +231,7 @@ $pgv_lang["upload"]                     = "Téléchargement";
 $pgv_lang["upload_error"]               = "Erreur lors du chargement de votre fichier GEDCOM sur le serveur.";
 $pgv_lang["copy_error"]                 = "Le fichier # GLOBALS [whichFile2] # ne peut pas être copié à partir de # GLOBALS [whichFile1] #";
 $pgv_lang["upload_media"]               = "Charger des objets MultiMédia";
-$pgv_lang["upload_media_help"]          = "~Charger des objets MultiMédia~<br /><br />Choisir un fichier sur votre poste. Il sera copié sur le serveur dans le dossier <b>#MEDIA_DIRECTORY#</b> ou un de ses sous-dossiers.<br /><br />Le nom du dossier sera ajouté à #MEDIA_DIRECTORY#. Par exemple, #MEDIA_DIRECTORY#famille. Si le dossier de vignettes n'existe pas, il sera créé automatiquement.";
+$pgv_lang["upload_media_help"]          = "Choisir un fichier sur votre poste. Il sera copié sur le serveur dans le dossier <b>#MEDIA_DIRECTORY#</b> ou un de ses sous-dossiers.<br /><br />Le nom du dossier sera ajouté à #MEDIA_DIRECTORY#. Par exemple, #MEDIA_DIRECTORY#famille. Si le dossier de vignettes n'existe pas, il sera créé automatiquement.";
 $pgv_lang["upload_successful"]          = "Téléchargement réussi";
 $pgv_lang["view_change_diff"]           = "Voir les différences";
 ?>

@@ -179,7 +179,7 @@ $pgv_lang["add_shared_note_lbl"]	= "Aggiungi una nota condivisa";
 $pgv_lang["advanced_search_discription"] = "Ricerca avanzata sito";
 $pgv_lang["auto_thumbnail"]			= "Anteprima automatica";
 $pgv_lang["basic_search_discription"] = "Ricerca base sito";
-$pgv_lang["change_family_instr"]	= "Utilizza questa pagina per modificare o rimuovere i membri della famiglia.<br /><br />Per ciascun membro della famiglia puoi utilizzare il link Modifica per scegliere una persona differente a svolgere quel ruolo nella famiglia.<br /><br />Quando avrai finito con le modifiche de imembri della famiglia, clicca sul pulsante Salva per salvarle<br />";
+$pgv_lang["change_family_instr"]	= "Utilizza questa pagina per modificare o rimuovere i membri della famiglia.<br /><br />Per ciascun membro della famiglia puoi utilizzare il link Modifica per scegliere una persona differente a svolgere quel ruolo nella famiglia.<br /><br />Quando avrai finito con le modifiche de imembri della famiglia, clicca sul pulsante Salva per salvarle";
 $pgv_lang["change_family_members"]	= "Modifica i membri della famiglia";
 $pgv_lang["create_repository"]		= "Crea deposito";
 $pgv_lang["thumb_media_ok1"]			= "File di anteprima <b>#GLOBALS[oldMediaName]#</b> rinominato con successo in <b>#GLOBALS[newMediaName]#</b>.";
@@ -245,6 +245,6 @@ $pgv_lang["record_marked_deleted"]		= "Questo record è stato marcato per essere
 $pgv_lang["thumbgen_error"]			= "Anteprima #thumbnail# non può essere generata automaticamente.";
 $pgv_lang["thumbnail"]				= "Anteprima da caricare";
 $pgv_lang["copy_error"]				= "Il file #GLOBALS[whichFile2]# non può essere copiato da #GLOBALS[whichFile1]#";
-$pgv_lang["upload_media_help"]		= "~Carica file multimediale~<br /><br />Seleziona i file da caricare nel server dal tuo computer. Tutti i file saranno caricati nella cartella <b>#MEDIA_DIRECTORY#</b> o in una delle sue sottocartelle.<br /><br />I nomi cartella che specificherai saranno aggiunti a #MEDIA_DIRECTORY#. Per esempio, #MEDIA_DIRECTORY#miafamiglia. Se la cartella anteprima non esiste, viene creata automaticamente.";
+$pgv_lang["upload_media_help"]		= "Seleziona i file da caricare nel server dal tuo computer. Tutti i file saranno caricati nella cartella <b>#MEDIA_DIRECTORY#</b> o in una delle sue sottocartelle.<br /><br />I nomi cartella che specificherai saranno aggiunti a #MEDIA_DIRECTORY#. Per esempio, #MEDIA_DIRECTORY#miafamiglia. Se la cartella anteprima non esiste, viene creata automaticamente.";
 $pgv_lang["upload_successful"]		= "Caricato con successo.";
 ?>

@@ -143,7 +143,7 @@ $pgv_lang["basic_search_discription"] = "Einfache Internetseiten-Suche";
 $pgv_lang["birthdate_search"]		= "Geburtsdatum:";
 $pgv_lang["birthplace_search"]		= "Geburtsort:";
 $pgv_lang["change"]					= "Ändern";
-$pgv_lang["change_family_instr"]	= "Benutze diese Seite zum Ändern oder Entfernen von Familienmitgliedern.<br /><br />Für jedes Familienmitglied können Sie den <b>Ändern</b> Button klicken, um eine andere Person für diese Rolle in der Familie zu wählen.<br /><br />Um Ihre Änderungen zu speichern, klicken Sie den <b>Speichern</b> Button.<br />";
+$pgv_lang["change_family_instr"]	= "Benutze diese Seite zum Ändern oder Entfernen von Familienmitgliedern.<br /><br />Für jedes Familienmitglied können Sie den <b>Ändern</b> Button klicken, um eine andere Person für diese Rolle in der Familie zu wählen.<br /><br />Um Ihre Änderungen zu speichern, klicken Sie den <b>Speichern</b> Button.";
 $pgv_lang["change_family_members"]	= "Familienmitglieder ändern";
 $pgv_lang["changes_occurred"]		= "An diesem Datensatz wurden folgende Änderungen vorgenommen:";
 $pgv_lang["confirm_remove"]			= "Möchten Sie wirklich diese Person aus dieser Familie entfernen?";
@@ -242,7 +242,7 @@ $pgv_lang["upload"]					= "Hochladen";
 $pgv_lang["upload_error"]			= "Beim Übertragen (upload) Ihrer Datei auf den Server trat ein Fehler auf.";
 $pgv_lang["copy_error"]				= "Die Datei #GLOBALS[whichFile2]# konnte nicht von #GLOBALS[whichFile1]# kopiert werden.";
 $pgv_lang["upload_media"]			= "Multimedia Dateien auf Server hochladen";
-$pgv_lang["upload_media_help"]		= "~Multimedia Dateien auf Server hochladen~<br /><br />Wählen Sie die Dateien zum Hochladen auf Ihren Server. Alle Dateien werden in das <b>#MEDIA_DIRECTORY#</b> Verzeichnis aktualisiert  oder in eines seiner Unterverzeichnisse.<br /><br />Verzeichnisnamen die Sie eingeben, werden an #MEDIA_DIRECTORY# angehängt. Zum Beispiel, #MEDIA_DIRECTORY#Müller. Falls das Miniaturbild-Verzeichnis nicht existiert, wird es automatisch erstellt.";
+$pgv_lang["upload_media_help"]		= "Wählen Sie die Dateien zum Hochladen auf Ihren Server. Alle Dateien werden in das <b>#MEDIA_DIRECTORY#</b> Verzeichnis aktualisiert  oder in eines seiner Unterverzeichnisse.<br /><br />Verzeichnisnamen die Sie eingeben, werden an #MEDIA_DIRECTORY# angehängt. Zum Beispiel, #MEDIA_DIRECTORY#Müller. Falls das Miniaturbild-Verzeichnis nicht existiert, wird es automatisch erstellt.";
 $pgv_lang["upload_successful"]		= "Hochladen erfolgreich.";
 $pgv_lang["view_change_diff"]		= "Änderungen ansehen";
 
