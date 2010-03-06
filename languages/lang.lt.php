@@ -34,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["duplicate_username"] 	= "Pasikartojantis vardas. Naudotojas tokiu vardu jau egzistuoja. Pasirinkite kitą naudotojo vardą.";
 $pgv_lang["none"]					= "Nieko";
 $pgv_lang["family"] 				= "Šeima";
-$pgv_lang["invalid_search_input"] 	= "Prie metų dar  įveskite  vardą, pavardę ar \n\t vietą";
+$pgv_lang["invalid_search_input"] 	= "Prie metų dar  įveskite  vardą, pavardę ar vietą";
 $pgv_lang["multi_site_search"] 		= "Keleto svetainių paieška";
 
 //-- GENERAL HELP MESSAGES

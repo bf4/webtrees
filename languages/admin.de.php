@@ -399,7 +399,7 @@ $pgv_lang["weekly"]					= "Wöchentlich";
 $pgv_lang["welcome_new"]			= "Willkommen auf Ihrer neuen PhpGedView-Website.";
 $pgv_lang["yearly"]					= "Jährlich";
 $pgv_lang["admin_OK_subject"]		= "Zugangserlaubnis bei #SERVER_NAME#";
-$pgv_lang["admin_OK_message"]		= "Der Verwalter von PhpGedView bei #SERVER_NAME# hat Ihren Zugangsantrag erlaubt.  Sie können sich jetzt mit dem folgenden Link anmelden:\r\n\r\n#SERVER_NAME#\r\n";
+$pgv_lang["admin_OK_message"]		= "Der Verwalter von PhpGedView bei #SERVER_NAME# hat Ihren Zugangsantrag erlaubt.  Sie können sich jetzt mit dem folgenden Link anmelden: #SERVER_NAME#";
 
 $pgv_lang["batch_update"]			= "Ihre Datenbank mittels Stapelverarbeitung aktualisieren oder ändern";
 

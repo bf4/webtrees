@@ -530,7 +530,7 @@ $pgv_lang["export_lang_utility_desc"]	= "Her kan du velge et språk og eksporter
 $pgv_lang["export_ok"]					= "Hjelpetekstene er eksportert";
 $pgv_lang["compare_lang_utility"]		= "Sammenligne språk-filer";
 $pgv_lang["compare_lang_utility_help"]	= "Her kan du sammenligne to språk og få en liste med hva som er forskjellen mellom de ulike språk-filene.<br /><br />Se filen [<a href=\"languages\\/LANG_CHANGELOG.txt\" target=\"_blank\">LANG_CHANGELOG.txt</a>] for andre endringer av språk-filer. Den engelske språkfilene er originalspråket og oversettelser må ta utgangspunkt i disse.";
-$pgv_lang["compare_lang_utility_desc"]	= "Her kan du sammenligne to språk og få en liste med hva som er forskjellen mellom de ulike språk-filene.<br /><br />Se filen [<a href=\"languages\/LANG_CHANGELOG.txt\" target=\"_blank\">LANG_CHANGELOG.txt</a>] for andre endringer av språk-filer. Den engelske språkfilene er originalspråket og oversettelser må ta utgangspunkt i disse.";
+$pgv_lang["compare_lang_utility_desc"]	= "Her kan du sammenligne to språk og få en liste med hva som er forskjellen mellom de ulike språk-filene.<br /><br />Se filen [<a href=\"languages/LANG_CHANGELOG.txt\" target=\"_blank\">LANG_CHANGELOG.txt</a>] for andre endringer av språk-filer. Den engelske språkfilene er originalspråket og oversettelser må ta utgangspunkt i disse.";
 $pgv_lang["new_language"]				= "Språk i kildefilene";
 $pgv_lang["new_language_help"]			= "Her kan du velge det språket som skal være utgangspunktet for å sammenligne mot et annet språk.<br /><br />Alle endringer og tillegg i språkfilene er først gjort i de <b>engelske</b> språkfilene, slik at til vanlig vil engelsk være valget her.";
 $pgv_lang["old_language"]				= "Språk i de andre";

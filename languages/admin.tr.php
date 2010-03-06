@@ -178,7 +178,7 @@ $pgv_lang["administration"]		= "Yönetim";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]		= "GEDCOM seçme izni ver";
 $pgv_lang["ALLOW_USER_THEMES"]		= "Üye tema seçmesine izin ver";
 $pgv_lang["ansi_encoding_detected"] 	= "ANSI ile kotlanmış saptanan dosya. PhpGedView UTF-8 e dönüştürülen dosyalar en iyi şekilde çalışır.";
-$pgv_lang["ansi_to_utf8"]		= "ANSİ ile kodlanmış bu GEDCOM veritabanı UTF-8\'e dönüştürülsün mü?";
+$pgv_lang["ansi_to_utf8"]		= "ANSİ ile kodlanmış bu GEDCOM veritabanı UTF-8'e dönüştürülsün mü?";
 $pgv_lang["apply_privacy"]				= "Mahremiyet ayarları uygula";
 $pgv_lang["back_useradmin"]				= "Kullanıcı Yönetimine geri don";
 $pgv_lang["bytes_read"]			= "Okunan bayt miktarı:";
@@ -197,7 +197,7 @@ $pgv_lang["config_still_writable"]				= "<i>config.php</i> dosyanız hala yazıl
 $pgv_lang["configuration"]		= "Genel ayarlar";
 $pgv_lang["configure"]							= "PhpGedView Genel ayarlar";
 $pgv_lang["configure_head"]						= "PhpGedView Genel ayarlar";
-$pgv_lang["confirm_gedcom_delete"]				= "Bu GEDCOM\'u silmek istediğinizden emin misiniz";
+$pgv_lang["confirm_gedcom_delete"]				= "Bu GEDCOM'u silmek istediğinizden emin misiniz";
 $pgv_lang["confirm_user_delete"]	= "Üyeyi hakikatten silmek mi istiyorsunuz";
 $pgv_lang["create_user"]		= "Yeni üye oluştur";
 $pgv_lang["current_users"]						= "Kullanıcı Listesi";
@@ -361,7 +361,7 @@ $pgv_lang["weekly"]								= "Haftalık";
 $pgv_lang["welcome_new"]			= "Yeni PhpGedView websitesine hoş geldiniz.";
 $pgv_lang["yearly"]								= "Yıllık";
 $pgv_lang["admin_OK_subject"]					= "#SERVER_NAME# hesabı onayla";
-$pgv_lang["admin_OK_message"]					= "PhpGedView site #SERVER_NAME# daki yönetici üyelik hesabınızı onayladı. Şimdi aşağıdaki linki tıklayıp PhpGedView sitesine bağlanıp giriş yapabilirsiniz: \r\n\r\n#SERVER_NAME#\r\n";
+$pgv_lang["admin_OK_message"]					= "PhpGedView site #SERVER_NAME# daki yönetici üyelik hesabınızı onayladı. Şimdi aşağıdaki linki tıklayıp PhpGedView sitesine bağlanıp giriş yapabilirsiniz: #SERVER_NAME#";
 
 $pgv_lang["batch_update"]="GEDCOM kümeyi güncelleme/düzenleme yönetimi";
 

@@ -418,7 +418,7 @@ $pgv_lang["weekly"]			= "שבועי";
 $pgv_lang["welcome_new"]		= "ברוך הבא לאתר האינטרנט החדש PhpGedView שלך.";
 $pgv_lang["yearly"]			= "שנתי";
 $pgv_lang["admin_OK_subject"]	= "אישור משתמש על #SERVER_NAME#";
-$pgv_lang["admin_OK_message"]	= "המנהלן של אתר PhpGedView #SERVER_NAME# אישר את הבקשה שלך לקוד משתמש. תוכל עכשיו להשתמש באתר ע\"י הקישור הבא: \r\n\r\n<a href=\"#SERVER_NAME#\">#SERVER_NAME#</a>\r\n";
+$pgv_lang["admin_OK_message"]	= "המנהלן של אתר PhpGedView #SERVER_NAME# אישר את הבקשה שלך לקוד משתמש. תוכל עכשיו להשתמש באתר ע\"י הקישור הבא: #SERVER_NAME#";
 
 $pgv_lang["batch_update"]		= "בצע עדכונים/עריכה באצוה (batch) על קובץ ה-GEDCOM שלך";
 

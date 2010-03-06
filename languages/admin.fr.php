@@ -360,7 +360,7 @@ $pgv_lang["weekly"]                     = "Hebdo";
 $pgv_lang["welcome_new"]                = "Bienvenue sur votre site PhpGedView. L'affichage de cette page signifie que PhpGedView a été correctement installé sur votre serveur. Vous pouvez lancer la configuration.";
 $pgv_lang["yearly"]                     = "Annuel";
 $pgv_lang["admin_OK_subject"]           = "Approbation (validation) du compte sur #SERVER_NAME#";
-$pgv_lang["admin_OK_message"]           = "L'administrateur du site PhpGedView #SERVER_NAME# a approuvé la création de votre compte utilisateur. Vous pouvez maintenant vous connecter en utilisant le lien suivant :\r\n\r\n#SERVER_NAME#\r\n";
+$pgv_lang["admin_OK_message"]           = "L'administrateur du site PhpGedView #SERVER_NAME# a approuvé la création de votre compte utilisateur. Vous pouvez maintenant vous connecter en utilisant le lien suivant: #SERVER_NAME#";
 $pgv_lang["batch_update"]               = "Effectuer des mises à jour/modifications de votre GEDCOM par batch";
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]                   = "Vérificateur GEDCOM";

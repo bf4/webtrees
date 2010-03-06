@@ -368,7 +368,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["welcome_new"]						= "Welcome to your new PhpGedView website.";
 ##$pgv_lang["yearly"]								= "Yearly";
 ##$pgv_lang["admin_OK_subject"]					= "Approval of account at #SERVER_NAME#";
-##$pgv_lang["admin_OK_message"]					= "The administrator at the PhpGedView site #SERVER_NAME# has approved your application for an account.  You may now login by accessing the following link:\r\n\r\n#SERVER_NAME#\r\n";
+##$pgv_lang["admin_OK_message"]					= "The administrator at the PhpGedView site #SERVER_NAME# has approved your application for an account.  You may now login by accessing the following link: #SERVER_NAME#";
 
 ##$pgv_lang["batch_update"]="Perform batch updates/edits on your GEDCOM";
 

@@ -288,7 +288,7 @@ $pgv_lang["weekly"]								= "Ugentlig";
 $pgv_lang["welcome_new"]						= "Velkommen til din nye PhpGedView hjemmeside.";
 $pgv_lang["yearly"]								= "Årlig";
 $pgv_lang["admin_OK_subject"]					= "Godkendelse af konto på #SERVER_NAME#";
-$pgv_lang["admin_OK_message"]					= "Administratoren af hjemmesiden #SERVER_NAME# har godkendt din ansøgning om en konto. Du kan nu logge på ved at bruge følgende genvej:\r\n\r\n#SERVER_NAME#\r\n";
+$pgv_lang["admin_OK_message"]					= "Administratoren af hjemmesiden #SERVER_NAME# har godkendt din ansøgning om en konto. Du kan nu logge på ved at bruge følgende genvej: #SERVER_NAME#";
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]     = "Gedcom kontrol";
