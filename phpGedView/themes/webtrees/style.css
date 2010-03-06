@@ -74,14 +74,14 @@ ul {
 	width: 60px;
 }
 .gedcom_table {
-	border: 1px solid #2694e8;
+	border: 1px solid #81a9cb;
 	margin: 0;
 	width: 99%;
 }
 
 .person_box {
 	background-color: #edf7fd;
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 }
 
 .person_boxF {
@@ -91,7 +91,7 @@ ul {
 
 .person_boxNN {
 	background-color: white;
-	border: dashed #2694e8 1px;
+	border: dashed #81a9cb 1px;
 }
 
 .person_box:target, .news_box:target, #gedcom_stats:target {
@@ -114,7 +114,7 @@ table.center {
 
 .list_label, .list_label_wrap {
 	color: #ffffff;
-	background-color: #2694e8;
+	background-color: #81a9cb;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	text-align: center;
 }
@@ -122,7 +122,7 @@ table.center {
 .list_value, .list_value_wrap {
 	background-color: #edf7f9;
 	color: black;
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	vertical-align: top;
 }
@@ -145,7 +145,7 @@ table.center {
 
 .facts_label {
 	color: #ffffff;
-	background-color: #2694e8;
+	background-color: #81a9cb;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
@@ -165,13 +165,13 @@ table.center {
 }
 
 .facts_label03 {
-	background-color: #2694e8;
+	background-color: #81a9cb;
 }
 
 .facts_value {
 	background-color: #edf7fd;
 	color: black;
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 }
@@ -179,14 +179,14 @@ table.center {
 .facts_value02 {
 	background-color: #edf7fd;
 	color: black;
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 5px;
 }
 
 .facts_labelred, .facts_labelblue {
 	color: #ffffff;
-	background-color: #2694e8;
+	background-color: #81a9cb;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
@@ -214,9 +214,9 @@ table.center {
 
 .tab_cell_active {
 	background-color: white;
-	border-left: outset #2694e8 2px;
-	border-top: outset #2694e8 2px;
-	border-right: outset #2694e8 2px;
+	border-left: outset #81a9cb 2px;
+	border-top: outset #81a9cb 2px;
+	border-right: outset #81a9cb 2px;
 	text-align: center;
 	font-weight: bold;
 	font-size: 10pt;
@@ -224,9 +224,9 @@ table.center {
 
 .tab_cell_inactive {
 	background-color: #edf7fd;
-	border-left: solid #2694e8 2px;
-	border-top: solid #2694e8 2px;
-	border-right: outset #2694e8 2px;
+	border-left: solid #81a9cb 2px;
+	border-top: solid #81a9cb 2px;
+	border-right: outset #81a9cb 2px;
 	text-align: center;
 	font-weight: bold;
 	font-size: 10pt;
@@ -234,9 +234,9 @@ table.center {
 
 .tab_cell_inactive_empty {
 	background-color: #c6d0da;
-	border-left: solid #2694e8 2px;
-	border-top: solid #2694e8 2px;
-	border-right: outset #2694e8 2px;
+	border-left: solid #81a9cb 2px;
+	border-top: solid #81a9cb 2px;
+	border-right: outset #81a9cb 2px;
 	text-align: center;
 	font-weight: bold;
 	font-size: 10pt;
@@ -257,14 +257,14 @@ table.center {
 .tab_inactive_bottom {
 	border-left: none;
 	border-right: none;
-	border-top: outset #2694e8 2px;
+	border-top: outset #81a9cb 2px;
 	height: 5px;
 }
 
 .tab_inactive_bottom_right {
 	border-left: none;
 	border-right: none;
-	border-top: outset #2694e8 2px;
+	border-top: outset #81a9cb 2px;
 	width: 33%;
 	height: 5px;
 }
@@ -416,7 +416,7 @@ a:hover .nameZoom {
 }
 
 .sublinks_table {
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 	background-color: #edf7fd;
 }
 
@@ -555,7 +555,7 @@ a:hover .nameZoom {
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	background-color: #edf7fd;
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 	white-space: nowrap;
 	visibility: hidden;
 	position: absolute;
@@ -597,7 +597,7 @@ a:hover .nameZoom {
 
 .news_box {
 	background-color: #edf7fd;
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 }
 
 .news_title {
@@ -668,7 +668,7 @@ a:hover .nameZoom {
 .block {
 	background-color: #edf7fd;
 	color: black;
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	vertical-align: top;
 	margin-bottom: 5px;
@@ -935,7 +935,7 @@ h4 {
 /* Style for the top and bottom bar */
 .topbottombar {
 	color: #ffffff;
-	background-color: #2694e8;
+	background-color: #81a9cb;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px;
 	text-align: center;
@@ -946,7 +946,7 @@ h4 {
 .subbar {
 	background-color: #d1d9ef;
 	color: black;
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	vertical-align: top;
 	white-space: nowrap;
@@ -956,7 +956,7 @@ h4 {
 /* Style for the descriptionbox */
 .descriptionbox {
 	color: #ffffff;
-	background-color: #2694e8;
+	background-color: #81a9cb;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	vertical-align: top;
 	white-space: nowrap;
@@ -967,7 +967,7 @@ h4 {
 .optionbox {
 	background-color: #d1d9ef;
 	color: black;
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	vertical-align: top;
 	white-space: nowrap;
@@ -1071,7 +1071,7 @@ h4 {
 /* Message box */
 .messagebox {
 	background-color: #c2ceef;
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 }
 
 /* Change indicators */
@@ -1355,7 +1355,7 @@ text-align: center;
 }
 
 .gchart{
-	border: solid #2694e8 1px;
+	border: solid #81a9cb 1px;
 }
 
 .execution_stats {
