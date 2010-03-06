@@ -127,6 +127,11 @@ $menubar = new MenuBar();
 	</tr>
 	</table>
 <?php require './includes/accesskeyHeaders.php'; ?>
-<?php require './sidebar.php'; ?>
+<?php 
+    global $controller; 
+    if (method_exists($controller, 'getOtherMenu')) {     
+        require './sidebar.php';  
+    } 
+?>
 <!-- close div for div id="header" -->
 <div id="content">
