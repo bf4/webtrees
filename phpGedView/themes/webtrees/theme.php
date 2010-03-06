@@ -68,6 +68,8 @@ $PGV_IMAGES["source"]["large"] = "source.gif";
 $PGV_IMAGES["sex"]["large"] = "male.gif";
 $PGV_IMAGES["sexf"]["large"] = "female.gif";
 $PGV_IMAGES["sexn"]["large"] = "fe_male.gif";
+$PGV_IMAGES["edit_indi"]["large"] = "edit_indi.png";
+$PGV_IMAGES["edit_fam"]["large"] = "edit_fam.png";
 
 //- PGV main icons for optional modules
 $PGV_IMAGES["menu_gallery"]["large"] = "menu_gallery.gif";
@@ -81,7 +83,7 @@ $PGV_IMAGES["calendar"]["small"] = "small/calendar.gif";
 $PGV_IMAGES["cfamily"]["small"] = "small/cfamily.gif";
 $PGV_IMAGES["clippings"]["small"] = "small/clippings.gif";
 $PGV_IMAGES["descendant"]["small"] = "small/descendancy.gif";
-$PGV_IMAGES["edit_fam"]["small"] = "small/edit_fam.gif";
+//$PGV_IMAGES["edit_fam"]["small"] = "small/edit_fam.gif";
 $PGV_IMAGES["edit_indi"]["small"] = "small/edit_indi.gif";
 $PGV_IMAGES["edit_sour"]["small"] = "small/edit_sour.gif";
 $PGV_IMAGES["edit_repo"]["small"] = "small/edit_repo.gif";

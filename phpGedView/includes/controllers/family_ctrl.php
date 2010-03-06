@@ -349,8 +349,11 @@ class FamilyRoot extends BaseController {
 		// edit_fam menu
 		$menu = new Menu($pgv_lang['edit_fam']);
 		$menu->addOnclick("return edit_family('".$this->getFamilyID()."');");
-		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
-			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+		if (!empty($PGV_IMAGES["edit_fam"]["large"])) {
+			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_fam"]["large"]);
+		}
+		else if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
+			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_fam"]["small"]);
 		}
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
