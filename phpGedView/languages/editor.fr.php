@@ -231,7 +231,7 @@ $pgv_lang["upload"]                     = "Téléchargement";
 $pgv_lang["upload_error"]               = "Erreur lors du chargement de votre fichier GEDCOM sur le serveur.";
 $pgv_lang["copy_error"]                 = "Le fichier # GLOBALS [whichFile2] # ne peut pas être copié à partir de # GLOBALS [whichFile1] #";
 $pgv_lang["upload_media"]               = "Charger des objets MultiMédia";
-$pgv_lang["upload_media_help"]          = "~#pgv_lang[upload_media]#~<br /><br />Choisir un fichier sur votre poste. Il sera copié sur le serveur dans le dossier <b>#MEDIA_DIRECTORY#</b> ou un de ses sous-dossiers.<br /><br />Le nom du dossier sera ajouté à #MEDIA_DIRECTORY#. Par exemple, #MEDIA_DIRECTORY#famille. Si le dossier de vignettes n'existe pas, il sera créé automatiquement.";
+$pgv_lang["upload_media_help"]          = "~Charger des objets MultiMédia~<br /><br />Choisir un fichier sur votre poste. Il sera copié sur le serveur dans le dossier <b>#MEDIA_DIRECTORY#</b> ou un de ses sous-dossiers.<br /><br />Le nom du dossier sera ajouté à #MEDIA_DIRECTORY#. Par exemple, #MEDIA_DIRECTORY#famille. Si le dossier de vignettes n'existe pas, il sera créé automatiquement.";
 $pgv_lang["upload_successful"]          = "Téléchargement réussi";
 $pgv_lang["view_change_diff"]           = "Voir les différences";
 ?>

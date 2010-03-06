@@ -307,7 +307,7 @@ $pgv_lang["total_changes"]				= "Änderungen Anzahl";
 $pgv_lang["total_links"]				= "Verbindungen Anzahl";
 $pgv_lang["top10_pageviews_nohits"]		= "Es gibt keine Treffer.";
 $pgv_lang["top10_pageviews_msg"]		= "Sie müssen in der GEDCOM Konfiguration die Zähler zunächst aktivieren.";
-$pgv_lang["review_changes_descr"]		= "Der «#pgv_lang[review_changes_block]#» Block zeigt Benutzern mit Editierrechten eine Liste der Datensätze die online geändert wurden und die noch kontrolliert und übernommen bzw. verworfen werden müssen.<br /><br />Wenn dieser Block aktiviert ist, erhalten alle Benutzer mit Editierrechten täglich eine Mail, die auf offene Änderungen hinweist.";
+$pgv_lang["review_changes_descr"]		= "Der «Offene Änderungen» Block zeigt Benutzern mit Editierrechten eine Liste der Datensätze die online geändert wurden und die noch kontrolliert und übernommen bzw. verworfen werden müssen.<br /><br />Wenn dieser Block aktiviert ist, erhalten alle Benutzer mit Editierrechten täglich eine Mail, die auf offene Änderungen hinweist.";
 $pgv_lang["review_changes_block"]		= "Offene Änderungen";
 $pgv_lang["review_changes_email"]		= "Erinnerungs Mails versenden?";
 $pgv_lang["review_changes_email_freq"]	= "Erinnerungs Mails Häufigkeit (Tage)";
@@ -1219,7 +1219,7 @@ $pgv_lang["registernew"]				= "Verifizierung der neuen Benutzerdaten";
 $pgv_lang["user_verify"]				= "Benutzer Verifizierung";
 $pgv_lang["send"]						= "Absenden";
 
-$pgv_lang["pls_note07"]					= "~#pgv_lang[user_verify]#~<br /><br />Um Ihren Antrag zu bestätigen, geben Sie bitte nun Ihren Benutzernamen, Ihr Kennwort und den Verifizierungscode ein, den Sie per Mail erhalten haben.";
+$pgv_lang["pls_note07"]					= "~Benutzer Verifizierung~<br /><br />Um Ihren Antrag zu bestätigen, geben Sie bitte nun Ihren Benutzernamen, Ihr Kennwort und den Verifizierungscode ein, den Sie per Mail erhalten haben.";
 $pgv_lang["pls_note08"]					= "Die Eingaben für den Benutzer <b>#user_name#</b> wurden überprüft.";
 
 $pgv_lang["mail03_line01"]				= "Hallo Verwalter ...";
@@ -1241,7 +1241,7 @@ $pgv_lang["mail04_line01"]				= "Hallo #user_fullname#...";
 $pgv_lang["mail04_line02"]				= "Für Ihren Benutzernamen wurde ein neues Kennwort angefordert.";
 $pgv_lang["mail04_line03"]				= "Empfehlung:";
 $pgv_lang["mail04_line04"]				= "Bitte klicken Sie jetzt auf den unten stehenden Link oder kopieren Sie ihn in die Adresszeile Ihres Browsers, melden sich mit dem neuen Kennwort an und ändern Sie es sofort aus Datenschutzgründen.";
-$pgv_lang["mail04_line05"]				= "Um Ihr Kennwort, nachdem Sie sich angemeldet haben zu ändern, wählen Sie die «#pgv_lang[editowndata]#» Verbindung innerhalb des «#pgv_lang[mygedview]#» Menüs und tragen Sie dann in beiden Kennwort Feldern Ihr gewünschtes Kennwort ein.";
+$pgv_lang["mail04_line05"]				= "Um Ihr Kennwort, nachdem Sie sich angemeldet haben zu ändern, wählen Sie die «Eigene Benutzerdaten bearbeiten» Verbindung innerhalb des «Mein GedView Portal» Menüs und tragen Sie dann in beiden Kennwort Feldern Ihr gewünschtes Kennwort ein.";
 $pgv_lang["mail04_subject"]				= "Datenanforderung bei #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]					= "Hallo...<br /><br />Das neue Kennwort wurde an die uns bekannte Mail Adresse von <b>#user[email]#</b> versandt.<br /><br />Sie sollten das Mail bald in Ihrem Postfach finden.<br /><br />Hinweis:<br />Sie sollten sich baldmöglichst mit dem neuen Kennwort anmelden und Ihr Kennwort aus Datenschutzgründen sofort ändern.";
@@ -1309,7 +1309,7 @@ $pgv_lang["no_messages"]				= "Keine neuen Nachrichten.";
 $pgv_lang["clicking_ok"]				= "Durch Klick auf OK, können Sie im sich dann öffnenden Fenster #user[fullname]# kontaktieren.";
 $pgv_lang["favorites"]					= "Lesezeichen";
 $pgv_lang["my_favorites"]				= "Meine Lesezeichen";
-$pgv_lang["no_favorites"]				= "Sie haben noch keine Lesezeichen gesetzt.<br /><br />Dies können Sie tun, indem Sie in der Detailansicht einer Person auf den <b>#pgv_lang[add_favorite]#</b> Button klicken.  Nachdem Sie diesen Button klicken, werden einige Felder gezeigt, wo Sie eine ID-Nummer eingeben oder suchen können.  Anstatt einer ID-Nummer können Sie auch ein URL mit Titel eingeben.";
+$pgv_lang["no_favorites"]				= "Sie haben noch keine Lesezeichen gesetzt.<br /><br />Dies können Sie tun, indem Sie in der Detailansicht einer Person auf den <b>Neues Lesezeichen hinzufügen</b> Button klicken.  Nachdem Sie diesen Button klicken, werden einige Felder gezeigt, wo Sie eine ID-Nummer eingeben oder suchen können.  Anstatt einer ID-Nummer können Sie auch ein URL mit Titel eingeben.";
 $pgv_lang["add_to_my_favorites"]		= "Lesezeichen hinzufügen";
 $pgv_lang["gedcom_favorites"]			= "Stammbaum Lesezeichen";
 $pgv_lang["no_gedcom_favorites"]		= "Derzeit sind keine Lesezeichen angelegt. Der Verwalter kann Lesezeichen einrichten, die Ihnen hier automatisch gezeigt werden.";
@@ -1373,7 +1373,7 @@ $pgv_lang["gedcom_favorites_descr"]		= "Der «GEDCOM Lesezeichen» Block gibt de
 $pgv_lang["gedcom_stats_block"]			= "GEDCOM Statistiken";
 $pgv_lang["gedcom_stats_descr"]			= "Der «GEDCOM Statistiken» Block zeigt dem Besucher einige Informationen über die GEDCOM Datei, z.B. wann sie erstellt wurde und wie viele Personen sie umfasst.<br /><br />Es kann auch eine Liste der am häufigsten vorkommenden Namen gezeigt werden. Zu dieser Liste können Namen hinzugefügt oder daraus Namen unterdrückt werden. Der Häufigkeitswert, ab wann ein Name in dieser Liste auftaucht, kann in der GEDCOM Konfiguration eingestellt werden.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Häufig vorkommende Nachnamen zeigen?";
-$pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Sie können die Seite Ihren Wünschen anpassen, indem Sie die Positionen der einzelnen Blöcke angeben.<br /><br />Die Seite ist in die Bereiche <b>Hauptbereich</b> und <b>Rechts</b> aufgeteilt. Die Blöcke im <b>Hauptbereich</b> erscheinen breiter und setzen sich links auf der Seite nach unten fort. Der Bereich <b>Rechts</b> setzt sich rechts auf der Seite nach unten fort.<br /><br />Jeder Bereich hat seine eigene Liste von Blöcken, die dort in der Reihenfolge ihrer Nennung gezeigt werden. Sie können Blöcke hinzufügen, entfernen oder umsortieren, wie es Ihnen beliebt.<br /><br />Wenn eine der beiden Listen leer ist werden die Blöcke des anderen Bereiches auf der vollen Seitenbreite dargestellt.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "~Mein GedView Portal anpassen <br /> Stammbaum Begrüßungs Seite anpassen~<br /><br />Sie können die Seite Ihren Wünschen anpassen, indem Sie die Positionen der einzelnen Blöcke angeben.<br /><br />Die Seite ist in die Bereiche <b>Hauptbereich</b> und <b>Rechts</b> aufgeteilt. Die Blöcke im <b>Hauptbereich</b> erscheinen breiter und setzen sich links auf der Seite nach unten fort. Der Bereich <b>Rechts</b> setzt sich rechts auf der Seite nach unten fort.<br /><br />Jeder Bereich hat seine eigene Liste von Blöcken, die dort in der Reihenfolge ihrer Nennung gezeigt werden. Sie können Blöcke hinzufügen, entfernen oder umsortieren, wie es Ihnen beliebt.<br /><br />Wenn eine der beiden Listen leer ist werden die Blöcke des anderen Bereiches auf der vollen Seitenbreite dargestellt.<br /><br />";
 $pgv_lang["login_block"]				= "Login";
 $pgv_lang["login_descr"]				= "Der «Login» Block ermöglicht Benutzern das Anmelden auf dieser Seite.";
 $pgv_lang["theme_select_block"]			= "Theme Auswahl";
@@ -1823,8 +1823,8 @@ $pgv_lang["definitions"]				= "Definitionen";
 //-- Index_edit
 $pgv_lang["block_desc"]					= "Block Beschreibungen";
 $pgv_lang["click_here"]					= "Fortsetzen";
-$pgv_lang["click_here_help"]			= "~#pgv_lang[click_here]#~<br /><br />Klicken Sie diesen Button, um die zuvor gespeicherten Änderungen zu verwenden.<br /><br />Sie werden zu der #pgv_lang[welcome]# oder #pgv_lang[mygedview]# Seite zurückgenommen, aber es kann sein, dass Ihre Änderungen nicht gezeigt werden. Sie können dann die «Seite Erneuern» Funktion Ihres Browsers benutzen um Ihre Änderungen richtig zu sehen.";
-$pgv_lang["block_summaries"]			= "~#pgv_lang[block_desc]#~<br /><br />Hier finden Sie eine kurze Beschreibung aller Blöcke, die Sie auf die #pgv_lang[welcome]# oder #pgv_lang[mygedview]# Seite stellen können.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"]			= "~Fortsetzen~<br /><br />Klicken Sie diesen Button, um die zuvor gespeicherten Änderungen zu verwenden.<br /><br />Sie werden zu der Willkommen oder Mein GedView Portal Seite zurückgenommen, aber es kann sein, dass Ihre Änderungen nicht gezeigt werden. Sie können dann die «Seite Erneuern» Funktion Ihres Browsers benutzen um Ihre Änderungen richtig zu sehen.";
+$pgv_lang["block_summaries"]			= "~Block Beschreibungen~<br /><br />Hier finden Sie eine kurze Beschreibung aller Blöcke, die Sie auf die Willkommen oder Mein GedView Portal Seite stellen können.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Beschreibung</b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]		= "&nbsp;";
 

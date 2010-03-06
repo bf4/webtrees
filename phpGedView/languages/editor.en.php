@@ -242,7 +242,7 @@ $pgv_lang["upload"]					= "Upload";
 $pgv_lang["upload_error"]			= "There was an error uploading your file.";
 $pgv_lang["copy_error"]				= "The file #GLOBALS[whichFile2]# could not be copied from #GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]			= "Upload Media files";
-$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically.";
+$pgv_lang["upload_media_help"]		= "~Upload Media files~<br /><br />Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically.";
 $pgv_lang["upload_successful"]		= "Upload successful.";
 $pgv_lang["view_change_diff"]		= "View Change Diff";
 

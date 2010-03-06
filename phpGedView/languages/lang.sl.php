@@ -1223,7 +1223,7 @@ $pgv_lang["registernew"]			= "Potrditev novega računa";
 $pgv_lang["user_verify"]			= "Preverjanje uporabnika";
 $pgv_lang["send"]					= "Pošlji";
 
-$pgv_lang["pls_note07"] 			= "~#pgv_lang[user_verify]#~<br /><br />Za potrditev zahtevka po računu vtipkajte svoje uporabniško ime, geslo in kodo za preverjanje, ki ste jo prejeli po elektronski pošti.";
+$pgv_lang["pls_note07"] 			= "~Preverjanje uporabnika~<br /><br />Za potrditev zahtevka po računu vtipkajte svoje uporabniško ime, geslo in kodo za preverjanje, ki ste jo prejeli po elektronski pošti.";
 $pgv_lang["pls_note08"] 			= "Podatki za uporabnika z imenom <b>#user_name#</b> so preverjeni.";
 
 $pgv_lang["mail03_line01"]			= "Zdravo, upravljalec ...";
@@ -1245,7 +1245,7 @@ $pgv_lang["mail04_line01"]			= "Zdravo, #user_fullname# ...";
 $pgv_lang["mail04_line02"]			= "Novo geslo je bilo zahtevano za vaše uporabniško ime.";
 $pgv_lang["mail04_line03"]			= "Priporočilo:";
 $pgv_lang["mail04_line04"]			= "Kliknite na spodno povezavo ali pa jo prelepite v brskalnik. Prijavite se z novim geslom in ga takoj zamenjajte, da ohranite vaše podatke varne.";
-$pgv_lang["mail04_line05"]			= "Potem ko ste se prijavili izberite povezavo «#pgv_lang[editowndata]#» v meniju «#pgv_lang[mygedview]#» in izpolnite polji za geslo.";
+$pgv_lang["mail04_line05"]			= "Potem ko ste se prijavili izberite povezavo «Moj račun» v meniju «Uporabnikov portal» in izpolnite polji za geslo.";
 $pgv_lang["mail04_subject"] 		= "Zahtevek za podatke na #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]				= "Zdravo,...<br /><br />Pošta z vašim novim geslom je bila poslana na naveden naslov za uporabnika <b>#user[email]#</b>.<br /><br />Preverite vaš poštni predal. Sporočilo boste prejeli v kratkem.<br /><br />Nasvet:<br />Ponovno se prijavite semkaj kakor hitro je to mogoče in zamenjajte geslo, da ohranite varnost podatkov.";
@@ -1313,7 +1313,7 @@ $pgv_lang["no_messages"]			= "Nimate čakajočih sporočil.";
 $pgv_lang["clicking_ok"]			= "Ko kliknete OK, se odpre novo okno, v katerem lahko kontaktirate #user[fullname]#";
 $pgv_lang["favorites"]				= "Priljubljeni zaznamki";
 $pgv_lang["my_favorites"]			= "Moji priljubljeni zaznamki";
-$pgv_lang["no_favorites"]			= "Niste izbrali priljubljenih zaznamkov.<br /><br />Osebo, družino ali vir dodate med priljubljene zaznamke tako, da kliknete na povezavo <b>#pgv_lang[add_favorite]#</b>, ki bo odkrila polja, v katera lahko vstavite ali iščete ID-številke.  Namesto ID-številke ahko vnesete URL in naslov.";
+$pgv_lang["no_favorites"]			= "Niste izbrali priljubljenih zaznamkov.<br /><br />Osebo, družino ali vir dodate med priljubljene zaznamke tako, da kliknete na povezavo <b>Dodaj novo priljubljeno osebo</b>, ki bo odkrila polja, v katera lahko vstavite ali iščete ID-številke.  Namesto ID-številke ahko vnesete URL in naslov.";
 $pgv_lang["add_to_my_favorites"]		= "Dodaj med Moje priljubljene zaznamke";
 $pgv_lang["gedcom_favorites"]			= "Priljubljeni zaznamki";
 $pgv_lang["no_gedcom_favorites"]		= "Ta trenutek ni izbranih priljubljenih.	Upravitelj lahko doda priljubljene za prikaz ob začetku.";
@@ -1377,7 +1377,7 @@ $pgv_lang["gedcom_favorites_descr"] = "Sklop GEDCOM-ove najljubše osebe daje up
 $pgv_lang["gedcom_stats_block"] 	= "GEDCOM-ovi statistični podatki";
 $pgv_lang["gedcom_stats_descr"] 	= "Sklop GEDCOM-ovi statistični podatki kaže obiskovalcu osnovne podatke o podatkovnih bazah, npr. kdaj je bila ustvarjena in koliko ljudi vključuje.<br /><br />Vsebuje tudi seznam najpogostejših priimkov. Sklop lahko nastavite tako, da ne prikazuje seznama najpogostejših priimkov, GEDCOM pa lahko nastavite tudi tako, da s seznama odstranite ali dodate priimke. V GEDCOM-ovih nastavitvah lahko določite mejno število pojavitev za ta seznam.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Pokaži pogoste priimke?";
-$pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Mesta posameznih sklopov na strani lahko prilagodite svojim željam.<br /><br />Stran je razdeljena na <b>glavne</b> in <b>desne</b> razdelke.	<b>Glavni</b> sklopi se pojavljajo v večjih sklopih neposredno pod naslovom strani. <b>Desni</b> razdelek se začne ob desni strani naslova in sega do dna strani.<br /><br />Vsak razdelek ima svoj seznam sklopov, ki bodo natisnjeni na strani v navedenem zaporedju. Sklope lahko dodate, odstranite ali prerazporedite po svojih željah. <br />Če kakšen od sklopov ostane nekoriščen, drugi sklopi zavzamejo celotno širino strani.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "~Priredi MyGedView portal <br /> Priredi to GEDCOM-ovo pozdravno stran~<br /><br />Mesta posameznih sklopov na strani lahko prilagodite svojim željam.<br /><br />Stran je razdeljena na <b>glavne</b> in <b>desne</b> razdelke.	<b>Glavni</b> sklopi se pojavljajo v večjih sklopih neposredno pod naslovom strani. <b>Desni</b> razdelek se začne ob desni strani naslova in sega do dna strani.<br /><br />Vsak razdelek ima svoj seznam sklopov, ki bodo natisnjeni na strani v navedenem zaporedju. Sklope lahko dodate, odstranite ali prerazporedite po svojih željah. <br />Če kakšen od sklopov ostane nekoriščen, drugi sklopi zavzamejo celotno širino strani.<br /><br />";
 $pgv_lang["login_block"]			= "Prijava";
 $pgv_lang["login_descr"]			= "Sklop Prijava sprejme uporabnikovo ime in geslo in tako omogoči uporabniku vstop.";
 $pgv_lang["theme_select_block"] 	= "Izbira teme";
@@ -1827,8 +1827,8 @@ $pgv_lang["definitions"]			= "Definicije";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Označi opise";
 $pgv_lang["click_here"]				= "Klikni za nadaljevanje";
-$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Kliknite ta gumb za shranitev sprememb.<br /><br />Čeprav se boste vrnili na #pgv_lang[welcome]# ali #pgv_lang[mygedview]# stran, vaših sprememb mogoče ne bo videti. Za ustrezen prikaz sprememb boste mogoče morali uporabiti funkcijo ponovnega nalaganja na vašem brskalniku.";
-$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Tu je kratek opis posameznih blokov, ki jih lahko postavite na #pgv_lang[welcome]# ali #pgv_lang[mygedview]# stran.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"]		= "~Klikni za nadaljevanje~<br /><br />Kliknite ta gumb za shranitev sprememb.<br /><br />Čeprav se boste vrnili na Zdravo, ali Uporabnikov portal stran, vaših sprememb mogoče ne bo videti. Za ustrezen prikaz sprememb boste mogoče morali uporabiti funkcijo ponovnega nalaganja na vašem brskalniku.";
+$pgv_lang["block_summaries"]		= "~Označi opise~<br /><br />Tu je kratek opis posameznih blokov, ki jih lahko postavite na Zdravo, ali Uporabnikov portal stran.<br /><table border='1' align='center'><tr><td class='list_value'><b>Ime</b></td><td class='list_value'><b>Opis</b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

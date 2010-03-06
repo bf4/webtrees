@@ -109,7 +109,7 @@ $pgv_lang["label_gedcom_id"]        = "GEDCOM-ID";
 $pgv_lang["label_local_id"]         = "Lokal-ID";
 $pgv_lang["accept"]				= "Godkjenn";
 $pgv_lang["accept_all"]			= "Godkjenn alle endringer";
-$pgv_lang["accept_gedcom"]		= "Bestem deg for om du vil godkjenne eller avvise de enkelte endringene.<dl><dt>For å godta <i>alle</i> endringene på en gang</dt><dd>Klikk på linken <b>#pgv_lang[accept_all]#</b> i boksen under.</dd><dt>For å få mer informasjon om en endring kan du klikke på:</dt><dd><b>#pgv_lang[view_change_diff]#</b> for å se på forskjellen mellom gammelt og nytt innhold.<br /><b>#pgv_lang[view_gedcom]#</b> for å se på det nye innholdet i slektsfil-oppsett (GEDCOM).</dd></dl>";
+$pgv_lang["accept_gedcom"]		= "Bestem deg for om du vil godkjenne eller avvise de enkelte endringene.<dl><dt>For å godta <i>alle</i> endringene på en gang</dt><dd>Klikk på linken <b>Godkjenn alle endringer</b> i boksen under.</dd><dt>For å få mer informasjon om en endring kan du klikke på:</dt><dd><b>Vis endring(er), forskjell(er)</b> for å se på forskjellen mellom gammelt og nytt innhold.<br /><b>Vis opplysningene i slektsfilen</b> for å se på det nye innholdet i slektsfil-oppsett (GEDCOM).</dd></dl>";
 $pgv_lang["accept_successful"]	= "Godkjente endringer er lagt til databasen";
 $pgv_lang["add_child"]			= "Legg til barn";
 $pgv_lang["add_child_to_family"]	= "Legg til et barn i denne familien";
@@ -232,7 +232,7 @@ $pgv_lang["upload"]				= "Hent (last opp)";
 $pgv_lang["upload_error"]			= "Det oppstod en FEIL under henting (opplasting) av filen din.";
 $pgv_lang["copy_error"]				= "Filen #GLOBALS[whichFile2]# kunne ikke kopieres fra #GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]		= "Hent (upload) bilde- / mediefiler";
-$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Velg en fil fra din lokale PC <b>#MEDIA_DIRECTORY#</b> eller i en av undermappene til denne.<br /><br />Navn på mapper du angir vil bli lagt til #MEDIA_DIRECTORY#. (Eksempel: #MEDIA_DIRECTORY#minfamilie)<br />Dersom mappen for miniatyrbilder ikke finnes fra før, vil denne bli lagd automatisk.";
+$pgv_lang["upload_media_help"]		= "~Hent (upload) bilde- / mediefiler~<br /><br />Velg en fil fra din lokale PC <b>#MEDIA_DIRECTORY#</b> eller i en av undermappene til denne.<br /><br />Navn på mapper du angir vil bli lagt til #MEDIA_DIRECTORY#. (Eksempel: #MEDIA_DIRECTORY#minfamilie)<br />Dersom mappen for miniatyrbilder ikke finnes fra før, vil denne bli lagd automatisk.";
 $pgv_lang["upload_successful"]	= "Overføring (opplasting) er utført";
 $pgv_lang["view_change_diff"]	= "Vis endring(er), forskjell(er)";
 

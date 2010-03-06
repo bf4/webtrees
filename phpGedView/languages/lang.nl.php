@@ -1207,13 +1207,13 @@ $pgv_lang["data_incorrect"]				= "Gegevens niet correct!<br />Probeer opnieuw!";
 $pgv_lang["user_not_found"]				= "Gebruiker niet gevonden!";
 
 $pgv_lang["lost_pw_reset"]				= "Verzoek om een nieuw wachtwoord";
-$pgv_lang["pls_note11"]					= "Uw wachtwoord kwijtraken is voor u lastig. Daarnaast betekent het ook een beveiligingsprobleem. Als het in handen komt van anderen, kunnen deze ongeoorloofde toegang krijgen tot gegevens.<br /><br />Type uw gebruikersnaam en e-mail adres in om uw wachtwoord opnieuw aan te vragen. Gebruik de gebruikersnaam en het e-mailadres dat u eerder op deze site heeft opgegeven. Klik daarna op de #pgv_lang[lost_pw_reset]#-knop.<br /><br />Als de gebruikersnaam en het e-mailadres correct zijn, ontvangt u een e-mailbericht, waarin een koppeling en een code zijn opgenomen. Via de koppeling en het intypen van de code kunt u uw wachtwoord opnieuw instellen. Zorg ervoor, dat het e-mailbericht niet in handen van anderen komt, inclusief de beheerder van deze site (deze zal er niet om vragen).<br /><br />Als u niet meer weet welk e-mailadres u eerder op de site heeft opgegeven, kunt u meerdere e-mailadressen proberen. Onze e-mail met de koppeling en code worden alleen verzonden, wanneer de juiste combinatie van gebruikersnaam en e-mailadres is opgegeven. In geval van problemen kunt u altijd contact opnemen met de beheerder van deze site.";
+$pgv_lang["pls_note11"]					= "Uw wachtwoord kwijtraken is voor u lastig. Daarnaast betekent het ook een beveiligingsprobleem. Als het in handen komt van anderen, kunnen deze ongeoorloofde toegang krijgen tot gegevens.<br /><br />Type uw gebruikersnaam en e-mail adres in om uw wachtwoord opnieuw aan te vragen. Gebruik de gebruikersnaam en het e-mailadres dat u eerder op deze site heeft opgegeven. Klik daarna op de Verzoek om een nieuw wachtwoord-knop.<br /><br />Als de gebruikersnaam en het e-mailadres correct zijn, ontvangt u een e-mailbericht, waarin een koppeling en een code zijn opgenomen. Via de koppeling en het intypen van de code kunt u uw wachtwoord opnieuw instellen. Zorg ervoor, dat het e-mailbericht niet in handen van anderen komt, inclusief de beheerder van deze site (deze zal er niet om vragen).<br /><br />Als u niet meer weet welk e-mailadres u eerder op de site heeft opgegeven, kunt u meerdere e-mailadressen proberen. Onze e-mail met de koppeling en code worden alleen verzonden, wanneer de juiste combinatie van gebruikersnaam en e-mailadres is opgegeven. In geval van problemen kunt u altijd contact opnemen met de beheerder van deze site.";
 
 $pgv_lang["mail04_line01"]				= "Hallo #user_fullname# ...";
 $pgv_lang["mail04_line02"]				= "Voor uw gebruikersnaam is een nieuw wachtwoord aangevraagd!";
 $pgv_lang["mail04_line03"]				= "Aanbeveling:";
 $pgv_lang["mail04_line04"]				= "Klik op de onderstaande koppeling, meldt u aan met het nieuwe wachtwoord en wijzig het vervolgens.";
-$pgv_lang["mail04_line05"]			= "Doe het volgende nadat u bent aangemeld: klik op '#pgv_lang[myuserdata]#' in het menu '#pgv_lang[mygedview]#' en vul de gegevens bij wachtwoord in, om uw wachtwoord te wijzigen.";
+$pgv_lang["mail04_line05"]			= "Doe het volgende nadat u bent aangemeld: klik op 'Mijn gegevens' in het menu 'MyGedView' en vul de gegevens bij wachtwoord in, om uw wachtwoord te wijzigen.";
 $pgv_lang["mail04_subject"]				= "Verzoek om gegevens op #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]					= "Hallo....<br /><br />Een nieuw wachtwoord is per e-mail verzonden aan (#user[email]#).<br /><br />Binnen enkele minuten zal deze in uw mailbox worden bezorgd.<br /><br />Aanbeveling:<br /><br />Meldt u na ontvangst van de e-mail met uw gebruikersnaam en nieuwe wachtwoord aan en wijzig daarna uw wachtwoord.";
@@ -1700,8 +1700,8 @@ $pgv_lang["definitions"]			= "Definities";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Vakbeschrijvingen";
 $pgv_lang["click_here"]				= "Klik hier om door te gaan";
-$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Klik op deze knop om de wijzigingen aan te brengen die eerder zijn opgeslagen.<br /><br />";
-$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Hier volgt een korte beschrijving van de vakken die u kunt toevoegen aan de #pgv_lang[welcome]# of de #pgv_lang[mygedview]# pagina.<br /><center><table border='1'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table></center><br /><br />";
+$pgv_lang["click_here_help"]		= "~Klik hier om door te gaan~<br /><br />Klik op deze knop om de wijzigingen aan te brengen die eerder zijn opgeslagen.<br /><br />";
+$pgv_lang["block_summaries"]		= "~Vakbeschrijvingen~<br /><br />Hier volgt een korte beschrijving van de vakken die u kunt toevoegen aan de Welkom of de MyGedView pagina.<br /><center><table border='1'><tr><td class='list_value'><b>Naam</b></td><td class='list_value'><b>Omschrijving</b></td></tr>&nbsp;</table></center><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

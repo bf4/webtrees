@@ -243,7 +243,7 @@ $pgv_lang["upload"]					= "Subir";
 $pgv_lang["upload_error"]			= "Hubo un error al subir su archivo.";
 $pgv_lang["copy_error"]				= "No se pudo copiar al archivo #GLOBALS[whichFile2]# el contenido del archivo #GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]			= "Subir archivos audiovisuales";
-$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Seleccione los archivos de su equipo local a subir a su servidor.  Todos los archivos se subirán al directorio <b>#MEDIA_DIRECTORY#</b> o a uno de sus subdirectorios.<br /><br />Los nombres de carpeta que indique se añadirán a #MEDIA_DIRECTORY#. Por ejemplo, #MEDIA_DIRECTORY#myfamily. Si no existe el directorio de miniaturas, se creará automáticamente.";
+$pgv_lang["upload_media_help"]		= "~Subir archivos audiovisuales~<br /><br />Seleccione los archivos de su equipo local a subir a su servidor.  Todos los archivos se subirán al directorio <b>#MEDIA_DIRECTORY#</b> o a uno de sus subdirectorios.<br /><br />Los nombres de carpeta que indique se añadirán a #MEDIA_DIRECTORY#. Por ejemplo, #MEDIA_DIRECTORY#myfamily. Si no existe el directorio de miniaturas, se creará automáticamente.";
 $pgv_lang["upload_successful"]		= "Proceso completo";
 $pgv_lang["view_change_diff"]		= "Ver modificaciones";
 

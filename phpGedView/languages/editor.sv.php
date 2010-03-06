@@ -206,7 +206,7 @@ $pgv_lang["update_successful"]	= "Uppdatering genomförd";
 $pgv_lang["upload"]					= "Ladda upp";
 $pgv_lang["upload_error"]		= "Det uppstod ett fel vid uppladdningen av din fil.";
 $pgv_lang["upload_media"]		= "Ladda upp mediafiler";
-$pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />Välj filer från din lokala dator som ska laddas upp till din server. Alla filer kommer att laddas upp till mappen <b>#MEDIA_DIRECTORY#</b> eller til en av dess undermappar.<br /><br />Mappnamnen som du angav kommer att läggas till #MEDIA_DIRECTORY#. T.ex. #MEDIA_DIRECTORY#myfamily. Om miniatyrbildsmappen inte finns kommer den att skapas automatiskt.";
+$pgv_lang["upload_media_help"]	= "~Ladda upp mediafiler~<br /><br />Välj filer från din lokala dator som ska laddas upp till din server. Alla filer kommer att laddas upp till mappen <b>#MEDIA_DIRECTORY#</b> eller til en av dess undermappar.<br /><br />Mappnamnen som du angav kommer att läggas till #MEDIA_DIRECTORY#. T.ex. #MEDIA_DIRECTORY#myfamily. Om miniatyrbildsmappen inte finns kommer den att skapas automatiskt.";
 $pgv_lang["upload_successful"]	= "Uppladdning lyckades";
 $pgv_lang["view_change_diff"]	= "Visa förändringar";
 

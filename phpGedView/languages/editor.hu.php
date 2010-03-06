@@ -169,7 +169,7 @@ $pgv_lang["update_successful"]		= "A frissítés sikeresen megtörtént";
 $pgv_lang["upload"]					= "Feltöltés";
 $pgv_lang["upload_error"]		= "Hiba történt az Ön GEDCOM-állományának feltöltése közben.";
 $pgv_lang["upload_media"]		= "Média állomány feltöltése";
-$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Válasszon állományokat a számítógépéről amit a szerverre fel akar tölteni. Minden álomány a <b>#MEDIA_DIRECTORY#</b> mappába lesz feltöltve vagy az alatta levő mappába.<br /><br />Az ön által választott mappa név a #MEDIA_DIRECTORY# -hoz lesz kapcsolva. Például, #MEDIA_DIRECTORY#csaladom. Ha az előnézet mappa nem létezik akkor létre lesz hozva.";
+$pgv_lang["upload_media_help"]		= "~Média állomány feltöltése~<br /><br />Válasszon állományokat a számítógépéről amit a szerverre fel akar tölteni. Minden álomány a <b>#MEDIA_DIRECTORY#</b> mappába lesz feltöltve vagy az alatta levő mappába.<br /><br />Az ön által választott mappa név a #MEDIA_DIRECTORY# -hoz lesz kapcsolva. Például, #MEDIA_DIRECTORY#csaladom. Ha az előnézet mappa nem létezik akkor létre lesz hozva.";
 $pgv_lang["upload_successful"]		= "A feltöltés sikeres volt.";
 $pgv_lang["view_change_diff"]		= "Változások megtekintése";
 

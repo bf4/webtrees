@@ -94,7 +94,7 @@ $pgv_lang["main_media_fail0"]		= "Das Medien-Objekt <b>#GLOBALS[oldMediaFolder]#
 $pgv_lang["main_media_fail1"]		= "Das Medien-Objekt <b>#GLOBALS[oldMediaName]#</b> konnte nicht auf <b>#GLOBALS[newMediaName]#</b> umbenannt werden.";
 $pgv_lang["main_media_fail2"]		= "Das Medien-Objekt <b>#GLOBALS[oldMediaName]#</b> konnte nicht von <b>#GLOBALS[oldMediaFolder]#</b> nach <b>#GLOBALS[newMediaFolder]#</b> verlegt werden.";
 $pgv_lang["main_media_fail3"]		= "Das Medien-Objekt konnte nicht von <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> nach <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b> verlegt und umbenannt werden.";
-$pgv_lang["resn_disabled"]			= "Um diese Wahl in Kraft zu setzen, muss die <b>#pgv_lang[PRIVACY_BY_RESN]#</b> Option auch eingeschaltet werden.";
+$pgv_lang["resn_disabled"]			= "Um diese Wahl in Kraft zu setzen, muss die <b>Datenschutz je GEDCOM (RESN) benutzen</b> Option auch eingeschaltet werden.";
 $pgv_lang["thumb_media_ok1"]		= "Das Miniaturbild <b>#GLOBALS[oldMediaName]#</b> wurde auf <b>#GLOBALS[newMediaName]#</b> umbenannt.";
 $pgv_lang["thumb_media_ok2"]		= "Das Miniaturbild <b>#GLOBALS[oldMediaName]#</b> wurde von <b>#GLOBALS[oldThumbFolder]#</b> nach <b>#GLOBALS[newThumbFolder]#</b> verlegt.";
 $pgv_lang["thumb_media_ok3"]		= "Das Miniaturbild wurde von <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> nach <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b> verlegt und umbenannt.";
@@ -242,7 +242,7 @@ $pgv_lang["upload"]					= "Hochladen";
 $pgv_lang["upload_error"]			= "Beim Übertragen (upload) Ihrer Datei auf den Server trat ein Fehler auf.";
 $pgv_lang["copy_error"]				= "Die Datei #GLOBALS[whichFile2]# konnte nicht von #GLOBALS[whichFile1]# kopiert werden.";
 $pgv_lang["upload_media"]			= "Multimedia Dateien auf Server hochladen";
-$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Wählen Sie die Dateien zum Hochladen auf Ihren Server. Alle Dateien werden in das <b>#MEDIA_DIRECTORY#</b> Verzeichnis aktualisiert  oder in eines seiner Unterverzeichnisse.<br /><br />Verzeichnisnamen die Sie eingeben, werden an #MEDIA_DIRECTORY# angehängt. Zum Beispiel, #MEDIA_DIRECTORY#Müller. Falls das Miniaturbild-Verzeichnis nicht existiert, wird es automatisch erstellt.";
+$pgv_lang["upload_media_help"]		= "~Multimedia Dateien auf Server hochladen~<br /><br />Wählen Sie die Dateien zum Hochladen auf Ihren Server. Alle Dateien werden in das <b>#MEDIA_DIRECTORY#</b> Verzeichnis aktualisiert  oder in eines seiner Unterverzeichnisse.<br /><br />Verzeichnisnamen die Sie eingeben, werden an #MEDIA_DIRECTORY# angehängt. Zum Beispiel, #MEDIA_DIRECTORY#Müller. Falls das Miniaturbild-Verzeichnis nicht existiert, wird es automatisch erstellt.";
 $pgv_lang["upload_successful"]		= "Hochladen erfolgreich.";
 $pgv_lang["view_change_diff"]		= "Änderungen ansehen";
 

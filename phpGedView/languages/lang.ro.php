@@ -1101,7 +1101,7 @@ $pgv_lang["registernew"]			= "O nouă confirmare de cont";
 $pgv_lang["user_verify"]			= "Verificarea utilizatorului";
 $pgv_lang["send"]					= "Trimite";
 
-$pgv_lang["pls_note07"] 			= "~#pgv_lang[user_verify]#~<br /><br />Pentru a confirma cererea pentru cont, vă rog să tastaţi numele utilizatorului, parola dumneavoastră, şi codul de verificare care l-aţi primit prin email.";
+$pgv_lang["pls_note07"] 			= "~Verificarea utilizatorului~<br /><br />Pentru a confirma cererea pentru cont, vă rog să tastaţi numele utilizatorului, parola dumneavoastră, şi codul de verificare care l-aţi primit prin email.";
 $pgv_lang["pls_note08"] 			= "Datele pentru utilizatorul <b>#user_name#</b> au fost verificate.";
 
 $pgv_lang["mail03_line01"]			= "Bună administratore ...";
@@ -1123,7 +1123,7 @@ $pgv_lang["mail04_line01"]			= "Bună #user_fullname# ...";
 $pgv_lang["mail04_line02"]			= "O nouă parolă a fost cerută pentru dumneavoastră.";
 $pgv_lang["mail04_line03"]			= "Recomandare:";
 $pgv_lang["mail04_line04"]			= "Vă rugăm să daţi click pe linkul de mai jos sau sa-l copiaţi si să-l lipiţi în navigatorul dumneavoastră, să vă autentificaţi cu noua parolă, şi s-o schimbaţi imediat pentru a vă păstra datele sigure.";
-$pgv_lang["mail04_line05"]			= "După ce v-aţi autentificat, selectaţi linkul «#pgv_lang[editowndata]#» de sub meniul «#pgv_lang[mygedview]#» şi completaţi câmpurile de parole pentru a vă schimba parola.";
+$pgv_lang["mail04_line05"]			= "După ce v-aţi autentificat, selectaţi linkul «Contul meu» de sub meniul «Portalul MyGedView» şi completaţi câmpurile de parole pentru a vă schimba parola.";
 $pgv_lang["mail04_subject"] 		= "Cerere de date la #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]				= "Bună...<br /><br />Un email cu parola nouă a fost trimis la adresa care o avem pentru  <b>#user[email]#</b>.<br /><br />Vă rugăm verificaţi adresa de email; ar trebui să primiţi mesajul nostru în curând.<br /><br />Recomandare:<br />Ar trebui să vă logaţi pe acest site cu noua parolă cât mai curând şi ar trebui să schimbaţi parola pentru a vă menţine datele în siguranţă.";
@@ -1188,7 +1188,7 @@ $pgv_lang["no_messages"]			= "Nu aveţi nici un mesaj în aşteptare.";
 $pgv_lang["clicking_ok"]			= "Când daţi click pe OK, se va deschide o altă fereastra şi veţi putea să contactaţi utilizatorul #user[fullname]#";
 $pgv_lang["favorites"]				= "Favoriţi";
 $pgv_lang["my_favorites"]			= "Favoriţii mei";
-$pgv_lang["no_favorites"]			= "Nu aţi selectat nici un favorit.<br /><br />Pentru a adăuga un individ, o familie, sau o sursă la favoriţi, daţi click pe linkul <b>#pgv_lang[add_favorite]#</b> pentru a afişa câteva câmpuri unde puteţi introduce sau căuta după un ID.  În loc de un ID, puteţi introduce un URL şi un titlu.";
+$pgv_lang["no_favorites"]			= "Nu aţi selectat nici un favorit.<br /><br />Pentru a adăuga un individ, o familie, sau o sursă la favoriţi, daţi click pe linkul <b>Adaugă un nou favorit</b> pentru a afişa câteva câmpuri unde puteţi introduce sau căuta după un ID.  În loc de un ID, puteţi introduce un URL şi un titlu.";
 $pgv_lang["add_to_my_favorites"]	= "Adaugă la favoriţii mei";
 $pgv_lang["gedcom_favorites"]		= "Favoriţii acestui GEDCOM";
 $pgv_lang["no_gedcom_favorites"]	= "În acest moment nu există selectat nici un favorit.	Administratorul poate adăuga favoriţi care să fie afişaţi la început.";
@@ -1246,7 +1246,7 @@ $pgv_lang["gedcom_favorites_descr"] = "Blocul cu favoriţii GEDCOM oferă admini
 $pgv_lang["gedcom_stats_block"] 	= "Statistici GEDCOM";
 $pgv_lang["gedcom_stats_descr"] 	= "Blocul cu statistici GEDCOM arată vizitatorului informaţii de bază despre baza de date, cum ar fi când a fost creată şi câţi oameni sunt în ea.<br /><br />Are de-asemenea şi o lista cu cele mai frecvente nume de familie.  Puteţi configura acest bloc să nu arate lista numelor de familie frecvente, şi puteţi de-asemenea să configuraţi GEDCOM-ul să şteargă sau să adauge nume la această listă.  Puteţi seta pragul de repetiţie pentru această listă în configuraţia GEDCOM-ului.";
 $pgv_lang["gedcom_stats_show_surnames"]	= "Arată lista de nume de familie comune ?";
-$pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Puteţi personaliza pagina prin poziţionarea blocurilor în pagină aşa cum doriţi.<br /><br />Pagina este împărţită în secţiunea <b>principală</b> şi <b>dreaptă</b>.	Blocurile din secţiunea <b>principală</b> apar mai mari şi sub titlul paginii.  Secţiunea din <b>dreapta</b> începe de la dreapta titlului si continuă în jos pe partea dreaptă a paginii.<br /><br />Fiecare secţiune are propria listă de blocuri care vor fi afişate pe pagină în ordinea în care sunt listate.  Puteţi adăuga, şterge, şi să rearanjaţi blocurile cum doriţi.<br /><br />Când una din listele de blocuri este goală, Blocurile rămase vor ocupa lăţimea întreagă a paginii.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "~Personalizaţi portalul MyGedView <br /> Personalizaţi această pagină GEDCOM de introducere~<br /><br />Puteţi personaliza pagina prin poziţionarea blocurilor în pagină aşa cum doriţi.<br /><br />Pagina este împărţită în secţiunea <b>principală</b> şi <b>dreaptă</b>.	Blocurile din secţiunea <b>principală</b> apar mai mari şi sub titlul paginii.  Secţiunea din <b>dreapta</b> începe de la dreapta titlului si continuă în jos pe partea dreaptă a paginii.<br /><br />Fiecare secţiune are propria listă de blocuri care vor fi afişate pe pagină în ordinea în care sunt listate.  Puteţi adăuga, şterge, şi să rearanjaţi blocurile cum doriţi.<br /><br />Când una din listele de blocuri este goală, Blocurile rămase vor ocupa lăţimea întreagă a paginii.<br /><br />";
 $pgv_lang["login_block"]			= "Autentificare";
 $pgv_lang["login_descr"]			= "Blocul de autentificare acceptă un nume de utilizator si o parolă pentru ca utilizatorii să se poată autentifica.";
 $pgv_lang["theme_select_block"] 	= "Alege tema";
@@ -1564,8 +1564,8 @@ $pgv_lang["definitions"]			= "Definiţii";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Bloc descrieri";
 $pgv_lang["click_here"]				= "Daţi click aici pentru a continua";
-$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Daţi clic pe acest buton pentru a vă salva schimbările.<br /><br />Vă veţi întoarce la pagina #pgv_lang[welcome]# sau pagina #pgv_lang[mygedview]#, dar schimbările dumneavoastră s-ar putea să nu fie arătate.  S-ar putea să trebuiască să folosiţi funţia de reîncărcare de la navigatorul dumneavoastră pentru a vedea corect schimbările dumneavoastră.";
-$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Aici este o scurtă descriere de la fiecare bloc pe care-l puteţi pune pe pagina #pgv_lang[welcome]# sau pagina #pgv_lang[mygedview]#.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["click_here_help"]		= "~Daţi click aici pentru a continua~<br /><br />Daţi clic pe acest buton pentru a vă salva schimbările.<br /><br />Vă veţi întoarce la pagina Bine aţi venit sau pagina Portalul MyGedView, dar schimbările dumneavoastră s-ar putea să nu fie arătate.  S-ar putea să trebuiască să folosiţi funţia de reîncărcare de la navigatorul dumneavoastră pentru a vedea corect schimbările dumneavoastră.";
+$pgv_lang["block_summaries"]		= "~Bloc descrieri~<br /><br />Aici este o scurtă descriere de la fiecare bloc pe care-l puteţi pune pe pagina Bine aţi venit sau pagina Portalul MyGedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nume</b></td><td class='list_value'><b>Descriere</b></td></tr>&nbsp;</table><br /><br />";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

@@ -145,7 +145,7 @@ $pgv_lang["update_successful"]		= "更新成功";
 $pgv_lang["upload"]					= "上载";
 $pgv_lang["upload_error"]		= "上载错误。";
 $pgv_lang["upload_media"]		= "上载多媒体文件";
-$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />选择上载的文件。所有文件会上载到 <b>#MEDIA_DIRECTORY#</b> 或其分目录。<br /><br />这些文件名会到#MEDIA_DIRECTORY#。 例如，#MEDIA_DIRECTORY#myfamily。 如果制图目录不存在，会被自动创建。";
+$pgv_lang["upload_media_help"]		= "~上载多媒体文件~<br /><br />选择上载的文件。所有文件会上载到 <b>#MEDIA_DIRECTORY#</b> 或其分目录。<br /><br />这些文件名会到#MEDIA_DIRECTORY#。 例如，#MEDIA_DIRECTORY#myfamily。 如果制图目录不存在，会被自动创建。";
 $pgv_lang["upload_successful"]		= "向上作用的負載";
 $pgv_lang["view_change_diff"]		= "观看更改差額";
 

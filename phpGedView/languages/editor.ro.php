@@ -216,7 +216,7 @@ $pgv_lang["update_successful"]		= "Actualizare reuşită";
 $pgv_lang["upload"]					= "Upload";
 $pgv_lang["upload_error"]			= "A existat o eroare la uploadarea fişierului dumneavoastră.";
 $pgv_lang["upload_media"]			= "Uploadează fişiere media";
-$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Selectaţi fişiere de pe calculatorul dumneavoastră pentru a putea fi uploadate pe serverul dumneavoastră.  Toate fişierele for fi uploadate în directorul <b>#MEDIA_DIRECTORY#</b> sau unul din subdirectoarele lui.<br /><br />Numele directoarelor specificate vor fi adăugate la #MEDIA_DIRECTORY#. De exemplu, #MEDIA_DIRECTORY#familia_mea. Dacă directorul pentru thumbnailuri nu există, este creat automat.";
+$pgv_lang["upload_media_help"]		= "~Uploadează fişiere media~<br /><br />Selectaţi fişiere de pe calculatorul dumneavoastră pentru a putea fi uploadate pe serverul dumneavoastră.  Toate fişierele for fi uploadate în directorul <b>#MEDIA_DIRECTORY#</b> sau unul din subdirectoarele lui.<br /><br />Numele directoarelor specificate vor fi adăugate la #MEDIA_DIRECTORY#. De exemplu, #MEDIA_DIRECTORY#familia_mea. Dacă directorul pentru thumbnailuri nu există, este creat automat.";
 $pgv_lang["upload_successful"]		= "Upload reuşit.";
 $pgv_lang["view_change_diff"]		= "Vezi diferenţele modificării";
 

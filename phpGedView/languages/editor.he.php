@@ -242,7 +242,7 @@ $pgv_lang["upload"]			= "העלה";
 $pgv_lang["upload_error"]		= "התגלתה שגיאה בהעלאת הקובץ שלך.";
 $pgv_lang["copy_error"]		= "לא ניתן להעתיק את קובץ #GLOBALS[whichFile2]# מ-#GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]		= "העלאת קבצי מדיה";
-$pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b><span dir=\"ltr\">#MEDIA_DIRECTORY#</span></b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-<span dir=\"ltr\">#MEDIA_DIRECTORY#</span>, למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תיווצר בצורה אוטומטית.";
+$pgv_lang["upload_media_help"]	= "~העלאת קבצי מדיה~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b><span dir=\"ltr\">#MEDIA_DIRECTORY#</span></b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-<span dir=\"ltr\">#MEDIA_DIRECTORY#</span>, למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תיווצר בצורה אוטומטית.";
 $pgv_lang["upload_successful"]	= "ההעלאה הצליחה.";
 $pgv_lang["view_change_diff"]	= "התבונן בשינויים ";
 
