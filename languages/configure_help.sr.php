@@ -419,7 +419,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ##$pgv_lang["gedcom_download_secure"]	= "#GEDCOM# cannot be downloaded.";
 
 ##$pgv_lang["welcome_new2"]			= "<br /><br />Since you are seeing this page, you have successfully installed PhpGedView on your server and are ready to begin configuring it to your requirements.";
-##$pgv_lang["welcome_new_help"]		= "~#pgv_lang[welcome_new]#~#pgv_lang[welcome_new2]#This Help page will guide you through the configuration process.  As you enter different fields, this window will provide you with help information about the field you are in.  You may close this window; to open it again click on one of the \"?\" question marks next to the field label.";
+##$pgv_lang["welcome_new_help"]		= "#pgv_lang[welcome_new2]#This Help page will guide you through the configuration process.  As you enter different fields, this window will provide you with help information about the field you are in.  You may close this window; to open it again click on one of the \"?\" question marks next to the field label.";
 ##$pgv_lang["return_editconfig"]		= "You may return to this configuration at any time by pointing your browser to <i>editconfig.php</i> or by clicking the link for <b>Configuration</b> on the <b>PhpGedView Administration</b> page.";
 ##$pgv_lang["return_editconfig_gedcom"]	= "You may return to this configuration at any time by clicking the link <b>Edit</b> in the <b>#pgv_lang[current_gedcoms]#</b> table on the <b>#pgv_lang[gedcom_adm_head]#</b> page or by pointing your browser to <i>editconfig_gedcom.php</i>.";
 ##$pgv_lang["save_config"] 		= "Save configuration";
