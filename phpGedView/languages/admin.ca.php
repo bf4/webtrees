@@ -286,7 +286,7 @@ $pgv_lang["weekly"]					= "Setmanalment";
 $pgv_lang["welcome_new"]			= "Benvingut al vostre lloc web PhpGedView.";
 $pgv_lang["yearly"]					= "Anualment";
 $pgv_lang["admin_OK_subject"]					= "Autorització de registre a #SERVER_NAME#|";
-$pgv_lang["admin_OK_message"]					= "L'Administrador del lloc PhpGedView #SERVER_NAME# ha autoritzat la vostra comanda de disposar-hi de compte. Ara podeu accedir-hi pel següent enllaç:\r\n\r\n#SERVER_NAME#\r\n";
+$pgv_lang["admin_OK_message"]					= "L'Administrador del lloc PhpGedView #SERVER_NAME# ha autoritzat la vostra comanda de disposar-hi de compte. Ara podeu accedir-hi pel següent enllaç: #SERVER_NAME#";
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]     			= "Comprovador Gedcom";

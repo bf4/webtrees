@@ -273,7 +273,7 @@ $pgv_lang["weekly"]				= "Veckovis";
 $pgv_lang["welcome_new"]		= "Välkommen till din nya PhpGedView sajt.";
 $pgv_lang["yearly"]				= "Årlig";
 $pgv_lang["admin_OK_subject"]					= "Godkännande av konto på #SERVER_NAME#";
-$pgv_lang["admin_OK_message"]					= "Administratören på PhpGedViewsajten #SERVER_NAME# har godkänt din ansökan om ett konto. Du kan nu logga in genom att följande link:\r\n\r\n#SERVER_NAME#\r\n";
+$pgv_lang["admin_OK_message"]					= "Administratören på PhpGedViewsajten #SERVER_NAME# har godkänt din ansökan om ett konto. Du kan nu logga in genom att följande link: #SERVER_NAME#";
 $pgv_lang["gedcheck"]     = "GEDCOM kontroll";
 
 $pgv_lang["gedcheck_text"]= 	"Denna modul kontrollera formatet i GEDCOM-filen mot <a \"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM Specifikationen</a>. Den kollar också efter ett antal vanliga fel i din data. Observera att det finns flera versioner, utökningar och variationer på specifikationen så du bör inte oroa dig för andra fel en de som är flaggade kritiska. Förklaringen till rad-för-rad felen finns i specifikationen, så kolla den först innan du frågar efter hjälp.";

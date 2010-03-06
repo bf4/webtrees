@@ -39,7 +39,7 @@ $pgv_lang["SHOW_HIGHLIGHT_IMAGES"]					= "Show highlight images in people boxes"
 $pgv_lang["cancel"]									= "Άκυρο";
 $pgv_lang["duplicate_username"]					= "Διπλότυπο όνομα χρήστη. Υπάρχει ήδη χρήστης με αυτό το όνομα χρήστη.  Παρακαλώ επιλέξτε άλλο όνομα χρήστη.";
 $pgv_lang["family"]								= "Οικογένεια";
-$pgv_lang["invalid_search_input"]				= "Παρακαλώ δώστε Όνομα, Επώνυμο ή Τοποθεσία \n\t καθώς και Έτος";
+$pgv_lang["invalid_search_input"]				= "Παρακαλώ δώστε Όνομα, Επώνυμο ή Τοποθεσία καθώς και Έτος";
 
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]									= ";";
@@ -899,7 +899,7 @@ $pgv_lang["delete_family"]			= "Διαγραφή οικογένειας";
 $pgv_lang["add_favorite"]			= "Προσθήκη νέου αγαπημένου";
 $pgv_lang["url"]					= "URL";
 $pgv_lang["add_fav_enter_note"]		= "Εισαγωγή προαιρετικής σημείωσης σχετικά με αυτό το αγαπημένο";
-$pgv_lang["add_fav_or_enter_url"]	= "Ή<br />\nΕισαγωγή URL και τίτλου";
+$pgv_lang["add_fav_or_enter_url"]	= "Ή<br />Εισαγωγή URL και τίτλου";
 $pgv_lang["add_fav_enter_id"]		= "Εισαγωγή ατόμου, οικογένειας ή ID πηγής";
 $pgv_lang["next_email_sent"]		= "Το επόμενο email υπενθύμισης θα σταλεί μετά";
 $pgv_lang["last_email_sent"]		= "Το τελευταίο email υπενθύμισης στάλθηκε";

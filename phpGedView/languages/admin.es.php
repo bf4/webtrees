@@ -418,7 +418,7 @@ $pgv_lang["weekly"]								= "Semanalmente";
 $pgv_lang["welcome_new"]						= "Bienvenido a su nuevo sitio PhpGedView.";
 $pgv_lang["yearly"]								= "Anualmente";
 $pgv_lang["admin_OK_subject"]					= "Aprobación de la cuenta en #SERVER_NAME#";
-$pgv_lang["admin_OK_message"]					= "El administrador del sitio PhpGedView #SERVER_NAME# ha aprobado su solicitud de cuenta.  Ya puede entrar de forma identificada accediendo al siguiente vínculo:\r\n\r\n#SERVER_NAME#\r\n";
+$pgv_lang["admin_OK_message"]					= "El administrador del sitio PhpGedView #SERVER_NAME# ha aprobado su solicitud de cuenta.  Ya puede entrar de forma identificada accediendo al siguiente vínculo: #SERVER_NAME#";
 
 $pgv_lang["batch_update"]="Realizar cambios en bloque a su GEDCOM";
 
