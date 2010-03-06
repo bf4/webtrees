@@ -106,9 +106,9 @@ function basicHTTPAuthenticateUser() {
  */
 function userLogout($user_id) {
 	set_user_setting($user_id, 'loggedin', 'N');
-
+if ($user_id != "Anonymous" and $user_id != "") {
 	AddToLog('Logout '.getUserName($user_id));
-
+	}
 	// If we are logging ourself out, then end our session too.
 	if (getUserId()==$user_id) {
 		session_destroy();
