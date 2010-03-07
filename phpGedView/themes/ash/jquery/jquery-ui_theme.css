@@ -6,13 +6,13 @@
 .ui-widget-content a 						{ color:#2f416f; }
 .ui-widget-content a:hover 					{ color:#2f416f; text-decoration:underline;}
 
-.ui-tabs .ui-tabs-nav 						{ padding: .3em .em 0 .3em; border-color:#888888; background: #9DA5B4; }
-.ui-tabs .ui-tabs-nav li 					{ font-size:1em; bottom:0px; margin:0 0.15em 0 0.1em; border-color:#888888; background: #efefee;}
+.ui-tabs .ui-tabs-nav 						{ border-color:#888888; background: #9DA5B4; }
+.ui-tabs .ui-tabs-nav li 					{ border-color:#888888; background: #efefee;}
 .ui-tabs .ui-tabs-nav li a 					{ color:#555555; padding: .2em .3em .2em .3em;  }
 .ui-tabs .ui-tabs-nav li:hover				{ color:red; background: #ededee;}
 .ui-tabs .ui-tabs-nav li a:hover			{ color:#2f416f; text-decoration:underline;}
 
-.ui-tabs-nav li.ui-tabs-selected  	 	{ color:2f416f; padding-top:0px; top:1px; bottom:0px; border-color: #888888; border-bottom-width: 0 !important; background:#ffffff;}
+.ui-tabs-nav li.ui-tabs-selected  	 		{ color:2f416f; border-color: #888888; background:#ffffff;}
 .ui-tabs-nav li.ui-tabs-selected a	 		{ font-weight:600; color:2f416f;}
 .ui-tabs-nav li.ui-tabs-selected a:hover	{ font-weight:600; color:2f416f; background:#ffffff; }
 .ui-tabs-nav li.ui-tabs-selected:hover		{ background:#efefee; }
@@ -33,9 +33,8 @@
 	position: absolute; 
 	z-index: 100;
 	right: 0px; 
-	background: #fffff; 
 	margin-top:0px; 
-	margin-right:23px;
+	margin-right:22px;
 }
 
 #sidebar_open {  /* + background */
