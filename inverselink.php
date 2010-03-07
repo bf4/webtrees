@@ -47,24 +47,24 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 	} else {
 		switch ($linkto) {
 		case 'person':
-			$toitems = $pgv_lang['to_person'];
+			$toitems = i18n::translate('To Person');
 			break;
 		case 'family':
-			$toitems = $pgv_lang['to_family'];
+			$toitems = i18n::translate('To Family');
 			break;
 		case 'source':
-			$toitems = $pgv_lang['to_source'];
+			$toitems = i18n::translate('To Source');
 			break;
 		case 'repository':
-			$toitems = $pgv_lang['to_repository'];
+			$toitems = i18n::translate('To Repository');
 			break;
 		case 'note':
-			$toitems = $pgv_lang['to_note'];
+			$toitems = i18n::translate('To Shared Note');
 			break;
 		}
 	}
 
-	print_simple_header($pgv_lang["link_media"]." ".$toitems);
+	print_simple_header(i18n::translate('Link Media')." ".$toitems);
 
 	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
@@ -113,8 +113,8 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 		echo '<table class="facts_table center ', $TEXT_DIRECTION, '">';
 		echo '<tr><td class="topbottombar" colspan="2">';
 		print_help_link("add_media_linkid", "qm", "link_media");
-		echo $pgv_lang["link_media"], ' ', $toitems, '</td></tr>';
-		echo '<tr><td class="descriptionbox width20 wrap">', $pgv_lang["media_id"], '</td>';
+		echo i18n::translate('Link Media'), ' ', $toitems, '</td></tr>';
+		echo '<tr><td class="descriptionbox width20 wrap">', i18n::translate('Media ID'), '</td>';
 		echo '<td class="optionbox wrap">';
 		if (!empty($mediaid)) {
 			//-- Get the title of this existing Media item
@@ -140,7 +140,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 		echo '<tr><td class="descriptionbox">';
 		
 		if ($linkto == "person") {
-			echo $pgv_lang["enter_pid"], "</td>";
+			echo i18n::translate('Enter Individual ID'), "</td>";
 			echo '<td class="optionbox wrap">';
 			if ($linktoid=="") {
 				 echo '<input class="pedigree_form" type="text" name="linktoid" id="linktopid" size="3" value="', $linktoid, '" />';
@@ -156,7 +156,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 		}
 
 		if ($linkto == "family") {
-			echo $pgv_lang["family"], '</td>';
+			echo i18n::translate('Family'), '</td>';
 			echo '<td class="optionbox wrap">';
 			if ($linktoid=="") {
 				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktofamid" size="3" value="', $linktoid, '" />';
@@ -171,7 +171,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 		}
 		
 		if ($linkto == "source") {
-			echo $pgv_lang["source"], "</td>";
+			echo i18n::translate('Source'), "</td>";
 			echo '<td  class="optionbox wrap">';
 			if ($linktoid=="") {
 				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktosid" size="3" value="', $linktoid, '" />';
@@ -185,7 +185,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 			}
 		}
 		if ($linkto == "repository") {
-			echo $pgv_lang["repository"], "</td>";
+			echo i18n::translate('Repository'), "</td>";
 			echo '<td  class="optionbox wrap">';
 			if ($linktoid=="") {
 				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktorid" size="3" value="', $linktoid, '" />';
@@ -200,7 +200,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 		}
 		
 		if ($linkto == "note") {
-			echo $pgv_lang["shared_note"], "</td>";
+			echo i18n::translate('Shared Note'), "</td>";
 			echo '<td  class="optionbox wrap">';
 			if ($linktoid=="") {
 				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktonid" size="3" value="', $linktoid, '" />';
@@ -215,20 +215,20 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 		}
 		
 		echo '</td></tr>';
-		echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', $pgv_lang["set_link"], '" /></td></tr>';
+		echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', i18n::translate('Set link'), '" /></td></tr>';
 		echo '</table>';
 		echo '</form>';
-		echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">', $pgv_lang["close_window"], '</a><br /></center>';
+		echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">', i18n::translate('Close Window'), '</a><br /></center>';
 		print_simple_footer();
 		
 	} elseif ($action == "update" && $paramok) {
 		linkMedia($mediaid, $linktoid);
-		echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">', $pgv_lang["close_window"], '</a><br /></center>';
+		echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">', i18n::translate('Close Window'), '</a><br /></center>';
 		print_simple_footer();
 		
 	} else {
 		echo '<center>nothing to do<center>';
-		echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">', $pgv_lang["close_window"], '</a><br /></center>';
+		echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">', i18n::translate('Close Window'), '</a><br /></center>';
 		print_simple_footer();
 	}
 

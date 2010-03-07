@@ -34,8 +34,8 @@ define('PGV_MEDIA_REORDER_PHP', '');
 
 require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 
-	print "<br /><b>".$pgv_lang["reorder_media"]."</b>";
-	print "&nbsp --- &nbsp;" . $pgv_lang["reorder_media_window_title"];
+	print "<br /><b>".i18n::translate('Re-order media')."</b>";
+	print "&nbsp --- &nbsp;" . i18n::translate('Click a row, then drag-and-drop to re-order media ');
 
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 	global $pgv_lang, $pgv_changes, $view;
@@ -54,9 +54,9 @@ require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 <!--		<input type="hidden" name="option" value="bybirth" /> -->
 
 		<center><p>
-		<button type="submit" title="<?php print $pgv_lang["reorder_media_save"];?>"><?php print $pgv_lang["save"];?></button>
-		<button type="submit" title="<?php print $pgv_lang["reorder_media_reset"];?>" onclick="document.reorder_form.action.value='reset_media_update'; document.reorder_form.submit();"><?php print $pgv_lang["reset"];?></button>
-		<button type="submit" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onclick="window.close();"><?php print $pgv_lang["cancel"];?></button>
+		<button type="submit" title="<?php print i18n::translate('Saves the sorted media to the database');?>"><?php print i18n::translate('Save');?></button>
+		<button type="submit" title="<?php print i18n::translate('Reset to the original order');?>" onclick="document.reorder_form.action.value='reset_media_update'; document.reorder_form.submit();"><?php print i18n::translate('Reset');?></button>
+		<button type="submit" title="<?php print i18n::translate('Quit and return');?>" onclick="window.close();"><?php print i18n::translate('Cancel');?></button>
 		</center>
 
 <ul id="reorder_media_list">
@@ -207,9 +207,9 @@ print "\n";
 </script>
 
 		<center>
-		<button type="submit" title="<?php print $pgv_lang["reorder_media_save"];?>"><?php print $pgv_lang["save"];?></button>
-		<button type="submit" title="<?php print $pgv_lang["reorder_media_reset"];?>" onclick="document.reorder_form.action.value='reset_media_update'; document.reorder_form.submit();"><?php print $pgv_lang["reset"];?></button>
-		<button type="submit" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onclick="window.close();"><?php print $pgv_lang["cancel"];?></button>
+		<button type="submit" title="<?php print i18n::translate('Saves the sorted media to the database');?>"><?php print i18n::translate('Save');?></button>
+		<button type="submit" title="<?php print i18n::translate('Reset to the original order');?>" onclick="document.reorder_form.action.value='reset_media_update'; document.reorder_form.submit();"><?php print i18n::translate('Reset');?></button>
+		<button type="submit" title="<?php print i18n::translate('Quit and return');?>" onclick="window.close();"><?php print i18n::translate('Cancel');?></button>
 		</center><p>
 
 	</form>

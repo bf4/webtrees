@@ -35,7 +35,7 @@ define('PGV_USER_MESSAGES_PHP', '');
 
 require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 
-$PGV_BLOCKS["print_user_messages"]["name"]		= $pgv_lang["user_messages_block"];
+$PGV_BLOCKS["print_user_messages"]["name"]		= i18n::translate('User Messages');
 $PGV_BLOCKS["print_user_messages"]["descr"]		= "user_messages_descr";
 $PGV_BLOCKS["print_user_messages"]["type"]		= "user";
 $PGV_BLOCKS["print_user_messages"]["canconfig"]	= false;
@@ -49,15 +49,15 @@ function print_user_messages($block=true, $config="", $side, $index) {
 
 	$id="user_messages";
 	$title = print_help_link("mygedview_message", "qm", "", false, true);
-	$title .= $pgv_lang["my_messages"]."&nbsp;&nbsp;";
+	$title .= i18n::translate('My Messages')."&nbsp;&nbsp;";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 	$title .= "(".count($usermessages).")";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 
 	$content = "";
-	$content .= "<form name=\"messageform\" action=\"\" onsubmit=\"return confirm('".$pgv_lang["confirm_message_delete"]."');\">";
+	$content .= "<form name=\"messageform\" action=\"\" onsubmit=\"return confirm('".i18n::translate('Are you sure you want to delete this message?  It cannot be retrieved later.')."');\">";
 	if (count($usermessages)==0) {
-		$content .= $pgv_lang["no_messages"]."<br />";
+		$content .= i18n::translate('You have no pending messages.')."<br />";
 	} else {
 		$content .= '
 			<script language="JavaScript" type="text/javascript">
@@ -82,10 +82,10 @@ function print_user_messages($block=true, $config="", $side, $index) {
 		';
 		$content .= "<input type=\"hidden\" name=\"action\" value=\"deletemessage\" />";
 		$content .= "<table class=\"list_table\"><tr>";
-		$content .= "<td class=\"list_label\">".$pgv_lang["delete"]."<br /><a href=\"javascript:;\" onclick=\"return select_all();\">".$pgv_lang["all"]."</a></td>";
-		$content .= "<td class=\"list_label\">".$pgv_lang["message_subject"]."</td>";
-		$content .= "<td class=\"list_label\">".$pgv_lang["date_created"]."</td>";
-		$content .= "<td class=\"list_label\">".$pgv_lang["message_from"]."</td>";
+		$content .= "<td class=\"list_label\">".i18n::translate('Delete')."<br /><a href=\"javascript:;\" onclick=\"return select_all();\">".i18n::translate('ALL')."</a></td>";
+		$content .= "<td class=\"list_label\">".i18n::translate('Subject:')."</td>";
+		$content .= "<td class=\"list_label\">".i18n::translate('Date Sent:')."</td>";
+		$content .= "<td class=\"list_label\">".i18n::translate('Email Address:')."</td>";
 		$content .= "</tr>";
 		foreach($usermessages as $key=>$message) {
 			if (isset($message["id"])) $key = $message["id"];
@@ -93,7 +93,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			$content .= "<td class=\"list_value_wrap\"><input type=\"checkbox\" id=\"cb_message$key\" name=\"message_id[]\" value=\"$key\" /></td>";
 			$showmsg=preg_replace("/(\w)\/(\w)/","\$1/<span style=\"font-size:1px;\"> </span>\$2",PrintReady($message["subject"]));
 			$showmsg=str_replace("@","@<span style=\"font-size:1px;\"> </span>",$showmsg);
-			$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /> <b>".$showmsg."</b></a></td>";
+			$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"".i18n::translate('Show Details')."\" title=\"".i18n::translate('Show Details')."\" /> <b>".$showmsg."</b></a></td>";
 			if (!empty($message["created"])) {
 				$time = strtotime($message["created"]);
 			} else {
@@ -123,19 +123,19 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				$message["subject"]="RE:".$message["subject"];
 			}
 			if ($user_id) {
-				$content .= "<a href=\"javascript:;\" onclick=\"reply('".$user_id."', '".$message["subject"]."'); return false;\">".$pgv_lang["reply"]."</a> | ";
+				$content .= "<a href=\"javascript:;\" onclick=\"reply('".$user_id."', '".$message["subject"]."'); return false;\">".i18n::translate('Reply')."</a> | ";
 			}
-			$content .= "<a href=\"".encode_url("index.php?action=deletemessage&message_id={$key}")."\" onclick=\"return confirm('".$pgv_lang["confirm_message_delete"]."');\">".$pgv_lang["delete"]."</a></div></td></tr>";
+			$content .= "<a href=\"".encode_url("index.php?action=deletemessage&message_id={$key}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this message?  It cannot be retrieved later.')."');\">".i18n::translate('Delete')."</a></div></td></tr>";
 		}
 		$content .= "</table>";
-		$content .= "<input type=\"submit\" value=\"".$pgv_lang["delete_selected_messages"]."\" /><br /><br />";
+		$content .= "<input type=\"submit\" value=\"".i18n::translate('Delete Selected Messages')."\" /><br /><br />";
 	}
 	if (get_user_count()>1) {
-		$content .= $pgv_lang["message"]." <select name=\"touser\">";
+		$content .= i18n::translate('Send Message')." <select name=\"touser\">";
 		if (PGV_USER_IS_ADMIN) {
-			$content .= "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>";
-			$content .= "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>";
-			$content .= "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>";
+			$content .= "<option value=\"all\">".i18n::translate('Broadcast to all users')."</option>";
+			$content .= "<option value=\"never_logged\">".i18n::translate('Send message to users who have never logged in')."</option>";
+			$content .= "<option value=\"last_6mo\">".i18n::translate('Send message to users who have not logged in for 6 months')."</option>";
 		}
 		foreach (get_all_users() as $user_id=>$user_name) {
 			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'verified_by_admin')=='yes' && get_user_setting($user_id, 'contactmethod')!='none') {
@@ -148,7 +148,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				$content .= "</option>";
 			}
 		}
-		$content .= "</select><input type=\"button\" value=\"".$pgv_lang["send"]."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />";
+		$content .= "</select><input type=\"button\" value=\"".i18n::translate('Send')."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />";
 	}
 	$content .= "</form>";
 

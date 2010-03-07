@@ -37,7 +37,7 @@ define('PGV_CHARTS_PHP', '');
 require_once PGV_ROOT.'includes/controllers/hourglass_ctrl.php';
 require_once PGV_ROOT.'includes/classes/class_treenav.php';
 
-$PGV_BLOCKS["print_charts_block"]["name"]		= $pgv_lang["charts_block"];
+$PGV_BLOCKS["print_charts_block"]["name"]		= i18n::translate('Charts Block');
 $PGV_BLOCKS["print_charts_block"]["descr"]		= "charts_block_descr";
 $PGV_BLOCKS["print_charts_block"]["canconfig"]	= true;
 $PGV_BLOCKS["print_charts_block"]["config"]		= array(
@@ -103,29 +103,29 @@ function print_charts_block($block = true, $config="", $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
 	if ($person) {
 		$name=PrintReady($person->getFullName());
 		switch($config['type']) {
 			case 'pedigree':
-				$title .= $name." ".$pgv_lang["index_header"];
+				$title .= $name." ".i18n::translate('Pedigree Tree');
 				break;
 			case 'descendants':
-				$title .= $name." ".$pgv_lang["descend_chart"];
+				$title .= $name." ".i18n::translate('Descendancy Chart');
 				break;
 			case 'hourglass':
-				$title .= $name." ".$pgv_lang["hourglass_chart"];
+				$title .= $name." ".i18n::translate('Hourglass Chart');
 				break;
 			case 'treenav':
-				$title .= $name." ".$pgv_lang["tree"];
+				$title .= $name." ".i18n::translate('Tree');
 				break;
 		}
 		$content = "";
 		$content .= "<script src=\"js/phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
 		if ($show_full==0) {
-			$content .= '<center><span class="details2">'.$pgv_lang['charts_click_box'].'</span></center><br />';
+			$content .= '<center><span class="details2">'.i18n::translate('Click on any of the boxes to get more information about that person.').'</span></center><br />';
 		}
 		$content .= '<table cellspacing="0" cellpadding="0" border="0"><tr>';
 		if ($config['type']=='descendants' || $config['type']=='hourglass') {
@@ -164,7 +164,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			-->
 			</script>';
 	} else {
-		$content=$pgv_lang['invalid_id'];
+		$content=i18n::translate('No such ID exists in this GEDCOM file.');
 	}
 
 	global $THEME_DIR;
@@ -183,28 +183,28 @@ function print_charts_block_config($config) {
 
 	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
-	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["chart_type"]; ?></td>
+	<tr><td class="descriptionbox wrap width33"><?php print i18n::translate('Chart Type'); ?></td>
 	<td class="optionbox">
 		<select name="type">
-			<option value="pedigree"<?php if ($config["type"]=="pedigree") print " selected=\"selected\""; ?>><?php print $pgv_lang["index_header"]; ?></option>
-			<option value="descendants"<?php if ($config["type"]=="descendants") print " selected=\"selected\""; ?>><?php print $pgv_lang["descend_chart"]; ?></option>
-			<option value="hourglass"<?php if ($config["type"]=="hourglass") print " selected=\"selected\""; ?>><?php print $pgv_lang["hourglass_chart"]; ?></option>
+			<option value="pedigree"<?php if ($config["type"]=="pedigree") print " selected=\"selected\""; ?>><?php print i18n::translate('Pedigree Tree'); ?></option>
+			<option value="descendants"<?php if ($config["type"]=="descendants") print " selected=\"selected\""; ?>><?php print i18n::translate('Descendancy Chart'); ?></option>
+			<option value="hourglass"<?php if ($config["type"]=="hourglass") print " selected=\"selected\""; ?>><?php print i18n::translate('Hourglass Chart'); ?></option>
 			<?php if (file_exists(PGV_ROOT.'includes/classes/class_treenav.php')) { ?>
-			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\""; ?>><?php print $pgv_lang["interactive_tree"]; ?></option>
+			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\""; ?>><?php print i18n::translate('Interactive Tree'); ?></option>
 			<?php } ?>
 		</select>
 	</td></tr>
 	<tr>
-		<td class="descriptionbox wrap width33"><?php print $pgv_lang["show_details"]; ?></td>
+		<td class="descriptionbox wrap width33"><?php print i18n::translate('Show Details'); ?></td>
 	<td class="optionbox">
 		<select name="details">
-				<option value="no" <?php if ($config["details"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang['no']; ?></option>
-				<option value="yes" <?php if ($config["details"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang['yes']; ?></option>
+				<option value="no" <?php if ($config["details"]=="no") print " selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
+				<option value="yes" <?php if ($config["details"]=="yes") print " selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
 		</select>
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width33"><?php print $pgv_lang["root_person"]; ?></td>
+		<td class="descriptionbox wrap width33"><?php print i18n::translate('Root Person ID'); ?></td>
 		<td class="optionbox">
 			<input type="text" name="pid" id="pid" value="<?php print $config['pid']; ?>" size="5" />
 			<?php
@@ -222,7 +222,7 @@ function print_charts_block_config($config) {
 	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
 			print_help_link("cache_life", "qm");
-			print $pgv_lang["cache_life"];
+			print i18n::translate('Cache file life');
 		print "</td><td class=\"optionbox\">";
 			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
 		print "</td></tr>";

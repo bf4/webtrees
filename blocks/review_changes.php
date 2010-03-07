@@ -36,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_REVIEW_CHANGES_PHP', '');
 
-$PGV_BLOCKS["review_changes_block"]["name"]			= $pgv_lang["review_changes_block"];
+$PGV_BLOCKS["review_changes_block"]["name"]			= i18n::translate('Pending Changes');
 $PGV_BLOCKS["review_changes_block"]["descr"]		= "review_changes_descr";
 $PGV_BLOCKS["review_changes_block"]["canconfig"]	= false;
 $PGV_BLOCKS["review_changes_block"]["config"]		= array(
@@ -80,8 +80,8 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					$message = array();
 					$message["to"]=$user_name;
 					$message["from"] = $PHPGEDVIEW_EMAIL;
-					$message["subject"] = $pgv_lang["review_changes_subject"];
-					$message["body"] = $pgv_lang["review_changes_body"];
+					$message["subject"] = i18n::translate('PhpGedView - Review changes');
+					$message["body"] = i18n::translate('Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes.');
 					$message["method"] = get_user_setting($user_id, 'contactmethod');
 					$message["url"] = PGV_SERVER_NAME.PGV_SCRIPT_PATH;
 					$message["no_from"] = true;
@@ -100,18 +100,18 @@ function review_changes_block($block = true, $config="", $side, $index) {
 						$name = PGV_USER_NAME;
 					}
 					$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-					$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
+					$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 				}
 			}
-			$title .= $pgv_lang["review_changes"];
+			$title .= i18n::translate('Review GEDCOM Changes');
 
 			$content = "";
 			if (PGV_USER_CAN_ACCEPT) {
-				$content .= "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a><br />";
+				$content .= "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".i18n::translate('Accept / Reject Changes')."</a><br />";
 			}
 			if ($config["sendmail"]=="yes") {
-				$content .= $pgv_lang["last_email_sent"].format_timestamp($LAST_CHANGE_EMAIL)."<br />";
-				$content .= $pgv_lang["next_email_sent"].format_timestamp($LAST_CHANGE_EMAIL+(60*60*24*$config["days"]))."<br /><br />";
+				$content .= i18n::translate('Last email reminder was sent ').format_timestamp($LAST_CHANGE_EMAIL)."<br />";
+				$content .= i18n::translate('Next email reminder will be sent after ').format_timestamp($LAST_CHANGE_EMAIL+(60*60*24*$config["days"]))."<br /><br />";
 			}
 			foreach ($pgv_changes as $cid=>$changes) {
 				$change = $changes[count($changes)-1];
@@ -125,7 +125,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 						case 'SOUR':
 						case 'OBJE':
 							$content.=$block ? '<br />' : ' ';
-							$content.='<a href="'.encode_url($record->getLinkUrl().'&show_changes=yes').'">'.$pgv_lang['view_change_diff'].'</a>';
+							$content.='<a href="'.encode_url($record->getLinkUrl().'&show_changes=yes').'">'.i18n::translate('View Change Diff').'</a>';
 							break;
 						}
 						$content.='<br />';
@@ -146,21 +146,21 @@ function review_changes_block($block = true, $config="", $side, $index) {
 function review_changes_block_config($config) {
 	global $pgv_lang, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["review_changes_block"]["config"];
-	print $pgv_lang["review_changes_email"];
+	print i18n::translate('Send out reminder emails?');
 	print "&nbsp;<select name='sendmail'>";
 	print "<option value='yes'";
 	if ($config["sendmail"]=="yes") print " selected='selected'";
-	print ">".$pgv_lang["yes"]."</option>";
+	print ">".i18n::translate('Yes')."</option>";
 	print "<option value='no'";
 	if ($config["sendmail"]=="no") print " selected='selected'";
-	print ">".$pgv_lang["no"]."</option>";
+	print ">".i18n::translate('No')."</option>";
 	print "</select><br /><br />";
-	print $pgv_lang["review_changes_email_freq"]."&nbsp;<input type='text' name='days' value='".$config["days"]."' size='2' />";
+	print i18n::translate('Reminder email frequency (days)')."&nbsp;<input type='text' name='days' value='".$config["days"]."' size='2' />";
 	// Cache file life
 	if ($ctype=="gedcom") {
 		print "<tr><td class=\"descriptionbox wrap width33\">";
 		print_help_link("cache_life", "qm");
-		print $pgv_lang["cache_life"];
+		print i18n::translate('Cache file life');
 		print "</td><td class=\"optionbox\">";
 		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
 		print "</td></tr>";

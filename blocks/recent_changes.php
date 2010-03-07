@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_RECENT_CHANGES_PHP', '');
 
-$PGV_BLOCKS["print_recent_changes"]["name"]     = $pgv_lang["recent_changes_block"];
+$PGV_BLOCKS["print_recent_changes"]["name"]     = i18n::translate('Recent Changes');
 $PGV_BLOCKS["print_recent_changes"]["descr"]    = "recent_changes_descr";
 $PGV_BLOCKS["print_recent_changes"]["canconfig"]= true;
 $PGV_BLOCKS["print_recent_changes"]["config"]   = array(
@@ -70,10 +70,10 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= $pgv_lang["recent_changes"];
+	$title .= i18n::translate('Recent Changes');
 
 	$content = "";
 // Print block content
@@ -102,21 +102,21 @@ function print_recent_changes_config($config) {
 	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_recent_changes"]["config"]["cache"];
 
-	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["days_to_show"]."</td>";?>
+	print "<tr><td class=\"descriptionbox wrap width33\">".i18n::translate('Number of days to show')."</td>";?>
 	<td class="optionbox">
 		<input type="text" name="days" size="2" value="<?php print $config["days"]; ?>" />
 	</td></tr>
 
 	<?php
-	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["show_empty_block"]."</td>";?>
+	print "<tr><td class=\"descriptionbox wrap width33\">".i18n::translate('Should this block be hidden when it is empty?')."</td>";?>
 	<td class="optionbox">
 		<select name="hide_empty">
-			<option value="no"<?php if ($config["hide_empty"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-			<option value="yes"<?php if ($config["hide_empty"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+			<option value="no"<?php if ($config["hide_empty"]=="no") print " selected=\"selected\"";?>><?php print i18n::translate('No'); ?></option>
+			<option value="yes"<?php if ($config["hide_empty"]=="yes") print " selected=\"selected\"";?>><?php print i18n::translate('Yes'); ?></option>
 		</select>
 	</td></tr>
 	<tr><td colspan="2" class="optionbox wrap">
-		<span class="error"><?php print $pgv_lang["hide_block_warn"]; ?></span>
+		<span class="error"><?php print i18n::translate('If you hide an empty block, you will not be able to change its configuration until it becomes visible by no longer being empty.'); ?></span>
 	</td></tr>
 	<?php
 
@@ -124,7 +124,7 @@ function print_recent_changes_config($config) {
 	if ($ctype=="gedcom") {
 		print "<tr><td class=\"descriptionbox wrap width33\">";
 		print_help_link("cache_life", "qm");
-		print $pgv_lang["cache_life"];
+		print i18n::translate('Cache file life');
 		print "</td><td class=\"optionbox\">";
 		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
 		print "</td></tr>";

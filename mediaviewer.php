@@ -45,7 +45,7 @@ $filename = $controller->getLocalFilename();
 print_header($controller->getPageTitle());
 
 if (!$controller->mediaobject){
-	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
+	echo "<b>", i18n::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();
 	exit;
 }
@@ -68,7 +68,7 @@ loadLangFile("lightbox:lang");
 		<td class="name_head" colspan="2">
 			<?php print PrintReady($controller->mediaobject->getFullName()); if ($SHOW_ID_NUMBERS && !empty($controller->pid)) print "&nbsp;&nbsp;&nbsp;" . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
 			<?php print PrintReady($controller->mediaobject->getAddName()); ?> <br /><br />
-			<?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
+			<?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".i18n::translate('This record has been marked for deletion upon admin approval.')."</span>"; ?>
 		</td>
 	</tr>
 	<tr>
@@ -101,7 +101,7 @@ loadLangFile("lightbox:lang");
 
 					// If download
 					if ($SHOW_MEDIA_DOWNLOAD) {
-						print "<br /><br /><a href=\"".$filename."\">".$pgv_lang["download_image"]."</a><br/>";
+						print "<br /><br /><a href=\"".$filename."\">".i18n::translate('Download File')."</a><br/>";
 					}
 
 				 // else the file is not external and does not exist
@@ -109,7 +109,7 @@ loadLangFile("lightbox:lang");
 					?>
 					<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(), ENT_COMPAT, 'UTF-8')); ?>" />
 					<span class="error">
-						<?php print $pgv_lang["file_not_found"];?>
+						<?php print i18n::translate('File not found.');?>
 					</span>
 					<?php
 				}
@@ -140,11 +140,11 @@ loadLangFile("lightbox:lang");
 			$links = get_media_relations($controller->pid);
 			if (isset($links) && !empty($links)){
 			?>
-			<br /><b><?php print $pgv_lang["relations_heading"]; ?></b><br /><br />
+			<br /><b><?php print i18n::translate('The image relates to:'); ?></b><br /><br />
 			<?php
 				// PrintMediaLinks($links, "");
 				require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
-				print_changes_table($links, $SHOW_LAST_CHANGE, $pgv_lang["total_links"]);
+				print_changes_table($links, $SHOW_LAST_CHANGE, i18n::translate('Total links'));
 			}	?>
 		</td>
 	</tr>

@@ -97,12 +97,12 @@ class plugin extends base_plugin {
 
 		return
 			parent::getOptionsForm().
-			'<tr valign="top"><td class="list_label width20">'.$pgv_lang['bu_surname_option'].'</td>'.
+			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Surname Option').'</td>'.
 			'<td class="optionbox"><select name="surname" onchange="reset_reload();"><option value="replace"'.
 			($this->surname=='replace' ? ' selected="selected"' : '').
-			'">'.$pgv_lang['bu_surname_replace'].'</option><option value="add"'.
+			'">'.i18n::translate('Wife\'s surname replaced by husband\'s surname').'</option><option value="add"'.
 			($this->surname=='add' ? ' selected="selected"' : '').
-			'">'.$pgv_lang['bu_surname_add'].'</option></select></td></tr>'
+			'">'.i18n::translate('Wife\'s maiden surname becomes new given name').'</option></select></td></tr>'
 		 	;
 	}
 }

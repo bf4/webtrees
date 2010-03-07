@@ -35,7 +35,7 @@ require_once PGV_ROOT.'includes/controllers/timeline_ctrl.php';
 $controller = new TimelineController();
 $controller->init();
 
-print_header($pgv_lang["timeline_title"]);
+print_header(i18n::translate('PhpGedView Timeline'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
@@ -143,10 +143,10 @@ function MM(e) {
 			}
 			yearform = document.getElementById('yearform'+personnum);
 			ageform = document.getElementById('ageform'+personnum);
-			yearform.innerHTML = year+"      "+month+" <?php print UTF8_substr($pgv_lang["month"], 0, 1);?>   "+day+" <?php print UTF8_substr($pgv_lang["day"], 0, 1);?>";
+			yearform.innerHTML = year+"      "+month+" <?php print UTF8_substr(i18n::translate('Month:'), 0, 1);?>   "+day+" <?php print UTF8_substr(i18n::translate('Day:'), 0, 1);?>";
 			if (ba*yage>1 || ba*yage<-1 || ba*yage==0)
-				 ageform.innerHTML = (ba*yage)+" <?php print UTF8_substr($pgv_lang["years"], 0, 1);?>   "+(ba*mage)+" <?php print UTF8_substr($pgv_lang["month"], 0, 1);?>   "+(ba*dage)+" <?php print UTF8_substr($pgv_lang["day"], 0, 1);?>";
-			else ageform.innerHTML = (ba*yage)+" <?php print UTF8_substr($pgv_lang["year"], 0, 1);?>   "+(ba*mage)+" <?php print UTF8_substr($pgv_lang["month"], 0, 1);?>   "+(ba*dage)+" <?php print UTF8_substr($pgv_lang["day"], 0, 1);?>";
+				 ageform.innerHTML = (ba*yage)+" <?php print UTF8_substr(i18n::translate('years'), 0, 1);?>   "+(ba*mage)+" <?php print UTF8_substr(i18n::translate('Month:'), 0, 1);?>   "+(ba*dage)+" <?php print UTF8_substr(i18n::translate('Day:'), 0, 1);?>";
+			else ageform.innerHTML = (ba*yage)+" <?php print UTF8_substr(i18n::translate('Year:'), 0, 1);?>   "+(ba*mage)+" <?php print UTF8_substr(i18n::translate('Month:'), 0, 1);?>   "+(ba*dage)+" <?php print UTF8_substr(i18n::translate('Day:'), 0, 1);?>";
 			var line = document.getElementById('ageline'+personnum);
 			temp = newx-oldx;
 			if (textDirection=='rtl') temp = temp * -1;
@@ -246,7 +246,7 @@ document.onmousemove = MM;
 document.onmouseup = MU;
 //-->
 </script>
-<h2><?php echo $pgv_lang["timeline_chart"]; ?></h2>
+<h2><?php echo i18n::translate('Timeline Chart'); ?></h2>
 <?php if (!$controller->isPrintPreview()) { ?><form name="people" action="timeline.php"><?php } ?>
 <?php
 $controller->checkPrivacy();
@@ -275,11 +275,11 @@ $controller->checkPrivacy();
 		<?php
 		if ($indi && $indi->canDisplayDetails()) {
 			if ($indi->getSex()=="M") {
-				echo $indi->getSexImage('large', '', $pgv_lang['male']);
+				echo $indi->getSexImage('large', '', i18n::translate('Male'));
 			} elseif ($indi->getSex()=="F") {
-				echo $indi->getSexImage('large', '', $pgv_lang['female']);
+				echo $indi->getSexImage('large', '', i18n::translate('Female'));
 			} else {
-				echo $indi->getSexImage('large', '', $pgv_lang['unknown']);
+				echo $indi->getSexImage('large', '', i18n::translate('unknown'));
 			}
 		?>
  			<a href="individual.php?pid=<?php echo $pid; ?>">&nbsp;<?php echo PrintReady($indi->getFullName()); ?><br />
@@ -291,11 +291,11 @@ $controller->checkPrivacy();
 				print_help_link("remove_person", "qm");
 				?>
 				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
-				<span class="details1"><?php echo $pgv_lang["remove_person"]; ?></span></a>
+				<span class="details1"><?php echo i18n::translate('Remove Person'); ?></span></a>
 			<?php if (!empty($controller->birthyears[$pid])) { ?>
 				<span class="details1"><br />
 				<?php print_help_link("show_age_marker", "qm"); ?>
-				<?php echo $pgv_lang["show_age"]; ?>
+				<?php echo i18n::translate('Show Age Marker'); ?>
 				<input type="checkbox" name="agebar<?php echo $p; ?>" value="ON" onclick="showhide('agebox<?php echo $p; ?>', this);" />
 				</span>
 			<?php }
@@ -311,7 +311,7 @@ $controller->checkPrivacy();
 				print_help_link("remove_person", "qm");
 				?>
 				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
-				<span class="details1"><?php echo $pgv_lang["remove_person"]; ?></span></a>
+				<span class="details1"><?php echo i18n::translate('Remove Person'); ?></span></a>
 			<?php } ?>
 			<br />
 		<?php } ?>
@@ -322,32 +322,32 @@ $controller->checkPrivacy();
 		?>
 		<td class="person<?php print $col; ?>" style="padding: 5px" valign="top">
 			<?php print_help_link("add_person", "qm"); ?>
-			<?php print $pgv_lang["add_another"];?>&nbsp;
+			<?php print i18n::translate('Add another person to chart:<br />Person ID:');?>&nbsp;
 			<input class="pedigree_form" type="text" size="5" id="newpid" name="newpid" />&nbsp;
 			<?php print_findindi_link("newpid",""); ?>
 			<br />
 			<br />
-			<div style="text-align: center"><input type="submit" value="<?php print $pgv_lang["show"]; ?>" /></div>
+			<div style="text-align: center"><input type="submit" value="<?php print i18n::translate('Show'); ?>" /></div>
 		</td>
 	<?php }
 	if ((count($controller->people)>0)&&(!$controller->isPrintPreview())) {
 		$scalemod = round($controller->scale*.2) + 1;
 		?>
 		<td class="list_value" style="padding: 5px">
-			<a href="<?php echo PGV_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other']; ?>" title="<?php print $pgv_lang["zoom_in"]; ?>" alt="<?php print $pgv_lang["zoom_in"]; ?>" border="0" /></a><br />
-			<a href="<?php echo PGV_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other']; ?>" title="<?php print $pgv_lang["zoom_out"]; ?>" alt="<?php print $pgv_lang["zoom_out"]; ?>" border="0" /></a><br />
-			<input type="button" value="<?php print $pgv_lang['clear_chart']; ?>" onclick="window.location = 'timeline.php?clear=1';" />
+			<a href="<?php echo PGV_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other']; ?>" title="<?php print i18n::translate('Zoom In'); ?>" alt="<?php print i18n::translate('Zoom In'); ?>" border="0" /></a><br />
+			<a href="<?php echo PGV_SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other']; ?>" title="<?php print i18n::translate('Zoom Out'); ?>" alt="<?php print i18n::translate('Zoom Out'); ?>" border="0" /></a><br />
+			<input type="button" value="<?php print i18n::translate('Clear Chart'); ?>" onclick="window.location = 'timeline.php?clear=1';" />
 		</td>
 	<?php } ?>
 	</tr>
 </table>
 <?php if (!$controller->isPrintPreview()) { ?>
-<br /><a href="lifespan.php"><b><?php print $pgv_lang["switch_lifespan"]; ?></b></a>
+<br /><a href="lifespan.php"><b><?php print i18n::translate('Show Lifespan chart'); ?></b></a>
 </form><?php } ?>
 <?php
 if (count($controller->people)>0) {
 	?>
-	<?php if ($controller->isPrintPreview()) print "\n\t".$pgv_lang['timeline_instructions']."<br /><br />"; ?>
+	<?php if ($controller->isPrintPreview()) print "\n\t".i18n::translate('In most recent browsers you can click and drag the boxes around on the chart.')."<br /><br />"; ?>
 <div id="timeline_chart">
 	<!-- print the timeline line image -->
 	<div id="line" style="position:absolute; <?php print $TEXT_DIRECTION =="ltr"?"left: ".($basexoffset+22):"right: ".($basexoffset+22); ?>px; top: <?php print $baseyoffset; ?>px; ">
@@ -398,12 +398,12 @@ if (count($controller->people)>0) {
 						?>
 						<table class="person<?php print $col; ?>" style="cursor: hand;">
 							<tr>
-								<td valign="top" width="120"><?php print $pgv_lang["year"]; ?>
+								<td valign="top" width="120"><?php print i18n::translate('Year:'); ?>
 									<span id="yearform<?php print $p; ?>" class="field">
 									<?php print $tyear; ?>
 									</span>
 								</td>
-								<td valign="top" width="130">(<?php print $pgv_lang["age"];?>
+								<td valign="top" width="130">(<?php print i18n::translate('Age');?>
 									<span id="ageform<?php print $p; ?>" class="field"><?php print $tage; ?></span>)
 								</td>
 							</tr>

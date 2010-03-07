@@ -33,10 +33,10 @@ global $SEARCH_SPIDER, $pgv_lang;
 if (empty($SEARCH_SPIDER)) {
 	?>
 	<div class="accesskeys">
-	<a class="accesskeys" href="#content" title="<?php print $pgv_lang["accesskey_skip_to_content_desc"]; ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_skip_to_content"]; ?>"><?php print $pgv_lang["accesskey_skip_to_content_desc"]; ?></a>
-	<a class="accesskeys" href="javascript://accesskey_viewing_advice_help" onfocus="this.onclick" onclick="return helpPopup('accesskey_viewing_advice_help');" title="<?php print $pgv_lang["accesskey_viewing_advice_desc"]; ?>" accesskey="<?php print $pgv_lang["accesskey_viewing_advice"]; ?>"><?php print $pgv_lang["accesskey_viewing_advice_desc"]; ?></a>
-	<a href="javascript://help_<?php echo PGV_SCRIPT_NAME; ?>" onclick="return helpPopup('help_<?php echo PGV_SCRIPT_NAME; ?>&amp;action=<?php print $action;?>');" accesskey="<?php print $pgv_lang["accesskey_help_current_page"]; ?>"> </a>
-	<a href="javascript://help_contents_help" onclick="return helpPopup('help_contents_help');" accesskey="<?php print $pgv_lang["accesskey_help_content"]; ?>"> </a>
+	<a class="accesskeys" href="#content" title="<?php print i18n::translate('Skip to Content'); ?>" tabindex="-1" accesskey="<?php print i18n::translate('C'); ?>"><?php print i18n::translate('Skip to Content'); ?></a>
+	<a class="accesskeys" href="javascript://accesskey_viewing_advice_help" onfocus="this.onclick" onclick="return helpPopup('accesskey_viewing_advice_help');" title="<?php print i18n::translate('Viewing advice'); ?>" accesskey="<?php print i18n::translate('0'); ?>"><?php print i18n::translate('Viewing advice'); ?></a>
+	<a href="javascript://help_<?php echo PGV_SCRIPT_NAME; ?>" onclick="return helpPopup('help_<?php echo PGV_SCRIPT_NAME; ?>&amp;action=<?php print $action;?>');" accesskey="<?php print i18n::translate('3'); ?>"> </a>
+	<a href="javascript://help_contents_help" onclick="return helpPopup('help_contents_help');" accesskey="<?php print i18n::translate('2'); ?>"> </a>
 	</div>
 	<?php
 }

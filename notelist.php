@@ -28,8 +28,8 @@ define('PGV_SCRIPT_NAME', 'notelist.php');
 require './config.php';
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
-print_header($pgv_lang['shared_note_list']);
-echo '<div class="center"><h2>', $pgv_lang['shared_note_list'], '</h2>';
+print_header(i18n::translate('Shared Notes'));
+echo '<div class="center"><h2>', i18n::translate('Shared Notes'), '</h2>';
 print_note_table(get_note_list(PGV_GED_ID));
 echo '</div>';
 print_footer();

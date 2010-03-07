@@ -34,7 +34,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	header('Location: login.php?url=gedcheck.php');
 	exit;
 }
-print_header($pgv_lang['gedcheck'].' - '.$GEDCOM);
+print_header(i18n::translate('Gedcom checker').' - '.$GEDCOM);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Scan all the gedcom directories for gedcom files
@@ -67,7 +67,7 @@ if (count($all_geds)==0) {
 ////////////////////////////////////////////////////////////////////////////////
 $critical=0; $error=1; $warning=2; $info=3;
 $levels=array(
-	$critical=>$pgv_lang['critical'],
+	$critical=>i18n::translate('Critical'),
 	$error   =>$pgv_lang['error'   ],
 	$warning =>$pgv_lang['warning' ],
 	$info    =>$pgv_lang['info'    ],
@@ -89,40 +89,40 @@ $showall      =safe_POST('showall',      '[01]',  '0');    // Show details of re
 
 echo '<form method="post" name="gedcheck" action="gedcheck.php">';
 echo '<table class="list_table ', $TEXT_DIRECTION, '">';
-echo '<tr><td class="list_label">', $pgv_lang['gedcom_file'], '</td>';
+echo '<tr><td class="list_label">', i18n::translate('GEDCOM File:'), '</td>';
 echo '<td class="optionbox"><select name="ged">';
 foreach ($all_geds as $key=>$value) {
 	echo '<option value="', htmlspecialchars($key), '"', $key==$ged?' selected="selected"':'', '>', htmlspecialchars($key), '</option>';
 }
 echo '</select></td></tr>';
-echo '<tr><td class="list_label">', $pgv_lang['level'], '</td>';
+echo '<tr><td class="list_label">', i18n::translate('Level'), '</td>';
 echo '<td class="optionbox"><select name="err_level">';
 for ($i=0; $i<count($levels); $i++) {
 	echo '<option value="', $i, '"', $i==$err_level?' selected="selected"':'', '>', $levels[$i], '</option>';
 }
 echo '</select></td></tr>';
-echo '<tr><td class="list_label">', $pgv_lang['open_link'], '</td>';
+echo '<tr><td class="list_label">', i18n::translate('Open links in'), '</td>';
 echo '<td class="optionbox"><select name="openinnew">';
-echo '<option value="0"', $openinnew==0?' selected="selected"':'', '/>', $pgv_lang['same_win'], '</option>';
-echo '<option value="1"', $openinnew==1?' selected="selected"':'', '/>', $pgv_lang['new_win'], '</option>';
+echo '<option value="0"', $openinnew==0?' selected="selected"':'', '/>', i18n::translate('Same tab/window'), '</option>';
+echo '<option value="1"', $openinnew==1?' selected="selected"':'', '/>', i18n::translate('New tab/window'), '</option>';
 echo '</select></td></tr>';
-echo '<tr><td class="list_label">', $pgv_lang['context_lines'], '</td>';
+echo '<tr><td class="list_label">', i18n::translate('Lines of GEDCOM context'), '</td>';
 echo '<td class="optionbox"><select name="context_lines">';
 for ($i=0; $i<6; $i++) {
 	echo '<option value="', $i, '"', $i==$context_lines?' selected="selected"':'', '>', $i, '</option>';
 }
 echo '</select></td></tr>';
-echo '<tr><td class="list_label">', $pgv_lang['show'], '</td>';
+echo '<tr><td class="list_label">', i18n::translate('Show'), '</td>';
 echo '<td class="optionbox"><select name="showall">';
-echo '<option value="0"', $showall==0?' selected="selected"':'', '>', $pgv_lang['err_rec'], '</option>';
-echo '<option value="1"', $showall==1?' selected="selected"':'', '>', $pgv_lang['all_rec'], '</option>';
+echo '<option value="0"', $showall==0?' selected="selected"':'', '>', i18n::translate('Records with errors'), '</option>';
+echo '<option value="1"', $showall==1?' selected="selected"':'', '>', i18n::translate('All records'), '</option>';
 echo '</select></td></tr>';
-echo '<tr><td colspan="2" class="list_label"><input type="submit" value="', $pgv_lang['show'], '"><input type="hidden" name="action" value="go"></td></tr>';
+echo '<tr><td colspan="2" class="list_label"><input type="submit" value="', i18n::translate('Show'), '"><input type="hidden" name="action" value="go"></td></tr>';
 echo '</table></form><hr />';
 // Do not run until user clicks "show", as default page may take a while to load.
 // Instead, show some useful help info.
 if (!isset($_POST['action'])) {
-	echo '<p>', $pgv_lang['gedcheck_text'], '</p><hr />';
+	echo '<p>', i18n::translate('This module checks the format of a GEDCOM file against the <a href="http://phpgedview.sourceforge.net/ged551-5.pdf">5.5.1 GEDCOM Specification</a>.  It also checks for a number of common errors in your data.  Note that there are lots of versions, extensions and variations on the specification so you should not be concerned with any issues other than those flagged as "Critical".  The explanation for all the line-by-line errors can be found in the specification, so please check there before asking for help.'), '</p><hr />';
 	print_footer();
 	exit();
 }
@@ -165,12 +165,12 @@ $EOL='[\n\r]+';
 ////////////////////////////////////////////////////////////////////////////////
 // Create error messages
 ////////////////////////////////////////////////////////////////////////////////
-function missing ($text) { global $pgv_lang; return $pgv_lang['missing'] .' &lrm;'.$text.' &lrm;'; }
-function multiple($text) { global $pgv_lang; return $pgv_lang['multiple'].' &lrm;'.$text.' &lrm;'; }
-function invalid ($text) { global $pgv_lang; return $pgv_lang['invalid'] .' &lrm;'.$text.' &lrm;'; }
-function too_many($text) { global $pgv_lang; return $pgv_lang['too_many'].' &lrm;'.$text.' &lrm;'; }
-function too_few ($text) { global $pgv_lang; return $pgv_lang['too_few'] .' &lrm;'.$text.' &lrm;'; }
-function no_link ($text) { global $pgv_lang; return '&lrm;'.$text.'&lrm; '.$pgv_lang['no_link'];}
+function missing ($text) { global $pgv_lang; return i18n::translate('missing') .' &lrm;'.$text.' &lrm;'; }
+function multiple($text) { global $pgv_lang; return i18n::translate('multiple').' &lrm;'.$text.' &lrm;'; }
+function invalid ($text) { global $pgv_lang; return i18n::translate('invalid') .' &lrm;'.$text.' &lrm;'; }
+function too_many($text) { global $pgv_lang; return i18n::translate('too many').' &lrm;'.$text.' &lrm;'; }
+function too_few ($text) { global $pgv_lang; return i18n::translate('too few') .' &lrm;'.$text.' &lrm;'; }
+function no_link ($text) { global $pgv_lang; return '&lrm;'.$text.'&lrm; '.i18n::translate('does not link back');}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Create a link to a PGV object
@@ -833,9 +833,9 @@ foreach ($gedfile as $num=>$value) {
 	// Huge nested if/else contruct.  Handle with care!
 	if ($err_level>=$critical) { // CRITICAL CHECKS - links
 		if ($tag=='')
-			$err=missing($pgv_lang['tag']);
+			$err=missing(i18n::translate('tag'));
 		elseif ($tag_level=='')
-			$err=missing($pgv_lang['level']);
+			$err=missing(i18n::translate('Level'));
 		elseif (preg_match('/^(@[^#@:!]+@)$/', $tag_data)) { // exclude external/internal XREfs with :/!
 			if (!isset($all_xrefs[$tag_data.$linked_rec]))
 				$err=missing("0 $tag_data $linked_rec");
@@ -850,12 +850,12 @@ foreach ($gedfile as $num=>$value) {
 		}
 		if ($err_level>=$error && $err=='') { // ERROR CHECKS - tags
 			if (!preg_match('/^[1-9]?[0-9]$/', $tag_level))
-				$err=invalid($pgv_lang['level']);
+				$err=invalid(i18n::translate('Level'));
 			elseif (!preg_match('/^[A-Z0-9_]{1,31}$/', $tag))
-				$err=invalid($pgv_lang['tag']);
+				$err=invalid(i18n::translate('tag'));
 			elseif (strpos($tmp, '_')===false) {
 				if (!isset($CONTEXT[$tmp]))
-					$err=invalid($pgv_lang['tag']);
+					$err=invalid(i18n::translate('tag'));
 			}
 
 			// Check tags at level N+1
@@ -900,16 +900,16 @@ foreach ($gedfile as $num=>$value) {
 
 			if ($err_level>=$warning && $err=='') { // WARNING CHECKS - data
 				if ((strpos($tmp, '_')===false) && !preg_match('/^'.$CONTEXT[$tmp].'$/i', $tag_data)) {
-					$err=invalid($pgv_lang['data']);
+					$err=invalid(i18n::translate('data'));
 				} elseif ($tag_level=='0' && $xref!='' && !isset($used_xrefs[$xref.$tag])) {
-					$err=$pgv_lang['noref'];
+					$err=i18n::translate('Nothing references this record');
 				}
 				if ($err_level>=$info && $err=='') { // INFOMATIONAL CHECKS - spacing
 					if ($whitespace1!=''  ||
 							$whitespace2!=' ' ||
 							$whitespace3==' ' && $xref=='' ||
 							$whitespace4==' ' && $tag=='') {
-						$err=invalid($pgv_lang['spacing']);
+						$err=invalid(i18n::translate('spacing'));
 							}
 				} // info
 			} // warning
@@ -938,7 +938,7 @@ foreach ($gedfile as $num=>$value) {
 			for ($i=max(0,$num-$context_lines); $i<$num; ++$i)
 				printf("%07d  %s\n", $i+1, $gedfile[$i]);
 		}
-		printf("<b><font color='red'>&lrm;%07d[[</font><b>%s</b><font color='red'>]]&lrm;  %s; {$pgv_lang['see']} %s</font></b>\n", $num+1, htmlspecialchars($gedfile[$num]), $err, pgv_href($curr_l0tag, $curr_xref));
+		printf("<b><font color='red'>&lrm;%07d[[</font><b>%s</b><font color='red'>]]&lrm;  %s; ".i18n::translate('see')." %s</font></b>\n", $num+1, htmlspecialchars($gedfile[$num]), $err, pgv_href($curr_l0tag, $curr_xref));
 		flush();
 		$last_err_num=$num;
 	} else
@@ -950,7 +950,7 @@ foreach ($gedfile as $num=>$value) {
 if (isset($last_err_num)) {
 	echo '</pre>';
 } else {
-	echo $pgv_lang['gedcheck_nothing'];
+	echo i18n::translate('No errors found at this level.');
 }
 echo '</div>'; // language/direction/alignment
 

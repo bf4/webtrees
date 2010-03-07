@@ -240,7 +240,7 @@ class Media extends GedcomRecord {
 				if ($this->fileExists()) {
 					// alert the admin if we cannot determine the mime type of an existing file
 					// as the media firewall will be unable to serve this file properly
-					AddToLog($pgv_lang['unknown_mime'].' >'.$this->file.'<');
+					AddToLog(i18n::translate('Media Firewall error: >Unknown Mimetype< for file').' >'.$this->file.'<');
 				}
 			} else {
 				$this->mime=$mime[$this->ext];

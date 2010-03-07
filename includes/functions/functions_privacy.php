@@ -848,7 +848,7 @@ function privatize_gedcom($gedrec) {
 						}
 					}
 				} else {
-					$newrec.="\n1 NAME {$pgv_lang['private']}";
+					$newrec.="\n1 NAME ".i18n::translate('Private');
 				}
 				// Just show the 1 FAMC/FAMS tag, not any subtags, which may contain private data
 				if (preg_match_all('/\n1 FAM[CS] @('.PGV_REGEX_XREF.')@/', $gedrec, $matches, PREG_SET_ORDER)) {
@@ -862,7 +862,7 @@ function privatize_gedcom($gedrec) {
 				if (preg_match('/\n1 SEX [MFU]/', $gedrec, $match)) {
 					$newrec.=$match[0];
 				}
-				$newrec .= "\n1 NOTE {$pgv_lang['person_private']}";
+				$newrec .= "\n1 NOTE ".i18n::translate('Details about this person are private. Personal details will not be included.');
 				break;
 			case 'FAM':
 				$newrec="0 @{$gid}@ FAM";
@@ -874,16 +874,16 @@ function privatize_gedcom($gedrec) {
 						}
 					}
 				}
-				$newrec .= "\n1 NOTE {$pgv_lang['family_private']}";
+				$newrec .= "\n1 NOTE ".i18n::translate('Details about this family are private. Family details will not be included.');
 				break;
 			case 'SOUR':
-				$newrec="0 @{$gid}@ SOUR\n1 TITL {$pgv_lang['private']}";
+				$newrec="0 @{$gid}@ SOUR\n1 TITL ".i18n::translate('Private');
 				break;
 			case 'OBJE':
-				$newrec="0 @{$gid}@ OBJE\n1 NOTE {$pgv_lang['media_private']}";
+				$newrec="0 @{$gid}@ OBJE\n1 NOTE ".i18n::translate('Details about this media are private. Media details will not be included.');
 				break;
 			default:
-				$newrec="0 @{$gid}@ {$type}\n1 NOTE {$pgv_lang['private']}";
+				$newrec="0 @{$gid}@ {$type}\n1 NOTE ".i18n::translate('Private');
 			}
 			return $newrec;
 		}

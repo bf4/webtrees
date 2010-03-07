@@ -77,7 +77,7 @@ class SourceControllerRoot extends BaseController {
 		$this->source->ged_id=PGV_GED_ID; // This record is from a file
 
 		if (!$this->source->canDisplayDetails()) {
-			print_header($pgv_lang["private"]." ".$pgv_lang["source_info"]);
+			print_header(i18n::translate('Private')." ".i18n::translate('Source Information'));
 			print_privacy_error($CONTACT_EMAIL);
 			print_footer();
 			exit;
@@ -166,10 +166,10 @@ class SourceControllerRoot extends BaseController {
 	function getPageTitle() {
 		global $pgv_lang;
 		if ($this->source) {
-			return $this->source->getFullName()." - ".$this->sid." - ".$pgv_lang["source_info"];
+			return $this->source->getFullName()." - ".$this->sid." - ".i18n::translate('Source Information');
 		}
 		else {
-			return $pgv_lang["unable_to_find_record"];
+			return i18n::translate('Unable to find record with ID');
 		}
 	}
 	/**
@@ -196,14 +196,14 @@ class SourceControllerRoot extends BaseController {
 		}
 
 		// edit source menu
-		$menu = new Menu($pgv_lang['edit_source']);
+		$menu = new Menu(i18n::translate('Edit Source'));
 		$menu->addOnclick('return edit_source(\''.$this->sid.'\');');
 		if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
 		// edit source / edit_source
-		$submenu = new Menu($pgv_lang['edit_source']);
+		$submenu = new Menu(i18n::translate('Edit Source'));
 		$submenu->addOnclick('return edit_source(\''.$this->sid.'\');');
 		if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
@@ -212,7 +212,7 @@ class SourceControllerRoot extends BaseController {
 
 		// edit source / edit_raw
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
-			$submenu = new Menu($pgv_lang['edit_raw']);
+			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->sid."');");
 			if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
@@ -221,8 +221,8 @@ class SourceControllerRoot extends BaseController {
 		}
 
 		// edit source / delete_source
-		$submenu = new Menu($pgv_lang['delete_source']);
-		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_source"]."')) return deletesource('".$this->sid."'); else return false;");
+		$submenu = new Menu(i18n::translate('Delete this Source'));
+		$submenu->addOnclick("if (confirm('".i18n::translate('Are you sure you want to delete this Source?')."')) return deletesource('".$this->sid."'); else return false;");
 		if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -238,7 +238,7 @@ class SourceControllerRoot extends BaseController {
 			// edit_sour / show/hide changes
 			if (!$this->show_changes)
 			{
-				$submenu = new Menu($pgv_lang['show_changes'], encode_url("source.php?sid={$this->sid}&show_changes=yes"));
+				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url("source.php?sid={$this->sid}&show_changes=yes"));
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -246,7 +246,7 @@ class SourceControllerRoot extends BaseController {
 			}
 			else
 			{
-				$submenu = new Menu($pgv_lang['hide_changes'], encode_url("source.php?sid={$this->sid}&show_changes=no"));
+				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url("source.php?sid={$this->sid}&show_changes=no"));
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -256,12 +256,12 @@ class SourceControllerRoot extends BaseController {
 			if (PGV_USER_CAN_ACCEPT)
 			{
 				// edit_source / accept_all
-				$submenu = new Menu($pgv_lang["undo_all"], encode_url("source.php?sid={$this->sid}&action=undo"));
+				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("source.php?sid={$this->sid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang['accept_all'], encode_url("source.php?sid={$this->sid}&action=accept"));
+				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("source.php?sid={$this->sid}&action=accept"));
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -288,7 +288,7 @@ class SourceControllerRoot extends BaseController {
 		}
 
 			// other menu
-		$menu = new Menu($pgv_lang['other']);
+		$menu = new Menu(i18n::translate('Other'));
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		if ($SHOW_GEDCOM_RECORD)
 		{
@@ -311,7 +311,7 @@ class SourceControllerRoot extends BaseController {
 		if ($SHOW_GEDCOM_RECORD)
 		{
 				// other / view_gedcom
-				$submenu = new Menu($pgv_lang['view_gedcom']);
+				$submenu = new Menu(i18n::translate('View GEDCOM Record'));
 				if ($this->show_changes && $this->userCanEdit())
 				{
 					$submenu->addLink("javascript:show_gedcom_record('new');");
@@ -327,7 +327,7 @@ class SourceControllerRoot extends BaseController {
 		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL)
 		{
 				// other / add_to_cart
-				$submenu = new Menu($pgv_lang['add_to_cart'], encode_url("clippings.php?action=add&id={$this->sid}&type=sour"));
+				$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url("clippings.php?action=add&id={$this->sid}&type=sour"));
 				if (!empty($PGV_IMAGES["clippings"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -336,7 +336,7 @@ class SourceControllerRoot extends BaseController {
 		if ($this->source->canDisplayDetails() && !empty($this->uname))
 		{
 				// other / add_to_my_favorites
-				$submenu = new Menu($pgv_lang['add_to_my_favorites'], encode_url("source.php?action=addfav&sid={$this->sid}&gid={$this->sid}"));
+				$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url("source.php?action=addfav&sid={$this->sid}&gid={$this->sid}"));
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);

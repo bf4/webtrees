@@ -170,7 +170,7 @@ if ($check == "cancel_upload") {
 	header("Location: editgedcoms.php");
 }
 
-if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]) {
+if ($cleanup_needed == "cleanup_needed" && $continue == i18n::translate('Continue')) {
 	require_once PGV_ROOT.'includes/functions/functions_tools.php';
 
 	$filechanged = false;
@@ -254,13 +254,13 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 
 // NOTE: Change header depending on action
 if ($action == "upload_form") {
-	print_header($pgv_lang["upload_gedcom"]);
+	print_header(i18n::translate('Upload GEDCOM'));
 } elseif ($action == "add_form") {
-	print_header($pgv_lang["add_gedcom"]);
+	print_header(i18n::translate('Add GEDCOM'));
 } elseif ($action == "add_new_form") {
-	print_header($pgv_lang["add_new_gedcom"]);
+	print_header(i18n::translate('Create a new GEDCOM'));
 } else {
-	print_header($pgv_lang["ged_import"]);
+	print_header(i18n::translate('Import'));
 }
 
 // NOTE: Print form header
@@ -274,9 +274,9 @@ if ($action == "add_form") {
 	echo "<tr><td class=\"topbottombar ", $TEXT_DIRECTION, "\" colspan=\"2\">";
 	echo "<a href=\"javascript: ";
 	if ($import_existing) {
-		echo $pgv_lang["ged_import"];
+		echo i18n::translate('Import');
 	} else {
-		echo $pgv_lang["add_gedcom"];
+		echo i18n::translate('Add GEDCOM');
 	}
 	echo "\" onclick=\"expand_layer('add-form');return false\"><img id=\"add-form_img\" src=\"", $PGV_IMAGE_DIR, "/";
 	if ($startimport != "true") {
@@ -288,15 +288,15 @@ if ($action == "add_form") {
 	print_help_link("add_gedcom", "qm", "add_gedcom");
 	echo "&nbsp;<a href=\"javascript: ";
 	if ($import_existing) {
-		echo $pgv_lang["ged_import"];
+		echo i18n::translate('Import');
 	} else {
-		echo $pgv_lang["add_gedcom"];
+		echo i18n::translate('Add GEDCOM');
 	}
 	print "\" onclick=\"expand_layer('add-form');return false\">";
 	if ($import_existing) {
-		echo $pgv_lang["ged_import"];
+		echo i18n::translate('Import');
 	} else {
-		echo $pgv_lang["add_gedcom"];
+		echo i18n::translate('Add GEDCOM');
 	}
 	echo "</a>";
 	echo "</td></tr>";
@@ -325,7 +325,7 @@ if ($action == "add_form") {
 	<tr>
 	<td class="descriptionbox width20 wrap">
 	<?php print_help_link("gedcom_path", "qm","gedcom_path");?>
-	<?php echo $pgv_lang["gedcom_file"]; ?></td>
+	<?php echo i18n::translate('GEDCOM File:'); ?></td>
 	<td class="optionbox"><input type="text" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME) && strlen($GEDFILENAME) > 4) echo get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path'); ?>"
 					size="60" dir ="ltr" tabindex="<?php $i++; echo $i?>"	<?php if ((!$no_upload && isset($GEDFILENAME)) && (empty($error))) echo "disabled "; ?> />
 	</td>
@@ -338,7 +338,7 @@ if ($action == "add_form") {
 // NOTE: Upload GEDCOM form
 elseif ($action == "upload_form") {
 	echo "<tr><td class=\"topbottombar ", $TEXT_DIRECTION, "\" colspan=\"2\">";
-	echo "<a href=\"javascript: ", $pgv_lang["upload_gedcom"], "\" onclick=\"expand_layer('upload_gedcom'); return false;\"><img id=\"upload_gedcom_img\" src=\"", $PGV_IMAGE_DIR, "/";
+	echo "<a href=\"javascript: ", i18n::translate('Upload GEDCOM'), "\" onclick=\"expand_layer('upload_gedcom'); return false;\"><img id=\"upload_gedcom_img\" src=\"", $PGV_IMAGE_DIR, "/";
 	if ($startimport != "true") {
 		echo $PGV_IMAGES["minus"]["other"];
 	} else {
@@ -346,7 +346,7 @@ elseif ($action == "upload_form") {
 	}
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	print_help_link("upload_gedcom", "qm", "upload_gedcom");
-	echo "&nbsp;<a href=\"javascript: ", $pgv_lang["upload_gedcom"], "\" onclick=\"expand_layer('upload_gedcom');return false\">", $pgv_lang["upload_gedcom"], "</a>";
+	echo "&nbsp;<a href=\"javascript: ", i18n::translate('Upload GEDCOM'), "\" onclick=\"expand_layer('upload_gedcom');return false\">", i18n::translate('Upload GEDCOM'), "</a>";
 	echo "</td></tr>";
 	echo "<tr><td class=\"optionbox wrap\">";
 	echo "<div id=\"upload_gedcom\" style=\"display: ";
@@ -370,7 +370,7 @@ if (!empty ($error)) {
 ?>
 <tr>
 <td class="descriptionbox width20 wrap">
-<?php echo $pgv_lang["gedcom_file"];?></td>
+<?php echo i18n::translate('GEDCOM File:');?></td>
 <td class="optionbox" dir="ltr">
 <?php
 
@@ -383,7 +383,7 @@ if (isset($GEDFILENAME)) {
 	if (!$filesize = ini_get('upload_max_filesize')) {
 		$filesize = "2M";
 	}
-	echo " ( ", $pgv_lang["max_upload_size"], " $filesize )";
+	echo " ( ", i18n::translate('Maximum upload size: '), " $filesize )";
 }
 ?>
 </td>
@@ -397,7 +397,7 @@ echo "</td></tr>";
 // NOTE: Add new GEDCOM form
 elseif ($action == "add_new_form") {
 	echo "<tr><td class=\"topbottombar ", $TEXT_DIRECTION, "\" colspan=\"2\">";
-	echo "<a href=\"javascript: ", $pgv_lang["add_new_gedcom"], "\" onclick=\"expand_layer('add_new_gedcom');return false\"><img id=\"add_new_gedcom_img\" src=\"", $PGV_IMAGE_DIR, "/";
+	echo "<a href=\"javascript: ", i18n::translate('Create a new GEDCOM'), "\" onclick=\"expand_layer('add_new_gedcom');return false\"><img id=\"add_new_gedcom_img\" src=\"", $PGV_IMAGE_DIR, "/";
 	if ($startimport != "true") {
 		echo $PGV_IMAGES["minus"]["other"];
 	} else {
@@ -405,7 +405,7 @@ elseif ($action == "add_new_form") {
 	}
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	print_help_link("add_gedcom_instructions", "qm", "add_new_gedcom");
-	echo "&nbsp;<a href=\"javascript: ", $pgv_lang["add_new_gedcom"], "\" onclick=\"expand_layer('add_new_gedcom');return false\">", $pgv_lang["add_new_gedcom"], "</a>";
+	echo "&nbsp;<a href=\"javascript: ", i18n::translate('Create a new GEDCOM'), "\" onclick=\"expand_layer('add_new_gedcom');return false\">", i18n::translate('Create a new GEDCOM'), "</a>";
 	echo "</td></tr>";
 	echo "<tr><td class=\"optionbox\">";
 	echo "<div id=\"add-form\" style=\"display: ";
@@ -429,7 +429,7 @@ if (!empty ($error)) {
 ?>
 <tr>
 <td class="descriptionbox width20 wrap">
-<?php echo $pgv_lang["gedcom_file"];?>
+<?php echo i18n::translate('GEDCOM File:');?>
 </td>
 <td class="optionbox"><input name="GEDFILENAME" type="text" value="<?php if (isset($GEDFILENAME)) echo $path, $GEDFILENAME; ?>" size="60" <?php if (isset($GEDFILENAME) && !$no_upload) echo "disabled"; ?> /></td>
 </tr>
@@ -451,14 +451,14 @@ if ($verify == "verify_gedcom") {
 	if ($imported || (!empty($bakfile) && file_exists($bakfile))) {
 		// NOTE: If GEDCOM exists show warning
 		print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-		print "<a href=\"javascript: ".$pgv_lang["verify_gedcom"]."\" onclick=\"expand_layer('verify_gedcom');return false\"><img id=\"verify_gedcom_img\" src=\"".$PGV_IMAGE_DIR."/";
+		print "<a href=\"javascript: ".i18n::translate('Verify GEDCOM')."\" onclick=\"expand_layer('verify_gedcom');return false\"><img id=\"verify_gedcom_img\" src=\"".$PGV_IMAGE_DIR."/";
 		if ($startimport != "true")
 		print $PGV_IMAGES["minus"]["other"];
 		else
 		print $PGV_IMAGES["plus"]["other"];
 		print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 		print_help_link("verify_gedcom", "qm", "verify_gedcom");
-		print "&nbsp;<a href=\"javascript: ".$pgv_lang["verify_gedcom"]."\" onclick=\"expand_layer('verify_gedcom');return false\">".$pgv_lang["verify_gedcom"]."</a>";
+		print "&nbsp;<a href=\"javascript: ".i18n::translate('Verify GEDCOM')."\" onclick=\"expand_layer('verify_gedcom');return false\">".i18n::translate('Verify GEDCOM')."</a>";
 		print "</td></tr>";
 		print "<tr><td class=\"optionbox\" colspan=\"2\">";
 		print "<div id=\"verify_gedcom\" style=\"display: ";
@@ -480,11 +480,11 @@ if ($verify == "verify_gedcom") {
 		<?php
 
 		if ($imported) {
-			print "<span class=error>".$pgv_lang["dataset_exists"]."</span><br /><br />";
+			print "<span class=error>".i18n::translate('A GEDCOM with this file name has already been imported into the database.')."</span><br /><br />";
 			if (!$SYNC_GEDCOM_FILE)
-				print "<span class=error>".$pgv_lang["unsync_warning"]."</span><br /><br />";
+				print "<span class=error>".i18n::translate('This GEDCOM file is <em>not</em> synchronized with the database.  It may not contain the latest version of your data.  To re-import from the database rather than the file, you should download and re-upload.')."</span><br /><br />";
 		}
-		if ($bakfile != "") print $pgv_lang["verify_upload_instructions"]."</td></tr>";
+		if ($bakfile != "") print i18n::translate('A GEDCOM file with the same name has been found. If you choose to continue, the old GEDCOM file will be replaced with the file that you uploaded and the Import process will begin again.  If you choose to cancel, the old GEDCOM will remain unchanged.')."</td></tr>";
 		// NOTE: Check for existing changes
 		foreach ($pgv_changes as $cid => $changes) {
 			if ($changes[0]["gedcom"] == $GEDFILENAME) {
@@ -493,27 +493,27 @@ if ($verify == "verify_gedcom") {
 				break;
 			}
 		}
-		print "<tr><td class=\"descriptionbox width20 wrap\">".$pgv_lang["empty_dataset"]."</td><td class=\"optionbox vmiddle\">\n";
+		print "<tr><td class=\"descriptionbox width20 wrap\">".i18n::translate('Do you want to erase the old data and replace it with this new data?')."</td><td class=\"optionbox vmiddle\">\n";
 		print "<select name=\"override\">";
 		print "<option value=\"yes\" ";
 		if ($override == "yes")
 			print "selected=\"selected\"";
-		print ">".$pgv_lang["yes"]."</option>";
+		print ">".i18n::translate('Yes')."</option>";
 		print "<option value=\"no\" ";
 		if ($override != "yes")
 			print "selected=\"selected\"";
-		print ">".$pgv_lang["no"]."</option>";
+		print ">".i18n::translate('No')."</option>";
 		print "</select></td></tr>";
 		//-- check if there are media in the DB already
 		if (array_key_exists('OBJE', $all_record_counts)) {
 			?>
 			<tr>
 			<td class="descriptionbox wrap width20">
-			<?php print_help_link("keep_media", "qm", "keep_media"); print $pgv_lang["keep_media"];?></td>
+			<?php print_help_link("keep_media", "qm", "keep_media"); print i18n::translate('Keep media links');?></td>
 			<td class="optionbox">
 			<select name="keepmedia">
-			<option value="yes" <?php if ($keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
-			<option value="no" <?php if (!$keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+			<option value="yes" <?php if ($keepmedia) print "selected=\"selected\"";?>><?php print i18n::translate('Yes'); ?></option>
+			<option value="no" <?php if (!$keepmedia) print "selected=\"selected\"";?>><?php print i18n::translate('No'); ?></option>
 			</select>
 			</td>
 			</tr>
@@ -526,14 +526,14 @@ if ($verify == "verify_gedcom") {
 
 if ($verify == "validate_form") {
 	print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-	print "<a href=\"javascript: ".$pgv_lang["validate_gedcom"]."\" onclick=\"expand_layer('validate_gedcom');return false\"><img id=\"validate_gedcom_img\" src=\"".$PGV_IMAGE_DIR."/";
+	print "<a href=\"javascript: ".i18n::translate('Validate GEDCOM')."\" onclick=\"expand_layer('validate_gedcom');return false\"><img id=\"validate_gedcom_img\" src=\"".$PGV_IMAGE_DIR."/";
 	if ($startimport != "true")
 	print $PGV_IMAGES["minus"]["other"];
 	else
 	print $PGV_IMAGES["plus"]["other"];
 	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	print_help_link("validate_gedcom", "qm", "validate_gedcom");
-	print "&nbsp;<a href=\"javascript: ".$pgv_lang["validate_gedcom"]."\" onclick=\"expand_layer('validate_gedcom');return false\">".$pgv_lang["validate_gedcom"]."</a>";
+	print "&nbsp;<a href=\"javascript: ".i18n::translate('Validate GEDCOM')."\" onclick=\"expand_layer('validate_gedcom');return false\">".i18n::translate('Validate GEDCOM')."</a>";
 	print "</td></tr>";
 	print "<tr><td class=\"optionbox\">";
 	print "<div id=\"validate_gedcom\" style=\"display: ";
@@ -543,7 +543,7 @@ if ($verify == "validate_form") {
 	print "none ";
 	print "\">";
 	print "\n<table class=\"facts_table\">";
-	print "<tr><td class=\"descriptionbox\" colspan=\"2\">".$pgv_lang["performing_validation"]."<br />";
+	print "<tr><td class=\"descriptionbox\" colspan=\"2\">".i18n::translate('Performing GEDCOM validation...')."<br />";
 	if (!empty ($error))
 	print "<span class=\"error\">$error</span>\n";
 
@@ -580,7 +580,7 @@ if ($verify == "validate_form") {
 
 		$cleanup_needed = false;
 		if (!$l_datecleanup && !$l_isansi && !$l_BOMcleanup && !$l_headcleanup && !$l_macfilecleanup && !$l_placecleanup && !$l_lineendingscleanup) {
-			print $pgv_lang["valid_gedcom"];
+			print i18n::translate('Valid GEDCOM detected. No cleanup required.');
 			print "</td></tr>";
 			$import = true;
 		} else {
@@ -594,28 +594,28 @@ if ($verify == "validate_form") {
 			if ($l_BOMcleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 				print_help_link("BOM_detected", "qm", "BOM_detected");
-				print "<span class=\"error\">".$pgv_lang["BOM_detected"]."</span>\n";
+				print "<span class=\"error\">".i18n::translate('A Byte Order Mark (BOM) was detected at the beginning of the file. On cleanup, this special code will be removed.')."</span>\n";
 				print "</td></tr>";
 			}
 			// NOTE: Check for head cleanup
 			if ($l_headcleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 				print_help_link("invalid_header", "qm", "invalid_header");
-				print "<span class=\"error\">".$pgv_lang["invalid_header"]."</span>\n";
+				print "<span class=\"error\">".i18n::translate('Detected lines before the GEDCOM header <b>0&nbsp;HEAD</b>.  On cleanup, these lines will be removed.')."</span>\n";
 				print "</td></tr>";
 			}
 			// NOTE: Check for mac file cleanup
 			if ($l_macfilecleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 				print_help_link("macfile_detected", "qm", "macfile_detected");
-				print "<span class=\"error\">".$pgv_lang["macfile_detected"]."</span>\n";
+				print "<span class=\"error\">".i18n::translate('Macintosh file detected.  On cleanup your file will be converted to a DOS file.')."</span>\n";
 				print "</td></tr>";
 			}
 			// NOTE: Check for line endings cleanup
 			if ($l_lineendingscleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 				print_help_link("empty_lines_detected", "qm", "empty_lines_detected");
-				print "<span class=\"error\">".$pgv_lang["empty_lines_detected"]."</span>\n";
+				print "<span class=\"error\">".i18n::translate('Empty lines were detected in your GEDCOM file.	On cleanup, these empty lines will be removed.')."</span>\n";
 				print "</td></tr>";
 			}
 			// NOTE: Check for place cleanup
@@ -623,34 +623,34 @@ if ($verify == "validate_form") {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 				print "\n<table class=\"facts_table\">";
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print "<span class=\"error\">".$pgv_lang["place_cleanup_detected"]."</span>\n";
+				print "<span class=\"error\">".i18n::translate('Invalid place encodings were detected.  These errors should be fixed.')."</span>\n";
 				print "</td></tr>";
 				print "<tr><td class=\"descriptionbox wrap width20\">";
 				print_help_link("cleanup_places", "qm", "cleanup_places");
-				print $pgv_lang["cleanup_places"];
+				print i18n::translate('Cleanup Places');
 				print "</td><td class=\"optionbox\" colspan=\"2\"><select name=\"cleanup_places\">\n";
-				print "<option value=\"YES\" selected=\"selected\">".$pgv_lang["yes"]."</option>\n<option value=\"NO\">".$pgv_lang["no"]."</option>\n</select>";
+				print "<option value=\"YES\" selected=\"selected\">".i18n::translate('Yes')."</option>\n<option value=\"NO\">".i18n::translate('No')."</option>\n</select>";
 				print "</td></tr>";
-				print "</td></tr><tr><td class=\"optionbox\" colspan=\"2\">".$pgv_lang["example_place"]."<br />".PrintReady(nl2br($placesample[0]));
+				print "</td></tr><tr><td class=\"optionbox\" colspan=\"2\">".i18n::translate('Example of invalid place from your GEDCOM:')."<br />".PrintReady(nl2br($placesample[0]));
 				print "</table>\n";
 				print "</td></tr>";
 			}
 			// NOTE: Check for date cleanup
 			if ($l_datecleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print "<span class=\"error\">".$pgv_lang["invalid_dates"]."</span>\n";
+				print "<span class=\"error\">".i18n::translate('Detected invalid date formats, on cleanup these will be changed to format of DD MMM YYYY (eg. 1 JAN 2004).')."</span>\n";
 				print "\n<table class=\"facts_table\">";
 				print "<tr><td class=\"descriptionbox width20\">";
 				print_help_link("detected_date", "qm");
-				print $pgv_lang["date_format"];
+				print i18n::translate('Date format');
 
 				print "</td><td class=\"optionbox\" colspan=\"2\">";
 				if (isset ($datesample["choose"])) {
 					print "<select name=\"datetype\">\n";
-					print "<option value=\"1\">".$pgv_lang["day_before_month"]."</option>\n<option value=\"2\">".$pgv_lang["month_before_day"]."</option>\n</select>";
+					print "<option value=\"1\">".i18n::translate('Day before Month (DD MM YYYY)')."</option>\n<option value=\"2\">".i18n::translate('Month before Day (MM DD YYYY)')."</option>\n</select>";
 				} else
 				print "<input type=\"hidden\" name=\"datetype\" value=\"3\" />";
-				print "</td></tr><tr><td class=\"optionbox\" colspan=\"2\">".$pgv_lang["example_date"]."<br />".$datesample[0];
+				print "</td></tr><tr><td class=\"optionbox\" colspan=\"2\">".i18n::translate('Example of invalid date from your GEDCOM:')."<br />".$datesample[0];
 				print "</td></tr>";
 				print "</table>\n";
 				print "</td></tr>";
@@ -658,20 +658,20 @@ if ($verify == "validate_form") {
 			// NOTE: Check for ansi encoding
 			if ($l_isansi) {
 				print "<tr><td class=\"optionbox\" colspan=\"2\">";
-				print "<span class=\"error\">".$pgv_lang["ansi_encoding_detected"]."</span>\n";
+				print "<span class=\"error\">".i18n::translate('ANSI file encoding detected.	PhpGedView works best with files encoded in UTF-8.')."</span>\n";
 				print "\n<table class=\"facts_table\">";
 				print "<tr><td class=\"descriptionbox wrap width20\">";
 				print_help_link("detected_ansi2utf", "qm", "ansi_to_utf8");
-				print $pgv_lang["ansi_to_utf8"];
+				print i18n::translate('Convert this ANSI encoded GEDCOM to UTF-8?');
 				print "</td><td class=\"optionbox\"><select name=\"utf8convert\">\n";
-				print "<option value=\"YES\" selected=\"selected\">".$pgv_lang["yes"]."</option>\n";
-				print "<option value=\"NO\">".$pgv_lang["no"]."</option>\n</select>";
+				print "<option value=\"YES\" selected=\"selected\">".i18n::translate('Yes')."</option>\n";
+				print "<option value=\"NO\">".i18n::translate('No')."</option>\n</select>";
 				print "</td></tr>";
 				print "</table>\n";
 			}
 		}
 	} else if (!$cleanup_needed) {
-		print $pgv_lang["valid_gedcom"];
+		print i18n::translate('Valid GEDCOM detected. No cleanup required.');
 		$import = true;
 	} else $import = true;
 	?>
@@ -692,14 +692,14 @@ if ($verify == "validate_form") {
 if ($import == true) {
 	// NOTE: Additional import options
 	print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-	print "<a href=\"javascript: ".$pgv_lang["import_options"]."\" onclick=\"expand_layer('import_options');return false\"><img id=\"import_options_img\" src=\"".$PGV_IMAGE_DIR."/";
+	print "<a href=\"javascript: ".i18n::translate('Import Options')."\" onclick=\"expand_layer('import_options');return false\"><img id=\"import_options_img\" src=\"".$PGV_IMAGE_DIR."/";
 	if ($startimport != "true")
 	print $PGV_IMAGES["minus"]["other"];
 	else
 	print $PGV_IMAGES["plus"]["other"];
 	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
 	print_help_link("import_options", "qm", "import_options");
-	print "&nbsp;<a href=\"javascript: ".$pgv_lang["import_options"]."\" onclick=\"expand_layer('import_options');return false\">".$pgv_lang["import_options"]."</a>";
+	print "&nbsp;<a href=\"javascript: ".i18n::translate('Import Options')."\" onclick=\"expand_layer('import_options');return false\">".i18n::translate('Import Options')."</a>";
 	print "</td></tr>";
 	print "<tr><td class=\"optionbox\" colspan=\"2\">";
 	print "<div id=\"import_options\" style=\"display: ";
@@ -714,7 +714,7 @@ if ($import == true) {
 	// TODO: Write help text
 	print "<tr><td class=\"descriptionbox width20 wrap\">";
 	print_help_link("time_limit", "qm", "time_limit");
-	print $pgv_lang["time_limit"];
+	print i18n::translate('Time limit:');
 	print "</td><td class=\"optionbox\"><input type=\"text\" name=\"timelimit\" value=\"".$timelimit."\" size=\"5\"";
 	if ($startimport == "true")
 	print " disabled ";
@@ -725,25 +725,25 @@ if ($import == true) {
 	// TODO: Write help text
 	print "<tr><td class=\"descriptionbox width20 wrap\">";
 	print_help_link("autoContinue", "qm", "autoContinue");
-	print $pgv_lang["autoContinue"];
+	print i18n::translate('Automatically press «Continue» button');
 	print "</td><td class=\"optionbox\"><select name=\"autoContinue\">\n";
-	print "<option value=\"YES\" selected=\"selected\">".$pgv_lang["yes"]."</option>\n";
-	print "<option value=\"NO\">".$pgv_lang["no"]."</option>\n</select>";
+	print "<option value=\"YES\" selected=\"selected\">".i18n::translate('Yes')."</option>\n";
+	print "<option value=\"NO\">".i18n::translate('No')."</option>\n</select>";
 	print "</td></tr>";
 
 	// NOTE: change XREF to RIN, REFN, or Don't change
 	print "<tr><td class=\"descriptionbox wrap\">";
 	print_help_link("change_indi2id", "qm", "change_id");
-	print $pgv_lang["change_id"];
+	print i18n::translate('Change Individual ID to:');
 	print "</td><td class=\"optionbox\">";
 	if ($startimport == "true") {
 		if ($xreftype == "NA")
-		print $pgv_lang["do_not_change"];
+		print i18n::translate('Do not change');
 		else
 		print $xreftype;
 	} else {
 		print "<select name=\"xreftype\">\n";
-		print "<option value=\"NA\">".$pgv_lang["do_not_change"]."</option>\n<option value=\"RIN\">RIN</option>\n";
+		print "<option value=\"NA\">".i18n::translate('Do not change')."</option>\n<option value=\"RIN\">RIN</option>\n";
 		print "<option value=\"REFN\">REFN</option>\n</select>";
 	}
 	print "</td></tr>\n";
@@ -792,17 +792,17 @@ if ($startimport == "true") {
 		<!--
 		function complete_progress(time, exectext, go_pedi, go_welc) {
 			progress = document.getElementById("progress_header");
-			if (progress) progress.innerHTML = '<span class="error"><b><?php print $pgv_lang["import_complete"]; ?></b></span><br />'+exectext+' '+time+' <?php print $pgv_lang["sec"]; ?>';
+			if (progress) progress.innerHTML = '<span class="error"><b><?php print i18n::translate('Import complete'); ?></b></span><br />'+exectext+' '+time+' <?php print i18n::translate('sec.'); ?>';
 			progress = document.getElementById("link1");
 			if (progress) progress.innerHTML = '<a href="pedigree.php?ged=<?php print encode_url(str_replace("'", "\'", $ged)); ?>">'+go_pedi+'</a>';
 			progress = document.getElementById("link2");
 			if (progress) progress.innerHTML = '<a href="index.php?ctype=gedcom&ged=<?php print encode_url(str_replace("'", "\'", $ged)); ?>">'+go_welc+'</a>';
 			progress = document.getElementById("link3");
-			if (progress) progress.innerHTML = '<a href="editgedcoms.php"><?php print $pgv_lang["manage_gedcoms"]; ?></a>';
+			if (progress) progress.innerHTML = '<a href="editgedcoms.php"><?php print i18n::translate('Manage GEDCOMs and edit Privacy'); ?></a>';
 		}
 		function wait_progress() {
 			progress = document.getElementById("progress_header");
-			if (progress) progress.innerHTML = '<?php print $pgv_lang["please_be_patient"]; ?>';
+			if (progress) progress.innerHTML = '<?php print i18n::translate('Please be patient'); ?>';
 		}
 
 		var FILE_SIZE = <?php print $FILE_SIZE; ?>;
@@ -828,7 +828,7 @@ if ($startimport == "true") {
 		<?php
 		print "\n<table style=\"width: 800px;\"><tr><td>";
 		print "<div id=\"progress_header\" class=\"person_box\" style=\"width: 350px; margin: 10px; text-align: center;\">\n";
-		print "<b>".$pgv_lang["import_progress"]."</b>";
+		print "<b>".i18n::translate('Import Progress...')."</b>";
 		print "<div style=\"left: 10px; right: 10px; width: 300px; height: 20px; border: inset #CCCCCC 3px; background-color: #000000;\">\n";
 		print "<div id=\"progress_div\" class=\"person_box\" style=\"width: 1%; height: 18px; text-align: center; overflow: hidden;\">1%</div>\n";
 		print "</div>\n";
@@ -839,9 +839,9 @@ if ($startimport == "true") {
 		print "\n<table style=\"width: 800px;\"><tr><td>";
 		print "<div id=\"progress_header\" class=\"person_box\" style=\"width: 350px; margin: 10px; text-align: center;\">\n";
 		if ($timelimit == 0)
-		print "<b>".$pgv_lang["time_limit"]." ".$pgv_lang["none"]."</b>";
+		print "<b>".i18n::translate('Time limit:')." ".i18n::translate('None')."</b>";
 		else
-		print "<b>".$pgv_lang["time_limit"]." ".$timelimit." ".$pgv_lang["sec"]."</b>";
+		print "<b>".i18n::translate('Time limit:')." ".$timelimit." ".i18n::translate('sec.')."</b>";
 		print "<div style=\"left: 10px; right: 10px; width: 300px; height: 20px; border: inset #CCCCCC 3px; background-color: #000000;\">\n";
 		print "<div id=\"time_div\" class=\"person_box\" style=\"width: 1%; height: 18px; text-align: center; overflow: hidden;\">1%</div>\n";
 		print "</div>\n";
@@ -901,11 +901,11 @@ if ($stage == 1) {
 
 	$FILE_SIZE = filesize($GEDCOM_FILE);
 	print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-	print $pgv_lang["reading_file"]." ".$GEDCOM_FILE;
+	print i18n::translate('Reading GEDCOM file')." ".$GEDCOM_FILE;
 	print "</td></tr>";
 	print "</table>";
 
-	print $pgv_lang['progress_bars_info'];
+	print i18n::translate('The status bars below will let you know how the Import is progressing.  If the time limit runs out the Import will be stopped and you will be asked to press a <b>Continue</b> button.  If you don\'t see the <b>Continue</b> button, you must restart the Import with a smaller time limit value.');
 	//print "<tr><td class=\"optionbox\">";
 	setup_progress_bar($FILE_SIZE);
 	//print "</td></tr>";
@@ -978,7 +978,7 @@ if ($stage == 1) {
 				echo '<pre>', htmlspecialchars($indirec), '</pre>';
 				// Don't let the error message disappear off the screen.
 				$autoContinue=false;
-				$record_type=$pgv_lang['invalid'];
+				$record_type=i18n::translate('invalid');
 			}
 
 			// Generate import statistics
@@ -1037,7 +1037,7 @@ if ($stage == 1) {
 					print "\n<table class=\"facts_table\">";
 					?>
 					<tr>
-						<td class="descriptionbox"><?php print $pgv_lang["import_time_exceeded"]; ?></td>
+						<td class="descriptionbox"><?php print i18n::translate('The execution time limit was reached.  Click the Continue button below to resume importing the GEDCOM file.'); ?></td>
 					</tr>
 					<tr>
 						<td class="topbottombar"><input type="hidden" name="ged"
@@ -1053,7 +1053,7 @@ if ($stage == 1) {
 							type="hidden" name="import" value="<?php print $import; ?>" /> <input
 							type="hidden" name="FILE" value="<?php print $FILE; ?>" /> <input
 							type="submit" name="continue"
-							value="<?php print $pgv_lang["del_proceed"]; ?>" /></td>
+							value="<?php print i18n::translate('Continue'); ?>" /></td>
 					</tr>
 					</table>
 					<?php if ($autoContinue=="YES") { ?>
@@ -1101,9 +1101,9 @@ if ($stage == 1) {
 	$newtime = time();
 	$exectime = $newtime - $oldtime;
 	$importtime = $importtime + $exectime;
-	$exec_text = $pgv_lang["exec_time"];
-	$go_pedi = $pgv_lang["click_here_to_go_to_pedigree_tree"];
-	$go_welc = $pgv_lang["welcome_page"];
+	$exec_text = i18n::translate('Execution time:');
+	$go_pedi = i18n::translate('Click here to go to the Pedigree tree.');
+	$go_welc = i18n::translate('Welcome page');
 	if ($LANGUAGE == "french" || $LANGUAGE == "italian") {
 		echo PGV_JS_START, "complete_progress($importtime, \"$exec_text\", \"$go_pedi\", \"$go_welc\");", PGV_JS_END;
 	} else {
@@ -1113,11 +1113,11 @@ if ($stage == 1) {
 
 	// Import Statistics
 	$show_table1  = "<table class=\"list_table\"><tr>";
-	$show_table1 .= "<tr><td class=\"topbottombar\" colspan=\"4\">".$pgv_lang["ged_import"]."</td></tr>";
-	$show_table1 .= "<td class=\"descriptionbox\">".$pgv_lang["exec_time"]."</td>";
-	$show_table1 .= "<td class=\"descriptionbox\">".$pgv_lang["bytes_read"]."</td>";
-	$show_table1 .= "<td class=\"descriptionbox\">".$pgv_lang["found_record"]."</td>";
-	$show_table1 .= "<td class=\"descriptionbox\">".$pgv_lang["type"]."</td></tr>";
+	$show_table1 .= "<tr><td class=\"topbottombar\" colspan=\"4\">".i18n::translate('Import')."</td></tr>";
+	$show_table1 .= "<td class=\"descriptionbox\">".i18n::translate('Execution time:')."</td>";
+	$show_table1 .= "<td class=\"descriptionbox\">".i18n::translate('Bytes read:')."</td>";
+	$show_table1 .= "<td class=\"descriptionbox\">".i18n::translate('Found record')."</td>";
+	$show_table1 .= "<td class=\"descriptionbox\">".i18n::translate('Type')."</td></tr>";
 	$total_seconds=0;
 	$total_bytes  =0;
 	$total_records=0;
@@ -1125,17 +1125,17 @@ if ($stage == 1) {
 		$total_seconds+=$stats['seconds'];
 		$total_bytes  +=$stats['bytes'];
 		$total_records+=$stats['records'];
-		$show_table1 .= "<tr><td class=\"optionbox indent\">".sprintf("%.2f %s", $stats['seconds'], $pgv_lang['sec'])."</td>";
+		$show_table1 .= "<tr><td class=\"optionbox indent\">".sprintf("%.2f %s", $stats['seconds'], i18n::translate('sec.'))."</td>";
 		$show_table1 .= "<td class=\"optionbox indent\">".$stats['bytes']."</td>";
 		$show_table1 .= "<td class=\"optionbox indent\">".$stats['records']."</td>";
 		$show_table1 .= "<td class=\"optionbox\">".$type."</td></tr>";
 	}
-	$show_table1 .= "<tr><td class=\"optionbox indent\">".sprintf("%.2f %s", $total_seconds, $pgv_lang['sec'])."</td>";
+	$show_table1 .= "<tr><td class=\"optionbox indent\">".sprintf("%.2f %s", $total_seconds, i18n::translate('sec.'))."</td>";
 	$show_table1 .= "<td class=\"optionbox indent\">".$total_bytes.PGV_JS_START."update_progress($total_bytes, $exectime);".PGV_JS_END;
 	$show_table1 .= "<td class=\"optionbox indent\">". $total_records."</td>";
 	$show_table1 .= "<td class=\"optionbox\">&nbsp;</td></tr>";
 	$show_table1 .= "</table>";
-	echo "<tr><td class=\"topbottombar $TEXT_DIRECTION\">", $pgv_lang["import_statistics"], "</td></tr>";
+	echo "<tr><td class=\"topbottombar $TEXT_DIRECTION\">", i18n::translate('Import Statistics'), "</td></tr>";
 	print "<tr><td class=\"optionbox\">";
 	print "<table cellspacing=\"20px\"><tr><td class=\"optionbox\" style=\"vertical-align: top;\">";
 	if (isset ($skip_table)) {
@@ -1163,9 +1163,9 @@ if ($stage == 1) {
 	<td class="topbottombar" colspan="2"><?php
 
 	if ($startimport != "true")
-	print "<input type=\"submit\" name=\"continue\" value=\"".$pgv_lang["del_proceed"]."\" />&nbsp;";
+	print "<input type=\"submit\" name=\"continue\" value=\"".i18n::translate('Continue')."\" />&nbsp;";
 	if ($verify && $startimport != "true")
-	print "<input type=\"button\" name=\"cancel\" value=\"".$pgv_lang["cancel"]."\" onclick=\"document.configform.override.value='no'; document.configform.no_upload.value='cancel_upload'; document.configform.submit(); \" />";
+	print "<input type=\"button\" name=\"cancel\" value=\"".i18n::translate('Cancel')."\" onclick=\"document.configform.override.value='no'; document.configform.no_upload.value='cancel_upload'; document.configform.submit(); \" />";
 	?></td>
 </tr>
 </table>

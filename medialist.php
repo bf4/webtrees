@@ -50,11 +50,11 @@ if ($_SESSION['medialist_ged'] != PGV_GEDCOM) {
 if (!isset($_SESSION['medialist'])) $search = "yes";
 
 $currentdironly = (isset($_REQUEST['subdirs']) && $_REQUEST['subdirs']=="on") ? false : true;
-print_header($pgv_lang["multi_title"]);
+print_header(i18n::translate('MultiMedia Objects'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
-echo "\n\t<div class=\"center\"><h2>", $pgv_lang["multi_title"], "</h2></div>\n\t";
+echo "\n\t<div class=\"center\"><h2>", i18n::translate('MultiMedia Objects'), "</h2></div>\n\t";
 
 // Get Javascript variables from lb_config.php ---------------------------
 if (PGV_USE_LIGHTBOX) {
@@ -121,14 +121,14 @@ if ($search == "yes") {
 	?>
 
 	<!-- // NOTE: Row 1, left: Sort sequence -->
-	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("sortby", "qm", "sortby"); ?><?php echo $pgv_lang["sortby"]; ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("sortby", "qm", "sortby"); ?><?php echo i18n::translate('Sequence'); ?></td>
 	<td class="optionbox wrap"><select name="sortby">
 		<option value="title" <?php if ($sortby=='title') echo "selected=\"selected\"";?>><?php echo i18n::translate('TITL'); ?></option>
 		<option value="file" <?php if ($sortby=='file') echo "selected=\"selected\"";?>><?php echo i18n::translate('FILE'); ?></option>
 	</select></td>
 
 	<!-- // NOTE: Row 1, right: Objects per page -->
-	<td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php echo $pgv_lang["per_page"]; ?></td>
+	<td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php echo i18n::translate('Media objects per page'); ?></td>
 	<td class="optionbox wrap width25">
 		<select name="max">
 		<?php
@@ -142,7 +142,7 @@ if ($search == "yes") {
 	</td></tr>
 
 	<!-- // NOTE: Row 2 left: Filter options -->
-	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("simple_filter", "qm", "filter"); echo $pgv_lang["filter"];?></td>
+	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("simple_filter", "qm", "filter"); echo i18n::translate('Filter');?></td>
 	<td class="optionbox wrap width25">
 		<?php
 		// Directory pick list
@@ -157,7 +157,7 @@ if ($search == "yes") {
 				echo "<option value=\"", $f, "\"";
 				if ($folder==$f) echo " selected=\"selected\"";
 				echo ">";
-				if ($f=="ALL") echo $pgv_lang["all"];
+				if ($f=="ALL") echo i18n::translate('ALL');
 				else echo $f;
 				echo "</option>\n";
 			}
@@ -166,12 +166,12 @@ if ($search == "yes") {
 		// Text field for filter and "submit" button
 		?>
 		<input id="filter" name="filter" value="<?php echo PrintReady($filter); ?>"/><br />
-		<input type="submit" value="<?php echo $pgv_lang["apply_filter"];?>" />
+		<input type="submit" value="<?php echo i18n::translate('Apply filter');?>" />
 	</td>
 
 	<!-- // NOTE: Row 2 right: Recursive directory list -->
 	<?php if ($MEDIA_DIRECTORY_LEVELS > 0) { ?>
-	<td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("medialist_recursive", "qm", "medialist_recursive"); echo $pgv_lang["medialist_recursive"];?></td>
+	<td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("medialist_recursive", "qm", "medialist_recursive"); echo i18n::translate('List files in subdirectories');?></td>
 	<td class="optionbox wrap width25">
 		<input type="checkbox" id="subdirs" name="subdirs" <?php if (!$currentdironly) { ?>checked="checked"<?php } ?> />
 	</td></tr>
@@ -213,7 +213,7 @@ if (isset($_GET["max"])) $max = $_GET["max"];
 $count = $max;
 if ($start+$count > $ct) $count = $ct-$start;
 
-echo "\n\t<div align=\"center\">", $pgv_lang["media_found"], " ", $ct, " <br /><br />";
+echo "\n\t<div align=\"center\">", i18n::translate('Media Objects found'), " ", $ct, " <br /><br />";
 if ($ct>0) {
 
 	$currentPage = ((int) ($start / $max)) + 1;
@@ -331,15 +331,15 @@ if ($ct>0) {
 
 					// ---------- Edit Media --------------------
 					echo "<td class=\"width33 wrap center font9\" valign=\"top\">";
-					echo "<a href=\"javascript:;\" title=\"" . $pgv_lang["lb_edit_media"] . "\" onclick=\" return window.open('addmedia.php?action=editmedia&pid={$media['XREF']}&linktoid=', '_blank', 'top=50, left=50, width=600, height=600, resizable=1, scrollbars=1');\">";
+					echo "<a href=\"javascript:;\" title=\"" . i18n::translate('Edit this Media Item\'s Details') . "\" onclick=\" return window.open('addmedia.php?action=editmedia&pid={$media['XREF']}&linktoid=', '_blank', 'top=50, left=50, width=600, height=600, resizable=1, scrollbars=1');\">";
 					if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
-						echo "<img src=\"modules/lightbox/images/image_edit.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_edit_media"] . "\" />&nbsp;&nbsp;&nbsp;" ;
+						echo "<img src=\"modules/lightbox/images/image_edit.gif\" alt=\"\" class=\"icon\" title=\"" . i18n::translate('Edit this Media Item\'s Details') . "\" />&nbsp;&nbsp;&nbsp;" ;
 					}
 					if ($LB_ML_THUMB_LINKS == "both") {
 						echo "<br />";
 					}
 					if ($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "text") {
-						echo $pgv_lang["lb_edit_details"] ;
+						echo i18n::translate('Edit Details') ;
 					}
 					echo "</a>" . "\n";
 					echo "</td>";
@@ -351,15 +351,17 @@ if ($ct>0) {
 
 					// ---------- View Media Details (mediaviewer) --------------------
 					echo "<td class=\"width33 wrap center font9\" valign=\"top\">";
-					echo "<a href=\"mediaviewer.php?mid=" . $media["XREF"] . "\" title=\"" . $pgv_lang["lb_view_media"] . "\">";
+					echo "<a href=\"mediaviewer.php?mid=" . $media["XREF"] . "\" title=\"" . i18n::translate('View this Media Item\'s Details 
+Plus other Media Options - MediaViewer page') . "\">";
 					if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
-						echo "&nbsp;&nbsp;&nbsp;<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" />";
+						echo "&nbsp;&nbsp;&nbsp;<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . i18n::translate('View this Media Item\'s Details 
+Plus other Media Options - MediaViewer page') . "\" />";
 					}
 					if ($LB_ML_THUMB_LINKS == "both") {
 						echo "<br />";
 					}
 					if ($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "text") {
-						echo $pgv_lang["lb_view_details"] ;
+						echo i18n::translate('View Details') ;
 					}
 					echo "</a>" . "\n" ;
 					echo "</td>";
@@ -394,16 +396,16 @@ if ($ct>0) {
 		echo "</a><br />";
 
 		if (!$isExternal && !$media["EXISTS"]) {
-			echo "<br /><span class=\"error\">", $pgv_lang["file_not_found"], " <span dir=\"ltr\">", PrintReady($media["FILE"]), "</span></span>";
+			echo "<br /><span class=\"error\">", i18n::translate('File not found.'), " <span dir=\"ltr\">", PrintReady($media["FILE"]), "</span></span>";
 		}
 		if (!$isExternal && $media["EXISTS"]) {
 			$imageTypes = array("", "GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
 			if (!empty($imgsize[2])) {
-				echo "\n\t\t\t<span class=\"label\"><br />", $pgv_lang["media_format"], ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imageTypes[$imgsize[2]], "</span>";
+				echo "\n\t\t\t<span class=\"label\"><br />", i18n::translate('Media Format'), ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imageTypes[$imgsize[2]], "</span>";
 			} else if (empty($imgsize[2])) {
 				$path_end=substr($media["FILE"], strlen($media["FILE"])-5);
 				$imageType = strtoupper(substr($path_end, strpos($path_end, ".")+1));
-				echo "\n\t\t\t<span class=\"label\"><br />", $pgv_lang["media_format"], ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imageType, "</span>";
+				echo "\n\t\t\t<span class=\"label\"><br />", i18n::translate('Media Format'), ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imageType, "</span>";
 			}
 
 			$fileSize = media_filesize($media["FILE"]);
@@ -411,7 +413,7 @@ if ($ct>0) {
 			echo "&nbsp;&nbsp;&nbsp;<span class=\"field\" style=\"direction: ltr;\">", $sizeString, "</span>";
 
 			if ($imgsize[2]!==false) {
-				echo "\n\t\t\t<span class=\"label\"><br />", $pgv_lang["image_size"], ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imgsize[0], $TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ", $imgsize[1], "</span>";
+				echo "\n\t\t\t<span class=\"label\"><br />", i18n::translate('Image Dimensions'), ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imgsize[0], $TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ", $imgsize[1], "</span>";
 			}
 		}
 

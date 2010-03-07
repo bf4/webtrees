@@ -185,20 +185,20 @@ function file_upload_error_text($error_code) {
 
 	switch ($error_code) {
 	case UPLOAD_ERR_OK:
-		return $pgv_lang['file_success'];
+		return i18n::translate('File successfully uploaded');
 	case UPLOAD_ERR_INI_SIZE:
 	case UPLOAD_ERR_FORM_SIZE:
-		return $pgv_lang['file_too_big'];
+		return i18n::translate('Uploaded file exceeds the allowed size');
 	case UPLOAD_ERR_PARTIAL:
-		return $pgv_lang['file_partial'];
+		return i18n::translate('File was only partially uploaded, please try again');
 	case UPLOAD_ERR_NO_FILE:
-		return $pgv_lang['file_missing'];
+		return i18n::translate('No file was received. Please upload again.');
 	case UPLOAD_ERR_NO_TMP_DIR:
-		return $pgv_lang['file_no_temp_dir'];
+		return i18n::translate('Missing PHP temporary directory');
 	case UPLOAD_ERR_CANT_WRITE:
-		return $pgv_lang['file_cant_write'];
+		return i18n::translate('PHP failed to write to disk');
 	case UPLOAD_ERR_EXTENSION:
-		return $pgv_lang['file_bad_extension'];
+		return i18n::translate('PHP blocked file by extension');
 	default:
 		$pgv_lang['global_num1'] = $error_code; // Make this available to print_text()
 		return print_text('file_unknown_err', 0, 1);
@@ -235,19 +235,19 @@ function write_access_option($checkVar) {
 
 	echo "<option value=\"PGV_PRIV_PUBLIC\"";
 	echo $checkVar==PGV_PRIV_PUBLIC ? " selected=\"selected\"" : '';
-	echo ">", $pgv_lang["PRIV_PUBLIC"], "</option>\n";
+	echo ">", i18n::translate('Show to public'), "</option>\n";
 
 	echo "<option value=\"PGV_PRIV_USER\"";
 	echo $checkVar==PGV_PRIV_USER ? " selected=\"selected\"" : '';
-	echo ">", $pgv_lang["PRIV_USER"], "</option>\n";
+	echo ">", i18n::translate('Show only to authenticated users'), "</option>\n";
 
 	echo "<option value=\"PGV_PRIV_NONE\"";
 	echo $checkVar==PGV_PRIV_NONE ? " selected=\"selected\"" : '';
-	echo ">", $pgv_lang["PRIV_NONE"], "</option>\n";
+	echo ">", i18n::translate('Show only to admin users'), "</option>\n";
 
 	echo "<option value=\"PGV_PRIV_HIDE\"";
 	echo $checkVar==PGV_PRIV_HIDE ? " selected=\"selected\"" : '';
-	echo ">", $pgv_lang["PRIV_HIDE"], "</option>\n";
+	echo ">", i18n::translate('Hide even from admin users'), "</option>\n";
 }
 
 /**
@@ -352,7 +352,7 @@ function update_site_config($newconfig, $return = false) {
 
 		$fp = @fopen("config.php", "wb");
 		if (!$fp) {
-			$error['msg'] = $pgv_lang["pgv_config_write_error"];
+			$error['msg'] = i18n::translate('Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again.');
 			$errors[] = $error;
 		} else {
 			fwrite($fp, $configtext);
@@ -841,11 +841,11 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 			} else
 				if ($convert && $t=="SEX") {
 					if ($value=="M") {
-						$value = UTF8_substr($pgv_lang["male"], 0, 1);
+						$value = UTF8_substr(i18n::translate('Male'), 0, 1);
 					} elseif ($value=="F") {
-						$value = UTF8_substr($pgv_lang["female"], 0, 1);
+						$value = UTF8_substr(i18n::translate('Female'), 0, 1);
 					} else {
-						$value = UTF8_substr($pgv_lang["unknown"], 0, 1);
+						$value = UTF8_substr(i18n::translate('unknown'), 0, 1);
 					}
 				} else {
 					if (!empty($truncate)) {
@@ -2001,7 +2001,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		$end_time = microtime(true);
 		$exectime = $end_time - $start_time;
 		if (($TIME_LIMIT>1)&&($exectime > $TIME_LIMIT-1)) {
-			echo "<span class=\"error\">", $pgv_lang["timeout_error"], "</span>\n";
+			echo "<span class=\"error\">", i18n::translate('The script timed out before a relationship could be found.'), "</span>\n";
 			return false;
 		}
 		if (count($p1nodes)==0) {

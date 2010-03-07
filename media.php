@@ -89,15 +89,15 @@ function move_file($src, $dest) {
 	if (!is_dir($destdir)) {
 		@mkdirs($destdir);
 		if (!is_dir($destdir)) {
-			print "<div class=\"error\">".$pgv_lang["folder_no_create"]." [".$destdir."]</div>";
+			print "<div class=\"error\">".i18n::translate('Directory could not be created')." [".$destdir."]</div>";
 			return false;
 		}
 	}
 	if(!rename($src, $dest)) {
-		print "<div class=\"error\">".$pgv_lang["media_file_not_moved"]." [".$src."]</div>";
+		print "<div class=\"error\">".i18n::translate('Media file could not be moved.')." [".$src."]</div>";
 		return false;
 	}
-	print "<div>".$pgv_lang["media_file_moved"]." [".$src."]</div>";
+	print "<div>".i18n::translate('Media file moved.')." [".$src."]</div>";
 	return true;
 }
 
@@ -113,7 +113,7 @@ function move_files($path, $protect) {
 			$exectime = time() - $starttime;
 			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
 				// bail now to ensure nothing is lost
-				print "<div class=\"error\">".$pgv_lang["move_time_exceeded"]."</div>";
+				print "<div class=\"error\">".i18n::translate('The execution time limit was reached.  Try the command again to move the rest of the files.')."</div>";
 				return;
 			}
 			// do not move certain files...
@@ -170,7 +170,7 @@ function set_perms($path) {
 			$exectime = time() - $starttime;
 			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
 				// bail now to ensure nothing is lost
-				print "<div class=\"error\">".$pgv_lang["setperms_time_exceeded"]."</div>";
+				print "<div class=\"error\">".i18n::translate('The execution time limit was reached.  Try the command again on a smaller directory.')."</div>";
 				return;
 			}
 			// do not set perms on certain files...
@@ -178,17 +178,17 @@ function set_perms($path) {
 				$fullpath = $path."/".$element;
 				if (is_dir($fullpath)) {
 					if (@chmod($fullpath, PGV_PERM_EXE)) {
-						print "<div>".$pgv_lang["setperms_success"]." [".decoct(PGV_PERM_EXE)."] [".$fullpath."]</div>";
+						print "<div>".i18n::translate('Permissions Set')." [".decoct(PGV_PERM_EXE)."] [".$fullpath."]</div>";
 					} else {
-						print "<div>".$pgv_lang["setperms_failure"]." [".decoct(PGV_PERM_EXE)."] [".$fullpath."]</div>";
+						print "<div>".i18n::translate('Permissions Not Set')." [".decoct(PGV_PERM_EXE)."] [".$fullpath."]</div>";
 					}
 					// call this function recursively on this directory
 					set_perms($fullpath);
 				} else {
 					if (@chmod($fullpath, PGV_PERM_FILE)) {
-						print "<div>".$pgv_lang["setperms_success"]." [".decoct(PGV_PERM_FILE)."] [".$fullpath."]</div>";
+						print "<div>".i18n::translate('Permissions Set')." [".decoct(PGV_PERM_FILE)."] [".$fullpath."]</div>";
 					} else {
-						print "<div>".$pgv_lang["setperms_failure"]." [".decoct(PGV_PERM_FILE)."] [".$fullpath."]</div>";
+						print "<div>".i18n::translate('Permissions Not Set')." [".decoct(PGV_PERM_FILE)."] [".$fullpath."]</div>";
 					}
 				}
 			}
@@ -253,7 +253,7 @@ if (PGV_USER_IS_ADMIN) {
 }
 
 // Print the header of the page
-print_header($pgv_lang["manage_media"]);
+print_header(i18n::translate('Manage MultiMedia'));
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -274,7 +274,7 @@ function checknames(frm) {
 		return true;
 	}
 	else if (frm.filter.value.length < 2) {
-		alert("<?php print $pgv_lang["search_more_chars"]; ?>");
+		alert("<?php print i18n::translate('Please enter more than one character'); ?>");
 		frm.filter.focus();
 		return false;
 	}
@@ -307,7 +307,7 @@ if (check_media_structure()) {
 	// If one of these is not true then do not continue
 	if (!dir_is_writable($MEDIA_DIRECTORY) || !$MULTI_MEDIA) {
 		print "<span class=\"error\"><b>";
-		print $pgv_lang["no_upload"];
+		print i18n::translate('Uploading media files is not allowed because multi-media items have been disabled or because the media directory is not writable.');
 		print "</b></span><br />";
 	} else {
 		show_mediaUpload_form('media.php', $showthumb);		// We have the green light to upload media, print the form
@@ -335,8 +335,8 @@ if (check_media_structure()) {
 				if (!in_array($file, $BADMEDIA)) $files[] = $file;
 			}
 		} else {
-			print "<div class=\"error\">".$directory." ".$pgv_lang["directory_not_exist"]."</div>";
-			AddToLog($directory." ".$pgv_lang["directory_not_exist"]);
+			print "<div class=\"error\">".$directory." ".i18n::translate('Directory does not exist.')."</div>";
+			AddToLog($directory." ".i18n::translate('Directory does not exist.'));
 		}
 
 		// Thumbs directory check
@@ -370,23 +370,23 @@ if (check_media_structure()) {
 
 		if (!isset($error)) {
 			if (count($files) > 0 ) {
-				print "<div class=\"error\">".$directory." -- ".$pgv_lang["directory_not_empty"]."</div>";
-				AddToLog($directory." -- ".$pgv_lang["directory_not_empty"]);
+				print "<div class=\"error\">".$directory." -- ".i18n::translate('Directory not empty.')."</div>";
+				AddToLog($directory." -- ".i18n::translate('Directory not empty.'));
 				$clean = false;
 			}
 			if (count($thumbfiles) > 0) {
-				print "<div class=\"error\">".$thumbdir." -- ".$pgv_lang["directory_not_empty"]."</div>";
-				AddToLog($thumbdir." -- ".$pgv_lang["directory_not_empty"]);
+				print "<div class=\"error\">".$thumbdir." -- ".i18n::translate('Directory not empty.')."</div>";
+				AddToLog($thumbdir." -- ".i18n::translate('Directory not empty.'));
 				$clean = false;
 			}
 			if (count($files_fw) > 0 ) {
-				print "<div class=\"error\">".$directory_fw." -- ".$pgv_lang["directory_not_empty"]."</div>";
-				AddToLog($directory_fw." -- ".$pgv_lang["directory_not_empty"]);
+				print "<div class=\"error\">".$directory_fw." -- ".i18n::translate('Directory not empty.')."</div>";
+				AddToLog($directory_fw." -- ".i18n::translate('Directory not empty.'));
 				$clean = false;
 			}
 			if (count($thumbfiles_fw) > 0) {
-				print "<div class=\"error\">".$thumbdir_fw." -- ".$pgv_lang["directory_not_empty"]."</div>";
-				AddToLog($thumbdir_fw." -- ".$pgv_lang["directory_not_empty"]);
+				print "<div class=\"error\">".$thumbdir_fw." -- ".i18n::translate('Directory not empty.')."</div>";
+				AddToLog($thumbdir_fw." -- ".i18n::translate('Directory not empty.'));
 				$clean = false;
 			}
 			else $clean = true;
@@ -407,28 +407,28 @@ if (check_media_structure()) {
 			if (file_exists(filename_decode($thumbdir_fw."index.php"))) @unlink(filename_decode($thumbdir_fw."index.php"));
 			if (@is_dir(filename_decode($thumbdir_fw))) $resthumb_fw = @rmdir(filename_decode(substr($thumbdir_fw, 0, -1)));
 			if ($resdir && $resthumb && $resdir_fw && $resthumb_fw) {
-				print $pgv_lang["delete_dir_success"];
-				AddToLog($directory." -- ".$pgv_lang["delete_dir_success"]);
+				print i18n::translate('Media and thumbnail directories successfully removed.');
+				AddToLog($directory." -- ".i18n::translate('Media and thumbnail directories successfully removed.'));
 			} else {
 				if (!$resdir) {
-					print "<div class=\"error\">".$pgv_lang["media_not_deleted"]."</div>";
-					AddToLog($directory." -- ".$pgv_lang["media_not_deleted"]);
+					print "<div class=\"error\">".i18n::translate('Media directory not removed.')."</div>";
+					AddToLog($directory." -- ".i18n::translate('Media directory not removed.'));
 				} else if (!$resdir_fw) {
-					print "<div class=\"error\">".$pgv_lang["media_not_deleted"]."</div>";
-					AddToLog($directory_fw." -- ".$pgv_lang["media_not_deleted"]);
+					print "<div class=\"error\">".i18n::translate('Media directory not removed.')."</div>";
+					AddToLog($directory_fw." -- ".i18n::translate('Media directory not removed.'));
 				} else {
-					print $pgv_lang["media_deleted"];
-					AddToLog($directory." -- ".$pgv_lang["media_deleted"]);
+					print i18n::translate('Media directory successfully removed.');
+					AddToLog($directory." -- ".i18n::translate('Media directory successfully removed.'));
 				}
 				if (!$resthumb) {
-					print "<div class=\"error\">".$pgv_lang["thumbs_not_deleted"]."</div>";
-					AddToLog($thumbdir." -- ".$pgv_lang["thumbs_not_deleted"]);
+					print "<div class=\"error\">".i18n::translate('Thumbnail directory not removed.')."</div>";
+					AddToLog($thumbdir." -- ".i18n::translate('Thumbnail directory not removed.'));
 				} else if (!$resthumb_fw) {
-					print "<div class=\"error\">".$pgv_lang["thumbs_not_deleted"]."</div>";
-					AddToLog($thumbdir_fw." -- ".$pgv_lang["thumbs_not_deleted"]);
+					print "<div class=\"error\">".i18n::translate('Thumbnail directory not removed.')."</div>";
+					AddToLog($thumbdir_fw." -- ".i18n::translate('Thumbnail directory not removed.'));
 				} else {
-					print $pgv_lang["thumbs_deleted"];
-					AddToLog($thumbdir." -- ".$pgv_lang["thumbs_deleted"]);
+					print i18n::translate('Thumbnail directory successfully removed.');
+					AddToLog($thumbdir." -- ".i18n::translate('Thumbnail directory successfully removed.'));
 				}
 
 			}
@@ -500,7 +500,7 @@ if (check_media_structure()) {
 		print "<tr><td class=\"messagebox wrap\">";
 		if (strpos($filename, "../") !== false) {
 			// don't allow user to access directories outside of media dir
-			print "<div class=\"error\">".$pgv_lang["illegal_chars"]."</div>";
+			print "<div class=\"error\">".i18n::translate('Blank name or illegal characters in name')."</div>";
 		} else {
 			if (file_exists($filename)) {
 				move_file($filename, get_media_firewall_path($filename));
@@ -522,7 +522,7 @@ if (check_media_structure()) {
 		print "<tr><td class=\"messagebox wrap\">";
 		if (strpos($filename, "../") !== false) {
 			// don't allow user to access directories outside of media dir
-			print "<div class=\"error\">".$pgv_lang["illegal_chars"]."</div>";
+			print "<div class=\"error\">".i18n::translate('Blank name or illegal characters in name')."</div>";
 		} else {
 			if (file_exists(get_media_firewall_path($filename))) {
 				move_file(get_media_firewall_path($filename), $filename);
@@ -540,7 +540,7 @@ if (check_media_structure()) {
 	if ($action == "movedirprotected") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
-		print "<strong>".$pgv_lang["move_protected"]."<br />";
+		print "<strong>".i18n::translate('Move to protected')."<br />";
 		move_files(substr($directory, 0, -1), true);
 		print "</td></tr></table>";
 		$action="filter";
@@ -550,7 +550,7 @@ if (check_media_structure()) {
 	if ($action == "movedirstandard") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
-		print "<strong>".$pgv_lang["move_standard"]."<br />";
+		print "<strong>".i18n::translate('Move to standard')."<br />";
 		move_files(substr(get_media_firewall_path($directory), 0, -1), false);
 		print "</td></tr></table>";
 		$action="filter";
@@ -559,7 +559,7 @@ if (check_media_structure()) {
 	if ($action == "setpermsfix") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
-		print "<strong>".$pgv_lang["setperms_fix"]."<br />";
+		print "<strong>".i18n::translate('Correct read/write/execute permissions')."<br />";
 		set_perms(substr($directory, 0, -1));
 		set_perms(substr(get_media_firewall_path($directory), 0, -1));
 		print "</td></tr></table>";
@@ -631,11 +631,11 @@ if (check_media_structure()) {
 		$finalResult = true;
 		if ($allowDelete) {
 			if (!$onegedcom) {
-				print "<span class=\"error\">".$pgv_lang["multiple_gedcoms"]."<br /><br /><b>".$pgv_lang["media_file_not_deleted"]."</b></span><br />";
+				print "<span class=\"error\">".i18n::translate('This file is linked to another genealogical database on this server.  It cannot be deleted, moved, or renamed until these links have been removed.')."<br /><br /><b>".i18n::translate('Media file could not be deleted.')."</b></span><br />";
 				$finalResult = false;
 			}
 			if (isFileExternal($filename)) {
-				print "<span class=\"error\">".$pgv_lang["external_file"]."<br /><br /><b>".$pgv_lang["media_file_not_deleted"]."</b></span><br />";
+				print "<span class=\"error\">".i18n::translate('This media object does not exist as a file on this server.  It cannot be deleted, moved, or renamed.')."<br /><br /><b>".i18n::translate('Media file could not be deleted.')."</b></span><br />";
 				$finalResult = false;
 			}
 			if ($finalResult) {
@@ -643,12 +643,12 @@ if (check_media_structure()) {
 				$server_filename = get_server_filename($filename);
 				if (file_exists($server_filename) && $allowDelete) {
 					if (@unlink($server_filename)) {
-						print $pgv_lang["media_file_deleted"]."<br />";
-						AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_deleted"]);
+						print i18n::translate('Media file successfully deleted.')."<br />";
+						AddToChangeLog($server_filename." -- ".i18n::translate('Media file successfully deleted.'));
 					} else {
 						$finalResult = false;
-						print "<span class=\"error\">".$pgv_lang["media_file_not_deleted"]."</span><br />";
-						AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_not_deleted"]);
+						print "<span class=\"error\">".i18n::translate('Media file could not be deleted.')."</span><br />";
+						AddToChangeLog($server_filename." -- ".i18n::translate('Media file could not be deleted.'));
 					}
 				}
 
@@ -657,12 +657,12 @@ if (check_media_structure()) {
 				$server_thumbnail = get_server_filename($thumbnail);
 				if (file_exists($server_thumbnail) && $allowDelete) {
 					if (@unlink($server_thumbnail)) {
-						print $pgv_lang["thumbnail_deleted"]."<br />";
-						AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_deleted"]);
+						print i18n::translate('Thumbnail file successfully deleted.')."<br />";
+						AddToChangeLog($server_thumbnail." -- ".i18n::translate('Thumbnail file successfully deleted.'));
 					} else {
 						$finalResult = false;
-						print "<span class=\"error\">".$pgv_lang["thumbnail_not_deleted"]."</span><br />";
-						AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_not_deleted"]);
+						print "<span class=\"error\">".i18n::translate('Thumbnail file could not be deleted.')."</span><br />";
+						AddToChangeLog($server_thumbnail." -- ".i18n::translate('Thumbnail file could not be deleted.'));
 					}
 				}
 			}
@@ -727,7 +727,7 @@ if (check_media_structure()) {
 					}
 			}
 		}
-		if ($finalResult) print $pgv_lang["update_successful"];
+		if ($finalResult) print i18n::translate('Update successful');
 		$action = "filter";
 		print "</td></tr></table>";
 	}
@@ -748,26 +748,26 @@ if (check_media_structure()) {
 		
 		// GEDFact assistant Add Media Links =======================
 		if (file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
-			$menu->addLabel($pgv_lang["add_or_remove_links"]);
+			$menu->addLabel(i18n::translate('Manage links'));
 			$menu->addOnclick("return ilinkitem('$mediaid', 'manage')");
 			$menu->addClass("", "", "submenu");
 			$menu->addFlyout("left");
 			// Do not print submunu
 			
 		} else {
-			$menu->addLabel($pgv_lang["set_link"]);
+			$menu->addLabel(i18n::translate('Set link'));
 			$menu->addOnclick("return ilinkitem('$mediaid', 'person')");
-			$submenu = new Menu($pgv_lang["to_person"]);
+			$submenu = new Menu(i18n::translate('To Person'));
 			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
 			$submenu->addOnclick("return ilinkitem('$mediaid', 'person')");
 			$menu->addSubMenu($submenu);
 
-			$submenu = new Menu($pgv_lang["to_family"]);
+			$submenu = new Menu(i18n::translate('To Family'));
 			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
 			$submenu->addOnclick("return ilinkitem('$mediaid', 'family')");
 			$menu->addSubMenu($submenu);
 
-			$submenu = new Menu($pgv_lang["to_source"]);
+			$submenu = new Menu(i18n::translate('To Source'));
 			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
 			$submenu->addOnclick("return ilinkitem('$mediaid', 'source')");
 			$menu->addSubMenu($submenu);
@@ -785,25 +785,25 @@ if (check_media_structure()) {
 	<input type="hidden" name="all" value="true" />
 	<input type="hidden" name="subclick" />
 	<table class="fact_table center width75 <?php print $TEXT_DIRECTION; ?>">
-	<tr><td class="topbottombar" colspan="4"><?php print_help_link("manage_media", "qm", "manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
+	<tr><td class="topbottombar" colspan="4"><?php print_help_link("manage_media", "qm", "manage_media");print i18n::translate('Manage MultiMedia'); ?></td></tr>
 	<?php
 	if ($TEXT_DIRECTION=='ltr') $legendAlign = 'align="right"';
 	else $legendAlign = 'align="left"';
 	?>
 
 	<!-- // NOTE: Row 1 left: Sort sequence -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("sortby", "qm", "sortby"); ?><?php print $pgv_lang["sortby"]; ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("sortby", "qm", "sortby"); ?><?php print i18n::translate('Sequence'); ?></td>
 	<td class="optionbox wrap"><select name="sortby">
 		<option value="title" <?php if ($sortby=='title') print "selected=\"selected\"";?>><?php print i18n::translate('TITL');?></option>
 		<option value="file" <?php if ($sortby=='file') print "selected=\"selected\"";?>><?php print i18n::translate('FILE');?></option>
 	</select></td>
 
 	<!-- // NOTE: Row 1 right, Upload media files -->
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("upload_media", "qm", "upload_media"); print $pgv_lang["upload_media"]; ?></td>
-	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".$pgv_lang["upload_media"]."</a>"; ?></td></tr>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("upload_media", "qm", "upload_media"); print i18n::translate('Upload Media files'); ?></td>
+	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".i18n::translate('Upload Media files')."</a>"; ?></td></tr>
 
 	<!-- // NOTE: Row 2 left: Filter options -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("simple_filter", "qm", "filter"); print $pgv_lang["filter"];?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("simple_filter", "qm", "filter"); print i18n::translate('Filter');?></td>
 	<td class="optionbox wrap">
 		<?php
 			// Directory pick list
@@ -823,14 +823,14 @@ if (check_media_structure()) {
 			} else print "<input name=\"directory\" type=\"hidden\" value=\"ALL\" />";
 		// Text field for filter
 		?>
-		<input type="text" name="filter" value="<?php if($filter) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print $pgv_lang["display_all"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
+		<input type="text" name="filter" value="<?php if($filter) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print i18n::translate('Filter');?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print i18n::translate('Display all'); ?>" onclick="this.form.subclick.value=this.name" /></td>
 
 	<!-- // NOTE: Row 2 right: Add media -->
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("add_media", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
-	<td class="optionbox wrap"><a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a></td></tr>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("add_media", "qm"); ?><?php print i18n::translate('Add Media'); ?></td>
+	<td class="optionbox wrap"><a href="javascript: <?php echo i18n::translate('Add Media'); ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo i18n::translate('Add a new Media item'); ?></a></td></tr>
 
 	<!-- // NOTE: Row 3 left: Show thumbnails -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("show_thumb", "qm", "show_thumbnail"); ?><?php print $pgv_lang["show_thumbnail"]; ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("show_thumb", "qm", "show_thumbnail"); ?><?php print i18n::translate('Show thumbnails'); ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="showthumb" value="true" <?php if ($showthumb) print "checked=\"checked\""; ?> onclick="submit();" /></td>
 
 	<!-- // NOTE: Row 3 right: Generate missing thumbnails -->
@@ -840,8 +840,8 @@ if (check_media_structure()) {
 		if (!empty($subclick)) $tempURL .= "subclick={$subclick}&";
 		$tempURL .= "action=thumbnail&sortby={$sortby}&all=yes&level={$level}&directory={$directory}".$thumbget;
 		?>
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("gen_missing_thumbs", "qm"); ?><?php print $pgv_lang["gen_missing_thumbs_lbl"]; ?></td>
-	<td class="optionbox wrap"><a href="<?php print encode_url($tempURL);?>"><?php print $pgv_lang["gen_missing_thumbs"];?></a></td></tr>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("gen_missing_thumbs", "qm"); ?><?php print i18n::translate('Missing thumbnails'); ?></td>
+	<td class="optionbox wrap"><a href="<?php print encode_url($tempURL);?>"><?php print i18n::translate('Create missing thumbnails');?></a></td></tr>
 	</table>
 </form>
 <?php
@@ -883,7 +883,7 @@ if (check_media_structure()) {
 		// Tell the user where he is
 		print "<tr>";
 			print "<td class=\"topbottombar\" colspan=\"2\">";
-				print $pgv_lang["current_dir"];
+				print i18n::translate('Current directory');
 				print "<br />";
 				print PrintReady(substr($directory, 0, -1));
 
@@ -896,13 +896,13 @@ if (check_media_structure()) {
 				print "<input type=\"hidden\" name=\"showthumb\" value=\"{$showthumb}\" />";
 				print "<input type=\"hidden\" name=\"sortby\" value=\"{$sortby}\" />";
 			if ($USE_MEDIA_FIREWALL) {
-				print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.action.value='movedirstandard';\" />";
+				print "<input type=\"submit\" value=\"".i18n::translate('Move to standard')."\" onclick=\"this.form.action.value='movedirstandard';\" />";
 				print_help_link("move_mediadirs", "qm", "move_mediadirs");
-				print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.action.value='movedirprotected';\" />";
+				print "<input type=\"submit\" value=\"".i18n::translate('Move to protected')."\" onclick=\"this.form.action.value='movedirprotected';\" />";
 				print "<br />";
 			}
 				print_help_link("setperms", "qm", "setperms");
-				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_fix"]."\" onclick=\"this.form.action.value='setpermsfix';\" />";
+				print "<input type=\"submit\" value=\"".i18n::translate('Correct read/write/execute permissions')."\" onclick=\"this.form.action.value='setpermsfix';\" />";
 
 				print "</form>";
 
@@ -936,10 +936,10 @@ if (check_media_structure()) {
 						print "<input type=\"hidden\" name=\"action\" value=\"\" />";
 						print "<input type=\"hidden\" name=\"showthumb\" value=\"{$showthumb}\" />";
 						print "<input type=\"hidden\" name=\"sortby\" value=\"{$sortby}\" />";
-						print "<input type=\"image\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]."\" alt=\"".$pgv_lang['delete']."\" onclick=\"this.form.action.value='deletedir';return confirm('".$pgv_lang["confirm_folder_delete"]."');\" />";
+						print "<input type=\"image\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]."\" alt=\"".i18n::translate('Delete')."\" onclick=\"this.form.action.value='deletedir';return confirm('".i18n::translate('Are you sure you want to delete this folder?')."');\" />";
 						if ($USE_MEDIA_FIREWALL) {
-							print "<br /><input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirstandard';\" />";
-							print "<br /><input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirprotected';\" />";
+							print "<br /><input type=\"submit\" value=\"".i18n::translate('Move to standard')."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirstandard';\" />";
+							print "<br /><input type=\"submit\" value=\"".i18n::translate('Move to protected')."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirprotected';\" />";
 						}
 
 						print "</form>";
@@ -1014,11 +1014,11 @@ if (check_media_structure()) {
 							} else {
 								$tempURL .= 'showmediaform&filename='.encrypt($media['FILE']).'&linktoid=new';
 							}
-							echo "<a href=\"javascript:", $pgv_lang["edit"], "\" onclick=\"window.open('", encode_url($tempURL, false), "', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;\">", $pgv_lang["edit"], "</a><br />";
+							echo "<a href=\"javascript:", i18n::translate('Edit'), "\" onclick=\"window.open('", encode_url($tempURL, false), "', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;\">", i18n::translate('Edit'), "</a><br />";
 
 							// Edit Raw
 							if ($media["XREF"] != "") {
-								print "<a href=\"javascript:".$pgv_lang["edit_raw"]."\" onclick=\"return edit_raw('".$media['XREF']."');\">".$pgv_lang['edit_raw']."</a><br />\n";
+								print "<a href=\"javascript:".i18n::translate('Edit raw GEDCOM record')."\" onclick=\"return edit_raw('".$media['XREF']."');\">".i18n::translate('Edit raw GEDCOM record')."</a><br />\n";
 							}
 
 							// Delete File
@@ -1035,7 +1035,7 @@ if (check_media_structure()) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL.= "filter={$filter}&";
 								$tempURL .= "action=deletefile&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
-								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_delete_file"]."');\">".$pgv_lang["delete_file"]."</a><br />";
+								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this file?')."');\">".i18n::translate('Delete file')."</a><br />";
 							}
 
 							// Remove Object
@@ -1043,7 +1043,7 @@ if (check_media_structure()) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL .= "filter={$filter}&";
 								$tempURL .= "action=removeobject&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
-								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_remove_object"]."');\">".$pgv_lang["remove_object"]."</a><br />";
+								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to remove this object from the database?')."');\">".i18n::translate('Remove object')."</a><br />";
 							}
 
 							// Remove links
@@ -1051,7 +1051,7 @@ if (check_media_structure()) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL .= "filter={$filter}&";
 								$tempURL .= "action=removelinks&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
-							//	print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_remove_links"]."');\">".$pgv_lang["remove_links"]."</a><br />";
+							//	print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to remove all links to this object?')."');\">".i18n::translate('Remove links')."</a><br />";
 							}
 
 							// Add or Remove Links
@@ -1078,7 +1078,7 @@ if (check_media_structure()) {
 									$tempURL = "media.php?";
 									if (!empty($filter)) $tempURL .= "filter={$filter}&";
 									$tempURL .= "action=thumbnail&all=no&sortby={$sortby}&level={$level}&directory={$directory}&filename=".encrypt($media["FILE"]).$thumbget;
-									print "<a href=\"".encode_url($tempURL)."\">".$pgv_lang["gen_thumb"]."</a>";
+									print "<a href=\"".encode_url($tempURL)."\">".i18n::translate('Create thumbnail')."</a>";
 								}
 							}
 
@@ -1126,7 +1126,7 @@ if (check_media_structure()) {
 								print "<br />";
 							}
 						}
-						if (!$isExternal && !$media["EXISTS"]) print "<span dir=\"ltr\">".PrintReady($media["FILE"])."</span><br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
+						if (!$isExternal && !$media["EXISTS"]) print "<span dir=\"ltr\">".PrintReady($media["FILE"])."</span><br /><span class=\"error\">".i18n::translate('The filename entered does not exist.')."</span><br />";
 						else {
 							if (substr($mediaInfo['type'], 0, 4) == 'url_') $tempText = 'URL';
 							else $tempText = PrintReady($media["FILE"]);
@@ -1137,14 +1137,14 @@ if (check_media_structure()) {
 							}
 						}
 						if (substr($mediaInfo['type'], 0, 4) != 'url_' && !empty($imgsize[0])) {
-							print "<sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
+							print "<sub>&nbsp;&nbsp;".i18n::translate('Image Dimensions')." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
 						}
 						print_fact_notes($media["GEDCOM"], 1);
 						print_fact_sources($media["GEDCOM"], 1);
 						if ($media["LINKED"]) {
 							PrintMediaLinks($media["LINKS"], "normal");
 						} else {
-							print "<br />".$pgv_lang["media_not_linked"];
+							print "<br />".i18n::translate('This media object is not linked to any GEDCOM record.');
 						}
 
 
@@ -1167,6 +1167,6 @@ if (check_media_structure()) {
 	?>
 <?php
 }
-else print $pgv_lang["media_folder_corrupt"];
+else print i18n::translate('The media folder is corrupted.');
 print_footer();
 ?>

@@ -41,21 +41,21 @@ if (file_exists('modules/googlemap/config.php')) {
 
 loadLangFile('pgv_lang, pgv_confighelp, pgv_help, googlemap:lang, googlemap:help_text');
 
-print_header($pgv_lang["configure_googlemap"]);
+print_header(i18n::translate('GoogleMap Configuration'));
 
 if (PGV_USER_IS_ADMIN) { ?>
 <table class="center <?php print $TEXT_DIRECTION ?>">
    <tr>
-	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["configure_googlemap"]; ?></td>
+	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('GoogleMap Configuration'); ?></td>
    </tr>
    <tr>
-      <td class="optionbox"><?php print_help_link("GOOGLEMAP_CONFIG", "qm", "GOOGLEMAP_CONFIG");?><a href="module.php?mod=googlemap&pgvaction=editconfig"><?php echo $pgv_lang["gm_manage"];?></a>
+      <td class="optionbox"><?php print_help_link("GOOGLEMAP_CONFIG", "qm", "GOOGLEMAP_CONFIG");?><a href="module.php?mod=googlemap&pgvaction=editconfig"><?php echo i18n::translate('Manage GoogleMap configuration');?></a>
 	  </td>
-      <td class="optionbox"><?php print_help_link("PLE_EDIT", "qm", "PLE_EDIT");?><a href="module.php?mod=googlemap&pgvaction=places"><?php echo $pgv_lang["edit_place_locations"];?></a>
+      <td class="optionbox"><?php print_help_link("PLE_EDIT", "qm", "PLE_EDIT");?><a href="module.php?mod=googlemap&pgvaction=places"><?php echo i18n::translate('Edit geographic place locations');?></a>
 	  </td>
    </tr>
    <tr>
-      <td class="optionbox"><?php print_help_link("GOOGLEMAP_PLACECHECK", "qm", "GOOGLEMAP_PLACECHECK");?><a href="module.php?mod=googlemap&pgvaction=placecheck"><?php echo $pgv_lang["placecheck"];?></a>
+      <td class="optionbox"><?php print_help_link("GOOGLEMAP_PLACECHECK", "qm", "GOOGLEMAP_PLACECHECK");?><a href="module.php?mod=googlemap&pgvaction=placecheck"><?php echo i18n::translate('Place Check');?></a>
 	  </td>
       <td class="optionbox">&nbsp;
 	  </td>

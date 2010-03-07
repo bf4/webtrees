@@ -165,9 +165,9 @@ class AncestryControllerRoot extends BaseController {
 		print "</td>";
 		print "<td>";
 		if ($TEXT_DIRECTION=="ltr") {
-			$label = $pgv_lang["ancestry_chart"].": ".$pid;
+			$label = i18n::translate('Ancestry Chart').": ".$pid;
 		} else {
-			$label = $pid." :".$pgv_lang["ancestry_chart"];
+			$label = $pid." :".i18n::translate('Ancestry Chart');
 		}
 		if ($sosa>1) print_url_arrow($pid, encode_url("?rootid={$pid}&PEDIGREE_GENERATIONS={$OLD_PGENS}&show_full={$this->show_full}&box_width={$box_width}&chart_style={$this->chart_style}"), $label, 3);
 		print "</td>";
@@ -200,12 +200,12 @@ class AncestryControllerRoot extends BaseController {
 		if (($parents || $SHOW_EMPTY_BOXES) && $new && $depth>0) {
 			// print marriage info
 			print "<span class=\"details1\" style=\"white-space: nowrap;\" >";
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" align=\"middle\" alt=\"\" /><a href=\"javascript: ".$pgv_lang["view_family"]."\" onclick=\"expand_layer('sosa_".$sosa."'); return false;\" class=\"top\"><img id=\"sosa_".$sosa."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".$pgv_lang["view_family"]."\" /></a> ";
-			print "&nbsp;<span class=\"person_box\">&nbsp;".($sosa*2)."&nbsp;</span>&nbsp;".$pgv_lang["and"];
+			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" align=\"middle\" alt=\"\" /><a href=\"javascript: ".i18n::translate('View Family')."\" onclick=\"expand_layer('sosa_".$sosa."'); return false;\" class=\"top\"><img id=\"sosa_".$sosa."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".i18n::translate('View Family')."\" /></a> ";
+			print "&nbsp;<span class=\"person_box\">&nbsp;".($sosa*2)."&nbsp;</span>&nbsp;".i18n::translate('and');
 			print "&nbsp;<span class=\"person_boxF\">&nbsp;".($sosa*2+1)." </span>&nbsp;";
 			if (!empty($family)) {
 				$marriage = $family->getMarriage();
-				if ($marriage->canShow()) $marriage->print_simple_fact(); else print $pgv_lang["private"];
+				if ($marriage->canShow()) $marriage->print_simple_fact(); else print i18n::translate('Private');
 			}
 			print "</span>";
 			// display parents recursively

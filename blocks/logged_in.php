@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_LOGGED_IN_PHP', '');
 
-$PGV_BLOCKS["print_logged_in_users"]["name"]		= $pgv_lang["logged_in_users_block"];
+$PGV_BLOCKS["print_logged_in_users"]["name"]		= i18n::translate('Logged In Users');
 $PGV_BLOCKS["print_logged_in_users"]["descr"]		= "logged_in_users_descr";
 $PGV_BLOCKS["print_logged_in_users"]["canconfig"]	= false;
 $PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
@@ -89,7 +89,7 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		foreach ($loggedusers as $user_id=>$user_name) {
 			$content .= "<tr><td><br />".PrintReady(getUserFullName($user_id))." - ".$user_name;
 			if (PGV_USER_ID!=$user_id && get_user_setting($user_id, 'contactmethod')!="none") {
-				$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user_id . "');\">" . $pgv_lang["message"] . "</a>";
+				$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user_id . "');\">" . i18n::translate('Send Message') . "</a>";
 			}
 			$content .= "</td></tr>";
 		}

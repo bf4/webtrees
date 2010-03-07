@@ -34,7 +34,7 @@ loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lightbox:lang, lightbox:help_t
 
 $help = safe_GET("help");
 
-print_simple_header($pgv_lang["config_help"]);
+print_simple_header(i18n::translate('Configuration help'));
 print '<span class="helpheader">';
 print_text("config_help");
 print '</span><br /><br /><span class="helptext">';

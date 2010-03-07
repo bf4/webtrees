@@ -102,9 +102,9 @@ class IndividualControllerRoot extends BaseController {
 		global $USE_QUICK_UPDATE, $DEFAULT_PIN_STATE, $pid;
 		global $Fam_Navigator;
 
-		$this->sexarray["M"] = $pgv_lang["male"];
-		$this->sexarray["F"] = $pgv_lang["female"];
-		$this->sexarray["U"] = $pgv_lang["unknown"];
+		$this->sexarray["M"] = i18n::translate('Male');
+		$this->sexarray["F"] = i18n::translate('Female');
+		$this->sexarray["U"] = i18n::translate('unknown');
 
 		$this->pid = safe_GET_xref('pid');
 
@@ -351,10 +351,10 @@ class IndividualControllerRoot extends BaseController {
 		global $pgv_lang;
 		if ($this->indi) {
 			$name = $this->indi->getFullName();
-			return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
+			return $name." - ".$this->indi->getXref()." - ".i18n::translate('Individual Information');
 		}
 		else {
-			return $pgv_lang["unable_to_find_record"];
+			return i18n::translate('Unable to find record with ID');
 		}
 	}
 
@@ -490,7 +490,7 @@ class IndividualControllerRoot extends BaseController {
 		if (!preg_match("/^2 (SURN)|(GIVN)/m", $factrec)) {
 			$dummy=new Person($factrec);
 			$dummy->setPrimaryName(0);
-			echo '<span class="label">', $pgv_lang['name'], ': </span><br />';
+			echo '<span class="label">', i18n::translate('Name'), ': </span><br />';
 			echo PrintReady($dummy->getFullName()), '<br />';
 		}
 		$ct = preg_match_all('/\n2 (\w+) (.*)/', $factrec, $nmatch, PREG_SET_ORDER);
@@ -524,8 +524,8 @@ class IndividualControllerRoot extends BaseController {
 		}
 		echo "\n\t\t</dl>";
 		if ($this->total_names>1 && !$this->isPrintPreview() && $this->userCanEdit() && !strpos($factrec, 'PGV_OLD')) {
-			echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">", $pgv_lang["edit_name"], "</a> | ";
-			echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", $pgv_lang["delete_name"], "</a>\n";
+			echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Edit Name'), "</a> | ";
+			echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Delete Name'), "</a>\n";
 			if ($this->name_count==2) {
 				print_help_link("delete_name", "qm");
 			}
@@ -565,21 +565,21 @@ class IndividualControllerRoot extends BaseController {
 			echo " class=\"nameblue\"";
 		}
 		echo "><dl>";
-		print "<dt class=\"label\">".$pgv_lang["sex"]."</dt><dd class=\"field\">".$this->sexarray[$sex];
+		print "<dt class=\"label\">".i18n::translate('Gender')."</dt><dd class=\"field\">".$this->sexarray[$sex];
 		if ($sex=='M') {
-			echo Person::sexImage('M', 'small', '', $pgv_lang['male']);
+			echo Person::sexImage('M', 'small', '', i18n::translate('Male'));
 		} elseif ($sex=='F') {
-			echo Person::sexImage('F', 'small', '', $pgv_lang['female']);
+			echo Person::sexImage('F', 'small', '', i18n::translate('Female'));
 		} else {
-			echo Person::sexImage('U', 'small', '', $pgv_lang['unknown']);
+			echo Person::sexImage('U', 'small', '', i18n::translate('unknown'));
 		}
 		if ($this->SEX_COUNT>1) {
 			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (strpos($factrec, "PGV_OLD")===false)) {
 				if ($event->getLineNumber()=="new") {
-					print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".$pgv_lang["edit"]."</a>";
+					print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".i18n::translate('Edit')."</a>";
 				} else {
-						print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"edit_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".$pgv_lang["edit"]."</a> | ";
-						print "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".$pgv_lang["delete"]."</a>\n";
+						print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"edit_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".i18n::translate('Edit')."</a> | ";
+						print "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".i18n::translate('Delete')."</a>\n";
 				}
 			}
 		}
@@ -605,7 +605,7 @@ class IndividualControllerRoot extends BaseController {
 			$ff="";
 		}
 		//-- main edit menu
-		$menu = new Menu($pgv_lang["edit"]);
+		$menu = new Menu(i18n::translate('Edit'));
 		if (!empty($PGV_IMAGES["edit_indi"]["large"])) {
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["large"]);
 		}
@@ -616,7 +616,7 @@ class IndividualControllerRoot extends BaseController {
 
 		if (PGV_USER_CAN_EDIT) {
 			if (count($this->indi->getSpouseFamilyIds())>1) {
-				$submenu = new Menu($pgv_lang["reorder_families"]);
+				$submenu = new Menu(i18n::translate('Reorder Families'));
 				$submenu->addOnclick("return reorder_families('".$this->pid."');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -625,19 +625,19 @@ class IndividualControllerRoot extends BaseController {
 			//--make sure the totals are correct
 			$this->getGlobalFacts();
 			if ($this->total_names<2) {
-				$submenu = new Menu($pgv_lang["edit_name"]);
+				$submenu = new Menu(i18n::translate('Edit Name'));
 				$submenu->addOnclick("return edit_name('".$this->pid."', $this->NAME_LINENUM);");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
 
-			$submenu = new Menu($pgv_lang["add_name"]);
+			$submenu = new Menu(i18n::translate('Add new Name'));
 			$submenu->addOnclick("return add_name('".$this->pid."');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
 			if ($this->SEX_COUNT<2) {
-				$submenu = new Menu($pgv_lang["edit_sex"]);
+				$submenu = new Menu(i18n::translate('Edit Gender'));
 				if ($this->SEX_LINENUM=="new") $submenu->addOnclick("return add_new_record('".$this->pid."', 'SEX');");
 				else $submenu->addOnclick("return edit_record('".$this->pid."', $this->SEX_LINENUM);");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -649,10 +649,10 @@ class IndividualControllerRoot extends BaseController {
 
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 			if (!$this->show_changes) {
-				$label = $pgv_lang["show_changes"];
+				$label = i18n::translate('This record has been updated.  Click here to show changes.');
 				$link = $this->indi->getLinkUrl()."&show_changes=yes";
 			} else {
-				$label = $pgv_lang["hide_changes"];
+				$label = i18n::translate('Click here to hide changes.');
 				$link = $this->indi->getLinkUrl()."&show_changes=no";
 			}
 			$submenu = new Menu($label, encode_url($link));
@@ -660,10 +660,10 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 
 			if (PGV_USER_CAN_ACCEPT) {
-				$submenu = new Menu($pgv_lang["undo_all"], encode_url($this->indi->getLinkUrl()."&action=undo"));
+				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url($this->indi->getLinkUrl()."&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang["accept_all"], encode_url($this->indi->getLinkUrl()."&action=accept"));
+				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url($this->indi->getLinkUrl()."&action=accept"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -672,13 +672,13 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		if (PGV_USER_IS_ADMIN || $this->canShowGedcomRecord()) {
-			$submenu = new Menu($pgv_lang["edit_raw"]);
+			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->pid."');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
 
-		$submenu = new Menu($pgv_lang["delete_person"]);
+		$submenu = new Menu(i18n::translate('Delete this individual'));
 		$submenu->addOnclick("return deleteperson('".$this->pid."');");
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
@@ -710,7 +710,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 		//-- main other menu item
-		$menu = new Menu($pgv_lang["other"]);
+		$menu = new Menu(i18n::translate('Other'));
 		if ($SHOW_GEDCOM_RECORD) {
 			if (!empty($PGV_IMAGES["gedcom"]["small"])) $menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"]);
 			if ($this->show_changes && PGV_USER_CAN_EDIT) $menu->addOnclick("return show_gedcom_record('new');");
@@ -721,7 +721,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		if ($SHOW_GEDCOM_RECORD) {
-			$submenu = new Menu($pgv_lang["view_gedcom"]);
+			$submenu = new Menu(i18n::translate('View GEDCOM Record'));
 			if (!empty($PGV_IMAGES["gedcom"]["small"])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 			if ($this->show_changes && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
 			else $submenu->addOnclick("return show_gedcom_record();");
@@ -729,13 +729,13 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->indi->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
-			$submenu = new Menu($pgv_lang["add_to_cart"], encode_url("module.php?mod=clippings&action=add&id={$this->pid}&type=indi"));
+			$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url("module.php?mod=clippings&action=add&id={$this->pid}&type=indi"));
 			if (!empty($PGV_IMAGES["clippings"]["small"])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->indi->canDisplayDetails() && PGV_USER_NAME) {
-			$submenu = new Menu($pgv_lang["add_to_my_favorites"], encode_url($this->indi->getLinkUrl()."&action=addfav&gid={$this->pid}"));
+			$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url($this->indi->getLinkUrl()."&action=addfav&gid={$this->pid}"));
 			if (!empty($PGV_IMAGES["gedcom"]["small"])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
@@ -816,26 +816,26 @@ class IndividualControllerRoot extends BaseController {
 		if (!is_object($family)) return $people;
 		$labels = array();
 		if ($type=="parents") {
-			$labels["parent"] = $pgv_lang["parent"];
-			$labels["mother"] = $pgv_lang["mother"];
-			$labels["father"] = $pgv_lang["father"];
-			$labels["sibling"] = $pgv_lang["sibling"];
-			$labels["sister"] = $pgv_lang["sister"];
-			$labels["brother"] = $pgv_lang["brother"];
+			$labels["parent"] = i18n::translate('Parent');
+			$labels["mother"] = i18n::translate('Mother');
+			$labels["father"] = i18n::translate('Father');
+			$labels["sibling"] = i18n::translate('Sibling');
+			$labels["sister"] = i18n::translate('Sister');
+			$labels["brother"] = i18n::translate('Brother');
 		}
 		if ($type=="step"){
-			$labels["parent"] = $pgv_lang["stepparent"];
-			$labels["mother"] = $pgv_lang["stepmom"];
-			$labels["father"] = $pgv_lang["stepdad"];
-			$labels["sibling"] = $pgv_lang["halfsibling"];
-			$labels["sister"] = $pgv_lang["halfsister"];
-			$labels["brother"] = $pgv_lang["halfbrother"];
+			$labels["parent"] = i18n::translate('Step-Parent');
+			$labels["mother"] = i18n::translate('Step-Mother');
+			$labels["father"] = i18n::translate('Step-Father');
+			$labels["sibling"] = i18n::translate('Half-Sibling');
+			$labels["sister"] = i18n::translate('Half-Sister');
+			$labels["brother"] = i18n::translate('Half-Brother');
 		}
 		if ($type=="spouse") {
 			if ($family->isNotMarried()) {
-				$labels["parent"] = $pgv_lang["partner"];
-				$labels["mother"] = $pgv_lang["partner"];
-				$labels["father"] = $pgv_lang["partner"];
+				$labels["parent"] = i18n::translate('Partner');
+				$labels["mother"] = i18n::translate('Partner');
+				$labels["father"] = i18n::translate('Partner');
 			} elseif ($family->isDivorced()) {
 				$labels["parent"] = $pgv_lang["ex-spouse"];
 				$labels["mother"] = $pgv_lang["ex-wife"];
@@ -845,28 +845,28 @@ class IndividualControllerRoot extends BaseController {
 				if (!empty($marr_rec)) {
 					$type = $family->getMarriageType();
 					if (empty($type) || stristr($type, "partner")===false) {
-						$labels["parent"] = $pgv_lang["spouse"];
-						$labels["mother"] = $pgv_lang["wife"];
-						$labels["father"] = $pgv_lang["husband"];
+						$labels["parent"] = i18n::translate('Spouse');
+						$labels["mother"] = i18n::translate('Wife');
+						$labels["father"] = i18n::translate('Husband');
 					} else {
 						if (isset($pgv_lang[$type])) {
 							$label = $pgv_lang[$type];
 						} else {
-							$label = $pgv_lang["partner"];
+							$label = i18n::translate('Partner');
 						}
 						$labels["parent"] = $label;
 						$labels["mother"] = $label;
 						$labels["father"] = $label;
 					}
 				} else {
-					$labels["parent"] = $pgv_lang["spouse"];
-					$labels["mother"] = $pgv_lang["wife"];
-					$labels["father"] = $pgv_lang["husband"];
+					$labels["parent"] = i18n::translate('Spouse');
+					$labels["mother"] = i18n::translate('Wife');
+					$labels["father"] = i18n::translate('Husband');
 				}
 			}
-			$labels["sibling"] = $pgv_lang["child"];
-			$labels["sister"] = $pgv_lang["daughter"];
-			$labels["brother"] = $pgv_lang["son"];
+			$labels["sibling"] = i18n::translate('Child');
+			$labels["sister"] = i18n::translate('Daughter');
+			$labels["brother"] = i18n::translate('Son');
 		}
 		$newhusb = null;
 		$newwife = null;
@@ -884,8 +884,8 @@ class IndividualControllerRoot extends BaseController {
 		if ($type=="step") {
 			$fams = $this->indi->getChildFamilies();
 			foreach($fams as $key=>$fam) {
-				if ($fam->hasParent($husb)) $labels["father"] = $pgv_lang["father"];
-				if ($fam->hasParent($wife)) $labels["mother"] = $pgv_lang["mother"];
+				if ($fam->hasParent($husb)) $labels["father"] = i18n::translate('Father');
+				if ($fam->hasParent($wife)) $labels["mother"] = i18n::translate('Mother');
 			}
 		}
 		//-- set the label for the husband

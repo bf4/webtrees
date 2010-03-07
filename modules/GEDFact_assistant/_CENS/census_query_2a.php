@@ -116,7 +116,7 @@ function print_indi_list($datalist, $legend="", $option="") {
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">&nbsp; INDI &nbsp;</th>";
 	echo '<th class="list_label">'.i18n::translate('NAME').'</th>';
-	echo "<th class=\"list_label\">&nbsp;".$pgv_lang["add"]."&nbsp; </th>";
+	echo "<th class=\"list_label\">&nbsp;".i18n::translate('Add')."&nbsp; </th>";
 	echo "</tr></thead>\n";
 
 	//-- table body

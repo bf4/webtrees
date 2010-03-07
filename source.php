@@ -48,12 +48,12 @@ if (PGV_USE_LIGHTBOX) {
 }
 
 if (!$controller->source){
-	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
+	echo "<b>", i18n::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();
 	exit;
 }
 else if ($controller->source->isMarkedDeleted()) {
-	echo '<span class="error">', $pgv_lang['record_marked_deleted'], '</span>';
+	echo '<span class="error">', i18n::translate('This record has been marked for deletion upon admin approval.'), '</span>';
 }
 
 echo PGV_JS_START;
@@ -67,7 +67,7 @@ echo PGV_JS_END;
 
 echo '<table class="list_table"><tr><td>';
 if ($controller->accept_success) {
-	echo '<b>', $pgv_lang['accept_successful'], '</b><br />';
+	echo '<b>', i18n::translate('Changes successfully accepted into database'), '</b><br />';
 }
 echo '<span class="name_head">', PrintReady(htmlspecialchars($controller->source->getFullName()));
 if ($SHOW_ID_NUMBERS) {
@@ -96,11 +96,11 @@ if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	// new media
 	echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
 	print_help_link('add_media', 'qm', 'add_media_lbl');
-	echo $pgv_lang['add_media_lbl'] , '</td>';
+	echo i18n::translate('Add Media') , '</td>';
 	echo '<td class="optionbox ', $TEXT_DIRECTION, '">';
-	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->sid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
+	echo '<a href="javascript: ', i18n::translate('Add Media'), '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->sid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', i18n::translate('Add a new Media item'), '</a>';
 	echo '<br />';
-	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid=', $controller->sid, '&linkto=source\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', $pgv_lang['link_to_existing_media'], '</a>';
+	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid=', $controller->sid, '&linkto=source\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', i18n::translate('Link to an existing Media item'), '</a>';
 	echo '</td></tr>';
 }
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';

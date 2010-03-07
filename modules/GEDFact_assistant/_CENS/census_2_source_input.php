@@ -957,7 +957,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 
 <div class="optionbox cens_sour">
 	<div class="cens_sour_country">
-		<span><?php echo $pgv_lang["cens_country"]; ?><br /></span>
+		<span><?php echo i18n::translate('Country'); ?><br /></span>
 		<select id="censCtry" name="censCtry" >
 			<option id="UKOPT" name="UKOPT" value="UK">UK</option>
 			<option id="USOPT" name="USOPT" value="USA">USA</option>
@@ -998,7 +998,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 			<table><tr><td nowrap="nowrap">
 			<br />
 			<?php
-				// echo "&nbsp;".$pgv_lang["date"].":&nbsp;&nbsp;"; 
+				// echo "&nbsp;".i18n::translate('Date').":&nbsp;&nbsp;"; 
 				echo "<font size=2>";
 			// Input renamed as type=hidden to hide the date field ----- //
 			// Note Input field is still required ---------------------- //
@@ -1012,7 +1012,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 	</div>
 
 	<div class="cens_sour_year">
-		<span><?php echo $pgv_lang["cens_year"]; ?><br /></span>
+		<span><?php echo i18n::translate('Year'); ?><br /></span>
 		<select style = "background:#ffaaaa;";
 				onchange =	"if( this.options[this.selectedIndex].value!='') {
 								changeYear(this.options[this.selectedIndex].value);

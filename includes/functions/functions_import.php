@@ -612,7 +612,7 @@ function import_record($gedrec, $ged_id, $update) {
 		$xref=$match[1];
 		$type=$match[1];
 	} else {
-		echo $pgv_lang['invalid_gedformat'], '<br /><pre>', $gedrec, '</pre>';
+		echo i18n::translate('Invalid GEDCOM format'), '<br /><pre>', $gedrec, '</pre>';
 		return;
 	}
 
@@ -638,7 +638,7 @@ function import_record($gedrec, $ged_id, $update) {
 		if (preg_match('/0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
 			list(,$xref, $type)=$match;
 		} else {
-			echo $pgv_lang['invalid_gedformat'], '<br /><pre>', $gedrec, '</pre>';
+			echo i18n::translate('Invalid GEDCOM format'), '<br /><pre>', $gedrec, '</pre>';
 			return;
 		}
 	}

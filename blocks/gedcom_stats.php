@@ -37,7 +37,7 @@ define('PGV_GEDCOM_STATS_PHP', '');
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 require_once PGV_ROOT.'includes/classes/class_stats.php';
 
-$PGV_BLOCKS['print_gedcom_stats']['name']     =$pgv_lang['gedcom_stats_block'];
+$PGV_BLOCKS['print_gedcom_stats']['name']     =i18n::translate('GEDCOM Statistics');
 $PGV_BLOCKS['print_gedcom_stats']['descr']    ='gedcom_stats_descr';
 $PGV_BLOCKS['print_gedcom_stats']['canconfig']=true;
 $PGV_BLOCKS['print_gedcom_stats']['config']   =array(
@@ -85,10 +85,10 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES['admin']['small']."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang['config_block']."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES['admin']['small']."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= $pgv_lang['gedcom_stats'];
+	$title .= i18n::translate('GEDCOM Statistics');
 
 	$stats=new stats(PGV_GEDCOM);
 
@@ -119,30 +119,30 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 
 	$content .= '<br /><table><tr><td valign="top" class="width20"><table cellspacing="1" cellpadding="0">';
 	if ($config['stat_indi']=='yes') {
-		$content.='<tr><td class="facts_label">'.$pgv_lang['stat_individuals'].'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?surname_sublist=no&ged=".PGV_GEDCOM).'">'.$stats->totalIndividuals().'</a></div></td></tr>';
-		$content.='<tr><td class="facts_label">'.$pgv_lang['stat_males'].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalSexMales().'<br />'.$stats->totalSexMalesPercentage().'%</div></td></tr>';
-		$content.='<tr><td class="facts_label">'.$pgv_lang['stat_females'].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalSexFemales().'<br />'.$stats->totalSexFemalesPercentage().'%</div></td></tr>';
+		$content.='<tr><td class="facts_label">'.i18n::translate('Individuals').'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?surname_sublist=no&ged=".PGV_GEDCOM).'">'.$stats->totalIndividuals().'</a></div></td></tr>';
+		$content.='<tr><td class="facts_label">'.i18n::translate('Males').'</td><td class="facts_value"><div dir="rtl">'.$stats->totalSexMales().'<br />'.$stats->totalSexMalesPercentage().'%</div></td></tr>';
+		$content.='<tr><td class="facts_label">'.i18n::translate('Females').'</td><td class="facts_value"><div dir="rtl">'.$stats->totalSexFemales().'<br />'.$stats->totalSexFemalesPercentage().'%</div></td></tr>';
 	}
 	if ($config['stat_surname']=='yes') {
-		$content .= '<tr><td class="facts_label">'.$pgv_lang['stat_surnames'].'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?show_all=yes&surname_sublist=yes&ged=".PGV_GEDCOM).'">'.$stats->totalSurnames().'</a></div></td></tr>';
+		$content .= '<tr><td class="facts_label">'.i18n::translate('Total surnames').'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?show_all=yes&surname_sublist=yes&ged=".PGV_GEDCOM).'">'.$stats->totalSurnames().'</a></div></td></tr>';
 	}
 	if ($config['stat_fam']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_families'].'</td><td class="facts_value"><div dir="rtl"><a href="famlist.php">'.$stats->totalFamilies().'</a></div></td></tr>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Families').'</td><td class="facts_value"><div dir="rtl"><a href="famlist.php">'.$stats->totalFamilies().'</a></div></td></tr>';
 	}
 	if ($config['stat_sour']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_sources'].'</td><td class="facts_value"><div dir="rtl"><a href="sourcelist.php">'.$stats->totalSources().'</a></div></td></tr>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Sources').'</td><td class="facts_value"><div dir="rtl"><a href="sourcelist.php">'.$stats->totalSources().'</a></div></td></tr>';
 	}
 	if ($config['stat_media']=='yes' && $MULTI_MEDIA==true) {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_media'].'</td><td class="facts_value"><div dir="rtl"><a href="medialist.php">'.$stats->totalMedia().'</a></div></td></tr>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Media objects').'</td><td class="facts_value"><div dir="rtl"><a href="medialist.php">'.$stats->totalMedia().'</a></div></td></tr>';
 	}
 	if ($config['stat_other']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_other'].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalOtherRecords().'</div></td></tr>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Other records').'</td><td class="facts_value"><div dir="rtl">'.$stats->totalOtherRecords().'</div></td></tr>';
 	}
 	if ($config['stat_events']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_events'].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalEvents().'</div></td></tr>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Total events').'</td><td class="facts_value"><div dir="rtl">'.$stats->totalEvents().'</div></td></tr>';
 	}
 	if ($config['stat_users']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_users'].'</td><td class="facts_value"><div dir="rtl">';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Total users').'</td><td class="facts_value"><div dir="rtl">';
 			if (PGV_USER_GEDCOM_ADMIN){
 			$content .= '<a href="useradmin.php">'.$stats->totalUsers().'</a>';
 		} else {
@@ -156,28 +156,28 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 		$content .= '</table></td><td><br /></td><td valign="top"><table cellspacing="1" cellpadding="1" border="0">';
 	}
 	if ($config['stat_first_birth']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_earliest_birth'].'</td><td class="facts_value"><div dir="rtl">'.$stats->firstBirthYear().'</div></td>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Earliest birth year').'</td><td class="facts_value"><div dir="rtl">'.$stats->firstBirthYear().'</div></td>';
 		if (!$block) {
 			$content .= '<td class="facts_value">'.$stats->firstBirth().'</td>';
 		}
 		$content .= '</tr>';
 	}
 	if ($config['stat_last_birth']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_latest_birth'].'</td><td class="facts_value"><div dir="rtl">'.$stats->lastBirthYear().'</div></td>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Latest birth year').'</td><td class="facts_value"><div dir="rtl">'.$stats->lastBirthYear().'</div></td>';
 		if (!$block){
 			$content .= '<td class="facts_value">'.$stats->lastBirth().'</td>';
 		}
 		$content .= '</tr>';
 	}
 	if ($config['stat_first_death']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_earliest_death'].'</td><td class="facts_value"><div dir="rtl">'.$stats->firstDeathYear().'</div></td>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Earliest death year').'</td><td class="facts_value"><div dir="rtl">'.$stats->firstDeathYear().'</div></td>';
 		if (!$block){
 			$content .= '<td class="facts_value">'.$stats->firstDeath().'</td>';
 		}
 		$content .= '</tr>';
 	}
 	if ($config['stat_last_death']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_latest_death'] .'</td><td class="facts_value"><div dir="rtl">'.$stats->lastDeathYear().'</div>
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Latest death year') .'</td><td class="facts_value"><div dir="rtl">'.$stats->lastDeathYear().'</div>
 </td>';
 		if (!$block){
 			$content .= '<td class="facts_value">'.$stats->lastDeath().'</td>';
@@ -185,30 +185,30 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 		$content .='</tr>';
 	}
 	if ($config['stat_long_life']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_longest_life'].'</td><td class="facts_value"><div dir="rtl">'.$stats->LongestLifeAge().'</div></td>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Person who lived the longest').'</td><td class="facts_value"><div dir="rtl">'.$stats->LongestLifeAge().'</div></td>';
 		if (!$block){
 			$content .= '<td class="facts_value">'.$stats->LongestLife().'</td>';
 		}
 		$content .= '</tr>';
 	}
 	if ($config['stat_avg_life']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_avg_age_at_death'].'</td><td class="facts_value"><div dir="rtl">'.$stats->averageLifespan().'</div></td>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Average age at death').'</td><td class="facts_value"><div dir="rtl">'.$stats->averageLifespan().'</div></td>';
 		if (!$block) {
-			$content .= '<td class="facts_value">'.$pgv_lang['stat_males'].':&nbsp;'.$stats->averageLifespanMale();
-			$content .= '&nbsp;&nbsp;&nbsp;'.$pgv_lang['stat_females'].':&nbsp;'.$stats->averageLifespanFemale().'</td>';
+			$content .= '<td class="facts_value">'.i18n::translate('Males').':&nbsp;'.$stats->averageLifespanMale();
+			$content .= '&nbsp;&nbsp;&nbsp;'.i18n::translate('Females').':&nbsp;'.$stats->averageLifespanFemale().'</td>';
 		}
 		$content .= '</tr>';
 	}
 
 	if ($config['stat_most_chil']=='yes' && !$block) {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_most_children'].'</td><td class="facts_value"><div dir="rtl">'.$stats->largestFamilySize().'</div></td>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Family with the most children').'</td><td class="facts_value"><div dir="rtl">'.$stats->largestFamilySize().'</div></td>';
 		if (!$block) {
 			$content .= '<td class="facts_value">'.$stats->largestFamily().'</td>';
 		}
 		$content .= '</tr>';
 	}
 	if ($config['stat_avg_chil']=='yes') {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang['stat_average_children'].'</td><td class="facts_value"><div dir="rtl">'.$stats->averageChildren().'</div></td>';
+		$content .= '<tr><td class="facts_label">'. i18n::translate('Average number of children per family').'</td><td class="facts_value"><div dir="rtl">'.$stats->averageChildren().'</div></td>';
 		if (!$block) {
 			$content .= '<td class="facts_value">&nbsp;</td>';
 		}
@@ -216,7 +216,7 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 	}
 	$content .= '</table></td></tr></table>';
 	if ($config['stat_link']=='yes') {
-		$content .= '<a href="statistics.php"><b>'.$pgv_lang['stat_link'].'</b></a><br />';
+		$content .= '<a href="statistics.php"><b>'.i18n::translate('View statistics as graphs').'</b></a><br />';
 	}
 	// NOTE: Print the most common surnames
 	if ($config['show_common_surnames']=='yes') {
@@ -224,7 +224,7 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 		if (count($surnames)>0) {
 			$content .= '<br />';
 			$content .= print_help_link('index_common_names', 'qm', '', false, true);
-			$content .= '<b>'.$pgv_lang['common_surnames'].'</b><br />';
+			$content .= '<b>'.i18n::translate('Most Common Surnames').'</b><br />';
 			$i=0;
 			foreach($surnames as $indexval => $surname) {
 				if (stristr($surname['name'], '@N.N')===false) {
@@ -256,91 +256,91 @@ function print_gedcom_stats_config($config) {
 	if (!isset($config['stat_link'])) $config['stat_link'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_link'];
 	if (!isset($config['cache'])) $config['cache'] = $PGV_BLOCKS['print_gedcom_stats']['config']['cache'];
 
-	?><tr><td class="descriptionbox wrap width33"> <?php echo $pgv_lang['gedcom_stats_show_surnames']; ?></td>
+	?><tr><td class="descriptionbox wrap width33"> <?php echo i18n::translate('Show common surnames?'); ?></td>
 <td class="optionbox"><select name="show_common_surnames">
 <option value="yes"
-<?php if ($config['show_common_surnames']=='yes') echo ' selected="selected"'; ?>><?php echo $pgv_lang['yes']; ?></option>
+<?php if ($config['show_common_surnames']=='yes') echo ' selected="selected"'; ?>><?php echo i18n::translate('Yes'); ?></option>
 <option value="no"
-<?php if ($config['show_common_surnames']=='no') echo ' selected="selected"'; ?>><?php echo $pgv_lang['no']; ?></option>
+<?php if ($config['show_common_surnames']=='no') echo ' selected="selected"'; ?>><?php echo i18n::translate('No'); ?></option>
 </select></td>
 </tr>
 <tr>
-<td class="descriptionbox wrap width33"><?php echo $pgv_lang['stats_to_show']; ?></td>
+<td class="descriptionbox wrap width33"><?php echo i18n::translate('Select the stats to show in this block'); ?></td>
 <td class="optionbox">
 <table>
 	<tr>
 		<td><input type="checkbox" value="yes" name="stat_indi"
 		<?php if ($config['stat_indi']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_individuals']; ?></td>
+		<?php echo i18n::translate('Individuals'); ?></td>
 		<td><input type="checkbox" value="yes" name="stat_first_birth"
 		<?php if ($config['stat_first_birth']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_earliest_birth']; ?></td>
+		<?php echo i18n::translate('Earliest birth year'); ?></td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" value="yes" name="stat_surname"
 		<?php if ($config['stat_surname']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_surnames']; ?></td>
+		<?php echo i18n::translate('Total surnames'); ?></td>
 		<td><input type="checkbox" value="yes" name="stat_last_birth"
 		<?php if ($config['stat_last_birth']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_latest_birth']; ?></td>
+		<?php echo i18n::translate('Latest birth year'); ?></td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" value="yes" name="stat_fam"
 		<?php if ($config['stat_fam']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_families']; ?></td>
+		<?php echo i18n::translate('Families'); ?></td>
 		<td><input type="checkbox" value="yes" name="stat_first_death"
 		<?php if ($config['stat_first_death']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_earliest_death']; ?></td>
+		<?php echo i18n::translate('Earliest death year'); ?></td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" value="yes" name="stat_sour"
 		<?php if ($config['stat_sour']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_sources']; ?></td>
+		<?php echo i18n::translate('Sources'); ?></td>
 		<td><input type="checkbox" value="yes" name="stat_last_death"
 		<?php if ($config['stat_last_death']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_latest_death']; ?></td>
+		<?php echo i18n::translate('Latest death year'); ?></td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" value="yes" name="stat_media"
 		<?php if ($config['stat_media']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_media']; ?></td>
+		<?php echo i18n::translate('Media objects'); ?></td>
 		<td><input type="checkbox" value="yes" name="stat_long_life"
 		<?php if ($config['stat_long_life']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_longest_life']; ?></td>
+		<?php echo i18n::translate('Person who lived the longest'); ?></td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" value="yes" name="stat_other"
 		<?php if ($config['stat_other']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_other']; ?></td>
+		<?php echo i18n::translate('Other records'); ?></td>
 		<td><input type="checkbox" value="yes" name="stat_avg_life"
 		<?php if ($config['stat_avg_life']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_avg_age_at_death']; ?></td>
+		<?php echo i18n::translate('Average age at death'); ?></td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" value="yes" name="stat_events"
 		<?php if ($config['stat_events']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_events']; ?></td>
+		<?php echo i18n::translate('Total events'); ?></td>
 		<td><input type="checkbox" value="yes" name="stat_most_chil"
 		<?php if ($config['stat_most_chil']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_most_children']; ?></td>
+		<?php echo i18n::translate('Family with the most children'); ?></td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" value="yes" name="stat_users"
 		<?php if ($config['stat_users']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_users']; ?></td>
+		<?php echo i18n::translate('Total users'); ?></td>
 		<td><input type="checkbox" value="yes" name="stat_avg_chil"
 		<?php if ($config['stat_avg_chil']=='yes') echo ' checked="checked"'; ?> />
-		<?php echo $pgv_lang['stat_average_children']; ?></td>
+		<?php echo i18n::translate('Average number of children per family'); ?></td>
 	</tr>
 </table>
 </td>
 </tr>
 <tr>
-	<td class="descriptionbox wrap width33"> <?php echo $pgv_lang['print_stat_link']; ?></td>
+	<td class="descriptionbox wrap width33"> <?php echo i18n::translate('Show link to Statistics charts?'); ?></td>
 	<td class="optionbox">
 		<select name="stat_link">
-			<option value="yes" <?php if ($config['stat_link']=='yes') echo ' selected="selected"'; ?>><?php echo $pgv_lang['yes']; ?></option>
-			<option value="no" <?php if ($config['stat_link']=='no') echo ' selected="selected"'; ?>><?php echo $pgv_lang['no']; ?></option>
+			<option value="yes" <?php if ($config['stat_link']=='yes') echo ' selected="selected"'; ?>><?php echo i18n::translate('Yes'); ?></option>
+			<option value="no" <?php if ($config['stat_link']=='no') echo ' selected="selected"'; ?>><?php echo i18n::translate('No'); ?></option>
 		</select>
 	</td>
 </tr>
@@ -350,7 +350,7 @@ function print_gedcom_stats_config($config) {
 	if ($ctype=='gedcom') {
 		echo '<tr><td class="descriptionbox wrap width33">';
 		print_help_link('cache_life', 'qm');
-		echo $pgv_lang['cache_life'];
+		echo i18n::translate('Cache file life');
 		echo '</td><td class="optionbox">';
 		echo '<input type="text" name="cache" size="2" value="', $config['cache'], '" />';
 		echo '</td></tr>';

@@ -275,15 +275,15 @@ class PedigreeControllerRoot extends BaseController {
 	function getPageTitle() {
 		global $pgv_lang, $GEDCOM;
 
-		$name = $pgv_lang['unknown'];
+		$name = i18n::translate('unknown');
 		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
-		return $name." ".$pgv_lang["index_header"];
+		return $name." ".i18n::translate('Pedigree Tree');
 	}
 
 	function getPersonName() {
 		global $pgv_lang;
 
-		$name = $pgv_lang['unknown'];
+		$name = i18n::translate('unknown');
 		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
 		return $name;
 	}

@@ -37,11 +37,11 @@ loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lightbox:lang, lightbox:help_t
 
 if (PGV_USER_IS_ADMIN) { ?>
    <tr>
-	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["configure_lightbox"]; ?></td>
+	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Lightbox-Album Configuration'); ?></td>
    </tr>
    <tr>
       <td class="optionbox">
-		<?php print_help_link("LIGHTBOX_CONFIG", "qm", "LIGHTBOX_CONFIG");?><a href="module.php?mod=lightbox&pgvaction=lb_editconfig"><?php echo $pgv_lang["lb_manage"];?>
+		<?php print_help_link("LIGHTBOX_CONFIG", "qm", "LIGHTBOX_CONFIG");?><a href="module.php?mod=lightbox&pgvaction=lb_editconfig"><?php echo i18n::translate('Manage Lightbox configuration');?>
 		</a>
 	  </td>
       <td class="optionbox">

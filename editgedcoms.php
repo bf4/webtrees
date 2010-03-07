@@ -75,7 +75,7 @@ if ($action=="delete") {
 	header("Location: editgedcoms.php");
 }
 
-print_header($pgv_lang["gedcom_adm_head"]);
+print_header(i18n::translate('GEDCOM Administration'));
 print "<center>\n";
 
 if (($action=="setdefault") && in_array($default_ged, $all_gedcoms)) {
@@ -93,7 +93,7 @@ if (($action=="setdefault") && in_array($default_ged, $all_gedcoms)) {
 print "<br />";
 if (PGV_USER_IS_ADMIN && count($all_gedcoms)>1) {
 	print_help_link("default_gedcom", "qm");
-	print $pgv_lang["DEFAULT_GEDCOM"]."&nbsp;";
+	print i18n::translate('Default GEDCOM')."&nbsp;";
 	print "<select name=\"default_ged\" class=\"header_select\" onchange=\"document.defaultform.submit();\">";
 	if (!in_array($DEFAULT_GEDCOM, $all_gedcoms)) {
 		echo '<option value="" selected="selected" onclick="document.defaultform.submit();">', htmlspecialchars($DEFAULT_GEDCOM), '</option>';
@@ -108,26 +108,26 @@ if (PGV_USER_IS_ADMIN && count($all_gedcoms)>1) {
 }
 
 print_help_link('SECURITY_CHECK_GEDCOM_DOWNLOADABLE', 'qm');
-print '<a href="editgedcoms.php?check_download=true">'.$pgv_lang['SECURITY_CHECK_GEDCOM_DOWNLOADABLE']."</a>\n";
+print '<a href="editgedcoms.php?check_download=true">'.i18n::translate('Check if GEDCOM files are downloadable')."</a>\n";
 // Print table heading
 print "<table class=\"gedcom_table\">";
 if (PGV_USER_IS_ADMIN) {
 	print "<tr><td class=\"list_label\">";
 	print_help_link("help_addgedcom.php", "qm");
-	print "<a href=\"editconfig_gedcom.php?source=add_form\">".$pgv_lang["add_gedcom"]."</a>";
+	print "<a href=\"editconfig_gedcom.php?source=add_form\">".i18n::translate('Add GEDCOM')."</a>";
 	print "</td>";
 	print "<td class=\"list_label\">";
 	print_help_link("help_uploadgedcom.php", "qm");
-	print "<a href=\"editconfig_gedcom.php?source=upload_form\">".$pgv_lang["upload_gedcom"]."</a>";
+	print "<a href=\"editconfig_gedcom.php?source=upload_form\">".i18n::translate('Upload GEDCOM')."</a>";
 	print "</td>";
 }
 if (PGV_USER_IS_ADMIN) {
 	print "<td class=\"list_label\">";
 	print_help_link("help_addnewgedcom.php", "qm");
-	print "<a href=\"editconfig_gedcom.php?source=add_new_form\">".$pgv_lang["add_new_gedcom"]."</a>";
+	print "<a href=\"editconfig_gedcom.php?source=add_new_form\">".i18n::translate('Create a new GEDCOM')."</a>";
 	print "</td>";
 }
-print  "<td class=\"list_label\"><a href=\"admin.php\">" . $pgv_lang["lang_back_admin"] . "</a></td></tr>";
+print  "<td class=\"list_label\"><a href=\"admin.php\">" . i18n::translate('Return to the Admin menu') . "</a></td></tr>";
 print "</table>";
 print "<table class=\"gedcom_table\">";
 $GedCount = 0;
@@ -147,14 +147,14 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 
 		// Row 1: Heading
 		print "<tr>";
-		print "<td colspan=\"1\" class=\"list_label\">".$pgv_lang["ged_title"]."</td>";
+		print "<td colspan=\"1\" class=\"list_label\">".i18n::translate('GEDCOM title')."</td>";
 		print "<td colspan=\"7\" class=\"list_value_wrap\">";
 		if ($DEFAULT_GEDCOM==$ged_name) print "<span class=\"label\">";
 		print PrintReady(get_gedcom_setting($ged_id, 'title'))."&nbsp;&nbsp;";
 		if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$ged_id.")" . getRLM();
 		else print getLRM() . "(".$ged_id.")" . getLRM();
 		if ($DEFAULT_GEDCOM==$ged_name) print "</span>";
-		print "&nbsp;&nbsp;<a href=\"".encode_url("editconfig_gedcom.php?source=replace_form&path=".get_gedcom_setting($ged_id, 'path'))."&oldged=".get_gedcom_setting($ged_id, 'gedcom')."\">".$pgv_lang['upload_replacement']."</a>\n";
+		print "&nbsp;&nbsp;<a href=\"".encode_url("editconfig_gedcom.php?source=replace_form&path=".get_gedcom_setting($ged_id, 'path'))."&oldged=".get_gedcom_setting($ged_id, 'gedcom')."\">".i18n::translate('Upload Replacement')."</a>\n";
 		print "</td>";
 		print "</tr>";
 
@@ -178,39 +178,39 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 				$url = check_gedcom_downloadable(get_gedcom_setting($ged_id, 'path'));
 				if ($url!==false) {
 					print "<br />\n";
-					print "<span class=\"error\">".$pgv_lang["gedcom_downloadable"]." :</span>";
+					print "<span class=\"error\">".i18n::translate('This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href="readme.txt"><b>readme.txt</b></a> file to fix this problem')." :</span>";
 					print "<br /><a href=\"$url\">$url</a>";
 				}
 				else print "<br /><b>".str_replace("#GEDCOM#", get_gedcom_setting($ged_id, 'path'), $pgv_lang['gedcom_download_secure'])."</b><br />";
 			}
 		}
-		else print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span>";
+		else print "<span class=\"error\">".i18n::translate('File not found.')."</span>";
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 3  (Import action)
-		print "<a href=\"".encode_url("uploadgedcom.php?GEDFILENAME={$ged_name}&verify=verify_gedcom&action=add_form&import_existing=1")."\">".$pgv_lang["ged_import"]."</a>";
+		print "<a href=\"".encode_url("uploadgedcom.php?GEDFILENAME={$ged_name}&verify=verify_gedcom&action=add_form&import_existing=1")."\">".i18n::translate('Import')."</a>";
 		if (!get_gedcom_setting($ged_id, 'imported')) {
-			print "<br /><span class=\"error\">".$pgv_lang["gedcom_not_imported"]."</span>";
+			print "<br /><span class=\"error\">".i18n::translate('This GEDCOM has not yet been imported.')."</span>";
 		}
 		print "&nbsp;&nbsp;";
 		print "</td>";
 
 		echo '<td valign="top">';		// Column 4  (Export action)
-		echo '<a href="javascript:" onclick="window.open(\'', encode_url("export_gedcom.php?export={$ged_name}"), '\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');">', $pgv_lang['ged_export'], '</a>';
+		echo '<a href="javascript:" onclick="window.open(\'', encode_url("export_gedcom.php?export={$ged_name}"), '\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');">', i18n::translate('Export'), '</a>';
 		echo '</td>';
 
 		print "<td valign=\"top\">";		// Column 5  (Delete action)
-		print "<a href=\"".encode_url("editgedcoms.php?action=delete&ged={$ged_name}")."\" onclick=\"return confirm('".$pgv_lang["confirm_gedcom_delete"]." ".str_replace("'", "\'", $ged_name)."?');\">".$pgv_lang["delete"]."</a>";
+		print "<a href=\"".encode_url("editgedcoms.php?action=delete&ged={$ged_name}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this GEDCOM')." ".str_replace("'", "\'", $ged_name)."?');\">".i18n::translate('Delete')."</a>";
 		print "&nbsp;&nbsp;";
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 6  (Download action)
-		print "<a href=\"".encode_url("downloadgedcom.php?ged={$ged_name}")."\">".$pgv_lang["ged_download"]."</a>";
+		print "<a href=\"".encode_url("downloadgedcom.php?ged={$ged_name}")."\">".i18n::translate('Download')."</a>";
 		print "&nbsp;&nbsp;";
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 7  (Check action)
-		print "<a href=\"".encode_url("gedcheck.php?ged={$ged_name}")."\">".$pgv_lang["ged_check"]."</a>";
+		print "<a href=\"".encode_url("gedcheck.php?ged={$ged_name}")."\">".i18n::translate('Check')."</a>";
 		print "&nbsp;&nbsp;";
 		print "</td>";
 
@@ -228,7 +228,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 3  (Edit action)
-		print "<a href=\"".encode_url("editconfig_gedcom.php?ged={$ged_name}")."\">".$pgv_lang["edit"]."</a>";
+		print "<a href=\"".encode_url("editconfig_gedcom.php?ged={$ged_name}")."\">".i18n::translate('Edit')."</a>";
 		print "</td>";
 
 		print "<td colspan=\"4\" valign=\"top\">";		// Columns 4-7  (blank)
@@ -247,7 +247,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 3  (Edit action)
-		print "<a href=\"".encode_url("edit_privacy.php?ged={$ged_name}")."\">".$pgv_lang["edit"]."</a>";
+		print "<a href=\"".encode_url("edit_privacy.php?ged={$ged_name}")."\">".i18n::translate('Edit')."</a>";
 		print "</td>";
 
 		print "<td colspan=\"4\" valign=\"top\">";		// Columns 4-7  (blank)
@@ -266,7 +266,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		require get_config_file($ged_id);
 		print "<td valign=\"top\">";		// Column 2  (notices)
 		if (!isset($SEARCHLOG_CREATE)) {
-			print getLRM() . $pgv_lang["none"];
+			print getLRM() . i18n::translate('None');
 		}
 		else {
 			print getLRM() . $pgv_lang[$SEARCHLOG_CREATE];
@@ -316,7 +316,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		print "</td>";
 		print "<td valign=\"top\">";		// Column 2  (notices)
 		if (!isset($CHANGELOG_CREATE)) {
-			print getLRM() . $pgv_lang["none"];
+			print getLRM() . i18n::translate('None');
 		}
 		else {
 			print getLRM() . $pgv_lang[$CHANGELOG_CREATE];

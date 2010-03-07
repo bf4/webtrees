@@ -102,19 +102,19 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 
 	// check for GD 2.x library
 	if (!defined("IMG_ARC_PIE")) {
-		echo "<span class=\"error\">".$pgv_lang["gd_library"]."</span>";
-		echo " <a href=\"" . $pgv_lang["gd_helplink"] . "\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["small"]."\" class=\"icon\" alt=\"\" /></a><br /><br />";
+		echo "<span class=\"error\">".i18n::translate('PHP server misconfiguration: GD 2.x library required to use image functions.')."</span>";
+		echo " <a href=\"" . i18n::translate('http://www.php.net/gd') . "\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["small"]."\" class=\"icon\" alt=\"\" /></a><br /><br />";
 		return false;
 	}
 	if (!function_exists("ImageTtfBbox")) {
-		echo "<span class=\"error\">".$pgv_lang["gd_freetype"]."</span>";
-		echo " <a href=\"" . $pgv_lang["gd_helplink"] . "\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["small"]."\" class=\"icon\" alt=\"\" /></a><br /><br />";
+		echo "<span class=\"error\">".i18n::translate('PHP server misconfiguration: FreeType library required to use TrueType fonts.')."</span>";
+		echo " <a href=\"" . i18n::translate('http://www.php.net/gd') . "\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["small"]."\" class=\"icon\" alt=\"\" /></a><br /><br />";
 		return false;
 	}
 
 	// Validate
 	if (!file_exists($fanChart['font'])) {
-		echo '<span class="error">', $pgv_lang["fontfile_error"], ' : ', $fanChart['font']. '</span>';
+		echo '<span class="error">', i18n::translate('Font file not found on PHP server'), ' : ', $fanChart['font']. '</span>';
 		return false;
 	}
 
@@ -292,19 +292,19 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				echo "<a href=\"individual.php?pid=$pid\" class=\"name1\">" . PrintReady($name);
 				if (!empty($addname)) echo "<br />" . PrintReady($addname);
 				echo "</a>";
-				echo "<br /><a href=\"pedigree.php?rootid=$pid\" >".$pgv_lang["index_header"]."</a>";
+				echo "<br /><a href=\"pedigree.php?rootid=$pid\" >".i18n::translate('Pedigree Tree')."</a>";
 				if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
-					echo "<br /><a href=\"module.php?mod=googlemap&pgvaction=pedigree_map&rootid=".$pid."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["pedigree_map"]."</a>";
+					echo "<br /><a href=\"module.php?mod=googlemap&pgvaction=pedigree_map&rootid=".$pid."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Pedigree Map')."</a>";
 				}
 				if (PGV_USER_GEDCOM_ID && PGV_USER_GEDCOM_ID!=$pid) {
-					echo "<br /><a href=\"".encode_url("relationship.php?pid1=".PGV_USER_GEDCOM_ID."&pid2={$pid}&ged={$GEDCOM}")."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["relationship_to_me"]."</a>";
+					echo "<br /><a href=\"".encode_url("relationship.php?pid1=".PGV_USER_GEDCOM_ID."&pid2={$pid}&ged={$GEDCOM}")."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Relationship to me')."</a>";
 				}
-				echo "<br /><a href=\"descendancy.php?pid=$pid\" >".$pgv_lang["descend_chart"]."</a>";
-				echo "<br /><a href=\"ancestry.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["ancestry_chart"]."</a>";
-				echo "<br /><a href=\"compact.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["compact_chart"]."</a>";
-				echo "<br /><a href=\"".encode_url($tempURL)."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["fan_chart"]."</a>";
-				echo "<br /><a href=\"hourglass.php?pid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["hourglass_chart"]."</a>";
-				echo "<br /><a href=\"treenav.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["interactive_tree"]."</a>";
+				echo "<br /><a href=\"descendancy.php?pid=$pid\" >".i18n::translate('Descendancy Chart')."</a>";
+				echo "<br /><a href=\"ancestry.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Ancestry Chart')."</a>";
+				echo "<br /><a href=\"compact.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Compact Chart')."</a>";
+				echo "<br /><a href=\"".encode_url($tempURL)."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Circle Diagram')."</a>";
+				echo "<br /><a href=\"hourglass.php?pid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Hourglass Chart')."</a>";
+				echo "<br /><a href=\"treenav.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".i18n::translate('Interactive Tree')."</a>";
 				if ($sosa>=1) {
 					$famids = find_sfamily_ids($pid);
 					//-- make sure there is more than 1 child in the family with parents
@@ -342,8 +342,8 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 							$famrec = find_family_record($cfamids[$f], PGV_GED_ID);
 							if ($famrec) {
 								$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
-								if ($num>2) echo "<br /><span class=\"name1\">".$pgv_lang["siblings"]."</span>";
-								if ($num==2) echo "<br /><span class=\"name1\">".$pgv_lang["sibling"]."</span>";
+								if ($num>2) echo "<br /><span class=\"name1\">".i18n::translate('Siblings')."</span>";
+								if ($num==2) echo "<br /><span class=\"name1\">".i18n::translate('Sibling')."</span>";
 								for($i=0; $i<$num; $i++) {
 									$cpid = $smatch[$i][1];
 									if ($cpid!=$pid) {
@@ -397,7 +397,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	// note: arg "image_name=" is to avoid image miscaching
 	$image_name= "V".time();
 	unset($_SESSION[$image_name]);		// statisticsplot.php uses this to hold a file name to send to browser
-	$image_title=preg_replace("~<.*>~", "", $name) . " " . $pgv_lang["fan_chart"];
+	$image_title=preg_replace("~<.*>~", "", $name) . " " . i18n::translate('Circle Diagram');
 	echo "<p align=\"center\" >";
 	echo "<img src=\"imageflush.php?image_type=png&amp;image_name=$image_name&amp;height=$fanh&amp;width=$fanw\" width=\"$fanw\" height=\"$fanh\" border=\"0\" alt=\"$image_title\" title=\"$image_title\" usemap=\"#fanmap\" />";
 	echo "</p>";
@@ -418,7 +418,7 @@ $name   =$person->getFullName();
 $addname=$person->getAddName();
 
 // -- print html header information
-print_header(PrintReady($name) . " " . $pgv_lang["fan_chart"]);
+print_header(PrintReady($name) . " " . i18n::translate('Circle Diagram'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
@@ -426,7 +426,7 @@ if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
 echo "<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"".$cellwidth."px\" valign=\"top\">";
 if ($view == "preview") echo "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_fan_chart"]) . ":";
-else echo "<h2>" . $pgv_lang["fan_chart"] . ":";
+else echo "<h2>" . i18n::translate('Circle Diagram') . ":";
 echo "<br />".PrintReady($name);
 if ($addname != "") echo "<br />" . PrintReady($addname);
 echo "</h2>";
@@ -442,7 +442,7 @@ if ($view != "preview") {
 	// NOTE: rootid
 	echo "<td class=\"descriptionbox\">";
 	print_help_link("rootid", "qm", "root_person");
-	echo $pgv_lang["root_person"]."</td>";
+	echo i18n::translate('Root Person ID')."</td>";
 	echo "<td class=\"optionbox\">";
 	echo "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
 	print_findindi_link("rootid","");
@@ -451,7 +451,7 @@ if ($view != "preview") {
 	// NOTE: fan style
 	echo "<td rowspan=\"3\" class=\"descriptionbox\">";
 	print_help_link("fan_style", "qm", "chart_style");
-	echo $pgv_lang["fan_chart"]."</td>";
+	echo i18n::translate('Circle Diagram')."</td>";
 	echo "<td rowspan=\"3\" class=\"optionbox\">";
 	echo "<input type=\"radio\" name=\"fan_style\" value=\"2\"";
 	if ($fan_style==2) echo " checked=\"checked\"";
@@ -465,13 +465,13 @@ if ($view != "preview") {
 
 	// NOTE: submit
 	echo "</td><td rowspan=\"3\" class=\"topbottombar vmiddle\">";
-	echo "<input type=\"submit\" value=\"" . $pgv_lang["view"] . "\" />";
+	echo "<input type=\"submit\" value=\"" . i18n::translate('View') . "\" />";
 	echo "</td></tr>";
 
 	// NOTE: generations
 	echo "<tr><td class=\"descriptionbox\">";
 	print_help_link("PEDIGREE_GENERATIONS", "qm", "generations");
-	echo $pgv_lang["generations"]."</td>";
+	echo i18n::translate('Generations')."</td>";
 	echo "<td class=\"optionbox\">";
 	echo "<select name=\"PEDIGREE_GENERATIONS\">";
 	// Can only show 9 generations (256 ancestors) as graphics library has integer degree resolution
@@ -486,7 +486,7 @@ if ($view != "preview") {
 	// NOTE: fan width
 	echo "<td class=\"descriptionbox\">";
 	print_help_link("fan_width", "qm", "fan_width");
-	echo $pgv_lang["fan_width"]."</td>";
+	echo i18n::translate('Width')."</td>";
 	echo "<td class=\"optionbox\">";
 	echo "<input type=\"text\" size=\"3\" name=\"fan_width\" value=\"$fan_width\" /> <b>%</b> ";
 	echo "</td>";
@@ -495,7 +495,7 @@ if ($view != "preview") {
 }
 else {
 	echo "<script language='JavaScript' type='text/javascript'>";
-	echo "if (IE) document.write('<span class=\"warning\">".str_replace("'", "\'", $pgv_lang["fanchart_IE"])."</span>');";
+	echo "if (IE) document.write('<span class=\"warning\">".str_replace("'", "\'", i18n::translate('This Fanchart image cannot be printed directly by your browser. Use right-click then save and print.'))."</span>');";
 	echo "</script>";
 }
 echo "</td></tr></table>";

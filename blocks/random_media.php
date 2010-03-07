@@ -35,7 +35,7 @@ define('PGV_RANDOM_MEDIA_PHP', '');
 
 //-- only enable this block if multi media has been enabled
 if ($MULTI_MEDIA) {
-	$PGV_BLOCKS['print_random_media']['name']		= $pgv_lang['random_media_block'];
+	$PGV_BLOCKS['print_random_media']['name']		= i18n::translate('Random Media');
 	$PGV_BLOCKS['print_random_media']['descr']		= 'random_media_descr';
 	$PGV_BLOCKS['print_random_media']['canconfig']	= true;
 	$PGV_BLOCKS['print_random_media']['config']		= array(
@@ -185,21 +185,21 @@ if ($MULTI_MEDIA) {
 							$name = PGV_USER_NAME;
 						}
 							$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-							$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>";
+							$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 					}
 				}
-				$title .= $pgv_lang["random_picture"];
+				$title .= i18n::translate('Random Picture');
 				$content = "<div id=\"random_picture_container$index\">";
 				if ($config['controls']=='yes') {
 					if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
 					else $image = "rarrow";
-					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['rdarrow']['other']}\" border=\"0\" alt=\"{$pgv_lang['next_image']}\" title=\"{$pgv_lang['next_image']}\" /></a>";
+					$linkNextImage = "<a href=\"javascript: ".i18n::translate('Next image')."\" onclick=\"return ajaxBlock('random_picture$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['rdarrow']['other']}\" border=\"0\" alt=\"".i18n::translate('Next image')."\" title=\"".i18n::translate('Next image')."\" /></a>";
 
 						$content .= "<div class=\"center\" id=\"random_picture_controls$index\"><br />";
 						if ($TEXT_DIRECTION=="rtl") $content .= $linkNextImage;
-						$content .= "<a href=\"javascript: ".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" onclick=\"togglePlay(); return false;\">";
-						if (isset($PGV_IMAGES[$image]['other'])) $content .= "<img id=\"play_stop\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES[$image]['other']}\" border=\"0\" alt=\"{$pgv_lang['play']}/{$pgv_lang['stop']}\" title=\"{$pgv_lang['play']}/{$pgv_lang['stop']}\" />";
-						else $content .= $pgv_lang["play"]."/".$pgv_lang["stop"];
+						$content .= "<a href=\"javascript: ".i18n::translate('Play')."/".i18n::translate('Stop')."\" onclick=\"togglePlay(); return false;\">";
+						if (isset($PGV_IMAGES[$image]['other'])) $content .= "<img id=\"play_stop\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES[$image]['other']}\" border=\"0\" alt=\"".i18n::translate('Play')."/".i18n::translate('Stop')."\" title=\"".i18n::translate('Play')."/".i18n::translate('Stop')."\" />";
+						else $content .= i18n::translate('Play')."/".i18n::translate('Stop');
 						$content .= "</a>";
 						if ($TEXT_DIRECTION=="ltr") $content .= $linkNextImage;
 						$content .= '
@@ -334,20 +334,20 @@ function openPic(filename, width, height) {
 
 		print "<tr><td class=\"descriptionbox wrap width33\">";
 			print_help_link("random_media_persons_or_all", "qm");
-			print $pgv_lang["random_media_persons_or_all"];
+			print i18n::translate('Show only persons, events, or all?');
 		print "</td>";?>
 	<td class="optionbox"><select name="filter">
 	<option value="indi"
-	<?php if ($config["filter"]=="indi") print " selected=\"selected\"";?>><?php print $pgv_lang["random_media_persons"]; ?></option>
+	<?php if ($config["filter"]=="indi") print " selected=\"selected\"";?>><?php print i18n::translate('Persons'); ?></option>
 	<option value="event"
-	<?php if ($config["filter"]=="event") print " selected=\"selected\"";?>><?php print $pgv_lang["random_media_events"]; ?></option>
+	<?php if ($config["filter"]=="event") print " selected=\"selected\"";?>><?php print i18n::translate('Events'); ?></option>
 	<option value="all"
-	<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print $pgv_lang["all"]; ?></option>
+	<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print i18n::translate('ALL'); ?></option>
 	</select></td>
 	</tr>
 
 	<tr>
-	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_filter", "qm"); print $pgv_lang["filter"]; ?></td>
+	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_filter", "qm"); print i18n::translate('Filter'); ?></td>
 		<td class="optionbox">
 			<center><b><?php echo i18n::translate('FORM'); ?></b></center>
 			<table class="width100">
@@ -412,7 +412,7 @@ function openPic(filename, width, height) {
 				asort($type);
 				array_flip($type);
 				//-- Add "Other" at the end
-				$type["other"] = $pgv_lang["TYPE__other"];
+				$type["other"] = i18n::translate('Other');
 				//-- Build the list of checkboxes
 				$i = 0;
 				foreach ($type as $typeName => $typeValue) {
@@ -432,21 +432,21 @@ function openPic(filename, width, height) {
 	</tr>
 
 	<tr>
-	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_ajax_controls", "qm"); print $pgv_lang["random_media_ajax_controls"]; ?></td>
+	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_ajax_controls", "qm"); print i18n::translate('Show slideshow controls?'); ?></td>
 		<td class="optionbox"><select name="controls">
 		<option value="yes"
-		<?php if ($config["controls"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+		<?php if ($config["controls"]=="yes") print " selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
 		<option value="no"
-		<?php if ($config["controls"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+		<?php if ($config["controls"]=="no") print " selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
 	</select></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_start_slide", "qm"); print $pgv_lang["random_media_start_slide"]; ?></td>
+	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_start_slide", "qm"); print i18n::translate('Start slideshow on page load?'); ?></td>
 		<td class="optionbox"><select name="start">
 		<option value="yes"
-		<?php if ($config["start"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+		<?php if ($config["start"]=="yes") print " selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
 		<option value="no"
-		<?php if ($config["start"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+		<?php if ($config["start"]=="no") print " selected=\"selected\""; ?>><?php print i18n::translate('No'); ?></option>
 	</select>
 	<input type="hidden" name="cache" value="0" />
 	</td></tr>

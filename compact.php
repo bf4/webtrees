@@ -41,7 +41,7 @@ $name   =$person->getFullName();
 $addname=$person->getAddName();
 
 // -- print html header information
-print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
+print_header(PrintReady($name) . " " . i18n::translate('Compact Chart'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
@@ -55,7 +55,7 @@ if (PGV_USE_LIGHTBOX) {
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"${cellwidth}px\" valign=\"top\">\n\t\t";
-print "<h2>" . $pgv_lang["compact_chart"] . ":";
+print "<h2>" . i18n::translate('Compact Chart') . ":";
 print "<br />".PrintReady($name) ;
 if ($addname != "") print "<br />" . PrintReady($addname);
 print "</h2>";
@@ -79,7 +79,7 @@ if ($view != "preview") {
 	// NOTE: Root ID
 	print "<td class=\"descriptionbox\">";
 	print_help_link("rootid", "qm");
-	print $pgv_lang["root_person"]."&nbsp;</td>";
+	print i18n::translate('Root Person ID')."&nbsp;</td>";
 	print "<td class=\"optionbox vmiddle\">";
 	print "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
 	print_findindi_link("rootid","");
@@ -87,14 +87,14 @@ if ($view != "preview") {
 
 	// NOTE: submit
 	print "<td class=\"facts_label03\" rowspan=\"3\">";
-	print "<input type=\"submit\" value=\"".$pgv_lang["view"]."\" />";
+	print "<input type=\"submit\" value=\"".i18n::translate('View')."\" />";
 	print "</td>\n</tr>\n";
 
 	if ($SHOW_ID_NUMBERS) {
 		print "<tr>\n";
 		print "<td class=\"descriptionbox\">";
 		print_help_link("SHOW_ID_NUMBERS", "qm");
-		print $pgv_lang["SHOW_ID_NUMBERS"];
+		print i18n::translate('Show ID numbers next to names');
 		print "</td>\n";
 		print "<td class=\"optionbox\">\n";
 		print "<input name=\"showids\" type=\"checkbox\" value=\"1\"";
@@ -106,7 +106,7 @@ if ($view != "preview") {
 		print "<tr>\n";
 		print "<td class=\"descriptionbox\">";
 		print_help_link("SHOW_HIGHLIGHT_IMAGES", "qm");
-		print $pgv_lang["SHOW_HIGHLIGHT_IMAGES"];
+		print i18n::translate('Show highlight images in people boxes');
 		print "</td>\n";
 		print "<td class=\"optionbox\">\n";
 		print "<input name=\"showthumbs\" type=\"checkbox\" value=\"1\"";
@@ -309,9 +309,9 @@ function print_td_person($n) {
 	$pid = $treeid[$n];
 
 	if ($TEXT_DIRECTION=="ltr") {
-		$title = $pgv_lang["indi_info"].": ".$pid;
+		$title = i18n::translate('Individual Information').": ".$pid;
 	} else {
-		$title = $pid." :".$pgv_lang["indi_info"];
+		$title = $pid." :".i18n::translate('Individual Information');
 	}
 
 	if ($pid) {
@@ -444,9 +444,9 @@ function print_arrow_person($n, $arrow_dir) {
 		}
 	}
 	if ($TEXT_DIRECTION=="ltr") {
-		$title = $pgv_lang["compact_chart"].": ".$pid;
+		$title = i18n::translate('Compact Chart').": ".$pid;
 	} else {
-		$title = $pid." :".$pgv_lang["compact_chart"];
+		$title = $pid." :".i18n::translate('Compact Chart');
 	}
 	$arrow_img = "<img id='arrow$n' src='".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='$title' title='$title' />";
 	$hideArrow = "<img id='arrow$n' src='".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='$title' title='$title' style='visibility:hidden;' />";

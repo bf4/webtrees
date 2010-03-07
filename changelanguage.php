@@ -43,12 +43,12 @@ if (!isset($action) or $action=="") $action="editold";
 switch ($action) {
 	case "addnew" :
 		$helpindex = "add_new_language_help";
-		print_header($pgv_lang["add_new_language"]);
+		print_header(i18n::translate('Add files and settings for a new language'));
 		break;
 
 	case "editold" :
 	default :
-		print_header($pgv_lang["config_lang_utility"]);
+		print_header(i18n::translate('Configuration of supported languages'));
 }
 
 print PGV_JS_START;
@@ -114,7 +114,7 @@ $maxlines = max($active, $inactive);
 
 print "<div class=\"center\">";
 print "<a href=\"admin.php\" style=\"font-weight: bold;\">";
-print $pgv_lang["lang_back_admin"];
+print i18n::translate('Return to the Admin menu');
 print "</a><br />";
 print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
 
@@ -128,7 +128,7 @@ switch ($action) {
 		print "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\" style=\"width:70%; \">";
 		print "<tr><td class=\"facts_label03\" colspan=\"2\">";
-		print $pgv_lang["add_new_language"];
+		print i18n::translate('Add files and settings for a new language');
 		print "</td></tr>";
 
 		require PGV_ROOT.'includes/lang_codes_std.php';
@@ -152,7 +152,7 @@ switch ($action) {
 		print "</select>\n\n";
 		print_help_link("add_new_language", "qm");
 		print "</td>";
-		print "<td class=\"facts_value center\"><input type=\"submit\" value=\"" . $pgv_lang["add_new_lang_button"] . "\" onclick=\"return helpPopup03('" . "action=new_lang" . "&amp;" . session_name() . "=" . session_id() . "'); \" /></td></tr>";
+		print "<td class=\"facts_value center\"><input type=\"submit\" value=\"" . i18n::translate('Add new language') . "\" onclick=\"return helpPopup03('" . "action=new_lang" . "&amp;" . session_name() . "=" . session_id() . "'); \" /></td></tr>";
 		$USERLANG = $LANGUAGE;
 		break;
 
@@ -163,7 +163,7 @@ switch ($action) {
 		print "<input type=\"hidden\" name=\"action\" value=\"config_lang\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\" style=\"width:70%; \">";
 		print "<tr><td class=\"facts_label03\" colspan=\"7\">";
-		print $pgv_lang["config_lang_utility"];
+		print i18n::translate('Configuration of supported languages');
 		print_help_link("config_lang_utility", "qm");
 		print "</td></tr>";
 
@@ -172,15 +172,15 @@ switch ($action) {
 
 		// Column headings, left set
 		print "<td class=\"facts_label03\">";
-		print $pgv_lang["lang_language"];
+		print i18n::translate('Language');
 		print "</td>";
 
 		print "<td class=\"facts_label03\">";
-		print $pgv_lang["active"];
+		print i18n::translate('Active');
 		print "</td>";
 
 		print "<td class=\"facts_label03\">";
-		print $pgv_lang["edit_settings"];
+		print i18n::translate('Edit settings');
 		print "</td>";
 
 		// Separator
@@ -188,15 +188,15 @@ switch ($action) {
 
 		// Column headings, right set
 		print "<td class=\"facts_label03\">";
-		print $pgv_lang["lang_language"];
+		print i18n::translate('Language');
 		print "</td>";
 
 		print "<td class=\"facts_label03\">";
-		print $pgv_lang["active"];
+		print i18n::translate('Active');
 		print "</td>";
 
 		print "<td class=\"facts_label03\">";
-		print $pgv_lang["edit_settings"];
+		print i18n::translate('Edit settings');
 		print "</td>";
 
 		// End of row
@@ -224,7 +224,7 @@ switch ($action) {
 				print "</td>";
 				print "<td class=\"facts_value\" style=\"text-align: center;\">";
 					print "<a href=\"editlang_edit_settings.php?ln=" . $value . "\">";
-					print $pgv_lang["lang_edit"] . "</a>";
+					print i18n::translate('Edit') . "</a>";
 				print "</td>";
 			}
 
@@ -247,7 +247,7 @@ switch ($action) {
 				print "</td>";
 				print "<td class=\"facts_value\" style=\"text-align: center;\">";
 					print "<a href=\"editlang_edit_settings.php?ln=" . $value . "\">";
-					print $pgv_lang["lang_edit"] . "</a>";
+					print i18n::translate('Edit') . "</a>";
 				print "</td>";
 			}
 			print "</tr>";
@@ -256,12 +256,12 @@ switch ($action) {
 		$USERLANG = $LANGUAGE;
 		print "<tr>";
 		print "<td class=\"facts_label03\" colspan=\"7\">";
-			print $pgv_lang["configured_languages"];
+			print i18n::translate('Languages used');
 		print "</td>";
 		print "</tr>";
 		print "<tr>";
 		print "<td class=\"facts_value\" colspan=\"3\" rowspan=\"".count($configuredlanguages["gedcom"])."\" valign=\"top\">";
-			print $pgv_lang["current_gedcoms"];
+			print i18n::translate('Current GEDCOMs');
 		print "</td>";
 		foreach ($configuredlanguages["gedcom"] as $key => $value) {
 			if (!isset($currentkey)) $currentkey = $key;
@@ -279,7 +279,7 @@ switch ($action) {
 			// Print language name and flag
 			print "<img src=\"".$language_settings[$key]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$key]."\" title=\"".$pgv_lang["lang_name_".$key]."\" />&nbsp;".$pgv_lang["lang_name_".$key]."<br />";
 		}
-		print "</td></tr><tr><td  class=\"facts_value\" colspan=\"5\" valign=\"top\">".$pgv_lang["users_langs"]."</td><td class=\"facts_value\" colspan=\"2\">";
+		print "</td></tr><tr><td  class=\"facts_value\" colspan=\"5\" valign=\"top\">".i18n::translate('Users\' languages')."</td><td class=\"facts_value\" colspan=\"2\">";
 		foreach ($configuredlanguages["users"] as $key => $value) {
 			print "<img src=\"".$language_settings[$key]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$key]."\" title=\"".$pgv_lang["lang_name_".$key]."\" />&nbsp;<a href=\"".encode_url("useradmin.php?action=listusers&filter=language&usrlang={$key}")."\">".$pgv_lang["lang_name_".$key]."</a><br />";
 		}

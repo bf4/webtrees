@@ -42,7 +42,7 @@ if (substr($help,-5)!="_help") {
 	}
 }
 
-print_simple_header($pgv_lang["config_help"]);
+print_simple_header(i18n::translate('Configuration help'));
 print '<span class="helpheader">';
 print_text("config_help");
 print '</span><br /><br /><span class="helptext">';

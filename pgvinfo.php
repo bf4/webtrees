@@ -40,7 +40,7 @@ if (!isset($action)) $action = "";
 
 if ($action == "phpinfo") {
 	$helpindex = "phpinfo_help";
-	print_header($pgv_lang["phpinfo"]);
+	print_header(i18n::translate('PHP information'));
 	?>
 	<div class="center">
 	<?php

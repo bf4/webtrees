@@ -120,8 +120,8 @@ class UserMigrateControllerRoot extends BaseController {
 	function getPageTitle() {
 		global $pgv_lang;
 
-		if ($this->proceed == "backup") return $pgv_lang["um_backup"];
-		else return $pgv_lang["um_header"];
+		if ($this->proceed == "backup") return i18n::translate('Backup');
+		else return i18n::translate('User Information Migration tool');
 	}
 
 	/**
@@ -372,7 +372,7 @@ class UserMigrateControllerRoot extends BaseController {
 
 		if ((file_exists($INDEX_DIRECTORY."favorites.dat")) == false) {
 			$this->favSuccess = false;
-			print $pgv_lang["um_nofav"]."<br /><br />";
+			print i18n::translate('No Favorites seem to be present in the system.')."<br /><br />";
 		}
 		else {
 			PGV_DB::exec("DELETE FROM {$TBLPREFIX}favorites");

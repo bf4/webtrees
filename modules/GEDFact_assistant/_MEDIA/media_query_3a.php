@@ -28,7 +28,7 @@
 
 $iid2		= safe_GET('iid');
 
-print_simple_header($pgv_lang["link_media"]);
+print_simple_header(i18n::translate('Link Media'));
 
 $record=GedcomRecord::getInstance($iid2);
 $headjs="";
@@ -57,7 +57,7 @@ if ($record) {
 	?>
 	<script language="JavaScript" type="text/javascript">
 	function insertId() {
-		window.opener.alert('<?php echo strtoupper($iid2); ?> - <?php echo $pgv_lang["id_not_valid"] ?>');
+		window.opener.alert('<?php echo strtoupper($iid2); ?> - <?php echo i18n::translate('Not a valid Individual, Family or Source ID') ?>');
 		window.close();
 	}
 	</script>

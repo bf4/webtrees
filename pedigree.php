@@ -51,7 +51,7 @@ echo '<table><tr><td valign="middle">';
 if ($controller->isPrintPreview()) {
 	echo "<h2>", str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_ped_chart"]), ":";
 } else {
-	echo "<h2>", $pgv_lang["index_header"], ":";
+	echo "<h2>", i18n::translate('Pedigree Tree'), ":";
 }
 echo '<br />', PrintReady($controller->name);
 if ($controller->addname!="") {
@@ -74,24 +74,24 @@ if (!$controller->isPrintPreview()) {
 		<table class="list_table <?php echo $TEXT_DIRECTION; ?>" width="500" align="center">
 			<tr>
 				<td colspan="4" class="topbottombar" style="text-align:center; ">
-					<?php echo $pgv_lang["options"]; ?>
+					<?php echo i18n::translate('Options:'); ?>
 				</td>
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap"><?php print_help_link("rootid", "qm", "root_person"); ?>
-					<?php echo $pgv_lang["root_person"]; ?>
+					<?php echo i18n::translate('Root Person ID'); ?>
 				</td>
 				<td class="descriptionbox wrap">
 				<?php print_help_link("PEDIGREE_GENERATIONS", "qm", "generations"); ?>
-				<?php echo $pgv_lang["generations"]; ?>
+				<?php echo i18n::translate('Generations'); ?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php print_help_link("talloffset", "qm", "orientation"); ?>
-					<?php echo $pgv_lang["orientation"]; ?>
+					<?php echo i18n::translate('Orientation'); ?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php print_help_link("show_full", "qm", "show_details"); ?>
-					<?php echo $pgv_lang["show_details"]; ?>
+					<?php echo i18n::translate('Show Details'); ?>
 				</td>
 			</tr>
 
@@ -116,16 +116,16 @@ if (!$controller->isPrintPreview()) {
 					<?php
 						echo '<option value="0"';
 							if ($talloffset==0) echo ' selected="selected"';
-							echo '>', $pgv_lang["portrait"], '</option>';
+							echo '>', i18n::translate('Portrait'), '</option>';
 						echo '<option value="1"';
 							if ($talloffset==1) echo ' selected="selected"';
-							echo '>', $pgv_lang["landscape"], '</option>';
+							echo '>', i18n::translate('Landscape'), '</option>';
 						echo '<option value="2"';
 							if ($talloffset==2) echo ' selected="selected"';
-							echo '>', $pgv_lang["landscape_top"], '</option>';
+							echo '>', i18n::translate('Oldest at top'), '</option>';
 						echo '<option value="3"';
 							if ($talloffset==3) echo ' selected="selected"';
-							echo '>', $pgv_lang["landscape_down"], '</option>';
+							echo '>', i18n::translate('Oldest at bottom'), '</option>';
 					?>
 					</select>
 				</td>
@@ -137,14 +137,14 @@ if (!$controller->isPrintPreview()) {
 			</tr>
 			<tr>
 				<td class="topbottombar" colspan="4">
-					<input type="submit" value="<?php echo $pgv_lang["view"]; ?>" />
+					<input type="submit" value="<?php echo i18n::translate('View'); ?>" />
 				</td>
 			</tr>
 		</table>
 	</form>
 <?php
 	if ($show_full==0) {
-		echo '<span class="details2">', $pgv_lang['charts_click_box'], '</span><br />';
+		echo '<span class="details2">', i18n::translate('Click on any of the boxes to get more information about that person.'), '</span><br />';
 	}
 } ?>
 	</td></tr>
@@ -330,17 +330,17 @@ if ($controller->rootPerson->canDisplayDetails()) {
 		}
 		if ($view!="preview") {
 			if ($talloffset < 2) {
-				if ($TEXT_DIRECTION=="rtl") echo "<a href=\"javascript: ", $pgv_lang["show"], "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 1);\" onmouseout=\"swap_image('larrow', 1);\">";
-				else echo "<a href=\"javascript: ", $pgv_lang["show"], "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 0);\" onmouseout=\"swap_image('larrow', 0);\">";
+				if ($TEXT_DIRECTION=="rtl") echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 1);\" onmouseout=\"swap_image('larrow', 1);\">";
+				else echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow', 0);\" onmouseout=\"swap_image('larrow', 0);\">";
 				if ($TEXT_DIRECTION=="rtl") echo "<img id=\"larrow\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["rarrow"]["other"], "\" border=\"0\" alt=\"\" />";
 				else echo "<img id=\"larrow\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["larrow"]["other"], "\" border=\"0\" alt=\"\" />";
 			}
 			else if ($talloffset==3) {
-				echo "<a href=\"javascript: ", $pgv_lang["show"], "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('uarrow', 2);\" onmouseout=\"swap_image('uarrow', 2);\">";
+				echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('uarrow', 2);\" onmouseout=\"swap_image('uarrow', 2);\">";
 				echo "<img id=\"uarrow\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["uarrow"]["other"], "\" border=\"0\" alt=\"\" />";
 			}
 			else {
-				echo "<a href=\"javascript: ", $pgv_lang["show"], "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('darrow', 3);\" onmouseout=\"swap_image('darrow', 3);\">";
+				echo "<a href=\"javascript: ", i18n::translate('Show'), "\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('darrow', 3);\" onmouseout=\"swap_image('darrow', 3);\">";
 				echo "<img id=\"darrow\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["darrow"]["other"], "\" border=\"0\" alt=\"\" />";
 			}
 			echo "</a>";
@@ -363,7 +363,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 					if ($spid->canDisplayName()) {
 						$name = $spid->getFullName();
 						$name = rtrim($name);
-					} else $name = $pgv_lang["private"];
+					} else $name = i18n::translate('Private');
 					if (hasRTLText($name)) echo 'class="name2">';
 						else echo 'class="name1">';
 					echo PrintReady($name);
@@ -376,7 +376,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 					if ($child->canDisplayName()) {
 						$name = $child->getFullName();
 						$name = rtrim($name);
-					} else $name = $pgv_lang["private"];
+					} else $name = i18n::translate('Private');
 					if (hasRTLText($name)) echo "class=\"name2\">&lt; ";
 						else echo "class=\"name1\">&lt; ";
 					echo PrintReady($name);
@@ -388,15 +388,15 @@ if ($controller->rootPerson->canDisplayDetails()) {
 		foreach($cfamids as $ind=>$family) {
 			if ($family!=null) {
 				$children = $family->getChildren();
-				if (count($children)>2) echo '<span class="name1"><br />', $pgv_lang["siblings"], '<br /></span>';
-				if (count($children)==2) echo '<span class="name1"><br />', $pgv_lang["sibling"], '<br /></span>';
+				if (count($children)>2) echo '<span class="name1"><br />', i18n::translate('Siblings'), '<br /></span>';
+				if (count($children)==2) echo '<span class="name1"><br />', i18n::translate('Sibling'), '<br /></span>';
 				foreach($children as $ind2=>$child) {
 					if (!$controller->rootPerson->equals($child) && !is_null($child)) {
 						echo "\n\t\t\t\t&nbsp;&nbsp;<a href=\"", encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$talloffset}"), "\"><span ";
 						if ($child->canDisplayName()) {
 							$name = $child->getFullName();
 							$name = rtrim($name);
-						} else $name = $pgv_lang["private"];
+						} else $name = i18n::translate('Private');
 						if (hasRTLText($name)) echo 'class="name2"> ';
 							else echo 'class="name1"> ';
 						echo PrintReady($name);

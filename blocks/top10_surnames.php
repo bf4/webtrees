@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_TOP10SURNAMES_PHP', '');
 
-$PGV_BLOCKS["print_block_name_top10"]["name"]		= $pgv_lang["block_top10"];
+$PGV_BLOCKS["print_block_name_top10"]["name"]		= i18n::translate('Top 10 Surnames');
 $PGV_BLOCKS["print_block_name_top10"]["descr"]		= "block_top10_descr";
 $PGV_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
 $PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
@@ -109,10 +109,10 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= str_replace("10", $config["num"], $pgv_lang["block_top10_title"]);
+	$title .= str_replace("10", $config["num"], i18n::translate('Top 10 Surnames'));
 
 	switch ($SURNAME_LIST_STYLE) {
 	case 'style3':
@@ -140,7 +140,7 @@ function print_block_name_top10_config($config) {
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_name_top10"]["config"]["cache"];
 ?>
 	<tr>
-		<td class="descriptionbox wrap width33"><?php print $pgv_lang["num_to_show"] ?></td>
+		<td class="descriptionbox wrap width33"><?php print i18n::translate('Number of items to show') ?></td>
 	<td class="optionbox">
 		<input type="text" name="num" size="2" value="<?php print $config["num"]; ?>" />
 	</td></tr>
@@ -151,7 +151,7 @@ function print_block_name_top10_config($config) {
 	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
 			print_help_link("cache_life", "qm");
-			print $pgv_lang["cache_life"];
+			print i18n::translate('Cache file life');
 		print "</td><td class=\"optionbox\">";
 			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
 		print "</td></tr>";

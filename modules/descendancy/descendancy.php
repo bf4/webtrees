@@ -52,7 +52,7 @@ class descendancy_Sidebar extends Sidebar {
 		
 		jQuery(document).ready(function(){
 			jQuery("#sb_desc_name").focus(function(){this.select();});
-			jQuery("#sb_desc_name").blur(function(){if (this.value=="") this.value="'.$pgv_lang['search'].'";});
+			jQuery("#sb_desc_name").blur(function(){if (this.value=="") this.value="'.i18n::translate('Search').'";});
 			var dtimerid = null;
 			jQuery("#sb_desc_name").keyup(function(e) {
 				if (dtimerid) window.clearTimeout(dtimerid);
@@ -83,7 +83,7 @@ class descendancy_Sidebar extends Sidebar {
 		//-->
 		</script>
 		<form method="post" action="sidebar.php" onsubmit="return false;">
-		<input type="text" name="sb_desc_name" id="sb_desc_name" value="'.$pgv_lang['search'].'" />';
+		<input type="text" name="sb_desc_name" id="sb_desc_name" value="'.i18n::translate('Search').'" />';
 		$out .= '</form><div id="sb_desc_content">';
 
 		if ($this->controller) {
@@ -174,7 +174,7 @@ class descendancy_Sidebar extends Sidebar {
 			}
 			else $private_count++;
 		}
-		if ($private_count>0) $out .= '<li>'.$pgv_lang['private'].' ('.$private_count.')</li>';
+		if ($private_count>0) $out .= '<li>'.i18n::translate('Private').' ('.$private_count.')</li>';
 		$out .= '</ul>';
 		return $out;
 	}
@@ -207,7 +207,7 @@ class descendancy_Sidebar extends Sidebar {
 					if ($child->canDisplayName()) $out .= $this->getPersonLi($child, $generations-1);
 					else $private++;
 				}
-				if ($private>0) $out .= '<li class="sb_desc_indi_li">'.$pgv_lang['private'].' ('.$private.')</li>';
+				if ($private>0) $out .= '<li class="sb_desc_indi_li">'.i18n::translate('Private').' ('.$private.')</li>';
 			}
 			else {
 				$out .= "No children";

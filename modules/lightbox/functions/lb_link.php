@@ -51,26 +51,26 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			$menu->addIcon("modules/lightbox/images/image_link.gif");
 		}
 		if ($LB_ML_THUMB_LINKS == "both") {
-			$menu->addLabel($pgv_lang["set_link"], "down");
+			$menu->addLabel(i18n::translate('Set link'), "down");
 		}
 		if ($LB_ML_THUMB_LINKS == "text") {
-			$menu->addLabel($pgv_lang["set_link"]);
+			$menu->addLabel(i18n::translate('Set link'));
 		}
 		$menu->addOnclick("return ilinkitem('$mediaid','person')");
 		$menu->addClass("", "", "submenu");
 		$menu->addFlyout("left");
 
-		$submenu = new Menu($pgv_lang["to_person"], "#");
+		$submenu = new Menu(i18n::translate('To Person'), "#");
 		$submenu->addOnclick("return ilinkitem('$mediaid','person')");
 		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
 		$menu->addSubMenu($submenu);
 
-		$submenu = new Menu($pgv_lang["to_family"], "#");
+		$submenu = new Menu(i18n::translate('To Family'), "#");
 		$submenu->addOnclick("return ilinkitem('$mediaid','family')");
 		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
 		$menu->addSubMenu($submenu);
 
-		$submenu = new Menu($pgv_lang["to_source"], "#");
+		$submenu = new Menu(i18n::translate('To Source'), "#");
 		$submenu->addOnclick("return ilinkitem('$mediaid','source')");
 		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
 		$menu->addSubMenu($submenu);

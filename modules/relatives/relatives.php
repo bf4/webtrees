@@ -49,7 +49,7 @@ class relatives_Tab extends Tab {
 				<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
 				<td><span class="subheaders"><?php print PrintReady($label); ?></span>
 				<?php if ((!$this->controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
-					- <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
+					- <a href="family.php?famid=<?php print $famid; ?>">[<?php print i18n::translate('View Family'); ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php }?>
 				</td>
 			</tr>
@@ -100,8 +100,8 @@ class relatives_Tab extends Tab {
 			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 				?>
 				<tr>
-					<td class="facts_label"><?php print $pgv_lang["add_father"]; ?></td>
-					<td class="facts_value"><?php print_help_link("edit_add_parent", "qm"); ?> <a href="javascript <?php print $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('<?php print $this->controller->pid; ?>', 'HUSB', '<?php print $family->getXref(); ?>');"><?php print $pgv_lang["add_father"]; ?></a></td>
+					<td class="facts_label"><?php print i18n::translate('Add a new father'); ?></td>
+					<td class="facts_value"><?php print_help_link("edit_add_parent", "qm"); ?> <a href="javascript <?php print i18n::translate('Add a new father'); ?>" onclick="return addnewparentfamily('<?php print $this->controller->pid; ?>', 'HUSB', '<?php print $family->getXref(); ?>');"><?php print i18n::translate('Add a new father'); ?></a></td>
 				</tr>
 				<?php
 			}
@@ -111,8 +111,8 @@ class relatives_Tab extends Tab {
 			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 				?>
 				<tr>
-					<td class="facts_label"><?php print $pgv_lang["add_husb"]; ?></td>
-					<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $family->getXref(); ?>', 'HUSB');"><?php print $pgv_lang["add_husb_to_family"]; ?></a></td>
+					<td class="facts_label"><?php print i18n::translate('Add husband'); ?></td>
+					<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $family->getXref(); ?>', 'HUSB');"><?php print i18n::translate('Add a husband to this family'); ?></a></td>
 				</tr>
 				<?php
 			}
@@ -146,8 +146,8 @@ class relatives_Tab extends Tab {
 			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 				?>
 				<tr>
-					<td class="facts_label"><?php print $pgv_lang["add_mother"]; ?></td>
-					<td class="facts_value"><?php print_help_link("edit_add_parent", "qm"); ?> <a href="javascript:;" onclick="return addnewparentfamily('<?php print $this->controller->pid; ?>', 'WIFE', '<?php print $family->getXref(); ?>');"><?php print $pgv_lang["add_mother"]; ?></a></td>
+					<td class="facts_label"><?php print i18n::translate('Add a new mother'); ?></td>
+					<td class="facts_value"><?php print_help_link("edit_add_parent", "qm"); ?> <a href="javascript:;" onclick="return addnewparentfamily('<?php print $this->controller->pid; ?>', 'WIFE', '<?php print $family->getXref(); ?>');"><?php print i18n::translate('Add a new mother'); ?></a></td>
 				</tr>
 				<?php
 			}
@@ -157,8 +157,8 @@ class relatives_Tab extends Tab {
 			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 				?>
 				<tr>
-					<td class="facts_label"><?php print $pgv_lang["add_wife"]; ?></td>
-					<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $family->getXref(); ?>', 'WIFE');"><?php print $pgv_lang["add_wife_to_family"]; ?></a></td>
+					<td class="facts_label"><?php print i18n::translate('Add wife'); ?></td>
+					<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $family->getXref(); ?>', 'WIFE');"><?php print i18n::translate('Add a wife to this family'); ?></a></td>
 				</tr>
 				<?php
 			}
@@ -215,7 +215,7 @@ class relatives_Tab extends Tab {
 						}
 					}
 					else if ($family->getMarriageRecord()=="" && $this->controller->canedit) {
-						print "<a href=\"#\" onclick=\"return add_new_record('".$famid."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
+						print "<a href=\"#\" onclick=\"return add_new_record('".$famid."', 'MARR');\">".i18n::translate('Add marriage details')."</a>";
 					}
 					else {
 						$factdetail = explode(' ', trim($family->getMarriageRecord()));
@@ -227,9 +227,9 @@ class relatives_Tab extends Tab {
 							if (isset($factdetail))
 								if (count($factdetail) == 3)
 									if (strtoupper($factdetail[2]) == "Y")
-										echo "<span class=\"details_label\">".i18n::translate($marr_type).": </span>".$pgv_lang["yes"];
+										echo "<span class=\"details_label\">".i18n::translate($marr_type).": </span>".i18n::translate('Yes');
 									else if (strtoupper($factdetail[2]) == "N")
-										echo "<span class=\"details_label\">".i18n::translate($marr_type).": </span>".$pgv_lang["no"];
+										echo "<span class=\"details_label\">".i18n::translate($marr_type).": </span>".i18n::translate('No');
 						}
 						else echo "<span class=\"details_label\">".i18n::translate('MARR').": </span>".$family->getMarriageType();
 					}
@@ -286,7 +286,7 @@ class relatives_Tab extends Tab {
 			<tr>
 				<td class="facts_label">
 					<?php if (PGV_USER_CAN_EDIT && isset($people["children"][1])) {?>
-					<a href="javascript:;" onclick="reorder_children('<?php print $family->getXref(); ?>');tabswitch(5);"><img src="images/topdown.gif" alt="" border="0" /> <?php print $pgv_lang['reorder_children']; ?></a>
+					<a href="javascript:;" onclick="reorder_children('<?php print $family->getXref(); ?>');tabswitch(5);"><img src="images/topdown.gif" alt="" border="0" /> <?php print i18n::translate('Re-order children'); ?></a>
 					<?php }?>
 				</td>
 				<td class="facts_value"><?php print_help_link($action, "qm"); ?>
@@ -312,29 +312,29 @@ class relatives_Tab extends Tab {
 		$saved_ABBREVIATE_CHART_LABELS = $ABBREVIATE_CHART_LABELS;
 		$ABBREVIATE_CHART_LABELS = false; // Override GEDCOM configuration
 		
-		$out = "<span class=\"subheaders\">".$pgv_lang["relatives"]."</span><div id=\"relatives_content\">";
+		$out = "<span class=\"subheaders\">".i18n::translate('Close Relatives')."</span><div id=\"relatives_content\">";
 
 		ob_start();
 		if (!$this->controller->isPrintPreview()) {
 		?>
 		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
 		<input id="checkbox_elder" type="checkbox" onclick="toggleByClassName('DIV', 'elderdate');" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\"";?>/>
-		<label for="checkbox_elder"><?php print_help_link("age_differences", "qm"); print $pgv_lang['age_differences'] ?></label>
+		<label for="checkbox_elder"><?php print_help_link("age_differences", "qm"); print i18n::translate('Show Date Differences') ?></label>
 		</td></tr></table>
 		<?php
 		}
 		$personcount=0;
 		$families = $this->controller->indi->getChildFamilies();
 		if (count($families)==0) {
-			print "<span class=\"subheaders\">".$pgv_lang["relatives"]."</span>";
+			print "<span class=\"subheaders\">".i18n::translate('Close Relatives')."</span>";
 			if (/**!$this->controller->isPrintPreview() &&**/ $this->controller->canedit) {
 				?>
 				<table class="facts_table">
 					<tr>
-						<td class="facts_value"><?php print_help_link("edit_add_parent", "qm"); ?><a href="javascript:;" onclick="return addnewparent('<?php print $this->controller->pid; ?>', 'HUSB');"><?php print $pgv_lang["add_father"]; ?></a></td>
+						<td class="facts_value"><?php print_help_link("edit_add_parent", "qm"); ?><a href="javascript:;" onclick="return addnewparent('<?php print $this->controller->pid; ?>', 'HUSB');"><?php print i18n::translate('Add a new father'); ?></a></td>
 					</tr>
 					<tr>
-						<td class="facts_value"><?php print_help_link("edit_add_parent", "qm"); ?><a href="javascript:;" onclick="return addnewparent('<?php print $this->controller->pid; ?>', 'WIFE');"><?php print $pgv_lang["add_mother"]; ?></a></td>
+						<td class="facts_value"><?php print_help_link("edit_add_parent", "qm"); ?><a href="javascript:;" onclick="return addnewparent('<?php print $this->controller->pid; ?>', 'WIFE');"><?php print i18n::translate('Add a new mother'); ?></a></td>
 					</tr>
 				</table>
 				<?php
@@ -398,33 +398,33 @@ class relatives_Tab extends Tab {
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("reorder_families", "qm"); ?>
-				<a href="javascript:;" onclick="return reorder_families('<?php print $this->controller->pid; ?>');"><?php print $pgv_lang["reorder_families"]; ?></a>
+				<a href="javascript:;" onclick="return reorder_families('<?php print $this->controller->pid; ?>');"><?php print i18n::translate('Reorder Families'); ?></a>
 				</td>
 			</tr>
 		<?php } ?>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_child", "qm"); ?>
-				<a href="javascript:;" onclick="return add_famc('<?php print $this->controller->pid; ?>');"><?php print $pgv_lang["link_as_child"]; ?></a>
+				<a href="javascript:;" onclick="return add_famc('<?php print $this->controller->pid; ?>');"><?php print i18n::translate('Link this person to an existing family as a child'); ?></a>
 				</td>
 			</tr>
 			<?php if ($this->controller->indi->getSex()!="F") { ?>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("add_wife", "qm"); ?>
-				<a href="javascript:;" onclick="return addspouse('<?php print $this->controller->pid; ?>','WIFE');"><?php print $pgv_lang["add_new_wife"]; ?></a>
+				<a href="javascript:;" onclick="return addspouse('<?php print $this->controller->pid; ?>','WIFE');"><?php print i18n::translate('Add a new wife'); ?></a>
 				</td>
 			</tr>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_new_wife", "qm"); ?>
-				<a href="javascript:;" onclick="return linkspouse('<?php print $this->controller->pid; ?>','WIFE');"><?php print $pgv_lang["link_new_wife"]; ?></a>
+				<a href="javascript:;" onclick="return linkspouse('<?php print $this->controller->pid; ?>','WIFE');"><?php print i18n::translate('Add a wife using an existing person'); ?></a>
 				</td>
 			</tr>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_new_husb", "qm"); ?>
-				<a href="javascript:;" onclick="return add_fams('<?php print $this->controller->pid; ?>','HUSB');"><?php print $pgv_lang["link_as_husband"]; ?></a>
+				<a href="javascript:;" onclick="return add_fams('<?php print $this->controller->pid; ?>','HUSB');"><?php print i18n::translate('Link this person to an existing family as a husband'); ?></a>
 				</td>
 			</tr>
 			<?php }
@@ -432,19 +432,19 @@ class relatives_Tab extends Tab {
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("add_husband", "qm"); ?>
-				<a href="javascript:;" onclick="return addspouse('<?php print $this->controller->pid; ?>','HUSB');"><?php print $pgv_lang["add_new_husb"]; ?></a>
+				<a href="javascript:;" onclick="return addspouse('<?php print $this->controller->pid; ?>','HUSB');"><?php print i18n::translate('Add a new husband'); ?></a>
 				</td>
 			</tr>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_husband", "qm"); ?>
-				<a href="javascript:;" onclick="return linkspouse('<?php print $this->controller->pid; ?>','HUSB');"><?php print $pgv_lang["link_new_husb"]; ?></a>
+				<a href="javascript:;" onclick="return linkspouse('<?php print $this->controller->pid; ?>','HUSB');"><?php print i18n::translate('Add a husband using an existing person'); ?></a>
 				</td>
 			</tr>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_wife", "qm"); ?>
-				<a href="javascript:;" onclick="return add_fams('<?php print $this->controller->pid; ?>','WIFE');"><?php print $pgv_lang["link_as_wife"]; ?></a>
+				<a href="javascript:;" onclick="return add_fams('<?php print $this->controller->pid; ?>','WIFE');"><?php print i18n::translate('Link this person to an existing family as a wife'); ?></a>
 				</td>
 			</tr>
 			<?php } ?>
@@ -452,7 +452,7 @@ class relatives_Tab extends Tab {
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("add_opf_child", "qm"); ?>
-				<a href="javascript:;" onclick="return addopfchild('<?php print $this->controller->pid; ?>','U');"><?php print $pgv_lang["add_opf_child"]; ?></a>
+				<a href="javascript:;" onclick="return addopfchild('<?php print $this->controller->pid; ?>','U');"><?php print i18n::translate('Add a child to create a one-parent family'); ?></a>
 				</td>
 			</tr>
 <?php } ?>
@@ -460,7 +460,7 @@ class relatives_Tab extends Tab {
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_remote", "qm"); ?>
-				<a href="javascript:;" onclick="return open_link_remote('<?php print $this->controller->pid; ?>');"><?php print $pgv_lang["link_remote"]; ?></a>
+				<a href="javascript:;" onclick="return open_link_remote('<?php print $this->controller->pid; ?>');"><?php print i18n::translate('Link remote person'); ?></a>
 				</td>
 			</tr>
 			<?php } ?>

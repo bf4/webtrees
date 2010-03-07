@@ -94,7 +94,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 
 	// If in re-order mode do not show header links, but instead, show drag and drop title.
 	if (isset($reorder) && $reorder==1){
-		echo "<center><b>", $pgv_lang["reorder_media_title"], "</b></center>" ;
+		echo "<center><b>", i18n::translate('Drag-and-drop thumbnails to re-order media items'), "</b></center>" ;
 		echo "<br />";
 
 	}else{
@@ -113,8 +113,8 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				// print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}&gedcom={$GEDCOM}&tab=4")."\">";
 				print "<a href=\"javascript:goto_config_lightbox()\">";
-				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$pgv_lang['configure_lightbox']}\" alt=\"{$pgv_lang['configure_lightbox']}\" /><br />" ;
-				print "" . $pgv_lang["configure_lightbox"] . "&nbsp;";
+				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"".i18n::translate('Lightbox-Album Configuration')."\" alt=\"".i18n::translate('Lightbox-Album Configuration')."\" /><br />" ;
+				print "" . i18n::translate('Lightbox-Album Configuration') . "&nbsp;";
 				print "</a>";
 				print "</td>";
 				// print "<td width=\"5%\">&nbsp;</td>";
@@ -122,7 +122,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"javascript:goto_config_lightbox()\">";
-				print "" . $pgv_lang["configure_lightbox"] . "&nbsp;";
+				print "" . i18n::translate('Lightbox-Album Configuration') . "&nbsp;";
 				print "</a>";
 				print "</td>";
 	        //    print "<td width=\"5%\">&nbsp;</td>";
@@ -130,7 +130,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
 	            print "<a href=\"javascript:goto_config_lightbox()\">";
-				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$pgv_lang['configure_lightbox']}\" alt=\"{$pgv_lang['configure_lightbox']}\" />" ;
+				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"".i18n::translate('Lightbox-Album Configuration')."\" alt=\"".i18n::translate('Lightbox-Album Configuration')."\" />" ;
 				print "</a>";
 				print "\n";
 			}
@@ -141,8 +141,8 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_add()\"> ";
-				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"{$pgv_lang['lb_add_media_full']}\" alt=\"{$pgv_lang['lb_add_media_full']}\" /><br />" ;
-				print "" . $pgv_lang["lb_add_media"] . "&nbsp;";
+				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"".i18n::translate('Add a new Multimedia Object to this Individual')."\" alt=\"".i18n::translate('Add a new Multimedia Object to this Individual')."\" /><br />" ;
+				print "" . i18n::translate('Add a new Media Object') . "&nbsp;";
 	            print " </a> ";
 	            print "</td>";
 	            //print "<td width=\"5%\">&nbsp;</td>";
@@ -150,7 +150,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_add()\"> ";
-				print "" . $pgv_lang["lb_add_media"] . "&nbsp;";
+				print "" . i18n::translate('Add a new Media Object') . "&nbsp;";
 	            print " </a> ";
 	            print "</td>";
 	            //print "<td width=\"5%\">&nbsp;</td>";
@@ -158,7 +158,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
 	            print "<a href=\"javascript: album_add()\"> ";
-				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"{$pgv_lang['lb_add_media_full']}\" alt=\"{$pgv_lang['lb_add_media_full']}\" />" ;
+				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"".i18n::translate('Add a new Multimedia Object to this Individual')."\" alt=\"".i18n::translate('Add a new Multimedia Object to this Individual')."\" />" ;
 	            print "</a>";
 				print "\n";
 			}
@@ -169,8 +169,8 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_link()\"> ";
-				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\"{$pgv_lang['lb_link_media_full']}\" alt=\"{$pgv_lang['lb_link_media_full']}\" /><br />" ;
-				print "" . $pgv_lang["lb_link_media"] . "&nbsp;";
+				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\"".i18n::translate('Link this Individual to an existing Multimedia Object')."\" alt=\"".i18n::translate('Link this Individual to an existing Multimedia Object')."\" /><br />" ;
+				print "" . i18n::translate('Link to an existing Media Object') . "&nbsp;";
 	            print " </a> ";
 	            print "</td>";
 				//    print "<td width=\"5%\">&nbsp;</td>";
@@ -178,14 +178,14 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_link()\"> ";
-				print "" . $pgv_lang["lb_link_media"] . "&nbsp;";
+				print "" . i18n::translate('Link to an existing Media Object') . "&nbsp;";
 	            print " </a> ";
 	            print "</td>";
 				//    print "<td width=\"5%\">&nbsp;</td>";
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
 	            print "<a href=\"javascript: album_link()\">";
-				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\"{$pgv_lang['lb_link_media_full']}\" alt=\"{$pgv_lang['lb_link_media_full']}\" />" ;
+				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\"".i18n::translate('Link this Individual to an existing Multimedia Object')."\" alt=\"".i18n::translate('Link this Individual to an existing Multimedia Object')."\" />" ;
 	            print "</a> ";
 				print "\n";
 			}else{
@@ -197,8 +197,8 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"".encode_url(PGV_SCRIPT_NAME."?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
-				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"{$pgv_lang['reorder_media']}\" alt=\"{$pgv_lang['reorder_media']}\" /><br />" ;
-				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
+				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"".i18n::translate('Re-order media')."\" alt=\"".i18n::translate('Re-order media')."\" /><br />" ;
+				print "" . i18n::translate('Re-order media') . "&nbsp;";
 				print '</a>';
 				print "</td>";
 				// print "<input type=\"hidden\" name=\"reorder\" value=\"1\" />";
@@ -207,7 +207,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"".encode_url(PGV_SCRIPT_NAME."?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
-				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
+				print "" . i18n::translate('Re-order media') . "&nbsp;";
 				print '</a>';
 				print "</td>";
 				//print "<td width=\"5%\">&nbsp;</td>";
@@ -215,7 +215,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
 				print "<a href=\"".encode_url(PGV_SCRIPT_NAME."?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
-				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"{$pgv_lang['reorder_media']}\" alt=\"{$pgv_lang['reorder_media']}\" />" ;
+				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"".i18n::translate('Re-order media')."\" alt=\"".i18n::translate('Re-order media')."\" />" ;
 				print '</a>';
 				//print "<td width=\"5%\">&nbsp;</td>";
 			}
@@ -227,9 +227,9 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"javascript: reorder_media()\">" ;
-				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"{$pgv_lang['reorder_media_window']}\" alt=\"{$pgv_lang['reorder_media_window']}\" /><br />" ;
-				//print "" . $pgv_lang["reorder_media_window"] . "&nbsp;";
-				print "" . $pgv_lang["reorder_media_window"] . "&nbsp;";
+				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"".i18n::translate('Re-order media (window)')."\" alt=\"".i18n::translate('Re-order media (window)')."\" /><br />" ;
+				//print "" . i18n::translate('Re-order media (window)') . "&nbsp;";
+				print "" . i18n::translate('Re-order media (window)') . "&nbsp;";
 				print '</a>';
 				print "</td>";
 				//print "<td width=\"5%\">&nbsp;</td>";
@@ -237,8 +237,8 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"javascript: reorder_media()\">" ;
-				// print "" . $pgv_lang["reorder_media_window"] . "&nbsp;";
-				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
+				// print "" . i18n::translate('Re-order media (window)') . "&nbsp;";
+				print "" . i18n::translate('Re-order media') . "&nbsp;";
 				print '</a>';
 				print "</td>";
 				//print "<td width=\"5%\">&nbsp;</td>";
@@ -246,7 +246,7 @@ require_once PGV_ROOT.'includes/media_reorder_count.php';
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;&nbsp;";
 				print "<a href=\"javascript: reorder_media()\">" ;
-				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"{$pgv_lang['reorder_media_window']}\" alt=\"{$pgv_lang['reorder_media_window']}\" /><br />" ;
+				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"".i18n::translate('Re-order media (window)')."\" alt=\"".i18n::translate('Re-order media (window)')."\" /><br />" ;
 				print '</a>';
 				//print "<td width=\"5%\">&nbsp;</td>";
 				print "\n";

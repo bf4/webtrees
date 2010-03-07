@@ -117,7 +117,7 @@ function check_media_structure() {
 				$inddata = "<?php\nheader(\"Location: ../medialist.php\");\nexit;\n?>";
 				$fp = @ fopen($MEDIA_DIRECTORY . "index.php", "w+");
 				if (!$fp)
-					print "<div class=\"error\">" . $pgv_lang["security_no_create"] . $MEDIA_DIRECTORY . "thumbs</div>";
+					print "<div class=\"error\">" . i18n::translate('Security Warning: Could not create file <b><i>index.php</i></b> in ') . $MEDIA_DIRECTORY . "thumbs</div>";
 				else {
 					// Write the index.php for the media folder
 					fputs($fp, $inddata);
@@ -136,7 +136,7 @@ function check_media_structure() {
 			$inddatathumb = str_replace(": ../", ": ../../", $inddata);
 			$fpthumb = @ fopen($MEDIA_DIRECTORY . "thumbs/index.php", "w+");
 			if (!$fpthumb)
-				print "<div class=\"error\">" . $pgv_lang["security_no_create"] . $MEDIA_DIRECTORY . "thumbs</div>";
+				print "<div class=\"error\">" . i18n::translate('Security Warning: Could not create file <b><i>index.php</i></b> in ') . $MEDIA_DIRECTORY . "thumbs</div>";
 			else {
 				// Write the index.php for the thumbs media folder
 				fputs($fpthumb, $inddatathumb);
@@ -767,16 +767,16 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 		if (!is_dir(filename_decode($MEDIA_DIRECTORY . $folderName))) {
 			if (!mkdir(filename_decode($MEDIA_DIRECTORY . $folderName))) {
 				if ($noise == "VERBOSE") {
-					print "<div class=\"error\">" . $pgv_lang["folder_no_create"] . $MEDIA_DIRECTORY . $folderName . "</div>";
+					print "<div class=\"error\">" . i18n::translate('Directory could not be created') . $MEDIA_DIRECTORY . $folderName . "</div>";
 				}
 			} else {
 				if ($noise == "VERBOSE") {
-					print $pgv_lang["folder_created"] . ": " . $MEDIA_DIRECTORY . $folderName . "/<br />";
+					print i18n::translate('Directory created') . ": " . $MEDIA_DIRECTORY . $folderName . "/<br />";
 				}
 				$fp = @ fopen(filename_decode($MEDIA_DIRECTORY . $folderName . "/index.php"), "w+");
 				if (!$fp) {
 					if ($noise == "VERBOSE") {
-						print "<div class=\"error\">" . $pgv_lang["security_no_create"] . $MEDIA_DIRECTORY . $folderName . "</div>";
+						print "<div class=\"error\">" . i18n::translate('Security Warning: Could not create file <b><i>index.php</i></b> in ') . $MEDIA_DIRECTORY . $folderName . "</div>";
 					}
 				} else {
 					fwrite($fp, "<?php\r\n");
@@ -790,16 +790,16 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 		if (!is_dir(filename_decode($MEDIA_DIRECTORY . "thumbs/" . $folderName))) {
 			if (!mkdir(filename_decode($MEDIA_DIRECTORY . "thumbs/" . $folderName))) {
 				if ($noise == "VERBOSE") {
-					print "<div class=\"error\">" . $pgv_lang["folder_no_create"] . $MEDIA_DIRECTORY . "thumbs/" . $folderName . "</div>";
+					print "<div class=\"error\">" . i18n::translate('Directory could not be created') . $MEDIA_DIRECTORY . "thumbs/" . $folderName . "</div>";
 				}
 			} else {
 				if ($noise == "VERBOSE") {
-					print $pgv_lang["folder_created"] . ": " . $MEDIA_DIRECTORY . "thumbs/" . $folderName . "/<br />";
+					print i18n::translate('Directory created') . ": " . $MEDIA_DIRECTORY . "thumbs/" . $folderName . "/<br />";
 				}
 				$fp = @ fopen(filename_decode($MEDIA_DIRECTORY . "thumbs/" . $folderName . "/index.php"), "w+");
 				if (!$fp) {
 					if ($noise == "VERBOSE") {
-						print "<div class=\"error\">" . $pgv_lang["security_no_create"] . $MEDIA_DIRECTORY . "thumbs/" . $folderName . "</div>";
+						print "<div class=\"error\">" . i18n::translate('Security Warning: Could not create file <b><i>index.php</i></b> in ') . $MEDIA_DIRECTORY . "thumbs/" . $folderName . "</div>";
 					}
 				} else {
 					fwrite($fp, "<?php\r\n");
@@ -924,7 +924,7 @@ function process_uploadMedia_form() {
 				// Copy main media file into the destination directory
 				if (!move_uploaded_file($_FILES["mediafile".$i]["tmp_name"], filename_decode($destFolder.$mediaFile))) {
 					// the file cannot be copied
-					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile".$i]["error"])."<br />";
+					$error .= i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES["mediafile".$i]["error"])."<br />";
 				} else {
 					@chmod(filename_decode($destFolder.$mediaFile), PGV_PERM_FILE);
 					AddToLog("Media file {$folderName}{$mediaFile} uploaded");
@@ -934,7 +934,7 @@ function process_uploadMedia_form() {
 				// Copy user-supplied thumbnail file into the destination directory
 				if (!move_uploaded_file($_FILES["thumbnail".$i]["tmp_name"], filename_decode($destThumbFolder.$mediaFile))) {
 					// the file cannot be copied
-					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
+					$error .= i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
 				} else {
 					@chmod(filename_decode($destThumbFolder.$mediaFile), PGV_PERM_FILE);
 					AddToLog("Media file {$thumbFolderName}{$mediaFile} uploaded");
@@ -944,7 +944,7 @@ function process_uploadMedia_form() {
 				// Copy user-supplied thumbnail file into the main destination directory
 				if (!copy(filename_decode($destThumbFolder.$mediaFile), filename_decode($destFolder.$mediaFile))) {
 					// the file cannot be copied
-					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
+					$error .= i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
 				} else {
 					@chmod(filename_decode($folderName.$mediaFile), PGV_PERM_FILE);
 					AddToLog("Media file {$folderName}{$mediaFile} copied from {$thumbFolderName}{$mediaFile}");
@@ -974,7 +974,7 @@ function process_uploadMedia_form() {
 			if (!empty($error)) echo '<span class="error">', $error, "</span><br />\n";
 			// No errors found then tell the user all is successful
 			else {
-				print $pgv_lang["upload_successful"]."<br /><br />";
+				print i18n::translate('Upload successful.')."<br /><br />";
 				$imgsize = findImageSize($folderName.$mediaFile);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
@@ -1019,52 +1019,52 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 	echo '<input type="hidden" name="showthumb" value="', $showthumb, '" />';
 	echo '<table class="list_table ', $TEXT_DIRECTION, ' width100">';
 	echo '<tr><td class="topbottombar" colspan="2">';
-		echo $pgv_lang["upload_media"], '<br />', $pgv_lang["max_upload_size"], $filesize;
+		echo i18n::translate('Upload Media files'), '<br />', i18n::translate('Maximum upload size: '), $filesize;
 	echo '</td></tr>';
 	$tab = 1;
 	// Print the Submit button for uploading the media
 	echo '<tr><td class="topbottombar" colspan="2">';
-		echo '<input type="submit" value="', $pgv_lang["upload"], '" tabindex="', $tab++, '" />';
+		echo '<input type="submit" value="', i18n::translate('Upload'), '" tabindex="', $tab++, '" />';
 	echo '</td></tr>';
 
 	// Print 5 forms for uploading images
 	for($i=1; $i<6; $i++) {
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
 			print_help_link("upload_media_file", "qm", "upload_media");
-			echo $pgv_lang["media_file"];
+			echo i18n::translate('Media file to upload');
 			echo '</td>';
 			echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 			echo '<input name="mediafile', $i, '" type="file" size="40" tabindex="', $tab++, '" />';
-			if ($i==1) echo '<br /><sub>', $pgv_lang["use_browse_advice"], '</sub>';
+			if ($i==1) echo '<br /><sub>', i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.'), '</sub>';
 		echo '</td></tr>';
 
 		if ($thumbSupport != "") {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
 				print_help_link("generate_thumb", "qm", "generate_thumbnail");
-				echo $pgv_lang["auto_thumbnail"];
+				echo i18n::translate('Automatic thumbnail');
 				echo '</td><td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 				echo '<input type="checkbox" name="genthumb', $i, '" value="yes" checked="checked" tabindex="', $tab++, '" />';
-				echo '&nbsp;&nbsp;&nbsp;', $pgv_lang["generate_thumbnail"], $thumbSupport;
+				echo '&nbsp;&nbsp;&nbsp;', i18n::translate('Generate thumbnail automatically from '), $thumbSupport;
 			echo '</td></tr>';
 		}
 
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
 			print_help_link("upload_thumbnail_file", "qm", "upload_media");
-			echo $pgv_lang["thumbnail"];
+			echo i18n::translate('Thumbnail to upload');
 			echo '</td>';
 			echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 			echo '<input name="thumbnail', $i, '" type="file" tabindex="', $tab++, '" size="40" />';
-			if ($i==1) echo '<br /><sub>', $pgv_lang["use_browse_advice"], '</sub>';
+			if ($i==1) echo '<br /><sub>', i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.'), '</sub>';
 		echo '</td></tr>';
 
 		if (PGV_USER_GEDCOM_ADMIN) {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
 				print_help_link("upload_server_file", "qm", "upload_media");
-				echo $pgv_lang["server_file"];
+				echo i18n::translate('File name on server');
 				echo '</td>';
 				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 				echo '<input name="filename', $i, '" type="text" tabindex="', $tab++, '" size="40" />';
-				if ($i==1) echo "<br /><sub>", $pgv_lang["server_file_advice"], "</sub>";
+				if ($i==1) echo "<br /><sub>", i18n::translate('Do not change to keep original file name.'), "</sub>";
 			echo '</td></tr>';
 		} else {
 			echo '<input type="hidden" name="filename', $i, '" value="" />';
@@ -1073,14 +1073,14 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 		if (PGV_USER_GEDCOM_ADMIN && $MEDIA_DIRECTORY_LEVELS>0) {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
 				print_help_link("upload_server_folder", "qm", "upload_media");
-				echo $pgv_lang["server_folder"];
+				echo i18n::translate('Folder name on server');
 				echo '</td>';
 				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 
 				echo '<span dir="ltr"><select name="folder_list', $i, '" onchange="document.uploadmedia.folder', $i, '.value=this.options[this.selectedIndex].value;">', "\n";
 				echo '<option';
-				echo ' value="/"> ', $pgv_lang["choose"], ' </option>';
-				if (PGV_USER_IS_ADMIN) echo '<option value="other" disabled>', $pgv_lang["add_media_other_folder"], "</option>\n";
+				echo ' value="/"> ', i18n::translate('Choose: '), ' </option>';
+				if (PGV_USER_IS_ADMIN) echo '<option value="other" disabled>', i18n::translate('Other folder... please type in'), "</option>\n";
 				foreach ($mediaFolders as $f) {
 					if (!strpos($f, ".svn")) {    //Do not print subversion directories
 						// Strip $MEDIA_DIRECTORY from the folder name
@@ -1107,7 +1107,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 	// Print the Submit button for uploading the media
 	echo '<tr><td class="topbottombar" colspan="2">';
-		echo '<input type="submit" value="', $pgv_lang["upload"], '" tabindex="', $tab++, '" />';
+		echo '<input type="submit" value="', i18n::translate('Upload'), '" tabindex="', $tab++, '" />';
 	echo '</td></tr>';
 
 	echo '</table></form>';
@@ -1140,21 +1140,21 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	echo "<table class=\"facts_table center ", $TEXT_DIRECTION, "\">\n";
 	echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
 	if ($action == "newentry") {
-		echo $pgv_lang["add_media"];
+		echo i18n::translate('Add a new Media item');
 	} else {
 		echo print_text('edit_media', 0 , 1);
 	}
 	echo "</td></tr>";
-	echo "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"", $pgv_lang["save"], "\" /></td></tr>";
+	echo "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /></td></tr>";
 	if ($linktoid == "new" || ($linktoid == "" && $action != "update")) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, "wrap width25\">";
 		print_help_link("add_media_linkid", "qm");
-		echo $pgv_lang["add_fav_enter_id"], "</td>";
+		echo i18n::translate('Enter a Person, Family, or Source ID'), "</td>";
 		echo "<td class=\"optionbox wrap\"><input type=\"text\" name=\"gid\" id=\"gid\" size=\"6\" value=\"\" />";
 		print_findindi_link("gid", "");
 		print_findfamily_link("gid");
 		print_findsource_link("gid");
-		echo "<br /><sub>", $pgv_lang["add_linkid_advice"], "</sub></td></tr>\n";
+		echo "<br /><sub>", i18n::translate('Enter or search for the ID of the person, family, or source to which this media item should be linked.'), "</sub></td></tr>\n";
 	}
 	if (isset ($pgv_changes[$pid . "_" . PGV_GEDCOM])) {
 		$gedrec = find_updated_record($pid, PGV_GED_ID);
@@ -1188,9 +1188,9 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		// Box for user to choose to upload file from local computer
 		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 		print_help_link("upload_media_file", "qm");
-		print $pgv_lang["media_file"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"mediafile\"";
+		print i18n::translate('Media file to upload') . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"mediafile\"";
 		print " onchange=\"updateFormat(this.value);\"";
-		print " size=\"40\" /><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
+		print " size=\"40\" /><br /><sub>" . i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.') . "</sub></td></tr>";
 		// Check for thumbnail generation support
 		if (PGV_USER_GEDCOM_ADMIN) {
 			$ThumbSupport = "";
@@ -1209,15 +1209,15 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				$thumbSupport = substr($thumbSupport, 2); // Trim off first ", "
 				print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 				print_help_link("generate_thumb", "qm", "generate_thumbnail");
-				print $pgv_lang["auto_thumbnail"];
+				print i18n::translate('Automatic thumbnail');
 				print "</td><td class=\"optionbox wrap\">";
 				print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked=\"checked\" />";
-				print "&nbsp;&nbsp;&nbsp;" . $pgv_lang["generate_thumbnail"] . $thumbSupport;
+				print "&nbsp;&nbsp;&nbsp;" . i18n::translate('Generate thumbnail automatically from ') . $thumbSupport;
 				print "</td></tr>";
 			}
 			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 			print_help_link("upload_thumbnail_file", "qm");
-			print $pgv_lang["thumbnail"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\" /><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
+			print i18n::translate('Thumbnail to upload') . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\" /><br /><sub>" . i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.') . "</sub></td></tr>";
 		}
 		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />";
 	}
@@ -1225,9 +1225,9 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	$isExternal = isFileExternal($gedfile);
 	if ($gedfile == "FILE") {
 		if (PGV_USER_GEDCOM_ADMIN) {
-			add_simple_tag("1 $gedfile", "", $pgv_lang["server_file"], "", "NOCLOSE");
-			print "<br /><sub>" . $pgv_lang["server_file_advice"];
-			print "<br />" . $pgv_lang["server_file_advice2"] . "</sub></td></tr>";
+			add_simple_tag("1 $gedfile", "", i18n::translate('File name on server'), "", "NOCLOSE");
+			print "<br /><sub>" . i18n::translate('Do not change to keep original file name.');
+			print "<br />" . i18n::translate('You may enter a URL, beginning with &laquo;http://&raquo;.') . "</sub></td></tr>";
 		}
 		$fileName = "";
 		$folder = "";
@@ -1245,7 +1245,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">\n";
 		print "<input name=\"oldFilename\" type=\"hidden\" value=\"" . addslashes($fileName) . "\" />";
 		print_help_link("upload_server_file", "qm", "upload_media");
-		print $pgv_lang["server_file"];
+		print i18n::translate('File name on server');
 		print "</td>\n";
 		print "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
 		if (PGV_USER_GEDCOM_ADMIN) {
@@ -1253,7 +1253,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			if ($isExternal)
 				print " />";
 			else
-				print " /><br /><sub>" . $pgv_lang["server_file_advice"] . "</sub>";
+				print " /><br /><sub>" . i18n::translate('Do not change to keep original file name.') . "</sub>";
 		} else {
 /*   $thumbnail = thumbnail_file($fileName, true, false, $pid);
 			if (!empty($thumbnail)) {
@@ -1279,15 +1279,15 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		}
 		// Strip $MEDIA_DIRECTORY from the folder name
 		if (substr($folder, 0, strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $folder = substr($folder, strlen($MEDIA_DIRECTORY));
-		echo $pgv_lang["server_folder"], '</td><td class="optionbox wrap">';
+		echo i18n::translate('Folder name on server'), '</td><td class="optionbox wrap">';
 		//-- don't let regular users change the location of media items
 		if ($action!='update' || PGV_USER_GEDCOM_ADMIN) {
 			$mediaFolders = get_media_folders();
 			echo '<span dir="ltr"><select name="folder_list" onchange="document.newmedia.folder.value=this.options[this.selectedIndex].value;">', "\n";
 			echo '<option';
 			if ($folder == '/') echo ' selected="selected"';
-			echo ' value="/"> ', $pgv_lang["choose"], ' </option>';
-			if (PGV_USER_IS_ADMIN) echo '<option value="other" disabled>', $pgv_lang["add_media_other_folder"], "</option>\n";
+			echo ' value="/"> ', i18n::translate('Choose: '), ' </option>';
+			if (PGV_USER_IS_ADMIN) echo '<option value="other" disabled>', i18n::translate('Other folder... please type in'), "</option>\n";
 			foreach ($mediaFolders as $f) {
 				if (!strpos($f, ".svn")) {    //Do not print subversion directories
 					// Strip $MEDIA_DIRECTORY from the folder name
@@ -1309,7 +1309,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				echo '<br /><sub>', print_text("server_folder_advice", 0, 1), '</sub>';
 			}
 			if ($gedfile == "FILE") {
-				echo '<br /><sub>', $pgv_lang["server_folder_advice2"], '</sub>';
+				echo '<br /><sub>', i18n::translate('This entry is ignored if you have entered a URL into the file name field.'), '</sub>';
 			}
 		} else echo '<input name="folder" type="hidden" value="', addslashes($folder), '" />';
 		echo '</td></tr>';
@@ -1479,13 +1479,13 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		print_help_link("no_update_CHAN", "qm");
-		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
 			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		}
-		echo $pgv_lang["no_update_CHAN"], "<br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 		echo format_fact_date($event, false, true);
 		echo "</td></tr>\n";
@@ -1512,7 +1512,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	print_add_layer("NOTE", 1);
 	print_add_layer("SHARED_NOTE", 1);
 	print_add_layer("RESN", 1);
-	print "<input type=\"submit\" value=\"" . $pgv_lang["save"] . "\" />";
+	print "<input type=\"submit\" value=\"" . i18n::translate('Save') . "\" />";
 	print "</form>\n";
 }
 
@@ -1598,13 +1598,13 @@ function PrintMediaLinks($links, $size = "small") {
 		echo '<br /><a href="', encode_url($record->getLinkUrl()), '">';
 		switch ($record->getType()) {
 		case 'INDI':
-			echo $pgv_lang['view_person'];
+			echo i18n::translate('View Person');
 			break;
 		case 'FAM':
-			echo $pgv_lang['view_family'];
+			echo i18n::translate('View Family');
 			break;
 		case 'SOUR':
-			echo $pgv_lang['view_source'];
+			echo i18n::translate('View Source');
 			break;
 		}
 		echo ' -- ';

@@ -59,7 +59,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			<div id="inout2-<?php print $boxID; ?>" style="display: block;"><?php print $BirthDeath; ?></div>
 		</div>
 		<div id="inout-<?php print $boxID; ?>" style="display: none;">
-			<div id="LOADING-inout-<?php print $boxID; ?>"><?php print $pgv_lang['loading']; ?></div>
+			<div id="LOADING-inout-<?php print $boxID; ?>"><?php print i18n::translate('Loading...'); ?></div>
 		</div>
 </td></tr></table>
 </div>

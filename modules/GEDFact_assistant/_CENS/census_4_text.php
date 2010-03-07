@@ -46,16 +46,16 @@ function help_window2(frm)  {
 <!--   ---- The proposed Census Text -------- -->
 <div class="optionbox cens_text">
 <!--[if IE]><style>.cens_text{margin-top:-1.3em;}</style><![EndIf]-->
-	<span><input type="button" value="<?php echo $pgv_lang["page_help"]; ?>" onclick="javascript: help_window2(this.form)" /></span>
-	<span><?php echo $pgv_lang["cens_preview"]; ?></span>
-	<span><input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" /></span>
-	<span><b><?php echo $pgv_lang["cens_proposed"]; ?></b></span>
-	<span><input type="submit" value="<?php echo $pgv_lang["save"]; ?>" onclick="caSave();" /></span>
+	<span><input type="button" value="<?php echo i18n::translate('Help'); ?>" onclick="javascript: help_window2(this.form)" /></span>
+	<span><?php echo i18n::translate('Click &quot;Preview&quot; to copy Edit Input Fields'); ?></span>
+	<span><input type="button" value="<?php echo i18n::translate('Preview'); ?>" onclick="preview();" /></span>
+	<span><b><?php echo i18n::translate('Proposed Census Text&nbsp;&nbsp;'); ?></b></span>
+	<span><input type="submit" value="<?php echo i18n::translate('Save'); ?>" onclick="caSave();" /></span>
 	<br /><br />
 	<span class="descriptionbox width15 nowrap <?php $TEXT_DIRECTION; ?>">
 		<?php
 			print_help_link("SHARED_NOTE", "qm");
-			echo $pgv_lang["shared_note"];
+			echo i18n::translate('Shared Note');
 		?>
 	</span>
 	<div class="optionbox">

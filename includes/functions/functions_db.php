@@ -2055,7 +2055,7 @@ function delete_fact($linenum, $pid, $gedrec) {
 	if (!empty($linenum)) {
 		if ($linenum==0) {
 			if (delete_gedrec($pid)) {
-				print $pgv_lang["gedrec_deleted"];
+				print i18n::translate('GEDCOM record successfully deleted.');
 			}
 		} else {
 			$gedlines = explode("\n", $gedrec);

@@ -113,10 +113,10 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$feed->category="genealogy";
 
 	$image = new FeedImage();
-	$image->title = $pgv_lang["rss_logo_descr"];
+	$image->title = i18n::translate('Feed created by PhpGedView');
 	$image->url = $SERVER_URL."images/gedview.gif";
 	$image->link = PGV_PHPGEDVIEW_URL;
-	$image->description = $pgv_lang["rss_logo_descr"];
+	$image->description = i18n::translate('Feed created by PhpGedView');
 	$image->descriptionHtmlSyndicated = true;
 	//$feed->descriptionTruncSize = 500; // does not make sense to truncate HTML since it will result in unpredictable output
 	$feed->image = $image;
@@ -189,7 +189,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 				$item->source = $SERVER_URL;
 				$item->author = $author;
 				$item->authorURL = $feed->link;
-				$item->category = $pgv_lang["genealogy"];
+				$item->category = i18n::translate('genealogy');
 				$feed->addItem($item);
 			}
 		}
@@ -206,7 +206,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 				$item->source = $SERVER_URL;
 				$item->author = $author;
 				$item->authorURL = $feed->link;
-				$item->category = $pgv_lang["genealogy"];
+				$item->category = i18n::translate('genealogy');
 				$feed->addItem($item);
 			}
 		}
@@ -225,7 +225,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 				$item->source = $SERVER_URL;
 				$item->author = $author;
 				$item->authorURL = $feed->link;
-				$item->category = $pgv_lang["genealogy"];
+				$item->category = i18n::translate('genealogy');
 				$feed->addItem($item);
 			}
 		}
@@ -244,7 +244,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 				$item->source = $SERVER_URL;
 				$item->author = $author;
 				$item->authorURL = $feed->link;
-				$item->category = $pgv_lang["genealogy"];
+				$item->category = i18n::translate('genealogy');
 				$feed->addItem($item);
 			}
 		}
@@ -286,7 +286,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 				$item->source = $SERVER_URL;
 				$item->author = $author;
 				$item->authorURL = $feed->link;
-				$item->category = $pgv_lang["genealogy"];
+				$item->category = i18n::translate('genealogy');
 				$feed->addItem($item);
 			}
 		}
@@ -306,7 +306,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 				$item->source = $SERVER_URL;
 				$item->author = $author;
 				$item->authorURL = $feed->link;
-				$item->category = $pgv_lang["genealogy"];
+				$item->category = i18n::translate('genealogy');
 				$item->enclosure = new EnclosureItem();
 				$item->enclosure->url = $SERVER_URL . $randomMedia[3];
 				$item->enclosure->type = $randomMedia[4];
@@ -318,14 +318,14 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 		}
 	} else {
 		$item = new FeedItem();
-		$item->title = $pgv_lang["no_feed_title"];
+		$item->title = i18n::translate('Feed not available');
 		$item->link = $SERVER_URL. "index.php";
-		$item->description = $pgv_lang["no_feed"];
+		$item->description = i18n::translate('There is no RSS feed available for this PhpGedView site');
 		$item->date = time();
 		$item->source = $SERVER_URL;
 		$item->author = $author;
 		$item->authorURL = $feed->link;
-		$item->category = $pgv_lang["genealogy"];
+		$item->category = i18n::translate('genealogy');
 		$feed->addItem($item);
 	}
 

@@ -57,7 +57,7 @@ if (!$this->controller->indi->canDisplayDetails()) {
 			type="checkbox"
 			<?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?>
 			onclick="toggleByClassName('TR', 'row_note2');" /> <label
-			for="checkbox_note2"><?php echo $pgv_lang["show_fact_notes"];?></label>
+			for="checkbox_note2"><?php echo i18n::translate('Show all notes');?></label>
 			<?php print_help_link("show_fact_sources", "qm", "show_fact_notes");?>
 		</td>
 	</tr>
@@ -77,21 +77,21 @@ if (!$this->controller->indi->canDisplayDetails()) {
 			print_main_notes($factrec->getGedcomRecord(), $i, $this->controller->pid, $factrec->getLineNumber(), true);
 		}
 	}
-	if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
+	if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".i18n::translate('There are no Notes for this individual.')."</td></tr>\n";
 	//-- New Note Link
 	if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 		?>
 	<tr>
-		<td class="facts_label"><?php print_help_link("add_note", "qm"); ?><?php echo $pgv_lang["add_note_lbl"]; ?></td>
+		<td class="facts_label"><?php print_help_link("add_note", "qm"); ?><?php echo i18n::translate('Add Note'); ?></td>
 		<td class="facts_value"><a href="javascript:;"
-			onclick="add_new_record('<?php echo $this->controller->pid; ?>','NOTE'); return false;"><?php echo $pgv_lang["add_note"]; ?></a>
+			onclick="add_new_record('<?php echo $this->controller->pid; ?>','NOTE'); return false;"><?php echo i18n::translate('Add a new Note'); ?></a>
 		<br />
 		</td>
 	</tr>
 	<tr>
-		<td class="facts_label"><?php print_help_link("add_shared_note", "qm"); ?><?php echo $pgv_lang["add_shared_note_lbl"]; ?></td>
+		<td class="facts_label"><?php print_help_link("add_shared_note", "qm"); ?><?php echo i18n::translate('Add Shared Note'); ?></td>
 		<td class="facts_value"><a href="javascript:;"
-			onclick="add_new_record('<?php echo $this->controller->pid; ?>','SHARED_NOTE'); return false;"><?php echo $pgv_lang["add_shared_note"]; ?></a>
+			onclick="add_new_record('<?php echo $this->controller->pid; ?>','SHARED_NOTE'); return false;"><?php echo i18n::translate('Add a new Shared Note'); ?></a>
 		<br />
 		</td>
 	</tr>

@@ -471,7 +471,7 @@ class GedcomRecord {
 					$this->_addName($this->getType(), $this->getFallBackName(), null);
 				}
 			} else {
-				$this->_addName($this->getType(), $pgv_lang['private'], null);
+				$this->_addName($this->getType(), i18n::translate('Private'), null);
 			}
 		}
 		return $this->_getAllNames;
@@ -603,7 +603,7 @@ class GedcomRecord {
 			$tmp=$this->getAllNames();
 			return $tmp[$this->getPrimaryName()]['full'];
 		} else {
-			return $pgv_lang['private'];
+			return i18n::translate('Private');
 		}
 	}
 	function getSortName() {
@@ -617,7 +617,7 @@ class GedcomRecord {
 			$tmp=$this->getAllNames();
 			return $tmp[$this->getPrimaryName()]['list'];
 		} else {
-			return $pgv_lang['private'];
+			return i18n::translate('Private');
 		}
 	}
 	// Get the fullname in an alternative character set

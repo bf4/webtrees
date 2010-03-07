@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_USER_WELCOME_PHP', '');
 
-$PGV_BLOCKS["print_welcome_block"]["name"]		= $pgv_lang["welcome_block"];
+$PGV_BLOCKS["print_welcome_block"]["name"]		= i18n::translate('User Welcome');
 $PGV_BLOCKS["print_welcome_block"]["descr"]		= "welcome_descr";
 $PGV_BLOCKS["print_welcome_block"]["type"]		= "user";
 $PGV_BLOCKS["print_welcome_block"]["canconfig"]	= false;
@@ -44,20 +44,20 @@ function print_welcome_block($block=true, $config="", $side, $index) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	$id="user_welcome";
-	$title = $pgv_lang["welcome"]." ".getUserFullName(PGV_USER_ID);
+	$title = i18n::translate('Welcome')." ".getUserFullName(PGV_USER_ID);
 
 	$content = "<table class=\"blockcontent\" cellspacing=\"0\" cellpadding=\"0\" style=\" width: 100%; direction:ltr;\"><tr>";
 	$content .= "<td class=\"tab_active_bottom\" colspan=\"3\" ></td></tr><tr>";
 	if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {
-		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"edituser.php\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["myuserdata"]."\" title=\"".$pgv_lang["myuserdata"]."\" /><br />".$pgv_lang["myuserdata"]."</a></td>";
+		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"edituser.php\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]."\" border=\"0\" alt=\"".i18n::translate('My Account')."\" title=\"".i18n::translate('My Account')."\" /><br />".i18n::translate('My Account')."</a></td>";
 	}
 	if (PGV_USER_GEDCOM_ID) {
-		$content .= "<td class=\"center details2\" style=\" width: 34%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"".encode_url("pedigree.php?rootid=".PGV_USER_GEDCOM_ID)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["my_pedigree"]."\" title=\"".$pgv_lang["my_pedigree"]."\" /><br />".$pgv_lang["my_pedigree"]."</a></td>";
-		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"".encode_url("individual.php?pid=".PGV_USER_GEDCOM_ID)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["my_indi"]."\" title=\"".$pgv_lang["my_indi"]."\" /><br />".$pgv_lang["my_indi"]."</a></td>";
+		$content .= "<td class=\"center details2\" style=\" width: 34%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"".encode_url("pedigree.php?rootid=".PGV_USER_GEDCOM_ID)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" border=\"0\" alt=\"".i18n::translate('My Pedigree')."\" title=\"".i18n::translate('My Pedigree')."\" /><br />".i18n::translate('My Pedigree')."</a></td>";
+		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"".encode_url("individual.php?pid=".PGV_USER_GEDCOM_ID)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"".i18n::translate('My Individual Record')."\" title=\"".i18n::translate('My Individual Record')."\" /><br />".i18n::translate('My Individual Record')."</a></td>";
 	}
 	$content .= "</tr><tr><td class=\"center\" colspan=\"3\">";
 	$content .= print_help_link("mygedview_customize", "qm","",false,true);
-	$content .= "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name=".PGV_USER_NAME."&ctype=user")."', '_blank', 'top=50,left=10,width=600,height=350,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>";
+	$content .= "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name=".PGV_USER_NAME."&ctype=user")."', '_blank', 'top=50,left=10,width=600,height=350,scrollbars=1,resizable=1');\">".i18n::translate('Customize MyGedView Portal')."</a>";
 	$content .= "<br />".format_timestamp(client_time());
 	$content .= "</td>";
 	$content .= "</tr></table>";

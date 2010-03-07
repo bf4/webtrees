@@ -44,12 +44,12 @@ $time      =isset($_REQUEST['time'      ]) ? $_REQUEST['time'      ] : '';
 $method    =isset($_REQUEST['method'    ]) ? $_REQUEST['method'    ] : '';
 
 if (empty($to)) {
-	print "<span class=\"error\">".$pgv_lang["no_to_user"]."</span><br />";
+	print "<span class=\"error\">".i18n::translate('No recipient user was provided.  Cannot continue.')."</span><br />";
 	print_simple_footer();
 	exit;
 }
 if ($to=="all" && !PGV_USER_IS_ADMIN) {
-	print "<span class=\"error\">".$pgv_lang["no_to_user"]."</span><br />";
+	print "<span class=\"error\">".i18n::translate('No recipient user was provided.  Cannot continue.')."</span><br />";
 	print_simple_footer();
 	exit;
 }
@@ -67,7 +67,7 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 					$host = "www.".$host;
 					$ip = checkdnsrr($host);
 					if ($ip === false) {
-						print "<center><br /><span class=\"error\">".$pgv_lang["invalid_email"]."</span>\n";
+						print "<center><br /><span class=\"error\">".i18n::translate('Please enter a valid email address.')."</span>\n";
 						print "<br /><br /></center>";
 						$action="compose";
 						//print_simple_footer();
@@ -76,7 +76,7 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 				}
 			}
 		} else {
-			print "<center><br /><span class=\"error\">".$pgv_lang["invalid_email"]."</span>\n";
+			print "<center><br /><span class=\"error\">".i18n::translate('Please enter a valid email address.')."</span>\n";
 			print "<br /><br /></center>";
 			$action="compose";
 		}
@@ -150,13 +150,13 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 else if ($action=="send") AddToLog('Invalid Compose Session while trying to send a message.  Possible spam attack.');
 
 if ($action=="compose") {
-	print '<span class="subheaders">'.$pgv_lang["message"].'</span>';
+	print '<span class="subheaders">'.i18n::translate('Send Message').'</span>';
 	$_SESSION["good_to_send"] = true;
 	?>
 	<script language="JavaScript" type="text/javascript">
 		function validateEmail(email) {
 			if (email.value.search("(.*)@(.*)")==-1) {
-				alert('<?php print $pgv_lang["invalid_email"]; ?>');
+				alert('<?php print i18n::translate('Please enter a valid email address.'); ?>');
 				email.focus();
 				return false;
 			}
@@ -164,12 +164,12 @@ if ($action=="compose") {
 		}
 		function checkForm(frm) {
 			if (frm.subject.value=="") {
-				alert('<?php print $pgv_lang["enter_subject"]; ?>');
+				alert('<?php print i18n::translate('Please enter a message subject.'); ?>');
 				document.messageform.subject.focus();
 				return false;
 			}
 			if (frm.body.value=="") {
-				alert('<?php print $pgv_lang["enter_body"]; ?>');
+				alert('<?php print i18n::translate('Please enter some message text before sending.'); ?>');
 				document.messageform.body.focus();
 				return false;
 			}
@@ -178,7 +178,7 @@ if ($action=="compose") {
 	</script>
 	<?php
 	if (!PGV_USER_ID) {
-		print "<br /><br />".$pgv_lang["message_instructions"];
+		print "<br /><br />".i18n::translate('<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data.');
 	}
 	print "<br /><form name=\"messageform\" method=\"post\" action=\"message.php\" onsubmit=\"t = new Date(); document.messageform.time.value=t.toUTCString(); ";
 	if (!PGV_USER_ID) print "return validateEmail(document.messageform.from_email);";
@@ -194,10 +194,10 @@ if ($action=="compose") {
 	}
 
 	if (!PGV_USER_ID){
-		print "<tr><td valign=\"top\" width=\"15%\" align=\"right\">".$pgv_lang["message_from_name"]."</td>";
-		print "<td><input type=\"text\" name=\"from_name\" size=\"40\" value=\"$from_name\" /></td></tr><tr><td valign=\"top\" align=\"right\">".$pgv_lang["message_from"]."</td><td><input type=\"text\" name=\"from_email\" size=\"40\" value=\"$from_email\" /><br />".$pgv_lang["provide_email"]."<br /><br /></td></tr>\n";
+		print "<tr><td valign=\"top\" width=\"15%\" align=\"right\">".i18n::translate('Your Name:')."</td>";
+		print "<td><input type=\"text\" name=\"from_name\" size=\"40\" value=\"$from_name\" /></td></tr><tr><td valign=\"top\" align=\"right\">".i18n::translate('Email Address:')."</td><td><input type=\"text\" name=\"from_email\" size=\"40\" value=\"$from_email\" /><br />".i18n::translate('Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  You email address will not be used in any other way besides responding to this inquiry.')."<br /><br /></td></tr>\n";
 	}
-	print "<tr><td align=\"right\">".$pgv_lang["message_subject"]."</td>";
+	print "<tr><td align=\"right\">".i18n::translate('Subject:')."</td>";
 	print "<td>";
 	if (PGV_USER_ID){
 		print "<input type=\"hidden\" name=\"from\" value=\"".PGV_USER_NAME."\" />\n";
@@ -208,16 +208,16 @@ if ($action=="compose") {
 	print "<input type=\"hidden\" name=\"method\" value=\"$method\" />\n";
 	print "<input type=\"hidden\" name=\"url\" value=\"$url\" />\n";
 	print "<input type=\"text\" name=\"subject\" size=\"50\" value=\"$subject\" /><br /></td></tr>\n";
-	print "<tr><td valign=\"top\" align=\"right\">".$pgv_lang["message_body"]."<br /></td><td><textarea name=\"body\" cols=\"50\" rows=\"7\">$body</textarea><br /></td></tr>\n";
-	print "<tr><td></td><td><input type=\"submit\" value=\"".$pgv_lang["send"]."\" /></td></tr>\n";
+	print "<tr><td valign=\"top\" align=\"right\">".i18n::translate('Body:')."<br /></td><td><textarea name=\"body\" cols=\"50\" rows=\"7\">$body</textarea><br /></td></tr>\n";
+	print "<tr><td></td><td><input type=\"submit\" value=\"".i18n::translate('Send')."\" /></td></tr>\n";
 	print "</table>\n";
 	print "</form>\n";
-	if ($method=="messaging2") print $pgv_lang["messaging2_help"];
+	if ($method=="messaging2") print i18n::translate('When you send this message you will receive a copy sent via email to the address you provided.');
 }
 else if ($action=="delete") {
-	if (deleteMessage($id)) print $pgv_lang["message_deleted"];
+	if (deleteMessage($id)) print i18n::translate('Message Deleted');
 }
-print "<center><br /><br /><a href=\"javascript:;\" onclick=\"if (window.opener.refreshpage) window.opener.refreshpage(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>";
+print "<center><br /><br /><a href=\"javascript:;\" onclick=\"if (window.opener.refreshpage) window.opener.refreshpage(); window.close();\">".i18n::translate('Close Window')."</a><br /></center>";
 
 print_simple_footer();
 ?>

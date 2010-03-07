@@ -270,16 +270,16 @@ class TimelineControllerRoot extends BaseController {
 					}
 					if (!empty($ageh) && $ageh > 0) {
 						if (empty($agew)) {
-							echo '<span class="age"> ', PrintReady("({$pgv_lang["age"]} {$ageh})"), '</span>';
+							echo '<span class="age"> ', i18n::translate('Age'), ' ', $ageh, '</span>';
 						} else {
-							echo '<span class="age"> ', PrintReady("({$pgv_lang["husb_age"]} {$ageh},"), ' ';
+							echo '<span class="age"> ', i18n::translate('Husband\'s age'), ' ', $ageh, ' ';
 						}
 					}
 					if (!empty($agew) && $agew > 0) {
 						if (empty($ageh)) {
-							echo '<span class="age"> ', PrintReady("({$pgv_lang["age"]} {$agew})"), '</span>';
+							echo '<span class="age"> ', i18n::translate('Age'), ' ', $agew, '</span>';
 						} else {
-							echo PrintReady("{$pgv_lang["wife_age"]} {$agew})"), '</span>';
+							echo i18n::translate('Wife\'s age'), ' ', $agew, '</span>';
 						}
 					}
 				}
@@ -313,7 +313,7 @@ class TimelineControllerRoot extends BaseController {
 						if ($ct>0) {
 							print " <a href=\"".encode_url("family.php?famid={$match[1]}&ged={$GEDCOM}")."\">";
 							if (displayDetailsById($match[1])||showLivingNameById($match[1])) print $event->getParentObject()->getFullName();
-							else print $pgv_lang["private"];
+							else print i18n::translate('Private');
 							print "</a>";
 						}
 					}

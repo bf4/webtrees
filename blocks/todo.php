@@ -36,7 +36,7 @@ define('PGV_TODO_PHP', '');
 
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
-$PGV_BLOCKS['print_todo']['name']     =$pgv_lang['todo_block'];
+$PGV_BLOCKS['print_todo']['name']     =i18n::translate('&quot;To Do&quot; tasks');
 $PGV_BLOCKS['print_todo']['descr']    ='todo_descr';
 $PGV_BLOCKS['print_todo']['canconfig']=true;
 $PGV_BLOCKS['print_todo']['config']   =array(
@@ -66,10 +66,10 @@ function print_todo($block=true, $config='', $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= $pgv_lang['todo_block'];
+	$title .= i18n::translate('&quot;To Do&quot; tasks');
 	$content = "";
 
 	require_once PGV_ROOT.'js/sorttable.js.htm';
@@ -79,9 +79,9 @@ function print_todo($block=true, $config='', $side, $index) {
 	$content .= '<table id="'.$table_id.'" class="sortable list_table center">';
 	$content .= '<tr>';
 	$content .= '<th class="list_label">'.i18n::translate('DATE').'</th>';
-	$content .= '<th class="list_label">'.$pgv_lang['record'].'</th>';
+	$content .= '<th class="list_label">'.i18n::translate('Record').'</th>';
 	if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
-		$content .= '<th class="list_label">'.$pgv_lang['username'].'</th>';
+		$content .= '<th class="list_label">'.i18n::translate('User name').'</th>';
 	}
 	$content .= '<th class="list_label">'.i18n::translate('TEXT').'</th>';
 	$content .= '</tr>';
@@ -110,7 +110,7 @@ function print_todo($block=true, $config='', $side, $index) {
 
 	$content .= '</table>';
 	if (!$found) {
-		$content.='<p>'.$pgv_lang['todo_nothing'].'</p>';
+		$content.='<p>'.i18n::translate('There are no &quot;To Do&quot; tasks.').'</p>';
 	}
 
 	global $THEME_DIR;
@@ -130,7 +130,7 @@ function print_todo_config($config) {
 
 	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link('todo_show_other', 'qm');
-	print $pgv_lang['todo_show_other']."</td>";
+	print i18n::translate('Show other users\' tasks')."</td>";
 	print '</td><td class="optionbox">';
 	print '<select name="show_other">';
 	foreach (array('yes', 'no') as $option) {
@@ -143,7 +143,7 @@ function print_todo_config($config) {
 
 	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link('todo_show_unassigned', 'qm');
-	print $pgv_lang['todo_show_unassigned']."</td>";
+	print i18n::translate('Show unassigned tasks')."</td>";
 	print '</td><td class="optionbox">';
 	print '<select name="show_unassigned">';
 	foreach (array('yes', 'no') as $option) {
@@ -156,7 +156,7 @@ function print_todo_config($config) {
 
 	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link('todo_show_future', 'qm');
-	print $pgv_lang['todo_show_future']."</td>";
+	print i18n::translate('Show future tasks')."</td>";
 	print '</td><td class="optionbox">';
 	print '<select name="show_future">';
 	foreach (array('yes', 'no') as $option) {

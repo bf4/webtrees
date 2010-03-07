@@ -99,7 +99,7 @@ header("Content-Type: text/html; charset=$CHARACTER_SET");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"></link>
-<title><?php print $pgv_lang["install_wizard"]; ?></title>
+<title><?php print i18n::translate('Installation Wizard'); ?></title>
 
 <?php print $head;?>
 
@@ -124,7 +124,7 @@ if ($CONFIGURED && !PGV_DB::isConnected()) {
 	<tr>
 		<td class="optionbox center">
 			<br /><br />
-			<h2><?php print $pgv_lang["site_unavailable"] ?></h2>
+			<h2><?php print i18n::translate('Site is currently unavailable') ?></h2>
 			<br /><br /><br />
 		</td>
 	</tr>
@@ -178,7 +178,7 @@ switch($step) {
 			} catch (PDOException $ex) {
 				$step=2;	// For any DB error, re-do Step 2
 				$errors[]=array(
-					'msg'=>$pgv_lang['db_setup_bad'],
+					'msg'=>i18n::translate('Your current database configuration is bad.  Please check your database connection parameters and configure again.'),
 					'help'=>$ex->getMessage()
 				);
 			}
@@ -347,12 +347,12 @@ switch($step) {
 
 					$_SESSION["pgv_user"]=$user_id;
 				} else {
-					$error['msg'] = $pgv_lang["user_create_error"];
+					$error['msg'] = i18n::translate('Unable to add user.  Please try again.');
 					$error['help'] = '';
 					$errors[] = $error;
 				}
 			} else {
-				$error['msg'] = $pgv_lang["password_mismatch"];
+				$error['msg'] = i18n::translate('Passwords do not match.');
 				$error['help'] = '';
 				$errors[] = $error;
 			}
@@ -360,7 +360,7 @@ switch($step) {
 				$step = 7;
 			}
 		} else {
-			$error['msg'] = $pgv_lang["passwordlength"];
+			$error['msg'] = i18n::translate('Passwords must contain at least 6 characters.');
 			$error['help'] = '';
 			$errors[] = $error;
 		}
@@ -388,7 +388,7 @@ $errormsg = "";
 			<?php } else { ?>
 			<h1>PhpGedView</h1>
 			<?php } ?>
-			<h2><?php print $pgv_lang["install_wizard"]; ?></h2>
+			<h2><?php print i18n::translate('Installation Wizard'); ?></h2>
 		</td>
 	</tr>
 	<tr>
@@ -407,7 +407,7 @@ $errormsg = "";
 			<?php if (!empty($_SESSION['install_modified'])) { ?>
 			<tr>
 				<td class="descriptionbox wrap width30"><br />
-				<span class="warning"><?php print $pgv_lang["config_not_saved"] ?></span>
+				<span class="warning"><?php print i18n::translate('*Your settings will not<br />be saved until step 6') ?></span>
 				</td>
 			</tr>
 			<?php } ?>
@@ -431,7 +431,7 @@ $errormsg = "";
 				case 3:
 					try {
 						PGV_DB::updateSchema('includes/db_schema/', 'PGV_SCHEMA_VERSION', PGV_SCHEMA_VERSION);
-						echo '<span class="pass">', $pgv_lang['db_tables_created'], '</span><br /><br /><br />';
+						echo '<span class="pass">', i18n::translate('Database Tables created successfully'), '</span><br /><br /><br />';
 						$success=true;
 					} catch (PDOException $ex) {
 						echo '<span class="error">', $ex->getMessage(), '</span><br /><br /><br />';
@@ -446,10 +446,10 @@ $errormsg = "";
 					break;
 				case 6:
 					if (count($errors)==0) {
-						print "<span class=\"pass\">".$pgv_lang["config_saved"]."</span><br /><br /><br />";
+						print "<span class=\"pass\">".i18n::translate('Configuration saved successfully')."</span><br /><br /><br />";
 						$success = true;
 					}
-					print "<input type=\"submit\" name=\"download\" value=\"".$pgv_lang["download_config"]."\" />";
+					print "<input type=\"submit\" name=\"download\" value=\"".i18n::translate('Download config.php')."\" />";
 					break;
 				case 7:
 					$success = printAdminUserForm();
@@ -467,7 +467,7 @@ $errormsg = "";
 		<br/><br />
 		<?php if ($step<$total_steps && $success) {?>
 			<div style="float: right;">
-			<input type="submit" id="next_button" name="next" value="<?php print $pgv_lang['next'] ?>" />
+			<input type="submit" id="next_button" name="next" value="<?php print i18n::translate('Next &gt;') ?>" />
 			<script type="text/javascript">
 			<!--
 				document.getElementById("next_button").focus();
@@ -477,7 +477,7 @@ $errormsg = "";
 		<?php } ?>
 		<?php if ($step>1) {?>
 			<div style="float: left;">
-			<input type="submit" name="prev" value="<?php print $pgv_lang['prev'] ?>" />
+			<input type="submit" name="prev" value="<?php print i18n::translate('&lt; Previous') ?>" />
 			</div>
 		<?php } ?>
 		</form>
@@ -499,13 +499,13 @@ function checkEnvironment() {
 	global $pgv_lang;
 
 	$success = true;
-	print "<h4>".$pgv_lang["checking_errors"]."</h4>";
+	print "<h4>".i18n::translate('Checking for errors...')."</h4>";
 	print "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
 	$phpcheck = (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0);
 	if ($phpcheck) {
 		echo '<tr><td valign="top">';
-		echo $pgv_lang["checking_php_version"], '<br />';
-		echo '<span class="error">', $pgv_lang["failed"], '</span><br />';
+		echo i18n::translate('Checking required PHP version:'), '<br />';
+		echo '<span class="error">', i18n::translate('Failed'), '</span><br />';
 		echo print_text("pgv_requires_version", 0, 1), '<br />';
 		echo print_text("using_php_version", 0, 1), '</td></tr>';
 	}
@@ -513,8 +513,8 @@ function checkEnvironment() {
 	// Check we have one or more PDO drivers available
 	if (!extension_loaded('pdo') || !PGV_DB::getAvailableDrivers()) {
 		print "<tr><td valign=\"top\">";
-		print $pgv_lang["checking_db_support"]."<br />";
-		print "<span class=\"error\">".$pgv_lang["no_db_extensions"]."</span><br />";
+		print i18n::translate('Checking for minimum database support:')."<br />";
+		print "<span class=\"error\">".i18n::translate('You do not have any of the supported database extensions.')."</span><br />";
 		print "</td></tr>";
 	}
 
@@ -528,14 +528,14 @@ function checkEnvironment() {
 		print "<span class=\"warning\">".$pgv_lang["config.php_not_writable"]."</span><br />".$pgv_lang["config.php_not_writable_instr"];
 	}
 	else {
-		print "<span class=\"pass\">".$pgv_lang["passed"]."</span><br />".$pgv_lang["config.php_writable"];
+		print "<span class=\"pass\">".i18n::translate('Passed')."</span><br />".$pgv_lang["config.php_writable"];
 	}
 	print "</td></tr>";
 	print "</table>\r\n";
 
 	//-- warnings
 	$has_warnings = false;
-	print "<h4>".$pgv_lang["checking_warnings"]."</h4>";
+	print "<h4>".i18n::translate('Checking for warnings...')."</h4>";
 	print "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
 	//set timelimit
 	//-- to do: This doesn't work if the time limit is already at 300 and can't be changed
@@ -544,10 +544,10 @@ function checkEnvironment() {
 	$newtimelimit = @ini_get("max_execution_time");
 	if ($newtimelimit!=300) {
 		print "<tr><td valign=\"top\">";
-		print $pgv_lang["checking_timelimit"]."<br />";
+		print i18n::translate('Checking for ability to change timelimit:')."<br />";
 		$has_warnings = true;
-		print "<span class=\"warning\">".$pgv_lang["cannot_change_timelimit"]."</span><br />".$pgv_lang["cannot_change_timelimit_instr"]."<br />";
-		print $pgv_lang["current_max_timelimit"]." ".$oldtimelimit;
+		print "<span class=\"warning\">".i18n::translate('Unable to change time limit.')."</span><br />".i18n::translate('You may not be able to run all functions on large databases with many individuals.')."<br />";
+		print i18n::translate('Your maximum time limit is')." ".$oldtimelimit;
 		print "</td></tr>";
 	}
 	//set memory limit
@@ -558,10 +558,10 @@ function checkEnvironment() {
 	if ($memorylimit!="38M") {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
-		print $pgv_lang["check_memlimit"]."<br />";
+		print i18n::translate('Checking for ability to change memory limit:')."<br />";
 
-		print "<span class=\"warning\">".$pgv_lang["cannot_change_memlimit"]."</span>".$pgv_lang["cannot_change_memlimit_instr"]."<br />";
-		print $pgv_lang["current_max_memlimit"]." ".$oldmemorylimit;
+		print "<span class=\"warning\">".i18n::translate('Unable to change memory limit.')."</span>".i18n::translate('You may not be able to run all functions on large databases with many individuals.')."<br />";
+		print i18n::translate('Your current memory limit is')." ".$oldmemorylimit;
 		print "</td></tr>";
 	}
 
@@ -570,9 +570,9 @@ function checkEnvironment() {
 	if ($uploads!="on" && $uploads!="On" && $uploads!=="1" && $uploads!==1) {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
-		print $pgv_lang["check_upload"]."<br />";
+		print i18n::translate('Checking for ability to upload files:')."<br />";
 
-		print $pgv_lang["current_max_upload"]." ".ini_get("upload_max_filesize")."<br />";
+		print i18n::translate('Your maximum upload file size is:')." ".ini_get("upload_max_filesize")."<br />";
 		print "</td></tr>";
 	}
 
@@ -580,9 +580,9 @@ function checkEnvironment() {
 	if (!function_exists('imagecreatefromjpeg')) {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
-		print $pgv_lang["check_gd"]."<br />";
+		print i18n::translate('Checking for GD image library:')."<br />";
 
-		print "<span class=\"warning\">".$pgv_lang["cannot_use_gd"]."</span><br />";
+		print "<span class=\"warning\">".i18n::translate('You do not have the GD image library.  You will not be able to automatically create image thumbnails.')."</span><br />";
 		print "</td></tr>";
 	}
 
@@ -590,38 +590,38 @@ function checkEnvironment() {
 	if (!function_exists('xml_parser_create')) {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
-		print $pgv_lang["check_sax"]."<br />";
+		print i18n::translate('Checking for SAX XML library:')."<br />";
 
-		print "<span class=\"warning\">".$pgv_lang["cannot_use_sax"]."</span><br />";
+		print "<span class=\"warning\">".i18n::translate('You do not have the SAX XML library.  You will not be able to run any reports or some other auxiliary functions.')."</span><br />";
 		print "</td></tr>";
 	}
 
 	if (!class_exists('DomDocument')) {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
-		print $pgv_lang["check_dom"]."<br />";
+		print i18n::translate('Checking for DOM XML library:')."<br />";
 
-		print "<span class=\"warning\">".$pgv_lang["cannot_use_dom"]."</span><br />";
+		print "<span class=\"warning\">".i18n::translate('You do not have the DOM XML library.  You will not be able to export XML.')."</span><br />";
 		print "</td></tr>";
 	}
 
 	if (!function_exists('GregorianToJD')) {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
-		print $pgv_lang["check_calendar"]."<br />";
+		print i18n::translate('Checking for Advanced Calendar library:')."<br />";
 
-		print "<span class=\"warning\">".$pgv_lang["cannot_use_calendar"]."</span><br />";
+		print "<span class=\"warning\">".i18n::translate('You do not have the advanced calendar support. You will not be able to run some advanced calendar functions.')."</span><br />";
 		print "</td></tr>";
 	}
 
 
 		print "<tr><td valign=\"top\">";
 		if (!$has_warnings) {
-			print "<span class=\"pass\">".$pgv_lang['passed']."</span><br />";
-			print $pgv_lang["warnings_passed"];
+			print "<span class=\"pass\">".i18n::translate('Passed')."</span><br />";
+			print i18n::translate('All warning checks passed.');
 		}
 		else {
-			print $pgv_lang["warning_instr"];
+			print i18n::translate('If any of the warnings do not pass you may still be able to run PhpGedView on this server, but some functionality may be disabled or you may experience poor performance.');
 		}
 		print "</td></tr>";
 	print "</table>";
@@ -644,7 +644,7 @@ function printDBForm() {
 	?>
 	<table>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBTYPE", "qm", "DBTYPE"); print $pgv_lang["DBTYPE"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBTYPE", "qm", "DBTYPE"); print i18n::translate('Database Type');?></td>
 		<td class="optionbox">
 			<select name="NEW_DBTYPE" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBTYPE_help');" onchange="changeDBtype(this);">
 			<?php
@@ -666,36 +666,36 @@ function printDBForm() {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBHOST", "qm", "DBHOST"); print $pgv_lang["DBHOST"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBHOST", "qm", "DBHOST"); print i18n::translate('Database Host');?></td>
 		<td class="optionbox"><input type="text" dir="ltr" name="NEW_DBHOST" value="<?php print $DBHOST?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBHOST_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBPORT", "qm", "DBPORT"); print $pgv_lang["DBPORT"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBPORT", "qm", "DBPORT"); print i18n::translate('Database Port');?></td>
 		<td class="optionbox"><input type="text" dir="ltr" name="NEW_DBPORT" value="<?php print $DBPORT?>" size="10" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPORT_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBUSER", "qm", "DBUSER"); print $pgv_lang["DBUSER"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBUSER", "qm", "DBUSER"); print i18n::translate('Database Username');?></td>
 		<td class="optionbox"><input type="text" name="NEW_DBUSER" value="<?php print $DBUSER?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBUSER_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBPASS", "qm", "DBPASS"); print $pgv_lang["DBPASS"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBPASS", "qm", "DBPASS"); print i18n::translate('Database Password');?></td>
 		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="<?php print $DBPASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBNAME", "qm", "DBNAME"); print $pgv_lang["DBNAME"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBNAME", "qm", "DBNAME"); print i18n::translate('Database Name');?></td>
 		<td class="optionbox"><input type="text" name="NEW_DBNAME" value="<?php print $DBNAME?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBNAME_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DB_UTF8_COLLATION", "qm", "DB_UTF8_COLLATION"); print $pgv_lang["DB_UTF8_COLLATION"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DB_UTF8_COLLATION", "qm", "DB_UTF8_COLLATION"); print i18n::translate('Use the database to provide UTF-8 collation');?></td>
 		<td class="optionbox">
 			<select name="NEW_DB_UTF8_COLLATION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DB_UTF8_COLLATION_help');">
-				<option value="yes" <?php if ($DB_UTF8_COLLATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$DB_UTF8_COLLATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+				<option value="yes" <?php if ($DB_UTF8_COLLATION) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+				<option value="no" <?php if (!$DB_UTF8_COLLATION) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 			</select>
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("TBLPREFIX", "qm", "TBLPREFIX"); print $pgv_lang["TBLPREFIX"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("TBLPREFIX", "qm", "TBLPREFIX"); print i18n::translate('Database Table Prefix');?></td>
 		<td class="optionbox"><input type="text" name="NEW_TBLPREFIX" value="<?php print $TBLPREFIX?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('TBLPREFIX_help');" /></td>
 	</tr>
 
@@ -760,19 +760,19 @@ function printConfigForm(){
 	  </script>
 	<div id="conf_tabbar">
 		<ul>
-			<li><a href="#conf_basic"><span><?php echo $pgv_lang['basic_site_config']?></span></a></li>
-			<li><a href="#conf_advanced"><span><?php echo $pgv_lang['adv_site_config']?></span></a></li>
+			<li><a href="#conf_basic"><span><?php echo i18n::translate('Basic Settings')?></span></a></li>
+			<li><a href="#conf_advanced"><span><?php echo i18n::translate('Advanced Settings')?></span></a></li>
 			<li><a href="#conf_smtp"><span>SMTP</span></a></li>
 		</ul>
 		<div id="conf_basic" class="indent" >
 		<table>
-			<tr><td colspan="2" class="center"><b><?php print $pgv_lang['basic_site_config'];?></b></td></tr>
+			<tr><td colspan="2" class="center"><b><?php print i18n::translate('Basic Settings');?></b></td></tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("INDEX_DIRECTORY", "qm", "INDEX_DIRECTORY"); print $pgv_lang["INDEX_DIRECTORY"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("INDEX_DIRECTORY", "qm", "INDEX_DIRECTORY"); print i18n::translate('Index file directory');?></td>
 				<td class="optionbox"><input type="text" size="50" name="NEW_INDEX_DIRECTORY" value="<?php print $INDEX_DIRECTORY?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('INDEX_DIRECTORY_help');" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("SERVER_URL", "qm", "SERVER_URL"); print $pgv_lang["SERVER_URL"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("SERVER_URL", "qm", "SERVER_URL"); print i18n::translate('PhpGedView URL');?></td>
 				<td class="optionbox wrap"><input type="text" name="NEW_SERVER_URL" value="<?php print $SERVER_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SERVER_URL_help');" size="50" />
 				<br /><?php
 					global $GUESS_URL;
@@ -782,38 +782,38 @@ function printConfigForm(){
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_CHANGE_GEDCOM", "qm", "ALLOW_CHANGE_GEDCOM"); print $pgv_lang["ALLOW_CHANGE_GEDCOM"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_CHANGE_GEDCOM", "qm", "ALLOW_CHANGE_GEDCOM"); print i18n::translate('Allow GEDCOM switching');?></td>
 				<td class="optionbox">
 					<select name="NEW_ALLOW_CHANGE_GEDCOM" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_CHANGE_GEDCOM_help');">
-						<option value="yes" <?php if ($ALLOW_CHANGE_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-						<option value="no" <?php if (!$ALLOW_CHANGE_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+						<option value="yes" <?php if ($ALLOW_CHANGE_GEDCOM) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+						<option value="no" <?php if (!$ALLOW_CHANGE_GEDCOM) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("USE_REGISTRATION_MODULE", "qm", "USE_REGISTRATION_MODULE"); print $pgv_lang["USE_REGISTRATION_MODULE"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("USE_REGISTRATION_MODULE", "qm", "USE_REGISTRATION_MODULE"); print i18n::translate('Allow visitors to request account registration');?></td>
 				<td class="optionbox">
 					<select name="NEW_USE_REGISTRATION_MODULE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_REGISTRATION_MODULE_help');">
-						<option value="yes" <?php if ($USE_REGISTRATION_MODULE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-						<option value="no" <?php if (!$USE_REGISTRATION_MODULE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+						<option value="yes" <?php if ($USE_REGISTRATION_MODULE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+						<option value="no" <?php if (!$USE_REGISTRATION_MODULE) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-		 		<td class="descriptionbox wrap width30"><?php print_help_link("REQUIRE_ADMIN_AUTH_REGISTRATION", "qm", "REQUIRE_ADMIN_AUTH_REGISTRATION"); print $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"];?></td>
+		 		<td class="descriptionbox wrap width30"><?php print_help_link("REQUIRE_ADMIN_AUTH_REGISTRATION", "qm", "REQUIRE_ADMIN_AUTH_REGISTRATION"); print i18n::translate('Require an administrator to approve new user registrations');?></td>
 		 		<td class="optionbox">
 		 			<select name="NEW_REQUIRE_ADMIN_AUTH_REGISTRATION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('REQUIRE_ADMIN_AUTH_REGISTRATION_help');">
-		 				<option value="yes" <?php if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-		 				<option value="no" <?php if (!$REQUIRE_ADMIN_AUTH_REGISTRATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+		 				<option value="yes" <?php if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+		 				<option value="no" <?php if (!$REQUIRE_ADMIN_AUTH_REGISTRATION) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 					</select>
 		 		</td>
 		 	</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_USER_THEMES", "qm", "ALLOW_USER_THEMES"); print $pgv_lang["ALLOW_USER_THEMES"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_USER_THEMES", "qm", "ALLOW_USER_THEMES"); print i18n::translate('Allow users to select their own theme');?></td>
 				<td class="optionbox">
 					<select name="NEW_ALLOW_USER_THEMES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_USER_THEMES_help');">
-						<option value="yes" <?php if ($ALLOW_USER_THEMES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-						<option value="no" <?php if (!$ALLOW_USER_THEMES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+						<option value="yes" <?php if ($ALLOW_USER_THEMES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+						<option value="no" <?php if (!$ALLOW_USER_THEMES) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 					</select>
 				</td>
 			</tr>
@@ -823,77 +823,77 @@ function printConfigForm(){
 		<!--  advanced settings -->
 		<div id="conf_advanced" class="indent">
 			<table>
-			<tr><td colspan="2" class="center"><br /><b><?php print $pgv_lang['adv_site_config'];?></b></td></tr>
+			<tr><td colspan="2" class="center"><br /><b><?php print i18n::translate('Advanced Settings');?></b></td></tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("LOGIN_URL", "qm", "LOGIN_URL"); print $pgv_lang["LOGIN_URL"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("LOGIN_URL", "qm", "LOGIN_URL"); print i18n::translate('Login URL');?></td>
 				<td class="optionbox"><input type="text" name="NEW_LOGIN_URL" value="<?php print $LOGIN_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LOGIN_URL_help');" size="50" />
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_STORE_MESSAGES", "qm", "PGV_STORE_MESSAGES"); print $pgv_lang["PGV_STORE_MESSAGES"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_STORE_MESSAGES", "qm", "PGV_STORE_MESSAGES"); print i18n::translate('Allow messages to be stored online');?></td>
 				<td class="optionbox">
 					<select name="NEW_PGV_STORE_MESSAGES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_STORE_MESSAGES_help');">
-						<option value="yes" <?php if ($PGV_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-						<option value="no" <?php if (!$PGV_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+						<option value="yes" <?php if ($PGV_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+						<option value="no" <?php if (!$PGV_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SIMPLE_MAIL", "qm", "PGV_SIMPLE_MAIL"); print $pgv_lang["PGV_SIMPLE_MAIL"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SIMPLE_MAIL", "qm", "PGV_SIMPLE_MAIL"); print i18n::translate('Use simple mail headers in external mails');?></td>
 				<td class="optionbox">
 					<select name="NEW_PGV_SIMPLE_MAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SIMPLE_MAIL_help');">
-						<option value="yes" <?php if ($PGV_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-						<option value="no" <?php if (!$PGV_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+						<option value="yes" <?php if ($PGV_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+						<option value="no" <?php if (!$PGV_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("LOGFILE_CREATE", "qm", "LOGFILE_CREATE"); print $pgv_lang["LOGFILE_CREATE"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("LOGFILE_CREATE", "qm", "LOGFILE_CREATE"); print i18n::translate('Archive log files');?></td>
 				<td class="optionbox">
 					<select name="NEW_LOGFILE_CREATE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LOGFILE_CREATE_help');">
-						<option value="none" <?php if ($LOGFILE_CREATE=="none") print "selected=\"selected\""; ?>><?php print $pgv_lang["no_logs"];?></option>
-						<option value="daily" <?php if ($LOGFILE_CREATE=="daily") print "selected=\"selected\""; ?>><?php print $pgv_lang["daily"];?></option>
-						<option value="weekly" <?php if ($LOGFILE_CREATE=="weekly") print "selected=\"selected\""; ?>><?php print $pgv_lang["weekly"];?></option>
-						<option value="monthly" <?php if ($LOGFILE_CREATE=="monthly") print "selected=\"selected\""; ?>><?php print $pgv_lang["monthly"];?></option>
-						<option value="yearly" <?php if ($LOGFILE_CREATE=="yearly") print "selected=\"selected\""; ?>><?php print $pgv_lang["yearly"];?></option>
+						<option value="none" <?php if ($LOGFILE_CREATE=="none") print "selected=\"selected\""; ?>><?php print i18n::translate('Disable logging');?></option>
+						<option value="daily" <?php if ($LOGFILE_CREATE=="daily") print "selected=\"selected\""; ?>><?php print i18n::translate('Daily');?></option>
+						<option value="weekly" <?php if ($LOGFILE_CREATE=="weekly") print "selected=\"selected\""; ?>><?php print i18n::translate('Weekly');?></option>
+						<option value="monthly" <?php if ($LOGFILE_CREATE=="monthly") print "selected=\"selected\""; ?>><?php print i18n::translate('Monthly');?></option>
+						<option value="yearly" <?php if ($LOGFILE_CREATE=="yearly") print "selected=\"selected\""; ?>><?php print i18n::translate('Yearly');?></option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SESSION_SAVE_PATH", "qm", "PGV_SESSION_SAVE_PATH"); print $pgv_lang["PGV_SESSION_SAVE_PATH"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SESSION_SAVE_PATH", "qm", "PGV_SESSION_SAVE_PATH"); print i18n::translate('Session save path');?></td>
 				<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SESSION_SAVE_PATH" value="<?php print $PGV_SESSION_SAVE_PATH?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SESSION_SAVE_PATH_help');" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SESSION_TIME", "qm", "PGV_SESSION_TIME"); print $pgv_lang["PGV_SESSION_TIME"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SESSION_TIME", "qm", "PGV_SESSION_TIME"); print i18n::translate('Session timeout');?></td>
 				<td class="optionbox"><input type="text" name="NEW_PGV_SESSION_TIME" value="<?php print $PGV_SESSION_TIME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SESSION_TIME_help');" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("MAX_VIEW_RATE", "qm", "MAX_VIEW_RATE"); print $pgv_lang["MAX_VIEW_RATE"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("MAX_VIEW_RATE", "qm", "MAX_VIEW_RATE"); print i18n::translate('Maximum page view rate');?></td>
 				<td class="optionbox wrap">
 					<input type="text" size="5" name="NEW_MAX_VIEWS" value="<?php print $MAX_VIEWS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
 					<?php
-						if ($TEXT_DIRECTION == "ltr") print $pgv_lang["page_views"];
-						else print $pgv_lang["seconds"];
+						if ($TEXT_DIRECTION == "ltr") print i18n::translate('&nbsp;&nbsp;page views in&nbsp;&nbsp;');
+						else print i18n::translate('&nbsp;&nbsp;seconds');
 					?>
 					<input type="text" size="5" name="NEW_MAX_VIEW_TIME" value="<?php print $MAX_VIEW_TIME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
 					<?php
-						if ($TEXT_DIRECTION == "ltr") print $pgv_lang["seconds"];
-						else print $pgv_lang["page_views"];
+						if ($TEXT_DIRECTION == "ltr") print i18n::translate('&nbsp;&nbsp;seconds');
+						else print i18n::translate('&nbsp;&nbsp;page views in&nbsp;&nbsp;');
 					?>
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("COMMIT_COMMAND", "qm", "COMMIT_COMMAND"); print $pgv_lang['COMMIT_COMMAND'];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("COMMIT_COMMAND", "qm", "COMMIT_COMMAND"); print i18n::translate('Version Control Commit Command');?></td>
 		 		<td class="optionbox">
 		 			<select name="NEW_COMMIT_COMMAND" tabindex="<?php $i++; print $i?>" onfocus="getHelp('COMMIT_COMMAND_help');">
-						<option value="" <?php if ($COMMIT_COMMAND=="") print "selected=\"selected\""; ?>><?php print $pgv_lang["none"];?></option>
+						<option value="" <?php if ($COMMIT_COMMAND=="") print "selected=\"selected\""; ?>><?php print i18n::translate('None');?></option>
 						<option value="cvs" <?php if ($COMMIT_COMMAND=="cvs") print "selected=\"selected\""; ?>>CVS</option>
 						<option value="svn" <?php if ($COMMIT_COMMAND=="svn") print "selected=\"selected\""; ?>>SVN</option>
 					</select>
 				</td>
 		 	</tr>
 		 	<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_MEMORY_LIMIT", "qm", "PGV_MEMORY_LIMIT"); print $pgv_lang["PGV_MEMORY_LIMIT"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_MEMORY_LIMIT", "qm", "PGV_MEMORY_LIMIT"); print i18n::translate('Memory limit');?></td>
 				<td class="optionbox"><input type="text" name="NEW_PGV_MEMORY_LIMIT" value="<?php print $PGV_MEMORY_LIMIT?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_MEMORY_LIMIT_help');" /></td>
 			</tr>
 			</table>
@@ -904,55 +904,55 @@ function printConfigForm(){
 		<table>
 		<tr><td colspan="2" class="center"><br /><b>SMTP</b></td></tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_ACTIVE", "qm", "PGV_SMTP_ACTIVE"); print $pgv_lang["PGV_SMTP_ACTIVE"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_ACTIVE", "qm", "PGV_SMTP_ACTIVE"); print i18n::translate('Use SMTP to send external mails');?></td>
 		<td class="optionbox">
 			<select name="NEW_PGV_SMTP_ACTIVE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_ACTIVE_help');">
-				<option value="yes" <?php if ($PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+				<option value="yes" <?php if ($PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+				<option value="no" <?php if (!$PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 			</select>
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HOST", "qm", "PGV_SMTP_HOST"); print $pgv_lang["PGV_SMTP_HOST"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HOST", "qm", "PGV_SMTP_HOST"); print i18n::translate('Outgoing server (SMTP) name');?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_HOST" value="<?php print $PGV_SMTP_HOST?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_HOST_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HELO", "qm", "PGV_SMTP_HELO"); print $pgv_lang["PGV_SMTP_HELO"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HELO", "qm", "PGV_SMTP_HELO"); print i18n::translate('Sending domain name');?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_HELO" value="<?php print $PGV_SMTP_HELO?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_HELO_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_PORT", "qm", "PGV_SMTP_PORT"); print $pgv_lang["PGV_SMTP_PORT"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_PORT", "qm", "PGV_SMTP_PORT"); print i18n::translate('SMTP Port');?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="5" name="NEW_PGV_SMTP_PORT" value="<?php print $PGV_SMTP_PORT?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_PORT_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH", "qm", "PGV_SMTP_AUTH"); print $pgv_lang["PGV_SMTP_AUTH"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH", "qm", "PGV_SMTP_AUTH"); print i18n::translate('Use name and password');?></td>
 		<td class="optionbox">
 			<select name="NEW_PGV_SMTP_AUTH" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_help');">
-			<option value="yes" <?php if ($PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-			<option value="no" <?php if (!$PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			<option value="yes" <?php if ($PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print i18n::translate('Yes');?></option>
+			<option value="no" <?php if (!$PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print i18n::translate('No');?></option>
 			</select>
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_USER", "qm", "PGV_SMTP_AUTH_USER"); print $pgv_lang["PGV_SMTP_AUTH_USER"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_USER", "qm", "PGV_SMTP_AUTH_USER"); print i18n::translate('User name');?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_AUTH_USER" value="<?php print $PGV_SMTP_AUTH_USER?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_USER_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_PASS", "qm", "PGV_SMTP_AUTH_PASS"); print $pgv_lang["PGV_SMTP_AUTH_PASS"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_PASS", "qm", "PGV_SMTP_AUTH_PASS"); print i18n::translate('Password');?></td>
 		<td class="optionbox"><input type="password" name="NEW_PGV_SMTP_AUTH_PASS" value="<?php print $PGV_SMTP_AUTH_PASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_PASS_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_SSL", "qm", "PGV_SMTP_SSL"); print $pgv_lang["PGV_SMTP_SSL"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_SSL", "qm", "PGV_SMTP_SSL"); print i18n::translate('Secure connection');?></td>
 		<td class="optionbox">
 			<select name="NEW_PGV_SMTP_SSL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_SSL_help');">
-				<option value="none" <?php if ($PGV_SMTP_SSL=='none') print "selected=\"selected\""; ?>><?php print $pgv_lang["none"];?></option>
+				<option value="none" <?php if ($PGV_SMTP_SSL=='none') print "selected=\"selected\""; ?>><?php print i18n::translate('None');?></option>
 				<option value="ssl" <?php if ($PGV_SMTP_SSL=='ssl') print "selected=\"selected\""; ?>>SSL</option>
 				<option value="tls" <?php if ($PGV_SMTP_SSL=='tls') print "selected=\"selected\""; ?>>TLS</option>
 			</select>
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_FROM_NAME", "qm", "PGV_SMTP_FROM_NAME"); print $pgv_lang["PGV_SMTP_FROM_NAME"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_FROM_NAME", "qm", "PGV_SMTP_FROM_NAME"); print i18n::translate('Sender name');?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_FROM_NAME" value="<?php print $PGV_SMTP_FROM_NAME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_FROM_NAME_help');" /></td>
 	</tr>
 	</table>
@@ -975,7 +975,7 @@ function printLanguageForm() {
 		}
 	}
 
-	print_help_link("LANG_SELECTION", "qm", "LANG_SELECTION"); print $pgv_lang["LANG_SELECTION"];?>
+	print_help_link("LANG_SELECTION", "qm", "LANG_SELECTION"); print i18n::translate('Supported languages');?>
 	<table>
 	<tr>
 		<td class="optionbox">
@@ -1054,60 +1054,60 @@ function printAdminUserForm() {
 			<script language="JavaScript" type="text/javascript">
 				function validate(frm) {
 					if (frm.username.value=="") {
-						alert("<?php print $pgv_lang["enter_username"]; ?>");
+						alert("<?php print i18n::translate('You must enter a user name.'); ?>");
 						frm.username.focus();
 						return false;
 					}
 					if (frm.firstname.value=="") {
-						alert("<?php print $pgv_lang["enter_fullname"]; ?>");
+						alert("<?php print i18n::translate('You must enter a first and last name.'); ?>");
 						frm.firstname.focus();
 						return false;
 					}
 					if (frm.lastname.value=="") {
-						alert("<?php print $pgv_lang["enter_fullname"]; ?>");
+						alert("<?php print i18n::translate('You must enter a first and last name.'); ?>");
 						frm.lastname.focus();
 						return false;
 					}
 					if (frm.pass1.value=="") {
-						alert("<?php print $pgv_lang["enter_password"]; ?>");
+						alert("<?php print i18n::translate('You must enter a password.'); ?>");
 						frm.pass1.focus();
 						return false;
 					}
 					if (frm.pass2.value=="") {
-						alert("<?php print $pgv_lang["confirm_password"]; ?>");
+						alert("<?php print i18n::translate('You must confirm the password.'); ?>");
 						frm.pass2.focus();
 						return false;
 					}
 					return true;
 				}
 			</script>
-			<b><?php print $pgv_lang["default_user"];?></b><br />
-			<?php print $pgv_lang["about_user"];?><br /><br />
+			<b><?php print i18n::translate('Create the default administrative user.');?></b><br />
+			<?php print i18n::translate('You must first create your main administrative user.  This user will have privileges to update the configuration files, view private data, and create other users.');?><br /><br />
 			<table>
-				<tr><td class="descriptionbox"><?php print $pgv_lang["username"];?></td>
+				<tr><td class="descriptionbox"><?php print i18n::translate('User name');?></td>
 				<td class="optionbox"><input type="text" name="username" /></td></tr>
-				<tr><td class="descriptionbox"><?php print $pgv_lang["firstname"];?></td>
+				<tr><td class="descriptionbox"><?php print i18n::translate('First Name');?></td>
 				<td class="optionbox"><input type="text" name="firstname" /></td></tr>
-				<tr><td class="descriptionbox"><?php print $pgv_lang["lastname"];?></td>
+				<tr><td class="descriptionbox"><?php print i18n::translate('Last Name');?></td>
 				<td class="optionbox"><input type="text" name="lastname" /></td></tr>
-				<tr><td class="descriptionbox"><?php print $pgv_lang["password"];?></td>
+				<tr><td class="descriptionbox"><?php print i18n::translate('Password');?></td>
 				<td class="optionbox"><input type="password" name="pass1" /></td></tr>
-				<tr><td class="descriptionbox"><?php print $pgv_lang["confirm"];?></td>
+				<tr><td class="descriptionbox"><?php print i18n::translate('Confirm Password');?></td>
 				<td class="optionbox"><input type="password" name="pass2" /></td></tr>
-				<tr><td class="descriptionbox"><?php print $pgv_lang["emailadress"];?></td>
+				<tr><td class="descriptionbox"><?php print i18n::translate('Email Address');?></td>
 				<td class="optionbox"><input type="text" name="emailadress" size="45" /></td></tr>
 			</table>
 			<?php
 	}
 	else {
 		?>
-		<?php print $pgv_lang["admin_users_exists"]	; ?>
+		<?php print i18n::translate('The following administrative users already exist:')	; ?>
 		<table>
 		<tr>
-			<td class="topbottombar"><?php print $pgv_lang["username"];?></td>
-			<td class="topbottombar"><?php print $pgv_lang["firstname"];?></td>
-			<td class="topbottombar"><?php print $pgv_lang["lastname"];?></td>
-			<td class="topbottombar"><?php print $pgv_lang["emailadress"];?></td>
+			<td class="topbottombar"><?php print i18n::translate('User name');?></td>
+			<td class="topbottombar"><?php print i18n::translate('First Name');?></td>
+			<td class="topbottombar"><?php print i18n::translate('Last Name');?></td>
+			<td class="topbottombar"><?php print i18n::translate('Email Address');?></td>
 		</tr>
 		<?php foreach(get_all_users() as $user_id=>$user_name) {
 		if (userIsAdmin($user_id)) {?>
@@ -1122,7 +1122,7 @@ function printAdminUserForm() {
 		</table>
 		<br />
 		<?php
-		print $pgv_lang['to_manage_users'];
+		print i18n::translate('To manage users, use the <a href="useradmin.php">User Administration</a> page.');
 	}
 	return true;
 }

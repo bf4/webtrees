@@ -46,7 +46,7 @@ class Note extends GedcomRecord {
 		if (UTF8_strlen($value)<100) {
 			parent::_addName($type, $value, $gedrec);
 		} else {
-			parent::_addName($type, UTF8_substr($value, 0, 100).$pgv_lang['ellipsis'], $gedrec);
+			parent::_addName($type, UTF8_substr($value, 0, 100).i18n::translate('…'), $gedrec);
 		}
 	}
 

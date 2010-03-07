@@ -111,12 +111,12 @@ if ($action=='deleteuser') {
 // Save new user info to the database
 if ($action=='createuser' || $action=='edituser2') {
 	if (($action=='createuser' || $action=='edituser2' && $username!=$oldusername) && get_user_id($username)) {
-		print_header($pgv_lang['user_admin']);
-		echo "<span class=\"error\">", $pgv_lang["duplicate_username"], "</span><br />";
+		print_header(i18n::translate('User administration'));
+		echo "<span class=\"error\">", i18n::translate('Duplicate user name.  A user with that user name already exists.  Please choose another user name.'), "</span><br />";
 	} else {
 		if ($pass1!=$pass2) {
-			print_header($pgv_lang['user_admin']);
-			echo "<span class=\"error\">", $pgv_lang["password_mismatch"], "</span><br />";
+			print_header(i18n::translate('User administration'));
+			echo "<span class=\"error\">", i18n::translate('Passwords do not match.'), "</span><br />";
 		} else {
 			$alphabet=getAlphabet()."_-. ";
 			$i=1;
@@ -129,8 +129,8 @@ if ($action=='createuser' || $action=='edituser2') {
 				$i++;
 			}
 			if (!$pass) {
-				print_header($pgv_lang['user_admin']);
-				echo "<span class=\"error\">", $pgv_lang["invalid_username"], "</span><br />";
+				print_header(i18n::translate('User administration'));
+				echo "<span class=\"error\">", i18n::translate('User name contains invalid characters'), "</span><br />";
 			} else {
 				// New user
 				if ($action=='createuser') {
@@ -214,7 +214,7 @@ if ($action=='createuser' || $action=='edituser2') {
 		}
 	}
 } else {
-	print_header($pgv_lang['user_admin']);
+	print_header(i18n::translate('User administration'));
 
 	if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 }
@@ -228,24 +228,24 @@ if ($action=="edituser") {
 	<!--
 	function checkform(frm) {
 		if (frm.username.value=="") {
-			alert("<?php echo $pgv_lang["enter_username"]; ?>");
+			alert("<?php echo i18n::translate('You must enter a user name.'); ?>");
 			frm.username.focus();
 			return false;
 		}
 		if (frm.firstname.value=="") {
-			alert("<?php echo $pgv_lang["enter_fullname"]; ?>");
+			alert("<?php echo i18n::translate('You must enter a first and last name.'); ?>");
 			frm.firstname.focus();
 			return false;
 		}
 		if ((frm.pass1.value!="")&&(frm.pass1.value.length < 6)) {
-			alert("<?php echo $pgv_lang["passwordlength"]; ?>");
+			alert("<?php echo i18n::translate('Passwords must contain at least 6 characters.'); ?>");
 			frm.pass1.value = "";
 			frm.pass2.value = "";
 			frm.pass1.focus();
 			return false;
 		}
 		if ((frm.emailaddress.value!="")&&(frm.emailaddress.value.indexOf("@")==-1)) {
-			alert("<?php echo $pgv_lang["enter_email"]; ?>");
+			alert("<?php echo i18n::translate('You must enter an email address.'); ?>");
 			frm.emailaddress.focus();
 			return false;
 		}
@@ -266,36 +266,36 @@ if ($action=="edituser") {
 	<?php $tab=0; ?>
 	<table class="center list_table width80 <?php echo $TEXT_DIRECTION; ?>">
 	<tr><td colspan="2" class="facts_label"><?php
-	echo "<h2>", $pgv_lang["update_user"], "</h2>";
+	echo "<h2>", i18n::translate('Update User Account'), "</h2>";
 	?>
 	</td>
 	</tr>
 	<tr><td class="topbottombar" colspan="2">
-	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["update_user"]; ?>" />
-	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["back"]; ?>" onclick="window.location='<?php echo encode_url("useradmin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
+	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Update User Account'); ?>" />
+	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo encode_url("useradmin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
 	</td></tr>
 	<tr>
-	<td class="descriptionbox width20 wrap"><?php print_help_link("useradmin_username", "qm", "username"); echo $pgv_lang["username"]; ?></td>
+	<td class="descriptionbox width20 wrap"><?php print_help_link("useradmin_username", "qm", "username"); echo i18n::translate('User name'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" value="<?php echo $username; ?>" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname", "qm", "firstname"); echo $pgv_lang["firstname"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname", "qm", "firstname"); echo i18n::translate('First Name'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" value="<?php echo PrintReady(get_user_setting($user_id, 'firstname')); ?>" size="50" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname", "qm", "lastname");echo $pgv_lang["lastname"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname", "qm", "lastname");echo i18n::translate('Last Name'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" value="<?php echo PrintReady(get_user_setting($user_id, 'lastname')); ?>" size="50" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_password", "qm", "password"); echo $pgv_lang["password"]; ?></td>
-	<td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /><br /><?php echo $pgv_lang["leave_blank"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_password", "qm", "password"); echo i18n::translate('Password'); ?></td>
+	<td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /><br /><?php echo i18n::translate('Leave password blank if you want to keep the current password.'); ?></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_conf_password", "qm", "confirm"); echo $pgv_lang["confirm"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_conf_password", "qm", "confirm"); echo i18n::translate('Confirm Password'); ?></td>
 	<td class="optionbox wrap"><input type="password" name="pass2" tabindex="<?php echo ++$tab; ?>" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_gedcomid", "qm", "gedcomid"); echo $pgv_lang["gedcomid"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_gedcomid", "qm", "gedcomid"); echo i18n::translate('GEDCOM INDI record ID'); ?></td>
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
@@ -317,7 +317,7 @@ if ($action=="edituser") {
 	}
 	?>
 	</table></td></tr><tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid", "qm", "rootid"); echo $pgv_lang["rootid"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid", "qm", "rootid"); echo i18n::translate('Pedigree Chart Root Person'); ?></td>
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
@@ -342,7 +342,7 @@ if ($action=="edituser") {
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin", "qm", "can_admin"); echo $pgv_lang["can_admin"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin", "qm", "can_admin"); echo i18n::translate('User can administer'); ?></td>
 	<?php
 	// Forms won't send the value of checkboxes if they are disabled :-(  Instead, create a hidden field
 	if ($user_id==PGV_USER_ID) {
@@ -359,7 +359,7 @@ if ($action=="edituser") {
 
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit", "qm", "can_edit"); echo $pgv_lang["can_edit"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit", "qm", "can_edit"); echo i18n::translate('Access level'); ?></td>
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
@@ -387,16 +387,16 @@ if ($action=="edituser") {
 	</table>
 	</td>
 	</tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept", "qm", "user_auto_accept"); echo $pgv_lang["user_auto_accept"]; ?></td>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept", "qm", "user_auto_accept"); echo i18n::translate('Automatically accept changes made by this user'); ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="new_auto_accept" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'auto_accept')=='Y') echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_relation_priv", "qm", "user_relationship_priv"); echo $pgv_lang["user_relationship_priv"]; ?></td>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_relation_priv", "qm", "user_relationship_priv"); echo i18n::translate('Limit access to related people'); ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="new_relationship_privacy" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'relationship_privacy')=="Y") echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_path_length", "qm", "user_path_length"); echo $pgv_lang["user_path_length"]; ?></td>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_path_length", "qm", "user_path_length"); echo i18n::translate('Max relationship privacy path length'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="new_max_relation_path" tabindex="<?php echo ++$tab; ?>" value="<?php echo get_user_setting($user_id, 'max_relation_path'); ?>" size="5" /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_email", "qm", "emailadress"); echo $pgv_lang["emailadress"]; ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" dir="ltr" value="<?php echo get_user_setting($user_id, 'email'); ?>" size="50" /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verified", "qm", "verified"); echo $pgv_lang["verified"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin", "qm", "verified_by_admin"); echo $pgv_lang["verified_by_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified_by_admin')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_change_lang", "qm", "change_lang");echo $pgv_lang["change_lang"]; ?></td><td class="optionbox wrap" valign="top"><?php
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_email", "qm", "emailadress"); echo i18n::translate('Email Address'); ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" dir="ltr" value="<?php echo get_user_setting($user_id, 'email'); ?>" size="50" /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verified", "qm", "verified"); echo i18n::translate('User verified himself'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin", "qm", "verified_by_admin"); echo i18n::translate('User approved by Admin'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified_by_admin')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_change_lang", "qm", "change_lang");echo i18n::translate('Change Language'); ?></td><td class="optionbox wrap" valign="top"><?php
 	if ($ENABLE_MULTI_LANGUAGE) {
 		$tab++;
 		echo "<select name=\"user_language\" tabindex=\"", $tab, "\" dir=\"ltr\" style=\"{ font-size: 9pt; }\">";
@@ -414,9 +414,9 @@ if ($action=="edituser") {
 	<?php
 	if ($ALLOW_USER_THEMES) {
 		?>
-		<tr><td class="descriptionbox wrap" valign="top" align="left"><?php print_help_link("useradmin_user_theme", "qm", "user_theme"); echo $pgv_lang["user_theme"]; ?></td><td class="optionbox wrap" valign="top">
+		<tr><td class="descriptionbox wrap" valign="top" align="left"><?php print_help_link("useradmin_user_theme", "qm", "user_theme"); echo i18n::translate('My Theme'); ?></td><td class="optionbox wrap" valign="top">
 		<select name="user_theme" tabindex="<?php echo ++$tab; ?>" dir="ltr">
-		<option value=""><?php echo $pgv_lang["site_default"]; ?></option>
+		<option value=""><?php echo i18n::translate('Site Default'); ?></option>
 		<?php
 		foreach(get_theme_names() as $themename=>$themedir) {
 		echo "<option value=\"", $themedir, "\"";
@@ -430,35 +430,35 @@ if ($action=="edituser") {
 	}
 	?>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_contact", "qm", "user_contact_method"); echo $pgv_lang["user_contact_method"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_contact", "qm", "user_contact_method"); echo i18n::translate('Preferred Contact Method'); ?></td>
 	<td class="optionbox wrap"><select name="new_contact_method" tabindex="<?php echo ++$tab; ?>">
 	<?php
 	if ($PGV_STORE_MESSAGES) {
 		?>
-		<option value="messaging" <?php if (get_user_setting($user_id, 'contactmethod')=='messaging') echo "selected=\"selected\""; ?>><?php echo $pgv_lang["messaging"]; ?></option>
-		<option value="messaging2" <?php if (get_user_setting($user_id, 'contactmethod')=='messaging2') echo "selected=\"selected\""; ?>><?php echo $pgv_lang["messaging2"]; ?></option>
+		<option value="messaging" <?php if (get_user_setting($user_id, 'contactmethod')=='messaging') echo "selected=\"selected\""; ?>><?php echo i18n::translate('PhpGedView internal messaging'); ?></option>
+		<option value="messaging2" <?php if (get_user_setting($user_id, 'contactmethod')=='messaging2') echo "selected=\"selected\""; ?>><?php echo i18n::translate('Internal messaging with emails'); ?></option>
 		<?php
 	} else {
 		?>
-		<option value="messaging3" <?php if (get_user_setting($user_id, 'contactmethod')=='messaging3') echo "selected=\"selected\""; ?>><?php echo $pgv_lang["messaging3"]; ?></option>
+		<option value="messaging3" <?php if (get_user_setting($user_id, 'contactmethod')=='messaging3') echo "selected=\"selected\""; ?>><?php echo i18n::translate('PhpGedView sends emails with no storage'); ?></option>
 		<?php
 	}
 	?>
-	<option value="mailto" <?php if (get_user_setting($user_id, 'contactmethod')=='mailto') echo "selected=\"selected\""; ?>><?php echo $pgv_lang["mailto"]; ?></option>
-	<option value="none" <?php if (get_user_setting($user_id, 'contactmethod')=='none') echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no_messaging"]; ?></option>
+	<option value="mailto" <?php if (get_user_setting($user_id, 'contactmethod')=='mailto') echo "selected=\"selected\""; ?>><?php echo i18n::translate('Mailto link'); ?></option>
+	<option value="none" <?php if (get_user_setting($user_id, 'contactmethod')=='none') echo "selected=\"selected\""; ?>><?php echo i18n::translate('No contact method'); ?></option>
 	</select>
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline", "qm", "visibleonline"); echo $pgv_lang["visibleonline"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline", "qm", "visibleonline"); echo i18n::translate('Visible to other users when online'); ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="visibleonline" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'visibleonline')=='Y') echo "checked=\"checked\""; ?> /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_editaccount", "qm", "editaccount"); echo $pgv_lang["editaccount"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_editaccount", "qm", "editaccount"); echo i18n::translate('Allow this user to edit his account information'); ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="editaccount" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'editaccount')=='Y') echo "checked=\"checked\""; ?> /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab", "qm", "user_default_tab"); echo $pgv_lang["user_default_tab"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab", "qm", "user_default_tab"); echo i18n::translate('Default Tab to show on Individual Information page'); ?></td>
 	<td class="optionbox wrap"><select name="new_default_tab" tabindex="<?php echo ++$tab; ?>">
 	<?php
 	foreach ($ALL_DEFAULT_TABS as $key=>$value) {
@@ -473,16 +473,16 @@ if ($action=="edituser") {
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment", "qm", "comment"); echo $pgv_lang["comment"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment", "qm", "comment"); echo i18n::translate('Admin comments on user'); ?></td>
 	<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php echo ++$tab; ?>" ><?php $tmp = PrintReady(get_user_setting($user_id, 'comment')); echo $tmp; ?></textarea></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp", "qm", "comment_exp"); echo $pgv_lang["comment_exp"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp", "qm", "comment_exp"); echo i18n::translate('Admin warning at date'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="new_comment_exp" id="new_comment_exp" tabindex="<?php echo ++$tab; ?>" value="<?php echo get_user_setting($user_id, 'comment_exp'); ?>" />&nbsp;&nbsp;<?php print_calendar_popup("new_comment_exp"); ?></td>
 	</tr>
 	<tr><td class="topbottombar" colspan="2">
-	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["update_user"]; ?>" />
-	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["back"]; ?>" onclick="window.location='<?php echo encode_url("useradmin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
+	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Update User Account'); ?>" />
+	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo encode_url("useradmin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
 	</td></tr>
 	</table>
 	</form>
@@ -557,24 +557,24 @@ if ($action == "listusers") {
 	?>
 	<table class="center list_table width80 <?php echo $TEXT_DIRECTION; ?>">
 	<tr><td colspan="<?php if ($view == "preview") echo "8"; else echo "11"; ?>" class="facts_label"><?php
-		echo "<h2>", $pgv_lang["current_users"], "</h2>";
+		echo "<h2>", i18n::translate('User List'), "</h2>";
 	?>
 	</td></tr>
 	<tr>
 	<?php if ($view!="preview") { ?>
-	<td colspan="5" class="topbottombar rtl"><a href="useradmin.php?action=createform"><?php echo $pgv_lang["add_user"]; ?></a></td>
+	<td colspan="5" class="topbottombar rtl"><a href="useradmin.php?action=createform"><?php echo i18n::translate('Add a new user'); ?></a></td>
 	<?php } ?>
-	<td colspan="<?php if ($view == "preview") echo "8"; else echo "5"; ?>" class="topbottombar rtl"><a href="useradmin.php"><?php if ($view != "preview") echo $pgv_lang["back_useradmin"]; else echo "&nbsp;"; ?></a></td>
+	<td colspan="<?php if ($view == "preview") echo "8"; else echo "5"; ?>" class="topbottombar rtl"><a href="useradmin.php"><?php if ($view != "preview") echo i18n::translate('Back to User Administration'); else echo "&nbsp;"; ?></a></td>
 	</tr>
 	<tr>
 	<?php if ($view != "preview") {
 	echo "<td class=\"descriptionbox wrap\">";
-	echo $pgv_lang["message"], "</td>";
+	echo i18n::translate('Send Message'), "</td>";
 	} ?>
-	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortlname&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["full_name"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["username"]; ?></a></td>
-	<td class="descriptionbox wrap"><?php echo $pgv_lang["inc_languages"]; ?></td>
-	<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php echo $pgv_lang["privileges"]; ?>" onclick="<?php
+	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortlname&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo i18n::translate('Full Name'); ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo i18n::translate('User name'); ?></a></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate(' Languages'); ?></td>
+	<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php echo i18n::translate('Privileges'); ?>" onclick="<?php
 	$k = 1;
 	for ($i=1, $max=count($users)+1; $i<=$max; $i++) echo "expand_layer('user-geds", $i, "'); ";
 	echo " return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $PGV_IMAGE_DIR, "/";
@@ -585,15 +585,15 @@ if ($action == "listusers") {
 	if ($showprivs == false) echo "none\">";
 	else echo "block\">";
 	echo "</div>&nbsp;";
-	echo $pgv_lang["privileges"]; ?>
+	echo i18n::translate('Privileges'); ?>
 	</td>
-	<td class="descriptionbox wrap width10"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortreg&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["date_registered"]; ?></a></td>
-	<td class="descriptionbox wrap width20"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortllgn&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["last_login"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortver&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["verified"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortveradmin&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo $pgv_lang["verified_by_admin"]; ?></a></td>
+	<td class="descriptionbox wrap width10"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortreg&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo i18n::translate('Date registered'); ?></a></td>
+	<td class="descriptionbox wrap width20"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortllgn&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo i18n::translate('Last logged in'); ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortver&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo i18n::translate('User verified himself'); ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php echo encode_url("useradmin.php?action=listusers&sort=sortveradmin&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php echo i18n::translate('User approved by Admin'); ?></a></td>
 	<?php if ($view != "preview") {
 	echo "<td class=\"descriptionbox wrap\">";
-	echo $pgv_lang["delete"], "</td>";
+	echo i18n::translate('Delete'), "</td>";
 	} ?>
 	</tr>
 	<?php
@@ -603,14 +603,14 @@ if ($action == "listusers") {
 		if ($view != "preview") {
 			echo "\t<td class=\"optionbox wrap\">";
 			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
-				echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\">", $pgv_lang["message"], "</a>";
+				echo "<a href=\"javascript:;\" onclick=\"return message('", $user_name, "');\">", i18n::translate('Send Message'), "</a>";
 			} else {
 				echo '&nbsp;';
 			}
 			echo '</td>';
 		}
 		$userName = getUserFullName($user_id);
-		echo "\t<td class=\"optionbox wrap\"><a href=\"", encode_url("useradmin.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" title=\"", $pgv_lang["edit"], "\">", $userName;
+		echo "\t<td class=\"optionbox wrap\"><a href=\"", encode_url("useradmin.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" title=\"", i18n::translate('Edit'), "\">", $userName;
 		if ($TEXT_DIRECTION=="ltr") echo getLRM();
 		else                        echo getRLM();
 		echo "</a></td>\n";
@@ -626,7 +626,7 @@ if ($action == "listusers") {
 		echo "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "<br /><img src=\"", $language_settings[get_user_setting($user_id, 'language')]["flagsfile"], "\" class=\"brightflag\" alt=\"", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "\" title=\"", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "\" /></td>\n";
 		echo "\t<td class=\"optionbox\">";
-		echo "<a href=\"javascript: ", $pgv_lang["privileges"], "\" onclick=\"expand_layer('user-geds", $k, "'); return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $PGV_IMAGE_DIR, "/";
+		echo "<a href=\"javascript: ", i18n::translate('Privileges'), "\" onclick=\"expand_layer('user-geds", $k, "'); return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $PGV_IMAGE_DIR, "/";
 		if ($showprivs == false) echo $PGV_IMAGES["plus"]["other"];
 		else echo $PGV_IMAGES["minus"]["other"];
 		echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" />";
@@ -636,7 +636,7 @@ if ($action == "listusers") {
 		else echo "block\">";
 		echo "<ul>";
 		if (get_user_setting($user_id, 'canadmin')=='Y') {
-			echo "<li class=\"warning\">", $pgv_lang["can_admin"], "</li>\n";
+			echo "<li class=\"warning\">", i18n::translate('User can administer'), "</li>\n";
 		}
 		foreach ($all_gedcoms as $ged_id=>$ged_name) {
 			$vval = get_user_gedcom_setting($user_id, $ged_id, 'canedit');
@@ -658,7 +658,7 @@ if ($action == "listusers") {
 		echo "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">";
 		if ((int)get_user_setting($user_id, 'reg_timestamp') > (int)get_user_setting($user_id, 'sessiontime')) {
-			echo $pgv_lang["never"];
+			echo i18n::translate('Never');
 			$pgv_lang["global_string1"] = formatElapsedTime(time() - (int)get_user_setting($user_id, 'reg_timestamp'));
 			echo '<br />', getLRM(), '(', print_text('elapsedAgo', 0, 1), getLRM(), ')';
 		} else {
@@ -668,16 +668,16 @@ if ($action == "listusers") {
 		}
 		echo "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">";
-		if (get_user_setting($user_id, 'verified')=="yes") echo $pgv_lang["yes"];
-		else echo $pgv_lang["no"];
+		if (get_user_setting($user_id, 'verified')=="yes") echo i18n::translate('Yes');
+		else echo i18n::translate('No');
 		echo "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">";
-		if (get_user_setting($user_id, 'verified_by_admin')=="yes") echo $pgv_lang["yes"];
-		else echo $pgv_lang["no"];
+		if (get_user_setting($user_id, 'verified_by_admin')=="yes") echo i18n::translate('Yes');
+		else echo i18n::translate('No');
 		echo "</td>\n";
 		if ($view != "preview") {
 			echo "\t<td class=\"optionbox wrap\">";
-			if (PGV_USER_ID!=$user_id) echo "<a href=\"", encode_url("useradmin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" onclick=\"return confirm('", $pgv_lang["confirm_user_delete"], " $user_name');\">", $pgv_lang["delete"], "</a>";
+			if (PGV_USER_ID!=$user_id) echo "<a href=\"", encode_url("useradmin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}"), "\" onclick=\"return confirm('", i18n::translate('Are you sure you want to delete the user'), " $user_name');\">", i18n::translate('Delete'), "</a>";
 			echo "</td>\n";
 		}
 		echo "</tr>\n";
@@ -685,9 +685,9 @@ if ($action == "listusers") {
 	?>
 	<tr>
 		<?php if ($view!="preview") { ?>
-		<td colspan="6" class="topbottombar rtl"><a href="useradmin.php?action=createform"><?php echo $pgv_lang["add_user"]; ?></a></td>
+		<td colspan="6" class="topbottombar rtl"><a href="useradmin.php?action=createform"><?php echo i18n::translate('Add a new user'); ?></a></td>
 		<?php } ?>
-		<td colspan="<?php if ($view == "preview") echo "8"; else echo "5"; ?>" class="topbottombar rtl"><a href="useradmin.php"><?php  if ($view != "preview") echo $pgv_lang["back_useradmin"]; else echo "&nbsp;"; ?></a></td>
+		<td colspan="<?php if ($view == "preview") echo "8"; else echo "5"; ?>" class="topbottombar rtl"><a href="useradmin.php"><?php  if ($view != "preview") echo i18n::translate('Back to User Administration'); else echo "&nbsp;"; ?></a></td>
 	</tr>
 	</table>
 	<?php
@@ -704,34 +704,34 @@ if ($action == "createform") {
 	<!--
 		function checkform(frm) {
 			if (frm.username.value=="") {
-				alert("<?php echo $pgv_lang["enter_username"]; ?>");
+				alert("<?php echo i18n::translate('You must enter a user name.'); ?>");
 				frm.username.focus();
 				return false;
 			}
 			if (frm.firstname.value=="") {
-				alert("<?php echo $pgv_lang["enter_fullname"]; ?>");
+				alert("<?php echo i18n::translate('You must enter a first and last name.'); ?>");
 				frm.firstname.focus();
 				return false;
 			}
 			if (frm.pass1.value=="") {
-				alert("<?php echo $pgv_lang["enter_password"]; ?>");
+				alert("<?php echo i18n::translate('You must enter a password.'); ?>");
 				frm.pass1.focus();
 				return false;
 			}
 			if (frm.pass2.value=="") {
-				alert("<?php echo $pgv_lang["confirm_password"]; ?>");
+				alert("<?php echo i18n::translate('You must confirm the password.'); ?>");
 				frm.pass2.focus();
 				return false;
 			}
 			if (frm.pass1.value.length < 6) {
-				alert("<?php echo $pgv_lang["passwordlength"]; ?>");
+				alert("<?php echo i18n::translate('Passwords must contain at least 6 characters.'); ?>");
 				frm.pass1.value = "";
 				frm.pass2.value = "";
 				frm.pass1.focus();
 				return false;
 			}
 			if ((frm.emailaddress.value!="")&&(frm.emailaddress.value.indexOf("@")==-1)) {
-				alert("<?php echo $pgv_lang["enter_email"]; ?>");
+				alert("<?php echo i18n::translate('You must enter an email address.'); ?>");
 				frm.emailaddress.focus();
 				return false;
 			}
@@ -751,19 +751,19 @@ if ($action == "createform") {
 	<table class="center list_table width80 <?php echo $TEXT_DIRECTION; ?>">
 	<tr>
 		<td class="facts_label" colspan="2">
-		<h2><?php echo $pgv_lang["add_user"]; ?></h2>
+		<h2><?php echo i18n::translate('Add a new user'); ?></h2>
 		</td>
 	</tr>
 	<tr><td class="topbottombar" colspan="2">
-	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["create_user"]; ?>" />
-	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["back"]; ?>" onclick="window.location='useradmin.php';"/>
+	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Create User'); ?>" />
+	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='useradmin.php';"/>
 	</td></tr>
-		<tr><td class="descriptionbox wrap width20"><?php print_help_link("useradmin_username", "qm", "username"); echo $pgv_lang["username"]; ?></td><td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname", "qm", "firstname"); echo $pgv_lang["firstname"]; ?></td><td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname", "qm", "lastname"); echo $pgv_lang["lastname"]; ?></td><td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_password", "qm", "password"); echo $pgv_lang["password"]; ?></td><td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_conf_password", "qm", "confirm"); echo $pgv_lang["confirm"]; ?></td><td class="optionbox wrap"><input type="password" name="pass2" tabindex="<?php echo ++$tab; ?>" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_gedcomid", "qm", "gedcomid"); echo $pgv_lang["gedcomid"]; ?></td><td class="optionbox wrap">
+		<tr><td class="descriptionbox wrap width20"><?php print_help_link("useradmin_username", "qm", "username"); echo i18n::translate('User name'); ?></td><td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname", "qm", "firstname"); echo i18n::translate('First Name'); ?></td><td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname", "qm", "lastname"); echo i18n::translate('Last Name'); ?></td><td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_password", "qm", "password"); echo i18n::translate('Password'); ?></td><td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_conf_password", "qm", "confirm"); echo i18n::translate('Confirm Password'); ?></td><td class="optionbox wrap"><input type="password" name="pass2" tabindex="<?php echo ++$tab; ?>" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_gedcomid", "qm", "gedcomid"); echo i18n::translate('GEDCOM INDI record ID'); ?></td><td class="optionbox wrap">
 
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
@@ -780,7 +780,7 @@ if ($action == "createform") {
 		?>
 		</table>
 		</td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid", "qm", "rootid"); echo $pgv_lang["rootid"]; ?></td><td class="optionbox wrap">
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid", "qm", "rootid"); echo i18n::translate('Pedigree Chart Root Person'); ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
 		foreach ($all_gedcoms as $ged_id=>$ged_name) {
@@ -796,8 +796,8 @@ if ($action == "createform") {
 		echo "</table>";
 		?>
 		</td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin", "qm", "can_admin"); echo $pgv_lang["can_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit", "qm", "can_edit");echo $pgv_lang["can_edit"]; ?></td><td class="optionbox wrap">
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin", "qm", "can_admin"); echo i18n::translate('User can administer'); ?></td><td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit", "qm", "can_edit");echo i18n::translate('Access level'); ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
 		foreach ($all_gedcoms as $ged_id=>$ged_name) {
@@ -806,30 +806,30 @@ if ($action == "createform") {
 			echo "<tr><td>{$ged_name}:&nbsp;&nbsp;</td><td>";
 			echo "<select name=\"$varname\" tabindex=\"", $tab, "\">\n";
 			echo "<option value=\"none\" selected=\"selected\"";
-			echo ">", $pgv_lang["none"], "</option>\n";
+			echo ">", i18n::translate('None'), "</option>\n";
 			echo "<option value=\"access\"";
-			echo ">", $pgv_lang["access"], "</option>\n";
+			echo ">", i18n::translate('Access'), "</option>\n";
 			echo "<option value=\"edit\"";
-			echo ">", $pgv_lang["edit"], "</option>\n";
+			echo ">", i18n::translate('Edit'), "</option>\n";
 			echo "<option value=\"accept\"";
-			echo ">", $pgv_lang["accept"], "</option>\n";
+			echo ">", i18n::translate('Accept'), "</option>\n";
 			echo "<option value=\"admin\"";
-			echo ">", $pgv_lang["admin_gedcom"], "</option>\n";
+			echo ">", i18n::translate('Admin GEDCOM'), "</option>\n";
 			echo "</select></td></tr>\n";
 		}
 		?>
 		</table>
 		</td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept", "qm", "user_auto_accept");echo $pgv_lang["user_auto_accept"]; ?></td>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept", "qm", "user_auto_accept");echo i18n::translate('Automatically accept changes made by this user'); ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="new_auto_accept" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_relation_priv", "qm", "user_relationship_priv");echo $pgv_lang["user_relationship_priv"]; ?></td>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_relation_priv", "qm", "user_relationship_priv");echo i18n::translate('Limit access to related people'); ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="new_relationship_privacy" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_path_length", "qm", "user_path_length"); echo $pgv_lang["user_path_length"]; ?></td>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_path_length", "qm", "user_path_length"); echo i18n::translate('Max relationship privacy path length'); ?></td>
 			<td class="optionbox wrap"><input type="text" name="new_max_relation_path" tabindex="<?php echo ++$tab; ?>" value="0" size="5" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_email", "qm", "emailadress"); echo $pgv_lang["emailadress"]; ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" value="" size="50" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verified", "qm", "verified"); echo $pgv_lang["verified"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin", "qm", "verified_by_admin"); echo $pgv_lang["verified_by_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_change_lang", "qm", "change_lang");echo $pgv_lang["change_lang"]; ?></td><td class="optionbox wrap" valign="top"><?php
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_email", "qm", "emailadress"); echo i18n::translate('Email Address'); ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" value="" size="50" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verified", "qm", "verified"); echo i18n::translate('User verified himself'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin", "qm", "verified_by_admin"); echo i18n::translate('User approved by Admin'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_change_lang", "qm", "change_lang");echo i18n::translate('Change Language'); ?></td><td class="optionbox wrap" valign="top"><?php
 
 		$user_lang = get_user_setting(PGV_USER_ID, 'language');
 		if ($ENABLE_MULTI_LANGUAGE) {
@@ -849,9 +849,9 @@ if ($action == "createform") {
 		else echo "&nbsp;";
 		?></td></tr>
 		<?php if ($ALLOW_USER_THEMES) { ?>
-			<tr><td class="descriptionbox wrap" valign="top" align="left"><?php print_help_link("useradmin_user_theme", "qm", "user_theme"); echo $pgv_lang["user_theme"]; ?></td><td class="optionbox wrap" valign="top">
+			<tr><td class="descriptionbox wrap" valign="top" align="left"><?php print_help_link("useradmin_user_theme", "qm", "user_theme"); echo i18n::translate('My Theme'); ?></td><td class="optionbox wrap" valign="top">
 			<select name="new_user_theme" tabindex="<?php echo ++$tab; ?>">
-			<option value="" selected="selected"><?php echo $pgv_lang["site_default"]; ?></option>
+			<option value="" selected="selected"><?php echo i18n::translate('Site Default'); ?></option>
 			<?php
 			foreach(get_theme_names() as $themename=>$themedir) {
 				echo "<option value=\"", $themedir, "\"";
@@ -862,29 +862,29 @@ if ($action == "createform") {
 			</td></tr>
 		<?php } ?>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_contact", "qm", "user_contact_method"); echo $pgv_lang["user_contact_method"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_contact", "qm", "user_contact_method"); echo i18n::translate('Preferred Contact Method'); ?></td>
 			<td class="optionbox wrap"><select name="new_contact_method" tabindex="<?php echo ++$tab; ?>">
 			<?php if ($PGV_STORE_MESSAGES) { ?>
-				<option value="messaging"><?php echo $pgv_lang["messaging"]; ?></option>
-				<option value="messaging2" selected="selected"><?php echo $pgv_lang["messaging2"]; ?></option>
+				<option value="messaging"><?php echo i18n::translate('PhpGedView internal messaging'); ?></option>
+				<option value="messaging2" selected="selected"><?php echo i18n::translate('Internal messaging with emails'); ?></option>
 			<?php } else { ?>
-				<option value="messaging3" selected="selected"><?php echo $pgv_lang["messaging3"]; ?></option>
+				<option value="messaging3" selected="selected"><?php echo i18n::translate('PhpGedView sends emails with no storage'); ?></option>
 			<?php } ?>
-				<option value="mailto"><?php echo $pgv_lang["mailto"]; ?></option>
-				<option value="none"><?php echo $pgv_lang["no_messaging"]; ?></option>
+				<option value="mailto"><?php echo i18n::translate('Mailto link'); ?></option>
+				<option value="none"><?php echo i18n::translate('No contact method'); ?></option>
 			</select>
 			</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline", "qm", "visibleonline"); echo $pgv_lang["visibleonline"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline", "qm", "visibleonline"); echo i18n::translate('Visible to other users when online'); ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="visibleonline" tabindex="<?php echo ++$tab; ?>" value="Y" <?php echo "checked=\"checked\""; ?> /></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_editaccount", "qm", "editaccount"); echo $pgv_lang["editaccount"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_editaccount", "qm", "editaccount"); echo i18n::translate('Allow this user to edit his account information'); ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="editaccount" tabindex="<?php echo ++$tab; ?>" value="Y" <?php echo "checked=\"checked\""; ?> /></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab", "qm", "user_default_tab"); echo $pgv_lang["user_default_tab"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab", "qm", "user_default_tab"); echo i18n::translate('Default Tab to show on Individual Information page'); ?></td>
 			<td class="optionbox wrap"><select name="new_default_tab" tabindex="<?php echo ++$tab; ?>">
 			<?php
 			foreach ($ALL_DEFAULT_TABS as $key=>$value) {
@@ -900,17 +900,17 @@ if ($action == "createform") {
 		</tr>
 		<?php if (PGV_USER_IS_ADMIN) { ?>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment", "qm", "comment"); echo $pgv_lang["comment"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment", "qm", "comment"); echo i18n::translate('Admin comments on user'); ?></td>
 			<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php echo ++$tab; ?>" ></textarea></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp", "qm", "comment_exp"); echo $pgv_lang["comment_exp"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp", "qm", "comment_exp"); echo i18n::translate('Admin warning at date'); ?></td>
 			<td class="optionbox wrap"><input type="text" name="new_comment_exp" tabindex="<?php echo ++$tab; ?>" id="new_comment_exp" />&nbsp;&nbsp;<?php print_calendar_popup("new_comment_exp"); ?></td>
 		</tr>
 		<?php } ?>
 	<tr><td class="topbottombar" colspan="2">
-	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["create_user"]; ?>" />
-	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["back"]; ?>" onclick="window.location='useradmin.php';"/>
+	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Create User'); ?>" />
+	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='useradmin.php';"/>
 	</td></tr></table>
 	</form>
 	<?php
@@ -927,14 +927,14 @@ if ($action == "cleanup") {
 	<table class="center list_table width80 <?php echo $TEXT_DIRECTION; ?>">
 	<tr>
 		<td class="facts_label" colspan="2">
-		<h2><?php echo $pgv_lang["cleanup_users"]; ?></h2>
+		<h2><?php echo i18n::translate('Cleanup users'); ?></h2>
 		</td>
 	</tr>
 	<?php
 	// Check for idle users
 //	if (!isset($month)) $month = 1;
 	$month = safe_GET_integer('month', 1, 12, 6);
-	echo "<tr><td class=\"descriptionbox\">", $pgv_lang["usr_idle"], "</td>";
+	echo "<tr><td class=\"descriptionbox\">", i18n::translate('Number of months since the last login for a user\'s account to be considered inactive: '), "</td>";
 	echo "<td class=\"optionbox\"><select onchange=\"document.location=options[selectedIndex].value;\">";
 	for($i=1; $i<=12; $i++) {
 		echo "<option value=\"useradmin.php?action=cleanup&amp;month=$i\"";
@@ -943,7 +943,7 @@ if ($action == "cleanup") {
 	}
 	echo "</select></td></tr>";
 	?>
-	<tr><td class="topbottombar" colspan="2"><?php echo $pgv_lang["options"]; ?></td></tr>
+	<tr><td class="topbottombar" colspan="2"><?php echo i18n::translate('Options:'); ?></td></tr>
 	<?php
 	// Check users not logged in too long
 	$ucnt = 0;
@@ -954,7 +954,7 @@ if ($action == "cleanup") {
 		else
 			$datelogin = (int)get_user_setting($user_id, 'sessiontime');
 		if ((mktime(0, 0, 0, (int)date("m")-$month, (int)date("d"), (int)date("Y")) > $datelogin) && (get_user_setting($user_id, 'verified') == "yes") && (get_user_setting($user_id, 'verified_by_admin') == "yes")) {
-			?><tr><td class="descriptionbox"><?php echo $user_name, " - ", $userName, ":&nbsp;&nbsp;", $pgv_lang["usr_idle_toolong"];
+			?><tr><td class="descriptionbox"><?php echo $user_name, " - ", $userName, ":&nbsp;&nbsp;", i18n::translate('User\'s account has been inactive too long: ');
 			echo timestamp_to_gedcom_date($datelogin)->Display(false);
 			$ucnt++;
 			?></td><td class="optionbox"><input type="checkbox" name="<?php echo "del_", str_replace(array(".", "-", " "), array("_", "_", "_"), $user_name); ?>" value="yes" /></td></tr><?php
@@ -965,7 +965,7 @@ if ($action == "cleanup") {
 	foreach(get_all_users() as $user_id=>$user_name) {
 		if (((date("U") - (int)get_user_setting($user_id, 'reg_timestamp')) > 604800) && (get_user_setting($user_id, 'verified')!="yes")) {
 			$userName = getUserFullName($user_id);
-			?><tr><td class="descriptionbox"><?php echo $user_name, " - ", $userName, ":&nbsp;&nbsp;", $pgv_lang["del_unveru"];
+			?><tr><td class="descriptionbox"><?php echo $user_name, " - ", $userName, ":&nbsp;&nbsp;", i18n::translate('User didn\'t verify within 7 days.');
 			$ucnt++;
 			?></td><td class="optionbox"><input type="checkbox" checked="checked" name="<?php echo "del_", str_replace(array(".", "-", " "), array("_",  "_", "_"), $user_name); ?>" value="yes" /></td></tr><?php
 		}
@@ -975,7 +975,7 @@ if ($action == "cleanup") {
 	foreach(get_all_users() as $user_id=>$user_name) {
 		if ((get_user_setting($user_id, 'verified_by_admin')!="yes") && (get_user_setting($user_id, 'verified') == "yes")) {
 			$userName = getUserFullName($user_id);
-			?><tr><td  class="descriptionbox"><?php echo $user_name, " - ", $userName, ":&nbsp;&nbsp;", $pgv_lang["del_unvera"];
+			?><tr><td  class="descriptionbox"><?php echo $user_name, " - ", $userName, ":&nbsp;&nbsp;", i18n::translate('User not verified by administrator.');
 			?></td><td class="optionbox"><input type="checkbox" name="<?php echo "del_", str_replace(array(".", "-", " "), array("_", "_", "_"), $user_name); ?>" value="yes" /></td></tr><?php
 			$ucnt++;
 		}
@@ -1007,21 +1007,21 @@ if ($action == "cleanup") {
 	}
 	ksort($gedrights);
 	foreach($gedrights as $key=>$ged) {
-		?><tr><td class="descriptionbox"><?php echo $ged, ":&nbsp;&nbsp;", $pgv_lang["del_gedrights"];
+		?><tr><td class="descriptionbox"><?php echo $ged, ":&nbsp;&nbsp;", i18n::translate('GEDCOM no longer active, remove user references.');
 		?></td><td class="optionbox"><input type="checkbox" checked="checked" name="<?php echo "delg_", str_replace(array(".", "-", " "), array("_", "_", "_"), $ged); ?>" value="yes" /></td></tr><?php
 		$ucnt++;
 	}
 	if ($ucnt == 0) {
 		echo "<tr><td class=\"warning\">";
-		echo $pgv_lang["usr_no_cleanup"], "</td></tr>";
+		echo i18n::translate('Nothing found to cleanup'), "</td></tr>";
 	} ?>
 
 	<tr><td class="topbottombar" colspan="2">
 	<?php
 	if ($ucnt >0) {
-		?><input type="submit" value="<?php echo $pgv_lang["del_proceed"]; ?>" />&nbsp;<?php
+		?><input type="submit" value="<?php echo i18n::translate('Continue'); ?>" />&nbsp;<?php
 	} ?>
-	<input type="button" value="<?php echo $pgv_lang["back"]; ?>" onclick="window.location='useradmin.php';"/>
+	<input type="button" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='useradmin.php';"/>
 	</td></tr></table>
 	</form><?php
 	print_footer();
@@ -1034,7 +1034,7 @@ if ($action == "cleanup2") {
 		if (safe_POST($var)=='yes') {
 			delete_user($user_id);
 			AddToLog("deleted user ->{$user_name}<-");
-			echo $pgv_lang["usr_deleted"]; echo $user_name, "<br />";
+			echo i18n::translate('Deleted user: '); echo $user_name, "<br />";
 		} else {
 			$tempArray = unserialize(get_user_setting($user_id, 'canedit'));
 			if (is_array($tempArray)) {
@@ -1042,7 +1042,7 @@ if ($action == "cleanup2") {
 					$var = "delg_".str_replace(array(".", "-", " "), "_", $gedid);
 					if (safe_POST($var)=='yes' && get_user_gedcom_setting($user_id, $gedid, 'canedit')) {
 						set_user_gedcom_setting($user_id, $gedid, 'canedit', null);
-						echo $gedid, ":&nbsp;&nbsp;", $pgv_lang["usr_unset_rights"], $user_name, "<br />";
+						echo $gedid, ":&nbsp;&nbsp;", i18n::translate('Unset GEDCOM rights for '), $user_name, "<br />";
 					}
 				}
 			}
@@ -1052,7 +1052,7 @@ if ($action == "cleanup2") {
 					$var = "delg_".str_replace(array(".", "-", " "), "_", $gedid);
 					if (safe_POST($var)=='yes' && get_user_gedcom_setting($user_id, $gedid, 'rootid')) {
 						set_user_gedcom_setting($user_id, $gedid, 'rootid', null);
-						echo $gedid, ":&nbsp;&nbsp;", $pgv_lang["usr_unset_rootid"], $user_name, "<br />";
+						echo $gedid, ":&nbsp;&nbsp;", i18n::translate('Unset root ID for '), $user_name, "<br />";
 					}
 				}
 			}
@@ -1062,7 +1062,7 @@ if ($action == "cleanup2") {
 					$var = "delg_".str_replace(array(".", "-", " "), "_", $gedid);
 					if (safe_POST($var)=='yes' && get_user_gedcom_setting($user_id, $gedid, 'gedcomid')) {
 						set_user_gedcom_setting($user_id, $gedid, 'gedcomid', null);
-						echo $gedid, ":&nbsp;&nbsp;", $pgv_lang["usr_unset_gedcomid"], $user_name, "<br />";
+						echo $gedid, ":&nbsp;&nbsp;", i18n::translate('Unset GEDCOM ID for '), $user_name, "<br />";
 					}
 				}
 			}
@@ -1077,29 +1077,29 @@ if ($action == "cleanup2") {
 <table class="center list_table width40 <?php echo $TEXT_DIRECTION; ?>">
 	<tr>
 		<td class="facts_label" colspan="3">
-		<h2><?php echo $pgv_lang["user_admin"]; ?></h2>
+		<h2><?php echo i18n::translate('User administration'); ?></h2>
 		</td>
 	</tr>
 	<tr>
-		<td colspan="3" class="topbottombar"><?php echo $pgv_lang["select_an_option"]; ?></td>
+		<td colspan="3" class="topbottombar"><?php echo i18n::translate('Select an option below:'); ?></td>
 	</tr>
 	<tr>
-		<td class="optionbox"><a href="useradmin.php?action=listusers"><?php echo $pgv_lang["current_users"]; ?></a></td>
-		<td class="optionbox" colspan="2" ><a href="useradmin.php?action=createform"><?php echo $pgv_lang["add_user"]; ?></a></td>
+		<td class="optionbox"><a href="useradmin.php?action=listusers"><?php echo i18n::translate('User List'); ?></a></td>
+		<td class="optionbox" colspan="2" ><a href="useradmin.php?action=createform"><?php echo i18n::translate('Add a new user'); ?></a></td>
 	</tr>
 	<tr>
-		<td class="optionbox"><a href="useradmin.php?action=cleanup"><?php echo $pgv_lang["cleanup_users"]; ?></a></td>
+		<td class="optionbox"><a href="useradmin.php?action=cleanup"><?php echo i18n::translate('Cleanup users'); ?></a></td>
 		<td class="optionbox" colspan="2" >
-			<a href="javascript: <?php echo $pgv_lang["message_to_all"]; ?>" onclick="message('all', 'messaging2', '', ''); return false;"><?php echo $pgv_lang["message_to_all"]; ?></a><br />
-			<a href="javascript: <?php echo $pgv_lang["broadcast_never_logged_in"]; ?>" onclick="message('never_logged', 'messaging2', '', ''); return false;"><?php echo $pgv_lang["broadcast_never_logged_in"]; ?></a><br />
-			<a href="javascript: <?php echo $pgv_lang["broadcast_not_logged_6mo"]; ?>" onclick="message('last_6mo', 'messaging2', '', ''); return false;"><?php echo $pgv_lang["broadcast_not_logged_6mo"]; ?></a><br />
+			<a href="javascript: <?php echo i18n::translate('Send message to all users'); ?>" onclick="message('all', 'messaging2', '', ''); return false;"><?php echo i18n::translate('Send message to all users'); ?></a><br />
+			<a href="javascript: <?php echo i18n::translate('Send message to users who have never logged in'); ?>" onclick="message('never_logged', 'messaging2', '', ''); return false;"><?php echo i18n::translate('Send message to users who have never logged in'); ?></a><br />
+			<a href="javascript: <?php echo i18n::translate('Send message to users who have not logged in for 6 months'); ?>" onclick="message('last_6mo', 'messaging2', '', ''); return false;"><?php echo i18n::translate('Send message to users who have not logged in for 6 months'); ?></a><br />
 		</td>
 	</tr>
 	<tr>
-		<td class="topbottombar" colspan="3" align="center" ><a href="admin.php"><?php echo $pgv_lang["lang_back_admin"]; ?></a></td>
+		<td class="topbottombar" colspan="3" align="center" ><a href="admin.php"><?php echo i18n::translate('Return to the Admin menu'); ?></a></td>
 	</tr>
 	<tr>
-		<td colspan="3" class="topbottombar"><?php echo $pgv_lang["admin_info"]; ?></td>
+		<td colspan="3" class="topbottombar"><?php echo i18n::translate('Informational'); ?></td>
 	</tr>
 	<tr>
 	<td class="optionbox" colspan="3">
@@ -1150,14 +1150,14 @@ if ($action == "cleanup2") {
 		}
 	}
 	echo "<table class=\"width100 $TEXT_DIRECTION\">";
-	echo "<tr><td class=\"font11\">", $pgv_lang["users_total"], "</td><td class=\"font11\">", $totusers, "</td></tr>";
+	echo "<tr><td class=\"font11\">", i18n::translate('Total number of users'), "</td><td class=\"font11\">", $totusers, "</td></tr>";
 
 	echo "<tr><td class=\"font11\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-	if ($adminusers == 0) echo $pgv_lang["users_admin"];
-	else echo "<a href=\"useradmin.php?action=listusers&amp;filter=adminusers\">", $pgv_lang["users_admin"], "</a>";
+	if ($adminusers == 0) echo i18n::translate('Site Administrators');
+	else echo "<a href=\"useradmin.php?action=listusers&amp;filter=adminusers\">", i18n::translate('Site Administrators'), "</a>";
 	echo "</td><td class=\"font11\">", $adminusers, "</td></tr>";
 
-	echo "<tr><td class=\"font11\">", $pgv_lang["users_gedadmin"], "</td></tr>";
+	echo "<tr><td class=\"font11\">", i18n::translate('GEDCOM Administrators'), "</td></tr>";
 	asort($gedadmin);
 	$ind = 0;
 	foreach ($gedadmin as $key=>$geds) {
@@ -1169,22 +1169,22 @@ if ($action == "cleanup2") {
 		echo "</td><td class=\"font11\">", $geds["number"], "</td></tr>";
 	}
 	echo "<tr><td class=\"font11\"></td></tr><tr><td class=\"font11\">";
-	if ($warnusers == 0) echo $pgv_lang["warn_users"];
-	else echo "<a href=\"useradmin.php?action=listusers&amp;filter=warnings\">", $pgv_lang["warn_users"], "</a>";
+	if ($warnusers == 0) echo i18n::translate('Users with warnings');
+	else echo "<a href=\"useradmin.php?action=listusers&amp;filter=warnings\">", i18n::translate('Users with warnings'), "</a>";
 	echo "</td><td class=\"font11\">", $warnusers, "</td></tr>";
 
 	echo "<tr><td class=\"font11\">";
-	if ($applusers == 0) echo $pgv_lang["users_unver"];
-	else echo "<a href=\"useradmin.php?action=listusers&amp;filter=usunver\">", $pgv_lang["users_unver"], "</a>";
+	if ($applusers == 0) echo i18n::translate('Unverified by User');
+	else echo "<a href=\"useradmin.php?action=listusers&amp;filter=usunver\">", i18n::translate('Unverified by User'), "</a>";
 	echo "</td><td class=\"font11\">", $applusers, "</td></tr>";
 
 	echo "<tr><td class=\"font11\">";
-	if ($nverusers == 0) echo $pgv_lang["users_unver_admin"];
-	else echo "<a href=\"useradmin.php?action=listusers&amp;filter=admunver\">", $pgv_lang["users_unver_admin"], "</a>";
+	if ($nverusers == 0) echo i18n::translate('Unverified by Administrator');
+	else echo "<a href=\"useradmin.php?action=listusers&amp;filter=admunver\">", i18n::translate('Unverified by Administrator'), "</a>";
 	echo "</td><td class=\"font11\">", $nverusers, "</td></tr>";
 
 	asort($userlang);
-	echo "<tr valign=\"middle\"><td class=\"font11\">", $pgv_lang["users_langs"], "</td>";
+	echo "<tr valign=\"middle\"><td class=\"font11\">", i18n::translate('Users\' languages'), "</td>";
 	foreach ($userlang as $key=>$ulang) {
 		echo "\t<td class=\"font11\"><img src=\"", $language_settings[$ulang["langname"]]["flagsfile"], "\" class=\"brightflag\" alt=\"", $key, "\" title=\"", $key, "\" /></td><td>&nbsp;<a href=\"", encode_url("useradmin.php?action=listusers&filter=language&usrlang=".$ulang["langname"]), "\">", $key, "</a></td><td>", $ulang["number"], "</td></tr><tr class=\"vmiddle\"><td></td>\n";
 	}

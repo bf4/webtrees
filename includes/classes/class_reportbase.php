@@ -2163,7 +2163,7 @@ function PGVRGetPersonNameSHandler($attrs) {
 		}
 		if (!$record->canDisplayName()) {
 			global $pgv_lang;
-			$currentElement->addText($pgv_lang["private"]);
+			$currentElement->addText(i18n::translate('Private'));
 		} else {
 			$name = $record->getFullName();
 			$name = preg_replace("/<span class=\"starredname\">(.*)<\/span> ?/", "\\1* ", $name); //restores the * for underlining a given name
