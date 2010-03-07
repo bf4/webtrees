@@ -1030,7 +1030,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 	// Print 5 forms for uploading images
 	for($i=1; $i<6; $i++) {
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-			print_help_link("upload_media_file_help", "qm", "upload_media");
+			print_help_link("upload_media_file", "qm", "upload_media");
 			echo $pgv_lang["media_file"];
 			echo '</td>';
 			echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
@@ -1040,7 +1040,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 		if ($thumbSupport != "") {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-				print_help_link("generate_thumb_help", "qm", "generate_thumbnail");
+				print_help_link("generate_thumb", "qm", "generate_thumbnail");
 				echo $pgv_lang["auto_thumbnail"];
 				echo '</td><td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 				echo '<input type="checkbox" name="genthumb', $i, '" value="yes" checked="checked" tabindex="', $tab++, '" />';
@@ -1049,7 +1049,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 		}
 
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-			print_help_link("upload_thumbnail_file_help", "qm", "upload_media");
+			print_help_link("upload_thumbnail_file", "qm", "upload_media");
 			echo $pgv_lang["thumbnail"];
 			echo '</td>';
 			echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
@@ -1059,7 +1059,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 		if (PGV_USER_GEDCOM_ADMIN) {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-				print_help_link("upload_server_file_help", "qm", "upload_media");
+				print_help_link("upload_server_file", "qm", "upload_media");
 				echo $pgv_lang["server_file"];
 				echo '</td>';
 				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
@@ -1072,7 +1072,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 		if (PGV_USER_GEDCOM_ADMIN && $MEDIA_DIRECTORY_LEVELS>0) {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-				print_help_link("upload_server_folder_help", "qm", "upload_media");
+				print_help_link("upload_server_folder", "qm", "upload_media");
 				echo $pgv_lang["server_folder"];
 				echo '</td>';
 				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
@@ -1187,7 +1187,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	if ($gedfile == "FILE") {
 		// Box for user to choose to upload file from local computer
 		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-		print_help_link("upload_media_file_help", "qm");
+		print_help_link("upload_media_file", "qm");
 		print $pgv_lang["media_file"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"mediafile\"";
 		print " onchange=\"updateFormat(this.value);\"";
 		print " size=\"40\" /><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
@@ -1208,7 +1208,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			if ($thumbSupport != "") {
 				$thumbSupport = substr($thumbSupport, 2); // Trim off first ", "
 				print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-				print_help_link("generate_thumb_help", "qm", "generate_thumbnail");
+				print_help_link("generate_thumb", "qm", "generate_thumbnail");
 				print $pgv_lang["auto_thumbnail"];
 				print "</td><td class=\"optionbox wrap\">";
 				print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked=\"checked\" />";
@@ -1216,7 +1216,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				print "</td></tr>";
 			}
 			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-			print_help_link("upload_thumbnail_file_help", "qm");
+			print_help_link("upload_thumbnail_file", "qm");
 			print $pgv_lang["thumbnail"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\" /><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 		}
 		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />";
@@ -1244,7 +1244,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "\n<tr>";
 		print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">\n";
 		print "<input name=\"oldFilename\" type=\"hidden\" value=\"" . addslashes($fileName) . "\" />";
-		print_help_link("upload_server_file_help", "qm", "upload_media");
+		print_help_link("upload_server_file", "qm", "upload_media");
 		print $pgv_lang["server_file"];
 		print "</td>\n";
 		print "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
@@ -1272,7 +1272,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	// Box for user to choose the folder to store the image
 	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0) {
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, 'wrap width25">';
-		print_help_link("upload_server_folder_help", "qm");
+		print_help_link("upload_server_folder", "qm");
 		if (empty($folder)) {
 			if (!empty($_SESSION['upload_folder'])) $folder = $_SESSION['upload_folder'];
 			else $folder = '';
@@ -1478,7 +1478,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN_help", "qm");
+		print_help_link("no_update_CHAN", "qm");
 		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";

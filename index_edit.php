@@ -309,7 +309,7 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 	if ($PGV_BLOCKS[$block[0]]["canconfig"]) {
 		eval($block[0]."_config(\$block[1]);");
 		print "<tr><td colspan=\"2\" class=\"topbottombar\">";
-		print_help_link("click_here_help", "qm");
+		print_help_link("click_here", "qm");
 		print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"document.block.submit();\" />";
 		print "&nbsp;&nbsp;<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
 		print "</td></tr>";
@@ -319,7 +319,7 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 		print $pgv_lang["block_not_configure"];
 		print "</td></tr>";
 		print "<tr><td colspan=\"2\" class=\"topbottombar\">";
-		print_help_link("click_here_help", "qm");
+		print_help_link("click_here", "qm");
 		print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"parentrefresh();\" />";
 		print "</td></tr>";
 	}
@@ -493,7 +493,7 @@ else {
 		print "<br />";
 		print "<a tabindex=\"-1\" onclick=\"move_down_block('main_select');\" title=\"".$pgv_lang["move_down"]."\">".$IconDarrow."</a>";
 		print "<br /><br />";
-		print_help_link("block_move_up_help", "qm");
+		print_help_link("block_move_up", "qm");
 
 	print "</td>";
 	// NOTE: Row 2 column 2: Left (Main) block list
@@ -514,7 +514,7 @@ else {
 		print "<br />";
 		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'main_select');\" title=\"".$pgv_lang["add"]."\">".$IconLarrow."</a>";
 		print "<br /><br />";
-		print_help_link("block_move_right_help", "qm");
+		print_help_link("block_move_right", "qm");
 
 	print "</td>";
 	// Row 2 column 4: Middle (Available) block list
@@ -534,7 +534,7 @@ else {
 		print "<br />";
 		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'right_select');\" title=\"".$pgv_lang["add"]."\">".$IconRarrow."</a>";
 		print "<br /><br />";
-		print_help_link("block_move_right_help", "qm");
+		print_help_link("block_move_right", "qm");
 	print "</td>";
 	// NOTE: Row 2 column 6: Right block list
 	print "<td class=\"optionbox\" dir=\"".$TEXT_DIRECTION."\">";
@@ -552,7 +552,7 @@ else {
 		print "<br />";
 		print "<a tabindex=\"-1\" onclick=\"move_down_block('right_select');\" title=\"".$pgv_lang["move_down"]."\">".$IconDarrow."</a>";
 		print "<br /><br />";
-		print_help_link("block_move_up_help", "qm");
+		print_help_link("block_move_up", "qm");
 	print "</td>";
 	print "</tr>";
 	// NOTE: Row 3 columns 1-7: Summary description of currently selected block
@@ -573,13 +573,13 @@ else {
 	}
 	print "<input type=\"button\" value=\"".$pgv_lang["reset_default_blocks"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=reset&amp;name=".str_replace("'", "\'", $name)."';\" />\n";
 	print "&nbsp;&nbsp;";
-	print_help_link("click_here_help", "qm");
+	print_help_link("click_here", "qm");
 	print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"select_options(); save_form();\" />\n";
 	print "&nbsp;&nbsp;";
 	print "<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
 	if (PGV_USER_GEDCOM_ADMIN && $ctype!="user") {
 		print "<br />";
-		print_help_link("clear_cache_help", "qm");
+		print_help_link("clear_cache", "qm");
 		print "<input type =\"button\" value=\"".$pgv_lang["clear_cache"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=clearcache&amp;name=".str_replace("'", "\'", $name)."';\" />";
 	}
 	print "</td></tr></table>";

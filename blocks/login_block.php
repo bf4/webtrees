@@ -67,8 +67,8 @@ function print_login_block($block = true, $config="", $side, $index) {
 
 		$i = 0;			// Initialize tab index
 
-		if ($USE_REGISTRATION_MODULE) $title .= print_help_link("index_login_register_help", "qm", "", false, true);
-		else $title .= print_help_link("index_login_help", "qm", "", false, true);
+		if ($USE_REGISTRATION_MODULE) $title .= print_help_link("index_login_register", "qm", "", false, true);
+		else $title .= print_help_link("index_login", "qm", "", false, true);
 		$title .= $pgv_lang["login"];
 		$content = "<div class=\"center\"><form method=\"post\" action=\"$LOGIN_URL\" name=\"loginform\" onsubmit=\"t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;\">";
 		$content .= "<input type=\"hidden\" name=\"url\" value=\"index.php\" />";
@@ -87,7 +87,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 		$content .= "<tr><td ";
 		$content .= write_align_with_textdir_check("right", true);
 		$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
-		$content .= print_help_link("username_help", "qm", "username", false, true);
+		$content .= print_help_link("username", "qm", "username", false, true);
 		$content .= $pgv_lang["username"]."</td>";
 		$content .= "<td ";
 		$content .= write_align_with_textdir_check("left", true);
@@ -99,7 +99,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 		$content .= "<tr><td ";
 		$content .= write_align_with_textdir_check("right", true);
 		$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
-		$content .= print_help_link("password_help", "qm", "password", false, true);
+		$content .= print_help_link("password", "qm", "password", false, true);
 		$content .= $pgv_lang["password"]."</td>";
 		$content .= "<td ";
 		$content .= write_align_with_textdir_check("left", true);
@@ -119,7 +119,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 			$content .= "<tr><td ";
 			$content .= write_align_with_textdir_check("right", true);
 			$content .= " class=\"{$TEXT_DIRECTION} wrap width50\"><br />";
-			$content .= print_help_link("new_user_help", "qm", "", false, true);
+			$content .= print_help_link("new_user", "qm", "", false, true);
 			$content .= $pgv_lang["no_account_yet"]."</td>";
 			$content .= "<td ";
 			$content .= write_align_with_textdir_check("left", true);
@@ -134,7 +134,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 			$content .= "<tr><td ";
 			$content .= write_align_with_textdir_check("right", true);
 			$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
-			$content .= print_help_link("new_password_help", "qm", "", false, true);
+			$content .= print_help_link("new_password", "qm", "", false, true);
 			$content .= $pgv_lang["lost_password"]."</td>";
 			$content .= "<td ";
 			$content .= write_align_with_textdir_check("left", true);

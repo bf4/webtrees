@@ -157,7 +157,7 @@ if ($display=="hierarchy") {
 	if ($level==0 || ($numls>=0 && (($TEXT_DIRECTION=="rtl" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="ltr" && !hasRtLText($parent[$numls]))))) echo $pgv_lang["top_level"];
 	echo "</a>";
 
-	print_help_link("ppp_levels_help", "qm");
+	print_help_link("ppp_levels", "qm");
 
 	if ($use_googlemap) {
 		create_map();
@@ -313,7 +313,7 @@ if ($display=="hierarchy") {
 			}
 
 			echo "&nbsp;";
-			print_help_link("ppp_placelist_help", "qm", "place_list");
+			print_help_link("ppp_placelist", "qm", "place_list");
 			echo "</td></tr><tr><td class=\"list_value\"><ul>\n\t\t\t";
 		}
 
@@ -352,7 +352,7 @@ if ($display=="hierarchy") {
 			}
 			echo ">\n\t";
 			echo $pgv_lang["view_records_in_place"];
-			print_help_link("ppp_view_records_help", "qm", "view_records_in_place");
+			print_help_link("ppp_view_records", "qm", "view_records_in_place");
 			echo "</td></tr><tr><td class=\"list_value\" ";
 			if ($ct1 > 20) {
 				echo "colspan=\"3\"";
@@ -432,7 +432,7 @@ if ($display=="list") {
 		echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", $pgv_lang["search_place"], "\" alt=\"", $pgv_lang["search_place"], "\" />&nbsp;&nbsp;";
 		echo $pgv_lang["place_list2"];
 		echo "&nbsp;";
-		print_help_link("ppp_placelist_help2", "qm");
+		print_help_link("ppp_placelist", "qm");
 		echo "</td></tr><tr><td class=\"list_value_wrap\"><ul>\n\t\t\t";
 		$i=0;
 		foreach($placelist as $indexval => $revplace) {
@@ -481,12 +481,12 @@ if ($hasplaceform) {
 	$ct = preg_match("/2 FORM (.*)/", $placeheader, $match);
 	if ($ct>0) {
 		echo  $pgv_lang["form"].$match[1];
-		print_help_link("ppp_match_one_help", "qm");
+		print_help_link("ppp_match_one", "qm");
 	}
 }
 else {
 	echo $pgv_lang["form"], $pgv_lang["default_form"], "  ", $pgv_lang["default_form_info"];
-	print_help_link("ppp_default_form_help", "qm");
+	print_help_link("ppp_default_form", "qm");
 }
 echo "<br /><br /></div>";
 if ($use_googlemap && $display=="hierarchy") map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $place_names);

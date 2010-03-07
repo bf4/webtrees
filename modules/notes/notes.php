@@ -58,7 +58,7 @@ if (!$this->controller->indi->canDisplayDetails()) {
 			<?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?>
 			onclick="toggleByClassName('TR', 'row_note2');" /> <label
 			for="checkbox_note2"><?php echo $pgv_lang["show_fact_notes"];?></label>
-			<?php print_help_link("show_fact_sources_help", "qm", "show_fact_notes");?>
+			<?php print_help_link("show_fact_sources", "qm", "show_fact_notes");?>
 		</td>
 	</tr>
 	<?php
@@ -82,14 +82,14 @@ if (!$this->controller->indi->canDisplayDetails()) {
 	if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 		?>
 	<tr>
-		<td class="facts_label"><?php print_help_link("add_note_help", "qm"); ?><?php echo $pgv_lang["add_note_lbl"]; ?></td>
+		<td class="facts_label"><?php print_help_link("add_note", "qm"); ?><?php echo $pgv_lang["add_note_lbl"]; ?></td>
 		<td class="facts_value"><a href="javascript:;"
 			onclick="add_new_record('<?php echo $this->controller->pid; ?>','NOTE'); return false;"><?php echo $pgv_lang["add_note"]; ?></a>
 		<br />
 		</td>
 	</tr>
 	<tr>
-		<td class="facts_label"><?php print_help_link("add_shared_note_help", "qm"); ?><?php echo $pgv_lang["add_shared_note_lbl"]; ?></td>
+		<td class="facts_label"><?php print_help_link("add_shared_note", "qm"); ?><?php echo $pgv_lang["add_shared_note_lbl"]; ?></td>
 		<td class="facts_value"><a href="javascript:;"
 			onclick="add_new_record('<?php echo $this->controller->pid; ?>','SHARED_NOTE'); return false;"><?php echo $pgv_lang["add_shared_note"]; ?></a>
 		<br />

@@ -288,13 +288,13 @@ $controller->checkPrivacy();
 			<input type="hidden" name="pids[<?php echo $p; ?>]" value="<?php echo htmlentities($pid, ENT_COMPAT, 'UTF-8'); ?>" />
 			<?php if (!$controller->isPrintPreview()) {
 				echo "<br />";
-				print_help_link("remove_person_help", "qm");
+				print_help_link("remove_person", "qm");
 				?>
 				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
 				<span class="details1"><?php echo $pgv_lang["remove_person"]; ?></span></a>
 			<?php if (!empty($controller->birthyears[$pid])) { ?>
 				<span class="details1"><br />
-				<?php print_help_link("show_age_marker_help", "qm"); ?>
+				<?php print_help_link("show_age_marker", "qm"); ?>
 				<?php echo $pgv_lang["show_age"]; ?>
 				<input type="checkbox" name="agebar<?php echo $p; ?>" value="ON" onclick="showhide('agebox<?php echo $p; ?>', this);" />
 				</span>
@@ -308,7 +308,7 @@ $controller->checkPrivacy();
 			<input type="hidden" name="pids[<?php echo $p; ?>]" value="<?php echo htmlentities($pid, ENT_COMPAT, 'UTF-8'); ?>" />
 			<?php if (!$controller->isPrintPreview()) {
 				echo "<br />";
-				print_help_link("remove_person_help", "qm");
+				print_help_link("remove_person", "qm");
 				?>
 				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
 				<span class="details1"><?php echo $pgv_lang["remove_person"]; ?></span></a>
@@ -321,7 +321,7 @@ $controller->checkPrivacy();
 		if (!isset($col)) $col = 0;
 		?>
 		<td class="person<?php print $col; ?>" style="padding: 5px" valign="top">
-			<?php print_help_link("add_person_help", "qm"); ?>
+			<?php print_help_link("add_person", "qm"); ?>
 			<?php print $pgv_lang["add_another"];?>&nbsp;
 			<input class="pedigree_form" type="text" size="5" id="newpid" name="newpid" />&nbsp;
 			<?php print_findindi_link("newpid",""); ?>

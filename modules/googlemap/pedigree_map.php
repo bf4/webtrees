@@ -151,31 +151,31 @@ if (!$controller->isPrintPreview()) {
 		<input type="hidden" name="pgvaction" value="pedigree_map" />
 		<table class="pedigree_table <?php echo $TEXT_DIRECTION; ?>" width="555">
 			<tr>
-				<td colspan="5" class="topbottombar" style="text-align:center; "><?php print_help_link("PEDIGREE_MAP_help", "qm", "PEDIGREE_MAP_help1"); ?>
+				<td colspan="5" class="topbottombar" style="text-align:center; "><?php print_help_link("PEDIGREE_MAP", "qm", "PEDIGREE_MAP1"); ?>
 					<?php echo $pgv_lang["options"]; ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap"><?php print_help_link("rootid_help", "qm", "PEDIGREE_MAP_help1"); ?>
+				<td class="descriptionbox wrap"><?php print_help_link("rootid", "qm", "PEDIGREE_MAP1"); ?>
 					<?php echo $pgv_lang["root_person"]; ?>
 				</td>
 				<td class="descriptionbox wrap">
-				<?php print_help_link("PEDIGREE_GENERATIONS_help", "qm", "PEDIGREE_MAP_help1"); ?>
+				<?php print_help_link("PEDIGREE_GENERATIONS", "qm", "PEDIGREE_MAP1"); ?>
 				<?php echo $pgv_lang["generations"]; ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("PEDIGREE_MAP_clustersize_help", "qm", "PEDIGREE_MAP_help1"); ?>
+					<?php print_help_link("PEDIGREE_MAP_clustersize", "qm", "PEDIGREE_MAP1"); ?>
 					<?php echo $pgv_lang["PEDIGREE_MAP_clustersize"]; ?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					print_help_link("PEDIGREE_MAP_hideflags_help", "qm", "PEDIGREE_MAP_help1");
+					print_help_link("PEDIGREE_MAP_hideflags", "qm", "PEDIGREE_MAP1");
 					echo $pgv_lang["PEDIGREE_MAP_hideflags"];
 					?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					print_help_link("PEDIGREE_MAP_hidelines_help", "qm", "PEDIGREE_MAP_help1");
+					print_help_link("PEDIGREE_MAP_hidelines", "qm", "PEDIGREE_MAP1");
 					echo $pgv_lang["PEDIGREE_MAP_hidelines"];
 					?>
 				</td>

@@ -35,7 +35,6 @@ define('PGV_MEDIA_REORDER_PHP', '');
 require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 
 	print "<br /><b>".$pgv_lang["reorder_media"]."</b>";
-//	print_help_link("reorder_children_help", "qm");
 	print "&nbsp --- &nbsp;" . $pgv_lang["reorder_media_window_title"];
 
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;

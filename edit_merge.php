@@ -302,7 +302,7 @@ if ($action=="choose") {
 	echo "<a href=\"javascript:iopen_find(document.merge.gid1, document.merge.ged);\" tabindex=\"6\"> ", $pgv_lang["find_individual"], "</a> |";
 	echo " <a href=\"javascript:fopen_find(document.merge.gid1, document.merge.ged);\" tabindex=\"8\"> ", $pgv_lang["find_familyid"], "</a> |";
 	echo " <a href=\"javascript:sopen_find(document.merge.gid1, document.merge.ged);\" tabindex=\"10\"> ", $pgv_lang["find_sourceid"], "</a>";
-	print_help_link("rootid_help", "qm");
+	print_help_link("rootid", "qm");
 	echo "</td></tr><tr><td class=\"list_label\">&nbsp;";
 	echo $pgv_lang["merge_from"];
 	echo "&nbsp;</td><td>";
@@ -319,7 +319,7 @@ if ($action=="choose") {
 	echo "<a href=\"javascript:iopen_find(document.merge.gid2, document.merge.ged2);\" tabindex=\"7\"> ", $pgv_lang["find_individual"], "</a> |";
 	echo "<a href=\"javascript:fopen_find(document.merge.gid2, document.merge.ged2);\" tabindex=\"9\"> ", $pgv_lang["find_familyid"], "</a> |";
 	echo "<a href=\"javascript:sopen_find(document.merge.gid2, document.merge.ged2);\" tabindex=\"11\"> ", $pgv_lang["find_sourceid"], "</a>";
-	print_help_link("rootid_help", "qm");
+	print_help_link("rootid", "qm");
 	echo "</td></tr><tr><td colspan=\"2\">";
 	echo "<input type=\"submit\" value=\"", $pgv_lang["merge_records"], "\"  tabindex=\"3\"/>\n";
 	echo "</td></tr></table>";

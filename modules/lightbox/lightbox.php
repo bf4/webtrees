@@ -38,7 +38,7 @@ class lightbox_Tab extends media_Tab {
 		$out .= "&nbsp;&nbsp;";
 		ob_start();
 		// ---------- Help link --------------------
-		print_help_link("lb_general_help", "qm", "lb_help", true);
+		print_help_link("lb_general", "qm");
 		// --------- Header include -------------
 		$mediacnt = $this->get_media_count();
 		require_once 'modules/lightbox/functions/lb_head.php';

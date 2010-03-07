@@ -202,11 +202,11 @@ $tab=0;		// initialize tab index
 		<table class="center facts_table width50">
 			<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["login"]; ?></td></tr>
 			<tr>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("username_help", "qm", "username"); print $pgv_lang["username"]; ?></td>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("username", "qm", "username"); print $pgv_lang["username"]; ?></td>
 				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" tabindex="<?php echo ++$tab; ?>" name="username" value="<?php print htmlentities($username,ENT_COMPAT,'UTF-8'); ?>" size="20" class="formField" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("password_help", "qm", "password"); print $pgv_lang["password"]; ?></td>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("password", "qm", "password"); print $pgv_lang["password"]; ?></td>
 				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" tabindex="<?php echo ++$tab; ?>" name="password" size="20" class="formField" /></td>
 			</tr>
 			<tr>
@@ -214,9 +214,9 @@ $tab=0;		// initialize tab index
 					<?php
 					if ($SHOW_CONTEXT_HELP) {
 						if ($REQUIRE_AUTHENTICATION) {
-							print_help_link("login_buttons_aut_help", "qm", "login");
+							print_help_link("login_buttons_aut", "qm", "login");
 						} else {
-							print_help_link("login_buttons_help", "qm", "login");
+							print_help_link("login_buttons", "qm", "login");
 						}
 					}
 					?>
@@ -233,9 +233,9 @@ if (!isset($_COOKIE[$sessname])) print "<center><div class=\"error width50\">".$
 if ($USE_REGISTRATION_MODULE) { ?>
 	<table class="center facts_table width50">
 	<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["account_information"]; ?></td></tr>
-	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_user_help", "qm", "requestaccount"); print $pgv_lang["no_account_yet"]; ?></td>
+	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_user", "qm", "requestaccount"); print $pgv_lang["no_account_yet"]; ?></td>
 	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=register"><?php print $pgv_lang["requestaccount"]; ?></a></td></tr>
-	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_password_help", "qm", "lost_password"); print $pgv_lang["lost_password"]; ?></td>
+	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_password", "qm", "lost_password"); print $pgv_lang["lost_password"]; ?></td>
 	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=pwlost"><?php print $pgv_lang["requestpassword"]; ?></a></td></tr>
 	<tr><td class="topbottombar ltr" colspan="2">&nbsp;</td></tr>
 	</table>

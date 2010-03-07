@@ -785,25 +785,25 @@ if (check_media_structure()) {
 	<input type="hidden" name="all" value="true" />
 	<input type="hidden" name="subclick" />
 	<table class="fact_table center width75 <?php print $TEXT_DIRECTION; ?>">
-	<tr><td class="topbottombar" colspan="4"><?php print_help_link("manage_media_help", "qm", "manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
+	<tr><td class="topbottombar" colspan="4"><?php print_help_link("manage_media", "qm", "manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
 	<?php
 	if ($TEXT_DIRECTION=='ltr') $legendAlign = 'align="right"';
 	else $legendAlign = 'align="left"';
 	?>
 
 	<!-- // NOTE: Row 1 left: Sort sequence -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("sortby_help", "qm", "sortby"); ?><?php print $pgv_lang["sortby"]; ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("sortby", "qm", "sortby"); ?><?php print $pgv_lang["sortby"]; ?></td>
 	<td class="optionbox wrap"><select name="sortby">
 		<option value="title" <?php if ($sortby=='title') print "selected=\"selected\"";?>><?php print i18n::translate('TITL');?></option>
 		<option value="file" <?php if ($sortby=='file') print "selected=\"selected\"";?>><?php print i18n::translate('FILE');?></option>
 	</select></td>
 
 	<!-- // NOTE: Row 1 right, Upload media files -->
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("upload_media_help", "qm", "upload_media"); print $pgv_lang["upload_media"]; ?></td>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("upload_media", "qm", "upload_media"); print $pgv_lang["upload_media"]; ?></td>
 	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".$pgv_lang["upload_media"]."</a>"; ?></td></tr>
 
 	<!-- // NOTE: Row 2 left: Filter options -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("simple_filter_help", "qm", "filter"); print $pgv_lang["filter"];?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("simple_filter", "qm", "filter"); print $pgv_lang["filter"];?></td>
 	<td class="optionbox wrap">
 		<?php
 			// Directory pick list
@@ -826,11 +826,11 @@ if (check_media_structure()) {
 		<input type="text" name="filter" value="<?php if($filter) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print $pgv_lang["display_all"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
 
 	<!-- // NOTE: Row 2 right: Add media -->
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("add_media", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
 	<td class="optionbox wrap"><a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a></td></tr>
 
 	<!-- // NOTE: Row 3 left: Show thumbnails -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("show_thumb_help", "qm", "show_thumbnail"); ?><?php print $pgv_lang["show_thumbnail"]; ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("show_thumb", "qm", "show_thumbnail"); ?><?php print $pgv_lang["show_thumbnail"]; ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="showthumb" value="true" <?php if ($showthumb) print "checked=\"checked\""; ?> onclick="submit();" /></td>
 
 	<!-- // NOTE: Row 3 right: Generate missing thumbnails -->
@@ -840,7 +840,7 @@ if (check_media_structure()) {
 		if (!empty($subclick)) $tempURL .= "subclick={$subclick}&";
 		$tempURL .= "action=thumbnail&sortby={$sortby}&all=yes&level={$level}&directory={$directory}".$thumbget;
 		?>
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("gen_missing_thumbs_help", "qm"); ?><?php print $pgv_lang["gen_missing_thumbs_lbl"]; ?></td>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("gen_missing_thumbs", "qm"); ?><?php print $pgv_lang["gen_missing_thumbs_lbl"]; ?></td>
 	<td class="optionbox wrap"><a href="<?php print encode_url($tempURL);?>"><?php print $pgv_lang["gen_missing_thumbs"];?></a></td></tr>
 	</table>
 </form>
@@ -897,11 +897,11 @@ if (check_media_structure()) {
 				print "<input type=\"hidden\" name=\"sortby\" value=\"{$sortby}\" />";
 			if ($USE_MEDIA_FIREWALL) {
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.action.value='movedirstandard';\" />";
-				print_help_link("move_mediadirs_help", "qm", "move_mediadirs");
+				print_help_link("move_mediadirs", "qm", "move_mediadirs");
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.action.value='movedirprotected';\" />";
 				print "<br />";
 			}
-				print_help_link("setperms_help", "qm", "setperms");
+				print_help_link("setperms", "qm", "setperms");
 				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_fix"]."\" onclick=\"this.form.action.value='setpermsfix';\" />";
 
 				print "</form>";

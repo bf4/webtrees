@@ -170,7 +170,7 @@ if (!$SEARCH_SPIDER) {
 	}
 }
 echo '<div class="alpha_index"><p class="center">';
-print_help_link('alpha_help', 'qm', 'alpha_index');
+print_help_link('alpha', 'qm', 'alpha_index');
 print $pgv_lang["first_letter_iname"]."<br />";
 echo join(' | ', $list), '</p>';
 
@@ -180,16 +180,16 @@ if (!$SEARCH_SPIDER) {
  	echo '<p class="center">';
 	if ($alpha!='@' && $alpha!=',' && !$surname) {
 		if ($surname_sublist=='yes') {
-			print_help_link('skip_sublist_help', 'qm', 'skip_surnames');
+			print_help_link('skip_sublist', 'qm', 'skip_surnames');
 			echo '<a href="', $url, '&amp;surname_sublist=no">', $pgv_lang['skip_surnames'], '</a>';
 		} else {
-			print_help_link('skip_sublist_help', 'qm', 'show_surnames');
+			print_help_link('skip_sublist', 'qm', 'show_surnames');
 			echo '<a href="', $url, '&amp;surname_sublist=yes">', $pgv_lang['show_surnames'], '</a>';
 		}
 		echo '&nbsp;&nbsp;&nbsp;';
 	}
 	if ($showList) {
-		print_help_link('show_marnms_help', 'qm', 'show_marnms');
+		print_help_link('show_marnms', 'qm', 'show_marnms');
 		if ($SHOW_MARRIED_NAMES) {
 			echo '<a href="', $url, '&amp;show_marnm=no">', $pgv_lang['skip_marnms'], '</a>';
 		} else {
@@ -197,7 +197,7 @@ if (!$SEARCH_SPIDER) {
 		}
 		echo '&nbsp;&nbsp;&nbsp;';
 	}
-	print_help_link('name_list_help', 'qm');
+	print_help_link('name_list', 'qm');
 	echo '</p>';
 }
 echo '</div>';
@@ -264,7 +264,7 @@ if ($showList) {
 					echo '</h2>';
 				}
 				echo '<div class="alpha_index"><p class="center">';
-				print_help_link('alpha_help', 'qm', 'alpha_index');
+				print_help_link('alpha', 'qm', 'alpha_index');
 				echo $pgv_lang['first_letter_fname'], '<br />';
 				echo join(' | ', $list), '</p></div>';
 			}

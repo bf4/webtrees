@@ -78,7 +78,7 @@ if ($view != "preview") {
 
 	// NOTE: Root ID
 	print "<td class=\"descriptionbox\">";
-	print_help_link("rootid_help", "qm");
+	print_help_link("rootid", "qm");
 	print $pgv_lang["root_person"]."&nbsp;</td>";
 	print "<td class=\"optionbox vmiddle\">";
 	print "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
@@ -93,7 +93,7 @@ if ($view != "preview") {
 	if ($SHOW_ID_NUMBERS) {
 		print "<tr>\n";
 		print "<td class=\"descriptionbox\">";
-		print_help_link("SHOW_ID_NUMBERS_help", "qm");
+		print_help_link("SHOW_ID_NUMBERS", "qm");
 		print $pgv_lang["SHOW_ID_NUMBERS"];
 		print "</td>\n";
 		print "<td class=\"optionbox\">\n";
@@ -105,7 +105,7 @@ if ($view != "preview") {
 	if ($SHOW_HIGHLIGHT_IMAGES) {
 		print "<tr>\n";
 		print "<td class=\"descriptionbox\">";
-		print_help_link("SHOW_HIGHLIGHT_IMAGES_help", "qm");
+		print_help_link("SHOW_HIGHLIGHT_IMAGES", "qm");
 		print $pgv_lang["SHOW_HIGHLIGHT_IMAGES"];
 		print "</td>\n";
 		print "<td class=\"optionbox\">\n";

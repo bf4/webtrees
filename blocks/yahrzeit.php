@@ -70,7 +70,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 	}
 
 	$id="yahrzeit";
-	$title = print_help_link('yahrzeit_help', 'qm','',false,true);
+	$title = print_help_link('yahrzeit', 'qm','',false,true);
 	if ($PGV_BLOCKS['print_yahrzeit']['canconfig']) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -257,14 +257,14 @@ function print_yahrzeit_config($config) {
 	if ($config['days']>$DAYS_TO_SHOW_LIMIT) $config['days']=$DAYS_TO_SHOW_LIMIT;
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('days_to_show_help', 'qm');
+	print_help_link('days_to_show', 'qm');
 	print $pgv_lang['days_to_show'];
 	print '</td><td class="optionbox">';
 	print '<input type="text" name="days" size="2" value="'.$config['days'].'" />';
 	print '</td></tr>';
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('style_help', 'qm');
+	print_help_link('style', 'qm');
 	print $pgv_lang['style'];
 	print '</td><td class="optionbox">';
 	print '<select name="infoStyle">';
@@ -277,7 +277,7 @@ function print_yahrzeit_config($config) {
 	print '</select></td></tr>';
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link("cal_dowload_help", "qm");
+	print_help_link("cal_dowload", "qm");
 	print $pgv_lang["cal_download"];
 	print '</td><td class="optionbox">';
 	print '<select name="allowDownload">';

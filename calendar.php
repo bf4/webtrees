@@ -133,7 +133,7 @@ echo '</h2></td></tr>';
 if ($view!='preview') {
 	// Day selector
 	echo '<tr><td class="descriptionbox vmiddle">';
-	print_help_link('annivers_date_select_help', 'qm', 'day');
+	print_help_link('annivers_date_select', 'qm', 'day');
 	echo $pgv_lang['day'].'</td><td colspan="7" class="optionbox">';
 	for($d=1; $d<=$days_in_month; $d++) {
 		// Format the day number using the calendar
@@ -148,7 +148,7 @@ if ($view!='preview') {
 	echo "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$tmp->Display(true, NULL, array()).'</b></a>';
 	// Month selector
 	echo '<tr><td class="descriptionbox vmiddle">';
-	print_help_link('annivers_month_select_help', 'qm', 'month');
+	print_help_link('annivers_month_select', 'qm', 'month');
 	echo $pgv_lang['month'].'</td>';
 	echo '<td class="optionbox" colspan="7">';
 	for ($n=1; $n<=$cal_date->NUM_MONTHS(); ++$n) {
@@ -168,7 +168,7 @@ if ($view!='preview') {
 	echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day=".min($cal_date->d, $today->DaysInMonth())."&month={$today_month}&year={$today->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\"><b>".$today->Format('F Y').'</b></a></td></tr>';
 	// Year selector
 	echo '<tr><td class="descriptionbox vmiddle">';
-	print_help_link('annivers_year_select_help', 'qm', 'year');
+	print_help_link('annivers_year_select', 'qm', 'year');
 	echo $pgv_lang['year'].'</td>';
 	echo "<td class=\"optionbox vmiddle\">";
 	echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year=".($cal_date->y==1?-1:$cal_date->y-1)."&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">-1</a>";
@@ -178,7 +178,7 @@ if ($view!='preview') {
 	echo "</td> ";
 	// Filtering options
 	echo "<td class=\"descriptionbox vmiddle\">";
-	print_help_link("annivers_show_help", "qm", "show");
+	print_help_link("annivers_show", "qm", "show");
 	echo $pgv_lang["show"].":&nbsp;</td>";
 	echo "<td class=\"optionbox vmiddle\">";
 	echo "<select class=\"list_value\" name=\"filterof\" onchange=\"document.dateform.submit();\">";
@@ -197,7 +197,7 @@ if ($view!='preview') {
 
 	echo "</td>";
 	echo "<td class=\"descriptionbox vmiddle\">";
-	print_help_link("annivers_sex_help", "qm", "sex");
+	print_help_link("annivers_sex", "qm", "sex");
 	echo $pgv_lang["sex"].":&nbsp;</td>";
 	echo "<td class=\"optionbox vmiddle\">";
 	if ($filtersx=="") {
@@ -222,7 +222,7 @@ if ($view!='preview') {
 	}
 	echo "</td>";
 	echo "<td class=\"descriptionbox vmiddle\">";
-	print_help_link("annivers_event_help", "qm", "showcal");
+	print_help_link("annivers_event", "qm", "showcal");
 	echo $pgv_lang["showcal"]."&nbsp;</td>";
 	echo "<td class=\"optionbox\">";
 	echo "<input type=\"hidden\" name=\"filterev\" value=\"$filterev\" />";
@@ -276,7 +276,7 @@ if ($view!='preview') {
 	echo "</td></tr>";
 	// Day/Month/Year and calendar selector
 	echo '<tr><td class="topbottombar" colspan="8">';
-	print_help_link("day_month_help", "qm", "view");
+	print_help_link("day_month", "qm", "view");
 
 	if ($action=='today') {
 		echo "<span class=\"error\">{$pgv_lang['viewday']}</span>";

@@ -55,19 +55,19 @@ if ($view!="preview") {
 	echo '<input type="hidden" name="show_full" value="', $controller->show_full, '" />';
 	echo '<table class="list_table ', $TEXT_DIRECTION, '">';
 	echo '<tr><td class="descriptionbox">';
-	print_help_link("desc_rootid_help", "qm", "root_person");
+	print_help_link("desc_rootid", "qm", "root_person");
 	echo $pgv_lang["root_person"], "&nbsp;</td>";
 	echo '<td class="optionbox">';
 	echo '<input class="pedigree_form" type="text" id="pid" name="pid" size="3" value="', $controller->pid, '" />';
 	print_findindi_link("pid", "");
 	echo '</td>';
 	echo '<td class="descriptionbox">';
-	print_help_link("box_width_help", "qm", "box_width");
+	print_help_link("box_width", "qm", "box_width");
 	print $pgv_lang["box_width"] . "&nbsp;</td>";
 	echo '<td class="optionbox"><input type="text" size="3" name="box_width" value="', $controller->box_width, '" />';
 	echo '<b>%</b></td>';
 	echo '<td rowspan="2" class="descriptionbox">';
-	print_help_link("chart_style_help", "qm", "chart_style");
+	print_help_link("chart_style", "qm", "chart_style");
 	echo $pgv_lang["displ_layout_conf"];
 	echo '</td><td rowspan="2" class="optionbox">';
 	echo '<input type="radio" name="chart_style" value="0"';
@@ -94,7 +94,7 @@ if ($view!="preview") {
 	echo '<input type="submit" value="', $pgv_lang["view"], '" />';
 	echo '</td></tr>';
 	echo '<tr><td class="descriptionbox">';
-	print_help_link("desc_generations_help", "qm", "generations");
+	print_help_link("desc_generations", "qm", "generations");
 	echo $pgv_lang["generations"], '&nbsp;</td>';
 	echo '<td class="optionbox"><select name="generations">';
 	for ($i=2; $i<=$MAX_DESCENDANCY_GENERATIONS; $i++) {
@@ -105,7 +105,7 @@ if ($view!="preview") {
 		echo '>', $i, '</option>';
 	}
 	echo '</select></td><td class="descriptionbox">';
-	print_help_link("show_full_help", "qm", "show_details");
+	print_help_link("show_full", "qm", "show_details");
 	echo $pgv_lang["show_details"];
 	echo '</td><td class="optionbox"><input type="checkbox" value="';
 	if ($controller->show_full) {

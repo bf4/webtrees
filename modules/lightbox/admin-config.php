@@ -41,7 +41,7 @@ if (PGV_USER_IS_ADMIN) { ?>
    </tr>
    <tr>
       <td class="optionbox">
-		<?php print_help_link("LIGHTBOX_CONFIG_help", "qm", "LIGHTBOX_CONFIG");?><a href="module.php?mod=lightbox&pgvaction=lb_editconfig"><?php echo $pgv_lang["lb_manage"];?>
+		<?php print_help_link("LIGHTBOX_CONFIG", "qm", "LIGHTBOX_CONFIG");?><a href="module.php?mod=lightbox&pgvaction=lb_editconfig"><?php echo $pgv_lang["lb_manage"];?>
 		</a>
 	  </td>
       <td class="optionbox">

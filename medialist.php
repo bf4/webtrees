@@ -121,7 +121,7 @@ if ($search == "yes") {
 	?>
 
 	<!-- // NOTE: Row 1, left: Sort sequence -->
-	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("sortby_help", "qm", "sortby"); ?><?php echo $pgv_lang["sortby"]; ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("sortby", "qm", "sortby"); ?><?php echo $pgv_lang["sortby"]; ?></td>
 	<td class="optionbox wrap"><select name="sortby">
 		<option value="title" <?php if ($sortby=='title') echo "selected=\"selected\"";?>><?php echo i18n::translate('TITL'); ?></option>
 		<option value="file" <?php if ($sortby=='file') echo "selected=\"selected\"";?>><?php echo i18n::translate('FILE'); ?></option>
@@ -142,7 +142,7 @@ if ($search == "yes") {
 	</td></tr>
 
 	<!-- // NOTE: Row 2 left: Filter options -->
-	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("simple_filter_help", "qm", "filter"); echo $pgv_lang["filter"];?></td>
+	<tr><td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("simple_filter", "qm", "filter"); echo $pgv_lang["filter"];?></td>
 	<td class="optionbox wrap width25">
 		<?php
 		// Directory pick list
@@ -171,7 +171,7 @@ if ($search == "yes") {
 
 	<!-- // NOTE: Row 2 right: Recursive directory list -->
 	<?php if ($MEDIA_DIRECTORY_LEVELS > 0) { ?>
-	<td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("medialist_recursive_help", "qm", "medialist_recursive"); echo $pgv_lang["medialist_recursive"];?></td>
+	<td class="descriptionbox wrap width25" <?php echo $legendAlign;?>><?php print_help_link("medialist_recursive", "qm", "medialist_recursive"); echo $pgv_lang["medialist_recursive"];?></td>
 	<td class="optionbox wrap width25">
 		<input type="checkbox" id="subdirs" name="subdirs" <?php if (!$currentdironly) { ?>checked="checked"<?php } ?> />
 	</td></tr>

@@ -51,7 +51,7 @@ if (PGV_USER_IS_ADMIN) echo " - ".PGV_VERSION_TEXT;
 echo '</a><br />';
 echo "\n\t<br />";
 
-print_help_link("preview_help", "qm");
+print_help_link("preview", "qm");
 echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', $pgv_lang['print_preview'], '</a>';
 echo "<br />";
 

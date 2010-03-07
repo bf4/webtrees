@@ -440,7 +440,7 @@ if (empty($errorServer)) {
 		</tr>
 		<tr>
 		<td class="facts_label width20">
-			<?php print_help_link('link_remote_site_help', 'qm');?>
+			<?php print_help_link('link_remote_site', 'qm');?>
 			<?php print $pgv_lang["label_server_url"];?>
 		</td>
 		<td class="facts_value">

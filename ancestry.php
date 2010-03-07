@@ -68,7 +68,7 @@ if ($view!="preview") {
 		<!-- // NOTE: Root ID -->
 	<tr><td class="descriptionbox">
 	<?php
-	print_help_link("rootid_help", "qm", "root_person");
+	print_help_link("rootid", "qm", "root_person");
 	echo $pgv_lang["root_person"]; ?></td>
 	<td class="optionbox">
 	<input class="pedigree_form" type="text" name="rootid" id="rootid" size="3" value="<?php echo htmlentities($controller->rootid, ENT_COMPAT, 'UTF-8'); ?>" />
@@ -78,7 +78,7 @@ if ($view!="preview") {
 	<!-- // NOTE: Box width -->
 	<td class="descriptionbox">
 	<?php
-	print_help_link("box_width_help", "qm", "box_width");
+	print_help_link("box_width", "qm", "box_width");
 	echo $pgv_lang["box_width"]; ?></td>
 	<td class="optionbox"><input type="text" size="3" name="box_width" value="<?php echo htmlentities($box_width, ENT_COMPAT, 'UTF-8'); ?>" /> <b>%</b>
 	</td>
@@ -86,7 +86,7 @@ if ($view!="preview") {
 	<!-- // NOTE: chart style -->
 	<td rowspan="2" class="descriptionbox">
 	<?php
-	print_help_link("chart_style_help", "qm", "chart_style");
+	print_help_link("chart_style", "qm", "chart_style");
 	echo $pgv_lang["displ_layout_conf"]; ?>
 	</td>
 	<td rowspan="2" class="optionbox">
@@ -108,7 +108,7 @@ if ($view!="preview") {
 	<!-- // NOTE: show cousins -->
 	<br />
 	<?php
-	print_help_link("show_cousins_help", "qm", "show_cousins");
+	print_help_link("show_cousins", "qm", "show_cousins");
 	echo '<input ';
 	if ($controller->chart_style=="0") {
 		echo 'disabled="disabled" ';
@@ -145,7 +145,7 @@ if ($view!="preview") {
 	<!-- // NOTE: generations -->
 	<tr><td class="descriptionbox">
 	<?php
-	print_help_link("PEDIGREE_GENERATIONS_help", "qm", "generations");
+	print_help_link("PEDIGREE_GENERATIONS", "qm", "generations");
 	echo $pgv_lang["generations"]; ?></td>
 
 	<td class="optionbox">
@@ -166,7 +166,7 @@ if ($view!="preview") {
 
 	<td class="descriptionbox">
 	<?php
-	print_help_link("show_full_help", "qm", "show_details");
+	print_help_link("show_full", "qm", "show_details");
 	echo $pgv_lang["show_details"];
 	?>
 	</td>

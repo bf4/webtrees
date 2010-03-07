@@ -644,7 +644,7 @@ function printDBForm() {
 	?>
 	<table>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBTYPE_help", "qm", "DBTYPE"); print $pgv_lang["DBTYPE"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBTYPE", "qm", "DBTYPE"); print $pgv_lang["DBTYPE"];?></td>
 		<td class="optionbox">
 			<select name="NEW_DBTYPE" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBTYPE_help');" onchange="changeDBtype(this);">
 			<?php
@@ -666,27 +666,27 @@ function printDBForm() {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBHOST_help", "qm", "DBHOST"); print $pgv_lang["DBHOST"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBHOST", "qm", "DBHOST"); print $pgv_lang["DBHOST"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" name="NEW_DBHOST" value="<?php print $DBHOST?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBHOST_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBPORT_help", "qm", "DBPORT"); print $pgv_lang["DBPORT"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBPORT", "qm", "DBPORT"); print $pgv_lang["DBPORT"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" name="NEW_DBPORT" value="<?php print $DBPORT?>" size="10" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPORT_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBUSER_help", "qm", "DBUSER"); print $pgv_lang["DBUSER"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBUSER", "qm", "DBUSER"); print $pgv_lang["DBUSER"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_DBUSER" value="<?php print $DBUSER?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBUSER_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBPASS_help", "qm", "DBPASS"); print $pgv_lang["DBPASS"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBPASS", "qm", "DBPASS"); print $pgv_lang["DBPASS"];?></td>
 		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="<?php print $DBPASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBNAME_help", "qm", "DBNAME"); print $pgv_lang["DBNAME"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DBNAME", "qm", "DBNAME"); print $pgv_lang["DBNAME"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_DBNAME" value="<?php print $DBNAME?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBNAME_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DB_UTF8_COLLATION_help", "qm", "DB_UTF8_COLLATION"); print $pgv_lang["DB_UTF8_COLLATION"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DB_UTF8_COLLATION", "qm", "DB_UTF8_COLLATION"); print $pgv_lang["DB_UTF8_COLLATION"];?></td>
 		<td class="optionbox">
 			<select name="NEW_DB_UTF8_COLLATION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DB_UTF8_COLLATION_help');">
 				<option value="yes" <?php if ($DB_UTF8_COLLATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -695,7 +695,7 @@ function printDBForm() {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("TBLPREFIX_help", "qm", "TBLPREFIX"); print $pgv_lang["TBLPREFIX"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("TBLPREFIX", "qm", "TBLPREFIX"); print $pgv_lang["TBLPREFIX"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_TBLPREFIX" value="<?php print $TBLPREFIX?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('TBLPREFIX_help');" /></td>
 	</tr>
 
@@ -768,11 +768,11 @@ function printConfigForm(){
 		<table>
 			<tr><td colspan="2" class="center"><b><?php print $pgv_lang['basic_site_config'];?></b></td></tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("INDEX_DIRECTORY_help", "qm", "INDEX_DIRECTORY"); print $pgv_lang["INDEX_DIRECTORY"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("INDEX_DIRECTORY", "qm", "INDEX_DIRECTORY"); print $pgv_lang["INDEX_DIRECTORY"];?></td>
 				<td class="optionbox"><input type="text" size="50" name="NEW_INDEX_DIRECTORY" value="<?php print $INDEX_DIRECTORY?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('INDEX_DIRECTORY_help');" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("SERVER_URL_help", "qm", "SERVER_URL"); print $pgv_lang["SERVER_URL"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("SERVER_URL", "qm", "SERVER_URL"); print $pgv_lang["SERVER_URL"];?></td>
 				<td class="optionbox wrap"><input type="text" name="NEW_SERVER_URL" value="<?php print $SERVER_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SERVER_URL_help');" size="50" />
 				<br /><?php
 					global $GUESS_URL;
@@ -782,7 +782,7 @@ function printConfigForm(){
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_CHANGE_GEDCOM_help", "qm", "ALLOW_CHANGE_GEDCOM"); print $pgv_lang["ALLOW_CHANGE_GEDCOM"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_CHANGE_GEDCOM", "qm", "ALLOW_CHANGE_GEDCOM"); print $pgv_lang["ALLOW_CHANGE_GEDCOM"];?></td>
 				<td class="optionbox">
 					<select name="NEW_ALLOW_CHANGE_GEDCOM" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_CHANGE_GEDCOM_help');">
 						<option value="yes" <?php if ($ALLOW_CHANGE_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -791,7 +791,7 @@ function printConfigForm(){
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("USE_REGISTRATION_MODULE_help", "qm", "USE_REGISTRATION_MODULE"); print $pgv_lang["USE_REGISTRATION_MODULE"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("USE_REGISTRATION_MODULE", "qm", "USE_REGISTRATION_MODULE"); print $pgv_lang["USE_REGISTRATION_MODULE"];?></td>
 				<td class="optionbox">
 					<select name="NEW_USE_REGISTRATION_MODULE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_REGISTRATION_MODULE_help');">
 						<option value="yes" <?php if ($USE_REGISTRATION_MODULE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -800,7 +800,7 @@ function printConfigForm(){
 				</td>
 			</tr>
 			<tr>
-		 		<td class="descriptionbox wrap width30"><?php print_help_link("REQUIRE_ADMIN_AUTH_REGISTRATION_help", "qm", "REQUIRE_ADMIN_AUTH_REGISTRATION"); print $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"];?></td>
+		 		<td class="descriptionbox wrap width30"><?php print_help_link("REQUIRE_ADMIN_AUTH_REGISTRATION", "qm", "REQUIRE_ADMIN_AUTH_REGISTRATION"); print $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"];?></td>
 		 		<td class="optionbox">
 		 			<select name="NEW_REQUIRE_ADMIN_AUTH_REGISTRATION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('REQUIRE_ADMIN_AUTH_REGISTRATION_help');">
 		 				<option value="yes" <?php if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -809,7 +809,7 @@ function printConfigForm(){
 		 		</td>
 		 	</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_USER_THEMES_help", "qm", "ALLOW_USER_THEMES"); print $pgv_lang["ALLOW_USER_THEMES"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_USER_THEMES", "qm", "ALLOW_USER_THEMES"); print $pgv_lang["ALLOW_USER_THEMES"];?></td>
 				<td class="optionbox">
 					<select name="NEW_ALLOW_USER_THEMES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_USER_THEMES_help');">
 						<option value="yes" <?php if ($ALLOW_USER_THEMES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -825,12 +825,12 @@ function printConfigForm(){
 			<table>
 			<tr><td colspan="2" class="center"><br /><b><?php print $pgv_lang['adv_site_config'];?></b></td></tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("LOGIN_URL_help", "qm", "LOGIN_URL"); print $pgv_lang["LOGIN_URL"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("LOGIN_URL", "qm", "LOGIN_URL"); print $pgv_lang["LOGIN_URL"];?></td>
 				<td class="optionbox"><input type="text" name="NEW_LOGIN_URL" value="<?php print $LOGIN_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LOGIN_URL_help');" size="50" />
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_STORE_MESSAGES_help", "qm", "PGV_STORE_MESSAGES"); print $pgv_lang["PGV_STORE_MESSAGES"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_STORE_MESSAGES", "qm", "PGV_STORE_MESSAGES"); print $pgv_lang["PGV_STORE_MESSAGES"];?></td>
 				<td class="optionbox">
 					<select name="NEW_PGV_STORE_MESSAGES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_STORE_MESSAGES_help');">
 						<option value="yes" <?php if ($PGV_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -839,7 +839,7 @@ function printConfigForm(){
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SIMPLE_MAIL_help", "qm", "PGV_SIMPLE_MAIL"); print $pgv_lang["PGV_SIMPLE_MAIL"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SIMPLE_MAIL", "qm", "PGV_SIMPLE_MAIL"); print $pgv_lang["PGV_SIMPLE_MAIL"];?></td>
 				<td class="optionbox">
 					<select name="NEW_PGV_SIMPLE_MAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SIMPLE_MAIL_help');">
 						<option value="yes" <?php if ($PGV_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -848,7 +848,7 @@ function printConfigForm(){
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("LOGFILE_CREATE_help", "qm", "LOGFILE_CREATE"); print $pgv_lang["LOGFILE_CREATE"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("LOGFILE_CREATE", "qm", "LOGFILE_CREATE"); print $pgv_lang["LOGFILE_CREATE"];?></td>
 				<td class="optionbox">
 					<select name="NEW_LOGFILE_CREATE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LOGFILE_CREATE_help');">
 						<option value="none" <?php if ($LOGFILE_CREATE=="none") print "selected=\"selected\""; ?>><?php print $pgv_lang["no_logs"];?></option>
@@ -860,15 +860,15 @@ function printConfigForm(){
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SESSION_SAVE_PATH_help", "qm", "PGV_SESSION_SAVE_PATH"); print $pgv_lang["PGV_SESSION_SAVE_PATH"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SESSION_SAVE_PATH", "qm", "PGV_SESSION_SAVE_PATH"); print $pgv_lang["PGV_SESSION_SAVE_PATH"];?></td>
 				<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SESSION_SAVE_PATH" value="<?php print $PGV_SESSION_SAVE_PATH?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SESSION_SAVE_PATH_help');" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SESSION_TIME_help", "qm", "PGV_SESSION_TIME"); print $pgv_lang["PGV_SESSION_TIME"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SESSION_TIME", "qm", "PGV_SESSION_TIME"); print $pgv_lang["PGV_SESSION_TIME"];?></td>
 				<td class="optionbox"><input type="text" name="NEW_PGV_SESSION_TIME" value="<?php print $PGV_SESSION_TIME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SESSION_TIME_help');" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("MAX_VIEW_RATE_help", "qm", "MAX_VIEW_RATE"); print $pgv_lang["MAX_VIEW_RATE"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("MAX_VIEW_RATE", "qm", "MAX_VIEW_RATE"); print $pgv_lang["MAX_VIEW_RATE"];?></td>
 				<td class="optionbox wrap">
 					<input type="text" size="5" name="NEW_MAX_VIEWS" value="<?php print $MAX_VIEWS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
 					<?php
@@ -883,7 +883,7 @@ function printConfigForm(){
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("COMMIT_COMMAND_help", "qm", "COMMIT_COMMAND"); print $pgv_lang['COMMIT_COMMAND'];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("COMMIT_COMMAND", "qm", "COMMIT_COMMAND"); print $pgv_lang['COMMIT_COMMAND'];?></td>
 		 		<td class="optionbox">
 		 			<select name="NEW_COMMIT_COMMAND" tabindex="<?php $i++; print $i?>" onfocus="getHelp('COMMIT_COMMAND_help');">
 						<option value="" <?php if ($COMMIT_COMMAND=="") print "selected=\"selected\""; ?>><?php print $pgv_lang["none"];?></option>
@@ -893,7 +893,7 @@ function printConfigForm(){
 				</td>
 		 	</tr>
 		 	<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_MEMORY_LIMIT_help", "qm", "PGV_MEMORY_LIMIT"); print $pgv_lang["PGV_MEMORY_LIMIT"];?></td>
+				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_MEMORY_LIMIT", "qm", "PGV_MEMORY_LIMIT"); print $pgv_lang["PGV_MEMORY_LIMIT"];?></td>
 				<td class="optionbox"><input type="text" name="NEW_PGV_MEMORY_LIMIT" value="<?php print $PGV_MEMORY_LIMIT?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_MEMORY_LIMIT_help');" /></td>
 			</tr>
 			</table>
@@ -904,7 +904,7 @@ function printConfigForm(){
 		<table>
 		<tr><td colspan="2" class="center"><br /><b>SMTP</b></td></tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_ACTIVE_help", "qm", "PGV_SMTP_ACTIVE"); print $pgv_lang["PGV_SMTP_ACTIVE"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_ACTIVE", "qm", "PGV_SMTP_ACTIVE"); print $pgv_lang["PGV_SMTP_ACTIVE"];?></td>
 		<td class="optionbox">
 			<select name="NEW_PGV_SMTP_ACTIVE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_ACTIVE_help');">
 				<option value="yes" <?php if ($PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -913,19 +913,19 @@ function printConfigForm(){
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HOST_help", "qm", "PGV_SMTP_HOST"); print $pgv_lang["PGV_SMTP_HOST"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HOST", "qm", "PGV_SMTP_HOST"); print $pgv_lang["PGV_SMTP_HOST"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_HOST" value="<?php print $PGV_SMTP_HOST?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_HOST_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HELO_help", "qm", "PGV_SMTP_HELO"); print $pgv_lang["PGV_SMTP_HELO"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HELO", "qm", "PGV_SMTP_HELO"); print $pgv_lang["PGV_SMTP_HELO"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_HELO" value="<?php print $PGV_SMTP_HELO?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_HELO_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_PORT_help", "qm", "PGV_SMTP_PORT"); print $pgv_lang["PGV_SMTP_PORT"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_PORT", "qm", "PGV_SMTP_PORT"); print $pgv_lang["PGV_SMTP_PORT"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="5" name="NEW_PGV_SMTP_PORT" value="<?php print $PGV_SMTP_PORT?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_PORT_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_help", "qm", "PGV_SMTP_AUTH"); print $pgv_lang["PGV_SMTP_AUTH"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH", "qm", "PGV_SMTP_AUTH"); print $pgv_lang["PGV_SMTP_AUTH"];?></td>
 		<td class="optionbox">
 			<select name="NEW_PGV_SMTP_AUTH" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_help');">
 			<option value="yes" <?php if ($PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -934,15 +934,15 @@ function printConfigForm(){
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_USER_help", "qm", "PGV_SMTP_AUTH_USER"); print $pgv_lang["PGV_SMTP_AUTH_USER"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_USER", "qm", "PGV_SMTP_AUTH_USER"); print $pgv_lang["PGV_SMTP_AUTH_USER"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_AUTH_USER" value="<?php print $PGV_SMTP_AUTH_USER?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_USER_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_PASS_help", "qm", "PGV_SMTP_AUTH_PASS"); print $pgv_lang["PGV_SMTP_AUTH_PASS"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_PASS", "qm", "PGV_SMTP_AUTH_PASS"); print $pgv_lang["PGV_SMTP_AUTH_PASS"];?></td>
 		<td class="optionbox"><input type="password" name="NEW_PGV_SMTP_AUTH_PASS" value="<?php print $PGV_SMTP_AUTH_PASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_PASS_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_SSL_help", "qm", "PGV_SMTP_SSL"); print $pgv_lang["PGV_SMTP_SSL"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_SSL", "qm", "PGV_SMTP_SSL"); print $pgv_lang["PGV_SMTP_SSL"];?></td>
 		<td class="optionbox">
 			<select name="NEW_PGV_SMTP_SSL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_SSL_help');">
 				<option value="none" <?php if ($PGV_SMTP_SSL=='none') print "selected=\"selected\""; ?>><?php print $pgv_lang["none"];?></option>
@@ -952,7 +952,7 @@ function printConfigForm(){
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_FROM_NAME_help", "qm", "PGV_SMTP_FROM_NAME"); print $pgv_lang["PGV_SMTP_FROM_NAME"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_FROM_NAME", "qm", "PGV_SMTP_FROM_NAME"); print $pgv_lang["PGV_SMTP_FROM_NAME"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_FROM_NAME" value="<?php print $PGV_SMTP_FROM_NAME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_FROM_NAME_help');" /></td>
 	</tr>
 	</table>
@@ -975,7 +975,7 @@ function printLanguageForm() {
 		}
 	}
 
-	print_help_link("LANG_SELECTION_help", "qm", "LANG_SELECTION"); print $pgv_lang["LANG_SELECTION"];?>
+	print_help_link("LANG_SELECTION", "qm", "LANG_SELECTION"); print $pgv_lang["LANG_SELECTION"];?>
 	<table>
 	<tr>
 		<td class="optionbox">

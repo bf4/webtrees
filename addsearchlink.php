@@ -60,18 +60,18 @@ if(isset($pid) && isset($server) && isset($indiName))
 				<table class="facts_table" align="center">
 					<tr>
 						<td class="facts_label03" colspan="3" align="center">
-							<?php print_help_link("link_remote_help", "qm"); ?> <?php echo $pgv_lang["title_remote_link"];?>
+							<?php print_help_link("link_remote", "qm"); ?> <?php echo $pgv_lang["title_remote_link"];?>
 						</td>
 					</tr>
 					<tr>
-						<td class="descriptionbox width20" id="tdId"><?php print_help_link('link_person_id_help', 'qm');?> Local Person ID</td>
+						<td class="descriptionbox width20" id="tdId"><?php print_help_link('link_person_id', 'qm');?> Local Person ID</td>
 						<td class="optionbox"><input type="text" id="pid" name="pid" size="14"/></td>
 						<td class="optionbox" rowspan="2"><br/>
 							<input type="submit" value="<?php echo $pgv_lang['label_add_remote_link'];?>" id="btnSubmit" name="btnSubmit" value="add"/>
 						</td>
 					</tr>
 					<tr>
-						<td class="descriptionbox width20"><?php print_help_link('link_remote_rel_help', 'qm');?> <?php echo $pgv_lang["label_rel_to_current"];?></td>
+						<td class="descriptionbox width20"><?php print_help_link('link_remote_rel', 'qm');?> <?php echo $pgv_lang["label_rel_to_current"];?></td>
 						<td class="optionbox">
 							<select id="cbRelationship" name="cbRelationship">
 								<option value="self" selected><?php echo $pgv_lang["current_person"];?></option>

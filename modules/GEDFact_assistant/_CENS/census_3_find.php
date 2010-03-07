@@ -263,13 +263,13 @@ switch ($type) {
 		print $pgv_lang["media_contains"]." <input type=\"text\" name=\"filter\" value=\"";
 		if ($filter) print $filter;
 		print "\" />";
-		print_help_link("simple_filter_help","qm");
+		print_help_link("simple_filter","qm");
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" wstyle=\"padding: 5px;\">";
 		print "<input type=\"checkbox\" name=\"showthumb\" value=\"true\"";
 		if( $showthumb) print "checked=\"checked\"";
 		print "onclick=\"javascript: this.form.submit();\" />".$pgv_lang["show_thumbnail"];
-		print_help_link("show_thumb_help","qm");
+		print_help_link("show_thumb","qm");
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 		print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
@@ -750,7 +750,7 @@ if ($action=="filter") {
 		}
 		print '</table>';
 		if (PGV_USER_CAN_EDIT) {
-			print_help_link('edit_add_unlinked_source_help', 'qm'); ?><a href="javascript: <?php print $pgv_lang['add_unlinked_source']; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang['add_unlinked_source']; ?></a>
+			print_help_link('edit_add_unlinked_source', 'qm'); ?><a href="javascript: <?php print $pgv_lang['add_unlinked_source']; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang['add_unlinked_source']; ?></a>
 		<?php
 		}
 	}

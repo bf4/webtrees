@@ -225,7 +225,7 @@ function getHelp(which) {
 
 if ($action=="generate") {
 	echo "<h3>";
-	print_help_link("SITEMAP_help", "qm", "SITEMAP");
+	print_help_link("SITEMAP", "qm", "SITEMAP");
 	echo $pgv_lang["generate_sitemap"];
 	echo "</h3>\n";
 	echo "<table class=\"facts_table\">\n";
@@ -276,13 +276,13 @@ if ($action=="") {
 	$i = 0;
 ?>
 
-<h3><?php print_help_link("SITEMAP_help", "qm", "SITEMAP"); echo $pgv_lang["generate_sitemap"]?></h3>
+<h3><?php print_help_link("SITEMAP", "qm", "SITEMAP"); echo $pgv_lang["generate_sitemap"]?></h3>
 
 <form method="post" enctype="multipart/form-data" id="sitemap" name="sitemap" action="module.php?mod=sitemap">
 	<input type="hidden" name="action" value="generate" />
 	<table class="facts_table width100">
 		<tr>
-			<td class="descriptionbox wrap width30"><?php print_help_link("SM_GEDCOM_SELECT_help", "qm", "SM_GEDCOM_SELECT"); echo $pgv_lang["gedcoms_selected"];?></td>
+			<td class="descriptionbox wrap width30"><?php print_help_link("SM_GEDCOM_SELECT", "qm", "SM_GEDCOM_SELECT"); echo $pgv_lang["gedcoms_selected"];?></td>
 			<td class="optionbox" colspan="3">
 <?php
 	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
@@ -300,7 +300,7 @@ if ($action=="") {
 		</tr>
 		<tr>
 			<td class="descriptionbox wrap width30" rowspan="6">
-				<?php print_help_link("SM_ITEM_SELECT_help", "qm", "SM_ITEM_SELECT"); echo $pgv_lang["selected_item"];?>
+				<?php print_help_link("SM_ITEM_SELECT", "qm", "SM_ITEM_SELECT"); echo $pgv_lang["selected_item"];?>
 			</td>
 			<td class="topbottombar"><?php echo $pgv_lang["sm_item"];?></td>
 			<td class="topbottombar"><?php echo $pgv_lang["sm_priority"];?></td>

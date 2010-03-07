@@ -40,7 +40,7 @@ echo "</div> <!-- closing div id=\"content\" -->";
 	<img src="<?php echo $PGV_IMAGE_DIR, '/', $PGV_IMAGES['gedview']['other']; ?>" width="100" border="0" alt="<?php echo PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): ""; ?>"
 		title="<?php echo PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" ;?>" /></a><br />
 <br />
-<?php print_help_link("preview_help", "qm"); ?>
+<?php print_help_link("preview", "qm"); ?>
 <a href="<?php echo PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(); ?>"><?php echo $pgv_lang['print_preview']; ?></a>
 <br />
 <?php

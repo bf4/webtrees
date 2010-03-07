@@ -63,7 +63,7 @@ class sources_tab_Tab extends Tab {
 				<td class="descriptionbox rela">
 					<input id="checkbox_sour2" type="checkbox" <?php if ($SHOW_LEVEL2_SOURCES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_sour2');" />
 					<label for="checkbox_sour2"><?php echo $pgv_lang["show_fact_sources"];?></label>
-					<?php print_help_link("show_fact_sources_help", "qm", "show_fact_sources");?>
+					<?php print_help_link("show_fact_sources", "qm", "show_fact_sources");?>
 				</td>
 			</tr>
 			<?php
@@ -83,7 +83,7 @@ class sources_tab_Tab extends Tab {
 			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 			?>
 				<tr>
-					<td class="facts_label"><?php print_help_link("add_source_help", "qm"); ?><?php echo $pgv_lang["add_source_lbl"]; ?></td>
+					<td class="facts_label"><?php print_help_link("add_source", "qm"); ?><?php echo $pgv_lang["add_source_lbl"]; ?></td>
 					<td class="facts_value">
 					<a href="javascript:;" onclick="add_new_record('<?php echo $this->controller->pid; ?>','SOUR'); return false;"><?php echo $pgv_lang["add_source"]; ?></a>
 					<br />

@@ -56,7 +56,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 	}
 
 	$id = "top10hits";
-	$title = print_help_link("index_top10_pageviews_help", "qm", "", false, true);
+	$title = print_help_link("index_top10_pageviews", "qm", "", false, true);
 	if ($PGV_BLOCKS["top10_pageviews"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -128,7 +128,6 @@ function top10_pageviews_config($config) {
 
 	// Number of items to show
 	print "<tr><td class=\"descriptionbox wrap width33\">";
-	// print_help_link("num_to_show_help", "qm");
 	print $pgv_lang["num_to_show"];
 	print "</td><td class=\"optionbox\">";
 	print "<input type=\"text\" name=\"num\" size=\"2\" value=\"".$config["num"]."\" />";
@@ -136,7 +135,6 @@ function top10_pageviews_config($config) {
 
 	// Count position
 	print "<tr><td class=\"descriptionbox wrap width33\">";
-	// print_help_link("before_or_after_help", "qm");
 	print $pgv_lang["before_or_after"];
 	print "</td><td class=\"optionbox\">";
 	print "<select name=\"count_placement\">";
@@ -152,7 +150,7 @@ function top10_pageviews_config($config) {
 	// Cache file life
 	if ($ctype=="gedcom") {
 		print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life_help", "qm");
+		print_help_link("cache_life", "qm");
 		print $pgv_lang["cache_life"];
 		print "</td><td class=\"optionbox\">";
 		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";

@@ -155,20 +155,20 @@ if ($action=="add") {
 	echo '<input type="hidden" name="oldOrder" value="" />';
 	echo '<table class="center list_table ', $TEXT_DIRECTION, '">';
 	echo '<tr><td class="topbottombar" colspan="2">';
-	print_help_link("add_faq_item_help","qm","add_faq_item");
+	print_help_link("add_faq_item","qm","add_faq_item");
 	echo $pgv_lang["add_faq_item"], '</td></tr>';
 	echo '<tr><td class="descriptionbox" colspan="2">';
-	print_help_link("add_faq_header_help","qm","add_faq_header");
+	print_help_link("add_faq_header","qm","add_faq_header");
 	echo $pgv_lang["add_faq_header"], '</td></tr>';
 	echo '<tr><td class="optionbox" colspan="2"><input type="text" name="header" size="90" tabindex="', $i++, '" /></td></tr>';
 	echo '<tr><td class="descriptionbox" colspan="2">';
-	print_help_link("add_faq_body_help","qm","add_faq_body");
+	print_help_link("add_faq_body","qm","add_faq_body");
 	echo $pgv_lang["add_faq_body"], '</td></tr>';
 	echo '<tr><td class="optionbox" colspan="2"><textarea name="body" rows="10" cols="90" tabindex="', $i++, '"></textarea></td></tr>';
 	echo '<tr><td class="descriptionbox">';
-	print_help_link("add_faq_order_help","qm","add_faq_order");
+	print_help_link("add_faq_order","qm","add_faq_order");
 	echo $pgv_lang["add_faq_order"], '</td><td class="descriptionbox">';
-	print_help_link("add_faq_visibility_help","qm","add_faq_order");
+	print_help_link("add_faq_visibility","qm","add_faq_order");
 	echo $pgv_lang["add_faq_visibility"], '</td></tr>';
 	echo '<tr><td class="optionbox"><input type="text" name="order" size="3" tabindex="', $i++, '" /></td>';
 	echo '<td class="optionbox">';
@@ -198,7 +198,7 @@ if ($action == "edit") {
 		echo '<input type="hidden" name="id" value="', $id, '" />';
 		echo '<table class="center list_table ', $TEXT_DIRECTION, '">';
 		echo '<tr><td class="topbottombar" colspan="2">';
-		print_help_link("edit_faq_item_help","qm","edit_faq_item");
+		print_help_link("edit_faq_item","qm","edit_faq_item");
 		echo $pgv_lang["edit_faq_item"], '</td></tr>';
 		foreach ($faqs as $id => $data) {
 			echo '<input type="hidden" name="pidh" value="', htmlspecialchars($data["header"]["pid"]), '" />';
@@ -206,17 +206,17 @@ if ($action == "edit") {
 			echo '<input type="hidden" name="oldGEDCOM" value="', htmlspecialchars($data["header"]["gedcom"]), '" />';
 			echo '<input type="hidden" name="oldOrder" value="', htmlspecialchars($id), '" />';
 			echo '<tr><td class="descriptionbox" colspan="2">';
-			print_help_link("add_faq_header_help","qm","add_faq_header");
+			print_help_link("add_faq_header","qm","add_faq_header");
 			echo $pgv_lang["add_faq_header"], '</td></tr>';
 			echo '<tr><td class="optionbox" colspan="2"><input type="text" name="header" size="90" tabindex="', $i++, '" value="', htmlspecialchars($data["header"]["text"]), '" /></td></tr>';
 			echo '<tr><td class="descriptionbox" colspan="2">';
-			print_help_link("add_faq_body_help","qm","add_faq_body");
+			print_help_link("add_faq_body","qm","add_faq_body");
 			echo $pgv_lang["add_faq_body"], '</td></tr>';
 			echo '<tr><td class="optionbox" colspan="2"><textarea name="body" rows="10" cols="90" tabindex="', $i++, '">', htmlspecialchars($data["body"]["text"]), '</textarea></td></tr>';
 			echo '<tr><td class="descriptionbox">';
-			print_help_link("add_faq_order_help","qm","add_faq_order");
+			print_help_link("add_faq_order","qm","add_faq_order");
 			echo $pgv_lang["add_faq_order"], '</td><td class="descriptionbox">';
-			print_help_link("add_faq_visibility_help","qm","add_faq_order");
+			print_help_link("add_faq_visibility","qm","add_faq_order");
 			echo $pgv_lang["add_faq_visibility"], '</td></tr>';
 			echo '<tr><td class="optionbox"><input type="text" name="order" size="3" tabindex="', $i++, '" value="', $id, '" /></td>';
 			echo '<td class="optionbox">';
@@ -243,7 +243,7 @@ if ($action == "show") {
 	if (count($faqs) == 0) {
 		if (PGV_USER_GEDCOM_ADMIN) {
 			echo '<tr><td class="width20 list_label">';
-			print_help_link("add_faq_item_help","qm","add_faq_item");
+			print_help_link("add_faq_item","qm","add_faq_item");
 			echo '<a href="faq.php?action=add">', $pgv_lang["add_faq_item"], '</a>';
 			echo '</td></tr>';
 		} else {
@@ -255,16 +255,16 @@ if ($action == "show") {
 			echo '<tr>';
 			if ($adminedit) {
 				echo '<td class="descriptionbox center" colspan="2">';
-				print_help_link("add_faq_item_help","qm","add_faq_item");
+				print_help_link("add_faq_item","qm","add_faq_item");
 				echo '<a href="faq.php?action=add">', $pgv_lang["add"], '</a></td>';
 			}
 			echo '<td class="descriptionbox center" colspan="2">';
 
 			if ($adminedit) {
-				print_help_link("preview_faq_item_help","qm","preview_faq_item");
+				print_help_link("preview_faq_item","qm","preview_faq_item");
 				echo '<a href="faq.php?adminedit=0">', $pgv_lang["preview"], '</a>';
 			} else {
-				print_help_link("restore_faq_edits_help","qm","restore_faq_edits");
+				print_help_link("restore_faq_edits","qm","restore_faq_edits");
 				echo '<a href="faq.php?adminedit=1">', $pgv_lang["edit"], '</a>';
 			}
 			echo '</td>';
@@ -295,16 +295,16 @@ if ($action == "show") {
 				// NOTE: Print the edit options of the current item
 				if (PGV_USER_GEDCOM_ADMIN && $adminedit) {
 					echo '<td class="optionbox center">';
-					print_help_link("moveup_faq_item_help","qm","moveup_faq_item");
+					print_help_link("moveup_faq_item","qm","moveup_faq_item");
 					echo '<a href="', encode_url('faq.php?action=commit&type=moveup&id='.$id.'&pidh='.$data["header"]["pid"].'&pidb='.$data["body"]["pid"]), '"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["uarrow"]["other"], '" border="0" alt="" /></a></td>';
 					echo '<td class="optionbox center">';
-					print_help_link("movedown_faq_item_help","qm","movedown_faq_item");
+					print_help_link("movedown_faq_item","qm","movedown_faq_item");
 					echo '<a href="', encode_url('faq.php?action=commit&type=movedown&id='.$id.'&pidh='.$data["header"]["pid"].'&pidb='.$data["body"]["pid"]), '"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["darrow"]["other"], '" border="0" alt="" /></a>';
 					echo '</td><td class="optionbox center">';
-					print_help_link("edit_faq_item_help","qm","edit_faq_item");
+					print_help_link("edit_faq_item","qm","edit_faq_item");
 					echo '<a href="', encode_url('faq.php?action=edit&id='.$id), '">', $pgv_lang["edit"], '</a>';
 					echo '</td><td class="optionbox center">';
-					print_help_link("delete_faq_item_help","qm","delete_faq_item");
+					print_help_link("delete_faq_item","qm","delete_faq_item");
 					echo '<a href="', encode_url('faq.php?action=commit&type=delete&id='.$id.'&pidh='.$data["header"]["pid"].'&amp;pidb='.$data["body"]["pid"].'&oldGEDCOM='.$data["header"]["gedcom"]), '" onclick="return confirm(\'', $pgv_lang["confirm_faq_delete"], '\');">', $pgv_lang["delete"], '</a>';
 					echo '</td>';
 				}

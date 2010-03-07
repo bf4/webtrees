@@ -163,7 +163,7 @@ function getHelp(which) {
 	<table class="facts_table">
 		<tr>
 			<td class="optionbox" colspan="4">
-				<?php print_help_link("PLE_FLAGS_help", "qm", "PLE_FLAGS");?>
+				<?php print_help_link("PLE_FLAGS", "qm", "PLE_FLAGS");?>
 				<select name="COUNTRYSELECT" dir="ltr" tabindex="0" onchange="selectCountry()">
 					<option value="Countries"><?php echo $pgv_lang["pl_countries"]; ?></option>
 					<?php foreach ($countryList as $country_key=>$country_name) {

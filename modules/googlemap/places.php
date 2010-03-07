@@ -324,12 +324,12 @@ if ($action=="ImportFile") {
 	<input type="hidden" name="action" value="ImportFile2" />
 	<table class="facts_table">
 		<tr>
-			<td class="descriptionbox"><?php print_help_link("PLIF_FILENAME_help", "qm", "PLIF_FILENAME");?><?php echo $pgv_lang["pl_places_filename"];?></td>
+			<td class="descriptionbox"><?php print_help_link("PLIF_FILENAME", "qm", "PLIF_FILENAME");?><?php echo $pgv_lang["pl_places_filename"];?></td>
 			<td class="optionbox"><input type="file" name="placesfile" size="50"></td>
 		</tr>
 		<?php if (count($placefiles)>0) { ?>
 		<tr>
-			<td class="descriptionbox"><?php print_help_link("PLIF_LOCALFILE_help", "qm", "pl_places_localfile");?><?php echo $pgv_lang["pl_places_localfile"];?></td>
+			<td class="descriptionbox"><?php print_help_link("PLIF_LOCALFILE", "qm", "pl_places_localfile");?><?php echo $pgv_lang["pl_places_localfile"];?></td>
 			<td class="optionbox">
 				<select name="localfile">
 					<option></option>
@@ -343,15 +343,15 @@ if ($action=="ImportFile") {
 		</tr>
 		<?php } ?>
 		<tr>
-			<td class="descriptionbox"><?php print_help_link("PLIF_CLEAN_help", "qm", "PLIF_CLEAN");?><?php echo $pgv_lang["pl_clean_db"];?></td>
+			<td class="descriptionbox"><?php print_help_link("PLIF_CLEAN", "qm", "PLIF_CLEAN");?><?php echo $pgv_lang["pl_clean_db"];?></td>
 			<td class="optionbox"><input type="checkbox" name="cleardatabase"></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php print_help_link("PLIF_UPDATE_help", "qm", "PLIF_UPDATE");?><?php echo $pgv_lang["pl_update_only"];?></td>
+			<td class="descriptionbox"><?php print_help_link("PLIF_UPDATE", "qm", "PLIF_UPDATE");?><?php echo $pgv_lang["pl_update_only"];?></td>
 			<td class="optionbox"><input type="checkbox" name="updateonly"></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php print_help_link("PLIF_OVERWRITE_help", "qm", "PLIF_OVERWRITE");?><?php echo $pgv_lang["pl_overwrite_data"];?></td>
+			<td class="descriptionbox"><?php print_help_link("PLIF_OVERWRITE", "qm", "PLIF_OVERWRITE");?><?php echo $pgv_lang["pl_overwrite_data"];?></td>
 			<td class="optionbox"><input type="checkbox" name="overwritedata"></td>
 		</tr>
 	</table>
@@ -587,7 +587,7 @@ echo "<br /><br /><form name=\"active\" method=\"post\" action=\"module.php?mod=
 echo "\n<table><tr><td class=\"optionbox\">", $pgv_lang["list_inactive"], ": <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
 if ($display == 'inactive') echo " checked=\"checked\"";
 echo ">\n<input type=\"submit\" value=\"", $pgv_lang["view"], "\" >";
-print_help_link("PLE_ACTIVE_help", "qm", "PLE_ACTIVE");
+print_help_link("PLE_ACTIVE", "qm", "PLE_ACTIVE");
 echo "</td></tr></table>";
 echo "</form>";
 
@@ -600,7 +600,7 @@ echo "<th class=\"descriptionbox\">", i18n::translate('LONG'), "</th>";
 echo "<th class=\"descriptionbox\">{$pgv_lang['pl_zoom_factor']}</th>";
 echo "<th class=\"descriptionbox\">{$pgv_lang['pl_place_icon']}</th>";
 echo "<th class=\"descriptionbox\" colspan=\"2\">";
-print_help_link('PL_EDIT_LOCATION_help', 'qm', 'PL_EDIT_LOCATION');
+print_help_link('PL_EDIT_LOCATION', 'qm', 'PL_EDIT_LOCATION');
 echo "{$pgv_lang['pl_edit']}</th></tr>";
 if (count($placelist) == 0)
 	echo "<tr><td colspan=\"7\" class=\"facts_value\">{$pgv_lang['pl_no_places_found']}</td></tr>";
@@ -646,27 +646,27 @@ foreach ($placelist as $place) {
 ?>
 	<table class="facts_table">
 		<tr>
-			<td class="optionbox" colspan="2"><?php print_help_link("PL_ADD_LOCATION_help", "qm", "PL_ADD_LOCATION");?><a href="javascript:;" onclick="add_place_location(<?php echo $parent;?>);return false;"><?php echo $pgv_lang["pl_add_place"];?></a></td>
+			<td class="optionbox" colspan="2"><?php print_help_link("PL_ADD_LOCATION_, "qm", "PL_ADD_LOCATION");?><a href="javascript:;" onclick="add_place_location(<?php echo $parent;?>);return false;"><?php echo $pgv_lang["pl_add_place"];?></a></td>
 		</tr>
 		<tr>
-			<td class="optionbox"><?php print_help_link("PL_IMPORT_GEDCOM_help", "qm", "PL_IMPORT_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr"><?php echo $pgv_lang["pl_import_gedcom"];?></a></td>
-			<td class="optionbox"><?php print_help_link("PL_IMPORT_ALL_GEDCOM_help", "qm", "PL_IMPORT_ALL_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=all"><?php echo $pgv_lang["pl_import_all_gedcom"];?></a></td>
+			<td class="optionbox"><?php print_help_link("PL_IMPORT_GEDCOM", "qm", "PL_IMPORT_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr"><?php echo $pgv_lang["pl_import_gedcom"];?></a></td>
+			<td class="optionbox"><?php print_help_link("PL_IMPORT_ALL_GEDCOM", "qm", "PL_IMPORT_ALL_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=all"><?php echo $pgv_lang["pl_import_all_gedcom"];?></a></td>
 		</tr>
 		<tr>
-			<td class="optionbox" colspan="2"><?php print_help_link("PL_IMPORT_FILE_help", "qm", "PL_IMPORT_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportFile&mode=add"><?php echo $pgv_lang["pl_import_file"];?></a></td>
+			<td class="optionbox" colspan="2"><?php print_help_link("PL_IMPORT_FILE", "qm", "PL_IMPORT_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportFile&mode=add"><?php echo $pgv_lang["pl_import_file"];?></a></td>
 		</tr>
 		<tr>
 			<td class="optionbox">
 <?php
 	if (count($where_am_i)<=4) {
-		print_help_link("PL_EXPORT_FILE_help", "qm", "PL_EXPORT_FILE");
+		print_help_link("PL_EXPORT_FILE", "qm", "PL_EXPORT_FILE");
 		echo "<a href=\"module.php?mod=googlemap&pgvaction=places&action=ExportFile&parent={$parent}\">";
 		echo "{$pgv_lang['pl_export_file']}</a>";
 	} else {
 		echo "&nbsp;";
 	}
 	echo "</td><td class=\"optionbox\">";
-	print_help_link("PL_EXPORT_ALL_FILE_help", "qm", "PL_EXPORT_ALL_FILE");
+	print_help_link("PL_EXPORT_ALL_FILE", "qm", "PL_EXPORT_ALL_FILE");
 	echo "<a href=\"module.php?mod=googlemap&pgvaction=places&action=ExportFile&parent=0\">";
 	echo "{$pgv_lang['pl_export_all_file']}</a>";
 	echo "</td></tr></table><br />";

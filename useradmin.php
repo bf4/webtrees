@@ -275,27 +275,27 @@ if ($action=="edituser") {
 	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["back"]; ?>" onclick="window.location='<?php echo encode_url("useradmin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
 	</td></tr>
 	<tr>
-	<td class="descriptionbox width20 wrap"><?php print_help_link("useradmin_username_help", "qm", "username"); echo $pgv_lang["username"]; ?></td>
+	<td class="descriptionbox width20 wrap"><?php print_help_link("useradmin_username", "qm", "username"); echo $pgv_lang["username"]; ?></td>
 	<td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" value="<?php echo $username; ?>" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname_help", "qm", "firstname"); echo $pgv_lang["firstname"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname", "qm", "firstname"); echo $pgv_lang["firstname"]; ?></td>
 	<td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" value="<?php echo PrintReady(get_user_setting($user_id, 'firstname')); ?>" size="50" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname_help", "qm", "lastname");echo $pgv_lang["lastname"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname", "qm", "lastname");echo $pgv_lang["lastname"]; ?></td>
 	<td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" value="<?php echo PrintReady(get_user_setting($user_id, 'lastname')); ?>" size="50" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_password_help", "qm", "password"); echo $pgv_lang["password"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_password", "qm", "password"); echo $pgv_lang["password"]; ?></td>
 	<td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /><br /><?php echo $pgv_lang["leave_blank"]; ?></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_conf_password_help", "qm", "confirm"); echo $pgv_lang["confirm"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_conf_password", "qm", "confirm"); echo $pgv_lang["confirm"]; ?></td>
 	<td class="optionbox wrap"><input type="password" name="pass2" tabindex="<?php echo ++$tab; ?>" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_gedcomid_help", "qm", "gedcomid"); echo $pgv_lang["gedcomid"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_gedcomid", "qm", "gedcomid"); echo $pgv_lang["gedcomid"]; ?></td>
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
@@ -317,7 +317,7 @@ if ($action=="edituser") {
 	}
 	?>
 	</table></td></tr><tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid_help", "qm", "rootid"); echo $pgv_lang["rootid"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid", "qm", "rootid"); echo $pgv_lang["rootid"]; ?></td>
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
@@ -342,7 +342,7 @@ if ($action=="edituser") {
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin_help", "qm", "can_admin"); echo $pgv_lang["can_admin"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin", "qm", "can_admin"); echo $pgv_lang["can_admin"]; ?></td>
 	<?php
 	// Forms won't send the value of checkboxes if they are disabled :-(  Instead, create a hidden field
 	if ($user_id==PGV_USER_ID) {
@@ -359,7 +359,7 @@ if ($action=="edituser") {
 
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit_help", "qm", "can_edit"); echo $pgv_lang["can_edit"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit", "qm", "can_edit"); echo $pgv_lang["can_edit"]; ?></td>
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
@@ -387,16 +387,16 @@ if ($action=="edituser") {
 	</table>
 	</td>
 	</tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept_help", "qm", "user_auto_accept"); echo $pgv_lang["user_auto_accept"]; ?></td>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept", "qm", "user_auto_accept"); echo $pgv_lang["user_auto_accept"]; ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="new_auto_accept" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'auto_accept')=='Y') echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_relation_priv_help", "qm", "user_relationship_priv"); echo $pgv_lang["user_relationship_priv"]; ?></td>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_relation_priv", "qm", "user_relationship_priv"); echo $pgv_lang["user_relationship_priv"]; ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="new_relationship_privacy" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'relationship_privacy')=="Y") echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_path_length_help", "qm", "user_path_length"); echo $pgv_lang["user_path_length"]; ?></td>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_path_length", "qm", "user_path_length"); echo $pgv_lang["user_path_length"]; ?></td>
 	<td class="optionbox wrap"><input type="text" name="new_max_relation_path" tabindex="<?php echo ++$tab; ?>" value="<?php echo get_user_setting($user_id, 'max_relation_path'); ?>" size="5" /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_email_help", "qm", "emailadress"); echo $pgv_lang["emailadress"]; ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" dir="ltr" value="<?php echo get_user_setting($user_id, 'email'); ?>" size="50" /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verified_help", "qm", "verified"); echo $pgv_lang["verified"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin_help", "qm", "verified_by_admin"); echo $pgv_lang["verified_by_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified_by_admin')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_change_lang_help", "qm", "change_lang");echo $pgv_lang["change_lang"]; ?></td><td class="optionbox wrap" valign="top"><?php
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_email", "qm", "emailadress"); echo $pgv_lang["emailadress"]; ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" dir="ltr" value="<?php echo get_user_setting($user_id, 'email'); ?>" size="50" /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verified", "qm", "verified"); echo $pgv_lang["verified"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin", "qm", "verified_by_admin"); echo $pgv_lang["verified_by_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified_by_admin')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_change_lang", "qm", "change_lang");echo $pgv_lang["change_lang"]; ?></td><td class="optionbox wrap" valign="top"><?php
 	if ($ENABLE_MULTI_LANGUAGE) {
 		$tab++;
 		echo "<select name=\"user_language\" tabindex=\"", $tab, "\" dir=\"ltr\" style=\"{ font-size: 9pt; }\">";
@@ -414,7 +414,7 @@ if ($action=="edituser") {
 	<?php
 	if ($ALLOW_USER_THEMES) {
 		?>
-		<tr><td class="descriptionbox wrap" valign="top" align="left"><?php print_help_link("useradmin_user_theme_help", "qm", "user_theme"); echo $pgv_lang["user_theme"]; ?></td><td class="optionbox wrap" valign="top">
+		<tr><td class="descriptionbox wrap" valign="top" align="left"><?php print_help_link("useradmin_user_theme", "qm", "user_theme"); echo $pgv_lang["user_theme"]; ?></td><td class="optionbox wrap" valign="top">
 		<select name="user_theme" tabindex="<?php echo ++$tab; ?>" dir="ltr">
 		<option value=""><?php echo $pgv_lang["site_default"]; ?></option>
 		<?php
@@ -430,7 +430,7 @@ if ($action=="edituser") {
 	}
 	?>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_contact_help", "qm", "user_contact_method"); echo $pgv_lang["user_contact_method"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_contact", "qm", "user_contact_method"); echo $pgv_lang["user_contact_method"]; ?></td>
 	<td class="optionbox wrap"><select name="new_contact_method" tabindex="<?php echo ++$tab; ?>">
 	<?php
 	if ($PGV_STORE_MESSAGES) {
@@ -450,15 +450,15 @@ if ($action=="edituser") {
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline_help", "qm", "visibleonline"); echo $pgv_lang["visibleonline"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline", "qm", "visibleonline"); echo $pgv_lang["visibleonline"]; ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="visibleonline" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'visibleonline')=='Y') echo "checked=\"checked\""; ?> /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_editaccount_help", "qm", "editaccount"); echo $pgv_lang["editaccount"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_editaccount", "qm", "editaccount"); echo $pgv_lang["editaccount"]; ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="editaccount" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'editaccount')=='Y') echo "checked=\"checked\""; ?> /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab_help", "qm", "user_default_tab"); echo $pgv_lang["user_default_tab"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab", "qm", "user_default_tab"); echo $pgv_lang["user_default_tab"]; ?></td>
 	<td class="optionbox wrap"><select name="new_default_tab" tabindex="<?php echo ++$tab; ?>">
 	<?php
 	foreach ($ALL_DEFAULT_TABS as $key=>$value) {
@@ -473,11 +473,11 @@ if ($action=="edituser") {
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_help", "qm", "comment"); echo $pgv_lang["comment"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment", "qm", "comment"); echo $pgv_lang["comment"]; ?></td>
 	<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php echo ++$tab; ?>" ><?php $tmp = PrintReady(get_user_setting($user_id, 'comment')); echo $tmp; ?></textarea></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp_help", "qm", "comment_exp"); echo $pgv_lang["comment_exp"]; ?></td>
+	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp", "qm", "comment_exp"); echo $pgv_lang["comment_exp"]; ?></td>
 	<td class="optionbox wrap"><input type="text" name="new_comment_exp" id="new_comment_exp" tabindex="<?php echo ++$tab; ?>" value="<?php echo get_user_setting($user_id, 'comment_exp'); ?>" />&nbsp;&nbsp;<?php print_calendar_popup("new_comment_exp"); ?></td>
 	</tr>
 	<tr><td class="topbottombar" colspan="2">
@@ -758,12 +758,12 @@ if ($action == "createform") {
 	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["create_user"]; ?>" />
 	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo $pgv_lang["back"]; ?>" onclick="window.location='useradmin.php';"/>
 	</td></tr>
-		<tr><td class="descriptionbox wrap width20"><?php print_help_link("useradmin_username_help", "qm", "username"); echo $pgv_lang["username"]; ?></td><td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname_help", "qm", "firstname"); echo $pgv_lang["firstname"]; ?></td><td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname_help", "qm", "lastname"); echo $pgv_lang["lastname"]; ?></td><td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_password_help", "qm", "password"); echo $pgv_lang["password"]; ?></td><td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_conf_password_help", "qm", "confirm"); echo $pgv_lang["confirm"]; ?></td><td class="optionbox wrap"><input type="password" name="pass2" tabindex="<?php echo ++$tab; ?>" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_gedcomid_help", "qm", "gedcomid"); echo $pgv_lang["gedcomid"]; ?></td><td class="optionbox wrap">
+		<tr><td class="descriptionbox wrap width20"><?php print_help_link("useradmin_username", "qm", "username"); echo $pgv_lang["username"]; ?></td><td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname", "qm", "firstname"); echo $pgv_lang["firstname"]; ?></td><td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname", "qm", "lastname"); echo $pgv_lang["lastname"]; ?></td><td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_password", "qm", "password"); echo $pgv_lang["password"]; ?></td><td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_conf_password", "qm", "confirm"); echo $pgv_lang["confirm"]; ?></td><td class="optionbox wrap"><input type="password" name="pass2" tabindex="<?php echo ++$tab; ?>" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_gedcomid", "qm", "gedcomid"); echo $pgv_lang["gedcomid"]; ?></td><td class="optionbox wrap">
 
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
@@ -780,7 +780,7 @@ if ($action == "createform") {
 		?>
 		</table>
 		</td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid_help", "qm", "rootid"); echo $pgv_lang["rootid"]; ?></td><td class="optionbox wrap">
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid", "qm", "rootid"); echo $pgv_lang["rootid"]; ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
 		foreach ($all_gedcoms as $ged_id=>$ged_name) {
@@ -796,8 +796,8 @@ if ($action == "createform") {
 		echo "</table>";
 		?>
 		</td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin_help", "qm", "can_admin"); echo $pgv_lang["can_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit_help", "qm", "can_edit");echo $pgv_lang["can_edit"]; ?></td><td class="optionbox wrap">
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin", "qm", "can_admin"); echo $pgv_lang["can_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit", "qm", "can_edit");echo $pgv_lang["can_edit"]; ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
 		foreach ($all_gedcoms as $ged_id=>$ged_name) {
@@ -820,16 +820,16 @@ if ($action == "createform") {
 		?>
 		</table>
 		</td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept_help", "qm", "user_auto_accept");echo $pgv_lang["user_auto_accept"]; ?></td>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept", "qm", "user_auto_accept");echo $pgv_lang["user_auto_accept"]; ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="new_auto_accept" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_relation_priv_help", "qm", "user_relationship_priv");echo $pgv_lang["user_relationship_priv"]; ?></td>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_relation_priv", "qm", "user_relationship_priv");echo $pgv_lang["user_relationship_priv"]; ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="new_relationship_privacy" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_path_length_help", "qm", "user_path_length"); echo $pgv_lang["user_path_length"]; ?></td>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_path_length", "qm", "user_path_length"); echo $pgv_lang["user_path_length"]; ?></td>
 			<td class="optionbox wrap"><input type="text" name="new_max_relation_path" tabindex="<?php echo ++$tab; ?>" value="0" size="5" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_email_help", "qm", "emailadress"); echo $pgv_lang["emailadress"]; ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" value="" size="50" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verified_help", "qm", "verified"); echo $pgv_lang["verified"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin_help", "qm", "verified_by_admin"); echo $pgv_lang["verified_by_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_change_lang_help", "qm", "change_lang");echo $pgv_lang["change_lang"]; ?></td><td class="optionbox wrap" valign="top"><?php
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_email", "qm", "emailadress"); echo $pgv_lang["emailadress"]; ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" value="" size="50" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verified", "qm", "verified"); echo $pgv_lang["verified"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin", "qm", "verified_by_admin"); echo $pgv_lang["verified_by_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_change_lang", "qm", "change_lang");echo $pgv_lang["change_lang"]; ?></td><td class="optionbox wrap" valign="top"><?php
 
 		$user_lang = get_user_setting(PGV_USER_ID, 'language');
 		if ($ENABLE_MULTI_LANGUAGE) {
@@ -849,7 +849,7 @@ if ($action == "createform") {
 		else echo "&nbsp;";
 		?></td></tr>
 		<?php if ($ALLOW_USER_THEMES) { ?>
-			<tr><td class="descriptionbox wrap" valign="top" align="left"><?php print_help_link("useradmin_user_theme_help", "qm", "user_theme"); echo $pgv_lang["user_theme"]; ?></td><td class="optionbox wrap" valign="top">
+			<tr><td class="descriptionbox wrap" valign="top" align="left"><?php print_help_link("useradmin_user_theme", "qm", "user_theme"); echo $pgv_lang["user_theme"]; ?></td><td class="optionbox wrap" valign="top">
 			<select name="new_user_theme" tabindex="<?php echo ++$tab; ?>">
 			<option value="" selected="selected"><?php echo $pgv_lang["site_default"]; ?></option>
 			<?php
@@ -862,7 +862,7 @@ if ($action == "createform") {
 			</td></tr>
 		<?php } ?>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_contact_help", "qm", "user_contact_method"); echo $pgv_lang["user_contact_method"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_contact", "qm", "user_contact_method"); echo $pgv_lang["user_contact_method"]; ?></td>
 			<td class="optionbox wrap"><select name="new_contact_method" tabindex="<?php echo ++$tab; ?>">
 			<?php if ($PGV_STORE_MESSAGES) { ?>
 				<option value="messaging"><?php echo $pgv_lang["messaging"]; ?></option>
@@ -876,15 +876,15 @@ if ($action == "createform") {
 			</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline_help", "qm", "visibleonline"); echo $pgv_lang["visibleonline"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline", "qm", "visibleonline"); echo $pgv_lang["visibleonline"]; ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="visibleonline" tabindex="<?php echo ++$tab; ?>" value="Y" <?php echo "checked=\"checked\""; ?> /></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_editaccount_help", "qm", "editaccount"); echo $pgv_lang["editaccount"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_editaccount", "qm", "editaccount"); echo $pgv_lang["editaccount"]; ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="editaccount" tabindex="<?php echo ++$tab; ?>" value="Y" <?php echo "checked=\"checked\""; ?> /></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab_help", "qm", "user_default_tab"); echo $pgv_lang["user_default_tab"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab", "qm", "user_default_tab"); echo $pgv_lang["user_default_tab"]; ?></td>
 			<td class="optionbox wrap"><select name="new_default_tab" tabindex="<?php echo ++$tab; ?>">
 			<?php
 			foreach ($ALL_DEFAULT_TABS as $key=>$value) {
@@ -900,11 +900,11 @@ if ($action == "createform") {
 		</tr>
 		<?php if (PGV_USER_IS_ADMIN) { ?>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_help", "qm", "comment"); echo $pgv_lang["comment"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment", "qm", "comment"); echo $pgv_lang["comment"]; ?></td>
 			<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php echo ++$tab; ?>" ></textarea></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp_help", "qm", "comment_exp"); echo $pgv_lang["comment_exp"]; ?></td>
+			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp", "qm", "comment_exp"); echo $pgv_lang["comment_exp"]; ?></td>
 			<td class="optionbox wrap"><input type="text" name="new_comment_exp" tabindex="<?php echo ++$tab; ?>" id="new_comment_exp" />&nbsp;&nbsp;<?php print_calendar_popup("new_comment_exp"); ?></td>
 		</tr>
 		<?php } ?>

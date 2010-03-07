@@ -527,7 +527,7 @@ class IndividualControllerRoot extends BaseController {
 			echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">", $pgv_lang["edit_name"], "</a> | ";
 			echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", $pgv_lang["delete_name"], "</a>\n";
 			if ($this->name_count==2) {
-				print_help_link("delete_name_help", "qm");
+				print_help_link("delete_name", "qm");
 			}
 			echo "<br />\n";
 		}

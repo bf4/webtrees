@@ -115,7 +115,7 @@ function print_html_block_config($config) {
 	// Cache file life
 	if ($ctype=="gedcom") {
   	print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life_help", "qm");
+		print_help_link("cache_life", "qm");
 		print $pgv_lang["cache_life"];
 		print "</td><td class=\"optionbox\">";
 		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";

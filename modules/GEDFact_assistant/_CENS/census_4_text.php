@@ -54,7 +54,7 @@ function help_window2(frm)  {
 	<br /><br />
 	<span class="descriptionbox width15 nowrap <?php $TEXT_DIRECTION; ?>">
 		<?php
-			print_help_link("edit_SHARED_NOTE_help", "qm");
+			print_help_link("SHARED_NOTE", "qm");
 			echo $pgv_lang["shared_note"];
 		?>
 	</span>

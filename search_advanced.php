@@ -140,7 +140,7 @@ print_header($pgv_lang["advanced_search"]);
 <table id="field_table" class="list_table $TEXT_DIRECTION" width="35%" border="0">
 	<tr>
 		<td colspan="4" class="facts_label03" style="text-align:center; ">
-			<?php print $pgv_lang["advanced_search"]; print_help_link("advanced_search_help", "qm"); ?>
+			<?php print $pgv_lang["advanced_search"]; print_help_link("advanced_search", "qm"); ?>
 		</td>
 	</tr>
 	<!-- // search terms -->
