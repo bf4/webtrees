@@ -661,17 +661,19 @@ function print_fam_table($datalist, $legend="", $option="") {
 			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 			if (function_exists($func)) {
 				// Localise the _NMR facts
-				$func("_NMR", $family->getXref());
+				echo '<div>', i18n::translate($func("_NMR", $family->getXref())), '<a name="9999999"></a></div>';
+			} else {
+				echo '<div>', i18n::translate('_NMR'), '<a name="9999999"></a></div>';
 			}
-			echo '<div>', i18n::translate('_NMR'), '<a name="9999999"></a></div>';
 		} else if (get_sub_record(1, "1 _NMAR", $family->getGedcomRecord())) {
 			// Allow special processing for different languages
 			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 			if (function_exists($func)) {
 				// Localise the _NMR facts
-				$func("_NMAR", $family->getXref());
+				echo '<div>', i18n::translate($func("_NMAR", $family->getXref())), '<a name="9999999"></a></div>';
+			} else {
+				echo '<div>', i18n::translate('_NMAR'), '<a name="9999999"></a></div>';
 			}
-			echo '<div>', i18n::translate('_NMAR'), '<a name="9999999"></a></div>';
 		} else {
 			$factdetail = explode(' ', trim($family->getMarriageRecord()));
 			if (isset($factdetail)) {
