@@ -2427,9 +2427,14 @@ case '__BRTM_SIBL':
 	break;
 
 	//////////////////////////////////////////////////////////////////////////////
-	// This section contains an entry for every page.  It is used to provide a
-	// page title and "help about this page".
+	// This section contains an entry for every page.
+	// Some pages my use the title as the page title
 	//////////////////////////////////////////////////////////////////////////////
+
+case 'branches.php':
+	$title='';
+	$text='';
+	break;
 
 	//////////////////////////////////////////////////////////////////////////////
 	// This section contains an entry for every configuration item
@@ -3371,10 +3376,9 @@ case 'ZOOM_BOXES':
 	$text=i18n::translate('Allows a user to zoom boxes on charts to get more information.<br /><br />Set to <b>Disabled</b> to disable this feature.  Set to <b>On Mouse Over</b> to zoom boxes when the user mouses over the icon in the box.  Set to <b>On Mouse Click</b> to zoom boxes when the user clicks on the icon in the box.');
 	break;
 
-case 'accesskey_viewing_advice':
-	$title=i18n::translate('0');
-	$text=i18n::translate('Keyboard shortcuts are intended to help users who have difficulty with pointing devices such as a mouse.  Shortcut use differs according to your browser:<ul><li>Internet Explorer 5+: Hold down the ALT key while you strike the desired character, and then press ENTER.</li><li>Firefox 2+: Hold down the SHIFT and ALT key while you strike the desired character.  Do not press ENTER afterwards.</li><li>Firefox 1, 1.5 and Netscape 6+: Hold down the ALT key while you strike the desired character.  Do not press ENTER afterwards.</li><li>Opera: Hold down the SHIFT and ESC keys while you strike the desired character.  Do not press ENTER afterwards.</li><li>Internet Explorer 5+ for Mac / Safari 1.2+: Hold down the CTRL key while you strike the desired character.  Do not press ENTER afterwards.</li></ul><br />The following keyboard shortcuts are available: <ul><li>All Pages <ul><li><b>zero</b> - Information about keyboard shortcuts</li><li><b>one</b> - Welcome page</li><li><b>2</b> - Help Contents</li><li><b>3</b> - Help with this page</li><li><b>4</b> - Contact </li><li><b>C</b> - Skip to Content</li><li><b>S</b> - Search </li></ul></li><li>Individual Page<ul><li><b>I</b> - Show Personal Facts and Details tab</li><li><b>N</b> - Show Notes tab</li><li><b>O</b> - Show Sources tab</li><li><b>A</b> - Show Media tab</li><li><b>R</b> - Show Close Relatives tab</li><li><b>L</b> - Show Research Assistant tab</li><li><b>P</b> - Show individual\'s Pedigree Chart</li><li><b>D</b> - Show individual\'s Descendancy Chart</li><li><b>T</b> - Show individual\'s Timeline Chart</li><li><b>M</b> - Show individual\'s Relationship to me chart</li><li><b>G</b> - View GEDCOM Record</li></ul></li><li>Family Pages <ul><li><b>P</b> - Show couple on timeline chart tab</li><li><b>D</b> - Show children on timeline chart tab</li><li><b>T</b> - Show family on timeline chart tab</li><li><b>G</b> - View GEDCOM Record</li></ul></li></ul>');
-	break;
+	//////////////////////////////////////////////////////////////////////////////
+	// This section contains all the other help items.
+	//////////////////////////////////////////////////////////////////////////////
 
 case 'active':
 	$title=i18n::translate('Active');
