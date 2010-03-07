@@ -60,6 +60,7 @@ $PGV_IMAGES["indis"]["large"] = "indis.png";
 $PGV_IMAGES["media"]["large"] = "media.gif";
 $PGV_IMAGES["mygedview"]["large"] = "mygedview.png";
 $PGV_IMAGES["notes"]["large"] = "notes.gif";
+$PGV_IMAGES["other"]["large"] = "other.png";
 $PGV_IMAGES["pedigree"]["large"] = "pedigree.png";
 $PGV_IMAGES["reports"]["large"] = "reports.png";
 $PGV_IMAGES["repository"]["large"] = "repository.gif";
