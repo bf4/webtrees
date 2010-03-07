@@ -2,9 +2,9 @@
 /**
  * Show help text in a popup window.
  *
- * This file also serves as a database of gedcom fact descriptions, allowing
- * them to be discovered by xgettext, so we may use them dynamically in the
- * rest of the code.
+ * This file also serves as a database of fact and label descriptions,
+ * allowing them to be discovered by xgettext, so we may use them dynamically
+ * in the rest of the code.
  *
  * Copyright (C) 2010 Greg Roach
  *
@@ -28,6 +28,8 @@
 define('PGV_SCRIPT_NAME', 'help_text.php');
 require './config.php';
 
+// TODO: incorporate help_text_vars.php
+
 /* TODO: This block of code belongs somewhere else.  In print_help_link() perhaps?
 require PGV_ROOT.'includes/help_text_vars.php';
 if ($help=='help_useradmin.php' && $action=='edituser') {
@@ -49,28 +51,21 @@ if ($help=='help_contents_help') {
 }
 */
 
-// The help message-id falls into one of four categories
-//
-// <TAG>     where <TAG> is the name of a gedcom tag
-// <PAGE>    where <PAGE> is the name of a PHP script
-// <OPTION>  where <OPTION> is the name of a configuration option
-// <OTHER>   all other items with help
-//
-// Every tag, option and page should have an entry here.
-//
-// These are currently sorted alphabetically.  Maybe group them by the 4 categories above?
-
 $help=safe_GET('help');
 switch ($help) {
+	//////////////////////////////////////////////////////////////////////////////
+	// This is a list of all known gedcom tags.  We list them all here so that
+	// xgettext() may find them.
+	//
+	// Tags such as BIRT:PLAC are only used as labels, and do not require help
+	// text.  These are only used for translating labels.
+	//
+	// Tags such as _BIRT_CHIL are pseudo-tags, used to create family events.
+	//////////////////////////////////////////////////////////////////////////////
 case 'ABBR':
 	// I18N: This is the GEDCOM label for "Abbreviation"
 	$title=i18n::translate('ABBR');
 	$text=i18n::translate('Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, "this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62)."<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required.');
-	break;
-
-case 'ABBREVIATE_CHART_LABELS':
-	$title=i18n::translate('Abbreviate chart labels');
-	$text=i18n::translate('This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev["BIRT"]&nbsp;=&nbsp;"*";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character.');
 	break;
 
 case 'ADOP':
@@ -97,16 +92,6 @@ case 'ADR2':
 	$text='';
 	break;
 
-case 'ADVANCED_NAME_FACTS':
-	$title=i18n::translate('Advanced name facts');
-	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will be shown on the add/edit name form.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store names in several different alphabets.');
-	break;
-
-case 'ADVANCED_PLAC_FACTS':
-	$title=i18n::translate('Advanced place name facts');
-	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will be shown when you add or edit place names.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store place names in several different alphabets.');
-	break;
-
 case 'AFN':	
 	// I18N: This is the GEDCOM label for "Ancestral File Number (AFN)"
 	$title=i18n::translate('AFN');
@@ -129,26 +114,6 @@ case 'ALIA':
 	// I18N: This is the GEDCOM label for "Alias"
 	$title=i18n::translate('ALIA');
 	$text='';
-	break;
-
-case 'ALLOW_CHANGE_GEDCOM':
-	$title=i18n::translate('Allow GEDCOM switching');
-	$text=i18n::translate('If you have an environment with multiple GEDCOMs, setting this value to <b>Yes</b> allows your site visitors <u>and</u> users to have the option of changing GEDCOMs.  Setting it to <b>No</b> disables GEDCOM switching for both visitors <u>and</u> logged in users.');
-	break;
-
-case 'ALLOW_EDIT_GEDCOM':
-	$title=i18n::translate('Enable online editing');
-	$text=i18n::translate('This option enables online editing features for this database so that users with Edit privileges may update data online.');
-	break;
-
-case 'ALLOW_THEME_DROPDOWN':
-	$title=i18n::translate('Display theme dropdown selector for theme changes');
-	$text=i18n::translate('Gives users the option of selecting their own theme from a menu.<br /><br />Even with this option set, the theme currently in effect may not provide for such a menu.  To be effective, this option requires the <b>Allow users to select their own theme</b> option to be set as well.');
-	break;
-
-case 'ALLOW_USER_THEMES':
-	$title=i18n::translate('Allow users to select their own theme');
-	$text=i18n::translate('Gives users the option of selecting their own theme.');
 	break;
 
 case 'ANCE':	
@@ -179,11 +144,6 @@ case 'AUTH':
 	// I18N: This is the GEDCOM label for "Author"
 	$title=i18n::translate('AUTH');
 	$text='';
-	break;
-
-case 'AUTO_GENERATE_THUMBS':
-	$title=i18n::translate('Automatically generated thumbnails');
-	$text=i18n::translate('Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality.');
 	break;
 
 case 'BAPL':	
@@ -304,11 +264,6 @@ case 'BLOB':
 	$text='';
 	break;
 
-case 'BOM_detected':
-	$title=i18n::translate('A Byte Order Mark (BOM) was detected at the beginning of the file. On cleanup, this special code will be removed.');
-	$text=i18n::translate('The GEDCOM file you are importing has a special 3-byte code at the beginning.  This special code is used by some programs to indicate that the file has been recorded in the UTF-8 character set.<br /><br />Although this special code is not really an error, PhpGedView will not work properly when the input file contains the code.  You should let PhpGedView remove the code.');
-	break;
-
 case 'BURI':	
 	// I18N: This is the GEDCOM label for "Burial"
 	$title=i18n::translate('BURI');
@@ -333,11 +288,6 @@ case 'BURI:SOUR':
 	// I18N: This is the GEDCOM label for "Burial Source"
 	$title=i18n::translate('BURI:SOUR');
 	$text='';
-	break;
-
-case 'CALENDAR_FORMAT':
-	$title=i18n::translate('Calendar format');
-	$text=i18n::translate('Dates can be recorded in various calendars such as Gregorian, Julian, or the Jewish Calendar.  This option allows you to convert dates to a preferred calendar.  For example, you could select Gregorian to convert Julian and Hebrew dates to Gregorian.  The converted date is shown in parentheses after the regular date.<br /><br />Dates are only converted if they are valid for the calendar.  For example, only dates between 22&nbsp;SEP&nbsp;1792 and 31&nbsp;DEC&nbsp;1805 will be converted to the French Republican calendar and only dates after 15&nbsp;OCT&nbsp;1582 will be converted to the Gregorian calendar.<br /><br />Hebrew is the same as Jewish, but using Hebrew characters.  Arabic is the same as Hijri, but using Arabic characters.<br /><br />Note: Since the Jewish and Hijri calendar day starts at dusk, any event taking place from dusk till midnight will display as one day prior to the correct date.  The display of Hebrew and Arabic can be problematic in old browsers, which may display text backwards (left to right) or not at all.');
 	break;
 
 case 'CALN':	
@@ -376,35 +326,10 @@ case 'CHAN':
 	$text='';
 	break;
 
-case 'CHANGELOG_CREATE':
-	$title=i18n::translate('Archive ChangeLog files');
-	$text=i18n::translate('How often should the program archive Changelog files.');
-	break;
-
 case 'CHAR':	
 	// I18N: This is the GEDCOM label for "Character Set"
 	$title=i18n::translate('CHAR');
 	$text='';
-	break;
-
-case 'CHARACTER_SET':
-	$title=i18n::translate('Character Set encoding');
-	$text=i18n::translate('This is the character set of your GEDCOM file.  UTF-8 is the default and should work for almost all sites.  If you export your GEDCOM using IBM Windows encoding, you should put WINDOWS here.<br /><br />NOTE: PhpGedView can\'t support UNICODE (UTF-16) because the support is missing in PHP.');
-	break;
-
-case 'CHART_BOX_TAGS':
-	$title=i18n::translate('Other facts to show in charts');
-	$text=i18n::translate('This should be a comma or space separated list of facts, in addition to Birth and Death, that you want to appear in chart boxes such as the Pedigree chart.  This list requires you to use fact tags as defined in the GEDCOM 5.5.1 Standard.  For example, if you wanted the occupation to show up in the box, you would add "OCCU" to this field.');
-	break;
-
-case 'CHECK_CHILD_DATES':
-	$title=i18n::translate('Check child dates');
-	$text=i18n::translate('Check children\'s dates when determining whether a person is dead.  On older systems and large GEDCOMs this can slow down the response time of your site.');
-	break;
-
-case 'CHECK_MARRIAGE_RELATIONS':
-	$title=i18n::translate('Check marriage relations');
-	$text=i18n::translate('Check relationships that are related by marriage.');
 	break;
 
 case 'CHIL':	
@@ -463,26 +388,6 @@ case 'COMM':
 	$text='';
 	break;
 
-case 'COMMIT_COMMAND':
-	$title=i18n::translate('Version Control Commit Command');
-	$text=i18n::translate('If you wish to use a version control system such as CVS to archive changes to your GEDCOM file and your configuration or privacy settings, enter the command here.  Leave the box blank if you do not wish to use a version control system.  Valid options are <b>cvs</b> and <b>svn</b>.');
-	break;
-
-case 'COMMON_NAMES_ADD':
-	$title=i18n::translate('Names to add to Common Surnames (comma separated)');
-	$text=i18n::translate('If the number of times that a certain surname occurs is lower than the threshold, it will not appear in the list.  It can be added here manually.  If more than one surname is entered, they must be separated by a comma.  <b>Surnames are case-sensitive.</b>');
-	break;
-
-case 'COMMON_NAMES_REMOVE':
-	$title=i18n::translate('Names to remove from Common Surnames (comma separated)');
-	$text=i18n::translate('If you want to remove a surname from the Common Surname list without increasing the threshold value, you can do that by entering the surname here.  If more than one surname is entered, they must be separated by a comma. <b>Surnames are case-sensitive.</b>  Surnames entered here will also be removed from the Top-10 list on the Welcome page.');
-	break;
-
-case 'COMMON_NAMES_THRESHOLD':
-	$title=i18n::translate('Min. no. of occurrences to be a "Common Surname"');
-	$text=i18n::translate('This is the number of times that a surname must occur before it shows up in the Common Surname list on the Welcome page.');
-	break;
-
 case 'CONF':	
 	// I18N: This is the GEDCOM label for "Confirmation"
 	$title=i18n::translate('CONF');
@@ -511,16 +416,6 @@ case 'CONL':
 	// I18N: This is the GEDCOM label for "LDS Confirmation"
 	$title=i18n::translate('CONL');
 	$text='';
-	break;
-
-case 'CONTACT_EMAIL':
-	$title=i18n::translate('Genealogy contact');
-	$text=i18n::translate('The person to contact about the genealogical data on this site.');
-	break;
-
-case 'CONTACT_METHOD':
-	$title=i18n::translate('Contact method');
-	$text=i18n::translate('The method to be used to contact the Genealogy contact about genealogy questions.<ul><li>The <b>Mailto link</b> option will create a "mailto" link that can be clicked to send an email using the mail client on the user\'s PC.</li><li>The <b>PhpGedView internal messaging</b> option will use a messaging system internal to PhpGedView, and no emails will be sent.</li><li>The <b>Internal messaging with emails</b> option is the default.  It will use the PhpGedView messaging system and will also send copies of the messages via email.</li><li>The <b>PhpGedView sends emails with no storage</b> option allows PhpGedView to handle the messaging and will send the messages as emails, but will not store the messages internally.  This option is similar to the <b>Mailto link</b> option, except that the message will be sent by PhpGedView instead of the user\'s workstation.</li><li>The <b>No contact method</b> option results in your users having no way of contacting you.</li></ul>');
 	break;
 
 case 'COPR':	
@@ -565,46 +460,6 @@ case 'DATE':
 	$text='';
 	break;
 
-case 'DAYS_TO_SHOW_LIMIT':
-	$title=i18n::translate('Upcoming Events block day limit');
-	$text=i18n::translate('Enter the maximum number of days to show in Upcoming Events blocks.  This number cannot be greater than 30. If you enter a larger value, 30 will be used.<br /><br />The value you enter here determines how far ahead PhpGedView looks when searching for upcoming events.  The results of this search, done once daily, are copied into a temporary file.<br /><br />No Upcoming Events blocks on Index or Portal pages can request more days than this value.  The larger you make this, the longer it will take to build the daily database extract, and the longer it will take to display the block, even when you request to display a number of days less than this setting.');
-	break;
-
-case 'DBHOST':
-	$title=i18n::translate('Database Host');
-	$text=i18n::translate('The DNS or IP address of the computer hosting your database server.  This setting is ignored if you are using an SQLite database.');
-	break;
-
-case 'DBNAME':
-	$title=i18n::translate('Database Name');
-	$text=i18n::translate('The database in the server you want PhpGedView to use.<br /><br />The username you enter in the Database Username field must have Create, Insert, Update, Delete, and Select privileges on this database.  In SQLite you need to set this to a file name in a directory that is writable by PHP such as your index directory (index/phpgedview.db).');
-	break;
-
-case 'DBPASS':
-	$title=i18n::translate('Database Password');
-	$text=i18n::translate('The database password for the user you entered in the Database Username field.  This setting is ignored if you are using an SQLite database.');
-	break;
-
-case 'DBPORT':
-	$title=i18n::translate('Database Port');
-	$text=i18n::translate('The TCP Port that should be used when connecting to your database server.  Leave this setting blank to use the default port for your particular type of database.  This setting is ignored if you are using an SQLite database.');
-	break;
-
-case 'DBTYPE':
-	$title=i18n::translate('Database Type');
-	$text=i18n::translate('The type of database to connect to.<br /><br />PhpGedView can use any database that has a PDO driver available.  You need to ensure that your php.ini file loads both the <b>php_pdo</b> library and the appropriate driver for your database, e.g. <b>php_pdo_mysql</b>.<br /><br />Most databases require a username and password.  You also need to create the database before installing PhpGedView. However, SQLite does not need Database Host, Database Username, or Database Password, but you will need to set a file path for your database in the Database Name field.  PhpGedView will create the SQLite database file for you.');
-	break;
-
-case 'DBUSER':
-	$title=i18n::translate('Database Username');
-	$text=i18n::translate('The database username required to login to your database.  This setting is ignored if you are using an SQLite database.');
-	break;
-
-case 'DB_UTF8_COLLATION':
-	$title=i18n::translate('Use the database to provide UTF-8 collation');
-	$text=i18n::translate('Controls whether PhpGedView should use the database\'s built-in sorting and collation facilities.  It is generally quicker to use the database to sort and filter data rather than PHP, although not all databases/versions provide this feature.  The collation sequence used for each language is set in that language\'s settings page.<br /><br /><span class="warning">IMPORTANT: You should only set this value to YES if you do so BEFORE the database tables are created for the first time. Selecting it on an existing database could cause your data to become corrupted.</span><br /><br />MySQL and PostgreSQL both offer good support for UTF-8, although not all collation sequences are available in earlier versions of MySQL.  Other databases offer little or no support for UTF-8. If you are unsure of your database\'s support of UTF-8, you should set this value to <b>No</b>.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/UTF-8\' target=\'_blank\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about UTF-8.');
-	break;
-
 case 'DEAT':	
 	// I18N: This is the GEDCOM label for "Death"
 	$title=i18n::translate('DEAT');
@@ -631,11 +486,6 @@ case 'DEAT:SOUR':
 	$text='';
 	break;
 
-case 'DEFAULT_PEDIGREE_GENERATIONS':
-	$title=i18n::translate('Pedigree generations');
-	$text=i18n::translate('Set the default number of generations to display on Descendancy and Pedigree charts.');
-	break;
-
 case 'DESC':	
 	// I18N: This is the GEDCOM label for "Descendants"
 	$title=i18n::translate('DESC');
@@ -654,16 +504,6 @@ case 'DEST':
 	$text='';
 	break;
 
-case 'DISPLAY_JEWISH_GERESHAYIM':
-	$title=i18n::translate('Display Hebrew Gershayim');
-	$text=i18n::translate('Show single and double quotes when displaying Hebrew dates.<br /><br />Setting this to <b>Yes</b> will display February 8 1969 as <span lang=\'he-IL\' dir=\'rtl\'>&#1499;\'&#160;&#1513;&#1489;&#1496;&#160;&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm; while setting it to <b>No</b> will display it as <span lang=\'he-IL\' dir=\'rtl\'>&#1499;&#160;&#1513;&#1489;&#1496;&#160;&#1514;&#1513;&#1499;&#1496;</span>&lrm;.  This has no impact on the Jewish year setting since quotes are not used in Jewish dates displayed with Latin characters.<br /><br />Note: This setting is similar to the PHP 5.0 Calendar constants CAL_JEWISH_ADD_ALAFIM_GERESH and CAL_JEWISH_ADD_GERESHAYIM.  This single setting affects both.');
-	break;
-
-case 'DISPLAY_JEWISH_THOUSANDS':
-	$title=i18n::translate('Display Hebrew Thousands');
-	$text=i18n::translate('Show Alafim in Hebrew calendars.<br /><br />Setting this to <b>Yes</b> will display the year 1969 as <span lang="he-IL" dir=\'rtl\'>&#1492;\'&#160;&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm; while setting it to <b>No</b> will display the year as <span lang="he-IL" dir=\'rtl\'>&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm;.  This has no impact on the Jewish year setting.  The year will display as 5729 regardless of this setting.<br /><br />Note: This setting is similar to the PHP 5.0 Calendar constant CAL_JEWISH_ADD_ALAFIM.');
-	break;
-
 case 'DIV':	
 	// I18N: This is the GEDCOM label for "Divorce"
 	$title=i18n::translate('DIV');
@@ -680,11 +520,6 @@ case 'DSCR':
 	// I18N: This is the GEDCOM label for "Description"
 	$title=i18n::translate('DSCR');
 	$text='';
-	break;
-
-case 'EDIT_AUTOCLOSE':
-	$title=i18n::translate('Autoclose edit window');
-	$text=i18n::translate('This option controls whether or not to automatically close the Edit window after a successful update.');
 	break;
 
 case 'EDUC':	
@@ -709,41 +544,6 @@ case 'EMIG':
 	// I18N: This is the GEDCOM label for "Emigration"
 	$title=i18n::translate('EMIG');
 	$text='';
-	break;
-
-case 'ENABLE_AUTOCOMPLETE':
-	$title=i18n::translate('Enable Autocomplete');
-	$text=i18n::translate('This option determines whether Autocomplete should be active while information is being entered into certain fields on input forms.  When this option is set to <b>Yes</b>, text input fields for which Autocomplete is possible are indicated by a differently colored background.<br /><br />When Autocomplete is active, PhpGedView will search its database for possible matches according to what you have already entered.  As you enter more information, the list of possible matches is refined.  When you see the desired input in the list of matches, you can move the mouse cursor to that line of the list and then click the left mouse button to complete the input.<br /><br />The disadvantages of Autocomplete are that it slows the program, entails significant database activity, and also results in more data being sent to the browser.');
-	break;
-
-case 'ENABLE_CLIPPINGS_CART':
-	$title=i18n::translate('Enable Clippings Cart');
-	$text=i18n::translate('The clippings cart allows users to add people to a temporary file that they can download in GEDCOM format for subsequent import into their genealogy software.');
-	break;
-
-case 'ENABLE_MULTI_LANGUAGE':
-	$title=i18n::translate('Allow user to change language');
-	$text=i18n::translate('Set to <b>Yes</b> to allow users to override the site\'s default language.  They can do this through their browser\'s preferred language configuration, configuration options on their Account page, or through links or buttons on most PhpGedView pages.');
-	break;
-
-case 'ENABLE_RSS':
-	$title=i18n::translate('Enable RSS');
-	$text=i18n::translate('This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS\' target=\'_blank\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.');
-	break;
-
-case 'EXPAND_NOTES':
-	$title=i18n::translate('Automatically expand notes');
-	$text=i18n::translate('This option controls whether or not to automatically display content of a <i>Note</i> record on the Individual page.');
-	break;
-
-case 'EXPAND_RELATIVES_EVENTS':
-	$title=i18n::translate('Automatically expand list of events of close relatives');
-	$text=i18n::translate('This option controls whether or not to automatically expand the <i>Events of close relatives</i> list.');
-	break;
-
-case 'EXPAND_SOURCES':
-	$title=i18n::translate('Automatically expand sources');
-	$text=i18n::translate('This option controls whether or not to automatically display content of a <i>Source</i> record on the Individual page.');
 	break;
 
 case 'ENDL':	
@@ -792,26 +592,6 @@ case 'FAM':
 	// I18N: This is the GEDCOM label for "Family"
 	$title=i18n::translate('FAM');
 	$text='';
-	break;
-
-case 'FAM_FACTS_ADD':
-	$title=i18n::translate('Family Add Facts');
-	$text=i18n::translate('This is the list of GEDCOM facts that your users can add to families.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Family Facts</i> list.');
-	break;
-
-case 'FAM_FACTS_QUICK':
-	$title=i18n::translate('Quick Family Facts');
-	$text=i18n::translate('This is the short list of GEDCOM family facts that appears next to the full list and can be added with a single click.');
-	break;
-
-case 'FAM_FACTS_UNIQUE':
-	$title=i18n::translate('Unique Family Facts');
-	$text=i18n::translate('This is the list of GEDCOM facts that your users can only add <u>once</u> to families.  For example, if MARR is in this list, users will not be able to add more than one MARR record to a family.  Fact names that appear in this list must not also appear in the <i>Family Add Facts</i> list.');
-	break;
-
-case 'FAM_ID_PREFIX':
-	$title=i18n::translate('Family ID prefix');
-	$text=i18n::translate('When a new family record is added online in PhpGedView, a new ID for that family will be generated automatically. The family ID will have this prefix.');
 	break;
 
 case 'FAMC':	
@@ -982,11 +762,6 @@ case 'FAMS:SPOUSE:DEAT:PLAC':
 	$text='';
 	break;
 
-case 'FAVICON':
-	$title=i18n::translate('Favorites icon');
-	$text=i18n::translate('Change this to point to the icon you want to display in peoples\' favorites menu when they bookmark your site.');
-	break;
-
 case 'FAX':
 	// I18N: This is the GEDCOM label for "FAX"
 	$title=i18n::translate('FAX');
@@ -1035,26 +810,6 @@ case 'FORM':
 	$text=i18n::translate('This is an optional field that can be used to enter the file format of the multimedia object.  Some genealogy programs may look at this field to determine how to handle the item.  However, since media do not transfer across computer systems very well, this field is not very important.');
 	break;
 
-case 'FULL_SOURCES':
-	$title=i18n::translate('Use full source citations');
-	$text=i18n::translate('Source citations can include fields to record the quality of the data (primary, secondary, etc.) and the date the event was recorded in the source.  If you don\'t use these fields, you can disable them when creating new source citations.');
-	break;
-
-case 'GEDCOM_DEFAULT_TAB':
-	$title=i18n::translate('Default tab to show on Individual page');
-	$text=i18n::translate('This option allows you to choose which tab opens automatically on the Individual page when that page is accessed.');
-	break;
-
-case 'GEDCOM_ID_PREFIX':
-	$title=i18n::translate('Individual ID prefix');
-	$text=i18n::translate('When a new individual record is added online in PhpGedView, a new ID for that individual will be generated automatically. The individual ID will have this prefix.');
-	break;
-
-case 'GENERATE_GUID':
-	$title=i18n::translate('Automatically create globally unique IDs');
-	$text=i18n::translate('<b>GUID</b> in this context is an acronym for «Globally Unique ID».<br /><br />GUIDs are intended to help identify each individual in a manner that is repeatable, so that central organizations such as the Family History Center of the LDS Church in Salt Lake City, or even compatible programs running on your own server, can determine whether they are dealing with the same person no matter where the GEDCOM originates.  The goal of the Family History Center is to have a central repository of genealogical data and expose it through web services. This will enable any program to access the data and update their data within it.<br /><br />If you do not intend to share this GEDCOM with anyone else, you do not need to let PhpGedView create these GUIDs; however, doing so will do no harm other than increasing the size of your GEDCOM.');
-	break;
-
 case 'GIVN':
 	// I18N: This is the GEDCOM label for "Given Names"
 	$title=i18n::translate('GIVN');
@@ -1065,26 +820,6 @@ case 'GRAD':
 	// I18N: This is the GEDCOM label for "Graduation"
 	$title=i18n::translate('GRAD');
 	$text='';
-	break;
-
-case 'HIDE_GEDCOM_ERRORS':
-	$title=i18n::translate('Hide GEDCOM errors');
-	$text=i18n::translate('Setting this to <b>Yes</b> will hide error messages produced by PhpGedView when it doesn\'t understand a tag in your GEDCOM file.  PhpGedView makes every effort to conform to the GEDCOM 5.5.1 standard, but many genealogy software programs include their own custom tags.  See the <a href="readme.txt">readme.txt</a> file for more information.');
-	break;
-
-case 'HIDE_LIVE_PEOPLE':
-	$title=i18n::translate('Enable Privacy');
-	$text=i18n::translate('This option will enable all privacy settings and hide the details of living people.<br /><br />Living people are defined to be those who do not have an event more recent than the number of years specified in variable $MAX_ALIVE_AGE.  For this purpose, births of children are considered to be such events as well.');
-	break;
-
-case 'HOME_SITE_TEXT':
-	$title=i18n::translate('Main WebSite text');
-	$text=i18n::translate('The legend used to identify the link to your main Home page.');
-	break;
-
-case 'HOME_SITE_URL':
-	$title=i18n::translate('Main WebSite URL');
-	$text=i18n::translate('Each PhpGedView page includes a link to your main Home page.  The appearance of this link is controlled by the theme being used.  You enter the actual URL to your Home site here.');
 	break;
 
 case 'HUSB':	
@@ -1105,41 +840,6 @@ case 'IMMI':
 	$text='';
 	break;
 
-case 'INDEX_DIRECTORY':
-	$title=i18n::translate('Index file directory');
-	$text=i18n::translate('The path to a readable and writable directory where PhpGedView should store index files (include the trailing "/").  PhpGedView does not require this directory\'s name to be "index".  You can choose any name you like.<br /><br />For security, this directory should be placed somewhere in the server\'s file space that is not accessible from the Internet. An example of such a structure follows:<br /><b>PhpGedView:</b> dir1/dir2/dir3/PhpGedView<br /><b>Index:</b> dir1/dir4/dir5/dir6/index<br /><br />For the example shown, you would enter <b>../../dir4/dir5/dir6/index/</b> in this field.');
-	break;
-
-case 'INDI_FACTS_ADD':
-	$title=i18n::translate('Individual Add Facts');
-	$text=i18n::translate('This is the list of GEDCOM facts that your users can add to individuals.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Individual Facts</i> list.');
-	break;
-
-case 'INDI_FACTS_QUICK':
-	$title=i18n::translate('Quick Individual Facts');
-	$text=i18n::translate('This is the short list of GEDCOM individual facts that appears next to the full list and can be added with a single click.');
-	break;
-
-case 'INDI_FACTS_UNIQUE':
-	$title=i18n::translate('Unique Individual Facts');
-	$text=i18n::translate('This is the list of GEDCOM facts that your users can only add <u>once</u> to individuals.  For example, if BIRT is in this list, users will not be able to add more than one BIRT record to an individual.  Fact names that appear in this list must not also appear in the <i>Individual Add Facts</i> list.');
-	break;
-
-case 'JEWISH_ASHKENAZ_PRONUNCIATION':
-	$title=i18n::translate('Jewish Ashkenaz pronunciation');
-	$text=i18n::translate('Use Jewish Ashkenazi pronunciations.<br /><br />When set to <b>Yes</b> the months Cheshvan and Teves will be spelled with Ashkenazi pronunciation.  Setting it to <b>No</b> will change the months to Hesvan and Tevet.  This only affects the Jewish setting.  The Hebrew setting will always use the Hebrew alphabet.');
-	break;
-
-case 'LANGUAGE':
-	$title=i18n::translate('Language');
-	$text=i18n::translate('Assign the default language for the site.<br /><br />When the <b>Allow user to change language</b> option is set, users can override this setting through their browser\'s preferred language configuration, configuration options on their Account page, or through links or buttons on most PhpGedView pages.');
-	break;
-
-case 'LANG_SELECTION':
-	$title=i18n::translate('Supported languages');
-	$text=i18n::translate('You can change the list of languages supported by your PhpGedView site by adding or removing checkmarks as appropriate.  This changes the language choices available to your users.<br /><br />You can achieve the same thing through the <b>Configure supported languages</b> link on the Admin menu, where you can also change things such as the language\'s flag icon, the date format, or whether the surname should always be printed first.');
-	break;
-
 case 'LATI':	
 	// I18N: This is the GEDCOM label for "Latitude"
 	$title=i18n::translate('LATI');
@@ -1150,21 +850,6 @@ case 'LEGA':
 	// I18N: This is the GEDCOM label for "Legatee"
 	$title=i18n::translate('LEGA');
 	$text='';
-	break;
-
-case 'LINK_ICONS':
-	$title=i18n::translate('PopUp links on charts');
-	$text=i18n::translate('Allows the user to select links to other charts and close relatives of the person.<br /><br />Set to <b>Disabled</b> to disable this feature.  Set to <b>On Mouse Over</b> to popup the links when the user mouses over the icon in the box.  Set to <b>On Mouse Click</b> to popup the links when the user clicks on the icon in the box.');
-	break;
-
-case 'LOGFILE_CREATE':
-	$title=i18n::translate('Archive log files');
-	$text=i18n::translate('How often should the program archive log files.');
-	break;
-
-case 'LOGIN_URL':
-	$title=i18n::translate('Login URL');
-	$text=i18n::translate('You only need to enter a Login URL if you want to redirect to a different site or location when your users login.  This is very useful if you need to switch from http to https when your users login.  Include the full URL to <i>login.php</i>.  For example, https://www.yourserver.com/phpgedview/login.php .');
 	break;
 
 case 'LONG':	
@@ -1271,125 +956,10 @@ case 'MARS':
 	$text='';
 	break;
 
-case 'MAX_ALIVE_AGE':
-	$title=i18n::translate('Age at which to assume a person is dead');
-	$text=i18n::translate('If this person has any events other than Death, Burial, or Cremation more recent than this number of years, he is considered to be "alive".  Children\'s birth dates are considered to be such events for this purpose.');
-	break;
-
-case 'MAX_DESCENDANCY_GENERATIONS':
-	$title=i18n::translate('Maximum Descendancy generations');
-	$text=i18n::translate('Set the maximum number of generations to display on Descendancy charts.');
-	break;
-
-case 'MAX_PEDIGREE_GENERATIONS':
-	$title=i18n::translate('Maximum Pedigree generations');
-	$text=i18n::translate('Set the maximum number of generations to display on Pedigree charts.');
-	break;
-
-case 'MAX_RELATION_PATH_LENGTH':
-	$title=i18n::translate('Max. relation path length');
-	$text=i18n::translate('If the <i>Use relationship privacy</i> option is enabled, logged-in users will only be able to see or edit individuals within this number of relationship steps.<br /><br />This option sets the default for all users who have access to this genealogical database.  The Administrator can override this option for individual users by editing the user\'s account details.');
-	break;
-
-case 'MAX_VIEW_RATE':
-	$title=i18n::translate('Maximum page view rate');
-	$text=i18n::translate('This option limits the rate at which a user can view pages.<br /><br />If that rate is exceeded, PhpGedView treats the session as a hacking attempt;  the session will be terminated with a suitable message.  These two values should place a reasonable limit on the amount of bandwith and downloaded bytes from the server.  This feature can be switched off by setting the time interval to 0.');
-	break;
-
 case 'MEDI':	
 	// I18N: This is the GEDCOM label for "Media Type"
 	$title=i18n::translate('MEDI');
 	$text='';
-	break;
-
-case 'MEDIA_DIRECTORY_LEVELS':
-	$title=i18n::translate('Multi-Media directory levels to keep');
-	$text=i18n::translate('A value of 0 will ignore all directories in the file path for the media object.  A value of 1 will retain the first directory containing this image.  Increasing the numbers increases number of parent directories to retain in the path.<br /><br />For example, if you link an image in your GEDCOM with a path like <b>C:\Documents&nbsp;and&nbsp;Settings\User\My&nbsp;Documents\My&nbsp;Pictures\Genealogy\Surname&nbsp;Line\grandpa.jpg</b>, a value of 0 will translate this path to <b>./media/grandpa.jpg</b>.  A value of 1 will translate this to <b>./media/Surname&nbsp;Line/grandpa.jpg</b>, etc.  Most people will only need to use a 0.  However, it is possible that some media objects kept in different directories have identical names and would overwrite each other when this option is set to 0.  Non-zero settings allow you to keep some organization in your media thereby preventing name collisions.');
-	break;
-
-case 'MEDIA_DIRECTORY':
-	$title=i18n::translate('MultiMedia directory');
-	$text=i18n::translate('The path to a readable and writable directory where PhpGedView should store media files (include the trailing "/").  PhpGedView does not require this directory\'s name to be "media".  You can choose any name you like.<br /><br />Even though the Media Firewall feature lets you store media files in an area of the server\'s file space that is not accessible from the Internet, the directory named here must still exist and must be readable from the Internet and writable by PhpGedView.  For more information, please refer to the Media Firewall configuration options in the Multimedia section of the GEDCOM configuration page.');
-	break;
-
-case 'MEDIA_EXTERNAL':
-	$title=i18n::translate('Keep links');
-	$text=i18n::translate('When a multimedia link is found starting with for example http://, ftp://, mms:// it will not be altered when set to <b>Yes</b>. For example, http://www.myfamily.com/photo/dad.jpg will stay http://www.myfamily.com/photo/dad.jpg.  When set to <b>No</b>, the link will be handled as a standard reference and the media depth will be used.  For example: http://www.myfamily.com/photo/dad.jpg will be changed to ./media/dad.jpg');
-	break;
-
-case 'MEDIA_FIREWALL_ROOTDIR':
-	$title=i18n::translate('Media Firewall Root Directory');
-	$text=i18n::translate('Directory in which the protected Media directory can be created.  When this field is empty, the <b>#GLOBALS[INDEX_DIRECTORY]#</b> directory will be used.');
-	break;
-
-case 'MEDIA_FIREWALL_THUMBS':
-	$title=i18n::translate('Protect Thumbnails of Protected Images');
-	$text=i18n::translate('When an image is in the protected Media directory, should its thumbnail be protected as well?');
-	break;
-
-case 'MEDIA_ID_PREFIX':
-	$title=i18n::translate('Media ID prefix');
-	$text=i18n::translate('When a new media record is added online in PhpGedView, a new ID for that media will be generated automatically. The media ID will have this prefix.');
-	break;
-
-case 'META_AUDIENCE':
-	$title=i18n::translate('Audience META tag');
-	$text=i18n::translate('The value to place in the Audience meta tag in the HTML page header.');
-	break;
-
-case 'META_AUTHOR':
-	$title=i18n::translate('Author META tag');
-	$text=i18n::translate('The value to place in the Author meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact.');
-	break;
-
-case 'META_COPYRIGHT':
-	$title=i18n::translate('Copyright META tag');
-	$text=i18n::translate('The value to place in the Copyright meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact.');
-	break;
-
-case 'META_DESCRIPTION':
-	$title=i18n::translate('Description META tag');
-	$text=i18n::translate('The value to place in the Description meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database.');
-	break;
-
-case 'META_KEYWORDS':
-	$title=i18n::translate('Keywords META tag');
-	$text=i18n::translate('The value to place in the Keywords meta tag in the HTML page header.  Some search engines will use the Keywords meta tag to help index your page.<br /><br />The Most Common Surnames list that appears in the GEDCOM Statistics block on your Welcome page can also be added to anything you enter here.');
-	break;
-
-case 'META_PAGE_TOPIC':
-	$title=i18n::translate('Page-topic META tag');
-	$text=i18n::translate('The value to place in the Page-topic meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database.');
-	break;
-
-case 'META_PAGE_TYPE':
-	$title=i18n::translate('Page-type META tag');
-	$text=i18n::translate('The value to place in the Page-type meta tag in the HTML page header.');
-	break;
-
-case 'META_PUBLISHER':
-	$title=i18n::translate('Publisher META tag');
-	$text=i18n::translate('The value to place in the Publisher meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact.');
-	break;
-
-case 'META_REVISIT':
-	$title=i18n::translate('How often should crawlers revisit META tag');
-	$text=i18n::translate('The value to place in the Revisit meta tag in the HTML page header.  Some web crawlers ignore this value.');
-	break;
-
-case 'META_ROBOTS':
-	$title=i18n::translate('Robots META tag');
-	$text=i18n::translate('The value to place in the Robots meta tag in the HTML page header.  Some robots or web crawlers ignore this value.');
-	break;
-
-case 'META_TITLE':
-	$title=i18n::translate('Add to TITLE header tag');
-	$text=i18n::translate('Anything on this line will be added to the TITLE tag in the HTML page header after the regular page title and before the PhpGedView credit.');
-	break;
-
-case 'MULTI_MEDIA':
-	$title=i18n::translate('Enable multimedia features');
-	$text=i18n::translate('GEDCOM 5.5.1 allows you to link pictures, videos, and other multimedia objects into your GEDCOM.  If you do not include multimedia objects in your GEDCOM, you can disable the multimedia features by setting this value to <b>No</b>.<br /><br />See the Multimedia section in the <a href="readme.txt">readme.txt</a> file for more information about including media in your site.');
 	break;
 
 case 'NAME':
@@ -1494,115 +1064,10 @@ case 'PAGE':
 	$text=i18n::translate('In the Citation Details field you would enter the page number or other information that might help someone find the information in the source.');
 	break;
 
-case 'PAGE_AFTER_LOGIN':
-	$title=i18n::translate('Page to show after Login');
-	$text=i18n::translate('Which page should users see after they have logged in?<br /><br />The choice made here determines whether a successful Login causes the Welcome or the MyGedView page to appear when the login is done from the Welcome page.<br /><br />A Login done from the link at the top of every other page will return the user to that page.');
-	break;
-
 case 'PEDI':
 	// I18N: This is the GEDCOM label for "Pedigree"
 	$title=i18n::translate('PEDI');
 	$text=i18n::translate('This field describes the relationship of the child to its family.  The possibilities are:<ul><li><b>unknown</b>&nbsp;&nbsp;&nbsp;The child\'s relationship to its family cannot be determined.  When this option is selected, the Pedigree field will not be copied into the database.<br /><br /></li><li><b>Birth</b>&nbsp;&nbsp;&nbsp;This option indicates that the child is related to its family by birth.<br /><br /></li><li><b>Adopted</b>&nbsp;&nbsp;&nbsp;This option indicates that the child was adopted by its family.  This does <i>not</i> indicate that there is no blood relationship between the child and its family; it shows that the child was adopted by the family in question sometime after the child\'s birth.<br /><br /></li><li><b>Foster</b>&nbsp;&nbsp;&nbsp;This option indicates that the child is a foster child of the family.  Usually, there is no blood relationship between the child and its family.<br /><br /></li><li><b>Sealing</b>&nbsp;&nbsp;&nbsp;The child was sealed to its family in an LDS <i>sealing</i> ceremony.  A child sealing is performed when the parents were sealed to each other after the birth of the child.  Children born after the parents\' sealing are automatically sealed to the family.<br /><br /></li></ul>');
-	break;
-
-case 'PEDIGREE_FULL_DETAILS':
-	$title=i18n::translate('Show Birth and Death details on charts');
-	$text=i18n::translate('This option controls whether or not to show the Birth and Death details of an individual on charts.');
-	break;
-
-case 'PEDIGREE_GENERATIONS':
-	$title=i18n::translate('PEDIGREE_GENERATIONS');
-	$text=i18n::translate('Here you can set the number of generations to display on this page.<br /><br />The right number for you depends of the size of your screen and whether you show details or not.  Processing time will increase as you increase the number of generations.');
-	break;
-
-case 'PEDIGREE_LAYOUT':
-	$title=i18n::translate('Default Pedigree chart layout');
-	$text=i18n::translate('This option indicates whether the Pedigree chart should be generated in landscape or portrait mode.');
-	break;
-
-case 'PEDIGREE_ROOT_ID':
-	$title=i18n::translate('Default person for Pedigree and Descendancy charts');
-	$text=i18n::translate('Set the ID of the default person to display on Pedigree and Descendancy charts.');
-	break;
-
-case 'PEDIGREE_SHOW_GENDER':
-	$title=i18n::translate('Show gender icon on charts');
-	$text=i18n::translate('This option controls whether or not to show the individual\'s gender icon on charts.<br /><br />Since the gender is also indicated by the color of the box, this option doesn\'t conceal the gender. The option simply removes some duplicate information from the box.');
-	break;
-
-case 'PGV_MEMORY_LIMIT':
-	$title=i18n::translate('Memory limit');
-	$text=i18n::translate('The maximum amount of memory that can be consumed by PhpGedView scripts.  The default is 32 Mb.  Many hosts disable this option in their PHP configuration; changing this value may not actually affect the current maximum memory setting.');
-	break;
-
-case 'PGV_SESSION_SAVE_PATH':
-	$title=i18n::translate('Session save path');
-	$text=i18n::translate('The path to store PhpGedView session files.<br /><br />Some hosts do not have PHP configured properly and sessions are not maintained between page requests.  This option lets site administrators overcome that problem by saving files in one of their local directories.  The ./index/ directory is a good choice if you need to change this.  The default is to leave the field empty, which will use the Save path as configured in <i>php.ini</i>.');
-	break;
-
-case 'PGV_SESSION_TIME':
-	$title=i18n::translate('Session timeout');
-	$text=i18n::translate('The time in seconds that a PhpGedView session remains active before requiring a login.  The default is 7200, which is 2 hours.');
-	break;
-
-case 'PGV_SIMPLE_MAIL':
-	$title=i18n::translate('Use simple mail headers in external mails');
-	$text=i18n::translate('In normal mail headers for external mails, the email address as well as the name are used. Some mail systems will not accept this. When set to <b>Yes</b>, only the email address will be used.');
-	break;
-
-case 'PGV_SMTP_ACTIVE':
-	$title=i18n::translate('Use SMTP to send external mails');
-	$text=i18n::translate('Use SMTP to send e-mails from PhpGedView.<br /><br />This option requires access to an SMTP mail server.  When set to <b>No</b> PhpGedView will use the e-mail system built into PHP on this server.');
-	break;
-
-case 'PGV_SMTP_AUTH_PASS':
-	$title=i18n::translate('Password');
-	$text=i18n::translate('The password required for authentication with the SMTP server.');
-	break;
-
-case 'PGV_SMTP_AUTH_USER':
-	$title=i18n::translate('User name');
-	$text=i18n::translate('The user name required for authentication with the SMTP server.');
-	break;
-
-case 'PGV_SMTP_AUTH':
-	$title=i18n::translate('Use name and password');
-	$text=i18n::translate('Use name and password authentication to connect to the SMTP server.<br /><br />Some SMTP servers require all connections to be authenticated before they will accept outbound e-mails.');
-	break;
-
-case 'PGV_SMTP_FROM_NAME':
-	$title=i18n::translate('Sender name');
-	$text=i18n::translate('Enter the name to be used in the &laquo;From:&raquo; field of e-mails originating at this site.<br /><br />For example, if your name is <b>John Smith</b> and you are the site administrator for a site that is  known as <b>Jones Genealogy</b>, you could enter something like <b>John Smith</b> or <b>Jones Genealogy</b> or even <b>John Smith, Administrator: Jones Genealogy</b>.  You may enter whatever you wish, but HTML is not permitted.');
-	break;
-
-case 'PGV_SMTP_HELO':
-	$title=i18n::translate('Sending domain name');
-	$text=i18n::translate('This is the domain part of a valid e-mail address on the SMTP server.<br /><br />For example, if you have an e-mail account such as <b>yourname@abc.xyz.com</b>, you would enter <b>abc.xyz.com</b> here.');
-	break;
-
-case 'PGV_SMTP_HOST':
-	$title=i18n::translate('Outgoing server (SMTP) name');
-	$text=i18n::translate('This is the name of the SMTP mail server.  Example: <b>smtp.foo.bar.com</b>.<br /><br />Configuration values for some e-mail providers:<br /><br /><b>Gmail<br /></b><br /><b>Outgoing server (SMTP) name:</b> smtp.gmail.com<br /><b>SMTP Port:</b> 465 or 587<br /><b>Secure connection:</b> SSL<br /><br /><b>Hotmail<br /></b><br /><b>Outgoing server (SMTP) name:</b> smtp.live.com<br /><b>SMTP Port:</b> 25 or 587<br /><b>Secure connection:</b> TLS<br /><br /><b>Yahoo Mail Plus (currently a paid service)<br /></b><br /><b>Outgoing server (SMTP) name:</b> smtp.mail.yahoo.com<br /><b>SMTP Port:</b> 25');
-	break;
-
-case 'PGV_SMTP_PORT':
-	$title=i18n::translate('SMTP Port');
-	$text=i18n::translate('The port number to be used for connections to the SMTP server.  Generally, this is port <b>25</b>.');
-	break;
-
-case 'PGV_SMTP_SSL':
-	$title=i18n::translate('Secure connection');
-	$text=i18n::translate('Transport Layer Security (TLS) and Secure Sockets Layer (SSL) are Internet data encryption protocols.<br /><br />TLS 1.0, 1.1 and 1.2 are standardized developments of SSL 3.0. TLS 1.0 and SSL 3.1 are equivalent. Further work on SSL is now done under the new name, TLS.<br /><br />If your SMTP Server requires the SSL protocol during login, you should select the <b>SSL</b> option. If your SMTP Server requires the TLS protocol during login, you should select the <b>TLS</b> option.');
-	break;
-
-case 'PGV_STORE_MESSAGES':
-	$title=i18n::translate('Allow messages to be stored online');
-	$text=i18n::translate('Specifies whether messages sent through PhpGedView can be stored in the database.  If set to <b>Yes</b> users will be able to retrieve their messages when they login to PhpGedView.  If set to <b>No</b> messages will only be emailed.');
-	break;
-
-case 'PHPGEDVIEW_EMAIL':
-	$title=i18n::translate('PhpGedView reply address');
-	$text=i18n::translate('E-mail address to be used in the &laquo;From:&raquo; field of e-mails that PhpGedView creates automatically.<br /><br />PhpGedView can automatically create e-mails to notify administrators of changes that need to be reviewed.  PhpGedView also sends notification e-mails to users who have requested an account.<br /><br />Usually, the &laquo;From:&raquo; field of these automatically created e-mails is something like <i>From: phpgedview-noreply@yoursite</i> to show that no response to the e-mail is required.  To guard against spam or other e-mail abuse, some e-mail systems require each message\'s &laquo;From:&raquo; field to reflect a valid e-mail account and will not accept messages that are apparently from account <i>phpgedview-noreply</i>.');
 	break;
 
 case 'PHON':
@@ -1641,26 +1106,6 @@ case 'POST':
 	$text='';
 	break;
 
-case 'POSTAL_CODE':
-	$title=i18n::translate('Postal Code position');
-	$text=i18n::translate('Different countries use different ways to write the address. This option will enable you to place the postal code either before or after the city name.');
-	break;
-
-case 'PREFER_LEVEL2_SOURCES':
-	$title=i18n::translate('Source type');
-	$text=i18n::translate('When adding new close relatives, you can add source citations to the records (e.g. INDI, FAM) or the facts (BIRT, MARR, DEAT).  This option controls which checkboxes are ticked by default.');
-	break;
-
-case 'PRIVACY_BY_RESN':
-	$title=i18n::translate('Use GEDCOM (RESN) Privacy restriction');
-	$text=i18n::translate('The GEDCOM 5.5.1 specification includes the option of using RESN tags to set Privacy options for people and facts in the GEDCOM file.  Enabling this option will tell the program to look for level 1 RESN tags in GEDCOM records.  Level 2+ RESN tags are automatically applied and will not be affected by this setting.  Note that this might slow down some of the functions of PhpGedView such as the Individual list.');
-	break;
-
-case 'PRIVACY_BY_YEAR':
-	$title=i18n::translate('Limit Privacy by age of event');
-	$text=i18n::translate('The <b>Limit Privacy by age of event</b> setting will hide the details of people based on how old they were at specific events regardless of whether they are dead or alive.<br /><br />Use this setting along with the <b>Age at which to assume a person is dead</b> setting.  For example, if you made the Age setting 100 and set this option to <b>Yes</b>, all persons, alive or dead, born less than 100 years ago would be set to private.  People who were married less than 85 years ago and people who died less than 75 years ago would also be marked as private.  Please note that using this option will slow down your performance somewhat.');
-	break;
-
 case 'PROB':	
 	// I18N: This is the GEDCOM label for "Probate"
 	$title=i18n::translate('PROB');
@@ -1685,16 +1130,6 @@ case 'QUAY':
 	$text=i18n::translate('You would use this field to record the quality or reliability of the data found in this source.  Many genealogy applications use a number in the field. <b>3</b> might mean that the data is a primary source, <b>2</b> might mean that it was a secondary source, <b>1</b> might mean the information is questionable, and <b>0</b> might mean that the source is unreliable.');
 	break;
 
-case 'QUICK_REQUIRED_FACTS':
-	$title=i18n::translate('Facts to always show on Quick Update');
-	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will always be shown on the Quick Update form whether or not they already exist in the individual\'s record.  For example, if BIRT is in the list, fields for birth date and birth place will always be shown on the form.');
-	break;
-
-case 'QUICK_REQUIRED_FAMFACTS':
-	$title=i18n::translate('Facts for families to always show on Quick Update');
-	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will always be shown on the Family tabs of the Quick Update form whether or not they already exist in the family\'s record.  For example, if MARR is in the list, then fields for marriage date and marriage place will always be shown on the form.');
-	break;
-
 case 'REFN':	
 	// I18N: This is the GEDCOM label for "Reference Number"
 	$title=i18n::translate('REFN');
@@ -1717,36 +1152,6 @@ case 'REPO':
 	// I18N: This is the GEDCOM label for "Repository"
 	$title=i18n::translate('REPO');
 	$text='';
-	break;
-
-case 'REPO_FACTS_ADD':
-	$title=i18n::translate('Repository Add Facts');
-	$text=i18n::translate('This is the list of GEDCOM facts that your users can add to repositories.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Repository Facts</i> list.');
-	break;
-
-case 'REPO_FACTS_QUICK':
-	$title=i18n::translate('Quick Repository Facts');
-	$text=i18n::translate('This is the short list of GEDCOM repository facts that appears next to the full list and can be added with a single click.');
-	break;
-
-case 'REPO_FACTS_UNIQUE':
-	$title=i18n::translate('Unique Repository Facts');
-	$text=i18n::translate('This is the list of GEDCOM facts that your users can only add <u>once</u> to repositories.  For example, if NAME is in this list, users will not be able to add more than one NAME record to a repository.  Fact names that appear in this list must not also appear in the <i>Repository Add Facts</i> list.');
-	break;
-
-case 'REPO_ID_PREFIX':
-	$title=i18n::translate('Repository ID prefix');
-	$text=i18n::translate('When a new repository record is added online in PhpGedView, a new ID for that repository will be generated automatically. The repository ID will have this prefix.');
-	break;
-
-case 'REQUIRE_ADMIN_AUTH_REGISTRATION':
-	$title=i18n::translate('Require an administrator to approve new user registrations');
-	$text=i18n::translate('If the option <b>Allow visitors to request account registration</b> is enabled this setting controls whether the admin must approve the registration.<br /><br />Setting this to <b>Yes</b> will require that all new users first verify themselves and then be approved by an admin before they can login.  With this setting on <b>No</b>, the <b>User approved by Admin</b> checkbox will be checked automatically when users verify their account, thus allowing an immediate login afterwards without admin intervention.');
-	break;
-
-case 'REQUIRE_AUTHENTICATION':
-	$title=i18n::translate('Require visitor authentication');
-	$text=i18n::translate('Enabling this option will force all visitors to login before they can view any data on the site.');
 	break;
 
 case 'RESI':	
@@ -1791,40 +1196,10 @@ case 'ROMN':
 	$text=i18n::translate('In many cultures it is customary to have a traditional name spelled in the traditional characters and also a romanized version of the name as it would be spelled or pronounced in languages based on the Latin alphabet, such as English.<br /><br />If you prefer to use a non-Latin alphabet such as Hebrew, Greek, Russian, Chinese, or Arabic to enter the name in the standard name fields, then you can use this field to enter the same name using the Latin alphabet.  Both versions of the name will appear in lists and charts.<br /><br />Although this field is labelled "Romanized", it is not restricted to containing only characters based on the Latin alphabet.  This might be of use with Japanese names, where three different alphabets may occur.');
 	break;
 
-case 'RSS_FORMAT':
-	$title=i18n::translate('RSS Format');
-	$text=i18n::translate('The format to be used as the default feed format for the site. The numeric suffixes <u>do not</u> indicate version: they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS\' target=\'_blank\'title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.');
-	break;
-
-case 'SAVE_WATERMARK_IMAGE':
-	$title=i18n::translate('Store watermarked full size images on server?');
-	$text=i18n::translate('If the Media Firewall is enabled, should copies of watermarked full size images be stored on the server in addition to the same images without watermarks?<br /><br />When set to <b>Yes</b>, full-sized watermarked images will be produced more quickly at the expense of higher server disk space requirements.');
-	break;
-
-case 'SAVE_WATERMARK_THUMB':
-	$title=i18n::translate('Store watermarked thumbnails on server?');
-	$text=i18n::translate('If the Media Firewall is enabled, should copies of watermarked thumbnails be stored on the server in addition to the same thumbnails without watermarks?<br /><br />When set to <b>Yes</b>, media lists containing watermarked thumbnails will be produced more quickly at the expense of higher server disk space requirements.');
-	break;
-
-case 'SEARCHLOG_CREATE':
-	$title=i18n::translate('Archive SearchLog files');
-	$text=i18n::translate('How often should the program archive Searchlog files.');
-	break;
-
-case 'SECURITY_CHECK_GEDCOM_DOWNLOADABLE':
-	$title=i18n::translate('Check if GEDCOM files are downloadable');
-	$text=i18n::translate('For security reasons, GEDCOM files should not be in a location where they can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOM files can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded.');
-	break;
-
 case 'SERV':	
 	// I18N: This is the GEDCOM label for "Remote Server"
 	$title=i18n::translate('SERV');
 	$text='';
-	break;
-
-case 'SERVER_URL':
-	$title=i18n::translate('PhpGedView URL');
-	$text=i18n::translate('If you use https or a port other than the default, you will need to enter the URL to access your server here.');
 	break;
 
 case 'SEX':
@@ -1837,151 +1212,6 @@ case 'SHARED_NOTE':
 	// I18N: This is the GEDCOM label for "Shared Note"
 	$title=i18n::translate('SHARED_NOTE');
 	$text=i18n::translate('Shared Notes are free-form text and will appear in the Fact Details section of the page.<br /><br />Each shared note can be linked to more than one person, family, source, or event.');
-	break;
-
-case 'SHOW_AGE_DIFF':
-	$title=i18n::translate('Show Date Differences');
-	$text=i18n::translate('This option controls whether or not the Close Relatives tab should show differences between birth dates of spouses, between marriage date and birth date of first child, and between birth dates of children.');
-	break;
-
-case 'SHOW_CONTEXT_HELP':
-	$title=i18n::translate('Show contextual <b>?</b> Help links');
-	$text=i18n::translate('This option will enable links, identified by question marks, next to items on many pages.  These links allow users to get information or help about those items.');
-	break;
-
-case 'SHOW_COUNTER':
-	$title=i18n::translate('Show hit counters');
-	$text=i18n::translate('Show hit counters on Portal and Individual pages.');
-	break;
-
-case 'SHOW_DEAD_PEOPLE':
-	$title=i18n::translate('Show dead people');
-	$text=i18n::translate('Set the privacy access level for all dead people.');
-	break;
-
-case 'SHOW_EMPTY_BOXES':
-	$title=i18n::translate('Show empty boxes on Pedigree charts');
-	$text=i18n::translate('This option controls whether or not to show empty boxes on Pedigree charts.');
-	break;
-
-case 'SHOW_EST_LIST_DATES':
-	$title=i18n::translate('Show estimated dates for birth and death');
-	$text=i18n::translate('This option controls whether or not to show estimated dates for birth and death instead of leaving blanks on individual lists and charts for individuals whose dates are not known.');
-	break;
-
-case 'SHOW_FACT_ICONS':
-	$title=i18n::translate('Show Fact icons');
-	$text=i18n::translate('Set this to <b>Yes</b> to display icons near Fact names on the Personal Facts and Details page.  Fact icons will be displayed only if they exist in the <i>images/facts</i> directory of the current theme.');
-	break;
-
-case 'SHOW_GEDCOM_RECORD':
-	$title=i18n::translate('Allow users to see raw GEDCOM records');
-	$text=i18n::translate('Setting this to <b>Yes</b> will place links on individuals, sources, and families to let users bring up another window containing the raw data taken right out of the GEDCOM file.');
-	break;
-
-case 'SHOW_HIGHLIGHT_IMAGES':
-	$title=i18n::translate('Show highlight images in people boxes');
-	$text=i18n::translate('If you have enabled multimedia in your site, you can have PhpGedView display a thumbnail image next to the person\'s name in charts and boxes.<br /><br />Currently, PhpGedView uses the first multimedia object listed in the GEDCOM record as the highlight image.  For people with multiple images, you should arrange the multimedia objects such that the one you wish to be highlighted appears first, before any others.<br /><br />See the Multimedia section in the <a href="readme.txt">readme.txt</a> file for more information about including media in your site.');
-	break;
-
-case 'SHOW_ID_NUMBERS':
-	$title=i18n::translate('Show ID numbers next to names');
-	$text=i18n::translate('This option controls whether or not to show ID numbers in parentheses after names on charts and lists.');
-	break;
-
-case 'SHOW_LAST_CHANGE':
-	$title=i18n::translate('Show GEDCOM record last change date on lists');
-	$text=i18n::translate('This option controls whether or not to show GEDCOM record last change date on lists.');
-	break;
-
-case 'SHOW_LDS_AT_GLANCE':
-	$title=i18n::translate('Show LDS ordinance codes in chart boxes');
-	$text=i18n::translate('Setting this option to <b>Yes</b> will show status codes for LDS ordinances in chart boxes.<ul><li><b>B</b> - Baptism</li><li><b>E</b> - Endowed</li><li><b>S</b> - Sealed to spouse</li><li><b>P</b> - Sealed to parents</li></ul>A person who has all of the ordinances done will have <b>BESP</b> printed after their name.  Missing ordinances are indicated by <b>_</b> in place of the corresponding letter code.  For example, <b>BE__</b> indicates missing <b>S</b> and <b>P</b> ordinances.');
-	break;
-
-case 'SHOW_LEVEL2_NOTES':
-	$title=i18n::translate('Show all Notes and Source references on Notes and Sources tabs');
-	$text=i18n::translate('This option controls whether Notes and Source references that are attached to Facts should be shown on the Notes and Sources tabs of the Individual page.<br /><br />Ordinarily, the Notes and Sources tabs show only Notes and Source references that are attached directly to the individual\'s database record.  These are <i>level 1</i> Notes and Source references.<br /><br />The <b>Yes</b> option causes these tabs to also show Notes and Source references that are part of the various Facts in the individual\'s database record.  These are <i>level 2</i> Notes and Source references because the various Facts are at level 1.');
-	break;
-
-case 'SHOW_LIST_PLACES':
-	$title=i18n::translate('Place levels to show on lists');
-	$text=i18n::translate('This determines how much of the Place information is shown in the Place fields on lists.<br /><br />Setting the value to <b>9</b> will ensure that all Place information will be shown.  Setting the value to <b>0</b> (zero) will hide places completely.  Setting the value to <b>1</b> will show the topmost level, which is normally the country.  Setting it to <b>2</b> will show the topmost two levels.  The second topmost level, below the country, is often the state, province, or territory. Etc.');
-	break;
-
-case 'SHOW_LIVING_NAMES':
-	$title=i18n::translate('Show living names');
-	$text=i18n::translate('Should the names of living people be shown to the public?');
-	break;
-
-case 'SHOW_MARRIED_NAMES':
-	$title=i18n::translate('Show married names on Individual list');
-	$text=i18n::translate('This option will show the married names of females on the Individual list.  This option requires that you calculate the married names when you import the GEDCOM file.');
-	break;
-
-case 'SHOW_MEDIA_DOWNLOAD':
-	$title=i18n::translate('Show download link in Media Viewer');
-	$text=i18n::translate('The Media Viewer can show a link which, when clicked, will download the Media file to the local PC.<br /><br />You may want to hide the download link for security reasons.');
-	break;
-
-case 'SHOW_MEDIA_FILENAME':
-	$title=i18n::translate('Show file name in Media Viewer');
-	$text=i18n::translate('The Media Viewer can show the name of the Media file being viewed.  This option determines whether that file name is shown to users or not.<br /><br />You may want to hide the file name for security reasons.');
-	break;
-
-case 'SHOW_MULTISITE_SEARCH':
-	$title=i18n::translate('Show Multi-Site Search');
-	$text=i18n::translate('Multi-site search allows users to search across multiple PhpGedView websites which you have setup in the Manage Sites administration area or remotely linked to.  This option controls whether the Multi-site Search feature is available to everyone or only to authenticated users.');
-	break;
-
-case 'SHOW_NO_WATERMARK':
-	$title=i18n::translate('Who can view non-watermarked images?');
-	$text=i18n::translate('If the Media Firewall is enabled, users will see watermarks if they do not have the privilege level specified here.');
-	break;
-
-case 'SHOW_PARENTS_AGE':
-	$title=i18n::translate('Show age of parents next to child\'s birthdate');
-	$text=i18n::translate('This option controls whether or not to show age of father and mother next to child\'s birthdate on charts.');
-	break;
-
-case 'SHOW_PEDIGREE_PLACES':
-	$title=i18n::translate('Place levels to show in person boxes');
-	$text=i18n::translate('This sets how much of the place information is shown in the person boxes on charts.<br /><br />Setting the value to 9 will guarantee to show all place levels.  Setting the value to 0 will hide places completely.  Setting the value to 1 will show the first level, setting it to 2 will show the first two levels, etc.');
-	break;
-
-case 'SHOW_PRIVATE_RELATIONSHIPS':
-	$title=i18n::translate('Show private relationships');
-	$text=i18n::translate('This option will retain family links in privatized records.  This means that you will see empty "private" boxes on the pedigree chart and on other charts with private people.<br /><br />This is similar to the behavior of PhpGedView versions prior to v4.0.<br /><br />This setting is off by default.  It is recommended instead of turning this on, to point your pedigree root person in your GEDCOM configuration to a person who is not private.');
-	break;
-
-case 'SHOW_REGISTER_CAUTION':
-	$title=i18n::translate('Show Acceptable Use agreement on «Request new user account» page');
-	$text=i18n::translate('When set to <b>Yes</b>, the following message will appear above the input fields on the «Request new user account» page:<div class="list_value_wrap"><div class="largeError">Notice:</div><div class="error">By completing and submitting this form, you agree:<ul><li>to protect the privacy of living people listed on our site;</li><li>and in the text box below, to explain to whom you are related, or to provide us with information on someone who should be listed on our site.</li></ul></div></div>');
-	break;
-
-case 'SHOW_RELATIVES_EVENTS':
-	$title=i18n::translate('Show events of close relatives on Individual page');
-	$text=i18n::translate('Births, marriages, and deaths of relatives are important events in one\'s life. This option controls whether or not to show these events on the <i>Personal facts and details</i> tab on the Individual page.<br /><br />The events affected by this option are:<ul><li>Death of spouse</li><li>Birth and death of children</li><li>Death of parents</li><li>Birth and death of siblings</li><li>Death of grand-parents</li><li>Birth and death of parents\' siblings</li></ul>');
-	break;
-
-case 'SHOW_RESEARCH_ASSISTANT':
-	$title=i18n::translate('Show Research Assistant');
-	$text=i18n::translate('What type of user can view the Research Assistant module if it is installed?');
-	break;
-
-case 'SHOW_SOURCES':
-	$title=i18n::translate('Show sources');
-	$text=i18n::translate('Set the privacy access level for all Sources.  If the user does not have access to Sources, the Source list will be removed from the Lists menu and the Sources tab will not be shown on the Individual Details page.');
-	break;
-
-case 'SHOW_SPIDER_TAGLINE':
-	$title=i18n::translate('Show spider tagline');
-	$text=i18n::translate('On pages generated for search engines, display as the last line the particular search engine the page detected.  If this option is on, it can bias Google&reg; AdSense towards search engine optimization tools.');
-	break;
-
-case 'SHOW_STATS':
-	$title=i18n::translate('Show execution statistics');
-	$text=i18n::translate('Show runtime statistics and database queries at the bottom of every page.');
 	break;
 
 case 'SLGC':	
@@ -2002,35 +1232,10 @@ case 'SOUR':
 	$text=i18n::translate('This field allows you to change the source record that this fact\'s source citation links to.  This field takes a Source ID.  Beside the field will be listed the title of the current source ID.  Use the <b>Find ID</b> link to look up the source\'s ID number.  To remove the entire citation, make this field blank.');
 	break;
 
-case 'SOURCE_ID_PREFIX':
-	$title=i18n::translate('Source ID prefix');
-	$text=i18n::translate('When a new source record is added online in PhpGedView, a new ID for that source will be generated automatically.  The source ID will have this prefix.');
-	break;
-
-case 'SOUR_FACTS_ADD':
-	$title=i18n::translate('Source Add Facts');
-	$text=i18n::translate('This is the list of GEDCOM facts that your users can add to sources.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Source Facts</i> list.');
-	break;
-
-case 'SOUR_FACTS_QUICK':
-	$title=i18n::translate('Quick Source Facts');
-	$text=i18n::translate('This is the short list of GEDCOM source facts that appears next to the full list and can be added with a single click.');
-	break;
-
-case 'SOUR_FACTS_UNIQUE':
-	$title=i18n::translate('Unique Source Facts');
-	$text=i18n::translate('This is the list of GEDCOM facts that your users can only add <u>once</u> to sources.  For example, if TITL is in this list, users will not be able to add more than one TITL record to a source.  Fact names that appear in this list must not also appear in the <i>Source Add Facts</i> list.');
-	break;
-
 case 'SPFX':
 	// I18N: This is the GEDCOM label for "Surname Prefix"
 	$title=i18n::translate('SPFX');
 	$text=i18n::translate('Enter or select from the list words that precede the main part of the Surname.  Examples of such words are <b>von</b> Braun, <b>van der</b> Kloot, <b>de</b> Graaf, etc.');
-	break;
-
-case 'SPLIT_PLACES':
-	$title=i18n::translate('Split places in Edit mode');
-	$text=i18n::translate('Set this to <b>Yes</b> to split each place name by commas into subfields for easier editing.  Example :<br /><ol><li>Default mode<br /><u>Place</u>: Half Moon Bay, San Mateo, California, USA<br /><br /></li><li>Split mode<br /><u>Country</u>: USA<br /><u>State</u>: California<br/><u>County</u>: San Mateo<br/><u>City</u>: Half Moon Bay</li></ol>');
 	break;
 
 case 'SSN':	
@@ -2057,57 +1262,10 @@ case 'STAT:DATE':
 	$text='';
 	break;
 
-case 'SUBLIST_TRIGGER_F':
-	$title=i18n::translate('Maximum number of family names');
-	$text=i18n::translate('Long lists of families with the same name can be broken into smaller sub-lists according to the first letter of the given name.<br /><br />This option determines when sub-listing of family names will occur.  To disable sub-listing completely, set this option to zero.');
-	break;
-
-case 'SUBLIST_TRIGGER_I':
-	$title=i18n::translate('Maximum number of surnames');
-	$text=i18n::translate('Long lists of persons with the same surname can be broken into smaller sub-lists according to the first letter of the individual\'s given name.<br /><br />This option determines when sub-listing of surnames will occur.  To disable sub-listing completely, set this option to zero.');
-	break;
-
-case 'SUBM':	
-	// I18N: This is the GEDCOM label for "Submitter"
-	$title=i18n::translate('SUBM');
-	$text='';
-	break;
-
-case 'SUBN':	
-	// I18N: This is the GEDCOM label for "Submission"
-	$title=i18n::translate('SUBN');
-	$text='';
-	break;
-
-case 'SUPPORT_METHOD':
-	$title=i18n::translate('Support method');
-	$text=i18n::translate('The method to be used to contact the Support contact about technical questions.<ul><li>The <b>Mailto link</b> option will create a "mailto" link that can be clicked to send an email using the mail client on the user\'s PC.</li><li>The <b>PhpGedView internal messaging</b> option will use a messaging system internal to PhpGedView, and no emails will be sent.</li><li>The <b>Internal messaging with emails</b> option is the default.  It will use the PhpGedView messaging system and will also send copies of the messages via email.</li><li>The <b>PhpGedView sends emails with no storage</b> option allows PhpGedView to handle the messaging and will send the messages as emails, but will not store the messages internally.  This option is similar to the <b>Mailto link</b> option, except that the message will be sent by PhpGedView instead of the user\'s workstation.</li><li>The <b>No contact method</b> option results in your users having no way of contacting you.</li></ul>');
-	break;
-
 case 'SURN':
 	// I18N: This is the GEDCOM label for "Surname"
 	$title=i18n::translate('SURN');
 	$text=i18n::translate('In this field you should enter the surname for the person.  As an example, in the name "John Robert Finlay", the surname that should be entered here is "Finlay"<br /><br />Individuals with multiple surnames, common in Spain and Portugal, should separate the surnames with a comma.  This indicates that the person is to be listed under each of the names.  For example, the surname "Cortes,Vega" will be listed under both <b>C</b> and <b>V</b>, whereas the surname "Cortes Vega" will only be listed under <b>C</b>.');
-	break;
-
-case 'SURNAME_LIST_STYLE':
-	$title=i18n::translate('Surname list style');
-	$text=i18n::translate('Lists of surnames, as they appear in the Top 10 Surnames block, the Individuals, and the Families, can be shown in different styles.<ul><li><b>Table</b>&nbsp;&nbsp;&nbsp;In this style, the surnames are shown in a table that can be sorted either by surname or by count.</li><li><b>Tagcloud</b>&nbsp;&nbsp;&nbsp;In this style, the surnames are shown in a list, and the font size used for each name depends on the number of occurrences of that name in the database.  The list is not sortable.</li></ul>');
-	break;
-
-case 'SURNAME_TRADITION':
-	$title=i18n::translate('Surname tradition');
-	$text=i18n::translate('When you add new members to a family, PhpGedView can supply default values for surnames according to regional custom.<br /><br /><ul><li>In the <b>Paternal</b> tradition, all family members share the father\'s surname.</li><li>In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.</li><li>In the <b>Icelandic</b> tradition, children receive their male parent\'s given name as a surname, with a suffix that denotes gender.</li><li>In the <b>Polish</b> tradition, all family members share the father\'s surname. For some surnames, the suffix indicates gender.  The suffixes <i>ski</i>, <i>cki</i>, and <i>dzki</i> indicate male, while the corresponding suffixes <i>ska</i>, <i>cka</i>, and <i>dzka</i> indicate female.</li></ul>');
-	break;
-
-case 'SYNC_GEDCOM_FILE':
-	$title=i18n::translate('Synchronize edits into GEDCOM file');
-	$text=i18n::translate('In past versions of PGV the pending edits were stored in the GEDCOM file and the changed records were then "accepted" into the database.  Starting with v4.1 pending changes are no longer stored in the GEDCOM file but in the changes file.  <br /><br />Setting this value to true will update the GEDCOM file when changes are accepted into the database.  This will keep the GEDCOM file synchronized with the database.  For greater compatibility with previous versions the default value of this field is on.<br /><br />You may want to turn it off to conserve memory when accepting changes.');
-	break;
-
-case 'TBLPREFIX':
-	$title=i18n::translate('Database Table Prefix');
-	$text=i18n::translate('A prefix to prepend to the tables created by PhpGedView.  By changing this value you can set up multiple PhpGedView sites to use the same physical database but different tables.  For example, the same site could host a "test" as well as a "production" installation of PhpGedView with completely independent data tables.');
 	break;
 
 case 'TEMP':
@@ -2120,21 +1278,6 @@ case 'TEXT':
 	// I18N: This is the GEDCOM label for "Text"
 	$title=i18n::translate('TEXT');
 	$text=i18n::translate('In this field you would enter the citation text for this source.  Examples of data may be a transcription of the text from the source, or a description of what was in the citation.');
-	break;
-
-case 'THEME_DIR':
-	$title=i18n::translate('Theme directory');
-	$text=i18n::translate('The directory where your PhpGedView theme files are kept.<br /><br />You may customize any of the standard themes that come with PhpGedView to give your site a unique look and feel.  See the Theme Customization section of the <a href="readme.txt">readme.txt</a> file for more information.');
-	break;
-
-case 'THUMBNAIL_WIDTH':
-	$title=i18n::translate('Width of generated thumbnails');
-	$text=i18n::translate('This is the width (in pixels) that the program will use when automatically generating thumbnails.  The default setting is 100.');
-	break;
-
-case 'TIME_LIMIT':
-	$title=i18n::translate('PHP time limit');
-	$text=i18n::translate('The maximum time in seconds that PhpGedView should be allowed to run.<br /><br />The default is 1 minute.  Depending on the size of your GEDCOM file, you may need to increase this time limit when you need to build the indexes.  Set this value to 0 to allow PHP to run forever.<br /><br />CAUTION: Setting this to 0 or setting it too high could cause your site to hang on certain operating systems until the script finishes.  Setting it to 0 means it may never finish until a server administrator kills the process or restarts the server.  A large Pedigree chart can take a very long time to run; leaving this value as low as possible ensures that someone cannot crash your server by requesting an excessively large chart.');
 	break;
 
 case 'TIME':
@@ -2173,80 +1316,10 @@ case 'TYPE':
 	$text=i18n::translate('The Type field is used to enter additional information about the item.  In most cases, the field is completely free-form, and you can enter anything you want.');
 	break;
 
-case 'UNDERLINE_NAME_QUOTES':
-	$title=i18n::translate('Underline names in quotes');
-	$text=i18n::translate('Many programs will place the preferred given name in "quotes" in the GEDCOM.  The usual convention for this is to underline the preferred given name.  Enabling this option will convert any names surrounded by quotes to &lt;span&gt; with a CSS class of "starredname".<br /><br />For example, if the name in the GEDCOM were 1&nbsp;NAME&nbsp;Gustave&nbsp;"Jean&nbsp;Paul"&nbsp;Charles&nbsp;/Wilson/ enabling this option would change the part of the name enclosed in quotes to &lt;span&nbsp;class="starredname"&gt;Jean&nbsp;Paul&lt;/span&gt; for printing purposes.  Depending on other settings, the browser would then display that name as <b>Gustave&nbsp;<u>Jean&nbsp;Paul</u>&nbsp;Charles&nbsp;Wilson</b> or <b>Wilson,&nbsp;Gustave&nbsp;<u>Jean&nbsp;Paul</u> Charles</b>');
-	break;
-
 case 'URL':
 	// I18N: This is the GEDCOM label for "Web URL"
 	$title=i18n::translate('URL');
 	$text=i18n::translate('Enter the URL address including the http://.<br /><br />An example URL looks like this: <b>http://www.phpgedview.net/</b> Leave this field blank if you do not want to include a URL.');
-	break;
-
-case 'USE_GEONAMES':
-	$title=i18n::translate('Use GeoNames database');
-	$text=i18n::translate('Should the GeoNames database be used to provide more suggestions for place names?<br /><br />When this option is set to <b>Yes</b>, the GeoNames database will be queried to supply suggestions for the place name being entered.  When set to <b>No</b>, only the current genealogical database will be searched.  As you enter more of the place name, the suggestion will become more precise.  This option can slow down data entry, particularly if your Internet connection is slow.<br /><br />The GeoNames geographical database is accessible free of charge. It currently contains over 8,000,000 geographical names.');
-	break;
-
-case 'USE_MEDIA_FIREWALL':
-	$title=i18n::translate('Use Media Firewall');
-	$text=i18n::translate('See the Wiki for a description of how to use the Media Firewall. <a href="#PGV_PHPGEDVIEW_WIKI#/en/index.php?title=Media_Firewall" target="_blank">#PGV_PHPGEDVIEW_WIKI#</a>');
-	break;
-
-case 'USE_MEDIA_VIEWER':
-	$title=i18n::translate('Use Media Viewer');
-	$text=i18n::translate('When this option is <b>Yes</b>, clicking on images will produce the Media Viewer page.  This page shows the details of the image.  If you have sufficient rights, you can also edit these details.<br /><br />When this option is <b>No</b>, clicking on images will produce a full-size image in a new window.');
-	break;
-
-case 'USE_REGISTRATION_MODULE':
-	$title=i18n::translate('Allow visitors to request account registration');
-	$text=i18n::translate('Gives visitors the option of registering themselves for an account on the site.<br /><br />The visitor will receive an email message with a code to verify his application for an account.  After verification, the Administrator will have to approve the registration before it becomes active.');
-	break;
-
-case 'USE_RELATIONSHIP_PRIVACY':
-	$title=i18n::translate('Use relationship privacy');
-	$text=i18n::translate('<b>No</b> means that authenticated users can see the details of all living people.  <b>Yes</b> means that users can only see the private information of living people they are related to.<br /><br />This option sets the default for all users who have access to this genealogical database.  The Administrator can override this option for individual users by editing the user\'s account details.');
-	break;
-
-case 'USE_RIN':
-	$title=i18n::translate('Use RIN number instead of GEDCOM ID');
-	$text=i18n::translate('Set to <b>Yes</b> to use the RIN number instead of the GEDCOM ID when asked for Individual IDs in configuration files, user settings, and charts.  This is useful for genealogy programs that do not consistently export GEDCOMs with the same ID assigned to each individual but always use the same RIN.');
-	break;
-
-case 'USE_SILHOUETTE':
-	$title=i18n::translate('Use silhouettes');
-	$text=i18n::translate('Use silhouette images when no highlighted image for that person has been specified.  The images used are specific to the gender of the person in question.<br /><br /><table><tr><td wrap valign="middle">This image might be used when the gender of the person is unknown: </td><td><img src="images/silhouette_unknown.gif" width="40" alt="Silhouette image" title="Silhouette image" /></td></tr></table>');
-	break;
-
-case 'USE_THUMBS_MAIN':
-	$title=i18n::translate('Use thumbnail');
-	$text=i18n::translate('This option determines whether PhpGedView should send the large or the small image to the browser whenever a chart or the Personal Details page requires a thumbnail.<br /><br />The <b>No</b> choice will cause PhpGedView to send the large image, while the <b>Yes</b> choice will cause the small image to be sent.  Each individual image also has the &laquo;Always use main image?&raquo; option which, when set to <b>Yes</b>, will cause the large image to be sent regardless of the setting of the &laquo;Use thumbnail&raquo; option in the GEDCOM configuration.  You cannot force PhpGedView to send small images when the GEDCOM configuration specifies that large images should always be used.<br /><br />PhpGedView does not re-size the image being sent; the browser does this according to the page specifications it has also received.  This can have undesirable consequences when the image being sent is not truly a thumbnail where PhpGedView is expecting to send a small image.  This is not an error:  There are occasions where it may be desirable to display a large image in places where one would normally expect to see a thumbnail-sized picture.<br /><br />You should avoid setting the &laquo;Use thumbnail&raquo; option to <b>No</b>.  This choice will cause excessive amounts of image-related data to be sent to the browser, only to have the browser discard the excess.  Page loads, particularly of charts with many images, can be seriously slowed.');
-	break;
-
-case 'WATERMARK_THUMB':
-	$title=i18n::translate('Add watermarks to thumbnails?');
-	$text=i18n::translate('If the Media Firewall is enabled, should thumbnails be watermarked? Your media lists will load faster if you don\'t watermark the thumbnails.');
-	break;
-
-case 'WEBMASTER_EMAIL':
-	$title=i18n::translate('Support contact');
-	$text=i18n::translate('The person to be contacted about technical questions or errors encountered on your site.');
-	break;
-
-case 'WELCOME_TEXT_AUTH_MODE_CUST_HEAD':
-	$title=i18n::translate('Standard header for custom Welcome text');
-	$text=i18n::translate('Choose to display a standard header for your custom Welcome text.  When your users change language, this header will appear in the new language.<br /><br />If set to <b>Yes</b>, the header will look look this:<div class="list_value_wrap"><center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website.<br /></div>');
-	break;
-
-case 'WELCOME_TEXT_AUTH_MODE_CUST':
-	$title=i18n::translate('Custom Welcome text');
-	$text=i18n::translate('If you have opted for custom Welcome text, you can type that text here.  The text will NOT be translated into the language of the visitor, but will be shown exactly as you typed it.  However, if your custom text contains references to language variables that you can define in the various <i>languages/extra.xx.php</i> files, your site can show translated text.<br /><br />You can insert HTML tags into your custom Welcome text.<br /><br />The following description, taken from the Help text for the FAQ list, is equally applicable to the custom Welcome text.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href="http://htmlhelp.com/reference/html40/entities/" target="_blank">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable $pgv_lang["add_to_cart"], and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray["AFN"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>#PGV_VERSION#&nbsp;#PGV_VERSION_RELEASE#</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM]#</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM_TITLE]#</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang["faq_title1"] = "This is a sample FAQ title";<br />$pgv_lang["faq_body1"] = "This is a sample FAQ body.";');
-	break;
-
-case 'WELCOME_TEXT_AUTH_MODE':
-	$title=i18n::translate('Welcome text on Login page');
-	$text=i18n::translate('Here you can choose text to appear on the login screen. You must determine which predefined text is most appropriate.<br /><br />You can also choose to enter your own custom Welcome text, but the text you enter will not be translated when your users change language.  However, if your custom text contains references to language variables that you can define in the various <i>languages/extra.xx.php</i> files, your site can show translated text.  Please refer to the Help text associated with the <b>Custom Welcome text</b> field for more information.<br /><br />The predefined texts are:<ul><li><b>Predefined text that states all users can request a user account:</b><div class="list_value_wrap"><center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.</div><br/></li><li><b>Predefined text that states admin will decide on each request for a user account:</b><div class="list_value_wrap"><center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorized</u> users only.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved.</div><br/></li><li><b>Predefined text that states only family members can request a user account:</b><div class="list_value_wrap"><center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>family members only</u>.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying the information you provide, the administrator will either approve or decline your request for an account.  You will receive an email when your request is approved.</div></li></ul>');
 	break;
 
 case 'WIFE':	
@@ -2261,20 +1334,10 @@ case 'WILL':
 	$text='';
 	break;
 
-case 'WORD_WRAPPED_NOTES':
-	$title=i18n::translate('Add spaces where notes were wrapped');
-	$text=i18n::translate('Some genealogy programs wrap notes at word boundaries while others wrap notes anywhere.  This can cause PhpGedView to run words together.  Setting this to <b>Yes</b> will add a space between words where they are wrapped in the original GEDCOM.');
-	break;
-
 case 'WWW':	
 	// I18N: This is the GEDCOM label for "Web Home Page"
 	$title=i18n::translate('WWW');
 	$text='';
-	break;
-
-case 'ZOOM_BOXES':
-	$title=i18n::translate('Zoom boxes on charts');
-	$text=i18n::translate('Allows a user to zoom boxes on charts to get more information.<br /><br />Set to <b>Disabled</b> to disable this feature.  Set to <b>On Mouse Over</b> to zoom boxes when the user mouses over the icon in the box.  Set to <b>On Mouse Click</b> to zoom boxes when the user clicks on the icon in the box.');
 	break;
 
 case '_ADOP_CHIL':	
@@ -3361,6 +2424,951 @@ case '__BRTM_SIBL':
 	// I18N: This is the GEDCOM label for "Brit Mila of sibling"
 	$title=i18n::translate('__BRTM_SIBL');
 	$text='';
+	break;
+
+	//////////////////////////////////////////////////////////////////////////////
+	// This section contains an entry for every page.  It is used to provide a
+	// page title and "help about this page".
+	//////////////////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////////////////////////////
+	// This section contains an entry for every configuration item
+	//////////////////////////////////////////////////////////////////////////////
+case 'ABBREVIATE_CHART_LABELS':
+	$title=i18n::translate('Abbreviate chart labels');
+	$text=i18n::translate('This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev["BIRT"]&nbsp;=&nbsp;"*";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character.');
+	break;
+
+case 'ADVANCED_NAME_FACTS':
+	$title=i18n::translate('Advanced name facts');
+	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will be shown on the add/edit name form.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store names in several different alphabets.');
+	break;
+
+case 'ADVANCED_PLAC_FACTS':
+	$title=i18n::translate('Advanced place name facts');
+	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will be shown when you add or edit place names.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store place names in several different alphabets.');
+	break;
+
+case 'ALLOW_CHANGE_GEDCOM':
+	$title=i18n::translate('Allow GEDCOM switching');
+	$text=i18n::translate('If you have an environment with multiple GEDCOMs, setting this value to <b>Yes</b> allows your site visitors <u>and</u> users to have the option of changing GEDCOMs.  Setting it to <b>No</b> disables GEDCOM switching for both visitors <u>and</u> logged in users.');
+	break;
+
+case 'ALLOW_EDIT_GEDCOM':
+	$title=i18n::translate('Enable online editing');
+	$text=i18n::translate('This option enables online editing features for this database so that users with Edit privileges may update data online.');
+	break;
+
+case 'ALLOW_THEME_DROPDOWN':
+	$title=i18n::translate('Display theme dropdown selector for theme changes');
+	$text=i18n::translate('Gives users the option of selecting their own theme from a menu.<br /><br />Even with this option set, the theme currently in effect may not provide for such a menu.  To be effective, this option requires the <b>Allow users to select their own theme</b> option to be set as well.');
+	break;
+
+case 'ALLOW_USER_THEMES':
+	$title=i18n::translate('Allow users to select their own theme');
+	$text=i18n::translate('Gives users the option of selecting their own theme.');
+	break;
+
+case 'AUTO_GENERATE_THUMBS':
+	$title=i18n::translate('Automatically generated thumbnails');
+	$text=i18n::translate('Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality.');
+	break;
+
+case 'BOM_detected':
+	$title=i18n::translate('A Byte Order Mark (BOM) was detected at the beginning of the file. On cleanup, this special code will be removed.');
+	$text=i18n::translate('The GEDCOM file you are importing has a special 3-byte code at the beginning.  This special code is used by some programs to indicate that the file has been recorded in the UTF-8 character set.<br /><br />Although this special code is not really an error, PhpGedView will not work properly when the input file contains the code.  You should let PhpGedView remove the code.');
+	break;
+
+case 'CALENDAR_FORMAT':
+	$title=i18n::translate('Calendar format');
+	$text=i18n::translate('Dates can be recorded in various calendars such as Gregorian, Julian, or the Jewish Calendar.  This option allows you to convert dates to a preferred calendar.  For example, you could select Gregorian to convert Julian and Hebrew dates to Gregorian.  The converted date is shown in parentheses after the regular date.<br /><br />Dates are only converted if they are valid for the calendar.  For example, only dates between 22&nbsp;SEP&nbsp;1792 and 31&nbsp;DEC&nbsp;1805 will be converted to the French Republican calendar and only dates after 15&nbsp;OCT&nbsp;1582 will be converted to the Gregorian calendar.<br /><br />Hebrew is the same as Jewish, but using Hebrew characters.  Arabic is the same as Hijri, but using Arabic characters.<br /><br />Note: Since the Jewish and Hijri calendar day starts at dusk, any event taking place from dusk till midnight will display as one day prior to the correct date.  The display of Hebrew and Arabic can be problematic in old browsers, which may display text backwards (left to right) or not at all.');
+	break;
+
+case 'CHANGELOG_CREATE':
+	$title=i18n::translate('Archive ChangeLog files');
+	$text=i18n::translate('How often should the program archive Changelog files.');
+	break;
+
+case 'CHARACTER_SET':
+	$title=i18n::translate('Character Set encoding');
+	$text=i18n::translate('This is the character set of your GEDCOM file.  UTF-8 is the default and should work for almost all sites.  If you export your GEDCOM using IBM Windows encoding, you should put WINDOWS here.<br /><br />NOTE: PhpGedView can\'t support UNICODE (UTF-16) because the support is missing in PHP.');
+	break;
+
+case 'CHART_BOX_TAGS':
+	$title=i18n::translate('Other facts to show in charts');
+	$text=i18n::translate('This should be a comma or space separated list of facts, in addition to Birth and Death, that you want to appear in chart boxes such as the Pedigree chart.  This list requires you to use fact tags as defined in the GEDCOM 5.5.1 Standard.  For example, if you wanted the occupation to show up in the box, you would add "OCCU" to this field.');
+	break;
+
+case 'CHECK_CHILD_DATES':
+	$title=i18n::translate('Check child dates');
+	$text=i18n::translate('Check children\'s dates when determining whether a person is dead.  On older systems and large GEDCOMs this can slow down the response time of your site.');
+	break;
+
+case 'CHECK_MARRIAGE_RELATIONS':
+	$title=i18n::translate('Check marriage relations');
+	$text=i18n::translate('Check relationships that are related by marriage.');
+	break;
+
+case 'COMMIT_COMMAND':
+	$title=i18n::translate('Version Control Commit Command');
+	$text=i18n::translate('If you wish to use a version control system such as CVS to archive changes to your GEDCOM file and your configuration or privacy settings, enter the command here.  Leave the box blank if you do not wish to use a version control system.  Valid options are <b>cvs</b> and <b>svn</b>.');
+	break;
+
+case 'COMMON_NAMES_ADD':
+	$title=i18n::translate('Names to add to Common Surnames (comma separated)');
+	$text=i18n::translate('If the number of times that a certain surname occurs is lower than the threshold, it will not appear in the list.  It can be added here manually.  If more than one surname is entered, they must be separated by a comma.  <b>Surnames are case-sensitive.</b>');
+	break;
+
+case 'COMMON_NAMES_REMOVE':
+	$title=i18n::translate('Names to remove from Common Surnames (comma separated)');
+	$text=i18n::translate('If you want to remove a surname from the Common Surname list without increasing the threshold value, you can do that by entering the surname here.  If more than one surname is entered, they must be separated by a comma. <b>Surnames are case-sensitive.</b>  Surnames entered here will also be removed from the Top-10 list on the Welcome page.');
+	break;
+
+case 'COMMON_NAMES_THRESHOLD':
+	$title=i18n::translate('Min. no. of occurrences to be a "Common Surname"');
+	$text=i18n::translate('This is the number of times that a surname must occur before it shows up in the Common Surname list on the Welcome page.');
+	break;
+
+case 'CONTACT_EMAIL':
+	$title=i18n::translate('Genealogy contact');
+	$text=i18n::translate('The person to contact about the genealogical data on this site.');
+	break;
+
+case 'CONTACT_METHOD':
+	$title=i18n::translate('Contact method');
+	$text=i18n::translate('The method to be used to contact the Genealogy contact about genealogy questions.<ul><li>The <b>Mailto link</b> option will create a "mailto" link that can be clicked to send an email using the mail client on the user\'s PC.</li><li>The <b>PhpGedView internal messaging</b> option will use a messaging system internal to PhpGedView, and no emails will be sent.</li><li>The <b>Internal messaging with emails</b> option is the default.  It will use the PhpGedView messaging system and will also send copies of the messages via email.</li><li>The <b>PhpGedView sends emails with no storage</b> option allows PhpGedView to handle the messaging and will send the messages as emails, but will not store the messages internally.  This option is similar to the <b>Mailto link</b> option, except that the message will be sent by PhpGedView instead of the user\'s workstation.</li><li>The <b>No contact method</b> option results in your users having no way of contacting you.</li></ul>');
+	break;
+
+case 'DAYS_TO_SHOW_LIMIT':
+	$title=i18n::translate('Upcoming Events block day limit');
+	$text=i18n::translate('Enter the maximum number of days to show in Upcoming Events blocks.  This number cannot be greater than 30. If you enter a larger value, 30 will be used.<br /><br />The value you enter here determines how far ahead PhpGedView looks when searching for upcoming events.  The results of this search, done once daily, are copied into a temporary file.<br /><br />No Upcoming Events blocks on Index or Portal pages can request more days than this value.  The larger you make this, the longer it will take to build the daily database extract, and the longer it will take to display the block, even when you request to display a number of days less than this setting.');
+	break;
+
+case 'DBHOST':
+	$title=i18n::translate('Database Host');
+	$text=i18n::translate('The DNS or IP address of the computer hosting your database server.  This setting is ignored if you are using an SQLite database.');
+	break;
+
+case 'DBNAME':
+	$title=i18n::translate('Database Name');
+	$text=i18n::translate('The database in the server you want PhpGedView to use.<br /><br />The username you enter in the Database Username field must have Create, Insert, Update, Delete, and Select privileges on this database.  In SQLite you need to set this to a file name in a directory that is writable by PHP such as your index directory (index/phpgedview.db).');
+	break;
+
+case 'DBPASS':
+	$title=i18n::translate('Database Password');
+	$text=i18n::translate('The database password for the user you entered in the Database Username field.  This setting is ignored if you are using an SQLite database.');
+	break;
+
+case 'DBPORT':
+	$title=i18n::translate('Database Port');
+	$text=i18n::translate('The TCP Port that should be used when connecting to your database server.  Leave this setting blank to use the default port for your particular type of database.  This setting is ignored if you are using an SQLite database.');
+	break;
+
+case 'DBTYPE':
+	$title=i18n::translate('Database Type');
+	$text=i18n::translate('The type of database to connect to.<br /><br />PhpGedView can use any database that has a PDO driver available.  You need to ensure that your php.ini file loads both the <b>php_pdo</b> library and the appropriate driver for your database, e.g. <b>php_pdo_mysql</b>.<br /><br />Most databases require a username and password.  You also need to create the database before installing PhpGedView. However, SQLite does not need Database Host, Database Username, or Database Password, but you will need to set a file path for your database in the Database Name field.  PhpGedView will create the SQLite database file for you.');
+	break;
+
+case 'DBUSER':
+	$title=i18n::translate('Database Username');
+	$text=i18n::translate('The database username required to login to your database.  This setting is ignored if you are using an SQLite database.');
+	break;
+
+case 'DB_UTF8_COLLATION':
+	$title=i18n::translate('Use the database to provide UTF-8 collation');
+	$text=i18n::translate('Controls whether PhpGedView should use the database\'s built-in sorting and collation facilities.  It is generally quicker to use the database to sort and filter data rather than PHP, although not all databases/versions provide this feature.  The collation sequence used for each language is set in that language\'s settings page.<br /><br /><span class="warning">IMPORTANT: You should only set this value to YES if you do so BEFORE the database tables are created for the first time. Selecting it on an existing database could cause your data to become corrupted.</span><br /><br />MySQL and PostgreSQL both offer good support for UTF-8, although not all collation sequences are available in earlier versions of MySQL.  Other databases offer little or no support for UTF-8. If you are unsure of your database\'s support of UTF-8, you should set this value to <b>No</b>.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/UTF-8\' target=\'_blank\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about UTF-8.');
+	break;
+
+case 'DEFAULT_PEDIGREE_GENERATIONS':
+	$title=i18n::translate('Pedigree generations');
+	$text=i18n::translate('Set the default number of generations to display on Descendancy and Pedigree charts.');
+	break;
+
+case 'DISPLAY_JEWISH_GERESHAYIM':
+	$title=i18n::translate('Display Hebrew Gershayim');
+	$text=i18n::translate('Show single and double quotes when displaying Hebrew dates.<br /><br />Setting this to <b>Yes</b> will display February 8 1969 as <span lang=\'he-IL\' dir=\'rtl\'>&#1499;\'&#160;&#1513;&#1489;&#1496;&#160;&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm; while setting it to <b>No</b> will display it as <span lang=\'he-IL\' dir=\'rtl\'>&#1499;&#160;&#1513;&#1489;&#1496;&#160;&#1514;&#1513;&#1499;&#1496;</span>&lrm;.  This has no impact on the Jewish year setting since quotes are not used in Jewish dates displayed with Latin characters.<br /><br />Note: This setting is similar to the PHP 5.0 Calendar constants CAL_JEWISH_ADD_ALAFIM_GERESH and CAL_JEWISH_ADD_GERESHAYIM.  This single setting affects both.');
+	break;
+
+case 'DISPLAY_JEWISH_THOUSANDS':
+	$title=i18n::translate('Display Hebrew Thousands');
+	$text=i18n::translate('Show Alafim in Hebrew calendars.<br /><br />Setting this to <b>Yes</b> will display the year 1969 as <span lang="he-IL" dir=\'rtl\'>&#1492;\'&#160;&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm; while setting it to <b>No</b> will display the year as <span lang="he-IL" dir=\'rtl\'>&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm;.  This has no impact on the Jewish year setting.  The year will display as 5729 regardless of this setting.<br /><br />Note: This setting is similar to the PHP 5.0 Calendar constant CAL_JEWISH_ADD_ALAFIM.');
+	break;
+
+case 'EDIT_AUTOCLOSE':
+	$title=i18n::translate('Autoclose edit window');
+	$text=i18n::translate('This option controls whether or not to automatically close the Edit window after a successful update.');
+	break;
+
+case 'ENABLE_AUTOCOMPLETE':
+	$title=i18n::translate('Enable Autocomplete');
+	$text=i18n::translate('This option determines whether Autocomplete should be active while information is being entered into certain fields on input forms.  When this option is set to <b>Yes</b>, text input fields for which Autocomplete is possible are indicated by a differently colored background.<br /><br />When Autocomplete is active, PhpGedView will search its database for possible matches according to what you have already entered.  As you enter more information, the list of possible matches is refined.  When you see the desired input in the list of matches, you can move the mouse cursor to that line of the list and then click the left mouse button to complete the input.<br /><br />The disadvantages of Autocomplete are that it slows the program, entails significant database activity, and also results in more data being sent to the browser.');
+	break;
+
+case 'ENABLE_CLIPPINGS_CART':
+	$title=i18n::translate('Enable Clippings Cart');
+	$text=i18n::translate('The clippings cart allows users to add people to a temporary file that they can download in GEDCOM format for subsequent import into their genealogy software.');
+	break;
+
+case 'ENABLE_MULTI_LANGUAGE':
+	$title=i18n::translate('Allow user to change language');
+	$text=i18n::translate('Set to <b>Yes</b> to allow users to override the site\'s default language.  They can do this through their browser\'s preferred language configuration, configuration options on their Account page, or through links or buttons on most PhpGedView pages.');
+	break;
+
+case 'ENABLE_RSS':
+	$title=i18n::translate('Enable RSS');
+	$text=i18n::translate('This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS\' target=\'_blank\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.');
+	break;
+
+case 'EXPAND_NOTES':
+	$title=i18n::translate('Automatically expand notes');
+	$text=i18n::translate('This option controls whether or not to automatically display content of a <i>Note</i> record on the Individual page.');
+	break;
+
+case 'EXPAND_RELATIVES_EVENTS':
+	$title=i18n::translate('Automatically expand list of events of close relatives');
+	$text=i18n::translate('This option controls whether or not to automatically expand the <i>Events of close relatives</i> list.');
+	break;
+
+case 'EXPAND_SOURCES':
+	$title=i18n::translate('Automatically expand sources');
+	$text=i18n::translate('This option controls whether or not to automatically display content of a <i>Source</i> record on the Individual page.');
+	break;
+
+case 'FAM_FACTS_ADD':
+	$title=i18n::translate('Family Add Facts');
+	$text=i18n::translate('This is the list of GEDCOM facts that your users can add to families.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Family Facts</i> list.');
+	break;
+
+case 'FAM_FACTS_QUICK':
+	$title=i18n::translate('Quick Family Facts');
+	$text=i18n::translate('This is the short list of GEDCOM family facts that appears next to the full list and can be added with a single click.');
+	break;
+
+case 'FAM_FACTS_UNIQUE':
+	$title=i18n::translate('Unique Family Facts');
+	$text=i18n::translate('This is the list of GEDCOM facts that your users can only add <u>once</u> to families.  For example, if MARR is in this list, users will not be able to add more than one MARR record to a family.  Fact names that appear in this list must not also appear in the <i>Family Add Facts</i> list.');
+	break;
+
+case 'FAM_ID_PREFIX':
+	$title=i18n::translate('Family ID prefix');
+	$text=i18n::translate('When a new family record is added online in PhpGedView, a new ID for that family will be generated automatically. The family ID will have this prefix.');
+	break;
+
+case 'FAVICON':
+	$title=i18n::translate('Favorites icon');
+	$text=i18n::translate('Change this to point to the icon you want to display in peoples\' favorites menu when they bookmark your site.');
+	break;
+
+case 'FULL_SOURCES':
+	$title=i18n::translate('Use full source citations');
+	$text=i18n::translate('Source citations can include fields to record the quality of the data (primary, secondary, etc.) and the date the event was recorded in the source.  If you don\'t use these fields, you can disable them when creating new source citations.');
+	break;
+
+case 'GEDCOM_DEFAULT_TAB':
+	$title=i18n::translate('Default tab to show on Individual page');
+	$text=i18n::translate('This option allows you to choose which tab opens automatically on the Individual page when that page is accessed.');
+	break;
+
+case 'GEDCOM_ID_PREFIX':
+	$title=i18n::translate('Individual ID prefix');
+	$text=i18n::translate('When a new individual record is added online in PhpGedView, a new ID for that individual will be generated automatically. The individual ID will have this prefix.');
+	break;
+
+case 'GENERATE_GUID':
+	$title=i18n::translate('Automatically create globally unique IDs');
+	$text=i18n::translate('<b>GUID</b> in this context is an acronym for «Globally Unique ID».<br /><br />GUIDs are intended to help identify each individual in a manner that is repeatable, so that central organizations such as the Family History Center of the LDS Church in Salt Lake City, or even compatible programs running on your own server, can determine whether they are dealing with the same person no matter where the GEDCOM originates.  The goal of the Family History Center is to have a central repository of genealogical data and expose it through web services. This will enable any program to access the data and update their data within it.<br /><br />If you do not intend to share this GEDCOM with anyone else, you do not need to let PhpGedView create these GUIDs; however, doing so will do no harm other than increasing the size of your GEDCOM.');
+	break;
+
+case 'HIDE_GEDCOM_ERRORS':
+	$title=i18n::translate('Hide GEDCOM errors');
+	$text=i18n::translate('Setting this to <b>Yes</b> will hide error messages produced by PhpGedView when it doesn\'t understand a tag in your GEDCOM file.  PhpGedView makes every effort to conform to the GEDCOM 5.5.1 standard, but many genealogy software programs include their own custom tags.  See the <a href="readme.txt">readme.txt</a> file for more information.');
+	break;
+
+case 'HIDE_LIVE_PEOPLE':
+	$title=i18n::translate('Enable Privacy');
+	$text=i18n::translate('This option will enable all privacy settings and hide the details of living people.<br /><br />Living people are defined to be those who do not have an event more recent than the number of years specified in variable $MAX_ALIVE_AGE.  For this purpose, births of children are considered to be such events as well.');
+	break;
+
+case 'HOME_SITE_TEXT':
+	$title=i18n::translate('Main WebSite text');
+	$text=i18n::translate('The legend used to identify the link to your main Home page.');
+	break;
+
+case 'HOME_SITE_URL':
+	$title=i18n::translate('Main WebSite URL');
+	$text=i18n::translate('Each PhpGedView page includes a link to your main Home page.  The appearance of this link is controlled by the theme being used.  You enter the actual URL to your Home site here.');
+	break;
+
+case 'INDEX_DIRECTORY':
+	$title=i18n::translate('Index file directory');
+	$text=i18n::translate('The path to a readable and writable directory where PhpGedView should store index files (include the trailing "/").  PhpGedView does not require this directory\'s name to be "index".  You can choose any name you like.<br /><br />For security, this directory should be placed somewhere in the server\'s file space that is not accessible from the Internet. An example of such a structure follows:<br /><b>PhpGedView:</b> dir1/dir2/dir3/PhpGedView<br /><b>Index:</b> dir1/dir4/dir5/dir6/index<br /><br />For the example shown, you would enter <b>../../dir4/dir5/dir6/index/</b> in this field.');
+	break;
+
+case 'INDI_FACTS_ADD':
+	$title=i18n::translate('Individual Add Facts');
+	$text=i18n::translate('This is the list of GEDCOM facts that your users can add to individuals.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Individual Facts</i> list.');
+	break;
+
+case 'INDI_FACTS_QUICK':
+	$title=i18n::translate('Quick Individual Facts');
+	$text=i18n::translate('This is the short list of GEDCOM individual facts that appears next to the full list and can be added with a single click.');
+	break;
+
+case 'INDI_FACTS_UNIQUE':
+	$title=i18n::translate('Unique Individual Facts');
+	$text=i18n::translate('This is the list of GEDCOM facts that your users can only add <u>once</u> to individuals.  For example, if BIRT is in this list, users will not be able to add more than one BIRT record to an individual.  Fact names that appear in this list must not also appear in the <i>Individual Add Facts</i> list.');
+	break;
+
+case 'JEWISH_ASHKENAZ_PRONUNCIATION':
+	$title=i18n::translate('Jewish Ashkenaz pronunciation');
+	$text=i18n::translate('Use Jewish Ashkenazi pronunciations.<br /><br />When set to <b>Yes</b> the months Cheshvan and Teves will be spelled with Ashkenazi pronunciation.  Setting it to <b>No</b> will change the months to Hesvan and Tevet.  This only affects the Jewish setting.  The Hebrew setting will always use the Hebrew alphabet.');
+	break;
+
+case 'LANGUAGE':
+	$title=i18n::translate('Language');
+	$text=i18n::translate('Assign the default language for the site.<br /><br />When the <b>Allow user to change language</b> option is set, users can override this setting through their browser\'s preferred language configuration, configuration options on their Account page, or through links or buttons on most PhpGedView pages.');
+	break;
+
+case 'LANG_SELECTION':
+	$title=i18n::translate('Supported languages');
+	$text=i18n::translate('You can change the list of languages supported by your PhpGedView site by adding or removing checkmarks as appropriate.  This changes the language choices available to your users.<br /><br />You can achieve the same thing through the <b>Configure supported languages</b> link on the Admin menu, where you can also change things such as the language\'s flag icon, the date format, or whether the surname should always be printed first.');
+	break;
+
+case 'LINK_ICONS':
+	$title=i18n::translate('PopUp links on charts');
+	$text=i18n::translate('Allows the user to select links to other charts and close relatives of the person.<br /><br />Set to <b>Disabled</b> to disable this feature.  Set to <b>On Mouse Over</b> to popup the links when the user mouses over the icon in the box.  Set to <b>On Mouse Click</b> to popup the links when the user clicks on the icon in the box.');
+	break;
+
+case 'LOGFILE_CREATE':
+	$title=i18n::translate('Archive log files');
+	$text=i18n::translate('How often should the program archive log files.');
+	break;
+
+case 'LOGIN_URL':
+	$title=i18n::translate('Login URL');
+	$text=i18n::translate('You only need to enter a Login URL if you want to redirect to a different site or location when your users login.  This is very useful if you need to switch from http to https when your users login.  Include the full URL to <i>login.php</i>.  For example, https://www.yourserver.com/phpgedview/login.php .');
+	break;
+
+case 'MAX_ALIVE_AGE':
+	$title=i18n::translate('Age at which to assume a person is dead');
+	$text=i18n::translate('If this person has any events other than Death, Burial, or Cremation more recent than this number of years, he is considered to be "alive".  Children\'s birth dates are considered to be such events for this purpose.');
+	break;
+
+case 'MAX_DESCENDANCY_GENERATIONS':
+	$title=i18n::translate('Maximum Descendancy generations');
+	$text=i18n::translate('Set the maximum number of generations to display on Descendancy charts.');
+	break;
+
+case 'MAX_PEDIGREE_GENERATIONS':
+	$title=i18n::translate('Maximum Pedigree generations');
+	$text=i18n::translate('Set the maximum number of generations to display on Pedigree charts.');
+	break;
+
+case 'MAX_RELATION_PATH_LENGTH':
+	$title=i18n::translate('Max. relation path length');
+	$text=i18n::translate('If the <i>Use relationship privacy</i> option is enabled, logged-in users will only be able to see or edit individuals within this number of relationship steps.<br /><br />This option sets the default for all users who have access to this genealogical database.  The Administrator can override this option for individual users by editing the user\'s account details.');
+	break;
+
+case 'MAX_VIEW_RATE':
+	$title=i18n::translate('Maximum page view rate');
+	$text=i18n::translate('This option limits the rate at which a user can view pages.<br /><br />If that rate is exceeded, PhpGedView treats the session as a hacking attempt;  the session will be terminated with a suitable message.  These two values should place a reasonable limit on the amount of bandwith and downloaded bytes from the server.  This feature can be switched off by setting the time interval to 0.');
+	break;
+
+case 'MEDIA_DIRECTORY_LEVELS':
+	$title=i18n::translate('Multi-Media directory levels to keep');
+	$text=i18n::translate('A value of 0 will ignore all directories in the file path for the media object.  A value of 1 will retain the first directory containing this image.  Increasing the numbers increases number of parent directories to retain in the path.<br /><br />For example, if you link an image in your GEDCOM with a path like <b>C:\Documents&nbsp;and&nbsp;Settings\User\My&nbsp;Documents\My&nbsp;Pictures\Genealogy\Surname&nbsp;Line\grandpa.jpg</b>, a value of 0 will translate this path to <b>./media/grandpa.jpg</b>.  A value of 1 will translate this to <b>./media/Surname&nbsp;Line/grandpa.jpg</b>, etc.  Most people will only need to use a 0.  However, it is possible that some media objects kept in different directories have identical names and would overwrite each other when this option is set to 0.  Non-zero settings allow you to keep some organization in your media thereby preventing name collisions.');
+	break;
+
+case 'MEDIA_DIRECTORY':
+	$title=i18n::translate('MultiMedia directory');
+	$text=i18n::translate('The path to a readable and writable directory where PhpGedView should store media files (include the trailing "/").  PhpGedView does not require this directory\'s name to be "media".  You can choose any name you like.<br /><br />Even though the Media Firewall feature lets you store media files in an area of the server\'s file space that is not accessible from the Internet, the directory named here must still exist and must be readable from the Internet and writable by PhpGedView.  For more information, please refer to the Media Firewall configuration options in the Multimedia section of the GEDCOM configuration page.');
+	break;
+
+case 'MEDIA_EXTERNAL':
+	$title=i18n::translate('Keep links');
+	$text=i18n::translate('When a multimedia link is found starting with for example http://, ftp://, mms:// it will not be altered when set to <b>Yes</b>. For example, http://www.myfamily.com/photo/dad.jpg will stay http://www.myfamily.com/photo/dad.jpg.  When set to <b>No</b>, the link will be handled as a standard reference and the media depth will be used.  For example: http://www.myfamily.com/photo/dad.jpg will be changed to ./media/dad.jpg');
+	break;
+
+case 'MEDIA_FIREWALL_ROOTDIR':
+	$title=i18n::translate('Media Firewall Root Directory');
+	$text=i18n::translate('Directory in which the protected Media directory can be created.  When this field is empty, the <b>#GLOBALS[INDEX_DIRECTORY]#</b> directory will be used.');
+	break;
+
+case 'MEDIA_FIREWALL_THUMBS':
+	$title=i18n::translate('Protect Thumbnails of Protected Images');
+	$text=i18n::translate('When an image is in the protected Media directory, should its thumbnail be protected as well?');
+	break;
+
+case 'MEDIA_ID_PREFIX':
+	$title=i18n::translate('Media ID prefix');
+	$text=i18n::translate('When a new media record is added online in PhpGedView, a new ID for that media will be generated automatically. The media ID will have this prefix.');
+	break;
+
+case 'META_AUDIENCE':
+	$title=i18n::translate('Audience META tag');
+	$text=i18n::translate('The value to place in the Audience meta tag in the HTML page header.');
+	break;
+
+case 'META_AUTHOR':
+	$title=i18n::translate('Author META tag');
+	$text=i18n::translate('The value to place in the Author meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact.');
+	break;
+
+case 'META_COPYRIGHT':
+	$title=i18n::translate('Copyright META tag');
+	$text=i18n::translate('The value to place in the Copyright meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact.');
+	break;
+
+case 'META_DESCRIPTION':
+	$title=i18n::translate('Description META tag');
+	$text=i18n::translate('The value to place in the Description meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database.');
+	break;
+
+case 'META_KEYWORDS':
+	$title=i18n::translate('Keywords META tag');
+	$text=i18n::translate('The value to place in the Keywords meta tag in the HTML page header.  Some search engines will use the Keywords meta tag to help index your page.<br /><br />The Most Common Surnames list that appears in the GEDCOM Statistics block on your Welcome page can also be added to anything you enter here.');
+	break;
+
+case 'META_PAGE_TOPIC':
+	$title=i18n::translate('Page-topic META tag');
+	$text=i18n::translate('The value to place in the Page-topic meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database.');
+	break;
+
+case 'META_PAGE_TYPE':
+	$title=i18n::translate('Page-type META tag');
+	$text=i18n::translate('The value to place in the Page-type meta tag in the HTML page header.');
+	break;
+
+case 'META_PUBLISHER':
+	$title=i18n::translate('Publisher META tag');
+	$text=i18n::translate('The value to place in the Publisher meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact.');
+	break;
+
+case 'META_REVISIT':
+	$title=i18n::translate('How often should crawlers revisit META tag');
+	$text=i18n::translate('The value to place in the Revisit meta tag in the HTML page header.  Some web crawlers ignore this value.');
+	break;
+
+case 'META_ROBOTS':
+	$title=i18n::translate('Robots META tag');
+	$text=i18n::translate('The value to place in the Robots meta tag in the HTML page header.  Some robots or web crawlers ignore this value.');
+	break;
+
+case 'META_TITLE':
+	$title=i18n::translate('Add to TITLE header tag');
+	$text=i18n::translate('Anything on this line will be added to the TITLE tag in the HTML page header after the regular page title and before the PhpGedView credit.');
+	break;
+
+case 'MULTI_MEDIA':
+	$title=i18n::translate('Enable multimedia features');
+	$text=i18n::translate('GEDCOM 5.5.1 allows you to link pictures, videos, and other multimedia objects into your GEDCOM.  If you do not include multimedia objects in your GEDCOM, you can disable the multimedia features by setting this value to <b>No</b>.<br /><br />See the Multimedia section in the <a href="readme.txt">readme.txt</a> file for more information about including media in your site.');
+	break;
+
+case 'PAGE_AFTER_LOGIN':
+	$title=i18n::translate('Page to show after Login');
+	$text=i18n::translate('Which page should users see after they have logged in?<br /><br />The choice made here determines whether a successful Login causes the Welcome or the MyGedView page to appear when the login is done from the Welcome page.<br /><br />A Login done from the link at the top of every other page will return the user to that page.');
+	break;
+
+case 'PEDIGREE_FULL_DETAILS':
+	$title=i18n::translate('Show Birth and Death details on charts');
+	$text=i18n::translate('This option controls whether or not to show the Birth and Death details of an individual on charts.');
+	break;
+
+case 'PEDIGREE_GENERATIONS':
+	$title=i18n::translate('PEDIGREE_GENERATIONS');
+	$text=i18n::translate('Here you can set the number of generations to display on this page.<br /><br />The right number for you depends of the size of your screen and whether you show details or not.  Processing time will increase as you increase the number of generations.');
+	break;
+
+case 'PEDIGREE_LAYOUT':
+	$title=i18n::translate('Default Pedigree chart layout');
+	$text=i18n::translate('This option indicates whether the Pedigree chart should be generated in landscape or portrait mode.');
+	break;
+
+case 'PEDIGREE_ROOT_ID':
+	$title=i18n::translate('Default person for Pedigree and Descendancy charts');
+	$text=i18n::translate('Set the ID of the default person to display on Pedigree and Descendancy charts.');
+	break;
+
+case 'PEDIGREE_SHOW_GENDER':
+	$title=i18n::translate('Show gender icon on charts');
+	$text=i18n::translate('This option controls whether or not to show the individual\'s gender icon on charts.<br /><br />Since the gender is also indicated by the color of the box, this option doesn\'t conceal the gender. The option simply removes some duplicate information from the box.');
+	break;
+
+case 'PGV_MEMORY_LIMIT':
+	$title=i18n::translate('Memory limit');
+	$text=i18n::translate('The maximum amount of memory that can be consumed by PhpGedView scripts.  The default is 32 Mb.  Many hosts disable this option in their PHP configuration; changing this value may not actually affect the current maximum memory setting.');
+	break;
+
+case 'PGV_SESSION_SAVE_PATH':
+	$title=i18n::translate('Session save path');
+	$text=i18n::translate('The path to store PhpGedView session files.<br /><br />Some hosts do not have PHP configured properly and sessions are not maintained between page requests.  This option lets site administrators overcome that problem by saving files in one of their local directories.  The ./index/ directory is a good choice if you need to change this.  The default is to leave the field empty, which will use the Save path as configured in <i>php.ini</i>.');
+	break;
+
+case 'PGV_SESSION_TIME':
+	$title=i18n::translate('Session timeout');
+	$text=i18n::translate('The time in seconds that a PhpGedView session remains active before requiring a login.  The default is 7200, which is 2 hours.');
+	break;
+
+case 'PGV_SIMPLE_MAIL':
+	$title=i18n::translate('Use simple mail headers in external mails');
+	$text=i18n::translate('In normal mail headers for external mails, the email address as well as the name are used. Some mail systems will not accept this. When set to <b>Yes</b>, only the email address will be used.');
+	break;
+
+case 'PGV_SMTP_ACTIVE':
+	$title=i18n::translate('Use SMTP to send external mails');
+	$text=i18n::translate('Use SMTP to send e-mails from PhpGedView.<br /><br />This option requires access to an SMTP mail server.  When set to <b>No</b> PhpGedView will use the e-mail system built into PHP on this server.');
+	break;
+
+case 'PGV_SMTP_AUTH_PASS':
+	$title=i18n::translate('Password');
+	$text=i18n::translate('The password required for authentication with the SMTP server.');
+	break;
+
+case 'PGV_SMTP_AUTH_USER':
+	$title=i18n::translate('User name');
+	$text=i18n::translate('The user name required for authentication with the SMTP server.');
+	break;
+
+case 'PGV_SMTP_AUTH':
+	$title=i18n::translate('Use name and password');
+	$text=i18n::translate('Use name and password authentication to connect to the SMTP server.<br /><br />Some SMTP servers require all connections to be authenticated before they will accept outbound e-mails.');
+	break;
+
+case 'PGV_SMTP_FROM_NAME':
+	$title=i18n::translate('Sender name');
+	$text=i18n::translate('Enter the name to be used in the &laquo;From:&raquo; field of e-mails originating at this site.<br /><br />For example, if your name is <b>John Smith</b> and you are the site administrator for a site that is  known as <b>Jones Genealogy</b>, you could enter something like <b>John Smith</b> or <b>Jones Genealogy</b> or even <b>John Smith, Administrator: Jones Genealogy</b>.  You may enter whatever you wish, but HTML is not permitted.');
+	break;
+
+case 'PGV_SMTP_HELO':
+	$title=i18n::translate('Sending domain name');
+	$text=i18n::translate('This is the domain part of a valid e-mail address on the SMTP server.<br /><br />For example, if you have an e-mail account such as <b>yourname@abc.xyz.com</b>, you would enter <b>abc.xyz.com</b> here.');
+	break;
+
+case 'PGV_SMTP_HOST':
+	$title=i18n::translate('Outgoing server (SMTP) name');
+	$text=i18n::translate('This is the name of the SMTP mail server.  Example: <b>smtp.foo.bar.com</b>.<br /><br />Configuration values for some e-mail providers:<br /><br /><b>Gmail<br /></b><br /><b>Outgoing server (SMTP) name:</b> smtp.gmail.com<br /><b>SMTP Port:</b> 465 or 587<br /><b>Secure connection:</b> SSL<br /><br /><b>Hotmail<br /></b><br /><b>Outgoing server (SMTP) name:</b> smtp.live.com<br /><b>SMTP Port:</b> 25 or 587<br /><b>Secure connection:</b> TLS<br /><br /><b>Yahoo Mail Plus (currently a paid service)<br /></b><br /><b>Outgoing server (SMTP) name:</b> smtp.mail.yahoo.com<br /><b>SMTP Port:</b> 25');
+	break;
+
+case 'PGV_SMTP_PORT':
+	$title=i18n::translate('SMTP Port');
+	$text=i18n::translate('The port number to be used for connections to the SMTP server.  Generally, this is port <b>25</b>.');
+	break;
+
+case 'PGV_SMTP_SSL':
+	$title=i18n::translate('Secure connection');
+	$text=i18n::translate('Transport Layer Security (TLS) and Secure Sockets Layer (SSL) are Internet data encryption protocols.<br /><br />TLS 1.0, 1.1 and 1.2 are standardized developments of SSL 3.0. TLS 1.0 and SSL 3.1 are equivalent. Further work on SSL is now done under the new name, TLS.<br /><br />If your SMTP Server requires the SSL protocol during login, you should select the <b>SSL</b> option. If your SMTP Server requires the TLS protocol during login, you should select the <b>TLS</b> option.');
+	break;
+
+case 'PGV_STORE_MESSAGES':
+	$title=i18n::translate('Allow messages to be stored online');
+	$text=i18n::translate('Specifies whether messages sent through PhpGedView can be stored in the database.  If set to <b>Yes</b> users will be able to retrieve their messages when they login to PhpGedView.  If set to <b>No</b> messages will only be emailed.');
+	break;
+
+case 'PHPGEDVIEW_EMAIL':
+	$title=i18n::translate('PhpGedView reply address');
+	$text=i18n::translate('E-mail address to be used in the &laquo;From:&raquo; field of e-mails that PhpGedView creates automatically.<br /><br />PhpGedView can automatically create e-mails to notify administrators of changes that need to be reviewed.  PhpGedView also sends notification e-mails to users who have requested an account.<br /><br />Usually, the &laquo;From:&raquo; field of these automatically created e-mails is something like <i>From: phpgedview-noreply@yoursite</i> to show that no response to the e-mail is required.  To guard against spam or other e-mail abuse, some e-mail systems require each message\'s &laquo;From:&raquo; field to reflect a valid e-mail account and will not accept messages that are apparently from account <i>phpgedview-noreply</i>.');
+	break;
+
+case 'POSTAL_CODE':
+	$title=i18n::translate('Postal Code position');
+	$text=i18n::translate('Different countries use different ways to write the address. This option will enable you to place the postal code either before or after the city name.');
+	break;
+
+case 'PREFER_LEVEL2_SOURCES':
+	$title=i18n::translate('Source type');
+	$text=i18n::translate('When adding new close relatives, you can add source citations to the records (e.g. INDI, FAM) or the facts (BIRT, MARR, DEAT).  This option controls which checkboxes are ticked by default.');
+	break;
+
+case 'PRIVACY_BY_RESN':
+	$title=i18n::translate('Use GEDCOM (RESN) Privacy restriction');
+	$text=i18n::translate('The GEDCOM 5.5.1 specification includes the option of using RESN tags to set Privacy options for people and facts in the GEDCOM file.  Enabling this option will tell the program to look for level 1 RESN tags in GEDCOM records.  Level 2+ RESN tags are automatically applied and will not be affected by this setting.  Note that this might slow down some of the functions of PhpGedView such as the Individual list.');
+	break;
+
+case 'PRIVACY_BY_YEAR':
+	$title=i18n::translate('Limit Privacy by age of event');
+	$text=i18n::translate('The <b>Limit Privacy by age of event</b> setting will hide the details of people based on how old they were at specific events regardless of whether they are dead or alive.<br /><br />Use this setting along with the <b>Age at which to assume a person is dead</b> setting.  For example, if you made the Age setting 100 and set this option to <b>Yes</b>, all persons, alive or dead, born less than 100 years ago would be set to private.  People who were married less than 85 years ago and people who died less than 75 years ago would also be marked as private.  Please note that using this option will slow down your performance somewhat.');
+	break;
+
+case 'QUICK_REQUIRED_FACTS':
+	$title=i18n::translate('Facts to always show on Quick Update');
+	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will always be shown on the Quick Update form whether or not they already exist in the individual\'s record.  For example, if BIRT is in the list, fields for birth date and birth place will always be shown on the form.');
+	break;
+
+case 'QUICK_REQUIRED_FAMFACTS':
+	$title=i18n::translate('Facts for families to always show on Quick Update');
+	$text=i18n::translate('This is a comma separated list of GEDCOM fact tags that will always be shown on the Family tabs of the Quick Update form whether or not they already exist in the family\'s record.  For example, if MARR is in the list, then fields for marriage date and marriage place will always be shown on the form.');
+	break;
+
+case 'REPO_FACTS_ADD':
+	$title=i18n::translate('Repository Add Facts');
+	$text=i18n::translate('This is the list of GEDCOM facts that your users can add to repositories.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Repository Facts</i> list.');
+	break;
+
+case 'REPO_FACTS_QUICK':
+	$title=i18n::translate('Quick Repository Facts');
+	$text=i18n::translate('This is the short list of GEDCOM repository facts that appears next to the full list and can be added with a single click.');
+	break;
+
+case 'REPO_FACTS_UNIQUE':
+	$title=i18n::translate('Unique Repository Facts');
+	$text=i18n::translate('This is the list of GEDCOM facts that your users can only add <u>once</u> to repositories.  For example, if NAME is in this list, users will not be able to add more than one NAME record to a repository.  Fact names that appear in this list must not also appear in the <i>Repository Add Facts</i> list.');
+	break;
+
+case 'REPO_ID_PREFIX':
+	$title=i18n::translate('Repository ID prefix');
+	$text=i18n::translate('When a new repository record is added online in PhpGedView, a new ID for that repository will be generated automatically. The repository ID will have this prefix.');
+	break;
+
+case 'REQUIRE_ADMIN_AUTH_REGISTRATION':
+	$title=i18n::translate('Require an administrator to approve new user registrations');
+	$text=i18n::translate('If the option <b>Allow visitors to request account registration</b> is enabled this setting controls whether the admin must approve the registration.<br /><br />Setting this to <b>Yes</b> will require that all new users first verify themselves and then be approved by an admin before they can login.  With this setting on <b>No</b>, the <b>User approved by Admin</b> checkbox will be checked automatically when users verify their account, thus allowing an immediate login afterwards without admin intervention.');
+	break;
+
+case 'REQUIRE_AUTHENTICATION':
+	$title=i18n::translate('Require visitor authentication');
+	$text=i18n::translate('Enabling this option will force all visitors to login before they can view any data on the site.');
+	break;
+
+case 'RSS_FORMAT':
+	$title=i18n::translate('RSS Format');
+	$text=i18n::translate('The format to be used as the default feed format for the site. The numeric suffixes <u>do not</u> indicate version: they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS\' target=\'_blank\'title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.');
+	break;
+
+case 'SAVE_WATERMARK_IMAGE':
+	$title=i18n::translate('Store watermarked full size images on server?');
+	$text=i18n::translate('If the Media Firewall is enabled, should copies of watermarked full size images be stored on the server in addition to the same images without watermarks?<br /><br />When set to <b>Yes</b>, full-sized watermarked images will be produced more quickly at the expense of higher server disk space requirements.');
+	break;
+
+case 'SAVE_WATERMARK_THUMB':
+	$title=i18n::translate('Store watermarked thumbnails on server?');
+	$text=i18n::translate('If the Media Firewall is enabled, should copies of watermarked thumbnails be stored on the server in addition to the same thumbnails without watermarks?<br /><br />When set to <b>Yes</b>, media lists containing watermarked thumbnails will be produced more quickly at the expense of higher server disk space requirements.');
+	break;
+
+case 'SEARCHLOG_CREATE':
+	$title=i18n::translate('Archive SearchLog files');
+	$text=i18n::translate('How often should the program archive Searchlog files.');
+	break;
+
+case 'SECURITY_CHECK_GEDCOM_DOWNLOADABLE':
+	$title=i18n::translate('Check if GEDCOM files are downloadable');
+	$text=i18n::translate('For security reasons, GEDCOM files should not be in a location where they can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOM files can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded.');
+	break;
+
+case 'SERVER_URL':
+	$title=i18n::translate('PhpGedView URL');
+	$text=i18n::translate('If you use https or a port other than the default, you will need to enter the URL to access your server here.');
+	break;
+
+case 'SHOW_AGE_DIFF':
+	$title=i18n::translate('Show Date Differences');
+	$text=i18n::translate('This option controls whether or not the Close Relatives tab should show differences between birth dates of spouses, between marriage date and birth date of first child, and between birth dates of children.');
+	break;
+
+case 'SHOW_CONTEXT_HELP':
+	$title=i18n::translate('Show contextual <b>?</b> Help links');
+	$text=i18n::translate('This option will enable links, identified by question marks, next to items on many pages.  These links allow users to get information or help about those items.');
+	break;
+
+case 'SHOW_COUNTER':
+	$title=i18n::translate('Show hit counters');
+	$text=i18n::translate('Show hit counters on Portal and Individual pages.');
+	break;
+
+case 'SHOW_DEAD_PEOPLE':
+	$title=i18n::translate('Show dead people');
+	$text=i18n::translate('Set the privacy access level for all dead people.');
+	break;
+
+case 'SHOW_EMPTY_BOXES':
+	$title=i18n::translate('Show empty boxes on Pedigree charts');
+	$text=i18n::translate('This option controls whether or not to show empty boxes on Pedigree charts.');
+	break;
+
+case 'SHOW_EST_LIST_DATES':
+	$title=i18n::translate('Show estimated dates for birth and death');
+	$text=i18n::translate('This option controls whether or not to show estimated dates for birth and death instead of leaving blanks on individual lists and charts for individuals whose dates are not known.');
+	break;
+
+case 'SHOW_FACT_ICONS':
+	$title=i18n::translate('Show Fact icons');
+	$text=i18n::translate('Set this to <b>Yes</b> to display icons near Fact names on the Personal Facts and Details page.  Fact icons will be displayed only if they exist in the <i>images/facts</i> directory of the current theme.');
+	break;
+
+case 'SHOW_GEDCOM_RECORD':
+	$title=i18n::translate('Allow users to see raw GEDCOM records');
+	$text=i18n::translate('Setting this to <b>Yes</b> will place links on individuals, sources, and families to let users bring up another window containing the raw data taken right out of the GEDCOM file.');
+	break;
+
+case 'SHOW_HIGHLIGHT_IMAGES':
+	$title=i18n::translate('Show highlight images in people boxes');
+	$text=i18n::translate('If you have enabled multimedia in your site, you can have PhpGedView display a thumbnail image next to the person\'s name in charts and boxes.<br /><br />Currently, PhpGedView uses the first multimedia object listed in the GEDCOM record as the highlight image.  For people with multiple images, you should arrange the multimedia objects such that the one you wish to be highlighted appears first, before any others.<br /><br />See the Multimedia section in the <a href="readme.txt">readme.txt</a> file for more information about including media in your site.');
+	break;
+
+case 'SHOW_ID_NUMBERS':
+	$title=i18n::translate('Show ID numbers next to names');
+	$text=i18n::translate('This option controls whether or not to show ID numbers in parentheses after names on charts and lists.');
+	break;
+
+case 'SHOW_LAST_CHANGE':
+	$title=i18n::translate('Show GEDCOM record last change date on lists');
+	$text=i18n::translate('This option controls whether or not to show GEDCOM record last change date on lists.');
+	break;
+
+case 'SHOW_LDS_AT_GLANCE':
+	$title=i18n::translate('Show LDS ordinance codes in chart boxes');
+	$text=i18n::translate('Setting this option to <b>Yes</b> will show status codes for LDS ordinances in chart boxes.<ul><li><b>B</b> - Baptism</li><li><b>E</b> - Endowed</li><li><b>S</b> - Sealed to spouse</li><li><b>P</b> - Sealed to parents</li></ul>A person who has all of the ordinances done will have <b>BESP</b> printed after their name.  Missing ordinances are indicated by <b>_</b> in place of the corresponding letter code.  For example, <b>BE__</b> indicates missing <b>S</b> and <b>P</b> ordinances.');
+	break;
+
+case 'SHOW_LEVEL2_NOTES':
+	$title=i18n::translate('Show all Notes and Source references on Notes and Sources tabs');
+	$text=i18n::translate('This option controls whether Notes and Source references that are attached to Facts should be shown on the Notes and Sources tabs of the Individual page.<br /><br />Ordinarily, the Notes and Sources tabs show only Notes and Source references that are attached directly to the individual\'s database record.  These are <i>level 1</i> Notes and Source references.<br /><br />The <b>Yes</b> option causes these tabs to also show Notes and Source references that are part of the various Facts in the individual\'s database record.  These are <i>level 2</i> Notes and Source references because the various Facts are at level 1.');
+	break;
+
+case 'SHOW_LIST_PLACES':
+	$title=i18n::translate('Place levels to show on lists');
+	$text=i18n::translate('This determines how much of the Place information is shown in the Place fields on lists.<br /><br />Setting the value to <b>9</b> will ensure that all Place information will be shown.  Setting the value to <b>0</b> (zero) will hide places completely.  Setting the value to <b>1</b> will show the topmost level, which is normally the country.  Setting it to <b>2</b> will show the topmost two levels.  The second topmost level, below the country, is often the state, province, or territory. Etc.');
+	break;
+
+case 'SHOW_LIVING_NAMES':
+	$title=i18n::translate('Show living names');
+	$text=i18n::translate('Should the names of living people be shown to the public?');
+	break;
+
+case 'SHOW_MARRIED_NAMES':
+	$title=i18n::translate('Show married names on Individual list');
+	$text=i18n::translate('This option will show the married names of females on the Individual list.  This option requires that you calculate the married names when you import the GEDCOM file.');
+	break;
+
+case 'SHOW_MEDIA_DOWNLOAD':
+	$title=i18n::translate('Show download link in Media Viewer');
+	$text=i18n::translate('The Media Viewer can show a link which, when clicked, will download the Media file to the local PC.<br /><br />You may want to hide the download link for security reasons.');
+	break;
+
+case 'SHOW_MEDIA_FILENAME':
+	$title=i18n::translate('Show file name in Media Viewer');
+	$text=i18n::translate('The Media Viewer can show the name of the Media file being viewed.  This option determines whether that file name is shown to users or not.<br /><br />You may want to hide the file name for security reasons.');
+	break;
+
+case 'SHOW_MULTISITE_SEARCH':
+	$title=i18n::translate('Show Multi-Site Search');
+	$text=i18n::translate('Multi-site search allows users to search across multiple PhpGedView websites which you have setup in the Manage Sites administration area or remotely linked to.  This option controls whether the Multi-site Search feature is available to everyone or only to authenticated users.');
+	break;
+
+case 'SHOW_NO_WATERMARK':
+	$title=i18n::translate('Who can view non-watermarked images?');
+	$text=i18n::translate('If the Media Firewall is enabled, users will see watermarks if they do not have the privilege level specified here.');
+	break;
+
+case 'SHOW_PARENTS_AGE':
+	$title=i18n::translate('Show age of parents next to child\'s birthdate');
+	$text=i18n::translate('This option controls whether or not to show age of father and mother next to child\'s birthdate on charts.');
+	break;
+
+case 'SHOW_PEDIGREE_PLACES':
+	$title=i18n::translate('Place levels to show in person boxes');
+	$text=i18n::translate('This sets how much of the place information is shown in the person boxes on charts.<br /><br />Setting the value to 9 will guarantee to show all place levels.  Setting the value to 0 will hide places completely.  Setting the value to 1 will show the first level, setting it to 2 will show the first two levels, etc.');
+	break;
+
+case 'SHOW_PRIVATE_RELATIONSHIPS':
+	$title=i18n::translate('Show private relationships');
+	$text=i18n::translate('This option will retain family links in privatized records.  This means that you will see empty "private" boxes on the pedigree chart and on other charts with private people.<br /><br />This is similar to the behavior of PhpGedView versions prior to v4.0.<br /><br />This setting is off by default.  It is recommended instead of turning this on, to point your pedigree root person in your GEDCOM configuration to a person who is not private.');
+	break;
+
+case 'SHOW_REGISTER_CAUTION':
+	$title=i18n::translate('Show Acceptable Use agreement on «Request new user account» page');
+	$text=i18n::translate('When set to <b>Yes</b>, the following message will appear above the input fields on the «Request new user account» page:<div class="list_value_wrap"><div class="largeError">Notice:</div><div class="error">By completing and submitting this form, you agree:<ul><li>to protect the privacy of living people listed on our site;</li><li>and in the text box below, to explain to whom you are related, or to provide us with information on someone who should be listed on our site.</li></ul></div></div>');
+	break;
+
+case 'SHOW_RELATIVES_EVENTS':
+	$title=i18n::translate('Show events of close relatives on Individual page');
+	$text=i18n::translate('Births, marriages, and deaths of relatives are important events in one\'s life. This option controls whether or not to show these events on the <i>Personal facts and details</i> tab on the Individual page.<br /><br />The events affected by this option are:<ul><li>Death of spouse</li><li>Birth and death of children</li><li>Death of parents</li><li>Birth and death of siblings</li><li>Death of grand-parents</li><li>Birth and death of parents\' siblings</li></ul>');
+	break;
+
+case 'SHOW_RESEARCH_ASSISTANT':
+	$title=i18n::translate('Show Research Assistant');
+	$text=i18n::translate('What type of user can view the Research Assistant module if it is installed?');
+	break;
+
+case 'SHOW_SOURCES':
+	$title=i18n::translate('Show sources');
+	$text=i18n::translate('Set the privacy access level for all Sources.  If the user does not have access to Sources, the Source list will be removed from the Lists menu and the Sources tab will not be shown on the Individual Details page.');
+	break;
+
+case 'SHOW_SPIDER_TAGLINE':
+	$title=i18n::translate('Show spider tagline');
+	$text=i18n::translate('On pages generated for search engines, display as the last line the particular search engine the page detected.  If this option is on, it can bias Google&reg; AdSense towards search engine optimization tools.');
+	break;
+
+case 'SHOW_STATS':
+	$title=i18n::translate('Show execution statistics');
+	$text=i18n::translate('Show runtime statistics and database queries at the bottom of every page.');
+	break;
+
+case 'SOURCE_ID_PREFIX':
+	$title=i18n::translate('Source ID prefix');
+	$text=i18n::translate('When a new source record is added online in PhpGedView, a new ID for that source will be generated automatically.  The source ID will have this prefix.');
+	break;
+
+case 'SOUR_FACTS_ADD':
+	$title=i18n::translate('Source Add Facts');
+	$text=i18n::translate('This is the list of GEDCOM facts that your users can add to sources.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Source Facts</i> list.');
+	break;
+
+case 'SOUR_FACTS_QUICK':
+	$title=i18n::translate('Quick Source Facts');
+	$text=i18n::translate('This is the short list of GEDCOM source facts that appears next to the full list and can be added with a single click.');
+	break;
+
+case 'SOUR_FACTS_UNIQUE':
+	$title=i18n::translate('Unique Source Facts');
+	$text=i18n::translate('This is the list of GEDCOM facts that your users can only add <u>once</u> to sources.  For example, if TITL is in this list, users will not be able to add more than one TITL record to a source.  Fact names that appear in this list must not also appear in the <i>Source Add Facts</i> list.');
+	break;
+
+case 'SPLIT_PLACES':
+	$title=i18n::translate('Split places in Edit mode');
+	$text=i18n::translate('Set this to <b>Yes</b> to split each place name by commas into subfields for easier editing.  Example :<br /><ol><li>Default mode<br /><u>Place</u>: Half Moon Bay, San Mateo, California, USA<br /><br /></li><li>Split mode<br /><u>Country</u>: USA<br /><u>State</u>: California<br/><u>County</u>: San Mateo<br/><u>City</u>: Half Moon Bay</li></ol>');
+	break;
+
+case 'SUBLIST_TRIGGER_F':
+	$title=i18n::translate('Maximum number of family names');
+	$text=i18n::translate('Long lists of families with the same name can be broken into smaller sub-lists according to the first letter of the given name.<br /><br />This option determines when sub-listing of family names will occur.  To disable sub-listing completely, set this option to zero.');
+	break;
+
+case 'SUBLIST_TRIGGER_I':
+	$title=i18n::translate('Maximum number of surnames');
+	$text=i18n::translate('Long lists of persons with the same surname can be broken into smaller sub-lists according to the first letter of the individual\'s given name.<br /><br />This option determines when sub-listing of surnames will occur.  To disable sub-listing completely, set this option to zero.');
+	break;
+
+case 'SUBM':	
+	// I18N: This is the GEDCOM label for "Submitter"
+	$title=i18n::translate('SUBM');
+	$text='';
+	break;
+
+case 'SUBN':	
+	// I18N: This is the GEDCOM label for "Submission"
+	$title=i18n::translate('SUBN');
+	$text='';
+	break;
+
+case 'SUPPORT_METHOD':
+	$title=i18n::translate('Support method');
+	$text=i18n::translate('The method to be used to contact the Support contact about technical questions.<ul><li>The <b>Mailto link</b> option will create a "mailto" link that can be clicked to send an email using the mail client on the user\'s PC.</li><li>The <b>PhpGedView internal messaging</b> option will use a messaging system internal to PhpGedView, and no emails will be sent.</li><li>The <b>Internal messaging with emails</b> option is the default.  It will use the PhpGedView messaging system and will also send copies of the messages via email.</li><li>The <b>PhpGedView sends emails with no storage</b> option allows PhpGedView to handle the messaging and will send the messages as emails, but will not store the messages internally.  This option is similar to the <b>Mailto link</b> option, except that the message will be sent by PhpGedView instead of the user\'s workstation.</li><li>The <b>No contact method</b> option results in your users having no way of contacting you.</li></ul>');
+	break;
+
+case 'SURNAME_LIST_STYLE':
+	$title=i18n::translate('Surname list style');
+	$text=i18n::translate('Lists of surnames, as they appear in the Top 10 Surnames block, the Individuals, and the Families, can be shown in different styles.<ul><li><b>Table</b>&nbsp;&nbsp;&nbsp;In this style, the surnames are shown in a table that can be sorted either by surname or by count.</li><li><b>Tagcloud</b>&nbsp;&nbsp;&nbsp;In this style, the surnames are shown in a list, and the font size used for each name depends on the number of occurrences of that name in the database.  The list is not sortable.</li></ul>');
+	break;
+
+case 'SURNAME_TRADITION':
+	$title=i18n::translate('Surname tradition');
+	$text=i18n::translate('When you add new members to a family, PhpGedView can supply default values for surnames according to regional custom.<br /><br /><ul><li>In the <b>Paternal</b> tradition, all family members share the father\'s surname.</li><li>In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.</li><li>In the <b>Icelandic</b> tradition, children receive their male parent\'s given name as a surname, with a suffix that denotes gender.</li><li>In the <b>Polish</b> tradition, all family members share the father\'s surname. For some surnames, the suffix indicates gender.  The suffixes <i>ski</i>, <i>cki</i>, and <i>dzki</i> indicate male, while the corresponding suffixes <i>ska</i>, <i>cka</i>, and <i>dzka</i> indicate female.</li></ul>');
+	break;
+
+case 'SYNC_GEDCOM_FILE':
+	$title=i18n::translate('Synchronize edits into GEDCOM file');
+	$text=i18n::translate('In past versions of PGV the pending edits were stored in the GEDCOM file and the changed records were then "accepted" into the database.  Starting with v4.1 pending changes are no longer stored in the GEDCOM file but in the changes file.  <br /><br />Setting this value to true will update the GEDCOM file when changes are accepted into the database.  This will keep the GEDCOM file synchronized with the database.  For greater compatibility with previous versions the default value of this field is on.<br /><br />You may want to turn it off to conserve memory when accepting changes.');
+	break;
+
+case 'TBLPREFIX':
+	$title=i18n::translate('Database Table Prefix');
+	$text=i18n::translate('A prefix to prepend to the tables created by PhpGedView.  By changing this value you can set up multiple PhpGedView sites to use the same physical database but different tables.  For example, the same site could host a "test" as well as a "production" installation of PhpGedView with completely independent data tables.');
+	break;
+
+case 'THEME_DIR':
+	$title=i18n::translate('Theme directory');
+	$text=i18n::translate('The directory where your PhpGedView theme files are kept.<br /><br />You may customize any of the standard themes that come with PhpGedView to give your site a unique look and feel.  See the Theme Customization section of the <a href="readme.txt">readme.txt</a> file for more information.');
+	break;
+
+case 'THUMBNAIL_WIDTH':
+	$title=i18n::translate('Width of generated thumbnails');
+	$text=i18n::translate('This is the width (in pixels) that the program will use when automatically generating thumbnails.  The default setting is 100.');
+	break;
+
+case 'TIME_LIMIT':
+	$title=i18n::translate('PHP time limit');
+	$text=i18n::translate('The maximum time in seconds that PhpGedView should be allowed to run.<br /><br />The default is 1 minute.  Depending on the size of your GEDCOM file, you may need to increase this time limit when you need to build the indexes.  Set this value to 0 to allow PHP to run forever.<br /><br />CAUTION: Setting this to 0 or setting it too high could cause your site to hang on certain operating systems until the script finishes.  Setting it to 0 means it may never finish until a server administrator kills the process or restarts the server.  A large Pedigree chart can take a very long time to run; leaving this value as low as possible ensures that someone cannot crash your server by requesting an excessively large chart.');
+	break;
+
+case 'UNDERLINE_NAME_QUOTES':
+	$title=i18n::translate('Underline names in quotes');
+	$text=i18n::translate('Many programs will place the preferred given name in "quotes" in the GEDCOM.  The usual convention for this is to underline the preferred given name.  Enabling this option will convert any names surrounded by quotes to &lt;span&gt; with a CSS class of "starredname".<br /><br />For example, if the name in the GEDCOM were 1&nbsp;NAME&nbsp;Gustave&nbsp;"Jean&nbsp;Paul"&nbsp;Charles&nbsp;/Wilson/ enabling this option would change the part of the name enclosed in quotes to &lt;span&nbsp;class="starredname"&gt;Jean&nbsp;Paul&lt;/span&gt; for printing purposes.  Depending on other settings, the browser would then display that name as <b>Gustave&nbsp;<u>Jean&nbsp;Paul</u>&nbsp;Charles&nbsp;Wilson</b> or <b>Wilson,&nbsp;Gustave&nbsp;<u>Jean&nbsp;Paul</u> Charles</b>');
+	break;
+
+case 'USE_GEONAMES':
+	$title=i18n::translate('Use GeoNames database');
+	$text=i18n::translate('Should the GeoNames database be used to provide more suggestions for place names?<br /><br />When this option is set to <b>Yes</b>, the GeoNames database will be queried to supply suggestions for the place name being entered.  When set to <b>No</b>, only the current genealogical database will be searched.  As you enter more of the place name, the suggestion will become more precise.  This option can slow down data entry, particularly if your Internet connection is slow.<br /><br />The GeoNames geographical database is accessible free of charge. It currently contains over 8,000,000 geographical names.');
+	break;
+
+case 'USE_MEDIA_FIREWALL':
+	$title=i18n::translate('Use Media Firewall');
+	$text=i18n::translate('See the Wiki for a description of how to use the Media Firewall. <a href="#PGV_PHPGEDVIEW_WIKI#/en/index.php?title=Media_Firewall" target="_blank">#PGV_PHPGEDVIEW_WIKI#</a>');
+	break;
+
+case 'USE_MEDIA_VIEWER':
+	$title=i18n::translate('Use Media Viewer');
+	$text=i18n::translate('When this option is <b>Yes</b>, clicking on images will produce the Media Viewer page.  This page shows the details of the image.  If you have sufficient rights, you can also edit these details.<br /><br />When this option is <b>No</b>, clicking on images will produce a full-size image in a new window.');
+	break;
+
+case 'USE_REGISTRATION_MODULE':
+	$title=i18n::translate('Allow visitors to request account registration');
+	$text=i18n::translate('Gives visitors the option of registering themselves for an account on the site.<br /><br />The visitor will receive an email message with a code to verify his application for an account.  After verification, the Administrator will have to approve the registration before it becomes active.');
+	break;
+
+case 'USE_RELATIONSHIP_PRIVACY':
+	$title=i18n::translate('Use relationship privacy');
+	$text=i18n::translate('<b>No</b> means that authenticated users can see the details of all living people.  <b>Yes</b> means that users can only see the private information of living people they are related to.<br /><br />This option sets the default for all users who have access to this genealogical database.  The Administrator can override this option for individual users by editing the user\'s account details.');
+	break;
+
+case 'USE_RIN':
+	$title=i18n::translate('Use RIN number instead of GEDCOM ID');
+	$text=i18n::translate('Set to <b>Yes</b> to use the RIN number instead of the GEDCOM ID when asked for Individual IDs in configuration files, user settings, and charts.  This is useful for genealogy programs that do not consistently export GEDCOMs with the same ID assigned to each individual but always use the same RIN.');
+	break;
+
+case 'USE_SILHOUETTE':
+	$title=i18n::translate('Use silhouettes');
+	$text=i18n::translate('Use silhouette images when no highlighted image for that person has been specified.  The images used are specific to the gender of the person in question.<br /><br /><table><tr><td wrap valign="middle">This image might be used when the gender of the person is unknown: </td><td><img src="images/silhouette_unknown.gif" width="40" alt="Silhouette image" title="Silhouette image" /></td></tr></table>');
+	break;
+
+case 'USE_THUMBS_MAIN':
+	$title=i18n::translate('Use thumbnail');
+	$text=i18n::translate('This option determines whether PhpGedView should send the large or the small image to the browser whenever a chart or the Personal Details page requires a thumbnail.<br /><br />The <b>No</b> choice will cause PhpGedView to send the large image, while the <b>Yes</b> choice will cause the small image to be sent.  Each individual image also has the &laquo;Always use main image?&raquo; option which, when set to <b>Yes</b>, will cause the large image to be sent regardless of the setting of the &laquo;Use thumbnail&raquo; option in the GEDCOM configuration.  You cannot force PhpGedView to send small images when the GEDCOM configuration specifies that large images should always be used.<br /><br />PhpGedView does not re-size the image being sent; the browser does this according to the page specifications it has also received.  This can have undesirable consequences when the image being sent is not truly a thumbnail where PhpGedView is expecting to send a small image.  This is not an error:  There are occasions where it may be desirable to display a large image in places where one would normally expect to see a thumbnail-sized picture.<br /><br />You should avoid setting the &laquo;Use thumbnail&raquo; option to <b>No</b>.  This choice will cause excessive amounts of image-related data to be sent to the browser, only to have the browser discard the excess.  Page loads, particularly of charts with many images, can be seriously slowed.');
+	break;
+
+case 'WATERMARK_THUMB':
+	$title=i18n::translate('Add watermarks to thumbnails?');
+	$text=i18n::translate('If the Media Firewall is enabled, should thumbnails be watermarked? Your media lists will load faster if you don\'t watermark the thumbnails.');
+	break;
+
+case 'WEBMASTER_EMAIL':
+	$title=i18n::translate('Support contact');
+	$text=i18n::translate('The person to be contacted about technical questions or errors encountered on your site.');
+	break;
+
+case 'WELCOME_TEXT_AUTH_MODE_CUST_HEAD':
+	$title=i18n::translate('Standard header for custom Welcome text');
+	$text=i18n::translate('Choose to display a standard header for your custom Welcome text.  When your users change language, this header will appear in the new language.<br /><br />If set to <b>Yes</b>, the header will look look this:<div class="list_value_wrap"><center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website.<br /></div>');
+	break;
+
+case 'WELCOME_TEXT_AUTH_MODE_CUST':
+	$title=i18n::translate('Custom Welcome text');
+	$text=i18n::translate('If you have opted for custom Welcome text, you can type that text here.  The text will NOT be translated into the language of the visitor, but will be shown exactly as you typed it.  However, if your custom text contains references to language variables that you can define in the various <i>languages/extra.xx.php</i> files, your site can show translated text.<br /><br />You can insert HTML tags into your custom Welcome text.<br /><br />The following description, taken from the Help text for the FAQ list, is equally applicable to the custom Welcome text.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href="http://htmlhelp.com/reference/html40/entities/" target="_blank">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable $pgv_lang["add_to_cart"], and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray["AFN"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>#PGV_VERSION#&nbsp;#PGV_VERSION_RELEASE#</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM]#</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM_TITLE]#</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang["faq_title1"] = "This is a sample FAQ title";<br />$pgv_lang["faq_body1"] = "This is a sample FAQ body.";');
+	break;
+
+case 'WELCOME_TEXT_AUTH_MODE':
+	$title=i18n::translate('Welcome text on Login page');
+	$text=i18n::translate('Here you can choose text to appear on the login screen. You must determine which predefined text is most appropriate.<br /><br />You can also choose to enter your own custom Welcome text, but the text you enter will not be translated when your users change language.  However, if your custom text contains references to language variables that you can define in the various <i>languages/extra.xx.php</i> files, your site can show translated text.  Please refer to the Help text associated with the <b>Custom Welcome text</b> field for more information.<br /><br />The predefined texts are:<ul><li><b>Predefined text that states all users can request a user account:</b><div class="list_value_wrap"><center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.</div><br/></li><li><b>Predefined text that states admin will decide on each request for a user account:</b><div class="list_value_wrap"><center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorized</u> users only.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved.</div><br/></li><li><b>Predefined text that states only family members can request a user account:</b><div class="list_value_wrap"><center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>family members only</u>.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying the information you provide, the administrator will either approve or decline your request for an account.  You will receive an email when your request is approved.</div></li></ul>');
+	break;
+
+case 'WORD_WRAPPED_NOTES':
+	$title=i18n::translate('Add spaces where notes were wrapped');
+	$text=i18n::translate('Some genealogy programs wrap notes at word boundaries while others wrap notes anywhere.  This can cause PhpGedView to run words together.  Setting this to <b>Yes</b> will add a space between words where they are wrapped in the original GEDCOM.');
+	break;
+
+case 'ZOOM_BOXES':
+	$title=i18n::translate('Zoom boxes on charts');
+	$text=i18n::translate('Allows a user to zoom boxes on charts to get more information.<br /><br />Set to <b>Disabled</b> to disable this feature.  Set to <b>On Mouse Over</b> to zoom boxes when the user mouses over the icon in the box.  Set to <b>On Mouse Click</b> to zoom boxes when the user clicks on the icon in the box.');
 	break;
 
 case 'accesskey_viewing_advice':
@@ -5464,17 +5472,18 @@ case 'zip':
 	$text=i18n::translate('Select this option as to save your clippings in a ZIP file.  For more information about ZIP files, please visit <a href="http://www.winzip.com" target="_blank">http://www.winzip.com</a>.');
 default:
 	$title=i18n::translate('Help');
-	$text=htmlspecialchars('No help is available for this subject');
+	$text=i18n::translate('No help is available for this subject.');
 	break;
 }
 
-print_simple_header(i18n::translate('Help for «%s»', htmlspecialchars($title));
+if (!$text) {
+	$text=i18n::translate('The help text has been written for this item.');
+}
+
+print_simple_header(i18n::translate('Help for «%s»', htmlspecialchars($title)));
 echo '<h1>', htmlspecialchars($title), '</h1>';
 echo '<p>', nl2br($text), '</p>';
-	break;
-
-echo '</div><br /><br /><br />';
-echo '<a href="#top" title="', $pgv_lang['move_up'], '">', $UpArrow, '</a><br />';
+echo '<br /><br /><br />';
 echo '<a href="help_text.php?help=help_contents_help"><b>', $pgv_lang['help_contents'], '</b></a><br />';
 echo '<a href="javascript:;" onclick="window.close();"><b>', $pgv_lang['close_window'], '</b></a>';
 print_simple_footer();
