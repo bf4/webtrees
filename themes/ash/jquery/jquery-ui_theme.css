@@ -42,10 +42,10 @@
 	border-color: #5d6779; 
 	background: #5d6779;
 }
-/* Items moved from jquery-ui-1.7.1.custom.css */
+/* Items moved from jquery-ui.custom.css */
 /* Accordion ----------------------------------*/
-.ui-accordion .ui-accordion-header 		{ cursor: pointer; position: relative; margin-top: 1px; zoom: 1; background: #5d6779; }
-.ui-accordion .ui-accordion-header a 	{ display: block; font-size: 1em; padding: .5em .5em .5em 2.2em; color: #ffffff;}
+.ui-accordion .ui-accordion-header 		{ cursor: pointer; position: relative; margin-top: 1px; zoom: 1; background: #9DA5B4; }
+.ui-accordion .ui-accordion-header a 	{ display: block; font-size: 1em; padding: .5em .5em .5em 2.2em; color: #ffffff ;}
 /* Component containers ----------------------------------*/
 .ui-widget-header { border: 1px solid #b2c7d7; background: #ffffff url(images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
 /* Interaction states ----------------------------------*/
@@ -91,6 +91,7 @@ color:#2a416f;
 #flyout3, #flyout3 a, #phusb, #pwife, #shusb, #swife, #spouse {
 	background:none;
     font-size: 11px;
+    color: #000;
 	border:none;
 	text-align: left;
 	margin-top: 0px;
@@ -109,3 +110,4 @@ color:  #000;
 #flyout3 a {
 color: #000;
 }
+
