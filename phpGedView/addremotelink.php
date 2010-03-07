@@ -33,7 +33,7 @@ require PGV_ROOT.'includes/controllers/remotelink_ctrl.php';
 $controller=new RemoteLinkController();
 $controller->init();
 
-print_simple_header($pgv_lang['title_remote_link']);
+print_simple_header(i18n::translate('Add Remote Link'));
 
 $pid=safe_REQUEST($_REQUEST, 'pid', PGV_REGEX_XREF);
 $action=safe_POST('action', array('addlink'));

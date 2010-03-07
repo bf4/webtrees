@@ -45,7 +45,7 @@ if (empty($gedcoms)) {
 // Which gedcom have we requested to export
 $export = safe_GET('export', $gedcoms);
 
-print_simple_header($pgv_lang['ged_export']);
+print_simple_header(i18n::translate('Export'));
 
 if ($export) {
 	$ged_id = get_id_from_gedcom($export);

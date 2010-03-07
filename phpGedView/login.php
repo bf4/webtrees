@@ -145,8 +145,11 @@ if ($action=='login') {
 	}
 }
 
-if ($type=="full") print_header($pgv_lang["login_head"]);
-else print_simple_header($pgv_lang["login_head"]);
+if ($type=="full") {
+	print_header(i18n::translate('PhpGedView User Login'));
+} else {
+	print_simple_header(i18n::translate('PhpGedView User Login'));
+}
 print "<div class=\"center\">\n";
 
 if ($WELCOME_TEXT_AUTH_MODE!="0") {

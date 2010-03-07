@@ -28,7 +28,7 @@
 define('PGV_SCRIPT_NAME', 'searchhelp.php');
 require './config.php';
 
-print_simple_header($pgv_lang["hs_title"]);
+print_simple_header(i18n::translate('Search Help Text'));
 
 // On first entry, initially check the boxes
 if (!isset($action)) {

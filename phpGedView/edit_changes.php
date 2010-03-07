@@ -40,7 +40,7 @@ $cid   =safe_GET('cid');
 $index =safe_GET('index');
 $ged   =safe_GET('ged');
 
-print_simple_header($pgv_lang['review_changes']);
+print_simple_header(i18n::translate('Review GEDCOM Changes'));
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
