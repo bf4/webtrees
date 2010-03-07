@@ -514,10 +514,10 @@ if (isset($content) && $content==1) {
 
 		?>
 			<tr>
-				<td class="descriptionbox" colspan="4"><?php print_help_link("stat_help", "qm", "statistiek_list"); ?> <?php echo $pgv_lang["statvars"]; ?></td>
+				<td class="descriptionbox" colspan="4"><?php print_help_link("stat", "qm", "statistiek_list"); ?> <?php echo $pgv_lang["statvars"]; ?></td>
 			</tr>
 			<tr>
-			<td class="descriptionbox width25 wrap"><?php print_help_link("stat_help_x", "qm", "statistiek_list"); ?> <?php echo $pgv_lang["statlxa"]; ?> </td>
+			<td class="descriptionbox width25 wrap"><?php print_help_link("stat_x", "qm", "statistiek_list"); ?> <?php echo $pgv_lang["statlxa"]; ?> </td>
 			<td class="optionbox">
 			<input type="radio" id="stat_11" name="x-as" value="11"
 			<?php
@@ -584,7 +584,7 @@ if (isset($content) && $content==1) {
 			<br />
 			<div id="x_years" style="display:none;">
 			<?php
-			print_help_link("stat_help_gax", "qm", "statistiek_list");
+			print_help_link("stat_gax", "qm", "statistiek_list");
 			echo $pgv_lang["statar_xgl"];
 			?>
 			<br /><select id="xas-grenzen-leeftijden" name="xas-grenzen-leeftijden">
@@ -598,7 +598,7 @@ if (isset($content) && $content==1) {
 			</div>
 			<div id="x_years_m" style="display:none;">
 			<?php
-			print_help_link("stat_help_gbx", "qm", "statistiek_list");
+			print_help_link("stat_gbx", "qm", "statistiek_list");
 			echo $pgv_lang["statar_xgl"];
 			?>
 			<br /><select id="xas-grenzen-leeftijden_m" name="xas-grenzen-leeftijden_m">
@@ -610,7 +610,7 @@ if (isset($content) && $content==1) {
 			</div>
 			<div id="x_months" style="display:none;">
 			<?php
-			print_help_link("stat_help_gwx", "qm", "statistiek_list");
+			print_help_link("stat_gwx", "qm", "statistiek_list");
 			echo $pgv_lang["statar_xgm"];
 			?>
 			<br /><select id="xas-grenzen-maanden" name="xas-grenzen-maanden">
@@ -622,7 +622,7 @@ if (isset($content) && $content==1) {
 			</div>
 			<div id="x_numbers" style="display:none;">
 			<?php
-			print_help_link("stat_help_gcx", "qm", "statistiek_list");
+			print_help_link("stat_gcx", "qm", "statistiek_list");
 			echo $pgv_lang["statar_xga"];
 			?>
 			<br /><select id="xas-grenzen-aantallen" name="xas-grenzen-aantallen">
@@ -634,7 +634,7 @@ if (isset($content) && $content==1) {
 			<div id="map_opt" style="display:none;">
 			<div id="chart_type">
 			<?php
-			print_help_link('chart_type_help', 'qm', "statistiek_list");
+			print_help_link('chart_type', 'qm', "statistiek_list");
 			echo $pgv_lang["map_type"]
 			?>
 			<br /><select name="chart_type" onchange="statusShowSurname(this);">
@@ -647,13 +647,13 @@ if (isset($content) && $content==1) {
 			</div>
 			<div id="surname_opt" style="display:none;">
 			<?php
-			print_help_link('google_chart_surname_help', 'qm', "statistiek_list");
+			print_help_link('google_chart_surname', 'qm', "statistiek_list");
 			echo $factarray['SURN'], '<br /><input type="text" name="SURN" size="20" />';
 			?>
 			<br />
 			</div>
 			<?php
-			print_help_link('chart_area_help', 'qm', "statistiek_list");
+			print_help_link('chart_area', 'qm', "statistiek_list");
 			echo $pgv_lang["area_chart"]
 			?>
 			<br /><select id="chart_shows" name="chart_shows">
@@ -666,7 +666,7 @@ if (isset($content) && $content==1) {
 			</select>
 			</div>
 			</td>
-			<td class="descriptionbox width20 wrap" id="axes"><?php print_help_link("stat_help_z", "qm", "statistiek_list"); ?> <?php echo $pgv_lang["statlza"]; ?>  </td>
+			<td class="descriptionbox width20 wrap" id="axes"><?php print_help_link("stat_z", "qm", "statistiek_list"); ?> <?php echo $pgv_lang["statlza"]; ?>  </td>
 			<td class="optionbox width30" id="zyaxes">
 			<input type="radio" id="z_none" name="z-as" value="300"
 			<?php
@@ -681,7 +681,7 @@ if (isset($content) && $content==1) {
 			if ($plotshow == "302") echo " checked=\"checked\"";
 			echo " onclick=\"statusEnable('zas-grenzen-periode');";
 			echo "\" /><label for=\"z_time\">", $pgv_lang["stat_302_cgp"], "</label><br /><br />";
-			print_help_link("stat_help_gwz", "qm", "statistiek_list");
+			print_help_link("stat_gwz", "qm", "statistiek_list");
 			echo $pgv_lang["statar_zgp"], "<br />";
 
 			// Allow special processing for different languages
@@ -715,7 +715,7 @@ if (isset($content) && $content==1) {
 			</select>
 			<br /><br />
 			<?php
-			print_help_link("stat_help_y", "qm", "statistiek_list");
+			print_help_link("stat_y", "qm", "statistiek_list");
 			echo $pgv_lang["statlya"], "<br />";
 			?>
 			<input type="radio" id="y_num" name="y-as" value="201"

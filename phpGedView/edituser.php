@@ -176,19 +176,19 @@ echo '<tr><td class="topbottombar" colspan="2"><h2>', $pgv_lang['editowndata'], 
 echo '<tr><td class="topbottombar" colspan="2"><input type="submit" tabindex="', ++$tab, '" value="', $pgv_lang['update_myaccount'], '" /></td></tr>';
 
 echo '<tr><td class="descriptionbox width20 wrap">';
-echo print_help_link('edituser_username_help', 'qm', '', false, true);
+echo print_help_link('edituser_username', 'qm', '', false, true);
 echo $pgv_lang['username'], '</td><td class="optionbox">';
 echo '<input type="text" name="form_username" tabindex="', ++$tab, '" value="', PGV_USER_NAME, '" />';
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_firstname_help', 'qm', '', false, true);
+echo print_help_link('edituser_firstname', 'qm', '', false, true);
 echo $pgv_lang['firstname'], '</td><td class="optionbox">';
 echo '<input type="text" name="form_firstname" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'firstname'), '" />';
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_lastname_help', 'qm', '', false, true);
+echo print_help_link('edituser_lastname', 'qm', '', false, true);
 echo $pgv_lang['lastname'], '</td><td class="optionbox">';
 echo '<input type="text" name="form_lastname" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'lastname'), '" />';
 echo '</td></tr>';
@@ -196,7 +196,7 @@ echo '</td></tr>';
 $person=Person::getInstance(PGV_USER_GEDCOM_ID);
 if ($person) {
 	echo '<tr><td class="descriptionbox wrap">';
-	echo print_help_link("edituser_gedcomid_help", "qm", '', false, true);
+	echo print_help_link("edituser_gedcomid", "qm", '', false, true);
 	echo $pgv_lang['gedcomid'], '</td><td class="optionbox">';
 	echo $person->format_list('span');
 	echo '</td></tr>';
@@ -204,7 +204,7 @@ if ($person) {
 
 $person=Person::getInstance(PGV_USER_ROOT_ID);
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_rootid_help', 'qm', '', false, true);
+echo print_help_link('edituser_rootid', 'qm', '', false, true);
 echo $pgv_lang['rootid'], '</td><td class="optionbox">';
 echo '<input type="text" name="form_rootid" id="rootid" tabindex="', ++$tab, '" value="', PGV_USER_ROOT_ID, '" />';
 echo print_findindi_link('rootid', '', true), '<br/>';
@@ -214,18 +214,18 @@ if ($person) {
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_password_help', 'qm', '', false, true);
+echo print_help_link('edituser_password', 'qm', '', false, true);
 echo $pgv_lang['password'], '</td><td class="optionbox">';
 echo '<input type="password" name="form_pass1" tabindex="', ++$tab, '" /> ', $pgv_lang['leave_blank'], '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_conf_password_help', 'qm', '', false, true);
+echo print_help_link('edituser_conf_password', 'qm', '', false, true);
 echo $pgv_lang['confirm'], '</td><td class="optionbox">';
 echo '<input type="password" name="form_pass2" tabindex="', ++$tab, '" /></td></tr>';
 
 if ($ENABLE_MULTI_LANGUAGE) {
 	echo '<tr><td class="descriptionbox wrap">';
-	echo print_help_link('edituser_change_lang_help', 'qm', '', false, true);
+	echo print_help_link('edituser_change_lang', 'qm', '', false, true);
 	echo $pgv_lang['change_lang'], '</td><td class="optionbox" valign="top">';
 	echo '<select name="form_language" tabindex="', ++$tab, '">';
 	foreach ($pgv_language as $key=> $value) {
@@ -241,13 +241,13 @@ if ($ENABLE_MULTI_LANGUAGE) {
 }
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_email_help', 'qm', '', false, true);
+echo print_help_link('edituser_email', 'qm', '', false, true);
 echo $pgv_lang['emailadress'], '</td><td class="optionbox" valign="top">';
 echo '<input type="text" name="form_email" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'email'), '" size="50" /></td></tr>';
 
 if ($ALLOW_USER_THEMES) {
 	echo '<tr><td class="descriptionbox wrap">';
-	echo print_help_link('edituser_user_theme_help', 'qm', '', false, true);
+	echo print_help_link('edituser_user_theme', 'qm', '', false, true);
 	echo $pgv_lang['user_theme'], '</td><td class="optionbox" valign="top">';
 	echo '<select name="form_theme" tabindex="', ++$tab, '">';
 		echo '<option value="">', $pgv_lang['site_default'], '</option>';
@@ -262,7 +262,7 @@ if ($ALLOW_USER_THEMES) {
 }
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_user_contact_help', 'qm', '', false, true);
+echo print_help_link('edituser_user_contact', 'qm', '', false, true);
 echo $pgv_lang['user_contact_method'], '</td><td class="optionbox">';
 echo '<select name="form_contact_method" tabindex="', ++$tab, '">';
 foreach ($ALL_CONTACT_METHODS as $key=>$value) {
@@ -277,7 +277,7 @@ foreach ($ALL_CONTACT_METHODS as $key=>$value) {
 echo '</select></td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('useradmin_visibleonline_help', 'qm', '', false, true);
+echo print_help_link('useradmin_visibleonline', 'qm', '', false, true);
 echo $pgv_lang['visibleonline'], '</td><td class="optionbox">';
 echo '<input type="checkbox" name="form_visible_online" tabindex="', ++$tab, '" value="Y"';
 if (get_user_setting(PGV_USER_ID, 'visibleonline')=='Y') {
@@ -286,7 +286,7 @@ if (get_user_setting(PGV_USER_ID, 'visibleonline')=='Y') {
 echo ' /></td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link("edituser_user_default_tab_help", "qm", '', false, true);
+echo print_help_link("edituser_user_default_tab", "qm", '', false, true);
 echo $pgv_lang['user_default_tab'], '</td><td class="optionbox">';
 echo '<select name="form_default_tab" tabindex="', ++$tab, '">';
 foreach ($ALL_DEFAULT_TABS as $key=>$value) {

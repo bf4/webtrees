@@ -293,13 +293,13 @@ if ($type == "media" && $MULTI_MEDIA) {
 	echo $pgv_lang["media_contains"], " <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) echo $filter;
 	echo "\" />";
-	print_help_link("simple_filter_help", "qm");
+	print_help_link("simple_filter", "qm");
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" wstyle=\"padding: 5px;\">";
 	echo "<input type=\"checkbox\" name=\"showthumb\" value=\"true\"";
 	if( $showthumb) echo "checked=\"checked\"";
 	echo "onclick=\"javascript: this.form.submit();\" />", $pgv_lang["show_thumbnail"];
-	print_help_link("show_thumb_help", "qm");
+	print_help_link("show_thumb", "qm");
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 	echo "<input type=\"submit\" name=\"search\" value=\"", $pgv_lang["filter"], "\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";

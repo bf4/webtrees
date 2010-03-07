@@ -441,7 +441,7 @@ print "</td></tr></table><br />";		// Close off that table
 
 if ($ctype=="user" && !$welcome_block_present) {
 	print "<div align=\"center\" style=\"width: 99%;\">";
-	print_help_link("mygedview_customize_help", "qm");
+	print_help_link("mygedview_customize", "qm");
 	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>";
 	print "</div>";
 }

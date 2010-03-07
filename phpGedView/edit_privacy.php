@@ -296,7 +296,7 @@ if ($action=="update") {
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
 				print "<a href=\"javascript: ".$pgv_lang["general_privacy"]."\" onclick=\"expand_layer('general-privacy-options');return false\"><img id=\"general-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";
-				print_help_link("general_privacy_help", "qm", "general_privacy");
+				print_help_link("general_privacy", "qm", "general_privacy");
 				?>
 				<a href="javascript: <?php print $pgv_lang["general_privacy"]; ?>" onclick="expand_layer('general-privacy-options');return false"><b><?php print $pgv_lang["general_privacy"]; ?></b></a>
 			</td>
@@ -308,7 +308,7 @@ if ($action=="update") {
 		<table class="facts_table">
 			<tr>
 				<td class="descriptionbox wrap width20 <?php print $TEXT_DIRECTION; ?>">
-					<?php print_help_link("SHOW_DEAD_PEOPLE_help", "qm", "SHOW_DEAD_PEOPLE"); print $pgv_lang["SHOW_DEAD_PEOPLE"]; ?>
+					<?php print_help_link("SHOW_DEAD_PEOPLE", "qm", "SHOW_DEAD_PEOPLE"); print $pgv_lang["SHOW_DEAD_PEOPLE"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_DEAD_PEOPLE"><?php write_access_option($SHOW_DEAD_PEOPLE); ?></select>
@@ -316,7 +316,7 @@ if ($action=="update") {
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_LIVING_NAMES_help", "qm", "SHOW_LIVING_NAMES"); print $pgv_lang["SHOW_LIVING_NAMES"]; ?>
+					<?php print_help_link("SHOW_LIVING_NAMES", "qm", "SHOW_LIVING_NAMES"); print $pgv_lang["SHOW_LIVING_NAMES"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_LIVING_NAMES"><?php write_access_option($SHOW_LIVING_NAMES); ?></select>
@@ -324,7 +324,7 @@ if ($action=="update") {
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_SOURCES_help", "qm", "SHOW_SOURCES"); print $pgv_lang["SHOW_SOURCES"]; ?>
+					<?php print_help_link("SHOW_SOURCES", "qm", "SHOW_SOURCES"); print $pgv_lang["SHOW_SOURCES"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_SOURCES"><?php write_access_option($SHOW_SOURCES); ?></select>
@@ -332,7 +332,7 @@ if ($action=="update") {
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("ENABLE_CLIPPINGS_CART_help", "qm", "ENABLE_CLIPPINGS_CART"); print $pgv_lang["ENABLE_CLIPPINGS_CART"]; ?>
+					<?php print_help_link("ENABLE_CLIPPINGS_CART", "qm", "ENABLE_CLIPPINGS_CART"); print $pgv_lang["ENABLE_CLIPPINGS_CART"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_ENABLE_CLIPPINGS_CART"><?php write_access_option($ENABLE_CLIPPINGS_CART); ?></select>
@@ -341,7 +341,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_MULTISITE_SEARCH_help", "qm", "SHOW_MULTISITE_SEARCH"); print $pgv_lang["SHOW_MULTISITE_SEARCH"]; ?>
+					<?php print_help_link("SHOW_MULTISITE_SEARCH", "qm", "SHOW_MULTISITE_SEARCH"); print $pgv_lang["SHOW_MULTISITE_SEARCH"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_MULTISITE_SEARCH"><?php write_access_option($SHOW_MULTISITE_SEARCH); ?></select>
@@ -350,7 +350,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("PRIVACY_BY_YEAR_help", "qm", "PRIVACY_BY_YEAR"); print $pgv_lang["PRIVACY_BY_YEAR"]; ?>
+					<?php print_help_link("PRIVACY_BY_YEAR", "qm", "PRIVACY_BY_YEAR"); print $pgv_lang["PRIVACY_BY_YEAR"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_PRIVACY_BY_YEAR"><?php write_yes_no($PRIVACY_BY_YEAR); ?></select>
@@ -359,7 +359,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("PRIVACY_BY_RESN_help", "qm", "PRIVACY_BY_RESN"); print $pgv_lang["PRIVACY_BY_RESN"]; ?>
+					<?php print_help_link("PRIVACY_BY_RESN", "qm", "PRIVACY_BY_RESN"); print $pgv_lang["PRIVACY_BY_RESN"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_PRIVACY_BY_RESN"><?php write_yes_no($PRIVACY_BY_RESN); ?></select>
@@ -368,7 +368,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_PRIVATE_RELATIONSHIPS_help", "qm", "SHOW_PRIVATE_RELATIONSHIPS"); print $pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]; ?>
+					<?php print_help_link("SHOW_PRIVATE_RELATIONSHIPS", "qm", "SHOW_PRIVATE_RELATIONSHIPS"); print $pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_PRIVATE_RELATIONSHIPS"><?php write_yes_no($SHOW_PRIVATE_RELATIONSHIPS); ?></select>
@@ -377,7 +377,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("USE_RELATIONSHIP_PRIVACY_help", "qm", "USE_RELATIONSHIP_PRIVACY"); print $pgv_lang["USE_RELATIONSHIP_PRIVACY"]; ?>
+					<?php print_help_link("USE_RELATIONSHIP_PRIVACY", "qm", "USE_RELATIONSHIP_PRIVACY"); print $pgv_lang["USE_RELATIONSHIP_PRIVACY"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_USE_RELATIONSHIP_PRIVACY"><?php write_yes_no($USE_RELATIONSHIP_PRIVACY); ?></select>
@@ -386,7 +386,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("MAX_RELATION_PATH_LENGTH_help", "qm", "MAX_RELATION_PATH_LENGTH"); print $pgv_lang["MAX_RELATION_PATH_LENGTH"]; ?>
+					<?php print_help_link("MAX_RELATION_PATH_LENGTH", "qm", "MAX_RELATION_PATH_LENGTH"); print $pgv_lang["MAX_RELATION_PATH_LENGTH"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_MAX_RELATION_PATH_LENGTH"><?php
@@ -403,7 +403,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("CHECK_MARRIAGE_RELATIONS_help", "qm", "CHECK_MARRIAGE_RELATIONS"); print $pgv_lang["CHECK_MARRIAGE_RELATIONS"]; ?>
+					<?php print_help_link("CHECK_MARRIAGE_RELATIONS", "qm", "CHECK_MARRIAGE_RELATIONS"); print $pgv_lang["CHECK_MARRIAGE_RELATIONS"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_CHECK_MARRIAGE_RELATIONS"><?php write_yes_no($CHECK_MARRIAGE_RELATIONS); ?></select>
@@ -412,7 +412,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("MAX_ALIVE_AGE_help", "qm", "MAX_ALIVE_AGE"); print $pgv_lang["MAX_ALIVE_AGE"]; ?>
+					<?php print_help_link("MAX_ALIVE_AGE", "qm", "MAX_ALIVE_AGE"); print $pgv_lang["MAX_ALIVE_AGE"]; ?>
 				</td>
 				<td class="optionbox">
 					<input type="text" name="v_MAX_ALIVE_AGE" value="<?php print $MAX_ALIVE_AGE; ?>" size="5" />
@@ -428,7 +428,7 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
-				print "<a href=\"javascript: ".$pgv_lang["person_privacy"]."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?><?php print_help_link("person_privacy_help", "qm", "person_privacy"); ?>
+				print "<a href=\"javascript: ".$pgv_lang["person_privacy"]."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?><?php print_help_link("person_privacy", "qm", "person_privacy"); ?>
 				<a href="javascript: <?php print $pgv_lang["person_privacy"]; ?>" onclick="expand_layer('person-privacy-options');return false"><b><?php print $pgv_lang["person_privacy"]; ?></b></a>
 			</td>
 		</tr>
@@ -507,7 +507,7 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php print "<a href=\"javascript: ".$pgv_lang["user_privacy"]."\" onclick=\"expand_layer('user-privacy-options');return false\"><img id=\"user-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
-				<?php print_help_link("user_privacy_help", "qm", "user_privacy"); ?>
+				<?php print_help_link("user_privacy", "qm", "user_privacy"); ?>
 				<a href="javascript: <?php print $pgv_lang["user_privacy"]; ?>" onclick="expand_layer('user-privacy-options');return false"><b><?php print $pgv_lang["user_privacy"]; ?></b></a>
 			</td>
 		</tr>
@@ -608,7 +608,7 @@ if ($action=="update") {
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
 				print "<a href=\"javascript: ".$pgv_lang["global_facts"]."\" onclick=\"expand_layer('global-facts-options');return false\"><img id=\"global-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
-				<?php print_help_link("global_facts_help", "qm", "global_facts"); ?>
+				<?php print_help_link("global_facts", "qm", "global_facts"); ?>
 				<a href="javascript: <?php print $pgv_lang["global_facts"]; ?>" onclick="expand_layer('global-facts-options');return false"><b><?php print $pgv_lang["global_facts"]; ?></b></a>
 			</td>
 		</tr>
@@ -699,7 +699,7 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php print "<a href=\"javascript: ".$pgv_lang["person_facts"]."\" onclick=\"expand_layer('person-facts-options');return false\"><img id=\"person-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
-				<?php print_help_link("person_facts_help", "qm", "person_facts"); ?>
+				<?php print_help_link("person_facts", "qm", "person_facts"); ?>
 				<a href="javascript: <?php print $pgv_lang["person_facts"]; ?>" onclick="expand_layer('person-facts-options');return false"><b><?php print $pgv_lang["person_facts"]; ?></b></a>
 			</td>
 		</tr>

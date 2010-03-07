@@ -87,7 +87,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 
 	// Output starts here
 	$id="upcoming_events";
-	$title = print_help_link("index_events_help", "qm","",false, true);
+	$title = print_help_link("index_events", "qm","",false, true);
 	if ($PGV_BLOCKS["print_upcoming_events"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -140,7 +140,7 @@ function print_upcoming_events_config($config) {
 	?>
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("days_to_show_help", "qm");
+	print_help_link("days_to_show", "qm");
 	print $pgv_lang["days_to_show"];
 	?>
 	</td><td class="optionbox">
@@ -160,7 +160,7 @@ function print_upcoming_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("basic_or_all_help", "qm");
+	print_help_link("basic_or_all", "qm");
 	print $pgv_lang["basic_or_all"];
 	?>
 	</td><td class="optionbox">
@@ -172,7 +172,7 @@ function print_upcoming_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("style_help", "qm");
+	print_help_link("style", "qm");
 	print $pgv_lang["style"];
 	?>
 	</td><td class="optionbox">
@@ -184,7 +184,7 @@ function print_upcoming_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("sort_style_help", "qm");
+	print_help_link("sort_style", "qm");
 	print $pgv_lang["sort_style"]."</td>";
 	?>
 	<td class="optionbox">
@@ -196,7 +196,7 @@ function print_upcoming_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
- 	print_help_link("cal_dowload_help", "qm");
+ 	print_help_link("cal_download", "qm");
 	print $pgv_lang["cal_download"]."</td>";
 	?>
 	<td class="optionbox">

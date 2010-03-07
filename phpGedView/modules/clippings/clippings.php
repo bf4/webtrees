@@ -86,7 +86,7 @@ class clippings_Sidebar extends Sidebar {
 		}
 		$out .= '</ul>';
 		if (count($cart)>0) {
-			$out .= '<a href="sidebar.php?sb_action=clippings&amp;empty=true" class="remove_cart">'.$pgv_lang["empty_cart"].'</a>'.print_help_link("empty_cart_help", "qm",'',false,true);
+			$out .= '<a href="sidebar.php?sb_action=clippings&amp;empty=true" class="remove_cart">'.$pgv_lang["empty_cart"].'</a>'.print_help_link("empty_cart", "qm",'',false,true);
 			$out .= '<br /><a href="sidebar.php?sb_action=clippings&amp;download=true" class="add_cart">'.$pgv_lang['download_now'].'</a>';
 		}
 		$out .= '<br />';
@@ -216,7 +216,7 @@ class clippings_Sidebar extends Sidebar {
 		<table>
 		<tr><td colspan="2" class="topbottombar"><h2>'.$pgv_lang["file_information"].'</h2></td></tr>
 		<tr>
-		<td class="descriptionbox width50 wrap">'.print_help_link("file_type_help", "qm", "", false, true). $pgv_lang["choose_file_type"].'</td>
+		<td class="descriptionbox width50 wrap">'.print_help_link("file_type", "qm", "", false, true). $pgv_lang["choose_file_type"].'</td>
 		<td class="optionbox">';
 		if ($TEXT_DIRECTION=='ltr') {
 			$out .= '<input type="radio" name="filetype" checked="checked" value="gedcom" />&nbsp;GEDCOM<br/><input type="radio" name="filetype" value="gramps" DISABLED />&nbsp;Gramps XML <!-- GRAMPS doesn\'t work right now -->';
@@ -226,10 +226,10 @@ class clippings_Sidebar extends Sidebar {
 		$out .= '
 		</td></tr>
 
-		<tr><td class="descriptionbox width50 wrap">'.print_help_link("zip_help", "qm", "", false, true). $pgv_lang["zip_files"].'</td>
+		<tr><td class="descriptionbox width50 wrap">'.print_help_link("zip", "qm", "", false, true). $pgv_lang["zip_files"].'</td>
 		<td class="optionbox"><input type="checkbox" name="Zip" value="yes" checked="checked" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap">'.print_help_link("include_media_help", "qm", "", false, true).$pgv_lang["include_media"].'</td>
+		<tr><td class="descriptionbox width50 wrap">'.print_help_link("include_media", "qm", "", false, true).$pgv_lang["include_media"].'</td>
 		<td class="optionbox"><input type="checkbox" name="IncludeMedia" value="yes" checked="checked" /></td></tr>
 		';
 		
@@ -260,7 +260,7 @@ class clippings_Sidebar extends Sidebar {
 			$radioPrivatizeAdmin = 'DISABLED ';
 		}
 		$out .= '
-		<tr><td class="descriptionbox width50 wrap">'.print_help_link("apply_privacy_help", "qm", "", false, true).$pgv_lang["apply_privacy"].'</td>
+		<tr><td class="descriptionbox width50 wrap">'.print_help_link("apply_privacy", "qm", "", false, true).$pgv_lang["apply_privacy"].'</td>
 		<td class="list_value">
 		<input type="radio" name="privatize_export" value="none" '.$radioPrivatizeNone.'/>&nbsp;'.$pgv_lang["none"].'<br />
 		<input type="radio" name="privatize_export" value="visitor" '.$radioPrivatizeVisitor.'/>&nbsp;'.$pgv_lang["visitor"].'<br />
@@ -269,10 +269,10 @@ class clippings_Sidebar extends Sidebar {
 		<input type="radio" name="privatize_export" value="admin" '.$radioPrivatizeAdmin.'/>&nbsp;'.$pgv_lang["siteadmin"].'
 		</td></tr>
 
-		<tr><td class="descriptionbox width50 wrap">'.print_help_link("utf8_ansi_help", "qm", "", false, true).$pgv_lang["utf8_to_ansi"].'</td>
+		<tr><td class="descriptionbox width50 wrap">'.print_help_link("utf8_ansi", "qm", "", false, true).$pgv_lang["utf8_to_ansi"].'</td>
 		<td class="optionbox"><input type="checkbox" name="convert" value="yes" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap">'. print_help_link("remove_tags_help", "qm", "", false, true).$pgv_lang["remove_custom_tags"].'</td>
+		<tr><td class="descriptionbox width50 wrap">'. print_help_link("remove_tags", "qm", "", false, true).$pgv_lang["remove_custom_tags"].'</td>
 		<td class="optionbox"><input type="checkbox" name="remove" value="yes" checked="checked" />
 		<input type="hidden" name="conv_path" value="'.getLRM(). $controller->conv_path. getLRM().'" /></td></tr>
 

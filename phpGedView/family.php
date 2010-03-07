@@ -108,12 +108,12 @@ $show_full = "1";
 						if (!$controller->isPrintPreview() && $controller->display && PGV_USER_CAN_EDIT) {
 							$husb = $controller->getHusband();
 							if (empty($husb)) { ?>
-								<?php print_help_link("edit_add_parent_help", "qm"); ?>
+								<?php print_help_link("edit_add_parent", "qm"); ?>
 			<a href="javascript <?php echo $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('', 'HUSB', '<?php echo $controller->famid; ?>');"><?php echo $pgv_lang["add_father"]; ?></a><br />
 						<?php }
 							$wife = $controller->getWife();
 							if (empty($wife))  { ?>
-								<?php print_help_link("edit_add_parent_help", "qm"); ?>
+								<?php print_help_link("edit_add_parent", "qm"); ?>
 			<a href="javascript <?php echo $pgv_lang["add_mother"]; ?>" onclick="return addnewparentfamily('', 'WIFE', '<?php echo $controller->famid; ?>');"><?php echo $pgv_lang["add_mother"]; ?></a><br />
 						<?php }
 						}

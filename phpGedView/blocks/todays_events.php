@@ -76,7 +76,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 
   //-- Start output
   $id ="on_this_day_events";
-  $title = print_help_link("index_onthisday_help", "qm","",false,true);
+  $title = print_help_link("index_onthisday", "qm","",false,true);
   if ($PGV_BLOCKS["print_todays_events"]["canconfig"]) {
 	if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -135,7 +135,7 @@ function print_todays_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("basic_or_all_help", "qm");
+	print_help_link("basic_or_all", "qm");
 	print $pgv_lang["basic_or_all"];
 	?>
 	</td><td class="optionbox">
@@ -147,7 +147,7 @@ function print_todays_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("style_help", "qm");
+	print_help_link("style", "qm");
 	print $pgv_lang["style"]."</td>";
 	?>
 	<td class="optionbox">
@@ -159,7 +159,7 @@ function print_todays_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("sort_style_help", "qm");
+	print_help_link("sort_style", "qm");
 	print $pgv_lang["sort_style"]."</td>";
 	?>
 	<td class="optionbox">
@@ -171,7 +171,7 @@ function print_todays_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("cal_dowload_help", "qm");
+	print_help_link("cal_dowload", "qm");
 	print $pgv_lang["cal_download"]."</td>";
 	?>
 	<td class="optionbox">

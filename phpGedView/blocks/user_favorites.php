@@ -56,7 +56,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	if (!is_array($userfavs)) $userfavs = array();
 
 	$id="user_favorites";
-	$title = print_help_link("mygedview_favorites_help", "qm","",false, true);
+	$title = print_help_link("mygedview_favorites", "qm","",false, true);
 	$title .= $pgv_lang["my_favorites"]."&nbsp;&nbsp;";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 	$title .= "(".count($userfavs).")";
@@ -153,7 +153,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	<br />
 	';
 	$uniqueID = floor(microtime() * 1000000);
-	$content .= print_help_link("index_add_favorites_help", "qm","",false,true);
+	$content .= print_help_link("index_add_favorites", "qm","",false,true);
 	$content .= "<b><a href=\"javascript: ".$pgv_lang["add_favorite"]." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".$pgv_lang["add_favorite"]."</a></b>";
 	$content .= "<br /><div id=\"add_user_fav\" style=\"display: none;\">";
 	$content .= "<form name=\"addufavform\" method=\"post\" action=\"index.php\">";

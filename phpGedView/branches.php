@@ -67,14 +67,14 @@ if ($ENABLE_AUTOCOMPLETE) {
 	<table class="center facts_table width50">
 		<tr>
 			<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>">
-				<?php print_help_link("surname_help", "qm", "surname"); echo i18n::translate('SURN'); ?></td>
+				<?php print_help_link("surname", "qm", "surname"); echo i18n::translate('SURN'); ?></td>
 			<td class="optionbox <?php echo $TEXT_DIRECTION; ?>">
 				<input type="text" name="surn" id="SURN" value="<?php echo $surn?>" />
 				<input type="hidden" name="ged" id="ged" value="<?php echo $ged?>" />
 				<input type="submit" value="<?php echo $pgv_lang['view']; ?>" />
 				<input type="submit" value="<?php echo $pgv_lang['random_surn']; ?>" onclick="document.surnlist.surn.value='*';" />
 				<p class="details1">
-					<?php print_help_link("soundex_search_help", "qm", "soundex_search"); echo $pgv_lang["soundex_search"]?><br />
+					<?php print_help_link("soundex_search", "qm", "soundex_search"); echo $pgv_lang["soundex_search"]?><br />
 					<input type="checkbox" name="soundex_std" id="soundex_std" value="1" <?php if ($soundex_std) echo " checked=\"checked\"" ?> />
 					<label for="soundex_std"><?php echo $pgv_lang["search_russell"]?></label>
 					<input type="checkbox" name="soundex_dm" id="soundex_dm" value="1" <?php if ($soundex_dm) echo " checked=\"checked\"" ?> />

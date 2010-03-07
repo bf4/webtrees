@@ -49,7 +49,7 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 	global $LANGUAGE, $pgv_lang;
 
 	$id="rss_block";
-	$title = print_help_link("rss_feed_help", "qm","",false,true);
+	$title = print_help_link("rss_feed", "qm","",false,true);
 	$title .= $pgv_lang["rss_feeds"];
 	$content = "<div class=\"center\">";
 	$content .= "<form method=\"post\" action=\"\" name=\"rssform\">";

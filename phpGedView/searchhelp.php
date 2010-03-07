@@ -70,7 +70,7 @@ print '<form name="entersearch" action="'.PGV_SCRIPT_NAME.'" method="post" onsub
 print "<input name=\"action\" type=\"hidden\" value=\"search\" />";
 print "<table class=\"facts_table $TEXT_DIRECTION\">";
 print "<tr><td colspan=\"2\" class=\"topbottombar\">";
-print_help_link("hs_title_help", "qm", "hs_title");
+print_help_link("hs_title", "qm", "hs_title");
 print $pgv_lang["hs_title"]."</td></tr>";
 
 // Enter the keyword(s)

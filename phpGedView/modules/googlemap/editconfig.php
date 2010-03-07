@@ -52,7 +52,7 @@ function print_level_config_table($level) {
 			</tr>
 			<tr>
 				<td>
-					<?php print_help_link("GM_NAME_PREFIX_help", "qm", "GM_NAME_PREFIX"); echo $pgv_lang["gm_name_prefix"];?>
+					<?php print_help_link("GM_NAME_PREFIX", "qm", "GM_NAME_PREFIX"); echo $pgv_lang["gm_name_prefix"];?>
 				</td>
 				<td>
 					<input type="text" name="NEW_GM_PREFIX_<?php echo $level;?>" value="<?php echo $GM_PREFIX[$level];?>" size="20" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GM_NAME_PREFIX_help');" />
@@ -60,7 +60,7 @@ function print_level_config_table($level) {
 			</tr>
 			<tr>
 				<td>
-					<?php print_help_link("GM_NAME_POSTFIX_help", "qm", "GM_NAME_POSTFIX"); echo $pgv_lang["gm_name_postfix"];?>
+					<?php print_help_link("GM_NAME_POSTFIX", "qm", "GM_NAME_POSTFIX"); echo $pgv_lang["gm_name_postfix"];?>
 				</td>
 				<td>
 					<input type="text" name="NEW_GM_POSTFIX_<?php echo $level;?>" value="<?php echo $GM_POSTFIX[$level];?>" size="20" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GM_NAME_POSTFIX_help');" />
@@ -68,7 +68,7 @@ function print_level_config_table($level) {
 			</tr>
 			<tr>
 				<td>
-					<?php print_help_link("GM_NAME_PRE_POST_help", "qm", "GM_NAME_PRE_POST"); echo $pgv_lang["gm_name_pre_post"];?>
+					<?php print_help_link("GM_NAME_PRE_POST", "qm", "GM_NAME_PRE_POST"); echo $pgv_lang["gm_name_pre_post"];?>
 				</td>
 				<td>
 					<select name="NEW_GM_PRE_POST_MODE_<?php echo $level;?>" dir="ltr" tabindex="<?php $i++; echo $i?>" onchange="showSelectedLevels()">
@@ -212,7 +212,7 @@ $i = 0;
 
 <table class="facts_table">
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_ENABLE_help", "qm", "GOOGLEMAP_ENABLE"); echo $pgv_lang["googlemap_enable"];?></td>
+		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_ENABLE", "qm", "GOOGLEMAP_ENABLE"); echo $pgv_lang["googlemap_enable"];?></td>
 		<td class="optionbox">
 			<select name="NEW_GM_ENABLE" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_ENABLED_help');">
 				<option value="0" <?php if ($GOOGLEMAP_ENABLED=="0") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
@@ -221,11 +221,11 @@ $i = 0;
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_API_KEY_help", "qm", "GOOGLEMAP_API_KEY"); echo $pgv_lang["googlemapkey"];?></td>
+		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_API_KEY", "qm", "GOOGLEMAP_API_KEY"); echo $pgv_lang["googlemapkey"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_GM_API_KEY" value="<?php echo $GOOGLEMAP_API_KEY;?>" size="60" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_API_KEY_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_MAP_TYPE_help", "qm", "GOOGLEMAP_MAP_TYPE"); echo $pgv_lang["gm_map_type"];?></td>
+		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_MAP_TYPE", "qm", "GOOGLEMAP_MAP_TYPE"); echo $pgv_lang["gm_map_type"];?></td>
 		<td class="optionbox">
 			<select name="NEW_GM_MAP_TYPE" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_TYPE_help');">
 				<option value="G_NORMAL_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_NORMAL_MAP") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["gm_map"];?></option>
@@ -236,7 +236,7 @@ $i = 0;
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_MAP_SIZE_help", "qm", "GOOGLEMAP_MAP_SIZE"); echo $pgv_lang["gm_map_size"];?></td>
+		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_MAP_SIZE", "qm", "GOOGLEMAP_MAP_SIZE"); echo $pgv_lang["gm_map_size"];?></td>
 		<td class="optionbox">
 			<?php echo $pgv_lang["gm_map_size_x"]; ?>
 			<input type="text" name="NEW_GM_XSIZE" value="<?php echo $GOOGLEMAP_XSIZE;?>" size="10" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_SIZE_help');" />
@@ -245,7 +245,7 @@ $i = 0;
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_help", "qm", "GOOGLEMAP_PH"); echo $pgv_lang["gm_place_hierarchy"];?></td>
+		<td class="descriptionbox"><?php _help_link("GOOGLEMAP_PH_help", "qm", "GOOGLEMAP_PH"); echo $pgv_lang["gm_place_hierarchy"];?></td>
 		<td class="optionbox">
 			<select name="NEW_GM_PLACE_HIERARCHY" tabindex="<?php $i++; echo $i?>;">
 				<option value="0" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="0") echo "selected=\"selected\""; ?>><?php echo $pgv_lang["no"];?></option>
@@ -255,7 +255,7 @@ $i = 0;
 	</tr>
 	<tr>
 		<td class="descriptionbox">
-			<?php print_help_link("GOOGLEMAP_PH_MAP_SIZE_help", "qm", "GOOGLEMAP_PH_MAP_SIZE"); echo $pgv_lang["gm_ph_map_size"];?>
+			<?php print_help_link("GOOGLEMAP_PH_MAP_SIZE", "qm", "GOOGLEMAP_PH_MAP_SIZE"); echo $pgv_lang["gm_ph_map_size"];?>
 		</td>
 		<td class="optionbox">
 			<?php echo $pgv_lang["gm_map_size_x"]; ?>
@@ -266,7 +266,7 @@ $i = 0;
 	</tr>
 	<tr>
 		<td class="descriptionbox">
-			<?php print_help_link("GOOGLEMAP_PH_MARKER_help", "qm", "GOOGLEMAP_PH_MARKER"); echo $pgv_lang["gm_ph_marker_type"];?>
+			<?php print_help_link("GOOGLEMAP_PH_MARKER", "qm", "GOOGLEMAP_PH_MARKER"); echo $pgv_lang["gm_ph_marker_type"];?>
 		</td>
 		<td class="optionbox">
 			<select name="NEW_GM_PH_MARKER" tabindex="<?php $i++; echo $i?>;">
@@ -277,7 +277,7 @@ $i = 0;
 	</tr>
 	<tr>
 		<td class="descriptionbox">
-			<?php print_help_link("GM_DISP_SHORT_PLACE_help", "qm", "GM_DISP_SHORT_PLACE"); echo $pgv_lang["gm_ph_placenames"];?>
+			<?php print_help_link("GM_DISP_SHORT_PLACE", "qm", "GM_DISP_SHORT_PLACE"); echo $pgv_lang["gm_ph_placenames"];?>
 		</td>
 		<td class="optionbox">
 			<select name="NEW_GM_DISP_SHORT_PLACE" tabindex="<?php $i++; echo $i?>;">
@@ -288,7 +288,7 @@ $i = 0;
 	</tr>
 	<tr>
 		<td class="descriptionbox">
-			<?php print_help_link("GM_DISP_COUNT_help", "qm", "GM_DISP_COUNT"); echo $pgv_lang["gm_ph_count"];?>
+			<?php print_help_link("GM_DISP_COUNT", "qm", "GM_DISP_COUNT"); echo $pgv_lang["gm_ph_count"];?>
 		</td>
 		<td class="optionbox">
 			<select name="NEW_GM_DISP_COUNT" tabindex="<?php $i++; echo $i?>;">
@@ -299,7 +299,7 @@ $i = 0;
 	</tr>
 	<tr>
 		<td class="descriptionbox">
-			<?php print_help_link("GOOGLEMAP_PH_WHEEL_help", "qm", "GOOGLEMAP_PH_WHEEL"); echo $pgv_lang["gm_ph_wheel"];?>
+			<?php print_help_link("GOOGLEMAP_PH_WHEEL", "qm", "GOOGLEMAP_PH_WHEEL"); echo $pgv_lang["gm_ph_wheel"];?>
 		</td>
 		<td class="optionbox">
 			<select name="NEW_GM_PH_WHEEL" tabindex="<?php $i++; echo $i?>;">
@@ -310,7 +310,7 @@ $i = 0;
 	</tr>
 	<tr>
 		<td class="descriptionbox">
-			<?php print_help_link("GOOGLEMAP_PH_CONTROLS_help", "qm", "GOOGLEMAP_PH_CONTROLS"); echo $pgv_lang["gm_ph_controls"];?>
+			<?php print_help_link("GOOGLEMAP_PH_CONTROLS", "qm", "GOOGLEMAP_PH_CONTROLS"); echo $pgv_lang["gm_ph_controls"];?>
 		</td>
 		<td class="optionbox">
 			<select name="NEW_GM_PH_CONTROLS" tabindex="<?php $i++; echo $i?>;">
@@ -321,7 +321,7 @@ $i = 0;
 	</tr>
 	<tr>
 		<td class="descriptionbox">
-			<?php print_help_link("GOOGLEMAP_COORD_help", "qm", "GOOGLEMAP_COORD"); echo $pgv_lang["googlemap_coord"];?>
+			<?php print_help_link("GOOGLEMAP_COORD", "qm", "GOOGLEMAP_COORD"); echo $pgv_lang["googlemap_coord"];?>
 		</td>
 		<td class="optionbox">
 			<select name="NEW_GM_COORD" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_COORD_help');">
@@ -332,7 +332,7 @@ $i = 0;
 	</tr>
 	<tr>
 		<td class="descriptionbox">
-			<?php print_help_link("GOOGLEMAP_MAP_ZOOM_help", "qm", "GOOGLEMAP_MAP_ZOOM"); echo $pgv_lang["gm_map_zoom"];?>
+			<?php print_help_link("GOOGLEMAP_MAP_ZOOM", "qm", "GOOGLEMAP_MAP_ZOOM"); echo $pgv_lang["gm_map_zoom"];?>
 		</td>
 		<td class="optionbox">
 			<?php echo $pgv_lang["gm_min"];?>: <select name="NEW_GM_MIN_ZOOM" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GOOGLEMAP_MAP_ZOOM_help');">
@@ -349,7 +349,7 @@ $i = 0;
 	</tr>
 	<tr>
 		<td class="descriptionbox">
-			<?php print_help_link("GOOGLEMAP_PRECISION_help", "qm", "GOOGLEMAP_PRECISION"); echo $pgv_lang["pl_precision"];?>
+			<?php print_help_link("GOOGLEMAP_PRECISION", "qm", "GOOGLEMAP_PRECISION"); echo $pgv_lang["pl_precision"];?>
 		</td>
 		<td class="optionbox">
 			<table>
@@ -408,11 +408,11 @@ $i = 0;
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("GM_DEFAULT_LEVEL_0_help", "qm", "GM_DEFAULT_LEVEL_0"); echo $pgv_lang["gm_default_level0"];?></td>
+		<td class="descriptionbox"><?php print_help_link("GM_DEFAULT_LEVEL_0", "qm", "GM_DEFAULT_LEVEL_0"); echo $pgv_lang["gm_default_level0"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_GM_DEFAULT_TOP_LEVEL" value="<?php echo $GM_DEFAULT_TOP_VALUE;?>" size="20" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GM_DEFAULT_LEVEL_0_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("GM_NOF_LEVELS_help", "qm", "GM_NOF_LEVELS"); echo $pgv_lang["gm_nof_levels"];?></td>
+		<td class="descriptionbox"><?php _help_link("GM_NOF_LEVELS_help", "qm", "GM_NOF_LEVELS"); echo $pgv_lang["gm_nof_levels"];?></td>
 		<td class="optionbox">
 			<select name="NEW_GM_LEVEL_COUNT" dir="ltr" tabindex="<?php $i++; echo $i?>" onchange="showSelectedLevels()">
 				<option value="1"<?php if ($GM_MAX_NOF_LEVELS == 1) echo " selected=\"selected\"";?>>1</option>

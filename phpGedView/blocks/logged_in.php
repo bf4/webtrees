@@ -72,7 +72,7 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	}
 
 	$id = "logged_in_users";
-	$title = print_help_link("index_loggedin_help", "qm", "", false, true);
+	$title = print_help_link("index_loggedin", "qm", "", false, true);
 	$title.=i18n::translate('Users Logged In');
 	$content='<table width="90%">';
 	$LoginUsers=count($loggedusers);

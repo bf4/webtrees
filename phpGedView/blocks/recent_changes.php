@@ -61,7 +61,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	if (count($found_facts)==0 and $HideEmpty=="yes") return false;
 // Print block header
 	$id="recent_changes";
-	$title = print_help_link("recent_changes_help", "qm","",false,true);
+	$title = print_help_link("recent_changes", "qm","",false,true);
 	if ($PGV_BLOCKS["print_recent_changes"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -123,7 +123,7 @@ function print_recent_changes_config($config) {
 	// Cache file life
 	if ($ctype=="gedcom") {
 		print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life_help", "qm");
+		print_help_link("cache_life", "qm");
 		print $pgv_lang["cache_life"];
 		print "</td><td class=\"optionbox\">";
 		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";

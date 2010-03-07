@@ -76,7 +76,7 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 	if (!isset($config['stat_link'])) $config['stat_link'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_link'];
 
 	$id = 'gedcom_stats';
-	$title = print_help_link('index_stats_help', 'qm', '', false, true);
+	$title = print_help_link('index_stats', 'qm', '', false, true);
 	if ($PGV_BLOCKS['print_gedcom_stats']['canconfig']) {
 		if ($ctype=='gedcom' && PGV_USER_GEDCOM_ADMIN || $ctype=='user' && PGV_USER_ID) {
 			if ($ctype=='gedcom') {
@@ -223,7 +223,7 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 		$surnames = get_common_surnames($COMMON_NAMES_THRESHOLD);
 		if (count($surnames)>0) {
 			$content .= '<br />';
-			$content .= print_help_link('index_common_names_help', 'qm', '', false, true);
+			$content .= print_help_link('index_common_names', 'qm', '', false, true);
 			$content .= '<b>'.$pgv_lang['common_surnames'].'</b><br />';
 			$i=0;
 			foreach($surnames as $indexval => $surname) {
@@ -349,7 +349,7 @@ function print_gedcom_stats_config($config) {
 	// Cache file life
 	if ($ctype=='gedcom') {
 		echo '<tr><td class="descriptionbox wrap width33">';
-		print_help_link('cache_life_help', 'qm');
+		print_help_link('cache_life', 'qm');
 		echo $pgv_lang['cache_life'];
 		echo '</td><td class="optionbox">';
 		echo '<input type="text" name="cache" size="2" value="', $config['cache'], '" />';

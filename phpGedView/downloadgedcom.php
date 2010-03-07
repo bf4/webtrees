@@ -134,7 +134,7 @@ print_header($pgv_lang["download_gedcom"]);
 	<input type="hidden" name="ged" value="<?php print $ged; ?>" />
 	<table class="list_table width50" border="0" valign="top">
 	<tr><td colspan="2" class="facts_label03"><?php print $pgv_lang["options"]; ?></td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("file_type_help", "qm"); print $pgv_lang["choose_file_type"] ?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("file_type", "qm"); print $pgv_lang["choose_file_type"] ?></td>
 		<td class="optionbox">
 		<?php if ($TEXT_DIRECTION=='ltr') { ?>
 			<input type="radio" name="filetype" checked="checked" value="gedcom" />&nbsp;&nbsp;GEDCOM<br/><input type="radio" name="filetype" value="gramps" />&nbsp;&nbsp;Gramps XML
@@ -142,9 +142,9 @@ print_header($pgv_lang["download_gedcom"]);
 			GEDCOM&nbsp;&nbsp;<?php print getLRM();?><input type="radio" name="filetype" checked="checked" value="gedcom" /><?php print getLRM();?><br />Gramps XML&nbsp;&nbsp;<?php print getLRM();?><input type="radio" name="filetype" value="gramps" /><?php print getLRM();?>
 		<?php } ?>
 		</td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("download_zipped_help", "qm"); print $pgv_lang["zip_files"]; ?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("download_zipped", "qm"); print $pgv_lang["zip_files"]; ?></td>
 		<td class="list_value"><input type="checkbox" name="zip" value="yes" checked="checked" /></td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("apply_privacy_help", "qm"); print $pgv_lang["apply_privacy"]; ?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("apply_privacy", "qm"); print $pgv_lang["apply_privacy"]; ?></td>
 		<td class="list_value">
 		<?php if (PGV_USER_IS_ADMIN) { ?>
 			<input type="radio" name="privatize_export" value="none" checked="checked" />&nbsp;&nbsp;<?php print $pgv_lang["none"]; ?><br />
@@ -157,13 +157,13 @@ print_header($pgv_lang["download_gedcom"]);
 		<input type="radio" name="privatize_export" value="gedadmin" />&nbsp;&nbsp;<?php print $pgv_lang["gedadmin"]; ?><br />
 		<input type="radio" name="privatize_export" value="admin"<?php if (!PGV_USER_IS_ADMIN) print " DISABLED"; ?> />&nbsp;&nbsp;<?php print $pgv_lang["siteadmin"]; ?>
 		</td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("utf8_ansi_help", "qm"); print $pgv_lang["utf8_to_ansi"]; ?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("utf8_ansi", "qm"); print $pgv_lang["utf8_to_ansi"]; ?></td>
 		<td class="list_value"><input type="checkbox" name="convert" value="yes" /></td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("remove_tags_help", "qm"); print $pgv_lang["remove_custom_tags"]; ?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("remove_tags", "qm"); print $pgv_lang["remove_custom_tags"]; ?></td>
 		<td class="list_value"><input type="checkbox" name="remove" value="yes" checked="checked" /></td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertPath_help", "qm"); print $pgv_lang["convertPath"];?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertPath", "qm"); print $pgv_lang["convertPath"];?></td>
 		<td class="list_value"><input type="text" name="conv_path" size="30" value="<?php echo getLRM(), $conv_path, getLRM();?>" /></td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertSlashes_help", "qm"); print $pgv_lang["convertSlashes"];?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertSlashes", "qm"); print $pgv_lang["convertSlashes"];?></td>
 		<td class="list_value">
 		<input type="radio" name="conv_slashes" value="forward" <?php if ($conv_slashes=='forward') print "checked=\"checked\" "; ?>/>&nbsp;&nbsp;<?php print $pgv_lang["forwardSlashes"];?><br />
 		<input type="radio" name="conv_slashes" value="backward" <?php if ($conv_slashes=='backward') print "checked=\"checked\" "; ?>/>&nbsp;&nbsp;<?php print $pgv_lang["backSlashes"];?>

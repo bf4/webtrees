@@ -176,7 +176,7 @@ if ($MULTI_MEDIA) {
 				$content = "";
 				$id = "";
 					$id = "random_picture$index";
-					$title = print_help_link("index_media_help", "qm", "random_picture", false, true);
+					$title = print_help_link("index_media", "qm", "random_picture", false, true);
 				if ($PGV_BLOCKS["print_random_media"]["canconfig"]) {
 					if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 						if ($ctype=="gedcom") {
@@ -333,7 +333,7 @@ function openPic(filename, width, height) {
 		}
 
 		print "<tr><td class=\"descriptionbox wrap width33\">";
-			print_help_link("random_media_persons_or_all_help", "qm");
+			print_help_link("random_media_persons_or_all", "qm");
 			print $pgv_lang["random_media_persons_or_all"];
 		print "</td>";?>
 	<td class="optionbox"><select name="filter">
@@ -347,7 +347,7 @@ function openPic(filename, width, height) {
 	</tr>
 
 	<tr>
-	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_filter_help", "qm"); print $pgv_lang["filter"]; ?></td>
+	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_filter", "qm"); print $pgv_lang["filter"]; ?></td>
 		<td class="optionbox">
 			<center><b><?php echo i18n::translate('FORM'); ?></b></center>
 			<table class="width100">
@@ -432,7 +432,7 @@ function openPic(filename, width, height) {
 	</tr>
 
 	<tr>
-	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_ajax_controls_help", "qm"); print $pgv_lang["random_media_ajax_controls"]; ?></td>
+	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_ajax_controls", "qm"); print $pgv_lang["random_media_ajax_controls"]; ?></td>
 		<td class="optionbox"><select name="controls">
 		<option value="yes"
 		<?php if ($config["controls"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
@@ -441,7 +441,7 @@ function openPic(filename, width, height) {
 	</select></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_start_slide_help", "qm"); print $pgv_lang["random_media_start_slide"]; ?></td>
+	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_start_slide", "qm"); print $pgv_lang["random_media_start_slide"]; ?></td>
 		<td class="optionbox"><select name="start">
 		<option value="yes"
 		<?php if ($config["start"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>

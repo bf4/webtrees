@@ -113,11 +113,11 @@ if (!$success) {
 <table class="facts_table">
 	<tr>
 		<td class="title" colspan="2">
-			<?php print_help_link("link_remote_help", "qm", "title_remote_link"); echo $pgv_lang["title_remote_link"]; ?>
+			<?php print_help_link("link_remote", "qm", "title_remote_link"); echo $pgv_lang["title_remote_link"]; ?>
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("link_remote_rel_help", "qm", "label_rel_to_current"); ?>
+		<td class="descriptionbox wrap width20"><?php print_help_link("link_remote_rel", "qm", "label_rel_to_current"); ?>
 			<?php echo $pgv_lang["label_rel_to_current"]; ?>
 		</td>
 		<td class="optionbox">
@@ -136,7 +136,7 @@ if (!$success) {
 	</tr>
 	<?php if ($controller->server_list || $controller->gedcom_list) { ?>
 	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("link_remote_location_help", "qm", "label_location"); ?>
+		<td class="descriptionbox wrap width20"><?php print_help_link("link_remote_location", "qm", "label_location"); ?>
 		<?php echo $pgv_lang["label_location"]; ?></td>
 		<td class="optionbox">
 			<?php
@@ -169,7 +169,7 @@ if (!$success) {
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php
-				print_help_link("link_person_id_help", "qm", "label_local_id");
+				print_help_link("link_person_id", "qm", "label_local_id");
 				echo $pgv_lang["label_local_id"];
 			?>
 		</td>
@@ -178,7 +178,7 @@ if (!$success) {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("link_remote_site_help", "qm", "label_site"); ?>
+		<td class="descriptionbox wrap width20"><?php print_help_link("link_remote_site", "qm", "label_site"); ?>
 			<span id="labelSite">
 				<?php echo $pgv_lang["label_site"]; ?>
 			</span>
@@ -246,7 +246,7 @@ if (!$success) {
 	<?php
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN_help", "qm", "no_update_CHAN");
+		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
 		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";

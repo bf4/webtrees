@@ -78,19 +78,19 @@ if (!$controller->isPrintPreview()) {
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap"><?php print_help_link("rootid_help", "qm", "root_person"); ?>
+				<td class="descriptionbox wrap"><?php print_help_link("rootid", "qm", "root_person"); ?>
 					<?php echo $pgv_lang["root_person"]; ?>
 				</td>
 				<td class="descriptionbox wrap">
-				<?php print_help_link("PEDIGREE_GENERATIONS_help", "qm", "generations"); ?>
+				<?php print_help_link("PEDIGREE_GENERATIONS", "qm", "generations"); ?>
 				<?php echo $pgv_lang["generations"]; ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("talloffset_help", "qm", "orientation"); ?>
+					<?php print_help_link("talloffset", "qm", "orientation"); ?>
 					<?php echo $pgv_lang["orientation"]; ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("show_full_help", "qm", "show_details"); ?>
+					<?php print_help_link("show_full", "qm", "show_details"); ?>
 					<?php echo $pgv_lang["show_details"]; ?>
 				</td>
 			</tr>

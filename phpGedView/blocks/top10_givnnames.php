@@ -63,7 +63,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	//Print block header
 
 	$id="top10givennames";
-	$title = print_help_link("index_common_given_names_help", "qm","",false,true);
+	$title = print_help_link("index_common_given_names", "qm","",false,true);
 	if ($PGV_BLOCKS["print_block_givn_top10"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -134,7 +134,7 @@ function print_block_givn_top10_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("style_help", "qm");
+	print_help_link("style", "qm");
 	print $pgv_lang["style"];
 	?>
 	</td><td class="optionbox">
@@ -146,7 +146,7 @@ function print_block_givn_top10_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("showUnknown_help", "qm");
+	print_help_link("showUnknown", "qm");
 	print $pgv_lang["showUnknown"];
 	?>
 	</td><td class="optionbox">
@@ -159,7 +159,7 @@ function print_block_givn_top10_config($config) {
 <?php	// Cache file life
 	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
-			print_help_link("cache_life_help", "qm");
+			print_help_link("cache_life", "qm");
 			print $pgv_lang["cache_life"];
 		print "</td><td class=\"optionbox\">";
 			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";

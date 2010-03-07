@@ -160,7 +160,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 <!--	/**************************************************** General Search Form *************************************************************/ -->
 			<?php if($controller->action == "general") { ?>
 				<td colspan="3" class="facts_label03" style="text-align:center;">
-					<?php print $pgv_lang["search_general"]; print_help_link("search_enter_terms_help", "qm"); ?>
+					<?php print $pgv_lang["search_general"]; print_help_link("search_enter_terms", "qm"); ?>
 				</td>
 	</tr>
 	<!-- // search terms -->
@@ -216,7 +216,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 	<!-- Choice to Exclude non-genealogical data -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print_help_link("search_exclude_tags_help", "qm"); print $pgv_lang["search_tagfilter"]; ?>
+			<?php print_help_link("search_exclude_tags", "qm"); print $pgv_lang["search_tagfilter"]; ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="radio" name="tagfilter" value="on"
@@ -237,7 +237,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 	<!-- Choice to show related persons/families (associates) -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print_help_link("search_include_ASSO_help", "qm"); print $pgv_lang["search_asso_label"]; ?>
+			<?php print_help_link("search_include_ASSO", "qm"); print $pgv_lang["search_asso_label"]; ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="checkbox" name="showasso" value="on"
@@ -255,7 +255,7 @@ if ($controller->action == "replace")
 	if (PGV_USER_CAN_EDIT) {
 ?>
 				<td colspan="3" class="facts_label03" style="text-align: center;">
-					<?php print $pgv_lang["search_replace"]; print_help_link('search_replace_help', 'qm'); ?>
+					<?php print $pgv_lang["search_replace"]; print_help_link('search_replace', 'qm'); ?>
 				</td>
 	</tr>
 	<!-- // search terms -->
@@ -309,7 +309,7 @@ if ($controller->action == "replace")
 if ($controller->action == "soundex") {
 ?>
 				<td colspan="3" class="facts_label03" style="text-align:center; ">
-					<?php print $pgv_lang["soundex_search"]; print_help_link("soundex_search_help", "qm"); ?>
+					<?php print $pgv_lang["soundex_search"]; print_help_link("soundex_search", "qm"); ?>
 				</td>
 	</tr>
 	<!-- // search terms -->
@@ -396,7 +396,7 @@ if ($controller->action == "multisite") {
 ?>
 					<input type="hidden" name="subaction" value="basic" />
 					<td colspan="3" class="facts_label03" style="text-align:center; ">
-						<?php print $pgv_lang["multi_site_search"]; print_help_link("multi_site_search_help", "qm"); ?>
+						<?php print $pgv_lang["multi_site_search"]; print_help_link("multi_site_search", "qm"); ?>
 					</td>
 	</tr>
 	<tr>

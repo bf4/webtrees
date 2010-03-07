@@ -123,7 +123,7 @@ if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	print_add_new_fact($controller->nid, $notefacts, 'NOTE');
 	// new media
 	echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
-	print_help_link('add_media_help', 'qm', 'add_media_lbl');
+	print_help_link('add_media', 'qm', 'add_media_lbl');
 	echo $pgv_lang['add_media_lbl'] , '</td>';
 	echo '<td class="optionbox ', $TEXT_DIRECTION, '">';
 	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';

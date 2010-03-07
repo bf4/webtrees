@@ -285,7 +285,7 @@ if ($action == "add_form") {
 		echo $PGV_IMAGES["plus"]["other"];
 	}
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-	print_help_link("add_gedcom_help", "qm", "add_gedcom");
+	print_help_link("add_gedcom", "qm", "add_gedcom");
 	echo "&nbsp;<a href=\"javascript: ";
 	if ($import_existing) {
 		echo $pgv_lang["ged_import"];
@@ -324,7 +324,7 @@ if ($action == "add_form") {
 	?>
 	<tr>
 	<td class="descriptionbox width20 wrap">
-	<?php print_help_link("gedcom_path_help", "qm","gedcom_path");?>
+	<?php print_help_link("gedcom_path", "qm","gedcom_path");?>
 	<?php echo $pgv_lang["gedcom_file"]; ?></td>
 	<td class="optionbox"><input type="text" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME) && strlen($GEDFILENAME) > 4) echo get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path'); ?>"
 					size="60" dir ="ltr" tabindex="<?php $i++; echo $i?>"	<?php if ((!$no_upload && isset($GEDFILENAME)) && (empty($error))) echo "disabled "; ?> />
@@ -345,7 +345,7 @@ elseif ($action == "upload_form") {
 		echo $PGV_IMAGES["plus"]["other"];
 	}
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-	print_help_link("upload_gedcom_help", "qm", "upload_gedcom");
+	print_help_link("upload_gedcom", "qm", "upload_gedcom");
 	echo "&nbsp;<a href=\"javascript: ", $pgv_lang["upload_gedcom"], "\" onclick=\"expand_layer('upload_gedcom');return false\">", $pgv_lang["upload_gedcom"], "</a>";
 	echo "</td></tr>";
 	echo "<tr><td class=\"optionbox wrap\">";
@@ -457,7 +457,7 @@ if ($verify == "verify_gedcom") {
 		else
 		print $PGV_IMAGES["plus"]["other"];
 		print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-		print_help_link("verify_gedcom_help", "qm", "verify_gedcom");
+		print_help_link("verify_gedcom", "qm", "verify_gedcom");
 		print "&nbsp;<a href=\"javascript: ".$pgv_lang["verify_gedcom"]."\" onclick=\"expand_layer('verify_gedcom');return false\">".$pgv_lang["verify_gedcom"]."</a>";
 		print "</td></tr>";
 		print "<tr><td class=\"optionbox\" colspan=\"2\">";
@@ -509,7 +509,7 @@ if ($verify == "verify_gedcom") {
 			?>
 			<tr>
 			<td class="descriptionbox wrap width20">
-			<?php print_help_link("keep_media_help", "qm", "keep_media"); print $pgv_lang["keep_media"];?></td>
+			<?php print_help_link("keep_media", "qm", "keep_media"); print $pgv_lang["keep_media"];?></td>
 			<td class="optionbox">
 			<select name="keepmedia">
 			<option value="yes" <?php if ($keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
@@ -532,7 +532,7 @@ if ($verify == "validate_form") {
 	else
 	print $PGV_IMAGES["plus"]["other"];
 	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-	print_help_link("validate_gedcom_help", "qm", "validate_gedcom");
+	print_help_link("validate_gedcom", "qm", "validate_gedcom");
 	print "&nbsp;<a href=\"javascript: ".$pgv_lang["validate_gedcom"]."\" onclick=\"expand_layer('validate_gedcom');return false\">".$pgv_lang["validate_gedcom"]."</a>";
 	print "</td></tr>";
 	print "<tr><td class=\"optionbox\">";
@@ -593,28 +593,28 @@ if ($verify == "validate_form") {
 			// NOTE: Check for BOM cleanup
 			if ($l_BOMcleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print_help_link("BOM_detected_help", "qm", "BOM_detected");
+				print_help_link("BOM_detected", "qm", "BOM_detected");
 				print "<span class=\"error\">".$pgv_lang["BOM_detected"]."</span>\n";
 				print "</td></tr>";
 			}
 			// NOTE: Check for head cleanup
 			if ($l_headcleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print_help_link("invalid_header_help", "qm", "invalid_header");
+				print_help_link("invalid_header", "qm", "invalid_header");
 				print "<span class=\"error\">".$pgv_lang["invalid_header"]."</span>\n";
 				print "</td></tr>";
 			}
 			// NOTE: Check for mac file cleanup
 			if ($l_macfilecleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print_help_link("macfile_detected_help", "qm", "macfile_detected");
+				print_help_link("macfile_detected", "qm", "macfile_detected");
 				print "<span class=\"error\">".$pgv_lang["macfile_detected"]."</span>\n";
 				print "</td></tr>";
 			}
 			// NOTE: Check for line endings cleanup
 			if ($l_lineendingscleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print_help_link("empty_lines_detected_help", "qm", "empty_lines_detected");
+				print_help_link("empty_lines_detected", "qm", "empty_lines_detected");
 				print "<span class=\"error\">".$pgv_lang["empty_lines_detected"]."</span>\n";
 				print "</td></tr>";
 			}
@@ -626,7 +626,7 @@ if ($verify == "validate_form") {
 				print "<span class=\"error\">".$pgv_lang["place_cleanup_detected"]."</span>\n";
 				print "</td></tr>";
 				print "<tr><td class=\"descriptionbox wrap width20\">";
-				print_help_link("cleanup_places_help", "qm", "cleanup_places");
+				print_help_link("cleanup_places", "qm", "cleanup_places");
 				print $pgv_lang["cleanup_places"];
 				print "</td><td class=\"optionbox\" colspan=\"2\"><select name=\"cleanup_places\">\n";
 				print "<option value=\"YES\" selected=\"selected\">".$pgv_lang["yes"]."</option>\n<option value=\"NO\">".$pgv_lang["no"]."</option>\n</select>";
@@ -641,7 +641,7 @@ if ($verify == "validate_form") {
 				print "<span class=\"error\">".$pgv_lang["invalid_dates"]."</span>\n";
 				print "\n<table class=\"facts_table\">";
 				print "<tr><td class=\"descriptionbox width20\">";
-				print_help_link("detected_date_help", "qm");
+				print_help_link("detected_date", "qm");
 				print $pgv_lang["date_format"];
 
 				print "</td><td class=\"optionbox\" colspan=\"2\">";
@@ -661,7 +661,7 @@ if ($verify == "validate_form") {
 				print "<span class=\"error\">".$pgv_lang["ansi_encoding_detected"]."</span>\n";
 				print "\n<table class=\"facts_table\">";
 				print "<tr><td class=\"descriptionbox wrap width20\">";
-				print_help_link("detected_ansi2utf_help", "qm", "ansi_to_utf8");
+				print_help_link("detected_ansi2utf", "qm", "ansi_to_utf8");
 				print $pgv_lang["ansi_to_utf8"];
 				print "</td><td class=\"optionbox\"><select name=\"utf8convert\">\n";
 				print "<option value=\"YES\" selected=\"selected\">".$pgv_lang["yes"]."</option>\n";
@@ -698,7 +698,7 @@ if ($import == true) {
 	else
 	print $PGV_IMAGES["plus"]["other"];
 	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-	print_help_link("import_options_help", "qm", "import_options");
+	print_help_link("import_options", "qm", "import_options");
 	print "&nbsp;<a href=\"javascript: ".$pgv_lang["import_options"]."\" onclick=\"expand_layer('import_options');return false\">".$pgv_lang["import_options"]."</a>";
 	print "</td></tr>";
 	print "<tr><td class=\"optionbox\" colspan=\"2\">";
@@ -713,7 +713,7 @@ if ($import == true) {
 	// NOTE: Time limit for import
 	// TODO: Write help text
 	print "<tr><td class=\"descriptionbox width20 wrap\">";
-	print_help_link("time_limit_help", "qm", "time_limit");
+	print_help_link("time_limit", "qm", "time_limit");
 	print $pgv_lang["time_limit"];
 	print "</td><td class=\"optionbox\"><input type=\"text\" name=\"timelimit\" value=\"".$timelimit."\" size=\"5\"";
 	if ($startimport == "true")
@@ -724,7 +724,7 @@ if ($import == true) {
 	// NOTE: Auto-click "Continue" button
 	// TODO: Write help text
 	print "<tr><td class=\"descriptionbox width20 wrap\">";
-	print_help_link("autoContinue_help", "qm", "autoContinue");
+	print_help_link("autoContinue", "qm", "autoContinue");
 	print $pgv_lang["autoContinue"];
 	print "</td><td class=\"optionbox\"><select name=\"autoContinue\">\n";
 	print "<option value=\"YES\" selected=\"selected\">".$pgv_lang["yes"]."</option>\n";
@@ -733,7 +733,7 @@ if ($import == true) {
 
 	// NOTE: change XREF to RIN, REFN, or Don't change
 	print "<tr><td class=\"descriptionbox wrap\">";
-	print_help_link("change_indi2id_help", "qm", "change_id");
+	print_help_link("change_indi2id", "qm", "change_id");
 	print $pgv_lang["change_id"];
 	print "</td><td class=\"optionbox\">";
 	if ($startimport == "true") {

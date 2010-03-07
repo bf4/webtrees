@@ -62,7 +62,7 @@ if (!$controller->isPrintPreview()) {
 		?>
 	<table>
 		<tr><td class="person<?php print $col; ?>" style="padding: 5px" valign="top">
-			<?php print_help_link("add_person_help", "qm"); ?>
+			<?php print_help_link("add_person", "qm"); ?>
 			<?php print $pgv_lang["add_another"];?>&nbsp;
 			<input class="pedigree_form" type="text" size="5" id="newpid" name="newpid" />&nbsp;
 			<?php print_findindi_link("newpid",""); ?>
@@ -299,7 +299,7 @@ var oldMx = 0;
 
 	<table>
 		<tr>
-			<td><?php print_help_link("timeline_control_help", "qm"); ?></td>
+			<td><?php print_help_link("timeline_control", "qm"); ?></td>
 			<td align="center"><?php print $pgv_lang["timeline_scrollSpeed"];?></td>
 				<td align="center"><?php print $pgv_lang["timeline_beginYear"];?></td>
 				<td align="center"><?php print $pgv_lang["timeline_endYear"];?></td>

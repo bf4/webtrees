@@ -92,7 +92,7 @@ if (($action=="setdefault") && in_array($default_ged, $all_gedcoms)) {
 // Default gedcom choice
 print "<br />";
 if (PGV_USER_IS_ADMIN && count($all_gedcoms)>1) {
-	print_help_link("default_gedcom_help", "qm");
+	print_help_link("default_gedcom", "qm");
 	print $pgv_lang["DEFAULT_GEDCOM"]."&nbsp;";
 	print "<select name=\"default_ged\" class=\"header_select\" onchange=\"document.defaultform.submit();\">";
 	if (!in_array($DEFAULT_GEDCOM, $all_gedcoms)) {
@@ -107,7 +107,7 @@ if (PGV_USER_IS_ADMIN && count($all_gedcoms)>1) {
 	print "</select><br /><br />";
 }
 
-print_help_link('SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help', 'qm');
+print_help_link('SECURITY_CHECK_GEDCOM_DOWNLOADABLE', 'qm');
 print '<a href="editgedcoms.php?check_download=true">'.$pgv_lang['SECURITY_CHECK_GEDCOM_DOWNLOADABLE']."</a>\n";
 // Print table heading
 print "<table class=\"gedcom_table\">";

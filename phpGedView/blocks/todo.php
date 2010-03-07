@@ -57,7 +57,7 @@ function print_todo($block=true, $config='', $side, $index) {
 	}
 
 	$id='todo';
-	$title = print_help_link('todo_help', 'qm','',false,true);
+	$title = print_help_link('todo', 'qm','',false,true);
 	if ($PGV_BLOCKS['print_todo']['canconfig']) {
 		if ($ctype=='gedcom' && PGV_USER_GEDCOM_ADMIN || $ctype=='user' && PGV_USER_ID) {
 			if ($ctype=='gedcom') {
@@ -129,7 +129,7 @@ function print_todo_config($config) {
 	}
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('todo_show_other_help', 'qm');
+	print_help_link('todo_show_other', 'qm');
 	print $pgv_lang['todo_show_other']."</td>";
 	print '</td><td class="optionbox">';
 	print '<select name="show_other">';
@@ -142,7 +142,7 @@ function print_todo_config($config) {
 	print '</select></td></tr>';
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('todo_show_unassigned_help', 'qm');
+	print_help_link('todo_show_unassigned', 'qm');
 	print $pgv_lang['todo_show_unassigned']."</td>";
 	print '</td><td class="optionbox">';
 	print '<select name="show_unassigned">';
@@ -155,7 +155,7 @@ function print_todo_config($config) {
 	print '</select></td></tr>';
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('todo_show_future_help', 'qm');
+	print_help_link('todo_show_future', 'qm');
 	print $pgv_lang['todo_show_future']."</td>";
 	print '</td><td class="optionbox">';
 	print '<select name="show_future">';

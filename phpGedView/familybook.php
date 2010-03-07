@@ -411,7 +411,7 @@ if ($view!="preview") {
 
 		<!-- // NOTE: Root ID -->
 	<td class="descriptionbox">
-	<?php print_help_link("desc_rootid_help", "qm");
+	<?php print_help_link("desc_rootid", "qm");
 	print $pgv_lang["root_person"] . "</td>";?>
 	<td class="optionbox">
 	<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php print $pid ?>"	/>
@@ -420,7 +420,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Show Details -->
 	<td class="descriptionbox">
-	<?php print_help_link("show_full_help", "qm");
+	<?php print_help_link("show_full", "qm");
 	print $pgv_lang["show_details"]?>
 	</td>
 	<td class="optionbox">
@@ -437,7 +437,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Generations -->
 	<tr><td class="descriptionbox" >
-	<?php print_help_link("desc_generations_help", "qm");
+	<?php print_help_link("desc_generations", "qm");
 	print $pgv_lang["generations"]?>
 	</td>
 	<td class="optionbox">
@@ -454,7 +454,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Show spouses -->
 	<td class="descriptionbox">
-	<?php print_help_link("show_spouse_help", "qm");
+	<?php print_help_link("show_spouse", "qm");
 	print $pgv_lang["show_spouses"]?>
 	</td>
 	<td class="optionbox">
@@ -465,7 +465,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Box width -->
 	<tr><td class="descriptionbox">
-	<?php print_help_link("box_width_help", "qm");
+	<?php print_help_link("box_width", "qm");
 	print $pgv_lang["box_width"]?>
 	</td>
 	<td class="optionbox"><input type="text" size="3" name="box_width" value="<?php print $box_width; ?>" />
@@ -477,7 +477,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Descent steps -->
 	<tr><td class="descriptionbox">
-	<?php print_help_link("fambook_descent_help", "qm");
+	<?php print_help_link("fambook_descent", "qm");
 	print $pgv_lang["descent_steps"]?>
 	</td>
 	<td class="optionbox"><input type="text" size="3" name="descent" value="<?php print $descent;?>" />

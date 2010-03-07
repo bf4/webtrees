@@ -201,7 +201,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_lang_use = $pgv_lang_use[$ln];
 	}
 	echo "<tr>";
-	echo '<td class="facts_label" >', print_help_link("active_help", "qm"), $pgv_lang["active"], "</td>";
+	echo '<td class="facts_label" >', print_help_link("active", "qm"), $pgv_lang["active"], "</td>";
 	write_td_with_textdir_check();
 
 	if ($v_lang_use) {
@@ -221,7 +221,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_original_lang_name = $pgv_lang_self[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("original_lang_name_help", "qm");
+	print_help_link("original_lang_name", "qm");
 	echo str_replace("#D_LANGNAME#", $pgv_lang[$d_LangName], $pgv_lang["original_lang_name"]);
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -234,7 +234,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_lang_shortcut = $lang_short_cut[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("lang_shortcut_help", "qm");
+	print_help_link("lang_shortcut", "qm");
 	echo $pgv_lang["lang_shortcut"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -247,7 +247,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_lang_langcode = $lang_langcode[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("lang_langcode_help", "qm");
+	print_help_link("lang_langcode", "qm");
 	echo $pgv_lang["lang_langcode"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -260,7 +260,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_flagsfile = $flagsfile[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("flagsfile_help", "qm");
+	print_help_link("flagsfile", "qm");
 	echo $pgv_lang["flagsfile"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -322,7 +322,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_date_format = $DATE_FORMAT_array[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("date_format_help", "qm");
+	print_help_link("date_format", "qm");
 	echo $pgv_lang["date_format"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -335,7 +335,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_time_format = $TIME_FORMAT_array[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("time_format_help", "qm");
+	print_help_link("time_format", "qm");
 	echo $pgv_lang["time_format"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -348,7 +348,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_week_start = $WEEK_START_array[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("week_start_help", "qm");
+	print_help_link("week_start", "qm");
 	echo $pgv_lang["week_start"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -374,7 +374,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_text_direction = $TEXT_DIRECTION_array[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("text_direction_help", "qm");
+	print_help_link("text_direction", "qm");
 	echo $pgv_lang["text_direction"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -398,7 +398,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_name_reverse = $NAME_REVERSE_array[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("name_reverse_help", "qm");
+	print_help_link("name_reverse", "qm");
 	echo $pgv_lang["name_reverse"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -422,7 +422,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_alphabet_upper = $ALPHABET_upper[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("alphabet_upper_help", "qm");
+	print_help_link("alphabet_upper", "qm");
 	echo $pgv_lang["alphabet_upper"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -435,7 +435,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_alphabet_lower = $ALPHABET_lower[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("alphabet_lower_help", "qm");
+	print_help_link("alphabet_lower", "qm");
 	echo $pgv_lang["alphabet_lower"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -448,7 +448,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_multi_letter_alphabet = $MULTI_LETTER_ALPHABET[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("multi_letter_alphabet_help", "qm");
+	print_help_link("multi_letter_alphabet", "qm");
 	echo $pgv_lang["multi_letter_alphabet"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -461,7 +461,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_multi_letter_equiv = $MULTI_LETTER_EQUIV[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("multi_letter_equiv_help", "qm");
+	print_help_link("multi_letter_equiv", "qm");
 	echo $pgv_lang["multi_letter_equiv"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -474,7 +474,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_dictionary_sort = $DICTIONARY_SORT[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("dictionary_sort_help", "qm");
+	print_help_link("dictionary_sort", "qm");
 	echo $pgv_lang["dictionary_sort"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -498,7 +498,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_collation = $COLLATION[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("collation_help", "qm");
+	print_help_link("collation", "qm");
 	echo $pgv_lang["collation"];
 	echo "</td>";
 	write_td_with_textdir_check();
@@ -518,7 +518,7 @@ if ($action != "save" && $action != "toggleActive") {
 
 	if ($action != "new_lang") {
 		echo '<tr><td class="facts_label" >';
-		print_help_link("lang_filenames_help", "qm");
+		print_help_link("lang_filenames", "qm");
 		echo $pgv_lang["lang_filenames"];
 		echo '</td>';
 		write_td_with_textdir_check();

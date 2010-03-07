@@ -113,10 +113,10 @@ if (!isset ($_POST["matching"])) {$matching=0;} else {$matching=1;}
 echo "<td>";
 echo "<table>";
 echo "<tr><td colspan='2' class='descriptionbox' align='center'>";
-print_help_link("PLACECHECK_FILTER_help", "qm", "PLACECHECK_FILTER");
+print_help_link("PLACECHECK_FILTER", "qm", "PLACECHECK_FILTER");
 echo "<strong>", $pgv_lang["placecheck_filter_text"], "</strong></td></tr>";
 echo "<tr><td class='descriptionbox'>";
-print_help_link("PLACECHECK_MATCH_help", "qm", "PLACECHECK_MATCH");
+print_help_link("PLACECHECK_MATCH", "qm", "PLACECHECK_MATCH");
 echo $pgv_lang["placecheck_match"], "</td>";
 echo "<td class='optionbox'><input type=\"checkbox\" name=\"matching\" value=\"active\"";
 if($matching==1) {

@@ -441,7 +441,7 @@ if ($view != "preview") {
 
 	// NOTE: rootid
 	echo "<td class=\"descriptionbox\">";
-	print_help_link("rootid_help", "qm", "root_person");
+	print_help_link("rootid", "qm", "root_person");
 	echo $pgv_lang["root_person"]."</td>";
 	echo "<td class=\"optionbox\">";
 	echo "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
@@ -450,7 +450,7 @@ if ($view != "preview") {
 
 	// NOTE: fan style
 	echo "<td rowspan=\"3\" class=\"descriptionbox\">";
-	print_help_link("fan_style_help", "qm", "chart_style");
+	print_help_link("fan_style", "qm", "chart_style");
 	echo $pgv_lang["fan_chart"]."</td>";
 	echo "<td rowspan=\"3\" class=\"optionbox\">";
 	echo "<input type=\"radio\" name=\"fan_style\" value=\"2\"";
@@ -470,7 +470,7 @@ if ($view != "preview") {
 
 	// NOTE: generations
 	echo "<tr><td class=\"descriptionbox\">";
-	print_help_link("PEDIGREE_GENERATIONS_help", "qm", "generations");
+	print_help_link("PEDIGREE_GENERATIONS", "qm", "generations");
 	echo $pgv_lang["generations"]."</td>";
 	echo "<td class=\"optionbox\">";
 	echo "<select name=\"PEDIGREE_GENERATIONS\">";
@@ -485,7 +485,7 @@ if ($view != "preview") {
 	echo "</tr><tr>";
 	// NOTE: fan width
 	echo "<td class=\"descriptionbox\">";
-	print_help_link("fan_width_help", "qm", "fan_width");
+	print_help_link("fan_width", "qm", "fan_width");
 	echo $pgv_lang["fan_width"]."</td>";
 	echo "<td class=\"optionbox\">";
 	echo "<input type=\"text\" size=\"3\" name=\"fan_width\" value=\"$fan_width\" /> <b>%</b> ";

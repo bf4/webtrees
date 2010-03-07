@@ -541,7 +541,6 @@ if ($pid2) {
 		$path_to_find=0;
 	}
 }
-//	print_help_link("relationship_help", "page_help");
 ?>
 <script language="JavaScript" type="text/javascript">
 var pastefield;
@@ -576,7 +575,7 @@ if ($view!="preview") {
 	<!-- // Person 1 -->
 	<tr><td class="descriptionbox">
 	<?php
-	print_help_link("relationship_id_help", "qm");
+	print_help_link("relationship_id", "qm");
 	print $pgv_lang["person1"]?>
 	</td>
 	<td class="optionbox vmiddle">
@@ -591,7 +590,7 @@ if ($view!="preview") {
 	<!-- // Show details -->
 	<td class="descriptionbox">
 	<?php
-	print_help_link("show_full_help", "qm");
+	print_help_link("show_full", "qm");
 	print $pgv_lang["show_details"];?>
 	</td>
 	<td class="optionbox vmiddle">
@@ -606,7 +605,7 @@ if ($view!="preview") {
 	<!-- // Person 2 -->
 	<tr><td class="descriptionbox">
 	<?php
-	print_help_link("relationship_id_help", "qm");
+	print_help_link("relationship_id", "qm");
 	print $pgv_lang["person2"]?>
 	</td>
 	<td class="optionbox vmiddle">
@@ -621,7 +620,7 @@ if ($view!="preview") {
 	<!-- // Line up generations -->
 	<td class="descriptionbox">
 	<?php
-	print_help_link("line_up_generations_help", "qm");
+	print_help_link("line_up_generations", "qm");
 	print $pgv_lang["line_up_generations"]?>
 	</td>
 	<td class="optionbox">
@@ -646,7 +645,7 @@ if ($view!="preview") {
 	else print "none";
 	?>">
 	<?php
-	print_help_link("oldest_top_help", "qm");
+	print_help_link("oldest_top", "qm");
 	print $pgv_lang["oldest_top"];
 	?>
 	</div>
@@ -715,7 +714,7 @@ if ($view!="preview") {
 	<!-- // Check relationships by marriage -->
 	<td class="descriptionbox">
 	<?php
-	print_help_link("follow_spouse_help", "qm");
+	print_help_link("follow_spouse", "qm");
 	print $pgv_lang["follow_spouse"];?>
 	</td>
 	<td class="optionbox" id="followspousebox">

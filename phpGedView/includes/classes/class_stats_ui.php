@@ -146,7 +146,7 @@ class stats_ui extends stats
 				';
 			$uniqueID = floor(microtime() * 1000000);
 			if($isged) {
-				$content .= print_help_link('index_add_favorites_help', 'qm', '', false, true)
+				$content .= print_help_link('index_add_favorites', 'qm', '', false, true)
 					."<b><a href=\"javascript://{$pgv_lang['add_favorite']} \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;{$pgv_lang['add_favorite']}</a></b>"
 					."<br />\n<div id=\"add_ged_fav\" style=\"display: none;\">\n"
 					."<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n"
@@ -155,7 +155,7 @@ class stats_ui extends stats
 
 			}
 			else {
-				$content .= print_help_link('index_add_favorites_help', 'qm', '', false, true)
+				$content .= print_help_link('index_add_favorites', 'qm', '', false, true)
 					."<b><a href=\"javascript://{$pgv_lang['add_favorite']} \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;{$pgv_lang['add_favorite']}</a></b>"
 					."<br />\n<div id=\"add_user_fav\" style=\"display: none;\">\n"
 					."<form name=\"addufavform\" method=\"post\" action=\"index.php\">\n"
@@ -461,7 +461,7 @@ class stats_ui extends stats
 		}
 		if($limit == 'date' || $limit == 'count') {
 			if($printedAddLink){$content .= '&nbsp;&nbsp;|&nbsp;&nbsp;';}
-			$content .= print_help_link('gedcom_news_archive_help', 'qm', '', false, true);
+			$content .= print_help_link('gedcom_news_archive', 'qm', '', false, true);
 			$content .= "<a href=\"".encode_url("index.php?gedcom_news_archive=yes&ctype={$ctype}")."\">{$pgv_lang['gedcom_news_archive']}</a><br />\n";
 		}
 		return $content;

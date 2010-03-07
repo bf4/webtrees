@@ -40,7 +40,7 @@ if (PGV_USER_IS_ADMIN) { ?>
 	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["sitemap"]; ?></td>
    </tr>
    <tr>
-      <td class="optionbox"><?php print_help_link("SITEMAP_help", "qm", "SITEMAP");?><a href="module.php?mod=sitemap"><?php print $pgv_lang["generate_sitemap"];?></a>
+      <td class="optionbox"><?php print_help_link("SITEMAP", "qm", "SITEMAP");?><a href="module.php?mod=sitemap"><?php print $pgv_lang["generate_sitemap"];?></a>
 	  </td>
       <td class="optionbox">&nbsp;
 	  </td>

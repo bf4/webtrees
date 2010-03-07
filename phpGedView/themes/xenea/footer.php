@@ -35,7 +35,7 @@ echo "\n\t<div align=\"center\" style=\"width:99%;\">";
 echo contact_links();
 echo '<br /><a href="', PGV_PHPGEDVIEW_URL, '" target="_blank"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['gedview']['other'], '" width="100" height="45" border="0" alt="', PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "", '" title="', PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "", '" /></a><br />';
 echo "\n\t<br />";
-print_help_link("preview_help", "qm");
+print_help_link("preview", "qm");
 echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', $pgv_lang['print_preview'], '</a>';
 echo "<br />";
 if ($SHOW_STATS || PGV_DEBUG) {

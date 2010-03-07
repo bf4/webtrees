@@ -736,7 +736,7 @@ if ($action=="add") {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("PLE_PLACES_help", "qm", "PLE_PLACES");?><?php echo i18n::translate('PLAC'); ?></td>
+		<td class="descriptionbox"><?php print_help_link("PLE_PLACES", "qm", "PLE_PLACES");?><?php echo i18n::translate('PLAC'); ?></td>
 		 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo htmlspecialchars($place_name) ?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />
 		<div id="INDI_PLAC_pop" style="display: inline;">
 		<?php print_specialchar_link("NEW_PLACE_NAME", false);?></div>
@@ -745,7 +745,7 @@ if ($action=="add") {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("PLE_PRECISION_help", "qm", "PLE_PRECISION");?><?php echo $pgv_lang["pl_precision"];?></td>
+		<td class="descriptionbox"><?php _help_link("PLE_PRECISION_help", "qm", "PLE_PRECISION");?><?php echo $pgv_lang["pl_precision"];?></td>
 		<?php
 			$exp = explode(".", $place_lati);
 			if (isset($exp[1])) {
@@ -781,7 +781,7 @@ if ($action=="add") {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("PLE_LATLON_CTRL_help", "qm", "PLE_LATLON_CTRL");?><?php echo i18n::translate('LATI'); ?></td>
+		<td class="descriptionbox"><?php print_help_link("PLE_LATLON_CTRL", "qm", "PLE_LATLON_CTRL");?><?php echo i18n::translate('LATI'); ?></td>
 		<td class="optionbox">
 			<select name="LATI_CONTROL" tabindex="<?php echo ++$i;?>" onchange="updateMap();">
 				<option value="" <?php if ($place_lati == null) echo " selected=\"selected\"";?>></option>
@@ -791,7 +791,7 @@ if ($action=="add") {
 			<input type="text" name="NEW_PLACE_LATI" value="<?php if ($place_lati != null) echo abs($place_lati);?>" size="20" tabindex="<?php echo ++$i;?>" onchange="updateMap();" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("PLE_LATLON_CTRL_help", "qm", "PLE_LATLON_CTRL");?><?php echo i18n::translate('LONG'); ?></td>
+		<td class="descriptionbox"><?php print_help_link("PLE_LATLON_CTRL", "qm", "PLE_LATLON_CTRL");?><?php echo i18n::translate('LONG'); ?></td>
 		<td class="optionbox">
 			<select name="LONG_CONTROL" tabindex="<?php echo ++$i;?>" onchange="updateMap();">
 				<option value="" <?php if ($place_long == null) echo " selected=\"selected\"";?>></option>
@@ -801,12 +801,12 @@ if ($action=="add") {
 			<input type="text" name="NEW_PLACE_LONG" value="<?php if ($place_long != null) echo abs($place_long);?>" size="20" tabindex="<?php echo ++$i;?>" onchange="updateMap();" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("PLE_ZOOM_help", "qm", "PLE_ZOOM");?><?php echo $pgv_lang["pl_zoom_factor"];?></td>
+		<td class="descriptionbox"><?php print_help_link("PLE_ZOOM", "qm", "PLE_ZOOM");?><?php echo $pgv_lang["pl_zoom_factor"];?></td>
 		<td class="optionbox">
 			<input type="text" name="NEW_ZOOM_FACTOR" value="<?php echo $zoomfactor;?>" size="20" tabindex="<?php echo ++$i;?>" onchange="updateMap();" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("PLE_ICON_help", "qm", "PLE_ICON");?><?php echo $pgv_lang["pl_flag"];?></td>
+		<td class="descriptionbox"><?php print_help_link("PLE_ICON", "qm", "PLE_ICON");?><?php echo $pgv_lang["pl_flag"];?></td>
 		<td class="optionbox">
 			<div id="flagsDiv">
 <?php

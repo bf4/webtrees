@@ -201,7 +201,7 @@ global $pgv_lang;
 	// Admin Option CHAN log update override =======================
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN_help", "qm");
+		print_help_link("no_update_CHAN", "qm");
 		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" value=\"no_change\"/ >\n";
 		echo $pgv_lang["no_update_CHANs"], "<br /><br />\n";
