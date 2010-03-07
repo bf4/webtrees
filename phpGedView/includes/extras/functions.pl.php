@@ -226,6 +226,7 @@ function fact_NMR_localisation_pl($fact, &$fid) {
 		if (empty($wife) && !empty($husb))		$fact = "Nigdy nieżonaty"; // mężczyzna
 		else if (empty($husb) && !empty($wife))	$fact = "Nigdy niezamężna"; // kobieta
 	}
+	return $fact;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Localise the AGNC fact. Lokalizacja faktu AGNC.

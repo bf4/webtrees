@@ -199,18 +199,20 @@ class relatives_Tab extends Tab {
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
 							// Localise the _NMR facts
-							$func("_NMR", $famid);
+							echo i18n::translate($func("_NMR", $famid));
+						} else {
+							echo i18n::translate('_NMR');
 						}
-						echo i18n::translate('_NMR');
 					}
 					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
 							// Localise the _NMR facts
-							$func("_NMAR", $famid);
+							echo i18n::translate($func("_NMAR", $famid));
+						} else {
+							echo i18n::translate('_NMAR');
 						}
-						echo i18n::translate('_NMAR');
 					}
 					else if ($family->getMarriageRecord()=="" && $this->controller->canedit) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$famid."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";

@@ -130,7 +130,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 				if (function_exists($func)) {
 					// Localise the _NMR facts
-					$func($fact, $pid);
+					$fact = $func($fact, $pid);
 				}
 			}
 			$explode_fact = explode("_", $fact);
@@ -238,7 +238,11 @@ function print_fact(&$eventObj, $noedit=false) {
 			// -- first print TYPE for some facts
 			if ($fact!="EVEN" && $fact!="FACT") {
 				if (preg_match("/2 TYPE (.*)/", $factrec, $match)) {
-					echo i18n::translate(trim($match[1]));
+					if ($fact=="MARR") {
+						echo i18n::translate("MARR_".strtoupper(trim($match[1])));
+					} else {
+						echo i18n::translate(trim($match[1]));
+					}
 					echo "<br />";
 				}
 			}
