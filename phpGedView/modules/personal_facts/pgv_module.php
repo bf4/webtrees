@@ -38,6 +38,10 @@ class personal_facts_PGVModule extends PGVModule {
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 
+	public function getName() {
+		return i18n::translate('Personal Facts');
+	}
+
 	/**
 	 * does this module implement a menu
 	 * should be overidden in extending classes

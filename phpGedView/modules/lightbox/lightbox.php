@@ -34,7 +34,7 @@ class lightbox_Tab extends media_Tab {
 		global $Fam_Navigator, $NAV_ALBUM;
 
 		$out = "<div id=\"lightbox2\">";
-		$out .= "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>";
+		$out .= "<span class=\"subheaders\">" . $this->getName() . "</span>";
 		$out .= "&nbsp;&nbsp;";
 		ob_start();
 		// ---------- Help link --------------------

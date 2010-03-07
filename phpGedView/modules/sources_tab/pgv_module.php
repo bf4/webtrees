@@ -38,6 +38,10 @@ class sources_tab_PGVModule extends PGVModule {
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 	
+	public function getName() {
+		return i18n::translate('Sources');
+	}
+
 	/**
 	 * get the tab for this
 	 * @return Tab

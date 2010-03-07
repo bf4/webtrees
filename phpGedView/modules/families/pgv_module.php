@@ -39,6 +39,10 @@ class families_PGVModule extends PGVModule {
 	protected $pgvVersion = '4.2.2';
 	protected $_sidebar = null;
 
+	public function getName() {
+		return i18n::translate('Families');
+	}
+
 	public function hasSidebar() { return true; }
 	
 	/**

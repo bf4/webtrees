@@ -38,6 +38,11 @@ class page_menu_PGVModule extends PGVModule {
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
 
+	public function getName() {
+		// TODO what is this?
+		return 'Unknown';
+	}
+
 	/**
 	 * does this module implement a menu
 	 * should be overidden in extending classes

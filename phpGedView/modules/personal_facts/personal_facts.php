@@ -43,7 +43,7 @@ class personal_facts_Tab extends Tab {
 		if (isset($_COOKIE['row_histo'])) $EXPAND_HISTO_EVENTS = ($_COOKIE['row_histo']);
 		else*/ $EXPAND_HISTO_EVENTS = false;
 
-		$out = "<span class=\"subheaders\">".$pgv_lang["personal_facts"]."</span><div id=\"facts_content\">";
+		$out = "<span class=\"subheaders\">".$this->getName()."</span><div id=\"facts_content\">";
 		//-- only need to add family facts on this tab
 		if (!isset($this->controller->skipFamilyFacts)) $this->controller->indi->add_family_facts();
 

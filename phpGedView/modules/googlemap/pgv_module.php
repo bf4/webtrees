@@ -17,6 +17,10 @@ class googlemap_PGVModule extends PGVModule {
 	protected $configLink = 'module.php?mod=googlemap&pgvaction=admin-config';
 	protected $_tab = null;
 
+	public function getName() {
+		return i18n::translate('Googlemap');
+	}
+
 	/**
 	 * does this module implement a menu
 	 * should be overidden in extending classes

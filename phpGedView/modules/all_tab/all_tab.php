@@ -31,9 +31,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 require_once PGV_ROOT.'includes/classes/class_tab.php';
 
-global $pgv_lang;
-$pgv_lang['all_tab'] = $pgv_lang['all'];
-
 class all_tab_Tab extends Tab {
 	
 	public function getJSCallback() {

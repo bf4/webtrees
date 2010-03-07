@@ -42,6 +42,10 @@ class clippings_PGVModule extends PGVModule {
 	protected $pgvVersion = '4.2.2';
 	protected $_sidebar = null;
 	
+	public function getName() {
+		return i18n::translate('Clippings');
+	}
+
 	/**
 	 * does this module implement a menu
 	 * should be overidden in extending classes
