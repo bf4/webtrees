@@ -811,6 +811,13 @@ class family_nav_Sidebar extends Sidebar {
 	public function hasContent() {
 		return true;
 	}
+	
+	function getTitle() {
+	// I18N: This is the title of a tab or sidebar item 
+		return i18n::translate('Family Navigator');
+	}
+	
+
 }
 
 ?>

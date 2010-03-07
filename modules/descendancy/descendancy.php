@@ -233,5 +233,12 @@ class descendancy_Sidebar extends Sidebar {
 	public function hasContent() {
 		return true;
 	}
+	
+	function getTitle() {
+	// I18N: This is the title of a tab on the sidebar
+		return i18n::translate('Descendancy');
+	}
+	
+
 }
 ?>
