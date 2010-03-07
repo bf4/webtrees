@@ -47,7 +47,7 @@ outdiv.style.width = (parent.offsetWidth-30) + "px";';
 		$inav = new TreeNav($this->controller->pid,'treetab');
 		$inav->generations = 5;
 		$inav->zoomLevel = -1;
-		$inav->drawViewport('treetab', "500px", "auto");
+		$inav->drawViewport('treetab', "auto", "500px");
 		$out .= ob_get_contents();
 		ob_end_clean();
 		$out .= "</div>";
