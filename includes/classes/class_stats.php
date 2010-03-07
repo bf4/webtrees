@@ -1140,7 +1140,7 @@ class stats {
 				if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
 					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 					foreach ($matches[1] as $country) {
-						$country=UTF8_strtolower(trim($country));
+						$country=trim($country);
 						if (array_key_exists($country, $country_to_iso3166)) {
 							if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
 								$surn_countries[$country_to_iso3166[$country]]++;
@@ -1158,7 +1158,7 @@ class stats {
 			$surn_countries=array();
 			$countries=$this->_statsPlaces('INDI', 'BIRT', 0, true);
 			foreach ($countries as $place=>$count) {
-				$country=UTF8_strtolower($place);
+				$country=$place;
 				if (array_key_exists($country, $country_to_iso3166)) {
 					if (!isset($surn_countries[$country_to_iso3166[$country]])) {
 						$surn_countries[$country_to_iso3166[$country]]=$count;
@@ -1175,7 +1175,7 @@ class stats {
 			$surn_countries=array();
 			$countries=$this->_statsPlaces('INDI', 'DEAT', 0, true);
 			foreach ($countries as $place=>$count) {
-				$country=UTF8_strtolower($place);
+				$country=$place;
 				if (array_key_exists($country, $country_to_iso3166)) {
 					if (!isset($surn_countries[$country_to_iso3166[$country]])) {
 						$surn_countries[$country_to_iso3166[$country]]=$count;
@@ -1194,7 +1194,7 @@ class stats {
 			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 			if (!empty($countries))
 			  foreach ($countries as $place) {
-				$country=UTF8_strtolower(trim($place['country']));
+				$country=trim($place['country']);
 				if (array_key_exists($country, $country_to_iso3166)) {
 					$surn_countries[$country_to_iso3166[$country]]=$place['tot'];
 				}
@@ -1209,7 +1209,7 @@ class stats {
 			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 			if (!empty($countries))
 			  foreach ($countries as $place) {
-				$country=UTF8_strtolower(trim($place['country']));
+				$country=trim($place['country']);
 				if (array_key_exists($country, $country_to_iso3166)) {
 					$surn_countries[$country_to_iso3166[$country]]=$place['tot'];
 				}

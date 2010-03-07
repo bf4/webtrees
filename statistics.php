@@ -648,7 +648,7 @@ if (isset($content) && $content==1) {
 			<div id="surname_opt" style="display:none;">
 			<?php
 			print_help_link('google_chart_surname', 'qm', "statistiek_list");
-			echo $factarray['SURN'], '<br /><input type="text" name="SURN" size="20" />';
+			echo i18n::translate('SURN'), '<br /><input type="text" name="SURN" size="20" />';
 			?>
 			<br />
 			</div>
