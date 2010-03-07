@@ -3399,16 +3399,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		require $file;
 	}
 
-	// Modify certain spellings if Ashkenazi pronounciations are in use.
-	if ($JEWISH_ASHKENAZ_PRONUNCIATION) {
-		switch($lang_short_cut[$LANGUAGE]) {
-		case 'en':
-			$pgv_lang['csh']='Cheshvan';
-			$pgv_lang['tvt']='Teves';
-			break;
-		}
-	}
-
 	// Special formatting options; R selects conversion to a language-dependent calendar.
 	// i.e. a French user will see conversion to the french calendar, a Hebrew user will
 	// see conversion to the hebrew calendar, etc.
