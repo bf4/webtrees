@@ -28,7 +28,7 @@
 define('PGV_SCRIPT_NAME', 'addsearchlink.php');
 require './config.php';
 
-print_simple_header($pgv_lang["title_search_link"]);
+print_simple_header(i18n::translate('Add Local Link'));
 
 //-- only allow users with editing access to this page
 if (!PGV_USER_CAN_EDIT) {

@@ -911,8 +911,8 @@ else {
 	unset($savedInput);
 }
 
-print_simple_header($pgv_lang["statistiek_list"]);
-echo "\n\t<center><h2>", $pgv_lang["statistiek_list"], "</h2>\n\t";
+print_simple_header(i18n::translate('Statistics Plot'));
+echo "<center><h2>", i18n::translate('Statistics Plot'), "</h2>\n\t";
 echo "</center><br />";
 
 $nrpers = $_SESSION[$GEDCOM."nrpers"];

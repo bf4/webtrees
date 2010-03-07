@@ -31,8 +31,9 @@ if($useFCK){
 	require PGV_ROOT.'modules/FCKeditor/fckeditor.php';
 }
 
+print_simple_header(i18n::translate('Add/Edit Journal/News entry'));
+
 if (!PGV_USER_ID) {
-	print_simple_header("");
 	print $pgv_lang["access_denied"];
 	print_simple_footer();
 	exit;
@@ -44,8 +45,6 @@ $username=safe_REQUEST($_REQUEST, 'username');
 $date    =safe_POST('date', PGV_REGEX_UNSAFE);
 $title   =safe_POST('title', PGV_REGEX_UNSAFE);
 $text    =safe_POST('text', PGV_REGEX_UNSAFE);
-
-print_simple_header($pgv_lang["edit_news"]);
 
 if (empty($username)) $username=$GEDCOM;
 

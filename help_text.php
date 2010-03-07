@@ -2427,12 +2427,76 @@ case '__BRTM_SIBL':
 	break;
 
 	//////////////////////////////////////////////////////////////////////////////
-	// This section contains an entry for every page.
-	// Some pages my use the title as the page title
+	// This section should contain an entry for every page.
 	//////////////////////////////////////////////////////////////////////////////
 
-case 'branches.php':
-	$title='';
+case 'addmedia.php':
+	$title=i18n::translate('Add a new Media item');
+	$text='';
+	break;
+
+case 'addremotelink.php':
+	$title=i18n::translate('Add Remote Link');
+	$text='';
+	break;
+
+case 'addsearchlink.php':
+	$title=i18n::translate('Add Local Link');
+	$text='';
+	break;
+
+case 'editconfig_help.php':
+	$title=i18n::translate('Configuration help');
+	$text='';
+	break;
+
+case 'edit_changes.php':
+	$title=i18n::translate('Review GEDCOM Changes');
+	$text='';
+	break;
+
+case 'edit_interface.php':
+	$title=i18n::translate('Edit Interface');
+	$text='';
+	break;
+
+case 'editnews.php':
+	$title=i18n::translate('Add/Edit Journal/News entry');
+	$text='';
+	break;
+
+case 'export_gedcom.php':
+	$title=i18n::translate('Export');
+	$text='';
+	break;
+
+case 'imageview.php':
+	$title=i18n::translate('Image Viewer');
+	$text='';
+	break;
+
+case 'login.php':
+	$title=i18n::translate('PhpGedView User Login');
+	$text='';
+	break;
+
+case 'message.php':
+	$title=i18n::translate('PhpGedView Message');
+	$text='';
+	break;
+
+case 'printlog.php':
+	$title=i18n::translate('Print logfile');
+	$text='';
+	break;
+
+case 'searchhelp.php':
+	$title=i18n::translate('Search Help Text');
+	$text='';
+	break;
+
+case 'statisticsplot.php':
+	$title=i18n::translate('Statistics Plot');
 	$text='';
 	break;
 

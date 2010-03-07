@@ -29,7 +29,7 @@ require './config.php';
 
 loadLangFile("pgv_confighelp");
 
-print_simple_header($pgv_lang["phpgedview_message"]);
+print_simple_header(i18n::translate('PhpGedView Message'));
 
 $subject   =isset($_REQUEST['subject'   ]) ? $_REQUEST['subject'   ] : '';
 $url       =isset($_REQUEST['url'       ]) ? $_REQUEST['url'       ] : '';

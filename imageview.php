@@ -29,7 +29,8 @@ require './config.php';
 
 $filename=decrypt(safe_GET('filename'));
 
-print_simple_header($pgv_lang["imageview"]);
+print_simple_header(i18n::translate('Image Viewer'));
+
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
