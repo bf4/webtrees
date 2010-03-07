@@ -359,7 +359,7 @@ if (!$controller->indi->canDisplayDetails()) {
 		if ($controller->static_tab) {
 			?><li class="ui-state-default ui-corner-top static_tab" style="float: <?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>">
 				<a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>">
-					<span><?php echo $pgv_lang[$controller->static_tab->getName()]?></span>
+					<span><?php echo $controller->static_tab->getName(); ?></span>
 				</a>
 				<a id="pin" href="#pin"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
 			</li><?php 
