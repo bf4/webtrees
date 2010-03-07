@@ -217,9 +217,7 @@ color: red;
 
 /*   End Edit Facts  */
 
-.facts_label .submenu a,
-.flyout, .flyout a, 
-.flyoutrtl, .flyoutrtl a {
+.facts_label .submenu a {
 background: #fff;
 color: #000;
 }
@@ -1569,19 +1567,6 @@ background:#0A246A;
 color:#FFF;
 }
 
-.flyout { 
-text-align: left;
-margin-top: -20px;
-right: 210px;
-padding: 3px;
-}
-
-.flyoutrtl { 
-text-align: right;
-margin-top: -20px;
-left: 210px;
-padding: 3px;
-}
 .sublinks_cell .submenuitem {
 background: #fff;
 } 
