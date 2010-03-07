@@ -39,7 +39,7 @@ class notes_Tab extends Tab {
 		global $SHOW_LEVEL2_NOTES;
 		global $NAV_NOTES;
 
-		$out = "<span class=\"subheaders\">".$pgv_lang["notes"]."</span><div id=\"notes_content\">";
+		$out = "<span class=\"subheaders\">".$this->getName()."</span><div id=\"notes_content\">";
 
 		ob_start();
 		?>

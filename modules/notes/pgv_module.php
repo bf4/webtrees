@@ -38,6 +38,10 @@ class notes_PGVModule extends PGVModule {
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 
+	public function getName() {
+		return i18n::translate('Notes');
+	}
+
 	/**
 	 * does this module implement a menu
 	 * should be overidden in extending classes

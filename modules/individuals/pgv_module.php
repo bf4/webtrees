@@ -39,6 +39,10 @@ class individuals_PGVModule extends PGVModule {
 	protected $pgvVersion = '4.2.2';
 	protected $_sidebar = null;
 
+	public function getName() {
+		return i18n::translate('Individuals');
+	}
+
 	public function hasSidebar() { return true; }
 	
 	/**

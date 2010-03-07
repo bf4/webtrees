@@ -41,10 +41,6 @@ class individuals_Sidebar extends Sidebar {
 
 		// Fetch a list of the initial letters of all surnames in the database
 		$initials=get_indilist_salpha($SHOW_MARRIED_NAMES, false, PGV_GED_ID);
-		// If there are no individuals in the database, do something sensible
-		if (!$initials) {
-			$initials[]='@';
-		}
 
 		$out = '<script type="text/javascript">
 		<!--
@@ -103,7 +99,7 @@ class individuals_Sidebar extends Sidebar {
 		<form method="post" action="sidebar.php" onsubmit="return false;">
 		<input type="text" name="sb_indi_name" id="sb_indi_name" value="'.$pgv_lang['search'].'" />
 		<p>';
-		foreach ($initials as $letter) {
+		foreach ($initials as $letter=>$count) {
 			switch ($letter) {
 				case '@':
 					$html=$pgv_lang['NN'];

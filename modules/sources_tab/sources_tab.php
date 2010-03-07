@@ -30,10 +30,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 require_once PGV_ROOT.'includes/classes/class_tab.php';
 
-global $pgv_lang;
-if (isset($pgv_lang['ssourcess']))
-$pgv_lang['sources_tab'] = $pgv_lang['ssourcess'];
-
 class sources_tab_Tab extends Tab {
 
 	protected $sourceCount = null;
@@ -46,7 +42,7 @@ class sources_tab_Tab extends Tab {
 		/*if (isset($_COOKIE['row_sour2'])) $SHOW_LEVEL2_SOURCES = ($_COOKIE['row_sour2']);
 		else*/ $SHOW_LEVEL2_SOURCES = $SHOW_LEVEL2_NOTES;
 
-		$out = "<span class=\"subheaders\">".$pgv_lang["ssourcess"]."</span><div id=\"sources_content\">";
+		$out = "<span class=\"subheaders\">".$this->getName()."</span><div id=\"sources_content\">";
 
 		ob_start();
 		?>

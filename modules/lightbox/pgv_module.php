@@ -19,6 +19,10 @@ class lightbox_PGVModule extends PGVModule {
 	protected $configLink = 'module.php?mod=lightbox&pgvaction=lb_editconfig';
 	protected $_tab = null;
 
+	public function getName() {
+		return i18n::translate('Lightbox');
+	}
+
 	/**
 	 * get the tab for this
 	 * @return Tab

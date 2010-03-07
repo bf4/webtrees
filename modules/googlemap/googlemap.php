@@ -91,7 +91,7 @@ class googlemap_Tab extends Tab {
 <table border="0" width="100%">
 	<tr>
 		<td><?php 
-		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
+		print "<span class=\"subheaders\">".$this->getName()."</span>\n";
 		if (!$GOOGLEMAP_ENABLED) {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
