@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 $theme_name       = "Ash";
 $SHARED_THEME_DIR = "themes/colors/";
+define('SHARED_THEME_DIR', $SHARED_THEME_DIR);
 $stylesheet       = $SHARED_THEME_DIR . "css/ash.css"; 
 $print_stylesheet = $SHARED_THEME_DIR . "css/ash.css"; 
 include('themes/colors/theme.inc');
