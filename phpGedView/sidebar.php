@@ -276,7 +276,7 @@ jQuery(document).ready(function() {
 		<a id="sidebar_pin" href="#pin"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
 	</div>
 	<div id="sidebarAccordion">
-		<img src="<?php echo $PGV_IMAGE_DIR ?>/loading.gif" />
+		<img src="<?php echo $PGV_IMAGE_DIR ?>/loading.gif" alt="" />
 	</div>
 	<span class="ui-icon ui-icon-grip-dotted-horizontal" style="margin:2px auto;"></span>
 </div>
