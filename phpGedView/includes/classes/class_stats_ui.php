@@ -77,7 +77,7 @@ class stats_ui extends stats
 			$content .= "<table width=\"99%\" style=\"border:none\" cellspacing=\"3px\" class=\"center {$TEXT_DIRECTION}\">";
 			foreach($userfavs as $k=>$favorite) {
 				if(isset($favorite['id'])){$k = $favorite['id'];}
-				$removeFavourite = "<a class=\"font9\" href=\"".encode_url("index.php?ctype={$ctype}&action=deletefav&fv_id={$k}")."\" onclick=\"return confirm('{$pgv_lang['confirm_fav_remove']}');\">{$pgv_lang['remove']}</a><br />\n";
+				$removeFavourite = "<a class=\"font9\" href=\"".encode_url("index.php?ctype={$ctype}&action=deletefav&fv_id={$k}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to remove this item from your list of Favorites?')."');\">".i18n::translate('Remove')."</a><br />\n";
 				if(!$isged) {
 					$current_gedcom = $GEDCOM;
 					$GEDCOM = $favorite['file'];
@@ -147,7 +147,7 @@ class stats_ui extends stats
 			$uniqueID = floor(microtime() * 1000000);
 			if($isged) {
 				$content .= print_help_link('index_add_favorites', 'qm', '', false, true)
-					."<b><a href=\"javascript://{$pgv_lang['add_favorite']} \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;{$pgv_lang['add_favorite']}</a></b>"
+					."<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>"
 					."<br />\n<div id=\"add_ged_fav\" style=\"display: none;\">\n"
 					."<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n"
 					."<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n"
@@ -156,7 +156,7 @@ class stats_ui extends stats
 			}
 			else {
 				$content .= print_help_link('index_add_favorites', 'qm', '', false, true)
-					."<b><a href=\"javascript://{$pgv_lang['add_favorite']} \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;{$pgv_lang['add_favorite']}</a></b>"
+					."<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>"
 					."<br />\n<div id=\"add_user_fav\" style=\"display: none;\">\n"
 					."<form name=\"addufavform\" method=\"post\" action=\"index.php\">\n"
 					."<input type=\"hidden\" name=\"favtype\" value=\"user\" />\n"
@@ -166,7 +166,7 @@ class stats_ui extends stats
 				."<input type=\"hidden\" name=\"ctype\" value=\"{$ctype}\" />\n"
 				."<input type=\"hidden\" name=\"ged\" value=\"{$GEDCOM}\" />\n"
 				."<table width=\"99%\" style=\"border:none\" cellspacing=\"3px\" class=\"center {$TEXT_DIRECTION}\">"
-				."<tr><td>{$pgv_lang['add_fav_enter_id']}<br />\n"
+				."<tr><td>".i18n::translate('Enter a Person, Family, or Source ID')."<br />\n"
 				."<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />"
 				.print_findindi_link("gid{$uniqueID}", '', true)
 				.print_findfamily_link("gid{$uniqueID}", '', true)
@@ -174,14 +174,14 @@ class stats_ui extends stats
 				.print_findrepository_link("gid{$uniqueID}",'',true)
 				.print_findnote_link("gid{$uniqueID}",'',true)
 				.print_findmedia_link("gid{$uniqueID}",'1','',true)
-				."<br />\n{$pgv_lang['add_fav_or_enter_url']}"
-				."<table><tr><td>{$pgv_lang['url']}</td><td><input type=\"text\" name=\"url\" size=\"40\" value=\"\" /></td></tr>"
-				."<tr><td>{$pgv_lang['title']}</td><td><input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" /></td></tr></table>"
-				."\n</td><td>"
-				."\n{$pgv_lang['add_fav_enter_note']}"
+				."<br />".i18n::translate('OR<br />Enter a URL and a title')
+				."<table><tr><td>".i18n::translate('URL')."</td><td><input type=\"text\" name=\"url\" size=\"40\" value=\"\" /></td></tr>"
+				."<tr><td>".i18n::translate('Title:')."</td><td><input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" /></td></tr></table>"
+				."</td><td>"
+				.i18n::translate('Enter an optional note about this favorite')
 				."<br />\n<textarea name=\"favnote\" rows=\"6\" cols=\"50\"></textarea>"
 				."</td></tr></table>\n"
-				."<br />\n<input type=\"submit\" value=\"{$pgv_lang['add']}\" style=\"font-size: 8pt; \" />"
+				."<br />\n<input type=\"submit\" value=\"".i18n::translate('Add')."\" style=\"font-size: 8pt; \" />"
 				."\n</form></div>\n"
 			;
 		}
@@ -209,9 +209,9 @@ class stats_ui extends stats
 
 		$usermessages = getUserMessages(PGV_USER_NAME);
 
-		$content = "<form name=\"messageform\" action=\"\" onsubmit=\"return confirm('{$pgv_lang['confirm_message_delete']}');\">";
+		$content = "<form name=\"messageform\" action=\"\" onsubmit=\"return confirm('".i18n::translate('Are you sure you want to delete this message?  It cannot be retrieved later.')."');\">";
 		if(count($usermessages) == 0) {
-			$content .= "{$pgv_lang['no_messages']}<br />\n";
+			$content .= i18n::translate('You have no pending messages.')."<br />";
 		}
 		else {
 			$content .= '
@@ -237,10 +237,10 @@ class stats_ui extends stats
 			';
 			$content .= '<input type="hidden" name="action" value="deletemessage" />'
 				.'<table class="list_table"><tr>'
-				."<td class=\"list_label\">{$pgv_lang['delete']}<br />\n<a href=\"javascript:;\" onclick=\"return select_all();\">{$pgv_lang['all']}</a></td>\n"
-				."<td class=\"list_label\">{$pgv_lang['message_subject']}</td>\n"
-				."<td class=\"list_label\">{$pgv_lang['date_created']}</td>\n"
-				."<td class=\"list_label\">{$pgv_lang['message_from']}</td>\n"
+				."<td class=\"list_label\">".i18n::translate('Delete')."<br />\n<a href=\"javascript:;\" onclick=\"return select_all();\">".i18n::translate('ALL')."</a></td>\n"
+				."<td class=\"list_label\">".i18n::translate('Subject:')."</td>\n"
+				."<td class=\"list_label\">".i18n::translate('Date Sent:')."</td>\n"
+				."<td class=\"list_label\">".i18n::translate('Email Address:')."</td>\n"
 				."</tr>\n";
 			foreach($usermessages as $k=>$message) {
 				if(isset($message['id'])){$k = $message['id'];}
@@ -273,20 +273,20 @@ class stats_ui extends stats
 					$message['subject'] = "RE:{$message['subject']}";
 				}
 				if($user_id) {
-					$content .= "<a href=\"javascript:;\" onclick=\"reply('{$user_id}', '{$message['subject']}'); return false;\">{$pgv_lang['reply']}</a> | ";
+					$content .= "<a href=\"javascript:;\" onclick=\"reply('{$user_id}', '{$message['subject']}'); return false;\">".i18n::translate('Reply')."</a> | ";
 				}
-				$content .= "<a href=\"".encode_url("index.php?action=deletemessage&message_id={$k}")."\" onclick=\"return confirm('{$pgv_lang['confirm_message_delete']}');\">{$pgv_lang['delete']}</a></div></td>\n</tr>\n";
+				$content .= "<a href=\"".encode_url("index.php?action=deletemessage&message_id={$k}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this message?  It cannot be retrieved later.')."');\">".i18n::translate('Delete')."</a></div></td>\n</tr>\n";
 			}
 			$content .= "</table>\n"
-				."<input type=\"submit\" value=\"{$pgv_lang['delete_selected_messages']}\" /><br />\n<br />\n"
+				."<input type=\"submit\" value=\"".i18n::translate('Delete Selected Messages')."\" /><br />\n<br />\n"
 			;
 		}
 		if(get_user_count() > 1) {
-			$content .= "{$pgv_lang['message']} <select name=\"touser\">";
+			$content .= i18n::translate('Send Message')." <select name=\"touser\">";
 			if(PGV_USER_IS_ADMIN) {
-				$content .= "<option value=\"all\">{$pgv_lang['broadcast_all']}</option>\n"
-					."<option value=\"never_logged\">{$pgv_lang['broadcast_never_logged_in']}</option>\n"
-					."<option value=\"last_6mo\">{$pgv_lang['broadcast_not_logged_6mo']}</option>\n"
+				$content .= "<option value=\"all\">".i18n::translate('Broadcast to all users')."</option>\n"
+					."<option value=\"never_logged\">".i18n::translate('Send message to users who have never logged in')."</option>\n"
+					."<option value=\"last_6mo\">".i18n::translate('Send message to users who have not logged in for 6 months')."</option>\n"
 				;
 			}
 			foreach(get_all_users() as $user_id=>$user_name) {
@@ -301,7 +301,7 @@ class stats_ui extends stats
 					$content .= "</option>\n";
 				}
 			}
-			$content .= "</select>\n<input type=\"button\" value=\"{$pgv_lang['send']}\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />\n";
+			$content .= "</select>\n<input type=\"button\" value=\"".i18n::translate('Send')."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />\n";
 		}
 		$content .= "</form>\n";
 		return $content;
@@ -319,7 +319,7 @@ class stats_ui extends stats
 		$usernews = getUserNews(PGV_USER_ID);
 		$content = '';
 		if(count($usernews) == 0) {
-			$content .= "{$pgv_lang['no_journal']} ";
+			$content .= i18n::translate('You have not created any Journal items.')." ";
 		}
 		foreach($usernews as $k=>$news) {
 			$day = date('j', $news['date']);
@@ -351,13 +351,13 @@ class stats_ui extends stats
 			$trans = array_flip(get_html_translation_table(HTML_SPECIALCHARS));
 			$news['text'] = strtr($news['text'], $trans);
 			$content .= PrintReady($news['text'])."<br />\n<br />\n"
-				."<a href=\"javascript:;\" onclick=\"editnews('{$k}'); return false;\">{$pgv_lang['edit']}</a> | "
-				."<a href=\"".encode_url("index.php?action=deletenews&news_id={$k}&ctype={$ctype}")."\" onclick=\"return confirm('{$pgv_lang['confirm_journal_delete']}');\">{$pgv_lang['delete']}</a><br />\n"
+				."<a href=\"javascript:;\" onclick=\"editnews('{$k}'); return false;\">".i18n::translate('Edit')."</a> | "
+				."<a href=\"".encode_url("index.php?action=deletenews&news_id={$k}&ctype={$ctype}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this Journal entry?')."');\">".i18n::translate('Delete')."</a><br />\n"
 				."</div><br />\n"
 			;
 		}
 		if(PGV_USER_ID) {
-			$content .= "<br />\n<a href=\"javascript:;\" onclick=\"addnews('".PGV_USER_ID."'); return false;\">{$pgv_lang['add_journal']}</a>";
+			$content .= "<br />\n<a href=\"javascript:;\" onclick=\"addnews('".PGV_USER_ID."'); return false;\">".i18n::translate('Add a new Journal entry')."</a>";
 		}
 		return $content;
 	}
@@ -385,7 +385,7 @@ class stats_ui extends stats
 
 		$content = '';
 		if(count($usernews) == 0) {
-			$content .= "{$pgv_lang['no_news']}<br />\n";
+			$content .= i18n::translate('No News articles have been submitted.')."<br />\n";
 		}
 		$c = 0;
 		$td = time();
@@ -448,21 +448,21 @@ class stats_ui extends stats
 			// Print Admin options for this News item
 			if(PGV_USER_GEDCOM_ADMIN) {
 				$content .= "<hr size=\"1\" />"
-					."<a href=\"javascript:;\" onclick=\"editnews('{$k}'); return false;\">{$pgv_lang['edit']}</a> | "
-					."<a href=\"".encode_url("index.php?action=deletenews&news_id={$k}&ctype={$ctype}")."\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />"
+					."<a href=\"javascript:;\" onclick=\"editnews('{$k}'); return false;\">".i18n::translate('Edit')."</a> | "
+					."<a href=\"".encode_url("index.php?action=deletenews&news_id={$k}&ctype={$ctype}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this News entry?')."');\">".i18n::translate('Delete')."</a><br />"
 				;
 			}
 			$content .= "</div>\n";
 		}
 		$printedAddLink = false;
 		if(PGV_USER_GEDCOM_ADMIN) {
-			$content .= "<a href=\"javascript:;\" onclick=\"addnews('".str_replace("'", "\'", $GEDCOM)."'); return false;\">{$pgv_lang['add_news']}</a>";
+			$content .= "<a href=\"javascript:;\" onclick=\"addnews('".str_replace("'", "\'", $GEDCOM)."'); return false;\">".i18n::translate('Add a News article')."</a>";
 			$printedAddLink = true;
 		}
 		if($limit == 'date' || $limit == 'count') {
 			if($printedAddLink){$content .= '&nbsp;&nbsp;|&nbsp;&nbsp;';}
 			$content .= print_help_link('gedcom_news_archive', 'qm', '', false, true);
-			$content .= "<a href=\"".encode_url("index.php?gedcom_news_archive=yes&ctype={$ctype}")."\">{$pgv_lang['gedcom_news_archive']}</a><br />\n";
+			$content .= "<a href=\"".encode_url("index.php?gedcom_news_archive=yes&ctype={$ctype}")."\">".i18n::translate('View archive')."</a><br />\n";
 		}
 		return $content;
 	}

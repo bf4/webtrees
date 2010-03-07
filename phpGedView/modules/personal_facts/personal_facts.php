@@ -59,7 +59,7 @@ class personal_facts_Tab extends Tab {
 			$indifacts = $this->controller->getIndiFacts();
 			if (count($indifacts)==0) {?>
 				<tr>
-					<td id="no_tab1" colspan="2" class="facts_value"><?php echo $pgv_lang["no_tab1"]?>
+					<td id="no_tab1" colspan="2" class="facts_value"><?php echo i18n::translate('There are no Facts for this individual.')?>
 					</td>
 				</tr>
 			<?php }
@@ -69,10 +69,10 @@ class personal_facts_Tab extends Tab {
 				<td valign="top"></td>
 				<td class="descriptionbox rela">
 					<input id="checkbox_rela_facts" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" />
-					<label for="checkbox_rela_facts"><?php echo $pgv_lang["relatives_events"]?></label>
+					<label for="checkbox_rela_facts"><?php echo i18n::translate('Events of close relatives')?></label>
 					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
 						<input id="checkbox_histo" type="checkbox" <?php if ($EXPAND_HISTO_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_histo');" />
-						<label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
+						<label for="checkbox_histo"><?php echo i18n::translate('Historical facts')?></label>
 					<?php }?>
 				</td>
 			</tr>

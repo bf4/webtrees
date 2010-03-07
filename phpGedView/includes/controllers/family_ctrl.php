@@ -174,7 +174,7 @@ class FamilyRoot extends BaseController {
 		}
 
 		if ($this->showLivingHusb == false && $this->showLivingWife == false) {
-			print_header($pgv_lang['private']." ".$pgv_lang['family_info']);
+			print_header(i18n::translate('Private')." ".i18n::translate('Family Information'));
 			print_privacy_error($CONTACT_EMAIL);
 			print_footer();
 			exit;
@@ -226,7 +226,7 @@ class FamilyRoot extends BaseController {
 			return PrintReady($this->title);
 		}
 		else {
-			return $pgv_lang["unable_to_find_record"];
+			return i18n::translate('Unable to find record with ID');
 		}
 	}
 
@@ -256,16 +256,16 @@ class FamilyRoot extends BaseController {
 		}
 
 		// charts menu
-		$menu = new Menu($pgv_lang['charts'], encode_url('timeline.php?'.$link));
+		$menu = new Menu(i18n::translate('Charts'), encode_url('timeline.php?'.$link));
 		if (!empty($PGV_IMAGES["timeline"]["small"])) {
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
 		}
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		// Build a sortable list of submenu items and then sort it in localized name order
 		$menuList = array();
-		$menuList["parentTimeLine"] = $pgv_lang['parents_timeline'];
-		$menuList["childTimeLine"] = $pgv_lang['children_timeline'];
-		$menuList["familyTimeLine"] = $pgv_lang['family_timeline'];
+		$menuList["parentTimeLine"] = i18n::translate('Show couple on timeline chart');
+		$menuList["childTimeLine"] = i18n::translate('Show children on timeline chart');
+		$menuList["familyTimeLine"] = i18n::translate('Show family on timeline chart');
 		asort($menuList);
 
 		// Produce the submenus in localized name order
@@ -274,7 +274,7 @@ class FamilyRoot extends BaseController {
 			switch ($menuType) {
 			case "parentTimeLine":
 				// charts / parents_timeline
-				$submenu = new Menu($pgv_lang['parents_timeline'], encode_url('timeline.php?'.$link));
+				$submenu = new Menu(i18n::translate('Show couple on timeline chart'), encode_url('timeline.php?'.$link));
 				if (!empty($PGV_IMAGES["timeline"]["small"])) {
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
 				}
@@ -284,7 +284,7 @@ class FamilyRoot extends BaseController {
 
 			case "childTimeLine":
 				// charts / children_timeline
-				$submenu = new Menu($pgv_lang['children_timeline'], encode_url('timeline.php?'.$this->getChildrenUrlTimeline()));
+				$submenu = new Menu(i18n::translate('Show children on timeline chart'), encode_url('timeline.php?'.$this->getChildrenUrlTimeline()));
 				if (!empty($PGV_IMAGES["timeline"]["small"])) {
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
 				}
@@ -294,7 +294,7 @@ class FamilyRoot extends BaseController {
 
 			case "familyTimeLine":
 				// charts / family_timeline
-				$submenu = new Menu($pgv_lang['family_timeline'], encode_url('timeline.php?'.$link.'&'.$this->getChildrenUrlTimeline($c)));
+				$submenu = new Menu(i18n::translate('Show family on timeline chart'), encode_url('timeline.php?'.$link.'&'.$this->getChildrenUrlTimeline($c)));
 				if (!empty($PGV_IMAGES["timeline"]["small"])) {
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
 				}
@@ -319,14 +319,14 @@ class FamilyRoot extends BaseController {
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
-		$menu = new Menu($pgv_lang['reports'], encode_url('reportengine.php?action=setup&report=reports/familygroup.xml&famid='.$this->getFamilyID()));
+		$menu = new Menu(i18n::translate('Reports'), encode_url('reportengine.php?action=setup&report=reports/familygroup.xml&famid='.$this->getFamilyID()));
 		if (!empty($PGV_IMAGES["reports"]["small"])) {
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['reports']['small']}");
 		}
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
 		// reports / family_group_report
-		$submenu = new Menu($pgv_lang['family_group_report'], encode_url('reportengine.php?action=setup&report=reports/familygroup.xml&famid='.$this->getFamilyID()));
+		$submenu = new Menu(i18n::translate('Family Group Report'), encode_url('reportengine.php?action=setup&report=reports/familygroup.xml&famid='.$this->getFamilyID()));
 		if (!empty($PGV_IMAGES["reports"]["small"])) {
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['reports']['small']}");
 		}
@@ -347,7 +347,7 @@ class FamilyRoot extends BaseController {
 		else $ff="";
 
 		// edit_fam menu
-		$menu = new Menu($pgv_lang['edit_fam']);
+		$menu = new Menu(i18n::translate('Edit Family'));
 		$menu->addOnclick("return edit_family('".$this->getFamilyID()."');");
 		if (!empty($PGV_IMAGES["edit_fam"]["large"])) {
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_fam"]["large"]);
@@ -358,7 +358,7 @@ class FamilyRoot extends BaseController {
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
 		// edit_fam / edit_fam
-		$submenu = new Menu($pgv_lang['edit_fam']);
+		$submenu = new Menu(i18n::translate('Edit Family'));
 		$submenu->addOnclick("return edit_family('".$this->getFamilyID()."');");
 		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
@@ -367,7 +367,7 @@ class FamilyRoot extends BaseController {
 		$menu->addSubmenu($submenu);
 
 		// edit_fam / members
-		$submenu = new Menu($pgv_lang['change_family_members']);
+		$submenu = new Menu(i18n::translate('Change Family Members'));
 		$submenu->addOnclick("return change_family_members('".$this->getFamilyID()."');");
 		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
@@ -376,7 +376,7 @@ class FamilyRoot extends BaseController {
 		$menu->addSubmenu($submenu);
 
 		// edit_fam / add child
-		$submenu = new Menu($pgv_lang['add_child_to_family']);
+		$submenu = new Menu(i18n::translate('Add a child to this family'));
 		$submenu->addOnclick("return addnewchild('".$this->getFamilyID()."');");
 		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
@@ -386,7 +386,7 @@ class FamilyRoot extends BaseController {
 
 		// edit_fam / reorder_children
 		if ($this->family->getNumberOfChildren() > 1) {
-			$submenu = new Menu($pgv_lang['reorder_children']);
+			$submenu = new Menu(i18n::translate('Re-order children'));
 			$submenu->addOnclick("return reorder_children('".$this->getFamilyID()."');");
 			if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
@@ -401,14 +401,14 @@ class FamilyRoot extends BaseController {
 
 			// edit_fam / show/hide changes
 			if (!$this->show_changes) {
-				$submenu = new Menu($pgv_lang['show_changes'], encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=yes'));
+				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=yes'));
 				if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
 				}
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			} else {
-				$submenu = new Menu($pgv_lang['hide_changes'], encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=no'));
+				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=no'));
 				if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
 				}
@@ -418,13 +418,13 @@ class FamilyRoot extends BaseController {
 
 			if (PGV_USER_CAN_ACCEPT) {
 				// edit_fam / accept_all
-				$submenu = new Menu($pgv_lang["undo_all"], encode_url("family.php?famid={$this->famid}&action=undo"));
+				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("family.php?famid={$this->famid}&action=undo"));
 				if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
 				}
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang["accept_all"], encode_url("family.php?famid={$this->famid}&action=accept"));
+				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("family.php?famid={$this->famid}&action=accept"));
 				if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
 				}
@@ -438,7 +438,7 @@ class FamilyRoot extends BaseController {
 
 		// edit_fam / edit_raw
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
-			$submenu = new Menu($pgv_lang['edit_raw']);
+			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->getFamilyID()."');");
 			if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
@@ -448,8 +448,8 @@ class FamilyRoot extends BaseController {
 		}
 
 		// edit_fam / delete_family
-		$submenu = new Menu($pgv_lang['delete_family']);
-		$submenu->addOnclick("if (confirm('".$pgv_lang["delete_family_confirm"]."')) return delete_family('".$this->getFamilyID()."'); else return false;");
+		$submenu = new Menu(i18n::translate('Delete family'));
+		$submenu->addOnclick("if (confirm('".i18n::translate('Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?')."')) return delete_family('".$this->getFamilyID()."'); else return false;");
 		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
 		}
@@ -477,7 +477,7 @@ class FamilyRoot extends BaseController {
 		else $ff="";
 
 			// other menu
-		$menu = new Menu($pgv_lang['other']);
+		$menu = new Menu(i18n::translate('Other'));
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		if ($SHOW_GEDCOM_RECORD) {
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
@@ -494,7 +494,7 @@ class FamilyRoot extends BaseController {
 		}
 		if ($SHOW_GEDCOM_RECORD) {
 				// other / view_gedcom
-				$submenu = new Menu($pgv_lang['view_gedcom']);
+				$submenu = new Menu(i18n::translate('View GEDCOM Record'));
 				if ($this->show_changes && PGV_USER_CAN_EDIT) {
 					$submenu->addLink("javascript:show_gedcom_record('new');");
 				} else {
@@ -506,7 +506,7 @@ class FamilyRoot extends BaseController {
 		}
 		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL) {
 				// other / add_to_cart
-				$submenu = new Menu($pgv_lang['add_to_cart'], encode_url('clippings.php?action=add&id='.$this->getFamilyID().'&type=fam'));
+				$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url('clippings.php?action=add&id='.$this->getFamilyID().'&type=fam'));
 				if (!empty($PGV_IMAGES["clippings"]["small"])) {
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
 				}
@@ -515,7 +515,7 @@ class FamilyRoot extends BaseController {
 		}
 		if ($this->display && PGV_USER_ID) {
 			// other / add_to_my_favorites
-			$submenu = new Menu($pgv_lang['add_to_my_favorites'], encode_url('family.php?action=addfav&famid='.$this->getFamilyID().'&gid='.$this->getFamilyID()));
+			$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url('family.php?action=addfav&famid='.$this->getFamilyID().'&gid='.$this->getFamilyID()));
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 			$menu->addSubmenu($submenu);

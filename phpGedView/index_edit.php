@@ -64,8 +64,8 @@ if (isset($_REQUEST['name'])) $name = $_REQUEST['name'];
 //-- otherwise have them login again
 if (!PGV_USER_ID) {
 	print_simple_header("");
-	print $pgv_lang["access_denied"];
-	print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"self.close();\">".$pgv_lang["close_window"]."</a></div>\n";
+	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
+	print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"self.close();\">".i18n::translate('Close Window')."</a></div>\n";
 	print_simple_footer();
 	exit;
 }
@@ -80,7 +80,7 @@ if (!isset($side)) $side="main";
 if (!isset($index)) $index=1;
 
 // Define all the icons we're going to use
-$IconHelp = $pgv_lang["qm"];
+$IconHelp = i18n::translate('?');
 if ($PGV_USE_HELPIMG) {
 	$IconHelp = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["small"]."\" class=\"icon\" width=\"15\" height=\"15\" alt=\"\" />";
 }
@@ -151,14 +151,14 @@ reset($SortedBlocks);
 
 // Build sorted table of block summary descriptions
 global $pgv_lang;
-$pgv_lang["block_summary_table"] = "";
+i18n::translate('&nbsp;') = "";
 $SortedBlocks = array_flip($SortedBlocks);
 foreach($SortedBlocks as $key => $b) {
 	$temp = $PGV_BLOCKS[$b]["descr"];
-	$pgv_lang["block_summary_table"] .= "<tr valign='top'>";
-	$pgv_lang["block_summary_table"] .= "<td>".$PGV_BLOCKS[$b]["name"]."</td>";
-	$pgv_lang["block_summary_table"] .= "<td>#pgv_lang[$temp]#</td>";
-	$pgv_lang["block_summary_table"] .= "</tr>";
+	i18n::translate('&nbsp;') .= "<tr valign='top'>";
+	i18n::translate('&nbsp;') .= "<td>".$PGV_BLOCKS[$b]["name"]."</td>";
+	i18n::translate('&nbsp;') .= "<td>#pgv_lang[$temp]#</td>";
+	i18n::translate('&nbsp;') .= "</tr>";
 }
 $SortedBlocks = array_flip($SortedBlocks);
 
@@ -196,7 +196,7 @@ else {
 }
 
 if ($ctype=="user") {
-	print_simple_header($pgv_lang["mygedview"]);
+	print_simple_header(i18n::translate('MyGedView Portal'));
 } else {
 	print_simple_header(get_gedcom_setting(PGV_GED_ID, 'title'));
 }
@@ -228,7 +228,7 @@ if ($action=="updateconfig") {
 		$ublocks[$side][$index][1] = $config;
 		setBlocks($name, $ublocks, $setdefault);
 	}
-	print $pgv_lang["config_update_ok"]."<br />\n";
+	print i18n::translate('Configuration file updated successfully.')."<br />\n";
 	if (isset($_POST["nextaction"])) $action = $_POST["nextaction"];
 	if ($ctype!="user") $_SESSION['clearcache'] = true;
 }
@@ -275,14 +275,14 @@ if ($action=="update") {
 
 if ($action=="clearcache") {
 	clearCache();
-	print "<span class=\"warning\">".$pgv_lang["clear_cache_succes"]."</span><br /><br />";
+	print "<span class=\"warning\">".i18n::translate('The cache files have been removed.')."</span><br /><br />";
 }
 
 if ($action=="configure" && isset($ublocks[$side][$index])) {
 	$block = $ublocks[$side][$index];
 	print "<table class=\"facts_table ".$TEXT_DIRECTION."\" width=\"99%\">";
 	print "<tr><td class=\"facts_label\">";
-	print "<h2>".$pgv_lang["config_block"]."</h2>";
+	print "<h2>".i18n::translate('Configure')."</h2>";
 	print "</td></tr>";
 	print "<tr><td class=\"facts_label03\">";
 	print "<b>".$PGV_BLOCKS[$block[0]]["name"]."</b>";
@@ -310,17 +310,17 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 		eval($block[0]."_config(\$block[1]);");
 		print "<tr><td colspan=\"2\" class=\"topbottombar\">";
 		print_help_link("click_here", "qm");
-		print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"document.block.submit();\" />";
-		print "&nbsp;&nbsp;<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
+		print "<input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"document.block.submit();\" />";
+		print "&nbsp;&nbsp;<input type =\"button\" value=\"".i18n::translate('Cancel')."\" onclick=\"window.close()\" />";
 		print "</td></tr>";
 	}
 	else {
 		print "<tr><td colspan=\"2\" class=\"optionbox\">";
-		print $pgv_lang["block_not_configure"];
+		print i18n::translate('This block cannot be configured.');
 		print "</td></tr>";
 		print "<tr><td colspan=\"2\" class=\"topbottombar\">";
 		print_help_link("click_here", "qm");
-		print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"parentrefresh();\" />";
+		print "<input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"parentrefresh();\" />";
 		print "</td></tr>";
 	}
 	print "</table>";
@@ -469,29 +469,29 @@ else {
 	<tr><td class="topbottombar" colspan="7">
 	<?php
 	print_help_link("portal_config_intructions", "qm");
-	if ($ctype=="user") print "<b>".UTF8_strtoupper($pgv_lang["customize_page"])."</b>";
-	else print "<b>".UTF8_strtoupper($pgv_lang["customize_gedcom_page"])."</b>";
+	if ($ctype=="user") print "<b>".UTF8_strtoupper(i18n::translate('Customize MyGedView Portal'))."</b>";
+	else print "<b>".UTF8_strtoupper(i18n::translate('Customize this GEDCOM Welcome page'))."</b>";
 	print "</td></tr>";
 	// NOTE: Row 1: Column legends
 	print "<tr>";
 		print "<td class=\"descriptionbox center vmiddle\" colspan=\"2\">\n";
-			print "<b>".$pgv_lang["main_section"]."</b>";
+			print "<b>".i18n::translate('Main Section Blocks')."</b>";
 		print "</td>\n";
 		print "<td class=\"descriptionbox center vmiddle\" colspan=\"3\">";
 			print " <a href=\"javascript:;\" class=\"help\" tabindex=\"0\" onclick=\"expand_layer('help',true); expand_layer('configure', false);\">".$IconHelp."</a> \n";
 			// Need to create a real popup for this some time ;)
-			print "<b>".$pgv_lang["available_blocks"]."</b>";
+			print "<b>".i18n::translate('Available Blocks')."</b>";
 		print "</td>\n";
 		print "<td class=\"descriptionbox center vmiddle\" colspan=\"2\">";
-			print "<b>".$pgv_lang["right_section"]."</b>";
+			print "<b>".i18n::translate('Right Section Blocks')."</b>";
 		print "</td>";
 	print "</tr>\n";
 	print "<tr>";
 	// NOTE: Row 2 column 1: Up/Down buttons for left (main) block list
 	print "<td class=\"optionbox width20px center vmiddle\">";
-		print "<a tabindex=\"-1\" onclick=\"move_up_block('main_select');\" title=\"".$pgv_lang["move_up"]."\">".$IconUarrow."</a>";
+		print "<a tabindex=\"-1\" onclick=\"move_up_block('main_select');\" title=\"".i18n::translate('Move Up')."\">".$IconUarrow."</a>";
 		print "<br />";
-		print "<a tabindex=\"-1\" onclick=\"move_down_block('main_select');\" title=\"".$pgv_lang["move_down"]."\">".$IconDarrow."</a>";
+		print "<a tabindex=\"-1\" onclick=\"move_down_block('main_select');\" title=\"".i18n::translate('Move Down')."\">".$IconDarrow."</a>";
 		print "<br /><br />";
 		print_help_link("block_move_up", "qm");
 
@@ -508,11 +508,11 @@ else {
 	print "</td>";
 	// NOTE: Row 2 column 3: Left/Right buttons for left (main) block list
 	print "<td class=\"optionbox width20 vmiddle\">";
-		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('main_select', 'right_select');\" title=\"".$pgv_lang["move_right"]."\">".$IconRDarrow."</a>";
+		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('main_select', 'right_select');\" title=\"".i18n::translate('Move Right')."\">".$IconRDarrow."</a>";
 		print "<br />";
-		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('main_select', 'available_select');\" title=\"".$pgv_lang["remove"]."\">".$IconRarrow."</a>";
+		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('main_select', 'available_select');\" title=\"".i18n::translate('Remove')."\">".$IconRarrow."</a>";
 		print "<br />";
-		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'main_select');\" title=\"".$pgv_lang["add"]."\">".$IconLarrow."</a>";
+		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'main_select');\" title=\"".i18n::translate('Add')."\">".$IconLarrow."</a>";
 		print "<br /><br />";
 		print_help_link("block_move_right", "qm");
 
@@ -528,11 +528,11 @@ else {
 	print "</td>";
 	// NOTE: Row 2 column 5: Left/Right buttons for right block list
 	print "<td class=\"optionbox width20 vmiddle\">";
-		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('right_select', 'main_select');\" title=\"".$pgv_lang["move_left"]."\">".$IconLDarrow."</a>";
+		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('right_select', 'main_select');\" title=\"".i18n::translate('Move Left')."\">".$IconLDarrow."</a>";
 		print "<br />";
-		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('right_select', 'available_select');\" title=\"".$pgv_lang["remove"]."\">".$IconLarrow."</a>";
+		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('right_select', 'available_select');\" title=\"".i18n::translate('Remove')."\">".$IconLarrow."</a>";
 		print "<br />";
-		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'right_select');\" title=\"".$pgv_lang["add"]."\">".$IconRarrow."</a>";
+		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'right_select');\" title=\"".i18n::translate('Add')."\">".$IconRarrow."</a>";
 		print "<br /><br />";
 		print_help_link("block_move_right", "qm");
 	print "</td>";
@@ -548,21 +548,21 @@ else {
 	print "</td>";
 	// NOTE: Row 2 column 7: Up/Down buttons for right block list
 	print "<td class=\"optionbox width20 vmiddle\">";
-		print "<a tabindex=\"-1\" onclick=\"move_up_block('right_select');\" title=\"".$pgv_lang["move_up"]."\">".$IconUarrow."</a>";
+		print "<a tabindex=\"-1\" onclick=\"move_up_block('right_select');\" title=\"".i18n::translate('Move Up')."\">".$IconUarrow."</a>";
 		print "<br />";
-		print "<a tabindex=\"-1\" onclick=\"move_down_block('right_select');\" title=\"".$pgv_lang["move_down"]."\">".$IconDarrow."</a>";
+		print "<a tabindex=\"-1\" onclick=\"move_down_block('right_select');\" title=\"".i18n::translate('Move Down')."\">".$IconDarrow."</a>";
 		print "<br /><br />";
 		print_help_link("block_move_up", "qm");
 	print "</td>";
 	print "</tr>";
 	// NOTE: Row 3 columns 1-7: Summary description of currently selected block
 	print "<tr><td class=\"descriptionbox wrap\" colspan=\"7\" dir=\"".$TEXT_DIRECTION."\"><div id=\"instructions\">";
-	print $pgv_lang["index_edit_advice"];
+	print i18n::translate('Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction.');
 	print "</div></td></tr>";
 	print "<tr><td class=\"topbottombar\" colspan=\"7\">";
 
 	if (PGV_USER_IS_ADMIN && $ctype=='user') {
-		print $pgv_lang["use_blocks_for_default"]."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br /><br />\n";
+		print i18n::translate('Use these blocks as the default block configuration for all users?')."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br /><br />\n";
 	}
 
 	if ($ctype=='user') {
@@ -571,16 +571,16 @@ else {
 	else {
 		print_help_link("block_default_index", "qm");
 	}
-	print "<input type=\"button\" value=\"".$pgv_lang["reset_default_blocks"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=reset&amp;name=".str_replace("'", "\'", $name)."';\" />\n";
+	print "<input type=\"button\" value=\"".i18n::translate('Reset to Default Blocks')."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=reset&amp;name=".str_replace("'", "\'", $name)."';\" />\n";
 	print "&nbsp;&nbsp;";
 	print_help_link("click_here", "qm");
-	print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"select_options(); save_form();\" />\n";
+	print "<input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"select_options(); save_form();\" />\n";
 	print "&nbsp;&nbsp;";
-	print "<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
+	print "<input type =\"button\" value=\"".i18n::translate('Cancel')."\" onclick=\"window.close()\" />";
 	if (PGV_USER_GEDCOM_ADMIN && $ctype!="user") {
 		print "<br />";
 		print_help_link("clear_cache", "qm");
-		print "<input type =\"button\" value=\"".$pgv_lang["clear_cache"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=clearcache&amp;name=".str_replace("'", "\'", $name)."';\" />";
+		print "<input type =\"button\" value=\"".i18n::translate('Clear cache files')."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=clearcache&amp;name=".str_replace("'", "\'", $name)."';\" />";
 	}
 	print "</td></tr></table>";
 	print "</form>\n";
@@ -591,7 +591,7 @@ else {
 	//--------------------------------Start 2nd tab Help page
 	print "\n\t<div id=\"help\" class=\"tab_page\" style=\"position: absolute; display: none; top: auto; left: auto; z-index: 2; \">\n\t";
 
-	print "<br /><center><input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"expand_layer('configure', true); expand_layer('help', false);\" /></center><br /><br />\n";
+	print "<br /><center><input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"expand_layer('configure', true); expand_layer('help', false);\" /></center><br /><br />\n";
 	print_text("block_summaries");
 
 	// end of 2nd tab

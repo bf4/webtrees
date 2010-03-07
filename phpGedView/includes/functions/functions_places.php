@@ -40,10 +40,10 @@ function get_plac_label() {
 	$HEAD_PLAC = get_sub_record(1, "1 PLAC", $HEAD);
 	$HEAD_PLAC_FORM = get_sub_record(1, "2 FORM", $HEAD_PLAC);
 	$HEAD_PLAC_FORM = substr($HEAD_PLAC_FORM, 7);
-	if (empty($HEAD_PLAC_FORM)) $HEAD_PLAC_FORM = $pgv_lang["default_form"];
+	if (empty($HEAD_PLAC_FORM)) $HEAD_PLAC_FORM = i18n::translate('City, County, State/Province, Country');
 	$plac_label = explode(',', $HEAD_PLAC_FORM);
 	$plac_label = array_reverse($plac_label);
-	if ($HEAD_PLAC_FORM == $pgv_lang["default_form"]) $plac_label[0] = i18n::translate('CTRY');
+	if ($HEAD_PLAC_FORM == i18n::translate('City, County, State/Province, Country')) $plac_label[0] = i18n::translate('CTRY');
 
 	return $plac_label;
 }
@@ -334,7 +334,7 @@ function print_place_subfields($element_id) {
 			foreach (array_keys($iso3166) as $alpha3) {
 				if ($alpha3!="???") {
 					$txt=$alpha3." : ".i18n::translate($alpha3);
-					if (UTF8_strlen($txt)>32) $txt = UTF8_substr($txt, 0, 32).$pgv_lang["ellipsis"];
+					if (UTF8_strlen($txt)>32) $txt = UTF8_substr($txt, 0, 32).i18n::translate('…');
 					print "<option value=\"".$alpha3."\">".$txt."</option>\n";
 				}
 			}

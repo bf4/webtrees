@@ -445,10 +445,10 @@ class stats {
 			$tot_sindi_per = round(100 * $tot_sindi / $tot_indi, 2);
 		}
 		$chd = self::_array_to_extended_encoding(array($tot_sindi_per, 100-$tot_sindi_per));
-		$chl =  $pgv_lang["with_sources"].' - '.round($tot_sindi_per,1).'%|'.
-				$pgv_lang["without_sources"].' - '.round($tot_indi_per,1).'%';
-		$chart_title =  $pgv_lang["with_sources"].' ['.round($tot_sindi_per,1).'%], '.
-						$pgv_lang["without_sources"].' ['.round($tot_indi_per,1).'%]';
+		$chl =  i18n::translate('With sources').' - '.round($tot_sindi_per,1).'%|'.
+				i18n::translate('Without sources').' - '.round($tot_indi_per,1).'%';
+		$chart_title =  i18n::translate('With sources').' ['.round($tot_sindi_per,1).'%], '.
+						i18n::translate('Without sources').' ['.round($tot_indi_per,1).'%]';
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
@@ -486,10 +486,10 @@ class stats {
 			$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
 		}
 		$chd = self::_array_to_extended_encoding(array($tot_sfam_per, 100-$tot_sfam_per));
-		$chl =  $pgv_lang["with_sources"].' - '.round($tot_sfam_per,1).'%|'.
-				$pgv_lang["without_sources"].' - '.round($tot_fam_per,1).'%';
-		$chart_title =  $pgv_lang["with_sources"].' ['.round($tot_sfam_per,1).'%], '.
-						$pgv_lang["without_sources"].' ['.round($tot_fam_per,1).'%]';
+		$chl =  i18n::translate('With sources').' - '.round($tot_sfam_per,1).'%|'.
+				i18n::translate('Without sources').' - '.round($tot_fam_per,1).'%';
+		$chart_title =  i18n::translate('With sources').' ['.round($tot_sfam_per,1).'%], '.
+						i18n::translate('Without sources').' ['.round($tot_fam_per,1).'%]';
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
@@ -691,21 +691,21 @@ class stats {
 		} else if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
 			$chl =
-				$pgv_lang['stat_unknown'].' - '.round($tot_u,1).'%|'.
-				$pgv_lang['stat_females'].' - '.round($tot_f,1).'%|'.
-				$pgv_lang['stat_males'].' - '.round($tot_m,1).'%';
+				i18n::translate('Unknown').' - '.round($tot_u,1).'%|'.
+				i18n::translate('Females').' - '.round($tot_f,1).'%|'.
+				i18n::translate('Males').' - '.round($tot_m,1).'%';
 			$chart_title =
-				$pgv_lang['stat_males'].' ['.round($tot_m,1).'%], '.
-				$pgv_lang['stat_females'].' ['.round($tot_f,1).'%], '.
-				$pgv_lang['stat_unknown'].' ['.round($tot_u,1).'%]';
+				i18n::translate('Males').' ['.round($tot_m,1).'%], '.
+				i18n::translate('Females').' ['.round($tot_f,1).'%], '.
+				i18n::translate('Unknown').' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_unknown},{$color_female},{$color_male}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		} else {
 			$chd = self::_array_to_extended_encoding(array($tot_f, $tot_m));
 			$chl =
-				$pgv_lang['stat_females'].' - '.round($tot_f,1).'%|'.
-				$pgv_lang['stat_males'].' - '.round($tot_m,1).'%';
-			$chart_title =  $pgv_lang['stat_males'].' ['.round($tot_m,1).'%], '.
-							$pgv_lang['stat_females'].' ['.round($tot_f,1).'%]';
+				i18n::translate('Females').' - '.round($tot_f,1).'%|'.
+				i18n::translate('Males').' - '.round($tot_m,1).'%';
+			$chart_title =  i18n::translate('Males').' ['.round($tot_m,1).'%], '.
+							i18n::translate('Females').' ['.round($tot_f,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_female},{$color_male}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 	}
@@ -769,21 +769,21 @@ class stats {
 		} else if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
 			$chl =
-				$pgv_lang['total_unknown'].' - '.round($tot_u,1).'%|'.
-				$pgv_lang['total_living'].' - '.round($tot_l,1).'%|'.
-				$pgv_lang['total_dead'].' - '.round($tot_d,1).'%';
+				i18n::translate('Unknown').' - '.round($tot_u,1).'%|'.
+				i18n::translate('Living').' - '.round($tot_l,1).'%|'.
+				i18n::translate('Dead').' - '.round($tot_d,1).'%';
 			$chart_title =
-				$pgv_lang['total_living'].' ['.round($tot_l,1).'%], '.
-				$pgv_lang['total_dead'].' ['.round($tot_d,1).'%], '.
-				$pgv_lang['total_unknown'].' ['.round($tot_u,1).'%]';
+				i18n::translate('Living').' ['.round($tot_l,1).'%], '.
+				i18n::translate('Dead').' ['.round($tot_d,1).'%], '.
+				i18n::translate('Unknown').' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_unknown},{$color_living},{$color_dead}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		} else {
 			$chd = self::_array_to_extended_encoding(array($tot_l, $tot_d));
 			$chl =
-				$pgv_lang['total_living'].' - '.round($tot_l,1).'%|'.
-				$pgv_lang['total_dead'].' - '.round($tot_d,1).'%|';
-			$chart_title =  $pgv_lang['total_living'].' ['.round($tot_l,1).'%], '.
-							$pgv_lang['total_dead'].' ['.round($tot_d,1).'%]';
+				i18n::translate('Living').' - '.round($tot_l,1).'%|'.
+				i18n::translate('Dead').' - '.round($tot_d,1).'%|';
+			$chart_title =  i18n::translate('Living').' ['.round($tot_l,1).'%], '.
+							i18n::translate('Dead').' ['.round($tot_d,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_living},{$color_dead}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 	}
@@ -860,7 +860,7 @@ class stats {
 		$sizes = explode('x', $size);
 		$tot = $this->_totalMediaType('all');
 		// Beware divide by zero
-		if ($tot==0) return $pgv_lang["none"];
+		if ($tot==0) return i18n::translate('None');
 		// Build a table listing only the media types actually present in the GEDCOM
 		$mediaCounts = array();
 		$mediaTypes = "";
@@ -904,8 +904,8 @@ class stats {
 				$mediaTypes .= $pgv_lang['TYPE__'.$type].' - '.$count.'|';
 				$chart_title .= $pgv_lang['TYPE__'.$type].' ['.$count.'], ';
 			} else {
-				$mediaTypes .= $pgv_lang['unknown'].' - '.$count.'|';
-				$chart_title .= $pgv_lang['unknown'].' ['.$count.'], ';
+				$mediaTypes .= i18n::translate('unknown').' - '.$count.'|';
+				$chart_title .= i18n::translate('unknown').' ['.$count.'], ';
 			}
 		}
 		$chart_title = substr($chart_title,0,-2);
@@ -991,7 +991,7 @@ class stats {
 				if ($record->canDisplayDetails()) {
 					$result=$record->format_list('span', false, $record->getFullName());
 				} else {
-					$result=$pgv_lang['privacy_error'];
+					$result=i18n::translate('This information is private and cannot be shown.');
 				}
 				break;
 			case 'year':
@@ -1132,7 +1132,7 @@ class stats {
 		switch ($chart_type) {
 		case 'surname_distribution_chart':
 			if ($surname=="") $surname = $this->getCommonSurname();
-			$chart_title=$pgv_lang["surname_distribution_chart"].': '.$surname;
+			$chart_title=i18n::translate('Surname distribution chart').': '.$surname;
 			// Count how many people are events in each country
 			$surn_countries=array();
 			$indis = get_indilist_indis(UTF8_strtoupper($surname), '', '', false, false, PGV_GED_ID);
@@ -1153,7 +1153,7 @@ class stats {
 			};
 			break;
 		case 'birth_distribution_chart':
-			$chart_title=$pgv_lang["stat_2_map"];
+			$chart_title=i18n::translate('Birth by country');
 			// Count how many people were born in each country
 			$surn_countries=array();
 			$countries=$this->_statsPlaces('INDI', 'BIRT', 0, true);
@@ -1170,7 +1170,7 @@ class stats {
 			}
 			break;
 		case 'death_distribution_chart':
-			$chart_title=$pgv_lang["stat_3_map"];
+			$chart_title=i18n::translate('Death by country');
 			// Count how many people were death in each country
 			$surn_countries=array();
 			$countries=$this->_statsPlaces('INDI', 'DEAT', 0, true);
@@ -1187,7 +1187,7 @@ class stats {
 			}
 			break;
 		case 'marriage_distribution_chart':
-			$chart_title=$pgv_lang["stat_4_map"];
+			$chart_title=i18n::translate('Marriage by country');
 			// Count how many families got marriage in each country
 			$surn_countries=array();
 			$countries=$this->_statsPlaces('FAM');
@@ -1202,7 +1202,7 @@ class stats {
 			break;
 		case 'indi_distribution_chart':
 		default:
-			$chart_title=$pgv_lang["indi_distribution_chart"];
+			$chart_title=i18n::translate('Individual distribution chart');
 			// Count how many people are events in each country
 			$surn_countries=array();
 			$countries=$this->_statsPlaces('INDI');
@@ -1228,9 +1228,9 @@ class stats {
 		$chart .= '<b>'.$chart_title.'</b><br /><br />';
 		$chart .= '<div align="center"><img src="'.$chart_url.'" alt="'.$chart_title.'" title="'.$chart_title.'" class="gchart" /><br />';
 		$chart .= '<table align="center" border="0" cellpadding="1" cellspacing="1"><tr>';
-		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR2.'" width="12"></td><td>'.$pgv_lang["g_chart_high"].'&nbsp;&nbsp;</td>';
-		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR3.'" width="12"></td><td>'.$pgv_lang["g_chart_low"].'&nbsp;&nbsp;</td>';
-		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR1.'" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR2.'" width="12"></td><td>'.i18n::translate('Highest population').'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR3.'" width="12"></td><td>'.i18n::translate('Lowest population').'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR1.'" width="12"></td><td>'.i18n::translate('Nobody at all').'&nbsp;&nbsp;</td>';
 		$chart .= '</tr></table></div></div>';
 		return $chart;
 	}
@@ -1354,7 +1354,7 @@ class stats {
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_5_birth"]."\" title=\"".$pgv_lang["stat_5_birth"]."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Births by century')."\" title=\"".i18n::translate('Births by century')."\" />";
 		}
 		if (!isset($rows)) return 0;
 		return $rows;
@@ -1419,7 +1419,7 @@ class stats {
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_6_death"]."\" title=\"".$pgv_lang["stat_6_death"]."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Deaths by century')."\" title=\"".i18n::translate('Deaths by century')."\" />";
 		}
 		if (!isset($rows)) {return 0;}
 		return $rows;
@@ -1524,7 +1524,7 @@ class stats {
 				if (displayDetailsById($row['id'])) {
 					$result=$person->format_list('span', false, $person->getFullName());
 				} else {
-					$result= $pgv_lang['privacy_error'];
+					$result= i18n::translate('This information is private and cannot be shown.');
 				}
 				break;
 			case 'age':
@@ -1624,7 +1624,7 @@ class stats {
 	function _topTenOldestAlive($type='list', $sex='BOTH', $params=null) {
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
-		if (!PGV_USER_CAN_ACCESS) return $pgv_lang["privacy_error"];
+		if (!PGV_USER_CAN_ACCESS) return i18n::translate('This information is private and cannot be shown.');
 		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
 		} elseif ($sex == 'M') {
@@ -1818,19 +1818,19 @@ class stats {
 			$countsf = substr($countsf,0,-1);
 			$countsa = substr($countsa,0,-1);
 			$chd = "t2:{$countsm}|{$countsf}|{$countsa}";
-			$chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".$pgv_lang["stat_age"]."|";
-			if (count($rows)>4 || UTF8_strlen($pgv_lang["stat_18_aard"])<30) {
-				$chtt = $pgv_lang["stat_18_aard"];
+			$chxl .= "1:||".i18n::translate('century')."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".i18n::translate('Age')."|";
+			if (count($rows)>4 || UTF8_strlen(i18n::translate('Average age related to death century'))<30) {
+				$chtt = i18n::translate('Average age related to death century');
 			} else {
 				$offset = 0;
 				$counter = array();
-				while($offset = strpos($pgv_lang["stat_18_aard"], " ", $offset + 1)){
+				while($offset = strpos(i18n::translate('Average age related to death century'), " ", $offset + 1)){
 					$counter[] = $offset;
 				}
 				$half = floor(count($counter)/2);
-				$chtt = substr_replace($pgv_lang["stat_18_aard"], '|', $counter[$half], 1);
+				$chtt = substr_replace(i18n::translate('Average age related to death century'), '|', $counter[$half], 1);
 			}
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|N*f1*,000000,0,-1,11,1|N*f1*,000000,1,-1,11,1&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl={$pgv_lang["male"]}|{$pgv_lang["female"]}|{$pgv_lang["stat_avg_age_at_death"]}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_18_aard"]."\" title=\"".$pgv_lang["stat_18_aard"]."\" />";
+			return '<img src="'.encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|N*f1*,000000,0,-1,11,1|N*f1*,000000,1,-1,11,1&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl=".i18n::translate('Male').'|'.i18n::translate('Female').'|'.i18n::translate('Average age at death'))."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Average age related to death century')."\" title=\"".i18n::translate('Average age related to death century')."\" />";
 		} else {
 			$sex_search = '';
 			$years = '';
@@ -1918,12 +1918,12 @@ class stats {
 	function _eventQuery($type, $direction, $facts) {
 		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir;
 		$eventTypes = array(
-			'BIRT'=>$pgv_lang['htmlplus_block_birth'],
-			'DEAT'=>$pgv_lang['htmlplus_block_death'],
-			'MARR'=>$pgv_lang['htmlplus_block_marrage'],
-			'ADOP'=>$pgv_lang['htmlplus_block_adoption'],
-			'BURI'=>$pgv_lang['htmlplus_block_burial'],
-			'CENS'=>$pgv_lang['htmlplus_block_census']
+			'BIRT'=>i18n::translate('birth'),
+			'DEAT'=>i18n::translate('death'),
+			'MARR'=>i18n::translate('marriage'),
+			'ADOP'=>i18n::translate('adoption'),
+			'BURI'=>i18n::translate('burial'),
+			'CENS'=>i18n::translate('census added')
 		);
 
 		$fact_query = "IN ('".str_replace('|', "','", $facts)."')";
@@ -1954,7 +1954,7 @@ class stats {
 				if ($record->canDisplayDetails()) {
 					$result=$record->format_list('span', false, $record->getFullName());
 				} else {
-					$result=$pgv_lang['privacy_error'];
+					$result=i18n::translate('This information is private and cannot be shown.');
 				}
 				break;
 			case 'year':
@@ -2065,7 +2065,7 @@ class stats {
 				if ($family->canDisplayDetails()) {
 					$result=$family->format_list('span', false, $person->getFullName());
 				} else {
-					$result=$pgv_lang['privacy_error'];
+					$result=i18n::translate('This information is private and cannot be shown.');
 				}
 				break;
 			case 'name':
@@ -2346,7 +2346,7 @@ class stats {
 				if ($person->canDisplayDetails()) {
 					$result=$person->format_list('span', false, $person->getFullName());
 				} else {
-					$result=$pgv_lang['privacy_error'];
+					$result=i18n::translate('This information is private and cannot be shown.');
 				}
 				break;
 			case 'name':
@@ -2454,7 +2454,7 @@ class stats {
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_7_marr"]."\" title=\"".$pgv_lang["stat_7_marr"]."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Marriages by century')."\" title=\"".i18n::translate('Marriages by century')."\" />";
 		}
 		return $rows;
 	}
@@ -2537,7 +2537,7 @@ class stats {
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_7_div"]."\" title=\"".$pgv_lang["stat_7_div"]."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Divorces by century')."\" title=\"".i18n::translate('Divorces by century')."\" />";
 		}
 		return $rows;
 	}
@@ -2667,20 +2667,20 @@ class stats {
 			$countsa = substr($countsa,0,-1);
 			$chmf = substr($chmf,0,-1);
 			$chd = "t2:{$countsm}|{$countsf}|{$countsa}";
-			if ($max<=50) $chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|3:||".$pgv_lang["stat_age"]."|";
-			else 	$chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".$pgv_lang["stat_age"]."|";
-			if (count($rows)>4 || UTF8_strlen($pgv_lang["stat_19_aarm"])<30) {
-				$chtt = $pgv_lang["stat_19_aarm"];
+			if ($max<=50) $chxl .= "1:||".i18n::translate('century')."|2:|0|10|20|30|40|50|3:||".i18n::translate('Age')."|";
+			else 	$chxl .= "1:||".i18n::translate('century')."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".i18n::translate('Age')."|";
+			if (count($rows)>4 || UTF8_strlen(i18n::translate('Average age in century of marriage'))<30) {
+				$chtt = i18n::translate('Average age in century of marriage');
 			} else {
 				$offset = 0;
 				$counter = array();
-				while($offset = strpos($pgv_lang["stat_19_aarm"], " ", $offset + 1)){
+				while($offset = strpos(i18n::translate('Average age in century of marriage'), " ", $offset + 1)){
 					$counter[] = $offset;
 				}
 				$half = floor(count($counter)/2);
-				$chtt = substr_replace($pgv_lang["stat_19_aarm"], '|', $counter[$half], 1);
+				$chtt = substr_replace(i18n::translate('Average age in century of marriage'), '|', $counter[$half], 1);
 			}
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|{$chmm}{$chmf}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl={$pgv_lang["male"]}|{$pgv_lang["female"]}|{$pgv_lang["avg_age"]}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_19_aarm"]."\" title=\"".$pgv_lang["stat_19_aarm"]."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|{$chmm}{$chmf}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl=".i18n::translate('Male')."|".i18n::translate('Female')."|".i18n::translate('Average age'))."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Average age in century of marriage')."\" title=\"".i18n::translate('Average age in century of marriage')."\" />";
 		} else {
 			$years = '';
 			if ($year1>=0 && $year2>=0) {
@@ -2845,7 +2845,7 @@ class stats {
 				if ($family->canDisplayDetails()) {
 					$result=$family->format_list('span', false, $family->getFullName());
 				} else {
-					$result = $pgv_lang['privacy_error'];
+					$result = i18n::translate('This information is private and cannot be shown.');
 				}
 				break;
 			case 'size':
@@ -2880,9 +2880,9 @@ class stats {
 			$family=Family::getInstance($rows[$c]['id']);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]")."</li>\n";
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$rows[$c]['tot']} ".i18n::translate('children')."]")."</li>\n";
 				} else {
-					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]");
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$rows[$c]['tot']} ".i18n::translate('children')."]");
 				}
 			}
 		}
@@ -2949,11 +2949,11 @@ class stats {
 			if ($type == 'name') {
 				if ($child1->canDisplayDetails() && $child2->canDisplayDetails()) {
 					$return = "<a href=\"".encode_url($child2->getLinkUrl())."\">".PrintReady($child2->getFullName())."</a> ";
-					$return .= $pgv_lang["and"]." ";
+					$return .= i18n::translate('and')." ";
 					$return .= "<a href=\"".encode_url($child1->getLinkUrl())."\">".PrintReady($child1->getFullName())."</a>";
-					$return .= " <a href=\"family.php?famid=".$fam['family']."\">[".$pgv_lang["view_family"]."]</a>\n";
+					$return .= " <a href=\"family.php?famid=".$fam['family']."\">[".i18n::translate('View Family')."]</a>\n";
 				} else {
-					$return = $pgv_lang['privacy_error'];
+					$return = i18n::translate('This information is private and cannot be shown.');
 				}
 				return $return;
 			}
@@ -2974,10 +2974,10 @@ class stats {
 					if ($child1->canDisplayDetails() && $child2->canDisplayDetails()) {
 						$return = "\t<li>";
 						$return .= "<a href=\"".encode_url($child2->getLinkUrl())."\">".PrintReady($child2->getFullName())."</a> ";
-						$return .= $pgv_lang["and"]." ";
+						$return .= i18n::translate('and')." ";
 						$return .= "<a href=\"".encode_url($child1->getLinkUrl())."\">".PrintReady($child1->getFullName())."</a>";
 						$return .= " [".$age."]";
-						$return .= " <a href=\"family.php?famid=".$fam['family']."\">[".$pgv_lang["view_family"]."]</a>";
+						$return .= " <a href=\"family.php?famid=".$fam['family']."\">[".i18n::translate('View Family')."]</a>";
 						$return .= "\t</li>\n";
 						$top10[] = $return;
 						$dist[] = $fam['family'];
@@ -2985,20 +2985,20 @@ class stats {
 				} else if (!$one && $child1->canDisplayDetails() && $child2->canDisplayDetails()) {
 					$return = "\t<li>";
 					$return .= "<a href=\"".encode_url($child2->getLinkUrl())."\">".PrintReady($child2->getFullName())."</a> ";
-					$return .= $pgv_lang["and"]." ";
+					$return .= i18n::translate('and')." ";
 					$return .= "<a href=\"".encode_url($child1->getLinkUrl())."\">".PrintReady($child1->getFullName())."</a>";
 					$return .= " [".$age."]";
-					$return .= " <a href=\"family.php?famid=".$fam['family']."\">[".$pgv_lang["view_family"]."]</a>";
+					$return .= " <a href=\"family.php?famid=".$fam['family']."\">[".i18n::translate('View Family')."]</a>";
 					$return .= "\t</li>\n";
 					$top10[] = $return;
 				}
 			} else {
 				if ($child1->canDisplayDetails() && $child2->canDisplayDetails()) {
 					$return = $child2->format_list('span', false, $child2->getFullName());
-					$return .= "<br />".$pgv_lang["and"]."<br />";
+					$return .= "<br />".i18n::translate('and')."<br />";
 					$return .= $child1->format_list('span', false, $child1->getFullName());
 					//$return .= "<br />[".$age."]";
-					$return .= "<br /><a href=\"family.php?famid=".$fam['family']."\">[".$pgv_lang["view_family"]."]</a>\n";
+					$return .= "<br /><a href=\"family.php?famid=".$fam['family']."\">[".i18n::translate('View Family')."]</a>\n";
 					return $return;
 				}
 			}
@@ -3061,7 +3061,7 @@ class stats {
 		$chl = join('|', $chl);
 
 		// the following does not print Arabic letters in names - encode_url shows still the letters
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_largest_families"]."\" title=\"".$pgv_lang["stat_largest_families"]."\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Largest families')."\" title=\"".i18n::translate('Largest families')."\" />";
 	}
 
 	function totalChildren() {
@@ -3124,9 +3124,9 @@ class stats {
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chm = substr($chm,0,-1);
-			if ($max<=5) $chxl .= "1:||".$pgv_lang["century"]."|2:|0|1|2|3|4|5|3:||".$pgv_lang["stat_21_nok"]."|";
-			else $chxl .= "1:||".$pgv_lang["century"]."|2:|0|1|2|3|4|5|6|7|8|9|10|3:||".$pgv_lang["stat_21_nok"]."|";
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chm=D,FF0000,0,0,3,1|{$chm}&amp;chd=e:{$chd}&amp;chco=0000FF&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_average_children"]."\" title=\"".$pgv_lang["stat_average_children"]."\" />";
+			if ($max<=5) $chxl .= "1:||".i18n::translate('century')."|2:|0|1|2|3|4|5|3:||".i18n::translate('Number of children')."|";
+			else $chxl .= "1:||".i18n::translate('century')."|2:|0|1|2|3|4|5|6|7|8|9|10|3:||".i18n::translate('Number of children')."|";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chm=D,FF0000,0,0,3,1|{$chm}&amp;chd=e:{$chd}&amp;chco=0000FF&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Average number of children per family')."\" title=\"".i18n::translate('Average number of children per family')."\" />";
 		} else {
 			if ($sex=='M') {
 				$sql = "SELECT num, COUNT(*) AS total FROM "
@@ -3278,7 +3278,7 @@ class stats {
 		$counts[] = round(4095*$unknown/($max+1));
 		$chd = self::_array_to_extended_encoding($counts);
 		$chm .= 't'.$unknown.',000000,0,'.$i.',11,1';
-		$chxl .= $pgv_lang["no_date_fam"]."|1:||".$pgv_lang["century"]."|2:|0|";
+		$chxl .= i18n::translate('unknown')."|1:||".i18n::translate('century')."|2:|0|";
 		$step = $max+1;
 		for ($d=floor($max+1); $d>0; $d--) {
 			if (($max+1)<($d*10+1) && fmod(($max+1),$d)==0) {
@@ -3295,8 +3295,8 @@ class stats {
 		for ($n=$step; $n<=($max+1); $n+=$step) {
 			$chxl .= $n."|";
 		}
-		$chxl .= "3:||".$pgv_lang["statnfam"]."|";
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chm=D,FF0000,0,0:".($i-1).",3,1|{$chm}&amp;chd=e:{$chd}&amp;chco=0000FF,ffffff00&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_22_fwok"]."\" title=\"".$pgv_lang["stat_22_fwok"]."\" />";
+		$chxl .= "3:||".i18n::translate('Total families')."|";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff00|c,s,ffffff00&amp;chm=D,FF0000,0,0:".($i-1).",3,1|{$chm}&amp;chd=e:{$chd}&amp;chco=0000FF,ffffff00&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".i18n::translate('Number of families without children')."\" title=\"".i18n::translate('Number of families without children')."\" />";
 	}
 
 	function _topTenGrandFamilyQuery($type='list', $params=null) {
@@ -3333,9 +3333,9 @@ class stats {
 			$family=Family::getInstance($row['id']);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$row['tot']} {$pgv_lang['grandchildren']}]")."</li>\n";
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$row['tot']} ".i18n::translate('grandchildren')."]")."</li>\n";
 				} else {
-					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$row['tot']} {$pgv_lang['grandchildren']}]");
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()."</a> [{$row['tot']} ".i18n::translate('grandchildren')."]");
 				}
 			}
 		}
@@ -3454,8 +3454,8 @@ class stats {
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
-		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
-		$chart_title .= $pgv_lang["other"].' - '.($tot_indi-$tot);
+		$chl[] = i18n::translate('Other').' - '.($tot_indi-$tot);
+		$chart_title .= i18n::translate('Other').' - '.($tot_indi-$tot);
 
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
@@ -3548,8 +3548,8 @@ class stats {
 		if ($common) {
 			switch ($type) {
 			case 'table':
-				$lookup=array('M'=>$pgv_lang['male'], 'F'=>$pgv_lang['female'], 'U'=>$pgv_lang['unknown'], 'B'=>$pgv_lang['all']);
-				return '<table><tr><td colspan="2" class="descriptionbox center">'.$lookup[$sex].'</td></tr><tr><td class="descriptionbox center">'.$pgv_lang['names'].'</td><td class="descriptionbox center">'.$pgv_lang['count'].'</td></tr>'.join('', $common).'</table>';
+				$lookup=array('M'=>i18n::translate('Male'), 'F'=>i18n::translate('Female'), 'U'=>i18n::translate('unknown'), 'B'=>i18n::translate('ALL'));
+				return '<table><tr><td colspan="2" class="descriptionbox center">'.$lookup[$sex].'</td></tr><tr><td class="descriptionbox center">'.i18n::translate('Names').'</td><td class="descriptionbox center">'.i18n::translate('Count').'</td></tr>'.join('', $common).'</table>';
 			case 'list':
 				return "<ul>\n".join("\n", $common)."</ul>\n";
 			case 'nolist':
@@ -3617,8 +3617,8 @@ class stats {
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
-		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
-		$chart_title .= $pgv_lang["other"].' - '.($tot_indi-$tot);
+		$chl[] = i18n::translate('Other').' - '.($tot_indi-$tot);
+		$chart_title .= i18n::translate('Other').' - '.($tot_indi-$tot);
 
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
@@ -3651,7 +3651,7 @@ class stats {
 		}
 		$LoginUsers = count($loggedusers);
 		if (($LoginUsers == 0) and ($NumAnonymous == 0)) {
-			return $pgv_lang['no_login_users'];
+			return i18n::translate('No logged-in and no anonymous users');
 		}
 		$Advisory = 'anon_user';
 		if ($NumAnonymous > 1) {$Advisory .= 's';}
@@ -3669,7 +3669,7 @@ class stats {
 				if ($type == 'list') {
 					$content .= "<br /><br />\n";
 				} else {
-					$content .= " {$pgv_lang['and']} ";
+					$content .= " ".i18n::translate('and')." ";
 				}
 			}
 			if ($type == 'list') {
@@ -3687,9 +3687,9 @@ class stats {
 				}
 				if (PGV_USER_ID != $user_id && get_user_setting($user_id, 'contactmethod') != 'none') {
 					if ($type == 'list') {
-						$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('{$user_id}');\">{$pgv_lang['message']}</a>";
+						$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('{$user_id}');\">".i18n::translate('Send Message')."</a>";
 					} else {
-						$content .= " <a href=\"javascript:;\" onclick=\"return message('{$user_id}');\">{$pgv_lang['message']}</a>";
+						$content .= " <a href=\"javascript:;\" onclick=\"return message('{$user_id}');\">".i18n::translate('Send Message')."</a>";
 					}
 				}
 				if ($type == 'list') {
@@ -3762,8 +3762,8 @@ class stats {
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $TIME_FORMAT;}
 				return date($datestamp, get_user_setting($user_id, 'reg_timestamp'));
 			case 'loggedin':
-				if(is_array($params) && isset($params[0]) && $params[0] != ''){$yes = $params[0];}else{$yes = $pgv_lang['yes'];}
-				if(is_array($params) && isset($params[1]) && $params[1] != ''){$no = $params[1];}else{$no = $pgv_lang['no'];}
+				if(is_array($params) && isset($params[0]) && $params[0] != ''){$yes = $params[0];}else{$yes = i18n::translate('Yes');}
+				if(is_array($params) && isset($params[1]) && $params[1] != ''){$no = $params[1];}else{$no = i18n::translate('No');}
 				return (get_user_setting($user_id, 'loggedin') == 'Y')?$yes:$no;
 		}
 	}
@@ -3814,12 +3814,12 @@ class stats {
 	static function _getEventType($type) {
 		global $pgv_lang;
 		$eventTypes=array(
-			'BIRT'=>$pgv_lang['htmlplus_block_birth'],
-			'DEAT'=>$pgv_lang['htmlplus_block_death'],
-			'MARR'=>$pgv_lang['htmlplus_block_marrage'],
-			'ADOP'=>$pgv_lang['htmlplus_block_adoption'],
-			'BURI'=>$pgv_lang['htmlplus_block_burial'],
-			'CENS'=>$pgv_lang['htmlplus_block_census']
+			'BIRT'=>i18n::translate('birth'),
+			'DEAT'=>i18n::translate('death'),
+			'MARR'=>i18n::translate('marriage'),
+			'ADOP'=>i18n::translate('adoption'),
+			'BURI'=>i18n::translate('burial'),
+			'CENS'=>i18n::translate('census added')
 		);
 		if (isset($eventTypes[$type])) {
 			return $eventTypes[$type];

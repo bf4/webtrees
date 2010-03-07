@@ -39,19 +39,19 @@ function write_access_option_numeric($checkVar) {
 
 	echo "<option value=\"".PGV_PRIV_PUBLIC."\"";
 	echo ($checkVar==PGV_PRIV_PUBLIC) ? " selected=\"selected\"" : '';
-	echo ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
+	echo ">".i18n::translate('Show to public')."</option>\n";
 
 	echo "<option value=\"".PGV_PRIV_USER."\"";
 	echo ($checkVar==PGV_PRIV_USER) ? " selected=\"selected\"" : '';
-	echo ">".$pgv_lang["PRIV_USER"]."</option>\n";
+	echo ">".i18n::translate('Show only to authenticated users')."</option>\n";
 
 	echo "<option value=\"".PGV_PRIV_NONE."\"";
 	echo ($checkVar==PGV_PRIV_NONE) ? " selected=\"selected\"" : '';
-	echo ">".$pgv_lang["PRIV_NONE"]."</option>\n";
+	echo ">".i18n::translate('Show only to admin users')."</option>\n";
 
 	echo "<option value=\"".PGV_PRIV_HIDE."\"";
 	echo ($checkVar==PGV_PRIV_HIDE) ? " selected=\"selected\"" : '';
-	echo ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
+	echo ">".i18n::translate('Hide even from admin users')."</option>\n";
 }
 
 loadLangFile("pgv_confighelp");
@@ -92,7 +92,7 @@ if ($action=='update_mods') {
   }
 }
 
-print_header($pgv_lang["module_admin"]);
+print_header(i18n::translate('Module Administration'));
 ?>
 <style type="text/css">
 <!--
@@ -179,48 +179,48 @@ print_header($pgv_lang["module_admin"]);
 <div align="center">
 <div class="width75">
 
-<p><?php echo "<h2>".$pgv_lang["module_admin"]."</h2>"; ?></p>
-<p><?php echo $pgv_lang['mod_admin_intro']?></p>
-<p><input TYPE="button" VALUE="<?php echo $pgv_lang["ret_admin"];?>" onclick="javascript:window.location='admin.php'" /></p>
+<p><?php echo "<h2>".i18n::translate('Module Administration')."</h2>"; ?></p>
+<p><?php echo i18n::translate('Below is the list of all the modules installed in this instance of PhpGedView.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them.')?></p>
+<p><input TYPE="button" VALUE="<?php echo i18n::translate('Return to Administration page');?>" onclick="javascript:window.location='admin.php'" /></p>
 
 <form method="post" action="module_admin.php"> 
 	<input type="hidden" name="action" value="update_mods" />
 
 <div id="tabs">
 <ul>
-	<li><a href="#installed_tab"><span><?php echo $pgv_lang['mod_admin_installed']?></span></a></li>
-	<li><a href="#menus_tab"><span><?php echo $pgv_lang['mod_admin_menus']?></span></a></li>
-	<li><a href="#tabs_tab"><span><?php echo $pgv_lang['mod_admin_tabs']?></span></a></li>
-	<li><a href="#sidebars_tab"><span><?php echo $pgv_lang['mod_admin_sidebars']?></span></a></li>
+	<li><a href="#installed_tab"><span><?php echo i18n::translate('Installed Modules')?></span></a></li>
+	<li><a href="#menus_tab"><span><?php echo i18n::translate('Manage Menus')?></span></a></li>
+	<li><a href="#tabs_tab"><span><?php echo i18n::translate('Manage Tabs')?></span></a></li>
+	<li><a href="#sidebars_tab"><span><?php echo i18n::translate('Manage Sidebars')?></span></a></li>
 </ul>
 <div id="installed_tab">
 <!-- installed -->
   <table id="installed_table" class="list_table">
     <thead>
       <tr>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_active']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_config']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_name']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_description']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_version']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_hastab']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_hasmenu']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_hasside']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_access_level']?></th>
+      <th class="list_label"><?php echo i18n::translate('Active')?></th>
+      <th class="list_label"><?php echo i18n::translate('Mod Settings')?></th>
+      <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
+      <th class="list_label"><?php echo i18n::translate('Description')?></th>
+      <th class="list_label"><?php echo i18n::translate('Version / PGV')?></th>
+      <th class="list_label"><?php echo i18n::translate('Tab?')?></th>
+      <th class="list_label"><?php echo i18n::translate('Menu?')?></th>
+      <th class="list_label"><?php echo i18n::translate('Sidebar?')?></th>
+      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
       </tr>
     </thead>
     <tbody>
 <?php
 foreach($modules as $mod) {
 	?><tr>
-	<td class="list_value"><?php if ($mod->getId()>0) echo $pgv_lang['yes']; else echo $pgv_lang['no']; ?></td>
+	<td class="list_value"><?php if ($mod->getId()>0) echo i18n::translate('Yes'); else echo i18n::translate('No'); ?></td>
 	<td class="list_value"><?php if ($mod->getConfigLink()) echo '<a href="'.$mod->getConfigLink().'"><img class="adminicon" src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES["admin"]["small"].'" border="0" alt="'.$mod->getName().'" /></a>'; ?></td>
 	<td class="list_value"><?php echo $mod->getName()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
 	<td class="list_value"><?php echo $mod->getVersion() . " / " . $mod->getPgvVersion() ?></td>
-	<td class="list_value"><?php if ($mod->hasTab()) echo $pgv_lang['yes']; else echo $pgv_lang['no'];?></td>
-	<td class="list_value"><?php if ($mod->hasMenu()) echo $pgv_lang['yes']; else echo $pgv_lang['no'];?></td>
-	<td class="list_value"><?php if ($mod->hasSidebar()) echo $pgv_lang['yes']; else echo $pgv_lang['no'];?></td>
+	<td class="list_value"><?php if ($mod->hasTab()) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+	<td class="list_value"><?php if ($mod->hasMenu()) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
+	<td class="list_value"><?php if ($mod->hasSidebar()) echo i18n::translate('Yes'); else echo i18n::translate('No');?></td>
 	<td class="list_value_wrap">
 	  <table>
 	<?php
@@ -248,10 +248,10 @@ foreach($modules as $mod) {
 <table id="menus_table" class="list_table">
     <thead>
       <tr>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_name']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_description']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_order']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_access_level']?></th>
+      <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
+      <th class="list_label"><?php echo i18n::translate('Description')?></th>
+      <th class="list_label"><?php echo i18n::translate('Order')?></th>
+      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
       </tr>
     </thead>
     <tbody>
@@ -299,10 +299,10 @@ $order++;
 <table id="tabs_table" class="list_table">
     <thead>
       <tr>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_name']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_description']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_order']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_access_level']?></th>
+      <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
+      <th class="list_label"><?php echo i18n::translate('Description')?></th>
+      <th class="list_label"><?php echo i18n::translate('Order')?></th>
+      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
       </tr>
     </thead>
     <tbody>
@@ -350,10 +350,10 @@ $order++;
 <table id="sidebars_table" class="list_table">
     <thead>
       <tr>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_name']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_description']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_order']?></th>
-      <th class="list_label"><?php echo $pgv_lang['mod_admin_access_level']?></th>
+      <th class="list_label"><?php echo i18n::translate('Module Name')?></th>
+      <th class="list_label"><?php echo i18n::translate('Description')?></th>
+      <th class="list_label"><?php echo i18n::translate('Order')?></th>
+      <th class="list_label"><?php echo i18n::translate('Access Level')?></th>
       </tr>
     </thead>
     <tbody>
@@ -396,7 +396,7 @@ $order++;
     </tbody>
   </table>
 </div>
-<input type="submit" value="<?php echo $pgv_lang['save']?>" />
+<input type="submit" value="<?php echo i18n::translate('Save')?>" />
 </div>
 </form>
 </div>

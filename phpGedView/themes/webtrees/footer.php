@@ -41,7 +41,7 @@ echo "</div> <!-- closing div id=\"content\" -->";
 		title="<?php echo PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" ;?>" /></a><br />
 <br />
 <?php print_help_link("preview", "qm"); ?>
-<a href="<?php echo PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(); ?>"><?php echo $pgv_lang['print_preview']; ?></a>
+<a href="<?php echo PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(); ?>"><?php echo i18n::translate('Printer-friendly Version'); ?></a>
 <br />
 <?php
 if ($SHOW_STATS || PGV_DEBUG) {
@@ -49,9 +49,9 @@ if ($SHOW_STATS || PGV_DEBUG) {
 }
 if (exists_pending_change()) {?>
 	<br />
-	<?php echo $pgv_lang["changes_exist"]; ?>
+	<?php echo i18n::translate('Changes have been made to this GEDCOM.'); ?>
 	<a href="javascript:;" onclick="window.open('edit_changes.php', '_blank', 'width=600, height=500, resizable=1, scrollbars=1'); return false;">
-	<?php echo $pgv_lang["accept_changes"]; ?></a>
+	<?php echo i18n::translate('Accept / Reject Changes'); ?></a>
 <?php } ?>
 </div>
 </div> <!-- close div id=\"footer\" -->

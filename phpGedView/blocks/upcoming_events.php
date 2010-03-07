@@ -35,7 +35,7 @@ define('PGV_UPCOMING_EVENTS_PHP', '');
 
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
-$PGV_BLOCKS["print_upcoming_events"]["name"]		= $pgv_lang["upcoming_events_block"];
+$PGV_BLOCKS["print_upcoming_events"]["name"]		= i18n::translate('Upcoming Events');
 $PGV_BLOCKS["print_upcoming_events"]["descr"]		= "upcoming_events_descr";
 $PGV_BLOCKS["print_upcoming_events"]["infoStyle"]	= "style2";
 $PGV_BLOCKS["print_upcoming_events"]["sortStyle"]	= "alpha";
@@ -96,10 +96,10 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 				$name = PGV_USER_NAME;
 			}
  			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= $pgv_lang["upcoming_events"];
+	$title .= i18n::translate('Upcoming Events');
 
 	$content = "";
 	switch ($infoStyle) {
@@ -141,7 +141,7 @@ function print_upcoming_events_config($config) {
 	<tr><td class="descriptionbox wrap width33">
 	<?php
 	print_help_link("days_to_show", "qm");
-	print $pgv_lang["days_to_show"];
+	print i18n::translate('Number of days to show');
 	?>
 	</td><td class="optionbox">
 		<input type="text" name="days" size="2" value="<?php print $config["days"]; ?>" />
@@ -149,60 +149,60 @@ function print_upcoming_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print $pgv_lang["living_or_all"];
+	print i18n::translate('Show only events of living people?');
 	?>
 	</td><td class="optionbox">
 		<select name="filter">
-			<option value="all"<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-			<option value="living"<?php if ($config["filter"]=="living") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+			<option value="all"<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print i18n::translate('No'); ?></option>
+			<option value="living"<?php if ($config["filter"]=="living") print " selected=\"selected\"";?>><?php print i18n::translate('Yes'); ?></option>
 		</select>
 	</td></tr>
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
 	print_help_link("basic_or_all", "qm");
-	print $pgv_lang["basic_or_all"];
+	print i18n::translate('Show only Births, Deaths, and Marriages?');
 	?>
 	</td><td class="optionbox">
 		<select name="onlyBDM">
-			<option value="no"<?php if ($config["onlyBDM"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-			<option value="yes"<?php if ($config["onlyBDM"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+			<option value="no"<?php if ($config["onlyBDM"]=="no") print " selected=\"selected\"";?>><?php print i18n::translate('No'); ?></option>
+			<option value="yes"<?php if ($config["onlyBDM"]=="yes") print " selected=\"selected\"";?>><?php print i18n::translate('Yes'); ?></option>
 		</select>
 	</td></tr>
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
 	print_help_link("style", "qm");
-	print $pgv_lang["style"];
+	print i18n::translate('Presentation Style');
 	?>
 	</td><td class="optionbox">
 		<select name="infoStyle">
-			<option value="style1"<?php if ($config["infoStyle"]=="style1") print " selected=\"selected\"";?>><?php print $pgv_lang["style1"]; ?></option>
-			<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print $pgv_lang["style2"]; ?></option>
+			<option value="style1"<?php if ($config["infoStyle"]=="style1") print " selected=\"selected\"";?>><?php print i18n::translate('List'); ?></option>
+			<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print i18n::translate('Table'); ?></option>
 		</select>
 	</td></tr>
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
 	print_help_link("sort_style", "qm");
-	print $pgv_lang["sort_style"]."</td>";
+	print i18n::translate('Sort Style')."</td>";
 	?>
 	<td class="optionbox">
 		<select name="sortStyle">
-			<option value="alpha"<?php if ($config["sortStyle"]=="alpha") print " selected=\"selected\"";?>><?php print $pgv_lang["by_alpha"]; ?></option>
-			<option value="anniv"<?php if ($config["sortStyle"]=="anniv") print " selected=\"selected\"";?>><?php print $pgv_lang["by_anniv"]; ?></option>
+			<option value="alpha"<?php if ($config["sortStyle"]=="alpha") print " selected=\"selected\"";?>><?php print i18n::translate('Alphabetically'); ?></option>
+			<option value="anniv"<?php if ($config["sortStyle"]=="anniv") print " selected=\"selected\"";?>><?php print i18n::translate('By Anniversary'); ?></option>
 		</select>
 	</td></tr>
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
  	print_help_link("cal_download", "qm");
-	print $pgv_lang["cal_download"]."</td>";
+	print i18n::translate('Allow calendar events download?')."</td>";
 	?>
 	<td class="optionbox">
 		<select name="allowDownload">
-			<option value="yes"<?php if ($config["allowDownload"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
-			<option value="no"<?php if ($config["allowDownload"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+			<option value="yes"<?php if ($config["allowDownload"]=="yes") print " selected=\"selected\"";?>><?php print i18n::translate('Yes'); ?></option>
+			<option value="no"<?php if ($config["allowDownload"]=="no") print " selected=\"selected\"";?>><?php print i18n::translate('No'); ?></option>
 		</select>
 		<input type="hidden" name="cache" value="1" />
 	</td></tr>

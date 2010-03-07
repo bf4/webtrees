@@ -81,14 +81,14 @@ if (
 	$locked_by_context[]=trim($MEDIA_DIRECTORY, '/');
 }
 
-print_header($pgv_lang["index_dir_cleanup"]);
-echo "<h2>", $pgv_lang["index_dir_cleanup"], "</h2>";
+print_header(i18n::translate('Cleanup Index directory'));
+echo "<h2>", i18n::translate('Cleanup Index directory'), "</h2>";
 
-echo $pgv_lang['index_dir_cleanup_inst'];
+echo i18n::translate('To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src="./images/RESN_confidential.gif" alt="" /> are required for proper operation and cannot be removed.<br />Files marked with <img src="./images/RESN_locked.gif" alt="" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing.');
 
 //post back
 if(isset($_REQUEST["to_delete"])) {
-	echo "<span class=\"error\">", $pgv_lang["deleted_files"], "</span><br/>";
+	echo "<span class=\"error\">", i18n::translate('Deleted files:'), "</span><br/>";
 	foreach($_REQUEST["to_delete"] as $k=>$v) {
 		if (is_dir($INDEX_DIRECTORY.$v)) {
 			full_rmdir($INDEX_DIRECTORY.$v);
@@ -108,7 +108,7 @@ require_once PGV_ROOT.'js/scriptaculous.js.htm';
 <!--
 function warnuser(cbox) {
 	if (cbox.checked) {
-		if(!confirm('<?php print $pgv_lang["warn_file_delete"]; ?>')) cbox.checked = false;
+		if(!confirm('<?php print i18n::translate('This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?'); ?>')) cbox.checked = false;
 	}
 }
 //-->
@@ -147,7 +147,7 @@ function warnuser(cbox) {
 					print "<li class=\"facts_value\" name=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
 					print "<img src=\"./images/RESN_confidential.gif\" alt=\"\" />&nbsp;&nbsp;";
 					print "<span class=\"name2\">".$entry."</span>";
-					print "&nbsp;&nbsp;{$pgv_lang["associated_files"]}<i>&nbsp;&nbsp;".str_replace($path, "", get_gedcom_setting($ged_id, 'privacy'));
+					print "&nbsp;&nbsp;".i18n::translate('Associated files:')."<i>&nbsp;&nbsp;".str_replace($path, "", get_gedcom_setting($ged_id, 'privacy'));
 					print "&nbsp;&nbsp;".str_replace($path, "", get_gedcom_setting($ged_id, 'config'))."</i>";
 				}
 				else if (in_array($entry, $locked_by_context)) {
@@ -202,7 +202,7 @@ function warnuser(cbox) {
 	onDrop: function(element)
 	{
 		if (element.attributes.warn) {
-			if (!confirm('<?php print $pgv_lang["warn_file_delete"]; ?>')) return;
+			if (!confirm('<?php print i18n::translate('This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?'); ?>')) return;
 		}
 		$('trashlist').innerHTML +=
 			'<li class="facts_value">'+ element.attributes.name.value +'<input type="hidden" name="to_delete[]" value="'+element.attributes.name.value+'"/></li>' ;
@@ -235,9 +235,9 @@ function removeAll() {
 // -->
 </script>
 
-		<button type="submit"><?php print $pgv_lang["delete"];?></button>
-		<button type="button" onclick="ul_clear(); return false;"><?php print $pgv_lang["cancel"];?></button><br /><br />
-		<button type="button" onclick="removeAll(); return false;"><?php print $pgv_lang["remove_all_files"];?></button>
+		<button type="submit"><?php print i18n::translate('Delete');?></button>
+		<button type="button" onclick="ul_clear(); return false;"><?php print i18n::translate('Cancel');?></button><br /><br />
+		<button type="button" onclick="removeAll(); return false;"><?php print i18n::translate('Remove all nonessential files');?></button>
 		<?php print_help_link("help_dir_editor.php", "qm", '', false, false); ?></td>
 	</tr>
 </table>

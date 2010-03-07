@@ -36,7 +36,7 @@ $controller->init();
 print_header($controller->getPageTitle());
 // completely prevent display if privacy dictates so
 if (!$controller->family){
-	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
+	echo "<b>", i18n::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();
 	exit;
 }
@@ -57,7 +57,7 @@ $PEDIGREE_FULL_DETAILS = "1";		// Override GEDCOM configuration
 $show_full = "1";
 
 ?>
-<?php if ($controller->family->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
+<?php if ($controller->family->isMarkedDeleted()) echo "<span class=\"error\">".i18n::translate('This record has been marked for deletion upon admin approval.')."</span>"; ?>
 <script language="JavaScript" type="text/javascript">
 <!--
 	function show_gedcom_record(shownew) {
@@ -82,7 +82,7 @@ $show_full = "1";
 			if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview()) : 
 			if ($controller->accept_success)
 			{
-				print "<b>".$pgv_lang["accept_successful"]."</b><br />";
+				print "<b>".i18n::translate('Changes successfully accepted into database')."</b><br />";
 			}
 			endif;	// view != preview
 			?>
@@ -97,8 +97,8 @@ $show_full = "1";
 		<td> <!--//parents pedigree chart and Family Details//-->
 			<table align="left" width="100%">
 				<tr>
-					<td class="subheaders" valign="top"><?php echo $pgv_lang["parents"];?></td>
-					<td class="subheaders" valign="top"><?php echo $pgv_lang["gparents"];?></td>
+					<td class="subheaders" valign="top"><?php echo i18n::translate('Parents');?></td>
+					<td class="subheaders" valign="top"><?php echo i18n::translate('Grandparents');?></td>
 				</tr>
 				<tr>
 					<td colspan="2">
@@ -109,12 +109,12 @@ $show_full = "1";
 							$husb = $controller->getHusband();
 							if (empty($husb)) { ?>
 								<?php print_help_link("edit_add_parent", "qm"); ?>
-			<a href="javascript <?php echo $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('', 'HUSB', '<?php echo $controller->famid; ?>');"><?php echo $pgv_lang["add_father"]; ?></a><br />
+			<a href="javascript <?php echo i18n::translate('Add a new father'); ?>" onclick="return addnewparentfamily('', 'HUSB', '<?php echo $controller->famid; ?>');"><?php echo i18n::translate('Add a new father'); ?></a><br />
 						<?php }
 							$wife = $controller->getWife();
 							if (empty($wife))  { ?>
 								<?php print_help_link("edit_add_parent", "qm"); ?>
-			<a href="javascript <?php echo $pgv_lang["add_mother"]; ?>" onclick="return addnewparentfamily('', 'WIFE', '<?php echo $controller->famid; ?>');"><?php echo $pgv_lang["add_mother"]; ?></a><br />
+			<a href="javascript <?php echo i18n::translate('Add a new mother'); ?>" onclick="return addnewparentfamily('', 'WIFE', '<?php echo $controller->famid; ?>');"><?php echo i18n::translate('Add a new mother'); ?></a><br />
 						<?php }
 						}
 						?>
@@ -134,17 +134,17 @@ $show_full = "1";
 			<?php
 				if (empty($SEARCH_SPIDER)) {
 				?>
-				<a class="accesskeys" href="<?php echo 'timeline.php?pids[0]=' . $controller->parents['HUSB'].'&amp;pids[1]='.$controller->parents['WIFE'];?>" title="<?php echo $pgv_lang['parents_timeline'] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang['accesskey_family_parents_timeline']; ?>"><?php echo $pgv_lang['parents_timeline'] ?></a>
-				<a class="accesskeys" href="<?php echo 'timeline.php?' . $controller->getChildrenUrlTimeline();?>" title="<?php echo $pgv_lang["children_timeline"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang['accesskey_family_children_timeline']; ?>"><?php echo $pgv_lang['children_timeline'] ?></a>
-				<a class="accesskeys" href="<?php echo 'timeline.php?pids[0]=' .$controller->getHusband().'&amp;pids[1]='.$controller->getWife().'&amp;'.$controller->getChildrenUrlTimeline(2);?>" title="<?php echo $pgv_lang['family_timeline'] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang['accesskey_family_timeline']; ?>"><?php echo $pgv_lang['family_timeline'] ?></a>
+				<a class="accesskeys" href="<?php echo 'timeline.php?pids[0]=' . $controller->parents['HUSB'].'&amp;pids[1]='.$controller->parents['WIFE'];?>" title="<?php echo i18n::translate('Show couple on timeline chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('P'); ?>"><?php echo i18n::translate('Show couple on timeline chart') ?></a>
+				<a class="accesskeys" href="<?php echo 'timeline.php?' . $controller->getChildrenUrlTimeline();?>" title="<?php echo i18n::translate('Show children on timeline chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('D'); ?>"><?php echo i18n::translate('Show children on timeline chart') ?></a>
+				<a class="accesskeys" href="<?php echo 'timeline.php?pids[0]=' .$controller->getHusband().'&amp;pids[1]='.$controller->getWife().'&amp;'.$controller->getChildrenUrlTimeline(2);?>" title="<?php echo i18n::translate('Show family on timeline chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('T'); ?>"><?php echo i18n::translate('Show family on timeline chart') ?></a>
 					<?php if ($SHOW_GEDCOM_RECORD) { ?>
-				<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php echo $pgv_lang["view_gedcom"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_family_gedcom"]; ?>"><?php echo $pgv_lang["view_gedcom"] ?></a>
+				<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php echo i18n::translate('View GEDCOM Record') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('G'); ?>"><?php echo i18n::translate('View GEDCOM Record') ?></a>
 					<?php } ?>
 			<?php } ?>
 			</div>
 			<?php
 				if ($controller->accept_success) {
-					echo "<b>".$pgv_lang["accept_successful"]."</b><br />";
+					echo "<b>".i18n::translate('Changes successfully accepted into database')."</b><br />";
 				}
 			?>
 		</td>
@@ -156,6 +156,6 @@ if(empty($SEARCH_SPIDER))
 	print_footer();
 else {
 	if($SHOW_SPIDER_TAGLINE)
-		echo $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+		echo i18n::translate('Search Engine Spider Detected').": ".$SEARCH_SPIDER;
 	echo "\n</div>\n\t</body>\n</html>";
 }

@@ -81,7 +81,7 @@ class clippings_PGVModule extends PGVModule {
 			return $menu;
 		}
 		//-- main clippings menu item
-		$menu = new Menu($pgv_lang["clippings_cart"], encode_url('module.php?mod=clippings&amp;ged='.$GEDCOM), "down");
+		$menu = new Menu(i18n::translate('Family Tree Clippings Cart'), encode_url('module.php?mod=clippings&amp;ged='.$GEDCOM), "down");
 		if (!empty($PGV_IMAGES["clippings"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["large"]);
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_clippings");

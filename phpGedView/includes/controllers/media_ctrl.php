@@ -174,7 +174,7 @@ class MediaControllerRoot extends IndividualController{
 			$name = $this->mediaobject->getFullName();
 			return $name." - ".$this->mediaobject->getXref();
 		}
-		else return $pgv_lang["unable_to_find_record"];
+		else return i18n::translate('Unable to find record with ID');
 	}
 
 	function canDisplayDetails() {
@@ -197,7 +197,7 @@ class MediaControllerRoot extends IndividualController{
 			break; // we're only interested in the key of the first list entry
 		}
 		//-- main edit menu
-		$menu = new Menu($pgv_lang["edit"]);
+		$menu = new Menu(i18n::translate('Edit'));
 		$click_link = "window.open('addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 		$menu->addOnclick($click_link);
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
@@ -205,14 +205,14 @@ class MediaControllerRoot extends IndividualController{
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		if (PGV_USER_CAN_EDIT) {
 			//- plain edit option
-			$submenu = new Menu($pgv_lang["edit"]);
+			$submenu = new Menu(i18n::translate('Edit'));
 			$click_link = "window.open('addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 			$submenu->addOnclick($click_link);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
 			if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
-				$submenu = new Menu($pgv_lang["edit_raw"]);
+				$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 				$submenu->addOnclick("return edit_raw('".$this->pid."');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -220,18 +220,18 @@ class MediaControllerRoot extends IndividualController{
 			//- end plain edit option
 			if (PGV_USER_GEDCOM_ADMIN) {
 				//- remove object option
-				$submenu = new Menu($pgv_lang["remove_object"]);
+				$submenu = new Menu(i18n::translate('Remove object'));
 				$submenu->addLink(encode_url("media.php?action=removeobject&xref=".$this->pid));
-				$submenu->addOnclick("return confirm('".$pgv_lang["confirm_remove_object"]."')");
+				$submenu->addOnclick("return confirm('".i18n::translate('Are you sure you want to remove this object from the database?')."')");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
 
 			// main link displayed on page
 			if (PGV_USER_GEDCOM_ADMIN && file_exists(PGV_ROOT.'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
-				$submenu = new Menu($pgv_lang["add_or_remove_links"]);
+				$submenu = new Menu(i18n::translate('Manage links'));
 			} else {	
-				$submenu = new Menu($pgv_lang["set_link"]);
+				$submenu = new Menu(i18n::translate('Set link'));
 			}
 			
 			// GEDFact assistant Add Media Links =======================
@@ -243,17 +243,17 @@ class MediaControllerRoot extends IndividualController{
 				$submenu->addOnclick("return ilinkitem('".$this->pid."','person');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 
-				$ssubmenu = new Menu($pgv_lang["to_person"]);
+				$ssubmenu = new Menu(i18n::translate('To Person'));
 				$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','person');");
 				$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$submenu->addSubMenu($ssubmenu);
 
-				$ssubmenu = new Menu($pgv_lang["to_family"]);
+				$ssubmenu = new Menu(i18n::translate('To Family'));
 				$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','family');");
 				$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$submenu->addSubMenu($ssubmenu);
 
-				$ssubmenu = new Menu($pgv_lang["to_source"]);
+				$ssubmenu = new Menu(i18n::translate('To Source'));
 				$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','source');");
 				$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$submenu->addSubMenu($ssubmenu);
@@ -263,11 +263,11 @@ class MediaControllerRoot extends IndividualController{
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 			$menu->addSeparator();
 			if (!$this->show_changes) {
-				$label = $pgv_lang["show_changes"];
+				$label = i18n::translate('This record has been updated.  Click here to show changes.');
 				$link = "mediaviewer.php?mid={$this->pid}&show_changes=yes";
 			}
 			else {
-				$label = $pgv_lang["hide_changes"];
+				$label = i18n::translate('Click here to hide changes.');
 				$link = "mediaviewer.php?mid={$this->pid}&show_changes=no";
 			}
 			$submenu = new Menu($label, encode_url($link));
@@ -275,10 +275,10 @@ class MediaControllerRoot extends IndividualController{
 			$menu->addSubmenu($submenu);
 
 			if (PGV_USER_CAN_ACCEPT) {
-				$submenu = new Menu($pgv_lang["undo_all"], encode_url("mediaviewer.php?mid={$this->pid}&action=undo"));
+				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("mediaviewer.php?mid={$this->pid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang["accept_all"], encode_url("mediaviewer.php?mid={$this->pid}&action=accept"));
+				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("mediaviewer.php?mid={$this->pid}&action=accept"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -307,7 +307,7 @@ class MediaControllerRoot extends IndividualController{
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 		//-- main other menu item
-		$menu = new Menu($pgv_lang["other"]);
+		$menu = new Menu(i18n::translate('Other'));
 		if ($SHOW_GEDCOM_RECORD) {
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
@@ -323,7 +323,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		if ($this->canShowGedcomRecord()) {
-			$submenu = new Menu($pgv_lang["view_gedcom"]);
+			$submenu = new Menu(i18n::translate('View GEDCOM Record'));
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 			if ($this->show_changes && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
@@ -332,14 +332,14 @@ class MediaControllerRoot extends IndividualController{
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->mediaobject->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
-			$submenu = new Menu($pgv_lang["add_to_cart"], encode_url("clippings.php?action=add&id={$this->pid}&type=obje"));
+			$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url("clippings.php?action=add&id={$this->pid}&type=obje"));
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->mediaobject->canDisplayDetails() && PGV_USER_ID) {
-			$submenu = new Menu($pgv_lang["add_to_my_favorites"], encode_url("mediaviewer.php?action=addfav&mid={$this->pid}&gid={$this->pid}"));
+			$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url("mediaviewer.php?action=addfav&mid={$this->pid}&gid={$this->pid}"));
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -377,7 +377,7 @@ class MediaControllerRoot extends IndividualController{
 //		if ($includeFileName) $facts[] = new Event("1 FILE ".$this->mediaobject->getFilename());
 		$mediaType = $this->mediaobject->getMediatype();
 		if (isset($pgv_lang["TYPE__".$mediaType])) $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__".$mediaType]);
-		else $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__other"]);
+		else $facts[] = new Event("1 TYPE ".i18n::translate('Other'));
 
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes)) {
 			$newrec = find_updated_record($this->pid, PGV_GED_ID);
@@ -387,7 +387,7 @@ class MediaControllerRoot extends IndividualController{
 			$newfacts[] = new Event("1 FORM ".$newmedia->getFiletype());
 			$mediaType = $newmedia->getMediatype();
 			if (isset($pgv_lang["TYPE__".$mediaType])) $newfacts[] = new Event("1 TYPE ".$mediaType);
-			else $newfacts[] = new Event("1 TYPE ".$pgv_lang["TYPE__other"]);
+			else $newfacts[] = new Event("1 TYPE ".i18n::translate('Other'));
 			//-- loop through new facts and add them to the list if they are any changes
 			//-- compare new and old facts of the Personal Fact and Details tab 1
 			for($i=0; $i<count($facts); $i++) {

@@ -78,7 +78,7 @@ if (array_key_exists($ln, $configuredlanguages["gedcom"]) or
 $d_LangName = "lang_name_" . $ln;
 $sentHeader = false;    // Indicates whether HTML headers have been sent
 if ($action !="save" and $action != "toggleActive") {
-	print_simple_header($pgv_lang["edit_lang_utility"]);
+	print_simple_header(i18n::translate('Language File Edit Utility'));
 	$sentHeader = true;
 
 	echo PGV_JS_START, "self.focus();", PGV_JS_END;
@@ -165,9 +165,9 @@ if ($action != "save" && $action != "toggleActive") {
 	echo PGV_JS_END;
 
 	if ($action == "new_lang") {
-		echo "<h2>", $pgv_lang["add_new_language"], "</h2>";
+		echo "<h2>", i18n::translate('Add files and settings for a new language'), "</h2>";
 	} else {
-		echo "<h2>", $pgv_lang["config_lang_utility"], "</h2>";
+		echo "<h2>", i18n::translate('Configuration of supported languages'), "</h2>";
 	}
 	// If we've added a new language, but haven't defined its name in the current language,
 	// then display something to indicate what is required, rather than an error.
@@ -187,9 +187,9 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 
 	echo "<br /><center>";
-	echo '<input type="submit" value="', $pgv_lang["lang_save"], '" />';
+	echo '<input type="submit" value="', i18n::translate('Save'), '" />';
 	echo "&nbsp;&nbsp;";
-	echo '<input type="submit" value="', $pgv_lang["cancel"], "\" onclick=\"document.Form1.action.value='cancel'\" />";
+	echo '<input type="submit" value="', i18n::translate('Cancel'), "\" onclick=\"document.Form1.action.value='cancel'\" />";
 	echo "</center><br />";
 
 	echo '<table class="facts_table">';
@@ -201,7 +201,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_lang_use = $pgv_lang_use[$ln];
 	}
 	echo "<tr>";
-	echo '<td class="facts_label" >', print_help_link("active", "qm"), $pgv_lang["active"], "</td>";
+	echo '<td class="facts_label" >', print_help_link("active", "qm"), i18n::translate('Active'), "</td>";
 	write_td_with_textdir_check();
 
 	if ($v_lang_use) {
@@ -235,7 +235,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("lang_shortcut", "qm");
-	echo $pgv_lang["lang_shortcut"];
+	echo i18n::translate('Abbreviation for language files');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_lang_shortcut" size="2" value="', $v_lang_shortcut, "\" onchange=\"document.Form1.action.value=''; submit();\" />";
@@ -248,7 +248,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("lang_langcode", "qm");
-	echo $pgv_lang["lang_langcode"];
+	echo i18n::translate('Language detection codes');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_lang_langcode" size="70" value="', $v_lang_langcode, '" />';
@@ -261,7 +261,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("flagsfile", "qm");
-	echo $pgv_lang["flagsfile"];
+	echo i18n::translate('Flag file');
 	echo "</td>";
 	write_td_with_textdir_check();
 	$dire = "images/flags";
@@ -323,7 +323,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("date_format", "qm");
-	echo $pgv_lang["date_format"];
+	echo i18n::translate('Date format');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_date_format" size="30" value="', $v_date_format. '" />';
@@ -336,7 +336,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("time_format", "qm");
-	echo $pgv_lang["time_format"];
+	echo i18n::translate('Time format');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_time_format" size="30" value="', $v_time_format, '" />';
@@ -349,12 +349,12 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("week_start", "qm");
-	echo $pgv_lang["week_start"];
+	echo i18n::translate('Week starting day');
 	echo "</td>";
 	write_td_with_textdir_check();
 
 	echo '<select size="1" name="v_week_start">';
-	$dayArray = array($pgv_lang["sunday"],$pgv_lang["monday"],$pgv_lang["tuesday"],$pgv_lang["wednesday"],$pgv_lang["thursday"],$pgv_lang["friday"],$pgv_lang["saturday"]);
+	$dayArray = array(i18n::translate('Sunday'),i18n::translate('Monday'),i18n::translate('Tuesday'),i18n::translate('Wednesday'),i18n::translate('Thursday'),i18n::translate('Friday'),i18n::translate('Saturday'));
 
 	for ($x = 0; $x <= 6; $x++)  {
 		echo "<option";
@@ -375,7 +375,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("text_direction", "qm");
-	echo $pgv_lang["text_direction"];
+	echo i18n::translate('Text direction');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<select size="1" name="v_text_direction">';
@@ -383,12 +383,12 @@ if ($action != "save" && $action != "toggleActive") {
 	if ($v_text_direction == "ltr") {
 		echo ' selected="selected"';
 	}
-	echo ' value="0">', $pgv_lang["ltr"], "</option>";
+	echo ' value="0">', i18n::translate('Left to right'), "</option>";
 	echo "<option";
 	if ($v_text_direction == "rtl") {
 		echo ' selected="selected"';
 	}
-	echo ' value="1">', $pgv_lang["rtl"], "</option>";
+	echo ' value="1">', i18n::translate('Right to left'), "</option>";
 	echo "</select>";
 	echo "</td>";
 	echo "</tr>";
@@ -399,7 +399,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("name_reverse", "qm");
-	echo $pgv_lang["name_reverse"];
+	echo i18n::translate('Surname first');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<select size="1" name="v_name_reverse">';
@@ -407,12 +407,12 @@ if ($action != "save" && $action != "toggleActive") {
 	if (!$v_name_reverse) {
 		echo ' selected="selected"';
 	}
-	echo ' value="0">', $pgv_lang["no"], "</option>";
+	echo ' value="0">', i18n::translate('No'), "</option>";
 	echo "<option";
 	if ($v_name_reverse) {
 		echo ' selected="selected"';
 	}
-	echo ' value="1">', $pgv_lang["yes"], "</option>";
+	echo ' value="1">', i18n::translate('Yes'), "</option>";
 	echo "</select>";
 	echo "</td>";
 	echo "</tr>";
@@ -423,7 +423,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("alphabet_upper", "qm");
-	echo $pgv_lang["alphabet_upper"];
+	echo i18n::translate('Alphabet upper case');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_alphabet_upper" size="80" value="', $v_alphabet_upper, '" />';
@@ -436,7 +436,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("alphabet_lower", "qm");
-	echo $pgv_lang["alphabet_lower"];
+	echo i18n::translate('Alphabet lower case');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_alphabet_lower" size="80" value="', $v_alphabet_lower, '" />';
@@ -449,7 +449,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("multi_letter_alphabet", "qm");
-	echo $pgv_lang["multi_letter_alphabet"];
+	echo i18n::translate('Multi-letter alphabet');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_multi_letter_alphabet" size="50" value="', $v_multi_letter_alphabet, '" />';
@@ -462,7 +462,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("multi_letter_equiv", "qm");
-	echo $pgv_lang["multi_letter_equiv"];
+	echo i18n::translate('Multi-letter equivalents');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_multi_letter_equiv" size="50" value="', $v_multi_letter_equiv, '" />';
@@ -475,7 +475,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("dictionary_sort", "qm");
-	echo $pgv_lang["dictionary_sort"];
+	echo i18n::translate('Use dictionary rules while sorting');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<select size="1" name="v_dictionary_sort">';
@@ -483,12 +483,12 @@ if ($action != "save" && $action != "toggleActive") {
 	if (!$v_dictionary_sort) {
 		echo ' selected="selected"';
 	}
-	echo ' value="0">', $pgv_lang["no"], "</option>";
+	echo ' value="0">', i18n::translate('No'), "</option>";
 	echo "<option";
 	if ($v_dictionary_sort) {
 		echo ' selected="selected"';
 	}
-	echo ' value="1">',	$pgv_lang["yes"], "</option>";
+	echo ' value="1">',	i18n::translate('Yes'), "</option>";
 	echo "</select>";
 	echo "</td>";
 	echo "</tr>";
@@ -499,7 +499,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("collation", "qm");
-	echo $pgv_lang["collation"];
+	echo i18n::translate('Database collation sequence');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_collation" size="30" value="', $v_collation, '" />';
@@ -519,7 +519,7 @@ if ($action != "save" && $action != "toggleActive") {
 	if ($action != "new_lang") {
 		echo '<tr><td class="facts_label" >';
 		print_help_link("lang_filenames", "qm");
-		echo $pgv_lang["lang_filenames"];
+		echo i18n::translate('Language files');
 		echo '</td>';
 		write_td_with_textdir_check();
 
@@ -527,7 +527,7 @@ if ($action != "save" && $action != "toggleActive") {
 		foreach(array($v_adminfile, $v_config_filename, $v_countryfile, $v_editorfile, $v_factsfile, $v_helpfile, $v_lang_filename) as $key => $fileName) {
 			echo $fileName;
 			if (!file_exists($fileName)) {
-				echo '&nbsp;&nbsp;&nbsp;&nbsp;<b class="error">', $pgv_lang["file_does_not_exist"], '</b>';
+				echo '&nbsp;&nbsp;&nbsp;&nbsp;<b class="error">', i18n::translate('ERROR! The file does not exist...'), '</b>';
 			}
 			echo '<br />';
 		}
@@ -536,7 +536,7 @@ if ($action != "save" && $action != "toggleActive") {
 		foreach(array($v_faqlistfile, $v_extrafile) as $key => $fileName) {
 			echo $fileName;
 			if (!file_exists($fileName)) {
-				echo '&nbsp;&nbsp;&nbsp;&nbsp;', $pgv_lang["optional_file_not_exist"];
+				echo '&nbsp;&nbsp;&nbsp;&nbsp;', i18n::translate('This optional file does not exist.');
 			}
 			echo '<br />';
 		}
@@ -547,8 +547,8 @@ if ($action != "save" && $action != "toggleActive") {
 
 	echo "<br />";
 	echo "<center>";
-	echo '<input type="submit" value="', $pgv_lang["lang_save"], '" />&nbsp;&nbsp;';
-	echo '<input type="submit" value="', $pgv_lang["cancel"], "\" onclick=\"document.Form1.action.value='cancel'\" />";
+	echo '<input type="submit" value="', i18n::translate('Save'), '" />&nbsp;&nbsp;';
+	echo '<input type="submit" value="', i18n::translate('Cancel'), "\" onclick=\"document.Form1.action.value='cancel'\" />";
 	echo "</center>";
 	echo "</form>";
 }
@@ -616,7 +616,7 @@ if ($action == "save" or $action=="toggleActive") {
 
 	if ($error != "") {
 		if (!$sentHeader) {
-			print_simple_header($pgv_lang["config_lang_utility"]);
+			print_simple_header(i18n::translate('Configuration of supported languages'));
 			$sentHeader = true;
 			echo '<div class="center"><center>';
 		}
@@ -625,7 +625,7 @@ if ($action == "save" or $action=="toggleActive") {
 		echo '<table class="facts_table">';
 		echo '<tr><td class="facts_value" style="text-align:center; " >';
 		srand((double)microtime()*1000000);
-		echo '<input type="submit" value="', $pgv_lang["close_window"], '" onclick="window.opener.showchanges(); self.close();" />';
+		echo '<input type="submit" value="', i18n::translate('Close Window'), '" onclick="window.opener.showchanges(); self.close();" />';
 		echo '</td></tr>';
 		echo '</table>';
 		echo '</form>';

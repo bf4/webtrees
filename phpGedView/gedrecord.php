@@ -37,12 +37,12 @@ $pid=safe_GET_xref('pid');
 <html  xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $CHARACTER_SET; ?>" />
-		<title><?php echo $pgv_lang["record"], ': ',$pid ; ?></title>
+		<title><?php echo i18n::translate('Record'), ': ',$pid ; ?></title>
 	</head>
 	<body><?php
 
 if (!$SHOW_GEDCOM_RECORD && !PGV_USER_CAN_ACCEPT) {
-	echo "<span class=\"error\">", $pgv_lang["ged_noshow"], "</span>\n";
+	echo "<span class=\"error\">", i18n::translate('This page has been disabled by the site administrator.'), "</span>\n";
 	echo "</body></html>";
 	exit;
 }

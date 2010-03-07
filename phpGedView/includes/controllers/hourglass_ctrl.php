@@ -379,7 +379,7 @@ class HourglassControllerRoot extends BaseController {
 					print "\n\t\t<div class=\"center\" id=\"childarrow\" dir=\"".$TEXT_DIRECTION."\"";
 					print " style=\"position:absolute; width:".$bwidth."px; \">";
 					if ($this->view!="preview") {
-						print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',3);\" onmouseout=\"swap_image('larrow',3);\">";
+						print "<a href=\"javascript: ".i18n::translate('Show')."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',3);\" onmouseout=\"swap_image('larrow',3);\">";
 						print "<img id=\"larrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
 						print "</a><br />";
 
@@ -426,7 +426,7 @@ class HourglassControllerRoot extends BaseController {
 					foreach($cfamids as $famid=>$family) {
 						if (!is_null($family)) {
 							if(!is_null($family->getHusband()) || !is_null($family->getWife())) {
-								print "<span class=\"name1\"><br />".$pgv_lang["parents"]."<br /></span>";
+								print "<span class=\"name1\"><br />".i18n::translate('Parents')."<br /></span>";
 								$husb = $family->getHusband();
 								if (!empty($husb)) {
 									$spid = $husb->getXref();
@@ -454,8 +454,8 @@ class HourglassControllerRoot extends BaseController {
 							}
 							$children = $family->getChildren();
 							$num = $family->getNumberOfChildren();
-							if ($num>2) print "<span class=\"name1\"><br />".$pgv_lang["siblings"]."<br /></span>";
-							if ($num==2) print "<span class=\"name1\"><br />".$pgv_lang["sibling"]."<br /></span>";
+							if ($num>2) print "<span class=\"name1\"><br />".i18n::translate('Siblings')."<br /></span>";
+							if ($num==2) print "<span class=\"name1\"><br />".i18n::translate('Sibling')."<br /></span>";
 							foreach($children as $id=>$child) {
 								$cid = $child->getXref();
 								if ($cid!=$pid) {

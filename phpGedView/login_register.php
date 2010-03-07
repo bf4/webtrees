@@ -55,14 +55,14 @@ $message="";
 
 switch ($action) {
 	case "pwlost" :
-		print_header($pgv_lang['lost_pw_reset']);
+		print_header(i18n::translate('Lost password request'));
 		?>
 		<script language="JavaScript" type="text/javascript">
 		<!--
 			function checkform(frm) {
 				/*
 				if (frm.user_email.value == "") {
-					alert("<?php print $pgv_lang["enter_email"]; ?>");
+					alert("<?php print i18n::translate('You must enter an email address.'); ?>");
 					frm.user_email.focus();
 					return false;
 				}
@@ -77,9 +77,9 @@ switch ($action) {
 			<input type="hidden" name="action" value="requestpw" />
 			<span class="warning"><?php print $message?></span>
 			<table class="center facts_table width25">
-				<tr><td class="topbottombar" colspan="2"><?php print_help_link("pls_note11", "qm", "lost_pw_reset"); print $pgv_lang["lost_pw_reset"];?></td></tr>
-				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print $pgv_lang["username"]?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="" /></td></tr>
-				<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php print $pgv_lang["lost_pw_reset"]; ?>" /></td></tr>
+				<tr><td class="topbottombar" colspan="2"><?php print_help_link("pls_note11", "qm", "lost_pw_reset"); print i18n::translate('Lost password request');?></td></tr>
+				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print i18n::translate('User name')?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="" /></td></tr>
+				<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php print i18n::translate('Lost password request'); ?>" /></td></tr>
 			</table>
 			</form>
 		</div>
@@ -91,7 +91,7 @@ switch ($action) {
 
 	case "requestpw" :
 		$QUERY_STRING = "";
-		print_header($pgv_lang['lost_pw_reset']);
+		print_header(i18n::translate('Lost password request'));
 		print "<div class=\"center\">";
 		$user_id=get_user_id($user_name);
 		if (!$user_id) {
@@ -124,12 +124,12 @@ switch ($action) {
 
 				$mail_body = "";
 				$mail_body .= str_replace("#user_fullname#", $newuserName, $pgv_lang["mail04_line01"]) . "\r\n\r\n";
-				$mail_body .= $pgv_lang["mail04_line02"] . "\r\n\r\n";
-				$mail_body .= $pgv_lang["username"] . ": " . $user_name . "\r\n";
+				$mail_body .= i18n::translate('A new password was requested for your user name.') . "\r\n\r\n";
+				$mail_body .= i18n::translate('User name') . ": " . $user_name . "\r\n";
 
-				$mail_body .= $pgv_lang["password"] . ": " . $user_new_pw . "\r\n\r\n";
-				$mail_body .= $pgv_lang["mail04_line03"] . "\r\n";
-				$mail_body .= $pgv_lang["mail04_line04"] . "\r\n\r\n";
+				$mail_body .= i18n::translate('Password') . ": " . $user_new_pw . "\r\n\r\n";
+				$mail_body .= i18n::translate('Recommendation:') . "\r\n";
+				$mail_body .= i18n::translate('Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure.') . "\r\n\r\n";
 				$mail_body .= print_text("mail04_line05", 0, 1) . "\r\n\r\n";
 
 				if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".PGV_SERVER_NAME.PGV_SCRIPT_PATH."\">".PGV_SERVER_NAME.PGV_SCRIPT_PATH."</a>";
@@ -159,25 +159,25 @@ switch ($action) {
 	}
 	$message = "";
 		if (!$user_name) {
-			$message .= $pgv_lang["enter_username"]."<br />";
+			$message .= i18n::translate('You must enter a user name.')."<br />";
 			$user_name_false = true;
 		}
 		else $user_name_false = false;
 
 		if (!$user_password01) {
-			$message .= $pgv_lang["enter_password"]."<br />";
+			$message .= i18n::translate('You must enter a password.')."<br />";
 			$user_password01_false = true;
 		}
 		else $user_password01_false = false;
 
 		if (!$user_password02) {
-			$message .= $pgv_lang["confirm_password"]."<br />";
+			$message .= i18n::translate('You must confirm the password.')."<br />";
 			$user_password02_false = true;
 		}
 		else $user_password02_false = false;
 
 		if ($user_password01 != $user_password02) {
-			$message .= $pgv_lang["password_mismatch"]."<br />";
+			$message .= i18n::translate('Passwords do not match.')."<br />";
 			$password_mismatch = true;
 		}
 		else $password_mismatch = false;
@@ -199,7 +199,7 @@ switch ($action) {
 
 		if ($user_name_false == false && $user_password01_false == false && $user_password02_false == false && $user_firstname_false == false && $user_lastname_false == false && $user_email_false == false && $user_language_false == false && $user_comments_false == false && $password_mismatch == false) $action = "registernew";
 		else {
-			print_header($pgv_lang['requestaccount']);
+			print_header(i18n::translate('Request new user account'));
 			// Empty user array in case any details might be left
 			// and faulty users are requested and created
 			$user = array();
@@ -209,51 +209,51 @@ switch ($action) {
 			<!--
 				function checkform(frm) {
 					if (frm.user_name.value == "") {
-						alert("<?php print $pgv_lang["enter_username"]; ?>");
+						alert("<?php print i18n::translate('You must enter a user name.'); ?>");
 						frm.user_name.focus();
 						return false;
 					}
 					if (frm.user_password01.value == "") {
-						alert("<?php print $pgv_lang["enter_password"]; ?>");
+						alert("<?php print i18n::translate('You must enter a password.'); ?>");
 						frm.user_password01.focus();
 						return false;
 					}
 					if (frm.user_password02.value == "") {
-						alert("<?php print $pgv_lang["confirm_password"]; ?>");
+						alert("<?php print i18n::translate('You must confirm the password.'); ?>");
 						frm.user_password02.focus();
 						return false;
 					}
 					if (frm.user_password01.value != frm.user_password02.value) {
-						alert("<?php print $pgv_lang["password_mismatch"]; ?>");
+						alert("<?php print i18n::translate('Passwords do not match.'); ?>");
 						frm.user_password01.value = "";
 						frm.user_password02.value = "";
 						frm.user_password01.focus();
 						return false;
 					}
 					if (frm.user_password01.value.length < 6) {
-						alert("<?php print $pgv_lang["passwordlength"]; ?>");
+						alert("<?php print i18n::translate('Passwords must contain at least 6 characters.'); ?>");
 						frm.user_password01.value = "";
 						frm.user_password02.value = "";
 						frm.user_password01.focus();
 						return false;
 					}
 					if (frm.user_firstname.value == "") {
-						alert("<?php print $pgv_lang["enter_fullname"]; ?>");
+						alert("<?php print i18n::translate('You must enter a first and last name.'); ?>");
 						frm.user_firstname.focus();
 						return false;
 					}
 					if (frm.user_lastname.value == "") {
-						alert("<?php print $pgv_lang["enter_fullname"]; ?>");
+						alert("<?php print i18n::translate('You must enter a first and last name.'); ?>");
 						frm.user_lastname.focus();
 						return false;
 					}
 					if ((frm.user_email.value == "")||(frm.user_email.value.indexOf('@')==-1)) {
-						alert("<?php print $pgv_lang["enter_email"]; ?>");
+						alert("<?php print i18n::translate('You must enter an email address.'); ?>");
 						frm.user_email.focus();
 						return false;
 					}
 					if (frm.user_comments.value == "") {
-						alert("<?php print $pgv_lang["enter_comments"]; ?>");
+						alert("<?php print i18n::translate('Please enter your relationship to the data in the Comments field.'); ?>");
 						frm.user_comments.focus();
 						return false;
 					}
@@ -280,18 +280,18 @@ switch ($action) {
 					<input type="hidden" name="time" value="" />
 					<table class="center facts_table width50">
 					<?php $i = 1;?>
-						<tr><td class="topbottombar" colspan="2"><?php print_help_link("register_info_0".$WELCOME_TEXT_AUTH_MODE."", "qm", "requestaccount"); echo $pgv_lang["requestaccount"];?><br /><?php if (strlen($message) > 0) echo $message; ?></td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("new_user_firstname", "qm", "firstname");echo $pgv_lang["firstname"];?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_firstname" value="<?php if (!$user_firstname_false) echo $user_firstname;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("new_user_lastname", "qm", "lastname");echo $pgv_lang["lastname"];?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_lastname" value="<?php if (!$user_lastname_false) echo $user_lastname;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_email", "qm", "emailadress");echo $pgv_lang["emailadress"];?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" size="30" name="user_email" value="<?php if (!$user_email_false) echo $user_email;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("username", "qm", "username"); echo $pgv_lang["choose_username"];?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php if (!$user_name_false) echo $user_name;?>" tabindex="<?php echo $i;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_password", "qm", "password"); echo $pgv_lang["choose_password"];?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password01" value="" tabindex="<?php echo $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_conf_password", "qm", "confirm");echo $pgv_lang["confirm"];?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password02" value="" tabindex="<?php echo $i++;?>" /> *</td></tr>
+						<tr><td class="topbottombar" colspan="2"><?php print_help_link("register_info_0".$WELCOME_TEXT_AUTH_MODE."", "qm", "requestaccount"); echo i18n::translate('Request new user account');?><br /><?php if (strlen($message) > 0) echo $message; ?></td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("new_user_firstname", "qm", "firstname");echo i18n::translate('First Name');?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_firstname" value="<?php if (!$user_firstname_false) echo $user_firstname;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("new_user_lastname", "qm", "lastname");echo i18n::translate('Last Name');?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_lastname" value="<?php if (!$user_lastname_false) echo $user_lastname;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_email", "qm", "emailadress");echo i18n::translate('Email Address');?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" size="30" name="user_email" value="<?php if (!$user_email_false) echo $user_email;?>" tabindex="<?php echo $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("username", "qm", "username"); echo i18n::translate('Desired user name');?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php if (!$user_name_false) echo $user_name;?>" tabindex="<?php echo $i;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_password", "qm", "password"); echo i18n::translate('Desired password');?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password01" value="" tabindex="<?php echo $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_conf_password", "qm", "confirm");echo i18n::translate('Confirm Password');?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>"><input type="password" name="user_password02" value="" tabindex="<?php echo $i++;?>" /> *</td></tr>
 						<?php
 						if ($ENABLE_MULTI_LANGUAGE) {
 							echo "<tr><td class=\"descriptionbox wrap ", $TEXT_DIRECTION, "\">";
 							print_help_link("edituser_change_lang", "qm", "change_lang");
-							echo $pgv_lang["change_lang"];
+							echo i18n::translate('Change Language');
 							echo "</td><td class=\"optionbox ", $TEXT_DIRECTION, "\"><select name=\"user_language\" tabindex=\"", $i++, "\">";
 							foreach ($pgv_language as $key => $value) {
 								if ($language_settings[$key]["pgv_lang_use"]) {
@@ -311,11 +311,11 @@ switch ($action) {
 						}
 						?>
 						<?php if ($REQUIRE_AUTHENTICATION && $SHOW_LIVING_NAMES>=$PRIV_PUBLIC) { ?>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("register_gedcomid", "qm", "gedcomid");echo $pgv_lang["gedcomid"];?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><input type="text" size="10" name="user_gedcomid" id="user_gedcomid" value="" tabindex="<?php echo $i++;?>" /><?php print_findindi_link("user_gedcomid",""); ?></td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("register_gedcomid", "qm", "gedcomid");echo i18n::translate('GEDCOM INDI record ID');?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><input type="text" size="10" name="user_gedcomid" id="user_gedcomid" value="" tabindex="<?php echo $i++;?>" /><?php print_findindi_link("user_gedcomid",""); ?></td></tr>
 						<?php } ?>
-						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("register_comments", "qm", "comments");echo $pgv_lang["comments"];?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><textarea cols="50" rows="5" name="user_comments" tabindex="<?php echo $i++;?>"><?php if (!$user_comments_false) echo $user_comments;?></textarea> *</td></tr>
-						<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php echo $pgv_lang["requestaccount"]; ?>" tabindex="<?php echo $i++;?>" /></td></tr>
-						<tr><td align="left" colspan="2" ><?php echo $pgv_lang["mandatory"];?></td></tr>
+						<tr><td class="descriptionbox wrap <?php echo $TEXT_DIRECTION; ?>"><?php print_help_link("register_comments", "qm", "comments");echo i18n::translate('Comments');?></td><td class="optionbox <?php echo $TEXT_DIRECTION; ?>" valign="top" ><textarea cols="50" rows="5" name="user_comments" tabindex="<?php echo $i++;?>"><?php if (!$user_comments_false) echo $user_comments;?></textarea> *</td></tr>
+						<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php echo i18n::translate('Request new user account'); ?>" tabindex="<?php echo $i++;?>" /></td></tr>
+						<tr><td align="left" colspan="2" ><?php echo i18n::translate('Fields marked with * are mandatory.');?></td></tr>
 					</table>
 				</form>
 			</div>
@@ -353,7 +353,7 @@ switch ($action) {
 
 		$QUERY_STRING = "";
 		if (isset($user_name)) {
-		print_header($pgv_lang['registernew']);
+		print_header(i18n::translate('New Account confirmation'));
 			print "<div class=\"center\">";
 			$alphabet = getAlphabet();
 			$alphabet .= "_-. ";
@@ -373,7 +373,7 @@ switch ($action) {
 
 				if (get_user_id($user_name)) {
 					print "<span class=\"warning\">".print_text("duplicate_username",0,1)."</span><br /><br />";
-					print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
+					print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
 				}
 				else if ($user_password01 == $user_password02) {
 					if ($user_id=create_user($user_name, crypt($user_password01))) {
@@ -402,11 +402,11 @@ switch ($action) {
 						$user_created_ok = true;
 					} else {
 						print "<span class=\"warning\">".print_text("user_create_error",0,1)."<br /></span>";
-						print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
+						print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
 					}
 				} else {
 					print "<span class=\"warning\">".print_text("password_mismatch",0,1)."</span><br />";
-					print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
+					print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
 				}
 				if ($user_created_ok) {
 					// switch to the user's language
@@ -419,8 +419,8 @@ switch ($action) {
 					$mail_body = "";
 					$mail_body .= str_replace("#user_fullname#", $fullName, $pgv_lang["mail01_line01"]) . "\r\n\r\n";
 					$mail_body .= str_replace("#user_email#", $user_email, str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail01_line02"])) . "  ";
-					$mail_body .= $pgv_lang["mail01_line03"] . "\r\n\r\n";
-					$mail_body .= $pgv_lang["mail01_line04"] . "\r\n\r\n";
+					$mail_body .= i18n::translate('Information about the request is shown under the link below.') . "\r\n\r\n";
+					$mail_body .= i18n::translate('Please click on the following link and fill in the requested data to confirm your request and email address.') . "\r\n\r\n";
 					if ($TEXT_DIRECTION=="rtl") {
 						$mail_body .= "<a href=\"";
 						$mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify\">";
@@ -428,11 +428,11 @@ switch ($action) {
 					$mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH . "login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_id, 'reg_hashcode'))."&action=userverify";
 					if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
 					$mail_body .= "\r\n";
-					$mail_body .= $pgv_lang["username"] . " " . $user_name . "\r\n";
-					$mail_body .= $pgv_lang["hashcode"] . " " . get_user_setting($user_id, 'reg_hashcode') . "\r\n\r\n";
-					$mail_body .= $pgv_lang["comments"].": " . $user_comments . "\r\n\r\n";
-					$mail_body .= $pgv_lang["mail01_line05"] . "  ";
-					$mail_body .= $pgv_lang["mail01_line06"] . "\r\n";
+					$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
+					$mail_body .= i18n::translate('Verification code:') . " " . get_user_setting($user_id, 'reg_hashcode') . "\r\n\r\n";
+					$mail_body .= i18n::translate('Comments').": " . $user_comments . "\r\n\r\n";
+					$mail_body .= i18n::translate('If you didn\'t request an account, you can just delete this message.') . "  ";
+					$mail_body .= i18n::translate('You won\'t get any more email from this site, because the account request will be deleted automatically after seven days.') . "\r\n";
 					require_once PGV_ROOT.'includes/functions/functions_mail.php';
 					pgvMail($user_email, $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail01_subject"]), $mail_body);
 
@@ -441,20 +441,20 @@ switch ($action) {
 					if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang, true);
 
 					$mail_body = "";
-					$mail_body .= $pgv_lang["mail02_line01"] . "\r\n\r\n";
+					$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
 					$mail_body .= str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail02_line02"]) . "\r\n\r\n";
-					$mail_body .= $pgv_lang["username"] . " " . $user_name . "\r\n";
+					$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
 					if ($NAME_REVERSE) {
-						$mail_body .= $pgv_lang["lastname"] . " " . $user_lastname . "\r\n\r\n";
-						$mail_body .= $pgv_lang["firstname"] . " " . $user_firstname . "\r\n";
+						$mail_body .= i18n::translate('Last Name') . " " . $user_lastname . "\r\n\r\n";
+						$mail_body .= i18n::translate('First Name') . " " . $user_firstname . "\r\n";
 					} else {
-						$mail_body .= $pgv_lang["firstname"] . " " . $user_firstname . "\r\n";
-						$mail_body .= $pgv_lang["lastname"] . " " . $user_lastname . "\r\n\r\n";
+						$mail_body .= i18n::translate('First Name') . " " . $user_firstname . "\r\n";
+						$mail_body .= i18n::translate('Last Name') . " " . $user_lastname . "\r\n\r\n";
 					}
-					$mail_body .= $pgv_lang["comments"].": " . $user_comments . "\r\n\r\n";
-					$mail_body .= $pgv_lang["mail02_line03"] . "\r\n\r\n";
-					if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= $pgv_lang["mail02_line04"] . "\r\n";
-					else $mail_body .= $pgv_lang["mail02_line04a"] . "\r\n";
+					$mail_body .= i18n::translate('Comments').": " . $user_comments . "\r\n\r\n";
+					$mail_body .= i18n::translate('The user received an email with the information necessary to confirm his access request.') . "\r\n\r\n";
+					if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= i18n::translate('You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account.') . "\r\n";
+					else $mail_body .= i18n::translate('You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part.') . "\r\n";
 
 					$message = array();
 					$message["to"]=$WEBMASTER_EMAIL;
@@ -483,7 +483,7 @@ switch ($action) {
 				print "</div>";
 			} else {
 				print "<span class=\"error\">".print_text("invalid_username",0,1)."</span><br />";
-				print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
+				print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
 			}
 		} else {
 			header("Location: login.php");
@@ -503,18 +503,18 @@ switch ($action) {
 		$user_lang=get_user_setting($user_id, 'language');
 		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang, true);
 
-		print_header($pgv_lang['user_verify']);
+		print_header(i18n::translate('User verification'));
 		print "<div class=\"center\">";
 		?>
 		<form name="verifyform" method="post" action="" onsubmit="t = new Date(); document.verifyform.time.value=t.toUTCString();">
 			<input type="hidden" name="action" value="verify_hash" />
 			<input type="hidden" name="time" value="" />
 			<table class="center facts_table width25">
-				<tr><td class="topbottombar" colspan="2"><?php print_help_link("pls_note07", "qm", "user_verify"); print $pgv_lang["user_verify"];?></td></tr>
-				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print $pgv_lang["username"]; ?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php print $user_name; ?>" /></td></tr>
-				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print $pgv_lang["password"]; ?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" name="user_password" value="" /></td></tr>
-				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print $pgv_lang["hashcode"]; ?></td><td class="facts_value <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_hashcode" value="<?php print $user_hashcode; ?>" /></td></tr>
-				<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php print $pgv_lang["send"]; ?>" /></td></tr>
+				<tr><td class="topbottombar" colspan="2"><?php print_help_link("pls_note07", "qm", "user_verify"); print i18n::translate('User verification');?></td></tr>
+				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print i18n::translate('User name'); ?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php print $user_name; ?>" /></td></tr>
+				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print i18n::translate('Password'); ?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" name="user_password" value="" /></td></tr>
+				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print i18n::translate('Verification code:'); ?></td><td class="facts_value <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_hashcode" value="<?php print $user_hashcode; ?>" /></td></tr>
+				<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php print i18n::translate('Send'); ?>" /></td></tr>
 			</table>
 		</form>
 		</div>
@@ -538,10 +538,10 @@ switch ($action) {
 		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang, true);
 		$oldLanguage = $LANGUAGE;
 
-		print_header($pgv_lang['user_verify']); // <-- better verification of authentication code
+		print_header(i18n::translate('User verification')); // <-- better verification of authentication code
 		print "<div class=\"center\">";
 		print "<table class=\"center facts_table wrap ".$TEXT_DIRECTION."\">";
-		print "<tr><td class=\"topbottombar\">".$pgv_lang["user_verify"]."</td></tr>";
+		print "<tr><td class=\"topbottombar\">".i18n::translate('User verification')."</td></tr>";
 		print "<tr><td class=\"optionbox\">";
 		print str_replace("#user_name#", $user_name, $pgv_lang["pls_note08"]);
 		if ($user_id) {
@@ -562,10 +562,10 @@ switch ($action) {
 				if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang, true);
 
 				$mail_body = "";
-				$mail_body .= $pgv_lang["mail03_line01"] . "\r\n\r\n";
+				$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
 				$mail_body .= str_replace(array("#newuser[username]#", "#newuser[fullname]#"), array($user_name, getUserFullName($user_id)), $pgv_lang["mail03_line02"]) . "\r\n\r\n";
-				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= $pgv_lang["mail03_line03"] . "\r\n";
-				else $mail_body .= $pgv_lang["mail03_line03a"] . "\r\n";
+				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= i18n::translate('Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site.') . "\r\n";
+				else $mail_body .= i18n::translate('You do not have to take any action; the user can now login.') . "\r\n";
 
 				if ($TEXT_DIRECTION=="rtl") {
 					$mail_body .= "<a href=\"";
@@ -587,20 +587,20 @@ switch ($action) {
 
 				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage, true);		// Reset language
 
-				print "<br /><br />".$pgv_lang["pls_note09"]."<br /><br />";
-				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print $pgv_lang["pls_note10"];
-				else print $pgv_lang["pls_note10a"];
+				print "<br /><br />".i18n::translate('You have confirmed your request to become a registered user.')."<br /><br />";
+				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print i18n::translate('The Administrator has been informed.  As soon as he gives you permission to login, you can login with your user name and password.');
+				else print i18n::translate('You can now login with your user name and password.');
 				print "<br /><br /></td></tr>";
 			} else {
 				print "<br /><br />";
 				print "<span class=\"warning\">";
-				print $pgv_lang["data_incorrect"];
+				print i18n::translate('Data was not correct, please try again');
 				print "</span><br /><br /></td></tr>";
 			}
 		} else {
 			print "<br /><br />";
 			print "<span class=\"warning\">";
-			print $pgv_lang["user_not_found"];
+			print i18n::translate('Could not verify the information you entered.  Please try again or contact the site administrator for more information.');
 			print "</span><br /><br /></td></tr>";
 		}
 		print "</table>";

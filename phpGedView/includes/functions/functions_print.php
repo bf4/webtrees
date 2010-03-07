@@ -102,54 +102,54 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				// NOTE: Start div I.$pid.$personcount.$count.links
 				$personlinks .= "<table class=\"person_box$isF\"><tr><td class=\"details1\">";
 				// NOTE: Zoom
-				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_chart"].": ".$pid;
-				else $title = $pid." :".$pgv_lang["pedigree_chart"];
-				$personlinks .= "<a href=\"".encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>";
+				if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Pedigree Chart').": ".$pid;
+				else $title = $pid." :".i18n::translate('Pedigree Chart');
+				$personlinks .= "<a href=\"".encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".i18n::translate('Pedigree Tree')."</b></a>";
 
 				if (file_exists(PGV_ROOT.'modules/googlemap/pedigree_map.php')) {
 					loadLangFile('googlemap:lang');
-					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_map"].": ".$pid;
-					else $title = $pid." :".$pgv_lang["pedigree_map"];
-					$personlinks .= "<br /><a href=\"".encode_url("module.php?mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["pedigree_map"]."</b></a>";
+					if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Pedigree Map').": ".$pid;
+					else $title = $pid." :".i18n::translate('Pedigree Map');
+					$personlinks .= "<br /><a href=\"".encode_url("module.php?mod=googlemap&pgvaction=pedigree_map&rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Pedigree Map')."</b></a>";
 				}
 				$username = PGV_USER_NAME;
 				if (!empty($username)) {
 					$myid=PGV_USER_GEDCOM_ID;
 					if ($myid && $myid!=$pid) {
-						if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
-						else $title = $pid." :".$pgv_lang["relationship_chart"];
-						$personlinks .= "<br /><a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$myid}&pid2={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&pretty=2&followspouse=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a>";
+						if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Relationship Chart').": ".$pid;
+						else $title = $pid." :".i18n::translate('Relationship Chart');
+						$personlinks .= "<br /><a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$myid}&pid2={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&pretty=2&followspouse=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Relationship to me')."</b></a>";
 					}
 				}
 
-				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["descend_chart"].": ".$pid;
-				else $title = $pid." :".$pgv_lang["descend_chart"];
-				$personlinks .= "<br /><a href=\"".encode_url("descendancy.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />";
+				if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Descendancy Chart').": ".$pid;
+				else $title = $pid." :".i18n::translate('Descendancy Chart');
+				$personlinks .= "<br /><a href=\"".encode_url("descendancy.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".i18n::translate('Descendancy Chart')."</b></a><br />";
 
 				if (file_exists(PGV_ROOT.'ancestry.php')) {
-					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
-					else $title = $pid." :".$pgv_lang["ancestry_chart"];
-					$personlinks .= "<a href=\"".encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />";
+					if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Ancestry Chart').": ".$pid;
+					else $title = $pid." :".i18n::translate('Ancestry Chart');
+					$personlinks .= "<a href=\"".encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Ancestry Chart')."</b></a><br />";
 				}
 				if (file_exists(PGV_ROOT.'compact.php')) {
-					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["compact_chart"].": ".$pid;
-					else $title = $pid." :".$pgv_lang["compact_chart"];
-					$personlinks .= "<a href=\"".encode_url("compact.php?rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />";
+					if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Compact Chart').": ".$pid;
+					else $title = $pid." :".i18n::translate('Compact Chart');
+					$personlinks .= "<a href=\"".encode_url("compact.php?rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Compact Chart')."</b></a><br />";
 				}
 				if (file_exists(PGV_ROOT.'fanchart.php') and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
-					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["fan_chart"].": ".$pid;
-					else $title = $pid." :".$pgv_lang["fan_chart"];
-					$personlinks .= "<a href=\"".encode_url("fanchart.php?rootid={$pid}&PEDIGREE_GENERATIONS={$OLD_PGENS}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />";
+					if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Circle Diagram').": ".$pid;
+					else $title = $pid." :".i18n::translate('Circle Diagram');
+					$personlinks .= "<a href=\"".encode_url("fanchart.php?rootid={$pid}&PEDIGREE_GENERATIONS={$OLD_PGENS}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Circle Diagram')."</b></a><br />";
 				}
 				if (file_exists(PGV_ROOT.'hourglass.php')) {
-					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
-					else $title = $pid." :".$pgv_lang["hourglass_chart"];
-					$personlinks .= "<a href=\"".encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}&show_spouse={$show_spouse}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />";
+					if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Hourglass Chart').": ".$pid;
+					else $title = $pid." :".i18n::translate('Hourglass Chart');
+					$personlinks .= "<a href=\"".encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}&show_spouse={$show_spouse}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Hourglass Chart')."</b></a><br />";
 				}
 				if (file_exists(PGV_ROOT.'treenav.php')) {
-					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["interactive_tree"].": ".$pid;
-					else $title = $pid." :".$pgv_lang["interactive_tree"];
-					$personlinks .= "<a href=\"".encode_url("treenav.php?rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["interactive_tree"]."</b></a><br />";
+					if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Interactive Tree').": ".$pid;
+					else $title = $pid." :".i18n::translate('Interactive Tree');
+					$personlinks .= "<a href=\"".encode_url("treenav.php?rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Interactive Tree')."</b></a><br />";
 				}
 
 				$fams = $person->getSpouseFamilies();
@@ -161,25 +161,25 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 						$children = $family->getChildren();
 						$num = count($children);
 						if ((!empty($spouse))||($num>0)) {
-							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["familybook_chart"].": ".$famid;
-							else $title = $famid." :".$pgv_lang["familybook_chart"];
-							$personlinks .= "<a href=\"".encode_url("family.php?famid={$famid}&show_full=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br />";
+							if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Family Book Chart').": ".$famid;
+							else $title = $famid." :".i18n::translate('Family Book Chart');
+							$personlinks .= "<a href=\"".encode_url("family.php?famid={$famid}&show_full=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".i18n::translate('Family with spouse')."</b></a><br />";
 							if (!empty($spouse)) {
-								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse->getXref();
-								else $title = $spouse->getXref()." :".$pgv_lang["indi_info"];
+								if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Individual Information').": ".$spouse->getXref();
+								else $title = $spouse->getXref()." :".i18n::translate('Individual Information');
 								$personlinks .= "<a href=\"".encode_url($spouse->getLinkUrl())."\" title=\"$title\" $mouseAction1>";
 								if ($spouse->canDisplayName()) $personlinks .= PrintReady($spouse->getFullName());
-								else $personlinks .= $pgv_lang["private"];
+								else $personlinks .= i18n::translate('Private');
 								$personlinks .= "</a><br />";
 							}
 						}
 						/* @var $child Person */
 						foreach($children as $c=>$child) {
-							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$child->getXref();
-							else $title = $child->getXref()." :".$pgv_lang["indi_info"];
+							if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Individual Information').": ".$child->getXref();
+							else $title = $child->getXref()." :".i18n::translate('Individual Information');
 							$personlinks .= "&nbsp;&nbsp;<a href=\"".encode_url($child->getLinkUrl())."\" title=\"$title\" $mouseAction1>";
 							if ($child->canDisplayName()) $personlinks .= PrintReady($child->getFullName());
-							else $personlinks .= $pgv_lang["private"];
+							else $personlinks .= i18n::translate('Private');
 							$personlinks .= "<br /></a>";
 						}
 					}
@@ -206,7 +206,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				if ($ZOOM_BOXES=="mouseover") $icons .= $mouseAction2;
 				if ($ZOOM_BOXES=="mousedown") $icons .= $mouseAction3;
 				if ($ZOOM_BOXES=="click") $icons .= $mouseAction4;
-				$icons .= "><img id=\"iconz-$boxID\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]."\" width=\"25\" height=\"25\" border=\"0\" alt=\"".$pgv_lang["zoom_box"]."\" title=\"".$pgv_lang["zoom_box"]."\" /></a>";
+				$icons .= "><img id=\"iconz-$boxID\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]."\" width=\"25\" height=\"25\" border=\"0\" alt=\"".i18n::translate('Zoom in/out on this box.')."\" title=\"".i18n::translate('Zoom in/out on this box.')."\" /></a>";
 			}
 			if ($LINK_ICONS!="disabled") {
 				$click_link="javascript:;";
@@ -264,7 +264,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				$icons .= "onmouseout=\"family_box_timeout('".$boxID."');";
 				$icons .= " return false;\"";
 				if (($click_link=="#")&&($LINK_ICONS!="click")) $icons .= "onclick=\"return false;\"";
-				$icons .= "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" width=\"25\" border=\"0\" vspace=\"0\" hspace=\"0\" alt=\"".$pgv_lang["person_links"]."\" title=\"".$pgv_lang["person_links"]."\" /></a>";
+				$icons .= "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" width=\"25\" border=\"0\" vspace=\"0\" hspace=\"0\" alt=\"".i18n::translate('Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person.')."\" title=\"".i18n::translate('Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person.')."\" /></a>";
 			}
 		}
 		else {
@@ -352,8 +352,8 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	//$name = PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'));
 	$name = PrintReady($name);
 
-	if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
-	else $title = $pid." :".$pgv_lang["indi_info"];
+	if ($TEXT_DIRECTION=="ltr") $title = i18n::translate('Individual Information').": ".$pid;
+	else $title = $pid." :".i18n::translate('Individual Information');
 	// add optional CSS style for each fact
 	$indirec = $person->getGedcomRecord();
 	$cssfacts = array("BIRT", "CHR", "DEAT", "BURI", "CREM", "ADOP", "BAPM", "BARM", "BASM", "BLES", "CHRA", "CONF", "FCOM", "ORDN", "NATU", "EMIG", "IMMI", "CENS", "PROB", "WILL", "GRAD", "RETI", "CAST", "DSCR", "EDUC", "IDNO",
@@ -551,10 +551,10 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		var plusminus = new Array();
 		plusminus[0] = new Image();
 		plusminus[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"].'";
-		plusminus[0].title = "'.$pgv_lang["show_details"].'";
+		plusminus[0].title = "'.i18n::translate('Show Details').'";
 		plusminus[1] = new Image();
 		plusminus[1].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"].'";
-		plusminus[1].title = "'.$pgv_lang["hide_details"].'";
+		plusminus[1].title = "'.i18n::translate('Hide Details').'";
 		var zoominout = new Array();
 		zoominout[0] = new Image();
 		zoominout[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"].'";
@@ -572,21 +572,21 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	';
 	$javascript .= 'function delete_record(pid, linenum, mediaid) {
 		if (!mediaid) mediaid="";
-		if (confirm(\''.$pgv_lang["check_delete"].'\')) {
+		if (confirm(\''.i18n::translate('Are you sure you want to delete this fact?').'\')) {
 			window.open(\'edit_interface.php?action=delete&pid=\'+pid+\'&linenum=\'+linenum+\'&mediaid=\'+mediaid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\');
 		}
 		return false;
 	}
 
 	function deleteperson(pid) {
-		if (confirm(\''.$pgv_lang["confirm_delete_person"].'\')) {
+		if (confirm(\''.i18n::translate('Are you sure you want to delete this person?').'\')) {
 			window.open(\'edit_interface.php?action=deleteperson&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\');
 		}
 		return false;
 	}
 
 	function deleterepository(pid) {
-		if (confirm(\''.$pgv_lang["confirm_delete_repo"].'\')) {
+		if (confirm(\''.i18n::translate('Are you sure you want to delete this Repository?').'\')) {
 			window.open(\'edit_interface.php?action=deleterepo&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\');
 		}
 		return false;
@@ -658,8 +658,8 @@ function print_footer() {
 		echo "<div id=\"backprint\" style=\"text-align: center; width: 95%\">";
 		$backlink = PGV_SCRIPT_NAME."?".get_query_string();
 		if (!$printlink) {
-			echo "<br /><a id=\"printlink\" href=\"javascript:;\" onclick=\"print(); return false;\">", $pgv_lang["print"], "</a><br />";
-			echo " <a id=\"printlinktwo\" href=\"javascript:;\" onclick=\"window.location='", $backlink, "'; return false;\">", $pgv_lang["cancel_preview"], "</a><br />";
+			echo "<br /><a id=\"printlink\" href=\"javascript:;\" onclick=\"print(); return false;\">", i18n::translate('Print'), "</a><br />";
+			echo " <a id=\"printlinktwo\" href=\"javascript:;\" onclick=\"window.location='", $backlink, "'; return false;\">", i18n::translate('Back to normal view'), "</a><br />";
 		}
 		$printlink = true;
 		echo "</div>";
@@ -727,7 +727,7 @@ function clustrmaps() {
 function execution_stats() {
 	global $start_time, $pgv_lang, $PRIVACY_CHECKS;
 
-	return sprintf("<div class=\"execution_stats\">{$pgv_lang['exec_time']} %.3f {$pgv_lang['sec']} {$pgv_lang['total_queries']} %d. {$pgv_lang['total_privacy_checks']} %d. {$pgv_lang['total_memory_usage']} %.0f KB.</div>",
+	return sprintf("<div class=\"execution_stats\">".i18n::translate('Execution time:')." %.3f ".i18n::translate('sec.')." ".i18n::translate('Total Database Queries: ')." %d. ".i18n::translate('Total privacy checks: ')." %d. ".i18n::translate('Total Memory Usage:')." %.0f KB.</div>",
 		microtime(true)-$start_time,
 		PGV_DB::getQueryCount(),
 		$PRIVACY_CHECKS,
@@ -768,18 +768,18 @@ function print_user_links() {
 	global $LOGIN_URL, $SEARCH_SPIDER;
 
 	if (PGV_USER_ID) {
-		echo '<a href="edituser.php" class="link">', $pgv_lang["logged_in_as"], ' (', PGV_USER_NAME, ')</a><br />';
+		echo '<a href="edituser.php" class="link">', i18n::translate('Logged in as '), ' (', PGV_USER_NAME, ')</a><br />';
 		if (PGV_USER_GEDCOM_ADMIN) {
-			echo "<a href=\"admin.php\" class=\"link\">", $pgv_lang["admin"], "</a> | ";
+			echo "<a href=\"admin.php\" class=\"link\">", i18n::translate('Admin'), "</a> | ";
 		}
-		echo "<a href=\"index.php?logout=1\" class=\"link\">", $pgv_lang["logout"], "</a>";
+		echo "<a href=\"index.php?logout=1\" class=\"link\">", i18n::translate('Logout'), "</a>";
 	} else {
 		$QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
 		if (empty($SEARCH_SPIDER)) {
 			if (PGV_SCRIPT_NAME=='login.php') {
-				echo "<a href=\"#\" class=\"link\">", $pgv_lang["login"], "</a>";
+				echo "<a href=\"#\" class=\"link\">", i18n::translate('Login'), "</a>";
 			} else {
-				echo "<a href=\"$LOGIN_URL?url=", rawurlencode(PGV_SCRIPT_NAME.decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM"))), "\" class=\"link\">", $pgv_lang["login"], "</a>";
+				echo "<a href=\"$LOGIN_URL?url=", rawurlencode(PGV_SCRIPT_NAME.decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM"))), "\" class=\"link\">", i18n::translate('Login'), "</a>";
 			}
 		}
 	}
@@ -792,9 +792,6 @@ function user_contact_link($user_id, $method=null) {
 
 	if (is_null($method)) {
 		$method=get_user_setting($user_id, 'contactmethod');
-		$access='';
-	} else {
-		$access="accesskey='{$pgv_lang['accesskey_contact']}'";
 	}
 
 	// Webmaster/contact addresses can be an email address as well as a user-id
@@ -813,9 +810,9 @@ function user_contact_link($user_id, $method=null) {
 	case 'none':
 		return '';
 	case 'mailto':
-		return "<a href='mailto:{$email}' {$access}>{$fullname}</a>";
+		return "<a href='mailto:{$email}' {$fullname}</a>";
 	default:
-		return "<a href='javascript:;' onclick='message(\"".get_user_name($user_id)."\", \"{$method}\");return false;' {$access}>{$fullname}</a>";
+		return "<a href='javascript:;' onclick='message(\"".get_user_name($user_id)."\", \"{$method}\");return false;'>{$fullname}</a>";
 	}
 }
 
@@ -881,17 +878,17 @@ function contact_links() {
 	}
 
 	if ($supportLink==$contactLink) {
-		return '<div class="contact_links">'.$pgv_lang['for_all_contact'].' '.$supportLink.'</div>';
+		return '<div class="contact_links">'.i18n::translate('For technical support or genealogy questions, please contact').' '.$supportLink.'</div>';
 	} else {
 		$returnText = '<div class="contact_links">';
 		if ($supportLink) {
-			$returnText .= $pgv_lang['for_support'].' '.$supportLink;
+			$returnText .= i18n::translate('For technical support and information contact').' '.$supportLink;
 			if ($contactLink) {
 				$returnText .= '<br />';
 			}
 		}
 		if ($contactLink) {
-			$returnText .= $pgv_lang['for_contact'].' '.$contactLink;
+			$returnText .= i18n::translate('For help with genealogy questions contact').' '.$contactLink;
 		}
 		$returnText .= '</div>';
 		return $returnText;
@@ -926,12 +923,12 @@ function contact_menus() {
 	}
 	$menuitems=array();
 	if ($support_menu==$contact_menu) {
-		$support_menu['label']=$pgv_lang['support_contact'];
+		$support_menu['label']=i18n::translate('Technical help contact');
 		$menuitems[]=$support_menu;
 	} else {
-		$support_menu['label']=$pgv_lang['support_contact'];
+		$support_menu['label']=i18n::translate('Technical help contact');
 		$menuitems[]=$support_menu;
-		$contact_menu['label']=$pgv_lang['genealogy_contact'];
+		$contact_menu['label']=i18n::translate('Genealogy contact');
 		$menuitems[]=$contact_menu;
 	}
 	return $menuitems;
@@ -982,15 +979,15 @@ function print_favorite_selector($option=0) {
 	echo "<div class=\"favorites_form\">";
 	switch($option) {
 	case 1:
-		$menu = new Menu($pgv_lang["favorites"], "#", "right", "down");
+		$menu = new Menu(i18n::translate('Favorites'), "#", "right", "down");
 		$menu->addClass("favmenuitem", "favmenuitem_hover", "favsubmenu");
 		if (count($userfavs)>0 || $gid!='') {
-			$submenu = new Menu("<strong>".$pgv_lang["my_favorites"]."</strong>", "#", "right");
+			$submenu = new Menu("<strong>".i18n::translate('My Favorites')."</strong>", "#", "right");
 			$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
 			$menu->addSubMenu($submenu);
 
 			if ($gid!='') {
-				$submenu = new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', encode_url(PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav&amp;gid='.$gid)), "right");
+				$submenu = new Menu('<em>'.i18n::translate('Add to My Favorites').'</em>', encode_url(PGV_SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav&amp;gid='.$gid)), "right");
 				$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
 				$menu->addSubMenu($submenu);
 			}
@@ -1026,7 +1023,7 @@ function print_favorite_selector($option=0) {
 			}
 		}
 		if (count($gedcomfavs)>0) {
-			$submenu = new Menu("<strong>".$pgv_lang["gedcom_favorites"]."</strong>", "#", "right");
+			$submenu = new Menu("<strong>".i18n::translate('This GEDCOM\'s Favorites')."</strong>", "#", "right");
 			$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
 			$menu->addSubMenu($submenu);
 			foreach($gedcomfavs as $key=>$favorite) {
@@ -1062,13 +1059,13 @@ function print_favorite_selector($option=0) {
 		echo '<form class="favorites_form" name="favoriteform" action="', PGV_SCRIPT_NAME, '"';
 		echo " method=\"post\" onsubmit=\"return false;\">";
 		echo "<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='", PGV_SCRIPT_NAME, normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$gid}"), "';\">";
-		echo "<option value=\"\">", $pgv_lang["favorites"], "</option>";
+		echo "<option value=\"\">", i18n::translate('Favorites'), "</option>";
 		if (PGV_USER_NAME) {
 			if (count($userfavs)>0 || $gid!='') {
-				echo "<optgroup label=\"", $pgv_lang["my_favorites"], "\">";
+				echo "<optgroup label=\"", i18n::translate('My Favorites'), "\">";
 			}
 			if ($gid!='') {
-				echo "<option value=\"add\">- ", $pgv_lang["add_to_my_favorites"], " -</option>";
+				echo "<option value=\"add\">- ", i18n::translate('Add to My Favorites'), " -</option>";
 			}
 			foreach($userfavs as $key=>$favorite) {
 				$GEDCOM = $favorite["file"];
@@ -1114,7 +1111,7 @@ function print_favorite_selector($option=0) {
 			}
 		}
 		if (count($gedcomfavs)>0) {
-			echo "<optgroup label=\"", $pgv_lang["gedcom_favorites"], "\">";
+			echo "<optgroup label=\"", i18n::translate('This GEDCOM\'s Favorites'), "\">";
 			foreach($gedcomfavs as $key=>$favorite) {
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
 					echo "<option value=\"", encode_url($favorite["url"]), "\">", PrintReady($favorite["title"]);
@@ -1203,15 +1200,15 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		if ($brpos !== false) {
 			if ($EXPAND_NOTES) $plusminus="minus"; else $plusminus="plus";
 			$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"";
-			if ($plusminus=="plus") $data .= $pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
-			else $data .= $pgv_lang["hide_details"]."\" title=\"".$pgv_lang["hide_details"]."\" /></a> ";
+			if ($plusminus=="plus") $data .= i18n::translate('Show Details')."\" title=\"".i18n::translate('Show Details')."\" /></a> ";
+			else $data .= i18n::translate('Hide Details')."\" title=\"".i18n::translate('Hide Details')."\" /></a> ";
 		}
 
 		// Check if Shared Note -----------------------------
 		if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec)) {
-			$data .= $pgv_lang["shared_note"].": </span> - ";
+			$data .= i18n::translate('Shared Note').": </span> - ";
 		}else{
-			$data .= $pgv_lang["note"].": </span>";
+			$data .= i18n::translate('Note').": </span>";
 		}
 
 		if ($brpos !== false) {
@@ -1325,12 +1322,12 @@ function print_privacy_error($username) {
 	if (!$user_id) {
 		$method = "mailto";
 	}
-	echo "<br /><span class=\"error\">", $pgv_lang["privacy_error"], " ";
+	echo "<br /><span class=\"error\">", i18n::translate('This information is private and cannot be shown.'), " ";
 	if ($method=="none") {
 		echo "</span><br />";
 		return;
 	}
-	echo $pgv_lang["more_information"];
+	echo i18n::translate('For more information contact');
 	if ($method=="mailto") {
 		if (!$user_id) {
 			$email = $username;
@@ -1367,7 +1364,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 			$show_desc = "";
 		}
 		if ($show_desc) {
-			$output.=$pgv_lang["help_header"].' '.$desc.'" href="javascript:// ';
+			$output.=i18n::translate('Information about:').' '.$desc.'" href="javascript:// ';
 			if ($use_print_text) {
 				$output.=print_text($show_desc, 0, 1);
 			} else {
@@ -1378,7 +1375,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 				}
 			}
 		} else {
-			$output.=$pgv_lang["help_header"].'" href="javascript:// ';
+			$output.=i18n::translate('Information about:').'" href="javascript:// ';
 			$output.=$help;
 		}
 		$output.="\" onclick=\"helpPopup('$help'); return false;\">";
@@ -1450,7 +1447,7 @@ function print_text($help, $level=0, $noprint=0){
 			if (isset($pgv_lang[$help])) {
 				$sentence = $pgv_lang[$help];
 			} else {
-				$sentence = $pgv_lang["help_not_exist"];
+				$sentence = i18n::translate('<b>Help text for this page or item is not yet available.</b>');
 			}
 		}
 	}
@@ -1468,7 +1465,7 @@ function print_text($help, $level=0, $noprint=0){
 		if ($value!==false) {
 			$sentence = str_replace($match[$i][0], $value, $sentence);
 		} elseif ($noprint==0 && $level==0) {
-			$sentence = str_replace($match[$i][0], $match[$i][1].": ".$pgv_lang["var_not_exist"], $sentence);
+			$sentence = str_replace($match[$i][0], $match[$i][1].": ".i18n::translate('<span style="font-weight: bold">The language variable does not exist. Please report this as it is an error.</span>'), $sentence);
 		}
 	}
 	// ------ Replace paired ~  by tag_start and tag_end (those vars contain CSS classes)
@@ -1802,9 +1799,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 						if (isset($node["path"][1])) {
 							$sex3 = Person::getInstance($node["path"][1])->getSex();
 							if ($sex3 == "M") {
-								$rela = $pgv_lang["bosa_brothers_offspring_2"];
+								$rela = i18n::translate('nephew');
 							} elseif ($sex3 == "F") {
-								$rela = $pgv_lang["bosa_sisters_offspring_2"];
+								$rela = i18n::translate('nephew');
 							}
 						}
 					} elseif ($key == "niece") {
@@ -1812,9 +1809,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 						if (isset($node["path"][1])) {
 							$sex3 = Person::getInstance($node["path"][1])->getSex();
 							if ($sex3 == "M") {
-								$rela = $pgv_lang["bosa_brothers_offspring_3"];
+								$rela = i18n::translate('niece');
 							} elseif ($sex3 == "F") {
-								$rela = $pgv_lang["bosa_sisters_offspring_3"];
+								$rela = i18n::translate('niece');
 							}
 						}
 					} elseif ($key == "uncle" || $key == "aunt") {
@@ -1879,15 +1876,15 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $event_date), true);
 					if (!empty($age)) {
 						if (GedcomDate::GetAgeGedcom($death_date, $event_date)=="0d") {
-							$ageText = "(".$pgv_lang["at_death_day"].")";
+							$ageText = "(".i18n::translate('on the date of death').")";
 						} else {
-							$ageText = "(".$age." ".$pgv_lang["after_death"].")";
+							$ageText = "(".$age." ".i18n::translate('after death').")";
 						}
 					}
 				} elseif (GedcomDate::GetAgeGedcom($birth_date, $event_date)!="0d") {
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
 					if (!empty($age)) {
-						$ageText = "({$pgv_lang['age']} {$age})";
+						$ageText = "(".i18n::translate('Age')." {$age})";
 					}
 				}
 				if (!empty($ageText)) {
@@ -1902,12 +1899,12 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
-						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"", encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID), "\">[" , $pgv_lang["relationship_chart"] , "<img src=\"$PGV_IMAGE_DIR/" , $PGV_IMAGES["sex"]["small"] , "\" title=\"" , $pgv_lang["husband"] , "\" alt=\"" , $pgv_lang["husband"] , "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"", encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID), "\">[" , i18n::translate('Relationship Chart') , "<img src=\"$PGV_IMAGE_DIR/" , $PGV_IMAGES["sex"]["small"] , "\" title=\"" , i18n::translate('Husband') , "\" alt=\"" , i18n::translate('Husband') , "\" class=\"gender_image\" />]</a>";
 						$pid1 = $parents["WIFE"];
-						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"", encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID), "\">[" , $pgv_lang["relationship_chart"] , "<img src=\"$PGV_IMAGE_DIR/" , $PGV_IMAGES["sexf"]["small"] , "\" title=\"" , $pgv_lang["wife"] , "\" alt=\"" , $pgv_lang["wife"] , "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"", encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID), "\">[" , i18n::translate('Relationship Chart') , "<img src=\"$PGV_IMAGE_DIR/" , $PGV_IMAGES["sexf"]["small"] , "\" title=\"" , i18n::translate('Wife') , "\" alt=\"" , i18n::translate('Wife') , "\" class=\"gender_image\" />]</a>";
 					}
 				}
-				else if ($pid!=$pid2 && $rela!="twin_sister") echo " - <a href=\"", encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID), "\">[" , $pgv_lang["relationship_chart"] , "]</a>";
+				else if ($pid!=$pid2 && $rela!="twin_sister") echo " - <a href=\"", encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID), "\">[" , i18n::translate('Relationship Chart') , "]</a>";
 			}
 
 		} elseif (strstr($gedrec, "@ FAM")!==false) {
@@ -1917,7 +1914,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			} else {
 				echo " ", getRLM();
 			}
-			echo "[", $pgv_lang["view_family"];
+			echo "[", i18n::translate('View Family');
 			if ($SHOW_ID_NUMBERS) {
 				echo " ", getLRM(), "($pid2)", getLRM();
 			}
@@ -1928,7 +1925,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			}
 		} else {
 			if (strstr($pid2, " ")) echo $pid2;
-			else echo $pgv_lang["unknown"];
+			else echo i18n::translate('unknown');
 			if ($SHOW_ID_NUMBERS) {
 				echo "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION=="rtl") echo getRLM();
@@ -1975,7 +1972,7 @@ function format_parents_age($pid, $birth_date=null) {
 							$class='parentdeath';
 							$title=i18n::translate('_DEAT_MOTH');
 						} else {
-							$title=$pgv_lang['mother_age'];
+							$title=i18n::translate('Mother\'s age');
 						}
 						break;
 					case 'M':
@@ -1984,11 +1981,11 @@ function format_parents_age($pid, $birth_date=null) {
 							$class='parentdeath';
 							$title=i18n::translate('_DEAT_FATH');
 						} else {
-							$title=$pgv_lang['father_age'];
+							$title=i18n::translate('Father\'s age');
 						}
 						break;
 					default:
-						$title=$pgv_lang['parent_age'];
+						$title=i18n::translate('Parent\'s age');
 						break;
 					}
 					if ($class) {
@@ -2073,7 +2070,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 							$wife_age!='' && $person->getSex()=='F' && $wife_age!=$age
 						) {
 							if ($age!="0d") {
-								$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
+								$ageText = '('.i18n::translate('Age').' '.get_age_at_event($age, false).')';
 							}
 						}
 					}
@@ -2083,9 +2080,9 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $date), true);
 					if ($age!='') {
 						if (GedcomDate::GetAgeGedcom($death_date, $date)=="0d") {
-							$ageText = '('.$pgv_lang['at_death_day'].')';
+							$ageText = '('.i18n::translate('on the date of death').')';
 						} else {
-							$ageText = '('.$age.' '.$pgv_lang['after_death'].')';
+							$ageText = '('.$age.' '.i18n::translate('after death').')';
 						}
 					}
 				}
@@ -2108,7 +2105,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 						$husb_age!='' && $indi->getSex()=='M' && $husb_age!= $age ||
 						$wife_age!='' && $indi->getSex()=='F' && $wife_age!=$age
 					) {
-						$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
+						$ageText = '('.i18n::translate('Age').' '.get_age_at_event($age, false).')';
 					}
 				}
 			}
@@ -2122,11 +2119,11 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 		$factrec = str_replace("\nPGV_NEW\n", '', $factrec);
 		$factdetail = explode(' ', trim($factrec));
 		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == 'Y') {
-			$html.=$pgv_lang['yes'];
+			$html.=i18n::translate('Yes');
 		}
 	}
 	// print gedcom ages
-	foreach (array(i18n::translate('AGE')=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age) {
+	foreach (array(i18n::translate('AGE')=>$fact_age, i18n::translate('Husband')=>$husb_age, i18n::translate('Wife')=>$wife_age) as $label=>$age) {
 		if ($age!='') {
 			$html.=' <span class="label">'.$label.':</span> <span class="age">'.PrintReady(get_age_at_event($age, false)).'</span>';
 		}
@@ -2233,13 +2230,13 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 		if (preg_match('/2 TEMP (.*)/', $factrec, $match)) {
 			$tcode=trim($match[1]);
 			if (array_key_exists($tcode, $TEMPLE_CODES)) {
-				$html.='<br/>'.$pgv_lang['temple'].': '.$TEMPLE_CODES[$tcode];
+				$html.='<br/>'.i18n::translate('LDS Temple').': '.$TEMPLE_CODES[$tcode];
 			} else {
-				$html.='<br/>'.$pgv_lang['temple_code'].$tcode;
+				$html.='<br/>'.i18n::translate('LDS Temple Code:').$tcode;
 			}
 		}
 		if (preg_match('/2 STAT (.*)/', $factrec, $match)) {
-			$html.='<br />'.$pgv_lang['status'].': '.trim($match[1]);
+			$html.='<br />'.i18n::translate('Status').': '.trim($match[1]);
 			if (preg_match('/3 DATE (.*)/', $factrec, $match)) {
 				$date=new GedcomDate($match[1]);
 				$html.=', '.i18n::translate('STAT:DATE').': '.$date->Display(false);
@@ -2320,7 +2317,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 					$newRow = false;
 					echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
 					print_help_link("add_from_clipboard", "qm");
-					echo $pgv_lang["add_from_clipboard"], '</td>';
+					echo i18n::translate('Add from clipboard'), '</td>';
 					echo '<td class="optionbox wrap"><form method="get" name="newFromClipboard" action="" onsubmit="return false;">';
 					echo '<select id="newClipboardFact" name="newClipboardFact">';
 				}
@@ -2339,7 +2336,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 		}
 		if (!$newRow) {
 			echo '</select>';
-			echo '&nbsp;&nbsp;<input type="button" value="', $pgv_lang["add"], "\" onclick=\"addClipboardRecord('$id', 'newClipboardFact');\" /> ";
+			echo '&nbsp;&nbsp;<input type="button" value="', i18n::translate('Add'), "\" onclick=\"addClipboardRecord('$id', 'newClipboardFact');\" /> ";
 			echo '</form></td></tr>', "\n";
 		}
 	}
@@ -2380,16 +2377,16 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	usort($addfacts, "factsort");
 	echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, "\">";
 	print_help_link("add_new_facts", "qm");
-	echo $pgv_lang["add_fact"], "</td>\n";
+	echo i18n::translate('Add new fact'), "</td>\n";
 	echo "<td class=\"optionbox wrap ", $TEXT_DIRECTION, "\">";
 	echo "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
 	echo "<select id=\"newfact\" name=\"newfact\">\n";
 	foreach($addfacts as $indexval => $fact) {
 		echo '<option value="', $fact, '">', i18n::translate($fact), " [".$fact."]</option>";
 	}
-	if (($type == "INDI") || ($type == "FAM")) echo "<option value=\"EVEN\">", $pgv_lang["custom_event"], " [EVEN]</option>";
+	if (($type == "INDI") || ($type == "FAM")) echo "<option value=\"EVEN\">", i18n::translate('Custom Event'), " [EVEN]</option>";
 	echo "\n</select>\n";
-	echo "&nbsp;&nbsp;<input type=\"button\" value=\"", $pgv_lang["add"], "\" onclick=\"add_record('$id', 'newfact');\" /> ";
+	echo "&nbsp;&nbsp;<input type=\"button\" value=\"", i18n::translate('Add'), "\" onclick=\"add_record('$id', 'newfact');\" /> ";
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">", i18n::translate($v), "</a></small>&nbsp;";
 	echo "</form>";
 	echo "</td></tr>";
@@ -2436,7 +2433,7 @@ function init_calendar_popup() {
 function print_findindi_link($element_id, $indiname, $asString=false, $multiple=false, $ged='', $filter='') {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
-	$text = $pgv_lang["find_individual"];
+	$text = i18n::translate('Find Individual ID');
 	if (empty($ged)) $ged=$GEDCOM;
 	if (isset($PGV_IMAGES["indi"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indi"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
@@ -2451,7 +2448,7 @@ function print_findplace_link($element_id, $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
-	$text = $pgv_lang["find_place"];
+	$text = i18n::translate('Find Place');
 	if (isset($PGV_IMAGES["place"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["place"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = " <a href=\"javascript:;\" onclick=\"findPlace(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
@@ -2465,7 +2462,7 @@ function print_findfamily_link($element_id, $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
-	$text = $pgv_lang["find_familyid"];
+	$text = i18n::translate('Find Family ID');
 	if (isset($PGV_IMAGES["family"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["family"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = " <a href=\"javascript:;\" onclick=\"findFamily(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
@@ -2478,7 +2475,7 @@ function print_findfamily_link($element_id, $ged='', $asString=false) {
 function print_specialchar_link($element_id, $vert, $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
-	$text = $pgv_lang["find_specialchar"];
+	$text = i18n::translate('Find Special Characters');
 	if (isset($PGV_IMAGES["keyboard"]["button"])) $Link = "<img id=\"".$element_id."_spec\" name=\"".$element_id."_spec\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["keyboard"]["button"]."\"  alt=\"".$text."\"  title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = " <a href=\"javascript:;\" onclick=\"findSpecialChar(document.getElementById('".$element_id."')); updatewholename(); return false;\">";
@@ -2507,7 +2504,7 @@ function print_findsource_link($element_id, $sourcename="", $asString=false, $ge
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
-	$text = $pgv_lang["find_sourceid"];
+	$text = i18n::translate('Find Source ID');
 	if (isset($PGV_IMAGES["source"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = " <a href=\"javascript:;\" onclick=\"findSource(document.getElementById('".$element_id."'), document.getElementById('".$sourcename."'), '".$ged."'); findtype='source'; return false;\">";
@@ -2522,7 +2519,7 @@ function print_findnote_link($element_id, $notename="", $asString=false, $ged=''
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
-	$text = $pgv_lang["find_shared_note"];
+	$text = i18n::translate('Find Shared Note');
 	if (isset($PGV_IMAGES["note"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = " <a href=\"javascript:;\" onclick=\"findnote(document.getElementById('".$element_id."'), document.getElementById('".$notename."'), '".$ged."'); findtype='note'; return false;\">";
@@ -2537,7 +2534,7 @@ function print_findrepository_link($element_id, $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
-	$text = $pgv_lang["find_repository"];
+	$text = i18n::translate('Find Repository');
 	if (isset($PGV_IMAGES["repository"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["repository"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = " <a href=\"javascript:;\" onclick=\"findRepository(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
@@ -2551,7 +2548,7 @@ function print_findmedia_link($element_id, $choose="", $ged='', $asString=false)
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
-	$text = $pgv_lang["find_media"];
+	$text = i18n::translate('Find Media');
 	if (isset($PGV_IMAGES["media"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = " <a href=\"javascript:;\" onclick=\"findMedia(document.getElementById('".$element_id."'), '".$choose."', '".$ged."'); return false;\">";

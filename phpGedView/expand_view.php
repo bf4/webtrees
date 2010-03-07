@@ -29,7 +29,7 @@ require './config.php';
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 $pid = safe_GET_xref('pid');
 $person = Person::getInstance($pid);
-if (!$person->canDisplayDetails()) return $pgv_lang['private'];
+if (!$person->canDisplayDetails()) return i18n::translate('Private');
 
 $nonfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO","_PGV_OBJS");
 $person->add_family_facts(false);
@@ -69,7 +69,7 @@ foreach($subfacts as $indexval => $event) {
 				}
 			}
 		if (!empty($famid)) {
-				print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"]."]</a>\n";
+				print "<a href=\"family.php?famid=$famid\">[".i18n::translate('View Family')."]</a>\n";
 			}
 		echo format_fact_place($event, true, true);
 		}

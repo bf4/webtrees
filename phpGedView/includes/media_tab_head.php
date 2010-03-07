@@ -60,7 +60,7 @@ require_once PGV_ROOT.'js/scriptaculous.js.htm';
 		// print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
 			//Popup Reorder Media
 			print "<td class=\"width15 center wrap\" valign=\"top\">";
-			print "<button type=\"button\" title=\"". $pgv_lang["reorder_media"]."\" onclick=\"reorder_media();\">". $pgv_lang["reorder_media"] ."</button>";
+			print "<button type=\"button\" title=\"". i18n::translate('Re-order media')."\" onclick=\"reorder_media();\">". i18n::translate('Re-order media') ."</button>";
 		print "</td>";
 		//print "<td width=\"5%\">&nbsp;</td>";
 		print "\n";

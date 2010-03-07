@@ -319,7 +319,7 @@ class ClippingsControllerRoot extends BaseController {
 							$filetext .= "1 SOUR @SPGV1@\n";
 							$filetext .= "2 PAGE " . $dSERVER_URL . "/individual.php?pid=" . $clipping['id'] . "\n";
 							$filetext .= "2 DATA\n";
-							$filetext .= "3 TEXT " . $pgv_lang["indi_downloaded_from"] . "\n";
+							$filetext .= "3 TEXT " . i18n::translate('This Individual was downloaded from:') . "\n";
 							$filetext .= "4 CONT " . $dSERVER_URL . "/individual.php?pid=" . $clipping['id'] . "\n";
 							break;
 
@@ -362,7 +362,7 @@ class ClippingsControllerRoot extends BaseController {
 							$filetext .= "1 SOUR @SPGV1@\n";
 							$filetext .= "2 PAGE " . $dSERVER_URL . $path . "family.php?famid=" . $clipping['id'] . "\n";
 							$filetext .= "2 DATA\n";
-							$filetext .= "3 TEXT " . $pgv_lang["family_downloaded_from"] . "\n";
+							$filetext .= "3 TEXT " . i18n::translate('This Family was downloaded from:') . "\n";
 							$filetext .= "4 CONT " . $dSERVER_URL . "/family.php?famid=" . $clipping['id'] . "\n";
 							break;
 
@@ -377,7 +377,7 @@ class ClippingsControllerRoot extends BaseController {
 //								$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
 							}
 							$filetext .= trim($record) . "\n";
-							$filetext .= "1 NOTE " . $pgv_lang["source_downloaded_from"] . "\n";
+							$filetext .= "1 NOTE " . i18n::translate('This Source was downloaded from:') . "\n";
 							$filetext .= "2 CONT " . $dSERVER_URL . "/source.php?sid=" . $clipping['id'] . "\n";
 							break;
 
@@ -503,7 +503,7 @@ class ClippingsControllerRoot extends BaseController {
 		}
 		else
 		{
-			print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."$tempFileName ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+			print i18n::translate('Cannot create')." ".$INDEX_DIRECTORY."$tempFileName ".i18n::translate('Check access rights on this directory.')."<br /><br />";
 		}
 	}
 	/**

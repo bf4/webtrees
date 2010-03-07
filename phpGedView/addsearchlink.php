@@ -32,7 +32,7 @@ print_simple_header(i18n::translate('Add Local Link'));
 
 //-- only allow users with editing access to this page
 if (!PGV_USER_CAN_EDIT) {
-	print $pgv_lang["access_denied"];
+	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	print_simple_footer();
 	exit;
 }
@@ -60,27 +60,27 @@ if(isset($pid) && isset($server) && isset($indiName))
 				<table class="facts_table" align="center">
 					<tr>
 						<td class="facts_label03" colspan="3" align="center">
-							<?php print_help_link("link_remote", "qm"); ?> <?php echo $pgv_lang["title_remote_link"];?>
+							<?php print_help_link("link_remote", "qm"); ?> <?php echo i18n::translate('Add Remote Link');?>
 						</td>
 					</tr>
 					<tr>
 						<td class="descriptionbox width20" id="tdId"><?php print_help_link('link_person_id', 'qm');?> Local Person ID</td>
 						<td class="optionbox"><input type="text" id="pid" name="pid" size="14"/></td>
 						<td class="optionbox" rowspan="2"><br/>
-							<input type="submit" value="<?php echo $pgv_lang['label_add_remote_link'];?>" id="btnSubmit" name="btnSubmit" value="add"/>
+							<input type="submit" value="<?php echo i18n::translate('Add Link');?>" id="btnSubmit" name="btnSubmit" value="add"/>
 						</td>
 					</tr>
 					<tr>
-						<td class="descriptionbox width20"><?php print_help_link('link_remote_rel', 'qm');?> <?php echo $pgv_lang["label_rel_to_current"];?></td>
+						<td class="descriptionbox width20"><?php print_help_link('link_remote_rel', 'qm');?> <?php echo i18n::translate('Relationship to current person');?></td>
 						<td class="optionbox">
 							<select id="cbRelationship" name="cbRelationship">
-								<option value="self" selected><?php echo $pgv_lang["current_person"];?></option>
-								<option value="mother"><?php echo $pgv_lang["mother"];?></option>
-								<option value="father"><?php echo $pgv_lang["father"];?></option>
-								<option value="husband"><?php echo $pgv_lang["husband"];?></option>
-								<option value="wife"><?php echo $pgv_lang["wife"];?></option>
-								<option value="son"><?php echo $pgv_lang["son"];?></option>
-								<option value="daughter"><?php echo $pgv_lang["daughter"];?></option>
+								<option value="self" selected><?php echo i18n::translate('Same as current');?></option>
+								<option value="mother"><?php echo i18n::translate('Mother');?></option>
+								<option value="father"><?php echo i18n::translate('Father');?></option>
+								<option value="husband"><?php echo i18n::translate('Husband');?></option>
+								<option value="wife"><?php echo i18n::translate('Wife');?></option>
+								<option value="son"><?php echo i18n::translate('Son');?></option>
+								<option value="daughter"><?php echo i18n::translate('Daughter');?></option>
 							</select>
 						</td>
 					</tr>

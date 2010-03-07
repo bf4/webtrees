@@ -397,7 +397,7 @@ class RemoteLinkController extends BaseController {
 				}
 				break;
 			}
-			echo '<b>', $pgv_lang['link_success'], '</b>';
+			echo '<b>', i18n::translate('Successfully added link'), '</b>';
 			return true;
 		}
 		return false;

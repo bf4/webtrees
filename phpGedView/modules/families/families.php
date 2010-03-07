@@ -55,7 +55,7 @@ class families_Sidebar extends Sidebar {
 		
 		jQuery(document).ready(function(){
 			jQuery("#sb_fam_name").focus(function(){this.select();});
-			jQuery("#sb_fam_name").blur(function(){if (this.value=="") this.value="'.$pgv_lang['search'].'";});
+			jQuery("#sb_fam_name").blur(function(){if (this.value=="") this.value="'.i18n::translate('Search').'";});
 			var famtimerid = null;
 			jQuery("#sb_fam_name").keyup(function(e) {
 				if (famtimerid) window.clearTimeout(famtimerid);
@@ -97,15 +97,15 @@ class families_Sidebar extends Sidebar {
 		//-->
 		</script>
 		<form method="post" action="sidebar.php" onsubmit="return false;">
-		<input type="text" name="sb_fam_name" id="sb_fam_name" value="'.$pgv_lang['search'].'" />
+		<input type="text" name="sb_fam_name" id="sb_fam_name" value="'.i18n::translate('Search').'" />
 		<p>';
 		foreach ($initials as $letter=>$count) {
 			switch ($letter) {
 				case '@':
-					$html=$pgv_lang['NN'];
+					$html=i18n::translate('(unknown)');
 					break;
 				case ',':
-					$html=$pgv_lang['none'];
+					$html=i18n::translate('None');
 					break;
 				default:
 					$html=$letter;
@@ -166,7 +166,7 @@ class families_Sidebar extends Sidebar {
 			}
 			else $private_count++;
 		}
-		if ($private_count>0) $out .= '<li>'.PrintReady($pgv_lang['private'].' ('.$private_count.')').'</li>';
+		if ($private_count>0) $out .= '<li>'.PrintReady(i18n::translate('Private').' ('.$private_count.')').'</li>';
 		$out .= '</ul>';
 		return $out;
 	}
@@ -224,7 +224,7 @@ class families_Sidebar extends Sidebar {
 			}
 			else $private_count++;
 		}
-		if ($private_count>0) $out .= '<li>'.PrintReady($pgv_lang['private'].' ('.$private_count.')').'</li>';
+		if ($private_count>0) $out .= '<li>'.PrintReady(i18n::translate('Private').' ('.$private_count.')').'</li>';
 		$out .= '</ul>';
 		return $out;
 	}

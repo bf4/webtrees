@@ -43,7 +43,7 @@ session_write_close();
 print_header($controller->getPageTitle());
 
 if (!$controller->indi){
-	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
+	echo "<b>", i18n::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();
 	exit;
 }
@@ -219,8 +219,8 @@ jQuery(document).ready(function(){
 		</div>
 		<div id="indi_name">
 		<?php
-		if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", $pgv_lang["accept_successful"], "</b><br />";
-		if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; 
+		if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", i18n::translate('Changes successfully accepted into database'), "</b><br />";
+		if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".i18n::translate('This record has been marked for deletion upon admin approval.')."</span>"; 
 		?>
 		<span class="name_head"><?php
 		if ($TEXT_DIRECTION=="rtl") echo "&nbsp;";
@@ -266,7 +266,7 @@ jQuery(document).ready(function(){
 				$bdate=$controller->indi->getBirthDate();
 				$age = GedcomDate::GetAgeGedcom($bdate);
 				if ($age!="")
-					$summary.= "<dt class=\"label\">".$pgv_lang["age"]."</dt><dd class=\"field\">".get_age_at_event($age, true)."</dd>";
+					$summary.= "<dt class=\"label\">".i18n::translate('Age')."</dt><dd class=\"field\">".get_age_at_event($age, true)."</dd>";
 			}
 			$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
 			if ($SHOW_LDS_AT_GLANCE) {
@@ -284,14 +284,14 @@ jQuery(document).ready(function(){
 		if($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 			//print indi counter only if displaying a non-private person
 			require PGV_ROOT.'includes/hitcount.php';
-			echo "{$pgv_lang["hit_count"]} {$hitCount}\n</div>";
+			echo i18n::translate('Hit Count:'), " ", $hitCount;
 		}
 		// if individual is a remote individual
 		// if information for this information is based on a remote site
 		if ($controller->indi->isRemote())
 		{
 			?><br />
-			<?php echo $pgv_lang["indi_is_remote"]; ?><!--<br />--><!--take this out if you want break the remote site and the fact that it was remote into two separate lines-->
+			<?php echo i18n::translate('The information for this individual was linked from a remote site.'); ?><!--<br />--><!--take this out if you want break the remote site and the fact that it was remote into two separate lines-->
 			<a href="<?php echo encode_url($controller->indi->getLinkUrl()); ?>"><?php echo $controller->indi->getLinkTitle(); ?></a>
 			<?php
 		}
@@ -316,17 +316,17 @@ foreach($controller->modules as $mod) {
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 	?>
 		<div class="accesskeys">
-			<a class="accesskeys" href="<?php echo "pedigree.php?rootid=$pid&amp;show_full=$showFull";?>" title="<?php echo $pgv_lang["pedigree_chart"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_pedigree"]; ?>"><?php echo $pgv_lang["pedigree_chart"] ?></a>
-			<a class="accesskeys" href="<?php echo "descendancy.php?pid=$pid&amp;show_full=$showFull";?>" title="<?php echo $pgv_lang["descend_chart"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_descendancy"]; ?>"><?php echo $pgv_lang["descend_chart"] ?></a>
-			<a class="accesskeys" href="<?php echo "timeline.php?pids[]=$pid";?>" title="<?php echo $pgv_lang["timeline_chart"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_timeline"]; ?>"><?php echo $pgv_lang["timeline_chart"] ?></a>
+			<a class="accesskeys" href="<?php echo "pedigree.php?rootid=$pid&amp;show_full=$showFull";?>" title="<?php echo i18n::translate('Pedigree Chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('P'); ?>"><?php echo i18n::translate('Pedigree Chart') ?></a>
+			<a class="accesskeys" href="<?php echo "descendancy.php?pid=$pid&amp;show_full=$showFull";?>" title="<?php echo i18n::translate('Descendancy Chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('D'); ?>"><?php echo i18n::translate('Descendancy Chart') ?></a>
+			<a class="accesskeys" href="<?php echo "timeline.php?pids[]=$pid";?>" title="<?php echo i18n::translate('Timeline Chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('T'); ?>"><?php echo i18n::translate('Timeline Chart') ?></a>
 			<?php
 				if (PGV_USER_GEDCOM_ID) {
 			?>
-			<a class="accesskeys" href="<?php echo "relationship.php?show_full=$showFull&amp;pid1=", PGV_USER_GEDCOM_ID, "&amp;pid2=", $controller->pid;?>" title="<?php echo $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php echo $pgv_lang["relationship_to_me"] ?></a>
+			<a class="accesskeys" href="<?php echo "relationship.php?show_full=$showFull&amp;pid1=", PGV_USER_GEDCOM_ID, "&amp;pid2=", $controller->pid;?>" title="<?php echo i18n::translate('Relationship to me') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('M'); ?>"><?php echo i18n::translate('Relationship to me') ?></a>
 			<?php }
 			if ($controller->canShowGedcomRecord()) {
 			?>
-			<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php echo $pgv_lang["view_gedcom"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_gedcom"]; ?>"><?php echo $pgv_lang["view_gedcom"] ?></a>
+			<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php echo i18n::translate('View GEDCOM Record') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('G'); ?>"><?php echo i18n::translate('View GEDCOM Record') ?></a>
 			<?php
 			}
 		?>
@@ -398,7 +398,7 @@ echo PGV_JS_END;
 
 if ($SEARCH_SPIDER) {
 	if($SHOW_SPIDER_TAGLINE)
-		echo $pgv_lang["label_search_engine_detected"], ": ", $SEARCH_SPIDER;
+		echo i18n::translate('Search Engine Spider Detected'), ": ", $SEARCH_SPIDER;
 	echo "</div></body></html>";
 } else {
 	print_footer();

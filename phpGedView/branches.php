@@ -58,7 +58,7 @@ if ($surn=='*') {
 }
 
 //-- form
-print_header($pgv_lang["branch_list"]." - ".$surn);
+print_header(i18n::translate('Branches')." - ".$surn);
 if ($ENABLE_AUTOCOMPLETE) {
 	require PGV_ROOT.'/js/autocomplete.js.htm';
 }
@@ -71,14 +71,14 @@ if ($ENABLE_AUTOCOMPLETE) {
 			<td class="optionbox <?php echo $TEXT_DIRECTION; ?>">
 				<input type="text" name="surn" id="SURN" value="<?php echo $surn?>" />
 				<input type="hidden" name="ged" id="ged" value="<?php echo $ged?>" />
-				<input type="submit" value="<?php echo $pgv_lang['view']; ?>" />
-				<input type="submit" value="<?php echo $pgv_lang['random_surn']; ?>" onclick="document.surnlist.surn.value='*';" />
+				<input type="submit" value="<?php echo i18n::translate('View'); ?>" />
+				<input type="submit" value="<?php echo i18n::translate('Random surname'); ?>" onclick="document.surnlist.surn.value='*';" />
 				<p class="details1">
-					<?php print_help_link("soundex_search", "qm", "soundex_search"); echo $pgv_lang["soundex_search"]?><br />
+					<?php print_help_link("soundex_search", "qm", "soundex_search"); echo i18n::translate('Search the way you think the name is written (Soundex)')?><br />
 					<input type="checkbox" name="soundex_std" id="soundex_std" value="1" <?php if ($soundex_std) echo " checked=\"checked\"" ?> />
-					<label for="soundex_std"><?php echo $pgv_lang["search_russell"]?></label>
+					<label for="soundex_std"><?php echo i18n::translate('Basic')?></label>
 					<input type="checkbox" name="soundex_dm" id="soundex_dm" value="1" <?php if ($soundex_dm) echo " checked=\"checked\"" ?> />
-					<label for="soundex_dm"><?php echo $pgv_lang["search_DM"]?></label>
+					<label for="soundex_dm"><?php echo i18n::translate('Daitch-Mokotoff')?></label>
 				</p>
 			</td>
 		</tr>
@@ -101,7 +101,7 @@ if ($surn) {
 	echo "</fieldset>";
 	if ($rootid) {
 		$person = Person::getInstance($rootid);
-		echo "<p class=\"center\">{$pgv_lang['rootid']} : <a title=\"", $person->getXref(), "\" href=\"{$person->getLinkUrl()}\">{$person->getFullName()}</a>";
+		echo "<p class=\"center\">", i18n::translate('Pedigree Chart Root Person'), " : <a title=\"", $person->getXref(), "\" href=\"{$person->getLinkUrl()}\">{$person->getFullName()}</a>";
 		echo "<br />{$pgv_lang["direct-ancestors"]} : ", count($_SESSION['user_ancestors']), "</p>";
 	}
 }
@@ -163,7 +163,7 @@ function print_fams($person, $famid=null) {
 				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".PGV_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
 			}
 			else if ($family->getMarriage()) {
-				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".$pgv_lang["yes"]."\">".PGV_ICON_RINGS."</span>&nbsp;";
+				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".i18n::translate('Yes')."\">".PGV_ICON_RINGS."</span>&nbsp;";
 			}
 			$spouse_name = $spouse->getListName();
 			foreach ($spouse->getAllNames() as $n=>$name) {
@@ -238,6 +238,6 @@ function indis_array($surn, $soundex_std, $soundex_dm) {
 function sosa_gen($sosa) {
 	global $pgv_lang;
 	$gen = (int)log($sosa, 2)+1;
-	return "<sup title=\"".$pgv_lang["generation_number"]."\">{$gen}</sup>";
+	return "<sup title=\"".i18n::translate('Generations')."\">{$gen}</sup>";
 }
 ?>

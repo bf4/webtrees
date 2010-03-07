@@ -103,7 +103,7 @@ function check_NN($names) {
 		return $names;
 	}
 	if (count($names) == 2 && stristr($names[0], '@N.N') && stristr($names[1], '@N.N')){
-		$fullname = $pgv_lang['NN']. ' + '. $pgv_lang['NN'];
+		$fullname = i18n::translate('(unknown)'). ' + '. i18n::translate('(unknown)');
 	} else {
 		for($i=0; $i<count($names); $i++) {
 			$lang = whatLanguage($names[$i]);
@@ -133,7 +133,7 @@ function check_NN($names) {
 	if (substr($fullname,-1)==',') $fullname = substr($fullname,0,strlen($fullname)-1);
 	if (substr($fullname,0,2)==', ') $fullname = substr($fullname,2);
 	$fullname = trim($fullname);
-	if (empty($fullname)) return $pgv_lang['NN'];
+	if (empty($fullname)) return i18n::translate('(unknown)');
 
 	return $fullname;
 }

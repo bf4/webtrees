@@ -49,7 +49,7 @@ if (!PGV_USER_CAN_EDIT) {
 	exit;
 }
 
-print_header($pgv_lang["upload_media"]);
+print_header(i18n::translate('Upload Media files'));
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -68,7 +68,7 @@ print_header($pgv_lang["upload_media"]);
 </script>
 <center>
 <?php
-print "<span class=\"subheaders\">".UTF8_strtoupper($pgv_lang["upload_media"])."</span><br /><br />\n";
+print "<span class=\"subheaders\">".UTF8_strtoupper(i18n::translate('Upload Media files'))."</span><br /><br />\n";
 $action = safe_POST('action');
 if ($action == "upload") {
 	process_uploadMedia_form();
@@ -78,7 +78,7 @@ if ($action == "upload") {
 // If one of these is not true then do not continue
 if (!dir_is_writable($MEDIA_DIRECTORY) || !$MULTI_MEDIA) {
 	print "<span class=\"error\"><b>";
-	print $pgv_lang["no_upload"];
+	print i18n::translate('Uploading media files is not allowed because multi-media items have been disabled or because the media directory is not writable.');
 	print "</b></span><br />";
 } else {
 	show_mediaUpload_form('uploadmedia.php', false);		// We have the green light to upload media, print the form

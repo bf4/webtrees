@@ -69,7 +69,7 @@ $currpid=$pid;
 	// Header of assistant window =====================================================
 	echo "<div class=\"cens_header\">";
 		echo "<div class=\"cens_header_left\">";
-			echo $pgv_lang["head"];
+			echo i18n::translate('Head of Household:');
 			echo " &nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
 		echo "</div>";
 			if ($summary) {
@@ -99,10 +99,10 @@ $currpid=$pid;
 	?>
 	<div class="optionbox cens_textinput">
 		<div class="cens_textinput_left">
-			<input type="button" value="<?php echo $pgv_lang["cens_add_insert"]; ?>" onclick="insertRowToTable('', '', '', '', '', '', '', '', 'Age', '', '', '', '', '', '');" />
+			<input type="button" value="<?php echo i18n::translate('Add/Insert Blank Row'); ?>" onclick="insertRowToTable('', '', '', '', '', '', '', '', 'Age', '', '', '', '', '', '');" />
 		</div>
 		<div class="cens_textinput_right">
-			<?php echo $pgv_lang["add"]; ?><br>
+			<?php echo i18n::translate('Add'); ?><br>
 			<input  type="radio" name="totallyrad" value="0" checked="checked" />
 		</div>	
 	<?php

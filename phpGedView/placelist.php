@@ -51,12 +51,12 @@ $level = safe_GET('level');
 if (empty($action)) $action = "find";
 if (empty($display)) $display = "hierarchy";
 
-if ($display=="hierarchy") print_header($pgv_lang["place_list"]);
-else print_header($pgv_lang["place_list2"]);
+if ($display=="hierarchy") print_header(i18n::translate('Place Hierarchy'));
+else print_header(i18n::translate('Place List'));
 
 echo "\n\t<div class=\"center\">";
-if ($display=="hierarchy") echo "<h2>", $pgv_lang["place_list"], "</h2>\n\t";
-else echo "<h2>", $pgv_lang["place_list2"], "</h2>\n\t";
+if ($display=="hierarchy") echo "<h2>", i18n::translate('Place Hierarchy'), "</h2>\n\t";
+else echo "<h2>", i18n::translate('Place List'), "</h2>\n\t";
 
 // Make sure the "parent" array has no holes
 if (isset($parent) && is_array($parent)) {
@@ -115,14 +115,14 @@ if ($display=="hierarchy") {
 	if ($level>0) {
 		//-- link to search results
 		if ((($level>1)||($parent[0]!=""))&&($numfound>0)) {
-			echo $numfound, " ", $pgv_lang["connections"], ": ";
+			echo $numfound, " ", i18n::translate('Place connections found'), ": ";
 		}
 		//-- breadcrumb
 		$numls = count($parent)-1;
 		$num_place="";
 		//-- place and page text orientation is opposite -> top level added at the beginning of the place text
 		echo "<a href=\"?level=0\">";
-		if ($numls>=0 && (($TEXT_DIRECTION=="ltr" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="rtl" && !hasRtLText($parent[$numls])))) echo $pgv_lang["top_level"], ", ";
+		if ($numls>=0 && (($TEXT_DIRECTION=="ltr" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="rtl" && !hasRtLText($parent[$numls])))) echo i18n::translate('Top Level'), ", ";
 		echo "</a>";
 			for($i=$numls; $i>=0; $i--) {
 			echo "<a href=\"?level=", ($i+1);
@@ -137,7 +137,7 @@ if ($display=="hierarchy") {
 			}
  			echo "\">";
  			if (trim($parent[$i])=="") {
- 				echo $pgv_lang["unknown"];
+ 				echo i18n::translate('unknown');
  			} else {
  				echo PrintReady($parent[$i]);
  			}
@@ -154,7 +154,7 @@ if ($display=="hierarchy") {
 	}
 	echo "<a href=\"?level=0\">";
 	//-- place and page text orientation is the same -> top level added at the end of the place text
-	if ($level==0 || ($numls>=0 && (($TEXT_DIRECTION=="rtl" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="ltr" && !hasRtLText($parent[$numls]))))) echo $pgv_lang["top_level"];
+	if ($level==0 || ($numls>=0 && (($TEXT_DIRECTION=="rtl" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="ltr" && !hasRtLText($parent[$numls]))))) echo i18n::translate('Top Level');
 	echo "</a>";
 
 	print_help_link("ppp_levels", "qm");
@@ -281,7 +281,7 @@ if ($display=="hierarchy") {
 		$linklevels .= "&amp;parent[$j]=".urlencode($parent[$j]);
 		if ($use_googlemap) {
 			if (trim($parent[$j])=="") {
-				$placelevels = ", ".$pgv_lang["unknown"].$placelevels;
+				$placelevels = ", ".i18n::translate('unknown').$placelevels;
 			} else {
 				$placelevels = ", ".$parent[$j].$placelevels;
 			}
@@ -304,12 +304,12 @@ if ($display=="hierarchy") {
 				echo "colspan=\"2\"";
 			}
 			echo ">&nbsp;";
-			echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", $pgv_lang["search_place"], "\" alt=\"", $pgv_lang["search_place"], "\" />&nbsp;&nbsp;";
+			echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", i18n::translate('Place'), "\" alt=\"", i18n::translate('Place'), "\" />&nbsp;&nbsp;";
 			if ($level>0) {
-				echo " ", $pgv_lang["place_list_aft"], ": ";
+				echo " ", i18n::translate('Place Hierarchy after'), ": ";
 				echo PrintReady($num_place);
 			} else {
-				echo $pgv_lang["place_list"];
+				echo i18n::translate('Place Hierarchy');
 			}
 
 			echo "&nbsp;";
@@ -325,7 +325,7 @@ if ($display=="hierarchy") {
 		echo " type=\"square\">\n<a href=\"?action=", $action, "&amp;level=", $level+1, $linklevels;
 		echo "&amp;parent[", $level, "]=", urlencode($value), "\" class=\"list_item\">";
 
-		if (trim($value)=="") echo $pgv_lang["unknown"];
+		if (trim($value)=="") echo i18n::translate('unknown');
 		else echo PrintReady($value);
 		if ($use_googlemap) $place_names[$i]=trim($value);
 		echo "</a></li>\n";
@@ -351,7 +351,7 @@ if ($display=="hierarchy") {
 				echo "colspan=\"2\"";
 			}
 			echo ">\n\t";
-			echo $pgv_lang["view_records_in_place"];
+			echo i18n::translate('View all records found in this place');
 			print_help_link("ppp_view_records", "qm", "view_records_in_place");
 			echo "</td></tr><tr><td class=\"list_value\" ";
 			if ($ct1 > 20) {
@@ -366,7 +366,7 @@ if ($display=="hierarchy") {
 			}
 			echo "\"><span class=\"formField\">";
 			if (trim($value)=="") {
-				echo $pgv_lang["unknown"];
+				echo i18n::translate('unknown');
 			} else {
 				echo PrintReady($value);
 			}
@@ -407,7 +407,7 @@ if ($level > 0) {
 		usort($myfamlist,    array('GedcomRecord', 'Compare'));
 		usort($mysourcelist, array('GedcomRecord', 'Compare'));
 		// echo each of the tables
-		print_indi_table($myindilist,   $pgv_lang['individuals'].' @ '.$title);
+		print_indi_table($myindilist,   i18n::translate('Individuals').' @ '.$title);
 		print_fam_table ($myfamlist,    $pgv_lang['families'   ].' @ '.$title);
 		print_sour_table($mysourcelist, $pgv_lang['sources'    ].' @ '.$title);
 	}
@@ -421,7 +421,7 @@ if ($display=="list") {
 	$placelist = array_unique($placelist);
 	uasort($placelist, "stringsort");
 	if (count($placelist)==0) {
-		echo "<b>", $pgv_lang["no_results"], "</b><br />";
+		echo "<b>", i18n::translate('No results found.'), "</b><br />";
 	}
 	else {
 		echo "\n\t<table class=\"list_table $TEXT_DIRECTION\"";
@@ -429,8 +429,8 @@ if ($display=="list") {
 		echo ">\n\t\t<tr>\n\t\t<td class=\"list_label\" ";
 		$ct = count($placelist);
 		echo " colspan=\"", $ct>20 ? "3" : "2", "\">&nbsp;";
-		echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", $pgv_lang["search_place"], "\" alt=\"", $pgv_lang["search_place"], "\" />&nbsp;&nbsp;";
-		echo $pgv_lang["place_list2"];
+		echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["place"]["small"], "\" border=\"0\" title=\"", i18n::translate('Place'), "\" alt=\"", i18n::translate('Place'), "\" />&nbsp;&nbsp;";
+		echo i18n::translate('Place List');
 		echo "&nbsp;";
 		print_help_link("ppp_placelist", "qm");
 		echo "</td></tr><tr><td class=\"list_value_wrap\"><ul>\n\t\t\t";
@@ -445,7 +445,7 @@ if ($display=="list") {
 				$linklevels .= "&amp;parent[$level]=".urlencode($place);
 				$level++;
 				if ($level>1) $revplace .= ", ";
-				if ($place=="") $revplace .= $pgv_lang["unknown"];
+				if ($place=="") $revplace .= i18n::translate('unknown');
 				else $revplace .= $place;
 			}
 			if (begRTLText($revplace)) {
@@ -465,7 +465,7 @@ if ($display=="list") {
 		echo "\n\t\t</ul></td></tr>\n\t\t";
 		if ($i>1) {
 			echo "<tr><td>";
-			if ($i>0) echo $pgv_lang["total_unic_places"], " ", $i;
+			if ($i>0) echo i18n::translate('Total Unique Places'), " ", $i;
 			echo "</td></tr>\n";
 		}
 		echo "\n\t\t</table>";
@@ -473,19 +473,19 @@ if ($display=="list") {
 }
 
 echo "<br /><a href=\"?display=";
-if ($display=="list") echo "hierarchy\">", $pgv_lang["show_place_hierarchy"];
-else echo "list\">", $pgv_lang["show_place_list"];
+if ($display=="list") echo "hierarchy\">", i18n::translate('Show Places in Hierarchy');
+else echo "list\">", i18n::translate('Show All Places in a List');
 echo "</a><br /><br />\n";
 if ($hasplaceform) {
 	$placeheader = substr($header, $hasplaceform);
 	$ct = preg_match("/2 FORM (.*)/", $placeheader, $match);
 	if ($ct>0) {
-		echo  $pgv_lang["form"].$match[1];
+		echo  i18n::translate('Places are encoded in the form: ').$match[1];
 		print_help_link("ppp_match_one", "qm");
 	}
 }
 else {
-	echo $pgv_lang["form"], $pgv_lang["default_form"], "  ", $pgv_lang["default_form_info"];
+	echo i18n::translate('Places are encoded in the form: '), i18n::translate('City, County, State/Province, Country'), "  ", i18n::translate('(Default)');
 	print_help_link("ppp_default_form", "qm");
 }
 echo "<br /><br /></div>";

@@ -78,17 +78,17 @@ function DefaultAgeLocalisation(&$agestring, &$show_years) {
 			'/(\d+)w/i'
 		),
 		array(
-			$pgv_lang["child"],
-			$pgv_lang["infant"],
-			$pgv_lang["stillborn"],
-			($show_years || preg_match('/[dm]/', $agestring)) ? '1 '.$pgv_lang["year1"] : '1',
-			($show_years || preg_match('/[dm]/', $agestring)) ? '$1 '.$pgv_lang["years"] : '$1',
-			'1 '.$pgv_lang["month1"],
-			'$1 '.$pgv_lang["months"],
-			'1 '.$pgv_lang["day1"],
-			'$1 '.$pgv_lang["days"],
-	  	'1 '.$pgv_lang["week1"],
-			'$1 '.$pgv_lang["weeks"]
+			i18n::translate('Child'),
+			i18n::translate('Infant'),
+			i18n::translate('Stillborn'),
+			($show_years || preg_match('/[dm]/', $agestring)) ? '1 '.i18n::translate('year') : '1',
+			($show_years || preg_match('/[dm]/', $agestring)) ? '$1 '.i18n::translate('years') : '$1',
+			'1 '.i18n::translate('month'),
+			'$1 '.i18n::translate('months'),
+			'1 '.i18n::translate('day'),
+			'$1 '.i18n::translate('days'),
+	  	'1 '.i18n::translate('week'),
+			'$1 '.i18n::translate('weeks')
 		),
 		$agestring
 	);
@@ -117,7 +117,7 @@ function formatElapsedTime($elapsedTime, $truncate=true) {
 	$years = floor($elapsedTime / 31536000);		// 365 * 24 * 60 * 60 seconds per year
 	if ($years > 0) {
 		if ($years==1) {
-			$rtn .= $pgv_lang["elapsedYear1"];
+			$rtn .= i18n::translate('1 year');
 		} else {
 			$pgv_lang["global_num1"] = $years;		// Make this visible to function print_text()
 			// Polish requires special handling of 2,3,4 or 22,23,24 or 32,33,34 etc.
@@ -134,7 +134,7 @@ function formatElapsedTime($elapsedTime, $truncate=true) {
 	$months = floor($elapsedTime / 2592000);		// 30 * 24 * 60 * 60 seconds per month
 	if ($months > 0) {
 		if ($months==1) {
-			$rtn .= $pgv_lang["elapsedMonth1"];
+			$rtn .= i18n::translate('1 month');
 		} else {
 			$pgv_lang["global_num1"] = $months;		// Make this visible to function print_text()
 			// Polish requires special handling of 2,3,4 or 22,23,24 or 32,33,34 etc.
@@ -150,7 +150,7 @@ function formatElapsedTime($elapsedTime, $truncate=true) {
 	$days = floor($elapsedTime / 86400);			// 24 * 60 * 60 seconds per day
 	if ($days > 0) {
 		if ($days==1) {
-			$rtn .= $pgv_lang["elapsedDay1"];
+			$rtn .= i18n::translate('1 day');
 		} else {
 			$pgv_lang["global_num1"] = $days;		// Make this visible to function print_text()
 			// Polish requires special handling of 2,3,4 or 22,23,24 or 32,33,34 etc.
@@ -167,7 +167,7 @@ function formatElapsedTime($elapsedTime, $truncate=true) {
 		$hours = floor($elapsedTime / 3600);			// 60 * 60 seconds per hour
 		if ($hours > 0) {
 			if ($hours==1) {
-				$rtn .= $pgv_lang["elapsedHour1"];
+				$rtn .= i18n::translate('1 hour');
 			} else {
 				$pgv_lang["global_num1"] = $hours;		// Make this visible to function print_text()
 				// Polish requires special handling of 2,3,4 or 22,23,24 or 32,33,34 etc.
@@ -183,7 +183,7 @@ function formatElapsedTime($elapsedTime, $truncate=true) {
 		$mins = floor($elapsedTime / 60);				// 60 seconds per minute
 		if ($mins > 0) {
 			if ($mins==1) {
-				$rtn .= $pgv_lang["elapsedMinute1"];
+				$rtn .= i18n::translate('1 minute');
 			} else {
 				$pgv_lang["global_num1"] = $mins;		// Make this visible to function print_text()
 				// Polish requires special handling of 2,3,4 or 22,23,24 or 32,33,34 etc.
@@ -195,7 +195,7 @@ function formatElapsedTime($elapsedTime, $truncate=true) {
 			$rtn .= ", ";
 		}
 	}
-	if ($rtn=='') return $pgv_lang["elapsedMinute1"];
+	if ($rtn=='') return i18n::translate('1 minute');
 	return substr($rtn,0,-2);
 }
 

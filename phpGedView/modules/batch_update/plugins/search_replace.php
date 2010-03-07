@@ -75,7 +75,7 @@ class plugin extends base_plugin {
 			$ct=-1;
 			$ct=@preg_match('/'.$this->search.'/', '');
 			if ($ct==-1) {
-				$this->error='<br/><span class="error">'.$pgv_lang['bu_regex_bad'].'</span>';
+				$this->error='<br/><span class="error">'.i18n::translate('The regex appears to contain an error.  It can\'t be used.').'</span>';
 			}
 			break;
 		}
@@ -85,28 +85,28 @@ class plugin extends base_plugin {
 		global $pgv_lang;
 
 		return
-			'<tr valign="top"><td class="list_label width20">'.$pgv_lang['bu_search'].':</td>'.
+			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Search text/pattern').':</td>'.
 			'<td class="optionbox wrap">'.
 			'<input name="search" size="40" value="'.htmlspecialchars($this->search).
 			'" onchange="this.form.submit();"></td></tr>'.
 
-			'<tr valign="top"><td class="list_label width20">'.$pgv_lang['bu_replace'].':</td>'.
+			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Replacement text').':</td>'.
 			'<td class="optionbox wrap">'.
 			'<input name="replace" size="40" value="'.htmlspecialchars($this->replace).
 			'" onchange="this.form.submit();"></td></tr>'.
 
-			'<tr valign="top"><td class="list_label width20">'.$pgv_lang['bu_method'].':</td>'.
+			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Search method').':</td>'.
 			'<td class="optionbox wrap"><select name="method" onchange="this.form.submit();">'.
-			'<option value="exact"'    .($this->method=='exact'     ? ' selected="selected"' : '').'>'.$pgv_lang['bu_exact']    .'</option>'.
-			'<option value="words"'    .($this->method=='words'     ? ' selected="selected"' : '').'>'.$pgv_lang['bu_words']    .'</option>'.
-			'<option value="wildcards"'.($this->method=='wildcards' ? ' selected="selected"' : '').'>'.$pgv_lang['bu_wildcards'].'</option>'.
-			'<option value="regex"'    .($this->method=='regex'     ? ' selected="selected"' : '').'>'.$pgv_lang['bu_regex']    .'</option>'.
+			'<option value="exact"'    .($this->method=='exact'     ? ' selected="selected"' : '').'>'.i18n::translate('Exact text')    .'</option>'.
+			'<option value="words"'    .($this->method=='words'     ? ' selected="selected"' : '').'>'.i18n::translate('Whole words only')    .'</option>'.
+			'<option value="wildcards"'.($this->method=='wildcards' ? ' selected="selected"' : '').'>'.i18n::translate('Wildcards').'</option>'.
+			'<option value="regex"'    .($this->method=='regex'     ? ' selected="selected"' : '').'>'.i18n::translate('Regular expression')    .'</option>'.
 			'</select><br/><i>'.$pgv_lang['bu_'.$this->method.'_desc'].'</i>'.$this->error.'</td></tr>'.
 
-			'<tr valign="top"><td class="list_label width20">'.$pgv_lang['bu_case'].':</td>'.
+			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Case insensitive').':</td>'.
 			'<td class="optionbox wrap">'.
 			'<input type="checkbox" name="case" value="i" '.($this->case=='i' ? 'checked="checked"' : '').'" onchange="this.form.submit();">'.
-			'<br/><i>'.$pgv_lang['bu_case_desc'].'</i></td></tr>'.
+			'<br/><i>'.i18n::translate('Tick this box to match both upper and lower case letters.').'</i></td></tr>'.
 			parent::getOptionsForm();
 	}
 }

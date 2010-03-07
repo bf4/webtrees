@@ -77,7 +77,7 @@ class NoteControllerRoot extends BaseController {
 		$this->note->ged_id=PGV_GED_ID; // This record is from a file
 
 		if (!$this->note->canDisplayDetails()) {
-			print_header($pgv_lang["private"]." ".$pgv_lang["shared_note_info"]);
+			print_header(i18n::translate('Private')." ".i18n::translate('Shared Note Information'));
 			print_privacy_error($CONTACT_EMAIL);
 			print_footer();
 			exit;
@@ -166,10 +166,10 @@ class NoteControllerRoot extends BaseController {
 	function getPageTitle() {
 		global $pgv_lang;
 		if ($this->note) {
-			return $this->note->getFullName()." - ".$this->nid." - ".$pgv_lang["shared_note_info"];
+			return $this->note->getFullName()." - ".$this->nid." - ".i18n::translate('Shared Note Information');
 		}
 		else {
-			return $pgv_lang["unable_to_find_record"];
+			return i18n::translate('Unable to find record with ID');
 		}
 	}
 	/**
@@ -196,7 +196,7 @@ class NoteControllerRoot extends BaseController {
 		}
 
 		// edit shared note menu
-		$menu = new Menu($pgv_lang['edit_shared_note']);
+		$menu = new Menu(i18n::translate('Edit Shared Note'));
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN)
 			$menu->addOnclick('return edit_note(\''.$this->nid.'\');');
 		if (!empty($PGV_IMAGES["notes"]["small"]))
@@ -205,7 +205,7 @@ class NoteControllerRoot extends BaseController {
 
 		// edit shared note / edit_raw
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
-			$submenu = new Menu($pgv_lang['edit_raw']);
+			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->nid."');");
 			if (!empty($PGV_IMAGES["notes"]["small"]))
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
@@ -214,8 +214,8 @@ class NoteControllerRoot extends BaseController {
 		}
 
 		// edit shared note / delete_shared note
-		$submenu = new Menu($pgv_lang['delete_shared_note']);
-		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_shared_note"]."')) return deletenote('".$this->nid."'); else return false;");
+		$submenu = new Menu(i18n::translate('Delete this Shared Note'));
+		$submenu->addOnclick("if (confirm('".i18n::translate('Are you sure you want to delete this Shared Note?')."')) return deletenote('".$this->nid."'); else return false;");
 		if (!empty($PGV_IMAGES["notes"]["small"]))
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -231,7 +231,7 @@ class NoteControllerRoot extends BaseController {
 			// edit_note / show/hide changes
 			if (!$this->show_changes)
 			{
-				$submenu = new Menu($pgv_lang['show_changes'], encode_url("note.php?nid={$this->nid}&show_changes=yes"));
+				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url("note.php?nid={$this->nid}&show_changes=yes"));
 				if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -239,7 +239,7 @@ class NoteControllerRoot extends BaseController {
 			}
 			else
 			{
-				$submenu = new Menu($pgv_lang['hide_changes'], encode_url("note.php?nid={$this->nid}&show_changes=no"));
+				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url("note.php?nid={$this->nid}&show_changes=no"));
 				if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -249,12 +249,12 @@ class NoteControllerRoot extends BaseController {
 			if (PGV_USER_CAN_ACCEPT)
 			{
 				// edit_shared note / accept_all
-				$submenu = new Menu($pgv_lang["undo_all"], encode_url("note.php?nid={$this->nid}&action=undo"));
+				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("note.php?nid={$this->nid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang['accept_all'], encode_url("note.php?nid={$this->nid}&action=accept"));
+				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("note.php?nid={$this->nid}&action=accept"));
 				if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -281,7 +281,7 @@ class NoteControllerRoot extends BaseController {
 		}
 
 			// other menu
-		$menu = new Menu($pgv_lang['other']);
+		$menu = new Menu(i18n::translate('Other'));
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		if ($SHOW_GEDCOM_RECORD)
 		{
@@ -304,7 +304,7 @@ class NoteControllerRoot extends BaseController {
 		if ($SHOW_GEDCOM_RECORD)
 		{
 				// other / view_gedcom
-				$submenu = new Menu($pgv_lang['view_gedcom']);
+				$submenu = new Menu(i18n::translate('View GEDCOM Record'));
 				if ($this->show_changes && $this->userCanEdit())
 				{
 					$submenu->addLink("javascript:show_gedcom_record('new');");
@@ -320,7 +320,7 @@ class NoteControllerRoot extends BaseController {
 		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL)
 		{
 				// other / add_to_cart
-				$submenu = new Menu($pgv_lang['add_to_cart'], encode_url("clippings.php?action=add&id={$this->nid}&type=note"));
+				$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url("clippings.php?action=add&id={$this->nid}&type=note"));
 				if (!empty($PGV_IMAGES["clippings"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -329,7 +329,7 @@ class NoteControllerRoot extends BaseController {
 		if ($this->note->canDisplayDetails() && !empty($this->uname))
 		{
 				// other / add_to_my_favorites
-				$submenu = new Menu($pgv_lang['add_to_my_favorites'], encode_url("note.php?action=addfav&nid={$this->nid}&gid={$this->nid}"));
+				$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url("note.php?action=addfav&nid={$this->nid}&gid={$this->nid}"));
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);

@@ -86,7 +86,7 @@ class ServiceClient extends GedcomRecord {
 	function getTitle() {
 		global $pgv_lang;
 
-		if (empty($this->title)) return $pgv_lang["unknown"];
+		if (empty($this->title)) return i18n::translate('unknown');
 		return $this->title;
 	}
 

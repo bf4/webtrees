@@ -144,14 +144,14 @@ if ($action=="choose") {
 		$reports[$file] = $reportList[$file];
 	}
 	
-	print_header($pgv_lang["choose_report"]);
+	print_header(i18n::translate('Choose a report to run'));
 
 	echo "<br /><br />\n<form name=\"choosereport\" method=\"get\" action=\"reportengine.php\">\n";
 	echo "<input type=\"hidden\" name=\"action\" value=\"setup\" />\n";
 	echo "<input type=\"hidden\" name=\"output\" value=\"", $output, "\" />\n";
 	echo "<table class=\"facts_table width40 center ", $TEXT_DIRECTION, " \">";
-	echo "<tr><td class=\"topbottombar\" colspan=\"2\">", $pgv_lang["choose_report"], "</td></tr>";
-	echo "<tr><td class=\"descriptionbox wrap width33 vmiddle\">", $pgv_lang["select_report"], "</td>";
+	echo "<tr><td class=\"topbottombar\" colspan=\"2\">", i18n::translate('Choose a report to run'), "</td></tr>";
+	echo "<tr><td class=\"descriptionbox wrap width33 vmiddle\">", i18n::translate('Select report'), "</td>";
 	echo "<td class=\"optionbox\"><select onchange=\"this.form.submit();\" name=\"report\">\n";
 	foreach($reports as $file=>$report) {
 		if ($report["access"] >= PGV_USER_ACCESS_LEVEL) {
@@ -159,7 +159,7 @@ if ($action=="choose") {
 		}
 	}
 	echo "</select></td></tr>\n";
-	echo "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"", $pgv_lang["click_here"], "\" /></td></tr>";
+	echo "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"", i18n::translate('Click here to continue'), "\" /></td></tr>";
 	echo "</table></form>\n<br /><br />\n";
 
 	print_footer();
@@ -167,7 +167,7 @@ if ($action=="choose") {
 
 //-- setup report to run
 elseif ($action=="setup") {
-	print_header($pgv_lang["enter_report_values"]);
+	print_header(i18n::translate('Enter report values'));
 
 	if ($ENABLE_AUTOCOMPLETE) {
 		require_once PGV_ROOT."js/autocomplete.js.htm";
@@ -175,7 +175,7 @@ elseif ($action=="setup") {
 
 	//-- make sure the report exists
 	if (!file_exists($report)) {
-		echo "<span class=\"error\">", $pgv_lang["file_not_found"], "</span> ", $report, "\n";
+		echo "<span class=\"error\">", i18n::translate('File not found.'), "</span> ", $report, "\n";
 	} else {
 		require_once PGV_ROOT."includes/reportheader.php";
 		$report_array = array();
@@ -216,8 +216,8 @@ elseif ($action=="setup") {
 		echo "<input type=\"hidden\" name=\"download\" value=\"\" />\n";
 
 		echo "<table class=\"facts_table width50 center ", $TEXT_DIRECTION, " \">";
-		echo "<tr><td class=\"topbottombar\" colspan=\"2\">", $pgv_lang["enter_report_values"], "</td></tr>";
-		echo "<tr><td class=\"descriptionbox width30 wrap\">", $pgv_lang["selected_report"], "</td><td class=\"optionbox\">", $report_array["title"], "</td></tr>\n";
+		echo "<tr><td class=\"topbottombar\" colspan=\"2\">", i18n::translate('Enter report values'), "</td></tr>";
+		echo "<tr><td class=\"descriptionbox width30 wrap\">", i18n::translate('Selected Report'), "</td><td class=\"optionbox\">", $report_array["title"], "</td></tr>\n";
 
 		$doctitle = trim($report_array["title"]);
 		if (!isset($report_array["inputs"])) {
@@ -309,7 +309,7 @@ elseif ($action=="setup") {
 						} elseif ($input["lookup"]=="SOUR") {
 							print_findsource_link($input["name"]);
 						} elseif ($input["lookup"]=="DATE") {
-							$text = $pgv_lang["select_date"];
+							$text = i18n::translate('Select a date');
 							if (isset($PGV_IMAGES["calendar"]["button"])) {
 								$Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["button"]."\" name=\"a_".$input["name"]."\" id=\"a_".$input["name"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 							} else {
@@ -341,8 +341,8 @@ elseif ($action=="setup") {
 		</td></tr>
 		<?php
 		echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
-		echo " <input type=\"submit\" value=\"", $pgv_lang["download_report"], "\" onclick=\"document.setupreport.elements['download'].value='1';\"/>";
-		echo " <input type=\"submit\" value=\"", $pgv_lang["cancel"], "\" onclick=\"document.setupreport.elements['action'].value='setup';document.setupreport.target='';\"/>";
+		echo " <input type=\"submit\" value=\"", i18n::translate('Download report'), "\" onclick=\"document.setupreport.elements['download'].value='1';\"/>";
+		echo " <input type=\"submit\" value=\"", i18n::translate('Cancel'), "\" onclick=\"document.setupreport.elements['action'].value='setup';document.setupreport.target='';\"/>";
 		echo "</td></tr></table></form><br /><br />\n";
 		echo PGV_JS_START, "document.title = \"", $doctitle, "\"", PGV_JS_END;
 	}

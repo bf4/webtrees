@@ -50,7 +50,7 @@ print_simple_header(i18n::translate('Export'));
 if ($export) {
 	$ged_id = get_id_from_gedcom($export);
 	$filename = get_gedcom_setting($ged_id, 'path');
-	echo '<h1>', $pgv_lang['ged_export'], '</h1>';
+	echo '<h1>', i18n::translate('Export'), '</h1>';
 	echo '<p>', htmlspecialchars(filename_decode($export)), ' => ', $filename, '</p>';
 	flush();
 	$gedout = fopen($filename.'.tmp', 'w');
@@ -84,5 +84,5 @@ if ($export) {
 	echo '</ul>';
 }
 
-echo '<p><a href="javascript: ', $pgv_lang['close_window'], '" onclick="window.close();">', $pgv_lang['close_window'], '</a></p>';
+echo '<p><a href="javascript: ', i18n::translate('Close Window'), '" onclick="window.close();">', i18n::translate('Close Window'), '</a></p>';
 print_simple_footer();

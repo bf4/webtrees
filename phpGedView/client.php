@@ -411,7 +411,7 @@ case 'uploadmedia':
 	$error="";
 	if (isset($_FILES['mediafile'])) {
 		if (!move_uploaded_file($_FILES['mediafile']['tmp_name'], $MEDIA_DIRECTORY.$_FILES['mediafile']['name'])) {
-			$error .= "ERROR 19: ".$pgv_lang["upload_error"]." ".file_upload_error_text($_FILES['mediafile']['error']);
+			$error .= "ERROR 19: ".i18n::translate('There was an error uploading your file.')." ".file_upload_error_text($_FILES['mediafile']['error']);
 		} else if (!isset($_FILES['thumbnail'])) {
 			$filename = $MEDIA_DIRECTORY.$_FILES['mediafile']['name'];
 			$thumbnail = $MEDIA_DIRECTORY."thumbs/".$_FILES['mediafile']['name'];
@@ -421,7 +421,7 @@ case 'uploadmedia':
 	}
 	if (isset($_FILES['thumbnail'])) {
 		if (!move_uploaded_file($_FILES['thumbnail']['tmp_name'], $MEDIA_DIRECTORY."thumbs/".$_FILES['thumbnail']['name'])) {
-			$error .= "\nERROR 19: ".$pgv_lang["upload_error"]." ".file_upload_error_text($_FILES['thumbnail']['error']);
+			$error .= "\nERROR 19: ".i18n::translate('There was an error uploading your file.')." ".file_upload_error_text($_FILES['thumbnail']['error']);
 		}
 	}
 	if (!empty($error)) {

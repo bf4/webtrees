@@ -211,7 +211,7 @@ switch($modinfo['Module']['type'])
 			default:
 			{
 				print_header($results['title'], $results['head']);
-				print str_replace('[action]', $results['action'], $pgv_lang['module_error_unknown_action_v2']);
+				print str_replace('[action]', $results['action'], i18n::translate('Unknown action: [action].'));
 				print_footer();
 				exit;
 			}
@@ -221,7 +221,7 @@ switch($modinfo['Module']['type'])
 	default:
 	{
 		print_header(get_gedcom_setting(PGV_GED_ID, 'title'));
-		print $pgv_lang['module_error_unknown_type'];
+		print i18n::translate('Unknown module type.');
 		print_footer();
 		break;
 	}

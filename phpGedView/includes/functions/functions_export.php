@@ -109,7 +109,7 @@ function gedcom_header($gedfile) {
 	$CHAR="\n1 CHAR {$CHARACTER_SET}";
 	$FILE="\n1 FILE {$gedfile}";
 	$LANG="";
-	$PLAC="\n1 PLAC\n2 FORM {$pgv_lang['default_form']}";
+	$PLAC="\n1 PLAC\n2 FORM City, County, State/Province, Country";
 	$COPR="";
 	$SUBN="";
 	$SUBM="\n1 SUBM @SUBM@\n0 @SUBM@ SUBM\n1 NAME ".PGV_USER_NAME; // The SUBM record is mandatory
@@ -461,7 +461,7 @@ function um_export($proceed) {
 
 	// Get user array and create authenticate.php
 	if (($proceed=="export") || ($proceed=="exportovr")) {
-		print $pgv_lang["um_creating"]." \"authenticate.php\"<br /><br />";
+		print i18n::translate('Creating')." \"authenticate.php\"<br /><br />";
 	}
 	$authtext="<?php\n\n\$users=array();\n\n";
 	foreach (get_all_users() as $user_id=>$username) {
@@ -490,7 +490,7 @@ function um_export($proceed) {
 	}
 	$authtext .="?".">\n";
 	if (file_exists($INDEX_DIRECTORY."authenticate.php")) {
-		print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."authenticate.php<br /><br />";
+		print i18n::translate('Creation of new file failed, a file with that name already exists:')." ".$INDEX_DIRECTORY."authenticate.php<br /><br />";
 	} else {
 		$fp=fopen($INDEX_DIRECTORY."authenticate.php", "w");
 		if ($fp) {
@@ -499,15 +499,15 @@ function um_export($proceed) {
 			$logline=AddToLog("authenticate.php updated");
 			check_in($logline, "authenticate.php", $INDEX_DIRECTORY);
 			if (($proceed=="export") || ($proceed=="exportovr")) {
-				print $pgv_lang["um_file_create_succ1"]." authenticate.php<br /><br />";
+				print i18n::translate('Creation of new file successful:')." authenticate.php<br /><br />";
 			}
 		} else
-			print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."authenticate.php. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+			print i18n::translate('Cannot create')." ".$INDEX_DIRECTORY."authenticate.php. ".i18n::translate('Check access rights on this directory.')."<br /><br />";
 	}
 
 	// Get messages and create messages.dat
 	if (($proceed=="export") || ($proceed=="exportovr")) {
-		print $pgv_lang["um_creating"]." \"messages.dat\"<br /><br />";
+		print i18n::translate('Creating')." \"messages.dat\"<br /><br />";
 	}
 	$messages=array();
 	$mesid=1;
@@ -528,7 +528,7 @@ function um_export($proceed) {
 	if ($mesid > 1) {
 		$mstring=serialize($messages);
 			if (file_exists($INDEX_DIRECTORY."messages.dat")) {
-			print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."messages.dat<br /><br />";
+			print i18n::translate('Creation of new file failed, a file with that name already exists:')." ".$INDEX_DIRECTORY."messages.dat<br /><br />";
 		} else {
 			$fp=fopen($INDEX_DIRECTORY."messages.dat", "wb");
 			if ($fp) {
@@ -537,20 +537,20 @@ function um_export($proceed) {
 				$logline=AddToLog("messages.dat updated");
 				check_in($logline, "messages.dat", $INDEX_DIRECTORY);
 				if (($proceed=="export") || ($proceed=="exportovr")) {
-					print $pgv_lang["um_file_create_succ1"]." messages.dat<br /><br />";
+					print i18n::translate('Creation of new file successful:')." messages.dat<br /><br />";
 				}
 			} else
-				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."messages.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+				print i18n::translate('Cannot create')." ".$INDEX_DIRECTORY."messages.dat. ".i18n::translate('Check access rights on this directory.')."<br /><br />";
 		}
 	} else {
 		if (($proceed=="export") || ($proceed=="exportovr")) {
-			print $pgv_lang["um_nomsg"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+			print i18n::translate('No Messages seem to be present in the system.')." ".i18n::translate('File is not created.')."<br /><br />";
 		}
 	}
 
 	// Get favorites and create favorites.dat
 	if (($proceed=="export") || ($proceed=="exportovr")) {
-		print $pgv_lang["um_creating"]." \"favorites.dat\"<br /><br />";
+		print i18n::translate('Creating')." \"favorites.dat\"<br /><br />";
 	}
 	$favorites=array();
 	$rows=
@@ -573,7 +573,7 @@ function um_export($proceed) {
 	if ($favid > 1) {
 		$mstring=serialize($favorites);
 		if (file_exists($INDEX_DIRECTORY."favorites.dat")) {
-			print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."favorites.dat<br /><br />";
+			print i18n::translate('Creation of new file failed, a file with that name already exists:')." ".$INDEX_DIRECTORY."favorites.dat<br /><br />";
 		} else {
 			$fp=fopen($INDEX_DIRECTORY."favorites.dat", "wb");
 			if ($fp) {
@@ -582,20 +582,20 @@ function um_export($proceed) {
 				$logline=AddToLog("favorites.dat updated");
 				check_in($logline, "favorites.dat", $INDEX_DIRECTORY);
 				if (($proceed=="export") || ($proceed=="exportovr")) {
-					print $pgv_lang["um_file_create_succ1"]." favorites.dat<br /><br />";
+					print i18n::translate('Creation of new file successful:')." favorites.dat<br /><br />";
 				}
 			} else
-				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."favorites.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+				print i18n::translate('Cannot create')." ".$INDEX_DIRECTORY."favorites.dat. ".i18n::translate('Check access rights on this directory.')."<br /><br />";
 		}
 	} else {
 		if (($proceed=="export") || ($proceed=="exportovr")) {
-			print $pgv_lang["um_nofav"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+			print i18n::translate('No Favorites seem to be present in the system.')." ".i18n::translate('File is not created.')."<br /><br />";
 		}
 	}
 
 	// Get news and create news.dat
 	if (($proceed=="export") || ($proceed=="exportovr")) {
-		print $pgv_lang["um_creating"]." \"news.dat\"<br /><br />";
+		print i18n::translate('Creating')." \"news.dat\"<br /><br />";
 	}
 	$allnews=array();
 	$rows=
@@ -613,7 +613,7 @@ function um_export($proceed) {
 	if (count($allnews) > 0) {
 		$mstring=serialize($allnews);
 		if (file_exists($INDEX_DIRECTORY."news.dat")) {
-			print $pgv_lang["um_file_create_fail1"].$INDEX_DIRECTORY."news.dat<br /><br />";
+			print i18n::translate('Creation of new file failed, a file with that name already exists:').$INDEX_DIRECTORY."news.dat<br /><br />";
 		} else {
 			$fp=fopen($INDEX_DIRECTORY."news.dat", "wb");
 			if ($fp) {
@@ -622,20 +622,20 @@ function um_export($proceed) {
 				$logline=AddToLog("news.dat updated");
 				check_in($logline, "news.dat", $INDEX_DIRECTORY);
 				if (($proceed=="export") || ($proceed=="exportovr")) {
-					print $pgv_lang["um_file_create_succ1"]." news.dat<br /><br />";
+					print i18n::translate('Creation of new file successful:')." news.dat<br /><br />";
 				}
 			} else
-				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."news.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+				print i18n::translate('Cannot create')." ".$INDEX_DIRECTORY."news.dat. ".i18n::translate('Check access rights on this directory.')."<br /><br />";
 		}
 	} else {
 		if (($proceed=="export") || ($proceed=="exportovr")) {
-			print $pgv_lang["um_nonews"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+			print i18n::translate('No News seems to be present in the system.')." ".i18n::translate('File is not created.')."<br /><br />";
 		}
 	}
 
 	// Get blocks and create blocks.dat
 	if (($proceed=="export") || ($proceed=="exportovr")) {
-		print $pgv_lang["um_creating"]." \"blocks.dat\"<br /><br />";
+		print i18n::translate('Creating')." \"blocks.dat\"<br /><br />";
 	}
 	$allblocks=array();
 	$blocks["main"]=array();
@@ -655,7 +655,7 @@ function um_export($proceed) {
 	if (count($allblocks) > 0) {
 		$mstring=serialize($allblocks);
 		if (file_exists($INDEX_DIRECTORY."blocks.dat")) {
-			print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."blocks.dat<br /><br />";
+			print i18n::translate('Creation of new file failed, a file with that name already exists:')." ".$INDEX_DIRECTORY."blocks.dat<br /><br />";
 		} else {
 			$fp=fopen($INDEX_DIRECTORY."blocks.dat", "wb");
 			if ($fp) {
@@ -664,14 +664,14 @@ function um_export($proceed) {
 				$logline=AddToLog("blocks.dat updated");
 				check_in($logline, "blocks.dat", $INDEX_DIRECTORY);
 				if (($proceed=="export") || ($proceed=="exportovr")) {
-					print $pgv_lang["um_file_create_succ1"]." blocks.dat<br /><br />";
+					print i18n::translate('Creation of new file successful:')." blocks.dat<br /><br />";
 				}
 			} else
-				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."blocks.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+				print i18n::translate('Cannot create')." ".$INDEX_DIRECTORY."blocks.dat. ".i18n::translate('Check access rights on this directory.')."<br /><br />";
 		}
 	} else {
 		if ($proceed=="export" || $proceed=="exportovr") {
-			print $pgv_lang["um_noblocks"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+			print i18n::translate('No Blocks seems to be present in the system.')." ".i18n::translate('File is not created.')."<br /><br />";
 		}
 	}
 }

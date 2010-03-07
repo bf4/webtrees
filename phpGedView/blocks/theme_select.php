@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_THEME_SELECT_PHP', '');
 
-$PGV_BLOCKS["print_block_theme_select"]["name"]			= $pgv_lang["theme_select_block"];
+$PGV_BLOCKS["print_block_theme_select"]["name"]			= i18n::translate('Theme Select');
 $PGV_BLOCKS["print_block_theme_select"]["descr"]		= "theme_select_descr";
 $PGV_BLOCKS["print_block_theme_select"]["type"]			= "gedcom";
 $PGV_BLOCKS["print_block_theme_select"]["canconfig"]	= false;
@@ -44,7 +44,7 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang, $themeformcount;
 
 	$id="theme_select";
-	$title = $pgv_lang["change_theme"];
+	$title = i18n::translate('Change Theme');
 	$title .= print_help_link("change_theme", "qm","",false,true);
 
 	$theme_menu=MenuBar::getThemeMenu();

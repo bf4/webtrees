@@ -92,9 +92,9 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 					}
 				}
 				if (empty($surn))
-					$surn = $pgv_lang["unknown"];
+					$surn = i18n::translate('unknown');
 				if (empty($givn))
-					$givn = $pgv_lang["unknown"];
+					$givn = i18n::translate('unknown');
 
 				$eFirstName = $this->dom->createElement("first");
 				$etFirstName = $this->dom->createTextNode($givn);

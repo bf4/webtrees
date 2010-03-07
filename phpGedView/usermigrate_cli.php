@@ -108,65 +108,65 @@ if ($controller->proceed == "backup") {
 		if ($controller->v_list == 0) {
 			print $controller->errorMsg;
 		} else {
-			print $pgv_lang["um_zip_succ"]."\r\n";
-			print $pgv_lang["um_zip_dl"]." ".$controller->fname;
+			print i18n::translate('ZIP file successfully created.')."\r\n";
+			print i18n::translate('Download ZIPped backup file ')." ".$controller->fname;
 			printf("(%.0f Kb)\r\n", (filesize($controller->fname)/1024));
-			print $pgv_lang["files_in_backup"];
+			print i18n::translate('Files included in this backup');
 			foreach($controller->flist as $f=>$file) {
 				print "\t".$file."\r\n";
 			}
 		}
 	}
 	else {
-		print $pgv_lang["um_nofiles"];
+		print i18n::translate('No files found for backup.');
 	}
 	exit;
 }
 
 // User Migration part of usermigrate. The function um_export is used by backup and migrate part.
 if (($controller->proceed == "export") || ($controller->proceed == "exportovr")) {
-	print "\r\n".$pgv_lang["um_sql_index"]."\r\n";
+	print "\r\n".i18n::translate('This tool will create <i>authenticate.php</i> and several <i>.dat</i> files in your index directory.<br /><br />After successful creation, you can switch to Index mode with all current users and their messages, favorites, news, and MyGedview layout available.<br /><br />Note: After switching to Index mode, you will need to import your GEDCOM files again.')."\r\n";
 }
 if ($controller->proceed == "import") {
 	if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
-		print $pgv_lang["um_nousers"];
+		print i18n::translate('File <i>authenticate.php</i> not found in your index directory. Migration is cancelled.');
 		exit;
 	}
 
 	if ($controller->impSuccess) {
-		print $pgv_lang["um_imp_succ"]."<br /><br />";
+		print i18n::translate('Import successful')."<br /><br />";
 	}
 	else {
-		print $pgv_lang["um_imp_fail"];
+		print i18n::translate('Import failed');
 		exit;
 	}
 
 	// Get messages and import them
-	print $pgv_lang["um_imp_messages"]."<br />";
+	print i18n::translate('Importing messages')."<br />";
 	if ((file_exists($INDEX_DIRECTORY."messages.dat")) == false) {
-		print $pgv_lang["um_nomsg"]."<br /><br />";
+		print i18n::translate('No Messages seem to be present in the system.')."<br /><br />";
 	}
-	if ($controller->msgSuccess) print $pgv_lang["um_imp_succ"]."<br /><br />";
+	if ($controller->msgSuccess) print i18n::translate('Import successful')."<br /><br />";
 
 	// Get favorites and import them
-	print $pgv_lang["um_imp_favorites"]."<br />";
+	print i18n::translate('Importing favorites')."<br />";
 	if ((file_exists($INDEX_DIRECTORY."favorites.dat")) == false) {
-		print $pgv_lang["um_nofav"]."<br /><br />";
+		print i18n::translate('No Favorites seem to be present in the system.')."<br /><br />";
 	}
-	if ($controller->favSuccess) print $pgv_lang["um_imp_succ"]."<br /><br />";
+	if ($controller->favSuccess) print i18n::translate('Import successful')."<br /><br />";
 
 	// Get news and import it
-	print $pgv_lang["um_imp_news"]."<br />";
+	print i18n::translate('Importing news')."<br />";
 	if ((file_exists($INDEX_DIRECTORY."news.dat")) == false) {
-		print $pgv_lang["um_nonews"]."<br /><br />";
+		print i18n::translate('No News seems to be present in the system.')."<br /><br />";
 	}
-	if ($controller->newsSuccess) print $pgv_lang["um_imp_succ"]."<br /><br />";
+	if ($controller->newsSuccess) print i18n::translate('Import successful')."<br /><br />";
 
 	// Get blocks and import them
-	print $pgv_lang["um_imp_blocks"]."<br />";
+	print i18n::translate('Importing blocks')."<br />";
 	if ((file_exists($INDEX_DIRECTORY."blocks.dat")) == false) {
-		print $pgv_lang["um_noblocks"]."<br /><br />";
+		print i18n::translate('No Blocks seems to be present in the system.')."<br /><br />";
 	}
-	if ($controller->blockSuccess) print $pgv_lang["um_imp_succ"]."<br /><br />";
+	if ($controller->blockSuccess) print i18n::translate('Import successful')."<br /><br />";
 }
 ?>

@@ -34,7 +34,7 @@ if($useFCK){
 print_simple_header(i18n::translate('Add/Edit Journal/News entry'));
 
 if (!PGV_USER_ID) {
-	print $pgv_lang["access_denied"];
+	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	print_simple_footer();
 	exit;
 }
@@ -49,19 +49,19 @@ $text    =safe_POST('text', PGV_REGEX_UNSAFE);
 if (empty($username)) $username=$GEDCOM;
 
 if ($action=="compose") {
-	print '<span class="subheaders">'.$pgv_lang["edit_news"].'</span>';
+	print '<span class="subheaders">'.i18n::translate('Add/Edit Journal/News entry').'</span>';
 	?>
 	<script language="JavaScript" type="text/javascript">
 		function checkForm(frm) {
 			if (frm.title.value=="") {
-				alert('<?php print $pgv_lang["enter_title"]; ?>');
+				alert('<?php print i18n::translate('Please enter a title.'); ?>');
 				document.messageform.title.focus();
 				return false;
 			}
 			<?php if (! $useFCK) { //will be empty for FCK. FIXME, use FCK API to check for content.
 			?>
 			if (frm.text.value=="") {
-				alert('<?php print $pgv_lang["enter_text"]; ?>');
+				alert('<?php print i18n::translate('Please enter some text for this News or Journal entry.'); ?>');
 				document.messageform.text.focus();
 				return false;
 			}
@@ -84,8 +84,8 @@ if ($action=="compose") {
 	print "<input type=\"hidden\" name=\"username\" value=\"".$news["username"]."\" />\n";
 	print "<input type=\"hidden\" name=\"date\" value=\"".$news["date"]."\" />\n";
 	print "<table>\n";
-	print "<tr><td align=\"right\">".$pgv_lang["title"]."</td><td><input type=\"text\" name=\"title\" size=\"50\" value=\"".$news["title"]."\" /><br /></td></tr>\n";
-	print "<tr><td valign=\"top\" align=\"right\">".$pgv_lang["article_text"]."<br /></td>";
+	print "<tr><td align=\"right\">".i18n::translate('Title:')."</td><td><input type=\"text\" name=\"title\" size=\"50\" value=\"".$news["title"]."\" /><br /></td></tr>\n";
+	print "<tr><td valign=\"top\" align=\"right\">".i18n::translate('Entry Text:')."<br /></td>";
 	print "<td>";
 	if ($useFCK) { // use FCKeditor module
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);
@@ -105,7 +105,7 @@ if ($action=="compose") {
 		print "<textarea name=\"text\" cols=\"80\" rows=\"10\">".$news["text"]."</textarea>";
 	}
 	print "<br /></td></tr>\n";
-	print "<tr><td></td><td><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /></td></tr>\n";
+	print "<tr><td></td><td><input type=\"submit\" value=\"".i18n::translate('Save')."\" /></td></tr>\n";
 	print "</table>\n";
 	print "</form>\n";
 } else if ($action=="save") {
@@ -122,12 +122,12 @@ if ($action=="compose") {
 	$message["title"] = $title;
 	$message["text"] = $text;
 	if (addNews($message)) {
-		print $pgv_lang["news_saved"];
+		print i18n::translate('News/Journal entry successfully saved.');
 	}
 } else if ($action=="delete") {
 	if (deleteNews($news_id)) print $pgv_lang["news_deleted"];
 }
-print "<center><br /><br /><a href=\"javascript:;\" onclick=\"if (window.opener.refreshpage) window.opener.refreshpage(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>";
+print "<center><br /><br /><a href=\"javascript:;\" onclick=\"if (window.opener.refreshpage) window.opener.refreshpage(); window.close();\">".i18n::translate('Close Window')."</a><br /></center>";
 
 print_simple_footer();
 ?>

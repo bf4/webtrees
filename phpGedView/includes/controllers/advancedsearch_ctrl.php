@@ -121,7 +121,7 @@ class AdvancedSearchController extends SearchController {
 
 	function getPageTitle() {
 		global $pgv_lang;
-		if ($this->action=="advanced") return $pgv_lang["advanced_search"];
+		if ($this->action=="advanced") return i18n::translate('Advanced Search');
 		else parent :: getPageTitle();
 	}
 
@@ -465,13 +465,13 @@ class AdvancedSearchController extends SearchController {
 		if (count($this->myindilist)>0) {
 			echo '<br /><div class="center">';
 			uasort($this->myindilist, array('GedcomRecord', 'Compare'));
-			print_indi_table($this->myindilist, $pgv_lang["individuals"]." @ ".PrintReady(get_gedcom_setting(PGV_GEDCOM, 'title'), true));
+			print_indi_table($this->myindilist, i18n::translate('Individuals')." @ ".PrintReady(get_gedcom_setting(PGV_GEDCOM, 'title'), true));
 			print "</div>";
 		}
 		else {
 			$ret = false;
 			if ($this->isPostBack) {
-				echo '<br /><div class="warning" style=" text-align: center;"><i>', $pgv_lang['no_results'], '</i><br /></div>';
+				echo '<br /><div class="warning" style=" text-align: center;"><i>', i18n::translate('No results found.'), '</i><br /></div>';
 			}
 		}
 		return $ret;

@@ -36,16 +36,16 @@ $controller = new HourglassController();
 $controller->init();
 
 // -- print html header information
-print_header(PrintReady($controller->name)." ".$pgv_lang["hourglass_chart"]);
+print_header(PrintReady($controller->name)." ".i18n::translate('Hourglass Chart'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 if ($controller->view=="preview") {
-	print "<h2 style=\"text-align: center\">".$pgv_lang["hourglass_chart"].":&nbsp;&nbsp;&nbsp;".PrintReady($controller->name)."</h2>";
+	print "<h2 style=\"text-align: center\">".i18n::translate('Hourglass Chart').":&nbsp;&nbsp;&nbsp;".PrintReady($controller->name)."</h2>";
 } else {
 	print "<!-- // NOTE: Start table header -->";
 	print "<table><tr><td valign=\"top\">";
-	print "<h2>".$pgv_lang["hourglass_chart"].":<br />".PrintReady($controller->name)."</h2>";
+	print "<h2>".i18n::translate('Hourglass Chart').":<br />".PrintReady($controller->name)."</h2>";
 }
 
 $controller->setupJavascript();
@@ -68,7 +68,7 @@ if ($view!="preview") {
 		<!-- // NOTE: Root ID -->
 	<td class="descriptionbox">
 	<?php print_help_link("desc_rootid", "qm");
-	print $pgv_lang["root_person"] . "</td>"; ?>
+	print i18n::translate('Root Person ID') . "</td>"; ?>
 	<td class="optionbox">
 	<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php print $controller->pid; ?>"	/>
 	<?php print_findindi_link("pid",""); ?>
@@ -77,7 +77,7 @@ if ($view!="preview") {
 	<!-- // NOTE: Show Details -->
 	<td class="descriptionbox">
 	<?php print_help_link("show_full", "qm");
-	print $pgv_lang["show_details"]; ?>
+	print i18n::translate('Show Details'); ?>
 	</td>
 	<td class="optionbox">
 	<input type="checkbox" value="
@@ -89,13 +89,13 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Submit button -->
 	<td rowspan="3" class="topbottombar vmiddle">
-	<input type="submit" value="<?php print $pgv_lang["view"]; ?>" />
+	<input type="submit" value="<?php print i18n::translate('View'); ?>" />
 	</td></tr>
 
 	<!-- // NOTE: Generations -->
 	<tr><td class="descriptionbox" >
 	<?php print_help_link("desc_generations", "qm");
-	print $pgv_lang["generations"]; ?>
+	print i18n::translate('Generations'); ?>
 	</td>
 	<td class="optionbox">
 	<select name="generations">
@@ -112,7 +112,7 @@ if ($view!="preview") {
 	<!-- // NOTE: Show spouses -->
 	<td class="descriptionbox">
 	<?php print_help_link("show_spouse", "qm");
-	print $pgv_lang["show_spouses"]; ?>
+	print i18n::translate('Show spouses'); ?>
 	</td>
 	<td class="optionbox">
 	<input type="checkbox" value="1" name="show_spouse"
@@ -123,7 +123,7 @@ if ($view!="preview") {
 	<!-- // NOTE: Box width -->
 	<tr><td class="descriptionbox">
 	<?php print_help_link("box_width", "qm");
-	print $pgv_lang["box_width"]; ?>
+	print i18n::translate('Box width'); ?>
 	</td>
 	<td class="optionbox"><input type="text" size="3" name="box_width" value="<?php print $controller->box_width; ?>" />
 	<b>%</b>
@@ -139,7 +139,7 @@ if ($view!="preview") {
 	</td></tr></table>
 <?php
 	if ($show_full==0) {
-		echo '<br /><span class="details2">', $pgv_lang['charts_click_box'], '</span><br />';
+		echo '<br /><span class="details2">', i18n::translate('Click on any of the boxes to get more information about that person.'), '</span><br />';
 	}
 } ?>
 <div id="hourglass_chart<?php if ($TEXT_DIRECTION=="rtl") print "_rtl"; ?>" <?php if ($controller->isPrintPreview()) print " style=\"top: 1px;\""; else print "style=\"width:98%; direction:".$TEXT_DIRECTION."; z-index:1;\""; ?> >

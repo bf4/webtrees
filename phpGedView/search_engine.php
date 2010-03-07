@@ -45,11 +45,11 @@ if ($rtl_stylesheet && $TEXT_DIRECTION=='rtl') {
 }
 echo '<meta name="robots" content="noindex,follow" />';
 echo '<meta name="generator" content="', PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL, '" />';
-echo '<title>', $pgv_lang['label_search_engine_detected'], '</title>';
+echo '<title>', i18n::translate('Search Engine Spider Detected'), '</title>';
 echo '</head><body>';
-echo '<div class="helptext">', $pgv_lang['search_engine_landing_page'];
+echo '<div class="helptext">', i18n::translate('PhpGedView automatically provides search engines with smaller data files with fewer links.  The data is limited to the individual and immediate family, without adding information about grand parents or grand children.  Many reports and server-intensive pages like the calendar are off limits to the spiders.<br /><br />Attempts by the spiders to go to those pages result in showing this page.  If you are seeing this text, the software believes you are a search engine spider.  Below is the list of pages that are allowed to be spidered and will provide the abbreviated data.<br /><br />Real users who follow search engine links into this site will see the full pages and data, and not this page.');
 if ($SEARCH_SPIDER) {
-	echo '<br /><br />', $pgv_lang['label_search_engine_detected'], ': ', $SEARCH_SPIDER, '<br />';
+	echo '<br /><br />', i18n::translate('Search Engine Spider Detected'), ': ', $SEARCH_SPIDER, '<br />';
 }
 echo '</div><br />';
 
@@ -57,18 +57,18 @@ echo '</div><br />';
 $all_gedcoms=get_all_gedcoms();
 if ($ALLOW_CHANGE_GEDCOM && count($all_gedcoms)>1) {
 	foreach ($all_gedcoms as $ged_id=>$gedcom) {
-		$title=$pgv_lang['welcome_page'].' - '.PrintReady(get_gedcom_setting($ged_id, 'title'));
+		$title=i18n::translate('Welcome page').' - '.PrintReady(get_gedcom_setting($ged_id, 'title'));
 		echo '<a href="', encode_url("index.php?ged={$gedcom}"), '"><b>', $title, '</b></a><br />';
 	}
 	echo '<br />';
 	foreach ($all_gedcoms as $ged_id=>$gedcom) {
-		$title=$pgv_lang['individual_list'].' - '.PrintReady(get_gedcom_setting($ged_id, 'title'));
+		$title=i18n::translate('Individuals').' - '.PrintReady(get_gedcom_setting($ged_id, 'title'));
 		echo '<a href="', encode_url("indilist.php?ged={$gedcom}"), '"><b>', $title, '</b></a><br />';
 	}
 } else {
-	$title=$pgv_lang['welcome_page'];
+	$title=i18n::translate('Welcome page');
 	echo '<a href="', encode_url("index.php?ged={$GEDCOM}"), '"><b>', $title, '</b></a><br />';
-	$title=$pgv_lang['individuals'];
+	$title=i18n::translate('Individuals');
 	echo '<a href="', encode_url("indilist.php?ged={$GEDCOM}"), '"><b>', $title, '</b></a><br />';
 }
 

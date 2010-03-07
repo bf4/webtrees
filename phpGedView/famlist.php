@@ -8,7 +8,7 @@
  * The alphabet bar shows all the available letters users can click. The bar is built
  * up from the lastnames first letter. Added to this bar is the symbol @, which is
  * shown as a translated version of the variable <var>pgv_lang["NN"]</var>, and a
- * translated version of the word ALL by means of variable <var>$pgv_lang["all"]</var>.
+ * translated version of the word ALL by means of variable <var>i18n::translate('ALL')</var>.
  *
  * The details can be shown in two ways, with surnames or without surnames. By default
  * the user first sees a list of surnames of the chosen letter and by clicking on a
@@ -90,7 +90,7 @@ $initials=get_indilist_salpha($SHOW_MARRIED_NAMES, true, PGV_GED_ID);
 if ($show_all=='yes') {
 	$alpha='';
 	$surname='';
-	$legend=$pgv_lang['all'];
+	$legend=i18n::translate('ALL');
 	$url='famlist.php?show_all=yes';
 } elseif ($surname) {
 	$surname=UTF8_strtoupper($surname);
@@ -106,7 +106,7 @@ if ($show_all=='yes') {
 	case '':
 		break;
 	case '@':
-		$legend.=', '.$pgv_lang['NN'];
+		$legend.=', '.i18n::translate('(unknown)');
 		break;
 	default:
 		$legend.=', '.$falpha;
@@ -118,11 +118,11 @@ if ($show_all=='yes') {
 	$show_all='no';
 	$surname='';
 	if ($alpha=='@') {
-		$legend=$pgv_lang['NN'];
+		$legend=i18n::translate('(unknown)');
 		$surname_sublist='no';
 		$surname='@N.N.';
 	} elseif ($alpha==',') {
-		$legend=$pgv_lang['none'];
+		$legend=i18n::translate('None');
 		$surname_sublist='no';
 	} else {
 		$legend=$alpha;
@@ -131,17 +131,17 @@ if ($show_all=='yes') {
 }
 
 
-print_header($pgv_lang['family_list'].' : '.$legend);
-echo '<h2 class="center">', $pgv_lang['family_list'], '</h2>';
+print_header(i18n::translate('Families').' : '.$legend);
+echo '<h2 class="center">', i18n::translate('Families'), '</h2>';
 
 // Print a selection list of initial letters
 foreach ($initials as $letter=>$count) {
 	switch ($letter) {
 	case '@':
-		$html=$pgv_lang['NN'];
+		$html=i18n::translate('(unknown)');
 		break;
 	case ',':
-		$html=$pgv_lang['none'];
+		$html=i18n::translate('None');
 		break;
 	default:
 		$html=$letter;
@@ -164,14 +164,14 @@ foreach ($initials as $letter=>$count) {
 // Search spiders don't get the "show all" option as the other links give them everything.
 if (!$SEARCH_SPIDER) {
 	if ($show_all=='yes') {
-		$list[]='<span class="warning">'.$pgv_lang['all'].'</span>';
+		$list[]='<span class="warning">'.i18n::translate('ALL').'</span>';
 	} else {
-		$list[]='<a href="famlist.php?show_all=yes">'.$pgv_lang['all'].'</a>';
+		$list[]='<a href="famlist.php?show_all=yes">'.i18n::translate('ALL').'</a>';
 	}
 }
 echo '<div class="alpha_index"><p class="center">';
 print_help_link('alpha', 'qm', 'alpha_index');
-print $pgv_lang["first_letter_name"]."<br />";
+print i18n::translate('Choose a letter to show families whose name starts with that letter.')."<br />";
 echo join(' | ', $list), '</p>';
 
 // Search spiders don't get an option to show/hide the surname sublists,
@@ -181,19 +181,19 @@ if (!$SEARCH_SPIDER) {
 	if ($alpha!='@' && $alpha!=',' && !$surname) {
 		if ($surname_sublist=='yes') {
 			print_help_link('skip_sublist', 'qm', 'skip_surnames');
-			echo '<a href="', $url, '&amp;surname_sublist=no">', $pgv_lang['skip_surnames'], '</a>';
+			echo '<a href="', $url, '&amp;surname_sublist=no">', i18n::translate('Skip Surname lists'), '</a>';
 		} else {
 			print_help_link('skip_sublist', 'qm', 'show_surnames');
-			echo '<a href="', $url, '&amp;surname_sublist=yes">', $pgv_lang['show_surnames'], '</a>';
+			echo '<a href="', $url, '&amp;surname_sublist=yes">', i18n::translate('Show Surname lists'), '</a>';
 		}
 		echo '&nbsp;&nbsp;&nbsp;';
 	}
 	if ($showList) {
 		print_help_link('show_marnm', 'qm', 'show_marnms');
 		if ($SHOW_MARRIED_NAMES) {
-			echo '<a href="', $url, '&amp;show_marnm=no">', $pgv_lang['skip_marnms'], '</a>';
+			echo '<a href="', $url, '&amp;show_marnm=no">', i18n::translate('Exclude married names'), '</a>';
 		} else {
-			echo '<a href="', $url, '&amp;show_marnm=yes">', $pgv_lang['show_marnms'], '</a>';
+			echo '<a href="', $url, '&amp;show_marnm=yes">', i18n::translate('Include married names'), '</a>';
 		}
 		echo '&nbsp;&nbsp;&nbsp;';
 	}
@@ -237,7 +237,7 @@ if ($showList) {
 				foreach ($givn_initials as $givn_initial) {
 					switch ($givn_initial) {
 					case '@':
-						$html=$pgv_lang['NN'];
+						$html=i18n::translate('(unknown)');
 						break;
 					default:
 						$html=$givn_initial;
@@ -253,9 +253,9 @@ if ($showList) {
 				// Seach spiders don't get the "show all" option as the other links give them everything.
 				if (!$SEARCH_SPIDER) {
 					if ($show_all_firstnames=='yes') {
-						$list[]='<span class="warning">'.$pgv_lang['all'].'</span>';
+						$list[]='<span class="warning">'.i18n::translate('ALL').'</span>';
 					} else {
-						$list[]='<a href="'.$url.'&amp;show_all_firstnames=yes">'.$pgv_lang['all'].'</a>';
+						$list[]='<a href="'.$url.'&amp;show_all_firstnames=yes">'.i18n::translate('ALL').'</a>';
 					}
 				}
 				if ($show_all=='no') {
@@ -265,7 +265,7 @@ if ($showList) {
 				}
 				echo '<div class="alpha_index"><p class="center">';
 				print_help_link('alpha', 'qm', 'alpha_index');
-				echo $pgv_lang['first_letter_sfname'], '<br />';
+				echo i18n::translate('Choose a letter to show families where a spouse has a given name which starts with that letter.'), '<br />';
 				echo join(' | ', $list), '</p></div>';
 			}
 		}

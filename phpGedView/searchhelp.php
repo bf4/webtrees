@@ -56,7 +56,7 @@ $found = 0;
 <!--
 function checkfrm(frm) {
 	if (frm.searchtext.value.length<2) {
-		alert("<?php print $pgv_lang["search_more_chars"]?>");
+		alert("<?php print i18n::translate('Please enter more than one character')?>");
 		frm.searchtext.focus();
 		return false;
 	}
@@ -71,59 +71,59 @@ print "<input name=\"action\" type=\"hidden\" value=\"search\" />";
 print "<table class=\"facts_table $TEXT_DIRECTION\">";
 print "<tr><td colspan=\"2\" class=\"topbottombar\">";
 print_help_link("hs_title", "qm", "hs_title");
-print $pgv_lang["hs_title"]."</td></tr>";
+print i18n::translate('Search Help Text')."</td></tr>";
 
 // Enter the keyword(s)
 print "<tr><td class=\"descriptionbox width20 wrap vmiddle\">";
 print_help_link("hs_keyword_advice", "qm", "hs_keyword");
-print $pgv_lang["hs_keyword"]."</td>";
+print i18n::translate('Search for')."</td>";
 print "<td class=\"optionbox\"><input type=\"text\" name=\"searchtext\" dir=\"ltr\" value=\"".$searchtext."\" /></td></tr>";
 
 // How to search
 print "<tr ><td class=\"descriptionbox width20 wrap vmiddle\">";
 print_help_link("hs_searchhow_advice", "qm", "hs_searchhow");
-print $pgv_lang["hs_searchhow"]."</td>";
+print i18n::translate('Search type')."</td>";
 print "<td class=\"optionbox\">";
 print "<input type=\"radio\" name=\"searchhow\" dir=\"ltr\" value=\"any\"";
 if ($searchhow == "any") print " checked=\"checked\"";
-print " />".$pgv_lang["hs_searchany"]."<br />";
+print " />".i18n::translate('Any word')."<br />";
 print "<input type=\"radio\" name=\"searchhow\" dir=\"ltr\" value=\"all\"";
 if ($searchhow == "all") print " checked=\"checked\"";
-print " />".$pgv_lang["hs_searchall"]."<br />";
+print " />".i18n::translate('All words')."<br />";
 print "<input type=\"radio\" name=\"searchhow\" dir=\"ltr\" value=\"sentence\"";
 if ($searchhow == "sentence") print " checked=\"checked\"";
-print " />".$pgv_lang["hs_searchsentence"]."<br />";
+print " />".i18n::translate('Exact phrase')."<br />";
 print "</td></tr>";
 
 print "<tr><td rowspan=\"2\" class=\"descriptionbox width20 wrap vmiddle\">";
 print_help_link("hs_searchin_advice", "qm", "hs_searchin");
-print $pgv_lang["hs_searchin"]."</td>";
+print i18n::translate('Search in')."</td>";
 print "<td class=\"optionbox\">";
 print "<input type=\"checkbox\" name=\"searchuser\" dir=\"ltr\" value=\"yes\"";
 if ($searchuser == "yes") print " checked=\"checked\"";
-print " />".$pgv_lang["hs_searchuser"]."<br />";
+print " />".i18n::translate('User Help')."<br />";
 print "<input type=\"checkbox\" name=\"searchmodules\" dir=\"ltr\" value=\"yes\"";
 if ($searchmodules == "yes") print " checked=\"checked\"";
-print " />".$pgv_lang["hs_searchmodules"]."<br />";
+print " />".i18n::translate('Modules Help')."<br />";
 // Show "administrator help" choice only to admins
 if (PGV_USER_GEDCOM_ADMIN) {
 	print "<input type=\"checkbox\" name=\"searchconfig\" dir=\"ltr\" value=\"yes\"";
 	if ($searchconfig == "yes") print " checked=\"checked\"";
-	print " />".$pgv_lang["hs_searchconfig"];
+	print " />".i18n::translate('Administrator Help');
 }
 print "</td></tr><tr>";
 print "<td class=\"optionbox\"><input type=\"radio\" name=\"searchintext\" dir=\"ltr\" value=\"true\"";
 if ($searchintext == "true") print " checked=\"checked\"";
-print " />".$pgv_lang["hs_intruehelp"]."<br />";
+print " />".i18n::translate('Help text only')."<br />";
 print "<input type=\"radio\" name=\"searchintext\" dir=\"ltr\" value=\"all\"";
 if ($searchintext == "all") print " checked=\"checked\"";
-print " />".$pgv_lang["hs_inallhelp"]."<br />";
+print " />".i18n::translate('All text')."<br />";
 print "</td></tr>";
 
 // Print the buttons
 print "<tr><td class=\"topbottombar\" colspan=\"2\">";
-print "<input type=\"submit\" name=\"entertext\" value=\"".$pgv_lang["hs_search"]."\" />";
-print "<input type=\"button\" value=\"".$pgv_lang["hs_close"]."\" onclick='self.close();' />";
+print "<input type=\"submit\" name=\"entertext\" value=\"".i18n::translate('Search')."\" />";
+print "<input type=\"button\" value=\"".i18n::translate('Close window')."\" onclick='self.close();' />";
 print "</td></tr>";
 
 // Perform the search
@@ -194,7 +194,7 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 
 // Print total results, if a search has been performed
 if (!empty($searchtext)) {
-	print "<tr><td colspan=\"2\" class=\"topbottombar\">".$pgv_lang["hs_results"]." ".$found;
+	print "<tr><td colspan=\"2\" class=\"topbottombar\">".i18n::translate('Results found:')." ".$found;
 	print "</td></tr>";
 }
 print "</table></form>";

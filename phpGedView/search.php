@@ -34,7 +34,7 @@ $controller = new SearchController();
 $controller->init();
 
 // Print the top header
-print_header($pgv_lang["search"]);
+print_header(i18n::translate('Search'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
@@ -45,7 +45,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 		if (action == "general")
 		{
 			if (frm.query.value.length<2) {
-				alert("<?php print $pgv_lang["search_more_chars"]?>");
+				alert("<?php print i18n::translate('Please enter more than one character')?>");
 				frm.query.focus();
 				return false;
 			}
@@ -67,7 +67,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 				if (place.length >= 2)
 					message = false;
 				if(message) {
-					alert("<?php print $pgv_lang["search_more_chars"]?>");
+					alert("<?php print i18n::translate('Please enter more than one character')?>");
 					return false;
 				}
 			}
@@ -82,7 +82,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 				if (place != "")
 					message = false;
 				if (message) {
-					alert("<?php print $pgv_lang["invalid_search_input"]?>");
+					alert("<?php print i18n::translate('Please enter a Given name, Last name, or Place in addition to Year')?>");
 					frm.firstname.focus();
 					return false;
 				}
@@ -94,7 +94,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 			if(frm.subaction.value=='basic')
 			{
 				if (frm.multiquery.value.length < 2) {
-					alert("<?php print $pgv_lang["search_more_chars"]?>");
+					alert("<?php print i18n::translate('Please enter more than one character')?>");
 					return false;
 				}
 			}
@@ -123,10 +123,10 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 					<?php if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) { ?>
 					if(gender.length < 1)
 					{
-						alert("<?php print $pgv_lang["invalid_search_multisite_input"]?>");
+						alert("<?php print i18n::translate('Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender ')?>");
 						return false;
 					}
-					alert("<?php print $pgv_lang["invalid_search_multisite_input_gender"]?>");
+					alert("<?php print i18n::translate('Please search again with more information than just gender')?>");
 					<?php } ?>
 					return false;
 				}
@@ -160,13 +160,13 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 <!--	/**************************************************** General Search Form *************************************************************/ -->
 			<?php if($controller->action == "general") { ?>
 				<td colspan="3" class="facts_label03" style="text-align:center;">
-					<?php print $pgv_lang["search_general"]; print_help_link("search_enter_terms", "qm"); ?>
+					<?php print i18n::translate('General Search'); print_help_link("search_enter_terms", "qm"); ?>
 				</td>
 	</tr>
 	<!-- // search terms -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print $pgv_lang["enter_terms"]; ?>
+			<?php print i18n::translate('Enter Search terms'); ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input tabindex="1" id="firstfocus" type="text" name="query" value="<?php if (isset($controller->myquery)) print $controller->myquery; ?>" size="40" />
@@ -174,13 +174,13 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="4">
-			<input tabindex="2" type="submit" value="<?php print $pgv_lang["search"] ?>" />
+			<input tabindex="2" type="submit" value="<?php print i18n::translate('Search') ?>" />
 		</td>
 	</tr>
 	<!-- // Choice where to search -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print $pgv_lang["search_inrecs"]; ?>
+			<?php print i18n::translate('Search for'); ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="checkbox"
@@ -189,34 +189,34 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 		print " checked=\"checked\" ";
 ?>
 				value="yes" name="srindi" />
-				<?php print $pgv_lang["search_indis"]; ?><br />
+				<?php print i18n::translate('Individuals'); ?><br />
 			<input type="checkbox"
 				<?php
 	if (isset ($controller->srfams))
 		print " checked=\"checked\" ";
 ?>
 				value="yes" name="srfams" />
-				<?php print $pgv_lang["search_fams"]; ?><br />
+				<?php print i18n::translate('Families'); ?><br />
 			<input type="checkbox"
 				<?php
 	if (isset ($controller->srsour))
 		print " checked=\"checked\" ";
 ?>
 				value="yes" name="srsour" />
-				<?php print $pgv_lang["search_sources"]; ?><br />
+				<?php print i18n::translate('Sources'); ?><br />
 			<input type="checkbox"
 				<?php
 	if (isset ($controller->srnote))
 		print " checked=\"checked\" ";
 ?>
 				value="yes" name="srnote" />
-				<?php print $pgv_lang["search_notes"]; ?><br />
+				<?php print i18n::translate('Shared Notes'); ?><br />
 		</td>
 	</tr>
 	<!-- Choice to Exclude non-genealogical data -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print_help_link("search_exclude_tags", "qm"); print $pgv_lang["search_tagfilter"]; ?>
+			<?php print_help_link("search_exclude_tags", "qm"); print i18n::translate('Exclude Filter'); ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="radio" name="tagfilter" value="on"
@@ -224,26 +224,26 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 	if (($controller->tagfilter == "on") || ($controller->tagfilter == ""))
 		print " checked=\"checked\" ";
 ?> />
-				<?php print $pgv_lang["search_tagfon"]; ?><br />
+				<?php print i18n::translate('Exclude some non-genealogical data'); ?><br />
 			<input type="radio" name="tagfilter" value="off"
 				<?php
 
 	if ($controller->tagfilter == "off")
 		print " checked=\"checked\" ";
 ?> />
-				<?php print $pgv_lang["search_tagfoff"]; ?>
+				<?php print i18n::translate('Off'); ?>
 		</td>
 	</tr>
 	<!-- Choice to show related persons/families (associates) -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print_help_link("search_include_ASSO", "qm"); print $pgv_lang["search_asso_label"]; ?>
+			<?php print_help_link("search_include_ASSO", "qm"); print i18n::translate('Associates'); ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="checkbox" name="showasso" value="on"
 				<?php
 	if ($controller->showasso == "on") print " checked=\"checked\" "; ?> />
-				<?php print $pgv_lang["search_asso_text"]; ?>
+				<?php print i18n::translate('Show related persons/families'); ?>
 		</td>
 	</tr>
 			<?php
@@ -255,24 +255,24 @@ if ($controller->action == "replace")
 	if (PGV_USER_CAN_EDIT) {
 ?>
 				<td colspan="3" class="facts_label03" style="text-align: center;">
-					<?php print $pgv_lang["search_replace"]; print_help_link('search_replace', 'qm'); ?>
+					<?php print i18n::translate('Search and Replace'); print_help_link('search_replace', 'qm'); ?>
 				</td>
 	</tr>
 	<!-- // search terms -->
 	<tr>
-		<td class="list_label" style="padding: 5px;"><?php print $pgv_lang["enter_terms"]; ?></td>
+		<td class="list_label" style="padding: 5px;"><?php print i18n::translate('Enter Search terms'); ?></td>
 		<td class="list_value" style="padding: 5px;"><input tabindex="1" id="firstfocus" name="query" value="" type="text"/></td>
 			<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="3">
-			<input tabindex="2" type="submit" value="<?php print $pgv_lang["search"]; ?>" />
+			<input tabindex="2" type="submit" value="<?php print i18n::translate('Search'); ?>" />
 		</td>
 	</tr>
 	<tr>
-		<td class="list_label" style="padding: 5px;"><?php print $pgv_lang["replace_with"]; ?></td>
+		<td class="list_label" style="padding: 5px;"><?php print i18n::translate('Replace with'); ?></td>
 		<td class="list_value" style="padding: 5px;"><input tabindex="1" name="replace" value="" type="text"/></td>
 	</tr>
 	<!-- // Choice where to search -->
 	<tr>
-		<td class="list_label" style="padding: 5px;"><?php print $pgv_lang["search_inrecs"]; ?></td>
+		<td class="list_label" style="padding: 5px;"><?php print i18n::translate('Search for'); ?></td>
 		<td class="list_value" style="padding: 5px;">
 			<script type="text/javascript">
 			<!--
@@ -290,13 +290,13 @@ if ($controller->action == "replace")
 				}
 			//-->
 			</script>
-			<input checked="checked" onclick="checkAll(this);" value="yes" name="replaceAll" type="checkbox"/><?php print $pgv_lang["search_record"]; ?>
+			<input checked="checked" onclick="checkAll(this);" value="yes" name="replaceAll" type="checkbox"/><?php print i18n::translate('Entire record'); ?>
 			<br/>
 			<hr />
-			<input checked="checked" disabled="disabled" value="yes" name="replaceNames" type="checkbox"/><?php print $pgv_lang["search_indis"]; ?>
+			<input checked="checked" disabled="disabled" value="yes" name="replaceNames" type="checkbox"/><?php print i18n::translate('Individuals'); ?>
 			<br/>
-			<input checked="checked" disabled="disabled" value="yes" name="replacePlaces" type="checkbox"/><?php print $pgv_lang["search_place"]; ?>
-			<input checked="checked" disabled="disabled" value="yes" name="replacePlacesWord" type="checkbox"/><?php print $pgv_lang["search_place_word"]; ?>
+			<input checked="checked" disabled="disabled" value="yes" name="replacePlaces" type="checkbox"/><?php print i18n::translate('Place'); ?>
+			<input checked="checked" disabled="disabled" value="yes" name="replacePlacesWord" type="checkbox"/><?php print i18n::translate('Whole words only'); ?>
 			<br/>
 
 		</td>
@@ -309,24 +309,24 @@ if ($controller->action == "replace")
 if ($controller->action == "soundex") {
 ?>
 				<td colspan="3" class="facts_label03" style="text-align:center; ">
-					<?php print $pgv_lang["soundex_search"]; print_help_link("soundex_search", "qm"); ?>
+					<?php print i18n::translate('Search the way you think the name is written (Soundex)'); print_help_link("soundex_search", "qm"); ?>
 				</td>
 	</tr>
 	<!-- // search terms -->
 	<tr>
 		<td class="list_label" width="35%">
-			<?php print $pgv_lang["firstname_search"]; ?>
+			<?php print i18n::translate('Given name'); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="3" type="text" id="firstfocus" name="firstname" autocomplete="off" value="<?php print $controller->myfirstname; ?>" />
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="6">
-			<input tabindex="7" type="submit" value="<?php print $pgv_lang["search"]; ?>" />
+			<input tabindex="7" type="submit" value="<?php print i18n::translate('Search'); ?>" />
 		</td>
 	</tr>
 	<tr>
 		<td class="list_label">
-			<?php print $pgv_lang["lastname_search"]; ?>
+			<?php print i18n::translate('Last name'); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="4" type="text" name="lastname" autocomplete="off" value="<?php print $controller->mylastname; ?>" />
@@ -334,7 +334,7 @@ if ($controller->action == "soundex") {
 	</tr>
 	<tr>
 		<td class="list_label">
-			<?php print $pgv_lang["search_place"]; ?>
+			<?php print i18n::translate('Place'); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="5" type="text" name="place" value="<?php print $controller->myplace; ?>" />
@@ -342,7 +342,7 @@ if ($controller->action == "soundex") {
 	</tr>
 	<tr>
 		<td class="list_label">
-			<?php print $pgv_lang["search_year"]; ?>
+			<?php print i18n::translate('Year'); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="6" type="text" name="year" value="<?php print $controller->myyear; ?>" />
@@ -351,40 +351,40 @@ if ($controller->action == "soundex") {
 	<!-- Soundex type options (Russell, DaitchM) -->
 	<tr>
 		<td class="list_label">
-			<?php print $pgv_lang["search_soundextype"]; ?>
+			<?php print i18n::translate('Soundex type:'); ?>
 		</td>
 		<td class="list_value" >
 			<input type="radio" name="soundex" value="Russell"
 				<?php if ($controller->soundex == "Russell") print " checked=\"checked\" "; ?> />
-			<?php print $pgv_lang["search_russell"]; ?><br />
+			<?php print i18n::translate('Basic'); ?><br />
 			<input type="radio" name="soundex" value="DaitchM"
 				<?php if ($controller->soundex == "DaitchM" || $controller->soundex == "") print " checked=\"checked\" "; ?> />
-			<?php print $pgv_lang["search_DM"]; ?>
+			<?php print i18n::translate('Daitch-Mokotoff'); ?>
 		</td>
 	</tr>
 
 	<!-- Individuals' names to print options (Names with hit, All names) -->
 	<!-- <tr>
 		<td class="list_label">
-			<?php 	print $pgv_lang["search_prtnames"]; ?>
+			<?php 	print i18n::translate('Individuals\'<br />names to print:'); ?>
 		</td>
 		<td class="list_value">
 			<input type="radio" name="nameprt" value="hit"
 				<?php if (($controller->nameprt == "hit") || ($controller->nameprt == "")) print " checked=\"checked\" "; ?> />
-				<?php print $pgv_lang["search_prthit"] ?><br />
+				<?php print i18n::translate('Names with hit') ?><br />
 			<input type="radio" name="nameprt" value="all"
 				<?php if ($controller->nameprt == "all") print " checked=\"checked\" "; ?> />
-				<?php print $pgv_lang["search_prtall"]; ?>
+				<?php print i18n::translate('All names'); ?>
 		</td>
 	</tr> -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print $pgv_lang["search_asso_label"]; ?>
+			<?php print i18n::translate('Associates'); ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="checkbox" name="showasso" value="on"
 				<?php if ($controller->showasso == "on") print " checked=\"checked\" "; ?> />
-				<?php print $pgv_lang["search_asso_text"]; ?>
+				<?php print i18n::translate('Show related persons/families'); ?>
 		</td>
 	</tr>
 				<?php
@@ -396,12 +396,12 @@ if ($controller->action == "multisite") {
 ?>
 					<input type="hidden" name="subaction" value="basic" />
 					<td colspan="3" class="facts_label03" style="text-align:center; ">
-						<?php print $pgv_lang["multi_site_search"]; print_help_link("multi_site_search", "qm"); ?>
+						<?php print i18n::translate('Multi Site Search'); print_help_link("multi_site_search", "qm"); ?>
 					</td>
 	</tr>
 	<tr>
 		<td class="list_label" >
-			<?php print $pgv_lang["search_sites"]; ?>
+			<?php print i18n::translate('Sites to search'); ?>
 		</td>
 		<td colspan="2" class="list_value" align="center">
 			<table>
@@ -425,7 +425,7 @@ if ($controller->action == "multisite") {
 			$i ++;
 		}
 	} else {
-		print $pgv_lang["no_known_servers"];
+		print i18n::translate('No known Servers<br />No results will be found');
 	}
 ?>
 					</td>
@@ -436,41 +436,41 @@ if ($controller->action == "multisite") {
 	<!-- // this is for the basic site search involving just a query string text -->
 	<tr>
 		<td colspan="3" class="facts_label02">
-			<?php print $pgv_lang["basic_search_discription"]; ?>
+			<?php print i18n::translate('Basic site search'); ?>
 		</td>
 	</tr>
 		<td class="list_label">
-			<?php print $pgv_lang["basic_search"]; ?>
+			<?php print i18n::translate('search'); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="<?php print $i ?>" type="text" name="multiquery" value="<?php print $controller->mymultiquery; ?>" />
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="1">
-			<input tabindex="<?php print ($i+2); ?>" type="submit" value="<?php print $pgv_lang["search"]; ?>" onclick="document.searchform.subaction.value='basic';"/>
+			<input tabindex="<?php print ($i+2); ?>" type="submit" value="<?php print i18n::translate('Search'); ?>" onclick="document.searchform.subaction.value='basic';"/>
 		</td>
 	</tr>
 	<!-- // this is for the advanced site search -->
 	<tr>
 		<td class="facts_label02" colspan="3">
-			<?php print $pgv_lang["advanced_search_discription"]; ?>
+			<?php print i18n::translate('Advanced site search'); ?>
 		</td>
 	</tr>
 	<!-- // Advanced search terms -->
 	<tr>
 		<td class="list_label">
-			<?php print $pgv_lang["name_search"]; ?>
+			<?php print i18n::translate('Name: '); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="<?php print ($i+3); ?>" type="text" name="name" value="<?php print $controller->myname; ?>" />
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="6">
-			<input tabindex="<?php print ($i+9); ?>" type="submit" value="<?php print $pgv_lang["search"]; ?>"
+			<input tabindex="<?php print ($i+9); ?>" type="submit" value="<?php print i18n::translate('Search'); ?>"
 				onclick="document.searchform.subaction.value='advanced';"/>
 		</td>
 	</tr>
 	<tr>
 		<td class="list_label">
-			<?php print $pgv_lang["birthdate_search"]; ?>
+			<?php print i18n::translate('Birth date: '); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="<?print ($i+4); ?>" type="text" name="birthdate" value="<?php print $controller->mybirthdate; ?>" />
@@ -478,7 +478,7 @@ if ($controller->action == "multisite") {
 	</tr>
 	<tr>
 		<td class="list_label">
-			<?php print $pgv_lang["birthplace_search"]; ?>
+			<?php print i18n::translate('Birth Place: '); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="<?php print ($i+5); ?> " type="text" name="birthplace" value="<?php print $controller->mybirthplace; ?>" />
@@ -486,7 +486,7 @@ if ($controller->action == "multisite") {
 	</tr>
 	<tr>
 		<td class="list_label">
-			<?php print $pgv_lang["deathdate_search"]; ?>
+			<?php print i18n::translate('Death date: '); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="<?php print ($i+6); ?>" type="text" name="deathdate" value="<?php print $controller->mydeathdate; ?>" />
@@ -494,7 +494,7 @@ if ($controller->action == "multisite") {
 	</tr>
 	<tr>
 		<td class="list_label">
-			<?php print $pgv_lang["deathplace_search"]; ?>
+			<?php print i18n::translate('Death Place: '); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="<?php ($i+7); ?>" type="text" name="deathplace" value="<?php print $controller->mydeathplace; ?>" />
@@ -502,7 +502,7 @@ if ($controller->action == "multisite") {
 	</tr>
 	<tr>
 		<td class="list_label">
-			<?php print $pgv_lang["gender_search"]; ?>
+			<?php print i18n::translate('Gender: '); ?>
 		</td>
 		<td class="list_value">
 			<input tabindex="<?php ($i+8); ?>" type="text" name="gender" value="<?php print $controller->mygender; ?>" />
@@ -519,7 +519,7 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 ?>
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print $pgv_lang["search_geds"]; ?>
+			<?php print i18n::translate('Databases to search in'); ?>
 		</td>
 		<td class="list_value" style="padding: 5px;" colspan="2">
 			<?php
@@ -545,7 +545,7 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 <!--  not currently used
 	<tr>
 		<td class="list_label" style="padding: 5px;" >
-			<?php print $pgv_lang["results_per_page"]; ?>
+			<?php print i18n::translate('Results per page'); ?>
 		</td>
 		<td class="list_value" style="padding: 5px;" colspan="2">
 			<select name="resultsPerPage">
@@ -560,48 +560,48 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 	-->
 	<tr>
 		<td class="list_label" style="padding: 5px;" >
-			<?php print $pgv_lang["other_searches"]; ?>
+			<?php print i18n::translate('Other Searches'); ?>
 		</td>
 		<td class="list_value" style="padding: 5px; text-align:center; " colspan="2" >
 			<?php
 
 if ($controller->action == "general") {
-	print "<a href='?action=soundex'>".$pgv_lang["search_soundex"]."</a>";
-	print " | <a href='search_advanced.php'>".$pgv_lang["advanced_search"]."</a>";
+	print "<a href='?action=soundex'>".i18n::translate('Soundex Search')."</a>";
+	print " | <a href='search_advanced.php'>".i18n::translate('Advanced Search')."</a>";
 	if(PGV_USER_CAN_EDIT) {
-		print " | <a href='?action=replace'>".$pgv_lang["search_replace"]."</a>";
+		print " | <a href='?action=replace'>".i18n::translate('Search and Replace')."</a>";
 	}
 	if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) {
 		if (count($controller->Sites) > 0) {
 
 
-			print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
+			print " | <a href='?action=multisite'>".i18n::translate('Multi Site Search')."</a></td></tr>";
 		}
 	}
 }
 else if ($controller->action == "replace")
 {
-	print "<a href='?action=general'>".$pgv_lang["search_general"]."</a> | ";
-	print "<a href='?action=soundex'>".$pgv_lang["search_soundex"]."</a>";
-	print " | <a href='search_advanced.php'>".$pgv_lang["advanced_search"]."</a>";
+	print "<a href='?action=general'>".i18n::translate('General Search')."</a> | ";
+	print "<a href='?action=soundex'>".i18n::translate('Soundex Search')."</a>";
+	print " | <a href='search_advanced.php'>".i18n::translate('Advanced Search')."</a>";
 		if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) {
 			if (count($controller->Sites) > 0) {
 
-				print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
+				print " | <a href='?action=multisite'>".i18n::translate('Multi Site Search')."</a></td></tr>";
 			}
 		}
 }
 else
 	if ($controller->action == "soundex") {
-		print "<a href='?action=general'>".$pgv_lang["search_general"]."</a>";
-		print " | <a href='search_advanced.php'>".$pgv_lang["advanced_search"]."</a>";
+		print "<a href='?action=general'>".i18n::translate('General Search')."</a>";
+		print " | <a href='search_advanced.php'>".i18n::translate('Advanced Search')."</a>";
 		if(PGV_USER_CAN_EDIT)
 		{
-			print " | <a href='?action=replace'>".$pgv_lang["search_replace"]."</a>";
+			print " | <a href='?action=replace'>".i18n::translate('Search and Replace')."</a>";
 		}
 		if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) {
 			if (count($controller->Sites) > 0) {
-				print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
+				print " | <a href='?action=multisite'>".i18n::translate('Multi Site Search')."</a></td></tr>";
 			}
 		}
 	}
@@ -610,12 +610,12 @@ else
 		{
 			if(PGV_USER_CAN_EDIT)
 			{
-				print "<a href='?action=replace'>".$pgv_lang["search_replace"]."</a> | ";
+				print "<a href='?action=replace'>".i18n::translate('Search and Replace')."</a> | ";
 			}
 
-			print "<a href='?action=general'>".$pgv_lang["search_general"]."</a> | ";
-			print "<a href='?action=soundex'>".$pgv_lang["search_soundex"]."</a>";
-			print " | <a href='search_advanced.php'>".$pgv_lang["advanced_search"]."</a></td></tr>";
+			print "<a href='?action=general'>".i18n::translate('General Search')."</a> | ";
+			print "<a href='?action=soundex'>".i18n::translate('Soundex Search')."</a>";
+			print " | <a href='search_advanced.php'>".i18n::translate('Advanced Search')."</a></td></tr>";
 		}
 
 ?>

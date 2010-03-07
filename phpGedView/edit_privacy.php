@@ -94,13 +94,13 @@ function write_yes_no($checkVar) {
 	print "<option";
 	if ($checkVar == false) print " selected=\"selected\"";
 	print " value=\"no\">";
-	print $pgv_lang["no"];
+	print i18n::translate('No');
 	print "</option>\n";
 
 	print "<option";
 	if ($checkVar == true) print " selected=\"selected\"";
 	print " value=\"yes\">";
-	print $pgv_lang["yes"];
+	print i18n::translate('Yes');
 	print "</option>";
 }
 
@@ -119,11 +119,11 @@ function search_ID_details($checkVar, $outputVar) {
 	} else {
 		print "<span class=\"error\">";
 		if ($outputVar == 1) {
-			print $pgv_lang["unable_to_find_privacy_indi"];
+			print i18n::translate('Unable to find individual with id');
 			print "<br />[" . $checkVar . "]";
 		}
 		if ($outputVar == 2) {
-			print $pgv_lang["unable_to_find_privacy_indi"];
+			print i18n::translate('Unable to find individual with id');
 		}
 		print "</span><br /><br />";
 	}
@@ -132,17 +132,17 @@ function search_ID_details($checkVar, $outputVar) {
 
 $PRIVACY_MODULE = get_privacy_file(PGV_GED_ID);
 
-print_header($pgv_lang["privacy_header"]);
+print_header(i18n::translate('Edit privacy settings'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
 <table class="facts_table <?php print $TEXT_DIRECTION; ?>">
 	<tr>
 		<td colspan="2" class="facts_label"><?php
-			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".PrintReady(strip_tags(get_gedcom_setting(get_id_from_gedcom($ged), 'title'))). "</h2>";
+			print "<h2>".i18n::translate('Edit GEDCOM privacy settings')." - ".PrintReady(strip_tags(get_gedcom_setting(get_id_from_gedcom($ged), 'title'))). "</h2>";
 			print "(" . getLRM() . $PRIVACY_MODULE.")";
 			print "<br /><br /><a href=\"editgedcoms.php\"><b>";
-			print $pgv_lang["lang_back_manage_gedcoms"];
+			print i18n::translate('Return to the GEDCOM management menu');
 			print "</b></a><br /><br />"; ?>
 		</td>
 	</tr>
@@ -156,10 +156,10 @@ if ($action=="update") {
 	$boolarray[true] = "true";
 	print "<table class=\"facts_table $TEXT_DIRECTION\">";
 	print "<tr><td class=\"descriptionbox\">";
-	print $pgv_lang["performing_update"];
+	print i18n::translate('Performing update.');
 	print "<br />";
 	$configtext = implode('', file("privacy.php"));
-	print $pgv_lang["config_file_read"];
+	print i18n::translate('Config file read.');
 	print "</td></tr></table>\n";
 	$configtext = preg_replace('/\$SHOW_DEAD_PEOPLE\s*=\s*.*;/', "\$SHOW_DEAD_PEOPLE = ".$_POST["v_SHOW_DEAD_PEOPLE"].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_LIVING_NAMES\s*=\s*.*;/', "\$SHOW_LIVING_NAMES = ".$_POST["v_SHOW_LIVING_NAMES"].";", $configtext);
@@ -295,10 +295,10 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
-				print "<a href=\"javascript: ".$pgv_lang["general_privacy"]."\" onclick=\"expand_layer('general-privacy-options');return false\"><img id=\"general-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";
+				print "<a href=\"javascript: ".i18n::translate('General Privacy settings')."\" onclick=\"expand_layer('general-privacy-options');return false\"><img id=\"general-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";
 				print_help_link("general_privacy", "qm", "general_privacy");
 				?>
-				<a href="javascript: <?php print $pgv_lang["general_privacy"]; ?>" onclick="expand_layer('general-privacy-options');return false"><b><?php print $pgv_lang["general_privacy"]; ?></b></a>
+				<a href="javascript: <?php print i18n::translate('General Privacy settings'); ?>" onclick="expand_layer('general-privacy-options');return false"><b><?php print i18n::translate('General Privacy settings'); ?></b></a>
 			</td>
 		</tr>
 	</table>
@@ -308,7 +308,7 @@ if ($action=="update") {
 		<table class="facts_table">
 			<tr>
 				<td class="descriptionbox wrap width20 <?php print $TEXT_DIRECTION; ?>">
-					<?php print_help_link("SHOW_DEAD_PEOPLE", "qm", "SHOW_DEAD_PEOPLE"); print $pgv_lang["SHOW_DEAD_PEOPLE"]; ?>
+					<?php print_help_link("SHOW_DEAD_PEOPLE", "qm", "SHOW_DEAD_PEOPLE"); print i18n::translate('Show dead people'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_DEAD_PEOPLE"><?php write_access_option($SHOW_DEAD_PEOPLE); ?></select>
@@ -316,7 +316,7 @@ if ($action=="update") {
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_LIVING_NAMES", "qm", "SHOW_LIVING_NAMES"); print $pgv_lang["SHOW_LIVING_NAMES"]; ?>
+					<?php print_help_link("SHOW_LIVING_NAMES", "qm", "SHOW_LIVING_NAMES"); print i18n::translate('Show living names'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_LIVING_NAMES"><?php write_access_option($SHOW_LIVING_NAMES); ?></select>
@@ -324,7 +324,7 @@ if ($action=="update") {
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_SOURCES", "qm", "SHOW_SOURCES"); print $pgv_lang["SHOW_SOURCES"]; ?>
+					<?php print_help_link("SHOW_SOURCES", "qm", "SHOW_SOURCES"); print i18n::translate('Show sources'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_SOURCES"><?php write_access_option($SHOW_SOURCES); ?></select>
@@ -332,7 +332,7 @@ if ($action=="update") {
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("ENABLE_CLIPPINGS_CART", "qm", "ENABLE_CLIPPINGS_CART"); print $pgv_lang["ENABLE_CLIPPINGS_CART"]; ?>
+					<?php print_help_link("ENABLE_CLIPPINGS_CART", "qm", "ENABLE_CLIPPINGS_CART"); print i18n::translate('Enable Clippings Cart'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_ENABLE_CLIPPINGS_CART"><?php write_access_option($ENABLE_CLIPPINGS_CART); ?></select>
@@ -341,7 +341,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_MULTISITE_SEARCH", "qm", "SHOW_MULTISITE_SEARCH"); print $pgv_lang["SHOW_MULTISITE_SEARCH"]; ?>
+					<?php print_help_link("SHOW_MULTISITE_SEARCH", "qm", "SHOW_MULTISITE_SEARCH"); print i18n::translate('Show Multi-Site Search'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_MULTISITE_SEARCH"><?php write_access_option($SHOW_MULTISITE_SEARCH); ?></select>
@@ -350,7 +350,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("PRIVACY_BY_YEAR", "qm", "PRIVACY_BY_YEAR"); print $pgv_lang["PRIVACY_BY_YEAR"]; ?>
+					<?php print_help_link("PRIVACY_BY_YEAR", "qm", "PRIVACY_BY_YEAR"); print i18n::translate('Limit Privacy by age of event'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_PRIVACY_BY_YEAR"><?php write_yes_no($PRIVACY_BY_YEAR); ?></select>
@@ -359,7 +359,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("PRIVACY_BY_RESN", "qm", "PRIVACY_BY_RESN"); print $pgv_lang["PRIVACY_BY_RESN"]; ?>
+					<?php print_help_link("PRIVACY_BY_RESN", "qm", "PRIVACY_BY_RESN"); print i18n::translate('Use GEDCOM (RESN) Privacy restriction'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_PRIVACY_BY_RESN"><?php write_yes_no($PRIVACY_BY_RESN); ?></select>
@@ -368,7 +368,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_PRIVATE_RELATIONSHIPS", "qm", "SHOW_PRIVATE_RELATIONSHIPS"); print $pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]; ?>
+					<?php print_help_link("SHOW_PRIVATE_RELATIONSHIPS", "qm", "SHOW_PRIVATE_RELATIONSHIPS"); print i18n::translate('Show private relationships'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_PRIVATE_RELATIONSHIPS"><?php write_yes_no($SHOW_PRIVATE_RELATIONSHIPS); ?></select>
@@ -377,7 +377,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("USE_RELATIONSHIP_PRIVACY", "qm", "USE_RELATIONSHIP_PRIVACY"); print $pgv_lang["USE_RELATIONSHIP_PRIVACY"]; ?>
+					<?php print_help_link("USE_RELATIONSHIP_PRIVACY", "qm", "USE_RELATIONSHIP_PRIVACY"); print i18n::translate('Use relationship privacy'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_USE_RELATIONSHIP_PRIVACY"><?php write_yes_no($USE_RELATIONSHIP_PRIVACY); ?></select>
@@ -386,7 +386,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("MAX_RELATION_PATH_LENGTH", "qm", "MAX_RELATION_PATH_LENGTH"); print $pgv_lang["MAX_RELATION_PATH_LENGTH"]; ?>
+					<?php print_help_link("MAX_RELATION_PATH_LENGTH", "qm", "MAX_RELATION_PATH_LENGTH"); print i18n::translate('Max. relation path length'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_MAX_RELATION_PATH_LENGTH"><?php
@@ -403,7 +403,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("CHECK_MARRIAGE_RELATIONS", "qm", "CHECK_MARRIAGE_RELATIONS"); print $pgv_lang["CHECK_MARRIAGE_RELATIONS"]; ?>
+					<?php print_help_link("CHECK_MARRIAGE_RELATIONS", "qm", "CHECK_MARRIAGE_RELATIONS"); print i18n::translate('Check marriage relations'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_CHECK_MARRIAGE_RELATIONS"><?php write_yes_no($CHECK_MARRIAGE_RELATIONS); ?></select>
@@ -412,7 +412,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("MAX_ALIVE_AGE", "qm", "MAX_ALIVE_AGE"); print $pgv_lang["MAX_ALIVE_AGE"]; ?>
+					<?php print_help_link("MAX_ALIVE_AGE", "qm", "MAX_ALIVE_AGE"); print i18n::translate('Age at which to assume a person is dead'); ?>
 				</td>
 				<td class="optionbox">
 					<input type="text" name="v_MAX_ALIVE_AGE" value="<?php print $MAX_ALIVE_AGE; ?>" size="5" />
@@ -428,8 +428,8 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
-				print "<a href=\"javascript: ".$pgv_lang["person_privacy"]."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?><?php print_help_link("person_privacy", "qm", "person_privacy"); ?>
-				<a href="javascript: <?php print $pgv_lang["person_privacy"]; ?>" onclick="expand_layer('person-privacy-options');return false"><b><?php print $pgv_lang["person_privacy"]; ?></b></a>
+				print "<a href=\"javascript: ".i18n::translate('Privacy settings by ID')."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?><?php print_help_link("person_privacy", "qm", "person_privacy"); ?>
+				<a href="javascript: <?php print i18n::translate('Privacy settings by ID'); ?>" onclick="expand_layer('person-privacy-options');return false"><b><?php print i18n::translate('Privacy settings by ID'); ?></b></a>
 			</td>
 		</tr>
 	</table>
@@ -439,14 +439,14 @@ if ($action=="update") {
 		<table class="facts_table">
 			<tr>
 				<td class="topbottombar" colspan="2">
-					<b><?php print $pgv_lang["add_new_pp_setting"]; ?></b>
+					<b><?php print i18n::translate('Add new setting for Privacy by ID'); ?></b>
 				</td>
 			</tr>
 
 			<tr>
 				<td class="descriptionbox">
-					<?php print $pgv_lang["id"]; ?></td>
-				<td class="descriptionbox"><?php print $pgv_lang["accessible_by"]; ?></td>
+					<?php print i18n::translate('ID'); ?></td>
+				<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
 			</tr>
 
 			<tr>
@@ -470,15 +470,15 @@ if ($action=="update") {
 		<table class="facts_table">
 			<tr>
 				<td class="topbottombar" colspan="4">
-					<?php print $pgv_lang["edit_exist_person_privacy_settings"]; ?>
+					<?php print i18n::translate('Edit existing settings for Privacy by ID'); ?>
 				</td>
 			</tr>
 
 			<tr>
-				<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
-				<td class="descriptionbox"><?php print $pgv_lang["id"]; ?></td>
-				<td class="descriptionbox"><?php print $pgv_lang["full_name"]; ?></td>
-				<td class="descriptionbox"><?php print $pgv_lang["accessible_by"]; ?></td>
+				<td class="descriptionbox"><?php print i18n::translate('Delete'); ?></td>
+				<td class="descriptionbox"><?php print i18n::translate('ID'); ?></td>
+				<td class="descriptionbox"><?php print i18n::translate('Full Name'); ?></td>
+				<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
 			</tr>
 			<?php foreach ($person_privacy as $key=>$value) { ?>
 			<tr>
@@ -506,9 +506,9 @@ if ($action=="update") {
 	<table class="facts_table">
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
-				<?php print "<a href=\"javascript: ".$pgv_lang["user_privacy"]."\" onclick=\"expand_layer('user-privacy-options');return false\"><img id=\"user-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
+				<?php print "<a href=\"javascript: ".i18n::translate('User Privacy settings')."\" onclick=\"expand_layer('user-privacy-options');return false\"><img id=\"user-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
 				<?php print_help_link("user_privacy", "qm", "user_privacy"); ?>
-				<a href="javascript: <?php print $pgv_lang["user_privacy"]; ?>" onclick="expand_layer('user-privacy-options');return false"><b><?php print $pgv_lang["user_privacy"]; ?></b></a>
+				<a href="javascript: <?php print i18n::translate('User Privacy settings'); ?>" onclick="expand_layer('user-privacy-options');return false"><b><?php print i18n::translate('User Privacy settings'); ?></b></a>
 			</td>
 		</tr>
 	</table>
@@ -518,14 +518,14 @@ if ($action=="update") {
 	<table class="facts_table">
 		<tr>
 			<td class="topbottombar" colspan="3">
-				<b><?php print $pgv_lang["add_new_up_setting"]; ?></b>
+				<b><?php print i18n::translate('Add new setting for User Privacy'); ?></b>
 			</td>
 		</tr>
 
 		<tr>
-			<td class="descriptionbox"><?php print $pgv_lang["user_name"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["id"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["show_question"]; ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Username'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('ID'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Show?'); ?></td>
 		</tr>
 
 		<tr class="<?php print $TEXT_DIRECTION; ?>">
@@ -563,15 +563,15 @@ if ($action=="update") {
 	<table class="facts_table">
 		<tr>
 			<td class="topbottombar" colspan="5">
-				<?php print $pgv_lang["edit_exist_user_privacy_settings"]; ?>
+				<?php print i18n::translate('Edit existing settings for User Privacy'); ?>
 			</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["user_name"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["id"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["full_name"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["show_question"]; ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Delete'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Username'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('ID'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Full Name'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Show?'); ?></td>
 		</tr>
 
 		<?php
@@ -607,9 +607,9 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
-				print "<a href=\"javascript: ".$pgv_lang["global_facts"]."\" onclick=\"expand_layer('global-facts-options');return false\"><img id=\"global-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
+				print "<a href=\"javascript: ".i18n::translate('Global Fact Privacy settings')."\" onclick=\"expand_layer('global-facts-options');return false\"><img id=\"global-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
 				<?php print_help_link("global_facts", "qm", "global_facts"); ?>
-				<a href="javascript: <?php print $pgv_lang["global_facts"]; ?>" onclick="expand_layer('global-facts-options');return false"><b><?php print $pgv_lang["global_facts"]; ?></b></a>
+				<a href="javascript: <?php print i18n::translate('Global Fact Privacy settings'); ?>" onclick="expand_layer('global-facts-options');return false"><b><?php print i18n::translate('Global Fact Privacy settings'); ?></b></a>
 			</td>
 		</tr>
 	</table>
@@ -619,18 +619,18 @@ if ($action=="update") {
 	<table class="facts_table">
 		<tr>
 			<td class="topbottombar" colspan="3">
-				<b><?php print $pgv_lang["add_new_gf_setting"]; ?></b></td>
+				<b><?php print i18n::translate('Add new setting for Global Fact Privacy'); ?></b></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php print $pgv_lang["name_of_fact"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["choice"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["accessible_by"]; ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Name of fact'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Choice'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
 		</tr>
 		<tr class="<?php print $TEXT_DIRECTION; ?>">
 			<td class="optionbox">
 				<select size="1" name="v_new_global_facts_abbr">
 				<?php
-				print "<option value=\"\">".$pgv_lang["choose"]."</option>";
+				print "<option value=\"\">".i18n::translate('Choose: ')."</option>";
 				foreach ($all_tags as $tag) {
 					print "<option";
 					print " value=\"";
@@ -644,8 +644,8 @@ if ($action=="update") {
 			</td>
 			<td class="optionbox">
 				<select size="1" name="v_new_global_facts_choice">
-					<option value="details"><?php print $pgv_lang["fact_details"]; ?></option>
-					<option value="show"><?php print $pgv_lang["fact_show"]; ?></option>
+					<option value="details"><?php print i18n::translate('Show fact details'); ?></option>
+					<option value="show"><?php print i18n::translate('Show fact'); ?></option>
 				</select>
 			</td>
 			<td class="optionbox">
@@ -657,14 +657,14 @@ if ($action=="update") {
 	<table class="facts_table">
 		<tr>
 			<td class="topbottombar" colspan="4">
-				<b><?php print $pgv_lang["edit_exist_global_facts_settings"]; ?></b>
+				<b><?php print i18n::translate('Edit existing settings for Global Fact Privacy'); ?></b>
 			</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["name_of_fact"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["choice"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["accessible_by"]; ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Delete'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Name of fact'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Choice'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
 		</tr>
 		<?php
 		foreach ($global_facts as $tag=>$value) {
@@ -681,8 +681,8 @@ if ($action=="update") {
 			</td>
 			<td class="optionbox">
 				<?php
-				if ($key == "show") print $pgv_lang["fact_show"];
-				if ($key == "details") print $pgv_lang["fact_details"];
+				if ($key == "show") print i18n::translate('Show fact');
+				if ($key == "details") print i18n::translate('Show fact details');
 				?>
 			</td>
 			<td class="optionbox">
@@ -698,9 +698,9 @@ if ($action=="update") {
 	<table class="facts_table">
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
-				<?php print "<a href=\"javascript: ".$pgv_lang["person_facts"]."\" onclick=\"expand_layer('person-facts-options');return false\"><img id=\"person-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
+				<?php print "<a href=\"javascript: ".i18n::translate('Facts Privacy settings by ID')."\" onclick=\"expand_layer('person-facts-options');return false\"><img id=\"person-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
 				<?php print_help_link("person_facts", "qm", "person_facts"); ?>
-				<a href="javascript: <?php print $pgv_lang["person_facts"]; ?>" onclick="expand_layer('person-facts-options');return false"><b><?php print $pgv_lang["person_facts"]; ?></b></a>
+				<a href="javascript: <?php print i18n::translate('Facts Privacy settings by ID'); ?>" onclick="expand_layer('person-facts-options');return false"><b><?php print i18n::translate('Facts Privacy settings by ID'); ?></b></a>
 			</td>
 		</tr>
 	</table>
@@ -710,14 +710,14 @@ if ($action=="update") {
 	<table class="facts_table">
 		<tr>
 			<td class="topbottombar" colspan="4">
-				<b><?php print $pgv_lang["add_new_pf_setting"]; ?></b>
+				<b><?php print i18n::translate('Add new setting for Facts Privacy by ID'); ?></b>
 			</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php print $pgv_lang["id"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["name_of_fact"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["choice"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["accessible_by"]; ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('ID'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Name of fact'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Choice'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
 		</tr>
 		<tr class="<?php print $TEXT_DIRECTION; ?>">
 			<td class="optionbox">
@@ -745,8 +745,8 @@ if ($action=="update") {
 			</td>
 			<td class="optionbox">
 				<select size="1" name="v_new_person_facts_choice">
-					<option value="details"><?php print $pgv_lang["fact_details"]; ?></option>
-					<option value="show"><?php print $pgv_lang["fact_show"]; ?></option>
+					<option value="details"><?php print i18n::translate('Show fact details'); ?></option>
+					<option value="show"><?php print i18n::translate('Show fact'); ?></option>
 				</select>
 			</td>
 			<td class="optionbox">
@@ -757,15 +757,15 @@ if ($action=="update") {
 	<?php if (count($person_facts) > 0) { ?>
 	<table class="facts_table">
 		<tr>
-			<td class="topbottombar" colspan="6"><b><?php print $pgv_lang["edit_exist_person_facts_settings"]; ?></b></td>
+			<td class="topbottombar" colspan="6"><b><?php print i18n::translate('Edit existing settings for Facts Privacy by ID'); ?></b></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["id"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["full_name"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["name_of_fact"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["choice"]; ?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["accessible_by"]; ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Delete'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('ID'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Full Name'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Name of fact'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Choice'); ?></td>
+			<td class="descriptionbox"><?php print i18n::translate('Show to?'); ?></td>
 		</tr>
 		<?php
 		foreach ($person_facts as $id=>$value) {
@@ -787,8 +787,8 @@ if ($action=="update") {
 			</td>
 			<td class="optionbox">
 				<?php
-				if ($key == "show") print $pgv_lang["fact_show"];
-				if ($key == "details") print $pgv_lang["fact_details"];
+				if ($key == "show") print i18n::translate('Show fact');
+				if ($key == "details") print i18n::translate('Show fact details');
 				?>
 			</td>
 			<td class="optionbox">
@@ -802,9 +802,9 @@ if ($action=="update") {
 	<table class="facts_table" border="0">
 		<tr>
 			<td class="topbottombar">
-				<input type="submit" value="<?php print $pgv_lang["save_config"]; ?>" onclick="closeHelp();" />
+				<input type="submit" value="<?php print i18n::translate('Save configuration'); ?>" onclick="closeHelp();" />
 				&nbsp;&nbsp;
-				<input type="reset" value="<?php print $pgv_lang["reset"]; ?>" /><br />
+				<input type="reset" value="<?php print i18n::translate('Reset'); ?>" /><br />
 			</td>
 		</tr>
 	</table>

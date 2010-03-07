@@ -34,7 +34,7 @@ loadLangFile("pgv_confighelp, pgv_help, googlemap:help_text");
 
 if (isset($_REQUEST['help'])) $help=$_REQUEST['help'];
 
-print_simple_header($pgv_lang["config_help"]);
+print_simple_header(i18n::translate('Configuration help'));
 echo '<span class="helpheader">';
 print_text("config_help");
 echo '</span><br /><br /><span class="helptext">';
