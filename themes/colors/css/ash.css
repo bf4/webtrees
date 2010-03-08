@@ -615,18 +615,24 @@ width:99%;
 background:#f0f9ff;
 border:1px solid #999;
 padding:3px;
+margin-bottom: 8px;
+margin-top: 5px;
 }
 
 .person_boxF {
 background:#fff0f0;
 border:1px solid #ff2080;
 padding:3px;
+margin-bottom: 8px;
+margin-top: 5px;
 }
 
 .person_boxNN {
 background:#fff;
 border:1px dashed #CCC;
 padding:3px;
+margin-bottom: 8px;
+margin-top: 5px;
 }
 
 .person_box:target, 
