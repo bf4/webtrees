@@ -34,8 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.2.2
-$pgv_lang["TYPE__notinDB"]			= "No és la la BD";
-$pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
+// UNUSED??	$pgv_lang["TYPE__notinDB"]			= "No és la la BD";
+// UNUSED??	$pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
 
 
 // Added in VERSION 4.1.6
@@ -105,7 +105,7 @@ $pgv_lang["lb_help"] 		 = "Ajuda de l'Àlbum";
 $pgv_lang["lightbox"]		 = "Àlbum";
 $pgv_lang["showmenu"] 		 = "Mostra el Menú:";
 
-$pgv_lang["TYPE__footnotes"] = "Notes al peu";
+// UNUSED??	$pgv_lang["TYPE__footnotes"] = "Notes al peu";
 
 $pgv_lang["census_text"]  	 = "\"Aquestes imatges del cens s'han obtingut d'\"Arxius Oficials\", custodis dels registres originals, ";
 $pgv_lang["census_text"] 	.= "i surten aquí amb llur autorització sota la condició de que no se'n faci ús comercial sense llur permís." . "\n" ;

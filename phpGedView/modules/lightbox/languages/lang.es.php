@@ -34,8 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.1.6
-$pgv_lang["TYPE__notinDB"]			= "No consta en la BD";
-$pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
+// UNUSED??	$pgv_lang["TYPE__notinDB"]			= "No consta en la BD";
+// UNUSED??	$pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
 
 
 // Added in VERSION 4.1.6
@@ -108,13 +108,13 @@ $pgv_lang["lightbox"]		 = "Álbum";
 $pgv_lang["showmenu"] 		 = "Mostrar menú:";
 
 // $pgv_lang["TYPE__other"] 			= "Other";
-$pgv_lang["TYPE__footnotes"]		= "Notas al pie";
+// UNUSED??	$pgv_lang["TYPE__footnotes"]		= "Notas al pie";
 
-$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
-$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
-$pgv_lang["ROW_TYPE__census"] 		= "Censo";
-$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
-$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
+// UNUSED??	$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+// UNUSED??	$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+// UNUSED??	$pgv_lang["ROW_TYPE__census"] 		= "Censo";
+// UNUSED??	$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+// UNUSED??	$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
 $pgv_lang["census_text"]  	 = "\"UK census images have been obtained from \"The National Archives\", the custodian of the original records, ";
 $pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
