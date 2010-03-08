@@ -135,7 +135,7 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 			if (addMessage($message)){
 				$to_user_id=get_user_id($to);
 				if ($to_user_id) {
-					print str_replace("#TO_USER#", "<b>".getUserFullName($to_user_id)."</b>", $pgv_lang["message_sent"]);
+					print i18n::translate('Message successfully sent to %s', "<b>".getUserFullName($to_user_id)."</b>");
 					print "<br />";
 				} else {
 					AddToLog('Invalid TO user.'.$to.' Possible spam attack.');
@@ -189,8 +189,8 @@ if ($action=="compose") {
 	if ($to_user_id) {
 		$lang_temp = "lang_name_".get_user_setting($to_user_id, 'language');
 		$touserName = getUserFullName($to_user_id);
-		print "<tr><td></td><td>".str_replace("#TO_USER#", "<b>".$touserName."</b>", $pgv_lang["sending_to"])."<br />";
-		print str_replace("#USERLANG#", "<b>".$pgv_lang[$lang_temp]."</b>", $pgv_lang["preferred_lang"])."</td></tr>\n";
+		print "<tr><td></td><td>".i18n::translate('This message will be sent to %s', "<b>".$touserName."</b>")."<br />";
+		print i18n::translate('This user prefers to receive messages in %s', "<b>".$pgv_lang[$lang_temp]."</b>")."</td></tr>\n";
 	}
 
 	if (!PGV_USER_ID){
