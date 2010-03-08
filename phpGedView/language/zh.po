@@ -24,7 +24,7 @@ msgstr "添加媒体文件"
 #: addremotelink.php:43
 #: addsearchlink.php:35
 msgid "<b>Access Denied</b><br />You do not have access to this resource."
-msgstr ""
+msgstr "<b>不允许</b><br />你不允许用这个资源。"
 
 #: addmedia.php:80
 #: addremotelink.php:45
@@ -34,7 +34,7 @@ msgstr ""
 #: addmedia.php:81
 #: addremotelink.php:47
 msgid "Editing this GEDCOM has been disabled by the administrator."
-msgstr ""
+msgstr "这个家谱文件被管理员禁止更改"
 
 #: addmedia.php:83
 #: addremotelink.php:49
@@ -64,7 +64,7 @@ msgstr ""
 #: client.php:414
 #: client.php:424
 msgid "There was an error uploading your file."
-msgstr ""
+msgstr "上载错误。"
 
 #: addmedia.php:207
 msgid "Media thumbnail already exists."
@@ -72,7 +72,7 @@ msgstr ""
 
 #: addmedia.php:273
 msgid "Blank name or illegal characters in name"
-msgstr ""
+msgstr "名字里有不允许的字母或是空的"
 
 #: addmedia.php:303
 #: addmedia.php:454
@@ -97,7 +97,7 @@ msgstr ""
 #: addmedia.php:564
 #: addmedia.php:572
 msgid "Update successful"
-msgstr ""
+msgstr "更新成功"
 
 #: addremotelink.php:36
 #: addremotelink.php:116
@@ -117,7 +117,7 @@ msgstr ""
 #: addremotelink.php:85
 #: addremotelink.php:183
 msgid "Site"
-msgstr ""
+msgstr "网站"
 
 #: addremotelink.php:80
 #, fuzzy
@@ -148,7 +148,7 @@ msgstr ""
 
 #: addremotelink.php:173
 msgid "Person ID"
-msgstr ""
+msgstr "个人号"
 
 #: addremotelink.php:202
 msgid "Type in a new site."
@@ -157,7 +157,7 @@ msgstr ""
 #: addremotelink.php:205
 #: addremotelink.php:227
 msgid "Title:"
-msgstr ""
+msgstr "题目:"
 
 #: addremotelink.php:208
 msgid "Site URL:"
@@ -208,36 +208,36 @@ msgstr ""
 
 #: addsearchlink.php:77
 msgid "Same as current"
-msgstr ""
+msgstr "保存为现在的样子"
 
 #: addsearchlink.php:78
 msgid "Mother"
-msgstr ""
+msgstr "妈妈"
 
 #: addsearchlink.php:79
 msgid "Father"
-msgstr ""
+msgstr "爸爸"
 
 #: addsearchlink.php:80
 msgid "Husband"
-msgstr ""
+msgstr "丈夫"
 
 #: addsearchlink.php:81
 msgid "Wife"
-msgstr ""
+msgstr "妻子"
 
 #: addsearchlink.php:82
 msgid "Son"
-msgstr ""
+msgstr "儿子"
 
 #: addsearchlink.php:83
 msgid "Daughter"
-msgstr ""
+msgstr "女儿"
 
 #: admin.php:51
 #: admin.php:137
 msgid "Administration"
-msgstr ""
+msgstr "管理"
 
 #: admin.php:55
 #, fuzzy
@@ -282,7 +282,7 @@ msgstr "PHP信息"
 #: admin.php:167
 #: admin.php:201
 msgid "Data and GEDCOM administration"
-msgstr ""
+msgstr "数据和家谱管理"
 
 #: admin.php:169
 #: admin.php:228
@@ -292,7 +292,7 @@ msgstr ""
 #: admin.php:172
 #: admin.php:256
 msgid "Site administration"
-msgstr ""
+msgstr "网站管理"
 
 #: admin.php:179
 msgid "Module Administration"
@@ -304,7 +304,7 @@ msgstr ""
 
 #: admin.php:191
 msgid "README documentation"
-msgstr ""
+msgstr "README 文件"
 
 #: admin.php:194
 #, fuzzy
@@ -317,11 +317,11 @@ msgstr "PHP信息"
 
 #: admin.php:205
 msgid "Manage GEDCOMs and edit Privacy"
-msgstr ""
+msgstr "管理家谱文件"
 
 #: admin.php:207
 msgid "Merge records"
-msgstr ""
+msgstr "合并纪录"
 
 #: admin.php:210
 #, fuzzy
@@ -354,15 +354,15 @@ msgstr "设置帮助"
 
 #: admin.php:262
 msgid "User Information Migration tool"
-msgstr ""
+msgstr "用户转移工具"
 
 #: admin.php:266
 msgid "User administration"
-msgstr ""
+msgstr "用戶管理"
 
 #: admin.php:268
 msgid "Backup"
-msgstr ""
+msgstr "备份"
 
 #: admin.php:272
 msgid "FAQ List"
@@ -390,18 +390,18 @@ msgstr "加入一个新的语言"
 
 #: admin.php:302
 msgid "Loading..."
-msgstr ""
+msgstr "读取中..."
 
 #: admin.php:314
 msgid "Content of log file"
-msgstr ""
+msgstr "看电脑日记文件"
 
 #: ancestry.php:37
 #: ancestry.php:51
 #: ancestry.php:237
 #: ancestry.php:254
 msgid "Ancestry Chart"
-msgstr ""
+msgstr "祖先表"
 
 #: ancestry.php:72
 #: compact.php:82
@@ -415,11 +415,11 @@ msgstr "框架宽度"
 
 #: ancestry.php:90
 msgid "Layout"
-msgstr ""
+msgstr "格式"
 
 #: ancestry.php:99
 msgid "List"
-msgstr ""
+msgstr "列表"
 
 #: ancestry.php:105
 msgid "Booklet"
@@ -446,7 +446,7 @@ msgstr "重新改动家庭摆列"
 #: branches.php:74
 #: compact.php:90
 msgid "View"
-msgstr ""
+msgstr "试图"
 
 #: ancestry.php:149
 #: branches.php:241
@@ -456,11 +456,11 @@ msgstr "几代人"
 
 #: ancestry.php:170
 msgid "Show Details"
-msgstr ""
+msgstr "顯示詳細資料"
 
 #: ancestry.php:192
 msgid "Click on any of the boxes to get more information about that person."
-msgstr ""
+msgstr "点击任何的方格会得到更多的个人信息"
 
 #: autocomplete.php:196
 msgid "Age"
@@ -501,39 +501,39 @@ msgstr "家谱图表开始点"
 
 #: branches.php:166
 msgid "Yes"
-msgstr ""
+msgstr "是"
 
 #: calendar.php:102
 msgid "Anniversary Calendar"
-msgstr ""
+msgstr "週年紀念日历"
 
 #: calendar.php:122
 msgid "On This Day ..."
-msgstr ""
+msgstr "在这一天..."
 
 #: calendar.php:125
 msgid "In This Month ..."
-msgstr ""
+msgstr "在这个月 ..."
 
 #: calendar.php:128
 msgid "In This Year ..."
-msgstr ""
+msgstr "在这年 ..."
 
 #: calendar.php:137
 msgid "Day:"
-msgstr ""
+msgstr "日:"
 
 #: calendar.php:152
 msgid "Month:"
-msgstr ""
+msgstr "月份:"
 
 #: calendar.php:172
 msgid "Year:"
-msgstr ""
+msgstr "年:"
 
 #: calendar.php:182
 msgid "Show"
-msgstr ""
+msgstr "显示"
 
 #: calendar.php:187
 #: calendar.php:204
@@ -542,17 +542,17 @@ msgstr ""
 #: calendar.php:209
 #: calendar.php:441
 msgid "All People"
-msgstr ""
+msgstr "所有人"
 
 #: calendar.php:191
 #: calendar.php:518
 msgid "Living People"
-msgstr ""
+msgstr "生存人员"
 
 #: calendar.php:195
 #: calendar.php:521
 msgid "Recent Years (&lt; 100 yrs)"
-msgstr ""
+msgstr "近期事件(< 100 年)"
 
 #: calendar.php:201
 #, fuzzy
@@ -573,7 +573,7 @@ msgstr ""
 
 #: calendar.php:226
 msgid "Show events of:"
-msgstr ""
+msgstr "显示事情："
 
 #: calendar.php:232
 #: calendar.php:530
@@ -632,7 +632,7 @@ msgstr "移出"
 
 #: calendar.php:274
 msgid "Custom Event"
-msgstr ""
+msgstr "自定义活动"
 
 #: calendar.php:282
 #: calendar.php:284
@@ -643,7 +643,7 @@ msgstr "看纪录"
 #: calendar.php:287
 #: calendar.php:289
 msgid "View Month"
-msgstr ""
+msgstr "试图月份"
 
 #: calendar.php:292
 #: calendar.php:294
@@ -663,21 +663,21 @@ msgstr "重新改动家庭摆列"
 
 #: calendar.php:477
 msgid "Day not set"
-msgstr ""
+msgstr "没有日子"
 
 #: calendar.php:524
 #: calendar.php:606
 msgid "Male"
-msgstr ""
+msgstr "男性"
 
 #: calendar.php:527
 #: calendar.php:610
 msgid "Female"
-msgstr ""
+msgstr "女性"
 
 #: calendar.php:536
 msgid "Filter"
-msgstr ""
+msgstr "过滤器"
 
 #: calendar.php:614
 msgid "unknown"
@@ -710,7 +710,7 @@ msgstr "工作状态中"
 #: changelanguage.php:183
 #: changelanguage.php:199
 msgid "Edit settings"
-msgstr ""
+msgstr "编辑设置"
 
 #: changelanguage.php:227
 #: changelanguage.php:250
@@ -743,45 +743,45 @@ msgstr "收集箱"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
-msgstr ""
+msgstr "從這個家庭您並且會希望哪個連結添加?"
 
 #: clippings.php:62
 msgid "Add just this family record."
-msgstr ""
+msgstr "添加這個家庭記錄。"
 
 #: clippings.php:63
 msgid "Add parents' records together with this family record."
-msgstr ""
+msgstr "添加父項以這個家庭記錄。"
 
 #: clippings.php:64
 msgid "Add parents' and children's records together with this family record."
-msgstr ""
+msgstr "添加父項和兒童記錄以這個家庭記錄。"
 
 #: clippings.php:65
 msgid "Add parents' and all descendants' records together with this family record."
-msgstr ""
+msgstr "添加父項和所有後裔記錄以這個家庭記錄。"
 
 #: clippings.php:66
 #: clippings.php:87
 #: clippings.php:99
 msgid "Continue Adding"
-msgstr ""
+msgstr "继续添加"
 
 #: clippings.php:74
 msgid "Which links from this person would you also like to add?"
-msgstr ""
+msgstr "從這個人員您並且會希望哪個連結添加?"
 
 #: clippings.php:78
 msgid "Add just this person."
-msgstr ""
+msgstr "添加这个人。"
 
 #: clippings.php:79
 msgid "Add this person, his parents, and siblings."
-msgstr ""
+msgstr "添加这个人, 他的父母, 並且兄弟姐妹。"
 
 #: clippings.php:80
 msgid "Add this person and his direct line ancestors."
-msgstr ""
+msgstr "添加这个人和他的直接祖先。"
 
 #: clippings.php:81
 #: clippings.php:83
@@ -792,15 +792,15 @@ msgstr "几代人"
 
 #: clippings.php:82
 msgid "Add this person, his direct line ancestors, and their families."
-msgstr ""
+msgstr "添加这个人, 他的直接祖先, 并且他们的家庭。"
 
 #: clippings.php:84
 msgid "Add this person, his spouse, and children."
-msgstr ""
+msgstr "添加这个人, 他的配偶, 並且孩子。"
 
 #: clippings.php:85
 msgid "Add this person, his spouse, and all descendants."
-msgstr ""
+msgstr "添加这个人, 他的配偶, 並且所有后裔記錄。"
 
 #: clippings.php:93
 msgid "Which records linked to this source should be added?"
@@ -817,7 +817,7 @@ msgstr ""
 
 #: clippings.php:107
 msgid "Some items could not be added due to privacy restrictions"
-msgstr ""
+msgstr "因为隐私，有些信息不能被加入"
 
 #: clippings.php:127
 #, fuzzy
@@ -826,7 +826,7 @@ msgstr "个人的代码号编码"
 
 #: clippings.php:140
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #: clippings.php:150
 #, fuzzy
@@ -840,11 +840,11 @@ msgstr "PHP信息"
 
 #: clippings.php:159
 msgid "File Type"
-msgstr ""
+msgstr "文件类型"
 
 #: clippings.php:168
 msgid "Zip File(s)"
-msgstr ""
+msgstr "压缩文件"
 
 #: clippings.php:171
 msgid "Include Media (automatically zips files)"
@@ -856,11 +856,11 @@ msgstr "设置隐私？"
 
 #: clippings.php:205
 msgid "None"
-msgstr ""
+msgstr "没有"
 
 #: clippings.php:206
 msgid "Visitor"
-msgstr ""
+msgstr "客人"
 
 #: clippings.php:207
 msgid "Authenticated user"
@@ -868,15 +868,15 @@ msgstr ""
 
 #: clippings.php:208
 msgid "GEDCOM administrator"
-msgstr ""
+msgstr "家谱管理员"
 
 #: clippings.php:209
 msgid "Site administrator"
-msgstr ""
+msgstr "网页管理员"
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
-msgstr ""
+msgstr "您想要轉換這GEDCOM 从UTF-8 到ANSI (ISO-8859-1)?"
 
 #: clippings.php:215
 msgid "Remove custom PGV tags? (eg. _PGVU, _THUM)"
@@ -935,7 +935,7 @@ msgstr "个人的代码号编码"
 #: descendancy.php:146
 #: descendancy.php:152
 msgid "Descendancy Chart"
-msgstr ""
+msgstr "儿女图表"
 
 #: descendancy.php:120
 #: edit_interface.php:296
@@ -954,11 +954,11 @@ msgstr "刪除名字"
 #: dir_editor.php:111
 #: dir_editor.php:205
 msgid "This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?"
-msgstr ""
+msgstr "这个文件有重要的语言设置或等待改变的数据。你肯等要删除它吗？"
 
 #: dir_editor.php:150
 msgid "Associated files:"
-msgstr ""
+msgstr "有联系的文件："
 
 #: dir_editor.php:238
 #: editgedcoms.php:203
@@ -977,11 +977,11 @@ msgstr "刪除名字"
 #: edit_interface.php:2464
 #: edit_interface.php:2725
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: dir_editor.php:240
 msgid "Remove all nonessential files"
-msgstr ""
+msgstr "删除没有必要的文件"
 
 #: downloadgedcom.php:127
 #: downloadgedcom.php:130
@@ -1057,7 +1057,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:837
 msgid "Results found"
-msgstr ""
+msgstr "搜索结果"
 
 #: editconfig_gedcom.php:846
 msgid "Search option text"
@@ -1065,7 +1065,7 @@ msgstr "搜索选项"
 
 #: editconfig_gedcom.php:850
 msgid "Clear Search"
-msgstr ""
+msgstr "清除搜索"
 
 #: editconfig_gedcom.php:878
 #: editconfig_gedcom.php:1106
@@ -1094,7 +1094,7 @@ msgstr "设置帮助"
 #: editconfig_gedcom.php:2225
 #: edit_privacy.php:807
 msgid "Reset"
-msgstr ""
+msgstr "重置"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
@@ -1127,7 +1127,7 @@ msgstr ""
 #: edit_merge.php:76
 #: edit_merge.php:79
 msgid "Unable to find record with ID"
-msgstr ""
+msgstr "無法查找記錄"
 
 #: editconfig_gedcom.php:987
 msgid "Calendar format"
@@ -1200,7 +1200,7 @@ msgstr ""
 #: editlang_edit_settings.php:486
 #: edit_privacy.php:97
 msgid "No"
-msgstr ""
+msgstr "不"
 
 #: editconfig_gedcom.php:1013
 msgid "Display Hebrew Gershayim"
@@ -1250,22 +1250,22 @@ msgstr ""
 #: editconfig_gedcom.php:1081
 #: editconfig_gedcom.php:1092
 msgid "Daily"
-msgstr ""
+msgstr "每天"
 
 #: editconfig_gedcom.php:1082
 #: editconfig_gedcom.php:1093
 msgid "Weekly"
-msgstr ""
+msgstr "每周"
 
 #: editconfig_gedcom.php:1083
 #: editconfig_gedcom.php:1094
 msgid "Monthly"
-msgstr ""
+msgstr "每月"
 
 #: editconfig_gedcom.php:1084
 #: editconfig_gedcom.php:1095
 msgid "Yearly"
-msgstr ""
+msgstr "每年"
 
 #: editconfig_gedcom.php:1089
 msgid "Archive ChangeLog files"
@@ -1288,7 +1288,7 @@ msgstr ""
 #: editconfig_gedcom.php:1133
 #: editconfig_gedcom.php:1134
 msgid "General"
-msgstr ""
+msgstr "普通"
 
 #: editconfig_gedcom.php:1140
 msgid "Keep links"
@@ -1392,7 +1392,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1331
 msgid "Welcome"
-msgstr ""
+msgstr "欢迎"
 
 #: editconfig_gedcom.php:1332
 #, fuzzy
@@ -1443,7 +1443,7 @@ msgstr ""
 #: editconfig_gedcom.php:1387
 #: editconfig_gedcom.php:1388
 msgid "Names"
-msgstr ""
+msgstr "名字"
 
 #: editconfig_gedcom.php:1393
 msgid "Show married names on Individual list"
@@ -1488,11 +1488,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1474
 msgid "Landscape"
-msgstr ""
+msgstr "宽图表"
 
 #: editconfig_gedcom.php:1475
 msgid "Portrait"
-msgstr ""
+msgstr "竖图表"
 
 #: editconfig_gedcom.php:1480
 msgid "Place levels to show in person boxes"
@@ -1535,7 +1535,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1509
 msgid "Personal Facts and Details"
-msgstr ""
+msgstr "个人记录和详细资料"
 
 #: editconfig_gedcom.php:1510
 msgid "Notes"
@@ -1553,7 +1553,7 @@ msgstr "查找媒體"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
-msgstr ""
+msgstr "近亲"
 
 #: editconfig_gedcom.php:1514
 msgid "Tree"
@@ -1577,11 +1577,11 @@ msgstr "邮编号码位置"
 
 #: editconfig_gedcom.php:1581
 msgid "after"
-msgstr ""
+msgstr "以後"
 
 #: editconfig_gedcom.php:1582
 msgid "before"
-msgstr ""
+msgstr "以前"
 
 #: editconfig_gedcom.php:1587
 msgid "Maximum number of surnames"
@@ -1597,7 +1597,7 @@ msgstr "姓列表的格式"
 
 #: editconfig_gedcom.php:1597
 msgid "Table"
-msgstr ""
+msgstr "表格"
 
 #: editconfig_gedcom.php:1598
 msgid "Tagcloud"
@@ -1877,7 +1877,7 @@ msgstr ""
 #: editconfig_gedcom.php:2083
 #: editconfig_gedcom.php:2113
 msgid "Mailto link"
-msgstr ""
+msgstr "发电邮件"
 
 #: editconfig_gedcom.php:2084
 #: editconfig_gedcom.php:2114
@@ -1968,7 +1968,7 @@ msgstr "设置帮助"
 
 #: editgedcoms.php:78
 msgid "GEDCOM Administration"
-msgstr ""
+msgstr "家谱管理"
 
 #: editgedcoms.php:96
 #, fuzzy
@@ -1989,7 +1989,7 @@ msgstr ""
 
 #: editgedcoms.php:187
 msgid "File not found."
-msgstr ""
+msgstr "文件沒被查找。"
 
 #: editgedcoms.php:191
 #, fuzzy
@@ -1998,15 +1998,15 @@ msgstr "读入选项"
 
 #: editgedcoms.php:193
 msgid "This GEDCOM has not yet been imported."
-msgstr ""
+msgstr "家谱文件还没有被导入"
 
 #: editgedcoms.php:199
 msgid "Export"
-msgstr ""
+msgstr "读出"
 
 #: editgedcoms.php:203
 msgid "Are you sure you want to delete this GEDCOM"
-msgstr ""
+msgstr "确认删除这个家谱文件"
 
 #: editgedcoms.php:208
 #, fuzzy
@@ -2015,7 +2015,7 @@ msgstr "下載家谱文件"
 
 #: editgedcoms.php:213
 msgid "Check"
-msgstr ""
+msgstr "检查"
 
 #: editlang_edit_settings.php:81
 msgid "Language File Edit Utility"
@@ -2066,31 +2066,31 @@ msgstr "一周的开始日"
 
 #: editlang_edit_settings.php:357
 msgid "Sunday"
-msgstr ""
+msgstr "星期天"
 
 #: editlang_edit_settings.php:357
 msgid "Monday"
-msgstr ""
+msgstr "星期一"
 
 #: editlang_edit_settings.php:357
 msgid "Tuesday"
-msgstr ""
+msgstr "星期二"
 
 #: editlang_edit_settings.php:357
 msgid "Wednesday"
-msgstr ""
+msgstr "星期三"
 
 #: editlang_edit_settings.php:357
 msgid "Thursday"
-msgstr ""
+msgstr "星期四"
 
 #: editlang_edit_settings.php:357
 msgid "Friday"
-msgstr ""
+msgstr "星期五"
 
 #: editlang_edit_settings.php:357
 msgid "Saturday"
-msgstr ""
+msgstr "星期六"
 
 #: editlang_edit_settings.php:378
 msgid "Text direction"
@@ -2098,11 +2098,11 @@ msgstr "写字方向"
 
 #: editlang_edit_settings.php:386
 msgid "Left to right"
-msgstr ""
+msgstr "从左到右"
 
 #: editlang_edit_settings.php:391
 msgid "Right to left"
-msgstr ""
+msgstr "从右到左"
 
 #: editlang_edit_settings.php:402
 msgid "Surname first"
@@ -2138,16 +2138,16 @@ msgstr "语言文件"
 
 #: editlang_edit_settings.php:530
 msgid "ERROR! The file does not exist..."
-msgstr ""
+msgstr "错误！文件不存在..."
 
 #: editlang_edit_settings.php:539
 msgid "This optional file does not exist."
-msgstr ""
+msgstr "多选的文件不存在。"
 
 #: editnews.php:34
 #: editnews.php:52
 msgid "Add/Edit Journal/News entry"
-msgstr ""
+msgstr "添加日记或新闻"
 
 #: editnews.php:57
 msgid "Please enter a title."
@@ -2167,41 +2167,41 @@ msgstr ""
 
 #: edituser.php:71
 msgid "Duplicate user name.  A user with that user name already exists.  Please choose another user name."
-msgstr ""
+msgstr "用户名重复。已经有一个人用现在的用户名字。请你选另一个用户名。"
 
 #: edituser.php:85
 msgid "User name contains invalid characters"
-msgstr ""
+msgstr "用户名有不允许的字"
 
 #: edituser.php:129
 msgid "You must enter a user name."
-msgstr ""
+msgstr "你必须输入一个用户名"
 
 #: edituser.php:134
 #: edituser.php:139
 msgid "You must enter a first and last name."
-msgstr ""
+msgstr "你必须输入全名"
 
 #: edituser.php:144
 msgid "You must enter an email address."
-msgstr ""
+msgstr "你必须输入一个电子邮件"
 
 #: edituser.php:149
 msgid "Passwords do not match."
-msgstr ""
+msgstr "密码不对"
 
 #: edituser.php:154
 msgid "Passwords must contain at least 6 characters."
-msgstr ""
+msgstr "Password must contain at least 6 characters."
 
 #: edituser.php:174
 msgid "My Account"
-msgstr ""
+msgstr "我的账户"
 
 #: edituser.php:176
 #: edituser.php:301
 msgid "Update MyAccount"
-msgstr ""
+msgstr "更新用户帐号信息"
 
 #: edituser.php:180
 #: edit_changes.php:124
@@ -2220,7 +2220,7 @@ msgstr "编辑名字"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
-msgstr ""
+msgstr "GEDCOM 記錄身份證"
 
 #: edituser.php:218
 msgid "Password"
@@ -2242,19 +2242,19 @@ msgstr "语言"
 
 #: edituser.php:245
 msgid "Email Address"
-msgstr ""
+msgstr "电子邮件地址："
 
 #: edituser.php:251
 msgid "My Theme"
-msgstr ""
+msgstr "我的背景设置"
 
 #: edituser.php:253
 msgid "Site Default"
-msgstr ""
+msgstr "站點默認值"
 
 #: edituser.php:266
 msgid "Preferred Contact Method"
-msgstr ""
+msgstr "理想的联系方法"
 
 #: edituser.php:281
 msgid "Visible to other users when online"
@@ -2273,12 +2273,12 @@ msgstr "批准家谱的变化"
 #: edit_changes.php:66
 #: edit_changes.php:84
 msgid "Undo successful"
-msgstr ""
+msgstr "使复原成功"
 
 #: edit_changes.php:71
 #: edit_changes.php:99
 msgid "Changes successfully accepted into database"
-msgstr ""
+msgstr "变化成功加入到数据库"
 
 #: edit_changes.php:104
 msgid "There are currently no changes to be reviewed."
@@ -2286,7 +2286,7 @@ msgstr ""
 
 #: edit_changes.php:116
 msgid "View Change Diff"
-msgstr ""
+msgstr "观看更改差額"
 
 #: edit_changes.php:117
 #, fuzzy
@@ -2296,33 +2296,33 @@ msgstr "批准家谱的变化"
 #: edit_changes.php:118
 #: edit_interface.php:413
 msgid "Edit raw GEDCOM record"
-msgstr ""
+msgstr "更改家谱编程源文件"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
-msgstr ""
+msgstr "以下更改發生對這單個:"
 
 #: edit_changes.php:122
 #: edit_changes.php:131
 msgid "Accept"
-msgstr ""
+msgstr "接受"
 
 #: edit_changes.php:123
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #: edit_changes.php:125
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
 #: edit_changes.php:127
 #: edit_changes.php:144
 msgid "Undo"
-msgstr ""
+msgstr "使复原"
 
 #: edit_changes.php:136
 msgid "Send Message"
-msgstr ""
+msgstr "送信"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
@@ -2333,11 +2333,11 @@ msgstr "近期的改动"
 #: edit_changes.php:163
 #: edit_changes.php:181
 msgid "Undo all changes"
-msgstr ""
+msgstr "返回所有的变化"
 
 #: edit_changes.php:181
 msgid "Are you sure you want to undo all of the changes for this GEDCOM?"
-msgstr ""
+msgstr "确认返回所有的变化？"
 
 #: edit_changes.php:186
 msgid "Decide for each change to either accept or reject it.<br /><br />To accept all changes at once, click <b>\"Accept all changes\"</b> in the box below.<br />To get more information about a change,<br />click <b>\"View change diff\"</b> to see the differences,<br />or click <b>\"View GEDCOM record\"</b> to see the new data in GEDCOM format."
@@ -2369,11 +2369,11 @@ msgstr ""
 #: edit_interface.php:2076
 #: edit_merge.php:179
 msgid "GEDCOM record successfully deleted."
-msgstr ""
+msgstr "GEDCOM 記錄被刪除"
 
 #: edit_interface.php:575
 msgid "Family"
-msgstr ""
+msgstr "家庭"
 
 #: edit_interface.php:580
 msgid "PEDI"
@@ -2381,20 +2381,20 @@ msgstr "家谱"
 
 #: edit_interface.php:584
 msgid "Adopted"
-msgstr ""
+msgstr "adopted 领养"
 
 #: edit_interface.php:585
 msgid "Foster"
-msgstr ""
+msgstr "foster 领养"
 
 #: edit_interface.php:586
 msgid "Sealing"
-msgstr ""
+msgstr "Sealing"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
 msgid "Set link"
-msgstr ""
+msgstr "设置连接"
 
 #: edit_interface.php:751
 #: edit_interface.php:902
@@ -2403,7 +2403,7 @@ msgstr ""
 #: edit_interface.php:1161
 #: edit_interface.php:1224
 msgid "You must provide a "
-msgstr ""
+msgstr "您必須提供 "
 
 #: edit_interface.php:751
 #: edit_interface.php:768
@@ -2452,11 +2452,11 @@ msgstr "索書號"
 
 #: edit_interface.php:810
 msgid "Associate events with this source"
-msgstr ""
+msgstr "联系事务到此资源"
 
 #: edit_interface.php:814
 msgid "Select Events"
-msgstr ""
+msgstr "选择事情"
 
 #: edit_interface.php:891
 msgid "New source created successfully."
@@ -2536,26 +2536,26 @@ msgstr "重新排列孩子"
 
 #: edit_interface.php:2322
 msgid "Sort by birth dates"
-msgstr ""
+msgstr "按生日排列"
 
 #: edit_interface.php:2350
 msgid "Child"
-msgstr ""
+msgstr "儿女"
 
 #: edit_interface.php:2362
 #: edit_interface.php:2371
 #: edit_interface.php:2405
 #: edit_interface.php:2425
 msgid "Spouse"
-msgstr ""
+msgstr "配偶"
 
 #: edit_interface.php:2389
 msgid "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes."
-msgstr ""
+msgstr "用此页改变或删除家庭成员。<br /><br /> 每个人都可以用改变连接替换为其它人。你可以用删除连接把此人从家庭抽出。<br /><br />但你完成后，请按保存以保存变化。"
 
 #: edit_interface.php:2394
 msgid "Change Family Members"
-msgstr ""
+msgstr "改变家庭成员"
 
 #: edit_interface.php:2412
 #: edit_interface.php:2432
@@ -2571,7 +2571,7 @@ msgstr "重新改动家庭摆列"
 
 #: edit_interface.php:2724
 msgid "Sort by marriage date"
-msgstr ""
+msgstr "按结婚日排列"
 
 #: edit_merge.php:58
 msgid "You entered the same IDs.  You cannot merge the same records."
@@ -2645,7 +2645,7 @@ msgstr "个人的代码号编码"
 #: edit_merge.php:303
 #: edit_merge.php:320
 msgid "Find Family ID"
-msgstr ""
+msgstr "寻找家庭代码号"
 
 #: edit_merge.php:304
 #: edit_merge.php:321
@@ -2857,7 +2857,7 @@ msgstr ""
 
 #: expand_view.php:32
 msgid "Private"
-msgstr ""
+msgstr "个人隐私"
 
 #: expand_view.php:72
 #, fuzzy
@@ -2872,7 +2872,7 @@ msgstr "這個記錄被更新了。  點擊這裡顯示更改。"
 #: family.php:100
 #: familybook.php:218
 msgid "Parents"
-msgstr ""
+msgstr "父母:"
 
 #: family.php:101
 msgid "Grandparents"
@@ -2898,7 +2898,7 @@ msgstr ""
 
 #: family.php:139
 msgid "Show family on timeline chart"
-msgstr ""
+msgstr "在时间表上显示家庭"
 
 #: family.php:139
 msgid "T"
@@ -2915,22 +2915,22 @@ msgstr ""
 #: familybook.php:243
 #: fanchart.php:345
 msgid "Siblings"
-msgstr ""
+msgstr "兄弟"
 
 #: familybook.php:244
 #: fanchart.php:346
 msgid "Sibling"
-msgstr ""
+msgstr "兄弟姐妹"
 
 #: familybook.php:340
 msgid "Family of:&nbsp;"
-msgstr ""
+msgstr ":&nbsp; 的家庭"
 
 #: familybook.php:371
 #: familybook.php:383
 #: familybook.php:387
 msgid "Family Book Chart"
-msgstr ""
+msgstr "家庭册"
 
 #: familybook.php:458
 #: hourglass.php:115
@@ -3095,7 +3095,7 @@ msgstr ""
 #: find.php:97
 #: find.php:202
 msgid "Find Family List"
-msgstr ""
+msgstr "找到家庭列表"
 
 #: find.php:100
 #: find.php:205
@@ -3138,7 +3138,7 @@ msgstr ""
 #: find.php:239
 #: find.php:259
 msgid "Name contains:"
-msgstr ""
+msgstr "名字包含:"
 
 #: find.php:283
 msgid "Media contains:"
@@ -3146,7 +3146,7 @@ msgstr ""
 
 #: find.php:291
 msgid "Show thumbnails"
-msgstr ""
+msgstr "显示指图"
 
 #: find.php:296
 #: find.php:317
@@ -3158,7 +3158,7 @@ msgstr ""
 
 #: find.php:311
 msgid "Place contains:"
-msgstr ""
+msgstr "安排包含:"
 
 #: find.php:332
 #, fuzzy
@@ -3175,7 +3175,7 @@ msgstr ""
 
 #: find.php:403
 msgid "Magnify"
-msgstr ""
+msgstr "放大"
 
 #: find.php:432
 #: find.php:457
@@ -3185,7 +3185,7 @@ msgstr ""
 #: find.php:693
 #: find.php:715
 msgid "No results found."
-msgstr ""
+msgstr "結果沒有查找。"
 
 #: find.php:487
 #, fuzzy
@@ -3198,15 +3198,15 @@ msgstr ""
 
 #: find.php:572
 msgid "The filename entered does not exist."
-msgstr ""
+msgstr "你输入的用户名不存在"
 
 #: find.php:574
 msgid "Image Dimensions"
-msgstr ""
+msgstr "图像大小"
 
 #: find.php:577
 msgid "This media object is linked to the following:"
-msgstr ""
+msgstr "这个媒体连接到："
 
 #: find.php:584
 #, fuzzy
@@ -3220,7 +3220,7 @@ msgstr "看纪录"
 
 #: find.php:593
 msgid "View Object"
-msgstr ""
+msgstr "看项目"
 
 #: find.php:599
 msgid "This media object is not linked to any GEDCOM record."
@@ -3245,7 +3245,7 @@ msgstr "显示来源"
 
 #: gedcheck.php:37
 msgid "Gedcom checker"
-msgstr ""
+msgstr "家谱文件测验"
 
 #: gedcheck.php:70
 msgid "Critical"
@@ -3279,7 +3279,7 @@ msgstr ""
 
 #: gedcheck.php:118
 msgid "All records"
-msgstr ""
+msgstr "所有记录"
 
 #: gedcheck.php:125
 msgid "This module checks the format of a GEDCOM file against the <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM Specification</a>.  It also checks for a number of common errors in your data.  Note that there are lots of versions, extensions and variations on the specification so you should not be concerned with any issues other than those flagged as \"Critical\".  The explanation for all the line-by-line errors can be found in the specification, so please check there before asking for help."
@@ -3287,7 +3287,7 @@ msgstr ""
 
 #: gedcheck.php:168
 msgid "missing"
-msgstr ""
+msgstr "丢失"
 
 #: gedcheck.php:169
 #: help_text.php:4884
@@ -3318,7 +3318,7 @@ msgstr ""
 
 #: gedcheck.php:903
 msgid "data"
-msgstr ""
+msgstr "纪录"
 
 #: gedcheck.php:905
 msgid "Nothing references this record"
@@ -5351,7 +5351,7 @@ msgstr "更改性别"
 #: help_text.php:2474
 #: imageview.php:32
 msgid "Image Viewer"
-msgstr ""
+msgstr "图像浏览器"
 
 #: help_text.php:2479
 #, fuzzy
@@ -9328,26 +9328,26 @@ msgstr ""
 
 #: help_text.php:5555
 msgid "Help Contents"
-msgstr ""
+msgstr "幫助目錄"
 
 #: imageview.php:180
 msgid "View image details"
-msgstr ""
+msgstr "看图片的详细资料"
 
 #: index.php:309
 #: index.php:370
 #: index_edit.php:199
 msgid "MyGedView Portal"
-msgstr ""
+msgstr "家谱主页"
 
 #: index.php:371
 msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
-msgstr ""
+msgstr "您的MyGedView 頁允許您保留您喜愛的人員書簽, 跟蹤即將來臨的活動, 並且與其它PhpGedView 用戶合作。"
 
 #: index.php:445
 #: index_edit.php:472
 msgid "Customize MyGedView Portal"
-msgstr ""
+msgstr "用户化家谱页面"
 
 #: index.php:451
 #: index_edit.php:473
@@ -9450,7 +9450,7 @@ msgstr "家谱图表开始点"
 
 #: individual.php:321
 msgid "Timeline Chart"
-msgstr ""
+msgstr "時間安排圖"
 
 #: individual.php:325
 msgid "M"
@@ -9471,7 +9471,7 @@ msgstr ""
 
 #: install.php:350
 msgid "Unable to add user.  Please try again."
-msgstr ""
+msgstr "無法增加用戶。  請回去和再嘗試。"
 
 #: install.php:410
 msgid "*Your settings will not<br />be saved until step 6"
@@ -9492,11 +9492,11 @@ msgstr ""
 
 #: install.php:470
 msgid "Next &gt;"
-msgstr ""
+msgstr "下一个"
 
 #: install.php:480
 msgid "&lt; Previous"
-msgstr ""
+msgstr "上一个"
 
 #: install.php:502
 msgid "Checking for errors..."
@@ -9625,23 +9625,23 @@ msgstr ""
 #: install.php:876
 #: install.php:880
 msgid "&nbsp;&nbsp;seconds"
-msgstr ""
+msgstr "&nbsp;&nbsp;秒"
 
 #: install.php:1072
 #: login_register.php:168
 #: login_register.php:217
 msgid "You must enter a password."
-msgstr ""
+msgstr "你必须输入一个密码。"
 
 #: install.php:1077
 #: login_register.php:174
 #: login_register.php:222
 msgid "You must confirm the password."
-msgstr ""
+msgstr "您必須證實密碼。"
 
 #: install.php:1084
 msgid "Create the default administrative user."
-msgstr ""
+msgstr "创造管理用户"
 
 #: install.php:1085
 msgid "You must first create your main administrative user.  This user will have privileges to update the configuration files, view private data, and create other users."
@@ -9664,7 +9664,7 @@ msgstr "去除人"
 #: inverselink.php:53
 #: media.php:765
 msgid "To Family"
-msgstr ""
+msgstr "到家庭"
 
 #: inverselink.php:56
 #: media.php:770
@@ -9689,7 +9689,7 @@ msgstr "查找媒體"
 
 #: inverselink.php:117
 msgid "Media ID"
-msgstr ""
+msgstr "多媒体代码"
 
 #: inverselink.php:143
 #, fuzzy
@@ -9709,15 +9709,15 @@ msgstr "删除Repository"
 #: lifespan.php:41
 #: lifespan.php:54
 msgid "Lifespan Chart"
-msgstr ""
+msgstr "寿命表"
 
 #: lifespan.php:66
 msgid "Add another person to chart:<br />Person ID:"
-msgstr ""
+msgstr "增加其它人:<br />个人代码号::"
 
 #: lifespan.php:70
 msgid "Include Immediate Family"
-msgstr ""
+msgstr "加入近亲的家庭"
 
 #: lifespan.php:75
 #, fuzzy
@@ -9726,19 +9726,19 @@ msgstr "表中显示性别标志"
 
 #: lifespan.php:303
 msgid "Speed"
-msgstr ""
+msgstr "速度"
 
 #: lifespan.php:304
 msgid "Begin Year"
-msgstr ""
+msgstr "开始年"
 
 #: lifespan.php:305
 msgid "End Year"
-msgstr ""
+msgstr "结束年"
 
 #: lifespan.php:321
 msgid "Search"
-msgstr ""
+msgstr "搜索"
 
 #: lifespan.php:322
 #, fuzzy
@@ -9752,12 +9752,12 @@ msgstr "个人的代码号编码"
 
 #: login.php:120
 msgid "Unable to authenticate user."
-msgstr ""
+msgstr "無法确认用戶。"
 
 #: login.php:206
 #: login.php:226
 msgid "Login"
-msgstr ""
+msgstr "登陆"
 
 #: login.php:238
 #, fuzzy
@@ -9766,45 +9766,45 @@ msgstr "PHP信息"
 
 #: login.php:239
 msgid "No account?"
-msgstr ""
+msgstr "没有账号？"
 
 #: login.php:240
 #: login_register.php:202
 #: login_register.php:283
 #: login_register.php:317
 msgid "Request new user account"
-msgstr ""
+msgstr "要新的账户"
 
 #: login.php:241
 msgid "Lost your password?"
-msgstr ""
+msgstr "丢失密码？"
 
 #: login.php:242
 msgid "Request new password"
-msgstr ""
+msgstr "要新的密码"
 
 #: login_register.php:58
 #: login_register.php:80
 #: login_register.php:82
 #: login_register.php:94
 msgid "Lost password request"
-msgstr ""
+msgstr "Lost password request"
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
-msgstr ""
+msgstr "你已经要了一个新密码"
 
 #: login_register.php:131
 msgid "Recommendation:"
-msgstr ""
+msgstr "建议："
 
 #: login_register.php:132
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
-msgstr ""
+msgstr "Now please click on the link below, login with the new Password and change it to keep the integrity of your data secure."
 
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
-msgstr ""
+msgstr "请输入关系"
 
 #: login_register.php:287
 #, fuzzy
@@ -9813,62 +9813,62 @@ msgstr "数据库用户名"
 
 #: login_register.php:288
 msgid "Desired password"
-msgstr ""
+msgstr "选择密码"
 
 #: login_register.php:316
 #: login_register.php:433
 #: login_register.php:454
 msgid "Comments"
-msgstr ""
+msgstr "注解"
 
 #: login_register.php:318
 msgid "Fields marked with * are mandatory."
-msgstr ""
+msgstr "有 * 的必须要添。"
 
 #: login_register.php:356
 msgid "New Account confirmation"
-msgstr ""
+msgstr "新帐户确认"
 
 #: login_register.php:376
 #: login_register.php:405
 #: login_register.php:409
 #: login_register.php:486
 msgid "Back"
-msgstr ""
+msgstr "返回"
 
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
-msgstr ""
+msgstr "The following data was used."
 
 #: login_register.php:423
 msgid "Please click on the following link and fill in the requested data to confirm your request and email address."
-msgstr ""
+msgstr "Please click on the link below and fill in the requested data to verify your Account and Email address."
 
 #: login_register.php:432
 #: login_register.php:516
 msgid "Verification code:"
-msgstr ""
+msgstr "Verfification code:"
 
 #: login_register.php:434
 msgid "If you didn't request an account, you can just delete this message."
-msgstr ""
+msgstr "If you didn't request this data you can just delete this message."
 
 #: login_register.php:435
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
-msgstr ""
+msgstr "You won't get any mail again from this system, because the account will be deleted without verification within seven days."
 
 #: login_register.php:444
 #: login_register.php:565
 msgid "Hello Administrator ..."
-msgstr ""
+msgstr "你好 管理员 ..."
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
-msgstr ""
+msgstr "The user received an email with the necessary data to verify their account."
 
 #: login_register.php:456
 msgid "You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account."
-msgstr ""
+msgstr "As soon as the user has done this verification you will be informed by mail to give this user the permission to login to your site."
 
 #: login_register.php:457
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
@@ -9879,16 +9879,16 @@ msgstr ""
 #: login_register.php:541
 #: login_register.php:544
 msgid "User verification"
-msgstr ""
+msgstr "用户确认"
 
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
-msgstr ""
+msgstr "发送"
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
-msgstr ""
+msgstr "Please click on the link below to login to your site edit the user and give him the permission to login to your site."
 
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
@@ -9896,23 +9896,23 @@ msgstr ""
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
-msgstr ""
+msgstr "You were identified as a registered user."
 
 #: login_register.php:591
 msgid "The Administrator has been informed.  As soon as he gives you permission to login, you can login with your user name and password."
-msgstr ""
+msgstr "The Administrator has been informed.<br />As soon as he gives you the permission to login you can login with your username and password."
 
 #: login_register.php:592
 msgid "You can now login with your user name and password."
-msgstr ""
+msgstr "你可以用你的用户名和密码进入网站。"
 
 #: login_register.php:597
 msgid "Data was not correct, please try again"
-msgstr ""
+msgstr "Data was not correct!<br />Please try again!"
 
 #: login_register.php:603
 msgid "Could not verify the information you entered.  Please try again or contact the site administrator for more information."
-msgstr ""
+msgstr "Could not verify the information you entered.  Please go back and try again."
 
 #: manageservers.php:118
 #: manageservers.php:121
@@ -9937,7 +9937,7 @@ msgstr ""
 
 #: manageservers.php:206
 msgid "Hide Details"
-msgstr ""
+msgstr "隱藏詳細資料"
 
 #: manageservers.php:231
 msgid "Manually mark Search Engines by IP"
@@ -9959,7 +9959,7 @@ msgstr "去除人"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
-msgstr ""
+msgstr "确认从家铺文件中删除这个来源？"
 
 #: manageservers.php:344
 msgid "View Connections"
@@ -10009,7 +10009,7 @@ msgstr ""
 #: media.php:338
 #: media.php:339
 msgid "Directory does not exist."
-msgstr ""
+msgstr "文件夹不存在。"
 
 #: media.php:373
 #: media.php:374
@@ -10020,19 +10020,19 @@ msgstr ""
 #: media.php:388
 #: media.php:389
 msgid "Directory not empty."
-msgstr ""
+msgstr "文件夹不是空的。"
 
 #: media.php:410
 #: media.php:411
 msgid "Media and thumbnail directories successfully removed."
-msgstr ""
+msgstr "媒体和指图成功删除。"
 
 #: media.php:414
 #: media.php:415
 #: media.php:417
 #: media.php:418
 msgid "Media directory not removed."
-msgstr ""
+msgstr "多媒体文件夹没有被删除。"
 
 #: media.php:420
 #: media.php:421
@@ -10044,12 +10044,12 @@ msgstr ""
 #: media.php:427
 #: media.php:428
 msgid "Thumbnail directory not removed."
-msgstr ""
+msgstr "指图文件夹没有被删除。"
 
 #: media.php:430
 #: media.php:431
 msgid "Thumbnail directory successfully removed."
-msgstr ""
+msgstr "指图文件夹成功被删除。"
 
 #: media.php:543
 #: media.php:901
@@ -10133,7 +10133,7 @@ msgstr "去除人"
 
 #: media.php:1081
 msgid "Create thumbnail"
-msgstr ""
+msgstr "创建指图"
 
 #: media.php:1170
 msgid "The media folder is corrupted."
@@ -10159,11 +10159,11 @@ msgstr "詳細資料在這個人員專用。"
 #: medialist.php:53
 #: medialist.php:57
 msgid "MultiMedia Objects"
-msgstr ""
+msgstr "多媒體對象列表"
 
 #: medialist.php:131
 msgid "Media objects per page"
-msgstr ""
+msgstr "每页几个多媒体文件"
 
 #: medialist.php:169
 msgid "Apply filter"
@@ -10171,16 +10171,16 @@ msgstr ""
 
 #: medialist.php:216
 msgid "Media Objects found"
-msgstr ""
+msgstr "媒體對象查找了"
 
 #: medialist.php:334
 #: medialist.php:336
 msgid "Edit this Media Item's Details"
-msgstr ""
+msgstr "编辑媒体的详细资料"
 
 #: medialist.php:342
 msgid "Edit Details"
-msgstr ""
+msgstr "编辑详细资料"
 
 #: medialist.php:354
 #: medialist.php:357
@@ -10191,7 +10191,7 @@ msgstr ""
 
 #: medialist.php:364
 msgid "View Details"
-msgstr ""
+msgstr "看详细资料"
 
 #: medialist.php:404
 #: medialist.php:408
@@ -10215,21 +10215,21 @@ msgstr ""
 #: message.php:47
 #: message.php:52
 msgid "No recipient user was provided.  Cannot continue."
-msgstr ""
+msgstr "接收用戶未被提供。  不能继续"
 
 #: message.php:70
 #: message.php:79
 #: message.php:159
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "請輸入一封有效電子郵件。"
 
 #: message.php:167
 msgid "Please enter a message subject."
-msgstr ""
+msgstr "請進入消息主題。"
 
 #: message.php:172
 msgid "Please enter some message text before sending."
-msgstr ""
+msgstr "請輸入一些文本在發送之前。"
 
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
@@ -10237,27 +10237,27 @@ msgstr ""
 
 #: message.php:197
 msgid "Your Name:"
-msgstr ""
+msgstr "你的名字："
 
 #: message.php:198
 msgid "Email Address:"
-msgstr ""
+msgstr "消息从:"
 
 #: message.php:198
 msgid "Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  You email address will not be used in any other way besides responding to this inquiry."
-msgstr ""
+msgstr "請提供您的電子郵件以便我們能與您聯繫以回應這個消息。  如果您不提供您的電子郵件我們不會能回應您的查詢。  您電子郵件不會被使用在其他方式除回應這次查詢以外。"
 
 #: message.php:200
 msgid "Subject:"
-msgstr ""
+msgstr "主題:"
 
 #: message.php:211
 msgid "Body:"
-msgstr ""
+msgstr "消息:"
 
 #: message.php:218
 msgid "Message Deleted"
-msgstr ""
+msgstr "消息被刪除"
 
 #: module.php:214
 msgid "Unknown action: [action]."
@@ -10327,7 +10327,7 @@ msgstr "刪除名字"
 #: module_admin.php:303
 #: module_admin.php:354
 msgid "Description"
-msgstr ""
+msgstr "介绍"
 
 #: module_admin.php:205
 msgid "Version / PGV"
@@ -10373,7 +10373,7 @@ msgstr ""
 
 #: pedigree.php:90
 msgid "Orientation"
-msgstr ""
+msgstr "方向"
 
 #: pedigree.php:125
 msgid "Oldest at top"
@@ -10387,22 +10387,22 @@ msgstr ""
 #: placelist.php:58
 #: placelist.php:312
 msgid "Place Hierarchy"
-msgstr ""
+msgstr "地方列表"
 
 #: placelist.php:55
 #: placelist.php:59
 #: placelist.php:433
 msgid "Place List"
-msgstr ""
+msgstr "地方列表"
 
 #: placelist.php:118
 msgid "Place connections found"
-msgstr ""
+msgstr "地方连接找到"
 
 #: placelist.php:125
 #: placelist.php:157
 msgid "Top Level"
-msgstr ""
+msgstr "最高級"
 
 #: placelist.php:307
 #: placelist.php:432
@@ -10436,21 +10436,21 @@ msgstr ""
 #: placelist.php:483
 #: placelist.php:488
 msgid "Places are encoded in the form: "
-msgstr ""
+msgstr "安排被輸入以形式: "
 
 #: placelist.php:488
 msgid "City, County, State/Province, Country"
-msgstr ""
+msgstr "城市，省市，国家"
 
 #: placelist.php:488
 msgid "(Default)"
-msgstr ""
+msgstr "（默认）"
 
 #: printlog.php:90
 #: printlog.php:112
 #: printlog.php:157
 msgid "Refresh"
-msgstr ""
+msgstr "刷新"
 
 #: printlog.php:91
 #: printlog.php:113
@@ -10598,14 +10598,14 @@ msgstr ""
 #: relationship.php:383
 #: relationship.php:384
 msgid "Sister"
-msgstr ""
+msgstr "姐妹"
 
 #: relationship.php:318
 #: relationship.php:319
 #: relationship.php:386
 #: relationship.php:387
 msgid "Brother"
-msgstr ""
+msgstr "兄弟"
 
 #: relationship.php:358
 #: relationship.php:359
@@ -10618,12 +10618,12 @@ msgstr ""
 #: relationship.php:375
 #: relationship.php:376
 msgid "Half-Sister"
-msgstr ""
+msgstr "半姐妹"
 
 #: relationship.php:378
 #: relationship.php:379
 msgid "Half-Brother"
-msgstr ""
+msgstr "半兄弟"
 
 #: relationship.php:419
 #: relationship.php:420
@@ -10636,19 +10636,19 @@ msgstr ""
 #: relationship.php:485
 #: relationship.php:564
 msgid "Relationship Chart"
-msgstr ""
+msgstr "关系图"
 
 #: relationship.php:535
 msgid "and"
-msgstr ""
+msgstr "並且"
 
 #: relationship.php:579
 msgid "Person 1"
-msgstr ""
+msgstr "第一个人"
 
 #: relationship.php:609
 msgid "Person 2"
-msgstr ""
+msgstr "第二个人"
 
 #: relationship.php:677
 #: relationship.php:698
@@ -10658,7 +10658,7 @@ msgstr "上载文件夹"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
-msgstr ""
+msgstr "没有发现两者的连接"
 
 #: relationship.php:737
 msgid "No other link between the two individuals could be found."
@@ -10667,7 +10667,7 @@ msgstr ""
 #: reportengine.php:147
 #: reportengine.php:153
 msgid "Choose a report to run"
-msgstr ""
+msgstr "選擇報表運行"
 
 #: reportengine.php:154
 #, fuzzy
@@ -10677,7 +10677,7 @@ msgstr "删除Repository"
 #: reportengine.php:170
 #: reportengine.php:219
 msgid "Enter report values"
-msgstr ""
+msgstr "進入報表值"
 
 #: reportengine.php:220
 #, fuzzy
@@ -10686,7 +10686,7 @@ msgstr "删除Repository"
 
 #: reportengine.php:312
 msgid "Select a date"
-msgstr ""
+msgstr "选择日期"
 
 #: reportengine.php:344
 #, fuzzy
@@ -10706,7 +10706,7 @@ msgstr ""
 #: rss.php:309
 #: rss.php:328
 msgid "genealogy"
-msgstr ""
+msgstr "家谱"
 
 #: rss.php:321
 msgid "Feed not available"
@@ -10718,7 +10718,7 @@ msgstr ""
 
 #: search.php:85
 msgid "Please enter a Given name, Last name, or Place in addition to Year"
-msgstr ""
+msgstr "请加入到这个年份新的名字，姓名或者是地方"
 
 #: search.php:126
 msgid "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender "
@@ -10733,12 +10733,12 @@ msgstr ""
 #: search.php:596
 #: search.php:616
 msgid "General Search"
-msgstr ""
+msgstr "普通搜索"
 
 #: search.php:169
 #: search.php:263
 msgid "Enter Search terms"
-msgstr ""
+msgstr "请输入搜寻词语"
 
 #: search.php:183
 #: search.php:275
@@ -10760,12 +10760,12 @@ msgstr ""
 #: search.php:240
 #: search.php:382
 msgid "Associates"
-msgstr ""
+msgstr "同事"
 
 #: search.php:246
 #: search.php:387
 msgid "Show related persons/families"
-msgstr ""
+msgstr "显示个人/家庭"
 
 #: search.php:270
 msgid "Replace with"
@@ -10800,22 +10800,22 @@ msgstr ""
 
 #: search.php:369
 msgid "Individuals'<br />names to print:"
-msgstr ""
+msgstr "个人的<br />名字:"
 
 #: search.php:374
 msgid "Names with hit"
-msgstr ""
+msgstr "被点击的名字"
 
 #: search.php:377
 msgid "All names"
-msgstr ""
+msgstr "全名"
 
 #: search.php:399
 #: search.php:578
 #: search.php:590
 #: search.php:604
 msgid "Multi Site Search"
-msgstr ""
+msgstr "多个网站搜索"
 
 #: search.php:404
 msgid "Sites to search"
@@ -10827,35 +10827,35 @@ msgstr ""
 
 #: search.php:439
 msgid "Basic site search"
-msgstr ""
+msgstr "简单搜索"
 
 #: search.php:443
 msgid "search"
-msgstr ""
+msgstr "搜索"
 
 #: search.php:455
 msgid "Advanced site search"
-msgstr ""
+msgstr "详细搜索"
 
 #: search.php:461
 msgid "Name: "
-msgstr ""
+msgstr "名字："
 
 #: search.php:473
 msgid "Birth date: "
-msgstr ""
+msgstr "出生日："
 
 #: search.php:481
 msgid "Birth Place: "
-msgstr ""
+msgstr "出生地："
 
 #: search.php:489
 msgid "Death date: "
-msgstr ""
+msgstr "去世日期："
 
 #: search.php:497
 msgid "Death Place: "
-msgstr ""
+msgstr "去世地点："
 
 #: search.php:505
 #, fuzzy
@@ -10869,11 +10869,11 @@ msgstr "数据库用户名"
 
 #: search.php:548
 msgid "Results per page"
-msgstr ""
+msgstr "每页的搜索结果"
 
 #: search.php:563
 msgid "Other Searches"
-msgstr ""
+msgstr "其他的搜索"
 
 #: search.php:569
 #: search.php:585
@@ -10956,7 +10956,7 @@ msgstr ""
 #: statistics.php:714
 #: timeline.php:148
 msgid "years"
-msgstr ""
+msgstr "年"
 
 #: search_advanced.php:167
 #: search_advanced.php:229
@@ -11057,7 +11057,7 @@ msgstr ""
 
 #: statistics.php:113
 msgid "Average age at death"
-msgstr ""
+msgstr "去世的平均年龄"
 
 #: statistics.php:127
 msgid "Top age at death"
@@ -11176,7 +11176,7 @@ msgstr ""
 
 #: statistics.php:278
 msgid "Average number of children per family"
-msgstr ""
+msgstr "平均家庭里的孩子数量"
 
 #: statistics.php:279
 msgid "Number of families without children"
@@ -11219,15 +11219,15 @@ msgstr ""
 #: statistics.php:331
 #: statistics.php:358
 msgid "Media objects"
-msgstr ""
+msgstr "多媒体文件"
 
 #: statistics.php:334
 msgid "Other records"
-msgstr ""
+msgstr "其它纪录"
 
 #: statistics.php:345
 msgid "Total events"
-msgstr ""
+msgstr "总共事件"
 
 #: statistics.php:348
 msgid "First event"
@@ -11472,7 +11472,7 @@ msgstr ""
 #: statistics.php:751
 #: statistics.php:754
 msgid "Statistics"
-msgstr ""
+msgstr "统计"
 
 #: statistics.php:820
 #: statistics.php:821
@@ -11502,51 +11502,51 @@ msgstr ""
 
 #: statisticsplot.php:728
 msgid "Jan"
-msgstr ""
+msgstr "一月"
 
 #: statisticsplot.php:729
 msgid "Feb"
-msgstr ""
+msgstr "二月"
 
 #: statisticsplot.php:730
 msgid "March"
-msgstr ""
+msgstr "三月"
 
 #: statisticsplot.php:731
 msgid "April"
-msgstr ""
+msgstr "四月"
 
 #: statisticsplot.php:732
 msgid "May"
-msgstr ""
+msgstr "五月"
 
 #: statisticsplot.php:733
 msgid "June"
-msgstr ""
+msgstr "六月"
 
 #: statisticsplot.php:734
 msgid "July"
-msgstr ""
+msgstr "七月"
 
 #: statisticsplot.php:735
 msgid "Aug"
-msgstr ""
+msgstr "八月"
 
 #: statisticsplot.php:736
 msgid "Sep"
-msgstr ""
+msgstr "九月"
 
 #: statisticsplot.php:737
 msgid "Oct"
-msgstr ""
+msgstr "十月"
 
 #: statisticsplot.php:738
 msgid "Nov"
-msgstr ""
+msgstr "十一月"
 
 #: statisticsplot.php:739
 msgid "Dec"
-msgstr ""
+msgstr "十二月"
 
 #: statisticsplot.php:805
 msgid " per gender"
@@ -11566,7 +11566,7 @@ msgstr ""
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "of"
-msgstr ""
+msgstr "从"
 
 #: statisticsplot.php:928
 #: statisticsplot.php:932
@@ -11581,34 +11581,34 @@ msgstr "家谱网络地址"
 
 #: timeline.php:298
 msgid "Show Age Marker"
-msgstr ""
+msgstr "先是年龄标记"
 
 #: timeline.php:337
 msgid "Zoom In"
-msgstr ""
+msgstr "放大"
 
 #: timeline.php:338
 msgid "Zoom Out"
-msgstr ""
+msgstr "缩小"
 
 #: timeline.php:345
 msgid "Show Lifespan chart"
-msgstr ""
+msgstr "显示寿命表"
 
 #: timeline.php:350
 msgid "In most recent browsers you can click and drag the boxes around on the chart."
-msgstr ""
+msgstr "新的浏览器可以让你随意摆放方格"
 
 #: uploadgedcom.php:173
 #: uploadgedcom.php:1056
 #: uploadgedcom.php:1166
 #: useradmin.php:1022
 msgid "Continue"
-msgstr ""
+msgstr "继续"
 
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
-msgstr ""
+msgstr "GEDCOM 以這個文件名已經被導入入資料庫。"
 
 #: uploadgedcom.php:485
 msgid "This GEDCOM file is <em>not</em> synchronized with the database.  It may not contain the latest version of your data.  To re-import from the database rather than the file, you should download and re-upload."
@@ -11620,7 +11620,7 @@ msgstr ""
 
 #: uploadgedcom.php:496
 msgid "Do you want to erase the old data and replace it with this new data?"
-msgstr ""
+msgstr "覆盖旧的信息吗？"
 
 #: uploadgedcom.php:546
 msgid "Performing GEDCOM validation..."
@@ -11649,7 +11649,7 @@ msgstr ""
 
 #: uploadgedcom.php:650
 msgid "Day before Month (DD MM YYYY)"
-msgstr ""
+msgstr "在一个月前面的日子 (DD MM YYYY)"
 
 #: uploadgedcom.php:650
 msgid "Month before Day (MM DD YYYY)"
@@ -11665,7 +11665,7 @@ msgstr ""
 
 #: uploadgedcom.php:665
 msgid "Convert this ANSI encoded GEDCOM to UTF-8?"
-msgstr ""
+msgstr "轉換這個ANSI (ISO-8859-1) 編碼GEDCOM 成UTF-8?"
 
 #: uploadgedcom.php:737
 #, fuzzy
@@ -11675,7 +11675,7 @@ msgstr "个人的代码号编码"
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
 msgid "Do not change"
-msgstr ""
+msgstr "不更改"
 
 #: uploadgedcom.php:795
 #, fuzzy
@@ -11687,15 +11687,15 @@ msgstr "读入选项"
 #: uploadgedcom.php:1128
 #: uploadgedcom.php:1133
 msgid "sec."
-msgstr ""
+msgstr "秒。"
 
 #: uploadgedcom.php:805
 msgid "Please be patient"
-msgstr ""
+msgstr "請是耐心"
 
 #: uploadgedcom.php:831
 msgid "Import Progress..."
-msgstr ""
+msgstr "正在倒入..."
 
 #: uploadgedcom.php:904
 #, fuzzy
@@ -11718,15 +11718,15 @@ msgstr "用户时间限制"
 
 #: uploadgedcom.php:1105
 msgid "Click here to go to the Pedigree tree."
-msgstr ""
+msgstr "點擊這裡去家譜結構樹。"
 
 #: uploadgedcom.php:1118
 msgid "Bytes read:"
-msgstr ""
+msgstr "读起了Bytes:"
 
 #: uploadgedcom.php:1119
 msgid "Found record"
-msgstr ""
+msgstr "被查找的記錄"
 
 #: uploadgedcom.php:1138
 #, fuzzy
@@ -11737,7 +11737,7 @@ msgstr "读入选项"
 #: useradmin.php:274
 #: useradmin.php:484
 msgid "Update User Account"
-msgstr ""
+msgstr "更新用戶"
 
 #: useradmin.php:345
 #: useradmin.php:639
@@ -11749,7 +11749,7 @@ msgstr "账号名"
 #: useradmin.php:362
 #: useradmin.php:800
 msgid "Access level"
-msgstr ""
+msgstr "能編輯"
 
 #: useradmin.php:390
 #: useradmin.php:823
@@ -11771,13 +11771,13 @@ msgstr ""
 #: useradmin.php:592
 #: useradmin.php:830
 msgid "User verified himself"
-msgstr ""
+msgstr "User verified himself:"
 
 #: useradmin.php:398
 #: useradmin.php:593
 #: useradmin.php:831
 msgid "User approved by Admin"
-msgstr ""
+msgstr "用户被管理员接受"
 
 #: useradmin.php:457
 #: useradmin.php:883
@@ -11798,7 +11798,7 @@ msgstr ""
 #: useradmin.php:560
 #: useradmin.php:1087
 msgid "User List"
-msgstr ""
+msgstr "用户表"
 
 #: useradmin.php:565
 #: useradmin.php:688
@@ -11811,7 +11811,7 @@ msgstr "添加来源情况小笔记"
 #: useradmin.php:567
 #: useradmin.php:690
 msgid "Back to User Administration"
-msgstr ""
+msgstr "回到用户管理"
 
 #: useradmin.php:576
 #, fuzzy
@@ -11822,11 +11822,11 @@ msgstr "语言"
 #: useradmin.php:588
 #: useradmin.php:629
 msgid "Privileges"
-msgstr ""
+msgstr "特权"
 
 #: useradmin.php:590
 msgid "Date registered"
-msgstr ""
+msgstr "注册日"
 
 #: useradmin.php:591
 #, fuzzy
@@ -11835,20 +11835,20 @@ msgstr "用戶被登陆"
 
 #: useradmin.php:661
 msgid "Never"
-msgstr ""
+msgstr "从没有"
 
 #: useradmin.php:680
 msgid "Are you sure you want to delete the user"
-msgstr ""
+msgstr "确认删除用户"
 
 #: useradmin.php:758
 #: useradmin.php:912
 msgid "Create User"
-msgstr ""
+msgstr "創造用戶"
 
 #: useradmin.php:811
 msgid "Access"
-msgstr ""
+msgstr "允许"
 
 #: useradmin.php:817
 #, fuzzy
@@ -11871,11 +11871,11 @@ msgstr ""
 
 #: useradmin.php:968
 msgid "User didn't verify within 7 days."
-msgstr ""
+msgstr "用户在七天内没有确认"
 
 #: useradmin.php:978
 msgid "User not verified by administrator."
-msgstr ""
+msgstr "用户没有被管理员确认"
 
 #: useradmin.php:1010
 msgid "GEDCOM no longer active, remove user references."
@@ -11904,11 +11904,11 @@ msgstr ""
 
 #: useradmin.php:1084
 msgid "Select an option below:"
-msgstr ""
+msgstr "选项："
 
 #: useradmin.php:1093
 msgid "Send message to all users"
-msgstr ""
+msgstr "发信息给所有的用户"
 
 #: useradmin.php:1094
 msgid "Send message to users who have never logged in"
@@ -11926,11 +11926,11 @@ msgstr "最多姓"
 #: useradmin.php:1156
 #: useradmin.php:1157
 msgid "Site Administrators"
-msgstr ""
+msgstr "网页管理员"
 
 #: useradmin.php:1160
 msgid "GEDCOM Administrators"
-msgstr ""
+msgstr "家谱管理员"
 
 #: useradmin.php:1172
 #: useradmin.php:1173
@@ -11940,12 +11940,12 @@ msgstr ""
 #: useradmin.php:1177
 #: useradmin.php:1178
 msgid "Unverified by User"
-msgstr ""
+msgstr "没有确认的用户"
 
 #: useradmin.php:1182
 #: useradmin.php:1183
 msgid "Unverified by Administrator"
-msgstr ""
+msgstr "没有被管理员确认"
 
 #: usermigrate.php:58
 #, fuzzy
@@ -11976,19 +11976,19 @@ msgstr "上载多媒体文件"
 
 #: usermigrate.php:64
 msgid "Make Backup"
-msgstr ""
+msgstr "创建悲愤"
 
 #: usermigrate.php:76
 msgid "Results"
-msgstr ""
+msgstr "结果"
 
 #: usermigrate.php:89
 msgid "ZIP file successfully created."
-msgstr ""
+msgstr "压缩的文件成果创建"
 
 #: usermigrate.php:94
 msgid "Download ZIPped backup file "
-msgstr ""
+msgstr "下载压缩的备份文件"
 
 #: usermigrate.php:96
 msgid "Files included in this backup"
@@ -12021,11 +12021,11 @@ msgstr ""
 #: usermigrate.php:209
 #: usermigrate.php:218
 msgid "Import successful"
-msgstr ""
+msgstr "读入成功"
 
 #: usermigrate.php:181
 msgid "Import failed"
-msgstr ""
+msgstr "读入失败"
 
 #: usermigrate.php:186
 msgid "Importing messages"
@@ -12069,7 +12069,7 @@ msgstr "表的格式"
 #: blocks/charts.php:167
 #: blocks/gedcom_favorites.php:130
 msgid "No such ID exists in this GEDCOM file."
-msgstr ""
+msgstr "家谱文件中没有此代码"
 
 #: blocks/gedcom_block.php:36
 #, fuzzy
@@ -12083,11 +12083,11 @@ msgstr "家谱文件的名称："
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
-msgstr ""
+msgstr "此家谱的收藏"
 
 #: blocks/gedcom_favorites.php:100
 msgid "Are you sure you want to remove this item from your list of Favorites?"
-msgstr ""
+msgstr "是否確實要從您的收藏頁去除這個項目嗎?"
 
 #: blocks/gedcom_favorites.php:155
 #, fuzzy
@@ -12096,7 +12096,7 @@ msgstr "添加来源情况小笔记"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
-msgstr ""
+msgstr "输入个人，家庭，或来源代码"
 
 #: blocks/gedcom_favorites.php:173
 msgid "OR<br />Enter a URL and a title"
@@ -12114,7 +12114,7 @@ msgstr "家谱文件的名称："
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
 msgid "News"
-msgstr ""
+msgstr "新闻"
 
 #: blocks/gedcom_news.php:91
 msgid "No News articles have been submitted."
@@ -12153,37 +12153,37 @@ msgstr "家谱文件的名称："
 #: blocks/gedcom_stats.php:145
 #: blocks/gedcom_stats.php:330
 msgid "Total users"
-msgstr ""
+msgstr "总用户"
 
 #: blocks/gedcom_stats.php:159
 #: blocks/gedcom_stats.php:277
 msgid "Earliest birth year"
-msgstr ""
+msgstr "最早出生"
 
 #: blocks/gedcom_stats.php:166
 #: blocks/gedcom_stats.php:285
 msgid "Latest birth year"
-msgstr ""
+msgstr "最近出生"
 
 #: blocks/gedcom_stats.php:173
 #: blocks/gedcom_stats.php:293
 msgid "Earliest death year"
-msgstr ""
+msgstr "最早去世"
 
 #: blocks/gedcom_stats.php:180
 #: blocks/gedcom_stats.php:301
 msgid "Latest death year"
-msgstr ""
+msgstr "最近去世"
 
 #: blocks/gedcom_stats.php:188
 #: blocks/gedcom_stats.php:309
 msgid "Person who lived the longest"
-msgstr ""
+msgstr "寿命最长的"
 
 #: blocks/gedcom_stats.php:204
 #: blocks/gedcom_stats.php:325
 msgid "Family with the most children"
-msgstr ""
+msgstr "有最多孩子的家庭"
 
 #: blocks/gedcom_stats.php:219
 msgid "View statistics as graphs"
@@ -12191,7 +12191,7 @@ msgstr ""
 
 #: blocks/gedcom_stats.php:227
 msgid "Most Common Surnames"
-msgstr ""
+msgstr "最普及的姓"
 
 #: blocks/gedcom_stats.php:259
 #, fuzzy
@@ -12227,7 +12227,7 @@ msgstr ""
 
 #: blocks/html_block.php:36
 msgid "HTML"
-msgstr ""
+msgstr "网络编程语言HTML"
 
 #: blocks/html_block.php:41
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -12265,11 +12265,11 @@ msgstr[0] ""
 #: blocks/login_block.php:53
 #: blocks/login_block.php:61
 msgid "Logout"
-msgstr ""
+msgstr "注销"
 
 #: blocks/login_block.php:58
 msgid "Logged in as "
-msgstr ""
+msgstr "登陆"
 
 #: blocks/random_media.php:38
 #, fuzzy
@@ -12279,23 +12279,23 @@ msgstr "查找媒體"
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
 msgid "Random Picture"
-msgstr ""
+msgstr "任意照片"
 
 #: blocks/random_media.php:196
 msgid "Next image"
-msgstr ""
+msgstr "下个图片"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Play"
-msgstr ""
+msgstr "播放"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Stop"
-msgstr ""
+msgstr "停止"
 
 #: blocks/random_media.php:341
 #, fuzzy
@@ -12321,7 +12321,7 @@ msgstr "近期的改动"
 
 #: blocks/review_changes.php:83
 msgid "PhpGedView - Review changes"
-msgstr ""
+msgstr "家谱 - 修改变化"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
@@ -12350,7 +12350,7 @@ msgstr ""
 
 #: blocks/rss_block.php:69
 msgid "Upcoming Events"
-msgstr ""
+msgstr "即将来临的事件"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
@@ -12358,20 +12358,20 @@ msgstr ""
 
 #: blocks/theme_select.php:36
 msgid "Theme Select"
-msgstr ""
+msgstr "选择背景主题"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
-msgstr ""
+msgstr "改变背景主题"
 
 #: blocks/todays_events.php:38
 msgid "On This Day"
-msgstr ""
+msgstr "在这一天"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
 msgid "Show only events of living people?"
-msgstr ""
+msgstr "只显示现在活着人的事情？"
 
 #: blocks/todays_events.php:167
 #: blocks/upcoming_events.php:192
@@ -12425,7 +12425,7 @@ msgstr ""
 
 #: blocks/top10_pageviews.php:138
 msgid "Place counts before or after name?"
-msgstr ""
+msgstr "在名字之前和之后加上数量"
 
 #: blocks/user_blog.php:36
 #, fuzzy
@@ -12434,7 +12434,7 @@ msgstr "账号名"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
-msgstr ""
+msgstr "我的日记"
 
 #: blocks/user_blog.php:56
 msgid "You have not created any Journal items."
@@ -12456,7 +12456,7 @@ msgstr "账号名"
 
 #: blocks/user_favorites.php:60
 msgid "My Favorites"
-msgstr ""
+msgstr "我的收藏"
 
 #: blocks/user_messages.php:38
 #, fuzzy
@@ -12465,28 +12465,28 @@ msgstr "账号名"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
-msgstr ""
+msgstr "我的消息"
 
 #: blocks/user_messages.php:58
 #: blocks/user_messages.php:128
 msgid "Are you sure you want to delete this message?  It cannot be retrieved later."
-msgstr ""
+msgstr "是否確實要刪除這個消息嗎?  它無法以後被檢索。"
 
 #: blocks/user_messages.php:60
 msgid "You have no pending messages."
-msgstr ""
+msgstr "您沒有待定消息。"
 
 #: blocks/user_messages.php:87
 msgid "Date Sent:"
-msgstr ""
+msgstr "日期被發送:"
 
 #: blocks/user_messages.php:126
 msgid "Reply"
-msgstr ""
+msgstr "回復"
 
 #: blocks/user_messages.php:131
 msgid "Delete Selected Messages"
-msgstr ""
+msgstr "删除选定的短信"
 
 #: blocks/user_messages.php:136
 msgid "Broadcast to all users"
@@ -12499,7 +12499,7 @@ msgstr "账号名"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
-msgstr ""
+msgstr "我的家谱"
 
 #: blocks/user_welcome.php:56
 #, fuzzy
@@ -12514,7 +12514,7 @@ msgstr ""
 #: blocks/yahrzeit.php:154
 #: blocks/yahrzeit.php:202
 msgid "Anniversary"
-msgstr ""
+msgstr "纪念日"
 
 #: blocks/yahrzeit.php:218
 #, fuzzy
@@ -12523,7 +12523,7 @@ msgstr "编辑名字"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
-msgstr ""
+msgstr "隐藏"
 
 #: includes/accesskeyHeaders.php:36
 msgid "Skip to Content"
@@ -12552,31 +12552,31 @@ msgstr ""
 
 #: includes/authentication.php:93
 msgid "PhpGedView Authentication System"
-msgstr ""
+msgstr "进入家谱系统"
 
 #: includes/authentication.php:95
 msgid "You must enter a valid login ID and password to access this resource"
-msgstr ""
+msgstr "你必须输入一个正确的用户名和密码才可以进入这个资源"
 
 #: includes/authentication.php:453
 #: includes/authentication.php:510
 msgid "This message was sent while viewing the following URL: "
-msgstr ""
+msgstr "這信被送了當觀看以下URL: "
 
 #: includes/authentication.php:461
 msgid "You sent the following message to a PhpGedView administrator:"
-msgstr ""
+msgstr "您寄發了以下消息到PhpGedView 管理員:"
 
 #: includes/authentication.php:469
 msgid "You sent the following message to a PhpGedView user:"
-msgstr ""
+msgstr "您寄發了以下消息到PhpGedView 用戶帳號:"
 
 #: includes/authentication.php:475
 #: includes/authentication.php:482
 #: includes/authentication.php:524
 #: includes/authentication.php:530
 msgid "The following message has been sent to your PhpGedView user account from "
-msgstr ""
+msgstr "以下消息寄發了到您的PhpGedView 用戶帳號:"
 
 #: includes/family_nav.php:84
 msgid "Parents Family"
@@ -12671,7 +12671,7 @@ msgstr ""
 
 #: includes/specialchars.php:60
 msgid "English"
-msgstr ""
+msgstr "英文"
 
 #: includes/specialchars.php:61
 msgid "Spanish"
@@ -12862,7 +12862,7 @@ msgstr "表的格式"
 #: includes/classes/class_menubar.php:545
 #: includes/classes/class_menubar.php:551
 msgid "Lists"
-msgstr ""
+msgstr "列表"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
@@ -12873,35 +12873,35 @@ msgstr "管理媒体"
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
 msgid "Reports"
-msgstr ""
+msgstr "報表"
 
 #: includes/classes/class_menubar.php:826
 msgid "Printer-friendly Version"
-msgstr ""
+msgstr "打印预览"
 
 #: includes/classes/class_menubar.php:932
 msgid "Help with this page"
-msgstr ""
+msgstr "幫助使用這頁"
 
 #: includes/classes/class_menubar.php:968
 msgid "Wiki Main Page"
-msgstr ""
+msgstr "Wiki 主页"
 
 #: includes/classes/class_menubar.php:972
 msgid "Wiki User's Guide"
-msgstr ""
+msgstr "Wiki 用户指导"
 
 #: includes/classes/class_menubar.php:977
 msgid "Wiki Administrator's Guide"
-msgstr ""
+msgstr "Wiki 管理员的指导"
 
 #: includes/classes/class_menubar.php:1118
 msgid "Favorites"
-msgstr ""
+msgstr "收藏"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
-msgstr ""
+msgstr "添加來我的收藏"
 
 #: includes/classes/class_note.php:49
 msgid "…"
@@ -12910,11 +12910,11 @@ msgstr ""
 #: includes/classes/class_person.php:576
 #: includes/classes/class_person.php:633
 msgid "Unable to find family with ID"
-msgstr ""
+msgstr "無法找到家庭"
 
 #: includes/classes/class_person.php:760
 msgid "Family with Parents"
-msgstr ""
+msgstr "这个人的家庭"
 
 #: includes/classes/class_person.php:779
 #: includes/classes/class_person.php:786
@@ -12937,11 +12937,11 @@ msgstr "標頭"
 
 #: includes/classes/class_person.php:1840
 msgid "month"
-msgstr ""
+msgstr "月"
 
 #: includes/classes/class_person.php:1842
 msgid "months"
-msgstr ""
+msgstr "月"
 
 #: includes/classes/class_stats.php:448
 #: includes/classes/class_stats.php:450
@@ -12971,7 +12971,7 @@ msgstr ""
 #: includes/classes/class_stats.php:783
 #: includes/classes/class_stats.php:785
 msgid "Living"
-msgstr ""
+msgstr "居住"
 
 #: includes/classes/class_stats.php:774
 #: includes/classes/class_stats.php:777
@@ -13013,32 +13013,32 @@ msgstr ""
 #: includes/classes/class_stats.php:1921
 #: includes/classes/class_stats.php:3817
 msgid "birth"
-msgstr ""
+msgstr "出生"
 
 #: includes/classes/class_stats.php:1922
 #: includes/classes/class_stats.php:3818
 msgid "death"
-msgstr ""
+msgstr "去世"
 
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
 msgid "marriage"
-msgstr ""
+msgstr "结婚"
 
 #: includes/classes/class_stats.php:1924
 #: includes/classes/class_stats.php:3820
 msgid "adoption"
-msgstr ""
+msgstr "代养儿女"
 
 #: includes/classes/class_stats.php:1925
 #: includes/classes/class_stats.php:3821
 msgid "burial"
-msgstr ""
+msgstr "埋葬"
 
 #: includes/classes/class_stats.php:1926
 #: includes/classes/class_stats.php:3822
 msgid "census added"
-msgstr ""
+msgstr "人口调查加入档案"
 
 #: includes/classes/class_stats.php:2672
 #: includes/classes/class_stats.php:2673
@@ -13079,7 +13079,7 @@ msgstr ""
 #: includes/controllers/descendancy_ctrl.php:226
 #: includes/controllers/descendancy_ctrl.php:313
 msgid "Start at parents"
-msgstr ""
+msgstr "从父母开始"
 
 #: includes/controllers/descendancy_ctrl.php:332
 #, fuzzy
@@ -13099,7 +13099,7 @@ msgstr "编辑名字"
 
 #: includes/controllers/family_ctrl.php:379
 msgid "Add a child to this family"
-msgstr ""
+msgstr "添加孩子到这个家庭"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -13108,7 +13108,7 @@ msgstr ""
 #: includes/controllers/repository_ctrl.php:241
 #: includes/controllers/source_ctrl.php:249
 msgid "Click here to hide changes."
-msgstr ""
+msgstr "隐蔽变化纪录"
 
 #: includes/controllers/family_ctrl.php:451
 #, fuzzy
@@ -13145,14 +13145,14 @@ msgstr ""
 
 #: includes/controllers/individual_ctrl.php:830
 msgid "Half-Sibling"
-msgstr ""
+msgstr "半兄弟姐妹"
 
 #: includes/controllers/individual_ctrl.php:836
 #: includes/controllers/individual_ctrl.php:837
 #: includes/controllers/individual_ctrl.php:838
 #: includes/controllers/individual_ctrl.php:855
 msgid "Partner"
-msgstr ""
+msgstr "配偶"
 
 #: includes/controllers/note_ctrl.php:80
 #: includes/controllers/note_ctrl.php:169
@@ -13193,7 +13193,7 @@ msgstr ""
 
 #: includes/controllers/search_ctrl.php:879
 msgid "People"
-msgstr ""
+msgstr "人们"
 
 #: includes/controllers/search_ctrl.php:883
 msgid "Site: "
@@ -13205,7 +13205,7 @@ msgstr ""
 
 #: includes/controllers/search_ctrl.php:918
 msgid "to"
-msgstr ""
+msgstr "到达"
 
 #: includes/controllers/search_ctrl.php:933
 msgid "Be sure to select at least one remote site."
@@ -13239,67 +13239,67 @@ msgstr ""
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "January"
-msgstr ""
+msgstr "一月"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "February"
-msgstr ""
+msgstr "二月"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "August"
-msgstr ""
+msgstr "八月"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "September"
-msgstr ""
+msgstr "九月"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "October"
-msgstr ""
+msgstr "十月"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "November"
-msgstr ""
+msgstr "十一月"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "December"
-msgstr ""
+msgstr "十二月"
 
 #: includes/extras/functions.pl.php:128
 #: includes/extras/functions.sl.php:113
 #: includes/functions/functions_date.php:82
 msgid "Infant"
-msgstr ""
+msgstr "幼儿"
 
 #: includes/extras/functions.pl.php:129
 #: includes/extras/functions.sl.php:114
 #: includes/functions/functions_date.php:83
 msgid "Stillborn"
-msgstr ""
+msgstr "未出生"
 
 #: includes/extras/functions.pl.php:148
 #: includes/extras/functions.sl.php:123
 #: includes/functions/functions_date.php:88
 msgid "day"
-msgstr ""
+msgstr "日"
 
 #: includes/extras/functions.pl.php:149
 #: includes/extras/functions.sl.php:124
 #: includes/functions/functions_date.php:89
 msgid "days"
-msgstr ""
+msgstr "日"
 
 #: includes/extras/functions.pl.php:150
 #: includes/functions/functions_date.php:90
@@ -13367,19 +13367,19 @@ msgstr ""
 
 #: includes/functions/functions.php:188
 msgid "File successfully uploaded"
-msgstr ""
+msgstr "文件成功地被上裝"
 
 #: includes/functions/functions.php:191
 msgid "Uploaded file exceeds the allowed size"
-msgstr ""
+msgstr "被上裝的文件超出允許的大小"
 
 #: includes/functions/functions.php:193
 msgid "File was only partially uploaded, please try again"
-msgstr ""
+msgstr "文件部份地只被上裝了, 請嘗試再"
 
 #: includes/functions/functions.php:195
 msgid "No file was received. Please upload again."
-msgstr ""
+msgstr "文件未被接受。 向上作用的負載再。"
 
 #: includes/functions/functions.php:197
 msgid "Missing PHP temporary directory"
@@ -13399,11 +13399,11 @@ msgstr ""
 
 #: includes/functions/functions.php:2004
 msgid "The script timed out before a relationship could be found."
-msgstr ""
+msgstr "找不到关系。"
 
 #: includes/functions/functions_charts.php:288
 msgid "Children"
-msgstr ""
+msgstr "孩子"
 
 #: includes/functions/functions_charts.php:293
 #, fuzzy
@@ -13413,16 +13413,16 @@ msgstr "添加儿女"
 #: includes/functions/functions_charts.php:448
 #: includes/functions/functions_charts.php:938
 msgid "This family remained childless"
-msgstr ""
+msgstr "该家庭没有孩子"
 
 #: includes/functions/functions_charts.php:487
 #: includes/functions/functions_charts.php:514
 msgid "Family Group Information"
-msgstr ""
+msgstr "家庭组咨询"
 
 #: includes/functions/functions_charts.php:521
 msgid "No facts for this family."
-msgstr ""
+msgstr "这个家庭没有信息。"
 
 #: includes/functions/functions_charts.php:532
 #, fuzzy
@@ -13478,16 +13478,16 @@ msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 #: includes/functions/functions_edit.php:2376
 #: includes/functions/functions_edit.php:2385
 msgid "Please reload the previous page to make sure you are working with the most recent record."
-msgstr ""
+msgstr "请刷新你的浏览器以保证你再变最新的纪录。"
 
 #: includes/functions/functions_edit.php:424
 #: includes/functions/functions_edit.php:746
 msgid "Save and go to new record"
-msgstr ""
+msgstr "保存并到新纪录去"
 
 #: includes/functions/functions_edit.php:1371
 msgid "No Temple - Living Ordinance"
-msgstr ""
+msgstr "沒有寺廟。 居住的法令"
 
 #: includes/functions/functions_edit.php:1458
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
@@ -13511,7 +13511,7 @@ msgstr "添加媒体文件"
 #: includes/functions/functions_edit.php:2375
 #: includes/functions/functions_edit.php:2384
 msgid "An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it."
-msgstr ""
+msgstr "当创造文件时出现错误。可能在你打开文件后不久有其它人更改过此文件。"
 
 #: includes/functions/functions_export.php:464
 #: includes/functions/functions_export.php:510
@@ -13519,7 +13519,7 @@ msgstr ""
 #: includes/functions/functions_export.php:598
 #: includes/functions/functions_export.php:638
 msgid "Creating"
-msgstr ""
+msgstr "创建中"
 
 #: includes/functions/functions_export.php:493
 #: includes/functions/functions_export.php:531
@@ -13543,7 +13543,7 @@ msgstr ""
 #: includes/functions/functions_export.php:628
 #: includes/functions/functions_export.php:670
 msgid "Cannot create"
-msgstr ""
+msgstr "不可以创建"
 
 #: includes/functions/functions_export.php:505
 #: includes/functions/functions_export.php:543
@@ -13579,7 +13579,7 @@ msgstr ""
 
 #: includes/functions/functions_mediadb.php:977
 msgid "Upload successful."
-msgstr ""
+msgstr "向上作用的負載"
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
@@ -13590,7 +13590,7 @@ msgstr "上载文件夹"
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
 msgid "Media file to upload"
-msgstr ""
+msgstr "媒体文件"
 
 #: includes/functions/functions_mediadb.php:1038
 #: includes/functions/functions_mediadb.php:1057
@@ -13608,29 +13608,29 @@ msgstr "自动创造指图"
 #: includes/functions/functions_mediadb.php:1047
 #: includes/functions/functions_mediadb.php:1215
 msgid "Generate thumbnail automatically from "
-msgstr ""
+msgstr "自动创建指图"
 
 #: includes/functions/functions_mediadb.php:1053
 #: includes/functions/functions_mediadb.php:1220
 msgid "Thumbnail to upload"
-msgstr ""
+msgstr "指圖"
 
 #: includes/functions/functions_mediadb.php:1063
 #: includes/functions/functions_mediadb.php:1228
 #: includes/functions/functions_mediadb.php:1248
 msgid "File name on server"
-msgstr ""
+msgstr "在服务器上的文件名"
 
 #: includes/functions/functions_mediadb.php:1067
 #: includes/functions/functions_mediadb.php:1229
 #: includes/functions/functions_mediadb.php:1256
 msgid "Do not change to keep original file name."
-msgstr ""
+msgstr "不要更改源文件名"
 
 #: includes/functions/functions_mediadb.php:1076
 #: includes/functions/functions_mediadb.php:1282
 msgid "Folder name on server"
-msgstr ""
+msgstr "服务器上文件名"
 
 #: includes/functions/functions_mediadb.php:1083
 #: includes/functions/functions_mediadb.php:1290
@@ -13643,7 +13643,7 @@ msgstr ""
 
 #: includes/functions/functions_mediadb.php:1230
 msgid "You may enter a URL, beginning with &laquo;http://&raquo;."
-msgstr ""
+msgstr "请输入一个开头为 &laquo;http://&raquo; 的地址。"
 
 #: includes/functions/functions_mediadb.php:1312
 msgid "This entry is ignored if you have entered a URL into the file name field."
@@ -13657,68 +13657,68 @@ msgstr "Unknown"
 
 #: includes/functions/functions_print.php:166
 msgid "Family with spouse"
-msgstr ""
+msgstr "家庭与配偶:"
 
 #: includes/functions/functions_print.php:209
 msgid "Zoom in/out on this box."
-msgstr ""
+msgstr "迅速移動/在這個配件箱。"
 
 #: includes/functions/functions_print.php:267
 msgid "Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person."
-msgstr ""
+msgstr "圖表的連結, 家庭, 並且這個人員的近親。"
 
 #: includes/functions/functions_print.php:575
 msgid "Are you sure you want to delete this fact?"
-msgstr ""
+msgstr "是否確實要刪除這個GEDCOM 情況嗎?"
 
 #: includes/functions/functions_print.php:582
 msgid "Are you sure you want to delete this person?"
-msgstr ""
+msgstr "确认从家铺文件中删除这个人？"
 
 #: includes/functions/functions_print.php:661
 msgid "Print"
-msgstr ""
+msgstr "打印"
 
 #: includes/functions/functions_print.php:662
 msgid "Back to normal view"
-msgstr ""
+msgstr "回到正常模式"
 
 #: includes/functions/functions_print.php:730
 msgid "Total Database Queries: "
-msgstr ""
+msgstr "總資料庫查詢: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total privacy checks: "
-msgstr ""
+msgstr "总共隐私检查："
 
 #: includes/functions/functions_print.php:730
 msgid "Total Memory Usage:"
-msgstr ""
+msgstr "共用记忆"
 
 #: includes/functions/functions_print.php:881
 msgid "For technical support or genealogy questions, please contact"
-msgstr ""
+msgstr "如果需要技术支持或其它问题，请联络"
 
 #: includes/functions/functions_print.php:885
 msgid "For technical support and information contact"
-msgstr ""
+msgstr "為技術支持和資訊聯絡"
 
 #: includes/functions/functions_print.php:891
 msgid "For help with genealogy questions contact"
-msgstr ""
+msgstr "為幫助以譜學問題聯絡"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
 msgid "Technical help contact"
-msgstr ""
+msgstr "技术帮助请联系"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
-msgstr ""
+msgstr "注"
 
 #: includes/functions/functions_print.php:1330
 msgid "For more information contact"
-msgstr ""
+msgstr "如果需要更多的信息请联系"
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
@@ -13728,7 +13728,7 @@ msgstr "PHP信息"
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
-msgstr ""
+msgstr "幫助文本, 為這個頁或項目, 不是可利用的"
 
 #: includes/functions/functions_print.php:1468
 msgid "<span style=\"font-weight: bold\">The language variable does not exist. Please report this as it is an error.</span>"
@@ -13752,7 +13752,7 @@ msgstr ""
 #: includes/functions/functions_print.php:1881
 #: includes/functions/functions_print.php:2085
 msgid "after death"
-msgstr ""
+msgstr "去世后"
 
 #: includes/functions/functions_print.php:1975
 msgid "Mother's age"
@@ -13768,15 +13768,15 @@ msgstr ""
 
 #: includes/functions/functions_print.php:2233
 msgid "LDS Temple"
-msgstr ""
+msgstr "LDS 寺廟"
 
 #: includes/functions/functions_print.php:2235
 msgid "LDS Temple Code:"
-msgstr ""
+msgstr "LDS 寺廟編碼:"
 
 #: includes/functions/functions_print.php:2239
 msgid "Status"
-msgstr ""
+msgstr "狀態"
 
 #: includes/functions/functions_print.php:2380
 #, fuzzy
@@ -13794,7 +13794,7 @@ msgstr "删除Repository"
 #: includes/functions/functions_print_facts.php:1149
 #: includes/functions/functions_print_facts.php:1455
 msgid "Copy"
-msgstr ""
+msgstr "拷贝"
 
 #: includes/functions/functions_print_facts.php:242
 #, fuzzy
@@ -13804,7 +13804,7 @@ msgstr "婚姻"
 #: includes/functions/functions_print_facts.php:446
 #: includes/functions/functions_print_facts.php:448
 msgid "Unrecognized GEDCOM Code"
-msgstr ""
+msgstr "未被認出的GEDCOM 編碼"
 
 #: includes/functions/functions_print_facts.php:448
 msgid "This is an error, and we would like to fix it. Please report this error to"
@@ -13817,7 +13817,7 @@ msgstr "显示健在人员名单"
 
 #: includes/functions/functions_print_lists.php:78
 msgid "Show only females."
-msgstr ""
+msgstr "只要显示女士"
 
 #: includes/functions/functions_print_lists.php:80
 msgid "Show only persons of whom the gender is not known."
@@ -13858,7 +13858,7 @@ msgstr ""
 #: includes/functions/functions_print_lists.php:90
 #: includes/functions/functions_print_lists.php:476
 msgid "Roots"
-msgstr ""
+msgstr "根目录"
 
 #: includes/functions/functions_print_lists.php:91
 #: includes/functions/functions_print_lists.php:477
@@ -13966,7 +13966,7 @@ msgstr ""
 #: includes/functions/functions_print_lists.php:1264
 #: includes/functions/functions_print_lists.php:1315
 msgid "Spouses"
-msgstr ""
+msgstr "夫妻"
 
 #: includes/functions/functions_print_lists.php:1523
 msgid "Total changes"
@@ -13978,7 +13978,7 @@ msgstr ""
 
 #: includes/functions/functions_privacy.php:865
 msgid "Details about this person are private. Personal details will not be included."
-msgstr ""
+msgstr "關於這個人員的詳細資料專用。  私有詳細資料不會是包括的。"
 
 #: includes/functions/functions_privacy.php:877
 msgid "Details about this family are private. Family details will not be included."
@@ -16456,7 +16456,7 @@ msgstr ""
 
 #: modules/googlemap/pedigree_map.php:740
 msgid "Birth:"
-msgstr ""
+msgstr "生日："
 
 #: modules/googlemap/pedigree_map.php:842
 msgid "Zoom&nbsp;in"
@@ -16674,7 +16674,7 @@ msgstr ""
 #: modules/lightbox/lb_editconfig.php:42
 #: modules/lightbox/lb_editconfig.php:46
 msgid "Lightbox-Album Configuration"
-msgstr ""
+msgstr "图片集播放器设置"
 
 #: modules/lightbox/admin-config.php:44
 msgid "Manage Lightbox configuration"
@@ -16682,11 +16682,11 @@ msgstr ""
 
 #: modules/lightbox/lb_editconfig.php:103
 msgid "Individual Page - Media Tab"
-msgstr ""
+msgstr "个人页面 - 媒体"
 
 #: modules/lightbox/lb_editconfig.php:103
 msgid "Appearance"
-msgstr ""
+msgstr "外表"
 
 #: modules/lightbox/lb_editconfig.php:107
 #: modules/lightbox/lb_editconfig.php:109
@@ -16696,13 +16696,13 @@ msgstr "標頭"
 
 #: modules/lightbox/lb_editconfig.php:117
 msgid "Individual Page - Album Tab Header"
-msgstr ""
+msgstr "个人页面 - 图片集图条"
 
 #: modules/lightbox/lb_editconfig.php:117
 #: modules/lightbox/lb_editconfig.php:145
 #: modules/lightbox/lb_editconfig.php:221
 msgid "Link appearance"
-msgstr ""
+msgstr "连接外表"
 
 #: modules/lightbox/lb_editconfig.php:121
 #: modules/lightbox/lb_editconfig.php:124
@@ -16711,7 +16711,7 @@ msgstr ""
 #: modules/lightbox/lb_editconfig.php:225
 #: modules/lightbox/lb_editconfig.php:229
 msgid "Text"
-msgstr ""
+msgstr "文字"
 
 #: modules/lightbox/lb_editconfig.php:122
 #: modules/lightbox/lb_editconfig.php:124
@@ -16739,19 +16739,19 @@ msgstr ""
 #: modules/lightbox/lb_editconfig.php:194
 #: modules/lightbox/lb_editconfig.php:198
 msgid "Normal"
-msgstr ""
+msgstr "正常"
 
 #: modules/lightbox/lb_editconfig.php:145
 msgid "Individual Page - Album Tab Thumbnails"
-msgstr ""
+msgstr "个人页面 - 图片集指图"
 
 #: modules/lightbox/lb_editconfig.php:158
 msgid "Slide Show speed"
-msgstr ""
+msgstr "图片播放速度"
 
 #: modules/lightbox/lb_editconfig.php:174
 msgid "Slide show timing in seconds"
-msgstr ""
+msgstr "图片播放计时（秒）"
 
 #: modules/lightbox/lb_editconfig.php:181
 #, fuzzy
@@ -16760,41 +16760,41 @@ msgstr "显示幻灯控制？"
 
 #: modules/lightbox/lb_editconfig.php:181
 msgid "(mp3 only)"
-msgstr ""
+msgstr "(只能放mp3)"
 
 #: modules/lightbox/lb_editconfig.php:184
 msgid "Location of sound track file (Leave blank for no sound track)"
-msgstr ""
+msgstr "声音文件的地址（如果没有文件那就空白）"
 
 #: modules/lightbox/lb_editconfig.php:191
 msgid "Image Transition speed"
-msgstr ""
+msgstr "图片变化速度"
 
 #: modules/lightbox/lb_editconfig.php:195
 #: modules/lightbox/lb_editconfig.php:198
 msgid "Double"
-msgstr ""
+msgstr "两倍"
 
 #: modules/lightbox/lb_editconfig.php:196
 #: modules/lightbox/lb_editconfig.php:198
 msgid "Warp"
-msgstr ""
+msgstr "弹性图片连接"
 
 #: modules/lightbox/lb_editconfig.php:205
 msgid "URL Window dimensions"
-msgstr ""
+msgstr "URL窗口的尺寸"
 
 #: modules/lightbox/lb_editconfig.php:212
 msgid "Width and height of URL window in pixels"
-msgstr ""
+msgstr "URL窗口的宽度和高度"
 
 #: modules/lightbox/lb_editconfig.php:221
 msgid "Multimedia Page - Thumbnails"
-msgstr ""
+msgstr "媒体页面 - 指图"
 
 #: modules/lightbox/lb_editconfig.php:250
 msgid "Return to Album page"
-msgstr ""
+msgstr "回到图片集页面"
 
 #: modules/lightbox/lb_editconfig.php:252
 msgid "Return to Admin Page"
@@ -16806,15 +16806,15 @@ msgstr ""
 
 #: modules/lightbox/functions/lb_call_js.php:50
 msgid "Details"
-msgstr ""
+msgstr "详细资料"
 
 #: modules/lightbox/functions/lb_call_js.php:51
 msgid "View this Media Item Details ...  Plus other Media Options - MediaViewer page"
-msgstr ""
+msgstr "查看媒体文件的详细资料 ...  和其他媒体的选项 - 媒体播放页面"
 
 #: modules/lightbox/functions/lb_call_js.php:54
 msgid "Pause Slideshow"
-msgstr ""
+msgstr "停止自动播放"
 
 #: modules/lightbox/functions/lb_call_js.php:55
 #, fuzzy
@@ -16823,15 +16823,15 @@ msgstr "本也读取时放幻灯图片？"
 
 #: modules/lightbox/functions/lb_call_js.php:56
 msgid "Turn Music On/Off"
-msgstr ""
+msgstr "音乐开关"
 
 #: modules/lightbox/functions/lb_call_js.php:57
 msgid "Disable Zoom"
-msgstr ""
+msgstr "关闭放大功能"
 
 #: modules/lightbox/functions/lb_call_js.php:58
 msgid "Zoom is enabled ... Use mousewheel or i and o keys to zoom in and out"
-msgstr ""
+msgstr "放大功能被启动 ... 用鼠标轮或 i 和 o 键来放大和缩小"
 
 #: modules/lightbox/functions/lb_call_js.php:59
 #, fuzzy
@@ -16845,7 +16845,7 @@ msgstr ""
 #: modules/lightbox/functions/lb_head.php:144
 #: modules/lightbox/functions/lb_head.php:161
 msgid "Add a new Multimedia Object to this Individual"
-msgstr ""
+msgstr "给这个人添加新的媒体文件"
 
 #: modules/lightbox/functions/lb_head.php:145
 #: modules/lightbox/functions/lb_head.php:153
@@ -16856,12 +16856,12 @@ msgstr "添加媒体文件"
 #: modules/lightbox/functions/lb_head.php:172
 #: modules/lightbox/functions/lb_head.php:188
 msgid "Link this Individual to an existing Multimedia Object"
-msgstr ""
+msgstr "连接这个人到一个现有的媒体文件"
 
 #: modules/lightbox/functions/lb_head.php:173
 #: modules/lightbox/functions/lb_head.php:181
 msgid "Link to an existing Media Object"
-msgstr ""
+msgstr "连接一个现有的媒体文件"
 
 #: modules/lightbox/functions/lb_head.php:230
 #: modules/lightbox/functions/lb_head.php:232
@@ -16874,12 +16874,12 @@ msgstr ""
 #: modules/lightbox/functions/lb_indi_doors_1.php:45
 #: modules/lightbox/functions/lb_indi_doors_1.php:50
 msgid "Album"
-msgstr ""
+msgstr "图片集"
 
 #: modules/lightbox/functions/lb_indi_doors_0.php:55
 #: modules/lightbox/functions/lb_indi_doors_1.php:58
 msgid "Research Assistant"
-msgstr ""
+msgstr "资料调查助理"
 
 #: modules/lightbox/functions/lightbox_print_media.php:132
 msgid "Photo"
@@ -16939,11 +16939,11 @@ msgstr "删除这个人"
 
 #: modules/personal_facts/personal_facts.php:72
 msgid "Events of close relatives"
-msgstr ""
+msgstr "近亲的事件"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
-msgstr ""
+msgstr "历史纪录"
 
 #: modules/personal_facts/pgv_module.php:42
 msgid "Personal Facts"
@@ -16960,19 +16960,19 @@ msgstr "添加儿女"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
-msgstr ""
+msgstr "添加一個丈夫到这个家庭"
 
 #: modules/relatives/relatives.php:161
 msgid "Add a wife to this family"
-msgstr ""
+msgstr "添加一個妻子來這個家庭"
 
 #: modules/relatives/relatives.php:218
 msgid "Add marriage details"
-msgstr ""
+msgstr "增加婚姻"
 
 #: modules/relatives/relatives.php:408
 msgid "Link this person to an existing family as a child"
-msgstr ""
+msgstr "把这个人当作个孩子连接到一个现有的家庭里去"
 
 #: modules/relatives/relatives.php:415
 #, fuzzy
@@ -16981,7 +16981,7 @@ msgstr "添加来源情况小笔记"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
-msgstr ""
+msgstr "把这个人当作个丈夫连接到一个现有的家庭里去"
 
 #: modules/relatives/relatives.php:435
 #, fuzzy
@@ -16990,7 +16990,7 @@ msgstr "添加来源情况小笔记"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
-msgstr ""
+msgstr "把这个人当作个妻子连接到一个现有的家庭里去"
 
 #: modules/sitemap/admin-config.php:40
 msgid "Sitemap"
@@ -17116,7 +17116,7 @@ msgstr ""
 #: themes/cloudy/footer.php:174
 #: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
-msgstr ""
+msgstr "家谱文件被改过。"
 
 #~ msgid "FAMC:HUSB:SURN"
 #~ msgstr "父亲姓"

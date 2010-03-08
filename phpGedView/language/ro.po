@@ -24,38 +24,38 @@ msgstr "Adaugă un articol media"
 #: addremotelink.php:43
 #: addsearchlink.php:35
 msgid "<b>Access Denied</b><br />You do not have access to this resource."
-msgstr ""
+msgstr "<b>Acces interzis</b><br />Nu aveţi acces la această resursă."
 
 #: addmedia.php:80
 #: addremotelink.php:45
 msgid "This user name cannot edit this GEDCOM."
-msgstr ""
+msgstr "Acest utilizator nu poate edita acest GEDCOM."
 
 #: addmedia.php:81
 #: addremotelink.php:47
 msgid "Editing this GEDCOM has been disabled by the administrator."
-msgstr ""
+msgstr "Editarea acestui GEDCOM a fost dezactivată de către administrator."
 
 #: addmedia.php:83
 #: addremotelink.php:49
 msgid "Privacy settings prevent you from editing this record."
-msgstr ""
+msgstr "Setările de confidenţialitate vă împiedică să modificaţi această înregistrare."
 
 #: addmedia.php:84
 #: addremotelink.php:51
 msgid "You have no access to"
-msgstr ""
+msgstr "Nu aveţi acces la"
 
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
 #: addremotelink.php:274
 msgid "Close Window"
-msgstr ""
+msgstr "Închide fereastra"
 
 #: addmedia.php:192
 msgid "Media file already exists."
-msgstr ""
+msgstr "Fişierul media există deja."
 
 #: addmedia.php:196
 #: addmedia.php:211
@@ -63,103 +63,103 @@ msgstr ""
 #: client.php:414
 #: client.php:424
 msgid "There was an error uploading your file."
-msgstr ""
+msgstr "A existat o eroare la uploadarea fişierului dumneavoastră."
 
 #: addmedia.php:207
 msgid "Media thumbnail already exists."
-msgstr ""
+msgstr "Thumbnailul media există deja."
 
 #: addmedia.php:273
 msgid "Blank name or illegal characters in name"
-msgstr ""
+msgstr "Nume gol sau caractere ilegale în nume"
 
 #: addmedia.php:303
 #: addmedia.php:454
 msgid "This file is linked to another genealogical database on this server.  It cannot be deleted, moved, or renamed until these links have been removed."
-msgstr ""
+msgstr "Acest fişier este legat de o altă bază de date genealogică de pe acest server.  Nu poate fi şters, mutat, sau redenumit până când aceste legături sunt şterse."
 
 #: addmedia.php:304
 #: addmedia.php:455
 msgid "Media file could not be moved or renamed."
-msgstr ""
+msgstr "Fişierul media nu a putut fi mutat sau redenumit."
 
 #: addmedia.php:305
 #: addmedia.php:456
 msgid "Media file could not be moved."
-msgstr ""
+msgstr "Fişierul media nu a putut fi mutat."
 
 #: addmedia.php:409
 msgid "Paste the following ID into your editing fields to reference the newly created record "
-msgstr ""
+msgstr "Lipiţi următorul ID în câmpurile dumneavoastră de editare pentru a referi înregistrarea proaspăt creată "
 
 #: addmedia.php:415
 #: addmedia.php:564
 #: addmedia.php:572
 msgid "Update successful"
-msgstr ""
+msgstr "Actualizare reuşită"
 
 #: addremotelink.php:36
 #: addremotelink.php:116
 #: addsearchlink.php:63
 msgid "Add Remote Link"
-msgstr ""
+msgstr "Adaugă link de la distanţă"
 
 #: addremotelink.php:64
 msgid "You have selected the same site."
-msgstr ""
+msgstr "Aţi ales acelaşi site."
 
 #: addremotelink.php:67
 msgid "You have selected a remote site."
-msgstr ""
+msgstr "Aţi ales un site de la distanţă."
 
 #: addremotelink.php:75
 #: addremotelink.php:85
 #: addremotelink.php:183
 msgid "Site"
-msgstr ""
+msgstr "Site"
 
 #: addremotelink.php:80
 msgid "Database ID"
-msgstr ""
+msgstr "ID-ul bazei de date"
 
 #: addremotelink.php:121
 #: addsearchlink.php:74
 msgid "Relationship to current person"
-msgstr ""
+msgstr "Relaţia cu persoana curentă"
 
 #: addremotelink.php:140
 msgid "Site Location"
-msgstr ""
+msgstr "Locaţia siteului"
 
 #: addremotelink.php:150
 msgid "Local site"
-msgstr ""
+msgstr "Acelaşi site"
 
 #: addremotelink.php:158
 #: addremotelink.php:188
 msgid "Existing remote site"
-msgstr ""
+msgstr "Foloseşte un site existent."
 
 #: addremotelink.php:163
 msgid "New remote site"
-msgstr ""
+msgstr "Site diferit"
 
 #: addremotelink.php:173
 msgid "Person ID"
-msgstr ""
+msgstr "ID-ul persoanei"
 
 #: addremotelink.php:202
 msgid "Type in a new site."
-msgstr ""
+msgstr "Tipăriţi un nou site."
 
 #: addremotelink.php:205
 #: addremotelink.php:227
 msgid "Title:"
-msgstr ""
+msgstr "Titlu:"
 
 #: addremotelink.php:208
 msgid "Site URL:"
-msgstr ""
+msgstr "URL-ul siteului:"
 
 #: addremotelink.php:211
 msgid "Example:"
@@ -185,7 +185,7 @@ msgstr ""
 
 #: addremotelink.php:250
 msgid "Admin Option"
-msgstr ""
+msgstr "Opţiunea de administrator"
 
 #: addremotelink.php:256
 msgid "Do not update the CHAN (Last Change) record"
@@ -199,35 +199,35 @@ msgstr "Adaugă soţie"
 
 #: addsearchlink.php:31
 msgid "Add Local Link"
-msgstr ""
+msgstr "Adaugă legătură locală"
 
 #: addsearchlink.php:77
 msgid "Same as current"
-msgstr ""
+msgstr "La fel ca şi persoana curentă"
 
 #: addsearchlink.php:78
 msgid "Mother"
-msgstr ""
+msgstr "Mama"
 
 #: addsearchlink.php:79
 msgid "Father"
-msgstr ""
+msgstr "Tatăl"
 
 #: addsearchlink.php:80
 msgid "Husband"
-msgstr ""
+msgstr "Soţ"
 
 #: addsearchlink.php:81
 msgid "Wife"
-msgstr ""
+msgstr "Soţie"
 
 #: addsearchlink.php:82
 msgid "Son"
-msgstr ""
+msgstr "Fiu"
 
 #: addsearchlink.php:83
 msgid "Daughter"
-msgstr ""
+msgstr "Fiică"
 
 #: admin.php:51
 #: admin.php:137
@@ -348,7 +348,7 @@ msgstr ""
 
 #: admin.php:266
 msgid "User administration"
-msgstr ""
+msgstr "Administrare utilizatori"
 
 #: admin.php:268
 msgid "Backup"
@@ -380,7 +380,7 @@ msgstr ""
 
 #: admin.php:302
 msgid "Loading..."
-msgstr ""
+msgstr "Încărcare..."
 
 #: admin.php:314
 msgid "Content of log file"
@@ -391,7 +391,7 @@ msgstr ""
 #: ancestry.php:237
 #: ancestry.php:254
 msgid "Ancestry Chart"
-msgstr ""
+msgstr "Diagrama strămoşilor"
 
 #: ancestry.php:72
 #: compact.php:82
@@ -414,16 +414,16 @@ msgstr "Lista numelor"
 
 #: ancestry.php:105
 msgid "Booklet"
-msgstr ""
+msgstr "Broşură"
 
 #: ancestry.php:123
 msgid "Show cousins"
-msgstr ""
+msgstr "Arată verişorii"
 
 #: ancestry.php:130
 #: calendar.php:404
 msgid "Individuals"
-msgstr ""
+msgstr "Indivizi"
 
 #: ancestry.php:136
 #: calendar.php:405
@@ -435,7 +435,7 @@ msgstr "Rearanjează familiile"
 #: branches.php:74
 #: compact.php:90
 msgid "View"
-msgstr ""
+msgstr "Vizualizează"
 
 #: ancestry.php:149
 #: branches.php:241
@@ -444,11 +444,11 @@ msgstr ""
 
 #: ancestry.php:170
 msgid "Show Details"
-msgstr ""
+msgstr "Arată detaliile"
 
 #: ancestry.php:192
 msgid "Click on any of the boxes to get more information about that person."
-msgstr ""
+msgstr "Daţi click pe oricare din cutii pentru a obţine mai multe informaţii despre acea persoană."
 
 #: autocomplete.php:196
 msgid "Age"
@@ -477,11 +477,11 @@ msgstr "Cautare după cum credeţi că se scrie numele (Soundex)"
 
 #: branches.php:79
 msgid "Basic"
-msgstr ""
+msgstr "De bază"
 
 #: branches.php:81
 msgid "Daitch-Mokotoff"
-msgstr ""
+msgstr "Daitch-Mokotoff"
 
 #: branches.php:104
 msgid "Pedigree Chart Root Person"
@@ -489,39 +489,39 @@ msgstr ""
 
 #: branches.php:166
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 #: calendar.php:102
 msgid "Anniversary Calendar"
-msgstr ""
+msgstr "Calendar aniversar"
 
 #: calendar.php:122
 msgid "On This Day ..."
-msgstr ""
+msgstr "În această zi ..."
 
 #: calendar.php:125
 msgid "In This Month ..."
-msgstr ""
+msgstr "În această lună ..."
 
 #: calendar.php:128
 msgid "In This Year ..."
-msgstr ""
+msgstr "În acest an ..."
 
 #: calendar.php:137
 msgid "Day:"
-msgstr ""
+msgstr "Zi:"
 
 #: calendar.php:152
 msgid "Month:"
-msgstr ""
+msgstr "Lună:"
 
 #: calendar.php:172
 msgid "Year:"
-msgstr ""
+msgstr "An:"
 
 #: calendar.php:182
 msgid "Show"
-msgstr ""
+msgstr "Arată"
 
 #: calendar.php:187
 #: calendar.php:204
@@ -530,17 +530,17 @@ msgstr ""
 #: calendar.php:209
 #: calendar.php:441
 msgid "All People"
-msgstr ""
+msgstr "Toate persoanele"
 
 #: calendar.php:191
 #: calendar.php:518
 msgid "Living People"
-msgstr ""
+msgstr "Persoanele în viaţă"
 
 #: calendar.php:195
 #: calendar.php:521
 msgid "Recent Years (&lt; 100 yrs)"
-msgstr ""
+msgstr "Anii recenţi (&lt; 100 ani)"
 
 #: calendar.php:201
 #, fuzzy
@@ -621,7 +621,7 @@ msgstr "Emigrare"
 
 #: calendar.php:274
 msgid "Custom Event"
-msgstr ""
+msgstr "Eveniment personalizat"
 
 #: calendar.php:282
 #: calendar.php:284
@@ -632,7 +632,7 @@ msgstr "Vizualizează arhiva"
 #: calendar.php:287
 #: calendar.php:289
 msgid "View Month"
-msgstr ""
+msgstr "Vezi luna"
 
 #: calendar.php:292
 #: calendar.php:294
@@ -652,21 +652,21 @@ msgstr "Rearanjează familiile"
 
 #: calendar.php:477
 msgid "Day not set"
-msgstr ""
+msgstr "Nu seta"
 
 #: calendar.php:524
 #: calendar.php:606
 msgid "Male"
-msgstr ""
+msgstr "Bărbat"
 
 #: calendar.php:527
 #: calendar.php:610
 msgid "Female"
-msgstr ""
+msgstr "Femeie"
 
 #: calendar.php:536
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: calendar.php:614
 msgid "unknown"
@@ -730,45 +730,45 @@ msgstr "Căruciorul cu decupaje"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
-msgstr ""
+msgstr "Ce alte linkuri de la această familie mai doriţi să adăugaţi ?"
 
 #: clippings.php:62
 msgid "Add just this family record."
-msgstr ""
+msgstr "Adaugă înregistrarea doar pentru această familie."
 
 #: clippings.php:63
 msgid "Add parents' records together with this family record."
-msgstr ""
+msgstr "Adaugă înregistrările părinţilor împreună cu înregistrearea acestei familii."
 
 #: clippings.php:64
 msgid "Add parents' and children's records together with this family record."
-msgstr ""
+msgstr "Adaugă înregistrările copiilor împreună cu înregistrearea acestei familii."
 
 #: clippings.php:65
 msgid "Add parents' and all descendants' records together with this family record."
-msgstr ""
+msgstr "Adaugă înregistrările părinţilor şi ale tuturor descendenţilor împreună cu înregistrearea acestei familii."
 
 #: clippings.php:66
 #: clippings.php:87
 #: clippings.php:99
 msgid "Continue Adding"
-msgstr ""
+msgstr "Continuă adăugarea"
 
 #: clippings.php:74
 msgid "Which links from this person would you also like to add?"
-msgstr ""
+msgstr "Care linkuri de la această persoană mai doriţi să le adăugaţi ?"
 
 #: clippings.php:78
 msgid "Add just this person."
-msgstr ""
+msgstr "Adăugaţi doar această persoană."
 
 #: clippings.php:79
 msgid "Add this person, his parents, and siblings."
-msgstr ""
+msgstr "Adăugaţi această persoană, părinţii şi fraţii persoanei."
 
 #: clippings.php:80
 msgid "Add this person and his direct line ancestors."
-msgstr ""
+msgstr "Adaugaţi această persoană si linia directă de strămoşi."
 
 #: clippings.php:81
 #: clippings.php:83
@@ -779,19 +779,19 @@ msgstr "Numărul de zile de arătat"
 
 #: clippings.php:82
 msgid "Add this person, his direct line ancestors, and their families."
-msgstr ""
+msgstr "Adaugaţi această persoană, linia directă de strămoşi şi familiile lor."
 
 #: clippings.php:84
 msgid "Add this person, his spouse, and children."
-msgstr ""
+msgstr "Adaugaţi această persoană, soţul/soţia ei, şi copiii."
 
 #: clippings.php:85
 msgid "Add this person, his spouse, and all descendants."
-msgstr ""
+msgstr "Adaugaţi această persoană, soţul/soţia ei, şi toţi descendenţii."
 
 #: clippings.php:93
 msgid "Which records linked to this source should be added?"
-msgstr ""
+msgstr "Care înregistrări legate de această sursă ar trebui adăugate ?"
 
 #: clippings.php:97
 #, fuzzy
@@ -800,19 +800,19 @@ msgstr "Şterge această sursă"
 
 #: clippings.php:98
 msgid "Add this source and families/people linked to it."
-msgstr ""
+msgstr "Adaugă această sursă şi familiile/persoanele legate de ea."
 
 #: clippings.php:107
 msgid "Some items could not be added due to privacy restrictions"
-msgstr ""
+msgstr "Unele articole nu au putut fi adăugate din cauza restricţiilor de confidenţialitate"
 
 #: clippings.php:127
 msgid "Add Individual By ID"
-msgstr ""
+msgstr "Adaugă individ după ID"
 
 #: clippings.php:140
 msgid "Add"
-msgstr ""
+msgstr "Adaugă"
 
 #: clippings.php:150
 #, fuzzy
@@ -821,15 +821,15 @@ msgstr "Căruciorul cu decupaje"
 
 #: clippings.php:157
 msgid "File Information"
-msgstr ""
+msgstr "Informaţia despre fişier"
 
 #: clippings.php:159
 msgid "File Type"
-msgstr ""
+msgstr "Alegeţi tipul fişierului"
 
 #: clippings.php:168
 msgid "Zip File(s)"
-msgstr ""
+msgstr "Arhive Zip"
 
 #: clippings.php:171
 msgid "Include Media (automatically zips files)"
@@ -861,11 +861,11 @@ msgstr ""
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
-msgstr ""
+msgstr "Converteşte din UTF-8 în ANSI (ISO-8859-1)"
 
 #: clippings.php:215
 msgid "Remove custom PGV tags? (eg. _PGVU, _THUM)"
-msgstr ""
+msgstr "Stergeţi tag-urile PGV personalizate ? (ex. _PGVU, _THUM)"
 
 #: clippings.php:218
 msgid "Convert media path to"
@@ -919,12 +919,12 @@ msgstr ""
 #: descendancy.php:146
 #: descendancy.php:152
 msgid "Descendancy Chart"
-msgstr ""
+msgstr "Diagrama descendenţilor"
 
 #: descendancy.php:120
 #: edit_interface.php:296
 msgid "The requested GEDCOM record could not be found.  This could be caused by a link to an invalid person or by a corrupt GEDCOM file."
-msgstr ""
+msgstr "GEDCOM-ul dorit nu a fost găsit.  Cauza ar putea fi un link către o persoană invalidă sau un fişier GEDCOM corupt."
 
 #: dir_editor.php:87
 msgid "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" alt=\"\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing."
@@ -961,7 +961,7 @@ msgstr "Şterge numele"
 #: edit_interface.php:2464
 #: edit_interface.php:2725
 msgid "Cancel"
-msgstr ""
+msgstr "Anulează"
 
 #: dir_editor.php:240
 msgid "Remove all nonessential files"
@@ -974,7 +974,7 @@ msgstr ""
 
 #: downloadgedcom.php:136
 msgid "Options:"
-msgstr ""
+msgstr "Opţiuni:"
 
 #: downloadgedcom.php:169
 msgid ""
@@ -986,16 +986,16 @@ msgstr ""
 
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
-msgstr ""
+msgstr "Directorul rădăcină Media Firewall cerut nu există.  Trebuie să-l creaţi prima dată."
 
 #: editconfig_gedcom.php:444
 msgid "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable."
-msgstr ""
+msgstr "Directorul media protejat nu a putut fi creat în directorul radăcina Media Firewall.  Vă rugăm creaţi acest director şi faceţi-l să poată fi scris de către lume."
 
 #: editconfig_gedcom.php:456
 #: editconfig_gedcom.php:468
 msgid "The protected media directory in the Media Firewall root directory is not world writable. "
-msgstr ""
+msgstr "Directorul media protejat din directorul rădăcină Media Firewall nu se poate scrie de către lume. "
 
 #: editconfig_gedcom.php:487
 msgid "Download GEDCOM configuration."
@@ -1073,7 +1073,7 @@ msgstr ""
 #: editconfig_gedcom.php:2225
 #: edit_privacy.php:807
 msgid "Reset"
-msgstr ""
+msgstr "Resetare"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
@@ -1086,7 +1086,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:900
 msgid "Maximum upload size: "
-msgstr ""
+msgstr "Marimea de upload maximă: "
 
 #: editconfig_gedcom.php:903
 #: editconfig_gedcom.php:924
@@ -1105,7 +1105,7 @@ msgstr ""
 #: edit_merge.php:76
 #: edit_merge.php:79
 msgid "Unable to find record with ID"
-msgstr ""
+msgstr "Nu am găsit înregistrarea cu ID-ul"
 
 #: editconfig_gedcom.php:987
 msgid "Calendar format"
@@ -1178,7 +1178,7 @@ msgstr ""
 #: editlang_edit_settings.php:486
 #: edit_privacy.php:97
 msgid "No"
-msgstr ""
+msgstr "Nu"
 
 #: editconfig_gedcom.php:1013
 msgid "Display Hebrew Gershayim"
@@ -1368,11 +1368,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1331
 msgid "Welcome"
-msgstr ""
+msgstr "Bine aţi venit"
 
 #: editconfig_gedcom.php:1332
 msgid "MyGedView"
-msgstr ""
+msgstr "MyGedView"
 
 #: editconfig_gedcom.php:1337
 msgid "Welcome text on Login page"
@@ -1464,11 +1464,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1474
 msgid "Landscape"
-msgstr ""
+msgstr "Peisaj"
 
 #: editconfig_gedcom.php:1475
 msgid "Portrait"
-msgstr ""
+msgstr "Portret"
 
 #: editconfig_gedcom.php:1480
 msgid "Place levels to show in person boxes"
@@ -1511,7 +1511,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1509
 msgid "Personal Facts and Details"
-msgstr ""
+msgstr "Fapte personale şi detalii"
 
 #: editconfig_gedcom.php:1510
 msgid "Notes"
@@ -1529,7 +1529,7 @@ msgstr "Găseşte media"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
-msgstr ""
+msgstr "Rude apropiate"
 
 #: editconfig_gedcom.php:1514
 msgid "Tree"
@@ -1553,11 +1553,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1581
 msgid "after"
-msgstr ""
+msgstr "după"
 
 #: editconfig_gedcom.php:1582
 msgid "before"
-msgstr ""
+msgstr "înainte"
 
 #: editconfig_gedcom.php:1587
 msgid "Maximum number of surnames"
@@ -1573,11 +1573,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1597
 msgid "Table"
-msgstr ""
+msgstr "Tabel"
 
 #: editconfig_gedcom.php:1598
 msgid "Tagcloud"
-msgstr ""
+msgstr "Nor de etichete"
 
 #: editconfig_gedcom.php:1608
 #: editconfig_gedcom.php:1609
@@ -1784,7 +1784,7 @@ msgstr ""
 #: editconfig_gedcom.php:1944
 #: edit_merge.php:150
 msgid "Record"
-msgstr ""
+msgstr "Înregistrarea"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
@@ -1961,7 +1961,7 @@ msgstr ""
 
 #: editgedcoms.php:187
 msgid "File not found."
-msgstr ""
+msgstr "Fişierul nu a fost găsit."
 
 #: editgedcoms.php:191
 msgid "Import"
@@ -2036,31 +2036,31 @@ msgstr ""
 
 #: editlang_edit_settings.php:357
 msgid "Sunday"
-msgstr ""
+msgstr "Duminică"
 
 #: editlang_edit_settings.php:357
 msgid "Monday"
-msgstr ""
+msgstr "Luni"
 
 #: editlang_edit_settings.php:357
 msgid "Tuesday"
-msgstr ""
+msgstr "Marţi"
 
 #: editlang_edit_settings.php:357
 msgid "Wednesday"
-msgstr ""
+msgstr "Miercuri"
 
 #: editlang_edit_settings.php:357
 msgid "Thursday"
-msgstr ""
+msgstr "Joi"
 
 #: editlang_edit_settings.php:357
 msgid "Friday"
-msgstr ""
+msgstr "Vineri"
 
 #: editlang_edit_settings.php:357
 msgid "Saturday"
-msgstr ""
+msgstr "Sâmbătă"
 
 #: editlang_edit_settings.php:378
 msgid "Text direction"
@@ -2117,7 +2117,7 @@ msgstr ""
 #: editnews.php:34
 #: editnews.php:52
 msgid "Add/Edit Journal/News entry"
-msgstr ""
+msgstr "Adaugă/Modifică articolul de jurnal/ştire"
 
 #: editnews.php:57
 #, fuzzy
@@ -2126,48 +2126,48 @@ msgstr "Stilul de prezentare"
 
 #: editnews.php:64
 msgid "Please enter some text for this News or Journal entry."
-msgstr ""
+msgstr "Vă rugăm introduceţi nişte text pentru această ştire / jurnal."
 
 #: editnews.php:88
 msgid "Entry Text:"
-msgstr ""
+msgstr "Textul intrării:"
 
 #: editnews.php:125
 msgid "News/Journal entry successfully saved."
-msgstr ""
+msgstr "Intrarea nouă pentru ştiri/jurnal a fost salvată cu succes."
 
 #: edituser.php:71
 msgid "Duplicate user name.  A user with that user name already exists.  Please choose another user name."
-msgstr ""
+msgstr "Nume de utilizator duplicat.  Există deja un utilizator cu acest nume.  Vă rugăm alegeţi alt nume de utilizator."
 
 #: edituser.php:85
 msgid "User name contains invalid characters"
-msgstr ""
+msgstr "Numele utilizatorului conţine caractere invalide"
 
 #: edituser.php:129
 msgid "You must enter a user name."
-msgstr ""
+msgstr "Trebuie să introduceţi un nume de utilizator."
 
 #: edituser.php:134
 #: edituser.php:139
 msgid "You must enter a first and last name."
-msgstr ""
+msgstr "Trebuie să introduceţi nume si prenume."
 
 #: edituser.php:144
 msgid "You must enter an email address."
-msgstr ""
+msgstr "Trebuie să introduceţi o adresă de email."
 
 #: edituser.php:149
 msgid "Passwords do not match."
-msgstr ""
+msgstr "Parolele nu corespund."
 
 #: edituser.php:154
 msgid "Passwords must contain at least 6 characters."
-msgstr ""
+msgstr "Parolele trebuie să conţină cel puţin 6 caractere."
 
 #: edituser.php:174
 msgid "My Account"
-msgstr ""
+msgstr "Contul meu"
 
 #: edituser.php:176
 #: edituser.php:301
@@ -2191,7 +2191,7 @@ msgstr "Editează numele"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
-msgstr ""
+msgstr "ID-ul înregistrării INDI GEDCOM"
 
 #: edituser.php:218
 msgid "Password"
@@ -2208,19 +2208,19 @@ msgstr "Parola"
 
 #: edituser.php:229
 msgid "Change Language"
-msgstr ""
+msgstr "Schimbă limba"
 
 #: edituser.php:245
 msgid "Email Address"
-msgstr ""
+msgstr "Adresă email"
 
 #: edituser.php:251
 msgid "My Theme"
-msgstr ""
+msgstr "Tema mea"
 
 #: edituser.php:253
 msgid "Site Default"
-msgstr ""
+msgstr "Setarea implicită"
 
 #: edituser.php:266
 msgid "Preferred Contact Method"
@@ -2243,20 +2243,20 @@ msgstr "Revizuieşte schimbările GEDCOM"
 #: edit_changes.php:66
 #: edit_changes.php:84
 msgid "Undo successful"
-msgstr ""
+msgstr "Anulare reuşită"
 
 #: edit_changes.php:71
 #: edit_changes.php:99
 msgid "Changes successfully accepted into database"
-msgstr ""
+msgstr "Modificarea a fost acceptată cu succes în baza de date"
 
 #: edit_changes.php:104
 msgid "There are currently no changes to be reviewed."
-msgstr ""
+msgstr "Nu există în prezent modificări care trebuie revizuite."
 
 #: edit_changes.php:116
 msgid "View Change Diff"
-msgstr ""
+msgstr "Vezi diferenţele modificării"
 
 #: edit_changes.php:117
 #, fuzzy
@@ -2266,33 +2266,33 @@ msgstr "Revizuieşte schimbările GEDCOM"
 #: edit_changes.php:118
 #: edit_interface.php:413
 msgid "Edit raw GEDCOM record"
-msgstr ""
+msgstr "Modifică înregistrarea GEDCOM în modul brut"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
-msgstr ""
+msgstr "Următoarele schimbări au fost făcute pentru această înregistrare:"
 
 #: edit_changes.php:122
 #: edit_changes.php:131
 msgid "Accept"
-msgstr ""
+msgstr "Acceptă"
 
 #: edit_changes.php:123
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
 #: edit_changes.php:125
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: edit_changes.php:127
 #: edit_changes.php:144
 msgid "Undo"
-msgstr ""
+msgstr "Anulează"
 
 #: edit_changes.php:136
 msgid "Send Message"
-msgstr ""
+msgstr "Trimite mesaj"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
@@ -2303,11 +2303,11 @@ msgstr "Schimbările recente"
 #: edit_changes.php:163
 #: edit_changes.php:181
 msgid "Undo all changes"
-msgstr ""
+msgstr "Anulează toate schimbările"
 
 #: edit_changes.php:181
 msgid "Are you sure you want to undo all of the changes for this GEDCOM?"
-msgstr ""
+msgstr "Sunteţi sigur(ă) că doriţi să anulaţi toate schimbările pentru acest GEDCOM ?"
 
 #: edit_changes.php:186
 msgid "Decide for each change to either accept or reject it.<br /><br />To accept all changes at once, click <b>\"Accept all changes\"</b> in the box below.<br />To get more information about a change,<br />click <b>\"View change diff\"</b> to see the differences,<br />or click <b>\"View GEDCOM record\"</b> to see the new data in GEDCOM format."
@@ -2339,11 +2339,11 @@ msgstr ""
 #: edit_interface.php:2076
 #: edit_merge.php:179
 msgid "GEDCOM record successfully deleted."
-msgstr ""
+msgstr "Înregistrarea GEDCOM a fost ştearsă cu succes."
 
 #: edit_interface.php:575
 msgid "Family"
-msgstr ""
+msgstr "Familie"
 
 #: edit_interface.php:580
 msgid "PEDI"
@@ -2351,20 +2351,20 @@ msgstr "Arborele de familie"
 
 #: edit_interface.php:584
 msgid "Adopted"
-msgstr ""
+msgstr "Adoptat"
 
 #: edit_interface.php:585
 msgid "Foster"
-msgstr ""
+msgstr "Tutore"
 
 #: edit_interface.php:586
 msgid "Sealing"
-msgstr ""
+msgstr "Sigiliu"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
 msgid "Set link"
-msgstr ""
+msgstr "Setează link"
 
 #: edit_interface.php:751
 #: edit_interface.php:902
@@ -2373,7 +2373,7 @@ msgstr ""
 #: edit_interface.php:1161
 #: edit_interface.php:1224
 msgid "You must provide a "
-msgstr ""
+msgstr "Trebuie să furnizaţi "
 
 #: edit_interface.php:751
 #: edit_interface.php:768
@@ -2387,7 +2387,7 @@ msgstr "Titlu"
 #: edit_interface.php:760
 #: edit_interface.php:838
 msgid "Create a new source"
-msgstr ""
+msgstr "Crează o nouă sursă"
 
 #: edit_interface.php:765
 msgid "ABBR"
@@ -2421,15 +2421,15 @@ msgstr "Număr apel"
 
 #: edit_interface.php:810
 msgid "Associate events with this source"
-msgstr ""
+msgstr "Asociaţi evenimentele cu această sursă"
 
 #: edit_interface.php:814
 msgid "Select Events"
-msgstr ""
+msgstr "Aleceţi evenimentele"
 
 #: edit_interface.php:891
 msgid "New source created successfully."
-msgstr ""
+msgstr "Sursă noua creată cu succes."
 
 #: edit_interface.php:911
 msgid "Create a new Shared Note"
@@ -2491,7 +2491,7 @@ msgstr "Şterge depozitul"
 
 #: edit_interface.php:1330
 msgid "Paste the following Repository ID into your editing fields to reference this Repository "
-msgstr ""
+msgstr "Lipiţi următorul ID de depozit în campurile dumneavoastră de editare pentru a referi acest depozit "
 
 #: edit_interface.php:2126
 #, fuzzy
@@ -2504,26 +2504,26 @@ msgstr "Rearanjează copiii"
 
 #: edit_interface.php:2322
 msgid "Sort by birth dates"
-msgstr ""
+msgstr "Sortează după datele naşterii"
 
 #: edit_interface.php:2350
 msgid "Child"
-msgstr ""
+msgstr "Copil"
 
 #: edit_interface.php:2362
 #: edit_interface.php:2371
 #: edit_interface.php:2405
 #: edit_interface.php:2425
 msgid "Spouse"
-msgstr ""
+msgstr "Soţ/soţie"
 
 #: edit_interface.php:2389
 msgid "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes."
-msgstr ""
+msgstr "Folosiţi această pagină pentru a schimba sau a şterge membri familiei.<br /><br />Pentru fiecare membru din familie, puteţi folosi linkul Modifică pentru a alege o persoană diferită care să umple acel rol în familie.  Puteţi de-asemenea să folosiţi linkul Şterge pentru a şterge acea persoană din familie.<br /><br />Când aţi terminat de modificat membri familiei, daţi click pe butonul Salvează pentru a salva schimbările."
 
 #: edit_interface.php:2394
 msgid "Change Family Members"
-msgstr ""
+msgstr "Modifică membri familiei"
 
 #: edit_interface.php:2412
 #: edit_interface.php:2432
@@ -2539,39 +2539,39 @@ msgstr "Rearanjează familiile"
 
 #: edit_interface.php:2724
 msgid "Sort by marriage date"
-msgstr ""
+msgstr "Sortează după data căsătoriei"
 
 #: edit_merge.php:58
 msgid "You entered the same IDs.  You cannot merge the same records."
-msgstr ""
+msgstr "Aţi introdus aceleaşi ID-uriYou .  Nu puteţi contopi aceleaşi înregistrări."
 
 #: edit_merge.php:91
 msgid "Records are not the same type.  Cannot merge records that are not the same type."
-msgstr ""
+msgstr "Înregistrările nu au acelaşi tip.  Nu se pot contopi înregistrările care nu au acelaşi tip."
 
 #: edit_merge.php:121
 msgid "Merge Step 2 of 3"
-msgstr ""
+msgstr "Pasul de contopire 2 din 3"
 
 #: edit_merge.php:123
 msgid "The following facts were exactly the same in both records and will be merged automatically."
-msgstr ""
+msgstr "Următoarele fapte au fost exact la fel în ambele înregistrări şi vor fi contopite automat."
 
 #: edit_merge.php:145
 msgid "No matching facts found"
-msgstr ""
+msgstr "Nu au fost găsite fapte care să se potrivească"
 
 #: edit_merge.php:148
 msgid "The following facts did not match.  Select the information you would like to keep."
-msgstr ""
+msgstr "Faptele următoare nu s-au potrivit.  Selectaţi informaţiile care aţi dori să le păstraţi."
 
 #: edit_merge.php:175
 msgid "Merge Step 3 of 3"
-msgstr ""
+msgstr "Pasul de contopire 3 din 3"
 
 #: edit_merge.php:191
 msgid "Updating linked record"
-msgstr ""
+msgstr "Actualizez înregistrarea ataşată"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
@@ -2590,38 +2590,38 @@ msgstr ""
 
 #: edit_merge.php:248
 msgid "Merge more records."
-msgstr ""
+msgstr "Contopeşte mai multe înregistrări."
 
 #: edit_merge.php:281
 msgid "Merge Step 1 of 3"
-msgstr ""
+msgstr "Pasul de contopire 1 din 3"
 
 #: edit_merge.php:284
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
-msgstr ""
+msgstr "Selectaţi două înregistrări GEDCOM pentru contopire.  Înregistrările trebuie sa fie de acelaşi tip."
 
 #: edit_merge.php:287
 msgid "Merge To ID:"
-msgstr ""
+msgstr "Contopiţi în ID-ul:"
 
 #: edit_merge.php:302
 #: edit_merge.php:319
 msgid "Find Individual ID"
-msgstr ""
+msgstr "Găseşte ID-ul individului"
 
 #: edit_merge.php:303
 #: edit_merge.php:320
 msgid "Find Family ID"
-msgstr ""
+msgstr "Găseşte ID-ul familiei"
 
 #: edit_merge.php:304
 #: edit_merge.php:321
 msgid "Find Source ID"
-msgstr ""
+msgstr "Găseşte ID-ul sursei"
 
 #: edit_merge.php:307
 msgid "Merge From ID:"
-msgstr ""
+msgstr "Contopiţi de la ID-ul:"
 
 #: edit_privacy.php:122
 #: edit_privacy.php:126
@@ -2786,7 +2786,7 @@ msgstr ""
 
 #: edit_privacy.php:633
 msgid "Choose: "
-msgstr ""
+msgstr "Alegeţi: "
 
 #: edit_privacy.php:647
 #: edit_privacy.php:685
@@ -2821,7 +2821,7 @@ msgstr ""
 
 #: expand_view.php:32
 msgid "Private"
-msgstr ""
+msgstr "Privat"
 
 #: expand_view.php:72
 #, fuzzy
@@ -2836,7 +2836,7 @@ msgstr "Această înregistrare a fost actualizată.  Daţi click aici pentru a a
 #: family.php:100
 #: familybook.php:218
 msgid "Parents"
-msgstr ""
+msgstr "Părinţi:"
 
 #: family.php:101
 msgid "Grandparents"
@@ -2844,55 +2844,55 @@ msgstr ""
 
 #: family.php:137
 msgid "Show couple on timeline chart"
-msgstr ""
+msgstr "Arată cuplu pe diagrama liniei temporale"
 
 #: family.php:137
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: family.php:138
 msgid "Show children on timeline chart"
-msgstr ""
+msgstr "Arată copiii pe diagrama cu linia temporală"
 
 #: family.php:138
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: family.php:139
 msgid "Show family on timeline chart"
-msgstr ""
+msgstr "Arată familia pe diagrama cu linia temporală"
 
 #: family.php:139
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #: family.php:141
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: family.php:159
 msgid "Search Engine Spider Detected"
-msgstr ""
+msgstr "Am detectat robot de motor de căutare"
 
 #: familybook.php:243
 #: fanchart.php:345
 msgid "Siblings"
-msgstr ""
+msgstr "Frate/soră"
 
 #: familybook.php:244
 #: fanchart.php:346
 msgid "Sibling"
-msgstr ""
+msgstr "Frate/soră"
 
 #: familybook.php:340
 msgid "Family of:&nbsp;"
-msgstr ""
+msgstr "Familie din:&nbsp;"
 
 #: familybook.php:371
 #: familybook.php:383
 #: familybook.php:387
 msgid "Family Book Chart"
-msgstr ""
+msgstr "Diagrama 'Albumul de familie'"
 
 #: familybook.php:458
 #: hourglass.php:115
@@ -2902,7 +2902,7 @@ msgstr "Arată toate sursele"
 
 #: familybook.php:481
 msgid "Descent Steps"
-msgstr ""
+msgstr "Paşi descendenţi"
 
 #: famlist.php:109
 #: famlist.php:121
@@ -2917,11 +2917,11 @@ msgstr ""
 
 #: famlist.php:184
 msgid "Skip Surname lists"
-msgstr ""
+msgstr "Exclude lista de nume de familie"
 
 #: famlist.php:187
 msgid "Show Surname lists"
-msgstr ""
+msgstr "Arată lista numelor de familie"
 
 #: famlist.php:194
 msgid "Exclude married names"
@@ -2938,24 +2938,24 @@ msgstr ""
 
 #: fanchart.php:105
 msgid "PHP server misconfiguration: GD 2.x library required to use image functions."
-msgstr ""
+msgstr "Serverul PHP este configurat greşit: librăria GD 2.x este necesară pentru a folosi funcţiile de imagini."
 
 #: fanchart.php:106
 #: fanchart.php:111
 msgid "http://www.php.net/gd"
-msgstr ""
+msgstr "http://www.php.net/gd"
 
 #: fanchart.php:110
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
-msgstr ""
+msgstr "Serverul PHP este configurat greşit: librăria FreeType este necesară pentru a folosi fonturi TrueType."
 
 #: fanchart.php:117
 msgid "Font file not found on PHP server"
-msgstr ""
+msgstr "Fişierul cu fontul nu a fost găsit pe serverul PHP"
 
 #: fanchart.php:295
 msgid "Pedigree Tree"
-msgstr ""
+msgstr "Arborele genealogic"
 
 #: fanchart.php:297
 msgid "Pedigree Map"
@@ -2972,14 +2972,14 @@ msgstr "Verifică relaţiile după căsătorie"
 #: fanchart.php:429
 #: fanchart.php:454
 msgid "Circle Diagram"
-msgstr ""
+msgstr "Diagrama cerc"
 
 #: fanchart.php:306
 #: hourglass.php:39
 #: hourglass.php:44
 #: hourglass.php:48
 msgid "Hourglass Chart"
-msgstr ""
+msgstr "Diagrama clepsidră"
 
 #: fanchart.php:307
 msgid "Interactive Tree"
@@ -2992,7 +2992,7 @@ msgstr "Lăţime"
 
 #: fanchart.php:498
 msgid "This Fanchart image cannot be printed directly by your browser. Use right-click then save and print."
-msgstr ""
+msgstr "Această imagine diagramă-evantai nu poate fi afişată direct pe în navigatorul dumneavoastră. Folosiţi clicul drept şi apoi salvează si tipăreşte."
 
 #: faq.php:159
 #: faq.php:247
@@ -3026,7 +3026,7 @@ msgstr "Vizibilitatea FAQ"
 
 #: faq.php:189
 msgid "No FAQ ID has been specified !"
-msgstr ""
+msgstr "Nu a fost specificat nici un ID pentru FAQ !"
 
 #: faq.php:202
 #: help_text.php:4149
@@ -3035,7 +3035,7 @@ msgstr ""
 
 #: faq.php:250
 msgid "The FAQ list is empty."
-msgstr ""
+msgstr "Lista FAQ este goală."
 
 #: faq.php:265
 #: help_text.php:5054
@@ -3049,12 +3049,12 @@ msgstr "Poziţia FAQ"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
-msgstr ""
+msgstr "Sunteţi sigur(ă) că doriţi să ştergeţi intrarea FAQ"
 
 #: find.php:97
 #: find.php:202
 msgid "Find Family List"
-msgstr ""
+msgstr "Găseşte listă de familii"
 
 #: find.php:100
 #: find.php:205
@@ -3083,16 +3083,16 @@ msgstr "Adaugă o notă nouă"
 #: find.php:116
 #: find.php:217
 msgid "Find Source"
-msgstr ""
+msgstr "Găseşte sursă"
 
 #: find.php:120
 #: find.php:220
 msgid "Find Special Characters"
-msgstr ""
+msgstr "Găseşte caractere speciale"
 
 #: find.php:163
 msgid "Please enter more than one character"
-msgstr ""
+msgstr "Vă rugăm introduceţi mai mult de un caracter"
 
 #: find.php:239
 #: find.php:259
@@ -3102,11 +3102,11 @@ msgstr "Lista numelor"
 
 #: find.php:283
 msgid "Media contains:"
-msgstr ""
+msgstr "Media conţine:"
 
 #: find.php:291
 msgid "Show thumbnails"
-msgstr ""
+msgstr "Arată thumbnailuri"
 
 #: find.php:296
 #: find.php:317
@@ -3114,15 +3114,15 @@ msgstr ""
 #: find.php:359
 #: find.php:380
 msgid "Display all"
-msgstr ""
+msgstr "Afişeaza toate"
 
 #: find.php:311
 msgid "Place contains:"
-msgstr ""
+msgstr "Locul conţine:"
 
 #: find.php:332
 msgid "Repository contains:"
-msgstr ""
+msgstr "Depozitul conţine:"
 
 #: find.php:353
 msgid "Shared Note contains:"
@@ -3130,11 +3130,11 @@ msgstr ""
 
 #: find.php:374
 msgid "Source contains:"
-msgstr ""
+msgstr "Sursa conţine:"
 
 #: find.php:403
 msgid "Magnify"
-msgstr ""
+msgstr "Măreşte"
 
 #: find.php:432
 #: find.php:457
@@ -3144,27 +3144,27 @@ msgstr ""
 #: find.php:693
 #: find.php:715
 msgid "No results found."
-msgstr ""
+msgstr "Nu au fost găsite rezultate."
 
 #: find.php:487
 msgid "Current directory"
-msgstr ""
+msgstr "Directorul curent"
 
 #: find.php:501
 msgid "External objects"
-msgstr ""
+msgstr "Obiecte externe"
 
 #: find.php:572
 msgid "The filename entered does not exist."
-msgstr ""
+msgstr "Numele de fişier introdus nu există."
 
 #: find.php:574
 msgid "Image Dimensions"
-msgstr ""
+msgstr "Dimensiunile imaginii"
 
 #: find.php:577
 msgid "This media object is linked to the following:"
-msgstr ""
+msgstr "Acest obiect media este legat de următoarele:"
 
 #: find.php:584
 #, fuzzy
@@ -3178,19 +3178,19 @@ msgstr "Vizualizează arhiva"
 
 #: find.php:593
 msgid "View Object"
-msgstr ""
+msgstr "Vizualizează obiect"
 
 #: find.php:599
 msgid "This media object is not linked to any GEDCOM record."
-msgstr ""
+msgstr "Acest obiect media nu este legat de nici o înregistrare GEDCOM."
 
 #: find.php:641
 msgid "Places found"
-msgstr ""
+msgstr "Locurile găsite"
 
 #: find.php:665
 msgid "Repositories found"
-msgstr ""
+msgstr "Găsit depozite"
 
 #: find.php:690
 msgid "Shared Notes found"
@@ -3296,7 +3296,7 @@ msgstr ""
 
 #: gedrecord.php:45
 msgid "This page has been disabled by the site administrator."
-msgstr ""
+msgstr "Această pagină a fost dezactivată de administratorul siteului."
 
 #: help_text.php:68
 msgid "Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, \"this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62).\"<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required."
@@ -5309,15 +5309,15 @@ msgstr "Modifică sexul"
 #: help_text.php:2474
 #: imageview.php:32
 msgid "Image Viewer"
-msgstr ""
+msgstr "Vizualizator de imagini"
 
 #: help_text.php:2479
 msgid "PhpGedView User Login"
-msgstr ""
+msgstr "Logare utilizator PhpGedView"
 
 #: help_text.php:2484
 msgid "PhpGedView Message"
-msgstr ""
+msgstr "Mesaj PhpGedView"
 
 #: help_text.php:2489
 msgid "Print logfile"
@@ -5330,7 +5330,7 @@ msgstr "Textul de ajutor pentru căutare"
 
 #: help_text.php:2499
 msgid "Statistics Plot"
-msgstr ""
+msgstr "Graficul statisticilor"
 
 #: help_text.php:2508
 msgid "This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev[\"BIRT\"]&nbsp;=&nbsp;\"*\";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character."
@@ -9282,35 +9282,35 @@ msgstr ""
 
 #: help_text.php:5555
 msgid "Help Contents"
-msgstr ""
+msgstr "Cuprins ajutor"
 
 #: imageview.php:180
 msgid "View image details"
-msgstr ""
+msgstr "Vezi detaliile imaginii"
 
 #: index.php:309
 #: index.php:370
 #: index_edit.php:199
 msgid "MyGedView Portal"
-msgstr ""
+msgstr "Portalul MyGedView"
 
 #: index.php:371
 msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
-msgstr ""
+msgstr "Pagina dumneavoastră MyGedView vă permite să păstraţi marcaje către persoanele dumneavoastră favorite, să urmăriţi evenimentele următoare, şi să colaboraţi cu alti utilizatori PhpGedView."
 
 #: index.php:445
 #: index_edit.php:472
 msgid "Customize MyGedView Portal"
-msgstr ""
+msgstr "Personalizaţi portalul MyGedView"
 
 #: index.php:451
 #: index_edit.php:473
 msgid "Customize this GEDCOM Welcome page"
-msgstr ""
+msgstr "Personalizaţi această pagină GEDCOM de introducere"
 
 #: index_edit.php:83
 msgid "?"
-msgstr ""
+msgstr "?"
 
 #: index_edit.php:154
 #: index_edit.php:158
@@ -9318,11 +9318,11 @@ msgstr ""
 #: index_edit.php:160
 #: index_edit.php:161
 msgid "&nbsp;"
-msgstr ""
+msgstr "&nbsp;"
 
 #: index_edit.php:231
 msgid "Configuration file updated successfully."
-msgstr ""
+msgstr "Fişierul de configurări a fost modificat cu succes."
 
 #: index_edit.php:278
 msgid "The cache files have been removed."
@@ -9330,53 +9330,53 @@ msgstr ""
 
 #: index_edit.php:285
 msgid "Configure"
-msgstr ""
+msgstr "Configurare"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
-msgstr ""
+msgstr "Acest bloc nu poate fi configurat."
 
 #: index_edit.php:478
 msgid "Main Section Blocks"
-msgstr ""
+msgstr "Blocurile din secţiunea principală"
 
 #: index_edit.php:483
 msgid "Available Blocks"
-msgstr ""
+msgstr "Blocurile disponibile"
 
 #: index_edit.php:486
 msgid "Right Section Blocks"
-msgstr ""
+msgstr "Blocurile din secţiunea din dreapta"
 
 #: index_edit.php:492
 #: index_edit.php:551
 msgid "Move Up"
-msgstr ""
+msgstr "Mută în sus"
 
 #: index_edit.php:494
 #: index_edit.php:553
 msgid "Move Down"
-msgstr ""
+msgstr "Mută în jos"
 
 #: index_edit.php:511
 msgid "Move Right"
-msgstr ""
+msgstr "Mută la dreapta"
 
 #: index_edit.php:531
 msgid "Move Left"
-msgstr ""
+msgstr "Mută la stânga"
 
 #: index_edit.php:560
 msgid "Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction."
-msgstr ""
+msgstr "Selectaţi un bloc din nume si apoi daţi click pe una din icoanele cu săgeţi pentru a muta blocul selectat în direcţia indicată."
 
 #: index_edit.php:565
 msgid "Use these blocks as the default block configuration for all users?"
-msgstr ""
+msgstr "Folosiţi aceste blocuri ca şi configuraţii iniţiale pentru blocurile tuturor utilizatorilor ?"
 
 #: index_edit.php:574
 msgid "Reset to Default Blocks"
-msgstr ""
+msgstr "Resetaţi la blocurile implicite"
 
 #: indilist.php:174
 msgid "Choose a letter to show individuals whose family name starts with that letter."
@@ -9384,27 +9384,27 @@ msgstr ""
 
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
-msgstr ""
+msgstr "Alegeţi o literă pentru a arăta indivizii al căror prenume începe cu litera respectivă."
 
 #: individual.php:287
 msgid "Hit Count:"
-msgstr ""
+msgstr "Contorul de accesări:"
 
 #: individual.php:294
 msgid "The information for this individual was linked from a remote site."
-msgstr ""
+msgstr "Informaţia pentru acest individ a fost legată de de la un site de la distanţă."
 
 #: individual.php:319
 msgid "Pedigree Chart"
-msgstr ""
+msgstr "Diagrama arborelui de familie"
 
 #: individual.php:321
 msgid "Timeline Chart"
-msgstr ""
+msgstr "Diagrama liniei temporale"
 
 #: individual.php:325
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: install.php:102
 #: install.php:391
@@ -9441,11 +9441,11 @@ msgstr ""
 
 #: install.php:470
 msgid "Next &gt;"
-msgstr ""
+msgstr "Următor &gt;"
 
 #: install.php:480
 msgid "&lt; Previous"
-msgstr ""
+msgstr "&lt; Anterior"
 
 #: install.php:502
 msgid "Checking for errors..."
@@ -9578,13 +9578,13 @@ msgstr ""
 #: login_register.php:168
 #: login_register.php:217
 msgid "You must enter a password."
-msgstr ""
+msgstr "Trebuie să introduceţi o parolă."
 
 #: install.php:1077
 #: login_register.php:174
 #: login_register.php:222
 msgid "You must confirm the password."
-msgstr ""
+msgstr "Trebuie să confirmaţi parola."
 
 #: install.php:1084
 msgid "Create the default administrative user."
@@ -9611,12 +9611,12 @@ msgstr "Şterge persoană"
 #: inverselink.php:53
 #: media.php:765
 msgid "To Family"
-msgstr ""
+msgstr "De familia"
 
 #: inverselink.php:56
 #: media.php:770
 msgid "To Source"
-msgstr ""
+msgstr "De sursa"
 
 #: inverselink.php:59
 #, fuzzy
@@ -9635,15 +9635,15 @@ msgstr "Găseşte media"
 
 #: inverselink.php:117
 msgid "Media ID"
-msgstr ""
+msgstr "ID media"
 
 #: inverselink.php:143
 msgid "Enter Individual ID"
-msgstr ""
+msgstr "Introduceţi ID-ul individului"
 
 #: inverselink.php:174
 msgid "Source"
-msgstr ""
+msgstr "Sursă"
 
 #: inverselink.php:188
 #, fuzzy
@@ -9653,98 +9653,98 @@ msgstr "Şterge depozitul"
 #: lifespan.php:41
 #: lifespan.php:54
 msgid "Lifespan Chart"
-msgstr ""
+msgstr "Diagrama duratei de viaţă"
 
 #: lifespan.php:66
 msgid "Add another person to chart:<br />Person ID:"
-msgstr ""
+msgstr "Adaugă altă persoană la diagramă:<br />ID persoană:"
 
 #: lifespan.php:70
 msgid "Include Immediate Family"
-msgstr ""
+msgstr "Include familia intermediară"
 
 #: lifespan.php:75
 msgid "Show Timeline chart"
-msgstr ""
+msgstr "Arată diagrama cu linia temporală"
 
 #: lifespan.php:303
 msgid "Speed"
-msgstr ""
+msgstr "Viteza"
 
 #: lifespan.php:304
 msgid "Begin Year"
-msgstr ""
+msgstr "Anul de început"
 
 #: lifespan.php:305
 msgid "End Year"
-msgstr ""
+msgstr "Anul de sfârşit"
 
 #: lifespan.php:321
 msgid "Search"
-msgstr ""
+msgstr "Caută"
 
 #: lifespan.php:322
 msgid "Clear Chart"
-msgstr ""
+msgstr "Goleşte diagrama"
 
 #: lifespan.php:329
 msgid "Individual"
-msgstr ""
+msgstr "Individ"
 
 #: login.php:120
 msgid "Unable to authenticate user."
-msgstr ""
+msgstr "Nu am putut autentifica utilizatorul."
 
 #: login.php:206
 #: login.php:226
 msgid "Login"
-msgstr ""
+msgstr "Autentificare"
 
 #: login.php:238
 msgid "Account Information"
-msgstr ""
+msgstr "Informaţia despre cont"
 
 #: login.php:239
 msgid "No account?"
-msgstr ""
+msgstr "Nu aveţi cont ?"
 
 #: login.php:240
 #: login_register.php:202
 #: login_register.php:283
 #: login_register.php:317
 msgid "Request new user account"
-msgstr ""
+msgstr "Cereţi un nou cont"
 
 #: login.php:241
 msgid "Lost your password?"
-msgstr ""
+msgstr "Aţi uitat parola ?"
 
 #: login.php:242
 msgid "Request new password"
-msgstr ""
+msgstr "Cereţi o nouă parolă"
 
 #: login_register.php:58
 #: login_register.php:80
 #: login_register.php:82
 #: login_register.php:94
 msgid "Lost password request"
-msgstr ""
+msgstr "Cerere pentru parolă uitată"
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
-msgstr ""
+msgstr "O nouă parolă a fost cerută pentru dumneavoastră."
 
 #: login_register.php:131
 msgid "Recommendation:"
-msgstr ""
+msgstr "Recomandare:"
 
 #: login_register.php:132
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
-msgstr ""
+msgstr "Vă rugăm să daţi click pe linkul de mai jos sau sa-l copiaţi si să-l lipiţi în navigatorul dumneavoastră, să vă autentificaţi cu noua parolă, şi s-o schimbaţi imediat pentru a vă păstra datele sigure."
 
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
-msgstr ""
+msgstr "Vă rog introduceţi relaţia dumneavoastră cu datele în câmpul de Comentarii."
 
 #: login_register.php:287
 #, fuzzy
@@ -9753,106 +9753,106 @@ msgstr "Nume utilizator"
 
 #: login_register.php:288
 msgid "Desired password"
-msgstr ""
+msgstr "Parola dorită"
 
 #: login_register.php:316
 #: login_register.php:433
 #: login_register.php:454
 msgid "Comments"
-msgstr ""
+msgstr "Comentarii"
 
 #: login_register.php:318
 msgid "Fields marked with * are mandatory."
-msgstr ""
+msgstr "Câmpurile marcate cu * sunt obligatorii."
 
 #: login_register.php:356
 msgid "New Account confirmation"
-msgstr ""
+msgstr "O nouă confirmare de cont"
 
 #: login_register.php:376
 #: login_register.php:405
 #: login_register.php:409
 #: login_register.php:486
 msgid "Back"
-msgstr ""
+msgstr "Înapoi"
 
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
-msgstr ""
+msgstr "Informaţia despre cerere este arătată sub linkul de mai jos."
 
 #: login_register.php:423
 msgid "Please click on the following link and fill in the requested data to confirm your request and email address."
-msgstr ""
+msgstr "Vă rugăm daţi click pe următorul link şi completaţi datele cerute şi adresa de email."
 
 #: login_register.php:432
 #: login_register.php:516
 msgid "Verification code:"
-msgstr ""
+msgstr "Codul de verificare:"
 
 #: login_register.php:434
 msgid "If you didn't request an account, you can just delete this message."
-msgstr ""
+msgstr "Dacă nu aţi cerut un cont, puteţi să ştergeţi acest mesaj."
 
 #: login_register.php:435
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
-msgstr ""
+msgstr "Nu veţi mai primi nici un email de la acest site, deoarece contul cerut va fi şters automat după 7 zile."
 
 #: login_register.php:444
 #: login_register.php:565
 msgid "Hello Administrator ..."
-msgstr ""
+msgstr "Bună administratore ..."
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
-msgstr ""
+msgstr "Utilizatorul a primit un email cu informaţia necesară pentru a confirma cererea lui de acces."
 
 #: login_register.php:456
 msgid "You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account."
-msgstr ""
+msgstr "Veţi fi informat prin email cand acest utilizator prospectiv a confirmat cererea sa.  Puteţi apoi să completaţi procesul prin activarea sa.  Noul utilizator nu va putea să se autentifice până nu veţi activa contul său."
 
 #: login_register.php:457
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
-msgstr ""
+msgstr "Veţi fi informat prin email cand acest utilizator prospectiv a confirmat cererea sa.  După aceasta, utilizatorul va putea să se autentifice fără nici o acţiune din partea voastră."
 
 #: login_register.php:506
 #: login_register.php:513
 #: login_register.php:541
 #: login_register.php:544
 msgid "User verification"
-msgstr ""
+msgstr "Verificarea utilizatorului"
 
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
-msgstr ""
+msgstr "Trimite"
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
-msgstr ""
+msgstr "Vă rugăm daţi clic pe linkul de mai jos pentru a vă loga pe siteul dumneavoastră.  Trebuie să editaţi utilizatorul pentru a-i activa contul, astfel încât să se poată autentifica pe siteul dumneavoastră."
 
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
-msgstr ""
+msgstr "Nu trebuie să faceţi nimic; utilizatorul se poate autentifica acum."
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
-msgstr ""
+msgstr "Aţi confirmat cererea dumneavoastră pentru a deveni un utilizator înregistrat."
 
 #: login_register.php:591
 msgid "The Administrator has been informed.  As soon as he gives you permission to login, you can login with your user name and password."
-msgstr ""
+msgstr "Administratorul a fost notificat.  De îndată ce vă dă permisiunea să vă autentificaţi, puteţi să vă autentificaţi cu utilizatorul si parola dumneavoastră."
 
 #: login_register.php:592
 msgid "You can now login with your user name and password."
-msgstr ""
+msgstr "Acum vă puteţi autentifica folosind utilizatorul si parola dumneavoastră."
 
 #: login_register.php:597
 msgid "Data was not correct, please try again"
-msgstr ""
+msgstr "Datele nu au fost corecte, vă rugăm încercaţi din nou"
 
 #: login_register.php:603
 msgid "Could not verify the information you entered.  Please try again or contact the site administrator for more information."
-msgstr ""
+msgstr "Nu am putut verifica informaţiile introduse de dumneavoastră.  Vă rugăm încercaţi din nou sau contactaţi administratorul siteului pentru mai multe informaţii."
 
 #: manageservers.php:118
 #: manageservers.php:121
@@ -9877,7 +9877,7 @@ msgstr ""
 
 #: manageservers.php:206
 msgid "Hide Details"
-msgstr ""
+msgstr "Ascunde detaliile"
 
 #: manageservers.php:231
 msgid "Manually mark Search Engines by IP"
@@ -9899,7 +9899,7 @@ msgstr "Şterge persoană"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
-msgstr ""
+msgstr "Sunteţi sigur(ă) că doriţi să ştergeţi această sursă din fişierul GEDCOM ?"
 
 #: manageservers.php:344
 msgid "View Connections"
@@ -9921,15 +9921,15 @@ msgstr ""
 
 #: media.php:100
 msgid "Media file moved."
-msgstr ""
+msgstr "Fişierul media a fost mutat."
 
 #: media.php:116
 msgid "The execution time limit was reached.  Try the command again to move the rest of the files."
-msgstr ""
+msgstr "Limita timpului de execuţie a fost atinsă.  Încercaţi din nou comanda pentru a muta restul de fişiere."
 
 #: media.php:173
 msgid "The execution time limit was reached.  Try the command again on a smaller directory."
-msgstr ""
+msgstr "Limita timpului de execuţie a fost atinsă.  Încercaţi din nou comanda pe un director mai mic."
 
 #: media.php:181
 #: media.php:189
@@ -9940,16 +9940,16 @@ msgstr "Setează permisiunile media"
 #: media.php:183
 #: media.php:191
 msgid "Permissions Not Set"
-msgstr ""
+msgstr "Permisiunile nu au fost setate"
 
 #: media.php:310
 msgid "Uploading media files is not allowed because multi-media items have been disabled or because the media directory is not writable."
-msgstr ""
+msgstr "Uploadarea fişierelor media nu este permisă deoarece articolele multimedia au fost dezactivate sau pentru că directorul media nu are drept de scriere."
 
 #: media.php:338
 #: media.php:339
 msgid "Directory does not exist."
-msgstr ""
+msgstr "Directorul nu există."
 
 #: media.php:373
 #: media.php:374
@@ -9960,12 +9960,12 @@ msgstr ""
 #: media.php:388
 #: media.php:389
 msgid "Directory not empty."
-msgstr ""
+msgstr "Directorul nu este gol."
 
 #: media.php:410
 #: media.php:411
 msgid "Media and thumbnail directories successfully removed."
-msgstr ""
+msgstr "Directoarele de Media şi thumbnail au fost şterse cu succes."
 
 #: media.php:414
 #: media.php:415
@@ -9978,31 +9978,31 @@ msgstr "Muta directoarele media"
 #: media.php:420
 #: media.php:421
 msgid "Media directory successfully removed."
-msgstr ""
+msgstr "Directorul media a fost şters cu succes."
 
 #: media.php:424
 #: media.php:425
 #: media.php:427
 #: media.php:428
 msgid "Thumbnail directory not removed."
-msgstr ""
+msgstr "Directorul cu thumbnailuri nu a fost şters."
 
 #: media.php:430
 #: media.php:431
 msgid "Thumbnail directory successfully removed."
-msgstr ""
+msgstr "Directorul cu thumbnailuri a fost şters cu succes."
 
 #: media.php:543
 #: media.php:901
 #: media.php:942
 msgid "Move to protected"
-msgstr ""
+msgstr "Mută în protejat"
 
 #: media.php:553
 #: media.php:899
 #: media.php:941
 msgid "Move to standard"
-msgstr ""
+msgstr "Mută în standard"
 
 #: media.php:562
 #: media.php:905
@@ -10018,12 +10018,12 @@ msgstr ""
 
 #: media.php:638
 msgid "This media object does not exist as a file on this server.  It cannot be deleted, moved, or renamed."
-msgstr ""
+msgstr "Acest obiect media nu există ca fişier pe acest server.  Nu poate fi şters, mutat, sau redenumit."
 
 #: media.php:646
 #: media.php:647
 msgid "Media file successfully deleted."
-msgstr ""
+msgstr "Fişierul media a fost şters cu succes."
 
 #: media.php:660
 #: media.php:661
@@ -10065,7 +10065,7 @@ msgstr "Şterge numele"
 
 #: media.php:1046
 msgid "Are you sure you want to remove this object from the database?"
-msgstr ""
+msgstr "Sunteţi sigur că doriţi să ştergeţi acest obiect din baza de date ?"
 
 #: media.php:1046
 #, fuzzy
@@ -10074,7 +10074,7 @@ msgstr "Şterge persoană"
 
 #: media.php:1081
 msgid "Create thumbnail"
-msgstr ""
+msgstr "Crează thumbnail"
 
 #: media.php:1170
 msgid "The media folder is corrupted."
@@ -10082,15 +10082,15 @@ msgstr ""
 
 #: mediafirewall.php:319
 msgid "Error: The Media Firewall was launched from a directory other than the media directory."
-msgstr ""
+msgstr "Eroare: Media Firewall a fost lansat dintr-un director diferit de directorul media."
 
 #: mediafirewall.php:335
 msgid "No Media Found"
-msgstr ""
+msgstr "Nu am găsit media"
 
 #: mediafirewall.php:352
 msgid "Privacy restrictions prevent you from viewing this item"
-msgstr ""
+msgstr "Restricţiile de confidenţialitate vă împiedică să vedeţi acest articol"
 
 #: mediafirewall.php:530
 #, fuzzy
@@ -10100,11 +10100,11 @@ msgstr "Această informaţie este privată şi nu poate fi aratată."
 #: medialist.php:53
 #: medialist.php:57
 msgid "MultiMedia Objects"
-msgstr ""
+msgstr "Lista obiectelor multimedia"
 
 #: medialist.php:131
 msgid "Media objects per page"
-msgstr ""
+msgstr "obiecte media pe pagină"
 
 #: medialist.php:169
 msgid "Apply filter"
@@ -10112,7 +10112,7 @@ msgstr ""
 
 #: medialist.php:216
 msgid "Media Objects found"
-msgstr ""
+msgstr "Obiecte media găsite"
 
 #: medialist.php:334
 #: medialist.php:336
@@ -10137,15 +10137,15 @@ msgstr ""
 #: medialist.php:404
 #: medialist.php:408
 msgid "Media Format"
-msgstr ""
+msgstr "Formatul media"
 
 #: mediaviewer.php:104
 msgid "Download File"
-msgstr ""
+msgstr "Descarcă fişier"
 
 #: mediaviewer.php:143
 msgid "The image relates to:"
-msgstr ""
+msgstr "Imaginea se referă la:"
 
 #: mediaviewer.php:147
 msgid "Total links"
@@ -10154,41 +10154,41 @@ msgstr ""
 #: message.php:47
 #: message.php:52
 msgid "No recipient user was provided.  Cannot continue."
-msgstr ""
+msgstr "Nu a fost specificat nici un destinatar.  Nu se poate continua."
 
 #: message.php:70
 #: message.php:79
 #: message.php:159
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "Vă rugăm introduceţi o adresă de email validă."
 
 #: message.php:167
 msgid "Please enter a message subject."
-msgstr ""
+msgstr "Vă rugăm introduceţi un subiect de mesaj."
 
 #: message.php:172
 msgid "Please enter some message text before sending."
-msgstr ""
+msgstr "Vă rugăm introduceţi textul mesalului înainte de a trimite."
 
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
-msgstr ""
+msgstr "<b>Vă rugăm tineţi minte:</b> Informaţiile private ale indivizilor aflaţi în viaţă vor fi date doar rudelor familiei şi prietenilor apropiaţi.  Veţi fi rugat(ă) să verificaţi relaţia dumneavoastră înainte să primiţi orice date private.  Câteodată informaţiile persoanelor decedate pot de-asemenea să fie private.  Dacă acesta este cazul, este din cauză că nu se cunosc destule informaţii despre persoană pentru a determina dacă sunt în viaţă sau nu şi probabil nu avem mai multe informaţii despre această persoană.<br /><br />Înainte de a pune o întrebare, vă rugăm verificaţi că puneţi întrebarea despre persoana corectă prin verificarea datelor, locurilor, şi a rudelor apropiate.  Dacă trimiteţi modificări la datele genealogice, vă rugăm includeţi sursele de unde le-aţi obţinut."
 
 #: message.php:197
 msgid "Your Name:"
-msgstr ""
+msgstr "Numele dumneavoastră:"
 
 #: message.php:198
 msgid "Email Address:"
-msgstr ""
+msgstr "Adresa de email:"
 
 #: message.php:198
 msgid "Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  You email address will not be used in any other way besides responding to this inquiry."
-msgstr ""
+msgstr "Vă rugăm furnizaţi adresa dumneavoastră de email pentru a vă putea contacta în legătură cu acest mesaj.  Dacă nu furnizaţi adresa dumneavoastră de email nu vom putea să vă răspundem la întrebare.  Adresa dumneavoastră de email nu va fi folosită în nici un alt scop în afară de a vă răspunde la întrebare."
 
 #: message.php:200
 msgid "Subject:"
-msgstr ""
+msgstr "Subiect:"
 
 #: message.php:211
 #, fuzzy
@@ -10197,15 +10197,15 @@ msgstr "Conţinut FAQ"
 
 #: message.php:218
 msgid "Message Deleted"
-msgstr ""
+msgstr "Mesaj şters"
 
 #: module.php:214
 msgid "Unknown action: [action]."
-msgstr ""
+msgstr "Acţiune necunoscută: [action]."
 
 #: module.php:224
 msgid "Unknown module type."
-msgstr ""
+msgstr "Tipul modulului necunoscut."
 
 #: module_admin.php:42
 msgid "Show to public"
@@ -10266,7 +10266,7 @@ msgstr "Şterge numele"
 #: module_admin.php:303
 #: module_admin.php:354
 msgid "Description"
-msgstr ""
+msgstr "Descriere"
 
 #: module_admin.php:205
 msgid "Version / PGV"
@@ -10328,7 +10328,7 @@ msgstr ""
 #: placelist.php:58
 #: placelist.php:312
 msgid "Place Hierarchy"
-msgstr ""
+msgstr "Ierarhia locurilor"
 
 #: placelist.php:55
 #: placelist.php:59
@@ -10339,12 +10339,12 @@ msgstr "Lista numelor"
 
 #: placelist.php:118
 msgid "Place connections found"
-msgstr ""
+msgstr "Plasează conexiunile găsite"
 
 #: placelist.php:125
 #: placelist.php:157
 msgid "Top Level"
-msgstr ""
+msgstr "Nivelul superior"
 
 #: placelist.php:307
 #: placelist.php:432
@@ -10356,36 +10356,36 @@ msgstr "Pagina"
 
 #: placelist.php:309
 msgid "Place Hierarchy after"
-msgstr ""
+msgstr "Ierarhia locurilor după"
 
 #: placelist.php:354
 msgid "View all records found in this place"
-msgstr ""
+msgstr "Vizualizează toate înregistrările găsite în acest loc"
 
 #: placelist.php:468
 msgid "Total Unique Places"
-msgstr ""
+msgstr "Toate locurile unice"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
-msgstr ""
+msgstr "Arata locurile în ierarhie"
 
 #: placelist.php:477
 msgid "Show All Places in a List"
-msgstr ""
+msgstr "Arată toate locurile într-o listă"
 
 #: placelist.php:483
 #: placelist.php:488
 msgid "Places are encoded in the form: "
-msgstr ""
+msgstr "Locurile sunt codificate în forma: "
 
 #: placelist.php:488
 msgid "City, County, State/Province, Country"
-msgstr ""
+msgstr "Oraş, Judeţ, Stat/Provincie, Ţară"
 
 #: placelist.php:488
 msgid "(Default)"
-msgstr ""
+msgstr "(Implicit)"
 
 #: printlog.php:90
 #: printlog.php:112
@@ -10419,22 +10419,22 @@ msgstr ""
 #: relationship.php:140
 #: relationship.php:141
 msgid "Mother-in-law"
-msgstr ""
+msgstr "Mother-in-law"
 
 #: relationship.php:143
 #: relationship.php:144
 msgid "Father-in-law"
-msgstr ""
+msgstr "Father-in-law"
 
 #: relationship.php:149
 #: relationship.php:154
 msgid "Step-Mother"
-msgstr ""
+msgstr "Mama vitregă"
 
 #: relationship.php:157
 #: relationship.php:162
 msgid "Step-Father"
-msgstr ""
+msgstr "Tatăl vitreg"
 
 #: relationship.php:169
 #: relationship.php:171
@@ -10445,27 +10445,27 @@ msgstr ""
 #: relationship.php:177
 #: relationship.php:178
 msgid "Brother-in-law"
-msgstr ""
+msgstr "Brother-in-law"
 
 #: relationship.php:185
 #: relationship.php:186
 msgid "Daughter-in-law"
-msgstr ""
+msgstr "Daughter-in-law"
 
 #: relationship.php:188
 #: relationship.php:189
 msgid "Son-in-law"
-msgstr ""
+msgstr "Son-in-law"
 
 #: relationship.php:194
 #: relationship.php:195
 msgid "step daughter"
-msgstr ""
+msgstr "step daughter"
 
 #: relationship.php:197
 #: relationship.php:198
 msgid "step son"
-msgstr ""
+msgstr "step son"
 
 #: relationship.php:209
 #: relationship.php:210
@@ -10473,7 +10473,7 @@ msgstr ""
 #: relationship.php:223
 #, php-format
 msgid "%2$d x great niece"
-msgstr ""
+msgstr "%2$d x strănepoată"
 
 #: relationship.php:212
 #: relationship.php:213
@@ -10481,17 +10481,17 @@ msgstr ""
 #: relationship.php:226
 #, php-format
 msgid "%2$d x great nephew"
-msgstr ""
+msgstr "%2$d x strănepot"
 
 #: relationship.php:233
 #: relationship.php:234
 msgid "Step-Sister"
-msgstr ""
+msgstr "Sora vitregă"
 
 #: relationship.php:236
 #: relationship.php:237
 msgid "Step-Brother"
-msgstr ""
+msgstr "Fratele vitreg"
 
 #: relationship.php:251
 #: relationship.php:252
@@ -10503,7 +10503,7 @@ msgstr ""
 #: relationship.php:343
 #, php-format
 msgid "%2$d x great aunt"
-msgstr ""
+msgstr "%2$d x mătuşă"
 
 #: relationship.php:254
 #: relationship.php:255
@@ -10515,7 +10515,7 @@ msgstr ""
 #: relationship.php:346
 #, php-format
 msgid "%2$d x great uncle"
-msgstr ""
+msgstr "%2$d x great uncle"
 
 #: relationship.php:293
 #: relationship.php:294
@@ -10523,7 +10523,7 @@ msgstr ""
 #: relationship.php:302
 #, php-format
 msgid "%3$d x great granddaughter"
-msgstr ""
+msgstr "%3$d x strănepoată"
 
 #: relationship.php:296
 #: relationship.php:297
@@ -10531,21 +10531,21 @@ msgstr ""
 #: relationship.php:305
 #, php-format
 msgid "%3$d x great grandson"
-msgstr ""
+msgstr "%3$d x strănepot"
 
 #: relationship.php:313
 #: relationship.php:314
 #: relationship.php:383
 #: relationship.php:384
 msgid "Sister"
-msgstr ""
+msgstr "Soră"
 
 #: relationship.php:318
 #: relationship.php:319
 #: relationship.php:386
 #: relationship.php:387
 msgid "Brother"
-msgstr ""
+msgstr "Frate"
 
 #: relationship.php:358
 #: relationship.php:359
@@ -10553,17 +10553,17 @@ msgstr ""
 #: relationship.php:368
 #, php-format
 msgid "%d x cousin"
-msgstr ""
+msgstr "%d x verişoară"
 
 #: relationship.php:375
 #: relationship.php:376
 msgid "Half-Sister"
-msgstr ""
+msgstr "Soră vitregă"
 
 #: relationship.php:378
 #: relationship.php:379
 msgid "Half-Brother"
-msgstr ""
+msgstr "Frate vitreg"
 
 #: relationship.php:419
 #: relationship.php:420
@@ -10571,33 +10571,33 @@ msgstr ""
 #: relationship.php:423
 #, php-format
 msgid "%1$s is the %2$s of %3$s."
-msgstr ""
+msgstr "%1$s is the %2$s of %3$s."
 
 #: relationship.php:485
 #: relationship.php:564
 msgid "Relationship Chart"
-msgstr ""
+msgstr "Diagrama relaţiilor"
 
 #: relationship.php:535
 msgid "and"
-msgstr ""
+msgstr "şi"
 
 #: relationship.php:579
 msgid "Person 1"
-msgstr ""
+msgstr "Persoana 1"
 
 #: relationship.php:609
 msgid "Person 2"
-msgstr ""
+msgstr "Persoana 2"
 
 #: relationship.php:677
 #: relationship.php:698
 msgid "Show path"
-msgstr ""
+msgstr "Arată calea"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
-msgstr ""
+msgstr "Nu s-a găsit nici o (altă) legătură între cei doi indivizi."
 
 #: relationship.php:737
 msgid "No other link between the two individuals could be found."
@@ -10606,7 +10606,7 @@ msgstr ""
 #: reportengine.php:147
 #: reportengine.php:153
 msgid "Choose a report to run"
-msgstr ""
+msgstr "Alegeţi ce raport doriţi să rulaţi"
 
 #: reportengine.php:154
 #, fuzzy
@@ -10616,7 +10616,7 @@ msgstr "Şterge depozitul"
 #: reportengine.php:170
 #: reportengine.php:219
 msgid "Enter report values"
-msgstr ""
+msgstr "Introduceţi valorile raportului"
 
 #: reportengine.php:220
 #, fuzzy
@@ -10625,16 +10625,16 @@ msgstr "Şterge depozitul"
 
 #: reportengine.php:312
 msgid "Select a date"
-msgstr ""
+msgstr "Selectaţi o dată"
 
 #: reportengine.php:344
 msgid "Download report"
-msgstr ""
+msgstr "Descărcaţi report"
 
 #: rss.php:116
 #: rss.php:119
 msgid "Feed created by PhpGedView"
-msgstr ""
+msgstr "Feed creat de PhpGedView"
 
 #: rss.php:192
 #: rss.php:209
@@ -10644,74 +10644,74 @@ msgstr ""
 #: rss.php:309
 #: rss.php:328
 msgid "genealogy"
-msgstr ""
+msgstr "genealogie"
 
 #: rss.php:321
 msgid "Feed not available"
-msgstr ""
+msgstr "Feed-ul nu este disponibil"
 
 #: rss.php:323
 msgid "There is no RSS feed available for this PhpGedView site"
-msgstr ""
+msgstr "Nu există nici un feed RSS disponibil pentru acest site PhpGedView"
 
 #: search.php:85
 msgid "Please enter a Given name, Last name, or Place in addition to Year"
-msgstr ""
+msgstr "Vă rog introduceţi un prenume, nume, sau locaţie pe lângă an"
 
 #: search.php:126
 msgid "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender "
-msgstr ""
+msgstr "Vă rugăm introduceţi una din următoarele informaţii:  Nume, Data naşterii, Locul naşterii, Data decesului, Locul decesului, şi sexul "
 
 #: search.php:129
 msgid "Please search again with more information than just gender"
-msgstr ""
+msgstr "Vă rugăm căutaţi din nou cu mai multe informaţii decât sexul"
 
 #: search.php:163
 #: search.php:584
 #: search.php:596
 #: search.php:616
 msgid "General Search"
-msgstr ""
+msgstr "Căutare generală"
 
 #: search.php:169
 #: search.php:263
 msgid "Enter Search terms"
-msgstr ""
+msgstr "Introduceţi termenii de căutare"
 
 #: search.php:183
 #: search.php:275
 msgid "Search for"
-msgstr ""
+msgstr "Căutare pentru"
 
 #: search.php:219
 msgid "Exclude Filter"
-msgstr ""
+msgstr "Exclude filtru"
 
 #: search.php:227
 msgid "Exclude some non-genealogical data"
-msgstr ""
+msgstr "Exclude unele date care nu sunt de natură genealogică"
 
 #: search.php:234
 msgid "Off"
-msgstr ""
+msgstr "Oprit"
 
 #: search.php:240
 #: search.php:382
 msgid "Associates"
-msgstr ""
+msgstr "Asociaţi"
 
 #: search.php:246
 #: search.php:387
 msgid "Show related persons/families"
-msgstr ""
+msgstr "Arată persoanele/familiile înrudite"
 
 #: search.php:270
 msgid "Replace with"
-msgstr ""
+msgstr "Înlocuieşte cu"
 
 #: search.php:293
 msgid "Entire record"
-msgstr ""
+msgstr "Înregistrare întreagă"
 
 #: search.php:299
 msgid "Whole words only"
@@ -10734,11 +10734,11 @@ msgstr "Antet"
 
 #: search.php:354
 msgid "Soundex type:"
-msgstr ""
+msgstr "Tip soundex:"
 
 #: search.php:369
 msgid "Individuals'<br />names to print:"
-msgstr ""
+msgstr "Numele indivizilor<br />de listat:"
 
 #: search.php:374
 #, fuzzy
@@ -10747,34 +10747,34 @@ msgstr "Lista numelor"
 
 #: search.php:377
 msgid "All names"
-msgstr ""
+msgstr "Toate numele"
 
 #: search.php:399
 #: search.php:578
 #: search.php:590
 #: search.php:604
 msgid "Multi Site Search"
-msgstr ""
+msgstr "Căutare pe mai multe site-uri"
 
 #: search.php:404
 msgid "Sites to search"
-msgstr ""
+msgstr "Caută în siteuri"
 
 #: search.php:428
 msgid "No known Servers<br />No results will be found"
-msgstr ""
+msgstr "Nu există servere cunoscute<br />Nici un rezultat nu va fi găsit"
 
 #: search.php:439
 msgid "Basic site search"
-msgstr ""
+msgstr "Cautare de bază pe site"
 
 #: search.php:443
 msgid "search"
-msgstr ""
+msgstr "caută"
 
 #: search.php:455
 msgid "Advanced site search"
-msgstr ""
+msgstr "Căutare avansată pe site"
 
 #: search.php:461
 #, fuzzy
@@ -10783,19 +10783,19 @@ msgstr "Lista numelor"
 
 #: search.php:473
 msgid "Birth date: "
-msgstr ""
+msgstr "Data naşterii: "
 
 #: search.php:481
 msgid "Birth Place: "
-msgstr ""
+msgstr "Locul naşterii: "
 
 #: search.php:489
 msgid "Death date: "
-msgstr ""
+msgstr "Data decesului: "
 
 #: search.php:497
 msgid "Death Place: "
-msgstr ""
+msgstr "Locul decesului: "
 
 #: search.php:505
 #, fuzzy
@@ -10804,21 +10804,21 @@ msgstr "Modifică sexul"
 
 #: search.php:522
 msgid "Databases to search in"
-msgstr ""
+msgstr "Bazele de date în care se face căutarea"
 
 #: search.php:548
 msgid "Results per page"
-msgstr ""
+msgstr "Rezultate pe pagină"
 
 #: search.php:563
 msgid "Other Searches"
-msgstr ""
+msgstr "Alte căutari"
 
 #: search.php:569
 #: search.php:585
 #: search.php:617
 msgid "Soundex Search"
-msgstr ""
+msgstr "Căutare soundex"
 
 #: search.php:570
 #: search.php:586
@@ -10829,19 +10829,19 @@ msgstr ""
 
 #: searchhelp.php:89
 msgid "Any word"
-msgstr ""
+msgstr "Orice cuvânt"
 
 #: searchhelp.php:92
 msgid "All words"
-msgstr ""
+msgstr "Toate cuvintele"
 
 #: searchhelp.php:95
 msgid "Exact phrase"
-msgstr ""
+msgstr "Fraza exactă"
 
 #: searchhelp.php:100
 msgid "Search in"
-msgstr ""
+msgstr "Caută în"
 
 #: searchhelp.php:104
 #, fuzzy
@@ -10850,19 +10850,19 @@ msgstr "Nume utilizator"
 
 #: searchhelp.php:107
 msgid "Modules Help"
-msgstr ""
+msgstr "Ajutorul pentru module"
 
 #: searchhelp.php:112
 msgid "Administrator Help"
-msgstr ""
+msgstr "Ajutorul pentru administrator"
 
 #: searchhelp.php:126
 msgid "Close window"
-msgstr ""
+msgstr "Închide fereastra"
 
 #: searchhelp.php:197
 msgid "Results found:"
-msgstr ""
+msgstr "Rezultatele găsite:"
 
 #: search_advanced.php:113
 #: search_advanced.php:166
@@ -10893,7 +10893,7 @@ msgstr ""
 #: statistics.php:714
 #: timeline.php:148
 msgid "years"
-msgstr ""
+msgstr "ani"
 
 #: search_advanced.php:167
 #: search_advanced.php:229
@@ -10932,15 +10932,15 @@ msgstr ""
 #: search_engine.php:69
 #: uploadgedcom.php:1106
 msgid "Welcome page"
-msgstr ""
+msgstr "Introducere"
 
 #: statistics.php:57
 msgid "Total males"
-msgstr ""
+msgstr "numărul de bărbaţi ="
 
 #: statistics.php:58
 msgid "Total females"
-msgstr ""
+msgstr "numărul de femei   ="
 
 #: statistics.php:59
 msgid "Total living"
@@ -10993,7 +10993,7 @@ msgstr ""
 
 #: statistics.php:113
 msgid "Average age at death"
-msgstr ""
+msgstr "Vârsta medie la momentul decesului"
 
 #: statistics.php:127
 msgid "Top age at death"
@@ -11068,7 +11068,7 @@ msgstr ""
 #: statistics.php:232
 #: statistics.php:558
 msgid "Age in year of marriage"
-msgstr ""
+msgstr "vârsta în anul căsătoriei"
 
 #: statistics.php:235
 msgid "Youngest male"
@@ -11112,7 +11112,7 @@ msgstr ""
 
 #: statistics.php:278
 msgid "Average number of children per family"
-msgstr ""
+msgstr "Numărul mediu de copii per familie"
 
 #: statistics.php:279
 msgid "Number of families without children"
@@ -11154,15 +11154,15 @@ msgstr ""
 #: statistics.php:331
 #: statistics.php:358
 msgid "Media objects"
-msgstr ""
+msgstr "Obiecte media"
 
 #: statistics.php:334
 msgid "Other records"
-msgstr ""
+msgstr "Alte înregistrări"
 
 #: statistics.php:345
 msgid "Total events"
-msgstr ""
+msgstr "Totalul de evenimente"
 
 #: statistics.php:348
 msgid "First event"
@@ -11210,39 +11210,39 @@ msgstr ""
 
 #: statistics.php:517
 msgid "Fill in the following parameters for the plot"
-msgstr ""
+msgstr "Completaţi următorii parametri pentru grafic"
 
 #: statistics.php:520
 msgid "Select chart type:"
-msgstr ""
+msgstr "de-a lungul axei X:"
 
 #: statistics.php:526
 msgid "Month of birth"
-msgstr ""
+msgstr "Luna naşterii"
 
 #: statistics.php:530
 msgid "Month of death"
-msgstr ""
+msgstr "Luna decesului"
 
 #: statistics.php:534
 msgid "Month of marriage"
-msgstr ""
+msgstr "Luna căsătoriei"
 
 #: statistics.php:538
 msgid "Month of first marriage"
-msgstr ""
+msgstr "Luna primei căsătorii"
 
 #: statistics.php:550
 msgid "Age related to birth year"
-msgstr ""
+msgstr "vârsta în relaţie cu anul naşterii"
 
 #: statistics.php:554
 msgid "Age related to death year"
-msgstr ""
+msgstr "vârsta în relaţie cu anul decesului"
 
 #: statistics.php:562
 msgid "Age in year of first marriage"
-msgstr ""
+msgstr "vârsta în anul primei căsătorii"
 
 #: statistics.php:566
 #: statisticsplot.php:785
@@ -11269,7 +11269,7 @@ msgstr ""
 #: statistics.php:588
 #: statistics.php:602
 msgid "boundaries for ages:"
-msgstr ""
+msgstr "Limitele axei X (vârste):"
 
 #: statistics.php:592
 #: statistics.php:594
@@ -11287,7 +11287,7 @@ msgstr ""
 
 #: statistics.php:614
 msgid "boundaries for month:"
-msgstr ""
+msgstr "Limitele axei X (luna):"
 
 #: statistics.php:617
 msgid "months after marriage"
@@ -11307,7 +11307,7 @@ msgstr ""
 
 #: statistics.php:626
 msgid "boundaries for numbers:"
-msgstr ""
+msgstr "Limitele axei X (numere):"
 
 #: statistics.php:629
 msgid "interval one child"
@@ -11359,11 +11359,11 @@ msgstr ""
 
 #: statistics.php:669
 msgid "Categories:"
-msgstr ""
+msgstr "de-a lungul axei Z"
 
 #: statistics.php:675
 msgid "none"
-msgstr ""
+msgstr "nimic"
 
 #: statistics.php:679
 #, fuzzy
@@ -11372,20 +11372,20 @@ msgstr "Antet"
 
 #: statistics.php:683
 msgid "date periods"
-msgstr ""
+msgstr "perioade de date"
 
 #: statistics.php:685
 msgid "boundaries for date periods:"
-msgstr ""
+msgstr "Limitele axei X (perioade de date):"
 
 #: statistics.php:719
 msgid "results:"
-msgstr ""
+msgstr "de-a lungul axei Y:"
 
 #: statistics.php:724
 #: statisticsplot.php:768
 msgid "numbers"
-msgstr ""
+msgstr "numerele pentru o familie"
 
 #: statistics.php:727
 #: statisticsplot.php:791
@@ -11395,16 +11395,16 @@ msgstr "Schimbările recente"
 
 #: statistics.php:735
 msgid "show the plot"
-msgstr ""
+msgstr "arată graficul"
 
 #: statistics.php:736
 msgid "reset"
-msgstr ""
+msgstr "resetează"
 
 #: statistics.php:751
 #: statistics.php:754
 msgid "Statistics"
-msgstr ""
+msgstr "Statistici"
 
 #: statistics.php:820
 #: statistics.php:821
@@ -11430,105 +11430,105 @@ msgstr ""
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid " not implemented:"
-msgstr ""
+msgstr " nu este implementat:"
 
 #: statisticsplot.php:728
 msgid "Jan"
-msgstr ""
+msgstr "Ian"
 
 #: statisticsplot.php:729
 msgid "Feb"
-msgstr ""
+msgstr "Feb"
 
 #: statisticsplot.php:730
 msgid "March"
-msgstr ""
+msgstr "Martie"
 
 #: statisticsplot.php:731
 msgid "April"
-msgstr ""
+msgstr "Aprilie"
 
 #: statisticsplot.php:732
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 #: statisticsplot.php:733
 msgid "June"
-msgstr ""
+msgstr "Iunie"
 
 #: statisticsplot.php:734
 msgid "July"
-msgstr ""
+msgstr "Iulie"
 
 #: statisticsplot.php:735
 msgid "Aug"
-msgstr ""
+msgstr "Aug"
 
 #: statisticsplot.php:736
 msgid "Sep"
-msgstr ""
+msgstr "Sep"
 
 #: statisticsplot.php:737
 msgid "Oct"
-msgstr ""
+msgstr "Oct"
 
 #: statisticsplot.php:738
 msgid "Nov"
-msgstr ""
+msgstr "Nov"
 
 #: statisticsplot.php:739
 msgid "Dec"
-msgstr ""
+msgstr "Dec"
 
 #: statisticsplot.php:805
 msgid " per gender"
-msgstr ""
+msgstr " / bărbat-femeie"
 
 #: statisticsplot.php:807
 msgid " per time period"
-msgstr ""
+msgstr " / pe perioada de timp"
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "Counts "
-msgstr ""
+msgstr "Numără "
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "of"
-msgstr ""
+msgstr "din"
 
 #: statisticsplot.php:928
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: timeline.php:38
 msgid "PhpGedView Timeline"
-msgstr ""
+msgstr "Linia temporală PhpGedView"
 
 #: timeline.php:298
 msgid "Show Age Marker"
-msgstr ""
+msgstr "Arată markerul vârstă"
 
 #: timeline.php:337
 msgid "Zoom In"
-msgstr ""
+msgstr "Măreşte"
 
 #: timeline.php:338
 msgid "Zoom Out"
-msgstr ""
+msgstr "Micşorează"
 
 #: timeline.php:345
 msgid "Show Lifespan chart"
-msgstr ""
+msgstr "Arată diagrama cu durata de viaţă"
 
 #: timeline.php:350
 msgid "In most recent browsers you can click and drag the boxes around on the chart."
-msgstr ""
+msgstr "În cele mai recente navigatoare puteţi da click şi să trageţi cutiile în jurul diagramei."
 
 #: uploadgedcom.php:173
 #: uploadgedcom.php:1056
@@ -11605,7 +11605,7 @@ msgstr ""
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
 msgid "Do not change"
-msgstr ""
+msgstr "Nu schimbaţi"
 
 #: uploadgedcom.php:795
 msgid "Import complete"
@@ -11616,7 +11616,7 @@ msgstr ""
 #: uploadgedcom.php:1128
 #: uploadgedcom.php:1133
 msgid "sec."
-msgstr ""
+msgstr "sec."
 
 #: uploadgedcom.php:805
 msgid "Please be patient"
@@ -11642,7 +11642,7 @@ msgstr ""
 #: uploadgedcom.php:1104
 #: uploadgedcom.php:1117
 msgid "Execution time:"
-msgstr ""
+msgstr "Timpul de execuţie:"
 
 #: uploadgedcom.php:1105
 #, fuzzy
@@ -11836,11 +11836,11 @@ msgstr ""
 
 #: useradmin.php:1094
 msgid "Send message to users who have never logged in"
-msgstr ""
+msgstr "Trimite mesaje utilizatorilor care nu s-au logat niciodată"
 
 #: useradmin.php:1095
 msgid "Send message to users who have not logged in for 6 months"
-msgstr ""
+msgstr "Trimite mesaje utilizatorilor care nu s-au mai logat în ultimele 6 luni"
 
 #: useradmin.php:1153
 msgid "Total number of users"
@@ -11987,23 +11987,23 @@ msgstr "Stilul diagramei"
 #: blocks/charts.php:167
 #: blocks/gedcom_favorites.php:130
 msgid "No such ID exists in this GEDCOM file."
-msgstr ""
+msgstr "Nu există acest ID în acest fisier GEDCOM."
 
 #: blocks/gedcom_block.php:36
 msgid "GEDCOM Welcome"
-msgstr ""
+msgstr "Introducere GEDCOM"
 
 #: blocks/gedcom_favorites.php:36
 msgid "GEDCOM Favorites"
-msgstr ""
+msgstr "Favoriţii GEDCOM"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
-msgstr ""
+msgstr "Favoriţii acestui GEDCOM"
 
 #: blocks/gedcom_favorites.php:100
 msgid "Are you sure you want to remove this item from your list of Favorites?"
-msgstr ""
+msgstr "Sunteţi sigur(ă) că doriţi să ştergeţi acest element din lista dumneavoastră de favoriţi ?"
 
 #: blocks/gedcom_favorites.php:155
 #, fuzzy
@@ -12012,32 +12012,32 @@ msgstr "Adaugă o notă nouă"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
-msgstr ""
+msgstr "Introduceţi o persoană, familie sau ID sursă"
 
 #: blocks/gedcom_favorites.php:173
 msgid "OR<br />Enter a URL and a title"
-msgstr ""
+msgstr "sau<br />Introduceţi un URL şi un titlu"
 
 #: blocks/gedcom_favorites.php:178
 msgid "Enter an optional note about this favorite"
-msgstr ""
+msgstr "Introduceţi o notă opţională pentru acest favorit"
 
 #: blocks/gedcom_news.php:36
 msgid "GEDCOM News"
-msgstr ""
+msgstr "Ştiri GEDCOM"
 
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
 msgid "News"
-msgstr ""
+msgstr "Ştiri"
 
 #: blocks/gedcom_news.php:91
 msgid "No News articles have been submitted."
-msgstr ""
+msgstr "Nu a fost trimisă nici o ştire."
 
 #: blocks/gedcom_news.php:159
 msgid "Are you sure you want to delete this News entry?"
-msgstr ""
+msgstr "Sunteţi sigur(ă) că doriţi să ştergeţi această ştire ?"
 
 #: blocks/gedcom_news.php:165
 #, fuzzy
@@ -12046,11 +12046,11 @@ msgstr "Adaugă o notă nouă"
 
 #: blocks/gedcom_news.php:196
 msgid "No limit"
-msgstr ""
+msgstr "Fără limită"
 
 #: blocks/gedcom_news.php:197
 msgid "Age of item"
-msgstr ""
+msgstr "Vârsta articolului"
 
 #: blocks/gedcom_news.php:198
 #, fuzzy
@@ -12061,42 +12061,42 @@ msgstr "Numărul de zile de arătat"
 #: blocks/gedcom_stats.php:91
 #: blocks/rss_block.php:70
 msgid "GEDCOM Statistics"
-msgstr ""
+msgstr "Statistici GEDCOM"
 
 #: blocks/gedcom_stats.php:145
 #: blocks/gedcom_stats.php:330
 msgid "Total users"
-msgstr ""
+msgstr "Toţi utilizatorii"
 
 #: blocks/gedcom_stats.php:159
 #: blocks/gedcom_stats.php:277
 msgid "Earliest birth year"
-msgstr ""
+msgstr "Cel mai devreme an al naşterii"
 
 #: blocks/gedcom_stats.php:166
 #: blocks/gedcom_stats.php:285
 msgid "Latest birth year"
-msgstr ""
+msgstr "Cel mai târziu an al naşterii"
 
 #: blocks/gedcom_stats.php:173
 #: blocks/gedcom_stats.php:293
 msgid "Earliest death year"
-msgstr ""
+msgstr "Cel mai devreme an al morţii"
 
 #: blocks/gedcom_stats.php:180
 #: blocks/gedcom_stats.php:301
 msgid "Latest death year"
-msgstr ""
+msgstr "Cel mai târziu an al morţii"
 
 #: blocks/gedcom_stats.php:188
 #: blocks/gedcom_stats.php:309
 msgid "Person who lived the longest"
-msgstr ""
+msgstr "Persoana care a trăit cel mai mult"
 
 #: blocks/gedcom_stats.php:204
 #: blocks/gedcom_stats.php:325
 msgid "Family with the most children"
-msgstr ""
+msgstr "Familia cu cei mai mulţi copii"
 
 #: blocks/gedcom_stats.php:219
 msgid "View statistics as graphs"
@@ -12104,15 +12104,15 @@ msgstr ""
 
 #: blocks/gedcom_stats.php:227
 msgid "Most Common Surnames"
-msgstr ""
+msgstr "Cele mai comune nume de familie"
 
 #: blocks/gedcom_stats.php:259
 msgid "Show common surnames?"
-msgstr ""
+msgstr "Arată lista de nume de familie comune ?"
 
 #: blocks/gedcom_stats.php:268
 msgid "Select the stats to show in this block"
-msgstr ""
+msgstr "Alegeţi statisticile care doriţi să le vedeţi în acest bloc"
 
 #: blocks/gedcom_stats.php:339
 msgid "Show link to Statistics charts?"
@@ -12138,7 +12138,7 @@ msgstr ""
 
 #: blocks/html_block.php:36
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: blocks/html_block.php:41
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -12146,7 +12146,7 @@ msgstr ""
 
 #: blocks/html_block.php:41
 msgid "to change what is printed here.</p>"
-msgstr ""
+msgstr "pentru a schimba ce este tipărit aici.</p>"
 
 #: blocks/logged_in.php:36
 #, fuzzy
@@ -12180,11 +12180,11 @@ msgstr[2] ""
 #: blocks/login_block.php:53
 #: blocks/login_block.php:61
 msgid "Logout"
-msgstr ""
+msgstr "Ieşire"
 
 #: blocks/login_block.php:58
 msgid "Logged in as "
-msgstr ""
+msgstr "Autentificat ca "
 
 #: blocks/random_media.php:38
 #, fuzzy
@@ -12194,23 +12194,23 @@ msgstr "Găseşte media"
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
 msgid "Random Picture"
-msgstr ""
+msgstr "Poză aleatoare"
 
 #: blocks/random_media.php:196
 msgid "Next image"
-msgstr ""
+msgstr "Următoarea imagine"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Play"
-msgstr ""
+msgstr "Start"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Stop"
-msgstr ""
+msgstr "Stop"
 
 #: blocks/random_media.php:341
 #, fuzzy
@@ -12223,11 +12223,11 @@ msgstr ""
 
 #: blocks/recent_changes.php:111
 msgid "Should this block be hidden when it is empty?"
-msgstr ""
+msgstr "Ascunde blocul când este gol ?"
 
 #: blocks/recent_changes.php:119
 msgid "If you hide an empty block, you will not be able to change its configuration until it becomes visible by no longer being empty."
-msgstr ""
+msgstr "Dacă ascundeţi un bloc gol, nu veţi putea să-i schimbaţi configuraţia până când devine vizibil (când nu mai este gol)."
 
 #: blocks/review_changes.php:39
 #, fuzzy
@@ -12236,52 +12236,52 @@ msgstr "Schimbările recente"
 
 #: blocks/review_changes.php:83
 msgid "PhpGedView - Review changes"
-msgstr ""
+msgstr "PhpGedView - Verificaţi modificările"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
-msgstr ""
+msgstr "Au fost făcute modificări online la o bază de date cu informaţii despre arborele genealogic.  Aceste schimbări trebuiesc verificate şi acceptate înainte să apară pentru toţi utilizatorii.  Vă rugăm folosiţi URL-ul de mai jos pentru a intra în acel site PhpGedView şi autentificaţi-vă pentru a verifica modificările."
 
 #: blocks/review_changes.php:113
 msgid "Last email reminder was sent "
-msgstr ""
+msgstr "Ultimul memento a fost trimis prin email la "
 
 #: blocks/review_changes.php:114
 msgid "Next email reminder will be sent after "
-msgstr ""
+msgstr "Următorul memento va fi trimis prin email după "
 
 #: blocks/review_changes.php:149
 msgid "Send out reminder emails?"
-msgstr ""
+msgstr "Trimiteţi emailuri pentru memento-uri ?"
 
 #: blocks/review_changes.php:158
 msgid "Reminder email frequency (days)"
-msgstr ""
+msgstr "Frecvenţa emailurilor pentru memento-uri (zile)"
 
 #: blocks/rss_block.php:38
 #: blocks/rss_block.php:53
 msgid "RSS Feeds"
-msgstr ""
+msgstr "Feed RSS"
 
 #: blocks/rss_block.php:69
 msgid "Upcoming Events"
-msgstr ""
+msgstr "Evenimentele următoare"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
-msgstr ""
+msgstr "Top 10 nume familie"
 
 #: blocks/theme_select.php:36
 msgid "Theme Select"
-msgstr ""
+msgstr "Alege tema"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
-msgstr ""
+msgstr "Schimbă tema"
 
 #: blocks/todays_events.php:38
 msgid "On This Day"
-msgstr ""
+msgstr "În această zi"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
@@ -12303,7 +12303,7 @@ msgstr ""
 #: blocks/upcoming_events.php:200
 #: blocks/yahrzeit.php:281
 msgid "Allow calendar events download?"
-msgstr ""
+msgstr "Permiteţi descărcarea evenimentelor din calendar ?"
 
 #: blocks/todo.php:39
 #: blocks/todo.php:72
@@ -12329,19 +12329,19 @@ msgstr "Numărul de zile de arătat"
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
 msgid "Most Viewed Items"
-msgstr ""
+msgstr "Cele mai vizualizate articole"
 
 #: blocks/top10_pageviews.php:77
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
-msgstr ""
+msgstr "Contoarele de accesări trebuie să fie activate în configuraţia GEDCOM-ului, secţiunea Afişare şi Dispunere, grupul Ascunde şi Arată."
 
 #: blocks/top10_pageviews.php:112
 msgid "There are currently no hits to show."
-msgstr ""
+msgstr "Nu există încă accesări de arătat."
 
 #: blocks/top10_pageviews.php:138
 msgid "Place counts before or after name?"
-msgstr ""
+msgstr "Plasează numerele inainte sau dupa nume ?"
 
 #: blocks/user_blog.php:36
 #, fuzzy
@@ -12350,15 +12350,15 @@ msgstr "Nume utilizator"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
-msgstr ""
+msgstr "Jurnalul meu"
 
 #: blocks/user_blog.php:56
 msgid "You have not created any Journal items."
-msgstr ""
+msgstr "Nu aţi creat încă nici un articol de jurnal."
 
 #: blocks/user_blog.php:90
 msgid "Are you sure you want to delete this Journal entry?"
-msgstr ""
+msgstr "Sunteţi sigur(ă) că doriţi să stergeţi această intrare din jurnal ?"
 
 #: blocks/user_blog.php:94
 #, fuzzy
@@ -12372,7 +12372,7 @@ msgstr "Nume utilizator"
 
 #: blocks/user_favorites.php:60
 msgid "My Favorites"
-msgstr ""
+msgstr "Favoriţii mei"
 
 #: blocks/user_messages.php:38
 #, fuzzy
@@ -12381,32 +12381,32 @@ msgstr "Nume utilizator"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
-msgstr ""
+msgstr "Mesajele mele"
 
 #: blocks/user_messages.php:58
 #: blocks/user_messages.php:128
 msgid "Are you sure you want to delete this message?  It cannot be retrieved later."
-msgstr ""
+msgstr "Sunteţi sigur(ă) că doriţi să ştergeţi acest mesaj ?  Nu poate fi recuperat mai târziu."
 
 #: blocks/user_messages.php:60
 msgid "You have no pending messages."
-msgstr ""
+msgstr "Nu aveţi nici un mesaj în aşteptare."
 
 #: blocks/user_messages.php:87
 msgid "Date Sent:"
-msgstr ""
+msgstr "Data trimiterii:"
 
 #: blocks/user_messages.php:126
 msgid "Reply"
-msgstr ""
+msgstr "Răspunde"
 
 #: blocks/user_messages.php:131
 msgid "Delete Selected Messages"
-msgstr ""
+msgstr "Ştergeţi mesajele selectate"
 
 #: blocks/user_messages.php:136
 msgid "Broadcast to all users"
-msgstr ""
+msgstr "Trimite tuturor utilizatorilor"
 
 #: blocks/user_welcome.php:36
 #, fuzzy
@@ -12415,21 +12415,21 @@ msgstr "Nume utilizator"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
-msgstr ""
+msgstr "Arborele meu genealogic"
 
 #: blocks/user_welcome.php:56
 msgid "My Individual Record"
-msgstr ""
+msgstr "Înregistrarea mea individuală"
 
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
 msgid "Upcoming Yahrzeiten"
-msgstr ""
+msgstr "Yahrzeiten următoare"
 
 #: blocks/yahrzeit.php:154
 #: blocks/yahrzeit.php:202
 msgid "Anniversary"
-msgstr ""
+msgstr "Aniversar"
 
 #: blocks/yahrzeit.php:218
 #, fuzzy
@@ -12438,15 +12438,15 @@ msgstr "Editează numele"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
-msgstr ""
+msgstr "Ascunse"
 
 #: includes/accesskeyHeaders.php:36
 msgid "Skip to Content"
-msgstr ""
+msgstr "Sari la conţinut"
 
 #: includes/accesskeyHeaders.php:36
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: includes/accesskeyHeaders.php:37
 #, fuzzy
@@ -12459,39 +12459,39 @@ msgstr "0"
 
 #: includes/accesskeyHeaders.php:38
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: includes/accesskeyHeaders.php:39
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: includes/authentication.php:93
 msgid "PhpGedView Authentication System"
-msgstr ""
+msgstr "Sistemul de autentificare PhpGedView"
 
 #: includes/authentication.php:95
 msgid "You must enter a valid login ID and password to access this resource"
-msgstr ""
+msgstr "Trebuie să introduceţi un ID de logare valid şi parolă pentru a accesa această resursă"
 
 #: includes/authentication.php:453
 #: includes/authentication.php:510
 msgid "This message was sent while viewing the following URL: "
-msgstr ""
+msgstr "Acest mesaj a fost trimis în timp ce se viziona următorul URL: "
 
 #: includes/authentication.php:461
 msgid "You sent the following message to a PhpGedView administrator:"
-msgstr ""
+msgstr "Aţi trimis următorul mesaj către un administrator PhpGedView:"
 
 #: includes/authentication.php:469
 msgid "You sent the following message to a PhpGedView user:"
-msgstr ""
+msgstr "Aţi trimis următorul mesaj către un utilizator PhpGedView:"
 
 #: includes/authentication.php:475
 #: includes/authentication.php:482
 #: includes/authentication.php:524
 #: includes/authentication.php:530
 msgid "The following message has been sent to your PhpGedView user account from "
-msgstr ""
+msgstr "Următorul mesaj a fost trimis către contul dumneavoastră PhpGedView de la "
 
 #: includes/family_nav.php:84
 msgid "Parents Family"
@@ -12767,12 +12767,12 @@ msgstr ""
 
 #: includes/classes/class_media.php:243
 msgid "Media Firewall error: >Unknown Mimetype< for file"
-msgstr ""
+msgstr "Eroare firewall media: >Mimetype necunoscut< pentru fişier"
 
 #: includes/classes/class_menubar.php:68
 #: includes/classes/class_menubar.php:115
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
@@ -12785,7 +12785,7 @@ msgstr "Stilul diagramei"
 #: includes/classes/class_menubar.php:545
 #: includes/classes/class_menubar.php:551
 msgid "Lists"
-msgstr ""
+msgstr "Liste"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
@@ -12796,35 +12796,35 @@ msgstr "Management Media"
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
 msgid "Reports"
-msgstr ""
+msgstr "Rapoarte"
 
 #: includes/classes/class_menubar.php:826
 msgid "Printer-friendly Version"
-msgstr ""
+msgstr "Versiune ce poate fi tipărită"
 
 #: includes/classes/class_menubar.php:932
 msgid "Help with this page"
-msgstr ""
+msgstr "Ajutor pentru această pagină"
 
 #: includes/classes/class_menubar.php:968
 msgid "Wiki Main Page"
-msgstr ""
+msgstr "Pagina Wiki principală"
 
 #: includes/classes/class_menubar.php:972
 msgid "Wiki User's Guide"
-msgstr ""
+msgstr "Ghidul utilizatorului Wiki"
 
 #: includes/classes/class_menubar.php:977
 msgid "Wiki Administrator's Guide"
-msgstr ""
+msgstr "Gidul administratorului Wiki"
 
 #: includes/classes/class_menubar.php:1118
 msgid "Favorites"
-msgstr ""
+msgstr "Favoriţi"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
-msgstr ""
+msgstr "Adaugă la favoriţii mei"
 
 #: includes/classes/class_note.php:49
 msgid "…"
@@ -12833,25 +12833,25 @@ msgstr ""
 #: includes/classes/class_person.php:576
 #: includes/classes/class_person.php:633
 msgid "Unable to find family with ID"
-msgstr ""
+msgstr "Nu am găsit familia cu ID-ul"
 
 #: includes/classes/class_person.php:760
 msgid "Family with Parents"
-msgstr ""
+msgstr "Familie cu părinţi"
 
 #: includes/classes/class_person.php:779
 #: includes/classes/class_person.php:786
 msgid "Father's Family with "
-msgstr ""
+msgstr "Familia tatălui cu "
 
 #: includes/classes/class_person.php:780
 #: includes/classes/class_person.php:785
 msgid "Mother's Family with "
-msgstr ""
+msgstr "Familia mamei cu "
 
 #: includes/classes/class_person.php:803
 msgid "Family with"
-msgstr ""
+msgstr "Familie cu"
 
 #: includes/classes/class_person.php:1836
 #, fuzzy
@@ -12860,11 +12860,11 @@ msgstr "Antet"
 
 #: includes/classes/class_person.php:1840
 msgid "month"
-msgstr ""
+msgstr "luna"
 
 #: includes/classes/class_person.php:1842
 msgid "months"
-msgstr ""
+msgstr "luni"
 
 #: includes/classes/class_stats.php:448
 #: includes/classes/class_stats.php:450
@@ -12894,7 +12894,7 @@ msgstr ""
 #: includes/classes/class_stats.php:783
 #: includes/classes/class_stats.php:785
 msgid "Living"
-msgstr ""
+msgstr "În viaţă"
 
 #: includes/classes/class_stats.php:774
 #: includes/classes/class_stats.php:777
@@ -12948,22 +12948,22 @@ msgstr "Lăţime"
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
 msgid "marriage"
-msgstr ""
+msgstr "căsătorie"
 
 #: includes/classes/class_stats.php:1924
 #: includes/classes/class_stats.php:3820
 msgid "adoption"
-msgstr ""
+msgstr "adopţie"
 
 #: includes/classes/class_stats.php:1925
 #: includes/classes/class_stats.php:3821
 msgid "burial"
-msgstr ""
+msgstr "înmormântare"
 
 #: includes/classes/class_stats.php:1926
 #: includes/classes/class_stats.php:3822
 msgid "census added"
-msgstr ""
+msgstr "adăugare recensământ"
 
 #: includes/classes/class_stats.php:2672
 #: includes/classes/class_stats.php:2673
@@ -13004,7 +13004,7 @@ msgstr ""
 #: includes/controllers/descendancy_ctrl.php:226
 #: includes/controllers/descendancy_ctrl.php:313
 msgid "Start at parents"
-msgstr ""
+msgstr "Începe la părinţi"
 
 #: includes/controllers/descendancy_ctrl.php:332
 #, fuzzy
@@ -13023,7 +13023,7 @@ msgstr "Editează numele"
 
 #: includes/controllers/family_ctrl.php:379
 msgid "Add a child to this family"
-msgstr ""
+msgstr "Adaugă un copil la această familie"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -13042,7 +13042,7 @@ msgstr "Şterge numele"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
-msgstr ""
+msgstr "Prin ştergerea familiei se dezleagă toţi indivizii unul de celălal dar indivizii ramân la locul lor.  Sunteţi sigur(ă) că doriţi să ştergeţi familia ?"
 
 #: includes/controllers/family_ctrl.php:509
 #: includes/controllers/individual_ctrl.php:732
@@ -13070,14 +13070,14 @@ msgstr ""
 
 #: includes/controllers/individual_ctrl.php:830
 msgid "Half-Sibling"
-msgstr ""
+msgstr "Frate vitreg"
 
 #: includes/controllers/individual_ctrl.php:836
 #: includes/controllers/individual_ctrl.php:837
 #: includes/controllers/individual_ctrl.php:838
 #: includes/controllers/individual_ctrl.php:855
 msgid "Partner"
-msgstr ""
+msgstr "Partener"
 
 #: includes/controllers/note_ctrl.php:80
 #: includes/controllers/note_ctrl.php:169
@@ -13095,12 +13095,12 @@ msgstr ""
 
 #: includes/controllers/remotelink_ctrl.php:400
 msgid "Successfully added link"
-msgstr ""
+msgstr "Linkul a fost adăugat cu succes"
 
 #: includes/controllers/repository_ctrl.php:79
 #: includes/controllers/repository_ctrl.php:168
 msgid "Repository Information"
-msgstr ""
+msgstr "Informaţii depozit"
 
 #: includes/controllers/repository_ctrl.php:198
 #, fuzzy
@@ -13109,40 +13109,40 @@ msgstr "Şterge depozitul"
 
 #: includes/controllers/repository_ctrl.php:217
 msgid "Are you sure you want to delete this Repository?"
-msgstr ""
+msgstr "Sunteţi sigur(ă) că doriţi să ştergeţi acest depozit din baza de date ?"
 
 #: includes/controllers/search_ctrl.php:819
 msgid "Be sure to select an option to search for."
-msgstr ""
+msgstr "Asiguraţi-vă că aţi selectat o opţiune după care să căutaţi."
 
 #: includes/controllers/search_ctrl.php:879
 msgid "People"
-msgstr ""
+msgstr "Oameni"
 
 #: includes/controllers/search_ctrl.php:883
 msgid "Site: "
-msgstr ""
+msgstr "Site: "
 
 #: includes/controllers/search_ctrl.php:883
 msgid " contained the following"
-msgstr ""
+msgstr " a conţinut următoarele"
 
 #: includes/controllers/search_ctrl.php:918
 msgid "to"
-msgstr ""
+msgstr "către"
 
 #: includes/controllers/search_ctrl.php:933
 msgid "Be sure to select at least one remote site."
-msgstr ""
+msgstr "Asiguraţi-vă că aţi selectat cel puţin un site îndepărtat."
 
 #: includes/controllers/search_ctrl.php:988
 msgid "Result Page"
-msgstr ""
+msgstr "Pagina cu rezultatul"
 
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
 msgid "Source Information"
-msgstr ""
+msgstr "Informaţia despre sursă"
 
 #: includes/controllers/source_ctrl.php:199
 #: includes/controllers/source_ctrl.php:206
@@ -13162,67 +13162,67 @@ msgstr ""
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "January"
-msgstr ""
+msgstr "Ianuarie"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "February"
-msgstr ""
+msgstr "Februarie"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "August"
-msgstr ""
+msgstr "August"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "September"
-msgstr ""
+msgstr "Septembrie"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "October"
-msgstr ""
+msgstr "Octombrie"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "November"
-msgstr ""
+msgstr "Noiembrie"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "December"
-msgstr ""
+msgstr "Decembrie"
 
 #: includes/extras/functions.pl.php:128
 #: includes/extras/functions.sl.php:113
 #: includes/functions/functions_date.php:82
 msgid "Infant"
-msgstr ""
+msgstr "Prunc"
 
 #: includes/extras/functions.pl.php:129
 #: includes/extras/functions.sl.php:114
 #: includes/functions/functions_date.php:83
 msgid "Stillborn"
-msgstr ""
+msgstr "Născut decedat"
 
 #: includes/extras/functions.pl.php:148
 #: includes/extras/functions.sl.php:123
 #: includes/functions/functions_date.php:88
 msgid "day"
-msgstr ""
+msgstr "zi"
 
 #: includes/extras/functions.pl.php:149
 #: includes/extras/functions.sl.php:124
 #: includes/functions/functions_date.php:89
 msgid "days"
-msgstr ""
+msgstr "zile"
 
 #: includes/extras/functions.pl.php:150
 #: includes/functions/functions_date.php:90
@@ -13236,11 +13236,11 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:366
 msgid "Informant"
-msgstr ""
+msgstr "Informator"
 
 #: includes/extras/functions.pl.php:370
 msgid "Lodger"
-msgstr ""
+msgstr "Locatar"
 
 #: includes/extras/functions.pl.php:374
 msgid "Slave"
@@ -13248,7 +13248,7 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:378
 msgid "Attending"
-msgstr ""
+msgstr "Participând la"
 
 #: includes/extras/functions.pl.php:382
 msgid "Guardian"
@@ -13256,11 +13256,11 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:386
 msgid "Nurse"
-msgstr ""
+msgstr "Asistentă"
 
 #: includes/extras/functions.pl.php:390
 msgid "Attendant"
-msgstr ""
+msgstr "Însoţitor"
 
 #: includes/extras/functions.pl.php:394
 msgid "Employee"
@@ -13268,15 +13268,15 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:398
 msgid "Friend"
-msgstr ""
+msgstr "Prieten"
 
 #: includes/extras/functions.pl.php:402
 msgid "Servant"
-msgstr ""
+msgstr "Servitor"
 
 #: includes/extras/functions.pl.php:406
 msgid "Seller"
-msgstr ""
+msgstr "Vânzător"
 
 #: includes/extras/functions.pl.php:410
 msgid "Owner"
@@ -13288,19 +13288,19 @@ msgstr ""
 
 #: includes/functions/functions.php:188
 msgid "File successfully uploaded"
-msgstr ""
+msgstr "Fişierul a fost uploadat cu succes"
 
 #: includes/functions/functions.php:191
 msgid "Uploaded file exceeds the allowed size"
-msgstr ""
+msgstr "Fişierul uploadat depăşeşte limita permisă"
 
 #: includes/functions/functions.php:193
 msgid "File was only partially uploaded, please try again"
-msgstr ""
+msgstr "Fişierul a fost uploadat doar parţial, vă rugăm încercaţi din nou"
 
 #: includes/functions/functions.php:195
 msgid "No file was received. Please upload again."
-msgstr ""
+msgstr "Nu a fost primit nici un fişier. Vă rugăm uploadaţi din nou."
 
 #: includes/functions/functions.php:197
 msgid "Missing PHP temporary directory"
@@ -13320,11 +13320,11 @@ msgstr ""
 
 #: includes/functions/functions.php:2004
 msgid "The script timed out before a relationship could be found."
-msgstr ""
+msgstr "Scriptul a expirat înainte ca o relaţie să fie găsită."
 
 #: includes/functions/functions_charts.php:288
 msgid "Children"
-msgstr ""
+msgstr "Copii"
 
 #: includes/functions/functions_charts.php:293
 #, fuzzy
@@ -13334,16 +13334,16 @@ msgstr "Adaugă copil"
 #: includes/functions/functions_charts.php:448
 #: includes/functions/functions_charts.php:938
 msgid "This family remained childless"
-msgstr ""
+msgstr "Această familie a rămas fără copii"
 
 #: includes/functions/functions_charts.php:487
 #: includes/functions/functions_charts.php:514
 msgid "Family Group Information"
-msgstr ""
+msgstr "Informaţii grup familie"
 
 #: includes/functions/functions_charts.php:521
 msgid "No facts for this family."
-msgstr ""
+msgstr "Nici un fapt pentru această familie."
 
 #: includes/functions/functions_charts.php:532
 #, fuzzy
@@ -13399,20 +13399,20 @@ msgstr "A Ă Â B C D E F G H I Î J K L M N O P Q R S Ş T Ţ U V W X Y Z"
 #: includes/functions/functions_edit.php:2376
 #: includes/functions/functions_edit.php:2385
 msgid "Please reload the previous page to make sure you are working with the most recent record."
-msgstr ""
+msgstr "Vă rugăm folosiţi butonul de 'Înapoi' de la navigatorul dumneavoastră şi reîncărcaţi pagina anterioară pentru a fi siguri că lucraţi cu cea mai recentă înregistrare."
 
 #: includes/functions/functions_edit.php:424
 #: includes/functions/functions_edit.php:746
 msgid "Save and go to new record"
-msgstr ""
+msgstr "Salvează şi trece la următoarea înregistrare"
 
 #: includes/functions/functions_edit.php:1371
 msgid "No Temple - Living Ordinance"
-msgstr ""
+msgstr "Nici un templu - Ordonanţă de viaţă"
 
 #: includes/functions/functions_edit.php:1458
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
-msgstr ""
+msgstr "Notă: Trebuie să activaţi facilitatea 'Foloseşte restricţia de intimitate GEDCOM (RESN)' pentru ca această setare să aibă efect."
 
 #: includes/functions/functions_edit.php:1674
 msgid "Shared Note using Assistant"
@@ -13432,7 +13432,7 @@ msgstr "Adaugă un articol media"
 #: includes/functions/functions_edit.php:2375
 #: includes/functions/functions_edit.php:2384
 msgid "An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it."
-msgstr ""
+msgstr "A apărut o eroare când se construia formularul de modificare.  Un alt utilizator s-ar putea să fi schimbat această înregistrare de când aţi vizionat-o ultima dată."
 
 #: includes/functions/functions_export.php:464
 #: includes/functions/functions_export.php:510
@@ -13484,7 +13484,7 @@ msgstr ""
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
 msgid "Invalid GEDCOM format"
-msgstr ""
+msgstr "Format GEDCOM invalid"
 
 #: includes/functions/functions_mediadb.php:120
 #: includes/functions/functions_mediadb.php:139
@@ -13500,73 +13500,73 @@ msgstr ""
 
 #: includes/functions/functions_mediadb.php:977
 msgid "Upload successful."
-msgstr ""
+msgstr "Upload reuşit."
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
 msgid "Upload"
-msgstr ""
+msgstr "Upload"
 
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
 msgid "Media file to upload"
-msgstr ""
+msgstr "Fişierul media de uploadat"
 
 #: includes/functions/functions_mediadb.php:1038
 #: includes/functions/functions_mediadb.php:1057
 #: includes/functions/functions_mediadb.php:1193
 #: includes/functions/functions_mediadb.php:1220
 msgid "Use the &laquo;Browse&raquo; button to search your local computer for the desired file."
-msgstr ""
+msgstr "Folosiţi butonul &laquo;Răsfoieşte&raquo; pentru a căuta în calculator fişierul dorit."
 
 #: includes/functions/functions_mediadb.php:1044
 #: includes/functions/functions_mediadb.php:1212
 msgid "Automatic thumbnail"
-msgstr ""
+msgstr "Thumbnalil automatic"
 
 #: includes/functions/functions_mediadb.php:1047
 #: includes/functions/functions_mediadb.php:1215
 msgid "Generate thumbnail automatically from "
-msgstr ""
+msgstr "Generează thumbnail automat din "
 
 #: includes/functions/functions_mediadb.php:1053
 #: includes/functions/functions_mediadb.php:1220
 msgid "Thumbnail to upload"
-msgstr ""
+msgstr "Thumbnailul de uploadat"
 
 #: includes/functions/functions_mediadb.php:1063
 #: includes/functions/functions_mediadb.php:1228
 #: includes/functions/functions_mediadb.php:1248
 msgid "File name on server"
-msgstr ""
+msgstr "Numele fişierului pe server"
 
 #: includes/functions/functions_mediadb.php:1067
 #: includes/functions/functions_mediadb.php:1229
 #: includes/functions/functions_mediadb.php:1256
 msgid "Do not change to keep original file name."
-msgstr ""
+msgstr "Nu schimbaţi pentru a păstra numele fişierului original."
 
 #: includes/functions/functions_mediadb.php:1076
 #: includes/functions/functions_mediadb.php:1282
 msgid "Folder name on server"
-msgstr ""
+msgstr "Numele directorului pe server"
 
 #: includes/functions/functions_mediadb.php:1083
 #: includes/functions/functions_mediadb.php:1290
 msgid "Other folder... please type in"
-msgstr ""
+msgstr "Alt director... vă rugăm tipăriţi"
 
 #: includes/functions/functions_mediadb.php:1157
 msgid "Enter or search for the ID of the person, family, or source to which this media item should be linked."
-msgstr ""
+msgstr "Introduceţi sau căutaţi ID-ul persoanei, familiei, sau sursei cu care ar trebui să fie legat acest articol."
 
 #: includes/functions/functions_mediadb.php:1230
 msgid "You may enter a URL, beginning with &laquo;http://&raquo;."
-msgstr ""
+msgstr "Puteţi introduce un URL, începând cu &laquo;http://&raquo;."
 
 #: includes/functions/functions_mediadb.php:1312
 msgid "This entry is ignored if you have entered a URL into the file name field."
-msgstr ""
+msgstr "Această intrare este ignorată dacă aţi introdus un URL în câmpul numelui."
 
 #. I18N: This is the country/chapman code for "Unknown"
 #: includes/functions/functions_places.php:333
@@ -13576,68 +13576,68 @@ msgstr "Necunoscută"
 
 #: includes/functions/functions_print.php:166
 msgid "Family with spouse"
-msgstr ""
+msgstr "Familie cu soţul/soţia"
 
 #: includes/functions/functions_print.php:209
 msgid "Zoom in/out on this box."
-msgstr ""
+msgstr "Măriţi sau micşoraţi cutia aceasta."
 
 #: includes/functions/functions_print.php:267
 msgid "Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person."
-msgstr ""
+msgstr "Linkuri către diagrame, familii, şi rudele apropiate ale acestei persoane. Daţi click pe această icoană pentru a vedea această pagină, începând de la această persoană."
 
 #: includes/functions/functions_print.php:575
 msgid "Are you sure you want to delete this fact?"
-msgstr ""
+msgstr "Sunteţi sigur(ă) că doriţi să ştergeţi acest fapt GEDCOM ?"
 
 #: includes/functions/functions_print.php:582
 msgid "Are you sure you want to delete this person?"
-msgstr ""
+msgstr "Sunteţi sigur(ă) că doriţi să ştergeţi această persoană din fişierul GEDCOM ?"
 
 #: includes/functions/functions_print.php:661
 msgid "Print"
-msgstr ""
+msgstr "Tipăreşte"
 
 #: includes/functions/functions_print.php:662
 msgid "Back to normal view"
-msgstr ""
+msgstr "Înapoi la vederea normală"
 
 #: includes/functions/functions_print.php:730
 msgid "Total Database Queries: "
-msgstr ""
+msgstr "Total interogări asupra bazei de date: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total privacy checks: "
-msgstr ""
+msgstr "Total verificări de confidenţialitate: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total Memory Usage:"
-msgstr ""
+msgstr "Memorie totală folosită:"
 
 #: includes/functions/functions_print.php:881
 msgid "For technical support or genealogy questions, please contact"
-msgstr ""
+msgstr "Pentru suport tehnic sau întrebări de genealogie, vă rugăm contactaţi"
 
 #: includes/functions/functions_print.php:885
 msgid "For technical support and information contact"
-msgstr ""
+msgstr "Contact pentru informaţii şi suport tehnic"
 
 #: includes/functions/functions_print.php:891
 msgid "For help with genealogy questions contact"
-msgstr ""
+msgstr "Contact pentru ajutor cu întrebările legate de genealogie"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
 msgid "Technical help contact"
-msgstr ""
+msgstr "Contact pentru asistenţă tehnică"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
-msgstr ""
+msgstr "Notă"
 
 #: includes/functions/functions_print.php:1330
 msgid "For more information contact"
-msgstr ""
+msgstr "Pentru mai multe informaţii contactaţi"
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
@@ -13646,7 +13646,7 @@ msgstr ""
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
-msgstr ""
+msgstr "<b>Textul de ajutor pentru această pagină sau articol nu este încă disponibil.</b>"
 
 #: includes/functions/functions_print.php:1468
 msgid "<span style=\"font-weight: bold\">The language variable does not exist. Please report this as it is an error.</span>"
@@ -13655,12 +13655,12 @@ msgstr ""
 #: includes/functions/functions_print.php:1802
 #: includes/functions/functions_print.php:1804
 msgid "nephew"
-msgstr ""
+msgstr "nepot"
 
 #: includes/functions/functions_print.php:1812
 #: includes/functions/functions_print.php:1814
 msgid "niece"
-msgstr ""
+msgstr "nepoată"
 
 #: includes/functions/functions_print.php:1879
 #: includes/functions/functions_print.php:2083
@@ -13670,7 +13670,7 @@ msgstr ""
 #: includes/functions/functions_print.php:1881
 #: includes/functions/functions_print.php:2085
 msgid "after death"
-msgstr ""
+msgstr "după moarte"
 
 #: includes/functions/functions_print.php:1975
 msgid "Mother's age"
@@ -13686,15 +13686,15 @@ msgstr ""
 
 #: includes/functions/functions_print.php:2233
 msgid "LDS Temple"
-msgstr ""
+msgstr "Templu LDS"
 
 #: includes/functions/functions_print.php:2235
 msgid "LDS Temple Code:"
-msgstr ""
+msgstr "Codul templului LDS:"
 
 #: includes/functions/functions_print.php:2239
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #: includes/functions/functions_print.php:2380
 #, fuzzy
@@ -13712,7 +13712,7 @@ msgstr "Şterge depozitul"
 #: includes/functions/functions_print_facts.php:1149
 #: includes/functions/functions_print_facts.php:1455
 msgid "Copy"
-msgstr ""
+msgstr "Copiază"
 
 #: includes/functions/functions_print_facts.php:242
 #, fuzzy
@@ -13722,90 +13722,90 @@ msgstr "Căsătorie"
 #: includes/functions/functions_print_facts.php:446
 #: includes/functions/functions_print_facts.php:448
 msgid "Unrecognized GEDCOM Code"
-msgstr ""
+msgstr "Cod GEDCOM nerecunoscut"
 
 #: includes/functions/functions_print_facts.php:448
 msgid "This is an error, and we would like to fix it. Please report this error to"
-msgstr ""
+msgstr "Aceasta este o eroare şi am dori să o reparăm. Vă rugăm raportaţi această eroare la"
 
 #: includes/functions/functions_print_lists.php:76
 msgid "Show only males."
-msgstr ""
+msgstr "Arată doar bărbaţii."
 
 #: includes/functions/functions_print_lists.php:78
 msgid "Show only females."
-msgstr ""
+msgstr "Arată doar femeile."
 
 #: includes/functions/functions_print_lists.php:80
 msgid "Show only persons of whom the gender is not known."
-msgstr ""
+msgstr "Arată doar persoanele al căror sex este necunoscut."
 
 #: includes/functions/functions_print_lists.php:83
 msgid "Show persons alive in the indicated year."
-msgstr ""
+msgstr "Arată persoanele în viaţă în anul indicat."
 
 #: includes/functions/functions_print_lists.php:84
 msgid "Alive in Year"
-msgstr ""
+msgstr "În viaţă în anul"
 
 #: includes/functions/functions_print_lists.php:85
 #: includes/functions/functions_print_lists.php:467
 msgid "Show people who are alive or couples where both partners are alive."
-msgstr ""
+msgstr "Arată persoanele care sunt în viaţă sau cuplurile unde ambii parteneri sunt în viaţă."
 
 #: includes/functions/functions_print_lists.php:86
 msgid "Alive "
-msgstr ""
+msgstr "În viaţă "
 
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
 msgid "Show people who are dead or couples where both partners are deceased."
-msgstr ""
+msgstr "Arată persoanele decedate sau cuplurile unde ambii parteneri sunt decedaţi."
 
 #: includes/functions/functions_print_lists.php:88
 msgid "Dead "
-msgstr ""
+msgstr "Decedat "
 
 #: includes/functions/functions_print_lists.php:89
 #: includes/functions/functions_print_lists.php:475
 msgid "Show «roots» couples or individuals.  These people may also be called «patriarchs».  They are individuals who have no parents recorded in the database."
-msgstr ""
+msgstr "Arată cuplurile sau indivizii «rădăcini».  Aceste persoane se pot numi şi «patriarhi».  Ei sunt indivizii care nu au părinţi înregistraţi în baza de date."
 
 #: includes/functions/functions_print_lists.php:90
 #: includes/functions/functions_print_lists.php:476
 msgid "Roots"
-msgstr ""
+msgstr "Rădăcini"
 
 #: includes/functions/functions_print_lists.php:91
 #: includes/functions/functions_print_lists.php:477
 msgid "Show «leaves» couples or individuals.  These are individuals who are alive but have no children recorded in the database."
-msgstr ""
+msgstr "Arată cuplurile sau indivizii «frunză».  Aceştia sunt indivizi care sunt în viaţă dar nu au copii înregistraţi în baza de date."
 
 #: includes/functions/functions_print_lists.php:92
 #: includes/functions/functions_print_lists.php:478
 msgid "Leaves"
-msgstr ""
+msgstr "Frunze"
 
 #: includes/functions/functions_print_lists.php:94
 msgid "Show persons born more than 100 years ago."
-msgstr ""
+msgstr "Arată persoanele născute cu mai mult de 100 de ani în urmă."
 
 #: includes/functions/functions_print_lists.php:96
 msgid "Show persons born within the last 100 years."
-msgstr ""
+msgstr "Arată persoanele născute în ultimi 100 de ani."
 
 #: includes/functions/functions_print_lists.php:98
 msgid "Show people who died more than 100 years ago."
-msgstr ""
+msgstr "Arată oamenii care au murit cu peste 100 de ani în urmă."
 
 #: includes/functions/functions_print_lists.php:100
 msgid "Show people who died within the last 100 years."
-msgstr ""
+msgstr "Arată persoanele care au murit în ultimii 100 de ani."
 
 #: includes/functions/functions_print_lists.php:102
 #: includes/functions/functions_print_lists.php:488
 msgid "Reset to the list defaults."
-msgstr ""
+msgstr "Resetează la valorile implicite ale listei."
 
 #: includes/functions/functions_print_lists.php:394
 #: includes/functions/functions_print_lists.php:779
@@ -13831,19 +13831,19 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:468
 msgid "Both alive "
-msgstr ""
+msgstr "Ambii în viaţă "
 
 #: includes/functions/functions_print_lists.php:469
 msgid "Show couples where only the female partner is deceased."
-msgstr ""
+msgstr "Arată cuplurile unde doar femeia este decedată."
 
 #: includes/functions/functions_print_lists.php:470
 msgid "Widower"
-msgstr ""
+msgstr "Văduv"
 
 #: includes/functions/functions_print_lists.php:471
 msgid "Show couples where only the male partner is deceased."
-msgstr ""
+msgstr "Arată cuplurile unde doar bărbatul este decedat."
 
 #: includes/functions/functions_print_lists.php:472
 #, fuzzy
@@ -13852,23 +13852,23 @@ msgstr "Lăţime"
 
 #: includes/functions/functions_print_lists.php:474
 msgid "Both dead "
-msgstr ""
+msgstr "Ambii decedaţi "
 
 #: includes/functions/functions_print_lists.php:480
 msgid "Show couples with an unknown marriage date."
-msgstr ""
+msgstr "Arată cuplurile cu data căsătoriei necunoscută."
 
 #: includes/functions/functions_print_lists.php:482
 msgid "Show couples who married more than 100 years ago."
-msgstr ""
+msgstr "Arată cuplurile care s-au căsătorit cu peste 100 de ani în urmă."
 
 #: includes/functions/functions_print_lists.php:484
 msgid "Show couples who married within the last 100 years."
-msgstr ""
+msgstr "Arată cuplurile care s-au căsătorit în ultimii 100 de ani."
 
 #: includes/functions/functions_print_lists.php:486
 msgid "Show divorced couples."
-msgstr ""
+msgstr "Arată cuplurile divorţate."
 
 #: includes/functions/functions_print_lists.php:807
 msgid "Decade of marriage"
@@ -13881,7 +13881,7 @@ msgstr ""
 #: includes/functions/functions_print_lists.php:1264
 #: includes/functions/functions_print_lists.php:1315
 msgid "Spouses"
-msgstr ""
+msgstr "Soţi"
 
 #: includes/functions/functions_print_lists.php:1523
 msgid "Total changes"
@@ -13889,15 +13889,15 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:2130
 msgid "Sort by this column."
-msgstr ""
+msgstr "Sortează după această coloană."
 
 #: includes/functions/functions_privacy.php:865
 msgid "Details about this person are private. Personal details will not be included."
-msgstr ""
+msgstr "Detaliile acestei persoane sunt private. Detaliile personale nu vor fi incluse."
 
 #: includes/functions/functions_privacy.php:877
 msgid "Details about this family are private. Family details will not be included."
-msgstr ""
+msgstr "Detaliile acestei familii sunt private. Detaliile familiei nu vor fi incluse."
 
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
@@ -15296,19 +15296,19 @@ msgstr ""
 #: modules/clippings/clippings.php:90
 #: modules/clippings/clippings.php:281
 msgid "Download Now"
-msgstr ""
+msgstr "Downloadează acum"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
-msgstr ""
+msgstr "Acest individ a fost downloadat de la:"
 
 #: modules/clippings/clippings_ctrl.php:365
 msgid "This Family was downloaded from:"
-msgstr ""
+msgstr "Această familie a fost downloadată de la:"
 
 #: modules/clippings/clippings_ctrl.php:380
 msgid "This Source was downloaded from:"
-msgstr ""
+msgstr "Această sursă a fost downloadată de la:"
 
 #: modules/clippings/pgv_module.php:46
 #, fuzzy
@@ -16277,14 +16277,14 @@ msgstr ""
 #: modules/googlemap/googlemap.php:118
 #: modules/googlemap/googlemap.php:119
 msgid "Activate"
-msgstr ""
+msgstr "Activează"
 
 #: modules/googlemap/gg_map_content.php:62
 #: modules/googlemap/gg_map_content.php:63
 #: modules/googlemap/googlemap.php:122
 #: modules/googlemap/googlemap.php:123
 msgid "Deactivate"
-msgstr ""
+msgstr "Dezactivează"
 
 #: modules/googlemap/googlemap.php:607
 msgid "Redraw map"
@@ -16358,7 +16358,7 @@ msgstr ""
 
 #: modules/googlemap/pedigree_map.php:740
 msgid "Birth:"
-msgstr ""
+msgstr "Născut:"
 
 #: modules/googlemap/pedigree_map.php:842
 msgid "Zoom&nbsp;in"
@@ -16781,7 +16781,7 @@ msgstr ""
 #: modules/lightbox/functions/lb_indi_doors_0.php:55
 #: modules/lightbox/functions/lb_indi_doors_1.php:58
 msgid "Research Assistant"
-msgstr ""
+msgstr "Asistent cercetare"
 
 #: modules/lightbox/functions/lightbox_print_media.php:132
 msgid "Photo"
@@ -16822,7 +16822,7 @@ msgstr "Găseşte media"
 
 #: modules/media/media.php:63
 msgid "There are no media objects for this individual."
-msgstr ""
+msgstr "Nu există obiecte media pentru acest individ."
 
 #: modules/notes/notes.php:60
 #, fuzzy
@@ -16841,11 +16841,11 @@ msgstr "Şterge acest individ"
 
 #: modules/personal_facts/personal_facts.php:72
 msgid "Events of close relatives"
-msgstr ""
+msgstr "Evenimentele rudelor apropiate"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
-msgstr ""
+msgstr "Fapte istorice"
 
 #: modules/personal_facts/pgv_module.php:42
 msgid "Personal Facts"
@@ -16862,19 +16862,19 @@ msgstr "Adaugă copil"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
-msgstr ""
+msgstr "Adaugă un soţ acestei familii"
 
 #: modules/relatives/relatives.php:161
 msgid "Add a wife to this family"
-msgstr ""
+msgstr "Adaugă o soţie la această familie"
 
 #: modules/relatives/relatives.php:218
 msgid "Add marriage details"
-msgstr ""
+msgstr "Adaugă o nouă căsătorie"
 
 #: modules/relatives/relatives.php:408
 msgid "Link this person to an existing family as a child"
-msgstr ""
+msgstr "Legaţi această persoană la o familie existentă ca şi copil"
 
 #: modules/relatives/relatives.php:415
 #, fuzzy
@@ -16883,7 +16883,7 @@ msgstr "Adaugă o notă nouă"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
-msgstr ""
+msgstr "Legaţi această persoană la o familie existentă ca şi soţ"
 
 #: modules/relatives/relatives.php:435
 #, fuzzy
@@ -16892,7 +16892,7 @@ msgstr "Adaugă o notă nouă"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
-msgstr ""
+msgstr "Legaţi această persoană de o familie existentă ca soţie"
 
 #: modules/sitemap/admin-config.php:40
 msgid "Sitemap"
@@ -17013,12 +17013,12 @@ msgstr ""
 
 #: modules/sources_tab/sources_tab.php:77
 msgid "There are no Source citations for this individual."
-msgstr ""
+msgstr "Nu există surse citate pentru acest individ."
 
 #: themes/cloudy/footer.php:174
 #: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
-msgstr ""
+msgstr "Acest GEDCOM a suferit modificări."
 
 #~ msgid "FAMC:HUSB:SURN"
 #~ msgstr "Numele tatălui"

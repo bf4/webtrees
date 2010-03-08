@@ -24,38 +24,38 @@ msgstr "Voeg nieuwe koppeling met multimedia toe"
 #: addremotelink.php:43
 #: addsearchlink.php:35
 msgid "<b>Access Denied</b><br />You do not have access to this resource."
-msgstr ""
+msgstr "<b>Toegang geweigerd</b><br />U heeft geen toegang tot deze bron."
 
 #: addmedia.php:80
 #: addremotelink.php:45
 msgid "This user name cannot edit this GEDCOM."
-msgstr ""
+msgstr "Gebruiker kan deze genealogie niet aanpassen."
 
 #: addmedia.php:81
 #: addremotelink.php:47
 msgid "Editing this GEDCOM has been disabled by the administrator."
-msgstr ""
+msgstr "De beheerder staat het wijzigen van deze genealogie niet toe."
 
 #: addmedia.php:83
 #: addremotelink.php:49
 msgid "Privacy settings prevent you from editing this record."
-msgstr ""
+msgstr "Volgens de privacy-instellingen heeft u geen rechten om deze gegevens te wijzigen."
 
 #: addmedia.php:84
 #: addremotelink.php:51
 msgid "You have no access to"
-msgstr ""
+msgstr "U heeft geen toegang tot"
 
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
 #: addremotelink.php:274
 msgid "Close Window"
-msgstr ""
+msgstr "Sluit venster"
 
 #: addmedia.php:192
 msgid "Media file already exists."
-msgstr ""
+msgstr "Multimediabestand bestaat al."
 
 #: addmedia.php:196
 #: addmedia.php:211
@@ -63,60 +63,60 @@ msgstr ""
 #: client.php:414
 #: client.php:424
 msgid "There was an error uploading your file."
-msgstr ""
+msgstr "Er is een fout opgetreden bij het uploaden van het bestand."
 
 #: addmedia.php:207
 msgid "Media thumbnail already exists."
-msgstr ""
+msgstr "Miniweergave bestaat al."
 
 #: addmedia.php:273
 msgid "Blank name or illegal characters in name"
-msgstr ""
+msgstr "Ongeldige karakters in de naam"
 
 #: addmedia.php:303
 #: addmedia.php:454
 msgid "This file is linked to another genealogical database on this server.  It cannot be deleted, moved, or renamed until these links have been removed."
-msgstr ""
+msgstr "Deze file is gekoppeld aan een andere genealogische database op deze server. De file kan niet worden verwijderd, verplaatsts of hernoemd totdat deze koppelingen zijn verwijderd."
 
 #: addmedia.php:304
 #: addmedia.php:455
 msgid "Media file could not be moved or renamed."
-msgstr ""
+msgstr "Mediabestand kan niet worden verplaatst of hernoemd."
 
 #: addmedia.php:305
 #: addmedia.php:456
 msgid "Media file could not be moved."
-msgstr ""
+msgstr "Mediabestand kan niet worden verplaatst."
 
 #: addmedia.php:409
 msgid "Paste the following ID into your editing fields to reference the newly created record "
-msgstr ""
+msgstr "Plak dit bron-ID in de invoervelden voor verwijzing naar deze bron "
 
 #: addmedia.php:415
 #: addmedia.php:564
 #: addmedia.php:572
 msgid "Update successful"
-msgstr ""
+msgstr "Bijwerken geslaagd."
 
 #: addremotelink.php:36
 #: addremotelink.php:116
 #: addsearchlink.php:63
 msgid "Add Remote Link"
-msgstr ""
+msgstr "Koppeling naar andere site toevoegen"
 
 #: addremotelink.php:64
 msgid "You have selected the same site."
-msgstr ""
+msgstr "U heeft dezelfde site geselecteerd."
 
 #: addremotelink.php:67
 msgid "You have selected a remote site."
-msgstr ""
+msgstr "U heeft een gekoppelde site geselecteerd."
 
 #: addremotelink.php:75
 #: addremotelink.php:85
 #: addremotelink.php:183
 msgid "Site"
-msgstr ""
+msgstr "Site"
 
 #: addremotelink.php:80
 #, fuzzy
@@ -126,37 +126,37 @@ msgstr "Database-machine"
 #: addremotelink.php:121
 #: addsearchlink.php:74
 msgid "Relationship to current person"
-msgstr ""
+msgstr "Relatie met huidige persoon"
 
 #: addremotelink.php:140
 msgid "Site Location"
-msgstr ""
+msgstr "Locatie"
 
 #: addremotelink.php:150
 msgid "Local site"
-msgstr ""
+msgstr "Zelfde site"
 
 #: addremotelink.php:158
 #: addremotelink.php:188
 msgid "Existing remote site"
-msgstr ""
+msgstr "Gebruik een bestaande site."
 
 #: addremotelink.php:163
 msgid "New remote site"
-msgstr ""
+msgstr "Andere site"
 
 #: addremotelink.php:173
 msgid "Person ID"
-msgstr ""
+msgstr "Persoons-ID"
 
 #: addremotelink.php:202
 msgid "Type in a new site."
-msgstr ""
+msgstr "Voer nieuwe site in:"
 
 #: addremotelink.php:205
 #: addremotelink.php:227
 msgid "Title:"
-msgstr ""
+msgstr "Titel"
 
 #: addremotelink.php:208
 #, fuzzy
@@ -165,7 +165,7 @@ msgstr "Website-URL"
 
 #: addremotelink.php:211
 msgid "Example:"
-msgstr ""
+msgstr "Voorbeeld:"
 
 #: addremotelink.php:214
 #, fuzzy
@@ -204,35 +204,35 @@ msgstr "Partner toevoegen"
 
 #: addsearchlink.php:31
 msgid "Add Local Link"
-msgstr ""
+msgstr "Lokale koppeling toevoegen"
 
 #: addsearchlink.php:77
 msgid "Same as current"
-msgstr ""
+msgstr "Zelfde als huidige"
 
 #: addsearchlink.php:78
 msgid "Mother"
-msgstr ""
+msgstr "moeder"
 
 #: addsearchlink.php:79
 msgid "Father"
-msgstr ""
+msgstr "vader"
 
 #: addsearchlink.php:80
 msgid "Husband"
-msgstr ""
+msgstr "Partner"
 
 #: addsearchlink.php:81
 msgid "Wife"
-msgstr ""
+msgstr "Partner"
 
 #: addsearchlink.php:82
 msgid "Son"
-msgstr ""
+msgstr "Zoon"
 
 #: addsearchlink.php:83
 msgid "Daughter"
-msgstr ""
+msgstr "Dochter"
 
 #: admin.php:51
 #: admin.php:137
@@ -252,11 +252,11 @@ msgstr "Archiveer Logbestanden"
 
 #: admin.php:105
 msgid "Edit Image Manipulation Configuration"
-msgstr ""
+msgstr "Configureren bewerking afbeeldingen"
 
 #: admin.php:138
 msgid "Current Server Time:"
-msgstr ""
+msgstr "Huidige systeemdatum/tijd: "
 
 #: admin.php:140
 msgid "Current User Time:"
@@ -264,15 +264,15 @@ msgstr ""
 
 #: admin.php:145
 msgid "Your <i>config.php</i> file is still writable.  For security, you should set the permissions of this file back to read-only when you have finished configuring your site."
-msgstr ""
+msgstr "<br />Uw config.php bestand heeft schrijftoegang.<br />Als u klaar bent met het configureren van uw site, dient u de rechten om beveiligingsredenen te wijzigen in \"alleen lezen\"."
 
 #: admin.php:150
 msgid "User accounts awaiting verification by admin"
-msgstr ""
+msgstr "Er wachten gebruikers op verificatie door de beheerder"
 
 #: admin.php:155
 msgid "One or more user accounts have warnings"
-msgstr ""
+msgstr "Een of meer gebruikers hebben een waarschuwing"
 
 #: admin.php:166
 #: admin.php:186
@@ -304,11 +304,11 @@ msgstr "_Gebruikersbeheer"
 
 #: admin.php:191
 msgid "View readme.txt file"
-msgstr ""
+msgstr "README documentatie"
 
 #: admin.php:191
 msgid "README documentation"
-msgstr ""
+msgstr "README documentatie"
 
 #: admin.php:194
 #, fuzzy
@@ -321,11 +321,11 @@ msgstr "Toon PHP-informatie"
 
 #: admin.php:205
 msgid "Manage GEDCOMs and edit Privacy"
-msgstr ""
+msgstr "Beheer GEDCOM-bestanden en privacy-instellingen"
 
 #: admin.php:207
 msgid "Merge records"
-msgstr ""
+msgstr "Gegevens samenvoegen"
 
 #: admin.php:210
 #, fuzzy
@@ -368,7 +368,7 @@ msgstr "_Gebruikersbeheer"
 
 #: admin.php:268
 msgid "Backup"
-msgstr ""
+msgstr "Backup"
 
 #: admin.php:272
 #, fuzzy
@@ -387,7 +387,7 @@ msgstr "_Instellen ondersteunde talen"
 
 #: admin.php:282
 msgid "You have not configured the languages your site will support.<br />PhpGedView will use its default actions."
-msgstr ""
+msgstr "U heeft de talen niet ingesteld, die op uw website worden ondersteund.<br />PhpGedView gebruikt de standaardinstellingen."
 
 #: admin.php:287
 #: changelanguage.php:46
@@ -397,18 +397,18 @@ msgstr "Bestanden en instellingen voor nieuwe taal toevoegen"
 
 #: admin.php:302
 msgid "Loading..."
-msgstr ""
+msgstr "Laden..."
 
 #: admin.php:314
 msgid "Content of log file"
-msgstr ""
+msgstr "Inhoud van log-bestand"
 
 #: ancestry.php:37
 #: ancestry.php:51
 #: ancestry.php:237
 #: ancestry.php:254
 msgid "Ancestry Chart"
-msgstr ""
+msgstr "Voorouders"
 
 #: ancestry.php:72
 #: compact.php:82
@@ -422,7 +422,7 @@ msgstr "Breedte vak"
 
 #: ancestry.php:90
 msgid "Layout"
-msgstr ""
+msgstr "Opmaak"
 
 #: ancestry.php:99
 #, fuzzy
@@ -431,7 +431,7 @@ msgstr "Namenlijst"
 
 #: ancestry.php:105
 msgid "Booklet"
-msgstr ""
+msgstr "Boek"
 
 #: ancestry.php:123
 #, fuzzy
@@ -454,7 +454,7 @@ msgstr "Gezinnen herschikken"
 #: branches.php:74
 #: compact.php:90
 msgid "View"
-msgstr ""
+msgstr "Ververs pagina"
 
 #: ancestry.php:149
 #: branches.php:241
@@ -469,7 +469,7 @@ msgstr "Toon toekomstige taken"
 
 #: ancestry.php:192
 msgid "Click on any of the boxes to get more information about that person."
-msgstr ""
+msgstr "Klik op een naam, om meer informatie over die persoon zichtbaar te maken."
 
 #: autocomplete.php:196
 msgid "Age"
@@ -498,11 +498,11 @@ msgstr "Zoek gelijkende persoons- of plaatsnamen (Soundex):"
 
 #: branches.php:79
 msgid "Basic"
-msgstr ""
+msgstr "Russell"
 
 #: branches.php:81
 msgid "Daitch-Mokotoff"
-msgstr ""
+msgstr "Daitch-Mokotoff"
 
 #: branches.php:104
 msgid "Pedigree Chart Root Person"
@@ -510,39 +510,39 @@ msgstr "Startpersoon van de kwartierstaat"
 
 #: branches.php:166
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: calendar.php:102
 msgid "Anniversary Calendar"
-msgstr ""
+msgstr "Gebeurteniskalender"
 
 #: calendar.php:122
 msgid "On This Day ..."
-msgstr ""
+msgstr "Op deze dag, in het verleden..."
 
 #: calendar.php:125
 msgid "In This Month ..."
-msgstr ""
+msgstr "In deze maand, in het verleden..."
 
 #: calendar.php:128
 msgid "In This Year ..."
-msgstr ""
+msgstr "In dit jaar, in het verleden...."
 
 #: calendar.php:137
 msgid "Day:"
-msgstr ""
+msgstr "Dag:"
 
 #: calendar.php:152
 msgid "Month:"
-msgstr ""
+msgstr "Maand:"
 
 #: calendar.php:172
 msgid "Year:"
-msgstr ""
+msgstr "Jaar:"
 
 #: calendar.php:182
 msgid "Show"
-msgstr ""
+msgstr "Toon"
 
 #: calendar.php:187
 #: calendar.php:204
@@ -551,17 +551,17 @@ msgstr ""
 #: calendar.php:209
 #: calendar.php:441
 msgid "All People"
-msgstr ""
+msgstr "Alle personen"
 
 #: calendar.php:191
 #: calendar.php:518
 msgid "Living People"
-msgstr ""
+msgstr "Levende personen"
 
 #: calendar.php:195
 #: calendar.php:521
 msgid "Recent Years (&lt; 100 yrs)"
-msgstr ""
+msgstr "Recent verleden (< 100 jaar)"
 
 #: calendar.php:201
 #, fuzzy
@@ -572,13 +572,13 @@ msgstr "Wijzig geslacht"
 #: calendar.php:215
 #: calendar.php:438
 msgid "Males"
-msgstr ""
+msgstr "Mannen"
 
 #: calendar.php:218
 #: calendar.php:221
 #: calendar.php:439
 msgid "Females"
-msgstr ""
+msgstr "Vrouwen"
 
 #: calendar.php:226
 #, fuzzy
@@ -642,7 +642,7 @@ msgstr "Emigratie"
 
 #: calendar.php:274
 msgid "Custom Event"
-msgstr ""
+msgstr "Vrij te kiezen gebeurtenis"
 
 #: calendar.php:282
 #: calendar.php:284
@@ -653,7 +653,7 @@ msgstr "Bekijk archief"
 #: calendar.php:287
 #: calendar.php:289
 msgid "View Month"
-msgstr ""
+msgstr "Toon maand"
 
 #: calendar.php:292
 #: calendar.php:294
@@ -673,21 +673,21 @@ msgstr "Gezinnen herschikken"
 
 #: calendar.php:477
 msgid "Day not set"
-msgstr ""
+msgstr "Dag niet bekend"
 
 #: calendar.php:524
 #: calendar.php:606
 msgid "Male"
-msgstr ""
+msgstr "Man"
 
 #: calendar.php:527
 #: calendar.php:610
 msgid "Female"
-msgstr ""
+msgstr "Vrouw"
 
 #: calendar.php:536
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: calendar.php:614
 msgid "unknown"
@@ -700,7 +700,7 @@ msgstr "Configuratie ondersteunde talen"
 
 #: changelanguage.php:117
 msgid "Return to the Admin menu"
-msgstr ""
+msgstr "Terug naar menu Beheer"
 
 #: changelanguage.php:155
 #, fuzzy
@@ -720,7 +720,7 @@ msgstr "Actief"
 #: changelanguage.php:183
 #: changelanguage.php:199
 msgid "Edit settings"
-msgstr ""
+msgstr "Wijzig instellingen"
 
 #: changelanguage.php:227
 #: changelanguage.php:250
@@ -753,45 +753,45 @@ msgstr "Knipselbak aanzetten"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
-msgstr ""
+msgstr "Welke koppelingen uit dit gezin wilt u nog meer toevoegen?"
 
 #: clippings.php:62
 msgid "Add just this family record."
-msgstr ""
+msgstr "Voeg alleen dit gezin toe."
 
 #: clippings.php:63
 msgid "Add parents' records together with this family record."
-msgstr ""
+msgstr "Voeg de ouders en dit gezin toe."
 
 #: clippings.php:64
 msgid "Add parents' and children's records together with this family record."
-msgstr ""
+msgstr "Voeg de ouders, dit gezin en de kinderen toe."
 
 #: clippings.php:65
 msgid "Add parents' and all descendants' records together with this family record."
-msgstr ""
+msgstr "Voeg de ouders, dit gezin en alle nakomelingen toe."
 
 #: clippings.php:66
 #: clippings.php:87
 #: clippings.php:99
 msgid "Continue Adding"
-msgstr ""
+msgstr "Doorgaan met toevoegen"
 
 #: clippings.php:74
 msgid "Which links from this person would you also like to add?"
-msgstr ""
+msgstr "Welke koppelingen van deze persoon wilt u nog meer toevoegen?"
 
 #: clippings.php:78
 msgid "Add just this person."
-msgstr ""
+msgstr "Voeg alleen deze persoon toe."
 
 #: clippings.php:79
 msgid "Add this person, his parents, and siblings."
-msgstr ""
+msgstr "Voeg deze persoon, zijn/haar ouders en broers en zussen toe."
 
 #: clippings.php:80
 msgid "Add this person and his direct line ancestors."
-msgstr ""
+msgstr "Voeg deze persoon en de directe voorouders toe."
 
 #: clippings.php:81
 #: clippings.php:83
@@ -802,19 +802,19 @@ msgstr "Generaties kwartierstaat"
 
 #: clippings.php:82
 msgid "Add this person, his direct line ancestors, and their families."
-msgstr ""
+msgstr "Voeg deze persoon, de directe voorouders en hun gezinnen toe."
 
 #: clippings.php:84
 msgid "Add this person, his spouse, and children."
-msgstr ""
+msgstr "Voeg deze persoon, zijn/haar partner en kinderen toe."
 
 #: clippings.php:85
 msgid "Add this person, his spouse, and all descendants."
-msgstr ""
+msgstr "Voeg deze persoon, zijn/haar partner en alle nakomelingen toe."
 
 #: clippings.php:93
 msgid "Which records linked to this source should be added?"
-msgstr ""
+msgstr "Welke kaarten, die aan deze bron zijn gekoppeld, moeten worden toegevoegd?"
 
 #: clippings.php:97
 #, fuzzy
@@ -823,11 +823,11 @@ msgstr "Verwijder deze bron"
 
 #: clippings.php:98
 msgid "Add this source and families/people linked to it."
-msgstr ""
+msgstr "Voeg deze bron toe en de families/mensen, die daaraan zijn gekoppeld."
 
 #: clippings.php:107
 msgid "Some items could not be added due to privacy restrictions"
-msgstr ""
+msgstr "Sommige items konden niet worden toegevoegd, vanwege privacy restricties"
 
 #: clippings.php:127
 #, fuzzy
@@ -836,7 +836,7 @@ msgstr "Voorvoegsel GEDCOM-ID"
 
 #: clippings.php:140
 msgid "Add"
-msgstr ""
+msgstr "Toevoegen"
 
 #: clippings.php:150
 #, fuzzy
@@ -850,11 +850,11 @@ msgstr "Toon PHP-informatie"
 
 #: clippings.php:159
 msgid "File Type"
-msgstr ""
+msgstr "Kies Bestands Type"
 
 #: clippings.php:168
 msgid "Zip File(s)"
-msgstr ""
+msgstr "Zip bestand(en)"
 
 #: clippings.php:171
 msgid "Include Media (automatically zips files)"
@@ -870,11 +870,11 @@ msgstr ""
 
 #: clippings.php:206
 msgid "Visitor"
-msgstr ""
+msgstr "Bezoeker"
 
 #: clippings.php:207
 msgid "Authenticated user"
-msgstr ""
+msgstr "Aangemelde gebruiker"
 
 #: clippings.php:208
 #, fuzzy
@@ -888,11 +888,11 @@ msgstr "_Gebruikersbeheer"
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
-msgstr ""
+msgstr "Converteer dit GEDCOM-bestand van UTF-8 naar ANSI (ISO-8859-1)?"
 
 #: clippings.php:215
 msgid "Remove custom PGV tags? (eg. _PGVU, _THUM)"
-msgstr ""
+msgstr "Verwijder speciale PGV-kenmerken (bijv. _PGVU, _THUM)?"
 
 #: clippings.php:218
 msgid "Convert media path to"
@@ -947,12 +947,12 @@ msgstr "Voorvoegsel GEDCOM-ID"
 #: descendancy.php:146
 #: descendancy.php:152
 msgid "Descendancy Chart"
-msgstr ""
+msgstr "Nakomelingen"
 
 #: descendancy.php:120
 #: edit_interface.php:296
 msgid "The requested GEDCOM record could not be found.  This could be caused by a link to an invalid person or by a corrupt GEDCOM file."
-msgstr ""
+msgstr "De opgevraagde gegevens zijn niet gevonden. Dit kan worden veroorzaakt door een verbinding met een onjuist persoon of door een beschadigd GEDCOM bestand."
 
 #: dir_editor.php:87
 msgid "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" alt=\"\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing."
@@ -989,7 +989,7 @@ msgstr "Verwijder naam"
 #: edit_interface.php:2464
 #: edit_interface.php:2725
 msgid "Cancel"
-msgstr ""
+msgstr "Afbreken"
 
 #: dir_editor.php:240
 msgid "Remove all nonessential files"
@@ -1015,16 +1015,16 @@ msgstr ""
 
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
-msgstr ""
+msgstr "De Media Firewall basis map, die u opgaf, bestaat niet.  U moet de map eerst maken."
 
 #: editconfig_gedcom.php:444
 msgid "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable."
-msgstr ""
+msgstr "De beschermde media map kon niet gemaakt worden in de Media Firewall basis map.  Maak a.u.b. deze map en maak het world-writable."
 
 #: editconfig_gedcom.php:456
 #: editconfig_gedcom.php:468
 msgid "The protected media directory in the Media Firewall root directory is not world writable. "
-msgstr ""
+msgstr "De beschermde media map, in de Media Firewall basis map, is niet world writable. "
 
 #: editconfig_gedcom.php:487
 #, fuzzy
@@ -1033,7 +1033,7 @@ msgstr "_GEDCOM: Instellingenbestand"
 
 #: editconfig_gedcom.php:487
 msgid "Upload the file to your index directory: "
-msgstr ""
+msgstr "Upload het bestand naar de index-map."
 
 #: editconfig_gedcom.php:620
 #: editconfig_gedcom.php:666
@@ -1064,7 +1064,7 @@ msgstr ""
 #: editconfig_gedcom.php:680
 #: edit_privacy.php:145
 msgid "Return to the GEDCOM management menu"
-msgstr ""
+msgstr "Terug naar menu Beheer GEDCOM-bestanden"
 
 #: editconfig_gedcom.php:837
 msgid "Results found"
@@ -1105,7 +1105,7 @@ msgstr "Configuratie-informatie"
 #: editconfig_gedcom.php:2225
 #: edit_privacy.php:807
 msgid "Reset"
-msgstr ""
+msgstr "Herstel"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
@@ -1119,7 +1119,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:900
 msgid "Maximum upload size: "
-msgstr ""
+msgstr "Maximale uploadgrootte: "
 
 #: editconfig_gedcom.php:903
 #: editconfig_gedcom.php:924
@@ -1138,7 +1138,7 @@ msgstr "Beginpersoon kwartierstaat en nakomelingen"
 #: edit_merge.php:76
 #: edit_merge.php:79
 msgid "Unable to find record with ID"
-msgstr ""
+msgstr "Niet gevonden: record met ID"
 
 #: editconfig_gedcom.php:987
 msgid "Calendar format"
@@ -1211,7 +1211,7 @@ msgstr "Geef Hebreeuwse duizendtallen weer"
 #: editlang_edit_settings.php:486
 #: edit_privacy.php:97
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 #: editconfig_gedcom.php:1013
 msgid "Display Hebrew Gershayim"
@@ -1256,27 +1256,27 @@ msgstr "Archiveer logbestand zoekopdrachten"
 #: editconfig_gedcom.php:1080
 #: editconfig_gedcom.php:1091
 msgid "Disable logging"
-msgstr ""
+msgstr "Log-bestand uitschakelen"
 
 #: editconfig_gedcom.php:1081
 #: editconfig_gedcom.php:1092
 msgid "Daily"
-msgstr ""
+msgstr "Dagelijks"
 
 #: editconfig_gedcom.php:1082
 #: editconfig_gedcom.php:1093
 msgid "Weekly"
-msgstr ""
+msgstr "Wekelijks"
 
 #: editconfig_gedcom.php:1083
 #: editconfig_gedcom.php:1094
 msgid "Monthly"
-msgstr ""
+msgstr "Maandelijks"
 
 #: editconfig_gedcom.php:1084
 #: editconfig_gedcom.php:1095
 msgid "Yearly"
-msgstr ""
+msgstr "Jaarlijks"
 
 #: editconfig_gedcom.php:1089
 msgid "Archive ChangeLog files"
@@ -1311,7 +1311,7 @@ msgstr "Multimediamappen"
 
 #: editconfig_gedcom.php:1151
 msgid "Media path should not contain a drive letter; media may not be displayed."
-msgstr ""
+msgstr "In het pad naar de multimediamap kan geen driveletter worden opgenomen. Een foutief multimediapad leidt ertoe, dat multimedia-items niet worden weergegeven."
 
 #: editconfig_gedcom.php:1156
 msgid "Multi-Media directory levels to keep"
@@ -1402,7 +1402,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1331
 msgid "Welcome"
-msgstr ""
+msgstr "Welkom"
 
 #: editconfig_gedcom.php:1332
 #, fuzzy
@@ -1419,19 +1419,19 @@ msgstr ""
 
 #: editconfig_gedcom.php:1340
 msgid "Predefined text that states all users can request a user account"
-msgstr ""
+msgstr "Voorgedefinieerde tekst: Alle bezoekers kunnen een gebruikersnaam aanvragen"
 
 #: editconfig_gedcom.php:1341
 msgid "Predefined text that states admin will decide on each request for a user account"
-msgstr ""
+msgstr "Voorgedefinieerde tekst: De sitebeheerder is selectief toekennen van toegangsrechten"
 
 #: editconfig_gedcom.php:1342
 msgid "Predefined text that states only family members can request a user account"
-msgstr ""
+msgstr "Voorgedefinieerde tekst: Alleen familieleden kunnen een gebruikersnaam aanvragen"
 
 #: editconfig_gedcom.php:1343
 msgid "Choose user defined welcome text typed below"
-msgstr ""
+msgstr "Kies zelf gedefinieerde tekst hieronder"
 
 #: editconfig_gedcom.php:1348
 msgid "Standard header for custom Welcome text"
@@ -1448,7 +1448,7 @@ msgstr ""
 #: editconfig_gedcom.php:1380
 #: editconfig_gedcom.php:1381
 msgid "Display and Layout"
-msgstr ""
+msgstr "Tonen en opmaak"
 
 #: editconfig_gedcom.php:1387
 #: editconfig_gedcom.php:1388
@@ -1467,7 +1467,7 @@ msgstr "Namen tussen aanhalingstekens onderstrepen"
 #: editconfig_gedcom.php:1421
 #: editconfig_gedcom.php:1422
 msgid "Common Surnames"
-msgstr ""
+msgstr "Meest voorkomende achternamen"
 
 #: editconfig_gedcom.php:1427
 msgid "Min. no. of occurrences to be a \"Common Surname\""
@@ -1499,11 +1499,11 @@ msgstr "Standaard opmaak kwartierstaat"
 
 #: editconfig_gedcom.php:1474
 msgid "Landscape"
-msgstr ""
+msgstr "Liggend"
 
 #: editconfig_gedcom.php:1475
 msgid "Portrait"
-msgstr ""
+msgstr "Staand"
 
 #: editconfig_gedcom.php:1480
 msgid "Place levels to show in person boxes"
@@ -1520,21 +1520,21 @@ msgstr "Inzoomen op vakken in de weergave"
 #: editconfig_gedcom.php:1490
 #: editconfig_gedcom.php:1500
 msgid "Disabled"
-msgstr ""
+msgstr "Uitgeschakeld"
 
 #: editconfig_gedcom.php:1491
 #: editconfig_gedcom.php:1501
 msgid "On Mouse Over"
-msgstr ""
+msgstr "Door muisaanwijzer erover"
 
 #: editconfig_gedcom.php:1492
 msgid "On Mouse Down"
-msgstr ""
+msgstr "Door muisknop ingedrukt"
 
 #: editconfig_gedcom.php:1493
 #: editconfig_gedcom.php:1502
 msgid "On Mouse Click"
-msgstr ""
+msgstr "Door muisklik"
 
 #: editconfig_gedcom.php:1498
 msgid "PopUp links on charts"
@@ -1546,7 +1546,7 @@ msgstr "Standaard tabblad op persoonspagina"
 
 #: editconfig_gedcom.php:1509
 msgid "Personal Facts and Details"
-msgstr ""
+msgstr "Persoonlijke feiten en details"
 
 #: editconfig_gedcom.php:1510
 msgid "Notes"
@@ -1564,11 +1564,11 @@ msgstr "Zoek multimedia"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
-msgstr ""
+msgstr "Verwanten"
 
 #: editconfig_gedcom.php:1514
 msgid "Tree"
-msgstr ""
+msgstr "Boom"
 
 #: editconfig_gedcom.php:1516
 msgid "Last Visited Tab For Individual"
@@ -1588,11 +1588,11 @@ msgstr "Positie postcode"
 
 #: editconfig_gedcom.php:1581
 msgid "after"
-msgstr ""
+msgstr "na"
 
 #: editconfig_gedcom.php:1582
 msgid "before"
-msgstr ""
+msgstr "voor"
 
 #: editconfig_gedcom.php:1587
 msgid "Maximum number of surnames"
@@ -1608,16 +1608,16 @@ msgstr ""
 
 #: editconfig_gedcom.php:1597
 msgid "Table"
-msgstr ""
+msgstr "Tabel"
 
 #: editconfig_gedcom.php:1598
 msgid "Tagcloud"
-msgstr ""
+msgstr "Tag-wolkje"
 
 #: editconfig_gedcom.php:1608
 #: editconfig_gedcom.php:1609
 msgid "Hide and Show"
-msgstr ""
+msgstr "Tonen & verbergen"
 
 #: editconfig_gedcom.php:1614
 msgid "Upcoming Events block day limit"
@@ -1815,12 +1815,12 @@ msgstr ""
 
 #: editconfig_gedcom.php:1943
 msgid "Facts"
-msgstr ""
+msgstr "Feiten"
 
 #: editconfig_gedcom.php:1944
 #: edit_merge.php:150
 msgid "Record"
-msgstr ""
+msgstr "Gegevens"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
@@ -1842,11 +1842,11 @@ msgstr "Themamap"
 
 #: editconfig_gedcom.php:2011
 msgid "Other, please type in"
-msgstr ""
+msgstr "Ander, typ in"
 
 #: editconfig_gedcom.php:2017
 msgid "does not exist"
-msgstr ""
+msgstr "bestaat niet"
 
 #: editconfig_gedcom.php:2025
 msgid "Display theme dropdown selector for theme changes"
@@ -1873,7 +1873,7 @@ msgstr "Verzendwijze genealogische vragen"
 #: editconfig_gedcom.php:2078
 #: editconfig_gedcom.php:2108
 msgid "PhpGedView internal messaging"
-msgstr ""
+msgstr "PhpGedView interne berichten"
 
 #: editconfig_gedcom.php:2079
 #: editconfig_gedcom.php:2109
@@ -1883,12 +1883,12 @@ msgstr "Interne berichten en e-mails"
 #: editconfig_gedcom.php:2081
 #: editconfig_gedcom.php:2111
 msgid "PhpGedView sends emails with no storage"
-msgstr ""
+msgstr "PhpGedView verzendt e-mails zonder opslaan"
 
 #: editconfig_gedcom.php:2083
 #: editconfig_gedcom.php:2113
 msgid "Mailto link"
-msgstr ""
+msgstr "Mailen naar"
 
 #: editconfig_gedcom.php:2084
 #: editconfig_gedcom.php:2114
@@ -1907,7 +1907,7 @@ msgstr "Verzendwijze ondersteuningsvragen"
 #: editconfig_gedcom.php:2130
 #: editconfig_gedcom.php:2131
 msgid "Web Site and META Tag Settings"
-msgstr ""
+msgstr "Website en META-tags"
 
 #: editconfig_gedcom.php:2136
 msgid "Main WebSite URL"
@@ -2003,7 +2003,7 @@ msgstr ""
 
 #: editgedcoms.php:187
 msgid "File not found."
-msgstr ""
+msgstr "Bestand niet gevonden."
 
 #: editgedcoms.php:191
 #, fuzzy
@@ -2012,15 +2012,15 @@ msgstr "Importopties"
 
 #: editgedcoms.php:193
 msgid "This GEDCOM has not yet been imported."
-msgstr ""
+msgstr "Dit GEDCOM-bestand is nog niet geïmporteerd."
 
 #: editgedcoms.php:199
 msgid "Export"
-msgstr ""
+msgstr "Export"
 
 #: editgedcoms.php:203
 msgid "Are you sure you want to delete this GEDCOM"
-msgstr ""
+msgstr "Weet u zeker dat u dit GEDCOM-bestand wilt verwijderen?"
 
 #: editgedcoms.php:208
 #, fuzzy
@@ -2029,7 +2029,7 @@ msgstr "Download GEDCOM-bestand"
 
 #: editgedcoms.php:213
 msgid "Check"
-msgstr ""
+msgstr "Controleer"
 
 #: editlang_edit_settings.php:81
 msgid "Language File Edit Utility"
@@ -2080,31 +2080,31 @@ msgstr "Week begint op:"
 
 #: editlang_edit_settings.php:357
 msgid "Sunday"
-msgstr ""
+msgstr "Zondag"
 
 #: editlang_edit_settings.php:357
 msgid "Monday"
-msgstr ""
+msgstr "Maandag"
 
 #: editlang_edit_settings.php:357
 msgid "Tuesday"
-msgstr ""
+msgstr "Dinsdag"
 
 #: editlang_edit_settings.php:357
 msgid "Wednesday"
-msgstr ""
+msgstr "Woensdag"
 
 #: editlang_edit_settings.php:357
 msgid "Thursday"
-msgstr ""
+msgstr "Donderdag"
 
 #: editlang_edit_settings.php:357
 msgid "Friday"
-msgstr ""
+msgstr "Vrijdag"
 
 #: editlang_edit_settings.php:357
 msgid "Saturday"
-msgstr ""
+msgstr "Zaterdag"
 
 #: editlang_edit_settings.php:378
 msgid "Text direction"
@@ -2112,11 +2112,11 @@ msgstr "Richting van de tekst:"
 
 #: editlang_edit_settings.php:386
 msgid "Left to right"
-msgstr ""
+msgstr "v.l.n.r.:"
 
 #: editlang_edit_settings.php:391
 msgid "Right to left"
-msgstr ""
+msgstr "v.r.n.l.:"
 
 #: editlang_edit_settings.php:402
 msgid "Surname first"
@@ -2152,7 +2152,7 @@ msgstr "Taalbestand"
 
 #: editlang_edit_settings.php:530
 msgid "ERROR! The file does not exist..."
-msgstr ""
+msgstr "FOUT! Het bestand bestaat niet!..."
 
 #: editlang_edit_settings.php:539
 msgid "This optional file does not exist."
@@ -2161,7 +2161,7 @@ msgstr ""
 #: editnews.php:34
 #: editnews.php:52
 msgid "Add/Edit Journal/News entry"
-msgstr ""
+msgstr "Wijzigen/toevoegen artikel/notitie"
 
 #: editnews.php:57
 #, fuzzy
@@ -2170,53 +2170,53 @@ msgstr "Presentation Style"
 
 #: editnews.php:64
 msgid "Please enter some text for this News or Journal entry."
-msgstr ""
+msgstr "Typ de tekst voor het artikel of de notitie:"
 
 #: editnews.php:88
 msgid "Entry Text:"
-msgstr ""
+msgstr "Artikeltekst:"
 
 #: editnews.php:125
 msgid "News/Journal entry successfully saved."
-msgstr ""
+msgstr "Artikel / notitie succesvol opgeslagen."
 
 #: edituser.php:71
 msgid "Duplicate user name.  A user with that user name already exists.  Please choose another user name."
-msgstr ""
+msgstr "Een gebruiker met die naam is reeds aanwezig. Ga terug en kies een andere naam."
 
 #: edituser.php:85
 msgid "User name contains invalid characters"
-msgstr ""
+msgstr "De gebruikersnaam bevat ongeldige tekens"
 
 #: edituser.php:129
 msgid "You must enter a user name."
-msgstr ""
+msgstr "U moet de gebruikersnaam invullen."
 
 #: edituser.php:134
 #: edituser.php:139
 msgid "You must enter a first and last name."
-msgstr ""
+msgstr "U moet de volledige naam invullen."
 
 #: edituser.php:144
 msgid "You must enter an email address."
-msgstr ""
+msgstr "U moet een e-mailadres opgeven."
 
 #: edituser.php:149
 msgid "Passwords do not match."
-msgstr ""
+msgstr "Wachtwoorden zijn verschillend."
 
 #: edituser.php:154
 msgid "Passwords must contain at least 6 characters."
-msgstr ""
+msgstr "Het wachtwoord moet uit minimaal 6 karakters bestaan."
 
 #: edituser.php:174
 msgid "My Account"
-msgstr ""
+msgstr "Mijn gegevens"
 
 #: edituser.php:176
 #: edituser.php:301
 msgid "Update MyAccount"
-msgstr ""
+msgstr "Mijn gegevens bijwerken"
 
 #: edituser.php:180
 #: edit_changes.php:124
@@ -2235,7 +2235,7 @@ msgstr "Wijzig naam"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
-msgstr ""
+msgstr "Uw ID in de genealogie"
 
 #: edituser.php:218
 msgid "Password"
@@ -2243,7 +2243,7 @@ msgstr "Wachtwoord"
 
 #: edituser.php:219
 msgid "Leave password blank if you want to keep the current password."
-msgstr ""
+msgstr "Laat het wachtwoord leeg als u het huidige wachtwoord wilt behouden."
 
 #: edituser.php:223
 #, fuzzy
@@ -2257,15 +2257,15 @@ msgstr "Taal"
 
 #: edituser.php:245
 msgid "Email Address"
-msgstr ""
+msgstr "E-mail adres"
 
 #: edituser.php:251
 msgid "My Theme"
-msgstr ""
+msgstr "Mijn site-opmaak"
 
 #: edituser.php:253
 msgid "Site Default"
-msgstr ""
+msgstr "Standaard site"
 
 #: edituser.php:266
 #, fuzzy
@@ -2274,7 +2274,7 @@ msgstr "Verzendwijze genealogische vragen"
 
 #: edituser.php:281
 msgid "Visible to other users when online"
-msgstr ""
+msgstr "Zichtbaar voor anderen als aangemeld"
 
 #: edituser.php:290
 #, fuzzy
@@ -2290,20 +2290,20 @@ msgstr "Beoordeel GEDCOM-wijzigingen"
 #: edit_changes.php:66
 #: edit_changes.php:84
 msgid "Undo successful"
-msgstr ""
+msgstr "Ongedaan maken geslaagd"
 
 #: edit_changes.php:71
 #: edit_changes.php:99
 msgid "Changes successfully accepted into database"
-msgstr ""
+msgstr "Wijzigingen succesvol aangebracht in de database"
 
 #: edit_changes.php:104
 msgid "There are currently no changes to be reviewed."
-msgstr ""
+msgstr "Er zijn op dit moment geen wijzigingen ter beoordeling."
 
 #: edit_changes.php:116
 msgid "View Change Diff"
-msgstr ""
+msgstr "Toon wijzigingen"
 
 #: edit_changes.php:117
 #, fuzzy
@@ -2318,29 +2318,29 @@ msgstr "Sta toe dat gebruikers de GEDCOM-regels zien"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
-msgstr ""
+msgstr "De volgende wijzigingen zijn voorgekomen voor deze persoon:"
 
 #: edit_changes.php:122
 #: edit_changes.php:131
 msgid "Accept"
-msgstr ""
+msgstr "Accepteer"
 
 #: edit_changes.php:123
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: edit_changes.php:125
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: edit_changes.php:127
 #: edit_changes.php:144
 msgid "Undo"
-msgstr ""
+msgstr "Maak ongedaan"
 
 #: edit_changes.php:136
 msgid "Send Message"
-msgstr ""
+msgstr "Stuur bericht"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
@@ -2351,11 +2351,11 @@ msgstr "Recente wijzigingen"
 #: edit_changes.php:163
 #: edit_changes.php:181
 msgid "Undo all changes"
-msgstr ""
+msgstr "Alle wijzigingen ongedaan maken"
 
 #: edit_changes.php:181
 msgid "Are you sure you want to undo all of the changes for this GEDCOM?"
-msgstr ""
+msgstr "Weet u zeker dat u alle wijzigingen ongedaan wilt maken?"
 
 #: edit_changes.php:186
 msgid "Decide for each change to either accept or reject it.<br /><br />To accept all changes at once, click <b>\"Accept all changes\"</b> in the box below.<br />To get more information about a change,<br />click <b>\"View change diff\"</b> to see the differences,<br />or click <b>\"View GEDCOM record\"</b> to see the new data in GEDCOM format."
@@ -2387,11 +2387,11 @@ msgstr ""
 #: edit_interface.php:2076
 #: edit_merge.php:179
 msgid "GEDCOM record successfully deleted."
-msgstr ""
+msgstr "GEDCOM-record verwijderd."
 
 #: edit_interface.php:575
 msgid "Family"
-msgstr ""
+msgstr "Gezin"
 
 #: edit_interface.php:580
 msgid "PEDI"
@@ -2399,15 +2399,15 @@ msgstr "Kwartierstaat"
 
 #: edit_interface.php:584
 msgid "Adopted"
-msgstr ""
+msgstr "Geadopteerd"
 
 #: edit_interface.php:585
 msgid "Foster"
-msgstr ""
+msgstr "Pleeg"
 
 #: edit_interface.php:586
 msgid "Sealing"
-msgstr ""
+msgstr "Zegeling"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
@@ -2422,7 +2422,7 @@ msgstr "Behoudt koppelingen"
 #: edit_interface.php:1161
 #: edit_interface.php:1224
 msgid "You must provide a "
-msgstr ""
+msgstr "Invoeren:"
 
 #: edit_interface.php:751
 #: edit_interface.php:768
@@ -2479,7 +2479,7 @@ msgstr ""
 
 #: edit_interface.php:891
 msgid "New source created successfully."
-msgstr ""
+msgstr "Bron succesvol aangemaakt."
 
 #: edit_interface.php:911
 #, fuzzy
@@ -2542,7 +2542,7 @@ msgstr "Unieke feiten voor bewaarplaatsen"
 
 #: edit_interface.php:1330
 msgid "Paste the following Repository ID into your editing fields to reference this Repository "
-msgstr ""
+msgstr "Plak het ID van de bewaarplaats in uw invoerpagina om de verwijzing naar de bewaarplaats over te nemen "
 
 #: edit_interface.php:2126
 #, fuzzy
@@ -2555,26 +2555,26 @@ msgstr "Kinderen herschikken"
 
 #: edit_interface.php:2322
 msgid "Sort by birth dates"
-msgstr ""
+msgstr "Sorteren op geboortedatum"
 
 #: edit_interface.php:2350
 msgid "Child"
-msgstr ""
+msgstr "Kind"
 
 #: edit_interface.php:2362
 #: edit_interface.php:2371
 #: edit_interface.php:2405
 #: edit_interface.php:2425
 msgid "Spouse"
-msgstr ""
+msgstr "Partner"
 
 #: edit_interface.php:2389
 msgid "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes."
-msgstr ""
+msgstr "Op deze pagina kunt u gezinsleden wijzigen en verwijderen.<br /><br />Voor ieder gezinslid kunt u de koppeling \"Wijzig\" gebruiken om en ander persoon de desbetreffende rol binnen het gezin te geven. U kunt ook de koppeling \"Verwijderen\"gebruiken om de persoon uit het gezin te verwijderen.<br /><br />Als u klaar bent met aanpassen van de gezinsleden, kunt u de wijzigingen opslaan met de \"Opslaan\"-knop."
 
 #: edit_interface.php:2394
 msgid "Change Family Members"
-msgstr ""
+msgstr "Wijzig gezinsleden"
 
 #: edit_interface.php:2412
 #: edit_interface.php:2432
@@ -2590,39 +2590,39 @@ msgstr "Gezinnen herschikken"
 
 #: edit_interface.php:2724
 msgid "Sort by marriage date"
-msgstr ""
+msgstr "Sorteren op huwelijksdatum"
 
 #: edit_merge.php:58
 msgid "You entered the same IDs.  You cannot merge the same records."
-msgstr ""
+msgstr "U heeft dezelfde ID's ingegeven. Samenvoegen is niet mogelijk."
 
 #: edit_merge.php:91
 msgid "Records are not the same type.  Cannot merge records that are not the same type."
-msgstr ""
+msgstr "Gegevens zijn niet van hetzelfde type en kunnen daarom niet worden samengevoegd."
 
 #: edit_merge.php:121
 msgid "Merge Step 2 of 3"
-msgstr ""
+msgstr "Samenvoegen stap 2 van 3"
 
 #: edit_merge.php:123
 msgid "The following facts were exactly the same in both records and will be merged automatically."
-msgstr ""
+msgstr "De volgende gebeurtenissen zijn exact hetzelfde bij beide ID's en zullen worden samengevoegd."
 
 #: edit_merge.php:145
 msgid "No matching facts found"
-msgstr ""
+msgstr "Geen overeenkomende gebeurtenissen gevonden"
 
 #: edit_merge.php:148
 msgid "The following facts did not match.  Select the information you would like to keep."
-msgstr ""
+msgstr "De volgende gebeurtenissen komen niet overeen. Selecteer de gegevens die behouden moeten worden."
 
 #: edit_merge.php:175
 msgid "Merge Step 3 of 3"
-msgstr ""
+msgstr "Samenvoegen stap 3 van 3"
 
 #: edit_merge.php:191
 msgid "Updating linked record"
-msgstr ""
+msgstr "Aanpassen gekoppelde gegevens"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
@@ -2641,19 +2641,19 @@ msgstr ""
 
 #: edit_merge.php:248
 msgid "Merge more records."
-msgstr ""
+msgstr "Meer gegevens samenvoegen."
 
 #: edit_merge.php:281
 msgid "Merge Step 1 of 3"
-msgstr ""
+msgstr "Samenvoegen stap 1 van 3"
 
 #: edit_merge.php:284
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
-msgstr ""
+msgstr "Selecteer twee ID's om samen te voegen. De gegevens moeten gelijksoortig zijn."
 
 #: edit_merge.php:287
 msgid "Merge To ID:"
-msgstr ""
+msgstr "Samenvoegen naar ID:"
 
 #: edit_merge.php:302
 #: edit_merge.php:319
@@ -2675,12 +2675,12 @@ msgstr "Voorvoegsel bron-ID"
 
 #: edit_merge.php:307
 msgid "Merge From ID:"
-msgstr ""
+msgstr "Samenvoegen van ID:"
 
 #: edit_privacy.php:122
 #: edit_privacy.php:126
 msgid "Unable to find individual with id"
-msgstr ""
+msgstr "Kan geen persoon met dit ID vinden"
 
 #: edit_privacy.php:135
 #, fuzzy
@@ -2694,11 +2694,11 @@ msgstr "_GEDCOM: Privacy instellingen"
 
 #: edit_privacy.php:159
 msgid "Performing update."
-msgstr ""
+msgstr "Update uitvoeren."
 
 #: edit_privacy.php:162
 msgid "Config file read."
-msgstr ""
+msgstr "Lezen instellingenbestand."
 
 #: edit_privacy.php:298
 #: edit_privacy.php:301
@@ -2760,7 +2760,7 @@ msgstr "Privacy instellingen voor een persoon"
 
 #: edit_privacy.php:442
 msgid "Add new setting for Privacy by ID"
-msgstr ""
+msgstr "Nieuwe privacy instelling voor persoon toevoegen"
 
 #: edit_privacy.php:448
 #: edit_privacy.php:479
@@ -2784,7 +2784,7 @@ msgstr "Toon oudste bovenaan"
 
 #: edit_privacy.php:473
 msgid "Edit existing settings for Privacy by ID"
-msgstr ""
+msgstr "Wijzig bestaande privacy instellingen voor persoon"
 
 #: edit_privacy.php:480
 #: edit_privacy.php:573
@@ -2800,7 +2800,7 @@ msgstr "Privacy instellingen voor een gebruiker"
 
 #: edit_privacy.php:521
 msgid "Add new setting for User Privacy"
-msgstr ""
+msgstr "Nieuwe privacy instelling voor gebruiker toevoegen"
 
 #: edit_privacy.php:526
 #: edit_privacy.php:571
@@ -2811,11 +2811,11 @@ msgstr "Gebruikersnaam"
 #: edit_privacy.php:528
 #: edit_privacy.php:574
 msgid "Show?"
-msgstr ""
+msgstr "Zichtbaar?"
 
 #: edit_privacy.php:566
 msgid "Edit existing settings for User Privacy"
-msgstr ""
+msgstr "Wijzig bestaande privacy instellingen voor een gebruiker"
 
 #: edit_privacy.php:610
 #: edit_privacy.php:612
@@ -2824,25 +2824,25 @@ msgstr "Algemene instellingen voor gegevens"
 
 #: edit_privacy.php:622
 msgid "Add new setting for Global Fact Privacy"
-msgstr ""
+msgstr "Nieuwe algemene instelling voor gegevens toevoegen"
 
 #: edit_privacy.php:625
 #: edit_privacy.php:665
 #: edit_privacy.php:718
 #: edit_privacy.php:766
 msgid "Name of fact"
-msgstr ""
+msgstr "Omschrijving gegevens"
 
 #: edit_privacy.php:626
 #: edit_privacy.php:666
 #: edit_privacy.php:719
 #: edit_privacy.php:767
 msgid "Choice"
-msgstr ""
+msgstr "Keuze"
 
 #: edit_privacy.php:633
 msgid "Choose: "
-msgstr ""
+msgstr "Kies:"
 
 #: edit_privacy.php:647
 #: edit_privacy.php:685
@@ -2857,11 +2857,11 @@ msgstr "Toon toekomstige taken"
 #: edit_privacy.php:749
 #: edit_privacy.php:790
 msgid "Show fact"
-msgstr ""
+msgstr "Gegeven zichtbaar"
 
 #: edit_privacy.php:660
 msgid "Edit existing settings for Global Fact Privacy"
-msgstr ""
+msgstr "Wijzig bestaande algemene instellingen voor gegevens"
 
 #: edit_privacy.php:701
 #: edit_privacy.php:703
@@ -2870,15 +2870,15 @@ msgstr "Specifieke instellingen voor gegevens"
 
 #: edit_privacy.php:713
 msgid "Add new setting for Facts Privacy by ID"
-msgstr ""
+msgstr "Nieuwe specifieke instelling voor gegevens toevoegen"
 
 #: edit_privacy.php:760
 msgid "Edit existing settings for Facts Privacy by ID"
-msgstr ""
+msgstr "Wijzig bestaande specifieke instellingen voor gegevens van een persoon"
 
 #: expand_view.php:32
 msgid "Private"
-msgstr ""
+msgstr "Privé"
 
 #: expand_view.php:72
 #, fuzzy
@@ -2893,7 +2893,7 @@ msgstr "Dit record is gewijzigd. Klik hier om de wijzigingen te tonen."
 #: family.php:100
 #: familybook.php:218
 msgid "Parents"
-msgstr ""
+msgstr "Ouders:"
 
 #: family.php:101
 msgid "Grandparents"
@@ -2906,15 +2906,15 @@ msgstr "Toon lege vakken in de kwartierstaat"
 
 #: family.php:137
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: family.php:138
 msgid "Show children on timeline chart"
-msgstr ""
+msgstr "Toon kinderen op de tijdlijn"
 
 #: family.php:138
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: family.php:139
 #, fuzzy
@@ -2923,29 +2923,29 @@ msgstr "Toon lege vakken in de kwartierstaat"
 
 #: family.php:139
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #: family.php:141
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: family.php:159
 msgid "Search Engine Spider Detected"
-msgstr ""
+msgstr "Zoekmachine gedetecteerd"
 
 #: familybook.php:243
 #: fanchart.php:345
 msgid "Siblings"
-msgstr ""
+msgstr "Broers/zussen"
 
 #: familybook.php:244
 #: fanchart.php:346
 msgid "Sibling"
-msgstr ""
+msgstr "Broer/zus"
 
 #: familybook.php:340
 msgid "Family of:&nbsp;"
-msgstr ""
+msgstr "Familie van: &nbsp;"
 
 #: familybook.php:371
 #: familybook.php:383
@@ -2962,7 +2962,7 @@ msgstr "Toon bronnen"
 
 #: familybook.php:481
 msgid "Descent Steps"
-msgstr ""
+msgstr "Nakomelingen stappen"
 
 #: famlist.php:109
 #: famlist.php:121
@@ -2973,7 +2973,7 @@ msgstr ""
 
 #: famlist.php:174
 msgid "Choose a letter to show families whose name starts with that letter."
-msgstr ""
+msgstr "Kies een letter om personen te tonen wiens voornaam begint met die letter."
 
 #: famlist.php:184
 #, fuzzy
@@ -3001,20 +3001,20 @@ msgstr ""
 
 #: fanchart.php:105
 msgid "PHP server misconfiguration: GD 2.x library required to use image functions."
-msgstr ""
+msgstr "De PHP-server is foutief geconfigureerd: De GD-bibliotheek is niet gevonden op de webserver. U kunt de grafische functies niet gebruiken."
 
 #: fanchart.php:106
 #: fanchart.php:111
 msgid "http://www.php.net/gd"
-msgstr ""
+msgstr "http://www.php.net/gd"
 
 #: fanchart.php:110
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
-msgstr ""
+msgstr "De PHP-server is foutief geconfigureerd: De Freetype bibliotheek is benodigd voor True Type fonts."
 
 #: fanchart.php:117
 msgid "Font file not found on PHP server"
-msgstr ""
+msgstr "Fontbestand niet gevonden op de webserver."
 
 #: fanchart.php:295
 #, fuzzy
@@ -3037,18 +3037,18 @@ msgstr "Controleer verwantschap via partners"
 #: fanchart.php:429
 #: fanchart.php:454
 msgid "Circle Diagram"
-msgstr ""
+msgstr "Cirkeldiagram"
 
 #: fanchart.php:306
 #: hourglass.php:39
 #: hourglass.php:44
 #: hourglass.php:48
 msgid "Hourglass Chart"
-msgstr ""
+msgstr "Zandloperdiagram"
 
 #: fanchart.php:307
 msgid "Interactive Tree"
-msgstr ""
+msgstr "Interactieve Stamboom"
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -3057,7 +3057,7 @@ msgstr "Cirkelomvang"
 
 #: fanchart.php:498
 msgid "This Fanchart image cannot be printed directly by your browser. Use right-click then save and print."
-msgstr ""
+msgstr "Dit cirkeldiagram kan niet direct vanuit uw Windows Verkenner worden afgedrukt. Gebruik rechts-klik op uw muis, kies opslaan en druk daarna de afbeelding af."
 
 #: faq.php:159
 #: faq.php:247
@@ -3091,7 +3091,7 @@ msgstr "FGV tonen voor:"
 
 #: faq.php:189
 msgid "No FAQ ID has been specified !"
-msgstr ""
+msgstr "Geen VGV-ID gespecificeerd!"
 
 #: faq.php:202
 #: help_text.php:4149
@@ -3100,7 +3100,7 @@ msgstr ""
 
 #: faq.php:250
 msgid "The FAQ list is empty."
-msgstr ""
+msgstr "De VGV-lijst is leeg."
 
 #: faq.php:265
 #: help_text.php:5054
@@ -3114,12 +3114,12 @@ msgstr "Positie VGV"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
-msgstr ""
+msgstr "Weet u zeker dat u deze VGV wilt verwijderen?"
 
 #: find.php:97
 #: find.php:202
 msgid "Find Family List"
-msgstr ""
+msgstr "Lijst gezinnen zoeken"
 
 #: find.php:100
 #: find.php:205
@@ -3148,16 +3148,16 @@ msgstr "Voeg nieuwe notitie toe"
 #: find.php:116
 #: find.php:217
 msgid "Find Source"
-msgstr ""
+msgstr "Zoek bron"
 
 #: find.php:120
 #: find.php:220
 msgid "Find Special Characters"
-msgstr ""
+msgstr "Speciale letters"
 
 #: find.php:163
 msgid "Please enter more than one character"
-msgstr ""
+msgstr "Voer meer dan één letter in."
 
 #: find.php:239
 #: find.php:259
@@ -3167,7 +3167,7 @@ msgstr "Namenlijst"
 
 #: find.php:283
 msgid "Media contains:"
-msgstr ""
+msgstr "Multimedia bevat:"
 
 #: find.php:291
 #, fuzzy
@@ -3180,11 +3180,11 @@ msgstr "Gebruik miniweergaven voor hoofdafbeelding bij detailgegevens persoon"
 #: find.php:359
 #: find.php:380
 msgid "Display all"
-msgstr ""
+msgstr "Alles tonen"
 
 #: find.php:311
 msgid "Place contains:"
-msgstr ""
+msgstr "Locatie bevat:"
 
 #: find.php:332
 #, fuzzy
@@ -3202,7 +3202,7 @@ msgstr "Feiten voor bronnen"
 
 #: find.php:403
 msgid "Magnify"
-msgstr ""
+msgstr "Vergroten"
 
 #: find.php:432
 #: find.php:457
@@ -3212,7 +3212,7 @@ msgstr ""
 #: find.php:693
 #: find.php:715
 msgid "No results found."
-msgstr ""
+msgstr "Geen resultaat gevonden."
 
 #: find.php:487
 #, fuzzy
@@ -3221,19 +3221,19 @@ msgstr "Themamap"
 
 #: find.php:501
 msgid "External objects"
-msgstr ""
+msgstr "Externe objecten"
 
 #: find.php:572
 msgid "The filename entered does not exist."
-msgstr ""
+msgstr "Er bestaat geen bestand met de opgegeven naam."
 
 #: find.php:574
 msgid "Image Dimensions"
-msgstr ""
+msgstr "Afmetingen afbeelding"
 
 #: find.php:577
 msgid "This media object is linked to the following:"
-msgstr ""
+msgstr "Dit media object is gekoppeld aan het volgende:"
 
 #: find.php:584
 #, fuzzy
@@ -3247,19 +3247,19 @@ msgstr "Bekijk archief"
 
 #: find.php:593
 msgid "View Object"
-msgstr ""
+msgstr "Bekijk object"
 
 #: find.php:599
 msgid "This media object is not linked to any GEDCOM record."
-msgstr ""
+msgstr "Dit media object is niet ekoppeld aan enig GEDCOM record."
 
 #: find.php:641
 msgid "Places found"
-msgstr ""
+msgstr "Locaties gevonden"
 
 #: find.php:665
 msgid "Repositories found"
-msgstr ""
+msgstr "Bewaarplaatsen gevonden"
 
 #: find.php:690
 msgid "Shared Notes found"
@@ -3282,7 +3282,7 @@ msgstr ""
 #: gedcheck.php:838
 #: gedcheck.php:853
 msgid "Level"
-msgstr ""
+msgstr "Nivo"
 
 #: gedcheck.php:104
 #, fuzzy
@@ -3366,7 +3366,7 @@ msgstr ""
 
 #: gedrecord.php:45
 msgid "This page has been disabled by the site administrator."
-msgstr ""
+msgstr "Deze functie is door de beheerder uitgeschakeld."
 
 #: help_text.php:68
 msgid "Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, \"this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62).\"<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required."
@@ -5379,7 +5379,7 @@ msgstr "Wijzig geslacht"
 #: help_text.php:2474
 #: imageview.php:32
 msgid "Image Viewer"
-msgstr ""
+msgstr "Afbeelding bekijken"
 
 #: help_text.php:2479
 #, fuzzy
@@ -5403,7 +5403,7 @@ msgstr "Zoeken in helpteksten"
 
 #: help_text.php:2499
 msgid "Statistics Plot"
-msgstr ""
+msgstr "Statistiek Grafiek"
 
 #: help_text.php:2508
 msgid "This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev[\"BIRT\"]&nbsp;=&nbsp;\"*\";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character."
@@ -9362,26 +9362,26 @@ msgstr ""
 
 #: help_text.php:5555
 msgid "Help Contents"
-msgstr ""
+msgstr "Inhoud"
 
 #: imageview.php:180
 msgid "View image details"
-msgstr ""
+msgstr "Toon details v.d. afbeelding"
 
 #: index.php:309
 #: index.php:370
 #: index_edit.php:199
 msgid "MyGedView Portal"
-msgstr ""
+msgstr "MyGedView"
 
 #: index.php:371
 msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
-msgstr ""
+msgstr "Op uw persoonlijke MyGedView pagina kunt u uw favoriete personen aangeven, kijken naar gebeurtenissen die binnenkort plaatsvinden en samenwerken met andere PhpGedView gebruikers van deze site."
 
 #: index.php:445
 #: index_edit.php:472
 msgid "Customize MyGedView Portal"
-msgstr ""
+msgstr "MyGedView indelen"
 
 #: index.php:451
 #: index_edit.php:473
@@ -9391,7 +9391,7 @@ msgstr "Zelf gedefinieerde tekst voor authenticatie vereist"
 
 #: index_edit.php:83
 msgid "?"
-msgstr ""
+msgstr "?"
 
 #: index_edit.php:154
 #: index_edit.php:158
@@ -9399,7 +9399,7 @@ msgstr ""
 #: index_edit.php:160
 #: index_edit.php:161
 msgid "&nbsp;"
-msgstr ""
+msgstr "&nbsp;"
 
 #: index_edit.php:231
 #, fuzzy
@@ -9417,65 +9417,65 @@ msgstr "_GEDCOM: Instellen"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
-msgstr ""
+msgstr "Dit vak kan niet worden ingesteld."
 
 #: index_edit.php:478
 msgid "Main Section Blocks"
-msgstr ""
+msgstr "Vakken hoofdsectie"
 
 #: index_edit.php:483
 msgid "Available Blocks"
-msgstr ""
+msgstr "Beschikbare vakken"
 
 #: index_edit.php:486
 msgid "Right Section Blocks"
-msgstr ""
+msgstr "Vakken rechter sectie"
 
 #: index_edit.php:492
 #: index_edit.php:551
 msgid "Move Up"
-msgstr ""
+msgstr "Omhoog"
 
 #: index_edit.php:494
 #: index_edit.php:553
 msgid "Move Down"
-msgstr ""
+msgstr "Omlaag"
 
 #: index_edit.php:511
 msgid "Move Right"
-msgstr ""
+msgstr "Verplaats naar rechts"
 
 #: index_edit.php:531
 msgid "Move Left"
-msgstr ""
+msgstr "Verplaats naar links"
 
 #: index_edit.php:560
 msgid "Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction."
-msgstr ""
+msgstr "Selecteer een vaknaam en klik op een van de pijlen om het vak in de aangegeven richting te verplaatsen."
 
 #: index_edit.php:565
 msgid "Use these blocks as the default block configuration for all users?"
-msgstr ""
+msgstr "Gebruik deze vakken als standaard voor alle gebruikers?"
 
 #: index_edit.php:574
 msgid "Reset to Default Blocks"
-msgstr ""
+msgstr "Terug naar standaardindeling"
 
 #: indilist.php:174
 msgid "Choose a letter to show individuals whose family name starts with that letter."
-msgstr ""
+msgstr "Kies een letter om personen te tonen wiens achternaam begint met die letter."
 
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
-msgstr ""
+msgstr "Kies een letter om families te tonen wiens naam begint met die letter."
 
 #: individual.php:287
 msgid "Hit Count:"
-msgstr ""
+msgstr "Bezoekteller:"
 
 #: individual.php:294
 msgid "The information for this individual was linked from a remote site."
-msgstr ""
+msgstr "De informatie over deze persoon is afkomstig van een gekoppelde site."
 
 #: individual.php:319
 #, fuzzy
@@ -9484,11 +9484,11 @@ msgstr "Startpersoon van de kwartierstaat"
 
 #: individual.php:321
 msgid "Timeline Chart"
-msgstr ""
+msgstr "Tijdlijn"
 
 #: individual.php:325
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: install.php:102
 #: install.php:391
@@ -9501,11 +9501,11 @@ msgstr ""
 
 #: install.php:181
 msgid "Your current database configuration is bad.  Please check your database connection parameters and configure again."
-msgstr ""
+msgstr "De huidige databaseconfiguratie is corrupt. Controleer de database-verbindingsparameters en configureer opnieuw."
 
 #: install.php:350
 msgid "Unable to add user.  Please try again."
-msgstr ""
+msgstr "Het is niet mogelijk om de gebruiker toe te voegen. Probeer het opnieuw."
 
 #: install.php:410
 msgid "*Your settings will not<br />be saved until step 6"
@@ -9527,11 +9527,11 @@ msgstr ""
 
 #: install.php:470
 msgid "Next &gt;"
-msgstr ""
+msgstr "volgende &gt;"
 
 #: install.php:480
 msgid "&lt; Previous"
-msgstr ""
+msgstr "&lt; vorige"
 
 #: install.php:502
 msgid "Checking for errors..."
@@ -9667,21 +9667,21 @@ msgstr ""
 #: login_register.php:168
 #: login_register.php:217
 msgid "You must enter a password."
-msgstr ""
+msgstr "U moet het wachtwoord invullen."
 
 #: install.php:1077
 #: login_register.php:174
 #: login_register.php:222
 msgid "You must confirm the password."
-msgstr ""
+msgstr "U moet het wachtwoord twee keer invullen."
 
 #: install.php:1084
 msgid "Create the default administrative user."
-msgstr ""
+msgstr "Aanmaken van de beheerder."
 
 #: install.php:1085
 msgid "You must first create your main administrative user.  This user will have privileges to update the configuration files, view private data, and create other users."
-msgstr ""
+msgstr "U moet eerst de beheerder aanmaken. De beheerder heeft de rechten om de instellingen te wijzigen, privé-gegevens te bekijken en andere gebruikers aan te maken."
 
 #: install.php:1104
 msgid "The following administrative users already exist:"
@@ -9700,7 +9700,7 @@ msgstr "Persoon verwijderen"
 #: inverselink.php:53
 #: media.php:765
 msgid "To Family"
-msgstr ""
+msgstr "aan een gezin"
 
 #: inverselink.php:56
 #: media.php:770
@@ -9746,11 +9746,11 @@ msgstr "Verwijder bewaarplaats"
 #: lifespan.php:41
 #: lifespan.php:54
 msgid "Lifespan Chart"
-msgstr ""
+msgstr "Levensduur Grafiek"
 
 #: lifespan.php:66
 msgid "Add another person to chart:<br />Person ID:"
-msgstr ""
+msgstr "Nog een persoon aan de tijdlijn toevoegen:<br />Persoons ID:"
 
 #: lifespan.php:70
 #, fuzzy
@@ -9759,23 +9759,23 @@ msgstr "Huwelijksnamen inbegrepen"
 
 #: lifespan.php:75
 msgid "Show Timeline chart"
-msgstr ""
+msgstr "Toon tijdlijn grafiek"
 
 #: lifespan.php:303
 msgid "Speed"
-msgstr ""
+msgstr "Snelheid"
 
 #: lifespan.php:304
 msgid "Begin Year"
-msgstr ""
+msgstr "Begin Jaar"
 
 #: lifespan.php:305
 msgid "End Year"
-msgstr ""
+msgstr "Einde Jaar"
 
 #: lifespan.php:321
 msgid "Search"
-msgstr ""
+msgstr "Zoek"
 
 #: lifespan.php:322
 #, fuzzy
@@ -9789,7 +9789,7 @@ msgstr "Voorvoegsel GEDCOM-ID"
 
 #: login.php:120
 msgid "Unable to authenticate user."
-msgstr ""
+msgstr "De gebruiker is niet geautoriseerd."
 
 #: login.php:206
 #: login.php:226
@@ -9804,45 +9804,45 @@ msgstr "Toon PHP-informatie"
 
 #: login.php:239
 msgid "No account?"
-msgstr ""
+msgstr "Nog geen gebruikersnaam?"
 
 #: login.php:240
 #: login_register.php:202
 #: login_register.php:283
 #: login_register.php:317
 msgid "Request new user account"
-msgstr ""
+msgstr "Vraag gebruikersnaam aan"
 
 #: login.php:241
 msgid "Lost your password?"
-msgstr ""
+msgstr "Wachtwoord vergeten?"
 
 #: login.php:242
 msgid "Request new password"
-msgstr ""
+msgstr "Vraag nieuw wachtwoord aan"
 
 #: login_register.php:58
 #: login_register.php:80
 #: login_register.php:82
 #: login_register.php:94
 msgid "Lost password request"
-msgstr ""
+msgstr "Verzoek om een nieuw wachtwoord"
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
-msgstr ""
+msgstr "Voor uw gebruikersnaam is een nieuw wachtwoord aangevraagd!"
 
 #: login_register.php:131
 msgid "Recommendation:"
-msgstr ""
+msgstr "Aanbeveling:"
 
 #: login_register.php:132
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
-msgstr ""
+msgstr "Klik op de onderstaande koppeling, meldt u aan met het nieuwe wachtwoord en wijzig het vervolgens."
 
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
-msgstr ""
+msgstr "Geef uw relatie tot de genealogie aan in het commentaarvak."
 
 #: login_register.php:287
 #, fuzzy
@@ -9858,43 +9858,43 @@ msgstr "Database-wachtwoord"
 #: login_register.php:433
 #: login_register.php:454
 msgid "Comments"
-msgstr ""
+msgstr "Commentaar"
 
 #: login_register.php:318
 msgid "Fields marked with * are mandatory."
-msgstr ""
+msgstr "Vakken met een * zijn verplicht."
 
 #: login_register.php:356
 msgid "New Account confirmation"
-msgstr ""
+msgstr "Bevestiging nieuwe gebruiker"
 
 #: login_register.php:376
 #: login_register.php:405
 #: login_register.php:409
 #: login_register.php:486
 msgid "Back"
-msgstr ""
+msgstr "Terug"
 
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
-msgstr ""
+msgstr "De volgende gegevens zijn gebruikt."
 
 #: login_register.php:423
 msgid "Please click on the following link and fill in the requested data to confirm your request and email address."
-msgstr ""
+msgstr "Klik op onderstaande koppeling en vul de gegevens in om uw gebruikersnaam en e-mailadres te verifiëren."
 
 #: login_register.php:432
 #: login_register.php:516
 msgid "Verification code:"
-msgstr ""
+msgstr "Verificatiecode:"
 
 #: login_register.php:434
 msgid "If you didn't request an account, you can just delete this message."
-msgstr ""
+msgstr "Als u deze gegevens niet heeft aangevraagd, kunt u dit bericht verwijderen."
 
 #: login_register.php:435
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
-msgstr ""
+msgstr "U krijgt geen e-mailberichten meer van dit systeem, omdat uw gebruikersnaam, zonder verificatie, binnen zeven dagen wordt verwijderd."
 
 #: login_register.php:444
 #: login_register.php:565
@@ -9904,15 +9904,15 @@ msgstr "_Gebruikersbeheer"
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
-msgstr ""
+msgstr "Deze gebruiker ontving een e-mail met de voor verificatie noodzakelijke informatie."
 
 #: login_register.php:456
 msgid "You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account."
-msgstr ""
+msgstr "U krijgt bericht zodra de gebruiker de verificatie heeft uitgevoerd. Daarna kunt u de gebruiker toestemming geven om aan te melden op de site."
 
 #: login_register.php:457
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
-msgstr ""
+msgstr "U wordt per e-mail ingelicht als deze toekomstige gebruiker de gegevens heeft geverifieerd. De gebruiker zal daarna in staat zijn zich aan te melden zonder dat van uw kant actie ondernomen hoeft te worden."
 
 #: login_register.php:506
 #: login_register.php:513
@@ -9925,48 +9925,48 @@ msgstr "_Gebruikersbeheer"
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
-msgstr ""
+msgstr "Verzenden"
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
-msgstr ""
+msgstr "Klik op de onderstaande koppeling, meld u aan bij uw site en geef de gebruiker toestemming om zich aan te melden."
 
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
-msgstr ""
+msgstr "U hoeft geen actie te ondernemen, de gebruiker kan zich nu aanmelden."
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
-msgstr ""
+msgstr "U bent herkend als geregistreerde gebruiker."
 
 #: login_register.php:591
 msgid "The Administrator has been informed.  As soon as he gives you permission to login, you can login with your user name and password."
-msgstr ""
+msgstr "De beheerder is geïnformeerd.<br /> Zodra hij toestemming heft verleend kunt u met uw gebruikersnaam en wachtwoord aanmelden."
 
 #: login_register.php:592
 msgid "You can now login with your user name and password."
-msgstr ""
+msgstr "U kunt zich nu aanmelden met uw gebruikersnaam en wachtwoord."
 
 #: login_register.php:597
 msgid "Data was not correct, please try again"
-msgstr ""
+msgstr "Gegevens niet correct!<br />Probeer opnieuw!"
 
 #: login_register.php:603
 msgid "Could not verify the information you entered.  Please try again or contact the site administrator for more information."
-msgstr ""
+msgstr "Gebruiker niet gevonden!"
 
 #: manageservers.php:118
 #: manageservers.php:121
 msgid "Invalid IP address."
-msgstr ""
+msgstr "Selecteer de site die u wilt blokkeren."
 
 #: manageservers.php:163
 msgid "Failed to authenticate to remote site"
-msgstr ""
+msgstr "Aanmelden bij gekoppelde site niet gelukt"
 
 #: manageservers.php:170
 msgid "Please do not leave remote site title or URL blank"
-msgstr ""
+msgstr "Gekoppelde site naam of URL niet leeg laten"
 
 #: manageservers.php:183
 msgid "The remote server could not be removed because its Connections list is not empty."
@@ -9978,11 +9978,11 @@ msgstr ""
 
 #: manageservers.php:206
 msgid "Hide Details"
-msgstr ""
+msgstr "Verberg details"
 
 #: manageservers.php:231
 msgid "Manually mark Search Engines by IP"
-msgstr ""
+msgstr "Handmatig zoekmachines markeren op basis van IP adres"
 
 #: manageservers.php:259
 #: manageservers.php:306
@@ -9991,7 +9991,7 @@ msgstr ""
 
 #: manageservers.php:279
 msgid "Ban Sites by IP"
-msgstr ""
+msgstr "Geblokkeerde sites"
 
 #: manageservers.php:325
 #, fuzzy
@@ -10000,16 +10000,16 @@ msgstr "Persoon verwijderen"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
-msgstr ""
+msgstr "Weet u zeker dat u deze bron uit het GEDCOM-bestand wilt verwijderen?"
 
 #: manageservers.php:344
 msgid "View Connections"
-msgstr ""
+msgstr "Bekijk verbindingen"
 
 #: manageservers.php:368
 #: manageservers.php:444
 msgid "Site URL/IP"
-msgstr ""
+msgstr "URL/IP"
 
 #: manageservers.php:430
 #, fuzzy
@@ -10018,7 +10018,7 @@ msgstr "Voeg nieuwe notitie toe"
 
 #: media.php:92
 msgid "Directory could not be created"
-msgstr ""
+msgstr "Map kan niet worden aangemaakt"
 
 #: media.php:100
 msgid "Media file moved."
@@ -10026,11 +10026,11 @@ msgstr ""
 
 #: media.php:116
 msgid "The execution time limit was reached.  Try the command again to move the rest of the files."
-msgstr ""
+msgstr "De uitvoerings-tijd-limiet was bereikt. Probeer het commando nogmaals om de rest van de bestanden te verplaatsen."
 
 #: media.php:173
 msgid "The execution time limit was reached.  Try the command again on a smaller directory."
-msgstr ""
+msgstr "De uitvoerings-tijd-limiet was bereikt. Probeer het commando nogmaals op een kleinere map."
 
 #: media.php:181
 #: media.php:189
@@ -10041,16 +10041,16 @@ msgstr "Stel Media Permissies in"
 #: media.php:183
 #: media.php:191
 msgid "Permissions Not Set"
-msgstr ""
+msgstr "Permissies Niet Ingesteld"
 
 #: media.php:310
 msgid "Uploading media files is not allowed because multi-media items have been disabled or because the media directory is not writable."
-msgstr ""
+msgstr "Het uploaden van multimediabestanden is niet toegestaan omdat gebruik van multimedia is uitgeschakeld, of omdat u in de multimediamap geen schrijfrechten heeft."
 
 #: media.php:338
 #: media.php:339
 msgid "Directory does not exist."
-msgstr ""
+msgstr "Map bestaat niet"
 
 #: media.php:373
 #: media.php:374
@@ -10061,12 +10061,12 @@ msgstr ""
 #: media.php:388
 #: media.php:389
 msgid "Directory not empty."
-msgstr ""
+msgstr "Map is niet leeg"
 
 #: media.php:410
 #: media.php:411
 msgid "Media and thumbnail directories successfully removed."
-msgstr ""
+msgstr "Mappen voor multimedia en miniweergaves succesvol verwijderd"
 
 #: media.php:414
 #: media.php:415
@@ -10079,62 +10079,62 @@ msgstr "Aantal niveaus van de Multimediamappen"
 #: media.php:420
 #: media.php:421
 msgid "Media directory successfully removed."
-msgstr ""
+msgstr "Multimediamap succesvol verwijderd"
 
 #: media.php:424
 #: media.php:425
 #: media.php:427
 #: media.php:428
 msgid "Thumbnail directory not removed."
-msgstr ""
+msgstr "Map voor miniweergaves niet verwijderd"
 
 #: media.php:430
 #: media.php:431
 msgid "Thumbnail directory successfully removed."
-msgstr ""
+msgstr "Map miniweergaves succesvol verwijderd"
 
 #: media.php:543
 #: media.php:901
 #: media.php:942
 msgid "Move to protected"
-msgstr ""
+msgstr "Verplaats naar beschermd"
 
 #: media.php:553
 #: media.php:899
 #: media.php:941
 msgid "Move to standard"
-msgstr ""
+msgstr "Verplaats naar standaard"
 
 #: media.php:562
 #: media.php:905
 msgid "Correct read/write/execute permissions"
-msgstr ""
+msgstr "Correct lees/schrijf/uitvoeren permissies"
 
 #: media.php:634
 #: media.php:638
 #: media.php:650
 #: media.php:651
 msgid "Media file could not be deleted."
-msgstr ""
+msgstr "Mediabestand kan niet worden verwijderd."
 
 #: media.php:638
 msgid "This media object does not exist as a file on this server.  It cannot be deleted, moved, or renamed."
-msgstr ""
+msgstr "Dit mediabestand bestaat niet op deze server. Het kan niet worden verwijderd, verplaatsts of hernoemd."
 
 #: media.php:646
 #: media.php:647
 msgid "Media file successfully deleted."
-msgstr ""
+msgstr "Mediabestand verwijderd."
 
 #: media.php:660
 #: media.php:661
 msgid "Thumbnail file successfully deleted."
-msgstr ""
+msgstr "Miniweergave verwijderd."
 
 #: media.php:664
 #: media.php:665
 msgid "Thumbnail file could not be deleted."
-msgstr ""
+msgstr "Miniweergave kan niet worden verwijderd."
 
 #: media.php:751
 #, fuzzy
@@ -10154,11 +10154,11 @@ msgstr "Gebruik miniweergaven voor hoofdafbeelding bij detailgegevens persoon"
 
 #: media.php:939
 msgid "Are you sure you want to delete this folder?"
-msgstr ""
+msgstr "Map verwijderen?"
 
 #: media.php:1038
 msgid "Are you sure you want to delete this file?"
-msgstr ""
+msgstr "Bestand verwijderen?"
 
 #: media.php:1038
 #, fuzzy
@@ -10167,7 +10167,7 @@ msgstr "Verwijder naam"
 
 #: media.php:1046
 msgid "Are you sure you want to remove this object from the database?"
-msgstr ""
+msgstr "Object uit database verwijderen?"
 
 #: media.php:1046
 #, fuzzy
@@ -10181,19 +10181,19 @@ msgstr "Gebruik miniweergaven voor hoofdafbeelding bij detailgegevens persoon"
 
 #: media.php:1170
 msgid "The media folder is corrupted."
-msgstr ""
+msgstr "De multimediamap is corrupt."
 
 #: mediafirewall.php:319
 msgid "Error: The Media Firewall was launched from a directory other than the media directory."
-msgstr ""
+msgstr "FOUT: De Media Firewall was gestart vanuit een andere map dan de media map."
 
 #: mediafirewall.php:335
 msgid "No Media Found"
-msgstr ""
+msgstr "Geen media gevonden"
 
 #: mediafirewall.php:352
 msgid "Privacy restrictions prevent you from viewing this item"
-msgstr ""
+msgstr "Wegens Privacy beperkingen kunt u dit bestand niet bekijken"
 
 #: mediafirewall.php:530
 #, fuzzy
@@ -10208,15 +10208,15 @@ msgstr "Multimediamappen"
 
 #: medialist.php:131
 msgid "Media objects per page"
-msgstr ""
+msgstr "media objecten per pagina"
 
 #: medialist.php:169
 msgid "Apply filter"
-msgstr ""
+msgstr "Filter toepassen"
 
 #: medialist.php:216
 msgid "Media Objects found"
-msgstr ""
+msgstr "Multimedia-objecten gevonden"
 
 #: medialist.php:334
 #: medialist.php:336
@@ -10256,46 +10256,46 @@ msgstr "Controleer relaties door huwelijk"
 
 #: mediaviewer.php:147
 msgid "Total links"
-msgstr ""
+msgstr "Totaal aantal links"
 
 #: message.php:47
 #: message.php:52
 msgid "No recipient user was provided.  Cannot continue."
-msgstr ""
+msgstr "Geen geadresseerde ingevoerd."
 
 #: message.php:70
 #: message.php:79
 #: message.php:159
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "Voer een geldig e-mailadres in"
 
 #: message.php:167
 msgid "Please enter a message subject."
-msgstr ""
+msgstr "Voer onderwerp van het bericht in"
 
 #: message.php:172
 msgid "Please enter some message text before sending."
-msgstr ""
+msgstr "Voer tekst in voor het verzenden a.u.b."
 
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
-msgstr ""
+msgstr "<b>Let op:</b>Vertrouwelijke informatie over levende personen wordt alleen verstrekt aan verwanten en andere geautoriseerde personen. Voordat u vertrouwelijke informatie ontvangt, wordt eerst uw relatie met de desbetreffende persoon geverifieerd.<br />Soms is informatie over reeds overleden personen ook vertrouwelijk. Dit kan voorkomen, als er niet voldoende informatie voorhanden is, om vast te stellen of de persoon daadwerkelijk is overleden. Waarschijnlijk is ook niet meer informatie voorhanden over deze persoon.<br /><br />Controleer, voordat u een vraag stelt, aan de hand van data, plaatsen en familieleden, dat het de juiste persoon betreft. Als u genealogische informatie versterkt, vermeldt dan de bronnen waar de informatie vandaan komt."
 
 #: message.php:197
 msgid "Your Name:"
-msgstr ""
+msgstr "Uw naam:"
 
 #: message.php:198
 msgid "Email Address:"
-msgstr ""
+msgstr "E-mail adres:"
 
 #: message.php:198
 msgid "Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  You email address will not be used in any other way besides responding to this inquiry."
-msgstr ""
+msgstr "Geef het e-mailadres waar wij het antwoord op uw bericht heen kunnen sturen. Als u dit achterwege laat kunnen wij uw vraag niet beantwoorden. Uw e-mailadres wordt uitsluitend gebruikt om uw vraag te beantwoorden."
 
 #: message.php:200
 msgid "Subject:"
-msgstr ""
+msgstr "Onderwerp:"
 
 #: message.php:211
 #, fuzzy
@@ -10304,15 +10304,15 @@ msgstr "VGV-tekst"
 
 #: message.php:218
 msgid "Message Deleted"
-msgstr ""
+msgstr "Bericht verwijderd"
 
 #: module.php:214
 msgid "Unknown action: [action]."
-msgstr ""
+msgstr "Unknown action: [action]."
 
 #: module.php:224
 msgid "Unknown module type."
-msgstr ""
+msgstr "Unknown module type."
 
 #: module_admin.php:42
 #, fuzzy
@@ -10321,15 +10321,15 @@ msgstr "Toon bronnen"
 
 #: module_admin.php:46
 msgid "Show only to authenticated users"
-msgstr ""
+msgstr "Alleen zichtbaar voor geautoriseerde gebruikers"
 
 #: module_admin.php:50
 msgid "Show only to admin users"
-msgstr ""
+msgstr "Alleen zichtbaar voor beheerders"
 
 #: module_admin.php:54
 msgid "Hide even from admin users"
-msgstr ""
+msgstr "Verberg, zelfs voor beheerders"
 
 #: module_admin.php:183
 msgid "Below is the list of all the modules installed in this instance of PhpGedView.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them."
@@ -10438,7 +10438,7 @@ msgstr ""
 #: placelist.php:58
 #: placelist.php:312
 msgid "Place Hierarchy"
-msgstr ""
+msgstr "Personen per locatie"
 
 #: placelist.php:55
 #: placelist.php:59
@@ -10449,12 +10449,12 @@ msgstr "Namenlijst"
 
 #: placelist.php:118
 msgid "Place connections found"
-msgstr ""
+msgstr "Locatieverbindingen gevonden"
 
 #: placelist.php:125
 #: placelist.php:157
 msgid "Top Level"
-msgstr ""
+msgstr "Hoogste niveau"
 
 #: placelist.php:307
 #: placelist.php:432
@@ -10466,11 +10466,11 @@ msgstr "Pagina"
 
 #: placelist.php:309
 msgid "Place Hierarchy after"
-msgstr ""
+msgstr "Locaties binnen"
 
 #: placelist.php:354
 msgid "View all records found in this place"
-msgstr ""
+msgstr "Alle personen/gezinnen op deze locatie"
 
 #: placelist.php:468
 #, fuzzy
@@ -10479,30 +10479,30 @@ msgstr "Opschonen locaties"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
-msgstr ""
+msgstr "Toon locaties op hoogste niveau"
 
 #: placelist.php:477
 msgid "Show All Places in a List"
-msgstr ""
+msgstr "Toon alle locaties in een lijst"
 
 #: placelist.php:483
 #: placelist.php:488
 msgid "Places are encoded in the form: "
-msgstr ""
+msgstr "Locaties staan geordend in deze volgorde: "
 
 #: placelist.php:488
 msgid "City, County, State/Province, Country"
-msgstr ""
+msgstr "Plaats, Gemeente, Provincie/Staat, Land"
 
 #: placelist.php:488
 msgid "(Default)"
-msgstr ""
+msgstr "(Standaard)"
 
 #: printlog.php:90
 #: printlog.php:112
 #: printlog.php:157
 msgid "Refresh"
-msgstr ""
+msgstr "Ververs"
 
 #: printlog.php:91
 #: printlog.php:113
@@ -10513,7 +10513,7 @@ msgstr "Databasenaam"
 #: printlog.php:91
 #: printlog.php:113
 msgid "IP address"
-msgstr ""
+msgstr "IP adres"
 
 #: printlog.php:91
 msgid "Log Message"
@@ -10526,27 +10526,27 @@ msgstr "Zoeken in helpteksten"
 
 #: printlog.php:113
 msgid "Query"
-msgstr ""
+msgstr "Zoekvraag"
 
 #: relationship.php:140
 #: relationship.php:141
 msgid "Mother-in-law"
-msgstr ""
+msgstr "schoonmoeder"
 
 #: relationship.php:143
 #: relationship.php:144
 msgid "Father-in-law"
-msgstr ""
+msgstr "schoonvader"
 
 #: relationship.php:149
 #: relationship.php:154
 msgid "Step-Mother"
-msgstr ""
+msgstr "Stiefmoeder"
 
 #: relationship.php:157
 #: relationship.php:162
 msgid "Step-Father"
-msgstr ""
+msgstr "Stiefvader"
 
 #: relationship.php:169
 #: relationship.php:171
@@ -10557,27 +10557,27 @@ msgstr ""
 #: relationship.php:177
 #: relationship.php:178
 msgid "Brother-in-law"
-msgstr ""
+msgstr "zwager"
 
 #: relationship.php:185
 #: relationship.php:186
 msgid "Daughter-in-law"
-msgstr ""
+msgstr "schoondochter"
 
 #: relationship.php:188
 #: relationship.php:189
 msgid "Son-in-law"
-msgstr ""
+msgstr "schoonzoon"
 
 #: relationship.php:194
 #: relationship.php:195
 msgid "step daughter"
-msgstr ""
+msgstr "stiefdochter"
 
 #: relationship.php:197
 #: relationship.php:198
 msgid "step son"
-msgstr ""
+msgstr "stiefzoon"
 
 #: relationship.php:209
 #: relationship.php:210
@@ -10585,7 +10585,7 @@ msgstr ""
 #: relationship.php:223
 #, php-format
 msgid "%2$d x great niece"
-msgstr ""
+msgstr "%2$d x achternicht"
 
 #: relationship.php:212
 #: relationship.php:213
@@ -10593,17 +10593,17 @@ msgstr ""
 #: relationship.php:226
 #, php-format
 msgid "%2$d x great nephew"
-msgstr ""
+msgstr "%2$d x achterneef"
 
 #: relationship.php:233
 #: relationship.php:234
 msgid "Step-Sister"
-msgstr ""
+msgstr "Stiefzuster"
 
 #: relationship.php:236
 #: relationship.php:237
 msgid "Step-Brother"
-msgstr ""
+msgstr "Stiefbroer"
 
 #: relationship.php:251
 #: relationship.php:252
@@ -10615,7 +10615,7 @@ msgstr ""
 #: relationship.php:343
 #, php-format
 msgid "%2$d x great aunt"
-msgstr ""
+msgstr "%2$d x oud-tante"
 
 #: relationship.php:254
 #: relationship.php:255
@@ -10627,7 +10627,7 @@ msgstr ""
 #: relationship.php:346
 #, php-format
 msgid "%2$d x great uncle"
-msgstr ""
+msgstr "%2$d x oud-oom"
 
 #: relationship.php:293
 #: relationship.php:294
@@ -10635,7 +10635,7 @@ msgstr ""
 #: relationship.php:302
 #, php-format
 msgid "%3$d x great granddaughter"
-msgstr ""
+msgstr "%3$d x achterkleindochter"
 
 #: relationship.php:296
 #: relationship.php:297
@@ -10643,21 +10643,21 @@ msgstr ""
 #: relationship.php:305
 #, php-format
 msgid "%3$d x great grandson"
-msgstr ""
+msgstr "%3$d x achterkleinzoon"
 
 #: relationship.php:313
 #: relationship.php:314
 #: relationship.php:383
 #: relationship.php:384
 msgid "Sister"
-msgstr ""
+msgstr "Zus"
 
 #: relationship.php:318
 #: relationship.php:319
 #: relationship.php:386
 #: relationship.php:387
 msgid "Brother"
-msgstr ""
+msgstr "Broer"
 
 #: relationship.php:358
 #: relationship.php:359
@@ -10670,12 +10670,12 @@ msgstr ""
 #: relationship.php:375
 #: relationship.php:376
 msgid "Half-Sister"
-msgstr ""
+msgstr "Halfzuster"
 
 #: relationship.php:378
 #: relationship.php:379
 msgid "Half-Brother"
-msgstr ""
+msgstr "Halfbroer"
 
 #: relationship.php:419
 #: relationship.php:420
@@ -10683,7 +10683,7 @@ msgstr ""
 #: relationship.php:423
 #, php-format
 msgid "%1$s is the %2$s of %3$s."
-msgstr ""
+msgstr "%1$s is %2$s van %3$s."
 
 #: relationship.php:485
 #: relationship.php:564
@@ -10693,24 +10693,24 @@ msgstr "Gebruik relatie privacy"
 
 #: relationship.php:535
 msgid "and"
-msgstr ""
+msgstr "en"
 
 #: relationship.php:579
 msgid "Person 1"
-msgstr ""
+msgstr "Persoon 1"
 
 #: relationship.php:609
 msgid "Person 2"
-msgstr ""
+msgstr "Persoon 2"
 
 #: relationship.php:677
 #: relationship.php:698
 msgid "Show path"
-msgstr ""
+msgstr "Toon pad"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
-msgstr ""
+msgstr "Geen (andere) verbinding tussen de twee personen gevonden."
 
 #: relationship.php:737
 msgid "No other link between the two individuals could be found."
@@ -10719,7 +10719,7 @@ msgstr ""
 #: reportengine.php:147
 #: reportengine.php:153
 msgid "Choose a report to run"
-msgstr ""
+msgstr "Kies een rapport"
 
 #: reportengine.php:154
 #, fuzzy
@@ -10729,7 +10729,7 @@ msgstr "Verwijder bewaarplaats"
 #: reportengine.php:170
 #: reportengine.php:219
 msgid "Enter report values"
-msgstr ""
+msgstr "Voer waarden voor het rapport in"
 
 #: reportengine.php:220
 #, fuzzy
@@ -10738,7 +10738,7 @@ msgstr "Verwijder bewaarplaats"
 
 #: reportengine.php:312
 msgid "Select a date"
-msgstr ""
+msgstr "Selecteer een datum"
 
 #: reportengine.php:344
 #, fuzzy
@@ -10748,7 +10748,7 @@ msgstr "Download GEDCOM-bestand"
 #: rss.php:116
 #: rss.php:119
 msgid "Feed created by PhpGedView"
-msgstr ""
+msgstr "Vervaardigd met PhpGedView"
 
 #: rss.php:192
 #: rss.php:209
@@ -10763,57 +10763,57 @@ msgstr "E-mail genealogische vragen"
 
 #: rss.php:321
 msgid "Feed not available"
-msgstr ""
+msgstr "Feed niet beschikbaar"
 
 #: rss.php:323
 msgid "There is no RSS feed available for this PhpGedView site"
-msgstr ""
+msgstr "Er is geen RSS feed beschikbaar voor de PhpGedView site."
 
 #: search.php:85
 msgid "Please enter a Given name, Last name, or Place in addition to Year"
-msgstr ""
+msgstr "Jaar wordt alleen gebruikt in combinatie met een achternaam, voornaam of locatienaam."
 
 #: search.php:126
 msgid "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender "
-msgstr ""
+msgstr "Voer één van de volgende gegevens in: Naam, Geboortedatum, Geboorteplaats, Overlijdensdatum, Plaats van overlijden of Geslacht"
 
 #: search.php:129
 msgid "Please search again with more information than just gender"
-msgstr ""
+msgstr "Zoek nogmaals met meer informatie dan alleen geslacht"
 
 #: search.php:163
 #: search.php:584
 #: search.php:596
 #: search.php:616
 msgid "General Search"
-msgstr ""
+msgstr "Tekst zoeken"
 
 #: search.php:169
 #: search.php:263
 msgid "Enter Search terms"
-msgstr ""
+msgstr "Geef zoekcriteria op:"
 
 #: search.php:183
 #: search.php:275
 msgid "Search for"
-msgstr ""
+msgstr "Zoek naar:"
 
 #: search.php:219
 msgid "Exclude Filter"
-msgstr ""
+msgstr "Zoekfilter:"
 
 #: search.php:227
 msgid "Exclude some non-genealogical data"
-msgstr ""
+msgstr "Niet-genealogische gegevens uitsluiten"
 
 #: search.php:234
 msgid "Off"
-msgstr ""
+msgstr "Uit"
 
 #: search.php:240
 #: search.php:382
 msgid "Associates"
-msgstr ""
+msgstr "Relaties"
 
 #: search.php:246
 #: search.php:387
@@ -10827,7 +10827,7 @@ msgstr ""
 
 #: search.php:293
 msgid "Entire record"
-msgstr ""
+msgstr "Gehele kaart"
 
 #: search.php:299
 msgid "Whole words only"
@@ -10850,11 +10850,11 @@ msgstr "Kopregel"
 
 #: search.php:354
 msgid "Soundex type:"
-msgstr ""
+msgstr "Soundex type:"
 
 #: search.php:369
 msgid "Individuals'<br />names to print:"
-msgstr ""
+msgstr "Toon namen<br />van persoon:"
 
 #: search.php:374
 #, fuzzy
@@ -10863,34 +10863,34 @@ msgstr "Namenlijst"
 
 #: search.php:377
 msgid "All names"
-msgstr ""
+msgstr "Alle namen"
 
 #: search.php:399
 #: search.php:578
 #: search.php:590
 #: search.php:604
 msgid "Multi Site Search"
-msgstr ""
+msgstr "Meerdere sites doorzoeken"
 
 #: search.php:404
 msgid "Sites to search"
-msgstr ""
+msgstr "Te doorzoeken sites"
 
 #: search.php:428
 msgid "No known Servers<br />No results will be found"
-msgstr ""
+msgstr "Geen bekende servers<br/>Geen resultaten gevonden"
 
 #: search.php:439
 msgid "Basic site search"
-msgstr ""
+msgstr "Eenvoudig zoeken"
 
 #: search.php:443
 msgid "search"
-msgstr ""
+msgstr "Zoeken"
 
 #: search.php:455
 msgid "Advanced site search"
-msgstr ""
+msgstr "Geavanceerd zoeken"
 
 #: search.php:461
 #, fuzzy
@@ -10899,19 +10899,19 @@ msgstr "Namenlijst"
 
 #: search.php:473
 msgid "Birth date: "
-msgstr ""
+msgstr "Geboortedatum: "
 
 #: search.php:481
 msgid "Birth Place: "
-msgstr ""
+msgstr "Geboorteplaats: "
 
 #: search.php:489
 msgid "Death date: "
-msgstr ""
+msgstr "Overlijdensdatum: "
 
 #: search.php:497
 msgid "Death Place: "
-msgstr ""
+msgstr "Plaats van overlijden: "
 
 #: search.php:505
 #, fuzzy
@@ -10925,40 +10925,40 @@ msgstr "Database-gebruikersnaam"
 
 #: search.php:548
 msgid "Results per page"
-msgstr ""
+msgstr "Resultaten per pagina"
 
 #: search.php:563
 msgid "Other Searches"
-msgstr ""
+msgstr "Andere zoekacties "
 
 #: search.php:569
 #: search.php:585
 #: search.php:617
 msgid "Soundex Search"
-msgstr ""
+msgstr "Zoeken met Soundex"
 
 #: search.php:570
 #: search.php:586
 #: search.php:597
 #: search.php:618
 msgid "Advanced Search"
-msgstr ""
+msgstr "Uitgebreid zoeken"
 
 #: searchhelp.php:89
 msgid "Any word"
-msgstr ""
+msgstr "Een of meer woorden"
 
 #: searchhelp.php:92
 msgid "All words"
-msgstr ""
+msgstr "Alle woorden"
 
 #: searchhelp.php:95
 msgid "Exact phrase"
-msgstr ""
+msgstr "Exacte zin"
 
 #: searchhelp.php:100
 msgid "Search in"
-msgstr ""
+msgstr "Zoek in:"
 
 #: searchhelp.php:104
 #, fuzzy
@@ -10967,7 +10967,7 @@ msgstr "Gebruikersnaam"
 
 #: searchhelp.php:107
 msgid "Modules Help"
-msgstr ""
+msgstr "Modules Help"
 
 #: searchhelp.php:112
 #, fuzzy
@@ -10976,11 +10976,11 @@ msgstr "_Beheer"
 
 #: searchhelp.php:126
 msgid "Close window"
-msgstr ""
+msgstr "Sluit venster"
 
 #: searchhelp.php:197
 msgid "Results found:"
-msgstr ""
+msgstr "Aantal resultaten gevonden:"
 
 #: search_advanced.php:113
 #: search_advanced.php:166
@@ -10990,7 +10990,7 @@ msgstr ""
 #: search_advanced.php:265
 #: search_advanced.php:280
 msgid "Exact"
-msgstr ""
+msgstr "Exact"
 
 #: search_advanced.php:117
 #: search_advanced.php:121
@@ -11011,7 +11011,7 @@ msgstr ""
 #: statistics.php:714
 #: timeline.php:148
 msgid "years"
-msgstr ""
+msgstr "jaren"
 
 #: search_advanced.php:167
 #: search_advanced.php:229
@@ -11028,7 +11028,7 @@ msgstr "Breedte vak"
 #: search_advanced.php:267
 #: search_advanced.php:282
 msgid "Contains"
-msgstr ""
+msgstr "Bevat"
 
 #: search_advanced.php:169
 #: search_advanced.php:231
@@ -11036,7 +11036,7 @@ msgstr ""
 #: search_advanced.php:268
 #: search_advanced.php:283
 msgid "Sounds like"
-msgstr ""
+msgstr "Klinkt als"
 
 #: search_advanced.php:299
 msgid "Add More Fields"
@@ -11055,11 +11055,11 @@ msgstr "Welkomsttekst op de aanmeldpagina bij aanmelden vereist"
 
 #: statistics.php:57
 msgid "Total males"
-msgstr ""
+msgstr "aantal mannen   ="
 
 #: statistics.php:58
 msgid "Total females"
-msgstr ""
+msgstr "aantal vrouwen  ="
 
 #: statistics.php:59
 msgid "Total living"
@@ -11112,7 +11112,7 @@ msgstr ""
 
 #: statistics.php:113
 msgid "Average age at death"
-msgstr ""
+msgstr "Gemiddelde leeftijd bij overlijden"
 
 #: statistics.php:127
 msgid "Top age at death"
@@ -11189,7 +11189,7 @@ msgstr ""
 #: statistics.php:232
 #: statistics.php:558
 msgid "Age in year of marriage"
-msgstr ""
+msgstr "leeftijd bij huwelijk,"
 
 #: statistics.php:235
 msgid "Youngest male"
@@ -11233,7 +11233,7 @@ msgstr ""
 
 #: statistics.php:278
 msgid "Average number of children per family"
-msgstr ""
+msgstr "Gemiddeld aantal kinderen per gezin"
 
 #: statistics.php:279
 msgid "Number of families without children"
@@ -11275,15 +11275,15 @@ msgstr ""
 #: statistics.php:331
 #: statistics.php:358
 msgid "Media objects"
-msgstr ""
+msgstr "Media objecten"
 
 #: statistics.php:334
 msgid "Other records"
-msgstr ""
+msgstr "Overige gegevens"
 
 #: statistics.php:345
 msgid "Total events"
-msgstr ""
+msgstr "Aantal gebeurtenissen"
 
 #: statistics.php:348
 msgid "First event"
@@ -11302,7 +11302,7 @@ msgstr "Voorvoegsel GEDCOM-ID"
 #: statistics.php:373
 #: statisticsplot.php:843
 msgid "Families with sources"
-msgstr ""
+msgstr "Families met bronnen"
 
 #: statistics.php:386
 #, fuzzy
@@ -11333,39 +11333,39 @@ msgstr "Andere feiten in overzichten"
 
 #: statistics.php:517
 msgid "Fill in the following parameters for the plot"
-msgstr ""
+msgstr "Zet de volgende variabelen voor de plot"
 
 #: statistics.php:520
 msgid "Select chart type:"
-msgstr ""
+msgstr "langs x-as:"
 
 #: statistics.php:526
 msgid "Month of birth"
-msgstr ""
+msgstr "Geboortemaand"
 
 #: statistics.php:530
 msgid "Month of death"
-msgstr ""
+msgstr "Overlijdensmaand"
 
 #: statistics.php:534
 msgid "Month of marriage"
-msgstr ""
+msgstr "Huwelijksmaand"
 
 #: statistics.php:538
 msgid "Month of first marriage"
-msgstr ""
+msgstr "Maand eerste huwelijk"
 
 #: statistics.php:550
 msgid "Age related to birth year"
-msgstr ""
+msgstr "leeftijd ten opzichte van geboortejaar."
 
 #: statistics.php:554
 msgid "Age related to death year"
-msgstr ""
+msgstr "leeftijd ten opzichte van overlijdensjaar."
 
 #: statistics.php:562
 msgid "Age in year of first marriage"
-msgstr ""
+msgstr "leeftijd in jaar eerste huwelijk."
 
 #: statistics.php:566
 #: statisticsplot.php:785
@@ -11380,20 +11380,20 @@ msgstr "Voorvoegsel GEDCOM-ID"
 
 #: statistics.php:574
 msgid "Birth by country"
-msgstr ""
+msgstr "Geboorte per land"
 
 #: statistics.php:578
 msgid "Marriage by country"
-msgstr ""
+msgstr "Huwelijk per land"
 
 #: statistics.php:582
 msgid "Death by country"
-msgstr ""
+msgstr "Sterfte per land"
 
 #: statistics.php:588
 #: statistics.php:602
 msgid "boundaries for ages:"
-msgstr ""
+msgstr "grenswaarden voor leeftijden (x-as):"
 
 #: statistics.php:592
 #: statistics.php:594
@@ -11407,43 +11407,43 @@ msgstr ""
 #: statistics.php:711
 #: statistics.php:714
 msgid "interval"
-msgstr ""
+msgstr "interval"
 
 #: statistics.php:614
 msgid "boundaries for month:"
-msgstr ""
+msgstr "grenswaarden voor maand (x-as):"
 
 #: statistics.php:617
 msgid "months after marriage"
-msgstr ""
+msgstr "maanden na huwelijk"
 
 #: statistics.php:618
 msgid "months before and after marriage"
-msgstr ""
+msgstr "maanden vooe en na huwelijk"
 
 #: statistics.php:619
 msgid "quarters after marriage"
-msgstr ""
+msgstr "kwartaal na huwelijk"
 
 #: statistics.php:620
 msgid "half-year after marriage"
-msgstr ""
+msgstr "half-jaar na huwelijk"
 
 #: statistics.php:626
 msgid "boundaries for numbers:"
-msgstr ""
+msgstr "keuzwaarden voor aantallen (x-as):"
 
 #: statistics.php:629
 msgid "interval one child"
-msgstr ""
+msgstr "interval one child"
 
 #: statistics.php:630
 msgid "interval two children"
-msgstr ""
+msgstr "interval two children"
 
 #: statistics.php:638
 msgid "Map type"
-msgstr ""
+msgstr "Type kaart"
 
 #: statistics.php:642
 #, fuzzy
@@ -11452,43 +11452,43 @@ msgstr "Feiten voor personen"
 
 #: statistics.php:644
 msgid "Surname distribution chart"
-msgstr ""
+msgstr "Verdeling per achternaam"
 
 #: statistics.php:657
 msgid "Geographical area"
-msgstr ""
+msgstr "Geographisch gebied"
 
 #: statistics.php:660
 msgid "World"
-msgstr ""
+msgstr "Wereld"
 
 #: statistics.php:661
 msgid "Europe"
-msgstr ""
+msgstr "Europa"
 
 #: statistics.php:662
 msgid "South America"
-msgstr ""
+msgstr "Zuid Amerika"
 
 #: statistics.php:663
 msgid "Asia"
-msgstr ""
+msgstr "Asië"
 
 #: statistics.php:664
 msgid "Middle East"
-msgstr ""
+msgstr "Midden Oosten"
 
 #: statistics.php:665
 msgid "Africa"
-msgstr ""
+msgstr "Afrika"
 
 #: statistics.php:669
 msgid "Categories:"
-msgstr ""
+msgstr "langs z-as"
 
 #: statistics.php:675
 msgid "none"
-msgstr ""
+msgstr "geen"
 
 #: statistics.php:679
 #, fuzzy
@@ -11497,20 +11497,20 @@ msgstr "Kopregel"
 
 #: statistics.php:683
 msgid "date periods"
-msgstr ""
+msgstr "perioden: controleer grenswaarden voor perioden z-as"
 
 #: statistics.php:685
 msgid "boundaries for date periods:"
-msgstr ""
+msgstr "grenswaarden voor perioden (z-as):"
 
 #: statistics.php:719
 msgid "results:"
-msgstr ""
+msgstr "langs y-as:"
 
 #: statistics.php:724
 #: statisticsplot.php:768
 msgid "numbers"
-msgstr ""
+msgstr "aantallen"
 
 #: statistics.php:727
 #: statisticsplot.php:791
@@ -11520,21 +11520,21 @@ msgstr "Recente wijzigingen"
 
 #: statistics.php:735
 msgid "show the plot"
-msgstr ""
+msgstr "laat grafiek zien"
 
 #: statistics.php:736
 msgid "reset"
-msgstr ""
+msgstr "herstel"
 
 #: statistics.php:751
 #: statistics.php:754
 msgid "Statistics"
-msgstr ""
+msgstr "Statistieken"
 
 #: statistics.php:820
 #: statistics.php:821
 msgid "Others"
-msgstr ""
+msgstr "Overige"
 
 #: statistics.php:824
 #: statistics.php:825
@@ -11544,92 +11544,92 @@ msgstr ""
 #: statisticsplot.php:646
 #: statisticsplot.php:673
 msgid "over"
-msgstr ""
+msgstr "boven"
 
 #: statisticsplot.php:648
 msgid "less than"
-msgstr ""
+msgstr "jonger dan"
 
 #: statisticsplot.php:723
 #: statisticsplot.php:928
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid " not implemented:"
-msgstr ""
+msgstr "niet geïmplementeerd:"
 
 #: statisticsplot.php:728
 msgid "Jan"
-msgstr ""
+msgstr "Jan"
 
 #: statisticsplot.php:729
 msgid "Feb"
-msgstr ""
+msgstr "Feb"
 
 #: statisticsplot.php:730
 msgid "March"
-msgstr ""
+msgstr "maart"
 
 #: statisticsplot.php:731
 msgid "April"
-msgstr ""
+msgstr "april"
 
 #: statisticsplot.php:732
 msgid "May"
-msgstr ""
+msgstr "mei"
 
 #: statisticsplot.php:733
 msgid "June"
-msgstr ""
+msgstr "juni"
 
 #: statisticsplot.php:734
 msgid "July"
-msgstr ""
+msgstr "juli"
 
 #: statisticsplot.php:735
 msgid "Aug"
-msgstr ""
+msgstr "Aug"
 
 #: statisticsplot.php:736
 msgid "Sep"
-msgstr ""
+msgstr "Sep"
 
 #: statisticsplot.php:737
 msgid "Oct"
-msgstr ""
+msgstr "Okt"
 
 #: statisticsplot.php:738
 msgid "Nov"
-msgstr ""
+msgstr "Nov"
 
 #: statisticsplot.php:739
 msgid "Dec"
-msgstr ""
+msgstr "Dec"
 
 #: statisticsplot.php:805
 msgid " per gender"
-msgstr ""
+msgstr " / man-vrouw"
 
 #: statisticsplot.php:807
 msgid " per time period"
-msgstr ""
+msgstr " / per tijdperiode"
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "Counts "
-msgstr ""
+msgstr "Aantallen"
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "of"
-msgstr ""
+msgstr "van"
 
 #: statisticsplot.php:928
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: timeline.php:38
 #, fuzzy
@@ -11638,34 +11638,34 @@ msgstr "PhpGedView-URL"
 
 #: timeline.php:298
 msgid "Show Age Marker"
-msgstr ""
+msgstr "Toon leeftijdindicator"
 
 #: timeline.php:337
 msgid "Zoom In"
-msgstr ""
+msgstr "Inzoomen"
 
 #: timeline.php:338
 msgid "Zoom Out"
-msgstr ""
+msgstr "Uitzoomen"
 
 #: timeline.php:345
 msgid "Show Lifespan chart"
-msgstr ""
+msgstr "Toon levensduur grafiek"
 
 #: timeline.php:350
 msgid "In most recent browsers you can click and drag the boxes around on the chart."
-msgstr ""
+msgstr "In de nieuwste Internet Verkenners is het mogelijk om de weergegeven blokken te verschuiven zoals u dat wilt."
 
 #: uploadgedcom.php:173
 #: uploadgedcom.php:1056
 #: uploadgedcom.php:1166
 #: useradmin.php:1022
 msgid "Continue"
-msgstr ""
+msgstr "Doorgaan"
 
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
-msgstr ""
+msgstr "Een GEDCOM-bestand met deze naam staat reeds in de database."
 
 #: uploadgedcom.php:485
 msgid "This GEDCOM file is <em>not</em> synchronized with the database.  It may not contain the latest version of your data.  To re-import from the database rather than the file, you should download and re-upload."
@@ -11673,20 +11673,20 @@ msgstr ""
 
 #: uploadgedcom.php:487
 msgid "A GEDCOM file with the same name has been found. If you choose to continue, the old GEDCOM file will be replaced with the file that you uploaded and the Import process will begin again.  If you choose to cancel, the old GEDCOM will remain unchanged."
-msgstr ""
+msgstr "Als u kiest om door te gaan, wordt het oude GEDCOM-bestand overschreven door het GEDCOM-bestand dat u heeft ge-upload, en begint het importeren opnieuw. Als u Annuleren kiest blijft het oude GEDCOM-bestand intact."
 
 #: uploadgedcom.php:496
 msgid "Do you want to erase the old data and replace it with this new data?"
-msgstr ""
+msgstr "Wilt u de oude gegevens verwijderen en de gegevens uit het nieuwe GEDCOM-bestand toevoegen?"
 
 #: uploadgedcom.php:546
 msgid "Performing GEDCOM validation..."
-msgstr ""
+msgstr "GEDCOM-validatie wordt uitgevoerd, selecteer de benodigde opties en klik op \"Opschonen\""
 
 #: uploadgedcom.php:583
 #: uploadgedcom.php:674
 msgid "Valid GEDCOM detected. No cleanup required."
-msgstr ""
+msgstr "Geldig GEDCOM-bestand gevonden. Opschonen is niet noodzakelijk."
 
 #: uploadgedcom.php:618
 #, fuzzy
@@ -11695,27 +11695,27 @@ msgstr "GEDCOM-regels aanwezig voor de kopregel (0 HEAD). Deze worden bij het op
 
 #: uploadgedcom.php:626
 msgid "Invalid place encodings were detected.  These errors should be fixed."
-msgstr ""
+msgstr "Foutieve locatiecoderingen aanwezig. Deze fouten moeten hersteld worden. Het volgende bestandsdeel geeft de foutieve locatiecodering aan:"
 
 #: uploadgedcom.php:634
 msgid "Example of invalid place from your GEDCOM:"
-msgstr ""
+msgstr "Voorbeeld van een foutieve locatieaanduiding in uw GEDCOM-bestand:"
 
 #: uploadgedcom.php:641
 msgid "Detected invalid date formats, on cleanup these will be changed to format of DD MMM YYYY (eg. 1 JAN 2004)."
-msgstr ""
+msgstr "Ongeldig datumformaat gevonden. Bij het opschonen worden deze datums gewijzigd in het formaat DD MMM YYYY (bijvoorbeeld 1 JAN 2004)."
 
 #: uploadgedcom.php:650
 msgid "Day before Month (DD MM YYYY)"
-msgstr ""
+msgstr "Dag voor maand (DD MM YYYY)"
 
 #: uploadgedcom.php:650
 msgid "Month before Day (MM DD YYYY)"
-msgstr ""
+msgstr "Maand voor dag (MM DD YYYY)"
 
 #: uploadgedcom.php:653
 msgid "Example of invalid date from your GEDCOM:"
-msgstr ""
+msgstr "Voorbeeld van een ongeldige datum in uw GEDCOM-bestand:"
 
 #: uploadgedcom.php:661
 msgid "ANSI file encoding detected.\tPhpGedView works best with files encoded in UTF-8."
@@ -11723,7 +11723,7 @@ msgstr ""
 
 #: uploadgedcom.php:665
 msgid "Convert this ANSI encoded GEDCOM to UTF-8?"
-msgstr ""
+msgstr "Converteer dit GEDCOM-bestand van ANSI (ISO-8859-1) naar UTF-8?"
 
 #: uploadgedcom.php:737
 #, fuzzy
@@ -11733,7 +11733,7 @@ msgstr "_GEDCOM: Wijzig persoons-ID"
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
 msgid "Do not change"
-msgstr ""
+msgstr "niet wijzigen"
 
 #: uploadgedcom.php:795
 #, fuzzy
@@ -11745,15 +11745,15 @@ msgstr "Importopties"
 #: uploadgedcom.php:1128
 #: uploadgedcom.php:1133
 msgid "sec."
-msgstr ""
+msgstr "sec."
 
 #: uploadgedcom.php:805
 msgid "Please be patient"
-msgstr ""
+msgstr "EVEN GEDULD A.U.B."
 
 #: uploadgedcom.php:831
 msgid "Import Progress..."
-msgstr ""
+msgstr "Voortgang importeren...."
 
 #: uploadgedcom.php:904
 #, fuzzy
@@ -11766,7 +11766,7 @@ msgstr ""
 
 #: uploadgedcom.php:1040
 msgid "The execution time limit was reached.  Click the Continue button below to resume importing the GEDCOM file."
-msgstr ""
+msgstr "De maximale uitvoeringstijd is bereikt. Druk op de knop \"Doorgaan\" om de import van het GEDCOM-bestand voort te zetten."
 
 #: uploadgedcom.php:1104
 #: uploadgedcom.php:1117
@@ -11781,11 +11781,11 @@ msgstr "Klik hier om door te gaan"
 
 #: uploadgedcom.php:1118
 msgid "Bytes read:"
-msgstr ""
+msgstr "Bytes gelezen:"
 
 #: uploadgedcom.php:1119
 msgid "Found record"
-msgstr ""
+msgstr "Record gevonden"
 
 #: uploadgedcom.php:1138
 #, fuzzy
@@ -11796,7 +11796,7 @@ msgstr "Importopties"
 #: useradmin.php:274
 #: useradmin.php:484
 msgid "Update User Account"
-msgstr ""
+msgstr "Aanpassen gebruiker"
 
 #: useradmin.php:345
 #: useradmin.php:639
@@ -11808,7 +11808,7 @@ msgstr "_Gebruikersbeheer"
 #: useradmin.php:362
 #: useradmin.php:800
 msgid "Access level"
-msgstr ""
+msgstr "Mag wijzigen"
 
 #: useradmin.php:390
 #: useradmin.php:823
@@ -11819,7 +11819,7 @@ msgstr "Miniweergaves automatisch maken"
 #: useradmin.php:392
 #: useradmin.php:825
 msgid "Limit access to related people"
-msgstr ""
+msgstr "Toegang beperken tot verwante personen"
 
 #: useradmin.php:394
 #: useradmin.php:827
@@ -11831,13 +11831,13 @@ msgstr "Max. lengte relatie-pad"
 #: useradmin.php:592
 #: useradmin.php:830
 msgid "User verified himself"
-msgstr ""
+msgstr "Registratie bevestigd"
 
 #: useradmin.php:398
 #: useradmin.php:593
 #: useradmin.php:831
 msgid "User approved by Admin"
-msgstr ""
+msgstr "Registratie goedgekeurd"
 
 #: useradmin.php:457
 #: useradmin.php:883
@@ -11848,12 +11848,12 @@ msgstr "Gebruikers toestaan om gebruikersnamen te registreren"
 #: useradmin.php:476
 #: useradmin.php:903
 msgid "Admin comments on user"
-msgstr ""
+msgstr "Commentaar beheerder"
 
 #: useradmin.php:480
 #: useradmin.php:907
 msgid "Admin warning at date"
-msgstr ""
+msgstr "Waarschuw beheerder op datum"
 
 #: useradmin.php:560
 #: useradmin.php:1087
@@ -11884,11 +11884,11 @@ msgstr "Taal"
 #: useradmin.php:588
 #: useradmin.php:629
 msgid "Privileges"
-msgstr ""
+msgstr "Rechten"
 
 #: useradmin.php:590
 msgid "Date registered"
-msgstr ""
+msgstr "Geregistreerd"
 
 #: useradmin.php:591
 #, fuzzy
@@ -11897,20 +11897,20 @@ msgstr "Aangemelde gebruikers"
 
 #: useradmin.php:661
 msgid "Never"
-msgstr ""
+msgstr "Nooit"
 
 #: useradmin.php:680
 msgid "Are you sure you want to delete the user"
-msgstr ""
+msgstr "Weet u zeker dat u deze gebruiker wilt verwijderen?"
 
 #: useradmin.php:758
 #: useradmin.php:912
 msgid "Create User"
-msgstr ""
+msgstr "Gebruiker maken"
 
 #: useradmin.php:811
 msgid "Access"
-msgstr ""
+msgstr "Toegang"
 
 #: useradmin.php:817
 #, fuzzy
@@ -11925,23 +11925,23 @@ msgstr "Opschonen locaties"
 
 #: useradmin.php:937
 msgid "Number of months since the last login for a user's account to be considered inactive: "
-msgstr ""
+msgstr "Aantal maanden voordat de gebruiker beschouwd wordt als te lang niet aangemeld: "
 
 #: useradmin.php:957
 msgid "User's account has been inactive too long: "
-msgstr ""
+msgstr "Deze gebruiker is te lang inactief geweest: "
 
 #: useradmin.php:968
 msgid "User didn't verify within 7 days."
-msgstr ""
+msgstr "Gebruiker heeft zijn gegevens niet binnen 7 dagen geverifieerd."
 
 #: useradmin.php:978
 msgid "User not verified by administrator."
-msgstr ""
+msgstr "Gebruiker niet geverifieerd door de beheerder."
 
 #: useradmin.php:1010
 msgid "GEDCOM no longer active, remove user references."
-msgstr ""
+msgstr "GEDCOM niet langer actief, verwijder verwijzingen van gebruikers."
 
 #: useradmin.php:1016
 msgid "Nothing found to cleanup"
@@ -11954,35 +11954,35 @@ msgstr "Verwijder naam"
 
 #: useradmin.php:1045
 msgid "Unset GEDCOM rights for "
-msgstr ""
+msgstr "GEDCOM-rechten verwijderd voor "
 
 #: useradmin.php:1055
 msgid "Unset root ID for "
-msgstr ""
+msgstr "Start-ID verwijderd voor "
 
 #: useradmin.php:1065
 msgid "Unset GEDCOM ID for "
-msgstr ""
+msgstr "GEDCOM-ID verwijderd voor "
 
 #: useradmin.php:1084
 msgid "Select an option below:"
-msgstr ""
+msgstr "Selecteer een optie:"
 
 #: useradmin.php:1093
 msgid "Send message to all users"
-msgstr ""
+msgstr "Bericht aan alle gebruikers sturen"
 
 #: useradmin.php:1094
 msgid "Send message to users who have never logged in"
-msgstr ""
+msgstr "Bericht aan nooit aangemelde gebruikers"
 
 #: useradmin.php:1095
 msgid "Send message to users who have not logged in for 6 months"
-msgstr ""
+msgstr "Bericht aan langer dan 6 maanden niet aangemelde gebruikers"
 
 #: useradmin.php:1153
 msgid "Total number of users"
-msgstr ""
+msgstr "Totaal aantal gebruikers"
 
 #: useradmin.php:1156
 #: useradmin.php:1157
@@ -11998,12 +11998,12 @@ msgstr "_GEDCOM: Beheerpagina"
 #: useradmin.php:1172
 #: useradmin.php:1173
 msgid "Users with warnings"
-msgstr ""
+msgstr "Gebruikers met waarschuwing"
 
 #: useradmin.php:1177
 #: useradmin.php:1178
 msgid "Unverified by User"
-msgstr ""
+msgstr "Niet geverifieerd door gebruiker"
 
 #: useradmin.php:1182
 #: useradmin.php:1183
@@ -12028,11 +12028,11 @@ msgstr "_GEDCOM: Instellingenbestand"
 
 #: usermigrate.php:61
 msgid "GEDCOM SearchLogs and PhpGedView Logfiles"
-msgstr ""
+msgstr "GEDCOM tellers, zoek-logbestanden en PhpGedView-logbestanden"
 
 #: usermigrate.php:62
 msgid "User definitions, Block settings, Favorites, Messages, News"
-msgstr ""
+msgstr "Gebruikersinstellingen, vakinstellingen. favorieten, berichten en nieuwsberichten."
 
 #: usermigrate.php:63
 #, fuzzy
@@ -12041,19 +12041,19 @@ msgstr "Uploaden mediabestanden"
 
 #: usermigrate.php:64
 msgid "Make Backup"
-msgstr ""
+msgstr "Maak backup"
 
 #: usermigrate.php:76
 msgid "Results"
-msgstr ""
+msgstr "Resultaten"
 
 #: usermigrate.php:89
 msgid "ZIP file successfully created."
-msgstr ""
+msgstr "ZIP-bestand succesvol aangemaakt."
 
 #: usermigrate.php:94
 msgid "Download ZIPped backup file "
-msgstr ""
+msgstr "Download ZIP-bestand met backup"
 
 #: usermigrate.php:96
 msgid "Files included in this backup"
@@ -12061,15 +12061,15 @@ msgstr ""
 
 #: usermigrate.php:107
 msgid "No files found for backup."
-msgstr ""
+msgstr "Geen bestanden gevonden voor de backup."
 
 #: usermigrate.php:141
 msgid "Choose an option or click the link below to return to the Administration menu"
-msgstr ""
+msgstr "Doorgaan met importeren/exporteren van gebruikersinformatie?"
 
 #: usermigrate.php:159
 msgid "One or more files already exist. Do you want to overwrite them?"
-msgstr ""
+msgstr "Een of meer bestanden bestaat al. Wilt u deze overschrijven?"
 
 #: usermigrate.php:172
 #, fuzzy
@@ -12087,27 +12087,27 @@ msgstr "Dit programma importeert de gegevens uit het \"authenticate.php\" bestan
 #: usermigrate.php:209
 #: usermigrate.php:218
 msgid "Import successful"
-msgstr ""
+msgstr "Import gereed"
 
 #: usermigrate.php:181
 msgid "Import failed"
-msgstr ""
+msgstr "Importfout"
 
 #: usermigrate.php:186
 msgid "Importing messages"
-msgstr ""
+msgstr "Importeren berichten"
 
 #: usermigrate.php:188
 msgid "No Messages seem to be present in the system."
-msgstr ""
+msgstr "Er zijn geen berichten aanwezig in het systeem."
 
 #: usermigrate.php:195
 msgid "Importing favorites"
-msgstr ""
+msgstr "Importeren favorieten"
 
 #: usermigrate.php:197
 msgid "No Favorites seem to be present in the system."
-msgstr ""
+msgstr "Er zijn geen favorieten aanwezig in het systeem."
 
 #: usermigrate.php:204
 #, fuzzy
@@ -12116,7 +12116,7 @@ msgstr "Importopties"
 
 #: usermigrate.php:206
 msgid "No News seems to be present in the system."
-msgstr ""
+msgstr "Er zijn geen nieuwsberichten aanwezig in het systeem."
 
 #: usermigrate.php:213
 #, fuzzy
@@ -12125,7 +12125,7 @@ msgstr "Importopties"
 
 #: usermigrate.php:215
 msgid "No Blocks seems to be present in the system."
-msgstr ""
+msgstr "Er zijn geen indelingsdefinities aanwezig in het systeem."
 
 #: blocks/charts.php:40
 #, fuzzy
@@ -12135,7 +12135,7 @@ msgstr "Indeling overzicht"
 #: blocks/charts.php:167
 #: blocks/gedcom_favorites.php:130
 msgid "No such ID exists in this GEDCOM file."
-msgstr ""
+msgstr "Dit ID bestaat niet in deze genealogie."
 
 #: blocks/gedcom_block.php:36
 #, fuzzy
@@ -12149,11 +12149,11 @@ msgstr "Geef een omschrijving van het GEDCOM-bestand"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
-msgstr ""
+msgstr "Favorieten in deze genealogie"
 
 #: blocks/gedcom_favorites.php:100
 msgid "Are you sure you want to remove this item from your list of Favorites?"
-msgstr ""
+msgstr "Weet u zeker dat u deze persoon uit uw favorieten wilt verwijderen?"
 
 #: blocks/gedcom_favorites.php:155
 #, fuzzy
@@ -12162,15 +12162,15 @@ msgstr "Voeg nieuwe notitie toe"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
-msgstr ""
+msgstr "Type een persoons-, gezins- of bron-ID"
 
 #: blocks/gedcom_favorites.php:173
 msgid "OR<br />Enter a URL and a title"
-msgstr ""
+msgstr "OF<br />type een URL en een titel"
 
 #: blocks/gedcom_favorites.php:178
 msgid "Enter an optional note about this favorite"
-msgstr ""
+msgstr "Type een notitie bij deze favoriet (optie)"
 
 #: blocks/gedcom_news.php:36
 #, fuzzy
@@ -12180,15 +12180,15 @@ msgstr "Geef een omschrijving van het GEDCOM-bestand"
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
 msgid "News"
-msgstr ""
+msgstr "Genealogie prikbord"
 
 #: blocks/gedcom_news.php:91
 msgid "No News articles have been submitted."
-msgstr ""
+msgstr "Er zijn geen artikelen op het prikbord geplaatst."
 
 #: blocks/gedcom_news.php:159
 msgid "Are you sure you want to delete this News entry?"
-msgstr ""
+msgstr "Weet u zeker dat u dit artikel wilt verwijderen?"
 
 #: blocks/gedcom_news.php:165
 #, fuzzy
@@ -12202,7 +12202,7 @@ msgstr "Geheugenlimiet"
 
 #: blocks/gedcom_news.php:197
 msgid "Age of item"
-msgstr ""
+msgstr "Ouderdom van artikel"
 
 #: blocks/gedcom_news.php:198
 #, fuzzy
@@ -12219,37 +12219,37 @@ msgstr "Geef een omschrijving van het GEDCOM-bestand"
 #: blocks/gedcom_stats.php:145
 #: blocks/gedcom_stats.php:330
 msgid "Total users"
-msgstr ""
+msgstr "Aantal gebruikers"
 
 #: blocks/gedcom_stats.php:159
 #: blocks/gedcom_stats.php:277
 msgid "Earliest birth year"
-msgstr ""
+msgstr "Vroegste geboortejaar"
 
 #: blocks/gedcom_stats.php:166
 #: blocks/gedcom_stats.php:285
 msgid "Latest birth year"
-msgstr ""
+msgstr "Laatste geboortejaar"
 
 #: blocks/gedcom_stats.php:173
 #: blocks/gedcom_stats.php:293
 msgid "Earliest death year"
-msgstr ""
+msgstr "Vroegste jaar van overlijden"
 
 #: blocks/gedcom_stats.php:180
 #: blocks/gedcom_stats.php:301
 msgid "Latest death year"
-msgstr ""
+msgstr "Laatste jaar van overlijden"
 
 #: blocks/gedcom_stats.php:188
 #: blocks/gedcom_stats.php:309
 msgid "Person who lived the longest"
-msgstr ""
+msgstr "Langst levende persoon"
 
 #: blocks/gedcom_stats.php:204
 #: blocks/gedcom_stats.php:325
 msgid "Family with the most children"
-msgstr ""
+msgstr "Gezin met meeste kinderen"
 
 #: blocks/gedcom_stats.php:219
 msgid "View statistics as graphs"
@@ -12257,7 +12257,7 @@ msgstr ""
 
 #: blocks/gedcom_stats.php:227
 msgid "Most Common Surnames"
-msgstr ""
+msgstr "Meest voorkomende achternamen"
 
 #: blocks/gedcom_stats.php:259
 #, fuzzy
@@ -12277,7 +12277,7 @@ msgstr "Laat geboorte- en overlijdensgegevens zien in kwartierstaat en nakomelin
 #: blocks/getting_started.php:48
 #: blocks/getting_started.php:59
 msgid "Get Started"
-msgstr ""
+msgstr "Beginnen"
 
 #: blocks/getting_started.php:60
 msgid "Choose one of these options to get started using PhpGedView"
@@ -12294,7 +12294,7 @@ msgstr ""
 
 #: blocks/html_block.php:36
 msgid "HTML"
-msgstr ""
+msgstr "HTML-tekstvak"
 
 #: blocks/html_block.php:41
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -12302,7 +12302,7 @@ msgstr ""
 
 #: blocks/html_block.php:41
 msgid "to change what is printed here.</p>"
-msgstr ""
+msgstr "om aan te passen wat hier wordt weergegeven.</p>"
 
 #: blocks/logged_in.php:36
 #, fuzzy
@@ -12334,11 +12334,11 @@ msgstr[1] ""
 #: blocks/login_block.php:53
 #: blocks/login_block.php:61
 msgid "Logout"
-msgstr ""
+msgstr "Afmelden"
 
 #: blocks/login_block.php:58
 msgid "Logged in as "
-msgstr ""
+msgstr "Aangemeld als"
 
 #: blocks/random_media.php:38
 #, fuzzy
@@ -12348,23 +12348,23 @@ msgstr "Zoek multimedia"
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
 msgid "Random Picture"
-msgstr ""
+msgstr "Willekeurige afbeelding"
 
 #: blocks/random_media.php:196
 msgid "Next image"
-msgstr ""
+msgstr "volgende afbeelding"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Play"
-msgstr ""
+msgstr "Speel af"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Stop"
-msgstr ""
+msgstr "Stop"
 
 #: blocks/random_media.php:341
 #, fuzzy
@@ -12377,11 +12377,11 @@ msgstr ""
 
 #: blocks/recent_changes.php:111
 msgid "Should this block be hidden when it is empty?"
-msgstr ""
+msgstr "Vak verbergen wanneer het leeg is?"
 
 #: blocks/recent_changes.php:119
 msgid "If you hide an empty block, you will not be able to change its configuration until it becomes visible by no longer being empty."
-msgstr ""
+msgstr "Als u een leeg vak verbergt, kun u de instellingen ervan niet wijzigen totdat het niet leeg en dus weer zichtbaar is."
 
 #: blocks/review_changes.php:39
 #, fuzzy
@@ -12390,40 +12390,40 @@ msgstr "Recente wijzigingen"
 
 #: blocks/review_changes.php:83
 msgid "PhpGedView - Review changes"
-msgstr ""
+msgstr "PhpGedView - Beoordeel wijzigingen"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
-msgstr ""
+msgstr "Er zijn wijzigingen aangebracht op een genealogie op de PhpGedView site. Deze wijzigingen moeten worden beoordeeld, voordat ze voor gebruikers zichtbaar zijn. Gebruik de link hieronder om naar de site te gaan en u aan te melden om de wijzigingen te beoordelen."
 
 #: blocks/review_changes.php:113
 msgid "Last email reminder was sent "
-msgstr ""
+msgstr "De laatste e-mailherinnering is verzonden op "
 
 #: blocks/review_changes.php:114
 msgid "Next email reminder will be sent after "
-msgstr ""
+msgstr "De volgende e-mailherinnering wordt verzonden na "
 
 #: blocks/review_changes.php:149
 msgid "Send out reminder emails?"
-msgstr ""
+msgstr "Herinneringse-mails verzenden?"
 
 #: blocks/review_changes.php:158
 msgid "Reminder email frequency (days)"
-msgstr ""
+msgstr "Frequentie voor herinneringse-mails (dagen)"
 
 #: blocks/rss_block.php:38
 #: blocks/rss_block.php:53
 msgid "RSS Feeds"
-msgstr ""
+msgstr "RSS feeds"
 
 #: blocks/rss_block.php:69
 msgid "Upcoming Events"
-msgstr ""
+msgstr "Binnenkort..."
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
-msgstr ""
+msgstr "Achternamen Top 10"
 
 #: blocks/theme_select.php:36
 #, fuzzy
@@ -12432,11 +12432,11 @@ msgstr "Themamap"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
-msgstr ""
+msgstr "Wijzig site-opmaak"
 
 #: blocks/todays_events.php:38
 msgid "On This Day"
-msgstr ""
+msgstr "Op deze dag, in het verleden...."
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
@@ -12459,21 +12459,21 @@ msgstr ""
 #: blocks/upcoming_events.php:200
 #: blocks/yahrzeit.php:281
 msgid "Allow calendar events download?"
-msgstr ""
+msgstr "Kalendar gebeurtenissen downloaden toestaan?"
 
 #: blocks/todo.php:39
 #: blocks/todo.php:72
 msgid "&quot;To Do&quot; tasks"
-msgstr ""
+msgstr "&quot;Te Doen&quot; taken"
 
 #: blocks/todo.php:113
 msgid "There are no &quot;To Do&quot; tasks."
-msgstr ""
+msgstr "Er zijn geen &quot;Te Doen&quot; taken."
 
 #: blocks/top10_givnnames.php:37
 #: blocks/top10_givnnames.php:78
 msgid "Top 10 Given Names"
-msgstr ""
+msgstr "Voornamen Top 10"
 
 #: blocks/top10_givnnames.php:130
 #: blocks/top10_pageviews.php:131
@@ -12485,19 +12485,19 @@ msgstr "Aantal te tonen dagen"
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
 msgid "Most Viewed Items"
-msgstr ""
+msgstr "Meest bekeken gegevens"
 
 #: blocks/top10_pageviews.php:77
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
-msgstr ""
+msgstr "Om dit vak te laten functioneren moet de bezoekteller zijn ingeschakeld in de GEDCOM-configuratie."
 
 #: blocks/top10_pageviews.php:112
 msgid "There are currently no hits to show."
-msgstr ""
+msgstr "Er zijn geen bezoeken geregisteerd."
 
 #: blocks/top10_pageviews.php:138
 msgid "Place counts before or after name?"
-msgstr ""
+msgstr "Plaats tellers voor of achter de naam?"
 
 #: blocks/user_blog.php:36
 #, fuzzy
@@ -12506,15 +12506,15 @@ msgstr "Gebruikersnaam"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
-msgstr ""
+msgstr "Mijn notitieblok"
 
 #: blocks/user_blog.php:56
 msgid "You have not created any Journal items."
-msgstr ""
+msgstr "U heeft geen notities gemaakt."
 
 #: blocks/user_blog.php:90
 msgid "Are you sure you want to delete this Journal entry?"
-msgstr ""
+msgstr "Weet u zeker dat u deze notitie wilt verwijderen?"
 
 #: blocks/user_blog.php:94
 #, fuzzy
@@ -12538,32 +12538,32 @@ msgstr "Gebruikersnaam"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
-msgstr ""
+msgstr "Mijn berichten"
 
 #: blocks/user_messages.php:58
 #: blocks/user_messages.php:128
 msgid "Are you sure you want to delete this message?  It cannot be retrieved later."
-msgstr ""
+msgstr "Wilt u dit bericht echt verwijderen? Herstellen is niet mogelijk."
 
 #: blocks/user_messages.php:60
 msgid "You have no pending messages."
-msgstr ""
+msgstr "U heeft geen ongelezen berichten."
 
 #: blocks/user_messages.php:87
 msgid "Date Sent:"
-msgstr ""
+msgstr "Datum verzonden:"
 
 #: blocks/user_messages.php:126
 msgid "Reply"
-msgstr ""
+msgstr "Antwoord"
 
 #: blocks/user_messages.php:131
 msgid "Delete Selected Messages"
-msgstr ""
+msgstr "Verwijder geselecteerde berichten"
 
 #: blocks/user_messages.php:136
 msgid "Broadcast to all users"
-msgstr ""
+msgstr "Bericht aan alle gebruikers"
 
 #: blocks/user_welcome.php:36
 #, fuzzy
@@ -12572,7 +12572,7 @@ msgstr "Gebruikersnaam"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
-msgstr ""
+msgstr "Mijn kwartierstaat"
 
 #: blocks/user_welcome.php:56
 #, fuzzy
@@ -12582,12 +12582,12 @@ msgstr "Unieke feiten voor personen"
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
 msgid "Upcoming Yahrzeiten"
-msgstr ""
+msgstr "Aankomende Yahrzeiten"
 
 #: blocks/yahrzeit.php:154
 #: blocks/yahrzeit.php:202
 msgid "Anniversary"
-msgstr ""
+msgstr "Jaarlijkse gebeurtenis"
 
 #: blocks/yahrzeit.php:218
 #, fuzzy
@@ -12596,15 +12596,15 @@ msgstr "Wijzig naam"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
-msgstr ""
+msgstr "Verborgen"
 
 #: includes/accesskeyHeaders.php:36
 msgid "Skip to Content"
-msgstr ""
+msgstr "Direct naar inhoud"
 
 #: includes/accesskeyHeaders.php:36
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: includes/accesskeyHeaders.php:37
 #, fuzzy
@@ -12617,51 +12617,51 @@ msgstr "0"
 
 #: includes/accesskeyHeaders.php:38
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: includes/accesskeyHeaders.php:39
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: includes/authentication.php:93
 msgid "PhpGedView Authentication System"
-msgstr ""
+msgstr "PhpGedView Authorisatie Systeem"
 
 #: includes/authentication.php:95
 msgid "You must enter a valid login ID and password to access this resource"
-msgstr ""
+msgstr "Voer een geldig login naam en wachtwoord in om  deze gegevens te benaderen"
 
 #: includes/authentication.php:453
 #: includes/authentication.php:510
 msgid "This message was sent while viewing the following URL: "
-msgstr ""
+msgstr "Het bericht is verzonden vanaf de volgende URL:"
 
 #: includes/authentication.php:461
 msgid "You sent the following message to a PhpGedView administrator:"
-msgstr ""
+msgstr "U zond het volgende bericht naar de PhpGedView beheerder:"
 
 #: includes/authentication.php:469
 msgid "You sent the following message to a PhpGedView user:"
-msgstr ""
+msgstr "U zond het volgende bericht naar een PhpGedView-gebruiker:"
 
 #: includes/authentication.php:475
 #: includes/authentication.php:482
 #: includes/authentication.php:524
 #: includes/authentication.php:530
 msgid "The following message has been sent to your PhpGedView user account from "
-msgstr ""
+msgstr "Het volgende bericht is verzonden naar uw PhpGedView-gebruiker:"
 
 #: includes/family_nav.php:84
 msgid "Parents Family"
-msgstr ""
+msgstr "Ouders Familie"
 
 #: includes/family_nav.php:224
 msgid "Step-Parent Family"
-msgstr ""
+msgstr "Stiefouders Familie"
 
 #: includes/family_nav.php:363
 msgid "Immediate Family"
-msgstr ""
+msgstr "Directe familie"
 
 #: includes/media_reorder.php:37
 #: includes/media_tab_head.php:63
@@ -12728,7 +12728,7 @@ msgstr ""
 
 #: includes/specialchars.php:56
 msgid "Czech"
-msgstr ""
+msgstr "Tsjechisch"
 
 #: includes/specialchars.php:57
 msgid "Slovak"
@@ -12736,83 +12736,83 @@ msgstr ""
 
 #: includes/specialchars.php:58
 msgid "Danish"
-msgstr ""
+msgstr "Deens"
 
 #: includes/specialchars.php:59
 msgid "German"
-msgstr ""
+msgstr "Duits"
 
 #: includes/specialchars.php:60
 msgid "English"
-msgstr ""
+msgstr "Engels"
 
 #: includes/specialchars.php:61
 msgid "Spanish"
-msgstr ""
+msgstr "Spaans"
 
 #: includes/specialchars.php:63
 msgid "French"
-msgstr ""
+msgstr "Frans"
 
 #: includes/specialchars.php:65
 msgid "Greek"
-msgstr ""
+msgstr "Grieks"
 
 #: includes/specialchars.php:67
 msgid "Italian"
-msgstr ""
+msgstr "Italiaans"
 
 #: includes/specialchars.php:68
 msgid "Hungarian"
-msgstr ""
+msgstr "Hongaars"
 
 #: includes/specialchars.php:69
 msgid "Lithuanian"
-msgstr ""
+msgstr "Litouws"
 
 #: includes/specialchars.php:70
 msgid "Dutch"
-msgstr ""
+msgstr "Nederlands"
 
 #: includes/specialchars.php:71
 msgid "Norwegian"
-msgstr ""
+msgstr "Noors"
 
 #: includes/specialchars.php:73
 msgid "Polish"
-msgstr ""
+msgstr "Pools"
 
 #: includes/specialchars.php:74
 msgid "Portuguese"
-msgstr ""
+msgstr "Portugees"
 
 #: includes/specialchars.php:76
 msgid "Finnish"
-msgstr ""
+msgstr "Fins"
 
 #: includes/specialchars.php:77
 msgid "Swedish"
-msgstr ""
+msgstr "Zweeds"
 
 #: includes/specialchars.php:78
 msgid "Turkish"
-msgstr ""
+msgstr "Turks"
 
 #: includes/specialchars.php:79
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebreeuws"
 
 #: includes/specialchars.php:80
 msgid "Arabic"
-msgstr ""
+msgstr "Arabisch"
 
 #: includes/specialchars.php:81
 msgid "Russian"
-msgstr ""
+msgstr "Russisch"
 
 #: includes/specialchars.php:82
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamees"
 
 #. I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
 #: includes/classes/class_i18n.php:60
@@ -12921,12 +12921,12 @@ msgstr ""
 
 #: includes/classes/class_media.php:243
 msgid "Media Firewall error: >Unknown Mimetype< for file"
-msgstr ""
+msgstr "Media Firewall fout: >Unknown Mimetype< voor bestand:"
 
 #: includes/classes/class_menubar.php:68
 #: includes/classes/class_menubar.php:115
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
@@ -12939,7 +12939,7 @@ msgstr "Indeling overzicht"
 #: includes/classes/class_menubar.php:545
 #: includes/classes/class_menubar.php:551
 msgid "Lists"
-msgstr ""
+msgstr "Detailgegevens"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
@@ -12950,27 +12950,27 @@ msgstr "Beheren multimedia"
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
 msgid "Reports"
-msgstr ""
+msgstr "Rapporten"
 
 #: includes/classes/class_menubar.php:826
 msgid "Printer-friendly Version"
-msgstr ""
+msgstr "Printervriendelijke versie"
 
 #: includes/classes/class_menubar.php:932
 msgid "Help with this page"
-msgstr ""
+msgstr "Help bij deze pagina"
 
 #: includes/classes/class_menubar.php:968
 msgid "Wiki Main Page"
-msgstr ""
+msgstr "Wiki Hoofd Pagina"
 
 #: includes/classes/class_menubar.php:972
 msgid "Wiki User's Guide"
-msgstr ""
+msgstr "Wiki Gebruikers Handleiding"
 
 #: includes/classes/class_menubar.php:977
 msgid "Wiki Administrator's Guide"
-msgstr ""
+msgstr "Wiki Beheerders Handleiding"
 
 #: includes/classes/class_menubar.php:1118
 #, fuzzy
@@ -12979,16 +12979,16 @@ msgstr "Favorieten icoon"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
-msgstr ""
+msgstr "Toevoegen aan mijn favorieten"
 
 #: includes/classes/class_note.php:49
 msgid "…"
-msgstr ""
+msgstr "…"
 
 #: includes/classes/class_person.php:576
 #: includes/classes/class_person.php:633
 msgid "Unable to find family with ID"
-msgstr ""
+msgstr "Niet gevonden: gezin met ID"
 
 #: includes/classes/class_person.php:760
 #, fuzzy
@@ -12998,16 +12998,16 @@ msgstr "Feiten voor gezinnen"
 #: includes/classes/class_person.php:779
 #: includes/classes/class_person.php:786
 msgid "Father's Family with "
-msgstr ""
+msgstr "Vaders gezin met "
 
 #: includes/classes/class_person.php:780
 #: includes/classes/class_person.php:785
 msgid "Mother's Family with "
-msgstr ""
+msgstr "Moeders gezin met "
 
 #: includes/classes/class_person.php:803
 msgid "Family with"
-msgstr ""
+msgstr "Gezin met"
 
 #: includes/classes/class_person.php:1836
 #, fuzzy
@@ -13016,11 +13016,11 @@ msgstr "Kopregel"
 
 #: includes/classes/class_person.php:1840
 msgid "month"
-msgstr ""
+msgstr "maand"
 
 #: includes/classes/class_person.php:1842
 msgid "months"
-msgstr ""
+msgstr "maanden"
 
 #: includes/classes/class_stats.php:448
 #: includes/classes/class_stats.php:450
@@ -13050,7 +13050,7 @@ msgstr ""
 #: includes/classes/class_stats.php:783
 #: includes/classes/class_stats.php:785
 msgid "Living"
-msgstr ""
+msgstr "Levend"
 
 #: includes/classes/class_stats.php:774
 #: includes/classes/class_stats.php:777
@@ -13062,15 +13062,15 @@ msgstr "Kopregel"
 
 #: includes/classes/class_stats.php:1231
 msgid "Highest population"
-msgstr ""
+msgstr "Hoogste Populatie"
 
 #: includes/classes/class_stats.php:1232
 msgid "Lowest population"
-msgstr ""
+msgstr "Laagste Populatie"
 
 #: includes/classes/class_stats.php:1233
 msgid "Nobody at all"
-msgstr ""
+msgstr "Niemand"
 
 #: includes/classes/class_stats.php:1821
 #: includes/classes/class_stats.php:2670
@@ -13104,22 +13104,22 @@ msgstr "Cirkelomvang"
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
 msgid "marriage"
-msgstr ""
+msgstr "huwelijk"
 
 #: includes/classes/class_stats.php:1924
 #: includes/classes/class_stats.php:3820
 msgid "adoption"
-msgstr ""
+msgstr "adoptie"
 
 #: includes/classes/class_stats.php:1925
 #: includes/classes/class_stats.php:3821
 msgid "burial"
-msgstr ""
+msgstr "begrafenis"
 
 #: includes/classes/class_stats.php:1926
 #: includes/classes/class_stats.php:3822
 msgid "census added"
-msgstr ""
+msgstr "census toegevoegd"
 
 #: includes/classes/class_stats.php:2672
 #: includes/classes/class_stats.php:2673
@@ -13131,7 +13131,7 @@ msgstr ""
 
 #: includes/classes/class_stats.php:2683
 msgid "Average age"
-msgstr ""
+msgstr "Gemiddelde Leeftijd"
 
 #: includes/classes/class_stats.php:2883
 #: includes/classes/class_stats.php:2885
@@ -13147,20 +13147,20 @@ msgstr "Kinderen herschikken"
 
 #: includes/classes/class_stats.php:3552
 msgid "Count"
-msgstr ""
+msgstr "Tel"
 
 #: includes/classes/class_treenav.php:168
 msgid "View this tree in the full page interactive tree"
-msgstr ""
+msgstr "Bekjk deze boom op een volledige pagina, als interactieve boom"
 
 #: includes/classes/class_treenav.php:169
 msgid "Show or hide multiple spouses"
-msgstr ""
+msgstr "Toon of verberg meerdere echtgenoten"
 
 #: includes/controllers/descendancy_ctrl.php:226
 #: includes/controllers/descendancy_ctrl.php:313
 msgid "Start at parents"
-msgstr ""
+msgstr "Ga naar ouders"
 
 #: includes/controllers/descendancy_ctrl.php:332
 #, fuzzy
@@ -13180,7 +13180,7 @@ msgstr "Wijzig naam"
 
 #: includes/controllers/family_ctrl.php:379
 msgid "Add a child to this family"
-msgstr ""
+msgstr "Kind toevoegen aan dit gezin"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -13199,7 +13199,7 @@ msgstr "Verwijder naam"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
-msgstr ""
+msgstr "Door het verwijderen van het gezin verbreekt u het verband tussen de personen. De gegevens van de personen zelf worden niet verwijderd. Weet u zeker dat u dit gezin wilt verwijderen?"
 
 #: includes/controllers/family_ctrl.php:509
 #: includes/controllers/individual_ctrl.php:732
@@ -13223,18 +13223,18 @@ msgstr "Pagina"
 
 #: includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
-msgstr ""
+msgstr "Stiefouder"
 
 #: includes/controllers/individual_ctrl.php:830
 msgid "Half-Sibling"
-msgstr ""
+msgstr "Halfbroer of -zus"
 
 #: includes/controllers/individual_ctrl.php:836
 #: includes/controllers/individual_ctrl.php:837
 #: includes/controllers/individual_ctrl.php:838
 #: includes/controllers/individual_ctrl.php:855
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #: includes/controllers/note_ctrl.php:80
 #: includes/controllers/note_ctrl.php:169
@@ -13252,7 +13252,7 @@ msgstr ""
 
 #: includes/controllers/remotelink_ctrl.php:400
 msgid "Successfully added link"
-msgstr ""
+msgstr "Koppeling toegevoegd"
 
 #: includes/controllers/repository_ctrl.php:79
 #: includes/controllers/repository_ctrl.php:168
@@ -13267,35 +13267,35 @@ msgstr "Verwijder bewaarplaats"
 
 #: includes/controllers/repository_ctrl.php:217
 msgid "Are you sure you want to delete this Repository?"
-msgstr ""
+msgstr "Weet u zeker dat u de bewaarplaats uit uw genealogie wilt verwijderen?"
 
 #: includes/controllers/search_ctrl.php:819
 msgid "Be sure to select an option to search for."
-msgstr ""
+msgstr "Selecteer een optie waar naar gezocht moet worden."
 
 #: includes/controllers/search_ctrl.php:879
 msgid "People"
-msgstr ""
+msgstr "PERSONEN"
 
 #: includes/controllers/search_ctrl.php:883
 msgid "Site: "
-msgstr ""
+msgstr "Site: "
 
 #: includes/controllers/search_ctrl.php:883
 msgid " contained the following"
-msgstr ""
+msgstr "bevat de volgende"
 
 #: includes/controllers/search_ctrl.php:918
 msgid "to"
-msgstr ""
+msgstr "tot"
 
 #: includes/controllers/search_ctrl.php:933
 msgid "Be sure to select at least one remote site."
-msgstr ""
+msgstr "Selecteer ten minste één site."
 
 #: includes/controllers/search_ctrl.php:988
 msgid "Result Page"
-msgstr ""
+msgstr "Resultaat pagina"
 
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
@@ -13311,87 +13311,87 @@ msgstr "Wijzig privacy"
 
 #: includes/controllers/timeline_ctrl.php:275
 msgid "Husband's age"
-msgstr ""
+msgstr "leeftijd echtgenoot"
 
 #: includes/controllers/timeline_ctrl.php:282
 msgid "Wife's age"
-msgstr ""
+msgstr "leeftijd vrouw"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "January"
-msgstr ""
+msgstr "januari"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "February"
-msgstr ""
+msgstr "februari"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "August"
-msgstr ""
+msgstr "augustus"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "September"
-msgstr ""
+msgstr "september"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "October"
-msgstr ""
+msgstr "oktober"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "November"
-msgstr ""
+msgstr "november"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "December"
-msgstr ""
+msgstr "december"
 
 #: includes/extras/functions.pl.php:128
 #: includes/extras/functions.sl.php:113
 #: includes/functions/functions_date.php:82
 msgid "Infant"
-msgstr ""
+msgstr "Kind"
 
 #: includes/extras/functions.pl.php:129
 #: includes/extras/functions.sl.php:114
 #: includes/functions/functions_date.php:83
 msgid "Stillborn"
-msgstr ""
+msgstr "Doodgeboren"
 
 #: includes/extras/functions.pl.php:148
 #: includes/extras/functions.sl.php:123
 #: includes/functions/functions_date.php:88
 msgid "day"
-msgstr ""
+msgstr "dag"
 
 #: includes/extras/functions.pl.php:149
 #: includes/extras/functions.sl.php:124
 #: includes/functions/functions_date.php:89
 msgid "days"
-msgstr ""
+msgstr "dagen"
 
 #: includes/extras/functions.pl.php:150
 #: includes/functions/functions_date.php:90
 msgid "week"
-msgstr ""
+msgstr "week"
 
 #: includes/extras/functions.pl.php:153
 #: includes/functions/functions_date.php:91
 msgid "weeks"
-msgstr ""
+msgstr "weken"
 
 #: includes/extras/functions.pl.php:366
 #, fuzzy
@@ -13400,7 +13400,7 @@ msgstr "Datumformaat:"
 
 #: includes/extras/functions.pl.php:370
 msgid "Lodger"
-msgstr ""
+msgstr "Kamerbewoner"
 
 #: includes/extras/functions.pl.php:374
 #, fuzzy
@@ -13409,7 +13409,7 @@ msgstr "Opslaan"
 
 #: includes/extras/functions.pl.php:378
 msgid "Attending"
-msgstr ""
+msgstr "Verzorgt"
 
 #: includes/extras/functions.pl.php:382
 msgid "Guardian"
@@ -13417,31 +13417,31 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:386
 msgid "Nurse"
-msgstr ""
+msgstr "Verpleegster"
 
 #: includes/extras/functions.pl.php:390
 msgid "Attendant"
-msgstr ""
+msgstr "Verzorger"
 
 #: includes/extras/functions.pl.php:394
 msgid "Employee"
-msgstr ""
+msgstr "Werknemer"
 
 #: includes/extras/functions.pl.php:398
 msgid "Friend"
-msgstr ""
+msgstr "Vriend(in)"
 
 #: includes/extras/functions.pl.php:402
 msgid "Servant"
-msgstr ""
+msgstr "Bediende"
 
 #: includes/extras/functions.pl.php:406
 msgid "Seller"
-msgstr ""
+msgstr "Verkoper"
 
 #: includes/extras/functions.pl.php:410
 msgid "Owner"
-msgstr ""
+msgstr "Eigenaar"
 
 #: includes/extras/functions.pl.php:414
 msgid "Ward"
@@ -13449,19 +13449,19 @@ msgstr ""
 
 #: includes/functions/functions.php:188
 msgid "File successfully uploaded"
-msgstr ""
+msgstr "Het bestand is goed verstuurd"
 
 #: includes/functions/functions.php:191
 msgid "Uploaded file exceeds the allowed size"
-msgstr ""
+msgstr "Het bestand is te groot."
 
 #: includes/functions/functions.php:193
 msgid "File was only partially uploaded, please try again"
-msgstr ""
+msgstr "Het bestand is slechts gedeeltelijk overgestuurd. Probeer het opnieuw."
 
 #: includes/functions/functions.php:195
 msgid "No file was received. Please upload again."
-msgstr ""
+msgstr "Geen bestand ontvangen. Verstuur het bestand opnieuw."
 
 #: includes/functions/functions.php:197
 msgid "Missing PHP temporary directory"
@@ -13477,15 +13477,15 @@ msgstr ""
 
 #: includes/functions/functions.php:355
 msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "Fout! Kan niet schrijven naar het PhpGedView-configuratiebestand. Controleer de toegangsrechten voor het bestand en de map en probeer opnieuw."
 
 #: includes/functions/functions.php:2004
 msgid "The script timed out before a relationship could be found."
-msgstr ""
+msgstr "Maximale zoektijd overschreden voordat een relatie werd gevonden."
 
 #: includes/functions/functions_charts.php:288
 msgid "Children"
-msgstr ""
+msgstr "Kinderen"
 
 #: includes/functions/functions_charts.php:293
 #, fuzzy
@@ -13495,16 +13495,16 @@ msgstr "Kind toevoegen"
 #: includes/functions/functions_charts.php:448
 #: includes/functions/functions_charts.php:938
 msgid "This family remained childless"
-msgstr ""
+msgstr "Dit gezin bleef kinderloos"
 
 #: includes/functions/functions_charts.php:487
 #: includes/functions/functions_charts.php:514
 msgid "Family Group Information"
-msgstr ""
+msgstr "Gezinsinformatie"
 
 #: includes/functions/functions_charts.php:521
 msgid "No facts for this family."
-msgstr ""
+msgstr "Geen gebeurtenissen voor dit gezin"
 
 #: includes/functions/functions_charts.php:532
 #, fuzzy
@@ -13565,11 +13565,11 @@ msgstr ""
 #: includes/functions/functions_edit.php:424
 #: includes/functions/functions_edit.php:746
 msgid "Save and go to new record"
-msgstr ""
+msgstr "Opslaan en naar een nieuw bestand gaan"
 
 #: includes/functions/functions_edit.php:1371
 msgid "No Temple - Living Ordinance"
-msgstr ""
+msgstr "Geen Temple - Living Ordinance"
 
 #: includes/functions/functions_edit.php:1458
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
@@ -13601,7 +13601,7 @@ msgstr ""
 #: includes/functions/functions_export.php:598
 #: includes/functions/functions_export.php:638
 msgid "Creating"
-msgstr ""
+msgstr "Aanmaken"
 
 #: includes/functions/functions_export.php:493
 #: includes/functions/functions_export.php:531
@@ -13609,7 +13609,7 @@ msgstr ""
 #: includes/functions/functions_export.php:616
 #: includes/functions/functions_export.php:658
 msgid "Creation of new file failed, a file with that name already exists:"
-msgstr ""
+msgstr "Aanmaken van nieuw bestand is mislukt, een bestand met deze naam bestaat al:"
 
 #: includes/functions/functions_export.php:502
 #: includes/functions/functions_export.php:540
@@ -13617,7 +13617,7 @@ msgstr ""
 #: includes/functions/functions_export.php:625
 #: includes/functions/functions_export.php:667
 msgid "Creation of new file successful:"
-msgstr ""
+msgstr "Bestand succesvol aangemaakt:"
 
 #: includes/functions/functions_export.php:505
 #: includes/functions/functions_export.php:543
@@ -13625,7 +13625,7 @@ msgstr ""
 #: includes/functions/functions_export.php:628
 #: includes/functions/functions_export.php:670
 msgid "Cannot create"
-msgstr ""
+msgstr "Aanmaken niet mogelijk van"
 
 #: includes/functions/functions_export.php:505
 #: includes/functions/functions_export.php:543
@@ -13633,14 +13633,14 @@ msgstr ""
 #: includes/functions/functions_export.php:628
 #: includes/functions/functions_export.php:670
 msgid "Check access rights on this directory."
-msgstr ""
+msgstr "Controleer uw toegangsrechten tot deze map."
 
 #: includes/functions/functions_export.php:547
 #: includes/functions/functions_export.php:592
 #: includes/functions/functions_export.php:632
 #: includes/functions/functions_export.php:674
 msgid "File is not created."
-msgstr ""
+msgstr "Bestand is niet aangemaakt."
 
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
@@ -13653,16 +13653,16 @@ msgstr "Verberg GEDCOM-fouten"
 #: includes/functions/functions_mediadb.php:779
 #: includes/functions/functions_mediadb.php:802
 msgid "Security Warning: Could not create file <b><i>index.php</i></b> in "
-msgstr ""
+msgstr "Beveiligingswaarschuwing: index.php bestaat niet in "
 
 #: includes/functions/functions_mediadb.php:774
 #: includes/functions/functions_mediadb.php:797
 msgid "Directory created"
-msgstr ""
+msgstr "Map gemaakt"
 
 #: includes/functions/functions_mediadb.php:977
 msgid "Upload successful."
-msgstr ""
+msgstr "Upload geslaagd"
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
@@ -13673,14 +13673,14 @@ msgstr "Upload GEDCOM-bestand"
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
 msgid "Media file to upload"
-msgstr ""
+msgstr "Mediabestand"
 
 #: includes/functions/functions_mediadb.php:1038
 #: includes/functions/functions_mediadb.php:1057
 #: includes/functions/functions_mediadb.php:1193
 #: includes/functions/functions_mediadb.php:1220
 msgid "Use the &laquo;Browse&raquo; button to search your local computer for the desired file."
-msgstr ""
+msgstr "Gebruik de knop &laquo;Bladeren&raquo; of &laquo;Browse&raquo; om op uw computer naar de gewenste file te zoeken."
 
 #: includes/functions/functions_mediadb.php:1044
 #: includes/functions/functions_mediadb.php:1212
@@ -13691,46 +13691,46 @@ msgstr "Miniweergaves automatisch maken"
 #: includes/functions/functions_mediadb.php:1047
 #: includes/functions/functions_mediadb.php:1215
 msgid "Generate thumbnail automatically from "
-msgstr ""
+msgstr "Genereer automatisch miniweergave van "
 
 #: includes/functions/functions_mediadb.php:1053
 #: includes/functions/functions_mediadb.php:1220
 msgid "Thumbnail to upload"
-msgstr ""
+msgstr "Miniweergave"
 
 #: includes/functions/functions_mediadb.php:1063
 #: includes/functions/functions_mediadb.php:1228
 #: includes/functions/functions_mediadb.php:1248
 msgid "File name on server"
-msgstr ""
+msgstr "Bestandsnaam op server"
 
 #: includes/functions/functions_mediadb.php:1067
 #: includes/functions/functions_mediadb.php:1229
 #: includes/functions/functions_mediadb.php:1256
 msgid "Do not change to keep original file name."
-msgstr ""
+msgstr "Niet wijzigen om originele bestandsnaam te behouden."
 
 #: includes/functions/functions_mediadb.php:1076
 #: includes/functions/functions_mediadb.php:1282
 msgid "Folder name on server"
-msgstr ""
+msgstr "Mapnaam op server"
 
 #: includes/functions/functions_mediadb.php:1083
 #: includes/functions/functions_mediadb.php:1290
 msgid "Other folder... please type in"
-msgstr ""
+msgstr "Andere map ... voer in"
 
 #: includes/functions/functions_mediadb.php:1157
 msgid "Enter or search for the ID of the person, family, or source to which this media item should be linked."
-msgstr ""
+msgstr "Voer de ID van de persoon, familie of bron in (of zoek hiernaar) met welke dit mediabestand moet worden verbonden."
 
 #: includes/functions/functions_mediadb.php:1230
 msgid "You may enter a URL, beginning with &laquo;http://&raquo;."
-msgstr ""
+msgstr "Hier kan een URL worden ingevoerd, beginnend met &laquo;http://&raquo;."
 
 #: includes/functions/functions_mediadb.php:1312
 msgid "This entry is ignored if you have entered a URL into the file name field."
-msgstr ""
+msgstr "Dit veld wordt genegeerd indien een URL is ingevoerd in het bestandsnaam veld."
 
 #. I18N: This is the country/chapman code for "Unknown"
 #: includes/functions/functions_places.php:333
@@ -13740,55 +13740,55 @@ msgstr ""
 
 #: includes/functions/functions_print.php:166
 msgid "Family with spouse"
-msgstr ""
+msgstr "Gezin met partner"
 
 #: includes/functions/functions_print.php:209
 msgid "Zoom in/out on this box."
-msgstr ""
+msgstr "In/uitzoomen op dit vak."
 
 #: includes/functions/functions_print.php:267
 msgid "Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person."
-msgstr ""
+msgstr "Verwijzingen naar overzichten, gezinnen en verwanten van deze persoon."
 
 #: includes/functions/functions_print.php:575
 msgid "Are you sure you want to delete this fact?"
-msgstr ""
+msgstr "Weet u zeker dat u dit GEDCOM-feit wilt verwijderen?"
 
 #: includes/functions/functions_print.php:582
 msgid "Are you sure you want to delete this person?"
-msgstr ""
+msgstr "Weet u zeker dat u deze persoon uit het GEDCOM-bestand wilt verwijderen?"
 
 #: includes/functions/functions_print.php:661
 msgid "Print"
-msgstr ""
+msgstr "Afdrukken"
 
 #: includes/functions/functions_print.php:662
 msgid "Back to normal view"
-msgstr ""
+msgstr "Annuleren printervriendelijke versie"
 
 #: includes/functions/functions_print.php:730
 msgid "Total Database Queries: "
-msgstr ""
+msgstr "Totaal aantal databasevragen:"
 
 #: includes/functions/functions_print.php:730
 msgid "Total privacy checks: "
-msgstr ""
+msgstr "Aantal privacycontroles:"
 
 #: includes/functions/functions_print.php:730
 msgid "Total Memory Usage:"
-msgstr ""
+msgstr "Totaal geheugengebruik:"
 
 #: includes/functions/functions_print.php:881
 msgid "For technical support or genealogy questions, please contact"
-msgstr ""
+msgstr "Neem voor genealogische vragen en vragen over de site contact op met"
 
 #: includes/functions/functions_print.php:885
 msgid "For technical support and information contact"
-msgstr ""
+msgstr "Voor ondersteuning en informatie neem contact op met"
 
 #: includes/functions/functions_print.php:891
 msgid "For help with genealogy questions contact"
-msgstr ""
+msgstr "Neem voor genealogische vragen contact op met"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
@@ -13798,11 +13798,11 @@ msgstr "E-mail genealogische vragen"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
-msgstr ""
+msgstr "Notitie"
 
 #: includes/functions/functions_print.php:1330
 msgid "For more information contact"
-msgstr ""
+msgstr "Neem voor meer informatie contact op met "
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
@@ -13812,7 +13812,7 @@ msgstr "Toon PHP-informatie"
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
-msgstr ""
+msgstr "<b>Een Help tekst voor dit onderwerp of deze pagina is nog niet beschikbaar</b>"
 
 #: includes/functions/functions_print.php:1468
 msgid "<span style=\"font-weight: bold\">The language variable does not exist. Please report this as it is an error.</span>"
@@ -13821,46 +13821,46 @@ msgstr ""
 #: includes/functions/functions_print.php:1802
 #: includes/functions/functions_print.php:1804
 msgid "nephew"
-msgstr ""
+msgstr "neef"
 
 #: includes/functions/functions_print.php:1812
 #: includes/functions/functions_print.php:1814
 msgid "niece"
-msgstr ""
+msgstr "nicht"
 
 #: includes/functions/functions_print.php:1879
 #: includes/functions/functions_print.php:2083
 msgid "on the date of death"
-msgstr ""
+msgstr "op de datum van overlijden"
 
 #: includes/functions/functions_print.php:1881
 #: includes/functions/functions_print.php:2085
 msgid "after death"
-msgstr ""
+msgstr "na overlijden"
 
 #: includes/functions/functions_print.php:1975
 msgid "Mother's age"
-msgstr ""
+msgstr "Mooeders leeftijd"
 
 #: includes/functions/functions_print.php:1984
 msgid "Father's age"
-msgstr ""
+msgstr "Vaders leeftijd"
 
 #: includes/functions/functions_print.php:1988
 msgid "Parent's age"
-msgstr ""
+msgstr "Ouders leeftijd"
 
 #: includes/functions/functions_print.php:2233
 msgid "LDS Temple"
-msgstr ""
+msgstr "HLD tempel"
 
 #: includes/functions/functions_print.php:2235
 msgid "LDS Temple Code:"
-msgstr ""
+msgstr "HLD Tempelcode:"
 
 #: includes/functions/functions_print.php:2239
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: includes/functions/functions_print.php:2380
 #, fuzzy
@@ -13878,7 +13878,7 @@ msgstr "Verwijder bewaarplaats"
 #: includes/functions/functions_print_facts.php:1149
 #: includes/functions/functions_print_facts.php:1455
 msgid "Copy"
-msgstr ""
+msgstr "Kopiëren"
 
 #: includes/functions/functions_print_facts.php:242
 #, fuzzy
@@ -13888,11 +13888,11 @@ msgstr "Huwelijk"
 #: includes/functions/functions_print_facts.php:446
 #: includes/functions/functions_print_facts.php:448
 msgid "Unrecognized GEDCOM Code"
-msgstr ""
+msgstr "Onbekende GEDCOM-code"
 
 #: includes/functions/functions_print_facts.php:448
 msgid "This is an error, and we would like to fix it. Please report this error to"
-msgstr ""
+msgstr "Er is een fout opgetreden, die we graag willen verhelpen. Meldt deze fout a.u.b. aan"
 
 #: includes/functions/functions_print_lists.php:76
 #, fuzzy
@@ -13901,24 +13901,24 @@ msgstr "Namen levende personen zichtbaar"
 
 #: includes/functions/functions_print_lists.php:78
 msgid "Show only females."
-msgstr ""
+msgstr "Toon alleen vrouwen."
 
 #: includes/functions/functions_print_lists.php:80
 msgid "Show only persons of whom the gender is not known."
-msgstr ""
+msgstr "Toon alleen personen, waarvan het geslacht onbekend is."
 
 #: includes/functions/functions_print_lists.php:83
 msgid "Show persons alive in the indicated year."
-msgstr ""
+msgstr "Toon personen, levend in het aangegeven jaar."
 
 #: includes/functions/functions_print_lists.php:84
 msgid "Alive in Year"
-msgstr ""
+msgstr "Levend in jaar"
 
 #: includes/functions/functions_print_lists.php:85
 #: includes/functions/functions_print_lists.php:467
 msgid "Show people who are alive or couples where both partners are alive."
-msgstr ""
+msgstr "Toon nog levende personen, of paren waarvan beide partners nog leven."
 
 #: includes/functions/functions_print_lists.php:86
 #, fuzzy
@@ -13928,26 +13928,26 @@ msgstr "Actief"
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
 msgid "Show people who are dead or couples where both partners are deceased."
-msgstr ""
+msgstr "Toon overleden personen, of paren waarvan beide partners zijn overleden."
 
 #: includes/functions/functions_print_lists.php:88
 msgid "Dead "
-msgstr ""
+msgstr "Overleden "
 
 #: includes/functions/functions_print_lists.php:89
 #: includes/functions/functions_print_lists.php:475
 msgid "Show «roots» couples or individuals.  These people may also be called «patriarchs».  They are individuals who have no parents recorded in the database."
-msgstr ""
+msgstr "Toon «wortel» paren of personen. Deze mensen worden ook wel «patriarchen» genoemd.  Zij zijn personen, waarvan geen ouders zijn pgenomen in het bestand."
 
 #: includes/functions/functions_print_lists.php:90
 #: includes/functions/functions_print_lists.php:476
 msgid "Roots"
-msgstr ""
+msgstr "Wortels"
 
 #: includes/functions/functions_print_lists.php:91
 #: includes/functions/functions_print_lists.php:477
 msgid "Show «leaves» couples or individuals.  These are individuals who are alive but have no children recorded in the database."
-msgstr ""
+msgstr "Toon «tak» paren of personen. Dit zijn nog levende personen, waarvan geen kinderen zijn opgenomen in het bestand."
 
 #: includes/functions/functions_print_lists.php:92
 #: includes/functions/functions_print_lists.php:478
@@ -13957,24 +13957,24 @@ msgstr "Opslaan"
 
 #: includes/functions/functions_print_lists.php:94
 msgid "Show persons born more than 100 years ago."
-msgstr ""
+msgstr "Toon personen, geboren meer dan 100 jaar geleden."
 
 #: includes/functions/functions_print_lists.php:96
 msgid "Show persons born within the last 100 years."
-msgstr ""
+msgstr "Toon personen, geboren in de laatste 100 jaar."
 
 #: includes/functions/functions_print_lists.php:98
 msgid "Show people who died more than 100 years ago."
-msgstr ""
+msgstr "Toon personen, gestorven meer dan 100 jaar geleden."
 
 #: includes/functions/functions_print_lists.php:100
 msgid "Show people who died within the last 100 years."
-msgstr ""
+msgstr "Toon personen, gestorven in de laatste 100 jaar."
 
 #: includes/functions/functions_print_lists.php:102
 #: includes/functions/functions_print_lists.php:488
 msgid "Reset to the list defaults."
-msgstr ""
+msgstr "Reset tot de standaard waarden."
 
 #: includes/functions/functions_print_lists.php:394
 #: includes/functions/functions_print_lists.php:779
@@ -13993,27 +13993,27 @@ msgstr "Toon verwerkingsgegevens"
 #: includes/functions/functions_print_lists.php:424
 #: includes/functions/functions_print_lists.php:805
 msgid "Decade of birth"
-msgstr ""
+msgstr "Decade van Geboorte "
 
 #: includes/functions/functions_print_lists.php:426
 msgid "Decade of death"
-msgstr ""
+msgstr "Decade van Overlijden"
 
 #: includes/functions/functions_print_lists.php:468
 msgid "Both alive "
-msgstr ""
+msgstr "Beide in leven "
 
 #: includes/functions/functions_print_lists.php:469
 msgid "Show couples where only the female partner is deceased."
-msgstr ""
+msgstr "Toon paren, waarvan alleen de vrouwelijke partner is overleden."
 
 #: includes/functions/functions_print_lists.php:470
 msgid "Widower"
-msgstr ""
+msgstr "Weduwenaar"
 
 #: includes/functions/functions_print_lists.php:471
 msgid "Show couples where only the male partner is deceased."
-msgstr ""
+msgstr "Toon paren, waarvan alleen de mannelijke partner is overleden."
 
 #: includes/functions/functions_print_lists.php:472
 #, fuzzy
@@ -14022,19 +14022,19 @@ msgstr "Cirkelomvang"
 
 #: includes/functions/functions_print_lists.php:474
 msgid "Both dead "
-msgstr ""
+msgstr "Beide overleden "
 
 #: includes/functions/functions_print_lists.php:480
 msgid "Show couples with an unknown marriage date."
-msgstr ""
+msgstr "Toon paren met een onbekende huwelijksdatum."
 
 #: includes/functions/functions_print_lists.php:482
 msgid "Show couples who married more than 100 years ago."
-msgstr ""
+msgstr "Toon paren, getrouwd meer dan 100 jaar geleden."
 
 #: includes/functions/functions_print_lists.php:484
 msgid "Show couples who married within the last 100 years."
-msgstr ""
+msgstr "Toon paren, getrouwd in de laatste 100 jaar."
 
 #: includes/functions/functions_print_lists.php:486
 #, fuzzy
@@ -14043,7 +14043,7 @@ msgstr "Overleden personen zichtbaar"
 
 #: includes/functions/functions_print_lists.php:807
 msgid "Decade of marriage"
-msgstr ""
+msgstr "Decade van Huwelijk"
 
 #: includes/functions/functions_print_lists.php:1033
 msgid "Total Shared Notes"
@@ -14052,23 +14052,23 @@ msgstr ""
 #: includes/functions/functions_print_lists.php:1264
 #: includes/functions/functions_print_lists.php:1315
 msgid "Spouses"
-msgstr ""
+msgstr "Partners"
 
 #: includes/functions/functions_print_lists.php:1523
 msgid "Total changes"
-msgstr ""
+msgstr "Totaal aantal wijzigigen"
 
 #: includes/functions/functions_print_lists.php:2130
 msgid "Sort by this column."
-msgstr ""
+msgstr "Gebruik deze kolom om te sorteren."
 
 #: includes/functions/functions_privacy.php:865
 msgid "Details about this person are private. Personal details will not be included."
-msgstr ""
+msgstr "Details van deze persoon zijn privé. Persoonlijke details worden niet toegevoegd."
 
 #: includes/functions/functions_privacy.php:877
 msgid "Details about this family are private. Family details will not be included."
-msgstr ""
+msgstr "Details van dit gezin zijn privé. Details van dit gezin worden niet toegevoegd."
 
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
@@ -15472,15 +15472,15 @@ msgstr "Download GEDCOM-bestand"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
-msgstr ""
+msgstr "Deze persoon is gedownload van:"
 
 #: modules/clippings/clippings_ctrl.php:365
 msgid "This Family was downloaded from:"
-msgstr ""
+msgstr "Dit gezin is gedownload van:"
 
 #: modules/clippings/clippings_ctrl.php:380
 msgid "This Source was downloaded from:"
-msgstr ""
+msgstr "Deze bron is gedownload van:"
 
 #: modules/clippings/pgv_module.php:46
 #, fuzzy
@@ -15991,7 +15991,7 @@ msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 msgid "Navigator"
-msgstr ""
+msgstr "Navigator"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:85
 #, fuzzy
@@ -16220,14 +16220,14 @@ msgstr "_GEDCOM: Instellingenbestand"
 #: modules/googlemap/googlemap.php:656
 #: modules/googlemap/googlemap.php:864
 msgid "Manage GoogleMap configuration"
-msgstr ""
+msgstr "Beheer Googlemap configuratie"
 
 #: modules/googlemap/admin-config.php:54
 #: modules/googlemap/editconfig.php:452
 #: modules/googlemap/gg_map_content.php:89
 #: modules/googlemap/googlemap.php:149
 msgid "Edit geographic place locations"
-msgstr ""
+msgstr "Wijzigen locatie gegevens"
 
 #: modules/googlemap/admin-config.php:58
 #: modules/googlemap/gg_map_content.php:92
@@ -16242,39 +16242,39 @@ msgstr "Voorbeeld"
 
 #: modules/googlemap/editconfig.php:63
 msgid "Postfix"
-msgstr ""
+msgstr "Achtervoegsel"
 
 #: modules/googlemap/editconfig.php:71
 msgid "Prefix / Postfix order"
-msgstr ""
+msgstr "Volgorde voor gebuik"
 
 #: modules/googlemap/editconfig.php:75
 msgid "No pre/postfix"
-msgstr ""
+msgstr "Geen voor/achtervoegsel"
 
 #: modules/googlemap/editconfig.php:76
 msgid "Normal, prefix, postfix, both"
-msgstr ""
+msgstr "Normaal, voor, achter, beide"
 
 #: modules/googlemap/editconfig.php:77
 msgid "Normal, postfix, prefix, both"
-msgstr ""
+msgstr "Normaal, achter, voor, beide"
 
 #: modules/googlemap/editconfig.php:78
 msgid "Prefix, postfix, both, normal"
-msgstr ""
+msgstr "Voor, achter, beide, normaal"
 
 #: modules/googlemap/editconfig.php:79
 msgid "Postfix, prefix, both, normal"
-msgstr ""
+msgstr "Achter, voor, beide, normaal"
 
 #: modules/googlemap/editconfig.php:80
 msgid "Prefix, postfix, normal, both"
-msgstr ""
+msgstr "Voor, achter, normaal, beide"
 
 #: modules/googlemap/editconfig.php:81
 msgid "Postfix, prefix, normal, both"
-msgstr ""
+msgstr "Achter, voor, normaal, beide"
 
 #: modules/googlemap/editconfig.php:96
 #, fuzzy
@@ -16283,31 +16283,31 @@ msgstr "_Gebruikersbeheer"
 
 #: modules/googlemap/editconfig.php:215
 msgid "Enable GoogleMap"
-msgstr ""
+msgstr "Googlemap aanzetten"
 
 #: modules/googlemap/editconfig.php:224
 msgid "GoogleMap API key"
-msgstr ""
+msgstr "Google Map API key"
 
 #: modules/googlemap/editconfig.php:228
 msgid "Default map type"
-msgstr ""
+msgstr "Standaard kaart soort"
 
 #: modules/googlemap/editconfig.php:231
 #: modules/googlemap/gg_map_content.php:31
 #: modules/googlemap/googlemap.php:608
 msgid "Map"
-msgstr ""
+msgstr "Kaart"
 
 #: modules/googlemap/editconfig.php:232
 #: modules/googlemap/googlemap.php:609
 msgid "Satellite"
-msgstr ""
+msgstr "Satelliet"
 
 #: modules/googlemap/editconfig.php:233
 #: modules/googlemap/googlemap.php:610
 msgid "Hybrid"
-msgstr ""
+msgstr "Combinatie"
 
 #: modules/googlemap/editconfig.php:234
 #: modules/googlemap/googlemap.php:611
@@ -16316,12 +16316,12 @@ msgstr ""
 
 #: modules/googlemap/editconfig.php:239
 msgid "Size of map (in pixels)"
-msgstr ""
+msgstr "Afmeting van de kaart (in pixels)"
 
 #: modules/googlemap/editconfig.php:243
 #: modules/googlemap/editconfig.php:263
 msgid "Height"
-msgstr ""
+msgstr "Hoogte"
 
 #: modules/googlemap/editconfig.php:248
 msgid "Use Googlemap for Place Hierarchy"
@@ -16366,19 +16366,19 @@ msgstr ""
 
 #: modules/googlemap/editconfig.php:335
 msgid "Zoom factor of map"
-msgstr ""
+msgstr "Zoom factor van de kaart"
 
 #: modules/googlemap/editconfig.php:338
 msgid "Min."
-msgstr ""
+msgstr "Min."
 
 #: modules/googlemap/editconfig.php:343
 msgid "Max."
-msgstr ""
+msgstr "Max."
 
 #: modules/googlemap/editconfig.php:352
 msgid "Precision"
-msgstr ""
+msgstr "Precisie"
 
 #: modules/googlemap/editconfig.php:362
 #: modules/googlemap/editconfig.php:371
@@ -16397,27 +16397,27 @@ msgstr "Opslaan"
 
 #: modules/googlemap/editconfig.php:375
 msgid "City"
-msgstr ""
+msgstr "Plaats"
 
 #: modules/googlemap/editconfig.php:383
 msgid "Neighborhood"
-msgstr ""
+msgstr "Buurt"
 
 #: modules/googlemap/editconfig.php:391
 msgid "House"
-msgstr ""
+msgstr "Huis"
 
 #: modules/googlemap/editconfig.php:399
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #: modules/googlemap/editconfig.php:411
 msgid "Default top level value"
-msgstr ""
+msgstr "Standaard waarde hoogste nivo"
 
 #: modules/googlemap/editconfig.php:415
 msgid "Number of levels"
-msgstr ""
+msgstr "Aantal nivo's"
 
 #: modules/googlemap/editconfig.php:432
 #, fuzzy
@@ -16426,7 +16426,7 @@ msgstr "Configuratie-informatie"
 
 #: modules/googlemap/flags.php:43
 msgid "Select flag"
-msgstr ""
+msgstr "Selecteer vlag"
 
 #: modules/googlemap/flags.php:46
 msgid "<b>The flags directory doesn't exist</b><br /><br />To make the flags work, copy the <b>flags</b> directory from <b>images</b> directory to <b>places</b> directory, or download the flags from the full version."
@@ -16435,12 +16435,12 @@ msgstr ""
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
 msgid "Change flag"
-msgstr ""
+msgstr "Wijzig vlag"
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
 msgid "Remove flag"
-msgstr ""
+msgstr "Verwijder vlag"
 
 #: modules/googlemap/flags.php:168
 msgid "Countries"
@@ -16450,7 +16450,7 @@ msgstr ""
 #: modules/googlemap/googlemap.php:97
 #: modules/googlemap/googlemap.php:651
 msgid "GoogleMap module disabled"
-msgstr ""
+msgstr "Googlemap module uitgeschakeld"
 
 #: modules/googlemap/gg_map_content.php:58
 #: modules/googlemap/gg_map_content.php:59
@@ -16470,11 +16470,11 @@ msgstr "Actief"
 
 #: modules/googlemap/googlemap.php:607
 msgid "Redraw map"
-msgstr ""
+msgstr "Ververs kaart"
 
 #: modules/googlemap/googlemap.php:857
 msgid "No map data for this person"
-msgstr ""
+msgstr "Geen gegevens voor deze persoon"
 
 #: modules/googlemap/googlemap.php:940
 msgid "This place has no coordinates"
@@ -16482,7 +16482,7 @@ msgstr ""
 
 #: modules/googlemap/googlemap.php:942
 msgid "Edit geographic location"
-msgstr ""
+msgstr "Wijzig locatie"
 
 #: modules/googlemap/pedigree_map.php:134
 msgid "for"
@@ -16543,7 +16543,7 @@ msgstr ""
 
 #: modules/googlemap/pedigree_map.php:740
 msgid "Birth:"
-msgstr ""
+msgstr "Geboren:"
 
 #: modules/googlemap/pedigree_map.php:842
 msgid "Zoom&nbsp;in"
@@ -16661,16 +16661,16 @@ msgstr ""
 #: modules/googlemap/places.php:600
 #: modules/googlemap/places_edit.php:804
 msgid "Zoom factor"
-msgstr ""
+msgstr "Zoom factor"
 
 #: modules/googlemap/places.php:188
 #: modules/googlemap/places.php:601
 msgid "Icon"
-msgstr ""
+msgstr "Icoon"
 
 #: modules/googlemap/places.php:327
 msgid "File containing places (CSV)"
-msgstr ""
+msgstr "Bestand met locatiegegevens (CSV)"
 
 #: modules/googlemap/places.php:332
 msgid "Server file containing places (CSV)"
@@ -16678,23 +16678,23 @@ msgstr ""
 
 #: modules/googlemap/places.php:346
 msgid "Clear all place-locations before import?"
-msgstr ""
+msgstr "Alle locatiegegevens verwijderen voor importeren?"
 
 #: modules/googlemap/places.php:350
 msgid "Update existing places only?"
-msgstr ""
+msgstr "Alleen bestaande plaatsten bijwerken?"
 
 #: modules/googlemap/places.php:354
 msgid "Overwrite location-data with data from file?"
-msgstr ""
+msgstr "Locatie-data overschrijven met nieuwe data?"
 
 #: modules/googlemap/places.php:523
 msgid "Location not removed: this location contains sub-locations"
-msgstr ""
+msgstr "Locatie niet verwijderd: deze locatie bevat sub-locaties"
 
 #: modules/googlemap/places.php:556
 msgid "Remove this location?"
-msgstr ""
+msgstr "Deze locatie verwijderen?"
 
 #: modules/googlemap/places.php:587
 #, fuzzy
@@ -16704,35 +16704,35 @@ msgstr "Klik hier om door te gaan"
 #: modules/googlemap/places.php:606
 #: modules/googlemap/places_edit.php:662
 msgid "No places found"
-msgstr ""
+msgstr "Geen plaatsen gevonden"
 
 #: modules/googlemap/places.php:649
 msgid "Add place"
-msgstr ""
+msgstr "Plaats toevoegen"
 
 #: modules/googlemap/places.php:652
 msgid "Import from current GEDCOM"
-msgstr ""
+msgstr "Importeren uit huidige GEDCOM"
 
 #: modules/googlemap/places.php:653
 msgid "Import from all GEDCOMs"
-msgstr ""
+msgstr "Importeren uit alle GEDCOMs"
 
 #: modules/googlemap/places.php:656
 msgid "Import from file"
-msgstr ""
+msgstr "Importeren uit bestand"
 
 #: modules/googlemap/places.php:664
 msgid "Export current view to file"
-msgstr ""
+msgstr "Exporteer huidige lijst naar bestand"
 
 #: modules/googlemap/places.php:671
 msgid "Export all locations to file"
-msgstr ""
+msgstr "Exporteer alle locaties naar bestand"
 
 #: modules/googlemap/places_edit.php:643
 msgid "Use this value"
-msgstr ""
+msgstr "Deze waarde gebruiken"
 
 #: modules/googlemap/places_edit.php:743
 msgid "Search on this level"
@@ -16745,19 +16745,19 @@ msgstr "Zoeken en vervangen"
 
 #: modules/googlemap/places_edit.php:788
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: modules/googlemap/places_edit.php:789
 msgid "S"
-msgstr ""
+msgstr "Z"
 
 #: modules/googlemap/places_edit.php:798
 msgid "E"
-msgstr ""
+msgstr "O"
 
 #: modules/googlemap/places_edit.php:799
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: modules/lightbox/admin-config.php:40
 #: modules/lightbox/lb_editconfig.php:42
@@ -16967,7 +16967,7 @@ msgstr ""
 #: modules/lightbox/functions/lb_indi_doors_0.php:55
 #: modules/lightbox/functions/lb_indi_doors_1.php:58
 msgid "Research Assistant"
-msgstr ""
+msgstr "Onderzoeks Helper"
 
 #: modules/lightbox/functions/lightbox_print_media.php:132
 msgid "Photo"
@@ -17008,7 +17008,7 @@ msgstr "Zoek multimedia"
 
 #: modules/media/media.php:63
 msgid "There are no media objects for this individual."
-msgstr ""
+msgstr "Geen multimedia-objecten voor deze persoon."
 
 #: modules/notes/notes.php:60
 #, fuzzy
@@ -17027,11 +17027,11 @@ msgstr "Verwijder deze persoon"
 
 #: modules/personal_facts/personal_facts.php:72
 msgid "Events of close relatives"
-msgstr ""
+msgstr "Gebeurtenissen van naaste familie"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
-msgstr ""
+msgstr "Historische feiten"
 
 #: modules/personal_facts/pgv_module.php:42
 msgid "Personal Facts"
@@ -17048,11 +17048,11 @@ msgstr "Kind toevoegen"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
-msgstr ""
+msgstr "Voeg partner toe aan dit gezin"
 
 #: modules/relatives/relatives.php:161
 msgid "Add a wife to this family"
-msgstr ""
+msgstr "Voeg partner toe aan dit gezin"
 
 #: modules/relatives/relatives.php:218
 #, fuzzy
@@ -17061,7 +17061,7 @@ msgstr "Controleer relaties door huwelijk"
 
 #: modules/relatives/relatives.php:408
 msgid "Link this person to an existing family as a child"
-msgstr ""
+msgstr "Koppel deze persoon als kind aan een bestaand gezin"
 
 #: modules/relatives/relatives.php:415
 #, fuzzy
@@ -17070,7 +17070,7 @@ msgstr "Voeg nieuwe notitie toe"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
-msgstr ""
+msgstr "Koppel deze persoon als partner aan een bestaand gezin"
 
 #: modules/relatives/relatives.php:435
 #, fuzzy
@@ -17079,7 +17079,7 @@ msgstr "Voeg nieuwe notitie toe"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
-msgstr ""
+msgstr "Koppel deze persoon als partner aan een bestaand gezin"
 
 #: modules/sitemap/admin-config.php:40
 msgid "Sitemap"
@@ -17090,12 +17090,12 @@ msgstr ""
 #: modules/sitemap/index.php:229
 #: modules/sitemap/index.php:279
 msgid "Generate Sitemap files"
-msgstr ""
+msgstr "Genereer Sitemap files"
 
 #: modules/sitemap/index.php:232
 #: modules/sitemap/index.php:303
 msgid "Selected items to store in Sitemap:"
-msgstr ""
+msgstr "Onderdelen welke in de Sitemap file opgenomen worden:"
 
 #: modules/sitemap/index.php:235
 #: modules/sitemap/index.php:366
@@ -17112,32 +17112,32 @@ msgstr "Namenlijst"
 #: modules/sitemap/index.php:238
 #: modules/sitemap/index.php:298
 msgid "No links to private information"
-msgstr ""
+msgstr "Geen links naar prive informatie"
 
 #: modules/sitemap/index.php:240
 #: modules/sitemap/index.php:285
 msgid "GEDCOMs to store in Sitemap:"
-msgstr ""
+msgstr "Van de volgende GEDCOM's wordt een Sitemap file gemaakt:"
 
 #: modules/sitemap/index.php:245
 msgid "The following Sitemap files have been generated and can be downloaded:"
-msgstr ""
+msgstr "De volgende sitemaps zijn gegenereerd en kunnen worden gedownload:"
 
 #: modules/sitemap/index.php:270
 msgid "Place all the files in the root of your PhpGedView installation."
-msgstr ""
+msgstr "Plaats de sitemap files in de directory waarin phpGedView is geinstalleerd."
 
 #: modules/sitemap/index.php:305
 msgid "Item"
-msgstr ""
+msgstr "Onderdelen"
 
 #: modules/sitemap/index.php:306
 msgid "Priority"
-msgstr ""
+msgstr "Prioriteit"
 
 #: modules/sitemap/index.php:307
 msgid "Updates"
-msgstr ""
+msgstr "Wijzigingen"
 
 #: modules/sitemap/index.php:328
 #: modules/sitemap/index.php:355
@@ -17145,7 +17145,7 @@ msgstr ""
 #: modules/sitemap/index.php:409
 #: modules/sitemap/index.php:436
 msgid "always"
-msgstr ""
+msgstr "continue"
 
 #: modules/sitemap/index.php:329
 #: modules/sitemap/index.php:356
@@ -17153,7 +17153,7 @@ msgstr ""
 #: modules/sitemap/index.php:410
 #: modules/sitemap/index.php:437
 msgid "hourly"
-msgstr ""
+msgstr "elk uur"
 
 #: modules/sitemap/index.php:330
 #: modules/sitemap/index.php:357
@@ -17161,7 +17161,7 @@ msgstr ""
 #: modules/sitemap/index.php:411
 #: modules/sitemap/index.php:438
 msgid "daily"
-msgstr ""
+msgstr "dagelijks"
 
 #: modules/sitemap/index.php:331
 #: modules/sitemap/index.php:358
@@ -17169,7 +17169,7 @@ msgstr ""
 #: modules/sitemap/index.php:412
 #: modules/sitemap/index.php:439
 msgid "weekly"
-msgstr ""
+msgstr "wekelijks"
 
 #: modules/sitemap/index.php:332
 #: modules/sitemap/index.php:359
@@ -17177,7 +17177,7 @@ msgstr ""
 #: modules/sitemap/index.php:413
 #: modules/sitemap/index.php:440
 msgid "monthly"
-msgstr ""
+msgstr "maandelijks"
 
 #: modules/sitemap/index.php:333
 #: modules/sitemap/index.php:360
@@ -17185,7 +17185,7 @@ msgstr ""
 #: modules/sitemap/index.php:414
 #: modules/sitemap/index.php:441
 msgid "yearly"
-msgstr ""
+msgstr "jaarlijks"
 
 #: modules/sitemap/index.php:334
 #: modules/sitemap/index.php:361
@@ -17193,20 +17193,20 @@ msgstr ""
 #: modules/sitemap/index.php:415
 #: modules/sitemap/index.php:442
 msgid "never"
-msgstr ""
+msgstr "nooit"
 
 #: modules/sitemap/index.php:447
 msgid "Generate"
-msgstr ""
+msgstr "Genereer"
 
 #: modules/sources_tab/sources_tab.php:77
 msgid "There are no Source citations for this individual."
-msgstr ""
+msgstr "Geen bronvermeldingen voor deze persoon."
 
 #: themes/cloudy/footer.php:174
 #: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
-msgstr ""
+msgstr "Dit GEDCOM-bestand is gewijzigd."
 
 #~ msgid "_FA13"
 #~ msgstr "Feit 13"

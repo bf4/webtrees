@@ -96,7 +96,7 @@ msgstr ""
 #: addmedia.php:564
 #: addmedia.php:572
 msgid "Update successful"
-msgstr ""
+msgstr "Uspešno ažurirano"
 
 #: addremotelink.php:36
 #: addremotelink.php:116
@@ -163,7 +163,7 @@ msgstr ""
 
 #: addremotelink.php:211
 msgid "Example:"
-msgstr ""
+msgstr "Primer:"
 
 #: addremotelink.php:214
 msgid "Database ID:"
@@ -207,27 +207,27 @@ msgstr ""
 
 #: addsearchlink.php:78
 msgid "Mother"
-msgstr ""
+msgstr "Majka"
 
 #: addsearchlink.php:79
 msgid "Father"
-msgstr ""
+msgstr "Otac"
 
 #: addsearchlink.php:80
 msgid "Husband"
-msgstr ""
+msgstr "Suprug"
 
 #: addsearchlink.php:81
 msgid "Wife"
-msgstr ""
+msgstr "Supruga"
 
 #: addsearchlink.php:82
 msgid "Son"
-msgstr ""
+msgstr "Sin"
 
 #: addsearchlink.php:83
 msgid "Daughter"
-msgstr ""
+msgstr "Ćerka"
 
 #: admin.php:51
 #: admin.php:137
@@ -236,7 +236,7 @@ msgstr ""
 
 #: admin.php:55
 msgid "Accept / Reject Changes"
-msgstr ""
+msgstr "Prihvati / Odbaci promene"
 
 #: admin.php:75
 msgid "View log files"
@@ -377,7 +377,7 @@ msgstr ""
 
 #: admin.php:302
 msgid "Loading..."
-msgstr ""
+msgstr "transfer u toku..."
 
 #: admin.php:314
 msgid "Content of log file"
@@ -419,7 +419,7 @@ msgstr ""
 #: ancestry.php:130
 #: calendar.php:404
 msgid "Individuals"
-msgstr ""
+msgstr "Pojedinaca"
 
 #: ancestry.php:136
 #: calendar.php:405
@@ -477,7 +477,7 @@ msgstr ""
 
 #: branches.php:81
 msgid "Daitch-Mokotoff"
-msgstr ""
+msgstr "Daitch-Mokotoff"
 
 #: branches.php:104
 msgid "Pedigree Chart Root Person"
@@ -485,15 +485,15 @@ msgstr ""
 
 #: branches.php:166
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 #: calendar.php:102
 msgid "Anniversary Calendar"
-msgstr ""
+msgstr "Kalendar godišnjica"
 
 #: calendar.php:122
 msgid "On This Day ..."
-msgstr ""
+msgstr "Na današnji dan ..."
 
 #: calendar.php:125
 msgid "In This Month ..."
@@ -566,7 +566,7 @@ msgstr ""
 
 #: calendar.php:235
 msgid "ALL"
-msgstr ""
+msgstr "SVE"
 
 #: calendar.php:238
 msgid "BIRT"
@@ -648,12 +648,12 @@ msgstr ""
 #: calendar.php:524
 #: calendar.php:606
 msgid "Male"
-msgstr ""
+msgstr "Muško"
 
 #: calendar.php:527
 #: calendar.php:610
 msgid "Female"
-msgstr ""
+msgstr "Žensko"
 
 #: calendar.php:536
 msgid "Filter"
@@ -801,7 +801,7 @@ msgstr ""
 
 #: clippings.php:140
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: clippings.php:150
 #, fuzzy
@@ -948,7 +948,7 @@ msgstr "Obriši ime "
 #: edit_interface.php:2464
 #: edit_interface.php:2725
 msgid "Cancel"
-msgstr ""
+msgstr "Poništi"
 
 #: dir_editor.php:240
 msgid "Remove all nonessential files"
@@ -1060,7 +1060,7 @@ msgstr ""
 #: editconfig_gedcom.php:2225
 #: edit_privacy.php:807
 msgid "Reset"
-msgstr ""
+msgstr "Početni položaj"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
@@ -1165,7 +1165,7 @@ msgstr ""
 #: editlang_edit_settings.php:486
 #: edit_privacy.php:97
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: editconfig_gedcom.php:1013
 msgid "Display Hebrew Gershayim"
@@ -1354,11 +1354,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1331
 msgid "Welcome"
-msgstr ""
+msgstr "Dobrodošli"
 
 #: editconfig_gedcom.php:1332
 msgid "MyGedView"
-msgstr ""
+msgstr "Moj portal"
 
 #: editconfig_gedcom.php:1337
 msgid "Welcome text on Login page"
@@ -1497,7 +1497,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1509
 msgid "Personal Facts and Details"
-msgstr ""
+msgstr "Lični podaci"
 
 #: editconfig_gedcom.php:1510
 msgid "Notes"
@@ -1514,11 +1514,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
-msgstr ""
+msgstr "Bliski srodnici"
 
 #: editconfig_gedcom.php:1514
 msgid "Tree"
-msgstr ""
+msgstr "Stablo"
 
 #: editconfig_gedcom.php:1516
 msgid "Last Visited Tab For Individual"
@@ -1538,11 +1538,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1581
 msgid "after"
-msgstr ""
+msgstr "posle"
 
 #: editconfig_gedcom.php:1582
 msgid "before"
-msgstr ""
+msgstr "pre"
 
 #: editconfig_gedcom.php:1587
 msgid "Maximum number of surnames"
@@ -1769,7 +1769,7 @@ msgstr ""
 #: editconfig_gedcom.php:1944
 #: edit_merge.php:150
 msgid "Record"
-msgstr ""
+msgstr "Upis"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
@@ -2126,7 +2126,7 @@ msgstr ""
 
 #: edituser.php:85
 msgid "User name contains invalid characters"
-msgstr ""
+msgstr "Korisničko ime sadrži neprihvatljive simbole"
 
 #: edituser.php:129
 msgid "You must enter a user name."
@@ -2143,15 +2143,15 @@ msgstr ""
 
 #: edituser.php:149
 msgid "Passwords do not match."
-msgstr ""
+msgstr "Lozinke nisu identične."
 
 #: edituser.php:154
 msgid "Passwords must contain at least 6 characters."
-msgstr ""
+msgstr "Lozinka mora imati najmanje šest znakova"
 
 #: edituser.php:174
 msgid "My Account"
-msgstr ""
+msgstr "Moj nalog"
 
 #: edituser.php:176
 #: edituser.php:301
@@ -2192,11 +2192,11 @@ msgstr "Lozinka"
 
 #: edituser.php:229
 msgid "Change Language"
-msgstr ""
+msgstr "Promeni jezik"
 
 #: edituser.php:245
 msgid "Email Address"
-msgstr ""
+msgstr "Email adresa"
 
 #: edituser.php:251
 msgid "My Theme"
@@ -2227,12 +2227,12 @@ msgstr ""
 #: edit_changes.php:66
 #: edit_changes.php:84
 msgid "Undo successful"
-msgstr ""
+msgstr "Opoziv uspeo"
 
 #: edit_changes.php:71
 #: edit_changes.php:99
 msgid "Changes successfully accepted into database"
-msgstr ""
+msgstr "Promene su uspešno upisane u bazu podataka"
 
 #: edit_changes.php:104
 msgid "There are currently no changes to be reviewed."
@@ -2266,26 +2266,26 @@ msgstr ""
 
 #: edit_changes.php:125
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: edit_changes.php:127
 #: edit_changes.php:144
 msgid "Undo"
-msgstr ""
+msgstr "Opozovi"
 
 #: edit_changes.php:136
 msgid "Send Message"
-msgstr ""
+msgstr "Pošalji poruku"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
 msgid "Accept all changes"
-msgstr ""
+msgstr "Prihvati sve izmene"
 
 #: edit_changes.php:163
 #: edit_changes.php:181
 msgid "Undo all changes"
-msgstr ""
+msgstr "Opozovi sve promene"
 
 #: edit_changes.php:181
 msgid "Are you sure you want to undo all of the changes for this GEDCOM?"
@@ -2325,7 +2325,7 @@ msgstr ""
 
 #: edit_interface.php:575
 msgid "Family"
-msgstr ""
+msgstr "Porodica"
 
 #: edit_interface.php:580
 msgid "PEDI"
@@ -2333,11 +2333,11 @@ msgstr ""
 
 #: edit_interface.php:584
 msgid "Adopted"
-msgstr ""
+msgstr "Usvojen"
 
 #: edit_interface.php:585
 msgid "Foster"
-msgstr ""
+msgstr "Hranioc"
 
 #: edit_interface.php:586
 msgid "Sealing"
@@ -2489,7 +2489,7 @@ msgstr ""
 
 #: edit_interface.php:2350
 msgid "Child"
-msgstr ""
+msgstr "Dete"
 
 #: edit_interface.php:2362
 #: edit_interface.php:2371
@@ -2504,14 +2504,14 @@ msgstr ""
 
 #: edit_interface.php:2394
 msgid "Change Family Members"
-msgstr ""
+msgstr "Promeni članove porodice"
 
 #: edit_interface.php:2412
 #: edit_interface.php:2432
 #: edit_interface.php:2445
 #: edit_interface.php:2458
 msgid "Change"
-msgstr ""
+msgstr "Promeni"
 
 #: edit_interface.php:2686
 msgid "Reorder Families"
@@ -2519,7 +2519,7 @@ msgstr "Presortiraj porodice"
 
 #: edit_interface.php:2724
 msgid "Sort by marriage date"
-msgstr ""
+msgstr "Sortiraj po datumu sklapanja braka"
 
 #: edit_merge.php:58
 msgid "You entered the same IDs.  You cannot merge the same records."
@@ -2804,7 +2804,7 @@ msgstr ""
 
 #: expand_view.php:72
 msgid "View Family"
-msgstr ""
+msgstr "Pogledaj upis porodice"
 
 #: family.php:60
 msgid "This record has been marked for deletion upon admin approval."
@@ -2813,7 +2813,7 @@ msgstr ""
 #: family.php:100
 #: familybook.php:218
 msgid "Parents"
-msgstr ""
+msgstr "Roditelji:"
 
 #: family.php:101
 msgid "Grandparents"
@@ -2829,7 +2829,7 @@ msgstr ""
 
 #: family.php:138
 msgid "Show children on timeline chart"
-msgstr ""
+msgstr "Pokaži decu na grafikonu kroz vreme"
 
 #: family.php:138
 msgid "D"
@@ -2837,7 +2837,7 @@ msgstr ""
 
 #: family.php:139
 msgid "Show family on timeline chart"
-msgstr ""
+msgstr "Pokaži porodicu na grafikonu kroz vreme"
 
 #: family.php:139
 msgid "T"
@@ -2890,15 +2890,15 @@ msgstr ""
 
 #: famlist.php:174
 msgid "Choose a letter to show families whose name starts with that letter."
-msgstr ""
+msgstr "Izaberi slovo-ime da vidiš porodice čije prezime počinje sa tim slovom."
 
 #: famlist.php:184
 msgid "Skip Surname lists"
-msgstr ""
+msgstr "Preskoči listu prezimena"
 
 #: famlist.php:187
 msgid "Show Surname lists"
-msgstr ""
+msgstr "pokaži listu prezimena"
 
 #: famlist.php:194
 msgid "Exclude married names"
@@ -2959,7 +2959,7 @@ msgstr ""
 
 #: fanchart.php:307
 msgid "Interactive Tree"
-msgstr ""
+msgstr "Interaktivno stablo"
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -3029,7 +3029,7 @@ msgstr ""
 #: find.php:97
 #: find.php:202
 msgid "Find Family List"
-msgstr ""
+msgstr "Pronađi listu porodica"
 
 #: find.php:100
 #: find.php:205
@@ -3141,7 +3141,7 @@ msgstr ""
 
 #: find.php:584
 msgid "View Person"
-msgstr ""
+msgstr "Pogledaj upis osobe"
 
 #: find.php:590
 msgid "View Source"
@@ -3149,7 +3149,7 @@ msgstr ""
 
 #: find.php:593
 msgid "View Object"
-msgstr ""
+msgstr "View Object"
 
 #: find.php:599
 msgid "This media object is not linked to any GEDCOM record."
@@ -5284,7 +5284,7 @@ msgstr ""
 
 #: help_text.php:2479
 msgid "PhpGedView User Login"
-msgstr ""
+msgstr "Prijava korisnika na rodoslov"
 
 #: help_text.php:2484
 msgid "PhpGedView Message"
@@ -9256,25 +9256,25 @@ msgstr ""
 #: index.php:370
 #: index_edit.php:199
 msgid "MyGedView Portal"
-msgstr ""
+msgstr "Moj portal"
 
 #: index.php:371
 msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
-msgstr ""
+msgstr "Stranica Moj portal omogućava da sebi obeležite omiljene upise, da pratite prestojeće događaje i sarađujete sa drugim korisnicima ovog rodoslova"
 
 #: index.php:445
 #: index_edit.php:472
 msgid "Customize MyGedView Portal"
-msgstr ""
+msgstr "Modifikuj svoj portal"
 
 #: index.php:451
 #: index_edit.php:473
 msgid "Customize this GEDCOM Welcome page"
-msgstr ""
+msgstr "Modifikuj ovu početnu stranicu"
 
 #: index_edit.php:83
 msgid "?"
-msgstr ""
+msgstr "?"
 
 #: index_edit.php:154
 #: index_edit.php:158
@@ -9282,7 +9282,7 @@ msgstr ""
 #: index_edit.php:160
 #: index_edit.php:161
 msgid "&nbsp;"
-msgstr ""
+msgstr "&nbsp;"
 
 #: index_edit.php:231
 msgid "Configuration file updated successfully."
@@ -9294,7 +9294,7 @@ msgstr ""
 
 #: index_edit.php:285
 msgid "Configure"
-msgstr ""
+msgstr "Konfiguriši"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
@@ -9344,11 +9344,11 @@ msgstr ""
 
 #: indilist.php:174
 msgid "Choose a letter to show individuals whose family name starts with that letter."
-msgstr ""
+msgstr "Izaberi slovo da vidiš porodice čije prezime počinje sa tim slovom."
 
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
-msgstr ""
+msgstr "Izaberi slovo da vidiš porodice ili pojedince čije prezime počinje sa tim slovom."
 
 #: individual.php:287
 msgid "Hit Count:"
@@ -9605,7 +9605,7 @@ msgstr ""
 
 #: inverselink.php:174
 msgid "Source"
-msgstr ""
+msgstr "Izvor"
 
 #: inverselink.php:188
 msgid "Repository"
@@ -9650,7 +9650,7 @@ msgstr ""
 
 #: lifespan.php:329
 msgid "Individual"
-msgstr ""
+msgstr "Pojedinac"
 
 #: login.php:120
 msgid "Unable to authenticate user."
@@ -9659,37 +9659,37 @@ msgstr ""
 #: login.php:206
 #: login.php:226
 msgid "Login"
-msgstr ""
+msgstr "Prijava"
 
 #: login.php:238
 msgid "Account Information"
-msgstr ""
+msgstr "Informacije o nalogu"
 
 #: login.php:239
 msgid "No account?"
-msgstr ""
+msgstr "Nemate nalog?"
 
 #: login.php:240
 #: login_register.php:202
 #: login_register.php:283
 #: login_register.php:317
 msgid "Request new user account"
-msgstr ""
+msgstr "Zahtevajte novi nalog"
 
 #: login.php:241
 msgid "Lost your password?"
-msgstr ""
+msgstr "Izgubili ste lozinku?"
 
 #: login.php:242
 msgid "Request new password"
-msgstr ""
+msgstr "Zahtevajte novu lozinku"
 
 #: login_register.php:58
 #: login_register.php:80
 #: login_register.php:82
 #: login_register.php:94
 msgid "Lost password request"
-msgstr ""
+msgstr "Zahtev za novu lozinku"
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
@@ -9714,13 +9714,13 @@ msgstr "Korisničko ime"
 
 #: login_register.php:288
 msgid "Desired password"
-msgstr ""
+msgstr "Lozinka po izboru"
 
 #: login_register.php:316
 #: login_register.php:433
 #: login_register.php:454
 msgid "Comments"
-msgstr ""
+msgstr "Primedbe - Komentari"
 
 #: login_register.php:318
 msgid "Fields marked with * are mandatory."
@@ -9785,7 +9785,7 @@ msgstr ""
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
-msgstr ""
+msgstr "Pošalji"
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
@@ -10217,7 +10217,7 @@ msgstr "Obriši ime "
 #: module_admin.php:303
 #: module_admin.php:354
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #: module_admin.php:205
 msgid "Version / PGV"
@@ -10375,12 +10375,12 @@ msgstr ""
 #: relationship.php:149
 #: relationship.php:154
 msgid "Step-Mother"
-msgstr ""
+msgstr "Maćeha"
 
 #: relationship.php:157
 #: relationship.php:162
 msgid "Step-Father"
-msgstr ""
+msgstr "Očuh"
 
 #: relationship.php:169
 #: relationship.php:171
@@ -10396,7 +10396,7 @@ msgstr ""
 #: relationship.php:185
 #: relationship.php:186
 msgid "Daughter-in-law"
-msgstr ""
+msgstr "Snajka"
 
 #: relationship.php:188
 #: relationship.php:189
@@ -10432,12 +10432,12 @@ msgstr ""
 #: relationship.php:233
 #: relationship.php:234
 msgid "Step-Sister"
-msgstr ""
+msgstr "Polusestra"
 
 #: relationship.php:236
 #: relationship.php:237
 msgid "Step-Brother"
-msgstr ""
+msgstr "Polubrat"
 
 #: relationship.php:251
 #: relationship.php:252
@@ -10484,14 +10484,14 @@ msgstr ""
 #: relationship.php:383
 #: relationship.php:384
 msgid "Sister"
-msgstr ""
+msgstr "Sestra"
 
 #: relationship.php:318
 #: relationship.php:319
 #: relationship.php:386
 #: relationship.php:387
 msgid "Brother"
-msgstr ""
+msgstr "Brat"
 
 #: relationship.php:358
 #: relationship.php:359
@@ -10504,12 +10504,12 @@ msgstr ""
 #: relationship.php:375
 #: relationship.php:376
 msgid "Half-Sister"
-msgstr ""
+msgstr "Polusestra"
 
 #: relationship.php:378
 #: relationship.php:379
 msgid "Half-Brother"
-msgstr ""
+msgstr "Polubrat"
 
 #: relationship.php:419
 #: relationship.php:420
@@ -10526,7 +10526,7 @@ msgstr ""
 
 #: relationship.php:535
 msgid "and"
-msgstr ""
+msgstr "i"
 
 #: relationship.php:579
 msgid "Person 1"
@@ -10569,7 +10569,7 @@ msgstr ""
 
 #: reportengine.php:312
 msgid "Select a date"
-msgstr ""
+msgstr "Izaberi datum"
 
 #: reportengine.php:344
 msgid "Download report"
@@ -10588,7 +10588,7 @@ msgstr ""
 #: rss.php:309
 #: rss.php:328
 msgid "genealogy"
-msgstr ""
+msgstr "geneologija"
 
 #: rss.php:321
 msgid "Feed not available"
@@ -10651,7 +10651,7 @@ msgstr ""
 
 #: search.php:270
 msgid "Replace with"
-msgstr ""
+msgstr "Zemeni sa"
 
 #: search.php:293
 msgid "Entire record"
@@ -10690,7 +10690,7 @@ msgstr "Lista imena"
 
 #: search.php:377
 msgid "All names"
-msgstr ""
+msgstr "Sva imena"
 
 #: search.php:399
 #: search.php:578
@@ -10713,7 +10713,7 @@ msgstr ""
 
 #: search.php:443
 msgid "search"
-msgstr ""
+msgstr "pretraga"
 
 #: search.php:455
 msgid "Advanced site search"
@@ -10726,19 +10726,19 @@ msgstr "Lista imena"
 
 #: search.php:473
 msgid "Birth date: "
-msgstr ""
+msgstr "Datum rođenja: "
 
 #: search.php:481
 msgid "Birth Place: "
-msgstr ""
+msgstr "Mesto rođenja:"
 
 #: search.php:489
 msgid "Death date: "
-msgstr ""
+msgstr "Datum smrti: "
 
 #: search.php:497
 msgid "Death Place: "
-msgstr ""
+msgstr "Mesto smrti: "
 
 #: search.php:505
 #, fuzzy
@@ -10836,7 +10836,7 @@ msgstr ""
 #: statistics.php:714
 #: timeline.php:148
 msgid "years"
-msgstr ""
+msgstr "god"
 
 #: search_advanced.php:167
 #: search_advanced.php:229
@@ -10874,7 +10874,7 @@ msgstr ""
 #: search_engine.php:69
 #: uploadgedcom.php:1106
 msgid "Welcome page"
-msgstr ""
+msgstr "Početna stranica"
 
 #: statistics.php:57
 msgid "Total males"
@@ -10935,7 +10935,7 @@ msgstr ""
 
 #: statistics.php:113
 msgid "Average age at death"
-msgstr ""
+msgstr "Prosečna starost umrlih"
 
 #: statistics.php:127
 msgid "Top age at death"
@@ -11054,7 +11054,7 @@ msgstr ""
 
 #: statistics.php:278
 msgid "Average number of children per family"
-msgstr ""
+msgstr "Prosečan broj dece po porodici"
 
 #: statistics.php:279
 msgid "Number of families without children"
@@ -11096,15 +11096,15 @@ msgstr ""
 #: statistics.php:331
 #: statistics.php:358
 msgid "Media objects"
-msgstr ""
+msgstr "Multimedijalni objekti"
 
 #: statistics.php:334
 msgid "Other records"
-msgstr ""
+msgstr "Ostalih zapisa"
 
 #: statistics.php:345
 msgid "Total events"
-msgstr ""
+msgstr "Ukupno događaja"
 
 #: statistics.php:348
 msgid "First event"
@@ -11372,51 +11372,51 @@ msgstr ""
 
 #: statisticsplot.php:728
 msgid "Jan"
-msgstr ""
+msgstr "Jan"
 
 #: statisticsplot.php:729
 msgid "Feb"
-msgstr ""
+msgstr "Feb"
 
 #: statisticsplot.php:730
 msgid "March"
-msgstr ""
+msgstr "mart"
 
 #: statisticsplot.php:731
 msgid "April"
-msgstr ""
+msgstr "april"
 
 #: statisticsplot.php:732
 msgid "May"
-msgstr ""
+msgstr "maj"
 
 #: statisticsplot.php:733
 msgid "June"
-msgstr ""
+msgstr "june"
 
 #: statisticsplot.php:734
 msgid "July"
-msgstr ""
+msgstr "jul"
 
 #: statisticsplot.php:735
 msgid "Aug"
-msgstr ""
+msgstr "Aug"
 
 #: statisticsplot.php:736
 msgid "Sep"
-msgstr ""
+msgstr "Sep"
 
 #: statisticsplot.php:737
 msgid "Oct"
-msgstr ""
+msgstr "Okt"
 
 #: statisticsplot.php:738
 msgid "Nov"
-msgstr ""
+msgstr "Nov"
 
 #: statisticsplot.php:739
 msgid "Dec"
-msgstr ""
+msgstr "Dec"
 
 #: statisticsplot.php:805
 msgid " per gender"
@@ -11934,7 +11934,7 @@ msgstr ""
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
-msgstr ""
+msgstr "Često posećivane stranice na rodoslovu"
 
 #: blocks/gedcom_favorites.php:100
 msgid "Are you sure you want to remove this item from your list of Favorites?"
@@ -11955,16 +11955,16 @@ msgstr ""
 
 #: blocks/gedcom_favorites.php:178
 msgid "Enter an optional note about this favorite"
-msgstr ""
+msgstr "Eventualno napravi belešku o ovoj stranici"
 
 #: blocks/gedcom_news.php:36
 msgid "GEDCOM News"
-msgstr ""
+msgstr "Novosti na Rodoslovu Damjanaca"
 
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
 msgid "News"
-msgstr ""
+msgstr "Obaveštenja"
 
 #: blocks/gedcom_news.php:91
 msgid "No News articles have been submitted."
@@ -12000,37 +12000,37 @@ msgstr ""
 #: blocks/gedcom_stats.php:145
 #: blocks/gedcom_stats.php:330
 msgid "Total users"
-msgstr ""
+msgstr "Broj reg. korisnika"
 
 #: blocks/gedcom_stats.php:159
 #: blocks/gedcom_stats.php:277
 msgid "Earliest birth year"
-msgstr ""
+msgstr "Godina prvog zabeleženog rođenja"
 
 #: blocks/gedcom_stats.php:166
 #: blocks/gedcom_stats.php:285
 msgid "Latest birth year"
-msgstr ""
+msgstr "Godina poslednjeg zabeleženog rođenja"
 
 #: blocks/gedcom_stats.php:173
 #: blocks/gedcom_stats.php:293
 msgid "Earliest death year"
-msgstr ""
+msgstr "Godina prve zabeležene smrti"
 
 #: blocks/gedcom_stats.php:180
 #: blocks/gedcom_stats.php:301
 msgid "Latest death year"
-msgstr ""
+msgstr "Godina zadnje zabeležene smrti"
 
 #: blocks/gedcom_stats.php:188
 #: blocks/gedcom_stats.php:309
 msgid "Person who lived the longest"
-msgstr ""
+msgstr "Osoba koja je živela najduže"
 
 #: blocks/gedcom_stats.php:204
 #: blocks/gedcom_stats.php:325
 msgid "Family with the most children"
-msgstr ""
+msgstr "Porodica sa najviše dece"
 
 #: blocks/gedcom_stats.php:219
 msgid "View statistics as graphs"
@@ -12038,7 +12038,7 @@ msgstr ""
 
 #: blocks/gedcom_stats.php:227
 msgid "Most Common Surnames"
-msgstr ""
+msgstr "Najčešća prezimena"
 
 #: blocks/gedcom_stats.php:259
 msgid "Show common surnames?"
@@ -12055,7 +12055,7 @@ msgstr ""
 #: blocks/getting_started.php:48
 #: blocks/getting_started.php:59
 msgid "Get Started"
-msgstr ""
+msgstr "Počni"
 
 #: blocks/getting_started.php:60
 msgid "Choose one of these options to get started using PhpGedView"
@@ -12113,11 +12113,11 @@ msgstr[2] ""
 #: blocks/login_block.php:53
 #: blocks/login_block.php:61
 msgid "Logout"
-msgstr ""
+msgstr "Odjava"
 
 #: blocks/login_block.php:58
 msgid "Logged in as "
-msgstr ""
+msgstr "Prijavljen kao "
 
 #: blocks/random_media.php:38
 msgid "Random Media"
@@ -12126,11 +12126,11 @@ msgstr ""
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
 msgid "Random Picture"
-msgstr ""
+msgstr "Nasumice izabrana slika"
 
 #: blocks/random_media.php:196
 msgid "Next image"
-msgstr ""
+msgstr "Sledeća slika"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
@@ -12162,15 +12162,15 @@ msgstr ""
 
 #: blocks/review_changes.php:39
 msgid "Pending Changes"
-msgstr ""
+msgstr "Promene u toku"
 
 #: blocks/review_changes.php:83
 msgid "PhpGedView - Review changes"
-msgstr ""
+msgstr "Rodoslov - Razmotri promene"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
-msgstr ""
+msgstr "Izvršene su promene u bazi podataka ovog rodoslova ali iste moraju biti odobrene pre nego što ih vide svi korisnici rodoslova. Klikni na link ispod da pristupiš rodoslovu i razmotriš promene."
 
 #: blocks/review_changes.php:113
 msgid "Last email reminder was sent "
@@ -12195,7 +12195,7 @@ msgstr ""
 
 #: blocks/rss_block.php:69
 msgid "Upcoming Events"
-msgstr ""
+msgstr "Nastupajući događaji"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
@@ -12207,11 +12207,11 @@ msgstr ""
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
-msgstr ""
+msgstr "Promeni izgled stranica"
 
 #: blocks/todays_events.php:38
 msgid "On This Day"
-msgstr ""
+msgstr "Na današnji dan"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
@@ -12300,7 +12300,7 @@ msgstr "Korisničko ime"
 
 #: blocks/user_favorites.php:60
 msgid "My Favorites"
-msgstr ""
+msgstr "Moje omiljene stranice"
 
 #: blocks/user_messages.php:38
 #, fuzzy
@@ -12309,7 +12309,7 @@ msgstr "Korisničko ime"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
-msgstr ""
+msgstr "Moje poruke"
 
 #: blocks/user_messages.php:58
 #: blocks/user_messages.php:128
@@ -12330,7 +12330,7 @@ msgstr ""
 
 #: blocks/user_messages.php:131
 msgid "Delete Selected Messages"
-msgstr ""
+msgstr "Obriši izabrane poruke"
 
 #: blocks/user_messages.php:136
 msgid "Broadcast to all users"
@@ -12347,7 +12347,7 @@ msgstr ""
 
 #: blocks/user_welcome.php:56
 msgid "My Individual Record"
-msgstr ""
+msgstr "Moj lični upis"
 
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
@@ -12357,7 +12357,7 @@ msgstr ""
 #: blocks/yahrzeit.php:154
 #: blocks/yahrzeit.php:202
 msgid "Anniversary"
-msgstr ""
+msgstr "Godišnjica"
 
 #: blocks/yahrzeit.php:218
 #, fuzzy
@@ -12398,7 +12398,7 @@ msgstr ""
 
 #: includes/authentication.php:95
 msgid "You must enter a valid login ID and password to access this resource"
-msgstr ""
+msgstr "Morate ukucati tačno korisničko ime i lozinku da pristupite"
 
 #: includes/authentication.php:453
 #: includes/authentication.php:510
@@ -12422,15 +12422,15 @@ msgstr ""
 
 #: includes/family_nav.php:84
 msgid "Parents Family"
-msgstr ""
+msgstr "Porodica roditelja"
 
 #: includes/family_nav.php:224
 msgid "Step-Parent Family"
-msgstr ""
+msgstr "Porodica tasta i tašte"
 
 #: includes/family_nav.php:363
 msgid "Immediate Family"
-msgstr ""
+msgstr "Uža porodica"
 
 #: includes/media_reorder.php:37
 #: includes/media_tab_head.php:63
@@ -12465,35 +12465,35 @@ msgstr "utf8_slovenian_ci"
 #: includes/sort_tables_utf8.php:75
 #: includes/sort_tables_utf8.php:85
 msgid "(לא-ידוע)"
-msgstr ""
+msgstr "(לא ידוע)"
 
 #: includes/sort_tables_utf8.php:76
 #: includes/sort_tables_utf8.php:86
 msgid "(غير معروف)"
-msgstr ""
+msgstr "(غير معروف)"
 
 #: includes/sort_tables_utf8.php:77
 #: includes/sort_tables_utf8.php:87
 msgid "(άγνωστος/η)"
-msgstr ""
+msgstr "(άγνωστος/η)"
 
 #: includes/sort_tables_utf8.php:78
 #: includes/sort_tables_utf8.php:88
 msgid "(неопределено)"
-msgstr ""
+msgstr "(неопределено)"
 
 #: includes/sort_tables_utf8.php:79
 #: includes/sort_tables_utf8.php:89
 msgid "(未知)"
-msgstr ""
+msgstr "(未知)"
 
 #: includes/sort_tables_utf8.php:80
 msgid "(vô danh)"
-msgstr ""
+msgstr "(vô danh)"
 
 #: includes/sort_tables_utf8.php:90
 msgid "(không biết tuổi)"
-msgstr ""
+msgstr "(không biết tuổi)"
 
 #: includes/specialchars.php:56
 msgid "Czech"
@@ -12704,14 +12704,14 @@ msgstr ""
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
 msgid "Charts"
-msgstr ""
+msgstr "Grafikoni"
 
 #: includes/classes/class_menubar.php:517
 #: includes/classes/class_menubar.php:523
 #: includes/classes/class_menubar.php:545
 #: includes/classes/class_menubar.php:551
 msgid "Lists"
-msgstr ""
+msgstr "Liste"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
@@ -12721,7 +12721,7 @@ msgstr ""
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
 msgid "Reports"
-msgstr ""
+msgstr "Pregledi"
 
 #: includes/classes/class_menubar.php:826
 msgid "Printer-friendly Version"
@@ -12745,15 +12745,15 @@ msgstr ""
 
 #: includes/classes/class_menubar.php:1118
 msgid "Favorites"
-msgstr ""
+msgstr "Omiljene stranice"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
-msgstr ""
+msgstr "Dodaj u moje omiljene stranice"
 
 #: includes/classes/class_note.php:49
 msgid "…"
-msgstr ""
+msgstr "…"
 
 #: includes/classes/class_person.php:576
 #: includes/classes/class_person.php:633
@@ -12762,12 +12762,12 @@ msgstr ""
 
 #: includes/classes/class_person.php:760
 msgid "Family with Parents"
-msgstr ""
+msgstr "Porodica roditelja"
 
 #: includes/classes/class_person.php:779
 #: includes/classes/class_person.php:786
 msgid "Father's Family with "
-msgstr ""
+msgstr "Očeva porodica sa"
 
 #: includes/classes/class_person.php:780
 #: includes/classes/class_person.php:785
@@ -12776,11 +12776,11 @@ msgstr ""
 
 #: includes/classes/class_person.php:803
 msgid "Family with"
-msgstr ""
+msgstr "Porodica sa:"
 
 #: includes/classes/class_person.php:1836
 msgid "year"
-msgstr ""
+msgstr "godina"
 
 #: includes/classes/class_person.php:1840
 msgid "month"
@@ -12825,7 +12825,7 @@ msgstr ""
 #: includes/classes/class_stats.php:784
 #: includes/classes/class_stats.php:786
 msgid "Dead"
-msgstr ""
+msgstr "Ukupno umrlih"
 
 #: includes/classes/class_stats.php:1231
 msgid "Highest population"
@@ -12859,27 +12859,27 @@ msgstr ""
 #: includes/classes/class_stats.php:1921
 #: includes/classes/class_stats.php:3817
 msgid "birth"
-msgstr ""
+msgstr "rođenje"
 
 #: includes/classes/class_stats.php:1922
 #: includes/classes/class_stats.php:3818
 msgid "death"
-msgstr ""
+msgstr "smrt"
 
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
 msgid "marriage"
-msgstr ""
+msgstr "sklapanje braka"
 
 #: includes/classes/class_stats.php:1924
 #: includes/classes/class_stats.php:3820
 msgid "adoption"
-msgstr ""
+msgstr "usvojenje"
 
 #: includes/classes/class_stats.php:1925
 #: includes/classes/class_stats.php:3821
 msgid "burial"
-msgstr ""
+msgstr "sahrana"
 
 #: includes/classes/class_stats.php:1926
 #: includes/classes/class_stats.php:3822
@@ -12920,7 +12920,7 @@ msgstr ""
 
 #: includes/classes/class_treenav.php:169
 msgid "Show or hide multiple spouses"
-msgstr ""
+msgstr "pokaži ili sakrij više supruga"
 
 #: includes/controllers/descendancy_ctrl.php:226
 #: includes/controllers/descendancy_ctrl.php:313
@@ -12983,15 +12983,15 @@ msgstr "Edituj ime"
 
 #: includes/controllers/individual_ctrl.php:819
 msgid "Parent"
-msgstr ""
+msgstr "Roditelj"
 
 #: includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
-msgstr ""
+msgstr "Očuh/maćeha"
 
 #: includes/controllers/individual_ctrl.php:830
 msgid "Half-Sibling"
-msgstr ""
+msgstr "Polubraća/polusestre"
 
 #: includes/controllers/individual_ctrl.php:836
 #: includes/controllers/individual_ctrl.php:837
@@ -13048,7 +13048,7 @@ msgstr ""
 
 #: includes/controllers/search_ctrl.php:918
 msgid "to"
-msgstr ""
+msgstr "do"
 
 #: includes/controllers/search_ctrl.php:933
 msgid "Be sure to select at least one remote site."
@@ -13081,43 +13081,43 @@ msgstr ""
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "January"
-msgstr ""
+msgstr "januar"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "February"
-msgstr ""
+msgstr "februar"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "August"
-msgstr ""
+msgstr "august"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "September"
-msgstr ""
+msgstr "septembar"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "October"
-msgstr ""
+msgstr "oktobar"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "November"
-msgstr ""
+msgstr "novembar"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "December"
-msgstr ""
+msgstr "decembar"
 
 #: includes/extras/functions.pl.php:128
 #: includes/extras/functions.sl.php:113
@@ -13129,7 +13129,7 @@ msgstr ""
 #: includes/extras/functions.sl.php:114
 #: includes/functions/functions_date.php:83
 msgid "Stillborn"
-msgstr ""
+msgstr "Mrtvorođenče"
 
 #: includes/extras/functions.pl.php:148
 #: includes/extras/functions.sl.php:123
@@ -13243,7 +13243,7 @@ msgstr ""
 
 #: includes/functions/functions_charts.php:288
 msgid "Children"
-msgstr ""
+msgstr "Deca"
 
 #: includes/functions/functions_charts.php:293
 #, fuzzy
@@ -13258,11 +13258,11 @@ msgstr ""
 #: includes/functions/functions_charts.php:487
 #: includes/functions/functions_charts.php:514
 msgid "Family Group Information"
-msgstr ""
+msgstr "Grupirani podaci za porodicu"
 
 #: includes/functions/functions_charts.php:521
 msgid "No facts for this family."
-msgstr ""
+msgstr "Nema podataka za ovu porodicu."
 
 #: includes/functions/functions_charts.php:532
 #, fuzzy
@@ -13534,7 +13534,7 @@ msgstr ""
 
 #: includes/functions/functions_print.php:881
 msgid "For technical support or genealogy questions, please contact"
-msgstr ""
+msgstr "Za tehničku podršku i pitanja u vezi rodoslova kontakt je "
 
 #: includes/functions/functions_print.php:885
 msgid "For technical support and information contact"
@@ -13547,11 +13547,11 @@ msgstr ""
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
 msgid "Technical help contact"
-msgstr ""
+msgstr "Kontakt za tehničku podršku:"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
-msgstr ""
+msgstr "Beleška"
 
 #: includes/functions/functions_print.php:1330
 msgid "For more information contact"
@@ -13647,15 +13647,15 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:76
 msgid "Show only males."
-msgstr ""
+msgstr "Pokaži samo osobe muškog pola."
 
 #: includes/functions/functions_print_lists.php:78
 msgid "Show only females."
-msgstr ""
+msgstr "Pokaži samo osobe ženskog pola."
 
 #: includes/functions/functions_print_lists.php:80
 msgid "Show only persons of whom the gender is not known."
-msgstr ""
+msgstr "Pokaži samo osobe za koje se ne zna pol."
 
 #: includes/functions/functions_print_lists.php:83
 msgid "Show persons alive in the indicated year."
@@ -13672,7 +13672,7 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:86
 msgid "Alive "
-msgstr ""
+msgstr "Živi "
 
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
@@ -13681,7 +13681,7 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:88
 msgid "Dead "
-msgstr ""
+msgstr "Mrtvi "
 
 #: includes/functions/functions_print_lists.php:89
 #: includes/functions/functions_print_lists.php:475
@@ -13722,7 +13722,7 @@ msgstr ""
 #: includes/functions/functions_print_lists.php:102
 #: includes/functions/functions_print_lists.php:488
 msgid "Reset to the list defaults."
-msgstr ""
+msgstr "Početni položaj liste."
 
 #: includes/functions/functions_print_lists.php:394
 #: includes/functions/functions_print_lists.php:779
@@ -13748,7 +13748,7 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:468
 msgid "Both alive "
-msgstr ""
+msgstr "Oboje živi "
 
 #: includes/functions/functions_print_lists.php:469
 msgid "Show couples where only the female partner is deceased."
@@ -13756,7 +13756,7 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:470
 msgid "Widower"
-msgstr ""
+msgstr "Udovica"
 
 #: includes/functions/functions_print_lists.php:471
 msgid "Show couples where only the male partner is deceased."
@@ -13764,11 +13764,11 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:472
 msgid "Widow"
-msgstr ""
+msgstr "Udovac"
 
 #: includes/functions/functions_print_lists.php:474
 msgid "Both dead "
-msgstr ""
+msgstr "Oboje mrtvi "
 
 #: includes/functions/functions_print_lists.php:480
 msgid "Show couples with an unknown marriage date."
@@ -16260,7 +16260,7 @@ msgstr ""
 
 #: modules/googlemap/pedigree_map.php:740
 msgid "Birth:"
-msgstr ""
+msgstr "Rođen/a:"
 
 #: modules/googlemap/pedigree_map.php:842
 msgid "Zoom&nbsp;in"
@@ -16677,7 +16677,7 @@ msgstr ""
 #: modules/lightbox/functions/lb_indi_doors_0.php:55
 #: modules/lightbox/functions/lb_indi_doors_1.php:58
 msgid "Research Assistant"
-msgstr ""
+msgstr "Pomoć u istraživanju"
 
 #: modules/lightbox/functions/lightbox_print_media.php:132
 msgid "Photo"
@@ -16735,7 +16735,7 @@ msgstr "Obriši ovu osobu"
 
 #: modules/personal_facts/personal_facts.php:72
 msgid "Events of close relatives"
-msgstr ""
+msgstr "Događaji bliže rodbine"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
@@ -16760,15 +16760,15 @@ msgstr ""
 
 #: modules/relatives/relatives.php:161
 msgid "Add a wife to this family"
-msgstr ""
+msgstr "Dodaj suprugu ovoj porodici"
 
 #: modules/relatives/relatives.php:218
 msgid "Add marriage details"
-msgstr ""
+msgstr "Dodaj detalje sklapanja braka"
 
 #: modules/relatives/relatives.php:408
 msgid "Link this person to an existing family as a child"
-msgstr ""
+msgstr "Dodaj ovu osobu kao dete već upisanoj porodici"
 
 #: modules/relatives/relatives.php:415
 #, fuzzy
@@ -16777,7 +16777,7 @@ msgstr "Dodaj novu belešku"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
-msgstr ""
+msgstr "Dodaj ovu osobu kao supruga već upisanoj porodici"
 
 #: modules/relatives/relatives.php:435
 #, fuzzy
@@ -16786,7 +16786,7 @@ msgstr "Dodaj novu zajedničku belešku"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
-msgstr ""
+msgstr "Dadaj ovu osobu kao suprugu u već upisanu porodicu "
 
 #: modules/sitemap/admin-config.php:40
 msgid "Sitemap"
