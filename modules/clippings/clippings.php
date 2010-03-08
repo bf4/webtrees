@@ -118,12 +118,12 @@ class clippings_Sidebar extends Sidebar {
 				$root = GedcomRecord::getInstance($this->controller->pid);
 				if ($root && $root->canDisplayDetails()) 
 					$out .= '<a href="sidebar.php?sb_action=clippings&amp;add='.$root->getXref().'" class="add_cart">
-					<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['clippings']['small'].'" width="20" /> '.str_replace("#NAME#", PrintReady($root->getListName()), $pgv_lang["add_name_to_cart"]).'</a>';
+					<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['clippings']['small'].'" width="20" /> '.i18n::translate('Add %s to cart', $root->getListName()).'</a>';
 			}
 			else if ($this->controller->famid && !id_in_cart($this->controller->pid)) {
 				$fam = Family::getInstance($this->controller->famid);
 				if ($fam && $fam->canDisplayDetails()) {
-					$out .= '<a href="sidebar.php?sb_action=clippings&amp;add='.$fam->getXref().'" class="add_cart"> '.str_replace("#NAME#", PrintReady($fam->getFullName()), $pgv_lang["add_name_to_cart"]).'</a><br />';
+					$out .= '<a href="sidebar.php?sb_action=clippings&amp;add='.$fam->getXref().'" class="add_cart"> '.i18n::translate('Add %s to cart', $fam->getFullName()).'</a><br />';
 				}
 			}
 			$out .= '</div>';
