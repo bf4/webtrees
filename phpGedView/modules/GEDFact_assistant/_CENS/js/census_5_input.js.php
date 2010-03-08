@@ -129,7 +129,7 @@ var TTEditWksu        = "<?php echo i18n::translate('Weeks Unemployed - xx = Wee
 var HeaderMnsu        = "<?php echo i18n::translate('MnsU');?>";
 var TTEditMnsu        = "<?php echo i18n::translate('Months Unemployed - xx = Months unemployed during Census Year');?>";
 var HeaderHome        = "<?php echo i18n::translate('Home');?>";
-var TTEditHome        = "<?php echo $pgv_lang["tt_edit_Home"];?>";
+var TTEditHome        = "<?php echo i18n::translate('Home Ownership - x-x-x-xxxx = O/R-F/M-F/H-#### = Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number');?>";
 var HeaderSitu        = "<?php echo i18n::translate('Situ');?>";
 var TTEditSitu        = "<?php echo i18n::translate('Situation - 3 parameters - Diseases, Infimaties, Convict/Pauper etc');?>";
 var HeaderWar         = "<?php echo i18n::translate('War');?>";
