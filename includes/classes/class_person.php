@@ -546,7 +546,8 @@ class Person extends GedcomRecord {
 				$label .= '</div>';
 			}
 		}
-		if ($counter) $label .= '<div class="'.strrev($TEXT_DIRECTION).'">'.$pgv_lang['number_sign'].$counter.'</div>';
+		// I18N: This is an abbreviation for a number.  i.e. #7 means number 7
+		if ($counter) $label .= '<div class="'.strrev($TEXT_DIRECTION).'">'.i18n::translate('#%d', $counter).'</div>';
 		$label .= $this->label;
 		if ($gap!=0 && $counter<1) $label .= '<br />&nbsp;';
 		return $label;
