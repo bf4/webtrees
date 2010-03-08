@@ -123,12 +123,20 @@ if (!$success) {
 		<td class="optionbox">
 			<select id="cbRelationship" name="cbRelationship">
 				<?php
-				foreach (array('current_person', 'mother', 'father', 'husband', 'wife', 'son', 'daughter') as $rel) {
+					foreach (array(
+						'current_person'=>i18n::translate('Same as current'),
+						'mother'        =>i18n::translate('Mother'),
+						'father'        =>i18n::translate('Father'),
+						'husband'       =>i18n::translate('Husband'),
+						'wife'          =>i18n::translate('Wife'),
+						'son'           =>i18n::translate('Son'),
+						'daughter'      =>i18n::translate('Daughter')
+					) as $rel=>$display) {
 					echo '<option value="', $rel, '"';
 					if ($rel==$controller->form_cbRelationship) {
 						echo ' checked="checked"';
 					}
-					echo '>', $pgv_lang[$rel], '</option>';
+					echo '>', $display, '</option>';
 				}
 				?>
 			</select>
