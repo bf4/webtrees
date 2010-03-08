@@ -138,7 +138,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 				$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\">".PrintReady($ind->getFullName())."</a>".$ind->getSexImage();
 				$content .= "<div class=\"indent\">";
 				$content .= $yahrzeit['date']->Display(true);
-				$content .= ', '.str_replace("#year_var#", $yahrzeit['anniv'], $pgv_lang["year_anniversary"]);
+				$content .= ', '.i18n::translate('%s year anniversary', $yahrzeit['anniv']);
 				$content .= "</div>";
 			}
 		break;
