@@ -34,7 +34,7 @@ require_once PGV_ROOT.'includes/classes/class_tab.php';
 class personal_facts_Tab extends Tab {
 	
 	public function getContent() {
-		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $EXPAND_RELATIVES_EVENTS;
+		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_RELATIVES_EVENTS;
 		global $n_chil, $n_gchi, $n_ggch;
 		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE, $lang_short_cut;
 		global $NAV_FACTS;
