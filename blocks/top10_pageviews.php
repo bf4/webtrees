@@ -43,7 +43,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 	);
 
 function top10_pageviews($block=true, $config="", $side, $index) {
-	global $TBLPREFIX, $pgv_lang, $INDEX_DIRECTORY, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_COUNTER, $SHOW_SOURCES, $TEXT_DIRECTION;
+	global $TBLPREFIX, $INDEX_DIRECTORY, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_COUNTER, $SHOW_SOURCES, $TEXT_DIRECTION;
 
 	if (empty($config)) {
 		$config = $PGV_BLOCKS["top10_pageviews"]["config"];
@@ -122,7 +122,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 }
 
 function top10_pageviews_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS;
+	global $ctype, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["top10_pageviews"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["top10_pageviews"]["config"]["cache"];
 

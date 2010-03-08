@@ -273,19 +273,15 @@ class PedigreeControllerRoot extends BaseController {
 	 * @return string	the title of the page to go in the <title> tags
 	 */
 	function getPageTitle() {
-		global $pgv_lang, $GEDCOM;
-
-		$name = i18n::translate('unknown');
-		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
-		return $name." ".i18n::translate('Pedigree Tree');
+		return $this->getPersonName()." ".i18n::translate('Pedigree Tree');
 	}
 
 	function getPersonName() {
-		global $pgv_lang;
-
-		$name = i18n::translate('unknown');
-		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
-		return $name;
+		if (is_null($this->rootPerson)) {
+			return i18n::translate('unknown');
+		} else {
+			return $this->rootPerson->getFullName();
+		}
 	}
 
 	function adjust_subtree($index, $diff) {

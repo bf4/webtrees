@@ -253,7 +253,7 @@ class RemoteLinkController extends BaseController {
 	}
 
 	function addLink() {
-		global $pgv_lang, $GEDCOM;
+		global $GEDCOM;
 
 		switch ($this->form_location) {
 		case 'remote':

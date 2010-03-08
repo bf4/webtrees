@@ -53,15 +53,11 @@ $PGV_BLOCKS["getting_started_block"]["config"]		= array("cache"=>5);
 
 //-- function to print the gedcom block
 function getting_started_block($block = true, $config="", $side, $index) {
-	global $pgv_lang, $SHOW_COUNTER;
-
 	$id = "getting_started";
 	$title = i18n::translate('Get Started');
 	$content = i18n::translate('Choose one of these options to get started using PhpGedView');
 	$content .= '<ul>';
 	$content .= '<li style="padding: 5px;"><a class="imenu" href="editconfig_gedcom.php?source=upload_form">'.i18n::translate('Upload a GEDCOM file').'</a></li>';
-	// -- not read yet, need to design a new page for it
-	// $content .= '<li style="padding: 5px;"><a class="imenu" href="#">'.i18n::translate('Start entering data').'</a></li>';
 	$content .= '<li style="padding: 5px;"><a class="imenu" href="editconfig_gedcom.php?source=add_form">'.i18n::translate('Add a GEDCOM from a file location').'</a></li>';
 	$content .= '<li style="padding: 5px;"><a class="imenu" href="editgedcoms.php">'.i18n::translate('Manage GEDCOMs and edit Privacy').'</a></li>';
 	$content .= '<li style="padding: 5px;"><a class="imenu" href="useradmin.php">'.i18n::translate('User administration').'</a></li>';
