@@ -101,19 +101,17 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 		if ($tt>0) $software = printReady(trim($tmatch[1]));
 		else $software = trim($match[1]);
 		if (!empty($software)) {
-			$text = str_replace(array('#SOFTWARE#', '#CREATED_SOFTWARE#'), $software, $pgv_lang['gedcom_created_using']);
 			$tt = preg_match('/2 VERS (.*)/', $softrec, $tmatch);
 			if ($tt>0) $version = printReady(trim($tmatch[1]));
 			else $version='';
-			$text = str_replace(array('#VERSION#', '#CREATED_VERSION#'), $version, $text);
-			$content .= $text;
+			$content .= i18n::translate('This GEDCOM was created using <b>%s %s</b>', $software, $version);
 		}
 	}
 	if (preg_match('/1 DATE (.+)/', $head, $match)) {
 		if (empty($software)) {
-			$content.=str_replace(array('#DATE#', '#CREATED_DATE#'), $stats->gedcomDate(), $pgv_lang['gedcom_created_on']);
+			$content.=i18n::translate('This GEDCOM was created on <b>%s</b>', $stats->gedcomDate());
 		} else {
-			$content.=str_replace(array('#DATE#', '#CREATED_DATE#'), $stats->gedcomDate(), $pgv_lang['gedcom_created_on2']);
+			$content.=i18n::translate(' on <b>%s</b>', $stats->gedcomDate());
 		}
 	}
 
