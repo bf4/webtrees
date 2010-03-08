@@ -46,7 +46,7 @@ if (PGV_USE_LIGHTBOX) {
 
 echo '<table><tr><td valign="middle">';
 if ($view=="preview") {
-	echo '<h2>', str_replace('#PEDIGREE_GENERATIONS#', $PEDIGREE_GENERATIONS, $pgv_lang["gen_ancestry_chart"]) , ':';
+	echo '<h2>', i18n::translate('%s Generation Ancestry Chart', $PEDIGREE_GENERATIONS) , ':';
 } else {
 	echo '<h2>', i18n::translate('Ancestry Chart'), ':';
 }
