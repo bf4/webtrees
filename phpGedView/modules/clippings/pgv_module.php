@@ -31,10 +31,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 require_once(PGV_ROOT."includes/classes/class_module.php");
 require_once(PGV_ROOT."modules/clippings/clippings.php");
 
-// Load PGV embeding language file
-global $pgv_lang;
-
-
 class clippings_PGVModule extends PGVModule {
 	protected $name = 'clippings';
 	protected $description = 'Clippings Cart PGV Module';
@@ -74,7 +70,7 @@ class clippings_PGVModule extends PGVModule {
 	 */
 	public function &getMenu() { 
 		global $ENABLE_CLIPPINGS_CART;
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");

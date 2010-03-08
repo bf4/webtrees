@@ -92,7 +92,7 @@ class ClippingsControllerRoot extends BaseController {
 	}
 	//----------------beginning of function definitions for ClippingsControllerRoot
 	function init() {
-		global $PRIV_HIDE, $PRIV_PUBLIC, $ENABLE_CLIPPINGS_CART, $SCRIPT_NAME, $pgv_lang, $SERVER_URL, $CONTACT_EMAIL, $HOME_SITE_TEXT, $HOME_SITE_URL, $MEDIA_DIRECTORY;
+		global $PRIV_HIDE, $PRIV_PUBLIC, $ENABLE_CLIPPINGS_CART, $SCRIPT_NAME, $SERVER_URL, $CONTACT_EMAIL, $HOME_SITE_TEXT, $HOME_SITE_URL, $MEDIA_DIRECTORY;
 		global $GEDCOM, $CHARACTER_SET, $cart;
 
 		if (!isset ($ENABLE_CLIPPINGS_CART))
@@ -467,7 +467,7 @@ class ClippingsControllerRoot extends BaseController {
 	 */
 	function zip_cart()
 	{
-		global $INDEX_DIRECTORY,$pgv_lang;
+		global $INDEX_DIRECTORY;
 
 		switch ($this->filetype) {
 		case 'gedcom':
@@ -546,7 +546,7 @@ class ClippingsControllerRoot extends BaseController {
 	 * @param
 	 */
 	function add_clipping($clipping) {
-		global $cart, $pgv_lang, $SHOW_SOURCES, $MULTI_MEDIA, $GEDCOM;
+		global $cart, $SHOW_SOURCES, $MULTI_MEDIA, $GEDCOM;
 		if (($clipping['id'] == false) || ($clipping['id'] == ""))
 		return false;
 		
