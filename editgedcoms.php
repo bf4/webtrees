@@ -181,7 +181,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 					print "<span class=\"error\">".i18n::translate('This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href="readme.txt"><b>readme.txt</b></a> file to fix this problem')." :</span>";
 					print "<br /><a href=\"$url\">$url</a>";
 				}
-				else print "<br /><b>".i18n::translate('#GEDCOM# cannot be downloaded.', get_gedcom_setting($ged_id, 'path'))."</b><br />";
+				else print "<br /><b>".i18n::translate('%s cannot be downloaded.', get_gedcom_setting($ged_id, 'path'))."</b><br />";
 			}
 		}
 		else print "<span class=\"error\">".i18n::translate('File not found.')."</span>";
