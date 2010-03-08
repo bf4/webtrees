@@ -39,7 +39,6 @@ padding:0px;
 background:#f41063;
 color: #ffffff;
 }
-
 /*	Define TopLink Color				*/
 
 #toplinks {
@@ -101,9 +100,6 @@ body,
 .subheaders {
 color:#7d7373;
 }
-
-/*		Begin Colors layout				 */
-/*		TopLinks Layout Begin			 */
 
 #toplinks {
 width:100%;
@@ -207,11 +203,13 @@ color: red;
 
 /*   End Edit Facts  */
 
-.facts_label .submenu a,
-.flyout, .flyout a, 
-.flyoutrtl, .flyoutrtl a {
+.facts_label .submenu a {
 background: #fff;
 color: #000;
+}
+
+#researchlog_content a {
+color: #fff;
 }
 
 tfoot label  {
@@ -603,18 +601,24 @@ width:99%;
 background:#f0f9ff;
 border:1px solid #999;
 padding:3px;
+margin-bottom: 8px;
+margin-top: 5px;
 }
 
 .person_boxF {
 background:#fff0f0;
 border:1px solid #ff2080;
 padding:3px;
+margin-bottom: 8px;
+margin-top: 5px;
 }
 
 .person_boxNN {
 background:#fff;
 border:1px dashed #CCC;
 padding:3px;
+margin-bottom: 8px;
+margin-top: 5px;
 }
 
 .person_box:target, 
@@ -1352,7 +1356,7 @@ background: #dfeeff;
 }
 
 .change_new {
-border: solid #0000ff 2px;
+border: solid #999 2px;
 }
 
 .change_old {
@@ -1555,19 +1559,6 @@ background:#0A246A;
 color:#FFF;
 }
 
-.flyout { 
-text-align: left;
-margin-top: -20px;
-right: 210px;
-padding: 3px;
-}
-
-.flyoutrtl { 
-text-align: right;
-margin-top: -20px;
-left: 210px;
-padding: 3px;
-}
 .sublinks_cell .submenuitem {
 background: #fff;
 } 
@@ -1596,6 +1587,7 @@ width: 8em;
 } 
 
 .statistics_chart{
+text-align: center;
 } 
 
 .gchart{
@@ -1606,3 +1598,43 @@ border: 1px solid #999;
 padding-top: 12px;
 text-align: center;
 } 
+/* ca branch */
+
+dl {
+	margin-bottom:20px;
+}
+
+dt {
+	float:left; 
+	font-weight:bold;
+	margin-right:10px;
+	clear:both; 
+}
+
+#indi_details dt:after { content: ":"; }
+
+#facts_content dd {
+	float:left;
+	width: 70%;
+}
+
+#indi_mainimage, #nameparts1, #nameparts2, #nameparts3, #nameparts4, #sex, #mainfacts {
+	float:left;
+	margin-right:15px;
+}
+
+#hitcounter {
+	display: block;
+	width: 100%;
+	margin-bottom:10px;
+}
+
+.clearfloat {
+	clear: both;
+}
+
+#indi_details {
+	display: block;
+	width: 100%;
+}
+
