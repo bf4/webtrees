@@ -43,7 +43,7 @@ class individuals_PGVModule extends PGVModule {
 		return 'individuals';
 	}
 
-	public function getName() {
+	public function getTitle() {
 		return i18n::translate('Individuals');
 	}
 
