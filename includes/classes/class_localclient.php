@@ -54,7 +54,7 @@ class LocalClient extends ServiceClient {
 	 * @param string $remoteid	the id of the record to get
 	 */
 	function getRemoteRecord($remoteid) {
-		$rec = find_gedcom_record($remoteid, $this->gedfile);
+		$rec = find_gedcom_record($remoteid, PGV_GED_ID);
 		$rec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $rec);
 		return $rec;
 	}
@@ -68,7 +68,7 @@ class LocalClient extends ServiceClient {
 	 */
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
 		//-- get the record from the database
-		$gedrec = find_gedcom_record($xref, $this->gedfile);
+		$gedrec = find_gedcom_record($xref, PGV_GED_ID);
 		$gedrec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $gedrec);
 		$gedrec = $this->checkIds($gedrec);
 		if (empty($localrec)) return $gedrec;
