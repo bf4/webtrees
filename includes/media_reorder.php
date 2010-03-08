@@ -38,7 +38,7 @@ require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 	print "&nbsp --- &nbsp;" . i18n::translate('Click a row, then drag-and-drop to re-order media ');
 
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
-	global $pgv_lang, $pgv_changes, $view;
+	global $pgv_changes, $view;
 	global $MEDIATYPE, $pgv_changes;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;

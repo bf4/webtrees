@@ -298,7 +298,6 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getMarriageDate() {
-		global $pgv_lang;
 		if (!$this->canDisplayDetails()) {
 			return new GedcomDate('');
 		}
