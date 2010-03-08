@@ -126,7 +126,6 @@ $menubar = new MenuBar();
 <?php } ?>
 	</tr>
 	</table>
-<?php require './includes/accesskeyHeaders.php'; ?>
 <?php 
     global $controller; 
     if (method_exists($controller, 'getOtherMenu')) {     
