@@ -2050,7 +2050,7 @@ function get_faq_data($id='') {
 }
 
 function delete_fact($linenum, $pid, $gedrec) {
-	global $linefix, $pgv_lang;
+	global $linefix;
 
 	if (!empty($linenum)) {
 		if ($linenum==0) {

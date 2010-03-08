@@ -745,7 +745,7 @@ class SearchControllerRoot extends BaseController {
 
 	function printResults() {
 		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
-		global $GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $global_facts;
+		global $GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $global_facts;
 		//-- all privacy settings must be global if we are going to load up privacy files
 		global $SHOW_DEAD_PEOPLE,$SHOW_LIVING_NAMES,$SHOW_SOURCES,$MAX_ALIVE_AGE,$USE_RELATIONSHIP_PRIVACY,$MAX_RELATION_PATH_LENGTH;
 		global $CHECK_MARRIAGE_RELATIONS,$PRIVACY_BY_YEAR,$PRIVACY_BY_RESN,$SHOW_PRIVATE_RELATIONSHIPS,$person_privacy,$user_privacy;
@@ -990,7 +990,6 @@ class SearchControllerRoot extends BaseController {
 	 * in the query string usually from input values in a form i.e. 'action', 'query', 'showasso' etc.
 	 */
 	function printPageResultsLinks($inputFieldNames, $totalResults, $resultsPerPage) {
-		global $pgv_lang;
 		print "<br /><table align='center'><tr><td>".i18n::translate('Result Page')." &nbsp;&nbsp;";
 		// Prints the '<<' linking to the previous page if it's not on the first page
 		if ($this->resultsPageNum > 0) {

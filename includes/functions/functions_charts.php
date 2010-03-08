@@ -302,7 +302,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 		print "<span class='nowrap font12'>";
 		print_help_link("add_child", "qm", "add_child_to_family");
 		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . i18n::translate('Add a child to this family') . "</a>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', $pgv_lang["son"     ])."]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', i18n::translate('Son'     ))."]</a>";
 		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', i18n::translate('Daughter'))."]</a>";
 		print "</span>";
 		print "<br /><br />";
@@ -466,7 +466,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
  * @param int $sosa optional child sosa number
  */
 function print_family_facts(&$family, $sosa = 0) {
-	global $pgv_lang, $pbwidth, $pbheight, $view;
+	global $pbwidth, $pbheight, $view;
 	global $nonfacts;
 	global $TEXT_DIRECTION, $GEDCOM, $SHOW_ID_NUMBERS;
 	global $show_changes, $pgv_changes;
@@ -580,7 +580,7 @@ function print_family_facts(&$family, $sosa = 0) {
  * @param string $gparid optional gd-parent ID (descendancy booklet)
  */
 function print_sosa_family($famid, $childid, $sosa, $label="", $parid="", $gparid="", $personcount="1") {
-	global $pgv_lang, $pbwidth, $pbheight, $view;
+	global $pbwidth, $pbheight, $view;
 
 	if ($view != "preview") print "<hr />";
 	print "\r\n\r\n<p style='page-break-before:always' />\r\n";
@@ -677,7 +677,7 @@ function ancestry_array($rootid, $maxgen=0) {
  * @param string $dir arrow direction 0=left 1=right 2=up 3=down (default=2)
  */
 function print_url_arrow($id, $url, $label, $dir=2) {
-	global $pgv_lang, $view;
+	global $view;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $TEXT_DIRECTION;
 
@@ -895,7 +895,7 @@ function find_last_spouse($pid) {
  */
 function print_cousins($famid, $personcount="1") {
 	global $show_full, $bheight, $bwidth;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 	global $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 

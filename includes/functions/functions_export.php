@@ -96,7 +96,7 @@ function reformat_record_export($rec) {
 * Create a header for a (newly-created or already-imported) gedcom file.
 */
 function gedcom_header($gedfile) {
-	global $CHARACTER_SET, $pgv_lang, $TBLPREFIX;
+	global $CHARACTER_SET, $TBLPREFIX;
 
 	$ged_id=get_id_from_gedcom($gedfile);
 
@@ -255,7 +255,7 @@ function convert_media_path($rec, $path, $slashes) {
  *			'slashes':		what folder separators apply to media file paths?  (forward, backward)
  */
 function export_gedcom($gedcom, $gedout, $exportOptions) {
-	global $GEDCOM, $pgv_lang, $CHARACTER_SET;
+	global $GEDCOM, $CHARACTER_SET;
 	global $TBLPREFIX;
 
 	// Temporarily switch to the specified GEDCOM
@@ -384,7 +384,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
  *			'slashes':		what folder separators apply to media file paths?  (forward, backward)
  */
 function export_gramps($gedcom, $gedout, $exportOptions) {
-	global $GEDCOM, $pgv_lang;
+	global $GEDCOM;
 	global $TBLPREFIX;
 
 	// Temporarily switch to the specified GEDCOM
@@ -457,7 +457,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 }
 
 function um_export($proceed) {
-	global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang;
+	global $INDEX_DIRECTORY, $TBLPREFIX;
 
 	// Get user array and create authenticate.php
 	if (($proceed=="export") || ($proceed=="exportovr")) {
