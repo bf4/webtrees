@@ -34,8 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.2.2
-$pgv_lang["TYPE__notinDB"]			= "Ei tietokannassa";
-$pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
+// UNUSED??	$pgv_lang["TYPE__notinDB"]			= "Ei tietokannassa";
+// UNUSED??	$pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
 
 
 // Added in VERSION 4.1.6
@@ -106,14 +106,14 @@ $pgv_lang["lb_help"] 		 	= "Albumin ohje";
 $pgv_lang["lightbox"]			= "Albumi";
 $pgv_lang["showmenu"] 		= "Näytä menu:";
 
-$pgv_lang["TYPE__other"] 	 	= "Muu"; 
-$pgv_lang["TYPE__footnotes"]	= "Alaviite"; 
+// UNUSED??	$pgv_lang["TYPE__other"] 	 	= "Muu"; 
+// UNUSED??	$pgv_lang["TYPE__footnotes"]	= "Alaviite"; 
 
-$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
-$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
-$pgv_lang["ROW_TYPE__census"] 		= "Väestölaskenta";
-$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
-$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
+// UNUSED??	$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+// UNUSED??	$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+// UNUSED??	$pgv_lang["ROW_TYPE__census"] 		= "Väestölaskenta";
+// UNUSED??	$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+// UNUSED??	$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
 $pgv_lang["census_text"]  	 	= "\"Nämä CENSUS kuvat on saatu \"Kansallisarkistosta\", joka hallitsee alkuperäisiä tiedostoja, ";
 $pgv_lang["census_text"] 		.= "ja on pantu esille tänne heidän suostumuksellaan edellyttäen, ettei niitä luvatta käytetä aupallisesti hyväksi.\".\"\n";

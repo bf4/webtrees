@@ -59,14 +59,14 @@ $pgv_lang["lb_ss_SpeedAdvice"]          = "secondes";
 $pgv_lang["lb_help"]                    = "Aide d'Album";
 $pgv_lang["lightbox"]                   = "Album";
 $pgv_lang["showmenu"]                   = "Afficher Menu:";
-$pgv_lang["TYPE__other"]                = "Autres";
-$pgv_lang["TYPE__footnotes"]            = "Notes de pied-de-page";
+// UNUSED??	$pgv_lang["TYPE__other"]                = "Autres";
+// UNUSED??	$pgv_lang["TYPE__footnotes"]            = "Notes de pied-de-page";
 
-$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
-$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
-$pgv_lang["ROW_TYPE__census"] 		= "Recensement";
-$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
-$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
+// UNUSED??	$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+// UNUSED??	$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+// UNUSED??	$pgv_lang["ROW_TYPE__census"] 		= "Recensement";
+// UNUSED??	$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+// UNUSED??	$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
 $pgv_lang["lb_edit_details"]            = "Editer détails";
 $pgv_lang["lb_view_details"]            = "Afficher détails";
