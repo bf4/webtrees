@@ -39,7 +39,7 @@ class sources_tab_PGVModule extends PGVModule {
 	protected $_tab = null;
 	
 	public function getName() {
-		return 'sources';
+		return 'sources_tab';
 	}
 
 	public function getTitle() {
