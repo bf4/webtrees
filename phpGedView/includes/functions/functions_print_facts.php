@@ -584,7 +584,7 @@ function print_media_links($factrec, $level, $pid='') {
 	global $pgv_lang, $SEARCH_SPIDER, $view;
 	global $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
-	global $GEDCOM, $SHOW_ID_NUMBERS;
+	global $GEDCOM, $SHOW_ID_NUMBERS, $MEDIA_TYPES;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 	if (!$MULTI_MEDIA) return;
 	$nlevel = $level+1;
@@ -679,9 +679,12 @@ function print_media_links($factrec, $level, $pid='') {
 				$ttype = preg_match("/".($nlevel+1)." TYPE (.*)/", $row["m_gedrec"], $match);
 				if ($ttype>0) {
 					$mediaType = $match[1];
-					$varName = "TYPE__".strtolower($mediaType);
-					if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
-					else $mediaType = i18n::translate('Other');
+					$varName = strtolower($mediaType);
+					if (array_key_exists($varName, $MEDIA_TYPES)) {
+						$mediaType = $MEDIA_TYPES[$varName];
+					} else {
+						$mediaType = i18n::translate('Other');
+					}
 					echo "\n\t\t\t<br /><span class=\"label\">", i18n::translate('Type'), ": </span> <span class=\"field\">$mediaType</span>";
 				}
 				//echo "</span>";
@@ -1421,7 +1424,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 function print_main_media_row($rtype, $rowm, $pid) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION, $SERVER_URL;
 	global $SHOW_ID_NUMBERS, $GEDCOM, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
-	global $SEARCH_SPIDER;
+	global $SEARCH_SPIDER, $MEDIA_TYPES;
 
 	if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 		//echo $rowm['m_media'], " no privacy ";
@@ -1548,9 +1551,12 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$ttype = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
 		if ($ttype>0) {
 			$mediaType = trim($match[1]);
-			$varName = "TYPE__".strtolower($mediaType);
-			if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
-			else $mediaType = i18n::translate('Other');
+			$varName = strtolower($mediaType);
+			if (array_key_exists($varName, $MEDIA_TYPES)) {
+				$mediaType = $MEDIA_TYPES[$varName];
+			} else {
+				$mediaType = i18n::translate('Other');
+			}
 			echo "\n\t\t\t<br /><span class=\"label\">", i18n::translate('Type'), ": </span> <span class=\"field\">$mediaType</span>";
 		}
 		echo "</span>";
