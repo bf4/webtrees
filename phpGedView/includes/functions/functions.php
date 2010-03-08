@@ -181,8 +181,6 @@ function update_config(&$text, $var, $value) {
 
 // Convert a file upload PHP error code into user-friendly text
 function file_upload_error_text($error_code) {
-	global $pgv_lang;
-
 	switch ($error_code) {
 	case UPLOAD_ERR_OK:
 		return i18n::translate('File successfully uploaded');
@@ -199,9 +197,6 @@ function file_upload_error_text($error_code) {
 		return i18n::translate('PHP failed to write to disk');
 	case UPLOAD_ERR_EXTENSION:
 		return i18n::translate('PHP blocked file by extension');
-	default:
-		$pgv_lang['global_num1'] = $error_code; // Make this available to print_text()
-		return print_text('file_unknown_err', 0, 1);
 	}
 }
 
@@ -231,8 +226,6 @@ function get_config_file($ged_id=PGV_GED_ID) {
  * @param string $checkVar
  */
 function write_access_option($checkVar) {
-	global $pgv_lang;
-
 	echo "<option value=\"PGV_PRIV_PUBLIC\"";
 	echo $checkVar==PGV_PRIV_PUBLIC ? " selected=\"selected\"" : '';
 	echo ">", i18n::translate('Show to public'), "</option>\n";
@@ -328,7 +321,7 @@ function load_privacy_file($ged_id=PGV_GED_ID) {
  * @return mixed	returns true on success, or returns an array of error messages on failure
  */
 function update_site_config($newconfig, $return = false) {
-	global $pgv_lang, $COMMIT_COMMAND;
+	global $COMMIT_COMMAND;
 
 	$errors = array();
 
