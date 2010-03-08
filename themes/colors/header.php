@@ -118,8 +118,8 @@ else if ($view!='simple'){?>
 			<form action="search.php" method="post">
 				<input type="hidden" name="action" value="general" />
 				<input type="hidden" name="topsearch" value="yes" />
-				<input type="text" class="formbut" accesskey="<?php echo $pgv_lang["accesskey_search"]?>" name="query" size="15" value="<?php echo $pgv_lang['search']?>" onfocus="if (this.value == '<?php echo $pgv_lang['search']?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo $pgv_lang['search']?>';" />
-				<input type="image" src="<?php echo $PGV_IMAGE_DIR ?>/go.gif" align="top" title="<?php echo $pgv_lang['search']?>" />
+				<input type="text" class="formbut" name="query" size="15" value="<?php echo i18n::translate('Search')?>" onfocus="if (this.value == '<?php echo i18n::translate('Search')?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search')?>';" />
+				<input type="image" src="<?php echo $PGV_IMAGE_DIR ?>/go.gif" align="top" title="<?php echo i18n::translate('Search')?>" />
 			</form>
 			</div>
 			<div align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>">
