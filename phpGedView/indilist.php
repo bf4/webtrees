@@ -260,7 +260,7 @@ if ($showList) {
 				}
 				if ($show_all=='no') {
 					echo '<h2 class="center">';
-					print PrintReady(str_replace("#surname#", check_NN($surname), $pgv_lang['indis_with_surname']));
+					print i18n::translate('Individuals with surname %s', check_NN($surname));
 					echo '</h2>';
 				}
 				echo '<div class="alpha_index"><p class="center">';
@@ -271,7 +271,7 @@ if ($showList) {
 		}
 		if ($showList) {
 			if ($legend && $show_all=='no') {
-				$legend=PrintReady(str_replace("#surname#", check_NN($legend), $pgv_lang['indis_with_surname']));
+				$legend=i18n::translate('Individuals with surname %s', check_NN($legend));
 			}
 			$indis=get_indilist_indis($surname, $alpha, $falpha, $SHOW_MARRIED_NAMES, false, PGV_GED_ID);
 			print_indi_table($indis, $legend);
