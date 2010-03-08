@@ -1066,7 +1066,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $lang_short_cut, $LANGUAGE;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
 	global $action, $event_add;
-	global $CensDate;
+	global $CensDate, $MEDIA_TYPES;
 	
 if (substr($tag, 0, strpos($tag, "CENS"))) {
 	$event_add="census_add";
@@ -1492,23 +1492,11 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		echo ">", i18n::translate('unknown'), "</option>\n</select>\n";
 	}
 	else if ($fact == "TYPE" && $level == '3') {
-		//-- Build array of currently defined values for this Media Fact
-		foreach ($pgv_lang as $varname => $typeValue) {
-			if (substr($varname, 0, 6) == "TYPE__") {
-				if ($varname != "TYPE__other") $type[strtolower(substr($varname, 6))] = $typeValue;
-			}
-		}
-		//-- Sort the array into a meaningful order
-		array_flip($type);
-		asort($type);
-		array_flip($type);
-		//-- Add "Other" at the end of the list
-		$type["other"] = i18n::translate('Other');
 		//-- Build the selector for the Media "TYPE" Fact
 		echo "<select tabindex=\"", $tabkey, "\" name=\"text[]\">";
 		if ($value=='') echo "<option selected=\"selected\" value=\"\" > ", i18n::translate('Choose: '), " </option>";
 		$selectedValue = strtolower($value);
-		foreach ($type as $typeName => $typeValue) {
+		foreach ($MEDIA_TYPES as $typeName => $typeValue) {
 			echo "<option value=\"", $typeName, "\" ";
 			if ($selectedValue == $typeName) echo "selected=\"selected\" ";
 			echo "> ", $typeValue, " </option>";

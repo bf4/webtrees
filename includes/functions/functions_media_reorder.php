@@ -97,10 +97,13 @@ function media_reorder_row($rtype, $rowm, $pid) {
 		//print media info
 		$ttype2 = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
 		if ($ttype2>0) {
-			$mediaType = trim($match[1]);
-			$varName = "TYPE__".strtolower($mediaType);
-			if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
-//		print "\n\t\t\t<br /><span class=\"label\">".i18n::translate('Type').": </span> <span class=\"field\">$mediaType</span>";
+			$varName = strtolower($match[1]);
+			if (array_key_exists($varName, $MEDIA_TYPES)) {
+				$mediaType = $MEDIA_TYPES[$varName];
+			} else {
+				$mediaType = i18n::translate('Other');
+			}
+			print "<br /><span class=\"label\">".i18n::translate('Type').": </span> <span class=\"field\">$mediaType</span>";
 		}
 
 		print "\n" . "</td><td>&nbsp;</td>" . "\n";

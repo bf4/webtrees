@@ -34,6 +34,28 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CONFIG_DATA_PHP', '');
 
+// Type attribute of a media object
+$MEDIA_TYPES=array(
+	'audio'      =>i18n::translate('Audio'),
+	'book'       =>i18n::translate('Book'),
+	'card'       =>i18n::translate('Card'),
+	'certificate'=>i18n::translate('Certificate'),
+	'coat'       =>i18n::translate('Coat of Arms'),
+	'document'   =>i18n::translate('Document'),
+	'electronic' =>i18n::translate('Electronic'),
+	'fiche'      =>i18n::translate('Microfiche'),
+	'film'       =>i18n::translate('Microfilm'),
+	'magazine'   =>i18n::translate('Magazine'),
+	'manuscript' =>i18n::translate('Manuscript'),
+	'map'        =>i18n::translate('Map'),
+	'newspaper'  =>i18n::translate('"Newspaper'),
+	'photo'      =>i18n::translate('Photo'),
+	'tombstone'  =>i18n::translate('Tombstone'),
+	'video'      =>i18n::translate('Video'),
+	'painting'   =>i18n::translate('Painting'),
+	'other'      =>i18n::translate('Other'),
+);
+
 // TEMP tags - LDS temple codes
 $TEMPLE_CODES = array(
 	'ABA'  =>'Aba, Nigeria',

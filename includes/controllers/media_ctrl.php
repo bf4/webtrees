@@ -363,7 +363,7 @@ class MediaControllerRoot extends IndividualController{
 	* @return array
 	*/
 	function getFacts($includeFileName=true) {
-		global $pgv_changes, $GEDCOM, $pgv_lang;
+		global $pgv_changes, $GEDCOM, $pgv_lang, $MEDIA_TYPES;
 
 		$ignore = array("TITL","FILE");
 		if ($this->show_changes) {
@@ -376,17 +376,17 @@ class MediaControllerRoot extends IndividualController{
 		sort_facts($facts);
 //		if ($includeFileName) $facts[] = new Event("1 FILE ".$this->mediaobject->getFilename());
 		$mediaType = $this->mediaobject->getMediatype();
-		if (isset($pgv_lang["TYPE__".$mediaType])) $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__".$mediaType]);
+		if (array_key_exists($mediaType, $MEDIA_TYPES)) $facts[] = new Event("1 TYPE ".$MEDIA_TYPE[$mediaType]]);
 		else $facts[] = new Event("1 TYPE ".i18n::translate('Other'));
 
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes)) {
 			$newrec = find_updated_record($this->pid, PGV_GED_ID);
 			$newmedia = new Media($newrec);
 			$newfacts = $newmedia->getFacts($ignore);
-			if ($includeFileName) $newfacts[] = new Event("1 TYPE ".$pgv_lang["TYPE__".$mediaType]);
+			if ($includeFileName) $newfacts[] = new Event("1 TYPE ".$MEDIA_TYPES[$mediaType]);
 			$newfacts[] = new Event("1 FORM ".$newmedia->getFiletype());
 			$mediaType = $newmedia->getMediatype();
-			if (isset($pgv_lang["TYPE__".$mediaType])) $newfacts[] = new Event("1 TYPE ".$mediaType);
+			if (array_key_exists($mediaType, $MEDIA_TYPES)) $newfacts[] = new Event("1 TYPE ".$mediaType);
 			else $newfacts[] = new Event("1 TYPE ".i18n::translate('Other'));
 			//-- loop through new facts and add them to the list if they are any changes
 			//-- compare new and old facts of the Personal Fact and Details tab 1

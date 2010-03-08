@@ -306,9 +306,6 @@ ignore_user_abort(false);
 if (empty($PGV_MEMORY_LIMIT)) $PGV_MEMORY_LIMIT = '32M';
 @ini_set('memory_limit', $PGV_MEMORY_LIMIT);
 
-// Application configuration data - things that aren't (yet) user-editable
-require PGV_ROOT.'includes/config_data.php';
-
 //--load common functions
 require  PGV_ROOT.'includes/functions/functions.php';
 require  PGV_ROOT.'includes/functions/functions_name.php';
@@ -469,6 +466,9 @@ unset($locale, $translate);
 
 require PGV_ROOT.'includes/classes/class_i18n.php';
 i18n::init();
+
+// Application configuration data - things that aren't (yet) user-editable
+require PGV_ROOT.'includes/config_data.php';
 
 // Tell the database to sort/compare using the language's preferred collatation settings
 try {

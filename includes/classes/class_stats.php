@@ -852,7 +852,7 @@ class stats {
 	function totalMediaUnknown() {return $this->_totalMediaType('unknown');}
 
 	function chartMedia($params=null) {
-		global $pgv_lang, $TEXT_DIRECTION, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $pgv_lang, $TEXT_DIRECTION, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y, $MEDIA_TYPES;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
@@ -900,9 +900,9 @@ class stats {
 		asort($media);
 		foreach ($media as $type=>$count) {
 			$mediaCounts[] = round(100 * $count / $tot, 0);
-			if (isset($pgv_lang['TYPE__'.$type])) {
-				$mediaTypes .= $pgv_lang['TYPE__'.$type].' - '.$count.'|';
-				$chart_title .= $pgv_lang['TYPE__'.$type].' ['.$count.'], ';
+			if (array_key_exists($type, $MEDIA_TYPES)) {
+				$mediaTypes .= $MEDIA_TYPES[$type].' - '.$count.'|';
+				$chart_title .= $MEDIA_TYPES[$type].' ['.$count.'], ';
 			} else {
 				$mediaTypes .= i18n::translate('unknown').' - '.$count.'|';
 				$chart_title .= i18n::translate('unknown').' ['.$count.'], ';

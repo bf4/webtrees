@@ -400,22 +400,10 @@ function openPic(filename, width, height) {
 			<table class="width100">
 				<tr>
 				<?php
-
-				//-- Build array of currently defined values for the Media Type
-				foreach ($pgv_lang as $varname => $typeValue) {
-					if (substr($varname, 0, 6) == "TYPE__") {
-						if ($varname != "TYPE__other") $type[strtolower(substr($varname, 6))] = $typeValue;
-					}
-				}
-				//-- Sort the array into a meaningful order
-				array_flip($type);
-				asort($type);
-				array_flip($type);
-				//-- Add "Other" at the end
-				$type["other"] = i18n::translate('Other');
 				//-- Build the list of checkboxes
 				$i = 0;
-				foreach ($type as $typeName => $typeValue) {
+				global $MEDIA_TYPES;
+				foreach ($MEDIA_TYPES as $typeName => $typeValue) {
 					$i++;
 					if ($i > 3) {
 						$i = 1;
