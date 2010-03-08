@@ -118,7 +118,7 @@ if ($FORMAT=="json") {
 * @return Array of string
 */
 function autocomplete_INDI($FILTER, $OPTION) {
-	global $pgv_lang, $MAX_ALIVE_AGE;
+	global $MAX_ALIVE_AGE;
 
 	// when adding ASSOciate $OPTION may contain :
 	// current INDI/FAM [, current event date]

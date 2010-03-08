@@ -752,7 +752,7 @@ if (isset($content) && $content==1) {
 	$ble = false;
 	?>
 	<h2 class="center"><?php echo i18n::translate('Statistics'); ?></h2>
-	<?php global $pgv_lang, $TEXT_DIRECTION;
+	<?php global $TEXT_DIRECTION;
 	if ($TEXT_DIRECTION=='rtl') $align='right';
 	else $align='left';	
 	?>

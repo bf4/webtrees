@@ -35,8 +35,6 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 
 function write_access_option_numeric($checkVar) {
-	global $pgv_lang;
-
 	echo "<option value=\"".PGV_PRIV_PUBLIC."\"";
 	echo ($checkVar==PGV_PRIV_PUBLIC) ? " selected=\"selected\"" : '';
 	echo ">".i18n::translate('Show to public')."</option>\n";

@@ -48,7 +48,7 @@ $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	);
 
 function print_charts_block($block = true, $config="", $side, $index) {
-	global $PGV_BLOCKS, $pgv_lang, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID, $PEDIGREE_FULL_DETAILS;
+	global $PGV_BLOCKS, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID, $PEDIGREE_FULL_DETAILS;
 	global $show_full, $bwidth, $bheight;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
@@ -176,7 +176,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 }
 
 function print_charts_block_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $PEDIGREE_ROOT_ID, $ENABLE_AUTOCOMPLETE;
+	global $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $PEDIGREE_ROOT_ID, $ENABLE_AUTOCOMPLETE;
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
 	if (empty($config["rootId"])) $config["rootId"] = $PEDIGREE_ROOT_ID;
 	if (empty($config['details'])) $config['details'] = 'no';

@@ -408,8 +408,8 @@ if ($level > 0) {
 		usort($mysourcelist, array('GedcomRecord', 'Compare'));
 		// echo each of the tables
 		print_indi_table($myindilist,   i18n::translate('Individuals').' @ '.$title);
-		print_fam_table ($myfamlist,    $pgv_lang['families'   ].' @ '.$title);
-		print_sour_table($mysourcelist, $pgv_lang['sources'    ].' @ '.$title);
+		print_fam_table ($myfamlist,    i18n::translate('Families'   ).' @ '.$title);
+		print_sour_table($mysourcelist, i18n::translate('Sources'    ).' @ '.$title);
 	}
 }
 

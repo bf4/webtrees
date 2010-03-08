@@ -89,8 +89,6 @@ if (!isset($MAX_ALIVE_AGE)) $MAX_ALIVE_AGE = 120;
  * @param string $checkVar
  */
 function write_yes_no($checkVar) {
-	global $pgv_lang;
-
 	print "<option";
 	if ($checkVar == false) print " selected=\"selected\"";
 	print " value=\"no\">";
@@ -111,8 +109,6 @@ function write_yes_no($checkVar) {
  * @param string $outputVar	error message style
  */
 function search_ID_details($checkVar, $outputVar) {
-	global $pgv_lang;
-
 	$record=GedcomRecord::getInstance($checkVar);
 	if ($record) {
 		echo $record->format_list('span');

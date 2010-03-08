@@ -301,7 +301,7 @@ print "<br />";
 print_footer();
 
 function print_td_person($n) {
-	global $treeid, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
+	global $treeid, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE, $PGV_IMAGES;
 	global $showids, $showthumbs;
 
