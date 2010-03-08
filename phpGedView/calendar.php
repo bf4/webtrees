@@ -585,7 +585,7 @@ function calendar_fact_text($fact, $show_places) {
 	global $pgv_lang, $TEXT_DIRECTION;
 	$text=i18n::translate($fact['fact']).' - '.$fact['date']->Display(true, "", array());
 	if ($fact['anniv']>0)
-		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.str_replace('#year_var#', $fact['anniv'], $pgv_lang['year_anniversary']).')</span>';
+		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.i18n::translate('%s year anniversary', $fact['anniv']).')</span>';
 	if ($show_places && !empty($fact['plac']))
 		$text.=' - '.$fact['plac'];
 	return $text;
