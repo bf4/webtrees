@@ -222,7 +222,7 @@ if ($action != "save" && $action != "toggleActive") {
 	}
 	echo '<td class="facts_label" >';
 	print_help_link("original_lang_name", "qm");
-	echo str_replace("#D_LANGNAME#", $pgv_lang[$d_LangName], $pgv_lang["original_lang_name"]);
+	echo i18n::translate('Original name of language in %s', $pgv_lang[$d_LangName]);
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_original_lang_name" size="30" value="', $v_original_lang_name, '" />';
