@@ -155,10 +155,10 @@ i18n::translate('&nbsp;') = "";
 $SortedBlocks = array_flip($SortedBlocks);
 foreach($SortedBlocks as $key => $b) {
 	$temp = $PGV_BLOCKS[$b]["descr"];
-	i18n::translate('&nbsp;') .= "<tr valign='top'>";
-	i18n::translate('&nbsp;') .= "<td>".$PGV_BLOCKS[$b]["name"]."</td>";
-	i18n::translate('&nbsp;') .= "<td>#pgv_lang[$temp]#</td>";
-	i18n::translate('&nbsp;') .= "</tr>";
+	$pgv_lang["block_summary_table"] .= "<tr valign='top'>";
+	$pgv_lang["block_summary_table"] .= "<td>".$PGV_BLOCKS[$b]["name"]."</td>";
+	$pgv_lang["block_summary_table"] .= "<td>#pgv_lang[$temp]#</td>";
+	$pgv_lang["block_summary_table"] .= "</tr>";
 }
 $SortedBlocks = array_flip($SortedBlocks);
 
@@ -201,7 +201,7 @@ if ($ctype=="user") {
 	print_simple_header(get_gedcom_setting(PGV_GED_ID, 'title'));
 }
 
-$GEDCOM_TITLE=PrintReady(get_gedcom_setting(PGV_GED_ID, 'title'));  // needed in $pgv_lang["rss_descr"]
+$GEDCOM_TITLE=PrintReady(get_gedcom_setting(PGV_GED_ID, 'title'));
 
 ?>
 <script language="JavaScript" type="text/javascript">
