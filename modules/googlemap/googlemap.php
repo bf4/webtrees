@@ -73,10 +73,10 @@ class googlemap_Tab extends Tab {
 	public function canLoadAjax() { return true; }
 
 	public function getContent() {
-		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $LANGUAGE;
 		global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
-		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
+		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD, $GOOGLEMAP_PH_CONTROLS;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
 
@@ -252,7 +252,6 @@ function print_fact_place_map($factrec) {
 
 
 function print_address_structure_map($factrec, $level) {
-	global $pgv_lang;
 	global $WORD_WRAPPED_NOTES;
 	global $POSTAL_CODE;
 
@@ -474,7 +473,7 @@ function get_lati_long_placelocation ($place) {
 }
 
 function setup_map() {
-	global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $pgv_lang;
+	global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM;
 	if (!$GOOGLEMAP_ENABLED) {
 		return;
 	}
@@ -521,7 +520,6 @@ function tool_tip_text($marker) {
 }
 
 function create_indiv_buttons() {
-	global $pgv_lang;
 	?>
 	<style type="text/css">
 	#map_type
@@ -643,7 +641,7 @@ function create_indiv_buttons() {
 
 function build_indiv_map($indifacts, $famids) {
 	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
-	global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
+	global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 	global $GOOGLEMAP_ENABLED, $TBLPREFIX, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 
 	if (!$GOOGLEMAP_ENABLED) {

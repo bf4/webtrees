@@ -33,14 +33,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 require PGV_ROOT.'modules/googlemap/defaultconfig.php';
 
-loadLangFile('pgv_lang, pgv_confighelp, pgv_help, googlemap:lang, googlemap:help_text');
-
 if (isset($_REQUEST['action'])) {
 	$action  = $_REQUEST['action'];
 }
 
 function print_level_config_table($level) {
-	global $pgv_lang, $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX;
+	global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX;
 	global $GM_POSTFIX, $GM_PRE_POST_MODE, $GM_MAX_NOF_LEVELS, $i;
 ?>
 	<div id="level<?php echo $level;?>" style="display:<?php if ($GM_MAX_NOF_LEVELS >= $level) {echo "block";} else {echo "none";}?>">

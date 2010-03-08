@@ -30,8 +30,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lightbox:lang, lightbox:help_text");
-
 $help = safe_GET("help");
 
 print_simple_header(i18n::translate('Configuration help'));

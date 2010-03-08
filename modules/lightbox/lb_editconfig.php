@@ -33,12 +33,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $pgv_lang, $pid, $GEDCOM ;
+global $pid, $GEDCOM ;
 
 $pid=safe_get('pid');
 $action = safe_POST("action");
 
-loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lightbox:lang, lightbox:help_text");
 print_header(i18n::translate('Lightbox-Album Configuration'));
 
 require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';

@@ -168,7 +168,7 @@ function set_levelm($level, $parent) {
 }
 
 function create_map() {
-	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION, $pgv_lang;
+	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION;
 	// create the map
 	//<!-- start of map display -->
 	echo "\n<br /><br />\n";
@@ -217,7 +217,7 @@ function check_place($place_names, $place) {
 }
 
 function print_how_many_people($level, $parent) {
-	global $GEDCOM, $pgv_lang, $stats;
+	global $GEDCOM, $stats;
 
 	$place_count_indi = 0;
 	$place_count_fam = 0;
@@ -239,7 +239,7 @@ function print_how_many_people($level, $parent) {
 }
 
 function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $placelevels, $lastlevel=false){
-	global $GOOGLEMAP_COORD, $GOOGLEMAP_PH_MARKER, $GM_DISP_SHORT_PLACE, $GM_DISP_COUNT, $pgv_lang;
+	global $GOOGLEMAP_COORD, $GOOGLEMAP_PH_MARKER, $GM_DISP_SHORT_PLACE, $GM_DISP_COUNT;
 	if (($place2['lati'] == NULL) || ($place2['long'] == NULL) || (($place2['lati'] == "0") && ($place2['long'] == "0"))) {
 		echo "var icon_type = new GIcon();\n";
 			echo "	icon_type.image = \"modules/googlemap/images/marker_yellow.png\";\n";
@@ -396,7 +396,6 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 }
 
 function create_buttons($numfound, $level) {
-	global $pgv_lang;
 	?>
 	<style type="text/css">
 	#map_type
@@ -439,7 +438,7 @@ function create_buttons($numfound, $level) {
 }
 
 function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $place_names) {
-	global $GOOGLEMAP_MAP_TYPE, $GM_MAX_NOF_LEVELS, $GOOGLEMAP_PH_WHEEL, $GOOGLEMAP_PH_CONTROLS, $pgv_lang;
+	global $GOOGLEMAP_MAP_TYPE, $GM_MAX_NOF_LEVELS, $GOOGLEMAP_PH_WHEEL, $GOOGLEMAP_PH_CONTROLS;
 	?>
 	<?php echo create_buttons($numfound, $level);?>
 	<script type="text/javascript">

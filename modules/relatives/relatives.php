@@ -41,7 +41,6 @@ class relatives_Tab extends Tab {
 	* @return html table
 	*/
 	function printFamilyHeader($famid, $label) {
-		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_ID_NUMBERS, $SEARCH_SPIDER;
 	?>
 		<table>
@@ -65,7 +64,7 @@ class relatives_Tab extends Tab {
 	* @return html table rows
 	*/
 	function printParentsRows(&$family, &$people, $type) {
-		global $personcount, $pgv_changes, $pgv_lang;
+		global $personcount, $pgv_changes;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $lang_short_cut, $LANGUAGE;
 		$elderdate = "";
@@ -302,7 +301,7 @@ class relatives_Tab extends Tab {
 	}
 	
 	public function getContent() {
-		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
+		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full, $personcount;
 
