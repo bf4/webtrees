@@ -35,7 +35,7 @@ class sources_tab_Tab extends Tab {
 	protected $sourceCount = null;
 
 	public function getContent() {
-		global $CONTACT_EMAIL, $pgv_lang, $FACT_COUNT;
+		global $CONTACT_EMAIL, $FACT_COUNT;
 		global $SHOW_LEVEL2_NOTES;
 		global $NAV_SOURCES;
 		
