@@ -36,12 +36,10 @@ class clippings_Sidebar extends Sidebar {
 	var $clippingCtrl;
 	
 	public function getTitle() {
-		global $pgv_lang;
 		return i18n::translate('Family Tree Clippings Cart');
 	}
 
 	public function getCartList() {
-		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $cart, $GEDCOM;
 		$out ='<ul>';
@@ -94,7 +92,6 @@ class clippings_Sidebar extends Sidebar {
 	}
 	public function getContent() {
 		require_once PGV_ROOT.'modules/clippings/clippings_ctrl.php';
-		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $cart, $GEDCOM;
 
@@ -132,7 +129,7 @@ class clippings_Sidebar extends Sidebar {
 	}
 
 	public function askAddOptions(&$person) {
-		global $pgv_lang,$MAX_PEDIGREE_GENERATIONS;
+		global $MAX_PEDIGREE_GENERATIONS;
 		$out = "<b>".$person->getFullName()."</b>";
 		$out .= PGV_JS_START;
 		$out .= 'function radAncestors(elementid) {var radFamilies=document.getElementById(elementid);radFamilies.checked=true;}
@@ -201,7 +198,7 @@ class clippings_Sidebar extends Sidebar {
 	}
 	
 	public function downloadForm() {
-		global $pgv_lang, $TEXT_DIRECTION;
+		global $TEXT_DIRECTION;
 		$controller = $this->clippingCtrl;
 		$out = PGV_JS_START;
 		$out .= 'function cancelDownload() {

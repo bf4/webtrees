@@ -93,8 +93,6 @@ class plugin extends base_plugin {
 	}
 
 	function getOptionsForm() {
-		global $pgv_lang;
-
 		return
 			parent::getOptionsForm().
 			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Surname Option').'</td>'.
