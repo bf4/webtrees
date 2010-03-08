@@ -123,7 +123,7 @@ switch ($action) {
 				$newuserName=getUserFullName($user_id);
 
 				$mail_body = "";
-				$mail_body .= str_replace("#user_fullname#", $newuserName, $pgv_lang["mail04_line01"]) . "\r\n\r\n";
+				$mail_body .= i18n::translate('Hello %s ...', $newuserName) . "\r\n\r\n";
 				$mail_body .= i18n::translate('A new password was requested for your user name.') . "\r\n\r\n";
 				$mail_body .= i18n::translate('User name') . ": " . $user_name . "\r\n";
 
@@ -136,11 +136,11 @@ switch ($action) {
 				else $mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH;
 
 				require_once PGV_ROOT.'includes/functions/functions_mail.php';
-				pgvMail(get_user_setting($user_id, 'email'), $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail04_subject"]), $mail_body);
+				pgvMail(get_user_setting($user_id, 'email'), $PHPGEDVIEW_EMAIL, i18n::translate('Data request at %s', PGV_SERVER_NAME.PGV_SCRIPT_PATH), $mail_body);
 
 				?>
 				<table class="center facts_table">
-				<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print str_replace("#user[email]#", $user_name, $pgv_lang["pwreqinfo"]);?></td></tr>
+				<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print i18n::translate('Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>%s</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data\'s security.', $user_name);?></td></tr>
 				</table>
 				<?php
 				AddToLog("Password request was sent to user: ".$user_name);
@@ -417,8 +417,8 @@ switch ($action) {
 					else $fullName = $user_firstname." ".$user_lastname;
 
 					$mail_body = "";
-					$mail_body .= str_replace("#user_fullname#", $fullName, $pgv_lang["mail01_line01"]) . "\r\n\r\n";
-					$mail_body .= str_replace("#user_email#", $user_email, str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail01_line02"])) . "  ";
+					$mail_body .= i18n::translate('Hello %s ...', $fullName) . "\r\n\r\n";
+					$mail_body .= i18n::translate('A request was received at %s to create a PhpGedView account with your email address %s.', PGV_SERVER_NAME.PGV_SCRIPT_PATH, $user_email) . "  ";
 					$mail_body .= i18n::translate('Information about the request is shown under the link below.') . "\r\n\r\n";
 					$mail_body .= i18n::translate('Please click on the following link and fill in the requested data to confirm your request and email address.') . "\r\n\r\n";
 					if ($TEXT_DIRECTION=="rtl") {
@@ -434,7 +434,7 @@ switch ($action) {
 					$mail_body .= i18n::translate('If you didn\'t request an account, you can just delete this message.') . "  ";
 					$mail_body .= i18n::translate('You won\'t get any more email from this site, because the account request will be deleted automatically after seven days.') . "\r\n";
 					require_once PGV_ROOT.'includes/functions/functions_mail.php';
-					pgvMail($user_email, $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail01_subject"]), $mail_body);
+					pgvMail($user_email, $PHPGEDVIEW_EMAIL, i18n::translate('Your registration at %s', PGV_SERVER_NAME.PGV_SCRIPT_PATH), $mail_body);
 
 					// switch language to webmaster settings
 					$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
@@ -442,7 +442,7 @@ switch ($action) {
 
 					$mail_body = "";
 					$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
-					$mail_body .= str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail02_line02"]) . "\r\n\r\n";
+					$mail_body .= i18n::translate('A prospective user registered himself with PhpGedView at %s.', PGV_SERVER_NAME.PGV_SCRIPT_PATH) . "\r\n\r\n";
 					$mail_body .= i18n::translate('User name') . " " . $user_name . "\r\n";
 					if ($NAME_REVERSE) {
 						$mail_body .= i18n::translate('Last Name') . " " . $user_lastname . "\r\n\r\n";
@@ -459,7 +459,7 @@ switch ($action) {
 					$message = array();
 					$message["to"]=$WEBMASTER_EMAIL;
 					$message["from"]=$user_email;
-					$message["subject"] = str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, str_replace("#user_email#", $user_email, $pgv_lang["mail02_subject"]));
+					$message["subject"] = i18n::translate('New registration at %s', PGV_SERVER_NAME.PGV_SCRIPT_PATH);
 					$message["body"] = $mail_body;
 					$message["created"] = $time;
 					$message["method"] = $SUPPORT_METHOD;
@@ -470,10 +470,10 @@ switch ($action) {
 					if ($LANGUAGE != $user_language) loadLanguage($user_language, true);
 					?>
 					<table class="center facts_table">
-						<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print str_replace("#user_fullname#", $user_firstname." ".$user_lastname, $pgv_lang["thankyou"]);?><br /><br />
+						<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print i18n::translate('Hello %s ...<br />Thank you for your registration.', $user_firstname." ".$user_lastname); ?><br /><br />
 						<?php
-						if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print str_replace("#user_email#", $user_email, $pgv_lang["pls_note06"]);
-						else print str_replace("#user_email#", $user_email, $pgv_lang["pls_note06a"]);
+						if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print i18n::translate('We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password.', $user_email);
+						else print i18n::translate('We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password.', $user_email);
 						?>
 						</td></tr>
 					</table>
@@ -543,7 +543,7 @@ switch ($action) {
 		print "<table class=\"center facts_table wrap ".$TEXT_DIRECTION."\">";
 		print "<tr><td class=\"topbottombar\">".i18n::translate('User verification')."</td></tr>";
 		print "<tr><td class=\"optionbox\">";
-		print str_replace("#user_name#", $user_name, $pgv_lang["pls_note08"]);
+		print i18n::translate('The data for the user <b>%s</b> was checked.', $user_name);
 		if ($user_id) {
 			$pw_ok = (get_user_password($user_id) == crypt($user_password, get_user_password($user_id)));
 			$hc_ok = (get_user_setting($user_id, 'reg_hashcode') == $user_hashcode);
@@ -563,7 +563,7 @@ switch ($action) {
 
 				$mail_body = "";
 				$mail_body .= i18n::translate('Hello Administrator ...') . "\r\n\r\n";
-				$mail_body .= str_replace(array("#newuser[username]#", "#newuser[fullname]#"), array($user_name, getUserFullName($user_id)), $pgv_lang["mail03_line02"]) . "\r\n\r\n";
+				$mail_body .= i18n::translate('User %s (%s) has confirmed his request for an account.', $user_name, getUserFullName($user_id)) . "\r\n\r\n";
 				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= i18n::translate('Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site.') . "\r\n";
 				else $mail_body .= i18n::translate('You do not have to take any action; the user can now login.') . "\r\n";
 
@@ -578,7 +578,7 @@ switch ($action) {
 				$message = array();
 				$message["to"]=$WEBMASTER_EMAIL;
 				$message["from"]=$PHPGEDVIEW_EMAIL;
-				$message["subject"] = str_replace("#SERVER_NAME#", PGV_SERVER_NAME.PGV_SCRIPT_PATH, $pgv_lang["mail03_subject"]);
+				$message["subject"] = i18n::translate('New user at %s', PGV_SERVER_NAME.PGV_SCRIPT_PATH);
 				$message["body"] = $mail_body;
 				$message["created"] = $time;
 				$message["method"] = $SUPPORT_METHOD;
