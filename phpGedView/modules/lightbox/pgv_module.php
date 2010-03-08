@@ -3,7 +3,7 @@ require_once("includes/classes/class_module.php");
 require_once("modules/lightbox/lightbox.php");
 
 // Load PGV embeding language file
-global $language_settings, $LANGUAGE, $pgv_lang;
+global $language_settings, $LANGUAGE;
 
 // Load other language file if needed
 if (isset($LANGUAGE)) {

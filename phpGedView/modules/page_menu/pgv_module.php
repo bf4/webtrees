@@ -62,7 +62,7 @@ class page_menu_PGVModule extends PGVModule {
 	 * @return Menu
 	 */
 	public function &getMenu() { 
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		global $controller;
 
 		$menu = null;

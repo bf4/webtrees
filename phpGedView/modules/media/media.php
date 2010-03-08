@@ -36,7 +36,7 @@ class media_Tab extends Tab {
 	protected $mediaCount = null;
 	
 	public function getContent() {
-		global $CONTACT_EMAIL, $pgv_lang, $MULTI_MEDIA;
+		global $CONTACT_EMAIL, $MULTI_MEDIA;
 		global $NAV_MEDIA;
 		
 		$out = "<span class=\"subheaders\">".$this->getName()."</span>";

@@ -38,7 +38,7 @@
 <center>
 
 <?php
-global $pgv_lang, $pid, $GEDCOM ;
+global $pid, $GEDCOM ;
 global $flvVideo, $SERVER_URL;
 $flvVideo="../../".decrypt(safe_GET('flvVideo'));
 $preview="";

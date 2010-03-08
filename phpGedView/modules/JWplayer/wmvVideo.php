@@ -39,7 +39,7 @@
 <center>
 
 <?php
-global $pgv_lang, $pid, $GEDCOM ;
+global $pid, $GEDCOM ;
 global $wmvVideo, $SERVER_URL;
 $wmvVideo=decrypt(safe_GET('wmvVideo'));
 ?>
