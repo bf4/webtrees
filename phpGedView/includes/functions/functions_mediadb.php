@@ -104,7 +104,7 @@ function real_path($path) {
 * @return boolean Specify whether we succeeded to create the media and thumbnail folder
 */
 function check_media_structure() {
-	global $MEDIA_DIRECTORY, $pgv_lang;
+	global $MEDIA_DIRECTORY;
 
 	// Check if the media directory is not a .
 	// If so, do not try to create it since it does exist
@@ -681,7 +681,6 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 */
 function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $MEDIA_EXTERNAL;
-	global $pgv_lang;
 
 	if (empty($filename) || ($MEDIA_EXTERNAL && isFileExternal($filename)))
 		return $filename;
@@ -866,7 +865,7 @@ function get_media_folders() {
 * process the form for uploading media files
 */
 function process_uploadMedia_form() {
-	global $pgv_lang, $TEXT_DIRECTION;
+	global $TEXT_DIRECTION;
 	global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_THUMBS, $MEDIATYPE;
 	global $thumbnail, $whichFile1, $whichFile2;
 
@@ -993,7 +992,7 @@ function process_uploadMedia_form() {
 */
 function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 	global $AUTO_GENERATE_THUMBS, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
-	global $pgv_lang, $TEXT_DIRECTION;
+	global $TEXT_DIRECTION;
 
 	$mediaFolders = get_media_folders();
 
@@ -1124,7 +1123,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 * @param int    $line  The line number in the GEDCOM record where this media item belongs
 */
 function show_media_form($pid, $action = "newentry", $filename = "", $linktoid = "", $level = 1, $line = 0) {
-	global $pgv_lang, $TEXT_DIRECTION, $WORD_WRAPPED_NOTES, $ADVANCED_NAME_FACTS;
+	global $TEXT_DIRECTION, $WORD_WRAPPED_NOTES, $ADVANCED_NAME_FACTS;
 	global $pgv_changes, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
 	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH, $NO_UPDATE_CHAN;
 
@@ -1544,7 +1543,7 @@ function findImageSize($file) {
 
 function PrintMediaLinks($links, $size = "small") {
 	;
-	global $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang;
+	global $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
 
 	if (count($links) == 0)
 		return false;
