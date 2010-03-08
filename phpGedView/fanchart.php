@@ -425,7 +425,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
 echo "<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"".$cellwidth."px\" valign=\"top\">";
-if ($view == "preview") echo "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_fan_chart"]) . ":";
+if ($view == "preview") echo "<h2>" . i18n::translate('%s Generation Circle Diagram', $PEDIGREE_GENERATIONS) . ":";
 else echo "<h2>" . i18n::translate('Circle Diagram') . ":";
 echo "<br />".PrintReady($name);
 if ($addname != "") echo "<br />" . PrintReady($addname);
