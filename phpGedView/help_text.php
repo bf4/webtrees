@@ -1972,7 +1972,7 @@ case '_FA12':
 
 case '_FA13':	
 	// I18N: This is the GEDCOM label for "Fact 13"
-	$title=i18n::translate('_FA12');
+	$title=i18n::translate('_FA13');
 	$text='';
 	break;
 
