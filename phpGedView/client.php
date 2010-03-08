@@ -416,7 +416,6 @@ case 'uploadmedia':
 			$filename = $MEDIA_DIRECTORY.$_FILES['mediafile']['name'];
 			$thumbnail = $MEDIA_DIRECTORY."thumbs/".$_FILES['mediafile']['name'];
 			generate_thumbnail($filename, $thumbnail);
-			//if (!$thumbgenned) $error .= "ERROR 19: ".$pgv_lang["thumbgen_error"].$filename;
 		}
 	}
 	if (isset($_FILES['thumbnail'])) {
