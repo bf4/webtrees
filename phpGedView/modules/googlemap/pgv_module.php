@@ -2,13 +2,6 @@
 require_once("includes/classes/class_module.php");
 require_once("modules/googlemap/googlemap.php");
 
-// Load PGV embeding language file
-global $language_settings, $LANGUAGE, $pgv_lang;
-require_once 'modules/googlemap/languages/lang.en.php';
-// Load other language file if needed
-if (isset($LANGUAGE))
-if($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists("modules/googlemap/languages/lang.{$language_settings[$LANGUAGE]['lang_short_cut']}.php")){require_once "modules/googlemap/languages/lang.{$language_settings[$LANGUAGE]['lang_short_cut']}.php";}
-
 class googlemap_PGVModule extends PGVModule {
 	protected $name = 'googlemap';
 	protected $description = 'Adds a tab to the individual page which maps the events of an individual and their close relatives on a Google map.';

@@ -39,8 +39,6 @@ if (file_exists('modules/googlemap/config.php')) {
 	require 'modules/googlemap/config.php';
 }
 
-loadLangFile('pgv_lang, pgv_confighelp, pgv_help, googlemap:lang, googlemap:help_text');
-
 print_header(i18n::translate('GoogleMap Configuration'));
 
 if (PGV_USER_IS_ADMIN) { ?>

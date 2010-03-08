@@ -33,8 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lightbox:lang, lightbox:help_text");
-
 if (PGV_USER_IS_ADMIN) { ?>
    <tr>
 	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Lightbox-Album Configuration'); ?></td>

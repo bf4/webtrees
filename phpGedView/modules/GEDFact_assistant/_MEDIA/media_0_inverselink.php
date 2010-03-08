@@ -68,8 +68,6 @@ if (!empty($linktoid)) $paramok = displayDetailsById($linktoid);
 
 if ($action == "choose" && $paramok) {
 
-global $pgv_lang;
-
 	?>
 	<script language="JavaScript" type="text/javascript">
 	<!--
