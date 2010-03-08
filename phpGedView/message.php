@@ -190,7 +190,7 @@ if ($action=="compose") {
 		$lang_temp = "lang_name_".get_user_setting($to_user_id, 'language');
 		$touserName = getUserFullName($to_user_id);
 		print "<tr><td></td><td>".i18n::translate('This message will be sent to %s', "<b>".$touserName."</b>")."<br />";
-		print i18n::translate('This user prefers to receive messages in %s', "<b>".$pgv_lang[$lang_temp]."</b>")."</td></tr>\n";
+		print i18n::translate('This user prefers to receive messages in %s', "<b>".$lang_temp."</b>")."</td></tr>\n";
 	}
 
 	if (!PGV_USER_ID){

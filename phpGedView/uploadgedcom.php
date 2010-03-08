@@ -786,7 +786,7 @@ if ($startimport == "true") {
 	 * @param long $FILE_SIZE	the size of the file
 	 */
 	function setup_progress_bar($FILE_SIZE) {
-		global $pgv_lang, $ged, $timelimit;
+		global $ged, $timelimit;
 		?>
 		<script type="text/javascript">
 		<!--

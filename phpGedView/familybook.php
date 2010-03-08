@@ -55,7 +55,7 @@ $name  =$person->getFullName();
 
 function print_descendency($pid, $count) {
 	global $show_spouse, $dgenerations, $bwidth, $bheight, $bhalfheight;
-	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full, $pgv_lang;
+	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full;
 	if ($count>=$dgenerations) return 0;
 	print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
 	print "<tr>";
@@ -329,7 +329,7 @@ function print_person_pedigree($pid, $count) {
 }
 function print_family_book($pid, $descent)
 {
-	global $generations, $dgenerations, $pgv_lang, $firstrun;
+	global $generations, $dgenerations, $firstrun;
 	if ($descent==0) return;
 		$famids = find_sfamily_ids($pid);
 		if (count($famids)>0 || empty($firstrun)) {
