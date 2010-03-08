@@ -58,7 +58,7 @@ define('PGV_SORT_TABLES_UTF8_PHP', '');
  */
 
 global $DICTIONARY_SORT, $LANGUAGE;
-global $UCDiacritWhole, $LCDiacritWhole, $unknownNN, $unknownPN, $pgv_lang;
+global $UCDiacritWhole, $LCDiacritWhole, $unknownNN, $unknownPN;
 global $UTF8_ranges, $UTF8_numbers, $UTF8_brackets, $UTF8_LC_letters;
 
 if (!isset($DICTIONARY_SORT[$LANGUAGE])) $DICTIONARY_SORT[$LANGUAGE] = false;

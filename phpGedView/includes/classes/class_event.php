@@ -291,7 +291,7 @@ class Event {
 	 * @param boolean $anchor	whether to add anchor to date and place
 	 */
 	function print_simple_fact($return=false, $anchor=false) {
-		global $pgv_lang, $SHOW_PEDIGREE_PLACES, $ABBREVIATE_CHART_LABELS;
+		global $SHOW_PEDIGREE_PLACES, $ABBREVIATE_CHART_LABELS;
 
 		if (!$this->canShow()) return "";
 		$data = "";

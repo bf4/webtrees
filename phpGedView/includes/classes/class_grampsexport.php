@@ -86,7 +86,6 @@ class GrampsExport {
  * The methods adds all the root elements and appends them to a DOMDocument.
  */
 	function begin_xml() {
-		global $pgv_lang; //, $eventsArray, $dom, $ePeople, $this->eFams, $eSources, $ePlaces, $eObject;
 		$user = PGV_USER_NAME;
 
 		$this->dom = new DomDocument("1.0", "UTF-8");

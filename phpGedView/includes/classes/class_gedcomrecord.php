@@ -451,7 +451,7 @@ class GedcomRecord {
 	// ['list'] = a version of the name as might appear in lists, e.g. 'van Gogh, Vincent' or 'Unknown, John'
 	// ['sort'] = a sortable version of the name (not for display), e.g. 'Gogh, Vincent' or '@N.N., John'
 	protected function _getAllNames($fact='!', $level=1) {
-		global $pgv_lang, $WORD_WRAPPED_NOTES;
+		global $WORD_WRAPPED_NOTES;
 
 		if (is_null($this->_getAllNames)) {
 			$this->_getAllNames=array();
@@ -598,7 +598,6 @@ class GedcomRecord {
 
 	// Get the three variants of the name
 	function getFullName() {
-		global $pgv_lang;
 		if ($this->canDisplayName()) {
 			$tmp=$this->getAllNames();
 			return $tmp[$this->getPrimaryName()]['full'];
@@ -612,7 +611,6 @@ class GedcomRecord {
 		return $tmp[$this->getPrimaryName()]['sort'];
 	}
 	function getListName() {
-		global $pgv_lang;
 		if ($this->canDisplayName()) {
 			$tmp=$this->getAllNames();
 			return $tmp[$this->getPrimaryName()]['list'];

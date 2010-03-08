@@ -42,7 +42,7 @@ class GEWebService extends GrampsExport
  * @return GrampsXML for the person
  */
 function create_person($personRec = "", $personID = "") {
-		global $pgv_lang, $eRoot;
+		global $eRoot;
 		if (!isset($this->dom))
 		{
 	     $this->dom = new DomDocument("1.0", "UTF-8");
