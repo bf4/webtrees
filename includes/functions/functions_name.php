@@ -84,7 +84,7 @@ function strip_prefix($lastname){
  * @return string
  */
 function check_NN($names) {
-	global $pgv_lang, $UNDERLINE_NAME_QUOTES;
+	global $UNDERLINE_NAME_QUOTES;
 	global $unknownNN, $unknownPN;
 
 	$fullname = '';
