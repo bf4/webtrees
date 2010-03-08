@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-07 22:49-0000\n"
+"POT-Creation-Date: 2010-03-08 18:55-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -49,10 +49,9 @@ msgstr "Du har ikke tilgang til"
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
-#: addremotelink.php:274
-#, fuzzy
+#: addremotelink.php:282
 msgid "Close Window"
-msgstr "Lukk automatisk vindu for redigering"
+msgstr "Lukk vinduet"
 
 #: addmedia.php:192
 msgid "Media file already exists."
@@ -62,7 +61,7 @@ msgstr "Mediafilen finnes fra før."
 #: addmedia.php:211
 #: addmedia.php:224
 #: client.php:414
-#: client.php:424
+#: client.php:423
 msgid "There was an error uploading your file."
 msgstr "Det oppstod en FEIL under henting (opplasting) av filen din."
 
@@ -115,141 +114,137 @@ msgstr "Du har valgt et eksternt nettsted."
 
 #: addremotelink.php:75
 #: addremotelink.php:85
-#: addremotelink.php:183
+#: addremotelink.php:191
 msgid "Site"
 msgstr "Nettsted"
 
 #: addremotelink.php:80
-#, fuzzy
 msgid "Database ID"
-msgstr "Database-vert"
+msgstr "GEDCOM-ID"
 
 #: addremotelink.php:121
 #: addsearchlink.php:74
 msgid "Relationship to current person"
 msgstr "Tilknytning til nåværende person"
 
-#: addremotelink.php:140
+#: addremotelink.php:127
+#: addsearchlink.php:77
+msgid "Same as current"
+msgstr "Samme som nåværende"
+
+#: addremotelink.php:128
+#: addsearchlink.php:78
+msgid "Mother"
+msgstr "Mor"
+
+#: addremotelink.php:129
+#: addsearchlink.php:79
+msgid "Father"
+msgstr "Far"
+
+#: addremotelink.php:130
+#: addsearchlink.php:80
+msgid "Husband"
+msgstr "Ektemann"
+
+#: addremotelink.php:131
+#: addsearchlink.php:81
+msgid "Wife"
+msgstr "Hustru"
+
+#: addremotelink.php:132
+#: addsearchlink.php:82
+msgid "Son"
+msgstr "Sønn"
+
+#: addremotelink.php:133
+#: addsearchlink.php:83
+msgid "Daughter"
+msgstr "Datter"
+
+#: addremotelink.php:148
 msgid "Site Location"
 msgstr "Plassering"
 
-#: addremotelink.php:150
+#: addremotelink.php:158
 msgid "Local site"
 msgstr "Lokalt nettsted"
 
-#: addremotelink.php:158
-#: addremotelink.php:188
+#: addremotelink.php:166
+#: addremotelink.php:196
 msgid "Existing remote site"
 msgstr "Eksisterende fjerntjener"
 
-#: addremotelink.php:163
+#: addremotelink.php:171
 msgid "New remote site"
 msgstr "Annet nettsted"
 
-#: addremotelink.php:173
+#: addremotelink.php:181
 msgid "Person ID"
 msgstr "Lokal-ID"
 
-#: addremotelink.php:202
+#: addremotelink.php:210
 msgid "Type in a new site."
 msgstr "Skriv inn navnet på det nye nettstedet."
 
-#: addremotelink.php:205
-#: addremotelink.php:227
+#: addremotelink.php:213
+#: addremotelink.php:235
 msgid "Title:"
 msgstr "Tittel:"
 
-#: addremotelink.php:208
-#, fuzzy
+#: addremotelink.php:216
 msgid "Site URL:"
-msgstr "URL til hjemmesiden din"
+msgstr "URL til nettsted:"
 
-#: addremotelink.php:211
+#: addremotelink.php:219
 msgid "Example:"
 msgstr "Eksempel:"
 
-#: addremotelink.php:214
-#, fuzzy
+#: addremotelink.php:222
 msgid "Database ID:"
-msgstr "Database-vert"
+msgstr "GEDCOM-ID:"
 
-#: addremotelink.php:217
-#, fuzzy
+#: addremotelink.php:225
 msgid "Username: "
-msgstr "Brukernavn"
+msgstr "Brukernavn: "
 
-#: addremotelink.php:220
-#, fuzzy
+#: addremotelink.php:228
 msgid "Password: "
-msgstr "Passord"
+msgstr "Passord: "
 
-#: addremotelink.php:230
-#, fuzzy
+#: addremotelink.php:238
 msgid "GEDCOM File:"
-msgstr "Tittel til Slektsbasen"
+msgstr "Slektsfil:"
 
-#: addremotelink.php:250
-#, fuzzy
+#: addremotelink.php:258
 msgid "Admin Option"
-msgstr "_Administrasjon"
+msgstr "Admin-valg"
 
-#: addremotelink.php:256
+#: addremotelink.php:264
 msgid "Do not update the CHAN (Last Change) record"
 msgstr "Ikke oppdater CHAN (Last Change) posten"
 
-#: addremotelink.php:264
+#: addremotelink.php:272
 #: addsearchlink.php:70
-#, fuzzy
 msgid "Add Link"
-msgstr "Legg til hustru"
+msgstr "Legg til kobling"
 
 #: addsearchlink.php:31
 msgid "Add Local Link"
 msgstr "Legg til intern kobling"
 
-#: addsearchlink.php:77
-msgid "Same as current"
-msgstr "Samme som nåværende"
-
-#: addsearchlink.php:78
-msgid "Mother"
-msgstr "Mor"
-
-#: addsearchlink.php:79
-msgid "Father"
-msgstr "Far"
-
-#: addsearchlink.php:80
-msgid "Husband"
-msgstr "Ektemann"
-
-#: addsearchlink.php:81
-msgid "Wife"
-msgstr "Hustru"
-
-#: addsearchlink.php:82
-msgid "Son"
-msgstr "Sønn"
-
-#: addsearchlink.php:83
-msgid "Daughter"
-msgstr "Datter"
-
 #: admin.php:51
 #: admin.php:137
-#, fuzzy
 msgid "Administration"
-msgstr "_Administrasjon"
+msgstr "Administrasjon"
 
 #: admin.php:55
-#, fuzzy
 msgid "Accept / Reject Changes"
-msgstr "Rammen Siste endringer"
+msgstr "Godta / Avvis endring(ene)"
 
 #: admin.php:75
-#, fuzzy
 msgid "View log files"
-msgstr "Arkiver logfiler"
+msgstr "Vis logg-fil "
 
 #: admin.php:105
 msgid "Edit Image Manipulation Configuration"
@@ -277,15 +272,13 @@ msgstr "En eller flere brukerkontoer har advarsler"
 
 #: admin.php:166
 #: admin.php:186
-#, fuzzy
 msgid "Informational"
-msgstr "PHPInfo"
+msgstr "Informasjon"
 
 #: admin.php:167
 #: admin.php:201
-#, fuzzy
 msgid "Data and GEDCOM administration"
-msgstr "_GEDCOM: Siden Administrasjon"
+msgstr "Data- og slektsfil-administrasjon"
 
 #: admin.php:169
 #: admin.php:228
@@ -294,9 +287,8 @@ msgstr ""
 
 #: admin.php:172
 #: admin.php:256
-#, fuzzy
 msgid "Site administration"
-msgstr "_Brukere og rettigheter"
+msgstr "Administrasjon av nettstedet"
 
 #: admin.php:179
 #, fuzzy
@@ -312,9 +304,8 @@ msgid "README documentation"
 msgstr "ReadMe-dokumentasjon (Engelsk)"
 
 #: admin.php:194
-#, fuzzy
 msgid "Show PHP information page"
-msgstr "PHPInfo"
+msgstr "Vis info om PHP"
 
 #: admin.php:194
 msgid "PHP information"
@@ -329,23 +320,20 @@ msgid "Merge records"
 msgstr "Flette data (dobbelregisterte)"
 
 #: admin.php:210
-#, fuzzy
 msgid "Cleanup Index directory"
-msgstr "Mappe for indekseringsfil"
+msgstr "Opprydning i Indexmappen"
 
 #: admin.php:216
 msgid "Batch Update"
 msgstr "Utfør batch-oppdateringer/endringer i din GEDCOM"
 
 #: admin.php:232
-#, fuzzy
 msgid "Add an unlinked person"
-msgstr "Legg til en ektemann/partner ved å bruke en registrert person"
+msgstr "Legg til en person som ikke er knyttet til en familie"
 
 #: admin.php:235
-#, fuzzy
 msgid "Add an unlinked source"
-msgstr "Legg til en ny note"
+msgstr "Legg til en kilde som ikke er knyttet til noen"
 
 #: admin.php:240
 #, fuzzy
@@ -353,38 +341,32 @@ msgid "Add an unlinked note"
 msgstr "Legg til en ny note"
 
 #: admin.php:260
-#, fuzzy
 msgid "Configuration"
-msgstr "Konfigurasjonshjelp"
+msgstr "Program-innstillinger"
 
 #: admin.php:262
-#, fuzzy
 msgid "User Information Migration tool"
-msgstr "_Konvertering (SQL <<-->> Index)"
+msgstr "Verktøy for konvertering til annen database"
 
 #: admin.php:266
-#, fuzzy
 msgid "User administration"
-msgstr "_Brukere og rettigheter"
+msgstr "Brukere og rettigheter"
 
 #: admin.php:268
 msgid "Backup"
 msgstr "Sikkerhetskopi"
 
 #: admin.php:272
-#, fuzzy
 msgid "FAQ List"
-msgstr "FAQ visning"
+msgstr "Spørsmål & svar"
 
 #: admin.php:274
-#, fuzzy
 msgid "Manage Sites"
-msgstr "Navn på språk-filer"
+msgstr "Oppsett for nettsteder"
 
 #: admin.php:278
-#, fuzzy
 msgid "Configure supported languages"
-msgstr "_Oppsett for støttede språk"
+msgstr "Konfigurere støttede språk"
 
 #: admin.php:282
 msgid "You have not configured the languages your site will support.<br />PhpGedView will use its default actions."
@@ -411,11 +393,14 @@ msgstr "Innhold i logg-filen"
 msgid "Ancestry Chart"
 msgstr "Forfedre"
 
+#: ancestry.php:49
+msgid "%s Generation Ancestry Chart"
+msgstr "Forfedre - %s slektsledd"
+
 #: ancestry.php:72
 #: compact.php:82
-#, fuzzy
 msgid "Root Person ID"
-msgstr "Fjern person"
+msgstr "ID til startperson&nbsp;"
 
 #: ancestry.php:82
 msgid "Box width"
@@ -426,30 +411,26 @@ msgid "Layout"
 msgstr "Layout"
 
 #: ancestry.php:99
-#, fuzzy
 msgid "List"
-msgstr "Navneliste"
+msgstr "Forfedre"
 
 #: ancestry.php:105
 msgid "Booklet"
 msgstr "Hefte"
 
 #: ancestry.php:123
-#, fuzzy
 msgid "Show cousins"
-msgstr "Vis Antall treff"
+msgstr "Vis søskenbarn"
 
 #: ancestry.php:130
 #: calendar.php:404
-#, fuzzy
 msgid "Individuals"
-msgstr "Fakta å legge til for personer"
+msgstr "Personer"
 
 #: ancestry.php:136
 #: calendar.php:405
-#, fuzzy
 msgid "Families"
-msgstr "Vis familier i annen rekkefølge"
+msgstr "Familier"
 
 #: ancestry.php:142
 #: branches.php:74
@@ -464,9 +445,8 @@ msgid "Generations"
 msgstr "Antall generasjoner i diagram / trær"
 
 #: ancestry.php:170
-#, fuzzy
 msgid "Show Details"
-msgstr "Vis fremtidige gjøremål"
+msgstr "Vis detaljer"
 
 #: ancestry.php:192
 msgid "Click on any of the boxes to get more information about that person."
@@ -565,9 +545,8 @@ msgid "Recent Years (&lt; 100 yrs)"
 msgstr "De siste 100 årene"
 
 #: calendar.php:201
-#, fuzzy
 msgid "Gender"
-msgstr "Endre kjønn"
+msgstr "Kjønn"
 
 #: calendar.php:212
 #: calendar.php:215
@@ -582,20 +561,17 @@ msgid "Females"
 msgstr ""
 
 #: calendar.php:226
-#, fuzzy
 msgid "Show events of:"
-msgstr "Vis de eldste øverst"
+msgstr "Vis hendelser for"
 
 #: calendar.php:232
 #: calendar.php:530
-#, fuzzy
 msgid "Births, Deaths, Marriages"
-msgstr "Vise bare fødselsdager, dødsfall og giftemål?"
+msgstr "Fødselsdager, dødsfall og giftemål"
 
 #: calendar.php:235
-#, fuzzy
 msgid "ALL"
-msgstr "Åland"
+msgstr "ALLE"
 
 #: calendar.php:238
 msgid "BIRT"
@@ -647,9 +623,8 @@ msgstr "Egendef. hendelse"
 
 #: calendar.php:282
 #: calendar.php:284
-#, fuzzy
 msgid "View Day"
-msgstr "Vis arkiv"
+msgstr "Vis dag"
 
 #: calendar.php:287
 #: calendar.php:289
@@ -658,19 +633,16 @@ msgstr "Vis måned"
 
 #: calendar.php:292
 #: calendar.php:294
-#, fuzzy
 msgid "View Year"
-msgstr "Vis arkiv"
+msgstr "Vis år"
 
 #: calendar.php:435
-#, fuzzy
 msgid "Total individuals"
-msgstr "Slett denne personen"
+msgstr "antall navn"
 
 #: calendar.php:443
-#, fuzzy
 msgid "Total families"
-msgstr "Vis familier i annen rekkefølge"
+msgstr "antall familier"
 
 #: calendar.php:477
 msgid "Day not set"
@@ -690,6 +662,10 @@ msgstr "Kvinne"
 msgid "Filter"
 msgstr "Søk"
 
+#: calendar.php:588
+msgid "%s year anniversary"
+msgstr "%s. årsdag"
+
 #: calendar.php:614
 msgid "unknown"
 msgstr ""
@@ -704,9 +680,8 @@ msgid "Return to the Admin menu"
 msgstr "Tilbake til Admin-meny"
 
 #: changelanguage.php:155
-#, fuzzy
 msgid "Add new language"
-msgstr "Legg til nytt navn"
+msgstr "Legg til nytt språk"
 
 #: changelanguage.php:175
 #: changelanguage.php:191
@@ -729,28 +704,24 @@ msgid "Edit"
 msgstr "Endre"
 
 #: changelanguage.php:259
-#, fuzzy
 msgid "Languages used"
-msgstr "Språk som skal endre"
+msgstr "Språk brukt"
 
 #: changelanguage.php:264
-#, fuzzy
 msgid "Current GEDCOMs"
-msgstr "Lag en ny slektsfil"
+msgstr "Aktive slektsfiler (GED)"
 
 #: changelanguage.php:282
-#, fuzzy
 msgid "Users' languages"
-msgstr "Språk i de andre"
+msgstr "Språkene til brukere"
 
 #: clippings.php:40
 msgid "Clippings Cart"
 msgstr "Utklippsmappe"
 
 #: clippings.php:49
-#, fuzzy
 msgid "Family Tree Clippings Cart"
-msgstr "Aktivere utklippsmappen"
+msgstr "Utklippsmappe"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
@@ -797,9 +768,8 @@ msgstr "Personen og slektninger i direkte linje."
 #: clippings.php:81
 #: clippings.php:83
 #: clippings.php:86
-#, fuzzy
 msgid "Number of generations:"
-msgstr "Antall generasjoner i diagram / trær"
+msgstr "Antall generasjoner:"
 
 #: clippings.php:82
 msgid "Add this person, his direct line ancestors, and their families."
@@ -818,9 +788,8 @@ msgid "Which records linked to this source should be added?"
 msgstr "Hvile poster linket til denne kilden skal legges til?"
 
 #: clippings.php:97
-#, fuzzy
 msgid "Add just this source."
-msgstr "Slett denne kilden"
+msgstr "Legg bare til denne kilden"
 
 #: clippings.php:98
 msgid "Add this source and families/people linked to it."
@@ -831,23 +800,20 @@ msgid "Some items could not be added due to privacy restrictions"
 msgstr "Noen objekter kunne ikke legges til pga personvernrestriksjoner"
 
 #: clippings.php:127
-#, fuzzy
 msgid "Add Individual By ID"
-msgstr "GEDCOM ID prefiks"
+msgstr "Legg til person ved hjelp av ID"
 
 #: clippings.php:140
 msgid "Add"
 msgstr "Legg til"
 
 #: clippings.php:150
-#, fuzzy
 msgid "Your Clippings Cart is empty."
-msgstr "Utklippsmappe"
+msgstr "<b>Utklippsmappen din er tom!</b>"
 
 #: clippings.php:157
-#, fuzzy
 msgid "File Information"
-msgstr "PHPInfo"
+msgstr "Fil-informasjon"
 
 #: clippings.php:159
 msgid "File Type"
@@ -878,14 +844,12 @@ msgid "Authenticated user"
 msgstr "Godkjent bruker"
 
 #: clippings.php:208
-#, fuzzy
 msgid "GEDCOM administrator"
-msgstr "_GEDCOM: Siden Administrasjon"
+msgstr "Administrator av slektsfilen"
 
 #: clippings.php:209
-#, fuzzy
 msgid "Site administrator"
-msgstr "_Brukere og rettigheter"
+msgstr "Administrator av nettstedet"
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
@@ -908,9 +872,8 @@ msgid "Forward slashes : /"
 msgstr ""
 
 #: clippings.php:307
-#, fuzzy
 msgid "Remove"
-msgstr "Fjern person"
+msgstr "Fjern"
 
 #: clippings.php:224
 msgid ""
@@ -925,9 +888,8 @@ msgstr ""
 #: compact.php:58
 #: compact.php:447
 #: compact.php:449
-#, fuzzy
 msgid "Compact Chart"
-msgstr "Fjern alt i mappen"
+msgstr "Kompakt"
 
 #: compact.php:97
 msgid "Show ID numbers next to names"
@@ -939,9 +901,8 @@ msgstr "Vis hovedbilde ved siden av personnavn i diagrammet?"
 
 #: compact.php:312
 #: compact.php:314
-#, fuzzy
 msgid "Individual Information"
-msgstr "GEDCOM ID prefiks"
+msgstr "Personinformasjon"
 
 #: descendancy.php:35
 #: descendancy.php:46
@@ -960,9 +921,8 @@ msgid "To delete a file or subdirectory from the Index directory drag it to the 
 msgstr ""
 
 #: dir_editor.php:91
-#, fuzzy
 msgid "Deleted files:"
-msgstr "Slett navn"
+msgstr "Slettede filer:"
 
 #: dir_editor.php:111
 #: dir_editor.php:205
@@ -1002,9 +962,8 @@ msgid "Download GEDCOM"
 msgstr "Laste ned (download) slektsfil (GEDCOM)"
 
 #: downloadgedcom.php:136
-#, fuzzy
 msgid "Options:"
-msgstr "Valg for import"
+msgstr "Valg:"
 
 #: downloadgedcom.php:169
 msgid ""
@@ -1013,6 +972,10 @@ msgid ""
 "\t<tr><td class=\"facts_label03\" colspan=\"2\">\n"
 "\t<input type=\"submit\" value=\"<?php print i18n::translate("
 msgstr ""
+
+#: editconfig_gedcom.php:254
+msgid "Genealogy from [%s]"
+msgstr "Slektsbase fra [%s]"
 
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
@@ -1028,9 +991,8 @@ msgid "The protected media directory in the Media Firewall root directory is not
 msgstr "Den beskyttede mediakatalogen i rotkatalogen til Mediabrannmuren er skrivebeskyttet. "
 
 #: editconfig_gedcom.php:487
-#, fuzzy
 msgid "Download GEDCOM configuration."
-msgstr "_GEDCOM: Konfigurasjonsfil"
+msgstr "Last ned (download) GEDCOM konfigurasjon."
 
 #: editconfig_gedcom.php:487
 msgid "Upload the file to your index directory: "
@@ -1038,9 +1000,8 @@ msgstr "Hent (upload) filen til din index-katalog:"
 
 #: editconfig_gedcom.php:620
 #: editconfig_gedcom.php:666
-#, fuzzy
 msgid "GEDCOM Configuration"
-msgstr "_GEDCOM: Konfigurasjonsfil"
+msgstr "Oppsett for GEDCOM"
 
 #: editconfig_gedcom.php:670
 #: editgedcoms.php:117
@@ -1059,9 +1020,8 @@ msgstr "Lag en ny slektsfil"
 
 #: editconfig_gedcom.php:676
 #: editgedcoms.php:157
-#, fuzzy
 msgid "Upload Replacement"
-msgstr "Bane for opplastning"
+msgstr "Last opp erstatningsfil"
 
 #: editconfig_gedcom.php:680
 #: edit_privacy.php:145
@@ -1077,9 +1037,8 @@ msgid "Search option text"
 msgstr "Søketekst"
 
 #: editconfig_gedcom.php:850
-#, fuzzy
 msgid "Clear Search"
-msgstr "Rens hurtigminne-filen"
+msgstr "Blank søk"
 
 #: editconfig_gedcom.php:878
 #: editconfig_gedcom.php:1106
@@ -1092,9 +1051,8 @@ msgstr "Rens hurtigminne-filen"
 #: editconfig_gedcom.php:2121
 #: editconfig_gedcom.php:2223
 #: edit_privacy.php:805
-#, fuzzy
 msgid "Save configuration"
-msgstr "Konfigurasjonshjelp"
+msgstr "Lagre konfigurasjon"
 
 #: editconfig_gedcom.php:880
 #: editconfig_gedcom.php:1108
@@ -1112,23 +1070,26 @@ msgstr "Vanlig størrelse / oppsett"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
-#, fuzzy
 msgid "GEDCOM Basics"
-msgstr "Tittel til Slektsbasen"
+msgstr "GEDCOM basisvalg"
 
 #: editconfig_gedcom.php:895
 msgid "Upload path"
 msgstr "Bane for opplastning"
 
 #: editconfig_gedcom.php:900
-#, fuzzy
 msgid "Maximum upload size: "
-msgstr "Maks antall sider å vise"
+msgstr "Maks størrelse for opplasting: "
 
 #: editconfig_gedcom.php:903
 #: editconfig_gedcom.php:924
 msgid "Path and name of GEDCOM on server"
 msgstr "Bane og navn til GEDCOM-filen"
+
+#: editconfig_gedcom.php:915
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, does not exist at the specified location."
+msgstr "Slektsfilen [%s], finnes ikke på det angitte stedet."
 
 #: editconfig_gedcom.php:960
 msgid "Character Set encoding"
@@ -1292,9 +1253,8 @@ msgstr "PHP tidsbegrensning"
 
 #: editconfig_gedcom.php:1115
 #: editconfig_gedcom.php:1116
-#, fuzzy
 msgid "Multimedia"
-msgstr "Behandling av bilder"
+msgstr "Multimedia"
 
 #: editconfig_gedcom.php:1122
 msgid "Enable multimedia features"
@@ -1351,9 +1311,8 @@ msgstr "Vis lenke for nedlasting i mediaviseren"
 
 #: editconfig_gedcom.php:1224
 #: editconfig_gedcom.php:1225
-#, fuzzy
 msgid "Media Firewall"
-msgstr "Bruk Mediabrannmur"
+msgstr "Mediabrannmur"
 
 #: editconfig_gedcom.php:1230
 msgid "Use Media Firewall"
@@ -1385,9 +1344,8 @@ msgstr "Lagre vanmerkede miniatyrbilder på tjeneren?"
 
 #: editconfig_gedcom.php:1299
 #: editconfig_gedcom.php:1300
-#, fuzzy
 msgid "Access and Privacy"
-msgstr "Endre personvernfilen"
+msgstr "Tilgang og personvern"
 
 #: editconfig_gedcom.php:1305
 msgid "Enable Privacy"
@@ -1410,9 +1368,8 @@ msgid "Welcome"
 msgstr "Velkommen"
 
 #: editconfig_gedcom.php:1332
-#, fuzzy
 msgid "MyGedView"
-msgstr "PhpGedView URL"
+msgstr "Min side"
 
 #: editconfig_gedcom.php:1337
 msgid "Welcome text on Login page"
@@ -1457,9 +1414,8 @@ msgstr "Visning og layout"
 
 #: editconfig_gedcom.php:1387
 #: editconfig_gedcom.php:1388
-#, fuzzy
 msgid "Names"
-msgstr "Navneliste"
+msgstr "Navn"
 
 #: editconfig_gedcom.php:1393
 msgid "Show married names on Individual list"
@@ -1558,14 +1514,12 @@ msgid "Notes"
 msgstr "Noter"
 
 #: editconfig_gedcom.php:1511
-#, fuzzy
 msgid "Sources"
-msgstr "Vis kilder"
+msgstr "Kilder"
 
 #: editconfig_gedcom.php:1512
-#, fuzzy
 msgid "Media"
-msgstr "Finn media"
+msgstr "Bilder / medier"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
@@ -1714,9 +1668,8 @@ msgstr "Vis beregnet dato for fødsler og dødsfall"
 
 #: editconfig_gedcom.php:1799
 #: editconfig_gedcom.php:1800
-#, fuzzy
 msgid "Edit Options"
-msgstr "Valg for import"
+msgstr "Redigeringsvalg"
 
 #: editconfig_gedcom.php:1805
 msgid "Enable online editing"
@@ -1829,9 +1782,8 @@ msgstr "Oppføring"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
-#, fuzzy
 msgid "User Options"
-msgstr "Valg for import"
+msgstr "Bruker-valg"
 
 #: editconfig_gedcom.php:1978
 msgid "Allow user to change language"
@@ -1859,9 +1811,8 @@ msgstr "Vis valgfelt for å bytte Stil"
 
 #: editconfig_gedcom.php:2044
 #: editconfig_gedcom.php:2045
-#, fuzzy
 msgid "Contact Information"
-msgstr "Kontaktmåte (slekt)"
+msgstr "Kontakt-informasjon"
 
 #: editconfig_gedcom.php:2055
 msgid "PhpGedView reply address"
@@ -1877,9 +1828,8 @@ msgstr "Kontaktmåte (slekt)"
 
 #: editconfig_gedcom.php:2078
 #: editconfig_gedcom.php:2108
-#, fuzzy
 msgid "PhpGedView internal messaging"
-msgstr "PhpGedView svaradresse"
+msgstr "PhpGedView interne beskjeder"
 
 #: editconfig_gedcom.php:2079
 #: editconfig_gedcom.php:2109
@@ -1898,9 +1848,8 @@ msgstr "Besøkende sitt eget e-post-program"
 
 #: editconfig_gedcom.php:2084
 #: editconfig_gedcom.php:2114
-#, fuzzy
 msgid "No contact method"
-msgstr "Kontaktmåte (slekt)"
+msgstr "Ingen kontaktlink"
 
 #: editconfig_gedcom.php:2089
 msgid "Support contact"
@@ -1941,9 +1890,8 @@ msgstr "META tag: Beskrivelse"
 
 #: editconfig_gedcom.php:2161
 #: editconfig_gedcom.php:2166
-#, fuzzy
 msgid "Leave this field empty to use the title of the currently active database."
-msgstr "Her kan du angi en sjanger nettstedet hører inn under og som vil plasseres i <meta> merket først på HTML siden.  Dersom feltet er tomt, vil titlen til den aktive slektsbasen bli brukt."
+msgstr "La feltet være tomt for å bruke titlen til den aktive slektsbasen."
 
 #: editconfig_gedcom.php:2164
 msgid "Page-topic META tag"
@@ -1986,14 +1934,12 @@ msgid "Configuration help"
 msgstr "Konfigurasjonshjelp"
 
 #: editgedcoms.php:78
-#, fuzzy
 msgid "GEDCOM Administration"
-msgstr "_GEDCOM: Siden Administrasjon"
+msgstr "Oppsett for slekts- / GEDCOM-fil"
 
 #: editgedcoms.php:96
-#, fuzzy
 msgid "Default GEDCOM"
-msgstr "Sjekker kvaliteten til slektsfilen"
+msgstr "Standard slektsbase "
 
 #: editgedcoms.php:111
 msgid "Check if GEDCOM files are downloadable"
@@ -2007,14 +1953,17 @@ msgstr "Tittel til Slektsbasen"
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
 msgstr ""
 
+#: editgedcoms.php:184
+msgid "%s cannot be downloaded."
+msgstr "%s kan ikke lastes ned."
+
 #: editgedcoms.php:187
 msgid "File not found."
 msgstr "Fant ikke filen."
 
 #: editgedcoms.php:191
-#, fuzzy
 msgid "Import"
-msgstr "Valg for import"
+msgstr "Import"
 
 #: editgedcoms.php:193
 msgid "This GEDCOM has not yet been imported."
@@ -2029,9 +1978,8 @@ msgid "Are you sure you want to delete this GEDCOM"
 msgstr "Er du sikker på at du vil slette GEDCOMfilen:"
 
 #: editgedcoms.php:208
-#, fuzzy
 msgid "Download"
-msgstr "Laste ned (download) slektsfil (GEDCOM)"
+msgstr "Last ned (download)"
 
 #: editgedcoms.php:213
 msgid "Check"
@@ -2059,6 +2007,10 @@ msgstr "Endre språk-fil"
 #: edit_interface.php:2723
 msgid "Save"
 msgstr "Lagre"
+
+#: editlang_edit_settings.php:225
+msgid "Original name of language in %s"
+msgstr "Original-navn til %s"
 
 #: editlang_edit_settings.php:238
 msgid "Abbreviation for language files"
@@ -2170,9 +2122,8 @@ msgid "Add/Edit Journal/News entry"
 msgstr "Legg til / endre notat- / nyhetsinnlegg"
 
 #: editnews.php:57
-#, fuzzy
 msgid "Please enter a title."
-msgstr "Presentasjonsstil"
+msgstr "Du må oppgi en tittel."
 
 #: editnews.php:64
 msgid "Please enter some text for this News or Journal entry."
@@ -2230,14 +2181,12 @@ msgid "User name"
 msgstr "Brukernavn"
 
 #: edituser.php:186
-#, fuzzy
 msgid "First Name"
-msgstr "Rediger navn"
+msgstr "Fornavn"
 
 #: edituser.php:192
-#, fuzzy
 msgid "Last Name"
-msgstr "Rediger navn"
+msgstr "Etternavn"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
@@ -2252,14 +2201,12 @@ msgid "Leave password blank if you want to keep the current password."
 msgstr "La feltet for passord være tomt, hvis du vil bevare det eksisterende passordet."
 
 #: edituser.php:223
-#, fuzzy
 msgid "Confirm Password"
-msgstr "Passord"
+msgstr "Bekreft passord"
 
 #: edituser.php:229
-#, fuzzy
 msgid "Change Language"
-msgstr "Språk"
+msgstr "Velg språk (Language)"
 
 #: edituser.php:245
 msgid "Email Address"
@@ -2274,18 +2221,16 @@ msgid "Site Default"
 msgstr "Standard på siden"
 
 #: edituser.php:266
-#, fuzzy
 msgid "Preferred Contact Method"
-msgstr "Kontaktmåte (slekt)"
+msgstr "Ønsket kontaktmetode"
 
 #: edituser.php:281
 msgid "Visible to other users when online"
 msgstr "Vis andre at du er pålogget"
 
 #: edituser.php:290
-#, fuzzy
 msgid "Default Tab to show on Individual Information page"
-msgstr "Standard ark/kort som skal vises på faktasiden til personer"
+msgstr "Arkfanen som skal vises som standard på faktasiden til personer"
 
 #: edit_changes.php:43
 #: edit_changes.php:61
@@ -2312,15 +2257,13 @@ msgid "View Change Diff"
 msgstr "Vis endring(er), forskjell(er)"
 
 #: edit_changes.php:117
-#, fuzzy
 msgid "View GEDCOM Record"
-msgstr "Skjul GEDCOM feilmeldinger"
+msgstr "Vis opplysningene i slektsfilen"
 
 #: edit_changes.php:118
 #: edit_interface.php:413
-#, fuzzy
 msgid "Edit raw GEDCOM record"
-msgstr "Tillat brukere å se GEDCOM poster"
+msgstr "Endre opplysninger direkte i slektsfilen"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
@@ -2345,15 +2288,13 @@ msgid "Undo"
 msgstr "Angre"
 
 #: edit_changes.php:136
-#, fuzzy
 msgid "Send Message"
-msgstr "Avsendernavn"
+msgstr "Ny beskjed til "
 
 #: edit_changes.php:159
 #: edit_changes.php:170
-#, fuzzy
 msgid "Accept all changes"
-msgstr "Rammen Siste endringer"
+msgstr "Godkjenn alle endringer"
 
 #: edit_changes.php:163
 #: edit_changes.php:181
@@ -2374,14 +2315,12 @@ msgid "Add child"
 msgstr "Legg til barn"
 
 #: edit_interface.php:355
-#, fuzzy
 msgid "Add a new mother"
-msgstr "Legg til en ny note"
+msgstr "Legg til en ny mor"
 
 #: edit_interface.php:357
-#, fuzzy
 msgid "Add a new father"
-msgstr "Legg til en ny note"
+msgstr "Legg til en ny far"
 
 #: edit_interface.php:362
 msgid "Add a child to create a one-parent family"
@@ -2418,9 +2357,8 @@ msgstr "Kobling"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
-#, fuzzy
 msgid "Set link"
-msgstr "Behold URL-linker"
+msgstr "Lag kobling"
 
 #: edit_interface.php:751
 #: edit_interface.php:902
@@ -2442,9 +2380,8 @@ msgstr "Tittel"
 
 #: edit_interface.php:760
 #: edit_interface.php:838
-#, fuzzy
 msgid "Create a new source"
-msgstr "Lag en ny slektsfil"
+msgstr "Opprett en ny kilde"
 
 #: edit_interface.php:765
 msgid "ABBR"
@@ -2518,9 +2455,8 @@ msgstr "Navn"
 
 #: edit_interface.php:1233
 #: edit_interface.php:1284
-#, fuzzy
 msgid "Create Repository"
-msgstr "Slett oppbevaringssted"
+msgstr "Opprett nytt oppbevaringssted"
 
 #: edit_interface.php:1253
 msgid "ADDR"
@@ -2543,18 +2479,16 @@ msgid "WWW"
 msgstr "Hjemmeside"
 
 #: edit_interface.php:1329
-#, fuzzy
 msgid "New Repository created"
-msgstr "Unike fakta for oppbevaringssteder"
+msgstr "Nytt oppbevaringssted er opprettet"
 
 #: edit_interface.php:1330
 msgid "Paste the following Repository ID into your editing fields to reference this Repository "
 msgstr "Lim inn følgende ID for oppbevaringsstedet til aktuelle koblings-feltet for ulike kilder: "
 
 #: edit_interface.php:2126
-#, fuzzy
 msgid "Record copied to clipboard"
-msgstr "Legg til fra klippebordet: "
+msgstr "Data er kopiert til klippebordet"
 
 #: edit_interface.php:2270
 msgid "Re-order children"
@@ -2587,9 +2521,8 @@ msgstr "Bytt medlemmer av familien"
 #: edit_interface.php:2432
 #: edit_interface.php:2445
 #: edit_interface.php:2458
-#, fuzzy
 msgid "Change"
-msgstr "Side"
+msgstr "Endre"
 
 #: edit_interface.php:2686
 msgid "Reorder Families"
@@ -2633,54 +2566,54 @@ msgstr "Oppdaterer data som er knyttet til denne"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
-#, fuzzy
 msgid "Adding"
-msgstr "Admin"
+msgstr "Legger til"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
 msgid "from"
 msgstr ""
 
-#: edit_merge.php:246
+#: edit_merge.php:242
+msgid "Record %s successfully updated."
+msgstr "Oppføringen %s er nå oppdatert."
+
+#: edit_merge.php:245
 msgid "favorites updated."
 msgstr ""
 
-#: edit_merge.php:248
+#: edit_merge.php:247
 msgid "Merge more records."
 msgstr "Flette flere oppføringer."
 
-#: edit_merge.php:281
+#: edit_merge.php:280
 msgid "Merge Step 1 of 3"
 msgstr "Flettesteg 1 av 3"
 
-#: edit_merge.php:284
+#: edit_merge.php:283
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
 msgstr "Velg 2 oppføringer i slektsbasen som skal flettes.  Oppføringene må være av samme type."
 
-#: edit_merge.php:287
+#: edit_merge.php:286
 msgid "Merge To ID:"
 msgstr "Flett til ID:"
 
+#: edit_merge.php:301
+#: edit_merge.php:318
+msgid "Find Individual ID"
+msgstr "Finn person"
+
 #: edit_merge.php:302
 #: edit_merge.php:319
-#, fuzzy
-msgid "Find Individual ID"
-msgstr "GEDCOM ID prefiks"
+msgid "Find Family ID"
+msgstr "Finn familie"
 
 #: edit_merge.php:303
 #: edit_merge.php:320
-#, fuzzy
-msgid "Find Family ID"
-msgstr "Prefiks til Familie-ID"
-
-#: edit_merge.php:304
-#: edit_merge.php:321
-#, fuzzy
 msgid "Find Source ID"
-msgstr "Kilde&nbsp;ID prefiks"
+msgstr "Finn kilde"
 
-#: edit_merge.php:307
+#: edit_merge.php:306
 msgid "Merge From ID:"
 msgstr "Flett fra ID:"
 
@@ -2690,14 +2623,12 @@ msgid "Unable to find individual with id"
 msgstr "Kan ikke finne person med ID "
 
 #: edit_privacy.php:135
-#, fuzzy
 msgid "Edit privacy settings"
-msgstr "Legge til nye innstillinger for personvern?"
+msgstr "Rediger personvern-innstillinger innenfra"
 
 #: edit_privacy.php:142
-#, fuzzy
 msgid "Edit GEDCOM privacy settings"
-msgstr "_GEDCOM: Personvern-innstillinger"
+msgstr "Endre slektsbasens personvern-innstillinger"
 
 #: edit_privacy.php:159
 msgid "Performing update."
@@ -2775,9 +2706,8 @@ msgstr "Legg til ny personvern-innstilling for person"
 #: edit_privacy.php:572
 #: edit_privacy.php:717
 #: edit_privacy.php:764
-#, fuzzy
 msgid "ID"
-msgstr "Indonesia"
+msgstr "ID"
 
 #: edit_privacy.php:449
 #: edit_privacy.php:481
@@ -2785,9 +2715,8 @@ msgstr "Indonesia"
 #: edit_privacy.php:667
 #: edit_privacy.php:720
 #: edit_privacy.php:768
-#, fuzzy
 msgid "Show to?"
-msgstr "Vis faktaikoner"
+msgstr "Vis til ?"
 
 #: edit_privacy.php:473
 msgid "Edit existing settings for Privacy by ID"
@@ -2796,9 +2725,8 @@ msgstr "Rediger eksisterende innstillinger for personer"
 #: edit_privacy.php:480
 #: edit_privacy.php:573
 #: edit_privacy.php:765
-#, fuzzy
 msgid "Full Name"
-msgstr "Slett navn"
+msgstr "Fullt navn"
 
 #: edit_privacy.php:509
 #: edit_privacy.php:511
@@ -2811,7 +2739,6 @@ msgstr "Legg til ny personvern-innstilling for bruker"
 
 #: edit_privacy.php:526
 #: edit_privacy.php:571
-#, fuzzy
 msgid "Username"
 msgstr "Brukernavn"
 
@@ -2855,17 +2782,15 @@ msgstr "Velg: "
 #: edit_privacy.php:685
 #: edit_privacy.php:748
 #: edit_privacy.php:791
-#, fuzzy
 msgid "Show fact details"
-msgstr "Vis faktaikoner"
+msgstr "Vis detaljerte fakta"
 
 #: edit_privacy.php:648
 #: edit_privacy.php:684
 #: edit_privacy.php:749
 #: edit_privacy.php:790
-#, fuzzy
 msgid "Show fact"
-msgstr "Vis faktaikoner"
+msgstr "Vis fakta"
 
 #: edit_privacy.php:660
 msgid "Edit existing settings for Global Fact Privacy"
@@ -2889,14 +2814,12 @@ msgid "Private"
 msgstr "Privat"
 
 #: expand_view.php:72
-#, fuzzy
 msgid "View Family"
-msgstr "Vis arkiv"
+msgstr "Vis familie"
 
 #: family.php:60
-#, fuzzy
 msgid "This record has been marked for deletion upon admin approval."
-msgstr "Denne oppføringen er blitt oppdatert. Klikk her for å se endring(ene)."
+msgstr "Denne oppføringen er merket for sletting og venter på godkjenning av admin."
 
 #: family.php:100
 #: familybook.php:218
@@ -2908,27 +2831,24 @@ msgid "Grandparents"
 msgstr ""
 
 #: family.php:137
-#, fuzzy
 msgid "Show couple on timeline chart"
-msgstr "Vis tomme bokser i diagram"
+msgstr "Vis partnere på en tidslinje"
 
 #: family.php:137
 msgid "P"
 msgstr "P"
 
 #: family.php:138
-#, fuzzy
 msgid "Show children on timeline chart"
-msgstr "Vis ikoner for kjønn i diagrammer"
+msgstr "Vis barn på en tidslinje"
 
 #: family.php:138
 msgid "D"
 msgstr "D"
 
 #: family.php:139
-#, fuzzy
 msgid "Show family on timeline chart"
-msgstr "Vis tomme bokser i diagram"
+msgstr "Vis familie på en tidslinje"
 
 #: family.php:139
 msgid "T"
@@ -2959,15 +2879,13 @@ msgstr "Familie av:&nbsp;"
 #: familybook.php:371
 #: familybook.php:383
 #: familybook.php:387
-#, fuzzy
 msgid "Family Book Chart"
-msgstr "Fakta å legge til for familier"
+msgstr "Familiebok"
 
 #: familybook.php:458
 #: hourglass.php:115
-#, fuzzy
 msgid "Show spouses"
-msgstr "Vis kilder"
+msgstr "Vis ektefeller"
 
 #: familybook.php:481
 msgid "Descent Steps"
@@ -2985,24 +2903,26 @@ msgid "Choose a letter to show families whose name starts with that letter."
 msgstr "Velg en bokstav for å vise etter/familienavn som begynner på bokstaven."
 
 #: famlist.php:184
-#, fuzzy
 msgid "Skip Surname lists"
-msgstr "Type etternavnliste"
+msgstr "Vis utvidet liste"
 
 #: famlist.php:187
-#, fuzzy
 msgid "Show Surname lists"
-msgstr "Type etternavnliste"
+msgstr "Vis kun etternavn"
 
 #: famlist.php:194
-#, fuzzy
 msgid "Exclude married names"
-msgstr "Ta med navn som gift"
+msgstr "Utelat navn som gift"
 
 #: famlist.php:196
 #: help_text.php:5234
 msgid "Include married names"
 msgstr "Ta med navn som gift"
+
+#: famlist.php:263
+#: famlist.php:274
+msgid "Families with surname %s"
+msgstr "Familier med etternavnet %s"
 
 #: famlist.php:268
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
@@ -3026,9 +2946,8 @@ msgid "Font file not found on PHP server"
 msgstr "Fant ikke nødvendige filer med skrifttyper på PHP serveren"
 
 #: fanchart.php:295
-#, fuzzy
 msgid "Pedigree Tree"
-msgstr "Antall generasjoner i diagram / trær"
+msgstr "Anetre"
 
 #: fanchart.php:297
 #, fuzzy
@@ -3036,9 +2955,8 @@ msgid "Pedigree Map"
 msgstr "Antall generasjoner i diagram / trær"
 
 #: fanchart.php:300
-#, fuzzy
 msgid "Relationship to me"
-msgstr "Sjekk slektskap via inngifte"
+msgstr "Slektskap til meg"
 
 #: fanchart.php:305
 #: fanchart.php:400
@@ -3058,6 +2976,10 @@ msgstr "Timeglass"
 #: fanchart.php:307
 msgid "Interactive Tree"
 msgstr "Interaktivt tre"
+
+#: fanchart.php:428
+msgid "%s Generation Circle Diagram"
+msgstr "Sirkeldiagram - %s slektsledd"
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -3117,9 +3039,8 @@ msgid "Preview"
 msgstr "Forhåndsvis"
 
 #: faq.php:285
-#, fuzzy
 msgid "Position item"
-msgstr "Plassering spørsmål & svar"
+msgstr "Plassering"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
@@ -3138,15 +3059,13 @@ msgstr "Finn media"
 
 #: find.php:104
 #: find.php:208
-#, fuzzy
 msgid "Find Place"
-msgstr "Finn media"
+msgstr "Finn stedsnavn"
 
 #: find.php:108
 #: find.php:211
-#, fuzzy
 msgid "Repositories"
-msgstr "Fakta å legge til for oppbevaringssteder"
+msgstr "Oppbevaringssteder"
 
 #: find.php:112
 #: find.php:214
@@ -3170,18 +3089,16 @@ msgstr "Du må søke etter mer enn bare en bokstav"
 
 #: find.php:239
 #: find.php:259
-#, fuzzy
 msgid "Name contains:"
-msgstr "Navneliste"
+msgstr "Navn inneholder:"
 
 #: find.php:283
 msgid "Media contains:"
 msgstr "Media inneholder:"
 
 #: find.php:291
-#, fuzzy
 msgid "Show thumbnails"
-msgstr "Bruk miniatyrbilde som hovedbilde på faktasiden til personer"
+msgstr "Vis miniatyrbilde(r)"
 
 #: find.php:296
 #: find.php:317
@@ -3196,18 +3113,16 @@ msgid "Place contains:"
 msgstr "Stedsnavn inneholder:"
 
 #: find.php:332
-#, fuzzy
 msgid "Repository contains:"
-msgstr "Fakta å legge til for oppbevaringssteder"
+msgstr "Oppbevaringsstedet inneholder:"
 
 #: find.php:353
 msgid "Shared Note contains:"
 msgstr ""
 
 #: find.php:374
-#, fuzzy
 msgid "Source contains:"
-msgstr "Fakta å legge til for kilder"
+msgstr "Kilde inneholder:"
 
 #: find.php:403
 msgid "Magnify"
@@ -3224,9 +3139,8 @@ msgid "No results found."
 msgstr "Fant ingen..."
 
 #: find.php:487
-#, fuzzy
 msgid "Current directory"
-msgstr "Tema og mappe"
+msgstr "Nåværende mappe: "
 
 #: find.php:501
 msgid "External objects"
@@ -3245,14 +3159,12 @@ msgid "This media object is linked to the following:"
 msgstr "Dette media-objektet er knyttet til:"
 
 #: find.php:584
-#, fuzzy
 msgid "View Person"
-msgstr "Fjern person"
+msgstr "Vis person"
 
 #: find.php:590
-#, fuzzy
 msgid "View Source"
-msgstr "Vis arkiv"
+msgstr "Vis kilder"
 
 #: find.php:593
 msgid "View Object"
@@ -3275,9 +3187,8 @@ msgid "Shared Notes found"
 msgstr ""
 
 #: find.php:712
-#, fuzzy
 msgid "Total Sources"
-msgstr "Vis alle kilder"
+msgstr "Antall kilder"
 
 #: gedcheck.php:37
 msgid "Gedcom checker"
@@ -3294,9 +3205,8 @@ msgid "Level"
 msgstr "Nivå"
 
 #: gedcheck.php:104
-#, fuzzy
 msgid "Open links in"
-msgstr "Behold URL-linker"
+msgstr "Åpne lenke i"
 
 #: gedcheck.php:106
 msgid "Same tab/window"
@@ -4993,11 +4903,14 @@ msgid "_FA11"
 msgstr "Fakta 11"
 
 #. I18N: This is the GEDCOM label for "Fact 12"
-#. I18N: This is the GEDCOM label for "Fact 13"
 #: help_text.php:1969
-#: help_text.php:1975
 msgid "_FA12"
 msgstr "Fakta 12"
+
+#. I18N: This is the GEDCOM label for "Fact 13"
+#: help_text.php:1975
+msgid "_FA13"
+msgstr "Fakta 13"
 
 #. I18N: This is the GEDCOM label for "Emigration of parents"
 #: help_text.php:1981
@@ -5391,14 +5304,12 @@ msgid "Image Viewer"
 msgstr "Bildeframviser"
 
 #: help_text.php:2479
-#, fuzzy
 msgid "PhpGedView User Login"
-msgstr "PhpGedView URL"
+msgstr "PhpGedView innlogging for brukere"
 
 #: help_text.php:2484
-#, fuzzy
 msgid "PhpGedView Message"
-msgstr "PhpGedView URL"
+msgstr "PhpGedView beskjed"
 
 #: help_text.php:2489
 #, fuzzy
@@ -8219,7 +8130,9 @@ msgstr "Oppdaget Macintosh-fil.  Under oppryddingen vil denne filen bli konverte
 #: help_text.php:4765
 msgid "PhpGedView detected that your GEDCOM file was created on a Macintosh computer.<br /><br />Macintosh files end each line with a CR control code.  CR is Ctrl+M.<br />Unix files end each line with an LF control code.  LF is Ctrl+J.<br />Windows and DOS use a two-code sequence, CR followed by LF.<br /><br />PhpGedView requires that all files use Unix or DOS line endings. When you click the Cleanup button, your line endings will be converted accordingly."
 msgstr "PhpGedView oppdaget at GEDCOM-filen din ble lagd på på en Macintosh datamaskin.  Macintosh-filer bruker andre koder for linjeslutt (\r) enn Unix (\n) og DOS/Windows (\r\n).  PHP-funksjoner brukt av PhpGedView krever at GEDCOM-filene må være Unix- eller DOS-filer.  Når du klikker på knappen Rydd, vil filen din bli konvertert til en DOS-fil."
-"PhpGedView oppdaget at GEDCOM-filen din ble lagd på på en Macintosh datamaskin.  Macintosh-filer bruker andre koder for linjeslutt (\\r) enn Unix (\\n"
+"PhpGedView oppdaget at GEDCOM-filen din ble lagd på på en Macintosh datamaskin.  Macintosh-filer bruker andre koder for linjeslutt (\r) enn Unix (\n"
+") og DOS/Windows (\r\n"
+").  PHP-funksjoner brukt av PhpGedView krever at GEDCOM-filene må være Unix- eller DOS-filer.  Når du klikker på knappen Rydd, vil filen din bli konvertert til en DOS-fil.PhpGedView oppdaget at GEDCOM-filen din ble lagd på på en Macintosh datamaskin.  Macintosh-filer bruker andre koder for linjeslutt (\\r) enn Unix (\\n"
 ") og DOS/Windows (\\r\\n"
 ").  PHP-funksjoner brukt av PhpGedView krever at GEDCOM-filene må være Unix- eller DOS-filer.  Når du klikker på knappen Rydd, vil filen din bli konvertert til en DOS-fil."
 
@@ -9398,35 +9311,28 @@ msgstr "Endre <i>din egen</i> side"
 
 #: index.php:451
 #: index_edit.php:473
-#, fuzzy
 msgid "Customize this GEDCOM Welcome page"
-msgstr "Egenkomponert velkomsttekst dersom <br />\"Krev at besøkende <br /><b>MÅ</b> logge inn\" = Ja"
+msgstr "Endre hovedsiden til denne slektsbasen"
 
 #: index_edit.php:83
 msgid "?"
 msgstr "?"
 
 #: index_edit.php:154
-#: index_edit.php:158
-#: index_edit.php:159
-#: index_edit.php:160
-#: index_edit.php:161
 msgid "&nbsp;"
 msgstr "&nbsp;"
 
 #: index_edit.php:231
-#, fuzzy
 msgid "Configuration file updated successfully."
-msgstr "Støttede språk"
+msgstr "Oppdatering av konfigurasjonsfilen er utført."
 
 #: index_edit.php:278
 msgid "The cache files have been removed."
 msgstr "Hurtigminne-filen er slettet."
 
 #: index_edit.php:285
-#, fuzzy
 msgid "Configure"
-msgstr "_GEDCOM: Konfigurere"
+msgstr "Endre oppsett for rammen"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
@@ -9478,6 +9384,11 @@ msgstr "Tilbakestill til standardrammer"
 msgid "Choose a letter to show individuals whose family name starts with that letter."
 msgstr "Velg en bokstav for å vise personer med etter/familienavn som begynner på bokstaven."
 
+#: indilist.php:263
+#: indilist.php:274
+msgid "Individuals with surname %s"
+msgstr "Personer med etternavn som begynner på %s"
+
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
 msgstr "Velg en bokstav for å vise personer med fornavn som begynner på bokstaven."
@@ -9491,9 +9402,8 @@ msgid "The information for this individual was linked from a remote site."
 msgstr "Opplysninger om denne personen er hentet fra et eksternt nettsted."
 
 #: individual.php:319
-#, fuzzy
 msgid "Pedigree Chart"
-msgstr "ID til startperson<br />i slektsbasen"
+msgstr "Anetre"
 
 #: individual.php:321
 msgid "Timeline Chart"
@@ -9525,14 +9435,12 @@ msgid "*Your settings will not<br />be saved until step 6"
 msgstr "*Instillingene vil ikke<br />bli lagret før i steg 6"
 
 #: install.php:434
-#, fuzzy
 msgid "Database Tables created successfully"
-msgstr "Database Table Prefiks"
+msgstr "Databasetabeller er opprettet"
 
 #: install.php:449
-#, fuzzy
 msgid "Configuration saved successfully"
-msgstr "Konfigurasjonshjelp"
+msgstr "Konfigurasjonen er lagret"
 
 #: install.php:452
 msgid "Download config.php"
@@ -9555,9 +9463,8 @@ msgid "Checking required PHP version:"
 msgstr "Sjekker PHP-versjon som kreves:"
 
 #: install.php:508
-#, fuzzy
 msgid "Failed"
-msgstr "Navn på flagg-bildefil"
+msgstr "Feilet"
 
 #: install.php:516
 msgid "Checking for minimum database support:"
@@ -9569,9 +9476,8 @@ msgstr "Du har ingen av de støttede databasetilleggene."
 
 #: install.php:531
 #: install.php:620
-#, fuzzy
 msgid "Passed"
-msgstr "Passord"
+msgstr "Passed"
 
 #: install.php:538
 msgid "Checking for warnings..."
@@ -9656,15 +9562,13 @@ msgstr "If any of the warnings do not pass you may still be able to run PhpGedVi
 
 #: install.php:763
 #: install.php:769
-#, fuzzy
 msgid "Basic Settings"
-msgstr "Personvern-innstillinger for brukere"
+msgstr "Vanlige innstillinger"
 
 #: install.php:764
 #: install.php:826
-#, fuzzy
 msgid "Advanced Settings"
-msgstr "Avanserte navnefakta"
+msgstr "Avanserte innstillinger"
 
 #: install.php:875
 #: install.php:881
@@ -9679,9 +9583,8 @@ msgstr "&nbsp;&nbsp;sekunder"
 #: install.php:1072
 #: login_register.php:168
 #: login_register.php:217
-#, fuzzy
 msgid "You must enter a password."
-msgstr "Brukernavn og passord"
+msgstr "Du må oppgi et passord."
 
 #: install.php:1077
 #: login_register.php:174
@@ -9707,9 +9610,8 @@ msgstr ""
 
 #: inverselink.php:50
 #: media.php:760
-#, fuzzy
 msgid "To Person"
-msgstr "Fjern person"
+msgstr "Til person"
 
 #: inverselink.php:53
 #: media.php:765
@@ -9718,9 +9620,8 @@ msgstr "Til familie"
 
 #: inverselink.php:56
 #: media.php:770
-#, fuzzy
 msgid "To Source"
-msgstr "Vis kilder"
+msgstr "Til kilde"
 
 #: inverselink.php:59
 #, fuzzy
@@ -9733,24 +9634,20 @@ msgstr ""
 
 #: inverselink.php:67
 #: inverselink.php:116
-#, fuzzy
 msgid "Link Media"
-msgstr "Finn media"
+msgstr "Kobling av Media"
 
 #: inverselink.php:117
-#, fuzzy
 msgid "Media ID"
-msgstr "Prefiks til Media-ID"
+msgstr "Media ID"
 
 #: inverselink.php:143
-#, fuzzy
 msgid "Enter Individual ID"
-msgstr "GEDCOM ID prefiks"
+msgstr "Angi PersonID"
 
 #: inverselink.php:174
-#, fuzzy
 msgid "Source"
-msgstr "Foretrekk kilder til fakta"
+msgstr "Kilde"
 
 #: inverselink.php:188
 #, fuzzy
@@ -9767,14 +9664,12 @@ msgid "Add another person to chart:<br />Person ID:"
 msgstr "Legg til en person på tidslinjen:<br />Person ID:"
 
 #: lifespan.php:70
-#, fuzzy
 msgid "Include Immediate Family"
-msgstr "Ta med navn som gift"
+msgstr "Inkluder nærmeste familie"
 
 #: lifespan.php:75
-#, fuzzy
 msgid "Show Timeline chart"
-msgstr "Vis ikoner for kjønn i diagrammer"
+msgstr "Vis tidslinjediagram"
 
 #: lifespan.php:303
 msgid "Speed"
@@ -9793,14 +9688,12 @@ msgid "Search"
 msgstr "Søk"
 
 #: lifespan.php:322
-#, fuzzy
 msgid "Clear Chart"
-msgstr "Format på kalender"
+msgstr "Nullstill diagram"
 
 #: lifespan.php:329
-#, fuzzy
 msgid "Individual"
-msgstr "GEDCOM ID prefiks"
+msgstr "Person"
 
 #: login.php:120
 msgid "Unable to authenticate user."
@@ -9808,14 +9701,12 @@ msgstr "Bruker kan ikke godkjennes."
 
 #: login.php:206
 #: login.php:226
-#, fuzzy
 msgid "Login"
-msgstr "Logg inn URL"
+msgstr "Rammen Logg inn"
 
 #: login.php:238
-#, fuzzy
 msgid "Account Information"
-msgstr "PHPInfo"
+msgstr "Konto-informasjon"
 
 #: login.php:239
 msgid "No account?"
@@ -9833,9 +9724,8 @@ msgid "Lost your password?"
 msgstr "Glemt passordet ditt?"
 
 #: login.php:242
-#, fuzzy
 msgid "Request new password"
-msgstr "Brukernavn og passord"
+msgstr "Be om nytt passord"
 
 #: login_register.php:58
 #: login_register.php:80
@@ -9843,6 +9733,11 @@ msgstr "Brukernavn og passord"
 #: login_register.php:94
 msgid "Lost password request"
 msgstr "Nytt passord"
+
+#: login_register.php:126
+#: login_register.php:420
+msgid "Hello %s ..."
+msgstr "Hei %s ..."
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
@@ -9856,19 +9751,27 @@ msgstr "Anbefaling:"
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
 msgstr "Vennligst klikk på linken under. Logg deg inn med det nye passordet. Du bør så angi et nytt passord for å verne om sikkerheten til dataene dine."
 
+#: login_register.php:139
+#, php-format
+msgid "Data request at %s"
+msgstr "Data anmodning fra %s"
+
+#: login_register.php:143
+#, php-format
+msgid "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>%s</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security."
+msgstr "Hei...<br /><br />En epost med det nye passordet ble sendt til epost-adressen (%s).<br /><br />Vær vennlig å sjekk epost-kontoen din om noen minutter.<br /><br />Anbefaling:<br /><br />Etter at du har mottatt eposten, bør du logge deg inn på dette nettstedet med ditt nye passord og endre det. Dette bør gjøres for å verne om sikkerheten til dataene din."
+
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
 msgstr "Vennligst angi slektskapet ditt til noen i slektsbasen i feltet Kommentarer."
 
 #: login_register.php:287
-#, fuzzy
 msgid "Desired user name"
-msgstr "Database-brukernavn"
+msgstr "Ønsket brukeravn"
 
 #: login_register.php:288
-#, fuzzy
 msgid "Desired password"
-msgstr "Database-passord"
+msgstr "Ønsket passord"
 
 #: login_register.php:316
 #: login_register.php:433
@@ -9891,6 +9794,11 @@ msgstr "Bekreftelse av ny konto"
 msgid "Back"
 msgstr "Tilbake"
 
+#: login_register.php:421
+#, php-format
+msgid "A request was received at %s to create a PhpGedView account with your email address %s."
+msgstr "En anmodning er gjort på ( %s ) om å få en brukerkonto med din epost-adresse ( %s )."
+
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
 msgstr "Opplysningene om deg ble gitt ved forespørsel om brukerkonto."
@@ -9912,11 +9820,20 @@ msgstr "Dersom du ikke har bedt om å få en konto, kan du bare slette denne e-p
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
 msgstr "Du vil ikke få tilsendt flere e-poster herfra, fordi kontoen vil bli slettet etter 7 dager dersom den ikke bekreftes."
 
+#: login_register.php:437
+#, php-format
+msgid "Your registration at %s"
+msgstr "Din registrering hos %s"
+
 #: login_register.php:444
 #: login_register.php:565
-#, fuzzy
 msgid "Hello Administrator ..."
-msgstr "_Brukere og rettigheter"
+msgstr "Hei administrator ..."
+
+#: login_register.php:445
+#, php-format
+msgid "A prospective user registered himself with PhpGedView at %s."
+msgstr "En ny bruker har registreret seg hos ( %s )."
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
@@ -9930,18 +9847,47 @@ msgstr "Så snart brukeren har bekreftet kontoen, vil du få en epost der du bli
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
 msgstr "Så snart brukeren har bekreftet kontoen, vil du få en epost om dette.  Brukeren vil nå kunne logge seg inn uten at du trenger å gjøre noe."
 
+#: login_register.php:462
+#, php-format
+msgid "New registration at %s"
+msgstr "Ny registrering på %s"
+
+#: login_register.php:473
+#, php-format
+msgid "Hello %s ...<br />Thank you for your registration."
+msgstr "Hei %s og takk for søknaden din om å få en brukerkonto."
+
+#: login_register.php:475
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password."
+msgstr "Du vil nå få tilsendt en bekreftelses-epost til adressen ( %s ).<br />Ved hjelp av denne e-posten kan du aktivere kontoen din. Dersom du ikke aktiverer kontoen din innen 7 dager, vil den bli slettet (du kan registrere kontoen igjen etter de 7 dagene, om du ønsker det). For å logge deg inn på dette nettstedet, kreves det at du oppgir et brukernavn og passord."
+
+#: login_register.php:476
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password."
+msgstr "Vi vil nå sende en bekreftelse på e-post til adressen ( %s ). Du må bekrefte ønske ditt om å få en konto ved å følge instruksene i i e-posten. Dersom du ikke bekrefter ønsket om å få en konto innen 7 dager, vil ønsket om en konto bli avslått automatisk.  Dersom senere ønsker å få en ny konto, må du søke på nytt.<br /><br />Etter at du har fulgt instruksjonene i bekreftelses-e-posten, kan du logge deg inn.  For å logge deg inn på denne nettsiden, kreves det at du oppgir brukernavnrt og passordet ditt."
+
 #: login_register.php:506
 #: login_register.php:513
 #: login_register.php:541
 #: login_register.php:544
-#, fuzzy
 msgid "User verification"
-msgstr "_Brukere og rettigheter"
+msgstr "Bruker-godkjenning"
 
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
 msgstr "Send"
+
+#: login_register.php:546
+#, php-format
+msgid "The data for the user <b>%s</b> was checked."
+msgstr "Informasjonen om brukeren <b>%s</b> er sjekket."
+
+#: login_register.php:566
+#, php-format
+msgid "User %s (%s) has confirmed his request for an account."
+msgstr "%s ( %s ) har bekreftet ønsket om å få en brukerkonto."
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
@@ -9950,6 +9896,11 @@ msgstr "Klikk på linken \"Admin\" på siden \"Logg inn\" på PhpGedView for å 
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
 msgstr "Du behøver ikke forta deg noe; brukeren kan nå logge seg inn."
+
+#: login_register.php:581
+#, php-format
+msgid "New user at %s"
+msgstr "Ny bekreftelse fra %s"
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
@@ -10010,9 +9961,8 @@ msgid "Ban Sites by IP"
 msgstr "Bannlys nettsteder ved IP"
 
 #: manageservers.php:325
-#, fuzzy
 msgid "Remote Servers"
-msgstr "Fjern person"
+msgstr "Eksterne nettsteder som er lagt til"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
@@ -10028,9 +9978,8 @@ msgid "Site URL/IP"
 msgstr "URL/IP til nettsted"
 
 #: manageservers.php:430
-#, fuzzy
 msgid "Add new site"
-msgstr "Legg til en ny note"
+msgstr "Legg til nytt nettsted"
 
 #: media.php:92
 msgid "Directory could not be created"
@@ -10050,9 +9999,8 @@ msgstr "Kjøretidsbegrensning er overskredet.  Forsøk igjen med en mindre mappe
 
 #: media.php:181
 #: media.php:189
-#, fuzzy
 msgid "Permissions Set"
-msgstr "Sett mediatilganger"
+msgstr "Tilganger er gitt"
 
 #: media.php:183
 #: media.php:191
@@ -10088,9 +10036,8 @@ msgstr "Mappene for media og minityrbilder er nå slettet."
 #: media.php:415
 #: media.php:417
 #: media.php:418
-#, fuzzy
 msgid "Media directory not removed."
-msgstr "Antall mappenivåer for multimedia"
+msgstr "Media-mappen ble ikke slettet."
 
 #: media.php:420
 #: media.php:421
@@ -10159,14 +10106,12 @@ msgstr "Behold URL-linker"
 
 #: media.php:829
 #: media.php:830
-#, fuzzy
 msgid "Add Media"
-msgstr "Finn media"
+msgstr "Legg til bilder/andre medier"
 
 #: media.php:843
-#, fuzzy
 msgid "Missing thumbnails"
-msgstr "Lag manglende miniatyrbilder"
+msgstr "Manglende miniatyrbilder"
 
 #: media.php:939
 msgid "Are you sure you want to delete this folder?"
@@ -10177,23 +10122,20 @@ msgid "Are you sure you want to delete this file?"
 msgstr "Er du sikker på at du vil slette denne filen?"
 
 #: media.php:1038
-#, fuzzy
 msgid "Delete file"
-msgstr "Slett navn"
+msgstr "Slett fil"
 
 #: media.php:1046
 msgid "Are you sure you want to remove this object from the database?"
 msgstr "Er du sikker på at du vil fjerne dette objektet fra slektsbasen?"
 
 #: media.php:1046
-#, fuzzy
 msgid "Remove object"
-msgstr "Fjern person"
+msgstr "Fjern objekt"
 
 #: media.php:1081
-#, fuzzy
 msgid "Create thumbnail"
-msgstr "Lag manglende miniatyrbilder"
+msgstr "Lag miniatyrbilde(r)"
 
 #: media.php:1170
 msgid "The media folder is corrupted."
@@ -10212,15 +10154,13 @@ msgid "Privacy restrictions prevent you from viewing this item"
 msgstr "Personvernet forhindrer visning av dette mediaobjektet "
 
 #: mediafirewall.php:530
-#, fuzzy
 msgid "This media file is broken and cannot be watermarked"
-msgstr "Opplysninger om denne personen er privat."
+msgstr "Denne mediafilen er skadet og kan ikke vannmerkes"
 
 #: medialist.php:53
 #: medialist.php:57
-#, fuzzy
 msgid "MultiMedia Objects"
-msgstr "Mappe for Multimedia"
+msgstr "Bilder eller andre medier"
 
 #: medialist.php:131
 msgid "Media objects per page"
@@ -10256,19 +10196,16 @@ msgstr "Vis detaljer"
 
 #: medialist.php:404
 #: medialist.php:408
-#, fuzzy
 msgid "Media Format"
-msgstr "Format på kalender"
+msgstr "Media-filtype"
 
 #: mediaviewer.php:104
-#, fuzzy
 msgid "Download File"
-msgstr "Laste ned (download) slektsfil (GEDCOM)"
+msgstr "Last ned fil"
 
 #: mediaviewer.php:143
-#, fuzzy
 msgid "The image relates to:"
-msgstr "Sjekk ekteskapsbånd"
+msgstr "Bildet er relatert til"
 
 #: mediaviewer.php:147
 msgid "Total links"
@@ -10285,6 +10222,10 @@ msgstr "Det ble ikke oppgitt en annen bruker som mottaker. - Kan ikke fortsette.
 msgid "Please enter a valid email address."
 msgstr "Tast inn en gyldig epost-adresse."
 
+#: message.php:138
+msgid "Message successfully sent to %s"
+msgstr "Beskjed sendt"
+
 #: message.php:167
 msgid "Please enter a message subject."
 msgstr "Tast inn en tekst i feltet for emne."
@@ -10296,6 +10237,16 @@ msgstr "Skriv inn en beskjed / tekst før den sendes."
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
 msgstr "<b>PS:</b> Privat informasjon om levende personer vil bare bli gitt til slektninger og nære venner.  Du vil bli spurt om å bekrefte din tilknytning / slektskap før du vil få se private data.  Av og til kan informasjon om døde personer også være private.  Hvis dette er tilfelle, er det på grunn av at det ikke funnet nok informasjon om personen til å avgjøre om vedkommende lever eller ikke, eller andre opplysninger om personen.<br /><br />Før du gjør en foresprsel, vennligst sjekk opp at det er riktig person ved å se på datoer, steder og nære slektninger.  Dersom du legger inn endringer i slektsdataene, vær vennlig å oppgi kildene der du fant dataene."
+
+#: message.php:192
+#, php-format
+msgid "This message will be sent to %s"
+msgstr "- Beskjeden vil bli sendt til %s"
+
+#: message.php:193
+#, php-format
+msgid "This user prefers to receive messages in %s"
+msgstr "- som ønsker at du skriver beskjeden på %s"
 
 #: message.php:197
 msgid "Your Name:"
@@ -10314,9 +10265,8 @@ msgid "Subject:"
 msgstr "Emne:"
 
 #: message.php:211
-#, fuzzy
 msgid "Body:"
-msgstr "Tekst spørsmål & svar"
+msgstr "Din beskjed:"
 
 #: message.php:218
 msgid "Message Deleted"
@@ -10331,9 +10281,8 @@ msgid "Unknown module type."
 msgstr "Ukjent modul."
 
 #: module_admin.php:42
-#, fuzzy
 msgid "Show to public"
-msgstr "Vis faktaikoner"
+msgstr "Vis til alle"
 
 #: module_admin.php:46
 msgid "Show only to authenticated users"
@@ -10390,9 +10339,8 @@ msgstr "Slett navn"
 #: module_admin.php:252
 #: module_admin.php:303
 #: module_admin.php:354
-#, fuzzy
 msgid "Description"
-msgstr "META tag: Beskrivelse"
+msgstr "Beskrivelse"
 
 #: module_admin.php:205
 msgid "Version / PGV"
@@ -10426,9 +10374,8 @@ msgstr ""
 
 #: note.php:131
 #: repo.php:103
-#, fuzzy
 msgid "Link to an existing Media item"
-msgstr "Legg til en ny bilde- / mediefil"
+msgstr "Lenke til et eksisterende Mediaobjekt"
 
 #: notelist.php:31
 #: notelist.php:32
@@ -10436,10 +10383,13 @@ msgstr "Legg til en ny bilde- / mediefil"
 msgid "Shared Notes"
 msgstr ""
 
+#: pedigree.php:52
+msgid "%s Generation Pedigree Chart"
+msgstr "Anetre - %s slektsledd"
+
 #: pedigree.php:90
-#, fuzzy
 msgid "Orientation"
-msgstr "Presentasjonsstil"
+msgstr "Retning"
 
 #: pedigree.php:125
 #, fuzzy
@@ -10459,9 +10409,8 @@ msgstr "Stedsnavn"
 #: placelist.php:55
 #: placelist.php:59
 #: placelist.php:433
-#, fuzzy
 msgid "Place List"
-msgstr "Navneliste"
+msgstr "Alle stedsnavn"
 
 #: placelist.php:118
 msgid "Place connections found"
@@ -10476,9 +10425,8 @@ msgstr "Lands-/toppnivå"
 #: placelist.php:432
 #: search.php:298
 #: search.php:337
-#, fuzzy
 msgid "Place"
-msgstr "Side"
+msgstr "Sted"
 
 #: placelist.php:309
 msgid "Place Hierarchy after"
@@ -10489,9 +10437,8 @@ msgid "View all records found in this place"
 msgstr " Vis alle personer / familier knyttet til stedet "
 
 #: placelist.php:468
-#, fuzzy
 msgid "Total Unique Places"
-msgstr "Rydd opp i stedene"
+msgstr "Antall unike steder"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
@@ -10522,9 +10469,8 @@ msgstr "Oppdater"
 
 #: printlog.php:91
 #: printlog.php:113
-#, fuzzy
 msgid "Date and time"
-msgstr "Database-navn"
+msgstr "Dato og tid"
 
 #: printlog.php:91
 #: printlog.php:113
@@ -10536,9 +10482,8 @@ msgid "Log Message"
 msgstr "Logg-melding"
 
 #: printlog.php:113
-#, fuzzy
 msgid "Search type"
-msgstr "Foretrekk kilder til fakta"
+msgstr "Søketype"
 
 #: printlog.php:113
 msgid "Query"
@@ -10703,9 +10648,8 @@ msgstr "%1$s er %2$s til %3$s."
 
 #: relationship.php:485
 #: relationship.php:564
-#, fuzzy
 msgid "Relationship Chart"
-msgstr "Bruk personvern på slektskap"
+msgstr "Slektskapsdiagram"
 
 #: relationship.php:535
 msgid "and"
@@ -10721,9 +10665,8 @@ msgstr "Person 2"
 
 #: relationship.php:677
 #: relationship.php:698
-#, fuzzy
 msgid "Show path"
-msgstr "Bane for opplastning"
+msgstr "Slektslinje"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
@@ -10739,9 +10682,8 @@ msgid "Choose a report to run"
 msgstr "Velg rapport"
 
 #: reportengine.php:154
-#, fuzzy
 msgid "Select report"
-msgstr "Slett oppbevaringssted"
+msgstr "Neste >>"
 
 #: reportengine.php:170
 #: reportengine.php:219
@@ -10749,18 +10691,21 @@ msgid "Enter report values"
 msgstr "Oppsett for rapport"
 
 #: reportengine.php:220
-#, fuzzy
 msgid "Selected Report"
-msgstr "Slett oppbevaringssted"
+msgstr "Valgt rapport"
 
 #: reportengine.php:312
 msgid "Select a date"
 msgstr "Velg en dato"
 
 #: reportengine.php:344
-#, fuzzy
 msgid "Download report"
-msgstr "Laste ned (download) slektsfil (GEDCOM)"
+msgstr "Lagre rapport"
+
+#: rss.php:110
+#, php-format
+msgid "News and links from the %s site"
+msgstr "Nyheter og lenker fra nettstedet %s"
 
 #: rss.php:116
 #: rss.php:119
@@ -10774,9 +10719,8 @@ msgstr "Oppføringen er laget av PhpGedView #VERSION#"
 #: rss.php:289
 #: rss.php:309
 #: rss.php:328
-#, fuzzy
 msgid "genealogy"
-msgstr "Kontaktperson for slektsspørsmål"
+msgstr "Slektsforskning"
 
 #: rss.php:321
 msgid "Feed not available"
@@ -10834,9 +10778,8 @@ msgstr "Vise i tillegg"
 
 #: search.php:246
 #: search.php:387
-#, fuzzy
 msgid "Show related persons/families"
-msgstr "Vis døde personer"
+msgstr "Beslektede personer / familier"
 
 #: search.php:270
 msgid "Replace with"
@@ -10851,14 +10794,12 @@ msgid "Whole words only"
 msgstr ""
 
 #: search.php:318
-#, fuzzy
 msgid "Given name"
-msgstr "Avsendernavn"
+msgstr "Fornavn"
 
 #: search.php:329
-#, fuzzy
 msgid "Last name"
-msgstr "Brukernavn"
+msgstr "Etternavn"
 
 #: search.php:345
 #, fuzzy
@@ -10866,18 +10807,16 @@ msgid "Year"
 msgstr "Toppfelt"
 
 #: search.php:354
-#, fuzzy
 msgid "Soundex type:"
-msgstr "Foretrekk kilder til fakta"
+msgstr "Metode"
 
 #: search.php:369
 msgid "Individuals'<br />names to print:"
 msgstr "Vise"
 
 #: search.php:374
-#, fuzzy
 msgid "Names with hit"
-msgstr "Navneliste"
+msgstr "Navn med antall treff"
 
 #: search.php:377
 msgid "All names"
@@ -10887,9 +10826,8 @@ msgstr "Alle navn"
 #: search.php:578
 #: search.php:590
 #: search.php:604
-#, fuzzy
 msgid "Multi Site Search"
-msgstr "Vis Multi-Site søk"
+msgstr "Søk på flere nettsteder"
 
 #: search.php:404
 msgid "Sites to search"
@@ -10908,14 +10846,12 @@ msgid "search"
 msgstr "søk"
 
 #: search.php:455
-#, fuzzy
 msgid "Advanced site search"
-msgstr "Avanserte navnefakta"
+msgstr "Avansert søk på nettsteder"
 
 #: search.php:461
-#, fuzzy
 msgid "Name: "
-msgstr "Navneliste"
+msgstr "Navn: "
 
 #: search.php:473
 msgid "Birth date: "
@@ -10934,14 +10870,12 @@ msgid "Death Place: "
 msgstr "Dødssted: "
 
 #: search.php:505
-#, fuzzy
 msgid "Gender: "
-msgstr "Avsendernavn"
+msgstr "Kjønn: "
 
 #: search.php:522
-#, fuzzy
 msgid "Databases to search in"
-msgstr "Database-brukernavn"
+msgstr "Slektsbase det skal søkes i"
 
 #: search.php:548
 msgid "Results per page"
@@ -10954,17 +10888,15 @@ msgstr "Andre søk"
 #: search.php:569
 #: search.php:585
 #: search.php:617
-#, fuzzy
 msgid "Soundex Search"
-msgstr "Vis Multi-Site søk"
+msgstr "Soundex-søk"
 
 #: search.php:570
 #: search.php:586
 #: search.php:597
 #: search.php:618
-#, fuzzy
 msgid "Advanced Search"
-msgstr "Avanserte navnefakta"
+msgstr "Avansert søk"
 
 #: searchhelp.php:89
 msgid "Any word"
@@ -10979,28 +10911,24 @@ msgid "Exact phrase"
 msgstr "Nøyaktig"
 
 #: searchhelp.php:100
-#, fuzzy
 msgid "Search in"
-msgstr "Søketekst"
+msgstr "Søk i"
 
 #: searchhelp.php:104
-#, fuzzy
 msgid "User Help"
-msgstr "Brukernavn"
+msgstr "Brukerhjelp"
 
 #: searchhelp.php:107
 msgid "Modules Help"
 msgstr "Modulhjelp"
 
 #: searchhelp.php:112
-#, fuzzy
 msgid "Administrator Help"
-msgstr "_Administrasjon"
+msgstr "Administrator-hjelp"
 
 #: searchhelp.php:126
-#, fuzzy
 msgid "Close window"
-msgstr "Lukk automatisk vindu for redigering"
+msgstr "Lukk vindu"
 
 #: searchhelp.php:197
 msgid "Results found:"
@@ -11042,9 +10970,8 @@ msgstr "år"
 #: search_advanced.php:244
 #: search_advanced.php:266
 #: search_advanced.php:281
-#, fuzzy
 msgid "Begins with"
-msgstr "Boksbredde"
+msgstr "begynner med"
 
 #: search_advanced.php:168
 #: search_advanced.php:230
@@ -11073,9 +11000,8 @@ msgstr ""
 #: search_engine.php:60
 #: search_engine.php:69
 #: uploadgedcom.php:1106
-#, fuzzy
 msgid "Welcome page"
-msgstr "Velkomsttekst<br />på siden for å logge inn hvis <br />\"Krev at besøkende <br /><b>MÅ</b> logge inn\" = Ja"
+msgstr "Hovedside"
 
 #: statistics.php:57
 msgid "Total males"
@@ -11320,9 +11246,8 @@ msgstr ""
 
 #: statistics.php:372
 #: statisticsplot.php:837
-#, fuzzy
 msgid "Individuals with sources"
-msgstr "GEDCOM ID prefiks"
+msgstr "Personer med kilder"
 
 #: statistics.php:373
 #: statisticsplot.php:843
@@ -11394,14 +11319,12 @@ msgstr "Alder i året for første ekteskap"
 
 #: statistics.php:566
 #: statisticsplot.php:785
-#, fuzzy
 msgid "Number of children"
-msgstr "Vis barn i annen rekkefølge"
+msgstr "Antall barn"
 
 #: statistics.php:570
-#, fuzzy
 msgid "Individual distribution"
-msgstr "GEDCOM ID prefiks"
+msgstr "Personfordelingn"
 
 #: statistics.php:574
 msgid "Birth by country"
@@ -11471,14 +11394,12 @@ msgid "Map type"
 msgstr "Karttype"
 
 #: statistics.php:642
-#, fuzzy
 msgid "Individual distribution chart"
-msgstr "Fakta å legge til for personer"
+msgstr "Personfordelingsdiagram"
 
 #: statistics.php:644
-#, fuzzy
 msgid "Surname distribution chart"
-msgstr "Etternavnstradisjon"
+msgstr "Fordeling av etternavn-diagram"
 
 #: statistics.php:657
 msgid "Geographical area"
@@ -11517,9 +11438,8 @@ msgid "none"
 msgstr "ingen"
 
 #: statistics.php:679
-#, fuzzy
 msgid "gender"
-msgstr "Toppfelt"
+msgstr "kjønn"
 
 #: statistics.php:683
 msgid "date periods"
@@ -11540,9 +11460,8 @@ msgstr "antall for en familie"
 
 #: statistics.php:727
 #: statisticsplot.php:791
-#, fuzzy
 msgid "percentage"
-msgstr "Rammen Siste endringer"
+msgstr "prosent"
 
 #: statistics.php:735
 msgid "show the plot"
@@ -11658,9 +11577,8 @@ msgid "..."
 msgstr "..."
 
 #: timeline.php:38
-#, fuzzy
 msgid "PhpGedView Timeline"
-msgstr "PhpGedView URL"
+msgstr "PhpGedView tidslinje"
 
 #: timeline.php:298
 msgid "Show Age Marker"
@@ -11688,6 +11606,12 @@ msgstr "- <i><b>PS!</b>  Du kan flytte på boksene under ved hjelp av musa!</i> 
 #: useradmin.php:1022
 msgid "Continue"
 msgstr "Fortsett"
+
+#: uploadgedcom.php:251
+#: uploadgedcom.php:590
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, is not writable. Please check attributes and access rights."
+msgstr "Slektsfilen [%s], er ikke skrivbar. Sjekk attributter og tilgangsrettigheter."
 
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
@@ -11752,9 +11676,8 @@ msgid "Convert this ANSI encoded GEDCOM to UTF-8?"
 msgstr "Konvertere fra ANSI til UTF-8 tegnsett?"
 
 #: uploadgedcom.php:737
-#, fuzzy
 msgid "Change Individual ID to:"
-msgstr "_GEDCOM: Endre ID til person(er) til ..."
+msgstr "Endre personID til:"
 
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
@@ -11762,9 +11685,8 @@ msgid "Do not change"
 msgstr "Ikke gjør endringer"
 
 #: uploadgedcom.php:795
-#, fuzzy
 msgid "Import complete"
-msgstr "Valg for import"
+msgstr "Import ferdig"
 
 #: uploadgedcom.php:795
 #: uploadgedcom.php:844
@@ -11782,9 +11704,8 @@ msgid "Import Progress..."
 msgstr "Import utført..."
 
 #: uploadgedcom.php:904
-#, fuzzy
 msgid "Reading GEDCOM file"
-msgstr "Tittel til Slektsbasen"
+msgstr "Leser slektsfilen"
 
 #: uploadgedcom.php:908
 msgid "The status bars below will let you know how the Import is progressing.  If the time limit runs out the Import will be stopped and you will be asked to press a <b>Continue</b> button.  If you don't see the <b>Continue</b> button, you must restart the Import with a smaller time limit value."
@@ -11796,14 +11717,12 @@ msgstr "Maks utføringstid for en handling er nådd !<br />- Klikk på knappen \
 
 #: uploadgedcom.php:1104
 #: uploadgedcom.php:1117
-#, fuzzy
 msgid "Execution time:"
-msgstr "Logg-inn timeout"
+msgstr "Utføringstid:"
 
 #: uploadgedcom.php:1105
-#, fuzzy
 msgid "Click here to go to the Pedigree tree."
-msgstr "Klikk her for å fortsette"
+msgstr "Klikk her for å gå til slektstreet."
 
 #: uploadgedcom.php:1118
 msgid "Bytes read:"
@@ -11814,9 +11733,18 @@ msgid "Found record"
 msgstr "dataposter funnet"
 
 #: uploadgedcom.php:1138
-#, fuzzy
 msgid "Import Statistics"
-msgstr "Valg for import"
+msgstr "Statistikk for importen"
+
+#: useradmin.php:194
+#, php-format
+msgid "Approval of account at %s"
+msgstr "Godkjenning av konto hos %s"
+
+#: useradmin.php:195
+#, php-format
+msgid "The administrator at the PhpGedView site %s has approved your application for an account.  You may now login by accessing the following link: %s#"
+msgstr ""
 
 #: useradmin.php:269
 #: useradmin.php:274
@@ -11827,9 +11755,8 @@ msgstr "Oppdater brukerkonto"
 #: useradmin.php:345
 #: useradmin.php:639
 #: useradmin.php:799
-#, fuzzy
 msgid "User can administer"
-msgstr "_Brukere og rettigheter"
+msgstr "Bruker kan administrere"
 
 #: useradmin.php:362
 #: useradmin.php:800
@@ -11838,9 +11765,8 @@ msgstr "Nivå for rettigheter"
 
 #: useradmin.php:390
 #: useradmin.php:823
-#, fuzzy
 msgid "Automatically accept changes made by this user"
-msgstr "Vis utvidede kilder automatisk"
+msgstr "Godkjenn automatisk endringer gjort av denne brukeren"
 
 #: useradmin.php:392
 #: useradmin.php:825
@@ -11849,9 +11775,8 @@ msgstr "Begrens tilgangen til slektninger"
 
 #: useradmin.php:394
 #: useradmin.php:827
-#, fuzzy
 msgid "Max relationship privacy path length"
-msgstr "Maks steglengde for slektskap"
+msgstr "Maks antall ledd for personvern for slektninger"
 
 #: useradmin.php:397
 #: useradmin.php:592
@@ -11867,9 +11792,8 @@ msgstr "Godkjent bruker<br />[av Admin]"
 
 #: useradmin.php:457
 #: useradmin.php:883
-#, fuzzy
 msgid "Allow this user to edit his account information"
-msgstr "Gir besøkende muligheten til å be om en brukerkonto"
+msgstr "Gi denne brukeren rettighet til å endre brukerkontoen sin"
 
 #: useradmin.php:476
 #: useradmin.php:903
@@ -11883,28 +11807,24 @@ msgstr "Advarsel fra admin om dato"
 
 #: useradmin.php:560
 #: useradmin.php:1087
-#, fuzzy
 msgid "User List"
-msgstr "Navneliste"
+msgstr "Aktiverte brukere"
 
 #: useradmin.php:565
 #: useradmin.php:688
 #: useradmin.php:754
 #: useradmin.php:1088
-#, fuzzy
 msgid "Add a new user"
-msgstr "Legg til en ny note"
+msgstr "Legg til ny bruker"
 
 #: useradmin.php:567
 #: useradmin.php:690
-#, fuzzy
 msgid "Back to User Administration"
-msgstr "_Brukere og rettigheter"
+msgstr "Tilbake til Brukere og rettigheter"
 
 #: useradmin.php:576
-#, fuzzy
 msgid " Languages"
-msgstr "Språk"
+msgstr " Språk"
 
 #: useradmin.php:577
 #: useradmin.php:588
@@ -11917,9 +11837,8 @@ msgid "Date registered"
 msgstr "Dato registert"
 
 #: useradmin.php:591
-#, fuzzy
 msgid "Last logged in"
-msgstr "Brukere som er pålogget"
+msgstr "Sist logget inn"
 
 #: useradmin.php:661
 msgid "Never"
@@ -11939,15 +11858,13 @@ msgid "Access"
 msgstr "Innsyn"
 
 #: useradmin.php:817
-#, fuzzy
 msgid "Admin GEDCOM"
-msgstr "Legg til en slektsfil"
+msgstr "Administrere"
 
 #: useradmin.php:930
 #: useradmin.php:1091
-#, fuzzy
 msgid "Cleanup users"
-msgstr "Rydd opp i stedene"
+msgstr "Rydd opp i brukere"
 
 #: useradmin.php:937
 msgid "Number of months since the last login for a user's account to be considered inactive: "
@@ -11974,9 +11891,8 @@ msgid "Nothing found to cleanup"
 msgstr "Fant ikke noe å rydde"
 
 #: useradmin.php:1037
-#, fuzzy
 msgid "Deleted user: "
-msgstr "Slett navn"
+msgstr "Slettet bruker: "
 
 #: useradmin.php:1045
 msgid "Unset GEDCOM rights for "
@@ -12007,20 +11923,17 @@ msgid "Send message to users who have not logged in for 6 months"
 msgstr "Send beskjed til brukere som ikke har logget seg inn siste 6 måneder"
 
 #: useradmin.php:1153
-#, fuzzy
 msgid "Total number of users"
-msgstr "Maks antall etternavn"
+msgstr "Totalt antall brukere"
 
 #: useradmin.php:1156
 #: useradmin.php:1157
-#, fuzzy
 msgid "Site Administrators"
-msgstr "_Brukere og rettigheter"
+msgstr "Administratorer til nettstedet"
 
 #: useradmin.php:1160
-#, fuzzy
 msgid "GEDCOM Administrators"
-msgstr "_GEDCOM: Siden Administrasjon"
+msgstr "Administratorer til slektsfilen"
 
 #: useradmin.php:1172
 #: useradmin.php:1173
@@ -12034,24 +11947,20 @@ msgstr "Ikke bekreftet av bruker"
 
 #: useradmin.php:1182
 #: useradmin.php:1183
-#, fuzzy
 msgid "Unverified by Administrator"
-msgstr "_Brukere og rettigheter"
+msgstr "Ikke bekreftet av administrator"
 
 #: usermigrate.php:58
-#, fuzzy
 msgid "PhpGedView Configuration File"
-msgstr "_GEDCOM: Konfigurasjonsfil"
+msgstr "PhpGedView konfigurasjonsfil"
 
 #: usermigrate.php:59
-#, fuzzy
 msgid "GEDCOM Files"
-msgstr "Tittel til Slektsbasen"
+msgstr "GEDCOM-filer"
 
 #: usermigrate.php:60
-#, fuzzy
 msgid "GEDCOM Settings, Configuration and Privacy files"
-msgstr "_GEDCOM: Konfigurasjonsfil"
+msgstr "GEDCOM-innstillinger, konfigurasjon og personvern-filer"
 
 #: usermigrate.php:61
 msgid "GEDCOM SearchLogs and PhpGedView Logfiles"
@@ -12062,9 +11971,8 @@ msgid "User definitions, Block settings, Favorites, Messages, News"
 msgstr "Bruker-definisjoner, ramme-innstillinger, favoritter, beskjeder og nyheter"
 
 #: usermigrate.php:63
-#, fuzzy
 msgid "Media files"
-msgstr "Hent (upload) bilde- / mediefiler"
+msgstr "Mediafiler"
 
 #: usermigrate.php:64
 msgid "Make Backup"
@@ -12099,14 +12007,12 @@ msgid "One or more files already exist. Do you want to overwrite them?"
 msgstr "En eller flere filer finnes fra før. Ønsker du å overskrive dem?"
 
 #: usermigrate.php:172
-#, fuzzy
 msgid "Importing users"
-msgstr "Valg for import"
+msgstr "Importerer brukere"
 
 #: usermigrate.php:174
-#, fuzzy
 msgid "File <i>authenticate.php</i> not found in your index directory. Migration is cancelled."
-msgstr "Dette verktøyet vil importere filen <i>authenticate.php</i> og andre <i>.dat</i> filer fra index-mappen din inn i databasen din."
+msgstr "Fant ikke filen <i>authenticate.php</i> katalogen ./index. Overføringen er avbrutt."
 
 #: usermigrate.php:179
 #: usermigrate.php:191
@@ -12137,43 +12043,41 @@ msgid "No Favorites seem to be present in the system."
 msgstr "Kunne ikke finne noen \"Favoritter\" lagret i systemet."
 
 #: usermigrate.php:204
-#, fuzzy
 msgid "Importing news"
-msgstr "Valg for import"
+msgstr "Importerer nyheter"
 
 #: usermigrate.php:206
 msgid "No News seems to be present in the system."
 msgstr "Kunne ikke finne noen \"Nyheter\" lagret i systemet."
 
 #: usermigrate.php:213
-#, fuzzy
 msgid "Importing blocks"
-msgstr "Valg for import"
+msgstr "Importerer rammer"
 
 #: usermigrate.php:215
 msgid "No Blocks seems to be present in the system."
 msgstr "Kunne ikke finne noen \"Rammer\" lagret i systemet."
 
+#: blocks/block_htmlplus.php:40
+msgid "Advanced HTML"
+msgstr "Avansert HTML"
+
 #: blocks/charts.php:40
-#, fuzzy
 msgid "Charts Block"
-msgstr "Utforming"
+msgstr "Diagramblokken"
 
 #: blocks/charts.php:167
 #: blocks/gedcom_favorites.php:130
-#, fuzzy
 msgid "No such ID exists in this GEDCOM file."
-msgstr "Synkroniser endringer til GEDCOM-filen"
+msgstr "Ukjent ID i denne slektsbasen."
 
 #: blocks/gedcom_block.php:36
-#, fuzzy
 msgid "GEDCOM Welcome"
-msgstr "Tittel til Slektsbasen"
+msgstr "Rammen Slektsbase-info"
 
 #: blocks/gedcom_favorites.php:36
-#, fuzzy
 msgid "GEDCOM Favorites"
-msgstr "Tittel til Slektsbasen"
+msgstr "Rammen Favoritter i slektsbasen"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
@@ -12184,9 +12088,8 @@ msgid "Are you sure you want to remove this item from your list of Favorites?"
 msgstr "Er du sikker på at du vil fjerne denne personen fra favorittene dine?"
 
 #: blocks/gedcom_favorites.php:155
-#, fuzzy
 msgid "Add a new favorite"
-msgstr "Legg til en ny note"
+msgstr "Legg til en ny favoritt"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
@@ -12201,9 +12104,8 @@ msgid "Enter an optional note about this favorite"
 msgstr "Beskrivelse av denne favoritten (valgfritt)"
 
 #: blocks/gedcom_news.php:36
-#, fuzzy
 msgid "GEDCOM News"
-msgstr "Tittel til Slektsbasen"
+msgstr "Rammen Nyheter for slektsbasen"
 
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
@@ -12219,86 +12121,94 @@ msgid "Are you sure you want to delete this News entry?"
 msgstr "Er du sikker på at du vil slette denne nyhetsartiklen?"
 
 #: blocks/gedcom_news.php:165
-#, fuzzy
 msgid "Add a News article"
-msgstr "Legg til en ny note"
+msgstr "Legg inn et nyhetsinnlegg"
 
 #: blocks/gedcom_news.php:196
-#, fuzzy
 msgid "No limit"
-msgstr "Maks Minnegrense"
+msgstr "Aldri"
 
 #: blocks/gedcom_news.php:197
-#, fuzzy
 msgid "Age of item"
-msgstr "Legg til FAQ-elementer"
+msgstr "Alder på artikkel"
 
 #: blocks/gedcom_news.php:198
-#, fuzzy
 msgid "Number of items"
-msgstr "Antall dager som skal vises"
+msgstr "Antall artikler"
 
 #: blocks/gedcom_stats.php:40
 #: blocks/gedcom_stats.php:91
 #: blocks/rss_block.php:70
-#, fuzzy
 msgid "GEDCOM Statistics"
-msgstr "Tittel til Slektsbasen"
+msgstr "Rammen Statistikk for slektsbasen"
 
-#: blocks/gedcom_stats.php:145
-#: blocks/gedcom_stats.php:330
+#: blocks/gedcom_stats.php:107
+#, php-format
+msgid "This GEDCOM was created using <b>%s %s</b>"
+msgstr "Denne slektsfila (GEDCOM) ble laget med <b>%s %s</b>"
+
+#: blocks/gedcom_stats.php:112
+#, php-format
+msgid "This GEDCOM was created on <b>%s</b>"
+msgstr "Denne slektsfila (GEDCOM) ble laget den <b>%s</b>"
+
+#: blocks/gedcom_stats.php:114
+#, php-format
+msgid " on <b>%s</b>"
+msgstr " den <b>%s</b>"
+
+#: blocks/gedcom_stats.php:143
+#: blocks/gedcom_stats.php:328
 msgid "Total users"
 msgstr "Antall brukere"
 
-#: blocks/gedcom_stats.php:159
-#: blocks/gedcom_stats.php:277
+#: blocks/gedcom_stats.php:157
+#: blocks/gedcom_stats.php:275
 msgid "Earliest birth year"
 msgstr "Tidligste fødselsår"
 
-#: blocks/gedcom_stats.php:166
-#: blocks/gedcom_stats.php:285
+#: blocks/gedcom_stats.php:164
+#: blocks/gedcom_stats.php:283
 msgid "Latest birth year"
 msgstr "Siste fødselsår"
 
-#: blocks/gedcom_stats.php:173
-#: blocks/gedcom_stats.php:293
+#: blocks/gedcom_stats.php:171
+#: blocks/gedcom_stats.php:291
 msgid "Earliest death year"
 msgstr "Tidligste dødsår"
 
-#: blocks/gedcom_stats.php:180
-#: blocks/gedcom_stats.php:301
+#: blocks/gedcom_stats.php:178
+#: blocks/gedcom_stats.php:299
 msgid "Latest death year"
 msgstr "Siste dødsår"
 
-#: blocks/gedcom_stats.php:188
-#: blocks/gedcom_stats.php:309
+#: blocks/gedcom_stats.php:186
+#: blocks/gedcom_stats.php:307
 msgid "Person who lived the longest"
 msgstr "Person som har levd lengst"
 
-#: blocks/gedcom_stats.php:204
-#: blocks/gedcom_stats.php:325
+#: blocks/gedcom_stats.php:202
+#: blocks/gedcom_stats.php:323
 msgid "Family with the most children"
 msgstr "Familie med flest barn"
 
-#: blocks/gedcom_stats.php:219
+#: blocks/gedcom_stats.php:217
 msgid "View statistics as graphs"
 msgstr ""
 
-#: blocks/gedcom_stats.php:227
+#: blocks/gedcom_stats.php:225
 msgid "Most Common Surnames"
 msgstr "Mest brukte etternavn"
 
-#: blocks/gedcom_stats.php:259
-#, fuzzy
+#: blocks/gedcom_stats.php:257
 msgid "Show common surnames?"
-msgstr "Vis navn til nålevende"
+msgstr "Vise Mest brukte etternavn?"
 
-#: blocks/gedcom_stats.php:268
-#, fuzzy
+#: blocks/gedcom_stats.php:266
 msgid "Select the stats to show in this block"
-msgstr "Vise andre fakta i diagram"
+msgstr "Velg statistikk som skal vises i denne rammen"
 
-#: blocks/gedcom_stats.php:339
+#: blocks/gedcom_stats.php:337
 #, fuzzy
 msgid "Show link to Statistics charts?"
 msgstr "Vise detaljer om fødsel og død i diagram / trær"
@@ -12313,9 +12223,8 @@ msgid "Choose one of these options to get started using PhpGedView"
 msgstr "Velg en av disse mulighetene for å¨begynne å bruke PhpGedView"
 
 #: blocks/getting_started.php:62
-#, fuzzy
 msgid "Upload a GEDCOM file"
-msgstr "Hente (upload) slektsfil(er) (GEDCOM)"
+msgstr "Last opp en GEDCOM-fil"
 
 #: blocks/getting_started.php:65
 msgid "Add a GEDCOM from a file location"
@@ -12334,9 +12243,8 @@ msgid "to change what is printed here.</p>"
 msgstr "for å endre det som skal stå her.</p>"
 
 #: blocks/logged_in.php:36
-#, fuzzy
 msgid "Logged In Users"
-msgstr "Brukere som er pålogget"
+msgstr "Rammen Brukere som er logget inn"
 
 #: blocks/logged_in.php:76
 msgid "Users Logged In"
@@ -12370,9 +12278,8 @@ msgid "Logged in as "
 msgstr "Logget inn som "
 
 #: blocks/random_media.php:38
-#, fuzzy
 msgid "Random Media"
-msgstr "Finn media"
+msgstr "Rammen Tilfeldig utvalgt bilde- / mediefil"
 
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
@@ -12396,9 +12303,8 @@ msgid "Stop"
 msgstr "Stopp avspilling"
 
 #: blocks/random_media.php:341
-#, fuzzy
 msgid "Persons"
-msgstr "Fjern person"
+msgstr "Personer"
 
 #: blocks/random_media.php:415
 msgid "Other"
@@ -12413,14 +12319,12 @@ msgid "If you hide an empty block, you will not be able to change its configurat
 msgstr "Dersom du velger å ikke vise en tom ramme, vil du heller ikke kunne endre oppsettet for rammen før den vises igjen ved at den ikke lenger er tom."
 
 #: blocks/review_changes.php:39
-#, fuzzy
 msgid "Pending Changes"
-msgstr "Rammen Siste endringer"
+msgstr "Rammen Endringer på vent"
 
 #: blocks/review_changes.php:83
-#, fuzzy
 msgid "PhpGedView - Review changes"
-msgstr "PhpGedView svaradresse"
+msgstr "PhpGedView - Vis endringer"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
@@ -12448,18 +12352,16 @@ msgid "RSS Feeds"
 msgstr "RSS lenker"
 
 #: blocks/rss_block.php:69
-#, fuzzy
 msgid "Upcoming Events"
-msgstr "Antall dager for rammen Kommende hendelser"
+msgstr "Rammen Kommende begivenheter"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
 msgstr "Rammen Topp 10 etternavn"
 
 #: blocks/theme_select.php:36
-#, fuzzy
 msgid "Theme Select"
-msgstr "Tema og mappe"
+msgstr "Rammen Velg stil"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
@@ -12471,9 +12373,8 @@ msgstr "Rammen Årsdag for hendelser i slekten"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
-#, fuzzy
 msgid "Show only events of living people?"
-msgstr "Vise bare personer, hendelser eller alle?"
+msgstr "Vise bare hendelser for levende personer?"
 
 #: blocks/todays_events.php:167
 #: blocks/upcoming_events.php:192
@@ -12509,9 +12410,8 @@ msgstr "Topp 10 fornavn"
 #: blocks/top10_givnnames.php:130
 #: blocks/top10_pageviews.php:131
 #: blocks/top10_surnames.php:143
-#, fuzzy
 msgid "Number of items to show"
-msgstr "Antall dager som skal vises"
+msgstr "Antall deler som skal vises"
 
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
@@ -12531,9 +12431,8 @@ msgid "Place counts before or after name?"
 msgstr "Plasser antall før eller etter navn?"
 
 #: blocks/user_blog.php:36
-#, fuzzy
 msgid "User Journal"
-msgstr "Brukernavn"
+msgstr "Rammen Notatblokk for bruker"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
@@ -12548,24 +12447,20 @@ msgid "Are you sure you want to delete this Journal entry?"
 msgstr "Er du sikker på at du vil slette dette notatet?"
 
 #: blocks/user_blog.php:94
-#, fuzzy
 msgid "Add a new Journal entry"
-msgstr "Legg til en ny note"
+msgstr "Legg inn et nytt notat"
 
 #: blocks/user_favorites.php:38
-#, fuzzy
 msgid "User Favorites"
-msgstr "Mappe til favoritt-ikon"
+msgstr "Rammen Brukeres favoritter-personer"
 
 #: blocks/user_favorites.php:60
-#, fuzzy
 msgid "My Favorites"
-msgstr "Mappe til favoritt-ikon"
+msgstr "Mine favoritter"
 
 #: blocks/user_messages.php:38
-#, fuzzy
 msgid "User Messages"
-msgstr "Brukernavn"
+msgstr "Rammen Bruker-beskjeder"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
@@ -12597,18 +12492,16 @@ msgid "Broadcast to all users"
 msgstr "Send til alle brukere"
 
 #: blocks/user_welcome.php:36
-#, fuzzy
 msgid "User Welcome"
-msgstr "Brukernavn"
+msgstr "Rammen Bruker/eier-info"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
 msgstr "Mitt anetre"
 
 #: blocks/user_welcome.php:56
-#, fuzzy
 msgid "My Individual Record"
-msgstr "Hurtiglinker for personfakta"
+msgstr "Meg selv"
 
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
@@ -12621,9 +12514,8 @@ msgid "Anniversary"
 msgstr "Årsdag"
 
 #: blocks/yahrzeit.php:218
-#, fuzzy
 msgid "Total Names"
-msgstr "Rediger navn"
+msgstr "Antall navn"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
@@ -12638,9 +12530,8 @@ msgid "C"
 msgstr "C"
 
 #: includes/accesskeyHeaders.php:37
-#, fuzzy
 msgid "Viewing advice"
-msgstr "Vis arkiv"
+msgstr "Visningsråd"
 
 #: includes/accesskeyHeaders.php:37
 msgid "0"
@@ -12696,9 +12587,8 @@ msgstr "Nærmeste familie"
 
 #: includes/media_reorder.php:37
 #: includes/media_tab_head.php:63
-#, fuzzy
 msgid "Re-order media"
-msgstr "Vis familier i annen rekkefølge"
+msgstr "Endre rekkefølge på media"
 
 #: includes/media_reorder.php:38
 msgid "Click a row, then drag-and-drop to re-order media "
@@ -12961,9 +12851,8 @@ msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
-#, fuzzy
 msgid "Charts"
-msgstr "Utforming"
+msgstr "Diagram"
 
 #: includes/classes/class_menubar.php:517
 #: includes/classes/class_menubar.php:523
@@ -12974,9 +12863,8 @@ msgstr "Lister"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
-#, fuzzy
 msgid "MultiMedia"
-msgstr "Behandling av bilder"
+msgstr "Bilder / medier"
 
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
@@ -13004,9 +12892,8 @@ msgid "Wiki Administrator's Guide"
 msgstr "Wiki administrator-veiledning"
 
 #: includes/classes/class_menubar.php:1118
-#, fuzzy
 msgid "Favorites"
-msgstr "Mappe til favoritt-ikon"
+msgstr "Favoritter"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
@@ -13016,40 +12903,44 @@ msgstr "Legg til i Mine favoritter"
 msgid "…"
 msgstr "…"
 
-#: includes/classes/class_person.php:576
-#: includes/classes/class_person.php:633
+#. I18N: This is an abbreviation for a number.  i.e. #7 means number 7
+#: includes/classes/class_person.php:550
+#, php-format
+msgid "#%d"
+msgstr ""
+
+#: includes/classes/class_person.php:577
+#: includes/classes/class_person.php:634
 msgid "Unable to find family with ID"
 msgstr "Kan ikke finne familien med id "
 
-#: includes/classes/class_person.php:760
-#, fuzzy
+#: includes/classes/class_person.php:761
 msgid "Family with Parents"
-msgstr "Fakta å legge til for familier"
+msgstr "Familie med foreldre"
 
-#: includes/classes/class_person.php:779
-#: includes/classes/class_person.php:786
+#: includes/classes/class_person.php:780
+#: includes/classes/class_person.php:787
 msgid "Father's Family with "
 msgstr "Familien til far til "
 
-#: includes/classes/class_person.php:780
-#: includes/classes/class_person.php:785
+#: includes/classes/class_person.php:781
+#: includes/classes/class_person.php:786
 msgid "Mother's Family with "
 msgstr "Familien til mor til "
 
-#: includes/classes/class_person.php:803
+#: includes/classes/class_person.php:804
 msgid "Family with"
 msgstr "Familie med"
 
-#: includes/classes/class_person.php:1836
-#, fuzzy
+#: includes/classes/class_person.php:1837
 msgid "year"
-msgstr "Toppfelt"
+msgstr "år"
 
-#: includes/classes/class_person.php:1840
+#: includes/classes/class_person.php:1841
 msgid "month"
 msgstr "måned"
 
-#: includes/classes/class_person.php:1842
+#: includes/classes/class_person.php:1843
 msgid "months"
 msgstr "måneder"
 
@@ -13087,9 +12978,8 @@ msgstr "Lever"
 #: includes/classes/class_stats.php:777
 #: includes/classes/class_stats.php:784
 #: includes/classes/class_stats.php:786
-#, fuzzy
 msgid "Dead"
-msgstr "Toppfelt"
+msgstr "Antall døde"
 
 #: includes/classes/class_stats.php:1231
 msgid "Highest population"
@@ -13122,15 +13012,13 @@ msgstr ""
 
 #: includes/classes/class_stats.php:1921
 #: includes/classes/class_stats.php:3817
-#, fuzzy
 msgid "birth"
-msgstr "Bredde"
+msgstr "født"
 
 #: includes/classes/class_stats.php:1922
 #: includes/classes/class_stats.php:3818
-#, fuzzy
 msgid "death"
-msgstr "Bredde"
+msgstr "død"
 
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
@@ -13166,9 +13054,8 @@ msgstr "Gjennomsnittlig alder"
 
 #: includes/classes/class_stats.php:2883
 #: includes/classes/class_stats.php:2885
-#, fuzzy
 msgid "children"
-msgstr "Vis barn i annen rekkefølge"
+msgstr "barn"
 
 #: includes/classes/class_stats.php:3336
 #: includes/classes/class_stats.php:3338
@@ -13194,25 +13081,21 @@ msgid "Start at parents"
 msgstr "Start med foreldrene"
 
 #: includes/controllers/descendancy_ctrl.php:332
-#, fuzzy
 msgid "No children"
-msgstr "Vis barn i annen rekkefølge"
+msgstr "Ingen registerte barn"
 
 #: includes/controllers/family_ctrl.php:177
-#, fuzzy
 msgid "Family Information"
-msgstr "PHPInfo"
+msgstr "Familieinformasjon"
 
 #: includes/controllers/family_ctrl.php:350
 #: includes/controllers/family_ctrl.php:361
-#, fuzzy
 msgid "Edit Family"
-msgstr "Rediger navn"
+msgstr "Endre familie"
 
 #: includes/controllers/family_ctrl.php:379
-#, fuzzy
 msgid "Add a child to this family"
-msgstr "Legg til et barn for å opprette en aleneforeldre-familie"
+msgstr "Legg til et barn i denne familien"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -13220,14 +13103,12 @@ msgstr "Legg til et barn for å opprette en aleneforeldre-familie"
 #: includes/controllers/note_ctrl.php:242
 #: includes/controllers/repository_ctrl.php:241
 #: includes/controllers/source_ctrl.php:249
-#, fuzzy
 msgid "Click here to hide changes."
-msgstr "Klikk her for å fortsette"
+msgstr "Klikk her for å skjule endringer."
 
 #: includes/controllers/family_ctrl.php:451
-#, fuzzy
 msgid "Delete family"
-msgstr "Slett navn"
+msgstr "Slett familie"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
@@ -13239,9 +13120,8 @@ msgstr "Dersom du sletter denne familien vil alle koblinger mellom familiemedlem
 #: includes/controllers/note_ctrl.php:323
 #: includes/controllers/repository_ctrl.php:322
 #: includes/controllers/source_ctrl.php:330
-#, fuzzy
 msgid "Add to Clippings Cart"
-msgstr "Utklippsmappe"
+msgstr "Legg i utklippsmappen"
 
 #: includes/controllers/individual_ctrl.php:493
 #, fuzzy
@@ -13249,9 +13129,8 @@ msgid "Name"
 msgstr "Rediger navn"
 
 #: includes/controllers/individual_ctrl.php:819
-#, fuzzy
 msgid "Parent"
-msgstr "Side"
+msgstr "En av foreldrene"
 
 #: includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
@@ -13288,14 +13167,12 @@ msgstr "Lenken ble lagt til"
 
 #: includes/controllers/repository_ctrl.php:79
 #: includes/controllers/repository_ctrl.php:168
-#, fuzzy
 msgid "Repository Information"
-msgstr "Oppbevaringssted&nbsp;ID prefiks"
+msgstr "Informasjon om oppbevaringssted"
 
 #: includes/controllers/repository_ctrl.php:198
-#, fuzzy
 msgid "Edit Repository"
-msgstr "Slett oppbevaringssted"
+msgstr "Rediger oppbevaringssted"
 
 #: includes/controllers/repository_ctrl.php:217
 msgid "Are you sure you want to delete this Repository?"
@@ -13331,15 +13208,13 @@ msgstr "Resultatside"
 
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
-#, fuzzy
 msgid "Source Information"
-msgstr "PHPInfo"
+msgstr "Informasjon om kilde"
 
 #: includes/controllers/source_ctrl.php:199
 #: includes/controllers/source_ctrl.php:206
-#, fuzzy
 msgid "Edit Source"
-msgstr "Endre personvernfilen"
+msgstr "Rediger kilde"
 
 #: includes/controllers/timeline_ctrl.php:275
 msgid "Husband's age"
@@ -13426,18 +13301,16 @@ msgid "weeks"
 msgstr "uker"
 
 #: includes/extras/functions.pl.php:366
-#, fuzzy
 msgid "Informant"
-msgstr "Dato-format"
+msgstr "Informant"
 
 #: includes/extras/functions.pl.php:370
 msgid "Lodger"
 msgstr "Losjerende"
 
 #: includes/extras/functions.pl.php:374
-#, fuzzy
 msgid "Slave"
-msgstr "Lagre"
+msgstr "Slave"
 
 #: includes/extras/functions.pl.php:378
 msgid "Attending"
@@ -13539,9 +13412,8 @@ msgid "No facts for this family."
 msgstr "Ingen faktopplysninger for denne familien."
 
 #: includes/functions/functions_charts.php:532
-#, fuzzy
 msgid "Add Note"
-msgstr "Legg til en ny note"
+msgstr "Legg til note"
 
 #: includes/functions/functions_charts.php:541
 #, fuzzy
@@ -13549,9 +13421,8 @@ msgid "Add Shared Note"
 msgstr "Legg til en ny note"
 
 #: includes/functions/functions_charts.php:560
-#, fuzzy
 msgid "Add Source Citation"
-msgstr "Legg til en ny kildehenvisning"
+msgstr "Legg til kildehenvisning"
 
 #: includes/functions/functions_charts.php:814
 msgid "Grandfather"
@@ -13588,6 +13459,16 @@ msgstr ""
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Å Ø Æ"
 
+#: includes/functions/functions_edit.php:78
+#, php-format
+msgid "The record with id %s was changed by another user since you last accessed it."
+msgstr "Posten med id %s ble endret av en annen bruker siden du åpnet den."
+
+#: includes/functions/functions_edit.php:79
+#, php-format
+msgid "This record was last changed by <i>%s</i> at %s"
+msgstr "Denne posten ble sist endret av <i>%s</i> den %s"
+
 #: includes/functions/functions_edit.php:80
 #: includes/functions/functions_edit.php:2376
 #: includes/functions/functions_edit.php:2385
@@ -13614,14 +13495,12 @@ msgstr "Vis forsknings-logg"
 
 #: includes/functions/functions_edit.php:1779
 #: includes/functions/functions_edit.php:1784
-#, fuzzy
 msgid "Add a new Associate"
-msgstr "Legg til en ny note"
+msgstr "Legg til en ny tilknyttet person"
 
 #: includes/functions/functions_edit.php:1830
-#, fuzzy
 msgid "Add a new Multimedia object"
-msgstr "Legg til en ny bilde- / mediefil"
+msgstr "Legg til et nytt bilde / media"
 
 #: includes/functions/functions_edit.php:2375
 #: includes/functions/functions_edit.php:2384
@@ -13677,9 +13556,8 @@ msgstr "Filen ble ikke lagd."
 
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
-#, fuzzy
 msgid "Invalid GEDCOM format"
-msgstr "Skjul GEDCOM feilmeldinger"
+msgstr "Ugyldig GEDCOM 5.5 format"
 
 #: includes/functions/functions_mediadb.php:120
 #: includes/functions/functions_mediadb.php:139
@@ -13699,9 +13577,8 @@ msgstr "Overføring (opplasting) er utført"
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
-#, fuzzy
 msgid "Upload"
-msgstr "Bane for opplastning"
+msgstr "Hent (last opp)"
 
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
@@ -13717,9 +13594,8 @@ msgstr "Bruk knappen &laquo;Bla gjennom&raquo; for å finne ønsket fil på din 
 
 #: includes/functions/functions_mediadb.php:1044
 #: includes/functions/functions_mediadb.php:1212
-#, fuzzy
 msgid "Automatic thumbnail"
-msgstr "Lage automatisk miniatyrbilder"
+msgstr "Automatisk miniatyrbilde"
 
 #: includes/functions/functions_mediadb.php:1047
 #: includes/functions/functions_mediadb.php:1215
@@ -13825,9 +13701,8 @@ msgstr "For hjelp med slektsspørsmål, kontakt"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
-#, fuzzy
 msgid "Technical help contact"
-msgstr "Kontaktperson for slektsspørsmål"
+msgstr "Teknisk hjelp"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
@@ -13839,9 +13714,8 @@ msgstr "For mer informasjon, kontakt"
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
-#, fuzzy
 msgid "Information about:"
-msgstr "PHPInfo"
+msgstr "Hjelp / informasjon om:"
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
@@ -13896,14 +13770,12 @@ msgid "Status"
 msgstr "Status"
 
 #: includes/functions/functions_print.php:2380
-#, fuzzy
 msgid "Add new fact"
-msgstr "Legg til nytt navn"
+msgstr "Legg til nye fakta"
 
 #: includes/functions/functions_print.php:2537
-#, fuzzy
 msgid "Find Repository"
-msgstr "Slett oppbevaringssted"
+msgstr "Finn oppbevaringssted"
 
 #: includes/functions/functions_print_facts.php:166
 #: includes/functions/functions_print_facts.php:217
@@ -13928,9 +13800,8 @@ msgid "This is an error, and we would like to fix it. Please report this error t
 msgstr "Dette er en feil som vi ønsker å rette på. Vennligst rapporter denne feilen til"
 
 #: includes/functions/functions_print_lists.php:76
-#, fuzzy
 msgid "Show only males."
-msgstr "Vis navn til nålevende"
+msgstr "Vis bare hankjønn."
 
 #: includes/functions/functions_print_lists.php:78
 msgid "Show only females."
@@ -13954,9 +13825,8 @@ msgid "Show people who are alive or couples where both partners are alive."
 msgstr "Vis personer som lever eller par hvor begge partnere lever"
 
 #: includes/functions/functions_print_lists.php:86
-#, fuzzy
 msgid "Alive "
-msgstr "Aktiv"
+msgstr "Levende "
 
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
@@ -13984,9 +13854,8 @@ msgstr "Vis bare levende personer eller par uten barn registrert i dabasen."
 
 #: includes/functions/functions_print_lists.php:92
 #: includes/functions/functions_print_lists.php:478
-#, fuzzy
 msgid "Leaves"
-msgstr "Lagre"
+msgstr "Personer uten forfedre"
 
 #: includes/functions/functions_print_lists.php:94
 msgid "Show persons born more than 100 years ago."
@@ -14013,15 +13882,13 @@ msgstr "Tilbakestill til listens standardverdi."
 #: includes/functions/functions_print_lists.php:779
 #: includes/functions/functions_print_lists.php:1612
 #: includes/functions/functions_print_lists.php:1757
-#, fuzzy
 msgid "Show parents"
-msgstr "Vis kilder"
+msgstr "Vis foreldre"
 
 #: includes/functions/functions_print_lists.php:409
 #: includes/functions/functions_print_lists.php:792
-#, fuzzy
 msgid "Show statistics charts"
-msgstr "Vis utførings-statistikk"
+msgstr "Vis statistiske diagrammer"
 
 #: includes/functions/functions_print_lists.php:424
 #: includes/functions/functions_print_lists.php:805
@@ -14049,9 +13916,8 @@ msgid "Show couples where only the male partner is deceased."
 msgstr "Vis bare par hvor den mannlige partneren er død"
 
 #: includes/functions/functions_print_lists.php:472
-#, fuzzy
 msgid "Widow"
-msgstr "Bredde"
+msgstr "Enke"
 
 #: includes/functions/functions_print_lists.php:474
 msgid "Both dead "
@@ -14070,9 +13936,8 @@ msgid "Show couples who married within the last 100 years."
 msgstr "Vis par som er gift i løet av de siste 100 år."
 
 #: includes/functions/functions_print_lists.php:486
-#, fuzzy
 msgid "Show divorced couples."
-msgstr "Vis døde personer"
+msgstr "Vis skilte par"
 
 #: includes/functions/functions_print_lists.php:807
 msgid "Decade of marriage"
@@ -14105,6 +13970,11 @@ msgstr "Data for denne familien er private. Familiære data vises derfor ikke."
 
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
+msgstr ""
+
+#: includes/functions/functions_rss.php:149
+#, php-format
+msgid "This GEDCOM was created using %s %s"
 msgstr ""
 
 #. I18N: This is the country/chapman code for "Aruba"
@@ -15500,9 +15370,14 @@ msgstr ""
 
 #: modules/clippings/clippings.php:90
 #: modules/clippings/clippings.php:281
-#, fuzzy
 msgid "Download Now"
-msgstr "Laste ned (download) slektsfil (GEDCOM)"
+msgstr "Laste ned (download) nå"
+
+#: modules/clippings/clippings.php:121
+#: modules/clippings/clippings.php:126
+#, fuzzy, php-format
+msgid "Add %s to cart"
+msgstr "Legg til i Mine favoritter"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
@@ -15523,7 +15398,6 @@ msgstr "Utklippsmappe"
 
 #. I18N: This is the title of a tab on the sidebar
 #: modules/descendancy/descendancy.php:239
-#: modules/descendancy/pgv_module.php:43
 msgid "Descendancy"
 msgstr ""
 
@@ -16016,6 +15890,7 @@ msgid "Infirmaties - Whether blind, Whether Deaf and Dumb"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:51
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:49
 msgid "Keep"
 msgstr ""
 
@@ -16024,20 +15899,27 @@ msgid "Unlink"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:53
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:77
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:51
 msgid "Navigator"
 msgstr "Navigatør"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:85
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:82
 #, fuzzy
 msgid "Keep Link in list"
 msgstr "Behold URL-linker"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:86
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:83
 msgid "Remove Link from list"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:90
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:94
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:60
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:87
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:91
 msgid "Open Family Navigator"
 msgstr ""
 
@@ -16189,6 +16071,10 @@ msgstr ""
 msgid "Months Unemployed - xx = Months unemployed during Census Year"
 msgstr ""
 
+#: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:132
+msgid "Home Ownership - x-x-x-xxxx = O/R-F/M-F/H-#### = Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number"
+msgstr ""
+
 #: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:134
 msgid "Situation - 3 parameters - Diseases, Infimaties, Convict/Pauper etc"
 msgstr ""
@@ -16244,9 +16130,8 @@ msgstr ""
 #: modules/googlemap/admin-config.php:49
 #: modules/googlemap/editconfig.php:90
 #: modules/googlemap/editconfig.php:92
-#, fuzzy
 msgid "GoogleMap Configuration"
-msgstr "_GEDCOM: Konfigurasjonsfil"
+msgstr "GoogleMapkonfigurasjon"
 
 #: modules/googlemap/admin-config.php:52
 #: modules/googlemap/gg_map_content.php:38
@@ -16255,6 +16140,9 @@ msgstr "_GEDCOM: Konfigurasjonsfil"
 #: modules/googlemap/googlemap.php:146
 #: modules/googlemap/googlemap.php:656
 #: modules/googlemap/googlemap.php:864
+#: modules/googlemap/pedigree_map.php:85
+#: modules/googlemap/pedigree_map.php:307
+#: modules/googlemap/placehierarchy.php:186
 msgid "Manage GoogleMap configuration"
 msgstr "Kontroller kofigurasjonen av GoogleMap"
 
@@ -16262,19 +16150,28 @@ msgstr "Kontroller kofigurasjonen av GoogleMap"
 #: modules/googlemap/editconfig.php:452
 #: modules/googlemap/gg_map_content.php:89
 #: modules/googlemap/googlemap.php:149
+#: modules/googlemap/pedigree_map.php:310
+#: modules/googlemap/placehierarchy.php:189
+#: modules/googlemap/places.php:159
+#: modules/googlemap/places.php:193
+#: modules/googlemap/places.php:566
+#: modules/googlemap/places_edit.php:42
 msgid "Edit geographic place locations"
 msgstr "Rediger geografiske stedplasseringer"
 
 #: modules/googlemap/admin-config.php:58
 #: modules/googlemap/gg_map_content.php:92
 #: modules/googlemap/googlemap.php:152
+#: modules/googlemap/pedigree_map.php:313
+#: modules/googlemap/placecheck.php:50
+#: modules/googlemap/placecheck.php:54
+#: modules/googlemap/placehierarchy.php:192
 msgid "Place Check"
 msgstr "Stedsjekk"
 
 #: modules/googlemap/editconfig.php:55
-#, fuzzy
 msgid "Prefix"
-msgstr "Forhåndsvis"
+msgstr "Prefix"
 
 #: modules/googlemap/editconfig.php:63
 msgid "Postfix"
@@ -16313,9 +16210,10 @@ msgid "Postfix, prefix, normal, both"
 msgstr "Postfix, prefix, normal, begge"
 
 #: modules/googlemap/editconfig.php:96
-#, fuzzy
+#: modules/googlemap/places.php:161
+#: modules/googlemap/places_edit.php:46
 msgid "Page only for Administrators"
-msgstr "_Brukere og rettigheter"
+msgstr "Side kun for administratorer"
 
 #: modules/googlemap/editconfig.php:215
 msgid "Enable GoogleMap"
@@ -16332,21 +16230,33 @@ msgstr "Standard karttype"
 #: modules/googlemap/editconfig.php:231
 #: modules/googlemap/gg_map_content.php:31
 #: modules/googlemap/googlemap.php:608
+#: modules/googlemap/pedigree_map.php:551
+#: modules/googlemap/placehierarchy.php:506
+#: modules/googlemap/places_edit.php:405
 msgid "Map"
 msgstr "Kart"
 
 #: modules/googlemap/editconfig.php:232
 #: modules/googlemap/googlemap.php:609
+#: modules/googlemap/pedigree_map.php:552
+#: modules/googlemap/placehierarchy.php:507
+#: modules/googlemap/places_edit.php:406
 msgid "Satellite"
 msgstr "Satellitt"
 
 #: modules/googlemap/editconfig.php:233
 #: modules/googlemap/googlemap.php:610
+#: modules/googlemap/pedigree_map.php:553
+#: modules/googlemap/placehierarchy.php:508
+#: modules/googlemap/places_edit.php:407
 msgid "Hybrid"
 msgstr "Hybrid"
 
 #: modules/googlemap/editconfig.php:234
 #: modules/googlemap/googlemap.php:611
+#: modules/googlemap/pedigree_map.php:554
+#: modules/googlemap/placehierarchy.php:509
+#: modules/googlemap/places_edit.php:408
 msgid "Terrain"
 msgstr "Terreng"
 
@@ -16376,9 +16286,10 @@ msgid "Standard"
 msgstr "Standard"
 
 #: modules/googlemap/editconfig.php:274
-#, fuzzy
+#: modules/googlemap/places_edit.php:809
+#: modules/googlemap/places_edit.php:817
 msgid "Flag"
-msgstr "Navn på flagg-bildefil"
+msgstr "Flagg"
 
 #: modules/googlemap/editconfig.php:280
 msgid "Display short placenames"
@@ -16413,6 +16324,7 @@ msgid "Max."
 msgstr "Maks."
 
 #: modules/googlemap/editconfig.php:352
+#: modules/googlemap/places_edit.php:748
 msgid "Precision"
 msgstr "Presisjon"
 
@@ -16422,28 +16334,33 @@ msgstr "Presisjon"
 #: modules/googlemap/editconfig.php:388
 #: modules/googlemap/editconfig.php:396
 #: modules/googlemap/editconfig.php:404
-#, fuzzy
 msgid "digits"
-msgstr "Endre"
+msgstr "desimaler"
 
 #: modules/googlemap/editconfig.php:366
-#, fuzzy
+#: modules/googlemap/places.php:179
+#: modules/googlemap/places_edit.php:772
 msgid "State"
-msgstr "Lagre"
+msgstr "Stat"
 
 #: modules/googlemap/editconfig.php:375
+#: modules/googlemap/places.php:181
+#: modules/googlemap/places_edit.php:774
 msgid "City"
 msgstr "By"
 
 #: modules/googlemap/editconfig.php:383
+#: modules/googlemap/places_edit.php:776
 msgid "Neighborhood"
 msgstr "Nabolag"
 
 #: modules/googlemap/editconfig.php:391
+#: modules/googlemap/places_edit.php:778
 msgid "House"
 msgstr "Hus"
 
 #: modules/googlemap/editconfig.php:399
+#: modules/googlemap/places_edit.php:780
 msgid "Max"
 msgstr "Maks"
 
@@ -16456,9 +16373,8 @@ msgid "Number of levels"
 msgstr "Antall nivåer"
 
 #: modules/googlemap/editconfig.php:432
-#, fuzzy
 msgid "Configuration per level"
-msgstr "Konfigurasjonshjelp"
+msgstr "Konfigurasjon pr nivå"
 
 #: modules/googlemap/flags.php:43
 msgid "Select flag"
@@ -16470,11 +16386,15 @@ msgstr ""
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:655
+#: modules/googlemap/places_edit.php:814
+#: modules/googlemap/places_edit.php:818
 msgid "Change flag"
 msgstr "Endre flagg"
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:819
 msgid "Remove flag"
 msgstr "Slett flagg"
 
@@ -16485,6 +16405,7 @@ msgstr "Land"
 #: modules/googlemap/gg_map_content.php:35
 #: modules/googlemap/googlemap.php:97
 #: modules/googlemap/googlemap.php:651
+#: modules/googlemap/pedigree_map.php:82
 msgid "GoogleMap module disabled"
 msgstr "GoogleMap-modulen er slått av"
 
@@ -16492,19 +16413,19 @@ msgstr "GoogleMap-modulen er slått av"
 #: modules/googlemap/gg_map_content.php:59
 #: modules/googlemap/googlemap.php:118
 #: modules/googlemap/googlemap.php:119
-#, fuzzy
 msgid "Activate"
-msgstr "Aktiv"
+msgstr "Aktiver"
 
 #: modules/googlemap/gg_map_content.php:62
 #: modules/googlemap/gg_map_content.php:63
 #: modules/googlemap/googlemap.php:122
 #: modules/googlemap/googlemap.php:123
-#, fuzzy
 msgid "Deactivate"
-msgstr "Aktiv"
+msgstr "Deaktiver"
 
 #: modules/googlemap/googlemap.php:607
+#: modules/googlemap/pedigree_map.php:550
+#: modules/googlemap/placehierarchy.php:505
 msgid "Redraw map"
 msgstr "Tegn kart på nytt"
 
@@ -16513,10 +16434,19 @@ msgid "No map data for this person"
 msgstr "Ingen kartdata for denne personen"
 
 #: modules/googlemap/googlemap.php:940
+#: modules/googlemap/placehierarchy.php:302
+#: modules/googlemap/placehierarchy.php:614
+#: modules/googlemap/placehierarchy.php:671
 msgid "This place has no coordinates"
 msgstr "Dette stedet har ingen koordinater"
 
 #: modules/googlemap/googlemap.php:942
+#: modules/googlemap/placehierarchy.php:304
+#: modules/googlemap/placehierarchy.php:616
+#: modules/googlemap/placehierarchy.php:617
+#: modules/googlemap/placehierarchy.php:673
+#: modules/googlemap/placehierarchy.php:674
+#: modules/googlemap/places.php:604
 msgid "Edit geographic location"
 msgstr "Rediger geografisk sted"
 
@@ -16626,14 +16556,12 @@ msgid "Select Next Level..."
 msgstr "Velg neste nivå."
 
 #: modules/googlemap/placecheck.php:117
-#, fuzzy
 msgid "List filtering options"
-msgstr "List opp filer i undemapper"
+msgstr "Filtervalg for stedliste"
 
 #: modules/googlemap/placecheck.php:120
-#, fuzzy
 msgid "Include fully matched places: "
-msgstr "Ta med navn som gift"
+msgstr "Inkluder steder med 100% match: "
 
 #: modules/googlemap/placecheck.php:132
 msgid "Key to colors used below"
@@ -16656,9 +16584,8 @@ msgid "this place level is blank in your GEDCOM file, but exists as 'unknown'<br
 msgstr "dette stednivå er blankt i GEDCOM-filen, men eksisterer som 'ukjent'<br />med koordinater i GoogleMap stedtabellen. Ingen behandling nødvendig<br />før det manglende nivå kan legges inn"
 
 #: modules/googlemap/placecheck.php:152
-#, fuzzy
 msgid "Place list for GEDCOM file"
-msgstr "Synkroniser endringer til GEDCOM-filen"
+msgstr "Stedliste for GEDCOM-fil"
 
 #: modules/googlemap/placecheck.php:241
 msgid "GEDCOM File Place Data<br />(2 PLAC tag)"
@@ -16734,9 +16661,8 @@ msgid "Remove this location?"
 msgstr "Slett dette stedet?"
 
 #: modules/googlemap/places.php:587
-#, fuzzy
 msgid "Click here to show inactive places"
-msgstr "Klikk her for å fortsette"
+msgstr "Klikk her for å vise inaktive steder"
 
 #: modules/googlemap/places.php:606
 #: modules/googlemap/places_edit.php:662
@@ -16772,14 +16698,12 @@ msgid "Use this value"
 msgstr "Bruk denne verdien"
 
 #: modules/googlemap/places_edit.php:743
-#, fuzzy
 msgid "Search on this level"
-msgstr "Søketekst"
+msgstr "Søk på dette nivå"
 
 #: modules/googlemap/places_edit.php:744
-#, fuzzy
 msgid "Search all"
-msgstr "Søk og erstatt"
+msgstr "Søk alle"
 
 #: modules/googlemap/places_edit.php:788
 msgid "N"
@@ -16800,6 +16724,10 @@ msgstr "V"
 #: modules/lightbox/admin-config.php:40
 #: modules/lightbox/lb_editconfig.php:42
 #: modules/lightbox/lb_editconfig.php:46
+#: modules/lightbox/functions/lb_head.php:116
+#: modules/lightbox/functions/lb_head.php:117
+#: modules/lightbox/functions/lb_head.php:125
+#: modules/lightbox/functions/lb_head.php:133
 msgid "Lightbox-Album Configuration"
 msgstr "Lightbox Albumkonfigurasjon"
 
@@ -16817,9 +16745,8 @@ msgstr "Visning"
 
 #: modules/lightbox/lb_editconfig.php:107
 #: modules/lightbox/lb_editconfig.php:109
-#, fuzzy
 msgid "Hide"
-msgstr "Toppfelt"
+msgstr "Skjul"
 
 #: modules/lightbox/lb_editconfig.php:117
 msgid "Individual Page - Album Tab Header"
@@ -16844,9 +16771,8 @@ msgstr "Tekst"
 #: modules/lightbox/lb_editconfig.php:124
 #: modules/lightbox/lb_editconfig.php:227
 #: modules/lightbox/lb_editconfig.php:229
-#, fuzzy
 msgid "Both"
-msgstr "Boksbredde"
+msgstr "Begge"
 
 #: modules/lightbox/lb_editconfig.php:132
 msgid "Individual Page - Album Tab Thumbnail - Notes Tooltip"
@@ -16881,9 +16807,8 @@ msgid "Slide show timing in seconds"
 msgstr "Lysbildevisning forløp i sekunder"
 
 #: modules/lightbox/lb_editconfig.php:181
-#, fuzzy
 msgid "Slideshow sound track"
-msgstr "Vis lysbildekontroller?"
+msgstr "Musikkspor for lysbildevisning"
 
 #: modules/lightbox/lb_editconfig.php:181
 msgid "(mp3 only)"
@@ -16944,9 +16869,8 @@ msgid "Pause Slideshow"
 msgstr "Pause i lysbildevisning"
 
 #: modules/lightbox/functions/lb_call_js.php:55
-#, fuzzy
 msgid "Start Slideshow"
-msgstr "Start lysbildevisning ved lasting av side?"
+msgstr "Begynn lysbildevisning"
 
 #: modules/lightbox/functions/lb_call_js.php:56
 msgid "Turn Music On/Off"
@@ -16961,9 +16885,8 @@ msgid "Zoom is enabled ... Use mousewheel or i and o keys to zoom in and out"
 msgstr "Zoom er aktivisert ... bruk musehjulet eller i og o-tastene for å zoome inn og ut"
 
 #: modules/lightbox/functions/lb_call_js.php:59
-#, fuzzy
 msgid "Close Lightbox window"
-msgstr "Lukk automatisk vindu for redigering"
+msgstr "Lukk Lightbox-vinduet"
 
 #: modules/lightbox/functions/lb_head.php:97
 msgid "Drag-and-drop thumbnails to re-order media items"
@@ -16976,9 +16899,8 @@ msgstr "Legg til et nytt multimediaobjekt til denne personen"
 
 #: modules/lightbox/functions/lb_head.php:145
 #: modules/lightbox/functions/lb_head.php:153
-#, fuzzy
 msgid "Add a new Media Object"
-msgstr "Legg til en ny bilde- / mediefil"
+msgstr "Legg til et nytt mediaobjekt"
 
 #: modules/lightbox/functions/lb_head.php:172
 #: modules/lightbox/functions/lb_head.php:188
@@ -17005,9 +16927,8 @@ msgstr "Album"
 
 #: modules/lightbox/functions/lb_indi_doors_0.php:55
 #: modules/lightbox/functions/lb_indi_doors_1.php:58
-#, fuzzy
 msgid "Research Assistant"
-msgstr "Vis forsknings-logg"
+msgstr "Forsknings-assistent"
 
 #: modules/lightbox/functions/lightbox_print_media.php:132
 msgid "Photo"
@@ -17018,9 +16939,8 @@ msgid "Document"
 msgstr "Dokument"
 
 #: modules/lightbox/functions/lightbox_print_media.php:150
-#, fuzzy
 msgid "Census"
-msgstr "Meny"
+msgstr "Folketelling"
 
 #: modules/lightbox/functions/lightbox_print_media.php:168
 msgid "Not in DB"
@@ -17037,38 +16957,32 @@ msgid "View Notes"
 msgstr "Vis noter"
 
 #: modules/lightbox/functions/lightbox_print_media_row.php:247
-#, fuzzy
 msgid "Edit Media"
-msgstr "Finn media"
+msgstr "Rediger media"
 
 #: modules/lightbox/functions/lightbox_print_media_row.php:258
-#, fuzzy
 msgid "Unlink Media"
-msgstr "Finn media"
+msgstr "Fjern kobling til media"
 
 #: modules/media/media.php:63
 msgid "There are no media objects for this individual."
 msgstr "Det er ikke noen bilder eller andre medier knyttet til denne personen."
 
 #: modules/notes/notes.php:60
-#, fuzzy
 msgid "Show all notes"
-msgstr "Vis alle kilder"
+msgstr "Vis alle notater"
 
 #: modules/notes/notes.php:80
-#, fuzzy
 msgid "There are no Notes for this individual."
-msgstr "Slett denne personen"
+msgstr "Det er ikke noen noter for denne personen."
 
 #: modules/personal_facts/personal_facts.php:62
-#, fuzzy
 msgid "There are no Facts for this individual."
-msgstr "Slett denne personen"
+msgstr "Det er ikke noen fakta / opplysninger om denne personen."
 
 #: modules/personal_facts/personal_facts.php:72
-#, fuzzy
 msgid "Events of close relatives"
-msgstr "Vis fødseldag og dødsdag for slektninger på faktasiden til personer"
+msgstr "Hendelser til nære slektninger"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
@@ -17083,9 +16997,8 @@ msgid "Relatives"
 msgstr ""
 
 #: modules/relatives/relatives.php:114
-#, fuzzy
 msgid "Add husband"
-msgstr "Legg til barn"
+msgstr "Legg til ektemann"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
@@ -17096,27 +17009,24 @@ msgid "Add a wife to this family"
 msgstr "Legg til en hustru/mor til denne familien"
 
 #: modules/relatives/relatives.php:218
-#, fuzzy
 msgid "Add marriage details"
-msgstr "Sjekk ekteskapsbånd"
+msgstr "Legg til detaljer om ekteskapet"
 
 #: modules/relatives/relatives.php:408
 msgid "Link this person to an existing family as a child"
 msgstr "Koble denne personen til en eksisterende familie som et barn"
 
 #: modules/relatives/relatives.php:415
-#, fuzzy
 msgid "Add a new wife"
-msgstr "Legg til en ny note"
+msgstr "Legg til en ny hustru"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
 msgstr "Koble denne personen til en eksisterende familie som ektemann"
 
 #: modules/relatives/relatives.php:435
-#, fuzzy
 msgid "Add a new husband"
-msgstr "Legg til en ny note"
+msgstr "Legg til en ny ektemann"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
@@ -17140,15 +17050,13 @@ msgstr "Velg elementer du vil ha med i nettstedkartet:"
 
 #: modules/sitemap/index.php:235
 #: modules/sitemap/index.php:366
-#, fuzzy
 msgid "Individual List"
-msgstr "GEDCOM ID prefiks"
+msgstr "Personliste"
 
 #: modules/sitemap/index.php:237
 #: modules/sitemap/index.php:420
-#, fuzzy
 msgid "Family List"
-msgstr "Navneliste"
+msgstr "Familieliste"
 
 #: modules/sitemap/index.php:238
 #: modules/sitemap/index.php:298
@@ -17237,16 +17145,14 @@ msgid "never"
 msgstr "aldri"
 
 #: modules/sitemap/index.php:447
-#, fuzzy
 msgid "Generate"
-msgstr "Avsendernavn"
+msgstr "Trykk for å opprette filen"
 
 #: modules/sources_tab/sources_tab.php:77
 msgid "There are no Source citations for this individual."
 msgstr "Det er ikke noen kilder knyttet til denne personen."
 
 #: themes/cloudy/footer.php:174
-#: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
 msgstr "Det er gjort endringer i denne slektsbasen."
 
@@ -17255,9 +17161,6 @@ msgstr "Det er gjort endringer i denne slektsbasen."
 
 #~ msgid "FAMC:WIFE:BIRT:PLAC"
 #~ msgstr "Morens fødested"
-
-#~ msgid "_FA13"
-#~ msgstr "Fakta 13"
 
 #~ msgid ""
 #~ "Keyboard shortcuts are intended to help users who have difficulty with "

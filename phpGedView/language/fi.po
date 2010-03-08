@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-07 22:40-0000\n"
+"POT-Creation-Date: 2010-03-08 18:50-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -49,7 +49,7 @@ msgstr "Sinulla ei ole pääsyoikeutta"
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
-#: addremotelink.php:274
+#: addremotelink.php:282
 msgid "Close Window"
 msgstr "Sulje ikkuna"
 
@@ -61,7 +61,7 @@ msgstr "Mediatiedosto on jo olemassa."
 #: addmedia.php:211
 #: addmedia.php:224
 #: client.php:414
-#: client.php:424
+#: client.php:423
 msgid "There was an error uploading your file."
 msgstr "Tiedoston lähetyksessä tapahtui virhe."
 
@@ -114,141 +114,137 @@ msgstr "Olet valinnut ulkoisen palvelimen"
 
 #: addremotelink.php:75
 #: addremotelink.php:85
-#: addremotelink.php:183
+#: addremotelink.php:191
 msgid "Site"
 msgstr "Verkkopalvelu"
 
 #: addremotelink.php:80
-#, fuzzy
 msgid "Database ID"
-msgstr "Tietokannan palvelin"
+msgstr "GEDCOM ID-tunnus"
 
 #: addremotelink.php:121
 #: addsearchlink.php:74
 msgid "Relationship to current person"
 msgstr "Sukulaisuus nykyiseen henkilöön"
 
-#: addremotelink.php:140
-#, fuzzy
-msgid "Site Location"
-msgstr "SSL kirjautuminen"
+#: addremotelink.php:127
+#: addsearchlink.php:77
+msgid "Same as current"
+msgstr "Sama kuin nykyinen"
 
-#: addremotelink.php:150
+#: addremotelink.php:128
+#: addsearchlink.php:78
+msgid "Mother"
+msgstr "Äiti"
+
+#: addremotelink.php:129
+#: addsearchlink.php:79
+msgid "Father"
+msgstr "Isä"
+
+#: addremotelink.php:130
+#: addsearchlink.php:80
+msgid "Husband"
+msgstr "Mies"
+
+#: addremotelink.php:131
+#: addsearchlink.php:81
+msgid "Wife"
+msgstr "Vaimo"
+
+#: addremotelink.php:132
+#: addsearchlink.php:82
+msgid "Son"
+msgstr "Poika"
+
+#: addremotelink.php:133
+#: addsearchlink.php:83
+msgid "Daughter"
+msgstr "Tytär"
+
+#: addremotelink.php:148
+msgid "Site Location"
+msgstr "Sijainti"
+
+#: addremotelink.php:158
 msgid "Local site"
 msgstr "Sama palvelin"
 
-#: addremotelink.php:158
-#: addremotelink.php:188
+#: addremotelink.php:166
+#: addremotelink.php:196
 msgid "Existing remote site"
 msgstr "Olemassa oleva ulkoinen palvelu"
 
-#: addremotelink.php:163
+#: addremotelink.php:171
 msgid "New remote site"
 msgstr "Uusi ulkoinen palvelu"
 
-#: addremotelink.php:173
+#: addremotelink.php:181
 msgid "Person ID"
 msgstr "Henkilön ID-tunnus"
 
-#: addremotelink.php:202
+#: addremotelink.php:210
 msgid "Type in a new site."
 msgstr "Lisää uusi verkkopalvelu."
 
-#: addremotelink.php:205
-#: addremotelink.php:227
+#: addremotelink.php:213
+#: addremotelink.php:235
 msgid "Title:"
 msgstr "Nimike:"
 
-#: addremotelink.php:208
+#: addremotelink.php:216
 msgid "Site URL:"
 msgstr "Verkko-osoite (URL)"
 
-#: addremotelink.php:211
+#: addremotelink.php:219
 msgid "Example:"
 msgstr "Esimerkki:"
 
-#: addremotelink.php:214
-#, fuzzy
+#: addremotelink.php:222
 msgid "Database ID:"
-msgstr "Tietokannan palvelin"
+msgstr "GEDCOM ID-tunnus:"
 
-#: addremotelink.php:217
-#, fuzzy
+#: addremotelink.php:225
 msgid "Username: "
-msgstr "Käyttäjätunnus"
+msgstr "Käyttäjätunnus: "
 
-#: addremotelink.php:220
-#, fuzzy
+#: addremotelink.php:228
 msgid "Password: "
-msgstr "Salasana"
+msgstr "Salasana: "
 
-#: addremotelink.php:230
-#, fuzzy
+#: addremotelink.php:238
 msgid "GEDCOM File:"
-msgstr "_GEDCOM: poista"
+msgstr "GEDCOM-tiedosto:"
 
-#: addremotelink.php:250
-#, fuzzy
+#: addremotelink.php:258
 msgid "Admin Option"
-msgstr "_ylläpito"
+msgstr "Ylläpitäjävalinta"
 
-#: addremotelink.php:256
+#: addremotelink.php:264
 msgid "Do not update the CHAN (Last Change) record"
 msgstr "Älä päivitä CHAN (viimeinen muutos) tietuetta"
 
-#: addremotelink.php:264
+#: addremotelink.php:272
 #: addsearchlink.php:70
-#, fuzzy
 msgid "Add Link"
-msgstr "Lisää vaimo"
+msgstr "Lisää yhteys"
 
 #: addsearchlink.php:31
 msgid "Add Local Link"
 msgstr "Lisää paikallinen yhteys"
 
-#: addsearchlink.php:77
-msgid "Same as current"
-msgstr "Sama kuin nykyinen"
-
-#: addsearchlink.php:78
-msgid "Mother"
-msgstr "Äiti"
-
-#: addsearchlink.php:79
-msgid "Father"
-msgstr "Isä"
-
-#: addsearchlink.php:80
-msgid "Husband"
-msgstr "Mies"
-
-#: addsearchlink.php:81
-msgid "Wife"
-msgstr "Vaimo"
-
-#: addsearchlink.php:82
-msgid "Son"
-msgstr "Poika"
-
-#: addsearchlink.php:83
-msgid "Daughter"
-msgstr "Tytär"
-
 #: admin.php:51
 #: admin.php:137
-#, fuzzy
 msgid "Administration"
-msgstr "_ylläpito"
+msgstr "Järjestelmänhallinta"
 
 #: admin.php:55
-#, fuzzy
 msgid "Accept / Reject Changes"
-msgstr "Viimeiset muutokset"
+msgstr "Hyväksy/Hylkää muutokset"
 
 #: admin.php:75
-#, fuzzy
 msgid "View log files"
-msgstr "Arkistoi lokitiedostot"
+msgstr "Näytä lokitiedot"
 
 #: admin.php:105
 msgid "Edit Image Manipulation Configuration"
@@ -276,15 +272,13 @@ msgstr "Yhdellä tai useammalla tilillä on varoitus"
 
 #: admin.php:166
 #: admin.php:186
-#, fuzzy
 msgid "Informational"
-msgstr "PHP-info"
+msgstr "Tiedoksi"
 
 #: admin.php:167
 #: admin.php:201
-#, fuzzy
 msgid "Data and GEDCOM administration"
-msgstr "_GEDCOM: ylläpitosivu"
+msgstr "Data- ja GEDCOM-ylläpito"
 
 #: admin.php:169
 #: admin.php:228
@@ -293,14 +287,12 @@ msgstr "Yhteydettömät tietueet"
 
 #: admin.php:172
 #: admin.php:256
-#, fuzzy
 msgid "Site administration"
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Sivuston ylläpito"
 
 #: admin.php:179
-#, fuzzy
 msgid "Module Administration"
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Moduulin ylläpito"
 
 #: admin.php:191
 msgid "View readme.txt file"
@@ -311,9 +303,8 @@ msgid "README documentation"
 msgstr "README-dokumentti"
 
 #: admin.php:194
-#, fuzzy
 msgid "Show PHP information page"
-msgstr "PHP-info"
+msgstr "Näytä PHP informaatio sivu"
 
 #: admin.php:194
 msgid "PHP information"
@@ -328,62 +319,52 @@ msgid "Merge records"
 msgstr "Yhdistä tietueita"
 
 #: admin.php:210
-#, fuzzy
 msgid "Cleanup Index directory"
-msgstr "Indeksi-kansio"
+msgstr "Siivoa indeksi-kansio"
 
 #: admin.php:216
 msgid "Batch Update"
 msgstr "Eräpäivitys"
 
 #: admin.php:232
-#, fuzzy
 msgid "Add an unlinked person"
-msgstr "Liitä mies puolisoksi käyttäen tiedostossa olevaa henkilöä."
+msgstr "Lisää yhteydetön henkilö"
 
 #: admin.php:235
-#, fuzzy
 msgid "Add an unlinked source"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää yhteydetön lähde"
 
 #: admin.php:240
-#, fuzzy
 msgid "Add an unlinked note"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää yhteydetön lisätieto"
 
 #: admin.php:260
-#, fuzzy
 msgid "Configuration"
-msgstr "Apua asetuksiin"
+msgstr "Konfigurointi"
 
 #: admin.php:262
-#, fuzzy
 msgid "User Information Migration tool"
-msgstr "_käyttäjätiedon muunnos (Indeksi -->> SQL)"
+msgstr "Käyttäjätietojen integrointityökalu"
 
 #: admin.php:266
-#, fuzzy
 msgid "User administration"
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Käyttäjien hallinta"
 
 #: admin.php:268
 msgid "Backup"
 msgstr "Varmuuskopio"
 
 #: admin.php:272
-#, fuzzy
 msgid "FAQ List"
-msgstr "_UKK-luettelo: muokkaa"
+msgstr "UKK-luettelo"
 
 #: admin.php:274
-#, fuzzy
 msgid "Manage Sites"
-msgstr "Kielitiedostot"
+msgstr "Palvelimien ylläpito"
 
 #: admin.php:278
-#, fuzzy
 msgid "Configure supported languages"
-msgstr "_Konfiguroi tuettuja kieliä"
+msgstr "Valitse tuetut kielet"
 
 #: admin.php:282
 msgid "You have not configured the languages your site will support.<br />PhpGedView will use its default actions."
@@ -410,11 +391,14 @@ msgstr "Lokitiedoston sisältö"
 msgid "Ancestry Chart"
 msgstr "Esipolvikaavio"
 
+#: ancestry.php:49
+msgid "%s Generation Ancestry Chart"
+msgstr "%s Sukupolvet esipolvikaaviossa"
+
 #: ancestry.php:72
 #: compact.php:82
-#, fuzzy
 msgid "Root Person ID"
-msgstr "Poista henkilö kaaviosta"
+msgstr "Lähtöhenkilön numero"
 
 #: ancestry.php:82
 msgid "Box width"
@@ -425,30 +409,26 @@ msgid "Layout"
 msgstr "Näkymä"
 
 #: ancestry.php:99
-#, fuzzy
 msgid "List"
-msgstr "Nimiluettelo"
+msgstr "Luettelo"
 
 #: ancestry.php:105
 msgid "Booklet"
 msgstr "Kirjanen"
 
 #: ancestry.php:123
-#, fuzzy
 msgid "Show cousins"
-msgstr "Näytä osumalaskurit"
+msgstr "Näytä serkut"
 
 #: ancestry.php:130
 #: calendar.php:404
-#, fuzzy
 msgid "Individuals"
-msgstr "Henkilöön lisättävät tiedot"
+msgstr "Henkilöitä"
 
 #: ancestry.php:136
 #: calendar.php:405
-#, fuzzy
 msgid "Families"
-msgstr "Järjestä perheet"
+msgstr "Perheitä"
 
 #: ancestry.php:142
 #: branches.php:74
@@ -458,14 +438,12 @@ msgstr "Näytä"
 
 #: ancestry.php:149
 #: branches.php:241
-#, fuzzy
 msgid "Generations"
-msgstr "Sukupuun sukupolvien määrä"
+msgstr "Sukupolvi"
 
 #: ancestry.php:170
-#, fuzzy
 msgid "Show Details"
-msgstr "Näytä tulevat tehtävät"
+msgstr "Näytä yksityiskohdat"
 
 #: ancestry.php:192
 msgid "Click on any of the boxes to get more information about that person."
@@ -564,9 +542,8 @@ msgid "Recent Years (&lt; 100 yrs)"
 msgstr "Viimeiset vuodet (< 100 vuotta)"
 
 #: calendar.php:201
-#, fuzzy
 msgid "Gender"
-msgstr "Muokkaa sukupuoli"
+msgstr "Sukupuoli"
 
 #: calendar.php:212
 #: calendar.php:215
@@ -581,20 +558,17 @@ msgid "Females"
 msgstr "Naispuolisia"
 
 #: calendar.php:226
-#, fuzzy
 msgid "Show events of:"
-msgstr "Näytä vanhin huipulla"
+msgstr "Näytä tapahtumat:"
 
 #: calendar.php:232
 #: calendar.php:530
-#, fuzzy
 msgid "Births, Deaths, Marriages"
-msgstr "Näytä vain syntymät, kuolemat ja avioliitot?"
+msgstr "Syntymät, kuolemat, avioliitot"
 
 #: calendar.php:235
-#, fuzzy
 msgid "ALL"
-msgstr "Ahvenanmaa"
+msgstr "Kaikki"
 
 #: calendar.php:238
 msgid "BIRT"
@@ -646,9 +620,8 @@ msgstr "Erikoistapahtuma"
 
 #: calendar.php:282
 #: calendar.php:284
-#, fuzzy
 msgid "View Day"
-msgstr "Näytä arkisto"
+msgstr "Näytä päivä"
 
 #: calendar.php:287
 #: calendar.php:289
@@ -657,19 +630,16 @@ msgstr "Näytä kuukausi"
 
 #: calendar.php:292
 #: calendar.php:294
-#, fuzzy
 msgid "View Year"
-msgstr "Näytä arkisto"
+msgstr "Näytä vuosi"
 
 #: calendar.php:435
-#, fuzzy
 msgid "Total individuals"
-msgstr "Poista tämä henkilö"
+msgstr "Nimien lukumäärä"
 
 #: calendar.php:443
-#, fuzzy
 msgid "Total families"
-msgstr "Järjestä perheet"
+msgstr "Perheiden lukumäärä"
 
 #: calendar.php:477
 msgid "Day not set"
@@ -689,6 +659,10 @@ msgstr "Nainen"
 msgid "Filter"
 msgstr "Suodatus"
 
+#: calendar.php:588
+msgid "%s year anniversary"
+msgstr "%s. vuosipäivä"
+
 #: calendar.php:614
 msgid "unknown"
 msgstr "ei tiedossa"
@@ -703,9 +677,8 @@ msgid "Return to the Admin menu"
 msgstr "Palaa ylläpitovalikkoon"
 
 #: changelanguage.php:155
-#, fuzzy
 msgid "Add new language"
-msgstr "Lisää nimi"
+msgstr "Lisää uusi kieli"
 
 #: changelanguage.php:175
 #: changelanguage.php:191
@@ -728,28 +701,24 @@ msgid "Edit"
 msgstr "Muokkaa"
 
 #: changelanguage.php:259
-#, fuzzy
 msgid "Languages used"
-msgstr "Muokattava kieli"
+msgstr "Käytettävät kielet"
 
 #: changelanguage.php:264
-#, fuzzy
 msgid "Current GEDCOMs"
-msgstr "Luo uusi GEDCOM-tiedosto"
+msgstr "Nykyiset GEDCOM:t"
 
 #: changelanguage.php:282
-#, fuzzy
 msgid "Users' languages"
-msgstr "Verrattava kieli"
+msgstr "Käyttäjien kielet"
 
 #: clippings.php:40
 msgid "Clippings Cart"
 msgstr "Leikekori"
 
 #: clippings.php:49
-#, fuzzy
 msgid "Family Tree Clippings Cart"
-msgstr "Leikekori"
+msgstr "Sukupuun leikekori"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
@@ -796,9 +765,8 @@ msgstr "Lisää tämä henkilö suorine esivanhempineen."
 #: clippings.php:81
 #: clippings.php:83
 #: clippings.php:86
-#, fuzzy
 msgid "Number of generations:"
-msgstr "Sukupuun sukupolvien määrä"
+msgstr "Sukupolvien lukumäärä:"
 
 #: clippings.php:82
 msgid "Add this person, his direct line ancestors, and their families."
@@ -817,9 +785,8 @@ msgid "Which records linked to this source should be added?"
 msgstr "Mitkä tähän lähteeseen liitetyt tietueet tulisi lisätä?"
 
 #: clippings.php:97
-#, fuzzy
 msgid "Add just this source."
-msgstr "Poista lähde"
+msgstr "Lisää vain tämä lähde."
 
 #: clippings.php:98
 msgid "Add this source and families/people linked to it."
@@ -830,23 +797,20 @@ msgid "Some items could not be added due to privacy restrictions"
 msgstr "Joitakin kohteita ei voitu lisätä yksityisyysrajoitusten vuoksi."
 
 #: clippings.php:127
-#, fuzzy
 msgid "Add Individual By ID"
-msgstr "Henkilön tunnuksen etuliite"
+msgstr "Lisää henkilö ID-tunnuksen avulla"
 
 #: clippings.php:140
 msgid "Add"
 msgstr "Lisää"
 
 #: clippings.php:150
-#, fuzzy
 msgid "Your Clippings Cart is empty."
-msgstr "Leikekori"
+msgstr "Leikekorisi on tyhjä."
 
 #: clippings.php:157
-#, fuzzy
 msgid "File Information"
-msgstr "PHP-info"
+msgstr "Tiedostoinformaatio"
 
 #: clippings.php:159
 msgid "File Type"
@@ -877,14 +841,12 @@ msgid "Authenticated user"
 msgstr "Tunnistettu käyttäjä"
 
 #: clippings.php:208
-#, fuzzy
 msgid "GEDCOM administrator"
-msgstr "_GEDCOM: ylläpitosivu"
+msgstr "GEDCOM-ylläpitäjä"
 
 #: clippings.php:209
-#, fuzzy
 msgid "Site administrator"
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Palvelun ylläpitäjä"
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
@@ -907,9 +869,8 @@ msgid "Forward slashes : /"
 msgstr "Kauttamerkit : /"
 
 #: clippings.php:307
-#, fuzzy
 msgid "Remove"
-msgstr "Poista henkilö kaaviosta"
+msgstr "Poista        "
 
 #: clippings.php:224
 msgid ""
@@ -924,9 +885,8 @@ msgstr ""
 #: compact.php:58
 #: compact.php:447
 #: compact.php:449
-#, fuzzy
 msgid "Compact Chart"
-msgstr "Tyhjennä leikekori"
+msgstr "Kompakti kaavio"
 
 #: compact.php:97
 msgid "Show ID numbers next to names"
@@ -938,9 +898,8 @@ msgstr "Näytä korostetut kuvat henkilöalueilla"
 
 #: compact.php:312
 #: compact.php:314
-#, fuzzy
 msgid "Individual Information"
-msgstr "Henkilön tunnuksen etuliite"
+msgstr "Henkilötietoja"
 
 #: descendancy.php:35
 #: descendancy.php:46
@@ -959,9 +918,8 @@ msgid "To delete a file or subdirectory from the Index directory drag it to the 
 msgstr ""
 
 #: dir_editor.php:91
-#, fuzzy
 msgid "Deleted files:"
-msgstr "Pyyhi nimi"
+msgstr "Poistetut tiedostot:"
 
 #: dir_editor.php:111
 #: dir_editor.php:205
@@ -978,9 +936,8 @@ msgstr "Liitetyt tiedostot:"
 #: edit_privacy.php:570
 #: edit_privacy.php:664
 #: edit_privacy.php:763
-#, fuzzy
 msgid "Delete"
-msgstr "Pyyhi nimi"
+msgstr "Poista"
 
 #: dir_editor.php:239
 #: editlang_edit_settings.php:192
@@ -1001,9 +958,8 @@ msgid "Download GEDCOM"
 msgstr "Lataa koneesta GEDCOM-tiedosto"
 
 #: downloadgedcom.php:136
-#, fuzzy
 msgid "Options:"
-msgstr "Tuo vaihtoehdot"
+msgstr "Asetukset:"
 
 #: downloadgedcom.php:169
 msgid ""
@@ -1012,6 +968,11 @@ msgid ""
 "\t<tr><td class=\"facts_label03\" colspan=\"2\">\n"
 "\t<input type=\"submit\" value=\"<?php print i18n::translate("
 msgstr ""
+
+#: editconfig_gedcom.php:254
+#, php-format
+msgid "Genealogy from [%s]"
+msgstr "Sukututkimus tiedostosta [%s]"
 
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
@@ -1027,9 +988,8 @@ msgid "The protected media directory in the Media Firewall root directory is not
 msgstr "Suojattu mediakansio mediapalomuurijuurikansiossa ei ole kirjoituskelpoinen."
 
 #: editconfig_gedcom.php:487
-#, fuzzy
 msgid "Download GEDCOM configuration."
-msgstr "_GEDCOM: asetustiedosto"
+msgstr "Lataa GEDCOM-konfiguraatio"
 
 #: editconfig_gedcom.php:487
 msgid "Upload the file to your index directory: "
@@ -1037,9 +997,8 @@ msgstr "Lähetä tiedosto index-kansioon:"
 
 #: editconfig_gedcom.php:620
 #: editconfig_gedcom.php:666
-#, fuzzy
 msgid "GEDCOM Configuration"
-msgstr "_GEDCOM: asetustiedosto"
+msgstr "GEDCOM konfiguraatio"
 
 #: editconfig_gedcom.php:670
 #: editgedcoms.php:117
@@ -1058,9 +1017,8 @@ msgstr "Luo uusi GEDCOM-tiedosto"
 
 #: editconfig_gedcom.php:676
 #: editgedcoms.php:157
-#, fuzzy
 msgid "Upload Replacement"
-msgstr "Lähetyspolku"
+msgstr "Lähetä korvaava"
 
 #: editconfig_gedcom.php:680
 #: edit_privacy.php:145
@@ -1076,9 +1034,8 @@ msgid "Search option text"
 msgstr "Hae asetuksen kuvauksesta"
 
 #: editconfig_gedcom.php:850
-#, fuzzy
 msgid "Clear Search"
-msgstr "Poista tiedostot välimuistista."
+msgstr "Tyhjennä haku"
 
 #: editconfig_gedcom.php:878
 #: editconfig_gedcom.php:1106
@@ -1091,9 +1048,8 @@ msgstr "Poista tiedostot välimuistista."
 #: editconfig_gedcom.php:2121
 #: editconfig_gedcom.php:2223
 #: edit_privacy.php:805
-#, fuzzy
 msgid "Save configuration"
-msgstr "Apua asetuksiin"
+msgstr "Tallenna konfiguraatio"
 
 #: editconfig_gedcom.php:880
 #: editconfig_gedcom.php:1108
@@ -1111,23 +1067,26 @@ msgstr "Palauta"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
-#, fuzzy
 msgid "GEDCOM Basics"
-msgstr "_GEDCOM: varmenna"
+msgstr "GEDCOM Perustiedot"
 
 #: editconfig_gedcom.php:895
 msgid "Upload path"
 msgstr "Lähetyspolku"
 
 #: editconfig_gedcom.php:900
-#, fuzzy
 msgid "Maximum upload size: "
-msgstr "Sivujen näyttömäärän maksimiraja"
+msgstr "Suurin lähetettävä tiedostokoko:"
 
 #: editconfig_gedcom.php:903
 #: editconfig_gedcom.php:924
 msgid "Path and name of GEDCOM on server"
 msgstr "GEDCOM-palvelimen polku ja nimi"
+
+#: editconfig_gedcom.php:915
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, does not exist at the specified location."
+msgstr "GEDCOM-tiedostoa [%s] ei löydy annetusta paikasta."
 
 #: editconfig_gedcom.php:960
 msgid "Character Set encoding"
@@ -1291,9 +1250,8 @@ msgstr "PHP aikaraja"
 
 #: editconfig_gedcom.php:1115
 #: editconfig_gedcom.php:1116
-#, fuzzy
 msgid "Multimedia"
-msgstr "Ylläpidä multimediaa"
+msgstr "Multimedia"
 
 #: editconfig_gedcom.php:1122
 msgid "Enable multimedia features"
@@ -1384,9 +1342,8 @@ msgstr ""
 
 #: editconfig_gedcom.php:1299
 #: editconfig_gedcom.php:1300
-#, fuzzy
 msgid "Access and Privacy"
-msgstr "Muokkaa yksityisyyttä"
+msgstr "Yhteys ja yksityisyys"
 
 #: editconfig_gedcom.php:1305
 msgid "Enable Privacy"
@@ -1409,9 +1366,8 @@ msgid "Welcome"
 msgstr "Tervetuloa"
 
 #: editconfig_gedcom.php:1332
-#, fuzzy
 msgid "MyGedView"
-msgstr "PhpGedView URL"
+msgstr "OmaGedView"
 
 #: editconfig_gedcom.php:1337
 msgid "Welcome text on Login page"
@@ -1456,9 +1412,8 @@ msgstr "Näyttö ja näkymä"
 
 #: editconfig_gedcom.php:1387
 #: editconfig_gedcom.php:1388
-#, fuzzy
 msgid "Names"
-msgstr "Nimiluettelo"
+msgstr "Nimet"
 
 #: editconfig_gedcom.php:1393
 msgid "Show married names on Individual list"
@@ -1557,14 +1512,12 @@ msgid "Notes"
 msgstr "Lisätiedot"
 
 #: editconfig_gedcom.php:1511
-#, fuzzy
 msgid "Sources"
-msgstr "Näytä lähde"
+msgstr "Lähteitä"
 
 #: editconfig_gedcom.php:1512
-#, fuzzy
 msgid "Media"
-msgstr "Etsi media"
+msgstr "Media"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
@@ -1713,9 +1666,8 @@ msgstr ""
 
 #: editconfig_gedcom.php:1799
 #: editconfig_gedcom.php:1800
-#, fuzzy
 msgid "Edit Options"
-msgstr "Tuo vaihtoehdot"
+msgstr "Muokkaa asetuksia"
 
 #: editconfig_gedcom.php:1805
 msgid "Enable online editing"
@@ -1828,9 +1780,8 @@ msgstr "Tietue"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
-#, fuzzy
 msgid "User Options"
-msgstr "Tuo vaihtoehdot"
+msgstr "Käyttäjäasetukset"
 
 #: editconfig_gedcom.php:1978
 msgid "Allow user to change language"
@@ -1858,9 +1809,8 @@ msgstr ""
 
 #: editconfig_gedcom.php:2044
 #: editconfig_gedcom.php:2045
-#, fuzzy
 msgid "Contact Information"
-msgstr "PHP-info"
+msgstr "Yhteystiedot"
 
 #: editconfig_gedcom.php:2055
 msgid "PhpGedView reply address"
@@ -1982,14 +1932,12 @@ msgid "Configuration help"
 msgstr "Apua asetuksiin"
 
 #: editgedcoms.php:78
-#, fuzzy
 msgid "GEDCOM Administration"
-msgstr "_GEDCOM: ylläpitosivu"
+msgstr "GEDCOM hallinta"
 
 #: editgedcoms.php:96
-#, fuzzy
 msgid "Default GEDCOM"
-msgstr "Validoi GEDCOM"
+msgstr "Vakio GEDCOM"
 
 #: editgedcoms.php:111
 msgid "Check if GEDCOM files are downloadable"
@@ -2003,14 +1951,18 @@ msgstr ""
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
 msgstr ""
 
+#: editgedcoms.php:184
+#, fuzzy, php-format
+msgid "%s cannot be downloaded."
+msgstr "Tätä aluetta ei voi konfiguroida."
+
 #: editgedcoms.php:187
 msgid "File not found."
 msgstr "Tiedostoa ei löydy."
 
 #: editgedcoms.php:191
-#, fuzzy
 msgid "Import"
-msgstr "Tuo vaihtoehdot"
+msgstr "Tuo"
 
 #: editgedcoms.php:193
 msgid "This GEDCOM has not yet been imported."
@@ -2025,9 +1977,8 @@ msgid "Are you sure you want to delete this GEDCOM"
 msgstr "Oletko varma että haluat poistaa tämän GEDCOM:n"
 
 #: editgedcoms.php:208
-#, fuzzy
 msgid "Download"
-msgstr "Lataa koneesta GEDCOM-tiedosto"
+msgstr "Lataa"
 
 #: editgedcoms.php:213
 msgid "Check"
@@ -2055,6 +2006,10 @@ msgstr "Kielitiedoston muokkaustyökalu"
 #: edit_interface.php:2723
 msgid "Save"
 msgstr "Talleta"
+
+#: editlang_edit_settings.php:225
+msgid "Original name of language in %s"
+msgstr "Alkuperäinen kielen nimi %s"
 
 #: editlang_edit_settings.php:238
 msgid "Abbreviation for language files"
@@ -2166,9 +2121,8 @@ msgid "Add/Edit Journal/News entry"
 msgstr "Muokkaa päiväkirja-/uutisartikkelimerkintää"
 
 #: editnews.php:57
-#, fuzzy
 msgid "Please enter a title."
-msgstr "Esitystyyli"
+msgstr "Täytä otsikko."
 
 #: editnews.php:64
 msgid "Please enter some text for this News or Journal entry."
@@ -2226,14 +2180,12 @@ msgid "User name"
 msgstr "Käyttäjätunnus"
 
 #: edituser.php:186
-#, fuzzy
 msgid "First Name"
-msgstr "Muokkaa nimeä"
+msgstr "Etunimi"
 
 #: edituser.php:192
-#, fuzzy
 msgid "Last Name"
-msgstr "Muokkaa nimeä"
+msgstr "Sukunimi"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
@@ -2248,14 +2200,12 @@ msgid "Leave password blank if you want to keep the current password."
 msgstr "Jätä salasana tyhjäksi jos et halua muuttaa sitä."
 
 #: edituser.php:223
-#, fuzzy
 msgid "Confirm Password"
-msgstr "Salasana"
+msgstr "Vahvista salasana"
 
 #: edituser.php:229
-#, fuzzy
 msgid "Change Language"
-msgstr "Kieli"
+msgstr "Vaihda kieli"
 
 #: edituser.php:245
 msgid "Email Address"
@@ -2278,9 +2228,8 @@ msgid "Visible to other users when online"
 msgstr "Näkyvissä muille käyttäjille online-tilassa."
 
 #: edituser.php:290
-#, fuzzy
 msgid "Default Tab to show on Individual Information page"
-msgstr "Oletusvälilehti näytettäessä henkilön sivu"
+msgstr "Oletusvälilehti, joka näytetään henkilösivulla"
 
 #: edit_changes.php:43
 #: edit_changes.php:61
@@ -2307,9 +2256,8 @@ msgid "View Change Diff"
 msgstr "Näytä muutokset"
 
 #: edit_changes.php:117
-#, fuzzy
 msgid "View GEDCOM Record"
-msgstr "Tarkista GEDCOM muutokset"
+msgstr "Näytä GEDCOM-tietue"
 
 #: edit_changes.php:118
 #: edit_interface.php:413
@@ -2339,15 +2287,13 @@ msgid "Undo"
 msgstr "Peru muutos"
 
 #: edit_changes.php:136
-#, fuzzy
 msgid "Send Message"
-msgstr "Lähettäjän nimi"
+msgstr "Lähetä viesti"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
-#, fuzzy
 msgid "Accept all changes"
-msgstr "Viimeiset muutokset"
+msgstr "Hyväksy kaikki muutokset"
 
 #: edit_changes.php:163
 #: edit_changes.php:181
@@ -2368,14 +2314,12 @@ msgid "Add child"
 msgstr "Lisää lapsi"
 
 #: edit_interface.php:355
-#, fuzzy
 msgid "Add a new mother"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää äiti"
 
 #: edit_interface.php:357
-#, fuzzy
 msgid "Add a new father"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää isä"
 
 #: edit_interface.php:362
 msgid "Add a child to create a one-parent family"
@@ -2435,9 +2379,8 @@ msgstr "Nimike"
 
 #: edit_interface.php:760
 #: edit_interface.php:838
-#, fuzzy
 msgid "Create a new source"
-msgstr "Luo uusi GEDCOM-tiedosto"
+msgstr "Luo uusi lähde"
 
 #: edit_interface.php:765
 msgid "ABBR"
@@ -2482,15 +2425,13 @@ msgid "New source created successfully."
 msgstr "Uuden lähteen luominen onnistui."
 
 #: edit_interface.php:911
-#, fuzzy
 msgid "Create a new Shared Note"
-msgstr "Lisää uusi jaettu lisätieto"
+msgstr "Luo uusi jaettu lisätieto"
 
 #: edit_interface.php:921
 #: edit_interface.php:1189
-#, fuzzy
 msgid "Shared Note"
-msgstr "Lisää uusi jaettu lisätieto"
+msgstr "Jaettu lisätieto"
 
 #: edit_interface.php:1018
 msgid "New Shared Note created successfully."
@@ -2501,9 +2442,8 @@ msgid "Create a new Shared Note using Assistant"
 msgstr "Lisää uusi jaettu lisätieto käyttäen avustajaa"
 
 #: edit_interface.php:1170
-#, fuzzy
 msgid "Edit Shared Note"
-msgstr "Lisää uusi jaettu lisätieto"
+msgstr "Muokkaa jaettua lisätietoa"
 
 #: edit_interface.php:1224
 #: edit_interface.php:1240
@@ -2512,9 +2452,8 @@ msgstr "Nimi"
 
 #: edit_interface.php:1233
 #: edit_interface.php:1284
-#, fuzzy
 msgid "Create Repository"
-msgstr "Poista tietovarasto"
+msgstr "Luo tietovarasto"
 
 #: edit_interface.php:1253
 msgid "ADDR"
@@ -2537,18 +2476,16 @@ msgid "WWW"
 msgstr "Kotisivu"
 
 #: edit_interface.php:1329
-#, fuzzy
 msgid "New Repository created"
-msgstr "Tietovarastoon kerran lisättävät tiedot"
+msgstr "Luotu uusi tietovarasto"
 
 #: edit_interface.php:1330
 msgid "Paste the following Repository ID into your editing fields to reference this Repository "
 msgstr "Liitä seuraava tietovaraston ID muokattaviin kenttiisi viittaukseksi tähän tietovarastoon."
 
 #: edit_interface.php:2126
-#, fuzzy
 msgid "Record copied to clipboard"
-msgstr "Lisää leikepöydältä"
+msgstr "Tietue kopioitu leikepöydälle"
 
 #: edit_interface.php:2270
 msgid "Re-order children"
@@ -2581,9 +2518,8 @@ msgstr "Muuta perheenjäseniä"
 #: edit_interface.php:2432
 #: edit_interface.php:2445
 #: edit_interface.php:2458
-#, fuzzy
 msgid "Change"
-msgstr "Sivu"
+msgstr "Muuta"
 
 #: edit_interface.php:2686
 msgid "Reorder Families"
@@ -2627,54 +2563,54 @@ msgstr "Päivitetään yhdistettyä tietuetta"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
-#, fuzzy
 msgid "Adding"
-msgstr "Ylläpito"
+msgstr "Lisätään"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
 msgid "from"
 msgstr ""
 
-#: edit_merge.php:246
+#: edit_merge.php:242
+msgid "Record %s successfully updated."
+msgstr "Tietue %s päivitetty."
+
+#: edit_merge.php:245
 msgid "favorites updated."
 msgstr ""
 
-#: edit_merge.php:248
+#: edit_merge.php:247
 msgid "Merge more records."
 msgstr "Yhdistä lisää tietueita."
 
-#: edit_merge.php:281
+#: edit_merge.php:280
 msgid "Merge Step 1 of 3"
 msgstr "Yhdistä - vaihe 1/3 "
 
-#: edit_merge.php:284
+#: edit_merge.php:283
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
 msgstr "Valitse kaksi GEDCOM-tietuetta yhdistettäväksi. Tietueiden tulee olla samaa tyyppiä."
 
-#: edit_merge.php:287
+#: edit_merge.php:286
 msgid "Merge To ID:"
 msgstr "Yhdistä ID:een:"
 
+#: edit_merge.php:301
+#: edit_merge.php:318
+msgid "Find Individual ID"
+msgstr "Hae henkilön ID"
+
 #: edit_merge.php:302
 #: edit_merge.php:319
-#, fuzzy
-msgid "Find Individual ID"
-msgstr "Henkilön tunnuksen etuliite"
+msgid "Find Family ID"
+msgstr "Hae perheen ID"
 
 #: edit_merge.php:303
 #: edit_merge.php:320
-#, fuzzy
-msgid "Find Family ID"
-msgstr "Perheen ID etuliite"
-
-#: edit_merge.php:304
-#: edit_merge.php:321
-#, fuzzy
 msgid "Find Source ID"
-msgstr "Lähteen tunnuksen etuliite"
+msgstr "Hae lähde-ID"
 
-#: edit_merge.php:307
+#: edit_merge.php:306
 msgid "Merge From ID:"
 msgstr "Yhdistä ID:stä:"
 
@@ -2684,14 +2620,12 @@ msgid "Unable to find individual with id"
 msgstr ""
 
 #: edit_privacy.php:135
-#, fuzzy
 msgid "Edit privacy settings"
-msgstr "Toteuta yksityisyysasetukset?"
+msgstr "Muokkaa yksityisyys asetuksia"
 
 #: edit_privacy.php:142
-#, fuzzy
 msgid "Edit GEDCOM privacy settings"
-msgstr "_GEDCOM: yksityisyysasetukset"
+msgstr "Muokkaa GEDCOMin tietosuoja-asetukset"
 
 #: edit_privacy.php:159
 msgid "Performing update."
@@ -2769,9 +2703,8 @@ msgstr ""
 #: edit_privacy.php:572
 #: edit_privacy.php:717
 #: edit_privacy.php:764
-#, fuzzy
 msgid "ID"
-msgstr "Indonesia"
+msgstr "ID"
 
 #: edit_privacy.php:449
 #: edit_privacy.php:481
@@ -2790,9 +2723,8 @@ msgstr ""
 #: edit_privacy.php:480
 #: edit_privacy.php:573
 #: edit_privacy.php:765
-#, fuzzy
 msgid "Full Name"
-msgstr "Pyyhi nimi"
+msgstr "Koko nimi"
 
 #: edit_privacy.php:509
 #: edit_privacy.php:511
@@ -2805,9 +2737,8 @@ msgstr ""
 
 #: edit_privacy.php:526
 #: edit_privacy.php:571
-#, fuzzy
 msgid "Username"
-msgstr "Käyttäjätunnus"
+msgstr "Tunnus"
 
 #: edit_privacy.php:528
 #: edit_privacy.php:574
@@ -2882,14 +2813,12 @@ msgid "Private"
 msgstr "Yksityinen"
 
 #: expand_view.php:72
-#, fuzzy
 msgid "View Family"
-msgstr "Näytä arkisto"
+msgstr "Katso perhettä"
 
 #: family.php:60
-#, fuzzy
 msgid "This record has been marked for deletion upon admin approval."
-msgstr "Tämä tietue on muuttunut. Klikkaa, jos haluat nähdä muutokset."
+msgstr "Tämä tietue on merkitty ylläpitäjän hyväksymisen jälkeen poistettavaksi."
 
 #: family.php:100
 #: familybook.php:218
@@ -2901,27 +2830,24 @@ msgid "Grandparents"
 msgstr ""
 
 #: family.php:137
-#, fuzzy
 msgid "Show couple on timeline chart"
-msgstr "Näytä tyhjät laatikot esipolvitaulussa"
+msgstr "Näytä pariskunta aikajanalla"
 
 #: family.php:137
 msgid "P"
 msgstr "P"
 
 #: family.php:138
-#, fuzzy
 msgid "Show children on timeline chart"
-msgstr "Näytä sukupuoli-ikonit kaavioilla"
+msgstr "Näytä lapset aikajanalla"
 
 #: family.php:138
 msgid "D"
 msgstr "D"
 
 #: family.php:139
-#, fuzzy
 msgid "Show family on timeline chart"
-msgstr "Näytä tyhjät laatikot esipolvitaulussa"
+msgstr "Näytä perhe aikajanalla"
 
 #: family.php:139
 msgid "T"
@@ -2952,15 +2878,13 @@ msgstr "Perhe:&nbsp;"
 #: familybook.php:371
 #: familybook.php:383
 #: familybook.php:387
-#, fuzzy
 msgid "Family Book Chart"
-msgstr "Perheeseen lisättävät tiedot"
+msgstr "Sukukirjakaavio"
 
 #: familybook.php:458
 #: hourglass.php:115
-#, fuzzy
 msgid "Show spouses"
-msgstr "Näytä lähde"
+msgstr "Näytä puolisot"
 
 #: familybook.php:481
 msgid "Descent Steps"
@@ -2978,24 +2902,26 @@ msgid "Choose a letter to show families whose name starts with that letter."
 msgstr "Valitse kirjain, jolla näytettävien perheiden nimi alkaa."
 
 #: famlist.php:184
-#, fuzzy
 msgid "Skip Surname lists"
-msgstr "Sukunimi ensin"
+msgstr "Ohita sukunimiluettelo"
 
 #: famlist.php:187
-#, fuzzy
 msgid "Show Surname lists"
-msgstr "Sukunimi ensin"
+msgstr "Näytä sukunimiluettelo"
 
 #: famlist.php:194
-#, fuzzy
 msgid "Exclude married names"
-msgstr "Sisällytä avionimet"
+msgstr "Älä sisällytä avionimiä"
 
 #: famlist.php:196
 #: help_text.php:5234
 msgid "Include married names"
 msgstr "Sisällytä avionimet"
+
+#: famlist.php:263
+#: famlist.php:274
+msgid "Families with surname %s"
+msgstr "Perheet, joilla on sukunimi %s"
 
 #: famlist.php:268
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
@@ -3019,9 +2945,8 @@ msgid "Font file not found on PHP server"
 msgstr "Kirjasintiedostoa ei löytynyt PHP-palvelimelta."
 
 #: fanchart.php:295
-#, fuzzy
 msgid "Pedigree Tree"
-msgstr "Sukupuun sukupolvien määrä"
+msgstr "Esipolvet"
 
 #: fanchart.php:297
 #, fuzzy
@@ -3029,9 +2954,8 @@ msgid "Pedigree Map"
 msgstr "Sukupuun sukupolvien määrä"
 
 #: fanchart.php:300
-#, fuzzy
 msgid "Relationship to me"
-msgstr "Tarkista sukulaisuus myös avioliiton kautta"
+msgstr "Sukulaisuus minuun"
 
 #: fanchart.php:305
 #: fanchart.php:400
@@ -3051,6 +2975,10 @@ msgstr "Tiimalasikaavio"
 #: fanchart.php:307
 msgid "Interactive Tree"
 msgstr "Interaktiivinen puu"
+
+#: fanchart.php:428
+msgid "%s Generation Circle Diagram"
+msgstr "%s Sukupolviviuhkakaavio"
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -3110,9 +3038,8 @@ msgid "Preview"
 msgstr "Esikatselu"
 
 #: faq.php:285
-#, fuzzy
 msgid "Position item"
-msgstr "UKK järjestys"
+msgstr "Kysymyksen sijoittelu"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
@@ -3131,21 +3058,18 @@ msgstr "Etsi media"
 
 #: find.php:104
 #: find.php:208
-#, fuzzy
 msgid "Find Place"
-msgstr "Etsi media"
+msgstr "hae paikka"
 
 #: find.php:108
 #: find.php:211
-#, fuzzy
 msgid "Repositories"
-msgstr "Tietovarastoon lisättävät tiedot"
+msgstr "Tietovarastoluettelo"
 
 #: find.php:112
 #: find.php:214
-#, fuzzy
 msgid "Find Shared Note"
-msgstr "Lisää uusi jaettu lisätieto"
+msgstr "Etsi jaettu lisätieto"
 
 #: find.php:116
 #: find.php:217
@@ -3163,9 +3087,8 @@ msgstr "Anna enemmän kuin yksi merkki"
 
 #: find.php:239
 #: find.php:259
-#, fuzzy
 msgid "Name contains:"
-msgstr "Nimiluettelo"
+msgstr "Nimi sisältää:"
 
 #: find.php:283
 msgid "Media contains:"
@@ -3188,18 +3111,16 @@ msgid "Place contains:"
 msgstr "Paikka sisältää:"
 
 #: find.php:332
-#, fuzzy
 msgid "Repository contains:"
-msgstr "Tietovarastoon lisättävät tiedot"
+msgstr "Tietovarasto sisältää:"
 
 #: find.php:353
 msgid "Shared Note contains:"
 msgstr "Jaettu lisätieto sisältää:"
 
 #: find.php:374
-#, fuzzy
 msgid "Source contains:"
-msgstr "SSL kirjautuminen"
+msgstr "Lähde sisältää:"
 
 #: find.php:403
 msgid "Magnify"
@@ -3216,9 +3137,8 @@ msgid "No results found."
 msgstr "Hakua vastaavia tuloksia ei löytynyt."
 
 #: find.php:487
-#, fuzzy
 msgid "Current directory"
-msgstr "Teemakansio"
+msgstr "Nykyinen kansio"
 
 #: find.php:501
 msgid "External objects"
@@ -3237,14 +3157,12 @@ msgid "This media object is linked to the following:"
 msgstr "Tämä mediaobjekti on liitetty seuraavaan:"
 
 #: find.php:584
-#, fuzzy
 msgid "View Person"
-msgstr "Poista henkilö kaaviosta"
+msgstr "Katso henkilöä"
 
 #: find.php:590
-#, fuzzy
 msgid "View Source"
-msgstr "Näytä arkisto"
+msgstr "Näytä lähteet"
 
 #: find.php:593
 msgid "View Object"
@@ -3267,9 +3185,8 @@ msgid "Shared Notes found"
 msgstr "Löytyi jaettuja lisätietoja"
 
 #: find.php:712
-#, fuzzy
 msgid "Total Sources"
-msgstr "Näytä kaikki lähteet"
+msgstr "Lähteiden kokonaismäärä"
 
 #: gedcheck.php:37
 msgid "Gedcom checker"
@@ -4984,11 +4901,14 @@ msgid "_FA11"
 msgstr "Fakta 11"
 
 #. I18N: This is the GEDCOM label for "Fact 12"
-#. I18N: This is the GEDCOM label for "Fact 13"
 #: help_text.php:1969
-#: help_text.php:1975
 msgid "_FA12"
 msgstr "Fakta 12"
+
+#. I18N: This is the GEDCOM label for "Fact 13"
+#: help_text.php:1975
+msgid "_FA13"
+msgstr "Fakta 13"
 
 #. I18N: This is the GEDCOM label for "Emigration of parents"
 #: help_text.php:1981
@@ -5382,14 +5302,12 @@ msgid "Image Viewer"
 msgstr "Kuvakatselin"
 
 #: help_text.php:2479
-#, fuzzy
 msgid "PhpGedView User Login"
-msgstr "PhpGedView URL"
+msgstr "PhpGedView Käyttäjän sisäänkirjautuminen"
 
 #: help_text.php:2484
-#, fuzzy
 msgid "PhpGedView Message"
-msgstr "PhpGedView URL"
+msgstr "PhpGedView viesti"
 
 #: help_text.php:2489
 #, fuzzy
@@ -9393,26 +9311,20 @@ msgid "?"
 msgstr "?"
 
 #: index_edit.php:154
-#: index_edit.php:158
-#: index_edit.php:159
-#: index_edit.php:160
-#: index_edit.php:161
 msgid "&nbsp;"
 msgstr "&nbsp;"
 
 #: index_edit.php:231
-#, fuzzy
 msgid "Configuration file updated successfully."
-msgstr "Tuettujen kielien hallinta"
+msgstr "Konfiguraatiotiedoston päivitys onnistui."
 
 #: index_edit.php:278
 msgid "The cache files have been removed."
 msgstr "Tiedostot välimuistista on poistettu."
 
 #: index_edit.php:285
-#, fuzzy
 msgid "Configure"
-msgstr "_GEDCOM: konfiguroi"
+msgstr "Konfiguraatio"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
@@ -9464,6 +9376,11 @@ msgstr "Palauta alkuperäiset alueet"
 msgid "Choose a letter to show individuals whose family name starts with that letter."
 msgstr "Valitse kirjain, jolla näytettävien henkilöiden sukunimi alkaa."
 
+#: indilist.php:263
+#: indilist.php:274
+msgid "Individuals with surname %s"
+msgstr "henkilöt, joilla on sukunimi %s"
+
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
 msgstr "Valitse kirjain näyttääksesi henkilöt, joiden etunimi alkaa kyseisellä kirjaimella."
@@ -9477,9 +9394,8 @@ msgid "The information for this individual was linked from a remote site."
 msgstr "Tämän henkilön tiedot on yhdistetty toisesta palvelusta."
 
 #: individual.php:319
-#, fuzzy
 msgid "Pedigree Chart"
-msgstr "Esipolvitaulun lähtöhenkilö"
+msgstr "Esipolvitaulu"
 
 #: individual.php:321
 msgid "Timeline Chart"
@@ -9511,14 +9427,12 @@ msgid "*Your settings will not<br />be saved until step 6"
 msgstr "*Asetuksesi eivät<br />tallennu ennen vaihetta 6 "
 
 #: install.php:434
-#, fuzzy
 msgid "Database Tables created successfully"
-msgstr "Tietokantataulun etuliite"
+msgstr "Tietokantataulut on luotu."
 
 #: install.php:449
-#, fuzzy
 msgid "Configuration saved successfully"
-msgstr "Apua asetuksiin"
+msgstr "Asetukset on tallennettu."
 
 #: install.php:452
 msgid "Download config.php"
@@ -9541,9 +9455,8 @@ msgid "Checking required PHP version:"
 msgstr "Tarkistetaan tarvittava PHP-versio:"
 
 #: install.php:508
-#, fuzzy
 msgid "Failed"
-msgstr "Lipputiedosto"
+msgstr "Epäonnistui"
 
 #: install.php:516
 msgid "Checking for minimum database support:"
@@ -9555,9 +9468,8 @@ msgstr "Sinulla ei ole tuettuja tietokantalaajennuksia."
 
 #: install.php:531
 #: install.php:620
-#, fuzzy
 msgid "Passed"
-msgstr "Salasana"
+msgstr "Hyväksytty"
 
 #: install.php:538
 msgid "Checking for warnings..."
@@ -9647,9 +9559,8 @@ msgstr "Perusasetukset"
 
 #: install.php:764
 #: install.php:826
-#, fuzzy
 msgid "Advanced Settings"
-msgstr "Erityiset nimitiedot"
+msgstr "Lisäasetukset"
 
 #: install.php:875
 #: install.php:881
@@ -9664,9 +9575,8 @@ msgstr "&nbsp;&nbsp;sekuntia"
 #: install.php:1072
 #: login_register.php:168
 #: login_register.php:217
-#, fuzzy
 msgid "You must enter a password."
-msgstr "Käyttäjänimi ja salasana"
+msgstr "Salasana on pakollinen."
 
 #: install.php:1077
 #: login_register.php:174
@@ -9692,9 +9602,8 @@ msgstr ""
 
 #: inverselink.php:50
 #: media.php:760
-#, fuzzy
 msgid "To Person"
-msgstr "Poista henkilö kaaviosta"
+msgstr "henkilöön"
 
 #: inverselink.php:53
 #: media.php:765
@@ -9703,45 +9612,37 @@ msgstr "perheeseen"
 
 #: inverselink.php:56
 #: media.php:770
-#, fuzzy
 msgid "To Source"
-msgstr "Näytä lähde"
+msgstr "lähteeseen"
 
 #: inverselink.php:59
-#, fuzzy
 msgid "To Repository"
-msgstr "Poista tietovarasto"
+msgstr "tietovarastoon"
 
 #: inverselink.php:62
-#, fuzzy
 msgid "To Shared Note"
-msgstr "Lisää uusi jaettu lisätieto"
+msgstr "jaettuun lisätietoon"
 
 #: inverselink.php:67
 #: inverselink.php:116
-#, fuzzy
 msgid "Link Media"
-msgstr "Etsi media"
+msgstr "Liitä media"
 
 #: inverselink.php:117
-#, fuzzy
 msgid "Media ID"
-msgstr "Median ID etuliite"
+msgstr "Media ID"
 
 #: inverselink.php:143
-#, fuzzy
 msgid "Enter Individual ID"
-msgstr "Henkilön tunnuksen etuliite"
+msgstr "Syötä henkilö ID"
 
 #: inverselink.php:174
-#, fuzzy
 msgid "Source"
-msgstr "Näytä lähde"
+msgstr "Lähde"
 
 #: inverselink.php:188
-#, fuzzy
 msgid "Repository"
-msgstr "Poista tietovarasto"
+msgstr "Tietovarasto"
 
 #: lifespan.php:41
 #: lifespan.php:54
@@ -9753,14 +9654,12 @@ msgid "Add another person to chart:<br />Person ID:"
 msgstr "Lisää uusi henkilö kaavioon:<br />Henkilön ID:"
 
 #: lifespan.php:70
-#, fuzzy
 msgid "Include Immediate Family"
-msgstr "Sisällytä avionimet"
+msgstr "Sisällytä ydinperhe"
 
 #: lifespan.php:75
-#, fuzzy
 msgid "Show Timeline chart"
-msgstr "Näytä sukupuoli-ikonit kaavioilla"
+msgstr "Näytä aikajanakaavio"
 
 #: lifespan.php:303
 msgid "Speed"
@@ -9779,14 +9678,12 @@ msgid "Search"
 msgstr "Hae"
 
 #: lifespan.php:322
-#, fuzzy
 msgid "Clear Chart"
-msgstr "Kalenterin muoto"
+msgstr "Tyhjennä kaavio"
 
 #: lifespan.php:329
-#, fuzzy
 msgid "Individual"
-msgstr "Henkilön tunnuksen etuliite"
+msgstr "Henkilö"
 
 #: login.php:120
 msgid "Unable to authenticate user."
@@ -9794,14 +9691,12 @@ msgstr "Sisäänkirjautuminen epäonnistui."
 
 #: login.php:206
 #: login.php:226
-#, fuzzy
 msgid "Login"
-msgstr "Kirjautumis URL"
+msgstr "Sisäänkirjautuminen"
 
 #: login.php:238
-#, fuzzy
 msgid "Account Information"
-msgstr "PHP-info"
+msgstr "Tietoja käyttäjätilistä"
 
 #: login.php:239
 msgid "No account?"
@@ -9819,9 +9714,8 @@ msgid "Lost your password?"
 msgstr "Salasana on hukassa?"
 
 #: login.php:242
-#, fuzzy
 msgid "Request new password"
-msgstr "Käyttäjänimi ja salasana"
+msgstr "Pyydä uusi salasana"
 
 #: login_register.php:58
 #: login_register.php:80
@@ -9829,6 +9723,11 @@ msgstr "Käyttäjänimi ja salasana"
 #: login_register.php:94
 msgid "Lost password request"
 msgstr "Pyydä uusi salasana"
+
+#: login_register.php:126
+#: login_register.php:420
+msgid "Hello %s ..."
+msgstr "Hei %s..."
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
@@ -9842,19 +9741,27 @@ msgstr "Suosittelu:"
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
 msgstr "Klikkaa aihe-linkkiä, kirjoittaudu sisään uudella salasanalla ja vaihda salasana niin että tietosuoja säilyy."
 
+#: login_register.php:139
+#, php-format
+msgid "Data request at %s"
+msgstr "Tietopyyntö koneelta %s"
+
+#: login_register.php:143
+#, php-format
+msgid "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>%s</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security."
+msgstr "Hei...<br /><br />Sähköposti, jossa on uusi salasana, on lähetetty osoitteeseen <b>%s</b>.<br /><br />Tutki sähköpostitiliäsi parin minuutin kuluttua. Sinun tulisi saada posti siihen mennessä.<br /><br />Suosittelu:<br />Saatuasi sähköpostisi sinun tulee kirjoittautua ja muuttaa salasanasi lisätäksesi tietosuoja kokonaisuutta."
+
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
 msgstr "Täytä suhteesi tietoon kommenttikenttään."
 
 #: login_register.php:287
-#, fuzzy
 msgid "Desired user name"
-msgstr "Tietokannan käyttäjä"
+msgstr "Toivottu käyttäjätunnus"
 
 #: login_register.php:288
-#, fuzzy
 msgid "Desired password"
-msgstr "Tietokannan salasana"
+msgstr "Toivottu salasana"
 
 #: login_register.php:316
 #: login_register.php:433
@@ -9877,6 +9784,11 @@ msgstr "Uuden käyttäjätilin vahvistus"
 msgid "Back"
 msgstr "Takaisin"
 
+#: login_register.php:421
+#, php-format
+msgid "A request was received at %s to create a PhpGedView account with your email address %s."
+msgstr "Olemme saaneet pyynnön kirjautua koneeseen (%s) sähköpostiosoitteellasi (%s)."
+
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
 msgstr "Seuraavat tiedot olivat käytössä."
@@ -9898,11 +9810,20 @@ msgstr "Jos sinä et pyytänyt tätä tietoa, voit pyyhkiä tämän ilmoituksen.
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
 msgstr "Et tule saamaan lisäviestejä tältä järjestelmältä ja tili pyyhitään seitsemän päivän kuluttua jos tätä ei vahvisteta."
 
+#: login_register.php:437
+#, php-format
+msgid "Your registration at %s"
+msgstr "Kirjoittautumisesi koneella %s"
+
 #: login_register.php:444
 #: login_register.php:565
-#, fuzzy
 msgid "Hello Administrator ..."
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Hei hallinnoitsija..."
+
+#: login_register.php:445
+#, php-format
+msgid "A prospective user registered himself with PhpGedView at %s."
+msgstr "Uusi käyttäjä rekisteröityi (%s) lle"
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
@@ -9916,18 +9837,47 @@ msgstr "Heti kun käyttäjä on vahvistanut tilin, tulet saamaan sähköposti il
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
 msgstr "Sinulle ilmoitetaan sähköpostitse, kun tämä käyttäjäehdokas on varmentanut itsensä. Varmennuksen jälkeen käyttäjä voi kirjautua järjestelmään ilman sinun toimenpiteitäsi."
 
+#: login_register.php:462
+#, php-format
+msgid "New registration at %s"
+msgstr "Uusi kirjoittautuminen koneella %s"
+
+#: login_register.php:473
+#, php-format
+msgid "Hello %s ...<br />Thank you for your registration."
+msgstr "Hei %s ...<br />Kiitos rekisteröinnistäsi"
+
+#: login_register.php:475
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password."
+msgstr "Tulet saamaan koodin sähköpostissa osoitteeseen (%s). Käytä viesti tilisi vahvistukseen. Tilisi pyyhitään seitsemän päivän kuluttua jos et vahvista sitä (voit sen jälkeen rekisteröidä tilin uudelleen). Kirjautuminen sivuille vaatii käyttäjätunnuksen ja salasanan."
+
+#: login_register.php:476
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password."
+msgstr "Lähetämme nyt varmistusviestin osoitteeseen <b>%s</b>. Sinun on varmistettava käyttäjätilipyyntösi noudattamalla viestin ohjeita. Mikäli et varmista tiliäsi seitsemän vuorokauden kuluessa, pyyntösi hylätään automaattisesti. Sen jälkeen sinun on tehtävä uusi anomus.<br /><br />Toimittuasi viestin edellyttämällä tavalla, voit kirjautua järjestelmään. Voidaksesi kirjautua tänne, sinun on tiedettävä käyttäjätunnuksesi ja salasanasi."
+
 #: login_register.php:506
 #: login_register.php:513
 #: login_register.php:541
 #: login_register.php:544
-#, fuzzy
 msgid "User verification"
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Käyttäjävahvistus"
 
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
 msgstr "Lähetä"
+
+#: login_register.php:546
+#, php-format
+msgid "The data for the user <b>%s</b> was checked."
+msgstr "Käyttäjä %s - tiedot on tarkastettu."
+
+#: login_register.php:566
+#, php-format
+msgid "User %s (%s) has confirmed his request for an account."
+msgstr "%s ( %s ) on vahvistanut rekisteröintitiedot."
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
@@ -9936,6 +9886,11 @@ msgstr "Huom! Klikkaa alla olevaa linkkiä, kirjaudu verkkopaikkaan ja anna hän
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
 msgstr "Sinun ei tarvitse tehdä mitään; käyttäjä voi nyt kirjautua."
+
+#: login_register.php:581
+#, php-format
+msgid "New user at %s"
+msgstr "Uusi vahvistus koneella %s"
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
@@ -9996,18 +9951,16 @@ msgid "Ban Sites by IP"
 msgstr "Hylätyt palvelimet"
 
 #: manageservers.php:325
-#, fuzzy
 msgid "Remote Servers"
-msgstr "Poista henkilö kaaviosta"
+msgstr "Lisätty etäpalvelimet"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
 msgstr "Haluatko varmasti poistaa lähteen GEDCOM-tiedostosta?"
 
 #: manageservers.php:344
-#, fuzzy
 msgid "View Connections"
-msgstr "SSL kirjautuminen"
+msgstr "Näytä yhteydet"
 
 #: manageservers.php:368
 #: manageservers.php:444
@@ -10015,9 +9968,8 @@ msgid "Site URL/IP"
 msgstr " URL/IP"
 
 #: manageservers.php:430
-#, fuzzy
 msgid "Add new site"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää uusi palvelin"
 
 #: media.php:92
 msgid "Directory could not be created"
@@ -10037,9 +9989,8 @@ msgstr "Suoritusaikaraja on savutettu. Yritä komentoa uudelleen pienemmällä k
 
 #: media.php:181
 #: media.php:189
-#, fuzzy
 msgid "Permissions Set"
-msgstr "Aseta mediaoikeudet"
+msgstr "Oikeudet asetettu"
 
 #: media.php:183
 #: media.php:191
@@ -10075,9 +10026,8 @@ msgstr "Media- ja pienoiskuvakansiot poistettu."
 #: media.php:415
 #: media.php:417
 #: media.php:418
-#, fuzzy
 msgid "Media directory not removed."
-msgstr "Multimediakansio"
+msgstr "Mediakansiota ei poistettu."
 
 #: media.php:420
 #: media.php:421
@@ -10140,20 +10090,17 @@ msgid "Thumbnail file could not be deleted."
 msgstr "Pienoiskuvatiedostoa ei voitu poistaa."
 
 #: media.php:751
-#, fuzzy
 msgid "Manage links"
-msgstr "Ylläpidä multimediaa"
+msgstr "Ylläpidä linkkejä"
 
 #: media.php:829
 #: media.php:830
-#, fuzzy
 msgid "Add Media"
-msgstr "Etsi media"
+msgstr "Lisää media"
 
 #: media.php:843
-#, fuzzy
 msgid "Missing thumbnails"
-msgstr "Luo puuttuvat pienoiskuvat"
+msgstr "Puuttuvat pienoiskuvat"
 
 #: media.php:939
 msgid "Are you sure you want to delete this folder?"
@@ -10164,23 +10111,20 @@ msgid "Are you sure you want to delete this file?"
 msgstr "Haluatko varmasti poistaa tämän tiedoston?"
 
 #: media.php:1038
-#, fuzzy
 msgid "Delete file"
-msgstr "Pyyhi nimi"
+msgstr "Poista tiedosto"
 
 #: media.php:1046
 msgid "Are you sure you want to remove this object from the database?"
 msgstr "Haluatko varmasti poistaa tämän kohteen tietokannasta?"
 
 #: media.php:1046
-#, fuzzy
 msgid "Remove object"
-msgstr "Poista henkilö kaaviosta"
+msgstr "Poista kohde"
 
 #: media.php:1081
-#, fuzzy
 msgid "Create thumbnail"
-msgstr "Luo puuttuvat pienoiskuvat"
+msgstr "Luo pienoiskuva"
 
 #: media.php:1170
 msgid "The media folder is corrupted."
@@ -10199,15 +10143,13 @@ msgid "Privacy restrictions prevent you from viewing this item"
 msgstr "Yksityisyysrajoitukset estävät tämän kohteen näyttämisen."
 
 #: mediafirewall.php:530
-#, fuzzy
 msgid "This media file is broken and cannot be watermarked"
-msgstr "Tämän henkilön tiedot on suojattu."
+msgstr "Tämä mediatiedosto on rikkonainen eikä siihen voi laittaa vesileimaa"
 
 #: medialist.php:53
 #: medialist.php:57
-#, fuzzy
 msgid "MultiMedia Objects"
-msgstr "Multimediakansio"
+msgstr "Multimedialuettelo"
 
 #: medialist.php:131
 msgid "Media objects per page"
@@ -10243,14 +10185,12 @@ msgstr "Näytä tiedot"
 
 #: medialist.php:404
 #: medialist.php:408
-#, fuzzy
 msgid "Media Format"
-msgstr "Kalenterin muoto"
+msgstr "Mediaformaatti"
 
 #: mediaviewer.php:104
-#, fuzzy
 msgid "Download File"
-msgstr "Lataa koneesta GEDCOM-tiedosto"
+msgstr "Lataa tiedosto"
 
 #: mediaviewer.php:143
 msgid "The image relates to:"
@@ -10271,6 +10211,10 @@ msgstr "Vastaanottajaa ei annettu. Ei voi jatkaa."
 msgid "Please enter a valid email address."
 msgstr "Huom! Anna hyväksyttävä sähköpostiosoite."
 
+#: message.php:138
+msgid "Message successfully sent to %s"
+msgstr "Viesti lähetetty"
+
 #: message.php:167
 msgid "Please enter a message subject."
 msgstr "Huom! Anna viestin aihe."
@@ -10282,6 +10226,16 @@ msgstr "Huom! Muista kirjoittaa myös tekstisi."
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
 msgstr "<b>Huomaa:</b> Yksityistä tietoa elävistä henkilöistä annetaan ainoastaan sukulaisille ja läheisille ystäville. Sinun on pyydettäessä osoitettava sukulaisuutesi. Toisinaan voivat kuolleidenkin henkilöiden tiedot olla yksityisiä. Näin voi olla siinä tapauksessa, että kyseisestä henkilöstä ei valitettavasti ole riittävästi tietoja käytettävissämme.<br /><br />Ennen kuin esität kysymyksiä, ole hyvä ja tarkista henkilön oikeellisuus päivämääristä, paikoista ja lähisukulaisista. Jos lähetät muutoksia tai lisäyksiä sukutietoihin, niin ilmoitathan myös lähteen, josta tieto on peräisin."
+
+#: message.php:192
+#, php-format
+msgid "This message will be sent to %s"
+msgstr "Tämän viestin vastaanottaja on: %s"
+
+#: message.php:193
+#, php-format
+msgid "This user prefers to receive messages in %s"
+msgstr "Suosituskieli tälle vastaanottajalle on: %s"
 
 #: message.php:197
 msgid "Your Name:"
@@ -10300,9 +10254,8 @@ msgid "Subject:"
 msgstr "Aihe:"
 
 #: message.php:211
-#, fuzzy
 msgid "Body:"
-msgstr "Vastaus"
+msgstr "Viesti:"
 
 #: message.php:218
 msgid "Message Deleted"
@@ -10317,9 +10270,8 @@ msgid "Unknown module type."
 msgstr "Tuntematon modulimuoto."
 
 #: module_admin.php:42
-#, fuzzy
 msgid "Show to public"
-msgstr "Näytä lähde"
+msgstr "Näytä kaikille"
 
 #: module_admin.php:46
 msgid "Show only to authenticated users"
@@ -10338,18 +10290,16 @@ msgid "Below is the list of all the modules installed in this instance of PhpGed
 msgstr "Alla on lista kaikista tälle PhpGedView sivustolle asennetuista moduuleista. Moduulit asennetaan sijoittamalla ne <i>modules</i> hakemistoon. Täällä voit asettaa GEDCOM-tiedostokohtaisesti pääsyn kullekin moduulille. Jos moduuli sisältää välilehtiä yksittäisille sivuille tai valikkoja päävalikkoon, voit myös asettaa pääsyn ja järjestyksen kullekin niistä."
 
 #: module_admin.php:184
-#, fuzzy
 msgid "Return to Administration page"
-msgstr "_GEDCOM: ylläpitosivu"
+msgstr "Palaa ylläpitosivulle"
 
 #: module_admin.php:191
 msgid "Installed Modules"
 msgstr "Asennetut moduulit"
 
 #: module_admin.php:192
-#, fuzzy
 msgid "Manage Menus"
-msgstr "Ylläpidä multimediaa"
+msgstr "Hallitse valikkoja"
 
 #: module_admin.php:193
 msgid "Manage Tabs"
@@ -10368,17 +10318,15 @@ msgstr "Moduulin asetukset"
 #: module_admin.php:251
 #: module_admin.php:302
 #: module_admin.php:353
-#, fuzzy
 msgid "Module Name"
-msgstr "Pyyhi nimi"
+msgstr "Moduulin nimi"
 
 #: module_admin.php:204
 #: module_admin.php:252
 #: module_admin.php:303
 #: module_admin.php:354
-#, fuzzy
 msgid "Description"
-msgstr "Kuvaus META-tagi"
+msgstr "Kuvaus"
 
 #: module_admin.php:205
 msgid "Version / PGV"
@@ -10389,9 +10337,8 @@ msgid "Tab?"
 msgstr "Välilehti?"
 
 #: module_admin.php:207
-#, fuzzy
 msgid "Menu?"
-msgstr "Valikko"
+msgstr "Valikko?"
 
 #: module_admin.php:208
 msgid "Sidebar?"
@@ -10412,26 +10359,26 @@ msgstr "Järjestys"
 
 #: note.php:131
 #: repo.php:103
-#, fuzzy
 msgid "Link to an existing Media item"
-msgstr "Lisää uusi media"
+msgstr "Liitä olemassa olevaan mediaan"
 
 #: notelist.php:31
 #: notelist.php:32
 #: search.php:213
-#, fuzzy
 msgid "Shared Notes"
-msgstr "Lisää uusi jaettu lisätieto"
+msgstr "Jaettuja lisätietoja"
+
+#: pedigree.php:52
+msgid "%s Generation Pedigree Chart"
+msgstr "%s sukupolven esipolvitaulu"
 
 #: pedigree.php:90
-#, fuzzy
 msgid "Orientation"
-msgstr "Esitystyyli"
+msgstr "Sivun asento"
 
 #: pedigree.php:125
-#, fuzzy
 msgid "Oldest at top"
-msgstr "Näytä vanhin huipulla"
+msgstr "Vanhin ylhäällä"
 
 #: pedigree.php:128
 msgid "Oldest at bottom"
@@ -10446,14 +10393,12 @@ msgstr "Paikkahierarkia"
 #: placelist.php:55
 #: placelist.php:59
 #: placelist.php:433
-#, fuzzy
 msgid "Place List"
-msgstr "Nimiluettelo"
+msgstr "Paikkaluettelo"
 
 #: placelist.php:118
-#, fuzzy
 msgid "Place connections found"
-msgstr "SSL kirjautuminen"
+msgstr "Paikkalinkki löytynyt"
 
 #: placelist.php:125
 #: placelist.php:157
@@ -10477,9 +10422,8 @@ msgid "View all records found in this place"
 msgstr "Näytä kaikki paikan tiedot"
 
 #: placelist.php:468
-#, fuzzy
 msgid "Total Unique Places"
-msgstr "Siivoa paikkatiedot"
+msgstr "Paikkoja yhteensä"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
@@ -10510,9 +10454,8 @@ msgstr "Näytön päivitys"
 
 #: printlog.php:91
 #: printlog.php:113
-#, fuzzy
 msgid "Date and time"
-msgstr "Tietokannan nimi"
+msgstr "Päivämäärä ja aika"
 
 #: printlog.php:91
 #: printlog.php:113
@@ -10524,9 +10467,8 @@ msgid "Log Message"
 msgstr "Lokitiedote"
 
 #: printlog.php:113
-#, fuzzy
 msgid "Search type"
-msgstr "Hae ohjetekstistä"
+msgstr "Hakutyyppi"
 
 #: printlog.php:113
 msgid "Query"
@@ -10708,9 +10650,8 @@ msgstr "Henkilö 2"
 
 #: relationship.php:677
 #: relationship.php:698
-#, fuzzy
 msgid "Show path"
-msgstr "Lähetyspolku"
+msgstr "Näytä polku"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
@@ -10726,9 +10667,8 @@ msgid "Choose a report to run"
 msgstr "Valitse ajettava raportti"
 
 #: reportengine.php:154
-#, fuzzy
 msgid "Select report"
-msgstr "Poista tietovarasto"
+msgstr "Valitse raportti"
 
 #: reportengine.php:170
 #: reportengine.php:219
@@ -10736,18 +10676,21 @@ msgid "Enter report values"
 msgstr "Syötä raporttiarvot"
 
 #: reportengine.php:220
-#, fuzzy
 msgid "Selected Report"
-msgstr "Poista tietovarasto"
+msgstr "Valittu raportti"
 
 #: reportengine.php:312
 msgid "Select a date"
 msgstr "Valitse päivämäärä"
 
 #: reportengine.php:344
-#, fuzzy
 msgid "Download report"
-msgstr "Lataa koneesta GEDCOM-tiedosto"
+msgstr "Talleta raportti"
+
+#: rss.php:110
+#, php-format
+msgid "News and links from the %s site"
+msgstr "Uutiset ja linkit %s sivustolta."
 
 #: rss.php:116
 #: rss.php:119
@@ -10820,9 +10763,8 @@ msgstr "Läheiset"
 
 #: search.php:246
 #: search.php:387
-#, fuzzy
 msgid "Show related persons/families"
-msgstr "Näytä kuolleet ihmiset"
+msgstr "Näytä sukulaishenkilöt ja -perheet."
 
 #: search.php:270
 msgid "Replace with"
@@ -10837,14 +10779,12 @@ msgid "Whole words only"
 msgstr "Vain kokonaiset sanat"
 
 #: search.php:318
-#, fuzzy
 msgid "Given name"
-msgstr "Lähettäjän nimi"
+msgstr "Etunimi"
 
 #: search.php:329
-#, fuzzy
 msgid "Last name"
-msgstr "Käyttäjätunnus"
+msgstr "Sukunimi"
 
 #: search.php:345
 #, fuzzy
@@ -10860,9 +10800,8 @@ msgid "Individuals'<br />names to print:"
 msgstr "Henkilöiden <br />tulostettavat nimet"
 
 #: search.php:374
-#, fuzzy
 msgid "Names with hit"
-msgstr "Nimiluettelo"
+msgstr "Löytyneet nimet"
 
 #: search.php:377
 msgid "All names"
@@ -10872,9 +10811,8 @@ msgstr "Kaikki nimet"
 #: search.php:578
 #: search.php:590
 #: search.php:604
-#, fuzzy
 msgid "Multi Site Search"
-msgstr "Näytä usean sivuston haku"
+msgstr "Haku monesta palvelusta"
 
 #: search.php:404
 msgid "Sites to search"
@@ -10893,14 +10831,12 @@ msgid "search"
 msgstr "hae"
 
 #: search.php:455
-#, fuzzy
 msgid "Advanced site search"
-msgstr "Erityiset nimitiedot"
+msgstr "Tarkempi haku sivustolta"
 
 #: search.php:461
-#, fuzzy
 msgid "Name: "
-msgstr "Nimiluettelo"
+msgstr "Nimi:"
 
 #: search.php:473
 msgid "Birth date: "
@@ -10919,14 +10855,12 @@ msgid "Death Place: "
 msgstr "Kuolinpaikka: "
 
 #: search.php:505
-#, fuzzy
 msgid "Gender: "
-msgstr "Lähettäjän nimi"
+msgstr "Sukupuoli: "
 
 #: search.php:522
-#, fuzzy
 msgid "Databases to search in"
-msgstr "Tietokannan käyttäjä"
+msgstr "Haetaan seuraavista tiedostoista"
 
 #: search.php:548
 msgid "Results per page"
@@ -10939,17 +10873,15 @@ msgstr "Muita hakuja"
 #: search.php:569
 #: search.php:585
 #: search.php:617
-#, fuzzy
 msgid "Soundex Search"
-msgstr "Näytä usean sivuston haku"
+msgstr "Soundex-haku"
 
 #: search.php:570
 #: search.php:586
 #: search.php:597
 #: search.php:618
-#, fuzzy
 msgid "Advanced Search"
-msgstr "Erityiset nimitiedot"
+msgstr "Tarkennettu haku"
 
 #: searchhelp.php:89
 msgid "Any word"
@@ -10964,23 +10896,20 @@ msgid "Exact phrase"
 msgstr "Täsmällinen ilmaisu"
 
 #: searchhelp.php:100
-#, fuzzy
 msgid "Search in"
-msgstr "Hae asetuksen kuvauksesta"
+msgstr "Hae seuraavasta: "
 
 #: searchhelp.php:104
-#, fuzzy
 msgid "User Help"
-msgstr "Käyttäjätunnus"
+msgstr "Käyttäjän ohje"
 
 #: searchhelp.php:107
 msgid "Modules Help"
 msgstr "Moduliavuste"
 
 #: searchhelp.php:112
-#, fuzzy
 msgid "Administrator Help"
-msgstr "_ylläpito"
+msgstr "Ylläpitäjän ohje"
 
 #: searchhelp.php:126
 msgid "Close window"
@@ -11026,9 +10955,8 @@ msgstr "vuotta"
 #: search_advanced.php:244
 #: search_advanced.php:266
 #: search_advanced.php:281
-#, fuzzy
 msgid "Begins with"
-msgstr "Leveys"
+msgstr "Alkaa näin"
 
 #: search_advanced.php:168
 #: search_advanced.php:230
@@ -11057,9 +10985,8 @@ msgstr "PhpGedView tuottaa hakumoottoreille automaattisesti pienemmät datatiedo
 #: search_engine.php:60
 #: search_engine.php:69
 #: uploadgedcom.php:1106
-#, fuzzy
 msgid "Welcome page"
-msgstr "Kirjautumissivun tervehdysteksti"
+msgstr "Tervetulosivu"
 
 #: statistics.php:57
 msgid "Total males"
@@ -11246,9 +11173,8 @@ msgid "Number of families without children"
 msgstr "Lapsettomien perheiden lukumäärä"
 
 #: statistics.php:290
-#, fuzzy
 msgid "Largest families"
-msgstr "Kielitiedostot"
+msgstr "Suurimmat perheet"
 
 #: statistics.php:291
 msgid "Largest grandfamilies"
@@ -11302,9 +11228,8 @@ msgstr ""
 
 #: statistics.php:372
 #: statisticsplot.php:837
-#, fuzzy
 msgid "Individuals with sources"
-msgstr "Henkilön tunnuksen etuliite"
+msgstr "Henkilöt joilla on lähteitä"
 
 #: statistics.php:373
 #: statisticsplot.php:843
@@ -11334,9 +11259,8 @@ msgid "Events in countries"
 msgstr ""
 
 #: statistics.php:415
-#, fuzzy
 msgid "Create your own chart"
-msgstr "Muut tiedot kaavioissa"
+msgstr "Luo oma kaaviosi"
 
 #: statistics.php:517
 msgid "Fill in the following parameters for the plot"
@@ -11376,14 +11300,12 @@ msgstr "Ikä ensimmäisen avioliittoonvihkimisvuoden aikana"
 
 #: statistics.php:566
 #: statisticsplot.php:785
-#, fuzzy
 msgid "Number of children"
-msgstr "Järjestä lapset uudelleen"
+msgstr "Lasten lukumäärä"
 
 #: statistics.php:570
-#, fuzzy
 msgid "Individual distribution"
-msgstr "Henkilön tunnuksen etuliite"
+msgstr "Henkilöiden jakautuminen"
 
 #: statistics.php:574
 msgid "Birth by country"
@@ -11453,14 +11375,12 @@ msgid "Map type"
 msgstr "Karttatyyppi"
 
 #: statistics.php:642
-#, fuzzy
 msgid "Individual distribution chart"
-msgstr "Henkilöön lisättävät tiedot"
+msgstr "Henkilöjakautuminen"
 
 #: statistics.php:644
-#, fuzzy
 msgid "Surname distribution chart"
-msgstr "Sukunimiperinne"
+msgstr "Sukunimijakautuminen"
 
 #: statistics.php:657
 msgid "Geographical area"
@@ -11499,9 +11419,8 @@ msgid "none"
 msgstr "ei mitään"
 
 #: statistics.php:679
-#, fuzzy
 msgid "gender"
-msgstr "Otsikko"
+msgstr "sukupuoli"
 
 #: statistics.php:683
 msgid "date periods"
@@ -11522,9 +11441,8 @@ msgstr "lukumäärät"
 
 #: statistics.php:727
 #: statisticsplot.php:791
-#, fuzzy
 msgid "percentage"
-msgstr "Viimeiset muutokset"
+msgstr "prosenttiosuus"
 
 #: statistics.php:735
 msgid "show the plot"
@@ -11640,9 +11558,8 @@ msgid "..."
 msgstr "..."
 
 #: timeline.php:38
-#, fuzzy
 msgid "PhpGedView Timeline"
-msgstr "PhpGedView URL"
+msgstr "PhpGedView aikajana"
 
 #: timeline.php:298
 msgid "Show Age Marker"
@@ -11670,6 +11587,12 @@ msgstr "Useimmissa uusissa selaimissa laatikoita voi siirtää hiirellä kaavios
 #: useradmin.php:1022
 msgid "Continue"
 msgstr "Jatka"
+
+#: uploadgedcom.php:251
+#: uploadgedcom.php:590
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, is not writable. Please check attributes and access rights."
+msgstr "GEDCOM-tiedosto <b>%s</b> ei ole kirjoituskelpoinen. Tarkista atribuutit ja oikeudet."
 
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
@@ -11734,9 +11657,8 @@ msgid "Convert this ANSI encoded GEDCOM to UTF-8?"
 msgstr "Muunnetaanko tämä ANSI-koodattu GEDCOM UTF-8 muotoon?"
 
 #: uploadgedcom.php:737
-#, fuzzy
 msgid "Change Individual ID to:"
-msgstr "_GEDCOM: muuta henkilön ID-tunnus"
+msgstr "Muuta henkilö-ID:"
 
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
@@ -11744,9 +11666,8 @@ msgid "Do not change"
 msgstr "Älä muokkaa"
 
 #: uploadgedcom.php:795
-#, fuzzy
 msgid "Import complete"
-msgstr "Tuo vaihtoehdot"
+msgstr "Tuonti onnistui"
 
 #: uploadgedcom.php:795
 #: uploadgedcom.php:844
@@ -11764,9 +11685,8 @@ msgid "Import Progress..."
 msgstr "Tuonti käynnissä..."
 
 #: uploadgedcom.php:904
-#, fuzzy
 msgid "Reading GEDCOM file"
-msgstr "Synkronoi muutokset GEDCOM-tiedostoon"
+msgstr "Lukee GEDCOM-tiedostoa"
 
 #: uploadgedcom.php:908
 msgid "The status bars below will let you know how the Import is progressing.  If the time limit runs out the Import will be stopped and you will be asked to press a <b>Continue</b> button.  If you don't see the <b>Continue</b> button, you must restart the Import with a smaller time limit value."
@@ -11778,14 +11698,12 @@ msgstr "Suoritusaikaraja on saavutettu. Klikkaa Jatka-painiketta alla jatkaakses
 
 #: uploadgedcom.php:1104
 #: uploadgedcom.php:1117
-#, fuzzy
 msgid "Execution time:"
-msgstr "Istunnon ajanloppuminen"
+msgstr "Suoritusaika:"
 
 #: uploadgedcom.php:1105
-#, fuzzy
 msgid "Click here to go to the Pedigree tree."
-msgstr "Klikkaa tästä jatkaaksesi"
+msgstr "Klikkaa tästä mennäksesi sukupuuhun."
 
 #: uploadgedcom.php:1118
 msgid "Bytes read:"
@@ -11796,9 +11714,18 @@ msgid "Found record"
 msgstr "Löytyi tietue"
 
 #: uploadgedcom.php:1138
-#, fuzzy
 msgid "Import Statistics"
-msgstr "Tuo vaihtoehdot"
+msgstr "Tuo tilastotiedot"
+
+#: useradmin.php:194
+#, php-format
+msgid "Approval of account at %s"
+msgstr "Tunnus anomus %s"
+
+#: useradmin.php:195
+#, php-format
+msgid "The administrator at the PhpGedView site %s has approved your application for an account.  You may now login by accessing the following link: %s#"
+msgstr ""
 
 #: useradmin.php:269
 #: useradmin.php:274
@@ -11809,9 +11736,8 @@ msgstr "Päivitä käyttäjä"
 #: useradmin.php:345
 #: useradmin.php:639
 #: useradmin.php:799
-#, fuzzy
 msgid "User can administer"
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Käyttäjä voi ylläpitää"
 
 #: useradmin.php:362
 #: useradmin.php:800
@@ -11820,9 +11746,8 @@ msgstr "Käyttöoikeus"
 
 #: useradmin.php:390
 #: useradmin.php:823
-#, fuzzy
 msgid "Automatically accept changes made by this user"
-msgstr "Automaattisesti laajenna lähdetiedot"
+msgstr "Hyväksy automaattisesti tämän käyttäjän tekemät muutokset"
 
 #: useradmin.php:392
 #: useradmin.php:825
@@ -11848,9 +11773,8 @@ msgstr "Ylläpitäjä on vahvistanut käyttäjän"
 
 #: useradmin.php:457
 #: useradmin.php:883
-#, fuzzy
 msgid "Allow this user to edit his account information"
-msgstr "Salli vieraiden tehdä käyttäjätilihakemuksen"
+msgstr "Salli tämän käyttäjän muokata käyttäjätiliään."
 
 #: useradmin.php:476
 #: useradmin.php:903
@@ -11864,28 +11788,24 @@ msgstr "Ylläpitäjän varoitus päivämäärällä "
 
 #: useradmin.php:560
 #: useradmin.php:1087
-#, fuzzy
 msgid "User List"
-msgstr "Nimiluettelo"
+msgstr "Nykyinen käyttäjälista"
 
 #: useradmin.php:565
 #: useradmin.php:688
 #: useradmin.php:754
 #: useradmin.php:1088
-#, fuzzy
 msgid "Add a new user"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää uusi käyttäjä"
 
 #: useradmin.php:567
 #: useradmin.php:690
-#, fuzzy
 msgid "Back to User Administration"
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Takaisin käyttäjien hallintaan"
 
 #: useradmin.php:576
-#, fuzzy
 msgid " Languages"
-msgstr "Kieli"
+msgstr " Kielet"
 
 #: useradmin.php:577
 #: useradmin.php:588
@@ -11898,9 +11818,8 @@ msgid "Date registered"
 msgstr "Rekisteröintipäivä"
 
 #: useradmin.php:591
-#, fuzzy
 msgid "Last logged in"
-msgstr "Sisäänkirjautuneet käyttäjät"
+msgstr "Viimeksi kirjautunut"
 
 #: useradmin.php:661
 msgid "Never"
@@ -11920,15 +11839,13 @@ msgid "Access"
 msgstr "Pääsy"
 
 #: useradmin.php:817
-#, fuzzy
 msgid "Admin GEDCOM"
-msgstr "Lisää uusi GEDCOM-tiedosto"
+msgstr "Ylläpito"
 
 #: useradmin.php:930
 #: useradmin.php:1091
-#, fuzzy
 msgid "Cleanup users"
-msgstr "Siivoa paikkatiedot"
+msgstr "Siivoa käyttäjät"
 
 #: useradmin.php:937
 msgid "Number of months since the last login for a user's account to be considered inactive: "
@@ -11955,9 +11872,8 @@ msgid "Nothing found to cleanup"
 msgstr "Ei löytynyt mitään siivottavaa"
 
 #: useradmin.php:1037
-#, fuzzy
 msgid "Deleted user: "
-msgstr "Pyyhi nimi"
+msgstr "Poistetut käyttäjät:"
 
 #: useradmin.php:1045
 msgid "Unset GEDCOM rights for "
@@ -11993,14 +11909,12 @@ msgstr "Käyttäjiä kaiken kaikkiaan"
 
 #: useradmin.php:1156
 #: useradmin.php:1157
-#, fuzzy
 msgid "Site Administrators"
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Paikan Ylläpitäjiä"
 
 #: useradmin.php:1160
-#, fuzzy
 msgid "GEDCOM Administrators"
-msgstr "_GEDCOM: ylläpitosivu"
+msgstr "GEDCOM ylläpitäjät"
 
 #: useradmin.php:1172
 #: useradmin.php:1173
@@ -12014,24 +11928,20 @@ msgstr "Käyttäjän vahvistamatta"
 
 #: useradmin.php:1182
 #: useradmin.php:1183
-#, fuzzy
 msgid "Unverified by Administrator"
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Ylläpidon vahvistamatta"
 
 #: usermigrate.php:58
-#, fuzzy
 msgid "PhpGedView Configuration File"
-msgstr "_GEDCOM: asetustiedosto"
+msgstr "PhpGedView konfiguraatiotiedosto"
 
 #: usermigrate.php:59
-#, fuzzy
 msgid "GEDCOM Files"
-msgstr "_GEDCOM: poista"
+msgstr "GEDCOM-tiedostot"
 
 #: usermigrate.php:60
-#, fuzzy
 msgid "GEDCOM Settings, Configuration and Privacy files"
-msgstr "_GEDCOM: asetustiedosto"
+msgstr "GEDCOM asetus-, konfiguraatio- ja yksityisyystiedostot"
 
 #: usermigrate.php:61
 msgid "GEDCOM SearchLogs and PhpGedView Logfiles"
@@ -12042,9 +11952,8 @@ msgid "User definitions, Block settings, Favorites, Messages, News"
 msgstr "Käyttäjä määritykset, lohko asetukset, suosikit, viestit, uutiset"
 
 #: usermigrate.php:63
-#, fuzzy
 msgid "Media files"
-msgstr "Lähetä mediatiedostot palvelimelle"
+msgstr "Media tiedostot"
 
 #: usermigrate.php:64
 msgid "Make Backup"
@@ -12079,14 +11988,12 @@ msgid "One or more files already exist. Do you want to overwrite them?"
 msgstr "Yksi tai useampi tiedosto on jo saatavilla. Haluatko ylikirjoittaa ne?"
 
 #: usermigrate.php:172
-#, fuzzy
 msgid "Importing users"
-msgstr "Tuo vaihtoehdot"
+msgstr "Tuo käyttäjät"
 
 #: usermigrate.php:174
-#, fuzzy
 msgid "File <i>authenticate.php</i> not found in your index directory. Migration is cancelled."
-msgstr "#pgv_lang[um_index_sql]#"
+msgstr "Tiedostoa <i>authenticate.php</i> ei löytynyt index-kansiosta. Siirto peruutettu."
 
 #: usermigrate.php:179
 #: usermigrate.php:191
@@ -12117,43 +12024,41 @@ msgid "No Favorites seem to be present in the system."
 msgstr "Järjestelmässä ei näytä olevan suosikkeja."
 
 #: usermigrate.php:204
-#, fuzzy
 msgid "Importing news"
-msgstr "Tuo vaihtoehdot"
+msgstr "Tuo uutiset"
 
 #: usermigrate.php:206
 msgid "No News seems to be present in the system."
 msgstr ""
 
 #: usermigrate.php:213
-#, fuzzy
 msgid "Importing blocks"
-msgstr "Tuo vaihtoehdot"
+msgstr "Tuo lohkot"
 
 #: usermigrate.php:215
 msgid "No Blocks seems to be present in the system."
 msgstr ""
 
+#: blocks/block_htmlplus.php:40
+msgid "Advanced HTML"
+msgstr "Edistynyt HTML"
+
 #: blocks/charts.php:40
-#, fuzzy
 msgid "Charts Block"
-msgstr "Kaavion tyyli"
+msgstr "Kaavioalue"
 
 #: blocks/charts.php:167
 #: blocks/gedcom_favorites.php:130
-#, fuzzy
 msgid "No such ID exists in this GEDCOM file."
-msgstr "Synkronoi muutokset GEDCOM-tiedostoon"
+msgstr "Tätä ID-tunnusta ei ole tässä GEDCOM-tiedostossa."
 
 #: blocks/gedcom_block.php:36
-#, fuzzy
 msgid "GEDCOM Welcome"
-msgstr "_GEDCOM: poista"
+msgstr "GEDCOM tervetuloalue"
 
 #: blocks/gedcom_favorites.php:36
-#, fuzzy
 msgid "GEDCOM Favorites"
-msgstr "_GEDCOM: varmenna"
+msgstr "GEDCOM suosikit"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
@@ -12164,9 +12069,8 @@ msgid "Are you sure you want to remove this item from your list of Favorites?"
 msgstr "Haluatko varmasti poistaa tämän tietueen suosikeistasi?"
 
 #: blocks/gedcom_favorites.php:155
-#, fuzzy
 msgid "Add a new favorite"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää uusi suosikki"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
@@ -12181,9 +12085,8 @@ msgid "Enter an optional note about this favorite"
 msgstr "Kirjoita lisätieto tästä suosikista"
 
 #: blocks/gedcom_news.php:36
-#, fuzzy
 msgid "GEDCOM News"
-msgstr "_GEDCOM: poista"
+msgstr "GEDCOM uutiset"
 
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
@@ -12199,24 +12102,20 @@ msgid "Are you sure you want to delete this News entry?"
 msgstr "Haluatko varmasti poistaa tämän uutisen?"
 
 #: blocks/gedcom_news.php:165
-#, fuzzy
 msgid "Add a News article"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää uutisartikkeli"
 
 #: blocks/gedcom_news.php:196
-#, fuzzy
 msgid "No limit"
-msgstr "Muistiraja"
+msgstr "Ei rajoituksia"
 
 #: blocks/gedcom_news.php:197
-#, fuzzy
 msgid "Age of item"
-msgstr "Lisää kysymys"
+msgstr "Kohteen ikä"
 
 #: blocks/gedcom_news.php:198
-#, fuzzy
 msgid "Number of items"
-msgstr "Näytettävien päivien lukumäärä"
+msgstr "Kohteiden lukumäärä"
 
 #: blocks/gedcom_stats.php:40
 #: blocks/gedcom_stats.php:91
@@ -12224,63 +12123,75 @@ msgstr "Näytettävien päivien lukumäärä"
 msgid "GEDCOM Statistics"
 msgstr "GEDCOM tilastotieto"
 
-#: blocks/gedcom_stats.php:145
-#: blocks/gedcom_stats.php:330
+#: blocks/gedcom_stats.php:107
+#, php-format
+msgid "This GEDCOM was created using <b>%s %s</b>"
+msgstr "Tämä GEDCOM on luotu ohjelmalla: <b>%s %s</b>"
+
+#: blocks/gedcom_stats.php:112
+#, php-format
+msgid "This GEDCOM was created on <b>%s</b>"
+msgstr "Luontipäivä: <b>%s</b>."
+
+#: blocks/gedcom_stats.php:114
+#, php-format
+msgid " on <b>%s</b>"
+msgstr ", <b>%s</b>"
+
+#: blocks/gedcom_stats.php:143
+#: blocks/gedcom_stats.php:328
 msgid "Total users"
 msgstr "Käyttäjiä yhteensä"
 
-#: blocks/gedcom_stats.php:159
-#: blocks/gedcom_stats.php:277
+#: blocks/gedcom_stats.php:157
+#: blocks/gedcom_stats.php:275
 msgid "Earliest birth year"
 msgstr "Aikaisin syntymävuosi"
 
-#: blocks/gedcom_stats.php:166
-#: blocks/gedcom_stats.php:285
+#: blocks/gedcom_stats.php:164
+#: blocks/gedcom_stats.php:283
 msgid "Latest birth year"
 msgstr "Myöhäisin syntymävuosi"
 
-#: blocks/gedcom_stats.php:173
-#: blocks/gedcom_stats.php:293
+#: blocks/gedcom_stats.php:171
+#: blocks/gedcom_stats.php:291
 msgid "Earliest death year"
 msgstr "Aikaisin kuolinvuosi"
 
-#: blocks/gedcom_stats.php:180
-#: blocks/gedcom_stats.php:301
+#: blocks/gedcom_stats.php:178
+#: blocks/gedcom_stats.php:299
 msgid "Latest death year"
 msgstr "Myöhäisin kuolinvuosi"
 
-#: blocks/gedcom_stats.php:188
-#: blocks/gedcom_stats.php:309
+#: blocks/gedcom_stats.php:186
+#: blocks/gedcom_stats.php:307
 msgid "Person who lived the longest"
 msgstr "Vanhimman henkilön ikä"
 
-#: blocks/gedcom_stats.php:204
-#: blocks/gedcom_stats.php:325
+#: blocks/gedcom_stats.php:202
+#: blocks/gedcom_stats.php:323
 msgid "Family with the most children"
 msgstr "Suurin lapsiluku perheessä"
 
-#: blocks/gedcom_stats.php:219
+#: blocks/gedcom_stats.php:217
 msgid "View statistics as graphs"
 msgstr "Näytä tilastotiedot graaffeina"
 
-#: blocks/gedcom_stats.php:227
+#: blocks/gedcom_stats.php:225
 msgid "Most Common Surnames"
 msgstr "Yleisimmät sukunimet"
 
-#: blocks/gedcom_stats.php:259
-#, fuzzy
+#: blocks/gedcom_stats.php:257
 msgid "Show common surnames?"
-msgstr "Näytä lähde"
+msgstr "Näytä tavalliset sukunimet?"
 
-#: blocks/gedcom_stats.php:268
-#, fuzzy
+#: blocks/gedcom_stats.php:266
 msgid "Select the stats to show in this block"
-msgstr "Muut tiedot kaavioissa"
+msgstr "Valitse tässä lohkossa näytettävät tilastotiedot"
 
-#: blocks/gedcom_stats.php:339
-#, fuzzy
+#: blocks/gedcom_stats.php:337
 msgid "Show link to Statistics charts?"
-msgstr "Näytä syntymän ja kuoleman yksityiskohdat kaavioilla"
+msgstr "Näytä linkki tilastotietokaavioihin?"
 
 #: blocks/getting_started.php:48
 #: blocks/getting_started.php:59
@@ -12292,9 +12203,8 @@ msgid "Choose one of these options to get started using PhpGedView"
 msgstr "Valitse joku näistä vaihtoehdoista aloittaaksesi PhpGedView:n käytön."
 
 #: blocks/getting_started.php:62
-#, fuzzy
 msgid "Upload a GEDCOM file"
-msgstr "Lähetä GEDCOM-tiedosto palvelimelle"
+msgstr "Lataa GEDCOM-tiedosto"
 
 #: blocks/getting_started.php:65
 msgid "Add a GEDCOM from a file location"
@@ -12313,9 +12223,8 @@ msgid "to change what is printed here.</p>"
 msgstr "muuttaaksesi sen, mikä on tulostettu tähän.</p>"
 
 #: blocks/logged_in.php:36
-#, fuzzy
 msgid "Logged In Users"
-msgstr "Sisäänkirjautuneet käyttäjät"
+msgstr "Sisäänkirjautuneet käyttäjät "
 
 #: blocks/logged_in.php:76
 msgid "Users Logged In"
@@ -12349,9 +12258,8 @@ msgid "Logged in as "
 msgstr "Kirjautunut nimellä"
 
 #: blocks/random_media.php:38
-#, fuzzy
 msgid "Random Media"
-msgstr "Etsi media"
+msgstr "Satunnainen kuva"
 
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
@@ -12375,9 +12283,8 @@ msgid "Stop"
 msgstr "Pysäytä"
 
 #: blocks/random_media.php:341
-#, fuzzy
 msgid "Persons"
-msgstr "Poista henkilö kaaviosta"
+msgstr "Henkilöt"
 
 #: blocks/random_media.php:415
 msgid "Other"
@@ -12392,9 +12299,8 @@ msgid "If you hide an empty block, you will not be able to change its configurat
 msgstr "Mikäli piilotat tyhjän alueen, et voi muuttaa sen asetusta, ennen kuin se taas tulee näkyviin sisältäessään tietoa."
 
 #: blocks/review_changes.php:39
-#, fuzzy
 msgid "Pending Changes"
-msgstr "Viimeiset muutokset"
+msgstr "Vireillä olevat muutokset"
 
 #: blocks/review_changes.php:83
 msgid "PhpGedView - Review changes"
@@ -12434,9 +12340,8 @@ msgid "Top 10 Surnames"
 msgstr "Yleisimmät sukunimet"
 
 #: blocks/theme_select.php:36
-#, fuzzy
 msgid "Theme Select"
-msgstr "Teemakansio"
+msgstr "Teemavalinta"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
@@ -12448,15 +12353,13 @@ msgstr "Tänä päivänä"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
-#, fuzzy
 msgid "Show only events of living people?"
-msgstr "Näytetäänkö ainoastaan henkilöt, tapahtumat vai kaikki?"
+msgstr "Näytä vain elossa olevien henkilöiden tapahtumat?"
 
 #: blocks/todays_events.php:167
 #: blocks/upcoming_events.php:192
-#, fuzzy
 msgid "Alphabetically"
-msgstr "Aakkoset pienin kirjaimin"
+msgstr "Aakkosjärjestyksessä"
 
 #: blocks/todays_events.php:168
 #: blocks/upcoming_events.php:193
@@ -12471,9 +12374,8 @@ msgstr "Sallitko kalenteritapahtumien latauksen?"
 
 #: blocks/todo.php:39
 #: blocks/todo.php:72
-#, fuzzy
 msgid "&quot;To Do&quot; tasks"
-msgstr "Näytä &quot;To Do&quot;-tehtävät, jotka on osoitettu  muille käyttäjälle."
+msgstr "&quot;Tehtävät&quot;"
 
 #: blocks/todo.php:113
 msgid "There are no &quot;To Do&quot; tasks."
@@ -12487,9 +12389,8 @@ msgstr "Yleisimmät etunimet"
 #: blocks/top10_givnnames.php:130
 #: blocks/top10_pageviews.php:131
 #: blocks/top10_surnames.php:143
-#, fuzzy
 msgid "Number of items to show"
-msgstr "Näytettävien päivien lukumäärä"
+msgstr "Näytettävien kohteiden lukumäärä"
 
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
@@ -12509,9 +12410,8 @@ msgid "Place counts before or after name?"
 msgstr "Sijoita lukumäärät ennen nimeä tai sen jälkeen?"
 
 #: blocks/user_blog.php:36
-#, fuzzy
 msgid "User Journal"
-msgstr "Käyttäjätunnus"
+msgstr "Käyttäjän päiväkirja"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
@@ -12526,23 +12426,20 @@ msgid "Are you sure you want to delete this Journal entry?"
 msgstr "Haluatko varmasti poistaa tämän päiväkirjamerkinnän?"
 
 #: blocks/user_blog.php:94
-#, fuzzy
 msgid "Add a new Journal entry"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää päiväkirjamerkintä"
 
 #: blocks/user_favorites.php:38
-#, fuzzy
 msgid "User Favorites"
-msgstr "Käyttäjätunnus"
+msgstr "Käyttäjän suosikit"
 
 #: blocks/user_favorites.php:60
 msgid "My Favorites"
 msgstr "Suosikkini"
 
 #: blocks/user_messages.php:38
-#, fuzzy
 msgid "User Messages"
-msgstr "Käyttäjätunnus"
+msgstr "Käyttäjän viestit"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
@@ -12574,18 +12471,16 @@ msgid "Broadcast to all users"
 msgstr "Lähetä kaikille käyttäjille"
 
 #: blocks/user_welcome.php:36
-#, fuzzy
 msgid "User Welcome"
-msgstr "Käyttäjätunnus"
+msgstr "Käyttäjän tervetuloalue"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
 msgstr "Esivanhempani"
 
 #: blocks/user_welcome.php:56
-#, fuzzy
 msgid "My Individual Record"
-msgstr "Henkilöön nopeasti lisättävät tiedot"
+msgstr "Tietoni"
 
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
@@ -12598,9 +12493,8 @@ msgid "Anniversary"
 msgstr "Vuosipäivä"
 
 #: blocks/yahrzeit.php:218
-#, fuzzy
 msgid "Total Names"
-msgstr "Muokkaa nimeä"
+msgstr "Nimiä yhteensä"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
@@ -12615,9 +12509,8 @@ msgid "C"
 msgstr "S"
 
 #: includes/accesskeyHeaders.php:37
-#, fuzzy
 msgid "Viewing advice"
-msgstr "Näytä arkisto"
+msgstr "Katsomisohje"
 
 #: includes/accesskeyHeaders.php:37
 msgid "0"
@@ -12673,9 +12566,8 @@ msgstr "Oma perhe"
 
 #: includes/media_reorder.php:37
 #: includes/media_tab_head.php:63
-#, fuzzy
 msgid "Re-order media"
-msgstr "Järjestä perheet"
+msgstr "Järjestä media uudelleen"
 
 #: includes/media_reorder.php:38
 msgid "Click a row, then drag-and-drop to re-order media "
@@ -12938,9 +12830,8 @@ msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
-#, fuzzy
 msgid "Charts"
-msgstr "Kaavion tyyli"
+msgstr "Kaaviot"
 
 #: includes/classes/class_menubar.php:517
 #: includes/classes/class_menubar.php:523
@@ -12951,9 +12842,8 @@ msgstr "Luettelot"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
-#, fuzzy
 msgid "MultiMedia"
-msgstr "Ylläpidä multimediaa"
+msgstr "Multimedia"
 
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
@@ -12992,40 +12882,44 @@ msgstr "Lisää suosikkeihini"
 msgid "…"
 msgstr "…"
 
-#: includes/classes/class_person.php:576
-#: includes/classes/class_person.php:633
+#. I18N: This is an abbreviation for a number.  i.e. #7 means number 7
+#: includes/classes/class_person.php:550
+#, php-format
+msgid "#%d"
+msgstr ""
+
+#: includes/classes/class_person.php:577
+#: includes/classes/class_person.php:634
 msgid "Unable to find family with ID"
 msgstr "Ei löydy perhettä, jonka ID on"
 
-#: includes/classes/class_person.php:760
-#, fuzzy
+#: includes/classes/class_person.php:761
 msgid "Family with Parents"
-msgstr "Perheeseen lisättävät tiedot"
+msgstr "Vanhempien perhe"
 
-#: includes/classes/class_person.php:779
-#: includes/classes/class_person.php:786
+#: includes/classes/class_person.php:780
+#: includes/classes/class_person.php:787
 msgid "Father's Family with "
 msgstr "Perhe - isä ja "
 
-#: includes/classes/class_person.php:780
-#: includes/classes/class_person.php:785
+#: includes/classes/class_person.php:781
+#: includes/classes/class_person.php:786
 msgid "Mother's Family with "
 msgstr "Perhe - äiti ja "
 
-#: includes/classes/class_person.php:803
+#: includes/classes/class_person.php:804
 msgid "Family with"
 msgstr "Perhe - itse ja"
 
-#: includes/classes/class_person.php:1836
-#, fuzzy
+#: includes/classes/class_person.php:1837
 msgid "year"
-msgstr "Otsikko"
+msgstr "vuosi"
 
-#: includes/classes/class_person.php:1840
+#: includes/classes/class_person.php:1841
 msgid "month"
 msgstr "kuukausi"
 
-#: includes/classes/class_person.php:1842
+#: includes/classes/class_person.php:1843
 msgid "months"
 msgstr "kuukautta"
 
@@ -13033,17 +12927,15 @@ msgstr "kuukautta"
 #: includes/classes/class_stats.php:450
 #: includes/classes/class_stats.php:489
 #: includes/classes/class_stats.php:491
-#, fuzzy
 msgid "With sources"
-msgstr "Näytä lähde"
+msgstr "Lähteiden kanssa"
 
 #: includes/classes/class_stats.php:449
 #: includes/classes/class_stats.php:451
 #: includes/classes/class_stats.php:490
 #: includes/classes/class_stats.php:492
-#, fuzzy
 msgid "Without sources"
-msgstr "Näytä lähde"
+msgstr "Ilman lähteitä"
 
 #: includes/classes/class_stats.php:694
 #: includes/classes/class_stats.php:700
@@ -13063,9 +12955,8 @@ msgstr "Elossa"
 #: includes/classes/class_stats.php:777
 #: includes/classes/class_stats.php:784
 #: includes/classes/class_stats.php:786
-#, fuzzy
 msgid "Dead"
-msgstr "Otsikko"
+msgstr "kuolleita"
 
 #: includes/classes/class_stats.php:1231
 msgid "Highest population"
@@ -13098,15 +12989,13 @@ msgstr "Keskimääräinen ikä suhteessa kuolinvuosisataan"
 
 #: includes/classes/class_stats.php:1921
 #: includes/classes/class_stats.php:3817
-#, fuzzy
 msgid "birth"
-msgstr "Viuhkakaavion leveys."
+msgstr "syntymä"
 
 #: includes/classes/class_stats.php:1922
 #: includes/classes/class_stats.php:3818
-#, fuzzy
 msgid "death"
-msgstr "Viuhkakaavion leveys."
+msgstr "kuolema"
 
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
@@ -13142,15 +13031,13 @@ msgstr "Keskimääräinen ikä"
 
 #: includes/classes/class_stats.php:2883
 #: includes/classes/class_stats.php:2885
-#, fuzzy
 msgid "children"
-msgstr "Järjestä lapset uudelleen"
+msgstr "lapsia"
 
 #: includes/classes/class_stats.php:3336
 #: includes/classes/class_stats.php:3338
-#, fuzzy
 msgid "grandchildren"
-msgstr "Järjestä lapset uudelleen"
+msgstr "lapsenlasta"
 
 #: includes/classes/class_stats.php:3552
 msgid "Count"
@@ -13170,25 +13057,21 @@ msgid "Start at parents"
 msgstr "Aloita vanhemmista"
 
 #: includes/controllers/descendancy_ctrl.php:332
-#, fuzzy
 msgid "No children"
-msgstr "Järjestä lapset uudelleen"
+msgstr "Ei lapsia rekisterissä"
 
 #: includes/controllers/family_ctrl.php:177
-#, fuzzy
 msgid "Family Information"
-msgstr "PHP-info"
+msgstr "Perhetietoja"
 
 #: includes/controllers/family_ctrl.php:350
 #: includes/controllers/family_ctrl.php:361
-#, fuzzy
 msgid "Edit Family"
-msgstr "Muokkaa nimeä"
+msgstr "Muokkaa perhettä"
 
 #: includes/controllers/family_ctrl.php:379
-#, fuzzy
 msgid "Add a child to this family"
-msgstr "Lisää lapsi ja luo yhden vanhemman perhe"
+msgstr "Lisää lapsi perheeseen"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -13196,14 +13079,12 @@ msgstr "Lisää lapsi ja luo yhden vanhemman perhe"
 #: includes/controllers/note_ctrl.php:242
 #: includes/controllers/repository_ctrl.php:241
 #: includes/controllers/source_ctrl.php:249
-#, fuzzy
 msgid "Click here to hide changes."
-msgstr "Klikkaa tästä jatkaaksesi"
+msgstr "Klikkaa kätkeäksesi muutokset."
 
 #: includes/controllers/family_ctrl.php:451
-#, fuzzy
 msgid "Delete family"
-msgstr "Pyyhi nimi"
+msgstr "Poista perhe"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
@@ -13215,9 +13096,8 @@ msgstr "Perheen poistaminen poistaa kaikki henkilöiden väliset yhteydet mutta 
 #: includes/controllers/note_ctrl.php:323
 #: includes/controllers/repository_ctrl.php:322
 #: includes/controllers/source_ctrl.php:330
-#, fuzzy
 msgid "Add to Clippings Cart"
-msgstr "Leikekori"
+msgstr "Lisää leikekoriin"
 
 #: includes/controllers/individual_ctrl.php:493
 #, fuzzy
@@ -13225,9 +13105,8 @@ msgid "Name"
 msgstr "Muokkaa nimeä"
 
 #: includes/controllers/individual_ctrl.php:819
-#, fuzzy
 msgid "Parent"
-msgstr "Sivu"
+msgstr "Vanhempi"
 
 #: includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
@@ -13250,9 +13129,8 @@ msgid "Shared Note Information"
 msgstr "Jaetun lisätiedon tiedot"
 
 #: includes/controllers/note_ctrl.php:217
-#, fuzzy
 msgid "Delete this Shared Note"
-msgstr "Poista lähde"
+msgstr "Poista tämä jaettu lisätieto"
 
 #: includes/controllers/note_ctrl.php:218
 msgid "Are you sure you want to delete this Shared Note?"
@@ -13264,14 +13142,12 @@ msgstr "Liitos onnistui"
 
 #: includes/controllers/repository_ctrl.php:79
 #: includes/controllers/repository_ctrl.php:168
-#, fuzzy
 msgid "Repository Information"
-msgstr "Tietovaraston tunnuksen etuliite"
+msgstr "Tietovarastoinformaatiota"
 
 #: includes/controllers/repository_ctrl.php:198
-#, fuzzy
 msgid "Edit Repository"
-msgstr "Poista tietovarasto"
+msgstr "Muokkaa tietovarastoa"
 
 #: includes/controllers/repository_ctrl.php:217
 msgid "Are you sure you want to delete this Repository?"
@@ -13307,15 +13183,13 @@ msgstr "Tulossivu"
 
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
-#, fuzzy
 msgid "Source Information"
-msgstr "PHP-info"
+msgstr "Lähdetieto"
 
 #: includes/controllers/source_ctrl.php:199
 #: includes/controllers/source_ctrl.php:206
-#, fuzzy
 msgid "Edit Source"
-msgstr "Muokkaa yksityisyyttä"
+msgstr "Muokkaa lähdettä"
 
 #: includes/controllers/timeline_ctrl.php:275
 msgid "Husband's age"
@@ -13402,18 +13276,16 @@ msgid "weeks"
 msgstr "viikkoa"
 
 #: includes/extras/functions.pl.php:366
-#, fuzzy
 msgid "Informant"
-msgstr "Päivämäärän muoto"
+msgstr "Tiedon antaja"
 
 #: includes/extras/functions.pl.php:370
 msgid "Lodger"
 msgstr "Asukki"
 
 #: includes/extras/functions.pl.php:374
-#, fuzzy
 msgid "Slave"
-msgstr "Talleta"
+msgstr "Orja"
 
 #: includes/extras/functions.pl.php:378
 msgid "Attending"
@@ -13515,19 +13387,16 @@ msgid "No facts for this family."
 msgstr "Ei tietoja tästä perheestä"
 
 #: includes/functions/functions_charts.php:532
-#, fuzzy
 msgid "Add Note"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää lisätieto"
 
 #: includes/functions/functions_charts.php:541
-#, fuzzy
 msgid "Add Shared Note"
-msgstr "Lisää uusi jaettu lisätieto"
+msgstr "Lisää jaettu lisätieto"
 
 #: includes/functions/functions_charts.php:560
-#, fuzzy
 msgid "Add Source Citation"
-msgstr "Lisää uusi lähde"
+msgstr "Lisää lähde"
 
 #: includes/functions/functions_charts.php:814
 msgid "Grandfather"
@@ -13564,6 +13433,16 @@ msgstr "1 minuutti"
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Å Ä Ö"
 
+#: includes/functions/functions_edit.php:78
+#, php-format
+msgid "The record with id %s was changed by another user since you last accessed it."
+msgstr "Tietuetta, jonka tunnus on %s, on muuttanut toinen käyttäjä sen jälkeen kun viimeksi käsittelit sitä."
+
+#: includes/functions/functions_edit.php:79
+#, php-format
+msgid "This record was last changed by <i>%s</i> at %s"
+msgstr "Tämän tietueen muutti viimeksi <i>%s</i> %s"
+
 #: includes/functions/functions_edit.php:80
 #: includes/functions/functions_edit.php:2376
 #: includes/functions/functions_edit.php:2385
@@ -13589,14 +13468,12 @@ msgstr ""
 
 #: includes/functions/functions_edit.php:1779
 #: includes/functions/functions_edit.php:1784
-#, fuzzy
 msgid "Add a new Associate"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää uusi läheinen"
 
 #: includes/functions/functions_edit.php:1830
-#, fuzzy
 msgid "Add a new Multimedia object"
-msgstr "Lisää uusi media"
+msgstr "Lisää multimediakohde"
 
 #: includes/functions/functions_edit.php:2375
 #: includes/functions/functions_edit.php:2384
@@ -13652,9 +13529,8 @@ msgstr "Tiedostoa ei luotu."
 
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
-#, fuzzy
 msgid "Invalid GEDCOM format"
-msgstr "Validoi GEDCOM"
+msgstr "GEDCOM muoto ei kelpaa"
 
 #: includes/functions/functions_mediadb.php:120
 #: includes/functions/functions_mediadb.php:139
@@ -13674,9 +13550,8 @@ msgstr "Lähetys onnistui."
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
-#, fuzzy
 msgid "Upload"
-msgstr "Lähetyspolku"
+msgstr "Lähetä palvelimelle"
 
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
@@ -13692,9 +13567,8 @@ msgstr "Käytä &laquo;Selaa&raquo;-painiketta hakeaksesi tiedostoa omalta tieto
 
 #: includes/functions/functions_mediadb.php:1044
 #: includes/functions/functions_mediadb.php:1212
-#, fuzzy
 msgid "Automatic thumbnail"
-msgstr "Automaattisesti kehitetyt pikkukuvat "
+msgstr "Automaattinen pienoiskuva"
 
 #: includes/functions/functions_mediadb.php:1047
 #: includes/functions/functions_mediadb.php:1215
@@ -13813,9 +13687,8 @@ msgstr "Lisätietoja varten on yhteyshenkilö"
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
-#, fuzzy
 msgid "Information about:"
-msgstr "PHP-info"
+msgstr "Lisätietoja:"
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
@@ -13870,14 +13743,12 @@ msgid "Status"
 msgstr "Tila"
 
 #: includes/functions/functions_print.php:2380
-#, fuzzy
 msgid "Add new fact"
-msgstr "Lisää nimi"
+msgstr "Lisää tieto"
 
 #: includes/functions/functions_print.php:2537
-#, fuzzy
 msgid "Find Repository"
-msgstr "Poista tietovarasto"
+msgstr "Hae tietovarasto"
 
 #: includes/functions/functions_print_facts.php:166
 #: includes/functions/functions_print_facts.php:217
@@ -13927,9 +13798,8 @@ msgid "Show people who are alive or couples where both partners are alive."
 msgstr "Näytä hengissä olevat henkilöt ja sellaiset parit, joissa kummatkin ovat elossa."
 
 #: includes/functions/functions_print_lists.php:86
-#, fuzzy
 msgid "Alive "
-msgstr "Aktiivinen"
+msgstr "Elossa"
 
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
@@ -13957,9 +13827,8 @@ msgstr "Näytä &laquo;lehti&raquo;parit tai henkilöt. Nämä ovat elossa olevi
 
 #: includes/functions/functions_print_lists.php:92
 #: includes/functions/functions_print_lists.php:478
-#, fuzzy
 msgid "Leaves"
-msgstr "Talleta"
+msgstr "Lehdet"
 
 #: includes/functions/functions_print_lists.php:94
 msgid "Show persons born more than 100 years ago."
@@ -13986,15 +13855,13 @@ msgstr "Palauta oletusarvot."
 #: includes/functions/functions_print_lists.php:779
 #: includes/functions/functions_print_lists.php:1612
 #: includes/functions/functions_print_lists.php:1757
-#, fuzzy
 msgid "Show parents"
-msgstr "Näytä lähde"
+msgstr "Näytä vanhemmat"
 
 #: includes/functions/functions_print_lists.php:409
 #: includes/functions/functions_print_lists.php:792
-#, fuzzy
 msgid "Show statistics charts"
-msgstr "Näytä syntymän ja kuoleman yksityiskohdat kaavioilla"
+msgstr "Näytä tilastokuvat"
 
 #: includes/functions/functions_print_lists.php:424
 #: includes/functions/functions_print_lists.php:805
@@ -14022,9 +13889,8 @@ msgid "Show couples where only the male partner is deceased."
 msgstr "Näytä av(i)oparit, joiden miespuolinen partneri on kuollut."
 
 #: includes/functions/functions_print_lists.php:472
-#, fuzzy
 msgid "Widow"
-msgstr "Viuhkakaavion leveys."
+msgstr "Leski"
 
 #: includes/functions/functions_print_lists.php:474
 msgid "Both dead "
@@ -14043,18 +13909,16 @@ msgid "Show couples who married within the last 100 years."
 msgstr "Näytä viimeisen sadan vuoden aikana vihityt parit."
 
 #: includes/functions/functions_print_lists.php:486
-#, fuzzy
 msgid "Show divorced couples."
-msgstr "Näytä kuolleet ihmiset"
+msgstr "Näytä eronneet av(i)oparit."
 
 #: includes/functions/functions_print_lists.php:807
 msgid "Decade of marriage"
 msgstr "Avioitumisvuosikymmen"
 
 #: includes/functions/functions_print_lists.php:1033
-#, fuzzy
 msgid "Total Shared Notes"
-msgstr "Lisää uusi jaettu lisätieto"
+msgstr "Jaettuja lisätietoja yhteensä"
 
 #: includes/functions/functions_print_lists.php:1264
 #: includes/functions/functions_print_lists.php:1315
@@ -14080,6 +13944,11 @@ msgstr "Tämän perheen tiedot ovat yksityisiä. Perheen tietoja ei oteta mukaan
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
 msgstr "Tiedot tästä mediasta ovat yksityisiä. Tietoja ei sisällytetä."
+
+#: includes/functions/functions_rss.php:149
+#, php-format
+msgid "This GEDCOM was created using %s %s"
+msgstr ""
 
 #. I18N: This is the country/chapman code for "Aruba"
 #: language/_countries.php:38
@@ -15410,9 +15279,8 @@ msgid "Nothing found."
 msgstr "Mitään ei löytynyt."
 
 #: modules/batch_update/batch_update.php:356
-#, fuzzy
 msgid "Update the CHAN record"
-msgstr "Älä päivitä CHAN (viimeinen muutos) tietuetta"
+msgstr "Päivitä CHAN-tietue"
 
 #: modules/batch_update/batch_update.php:368
 msgid "Update"
@@ -15423,9 +15291,8 @@ msgid "Update all"
 msgstr "Päivitä kaikki"
 
 #: modules/batch_update/plugins/married_names.php:100
-#, fuzzy
 msgid "Surname Option"
-msgstr "Sukunimiperinne"
+msgstr "Sukunimioptio"
 
 #: modules/batch_update/plugins/married_names.php:103
 msgid "Wife's surname replaced by husband's surname"
@@ -15448,9 +15315,8 @@ msgid "Replacement text"
 msgstr "Korvaava teksti"
 
 #: modules/batch_update/plugins/search_replace.php:98
-#, fuzzy
 msgid "Search method"
-msgstr "Hae ohjetekstistä"
+msgstr "Hakutapa"
 
 #: modules/batch_update/plugins/search_replace.php:100
 msgid "Exact text"
@@ -15474,9 +15340,14 @@ msgstr "Rastita tämä ruutu verrataksesi sekä pien- että suuraakkosia."
 
 #: modules/clippings/clippings.php:90
 #: modules/clippings/clippings.php:281
-#, fuzzy
 msgid "Download Now"
-msgstr "Lataa koneesta GEDCOM-tiedosto"
+msgstr "Lataa nyt omalle koneelle"
+
+#: modules/clippings/clippings.php:121
+#: modules/clippings/clippings.php:126
+#, fuzzy, php-format
+msgid "Add %s to cart"
+msgstr "Lisää suosikkeihini"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
@@ -15497,7 +15368,6 @@ msgstr "Leikekori"
 
 #. I18N: This is the title of a tab on the sidebar
 #: modules/descendancy/descendancy.php:239
-#: modules/descendancy/pgv_module.php:43
 msgid "Descendancy"
 msgstr ""
 
@@ -15990,6 +15860,7 @@ msgid "Infirmaties - Whether blind, Whether Deaf and Dumb"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:51
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:49
 msgid "Keep"
 msgstr "Pidä"
 
@@ -15998,20 +15869,26 @@ msgid "Unlink"
 msgstr "Poista liitos"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:53
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:77
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:51
 msgid "Navigator"
 msgstr "Navigaattori"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:85
-#, fuzzy
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:82
 msgid "Keep Link in list"
-msgstr "Säilytä medialinkit"
+msgstr "Pidä liitos listalla"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:86
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:83
 msgid "Remove Link from list"
 msgstr "Poista liitos listalta"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:90
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:94
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:60
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:87
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:91
 msgid "Open Family Navigator"
 msgstr "Avaa perhenavigaattori"
 
@@ -16163,6 +16040,10 @@ msgstr ""
 msgid "Months Unemployed - xx = Months unemployed during Census Year"
 msgstr ""
 
+#: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:132
+msgid "Home Ownership - x-x-x-xxxx = O/R-F/M-F/H-#### = Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number"
+msgstr ""
+
 #: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:134
 msgid "Situation - 3 parameters - Diseases, Infimaties, Convict/Pauper etc"
 msgstr ""
@@ -16188,14 +16069,12 @@ msgid "Add links"
 msgstr "Lisää linkkejä"
 
 #: modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:207
-#, fuzzy
 msgid "Do not update the CHAN (Last Change) records"
-msgstr "Älä päivitä CHAN (viimeinen muutos) tietuetta"
+msgstr "Älä päivitä CHAN (viimeksi muutettu) tietueita"
 
 #: modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:272
-#, fuzzy
 msgid "No CHAN (Last Change) records were updated"
-msgstr "Älä päivitä CHAN (viimeinen muutos) tietuetta"
+msgstr "CHAN (viimeksi muutettu) tietueita ei muutettu"
 
 #: modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:41
 msgid "Search for People to add to Add Links list."
@@ -16217,9 +16096,8 @@ msgstr "Ei käytettävissä oleva henkilö-, perhe- tai lähdetunnus"
 #: modules/googlemap/admin-config.php:49
 #: modules/googlemap/editconfig.php:90
 #: modules/googlemap/editconfig.php:92
-#, fuzzy
 msgid "GoogleMap Configuration"
-msgstr "_GEDCOM: asetustiedosto"
+msgstr "Google-kartasto -asetukset"
 
 #: modules/googlemap/admin-config.php:52
 #: modules/googlemap/gg_map_content.php:38
@@ -16228,6 +16106,9 @@ msgstr "_GEDCOM: asetustiedosto"
 #: modules/googlemap/googlemap.php:146
 #: modules/googlemap/googlemap.php:656
 #: modules/googlemap/googlemap.php:864
+#: modules/googlemap/pedigree_map.php:85
+#: modules/googlemap/pedigree_map.php:307
+#: modules/googlemap/placehierarchy.php:186
 msgid "Manage GoogleMap configuration"
 msgstr "Hallitse Google-kartasto -asetuksia"
 
@@ -16235,19 +16116,28 @@ msgstr "Hallitse Google-kartasto -asetuksia"
 #: modules/googlemap/editconfig.php:452
 #: modules/googlemap/gg_map_content.php:89
 #: modules/googlemap/googlemap.php:149
+#: modules/googlemap/pedigree_map.php:310
+#: modules/googlemap/placehierarchy.php:189
+#: modules/googlemap/places.php:159
+#: modules/googlemap/places.php:193
+#: modules/googlemap/places.php:566
+#: modules/googlemap/places_edit.php:42
 msgid "Edit geographic place locations"
 msgstr "Muokkaa sijaintipaikkatietoja"
 
 #: modules/googlemap/admin-config.php:58
 #: modules/googlemap/gg_map_content.php:92
 #: modules/googlemap/googlemap.php:152
+#: modules/googlemap/pedigree_map.php:313
+#: modules/googlemap/placecheck.php:50
+#: modules/googlemap/placecheck.php:54
+#: modules/googlemap/placehierarchy.php:192
 msgid "Place Check"
 msgstr "Paikkojen tarkistus"
 
 #: modules/googlemap/editconfig.php:55
-#, fuzzy
 msgid "Prefix"
-msgstr "Esikatselu"
+msgstr "Etuliite"
 
 #: modules/googlemap/editconfig.php:63
 msgid "Postfix"
@@ -16286,9 +16176,10 @@ msgid "Postfix, prefix, normal, both"
 msgstr "Jälkiliite, etuliite, normal, kumpikin"
 
 #: modules/googlemap/editconfig.php:96
-#, fuzzy
+#: modules/googlemap/places.php:161
+#: modules/googlemap/places_edit.php:46
 msgid "Page only for Administrators"
-msgstr "_GEDCOM: käyttäjien ylläpito"
+msgstr "Sivu vain ylläpitäjille"
 
 #: modules/googlemap/editconfig.php:215
 msgid "Enable GoogleMap"
@@ -16305,21 +16196,33 @@ msgstr "Oletuskarttatyyppi"
 #: modules/googlemap/editconfig.php:231
 #: modules/googlemap/gg_map_content.php:31
 #: modules/googlemap/googlemap.php:608
+#: modules/googlemap/pedigree_map.php:551
+#: modules/googlemap/placehierarchy.php:506
+#: modules/googlemap/places_edit.php:405
 msgid "Map"
 msgstr "Kartta"
 
 #: modules/googlemap/editconfig.php:232
 #: modules/googlemap/googlemap.php:609
+#: modules/googlemap/pedigree_map.php:552
+#: modules/googlemap/placehierarchy.php:507
+#: modules/googlemap/places_edit.php:406
 msgid "Satellite"
 msgstr "Satelliitti"
 
 #: modules/googlemap/editconfig.php:233
 #: modules/googlemap/googlemap.php:610
+#: modules/googlemap/pedigree_map.php:553
+#: modules/googlemap/placehierarchy.php:508
+#: modules/googlemap/places_edit.php:407
 msgid "Hybrid"
 msgstr "Hybridi"
 
 #: modules/googlemap/editconfig.php:234
 #: modules/googlemap/googlemap.php:611
+#: modules/googlemap/pedigree_map.php:554
+#: modules/googlemap/placehierarchy.php:509
+#: modules/googlemap/places_edit.php:408
 msgid "Terrain"
 msgstr "Maasto"
 
@@ -16349,9 +16252,10 @@ msgid "Standard"
 msgstr "Vakio"
 
 #: modules/googlemap/editconfig.php:274
-#, fuzzy
+#: modules/googlemap/places_edit.php:809
+#: modules/googlemap/places_edit.php:817
 msgid "Flag"
-msgstr "Lipputiedosto"
+msgstr "Lippu"
 
 #: modules/googlemap/editconfig.php:280
 msgid "Display short placenames"
@@ -16386,6 +16290,7 @@ msgid "Max."
 msgstr "Max."
 
 #: modules/googlemap/editconfig.php:352
+#: modules/googlemap/places_edit.php:748
 msgid "Precision"
 msgstr "Tarkkuus"
 
@@ -16395,28 +16300,33 @@ msgstr "Tarkkuus"
 #: modules/googlemap/editconfig.php:388
 #: modules/googlemap/editconfig.php:396
 #: modules/googlemap/editconfig.php:404
-#, fuzzy
 msgid "digits"
-msgstr "Muokkaa"
+msgstr "taso"
 
 #: modules/googlemap/editconfig.php:366
-#, fuzzy
+#: modules/googlemap/places.php:179
+#: modules/googlemap/places_edit.php:772
 msgid "State"
-msgstr "Talleta"
+msgstr "Lääni"
 
 #: modules/googlemap/editconfig.php:375
+#: modules/googlemap/places.php:181
+#: modules/googlemap/places_edit.php:774
 msgid "City"
 msgstr "Kaupunki"
 
 #: modules/googlemap/editconfig.php:383
+#: modules/googlemap/places_edit.php:776
 msgid "Neighborhood"
 msgstr "Naapurusto"
 
 #: modules/googlemap/editconfig.php:391
+#: modules/googlemap/places_edit.php:778
 msgid "House"
 msgstr "Talo"
 
 #: modules/googlemap/editconfig.php:399
+#: modules/googlemap/places_edit.php:780
 msgid "Max"
 msgstr "Maksimi"
 
@@ -16429,9 +16339,8 @@ msgid "Number of levels"
 msgstr "Tasojen määrä"
 
 #: modules/googlemap/editconfig.php:432
-#, fuzzy
 msgid "Configuration per level"
-msgstr "Apua asetuksiin"
+msgstr "Tasojen asetukset"
 
 #: modules/googlemap/flags.php:43
 msgid "Select flag"
@@ -16443,11 +16352,15 @@ msgstr ""
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:655
+#: modules/googlemap/places_edit.php:814
+#: modules/googlemap/places_edit.php:818
 msgid "Change flag"
 msgstr "Vaihda lippu"
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:819
 msgid "Remove flag"
 msgstr "Poista lippu"
 
@@ -16458,6 +16371,7 @@ msgstr "Maat"
 #: modules/googlemap/gg_map_content.php:35
 #: modules/googlemap/googlemap.php:97
 #: modules/googlemap/googlemap.php:651
+#: modules/googlemap/pedigree_map.php:82
 msgid "GoogleMap module disabled"
 msgstr "Google-kartasto -moduli estetty"
 
@@ -16465,19 +16379,19 @@ msgstr "Google-kartasto -moduli estetty"
 #: modules/googlemap/gg_map_content.php:59
 #: modules/googlemap/googlemap.php:118
 #: modules/googlemap/googlemap.php:119
-#, fuzzy
 msgid "Activate"
-msgstr "Aktiivinen"
+msgstr "Aktivoi"
 
 #: modules/googlemap/gg_map_content.php:62
 #: modules/googlemap/gg_map_content.php:63
 #: modules/googlemap/googlemap.php:122
 #: modules/googlemap/googlemap.php:123
-#, fuzzy
 msgid "Deactivate"
-msgstr "Aktiivinen"
+msgstr "Poista käytöstä"
 
 #: modules/googlemap/googlemap.php:607
+#: modules/googlemap/pedigree_map.php:550
+#: modules/googlemap/placehierarchy.php:505
 msgid "Redraw map"
 msgstr "Näytä kartta uudelleen"
 
@@ -16486,10 +16400,19 @@ msgid "No map data for this person"
 msgstr "Ei kartta tietoa tällä henkilöllä"
 
 #: modules/googlemap/googlemap.php:940
+#: modules/googlemap/placehierarchy.php:302
+#: modules/googlemap/placehierarchy.php:614
+#: modules/googlemap/placehierarchy.php:671
 msgid "This place has no coordinates"
 msgstr "Tällä paikalla ei ole koordinaatteja"
 
 #: modules/googlemap/googlemap.php:942
+#: modules/googlemap/placehierarchy.php:304
+#: modules/googlemap/placehierarchy.php:616
+#: modules/googlemap/placehierarchy.php:617
+#: modules/googlemap/placehierarchy.php:673
+#: modules/googlemap/placehierarchy.php:674
+#: modules/googlemap/places.php:604
 msgid "Edit geographic location"
 msgstr "Muokkaa paikan sijaintia"
 
@@ -16599,14 +16522,12 @@ msgid "Select Next Level..."
 msgstr "Valitse seuraava taso..."
 
 #: modules/googlemap/placecheck.php:117
-#, fuzzy
 msgid "List filtering options"
-msgstr "Luettele tiedostot alikansioissa"
+msgstr "Listan suodatusvalinnat"
 
 #: modules/googlemap/placecheck.php:120
-#, fuzzy
 msgid "Include fully matched places: "
-msgstr "Sisällytä avionimet"
+msgstr "Sisällytä täysin vastaavat paikat: "
 
 #: modules/googlemap/placecheck.php:132
 msgid "Key to colors used below"
@@ -16629,9 +16550,8 @@ msgid "this place level is blank in your GEDCOM file, but exists as 'unknown'<br
 msgstr "tämä paikkataso on tyhjä sinun GEDCOM tiedostossasi, mutta näkyy tekstillä 'tuntematon'<br/> Google-kartaston paikkataulussa koordinaattien kera. Se ei vaadi toimenpiteitä<br/>ennen kuin kadoksissa oleva taso voidaan lisätä"
 
 #: modules/googlemap/placecheck.php:152
-#, fuzzy
 msgid "Place list for GEDCOM file"
-msgstr "Synkronoi muutokset GEDCOM-tiedostoon"
+msgstr "Paikkalista GEDCOM tiedostosta"
 
 #: modules/googlemap/placecheck.php:241
 msgid "GEDCOM File Place Data<br />(2 PLAC tag)"
@@ -16707,9 +16627,8 @@ msgid "Remove this location?"
 msgstr "Poista tämä sijainti?"
 
 #: modules/googlemap/places.php:587
-#, fuzzy
 msgid "Click here to show inactive places"
-msgstr "Klikkaa tästä jatkaaksesi"
+msgstr "Klikkaa tässä nähdäksesi joutilaat paikat"
 
 #: modules/googlemap/places.php:606
 #: modules/googlemap/places_edit.php:662
@@ -16745,14 +16664,12 @@ msgid "Use this value"
 msgstr "Käytä tätä arvoa"
 
 #: modules/googlemap/places_edit.php:743
-#, fuzzy
 msgid "Search on this level"
-msgstr "Hae asetuksen kuvauksesta"
+msgstr "Etsi tällä tasolla"
 
 #: modules/googlemap/places_edit.php:744
-#, fuzzy
 msgid "Search all"
-msgstr "Etsi ja korvaa"
+msgstr "Etsi kaikkialla"
 
 #: modules/googlemap/places_edit.php:788
 msgid "N"
@@ -16773,6 +16690,10 @@ msgstr "L"
 #: modules/lightbox/admin-config.php:40
 #: modules/lightbox/lb_editconfig.php:42
 #: modules/lightbox/lb_editconfig.php:46
+#: modules/lightbox/functions/lb_head.php:116
+#: modules/lightbox/functions/lb_head.php:117
+#: modules/lightbox/functions/lb_head.php:125
+#: modules/lightbox/functions/lb_head.php:133
 msgid "Lightbox-Album Configuration"
 msgstr "Lightbox asetukset"
 
@@ -16790,9 +16711,8 @@ msgstr "Ulkonäkö"
 
 #: modules/lightbox/lb_editconfig.php:107
 #: modules/lightbox/lb_editconfig.php:109
-#, fuzzy
 msgid "Hide"
-msgstr "Otsikko"
+msgstr "Piilota"
 
 #: modules/lightbox/lb_editconfig.php:117
 msgid "Individual Page - Album Tab Header"
@@ -16817,9 +16737,8 @@ msgstr "Teksti"
 #: modules/lightbox/lb_editconfig.php:124
 #: modules/lightbox/lb_editconfig.php:227
 #: modules/lightbox/lb_editconfig.php:229
-#, fuzzy
 msgid "Both"
-msgstr "Leveys"
+msgstr "Kumpikin"
 
 #: modules/lightbox/lb_editconfig.php:132
 msgid "Individual Page - Album Tab Thumbnail - Notes Tooltip"
@@ -16854,9 +16773,8 @@ msgid "Slide show timing in seconds"
 msgstr "Diaesityksen ajastus sekunteina"
 
 #: modules/lightbox/lb_editconfig.php:181
-#, fuzzy
 msgid "Slideshow sound track"
-msgstr "Näytetäänkö AJAX-kontrollit?"
+msgstr "Diaesityksen ääniraita"
 
 #: modules/lightbox/lb_editconfig.php:181
 msgid "(mp3 only)"
@@ -16917,9 +16835,8 @@ msgid "Pause Slideshow"
 msgstr "Pysäytä diaesitys"
 
 #: modules/lightbox/functions/lb_call_js.php:55
-#, fuzzy
 msgid "Start Slideshow"
-msgstr "Aloitetaanko diaesitys sivun latautuessa?"
+msgstr "Aloita diaesitys"
 
 #: modules/lightbox/functions/lb_call_js.php:56
 msgid "Turn Music On/Off"
@@ -16948,7 +16865,6 @@ msgstr "Lisää uusi multimediakohde tälle henkilölle"
 
 #: modules/lightbox/functions/lb_head.php:145
 #: modules/lightbox/functions/lb_head.php:153
-#, fuzzy
 msgid "Add a new Media Object"
 msgstr "Lisää uusi media"
 
@@ -16989,9 +16905,8 @@ msgid "Document"
 msgstr "Asiakirja"
 
 #: modules/lightbox/functions/lightbox_print_media.php:150
-#, fuzzy
 msgid "Census"
-msgstr "Valikko"
+msgstr "Väestölaskenta"
 
 #: modules/lightbox/functions/lightbox_print_media.php:168
 msgid "Not in DB"
@@ -17008,38 +16923,32 @@ msgid "View Notes"
 msgstr "Näytä lisätiedot"
 
 #: modules/lightbox/functions/lightbox_print_media_row.php:247
-#, fuzzy
 msgid "Edit Media"
-msgstr "Etsi media"
+msgstr "Muokkaa mediaa"
 
 #: modules/lightbox/functions/lightbox_print_media_row.php:258
-#, fuzzy
 msgid "Unlink Media"
-msgstr "Etsi media"
+msgstr "Poista yhteys mediaan"
 
 #: modules/media/media.php:63
 msgid "There are no media objects for this individual."
 msgstr "Tällä henkilöllä ei ole multimediakohteita."
 
 #: modules/notes/notes.php:60
-#, fuzzy
 msgid "Show all notes"
-msgstr "Näytä kaikki lähteet"
+msgstr "Näytä kaikki lisätiedot"
 
 #: modules/notes/notes.php:80
-#, fuzzy
 msgid "There are no Notes for this individual."
-msgstr "Poista tämä henkilö"
+msgstr "Tällä henkilöllä ei ole lisätietoja."
 
 #: modules/personal_facts/personal_facts.php:62
-#, fuzzy
 msgid "There are no Facts for this individual."
-msgstr "Poista tämä henkilö"
+msgstr "Tällä henkilöllä ei ole tietoja."
 
 #: modules/personal_facts/personal_facts.php:72
-#, fuzzy
 msgid "Events of close relatives"
-msgstr "Näytä lähisukulaisten tapahtumat henkilön sivulla"
+msgstr "Lähisukulaisten tapahtumia"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
@@ -17054,9 +16963,8 @@ msgid "Relatives"
 msgstr ""
 
 #: modules/relatives/relatives.php:114
-#, fuzzy
 msgid "Add husband"
-msgstr "Lisää lapsi"
+msgstr "Lisää aviomies"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
@@ -17075,18 +16983,16 @@ msgid "Link this person to an existing family as a child"
 msgstr "Liitä tämä henkilö lapseksi olemassa olevaan perheeseen."
 
 #: modules/relatives/relatives.php:415
-#, fuzzy
 msgid "Add a new wife"
-msgstr "Lisää uusi lisätieto"
+msgstr "Lisää uusi vaimo"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
 msgstr "Liitä tämä henkilö mieheksi olemassa olevaan perheeseen."
 
 #: modules/relatives/relatives.php:435
-#, fuzzy
 msgid "Add a new husband"
-msgstr "Lisää uusi jaettu lisätieto"
+msgstr "Lisää uusi mies puolisoksi"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
@@ -17110,15 +17016,13 @@ msgstr " Valitse kohteet, jotka tallennetaan sivukarttaan:"
 
 #: modules/sitemap/index.php:235
 #: modules/sitemap/index.php:366
-#, fuzzy
 msgid "Individual List"
-msgstr "Henkilön tunnuksen etuliite"
+msgstr "Henkilöluettelo"
 
 #: modules/sitemap/index.php:237
 #: modules/sitemap/index.php:420
-#, fuzzy
 msgid "Family List"
-msgstr "Nimiluettelo"
+msgstr "Perheluettelo"
 
 #: modules/sitemap/index.php:238
 #: modules/sitemap/index.php:298
@@ -17207,16 +17111,14 @@ msgid "never"
 msgstr "ei koskaan"
 
 #: modules/sitemap/index.php:447
-#, fuzzy
 msgid "Generate"
-msgstr "Lähettäjän nimi"
+msgstr "Luo"
 
 #: modules/sources_tab/sources_tab.php:77
 msgid "There are no Source citations for this individual."
 msgstr "Tällä henkilöllä ei ole lähteitä."
 
 #: themes/cloudy/footer.php:174
-#: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
 msgstr "Tätä GEDCOM-tiedostoa on muutettu."
 
@@ -17228,6 +17130,3 @@ msgstr "Tätä GEDCOM-tiedostoa on muutettu."
 
 #~ msgid "NAME:ROMN"
 #~ msgstr "Romanisoitu nimi"
-
-#~ msgid "_FA13"
-#~ msgstr "Fakta 13"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-07 22:52-0000\n"
+"POT-Creation-Date: 2010-03-08 18:56-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -49,10 +49,9 @@ msgstr "Você não tem acesso para"
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
-#: addremotelink.php:274
-#, fuzzy
+#: addremotelink.php:282
 msgid "Close Window"
-msgstr "Fechamento automático da janela de edição."
+msgstr "Fechar Janela"
 
 #: addmedia.php:192
 msgid "Media file already exists."
@@ -62,7 +61,7 @@ msgstr "Arquivo de Mídia já existe."
 #: addmedia.php:211
 #: addmedia.php:224
 #: client.php:414
-#: client.php:424
+#: client.php:423
 msgid "There was an error uploading your file."
 msgstr "Um erro ocorreu durante o envio do arquivo GEDCOM."
 
@@ -115,140 +114,138 @@ msgstr "Site remoto selecionado."
 
 #: addremotelink.php:75
 #: addremotelink.php:85
-#: addremotelink.php:183
+#: addremotelink.php:191
 msgid "Site"
 msgstr "Site"
 
 #: addremotelink.php:80
-#, fuzzy
 msgid "Database ID"
-msgstr "Servidor de Banco de Dados"
+msgstr "ID do Banco de Dados"
 
 #: addremotelink.php:121
 #: addsearchlink.php:74
 msgid "Relationship to current person"
 msgstr "Relação com a pessoa atual"
 
-#: addremotelink.php:140
+#: addremotelink.php:127
+#: addsearchlink.php:77
+msgid "Same as current"
+msgstr "O mesmo que agora"
+
+#: addremotelink.php:128
+#: addsearchlink.php:78
+msgid "Mother"
+msgstr "Mãe"
+
+#: addremotelink.php:129
+#: addsearchlink.php:79
+msgid "Father"
+msgstr "Pai"
+
+#: addremotelink.php:130
+#: addsearchlink.php:80
+msgid "Husband"
+msgstr "Marido"
+
+#: addremotelink.php:131
+#: addsearchlink.php:81
+msgid "Wife"
+msgstr "Esposa"
+
+#: addremotelink.php:132
+#: addsearchlink.php:82
+msgid "Son"
+msgstr "Filho"
+
+#: addremotelink.php:133
+#: addsearchlink.php:83
+msgid "Daughter"
+msgstr "Filha"
+
+#: addremotelink.php:148
 msgid "Site Location"
 msgstr "Local"
 
-#: addremotelink.php:150
+#: addremotelink.php:158
 msgid "Local site"
 msgstr "Mesmo Site"
 
-#: addremotelink.php:158
-#: addremotelink.php:188
+#: addremotelink.php:166
+#: addremotelink.php:196
 msgid "Existing remote site"
 msgstr "Usar um site que já exista."
 
-#: addremotelink.php:163
+#: addremotelink.php:171
 msgid "New remote site"
 msgstr "Site diferente"
 
-#: addremotelink.php:173
+#: addremotelink.php:181
 msgid "Person ID"
 msgstr "ID da Pessoa"
 
-#: addremotelink.php:202
+#: addremotelink.php:210
 msgid "Type in a new site."
 msgstr "Informe novo site."
 
-#: addremotelink.php:205
-#: addremotelink.php:227
+#: addremotelink.php:213
+#: addremotelink.php:235
 msgid "Title:"
 msgstr "Título"
 
-#: addremotelink.php:208
+#: addremotelink.php:216
 msgid "Site URL:"
 msgstr "Endereço do Site:"
 
-#: addremotelink.php:211
+#: addremotelink.php:219
 msgid "Example:"
 msgstr ""
 
-#: addremotelink.php:214
-#, fuzzy
+#: addremotelink.php:222
 msgid "Database ID:"
-msgstr "Servidor de Banco de Dados"
+msgstr "ID do Banco de Dados:"
 
-#: addremotelink.php:217
-#, fuzzy
+#: addremotelink.php:225
 msgid "Username: "
-msgstr "Usuário"
+msgstr "Usuário:"
 
-#: addremotelink.php:220
-#, fuzzy
+#: addremotelink.php:228
 msgid "Password: "
-msgstr "Senha"
+msgstr "Senha:"
 
-#: addremotelink.php:230
-#, fuzzy
+#: addremotelink.php:238
 msgid "GEDCOM File:"
-msgstr "_GEDCOM: Excluir"
+msgstr "Arquivo GEDCOM"
 
-#: addremotelink.php:250
+#: addremotelink.php:258
 #, fuzzy
 msgid "Admin Option"
 msgstr "Opções de Importação"
 
-#: addremotelink.php:256
+#: addremotelink.php:264
 msgid "Do not update the CHAN (Last Change) record"
 msgstr ""
 
-#: addremotelink.php:264
+#: addremotelink.php:272
 #: addsearchlink.php:70
-#, fuzzy
 msgid "Add Link"
-msgstr "Adicionar esposa"
+msgstr "Adicionar Ligação"
 
 #: addsearchlink.php:31
 msgid "Add Local Link"
 msgstr "Adicionar Ligação Local"
 
-#: addsearchlink.php:77
-msgid "Same as current"
-msgstr "O mesmo que agora"
-
-#: addsearchlink.php:78
-msgid "Mother"
-msgstr "Mãe"
-
-#: addsearchlink.php:79
-msgid "Father"
-msgstr "Pai"
-
-#: addsearchlink.php:80
-msgid "Husband"
-msgstr "Marido"
-
-#: addsearchlink.php:81
-msgid "Wife"
-msgstr "Esposa"
-
-#: addsearchlink.php:82
-msgid "Son"
-msgstr "Filho"
-
-#: addsearchlink.php:83
-msgid "Daughter"
-msgstr "Filha"
-
 #: admin.php:51
 #: admin.php:137
-#, fuzzy
 msgid "Administration"
-msgstr "_GEDCOM: Página de Administração"
+msgstr "Administração"
 
 #: admin.php:55
-#, fuzzy
 msgid "Accept / Reject Changes"
-msgstr "Últimas Atualizações"
+msgstr "Aceitar / Rejeitar Alterações"
 
 #: admin.php:75
-#, fuzzy
 msgid "View log files"
-msgstr "Frequência de arquivamento dos Logs"
+msgstr "Exibir Logs"
 
 #: admin.php:105
 msgid "Edit Image Manipulation Configuration"
@@ -276,15 +273,13 @@ msgstr "Uma ou mais contas de usuários possuem avisos"
 
 #: admin.php:166
 #: admin.php:186
-#, fuzzy
 msgid "Informational"
-msgstr "Informações do PHP"
+msgstr "Informativo"
 
 #: admin.php:167
 #: admin.php:201
-#, fuzzy
 msgid "Data and GEDCOM administration"
-msgstr "_GEDCOM: Página de Administração"
+msgstr "Gerenciar GEDCOM e Dados"
 
 #: admin.php:169
 #: admin.php:228
@@ -310,9 +305,8 @@ msgid "README documentation"
 msgstr "Documentação"
 
 #: admin.php:194
-#, fuzzy
 msgid "Show PHP information page"
-msgstr "Informações do PHP"
+msgstr "Mostrar a página PHPInfo"
 
 #: admin.php:194
 msgid "PHP information"
@@ -336,14 +330,12 @@ msgid "Batch Update"
 msgstr ""
 
 #: admin.php:232
-#, fuzzy
 msgid "Add an unlinked person"
-msgstr "Adicionar um marido a partir de uma pessoa da árvore"
+msgstr "Adicionar uma pessoa sem parentes a árvore"
 
 #: admin.php:235
-#, fuzzy
 msgid "Add an unlinked source"
-msgstr "Adicionar Nota"
+msgstr "Adicionar uma fonte sem ligação alguma"
 
 #: admin.php:240
 #, fuzzy
@@ -351,9 +343,8 @@ msgid "Add an unlinked note"
 msgstr "Adicionar Nota"
 
 #: admin.php:260
-#, fuzzy
 msgid "Configuration"
-msgstr "Configuration Help"
+msgstr "Configuração"
 
 #: admin.php:262
 msgid "User Information Migration tool"
@@ -368,14 +359,12 @@ msgid "Backup"
 msgstr ""
 
 #: admin.php:272
-#, fuzzy
 msgid "FAQ List"
-msgstr "Posição da FAQ"
+msgstr "Lista de FAQs"
 
 #: admin.php:274
-#, fuzzy
 msgid "Manage Sites"
-msgstr "Gerenciar Mídias"
+msgstr "Gerenciar Sites"
 
 #: admin.php:278
 #, fuzzy
@@ -407,11 +396,14 @@ msgstr "Conteúdo do arquivo de log"
 msgid "Ancestry Chart"
 msgstr "Ancestrais"
 
+#: ancestry.php:49
+msgid "%s Generation Ancestry Chart"
+msgstr "%s Gerações de Ancestrais"
+
 #: ancestry.php:72
 #: compact.php:82
-#, fuzzy
 msgid "Root Person ID"
-msgstr "Remover Pessoa"
+msgstr "ID Raiz"
 
 #: ancestry.php:82
 msgid "Box width"
@@ -422,30 +414,26 @@ msgid "Layout"
 msgstr "Formatação"
 
 #: ancestry.php:99
-#, fuzzy
 msgid "List"
-msgstr "Lista de Nomes"
+msgstr "Estilo Lista"
 
 #: ancestry.php:105
 msgid "Booklet"
 msgstr "Estilo Livreto"
 
 #: ancestry.php:123
-#, fuzzy
 msgid "Show cousins"
-msgstr "Exibir Fontes"
+msgstr "Exibir Primos"
 
 #: ancestry.php:130
 #: calendar.php:404
-#, fuzzy
 msgid "Individuals"
-msgstr "Fatos/Eventos da Pessoa"
+msgstr "Pessoas"
 
 #: ancestry.php:136
 #: calendar.php:405
-#, fuzzy
 msgid "Families"
-msgstr "Reordenar Famílias"
+msgstr "Famílias"
 
 #: ancestry.php:142
 #: branches.php:74
@@ -559,9 +547,8 @@ msgid "Recent Years (&lt; 100 yrs)"
 msgstr "Eventos Recentes (< 100 anos)"
 
 #: calendar.php:201
-#, fuzzy
 msgid "Gender"
-msgstr "Alterar Sexo"
+msgstr "Sexo"
 
 #: calendar.php:212
 #: calendar.php:215
@@ -576,20 +563,17 @@ msgid "Females"
 msgstr ""
 
 #: calendar.php:226
-#, fuzzy
 msgid "Show events of:"
-msgstr "Exibir mais velho no topo"
+msgstr "Exibir Eventos de:"
 
 #: calendar.php:232
 #: calendar.php:530
-#, fuzzy
 msgid "Births, Deaths, Marriages"
-msgstr "Exibir apenas Nascimentos, Falecimentos e Casamentos?"
+msgstr "Nascimentos, Falecimentos e Casamentos"
 
 #: calendar.php:235
-#, fuzzy
 msgid "ALL"
-msgstr "Ilhas Åland"
+msgstr "Todos"
 
 #: calendar.php:238
 msgid "BIRT"
@@ -641,9 +625,8 @@ msgstr "Configurar Evento"
 
 #: calendar.php:282
 #: calendar.php:284
-#, fuzzy
 msgid "View Day"
-msgstr "Exibir arquivo"
+msgstr "Exibir Dia"
 
 #: calendar.php:287
 #: calendar.php:289
@@ -652,19 +635,16 @@ msgstr "Exibir Mês"
 
 #: calendar.php:292
 #: calendar.php:294
-#, fuzzy
 msgid "View Year"
-msgstr "Exibir arquivo"
+msgstr "Exibir Ano"
 
 #: calendar.php:435
-#, fuzzy
 msgid "Total individuals"
-msgstr "Excluir esta Pessoa"
+msgstr "qtde de nomes ="
 
 #: calendar.php:443
-#, fuzzy
 msgid "Total families"
-msgstr "Reordenar Famílias"
+msgstr "qtde de famílias ="
 
 #: calendar.php:477
 msgid "Day not set"
@@ -683,6 +663,11 @@ msgstr "Feminino"
 #: calendar.php:536
 msgid "Filter"
 msgstr "Pesquisar"
+
+#: calendar.php:588
+#, php-format
+msgid "%s year anniversary"
+msgstr "%s anos"
 
 #: calendar.php:614
 msgid "unknown"
@@ -727,9 +712,8 @@ msgid "Languages used"
 msgstr ""
 
 #: changelanguage.php:264
-#, fuzzy
 msgid "Current GEDCOMs"
-msgstr "Criar um novo arquivo GEDCOM"
+msgstr "GEDCOMs Cadastrados"
 
 #: changelanguage.php:282
 #, fuzzy
@@ -741,9 +725,8 @@ msgid "Clippings Cart"
 msgstr "Carrinho de Recortes"
 
 #: clippings.php:49
-#, fuzzy
 msgid "Family Tree Clippings Cart"
-msgstr "Carrinho de Recortes"
+msgstr "Extração de Dados"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
@@ -824,18 +807,16 @@ msgid "Some items could not be added due to privacy restrictions"
 msgstr ""
 
 #: clippings.php:127
-#, fuzzy
 msgid "Add Individual By ID"
-msgstr "Fatos/Eventos da Pessoa"
+msgstr "Adicionar pessoa pelo ID"
 
 #: clippings.php:140
 msgid "Add"
 msgstr "Adicionar"
 
 #: clippings.php:150
-#, fuzzy
 msgid "Your Clippings Cart is empty."
-msgstr "Carrinho de Recortes"
+msgstr "Seu carrinho de recortes está vazio."
 
 #: clippings.php:157
 #, fuzzy
@@ -871,9 +852,8 @@ msgid "Authenticated user"
 msgstr "Usuário Autenticado"
 
 #: clippings.php:208
-#, fuzzy
 msgid "GEDCOM administrator"
-msgstr "_GEDCOM: Página de Administração"
+msgstr "Administrador de GEDCOM"
 
 #: clippings.php:209
 msgid "Site administrator"
@@ -900,9 +880,8 @@ msgid "Forward slashes : /"
 msgstr ""
 
 #: clippings.php:307
-#, fuzzy
 msgid "Remove"
-msgstr "Remover Pessoa"
+msgstr "Remover"
 
 #: clippings.php:224
 msgid ""
@@ -917,9 +896,8 @@ msgstr ""
 #: compact.php:58
 #: compact.php:447
 #: compact.php:449
-#, fuzzy
 msgid "Compact Chart"
-msgstr "Esvaziar o carrinho"
+msgstr "Gráfico Resumo"
 
 #: compact.php:97
 msgid "Show ID numbers next to names"
@@ -994,9 +972,8 @@ msgid "Download GEDCOM"
 msgstr "Download GEDCOM"
 
 #: downloadgedcom.php:136
-#, fuzzy
 msgid "Options:"
-msgstr "Opções de Importação"
+msgstr "Opções:"
 
 #: downloadgedcom.php:169
 msgid ""
@@ -1005,6 +982,10 @@ msgid ""
 "\t<tr><td class=\"facts_label03\" colspan=\"2\">\n"
 "\t<input type=\"submit\" value=\"<?php print i18n::translate("
 msgstr ""
+
+#: editconfig_gedcom.php:254
+msgid "Genealogy from [%s]"
+msgstr "Genealogia de [%s]"
 
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
@@ -1030,9 +1011,8 @@ msgstr ""
 
 #: editconfig_gedcom.php:620
 #: editconfig_gedcom.php:666
-#, fuzzy
 msgid "GEDCOM Configuration"
-msgstr "_GEDCOM: arquivo de Configuração"
+msgstr "Configuração GEDCOM"
 
 #: editconfig_gedcom.php:670
 #: editgedcoms.php:117
@@ -1083,9 +1063,8 @@ msgstr ""
 #: editconfig_gedcom.php:2121
 #: editconfig_gedcom.php:2223
 #: edit_privacy.php:805
-#, fuzzy
 msgid "Save configuration"
-msgstr "Configuration Help"
+msgstr "Salvar Configuração"
 
 #: editconfig_gedcom.php:880
 #: editconfig_gedcom.php:1108
@@ -1118,6 +1097,11 @@ msgstr "Tamanho máximo para envio:"
 #: editconfig_gedcom.php:924
 msgid "Path and name of GEDCOM on server"
 msgstr "Localização e nome do GEDCOM no servidor"
+
+#: editconfig_gedcom.php:915
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, does not exist at the specified location."
+msgstr "O arquivo GEDCOM, [%s], não existe no local informado."
 
 #: editconfig_gedcom.php:960
 msgid "Character Set encoding"
@@ -1281,9 +1265,8 @@ msgstr ""
 
 #: editconfig_gedcom.php:1115
 #: editconfig_gedcom.php:1116
-#, fuzzy
 msgid "Multimedia"
-msgstr "Gerenciar Mídias"
+msgstr "Mídias"
 
 #: editconfig_gedcom.php:1122
 msgid "Enable multimedia features"
@@ -1443,9 +1426,8 @@ msgstr "Exibição e Formatação"
 
 #: editconfig_gedcom.php:1387
 #: editconfig_gedcom.php:1388
-#, fuzzy
 msgid "Names"
-msgstr "Lista de Nomes"
+msgstr "Nomes"
 
 #: editconfig_gedcom.php:1393
 msgid "Show married names on Individual list"
@@ -1544,14 +1526,12 @@ msgid "Notes"
 msgstr ""
 
 #: editconfig_gedcom.php:1511
-#, fuzzy
 msgid "Sources"
-msgstr "Exibir Fontes"
+msgstr "Fontes"
 
 #: editconfig_gedcom.php:1512
-#, fuzzy
 msgid "Media"
-msgstr "Localizar Mídia"
+msgstr "Mídia"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
@@ -1700,9 +1680,8 @@ msgstr ""
 
 #: editconfig_gedcom.php:1799
 #: editconfig_gedcom.php:1800
-#, fuzzy
 msgid "Edit Options"
-msgstr "Opções de Importação"
+msgstr "Opções de Edição"
 
 #: editconfig_gedcom.php:1805
 msgid "Enable online editing"
@@ -1815,9 +1794,8 @@ msgstr "Registro"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
-#, fuzzy
 msgid "User Options"
-msgstr "Opções de Importação"
+msgstr "Opções do Usuário"
 
 #: editconfig_gedcom.php:1978
 msgid "Allow user to change language"
@@ -1845,9 +1823,8 @@ msgstr ""
 
 #: editconfig_gedcom.php:2044
 #: editconfig_gedcom.php:2045
-#, fuzzy
 msgid "Contact Information"
-msgstr "Informações do PHP"
+msgstr "Informação para Contato"
 
 #: editconfig_gedcom.php:2055
 msgid "PhpGedView reply address"
@@ -1969,14 +1946,12 @@ msgid "Configuration help"
 msgstr "Configuration Help"
 
 #: editgedcoms.php:78
-#, fuzzy
 msgid "GEDCOM Administration"
-msgstr "_GEDCOM: Página de Administração"
+msgstr "Gerenciar GEDCOM"
 
 #: editgedcoms.php:96
-#, fuzzy
 msgid "Default GEDCOM"
-msgstr "Validar GEDCOM"
+msgstr "Default GEDCOM"
 
 #: editgedcoms.php:111
 msgid "Check if GEDCOM files are downloadable"
@@ -1989,6 +1964,11 @@ msgstr ""
 #: editgedcoms.php:181
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
 msgstr ""
+
+#: editgedcoms.php:184
+#, fuzzy, php-format
+msgid "%s cannot be downloaded."
+msgstr "Este bloco não pode ser configurado."
 
 #: editgedcoms.php:187
 msgid "File not found."
@@ -2012,9 +1992,8 @@ msgid "Are you sure you want to delete this GEDCOM"
 msgstr "Você tem certeza que deseja excluir este GEDCOM"
 
 #: editgedcoms.php:208
-#, fuzzy
 msgid "Download"
-msgstr "Download GEDCOM"
+msgstr "Descarregar"
 
 #: editgedcoms.php:213
 msgid "Check"
@@ -2041,6 +2020,11 @@ msgstr ""
 #: edit_interface.php:2654
 #: edit_interface.php:2723
 msgid "Save"
+msgstr ""
+
+#: editlang_edit_settings.php:225
+#, php-format
+msgid "Original name of language in %s"
 msgstr ""
 
 #: editlang_edit_settings.php:238
@@ -2212,14 +2196,12 @@ msgid "User name"
 msgstr "Usuário"
 
 #: edituser.php:186
-#, fuzzy
 msgid "First Name"
-msgstr "Alterar Nome"
+msgstr "Nome"
 
 #: edituser.php:192
-#, fuzzy
 msgid "Last Name"
-msgstr "Alterar Nome"
+msgstr "Sobrenome"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
@@ -2234,9 +2216,8 @@ msgid "Leave password blank if you want to keep the current password."
 msgstr "Deixe a senha em branco para manter a senha inalterada."
 
 #: edituser.php:223
-#, fuzzy
 msgid "Confirm Password"
-msgstr "Senha"
+msgstr "Confirme a Senha"
 
 #: edituser.php:229
 msgid "Change Language"
@@ -2263,9 +2244,8 @@ msgid "Visible to other users when online"
 msgstr "Visível para outros usuários quando on-line"
 
 #: edituser.php:290
-#, fuzzy
 msgid "Default Tab to show on Individual Information page"
-msgstr "A ficha que será exibida primeiro na página da pessoa"
+msgstr "Ficha a ser exibida na página de dados de pessoas"
 
 #: edit_changes.php:43
 #: edit_changes.php:61
@@ -2292,15 +2272,13 @@ msgid "View Change Diff"
 msgstr "Exibir Diferenças"
 
 #: edit_changes.php:117
-#, fuzzy
 msgid "View GEDCOM Record"
-msgstr "Não exibir erros do GEDCOM"
+msgstr "Exibir registro GEDCOM"
 
 #: edit_changes.php:118
 #: edit_interface.php:413
-#, fuzzy
 msgid "Edit raw GEDCOM record"
-msgstr "Exibir os registros do GEDCOM para os usuários"
+msgstr "Editar registro GEDCOM"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
@@ -2330,9 +2308,8 @@ msgstr "Enviar Mensagem"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
-#, fuzzy
 msgid "Accept all changes"
-msgstr "Últimas Atualizações"
+msgstr "Aceitar todas as alterações"
 
 #: edit_changes.php:163
 #: edit_changes.php:181
@@ -2353,14 +2330,12 @@ msgid "Add child"
 msgstr "Adicionar filho"
 
 #: edit_interface.php:355
-#, fuzzy
 msgid "Add a new mother"
-msgstr "Adicionar Nota"
+msgstr "Adicionar mãe"
 
 #: edit_interface.php:357
-#, fuzzy
 msgid "Add a new father"
-msgstr "Adicionar Nota"
+msgstr "Adicionar pai"
 
 #: edit_interface.php:362
 msgid "Add a child to create a one-parent family"
@@ -2397,9 +2372,8 @@ msgstr "Sealing"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
-#, fuzzy
 msgid "Set link"
-msgstr "Guardar links"
+msgstr "Preparar Link"
 
 #: edit_interface.php:751
 #: edit_interface.php:902
@@ -2421,9 +2395,8 @@ msgstr "Título"
 
 #: edit_interface.php:760
 #: edit_interface.php:838
-#, fuzzy
 msgid "Create a new source"
-msgstr "Criar um novo arquivo GEDCOM"
+msgstr "Nova Fonte"
 
 #: edit_interface.php:765
 msgid "ABBR"
@@ -2497,9 +2470,8 @@ msgstr "Nome"
 
 #: edit_interface.php:1233
 #: edit_interface.php:1284
-#, fuzzy
 msgid "Create Repository"
-msgstr "Excluir Reposição"
+msgstr "Nova Reposição"
 
 #: edit_interface.php:1253
 msgid "ADDR"
@@ -2522,18 +2494,16 @@ msgid "WWW"
 msgstr "Página Pessoal na Internet"
 
 #: edit_interface.php:1329
-#, fuzzy
 msgid "New Repository created"
-msgstr "Excluir Reposição"
+msgstr "Reposição criada"
 
 #: edit_interface.php:1330
 msgid "Paste the following Repository ID into your editing fields to reference this Repository "
 msgstr "Para referenciar esta Reposição, Cole a ID da Reposição nos campos de edição "
 
 #: edit_interface.php:2126
-#, fuzzy
 msgid "Record copied to clipboard"
-msgstr "Adicionar da Área de Transferência:"
+msgstr "Registro copiado para a Área de Transferência"
 
 #: edit_interface.php:2270
 msgid "Re-order children"
@@ -2566,9 +2536,8 @@ msgstr "Alterar Membros da Família"
 #: edit_interface.php:2432
 #: edit_interface.php:2445
 #: edit_interface.php:2458
-#, fuzzy
 msgid "Change"
-msgstr "Página"
+msgstr "Alterar"
 
 #: edit_interface.php:2686
 msgid "Reorder Families"
@@ -2612,53 +2581,54 @@ msgstr "Atualizando registro combinado"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
-#, fuzzy
 msgid "Adding"
-msgstr "Administrador"
+msgstr "Adicionando"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
 msgid "from"
 msgstr ""
 
-#: edit_merge.php:246
+#: edit_merge.php:242
+msgid "Record %s successfully updated."
+msgstr "Registro %s atualizado com sucesso."
+
+#: edit_merge.php:245
 msgid "favorites updated."
 msgstr ""
 
-#: edit_merge.php:248
+#: edit_merge.php:247
 msgid "Merge more records."
 msgstr "Consolidar mais registros."
 
-#: edit_merge.php:281
+#: edit_merge.php:280
 msgid "Merge Step 1 of 3"
 msgstr "Consolidação Passo 1 de 3"
 
-#: edit_merge.php:284
+#: edit_merge.php:283
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
 msgstr "Selecionar 2 registros GEDCOM para consolidação.  Registros devem ser do mesmo tipo."
 
-#: edit_merge.php:287
+#: edit_merge.php:286
 msgid "Merge To ID:"
 msgstr "Consolidar para ID:"
 
+#: edit_merge.php:301
+#: edit_merge.php:318
+msgid "Find Individual ID"
+msgstr "Procurar ID de Pessoa"
+
 #: edit_merge.php:302
 #: edit_merge.php:319
-#, fuzzy
-msgid "Find Individual ID"
-msgstr "Fatos Singulares da Pessoa"
+msgid "Find Family ID"
+msgstr "Procurar ID de Família"
 
 #: edit_merge.php:303
 #: edit_merge.php:320
-#, fuzzy
-msgid "Find Family ID"
-msgstr "Prefixo da ID da Família"
-
-#: edit_merge.php:304
-#: edit_merge.php:321
 msgid "Find Source ID"
 msgstr "Procurar ID de Fonte"
 
-#: edit_merge.php:307
+#: edit_merge.php:306
 msgid "Merge From ID:"
 msgstr "Consolidar de ID:"
 
@@ -2753,9 +2723,8 @@ msgstr ""
 #: edit_privacy.php:572
 #: edit_privacy.php:717
 #: edit_privacy.php:764
-#, fuzzy
 msgid "ID"
-msgstr "Indonésia"
+msgstr "ID"
 
 #: edit_privacy.php:449
 #: edit_privacy.php:481
@@ -2774,9 +2743,8 @@ msgstr ""
 #: edit_privacy.php:480
 #: edit_privacy.php:573
 #: edit_privacy.php:765
-#, fuzzy
 msgid "Full Name"
-msgstr "Excluir Nome"
+msgstr "Nome Completo"
 
 #: edit_privacy.php:509
 #: edit_privacy.php:511
@@ -2865,14 +2833,12 @@ msgid "Private"
 msgstr "Privado"
 
 #: expand_view.php:72
-#, fuzzy
 msgid "View Family"
-msgstr "Exibir arquivo"
+msgstr "Exibir a Família"
 
 #: family.php:60
-#, fuzzy
 msgid "This record has been marked for deletion upon admin approval."
-msgstr "Este registro foi atualizado. Clique aqui para exibir as alterações."
+msgstr "Este registro foi marcado para ser excluido após a aprovação do Administrador."
 
 #: family.php:100
 #: familybook.php:218
@@ -2884,9 +2850,8 @@ msgid "Grandparents"
 msgstr ""
 
 #: family.php:137
-#, fuzzy
 msgid "Show couple on timeline chart"
-msgstr "Exibir caixas vazias no gráfico"
+msgstr "Exibir casal no<br />gráfico Linha do Tempo"
 
 #: family.php:137
 msgid "P"
@@ -2901,9 +2866,8 @@ msgid "D"
 msgstr "D"
 
 #: family.php:139
-#, fuzzy
 msgid "Show family on timeline chart"
-msgstr "Exibir caixas vazias no gráfico"
+msgstr "Exibir a família no gráfico Cronológico"
 
 #: family.php:139
 msgid "T"
@@ -2934,15 +2898,13 @@ msgstr "Família de:&nbsp;"
 #: familybook.php:371
 #: familybook.php:383
 #: familybook.php:387
-#, fuzzy
 msgid "Family Book Chart"
-msgstr "Fatos/Eventos da Família"
+msgstr "Álbum de Família"
 
 #: familybook.php:458
 #: hourglass.php:115
-#, fuzzy
 msgid "Show spouses"
-msgstr "Exibir Fontes"
+msgstr "Exibir cônjuges"
 
 #: familybook.php:481
 msgid "Descent Steps"
@@ -2964,9 +2926,8 @@ msgid "Skip Surname lists"
 msgstr "Mostre Lista de Pessoas"
 
 #: famlist.php:187
-#, fuzzy
 msgid "Show Surname lists"
-msgstr "Exibir Fontes"
+msgstr "Exibir Lista de Sobrenomes"
 
 #: famlist.php:194
 msgid "Exclude married names"
@@ -2976,6 +2937,11 @@ msgstr ""
 #: help_text.php:5234
 msgid "Include married names"
 msgstr ""
+
+#: famlist.php:263
+#: famlist.php:274
+msgid "Families with surname %s"
+msgstr "Famílias com o sobrenome %s"
 
 #: famlist.php:268
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
@@ -3007,9 +2973,8 @@ msgid "Pedigree Map"
 msgstr ""
 
 #: fanchart.php:300
-#, fuzzy
 msgid "Relationship to me"
-msgstr "Verificar relacionamentos por casamento"
+msgstr "Relacionamento Comigo"
 
 #: fanchart.php:305
 #: fanchart.php:400
@@ -3029,6 +2994,10 @@ msgstr "Ampulheta"
 #: fanchart.php:307
 msgid "Interactive Tree"
 msgstr ""
+
+#: fanchart.php:428
+msgid "%s Generation Circle Diagram"
+msgstr "Exibir até %s gerações no gráfico"
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -3088,9 +3057,8 @@ msgid "Preview"
 msgstr "Prévia"
 
 #: faq.php:285
-#, fuzzy
 msgid "Position item"
-msgstr "Posição da FAQ"
+msgstr "Posição do item"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
@@ -3109,15 +3077,13 @@ msgstr "Localizar Mídia"
 
 #: find.php:104
 #: find.php:208
-#, fuzzy
 msgid "Find Place"
-msgstr "Localizar Mídia"
+msgstr "Procurar Local"
 
 #: find.php:108
 #: find.php:211
-#, fuzzy
 msgid "Repositories"
-msgstr "Excluir Reposição"
+msgstr "Reposição"
 
 #: find.php:112
 #: find.php:214
@@ -3141,18 +3107,16 @@ msgstr "Informe mais de caracter"
 
 #: find.php:239
 #: find.php:259
-#, fuzzy
 msgid "Name contains:"
-msgstr "Lista de Nomes"
+msgstr "Nome Contendo:"
 
 #: find.php:283
 msgid "Media contains:"
 msgstr "Mídia contém:"
 
 #: find.php:291
-#, fuzzy
 msgid "Show thumbnails"
-msgstr "Usar miniatura da imagem principal na página de indivíduos"
+msgstr "Exibir Miniaturas"
 
 #: find.php:296
 #: find.php:317
@@ -3175,9 +3139,8 @@ msgid "Shared Note contains:"
 msgstr ""
 
 #: find.php:374
-#, fuzzy
 msgid "Source contains:"
-msgstr "Fatos/Eventos de Fonte"
+msgstr "Fonte contém:"
 
 #: find.php:403
 msgid "Magnify"
@@ -3194,9 +3157,8 @@ msgid "No results found."
 msgstr "Nenhum resultado encontrado."
 
 #: find.php:487
-#, fuzzy
 msgid "Current directory"
-msgstr "Pasta de Mídias"
+msgstr "Pasta Atual"
 
 #: find.php:501
 msgid "External objects"
@@ -3215,9 +3177,8 @@ msgid "This media object is linked to the following:"
 msgstr "Esta Mídia esta ligada a:"
 
 #: find.php:584
-#, fuzzy
 msgid "View Person"
-msgstr "Remover Pessoa"
+msgstr "Exibir a Pessoa"
 
 #: find.php:590
 #, fuzzy
@@ -3245,9 +3206,8 @@ msgid "Shared Notes found"
 msgstr ""
 
 #: find.php:712
-#, fuzzy
 msgid "Total Sources"
-msgstr "Exibir Fontes"
+msgstr "Total de Fontes"
 
 #: gedcheck.php:37
 msgid "Gedcom checker"
@@ -4963,11 +4923,14 @@ msgid "_FA11"
 msgstr "Fato 11"
 
 #. I18N: This is the GEDCOM label for "Fact 12"
-#. I18N: This is the GEDCOM label for "Fact 13"
 #: help_text.php:1969
-#: help_text.php:1975
 msgid "_FA12"
 msgstr "Fato 12"
+
+#. I18N: This is the GEDCOM label for "Fact 13"
+#: help_text.php:1975
+msgid "_FA13"
+msgstr "Fato 13"
 
 #. I18N: This is the GEDCOM label for "Emigration of parents"
 #: help_text.php:1981
@@ -9366,10 +9329,6 @@ msgid "?"
 msgstr "?"
 
 #: index_edit.php:154
-#: index_edit.php:158
-#: index_edit.php:159
-#: index_edit.php:160
-#: index_edit.php:161
 msgid "&nbsp;"
 msgstr "&nbsp;"
 
@@ -9382,9 +9341,8 @@ msgid "The cache files have been removed."
 msgstr ""
 
 #: index_edit.php:285
-#, fuzzy
 msgid "Configure"
-msgstr "_GEDCOM: Configure"
+msgstr "Configurar"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
@@ -9436,6 +9394,11 @@ msgstr "Restaurar padrão de Blocos"
 msgid "Choose a letter to show individuals whose family name starts with that letter."
 msgstr ""
 
+#: indilist.php:263
+#: indilist.php:274
+msgid "Individuals with surname %s"
+msgstr "Pessoas com o sobrenome %s"
+
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
 msgstr "Escolha a letra inical do nome das pessoas a serem exibidas."
@@ -9449,9 +9412,8 @@ msgid "The information for this individual was linked from a remote site."
 msgstr "A informação desta pessoa está ligada a um site remoto."
 
 #: individual.php:319
-#, fuzzy
 msgid "Pedigree Chart"
-msgstr "Pessoa raiz da Árvore Genealógica"
+msgstr "Árvore Genealógica"
 
 #: individual.php:321
 msgid "Timeline Chart"
@@ -9662,9 +9624,8 @@ msgstr ""
 
 #: inverselink.php:50
 #: media.php:760
-#, fuzzy
 msgid "To Person"
-msgstr "Remover Pessoa"
+msgstr "Com a Pessoa"
 
 #: inverselink.php:53
 #: media.php:765
@@ -9673,9 +9634,8 @@ msgstr "Com a Família"
 
 #: inverselink.php:56
 #: media.php:770
-#, fuzzy
 msgid "To Source"
-msgstr "Exibir Fontes"
+msgstr "Com a Fonte"
 
 #: inverselink.php:59
 #, fuzzy
@@ -9688,24 +9648,20 @@ msgstr ""
 
 #: inverselink.php:67
 #: inverselink.php:116
-#, fuzzy
 msgid "Link Media"
-msgstr "Localizar Mídia"
+msgstr "Ligar Mídia"
 
 #: inverselink.php:117
-#, fuzzy
 msgid "Media ID"
-msgstr "Prefixo da ID da Mídia"
+msgstr "ID da Mídia"
 
 #: inverselink.php:143
-#, fuzzy
 msgid "Enter Individual ID"
-msgstr "Fatos Singulares da Pessoa"
+msgstr "Informe ID da Pessoa"
 
 #: inverselink.php:174
-#, fuzzy
 msgid "Source"
-msgstr "Exibir Fontes"
+msgstr "Fonte"
 
 #: inverselink.php:188
 #, fuzzy
@@ -9751,9 +9707,8 @@ msgid "Clear Chart"
 msgstr "Formato do Calendário"
 
 #: lifespan.php:329
-#, fuzzy
 msgid "Individual"
-msgstr "Fatos/Eventos da Pessoa"
+msgstr "Pessoa"
 
 #: login.php:120
 msgid "Unable to authenticate user."
@@ -9765,9 +9720,8 @@ msgid "Login"
 msgstr "Conectar"
 
 #: login.php:238
-#, fuzzy
 msgid "Account Information"
-msgstr "Informações do PHP"
+msgstr "Informação da Conta"
 
 #: login.php:239
 msgid "No account?"
@@ -9795,6 +9749,11 @@ msgstr "Solicitação de cadastramento de nova senha"
 msgid "Lost password request"
 msgstr "Solicitação de cadastramento de nova senha"
 
+#: login_register.php:126
+#: login_register.php:420
+msgid "Hello %s ..."
+msgstr "Oi %s ..."
+
 #: login_register.php:127
 msgid "A new password was requested for your user name."
 msgstr "Uma nova senha foi solicitada para o seu nome de usuário!"
@@ -9806,6 +9765,16 @@ msgstr "Recomendações:"
 #: login_register.php:132
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
 msgstr "Agora clique no link abaixo, conecte com sua nova senha e altere-a para manter segura a integridade de seus dados."
+
+#: login_register.php:139
+#, php-format
+msgid "Data request at %s"
+msgstr "Requisição de Dados de %s"
+
+#: login_register.php:143
+#, php-format
+msgid "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>%s</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security."
+msgstr "Olá ...<br /><br />Um e-mail foi enviado para seu endereço (%s) contendo a nova senha.<br /><br />Verifique no seu programa de e-mails o recebimento do mesmo.<br /><br />Recomendação:<br /><br />Após receber o e-mail, acesse o site utilizando a nova senha e altere-a para manter segura a integridade de seus dados."
 
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
@@ -9842,6 +9811,11 @@ msgstr "Confirmação de nova conta"
 msgid "Back"
 msgstr "Voltar"
 
+#: login_register.php:421
+#, php-format
+msgid "A request was received at %s to create a PhpGedView account with your email address %s."
+msgstr "Um pedido de cadastramento de conta feito em ( %s ) está utilizando seu endereço de E-mail ( %s )."
+
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
 msgstr "Os seguintes dados estão sendo usuados."
@@ -9863,10 +9837,20 @@ msgstr "Ignore esta mensagem caso você não tenha solicitado esse cadastramento
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
 msgstr "Você não receberá mais nenhum outro E-mail deste site. Contas não validadas em até 7 dias, são eliminadas automaticamente."
 
+#: login_register.php:437
+#, php-format
+msgid "Your registration at %s"
+msgstr "Seu registro em %s"
+
 #: login_register.php:444
 #: login_register.php:565
 msgid "Hello Administrator ..."
 msgstr "Olá Administrador ..."
+
+#: login_register.php:445
+#, php-format
+msgid "A prospective user registered himself with PhpGedView at %s."
+msgstr "Existe um registro de novo usuário em ( %s )."
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
@@ -9880,6 +9864,26 @@ msgstr "Tão logo o usuário faça a validação da conta você será informado 
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
 msgstr "Você será informado por email quando este usuário confirmar sua adesão ao site. Após a adesão, o usuário poderá se conectar sem necessitar de sua intervenção."
 
+#: login_register.php:462
+#, php-format
+msgid "New registration at %s"
+msgstr "Novo registro em %s"
+
+#: login_register.php:473
+#, php-format
+msgid "Hello %s ...<br />Thank you for your registration."
+msgstr "Olá %s ...<br />Obrigado por seu registro"
+
+#: login_register.php:475
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password."
+msgstr "Você receberá um e-mail de confirmação no endereço ( %s ). Siga as instruções do e-mail de confirmação para validar seu pedido de uma conta. Você terá até 7 dias para validar seu pedido, após este prazo seu pedido será eliminado. Sua validação será enviada para ser aprovada pelo Administrador do site. Após aprovada a conta, você precisará saber seu nome de usuário e senha para acessar o site."
+
+#: login_register.php:476
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password."
+msgstr "Um email será enviado para o endereço %s, com as instruções para desbloquear sua conta. A conta será removida se não for desbloqueada em 7 dias.<br /><br />Após o desbloqueio, informe seu Nome de Usuário/Senha e entre no site."
+
 #: login_register.php:506
 #: login_register.php:513
 #: login_register.php:541
@@ -9892,6 +9896,16 @@ msgstr "Validação de Usuário"
 msgid "Send"
 msgstr "Enviar"
 
+#: login_register.php:546
+#, php-format
+msgid "The data for the user <b>%s</b> was checked."
+msgstr "Os dados do Usuário <b>%s</b> foram validados."
+
+#: login_register.php:566
+#, php-format
+msgid "User %s (%s) has confirmed his request for an account."
+msgstr "%s ( %s ) verificou os dados de registro."
+
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
 msgstr "Por favor, clique no link abaixo para conectar ao seu site e verificar os dados do usuário para permitir-lhe acesso ao seu site."
@@ -9899,6 +9913,11 @@ msgstr "Por favor, clique no link abaixo para conectar ao seu site e verificar o
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
 msgstr "Conta ativada, o usuário já pode acessar o site."
+
+#: login_register.php:581
+#, php-format
+msgid "New user at %s"
+msgstr "Nova verificação em %s"
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
@@ -9959,9 +9978,8 @@ msgid "Ban Sites by IP"
 msgstr "Banir sites por IP"
 
 #: manageservers.php:325
-#, fuzzy
 msgid "Remote Servers"
-msgstr "Remover Pessoa"
+msgstr "Adicionar Servidores Remotos"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
@@ -9977,9 +9995,8 @@ msgid "Site URL/IP"
 msgstr "Site URL/IP"
 
 #: manageservers.php:430
-#, fuzzy
 msgid "Add new site"
-msgstr "Adicionar Nota"
+msgstr "Novo site"
 
 #: media.php:92
 msgid "Directory could not be created"
@@ -10037,9 +10054,8 @@ msgstr "Pastas de Mídia e Miniatura foram excluídas com sucesso."
 #: media.php:415
 #: media.php:417
 #: media.php:418
-#, fuzzy
 msgid "Media directory not removed."
-msgstr "Qtde de sub-níveis da pasta de Mídias"
+msgstr "Pasta de Mídia não foi excluída."
 
 #: media.php:420
 #: media.php:421
@@ -10108,9 +10124,8 @@ msgstr "Guardar links"
 
 #: media.php:829
 #: media.php:830
-#, fuzzy
 msgid "Add Media"
-msgstr "Localizar Mídia"
+msgstr "Adicionar Mídia"
 
 #: media.php:843
 #, fuzzy
@@ -10126,23 +10141,20 @@ msgid "Are you sure you want to delete this file?"
 msgstr "Confirma exclusão do arquivo?"
 
 #: media.php:1038
-#, fuzzy
 msgid "Delete file"
-msgstr "Excluir Nome"
+msgstr "Excluir Arquivo"
 
 #: media.php:1046
 msgid "Are you sure you want to remove this object from the database?"
 msgstr "Confirma a exclusão do objeto?"
 
 #: media.php:1046
-#, fuzzy
 msgid "Remove object"
-msgstr "Remover Pessoa"
+msgstr "Excluir Objeto"
 
 #: media.php:1081
-#, fuzzy
 msgid "Create thumbnail"
-msgstr "Usar miniatura da imagem principal na página de indivíduos"
+msgstr "Criar Miniatura"
 
 #: media.php:1170
 msgid "The media folder is corrupted."
@@ -10167,9 +10179,8 @@ msgstr "Os detalhes desta pessoa são privados."
 
 #: medialist.php:53
 #: medialist.php:57
-#, fuzzy
 msgid "MultiMedia Objects"
-msgstr "Pasta de Mídias"
+msgstr "Titulo da Mídia"
 
 #: medialist.php:131
 msgid "Media objects per page"
@@ -10205,9 +10216,8 @@ msgstr ""
 
 #: medialist.php:404
 #: medialist.php:408
-#, fuzzy
 msgid "Media Format"
-msgstr "Formato do Calendário"
+msgstr "Formato da Mídia"
 
 #: mediaviewer.php:104
 #, fuzzy
@@ -10233,6 +10243,10 @@ msgstr "Nenhum recipiente de usuário foi fornecido.  Impossível continuar."
 msgid "Please enter a valid email address."
 msgstr "Por favor informe um e-mail válido."
 
+#: message.php:138
+msgid "Message successfully sent to %s"
+msgstr "Mensagem Enviada"
+
 #: message.php:167
 msgid "Please enter a message subject."
 msgstr "Por favor informe o Assunto da mensagem."
@@ -10244,6 +10258,16 @@ msgstr "Por favor, informe algum texto antes de enviar."
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
 msgstr "<b>Importante:</b> Informações privadas de pessoas vivas somente serão fornecidas aos parentes e amigos próximos.  Será solicitado confirmação de seu parentesco antes de você receber qualquer dado privado.  Ocasionalmente informações de pessoas já falecidas podem ser privadas.  Se esse for o caso, é porquê não há informação suficiente a respeito da pessoa que permita determinar se a mesma está viva ou não e nós provavelmente não temos mais informações sobre essa pessoa.<br /><br />Antecipadamente, por favor, verifique se o que está pesquisando sobre a pessoa está correto, verificando datas, locais e parentesco.  Se você está enviando alterações sobre dados de genealogia, por favor informe as fontes de onde obteve os dados."
+
+#: message.php:192
+#, php-format
+msgid "This message will be sent to %s"
+msgstr "Esta mensagem será enviada para %s"
+
+#: message.php:193
+#, php-format
+msgid "This user prefers to receive messages in %s"
+msgstr "Este usuário prefere receber mensagens em %s"
 
 #: message.php:197
 msgid "Your Name:"
@@ -10262,9 +10286,8 @@ msgid "Subject:"
 msgstr "Assunto"
 
 #: message.php:211
-#, fuzzy
 msgid "Body:"
-msgstr "Corpo da FAQ"
+msgstr "Corpo"
 
 #: message.php:218
 msgid "Message Deleted"
@@ -10373,15 +10396,18 @@ msgstr ""
 
 #: note.php:131
 #: repo.php:103
-#, fuzzy
 msgid "Link to an existing Media item"
-msgstr "Adicionar Mídia"
+msgstr "Ligar a uma mídia existente"
 
 #: notelist.php:31
 #: notelist.php:32
 #: search.php:213
 msgid "Shared Notes"
 msgstr ""
+
+#: pedigree.php:52
+msgid "%s Generation Pedigree Chart"
+msgstr "%s Gerações"
 
 #: pedigree.php:90
 msgid "Orientation"
@@ -10405,9 +10431,8 @@ msgstr "Locais"
 #: placelist.php:55
 #: placelist.php:59
 #: placelist.php:433
-#, fuzzy
 msgid "Place List"
-msgstr "Lista de Nomes"
+msgstr "Lista de Locais"
 
 #: placelist.php:118
 msgid "Place connections found"
@@ -10435,9 +10460,8 @@ msgid "View all records found in this place"
 msgstr "Exibir os registros deste Local"
 
 #: placelist.php:468
-#, fuzzy
 msgid "Total Unique Places"
-msgstr "Limpeza de Locais"
+msgstr "Total Locais"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
@@ -10482,9 +10506,8 @@ msgid "Log Message"
 msgstr ""
 
 #: printlog.php:113
-#, fuzzy
 msgid "Search type"
-msgstr "Procurar texto de Ajuda"
+msgstr "Tipo de pesquisa"
 
 #: printlog.php:113
 msgid "Query"
@@ -10666,9 +10689,8 @@ msgstr "Pessoa 2"
 
 #: relationship.php:677
 #: relationship.php:698
-#, fuzzy
 msgid "Show path"
-msgstr "Pasta de destino"
+msgstr "Exibir caminho"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
@@ -10684,9 +10706,8 @@ msgid "Choose a report to run"
 msgstr "Escolha o Relatório a executar"
 
 #: reportengine.php:154
-#, fuzzy
 msgid "Select report"
-msgstr "Excluir Reposição"
+msgstr "Selecione Relatório"
 
 #: reportengine.php:170
 #: reportengine.php:219
@@ -10694,18 +10715,21 @@ msgid "Enter report values"
 msgstr "Informe os dados do Relatório"
 
 #: reportengine.php:220
-#, fuzzy
 msgid "Selected Report"
-msgstr "Excluir Reposição"
+msgstr "Relatório selecionado"
 
 #: reportengine.php:312
 msgid "Select a date"
 msgstr "Selecionar uma data"
 
 #: reportengine.php:344
-#, fuzzy
 msgid "Download report"
-msgstr "Download GEDCOM"
+msgstr "Salvar Relatório"
+
+#: rss.php:110
+#, php-format
+msgid "News and links from the %s site"
+msgstr "Notícias e links do site %s"
 
 #: rss.php:116
 #: rss.php:119
@@ -10795,14 +10819,12 @@ msgid "Whole words only"
 msgstr ""
 
 #: search.php:318
-#, fuzzy
 msgid "Given name"
-msgstr "Usuário"
+msgstr "Nome"
 
 #: search.php:329
-#, fuzzy
 msgid "Last name"
-msgstr "Usuário"
+msgstr "Sobrenome"
 
 #: search.php:345
 #, fuzzy
@@ -10818,9 +10840,8 @@ msgid "Individuals'<br />names to print:"
 msgstr "Nome das pessoas<br />a serem impressas:"
 
 #: search.php:374
-#, fuzzy
 msgid "Names with hit"
-msgstr "Lista de Nomes"
+msgstr "Nomes com hit"
 
 #: search.php:377
 msgid "All names"
@@ -10830,9 +10851,8 @@ msgstr "Todos os nomes"
 #: search.php:578
 #: search.php:590
 #: search.php:604
-#, fuzzy
 msgid "Multi Site Search"
-msgstr "Exibir Pesquisa Multi-Site"
+msgstr "Pesquisa Multi-Site"
 
 #: search.php:404
 msgid "Sites to search"
@@ -10855,9 +10875,8 @@ msgid "Advanced site search"
 msgstr "Pesquisa avançada de site"
 
 #: search.php:461
-#, fuzzy
 msgid "Name: "
-msgstr "Lista de Nomes"
+msgstr "Nome:"
 
 #: search.php:473
 msgid "Birth date: "
@@ -10876,14 +10895,12 @@ msgid "Death Place: "
 msgstr "Local onde Faleceu:"
 
 #: search.php:505
-#, fuzzy
 msgid "Gender: "
-msgstr "Alterar Sexo"
+msgstr "Sexo:"
 
 #: search.php:522
-#, fuzzy
 msgid "Databases to search in"
-msgstr "Database Username"
+msgstr "Pesquisar nos seguintes GEDCOMS"
 
 #: search.php:548
 msgid "Results per page"
@@ -10896,9 +10913,8 @@ msgstr "Outras Pesquisas"
 #: search.php:569
 #: search.php:585
 #: search.php:617
-#, fuzzy
 msgid "Soundex Search"
-msgstr "Exibir Pesquisa Multi-Site"
+msgstr "Pesquisa Fonética"
 
 #: search.php:570
 #: search.php:586
@@ -10924,23 +10940,20 @@ msgid "Search in"
 msgstr "Pesquisar em"
 
 #: searchhelp.php:104
-#, fuzzy
 msgid "User Help"
-msgstr "Usuário"
+msgstr "Ajuda do Usuário"
 
 #: searchhelp.php:107
 msgid "Modules Help"
 msgstr ""
 
 #: searchhelp.php:112
-#, fuzzy
 msgid "Administrator Help"
-msgstr "_GEDCOM: Página de Administração"
+msgstr "Ajuda do Administrador"
 
 #: searchhelp.php:126
-#, fuzzy
 msgid "Close window"
-msgstr "Fechamento automático da janela de edição."
+msgstr "Fechar a janela"
 
 #: searchhelp.php:197
 msgid "Results found:"
@@ -11013,9 +11026,8 @@ msgstr ""
 #: search_engine.php:60
 #: search_engine.php:69
 #: uploadgedcom.php:1106
-#, fuzzy
 msgid "Welcome page"
-msgstr "Texto de boas-vindas da página de identificação do modo Autenticador"
+msgstr "Página Inicial"
 
 #: statistics.php:57
 msgid "Total males"
@@ -11329,9 +11341,8 @@ msgstr "idade no 1ro casamento."
 
 #: statistics.php:566
 #: statisticsplot.php:785
-#, fuzzy
 msgid "Number of children"
-msgstr "Re-ordenar os Filhos"
+msgstr "qtde de filhos."
 
 #: statistics.php:570
 #, fuzzy
@@ -11451,9 +11462,8 @@ msgid "none"
 msgstr "nenhum"
 
 #: statistics.php:679
-#, fuzzy
 msgid "gender"
-msgstr "Cabeçalho"
+msgstr "masculino/feminino"
 
 #: statistics.php:683
 msgid "date periods"
@@ -11474,9 +11484,8 @@ msgstr "números de uma família"
 
 #: statistics.php:727
 #: statisticsplot.php:791
-#, fuzzy
 msgid "percentage"
-msgstr "Últimas Atualizações"
+msgstr "percentual"
 
 #: statistics.php:735
 msgid "show the plot"
@@ -11622,6 +11631,12 @@ msgstr ">>> Em Browsers mais novos você pode clicar e mover as caixas na linha 
 msgid "Continue"
 msgstr ""
 
+#: uploadgedcom.php:251
+#: uploadgedcom.php:590
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, is not writable. Please check attributes and access rights."
+msgstr "O arquivo GEDCOM, [%s], não tem permissão para escrita. Verifique atributos e direitos de acesso."
+
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
 msgstr "Um arquivo GEDCOM com este nome já foi importado para esse banco de dados."
@@ -11685,9 +11700,8 @@ msgid "Convert this ANSI encoded GEDCOM to UTF-8?"
 msgstr "Converter esse arquivo GEDCOM do formato ANSI (ISO-8859-1) para UTF-8?"
 
 #: uploadgedcom.php:737
-#, fuzzy
 msgid "Change Individual ID to:"
-msgstr "Fatos Singulares da Pessoa"
+msgstr "Alterar ID da Pessoa para"
 
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
@@ -11695,9 +11709,8 @@ msgid "Do not change"
 msgstr "Não alterar"
 
 #: uploadgedcom.php:795
-#, fuzzy
 msgid "Import complete"
-msgstr "Opções de Importação"
+msgstr "Importação terminada."
 
 #: uploadgedcom.php:795
 #: uploadgedcom.php:844
@@ -11715,9 +11728,8 @@ msgid "Import Progress..."
 msgstr "Importação em progresso, Aguarde ..."
 
 #: uploadgedcom.php:904
-#, fuzzy
 msgid "Reading GEDCOM file"
-msgstr "Rever Alterações"
+msgstr "Lendo arquivo GEDCOM"
 
 #: uploadgedcom.php:908
 msgid "The status bars below will let you know how the Import is progressing.  If the time limit runs out the Import will be stopped and you will be asked to press a <b>Continue</b> button.  If you don't see the <b>Continue</b> button, you must restart the Import with a smaller time limit value."
@@ -11729,14 +11741,12 @@ msgstr "Tempo máximo de processamento para a importação dos dados foi excedid
 
 #: uploadgedcom.php:1104
 #: uploadgedcom.php:1117
-#, fuzzy
 msgid "Execution time:"
-msgstr "Tempo máximo de uma sessão"
+msgstr "Tempo total de execução"
 
 #: uploadgedcom.php:1105
-#, fuzzy
 msgid "Click here to go to the Pedigree tree."
-msgstr "Clique aqui para continuar"
+msgstr "Clique aqui para ir para a Árvore Genealógica."
 
 #: uploadgedcom.php:1118
 msgid "Bytes read:"
@@ -11747,9 +11757,18 @@ msgid "Found record"
 msgstr "Registro encontrado"
 
 #: uploadgedcom.php:1138
-#, fuzzy
 msgid "Import Statistics"
-msgstr "Opções de Importação"
+msgstr "Estatística da Importação"
+
+#: useradmin.php:194
+#, php-format
+msgid "Approval of account at %s"
+msgstr ""
+
+#: useradmin.php:195
+#, php-format
+msgid "The administrator at the PhpGedView site %s has approved your application for an account.  You may now login by accessing the following link: %s#"
+msgstr ""
 
 #: useradmin.php:269
 #: useradmin.php:274
@@ -11760,9 +11779,8 @@ msgstr "Alterar Conta do Usuário"
 #: useradmin.php:345
 #: useradmin.php:639
 #: useradmin.php:799
-#, fuzzy
 msgid "User can administer"
-msgstr "Usuário"
+msgstr "Pode Administrar"
 
 #: useradmin.php:362
 #: useradmin.php:800
@@ -11771,9 +11789,8 @@ msgstr "Nível de Acesso"
 
 #: useradmin.php:390
 #: useradmin.php:823
-#, fuzzy
 msgid "Automatically accept changes made by this user"
-msgstr "Expandir automaticamente Fontes"
+msgstr "Aceitar, imediatamente, as alterações feitas por este usuário "
 
 #: useradmin.php:392
 #: useradmin.php:825
@@ -11799,9 +11816,8 @@ msgstr "Aprovado pelo Administrador"
 
 #: useradmin.php:457
 #: useradmin.php:883
-#, fuzzy
 msgid "Allow this user to edit his account information"
-msgstr "Sub-níveis da pasta de Mídias"
+msgstr "Permite este usuário alterar as informações de sua conta"
 
 #: useradmin.php:476
 #: useradmin.php:903
@@ -11815,17 +11831,15 @@ msgstr "Comentário do administrador"
 
 #: useradmin.php:560
 #: useradmin.php:1087
-#, fuzzy
 msgid "User List"
-msgstr "Lista de Nomes"
+msgstr "Usuários Cadastrados"
 
 #: useradmin.php:565
 #: useradmin.php:688
 #: useradmin.php:754
 #: useradmin.php:1088
-#, fuzzy
 msgid "Add a new user"
-msgstr "Adicionar Nota"
+msgstr "Adicionar um novo Usuário"
 
 #: useradmin.php:567
 #: useradmin.php:690
@@ -11833,9 +11847,8 @@ msgid "Back to User Administration"
 msgstr ""
 
 #: useradmin.php:576
-#, fuzzy
 msgid " Languages"
-msgstr "Idiomas Disponíveis"
+msgstr "Idiomas"
 
 #: useradmin.php:577
 #: useradmin.php:588
@@ -11848,9 +11861,8 @@ msgid "Date registered"
 msgstr "Data de Registro"
 
 #: useradmin.php:591
-#, fuzzy
 msgid "Last logged in"
-msgstr "Usuários Conectados"
+msgstr "Último acesso"
 
 #: useradmin.php:661
 msgid "Never"
@@ -11870,9 +11882,8 @@ msgid "Access"
 msgstr "Acessar"
 
 #: useradmin.php:817
-#, fuzzy
 msgid "Admin GEDCOM"
-msgstr "Incluir arquivo GEDCOM"
+msgstr "Gerenciar GEDCOM"
 
 #: useradmin.php:930
 #: useradmin.php:1091
@@ -12081,6 +12092,10 @@ msgstr "Opções de Importação"
 msgid "No Blocks seems to be present in the system."
 msgstr ""
 
+#: blocks/block_htmlplus.php:40
+msgid "Advanced HTML"
+msgstr "HTML Avançado"
+
 #: blocks/charts.php:40
 #, fuzzy
 msgid "Charts Block"
@@ -12092,14 +12107,12 @@ msgid "No such ID exists in this GEDCOM file."
 msgstr "Esta ID não existe neste GEDCOM."
 
 #: blocks/gedcom_block.php:36
-#, fuzzy
 msgid "GEDCOM Welcome"
-msgstr "_GEDCOM: Excluir"
+msgstr "Bem-Vindo - Site"
 
 #: blocks/gedcom_favorites.php:36
-#, fuzzy
 msgid "GEDCOM Favorites"
-msgstr "_GEDCOM: Importar"
+msgstr "Favoritos - Site"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
@@ -12110,9 +12123,8 @@ msgid "Are you sure you want to remove this item from your list of Favorites?"
 msgstr "Tem certeza que deseja remover este item de Meus Favoritos?"
 
 #: blocks/gedcom_favorites.php:155
-#, fuzzy
 msgid "Add a new favorite"
-msgstr "Adicionar Nota"
+msgstr "Adicionar Favorito"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
@@ -12127,9 +12139,8 @@ msgid "Enter an optional note about this favorite"
 msgstr "Observação deste favorito - opcional"
 
 #: blocks/gedcom_news.php:36
-#, fuzzy
 msgid "GEDCOM News"
-msgstr "Não exibir erros do GEDCOM"
+msgstr "Notícias"
 
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
@@ -12145,23 +12156,20 @@ msgid "Are you sure you want to delete this News entry?"
 msgstr "Conforma exclusão desta Notícia?"
 
 #: blocks/gedcom_news.php:165
-#, fuzzy
 msgid "Add a News article"
-msgstr "Adicionar Nota"
+msgstr "Adicionar Notícia"
 
 #: blocks/gedcom_news.php:196
-#, fuzzy
 msgid "No limit"
-msgstr "Limite de Memória Utilizada"
+msgstr "Sem Limite"
 
 #: blocks/gedcom_news.php:197
 msgid "Age of item"
 msgstr "Idade do Item"
 
 #: blocks/gedcom_news.php:198
-#, fuzzy
 msgid "Number of items"
-msgstr "Qtde de dias exibidos"
+msgstr "Qtde de Itens"
 
 #: blocks/gedcom_stats.php:40
 #: blocks/gedcom_stats.php:91
@@ -12169,60 +12177,73 @@ msgstr "Qtde de dias exibidos"
 msgid "GEDCOM Statistics"
 msgstr "Dados Estatísticos"
 
-#: blocks/gedcom_stats.php:145
-#: blocks/gedcom_stats.php:330
+#: blocks/gedcom_stats.php:107
+#, php-format
+msgid "This GEDCOM was created using <b>%s %s</b>"
+msgstr "Este arquivo GEDCOM foi criado usando <b>%s %s</b>."
+
+#: blocks/gedcom_stats.php:112
+#, php-format
+msgid "This GEDCOM was created on <b>%s</b>"
+msgstr "Este arquivo GEDCOM foi criado em <b>%s</b>."
+
+#: blocks/gedcom_stats.php:114
+#, php-format
+msgid " on <b>%s</b>"
+msgstr " em <b>%s</b>"
+
+#: blocks/gedcom_stats.php:143
+#: blocks/gedcom_stats.php:328
 msgid "Total users"
 msgstr "Total de Usuários"
 
-#: blocks/gedcom_stats.php:159
-#: blocks/gedcom_stats.php:277
+#: blocks/gedcom_stats.php:157
+#: blocks/gedcom_stats.php:275
 msgid "Earliest birth year"
 msgstr "Pessoa Mais Antiga"
 
-#: blocks/gedcom_stats.php:166
-#: blocks/gedcom_stats.php:285
+#: blocks/gedcom_stats.php:164
+#: blocks/gedcom_stats.php:283
 msgid "Latest birth year"
 msgstr "Pessoa Mais Nova"
 
-#: blocks/gedcom_stats.php:173
-#: blocks/gedcom_stats.php:293
+#: blocks/gedcom_stats.php:171
+#: blocks/gedcom_stats.php:291
 msgid "Earliest death year"
 msgstr "Primeiro Falecimento"
 
-#: blocks/gedcom_stats.php:180
-#: blocks/gedcom_stats.php:301
+#: blocks/gedcom_stats.php:178
+#: blocks/gedcom_stats.php:299
 msgid "Latest death year"
 msgstr "Último Falecimento"
 
-#: blocks/gedcom_stats.php:188
-#: blocks/gedcom_stats.php:309
+#: blocks/gedcom_stats.php:186
+#: blocks/gedcom_stats.php:307
 msgid "Person who lived the longest"
 msgstr "Pessoa Que Mais Viveu"
 
-#: blocks/gedcom_stats.php:204
-#: blocks/gedcom_stats.php:325
+#: blocks/gedcom_stats.php:202
+#: blocks/gedcom_stats.php:323
 msgid "Family with the most children"
 msgstr "Família Com Mais Filhos"
 
-#: blocks/gedcom_stats.php:219
+#: blocks/gedcom_stats.php:217
 msgid "View statistics as graphs"
 msgstr ""
 
-#: blocks/gedcom_stats.php:227
+#: blocks/gedcom_stats.php:225
 msgid "Most Common Surnames"
 msgstr "Sobrenomes Mais Comuns"
 
-#: blocks/gedcom_stats.php:259
-#, fuzzy
+#: blocks/gedcom_stats.php:257
 msgid "Show common surnames?"
-msgstr "Exibir Fontes"
+msgstr "Exibir Sobrenomes mais comuns?"
 
-#: blocks/gedcom_stats.php:268
-#, fuzzy
+#: blocks/gedcom_stats.php:266
 msgid "Select the stats to show in this block"
-msgstr "Outros fatos a exibir nos gráficos"
+msgstr "Escolha a estatística a ser mostrada neste bloco"
 
-#: blocks/gedcom_stats.php:339
+#: blocks/gedcom_stats.php:337
 msgid "Show link to Statistics charts?"
 msgstr ""
 
@@ -12257,7 +12278,6 @@ msgid "to change what is printed here.</p>"
 msgstr "para alterar o que está impresso aqui.</p>"
 
 #: blocks/logged_in.php:36
-#, fuzzy
 msgid "Logged In Users"
 msgstr "Usuários Conectados"
 
@@ -12293,9 +12313,8 @@ msgid "Logged in as "
 msgstr "Conectado como "
 
 #: blocks/random_media.php:38
-#, fuzzy
 msgid "Random Media"
-msgstr "Localizar Mídia"
+msgstr "Imagem Aleatória"
 
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
@@ -12319,9 +12338,8 @@ msgid "Stop"
 msgstr ""
 
 #: blocks/random_media.php:341
-#, fuzzy
 msgid "Persons"
-msgstr "Remover Pessoa"
+msgstr "Pessoas"
 
 #: blocks/random_media.php:415
 msgid "Other"
@@ -12336,9 +12354,8 @@ msgid "If you hide an empty block, you will not be able to change its configurat
 msgstr "Se um bloco não é exibido quando está vazio, então ele só poderá ser configurado se não estiver vazio."
 
 #: blocks/review_changes.php:39
-#, fuzzy
 msgid "Pending Changes"
-msgstr "Últimas Atualizações"
+msgstr "Alterações Pendentes"
 
 #: blocks/review_changes.php:83
 msgid "PhpGedView - Review changes"
@@ -12370,9 +12387,8 @@ msgid "RSS Feeds"
 msgstr "Alimentação da RSS"
 
 #: blocks/rss_block.php:69
-#, fuzzy
 msgid "Upcoming Events"
-msgstr "Limite de dias do bloco Próximos Eventos"
+msgstr "Próximos Eventos"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
@@ -12392,9 +12408,8 @@ msgstr "Este dia em nossa História"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
-#, fuzzy
 msgid "Show only events of living people?"
-msgstr "Exibir apenas pessoas, eventos ou tudo?"
+msgstr "Exibir somente eventos dos Vivos."
 
 #: blocks/todays_events.php:167
 #: blocks/upcoming_events.php:192
@@ -12429,9 +12444,8 @@ msgstr ""
 #: blocks/top10_givnnames.php:130
 #: blocks/top10_pageviews.php:131
 #: blocks/top10_surnames.php:143
-#, fuzzy
 msgid "Number of items to show"
-msgstr "Qtde de dias exibidos"
+msgstr "Qtde de itens exibidos"
 
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
@@ -12451,9 +12465,8 @@ msgid "Place counts before or after name?"
 msgstr "Contadores, antes ou depois do nome?"
 
 #: blocks/user_blog.php:36
-#, fuzzy
 msgid "User Journal"
-msgstr "Usuário"
+msgstr "Minhas Notícias"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
@@ -12468,23 +12481,20 @@ msgid "Are you sure you want to delete this Journal entry?"
 msgstr "Confirma a exclusão desta informação do Diário?"
 
 #: blocks/user_blog.php:94
-#, fuzzy
 msgid "Add a new Journal entry"
-msgstr "Adicionar Nota"
+msgstr "Adicionar informação ao Diário"
 
 #: blocks/user_favorites.php:38
-#, fuzzy
 msgid "User Favorites"
-msgstr "Usuário"
+msgstr "Meus Favoritos"
 
 #: blocks/user_favorites.php:60
 msgid "My Favorites"
 msgstr "Meus Favoritos"
 
 #: blocks/user_messages.php:38
-#, fuzzy
 msgid "User Messages"
-msgstr "Usuário"
+msgstr "Minhas Mensagens"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
@@ -12516,18 +12526,16 @@ msgid "Broadcast to all users"
 msgstr "Enviar para todos os usuários"
 
 #: blocks/user_welcome.php:36
-#, fuzzy
 msgid "User Welcome"
-msgstr "Usuário"
+msgstr "Bem-Vindo - Usuário"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
 msgstr "Minha Árvore"
 
 #: blocks/user_welcome.php:56
-#, fuzzy
 msgid "My Individual Record"
-msgstr "Fatos Singulares da Pessoa"
+msgstr "Meus Dados"
 
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
@@ -12540,9 +12548,8 @@ msgid "Anniversary"
 msgstr ""
 
 #: blocks/yahrzeit.php:218
-#, fuzzy
 msgid "Total Names"
-msgstr "Alterar Nome"
+msgstr "Total de Nomes"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
@@ -12557,9 +12564,8 @@ msgid "C"
 msgstr "C"
 
 #: includes/accesskeyHeaders.php:37
-#, fuzzy
 msgid "Viewing advice"
-msgstr "Exibir arquivo"
+msgstr "Vendo conselho"
 
 #: includes/accesskeyHeaders.php:37
 msgid "0"
@@ -12880,9 +12886,8 @@ msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
-#, fuzzy
 msgid "Charts"
-msgstr "Tipo de gráfico"
+msgstr "Gráficos"
 
 #: includes/classes/class_menubar.php:517
 #: includes/classes/class_menubar.php:523
@@ -12893,9 +12898,8 @@ msgstr "Listas"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
-#, fuzzy
 msgid "MultiMedia"
-msgstr "Gerenciar Mídias"
+msgstr "Mídias"
 
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
@@ -12934,40 +12938,44 @@ msgstr "Adicione aos Meus Favoritos"
 msgid "…"
 msgstr ""
 
-#: includes/classes/class_person.php:576
-#: includes/classes/class_person.php:633
+#. I18N: This is an abbreviation for a number.  i.e. #7 means number 7
+#: includes/classes/class_person.php:550
+#, php-format
+msgid "#%d"
+msgstr ""
+
+#: includes/classes/class_person.php:577
+#: includes/classes/class_person.php:634
 msgid "Unable to find family with ID"
 msgstr "Incapaz de localizar família com este ID"
 
-#: includes/classes/class_person.php:760
-#, fuzzy
+#: includes/classes/class_person.php:761
 msgid "Family with Parents"
-msgstr "Fatos/Eventos da Família"
+msgstr "Família com Pais"
 
-#: includes/classes/class_person.php:779
-#: includes/classes/class_person.php:786
+#: includes/classes/class_person.php:780
+#: includes/classes/class_person.php:787
 msgid "Father's Family with "
 msgstr "Família Paterna com "
 
-#: includes/classes/class_person.php:780
-#: includes/classes/class_person.php:785
+#: includes/classes/class_person.php:781
+#: includes/classes/class_person.php:786
 msgid "Mother's Family with "
 msgstr "Família Materna com "
 
-#: includes/classes/class_person.php:803
+#: includes/classes/class_person.php:804
 msgid "Family with"
 msgstr "Família com"
 
-#: includes/classes/class_person.php:1836
-#, fuzzy
+#: includes/classes/class_person.php:1837
 msgid "year"
-msgstr "Cabeçalho"
+msgstr "ano"
 
-#: includes/classes/class_person.php:1840
+#: includes/classes/class_person.php:1841
 msgid "month"
 msgstr "mês"
 
-#: includes/classes/class_person.php:1842
+#: includes/classes/class_person.php:1843
 msgid "months"
 msgstr "meses"
 
@@ -13005,9 +13013,8 @@ msgstr "Vivo"
 #: includes/classes/class_stats.php:777
 #: includes/classes/class_stats.php:784
 #: includes/classes/class_stats.php:786
-#, fuzzy
 msgid "Dead"
-msgstr "Cabeçalho"
+msgstr "Mortos"
 
 #: includes/classes/class_stats.php:1231
 msgid "Highest population"
@@ -13112,9 +13119,8 @@ msgid "Start at parents"
 msgstr "Iniciar nos Pais"
 
 #: includes/controllers/descendancy_ctrl.php:332
-#, fuzzy
 msgid "No children"
-msgstr "Re-ordenar os Filhos"
+msgstr "Sem Filhos"
 
 #: includes/controllers/family_ctrl.php:177
 #, fuzzy
@@ -13123,9 +13129,8 @@ msgstr "Informações do PHP"
 
 #: includes/controllers/family_ctrl.php:350
 #: includes/controllers/family_ctrl.php:361
-#, fuzzy
 msgid "Edit Family"
-msgstr "Alterar Nome"
+msgstr "Alterar a Família"
 
 #: includes/controllers/family_ctrl.php:379
 msgid "Add a child to this family"
@@ -13137,14 +13142,12 @@ msgstr "Adicionar filho a esta família"
 #: includes/controllers/note_ctrl.php:242
 #: includes/controllers/repository_ctrl.php:241
 #: includes/controllers/source_ctrl.php:249
-#, fuzzy
 msgid "Click here to hide changes."
-msgstr "Clique aqui para continuar"
+msgstr "Clique aqui para não exibir as alterações."
 
 #: includes/controllers/family_ctrl.php:451
-#, fuzzy
 msgid "Delete family"
-msgstr "Excluir Nome"
+msgstr "Excluir Família"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
@@ -13156,9 +13159,8 @@ msgstr "Excluir uma família significa que <b>somente<b> a ligação entre as pe
 #: includes/controllers/note_ctrl.php:323
 #: includes/controllers/repository_ctrl.php:322
 #: includes/controllers/source_ctrl.php:330
-#, fuzzy
 msgid "Add to Clippings Cart"
-msgstr "Carrinho de Recortes"
+msgstr "Adicionar ao Carrinho de Recortes"
 
 #: includes/controllers/individual_ctrl.php:493
 #, fuzzy
@@ -13166,9 +13168,8 @@ msgid "Name"
 msgstr "Alterar Nome"
 
 #: includes/controllers/individual_ctrl.php:819
-#, fuzzy
 msgid "Parent"
-msgstr "Página"
+msgstr "Pais"
 
 #: includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
@@ -13247,15 +13248,13 @@ msgstr "Página de Resultado"
 
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
-#, fuzzy
 msgid "Source Information"
-msgstr "Informações do PHP"
+msgstr "Informações da Fonte"
 
 #: includes/controllers/source_ctrl.php:199
 #: includes/controllers/source_ctrl.php:206
-#, fuzzy
 msgid "Edit Source"
-msgstr "Alterar Nome"
+msgstr "Editar a Fonte"
 
 #: includes/controllers/timeline_ctrl.php:275
 msgid "Husband's age"
@@ -13453,7 +13452,6 @@ msgid "No facts for this family."
 msgstr "Não a fatos para esta família."
 
 #: includes/functions/functions_charts.php:532
-#, fuzzy
 msgid "Add Note"
 msgstr "Adicionar Nota"
 
@@ -13463,7 +13461,6 @@ msgid "Add Shared Note"
 msgstr "Adicionar Nota"
 
 #: includes/functions/functions_charts.php:560
-#, fuzzy
 msgid "Add Source Citation"
 msgstr "Adicionar Citação à Fonte"
 
@@ -13502,6 +13499,16 @@ msgstr ""
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 
+#: includes/functions/functions_edit.php:78
+#, php-format
+msgid "The record with id %s was changed by another user since you last accessed it."
+msgstr ""
+
+#: includes/functions/functions_edit.php:79
+#, php-format
+msgid "This record was last changed by <i>%s</i> at %s"
+msgstr ""
+
 #: includes/functions/functions_edit.php:80
 #: includes/functions/functions_edit.php:2376
 #: includes/functions/functions_edit.php:2385
@@ -13527,12 +13534,10 @@ msgstr ""
 
 #: includes/functions/functions_edit.php:1779
 #: includes/functions/functions_edit.php:1784
-#, fuzzy
 msgid "Add a new Associate"
-msgstr "Adicionar Nota"
+msgstr "Nova Testemunha"
 
 #: includes/functions/functions_edit.php:1830
-#, fuzzy
 msgid "Add a new Multimedia object"
 msgstr "Adicionar Mídia"
 
@@ -13590,9 +13595,8 @@ msgstr ""
 
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
-#, fuzzy
 msgid "Invalid GEDCOM format"
-msgstr "Não exibir erros do GEDCOM"
+msgstr "Formato de arquivo GEDCOM 5.5 inválido"
 
 #: includes/functions/functions_mediadb.php:120
 #: includes/functions/functions_mediadb.php:139
@@ -13612,9 +13616,8 @@ msgstr "Enviado com sucesso"
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
-#, fuzzy
 msgid "Upload"
-msgstr "Pasta de destino"
+msgstr "Enviar/Upload"
 
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
@@ -13630,9 +13633,8 @@ msgstr "Use o botão de &laquo;Procurar&raquo; e selecione em seu computador o a
 
 #: includes/functions/functions_mediadb.php:1044
 #: includes/functions/functions_mediadb.php:1212
-#, fuzzy
 msgid "Automatic thumbnail"
-msgstr "Miniaturas geradas automaticamente"
+msgstr "Miniatura Automática"
 
 #: includes/functions/functions_mediadb.php:1047
 #: includes/functions/functions_mediadb.php:1215
@@ -13738,9 +13740,8 @@ msgstr "Para Ajuda sobre questões Genealógicas entre em contato com"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
-#, fuzzy
 msgid "Technical help contact"
-msgstr "Contato Genealógico"
+msgstr "Contato para ajuda técnica"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
@@ -13752,9 +13753,8 @@ msgstr "Para maiores informações entre em contato com"
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
-#, fuzzy
 msgid "Information about:"
-msgstr "Informações do PHP"
+msgstr "Informação sobre:"
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
@@ -13809,14 +13809,12 @@ msgid "Status"
 msgstr "Status"
 
 #: includes/functions/functions_print.php:2380
-#, fuzzy
 msgid "Add new fact"
-msgstr "Adicionar Nome"
+msgstr "Adicionar Fato"
 
 #: includes/functions/functions_print.php:2537
-#, fuzzy
 msgid "Find Repository"
-msgstr "Excluir Reposição"
+msgstr "Procurar por Reposição"
 
 #: includes/functions/functions_print_facts.php:166
 #: includes/functions/functions_print_facts.php:217
@@ -14013,6 +14011,11 @@ msgstr "Detalhes sobre esta Família são privados. Detalhes de Família não se
 
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
+msgstr ""
+
+#: includes/functions/functions_rss.php:149
+#, php-format
+msgid "This GEDCOM was created using %s %s"
 msgstr ""
 
 #. I18N: This is the country/chapman code for "Aruba"
@@ -15406,9 +15409,14 @@ msgstr ""
 
 #: modules/clippings/clippings.php:90
 #: modules/clippings/clippings.php:281
-#, fuzzy
 msgid "Download Now"
-msgstr "Download GEDCOM"
+msgstr "Fazer Download agora"
+
+#: modules/clippings/clippings.php:121
+#: modules/clippings/clippings.php:126
+#, fuzzy, php-format
+msgid "Add %s to cart"
+msgstr "Adicione aos Meus Favoritos"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
@@ -15429,7 +15437,6 @@ msgstr "Carrinho de Recortes"
 
 #. I18N: This is the title of a tab on the sidebar
 #: modules/descendancy/descendancy.php:239
-#: modules/descendancy/pgv_module.php:43
 msgid "Descendancy"
 msgstr ""
 
@@ -15920,6 +15927,7 @@ msgid "Infirmaties - Whether blind, Whether Deaf and Dumb"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:51
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:49
 msgid "Keep"
 msgstr ""
 
@@ -15928,20 +15936,27 @@ msgid "Unlink"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:53
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:77
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:51
 msgid "Navigator"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:85
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:82
 #, fuzzy
 msgid "Keep Link in list"
 msgstr "Guardar links"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:86
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:83
 msgid "Remove Link from list"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:90
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:94
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:60
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:87
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:91
 msgid "Open Family Navigator"
 msgstr ""
 
@@ -16093,6 +16108,10 @@ msgstr ""
 msgid "Months Unemployed - xx = Months unemployed during Census Year"
 msgstr ""
 
+#: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:132
+msgid "Home Ownership - x-x-x-xxxx = O/R-F/M-F/H-#### = Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number"
+msgstr ""
+
 #: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:134
 msgid "Situation - 3 parameters - Diseases, Infimaties, Convict/Pauper etc"
 msgstr ""
@@ -16146,9 +16165,8 @@ msgstr ""
 #: modules/googlemap/admin-config.php:49
 #: modules/googlemap/editconfig.php:90
 #: modules/googlemap/editconfig.php:92
-#, fuzzy
 msgid "GoogleMap Configuration"
-msgstr "_GEDCOM: arquivo de Configuração"
+msgstr "Configura&ccedil;&atilde;o Googlemap"
 
 #: modules/googlemap/admin-config.php:52
 #: modules/googlemap/gg_map_content.php:38
@@ -16157,6 +16175,9 @@ msgstr "_GEDCOM: arquivo de Configuração"
 #: modules/googlemap/googlemap.php:146
 #: modules/googlemap/googlemap.php:656
 #: modules/googlemap/googlemap.php:864
+#: modules/googlemap/pedigree_map.php:85
+#: modules/googlemap/pedigree_map.php:307
+#: modules/googlemap/placehierarchy.php:186
 msgid "Manage GoogleMap configuration"
 msgstr "Configurar m&oacute;dulo Googlemap "
 
@@ -16164,12 +16185,22 @@ msgstr "Configurar m&oacute;dulo Googlemap "
 #: modules/googlemap/editconfig.php:452
 #: modules/googlemap/gg_map_content.php:89
 #: modules/googlemap/googlemap.php:149
+#: modules/googlemap/pedigree_map.php:310
+#: modules/googlemap/placehierarchy.php:189
+#: modules/googlemap/places.php:159
+#: modules/googlemap/places.php:193
+#: modules/googlemap/places.php:566
+#: modules/googlemap/places_edit.php:42
 msgid "Edit geographic place locations"
 msgstr "Editar coordenadas de localização"
 
 #: modules/googlemap/admin-config.php:58
 #: modules/googlemap/gg_map_content.php:92
 #: modules/googlemap/googlemap.php:152
+#: modules/googlemap/pedigree_map.php:313
+#: modules/googlemap/placecheck.php:50
+#: modules/googlemap/placecheck.php:54
+#: modules/googlemap/placehierarchy.php:192
 msgid "Place Check"
 msgstr ""
 
@@ -16215,6 +16246,8 @@ msgid "Postfix, prefix, normal, both"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:96
+#: modules/googlemap/places.php:161
+#: modules/googlemap/places_edit.php:46
 msgid "Page only for Administrators"
 msgstr "Somente para Administradores"
 
@@ -16233,21 +16266,33 @@ msgstr "Mapa padr&atilde;o"
 #: modules/googlemap/editconfig.php:231
 #: modules/googlemap/gg_map_content.php:31
 #: modules/googlemap/googlemap.php:608
+#: modules/googlemap/pedigree_map.php:551
+#: modules/googlemap/placehierarchy.php:506
+#: modules/googlemap/places_edit.php:405
 msgid "Map"
 msgstr "Mapa"
 
 #: modules/googlemap/editconfig.php:232
 #: modules/googlemap/googlemap.php:609
+#: modules/googlemap/pedigree_map.php:552
+#: modules/googlemap/placehierarchy.php:507
+#: modules/googlemap/places_edit.php:406
 msgid "Satellite"
 msgstr "Imagem"
 
 #: modules/googlemap/editconfig.php:233
 #: modules/googlemap/googlemap.php:610
+#: modules/googlemap/pedigree_map.php:553
+#: modules/googlemap/placehierarchy.php:508
+#: modules/googlemap/places_edit.php:407
 msgid "Hybrid"
 msgstr "H&iacute;brido"
 
 #: modules/googlemap/editconfig.php:234
 #: modules/googlemap/googlemap.php:611
+#: modules/googlemap/pedigree_map.php:554
+#: modules/googlemap/placehierarchy.php:509
+#: modules/googlemap/places_edit.php:408
 msgid "Terrain"
 msgstr ""
 
@@ -16277,6 +16322,8 @@ msgid "Standard"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:274
+#: modules/googlemap/places_edit.php:809
+#: modules/googlemap/places_edit.php:817
 msgid "Flag"
 msgstr "Bandeira"
 
@@ -16313,6 +16360,7 @@ msgid "Max."
 msgstr "Max."
 
 #: modules/googlemap/editconfig.php:352
+#: modules/googlemap/places_edit.php:748
 msgid "Precision"
 msgstr "Precis&atilde;o"
 
@@ -16326,22 +16374,29 @@ msgid "digits"
 msgstr "d&iacute;gitos"
 
 #: modules/googlemap/editconfig.php:366
+#: modules/googlemap/places.php:179
+#: modules/googlemap/places_edit.php:772
 msgid "State"
 msgstr "Estado"
 
 #: modules/googlemap/editconfig.php:375
+#: modules/googlemap/places.php:181
+#: modules/googlemap/places_edit.php:774
 msgid "City"
 msgstr "Cidade"
 
 #: modules/googlemap/editconfig.php:383
+#: modules/googlemap/places_edit.php:776
 msgid "Neighborhood"
 msgstr "Vizinhan&ccedil;as"
 
 #: modules/googlemap/editconfig.php:391
+#: modules/googlemap/places_edit.php:778
 msgid "House"
 msgstr "Casa"
 
 #: modules/googlemap/editconfig.php:399
+#: modules/googlemap/places_edit.php:780
 msgid "Max"
 msgstr "Max"
 
@@ -16368,11 +16423,15 @@ msgstr ""
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:655
+#: modules/googlemap/places_edit.php:814
+#: modules/googlemap/places_edit.php:818
 msgid "Change flag"
 msgstr "Alterar bandeira"
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:819
 msgid "Remove flag"
 msgstr "Remover bandeira"
 
@@ -16383,6 +16442,7 @@ msgstr ""
 #: modules/googlemap/gg_map_content.php:35
 #: modules/googlemap/googlemap.php:97
 #: modules/googlemap/googlemap.php:651
+#: modules/googlemap/pedigree_map.php:82
 msgid "GoogleMap module disabled"
 msgstr "M&oacute;dulo Googlemap desabilitado"
 
@@ -16401,6 +16461,8 @@ msgid "Deactivate"
 msgstr ""
 
 #: modules/googlemap/googlemap.php:607
+#: modules/googlemap/pedigree_map.php:550
+#: modules/googlemap/placehierarchy.php:505
 msgid "Redraw map"
 msgstr "Refazer mapa"
 
@@ -16409,10 +16471,19 @@ msgid "No map data for this person"
 msgstr "N&atilde;o existem dados para o mapa desta pessoa"
 
 #: modules/googlemap/googlemap.php:940
+#: modules/googlemap/placehierarchy.php:302
+#: modules/googlemap/placehierarchy.php:614
+#: modules/googlemap/placehierarchy.php:671
 msgid "This place has no coordinates"
 msgstr ""
 
 #: modules/googlemap/googlemap.php:942
+#: modules/googlemap/placehierarchy.php:304
+#: modules/googlemap/placehierarchy.php:616
+#: modules/googlemap/placehierarchy.php:617
+#: modules/googlemap/placehierarchy.php:673
+#: modules/googlemap/placehierarchy.php:674
+#: modules/googlemap/places.php:604
 msgid "Edit geographic location"
 msgstr "Editar local"
 
@@ -16690,6 +16761,10 @@ msgstr "W"
 #: modules/lightbox/admin-config.php:40
 #: modules/lightbox/lb_editconfig.php:42
 #: modules/lightbox/lb_editconfig.php:46
+#: modules/lightbox/functions/lb_head.php:116
+#: modules/lightbox/functions/lb_head.php:117
+#: modules/lightbox/functions/lb_head.php:125
+#: modules/lightbox/functions/lb_head.php:133
 msgid "Lightbox-Album Configuration"
 msgstr ""
 
@@ -16944,19 +17019,16 @@ msgid "Show all notes"
 msgstr "Exibir Fontes"
 
 #: modules/notes/notes.php:80
-#, fuzzy
 msgid "There are no Notes for this individual."
-msgstr "Excluir esta Pessoa"
+msgstr "Não há nenhuma Nota para essa pessoa."
 
 #: modules/personal_facts/personal_facts.php:62
-#, fuzzy
 msgid "There are no Facts for this individual."
-msgstr "Excluir esta Pessoa"
+msgstr "Não há nenhum Fato para essa pessoa."
 
 #: modules/personal_facts/personal_facts.php:72
-#, fuzzy
 msgid "Events of close relatives"
-msgstr "Na página da pessoa, exibir eventos dos parentes próximos"
+msgstr "Eventos de parentes próximos"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
@@ -16971,9 +17043,8 @@ msgid "Relatives"
 msgstr ""
 
 #: modules/relatives/relatives.php:114
-#, fuzzy
 msgid "Add husband"
-msgstr "Adicionar filho"
+msgstr "Adicionar marido"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
@@ -16992,18 +17063,16 @@ msgid "Link this person to an existing family as a child"
 msgstr "Ligar esta pessoa como Filho de uma Família da árvore"
 
 #: modules/relatives/relatives.php:415
-#, fuzzy
 msgid "Add a new wife"
-msgstr "Adicionar Nota"
+msgstr "Adicionar esposa"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
 msgstr "Ligar esta pessoa como Marido de uma Família da árvore"
 
 #: modules/relatives/relatives.php:435
-#, fuzzy
 msgid "Add a new husband"
-msgstr "Adicionar Nota"
+msgstr "Adicionar marido"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
@@ -17132,9 +17201,6 @@ msgid "There are no Source citations for this individual."
 msgstr "Não há nenhuma Fonte para essa pessoa."
 
 #: themes/cloudy/footer.php:174
-#: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
 msgstr "Foram feitas alterações neste arquivo GEDCOM."
 
-#~ msgid "_FA13"
-#~ msgstr "Fato 13"
