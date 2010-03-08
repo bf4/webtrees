@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-07 22:43-0000\n"
+"POT-Creation-Date: 2010-03-08 18:52-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -49,10 +49,9 @@ msgstr "אין לך גישה ל-"
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
-#: addremotelink.php:274
-#, fuzzy
+#: addremotelink.php:282
 msgid "Close Window"
-msgstr "סגור אוטומטית חלון עריכה"
+msgstr "סגור חלון"
 
 #: addmedia.php:192
 msgid "Media file already exists."
@@ -62,7 +61,7 @@ msgstr "קובץ המדיה כבר קיים."
 #: addmedia.php:211
 #: addmedia.php:224
 #: client.php:414
-#: client.php:424
+#: client.php:423
 msgid "There was an error uploading your file."
 msgstr "התגלתה שגיאה בהעלאת הקובץ שלך."
 
@@ -115,142 +114,137 @@ msgstr "בחרת אתר מרוחק."
 
 #: addremotelink.php:75
 #: addremotelink.php:85
-#: addremotelink.php:183
+#: addremotelink.php:191
 msgid "Site"
 msgstr "אתר"
 
 #: addremotelink.php:80
-#, fuzzy
 msgid "Database ID"
-msgstr "מארח מסד נתונים"
+msgstr "קוד של מסד הנתונים"
 
 #: addremotelink.php:121
 #: addsearchlink.php:74
 msgid "Relationship to current person"
 msgstr "קשר לאדם הנוכחי"
 
-#: addremotelink.php:140
-#, fuzzy
-msgid "Site Location"
-msgstr "חיבור מאובטח"
+#: addremotelink.php:127
+#: addsearchlink.php:77
+msgid "Same as current"
+msgstr "כמו הנוכחי"
 
-#: addremotelink.php:150
+#: addremotelink.php:128
+#: addsearchlink.php:78
+msgid "Mother"
+msgstr "אמא"
+
+#: addremotelink.php:129
+#: addsearchlink.php:79
+msgid "Father"
+msgstr "אבא"
+
+#: addremotelink.php:130
+#: addsearchlink.php:80
+msgid "Husband"
+msgstr "בעל"
+
+#: addremotelink.php:131
+#: addsearchlink.php:81
+msgid "Wife"
+msgstr "אישה"
+
+#: addremotelink.php:132
+#: addsearchlink.php:82
+msgid "Son"
+msgstr "בן"
+
+#: addremotelink.php:133
+#: addsearchlink.php:83
+msgid "Daughter"
+msgstr "בת"
+
+#: addremotelink.php:148
+msgid "Site Location"
+msgstr "מיקום האתר"
+
+#: addremotelink.php:158
 msgid "Local site"
 msgstr "אתר מקומי"
 
-#: addremotelink.php:158
-#: addremotelink.php:188
+#: addremotelink.php:166
+#: addremotelink.php:196
 msgid "Existing remote site"
 msgstr "אתר מרוחק קיים"
 
-#: addremotelink.php:163
+#: addremotelink.php:171
 msgid "New remote site"
 msgstr "אתר מרוחק חדש"
 
-#: addremotelink.php:173
+#: addremotelink.php:181
 msgid "Person ID"
 msgstr "קוד זיהוי אישי"
 
-#: addremotelink.php:202
+#: addremotelink.php:210
 msgid "Type in a new site."
 msgstr "הקלד אתר חדש."
 
-#: addremotelink.php:205
-#: addremotelink.php:227
+#: addremotelink.php:213
+#: addremotelink.php:235
 msgid "Title:"
 msgstr "כותרת/תאור"
 
-#: addremotelink.php:208
-#, fuzzy
+#: addremotelink.php:216
 msgid "Site URL:"
-msgstr "URL של האתר הראשי"
+msgstr "URL של האתר:"
 
-#: addremotelink.php:211
+#: addremotelink.php:219
 msgid "Example:"
 msgstr "דוגמא:"
 
-#: addremotelink.php:214
-#, fuzzy
+#: addremotelink.php:222
 msgid "Database ID:"
-msgstr "מארח מסד נתונים"
+msgstr "זיהוי מאגר נתונים:"
 
-#: addremotelink.php:217
-#, fuzzy
+#: addremotelink.php:225
 msgid "Username: "
-msgstr "קוד משתמש"
+msgstr "קוד משתמש: "
 
-#: addremotelink.php:220
-#, fuzzy
+#: addremotelink.php:228
 msgid "Password: "
-msgstr "סיסמא"
+msgstr "סיסמא: "
 
-#: addremotelink.php:230
-#, fuzzy
+#: addremotelink.php:238
 msgid "GEDCOM File:"
-msgstr "כותרת GEDCOM"
+msgstr "קובץ GEDCOM:"
 
-#: addremotelink.php:250
-#, fuzzy
+#: addremotelink.php:258
 msgid "Admin Option"
-msgstr "_ניהול"
+msgstr " אופציית מנהלן"
 
-#: addremotelink.php:256
+#: addremotelink.php:264
 msgid "Do not update the CHAN (Last Change) record"
 msgstr "אין לעדכן רשומת שינוי אחרון CHAN"
 
-#: addremotelink.php:264
+#: addremotelink.php:272
 #: addsearchlink.php:70
-#, fuzzy
 msgid "Add Link"
-msgstr "הוסף אישה"
+msgstr "הוסף קשר"
 
 #: addsearchlink.php:31
 msgid "Add Local Link"
 msgstr "הוסף קישור מקומי"
 
-#: addsearchlink.php:77
-msgid "Same as current"
-msgstr "כמו הנוכחי"
-
-#: addsearchlink.php:78
-msgid "Mother"
-msgstr "אמא"
-
-#: addsearchlink.php:79
-msgid "Father"
-msgstr "אבא"
-
-#: addsearchlink.php:80
-msgid "Husband"
-msgstr "בעל"
-
-#: addsearchlink.php:81
-msgid "Wife"
-msgstr "אישה"
-
-#: addsearchlink.php:82
-msgid "Son"
-msgstr "בן"
-
-#: addsearchlink.php:83
-msgid "Daughter"
-msgstr "בת"
-
 #: admin.php:51
 #: admin.php:137
-#, fuzzy
 msgid "Administration"
-msgstr "_ניהול"
+msgstr "ניהול"
 
 #: admin.php:55
-#, fuzzy
 msgid "Accept / Reject Changes"
-msgstr "השינויים האחרונים"
+msgstr "קבל/דחה את השינויים"
 
 #: admin.php:75
-#, fuzzy
 msgid "View log files"
-msgstr "גנוז קבצי יומן"
+msgstr "התבונן בקבצי היומן"
 
 #: admin.php:105
 msgid "Edit Image Manipulation Configuration"
@@ -278,15 +272,13 @@ msgstr "לאחד או יותר משתמשים יש התראות"
 
 #: admin.php:166
 #: admin.php:186
-#, fuzzy
 msgid "Informational"
-msgstr "נתוני PHP"
+msgstr "אינפורמטיבי"
 
 #: admin.php:167
 #: admin.php:201
-#, fuzzy
 msgid "Data and GEDCOM administration"
-msgstr "_GEDCOM: דף ניהול"
+msgstr "ניהול מידע ו-GEDCOM-ים"
 
 #: admin.php:169
 #: admin.php:228
@@ -295,14 +287,12 @@ msgstr "רשומות לא קשורות"
 
 #: admin.php:172
 #: admin.php:256
-#, fuzzy
 msgid "Site administration"
-msgstr "_ניהול משתמשים"
+msgstr "ניהול האתר"
 
 #: admin.php:179
-#, fuzzy
 msgid "Module Administration"
-msgstr "_ניהול משתמשים"
+msgstr "ניהול מודולים"
 
 #: admin.php:191
 msgid "View readme.txt file"
@@ -313,9 +303,8 @@ msgid "README documentation"
 msgstr "תיעוד (Readme)"
 
 #: admin.php:194
-#, fuzzy
 msgid "Show PHP information page"
-msgstr "נתוני PHP"
+msgstr "הראה דף מידע על PHP"
 
 #: admin.php:194
 msgid "PHP information"
@@ -330,62 +319,52 @@ msgid "Merge records"
 msgstr "מזג רשומות"
 
 #: admin.php:210
-#, fuzzy
 msgid "Cleanup Index directory"
-msgstr "תיקיית קובץ אינדקסים"
+msgstr "תיקיית אינדקס לניקוי"
 
 #: admin.php:216
 msgid "Batch Update"
 msgstr "עדכון אצוה (Batch)"
 
 #: admin.php:232
-#, fuzzy
 msgid "Add an unlinked person"
-msgstr "הוסף בעל ע\"י שימוש באדם קיים"
+msgstr "הוסף אדם לא קשור"
 
 #: admin.php:235
-#, fuzzy
 msgid "Add an unlinked source"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף מקור לא קשור"
 
 #: admin.php:240
-#, fuzzy
 msgid "Add an unlinked note"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף הערה לא קשורה"
 
 #: admin.php:260
-#, fuzzy
 msgid "Configuration"
-msgstr "עזרת תצורה"
+msgstr "תצורה"
 
 #: admin.php:262
-#, fuzzy
 msgid "User Information Migration tool"
-msgstr "_הסבת נתוני משתמשים (SQL &lt;&lt;-- אינדקס)"
+msgstr "כלי להגירת נתוני משתמשים"
 
 #: admin.php:266
-#, fuzzy
 msgid "User administration"
-msgstr "_ניהול משתמשים"
+msgstr "ניהול משתמשים"
 
 #: admin.php:268
 msgid "Backup"
 msgstr "גיבוי"
 
 #: admin.php:272
-#, fuzzy
 msgid "FAQ List"
-msgstr "_רשימת FAQ: ערוך"
+msgstr "רשימת שאלות נפוצות (FAQ)"
 
 #: admin.php:274
-#, fuzzy
 msgid "Manage Sites"
-msgstr "קבצי שפות"
+msgstr "נהל אתרים"
 
 #: admin.php:278
-#, fuzzy
 msgid "Configure supported languages"
-msgstr "_עצב את השפות הנתמכות"
+msgstr "הגדר את השפות הנתמכות"
 
 #: admin.php:282
 msgid "You have not configured the languages your site will support.<br />PhpGedView will use its default actions."
@@ -412,11 +391,14 @@ msgstr "תוכן קובץ יומן"
 msgid "Ancestry Chart"
 msgstr "תרשים שושלת"
 
+#: ancestry.php:49
+msgid "%s Generation Ancestry Chart"
+msgstr "תרשים שושלת של %s דורות"
+
 #: ancestry.php:72
 #: compact.php:82
-#, fuzzy
 msgid "Root Person ID"
-msgstr "הסר אדם"
+msgstr "קוד הזיהוי של אדם המוצא"
 
 #: ancestry.php:82
 msgid "Box width"
@@ -427,30 +409,26 @@ msgid "Layout"
 msgstr "מבנה"
 
 #: ancestry.php:99
-#, fuzzy
 msgid "List"
-msgstr "רשימת שמות"
+msgstr "רשימה"
 
 #: ancestry.php:105
 msgid "Booklet"
 msgstr "ספרון"
 
 #: ancestry.php:123
-#, fuzzy
 msgid "Show cousins"
-msgstr "הראה מוני פגיעה"
+msgstr "הראה בני דוד"
 
 #: ancestry.php:130
 #: calendar.php:404
-#, fuzzy
 msgid "Individuals"
-msgstr "עובדות אישיות שניתן להוסיף"
+msgstr "אנשים"
 
 #: ancestry.php:136
 #: calendar.php:405
-#, fuzzy
 msgid "Families"
-msgstr "סדר מחדש את המשפחות"
+msgstr "משפחות"
 
 #: ancestry.php:142
 #: branches.php:74
@@ -460,14 +438,12 @@ msgstr "הצג"
 
 #: ancestry.php:149
 #: branches.php:241
-#, fuzzy
 msgid "Generations"
-msgstr "מספר דורות באילן יוחסין"
+msgstr "דורות"
 
 #: ancestry.php:170
-#, fuzzy
 msgid "Show Details"
-msgstr "הראה מטלות עתידיות"
+msgstr "הצג פרטים"
 
 #: ancestry.php:192
 msgid "Click on any of the boxes to get more information about that person."
@@ -566,9 +542,8 @@ msgid "Recent Years (&lt; 100 yrs)"
 msgstr "אירועים ב-100 השנים האחרונות"
 
 #: calendar.php:201
-#, fuzzy
 msgid "Gender"
-msgstr "ערוך מגדר"
+msgstr "מגדר"
 
 #: calendar.php:212
 #: calendar.php:215
@@ -583,20 +558,17 @@ msgid "Females"
 msgstr "נקבות"
 
 #: calendar.php:226
-#, fuzzy
 msgid "Show events of:"
-msgstr "הראה את הישן למעלה"
+msgstr "הראה:"
 
 #: calendar.php:232
 #: calendar.php:530
-#, fuzzy
 msgid "Births, Deaths, Marriages"
-msgstr "הראה רק לידות, פטירות וחתונות?"
+msgstr "לידות, פטירות, נישואין"
 
 #: calendar.php:235
-#, fuzzy
 msgid "ALL"
-msgstr "איי אולנד"
+msgstr "הכול"
 
 #: calendar.php:238
 msgid "BIRT"
@@ -648,9 +620,8 @@ msgstr "מאורע מותאם"
 
 #: calendar.php:282
 #: calendar.php:284
-#, fuzzy
 msgid "View Day"
-msgstr "הצג ארכיון"
+msgstr "הצג יום"
 
 #: calendar.php:287
 #: calendar.php:289
@@ -659,19 +630,16 @@ msgstr "הצג חודש"
 
 #: calendar.php:292
 #: calendar.php:294
-#, fuzzy
 msgid "View Year"
-msgstr "הצג ארכיון"
+msgstr "הצג שנה"
 
 #: calendar.php:435
-#, fuzzy
 msgid "Total individuals"
-msgstr "מחק המידע על אדם זה"
+msgstr "סה\"כ אנשים"
 
 #: calendar.php:443
-#, fuzzy
 msgid "Total families"
-msgstr "סדר מחדש את המשפחות"
+msgstr "סה\"כ משפחות"
 
 #: calendar.php:477
 msgid "Day not set"
@@ -691,6 +659,10 @@ msgstr "נקבה"
 msgid "Filter"
 msgstr "פילטר"
 
+#: calendar.php:588
+msgid "%s year anniversary"
+msgstr "יום השנה %s"
+
 #: calendar.php:614
 msgid "unknown"
 msgstr "לא ידוע"
@@ -705,9 +677,8 @@ msgid "Return to the Admin menu"
 msgstr "חזור לתפריט הניהול"
 
 #: changelanguage.php:155
-#, fuzzy
 msgid "Add new language"
-msgstr "הוסף שם"
+msgstr "הוסף שפה חדשה"
 
 #: changelanguage.php:175
 #: changelanguage.php:191
@@ -730,28 +701,24 @@ msgid "Edit"
 msgstr "ערך"
 
 #: changelanguage.php:259
-#, fuzzy
 msgid "Languages used"
-msgstr "שפת עריכה"
+msgstr "השפות שבשימוש"
 
 #: changelanguage.php:264
-#, fuzzy
 msgid "Current GEDCOMs"
-msgstr "בנה GEDCOM חדש"
+msgstr "GEDCOM-ים נוכחיים"
 
 #: changelanguage.php:282
-#, fuzzy
 msgid "Users' languages"
-msgstr "שפה משנית"
+msgstr "שפות המשתמשים"
 
 #: clippings.php:40
 msgid "Clippings Cart"
 msgstr "עגלת גזירי העץ"
 
 #: clippings.php:49
-#, fuzzy
 msgid "Family Tree Clippings Cart"
-msgstr "אפשר עגלת גזירות"
+msgstr "עגלת גזירי העץ"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
@@ -798,9 +765,8 @@ msgstr "הוסף אדם זה ואב-אבותיו הישירים."
 #: clippings.php:81
 #: clippings.php:83
 #: clippings.php:86
-#, fuzzy
 msgid "Number of generations:"
-msgstr "מספר דורות באילן יוחסין"
+msgstr "מספר דורות:"
 
 #: clippings.php:82
 msgid "Add this person, his direct line ancestors, and their families."
@@ -819,9 +785,8 @@ msgid "Which records linked to this source should be added?"
 msgstr "איזה רשומות הקשורות למקור הזה יש להוסיף?"
 
 #: clippings.php:97
-#, fuzzy
 msgid "Add just this source."
-msgstr "מחק המקור"
+msgstr "הוסף רק את המקור הזה."
 
 #: clippings.php:98
 msgid "Add this source and families/people linked to it."
@@ -832,23 +797,20 @@ msgid "Some items could not be added due to privacy restrictions"
 msgstr "לא ניתן להוסיף חלק מהפריטים בגלל הגבלת פרטיות"
 
 #: clippings.php:127
-#, fuzzy
 msgid "Add Individual By ID"
-msgstr "קידומת קוד זיהוי אישי "
+msgstr "הוסף אדם לפי קוד זיהוי"
 
 #: clippings.php:140
 msgid "Add"
 msgstr "הוסף"
 
 #: clippings.php:150
-#, fuzzy
 msgid "Your Clippings Cart is empty."
-msgstr "עגלת גזירי העץ"
+msgstr "עגלת הגזרים שלך ריקה."
 
 #: clippings.php:157
-#, fuzzy
 msgid "File Information"
-msgstr "נתוני PHP"
+msgstr "מידע על קובץ"
 
 #: clippings.php:159
 msgid "File Type"
@@ -879,14 +841,12 @@ msgid "Authenticated user"
 msgstr "משתמש מאושר"
 
 #: clippings.php:208
-#, fuzzy
 msgid "GEDCOM administrator"
-msgstr "_GEDCOM: דף ניהול"
+msgstr "מנהלן GEDCOM"
 
 #: clippings.php:209
-#, fuzzy
 msgid "Site administrator"
-msgstr "_ניהול משתמשים"
+msgstr "מנהלן אתר"
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
@@ -909,9 +869,8 @@ msgid "Forward slashes : /"
 msgstr "לוכסן קדמי : /"
 
 #: clippings.php:307
-#, fuzzy
 msgid "Remove"
-msgstr "הסר אדם"
+msgstr "הסר"
 
 #: clippings.php:224
 msgid ""
@@ -926,9 +885,8 @@ msgstr ""
 #: compact.php:58
 #: compact.php:447
 #: compact.php:449
-#, fuzzy
 msgid "Compact Chart"
-msgstr "רוקן עגלה"
+msgstr "תרשים קומפקטי"
 
 #: compact.php:97
 msgid "Show ID numbers next to names"
@@ -940,9 +898,8 @@ msgstr "הראה תמונות מודגשות בתיבות של אנשים"
 
 #: compact.php:312
 #: compact.php:314
-#, fuzzy
 msgid "Individual Information"
-msgstr "קידומת קוד זיהוי אישי "
+msgstr "נתוני אנשים"
 
 #: descendancy.php:35
 #: descendancy.php:46
@@ -961,9 +918,8 @@ msgid "To delete a file or subdirectory from the Index directory drag it to the 
 msgstr ""
 
 #: dir_editor.php:91
-#, fuzzy
 msgid "Deleted files:"
-msgstr "מחק שם"
+msgstr "קבצים שנמחקו:"
 
 #: dir_editor.php:111
 #: dir_editor.php:205
@@ -980,9 +936,8 @@ msgstr "קבצים קשורים:"
 #: edit_privacy.php:570
 #: edit_privacy.php:664
 #: edit_privacy.php:763
-#, fuzzy
 msgid "Delete"
-msgstr "מחק שם"
+msgstr "מחק"
 
 #: dir_editor.php:239
 #: editlang_edit_settings.php:192
@@ -1003,9 +958,8 @@ msgid "Download GEDCOM"
 msgstr "הורד GEDCOM"
 
 #: downloadgedcom.php:136
-#, fuzzy
 msgid "Options:"
-msgstr "אופציות ייבוא"
+msgstr "אפשרויות:"
 
 #: downloadgedcom.php:169
 msgid ""
@@ -1014,6 +968,10 @@ msgid ""
 "\t<tr><td class=\"facts_label03\" colspan=\"2\">\n"
 "\t<input type=\"submit\" value=\"<?php print i18n::translate("
 msgstr ""
+
+#: editconfig_gedcom.php:254
+msgid "Genealogy from [%s]"
+msgstr "חקר משפחה מקובץ [%s]"
 
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
@@ -1029,9 +987,8 @@ msgid "The protected media directory in the Media Firewall root directory is not
 msgstr "ספריית המדיה המוגנת הנמצאת בספריית השורש של חומת האש אינה ניתנת לכתיבה עולמית."
 
 #: editconfig_gedcom.php:487
-#, fuzzy
 msgid "Download GEDCOM configuration."
-msgstr "_GEDCOM: קובץ תצורה"
+msgstr "הורד את תצורת GEDCOM."
 
 #: editconfig_gedcom.php:487
 msgid "Upload the file to your index directory: "
@@ -1039,9 +996,8 @@ msgstr "העלה את הקובץ לתיקיית האינדקסים שלך: "
 
 #: editconfig_gedcom.php:620
 #: editconfig_gedcom.php:666
-#, fuzzy
 msgid "GEDCOM Configuration"
-msgstr "_GEDCOM: קובץ תצורה"
+msgstr "תצורת GEDCOM"
 
 #: editconfig_gedcom.php:670
 #: editgedcoms.php:117
@@ -1060,9 +1016,8 @@ msgstr "בנה GEDCOM חדש"
 
 #: editconfig_gedcom.php:676
 #: editgedcoms.php:157
-#, fuzzy
 msgid "Upload Replacement"
-msgstr "נתיב טעינה"
+msgstr "העלה החלפה"
 
 #: editconfig_gedcom.php:680
 #: edit_privacy.php:145
@@ -1078,9 +1033,8 @@ msgid "Search option text"
 msgstr "טכסט של אופציות החיפוש"
 
 #: editconfig_gedcom.php:850
-#, fuzzy
 msgid "Clear Search"
-msgstr "cache נקה קובצי"
+msgstr "חיפוש נקי"
 
 #: editconfig_gedcom.php:878
 #: editconfig_gedcom.php:1106
@@ -1093,9 +1047,8 @@ msgstr "cache נקה קובצי"
 #: editconfig_gedcom.php:2121
 #: editconfig_gedcom.php:2223
 #: edit_privacy.php:805
-#, fuzzy
 msgid "Save configuration"
-msgstr "עזרת תצורה"
+msgstr "שמור תצורה"
 
 #: editconfig_gedcom.php:880
 #: editconfig_gedcom.php:1108
@@ -1113,23 +1066,26 @@ msgstr "ברירת מחדל"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
-#, fuzzy
 msgid "GEDCOM Basics"
-msgstr "כותרת GEDCOM"
+msgstr "בסיס GEDCOM"
 
 #: editconfig_gedcom.php:895
 msgid "Upload path"
 msgstr "נתיב טעינה"
 
 #: editconfig_gedcom.php:900
-#, fuzzy
 msgid "Maximum upload size: "
-msgstr "שעור צפייה מכסימלי של דפים"
+msgstr "גודל העלאה מכסימלי: "
 
 #: editconfig_gedcom.php:903
 #: editconfig_gedcom.php:924
 msgid "Path and name of GEDCOM on server"
 msgstr "נתיב ושם קובץ ה-GEDCOM"
+
+#: editconfig_gedcom.php:915
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, does not exist at the specified location."
+msgstr "קובץ ה-GEDCOM, <b>%s</b>, לא נימצא במקום שצוין"
 
 #: editconfig_gedcom.php:960
 msgid "Character Set encoding"
@@ -1293,9 +1249,8 @@ msgstr "הגבלת זמן של PHP"
 
 #: editconfig_gedcom.php:1115
 #: editconfig_gedcom.php:1116
-#, fuzzy
 msgid "Multimedia"
-msgstr "נהל מולטימדיה"
+msgstr "מולטימדיה"
 
 #: editconfig_gedcom.php:1122
 msgid "Enable multimedia features"
@@ -1352,9 +1307,8 @@ msgstr "הראה קישור הורדה במציג המדיה"
 
 #: editconfig_gedcom.php:1224
 #: editconfig_gedcom.php:1225
-#, fuzzy
 msgid "Media Firewall"
-msgstr "השתמש בחומת אש של מדיה"
+msgstr "חומת מגן של מדיה"
 
 #: editconfig_gedcom.php:1230
 msgid "Use Media Firewall"
@@ -1386,9 +1340,8 @@ msgstr "שמור תמונות ממוזערות בעלות סימני מים על
 
 #: editconfig_gedcom.php:1299
 #: editconfig_gedcom.php:1300
-#, fuzzy
 msgid "Access and Privacy"
-msgstr "ערוך פרטיות"
+msgstr "גישה ופרטיות"
 
 #: editconfig_gedcom.php:1305
 msgid "Enable Privacy"
@@ -1411,9 +1364,8 @@ msgid "Welcome"
 msgstr "ברוך הבא"
 
 #: editconfig_gedcom.php:1332
-#, fuzzy
 msgid "MyGedView"
-msgstr "URL של PhpGedView"
+msgstr "MyGedView"
 
 #: editconfig_gedcom.php:1337
 msgid "Welcome text on Login page"
@@ -1458,9 +1410,8 @@ msgstr "תצוגה ומבנה"
 
 #: editconfig_gedcom.php:1387
 #: editconfig_gedcom.php:1388
-#, fuzzy
 msgid "Names"
-msgstr "רשימת שמות"
+msgstr "שמות"
 
 #: editconfig_gedcom.php:1393
 msgid "Show married names on Individual list"
@@ -1559,14 +1510,12 @@ msgid "Notes"
 msgstr "הערות"
 
 #: editconfig_gedcom.php:1511
-#, fuzzy
 msgid "Sources"
-msgstr "הצג מקורות"
+msgstr "מקורות"
 
 #: editconfig_gedcom.php:1512
-#, fuzzy
 msgid "Media"
-msgstr "מצא מדיה"
+msgstr "מדיה"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
@@ -1715,9 +1664,8 @@ msgstr "הראה תאריכים מוערכים עבור לידה ופטירה"
 
 #: editconfig_gedcom.php:1799
 #: editconfig_gedcom.php:1800
-#, fuzzy
 msgid "Edit Options"
-msgstr "אופציות ייבוא"
+msgstr "אפשרויות העריכה"
 
 #: editconfig_gedcom.php:1805
 msgid "Enable online editing"
@@ -1830,9 +1778,8 @@ msgstr "רשומה"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
-#, fuzzy
 msgid "User Options"
-msgstr "אופציות ייבוא"
+msgstr "בחירות משתמש"
 
 #: editconfig_gedcom.php:1978
 msgid "Allow user to change language"
@@ -1860,9 +1807,8 @@ msgstr "הראה את הבחירה הנגללת של שינויי העיצוב"
 
 #: editconfig_gedcom.php:2044
 #: editconfig_gedcom.php:2045
-#, fuzzy
 msgid "Contact Information"
-msgstr "שיטת הקשר"
+msgstr "נתוני קשר"
 
 #: editconfig_gedcom.php:2055
 msgid "PhpGedView reply address"
@@ -1878,9 +1824,8 @@ msgstr "שיטת הקשר"
 
 #: editconfig_gedcom.php:2078
 #: editconfig_gedcom.php:2108
-#, fuzzy
 msgid "PhpGedView internal messaging"
-msgstr "כתובת מענה עבור PhpGedView"
+msgstr "הודעות פנימיות של PhpGedView"
 
 #: editconfig_gedcom.php:2079
 #: editconfig_gedcom.php:2109
@@ -1899,9 +1844,8 @@ msgstr "קישור דואר אלקטרוני"
 
 #: editconfig_gedcom.php:2084
 #: editconfig_gedcom.php:2114
-#, fuzzy
 msgid "No contact method"
-msgstr "שיטת הקשר"
+msgstr "אין שיטת קשר"
 
 #: editconfig_gedcom.php:2089
 msgid "Support contact"
@@ -1942,9 +1886,8 @@ msgstr "תווית META של תאור"
 
 #: editconfig_gedcom.php:2161
 #: editconfig_gedcom.php:2166
-#, fuzzy
 msgid "Leave this field empty to use the title of the currently active database."
-msgstr "The value to place in the Page-topic meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database."
+msgstr "השאר שדה זה ריק כדי להשתמש בכותרת של ה-GEDCOM הפעיל עבור הערך זה."
 
 #: editconfig_gedcom.php:2164
 msgid "Page-topic META tag"
@@ -1987,14 +1930,12 @@ msgid "Configuration help"
 msgstr "עזרת תצורה"
 
 #: editgedcoms.php:78
-#, fuzzy
 msgid "GEDCOM Administration"
-msgstr "_GEDCOM: דף ניהול"
+msgstr "ניהול ה-GEDCOM"
 
 #: editgedcoms.php:96
-#, fuzzy
 msgid "Default GEDCOM"
-msgstr "בדוק GEDCOM"
+msgstr "ברירת מחדל"
 
 #: editgedcoms.php:111
 msgid "Check if GEDCOM files are downloadable"
@@ -2008,14 +1949,17 @@ msgstr "כותרת GEDCOM"
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
 msgstr ""
 
+#: editgedcoms.php:184
+msgid "%s cannot be downloaded."
+msgstr "לא ניתן להוריד את קובץ %s ."
+
 #: editgedcoms.php:187
 msgid "File not found."
 msgstr "הקובץ לא נימצא"
 
 #: editgedcoms.php:191
-#, fuzzy
 msgid "Import"
-msgstr "אופציות ייבוא"
+msgstr "ייבא"
 
 #: editgedcoms.php:193
 msgid "This GEDCOM has not yet been imported."
@@ -2030,9 +1974,8 @@ msgid "Are you sure you want to delete this GEDCOM"
 msgstr "GEDCOM האם ברצונך באמת לבטל"
 
 #: editgedcoms.php:208
-#, fuzzy
 msgid "Download"
-msgstr "הורד GEDCOM"
+msgstr "הורד"
 
 #: editgedcoms.php:213
 msgid "Check"
@@ -2060,6 +2003,10 @@ msgstr "תוכנת עריכה של קובץ שפה"
 #: edit_interface.php:2723
 msgid "Save"
 msgstr "שמור"
+
+#: editlang_edit_settings.php:225
+msgid "Original name of language in %s"
+msgstr "שם המקורי של השפה ב%s"
 
 #: editlang_edit_settings.php:238
 msgid "Abbreviation for language files"
@@ -2171,9 +2118,8 @@ msgid "Add/Edit Journal/News entry"
 msgstr "הוסף/ערוך כניסת יומן/חדשות"
 
 #: editnews.php:57
-#, fuzzy
 msgid "Please enter a title."
-msgstr "סגנון תצוגה"
+msgstr "נא הכנס כותרת."
 
 #: editnews.php:64
 msgid "Please enter some text for this News or Journal entry."
@@ -2231,14 +2177,12 @@ msgid "User name"
 msgstr "קוד משתמש"
 
 #: edituser.php:186
-#, fuzzy
 msgid "First Name"
-msgstr "ערוך שם"
+msgstr "שם פרטי"
 
 #: edituser.php:192
-#, fuzzy
 msgid "Last Name"
-msgstr "ערוך שם"
+msgstr "שם משפחה"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
@@ -2253,14 +2197,12 @@ msgid "Leave password blank if you want to keep the current password."
 msgstr "השאר את תיבת הסיסמא ריקה, אם ברצונך לשמור על הסיסמא הקיימת."
 
 #: edituser.php:223
-#, fuzzy
 msgid "Confirm Password"
-msgstr "סיסמא"
+msgstr "אשר סיסמא"
 
 #: edituser.php:229
-#, fuzzy
 msgid "Change Language"
-msgstr "שפה"
+msgstr "החלף שפה"
 
 #: edituser.php:245
 msgid "Email Address"
@@ -2275,18 +2217,16 @@ msgid "Site Default"
 msgstr "ברירת מחדל"
 
 #: edituser.php:266
-#, fuzzy
 msgid "Preferred Contact Method"
-msgstr "שיטת הקשר"
+msgstr "שיטת התקשורת המועדפת"
 
 #: edituser.php:281
 msgid "Visible to other users when online"
 msgstr "גלוי למשתמשים אחרים בהיותו מחובר"
 
 #: edituser.php:290
-#, fuzzy
 msgid "Default Tab to show on Individual Information page"
-msgstr "חוצץ ברירת המחדל שיוצג על דף הנתונים האישיים"
+msgstr "חוצץ ברירת המחדל של דף מידע אישי"
 
 #: edit_changes.php:43
 #: edit_changes.php:61
@@ -2313,15 +2253,13 @@ msgid "View Change Diff"
 msgstr "התבונן בשינויים "
 
 #: edit_changes.php:117
-#, fuzzy
 msgid "View GEDCOM Record"
-msgstr "החבא שגיאות GEDCOM"
+msgstr "הצג מידע מ-GEDCOM"
 
 #: edit_changes.php:118
 #: edit_interface.php:413
-#, fuzzy
 msgid "Edit raw GEDCOM record"
-msgstr "לאפשר למשתמשים לראות נתוני קובץ GEDCOM"
+msgstr "ערוך את רשומת ה-GEDCOM הלא מעובדת"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
@@ -2346,15 +2284,13 @@ msgid "Undo"
 msgstr "בטל"
 
 #: edit_changes.php:136
-#, fuzzy
 msgid "Send Message"
-msgstr "שם השולח"
+msgstr "שלח הודעה"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
-#, fuzzy
 msgid "Accept all changes"
-msgstr "השינויים האחרונים"
+msgstr "אשר את כל השינויים"
 
 #: edit_changes.php:163
 #: edit_changes.php:181
@@ -2375,14 +2311,12 @@ msgid "Add child"
 msgstr "הוסף ילד/ה"
 
 #: edit_interface.php:355
-#, fuzzy
 msgid "Add a new mother"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף אמא חדשה"
 
 #: edit_interface.php:357
-#, fuzzy
 msgid "Add a new father"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף אבא חדש"
 
 #: edit_interface.php:362
 msgid "Add a child to create a one-parent family"
@@ -2419,9 +2353,8 @@ msgstr "אישור"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
-#, fuzzy
 msgid "Set link"
-msgstr "שמור קישורים"
+msgstr "הצב קישור"
 
 #: edit_interface.php:751
 #: edit_interface.php:902
@@ -2443,9 +2376,8 @@ msgstr "כותרת"
 
 #: edit_interface.php:760
 #: edit_interface.php:838
-#, fuzzy
 msgid "Create a new source"
-msgstr "בנה GEDCOM חדש"
+msgstr "צור מקור חדש"
 
 #: edit_interface.php:765
 msgid "ABBR"
@@ -2490,15 +2422,13 @@ msgid "New source created successfully."
 msgstr "מקור חדש נוצר בהצלחה."
 
 #: edit_interface.php:911
-#, fuzzy
 msgid "Create a new Shared Note"
-msgstr "הוסף הערה משותפת חדשה"
+msgstr "צור הערה משותפת חדשה"
 
 #: edit_interface.php:921
 #: edit_interface.php:1189
-#, fuzzy
 msgid "Shared Note"
-msgstr "הוסף הערה משותפת חדשה"
+msgstr "הערה משותפת"
 
 #: edit_interface.php:1018
 msgid "New Shared Note created successfully."
@@ -2509,9 +2439,8 @@ msgid "Create a new Shared Note using Assistant"
 msgstr "צור הערה משותפת חדשה בעזרת מסייע"
 
 #: edit_interface.php:1170
-#, fuzzy
 msgid "Edit Shared Note"
-msgstr "הוסף הערה משותפת חדשה"
+msgstr "ערוך הערה משותפת"
 
 #: edit_interface.php:1224
 #: edit_interface.php:1240
@@ -2520,9 +2449,8 @@ msgstr "שם"
 
 #: edit_interface.php:1233
 #: edit_interface.php:1284
-#, fuzzy
 msgid "Create Repository"
-msgstr "מחק מאגר"
+msgstr "צור מאגר"
 
 #: edit_interface.php:1253
 msgid "ADDR"
@@ -2545,18 +2473,16 @@ msgid "WWW"
 msgstr "דף בית"
 
 #: edit_interface.php:1329
-#, fuzzy
 msgid "New Repository created"
-msgstr "עובדות מאגר יחידות במינן"
+msgstr "מאגר חדש נוצר"
 
 #: edit_interface.php:1330
 msgid "Paste the following Repository ID into your editing fields to reference this Repository "
 msgstr "הדבק את זיהוי המאגר הבא לשדות העריכה כדי להתייחס למאגר זה "
 
 #: edit_interface.php:2126
-#, fuzzy
 msgid "Record copied to clipboard"
-msgstr "הוסף מלוח הגזירים"
+msgstr "הרשומה הועתקה ללוח הגזירים"
 
 #: edit_interface.php:2270
 msgid "Re-order children"
@@ -2589,9 +2515,8 @@ msgstr "שנה בני משפחה"
 #: edit_interface.php:2432
 #: edit_interface.php:2445
 #: edit_interface.php:2458
-#, fuzzy
 msgid "Change"
-msgstr "דף"
+msgstr "שנה"
 
 #: edit_interface.php:2686
 msgid "Reorder Families"
@@ -2635,54 +2560,54 @@ msgstr "מעדכן רשומה קשורה"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
-#, fuzzy
 msgid "Adding"
-msgstr "ניהול"
+msgstr "מוסיף"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
 msgid "from"
 msgstr "עבור"
 
-#: edit_merge.php:246
+#: edit_merge.php:242
+msgid "Record %s successfully updated."
+msgstr "רשומת %s עודכנה בהצלחה."
+
+#: edit_merge.php:245
 msgid "favorites updated."
 msgstr "מועדפים עודכנו."
 
-#: edit_merge.php:248
+#: edit_merge.php:247
 msgid "Merge more records."
 msgstr "מזג רשומות נוספות."
 
-#: edit_merge.php:281
+#: edit_merge.php:280
 msgid "Merge Step 1 of 3"
 msgstr "שלב מיזוג 1 מתוך 3"
 
-#: edit_merge.php:284
+#: edit_merge.php:283
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
 msgstr "בחר שתי רשומות GEDCOM למיזוג. הרשומות חייבות להיות מאותו סוג."
 
-#: edit_merge.php:287
+#: edit_merge.php:286
 msgid "Merge To ID:"
 msgstr "מזג לקוד זיהוי:"
 
+#: edit_merge.php:301
+#: edit_merge.php:318
+msgid "Find Individual ID"
+msgstr "מצא קוד זיהוי"
+
 #: edit_merge.php:302
 #: edit_merge.php:319
-#, fuzzy
-msgid "Find Individual ID"
-msgstr "קידומת קוד זיהוי אישי "
+msgid "Find Family ID"
+msgstr "מצא קוד זיהוי של המשפחה"
 
 #: edit_merge.php:303
 #: edit_merge.php:320
-#, fuzzy
-msgid "Find Family ID"
-msgstr "קידומת קוד זיהוי של משפחה"
-
-#: edit_merge.php:304
-#: edit_merge.php:321
-#, fuzzy
 msgid "Find Source ID"
-msgstr "קידומת קוד זיהוי של מקור"
+msgstr "מצא את המקור"
 
-#: edit_merge.php:307
+#: edit_merge.php:306
 msgid "Merge From ID:"
 msgstr "מזג מקוד זיהוי:"
 
@@ -2692,14 +2617,12 @@ msgid "Unable to find individual with id"
 msgstr "לא נימצא אדם עם קוד זיהוי"
 
 #: edit_privacy.php:135
-#, fuzzy
 msgid "Edit privacy settings"
-msgstr "הפעל הגדרות פרטיות?"
+msgstr "ערוך הגדרות פרטיות"
 
 #: edit_privacy.php:142
-#, fuzzy
 msgid "Edit GEDCOM privacy settings"
-msgstr "_GEDCOM: הגדרת פרטיות"
+msgstr "ערוך הגדרת פרטיות של GEDCOM"
 
 #: edit_privacy.php:159
 msgid "Performing update."
@@ -2777,9 +2700,8 @@ msgstr "הוסף הגדרות חדשות לפרטיות לפי קוד זיהוי
 #: edit_privacy.php:572
 #: edit_privacy.php:717
 #: edit_privacy.php:764
-#, fuzzy
 msgid "ID"
-msgstr "אינדונזיה"
+msgstr "קוד זיהוי"
 
 #: edit_privacy.php:449
 #: edit_privacy.php:481
@@ -2787,9 +2709,8 @@ msgstr "אינדונזיה"
 #: edit_privacy.php:667
 #: edit_privacy.php:720
 #: edit_privacy.php:768
-#, fuzzy
 msgid "Show to?"
-msgstr "הראה צלמיות של עובדות"
+msgstr "הראה ל-"
 
 #: edit_privacy.php:473
 msgid "Edit existing settings for Privacy by ID"
@@ -2798,9 +2719,8 @@ msgstr "ערוך הגדרות קיימות לפרטיות לפי קוד זיהו
 #: edit_privacy.php:480
 #: edit_privacy.php:573
 #: edit_privacy.php:765
-#, fuzzy
 msgid "Full Name"
-msgstr "מחק שם"
+msgstr "שם מלא"
 
 #: edit_privacy.php:509
 #: edit_privacy.php:511
@@ -2813,7 +2733,6 @@ msgstr "הוסף הגדרה חדשה לפרטיות משתמש"
 
 #: edit_privacy.php:526
 #: edit_privacy.php:571
-#, fuzzy
 msgid "Username"
 msgstr "קוד משתמש"
 
@@ -2857,17 +2776,15 @@ msgstr "בחר: "
 #: edit_privacy.php:685
 #: edit_privacy.php:748
 #: edit_privacy.php:791
-#, fuzzy
 msgid "Show fact details"
-msgstr "הראה צלמיות של עובדות"
+msgstr "הראה פרטי העובדה"
 
 #: edit_privacy.php:648
 #: edit_privacy.php:684
 #: edit_privacy.php:749
 #: edit_privacy.php:790
-#, fuzzy
 msgid "Show fact"
-msgstr "הראה צלמיות של עובדות"
+msgstr "הראה את העובדה"
 
 #: edit_privacy.php:660
 msgid "Edit existing settings for Global Fact Privacy"
@@ -2891,14 +2808,12 @@ msgid "Private"
 msgstr "אישי"
 
 #: expand_view.php:72
-#, fuzzy
 msgid "View Family"
-msgstr "הצג ארכיון"
+msgstr "הצג משפחה"
 
 #: family.php:60
-#, fuzzy
 msgid "This record has been marked for deletion upon admin approval."
-msgstr "הרשומה עודכנה. הקש כדי לראות את השינויים."
+msgstr "הרשומה הזאת סומנה למחיקה לאחר אישור המנהלן."
 
 #: family.php:100
 #: familybook.php:218
@@ -2910,27 +2825,24 @@ msgid "Grandparents"
 msgstr ""
 
 #: family.php:137
-#, fuzzy
 msgid "Show couple on timeline chart"
-msgstr "הראה תיבות ריקות באילן היוחסין"
+msgstr "הצג הזוג על תרשים קו הזמן"
 
 #: family.php:137
 msgid "P"
 msgstr "א"
 
 #: family.php:138
-#, fuzzy
 msgid "Show children on timeline chart"
-msgstr "הראה צלמית מין בתרשימים"
+msgstr "הראה ילדים על תרשים קו הזמן"
 
 #: family.php:138
 msgid "D"
 msgstr "צ"
 
 #: family.php:139
-#, fuzzy
 msgid "Show family on timeline chart"
-msgstr "הראה תיבות ריקות באילן היוחסין"
+msgstr "הראה משפחה על תרשים קו הזמן"
 
 #: family.php:139
 msgid "T"
@@ -2961,15 +2873,13 @@ msgstr "משפחה של:&nbsp;"
 #: familybook.php:371
 #: familybook.php:383
 #: familybook.php:387
-#, fuzzy
 msgid "Family Book Chart"
-msgstr "עובדות משפחתיות שניתן להוסיף"
+msgstr "תרשים ספר משפחה"
 
 #: familybook.php:458
 #: hourglass.php:115
-#, fuzzy
 msgid "Show spouses"
-msgstr "הצג מקורות"
+msgstr "הצג בני זוג"
 
 #: familybook.php:481
 msgid "Descent Steps"
@@ -2987,24 +2897,26 @@ msgid "Choose a letter to show families whose name starts with that letter."
 msgstr "בחר אות כדי להציג משפחות שהשם שלהם מתחיל באות זו."
 
 #: famlist.php:184
-#, fuzzy
 msgid "Skip Surname lists"
-msgstr "סגנון רשימת שמות משפחה"
+msgstr "דלג על רשימות שמות המשפחה"
 
 #: famlist.php:187
-#, fuzzy
 msgid "Show Surname lists"
-msgstr "סגנון רשימת שמות משפחה"
+msgstr "הצג רשימות שמות המשפחה"
 
 #: famlist.php:194
-#, fuzzy
 msgid "Exclude married names"
-msgstr "כלול שמות נישואין"
+msgstr "הוצא שמות נישואין"
 
 #: famlist.php:196
 #: help_text.php:5234
 msgid "Include married names"
 msgstr "כלול שמות נישואין"
+
+#: famlist.php:263
+#: famlist.php:274
+msgid "Families with surname %s"
+msgstr "משפחות עם שם משפחה %s"
 
 #: famlist.php:268
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
@@ -3028,19 +2940,16 @@ msgid "Font file not found on PHP server"
 msgstr "הפונט לא נמצא על שרת ה-PHP"
 
 #: fanchart.php:295
-#, fuzzy
 msgid "Pedigree Tree"
-msgstr "מספר דורות באילן יוחסין"
+msgstr "אילן יוחסין"
 
 #: fanchart.php:297
-#, fuzzy
 msgid "Pedigree Map"
-msgstr "מספר דורות באילן יוחסין"
+msgstr "מפת שושלת"
 
 #: fanchart.php:300
-#, fuzzy
 msgid "Relationship to me"
-msgstr "בדוק קירבה באמצעות נישואין"
+msgstr "קירבה אלי"
 
 #: fanchart.php:305
 #: fanchart.php:400
@@ -3060,6 +2969,10 @@ msgstr "תרשים שעון חול"
 #: fanchart.php:307
 msgid "Interactive Tree"
 msgstr "עץ אינטראקטיבי"
+
+#: fanchart.php:428
+msgid "%s Generation Circle Diagram"
+msgstr "תרשים מניפה של %s דורות"
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -3119,9 +3032,8 @@ msgid "Preview"
 msgstr "הצגה מוקדמת"
 
 #: faq.php:285
-#, fuzzy
 msgid "Position item"
-msgstr "מיקום ה-FAQ"
+msgstr "מיקום ישות"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
@@ -3140,21 +3052,18 @@ msgstr "מצא מדיה"
 
 #: find.php:104
 #: find.php:208
-#, fuzzy
 msgid "Find Place"
-msgstr "מצא מדיה"
+msgstr "מצא מקום"
 
 #: find.php:108
 #: find.php:211
-#, fuzzy
 msgid "Repositories"
-msgstr "עובדות מאגר שניתן להוסיף"
+msgstr "מאגרים"
 
 #: find.php:112
 #: find.php:214
-#, fuzzy
 msgid "Find Shared Note"
-msgstr "הוסף הערה משותפת חדשה"
+msgstr "מצא הערה משותפת"
 
 #: find.php:116
 #: find.php:217
@@ -3172,18 +3081,16 @@ msgstr "נא הכנס יותר מתו אחד"
 
 #: find.php:239
 #: find.php:259
-#, fuzzy
 msgid "Name contains:"
-msgstr "רשימת שמות"
+msgstr "השם מכיל:"
 
 #: find.php:283
 msgid "Media contains:"
 msgstr "מדיה מכילה:"
 
 #: find.php:291
-#, fuzzy
 msgid "Show thumbnails"
-msgstr "השתמש בתמונות מזעריות"
+msgstr "הראה תמונות מזעריות"
 
 #: find.php:296
 #: find.php:317
@@ -3198,18 +3105,16 @@ msgid "Place contains:"
 msgstr "מקום מכיל:"
 
 #: find.php:332
-#, fuzzy
 msgid "Repository contains:"
-msgstr "עובדות מאגר שניתן להוסיף"
+msgstr "מאגר מכיל:"
 
 #: find.php:353
 msgid "Shared Note contains:"
 msgstr "ההערה המשותפת מכילה:"
 
 #: find.php:374
-#, fuzzy
 msgid "Source contains:"
-msgstr "חיבור מאובטח"
+msgstr "מקור מכיל:"
 
 #: find.php:403
 msgid "Magnify"
@@ -3226,9 +3131,8 @@ msgid "No results found."
 msgstr "לא נמצאו תוצאות"
 
 #: find.php:487
-#, fuzzy
 msgid "Current directory"
-msgstr "תיקיית עיצוב"
+msgstr "התיקייה הנוכחית"
 
 #: find.php:501
 msgid "External objects"
@@ -3247,14 +3151,12 @@ msgid "This media object is linked to the following:"
 msgstr "המדיה הזו מקושרת ל-"
 
 #: find.php:584
-#, fuzzy
 msgid "View Person"
-msgstr "הסר אדם"
+msgstr "הצג אדם"
 
 #: find.php:590
-#, fuzzy
 msgid "View Source"
-msgstr "הצג ארכיון"
+msgstr "ראה מקור"
 
 #: find.php:593
 msgid "View Object"
@@ -3277,9 +3179,8 @@ msgid "Shared Notes found"
 msgstr "נמצאו הערות משותפות"
 
 #: find.php:712
-#, fuzzy
 msgid "Total Sources"
-msgstr "הראה את כל המקורות"
+msgstr "סה\"כ מקורות"
 
 #: gedcheck.php:37
 msgid "Gedcom checker"
@@ -3296,9 +3197,8 @@ msgid "Level"
 msgstr "רמה"
 
 #: gedcheck.php:104
-#, fuzzy
 msgid "Open links in"
-msgstr "שמור קישורים"
+msgstr "פתח קישורים ב-"
 
 #: gedcheck.php:106
 msgid "Same tab/window"
@@ -4995,11 +4895,14 @@ msgid "_FA11"
 msgstr "עובדה 11"
 
 #. I18N: This is the GEDCOM label for "Fact 12"
-#. I18N: This is the GEDCOM label for "Fact 13"
 #: help_text.php:1969
-#: help_text.php:1975
 msgid "_FA12"
 msgstr "עובדה 12"
+
+#. I18N: This is the GEDCOM label for "Fact 13"
+#: help_text.php:1975
+msgid "_FA13"
+msgstr "עובדה 13"
 
 #. I18N: This is the GEDCOM label for "Emigration of parents"
 #: help_text.php:1981
@@ -5393,14 +5296,12 @@ msgid "Image Viewer"
 msgstr "מציג מדיה"
 
 #: help_text.php:2479
-#, fuzzy
 msgid "PhpGedView User Login"
-msgstr "URL של PhpGedView"
+msgstr "PhpGedView התחברות משתמש"
 
 #: help_text.php:2484
-#, fuzzy
 msgid "PhpGedView Message"
-msgstr "URL של PhpGedView"
+msgstr "PhpGedView הודעת"
 
 #: help_text.php:2489
 #, fuzzy
@@ -9398,35 +9299,28 @@ msgstr "MyGedView התאם אישית את הפורטל"
 
 #: index.php:451
 #: index_edit.php:473
-#, fuzzy
 msgid "Customize this GEDCOM Welcome page"
-msgstr "טכסט ברוכים הבאים מותאם"
+msgstr "התאם אישית את דף ברוכים הבאים הזה"
 
 #: index_edit.php:83
 msgid "?"
 msgstr "?"
 
 #: index_edit.php:154
-#: index_edit.php:158
-#: index_edit.php:159
-#: index_edit.php:160
-#: index_edit.php:161
 msgid "&nbsp;"
 msgstr "&nbsp;"
 
 #: index_edit.php:231
-#, fuzzy
 msgid "Configuration file updated successfully."
-msgstr "עיצוב השפות הנתמכות"
+msgstr "קובץ התצורה עודכן בצורה מוצלחת."
 
 #: index_edit.php:278
 msgid "The cache files have been removed."
 msgstr "קובצי cache הוסרו."
 
 #: index_edit.php:285
-#, fuzzy
 msgid "Configure"
-msgstr "_GEDCOM: עצב"
+msgstr "עצב"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
@@ -9478,6 +9372,11 @@ msgstr "החזר את האזורים למצב ברירת המחדל"
 msgid "Choose a letter to show individuals whose family name starts with that letter."
 msgstr "בחר אות כדי להציג אנשים ששם המשפחה שלהם מתחיל באות זו."
 
+#: indilist.php:263
+#: indilist.php:274
+msgid "Individuals with surname %s"
+msgstr "אנשים עם שם משפחה %s"
+
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
 msgstr "בחר אות כדי להציג אנשים ששמם הפרטי מתחיל באות זו."
@@ -9491,9 +9390,8 @@ msgid "The information for this individual was linked from a remote site."
 msgstr "נתוני אדם זה מקושרים מאתר מרוחק."
 
 #: individual.php:319
-#, fuzzy
 msgid "Pedigree Chart"
-msgstr "אדם ההתחלה באילן היוחסין"
+msgstr "אילן יוחסין"
 
 #: individual.php:321
 msgid "Timeline Chart"
@@ -9525,14 +9423,12 @@ msgid "*Your settings will not<br />be saved until step 6"
 msgstr "הגדרותיך לא ישמרו<br />עד שלב 6"
 
 #: install.php:434
-#, fuzzy
 msgid "Database Tables created successfully"
-msgstr "קידומת שמות קבצי מסד הנתונים"
+msgstr "טבלאות מאגר המידע נוצרו בהצלחה"
 
 #: install.php:449
-#, fuzzy
 msgid "Configuration saved successfully"
-msgstr "עזרת תצורה"
+msgstr "התצורה נשמרה בהצלחה"
 
 #: install.php:452
 msgid "Download config.php"
@@ -9555,9 +9451,8 @@ msgid "Checking required PHP version:"
 msgstr "בודק גרסת ה-PHP הנדרשת:"
 
 #: install.php:508
-#, fuzzy
 msgid "Failed"
-msgstr "קובץ הדגל"
+msgstr "נכשל"
 
 #: install.php:516
 msgid "Checking for minimum database support:"
@@ -9569,9 +9464,8 @@ msgstr "אין לך אף אחת מהסיומות הנתמכות של מאגר ה
 
 #: install.php:531
 #: install.php:620
-#, fuzzy
 msgid "Passed"
-msgstr "סיסמא"
+msgstr "עבר בהצלחה"
 
 #: install.php:538
 msgid "Checking for warnings..."
@@ -9656,15 +9550,13 @@ msgstr "אם אזהרה כלשהי לא עברה יתכן שעדיין תוכל 
 
 #: install.php:763
 #: install.php:769
-#, fuzzy
 msgid "Basic Settings"
-msgstr "ערכי פרטיות של משתמשים"
+msgstr "בסיסי"
 
 #: install.php:764
 #: install.php:826
-#, fuzzy
 msgid "Advanced Settings"
-msgstr "עובדות מתקדמות של שם"
+msgstr "מתקדם"
 
 #: install.php:875
 #: install.php:881
@@ -9679,9 +9571,8 @@ msgstr "&nbsp;&nbsp;שניות"
 #: install.php:1072
 #: login_register.php:168
 #: login_register.php:217
-#, fuzzy
 msgid "You must enter a password."
-msgstr "השתמש בשם וסיסמא"
+msgstr ".יש למלא סיסמא"
 
 #: install.php:1077
 #: login_register.php:174
@@ -9707,9 +9598,8 @@ msgstr ""
 
 #: inverselink.php:50
 #: media.php:760
-#, fuzzy
 msgid "To Person"
-msgstr "הסר אדם"
+msgstr "לאדם"
 
 #: inverselink.php:53
 #: media.php:765
@@ -9718,45 +9608,37 @@ msgstr "למשפחה"
 
 #: inverselink.php:56
 #: media.php:770
-#, fuzzy
 msgid "To Source"
-msgstr "הצג מקורות"
+msgstr "למקור"
 
 #: inverselink.php:59
-#, fuzzy
 msgid "To Repository"
-msgstr "מחק מאגר"
+msgstr "למאגר"
 
 #: inverselink.php:62
-#, fuzzy
 msgid "To Shared Note"
-msgstr "הוסף הערה משותפת חדשה"
+msgstr "להערה משותפת"
 
 #: inverselink.php:67
 #: inverselink.php:116
-#, fuzzy
 msgid "Link Media"
-msgstr "מצא מדיה"
+msgstr "קשר מדיה"
 
 #: inverselink.php:117
-#, fuzzy
 msgid "Media ID"
-msgstr "קידומת קוד זיהוי של מדיה"
+msgstr "קוד זיהוי של מדיה"
 
 #: inverselink.php:143
-#, fuzzy
 msgid "Enter Individual ID"
-msgstr "קידומת קוד זיהוי אישי "
+msgstr "הכנס קוד זיהוי אישי"
 
 #: inverselink.php:174
-#, fuzzy
 msgid "Source"
-msgstr "סוג מקור "
+msgstr "מקור"
 
 #: inverselink.php:188
-#, fuzzy
 msgid "Repository"
-msgstr "מחק מאגר"
+msgstr "מאגר"
 
 #: lifespan.php:41
 #: lifespan.php:54
@@ -9768,14 +9650,12 @@ msgid "Add another person to chart:<br />Person ID:"
 msgstr "הוסף אדם לתרשים:<br >קוד זיהוי אדם:"
 
 #: lifespan.php:70
-#, fuzzy
 msgid "Include Immediate Family"
-msgstr "כלול שמות נישואין"
+msgstr "כלול משפחה קרובה"
 
 #: lifespan.php:75
-#, fuzzy
 msgid "Show Timeline chart"
-msgstr "הראה צלמית מין בתרשימים"
+msgstr "הראה תרשים קו הזמן"
 
 #: lifespan.php:303
 msgid "Speed"
@@ -9794,14 +9674,12 @@ msgid "Search"
 msgstr "חפש"
 
 #: lifespan.php:322
-#, fuzzy
 msgid "Clear Chart"
-msgstr "מבנה לוח שנה"
+msgstr "נקה תרשים"
 
 #: lifespan.php:329
-#, fuzzy
 msgid "Individual"
-msgstr "קידומת קוד זיהוי אישי "
+msgstr "אדם"
 
 #: login.php:120
 msgid "Unable to authenticate user."
@@ -9809,14 +9687,12 @@ msgstr "לא ניתן לאשר משתמש."
 
 #: login.php:206
 #: login.php:226
-#, fuzzy
 msgid "Login"
-msgstr "URL של התחברות"
+msgstr "התחברות"
 
 #: login.php:238
-#, fuzzy
 msgid "Account Information"
-msgstr "נתוני PHP"
+msgstr "נתוני קוד משתמש"
 
 #: login.php:239
 msgid "No account?"
@@ -9834,9 +9710,8 @@ msgid "Lost your password?"
 msgstr "שכחת את סיסמתך?"
 
 #: login.php:242
-#, fuzzy
 msgid "Request new password"
-msgstr "השתמש בשם וסיסמא"
+msgstr "בקש סיסמא חדשה"
 
 #: login_register.php:58
 #: login_register.php:80
@@ -9844,6 +9719,11 @@ msgstr "השתמש בשם וסיסמא"
 #: login_register.php:94
 msgid "Lost password request"
 msgstr "בקשת סיסמא אבודה"
+
+#: login_register.php:126
+#: login_register.php:420
+msgid "Hello %s ..."
+msgstr "שלום <span dir=\"ltr\">%s</span> ..."
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
@@ -9857,19 +9737,27 @@ msgstr "המלצה:"
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
 msgstr "הקש על הקישור מתחת או הדבק אותו לדפדפן שלך, התחבר עם הסיסמא החדשה ושנה אותה מיידית כדי לשמור על שלמות הנתונים."
 
+#: login_register.php:139
+#, php-format
+msgid "Data request at %s"
+msgstr "בקשת נתונים על %s"
+
+#: login_register.php:143
+#, php-format
+msgid "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>%s</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security."
+msgstr "שלום...<br /><br />דואר הכולל סיסמא חדשה נישלח לכתובת אלקטרונית <span dir=\"ltr\"><b>%s</b></span>.<br /><br />בדוק את תיבת הדואר שלך מכיוון שהדואר יתקבל תוך מספר דקות.<br /><br />המלצה:<br />אחרי שתקבל את הדואר התחבר לאתר זה עם סיסמתך החדשה ושנה את הסיסמא כדי לשמור על אבטחת הנתונים."
+
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
 msgstr ".אנא הכנס את הקשר שלך אל הנתונים בשדה ההערה"
 
 #: login_register.php:287
-#, fuzzy
 msgid "Desired user name"
-msgstr "קוד משתמש של מסד נתונים"
+msgstr "קוד משתמש רצוי"
 
 #: login_register.php:288
-#, fuzzy
 msgid "Desired password"
-msgstr "סיסמת מסד הנתונים"
+msgstr "סיסמא רצויה"
 
 #: login_register.php:316
 #: login_register.php:433
@@ -9892,6 +9780,11 @@ msgstr "אישור משתמש חדש"
 msgid "Back"
 msgstr "חזור"
 
+#: login_register.php:421
+#, php-format
+msgid "A request was received at %s to create a PhpGedView account with your email address %s."
+msgstr "קיבלנו בקשה ב- <span dir=\"ltr\">%s</span>  ליצור קוד משתמש של PhpGedView עם הכתובת האלקטרונית שלך  <span dir=\"ltr\">%s ."
+
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
 msgstr "הנתונים על הבקשה מוצגים מתחת לקישור למטה."
@@ -9913,11 +9806,20 @@ msgstr "מחק הודעה זו אם לא ביקשת קוד משתמש."
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
 msgstr "לא תקבל דואר נוסף מאתר זה, מכיוון שקוד המשתמש ימחק אוטומטית לאחר שבעה ימים."
 
+#: login_register.php:437
+#, php-format
+msgid "Your registration at %s"
+msgstr "הרשמתך ב-%s"
+
 #: login_register.php:444
 #: login_register.php:565
-#, fuzzy
 msgid "Hello Administrator ..."
-msgstr "_ניהול משתמשים"
+msgstr "שלום המנהלן ..."
+
+#: login_register.php:445
+#, php-format
+msgid "A prospective user registered himself with PhpGedView at %s."
+msgstr "משתמש פוטנציאלי נרשם ב-PhpGedView של <span dir=\"ltr\">%s</span>"
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
@@ -9931,18 +9833,47 @@ msgstr "אחרי שהמשתמש הפוטנציאלי הזה יבצע את איש
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
 msgstr "תקבל הודעה בדואר אלקטרוני אחרי שהמשתמש הפוטנציאלי הזה יאשר את עצמו. אחרי האישור, המשתמש יוכל להתחבר ללא שום פעולה נוספת שלך."
 
+#: login_register.php:462
+#, php-format
+msgid "New registration at %s"
+msgstr "רישום חדש ב-%s"
+
+#: login_register.php:473
+#, php-format
+msgid "Hello %s ...<br />Thank you for your registration."
+msgstr "שלום <span dir=\"ltr\">%s</span> ...<br />תודה שנרשמת."
+
+#: login_register.php:475
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password."
+msgstr "נשלח לך דואר של אישור לכתובת האלקטרונית <span dir=\"ltr\"><b>%s</b></span>. עליך לאשר את בקשת קוד המשתמש שלך לפי ההוראות המופיעות בדואר של האישור. אם לא תאשר את בקשת קוד המשתמש תוך שבעה ימים,  הבקשה לקוד משתמש תדחה באופן אוטומטי ואז יהיה עליך להירשם שנית.<br /><br />אחרי שתנהג לפי ההוראות המופיעות בדואר של האישור, על המנהלן עדיין לאשר את המשתמש שלך לפני שיהיה ניתן להשתמש בקוד המשתמש שלך.<br /><br />כדי להתחבר לאתר זה, עליך לדעת קוד משתמש וסיסמא."
+
+#: login_register.php:476
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password."
+msgstr "נשלח לך דואר של אישור לכתובת האלקטרונית <span dir=\"ltr\"><b>%s</b></span>. עליך לאשר את בקשת קוד המשתמש שלך לפי ההוראות המופיעות בדואר של האישור. אם לא תאשר את בקשת קוד המשתמש תוך שבעה ימים,  הבקשה לקוד משתמש תדחה באופן אוטומטי ואז יהיה עליך להירשם שנית.<br /><br />אחרי שתנהג לפי ההוראות המופיעות בדואר של האישור תוכל להתחבר לאתר. כדי להתחבר לאתר זה, יש לדעת קוד משתמש וסיסמא."
+
 #: login_register.php:506
 #: login_register.php:513
 #: login_register.php:541
 #: login_register.php:544
-#, fuzzy
 msgid "User verification"
-msgstr "_ניהול משתמשים"
+msgstr "אמות משתמש"
 
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
 msgstr "שלח"
+
+#: login_register.php:546
+#, php-format
+msgid "The data for the user <b>%s</b> was checked."
+msgstr "הנתונים על המשתמש <span dir=\"ltr\"><b>%s</b></span> נבדקו."
+
+#: login_register.php:566
+#, php-format
+msgid "User %s (%s) has confirmed his request for an account."
+msgstr "המשתמש <span dir=\"ltr\">%s - %s</span> אישר את נתוני הרישום שלו."
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
@@ -9951,6 +9882,11 @@ msgstr "השתמש בקישור מתחת כדי להתחבר לאתר שלך, ל
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
 msgstr "לא נדרשת פעולה מצידך; המשתמש יכול עכשיו להתחבר."
+
+#: login_register.php:581
+#, php-format
+msgid "New user at %s"
+msgstr "משתמש חדש ב-%s"
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
@@ -10011,18 +9947,16 @@ msgid "Ban Sites by IP"
 msgstr "אסור אתרים לפי IP"
 
 #: manageservers.php:325
-#, fuzzy
 msgid "Remote Servers"
-msgstr "הסר אדם"
+msgstr "שרתים מרוחקים"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
 msgstr "האם באמת למחוק מקור זה?"
 
 #: manageservers.php:344
-#, fuzzy
 msgid "View Connections"
-msgstr "חיבור מאובטח"
+msgstr "ראה קישורים"
 
 #: manageservers.php:368
 #: manageservers.php:444
@@ -10030,9 +9964,8 @@ msgid "Site URL/IP"
 msgstr "URL/IP של האתר"
 
 #: manageservers.php:430
-#, fuzzy
 msgid "Add new site"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף אתר"
 
 #: media.php:92
 msgid "Directory could not be created"
@@ -10052,9 +9985,8 @@ msgstr "גבול זמן העיבוד הושג.  נסה את הפקודה שני�
 
 #: media.php:181
 #: media.php:189
-#, fuzzy
 msgid "Permissions Set"
-msgstr "הגדר הרשאות של המדיה"
+msgstr "ההרשאות הוגדרו"
 
 #: media.php:183
 #: media.php:191
@@ -10090,9 +10022,8 @@ msgstr "תיקיות המדיה והתמונות המזעריות הוסרו ב�
 #: media.php:415
 #: media.php:417
 #: media.php:418
-#, fuzzy
 msgid "Media directory not removed."
-msgstr "מספר הרמות של תיקיות מולטימדיה"
+msgstr "תיקיית המדיה לא הוסרה."
 
 #: media.php:420
 #: media.php:421
@@ -10155,20 +10086,17 @@ msgid "Thumbnail file could not be deleted."
 msgstr "לא ניתן למחוק את קובץ התמונה המזערית."
 
 #: media.php:751
-#, fuzzy
 msgid "Manage links"
-msgstr "שמור קישורים"
+msgstr "נהל קישורים"
 
 #: media.php:829
 #: media.php:830
-#, fuzzy
 msgid "Add Media"
-msgstr "מצא מדיה"
+msgstr "הוסף מדיה"
 
 #: media.php:843
-#, fuzzy
 msgid "Missing thumbnails"
-msgstr "צור תמונות מזעריות חסרות"
+msgstr "תמונות מזעריות חסרות"
 
 #: media.php:939
 msgid "Are you sure you want to delete this folder?"
@@ -10179,23 +10107,20 @@ msgid "Are you sure you want to delete this file?"
 msgstr "אשר שברצונך למחוק קובץ זה."
 
 #: media.php:1038
-#, fuzzy
 msgid "Delete file"
-msgstr "מחק שם"
+msgstr "מחק קובץ"
 
 #: media.php:1046
 msgid "Are you sure you want to remove this object from the database?"
 msgstr "האם אתה בטוח שתרצה להסיר את ישות המדיה הזו ממאגר הנתונים?"
 
 #: media.php:1046
-#, fuzzy
 msgid "Remove object"
-msgstr "הסר אדם"
+msgstr "הסר ישות מדיה"
 
 #: media.php:1081
-#, fuzzy
 msgid "Create thumbnail"
-msgstr "צור תמונות מזעריות חסרות"
+msgstr "צור תמונה מזערית"
 
 #: media.php:1170
 msgid "The media folder is corrupted."
@@ -10214,15 +10139,13 @@ msgid "Privacy restrictions prevent you from viewing this item"
 msgstr "הגבלות פרטיות מונעות ממך לראות פריט זה"
 
 #: mediafirewall.php:530
-#, fuzzy
 msgid "This media file is broken and cannot be watermarked"
-msgstr "הנתונים הם פרטיים ולא ניתן להראות אותם."
+msgstr "קובץ המדיה הזה פגום ואינו ניתן לסמן אותו בסימן מים"
 
 #: medialist.php:53
 #: medialist.php:57
-#, fuzzy
 msgid "MultiMedia Objects"
-msgstr "תיקיית מולטימדיה"
+msgstr "ישויות מולטימדיה"
 
 #: medialist.php:131
 msgid "Media objects per page"
@@ -10258,19 +10181,16 @@ msgstr "ראה פרטים"
 
 #: medialist.php:404
 #: medialist.php:408
-#, fuzzy
 msgid "Media Format"
-msgstr "מבנה לוח שנה"
+msgstr "מבנה המדיה"
 
 #: mediaviewer.php:104
-#, fuzzy
 msgid "Download File"
-msgstr "הורד GEDCOM"
+msgstr "הורד קובץ"
 
 #: mediaviewer.php:143
-#, fuzzy
 msgid "The image relates to:"
-msgstr "בדוק קשרי נישואין"
+msgstr "האימג' קשור ל-:"
 
 #: mediaviewer.php:147
 msgid "Total links"
@@ -10287,6 +10207,10 @@ msgstr "לא סיפקת משתמש מקבל. לא ניתן להמשיך."
 msgid "Please enter a valid email address."
 msgstr ".הכנס כתובת דואר אלקטרוני בר תוקף"
 
+#: message.php:138
+msgid "Message successfully sent to %s"
+msgstr "ההודעה נשלחה בהצלחה ל-%s"
+
 #: message.php:167
 msgid "Please enter a message subject."
 msgstr "הכנס נושא להודעתך"
@@ -10298,6 +10222,16 @@ msgstr ".מלא טכסט לפני שאתה שולח את ההודעה"
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
 msgstr "<b>שים לב:</b> נתונים אישיים של אנשים חיים נמסרים רק לקרובי משפחה וחברים קרובים. תתבקש לאשר את הקשר שלך לפני שתוכל לראות נתונים אישיים. לפעמים גם הנתונים של אנשים שנפטרו הם פרטיים מכיוון שאין מספיק מידע על האדם כדי לקבוע אם הוא חי או מת ולנו אין, כפי הנראה, מידע נוסף על האדם.<br /><br />נא בדוק את התאריכים, המקומות וקרובי המשפחה של האדם, כדי לוודא שמדובר באדם הנכון לפני פנייה אלינו. אנחנו מבקשים שתוסיף מידע על המקור שממנו השגת את הנתונים, במידה ותוסיף או תשנה נתונים."
+
+#: message.php:192
+#, php-format
+msgid "This message will be sent to %s"
+msgstr "ההודעה תשלח ל-%s"
+
+#: message.php:193
+#, php-format
+msgid "This user prefers to receive messages in %s"
+msgstr "המשתמש מעדיף לקבל הודעות בשפה %s"
 
 #: message.php:197
 msgid "Your Name:"
@@ -10316,9 +10250,8 @@ msgid "Subject:"
 msgstr "נושא:"
 
 #: message.php:211
-#, fuzzy
 msgid "Body:"
-msgstr "גוף ה-FAQ"
+msgstr "גוף:"
 
 #: message.php:218
 msgid "Message Deleted"
@@ -10333,9 +10266,8 @@ msgid "Unknown module type."
 msgstr "סוג מודול בלתי ידוע."
 
 #: module_admin.php:42
-#, fuzzy
 msgid "Show to public"
-msgstr "הראה צלמיות של עובדות"
+msgstr "הראה לקהל הרחב"
 
 #: module_admin.php:46
 msgid "Show only to authenticated users"
@@ -10354,18 +10286,16 @@ msgid "Below is the list of all the modules installed in this instance of PhpGed
 msgstr "למטה תמצא את הרשימה של כל המודולים שהותקנו בהתקנה הזו של PhpGedView.  מודולים מותקנים בכך ששמים אותם בתיקיית <i>modules</i>.  כאן ניתן להגדיר את רמת ההרשאות לפי קובץ GEDCOM לכל מודול.  אם המודול כולל חוצצים בדף האישי או תפריטים בסרגל התפריטים, ניתן להגדיר גם את רמת הגישה והסדר של כל אחד מהם."
 
 #: module_admin.php:184
-#, fuzzy
 msgid "Return to Administration page"
-msgstr "_GEDCOM: דף ניהול"
+msgstr "חזור לדף הניהול"
 
 #: module_admin.php:191
 msgid "Installed Modules"
 msgstr "מודולים שהותקנו"
 
 #: module_admin.php:192
-#, fuzzy
 msgid "Manage Menus"
-msgstr "נהל מולטימדיה"
+msgstr "נהל תפריטים"
 
 #: module_admin.php:193
 msgid "Manage Tabs"
@@ -10384,17 +10314,15 @@ msgstr "ערכי מודולים"
 #: module_admin.php:251
 #: module_admin.php:302
 #: module_admin.php:353
-#, fuzzy
 msgid "Module Name"
-msgstr "מחק שם"
+msgstr "שם המודול"
 
 #: module_admin.php:204
 #: module_admin.php:252
 #: module_admin.php:303
 #: module_admin.php:354
-#, fuzzy
 msgid "Description"
-msgstr "תווית META של תאור"
+msgstr "תאור"
 
 #: module_admin.php:205
 msgid "Version / PGV"
@@ -10405,9 +10333,8 @@ msgid "Tab?"
 msgstr "חוצץ?"
 
 #: module_admin.php:207
-#, fuzzy
 msgid "Menu?"
-msgstr "תפריטים"
+msgstr "תפריט?"
 
 #: module_admin.php:208
 msgid "Sidebar?"
@@ -10428,26 +10355,26 @@ msgstr "סדר"
 
 #: note.php:131
 #: repo.php:103
-#, fuzzy
 msgid "Link to an existing Media item"
-msgstr "הוסף מדיה חדשה"
+msgstr "קשר לישות מדיה קיימת"
 
 #: notelist.php:31
 #: notelist.php:32
 #: search.php:213
-#, fuzzy
 msgid "Shared Notes"
-msgstr "הוסף הערה משותפת חדשה"
+msgstr "הערות משותפות"
+
+#: pedigree.php:52
+msgid "%s Generation Pedigree Chart"
+msgstr "תרשים אילן יוחסין עבור %s דורות"
 
 #: pedigree.php:90
-#, fuzzy
 msgid "Orientation"
-msgstr "סגנון תצוגה"
+msgstr "כוון"
 
 #: pedigree.php:125
-#, fuzzy
 msgid "Oldest at top"
-msgstr "הראה את הישן למעלה"
+msgstr "המבוגרים ביותר למעלה"
 
 #: pedigree.php:128
 msgid "Oldest at bottom"
@@ -10462,14 +10389,12 @@ msgstr "היררכית המקומות"
 #: placelist.php:55
 #: placelist.php:59
 #: placelist.php:433
-#, fuzzy
 msgid "Place List"
-msgstr "רשימת שמות"
+msgstr "רשימת מקומות"
 
 #: placelist.php:118
-#, fuzzy
 msgid "Place connections found"
-msgstr "חיבור מאובטח"
+msgstr "קשרים נמצאו למקום"
 
 #: placelist.php:125
 #: placelist.php:157
@@ -10480,9 +10405,8 @@ msgstr "רמה עליונה"
 #: placelist.php:432
 #: search.php:298
 #: search.php:337
-#, fuzzy
 msgid "Place"
-msgstr "דף"
+msgstr "מקום"
 
 #: placelist.php:309
 msgid "Place Hierarchy after"
@@ -10493,9 +10417,8 @@ msgid "View all records found in this place"
 msgstr "התבונן בכל הרשומות הנמצאות במקום הזה"
 
 #: placelist.php:468
-#, fuzzy
 msgid "Total Unique Places"
-msgstr "נקה מקומות"
+msgstr "סה\"כ מקומות שונים"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
@@ -10526,9 +10449,8 @@ msgstr "רענן"
 
 #: printlog.php:91
 #: printlog.php:113
-#, fuzzy
 msgid "Date and time"
-msgstr "שם מסד הנתונים"
+msgstr "תאריך וזמן"
 
 #: printlog.php:91
 #: printlog.php:113
@@ -10540,9 +10462,8 @@ msgid "Log Message"
 msgstr "הודעת לוג"
 
 #: printlog.php:113
-#, fuzzy
 msgid "Search type"
-msgstr "סוג מקור "
+msgstr "סוג חיפוש"
 
 #: printlog.php:113
 msgid "Query"
@@ -10707,9 +10628,8 @@ msgstr "%1$s היא %2$s של %3$s"
 
 #: relationship.php:485
 #: relationship.php:564
-#, fuzzy
 msgid "Relationship Chart"
-msgstr "השתמש בפרטיות בקשרי משפחה"
+msgstr "קירבה משפחתית"
 
 #: relationship.php:535
 msgid "and"
@@ -10725,9 +10645,8 @@ msgstr "אדם ב'"
 
 #: relationship.php:677
 #: relationship.php:698
-#, fuzzy
 msgid "Show path"
-msgstr "נתיב טעינה"
+msgstr "הראה את הנתיב"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
@@ -10743,9 +10662,8 @@ msgid "Choose a report to run"
 msgstr "בחר דו\"ח להרצה"
 
 #: reportengine.php:154
-#, fuzzy
 msgid "Select report"
-msgstr "מחק מאגר"
+msgstr "בחר דו&quot;ח"
 
 #: reportengine.php:170
 #: reportengine.php:219
@@ -10753,18 +10671,21 @@ msgid "Enter report values"
 msgstr "הכנס ערכי הדו\"ח"
 
 #: reportengine.php:220
-#, fuzzy
 msgid "Selected Report"
-msgstr "מחק מאגר"
+msgstr "דו\"ח נבחר"
 
 #: reportengine.php:312
 msgid "Select a date"
 msgstr "בחר תאריך"
 
 #: reportengine.php:344
-#, fuzzy
 msgid "Download report"
-msgstr "הורד GEDCOM"
+msgstr "הורד דו&quot;ח"
+
+#: rss.php:110
+#, php-format
+msgid "News and links from the %s site"
+msgstr "חדשות וקישורים מאתר ה-%s "
 
 #: rss.php:116
 #: rss.php:119
@@ -10778,9 +10699,8 @@ msgstr "ההזנה נוצרה ע\"י PhpGedView"
 #: rss.php:289
 #: rss.php:309
 #: rss.php:328
-#, fuzzy
 msgid "genealogy"
-msgstr "הקשר לנתוני שושלת יוחסין"
+msgstr "חקר שושלות יוחסין"
 
 #: rss.php:321
 msgid "Feed not available"
@@ -10838,9 +10758,8 @@ msgstr "שותפים"
 
 #: search.php:246
 #: search.php:387
-#, fuzzy
 msgid "Show related persons/families"
-msgstr "הראה אנשים שנפטרו"
+msgstr "הראה אנשים/משפחות קשורים"
 
 #: search.php:270
 msgid "Replace with"
@@ -10855,14 +10774,12 @@ msgid "Whole words only"
 msgstr "מילים שלמות בלבד"
 
 #: search.php:318
-#, fuzzy
 msgid "Given name"
-msgstr "שם השולח"
+msgstr "פרטי"
 
 #: search.php:329
-#, fuzzy
 msgid "Last name"
-msgstr "קוד משתמש"
+msgstr "משפחה"
 
 #: search.php:345
 #, fuzzy
@@ -10870,18 +10787,16 @@ msgid "Year"
 msgstr "כותרת"
 
 #: search.php:354
-#, fuzzy
 msgid "Soundex type:"
-msgstr "סוג מקור "
+msgstr "סוג סאונדקס:"
 
 #: search.php:369
 msgid "Individuals'<br />names to print:"
 msgstr "שמות אנשים<br />להדפסה:"
 
 #: search.php:374
-#, fuzzy
 msgid "Names with hit"
-msgstr "רשימת שמות"
+msgstr "שמות שנמצאו"
 
 #: search.php:377
 msgid "All names"
@@ -10891,9 +10806,8 @@ msgstr "כל השמות"
 #: search.php:578
 #: search.php:590
 #: search.php:604
-#, fuzzy
 msgid "Multi Site Search"
-msgstr "הראה חיפוש באתרים מרובים"
+msgstr "חיפוש רב אתרים"
 
 #: search.php:404
 msgid "Sites to search"
@@ -10912,14 +10826,12 @@ msgid "search"
 msgstr "חיפוש"
 
 #: search.php:455
-#, fuzzy
 msgid "Advanced site search"
-msgstr "עובדות מתקדמות של שם"
+msgstr "חיפוש מתקדם באתר"
 
 #: search.php:461
-#, fuzzy
 msgid "Name: "
-msgstr "רשימת שמות"
+msgstr "שם: "
 
 #: search.php:473
 msgid "Birth date: "
@@ -10938,14 +10850,12 @@ msgid "Death Place: "
 msgstr "מקום פטירה: "
 
 #: search.php:505
-#, fuzzy
 msgid "Gender: "
-msgstr "שם השולח"
+msgstr "מגדר: "
 
 #: search.php:522
-#, fuzzy
 msgid "Databases to search in"
-msgstr "קוד משתמש של מסד נתונים"
+msgstr "מאגרי נתונים בהם יש לחפש"
 
 #: search.php:548
 msgid "Results per page"
@@ -10958,17 +10868,15 @@ msgstr "חיפושים אחרים"
 #: search.php:569
 #: search.php:585
 #: search.php:617
-#, fuzzy
 msgid "Soundex Search"
-msgstr "הראה חיפוש באתרים מרובים"
+msgstr "חיפוש סאונדקס"
 
 #: search.php:570
 #: search.php:586
 #: search.php:597
 #: search.php:618
-#, fuzzy
 msgid "Advanced Search"
-msgstr "עובדות מתקדמות של שם"
+msgstr "חיפוש מתקדם"
 
 #: searchhelp.php:89
 msgid "Any word"
@@ -10983,28 +10891,24 @@ msgid "Exact phrase"
 msgstr "ביטוי מדויק"
 
 #: searchhelp.php:100
-#, fuzzy
 msgid "Search in"
-msgstr "טכסט של אופציות החיפוש"
+msgstr "חפש ב-"
 
 #: searchhelp.php:104
-#, fuzzy
 msgid "User Help"
-msgstr "קוד משתמש"
+msgstr "עזרה למשתמשים"
 
 #: searchhelp.php:107
 msgid "Modules Help"
 msgstr "עזרה במודולים"
 
 #: searchhelp.php:112
-#, fuzzy
 msgid "Administrator Help"
-msgstr "_ניהול"
+msgstr "עזרה למנהלנים"
 
 #: searchhelp.php:126
-#, fuzzy
 msgid "Close window"
-msgstr "סגור אוטומטית חלון עריכה"
+msgstr "סגור חלון"
 
 #: searchhelp.php:197
 msgid "Results found:"
@@ -11046,9 +10950,8 @@ msgstr "שנים"
 #: search_advanced.php:244
 #: search_advanced.php:266
 #: search_advanced.php:281
-#, fuzzy
 msgid "Begins with"
-msgstr "רוחב התיבה"
+msgstr "מתחיל ב-"
 
 #: search_advanced.php:168
 #: search_advanced.php:230
@@ -11077,9 +10980,8 @@ msgstr "PhpGedView automatically provides search engines with smaller data files
 #: search_engine.php:60
 #: search_engine.php:69
 #: uploadgedcom.php:1106
-#, fuzzy
 msgid "Welcome page"
-msgstr "טכסט ברוכים הבאים על דף התחברות "
+msgstr "דף ברוכים הבאים"
 
 #: statistics.php:57
 msgid "Total males"
@@ -11151,32 +11053,28 @@ msgid "Oldest living people"
 msgstr "אנשים שחיים הכי הרבה זמן"
 
 #: statistics.php:160
-#, fuzzy
 msgid "Total surnames"
-msgstr "הראה את כל המקורות"
+msgstr "סה\"כ שמות משפחה"
 
 #: statistics.php:161
-#, fuzzy
 msgid "Total given names"
-msgstr "הראה שמות של אנשים חיים"
+msgstr "סה\"כ שמות פרטיים"
 
 #: statistics.php:168
 msgid "Top surnames"
 msgstr "שמות המשפחה הנפוצים"
 
 #: statistics.php:169
-#, fuzzy
 msgid "Top given names"
-msgstr "הראה שמות של אנשים חיים"
+msgstr "שמות הפרטיים הנפוצים"
 
 #: statistics.php:187
 msgid "Total marriages"
 msgstr "סה\"כ נישואין"
 
 #: statistics.php:188
-#, fuzzy
 msgid "Total divorces"
-msgstr "הראה את כל המקורות"
+msgstr "סה\"כ גירושים"
 
 #: statistics.php:195
 msgid "Marriages by century"
@@ -11268,18 +11166,16 @@ msgid "Number of families without children"
 msgstr "מספר המשפחות ללא ילדים"
 
 #: statistics.php:290
-#, fuzzy
 msgid "Largest families"
-msgstr "קבצי שפות"
+msgstr "המשפחות הגדולות"
 
 #: statistics.php:291
 msgid "Largest grandfamilies"
 msgstr "משפחת הסבים הגדולה"
 
 #: statistics.php:302
-#, fuzzy
 msgid "Age difference"
-msgstr "הראה הפרשי תאריכים"
+msgstr "הבדל גילים"
 
 #: statistics.php:305
 msgid "Age between siblings"
@@ -11324,9 +11220,8 @@ msgstr "אירוע אחרון"
 
 #: statistics.php:372
 #: statisticsplot.php:837
-#, fuzzy
 msgid "Individuals with sources"
-msgstr "קידומת קוד זיהוי אישי "
+msgstr "אנשים עם מקורות"
 
 #: statistics.php:373
 #: statisticsplot.php:843
@@ -11334,18 +11229,16 @@ msgid "Families with sources"
 msgstr "משפחות עם מקורות"
 
 #: statistics.php:386
-#, fuzzy
 msgid "Places"
-msgstr "נקה מקומות"
+msgstr "מקומות"
 
 #: statistics.php:389
 msgid "Birth places"
 msgstr "מקומות לידה"
 
 #: statistics.php:390
-#, fuzzy
 msgid "Death places"
-msgstr "נקה מקומות"
+msgstr "מקומות פטירה"
 
 #: statistics.php:397
 msgid "Marriage places"
@@ -11356,9 +11249,8 @@ msgid "Events in countries"
 msgstr "אירועים בארצות"
 
 #: statistics.php:415
-#, fuzzy
 msgid "Create your own chart"
-msgstr "נתונים אחרים שניתן להציג בתרשימים"
+msgstr "צור תרשים אישי"
 
 #: statistics.php:517
 msgid "Fill in the following parameters for the plot"
@@ -11398,14 +11290,12 @@ msgstr "גיל בנישואין הראשונים"
 
 #: statistics.php:566
 #: statisticsplot.php:785
-#, fuzzy
 msgid "Number of children"
-msgstr "סדר מחדש את הילדים"
+msgstr "מספר ילדים"
 
 #: statistics.php:570
-#, fuzzy
 msgid "Individual distribution"
-msgstr "קידומת קוד זיהוי אישי "
+msgstr "התפלגות אישית"
 
 #: statistics.php:574
 msgid "Birth by country"
@@ -11475,14 +11365,12 @@ msgid "Map type"
 msgstr "סוג מפה"
 
 #: statistics.php:642
-#, fuzzy
 msgid "Individual distribution chart"
-msgstr "עובדות אישיות שניתן להוסיף"
+msgstr "תרשים התפלגות אנשים"
 
 #: statistics.php:644
-#, fuzzy
 msgid "Surname distribution chart"
-msgstr "מסורת שם משפחה"
+msgstr "תרשים התפלגות שמות משפחה"
 
 #: statistics.php:657
 msgid "Geographical area"
@@ -11521,9 +11409,8 @@ msgid "none"
 msgstr "כלום"
 
 #: statistics.php:679
-#, fuzzy
 msgid "gender"
-msgstr "כותרת"
+msgstr "מגדר"
 
 #: statistics.php:683
 msgid "date periods"
@@ -11544,9 +11431,8 @@ msgstr "ספרות"
 
 #: statistics.php:727
 #: statisticsplot.php:791
-#, fuzzy
 msgid "percentage"
-msgstr "השינויים האחרונים"
+msgstr "אחוז"
 
 #: statistics.php:735
 msgid "show the plot"
@@ -11662,9 +11548,8 @@ msgid "..."
 msgstr "..."
 
 #: timeline.php:38
-#, fuzzy
 msgid "PhpGedView Timeline"
-msgstr "URL של PhpGedView"
+msgstr "תרשים קו הזמן של PhpGedView"
 
 #: timeline.php:298
 msgid "Show Age Marker"
@@ -11692,6 +11577,12 @@ msgstr "ברוב תוכנות הגלישה החדשות ניתן להקיש ול
 #: useradmin.php:1022
 msgid "Continue"
 msgstr "המשך"
+
+#: uploadgedcom.php:251
+#: uploadgedcom.php:590
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, is not writable. Please check attributes and access rights."
+msgstr "לא ניתן לכתוב על קובץ ה-GEDCOM, <b>%s</b>. בדוק תכונות והרשאות גישה."
 
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
@@ -11756,9 +11647,8 @@ msgid "Convert this ANSI encoded GEDCOM to UTF-8?"
 msgstr "הסב קובץ GEDCOM זה מ-ANSI ל-UTF-8?"
 
 #: uploadgedcom.php:737
-#, fuzzy
 msgid "Change Individual ID to:"
-msgstr "_GEDCOM: שנה קוד זיהוי אישי ל-..."
+msgstr "שנה קוד זיהוי אישי ל:"
 
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
@@ -11766,9 +11656,8 @@ msgid "Do not change"
 msgstr "אין לשנות"
 
 #: uploadgedcom.php:795
-#, fuzzy
 msgid "Import complete"
-msgstr "אופציות ייבוא"
+msgstr "הייבוא הסתיים"
 
 #: uploadgedcom.php:795
 #: uploadgedcom.php:844
@@ -11786,9 +11675,8 @@ msgid "Import Progress..."
 msgstr "התקדמות הייבוא..."
 
 #: uploadgedcom.php:904
-#, fuzzy
 msgid "Reading GEDCOM file"
-msgstr "כותרת GEDCOM"
+msgstr "קובץ GEDCOM בקריאה"
 
 #: uploadgedcom.php:908
 msgid "The status bars below will let you know how the Import is progressing.  If the time limit runs out the Import will be stopped and you will be asked to press a <b>Continue</b> button.  If you don't see the <b>Continue</b> button, you must restart the Import with a smaller time limit value."
@@ -11800,14 +11688,12 @@ msgstr "עברת את גבול זמן העיבוד. לחץ על כפתור המ�
 
 #: uploadgedcom.php:1104
 #: uploadgedcom.php:1117
-#, fuzzy
 msgid "Execution time:"
-msgstr "פסק-זמן מהתחברות עד לניתוק אוטומטי"
+msgstr "זמן העיבוד:"
 
 #: uploadgedcom.php:1105
-#, fuzzy
 msgid "Click here to go to the Pedigree tree."
-msgstr "לחץ כאן כדי להמשיך"
+msgstr "הקשה כאן מביאה לאילן יוחסין"
 
 #: uploadgedcom.php:1118
 msgid "Bytes read:"
@@ -11818,9 +11704,18 @@ msgid "Found record"
 msgstr "רשומה נמצאה"
 
 #: uploadgedcom.php:1138
-#, fuzzy
 msgid "Import Statistics"
-msgstr "אופציות ייבוא"
+msgstr "סטטיסטיקות ייבוא"
+
+#: useradmin.php:194
+#, php-format
+msgid "Approval of account at %s"
+msgstr "אישור משתמש על %s"
+
+#: useradmin.php:195
+#, php-format
+msgid "The administrator at the PhpGedView site %s has approved your application for an account.  You may now login by accessing the following link: %s#"
+msgstr ""
 
 #: useradmin.php:269
 #: useradmin.php:274
@@ -11831,9 +11726,8 @@ msgstr "עדכן נתוני המשתמש"
 #: useradmin.php:345
 #: useradmin.php:639
 #: useradmin.php:799
-#, fuzzy
 msgid "User can administer"
-msgstr "_ניהול משתמשים"
+msgstr "המשתמש יכול לנהל"
 
 #: useradmin.php:362
 #: useradmin.php:800
@@ -11842,9 +11736,8 @@ msgstr "רמת גישה"
 
 #: useradmin.php:390
 #: useradmin.php:823
-#, fuzzy
 msgid "Automatically accept changes made by this user"
-msgstr "הרחב אוטומטית את המקורות"
+msgstr "קבל בצורה אוטומטית את השינויים שמשתמש זה עושה"
 
 #: useradmin.php:392
 #: useradmin.php:825
@@ -11853,9 +11746,8 @@ msgstr "הגבלת כניסה רק לקרובי משפחה"
 
 #: useradmin.php:394
 #: useradmin.php:827
-#, fuzzy
 msgid "Max relationship privacy path length"
-msgstr "אורך מכסימלי של נתיב קשר משפחתי"
+msgstr "האורך המכסימלי של שביל קישור הפרטיות"
 
 #: useradmin.php:397
 #: useradmin.php:592
@@ -11871,9 +11763,8 @@ msgstr "המשתמש אושר ע\"י המנהלן"
 
 #: useradmin.php:457
 #: useradmin.php:883
-#, fuzzy
 msgid "Allow this user to edit his account information"
-msgstr "אפשר למשתמשים לבקש רישום באתר"
+msgstr "הרשאה למשתמש זה לערוך את נתוני המשתמש שלו"
 
 #: useradmin.php:476
 #: useradmin.php:903
@@ -11887,28 +11778,24 @@ msgstr "התראה למנהלן בתאריך"
 
 #: useradmin.php:560
 #: useradmin.php:1087
-#, fuzzy
 msgid "User List"
-msgstr "רשימת שמות"
+msgstr "רשימת משתמשים"
 
 #: useradmin.php:565
 #: useradmin.php:688
 #: useradmin.php:754
 #: useradmin.php:1088
-#, fuzzy
 msgid "Add a new user"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף משתמש חדש"
 
 #: useradmin.php:567
 #: useradmin.php:690
-#, fuzzy
 msgid "Back to User Administration"
-msgstr "_ניהול משתמשים"
+msgstr "חזור לניהול משתמשים"
 
 #: useradmin.php:576
-#, fuzzy
 msgid " Languages"
-msgstr "שפה"
+msgstr " שפות"
 
 #: useradmin.php:577
 #: useradmin.php:588
@@ -11921,9 +11808,8 @@ msgid "Date registered"
 msgstr "תאריך הרשמה"
 
 #: useradmin.php:591
-#, fuzzy
 msgid "Last logged in"
-msgstr "משתמשים מחוברים"
+msgstr "התחברות אחרונה ב-"
 
 #: useradmin.php:661
 msgid "Never"
@@ -11943,15 +11829,13 @@ msgid "Access"
 msgstr "גישה"
 
 #: useradmin.php:817
-#, fuzzy
 msgid "Admin GEDCOM"
-msgstr "הוסף GEDCOM"
+msgstr "ניהול GEDCOM"
 
 #: useradmin.php:930
 #: useradmin.php:1091
-#, fuzzy
 msgid "Cleanup users"
-msgstr "נקה מקומות"
+msgstr "ניקוי משתמשים"
 
 #: useradmin.php:937
 msgid "Number of months since the last login for a user's account to be considered inactive: "
@@ -11978,9 +11862,8 @@ msgid "Nothing found to cleanup"
 msgstr "לא נמצא כלום לנקות"
 
 #: useradmin.php:1037
-#, fuzzy
 msgid "Deleted user: "
-msgstr "מחק שם"
+msgstr "משתמש מחוק: "
 
 #: useradmin.php:1045
 msgid "Unset GEDCOM rights for "
@@ -12011,20 +11894,17 @@ msgid "Send message to users who have not logged in for 6 months"
 msgstr "שלח הודעה למשתמשים שלא התחברו למערכת ב-6  החודשים האחרונים"
 
 #: useradmin.php:1153
-#, fuzzy
 msgid "Total number of users"
-msgstr "מספר מכסימלי של שמות משפחה אישיים"
+msgstr "סה\"כ משתמשים"
 
 #: useradmin.php:1156
 #: useradmin.php:1157
-#, fuzzy
 msgid "Site Administrators"
-msgstr "_ניהול משתמשים"
+msgstr "מנהלני האתר"
 
 #: useradmin.php:1160
-#, fuzzy
 msgid "GEDCOM Administrators"
-msgstr "_GEDCOM: דף ניהול"
+msgstr "מנהלי GEDCOM"
 
 #: useradmin.php:1172
 #: useradmin.php:1173
@@ -12038,24 +11918,20 @@ msgstr "לא אומת ע\"י משתמש"
 
 #: useradmin.php:1182
 #: useradmin.php:1183
-#, fuzzy
 msgid "Unverified by Administrator"
-msgstr "_ניהול משתמשים"
+msgstr "לא אומת ע\"י מנהלן"
 
 #: usermigrate.php:58
-#, fuzzy
 msgid "PhpGedView Configuration File"
-msgstr "_GEDCOM: קובץ תצורה"
+msgstr "קובץ תצורה של PhpGedView"
 
 #: usermigrate.php:59
-#, fuzzy
 msgid "GEDCOM Files"
-msgstr "כותרת GEDCOM"
+msgstr "קבצי GEDCOM"
 
 #: usermigrate.php:60
-#, fuzzy
 msgid "GEDCOM Settings, Configuration and Privacy files"
-msgstr "_GEDCOM: קובץ תצורה"
+msgstr "קבצי הגדרות, תצורה ופרטיות של GEDCOM"
 
 #: usermigrate.php:61
 msgid "GEDCOM SearchLogs and PhpGedView Logfiles"
@@ -12066,9 +11942,8 @@ msgid "User definitions, Block settings, Favorites, Messages, News"
 msgstr "הגדרות משתמש, הגדרות אזורים, מועדפים, הודעות, חדשות"
 
 #: usermigrate.php:63
-#, fuzzy
 msgid "Media files"
-msgstr "העלאת קבצי מדיה"
+msgstr "קובצי מדיה"
 
 #: usermigrate.php:64
 msgid "Make Backup"
@@ -12103,14 +11978,12 @@ msgid "One or more files already exist. Do you want to overwrite them?"
 msgstr "קובץ אחד או יותר קיימים כבר. האם אתה רוצה לעלות עליהם?"
 
 #: usermigrate.php:172
-#, fuzzy
 msgid "Importing users"
-msgstr "אופציות ייבוא"
+msgstr "מייבא משתמשים"
 
 #: usermigrate.php:174
-#, fuzzy
 msgid "File <i>authenticate.php</i> not found in your index directory. Migration is cancelled."
-msgstr "כלי זה ייבא <i>authenticate.php</i> וקבצי <i>.dat</i> אחרים מתיקית ה-index שלך למאגר המידע שלך."
+msgstr "קובץ <i>authenticate.php</i> לא נמצא בתיקיית ה-index שלך. ההגירה מבוטלת."
 
 #: usermigrate.php:179
 #: usermigrate.php:191
@@ -12141,43 +12014,41 @@ msgid "No Favorites seem to be present in the system."
 msgstr "נראה שאין מועדפים במערכת."
 
 #: usermigrate.php:204
-#, fuzzy
 msgid "Importing news"
-msgstr "אופציות ייבוא"
+msgstr "מייבא חדשות"
 
 #: usermigrate.php:206
 msgid "No News seems to be present in the system."
 msgstr "נראה שאין חדשות במערכת."
 
 #: usermigrate.php:213
-#, fuzzy
 msgid "Importing blocks"
-msgstr "אופציות ייבוא"
+msgstr "מייבא אזורים"
 
 #: usermigrate.php:215
 msgid "No Blocks seems to be present in the system."
 msgstr "נראה שאין אזורים במערכת."
 
+#: blocks/block_htmlplus.php:40
+msgid "Advanced HTML"
+msgstr "HTML מתקדם"
+
 #: blocks/charts.php:40
-#, fuzzy
 msgid "Charts Block"
-msgstr "סגנון תרשים"
+msgstr "אזור תרשימים"
 
 #: blocks/charts.php:167
 #: blocks/gedcom_favorites.php:130
-#, fuzzy
 msgid "No such ID exists in this GEDCOM file."
-msgstr "סנכרן שינויים לתוך קובץ GEDCOM"
+msgstr "קוד זיהוי כזה לא קיים בקובץ GEDCOM הזה."
 
 #: blocks/gedcom_block.php:36
-#, fuzzy
 msgid "GEDCOM Welcome"
-msgstr "כותרת GEDCOM"
+msgstr "GEDCOM ברוכים הבאים"
 
 #: blocks/gedcom_favorites.php:36
-#, fuzzy
 msgid "GEDCOM Favorites"
-msgstr "כותרת GEDCOM"
+msgstr "מועדפי GEDCOM"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
@@ -12188,9 +12059,8 @@ msgid "Are you sure you want to remove this item from your list of Favorites?"
 msgstr "?האם באמת למחוק אדם זה מרשימת המועדפים שלך"
 
 #: blocks/gedcom_favorites.php:155
-#, fuzzy
 msgid "Add a new favorite"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף מועדף חדש"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
@@ -12205,9 +12075,8 @@ msgid "Enter an optional note about this favorite"
 msgstr "הכנס הערת בחירה על המועדף הזה"
 
 #: blocks/gedcom_news.php:36
-#, fuzzy
 msgid "GEDCOM News"
-msgstr "כותרת GEDCOM"
+msgstr "חדשות GEDCOM"
 
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
@@ -12223,89 +12092,96 @@ msgid "Are you sure you want to delete this News entry?"
 msgstr "האם באמת למחוק את כניסת החדשות הזו?"
 
 #: blocks/gedcom_news.php:165
-#, fuzzy
 msgid "Add a News article"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף מאמר חדשות"
 
 #: blocks/gedcom_news.php:196
-#, fuzzy
 msgid "No limit"
-msgstr "גודל הזיכרון המוקצה ל-PHP"
+msgstr "אין הגבלה"
 
 #: blocks/gedcom_news.php:197
-#, fuzzy
 msgid "Age of item"
-msgstr "הוסף ישות שאלות נפוצות (FAQ)"
+msgstr "גיל הכניסה"
 
 #: blocks/gedcom_news.php:198
-#, fuzzy
 msgid "Number of items"
-msgstr "מספר הימים שיש להציג"
+msgstr "מספר כניסות"
 
 #: blocks/gedcom_stats.php:40
 #: blocks/gedcom_stats.php:91
 #: blocks/rss_block.php:70
-#, fuzzy
 msgid "GEDCOM Statistics"
-msgstr "כותרת GEDCOM"
+msgstr "סטטיסטיקות GEDCOM"
 
-#: blocks/gedcom_stats.php:145
-#: blocks/gedcom_stats.php:330
+#: blocks/gedcom_stats.php:107
+#, php-format
+msgid "This GEDCOM was created using <b>%s %s</b>"
+msgstr "ה-GEDCOM הזה נוצר ע\"י תוכנת <b>%s %s</b>"
+
+#: blocks/gedcom_stats.php:112
+#, php-format
+msgid "This GEDCOM was created on <b>%s</b>"
+msgstr "ה-GEDCOM הזה נוצר ב-<b>%s</b>"
+
+#: blocks/gedcom_stats.php:114
+#, php-format
+msgid " on <b>%s</b>"
+msgstr " ב-<b>%s</b>"
+
+#: blocks/gedcom_stats.php:143
+#: blocks/gedcom_stats.php:328
 msgid "Total users"
 msgstr "סה\"כ משתמשים"
 
-#: blocks/gedcom_stats.php:159
-#: blocks/gedcom_stats.php:277
+#: blocks/gedcom_stats.php:157
+#: blocks/gedcom_stats.php:275
 msgid "Earliest birth year"
 msgstr "שנת הלידה המוקדמת ביותר"
 
-#: blocks/gedcom_stats.php:166
-#: blocks/gedcom_stats.php:285
+#: blocks/gedcom_stats.php:164
+#: blocks/gedcom_stats.php:283
 msgid "Latest birth year"
 msgstr "שנת הלידה המאוחרת ביותר"
 
-#: blocks/gedcom_stats.php:173
-#: blocks/gedcom_stats.php:293
+#: blocks/gedcom_stats.php:171
+#: blocks/gedcom_stats.php:291
 msgid "Earliest death year"
 msgstr "שנת הפטירה המוקדמת ביותר"
 
-#: blocks/gedcom_stats.php:180
-#: blocks/gedcom_stats.php:301
+#: blocks/gedcom_stats.php:178
+#: blocks/gedcom_stats.php:299
 msgid "Latest death year"
 msgstr "שנת הפטירה המאוחרת ביותר"
 
-#: blocks/gedcom_stats.php:188
-#: blocks/gedcom_stats.php:309
+#: blocks/gedcom_stats.php:186
+#: blocks/gedcom_stats.php:307
 msgid "Person who lived the longest"
 msgstr "האדם אשר חי הכי הרבה זמן"
 
-#: blocks/gedcom_stats.php:204
-#: blocks/gedcom_stats.php:325
+#: blocks/gedcom_stats.php:202
+#: blocks/gedcom_stats.php:323
 msgid "Family with the most children"
 msgstr "משפחה עם הכי הרבה ילדים"
 
-#: blocks/gedcom_stats.php:219
+#: blocks/gedcom_stats.php:217
 msgid "View statistics as graphs"
 msgstr "ראה תרשימים סטטיסטיים"
 
-#: blocks/gedcom_stats.php:227
+#: blocks/gedcom_stats.php:225
 msgid "Most Common Surnames"
 msgstr "שמות משפחה שכיחים"
 
-#: blocks/gedcom_stats.php:259
-#, fuzzy
+#: blocks/gedcom_stats.php:257
 msgid "Show common surnames?"
-msgstr "הראה שמות של אנשים חיים"
+msgstr "הראה שמות משפחה שכיחים?"
 
-#: blocks/gedcom_stats.php:268
-#, fuzzy
+#: blocks/gedcom_stats.php:266
 msgid "Select the stats to show in this block"
-msgstr "נתונים אחרים שניתן להציג בתרשימים"
+msgstr "בחר את הנתונים הסטטיסטיים שיוצגו באזור זה"
 
-#: blocks/gedcom_stats.php:339
-#, fuzzy
+#: blocks/gedcom_stats.php:337
 msgid "Show link to Statistics charts?"
-msgstr "הראה נתוני לידה ופטירה בתרשימים"
+msgstr "הראה קישור לתרשימים סטטיסטיים?"
 
 #: blocks/getting_started.php:48
 #: blocks/getting_started.php:59
@@ -12317,9 +12193,8 @@ msgid "Choose one of these options to get started using PhpGedView"
 msgstr "בחר באופציה מתחת כדי להתחיל להשתמש ב-PhpGedView"
 
 #: blocks/getting_started.php:62
-#, fuzzy
 msgid "Upload a GEDCOM file"
-msgstr "העלה GEDCOM"
+msgstr "העלה קובץ GEDCOM"
 
 #: blocks/getting_started.php:65
 msgid "Add a GEDCOM from a file location"
@@ -12338,7 +12213,6 @@ msgid "to change what is printed here.</p>"
 msgstr "כדי לראות מה שמודפס כאן.</p>"
 
 #: blocks/logged_in.php:36
-#, fuzzy
 msgid "Logged In Users"
 msgstr "משתמשים מחוברים"
 
@@ -12374,9 +12248,8 @@ msgid "Logged in as "
 msgstr "מחובר בקוד"
 
 #: blocks/random_media.php:38
-#, fuzzy
 msgid "Random Media"
-msgstr "מצא מדיה"
+msgstr "מדיה אקראית"
 
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
@@ -12400,9 +12273,8 @@ msgid "Stop"
 msgstr "עצור"
 
 #: blocks/random_media.php:341
-#, fuzzy
 msgid "Persons"
-msgstr "הסר אדם"
+msgstr "אנשים"
 
 #: blocks/random_media.php:415
 msgid "Other"
@@ -12417,14 +12289,12 @@ msgid "If you hide an empty block, you will not be able to change its configurat
 msgstr "אם תסתיר אזור ריק, לא תוכל לשנות את ההגדרות שלו כל עוד הוא ריק ומוסתר."
 
 #: blocks/review_changes.php:39
-#, fuzzy
 msgid "Pending Changes"
-msgstr "השינויים האחרונים"
+msgstr "שינויים תלויים ועומדים"
 
 #: blocks/review_changes.php:83
-#, fuzzy
 msgid "PhpGedView - Review changes"
-msgstr "כתובת מענה עבור PhpGedView"
+msgstr "PhpGedView - סקור שינויי"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
@@ -12452,18 +12322,16 @@ msgid "RSS Feeds"
 msgstr "הזנות RSS"
 
 #: blocks/rss_block.php:69
-#, fuzzy
 msgid "Upcoming Events"
-msgstr "הגבלת הימים באזור האירועים הקרובים"
+msgstr "אירועים קרובים"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
 msgstr "עשרת השמות השכיחים "
 
 #: blocks/theme_select.php:36
-#, fuzzy
 msgid "Theme Select"
-msgstr "תיקיית עיצוב"
+msgstr "בחירת עיצוב"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
@@ -12475,15 +12343,13 @@ msgstr "ביום הזה"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
-#, fuzzy
 msgid "Show only events of living people?"
-msgstr "הראה רק אנשים, מאורעות, או הכול?"
+msgstr "הצג רק אירועים של אנשים חיים?"
 
 #: blocks/todays_events.php:167
 #: blocks/upcoming_events.php:192
-#, fuzzy
 msgid "Alphabetically"
-msgstr "אותיות קטנות"
+msgstr "לפי אלף-בית"
 
 #: blocks/todays_events.php:168
 #: blocks/upcoming_events.php:193
@@ -12498,9 +12364,8 @@ msgstr "הרשה הורדת אירועי לוח שנה?"
 
 #: blocks/todo.php:39
 #: blocks/todo.php:72
-#, fuzzy
 msgid "&quot;To Do&quot; tasks"
-msgstr "הצג &quot;משימות - To Do&quot; לביצוע אשר שוייכו למשתמשים אחרים"
+msgstr "&quot;משימות - To Do&quot; לביצוע"
 
 #: blocks/todo.php:113
 msgid "There are no &quot;To Do&quot; tasks."
@@ -12514,9 +12379,8 @@ msgstr "עשרת השמות הפרטיים השכיחים"
 #: blocks/top10_givnnames.php:130
 #: blocks/top10_pageviews.php:131
 #: blocks/top10_surnames.php:143
-#, fuzzy
 msgid "Number of items to show"
-msgstr "מספר הימים שיש להציג"
+msgstr "מספר פריטים להצגה"
 
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
@@ -12536,9 +12400,8 @@ msgid "Place counts before or after name?"
 msgstr "שים מונים לפני או אחרי השם?"
 
 #: blocks/user_blog.php:36
-#, fuzzy
 msgid "User Journal"
-msgstr "קוד משתמש"
+msgstr "יומן המשתמש"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
@@ -12553,24 +12416,20 @@ msgid "Are you sure you want to delete this Journal entry?"
 msgstr "האם באמת למחוק את כניסת היומן הזו?"
 
 #: blocks/user_blog.php:94
-#, fuzzy
 msgid "Add a new Journal entry"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף כניסת יומן חדשה"
 
 #: blocks/user_favorites.php:38
-#, fuzzy
 msgid "User Favorites"
-msgstr "צלמית של מועדפים"
+msgstr "מועדפים של משתמש"
 
 #: blocks/user_favorites.php:60
-#, fuzzy
 msgid "My Favorites"
-msgstr "צלמית של מועדפים"
+msgstr "מועדפים שלי"
 
 #: blocks/user_messages.php:38
-#, fuzzy
 msgid "User Messages"
-msgstr "קוד משתמש"
+msgstr "הודעות המשתמש"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
@@ -12602,18 +12461,16 @@ msgid "Broadcast to all users"
 msgstr "שדר לכל המשתמשים"
 
 #: blocks/user_welcome.php:36
-#, fuzzy
 msgid "User Welcome"
-msgstr "קוד משתמש"
+msgstr "ברוכים הבאים של המשתמש"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
 msgstr "אילן היוחסין שלי"
 
 #: blocks/user_welcome.php:56
-#, fuzzy
 msgid "My Individual Record"
-msgstr "עובדות אישיות עיקריות"
+msgstr "נתונים אישיים שלי"
 
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
@@ -12626,9 +12483,8 @@ msgid "Anniversary"
 msgstr "יום השנה"
 
 #: blocks/yahrzeit.php:218
-#, fuzzy
 msgid "Total Names"
-msgstr "ערוך שם"
+msgstr "סה\"כ שמות"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
@@ -12643,9 +12499,8 @@ msgid "C"
 msgstr "ת"
 
 #: includes/accesskeyHeaders.php:37
-#, fuzzy
 msgid "Viewing advice"
-msgstr "הצג ארכיון"
+msgstr "עצת הסתכלות"
 
 #: includes/accesskeyHeaders.php:37
 msgid "0"
@@ -12701,9 +12556,8 @@ msgstr "משפחה מידית"
 
 #: includes/media_reorder.php:37
 #: includes/media_tab_head.php:63
-#, fuzzy
 msgid "Re-order media"
-msgstr "סדר מחדש את המשפחות"
+msgstr "סדר מחדש מדיה"
 
 #: includes/media_reorder.php:38
 msgid "Click a row, then drag-and-drop to re-order media "
@@ -12966,9 +12820,8 @@ msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
-#, fuzzy
 msgid "Charts"
-msgstr "סגנון תרשים"
+msgstr "תרשימים"
 
 #: includes/classes/class_menubar.php:517
 #: includes/classes/class_menubar.php:523
@@ -12979,9 +12832,8 @@ msgstr "רשימות"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
-#, fuzzy
 msgid "MultiMedia"
-msgstr "נהל מולטימדיה"
+msgstr "מולטימדיה"
 
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
@@ -13009,9 +12861,8 @@ msgid "Wiki Administrator's Guide"
 msgstr "מדריך למנהלן של ויקי"
 
 #: includes/classes/class_menubar.php:1118
-#, fuzzy
 msgid "Favorites"
-msgstr "צלמית של מועדפים"
+msgstr "מועדפים"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
@@ -13021,40 +12872,44 @@ msgstr "הוסף למועדפים שלי"
 msgid "…"
 msgstr "…"
 
-#: includes/classes/class_person.php:576
-#: includes/classes/class_person.php:633
+#. I18N: This is an abbreviation for a number.  i.e. #7 means number 7
+#: includes/classes/class_person.php:550
+#, php-format
+msgid "#%d"
+msgstr ""
+
+#: includes/classes/class_person.php:577
+#: includes/classes/class_person.php:634
 msgid "Unable to find family with ID"
 msgstr "לא נמצאת משפחה עם קוד זיהוי"
 
-#: includes/classes/class_person.php:760
-#, fuzzy
+#: includes/classes/class_person.php:761
 msgid "Family with Parents"
-msgstr "עובדות משפחתיות שניתן להוסיף"
+msgstr "משפחה עם הורים"
 
-#: includes/classes/class_person.php:779
-#: includes/classes/class_person.php:786
+#: includes/classes/class_person.php:780
+#: includes/classes/class_person.php:787
 msgid "Father's Family with "
 msgstr "משפחת אב עם "
 
-#: includes/classes/class_person.php:780
-#: includes/classes/class_person.php:785
+#: includes/classes/class_person.php:781
+#: includes/classes/class_person.php:786
 msgid "Mother's Family with "
 msgstr "משפחת אם עם "
 
-#: includes/classes/class_person.php:803
+#: includes/classes/class_person.php:804
 msgid "Family with"
 msgstr "משפחה עם"
 
-#: includes/classes/class_person.php:1836
-#, fuzzy
+#: includes/classes/class_person.php:1837
 msgid "year"
-msgstr "כותרת"
+msgstr "שנה"
 
-#: includes/classes/class_person.php:1840
+#: includes/classes/class_person.php:1841
 msgid "month"
 msgstr "חודש"
 
-#: includes/classes/class_person.php:1842
+#: includes/classes/class_person.php:1843
 msgid "months"
 msgstr "חודשים"
 
@@ -13062,17 +12917,15 @@ msgstr "חודשים"
 #: includes/classes/class_stats.php:450
 #: includes/classes/class_stats.php:489
 #: includes/classes/class_stats.php:491
-#, fuzzy
 msgid "With sources"
-msgstr "הצג מקורות"
+msgstr "עם מקורות"
 
 #: includes/classes/class_stats.php:449
 #: includes/classes/class_stats.php:451
 #: includes/classes/class_stats.php:490
 #: includes/classes/class_stats.php:492
-#, fuzzy
 msgid "Without sources"
-msgstr "הצג מקורות"
+msgstr "ללא מקורות"
 
 #: includes/classes/class_stats.php:694
 #: includes/classes/class_stats.php:700
@@ -13092,9 +12945,8 @@ msgstr "חי"
 #: includes/classes/class_stats.php:777
 #: includes/classes/class_stats.php:784
 #: includes/classes/class_stats.php:786
-#, fuzzy
 msgid "Dead"
-msgstr "כותרת"
+msgstr "מתים"
 
 #: includes/classes/class_stats.php:1231
 msgid "Highest population"
@@ -13127,15 +12979,13 @@ msgstr "הגיל הממוצע ביחס למאת פטירה"
 
 #: includes/classes/class_stats.php:1921
 #: includes/classes/class_stats.php:3817
-#, fuzzy
 msgid "birth"
-msgstr "רוחב"
+msgstr "לידה"
 
 #: includes/classes/class_stats.php:1922
 #: includes/classes/class_stats.php:3818
-#, fuzzy
 msgid "death"
-msgstr "רוחב"
+msgstr "מות"
 
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
@@ -13171,15 +13021,13 @@ msgstr "גיל ממוצע"
 
 #: includes/classes/class_stats.php:2883
 #: includes/classes/class_stats.php:2885
-#, fuzzy
 msgid "children"
-msgstr "סדר מחדש את הילדים"
+msgstr "ילדים"
 
 #: includes/classes/class_stats.php:3336
 #: includes/classes/class_stats.php:3338
-#, fuzzy
 msgid "grandchildren"
-msgstr "סדר מחדש את הילדים"
+msgstr "נכדים"
 
 #: includes/classes/class_stats.php:3552
 msgid "Count"
@@ -13199,25 +13047,21 @@ msgid "Start at parents"
 msgstr "התחל מההורים"
 
 #: includes/controllers/descendancy_ctrl.php:332
-#, fuzzy
 msgid "No children"
-msgstr "סדר מחדש את הילדים"
+msgstr "אין ילדים באתר"
 
 #: includes/controllers/family_ctrl.php:177
-#, fuzzy
 msgid "Family Information"
-msgstr "נתוני PHP"
+msgstr "נתוני משפחה"
 
 #: includes/controllers/family_ctrl.php:350
 #: includes/controllers/family_ctrl.php:361
-#, fuzzy
 msgid "Edit Family"
-msgstr "ערוך שם"
+msgstr "ערוך משפחה"
 
 #: includes/controllers/family_ctrl.php:379
-#, fuzzy
 msgid "Add a child to this family"
-msgstr "הוסף ילד/ה וצור משפחה חד-הורית"
+msgstr "הוסף ילד/ה למשפחה"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -13225,14 +13069,12 @@ msgstr "הוסף ילד/ה וצור משפחה חד-הורית"
 #: includes/controllers/note_ctrl.php:242
 #: includes/controllers/repository_ctrl.php:241
 #: includes/controllers/source_ctrl.php:249
-#, fuzzy
 msgid "Click here to hide changes."
-msgstr "לחץ כאן כדי להמשיך"
+msgstr "לחץ כאן כדי להסתיר את השינויים."
 
 #: includes/controllers/family_ctrl.php:451
-#, fuzzy
 msgid "Delete family"
-msgstr "מחק שם"
+msgstr "מחק משפחה"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
@@ -13244,9 +13086,8 @@ msgstr "מחיקת המשפחה תבטל את הקשר בין כל האנשים 
 #: includes/controllers/note_ctrl.php:323
 #: includes/controllers/repository_ctrl.php:322
 #: includes/controllers/source_ctrl.php:330
-#, fuzzy
 msgid "Add to Clippings Cart"
-msgstr "עגלת גזירי העץ"
+msgstr "הוסף לעגלת גזירים"
 
 #: includes/controllers/individual_ctrl.php:493
 #, fuzzy
@@ -13254,9 +13095,8 @@ msgid "Name"
 msgstr "ערוך שם"
 
 #: includes/controllers/individual_ctrl.php:819
-#, fuzzy
 msgid "Parent"
-msgstr "דף"
+msgstr "הורה"
 
 #: includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
@@ -13279,9 +13119,8 @@ msgid "Shared Note Information"
 msgstr "מידע על הערה משותפת"
 
 #: includes/controllers/note_ctrl.php:217
-#, fuzzy
 msgid "Delete this Shared Note"
-msgstr "מחק המקור"
+msgstr "מחק הערה משותפת זו"
 
 #: includes/controllers/note_ctrl.php:218
 msgid "Are you sure you want to delete this Shared Note?"
@@ -13293,14 +13132,12 @@ msgstr "קישור התווסף בהצלחה"
 
 #: includes/controllers/repository_ctrl.php:79
 #: includes/controllers/repository_ctrl.php:168
-#, fuzzy
 msgid "Repository Information"
-msgstr "קידומת קוד זיהוי של מאגר"
+msgstr "נתוני מאגר"
 
 #: includes/controllers/repository_ctrl.php:198
-#, fuzzy
 msgid "Edit Repository"
-msgstr "מחק מאגר"
+msgstr "ערוך מאגר"
 
 #: includes/controllers/repository_ctrl.php:217
 msgid "Are you sure you want to delete this Repository?"
@@ -13336,15 +13173,13 @@ msgstr "דף תוצאה"
 
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
-#, fuzzy
 msgid "Source Information"
-msgstr "נתוני PHP"
+msgstr "נתוני מקור"
 
 #: includes/controllers/source_ctrl.php:199
 #: includes/controllers/source_ctrl.php:206
-#, fuzzy
 msgid "Edit Source"
-msgstr "ערוך פרטיות"
+msgstr "ערוך מקור"
 
 #: includes/controllers/timeline_ctrl.php:275
 msgid "Husband's age"
@@ -13431,18 +13266,16 @@ msgid "weeks"
 msgstr "שבועות"
 
 #: includes/extras/functions.pl.php:366
-#, fuzzy
 msgid "Informant"
-msgstr "מבנה תאריך"
+msgstr "מוסר מידע"
 
 #: includes/extras/functions.pl.php:370
 msgid "Lodger"
 msgstr "דייר"
 
 #: includes/extras/functions.pl.php:374
-#, fuzzy
 msgid "Slave"
-msgstr "שמור"
+msgstr "עבד"
 
 #: includes/extras/functions.pl.php:378
 msgid "Attending"
@@ -13544,19 +13377,16 @@ msgid "No facts for this family."
 msgstr "אין עובדות למשפחה זו."
 
 #: includes/functions/functions_charts.php:532
-#, fuzzy
 msgid "Add Note"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף הערה"
 
 #: includes/functions/functions_charts.php:541
-#, fuzzy
 msgid "Add Shared Note"
-msgstr "הוסף הערה משותפת חדשה"
+msgstr "הוסף הערה משותפת"
 
 #: includes/functions/functions_charts.php:560
-#, fuzzy
 msgid "Add Source Citation"
-msgstr "הוסף ציטוט של מקור חדש"
+msgstr "הוסף ציטוט של מקור"
 
 #: includes/functions/functions_charts.php:814
 msgid "Grandfather"
@@ -13593,6 +13423,16 @@ msgstr "דקה 1"
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 msgstr "א ב ג ד ה ו ז ח ט י כ ך ל מ ם נ ן ס ע פ ף צ ץ ק ר ש ת"
 
+#: includes/functions/functions_edit.php:78
+#, php-format
+msgid "The record with id %s was changed by another user since you last accessed it."
+msgstr "הרשומה עם קוד זיהוי %s שונתה ע\"י משתמש אחר לאחר שניגשת אליה בפעם האחרונה ."
+
+#: includes/functions/functions_edit.php:79
+#, php-format
+msgid "This record was last changed by <i>%s</i> at %s"
+msgstr "הרשומה הזו שונתה לאחרונה ע\"י <i>%s</i> ב-%s"
+
 #: includes/functions/functions_edit.php:80
 #: includes/functions/functions_edit.php:2376
 #: includes/functions/functions_edit.php:2385
@@ -13613,20 +13453,17 @@ msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature
 msgstr "הערה: יש לאפשר מאפיין 'השתמש בהגבלת הפרטיות של (GEDCOM (RESN' כדי שהערך הזה יופעל."
 
 #: includes/functions/functions_edit.php:1674
-#, fuzzy
 msgid "Shared Note using Assistant"
-msgstr "הראה עזרה למחקר"
+msgstr "הערה משותפת חדשה בעזרת מסייע"
 
 #: includes/functions/functions_edit.php:1779
 #: includes/functions/functions_edit.php:1784
-#, fuzzy
 msgid "Add a new Associate"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף שותף חדש"
 
 #: includes/functions/functions_edit.php:1830
-#, fuzzy
 msgid "Add a new Multimedia object"
-msgstr "הוסף מדיה חדשה"
+msgstr "הוסף ישות מולטימדיה חדשה"
 
 #: includes/functions/functions_edit.php:2375
 #: includes/functions/functions_edit.php:2384
@@ -13682,9 +13519,8 @@ msgstr "קובץ לא נוצר."
 
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
-#, fuzzy
 msgid "Invalid GEDCOM format"
-msgstr "החבא שגיאות GEDCOM"
+msgstr "מבנה GEDCOM שגוי"
 
 #: includes/functions/functions_mediadb.php:120
 #: includes/functions/functions_mediadb.php:139
@@ -13704,9 +13540,8 @@ msgstr "ההעלאה הצליחה."
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
-#, fuzzy
 msgid "Upload"
-msgstr "נתיב טעינה"
+msgstr "העלה"
 
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
@@ -13722,9 +13557,8 @@ msgstr "השתמש בכפתור ה-&laquo;Browse&raquo; כדי לחפש את ה�
 
 #: includes/functions/functions_mediadb.php:1044
 #: includes/functions/functions_mediadb.php:1212
-#, fuzzy
 msgid "Automatic thumbnail"
-msgstr "תמונות מזעריות שנוצרו בצורה אוטומטית"
+msgstr "קובץ מזערי אוטומטי"
 
 #: includes/functions/functions_mediadb.php:1047
 #: includes/functions/functions_mediadb.php:1215
@@ -13830,9 +13664,8 @@ msgstr "לשאלות בקשר לשושלת יוחסין נא להתקשר אל"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
-#, fuzzy
 msgid "Technical help contact"
-msgstr "הקשר לנתוני שושלת יוחסין"
+msgstr "קשר לסיוע טכני"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
@@ -13844,9 +13677,8 @@ msgstr "לפרטים נוספים נא להתקשר אל "
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
-#, fuzzy
 msgid "Information about:"
-msgstr "נתוני PHP"
+msgstr "מידע על:"
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
@@ -13901,14 +13733,12 @@ msgid "Status"
 msgstr "מצב"
 
 #: includes/functions/functions_print.php:2380
-#, fuzzy
 msgid "Add new fact"
-msgstr "הוסף שם"
+msgstr "הוסף עובדה חדשה"
 
 #: includes/functions/functions_print.php:2537
-#, fuzzy
 msgid "Find Repository"
-msgstr "מחק מאגר"
+msgstr "מצא מאגר"
 
 #: includes/functions/functions_print_facts.php:166
 #: includes/functions/functions_print_facts.php:217
@@ -13933,9 +13763,8 @@ msgid "This is an error, and we would like to fix it. Please report this error t
 msgstr "זו שגיאה שברצוננו לתקן. דווח לנו על השגיאה הזו."
 
 #: includes/functions/functions_print_lists.php:76
-#, fuzzy
 msgid "Show only males."
-msgstr "הראה שמות של אנשים חיים"
+msgstr "הראה רק זכרים."
 
 #: includes/functions/functions_print_lists.php:78
 msgid "Show only females."
@@ -13959,9 +13788,8 @@ msgid "Show people who are alive or couples where both partners are alive."
 msgstr "הראה אנשים חיים או זוגות שבהם שני בני הזוג חיים."
 
 #: includes/functions/functions_print_lists.php:86
-#, fuzzy
 msgid "Alive "
-msgstr "פעיל"
+msgstr "חי "
 
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
@@ -13989,9 +13817,8 @@ msgstr "הראה זוגות או אנשי &laquo;עלים&raquo;. מדובר ב�
 
 #: includes/functions/functions_print_lists.php:92
 #: includes/functions/functions_print_lists.php:478
-#, fuzzy
 msgid "Leaves"
-msgstr "שמור"
+msgstr "עלים"
 
 #: includes/functions/functions_print_lists.php:94
 msgid "Show persons born more than 100 years ago."
@@ -14018,15 +13845,13 @@ msgstr "החזר לברירת המחדל של הרשימה."
 #: includes/functions/functions_print_lists.php:779
 #: includes/functions/functions_print_lists.php:1612
 #: includes/functions/functions_print_lists.php:1757
-#, fuzzy
 msgid "Show parents"
-msgstr "הצג מקורות"
+msgstr "הראה הורים"
 
 #: includes/functions/functions_print_lists.php:409
 #: includes/functions/functions_print_lists.php:792
-#, fuzzy
 msgid "Show statistics charts"
-msgstr "הצג סטטיסטיקות של העיבוד"
+msgstr "הראה תרשימי סטטיסטיקות"
 
 #: includes/functions/functions_print_lists.php:424
 #: includes/functions/functions_print_lists.php:805
@@ -14054,9 +13879,8 @@ msgid "Show couples where only the male partner is deceased."
 msgstr "הראה זוגות שבהם רק בן הזוג נפטר."
 
 #: includes/functions/functions_print_lists.php:472
-#, fuzzy
 msgid "Widow"
-msgstr "רוחב"
+msgstr "אלמנה"
 
 #: includes/functions/functions_print_lists.php:474
 msgid "Both dead "
@@ -14075,18 +13899,16 @@ msgid "Show couples who married within the last 100 years."
 msgstr "הראה זוגות שהתחתנו ב-100 שנים האחרונות."
 
 #: includes/functions/functions_print_lists.php:486
-#, fuzzy
 msgid "Show divorced couples."
-msgstr "הראה אנשים שנפטרו"
+msgstr "הראה זוגות שהתגרשו."
 
 #: includes/functions/functions_print_lists.php:807
 msgid "Decade of marriage"
 msgstr "עשור של הנשואים"
 
 #: includes/functions/functions_print_lists.php:1033
-#, fuzzy
 msgid "Total Shared Notes"
-msgstr "הוסף הערה משותפת חדשה"
+msgstr "סה\"כ הערות משותפות"
 
 #: includes/functions/functions_print_lists.php:1264
 #: includes/functions/functions_print_lists.php:1315
@@ -14112,6 +13934,11 @@ msgstr "נתוני המשפחה הזו אישיים. נתוני המשפחה א�
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
 msgstr "הפירוט של המדיה הזה פרטי. פירוט המדיה לא יכלול."
+
+#: includes/functions/functions_rss.php:149
+#, php-format
+msgid "This GEDCOM was created using %s %s"
+msgstr ""
 
 #. I18N: This is the country/chapman code for "Aruba"
 #: language/_countries.php:38
@@ -15442,9 +15269,8 @@ msgid "Nothing found."
 msgstr "לא נימצא כלום."
 
 #: modules/batch_update/batch_update.php:356
-#, fuzzy
 msgid "Update the CHAN record"
-msgstr "אין לעדכן רשומת שינוי אחרון CHAN"
+msgstr "עדכן רשומת CHAN"
 
 #: modules/batch_update/batch_update.php:368
 msgid "Update"
@@ -15455,9 +15281,8 @@ msgid "Update all"
 msgstr "עדכן הכל"
 
 #: modules/batch_update/plugins/married_names.php:100
-#, fuzzy
 msgid "Surname Option"
-msgstr "מסורת שם משפחה"
+msgstr "אופצית שם משפחה"
 
 #: modules/batch_update/plugins/married_names.php:103
 msgid "Wife's surname replaced by husband's surname"
@@ -15480,9 +15305,8 @@ msgid "Replacement text"
 msgstr "טכסט החלפה"
 
 #: modules/batch_update/plugins/search_replace.php:98
-#, fuzzy
 msgid "Search method"
-msgstr "שיטת הקשר"
+msgstr "שיטת החיפוש"
 
 #: modules/batch_update/plugins/search_replace.php:100
 msgid "Exact text"
@@ -15506,9 +15330,14 @@ msgstr "סמן את התיבה כדי להתאים אותיות לועזיות �
 
 #: modules/clippings/clippings.php:90
 #: modules/clippings/clippings.php:281
-#, fuzzy
 msgid "Download Now"
-msgstr "הורד GEDCOM"
+msgstr "הורד עכשיו"
+
+#: modules/clippings/clippings.php:121
+#: modules/clippings/clippings.php:126
+#, fuzzy, php-format
+msgid "Add %s to cart"
+msgstr "הוסף למועדפים שלי"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
@@ -15529,7 +15358,6 @@ msgstr "עגלת גזירי העץ"
 
 #. I18N: This is the title of a tab on the sidebar
 #: modules/descendancy/descendancy.php:239
-#: modules/descendancy/pgv_module.php:43
 msgid "Descendancy"
 msgstr ""
 
@@ -16022,6 +15850,7 @@ msgid "Infirmaties - Whether blind, Whether Deaf and Dumb"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:51
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:49
 msgid "Keep"
 msgstr "שמור"
 
@@ -16030,20 +15859,26 @@ msgid "Unlink"
 msgstr "מחק קישור"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:53
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:77
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:51
 msgid "Navigator"
 msgstr "נווט"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:85
-#, fuzzy
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:82
 msgid "Keep Link in list"
-msgstr "שמור קישורים"
+msgstr "שמור קישור ברשימה"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:86
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:83
 msgid "Remove Link from list"
 msgstr "הסר קישור מרשימה"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:90
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:94
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:60
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:87
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:91
 msgid "Open Family Navigator"
 msgstr "פתח נווט משפחה"
 
@@ -16195,6 +16030,10 @@ msgstr ""
 msgid "Months Unemployed - xx = Months unemployed during Census Year"
 msgstr ""
 
+#: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:132
+msgid "Home Ownership - x-x-x-xxxx = O/R-F/M-F/H-#### = Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number"
+msgstr ""
+
 #: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:134
 msgid "Situation - 3 parameters - Diseases, Infimaties, Convict/Pauper etc"
 msgstr ""
@@ -16216,19 +16055,16 @@ msgid "Links"
 msgstr "קישורים"
 
 #: modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:166
-#, fuzzy
 msgid "Add links"
-msgstr "שמור קישורים"
+msgstr "הוסף קישורים"
 
 #: modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:207
-#, fuzzy
 msgid "Do not update the CHAN (Last Change) records"
-msgstr "אין לעדכן רשומת שינוי אחרון CHAN"
+msgstr "אל תעדכן רשומות CHAN (שינוי האחרון)"
 
 #: modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:272
-#, fuzzy
 msgid "No CHAN (Last Change) records were updated"
-msgstr "אין לעדכן רשומת שינוי אחרון CHAN"
+msgstr "שום רשומות CHAN (שינוי אחרון) עודכנו"
 
 #: modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:41
 msgid "Search for People to add to Add Links list."
@@ -16250,9 +16086,8 @@ msgstr "קוד הזיהוי של האדם, המשפחה או המקור אינו
 #: modules/googlemap/admin-config.php:49
 #: modules/googlemap/editconfig.php:90
 #: modules/googlemap/editconfig.php:92
-#, fuzzy
 msgid "GoogleMap Configuration"
-msgstr "_GEDCOM: קובץ תצורה"
+msgstr "קנפג GoogleMap"
 
 #: modules/googlemap/admin-config.php:52
 #: modules/googlemap/gg_map_content.php:38
@@ -16261,6 +16096,9 @@ msgstr "_GEDCOM: קובץ תצורה"
 #: modules/googlemap/googlemap.php:146
 #: modules/googlemap/googlemap.php:656
 #: modules/googlemap/googlemap.php:864
+#: modules/googlemap/pedigree_map.php:85
+#: modules/googlemap/pedigree_map.php:307
+#: modules/googlemap/placehierarchy.php:186
 msgid "Manage GoogleMap configuration"
 msgstr "נהל תצורת GoogleMap"
 
@@ -16268,19 +16106,28 @@ msgstr "נהל תצורת GoogleMap"
 #: modules/googlemap/editconfig.php:452
 #: modules/googlemap/gg_map_content.php:89
 #: modules/googlemap/googlemap.php:149
+#: modules/googlemap/pedigree_map.php:310
+#: modules/googlemap/placehierarchy.php:189
+#: modules/googlemap/places.php:159
+#: modules/googlemap/places.php:193
+#: modules/googlemap/places.php:566
+#: modules/googlemap/places_edit.php:42
 msgid "Edit geographic place locations"
 msgstr "ערוך מיקומים גיאוגרפיים"
 
 #: modules/googlemap/admin-config.php:58
 #: modules/googlemap/gg_map_content.php:92
 #: modules/googlemap/googlemap.php:152
+#: modules/googlemap/pedigree_map.php:313
+#: modules/googlemap/placecheck.php:50
+#: modules/googlemap/placecheck.php:54
+#: modules/googlemap/placehierarchy.php:192
 msgid "Place Check"
 msgstr "בדיקת מקום"
 
 #: modules/googlemap/editconfig.php:55
-#, fuzzy
 msgid "Prefix"
-msgstr "הצגה מוקדמת"
+msgstr "תחילית"
 
 #: modules/googlemap/editconfig.php:63
 msgid "Postfix"
@@ -16319,14 +16166,14 @@ msgid "Postfix, prefix, normal, both"
 msgstr "סיומת, תחילית, נורמאלי, שניהם"
 
 #: modules/googlemap/editconfig.php:96
-#, fuzzy
+#: modules/googlemap/places.php:161
+#: modules/googlemap/places_edit.php:46
 msgid "Page only for Administrators"
-msgstr "_ניהול משתמשים"
+msgstr "דף רק של מנהלנים"
 
 #: modules/googlemap/editconfig.php:215
-#, fuzzy
 msgid "Enable GoogleMap"
-msgstr "אפשר סיום אוטומטי"
+msgstr "אפשר GoogleMap"
 
 #: modules/googlemap/editconfig.php:224
 msgid "GoogleMap API key"
@@ -16339,21 +16186,33 @@ msgstr "ברירת מחדל של סוג המפה"
 #: modules/googlemap/editconfig.php:231
 #: modules/googlemap/gg_map_content.php:31
 #: modules/googlemap/googlemap.php:608
+#: modules/googlemap/pedigree_map.php:551
+#: modules/googlemap/placehierarchy.php:506
+#: modules/googlemap/places_edit.php:405
 msgid "Map"
 msgstr "מפה"
 
 #: modules/googlemap/editconfig.php:232
 #: modules/googlemap/googlemap.php:609
+#: modules/googlemap/pedigree_map.php:552
+#: modules/googlemap/placehierarchy.php:507
+#: modules/googlemap/places_edit.php:406
 msgid "Satellite"
 msgstr "לוויין"
 
 #: modules/googlemap/editconfig.php:233
 #: modules/googlemap/googlemap.php:610
+#: modules/googlemap/pedigree_map.php:553
+#: modules/googlemap/placehierarchy.php:508
+#: modules/googlemap/places_edit.php:407
 msgid "Hybrid"
 msgstr "משולבת"
 
 #: modules/googlemap/editconfig.php:234
 #: modules/googlemap/googlemap.php:611
+#: modules/googlemap/pedigree_map.php:554
+#: modules/googlemap/placehierarchy.php:509
+#: modules/googlemap/places_edit.php:408
 msgid "Terrain"
 msgstr "פיסית"
 
@@ -16383,9 +16242,10 @@ msgid "Standard"
 msgstr "רגיל"
 
 #: modules/googlemap/editconfig.php:274
-#, fuzzy
+#: modules/googlemap/places_edit.php:809
+#: modules/googlemap/places_edit.php:817
 msgid "Flag"
-msgstr "קובץ הדגל"
+msgstr "דגל"
 
 #: modules/googlemap/editconfig.php:280
 msgid "Display short placenames"
@@ -16420,6 +16280,7 @@ msgid "Max."
 msgstr "מכסימום"
 
 #: modules/googlemap/editconfig.php:352
+#: modules/googlemap/places_edit.php:748
 msgid "Precision"
 msgstr "דיוק"
 
@@ -16429,28 +16290,33 @@ msgstr "דיוק"
 #: modules/googlemap/editconfig.php:388
 #: modules/googlemap/editconfig.php:396
 #: modules/googlemap/editconfig.php:404
-#, fuzzy
 msgid "digits"
-msgstr "ערך"
+msgstr "ספרות"
 
 #: modules/googlemap/editconfig.php:366
-#, fuzzy
+#: modules/googlemap/places.php:179
+#: modules/googlemap/places_edit.php:772
 msgid "State"
-msgstr "שמור"
+msgstr "מדינה"
 
 #: modules/googlemap/editconfig.php:375
+#: modules/googlemap/places.php:181
+#: modules/googlemap/places_edit.php:774
 msgid "City"
 msgstr "עיר"
 
 #: modules/googlemap/editconfig.php:383
+#: modules/googlemap/places_edit.php:776
 msgid "Neighborhood"
 msgstr "שכונה"
 
 #: modules/googlemap/editconfig.php:391
+#: modules/googlemap/places_edit.php:778
 msgid "House"
 msgstr "בית"
 
 #: modules/googlemap/editconfig.php:399
+#: modules/googlemap/places_edit.php:780
 msgid "Max"
 msgstr "מכסימלי"
 
@@ -16463,9 +16329,8 @@ msgid "Number of levels"
 msgstr "מספר רמות"
 
 #: modules/googlemap/editconfig.php:432
-#, fuzzy
 msgid "Configuration per level"
-msgstr "עזרת תצורה"
+msgstr "תצורה לרמה"
 
 #: modules/googlemap/flags.php:43
 msgid "Select flag"
@@ -16477,11 +16342,15 @@ msgstr "<b>תיקיית המפות אינו קיים</b><br /><br />כדי שה�
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:655
+#: modules/googlemap/places_edit.php:814
+#: modules/googlemap/places_edit.php:818
 msgid "Change flag"
 msgstr "החלף דגל"
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:819
 msgid "Remove flag"
 msgstr "הסר דגל"
 
@@ -16492,6 +16361,7 @@ msgstr "ארצות"
 #: modules/googlemap/gg_map_content.php:35
 #: modules/googlemap/googlemap.php:97
 #: modules/googlemap/googlemap.php:651
+#: modules/googlemap/pedigree_map.php:82
 msgid "GoogleMap module disabled"
 msgstr "מודול GoogleMap נוטרל"
 
@@ -16499,19 +16369,19 @@ msgstr "מודול GoogleMap נוטרל"
 #: modules/googlemap/gg_map_content.php:59
 #: modules/googlemap/googlemap.php:118
 #: modules/googlemap/googlemap.php:119
-#, fuzzy
 msgid "Activate"
-msgstr "פעיל"
+msgstr "הפעל"
 
 #: modules/googlemap/gg_map_content.php:62
 #: modules/googlemap/gg_map_content.php:63
 #: modules/googlemap/googlemap.php:122
 #: modules/googlemap/googlemap.php:123
-#, fuzzy
 msgid "Deactivate"
-msgstr "פעיל"
+msgstr "נטרל"
 
 #: modules/googlemap/googlemap.php:607
+#: modules/googlemap/pedigree_map.php:550
+#: modules/googlemap/placehierarchy.php:505
 msgid "Redraw map"
 msgstr "צייר מפה מחדש"
 
@@ -16520,10 +16390,19 @@ msgid "No map data for this person"
 msgstr "אין נתוני מפה עבור אדם זה"
 
 #: modules/googlemap/googlemap.php:940
+#: modules/googlemap/placehierarchy.php:302
+#: modules/googlemap/placehierarchy.php:614
+#: modules/googlemap/placehierarchy.php:671
 msgid "This place has no coordinates"
 msgstr "למקום הזה אין קואורדינטות"
 
 #: modules/googlemap/googlemap.php:942
+#: modules/googlemap/placehierarchy.php:304
+#: modules/googlemap/placehierarchy.php:616
+#: modules/googlemap/placehierarchy.php:617
+#: modules/googlemap/placehierarchy.php:673
+#: modules/googlemap/placehierarchy.php:674
+#: modules/googlemap/places.php:604
 msgid "Edit geographic location"
 msgstr "ערוך מיקום גיאוגרפי"
 
@@ -16542,19 +16421,16 @@ msgid "individuals displayed out of the normal total of"
 msgstr "אנשים מוצגים מתוך מכסימום אפשרי של"
 
 #: modules/googlemap/pedigree_map.php:344
-#, fuzzy
 msgid "generations"
-msgstr "מספר דורות באילן יוחסין"
+msgstr "דורות"
 
 #: modules/googlemap/pedigree_map.php:352
-#, fuzzy
 msgid "individual is private."
-msgstr "קידומת קוד זיהוי אישי "
+msgstr "אדם הוא פרטי."
 
 #: modules/googlemap/pedigree_map.php:354
-#, fuzzy
 msgid "individuals are private."
-msgstr "קידומת קוד זיהוי אישי "
+msgstr "אנשים הם פרטיים."
 
 #: modules/googlemap/pedigree_map.php:360
 msgid "individual is missing birth place map coordinates:"
@@ -16633,14 +16509,12 @@ msgid "Select Next Level..."
 msgstr "בחר את הרמה הבאה..."
 
 #: modules/googlemap/placecheck.php:117
-#, fuzzy
 msgid "List filtering options"
-msgstr "הצג קבצים בתיקיות משנה"
+msgstr "תציג אופציות של הפילטר"
 
 #: modules/googlemap/placecheck.php:120
-#, fuzzy
 msgid "Include fully matched places: "
-msgstr "כלול שמות נישואין"
+msgstr "כלול מקומות עם התאמה מלאה: "
 
 #: modules/googlemap/placecheck.php:132
 msgid "Key to colors used below"
@@ -16663,9 +16537,8 @@ msgid "this place level is blank in your GEDCOM file, but exists as 'unknown'<br
 msgstr "רשימת מקומות עבור בקובץ GEDCOM"
 
 #: modules/googlemap/placecheck.php:152
-#, fuzzy
 msgid "Place list for GEDCOM file"
-msgstr "סנכרן שינויים לתוך קובץ GEDCOM"
+msgstr "הרמה הזו של רשימת מקומות ריקה בקובץ ה-GEDCOM שלך, אבל קיימת כ'בלתי ידוע'<br/>בטבלת המקומות של GoogleMap עם קואורדינאטות. שום פעולה אינה נדרשת<br/>עד שמוסיפים את הרמה החסרה"
 
 #: modules/googlemap/placecheck.php:241
 msgid "GEDCOM File Place Data<br />(2 PLAC tag)"
@@ -16741,9 +16614,8 @@ msgid "Remove this location?"
 msgstr "?הסר המיקום"
 
 #: modules/googlemap/places.php:587
-#, fuzzy
 msgid "Click here to show inactive places"
-msgstr "לחץ כאן כדי להמשיך"
+msgstr "לחץ כאן כדי להראות מקומות שאינם בשימוש"
 
 #: modules/googlemap/places.php:606
 #: modules/googlemap/places_edit.php:662
@@ -16779,14 +16651,12 @@ msgid "Use this value"
 msgstr "השתמש בערך הזה"
 
 #: modules/googlemap/places_edit.php:743
-#, fuzzy
 msgid "Search on this level"
-msgstr "טכסט של אופציות החיפוש"
+msgstr "חפש ברמה זו"
 
 #: modules/googlemap/places_edit.php:744
-#, fuzzy
 msgid "Search all"
-msgstr "חפש והחלף"
+msgstr "חפש הכל"
 
 #: modules/googlemap/places_edit.php:788
 msgid "N"
@@ -16807,6 +16677,10 @@ msgstr "מערב"
 #: modules/lightbox/admin-config.php:40
 #: modules/lightbox/lb_editconfig.php:42
 #: modules/lightbox/lb_editconfig.php:46
+#: modules/lightbox/functions/lb_head.php:116
+#: modules/lightbox/functions/lb_head.php:117
+#: modules/lightbox/functions/lb_head.php:125
+#: modules/lightbox/functions/lb_head.php:133
 msgid "Lightbox-Album Configuration"
 msgstr "ערוך אלבום תיבת אור - Lightbox"
 
@@ -16824,9 +16698,8 @@ msgstr "צורה"
 
 #: modules/lightbox/lb_editconfig.php:107
 #: modules/lightbox/lb_editconfig.php:109
-#, fuzzy
 msgid "Hide"
-msgstr "כותרת"
+msgstr "הסתר"
 
 #: modules/lightbox/lb_editconfig.php:117
 msgid "Individual Page - Album Tab Header"
@@ -16851,9 +16724,8 @@ msgstr "טכסט"
 #: modules/lightbox/lb_editconfig.php:124
 #: modules/lightbox/lb_editconfig.php:227
 #: modules/lightbox/lb_editconfig.php:229
-#, fuzzy
 msgid "Both"
-msgstr "רוחב התיבה"
+msgstr "שניהם"
 
 #: modules/lightbox/lb_editconfig.php:132
 msgid "Individual Page - Album Tab Thumbnail - Notes Tooltip"
@@ -16888,9 +16760,8 @@ msgid "Slide show timing in seconds"
 msgstr "משך תזמון מצגת שקפים בשניות"
 
 #: modules/lightbox/lb_editconfig.php:181
-#, fuzzy
 msgid "Slideshow sound track"
-msgstr "הראה כפתורי בקרה של מצגת שקופיות?"
+msgstr "פס קול של מצגת שקופיות"
 
 #: modules/lightbox/lb_editconfig.php:181
 msgid "(mp3 only)"
@@ -16951,9 +16822,8 @@ msgid "Pause Slideshow"
 msgstr "הפסק מצגת שקפים"
 
 #: modules/lightbox/functions/lb_call_js.php:55
-#, fuzzy
 msgid "Start Slideshow"
-msgstr "התחל מצגת שקופיות כאשר הדף נטען?"
+msgstr "התחל מצגת שקפים"
 
 #: modules/lightbox/functions/lb_call_js.php:56
 msgid "Turn Music On/Off"
@@ -16968,9 +16838,8 @@ msgid "Zoom is enabled ... Use mousewheel or i and o keys to zoom in and out"
 msgstr "זום אופשר ... השתמש בגלגל של העכבר או במקשי ן ו-ם כדי להפעיל הגדלה או הקטנה של זום"
 
 #: modules/lightbox/functions/lb_call_js.php:59
-#, fuzzy
 msgid "Close Lightbox window"
-msgstr "סגור אוטומטית חלון עריכה"
+msgstr "סגור חלון מדיה - תיבת אור"
 
 #: modules/lightbox/functions/lb_head.php:97
 msgid "Drag-and-drop thumbnails to re-order media items"
@@ -16983,9 +16852,8 @@ msgstr "הוסף ישות מולטימדיה חדשה לאדם זה"
 
 #: modules/lightbox/functions/lb_head.php:145
 #: modules/lightbox/functions/lb_head.php:153
-#, fuzzy
 msgid "Add a new Media Object"
-msgstr "הוסף מדיה חדשה"
+msgstr "הוסף ישות מדיה"
 
 #: modules/lightbox/functions/lb_head.php:172
 #: modules/lightbox/functions/lb_head.php:188
@@ -17012,9 +16880,8 @@ msgstr "אלבום"
 
 #: modules/lightbox/functions/lb_indi_doors_0.php:55
 #: modules/lightbox/functions/lb_indi_doors_1.php:58
-#, fuzzy
 msgid "Research Assistant"
-msgstr "הראה עזרה למחקר"
+msgstr "עוזר מחקר"
 
 #: modules/lightbox/functions/lightbox_print_media.php:132
 msgid "Photo"
@@ -17025,9 +16892,8 @@ msgid "Document"
 msgstr "מסמך"
 
 #: modules/lightbox/functions/lightbox_print_media.php:150
-#, fuzzy
 msgid "Census"
-msgstr "תפריטים"
+msgstr "מפקד אוכלוסין"
 
 #: modules/lightbox/functions/lightbox_print_media.php:168
 msgid "Not in DB"
@@ -17044,38 +16910,32 @@ msgid "View Notes"
 msgstr "ראה הערות"
 
 #: modules/lightbox/functions/lightbox_print_media_row.php:247
-#, fuzzy
 msgid "Edit Media"
-msgstr "מצא מדיה"
+msgstr "ערוך מדיה"
 
 #: modules/lightbox/functions/lightbox_print_media_row.php:258
-#, fuzzy
 msgid "Unlink Media"
-msgstr "מצא מדיה"
+msgstr "התר קישור מדיה"
 
 #: modules/media/media.php:63
 msgid "There are no media objects for this individual."
 msgstr "לאדם זה אין מדיה."
 
 #: modules/notes/notes.php:60
-#, fuzzy
 msgid "Show all notes"
-msgstr "הראה את כל המקורות"
+msgstr "הראה את כל ההערות"
 
 #: modules/notes/notes.php:80
-#, fuzzy
 msgid "There are no Notes for this individual."
-msgstr "מחק המידע על אדם זה"
+msgstr "לאדם זה אין הערות."
 
 #: modules/personal_facts/personal_facts.php:62
-#, fuzzy
 msgid "There are no Facts for this individual."
-msgstr "מחק המידע על אדם זה"
+msgstr "לאדם זה אין עובדות."
 
 #: modules/personal_facts/personal_facts.php:72
-#, fuzzy
 msgid "Events of close relatives"
-msgstr "הראה מאורעות של קרובים על הדף האישי"
+msgstr "אירועים של קרובי משפחה"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
@@ -17090,9 +16950,8 @@ msgid "Relatives"
 msgstr ""
 
 #: modules/relatives/relatives.php:114
-#, fuzzy
 msgid "Add husband"
-msgstr "הוסף ילד/ה"
+msgstr "הוסף בעל"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
@@ -17103,27 +16962,24 @@ msgid "Add a wife to this family"
 msgstr "הוסף אישה למשפחה"
 
 #: modules/relatives/relatives.php:218
-#, fuzzy
 msgid "Add marriage details"
-msgstr "בדוק קשרי נישואין"
+msgstr "הוסף פירטי נישואין"
 
 #: modules/relatives/relatives.php:408
 msgid "Link this person to an existing family as a child"
 msgstr "קשר אדם זה למשפחה קיימת בתור ילד"
 
 #: modules/relatives/relatives.php:415
-#, fuzzy
 msgid "Add a new wife"
-msgstr "הוסף הערה חדשה"
+msgstr "הוסף אישה חדשה"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
 msgstr "קשר אדם זה למשפחה קיימת בתור בעל"
 
 #: modules/relatives/relatives.php:435
-#, fuzzy
 msgid "Add a new husband"
-msgstr "הוסף הערה משותפת חדשה"
+msgstr "הוסף בעל חדש"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
@@ -17147,15 +17003,13 @@ msgstr "בחר פריטים לשמירה במפת האתר:"
 
 #: modules/sitemap/index.php:235
 #: modules/sitemap/index.php:366
-#, fuzzy
 msgid "Individual List"
-msgstr "קידומת קוד זיהוי אישי "
+msgstr "רשימת אנשים"
 
 #: modules/sitemap/index.php:237
 #: modules/sitemap/index.php:420
-#, fuzzy
 msgid "Family List"
-msgstr "רשימת שמות"
+msgstr "רשימת משפחה"
 
 #: modules/sitemap/index.php:238
 #: modules/sitemap/index.php:298
@@ -17244,16 +17098,14 @@ msgid "never"
 msgstr "לעולם לא"
 
 #: modules/sitemap/index.php:447
-#, fuzzy
 msgid "Generate"
-msgstr "שם השולח"
+msgstr "צור"
 
 #: modules/sources_tab/sources_tab.php:77
 msgid "There are no Source citations for this individual."
 msgstr "לאדם זה אין מקורות."
 
 #: themes/cloudy/footer.php:174
-#: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
 msgstr "ה-GEDCOM הזה שונה."
 
@@ -17265,9 +17117,6 @@ msgstr "ה-GEDCOM הזה שונה."
 
 #~ msgid "NAME:ROMN"
 #~ msgstr "שם לטיני"
-
-#~ msgid "_FA13"
-#~ msgstr "עובדה 13"
 
 #~ msgid ""
 #~ "Keyboard shortcuts are intended to help users who have difficulty with "

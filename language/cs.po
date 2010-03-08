@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-07 22:29-0000\n"
+"POT-Creation-Date: 2010-03-08 18:47-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -49,7 +49,7 @@ msgstr "Nemáte přístup k"
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
-#: addremotelink.php:274
+#: addremotelink.php:282
 msgid "Close Window"
 msgstr "Zavřít okno"
 
@@ -61,7 +61,7 @@ msgstr ""
 #: addmedia.php:211
 #: addmedia.php:224
 #: client.php:414
-#: client.php:424
+#: client.php:423
 msgid "There was an error uploading your file."
 msgstr "Během nahrávání vašeho souboru se objevila chyba."
 
@@ -114,7 +114,7 @@ msgstr ""
 
 #: addremotelink.php:75
 #: addremotelink.php:85
-#: addremotelink.php:183
+#: addremotelink.php:191
 msgid "Site"
 msgstr ""
 
@@ -128,75 +128,109 @@ msgstr "Host databáze"
 msgid "Relationship to current person"
 msgstr ""
 
-#: addremotelink.php:140
+#: addremotelink.php:127
+#: addsearchlink.php:77
+msgid "Same as current"
+msgstr ""
+
+#: addremotelink.php:128
+#: addsearchlink.php:78
+msgid "Mother"
+msgstr "Matka"
+
+#: addremotelink.php:129
+#: addsearchlink.php:79
+msgid "Father"
+msgstr "Otec"
+
+#: addremotelink.php:130
+#: addsearchlink.php:80
+msgid "Husband"
+msgstr "Manžel"
+
+#: addremotelink.php:131
+#: addsearchlink.php:81
+msgid "Wife"
+msgstr "Manželka"
+
+#: addremotelink.php:132
+#: addsearchlink.php:82
+msgid "Son"
+msgstr "Syn"
+
+#: addremotelink.php:133
+#: addsearchlink.php:83
+msgid "Daughter"
+msgstr "Dcera"
+
+#: addremotelink.php:148
 msgid "Site Location"
 msgstr ""
 
-#: addremotelink.php:150
+#: addremotelink.php:158
 msgid "Local site"
 msgstr ""
 
-#: addremotelink.php:158
-#: addremotelink.php:188
+#: addremotelink.php:166
+#: addremotelink.php:196
 msgid "Existing remote site"
 msgstr ""
 
-#: addremotelink.php:163
+#: addremotelink.php:171
 msgid "New remote site"
 msgstr ""
 
-#: addremotelink.php:173
+#: addremotelink.php:181
 msgid "Person ID"
 msgstr ""
 
-#: addremotelink.php:202
+#: addremotelink.php:210
 msgid "Type in a new site."
 msgstr ""
 
-#: addremotelink.php:205
-#: addremotelink.php:227
+#: addremotelink.php:213
+#: addremotelink.php:235
 msgid "Title:"
 msgstr "Nadpis"
 
-#: addremotelink.php:208
+#: addremotelink.php:216
 #, fuzzy
 msgid "Site URL:"
 msgstr "URL hlavní stránky"
 
-#: addremotelink.php:211
+#: addremotelink.php:219
 msgid "Example:"
 msgstr ""
 
-#: addremotelink.php:214
+#: addremotelink.php:222
 #, fuzzy
 msgid "Database ID:"
 msgstr "Host databáze"
 
-#: addremotelink.php:217
+#: addremotelink.php:225
 #, fuzzy
 msgid "Username: "
 msgstr "Uživatelské jméno"
 
-#: addremotelink.php:220
+#: addremotelink.php:228
 #, fuzzy
 msgid "Password: "
 msgstr "Heslo"
 
-#: addremotelink.php:230
-#, fuzzy
+#: addremotelink.php:238
 msgid "GEDCOM File:"
-msgstr "Zadejte nadpis popisující data v tomto GEDCOM souboru"
+msgstr "Soubor GEDCOM:"
 
-#: addremotelink.php:250
+#: addremotelink.php:258
 #, fuzzy
 msgid "Admin Option"
 msgstr "_Administrace"
 
-#: addremotelink.php:256
+#: addremotelink.php:264
 msgid "Do not update the CHAN (Last Change) record"
 msgstr ""
 
-#: addremotelink.php:264
+#: addremotelink.php:272
 #: addsearchlink.php:70
 #, fuzzy
 msgid "Add Link"
@@ -206,49 +240,18 @@ msgstr "Přidat manželku"
 msgid "Add Local Link"
 msgstr ""
 
-#: addsearchlink.php:77
-msgid "Same as current"
-msgstr ""
-
-#: addsearchlink.php:78
-msgid "Mother"
-msgstr "Matka"
-
-#: addsearchlink.php:79
-msgid "Father"
-msgstr "Otec"
-
-#: addsearchlink.php:80
-msgid "Husband"
-msgstr "Manžel"
-
-#: addsearchlink.php:81
-msgid "Wife"
-msgstr "Manželka"
-
-#: addsearchlink.php:82
-msgid "Son"
-msgstr "Syn"
-
-#: addsearchlink.php:83
-msgid "Daughter"
-msgstr "Dcera"
-
 #: admin.php:51
 #: admin.php:137
-#, fuzzy
 msgid "Administration"
-msgstr "_Administrace"
+msgstr "Administrace"
 
 #: admin.php:55
-#, fuzzy
 msgid "Accept / Reject Changes"
-msgstr "Blok posledních změn"
+msgstr "Přijmout / Odmítnout změny"
 
 #: admin.php:75
-#, fuzzy
 msgid "View log files"
-msgstr "Archivovat Log soubory"
+msgstr "Zobrazit logfiles"
 
 #: admin.php:105
 msgid "Edit Image Manipulation Configuration"
@@ -349,18 +352,16 @@ msgid "Add an unlinked note"
 msgstr "Přidat novou poznámku"
 
 #: admin.php:260
-#, fuzzy
 msgid "Configuration"
-msgstr "Nápověda konfigurace"
+msgstr "Konfigurace"
 
 #: admin.php:262
 msgid "User Information Migration tool"
 msgstr "Nástroj pro přesun informací o uživatelích"
 
 #: admin.php:266
-#, fuzzy
 msgid "User administration"
-msgstr "_Administrace uživatelů"
+msgstr "Správa uživatelů"
 
 #: admin.php:268
 msgid "Backup"
@@ -404,11 +405,14 @@ msgstr "Obsah \"log\" souboru"
 msgid "Ancestry Chart"
 msgstr "Přehled předků"
 
+#: ancestry.php:49
+msgid "%s Generation Ancestry Chart"
+msgstr "Přehled předků do %s. pokolení"
+
 #: ancestry.php:72
 #: compact.php:82
-#, fuzzy
 msgid "Root Person ID"
-msgstr "Odstranit osobu"
+msgstr "ID střena"
 
 #: ancestry.php:82
 msgid "Box width"
@@ -433,9 +437,8 @@ msgstr "Zobrazit počítadlo přístupů"
 
 #: ancestry.php:130
 #: calendar.php:404
-#, fuzzy
 msgid "Individuals"
-msgstr "GEDCOM ID Prefix"
+msgstr "osob,"
 
 #: ancestry.php:136
 #: calendar.php:405
@@ -555,9 +558,8 @@ msgid "Recent Years (&lt; 100 yrs)"
 msgstr "Nedávné události (&lt; 100 let)"
 
 #: calendar.php:201
-#, fuzzy
 msgid "Gender"
-msgstr "Záhlaví"
+msgstr "Pohlaví"
 
 #: calendar.php:212
 #: calendar.php:215
@@ -572,9 +574,8 @@ msgid "Females"
 msgstr ""
 
 #: calendar.php:226
-#, fuzzy
 msgid "Show events of:"
-msgstr "Zobrazit nejstarší nahoře"
+msgstr "Události k zobrazení:"
 
 #: calendar.php:232
 #: calendar.php:530
@@ -582,9 +583,8 @@ msgid "Births, Deaths, Marriages"
 msgstr ""
 
 #: calendar.php:235
-#, fuzzy
 msgid "ALL"
-msgstr "Alias"
+msgstr "VŠECHNY"
 
 #: calendar.php:238
 msgid "BIRT"
@@ -676,6 +676,11 @@ msgstr "Žena"
 msgid "Filter"
 msgstr "Prohledat"
 
+#: calendar.php:588
+#, php-format
+msgid "%s year anniversary"
+msgstr "%s výročí"
+
 #: calendar.php:614
 msgid "unknown"
 msgstr ""
@@ -690,9 +695,8 @@ msgid "Return to the Admin menu"
 msgstr "Zpět do menu Admina"
 
 #: changelanguage.php:155
-#, fuzzy
 msgid "Add new language"
-msgstr "Přidat nové jméno"
+msgstr "Přidat nový jazyk"
 
 #: changelanguage.php:175
 #: changelanguage.php:191
@@ -720,9 +724,8 @@ msgid "Languages used"
 msgstr "Jazyk, který se má upravit"
 
 #: changelanguage.php:264
-#, fuzzy
 msgid "Current GEDCOMs"
-msgstr "Vytvořit nový GEDCOM"
+msgstr "Současné GEDCOM soubory"
 
 #: changelanguage.php:282
 #, fuzzy
@@ -734,9 +737,8 @@ msgid "Clippings Cart"
 msgstr "Schránka výstřižků"
 
 #: clippings.php:49
-#, fuzzy
 msgid "Family Tree Clippings Cart"
-msgstr "Zapnout schránku výstřižků"
+msgstr "Schránka výstřižků"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
@@ -826,9 +828,8 @@ msgid "Add"
 msgstr "Přidat"
 
 #: clippings.php:150
-#, fuzzy
 msgid "Your Clippings Cart is empty."
-msgstr "Schránka výstřižků"
+msgstr "Vaše Schránka výstřižků je prázdná."
 
 #: clippings.php:157
 #, fuzzy
@@ -894,9 +895,8 @@ msgid "Forward slashes : /"
 msgstr ""
 
 #: clippings.php:307
-#, fuzzy
 msgid "Remove"
-msgstr "Odstranit osobu"
+msgstr "Odstranit"
 
 #: clippings.php:224
 msgid ""
@@ -999,6 +999,10 @@ msgid ""
 "\t<input type=\"submit\" value=\"<?php print i18n::translate("
 msgstr ""
 
+#: editconfig_gedcom.php:254
+msgid "Genealogy from [%s]"
+msgstr "Genealogie z [%s]"
+
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
 msgstr ""
@@ -1013,9 +1017,8 @@ msgid "The protected media directory in the Media Firewall root directory is not
 msgstr ""
 
 #: editconfig_gedcom.php:487
-#, fuzzy
 msgid "Download GEDCOM configuration."
-msgstr "_GEDCOM: Konfigurační soubor"
+msgstr "Stáhnout konfiguraci GEDCOM."
 
 #: editconfig_gedcom.php:487
 msgid "Upload the file to your index directory: "
@@ -1023,9 +1026,8 @@ msgstr "Nahrát soubor do složky index: "
 
 #: editconfig_gedcom.php:620
 #: editconfig_gedcom.php:666
-#, fuzzy
 msgid "GEDCOM Configuration"
-msgstr "_GEDCOM: Konfigurační soubor"
+msgstr "Nastavení GEDCOMu"
 
 #: editconfig_gedcom.php:670
 #: editgedcoms.php:117
@@ -1075,9 +1077,8 @@ msgstr ""
 #: editconfig_gedcom.php:2121
 #: editconfig_gedcom.php:2223
 #: edit_privacy.php:805
-#, fuzzy
 msgid "Save configuration"
-msgstr "Nápověda konfigurace"
+msgstr "Uložit konfiguraci"
 
 #: editconfig_gedcom.php:880
 #: editconfig_gedcom.php:1108
@@ -1111,6 +1112,11 @@ msgstr ""
 #: editconfig_gedcom.php:924
 msgid "Path and name of GEDCOM on server"
 msgstr ""
+
+#: editconfig_gedcom.php:915
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, does not exist at the specified location."
+msgstr "Soubor GEDCOM, [%s], není na zadaném místě."
 
 #: editconfig_gedcom.php:960
 msgid "Character Set encoding"
@@ -1391,9 +1397,8 @@ msgid "Welcome"
 msgstr "Vítejte"
 
 #: editconfig_gedcom.php:1332
-#, fuzzy
 msgid "MyGedView"
-msgstr "URL PhpGedView"
+msgstr "MyGedView"
 
 #: editconfig_gedcom.php:1337
 msgid "Welcome text on Login page"
@@ -1542,9 +1547,8 @@ msgid "Sources"
 msgstr "pramenů,"
 
 #: editconfig_gedcom.php:1512
-#, fuzzy
 msgid "Media"
-msgstr "Najít média"
+msgstr "Média"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
@@ -1874,9 +1878,8 @@ msgstr "E-mail"
 
 #: editconfig_gedcom.php:2084
 #: editconfig_gedcom.php:2114
-#, fuzzy
 msgid "No contact method"
-msgstr "Způsob kontaktu"
+msgstr "Není možné kontaktovat"
 
 #: editconfig_gedcom.php:2089
 msgid "Support contact"
@@ -1917,9 +1920,8 @@ msgstr "META tag s popisem"
 
 #: editconfig_gedcom.php:2161
 #: editconfig_gedcom.php:2166
-#, fuzzy
 msgid "Leave this field empty to use the title of the currently active database."
-msgstr "Hodnota, která se má v hlavičce HTML stránky zapsat do meta tagu popisující tematické zaměření stránky. Ponechte políčko prázdné, chcete-li, aby byl použit nynější nadpis tohoto GEDCOMu."
+msgstr "Ponechte toto políčko prázdné, chcete-li, aby byl použit nynější nadpis tohoto GEDCOMu."
 
 #: editconfig_gedcom.php:2164
 msgid "Page-topic META tag"
@@ -1962,14 +1964,12 @@ msgid "Configuration help"
 msgstr "Nápověda konfigurace"
 
 #: editgedcoms.php:78
-#, fuzzy
 msgid "GEDCOM Administration"
-msgstr "_GEDCOM: Stránka administrace"
+msgstr "Správa GEDCOMů"
 
 #: editgedcoms.php:96
-#, fuzzy
 msgid "Default GEDCOM"
-msgstr "Potvrdit platnost GEDCOMu"
+msgstr "Implicitní GEDCOM"
 
 #: editgedcoms.php:111
 msgid "Check if GEDCOM files are downloadable"
@@ -1981,6 +1981,11 @@ msgstr "Zadejte nadpis popisující data v tomto GEDCOM souboru"
 
 #: editgedcoms.php:181
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
+msgstr ""
+
+#: editgedcoms.php:184
+#, php-format
+msgid "%s cannot be downloaded."
 msgstr ""
 
 #: editgedcoms.php:187
@@ -2004,9 +2009,8 @@ msgid "Are you sure you want to delete this GEDCOM"
 msgstr "Opravdu chcete smazat tento GEDCOM"
 
 #: editgedcoms.php:208
-#, fuzzy
 msgid "Download"
-msgstr "Stáhnout GEDCOM"
+msgstr "Stáhnout"
 
 #: editgedcoms.php:213
 msgid "Check"
@@ -2034,6 +2038,10 @@ msgstr "Nástroj pro úpravu jazykových souborů"
 #: edit_interface.php:2723
 msgid "Save"
 msgstr ""
+
+#: editlang_edit_settings.php:225
+msgid "Original name of language in %s"
+msgstr "Jak tento jazyk označuje jazyk %s"
 
 #: editlang_edit_settings.php:238
 msgid "Abbreviation for language files"
@@ -2226,14 +2234,12 @@ msgid "Leave password blank if you want to keep the current password."
 msgstr "Pokud chcete zachovat stávající heslo, nechte políčko pro heslo prázdné."
 
 #: edituser.php:223
-#, fuzzy
 msgid "Confirm Password"
-msgstr "Heslo"
+msgstr "Potvrzení hesla"
 
 #: edituser.php:229
-#, fuzzy
 msgid "Change Language"
-msgstr "Jazyk"
+msgstr "Změnit jazyk"
 
 #: edituser.php:245
 msgid "Email Address"
@@ -2248,9 +2254,8 @@ msgid "Site Default"
 msgstr "Domácí stránka"
 
 #: edituser.php:266
-#, fuzzy
 msgid "Preferred Contact Method"
-msgstr "Způsob kontaktu"
+msgstr "Upřednostňovaný způsob kontaktu"
 
 #: edituser.php:281
 msgid "Visible to other users when online"
@@ -2285,15 +2290,13 @@ msgid "View Change Diff"
 msgstr "Prohlédnout si změny"
 
 #: edit_changes.php:117
-#, fuzzy
 msgid "View GEDCOM Record"
-msgstr "Skrýt chyby GEDCOM"
+msgstr "Zobrazit GEDCOM záznam"
 
 #: edit_changes.php:118
 #: edit_interface.php:413
-#, fuzzy
 msgid "Edit raw GEDCOM record"
-msgstr "Umožnit uživatelům prohlížet čisté GEDCOM záznamy"
+msgstr "Upravit přímo záznam GEDCOM"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
@@ -2323,9 +2326,8 @@ msgstr "Poslat zprávu"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
-#, fuzzy
 msgid "Accept all changes"
-msgstr "Blok posledních změn"
+msgstr "Přijmout všechny změny"
 
 #: edit_changes.php:163
 #: edit_changes.php:181
@@ -2346,14 +2348,12 @@ msgid "Add child"
 msgstr "Přidat dítě"
 
 #: edit_interface.php:355
-#, fuzzy
 msgid "Add a new mother"
-msgstr "Přidat novou poznámku"
+msgstr "Přidat novou matku"
 
 #: edit_interface.php:357
-#, fuzzy
 msgid "Add a new father"
-msgstr "Přidat novou poznámku"
+msgstr "Přidat nového otce"
 
 #: edit_interface.php:362
 msgid "Add a child to create a one-parent family"
@@ -2390,9 +2390,8 @@ msgstr "nepřeloženo!!!: Sealing"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
-#, fuzzy
 msgid "Set link"
-msgstr "Uchovávat odkazy"
+msgstr "Nastavit odkaz"
 
 #: edit_interface.php:751
 #: edit_interface.php:902
@@ -2414,9 +2413,8 @@ msgstr "Titul"
 
 #: edit_interface.php:760
 #: edit_interface.php:838
-#, fuzzy
 msgid "Create a new source"
-msgstr "Vytvořit nový GEDCOM"
+msgstr "Vytvořit nový pramen"
 
 #: edit_interface.php:765
 msgid "ABBR"
@@ -2602,52 +2600,55 @@ msgstr "Aktualizování připojené zprávy"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
-#, fuzzy
 msgid "Adding"
-msgstr "Admin"
+msgstr "Přidání"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
 msgid "from"
 msgstr ""
 
-#: edit_merge.php:246
+#: edit_merge.php:242
+#, fuzzy, php-format
+msgid "Record %s successfully updated."
+msgstr "Záznam byl úspěšně smazán."
+
+#: edit_merge.php:245
 msgid "favorites updated."
 msgstr ""
 
-#: edit_merge.php:248
+#: edit_merge.php:247
 msgid "Merge more records."
 msgstr "Sloučit více záznamů."
 
-#: edit_merge.php:281
+#: edit_merge.php:280
 msgid "Merge Step 1 of 3"
 msgstr "Slučování - krok 1 ze 3"
 
-#: edit_merge.php:284
+#: edit_merge.php:283
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
 msgstr "Označte 2 GEDCOM záznamy, které se mají sloučit. Záznamy musí být stejného typu."
 
-#: edit_merge.php:287
+#: edit_merge.php:286
 msgid "Merge To ID:"
 msgstr "Sloučit DO ID:"
 
+#: edit_merge.php:301
+#: edit_merge.php:318
+msgid "Find Individual ID"
+msgstr "Najít ID osoby"
+
 #: edit_merge.php:302
 #: edit_merge.php:319
-#, fuzzy
-msgid "Find Individual ID"
-msgstr "GEDCOM ID Prefix"
-
-#: edit_merge.php:303
-#: edit_merge.php:320
 msgid "Find Family ID"
 msgstr "Najít ID rodiny"
 
-#: edit_merge.php:304
-#: edit_merge.php:321
+#: edit_merge.php:303
+#: edit_merge.php:320
 msgid "Find Source ID"
 msgstr "Najít ID zdroje"
 
-#: edit_merge.php:307
+#: edit_merge.php:306
 msgid "Merge From ID:"
 msgstr "Sloučit Z ID:"
 
@@ -2657,14 +2658,12 @@ msgid "Unable to find individual with id"
 msgstr "Není možné nalézt osobu s id"
 
 #: edit_privacy.php:135
-#, fuzzy
 msgid "Edit privacy settings"
-msgstr "_GEDCOM: Nastavení privátnosti"
+msgstr "Upravit nastavení privátnosti uvnitř"
 
 #: edit_privacy.php:142
-#, fuzzy
 msgid "Edit GEDCOM privacy settings"
-msgstr "_GEDCOM: Nastavení privátnosti"
+msgstr "Upravit nastavení privátnosti v GEDCOMu"
 
 #: edit_privacy.php:159
 msgid "Performing update."
@@ -2742,9 +2741,8 @@ msgstr "Přidat nové nastavení osobní privátnosti"
 #: edit_privacy.php:572
 #: edit_privacy.php:717
 #: edit_privacy.php:764
-#, fuzzy
 msgid "ID"
-msgstr "Identifikační číslo"
+msgstr "ID"
 
 #: edit_privacy.php:449
 #: edit_privacy.php:481
@@ -2752,9 +2750,8 @@ msgstr "Identifikační číslo"
 #: edit_privacy.php:667
 #: edit_privacy.php:720
 #: edit_privacy.php:768
-#, fuzzy
 msgid "Show to?"
-msgstr "Zobrazit nejstarší nahoře"
+msgstr "Komu ukázat?"
 
 #: edit_privacy.php:473
 msgid "Edit existing settings for Privacy by ID"
@@ -2763,9 +2760,8 @@ msgstr "Upravit existující nastavení osobní privátnosti"
 #: edit_privacy.php:480
 #: edit_privacy.php:573
 #: edit_privacy.php:765
-#, fuzzy
 msgid "Full Name"
-msgstr "Smazat jméno"
+msgstr "Celé jméno"
 
 #: edit_privacy.php:509
 #: edit_privacy.php:511
@@ -2778,7 +2774,6 @@ msgstr "Přidat nové nastavení uživatelské privátnosti"
 
 #: edit_privacy.php:526
 #: edit_privacy.php:571
-#, fuzzy
 msgid "Username"
 msgstr "Uživatelské jméno"
 
@@ -2872,9 +2867,8 @@ msgid "Grandparents"
 msgstr ""
 
 #: family.php:137
-#, fuzzy
 msgid "Show couple on timeline chart"
-msgstr "Zobrazovat ve vývodu i prázdná políčka"
+msgstr "Ukázat pár na<br />časové ose"
 
 #: family.php:137
 msgid "P"
@@ -2947,14 +2941,12 @@ msgid "Choose a letter to show families whose name starts with that letter."
 msgstr ""
 
 #: famlist.php:184
-#, fuzzy
 msgid "Skip Surname lists"
-msgstr "Příjmení na prvním místě"
+msgstr "Přeskočit seznamy příjmení"
 
 #: famlist.php:187
-#, fuzzy
 msgid "Show Surname lists"
-msgstr "Příjmení na prvním místě"
+msgstr "Ukázat seznamy příjmení"
 
 #: famlist.php:194
 msgid "Exclude married names"
@@ -2964,6 +2956,12 @@ msgstr ""
 #: help_text.php:5234
 msgid "Include married names"
 msgstr ""
+
+#: famlist.php:263
+#: famlist.php:274
+#, fuzzy, php-format
+msgid "Families with surname %s"
+msgstr "Rodina s partnerem"
 
 #: famlist.php:268
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
@@ -2987,9 +2985,8 @@ msgid "Font file not found on PHP server"
 msgstr "Soubor s tímto fontem nebyl na PHP serveru nalezen."
 
 #: fanchart.php:295
-#, fuzzy
 msgid "Pedigree Tree"
-msgstr "Počet generací ve vývodu"
+msgstr "Vývod"
 
 #: fanchart.php:297
 #, fuzzy
@@ -2997,9 +2994,8 @@ msgid "Pedigree Map"
 msgstr "Počet generací ve vývodu"
 
 #: fanchart.php:300
-#, fuzzy
 msgid "Relationship to me"
-msgstr "Zkontrolovat příbuzenství sňatkem"
+msgstr "Vztah ke mně"
 
 #: fanchart.php:305
 #: fanchart.php:400
@@ -3019,6 +3015,10 @@ msgstr "Schéma přesýpacích hodin"
 #: fanchart.php:307
 msgid "Interactive Tree"
 msgstr ""
+
+#: fanchart.php:428
+msgid "%s Generation Circle Diagram"
+msgstr "%s - generační vějířové schéma"
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -3098,9 +3098,8 @@ msgstr "Najít média"
 
 #: find.php:104
 #: find.php:208
-#, fuzzy
 msgid "Find Place"
-msgstr "Najít média"
+msgstr "Najít místo"
 
 #: find.php:108
 #: find.php:211
@@ -3201,9 +3200,8 @@ msgid "This media object is linked to the following:"
 msgstr ""
 
 #: find.php:584
-#, fuzzy
 msgid "View Person"
-msgstr "Odstranit osobu"
+msgstr "Zobrazit osobu"
 
 #: find.php:590
 msgid "View Source"
@@ -4947,11 +4945,14 @@ msgid "_FA11"
 msgstr "Údaj 11"
 
 #. I18N: This is the GEDCOM label for "Fact 12"
-#. I18N: This is the GEDCOM label for "Fact 13"
 #: help_text.php:1969
-#: help_text.php:1975
 msgid "_FA12"
 msgstr "Údaj 12"
+
+#. I18N: This is the GEDCOM label for "Fact 13"
+#: help_text.php:1975
+msgid "_FA13"
+msgstr "Údaj 13"
 
 #. I18N: This is the GEDCOM label for "Emigration of parents"
 #: help_text.php:1981
@@ -5345,14 +5346,12 @@ msgid "Image Viewer"
 msgstr "Prohlížeč obrázků"
 
 #: help_text.php:2479
-#, fuzzy
 msgid "PhpGedView User Login"
-msgstr "URL PhpGedView"
+msgstr "Přihlášení uživatele PhpGedView"
 
 #: help_text.php:2484
-#, fuzzy
 msgid "PhpGedView Message"
-msgstr "URL PhpGedView"
+msgstr "Zpráva PhpGedView"
 
 #: help_text.php:2489
 #, fuzzy
@@ -9344,26 +9343,20 @@ msgstr "Upravit vstupní bránu MyGedView"
 
 #: index.php:451
 #: index_edit.php:473
-#, fuzzy
 msgid "Customize this GEDCOM Welcome page"
-msgstr "Vlastní úvodní text pro autentifikační mód"
+msgstr "Upravit úvodní stránku tohoto GEDCOMu"
 
 #: index_edit.php:83
 msgid "?"
 msgstr "?"
 
 #: index_edit.php:154
-#: index_edit.php:158
-#: index_edit.php:159
-#: index_edit.php:160
-#: index_edit.php:161
 msgid "&nbsp;"
 msgstr ""
 
 #: index_edit.php:231
-#, fuzzy
 msgid "Configuration file updated successfully."
-msgstr "Konfigurace podporovaných jazyků"
+msgstr "Konfigurační soubor byl úspěšně aktualizován."
 
 #: index_edit.php:278
 msgid "The cache files have been removed."
@@ -9424,6 +9417,12 @@ msgstr "Obnovit původní bloky"
 msgid "Choose a letter to show individuals whose family name starts with that letter."
 msgstr ""
 
+#: indilist.php:263
+#: indilist.php:274
+#, fuzzy, php-format
+msgid "Individuals with surname %s"
+msgstr "GEDCOM ID Prefix"
+
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
 msgstr ""
@@ -9437,9 +9436,8 @@ msgid "The information for this individual was linked from a remote site."
 msgstr ""
 
 #: individual.php:319
-#, fuzzy
 msgid "Pedigree Chart"
-msgstr "Střen (proband) vývodu"
+msgstr "Vývod"
 
 #: individual.php:321
 msgid "Timeline Chart"
@@ -9683,9 +9681,8 @@ msgid "Media ID"
 msgstr ""
 
 #: inverselink.php:143
-#, fuzzy
 msgid "Enter Individual ID"
-msgstr "GEDCOM ID Prefix"
+msgstr "Zadat ID osoby"
 
 #: inverselink.php:174
 msgid "Source"
@@ -9744,9 +9741,8 @@ msgstr "Není možné ověřit uživatele."
 
 #: login.php:206
 #: login.php:226
-#, fuzzy
 msgid "Login"
-msgstr "Přihlašovací URL"
+msgstr "Přihlašovací blok"
 
 #: login.php:238
 msgid "Account Information"
@@ -9778,6 +9774,11 @@ msgstr "Zažádat o nové heslo"
 msgid "Lost password request"
 msgstr "Zapomenuté heslo"
 
+#: login_register.php:126
+#: login_register.php:420
+msgid "Hello %s ..."
+msgstr "Nazdar %s ..."
+
 #: login_register.php:127
 msgid "A new password was requested for your user name."
 msgstr "Bylo zažádáno o nové heslo pro vaše uživatelské jméno!"
@@ -9789,6 +9790,16 @@ msgstr "Doporučení:"
 #: login_register.php:132
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
 msgstr "Teď prosím klikněte na odkaz dole, přihlaste se s novým heslem a ihned si ho změňte, abyste uchovali svá data v tajnosti."
+
+#: login_register.php:139
+#, php-format
+msgid "Data request at %s"
+msgstr "Data požadována na %s"
+
+#: login_register.php:143
+#, php-format
+msgid "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>%s</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security."
+msgstr "Nazdar...<br /><br />Na adresu (%s) byl zaslán e-mail s novým heslem.<br /><br />Prosím zkontrolujte svou e-mailovou schránku, zprávu byste měli obdržet během několika minut.<br /><br />Doporučení:<br /><br />Potom, co zažádáte o e-mail, měli byste se na tyto stránky přihlásit se svým novým heslem a změnit si jej, abyste uchovali svá data v tajnosti."
 
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
@@ -9825,6 +9836,11 @@ msgstr "Potvrzení nového účtu"
 msgid "Back"
 msgstr "Zpět"
 
+#: login_register.php:421
+#, php-format
+msgid "A request was received at %s to create a PhpGedView account with your email address %s."
+msgstr "Z adresy ( %s ) byl vyslán požadavek na přihlášení pod vaší e-mailovou adresou ( %s )."
+
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
 msgstr "Byla použita následující data."
@@ -9846,11 +9862,20 @@ msgstr "Kdybyste tato data nevyžadovali, můžete tuto zprávu klidně smazat."
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
 msgstr "Žádný další e-mail z tohoto systému již nedostanete, protože účet bude do sedmi dnů bez ověření smazán."
 
+#: login_register.php:437
+#, php-format
+msgid "Your registration at %s"
+msgstr "Vaše registrace na %s"
+
 #: login_register.php:444
 #: login_register.php:565
-#, fuzzy
 msgid "Hello Administrator ..."
-msgstr "_Administrace uživatelů"
+msgstr "Nazdar administrátore ..."
+
+#: login_register.php:445
+#, php-format
+msgid "A prospective user registered himself with PhpGedView at %s."
+msgstr "Nový uživatel se zaregistroval na ( %s )."
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
@@ -9864,18 +9889,47 @@ msgstr "Jakmile se uživatel dokončí toto ověřování, budete e-mailem infor
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
 msgstr ""
 
+#: login_register.php:462
+#, php-format
+msgid "New registration at %s"
+msgstr "Nová registrace na %s"
+
+#: login_register.php:473
+#, php-format
+msgid "Hello %s ...<br />Thank you for your registration."
+msgstr "Nazdar %s ...<br />Díky za registraci."
+
+#: login_register.php:475
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password."
+msgstr "Nyní na e-mail ( %s ) obdržíte potvrzení. Tento e-mail použijte k aktivování svého účtu; jestliže se vám nepodaří aktivovat svůj účet do sedmi dní, bude vymazán (pak se můžete znovu pokusit zaregistrovat). Abyste se mohli přihlásit na tyto stránky, budete potřebovat znát své přihlašovací jméno a heslo."
+
+#: login_register.php:476
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password."
+msgstr ""
+
 #: login_register.php:506
 #: login_register.php:513
 #: login_register.php:541
 #: login_register.php:544
-#, fuzzy
 msgid "User verification"
-msgstr "_Administrace uživatelů"
+msgstr "Ověření uživatele"
 
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
 msgstr "Odeslat"
+
+#: login_register.php:546
+#, php-format
+msgid "The data for the user <b>%s</b> was checked."
+msgstr "Data pro uživatele %s byla zkontrolována."
+
+#: login_register.php:566
+#, php-format
+msgid "User %s (%s) has confirmed his request for an account."
+msgstr "%s ( %s ) zkontroloval registrační data."
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
@@ -9884,6 +9938,11 @@ msgstr "Pro přihlášení a úpravu uživatele a povolení k přihlášení na 
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
 msgstr ""
+
+#: login_register.php:581
+#, php-format
+msgid "New user at %s"
+msgstr "Nové ověření na %s"
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
@@ -10093,9 +10152,8 @@ msgstr "Uchovávat odkazy"
 
 #: media.php:829
 #: media.php:830
-#, fuzzy
 msgid "Add Media"
-msgstr "Najít média"
+msgstr "Přidat média"
 
 #: media.php:843
 #, fuzzy
@@ -10152,9 +10210,8 @@ msgstr "Podrobnosti o této osobě jsou soukromé."
 
 #: medialist.php:53
 #: medialist.php:57
-#, fuzzy
 msgid "MultiMedia Objects"
-msgstr "Složka Multimédií"
+msgstr "Seznam multimediálních souborů"
 
 #: medialist.php:131
 msgid "Media objects per page"
@@ -10219,6 +10276,10 @@ msgstr "Nezadali jste příjemce zprávy.  Není možné pokračovat."
 msgid "Please enter a valid email address."
 msgstr "Prosím zadejte platnou e-mailovou adresu."
 
+#: message.php:138
+msgid "Message successfully sent to %s"
+msgstr "Zpráva byla zaslána"
+
 #: message.php:167
 msgid "Please enter a message subject."
 msgstr "Prosím zadejte předmět zprávy."
@@ -10230,6 +10291,16 @@ msgstr "Prosím zadejte text zprávy před jejím odesláním."
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
 msgstr "<b>Prosím pozor:</b> Soukromé informace žijících osob budou poskytnuta pouze rodinným příbuzným a blízkým přátelům. Předtím, než obdržíte jakákoliv soukromá data, budete požádáni o ověření vašeho vztahu.  Někdy mohou být soukromé povahy i data zemřelých osob.  Jestliže je to tento případ, pak je to z toho důvodu, že není dost známých informací o této osobě, aby bylo možné rozhodnout, jestli žije nebo ne, a pak tedy ani žádné další informace o této informace nemáme.<br /><br />Před vznesením dotazu na nějakou, prosím zkontrolujte u ní data, místa a blízké příbuzné, abyste si byli jistí, že se tážete na tu správnou osobu.  Jestliže provádíte změny v genealogických datech, prosím uveďte prameny, ze kterých jste čerpali."
+
+#: message.php:192
+#, php-format
+msgid "This message will be sent to %s"
+msgstr "Tato zpráva bude odeslána na %s"
+
+#: message.php:193
+#, php-format
+msgid "This user prefers to receive messages in %s"
+msgstr "Tento uživatel upřednostňuje příjem zpráv přes %s"
 
 #: message.php:197
 msgid "Your Name:"
@@ -10366,6 +10437,10 @@ msgstr "Přidat do médií novou položku"
 msgid "Shared Notes"
 msgstr ""
 
+#: pedigree.php:52
+msgid "%s Generation Pedigree Chart"
+msgstr "%s - generační schéma"
+
 #: pedigree.php:90
 #, fuzzy
 msgid "Orientation"
@@ -10418,9 +10493,8 @@ msgid "View all records found in this place"
 msgstr "Zobrazit všechny záznamy spojené s tímto místem"
 
 #: placelist.php:468
-#, fuzzy
 msgid "Total Unique Places"
-msgstr "Vyčištění míst"
+msgstr "Unikátních míst celkem"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
@@ -10631,9 +10705,8 @@ msgstr ""
 
 #: relationship.php:485
 #: relationship.php:564
-#, fuzzy
 msgid "Relationship Chart"
-msgstr "Použít příbuzenskou privátnost"
+msgstr "Schéma vztahů"
 
 #: relationship.php:535
 msgid "and"
@@ -10683,9 +10756,13 @@ msgid "Select a date"
 msgstr "Vybrat datum"
 
 #: reportengine.php:344
-#, fuzzy
 msgid "Download report"
-msgstr "Stáhnout GEDCOM"
+msgstr "Stáhnout zprávu"
+
+#: rss.php:110
+#, php-format
+msgid "News and links from the %s site"
+msgstr "Novinky a odkazy ze stránky %s"
 
 #: rss.php:116
 #: rss.php:119
@@ -10776,14 +10853,12 @@ msgid "Whole words only"
 msgstr ""
 
 #: search.php:318
-#, fuzzy
 msgid "Given name"
-msgstr "Uživatelské jméno"
+msgstr "Jméno: "
 
 #: search.php:329
-#, fuzzy
 msgid "Last name"
-msgstr "Uživatelské jméno"
+msgstr "Příjmení: "
 
 #: search.php:345
 #, fuzzy
@@ -10988,9 +11063,8 @@ msgstr ""
 #: search_engine.php:60
 #: search_engine.php:69
 #: uploadgedcom.php:1106
-#, fuzzy
 msgid "Welcome page"
-msgstr "Úvodní text přihlašovací stránky v autentifikačním módu"
+msgstr "Úvodní stránka"
 
 #: statistics.php:57
 msgid "Total males"
@@ -11565,9 +11639,8 @@ msgid "..."
 msgstr ""
 
 #: timeline.php:38
-#, fuzzy
 msgid "PhpGedView Timeline"
-msgstr "URL PhpGedView"
+msgstr "Časová osa PhpGedView"
 
 #: timeline.php:298
 msgid "Show Age Marker"
@@ -11595,6 +11668,12 @@ msgstr "Ve většině novějších prohlížečů můžete klepnout na jméno v 
 #: useradmin.php:1022
 msgid "Continue"
 msgstr ""
+
+#: uploadgedcom.php:251
+#: uploadgedcom.php:590
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, is not writable. Please check attributes and access rights."
+msgstr "Do souboru GEDCOM [%s] nelze zapisovat. Zkontrolujte vlastnosti a přístupová práva souboru."
 
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
@@ -11659,9 +11738,8 @@ msgid "Convert this ANSI encoded GEDCOM to UTF-8?"
 msgstr "Převést kódování v tomto GEDCOM souboru z ANSI (ISO-8859-1) na UTF-8?"
 
 #: uploadgedcom.php:737
-#, fuzzy
 msgid "Change Individual ID to:"
-msgstr "_GEDCOM: Změna ID osob na ......."
+msgstr "Změnit ID osob na:"
 
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
@@ -11688,9 +11766,8 @@ msgid "Import Progress..."
 msgstr "Průběh nahrávání..."
 
 #: uploadgedcom.php:904
-#, fuzzy
 msgid "Reading GEDCOM file"
-msgstr "Zadejte nadpis popisující data v tomto GEDCOM souboru"
+msgstr "Čtení souboru GEDCOM"
 
 #: uploadgedcom.php:908
 msgid "The status bars below will let you know how the Import is progressing.  If the time limit runs out the Import will be stopped and you will be asked to press a <b>Continue</b> button.  If you don't see the <b>Continue</b> button, you must restart the Import with a smaller time limit value."
@@ -11702,9 +11779,8 @@ msgstr ""
 
 #: uploadgedcom.php:1104
 #: uploadgedcom.php:1117
-#, fuzzy
 msgid "Execution time:"
-msgstr "Vypršení platnosti session"
+msgstr "Celkový čas:"
 
 #: uploadgedcom.php:1105
 msgid "Click here to go to the Pedigree tree."
@@ -11722,6 +11798,16 @@ msgstr "Nalezen záznam"
 msgid "Import Statistics"
 msgstr ""
 
+#: useradmin.php:194
+#, php-format
+msgid "Approval of account at %s"
+msgstr ""
+
+#: useradmin.php:195
+#, php-format
+msgid "The administrator at the PhpGedView site %s has approved your application for an account.  You may now login by accessing the following link: %s#"
+msgstr ""
+
 #: useradmin.php:269
 #: useradmin.php:274
 #: useradmin.php:484
@@ -11731,9 +11817,8 @@ msgstr "Aktualizovat uživatelský účet"
 #: useradmin.php:345
 #: useradmin.php:639
 #: useradmin.php:799
-#, fuzzy
 msgid "User can administer"
-msgstr "_Administrace uživatelů"
+msgstr "Uživatel může administrovat"
 
 #: useradmin.php:362
 #: useradmin.php:800
@@ -11770,9 +11855,8 @@ msgstr "Uživatel byl adminem povolen"
 
 #: useradmin.php:457
 #: useradmin.php:883
-#, fuzzy
 msgid "Allow this user to edit his account information"
-msgstr "Umožnit uživatelům požadovat registraci účtu"
+msgstr "Umožnit tomuto uživateli upravovat informace o svém účtu"
 
 #: useradmin.php:476
 #: useradmin.php:903
@@ -11793,9 +11877,8 @@ msgstr "Seznam všech uživatelů"
 #: useradmin.php:688
 #: useradmin.php:754
 #: useradmin.php:1088
-#, fuzzy
 msgid "Add a new user"
-msgstr "Přidat novou poznámku"
+msgstr "Přidat nového uživatele"
 
 #: useradmin.php:567
 #: useradmin.php:690
@@ -11804,9 +11887,8 @@ msgid "Back to User Administration"
 msgstr "_Administrace uživatelů"
 
 #: useradmin.php:576
-#, fuzzy
 msgid " Languages"
-msgstr "Jazyk"
+msgstr " Jazyky"
 
 #: useradmin.php:577
 #: useradmin.php:588
@@ -11819,9 +11901,8 @@ msgid "Date registered"
 msgstr "Datum zapsáno"
 
 #: useradmin.php:591
-#, fuzzy
 msgid "Last logged in"
-msgstr "Přihlášení uživatelé"
+msgstr "Naposledy přihlášen(a)"
 
 #: useradmin.php:661
 msgid "Never"
@@ -11841,9 +11922,8 @@ msgid "Access"
 msgstr "Přístup"
 
 #: useradmin.php:817
-#, fuzzy
 msgid "Admin GEDCOM"
-msgstr "Přidat další GEDCOM"
+msgstr "Spravovat GEDCOM"
 
 #: useradmin.php:930
 #: useradmin.php:1091
@@ -12051,6 +12131,10 @@ msgstr ""
 msgid "No Blocks seems to be present in the system."
 msgstr "Zdá se, že v tuto chvíli nejsou v systému žádné bloky."
 
+#: blocks/block_htmlplus.php:40
+msgid "Advanced HTML"
+msgstr ""
+
 #: blocks/charts.php:40
 #, fuzzy
 msgid "Charts Block"
@@ -12062,14 +12146,12 @@ msgid "No such ID exists in this GEDCOM file."
 msgstr ""
 
 #: blocks/gedcom_block.php:36
-#, fuzzy
 msgid "GEDCOM Welcome"
-msgstr "Zadejte nadpis popisující data v tomto GEDCOM souboru"
+msgstr "Uvítací blok GEDCOM"
 
 #: blocks/gedcom_favorites.php:36
-#, fuzzy
 msgid "GEDCOM Favorites"
-msgstr "Zadejte nadpis popisující data v tomto GEDCOM souboru"
+msgstr "Blok Oblíbených GEDCOMu"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
@@ -12097,9 +12179,8 @@ msgid "Enter an optional note about this favorite"
 msgstr ""
 
 #: blocks/gedcom_news.php:36
-#, fuzzy
 msgid "GEDCOM News"
-msgstr "Zadejte nadpis popisující data v tomto GEDCOM souboru"
+msgstr "Blok novinek GEDCOMu"
 
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
@@ -12115,9 +12196,8 @@ msgid "Are you sure you want to delete this News entry?"
 msgstr "Opravdu chcete z Novinek vymazat tuto položku?"
 
 #: blocks/gedcom_news.php:165
-#, fuzzy
 msgid "Add a News article"
-msgstr "Přidat novou poznámku"
+msgstr "Přidat nový článek"
 
 #: blocks/gedcom_news.php:196
 #, fuzzy
@@ -12135,63 +12215,77 @@ msgstr ""
 #: blocks/gedcom_stats.php:40
 #: blocks/gedcom_stats.php:91
 #: blocks/rss_block.php:70
-#, fuzzy
 msgid "GEDCOM Statistics"
-msgstr "Zadejte nadpis popisující data v tomto GEDCOM souboru"
+msgstr "Blok statistiky GEDCOMu"
 
-#: blocks/gedcom_stats.php:145
-#: blocks/gedcom_stats.php:330
+#: blocks/gedcom_stats.php:107
+#, php-format
+msgid "This GEDCOM was created using <b>%s %s</b>"
+msgstr "Tento GEDCOM byl vytvořen v programu <b>%s %s</b>."
+
+#: blocks/gedcom_stats.php:112
+#, php-format
+msgid "This GEDCOM was created on <b>%s</b>"
+msgstr "Tento GEDCOM byl vytvořen <b>%s</b>."
+
+#: blocks/gedcom_stats.php:114
+#, php-format
+msgid " on <b>%s</b>"
+msgstr "<b>%s</b>"
+
+#: blocks/gedcom_stats.php:143
+#: blocks/gedcom_stats.php:328
 msgid "Total users"
 msgstr ""
 
-#: blocks/gedcom_stats.php:159
-#: blocks/gedcom_stats.php:277
+#: blocks/gedcom_stats.php:157
+#: blocks/gedcom_stats.php:275
 msgid "Earliest birth year"
 msgstr ""
 
-#: blocks/gedcom_stats.php:166
-#: blocks/gedcom_stats.php:285
+#: blocks/gedcom_stats.php:164
+#: blocks/gedcom_stats.php:283
 msgid "Latest birth year"
 msgstr ""
 
-#: blocks/gedcom_stats.php:173
-#: blocks/gedcom_stats.php:293
+#: blocks/gedcom_stats.php:171
+#: blocks/gedcom_stats.php:291
 msgid "Earliest death year"
 msgstr ""
 
-#: blocks/gedcom_stats.php:180
-#: blocks/gedcom_stats.php:301
+#: blocks/gedcom_stats.php:178
+#: blocks/gedcom_stats.php:299
 msgid "Latest death year"
 msgstr ""
 
-#: blocks/gedcom_stats.php:188
-#: blocks/gedcom_stats.php:309
+#: blocks/gedcom_stats.php:186
+#: blocks/gedcom_stats.php:307
 msgid "Person who lived the longest"
 msgstr ""
 
-#: blocks/gedcom_stats.php:204
-#: blocks/gedcom_stats.php:325
+#: blocks/gedcom_stats.php:202
+#: blocks/gedcom_stats.php:323
 msgid "Family with the most children"
 msgstr ""
 
-#: blocks/gedcom_stats.php:219
+#: blocks/gedcom_stats.php:217
 msgid "View statistics as graphs"
 msgstr ""
 
-#: blocks/gedcom_stats.php:227
+#: blocks/gedcom_stats.php:225
 msgid "Most Common Surnames"
 msgstr "Nejčastější příjmení"
 
-#: blocks/gedcom_stats.php:259
+#: blocks/gedcom_stats.php:257
 #, fuzzy
 msgid "Show common surnames?"
 msgstr "Ukázat jména žijících osob"
 
-#: blocks/gedcom_stats.php:268
+#: blocks/gedcom_stats.php:266
 msgid "Select the stats to show in this block"
 msgstr ""
 
-#: blocks/gedcom_stats.php:339
+#: blocks/gedcom_stats.php:337
 #, fuzzy
 msgid "Show link to Statistics charts?"
 msgstr "Zobrazit podrobnosti o narození a úmrtí ve vývodu a rozrodu"
@@ -12227,9 +12321,8 @@ msgid "to change what is printed here.</p>"
 msgstr ""
 
 #: blocks/logged_in.php:36
-#, fuzzy
 msgid "Logged In Users"
-msgstr "Přihlášení uživatelé"
+msgstr "Přihlášeni uživatelé"
 
 #: blocks/logged_in.php:76
 msgid "Users Logged In"
@@ -12265,9 +12358,8 @@ msgid "Logged in as "
 msgstr "Přihlášen jako "
 
 #: blocks/random_media.php:38
-#, fuzzy
 msgid "Random Media"
-msgstr "Najít média"
+msgstr "Blok náhodného média"
 
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
@@ -12350,9 +12442,8 @@ msgid "Top 10 Surnames"
 msgstr "Blok příjmení Top-10"
 
 #: blocks/theme_select.php:36
-#, fuzzy
 msgid "Theme Select"
-msgstr "Složka motivů:"
+msgstr "Blok pro výběr motivu"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
@@ -12422,9 +12513,8 @@ msgid "Place counts before or after name?"
 msgstr ""
 
 #: blocks/user_blog.php:36
-#, fuzzy
 msgid "User Journal"
-msgstr "Uživatelské jméno"
+msgstr "Uživatelský deník"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
@@ -12439,24 +12529,20 @@ msgid "Are you sure you want to delete this Journal entry?"
 msgstr "Opravdu chcete vymazat tuto položku z deníku?"
 
 #: blocks/user_blog.php:94
-#, fuzzy
 msgid "Add a new Journal entry"
-msgstr "Přidat novou poznámku"
+msgstr "Přidat do deníku nový záznam"
 
 #: blocks/user_favorites.php:38
-#, fuzzy
 msgid "User Favorites"
-msgstr "Ikona Oblíbených"
+msgstr "Blok uživatelských Oblíbených"
 
 #: blocks/user_favorites.php:60
-#, fuzzy
 msgid "My Favorites"
-msgstr "Ikona Oblíbených"
+msgstr "Moje oblíbené"
 
 #: blocks/user_messages.php:38
-#, fuzzy
 msgid "User Messages"
-msgstr "Uživatelské jméno"
+msgstr "Blok zpráv"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
@@ -12488,18 +12574,16 @@ msgid "Broadcast to all users"
 msgstr "Rozeslat všem uživatelům"
 
 #: blocks/user_welcome.php:36
-#, fuzzy
 msgid "User Welcome"
-msgstr "Uživatelské jméno"
+msgstr "Uvítací blok uživatele"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
 msgstr "Můj vývod"
 
 #: blocks/user_welcome.php:56
-#, fuzzy
 msgid "My Individual Record"
-msgstr "GEDCOM ID Prefix"
+msgstr "Můj osobní záznam"
 
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
@@ -12854,9 +12938,8 @@ msgstr ""
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
-#, fuzzy
 msgid "Charts"
-msgstr "Styl schématu"
+msgstr "Schémata"
 
 #: includes/classes/class_menubar.php:517
 #: includes/classes/class_menubar.php:523
@@ -12867,9 +12950,8 @@ msgstr "Seznamy"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
-#, fuzzy
 msgid "MultiMedia"
-msgstr "Složka Multimédií"
+msgstr "Seznam multimédií"
 
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
@@ -12909,39 +12991,45 @@ msgstr "Přidat do mých oblíbených"
 msgid "…"
 msgstr ""
 
-#: includes/classes/class_person.php:576
-#: includes/classes/class_person.php:633
+#. I18N: This is an abbreviation for a number.  i.e. #7 means number 7
+#: includes/classes/class_person.php:550
+#, php-format
+msgid "#%d"
+msgstr ""
+
+#: includes/classes/class_person.php:577
+#: includes/classes/class_person.php:634
 msgid "Unable to find family with ID"
 msgstr "Není možné nalézt rodinu s id"
 
-#: includes/classes/class_person.php:760
+#: includes/classes/class_person.php:761
 msgid "Family with Parents"
 msgstr "Rodina s rodiči"
 
-#: includes/classes/class_person.php:779
-#: includes/classes/class_person.php:786
+#: includes/classes/class_person.php:780
+#: includes/classes/class_person.php:787
 msgid "Father's Family with "
 msgstr ""
 
-#: includes/classes/class_person.php:780
-#: includes/classes/class_person.php:785
+#: includes/classes/class_person.php:781
+#: includes/classes/class_person.php:786
 msgid "Mother's Family with "
 msgstr ""
 
-#: includes/classes/class_person.php:803
+#: includes/classes/class_person.php:804
 msgid "Family with"
 msgstr "Rodina s"
 
-#: includes/classes/class_person.php:1836
+#: includes/classes/class_person.php:1837
 #, fuzzy
 msgid "year"
 msgstr "Záhlaví"
 
-#: includes/classes/class_person.php:1840
+#: includes/classes/class_person.php:1841
 msgid "month"
 msgstr ""
 
-#: includes/classes/class_person.php:1842
+#: includes/classes/class_person.php:1843
 msgid "months"
 msgstr ""
 
@@ -13082,9 +13170,8 @@ msgid "Start at parents"
 msgstr "Začít u rodičů"
 
 #: includes/controllers/descendancy_ctrl.php:332
-#, fuzzy
 msgid "No children"
-msgstr "Přidat dítě"
+msgstr "Žádné zaznamenané děti"
 
 #: includes/controllers/family_ctrl.php:177
 msgid "Family Information"
@@ -13124,9 +13211,8 @@ msgstr ""
 #: includes/controllers/note_ctrl.php:323
 #: includes/controllers/repository_ctrl.php:322
 #: includes/controllers/source_ctrl.php:330
-#, fuzzy
 msgid "Add to Clippings Cart"
-msgstr "Schránka výstřižků"
+msgstr "Přidat do schránky výstřižků"
 
 #: includes/controllers/individual_ctrl.php:493
 #, fuzzy
@@ -13420,9 +13506,8 @@ msgid "No facts for this family."
 msgstr ""
 
 #: includes/functions/functions_charts.php:532
-#, fuzzy
 msgid "Add Note"
-msgstr "Přidat novou poznámku"
+msgstr "Přidat poznámku"
 
 #: includes/functions/functions_charts.php:541
 #, fuzzy
@@ -13430,9 +13515,8 @@ msgid "Add Shared Note"
 msgstr "Přidat novou poznámku"
 
 #: includes/functions/functions_charts.php:560
-#, fuzzy
 msgid "Add Source Citation"
-msgstr "Přidat novou citaci k prameni"
+msgstr "Přidat citaci k prameni"
 
 #: includes/functions/functions_charts.php:814
 msgid "Grandfather"
@@ -13469,6 +13553,16 @@ msgstr ""
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 msgstr "A B C D E F G H CH I J K L M N O P Q R S T U V W X Y Z"
 
+#: includes/functions/functions_edit.php:78
+#, php-format
+msgid "The record with id %s was changed by another user since you last accessed it."
+msgstr ""
+
+#: includes/functions/functions_edit.php:79
+#, php-format
+msgid "This record was last changed by <i>%s</i> at %s"
+msgstr ""
+
 #: includes/functions/functions_edit.php:80
 #: includes/functions/functions_edit.php:2376
 #: includes/functions/functions_edit.php:2385
@@ -13499,9 +13593,8 @@ msgid "Add a new Associate"
 msgstr "Přidat novou poznámku"
 
 #: includes/functions/functions_edit.php:1830
-#, fuzzy
 msgid "Add a new Multimedia object"
-msgstr "Přidat do médií novou položku"
+msgstr "Přidat nový multimediální soubor"
 
 #: includes/functions/functions_edit.php:2375
 #: includes/functions/functions_edit.php:2384
@@ -13557,9 +13650,8 @@ msgstr "Soubor nebyl vytvořen."
 
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
-#, fuzzy
 msgid "Invalid GEDCOM format"
-msgstr "Skrýt chyby GEDCOM"
+msgstr "Neplatný formát (neodpovídá standardu GEDCOM 5.5)"
 
 #: includes/functions/functions_mediadb.php:120
 #: includes/functions/functions_mediadb.php:139
@@ -13775,9 +13867,8 @@ msgid "Status"
 msgstr "Stav"
 
 #: includes/functions/functions_print.php:2380
-#, fuzzy
 msgid "Add new fact"
-msgstr "Přidat nové jméno"
+msgstr "Přidat nový údaj"
 
 #: includes/functions/functions_print.php:2537
 msgid "Find Repository"
@@ -13981,6 +14072,11 @@ msgstr "Podrobnosti o této rodině jsou soukromé. Rodinné údaje nebudou zahr
 
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
+msgstr ""
+
+#: includes/functions/functions_rss.php:149
+#, php-format
+msgid "This GEDCOM was created using %s %s"
 msgstr ""
 
 #. I18N: This is the country/chapman code for "Aruba"
@@ -15375,9 +15471,14 @@ msgstr ""
 
 #: modules/clippings/clippings.php:90
 #: modules/clippings/clippings.php:281
-#, fuzzy
 msgid "Download Now"
-msgstr "Stáhnout GEDCOM"
+msgstr "Stáhnout"
+
+#: modules/clippings/clippings.php:121
+#: modules/clippings/clippings.php:126
+#, fuzzy, php-format
+msgid "Add %s to cart"
+msgstr "Přidat do mých oblíbených"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
@@ -15398,7 +15499,6 @@ msgstr "Schránka výstřižků"
 
 #. I18N: This is the title of a tab on the sidebar
 #: modules/descendancy/descendancy.php:239
-#: modules/descendancy/pgv_module.php:43
 msgid "Descendancy"
 msgstr ""
 
@@ -15887,6 +15987,7 @@ msgid "Infirmaties - Whether blind, Whether Deaf and Dumb"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:51
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:49
 msgid "Keep"
 msgstr ""
 
@@ -15895,20 +15996,27 @@ msgid "Unlink"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:53
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:77
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:51
 msgid "Navigator"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:85
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:82
 #, fuzzy
 msgid "Keep Link in list"
 msgstr "Uchovávat odkazy"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:86
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:83
 msgid "Remove Link from list"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:90
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:94
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:60
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:87
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:91
 msgid "Open Family Navigator"
 msgstr ""
 
@@ -16060,6 +16168,10 @@ msgstr ""
 msgid "Months Unemployed - xx = Months unemployed during Census Year"
 msgstr ""
 
+#: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:132
+msgid "Home Ownership - x-x-x-xxxx = O/R-F/M-F/H-#### = Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number"
+msgstr ""
+
 #: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:134
 msgid "Situation - 3 parameters - Diseases, Infimaties, Convict/Pauper etc"
 msgstr ""
@@ -16124,6 +16236,9 @@ msgstr "_GEDCOM: Konfigurační soubor"
 #: modules/googlemap/googlemap.php:146
 #: modules/googlemap/googlemap.php:656
 #: modules/googlemap/googlemap.php:864
+#: modules/googlemap/pedigree_map.php:85
+#: modules/googlemap/pedigree_map.php:307
+#: modules/googlemap/placehierarchy.php:186
 msgid "Manage GoogleMap configuration"
 msgstr ""
 
@@ -16131,12 +16246,22 @@ msgstr ""
 #: modules/googlemap/editconfig.php:452
 #: modules/googlemap/gg_map_content.php:89
 #: modules/googlemap/googlemap.php:149
+#: modules/googlemap/pedigree_map.php:310
+#: modules/googlemap/placehierarchy.php:189
+#: modules/googlemap/places.php:159
+#: modules/googlemap/places.php:193
+#: modules/googlemap/places.php:566
+#: modules/googlemap/places_edit.php:42
 msgid "Edit geographic place locations"
 msgstr ""
 
 #: modules/googlemap/admin-config.php:58
 #: modules/googlemap/gg_map_content.php:92
 #: modules/googlemap/googlemap.php:152
+#: modules/googlemap/pedigree_map.php:313
+#: modules/googlemap/placecheck.php:50
+#: modules/googlemap/placecheck.php:54
+#: modules/googlemap/placehierarchy.php:192
 msgid "Place Check"
 msgstr ""
 
@@ -16181,6 +16306,8 @@ msgid "Postfix, prefix, normal, both"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:96
+#: modules/googlemap/places.php:161
+#: modules/googlemap/places_edit.php:46
 #, fuzzy
 msgid "Page only for Administrators"
 msgstr "_Administrace uživatelů"
@@ -16200,21 +16327,33 @@ msgstr ""
 #: modules/googlemap/editconfig.php:231
 #: modules/googlemap/gg_map_content.php:31
 #: modules/googlemap/googlemap.php:608
+#: modules/googlemap/pedigree_map.php:551
+#: modules/googlemap/placehierarchy.php:506
+#: modules/googlemap/places_edit.php:405
 msgid "Map"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:232
 #: modules/googlemap/googlemap.php:609
+#: modules/googlemap/pedigree_map.php:552
+#: modules/googlemap/placehierarchy.php:507
+#: modules/googlemap/places_edit.php:406
 msgid "Satellite"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:233
 #: modules/googlemap/googlemap.php:610
+#: modules/googlemap/pedigree_map.php:553
+#: modules/googlemap/placehierarchy.php:508
+#: modules/googlemap/places_edit.php:407
 msgid "Hybrid"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:234
 #: modules/googlemap/googlemap.php:611
+#: modules/googlemap/pedigree_map.php:554
+#: modules/googlemap/placehierarchy.php:509
+#: modules/googlemap/places_edit.php:408
 msgid "Terrain"
 msgstr ""
 
@@ -16244,6 +16383,8 @@ msgid "Standard"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:274
+#: modules/googlemap/places_edit.php:809
+#: modules/googlemap/places_edit.php:817
 #, fuzzy
 msgid "Flag"
 msgstr "Soubor s vlajkou"
@@ -16281,6 +16422,7 @@ msgid "Max."
 msgstr ""
 
 #: modules/googlemap/editconfig.php:352
+#: modules/googlemap/places_edit.php:748
 msgid "Precision"
 msgstr ""
 
@@ -16295,22 +16437,29 @@ msgid "digits"
 msgstr "Upravit"
 
 #: modules/googlemap/editconfig.php:366
+#: modules/googlemap/places.php:179
+#: modules/googlemap/places_edit.php:772
 msgid "State"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:375
+#: modules/googlemap/places.php:181
+#: modules/googlemap/places_edit.php:774
 msgid "City"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:383
+#: modules/googlemap/places_edit.php:776
 msgid "Neighborhood"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:391
+#: modules/googlemap/places_edit.php:778
 msgid "House"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:399
+#: modules/googlemap/places_edit.php:780
 msgid "Max"
 msgstr ""
 
@@ -16337,11 +16486,15 @@ msgstr ""
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:655
+#: modules/googlemap/places_edit.php:814
+#: modules/googlemap/places_edit.php:818
 msgid "Change flag"
 msgstr ""
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:819
 msgid "Remove flag"
 msgstr ""
 
@@ -16352,6 +16505,7 @@ msgstr ""
 #: modules/googlemap/gg_map_content.php:35
 #: modules/googlemap/googlemap.php:97
 #: modules/googlemap/googlemap.php:651
+#: modules/googlemap/pedigree_map.php:82
 msgid "GoogleMap module disabled"
 msgstr ""
 
@@ -16372,6 +16526,8 @@ msgid "Deactivate"
 msgstr "Aktivní"
 
 #: modules/googlemap/googlemap.php:607
+#: modules/googlemap/pedigree_map.php:550
+#: modules/googlemap/placehierarchy.php:505
 msgid "Redraw map"
 msgstr ""
 
@@ -16380,10 +16536,19 @@ msgid "No map data for this person"
 msgstr ""
 
 #: modules/googlemap/googlemap.php:940
+#: modules/googlemap/placehierarchy.php:302
+#: modules/googlemap/placehierarchy.php:614
+#: modules/googlemap/placehierarchy.php:671
 msgid "This place has no coordinates"
 msgstr ""
 
 #: modules/googlemap/googlemap.php:942
+#: modules/googlemap/placehierarchy.php:304
+#: modules/googlemap/placehierarchy.php:616
+#: modules/googlemap/placehierarchy.php:617
+#: modules/googlemap/placehierarchy.php:673
+#: modules/googlemap/placehierarchy.php:674
+#: modules/googlemap/places.php:604
 msgid "Edit geographic location"
 msgstr ""
 
@@ -16661,6 +16826,10 @@ msgstr ""
 #: modules/lightbox/admin-config.php:40
 #: modules/lightbox/lb_editconfig.php:42
 #: modules/lightbox/lb_editconfig.php:46
+#: modules/lightbox/functions/lb_head.php:116
+#: modules/lightbox/functions/lb_head.php:117
+#: modules/lightbox/functions/lb_head.php:125
+#: modules/lightbox/functions/lb_head.php:133
 msgid "Lightbox-Album Configuration"
 msgstr ""
 
@@ -16678,9 +16847,8 @@ msgstr ""
 
 #: modules/lightbox/lb_editconfig.php:107
 #: modules/lightbox/lb_editconfig.php:109
-#, fuzzy
 msgid "Hide"
-msgstr "Záhlaví"
+msgstr "Skrýt"
 
 #: modules/lightbox/lb_editconfig.php:117
 msgid "Individual Page - Album Tab Header"
@@ -16913,14 +17081,12 @@ msgid "Show all notes"
 msgstr "Zobrazit počítadlo přístupů"
 
 #: modules/notes/notes.php:80
-#, fuzzy
 msgid "There are no Notes for this individual."
-msgstr "Smazat tuto osobu"
+msgstr "K této osobě nejsou žádné poznámky."
 
 #: modules/personal_facts/personal_facts.php:62
-#, fuzzy
 msgid "There are no Facts for this individual."
-msgstr "Smazat tuto osobu"
+msgstr "K této osobě nejsou dostupné žádné údaje."
 
 #: modules/personal_facts/personal_facts.php:72
 msgid "Events of close relatives"
@@ -16939,9 +17105,8 @@ msgid "Relatives"
 msgstr ""
 
 #: modules/relatives/relatives.php:114
-#, fuzzy
 msgid "Add husband"
-msgstr "Přidat dítě"
+msgstr "Přidat manžela"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
@@ -16961,18 +17126,16 @@ msgid "Link this person to an existing family as a child"
 msgstr ""
 
 #: modules/relatives/relatives.php:415
-#, fuzzy
 msgid "Add a new wife"
-msgstr "Přidat novou poznámku"
+msgstr "Přidat novou manželku"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
 msgstr ""
 
 #: modules/relatives/relatives.php:435
-#, fuzzy
 msgid "Add a new husband"
-msgstr "Přidat novou poznámku"
+msgstr "Přidat nového manžela"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
@@ -17100,9 +17263,6 @@ msgid "There are no Source citations for this individual."
 msgstr "K této osobě nejsou žádné citace pramenů."
 
 #: themes/cloudy/footer.php:174
-#: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
 msgstr "V tomto GEDCOM souboru byly provedeny změny."
 
-#~ msgid "_FA13"
-#~ msgstr "Údaj 13"

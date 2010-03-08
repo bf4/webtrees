@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-07 22:55-0000\n"
+"POT-Creation-Date: 2010-03-08 18:58-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -49,7 +49,7 @@ msgstr ""
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
-#: addremotelink.php:274
+#: addremotelink.php:282
 msgid "Close Window"
 msgstr ""
 
@@ -61,7 +61,7 @@ msgstr ""
 #: addmedia.php:211
 #: addmedia.php:224
 #: client.php:414
-#: client.php:424
+#: client.php:423
 msgid "There was an error uploading your file."
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 
 #: addremotelink.php:75
 #: addremotelink.php:85
-#: addremotelink.php:183
+#: addremotelink.php:191
 msgid "Site"
 msgstr ""
 
@@ -127,71 +127,106 @@ msgstr ""
 msgid "Relationship to current person"
 msgstr ""
 
-#: addremotelink.php:140
+#: addremotelink.php:127
+#: addsearchlink.php:77
+msgid "Same as current"
+msgstr ""
+
+#: addremotelink.php:128
+#: addsearchlink.php:78
+msgid "Mother"
+msgstr "Majka"
+
+#: addremotelink.php:129
+#: addsearchlink.php:79
+msgid "Father"
+msgstr "Otac"
+
+#: addremotelink.php:130
+#: addsearchlink.php:80
+msgid "Husband"
+msgstr "Suprug"
+
+#: addremotelink.php:131
+#: addsearchlink.php:81
+msgid "Wife"
+msgstr "Supruga"
+
+#: addremotelink.php:132
+#: addsearchlink.php:82
+msgid "Son"
+msgstr "Sin"
+
+#: addremotelink.php:133
+#: addsearchlink.php:83
+msgid "Daughter"
+msgstr "Ćerka"
+
+#: addremotelink.php:148
 msgid "Site Location"
 msgstr ""
 
-#: addremotelink.php:150
+#: addremotelink.php:158
 msgid "Local site"
 msgstr ""
 
-#: addremotelink.php:158
-#: addremotelink.php:188
+#: addremotelink.php:166
+#: addremotelink.php:196
 msgid "Existing remote site"
 msgstr ""
 
-#: addremotelink.php:163
+#: addremotelink.php:171
 msgid "New remote site"
 msgstr ""
 
-#: addremotelink.php:173
+#: addremotelink.php:181
 msgid "Person ID"
 msgstr ""
 
-#: addremotelink.php:202
+#: addremotelink.php:210
 msgid "Type in a new site."
 msgstr ""
 
-#: addremotelink.php:205
-#: addremotelink.php:227
+#: addremotelink.php:213
+#: addremotelink.php:235
 msgid "Title:"
 msgstr ""
 
-#: addremotelink.php:208
+#: addremotelink.php:216
 msgid "Site URL:"
 msgstr ""
 
-#: addremotelink.php:211
+#: addremotelink.php:219
 msgid "Example:"
 msgstr "Primer:"
 
-#: addremotelink.php:214
+#: addremotelink.php:222
 msgid "Database ID:"
 msgstr ""
 
-#: addremotelink.php:217
+#: addremotelink.php:225
 #, fuzzy
 msgid "Username: "
 msgstr "Korisničko ime"
 
-#: addremotelink.php:220
+#: addremotelink.php:228
 #, fuzzy
 msgid "Password: "
 msgstr "Lozinka"
 
-#: addremotelink.php:230
+#: addremotelink.php:238
 msgid "GEDCOM File:"
 msgstr ""
 
-#: addremotelink.php:250
+#: addremotelink.php:258
 msgid "Admin Option"
 msgstr ""
 
-#: addremotelink.php:256
+#: addremotelink.php:264
 msgid "Do not update the CHAN (Last Change) record"
 msgstr "CHAN (Poslednja promena) upis ne treba ažurirati"
 
-#: addremotelink.php:264
+#: addremotelink.php:272
 #: addsearchlink.php:70
 #, fuzzy
 msgid "Add Link"
@@ -200,34 +235,6 @@ msgstr "Dodaj suprugu"
 #: addsearchlink.php:31
 msgid "Add Local Link"
 msgstr ""
-
-#: addsearchlink.php:77
-msgid "Same as current"
-msgstr ""
-
-#: addsearchlink.php:78
-msgid "Mother"
-msgstr "Majka"
-
-#: addsearchlink.php:79
-msgid "Father"
-msgstr "Otac"
-
-#: addsearchlink.php:80
-msgid "Husband"
-msgstr "Suprug"
-
-#: addsearchlink.php:81
-msgid "Wife"
-msgstr "Supruga"
-
-#: addsearchlink.php:82
-msgid "Son"
-msgstr "Sin"
-
-#: addsearchlink.php:83
-msgid "Daughter"
-msgstr "Ćerka"
 
 #: admin.php:51
 #: admin.php:137
@@ -390,6 +397,11 @@ msgstr ""
 msgid "Ancestry Chart"
 msgstr ""
 
+#: ancestry.php:49
+#, php-format
+msgid "%s Generation Ancestry Chart"
+msgstr ""
+
 #: ancestry.php:72
 #: compact.php:82
 msgid "Root Person ID"
@@ -423,9 +435,8 @@ msgstr "Pojedinaca"
 
 #: ancestry.php:136
 #: calendar.php:405
-#, fuzzy
 msgid "Families"
-msgstr "Presortiraj porodice"
+msgstr "Porodica"
 
 #: ancestry.php:142
 #: branches.php:74
@@ -539,9 +550,8 @@ msgid "Recent Years (&lt; 100 yrs)"
 msgstr ""
 
 #: calendar.php:201
-#, fuzzy
 msgid "Gender"
-msgstr "Edituj pol"
+msgstr "Pol"
 
 #: calendar.php:212
 #: calendar.php:215
@@ -659,6 +669,11 @@ msgstr "Žensko"
 msgid "Filter"
 msgstr ""
 
+#: calendar.php:588
+#, fuzzy, php-format
+msgid "%s year anniversary"
+msgstr "Godišnjica"
+
 #: calendar.php:614
 msgid "unknown"
 msgstr ""
@@ -715,9 +730,8 @@ msgid "Clippings Cart"
 msgstr "Kresanje stabla "
 
 #: clippings.php:49
-#, fuzzy
 msgid "Family Tree Clippings Cart"
-msgstr "Kresanje stabla "
+msgstr "Kresanje porodičnog stabla"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
@@ -971,6 +985,11 @@ msgid ""
 "\t<input type=\"submit\" value=\"<?php print i18n::translate("
 msgstr ""
 
+#: editconfig_gedcom.php:254
+#, php-format
+msgid "Genealogy from [%s]"
+msgstr ""
+
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
 msgstr ""
@@ -1078,6 +1097,11 @@ msgstr ""
 #: editconfig_gedcom.php:903
 #: editconfig_gedcom.php:924
 msgid "Path and name of GEDCOM on server"
+msgstr ""
+
+#: editconfig_gedcom.php:915
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, does not exist at the specified location."
 msgstr ""
 
 #: editconfig_gedcom.php:960
@@ -1504,9 +1528,8 @@ msgid "Notes"
 msgstr ""
 
 #: editconfig_gedcom.php:1511
-#, fuzzy
 msgid "Sources"
-msgstr "Vidi sve izvore"
+msgstr "Dokumenata"
 
 #: editconfig_gedcom.php:1512
 msgid "Media"
@@ -1944,6 +1967,11 @@ msgstr ""
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
 msgstr ""
 
+#: editgedcoms.php:184
+#, php-format
+msgid "%s cannot be downloaded."
+msgstr ""
+
 #: editgedcoms.php:187
 msgid "File not found."
 msgstr ""
@@ -1993,6 +2021,11 @@ msgstr ""
 #: edit_interface.php:2654
 #: edit_interface.php:2723
 msgid "Save"
+msgstr ""
+
+#: editlang_edit_settings.php:225
+#, php-format
+msgid "Original name of language in %s"
 msgstr ""
 
 #: editlang_edit_settings.php:238
@@ -2164,14 +2197,12 @@ msgid "User name"
 msgstr "Korisničko ime"
 
 #: edituser.php:186
-#, fuzzy
 msgid "First Name"
-msgstr "Edituj ime"
+msgstr "Ime"
 
 #: edituser.php:192
-#, fuzzy
 msgid "Last Name"
-msgstr "Edituj ime"
+msgstr "Prezime"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
@@ -2186,9 +2217,8 @@ msgid "Leave password blank if you want to keep the current password."
 msgstr ""
 
 #: edituser.php:223
-#, fuzzy
 msgid "Confirm Password"
-msgstr "Lozinka"
+msgstr "Ponovi lozinku"
 
 #: edituser.php:229
 msgid "Change Language"
@@ -2301,14 +2331,12 @@ msgid "Add child"
 msgstr "Dodaj dete"
 
 #: edit_interface.php:355
-#, fuzzy
 msgid "Add a new mother"
-msgstr "Dodaj novu belešku"
+msgstr "Dodaj majku"
 
 #: edit_interface.php:357
-#, fuzzy
 msgid "Add a new father"
-msgstr "Dodaj novu belešku"
+msgstr "Dodaj oca"
 
 #: edit_interface.php:362
 msgid "Add a child to create a one-parent family"
@@ -2414,9 +2442,8 @@ msgid "New source created successfully."
 msgstr ""
 
 #: edit_interface.php:911
-#, fuzzy
 msgid "Create a new Shared Note"
-msgstr "Dodaj novu zajedničku belešku"
+msgstr "Napravi novu zajedničku belešku"
 
 #: edit_interface.php:921
 #: edit_interface.php:1189
@@ -2564,42 +2591,47 @@ msgstr "Admin"
 msgid "from"
 msgstr ""
 
-#: edit_merge.php:246
+#: edit_merge.php:242
+#, php-format
+msgid "Record %s successfully updated."
+msgstr "Upis %s uspešno ažuriran."
+
+#: edit_merge.php:245
 msgid "favorites updated."
 msgstr ""
 
-#: edit_merge.php:248
+#: edit_merge.php:247
 msgid "Merge more records."
 msgstr ""
 
-#: edit_merge.php:281
+#: edit_merge.php:280
 msgid "Merge Step 1 of 3"
 msgstr ""
 
-#: edit_merge.php:284
+#: edit_merge.php:283
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
 msgstr ""
 
-#: edit_merge.php:287
+#: edit_merge.php:286
 msgid "Merge To ID:"
+msgstr ""
+
+#: edit_merge.php:301
+#: edit_merge.php:318
+msgid "Find Individual ID"
 msgstr ""
 
 #: edit_merge.php:302
 #: edit_merge.php:319
-msgid "Find Individual ID"
+msgid "Find Family ID"
 msgstr ""
 
 #: edit_merge.php:303
 #: edit_merge.php:320
-msgid "Find Family ID"
-msgstr ""
-
-#: edit_merge.php:304
-#: edit_merge.php:321
 msgid "Find Source ID"
 msgstr ""
 
-#: edit_merge.php:307
+#: edit_merge.php:306
 msgid "Merge From ID:"
 msgstr ""
 
@@ -2873,9 +2905,8 @@ msgstr ""
 
 #: familybook.php:458
 #: hourglass.php:115
-#, fuzzy
 msgid "Show spouses"
-msgstr "Vidi sve izvore"
+msgstr "Pokaži supruge"
 
 #: familybook.php:481
 msgid "Descent Steps"
@@ -2908,6 +2939,11 @@ msgstr ""
 #: help_text.php:5234
 msgid "Include married names"
 msgstr ""
+
+#: famlist.php:263
+#: famlist.php:274
+msgid "Families with surname %s"
+msgstr "Porodice sa prezimenom %s"
 
 #: famlist.php:268
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
@@ -2960,6 +2996,11 @@ msgstr ""
 #: fanchart.php:307
 msgid "Interactive Tree"
 msgstr "Interaktivno stablo"
+
+#: fanchart.php:428
+#, php-format
+msgid "%s Generation Circle Diagram"
+msgstr ""
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -4885,11 +4926,14 @@ msgid "_FA11"
 msgstr "Podatak 11"
 
 #. I18N: This is the GEDCOM label for "Fact 12"
-#. I18N: This is the GEDCOM label for "Fact 13"
 #: help_text.php:1969
-#: help_text.php:1975
 msgid "_FA12"
 msgstr "Podatak 12"
+
+#. I18N: This is the GEDCOM label for "Fact 13"
+#: help_text.php:1975
+msgid "_FA13"
+msgstr "Podatak 13"
 
 #. I18N: This is the GEDCOM label for "Emigration of parents"
 #: help_text.php:1981
@@ -9277,10 +9321,6 @@ msgid "?"
 msgstr "?"
 
 #: index_edit.php:154
-#: index_edit.php:158
-#: index_edit.php:159
-#: index_edit.php:160
-#: index_edit.php:161
 msgid "&nbsp;"
 msgstr "&nbsp;"
 
@@ -9345,6 +9385,12 @@ msgstr ""
 #: indilist.php:174
 msgid "Choose a letter to show individuals whose family name starts with that letter."
 msgstr "Izaberi slovo da vidiš porodice čije prezime počinje sa tim slovom."
+
+#: indilist.php:263
+#: indilist.php:274
+#, php-format
+msgid "Individuals with surname %s"
+msgstr "Pojedinci koji se prezivaju %s"
 
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
@@ -9691,6 +9737,12 @@ msgstr "Zahtevajte novu lozinku"
 msgid "Lost password request"
 msgstr "Zahtev za novu lozinku"
 
+#: login_register.php:126
+#: login_register.php:420
+#, php-format
+msgid "Hello %s ..."
+msgstr ""
+
 #: login_register.php:127
 msgid "A new password was requested for your user name."
 msgstr ""
@@ -9703,14 +9755,23 @@ msgstr ""
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
 msgstr ""
 
+#: login_register.php:139
+#, php-format
+msgid "Data request at %s"
+msgstr ""
+
+#: login_register.php:143
+#, php-format
+msgid "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>%s</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security."
+msgstr ""
+
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
 msgstr ""
 
 #: login_register.php:287
-#, fuzzy
 msgid "Desired user name"
-msgstr "Korisničko ime"
+msgstr "Korisničko ime po želji"
 
 #: login_register.php:288
 msgid "Desired password"
@@ -9737,6 +9798,11 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+#: login_register.php:421
+#, php-format
+msgid "A request was received at %s to create a PhpGedView account with your email address %s."
+msgstr ""
+
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
 msgstr ""
@@ -9758,9 +9824,19 @@ msgstr ""
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
 msgstr ""
 
+#: login_register.php:437
+#, php-format
+msgid "Your registration at %s"
+msgstr ""
+
 #: login_register.php:444
 #: login_register.php:565
 msgid "Hello Administrator ..."
+msgstr ""
+
+#: login_register.php:445
+#, php-format
+msgid "A prospective user registered himself with PhpGedView at %s."
 msgstr ""
 
 #: login_register.php:455
@@ -9775,6 +9851,26 @@ msgstr ""
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
 msgstr ""
 
+#: login_register.php:462
+#, php-format
+msgid "New registration at %s"
+msgstr ""
+
+#: login_register.php:473
+#, php-format
+msgid "Hello %s ...<br />Thank you for your registration."
+msgstr ""
+
+#: login_register.php:475
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password."
+msgstr ""
+
+#: login_register.php:476
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password."
+msgstr ""
+
 #: login_register.php:506
 #: login_register.php:513
 #: login_register.php:541
@@ -9787,12 +9883,27 @@ msgstr ""
 msgid "Send"
 msgstr "Pošalji"
 
+#: login_register.php:546
+#, php-format
+msgid "The data for the user <b>%s</b> was checked."
+msgstr ""
+
+#: login_register.php:566
+#, php-format
+msgid "User %s (%s) has confirmed his request for an account."
+msgstr ""
+
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
 msgstr ""
 
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
+msgstr ""
+
+#: login_register.php:581
+#, php-format
+msgid "New user at %s"
 msgstr ""
 
 #: login_register.php:590
@@ -10116,6 +10227,11 @@ msgstr ""
 msgid "Please enter a valid email address."
 msgstr ""
 
+#: message.php:138
+#, fuzzy, php-format
+msgid "Message successfully sent to %s"
+msgstr "Promene su uspešno upisane u bazu podataka"
+
 #: message.php:167
 msgid "Please enter a message subject."
 msgstr ""
@@ -10126,6 +10242,16 @@ msgstr ""
 
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
+msgstr ""
+
+#: message.php:192
+#, php-format
+msgid "This message will be sent to %s"
+msgstr ""
+
+#: message.php:193
+#, php-format
+msgid "This user prefers to receive messages in %s"
 msgstr ""
 
 #: message.php:197
@@ -10259,6 +10385,11 @@ msgstr ""
 #, fuzzy
 msgid "Shared Notes"
 msgstr "Dodaj novu zajedničku belešku"
+
+#: pedigree.php:52
+#, php-format
+msgid "%s Generation Pedigree Chart"
+msgstr ""
 
 #: pedigree.php:90
 msgid "Orientation"
@@ -10575,6 +10706,11 @@ msgstr "Izaberi datum"
 msgid "Download report"
 msgstr ""
 
+#: rss.php:110
+#, php-format
+msgid "News and links from the %s site"
+msgstr ""
+
 #: rss.php:116
 #: rss.php:119
 msgid "Feed created by PhpGedView"
@@ -10662,14 +10798,12 @@ msgid "Whole words only"
 msgstr ""
 
 #: search.php:318
-#, fuzzy
 msgid "Given name"
-msgstr "Korisničko ime"
+msgstr "Lično ime"
 
 #: search.php:329
-#, fuzzy
 msgid "Last name"
-msgstr "Korisničko ime"
+msgstr "Prezime"
 
 #: search.php:345
 msgid "Year"
@@ -11475,6 +11609,12 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
+#: uploadgedcom.php:251
+#: uploadgedcom.php:590
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, is not writable. Please check attributes and access rights."
+msgstr ""
+
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
 msgstr ""
@@ -11596,6 +11736,16 @@ msgstr ""
 
 #: uploadgedcom.php:1138
 msgid "Import Statistics"
+msgstr ""
+
+#: useradmin.php:194
+#, php-format
+msgid "Approval of account at %s"
+msgstr ""
+
+#: useradmin.php:195
+#, php-format
+msgid "The administrator at the PhpGedView site %s has approved your application for an account.  You may now login by accessing the following link: %s#"
 msgstr ""
 
 #: useradmin.php:269
@@ -11915,6 +12065,10 @@ msgstr ""
 msgid "No Blocks seems to be present in the system."
 msgstr ""
 
+#: blocks/block_htmlplus.php:40
+msgid "Advanced HTML"
+msgstr ""
+
 #: blocks/charts.php:40
 msgid "Charts Block"
 msgstr ""
@@ -11941,9 +12095,8 @@ msgid "Are you sure you want to remove this item from your list of Favorites?"
 msgstr ""
 
 #: blocks/gedcom_favorites.php:155
-#, fuzzy
 msgid "Add a new favorite"
-msgstr "Dodaj novu belešku"
+msgstr "Dodaj novu omiljenu/često posećivanu stranicu"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
@@ -11997,58 +12150,73 @@ msgstr ""
 msgid "GEDCOM Statistics"
 msgstr ""
 
-#: blocks/gedcom_stats.php:145
-#: blocks/gedcom_stats.php:330
+#: blocks/gedcom_stats.php:107
+#, php-format
+msgid "This GEDCOM was created using <b>%s %s</b>"
+msgstr "Ovaj rodoslov je napravljen sa <b>%s %s</b>"
+
+#: blocks/gedcom_stats.php:112
+#, php-format
+msgid "This GEDCOM was created on <b>%s</b>"
+msgstr "Ovaj rodoslov je napravljen započet <b>%s</b>"
+
+#: blocks/gedcom_stats.php:114
+#, php-format
+msgid " on <b>%s</b>"
+msgstr ""
+
+#: blocks/gedcom_stats.php:143
+#: blocks/gedcom_stats.php:328
 msgid "Total users"
 msgstr "Broj reg. korisnika"
 
-#: blocks/gedcom_stats.php:159
-#: blocks/gedcom_stats.php:277
+#: blocks/gedcom_stats.php:157
+#: blocks/gedcom_stats.php:275
 msgid "Earliest birth year"
 msgstr "Godina prvog zabeleženog rođenja"
 
-#: blocks/gedcom_stats.php:166
-#: blocks/gedcom_stats.php:285
+#: blocks/gedcom_stats.php:164
+#: blocks/gedcom_stats.php:283
 msgid "Latest birth year"
 msgstr "Godina poslednjeg zabeleženog rođenja"
 
-#: blocks/gedcom_stats.php:173
-#: blocks/gedcom_stats.php:293
+#: blocks/gedcom_stats.php:171
+#: blocks/gedcom_stats.php:291
 msgid "Earliest death year"
 msgstr "Godina prve zabeležene smrti"
 
-#: blocks/gedcom_stats.php:180
-#: blocks/gedcom_stats.php:301
+#: blocks/gedcom_stats.php:178
+#: blocks/gedcom_stats.php:299
 msgid "Latest death year"
 msgstr "Godina zadnje zabeležene smrti"
 
-#: blocks/gedcom_stats.php:188
-#: blocks/gedcom_stats.php:309
+#: blocks/gedcom_stats.php:186
+#: blocks/gedcom_stats.php:307
 msgid "Person who lived the longest"
 msgstr "Osoba koja je živela najduže"
 
-#: blocks/gedcom_stats.php:204
-#: blocks/gedcom_stats.php:325
+#: blocks/gedcom_stats.php:202
+#: blocks/gedcom_stats.php:323
 msgid "Family with the most children"
 msgstr "Porodica sa najviše dece"
 
-#: blocks/gedcom_stats.php:219
+#: blocks/gedcom_stats.php:217
 msgid "View statistics as graphs"
 msgstr ""
 
-#: blocks/gedcom_stats.php:227
+#: blocks/gedcom_stats.php:225
 msgid "Most Common Surnames"
 msgstr "Najčešća prezimena"
 
-#: blocks/gedcom_stats.php:259
+#: blocks/gedcom_stats.php:257
 msgid "Show common surnames?"
 msgstr ""
 
-#: blocks/gedcom_stats.php:268
+#: blocks/gedcom_stats.php:266
 msgid "Select the stats to show in this block"
 msgstr ""
 
-#: blocks/gedcom_stats.php:339
+#: blocks/gedcom_stats.php:337
 msgid "Show link to Statistics charts?"
 msgstr ""
 
@@ -12360,9 +12528,8 @@ msgid "Anniversary"
 msgstr "Godišnjica"
 
 #: blocks/yahrzeit.php:218
-#, fuzzy
 msgid "Total Names"
-msgstr "Edituj ime"
+msgstr "Ukupno prezimena"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
@@ -12755,38 +12922,44 @@ msgstr "Dodaj u moje omiljene stranice"
 msgid "…"
 msgstr "…"
 
-#: includes/classes/class_person.php:576
-#: includes/classes/class_person.php:633
+#. I18N: This is an abbreviation for a number.  i.e. #7 means number 7
+#: includes/classes/class_person.php:550
+#, php-format
+msgid "#%d"
+msgstr ""
+
+#: includes/classes/class_person.php:577
+#: includes/classes/class_person.php:634
 msgid "Unable to find family with ID"
 msgstr ""
 
-#: includes/classes/class_person.php:760
+#: includes/classes/class_person.php:761
 msgid "Family with Parents"
 msgstr "Porodica roditelja"
 
-#: includes/classes/class_person.php:779
-#: includes/classes/class_person.php:786
+#: includes/classes/class_person.php:780
+#: includes/classes/class_person.php:787
 msgid "Father's Family with "
 msgstr "Očeva porodica sa"
 
-#: includes/classes/class_person.php:780
-#: includes/classes/class_person.php:785
+#: includes/classes/class_person.php:781
+#: includes/classes/class_person.php:786
 msgid "Mother's Family with "
 msgstr ""
 
-#: includes/classes/class_person.php:803
+#: includes/classes/class_person.php:804
 msgid "Family with"
 msgstr "Porodica sa:"
 
-#: includes/classes/class_person.php:1836
+#: includes/classes/class_person.php:1837
 msgid "year"
 msgstr "godina"
 
-#: includes/classes/class_person.php:1840
+#: includes/classes/class_person.php:1841
 msgid "month"
 msgstr ""
 
-#: includes/classes/class_person.php:1842
+#: includes/classes/class_person.php:1843
 msgid "months"
 msgstr ""
 
@@ -12928,9 +13101,8 @@ msgid "Start at parents"
 msgstr ""
 
 #: includes/controllers/descendancy_ctrl.php:332
-#, fuzzy
 msgid "No children"
-msgstr "Promeni redosled dece"
+msgstr "Nema upisane dece"
 
 #: includes/controllers/family_ctrl.php:177
 msgid "Family Information"
@@ -12938,14 +13110,12 @@ msgstr ""
 
 #: includes/controllers/family_ctrl.php:350
 #: includes/controllers/family_ctrl.php:361
-#, fuzzy
 msgid "Edit Family"
-msgstr "Edituj ime"
+msgstr "Edituj porodicu"
 
 #: includes/controllers/family_ctrl.php:379
-#, fuzzy
 msgid "Add a child to this family"
-msgstr "Dodaj dete i započni porodicu sa samo jednim roditeljem"
+msgstr "Dodaj dete ovoj porodici"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -12958,9 +13128,8 @@ msgid "Click here to hide changes."
 msgstr "Klikni ovde da nastaviš"
 
 #: includes/controllers/family_ctrl.php:451
-#, fuzzy
 msgid "Delete family"
-msgstr "Obriši ime "
+msgstr "Obriši porodicu"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
@@ -13065,9 +13234,8 @@ msgstr ""
 
 #: includes/controllers/source_ctrl.php:199
 #: includes/controllers/source_ctrl.php:206
-#, fuzzy
 msgid "Edit Source"
-msgstr "Edituj ime"
+msgstr "Edituj izvor"
 
 #: includes/controllers/timeline_ctrl.php:275
 msgid "Husband's age"
@@ -13265,14 +13433,12 @@ msgid "No facts for this family."
 msgstr "Nema podataka za ovu porodicu."
 
 #: includes/functions/functions_charts.php:532
-#, fuzzy
 msgid "Add Note"
-msgstr "Dodaj novu belešku"
+msgstr "Dodaj belešku"
 
 #: includes/functions/functions_charts.php:541
-#, fuzzy
 msgid "Add Shared Note"
-msgstr "Dodaj novu zajedničku belešku"
+msgstr "Dodaj zajedničku belešku"
 
 #: includes/functions/functions_charts.php:560
 msgid "Add Source Citation"
@@ -13312,6 +13478,16 @@ msgstr ""
 #: includes/functions/functions_db.php:328
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 msgstr "A B C Č Ć D Đ E F G H I J K L M N O P R S Š T U V Z Ž"
+
+#: includes/functions/functions_edit.php:78
+#, php-format
+msgid "The record with id %s was changed by another user since you last accessed it."
+msgstr ""
+
+#: includes/functions/functions_edit.php:79
+#, php-format
+msgid "This record was last changed by <i>%s</i> at %s"
+msgstr "Zadnju promenu upisa izvršio <i>%s</i> u %s"
 
 #: includes/functions/functions_edit.php:80
 #: includes/functions/functions_edit.php:2376
@@ -13615,9 +13791,8 @@ msgid "Status"
 msgstr ""
 
 #: includes/functions/functions_print.php:2380
-#, fuzzy
 msgid "Add new fact"
-msgstr "Dodaj novo ime"
+msgstr "Dodaj novi podatak"
 
 #: includes/functions/functions_print.php:2537
 msgid "Find Repository"
@@ -13728,9 +13903,8 @@ msgstr "Početni položaj liste."
 #: includes/functions/functions_print_lists.php:779
 #: includes/functions/functions_print_lists.php:1612
 #: includes/functions/functions_print_lists.php:1757
-#, fuzzy
 msgid "Show parents"
-msgstr "Vidi sve izvore"
+msgstr "Pokaži roditelje"
 
 #: includes/functions/functions_print_lists.php:409
 #: includes/functions/functions_print_lists.php:792
@@ -13818,6 +13992,11 @@ msgstr ""
 
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
+msgstr ""
+
+#: includes/functions/functions_rss.php:149
+#, php-format
+msgid "This GEDCOM was created using %s %s"
 msgstr ""
 
 #. I18N: This is the country/chapman code for "Aruba"
@@ -15214,6 +15393,12 @@ msgstr ""
 msgid "Download Now"
 msgstr ""
 
+#: modules/clippings/clippings.php:121
+#: modules/clippings/clippings.php:126
+#, fuzzy, php-format
+msgid "Add %s to cart"
+msgstr "Dodaj u moje omiljene stranice"
+
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
 msgstr ""
@@ -15233,7 +15418,6 @@ msgstr "Kresanje stabla "
 
 #. I18N: This is the title of a tab on the sidebar
 #: modules/descendancy/descendancy.php:239
-#: modules/descendancy/pgv_module.php:43
 msgid "Descendancy"
 msgstr ""
 
@@ -15711,6 +15895,7 @@ msgid "Infirmaties - Whether blind, Whether Deaf and Dumb"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:51
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:49
 msgid "Keep"
 msgstr ""
 
@@ -15719,19 +15904,26 @@ msgid "Unlink"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:53
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:77
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:51
 msgid "Navigator"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:85
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:82
 msgid "Keep Link in list"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:86
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:83
 msgid "Remove Link from list"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:90
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:94
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:60
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:87
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:91
 msgid "Open Family Navigator"
 msgstr ""
 
@@ -15883,6 +16075,10 @@ msgstr ""
 msgid "Months Unemployed - xx = Months unemployed during Census Year"
 msgstr ""
 
+#: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:132
+msgid "Home Ownership - x-x-x-xxxx = O/R-F/M-F/H-#### = Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number"
+msgstr ""
+
 #: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:134
 msgid "Situation - 3 parameters - Diseases, Infimaties, Convict/Pauper etc"
 msgstr ""
@@ -15947,6 +16143,9 @@ msgstr ""
 #: modules/googlemap/googlemap.php:146
 #: modules/googlemap/googlemap.php:656
 #: modules/googlemap/googlemap.php:864
+#: modules/googlemap/pedigree_map.php:85
+#: modules/googlemap/pedigree_map.php:307
+#: modules/googlemap/placehierarchy.php:186
 msgid "Manage GoogleMap configuration"
 msgstr ""
 
@@ -15954,12 +16153,22 @@ msgstr ""
 #: modules/googlemap/editconfig.php:452
 #: modules/googlemap/gg_map_content.php:89
 #: modules/googlemap/googlemap.php:149
+#: modules/googlemap/pedigree_map.php:310
+#: modules/googlemap/placehierarchy.php:189
+#: modules/googlemap/places.php:159
+#: modules/googlemap/places.php:193
+#: modules/googlemap/places.php:566
+#: modules/googlemap/places_edit.php:42
 msgid "Edit geographic place locations"
 msgstr ""
 
 #: modules/googlemap/admin-config.php:58
 #: modules/googlemap/gg_map_content.php:92
 #: modules/googlemap/googlemap.php:152
+#: modules/googlemap/pedigree_map.php:313
+#: modules/googlemap/placecheck.php:50
+#: modules/googlemap/placecheck.php:54
+#: modules/googlemap/placehierarchy.php:192
 msgid "Place Check"
 msgstr ""
 
@@ -16004,6 +16213,8 @@ msgid "Postfix, prefix, normal, both"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:96
+#: modules/googlemap/places.php:161
+#: modules/googlemap/places_edit.php:46
 msgid "Page only for Administrators"
 msgstr ""
 
@@ -16022,21 +16233,33 @@ msgstr ""
 #: modules/googlemap/editconfig.php:231
 #: modules/googlemap/gg_map_content.php:31
 #: modules/googlemap/googlemap.php:608
+#: modules/googlemap/pedigree_map.php:551
+#: modules/googlemap/placehierarchy.php:506
+#: modules/googlemap/places_edit.php:405
 msgid "Map"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:232
 #: modules/googlemap/googlemap.php:609
+#: modules/googlemap/pedigree_map.php:552
+#: modules/googlemap/placehierarchy.php:507
+#: modules/googlemap/places_edit.php:406
 msgid "Satellite"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:233
 #: modules/googlemap/googlemap.php:610
+#: modules/googlemap/pedigree_map.php:553
+#: modules/googlemap/placehierarchy.php:508
+#: modules/googlemap/places_edit.php:407
 msgid "Hybrid"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:234
 #: modules/googlemap/googlemap.php:611
+#: modules/googlemap/pedigree_map.php:554
+#: modules/googlemap/placehierarchy.php:509
+#: modules/googlemap/places_edit.php:408
 msgid "Terrain"
 msgstr ""
 
@@ -16066,6 +16289,8 @@ msgid "Standard"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:274
+#: modules/googlemap/places_edit.php:809
+#: modules/googlemap/places_edit.php:817
 msgid "Flag"
 msgstr ""
 
@@ -16102,6 +16327,7 @@ msgid "Max."
 msgstr ""
 
 #: modules/googlemap/editconfig.php:352
+#: modules/googlemap/places_edit.php:748
 msgid "Precision"
 msgstr ""
 
@@ -16115,22 +16341,29 @@ msgid "digits"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:366
+#: modules/googlemap/places.php:179
+#: modules/googlemap/places_edit.php:772
 msgid "State"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:375
+#: modules/googlemap/places.php:181
+#: modules/googlemap/places_edit.php:774
 msgid "City"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:383
+#: modules/googlemap/places_edit.php:776
 msgid "Neighborhood"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:391
+#: modules/googlemap/places_edit.php:778
 msgid "House"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:399
+#: modules/googlemap/places_edit.php:780
 msgid "Max"
 msgstr ""
 
@@ -16156,11 +16389,15 @@ msgstr ""
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:655
+#: modules/googlemap/places_edit.php:814
+#: modules/googlemap/places_edit.php:818
 msgid "Change flag"
 msgstr ""
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:819
 msgid "Remove flag"
 msgstr ""
 
@@ -16171,6 +16408,7 @@ msgstr ""
 #: modules/googlemap/gg_map_content.php:35
 #: modules/googlemap/googlemap.php:97
 #: modules/googlemap/googlemap.php:651
+#: modules/googlemap/pedigree_map.php:82
 msgid "GoogleMap module disabled"
 msgstr ""
 
@@ -16189,6 +16427,8 @@ msgid "Deactivate"
 msgstr ""
 
 #: modules/googlemap/googlemap.php:607
+#: modules/googlemap/pedigree_map.php:550
+#: modules/googlemap/placehierarchy.php:505
 msgid "Redraw map"
 msgstr ""
 
@@ -16197,10 +16437,19 @@ msgid "No map data for this person"
 msgstr ""
 
 #: modules/googlemap/googlemap.php:940
+#: modules/googlemap/placehierarchy.php:302
+#: modules/googlemap/placehierarchy.php:614
+#: modules/googlemap/placehierarchy.php:671
 msgid "This place has no coordinates"
 msgstr ""
 
 #: modules/googlemap/googlemap.php:942
+#: modules/googlemap/placehierarchy.php:304
+#: modules/googlemap/placehierarchy.php:616
+#: modules/googlemap/placehierarchy.php:617
+#: modules/googlemap/placehierarchy.php:673
+#: modules/googlemap/placehierarchy.php:674
+#: modules/googlemap/places.php:604
 msgid "Edit geographic location"
 msgstr ""
 
@@ -16476,6 +16725,10 @@ msgstr ""
 #: modules/lightbox/admin-config.php:40
 #: modules/lightbox/lb_editconfig.php:42
 #: modules/lightbox/lb_editconfig.php:46
+#: modules/lightbox/functions/lb_head.php:116
+#: modules/lightbox/functions/lb_head.php:117
+#: modules/lightbox/functions/lb_head.php:125
+#: modules/lightbox/functions/lb_head.php:133
 msgid "Lightbox-Album Configuration"
 msgstr ""
 
@@ -16719,9 +16972,8 @@ msgid "There are no media objects for this individual."
 msgstr ""
 
 #: modules/notes/notes.php:60
-#, fuzzy
 msgid "Show all notes"
-msgstr "Vidi sve izvore"
+msgstr "Vidi sve beleške"
 
 #: modules/notes/notes.php:80
 #, fuzzy
@@ -16750,9 +17002,8 @@ msgid "Relatives"
 msgstr ""
 
 #: modules/relatives/relatives.php:114
-#, fuzzy
 msgid "Add husband"
-msgstr "Dodaj dete"
+msgstr "Dodaj supruga"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
@@ -16771,18 +17022,16 @@ msgid "Link this person to an existing family as a child"
 msgstr "Dodaj ovu osobu kao dete već upisanoj porodici"
 
 #: modules/relatives/relatives.php:415
-#, fuzzy
 msgid "Add a new wife"
-msgstr "Dodaj novu belešku"
+msgstr "Dodaj suprugu"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
 msgstr "Dodaj ovu osobu kao supruga već upisanoj porodici"
 
 #: modules/relatives/relatives.php:435
-#, fuzzy
 msgid "Add a new husband"
-msgstr "Dodaj novu zajedničku belešku"
+msgstr "Dodaj supruga"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
@@ -16910,7 +17159,6 @@ msgid "There are no Source citations for this individual."
 msgstr ""
 
 #: themes/cloudy/footer.php:174
-#: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
 msgstr ""
 
@@ -16919,6 +17167,3 @@ msgstr ""
 
 #~ msgid "FAMC:WIFE:BIRT:PLAC"
 #~ msgstr "Mesto rođenja majke"
-
-#~ msgid "_FA13"
-#~ msgstr "Podatak 13"

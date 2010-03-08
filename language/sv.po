@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-07 22:55-0000\n"
+"POT-Creation-Date: 2010-03-08 18:58-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -49,10 +49,9 @@ msgstr "Du har inte access till"
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
-#: addremotelink.php:274
-#, fuzzy
+#: addremotelink.php:282
 msgid "Close Window"
-msgstr "Automatstängning av redigeringsfönster"
+msgstr "Stäng fönster"
 
 #: addmedia.php:192
 msgid "Media file already exists."
@@ -62,7 +61,7 @@ msgstr "Mediafil existerar redan."
 #: addmedia.php:211
 #: addmedia.php:224
 #: client.php:414
-#: client.php:424
+#: client.php:423
 msgid "There was an error uploading your file."
 msgstr "Det uppstod ett fel vid uppladdningen av din fil."
 
@@ -115,141 +114,137 @@ msgstr "Du har valt en sajt från en annan plats."
 
 #: addremotelink.php:75
 #: addremotelink.php:85
-#: addremotelink.php:183
+#: addremotelink.php:191
 msgid "Site"
 msgstr "Sajt"
 
 #: addremotelink.php:80
-#, fuzzy
 msgid "Database ID"
-msgstr "Databasvärd"
+msgstr "Databas-ID"
 
 #: addremotelink.php:121
 #: addsearchlink.php:74
 msgid "Relationship to current person"
 msgstr "Relation till vald person"
 
-#: addremotelink.php:140
+#: addremotelink.php:127
+#: addsearchlink.php:77
+msgid "Same as current"
+msgstr "Samma som nuvarande"
+
+#: addremotelink.php:128
+#: addsearchlink.php:78
+msgid "Mother"
+msgstr "Mor"
+
+#: addremotelink.php:129
+#: addsearchlink.php:79
+msgid "Father"
+msgstr "Far"
+
+#: addremotelink.php:130
+#: addsearchlink.php:80
+msgid "Husband"
+msgstr "Make"
+
+#: addremotelink.php:131
+#: addsearchlink.php:81
+msgid "Wife"
+msgstr "Maka"
+
+#: addremotelink.php:132
+#: addsearchlink.php:82
+msgid "Son"
+msgstr "Son"
+
+#: addremotelink.php:133
+#: addsearchlink.php:83
+msgid "Daughter"
+msgstr "Dotter"
+
+#: addremotelink.php:148
 msgid "Site Location"
 msgstr "Sajtplats"
 
-#: addremotelink.php:150
+#: addremotelink.php:158
 msgid "Local site"
 msgstr "Samma sajt"
 
-#: addremotelink.php:158
-#: addremotelink.php:188
+#: addremotelink.php:166
+#: addremotelink.php:196
 msgid "Existing remote site"
 msgstr "Använd en existerande sajt."
 
-#: addremotelink.php:163
+#: addremotelink.php:171
 msgid "New remote site"
 msgstr "Annan sajt"
 
-#: addremotelink.php:173
+#: addremotelink.php:181
 msgid "Person ID"
 msgstr "Person-ID"
 
-#: addremotelink.php:202
+#: addremotelink.php:210
 msgid "Type in a new site."
 msgstr "Skriv in en ny sajt."
 
-#: addremotelink.php:205
-#: addremotelink.php:227
+#: addremotelink.php:213
+#: addremotelink.php:235
 msgid "Title:"
 msgstr "Titel"
 
-#: addremotelink.php:208
-#, fuzzy
+#: addremotelink.php:216
 msgid "Site URL:"
-msgstr "Huvudsidans URL"
+msgstr "Sajt URL:"
 
-#: addremotelink.php:211
+#: addremotelink.php:219
 msgid "Example:"
 msgstr ""
 
-#: addremotelink.php:214
-#, fuzzy
+#: addremotelink.php:222
 msgid "Database ID:"
-msgstr "Databasvärd"
+msgstr "DatabasID:"
 
-#: addremotelink.php:217
-#, fuzzy
+#: addremotelink.php:225
 msgid "Username: "
-msgstr "Användarnamn"
+msgstr "Användarnamn: "
 
-#: addremotelink.php:220
-#, fuzzy
+#: addremotelink.php:228
 msgid "Password: "
-msgstr "Lösenord"
+msgstr "Lösenord: "
 
-#: addremotelink.php:230
-#, fuzzy
+#: addremotelink.php:238
 msgid "GEDCOM File:"
-msgstr "GEDCOM-titel"
+msgstr "GEDCOM-fil:"
 
-#: addremotelink.php:250
-#, fuzzy
+#: addremotelink.php:258
 msgid "Admin Option"
-msgstr "_Administration"
+msgstr "Administratörsinställningar"
 
-#: addremotelink.php:256
+#: addremotelink.php:264
 msgid "Do not update the CHAN (Last Change) record"
 msgstr "Uppdatera inte CHAN (Senast ändrade) posten"
 
-#: addremotelink.php:264
+#: addremotelink.php:272
 #: addsearchlink.php:70
-#, fuzzy
 msgid "Add Link"
-msgstr "Lägg till maka"
+msgstr "Lägg till länk"
 
 #: addsearchlink.php:31
 msgid "Add Local Link"
 msgstr "Lägg till lokal länk"
 
-#: addsearchlink.php:77
-msgid "Same as current"
-msgstr "Samma som nuvarande"
-
-#: addsearchlink.php:78
-msgid "Mother"
-msgstr "Mor"
-
-#: addsearchlink.php:79
-msgid "Father"
-msgstr "Far"
-
-#: addsearchlink.php:80
-msgid "Husband"
-msgstr "Make"
-
-#: addsearchlink.php:81
-msgid "Wife"
-msgstr "Maka"
-
-#: addsearchlink.php:82
-msgid "Son"
-msgstr "Son"
-
-#: addsearchlink.php:83
-msgid "Daughter"
-msgstr "Dotter"
-
 #: admin.php:51
 #: admin.php:137
-#, fuzzy
 msgid "Administration"
-msgstr "_Administration"
+msgstr "Administration"
 
 #: admin.php:55
-#, fuzzy
 msgid "Accept / Reject Changes"
-msgstr "Nyligen ändrade område"
+msgstr "Acceptera / Förkasta ändringar"
 
 #: admin.php:75
-#, fuzzy
 msgid "View log files"
-msgstr "Arkivera loggfiler"
+msgstr "Visa loggfiler"
 
 #: admin.php:105
 msgid "Edit Image Manipulation Configuration"
@@ -277,15 +272,13 @@ msgstr "Ett eller flera användarkonton har varningar"
 
 #: admin.php:166
 #: admin.php:186
-#, fuzzy
 msgid "Informational"
-msgstr "PHP Info"
+msgstr "Information"
 
 #: admin.php:167
 #: admin.php:201
-#, fuzzy
 msgid "Data and GEDCOM administration"
-msgstr "_GEDCOM: Administratörssida"
+msgstr "Data och GEDCOM-administration"
 
 #: admin.php:169
 #: admin.php:228
@@ -294,9 +287,8 @@ msgstr ""
 
 #: admin.php:172
 #: admin.php:256
-#, fuzzy
 msgid "Site administration"
-msgstr "_Användaradministration"
+msgstr "Sajtadministration"
 
 #: admin.php:179
 #, fuzzy
@@ -312,9 +304,8 @@ msgid "README documentation"
 msgstr "README-dokumentation"
 
 #: admin.php:194
-#, fuzzy
 msgid "Show PHP information page"
-msgstr "PHP Info"
+msgstr "Visa PHP informationssida"
 
 #: admin.php:194
 msgid "PHP information"
@@ -329,23 +320,20 @@ msgid "Merge records"
 msgstr "Slå ihop poster"
 
 #: admin.php:210
-#, fuzzy
 msgid "Cleanup Index directory"
-msgstr "Indexkatalog"
+msgstr "Rensa indexmappen"
 
 #: admin.php:216
 msgid "Batch Update"
 msgstr ""
 
 #: admin.php:232
-#, fuzzy
 msgid "Add an unlinked person"
-msgstr "Lägg till en make för en existerande person"
+msgstr "Lägg till en olänkad person"
 
 #: admin.php:235
-#, fuzzy
 msgid "Add an unlinked source"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till en olänkad källa"
 
 #: admin.php:240
 #, fuzzy
@@ -353,38 +341,32 @@ msgid "Add an unlinked note"
 msgstr "Lägg till ny anteckning"
 
 #: admin.php:260
-#, fuzzy
 msgid "Configuration"
-msgstr "Konfigurationshjälp"
+msgstr "Konfiguration"
 
 #: admin.php:262
-#, fuzzy
 msgid "User Information Migration tool"
-msgstr "_Användarinformation migrering (SQL <<-->> Index)"
+msgstr "Migreringsverktyg för användarinformationen"
 
 #: admin.php:266
-#, fuzzy
 msgid "User administration"
-msgstr "_Användaradministration"
+msgstr "Användaradministration"
 
 #: admin.php:268
 msgid "Backup"
 msgstr "Backup"
 
 #: admin.php:272
-#, fuzzy
 msgid "FAQ List"
-msgstr "_FAQ Lista: Redigera"
+msgstr "FAQ lista"
 
 #: admin.php:274
-#, fuzzy
 msgid "Manage Sites"
-msgstr "Språkfiler"
+msgstr "Hantera sajter"
 
 #: admin.php:278
-#, fuzzy
 msgid "Configure supported languages"
-msgstr "_Konfigurera stödda språk"
+msgstr "Konfigurera stödda språk"
 
 #: admin.php:282
 msgid "You have not configured the languages your site will support.<br />PhpGedView will use its default actions."
@@ -411,11 +393,14 @@ msgstr "Innehåll i loggfil"
 msgid "Ancestry Chart"
 msgstr "Släktöversikt"
 
+#: ancestry.php:49
+msgid "%s Generation Ancestry Chart"
+msgstr "%s generationer släktöversikten"
+
 #: ancestry.php:72
 #: compact.php:82
-#, fuzzy
 msgid "Root Person ID"
-msgstr "Ta bort person"
+msgstr "ID för startperson"
 
 #: ancestry.php:82
 msgid "Box width"
@@ -426,30 +411,26 @@ msgid "Layout"
 msgstr "Layout"
 
 #: ancestry.php:99
-#, fuzzy
 msgid "List"
-msgstr "Namnlista"
+msgstr "Lista"
 
 #: ancestry.php:105
 msgid "Booklet"
 msgstr "Häfte"
 
 #: ancestry.php:123
-#, fuzzy
 msgid "Show cousins"
-msgstr "Visa träffräknare"
+msgstr "Visa kusiner"
 
 #: ancestry.php:130
 #: calendar.php:404
-#, fuzzy
 msgid "Individuals"
-msgstr "Person lägg till fakta"
+msgstr "Personer"
 
 #: ancestry.php:136
 #: calendar.php:405
-#, fuzzy
 msgid "Families"
-msgstr "Ändra ordning på familjer"
+msgstr "Familjer"
 
 #: ancestry.php:142
 #: branches.php:74
@@ -564,9 +545,8 @@ msgid "Recent Years (&lt; 100 yrs)"
 msgstr "Senare år(< 100 år)"
 
 #: calendar.php:201
-#, fuzzy
 msgid "Gender"
-msgstr "Redigera kön"
+msgstr "Kön"
 
 #: calendar.php:212
 #: calendar.php:215
@@ -581,20 +561,17 @@ msgid "Females"
 msgstr ""
 
 #: calendar.php:226
-#, fuzzy
 msgid "Show events of:"
-msgstr "Visa den äldsta överst"
+msgstr "Visa händelser för:"
 
 #: calendar.php:232
 #: calendar.php:530
-#, fuzzy
 msgid "Births, Deaths, Marriages"
-msgstr "Visa endast födda, döda och vigda?"
+msgstr "Födda, döda, vigda"
 
 #: calendar.php:235
-#, fuzzy
 msgid "ALL"
-msgstr "Ã…land"
+msgstr "Alla"
 
 #: calendar.php:238
 msgid "BIRT"
@@ -646,9 +623,8 @@ msgstr "Specialhändelse"
 
 #: calendar.php:282
 #: calendar.php:284
-#, fuzzy
 msgid "View Day"
-msgstr "Visa arkiv"
+msgstr "Visa dag"
 
 #: calendar.php:287
 #: calendar.php:289
@@ -657,19 +633,16 @@ msgstr "Visa månad"
 
 #: calendar.php:292
 #: calendar.php:294
-#, fuzzy
 msgid "View Year"
-msgstr "Visa arkiv"
+msgstr "Visa år"
 
 #: calendar.php:435
-#, fuzzy
 msgid "Total individuals"
-msgstr "Radera denna person"
+msgstr "antal namn ="
 
 #: calendar.php:443
-#, fuzzy
 msgid "Total families"
-msgstr "Ändra ordning på familjer"
+msgstr "antal familjer ="
 
 #: calendar.php:477
 msgid "Day not set"
@@ -689,6 +662,10 @@ msgstr "Kvinna"
 msgid "Filter"
 msgstr "Filter"
 
+#: calendar.php:588
+msgid "%s year anniversary"
+msgstr "%s årsdag"
+
 #: calendar.php:614
 msgid "unknown"
 msgstr ""
@@ -703,9 +680,8 @@ msgid "Return to the Admin menu"
 msgstr "Tillbaka till administratörsmenyn"
 
 #: changelanguage.php:155
-#, fuzzy
 msgid "Add new language"
-msgstr "Lägg till nytt namn"
+msgstr "Lägg till nytt språk"
 
 #: changelanguage.php:175
 #: changelanguage.php:191
@@ -728,28 +704,24 @@ msgid "Edit"
 msgstr "Ändra"
 
 #: changelanguage.php:259
-#, fuzzy
 msgid "Languages used"
-msgstr "Välj språk"
+msgstr "Språk som används"
 
 #: changelanguage.php:264
-#, fuzzy
 msgid "Current GEDCOMs"
-msgstr "Skapa ny GEDCOM-fil"
+msgstr "Aktuell GEDCOM"
 
 #: changelanguage.php:282
-#, fuzzy
 msgid "Users' languages"
-msgstr "Gammalt språk"
+msgstr "Användarnas språk"
 
 #: clippings.php:40
 msgid "Clippings Cart"
 msgstr "Urklippskorg"
 
 #: clippings.php:49
-#, fuzzy
 msgid "Family Tree Clippings Cart"
-msgstr "Tillåt urklippskorgen"
+msgstr "Släktträdsurklippskorg"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
@@ -817,9 +789,8 @@ msgid "Which records linked to this source should be added?"
 msgstr "Vilka poster länkade till denna källa skall läggas till?"
 
 #: clippings.php:97
-#, fuzzy
 msgid "Add just this source."
-msgstr "Radera källa"
+msgstr "Lägg enbart till denna källa."
 
 #: clippings.php:98
 msgid "Add this source and families/people linked to it."
@@ -830,23 +801,20 @@ msgid "Some items could not be added due to privacy restrictions"
 msgstr "Vissa delar kunde inte läggas till på grund av integritetsrestriktioner"
 
 #: clippings.php:127
-#, fuzzy
 msgid "Add Individual By ID"
-msgstr "GEDCOM-ID Prefix"
+msgstr "Lägg till person via ID"
 
 #: clippings.php:140
 msgid "Add"
 msgstr "Lägg till"
 
 #: clippings.php:150
-#, fuzzy
 msgid "Your Clippings Cart is empty."
-msgstr "Urklippskorg"
+msgstr "Urklippskorgen för ditt släktträd är tom."
 
 #: clippings.php:157
-#, fuzzy
 msgid "File Information"
-msgstr "PHP Info"
+msgstr "Filinformation"
 
 #: clippings.php:159
 msgid "File Type"
@@ -877,14 +845,12 @@ msgid "Authenticated user"
 msgstr "Inloggade användare"
 
 #: clippings.php:208
-#, fuzzy
 msgid "GEDCOM administrator"
-msgstr "_GEDCOM: Administratörssida"
+msgstr "GEDCOM-administratör"
 
 #: clippings.php:209
-#, fuzzy
 msgid "Site administrator"
-msgstr "_Användaradministration"
+msgstr "Sajt-administratör"
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
@@ -907,9 +873,8 @@ msgid "Forward slashes : /"
 msgstr ""
 
 #: clippings.php:307
-#, fuzzy
 msgid "Remove"
-msgstr "Ta bort person"
+msgstr "Radera"
 
 #: clippings.php:224
 msgid ""
@@ -924,9 +889,8 @@ msgstr ""
 #: compact.php:58
 #: compact.php:447
 #: compact.php:449
-#, fuzzy
 msgid "Compact Chart"
-msgstr "Töm urklippskorgen"
+msgstr "Kompakt släktöversikt"
 
 #: compact.php:97
 msgid "Show ID numbers next to names"
@@ -959,9 +923,8 @@ msgid "To delete a file or subdirectory from the Index directory drag it to the 
 msgstr ""
 
 #: dir_editor.php:91
-#, fuzzy
 msgid "Deleted files:"
-msgstr "Radera namn"
+msgstr "Borttagna filer:"
 
 #: dir_editor.php:111
 #: dir_editor.php:205
@@ -1001,9 +964,8 @@ msgid "Download GEDCOM"
 msgstr "Ladda ner GEDCOM-fil"
 
 #: downloadgedcom.php:136
-#, fuzzy
 msgid "Options:"
-msgstr "Importeringsval"
+msgstr "Inställningar:"
 
 #: downloadgedcom.php:169
 msgid ""
@@ -1012,6 +974,10 @@ msgid ""
 "\t<tr><td class=\"facts_label03\" colspan=\"2\">\n"
 "\t<input type=\"submit\" value=\"<?php print i18n::translate("
 msgstr ""
+
+#: editconfig_gedcom.php:254
+msgid "Genealogy from [%s]"
+msgstr "Genealogi från [%s]"
 
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
@@ -1027,9 +993,8 @@ msgid "The protected media directory in the Media Firewall root directory is not
 msgstr "Den skyddade mediamappen i mediabrandväggens rootmapp är inte skrivbar för alla."
 
 #: editconfig_gedcom.php:487
-#, fuzzy
 msgid "Download GEDCOM configuration."
-msgstr "_GEDCOM: Konfigurationsfil"
+msgstr "Ladda ner GEDCOM-inställningarna."
 
 #: editconfig_gedcom.php:487
 msgid "Upload the file to your index directory: "
@@ -1037,9 +1002,8 @@ msgstr "Ladda upp filen till indexkatalogen: "
 
 #: editconfig_gedcom.php:620
 #: editconfig_gedcom.php:666
-#, fuzzy
 msgid "GEDCOM Configuration"
-msgstr "_GEDCOM: Konfigurationsfil"
+msgstr "GEDCOM-konfiguration"
 
 #: editconfig_gedcom.php:670
 #: editgedcoms.php:117
@@ -1058,9 +1022,8 @@ msgstr "Skapa ny GEDCOM-fil"
 
 #: editconfig_gedcom.php:676
 #: editgedcoms.php:157
-#, fuzzy
 msgid "Upload Replacement"
-msgstr "Sökväg för uppladdningen"
+msgstr "Ladda upp ersättningsfil"
 
 #: editconfig_gedcom.php:680
 #: edit_privacy.php:145
@@ -1076,9 +1039,8 @@ msgid "Search option text"
 msgstr "Sök text för inställningar"
 
 #: editconfig_gedcom.php:850
-#, fuzzy
 msgid "Clear Search"
-msgstr "Töm cache-filerna"
+msgstr "Rensa sökning"
 
 #: editconfig_gedcom.php:878
 #: editconfig_gedcom.php:1106
@@ -1091,9 +1053,8 @@ msgstr "Töm cache-filerna"
 #: editconfig_gedcom.php:2121
 #: editconfig_gedcom.php:2223
 #: edit_privacy.php:805
-#, fuzzy
 msgid "Save configuration"
-msgstr "Konfigurationshjälp"
+msgstr "Spara konfigurationen"
 
 #: editconfig_gedcom.php:880
 #: editconfig_gedcom.php:1108
@@ -1111,23 +1072,26 @@ msgstr "Återställ"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
-#, fuzzy
 msgid "GEDCOM Basics"
-msgstr "GEDCOM-titel"
+msgstr "Grundläggande GEDCOM"
 
 #: editconfig_gedcom.php:895
 msgid "Upload path"
 msgstr "Sökväg för uppladdningen"
 
 #: editconfig_gedcom.php:900
-#, fuzzy
 msgid "Maximum upload size: "
-msgstr "Maximum sidvisningstakt"
+msgstr "Max uppladdningsstorlek: "
 
 #: editconfig_gedcom.php:903
 #: editconfig_gedcom.php:924
 msgid "Path and name of GEDCOM on server"
 msgstr "GEDCOM-filens sökväg och namn"
+
+#: editconfig_gedcom.php:915
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, does not exist at the specified location."
+msgstr "GEDCOM-filen, <b>[%s]</b>, finns inte på den angivna platsen."
 
 #: editconfig_gedcom.php:960
 msgid "Character Set encoding"
@@ -1291,9 +1255,8 @@ msgstr "PHP-tidsgräns"
 
 #: editconfig_gedcom.php:1115
 #: editconfig_gedcom.php:1116
-#, fuzzy
 msgid "Multimedia"
-msgstr "Hantera media"
+msgstr "Multimedia"
 
 #: editconfig_gedcom.php:1122
 msgid "Enable multimedia features"
@@ -1350,9 +1313,8 @@ msgstr "Visa nerladdningslänk i mediavisaren"
 
 #: editconfig_gedcom.php:1224
 #: editconfig_gedcom.php:1225
-#, fuzzy
 msgid "Media Firewall"
-msgstr "Använd mediabrandvägg"
+msgstr "Mediabrandvägg"
 
 #: editconfig_gedcom.php:1230
 msgid "Use Media Firewall"
@@ -1384,9 +1346,8 @@ msgstr "Spara vattenmärkta miniatyrer på servern?"
 
 #: editconfig_gedcom.php:1299
 #: editconfig_gedcom.php:1300
-#, fuzzy
 msgid "Access and Privacy"
-msgstr "Ändra integritetsinställningar"
+msgstr "Access och integritet"
 
 #: editconfig_gedcom.php:1305
 msgid "Enable Privacy"
@@ -1409,9 +1370,8 @@ msgid "Welcome"
 msgstr "Välkommen"
 
 #: editconfig_gedcom.php:1332
-#, fuzzy
 msgid "MyGedView"
-msgstr "PhpGedView URL"
+msgstr "Min GedView"
 
 #: editconfig_gedcom.php:1337
 msgid "Welcome text on Login page"
@@ -1456,9 +1416,8 @@ msgstr "Visning och layout"
 
 #: editconfig_gedcom.php:1387
 #: editconfig_gedcom.php:1388
-#, fuzzy
 msgid "Names"
-msgstr "Namnlista"
+msgstr "Namn"
 
 #: editconfig_gedcom.php:1393
 msgid "Show married names on Individual list"
@@ -1557,14 +1516,12 @@ msgid "Notes"
 msgstr ""
 
 #: editconfig_gedcom.php:1511
-#, fuzzy
 msgid "Sources"
-msgstr "Visa källor"
+msgstr "Källor"
 
 #: editconfig_gedcom.php:1512
-#, fuzzy
 msgid "Media"
-msgstr "Hitta media"
+msgstr "Media"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
@@ -1713,9 +1670,8 @@ msgstr ""
 
 #: editconfig_gedcom.php:1799
 #: editconfig_gedcom.php:1800
-#, fuzzy
 msgid "Edit Options"
-msgstr "Importeringsval"
+msgstr "Redigereringsinställningar"
 
 #: editconfig_gedcom.php:1805
 msgid "Enable online editing"
@@ -1828,9 +1784,8 @@ msgstr "Post"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
-#, fuzzy
 msgid "User Options"
-msgstr "Importeringsval"
+msgstr "Användarinställningar"
 
 #: editconfig_gedcom.php:1978
 msgid "Allow user to change language"
@@ -1858,9 +1813,8 @@ msgstr "Visa temaväljare för att ändra tema"
 
 #: editconfig_gedcom.php:2044
 #: editconfig_gedcom.php:2045
-#, fuzzy
 msgid "Contact Information"
-msgstr "Kontaktmetod"
+msgstr "Kontakt information"
 
 #: editconfig_gedcom.php:2055
 msgid "PhpGedView reply address"
@@ -1876,9 +1830,8 @@ msgstr "Kontaktmetod"
 
 #: editconfig_gedcom.php:2078
 #: editconfig_gedcom.php:2108
-#, fuzzy
 msgid "PhpGedView internal messaging"
-msgstr "PhpGedView svarsadress"
+msgstr "PhpGedView intern meddelandehantering"
 
 #: editconfig_gedcom.php:2079
 #: editconfig_gedcom.php:2109
@@ -1897,9 +1850,8 @@ msgstr "Epost till länk"
 
 #: editconfig_gedcom.php:2084
 #: editconfig_gedcom.php:2114
-#, fuzzy
 msgid "No contact method"
-msgstr "Kontaktmetod"
+msgstr "Ingen kontaktmetod"
 
 #: editconfig_gedcom.php:2089
 msgid "Support contact"
@@ -1940,9 +1892,8 @@ msgstr "Beskrivning META tag"
 
 #: editconfig_gedcom.php:2161
 #: editconfig_gedcom.php:2166
-#, fuzzy
 msgid "Leave this field empty to use the title of the currently active database."
-msgstr "Värdet som ska användas i sidämnes-metatagen i HTML sidans rubrik. Lämna detta fält tomt för att använda den aktiva databasen title för detta värde.<br />Detta sätter $META_PAGE_TOPIC variabeln i <i><u>xxx</u>.GED_conf.php</i>."
+msgstr "Lämna detta fält tomt för att använda den för närvarande aktiva databasens titel för detta värde."
 
 #: editconfig_gedcom.php:2164
 msgid "Page-topic META tag"
@@ -1985,14 +1936,12 @@ msgid "Configuration help"
 msgstr "Konfigurationshjälp"
 
 #: editgedcoms.php:78
-#, fuzzy
 msgid "GEDCOM Administration"
-msgstr "_GEDCOM: Administratörssida"
+msgstr "GEDCOM-administration"
 
 #: editgedcoms.php:96
-#, fuzzy
 msgid "Default GEDCOM"
-msgstr "Validera GEDCOM-filen"
+msgstr "Standard-GEDCOM"
 
 #: editgedcoms.php:111
 msgid "Check if GEDCOM files are downloadable"
@@ -2006,14 +1955,17 @@ msgstr "GEDCOM-titel"
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
 msgstr ""
 
+#: editgedcoms.php:184
+msgid "%s cannot be downloaded."
+msgstr "%s kan inte laddas ner."
+
 #: editgedcoms.php:187
 msgid "File not found."
 msgstr "Filen kunde inte hittas."
 
 #: editgedcoms.php:191
-#, fuzzy
 msgid "Import"
-msgstr "Importeringsval"
+msgstr "Importera"
 
 #: editgedcoms.php:193
 msgid "This GEDCOM has not yet been imported."
@@ -2028,9 +1980,8 @@ msgid "Are you sure you want to delete this GEDCOM"
 msgstr "Är du säker på att du vill radera denna GEDCOM-fil"
 
 #: editgedcoms.php:208
-#, fuzzy
 msgid "Download"
-msgstr "Ladda ner GEDCOM-fil"
+msgstr "Ladda ner"
 
 #: editgedcoms.php:213
 msgid "Check"
@@ -2058,6 +2009,10 @@ msgstr "Redigerare för översättningsfiler"
 #: edit_interface.php:2723
 msgid "Save"
 msgstr "Spara"
+
+#: editlang_edit_settings.php:225
+msgid "Original name of language in %s"
+msgstr "Ursprungligt namn på språket i %s"
 
 #: editlang_edit_settings.php:238
 msgid "Abbreviation for language files"
@@ -2169,9 +2124,8 @@ msgid "Add/Edit Journal/News entry"
 msgstr "Lägg till/ändra dagboks/nyhets notering"
 
 #: editnews.php:57
-#, fuzzy
 msgid "Please enter a title."
-msgstr "Presentationsstil"
+msgstr "Skriv en titel."
 
 #: editnews.php:64
 msgid "Please enter some text for this News or Journal entry."
@@ -2229,14 +2183,12 @@ msgid "User name"
 msgstr "Användarnamn"
 
 #: edituser.php:186
-#, fuzzy
 msgid "First Name"
-msgstr "Ändra namn"
+msgstr "Förnamn"
 
 #: edituser.php:192
-#, fuzzy
 msgid "Last Name"
-msgstr "Ändra namn"
+msgstr "Efternamn"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
@@ -2251,14 +2203,12 @@ msgid "Leave password blank if you want to keep the current password."
 msgstr "Lämna lösenordsfältet tomt om du vill behålla det nuvarande lösenordet."
 
 #: edituser.php:223
-#, fuzzy
 msgid "Confirm Password"
-msgstr "Lösenord"
+msgstr "Bekräfta lösenord"
 
 #: edituser.php:229
-#, fuzzy
 msgid "Change Language"
-msgstr "Språk"
+msgstr "Change language"
 
 #: edituser.php:245
 msgid "Email Address"
@@ -2273,18 +2223,16 @@ msgid "Site Default"
 msgstr "Sajt-standard"
 
 #: edituser.php:266
-#, fuzzy
 msgid "Preferred Contact Method"
-msgstr "Kontaktmetod"
+msgstr "Föredragen kontaktmetod"
 
 #: edituser.php:281
 msgid "Visible to other users when online"
 msgstr "Synlig för andra användare när du är online"
 
 #: edituser.php:290
-#, fuzzy
 msgid "Default Tab to show on Individual Information page"
-msgstr "Standardflik att visa på ansedelsidan"
+msgstr "Den flik som visas som standard på ansedelsidan"
 
 #: edit_changes.php:43
 #: edit_changes.php:61
@@ -2311,15 +2259,13 @@ msgid "View Change Diff"
 msgstr "Visa förändringar"
 
 #: edit_changes.php:117
-#, fuzzy
 msgid "View GEDCOM Record"
-msgstr "Göm GEDCOM-fel"
+msgstr "Visa GEDCOM-post"
 
 #: edit_changes.php:118
 #: edit_interface.php:413
-#, fuzzy
 msgid "Edit raw GEDCOM record"
-msgstr "Tillåt användare att se rådata i GEDCOM-poster"
+msgstr "Redigera rå GEDCOM-post"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
@@ -2349,9 +2295,8 @@ msgstr "Skicka meddelande"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
-#, fuzzy
 msgid "Accept all changes"
-msgstr "Nyligen ändrade område"
+msgstr "Godkänn alla ändringar"
 
 #: edit_changes.php:163
 #: edit_changes.php:181
@@ -2372,14 +2317,12 @@ msgid "Add child"
 msgstr "Lägg till barn"
 
 #: edit_interface.php:355
-#, fuzzy
 msgid "Add a new mother"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till en ny moder"
 
 #: edit_interface.php:357
-#, fuzzy
 msgid "Add a new father"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till en ny fader"
 
 #: edit_interface.php:362
 msgid "Add a child to create a one-parent family"
@@ -2416,9 +2359,8 @@ msgstr "Försegling"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
-#, fuzzy
 msgid "Set link"
-msgstr "Behålla länkar"
+msgstr "Sätt länk"
 
 #: edit_interface.php:751
 #: edit_interface.php:902
@@ -2440,9 +2382,8 @@ msgstr "Titel"
 
 #: edit_interface.php:760
 #: edit_interface.php:838
-#, fuzzy
 msgid "Create a new source"
-msgstr "Skapa ny GEDCOM-fil"
+msgstr "Skapa en ny källa"
 
 #: edit_interface.php:765
 msgid "ABBR"
@@ -2516,9 +2457,8 @@ msgstr "Namn"
 
 #: edit_interface.php:1233
 #: edit_interface.php:1284
-#, fuzzy
 msgid "Create Repository"
-msgstr "Radera arkiv"
+msgstr "Skapa arkiv"
 
 #: edit_interface.php:1253
 msgid "ADDR"
@@ -2541,18 +2481,16 @@ msgid "WWW"
 msgstr "Hemsida"
 
 #: edit_interface.php:1329
-#, fuzzy
 msgid "New Repository created"
-msgstr "Unika arkivfakta"
+msgstr "Nytt arkiv skapat"
 
 #: edit_interface.php:1330
 msgid "Paste the following Repository ID into your editing fields to reference this Repository "
 msgstr "Klistra in följande arkivid i ditt redigeringsfält för att referera till detta arkiv "
 
 #: edit_interface.php:2126
-#, fuzzy
 msgid "Record copied to clipboard"
-msgstr "Lägg till urklippskorgen:"
+msgstr "Post som är kopierad till urklippskorgen"
 
 #: edit_interface.php:2270
 msgid "Re-order children"
@@ -2585,9 +2523,8 @@ msgstr "Ändra familjemedlemmar"
 #: edit_interface.php:2432
 #: edit_interface.php:2445
 #: edit_interface.php:2458
-#, fuzzy
 msgid "Change"
-msgstr "Sida"
+msgstr "Ändra"
 
 #: edit_interface.php:2686
 msgid "Reorder Families"
@@ -2631,54 +2568,54 @@ msgstr "Uppdatera länkade poster"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
-#, fuzzy
 msgid "Adding"
-msgstr "Administratör"
+msgstr "Lägga till"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
 msgid "from"
 msgstr ""
 
-#: edit_merge.php:246
+#: edit_merge.php:242
+msgid "Record %s successfully updated."
+msgstr "Post %s uppdaterades."
+
+#: edit_merge.php:245
 msgid "favorites updated."
 msgstr ""
 
-#: edit_merge.php:248
+#: edit_merge.php:247
 msgid "Merge more records."
 msgstr "Slå ihop flera poster."
 
-#: edit_merge.php:281
+#: edit_merge.php:280
 msgid "Merge Step 1 of 3"
 msgstr "Slå ihop steg 1 av 3"
 
-#: edit_merge.php:284
+#: edit_merge.php:283
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
 msgstr "Välj 2 GEDCOM-poster att slå ihop. Posterna måste vara av samma typ."
 
-#: edit_merge.php:287
+#: edit_merge.php:286
 msgid "Merge To ID:"
 msgstr "Slå ihop med ID:"
 
+#: edit_merge.php:301
+#: edit_merge.php:318
+msgid "Find Individual ID"
+msgstr "Sök id för person"
+
 #: edit_merge.php:302
 #: edit_merge.php:319
-#, fuzzy
-msgid "Find Individual ID"
-msgstr "GEDCOM-ID Prefix"
+msgid "Find Family ID"
+msgstr "Sök id för familj"
 
 #: edit_merge.php:303
 #: edit_merge.php:320
-#, fuzzy
-msgid "Find Family ID"
-msgstr "Familje-ID prefix"
-
-#: edit_merge.php:304
-#: edit_merge.php:321
-#, fuzzy
 msgid "Find Source ID"
-msgstr "Käll-ID prefix"
+msgstr "Sök id för källa"
 
-#: edit_merge.php:307
+#: edit_merge.php:306
 msgid "Merge From ID:"
 msgstr "Slå ihop från ID:"
 
@@ -2688,14 +2625,12 @@ msgid "Unable to find individual with id"
 msgstr "Kan inte hitta personen med id"
 
 #: edit_privacy.php:135
-#, fuzzy
 msgid "Edit privacy settings"
-msgstr "Tillämpa integritetsinställningar?"
+msgstr "Ändra integritetsinställningar inuti"
 
 #: edit_privacy.php:142
-#, fuzzy
 msgid "Edit GEDCOM privacy settings"
-msgstr "_GEDCOM: Integritetsinställningar"
+msgstr "Editera GEDCOM-integritetsinställningar"
 
 #: edit_privacy.php:159
 msgid "Performing update."
@@ -2773,9 +2708,8 @@ msgstr "Lägg till ny inställningar för personintegritet"
 #: edit_privacy.php:572
 #: edit_privacy.php:717
 #: edit_privacy.php:764
-#, fuzzy
 msgid "ID"
-msgstr "Indonesien"
+msgstr "ID"
 
 #: edit_privacy.php:449
 #: edit_privacy.php:481
@@ -2783,9 +2717,8 @@ msgstr "Indonesien"
 #: edit_privacy.php:667
 #: edit_privacy.php:720
 #: edit_privacy.php:768
-#, fuzzy
 msgid "Show to?"
-msgstr "Visa faktaikoner"
+msgstr "Visa för?"
 
 #: edit_privacy.php:473
 msgid "Edit existing settings for Privacy by ID"
@@ -2794,9 +2727,8 @@ msgstr "Ändra existerande inställningar för personintegritet"
 #: edit_privacy.php:480
 #: edit_privacy.php:573
 #: edit_privacy.php:765
-#, fuzzy
 msgid "Full Name"
-msgstr "Radera namn"
+msgstr "Fullständigt namn"
 
 #: edit_privacy.php:509
 #: edit_privacy.php:511
@@ -2809,7 +2741,6 @@ msgstr "Lägg till ny inställning för användarintegritet"
 
 #: edit_privacy.php:526
 #: edit_privacy.php:571
-#, fuzzy
 msgid "Username"
 msgstr "Användarnamn"
 
@@ -2853,17 +2784,15 @@ msgstr "Välj:"
 #: edit_privacy.php:685
 #: edit_privacy.php:748
 #: edit_privacy.php:791
-#, fuzzy
 msgid "Show fact details"
-msgstr "Visa faktaikoner"
+msgstr "Visa faktadetaljer"
 
 #: edit_privacy.php:648
 #: edit_privacy.php:684
 #: edit_privacy.php:749
 #: edit_privacy.php:790
-#, fuzzy
 msgid "Show fact"
-msgstr "Visa faktaikoner"
+msgstr "Visa fakta"
 
 #: edit_privacy.php:660
 msgid "Edit existing settings for Global Fact Privacy"
@@ -2887,14 +2816,12 @@ msgid "Private"
 msgstr "Privat"
 
 #: expand_view.php:72
-#, fuzzy
 msgid "View Family"
-msgstr "Visa arkiv"
+msgstr "Visa familj"
 
 #: family.php:60
-#, fuzzy
 msgid "This record has been marked for deletion upon admin approval."
-msgstr "Denna post har uppdaterats. Klicka här för att se ändringarna."
+msgstr "Denna post har markerats för radering efter godkännande av administratören."
 
 #: family.php:100
 #: familybook.php:218
@@ -2906,27 +2833,24 @@ msgid "Grandparents"
 msgstr ""
 
 #: family.php:137
-#, fuzzy
 msgid "Show couple on timeline chart"
-msgstr "Visa tomma rutor i antavla."
+msgstr "Visa par på tidslinje"
 
 #: family.php:137
 msgid "P"
 msgstr "P"
 
 #: family.php:138
-#, fuzzy
 msgid "Show children on timeline chart"
-msgstr "Visa könsikon i diagram"
+msgstr "Visa barn på tidslinje"
 
 #: family.php:138
 msgid "D"
 msgstr "D"
 
 #: family.php:139
-#, fuzzy
 msgid "Show family on timeline chart"
-msgstr "Visa tomma rutor i antavla."
+msgstr "Visa familj på tidslinje"
 
 #: family.php:139
 msgid "T"
@@ -2957,15 +2881,13 @@ msgstr "Familj för:&nbsp;"
 #: familybook.php:371
 #: familybook.php:383
 #: familybook.php:387
-#, fuzzy
 msgid "Family Book Chart"
-msgstr "Familj lägg till fakta"
+msgstr "Familjebok"
 
 #: familybook.php:458
 #: hourglass.php:115
-#, fuzzy
 msgid "Show spouses"
-msgstr "Visa källor"
+msgstr "Visa make/makar"
 
 #: familybook.php:481
 msgid "Descent Steps"
@@ -2983,14 +2905,12 @@ msgid "Choose a letter to show families whose name starts with that letter."
 msgstr ""
 
 #: famlist.php:184
-#, fuzzy
 msgid "Skip Surname lists"
-msgstr "Stil för efternamnlistor"
+msgstr "Hoppa över efternamnslistan"
 
 #: famlist.php:187
-#, fuzzy
 msgid "Show Surname lists"
-msgstr "Stil för efternamnlistor"
+msgstr "Visa efternamnslistan"
 
 #: famlist.php:194
 msgid "Exclude married names"
@@ -3000,6 +2920,11 @@ msgstr ""
 #: help_text.php:5234
 msgid "Include married names"
 msgstr ""
+
+#: famlist.php:263
+#: famlist.php:274
+msgid "Families with surname %s"
+msgstr "Familjer med efternamn %s"
 
 #: famlist.php:268
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
@@ -3023,9 +2948,8 @@ msgid "Font file not found on PHP server"
 msgstr "Teckensnittsfilen finns inte på PHP servern"
 
 #: fanchart.php:295
-#, fuzzy
 msgid "Pedigree Tree"
-msgstr "Antal generationer i antavlan"
+msgstr "Antavla"
 
 #: fanchart.php:297
 #, fuzzy
@@ -3033,9 +2957,8 @@ msgid "Pedigree Map"
 msgstr "Antal generationer i antavlan"
 
 #: fanchart.php:300
-#, fuzzy
 msgid "Relationship to me"
-msgstr "Kontrollera förhållanden via giftermål"
+msgstr "Förhållande till mig"
 
 #: fanchart.php:305
 #: fanchart.php:400
@@ -3055,6 +2978,10 @@ msgstr "Timglas"
 #: fanchart.php:307
 msgid "Interactive Tree"
 msgstr ""
+
+#: fanchart.php:428
+msgid "%s Generation Circle Diagram"
+msgstr "%s Generationer i Solfjädertavla"
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -3114,9 +3041,8 @@ msgid "Preview"
 msgstr "Förhandsgranska"
 
 #: faq.php:285
-#, fuzzy
 msgid "Position item"
-msgstr "FAQ position"
+msgstr "Position för artikel"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
@@ -3135,15 +3061,13 @@ msgstr "Hitta media"
 
 #: find.php:104
 #: find.php:208
-#, fuzzy
 msgid "Find Place"
-msgstr "Hitta media"
+msgstr "Sök ort"
 
 #: find.php:108
 #: find.php:211
-#, fuzzy
 msgid "Repositories"
-msgstr "Arkiv lägg till fakta"
+msgstr "Arkivlista"
 
 #: find.php:112
 #: find.php:214
@@ -3167,18 +3091,16 @@ msgstr "Var vänlig och skriv in mer än ett tecken"
 
 #: find.php:239
 #: find.php:259
-#, fuzzy
 msgid "Name contains:"
-msgstr "Namnlista"
+msgstr "Namnet innehåller:"
 
 #: find.php:283
 msgid "Media contains:"
 msgstr "Media innehåller:"
 
 #: find.php:291
-#, fuzzy
 msgid "Show thumbnails"
-msgstr "Använd minibilder för huvudbilden på ansedeln"
+msgstr "Visa miniatyrbilder"
 
 #: find.php:296
 #: find.php:317
@@ -3193,18 +3115,16 @@ msgid "Place contains:"
 msgstr "Orten består av:"
 
 #: find.php:332
-#, fuzzy
 msgid "Repository contains:"
-msgstr "Arkiv lägg till fakta"
+msgstr "Arkivet innehåller:"
 
 #: find.php:353
 msgid "Shared Note contains:"
 msgstr ""
 
 #: find.php:374
-#, fuzzy
 msgid "Source contains:"
-msgstr "Källa lägg till fakta"
+msgstr "Källa innehåller:"
 
 #: find.php:403
 msgid "Magnify"
@@ -3221,9 +3141,8 @@ msgid "No results found."
 msgstr "Inga resultat funna."
 
 #: find.php:487
-#, fuzzy
 msgid "Current directory"
-msgstr "Temakatalog"
+msgstr "Nuvarande mapp: "
 
 #: find.php:501
 msgid "External objects"
@@ -3242,9 +3161,8 @@ msgid "This media object is linked to the following:"
 msgstr "Detta mediaobjekt länkat till följande:"
 
 #: find.php:584
-#, fuzzy
 msgid "View Person"
-msgstr "Ta bort person"
+msgstr "Visa person"
 
 #: find.php:590
 #, fuzzy
@@ -3272,9 +3190,8 @@ msgid "Shared Notes found"
 msgstr ""
 
 #: find.php:712
-#, fuzzy
 msgid "Total Sources"
-msgstr "Visa alla källor"
+msgstr "Totalt antal källor"
 
 #: gedcheck.php:37
 msgid "Gedcom checker"
@@ -3291,9 +3208,8 @@ msgid "Level"
 msgstr ""
 
 #: gedcheck.php:104
-#, fuzzy
 msgid "Open links in"
-msgstr "Behålla länkar"
+msgstr "Öppna länkar med"
 
 #: gedcheck.php:106
 msgid "Same tab/window"
@@ -4990,11 +4906,14 @@ msgid "_FA11"
 msgstr "Faktum 11"
 
 #. I18N: This is the GEDCOM label for "Fact 12"
-#. I18N: This is the GEDCOM label for "Fact 13"
 #: help_text.php:1969
-#: help_text.php:1975
 msgid "_FA12"
 msgstr "Faktum 12"
+
+#. I18N: This is the GEDCOM label for "Fact 13"
+#: help_text.php:1975
+msgid "_FA13"
+msgstr "Faktum 13"
 
 #. I18N: This is the GEDCOM label for "Emigration of parents"
 #: help_text.php:1981
@@ -5388,14 +5307,12 @@ msgid "Image Viewer"
 msgstr "Bildvisare"
 
 #: help_text.php:2479
-#, fuzzy
 msgid "PhpGedView User Login"
-msgstr "PhpGedView URL"
+msgstr "PhpGedView användarinloggning"
 
 #: help_text.php:2484
-#, fuzzy
 msgid "PhpGedView Message"
-msgstr "PhpGedView URL"
+msgstr "PhpGedView meddelande"
 
 #: help_text.php:2489
 #, fuzzy
@@ -9391,35 +9308,28 @@ msgstr "Skräddarsy MyGedView-portalen"
 
 #: index.php:451
 #: index_edit.php:473
-#, fuzzy
 msgid "Customize this GEDCOM Welcome page"
-msgstr "Egendefinierad välkomsttext för autenticieringsmod"
+msgstr "Skräddarsy denna GEDCOMs välkomstsida"
 
 #: index_edit.php:83
 msgid "?"
 msgstr "?"
 
 #: index_edit.php:154
-#: index_edit.php:158
-#: index_edit.php:159
-#: index_edit.php:160
-#: index_edit.php:161
 msgid "&nbsp;"
 msgstr "&nbsp;"
 
 #: index_edit.php:231
-#, fuzzy
 msgid "Configuration file updated successfully."
-msgstr "Konfiguration av stödda språk"
+msgstr "Lyckad uppdatering av konfigurationsfil."
 
 #: index_edit.php:278
 msgid "The cache files have been removed."
 msgstr "Cache-filerna har tagits bort."
 
 #: index_edit.php:285
-#, fuzzy
 msgid "Configure"
-msgstr "_GEDCOM: Konfigurera"
+msgstr "Konfigurationsområde"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
@@ -9471,6 +9381,11 @@ msgstr "Återställ till standardområden"
 msgid "Choose a letter to show individuals whose family name starts with that letter."
 msgstr ""
 
+#: indilist.php:263
+#: indilist.php:274
+msgid "Individuals with surname %s"
+msgstr "Personer med efternamn %s"
+
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
 msgstr "Välj bokstav för att visa personer vars namn börjar med den bokstaven."
@@ -9484,9 +9399,8 @@ msgid "The information for this individual was linked from a remote site."
 msgstr "Informationen om denna person är länkad ifrån en annan sajt."
 
 #: individual.php:319
-#, fuzzy
 msgid "Pedigree Chart"
-msgstr "Startperson för antavla"
+msgstr "Antavla"
 
 #: individual.php:321
 msgid "Timeline Chart"
@@ -9699,9 +9613,8 @@ msgstr ""
 
 #: inverselink.php:50
 #: media.php:760
-#, fuzzy
 msgid "To Person"
-msgstr "Ta bort person"
+msgstr "Till person"
 
 #: inverselink.php:53
 #: media.php:765
@@ -9710,9 +9623,8 @@ msgstr "Till familj"
 
 #: inverselink.php:56
 #: media.php:770
-#, fuzzy
 msgid "To Source"
-msgstr "Visa källor"
+msgstr "Till källa"
 
 #: inverselink.php:59
 #, fuzzy
@@ -9725,24 +9637,20 @@ msgstr ""
 
 #: inverselink.php:67
 #: inverselink.php:116
-#, fuzzy
 msgid "Link Media"
-msgstr "Hitta media"
+msgstr "Länka media"
 
 #: inverselink.php:117
-#, fuzzy
 msgid "Media ID"
-msgstr "Media-ID prefix"
+msgstr "Media ID"
 
 #: inverselink.php:143
-#, fuzzy
 msgid "Enter Individual ID"
-msgstr "GEDCOM-ID Prefix"
+msgstr "Skriv in personens ID"
 
 #: inverselink.php:174
-#, fuzzy
 msgid "Source"
-msgstr "Visa källor"
+msgstr "Källa"
 
 #: inverselink.php:188
 #, fuzzy
@@ -9763,9 +9671,8 @@ msgid "Include Immediate Family"
 msgstr "Inkludera nära familjemedlemmar"
 
 #: lifespan.php:75
-#, fuzzy
 msgid "Show Timeline chart"
-msgstr "Visa könsikon i diagram"
+msgstr "Visa tidslinjediagram"
 
 #: lifespan.php:303
 msgid "Speed"
@@ -9784,14 +9691,12 @@ msgid "Search"
 msgstr "Sök"
 
 #: lifespan.php:322
-#, fuzzy
 msgid "Clear Chart"
-msgstr "Kalenderformat"
+msgstr "Rensa tavla"
 
 #: lifespan.php:329
-#, fuzzy
 msgid "Individual"
-msgstr "GEDCOM-ID Prefix"
+msgstr "Person"
 
 #: login.php:120
 msgid "Unable to authenticate user."
@@ -9799,14 +9704,12 @@ msgstr "Kan inte logga in användaren."
 
 #: login.php:206
 #: login.php:226
-#, fuzzy
 msgid "Login"
-msgstr "InloggningsURL"
+msgstr "Inloggningsområde"
 
 #: login.php:238
-#, fuzzy
 msgid "Account Information"
-msgstr "PHP Info"
+msgstr "Kontoinformation"
 
 #: login.php:239
 msgid "No account?"
@@ -9834,6 +9737,11 @@ msgstr "Begär nytt lösenord"
 msgid "Lost password request"
 msgstr "Begär återställning av bortglömt lösenord."
 
+#: login_register.php:126
+#: login_register.php:420
+msgid "Hello %s ..."
+msgstr "Hej %s..."
+
 #: login_register.php:127
 msgid "A new password was requested for your user name."
 msgstr "Ett nytt lösenord efterfrågas för ditt användarnamn."
@@ -9846,19 +9754,27 @@ msgstr "Rekommendation:"
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
 msgstr "Klicka på länken nedan, logga in med ditt nya lösenord. Ändra sedan lösenordet så att säkerheten bibehålls för din data."
 
+#: login_register.php:139
+#, php-format
+msgid "Data request at %s"
+msgstr "Dataförfrågan på %s"
+
+#: login_register.php:143
+#, php-format
+msgid "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>%s</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security."
+msgstr "Hej...<br /><br />Ett e-post med det nya lösenordet sändes till e-postadressen(%s).<br /><br />Kontrollera din e-postlåda om en liten stund.<br /><br />Rekommendation:<br /><br />Efter du fått ditt e-postmeddelande bör du logga in och ändra ditt lösenord för att öka säkerheten."
+
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
 msgstr "Var vänlig och beskriv ditt förhållande till släkten i kommentarfältet."
 
 #: login_register.php:287
-#, fuzzy
 msgid "Desired user name"
-msgstr "Databasens användarnamn"
+msgstr "Önskat användarnamn"
 
 #: login_register.php:288
-#, fuzzy
 msgid "Desired password"
-msgstr "Databasens lösenord"
+msgstr "Önskat lösenord"
 
 #: login_register.php:316
 #: login_register.php:433
@@ -9881,6 +9797,11 @@ msgstr "Bekräftelse av ett nytt konto"
 msgid "Back"
 msgstr "Tillbaka"
 
+#: login_register.php:421
+#, php-format
+msgid "A request was received at %s to create a PhpGedView account with your email address %s."
+msgstr "En begäran mottogs från (%s) om att skapa ett konto med din e-postadress (%s)."
+
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
 msgstr "Informationen om förfrågan visas under länken nedan."
@@ -9902,11 +9823,20 @@ msgstr "Om du inte begärde ett konto kan du radera meddelandet."
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
 msgstr "Du kommer inte få några fler mail från detta systemet efterom kontot kommer att raderas inom sju dagar om ingen verifiering görs."
 
+#: login_register.php:437
+#, php-format
+msgid "Your registration at %s"
+msgstr "Din registrering på %s"
+
 #: login_register.php:444
 #: login_register.php:565
-#, fuzzy
 msgid "Hello Administrator ..."
-msgstr "_Användaradministration"
+msgstr "Hej administratör"
+
+#: login_register.php:445
+#, php-format
+msgid "A prospective user registered himself with PhpGedView at %s."
+msgstr "En ny användare gjorde en ny användarregistrering på %s"
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
@@ -9920,18 +9850,47 @@ msgstr "Så snart användaren har gjort sin verifiering kommer du att informeras
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
 msgstr "Du kommer att bli informerad via epost när den användaren som ansökt om kontot har verifierat sig själv. Efter verifikation kommer användaren att kunna logga in utan att du behöver göra något."
 
+#: login_register.php:462
+#, php-format
+msgid "New registration at %s"
+msgstr "Ny registrering på %s"
+
+#: login_register.php:473
+#, php-format
+msgid "Hello %s ...<br />Thank you for your registration."
+msgstr "Hej %s...<br />Tack för din registrering"
+
+#: login_register.php:475
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password."
+msgstr "Ni kommer att få en bekräftelse via e-post till e-postadressen(%s). Använd bekräftelsen för att aktivera ditt konto, om du misslyckas att aktiver ditt konto inom sju dagar kommer det att raderas (du kan då registrera kontot igen).<br /><br />Efter du har följt instruktionerna i bekräftelse-eposten, måste administratören fortfarande godkänna din begäran innan du kan använda ditt konto.<br /><br />För att logga in på sajten måste du veta ditt användarnamn och lösenord."
+
+#: login_register.php:476
+#, php-format
+msgid "We will now send a confirmation email to the address <b>%s</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password."
+msgstr "Vi kommer nu att skicka ett konfirmationsepost till adressen (%s). Du måste verifiera ditt kontobegäran genom att följa instruktionerna i bekräftelse eposten. Om du inte verifierar ditt kontobegrän inom 7 dagar kommer din begäran att avslås automatiskt. Du för ansöka igen.<br /><br />Efter du följt instruktionerna i konfirmationsbegäran så kan du logga in. För att logga in på denna sajt måste du veta ditt användarnamn och lösenord."
+
 #: login_register.php:506
 #: login_register.php:513
 #: login_register.php:541
 #: login_register.php:544
-#, fuzzy
 msgid "User verification"
-msgstr "_Användaradministration"
+msgstr "Användarverifiering"
 
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
 msgstr "Skicka"
+
+#: login_register.php:546
+#, php-format
+msgid "The data for the user <b>%s</b> was checked."
+msgstr "Datan för användaren %s är kontrollerad."
+
+#: login_register.php:566
+#, php-format
+msgid "User %s (%s) has confirmed his request for an account."
+msgstr "%s (%s) har verifierat registreringsdatan."
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
@@ -9940,6 +9899,11 @@ msgstr "Vänligen klicka på länken nedan för att logga in till din sajt för 
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
 msgstr "Du behöver inte göra något, användaren kan nu logga in."
+
+#: login_register.php:581
+#, php-format
+msgid "New user at %s"
+msgstr "Ny verifiering på %s"
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
@@ -10000,9 +9964,8 @@ msgid "Ban Sites by IP"
 msgstr "Förbjud sajter via IP"
 
 #: manageservers.php:325
-#, fuzzy
 msgid "Remote Servers"
-msgstr "Ta bort person"
+msgstr "Lagt till server"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
@@ -10018,9 +9981,8 @@ msgid "Site URL/IP"
 msgstr "Sajt URL/IP"
 
 #: manageservers.php:430
-#, fuzzy
 msgid "Add new site"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till ny sajt"
 
 #: media.php:92
 msgid "Directory could not be created"
@@ -10040,9 +10002,8 @@ msgstr "Körtidens gräns är nådd. Försök att köra kommandot igen på en mi
 
 #: media.php:181
 #: media.php:189
-#, fuzzy
 msgid "Permissions Set"
-msgstr "Sätt mediarättigheter"
+msgstr "Rättigheter satta"
 
 #: media.php:183
 #: media.php:191
@@ -10078,9 +10039,8 @@ msgstr "Media och miniatyrbildsmappen togs bort."
 #: media.php:415
 #: media.php:417
 #: media.php:418
-#, fuzzy
 msgid "Media directory not removed."
-msgstr "Antal katalognivåer för MultiMedia som används"
+msgstr "Mediamappen togs inte bort."
 
 #: media.php:420
 #: media.php:421
@@ -10149,9 +10109,8 @@ msgstr "Behålla länkar"
 
 #: media.php:829
 #: media.php:830
-#, fuzzy
 msgid "Add Media"
-msgstr "Hitta media"
+msgstr "Lägg till media"
 
 #: media.php:843
 #, fuzzy
@@ -10167,23 +10126,20 @@ msgid "Are you sure you want to delete this file?"
 msgstr "Är du säker på at du vill radera denna fil?"
 
 #: media.php:1038
-#, fuzzy
 msgid "Delete file"
-msgstr "Radera namn"
+msgstr "Radera fil"
 
 #: media.php:1046
 msgid "Are you sure you want to remove this object from the database?"
 msgstr "Är du säker på att du vill tabort detta objekt ifrån databasen?"
 
 #: media.php:1046
-#, fuzzy
 msgid "Remove object"
-msgstr "Ta bort person"
+msgstr "Ta bort objekt"
 
 #: media.php:1081
-#, fuzzy
 msgid "Create thumbnail"
-msgstr "Använd minibilder för huvudbilden på ansedeln"
+msgstr "Skapa miniatyrbilder"
 
 #: media.php:1170
 msgid "The media folder is corrupted."
@@ -10202,15 +10158,13 @@ msgid "Privacy restrictions prevent you from viewing this item"
 msgstr "Integritetsrestriktioner hindrar dig från att se denna post"
 
 #: mediafirewall.php:530
-#, fuzzy
 msgid "This media file is broken and cannot be watermarked"
-msgstr "Detaljer om denna personen är skyddade."
+msgstr "Mediafilen är trasig och kan inte få ett vattenmärke"
 
 #: medialist.php:53
 #: medialist.php:57
-#, fuzzy
 msgid "MultiMedia Objects"
-msgstr "MultiMediakatalog"
+msgstr "Lista över Multimediaobjekt"
 
 #: medialist.php:131
 msgid "Media objects per page"
@@ -10246,19 +10200,16 @@ msgstr ""
 
 #: medialist.php:404
 #: medialist.php:408
-#, fuzzy
 msgid "Media Format"
-msgstr "Kalenderformat"
+msgstr "Mediaformat"
 
 #: mediaviewer.php:104
-#, fuzzy
 msgid "Download File"
-msgstr "Ladda ner GEDCOM-fil"
+msgstr "Ladda ner fil"
 
 #: mediaviewer.php:143
-#, fuzzy
 msgid "The image relates to:"
-msgstr "Kontrollera vigselrelation"
+msgstr "Bilden relaterar till:"
 
 #: mediaviewer.php:147
 msgid "Total links"
@@ -10275,6 +10226,10 @@ msgstr "Ingen mottagare har angivits. Kan inte fortsätta."
 msgid "Please enter a valid email address."
 msgstr "Obs! Skriv in en giltig e-postadress."
 
+#: message.php:138
+msgid "Message successfully sent to %s"
+msgstr "Meddelandet är skickat"
+
 #: message.php:167
 msgid "Please enter a message subject."
 msgstr "Obs! Skriv ett ärende för meddelandet."
@@ -10286,6 +10241,16 @@ msgstr "Obs! Skriv någon text i meddelandet innan du skickar det."
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
 msgstr "<b>Observera:</b> Privat information om levande personer kommer endast ges till släktingar och nära vänner. Du kommer att ombedas att verifiera ditt släktskap innan du kommer att erhålla någon information. Ibland är även information om döda personer privat. Om detta är fallet så beror det på att det inte finns tillräckligt med information för att avgöra om personen är död eller fortfarande lever och vi har antagligen inte mer information om denna person.<br /><br />Före du ställer några frågor så kontrollera att det är rätt person genom att kontrollera datum, orter och nära släktingar. Om du skickar ändringar av den genealogiska datan så inkludera källan var du fått uppgifterna ifrån."
+
+#: message.php:192
+#, php-format
+msgid "This message will be sent to %s"
+msgstr "Detta meddelande kommer att sändas till %s"
+
+#: message.php:193
+#, php-format
+msgid "This user prefers to receive messages in %s"
+msgstr "Användaren föredrar att motta meddelande på %s"
 
 #: message.php:197
 msgid "Your Name:"
@@ -10304,9 +10269,8 @@ msgid "Subject:"
 msgstr "Ärende:"
 
 #: message.php:211
-#, fuzzy
 msgid "Body:"
-msgstr "FAQ innehåll"
+msgstr "Meddelande:"
 
 #: message.php:218
 msgid "Message Deleted"
@@ -10321,9 +10285,8 @@ msgid "Unknown module type."
 msgstr "Okänd modultyp."
 
 #: module_admin.php:42
-#, fuzzy
 msgid "Show to public"
-msgstr "Visa faktaikoner"
+msgstr "Visa för alla"
 
 #: module_admin.php:46
 msgid "Show only to authenticated users"
@@ -10380,9 +10343,8 @@ msgstr "Radera namn"
 #: module_admin.php:252
 #: module_admin.php:303
 #: module_admin.php:354
-#, fuzzy
 msgid "Description"
-msgstr "Beskrivning META tag"
+msgstr "Beskrivning"
 
 #: module_admin.php:205
 msgid "Version / PGV"
@@ -10416,9 +10378,8 @@ msgstr ""
 
 #: note.php:131
 #: repo.php:103
-#, fuzzy
 msgid "Link to an existing Media item"
-msgstr "Lägg till ny mediaartikel"
+msgstr "Länka till en existerande mediaartikel"
 
 #: notelist.php:31
 #: notelist.php:32
@@ -10426,10 +10387,13 @@ msgstr "Lägg till ny mediaartikel"
 msgid "Shared Notes"
 msgstr ""
 
+#: pedigree.php:52
+msgid "%s Generation Pedigree Chart"
+msgstr "%s generationers antavla"
+
 #: pedigree.php:90
-#, fuzzy
 msgid "Orientation"
-msgstr "Presentationsstil"
+msgstr "Orientering"
 
 #: pedigree.php:125
 #, fuzzy
@@ -10449,9 +10413,8 @@ msgstr "Orter"
 #: placelist.php:55
 #: placelist.php:59
 #: placelist.php:433
-#, fuzzy
 msgid "Place List"
-msgstr "Namnlista"
+msgstr "Ortslista"
 
 #: placelist.php:118
 msgid "Place connections found"
@@ -10479,9 +10442,8 @@ msgid "View all records found in this place"
 msgstr "Visa alla poster för denna ort"
 
 #: placelist.php:468
-#, fuzzy
 msgid "Total Unique Places"
-msgstr "Städa orter"
+msgstr "Totalt antal unika platser"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
@@ -10512,9 +10474,8 @@ msgstr "Ladda om"
 
 #: printlog.php:91
 #: printlog.php:113
-#, fuzzy
 msgid "Date and time"
-msgstr "Databasnamn"
+msgstr "Datum och tid"
 
 #: printlog.php:91
 #: printlog.php:113
@@ -10526,9 +10487,8 @@ msgid "Log Message"
 msgstr "Logmeddelande"
 
 #: printlog.php:113
-#, fuzzy
 msgid "Search type"
-msgstr "Hjälptext för sökning"
+msgstr "Sökningstyp"
 
 #: printlog.php:113
 msgid "Query"
@@ -10693,9 +10653,8 @@ msgstr "%1$s är %2$s till %3$s."
 
 #: relationship.php:485
 #: relationship.php:564
-#, fuzzy
 msgid "Relationship Chart"
-msgstr "Använd relationsintegritet"
+msgstr "Relationer"
 
 #: relationship.php:535
 msgid "and"
@@ -10711,9 +10670,8 @@ msgstr "Person 2"
 
 #: relationship.php:677
 #: relationship.php:698
-#, fuzzy
 msgid "Show path"
-msgstr "Sökväg för uppladdningen"
+msgstr "Visa sökväg"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
@@ -10729,9 +10687,8 @@ msgid "Choose a report to run"
 msgstr "Välj en rapport att köra"
 
 #: reportengine.php:154
-#, fuzzy
 msgid "Select report"
-msgstr "Radera arkiv"
+msgstr "Välj rapport"
 
 #: reportengine.php:170
 #: reportengine.php:219
@@ -10739,18 +10696,21 @@ msgid "Enter report values"
 msgstr "Fyll i rapportvärden"
 
 #: reportengine.php:220
-#, fuzzy
 msgid "Selected Report"
-msgstr "Radera arkiv"
+msgstr "Vald rapport"
 
 #: reportengine.php:312
 msgid "Select a date"
 msgstr "Välj ett datum"
 
 #: reportengine.php:344
-#, fuzzy
 msgid "Download report"
-msgstr "Ladda ner GEDCOM-fil"
+msgstr "Ladda ner rapport"
+
+#: rss.php:110
+#, php-format
+msgid "News and links from the %s site"
+msgstr "Nyheter och länkar från %s-sajten"
 
 #: rss.php:116
 #: rss.php:119
@@ -10764,9 +10724,8 @@ msgstr "RSS-flöde skapat med PhpGedView"
 #: rss.php:289
 #: rss.php:309
 #: rss.php:328
-#, fuzzy
 msgid "genealogy"
-msgstr "Släktforskningskontakt"
+msgstr "genealogi"
 
 #: rss.php:321
 msgid "Feed not available"
@@ -10824,9 +10783,8 @@ msgstr "Associationer"
 
 #: search.php:246
 #: search.php:387
-#, fuzzy
 msgid "Show related persons/families"
-msgstr "Visa döda personer"
+msgstr "Visa relaterade personer/familjer"
 
 #: search.php:270
 msgid "Replace with"
@@ -10841,14 +10799,12 @@ msgid "Whole words only"
 msgstr ""
 
 #: search.php:318
-#, fuzzy
 msgid "Given name"
-msgstr "Användarnamn"
+msgstr "Förnamn"
 
 #: search.php:329
-#, fuzzy
 msgid "Last name"
-msgstr "Användarnamn"
+msgstr "Efternamn"
 
 #: search.php:345
 #, fuzzy
@@ -10864,9 +10820,8 @@ msgid "Individuals'<br />names to print:"
 msgstr "Personers<br />namn att skriva ut:"
 
 #: search.php:374
-#, fuzzy
 msgid "Names with hit"
-msgstr "Namnlista"
+msgstr "Namn som hittats"
 
 #: search.php:377
 msgid "All names"
@@ -10876,9 +10831,8 @@ msgstr "Alla namn"
 #: search.php:578
 #: search.php:590
 #: search.php:604
-#, fuzzy
 msgid "Multi Site Search"
-msgstr "Visa multi-sajt sökning"
+msgstr "Multisajtsökning"
 
 #: search.php:404
 msgid "Sites to search"
@@ -10897,14 +10851,12 @@ msgid "search"
 msgstr "sök"
 
 #: search.php:455
-#, fuzzy
 msgid "Advanced site search"
-msgstr "Avancerade namnfakta"
+msgstr "Avancerad sajtsökning"
 
 #: search.php:461
-#, fuzzy
 msgid "Name: "
-msgstr "Namnlista"
+msgstr "Namn: "
 
 #: search.php:473
 msgid "Birth date: "
@@ -10923,14 +10875,12 @@ msgid "Death Place: "
 msgstr "Dödsort: "
 
 #: search.php:505
-#, fuzzy
 msgid "Gender: "
-msgstr "Redigera kön"
+msgstr "Kön: "
 
 #: search.php:522
-#, fuzzy
 msgid "Databases to search in"
-msgstr "Databasens användarnamn"
+msgstr "GEDCOM-filer att söka i"
 
 #: search.php:548
 msgid "Results per page"
@@ -10943,9 +10893,8 @@ msgstr "Andra sökningar"
 #: search.php:569
 #: search.php:585
 #: search.php:617
-#, fuzzy
 msgid "Soundex Search"
-msgstr "Visa multi-sajt sökning"
+msgstr "Soundex-sökning"
 
 #: search.php:570
 #: search.php:586
@@ -10968,28 +10917,24 @@ msgid "Exact phrase"
 msgstr "Exakt fras"
 
 #: searchhelp.php:100
-#, fuzzy
 msgid "Search in"
-msgstr "Sök text för inställningar"
+msgstr "Sök i:"
 
 #: searchhelp.php:104
-#, fuzzy
 msgid "User Help"
-msgstr "Användarnamn"
+msgstr "Användarhjälp"
 
 #: searchhelp.php:107
 msgid "Modules Help"
 msgstr "Modulhjälp"
 
 #: searchhelp.php:112
-#, fuzzy
 msgid "Administrator Help"
-msgstr "_Administration"
+msgstr "Administratörshjälp"
 
 #: searchhelp.php:126
-#, fuzzy
 msgid "Close window"
-msgstr "Automatstängning av redigeringsfönster"
+msgstr "Stäng fönster"
 
 #: searchhelp.php:197
 msgid "Results found:"
@@ -11062,9 +11007,8 @@ msgstr "PhpGedView ger automatiskt sökmotorer med mindre datafiler med mindre a
 #: search_engine.php:60
 #: search_engine.php:69
 #: uploadgedcom.php:1106
-#, fuzzy
 msgid "Welcome page"
-msgstr "Välkomsttext för inloggningssidan i Autenticieringsmod"
+msgstr "Välkomstsidan"
 
 #: statistics.php:57
 msgid "Total males"
@@ -11383,9 +11327,8 @@ msgstr "ålder vid första vigseln."
 
 #: statistics.php:566
 #: statisticsplot.php:785
-#, fuzzy
 msgid "Number of children"
-msgstr "Ändra ordning på barn"
+msgstr "antal barn."
 
 #: statistics.php:570
 #, fuzzy
@@ -11506,9 +11449,8 @@ msgid "none"
 msgstr "inga"
 
 #: statistics.php:679
-#, fuzzy
 msgid "gender"
-msgstr "Rubrik"
+msgstr "man/kvinna"
 
 #: statistics.php:683
 msgid "date periods"
@@ -11529,9 +11471,8 @@ msgstr "antal"
 
 #: statistics.php:727
 #: statisticsplot.php:791
-#, fuzzy
 msgid "percentage"
-msgstr "Nyligen ändrade område"
+msgstr "Procent"
 
 #: statistics.php:735
 msgid "show the plot"
@@ -11647,9 +11588,8 @@ msgid "..."
 msgstr "..."
 
 #: timeline.php:38
-#, fuzzy
 msgid "PhpGedView Timeline"
-msgstr "PhpGedView URL"
+msgstr "PhpGedView tidslinje"
 
 #: timeline.php:298
 msgid "Show Age Marker"
@@ -11677,6 +11617,12 @@ msgstr "I de flesta nyare webläsare kan man klicka och dra runt boxarna i tavla
 #: useradmin.php:1022
 msgid "Continue"
 msgstr "Fortsätt"
+
+#: uploadgedcom.php:251
+#: uploadgedcom.php:590
+#, php-format
+msgid "The GEDCOM file, <b>%s</b>, is not writable. Please check attributes and access rights."
+msgstr "GEDCOM-filen, <b>[%s]</b>, är inte skrivbar. Kontrollera fil- och access-rättigheter."
 
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
@@ -11741,9 +11687,8 @@ msgid "Convert this ANSI encoded GEDCOM to UTF-8?"
 msgstr "Konvertera denna ANSI(iso-8859-1) kodade GEDCOM till UTF-8?"
 
 #: uploadgedcom.php:737
-#, fuzzy
 msgid "Change Individual ID to:"
-msgstr "_GEDCOM: Ändra person-id till ....."
+msgstr "Ändra person ID till:"
 
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
@@ -11751,9 +11696,8 @@ msgid "Do not change"
 msgstr "Ändra inte"
 
 #: uploadgedcom.php:795
-#, fuzzy
 msgid "Import complete"
-msgstr "Importeringsval"
+msgstr "Importen är färdig"
 
 #: uploadgedcom.php:795
 #: uploadgedcom.php:844
@@ -11771,9 +11715,8 @@ msgid "Import Progress..."
 msgstr "Import framsteg..."
 
 #: uploadgedcom.php:904
-#, fuzzy
 msgid "Reading GEDCOM file"
-msgstr "GEDCOM-titel"
+msgstr "Läser GEDCOM-fil"
 
 #: uploadgedcom.php:908
 msgid "The status bars below will let you know how the Import is progressing.  If the time limit runs out the Import will be stopped and you will be asked to press a <b>Continue</b> button.  If you don't see the <b>Continue</b> button, you must restart the Import with a smaller time limit value."
@@ -11785,14 +11728,12 @@ msgstr "Exekveringstidens gräns nåddes. Klicka på fortsätt nedan för att fo
 
 #: uploadgedcom.php:1104
 #: uploadgedcom.php:1117
-#, fuzzy
 msgid "Execution time:"
-msgstr "Sessionstidsgräns"
+msgstr "Exekveringstid:"
 
 #: uploadgedcom.php:1105
-#, fuzzy
 msgid "Click here to go to the Pedigree tree."
-msgstr "Klicka här för att fortsätta"
+msgstr "Klicka här för att gå till antavlan."
 
 #: uploadgedcom.php:1118
 msgid "Bytes read:"
@@ -11803,9 +11744,18 @@ msgid "Found record"
 msgstr "Hittade poster"
 
 #: uploadgedcom.php:1138
-#, fuzzy
 msgid "Import Statistics"
-msgstr "Importeringsval"
+msgstr "Importeringsstatistik"
+
+#: useradmin.php:194
+#, php-format
+msgid "Approval of account at %s"
+msgstr "Godkännande av konto på %s"
+
+#: useradmin.php:195
+#, php-format
+msgid "The administrator at the PhpGedView site %s has approved your application for an account.  You may now login by accessing the following link: %s#"
+msgstr ""
 
 #: useradmin.php:269
 #: useradmin.php:274
@@ -11816,9 +11766,8 @@ msgstr "Uppdatera användarkonto"
 #: useradmin.php:345
 #: useradmin.php:639
 #: useradmin.php:799
-#, fuzzy
 msgid "User can administer"
-msgstr "_Användaradministration"
+msgstr "Användare kan administrera"
 
 #: useradmin.php:362
 #: useradmin.php:800
@@ -11827,9 +11776,8 @@ msgstr "Accessnivå"
 
 #: useradmin.php:390
 #: useradmin.php:823
-#, fuzzy
 msgid "Automatically accept changes made by this user"
-msgstr "Expandera källor automatiskt"
+msgstr "Acceptera automatiskt ändringar gjorda av denna användare"
 
 #: useradmin.php:392
 #: useradmin.php:825
@@ -11838,9 +11786,8 @@ msgstr "Begränsa access till besläktade personer"
 
 #: useradmin.php:394
 #: useradmin.php:827
-#, fuzzy
 msgid "Max relationship privacy path length"
-msgstr "Max. relationsväglängd"
+msgstr "Maximal relationssekretess sökvägslängd"
 
 #: useradmin.php:397
 #: useradmin.php:592
@@ -11856,9 +11803,8 @@ msgstr "Användare godkänd av admin"
 
 #: useradmin.php:457
 #: useradmin.php:883
-#, fuzzy
 msgid "Allow this user to edit his account information"
-msgstr "Tillåt besökare att registera ett användarkonto"
+msgstr "Tillåt användaren att redigera sin kontoinformation"
 
 #: useradmin.php:476
 #: useradmin.php:903
@@ -11872,26 +11818,22 @@ msgstr "Adminstratörvarning utfärdad den"
 
 #: useradmin.php:560
 #: useradmin.php:1087
-#, fuzzy
 msgid "User List"
-msgstr "Namnlista"
+msgstr "Användarlista"
 
 #: useradmin.php:565
 #: useradmin.php:688
 #: useradmin.php:754
 #: useradmin.php:1088
-#, fuzzy
 msgid "Add a new user"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till en ny användare"
 
 #: useradmin.php:567
 #: useradmin.php:690
-#, fuzzy
 msgid "Back to User Administration"
-msgstr "_Användaradministration"
+msgstr "Tillbaka till användaradministration"
 
 #: useradmin.php:576
-#, fuzzy
 msgid " Languages"
 msgstr "Språk"
 
@@ -11906,9 +11848,8 @@ msgid "Date registered"
 msgstr "Registreringsdatum"
 
 #: useradmin.php:591
-#, fuzzy
 msgid "Last logged in"
-msgstr "Användare inloggad"
+msgstr "Senast inloggad"
 
 #: useradmin.php:661
 msgid "Never"
@@ -11928,15 +11869,13 @@ msgid "Access"
 msgstr "Access"
 
 #: useradmin.php:817
-#, fuzzy
 msgid "Admin GEDCOM"
-msgstr "Lägg till GEDCOM-fil"
+msgstr "Administrera GEDCOM"
 
 #: useradmin.php:930
 #: useradmin.php:1091
-#, fuzzy
 msgid "Cleanup users"
-msgstr "Städa orter"
+msgstr "Rensa bland användare"
 
 #: useradmin.php:937
 msgid "Number of months since the last login for a user's account to be considered inactive: "
@@ -11963,9 +11902,8 @@ msgid "Nothing found to cleanup"
 msgstr "Ingenting hittades som kräver uppstädning"
 
 #: useradmin.php:1037
-#, fuzzy
 msgid "Deleted user: "
-msgstr "Radera namn"
+msgstr "Radera användare:"
 
 #: useradmin.php:1045
 msgid "Unset GEDCOM rights for "
@@ -11996,20 +11934,17 @@ msgid "Send message to users who have not logged in for 6 months"
 msgstr "Skicka meddelande till användare som inte loggat in på 6 månader"
 
 #: useradmin.php:1153
-#, fuzzy
 msgid "Total number of users"
-msgstr "Maximalt antal efternamn"
+msgstr "Totalt antal användare"
 
 #: useradmin.php:1156
 #: useradmin.php:1157
-#, fuzzy
 msgid "Site Administrators"
-msgstr "_Användaradministration"
+msgstr "Sajtadministratörer"
 
 #: useradmin.php:1160
-#, fuzzy
 msgid "GEDCOM Administrators"
-msgstr "_GEDCOM: Administratörssida"
+msgstr "GEDCOM-Administratörer"
 
 #: useradmin.php:1172
 #: useradmin.php:1173
@@ -12023,24 +11958,20 @@ msgstr "Ej verifierad av användare"
 
 #: useradmin.php:1182
 #: useradmin.php:1183
-#, fuzzy
 msgid "Unverified by Administrator"
-msgstr "_Användaradministration"
+msgstr "Ej verifierad av administratör"
 
 #: usermigrate.php:58
-#, fuzzy
 msgid "PhpGedView Configuration File"
-msgstr "_GEDCOM: Konfigurationsfil"
+msgstr "PhpGedView konfigurationsfil"
 
 #: usermigrate.php:59
-#, fuzzy
 msgid "GEDCOM Files"
-msgstr "GEDCOM-titel"
+msgstr "GEDCOM-filer"
 
 #: usermigrate.php:60
-#, fuzzy
 msgid "GEDCOM Settings, Configuration and Privacy files"
-msgstr "_GEDCOM: Konfigurationsfil"
+msgstr "GEDCOM-inställningar, konfiguration och integritetsfiler"
 
 #: usermigrate.php:61
 msgid "GEDCOM SearchLogs and PhpGedView Logfiles"
@@ -12051,9 +11982,8 @@ msgid "User definitions, Block settings, Favorites, Messages, News"
 msgstr "Användardefinitioner, områdesinställning, favoriter, meddelande, nyheter"
 
 #: usermigrate.php:63
-#, fuzzy
 msgid "Media files"
-msgstr "Ladda upp mediafiler"
+msgstr "Mediafiler"
 
 #: usermigrate.php:64
 msgid "Make Backup"
@@ -12088,14 +12018,12 @@ msgid "One or more files already exist. Do you want to overwrite them?"
 msgstr "En eller flera filer finns redan. Vill du skriva över dem?"
 
 #: usermigrate.php:172
-#, fuzzy
 msgid "Importing users"
-msgstr "Importeringsval"
+msgstr "Importera användare"
 
 #: usermigrate.php:174
-#, fuzzy
 msgid "File <i>authenticate.php</i> not found in your index directory. Migration is cancelled."
-msgstr "Detta verktyg kommer att importera <i>authenticate.php</i> och andra <i>.dat</i>-filer ifrån indexmappen till din databas."
+msgstr "Filen <i>authenticate.php</i> hittades inte i indexmappen. Migrationen avbröts."
 
 #: usermigrate.php:179
 #: usermigrate.php:191
@@ -12126,43 +12054,41 @@ msgid "No Favorites seem to be present in the system."
 msgstr "Det finns inga favoriter i systemet."
 
 #: usermigrate.php:204
-#, fuzzy
 msgid "Importing news"
-msgstr "Importeringsval"
+msgstr "Importera nyheter"
 
 #: usermigrate.php:206
 msgid "No News seems to be present in the system."
 msgstr "Det finns inga nyheter i systemet."
 
 #: usermigrate.php:213
-#, fuzzy
 msgid "Importing blocks"
-msgstr "Importeringsval"
+msgstr "Importera områden"
 
 #: usermigrate.php:215
 msgid "No Blocks seems to be present in the system."
 msgstr "Det finns inga områden i systemet."
 
+#: blocks/block_htmlplus.php:40
+msgid "Advanced HTML"
+msgstr "Avancerad HTML"
+
 #: blocks/charts.php:40
-#, fuzzy
 msgid "Charts Block"
-msgstr "Tavelstil"
+msgstr "Diagramområde"
 
 #: blocks/charts.php:167
 #: blocks/gedcom_favorites.php:130
-#, fuzzy
 msgid "No such ID exists in this GEDCOM file."
-msgstr "Synkronisera redigeringar med GEDOM-filen"
+msgstr "Idt finns inte i denna GEDCOM-fil. "
 
 #: blocks/gedcom_block.php:36
-#, fuzzy
 msgid "GEDCOM Welcome"
-msgstr "GEDCOM-titel"
+msgstr "Välkomstområde för GEDCOM-filen"
 
 #: blocks/gedcom_favorites.php:36
-#, fuzzy
 msgid "GEDCOM Favorites"
-msgstr "GEDCOM-titel"
+msgstr "Favoriterområdet för GEDCOM-filer"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
@@ -12173,9 +12099,8 @@ msgid "Are you sure you want to remove this item from your list of Favorites?"
 msgstr "Är du säker på att du vill radera denna post från dina favoriter?"
 
 #: blocks/gedcom_favorites.php:155
-#, fuzzy
 msgid "Add a new favorite"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till en ny favorit"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
@@ -12190,9 +12115,8 @@ msgid "Enter an optional note about this favorite"
 msgstr "Skriv en frivillig notering om denna favorit"
 
 #: blocks/gedcom_news.php:36
-#, fuzzy
 msgid "GEDCOM News"
-msgstr "GEDCOM-titel"
+msgstr "GEDCOM-nyhetsområde"
 
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
@@ -12208,86 +12132,94 @@ msgid "Are you sure you want to delete this News entry?"
 msgstr "Är du säker på att du vill ta bort denna nyhetsnotering?"
 
 #: blocks/gedcom_news.php:165
-#, fuzzy
 msgid "Add a News article"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till en nyhetsartikel"
 
 #: blocks/gedcom_news.php:196
-#, fuzzy
 msgid "No limit"
-msgstr "Minnesgräns"
+msgstr "Ingen begränsning"
 
 #: blocks/gedcom_news.php:197
-#, fuzzy
 msgid "Age of item"
-msgstr "Lägg till FAQ-post"
+msgstr "Ålder för artikel"
 
 #: blocks/gedcom_news.php:198
-#, fuzzy
 msgid "Number of items"
-msgstr "Antal dagar att visa"
+msgstr "Antal artiklar"
 
 #: blocks/gedcom_stats.php:40
 #: blocks/gedcom_stats.php:91
 #: blocks/rss_block.php:70
-#, fuzzy
 msgid "GEDCOM Statistics"
-msgstr "GEDCOM-titel"
+msgstr "Statistikområde för GEDCOM-filer"
 
-#: blocks/gedcom_stats.php:145
-#: blocks/gedcom_stats.php:330
+#: blocks/gedcom_stats.php:107
+#, php-format
+msgid "This GEDCOM was created using <b>%s %s</b>"
+msgstr "Denna GEDCOM är skapad av <b>%s %s</b>."
+
+#: blocks/gedcom_stats.php:112
+#, php-format
+msgid "This GEDCOM was created on <b>%s</b>"
+msgstr "Denna GEDCOM skapades den <b>%s</b>."
+
+#: blocks/gedcom_stats.php:114
+#, php-format
+msgid " on <b>%s</b>"
+msgstr "den <b>%s</b>"
+
+#: blocks/gedcom_stats.php:143
+#: blocks/gedcom_stats.php:328
 msgid "Total users"
 msgstr "Totalt antal användare"
 
-#: blocks/gedcom_stats.php:159
-#: blocks/gedcom_stats.php:277
+#: blocks/gedcom_stats.php:157
+#: blocks/gedcom_stats.php:275
 msgid "Earliest birth year"
 msgstr "Tidigaste födelseår"
 
-#: blocks/gedcom_stats.php:166
-#: blocks/gedcom_stats.php:285
+#: blocks/gedcom_stats.php:164
+#: blocks/gedcom_stats.php:283
 msgid "Latest birth year"
 msgstr "Senaste födelseåret"
 
-#: blocks/gedcom_stats.php:173
-#: blocks/gedcom_stats.php:293
+#: blocks/gedcom_stats.php:171
+#: blocks/gedcom_stats.php:291
 msgid "Earliest death year"
 msgstr "Tidigaste dödsår"
 
-#: blocks/gedcom_stats.php:180
-#: blocks/gedcom_stats.php:301
+#: blocks/gedcom_stats.php:178
+#: blocks/gedcom_stats.php:299
 msgid "Latest death year"
 msgstr "Senaste dödsår"
 
-#: blocks/gedcom_stats.php:188
-#: blocks/gedcom_stats.php:309
+#: blocks/gedcom_stats.php:186
+#: blocks/gedcom_stats.php:307
 msgid "Person who lived the longest"
 msgstr "Person som levt längst"
 
-#: blocks/gedcom_stats.php:204
-#: blocks/gedcom_stats.php:325
+#: blocks/gedcom_stats.php:202
+#: blocks/gedcom_stats.php:323
 msgid "Family with the most children"
 msgstr "Familj med flest barn"
 
-#: blocks/gedcom_stats.php:219
+#: blocks/gedcom_stats.php:217
 msgid "View statistics as graphs"
 msgstr ""
 
-#: blocks/gedcom_stats.php:227
+#: blocks/gedcom_stats.php:225
 msgid "Most Common Surnames"
 msgstr "De vanligaste efternamnen"
 
-#: blocks/gedcom_stats.php:259
-#, fuzzy
+#: blocks/gedcom_stats.php:257
 msgid "Show common surnames?"
-msgstr "Visa de levandes namn"
+msgstr "Visa vanliga efternamn?"
 
-#: blocks/gedcom_stats.php:268
-#, fuzzy
+#: blocks/gedcom_stats.php:266
 msgid "Select the stats to show in this block"
-msgstr "Andra fakta att visa i tavlorna"
+msgstr "Välj vilken statistik som ska visas i detta område"
 
-#: blocks/gedcom_stats.php:339
+#: blocks/gedcom_stats.php:337
 #, fuzzy
 msgid "Show link to Statistics charts?"
 msgstr "Visa detaljer om födelse och död i släktträden"
@@ -12323,9 +12255,8 @@ msgid "to change what is printed here.</p>"
 msgstr "för att ändra vad som skrivs här.</p>"
 
 #: blocks/logged_in.php:36
-#, fuzzy
 msgid "Logged In Users"
-msgstr "Användare inloggad"
+msgstr "Inloggad anvädarområde"
 
 #: blocks/logged_in.php:76
 msgid "Users Logged In"
@@ -12359,9 +12290,8 @@ msgid "Logged in as "
 msgstr "Inloggad som"
 
 #: blocks/random_media.php:38
-#, fuzzy
 msgid "Random Media"
-msgstr "Hitta media"
+msgstr "Slumpmässigt mediaområde"
 
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
@@ -12385,9 +12315,8 @@ msgid "Stop"
 msgstr "Stopp"
 
 #: blocks/random_media.php:341
-#, fuzzy
 msgid "Persons"
-msgstr "Ta bort person"
+msgstr "Personer"
 
 #: blocks/random_media.php:415
 msgid "Other"
@@ -12402,14 +12331,12 @@ msgid "If you hide an empty block, you will not be able to change its configurat
 msgstr "Om du döljer ett tomt område, kan du inte längre ändra konfigurationen tills det blir synligt igen genom att inte längre vara tomt."
 
 #: blocks/review_changes.php:39
-#, fuzzy
 msgid "Pending Changes"
-msgstr "Nyligen ändrade område"
+msgstr "Ej accepterade ändringar"
 
 #: blocks/review_changes.php:83
-#, fuzzy
 msgid "PhpGedView - Review changes"
-msgstr "PhpGedView svarsadress"
+msgstr "PhpGedView - Visa ändringar"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
@@ -12437,18 +12364,16 @@ msgid "RSS Feeds"
 msgstr "RSS flöden"
 
 #: blocks/rss_block.php:69
-#, fuzzy
 msgid "Upcoming Events"
-msgstr "Kommande händelseområdets gräns för antal dagar"
+msgstr "Kommande händelser-block"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
 msgstr "De 10 vanligaste efternamns-området"
 
 #: blocks/theme_select.php:36
-#, fuzzy
 msgid "Theme Select"
-msgstr "Temakatalog"
+msgstr "Tema väljarområde"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
@@ -12460,9 +12385,8 @@ msgstr "På denna dagen..."
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
-#, fuzzy
 msgid "Show only events of living people?"
-msgstr "Visa endast personer, händelser eller allting?"
+msgstr "Visa händelser enbart för levande personer?"
 
 #: blocks/todays_events.php:167
 #: blocks/upcoming_events.php:192
@@ -12498,9 +12422,8 @@ msgstr ""
 #: blocks/top10_givnnames.php:130
 #: blocks/top10_pageviews.php:131
 #: blocks/top10_surnames.php:143
-#, fuzzy
 msgid "Number of items to show"
-msgstr "Antal dagar att visa"
+msgstr "Antal objekt att visa"
 
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
@@ -12520,9 +12443,8 @@ msgid "Place counts before or after name?"
 msgstr "Placera räknare före eller efter namn?"
 
 #: blocks/user_blog.php:36
-#, fuzzy
 msgid "User Journal"
-msgstr "Användarnamn"
+msgstr "Användarens dagboksområde"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
@@ -12537,24 +12459,20 @@ msgid "Are you sure you want to delete this Journal entry?"
 msgstr "Är du säker på att du vill ta bort denna dagboksnotering?"
 
 #: blocks/user_blog.php:94
-#, fuzzy
 msgid "Add a new Journal entry"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till en ny dagboksnotering"
 
 #: blocks/user_favorites.php:38
-#, fuzzy
 msgid "User Favorites"
-msgstr "Favoritikon"
+msgstr "Område med användarens favoriter"
 
 #: blocks/user_favorites.php:60
-#, fuzzy
 msgid "My Favorites"
-msgstr "Favoritikon"
+msgstr "Mina favoriter"
 
 #: blocks/user_messages.php:38
-#, fuzzy
 msgid "User Messages"
-msgstr "Användarnamn"
+msgstr "Meddelandeområde för användare"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
@@ -12586,18 +12504,16 @@ msgid "Broadcast to all users"
 msgstr "Skicka till alla användare"
 
 #: blocks/user_welcome.php:36
-#, fuzzy
 msgid "User Welcome"
-msgstr "Användarnamn"
+msgstr "Välkomstblock för användare"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
 msgstr "Mina anor"
 
 #: blocks/user_welcome.php:56
-#, fuzzy
 msgid "My Individual Record"
-msgstr "Snabb personfakta"
+msgstr "Min personliga post"
 
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
@@ -12610,9 +12526,8 @@ msgid "Anniversary"
 msgstr "Årsdag"
 
 #: blocks/yahrzeit.php:218
-#, fuzzy
 msgid "Total Names"
-msgstr "Ändra namn"
+msgstr "Totalt antal namn"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
@@ -12627,9 +12542,8 @@ msgid "C"
 msgstr "C"
 
 #: includes/accesskeyHeaders.php:37
-#, fuzzy
 msgid "Viewing advice"
-msgstr "Visa arkiv"
+msgstr "Visningsråd"
 
 #: includes/accesskeyHeaders.php:37
 msgid "0"
@@ -12950,9 +12864,8 @@ msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
-#, fuzzy
 msgid "Charts"
-msgstr "Tavelstil"
+msgstr "Tavlor"
 
 #: includes/classes/class_menubar.php:517
 #: includes/classes/class_menubar.php:523
@@ -12963,9 +12876,8 @@ msgstr "Listor"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
-#, fuzzy
 msgid "MultiMedia"
-msgstr "Hantera media"
+msgstr "Multimedialista"
 
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
@@ -12993,9 +12905,8 @@ msgid "Wiki Administrator's Guide"
 msgstr "WIKI administrationsguide"
 
 #: includes/classes/class_menubar.php:1118
-#, fuzzy
 msgid "Favorites"
-msgstr "Favoritikon"
+msgstr "Favoriter"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
@@ -13005,40 +12916,44 @@ msgstr "Lägg till i mina favoriter"
 msgid "…"
 msgstr ""
 
-#: includes/classes/class_person.php:576
-#: includes/classes/class_person.php:633
+#. I18N: This is an abbreviation for a number.  i.e. #7 means number 7
+#: includes/classes/class_person.php:550
+#, php-format
+msgid "#%d"
+msgstr ""
+
+#: includes/classes/class_person.php:577
+#: includes/classes/class_person.php:634
 msgid "Unable to find family with ID"
 msgstr "Kan inte hitta familj med id"
 
-#: includes/classes/class_person.php:760
-#, fuzzy
+#: includes/classes/class_person.php:761
 msgid "Family with Parents"
-msgstr "Familj lägg till fakta"
+msgstr "Familj med föräldrar"
 
-#: includes/classes/class_person.php:779
-#: includes/classes/class_person.php:786
+#: includes/classes/class_person.php:780
+#: includes/classes/class_person.php:787
 msgid "Father's Family with "
 msgstr "Faderns familj med "
 
-#: includes/classes/class_person.php:780
-#: includes/classes/class_person.php:785
+#: includes/classes/class_person.php:781
+#: includes/classes/class_person.php:786
 msgid "Mother's Family with "
 msgstr "Moderns familj med "
 
-#: includes/classes/class_person.php:803
+#: includes/classes/class_person.php:804
 msgid "Family with"
 msgstr "Familj med"
 
-#: includes/classes/class_person.php:1836
-#, fuzzy
+#: includes/classes/class_person.php:1837
 msgid "year"
-msgstr "Rubrik"
+msgstr "år"
 
-#: includes/classes/class_person.php:1840
+#: includes/classes/class_person.php:1841
 msgid "month"
 msgstr "månad"
 
-#: includes/classes/class_person.php:1842
+#: includes/classes/class_person.php:1843
 msgid "months"
 msgstr "månader"
 
@@ -13076,9 +12991,8 @@ msgstr "Lever"
 #: includes/classes/class_stats.php:777
 #: includes/classes/class_stats.php:784
 #: includes/classes/class_stats.php:786
-#, fuzzy
 msgid "Dead"
-msgstr "Rubrik"
+msgstr "Totalt antal döda"
 
 #: includes/classes/class_stats.php:1231
 msgid "Highest population"
@@ -13111,15 +13025,13 @@ msgstr ""
 
 #: includes/classes/class_stats.php:1921
 #: includes/classes/class_stats.php:3817
-#, fuzzy
 msgid "birth"
-msgstr "Solfjäderns bredd"
+msgstr "födelse"
 
 #: includes/classes/class_stats.php:1922
 #: includes/classes/class_stats.php:3818
-#, fuzzy
 msgid "death"
-msgstr "Solfjäderns bredd"
+msgstr "död"
 
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
@@ -13183,9 +13095,8 @@ msgid "Start at parents"
 msgstr "Starta vid föräldrarna"
 
 #: includes/controllers/descendancy_ctrl.php:332
-#, fuzzy
 msgid "No children"
-msgstr "Ändra ordning på barn"
+msgstr "Inga registrerade barn"
 
 #: includes/controllers/family_ctrl.php:177
 #, fuzzy
@@ -13194,9 +13105,8 @@ msgstr "PHP Info"
 
 #: includes/controllers/family_ctrl.php:350
 #: includes/controllers/family_ctrl.php:361
-#, fuzzy
 msgid "Edit Family"
-msgstr "Ändra namn"
+msgstr "Redigera familj"
 
 #: includes/controllers/family_ctrl.php:379
 msgid "Add a child to this family"
@@ -13208,14 +13118,12 @@ msgstr "Lägg till barn till denna familj"
 #: includes/controllers/note_ctrl.php:242
 #: includes/controllers/repository_ctrl.php:241
 #: includes/controllers/source_ctrl.php:249
-#, fuzzy
 msgid "Click here to hide changes."
-msgstr "Klicka här för att fortsätta"
+msgstr "Klicka här för att dölja ändringar."
 
 #: includes/controllers/family_ctrl.php:451
-#, fuzzy
 msgid "Delete family"
-msgstr "Radera namn"
+msgstr "Radera familj"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
@@ -13227,9 +13135,8 @@ msgstr "Radering av familjen kommer att koppla loss alla personerna ifrån famil
 #: includes/controllers/note_ctrl.php:323
 #: includes/controllers/repository_ctrl.php:322
 #: includes/controllers/source_ctrl.php:330
-#, fuzzy
 msgid "Add to Clippings Cart"
-msgstr "Urklippskorg"
+msgstr "Lägg till i urklippskorg"
 
 #: includes/controllers/individual_ctrl.php:493
 #, fuzzy
@@ -13237,9 +13144,8 @@ msgid "Name"
 msgstr "Ändra namn"
 
 #: includes/controllers/individual_ctrl.php:819
-#, fuzzy
 msgid "Parent"
-msgstr "Sida"
+msgstr "Förälder"
 
 #: includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
@@ -13276,9 +13182,8 @@ msgstr "Lyckades lägga till länk"
 
 #: includes/controllers/repository_ctrl.php:79
 #: includes/controllers/repository_ctrl.php:168
-#, fuzzy
 msgid "Repository Information"
-msgstr "Arkiv-ID prefix"
+msgstr "Arkivinformation"
 
 #: includes/controllers/repository_ctrl.php:198
 #, fuzzy
@@ -13319,15 +13224,13 @@ msgstr "Resultatsida"
 
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
-#, fuzzy
 msgid "Source Information"
-msgstr "PHP Info"
+msgstr "Källinformation"
 
 #: includes/controllers/source_ctrl.php:199
 #: includes/controllers/source_ctrl.php:206
-#, fuzzy
 msgid "Edit Source"
-msgstr "Ändra integritetsinställningar"
+msgstr "Redigera källa"
 
 #: includes/controllers/timeline_ctrl.php:275
 msgid "Husband's age"
@@ -13414,9 +13317,8 @@ msgid "weeks"
 msgstr "veckor"
 
 #: includes/extras/functions.pl.php:366
-#, fuzzy
 msgid "Informant"
-msgstr "Datumformat:"
+msgstr "Sagesman"
 
 #: includes/extras/functions.pl.php:370
 msgid "Lodger"
@@ -13527,9 +13429,8 @@ msgid "No facts for this family."
 msgstr "Inga fakta om denna familj."
 
 #: includes/functions/functions_charts.php:532
-#, fuzzy
 msgid "Add Note"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till en anteckning"
 
 #: includes/functions/functions_charts.php:541
 #, fuzzy
@@ -13537,9 +13438,8 @@ msgid "Add Shared Note"
 msgstr "Lägg till ny anteckning"
 
 #: includes/functions/functions_charts.php:560
-#, fuzzy
 msgid "Add Source Citation"
-msgstr "Lägg till nytt källcitat"
+msgstr "Lägg till källcitat"
 
 #: includes/functions/functions_charts.php:814
 msgid "Grandfather"
@@ -13576,6 +13476,16 @@ msgstr ""
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Å Ä Ö"
 
+#: includes/functions/functions_edit.php:78
+#, php-format
+msgid "The record with id %s was changed by another user since you last accessed it."
+msgstr "Posten med id %s har ändrats av en annan användare sedan du senast  besökte den."
+
+#: includes/functions/functions_edit.php:79
+#, php-format
+msgid "This record was last changed by <i>%s</i> at %s"
+msgstr "Denna post ändrades senast av <i>%s</i> den %s"
+
 #: includes/functions/functions_edit.php:80
 #: includes/functions/functions_edit.php:2376
 #: includes/functions/functions_edit.php:2385
@@ -13602,14 +13512,12 @@ msgstr "Visa forskningsassistenten"
 
 #: includes/functions/functions_edit.php:1779
 #: includes/functions/functions_edit.php:1784
-#, fuzzy
 msgid "Add a new Associate"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till ny bekant"
 
 #: includes/functions/functions_edit.php:1830
-#, fuzzy
 msgid "Add a new Multimedia object"
-msgstr "Lägg till ny mediaartikel"
+msgstr "Lägg till ett nytt multimediaobjekt"
 
 #: includes/functions/functions_edit.php:2375
 #: includes/functions/functions_edit.php:2384
@@ -13665,9 +13573,8 @@ msgstr "Filen skapades inte."
 
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
-#, fuzzy
 msgid "Invalid GEDCOM format"
-msgstr "Göm GEDCOM-fel"
+msgstr "Felaktigt GEDCOM 5.5 format"
 
 #: includes/functions/functions_mediadb.php:120
 #: includes/functions/functions_mediadb.php:139
@@ -13687,9 +13594,8 @@ msgstr "Uppladdning lyckades"
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
-#, fuzzy
 msgid "Upload"
-msgstr "Sökväg för uppladdningen"
+msgstr "Ladda upp"
 
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
@@ -13705,9 +13611,8 @@ msgstr "Använd  &laquo;Browse&raquo;-knappen för att söka på din lokala dato
 
 #: includes/functions/functions_mediadb.php:1044
 #: includes/functions/functions_mediadb.php:1212
-#, fuzzy
 msgid "Automatic thumbnail"
-msgstr "Automatisk generering av miniatyrbilder"
+msgstr "Automatiska miniatyrbilder"
 
 #: includes/functions/functions_mediadb.php:1047
 #: includes/functions/functions_mediadb.php:1215
@@ -13813,9 +13718,8 @@ msgstr "För hjälp med släktfrågor kontakta"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
-#, fuzzy
 msgid "Technical help contact"
-msgstr "Släktforskningskontakt"
+msgstr "Kontakt för teknisk hjälp"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
@@ -13827,9 +13731,8 @@ msgstr "För mer information kontakta"
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
-#, fuzzy
 msgid "Information about:"
-msgstr "PHP Info"
+msgstr "Extra information om:"
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
@@ -13884,14 +13787,12 @@ msgid "Status"
 msgstr "Status"
 
 #: includes/functions/functions_print.php:2380
-#, fuzzy
 msgid "Add new fact"
-msgstr "Lägg till nytt namn"
+msgstr "Lägg till ny fakta tag"
 
 #: includes/functions/functions_print.php:2537
-#, fuzzy
 msgid "Find Repository"
-msgstr "Radera arkiv"
+msgstr "Hitta arkiv"
 
 #: includes/functions/functions_print_facts.php:166
 #: includes/functions/functions_print_facts.php:217
@@ -13916,9 +13817,8 @@ msgid "This is an error, and we would like to fix it. Please report this error t
 msgstr "Detta är ett fel och vi skulle gärna vilja rätta till det. Var vänlig rapportera detta till"
 
 #: includes/functions/functions_print_lists.php:76
-#, fuzzy
 msgid "Show only males."
-msgstr "Visa de levandes namn"
+msgstr "Visa endast män."
 
 #: includes/functions/functions_print_lists.php:78
 msgid "Show only females."
@@ -13942,9 +13842,8 @@ msgid "Show people who are alive or couples where both partners are alive."
 msgstr "Visa personer som lever eller par där båda är vid liv."
 
 #: includes/functions/functions_print_lists.php:86
-#, fuzzy
 msgid "Alive "
-msgstr "Aktiverad"
+msgstr "Levde"
 
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
@@ -13972,9 +13871,8 @@ msgstr "Visa &laquo;löv&raquo; för par eller personer. Dessa är personer som 
 
 #: includes/functions/functions_print_lists.php:92
 #: includes/functions/functions_print_lists.php:478
-#, fuzzy
 msgid "Leaves"
-msgstr "Spara"
+msgstr "Löv"
 
 #: includes/functions/functions_print_lists.php:94
 msgid "Show persons born more than 100 years ago."
@@ -14037,9 +13935,8 @@ msgid "Show couples where only the male partner is deceased."
 msgstr "Visa par där den manliga partnern är avliden."
 
 #: includes/functions/functions_print_lists.php:472
-#, fuzzy
 msgid "Widow"
-msgstr "Solfjäderns bredd"
+msgstr "Änka"
 
 #: includes/functions/functions_print_lists.php:474
 msgid "Both dead "
@@ -14058,9 +13955,8 @@ msgid "Show couples who married within the last 100 years."
 msgstr "Visa par som gift sig de senaste 100 åren."
 
 #: includes/functions/functions_print_lists.php:486
-#, fuzzy
 msgid "Show divorced couples."
-msgstr "Visa döda personer"
+msgstr "Visa skilda par."
 
 #: includes/functions/functions_print_lists.php:807
 msgid "Decade of marriage"
@@ -14093,6 +13989,11 @@ msgstr "Detaljerna om familjen är privata. Familjedetaljer kommer inte att inkl
 
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
+msgstr ""
+
+#: includes/functions/functions_rss.php:149
+#, php-format
+msgid "This GEDCOM was created using %s %s"
 msgstr ""
 
 #. I18N: This is the country/chapman code for "Aruba"
@@ -15488,9 +15389,14 @@ msgstr ""
 
 #: modules/clippings/clippings.php:90
 #: modules/clippings/clippings.php:281
-#, fuzzy
 msgid "Download Now"
-msgstr "Ladda ner GEDCOM-fil"
+msgstr "Ladda ner nu"
+
+#: modules/clippings/clippings.php:121
+#: modules/clippings/clippings.php:126
+#, fuzzy, php-format
+msgid "Add %s to cart"
+msgstr "Lägg till i mina favoriter"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
@@ -15511,7 +15417,6 @@ msgstr "Urklippskorg"
 
 #. I18N: This is the title of a tab on the sidebar
 #: modules/descendancy/descendancy.php:239
-#: modules/descendancy/pgv_module.php:43
 msgid "Descendancy"
 msgstr ""
 
@@ -16004,6 +15909,7 @@ msgid "Infirmaties - Whether blind, Whether Deaf and Dumb"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:51
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:49
 msgid "Keep"
 msgstr ""
 
@@ -16012,20 +15918,27 @@ msgid "Unlink"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:53
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:77
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:51
 msgid "Navigator"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:85
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:82
 #, fuzzy
 msgid "Keep Link in list"
 msgstr "Behålla länkar"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:86
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:83
 msgid "Remove Link from list"
 msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:90
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:94
+#: modules/GEDFact_assistant/_MEDIA/media_5_input.php:60
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:87
+#: modules/GEDFact_assistant/_MEDIA/media_query_1a.php:91
 msgid "Open Family Navigator"
 msgstr ""
 
@@ -16177,6 +16090,10 @@ msgstr ""
 msgid "Months Unemployed - xx = Months unemployed during Census Year"
 msgstr ""
 
+#: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:132
+msgid "Home Ownership - x-x-x-xxxx = O/R-F/M-F/H-#### = Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number"
+msgstr ""
+
 #: modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:134
 msgid "Situation - 3 parameters - Diseases, Infimaties, Convict/Pauper etc"
 msgstr ""
@@ -16243,6 +16160,9 @@ msgstr "_GEDCOM: Konfigurationsfil"
 #: modules/googlemap/googlemap.php:146
 #: modules/googlemap/googlemap.php:656
 #: modules/googlemap/googlemap.php:864
+#: modules/googlemap/pedigree_map.php:85
+#: modules/googlemap/pedigree_map.php:307
+#: modules/googlemap/placehierarchy.php:186
 msgid "Manage GoogleMap configuration"
 msgstr ""
 
@@ -16250,12 +16170,22 @@ msgstr ""
 #: modules/googlemap/editconfig.php:452
 #: modules/googlemap/gg_map_content.php:89
 #: modules/googlemap/googlemap.php:149
+#: modules/googlemap/pedigree_map.php:310
+#: modules/googlemap/placehierarchy.php:189
+#: modules/googlemap/places.php:159
+#: modules/googlemap/places.php:193
+#: modules/googlemap/places.php:566
+#: modules/googlemap/places_edit.php:42
 msgid "Edit geographic place locations"
 msgstr ""
 
 #: modules/googlemap/admin-config.php:58
 #: modules/googlemap/gg_map_content.php:92
 #: modules/googlemap/googlemap.php:152
+#: modules/googlemap/pedigree_map.php:313
+#: modules/googlemap/placecheck.php:50
+#: modules/googlemap/placecheck.php:54
+#: modules/googlemap/placehierarchy.php:192
 msgid "Place Check"
 msgstr ""
 
@@ -16301,6 +16231,8 @@ msgid "Postfix, prefix, normal, both"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:96
+#: modules/googlemap/places.php:161
+#: modules/googlemap/places_edit.php:46
 #, fuzzy
 msgid "Page only for Administrators"
 msgstr "_Användaradministration"
@@ -16320,21 +16252,33 @@ msgstr ""
 #: modules/googlemap/editconfig.php:231
 #: modules/googlemap/gg_map_content.php:31
 #: modules/googlemap/googlemap.php:608
+#: modules/googlemap/pedigree_map.php:551
+#: modules/googlemap/placehierarchy.php:506
+#: modules/googlemap/places_edit.php:405
 msgid "Map"
 msgstr "Karta"
 
 #: modules/googlemap/editconfig.php:232
 #: modules/googlemap/googlemap.php:609
+#: modules/googlemap/pedigree_map.php:552
+#: modules/googlemap/placehierarchy.php:507
+#: modules/googlemap/places_edit.php:406
 msgid "Satellite"
 msgstr "Satellit"
 
 #: modules/googlemap/editconfig.php:233
 #: modules/googlemap/googlemap.php:610
+#: modules/googlemap/pedigree_map.php:553
+#: modules/googlemap/placehierarchy.php:508
+#: modules/googlemap/places_edit.php:407
 msgid "Hybrid"
 msgstr "Hybrid"
 
 #: modules/googlemap/editconfig.php:234
 #: modules/googlemap/googlemap.php:611
+#: modules/googlemap/pedigree_map.php:554
+#: modules/googlemap/placehierarchy.php:509
+#: modules/googlemap/places_edit.php:408
 msgid "Terrain"
 msgstr "Terräng"
 
@@ -16364,6 +16308,8 @@ msgid "Standard"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:274
+#: modules/googlemap/places_edit.php:809
+#: modules/googlemap/places_edit.php:817
 #, fuzzy
 msgid "Flag"
 msgstr "Flaggfilens namn"
@@ -16401,6 +16347,7 @@ msgid "Max."
 msgstr ""
 
 #: modules/googlemap/editconfig.php:352
+#: modules/googlemap/places_edit.php:748
 msgid "Precision"
 msgstr ""
 
@@ -16415,23 +16362,30 @@ msgid "digits"
 msgstr "Ändra"
 
 #: modules/googlemap/editconfig.php:366
+#: modules/googlemap/places.php:179
+#: modules/googlemap/places_edit.php:772
 #, fuzzy
 msgid "State"
 msgstr "Spara"
 
 #: modules/googlemap/editconfig.php:375
+#: modules/googlemap/places.php:181
+#: modules/googlemap/places_edit.php:774
 msgid "City"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:383
+#: modules/googlemap/places_edit.php:776
 msgid "Neighborhood"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:391
+#: modules/googlemap/places_edit.php:778
 msgid "House"
 msgstr ""
 
 #: modules/googlemap/editconfig.php:399
+#: modules/googlemap/places_edit.php:780
 msgid "Max"
 msgstr ""
 
@@ -16458,11 +16412,15 @@ msgstr ""
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:655
+#: modules/googlemap/places_edit.php:814
+#: modules/googlemap/places_edit.php:818
 msgid "Change flag"
 msgstr ""
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
+#: modules/googlemap/places_edit.php:819
 msgid "Remove flag"
 msgstr ""
 
@@ -16473,6 +16431,7 @@ msgstr ""
 #: modules/googlemap/gg_map_content.php:35
 #: modules/googlemap/googlemap.php:97
 #: modules/googlemap/googlemap.php:651
+#: modules/googlemap/pedigree_map.php:82
 msgid "GoogleMap module disabled"
 msgstr "Googlekartmodulen är avstängd"
 
@@ -16480,19 +16439,19 @@ msgstr "Googlekartmodulen är avstängd"
 #: modules/googlemap/gg_map_content.php:59
 #: modules/googlemap/googlemap.php:118
 #: modules/googlemap/googlemap.php:119
-#, fuzzy
 msgid "Activate"
-msgstr "Aktiverad"
+msgstr "Aktivera"
 
 #: modules/googlemap/gg_map_content.php:62
 #: modules/googlemap/gg_map_content.php:63
 #: modules/googlemap/googlemap.php:122
 #: modules/googlemap/googlemap.php:123
-#, fuzzy
 msgid "Deactivate"
-msgstr "Aktiverad"
+msgstr "Avaktivera"
 
 #: modules/googlemap/googlemap.php:607
+#: modules/googlemap/pedigree_map.php:550
+#: modules/googlemap/placehierarchy.php:505
 msgid "Redraw map"
 msgstr "Visa kartan på nytt"
 
@@ -16501,10 +16460,19 @@ msgid "No map data for this person"
 msgstr "Det finns ingen kartdata för denna person"
 
 #: modules/googlemap/googlemap.php:940
+#: modules/googlemap/placehierarchy.php:302
+#: modules/googlemap/placehierarchy.php:614
+#: modules/googlemap/placehierarchy.php:671
 msgid "This place has no coordinates"
 msgstr ""
 
 #: modules/googlemap/googlemap.php:942
+#: modules/googlemap/placehierarchy.php:304
+#: modules/googlemap/placehierarchy.php:616
+#: modules/googlemap/placehierarchy.php:617
+#: modules/googlemap/placehierarchy.php:673
+#: modules/googlemap/placehierarchy.php:674
+#: modules/googlemap/places.php:604
 msgid "Edit geographic location"
 msgstr ""
 
@@ -16787,6 +16755,10 @@ msgstr ""
 #: modules/lightbox/admin-config.php:40
 #: modules/lightbox/lb_editconfig.php:42
 #: modules/lightbox/lb_editconfig.php:46
+#: modules/lightbox/functions/lb_head.php:116
+#: modules/lightbox/functions/lb_head.php:117
+#: modules/lightbox/functions/lb_head.php:125
+#: modules/lightbox/functions/lb_head.php:133
 msgid "Lightbox-Album Configuration"
 msgstr ""
 
@@ -16804,9 +16776,8 @@ msgstr ""
 
 #: modules/lightbox/lb_editconfig.php:107
 #: modules/lightbox/lb_editconfig.php:109
-#, fuzzy
 msgid "Hide"
-msgstr "Rubrik"
+msgstr "Göm"
 
 #: modules/lightbox/lb_editconfig.php:117
 msgid "Individual Page - Album Tab Header"
@@ -16992,9 +16963,8 @@ msgstr ""
 
 #: modules/lightbox/functions/lb_indi_doors_0.php:55
 #: modules/lightbox/functions/lb_indi_doors_1.php:58
-#, fuzzy
 msgid "Research Assistant"
-msgstr "Visa forskningsassistenten"
+msgstr "Forskningsassistent"
 
 #: modules/lightbox/functions/lightbox_print_media.php:132
 msgid "Photo"
@@ -17038,24 +17008,20 @@ msgid "There are no media objects for this individual."
 msgstr "Det finns ingen mediaobjekt för denna person."
 
 #: modules/notes/notes.php:60
-#, fuzzy
 msgid "Show all notes"
-msgstr "Visa alla källor"
+msgstr "Visa alla anteckningar"
 
 #: modules/notes/notes.php:80
-#, fuzzy
 msgid "There are no Notes for this individual."
-msgstr "Radera denna person"
+msgstr "Det finns inga antecknngar om denna person."
 
 #: modules/personal_facts/personal_facts.php:62
-#, fuzzy
 msgid "There are no Facts for this individual."
-msgstr "Radera denna person"
+msgstr "Det finns ingen fakta om denna person."
 
 #: modules/personal_facts/personal_facts.php:72
-#, fuzzy
 msgid "Events of close relatives"
-msgstr "Visa födelse och död för släktingar på personsidan"
+msgstr "Händelser för nära släktingar"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
@@ -17070,9 +17036,8 @@ msgid "Relatives"
 msgstr ""
 
 #: modules/relatives/relatives.php:114
-#, fuzzy
 msgid "Add husband"
-msgstr "Lägg till barn"
+msgstr "Lägg till make"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
@@ -17083,27 +17048,24 @@ msgid "Add a wife to this family"
 msgstr "Lägg till en maka till denna familj"
 
 #: modules/relatives/relatives.php:218
-#, fuzzy
 msgid "Add marriage details"
-msgstr "Kontrollera vigselrelation"
+msgstr "Lägg till en ny vigsel"
 
 #: modules/relatives/relatives.php:408
 msgid "Link this person to an existing family as a child"
 msgstr "Länka personen till existerande familj som barn"
 
 #: modules/relatives/relatives.php:415
-#, fuzzy
 msgid "Add a new wife"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till en ny maka"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
 msgstr "Länka personen till existerande familj som make"
 
 #: modules/relatives/relatives.php:435
-#, fuzzy
 msgid "Add a new husband"
-msgstr "Lägg till ny anteckning"
+msgstr "Lägg till en ny make"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
@@ -17232,7 +17194,6 @@ msgid "There are no Source citations for this individual."
 msgstr "Det finns ingen källcitat om denna person."
 
 #: themes/cloudy/footer.php:174
-#: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
 msgstr "Förändringar har gjorts på denna GEDCOM-fil."
 
@@ -17244,9 +17205,6 @@ msgstr "Förändringar har gjorts på denna GEDCOM-fil."
 
 #~ msgid "NAME:ROMN"
 #~ msgstr "Romaniserat namn"
-
-#~ msgid "_FA13"
-#~ msgstr "Faktum 13"
 
 #~ msgid ""
 #~ "Keyboard shortcuts are intended to help users who have difficulty with "
