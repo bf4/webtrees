@@ -52,7 +52,7 @@ $PGV_BLOCKS["print_todays_events"]["config"]	= array(
 //-- today's events block
 //-- this block prints a list of today's upcoming events of living people in your gedcom
 function print_todays_events($block=true, $config="", $side, $index) {
-  global $pgv_lang, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+  global $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
   global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 
   $block = true;		// Always restrict this block's height
@@ -113,7 +113,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 }
 
 function print_todays_events_config($config) {
-	global $pgv_lang, $PGV_BLOCKS;
+	global $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["print_todays_events"]["config"];
 	if (!isset($config["filter"])) $config["filter"] = "all";
 	if (!isset($config["onlyBDM"])) $config["onlyBDM"] = "no";

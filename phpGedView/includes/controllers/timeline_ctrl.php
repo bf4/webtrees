@@ -177,7 +177,7 @@ class TimelineControllerRoot extends BaseController {
 
 	function print_time_fact($event) {
 		global $basexoffset, $baseyoffset, $factcount, $TEXT_DIRECTION;
-		global $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
+		global $lang_short_cut, $LANGUAGE, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
 		global $familyfacts, $GEDCOM;
 		/* @var $event Event */
 		$factrec = $event->getGedComRecord();

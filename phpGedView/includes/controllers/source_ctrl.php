@@ -61,7 +61,7 @@ class SourceControllerRoot extends BaseController {
 	* initialize the controller
 	*/
 	function init() {
-		global $pgv_lang, $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
+		global $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
 
 		$this->sid = safe_GET_xref('sid');
 
@@ -164,11 +164,9 @@ class SourceControllerRoot extends BaseController {
 	* @return string
 	*/
 	function getPageTitle() {
-		global $pgv_lang;
 		if ($this->source) {
 			return $this->source->getFullName()." - ".$this->sid." - ".i18n::translate('Source Information');
-		}
-		else {
+		} else {
 			return i18n::translate('Unable to find record with ID');
 		}
 	}
@@ -185,7 +183,7 @@ class SourceControllerRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getEditMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $pgv_changes;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_changes;
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
@@ -276,7 +274,7 @@ class SourceControllerRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getOtherMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";

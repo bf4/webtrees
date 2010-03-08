@@ -50,7 +50,7 @@ $PGV_BLOCKS["print_block_givn_top10"]["config"]		= array(
  * Print First Names Block
  */
 function print_block_givn_top10($block=true, $config="", $side, $index) {
-	global $pgv_lang, $TEXT_DIRECTION, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
+	global $TEXT_DIRECTION, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_givn_top10"]["config"];
 	if (isset($config["infoStyle"])) $infoStyle = $config["infoStyle"];  // "style1" or "style2"
@@ -121,7 +121,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 }
 
 function print_block_givn_top10_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION;
+	global $ctype, $PGV_BLOCKS, $TEXT_DIRECTION;
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_givn_top10"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_givn_top10"]["config"]["cache"];
 	if (!isset($config["infoStyle"])) $config["infoStyle"] = "style2";

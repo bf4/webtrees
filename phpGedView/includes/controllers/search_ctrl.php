@@ -109,7 +109,7 @@ class SearchControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-		global $pgv_lang, $ALLOW_CHANGE_GEDCOM, $GEDCOM;
+		global $ALLOW_CHANGE_GEDCOM, $GEDCOM;
 
 		if ($this->action=='') {
 			$this->action='general';
@@ -286,26 +286,32 @@ class SearchControllerRoot extends BaseController {
 			$this->TopSearch();
 		}
 		// If we want to show associated persons, build the list
-		if ($this->action == "general") {
+		switch ($this->action) {
+		case 'general':
 			$this->GeneralSearch();
-		} elseif ($this->action == "soundex") {
+			break;
+		case 'soundex':
 			$this->SoundexSearch();
-		} elseif ($this->action == "replace") {
+			break;
+		case 'replace':
 			$this->SearchAndReplace();
-		} elseif ($this->action == "multisite") {
+			return;
+		case 'multisite':
 			$this->MultiSiteSearch();
+			break;
+
 		}
 	}
 
 	function getPageTitle() {
-		global $pgv_lang;
-		if ($this->action == "general") {
+		switch ($this->action) {
+		case 'general':
 			return i18n::translate('General Search');
-		} elseif ($this->action == "soundex") {
+		case 'soundex':
 			return i18n::translate('Soundex Search');
-		} elseif ($this->action == "replace") {
+		case 'replace':
 			return i18n::translate('Search and Replace');
-		} elseif ($this->action == "multisite") {
+		case 'multisite':
 			return i18n::translate('Multi Site Search');
 		}
 	}

@@ -118,10 +118,11 @@ class UserMigrateControllerRoot extends BaseController {
 	 * @return string
 	 */
 	function getPageTitle() {
-		global $pgv_lang;
-
-		if ($this->proceed == "backup") return i18n::translate('Backup');
-		else return i18n::translate('User Information Migration tool');
+		if ($this->proceed == "backup") {
+			return i18n::translate('Backup');
+		} else {
+			return i18n::translate('User Information Migration tool');
+		}
 	}
 
 	/**
@@ -282,7 +283,7 @@ class UserMigrateControllerRoot extends BaseController {
 	 *
 	 */
 	function import() {
-		global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang;
+		global $INDEX_DIRECTORY, $TBLPREFIX;
 
 		if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
 			$this->impSuccess = false;

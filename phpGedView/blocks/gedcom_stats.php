@@ -65,7 +65,7 @@ $PGV_BLOCKS['print_gedcom_stats']['config']   =array(
 //-- function to print the gedcom statistics block
 
 function print_gedcom_stats($block=true, $config='', $side, $index) {
-	global $PGV_BLOCKS, $pgv_lang, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $PGV_IMAGE_DIR, $PGV_IMAGES, $MULTI_MEDIA;
+	global $PGV_BLOCKS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $PGV_IMAGE_DIR, $PGV_IMAGES, $MULTI_MEDIA;
 	global $top10_block_present;
 
 	if (empty($config)) $config = $PGV_BLOCKS['print_gedcom_stats']['config'];
@@ -245,7 +245,7 @@ function print_gedcom_stats($block=true, $config='', $side, $index) {
 }
 
 function print_gedcom_stats_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION;
+	global $ctype, $PGV_BLOCKS, $TEXT_DIRECTION;
 	if (empty($config)) $config = $PGV_BLOCKS['print_gedcom_stats']['config'];
 	if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS['print_gedcom_stats']['config'];
 	if (!isset($config['stat_first_death'])) $config['stat_first_death'] = $PGV_BLOCKS['print_gedcom_stats']['config']['stat_first_death'];

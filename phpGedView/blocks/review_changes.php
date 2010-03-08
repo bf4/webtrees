@@ -51,7 +51,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
  * Prints a block allowing the user review all changes pending approval
  */
 function review_changes_block($block = true, $config="", $side, $index) {
-	global $pgv_lang, $ctype, $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $ctype, $QUERY_STRING, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $pgv_changes, $TEXT_DIRECTION, $SHOW_SOURCES, $PGV_BLOCKS;
 	global $PHPGEDVIEW_EMAIL;
 
@@ -144,7 +144,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 }
 
 function review_changes_block_config($config) {
-	global $pgv_lang, $PGV_BLOCKS;
+	global $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["review_changes_block"]["config"];
 	print i18n::translate('Send out reminder emails?');
 	print "&nbsp;<select name='sendmail'>";
