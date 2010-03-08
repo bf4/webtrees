@@ -39,6 +39,10 @@ class clippings_PGVModule extends PGVModule {
 	protected $_sidebar = null;
 	
 	public function getName() {
+		return 'clippings';
+	}
+
+	public function getTitle() {
 		return i18n::translate('Clippings');
 	}
 

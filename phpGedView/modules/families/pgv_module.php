@@ -40,6 +40,10 @@ class families_PGVModule extends PGVModule {
 	protected $_sidebar = null;
 
 	public function getName() {
+		return 'families';
+	}
+
+	public function getTitle() {
 		return i18n::translate('Families');
 	}
 

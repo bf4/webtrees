@@ -39,6 +39,10 @@ class tree_PGVModule extends PGVModule {
 	protected $_tab = null;
 
 	public function getName() {
+		return 'tree';
+	}
+
+	public function getTitle() {
 		return i18n::translate('Tree');
 	}
 

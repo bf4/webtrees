@@ -39,6 +39,10 @@ class relatives_PGVModule extends PGVModule {
 	protected $_tab = null;
 
 	public function getName() {
+		return 'relatives';
+	}
+
+	public function getTitle() {
 		return i18n::translate('Relatives');
 	}
 

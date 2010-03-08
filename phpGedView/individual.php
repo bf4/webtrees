@@ -347,10 +347,10 @@ if (!$controller->indi->canDisplayDetails()) {
 		foreach($controller->modules as $mod) {
 			if ($mod!=$controller->static_tab && $mod->hasTab()) {
 				if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
-					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $mod->getName(); ?></span></a></li>
+					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getTitle(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $mod->getTitle(); ?></span></a></li>
 				<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
-					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getName(); ?>" href="individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
-						<span><?php echo $mod->getName()?></span>
+					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getTitle(); ?>" href="individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
+						<span><?php echo $mod->getTitle()?></span>
 						</a></li>
 				<?php } 
 				if ($mod->getTab()->hasContent()) $tabcount++; 
@@ -359,7 +359,7 @@ if (!$controller->indi->canDisplayDetails()) {
 		if ($controller->static_tab) {
 			?><li class="ui-state-default ui-corner-top static_tab" style="float: <?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>">
 				<a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>">
-					<span><?php echo $controller->static_tab->getName(); ?></span>
+					<span><?php echo $controller->static_tab->getTitle(); ?></span>
 				</a>
 				<a id="pin" href="#pin"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
 			</li><?php 

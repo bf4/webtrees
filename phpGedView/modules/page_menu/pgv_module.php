@@ -39,7 +39,12 @@ class page_menu_PGVModule extends PGVModule {
 	protected $pgvVersion = '4.2.2';
 
 	public function getName() {
-		// TODO what is this?
+		// TODO what is this module?
+		return 'Unknown';
+	}
+
+	public function getTitle() {
+		// TODO what is this module?
 		return 'Unknown';
 	}
 

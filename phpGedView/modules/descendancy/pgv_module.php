@@ -40,6 +40,10 @@ class descendancy_PGVModule extends PGVModule {
 	protected $_sidebar = null;
 
 	public function getName() {
+		return 'descendancy';
+	}
+
+	public function getTitle() {
 		return i18n::translate('Descendancy');
 	}
 

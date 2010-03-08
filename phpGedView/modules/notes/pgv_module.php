@@ -39,6 +39,10 @@ class notes_PGVModule extends PGVModule {
 	protected $_tab = null;
 
 	public function getName() {
+		return 'notes';
+	}
+
+	public function getTitle() {
 		return i18n::translate('Notes');
 	}
 

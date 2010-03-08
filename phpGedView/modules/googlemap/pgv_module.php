@@ -11,6 +11,10 @@ class googlemap_PGVModule extends PGVModule {
 	protected $_tab = null;
 
 	public function getName() {
+		return 'googlemap';
+	}
+
+	public function getTitle() {
 		return i18n::translate('Googlemap');
 	}
 
