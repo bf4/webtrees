@@ -43,7 +43,7 @@ $PGV_BLOCKS['print_htmlplus_block']['canconfig']	= true;
 $PGV_BLOCKS['print_htmlplus_block']['config']		= array(
 	'cache'=>0,
 	'title'=>'',
-	'html'=>"{i18n::translate('<p class="blockhc"><b>Put your title here</b></p><br /><p>Click the configure button')} <img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" alt=\"{i18n::translate('Configure')}\" /> {i18n::translate('to change what is printed here.</p>')}",
+	'html'=>"{i18n::translate('<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button')} <img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" alt=\"{i18n::translate('Configure')}\" /> {i18n::translate('to change what is printed here.</p>')}",
 	'gedcom'=>'__current__',
 	'compat'=>0,
 	'ui'=>0
