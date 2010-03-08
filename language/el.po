@@ -24,34 +24,34 @@ msgstr "Προσθήκη νέου τύπου Πολυμέσων"
 #: addremotelink.php:43
 #: addsearchlink.php:35
 msgid "<b>Access Denied</b><br />You do not have access to this resource."
-msgstr ""
+msgstr "<b>Απαγορεύεται η πρόσβαση</b><br />Δεν έχετε πρόσβαση σε αυτό τον πόρο."
 
 #: addmedia.php:80
 #: addremotelink.php:45
 msgid "This user name cannot edit this GEDCOM."
-msgstr ""
+msgstr "Αυτό το όνομα χρήστη δεν μπορεί να επεξεργαστεί αυτό το GEDCOM."
 
 #: addmedia.php:81
 #: addremotelink.php:47
 msgid "Editing this GEDCOM has been disabled by the administrator."
-msgstr ""
+msgstr "Editing this GEDCOM has been disabled by the system administrator."
 
 #: addmedia.php:83
 #: addremotelink.php:49
 msgid "Privacy settings prevent you from editing this record."
-msgstr ""
+msgstr "The privacy settings prevent you from editing this record."
 
 #: addmedia.php:84
 #: addremotelink.php:51
 msgid "You have no access to"
-msgstr ""
+msgstr "You have no access to"
 
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
 #: addremotelink.php:274
 msgid "Close Window"
-msgstr ""
+msgstr "Κλείσιμο παραθύρου"
 
 #: addmedia.php:192
 msgid "Media file already exists."
@@ -63,7 +63,7 @@ msgstr ""
 #: client.php:414
 #: client.php:424
 msgid "There was an error uploading your file."
-msgstr ""
+msgstr "Υπήρχε σφάλμα κατά την αποστολή του αρχείου."
 
 #: addmedia.php:207
 msgid "Media thumbnail already exists."
@@ -90,13 +90,13 @@ msgstr ""
 
 #: addmedia.php:409
 msgid "Paste the following ID into your editing fields to reference the newly created record "
-msgstr ""
+msgstr "Paste the following source ID into your editing fields to reference this source "
 
 #: addmedia.php:415
 #: addmedia.php:564
 #: addmedia.php:572
 msgid "Update successful"
-msgstr ""
+msgstr "Ενημερώθηκε επιτυχώς"
 
 #: addremotelink.php:36
 #: addremotelink.php:116
@@ -156,7 +156,7 @@ msgstr ""
 #: addremotelink.php:205
 #: addremotelink.php:227
 msgid "Title:"
-msgstr ""
+msgstr "Τίτλος:"
 
 #: addremotelink.php:208
 #, fuzzy
@@ -165,7 +165,7 @@ msgstr "Main WebSite URL"
 
 #: addremotelink.php:211
 msgid "Example:"
-msgstr ""
+msgstr "Παράδειγμα:"
 
 #: addremotelink.php:214
 #, fuzzy
@@ -204,7 +204,7 @@ msgstr "Προσθήκη Συγύζου-Γυναίκας"
 
 #: addsearchlink.php:31
 msgid "Add Local Link"
-msgstr ""
+msgstr "Προσθήκη τοπικής σύνδεσης"
 
 #: addsearchlink.php:77
 msgid "Same as current"
@@ -212,27 +212,27 @@ msgstr ""
 
 #: addsearchlink.php:78
 msgid "Mother"
-msgstr ""
+msgstr "Μητέρα"
 
 #: addsearchlink.php:79
 msgid "Father"
-msgstr ""
+msgstr "Πατέρας"
 
 #: addsearchlink.php:80
 msgid "Husband"
-msgstr ""
+msgstr "Σύζυγος (άνδρας)"
 
 #: addsearchlink.php:81
 msgid "Wife"
-msgstr ""
+msgstr "Σύζυγος (γυναίκα)"
 
 #: addsearchlink.php:82
 msgid "Son"
-msgstr ""
+msgstr "Υιός"
 
 #: addsearchlink.php:83
 msgid "Daughter"
-msgstr ""
+msgstr "Θυγατέρα"
 
 #: admin.php:51
 #: admin.php:137
@@ -252,11 +252,11 @@ msgstr "Archive Log Files"
 
 #: admin.php:105
 msgid "Edit Image Manipulation Configuration"
-msgstr ""
+msgstr "Edit Image Manipulation Configuration"
 
 #: admin.php:138
 msgid "Current Server Time:"
-msgstr ""
+msgstr "Current System Time:"
 
 #: admin.php:140
 msgid "Current User Time:"
@@ -264,11 +264,11 @@ msgstr ""
 
 #: admin.php:145
 msgid "Your <i>config.php</i> file is still writable.  For security, you should set the permissions of this file back to read-only when you have finished configuring your site."
-msgstr ""
+msgstr "Your config.php file is still writeable.  If you are done configuring your site you should set the permissions of this file back to read-only for security."
 
 #: admin.php:150
 msgid "User accounts awaiting verification by admin"
-msgstr ""
+msgstr "Useraccount(s) awaiting verification by admin"
 
 #: admin.php:155
 msgid "One or more user accounts have warnings"
@@ -307,11 +307,11 @@ msgstr ""
 
 #: admin.php:191
 msgid "README documentation"
-msgstr ""
+msgstr "README Κείμενο Τεκμηρίωσης"
 
 #: admin.php:194
 msgid "Show PHP information page"
-msgstr ""
+msgstr "Εμφάνιση σελίδας PHPInfo"
 
 #: admin.php:194
 msgid "PHP information"
@@ -319,11 +319,11 @@ msgstr ""
 
 #: admin.php:205
 msgid "Manage GEDCOMs and edit Privacy"
-msgstr ""
+msgstr "Διαχείριση GEDCOMs και Διαμόρφωση Προστασίας Προσωπικών Δεδομένων"
 
 #: admin.php:207
 msgid "Merge records"
-msgstr ""
+msgstr "Merge Records"
 
 #: admin.php:210
 #, fuzzy
@@ -356,7 +356,7 @@ msgstr "Βοήθεια Προσαρμογών"
 
 #: admin.php:262
 msgid "User Information Migration tool"
-msgstr ""
+msgstr "User Information Migration Tool"
 
 #: admin.php:266
 #, fuzzy
@@ -394,18 +394,18 @@ msgstr "Add files and settings for a new language"
 
 #: admin.php:302
 msgid "Loading..."
-msgstr ""
+msgstr "Φόρτωση..."
 
 #: admin.php:314
 msgid "Content of log file"
-msgstr ""
+msgstr "Content of log-file"
 
 #: ancestry.php:37
 #: ancestry.php:51
 #: ancestry.php:237
 #: ancestry.php:254
 msgid "Ancestry Chart"
-msgstr ""
+msgstr "Διάγραμμα προγόνων"
 
 #: ancestry.php:72
 #: compact.php:82
@@ -428,7 +428,7 @@ msgstr "Κατάλογος ονομάτων"
 
 #: ancestry.php:105
 msgid "Booklet"
-msgstr ""
+msgstr "Φυλλάδιο"
 
 #: ancestry.php:123
 #, fuzzy
@@ -451,7 +451,7 @@ msgstr "Αναδιάταξη οικογενειών"
 #: branches.php:74
 #: compact.php:90
 msgid "View"
-msgstr ""
+msgstr "Προβολή"
 
 #: ancestry.php:149
 #: branches.php:241
@@ -466,7 +466,7 @@ msgstr "Εμφάνιση μελλοντικών εργασιών"
 
 #: ancestry.php:192
 msgid "Click on any of the boxes to get more information about that person."
-msgstr ""
+msgstr "Κάντε κλικ σε οποιοδήποτε από τα κουτιά για να πάρετε πληροφορίες σχετικά με εκείνο το άτομο."
 
 #: autocomplete.php:196
 msgid "Age"
@@ -495,11 +495,11 @@ msgstr "Αναζήτηση όπως νομίζετε οτι γράφεται τ�
 
 #: branches.php:79
 msgid "Basic"
-msgstr ""
+msgstr "Βασικό"
 
 #: branches.php:81
 msgid "Daitch-Mokotoff"
-msgstr ""
+msgstr "Daitch-Mokotoff"
 
 #: branches.php:104
 msgid "Pedigree Chart Root Person"
@@ -507,39 +507,39 @@ msgstr "Pedigree Chart Root Person"
 
 #: branches.php:166
 msgid "Yes"
-msgstr ""
+msgstr "Ναι"
 
 #: calendar.php:102
 msgid "Anniversary Calendar"
-msgstr ""
+msgstr "Ημερολόγιο επετείων"
 
 #: calendar.php:122
 msgid "On This Day ..."
-msgstr ""
+msgstr "Σαν σήμερα, στην ιστορία μας..."
 
 #: calendar.php:125
 msgid "In This Month ..."
-msgstr ""
+msgstr "Στο μήνα αυτό, στην ιστορία μας..."
 
 #: calendar.php:128
 msgid "In This Year ..."
-msgstr ""
+msgstr "Στο έτος αυτό, στην ιστορία μας..."
 
 #: calendar.php:137
 msgid "Day:"
-msgstr ""
+msgstr "Ημέρα:"
 
 #: calendar.php:152
 msgid "Month:"
-msgstr ""
+msgstr "Μήνας:"
 
 #: calendar.php:172
 msgid "Year:"
-msgstr ""
+msgstr "Έτος:"
 
 #: calendar.php:182
 msgid "Show"
-msgstr ""
+msgstr "Εμφάνιση"
 
 #: calendar.php:187
 #: calendar.php:204
@@ -548,17 +548,17 @@ msgstr ""
 #: calendar.php:209
 #: calendar.php:441
 msgid "All People"
-msgstr ""
+msgstr "Όλα τα άτομα"
 
 #: calendar.php:191
 #: calendar.php:518
 msgid "Living People"
-msgstr ""
+msgstr "Ζωντανά άτομα"
 
 #: calendar.php:195
 #: calendar.php:521
 msgid "Recent Years (&lt; 100 yrs)"
-msgstr ""
+msgstr "Πρόσφατα έτη (&lt; 100 έτη)"
 
 #: calendar.php:201
 #, fuzzy
@@ -569,13 +569,13 @@ msgstr "Κεφαλίδα"
 #: calendar.php:215
 #: calendar.php:438
 msgid "Males"
-msgstr ""
+msgstr "Αρσενικά"
 
 #: calendar.php:218
 #: calendar.php:221
 #: calendar.php:439
 msgid "Females"
-msgstr ""
+msgstr "Θηλυκά"
 
 #: calendar.php:226
 #, fuzzy
@@ -639,7 +639,7 @@ msgstr "Μετανάστευση"
 
 #: calendar.php:274
 msgid "Custom Event"
-msgstr ""
+msgstr "Προσαρμοσμένο συμβάν"
 
 #: calendar.php:282
 #: calendar.php:284
@@ -650,7 +650,7 @@ msgstr "Προβολή αρχείου"
 #: calendar.php:287
 #: calendar.php:289
 msgid "View Month"
-msgstr ""
+msgstr "Προβολή μήνα"
 
 #: calendar.php:292
 #: calendar.php:294
@@ -670,21 +670,21 @@ msgstr "Αναδιάταξη οικογενειών"
 
 #: calendar.php:477
 msgid "Day not set"
-msgstr ""
+msgstr "Δεν ορίστηκε ημέρα"
 
 #: calendar.php:524
 #: calendar.php:606
 msgid "Male"
-msgstr ""
+msgstr "Άρσενικό"
 
 #: calendar.php:527
 #: calendar.php:610
 msgid "Female"
-msgstr ""
+msgstr "Θηλυκό"
 
 #: calendar.php:536
 msgid "Filter"
-msgstr ""
+msgstr "Φίλτρο"
 
 #: calendar.php:614
 msgid "unknown"
@@ -697,7 +697,7 @@ msgstr "Configuration of supported languages"
 
 #: changelanguage.php:117
 msgid "Return to the Admin menu"
-msgstr ""
+msgstr "Go back to the Admin menu"
 
 #: changelanguage.php:155
 #, fuzzy
@@ -717,7 +717,7 @@ msgstr "Active"
 #: changelanguage.php:183
 #: changelanguage.php:199
 msgid "Edit settings"
-msgstr ""
+msgstr "Edit settings"
 
 #: changelanguage.php:227
 #: changelanguage.php:250
@@ -750,45 +750,45 @@ msgstr "Enable Clippings Cart"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
-msgstr ""
+msgstr "Ποιές συνδέσεις από την οικογένεια αυτή θέλετε να προσθέσετε;"
 
 #: clippings.php:62
 msgid "Add just this family record."
-msgstr ""
+msgstr "Προσθήκη μόνο αυτής της οικογενειακής εγγραφής."
 
 #: clippings.php:63
 msgid "Add parents' records together with this family record."
-msgstr ""
+msgstr "Προσθήκη εγγραφών γονέων μαζί με αυτή την οικογενειακή εγγραφή."
 
 #: clippings.php:64
 msgid "Add parents' and children's records together with this family record."
-msgstr ""
+msgstr "Προσθήκη εγγραφών γονέων και παιδιών, μαζί με αυτή την οικογενειακή εγγραφή."
 
 #: clippings.php:65
 msgid "Add parents' and all descendants' records together with this family record."
-msgstr ""
+msgstr "Προσθήκη εγγραφών γονέων και απογόνων, μαζί με αυτή την οικογενειακή εγγραφή."
 
 #: clippings.php:66
 #: clippings.php:87
 #: clippings.php:99
 msgid "Continue Adding"
-msgstr ""
+msgstr "Συνέχιση πρόσθεσης"
 
 #: clippings.php:74
 msgid "Which links from this person would you also like to add?"
-msgstr ""
+msgstr "Ποιές συνδέσεις από αυτό το άτομο θα θέλατε επίσης να προσθέσετε;"
 
 #: clippings.php:78
 msgid "Add just this person."
-msgstr ""
+msgstr "Προσθήκη μόνο αυτού του ατόμου."
 
 #: clippings.php:79
 msgid "Add this person, his parents, and siblings."
-msgstr ""
+msgstr "Προσθήκη του ατόμου αυτού, των γονιών του, και των αδερφιών του."
 
 #: clippings.php:80
 msgid "Add this person and his direct line ancestors."
-msgstr ""
+msgstr "Προσθήκη του ατόμου αυτού και των απευθείας προγόνων του."
 
 #: clippings.php:81
 #: clippings.php:83
@@ -799,19 +799,19 @@ msgstr "Pedigree Generations"
 
 #: clippings.php:82
 msgid "Add this person, his direct line ancestors, and their families."
-msgstr ""
+msgstr "Προσθήκη του ατόμου αυτού, των απευθείας προγόνων του, και των οικογενειών τους."
 
 #: clippings.php:84
 msgid "Add this person, his spouse, and children."
-msgstr ""
+msgstr "Προσθήκη του ατόμου αυτού, του συζύγου του, και των παιδιών."
 
 #: clippings.php:85
 msgid "Add this person, his spouse, and all descendants."
-msgstr ""
+msgstr "Προσθήκη του ατόμου αυτού, του συζύγου του, και όλων των απογόνων."
 
 #: clippings.php:93
 msgid "Which records linked to this source should be added?"
-msgstr ""
+msgstr "Ποιες από τις εγγραφές που συνδέονται σε αυτή την πηγή πρέπει να προστεθούν;"
 
 #: clippings.php:97
 #, fuzzy
@@ -820,11 +820,11 @@ msgstr "Διαγραφή αυτής της πηγής"
 
 #: clippings.php:98
 msgid "Add this source and families/people linked to it."
-msgstr ""
+msgstr "Προσθήκη αυτής της πηγής και οικογένειες/άτομα που συνδέονται σε αυτή."
 
 #: clippings.php:107
 msgid "Some items could not be added due to privacy restrictions"
-msgstr ""
+msgstr "Μερικά αντικείμενα δεν μπορούν να προστεθούν λόγω περιορισμών ιδιωτικότητας"
 
 #: clippings.php:127
 #, fuzzy
@@ -833,7 +833,7 @@ msgstr "Πρόθεμα GEDCOM ID"
 
 #: clippings.php:140
 msgid "Add"
-msgstr ""
+msgstr "Προσθήκη"
 
 #: clippings.php:150
 #, fuzzy
@@ -847,11 +847,11 @@ msgstr "Μορφή ώρας"
 
 #: clippings.php:159
 msgid "File Type"
-msgstr ""
+msgstr "Επιλογή τύπου αρχείου"
 
 #: clippings.php:168
 msgid "Zip File(s)"
-msgstr ""
+msgstr "Αρχείο(α) zip"
 
 #: clippings.php:171
 msgid "Include Media (automatically zips files)"
@@ -885,11 +885,11 @@ msgstr "_Διαχείριση Χρηστών"
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
-msgstr ""
+msgstr "Θέλετε να μετατρέψετε αυτό το GEDCOM από UTF-8 σε ANSI (ISO-8859-1);"
 
 #: clippings.php:215
 msgid "Remove custom PGV tags? (eg. _PGVU, _THUM)"
-msgstr ""
+msgstr "Απομάκρυνση προσαρμοσμένων PGV ετικετών; (πχ. _PGVU, _THUM)"
 
 #: clippings.php:218
 msgid "Convert media path to"
@@ -944,12 +944,12 @@ msgstr "Πρόθεμα GEDCOM ID"
 #: descendancy.php:146
 #: descendancy.php:152
 msgid "Descendancy Chart"
-msgstr ""
+msgstr "Διάγραμμα απογόνων"
 
 #: descendancy.php:120
 #: edit_interface.php:296
 msgid "The requested GEDCOM record could not be found.  This could be caused by a link to an invalid person or by a corrupt GEDCOM file."
-msgstr ""
+msgstr "Η ζητούμενη εγγραφή GEDCOM  δεν μπόρεσε να βρεθεί. Αυτό μπορεί να προκλήθηκε από μια σύνδεση σε μη έγκυρο άτομο ή σε κατεστραμένο αρχείο GEDCOM."
 
 #: dir_editor.php:87
 msgid "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" alt=\"\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing."
@@ -986,7 +986,7 @@ msgstr "Διαγραφή ονόματος"
 #: edit_interface.php:2464
 #: edit_interface.php:2725
 msgid "Cancel"
-msgstr ""
+msgstr "Άκυρο"
 
 #: dir_editor.php:240
 msgid "Remove all nonessential files"
@@ -999,7 +999,7 @@ msgstr "Λήψη Αρχείου GEDCOM"
 
 #: downloadgedcom.php:136
 msgid "Options:"
-msgstr ""
+msgstr "Επιλογές:"
 
 #: downloadgedcom.php:169
 msgid ""
@@ -1011,16 +1011,16 @@ msgstr ""
 
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
-msgstr ""
+msgstr "Ο ριζικός κατάλογος του τοίχου προστασίας μέσων που ζητήσατε, δεν υπάρχει."
 
 #: editconfig_gedcom.php:444
 msgid "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable."
-msgstr ""
+msgstr "Ο προστατευμένος κατάλογος μέσων δεν μπορούσε να δημιουργηθεί μέσα στον ριζικό κατάλογο του τοίχου προστασίας μέσων. Παρακαλώ δημιουργήστε αυτό τον κατάλογο και κάντε τον παγκόσμια εγγράψιμο."
 
 #: editconfig_gedcom.php:456
 #: editconfig_gedcom.php:468
 msgid "The protected media directory in the Media Firewall root directory is not world writable. "
-msgstr ""
+msgstr "Ο προστατευμένος κατάλογος μέσων, μέσα στον ριζικό κατάλογο του τοίχου προστασίας, δεν είναι παγκόσμια εγγράψιμος."
 
 #: editconfig_gedcom.php:487
 #, fuzzy
@@ -1029,7 +1029,7 @@ msgstr "_GEDCOM: Configuration file"
 
 #: editconfig_gedcom.php:487
 msgid "Upload the file to your index directory: "
-msgstr ""
+msgstr "Upload the file to your index directory: "
 
 #: editconfig_gedcom.php:620
 #: editconfig_gedcom.php:666
@@ -1060,7 +1060,7 @@ msgstr ""
 #: editconfig_gedcom.php:680
 #: edit_privacy.php:145
 msgid "Return to the GEDCOM management menu"
-msgstr ""
+msgstr "Go back to the GEDCOM management menu"
 
 #: editconfig_gedcom.php:837
 msgid "Results found"
@@ -1101,7 +1101,7 @@ msgstr "Βοήθεια Προσαρμογών"
 #: editconfig_gedcom.php:2225
 #: edit_privacy.php:807
 msgid "Reset"
-msgstr ""
+msgstr "Επαναφορά"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
@@ -1134,7 +1134,7 @@ msgstr "Default person for pedigree and descendency charts"
 #: edit_merge.php:76
 #: edit_merge.php:79
 msgid "Unable to find record with ID"
-msgstr ""
+msgstr "Δεν βρέθηκε εγγραφή με ID"
 
 #: editconfig_gedcom.php:987
 msgid "Calendar format"
@@ -1207,7 +1207,7 @@ msgstr "Display Hebrew Thousands"
 #: editlang_edit_settings.php:486
 #: edit_privacy.php:97
 msgid "No"
-msgstr ""
+msgstr "Όχι"
 
 #: editconfig_gedcom.php:1013
 msgid "Display Hebrew Gershayim"
@@ -1252,27 +1252,27 @@ msgstr ""
 #: editconfig_gedcom.php:1080
 #: editconfig_gedcom.php:1091
 msgid "Disable logging"
-msgstr ""
+msgstr "Disable Logging"
 
 #: editconfig_gedcom.php:1081
 #: editconfig_gedcom.php:1092
 msgid "Daily"
-msgstr ""
+msgstr "Ημερήσια"
 
 #: editconfig_gedcom.php:1082
 #: editconfig_gedcom.php:1093
 msgid "Weekly"
-msgstr ""
+msgstr "Εβδομαδιαία"
 
 #: editconfig_gedcom.php:1083
 #: editconfig_gedcom.php:1094
 msgid "Monthly"
-msgstr ""
+msgstr "Μηνιαία"
 
 #: editconfig_gedcom.php:1084
 #: editconfig_gedcom.php:1095
 msgid "Yearly"
-msgstr ""
+msgstr "Ετήσια"
 
 #: editconfig_gedcom.php:1089
 msgid "Archive ChangeLog files"
@@ -1307,7 +1307,7 @@ msgstr "MultiMedia directory"
 
 #: editconfig_gedcom.php:1151
 msgid "Media path should not contain a drive letter; media may not be displayed."
-msgstr ""
+msgstr "Το path των εικόνων δεν πρέπει να έχει driver letter, εικόνα δεν μπορεί να απεικονιστεί."
 
 #: editconfig_gedcom.php:1156
 msgid "Multi-Media directory levels to keep"
@@ -1398,7 +1398,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1331
 msgid "Welcome"
-msgstr ""
+msgstr "Καλωσόρισες"
 
 #: editconfig_gedcom.php:1332
 #, fuzzy
@@ -1415,19 +1415,19 @@ msgstr ""
 
 #: editconfig_gedcom.php:1340
 msgid "Predefined text that states all users can request a user account"
-msgstr ""
+msgstr "Predefined text that states all users can apply for a user account"
 
 #: editconfig_gedcom.php:1341
 msgid "Predefined text that states admin will decide on each request for a user account"
-msgstr ""
+msgstr "Predefined text that states admin will decide if applied for a user account"
 
 #: editconfig_gedcom.php:1342
 msgid "Predefined text that states only family members can request a user account"
-msgstr ""
+msgstr "Predefined text that states only family members can apply for a user account"
 
 #: editconfig_gedcom.php:1343
 msgid "Choose user defined welcome text typed below"
-msgstr ""
+msgstr "Choose user defined welcome text typed below"
 
 #: editconfig_gedcom.php:1348
 msgid "Standard header for custom Welcome text"
@@ -1495,11 +1495,11 @@ msgstr "Default Pedigree Chart Layout"
 
 #: editconfig_gedcom.php:1474
 msgid "Landscape"
-msgstr ""
+msgstr "Οριζόντια"
 
 #: editconfig_gedcom.php:1475
 msgid "Portrait"
-msgstr ""
+msgstr "Κατακόρυφα"
 
 #: editconfig_gedcom.php:1480
 msgid "Place levels to show in person boxes"
@@ -1516,21 +1516,21 @@ msgstr "Zoom Boxes on Charts"
 #: editconfig_gedcom.php:1490
 #: editconfig_gedcom.php:1500
 msgid "Disabled"
-msgstr ""
+msgstr "Disabled"
 
 #: editconfig_gedcom.php:1491
 #: editconfig_gedcom.php:1501
 msgid "On Mouse Over"
-msgstr ""
+msgstr "On Mouse Over"
 
 #: editconfig_gedcom.php:1492
 msgid "On Mouse Down"
-msgstr ""
+msgstr "On Mouse Down"
 
 #: editconfig_gedcom.php:1493
 #: editconfig_gedcom.php:1502
 msgid "On Mouse Click"
-msgstr ""
+msgstr "On Mouse Click"
 
 #: editconfig_gedcom.php:1498
 msgid "PopUp links on charts"
@@ -1542,7 +1542,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1509
 msgid "Personal Facts and Details"
-msgstr ""
+msgstr "Προσωπικά γεγονότα και λεπτομέρειες"
 
 #: editconfig_gedcom.php:1510
 msgid "Notes"
@@ -1560,11 +1560,11 @@ msgstr "Εύρεση μέσου"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
-msgstr ""
+msgstr "Πλησιέστεροι συγγενείς"
 
 #: editconfig_gedcom.php:1514
 msgid "Tree"
-msgstr ""
+msgstr "Δέντρο"
 
 #: editconfig_gedcom.php:1516
 msgid "Last Visited Tab For Individual"
@@ -1584,11 +1584,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1581
 msgid "after"
-msgstr ""
+msgstr "μετά"
 
 #: editconfig_gedcom.php:1582
 msgid "before"
-msgstr ""
+msgstr "πριν"
 
 #: editconfig_gedcom.php:1587
 msgid "Maximum number of surnames"
@@ -1604,11 +1604,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1597
 msgid "Table"
-msgstr ""
+msgstr "Πίνακας"
 
 #: editconfig_gedcom.php:1598
 msgid "Tagcloud"
-msgstr ""
+msgstr "Ετικετοσύνεφο"
 
 #: editconfig_gedcom.php:1608
 #: editconfig_gedcom.php:1609
@@ -1810,12 +1810,12 @@ msgstr ""
 
 #: editconfig_gedcom.php:1943
 msgid "Facts"
-msgstr ""
+msgstr "Γεγονότα"
 
 #: editconfig_gedcom.php:1944
 #: edit_merge.php:150
 msgid "Record"
-msgstr ""
+msgstr "Εγγραφή"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
@@ -1836,11 +1836,11 @@ msgstr "Theme directory"
 
 #: editconfig_gedcom.php:2011
 msgid "Other, please type in"
-msgstr ""
+msgstr "Άλλο, παρακαλώ πληκτρολογήστε"
 
 #: editconfig_gedcom.php:2017
 msgid "does not exist"
-msgstr ""
+msgstr "δεν υπάρχει"
 
 #: editconfig_gedcom.php:2025
 msgid "Display theme dropdown selector for theme changes"
@@ -1867,7 +1867,7 @@ msgstr "Contact Method"
 #: editconfig_gedcom.php:2078
 #: editconfig_gedcom.php:2108
 msgid "PhpGedView internal messaging"
-msgstr ""
+msgstr "PhpGedView Εσωτερική Επικοινωνία"
 
 #: editconfig_gedcom.php:2079
 #: editconfig_gedcom.php:2109
@@ -1877,12 +1877,12 @@ msgstr "Εσωτερική Επικοινωνία μέσω Ηλεκτρονικ�
 #: editconfig_gedcom.php:2081
 #: editconfig_gedcom.php:2111
 msgid "PhpGedView sends emails with no storage"
-msgstr ""
+msgstr "PhpGedView sends Emails with no storage"
 
 #: editconfig_gedcom.php:2083
 #: editconfig_gedcom.php:2113
 msgid "Mailto link"
-msgstr ""
+msgstr "Mailto Link"
 
 #: editconfig_gedcom.php:2084
 #: editconfig_gedcom.php:2114
@@ -1901,7 +1901,7 @@ msgstr "Support Method"
 #: editconfig_gedcom.php:2130
 #: editconfig_gedcom.php:2131
 msgid "Web Site and META Tag Settings"
-msgstr ""
+msgstr "META Tag Επιλογές Διαμόρφωσης"
 
 #: editconfig_gedcom.php:2136
 msgid "Main WebSite URL"
@@ -1997,7 +1997,7 @@ msgstr ""
 
 #: editgedcoms.php:187
 msgid "File not found."
-msgstr ""
+msgstr "Το αρχείο δεν βρέθηκε."
 
 #: editgedcoms.php:191
 msgid "Import"
@@ -2005,7 +2005,7 @@ msgstr ""
 
 #: editgedcoms.php:193
 msgid "This GEDCOM has not yet been imported."
-msgstr ""
+msgstr "This GEDCOM has not been imported yet."
 
 #: editgedcoms.php:199
 msgid "Export"
@@ -2013,7 +2013,7 @@ msgstr ""
 
 #: editgedcoms.php:203
 msgid "Are you sure you want to delete this GEDCOM"
-msgstr ""
+msgstr "Are you sure you want to delete this GEDCOM"
 
 #: editgedcoms.php:208
 #, fuzzy
@@ -2073,31 +2073,31 @@ msgstr "Αρχική ημέρα της εβδομάδας"
 
 #: editlang_edit_settings.php:357
 msgid "Sunday"
-msgstr ""
+msgstr "Κυριακή"
 
 #: editlang_edit_settings.php:357
 msgid "Monday"
-msgstr ""
+msgstr "Δευτέρα"
 
 #: editlang_edit_settings.php:357
 msgid "Tuesday"
-msgstr ""
+msgstr "Τριτη"
 
 #: editlang_edit_settings.php:357
 msgid "Wednesday"
-msgstr ""
+msgstr "Τετάρτη"
 
 #: editlang_edit_settings.php:357
 msgid "Thursday"
-msgstr ""
+msgstr "Πέμπτη"
 
 #: editlang_edit_settings.php:357
 msgid "Friday"
-msgstr ""
+msgstr "Παρασκευή"
 
 #: editlang_edit_settings.php:357
 msgid "Saturday"
-msgstr ""
+msgstr "Σάββατο"
 
 #: editlang_edit_settings.php:378
 msgid "Text direction"
@@ -2105,11 +2105,11 @@ msgstr "Φορά γραφής"
 
 #: editlang_edit_settings.php:386
 msgid "Left to right"
-msgstr ""
+msgstr "Αριστερά προς δεξιά"
 
 #: editlang_edit_settings.php:391
 msgid "Right to left"
-msgstr ""
+msgstr "Δεξιά προς αριστερά"
 
 #: editlang_edit_settings.php:402
 msgid "Surname first"
@@ -2145,7 +2145,7 @@ msgstr ""
 
 #: editlang_edit_settings.php:530
 msgid "ERROR! The file does not exist..."
-msgstr ""
+msgstr "ΣΦΑΛΜΑ! Το αρχείο δεν υπάρχει..."
 
 #: editlang_edit_settings.php:539
 msgid "This optional file does not exist."
@@ -2154,7 +2154,7 @@ msgstr ""
 #: editnews.php:34
 #: editnews.php:52
 msgid "Add/Edit Journal/News entry"
-msgstr ""
+msgstr "Προσθήκη/Επεξεργασία καταχώρησης Ημερολογίου/Νέων"
 
 #: editnews.php:57
 #, fuzzy
@@ -2163,53 +2163,53 @@ msgstr "Στυλ παρουσίασης"
 
 #: editnews.php:64
 msgid "Please enter some text for this News or Journal entry."
-msgstr ""
+msgstr "Παρακαλώ εισάγετε κάποιο κείμενο για αυτή την καταχώρηση νέων ή ημερολογίου."
 
 #: editnews.php:88
 msgid "Entry Text:"
-msgstr ""
+msgstr "Κείμενο καταχώρησης:"
 
 #: editnews.php:125
 msgid "News/Journal entry successfully saved."
-msgstr ""
+msgstr "Η καταχώρηση Νέων/Ημερολογίου αποθηκεύτηκε επιτυχώς."
 
 #: edituser.php:71
 msgid "Duplicate user name.  A user with that user name already exists.  Please choose another user name."
-msgstr ""
+msgstr "Διπλότυπο όνομα χρήστη. Υπάρχει ήδη χρήστης με αυτό το όνομα χρήστη.  Παρακαλώ επιλέξτε άλλο όνομα χρήστη."
 
 #: edituser.php:85
 msgid "User name contains invalid characters"
-msgstr ""
+msgstr "Το όνομα χρήστη περιέχει άκυρους χαρακτήρες"
 
 #: edituser.php:129
 msgid "You must enter a user name."
-msgstr ""
+msgstr "Πρέπει να εισάγετε όνομα χρήστη."
 
 #: edituser.php:134
 #: edituser.php:139
 msgid "You must enter a first and last name."
-msgstr ""
+msgstr "Πρέπει να εισάγετε δοσμένο όνομα και επώνυμο."
 
 #: edituser.php:144
 msgid "You must enter an email address."
-msgstr ""
+msgstr "Πρέπει να εισάγετε την διεύθυνση email."
 
 #: edituser.php:149
 msgid "Passwords do not match."
-msgstr ""
+msgstr "Οι κωδικοί δεν ταυτίζονται."
 
 #: edituser.php:154
 msgid "Passwords must contain at least 6 characters."
-msgstr ""
+msgstr "Οι κωδικοί πρέπει να περιέχουν τουλάχιστον 6 χαρακτήρες."
 
 #: edituser.php:174
 msgid "My Account"
-msgstr ""
+msgstr "Ο Λογαριασμός μου"
 
 #: edituser.php:176
 #: edituser.php:301
 msgid "Update MyAccount"
-msgstr ""
+msgstr "Update MyAccount"
 
 #: edituser.php:180
 #: edit_changes.php:124
@@ -2228,7 +2228,7 @@ msgstr "Επεξεργασία ονόματος"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
-msgstr ""
+msgstr "GEDCOM INDI record ID"
 
 #: edituser.php:218
 msgid "Password"
@@ -2236,7 +2236,7 @@ msgstr "Κωδικός πρόσβασης"
 
 #: edituser.php:219
 msgid "Leave password blank if you want to keep the current password."
-msgstr ""
+msgstr "Αφήστε κενό τον κωδικό πρόσβασης για να κρατήστε το ήδη υπάρχοντα."
 
 #: edituser.php:223
 #, fuzzy
@@ -2250,15 +2250,15 @@ msgstr "Language"
 
 #: edituser.php:245
 msgid "Email Address"
-msgstr ""
+msgstr "Διεύθυνση email"
 
 #: edituser.php:251
 msgid "My Theme"
-msgstr ""
+msgstr "Το θέμα εμφάνισης μου"
 
 #: edituser.php:253
 msgid "Site Default"
-msgstr ""
+msgstr "Προεπιλογή τοποθεσίας"
 
 #: edituser.php:266
 #, fuzzy
@@ -2267,7 +2267,7 @@ msgstr "Contact Method"
 
 #: edituser.php:281
 msgid "Visible to other users when online"
-msgstr ""
+msgstr "Visible to other users when online"
 
 #: edituser.php:290
 msgid "Default Tab to show on Individual Information page"
@@ -2282,20 +2282,20 @@ msgstr "Ανασκόπιση Αλλαγών GEDCOM"
 #: edit_changes.php:66
 #: edit_changes.php:84
 msgid "Undo successful"
-msgstr ""
+msgstr "Undo Successful"
 
 #: edit_changes.php:71
 #: edit_changes.php:99
 msgid "Changes successfully accepted into database"
-msgstr ""
+msgstr "Επιτυχής ενημέρωση αλλαγών στη βάση δεδομένων"
 
 #: edit_changes.php:104
 msgid "There are currently no changes to be reviewed."
-msgstr ""
+msgstr "There are currently no changes that need to be reviewed."
 
 #: edit_changes.php:116
 msgid "View Change Diff"
-msgstr ""
+msgstr "View Change Diff"
 
 #: edit_changes.php:117
 #, fuzzy
@@ -2310,29 +2310,29 @@ msgstr "Allow users to see raw GEDCOM records"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
-msgstr ""
+msgstr "The following changes occured to this individual:"
 
 #: edit_changes.php:122
 #: edit_changes.php:131
 msgid "Accept"
-msgstr ""
+msgstr "Αποδοχή"
 
 #: edit_changes.php:123
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #: edit_changes.php:125
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #: edit_changes.php:127
 #: edit_changes.php:144
 msgid "Undo"
-msgstr ""
+msgstr "Undo"
 
 #: edit_changes.php:136
 msgid "Send Message"
-msgstr ""
+msgstr "Αποστολή μηνύματος"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
@@ -2379,11 +2379,11 @@ msgstr ""
 #: edit_interface.php:2076
 #: edit_merge.php:179
 msgid "GEDCOM record successfully deleted."
-msgstr ""
+msgstr "GEDCOM record succesfully deleted."
 
 #: edit_interface.php:575
 msgid "Family"
-msgstr ""
+msgstr "Οικογένεια"
 
 #: edit_interface.php:580
 msgid "PEDI"
@@ -2391,15 +2391,15 @@ msgstr "Γενεαλόγιο"
 
 #: edit_interface.php:584
 msgid "Adopted"
-msgstr ""
+msgstr "Υιοθετημένος/η"
 
 #: edit_interface.php:585
 msgid "Foster"
-msgstr ""
+msgstr "Θετός"
 
 #: edit_interface.php:586
 msgid "Sealing"
-msgstr ""
+msgstr "Sealing"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
@@ -2414,7 +2414,7 @@ msgstr "Keep links"
 #: edit_interface.php:1161
 #: edit_interface.php:1224
 msgid "You must provide a "
-msgstr ""
+msgstr "You must provide a "
 
 #: edit_interface.php:751
 #: edit_interface.php:768
@@ -2471,7 +2471,7 @@ msgstr ""
 
 #: edit_interface.php:891
 msgid "New source created successfully."
-msgstr ""
+msgstr "New source created successfully."
 
 #: edit_interface.php:911
 #, fuzzy
@@ -2481,7 +2481,7 @@ msgstr "Δημιουργία Νέου Αρχείου GEDCOM"
 #: edit_interface.php:921
 #: edit_interface.php:1189
 msgid "Shared Note"
-msgstr ""
+msgstr "Κοινόχρηστη σημείωση"
 
 #: edit_interface.php:1018
 msgid "New Shared Note created successfully."
@@ -2548,14 +2548,14 @@ msgstr ""
 
 #: edit_interface.php:2350
 msgid "Child"
-msgstr ""
+msgstr "Παιδί"
 
 #: edit_interface.php:2362
 #: edit_interface.php:2371
 #: edit_interface.php:2405
 #: edit_interface.php:2425
 msgid "Spouse"
-msgstr ""
+msgstr "Σύζυγος"
 
 #: edit_interface.php:2389
 msgid "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes."
@@ -2579,39 +2579,39 @@ msgstr "Αναδιάταξη οικογενειών"
 
 #: edit_interface.php:2724
 msgid "Sort by marriage date"
-msgstr ""
+msgstr "Ταξινόμηση ανά ημερομηνία γάμου"
 
 #: edit_merge.php:58
 msgid "You entered the same IDs.  You cannot merge the same records."
-msgstr ""
+msgstr "Εισάγατε τα ίδια ID. Δεν μπορείτε να συγχωνεύσετε τις ίδιες εγγραφές."
 
 #: edit_merge.php:91
 msgid "Records are not the same type.  Cannot merge records that are not the same type."
-msgstr ""
+msgstr "Οι εγγραφές δεν είναι του ίδιου τύπου. Δεν μπορούν να συγχωνευτούν εγγραφές που δεν είναι του ίδιου τύπου."
 
 #: edit_merge.php:121
 msgid "Merge Step 2 of 3"
-msgstr ""
+msgstr "Συγχώνευση βήμα 2 από 3"
 
 #: edit_merge.php:123
 msgid "The following facts were exactly the same in both records and will be merged automatically."
-msgstr ""
+msgstr "Τα παρακάτω γεγονότα ήταν ακριβώς τα ίδια και στις δύο εγγραφές και θα συγχωνευτούν αυτόματα."
 
 #: edit_merge.php:145
 msgid "No matching facts found"
-msgstr ""
+msgstr "Δεν βρέθηκαν γεγονότα που να ταιριάζουν"
 
 #: edit_merge.php:148
 msgid "The following facts did not match.  Select the information you would like to keep."
-msgstr ""
+msgstr "Τα παρακάτω γεγονότα δεν ταιριάζουν. Επιλέξτε τις πληροφορίες που θέλετε να κρατήσετε."
 
 #: edit_merge.php:175
 msgid "Merge Step 3 of 3"
-msgstr ""
+msgstr "Συγχώνευση βήμα 3 από 3"
 
 #: edit_merge.php:191
 msgid "Updating linked record"
-msgstr ""
+msgstr "Ενημέρωση συνδεδεμένης εγγραφής"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
@@ -2630,19 +2630,19 @@ msgstr ""
 
 #: edit_merge.php:248
 msgid "Merge more records."
-msgstr ""
+msgstr "Συγχώνευση περισσότερων εγγραφών."
 
 #: edit_merge.php:281
 msgid "Merge Step 1 of 3"
-msgstr ""
+msgstr "Συγχώνευση βήμα 1 από 3"
 
 #: edit_merge.php:284
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
-msgstr ""
+msgstr "Επιλέξτε δύο εγγραφές GEDCOM για συγχώνευση. Οι εγγραφές πρέπει να είναι του ίδιου τύπου."
 
 #: edit_merge.php:287
 msgid "Merge To ID:"
-msgstr ""
+msgstr "Συγχώνευση στο ID:"
 
 #: edit_merge.php:302
 #: edit_merge.php:319
@@ -2653,21 +2653,21 @@ msgstr "Πρόθεμα GEDCOM ID"
 #: edit_merge.php:303
 #: edit_merge.php:320
 msgid "Find Family ID"
-msgstr ""
+msgstr "Εύρεση ID οικογένειας"
 
 #: edit_merge.php:304
 #: edit_merge.php:321
 msgid "Find Source ID"
-msgstr ""
+msgstr "Εύρεση ID πηγής"
 
 #: edit_merge.php:307
 msgid "Merge From ID:"
-msgstr ""
+msgstr "Συγχώνευση από το ID:"
 
 #: edit_privacy.php:122
 #: edit_privacy.php:126
 msgid "Unable to find individual with id"
-msgstr ""
+msgstr "Unable to find individual with id"
 
 #: edit_privacy.php:135
 #, fuzzy
@@ -2681,11 +2681,11 @@ msgstr "_GEDCOM: Privacy Settings"
 
 #: edit_privacy.php:159
 msgid "Performing update."
-msgstr ""
+msgstr "Σε διαδικασία ενημέρωσης."
 
 #: edit_privacy.php:162
 msgid "Config file read."
-msgstr ""
+msgstr "Ανάγνωση αρχείου προσαρμογής."
 
 #: edit_privacy.php:298
 #: edit_privacy.php:301
@@ -2747,7 +2747,7 @@ msgstr ""
 
 #: edit_privacy.php:442
 msgid "Add new setting for Privacy by ID"
-msgstr ""
+msgstr "Add new setting for Person Privacy"
 
 #: edit_privacy.php:448
 #: edit_privacy.php:479
@@ -2771,7 +2771,7 @@ msgstr "Εμφάνιση πρώτα του μεγαλύτερου"
 
 #: edit_privacy.php:473
 msgid "Edit existing settings for Privacy by ID"
-msgstr ""
+msgstr "Edit existing settings for Person Privacy "
 
 #: edit_privacy.php:480
 #: edit_privacy.php:573
@@ -2787,7 +2787,7 @@ msgstr ""
 
 #: edit_privacy.php:521
 msgid "Add new setting for User Privacy"
-msgstr ""
+msgstr "Add new setting for User Privacy"
 
 #: edit_privacy.php:526
 #: edit_privacy.php:571
@@ -2798,11 +2798,11 @@ msgstr "Όνομα χρήστη"
 #: edit_privacy.php:528
 #: edit_privacy.php:574
 msgid "Show?"
-msgstr ""
+msgstr "Εμφάνιση?"
 
 #: edit_privacy.php:566
 msgid "Edit existing settings for User Privacy"
-msgstr ""
+msgstr "Edit existing settings for User Privacy"
 
 #: edit_privacy.php:610
 #: edit_privacy.php:612
@@ -2811,25 +2811,25 @@ msgstr ""
 
 #: edit_privacy.php:622
 msgid "Add new setting for Global Fact Privacy"
-msgstr ""
+msgstr "Add new setting for Global Fact Privacy"
 
 #: edit_privacy.php:625
 #: edit_privacy.php:665
 #: edit_privacy.php:718
 #: edit_privacy.php:766
 msgid "Name of fact"
-msgstr ""
+msgstr "Name of fact"
 
 #: edit_privacy.php:626
 #: edit_privacy.php:666
 #: edit_privacy.php:719
 #: edit_privacy.php:767
 msgid "Choice"
-msgstr ""
+msgstr "Επιλογή"
 
 #: edit_privacy.php:633
 msgid "Choose: "
-msgstr ""
+msgstr "Επιλογή:"
 
 #: edit_privacy.php:647
 #: edit_privacy.php:685
@@ -2844,11 +2844,11 @@ msgstr "Εμφάνιση μελλοντικών εργασιών"
 #: edit_privacy.php:749
 #: edit_privacy.php:790
 msgid "Show fact"
-msgstr ""
+msgstr "Show fact"
 
 #: edit_privacy.php:660
 msgid "Edit existing settings for Global Fact Privacy"
-msgstr ""
+msgstr "Edit existing settings for Global Fact Privacy"
 
 #: edit_privacy.php:701
 #: edit_privacy.php:703
@@ -2857,15 +2857,15 @@ msgstr ""
 
 #: edit_privacy.php:713
 msgid "Add new setting for Facts Privacy by ID"
-msgstr ""
+msgstr "Add new setting for Person Facts Privacy"
 
 #: edit_privacy.php:760
 msgid "Edit existing settings for Facts Privacy by ID"
-msgstr ""
+msgstr "Edit existing settings for Person Facts Privacy"
 
 #: expand_view.php:32
 msgid "Private"
-msgstr ""
+msgstr "Προσωπικά"
 
 #: expand_view.php:72
 #, fuzzy
@@ -2880,7 +2880,7 @@ msgstr "This record has been updated.  Click here to show changes."
 #: family.php:100
 #: familybook.php:218
 msgid "Parents"
-msgstr ""
+msgstr "Γονείς"
 
 #: family.php:101
 msgid "Grandparents"
@@ -2893,15 +2893,15 @@ msgstr "Εμφάνιση άδειων κουτιών στα γενεαλογικ
 
 #: family.php:137
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: family.php:138
 msgid "Show children on timeline chart"
-msgstr ""
+msgstr "Εμφάνιση παιδιών στο χρονοδιάγραμμα"
 
 #: family.php:138
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: family.php:139
 #, fuzzy
@@ -2910,35 +2910,35 @@ msgstr "Εμφάνιση άδειων κουτιών στα γενεαλογικ
 
 #: family.php:139
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #: family.php:141
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: family.php:159
 msgid "Search Engine Spider Detected"
-msgstr ""
+msgstr "Αναγνωρίστηκε αράχνη μηχανής αναζήτησης"
 
 #: familybook.php:243
 #: fanchart.php:345
 msgid "Siblings"
-msgstr ""
+msgstr "Αδέλφια"
 
 #: familybook.php:244
 #: fanchart.php:346
 msgid "Sibling"
-msgstr ""
+msgstr "Αδέλφια"
 
 #: familybook.php:340
 msgid "Family of:&nbsp;"
-msgstr ""
+msgstr "Οικογένεια του:&nbsp;"
 
 #: familybook.php:371
 #: familybook.php:383
 #: familybook.php:387
 msgid "Family Book Chart"
-msgstr ""
+msgstr "Διάγραμμα οικογενειακού βιβλίου"
 
 #: familybook.php:458
 #: hourglass.php:115
@@ -2948,18 +2948,18 @@ msgstr "Εμφάνιση όλων των πηγών"
 
 #: familybook.php:481
 msgid "Descent Steps"
-msgstr ""
+msgstr "Βήματα προγόνων"
 
 #: famlist.php:109
 #: famlist.php:121
 #: famlist.php:141
 #: famlist.php:240
 msgid "(unknown)"
-msgstr ""
+msgstr "(άγνωστο)"
 
 #: famlist.php:174
 msgid "Choose a letter to show families whose name starts with that letter."
-msgstr ""
+msgstr "Επιλέξτε ένα γράμμα για να εμφανιστού οικογένειες που το όνομα τους ξεκινά με αυτό το γράμμα."
 
 #: famlist.php:184
 #, fuzzy
@@ -2983,24 +2983,24 @@ msgstr "Συμπερίληψη ονομάτων γάμου"
 
 #: famlist.php:268
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
-msgstr ""
+msgstr "Επιλέξτε ένα γράμμα για να εμφανίσετε οικογένειες στις οποίες ένας από τους συζύγους έχει δοσμένο όνομα το οποίο ξεκινάει από αυτό το γράμμα."
 
 #: fanchart.php:105
 msgid "PHP server misconfiguration: GD 2.x library required to use image functions."
-msgstr ""
+msgstr "Εσφαλμένη ρύθμιση του PHP server: απαιτείται η βιβλιοθήκη GD 2.x για χρήση λειτουργιών εικόνας."
 
 #: fanchart.php:106
 #: fanchart.php:111
 msgid "http://www.php.net/gd"
-msgstr ""
+msgstr "http://www.php.net/gd"
 
 #: fanchart.php:110
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
-msgstr ""
+msgstr "Εσφαλμένη ρύθμιση του PHP server: απαιτείται η βιβλιοθήκη Freetype για χρήση γραμματοσειρών TrueType."
 
 #: fanchart.php:117
 msgid "Font file not found on PHP server"
-msgstr ""
+msgstr "Το αρχείο γραμματοσειράς δεν βρέθηκε στον PHP server"
 
 #: fanchart.php:295
 #, fuzzy
@@ -3023,18 +3023,18 @@ msgstr "Έλεγχος συγγένειας από γάμο"
 #: fanchart.php:429
 #: fanchart.php:454
 msgid "Circle Diagram"
-msgstr ""
+msgstr "Διάγραμμα βεντάλιας"
 
 #: fanchart.php:306
 #: hourglass.php:39
 #: hourglass.php:44
 #: hourglass.php:48
 msgid "Hourglass Chart"
-msgstr ""
+msgstr "Διάγραμμα κλεψύδρας"
 
 #: fanchart.php:307
 msgid "Interactive Tree"
-msgstr ""
+msgstr "Διαδραστικό δέντρο"
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -3043,7 +3043,7 @@ msgstr "Πλάτος"
 
 #: fanchart.php:498
 msgid "This Fanchart image cannot be printed directly by your browser. Use right-click then save and print."
-msgstr ""
+msgstr "Η εικόνα του διαγράμματος βεντάλιας δεν μπορεί να εκτυπωθεί απευθείας από τον φυλλομετρητή σας. Χρησιμοποιήστε δεξί κλικ και μετά αποθηκεύστε και εκτυπώστε."
 
 #: faq.php:159
 #: faq.php:247
@@ -3077,7 +3077,7 @@ msgstr "Ορατότητα συχνής ερώτησης"
 
 #: faq.php:189
 msgid "No FAQ ID has been specified !"
-msgstr ""
+msgstr "Δεν έχει ορισθεί ID συχνής ερώτησης !"
 
 #: faq.php:202
 #: help_text.php:4149
@@ -3086,7 +3086,7 @@ msgstr ""
 
 #: faq.php:250
 msgid "The FAQ list is empty."
-msgstr ""
+msgstr "Η λίστα συχνών ερωτήσεων είναι άδεια."
 
 #: faq.php:265
 #: help_text.php:5054
@@ -3100,12 +3100,12 @@ msgstr "Θέση συχνής ερώτησης"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
-msgstr ""
+msgstr "Σίγουρα θέλετε να διαγράψετε αυτή την καταχώρηση συχνής ερώτησης;"
 
 #: find.php:97
 #: find.php:202
 msgid "Find Family List"
-msgstr ""
+msgstr "Εύρεση καταλόγου οικογένειας"
 
 #: find.php:100
 #: find.php:205
@@ -3122,7 +3122,7 @@ msgstr "Εύρεση μέσου"
 #: find.php:108
 #: find.php:211
 msgid "Repositories"
-msgstr ""
+msgstr "Χώροι φύλαξης"
 
 #: find.php:112
 #: find.php:214
@@ -3133,16 +3133,16 @@ msgstr "Προσθήκη νέου Σημειώματος/Σχολίου"
 #: find.php:116
 #: find.php:217
 msgid "Find Source"
-msgstr ""
+msgstr "Εύρεση πηγής"
 
 #: find.php:120
 #: find.php:220
 msgid "Find Special Characters"
-msgstr ""
+msgstr "Εύρεση ειδικών χαρακτήρων"
 
 #: find.php:163
 msgid "Please enter more than one character"
-msgstr ""
+msgstr "Παρακαλώ εισάγετε περισσότερους από έναν χαρακτήρες"
 
 #: find.php:239
 #: find.php:259
@@ -3152,7 +3152,7 @@ msgstr "Κατάλογος ονομάτων"
 
 #: find.php:283
 msgid "Media contains:"
-msgstr ""
+msgstr "Το μέσο περιέχει:"
 
 #: find.php:291
 #, fuzzy
@@ -3165,27 +3165,27 @@ msgstr "Use thumbnail for main picture on individual page"
 #: find.php:359
 #: find.php:380
 msgid "Display all"
-msgstr ""
+msgstr "Εμφάνιση όλων"
 
 #: find.php:311
 msgid "Place contains:"
-msgstr ""
+msgstr "Ο τόπος περιέχει:"
 
 #: find.php:332
 msgid "Repository contains:"
-msgstr ""
+msgstr "Ο χώρος φύλαξης περιέχει:"
 
 #: find.php:353
 msgid "Shared Note contains:"
-msgstr ""
+msgstr "Η κοινόχρηστη σημείωση περιέχει:"
 
 #: find.php:374
 msgid "Source contains:"
-msgstr ""
+msgstr "Η πηγή περιέχει:"
 
 #: find.php:403
 msgid "Magnify"
-msgstr ""
+msgstr "Μεγέθυνση"
 
 #: find.php:432
 #: find.php:457
@@ -3195,7 +3195,7 @@ msgstr ""
 #: find.php:693
 #: find.php:715
 msgid "No results found."
-msgstr ""
+msgstr "Δεν βρέθηκαν αποτελέσματα."
 
 #: find.php:487
 #, fuzzy
@@ -3204,19 +3204,19 @@ msgstr "Theme directory"
 
 #: find.php:501
 msgid "External objects"
-msgstr ""
+msgstr "Εξωτερικά αντικείμενα"
 
 #: find.php:572
 msgid "The filename entered does not exist."
-msgstr ""
+msgstr "Το όνομα αρχείου που πληκτρολογήσατε δεν υπάρχει."
 
 #: find.php:574
 msgid "Image Dimensions"
-msgstr ""
+msgstr "Διαστάσεις εικόνας"
 
 #: find.php:577
 msgid "This media object is linked to the following:"
-msgstr ""
+msgstr "Αυτό το αντικείμενο μέσου είναι διασυνδεμένο στα παρακάτω:"
 
 #: find.php:584
 #, fuzzy
@@ -3230,23 +3230,23 @@ msgstr "Προβολή αρχείου"
 
 #: find.php:593
 msgid "View Object"
-msgstr ""
+msgstr "Προβολή αντικειμένου"
 
 #: find.php:599
 msgid "This media object is not linked to any GEDCOM record."
-msgstr ""
+msgstr "Αυτό το αντικείμενο μέσου δεν είναι διασυνδεμένο σε κάποια εγγραφή GEDCOM."
 
 #: find.php:641
 msgid "Places found"
-msgstr ""
+msgstr "Ευρεθείσες τοποθεσίες"
 
 #: find.php:665
 msgid "Repositories found"
-msgstr ""
+msgstr "Χώροι φύλαξης που βρέθηκαν"
 
 #: find.php:690
 msgid "Shared Notes found"
-msgstr ""
+msgstr "Κοινόχρηστες σημειώσεις βρέθηκαν"
 
 #: find.php:712
 #, fuzzy
@@ -3349,7 +3349,7 @@ msgstr ""
 
 #: gedrecord.php:45
 msgid "This page has been disabled by the site administrator."
-msgstr ""
+msgstr "Αυτή η σελίδα έχει απενεργοποιηθεί από τον διαχειριστή της τοποθεσίας."
 
 #: help_text.php:68
 msgid "Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, \"this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62).\"<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required."
@@ -5362,7 +5362,7 @@ msgstr "Edit Privacy"
 #: help_text.php:2474
 #: imageview.php:32
 msgid "Image Viewer"
-msgstr ""
+msgstr "Προβολή εικόνων"
 
 #: help_text.php:2479
 #, fuzzy
@@ -5386,7 +5386,7 @@ msgstr "Αναζήτηση κειμένου βοήθειας"
 
 #: help_text.php:2499
 msgid "Statistics Plot"
-msgstr ""
+msgstr "Σχεδίαση στατιστικών"
 
 #: help_text.php:2508
 msgid "This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev[\"BIRT\"]&nbsp;=&nbsp;\"*\";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character."
@@ -9343,26 +9343,26 @@ msgstr ""
 
 #: help_text.php:5555
 msgid "Help Contents"
-msgstr ""
+msgstr "Περιεχέμενα Βοήθειας"
 
 #: imageview.php:180
 msgid "View image details"
-msgstr ""
+msgstr "Προβολή λεπτομερειών εικόνας"
 
 #: index.php:309
 #: index.php:370
 #: index_edit.php:199
 msgid "MyGedView Portal"
-msgstr ""
+msgstr "Ατομική πύλη"
 
 #: index.php:371
 msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
-msgstr ""
+msgstr "Η σελίδα Ατομική πύλη, σας επιτρέπει να κρατάτε σελιδοδείκτες των αγαπημένων σας ανθρώπων, να παρακολουθείτε επερχόμενα γεγονότα και να συνεργάζεσθε με άλλους χρήστες του PhpGedView."
 
 #: index.php:445
 #: index_edit.php:472
 msgid "Customize MyGedView Portal"
-msgstr ""
+msgstr "Προσαρμογή ατομικής πύλης"
 
 #: index.php:451
 #: index_edit.php:473
@@ -9372,7 +9372,7 @@ msgstr "Custom welcome text for authentication mode"
 
 #: index_edit.php:83
 msgid "?"
-msgstr ""
+msgstr ";"
 
 #: index_edit.php:154
 #: index_edit.php:158
@@ -9380,7 +9380,7 @@ msgstr ""
 #: index_edit.php:160
 #: index_edit.php:161
 msgid "&nbsp;"
-msgstr ""
+msgstr "&nbsp;"
 
 #: index_edit.php:231
 #, fuzzy
@@ -9398,65 +9398,65 @@ msgstr "_GEDCOM: Configure"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
-msgstr ""
+msgstr "Αυτό το πλαίσιο δεν μπορεί να ρυθμιστεί."
 
 #: index_edit.php:478
 msgid "Main Section Blocks"
-msgstr ""
+msgstr "Πλαίσια κύριου τμήματος"
 
 #: index_edit.php:483
 msgid "Available Blocks"
-msgstr ""
+msgstr "Διαθέσιμα πλαίσια"
 
 #: index_edit.php:486
 msgid "Right Section Blocks"
-msgstr ""
+msgstr "Πλαίσια δεξιού τμήματος"
 
 #: index_edit.php:492
 #: index_edit.php:551
 msgid "Move Up"
-msgstr ""
+msgstr "Μετακίνηση επάνω"
 
 #: index_edit.php:494
 #: index_edit.php:553
 msgid "Move Down"
-msgstr ""
+msgstr "Μετακίνηση κάτω"
 
 #: index_edit.php:511
 msgid "Move Right"
-msgstr ""
+msgstr "Μετακίνηση δεξιά"
 
 #: index_edit.php:531
 msgid "Move Left"
-msgstr ""
+msgstr "Μετακίνηση αριστερά"
 
 #: index_edit.php:560
 msgid "Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction."
-msgstr ""
+msgstr "Επιλέξτε ένα πλαίσιο ονόματος και μετά κάντε κλικ σε ένα από τα εικονίδια με τα βέλη για να μετακινήσετε το επιλεγμένο πλαίσιο στην ενδεικνυόμενη κατεύθυνση."
 
 #: index_edit.php:565
 msgid "Use these blocks as the default block configuration for all users?"
-msgstr ""
+msgstr "Να χρησιμοποιηθούν αυτά τα πλαίσια ως προεπιλεγμένη ρύθμιση πλαισίων για όλους τους χρήστες;"
 
 #: index_edit.php:574
 msgid "Reset to Default Blocks"
-msgstr ""
+msgstr "Επαναφορά στα προεπιλεγμένα πλαίσια"
 
 #: indilist.php:174
 msgid "Choose a letter to show individuals whose family name starts with that letter."
-msgstr ""
+msgstr "Επιλέξτε ένα γράμμα για να εμφανίσετε άτομα των οποίων το επώνυμο αρχίζει με αυτό το γράμμα."
 
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
-msgstr ""
+msgstr "Επιλέξτε ένα γράμμα για να εμφανίσετε άτομα που έχουν δοσμένο όνομα το οποίο αρχίζει με αυτό το γράμμα."
 
 #: individual.php:287
 msgid "Hit Count:"
-msgstr ""
+msgstr "Μέτρηση hit:"
 
 #: individual.php:294
 msgid "The information for this individual was linked from a remote site."
-msgstr ""
+msgstr "Οι πληροφορίες για αυτό το άτομο διασυνδέθηκαν από μία απομακρυσμένη τοποθεσία."
 
 #: individual.php:319
 #, fuzzy
@@ -9465,11 +9465,11 @@ msgstr "Pedigree Chart Root Person"
 
 #: individual.php:321
 msgid "Timeline Chart"
-msgstr ""
+msgstr "Χρονοδιάγραμμα"
 
 #: individual.php:325
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: install.php:102
 #: install.php:391
@@ -9482,11 +9482,11 @@ msgstr ""
 
 #: install.php:181
 msgid "Your current database configuration is bad.  Please check your database connection parameters and configure again."
-msgstr ""
+msgstr "Your current database configuration is bad.  Please check your database connection parameters and configure again."
 
 #: install.php:350
 msgid "Unable to add user.  Please try again."
-msgstr ""
+msgstr "Unable to add user.  Please go back and try again."
 
 #: install.php:410
 msgid "*Your settings will not<br />be saved until step 6"
@@ -9508,11 +9508,11 @@ msgstr ""
 
 #: install.php:470
 msgid "Next &gt;"
-msgstr ""
+msgstr "Επόμενο &gt;"
 
 #: install.php:480
 msgid "&lt; Previous"
-msgstr ""
+msgstr "&lt; Προηγούμενο"
 
 #: install.php:502
 msgid "Checking for errors..."
@@ -9646,21 +9646,21 @@ msgstr ""
 #: login_register.php:168
 #: login_register.php:217
 msgid "You must enter a password."
-msgstr ""
+msgstr "Πρέπει να εισάγετε κωδικό πρόσβασης."
 
 #: install.php:1077
 #: login_register.php:174
 #: login_register.php:222
 msgid "You must confirm the password."
-msgstr ""
+msgstr "Πρέπει να επιβεβαιώστε τον κωδικό."
 
 #: install.php:1084
 msgid "Create the default administrative user."
-msgstr ""
+msgstr "Δημιουργία αρχικού χρήστη διαχείρισης."
 
 #: install.php:1085
 msgid "You must first create your main administrative user.  This user will have privileges to update the configuration files, view private data, and create other users."
-msgstr ""
+msgstr "Πρέπει πρώτα να δημιουργήστε τον βασικό χρήστη διαχείρισης.  Ο χρήστης αυτός θα έχει αρμοδιότητες αλλαγών στα αρχεία διαμόρφωσης, απεικόνισης προσωπικών δεδομένων, και δημιουργία άλλων χρηστών."
 
 #: install.php:1104
 msgid "The following administrative users already exist:"
@@ -9702,7 +9702,7 @@ msgstr "Εύρεση μέσου"
 
 #: inverselink.php:117
 msgid "Media ID"
-msgstr ""
+msgstr "ID μέσου"
 
 #: inverselink.php:143
 #, fuzzy
@@ -9711,7 +9711,7 @@ msgstr "Πρόθεμα GEDCOM ID"
 
 #: inverselink.php:174
 msgid "Source"
-msgstr ""
+msgstr "Πηγή"
 
 #: inverselink.php:188
 msgid "Repository"
@@ -9720,11 +9720,11 @@ msgstr ""
 #: lifespan.php:41
 #: lifespan.php:54
 msgid "Lifespan Chart"
-msgstr ""
+msgstr "Διάγραμμα διάρκειας ζωής"
 
 #: lifespan.php:66
 msgid "Add another person to chart:<br />Person ID:"
-msgstr ""
+msgstr "Προσθήκη και άλλου ατόμου στο διάγραμμα:<br />ID ατόμου:"
 
 #: lifespan.php:70
 #, fuzzy
@@ -9733,23 +9733,23 @@ msgstr "Συμπερίληψη ονομάτων γάμου"
 
 #: lifespan.php:75
 msgid "Show Timeline chart"
-msgstr ""
+msgstr "Εμφάνιση χρονοδιαγράμματος"
 
 #: lifespan.php:303
 msgid "Speed"
-msgstr ""
+msgstr "Ταχύτητα"
 
 #: lifespan.php:304
 msgid "Begin Year"
-msgstr ""
+msgstr "Έτος αρχής"
 
 #: lifespan.php:305
 msgid "End Year"
-msgstr ""
+msgstr "Έτος τέλους"
 
 #: lifespan.php:321
 msgid "Search"
-msgstr ""
+msgstr "Αναζήτηση"
 
 #: lifespan.php:322
 #, fuzzy
@@ -9763,7 +9763,7 @@ msgstr "Πρόθεμα GEDCOM ID"
 
 #: login.php:120
 msgid "Unable to authenticate user."
-msgstr ""
+msgstr "Αδυναμία πιστοποίησης χρήστη."
 
 #: login.php:206
 #: login.php:226
@@ -9773,49 +9773,49 @@ msgstr "Login URL"
 
 #: login.php:238
 msgid "Account Information"
-msgstr ""
+msgstr "Πληροφορίες λογαριασμού"
 
 #: login.php:239
 msgid "No account?"
-msgstr ""
+msgstr "Δεν έχετε ακόμη λογαριασμό;"
 
 #: login.php:240
 #: login_register.php:202
 #: login_register.php:283
 #: login_register.php:317
 msgid "Request new user account"
-msgstr ""
+msgstr "Αίτηση νέου λογαριασμού χρήστη"
 
 #: login.php:241
 msgid "Lost your password?"
-msgstr ""
+msgstr "Χάσατε τον κωδικό σας;"
 
 #: login.php:242
 msgid "Request new password"
-msgstr ""
+msgstr "Αίτηση νέου κωδικού"
 
 #: login_register.php:58
 #: login_register.php:80
 #: login_register.php:82
 #: login_register.php:94
 msgid "Lost password request"
-msgstr ""
+msgstr "Αίτηση απολεσθέντος κωδικού"
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
-msgstr ""
+msgstr "Έχει γίνει αίτηση νέου κωδικού για το όνομα χρήστη σας."
 
 #: login_register.php:131
 msgid "Recommendation:"
-msgstr ""
+msgstr "Υπόδειξη:"
 
 #: login_register.php:132
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
-msgstr ""
+msgstr "Παρακαλώ επιλέξτε το σύνδεσμο παρακάτω ή επικολλήστε τον στον φυλλομετρητή σας, συνδεθείτε με τον νέο κωδικό και αλλάξτε τον άμεσα ώστε να διατηρήσετε την ακεραιότητα των δεδομένων σας με ασφάλεια."
 
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
-msgstr ""
+msgstr "Παρακαλώ εισάγετε την συγγένεια σας, στα δεδομένα του πεδίου Σχόλια."
 
 #: login_register.php:287
 #, fuzzy
@@ -9831,43 +9831,43 @@ msgstr "Κωδικός Βάσης Δεδομένων"
 #: login_register.php:433
 #: login_register.php:454
 msgid "Comments"
-msgstr ""
+msgstr "Σχόλια"
 
 #: login_register.php:318
 msgid "Fields marked with * are mandatory."
-msgstr ""
+msgstr "Τα σημειωμένα πεδία με * είναι υποχρεωτικά."
 
 #: login_register.php:356
 msgid "New Account confirmation"
-msgstr ""
+msgstr "Επιβεβαίωση νέου λογαριασμού"
 
 #: login_register.php:376
 #: login_register.php:405
 #: login_register.php:409
 #: login_register.php:486
 msgid "Back"
-msgstr ""
+msgstr "Πίσω"
 
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
-msgstr ""
+msgstr "Πληροφορίες σχετικά με την αίτηση εμφανίζονται κάτω από τον σύνδεσμο παρακάτω."
 
 #: login_register.php:423
 msgid "Please click on the following link and fill in the requested data to confirm your request and email address."
-msgstr ""
+msgstr "Please click on the link below and fill in the requested data to verify your Account and Email address."
 
 #: login_register.php:432
 #: login_register.php:516
 msgid "Verification code:"
-msgstr ""
+msgstr "Κώδικας επαλήθευσης:"
 
 #: login_register.php:434
 msgid "If you didn't request an account, you can just delete this message."
-msgstr ""
+msgstr "Εάν δεν ζητήσατε εσείς τον λογαριασμό, μπορείτε απλά να διαγράψετε αυτό το μήνυμα."
 
 #: login_register.php:435
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
-msgstr ""
+msgstr "Δεν θα λάβετε περισσότερα email από αυτή την τοποθεσία, γιατί η αίτηση λογαριασμού θα διαγραφεί αυτόματα μετά από επτά ημέρες."
 
 #: login_register.php:444
 #: login_register.php:565
@@ -9877,15 +9877,15 @@ msgstr "_Διαχείριση Χρηστών"
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
-msgstr ""
+msgstr "Ο χρήστης έλαβε ένα email με πληροφορίες απαραίτητες για να επιβεβαιώσει την αίτηση πρόσβασης του."
 
 #: login_register.php:456
 msgid "You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account."
-msgstr ""
+msgstr "Θα ενημερωθείτε με email όταν ο υποψήφιος χρήστης έχει επιβεβαιώσει την αίτηση του. Μετά μπορείτε να ολοκληρώσετε την διαδικασία ενεργοποιώντας το όνομα χρήστη. Ο νέος χρήστης δεν θα μπορεί να συνδεθεί μέχρι να ενεργοποιήσετε τον λογαριασμό."
 
 #: login_register.php:457
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
-msgstr ""
+msgstr "Θα ενημερωθείτε με email όταν ο υποψήφιος χρήστης έχει επιβεβαιώσει την αίτηση του. Μετά από αυτό, ο χρήστης θα μπορεί να συνδεθεί χωρίς καμία δράση από την πλευρά σας."
 
 #: login_register.php:506
 #: login_register.php:513
@@ -9898,35 +9898,35 @@ msgstr "_Διαχείριση Χρηστών"
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
-msgstr ""
+msgstr "Αποστολή"
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
-msgstr ""
+msgstr "Παρακαλώ επιλέξτε τον σύνδεσμο παρακάτω για να συνδεθείτε στην τοποθεσία. Πρέπει να επεξεργαστείτε τον χρήστη και να ενεργοποιήσετε τον λογαριασμό ώστε να μπορεί να συνδεθεί στην τοποθεσία σας."
 
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
-msgstr ""
+msgstr "Δεν χρειάζεται να κάνετε οποιαδήποτε ενέργεια. Ο χρήστης μπορεί τώρα να συνδεθεί."
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
-msgstr ""
+msgstr "Έχετε επιβεβαιώσει την αίτηση σας για να γίνεται ένας εγγεγραμμένος χρήστης."
 
 #: login_register.php:591
 msgid "The Administrator has been informed.  As soon as he gives you permission to login, you can login with your user name and password."
-msgstr ""
+msgstr "Ο διαχειριστής έχει ενημερωθεί. Μόλις σας δώσει άδεια να συνδεθείτε, θα μπορέσετε να συνδεθείτε με το όνομα χρήστη και τον κωδικό σας."
 
 #: login_register.php:592
 msgid "You can now login with your user name and password."
-msgstr ""
+msgstr "Μπορείτε τώρα να συνδεθείτε με το όνομα χρήστη και τον κωδικό σας."
 
 #: login_register.php:597
 msgid "Data was not correct, please try again"
-msgstr ""
+msgstr "Τα δεδομένα δεν ήταν σωστά, παρακαλώ δοκιμάστε ξανά"
 
 #: login_register.php:603
 msgid "Could not verify the information you entered.  Please try again or contact the site administrator for more information."
-msgstr ""
+msgstr "Δεν μπόρεσαν να επαληθευτούν οι πληροφορίες που εισάγατε. Παρακαλώ δοκιμάστε ξανά ή επικοινωνήστε με τον διαχειριστή της τοποθεσίας για περισσότερες πληροφορίες."
 
 #: manageservers.php:118
 #: manageservers.php:121
@@ -9951,7 +9951,7 @@ msgstr ""
 
 #: manageservers.php:206
 msgid "Hide Details"
-msgstr ""
+msgstr "Απόκρυψη λεπτομεριών"
 
 #: manageservers.php:231
 msgid "Manually mark Search Engines by IP"
@@ -9973,7 +9973,7 @@ msgstr "Αφαίρεση ατόμου"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
-msgstr ""
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την πηγή από το αρχείο GEDCOM;"
 
 #: manageservers.php:344
 msgid "View Connections"
@@ -9999,11 +9999,11 @@ msgstr ""
 
 #: media.php:116
 msgid "The execution time limit was reached.  Try the command again to move the rest of the files."
-msgstr ""
+msgstr "Προσεγγίστηκε το χρονικό όριο εκτέλεσης. Δοκιμάστε την εντολή ξανά για να μετακινήσετε τα υπόλοιπα αρχεία."
 
 #: media.php:173
 msgid "The execution time limit was reached.  Try the command again on a smaller directory."
-msgstr ""
+msgstr "Προσεγγίστηκε το χρονικό όριο εκτέλεσης. Δοκιμάστε την εντολή ξανά σε μικρότερο κατάλογο."
 
 #: media.php:181
 #: media.php:189
@@ -10014,7 +10014,7 @@ msgstr "Ορισμός αδειών μέσων"
 #: media.php:183
 #: media.php:191
 msgid "Permissions Not Set"
-msgstr ""
+msgstr "Οι άδειες δεν ορίστηκαν"
 
 #: media.php:310
 msgid "Uploading media files is not allowed because multi-media items have been disabled or because the media directory is not writable."
@@ -10070,18 +10070,18 @@ msgstr ""
 #: media.php:901
 #: media.php:942
 msgid "Move to protected"
-msgstr ""
+msgstr "Μετακίνηση στον προστατευμένο"
 
 #: media.php:553
 #: media.php:899
 #: media.php:941
 msgid "Move to standard"
-msgstr ""
+msgstr "Μετακίνηση στον κανονικό"
 
 #: media.php:562
 #: media.php:905
 msgid "Correct read/write/execute permissions"
-msgstr ""
+msgstr "Διόρθωση αδειών ανάγνωσης/εγγραφής/εκτέλεσης"
 
 #: media.php:634
 #: media.php:638
@@ -10158,15 +10158,15 @@ msgstr ""
 
 #: mediafirewall.php:319
 msgid "Error: The Media Firewall was launched from a directory other than the media directory."
-msgstr ""
+msgstr "Σφάλμα: Το τοίχος προστασίας μέσων ξεκίνησε από κατάλογο διαφορετικό από τον κατάλογο μέσων."
 
 #: mediafirewall.php:335
 msgid "No Media Found"
-msgstr ""
+msgstr "Δεν βρέθηκε μέσο"
 
 #: mediafirewall.php:352
 msgid "Privacy restrictions prevent you from viewing this item"
-msgstr ""
+msgstr "Περιορισμοί ιδιωτικότητας σας εμποδίζουν να προβάλετε αυτό το αντικείμενο"
 
 #: mediafirewall.php:530
 #, fuzzy
@@ -10181,15 +10181,15 @@ msgstr "MultiMedia directory"
 
 #: medialist.php:131
 msgid "Media objects per page"
-msgstr ""
+msgstr "Αντικείμενα μέσων ανά σελίδα"
 
 #: medialist.php:169
 msgid "Apply filter"
-msgstr ""
+msgstr "Εφαρμογή φίλτρου"
 
 #: medialist.php:216
 msgid "Media Objects found"
-msgstr ""
+msgstr "Ευρεθέντα αντικείμενα μέσων"
 
 #: medialist.php:334
 #: medialist.php:336
@@ -10229,46 +10229,46 @@ msgstr "Check marriage relations"
 
 #: mediaviewer.php:147
 msgid "Total links"
-msgstr ""
+msgstr "Σύνολο διασυνδέσεων"
 
 #: message.php:47
 #: message.php:52
 msgid "No recipient user was provided.  Cannot continue."
-msgstr ""
+msgstr "Δεν ορίσθηκε παραλήπτης. Η συνέχιση είναι αδύνατη."
 
 #: message.php:70
 #: message.php:79
 #: message.php:159
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "Παρακαλώ εισάγετε μια έγκυρη διεύθυνση email."
 
 #: message.php:167
 msgid "Please enter a message subject."
-msgstr ""
+msgstr "Παρακαλώ εισάγετε ένα θέμα για το μήνυμα."
 
 #: message.php:172
 msgid "Please enter some message text before sending."
-msgstr ""
+msgstr "Παρακαλώ εισάγετε κάποιο κείμενο μηνύματος πριν την αποστολή."
 
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
-msgstr ""
+msgstr "<b>Παρακαλώ προσέξτε:</b>  Ιδιωτικές πληροφορίες ατόμων που ζουν, θα δίνονται μόνο σε συγγενείς της οικογένειας και κοντινούς φίλους. Θα ερωτηθείτε να επαληθεύσετε την συγγένεια σας πριν λάβετε οποιαδήποτε προσωπικά δεδομένα. Μερικές φορές οι πληροφορίες νεκρών ατόμων μπορεί να είναι επίσης ιδιωτικές. Εάν αυτό συμβαίνει, είναι διότι δεν υπάρχουν αρκετές γνωστές πληροφορίες για το άτομο που να καθορίζουν εάν είναι ζωντανό ή όχι, και πιθανά δεν υπάρχουν περισσότερες πληροφορίες σε αυτό το άτομο.<br /><br />Πριν κάνετε μια ερώτηση, παρακαλώ επαληθεύστε ότι εξετάζετε το σωστό άτομο ελέγχοντας ημερομηνίες, τοποθεσίες και κοντινούς συγγενείς. Εάν υποβάλετε αλλαγές στα γενεαλογικά δεδομένα, παρακαλώ συμπεριλάβετε τις πηγές απ' όπου λάβατε τα δεδομένα."
 
 #: message.php:197
 msgid "Your Name:"
-msgstr ""
+msgstr "Το όνομα σας:"
 
 #: message.php:198
 msgid "Email Address:"
-msgstr ""
+msgstr "Διεύθυνση email:"
 
 #: message.php:198
 msgid "Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  You email address will not be used in any other way besides responding to this inquiry."
-msgstr ""
+msgstr "Παρακαλώ να παρέχετε την διεύθυνση email σας ώστε να μπορούμε να έρθουμε σε επαφή μαζί σας ως απόκριση σε αυτό το μήνυμα. Εάν δεν μας παρέχετε την διεύθυνση email σας, δεν θα μπορούμε να αποκριθούμε στο αίτημα σας. Η διεύθυνση email σας δεν θα χρησιμοποιηθεί με κανένα άλλο τρόπο, εκτός από την απόκριση σε αυτό το αίτημα."
 
 #: message.php:200
 msgid "Subject:"
-msgstr ""
+msgstr "Θέμα:"
 
 #: message.php:211
 #, fuzzy
@@ -10277,31 +10277,31 @@ msgstr "Σώμα συχνής ερώτησης"
 
 #: message.php:218
 msgid "Message Deleted"
-msgstr ""
+msgstr "Το μήνυμα διαγράφηκε"
 
 #: module.php:214
 msgid "Unknown action: [action]."
-msgstr ""
+msgstr "Άγνωστη ενέργεια: [action]."
 
 #: module.php:224
 msgid "Unknown module type."
-msgstr ""
+msgstr "Άγνωστος τύπος αρθρώματος."
 
 #: module_admin.php:42
 msgid "Show to public"
-msgstr ""
+msgstr "Show to public"
 
 #: module_admin.php:46
 msgid "Show only to authenticated users"
-msgstr ""
+msgstr "Show only to authenticated users"
 
 #: module_admin.php:50
 msgid "Show only to admin users"
-msgstr ""
+msgstr "Show only to admin users"
 
 #: module_admin.php:54
 msgid "Hide even from admin users"
-msgstr ""
+msgstr "Hide even from admin users"
 
 #: module_admin.php:183
 msgid "Below is the list of all the modules installed in this instance of PhpGedView.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them."
@@ -10390,7 +10390,7 @@ msgstr "Προσθήκη νέου τύπου Πολυμέσων"
 #: notelist.php:32
 #: search.php:213
 msgid "Shared Notes"
-msgstr ""
+msgstr "Κοινόχρηστες σημειώσεις"
 
 #: pedigree.php:90
 #, fuzzy
@@ -10410,7 +10410,7 @@ msgstr ""
 #: placelist.php:58
 #: placelist.php:312
 msgid "Place Hierarchy"
-msgstr ""
+msgstr "Ιεραρχία τόπων"
 
 #: placelist.php:55
 #: placelist.php:59
@@ -10421,12 +10421,12 @@ msgstr "Κατάλογος ονομάτων"
 
 #: placelist.php:118
 msgid "Place connections found"
-msgstr ""
+msgstr "Ευρεθείσες συνδέσεις τόπων"
 
 #: placelist.php:125
 #: placelist.php:157
 msgid "Top Level"
-msgstr ""
+msgstr "Ανώτατο επίπεδο"
 
 #: placelist.php:307
 #: placelist.php:432
@@ -10438,11 +10438,11 @@ msgstr "Σελίδα"
 
 #: placelist.php:309
 msgid "Place Hierarchy after"
-msgstr ""
+msgstr "Ιεραρχία τόπων μετά"
 
 #: placelist.php:354
 msgid "View all records found in this place"
-msgstr ""
+msgstr "Εμφάνιση όλων των εγγραφών που βρέθηκαν στον τόπο αυτό"
 
 #: placelist.php:468
 #, fuzzy
@@ -10451,24 +10451,24 @@ msgstr "Cleanup Places"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
-msgstr ""
+msgstr "Εμφάνιση τοποθεσιών σε ιεραρχία"
 
 #: placelist.php:477
 msgid "Show All Places in a List"
-msgstr ""
+msgstr "Εμφάνιση όλων των τόπων σε κατάλογο"
 
 #: placelist.php:483
 #: placelist.php:488
 msgid "Places are encoded in the form: "
-msgstr ""
+msgstr "Οι τοποθεσίες έχουν κωδικοποιηθεί στη μορφή: "
 
 #: placelist.php:488
 msgid "City, County, State/Province, Country"
-msgstr ""
+msgstr "Πόλη, County, Πολιτεία/Νομός, Χώρα"
 
 #: placelist.php:488
 msgid "(Default)"
-msgstr ""
+msgstr "(Προκαθορισμένο)"
 
 #: printlog.php:90
 #: printlog.php:112
@@ -10503,53 +10503,53 @@ msgstr ""
 #: relationship.php:140
 #: relationship.php:141
 msgid "Mother-in-law"
-msgstr ""
+msgstr "Πεθερά"
 
 #: relationship.php:143
 #: relationship.php:144
 msgid "Father-in-law"
-msgstr ""
+msgstr "Πεθερός"
 
 #: relationship.php:149
 #: relationship.php:154
 msgid "Step-Mother"
-msgstr ""
+msgstr "Θετή μητέρα"
 
 #: relationship.php:157
 #: relationship.php:162
 msgid "Step-Father"
-msgstr ""
+msgstr "Θετός πατέρας"
 
 #: relationship.php:169
 #: relationship.php:171
 #: relationship.php:174
 msgid "Sister-in-law"
-msgstr ""
+msgstr "Κουνιάδα"
 
 #: relationship.php:177
 #: relationship.php:178
 msgid "Brother-in-law"
-msgstr ""
+msgstr "Κουνιάδος"
 
 #: relationship.php:185
 #: relationship.php:186
 msgid "Daughter-in-law"
-msgstr ""
+msgstr "Νύφη"
 
 #: relationship.php:188
 #: relationship.php:189
 msgid "Son-in-law"
-msgstr ""
+msgstr "Γαμπρός"
 
 #: relationship.php:194
 #: relationship.php:195
 msgid "step daughter"
-msgstr ""
+msgstr "θετή κόρη"
 
 #: relationship.php:197
 #: relationship.php:198
 msgid "step son"
-msgstr ""
+msgstr "θετός γιος"
 
 #: relationship.php:209
 #: relationship.php:210
@@ -10557,7 +10557,7 @@ msgstr ""
 #: relationship.php:223
 #, php-format
 msgid "%2$d x great niece"
-msgstr ""
+msgstr "%2$d x great ανιψιά"
 
 #: relationship.php:212
 #: relationship.php:213
@@ -10565,17 +10565,17 @@ msgstr ""
 #: relationship.php:226
 #, php-format
 msgid "%2$d x great nephew"
-msgstr ""
+msgstr "%2$d x great ανιψιός"
 
 #: relationship.php:233
 #: relationship.php:234
 msgid "Step-Sister"
-msgstr ""
+msgstr "Ετεροθαλής αδερφή"
 
 #: relationship.php:236
 #: relationship.php:237
 msgid "Step-Brother"
-msgstr ""
+msgstr "Ετεροθαλής αδερφός"
 
 #: relationship.php:251
 #: relationship.php:252
@@ -10587,7 +10587,7 @@ msgstr ""
 #: relationship.php:343
 #, php-format
 msgid "%2$d x great aunt"
-msgstr ""
+msgstr "%2$d x great θεία"
 
 #: relationship.php:254
 #: relationship.php:255
@@ -10599,7 +10599,7 @@ msgstr ""
 #: relationship.php:346
 #, php-format
 msgid "%2$d x great uncle"
-msgstr ""
+msgstr "%2$d x great θείος"
 
 #: relationship.php:293
 #: relationship.php:294
@@ -10607,7 +10607,7 @@ msgstr ""
 #: relationship.php:302
 #, php-format
 msgid "%3$d x great granddaughter"
-msgstr ""
+msgstr "%3$d x δισεγγονή"
 
 #: relationship.php:296
 #: relationship.php:297
@@ -10615,21 +10615,21 @@ msgstr ""
 #: relationship.php:305
 #, php-format
 msgid "%3$d x great grandson"
-msgstr ""
+msgstr "%3$d x δισέγγονος"
 
 #: relationship.php:313
 #: relationship.php:314
 #: relationship.php:383
 #: relationship.php:384
 msgid "Sister"
-msgstr ""
+msgstr "Αδελφή"
 
 #: relationship.php:318
 #: relationship.php:319
 #: relationship.php:386
 #: relationship.php:387
 msgid "Brother"
-msgstr ""
+msgstr "Αδελφός"
 
 #: relationship.php:358
 #: relationship.php:359
@@ -10637,17 +10637,17 @@ msgstr ""
 #: relationship.php:368
 #, php-format
 msgid "%d x cousin"
-msgstr ""
+msgstr "%d x ξαδέρφη"
 
 #: relationship.php:375
 #: relationship.php:376
 msgid "Half-Sister"
-msgstr ""
+msgstr "Ετεροθαλής αδερφή"
 
 #: relationship.php:378
 #: relationship.php:379
 msgid "Half-Brother"
-msgstr ""
+msgstr "Ετεροθαλής αδερφός"
 
 #: relationship.php:419
 #: relationship.php:420
@@ -10655,7 +10655,7 @@ msgstr ""
 #: relationship.php:423
 #, php-format
 msgid "%1$s is the %2$s of %3$s."
-msgstr ""
+msgstr "%1$s είναι η %2$s του %3$s."
 
 #: relationship.php:485
 #: relationship.php:564
@@ -10665,50 +10665,50 @@ msgstr "Use relationship privacy"
 
 #: relationship.php:535
 msgid "and"
-msgstr ""
+msgstr "και"
 
 #: relationship.php:579
 msgid "Person 1"
-msgstr ""
+msgstr "Άτομο 1"
 
 #: relationship.php:609
 msgid "Person 2"
-msgstr ""
+msgstr "Άτομο 2"
 
 #: relationship.php:677
 #: relationship.php:698
 msgid "Show path"
-msgstr ""
+msgstr "Εμφάνιση διαδρομής"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
-msgstr ""
+msgstr "Δεν βρέθηκε καμία σύνδεση ανάμεσα στα δύο άτομα."
 
 #: relationship.php:737
 msgid "No other link between the two individuals could be found."
-msgstr ""
+msgstr "Δεν βρέθηκε καμία άλλη σύνδεση ανάμεσα στα δύο άτομα."
 
 #: reportengine.php:147
 #: reportengine.php:153
 msgid "Choose a report to run"
-msgstr ""
+msgstr "Επιλογή αναφοράς"
 
 #: reportengine.php:154
 msgid "Select report"
-msgstr ""
+msgstr "Επιλογή αναφοράς"
 
 #: reportengine.php:170
 #: reportengine.php:219
 msgid "Enter report values"
-msgstr ""
+msgstr "Εισαγωγή τιμών αναφοράς"
 
 #: reportengine.php:220
 msgid "Selected Report"
-msgstr ""
+msgstr "Επιλεγμένη αναφορά"
 
 #: reportengine.php:312
 msgid "Select a date"
-msgstr ""
+msgstr "Επιλογή ημερομηνίας"
 
 #: reportengine.php:344
 #, fuzzy
@@ -10718,7 +10718,7 @@ msgstr "Λήψη Αρχείου GEDCOM"
 #: rss.php:116
 #: rss.php:119
 msgid "Feed created by PhpGedView"
-msgstr ""
+msgstr "Η τροφοδοσία δημιουργήθηκε από το PhpGedView"
 
 #: rss.php:192
 #: rss.php:209
@@ -10733,15 +10733,15 @@ msgstr "Genealogy Contact User"
 
 #: rss.php:321
 msgid "Feed not available"
-msgstr ""
+msgstr "Η τροφοδοσία δεν είναι διαθέσιμη"
 
 #: rss.php:323
 msgid "There is no RSS feed available for this PhpGedView site"
-msgstr ""
+msgstr "Δεν υπάρχει διαθέσιμη τροφοδοσία RSS για αυτή την τοποθεσία PhpGedView"
 
 #: search.php:85
 msgid "Please enter a Given name, Last name, or Place in addition to Year"
-msgstr ""
+msgstr "Παρακαλώ δώστε Όνομα, Επώνυμο ή Τοποθεσία καθώς και Έτος"
 
 #: search.php:126
 msgid "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender "
@@ -10756,34 +10756,34 @@ msgstr ""
 #: search.php:596
 #: search.php:616
 msgid "General Search"
-msgstr ""
+msgstr "Γενική αναζήτηση"
 
 #: search.php:169
 #: search.php:263
 msgid "Enter Search terms"
-msgstr ""
+msgstr "Εισάγετε όρους αναζήτησης"
 
 #: search.php:183
 #: search.php:275
 msgid "Search for"
-msgstr ""
+msgstr "Αναζήτηση για"
 
 #: search.php:219
 msgid "Exclude Filter"
-msgstr ""
+msgstr "Φίλτρο εξαίρεσης"
 
 #: search.php:227
 msgid "Exclude some non-genealogical data"
-msgstr ""
+msgstr "Εξαίρεση κάποιων μη-γενεαλογικών δεδομένων"
 
 #: search.php:234
 msgid "Off"
-msgstr ""
+msgstr "Ανενεργό"
 
 #: search.php:240
 #: search.php:382
 msgid "Associates"
-msgstr ""
+msgstr "Σχετιζόμενοι"
 
 #: search.php:246
 #: search.php:387
@@ -10797,7 +10797,7 @@ msgstr ""
 
 #: search.php:293
 msgid "Entire record"
-msgstr ""
+msgstr "Πλήρης εγγραφή"
 
 #: search.php:299
 msgid "Whole words only"
@@ -10820,11 +10820,11 @@ msgstr "Κεφαλίδα"
 
 #: search.php:354
 msgid "Soundex type:"
-msgstr ""
+msgstr "Τύπος Soundex:"
 
 #: search.php:369
 msgid "Individuals'<br />names to print:"
-msgstr ""
+msgstr "Ονόματα ατόμου<br />για εκτύπωση:"
 
 #: search.php:374
 #, fuzzy
@@ -10833,18 +10833,18 @@ msgstr "Κατάλογος ονομάτων"
 
 #: search.php:377
 msgid "All names"
-msgstr ""
+msgstr "Όλα τα ονόματα"
 
 #: search.php:399
 #: search.php:578
 #: search.php:590
 #: search.php:604
 msgid "Multi Site Search"
-msgstr ""
+msgstr "Αναζήτηση σε πολλαπλούς τόπους"
 
 #: search.php:404
 msgid "Sites to search"
-msgstr ""
+msgstr "Τοποθεσίες για αναζήτηση"
 
 #: search.php:428
 msgid "No known Servers<br />No results will be found"
@@ -10894,40 +10894,40 @@ msgstr "Όνομα Χρήστη Βάσης Δεδομένων"
 
 #: search.php:548
 msgid "Results per page"
-msgstr ""
+msgstr "Αποτελέσματα ανά σελίδα"
 
 #: search.php:563
 msgid "Other Searches"
-msgstr ""
+msgstr "Άλλες αναζητήσεις"
 
 #: search.php:569
 #: search.php:585
 #: search.php:617
 msgid "Soundex Search"
-msgstr ""
+msgstr "Αναζήτηση Soundex"
 
 #: search.php:570
 #: search.php:586
 #: search.php:597
 #: search.php:618
 msgid "Advanced Search"
-msgstr ""
+msgstr "Προχωρημένη αναζήτηση"
 
 #: searchhelp.php:89
 msgid "Any word"
-msgstr ""
+msgstr "Οποιαδήποτε λέξη"
 
 #: searchhelp.php:92
 msgid "All words"
-msgstr ""
+msgstr "Όλες οι λέξεις"
 
 #: searchhelp.php:95
 msgid "Exact phrase"
-msgstr ""
+msgstr "Ακριβής φράση"
 
 #: searchhelp.php:100
 msgid "Search in"
-msgstr ""
+msgstr "Αναζήτηση σε"
 
 #: searchhelp.php:104
 #, fuzzy
@@ -10936,7 +10936,7 @@ msgstr "Όνομα χρήστη"
 
 #: searchhelp.php:107
 msgid "Modules Help"
-msgstr ""
+msgstr "Βοήθεια αρθρωμάτων"
 
 #: searchhelp.php:112
 #, fuzzy
@@ -10945,11 +10945,11 @@ msgstr "_Διαχείριση"
 
 #: searchhelp.php:126
 msgid "Close window"
-msgstr ""
+msgstr "Κλείσιμο παραθύρου"
 
 #: searchhelp.php:197
 msgid "Results found:"
-msgstr ""
+msgstr "Ευρεθέντα αποτελέσματα:"
 
 #: search_advanced.php:113
 #: search_advanced.php:166
@@ -10959,7 +10959,7 @@ msgstr ""
 #: search_advanced.php:265
 #: search_advanced.php:280
 msgid "Exact"
-msgstr ""
+msgstr "Ακριβής"
 
 #: search_advanced.php:117
 #: search_advanced.php:121
@@ -10980,7 +10980,7 @@ msgstr ""
 #: statistics.php:714
 #: timeline.php:148
 msgid "years"
-msgstr ""
+msgstr "ετών"
 
 #: search_advanced.php:167
 #: search_advanced.php:229
@@ -10997,7 +10997,7 @@ msgstr "Μήκος κουτιού"
 #: search_advanced.php:267
 #: search_advanced.php:282
 msgid "Contains"
-msgstr ""
+msgstr "Περιέχει"
 
 #: search_advanced.php:169
 #: search_advanced.php:231
@@ -11005,11 +11005,11 @@ msgstr ""
 #: search_advanced.php:268
 #: search_advanced.php:283
 msgid "Sounds like"
-msgstr ""
+msgstr "Ακούγεται σαν"
 
 #: search_advanced.php:299
 msgid "Add More Fields"
-msgstr ""
+msgstr "Προσθήκη περισσότερων πεδίων"
 
 #: search_engine.php:50
 msgid "PhpGedView automatically provides search engines with smaller data files with fewer links.  The data is limited to the individual and immediate family, without adding information about grand parents or grand children.  Many reports and server-intensive pages like the calendar are off limits to the spiders.<br /><br />Attempts by the spiders to go to those pages result in showing this page.  If you are seeing this text, the software believes you are a search engine spider.  Below is the list of pages that are allowed to be spidered and will provide the abbreviated data.<br /><br />Real users who follow search engine links into this site will see the full pages and data, and not this page."
@@ -11024,11 +11024,11 @@ msgstr "Welcome text on login page in Authentication mode"
 
 #: statistics.php:57
 msgid "Total males"
-msgstr ""
+msgstr "Σύνολο αρσενικών"
 
 #: statistics.php:58
 msgid "Total females"
-msgstr ""
+msgstr "Σύνολο θηλυκά"
 
 #: statistics.php:59
 msgid "Total living"
@@ -11081,7 +11081,7 @@ msgstr ""
 
 #: statistics.php:113
 msgid "Average age at death"
-msgstr ""
+msgstr "Μέσος όρος ηλικίας θανάτου"
 
 #: statistics.php:127
 msgid "Top age at death"
@@ -11158,7 +11158,7 @@ msgstr ""
 #: statistics.php:232
 #: statistics.php:558
 msgid "Age in year of marriage"
-msgstr ""
+msgstr "Ηλικία στο έτος του γάμου"
 
 #: statistics.php:235
 msgid "Youngest male"
@@ -11202,7 +11202,7 @@ msgstr ""
 
 #: statistics.php:278
 msgid "Average number of children per family"
-msgstr ""
+msgstr "Μέσος όρος παιδιών ανά οικογένεια"
 
 #: statistics.php:279
 msgid "Number of families without children"
@@ -11244,15 +11244,15 @@ msgstr ""
 #: statistics.php:331
 #: statistics.php:358
 msgid "Media objects"
-msgstr ""
+msgstr "Αντικείμενα μέσων"
 
 #: statistics.php:334
 msgid "Other records"
-msgstr ""
+msgstr "Άλλες εγγραφές"
 
 #: statistics.php:345
 msgid "Total events"
-msgstr ""
+msgstr "Σύνολο γεγονότων"
 
 #: statistics.php:348
 msgid "First event"
@@ -11271,7 +11271,7 @@ msgstr "Πρόθεμα GEDCOM ID"
 #: statistics.php:373
 #: statisticsplot.php:843
 msgid "Families with sources"
-msgstr ""
+msgstr "Οικογένειες με συζύγους"
 
 #: statistics.php:386
 #, fuzzy
@@ -11301,44 +11301,44 @@ msgstr ""
 
 #: statistics.php:517
 msgid "Fill in the following parameters for the plot"
-msgstr ""
+msgstr "Συμπληρώστε τις παρακάτω παραμέτρους για τη σχεδίαση"
 
 #: statistics.php:520
 msgid "Select chart type:"
-msgstr ""
+msgstr "Επιλογή τύπου διαγράμματος:"
 
 #: statistics.php:526
 msgid "Month of birth"
-msgstr ""
+msgstr "Μήνας γέννησης"
 
 #: statistics.php:530
 msgid "Month of death"
-msgstr ""
+msgstr "Μήνας θανάτου"
 
 #: statistics.php:534
 msgid "Month of marriage"
-msgstr ""
+msgstr "Μήνας γάμου"
 
 #: statistics.php:538
 msgid "Month of first marriage"
-msgstr ""
+msgstr "Μήνας του πρώτου γάμου"
 
 #: statistics.php:550
 msgid "Age related to birth year"
-msgstr ""
+msgstr "Ηλικία σε σχέση με το έτος γέννησης"
 
 #: statistics.php:554
 msgid "Age related to death year"
-msgstr ""
+msgstr "Ηλικία σε σχέση με το έτος θανάτου"
 
 #: statistics.php:562
 msgid "Age in year of first marriage"
-msgstr ""
+msgstr "Ηλικία στο έτος του πρώτου γάμου"
 
 #: statistics.php:566
 #: statisticsplot.php:785
 msgid "Number of children"
-msgstr ""
+msgstr "Αριθμός παιδιών"
 
 #: statistics.php:570
 #, fuzzy
@@ -11347,20 +11347,20 @@ msgstr "Πρόθεμα GEDCOM ID"
 
 #: statistics.php:574
 msgid "Birth by country"
-msgstr ""
+msgstr "Γεννήσεις ανά χώρα"
 
 #: statistics.php:578
 msgid "Marriage by country"
-msgstr ""
+msgstr "Γάμοι ανά χώρα"
 
 #: statistics.php:582
 msgid "Death by country"
-msgstr ""
+msgstr "Θάνατοι ανά χώρα"
 
 #: statistics.php:588
 #: statistics.php:602
 msgid "boundaries for ages:"
-msgstr ""
+msgstr "όρια για τις ηλικίες:"
 
 #: statistics.php:592
 #: statistics.php:594
@@ -11374,87 +11374,87 @@ msgstr ""
 #: statistics.php:711
 #: statistics.php:714
 msgid "interval"
-msgstr ""
+msgstr "μεσοδιάστημα"
 
 #: statistics.php:614
 msgid "boundaries for month:"
-msgstr ""
+msgstr "όρια για το μήνα:"
 
 #: statistics.php:617
 msgid "months after marriage"
-msgstr ""
+msgstr "μήνες μετά το γάμο"
 
 #: statistics.php:618
 msgid "months before and after marriage"
-msgstr ""
+msgstr "μήνες πριν και μετά το γάμο"
 
 #: statistics.php:619
 msgid "quarters after marriage"
-msgstr ""
+msgstr "τρίμηνα μετά το γάμο"
 
 #: statistics.php:620
 msgid "half-year after marriage"
-msgstr ""
+msgstr "εξάμηνο μετά το γάμο"
 
 #: statistics.php:626
 msgid "boundaries for numbers:"
-msgstr ""
+msgstr "όρια για τους αριθμούς:"
 
 #: statistics.php:629
 msgid "interval one child"
-msgstr ""
+msgstr "μεσοδιάστημα ένα παιδί"
 
 #: statistics.php:630
 msgid "interval two children"
-msgstr ""
+msgstr "μεσοδιάστημα δύο παιδιά"
 
 #: statistics.php:638
 msgid "Map type"
-msgstr ""
+msgstr "Τύπος χάρτη"
 
 #: statistics.php:642
 msgid "Individual distribution chart"
-msgstr ""
+msgstr "Διάγραμμα κατανομής ατόμων"
 
 #: statistics.php:644
 msgid "Surname distribution chart"
-msgstr ""
+msgstr "Διάγραμμα κατανομής επωνύμων"
 
 #: statistics.php:657
 msgid "Geographical area"
-msgstr ""
+msgstr "Γεωγραφική περιοχή"
 
 #: statistics.php:660
 msgid "World"
-msgstr ""
+msgstr "Κόσμος"
 
 #: statistics.php:661
 msgid "Europe"
-msgstr ""
+msgstr "Ευρώπη"
 
 #: statistics.php:662
 msgid "South America"
-msgstr ""
+msgstr "Νότια Αμερική"
 
 #: statistics.php:663
 msgid "Asia"
-msgstr ""
+msgstr "Ασία"
 
 #: statistics.php:664
 msgid "Middle East"
-msgstr ""
+msgstr "Μέση Ανατολή"
 
 #: statistics.php:665
 msgid "Africa"
-msgstr ""
+msgstr "Αφρική"
 
 #: statistics.php:669
 msgid "Categories:"
-msgstr ""
+msgstr "Κατηγορίες:"
 
 #: statistics.php:675
 msgid "none"
-msgstr ""
+msgstr "κανένα"
 
 #: statistics.php:679
 #, fuzzy
@@ -11463,20 +11463,20 @@ msgstr "Κεφαλίδα"
 
 #: statistics.php:683
 msgid "date periods"
-msgstr ""
+msgstr "Ημερομηνία περιόδων"
 
 #: statistics.php:685
 msgid "boundaries for date periods:"
-msgstr ""
+msgstr "όρια για περιόδους ημερομηνιών:"
 
 #: statistics.php:719
 msgid "results:"
-msgstr ""
+msgstr "αποτελέσματα:"
 
 #: statistics.php:724
 #: statisticsplot.php:768
 msgid "numbers"
-msgstr ""
+msgstr "αριθμοί"
 
 #: statistics.php:727
 #: statisticsplot.php:791
@@ -11486,21 +11486,21 @@ msgstr "Πρόσφατες αλλαγές"
 
 #: statistics.php:735
 msgid "show the plot"
-msgstr ""
+msgstr "εμφάνιση της σχεδίασης"
 
 #: statistics.php:736
 msgid "reset"
-msgstr ""
+msgstr "επαναφορά"
 
 #: statistics.php:751
 #: statistics.php:754
 msgid "Statistics"
-msgstr ""
+msgstr "Στατιστικά"
 
 #: statistics.php:820
 #: statistics.php:821
 msgid "Others"
-msgstr ""
+msgstr "Άλλοι"
 
 #: statistics.php:824
 #: statistics.php:825
@@ -11510,92 +11510,92 @@ msgstr ""
 #: statisticsplot.php:646
 #: statisticsplot.php:673
 msgid "over"
-msgstr ""
+msgstr "πάνω από"
 
 #: statisticsplot.php:648
 msgid "less than"
-msgstr ""
+msgstr "λιγότερο από"
 
 #: statisticsplot.php:723
 #: statisticsplot.php:928
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid " not implemented:"
-msgstr ""
+msgstr "δεν παρέχεται:"
 
 #: statisticsplot.php:728
 msgid "Jan"
-msgstr ""
+msgstr "Ιαν"
 
 #: statisticsplot.php:729
 msgid "Feb"
-msgstr ""
+msgstr "Φεβ"
 
 #: statisticsplot.php:730
 msgid "March"
-msgstr ""
+msgstr "Μάρτιος"
 
 #: statisticsplot.php:731
 msgid "April"
-msgstr ""
+msgstr "Απρίλιος"
 
 #: statisticsplot.php:732
 msgid "May"
-msgstr ""
+msgstr "Μάιος"
 
 #: statisticsplot.php:733
 msgid "June"
-msgstr ""
+msgstr "Ιούνιος"
 
 #: statisticsplot.php:734
 msgid "July"
-msgstr ""
+msgstr "Ιούλιος"
 
 #: statisticsplot.php:735
 msgid "Aug"
-msgstr ""
+msgstr "Αυγ"
 
 #: statisticsplot.php:736
 msgid "Sep"
-msgstr ""
+msgstr "Σεπ"
 
 #: statisticsplot.php:737
 msgid "Oct"
-msgstr ""
+msgstr "Οκτ"
 
 #: statisticsplot.php:738
 msgid "Nov"
-msgstr ""
+msgstr "Νοεμ"
 
 #: statisticsplot.php:739
 msgid "Dec"
-msgstr ""
+msgstr "Δεκ"
 
 #: statisticsplot.php:805
 msgid " per gender"
-msgstr ""
+msgstr "ανά φύλο"
 
 #: statisticsplot.php:807
 msgid " per time period"
-msgstr ""
+msgstr "ανά χρονική περίοδο"
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "Counts "
-msgstr ""
+msgstr "Μετρήσεις"
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "of"
-msgstr ""
+msgstr "από"
 
 #: statisticsplot.php:928
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: timeline.php:38
 #, fuzzy
@@ -11604,23 +11604,23 @@ msgstr "PhpGedView URL"
 
 #: timeline.php:298
 msgid "Show Age Marker"
-msgstr ""
+msgstr "Εμφάνιση σήμανσης ηλικίας"
 
 #: timeline.php:337
 msgid "Zoom In"
-msgstr ""
+msgstr "Μεγέθυνση"
 
 #: timeline.php:338
 msgid "Zoom Out"
-msgstr ""
+msgstr "Σμίκρυνση"
 
 #: timeline.php:345
 msgid "Show Lifespan chart"
-msgstr ""
+msgstr "Εμφάνιση διάγραμματος διάρκειας ζωής"
 
 #: timeline.php:350
 msgid "In most recent browsers you can click and drag the boxes around on the chart."
-msgstr ""
+msgstr "Σε πιο πρόσφατους φυλλομετρητές μπορείτε να σύρετε τα κουτιά γύρω από το διάγραμμα."
 
 #: uploadgedcom.php:173
 #: uploadgedcom.php:1056
@@ -11631,7 +11631,7 @@ msgstr ""
 
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
-msgstr ""
+msgstr "A GEDCOM with this filename has already been imported into the database."
 
 #: uploadgedcom.php:485
 msgid "This GEDCOM file is <em>not</em> synchronized with the database.  It may not contain the latest version of your data.  To re-import from the database rather than the file, you should download and re-upload."
@@ -11639,20 +11639,20 @@ msgstr ""
 
 #: uploadgedcom.php:487
 msgid "A GEDCOM file with the same name has been found. If you choose to continue, the old GEDCOM file will be replaced with the file that you uploaded and the Import process will begin again.  If you choose to cancel, the old GEDCOM will remain unchanged."
-msgstr ""
+msgstr "If you choose to continue, the old GEDCOM file will be replaced with the file that you uploaded and the import process will begin again.  If you choose to cancel, the old GEDCOM will remain unchanged."
 
 #: uploadgedcom.php:496
 msgid "Do you want to erase the old data and replace it with this new data?"
-msgstr ""
+msgstr "Do you want to erase the old data and replace it with this new data?"
 
 #: uploadgedcom.php:546
 msgid "Performing GEDCOM validation..."
-msgstr ""
+msgstr "Performing GEDCOM validation, select the necessary options then click 'Cleanup'"
 
 #: uploadgedcom.php:583
 #: uploadgedcom.php:674
 msgid "Valid GEDCOM detected. No cleanup required."
-msgstr ""
+msgstr "Valid GEDCOM Detected.   No cleanup required."
 
 #: uploadgedcom.php:618
 #, fuzzy
@@ -11661,7 +11661,7 @@ msgstr "Detected lines before the GEDCOM header (0 HEAD).  On cleanup these line
 
 #: uploadgedcom.php:626
 msgid "Invalid place encodings were detected.  These errors should be fixed."
-msgstr ""
+msgstr "Invalid place encodings were detected.  These errors should be fixed.  The following sample shows the invalid place that was detected: "
 
 #: uploadgedcom.php:634
 msgid "Example of invalid place from your GEDCOM:"
@@ -11669,19 +11669,19 @@ msgstr ""
 
 #: uploadgedcom.php:641
 msgid "Detected invalid date formats, on cleanup these will be changed to format of DD MMM YYYY (eg. 1 JAN 2004)."
-msgstr ""
+msgstr "Detected invalid date formats, on cleanup these will be changed to format of DD MMM YYYY (ie. 1 JAN 2004)."
 
 #: uploadgedcom.php:650
 msgid "Day before Month (DD MM YYYY)"
-msgstr ""
+msgstr "Ημέρα πριν από Μήνα (ΗΗ ΜΜ ΕΕΕΕ)"
 
 #: uploadgedcom.php:650
 msgid "Month before Day (MM DD YYYY)"
-msgstr ""
+msgstr "Μήνας πριν από Ημέρα (ΜΜ ΗΗ ΕΕΕΕ)"
 
 #: uploadgedcom.php:653
 msgid "Example of invalid date from your GEDCOM:"
-msgstr ""
+msgstr "Example of invalid date from your GEDCOM:"
 
 #: uploadgedcom.php:661
 msgid "ANSI file encoding detected.\tPhpGedView works best with files encoded in UTF-8."
@@ -11689,7 +11689,7 @@ msgstr ""
 
 #: uploadgedcom.php:665
 msgid "Convert this ANSI encoded GEDCOM to UTF-8?"
-msgstr ""
+msgstr "Μετατροπή ANSI encoded GEDCOM σε UTF-8?"
 
 #: uploadgedcom.php:737
 #, fuzzy
@@ -11699,26 +11699,26 @@ msgstr "_GEDCOM: Change Individual ID to ......."
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
 msgid "Do not change"
-msgstr ""
+msgstr "Δεν αλλάζει"
 
 #: uploadgedcom.php:795
 msgid "Import complete"
-msgstr ""
+msgstr "Import Complete"
 
 #: uploadgedcom.php:795
 #: uploadgedcom.php:844
 #: uploadgedcom.php:1128
 #: uploadgedcom.php:1133
 msgid "sec."
-msgstr ""
+msgstr "sec."
 
 #: uploadgedcom.php:805
 msgid "Please be patient"
-msgstr ""
+msgstr "ΠΑΡΑΚΑΛΩ ΥΠΟΜΟΝΗ"
 
 #: uploadgedcom.php:831
 msgid "Import Progress..."
-msgstr ""
+msgstr "Πρόοδος Διαδικασίας Εισαγωγής..."
 
 #: uploadgedcom.php:904
 #, fuzzy
@@ -11746,11 +11746,11 @@ msgstr "Συνέχεια"
 
 #: uploadgedcom.php:1118
 msgid "Bytes read:"
-msgstr ""
+msgstr "Bytes Διαβάστηκαν:"
 
 #: uploadgedcom.php:1119
 msgid "Found record"
-msgstr ""
+msgstr "Βρέθηκαν στοιχεία"
 
 #: uploadgedcom.php:1138
 msgid "Import Statistics"
@@ -11760,7 +11760,7 @@ msgstr ""
 #: useradmin.php:274
 #: useradmin.php:484
 msgid "Update User Account"
-msgstr ""
+msgstr "Ενημέρωση Λογαριασμού Χρήστη"
 
 #: useradmin.php:345
 #: useradmin.php:639
@@ -11772,7 +11772,7 @@ msgstr "_Διαχείριση Χρηστών"
 #: useradmin.php:362
 #: useradmin.php:800
 msgid "Access level"
-msgstr ""
+msgstr "Επίπεδα Πρόσβασης"
 
 #: useradmin.php:390
 #: useradmin.php:823
@@ -11794,13 +11794,13 @@ msgstr "Max. relation path length"
 #: useradmin.php:592
 #: useradmin.php:830
 msgid "User verified himself"
-msgstr ""
+msgstr "User verified himself"
 
 #: useradmin.php:398
 #: useradmin.php:593
 #: useradmin.php:831
 msgid "User approved by Admin"
-msgstr ""
+msgstr "User Approved by Admin"
 
 #: useradmin.php:457
 #: useradmin.php:883
@@ -11847,11 +11847,11 @@ msgstr "Language"
 #: useradmin.php:588
 #: useradmin.php:629
 msgid "Privileges"
-msgstr ""
+msgstr "Privileges"
 
 #: useradmin.php:590
 msgid "Date registered"
-msgstr ""
+msgstr "Date Registered"
 
 #: useradmin.php:591
 #, fuzzy
@@ -11860,20 +11860,20 @@ msgstr "Συνδεδεμένοι χρήστες"
 
 #: useradmin.php:661
 msgid "Never"
-msgstr ""
+msgstr "Ποτέ"
 
 #: useradmin.php:680
 msgid "Are you sure you want to delete the user"
-msgstr ""
+msgstr "Σίγουρα θέλετε να διαγράψτε τον χρήστη"
 
 #: useradmin.php:758
 #: useradmin.php:912
 msgid "Create User"
-msgstr ""
+msgstr "Δημιουργία Χρήστη"
 
 #: useradmin.php:811
 msgid "Access"
-msgstr ""
+msgstr "Απλή Πρόσβαση"
 
 #: useradmin.php:817
 #, fuzzy
@@ -11929,7 +11929,7 @@ msgstr ""
 
 #: useradmin.php:1084
 msgid "Select an option below:"
-msgstr ""
+msgstr "Επιλέξτε ένα από τα ακόλουθα:"
 
 #: useradmin.php:1093
 msgid "Send message to all users"
@@ -11937,11 +11937,11 @@ msgstr ""
 
 #: useradmin.php:1094
 msgid "Send message to users who have never logged in"
-msgstr ""
+msgstr "Αποστολή μηνύματος σε χρήστες που δεν συνδέθηκαν ποτέ"
 
 #: useradmin.php:1095
 msgid "Send message to users who have not logged in for 6 months"
-msgstr ""
+msgstr "Αποστολή μηνύματος σε χρήστες που δεν συνδέθηκαν για 6 μήνες"
 
 #: useradmin.php:1153
 msgid "Total number of users"
@@ -12028,7 +12028,7 @@ msgstr ""
 
 #: usermigrate.php:141
 msgid "Choose an option or click the link below to return to the Administration menu"
-msgstr ""
+msgstr "Proceed with export of user data files?"
 
 #: usermigrate.php:159
 msgid "One or more files already exist. Do you want to overwrite them?"
@@ -12060,7 +12060,7 @@ msgstr ""
 
 #: usermigrate.php:188
 msgid "No Messages seem to be present in the system."
-msgstr ""
+msgstr "No messages seem to be present in the system."
 
 #: usermigrate.php:195
 msgid "Importing favorites"
@@ -12068,7 +12068,7 @@ msgstr ""
 
 #: usermigrate.php:197
 msgid "No Favorites seem to be present in the system."
-msgstr ""
+msgstr "No favorites seem to be present in the system."
 
 #: usermigrate.php:204
 msgid "Importing news"
@@ -12076,7 +12076,7 @@ msgstr ""
 
 #: usermigrate.php:206
 msgid "No News seems to be present in the system."
-msgstr ""
+msgstr "No news seems to be present in the system."
 
 #: usermigrate.php:213
 msgid "Importing blocks"
@@ -12084,7 +12084,7 @@ msgstr ""
 
 #: usermigrate.php:215
 msgid "No Blocks seems to be present in the system."
-msgstr ""
+msgstr "No blocks seems to be present in the system."
 
 #: blocks/charts.php:40
 #, fuzzy
@@ -12094,7 +12094,7 @@ msgstr "Στυλ διαγράμματος"
 #: blocks/charts.php:167
 #: blocks/gedcom_favorites.php:130
 msgid "No such ID exists in this GEDCOM file."
-msgstr ""
+msgstr "Δεν υπάρχει τέτοιο ID σε αυτό το αρχείο GEDCOM."
 
 #: blocks/gedcom_block.php:36
 #, fuzzy
@@ -12108,11 +12108,11 @@ msgstr "Enter a title that describes the data in this GEDCOM file"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
-msgstr ""
+msgstr "Αγαπημένα αυτού του GEDCOM"
 
 #: blocks/gedcom_favorites.php:100
 msgid "Are you sure you want to remove this item from your list of Favorites?"
-msgstr ""
+msgstr "Είστε σίγουροι ότι θέλετε να αφαιρέσετε αυτό το αντικείμενο από τον κατάλογο των αγαπημένων σας;"
 
 #: blocks/gedcom_favorites.php:155
 #, fuzzy
@@ -12121,15 +12121,15 @@ msgstr "Προσθήκη νέου Σημειώματος/Σχολίου"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
-msgstr ""
+msgstr "Εισαγωγή ατόμου, οικογένειας ή ID πηγής"
 
 #: blocks/gedcom_favorites.php:173
 msgid "OR<br />Enter a URL and a title"
-msgstr ""
+msgstr "Ή<br />Εισαγωγή URL και τίτλου"
 
 #: blocks/gedcom_favorites.php:178
 msgid "Enter an optional note about this favorite"
-msgstr ""
+msgstr "Εισαγωγή προαιρετικής σημείωσης σχετικά με αυτό το αγαπημένο"
 
 #: blocks/gedcom_news.php:36
 #, fuzzy
@@ -12139,15 +12139,15 @@ msgstr "Enter a title that describes the data in this GEDCOM file"
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
 msgid "News"
-msgstr ""
+msgstr "Νέα"
 
 #: blocks/gedcom_news.php:91
 msgid "No News articles have been submitted."
-msgstr ""
+msgstr "Δεν έχουν υποβληθεί άρθρα νέων."
 
 #: blocks/gedcom_news.php:159
 msgid "Are you sure you want to delete this News entry?"
-msgstr ""
+msgstr "Σίγουρα θέλετε να διαγράψετε αυτή την καταχώρηση νέων;"
 
 #: blocks/gedcom_news.php:165
 #, fuzzy
@@ -12161,7 +12161,7 @@ msgstr "Max Memory Limit"
 
 #: blocks/gedcom_news.php:197
 msgid "Age of item"
-msgstr ""
+msgstr "Ηλικία αντικειμένου"
 
 #: blocks/gedcom_news.php:198
 #, fuzzy
@@ -12178,45 +12178,45 @@ msgstr "Enter a title that describes the data in this GEDCOM file"
 #: blocks/gedcom_stats.php:145
 #: blocks/gedcom_stats.php:330
 msgid "Total users"
-msgstr ""
+msgstr "Σύνολο χρηστών"
 
 #: blocks/gedcom_stats.php:159
 #: blocks/gedcom_stats.php:277
 msgid "Earliest birth year"
-msgstr ""
+msgstr "Παλαιότερο έτος γέννησης"
 
 #: blocks/gedcom_stats.php:166
 #: blocks/gedcom_stats.php:285
 msgid "Latest birth year"
-msgstr ""
+msgstr "Τελευταίο έτος γέννησης"
 
 #: blocks/gedcom_stats.php:173
 #: blocks/gedcom_stats.php:293
 msgid "Earliest death year"
-msgstr ""
+msgstr "Παλαιότερο έτος θανάτου"
 
 #: blocks/gedcom_stats.php:180
 #: blocks/gedcom_stats.php:301
 msgid "Latest death year"
-msgstr ""
+msgstr "Τελευταίο έτος θανάτου"
 
 #: blocks/gedcom_stats.php:188
 #: blocks/gedcom_stats.php:309
 msgid "Person who lived the longest"
-msgstr ""
+msgstr "Μακροβιότερο άτομο"
 
 #: blocks/gedcom_stats.php:204
 #: blocks/gedcom_stats.php:325
 msgid "Family with the most children"
-msgstr ""
+msgstr "Οικογένεια με τα περισσότερα παιδιά"
 
 #: blocks/gedcom_stats.php:219
 msgid "View statistics as graphs"
-msgstr ""
+msgstr "Προβολή στατιστικών ως γράφημα"
 
 #: blocks/gedcom_stats.php:227
 msgid "Most Common Surnames"
-msgstr ""
+msgstr "Τα πιο συνηθισμένα επώνυμα"
 
 #: blocks/gedcom_stats.php:259
 #, fuzzy
@@ -12225,7 +12225,7 @@ msgstr "Show living names"
 
 #: blocks/gedcom_stats.php:268
 msgid "Select the stats to show in this block"
-msgstr ""
+msgstr "Επιλογή στατιστικών για εμφάνιση σε αυτό το πλαίσιο"
 
 #: blocks/gedcom_stats.php:339
 #, fuzzy
@@ -12235,7 +12235,7 @@ msgstr "Show Birth and Death Details on Pedigree and descendency charts"
 #: blocks/getting_started.php:48
 #: blocks/getting_started.php:59
 msgid "Get Started"
-msgstr ""
+msgstr "Ξεκινήστε"
 
 #: blocks/getting_started.php:60
 msgid "Choose one of these options to get started using PhpGedView"
@@ -12252,7 +12252,7 @@ msgstr ""
 
 #: blocks/html_block.php:36
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: blocks/html_block.php:41
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -12260,7 +12260,7 @@ msgstr ""
 
 #: blocks/html_block.php:41
 msgid "to change what is printed here.</p>"
-msgstr ""
+msgstr "για να αλλάξει ότι εκτυπώθηκε εδώ.</p>"
 
 #: blocks/logged_in.php:36
 #, fuzzy
@@ -12292,11 +12292,11 @@ msgstr[1] ""
 #: blocks/login_block.php:53
 #: blocks/login_block.php:61
 msgid "Logout"
-msgstr ""
+msgstr "Αποσύνδεση"
 
 #: blocks/login_block.php:58
 msgid "Logged in as "
-msgstr ""
+msgstr "Συνδεδεμένος ως"
 
 #: blocks/random_media.php:38
 #, fuzzy
@@ -12306,23 +12306,23 @@ msgstr "Εύρεση μέσου"
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
 msgid "Random Picture"
-msgstr ""
+msgstr "Τυχαία εικόνα"
 
 #: blocks/random_media.php:196
 msgid "Next image"
-msgstr ""
+msgstr "Επόμενη εικόνα"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Play"
-msgstr ""
+msgstr "Αναπαραγωγή"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Stop"
-msgstr ""
+msgstr "Διακοπή"
 
 #: blocks/random_media.php:341
 #, fuzzy
@@ -12335,11 +12335,11 @@ msgstr ""
 
 #: blocks/recent_changes.php:111
 msgid "Should this block be hidden when it is empty?"
-msgstr ""
+msgstr "Πρέπει αυτό το πλαίσιο να αποκρύπτεται όταν είναι άδειο;"
 
 #: blocks/recent_changes.php:119
 msgid "If you hide an empty block, you will not be able to change its configuration until it becomes visible by no longer being empty."
-msgstr ""
+msgstr "Εάν αποκρύψετε ένα άδειο πλαίσιο, δεν θα μπορείτε να αλλάξετε τις ρυθμίσεις του μέχρι να μην είναι πλέον άδειο ώστε να γίνει ορατό."
 
 #: blocks/review_changes.php:39
 #, fuzzy
@@ -12348,40 +12348,40 @@ msgstr "Πρόσφατες αλλαγές"
 
 #: blocks/review_changes.php:83
 msgid "PhpGedView - Review changes"
-msgstr ""
+msgstr "PhpGedView - Επιθεώρηση αλλαγών"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
-msgstr ""
+msgstr "Έχουν γίνει αλλαγές online στην γενεαλογική βάση δεδομένων. Αυτές οι αλλαγές χρειάζεται να επιθεωρηθούν και να γίνει αποδοχή τους πριν εμφανιστούν σε όλους τους χρήστες. Παρακαλώ χρησιμοποιήστες το παρακάτω URL για να μπείτε σε αυτή την τοποθεσία PhpGedView και να συνδεθείτε ώστε να επιθεωρήσετε τις αλλαγές."
 
 #: blocks/review_changes.php:113
 msgid "Last email reminder was sent "
-msgstr ""
+msgstr "Το τελευταίο email υπενθύμισης στάλθηκε"
 
 #: blocks/review_changes.php:114
 msgid "Next email reminder will be sent after "
-msgstr ""
+msgstr "Το επόμενο email υπενθύμισης θα σταλεί μετά"
 
 #: blocks/review_changes.php:149
 msgid "Send out reminder emails?"
-msgstr ""
+msgstr "Αποστολή υπενθυμιστικών email;"
 
 #: blocks/review_changes.php:158
 msgid "Reminder email frequency (days)"
-msgstr ""
+msgstr "Συχνότητα email υπενθύμισης (ημέρες)"
 
 #: blocks/rss_block.php:38
 #: blocks/rss_block.php:53
 msgid "RSS Feeds"
-msgstr ""
+msgstr "Τροφοδοσίες RSS"
 
 #: blocks/rss_block.php:69
 msgid "Upcoming Events"
-msgstr ""
+msgstr "Επερχόμενα συμβάντα"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
-msgstr ""
+msgstr "Δημοφιλή επώνυμα"
 
 #: blocks/theme_select.php:36
 #, fuzzy
@@ -12390,11 +12390,11 @@ msgstr "Theme directory"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
-msgstr ""
+msgstr "Αλλαγή θέματος εμφάνισης"
 
 #: blocks/todays_events.php:38
 msgid "On This Day"
-msgstr ""
+msgstr "Σαν σήμερα"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
@@ -12417,21 +12417,21 @@ msgstr ""
 #: blocks/upcoming_events.php:200
 #: blocks/yahrzeit.php:281
 msgid "Allow calendar events download?"
-msgstr ""
+msgstr "Επιτρέπεται η λήψη συμβάντων του ημερολογίου;"
 
 #: blocks/todo.php:39
 #: blocks/todo.php:72
 msgid "&quot;To Do&quot; tasks"
-msgstr ""
+msgstr "Εργασίες &quot;προς ενέργεια&quot;"
 
 #: blocks/todo.php:113
 msgid "There are no &quot;To Do&quot; tasks."
-msgstr ""
+msgstr "Δεν υπάρχουν εργασίες &quot;προς ενέργεια&quot;."
 
 #: blocks/top10_givnnames.php:37
 #: blocks/top10_givnnames.php:78
 msgid "Top 10 Given Names"
-msgstr ""
+msgstr "Δημοφιλή δοσμένα ονόματα"
 
 #: blocks/top10_givnnames.php:130
 #: blocks/top10_pageviews.php:131
@@ -12443,19 +12443,19 @@ msgstr "Αριθμός ημερών για εμφάνιση"
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
 msgid "Most Viewed Items"
-msgstr ""
+msgstr "Περισσότερο προβεβλημένα αντικείμενα"
 
 #: blocks/top10_pageviews.php:77
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
-msgstr ""
+msgstr "Οι μετρητές επιτυχιών πρέπει να ενεργοποιηθούν στις ρυθμίσεις GEDCOM, τμήμα Προβολή και Διάταξη, ομάδα Εμφάνιση και Προβολή."
 
 #: blocks/top10_pageviews.php:112
 msgid "There are currently no hits to show."
-msgstr ""
+msgstr "Δεν υπάρχουν επιτυχίες για εμφάνιση."
 
 #: blocks/top10_pageviews.php:138
 msgid "Place counts before or after name?"
-msgstr ""
+msgstr "Τοποθέτηση μετρήσεων πριν ή μετά το όνομα;"
 
 #: blocks/user_blog.php:36
 #, fuzzy
@@ -12464,15 +12464,15 @@ msgstr "Όνομα χρήστη"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
-msgstr ""
+msgstr "Το ημερολόγιο μου"
 
 #: blocks/user_blog.php:56
 msgid "You have not created any Journal items."
-msgstr ""
+msgstr "Δεν έχετε δημιουργήσει κάποια αντικείμενα ημερολογίου."
 
 #: blocks/user_blog.php:90
 msgid "Are you sure you want to delete this Journal entry?"
-msgstr ""
+msgstr "Σίγουρα θέλετε να διαγράψετε αυτή την καταχώρηση ημερολογίου;"
 
 #: blocks/user_blog.php:94
 #, fuzzy
@@ -12496,32 +12496,32 @@ msgstr "Όνομα χρήστη"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
-msgstr ""
+msgstr "Τα μηνύματά μου"
 
 #: blocks/user_messages.php:58
 #: blocks/user_messages.php:128
 msgid "Are you sure you want to delete this message?  It cannot be retrieved later."
-msgstr ""
+msgstr "Σίγουρα θέλετε να διαγράψετε αυτό το μήνυμα; Δεν θα μπορεί να ανακτηθεί αργότερα."
 
 #: blocks/user_messages.php:60
 msgid "You have no pending messages."
-msgstr ""
+msgstr "Δεν έχετε εκκρεμή μηνύματα."
 
 #: blocks/user_messages.php:87
 msgid "Date Sent:"
-msgstr ""
+msgstr "Ημερομηνία αποστολής:"
 
 #: blocks/user_messages.php:126
 msgid "Reply"
-msgstr ""
+msgstr "Απάντηση"
 
 #: blocks/user_messages.php:131
 msgid "Delete Selected Messages"
-msgstr ""
+msgstr "Διαγραφή επιλεγμένων μηνυμάτων"
 
 #: blocks/user_messages.php:136
 msgid "Broadcast to all users"
-msgstr ""
+msgstr "Εξαγγελία σε όλους τους χρήστες"
 
 #: blocks/user_welcome.php:36
 #, fuzzy
@@ -12530,7 +12530,7 @@ msgstr "Όνομα χρήστη"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
-msgstr ""
+msgstr "Το γενεαλόγιο μου"
 
 #: blocks/user_welcome.php:56
 #, fuzzy
@@ -12540,12 +12540,12 @@ msgstr "Πρόθεμα GEDCOM ID"
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
 msgid "Upcoming Yahrzeiten"
-msgstr ""
+msgstr "Επερχόμενο Yahrzeiten"
 
 #: blocks/yahrzeit.php:154
 #: blocks/yahrzeit.php:202
 msgid "Anniversary"
-msgstr ""
+msgstr "Επέτειος"
 
 #: blocks/yahrzeit.php:218
 #, fuzzy
@@ -12554,15 +12554,15 @@ msgstr "Επεξεργασία ονόματος"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
-msgstr ""
+msgstr "Κρυφό"
 
 #: includes/accesskeyHeaders.php:36
 msgid "Skip to Content"
-msgstr ""
+msgstr "Υπερπήδηση στο περιεχόμενο"
 
 #: includes/accesskeyHeaders.php:36
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: includes/accesskeyHeaders.php:37
 #, fuzzy
@@ -12575,51 +12575,51 @@ msgstr "0"
 
 #: includes/accesskeyHeaders.php:38
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: includes/accesskeyHeaders.php:39
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: includes/authentication.php:93
 msgid "PhpGedView Authentication System"
-msgstr ""
+msgstr "Σύστημα πιστοποίησης του PhpGedView "
 
 #: includes/authentication.php:95
 msgid "You must enter a valid login ID and password to access this resource"
-msgstr ""
+msgstr "Πρέπει να εισάγετε έγκυρο ID σύνδεσης και κωδικό, για πρόσβαση σε αυτό τον πόρο"
 
 #: includes/authentication.php:453
 #: includes/authentication.php:510
 msgid "This message was sent while viewing the following URL: "
-msgstr ""
+msgstr "Το μήνυμα στάλθηκε καθώς προβαλλόταν το ακόλουθο URL: "
 
 #: includes/authentication.php:461
 msgid "You sent the following message to a PhpGedView administrator:"
-msgstr ""
+msgstr "Στείλατε το ακόλουθο μήνυμα σε διαχειριστή του PhpGedView:"
 
 #: includes/authentication.php:469
 msgid "You sent the following message to a PhpGedView user:"
-msgstr ""
+msgstr "Στείλατε το ακόλουθο μήνυμα σε χρήστη του PhpGedView:"
 
 #: includes/authentication.php:475
 #: includes/authentication.php:482
 #: includes/authentication.php:524
 #: includes/authentication.php:530
 msgid "The following message has been sent to your PhpGedView user account from "
-msgstr ""
+msgstr "Το ακόλουθο μήνυμα έχει σταλθεί στον PhpGedView λογαριασμό σας από"
 
 #: includes/family_nav.php:84
 msgid "Parents Family"
-msgstr ""
+msgstr "Οικογένεια γονέων"
 
 #: includes/family_nav.php:224
 msgid "Step-Parent Family"
-msgstr ""
+msgstr "Οικογένεια θετού γονέα"
 
 #: includes/family_nav.php:363
 msgid "Immediate Family"
-msgstr ""
+msgstr "Άμεση οικογένεια"
 
 #: includes/media_reorder.php:37
 #: includes/media_tab_head.php:63
@@ -12686,7 +12686,7 @@ msgstr ""
 
 #: includes/specialchars.php:56
 msgid "Czech"
-msgstr ""
+msgstr "Czech"
 
 #: includes/specialchars.php:57
 msgid "Slovak"
@@ -12694,35 +12694,35 @@ msgstr ""
 
 #: includes/specialchars.php:58
 msgid "Danish"
-msgstr ""
+msgstr "Danish"
 
 #: includes/specialchars.php:59
 msgid "German"
-msgstr ""
+msgstr "Γερμανικά"
 
 #: includes/specialchars.php:60
 msgid "English"
-msgstr ""
+msgstr "Αγγλικά"
 
 #: includes/specialchars.php:61
 msgid "Spanish"
-msgstr ""
+msgstr "Ισπανικά"
 
 #: includes/specialchars.php:63
 msgid "French"
-msgstr ""
+msgstr "Γαλλικά"
 
 #: includes/specialchars.php:65
 msgid "Greek"
-msgstr ""
+msgstr "Ελληνικά"
 
 #: includes/specialchars.php:67
 msgid "Italian"
-msgstr ""
+msgstr "Ιταλικά"
 
 #: includes/specialchars.php:68
 msgid "Hungarian"
-msgstr ""
+msgstr "Hungarian"
 
 #: includes/specialchars.php:69
 msgid "Lithuanian"
@@ -12730,35 +12730,35 @@ msgstr ""
 
 #: includes/specialchars.php:70
 msgid "Dutch"
-msgstr ""
+msgstr "Dutch"
 
 #: includes/specialchars.php:71
 msgid "Norwegian"
-msgstr ""
+msgstr "Norwegian"
 
 #: includes/specialchars.php:73
 msgid "Polish"
-msgstr ""
+msgstr "Polish"
 
 #: includes/specialchars.php:74
 msgid "Portuguese"
-msgstr ""
+msgstr "Portuguese"
 
 #: includes/specialchars.php:76
 msgid "Finnish"
-msgstr ""
+msgstr "Finnish"
 
 #: includes/specialchars.php:77
 msgid "Swedish"
-msgstr ""
+msgstr "Swedish"
 
 #: includes/specialchars.php:78
 msgid "Turkish"
-msgstr ""
+msgstr "Τούρκικα"
 
 #: includes/specialchars.php:79
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebrew"
 
 #: includes/specialchars.php:80
 msgid "Arabic"
@@ -12766,7 +12766,7 @@ msgstr ""
 
 #: includes/specialchars.php:81
 msgid "Russian"
-msgstr ""
+msgstr "Ρώσικα"
 
 #: includes/specialchars.php:82
 msgid "Vietnamese"
@@ -12879,12 +12879,12 @@ msgstr ""
 
 #: includes/classes/class_media.php:243
 msgid "Media Firewall error: >Unknown Mimetype< for file"
-msgstr ""
+msgstr "Σφάλμα του τοίχου προστασίας: >Άγνωστο Mimetype< για το αρχείο"
 
 #: includes/classes/class_menubar.php:68
 #: includes/classes/class_menubar.php:115
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
@@ -12897,7 +12897,7 @@ msgstr "Στυλ διαγράμματος"
 #: includes/classes/class_menubar.php:545
 #: includes/classes/class_menubar.php:551
 msgid "Lists"
-msgstr ""
+msgstr "Κατάλογοι"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
@@ -12908,27 +12908,27 @@ msgstr "Διαχείριση πολυμέσων"
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
 msgid "Reports"
-msgstr ""
+msgstr "Αναφορές"
 
 #: includes/classes/class_menubar.php:826
 msgid "Printer-friendly Version"
-msgstr ""
+msgstr "Έκδοση φιλική για εκτύπωση"
 
 #: includes/classes/class_menubar.php:932
 msgid "Help with this page"
-msgstr ""
+msgstr "Βοήθεια για τη σελίδα αυτή"
 
 #: includes/classes/class_menubar.php:968
 msgid "Wiki Main Page"
-msgstr ""
+msgstr "Κύρια σελίδα wiki"
 
 #: includes/classes/class_menubar.php:972
 msgid "Wiki User's Guide"
-msgstr ""
+msgstr "Οδηγός χρήστη του wiki"
 
 #: includes/classes/class_menubar.php:977
 msgid "Wiki Administrator's Guide"
-msgstr ""
+msgstr "Οδηγός διαχειριστών του wiki"
 
 #: includes/classes/class_menubar.php:1118
 #, fuzzy
@@ -12937,34 +12937,34 @@ msgstr "Favorites Icon"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
-msgstr ""
+msgstr "Προσθήκη στα αγαπημένα μου"
 
 #: includes/classes/class_note.php:49
 msgid "…"
-msgstr ""
+msgstr "…"
 
 #: includes/classes/class_person.php:576
 #: includes/classes/class_person.php:633
 msgid "Unable to find family with ID"
-msgstr ""
+msgstr "Δεν βρέθηκε οικογένεια με ID"
 
 #: includes/classes/class_person.php:760
 msgid "Family with Parents"
-msgstr ""
+msgstr "Οικογένεια με γονείς"
 
 #: includes/classes/class_person.php:779
 #: includes/classes/class_person.php:786
 msgid "Father's Family with "
-msgstr ""
+msgstr "Οικογένεια πατέρα με"
 
 #: includes/classes/class_person.php:780
 #: includes/classes/class_person.php:785
 msgid "Mother's Family with "
-msgstr ""
+msgstr "Οικογένεια μητέρας με"
 
 #: includes/classes/class_person.php:803
 msgid "Family with"
-msgstr ""
+msgstr "Οικογένεια με"
 
 #: includes/classes/class_person.php:1836
 #, fuzzy
@@ -12973,11 +12973,11 @@ msgstr "Κεφαλίδα"
 
 #: includes/classes/class_person.php:1840
 msgid "month"
-msgstr ""
+msgstr "μήνας"
 
 #: includes/classes/class_person.php:1842
 msgid "months"
-msgstr ""
+msgstr "μήνες"
 
 #: includes/classes/class_stats.php:448
 #: includes/classes/class_stats.php:450
@@ -13007,7 +13007,7 @@ msgstr ""
 #: includes/classes/class_stats.php:783
 #: includes/classes/class_stats.php:785
 msgid "Living"
-msgstr ""
+msgstr "Ζωντανοί"
 
 #: includes/classes/class_stats.php:774
 #: includes/classes/class_stats.php:777
@@ -13019,15 +13019,15 @@ msgstr "Κεφαλίδα"
 
 #: includes/classes/class_stats.php:1231
 msgid "Highest population"
-msgstr ""
+msgstr "Υψηλότερος πληθυσμός"
 
 #: includes/classes/class_stats.php:1232
 msgid "Lowest population"
-msgstr ""
+msgstr "Χαμηλότερος πληθυσμός"
 
 #: includes/classes/class_stats.php:1233
 msgid "Nobody at all"
-msgstr ""
+msgstr "Απολύτως κανένας"
 
 #: includes/classes/class_stats.php:1821
 #: includes/classes/class_stats.php:2670
@@ -13061,22 +13061,22 @@ msgstr "Πλάτος"
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
 msgid "marriage"
-msgstr ""
+msgstr "γάμος"
 
 #: includes/classes/class_stats.php:1924
 #: includes/classes/class_stats.php:3820
 msgid "adoption"
-msgstr ""
+msgstr "υιοθεσία"
 
 #: includes/classes/class_stats.php:1925
 #: includes/classes/class_stats.php:3821
 msgid "burial"
-msgstr ""
+msgstr "ταφή"
 
 #: includes/classes/class_stats.php:1926
 #: includes/classes/class_stats.php:3822
 msgid "census added"
-msgstr ""
+msgstr "απογραφή προστέθηκε"
 
 #: includes/classes/class_stats.php:2672
 #: includes/classes/class_stats.php:2673
@@ -13088,12 +13088,12 @@ msgstr ""
 
 #: includes/classes/class_stats.php:2683
 msgid "Average age"
-msgstr ""
+msgstr "Μέσος όρος ηλικίας"
 
 #: includes/classes/class_stats.php:2883
 #: includes/classes/class_stats.php:2885
 msgid "children"
-msgstr ""
+msgstr "παιδιά"
 
 #: includes/classes/class_stats.php:3336
 #: includes/classes/class_stats.php:3338
@@ -13102,20 +13102,20 @@ msgstr ""
 
 #: includes/classes/class_stats.php:3552
 msgid "Count"
-msgstr ""
+msgstr "Μέτρηση"
 
 #: includes/classes/class_treenav.php:168
 msgid "View this tree in the full page interactive tree"
-msgstr ""
+msgstr "Δείτε αυτό το δέντρο, στο διαδραστικό δέντρο πλήρους σελίδας"
 
 #: includes/classes/class_treenav.php:169
 msgid "Show or hide multiple spouses"
-msgstr ""
+msgstr "Εμφάνιση ή απόκρυψη πολλαπλών συζύγων"
 
 #: includes/controllers/descendancy_ctrl.php:226
 #: includes/controllers/descendancy_ctrl.php:313
 msgid "Start at parents"
-msgstr ""
+msgstr "Εκκίνηση από γονείς"
 
 #: includes/controllers/descendancy_ctrl.php:332
 #, fuzzy
@@ -13134,7 +13134,7 @@ msgstr "Επεξεργασία ονόματος"
 
 #: includes/controllers/family_ctrl.php:379
 msgid "Add a child to this family"
-msgstr ""
+msgstr "Προσθήκη παιδιού στην οικογένεια αυτή"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -13153,7 +13153,7 @@ msgstr "Διαγραφή ονόματος"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
-msgstr ""
+msgstr "Διαγράφοντας την οικογένεια θα αποσυνδεθούν όλα τα άτομα από κάθε άλλο, αλλά θα μείνουν τα άτομα στη θέση τους. Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την οικογένεια;"
 
 #: includes/controllers/family_ctrl.php:509
 #: includes/controllers/individual_ctrl.php:732
@@ -13177,23 +13177,23 @@ msgstr "Σελίδα"
 
 #: includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
-msgstr ""
+msgstr "Θετός γονέας"
 
 #: includes/controllers/individual_ctrl.php:830
 msgid "Half-Sibling"
-msgstr ""
+msgstr "Ετεροθαλές αδέρφι"
 
 #: includes/controllers/individual_ctrl.php:836
 #: includes/controllers/individual_ctrl.php:837
 #: includes/controllers/individual_ctrl.php:838
 #: includes/controllers/individual_ctrl.php:855
 msgid "Partner"
-msgstr ""
+msgstr "Σύντροφος"
 
 #: includes/controllers/note_ctrl.php:80
 #: includes/controllers/note_ctrl.php:169
 msgid "Shared Note Information"
-msgstr ""
+msgstr "Πληροφορίες κοινόχρηστης σημείωσης"
 
 #: includes/controllers/note_ctrl.php:217
 #, fuzzy
@@ -13202,7 +13202,7 @@ msgstr "Διαγραφή αυτής της πηγής"
 
 #: includes/controllers/note_ctrl.php:218
 msgid "Are you sure you want to delete this Shared Note?"
-msgstr ""
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την κοινόχρηστη σημείωση;"
 
 #: includes/controllers/remotelink_ctrl.php:400
 msgid "Successfully added link"
@@ -13211,7 +13211,7 @@ msgstr ""
 #: includes/controllers/repository_ctrl.php:79
 #: includes/controllers/repository_ctrl.php:168
 msgid "Repository Information"
-msgstr ""
+msgstr "Πληροφορίες χώρου φύλαξης"
 
 #: includes/controllers/repository_ctrl.php:198
 msgid "Edit Repository"
@@ -13219,40 +13219,40 @@ msgstr ""
 
 #: includes/controllers/repository_ctrl.php:217
 msgid "Are you sure you want to delete this Repository?"
-msgstr ""
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό τον χώρο φύλαξης;"
 
 #: includes/controllers/search_ctrl.php:819
 msgid "Be sure to select an option to search for."
-msgstr ""
+msgstr "Σιγουρευτείτε ότι επιλέξατε μια επιλογή για αναζήτηση."
 
 #: includes/controllers/search_ctrl.php:879
 msgid "People"
-msgstr ""
+msgstr "Άτομα"
 
 #: includes/controllers/search_ctrl.php:883
 msgid "Site: "
-msgstr ""
+msgstr "Τοποθεσία:"
 
 #: includes/controllers/search_ctrl.php:883
 msgid " contained the following"
-msgstr ""
+msgstr "περιείχε τα ακόλουθα"
 
 #: includes/controllers/search_ctrl.php:918
 msgid "to"
-msgstr ""
+msgstr "έως"
 
 #: includes/controllers/search_ctrl.php:933
 msgid "Be sure to select at least one remote site."
-msgstr ""
+msgstr "Σιγουρευτείτε ότι επιλέξατε τουλάχιστον μία απομακρυσμένη τοποθεσία."
 
 #: includes/controllers/search_ctrl.php:988
 msgid "Result Page"
-msgstr ""
+msgstr "Σελίδα αποτελέσματος"
 
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
 msgid "Source Information"
-msgstr ""
+msgstr "Πληροφορίες πηγής"
 
 #: includes/controllers/source_ctrl.php:199
 #: includes/controllers/source_ctrl.php:206
@@ -13262,7 +13262,7 @@ msgstr "Edit Privacy"
 
 #: includes/controllers/timeline_ctrl.php:275
 msgid "Husband's age"
-msgstr ""
+msgstr "Ηλικία συζύγου (άντρα)"
 
 #: includes/controllers/timeline_ctrl.php:282
 msgid "Wife's age"
@@ -13272,77 +13272,77 @@ msgstr ""
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "January"
-msgstr ""
+msgstr "Ιανουάριος"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "February"
-msgstr ""
+msgstr "Φεβρουάριος"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "August"
-msgstr ""
+msgstr "Αύγουστος"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "September"
-msgstr ""
+msgstr "Σεπτέμβριος"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "October"
-msgstr ""
+msgstr "Οκτώβριος"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "November"
-msgstr ""
+msgstr "Νοέμβριος"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "December"
-msgstr ""
+msgstr "Δεκέμβριος"
 
 #: includes/extras/functions.pl.php:128
 #: includes/extras/functions.sl.php:113
 #: includes/functions/functions_date.php:82
 msgid "Infant"
-msgstr ""
+msgstr "Βρέφος"
 
 #: includes/extras/functions.pl.php:129
 #: includes/extras/functions.sl.php:114
 #: includes/functions/functions_date.php:83
 msgid "Stillborn"
-msgstr ""
+msgstr "Θνησιγενές"
 
 #: includes/extras/functions.pl.php:148
 #: includes/extras/functions.sl.php:123
 #: includes/functions/functions_date.php:88
 msgid "day"
-msgstr ""
+msgstr "ημέρα"
 
 #: includes/extras/functions.pl.php:149
 #: includes/extras/functions.sl.php:124
 #: includes/functions/functions_date.php:89
 msgid "days"
-msgstr ""
+msgstr "ημέρες"
 
 #: includes/extras/functions.pl.php:150
 #: includes/functions/functions_date.php:90
 msgid "week"
-msgstr ""
+msgstr "εβδομάδα"
 
 #: includes/extras/functions.pl.php:153
 #: includes/functions/functions_date.php:91
 msgid "weeks"
-msgstr ""
+msgstr "εβδομάδες"
 
 #: includes/extras/functions.pl.php:366
 #, fuzzy
@@ -13351,15 +13351,15 @@ msgstr "Μορφή Απεικόνισης Ημερομηνίας:"
 
 #: includes/extras/functions.pl.php:370
 msgid "Lodger"
-msgstr ""
+msgstr "Ένοικος"
 
 #: includes/extras/functions.pl.php:374
 msgid "Slave"
-msgstr ""
+msgstr "Δούλος"
 
 #: includes/extras/functions.pl.php:378
 msgid "Attending"
-msgstr ""
+msgstr "Παρακολούθηση"
 
 #: includes/extras/functions.pl.php:382
 msgid "Guardian"
@@ -13367,31 +13367,31 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:386
 msgid "Nurse"
-msgstr ""
+msgstr "Νοσηλευτής"
 
 #: includes/extras/functions.pl.php:390
 msgid "Attendant"
-msgstr ""
+msgstr "Ακόλουθος"
 
 #: includes/extras/functions.pl.php:394
 msgid "Employee"
-msgstr ""
+msgstr "Εργαζόμενος"
 
 #: includes/extras/functions.pl.php:398
 msgid "Friend"
-msgstr ""
+msgstr "Φίλος"
 
 #: includes/extras/functions.pl.php:402
 msgid "Servant"
-msgstr ""
+msgstr "Υπηρέτης"
 
 #: includes/extras/functions.pl.php:406
 msgid "Seller"
-msgstr ""
+msgstr "Πωλητής"
 
 #: includes/extras/functions.pl.php:410
 msgid "Owner"
-msgstr ""
+msgstr "Κάτοχος"
 
 #: includes/extras/functions.pl.php:414
 msgid "Ward"
@@ -13399,19 +13399,19 @@ msgstr ""
 
 #: includes/functions/functions.php:188
 msgid "File successfully uploaded"
-msgstr ""
+msgstr "Η Αποστολή Αρχείου ολοκληρώθηκε με επιτυχία"
 
 #: includes/functions/functions.php:191
 msgid "Uploaded file exceeds the allowed size"
-msgstr ""
+msgstr "Uploaded file exceeds the allowed size"
 
 #: includes/functions/functions.php:193
 msgid "File was only partially uploaded, please try again"
-msgstr ""
+msgstr "File was only partially uploaded, please try again"
 
 #: includes/functions/functions.php:195
 msgid "No file was received. Please upload again."
-msgstr ""
+msgstr "No file was received. Upload again."
 
 #: includes/functions/functions.php:197
 msgid "Missing PHP temporary directory"
@@ -13427,15 +13427,15 @@ msgstr ""
 
 #: includes/functions/functions.php:355
 msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "Σφάλμα!!! Αδυναμία εγγραφής στο αρχείο προσαρμογών του PhpGedView. Παρκαλώ ελέγξτε τα δικαιώματα πρόσβασης του αρχείου και του φακέλλου και δοκιμάστε ξανά."
 
 #: includes/functions/functions.php:2004
 msgid "The script timed out before a relationship could be found."
-msgstr ""
+msgstr "Ξεπεράστηκε ο επιτρεπόμενος χρόνος του σεναρίου, πριν βρεθεί κάποια συγγένεια."
 
 #: includes/functions/functions_charts.php:288
 msgid "Children"
-msgstr ""
+msgstr "Παιδιά"
 
 #: includes/functions/functions_charts.php:293
 #, fuzzy
@@ -13445,16 +13445,16 @@ msgstr "Προσθήκη Παιδιού"
 #: includes/functions/functions_charts.php:448
 #: includes/functions/functions_charts.php:938
 msgid "This family remained childless"
-msgstr ""
+msgstr "Αυτή η οικογένεια παρέμεινε άτεκνη"
 
 #: includes/functions/functions_charts.php:487
 #: includes/functions/functions_charts.php:514
 msgid "Family Group Information"
-msgstr ""
+msgstr "Πληροφορίες οικογενειακής ομάδας"
 
 #: includes/functions/functions_charts.php:521
 msgid "No facts for this family."
-msgstr ""
+msgstr "Δεν υπάρχουν γεγονότα για αυτή την οικογένεια"
 
 #: includes/functions/functions_charts.php:532
 #, fuzzy
@@ -13515,11 +13515,11 @@ msgstr ""
 #: includes/functions/functions_edit.php:424
 #: includes/functions/functions_edit.php:746
 msgid "Save and go to new record"
-msgstr ""
+msgstr "Αποθήκευση και μετάβαση στη νέα εγγραφή"
 
 #: includes/functions/functions_edit.php:1371
 msgid "No Temple - Living Ordinance"
-msgstr ""
+msgstr "No Temple - Living Ordinance"
 
 #: includes/functions/functions_edit.php:1458
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
@@ -13551,7 +13551,7 @@ msgstr ""
 #: includes/functions/functions_export.php:598
 #: includes/functions/functions_export.php:638
 msgid "Creating"
-msgstr ""
+msgstr "Creating"
 
 #: includes/functions/functions_export.php:493
 #: includes/functions/functions_export.php:531
@@ -13559,7 +13559,7 @@ msgstr ""
 #: includes/functions/functions_export.php:616
 #: includes/functions/functions_export.php:658
 msgid "Creation of new file failed, a file with that name already exists:"
-msgstr ""
+msgstr "Creation of new file failed, a file with that name already exists:"
 
 #: includes/functions/functions_export.php:502
 #: includes/functions/functions_export.php:540
@@ -13567,7 +13567,7 @@ msgstr ""
 #: includes/functions/functions_export.php:625
 #: includes/functions/functions_export.php:667
 msgid "Creation of new file successful:"
-msgstr ""
+msgstr "Creation of new file succeful:"
 
 #: includes/functions/functions_export.php:505
 #: includes/functions/functions_export.php:543
@@ -13575,7 +13575,7 @@ msgstr ""
 #: includes/functions/functions_export.php:628
 #: includes/functions/functions_export.php:670
 msgid "Cannot create"
-msgstr ""
+msgstr "Cannot create"
 
 #: includes/functions/functions_export.php:505
 #: includes/functions/functions_export.php:543
@@ -13583,14 +13583,14 @@ msgstr ""
 #: includes/functions/functions_export.php:628
 #: includes/functions/functions_export.php:670
 msgid "Check access rights on this directory."
-msgstr ""
+msgstr "Check access rights on this directory."
 
 #: includes/functions/functions_export.php:547
 #: includes/functions/functions_export.php:592
 #: includes/functions/functions_export.php:632
 #: includes/functions/functions_export.php:674
 msgid "File is not created."
-msgstr ""
+msgstr "File is not created."
 
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
@@ -13608,11 +13608,11 @@ msgstr ""
 #: includes/functions/functions_mediadb.php:774
 #: includes/functions/functions_mediadb.php:797
 msgid "Directory created"
-msgstr ""
+msgstr "Δημιουργήθηκε Φάκελος"
 
 #: includes/functions/functions_mediadb.php:977
 msgid "Upload successful."
-msgstr ""
+msgstr "Επιτυχής Αποστολή"
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
@@ -13623,7 +13623,7 @@ msgstr "Αποστολή Αρχείου GEDCOM"
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
 msgid "Media file to upload"
-msgstr ""
+msgstr "Αρχείο Πολυμέσων"
 
 #: includes/functions/functions_mediadb.php:1038
 #: includes/functions/functions_mediadb.php:1057
@@ -13646,7 +13646,7 @@ msgstr ""
 #: includes/functions/functions_mediadb.php:1053
 #: includes/functions/functions_mediadb.php:1220
 msgid "Thumbnail to upload"
-msgstr ""
+msgstr "Thumbnail"
 
 #: includes/functions/functions_mediadb.php:1063
 #: includes/functions/functions_mediadb.php:1228
@@ -13663,7 +13663,7 @@ msgstr ""
 #: includes/functions/functions_mediadb.php:1076
 #: includes/functions/functions_mediadb.php:1282
 msgid "Folder name on server"
-msgstr ""
+msgstr "Όνομα φακέλου στον εξυπηρετητή"
 
 #: includes/functions/functions_mediadb.php:1083
 #: includes/functions/functions_mediadb.php:1290
@@ -13690,55 +13690,55 @@ msgstr ""
 
 #: includes/functions/functions_print.php:166
 msgid "Family with spouse"
-msgstr ""
+msgstr "Οικογένεια με σύζυγο"
 
 #: includes/functions/functions_print.php:209
 msgid "Zoom in/out on this box."
-msgstr ""
+msgstr "Μεγένθυση/Σμίκρυνση στο κουτί αυτό."
 
 #: includes/functions/functions_print.php:267
 msgid "Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person."
-msgstr ""
+msgstr "Συνδέει σε διαγράμματα, οικογένειες, και στενούς συγγενείς του ατόμου αυτού. Κάντε κλικ στο εικονίδιο, για να προβάλετε αυτή τη σελίδα αρχίζοντας από αυτό το άτομο."
 
 #: includes/functions/functions_print.php:575
 msgid "Are you sure you want to delete this fact?"
-msgstr ""
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το γεγονός;"
 
 #: includes/functions/functions_print.php:582
 msgid "Are you sure you want to delete this person?"
-msgstr ""
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το άτομο από το αρχείο GEDCOM;"
 
 #: includes/functions/functions_print.php:661
 msgid "Print"
-msgstr ""
+msgstr "Εκτύπωση"
 
 #: includes/functions/functions_print.php:662
 msgid "Back to normal view"
-msgstr ""
+msgstr "Επιστροφή σε κανονική προβολή"
 
 #: includes/functions/functions_print.php:730
 msgid "Total Database Queries: "
-msgstr ""
+msgstr "Σύνολο επερωτήσεων στη βάση δεδομένων: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total privacy checks: "
-msgstr ""
+msgstr "Σύνολο ελέγχων ιδιωτικότητας: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total Memory Usage:"
-msgstr ""
+msgstr "Σύνολο χρήσης μνήμης:"
 
 #: includes/functions/functions_print.php:881
 msgid "For technical support or genealogy questions, please contact"
-msgstr ""
+msgstr "Για τεχνική υποστήριξη ή γενεαλογικές ερωτήσεις, παρακαλώ επικοινωνήστε με"
 
 #: includes/functions/functions_print.php:885
 msgid "For technical support and information contact"
-msgstr ""
+msgstr "Για τεχνική υποστήριξη και πληροφορίες επικοινωνήστε με"
 
 #: includes/functions/functions_print.php:891
 msgid "For help with genealogy questions contact"
-msgstr ""
+msgstr "Για βοήθεια με γενεαλογικές ερωτήσεις, παρακαλώ επικοινωνήστε με"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
@@ -13748,20 +13748,20 @@ msgstr "Genealogy Contact User"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
-msgstr ""
+msgstr "Σημείωση"
 
 #: includes/functions/functions_print.php:1330
 msgid "For more information contact"
-msgstr ""
+msgstr "Για περισσότερες πληροφορίες επικοινωνήστε με"
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
 msgid "Information about:"
-msgstr ""
+msgstr "Πληροφορίες για:"
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
-msgstr ""
+msgstr "<b>Το κείμενο βοήθειας, για την σελίδα αυτή ή για το θέμα αυτό, δεν είναι διαθέσιμο ακόμη</b>"
 
 #: includes/functions/functions_print.php:1468
 msgid "<span style=\"font-weight: bold\">The language variable does not exist. Please report this as it is an error.</span>"
@@ -13770,46 +13770,46 @@ msgstr ""
 #: includes/functions/functions_print.php:1802
 #: includes/functions/functions_print.php:1804
 msgid "nephew"
-msgstr ""
+msgstr "ανιψιός"
 
 #: includes/functions/functions_print.php:1812
 #: includes/functions/functions_print.php:1814
 msgid "niece"
-msgstr ""
+msgstr "ανιψιά"
 
 #: includes/functions/functions_print.php:1879
 #: includes/functions/functions_print.php:2083
 msgid "on the date of death"
-msgstr ""
+msgstr "την ημέρα του θανάτου"
 
 #: includes/functions/functions_print.php:1881
 #: includes/functions/functions_print.php:2085
 msgid "after death"
-msgstr ""
+msgstr "μετά τον θάνατο"
 
 #: includes/functions/functions_print.php:1975
 msgid "Mother's age"
-msgstr ""
+msgstr "Ηλικία μητέρας"
 
 #: includes/functions/functions_print.php:1984
 msgid "Father's age"
-msgstr ""
+msgstr "Ηλικία πατέρα"
 
 #: includes/functions/functions_print.php:1988
 msgid "Parent's age"
-msgstr ""
+msgstr "Ηλικία γονέα"
 
 #: includes/functions/functions_print.php:2233
 msgid "LDS Temple"
-msgstr ""
+msgstr "Ναός LDS"
 
 #: includes/functions/functions_print.php:2235
 msgid "LDS Temple Code:"
-msgstr ""
+msgstr "Κωδικός ναού LDS:"
 
 #: includes/functions/functions_print.php:2239
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #: includes/functions/functions_print.php:2380
 #, fuzzy
@@ -13818,7 +13818,7 @@ msgstr "Προσθήκη Νέου Ονόματος"
 
 #: includes/functions/functions_print.php:2537
 msgid "Find Repository"
-msgstr ""
+msgstr "Εύρεση χώρου φύλαξης"
 
 #: includes/functions/functions_print_facts.php:166
 #: includes/functions/functions_print_facts.php:217
@@ -13836,11 +13836,11 @@ msgstr "Γάμος"
 #: includes/functions/functions_print_facts.php:446
 #: includes/functions/functions_print_facts.php:448
 msgid "Unrecognized GEDCOM Code"
-msgstr ""
+msgstr "Μη αναγνωρίσιμος κώδικας GEDCOM"
 
 #: includes/functions/functions_print_facts.php:448
 msgid "This is an error, and we would like to fix it. Please report this error to"
-msgstr ""
+msgstr "Αυτό είναι ένα σφάλμα και θα θέλαμε να το διορθώσουμε. Παρακαλώ αναφέρετε αυτό το σφάλμα σε"
 
 #: includes/functions/functions_print_lists.php:76
 #, fuzzy
@@ -13849,24 +13849,24 @@ msgstr "Show living names"
 
 #: includes/functions/functions_print_lists.php:78
 msgid "Show only females."
-msgstr ""
+msgstr "Εμφάνιση μόνο θηλυκών."
 
 #: includes/functions/functions_print_lists.php:80
 msgid "Show only persons of whom the gender is not known."
-msgstr ""
+msgstr "Εμφάνιση μόνο ατόμων αγνώστου φύλου."
 
 #: includes/functions/functions_print_lists.php:83
 msgid "Show persons alive in the indicated year."
-msgstr ""
+msgstr "Εμφάνιση ζωντανών ατόμων κατά το υποδεικνυόμενο έτος."
 
 #: includes/functions/functions_print_lists.php:84
 msgid "Alive in Year"
-msgstr ""
+msgstr "Ζωντανοί στο έτος"
 
 #: includes/functions/functions_print_lists.php:85
 #: includes/functions/functions_print_lists.php:467
 msgid "Show people who are alive or couples where both partners are alive."
-msgstr ""
+msgstr "Εμφάνιση ατόμων που είναι ζωντανά ή ζευγαριών όπου και οι δύο σύντροφοι ζουν."
 
 #: includes/functions/functions_print_lists.php:86
 #, fuzzy
@@ -13876,52 +13876,52 @@ msgstr "Active"
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
 msgid "Show people who are dead or couples where both partners are deceased."
-msgstr ""
+msgstr "Εμφάνιση ατόμων που έχουν πεθάνει ή ζευγαριών όπου και οι δύο σύντροφοι απεβίωσαν."
 
 #: includes/functions/functions_print_lists.php:88
 msgid "Dead "
-msgstr ""
+msgstr "Νεκρός"
 
 #: includes/functions/functions_print_lists.php:89
 #: includes/functions/functions_print_lists.php:475
 msgid "Show «roots» couples or individuals.  These people may also be called «patriarchs».  They are individuals who have no parents recorded in the database."
-msgstr ""
+msgstr "Εμφάνιση «ριζών», ζευγάρια ή άτομα. Αυτά τα άτομα μπορούν επίσης να αποκαλεστούν «πατριάρχες». Είναι άτομα που δεν έχουν γονείς καταχωρημένους στην βάση δεδομένων."
 
 #: includes/functions/functions_print_lists.php:90
 #: includes/functions/functions_print_lists.php:476
 msgid "Roots"
-msgstr ""
+msgstr "Ρίζες"
 
 #: includes/functions/functions_print_lists.php:91
 #: includes/functions/functions_print_lists.php:477
 msgid "Show «leaves» couples or individuals.  These are individuals who are alive but have no children recorded in the database."
-msgstr ""
+msgstr "Εμφάνιση «φύλλων», ζευγαριών ή ατόμων. Αυτά είναι άτομα που είναι ζωντανά αλλά δεν έχουν καταχωρημένα παιδιά στην βάση δεδομένων."
 
 #: includes/functions/functions_print_lists.php:92
 #: includes/functions/functions_print_lists.php:478
 msgid "Leaves"
-msgstr ""
+msgstr "Φύλλα"
 
 #: includes/functions/functions_print_lists.php:94
 msgid "Show persons born more than 100 years ago."
-msgstr ""
+msgstr "Εμφάνιση ατόμων γεννημένων περισσότερο από 100 χρόνια πριν."
 
 #: includes/functions/functions_print_lists.php:96
 msgid "Show persons born within the last 100 years."
-msgstr ""
+msgstr "Εμφάνιση ατόμων γεννημένων τα τελευταία 100 χρόνια."
 
 #: includes/functions/functions_print_lists.php:98
 msgid "Show people who died more than 100 years ago."
-msgstr ""
+msgstr "Εμφάνιση ατόμων που πέθαναν περισσότερο από 100 χρόνια πριν."
 
 #: includes/functions/functions_print_lists.php:100
 msgid "Show people who died within the last 100 years."
-msgstr ""
+msgstr "Εμφάνιση ατόμων που πέθαναν μέσα στα τελευταία 100 χρόνια."
 
 #: includes/functions/functions_print_lists.php:102
 #: includes/functions/functions_print_lists.php:488
 msgid "Reset to the list defaults."
-msgstr ""
+msgstr "Επαναφορά στις προεπιλογές της λίστας."
 
 #: includes/functions/functions_print_lists.php:394
 #: includes/functions/functions_print_lists.php:779
@@ -13940,27 +13940,27 @@ msgstr "Show Execution Statistics"
 #: includes/functions/functions_print_lists.php:424
 #: includes/functions/functions_print_lists.php:805
 msgid "Decade of birth"
-msgstr ""
+msgstr "Δεκαετία γέννησης"
 
 #: includes/functions/functions_print_lists.php:426
 msgid "Decade of death"
-msgstr ""
+msgstr "Δεκαετία θανάτου"
 
 #: includes/functions/functions_print_lists.php:468
 msgid "Both alive "
-msgstr ""
+msgstr "Και οι δύο ζωντανοί"
 
 #: includes/functions/functions_print_lists.php:469
 msgid "Show couples where only the female partner is deceased."
-msgstr ""
+msgstr "Εμφάνιση ζευγαριών όπου μόνο η θηλυκή σύντροφος απεβίωσε."
 
 #: includes/functions/functions_print_lists.php:470
 msgid "Widower"
-msgstr ""
+msgstr "Χήρος"
 
 #: includes/functions/functions_print_lists.php:471
 msgid "Show couples where only the male partner is deceased."
-msgstr ""
+msgstr "Εμφάνιση ζευγαριών όπου μόνο ο αρσενικός σύντροφος απεβίωσε."
 
 #: includes/functions/functions_print_lists.php:472
 #, fuzzy
@@ -13969,19 +13969,19 @@ msgstr "Πλάτος"
 
 #: includes/functions/functions_print_lists.php:474
 msgid "Both dead "
-msgstr ""
+msgstr "Και οι δύο νεκροί"
 
 #: includes/functions/functions_print_lists.php:480
 msgid "Show couples with an unknown marriage date."
-msgstr ""
+msgstr "Εμφάνιση ζευγαριών με άγνωστη ημερομηνία γάμου."
 
 #: includes/functions/functions_print_lists.php:482
 msgid "Show couples who married more than 100 years ago."
-msgstr ""
+msgstr "Εμφάνιση ζευγαριών που παντρεύτηκαν περισσότερο από 100 χρόνια πριν."
 
 #: includes/functions/functions_print_lists.php:484
 msgid "Show couples who married within the last 100 years."
-msgstr ""
+msgstr "Εμφάνιση ζευγαριών που παντρεύτηκαν μέσα στα τελευταία 100 χρόνια."
 
 #: includes/functions/functions_print_lists.php:486
 #, fuzzy
@@ -13990,32 +13990,32 @@ msgstr "Show dead people"
 
 #: includes/functions/functions_print_lists.php:807
 msgid "Decade of marriage"
-msgstr ""
+msgstr "Δεκαετία γάμου"
 
 #: includes/functions/functions_print_lists.php:1033
 msgid "Total Shared Notes"
-msgstr ""
+msgstr "Σύνολο κοινόχρηστων σημειώσεων"
 
 #: includes/functions/functions_print_lists.php:1264
 #: includes/functions/functions_print_lists.php:1315
 msgid "Spouses"
-msgstr ""
+msgstr "Σύζυγοι"
 
 #: includes/functions/functions_print_lists.php:1523
 msgid "Total changes"
-msgstr ""
+msgstr "Σύνολο αλλαγών"
 
 #: includes/functions/functions_print_lists.php:2130
 msgid "Sort by this column."
-msgstr ""
+msgstr "Ταξινόμηση με βάση αυτή τη στήλη."
 
 #: includes/functions/functions_privacy.php:865
 msgid "Details about this person are private. Personal details will not be included."
-msgstr ""
+msgstr "Οι λεπτομέρειες για το άτομο αυτό είναι ιδιωτικές. Οι ατομικές λεπτομέρειες δεν θα συμπεριληφθούν."
 
 #: includes/functions/functions_privacy.php:877
 msgid "Details about this family are private. Family details will not be included."
-msgstr ""
+msgstr "Οι λεπτομέρειες για την οικογένεια αυτή είναι ιδιωτικές. Οι οικογενειακές λεπτομέρειες δεν θα συμπεριληφθούν."
 
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
@@ -15419,15 +15419,15 @@ msgstr "Λήψη Αρχείου GEDCOM"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
-msgstr ""
+msgstr "Το άτομο αυτό έχει ληφθεί από:"
 
 #: modules/clippings/clippings_ctrl.php:365
 msgid "This Family was downloaded from:"
-msgstr ""
+msgstr "Η οικογένεια αυτή έχει ληφθεί από:"
 
 #: modules/clippings/clippings_ctrl.php:380
 msgid "This Source was downloaded from:"
-msgstr ""
+msgstr "Η πηγή αυτή έχει ληφθεί από:"
 
 #: modules/clippings/pgv_module.php:46
 #, fuzzy
@@ -15934,7 +15934,7 @@ msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 msgid "Navigator"
-msgstr ""
+msgstr "Πλοηγός"
 
 #: modules/GEDFact_assistant/_CENS/census_query_1b.php:85
 #, fuzzy
@@ -16485,7 +16485,7 @@ msgstr ""
 
 #: modules/googlemap/pedigree_map.php:740
 msgid "Birth:"
-msgstr ""
+msgstr "Γέννηση:"
 
 #: modules/googlemap/pedigree_map.php:842
 msgid "Zoom&nbsp;in"
@@ -16909,7 +16909,7 @@ msgstr ""
 #: modules/lightbox/functions/lb_indi_doors_0.php:55
 #: modules/lightbox/functions/lb_indi_doors_1.php:58
 msgid "Research Assistant"
-msgstr ""
+msgstr "Βοηθός έρευνας"
 
 #: modules/lightbox/functions/lightbox_print_media.php:132
 msgid "Photo"
@@ -16950,7 +16950,7 @@ msgstr "Εύρεση μέσου"
 
 #: modules/media/media.php:63
 msgid "There are no media objects for this individual."
-msgstr ""
+msgstr "Δεν υπάρχουν αντικείμενα μέσων για το άτομο αυτό."
 
 #: modules/notes/notes.php:60
 #, fuzzy
@@ -16969,11 +16969,11 @@ msgstr "Διαγραφή αυτού του ατόμου"
 
 #: modules/personal_facts/personal_facts.php:72
 msgid "Events of close relatives"
-msgstr ""
+msgstr "Συμβάντα πλησιεστέρων συγγενών"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
-msgstr ""
+msgstr "Ιστορικά γεγονότα"
 
 #: modules/personal_facts/pgv_module.php:42
 msgid "Personal Facts"
@@ -16990,11 +16990,11 @@ msgstr "Προσθήκη Παιδιού"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
-msgstr ""
+msgstr "Προσθήκη Συζύγου-Άνδρα σε αυτή την οικογένεια"
 
 #: modules/relatives/relatives.php:161
 msgid "Add a wife to this family"
-msgstr ""
+msgstr "Προσθήκη Συζύγου-Γυναίκας σε αυτή την οικογένεια"
 
 #: modules/relatives/relatives.php:218
 #, fuzzy
@@ -17021,7 +17021,7 @@ msgstr "Προσθήκη νέου Σημειώματος/Σχολίου"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
-msgstr ""
+msgstr "Σύνδεση αυτού του ατόμου σε μια υπάρχουσα οικογένεια, ως σύζυγο (γυναίκα)"
 
 #: modules/sitemap/admin-config.php:40
 msgid "Sitemap"
@@ -17143,12 +17143,12 @@ msgstr ""
 
 #: modules/sources_tab/sources_tab.php:77
 msgid "There are no Source citations for this individual."
-msgstr ""
+msgstr "Δεν υπάρχουν αναφορές πηγών για το άτομο αυτό."
 
 #: themes/cloudy/footer.php:174
 #: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
-msgstr ""
+msgstr "Έχουν γίνει αλλαγές σε αυτό το GEDCOM."
 
 #~ msgid "FAMC:HUSB:SURN"
 #~ msgstr "Επώνυμο πατέρα"

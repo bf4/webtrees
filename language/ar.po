@@ -477,7 +477,7 @@ msgstr ""
 
 #: branches.php:166
 msgid "Yes"
-msgstr ""
+msgstr "نعم"
 
 #: calendar.php:102
 msgid "Anniversary Calendar"
@@ -532,7 +532,7 @@ msgstr ""
 
 #: calendar.php:201
 msgid "Gender"
-msgstr ""
+msgstr "جنس"
 
 #: calendar.php:212
 #: calendar.php:215
@@ -637,12 +637,12 @@ msgstr ""
 #: calendar.php:524
 #: calendar.php:606
 msgid "Male"
-msgstr ""
+msgstr "رجولي"
 
 #: calendar.php:527
 #: calendar.php:610
 msgid "Female"
-msgstr ""
+msgstr "أنثوي"
 
 #: calendar.php:536
 msgid "Filter"
@@ -1148,7 +1148,7 @@ msgstr ""
 #: editlang_edit_settings.php:486
 #: edit_privacy.php:97
 msgid "No"
-msgstr ""
+msgstr "أحد"
 
 #: editconfig_gedcom.php:1013
 msgid "Display Hebrew Gershayim"
@@ -2002,31 +2002,31 @@ msgstr ""
 
 #: editlang_edit_settings.php:357
 msgid "Sunday"
-msgstr ""
+msgstr "الأحد"
 
 #: editlang_edit_settings.php:357
 msgid "Monday"
-msgstr ""
+msgstr "الأثنين"
 
 #: editlang_edit_settings.php:357
 msgid "Tuesday"
-msgstr ""
+msgstr "الثلاثاء"
 
 #: editlang_edit_settings.php:357
 msgid "Wednesday"
-msgstr ""
+msgstr "الأربعاء"
 
 #: editlang_edit_settings.php:357
 msgid "Thursday"
-msgstr ""
+msgstr "الخميس"
 
 #: editlang_edit_settings.php:357
 msgid "Friday"
-msgstr ""
+msgstr "الجمعه"
 
 #: editlang_edit_settings.php:357
 msgid "Saturday"
-msgstr ""
+msgstr "السبت"
 
 #: editlang_edit_settings.php:378
 msgid "Text direction"
@@ -11315,51 +11315,51 @@ msgstr ""
 
 #: statisticsplot.php:728
 msgid "Jan"
-msgstr ""
+msgstr "ياناير"
 
 #: statisticsplot.php:729
 msgid "Feb"
-msgstr ""
+msgstr "فبراير"
 
 #: statisticsplot.php:730
 msgid "March"
-msgstr ""
+msgstr "مارس"
 
 #: statisticsplot.php:731
 msgid "April"
-msgstr ""
+msgstr "ابريل"
 
 #: statisticsplot.php:732
 msgid "May"
-msgstr ""
+msgstr "مايو"
 
 #: statisticsplot.php:733
 msgid "June"
-msgstr ""
+msgstr "يونيو"
 
 #: statisticsplot.php:734
 msgid "July"
-msgstr ""
+msgstr "يوليو"
 
 #: statisticsplot.php:735
 msgid "Aug"
-msgstr ""
+msgstr "اغسطس"
 
 #: statisticsplot.php:736
 msgid "Sep"
-msgstr ""
+msgstr "سبتمبر"
 
 #: statisticsplot.php:737
 msgid "Oct"
-msgstr ""
+msgstr "اكتوبر"
 
 #: statisticsplot.php:738
 msgid "Nov"
-msgstr ""
+msgstr "نوفمبر"
 
 #: statisticsplot.php:739
 msgid "Dec"
-msgstr ""
+msgstr "ديسمبر"
 
 #: statisticsplot.php:805
 msgid " per gender"
@@ -12990,43 +12990,43 @@ msgstr ""
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "January"
-msgstr ""
+msgstr "ياناير"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "February"
-msgstr ""
+msgstr "فبراير"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "August"
-msgstr ""
+msgstr "اغسطس"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "September"
-msgstr ""
+msgstr "سبتمبر"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "October"
-msgstr ""
+msgstr "اكتوبر"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "November"
-msgstr ""
+msgstr "نوفمبر"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "December"
-msgstr ""
+msgstr "ديسمبر"
 
 #: includes/extras/functions.pl.php:128
 #: includes/extras/functions.sl.php:113
@@ -16153,7 +16153,7 @@ msgstr ""
 
 #: modules/googlemap/pedigree_map.php:740
 msgid "Birth:"
-msgstr ""
+msgstr "الوِدة:"
 
 #: modules/googlemap/pedigree_map.php:842
 msgid "Zoom&nbsp;in"
