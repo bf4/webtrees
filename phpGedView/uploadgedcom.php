@@ -248,7 +248,7 @@ if ($cleanup_needed == "cleanup_needed" && $continue == i18n::translate('Continu
 		$cleanup_needed = false;
 		$import = "true";
 	} else {
-		$error = str_replace("#GEDCOM#", $GEDFILENAME, $pgv_lang["error_header_write"]);
+		$error = i18n::translate('The GEDCOM file, <b>%s</b>, is not writable. Please check attributes and access rights.', $GEDFILENAME);
 	}
 }
 
@@ -587,7 +587,7 @@ if ($verify == "validate_form") {
 			$cleanup_needed = true;
 			print "<input type=\"hidden\" name=\"cleanup_needed\" value=\"cleanup_needed\">";
 			if (!file_is_writeable(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path')) && (file_exists(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path')))) {
-				print "<span class=\"error\">".str_replace("#GEDCOM#", $GEDCOM, $pgv_lang["error_header_write"])."</span>\n";
+				print "<span class=\"error\">".i18n::translate('The GEDCOM file, <b>%s</b>, is not writable. Please check attributes and access rights.', $GEDCOM))."</span>\n";
 				print "</td></tr>";
 			}
 			// NOTE: Check for BOM cleanup
