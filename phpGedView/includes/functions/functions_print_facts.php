@@ -151,9 +151,9 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($SHOW_FACT_ICONS)
 				echo $eventObj->Icon(), ' ';
 			echo i18n::translate($factref);
-			if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", $pgv_lang["number_sign"], $n_chil++;
-			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", $pgv_lang["number_sign"], $n_gchi++;
-			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", $pgv_lang["number_sign"], $n_ggch++;
+			if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", i18n::translate('#%d', $n_chil++);
+			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", i18n::translate('#%d', $n_gchi++);
+			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", i18n::translate('#%d', $n_ggch++);
 			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
 				$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 				$menu->addOnclick("return edit_record('$pid', $linenum);");
