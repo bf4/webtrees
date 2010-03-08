@@ -101,20 +101,6 @@ body,
 color:#494949;
 }
 
-/*	Local Fixes							 */
-
-.maxHeight {
-max-height:400px;
-height:auto!important;
-}
-/*
-div.small_inner_block {
-font-size: 13px;
-}
-*/
-/*		Begin Colors layout				 */
-/*		TopLinks Layout Begin			 */
-
 #toplinks {
 width:100%;
 height:36px;
@@ -1612,7 +1598,7 @@ border: 1px solid #999;
 padding-top: 12px;
 text-align: center;
 } 
-/* ca branch */
+/* tab support */
 
 dl {
 	margin-bottom:20px;
