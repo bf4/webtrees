@@ -251,7 +251,7 @@ if ($action=="update") {
 		if (!empty($_POST["gedcom_title"])) {
 			$gedcom_title=$_POST["gedcom_title"];
 		} else {
-			$gedcom_title=i18n::translate('Genealogy from [#GEDCOMFILE#]', $FILE);
+			$gedcom_title=i18n::translate('Genealogy from [%s]', $FILE);
 		}
 	}
 	
@@ -912,7 +912,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('GEDCOM Basics')."\" onclic
 					if (strtolower(substr(trim($path.$GEDFILENAME), -4)) != ".ged") $GEDFILENAME .= ".ged";
 				}
 				if ((!isFileExternal($GEDCOMPATH)) &&(!file_exists($path.$GEDFILENAME))) {
-					print "<br /><span class=\"error\">".i18n::translate('The GEDCOM file, <b>#GEDCOM#</b>, does not exist at the specified location.', $GEDCOMPATH)."</span>\n";
+					print "<br /><span class=\"error\">".i18n::translate('The GEDCOM file, <b>%s</b>, does not exist at the specified location.', $GEDCOMPATH)."</span>\n";
 				}
 			}
 		?>
