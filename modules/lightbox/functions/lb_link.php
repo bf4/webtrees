@@ -40,7 +40,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	 */
 //	function print_link_menu2($mediaid) {
         $mediaid=$media["XREF"];
-		global $pgv_lang, $TEXT_DIRECTION;
+		global $TEXT_DIRECTION;
 
 		$classSuffix = "";
 		if ($TEXT_DIRECTION=="rtl") $classSuffix = "_rtl";

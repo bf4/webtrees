@@ -36,7 +36,7 @@ if (!defined('PGV_AUTOCOMPLETE_LIMIT')) define('PGV_AUTOCOMPLETE_LIMIT', 500);
 class individuals_Sidebar extends Sidebar {
 
 	public function getContent() {
-		global $SHOW_MARRIED_NAMES, $pgv_lang;
+		global $SHOW_MARRIED_NAMES;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 		// Fetch a list of the initial letters of all surnames in the database
@@ -151,7 +151,7 @@ class individuals_Sidebar extends Sidebar {
 	}
 
 	public function getSurnameIndis($alpha, $surname) {
-		global $SHOW_MARRIED_NAMES, $pgv_lang;
+		global $SHOW_MARRIED_NAMES;
 		$indis=get_indilist_indis($surname, $alpha, '', $SHOW_MARRIED_NAMES, false, PGV_GED_ID);
 		$out = '<ul>';
 		$private_count = 0;
@@ -172,7 +172,7 @@ class individuals_Sidebar extends Sidebar {
 	}
 
 	public function search($query) {
-		global $TBLPREFIX, $pgv_lang;
+		global $TBLPREFIX;
 		if (strlen($query)<2) return '';
 		$sql=
 		"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".

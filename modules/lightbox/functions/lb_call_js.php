@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $tabno, $LB_MUSIC_FILE, $LB_SS_SPEED, $LB_TRANSITION, $TEXT_DIRECTION, $pgv_lang ;
+global $tabno, $LB_MUSIC_FILE, $LB_SS_SPEED, $LB_TRANSITION, $TEXT_DIRECTION;
 
 loadLangFile("lightbox:lang");
 

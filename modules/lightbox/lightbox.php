@@ -25,7 +25,7 @@ class lightbox_Tab extends media_Tab {
 	
 	public function getContent() {
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
-		global $pgv_lang, $pgv_changes, $view;
+		global $pgv_changes, $view;
 		global $GEDCOM, $MEDIATYPE, $pgv_changes;
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
