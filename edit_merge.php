@@ -239,8 +239,7 @@ if ($action!="choose") {
 					}
 					write_changes();
 					$rec=GedcomRecord::getInstance($gid1);
-					$pid=$rec->getXrefLink(); // $pid is embedded in $pgv_lang['record_updated']
-					echo '<br />', print_text('record_updated', 0, 1), '<br />';
+					echo '<br />', i18n::translate('Record %s successfully updated.', $rec->getXrefLink()), '<br />';
 					$fav_count=update_favorites($gid2, $gid1);
 					if ($fav_count > 0) {
 						echo '<br />', $fav_count, ' ', i18n::translate('favorites updated.'), '<br />';
