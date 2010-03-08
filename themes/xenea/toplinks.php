@@ -127,7 +127,6 @@ $menubar = new MenuBar();
 	</tr>
 </table>
 <br />
-<?php require PGV_ROOT.'includes/accesskeyHeaders.php'; ?>
 </div>
 <!-- close div for div id="header" -->
 <?php
