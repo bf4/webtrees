@@ -39,6 +39,10 @@ class personal_facts_PGVModule extends PGVModule {
 	protected $_tab = null;
 
 	public function getName() {
+		return 'personal_facts';
+	}
+
+	public function getTitle() {
 		return i18n::translate('Personal Facts');
 	}
 

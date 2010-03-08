@@ -11,6 +11,10 @@ class family_nav_PGVModule extends PGVModule {
 	protected $_sidebar = null;
 
 	public function getName() {
+		return 'family_nav';
+	}
+
+	public function getTitle() {
 		return i18n::translate('Family Navigator');
 	}
 

@@ -20,6 +20,10 @@ class lightbox_PGVModule extends PGVModule {
 	protected $_tab = null;
 
 	public function getName() {
+		return 'lightbox';
+	}
+
+	public function getTitle() {
 		return i18n::translate('Lightbox');
 	}
 

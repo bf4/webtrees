@@ -40,6 +40,10 @@ class individuals_PGVModule extends PGVModule {
 	protected $_sidebar = null;
 
 	public function getName() {
+		return 'individuals';
+	}
+
+	public function getName() {
 		return i18n::translate('Individuals');
 	}
 
