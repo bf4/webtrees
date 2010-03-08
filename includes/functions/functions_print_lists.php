@@ -1876,7 +1876,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
 		$return .= "<br /><div class=\"indent\">";
 		$return .= i18n::translate($value['fact']).' - '.$value['date']->Display(true);
-		if ($value['anniv']!=0) $return .= " (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
+		if ($value['anniv']!=0) $return .= " (" . i18n::translate('%s year anniversary', $value['anniv']).")";
 		if (!empty($value['plac'])) $return .= " - <a href=\"".encode_url(get_place_url($value['plac']))."\">".$value['plac']."</a>";
 		$return .= "</div>";
 	}
