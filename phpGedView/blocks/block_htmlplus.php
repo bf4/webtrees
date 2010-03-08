@@ -37,13 +37,13 @@ define('PGV_BLOCK_HTMLPLUS_PHP', '');
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 require_once PGV_ROOT.'includes/classes/class_stats.php';
 
-$PGV_BLOCKS['print_htmlplus_block']['name']			= $pgv_lang['htmlplus_block_name'];
+$PGV_BLOCKS['print_htmlplus_block']['name']			= i18n::translate('Advanced HTML');
 $PGV_BLOCKS['print_htmlplus_block']['descr']		= 'htmlplus_block_descr';
 $PGV_BLOCKS['print_htmlplus_block']['canconfig']	= true;
 $PGV_BLOCKS['print_htmlplus_block']['config']		= array(
 	'cache'=>0,
 	'title'=>'',
-	'html'=>"{$pgv_lang['html_block_sample_part1']} <img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" alt=\"{$pgv_lang['config_block']}\" /> {$pgv_lang['html_block_sample_part2']}",
+	'html'=>"{i18n::translate('<p class="blockhc"><b>Put your title here</b></p><br /><p>Click the configure button')} <img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" alt=\"{i18n::translate('Configure')}\" /> {i18n::translate('to change what is printed here.</p>')}",
 	'gedcom'=>'__current__',
 	'compat'=>0,
 	'ui'=>0
@@ -148,7 +148,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 					$name = PGV_USER_NAME;
 				}
 				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
-				."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>"
+				."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{i18n::translate('Configure')}\" /></a>"
 				;
 			}
 		}
@@ -166,7 +166,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 			$content .= "<br />"
 			.print_help_link('index_htmlplus_ahelp', 'qm_ah', '', false, true)
 			."<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=500,scrollbars=1,resizable=1'); return false;\">"
-			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" title=\"{$pgv_lang['config_block']}\" /></a>"
+			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{i18n::translate('Configure')}\" title=\"{i18n::translate('Configure')}\" /></a>"
 			;
 		}
 	}
@@ -220,7 +220,7 @@ function print_htmlplus_block_config($config)
 	// templates
 	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_template', 'qm_ah', '', false, true)
-		."{$pgv_lang['htmlplus_block_templates']}</td>\n"
+		."{i18n::translate('Templates')}</td>\n"
 		."\t\t<td class=\"optionbox\">\n"
 	;
 	if($useFCK)
@@ -241,7 +241,7 @@ function print_htmlplus_block_config($config)
 	{
 		print "\t\t\t<select name=\"template\" onchange=\"document.block.html.value=document.block.template.options[document.block.template.selectedIndex].value;\">\n";
 	}
-	print "\t\t\t\t<option value=\"\">{$pgv_lang['htmlplus_block_custom']}</option>\n";
+	print "\t\t\t\t<option value=\"\">{i18n::translate('Custom')}</option>\n";
 	foreach($templates as $tpl)
 	{
 		print "\t\t\t\t<option value=\"{$tpl['template']}\">{$tpl['title']}</option>\n";
@@ -258,11 +258,11 @@ function print_htmlplus_block_config($config)
 		if($config['gedcom'] == '__default__'){$sel_default = ' selected="selected"';}else{$sel_default = '';}
 		print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
 			.print_help_link('index_htmlplus_gedcom', 'qm_ah', '', false, true)
-			."{$pgv_lang['htmlplus_block_gedcom']}</td>\n"
+			."{i18n::translate('Family Tree')}</td>\n"
 			."\t\t<td class=\"optionbox\">\n"
 			."\t\t\t<select name=\"gedcom\">\n"
-			."\t\t\t\t<option value=\"__current__\"{$sel_current}>{$pgv_lang['htmlplus_block_current']}</option>\n"
-			."\t\t\t\t<option value=\"__default__\"{$sel_default}>{$pgv_lang['htmlplus_block_default']}</option>\n"
+			."\t\t\t\t<option value=\"__current__\"{$sel_current}>{i18n::translate('Current')}</option>\n"
+			."\t\t\t\t<option value=\"__default__\"{$sel_default}>{i18n::translate('Default')}</option>\n"
 		;
 		foreach($gedcoms as $ged_id=>$ged_name)
 		{
@@ -277,7 +277,7 @@ function print_htmlplus_block_config($config)
 	// html
 	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">\n"
 		.print_help_link('index_htmlplus_content', 'qm_ah', '', false, true)
-		."{$pgv_lang['htmlplus_block_content']}<br />\n\t\t\t<br />\n"
+		."{i18n::translate('Content')}<br />\n\t\t\t<br />\n"
 		."\t\t</td>\n"
 		."\t\t<td class=\"optionbox\">\n\t\t\t"
 	;
@@ -306,7 +306,7 @@ function print_htmlplus_block_config($config)
 	if($config['compat'] == 1){$compat = ' checked="checked"';}else{$compat = '';}
 	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_compat', 'qm_ah', '', false, true)
-		."{$pgv_lang['htmlplus_block_compat']}</td>\n"
+		."{i18n::translate('Compatibility Mode')}</td>\n"
 		."\t\t<td class=\"optionbox\"><input type=\"checkbox\" name=\"compat\" value=\"1\"{$compat} /></td>\n"
 		."\t</tr>\n"
 	;
@@ -315,7 +315,7 @@ function print_htmlplus_block_config($config)
 	if($config['ui'] == 1){$ui = ' checked="checked"';}else{$ui = '';}
 	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_ui', 'qm_ah', '', false, true)
-		."{$pgv_lang['htmlplus_block_ui']}</td>\n"
+		."{i18n::translate('Extended Interface')}</td>\n"
 		."\t\t<td class=\"optionbox\"><input type=\"checkbox\" name=\"ui\" value=\"1\"{$ui} /></td>\n"
 		."\t</tr>\n"
 	;
@@ -325,7 +325,7 @@ function print_htmlplus_block_config($config)
 	{
 		print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
 			.print_help_link('cache_life', 'qm', '', false, true)
-			."{$pgv_lang['cache_life']}</td>\n"
+			."{i18n::translate('Cache file life')}</td>\n"
 			."\t\t<td class=\"optionbox\">"
 			."<input type=\"text\" name=\"cache\" size=\"2\" value=\"{$config['cache']}\" /></td>\n"
 			."\t</tr>\n"
