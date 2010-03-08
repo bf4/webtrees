@@ -24,34 +24,34 @@ msgstr "Lisa uus meedia objekt"
 #: addremotelink.php:43
 #: addsearchlink.php:35
 msgid "<b>Access Denied</b><br />You do not have access to this resource."
-msgstr ""
+msgstr "<b>Juurdepääs keelatud</b><br />Sul ei ole ligipääsu siia."
 
 #: addmedia.php:80
 #: addremotelink.php:45
 msgid "This user name cannot edit this GEDCOM."
-msgstr ""
+msgstr "Kasutajal ei ole õigust muuta GEDCOMi."
 
 #: addmedia.php:81
 #: addremotelink.php:47
 msgid "Editing this GEDCOM has been disabled by the administrator."
-msgstr ""
+msgstr "GEDCOM muutmine on administraatori poolt ära keelatud."
 
 #: addmedia.php:83
 #: addremotelink.php:49
 msgid "Privacy settings prevent you from editing this record."
-msgstr ""
+msgstr "Privaatsusseadete tõttu ei saa sa seda kirjet muuta."
 
 #: addmedia.php:84
 #: addremotelink.php:51
 msgid "You have no access to"
-msgstr ""
+msgstr "Sul ei ole juurdepääsu"
 
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
 #: addremotelink.php:274
 msgid "Close Window"
-msgstr ""
+msgstr "Sulge aken"
 
 #: addmedia.php:192
 msgid "Media file already exists."
@@ -96,7 +96,7 @@ msgstr ""
 #: addmedia.php:564
 #: addmedia.php:572
 msgid "Update successful"
-msgstr ""
+msgstr "Uuendamine õnnestus"
 
 #: addremotelink.php:36
 #: addremotelink.php:116
@@ -120,7 +120,7 @@ msgstr ""
 
 #: addremotelink.php:80
 msgid "Database ID"
-msgstr ""
+msgstr "GEDCOM ID"
 
 #: addremotelink.php:121
 #: addsearchlink.php:74
@@ -129,7 +129,7 @@ msgstr ""
 
 #: addremotelink.php:140
 msgid "Site Location"
-msgstr ""
+msgstr "Koht"
 
 #: addremotelink.php:150
 msgid "Local site"
@@ -146,7 +146,7 @@ msgstr ""
 
 #: addremotelink.php:173
 msgid "Person ID"
-msgstr ""
+msgstr "Isiku ID"
 
 #: addremotelink.php:202
 msgid "Type in a new site."
@@ -155,7 +155,7 @@ msgstr ""
 #: addremotelink.php:205
 #: addremotelink.php:227
 msgid "Title:"
-msgstr ""
+msgstr "Pealkiri"
 
 #: addremotelink.php:208
 msgid "Site URL:"
@@ -167,7 +167,7 @@ msgstr ""
 
 #: addremotelink.php:214
 msgid "Database ID:"
-msgstr ""
+msgstr "GEDCOM ID:"
 
 #: addremotelink.php:217
 #, fuzzy
@@ -181,7 +181,7 @@ msgstr "Parool"
 
 #: addremotelink.php:230
 msgid "GEDCOM File:"
-msgstr ""
+msgstr "GEDCOM fail:"
 
 #: addremotelink.php:250
 #, fuzzy
@@ -208,27 +208,27 @@ msgstr ""
 
 #: addsearchlink.php:78
 msgid "Mother"
-msgstr ""
+msgstr "Ema"
 
 #: addsearchlink.php:79
 msgid "Father"
-msgstr ""
+msgstr "Isa"
 
 #: addsearchlink.php:80
 msgid "Husband"
-msgstr ""
+msgstr "Mees"
 
 #: addsearchlink.php:81
 msgid "Wife"
-msgstr ""
+msgstr "Naine"
 
 #: addsearchlink.php:82
 msgid "Son"
-msgstr ""
+msgstr "Poeg"
 
 #: addsearchlink.php:83
 msgid "Daughter"
-msgstr ""
+msgstr "Tütar"
 
 #: admin.php:51
 #: admin.php:137
@@ -242,7 +242,7 @@ msgstr "Viimased muudatused"
 
 #: admin.php:75
 msgid "View log files"
-msgstr ""
+msgstr "Vaata logifaile"
 
 #: admin.php:105
 msgid "Edit Image Manipulation Configuration"
@@ -294,11 +294,11 @@ msgstr ""
 
 #: admin.php:191
 msgid "View readme.txt file"
-msgstr ""
+msgstr "Vaata faili readme.txt"
 
 #: admin.php:191
 msgid "README documentation"
-msgstr ""
+msgstr "README dokumentatsioon"
 
 #: admin.php:194
 msgid "Show PHP information page"
@@ -340,7 +340,7 @@ msgstr "Lisa uus märkus"
 
 #: admin.php:260
 msgid "Configuration"
-msgstr ""
+msgstr "Konfigureerimine"
 
 #: admin.php:262
 msgid "User Information Migration tool"
@@ -348,7 +348,7 @@ msgstr ""
 
 #: admin.php:266
 msgid "User administration"
-msgstr ""
+msgstr "Kasutajate administreerimine"
 
 #: admin.php:268
 msgid "Backup"
@@ -390,7 +390,7 @@ msgstr ""
 #: ancestry.php:237
 #: ancestry.php:254
 msgid "Ancestry Chart"
-msgstr ""
+msgstr "Esivanemate tabel"
 
 #: ancestry.php:72
 #: compact.php:82
@@ -413,16 +413,16 @@ msgstr "Nimede loend"
 
 #: ancestry.php:105
 msgid "Booklet"
-msgstr ""
+msgstr "Raamat"
 
 #: ancestry.php:123
 msgid "Show cousins"
-msgstr ""
+msgstr "Näita tädide ja onude lapsi"
 
 #: ancestry.php:130
 #: calendar.php:404
 msgid "Individuals"
-msgstr ""
+msgstr "Isikuid"
 
 #: ancestry.php:136
 #: calendar.php:405
@@ -434,7 +434,7 @@ msgstr "Järjesta perekonnad"
 #: branches.php:74
 #: compact.php:90
 msgid "View"
-msgstr ""
+msgstr "Vaata"
 
 #: ancestry.php:149
 #: branches.php:241
@@ -443,7 +443,7 @@ msgstr ""
 
 #: ancestry.php:170
 msgid "Show Details"
-msgstr ""
+msgstr "Näita detaile"
 
 #: ancestry.php:192
 msgid "Click on any of the boxes to get more information about that person."
@@ -476,11 +476,11 @@ msgstr "Otsi sõna sellisena nagu tead (Soundex)"
 
 #: branches.php:79
 msgid "Basic"
-msgstr ""
+msgstr "Tavaline"
 
 #: branches.php:81
 msgid "Daitch-Mokotoff"
-msgstr ""
+msgstr "Daitch-Mokotoff"
 
 #: branches.php:104
 msgid "Pedigree Chart Root Person"
@@ -488,39 +488,39 @@ msgstr "Esivanemate puu algab"
 
 #: branches.php:166
 msgid "Yes"
-msgstr ""
+msgstr "Jah"
 
 #: calendar.php:102
 msgid "Anniversary Calendar"
-msgstr ""
+msgstr "Tähtpäevade kalender"
 
 #: calendar.php:122
 msgid "On This Day ..."
-msgstr ""
+msgstr "Sellel päeval ..."
 
 #: calendar.php:125
 msgid "In This Month ..."
-msgstr ""
+msgstr "Sellel kuul ..."
 
 #: calendar.php:128
 msgid "In This Year ..."
-msgstr ""
+msgstr "Sellel aastal ..."
 
 #: calendar.php:137
 msgid "Day:"
-msgstr ""
+msgstr "Päev:"
 
 #: calendar.php:152
 msgid "Month:"
-msgstr ""
+msgstr "Kuu:"
 
 #: calendar.php:172
 msgid "Year:"
-msgstr ""
+msgstr "Aasta:"
 
 #: calendar.php:182
 msgid "Show"
-msgstr ""
+msgstr "Näita"
 
 #: calendar.php:187
 #: calendar.php:204
@@ -529,17 +529,17 @@ msgstr ""
 #: calendar.php:209
 #: calendar.php:441
 msgid "All People"
-msgstr ""
+msgstr "Kõik inimesed"
 
 #: calendar.php:191
 #: calendar.php:518
 msgid "Living People"
-msgstr ""
+msgstr "Elavad inimesed"
 
 #: calendar.php:195
 #: calendar.php:521
 msgid "Recent Years (&lt; 100 yrs)"
-msgstr ""
+msgstr "Viimased aastad (< 100 a)"
 
 #: calendar.php:201
 #, fuzzy
@@ -571,7 +571,7 @@ msgstr "Näita ainult sündinud, surnud ja abiellunud"
 
 #: calendar.php:235
 msgid "ALL"
-msgstr ""
+msgstr "KÕIK"
 
 #: calendar.php:238
 msgid "BIRT"
@@ -619,7 +619,7 @@ msgstr ""
 
 #: calendar.php:274
 msgid "Custom Event"
-msgstr ""
+msgstr "Kohandatud sündmus"
 
 #: calendar.php:282
 #: calendar.php:284
@@ -630,7 +630,7 @@ msgstr "Vaata arhiivi"
 #: calendar.php:287
 #: calendar.php:289
 msgid "View Month"
-msgstr ""
+msgstr "Vaata kuud"
 
 #: calendar.php:292
 #: calendar.php:294
@@ -650,21 +650,21 @@ msgstr "Järjesta perekonnad"
 
 #: calendar.php:477
 msgid "Day not set"
-msgstr ""
+msgstr "Päeva pole valitud"
 
 #: calendar.php:524
 #: calendar.php:606
 msgid "Male"
-msgstr ""
+msgstr "Mees"
 
 #: calendar.php:527
 #: calendar.php:610
 msgid "Female"
-msgstr ""
+msgstr "Naine"
 
 #: calendar.php:536
 msgid "Filter"
-msgstr ""
+msgstr "Leia"
 
 #: calendar.php:614
 msgid "unknown"
@@ -724,7 +724,7 @@ msgstr ""
 
 #: clippings.php:49
 msgid "Family Tree Clippings Cart"
-msgstr ""
+msgstr "Sugupuu väljalõigete korv"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
@@ -810,7 +810,7 @@ msgstr ""
 
 #: clippings.php:140
 msgid "Add"
-msgstr ""
+msgstr "Lisa"
 
 #: clippings.php:150
 msgid "Your Clippings Cart is empty."
@@ -842,19 +842,19 @@ msgstr ""
 
 #: clippings.php:206
 msgid "Visitor"
-msgstr ""
+msgstr "Külastaja"
 
 #: clippings.php:207
 msgid "Authenticated user"
-msgstr ""
+msgstr "Autenditud kasutaja"
 
 #: clippings.php:208
 msgid "GEDCOM administrator"
-msgstr ""
+msgstr "GEDCOM administraator"
 
 #: clippings.php:209
 msgid "Site administrator"
-msgstr ""
+msgstr "Veebiadministraator"
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
@@ -862,7 +862,7 @@ msgstr ""
 
 #: clippings.php:215
 msgid "Remove custom PGV tags? (eg. _PGVU, _THUM)"
-msgstr ""
+msgstr "Eemalda kohandatud PGV tagid? (näiteks. _PGVU, _THUM)"
 
 #: clippings.php:218
 msgid "Convert media path to"
@@ -895,7 +895,7 @@ msgstr ""
 #: compact.php:447
 #: compact.php:449
 msgid "Compact Chart"
-msgstr ""
+msgstr "Kompaktne skeem"
 
 #: compact.php:97
 msgid "Show ID numbers next to names"
@@ -915,7 +915,7 @@ msgstr ""
 #: descendancy.php:146
 #: descendancy.php:152
 msgid "Descendancy Chart"
-msgstr ""
+msgstr "Järglaste tabel"
 
 #: descendancy.php:120
 #: edit_interface.php:296
@@ -957,7 +957,7 @@ msgstr "Kustuta nimi"
 #: edit_interface.php:2464
 #: edit_interface.php:2725
 msgid "Cancel"
-msgstr ""
+msgstr "Tühista"
 
 #: dir_editor.php:240
 msgid "Remove all nonessential files"
@@ -1071,7 +1071,7 @@ msgstr ""
 #: editconfig_gedcom.php:2225
 #: edit_privacy.php:807
 msgid "Reset"
-msgstr ""
+msgstr "Taasta"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
@@ -1084,7 +1084,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:900
 msgid "Maximum upload size: "
-msgstr ""
+msgstr "Maksimaalne üleslaadimise maht: "
 
 #: editconfig_gedcom.php:903
 #: editconfig_gedcom.php:924
@@ -1103,7 +1103,7 @@ msgstr ""
 #: edit_merge.php:76
 #: edit_merge.php:79
 msgid "Unable to find record with ID"
-msgstr ""
+msgstr "Ei leia kiret, mille ID on"
 
 #: editconfig_gedcom.php:987
 msgid "Calendar format"
@@ -1176,7 +1176,7 @@ msgstr ""
 #: editlang_edit_settings.php:486
 #: edit_privacy.php:97
 msgid "No"
-msgstr ""
+msgstr "Ei"
 
 #: editconfig_gedcom.php:1013
 msgid "Display Hebrew Gershayim"
@@ -1365,11 +1365,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1331
 msgid "Welcome"
-msgstr ""
+msgstr "Tere, "
 
 #: editconfig_gedcom.php:1332
 msgid "MyGedView"
-msgstr ""
+msgstr "Minu GedView"
 
 #: editconfig_gedcom.php:1337
 msgid "Welcome text on Login page"
@@ -1461,11 +1461,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1474
 msgid "Landscape"
-msgstr ""
+msgstr "Põiki"
 
 #: editconfig_gedcom.php:1475
 msgid "Portrait"
-msgstr ""
+msgstr "Püstine"
 
 #: editconfig_gedcom.php:1480
 msgid "Place levels to show in person boxes"
@@ -1508,7 +1508,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1509
 msgid "Personal Facts and Details"
-msgstr ""
+msgstr "Isiku faktid ja detailid"
 
 #: editconfig_gedcom.php:1510
 msgid "Notes"
@@ -1516,7 +1516,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1511
 msgid "Sources"
-msgstr ""
+msgstr "Allikaid"
 
 #: editconfig_gedcom.php:1512
 #, fuzzy
@@ -1525,7 +1525,7 @@ msgstr "Leia Meedia"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
-msgstr ""
+msgstr "Lähemad sugulased"
 
 #: editconfig_gedcom.php:1514
 msgid "Tree"
@@ -1549,11 +1549,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1581
 msgid "after"
-msgstr ""
+msgstr "peale"
 
 #: editconfig_gedcom.php:1582
 msgid "before"
-msgstr ""
+msgstr "enne"
 
 #: editconfig_gedcom.php:1587
 msgid "Maximum number of surnames"
@@ -1960,7 +1960,7 @@ msgstr ""
 
 #: editgedcoms.php:187
 msgid "File not found."
-msgstr ""
+msgstr "Faili ei leitud."
 
 #: editgedcoms.php:191
 #, fuzzy
@@ -2037,31 +2037,31 @@ msgstr ""
 
 #: editlang_edit_settings.php:357
 msgid "Sunday"
-msgstr ""
+msgstr "Pühapäev"
 
 #: editlang_edit_settings.php:357
 msgid "Monday"
-msgstr ""
+msgstr "Esmaspäev"
 
 #: editlang_edit_settings.php:357
 msgid "Tuesday"
-msgstr ""
+msgstr "Teisipäev"
 
 #: editlang_edit_settings.php:357
 msgid "Wednesday"
-msgstr ""
+msgstr "Kolmapäev"
 
 #: editlang_edit_settings.php:357
 msgid "Thursday"
-msgstr ""
+msgstr "Neljapäev"
 
 #: editlang_edit_settings.php:357
 msgid "Friday"
-msgstr ""
+msgstr "Reede"
 
 #: editlang_edit_settings.php:357
 msgid "Saturday"
-msgstr ""
+msgstr "Laupäev"
 
 #: editlang_edit_settings.php:378
 msgid "Text direction"
@@ -2118,61 +2118,61 @@ msgstr ""
 #: editnews.php:34
 #: editnews.php:52
 msgid "Add/Edit Journal/News entry"
-msgstr ""
+msgstr "Lisa/Muuda päeviku/uudiste sissekannet"
 
 #: editnews.php:57
 msgid "Please enter a title."
-msgstr ""
+msgstr "Palun sisesta pealkiri."
 
 #: editnews.php:64
 msgid "Please enter some text for this News or Journal entry."
-msgstr ""
+msgstr "Palun sisesta selle uudise või päevikukande tekst."
 
 #: editnews.php:88
 msgid "Entry Text:"
-msgstr ""
+msgstr "Kande tekst:"
 
 #: editnews.php:125
 msgid "News/Journal entry successfully saved."
-msgstr ""
+msgstr "Uudiste/päeviku sissekande salvestamine õnnestus."
 
 #: edituser.php:71
 msgid "Duplicate user name.  A user with that user name already exists.  Please choose another user name."
-msgstr ""
+msgstr "Korduv kasutajanimi. Sellise kasutajanimega kasutaja on juba olemas.  Vali uus kasutajanimi."
 
 #: edituser.php:85
 msgid "User name contains invalid characters"
-msgstr ""
+msgstr "Kasutajanimi sisaldab sobimatuid sümboleid"
 
 #: edituser.php:129
 msgid "You must enter a user name."
-msgstr ""
+msgstr "Sisesta kasutajanimi."
 
 #: edituser.php:134
 #: edituser.php:139
 msgid "You must enter a first and last name."
-msgstr ""
+msgstr "Sisesta ees- ja perekonnanimi."
 
 #: edituser.php:144
 msgid "You must enter an email address."
-msgstr ""
+msgstr "Pead sisestama e-maili aadressi."
 
 #: edituser.php:149
 msgid "Passwords do not match."
-msgstr ""
+msgstr "Paroolid ei sobi kokku."
 
 #: edituser.php:154
 msgid "Passwords must contain at least 6 characters."
-msgstr ""
+msgstr "Parool peab sisaldama vähemalt 6 sümbolit."
 
 #: edituser.php:174
 msgid "My Account"
-msgstr ""
+msgstr "Minu konto"
 
 #: edituser.php:176
 #: edituser.php:301
 msgid "Update MyAccount"
-msgstr ""
+msgstr "Uuenda minu konto andmed"
 
 #: edituser.php:180
 #: edit_changes.php:124
@@ -2191,7 +2191,7 @@ msgstr "Muuda nime"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
-msgstr ""
+msgstr "GEDCOM INDI kirje ID"
 
 #: edituser.php:218
 msgid "Password"
@@ -2208,31 +2208,31 @@ msgstr "Parool"
 
 #: edituser.php:229
 msgid "Change Language"
-msgstr ""
+msgstr "Muuda keel"
 
 #: edituser.php:245
 msgid "Email Address"
-msgstr ""
+msgstr "E-mail"
 
 #: edituser.php:251
 msgid "My Theme"
-msgstr ""
+msgstr "Minu teema"
 
 #: edituser.php:253
 msgid "Site Default"
-msgstr ""
+msgstr "Veebilehe vaikimisi teema"
 
 #: edituser.php:266
 msgid "Preferred Contact Method"
-msgstr ""
+msgstr "Eelistatud suhtlusviis"
 
 #: edituser.php:281
 msgid "Visible to other users when online"
-msgstr ""
+msgstr "Veebilehel viibimine teistele kasutajatele nähtav."
 
 #: edituser.php:290
 msgid "Default Tab to show on Individual Information page"
-msgstr ""
+msgstr "Isiku informatsioonist vaikimisi näidatav leht"
 
 #: edit_changes.php:43
 #: edit_changes.php:61
@@ -2243,20 +2243,20 @@ msgstr "Vaata üle GEDCOM muudatused"
 #: edit_changes.php:66
 #: edit_changes.php:84
 msgid "Undo successful"
-msgstr ""
+msgstr "Taastamine õnnestus"
 
 #: edit_changes.php:71
 #: edit_changes.php:99
 msgid "Changes successfully accepted into database"
-msgstr ""
+msgstr "Muudatuste lisamine andmebaasi õnnestus"
 
 #: edit_changes.php:104
 msgid "There are currently no changes to be reviewed."
-msgstr ""
+msgstr "Ei ole ühtegi muudatust."
 
 #: edit_changes.php:116
 msgid "View Change Diff"
-msgstr ""
+msgstr "Vaata muudatusi"
 
 #: edit_changes.php:117
 #, fuzzy
@@ -2266,33 +2266,33 @@ msgstr "Vaata üle GEDCOM muudatused"
 #: edit_changes.php:118
 #: edit_interface.php:413
 msgid "Edit raw GEDCOM record"
-msgstr ""
+msgstr "Muuda GEDCOM Kirjet"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
-msgstr ""
+msgstr "Kirjele on tehtud järgmised muudatused:"
 
 #: edit_changes.php:122
 #: edit_changes.php:131
 msgid "Accept"
-msgstr ""
+msgstr "Nõustu"
 
 #: edit_changes.php:123
 msgid "Type"
-msgstr ""
+msgstr "Tüüp"
 
 #: edit_changes.php:125
 msgid "Date"
-msgstr ""
+msgstr "Kuupäev"
 
 #: edit_changes.php:127
 #: edit_changes.php:144
 msgid "Undo"
-msgstr ""
+msgstr "Taasta"
 
 #: edit_changes.php:136
 msgid "Send Message"
-msgstr ""
+msgstr "Saada sõnum"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
@@ -2303,11 +2303,11 @@ msgstr "Viimased muudatused"
 #: edit_changes.php:163
 #: edit_changes.php:181
 msgid "Undo all changes"
-msgstr ""
+msgstr "Tühista kõik muudatused"
 
 #: edit_changes.php:181
 msgid "Are you sure you want to undo all of the changes for this GEDCOM?"
-msgstr ""
+msgstr "Kas soovid kindlasti kõik sellele GEDCOMile tehtud muudatused tühistada?"
 
 #: edit_changes.php:186
 msgid "Decide for each change to either accept or reject it.<br /><br />To accept all changes at once, click <b>\"Accept all changes\"</b> in the box below.<br />To get more information about a change,<br />click <b>\"View change diff\"</b> to see the differences,<br />or click <b>\"View GEDCOM record\"</b> to see the new data in GEDCOM format."
@@ -2339,11 +2339,11 @@ msgstr ""
 #: edit_interface.php:2076
 #: edit_merge.php:179
 msgid "GEDCOM record successfully deleted."
-msgstr ""
+msgstr "GEDCOM kirje kustutamine õnnestus."
 
 #: edit_interface.php:575
 msgid "Family"
-msgstr ""
+msgstr "Perekond"
 
 #: edit_interface.php:580
 msgid "PEDI"
@@ -2351,11 +2351,11 @@ msgstr "Esivanemate puu"
 
 #: edit_interface.php:584
 msgid "Adopted"
-msgstr ""
+msgstr "Lapsendatud"
 
 #: edit_interface.php:585
 msgid "Foster"
-msgstr ""
+msgstr "Hooldaja"
 
 #: edit_interface.php:586
 msgid "Sealing"
@@ -2364,7 +2364,7 @@ msgstr ""
 #: edit_interface.php:604
 #: edit_interface.php:652
 msgid "Set link"
-msgstr ""
+msgstr "Seosta"
 
 #: edit_interface.php:751
 #: edit_interface.php:902
@@ -2373,7 +2373,7 @@ msgstr ""
 #: edit_interface.php:1161
 #: edit_interface.php:1224
 msgid "You must provide a "
-msgstr ""
+msgstr "Pead sisestama "
 
 #: edit_interface.php:751
 #: edit_interface.php:768
@@ -2430,7 +2430,7 @@ msgstr ""
 
 #: edit_interface.php:891
 msgid "New source created successfully."
-msgstr ""
+msgstr "Uue allika loomine õnnestus."
 
 #: edit_interface.php:911
 #, fuzzy
@@ -2506,18 +2506,18 @@ msgstr "Muuda laste järjestust"
 
 #: edit_interface.php:2322
 msgid "Sort by birth dates"
-msgstr ""
+msgstr "Järjesta sünniaegade järgi"
 
 #: edit_interface.php:2350
 msgid "Child"
-msgstr ""
+msgstr "Laps"
 
 #: edit_interface.php:2362
 #: edit_interface.php:2371
 #: edit_interface.php:2405
 #: edit_interface.php:2425
 msgid "Spouse"
-msgstr ""
+msgstr "Abikaasa"
 
 #: edit_interface.php:2389
 msgid "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes."
@@ -2525,7 +2525,7 @@ msgstr ""
 
 #: edit_interface.php:2394
 msgid "Change Family Members"
-msgstr ""
+msgstr "Muuda perekonna liikmeid"
 
 #: edit_interface.php:2412
 #: edit_interface.php:2432
@@ -2541,7 +2541,7 @@ msgstr "Järjesta perekonnad"
 
 #: edit_interface.php:2724
 msgid "Sort by marriage date"
-msgstr ""
+msgstr "Järjesta abiellumise kuupäeva järgi"
 
 #: edit_merge.php:58
 msgid "You entered the same IDs.  You cannot merge the same records."
@@ -2609,17 +2609,17 @@ msgstr ""
 #: edit_merge.php:302
 #: edit_merge.php:319
 msgid "Find Individual ID"
-msgstr ""
+msgstr "Leia isiku ID"
 
 #: edit_merge.php:303
 #: edit_merge.php:320
 msgid "Find Family ID"
-msgstr ""
+msgstr "Leia perekonna ID"
 
 #: edit_merge.php:304
 #: edit_merge.php:321
 msgid "Find Source ID"
-msgstr ""
+msgstr "Leia allika ID"
 
 #: edit_merge.php:307
 msgid "Merge From ID:"
@@ -2789,7 +2789,7 @@ msgstr ""
 
 #: edit_privacy.php:633
 msgid "Choose: "
-msgstr ""
+msgstr "Vali: "
 
 #: edit_privacy.php:647
 #: edit_privacy.php:685
@@ -2824,7 +2824,7 @@ msgstr ""
 
 #: expand_view.php:32
 msgid "Private"
-msgstr ""
+msgstr "Privaatne"
 
 #: expand_view.php:72
 #, fuzzy
@@ -2839,7 +2839,7 @@ msgstr "Seda kirjet on muudetud.  Muudatuste vaatamiseks vajuta siia."
 #: family.php:100
 #: familybook.php:218
 msgid "Parents"
-msgstr ""
+msgstr "Vanemad:"
 
 #: family.php:101
 msgid "Grandparents"
@@ -2847,31 +2847,31 @@ msgstr ""
 
 #: family.php:137
 msgid "Show couple on timeline chart"
-msgstr ""
+msgstr "Näita abielupaari aegreal"
 
 #: family.php:137
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: family.php:138
 msgid "Show children on timeline chart"
-msgstr ""
+msgstr "Näita lapsi aegreal"
 
 #: family.php:138
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: family.php:139
 msgid "Show family on timeline chart"
-msgstr ""
+msgstr "Näita perekonna aegrida"
 
 #: family.php:139
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #: family.php:141
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: family.php:159
 msgid "Search Engine Spider Detected"
@@ -2880,31 +2880,31 @@ msgstr ""
 #: familybook.php:243
 #: fanchart.php:345
 msgid "Siblings"
-msgstr ""
+msgstr "Õde / vend"
 
 #: familybook.php:244
 #: fanchart.php:346
 msgid "Sibling"
-msgstr ""
+msgstr "Õde / vend"
 
 #: familybook.php:340
 msgid "Family of:&nbsp;"
-msgstr ""
+msgstr "Perekond: &nbsp;"
 
 #: familybook.php:371
 #: familybook.php:383
 #: familybook.php:387
 msgid "Family Book Chart"
-msgstr ""
+msgstr "Perekond raamatuna"
 
 #: familybook.php:458
 #: hourglass.php:115
 msgid "Show spouses"
-msgstr ""
+msgstr "Näita abikaasasid"
 
 #: familybook.php:481
 msgid "Descent Steps"
-msgstr ""
+msgstr "Järeltulijad"
 
 #: famlist.php:109
 #: famlist.php:121
@@ -2919,11 +2919,11 @@ msgstr ""
 
 #: famlist.php:184
 msgid "Skip Surname lists"
-msgstr ""
+msgstr "Jäta perekonanimede loend vahele"
 
 #: famlist.php:187
 msgid "Show Surname lists"
-msgstr ""
+msgstr "Näita perekonnanimede loendit"
 
 #: famlist.php:194
 msgid "Exclude married names"
@@ -2940,24 +2940,24 @@ msgstr ""
 
 #: fanchart.php:105
 msgid "PHP server misconfiguration: GD 2.x library required to use image functions."
-msgstr ""
+msgstr "PHP serveri konfiguratsiooni viga: kujutiste jaoks on vaja kasutada GD 2.x library."
 
 #: fanchart.php:106
 #: fanchart.php:111
 msgid "http://www.php.net/gd"
-msgstr ""
+msgstr "http://www.php.net/gd"
 
 #: fanchart.php:110
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
-msgstr ""
+msgstr "PHP serveri konfiguratsiooni viga: TrueType fontide kasutamiseks on vaja FreeType library."
 
 #: fanchart.php:117
 msgid "Font file not found on PHP server"
-msgstr ""
+msgstr "PHP serveris puudub kirjatüübi (font) fail"
 
 #: fanchart.php:295
 msgid "Pedigree Tree"
-msgstr ""
+msgstr "Esivanemate puu"
 
 #: fanchart.php:297
 msgid "Pedigree Map"
@@ -2974,14 +2974,14 @@ msgstr "Kontrolli sugulust abielu kaudu"
 #: fanchart.php:429
 #: fanchart.php:454
 msgid "Circle Diagram"
-msgstr ""
+msgstr "Ringdiagramm"
 
 #: fanchart.php:306
 #: hourglass.php:39
 #: hourglass.php:44
 #: hourglass.php:48
 msgid "Hourglass Chart"
-msgstr ""
+msgstr "Liivakella tabel"
 
 #: fanchart.php:307
 msgid "Interactive Tree"
@@ -2994,7 +2994,7 @@ msgstr "Laius"
 
 #: fanchart.php:498
 msgid "This Fanchart image cannot be printed directly by your browser. Use right-click then save and print."
-msgstr ""
+msgstr "Ringdiagrammi ei saa vahetult brauserist printida. Kasuta paremat hiireklikki kujutise salvestamiseks, prindi kujutis failist."
 
 #: faq.php:159
 #: faq.php:247
@@ -3028,7 +3028,7 @@ msgstr ""
 
 #: faq.php:189
 msgid "No FAQ ID has been specified !"
-msgstr ""
+msgstr "KKK ID pole määratud!"
 
 #: faq.php:202
 #: help_text.php:4149
@@ -3037,7 +3037,7 @@ msgstr ""
 
 #: faq.php:250
 msgid "The FAQ list is empty."
-msgstr ""
+msgstr "KKK loend on tühi."
 
 #: faq.php:265
 #: help_text.php:5054
@@ -3051,12 +3051,12 @@ msgstr "FAQ Position"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
-msgstr ""
+msgstr "Kas soovid KKK sisestuse kustutada"
 
 #: find.php:97
 #: find.php:202
 msgid "Find Family List"
-msgstr ""
+msgstr "Leia perekonnad"
 
 #: find.php:100
 #: find.php:205
@@ -3085,16 +3085,16 @@ msgstr "Lisa uus märkus"
 #: find.php:116
 #: find.php:217
 msgid "Find Source"
-msgstr ""
+msgstr "Leia allikas"
 
 #: find.php:120
 #: find.php:220
 msgid "Find Special Characters"
-msgstr ""
+msgstr "Leia erisümbolid"
 
 #: find.php:163
 msgid "Please enter more than one character"
-msgstr ""
+msgstr "Sisesta rohkem kui üks sümbol"
 
 #: find.php:239
 #: find.php:259
@@ -3104,7 +3104,7 @@ msgstr "Nimede loend"
 
 #: find.php:283
 msgid "Media contains:"
-msgstr ""
+msgstr "Media sisaldab:"
 
 #: find.php:291
 msgid "Show thumbnails"
@@ -3116,15 +3116,15 @@ msgstr ""
 #: find.php:359
 #: find.php:380
 msgid "Display all"
-msgstr ""
+msgstr "Näita kõiki"
 
 #: find.php:311
 msgid "Place contains:"
-msgstr ""
+msgstr "Koht sisaldab:"
 
 #: find.php:332
 msgid "Repository contains:"
-msgstr ""
+msgstr "Hoidla sisaldab:"
 
 #: find.php:353
 msgid "Shared Note contains:"
@@ -3132,11 +3132,11 @@ msgstr ""
 
 #: find.php:374
 msgid "Source contains:"
-msgstr ""
+msgstr "Allikas sisaldab:"
 
 #: find.php:403
 msgid "Magnify"
-msgstr ""
+msgstr "Suurenda"
 
 #: find.php:432
 #: find.php:457
@@ -3146,7 +3146,7 @@ msgstr ""
 #: find.php:693
 #: find.php:715
 msgid "No results found."
-msgstr ""
+msgstr "Midagi ei leitud."
 
 #: find.php:487
 msgid "Current directory"
@@ -3154,11 +3154,11 @@ msgstr ""
 
 #: find.php:501
 msgid "External objects"
-msgstr ""
+msgstr "Välised objektid"
 
 #: find.php:572
 msgid "The filename entered does not exist."
-msgstr ""
+msgstr "Ei leia sisestatud faili."
 
 #: find.php:574
 msgid "Image Dimensions"
@@ -3180,7 +3180,7 @@ msgstr "Vaata arhiivi"
 
 #: find.php:593
 msgid "View Object"
-msgstr ""
+msgstr "Vaata objekti"
 
 #: find.php:599
 msgid "This media object is not linked to any GEDCOM record."
@@ -3188,11 +3188,11 @@ msgstr ""
 
 #: find.php:641
 msgid "Places found"
-msgstr ""
+msgstr "Kohta leitud"
 
 #: find.php:665
 msgid "Repositories found"
-msgstr ""
+msgstr "Hoidlat leitud"
 
 #: find.php:690
 msgid "Shared Notes found"
@@ -3200,7 +3200,7 @@ msgstr ""
 
 #: find.php:712
 msgid "Total Sources"
-msgstr ""
+msgstr "Kokku allikaid"
 
 #: gedcheck.php:37
 msgid "Gedcom checker"
@@ -3297,7 +3297,7 @@ msgstr ""
 
 #: gedrecord.php:45
 msgid "This page has been disabled by the site administrator."
-msgstr ""
+msgstr "Veebi administraator on selle saidi blokeerinud."
 
 #: help_text.php:68
 msgid "Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, \"this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62).\"<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required."
@@ -5314,11 +5314,11 @@ msgstr ""
 
 #: help_text.php:2479
 msgid "PhpGedView User Login"
-msgstr ""
+msgstr "PhpGedView kasutaja sisselogimine"
 
 #: help_text.php:2484
 msgid "PhpGedView Message"
-msgstr ""
+msgstr "PhpGedView sõnum"
 
 #: help_text.php:2489
 msgid "Print logfile"
@@ -5331,7 +5331,7 @@ msgstr "Otsi spikri tekstist"
 
 #: help_text.php:2499
 msgid "Statistics Plot"
-msgstr ""
+msgstr "Statistilised graafikud"
 
 #: help_text.php:2508
 msgid "This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev[\"BIRT\"]&nbsp;=&nbsp;\"*\";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character."
@@ -9280,7 +9280,7 @@ msgstr ""
 
 #: help_text.php:5555
 msgid "Help Contents"
-msgstr ""
+msgstr "Spikri sisukord"
 
 #: imageview.php:180
 msgid "View image details"
@@ -9290,25 +9290,25 @@ msgstr ""
 #: index.php:370
 #: index_edit.php:199
 msgid "MyGedView Portal"
-msgstr ""
+msgstr "Minu GedView portaal"
 
 #: index.php:371
 msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
-msgstr ""
+msgstr "Minu GedView lehekülg võimaldab seada järjehoidjaid tähtsamatele inimestele, jälgida saabuvaid sündmusi ja teha koostööd teiste PhpGedView kasutajatega."
 
 #: index.php:445
 #: index_edit.php:472
 msgid "Customize MyGedView Portal"
-msgstr ""
+msgstr "Kohanda minu GedView portaali"
 
 #: index.php:451
 #: index_edit.php:473
 msgid "Customize this GEDCOM Welcome page"
-msgstr ""
+msgstr "Kohanda selle GEDCOM avalehekülge"
 
 #: index_edit.php:83
 msgid "?"
-msgstr ""
+msgstr "?"
 
 #: index_edit.php:154
 #: index_edit.php:158
@@ -9316,7 +9316,7 @@ msgstr ""
 #: index_edit.php:160
 #: index_edit.php:161
 msgid "&nbsp;"
-msgstr ""
+msgstr "&nbsp;"
 
 #: index_edit.php:231
 msgid "Configuration file updated successfully."
@@ -9332,37 +9332,37 @@ msgstr ""
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
-msgstr ""
+msgstr "Seda blokki ei saa seadistada."
 
 #: index_edit.php:478
 msgid "Main Section Blocks"
-msgstr ""
+msgstr "Põhisektsiooni blokid"
 
 #: index_edit.php:483
 msgid "Available Blocks"
-msgstr ""
+msgstr "Olemasolevad blokid"
 
 #: index_edit.php:486
 msgid "Right Section Blocks"
-msgstr ""
+msgstr "Parema sektsiooni blokid"
 
 #: index_edit.php:492
 #: index_edit.php:551
 msgid "Move Up"
-msgstr ""
+msgstr "Liiguta üles"
 
 #: index_edit.php:494
 #: index_edit.php:553
 msgid "Move Down"
-msgstr ""
+msgstr "Liiguta alla"
 
 #: index_edit.php:511
 msgid "Move Right"
-msgstr ""
+msgstr "Liiguta paremale"
 
 #: index_edit.php:531
 msgid "Move Left"
-msgstr ""
+msgstr "Liiguta vasemale"
 
 #: index_edit.php:560
 msgid "Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction."
@@ -9370,11 +9370,11 @@ msgstr ""
 
 #: index_edit.php:565
 msgid "Use these blocks as the default block configuration for all users?"
-msgstr ""
+msgstr "Kasuta seda seadistust, kui vaikimisi seadet kõikide kasutajate jaoks."
 
 #: index_edit.php:574
 msgid "Reset to Default Blocks"
-msgstr ""
+msgstr "Taasta algsed blokid"
 
 #: indilist.php:174
 msgid "Choose a letter to show individuals whose family name starts with that letter."
@@ -9382,11 +9382,11 @@ msgstr ""
 
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
-msgstr ""
+msgstr "Vali täht, millega algavaid perekonnanimesid soovid näha."
 
 #: individual.php:287
 msgid "Hit Count:"
-msgstr ""
+msgstr "Külastuste arv:"
 
 #: individual.php:294
 msgid "The information for this individual was linked from a remote site."
@@ -9399,11 +9399,11 @@ msgstr "Esivanemate puu algab"
 
 #: individual.php:321
 msgid "Timeline Chart"
-msgstr ""
+msgstr "Aegrea tabel"
 
 #: individual.php:325
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: install.php:102
 #: install.php:391
@@ -9420,7 +9420,7 @@ msgstr ""
 
 #: install.php:350
 msgid "Unable to add user.  Please try again."
-msgstr ""
+msgstr "Kasutajat ei saa lisada.  Proovi uuesti."
 
 #: install.php:410
 msgid "*Your settings will not<br />be saved until step 6"
@@ -9440,11 +9440,11 @@ msgstr ""
 
 #: install.php:470
 msgid "Next &gt;"
-msgstr ""
+msgstr "Järgmine &gt;"
 
 #: install.php:480
 msgid "&lt; Previous"
-msgstr ""
+msgstr "&lt; Eelmine"
 
 #: install.php:502
 msgid "Checking for errors..."
@@ -9578,13 +9578,13 @@ msgstr ""
 #: login_register.php:168
 #: login_register.php:217
 msgid "You must enter a password."
-msgstr ""
+msgstr "Sisesta parool."
 
 #: install.php:1077
 #: login_register.php:174
 #: login_register.php:222
 msgid "You must confirm the password."
-msgstr ""
+msgstr "Kinnita parool."
 
 #: install.php:1084
 msgid "Create the default administrative user."
@@ -9639,11 +9639,11 @@ msgstr ""
 
 #: inverselink.php:143
 msgid "Enter Individual ID"
-msgstr ""
+msgstr "Sisesta isiku ID"
 
 #: inverselink.php:174
 msgid "Source"
-msgstr ""
+msgstr "Allikas"
 
 #: inverselink.php:188
 #, fuzzy
@@ -9657,7 +9657,7 @@ msgstr ""
 
 #: lifespan.php:66
 msgid "Add another person to chart:<br />Person ID:"
-msgstr ""
+msgstr "Lisa tabelisse isik:<br />Person ID:"
 
 #: lifespan.php:70
 msgid "Include Immediate Family"
@@ -9681,7 +9681,7 @@ msgstr ""
 
 #: lifespan.php:321
 msgid "Search"
-msgstr ""
+msgstr "Otsi"
 
 #: lifespan.php:322
 msgid "Clear Chart"
@@ -9689,46 +9689,46 @@ msgstr ""
 
 #: lifespan.php:329
 msgid "Individual"
-msgstr ""
+msgstr "Isik"
 
 #: login.php:120
 msgid "Unable to authenticate user."
-msgstr ""
+msgstr "Kasutaja tuvastamine ebaõnnestus."
 
 #: login.php:206
 #: login.php:226
 msgid "Login"
-msgstr ""
+msgstr "Logi sisse"
 
 #: login.php:238
 msgid "Account Information"
-msgstr ""
+msgstr "Konto informatsioon"
 
 #: login.php:239
 msgid "No account?"
-msgstr ""
+msgstr "Pole kasutaja?"
 
 #: login.php:240
 #: login_register.php:202
 #: login_register.php:283
 #: login_register.php:317
 msgid "Request new user account"
-msgstr ""
+msgstr "Registreeru kasutajaks"
 
 #: login.php:241
 msgid "Lost your password?"
-msgstr ""
+msgstr "Unustasid parooli?"
 
 #: login.php:242
 msgid "Request new password"
-msgstr ""
+msgstr "Küsi uus parool"
 
 #: login_register.php:58
 #: login_register.php:80
 #: login_register.php:82
 #: login_register.php:94
 msgid "Lost password request"
-msgstr ""
+msgstr "Unustatud parooli küsimine"
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
@@ -9759,11 +9759,11 @@ msgstr ""
 #: login_register.php:433
 #: login_register.php:454
 msgid "Comments"
-msgstr ""
+msgstr "Märkused"
 
 #: login_register.php:318
 msgid "Fields marked with * are mandatory."
-msgstr ""
+msgstr "* tähistatud väljad on kohustuslikud"
 
 #: login_register.php:356
 msgid "New Account confirmation"
@@ -9774,28 +9774,28 @@ msgstr ""
 #: login_register.php:409
 #: login_register.php:486
 msgid "Back"
-msgstr ""
+msgstr "Tagasi"
 
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
-msgstr ""
+msgstr "Informatsiooni saab allpoololeval lingil."
 
 #: login_register.php:423
 msgid "Please click on the following link and fill in the requested data to confirm your request and email address."
-msgstr ""
+msgstr "Oma konto ja mailiaadressi kinnitamiseks klõpsa järgneval lingil ja sisesta nõutavad andmed."
 
 #: login_register.php:432
 #: login_register.php:516
 msgid "Verification code:"
-msgstr ""
+msgstr "Kontrollkood:"
 
 #: login_register.php:434
 msgid "If you didn't request an account, you can just delete this message."
-msgstr ""
+msgstr "Kui te pole meie kasutajakontot soovinud, siis võite käesoleva sõnumi kustutada."
 
 #: login_register.php:435
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
-msgstr ""
+msgstr "Te ei saa sellelt aadressilt rohkem sõnumeid, sest see kontonõue aegub automaatselt seitsme päeva pärast."
 
 #: login_register.php:444
 #: login_register.php:565
@@ -9819,12 +9819,12 @@ msgstr ""
 #: login_register.php:541
 #: login_register.php:544
 msgid "User verification"
-msgstr ""
+msgstr "Kasutaja kinnitamine"
 
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
-msgstr ""
+msgstr "Saada"
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
@@ -9836,7 +9836,7 @@ msgstr ""
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
-msgstr ""
+msgstr "Oled kinnitanud oma soovi saada registreeritud kasutajaks."
 
 #: login_register.php:591
 msgid "The Administrator has been informed.  As soon as he gives you permission to login, you can login with your user name and password."
@@ -9848,11 +9848,11 @@ msgstr ""
 
 #: login_register.php:597
 msgid "Data was not correct, please try again"
-msgstr ""
+msgstr "Andmed ei olnud korrektsed. Palun proovi uuesti."
 
 #: login_register.php:603
 msgid "Could not verify the information you entered.  Please try again or contact the site administrator for more information."
-msgstr ""
+msgstr "Sisestatud info kontrollimine ebaõnnestus. Palun proovi uuesti või võta ühendust administraatoriga täiendava info saamiseks."
 
 #: manageservers.php:118
 #: manageservers.php:121
@@ -9877,7 +9877,7 @@ msgstr ""
 
 #: manageservers.php:206
 msgid "Hide Details"
-msgstr ""
+msgstr "Peida detailid"
 
 #: manageservers.php:231
 msgid "Manually mark Search Engines by IP"
@@ -9899,7 +9899,7 @@ msgstr "eemalda isik"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
-msgstr ""
+msgstr "Kas soovid kindlasti valitud allika kustutada GEDCOM failist?"
 
 #: manageservers.php:344
 msgid "View Connections"
@@ -10049,7 +10049,7 @@ msgstr ""
 
 #: media.php:939
 msgid "Are you sure you want to delete this folder?"
-msgstr ""
+msgstr "Kas soovid kindlasti selle kausta kustutada?"
 
 #: media.php:1038
 msgid "Are you sure you want to delete this file?"
@@ -10097,11 +10097,11 @@ msgstr "Selle isiku detailisem info on privaatne."
 #: medialist.php:53
 #: medialist.php:57
 msgid "MultiMedia Objects"
-msgstr ""
+msgstr "Multimeedia objektide nimeiri"
 
 #: medialist.php:131
 msgid "Media objects per page"
-msgstr ""
+msgstr "media objects per page"
 
 #: medialist.php:169
 msgid "Apply filter"
@@ -10109,7 +10109,7 @@ msgstr ""
 
 #: medialist.php:216
 msgid "Media Objects found"
-msgstr ""
+msgstr "Meedia objekti leitud"
 
 #: medialist.php:334
 #: medialist.php:336
@@ -10152,41 +10152,41 @@ msgstr ""
 #: message.php:47
 #: message.php:52
 msgid "No recipient user was provided.  Cannot continue."
-msgstr ""
+msgstr "Saaja puudub. Pole võimalik jätkata."
 
 #: message.php:70
 #: message.php:79
 #: message.php:159
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "Palun sisesta sobiv e-maili aadress."
 
 #: message.php:167
 msgid "Please enter a message subject."
-msgstr ""
+msgstr "Palun sisesta sõnumi teema."
 
 #: message.php:172
 msgid "Please enter some message text before sending."
-msgstr ""
+msgstr "Palun sisesta sõnumi tekst."
 
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
-msgstr ""
+msgstr "<b>Pane tähele:</b> Privaatset informatsiooni elavate inimeste kohta väljastatakse ainult sugulastele ja lähedastele sõpradele. Enne privaatse info saatmist kontrollitakse sinu suhet. Mõnikord võib ka surnud isikute info olla privaatne. Võib-olla ei ole nende inimeste kohta treada, kas nad on surnud või elus ja meil puudub informatsioon selle isiku kohta.<br /><br />Enne küsimuste esitamist kinnita palun, et esitad päringu õige isiku kohta, kontrolli kuupäevi, kohti ja lähedasi sugulsi.Kui esitad andmeid genealoogilise info muutmiseks, siis lisa ka allikad, kust informatsiooni said."
 
 #: message.php:197
 msgid "Your Name:"
-msgstr ""
+msgstr "Sinu nimi:"
 
 #: message.php:198
 msgid "Email Address:"
-msgstr ""
+msgstr "E-maili aadress:"
 
 #: message.php:198
 msgid "Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  You email address will not be used in any other way besides responding to this inquiry."
-msgstr ""
+msgstr "Palun lisa ka oma e-maili aadress, et saaksime sellele sõnumile vastamiseks sinuga ühendust võtta. Sinu meiliaadressi ei kasutata ühelgi muul viisil kui ainult sellele päringule vastamiseks."
 
 #: message.php:200
 msgid "Subject:"
-msgstr ""
+msgstr "Teema:"
 
 #: message.php:211
 #, fuzzy
@@ -10195,7 +10195,7 @@ msgstr "KKK sisu"
 
 #: message.php:218
 msgid "Message Deleted"
-msgstr ""
+msgstr "Sõnum kustutatud"
 
 #: module.php:214
 msgid "Unknown action: [action]."
@@ -10262,7 +10262,7 @@ msgstr "Kustuta nimi"
 #: module_admin.php:303
 #: module_admin.php:354
 msgid "Description"
-msgstr ""
+msgstr "Kirjeldus"
 
 #: module_admin.php:205
 msgid "Version / PGV"
@@ -10308,7 +10308,7 @@ msgstr ""
 
 #: pedigree.php:90
 msgid "Orientation"
-msgstr ""
+msgstr "Orientatsioon"
 
 #: pedigree.php:125
 #, fuzzy
@@ -10323,7 +10323,7 @@ msgstr ""
 #: placelist.php:58
 #: placelist.php:312
 msgid "Place Hierarchy"
-msgstr ""
+msgstr "Kohtade hierarhia"
 
 #: placelist.php:55
 #: placelist.php:59
@@ -10334,12 +10334,12 @@ msgstr "Nimede loend"
 
 #: placelist.php:118
 msgid "Place connections found"
-msgstr ""
+msgstr "Seoseid kohaga leitud"
 
 #: placelist.php:125
 #: placelist.php:157
 msgid "Top Level"
-msgstr ""
+msgstr "Kõrgeimale tasemele"
 
 #: placelist.php:307
 #: placelist.php:432
@@ -10351,11 +10351,11 @@ msgstr "Lk"
 
 #: placelist.php:309
 msgid "Place Hierarchy after"
-msgstr ""
+msgstr "Kohtade hierahia: "
 
 #: placelist.php:354
 msgid "View all records found in this place"
-msgstr ""
+msgstr "Vaata kõiki selle koha kirjeid"
 
 #: placelist.php:468
 #, fuzzy
@@ -10364,30 +10364,30 @@ msgstr "Puhasta kohad"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
-msgstr ""
+msgstr "Näita kohad hierarhias"
 
 #: placelist.php:477
 msgid "Show All Places in a List"
-msgstr ""
+msgstr "Näita nimekirjas kõik kohad"
 
 #: placelist.php:483
 #: placelist.php:488
 msgid "Places are encoded in the form: "
-msgstr ""
+msgstr "Kohad on märatletud kujul: "
 
 #: placelist.php:488
 msgid "City, County, State/Province, Country"
-msgstr ""
+msgstr "Linn, Maakond, Osariik, Riik"
 
 #: placelist.php:488
 msgid "(Default)"
-msgstr ""
+msgstr "(Vaikimisi)"
 
 #: printlog.php:90
 #: printlog.php:112
 #: printlog.php:157
 msgid "Refresh"
-msgstr ""
+msgstr "Värskenda"
 
 #: printlog.php:91
 #: printlog.php:113
@@ -10425,12 +10425,12 @@ msgstr ""
 #: relationship.php:149
 #: relationship.php:154
 msgid "Step-Mother"
-msgstr ""
+msgstr "Poolema"
 
 #: relationship.php:157
 #: relationship.php:162
 msgid "Step-Father"
-msgstr ""
+msgstr "Poolisa"
 
 #: relationship.php:169
 #: relationship.php:171
@@ -10482,12 +10482,12 @@ msgstr ""
 #: relationship.php:233
 #: relationship.php:234
 msgid "Step-Sister"
-msgstr ""
+msgstr "Poolõde"
 
 #: relationship.php:236
 #: relationship.php:237
 msgid "Step-Brother"
-msgstr ""
+msgstr "Poolvend"
 
 #: relationship.php:251
 #: relationship.php:252
@@ -10534,14 +10534,14 @@ msgstr ""
 #: relationship.php:383
 #: relationship.php:384
 msgid "Sister"
-msgstr ""
+msgstr "Õde"
 
 #: relationship.php:318
 #: relationship.php:319
 #: relationship.php:386
 #: relationship.php:387
 msgid "Brother"
-msgstr ""
+msgstr "Vend"
 
 #: relationship.php:358
 #: relationship.php:359
@@ -10554,12 +10554,12 @@ msgstr ""
 #: relationship.php:375
 #: relationship.php:376
 msgid "Half-Sister"
-msgstr ""
+msgstr "Poolõde"
 
 #: relationship.php:378
 #: relationship.php:379
 msgid "Half-Brother"
-msgstr ""
+msgstr "Poolvend"
 
 #: relationship.php:419
 #: relationship.php:420
@@ -10572,28 +10572,28 @@ msgstr ""
 #: relationship.php:485
 #: relationship.php:564
 msgid "Relationship Chart"
-msgstr ""
+msgstr "Sugulus"
 
 #: relationship.php:535
 msgid "and"
-msgstr ""
+msgstr "ja"
 
 #: relationship.php:579
 msgid "Person 1"
-msgstr ""
+msgstr "Isik 1"
 
 #: relationship.php:609
 msgid "Person 2"
-msgstr ""
+msgstr "Isik 2"
 
 #: relationship.php:677
 #: relationship.php:698
 msgid "Show path"
-msgstr ""
+msgstr "Näita käiku"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
-msgstr ""
+msgstr "Nende kahe isiku vahel (järgmist) seost ei leitud."
 
 #: relationship.php:737
 msgid "No other link between the two individuals could be found."
@@ -10602,7 +10602,7 @@ msgstr ""
 #: reportengine.php:147
 #: reportengine.php:153
 msgid "Choose a report to run"
-msgstr ""
+msgstr "Vali raport"
 
 #: reportengine.php:154
 #, fuzzy
@@ -10612,7 +10612,7 @@ msgstr "Kustuta hoidla"
 #: reportengine.php:170
 #: reportengine.php:219
 msgid "Enter report values"
-msgstr ""
+msgstr "Tee valikud raporti käivitamiseks"
 
 #: reportengine.php:220
 #, fuzzy
@@ -10621,7 +10621,7 @@ msgstr "Kustuta hoidla"
 
 #: reportengine.php:312
 msgid "Select a date"
-msgstr ""
+msgstr "Vali kuupäev"
 
 #: reportengine.php:344
 #, fuzzy
@@ -10653,7 +10653,7 @@ msgstr ""
 
 #: search.php:85
 msgid "Please enter a Given name, Last name, or Place in addition to Year"
-msgstr ""
+msgstr "Palun sisesta eesnimi, perekonnanimi või koht lisaks aastale"
 
 #: search.php:126
 msgid "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender "
@@ -10668,39 +10668,39 @@ msgstr ""
 #: search.php:596
 #: search.php:616
 msgid "General Search"
-msgstr ""
+msgstr "Otsi"
 
 #: search.php:169
 #: search.php:263
 msgid "Enter Search terms"
-msgstr ""
+msgstr "Sisesta otsingusõnad"
 
 #: search.php:183
 #: search.php:275
 msgid "Search for"
-msgstr ""
+msgstr "Otsi sõna"
 
 #: search.php:219
 msgid "Exclude Filter"
-msgstr ""
+msgstr "Filtreeri välja"
 
 #: search.php:227
 msgid "Exclude some non-genealogical data"
-msgstr ""
+msgstr "Jäta välja mittegenealoogilist infot"
 
 #: search.php:234
 msgid "Off"
-msgstr ""
+msgstr "Väljas"
 
 #: search.php:240
 #: search.php:382
 msgid "Associates"
-msgstr ""
+msgstr "Partnerid"
 
 #: search.php:246
 #: search.php:387
 msgid "Show related persons/families"
-msgstr ""
+msgstr "Näita seotud isikuid/perekondi"
 
 #: search.php:270
 msgid "Replace with"
@@ -10731,11 +10731,11 @@ msgstr "Päis"
 
 #: search.php:354
 msgid "Soundex type:"
-msgstr ""
+msgstr "Soundexi tüüp:"
 
 #: search.php:369
 msgid "Individuals'<br />names to print:"
-msgstr ""
+msgstr "Isikud'<br />näita nimesid:"
 
 #: search.php:374
 #, fuzzy
@@ -10744,7 +10744,7 @@ msgstr "Nimede loend"
 
 #: search.php:377
 msgid "All names"
-msgstr ""
+msgstr "Kõik nimed"
 
 #: search.php:399
 #: search.php:578
@@ -10767,7 +10767,7 @@ msgstr ""
 
 #: search.php:443
 msgid "search"
-msgstr ""
+msgstr "otsi"
 
 #: search.php:455
 msgid "Advanced site search"
@@ -10780,19 +10780,19 @@ msgstr "Nimede loend"
 
 #: search.php:473
 msgid "Birth date: "
-msgstr ""
+msgstr "Sünnikuupäev:"
 
 #: search.php:481
 msgid "Birth Place: "
-msgstr ""
+msgstr "Sünnikoht:"
 
 #: search.php:489
 msgid "Death date: "
-msgstr ""
+msgstr "Surma kuupäev:"
 
 #: search.php:497
 msgid "Death Place: "
-msgstr ""
+msgstr "Surma koht: "
 
 #: search.php:505
 #, fuzzy
@@ -10801,21 +10801,21 @@ msgstr "Muuda sugu"
 
 #: search.php:522
 msgid "Databases to search in"
-msgstr ""
+msgstr "Otsi andmebaasist"
 
 #: search.php:548
 msgid "Results per page"
-msgstr ""
+msgstr "Tulemusi leheküljel"
 
 #: search.php:563
 msgid "Other Searches"
-msgstr ""
+msgstr "Teised otsingud"
 
 #: search.php:569
 #: search.php:585
 #: search.php:617
 msgid "Soundex Search"
-msgstr ""
+msgstr "Soundex otsing"
 
 #: search.php:570
 #: search.php:586
@@ -10826,19 +10826,19 @@ msgstr ""
 
 #: searchhelp.php:89
 msgid "Any word"
-msgstr ""
+msgstr "Ükskõik milline sõnadest"
 
 #: searchhelp.php:92
 msgid "All words"
-msgstr ""
+msgstr "Kõik sõnad"
 
 #: searchhelp.php:95
 msgid "Exact phrase"
-msgstr ""
+msgstr "Otsi täpset fraasi"
 
 #: searchhelp.php:100
 msgid "Search in"
-msgstr ""
+msgstr "Otsi"
 
 #: searchhelp.php:104
 #, fuzzy
@@ -10851,15 +10851,15 @@ msgstr ""
 
 #: searchhelp.php:112
 msgid "Administrator Help"
-msgstr ""
+msgstr "Administraatori spikrist"
 
 #: searchhelp.php:126
 msgid "Close window"
-msgstr ""
+msgstr "Sulge aken"
 
 #: searchhelp.php:197
 msgid "Results found:"
-msgstr ""
+msgstr "Otsingu tulemusi:"
 
 #: search_advanced.php:113
 #: search_advanced.php:166
@@ -10890,7 +10890,7 @@ msgstr ""
 #: statistics.php:714
 #: timeline.php:148
 msgid "years"
-msgstr ""
+msgstr "aastaid"
 
 #: search_advanced.php:167
 #: search_advanced.php:229
@@ -10929,7 +10929,7 @@ msgstr ""
 #: search_engine.php:69
 #: uploadgedcom.php:1106
 msgid "Welcome page"
-msgstr ""
+msgstr "Avalehekülg"
 
 #: statistics.php:57
 msgid "Total males"
@@ -10990,7 +10990,7 @@ msgstr ""
 
 #: statistics.php:113
 msgid "Average age at death"
-msgstr ""
+msgstr "Keskmine vanus"
 
 #: statistics.php:127
 msgid "Top age at death"
@@ -11107,7 +11107,7 @@ msgstr ""
 
 #: statistics.php:278
 msgid "Average number of children per family"
-msgstr ""
+msgstr "Keskmine laste arv perekonnas"
 
 #: statistics.php:279
 msgid "Number of families without children"
@@ -11149,15 +11149,15 @@ msgstr ""
 #: statistics.php:331
 #: statistics.php:358
 msgid "Media objects"
-msgstr ""
+msgstr "Meedia objekte"
 
 #: statistics.php:334
 msgid "Other records"
-msgstr ""
+msgstr "Muid"
 
 #: statistics.php:345
 msgid "Total events"
-msgstr ""
+msgstr "Sündmusi"
 
 #: statistics.php:348
 msgid "First event"
@@ -11380,7 +11380,7 @@ msgstr ""
 #: statistics.php:724
 #: statisticsplot.php:768
 msgid "numbers"
-msgstr ""
+msgstr "arvud perekonna kohta"
 
 #: statistics.php:727
 #: statisticsplot.php:791
@@ -11399,7 +11399,7 @@ msgstr ""
 #: statistics.php:751
 #: statistics.php:754
 msgid "Statistics"
-msgstr ""
+msgstr "Statistika"
 
 #: statistics.php:820
 #: statistics.php:821
@@ -11425,75 +11425,75 @@ msgstr ""
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid " not implemented:"
-msgstr ""
+msgstr " pole realiseeritud:"
 
 #: statisticsplot.php:728
 msgid "Jan"
-msgstr ""
+msgstr "jaan"
 
 #: statisticsplot.php:729
 msgid "Feb"
-msgstr ""
+msgstr "veebr"
 
 #: statisticsplot.php:730
 msgid "March"
-msgstr ""
+msgstr "märts"
 
 #: statisticsplot.php:731
 msgid "April"
-msgstr ""
+msgstr "aprill"
 
 #: statisticsplot.php:732
 msgid "May"
-msgstr ""
+msgstr "mai"
 
 #: statisticsplot.php:733
 msgid "June"
-msgstr ""
+msgstr "juuni"
 
 #: statisticsplot.php:734
 msgid "July"
-msgstr ""
+msgstr "juuli"
 
 #: statisticsplot.php:735
 msgid "Aug"
-msgstr ""
+msgstr "aug"
 
 #: statisticsplot.php:736
 msgid "Sep"
-msgstr ""
+msgstr "sept"
 
 #: statisticsplot.php:737
 msgid "Oct"
-msgstr ""
+msgstr "okt"
 
 #: statisticsplot.php:738
 msgid "Nov"
-msgstr ""
+msgstr "nov"
 
 #: statisticsplot.php:739
 msgid "Dec"
-msgstr ""
+msgstr "dets"
 
 #: statisticsplot.php:805
 msgid " per gender"
-msgstr ""
+msgstr " / mees-naine"
 
 #: statisticsplot.php:807
 msgid " per time period"
-msgstr ""
+msgstr " / ajavahemiku kohta"
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "Counts "
-msgstr ""
+msgstr "Arv "
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "of"
-msgstr ""
+msgstr " / "
 
 #: statisticsplot.php:928
 #: statisticsplot.php:932
@@ -11503,19 +11503,19 @@ msgstr ""
 
 #: timeline.php:38
 msgid "PhpGedView Timeline"
-msgstr ""
+msgstr "PhpGedView aegrida"
 
 #: timeline.php:298
 msgid "Show Age Marker"
-msgstr ""
+msgstr "Näita vanuse markerit"
 
 #: timeline.php:337
 msgid "Zoom In"
-msgstr ""
+msgstr "Suurenda"
 
 #: timeline.php:338
 msgid "Zoom Out"
-msgstr ""
+msgstr "Vähenda"
 
 #: timeline.php:345
 msgid "Show Lifespan chart"
@@ -11523,7 +11523,7 @@ msgstr ""
 
 #: timeline.php:350
 msgid "In most recent browsers you can click and drag the boxes around on the chart."
-msgstr ""
+msgstr "Enamikes uuemates brauserites võid kasutada kastikeste liigutamiseks drag-and-drop meetodit."
 
 #: uploadgedcom.php:173
 #: uploadgedcom.php:1056
@@ -11550,12 +11550,12 @@ msgstr ""
 
 #: uploadgedcom.php:546
 msgid "Performing GEDCOM validation..."
-msgstr ""
+msgstr "GEDCOM faili kontrollimine..."
 
 #: uploadgedcom.php:583
 #: uploadgedcom.php:674
 msgid "Valid GEDCOM detected. No cleanup required."
-msgstr ""
+msgstr "GEDCOM on vigadeta. Puhastamine pole vajalik."
 
 #: uploadgedcom.php:618
 #, fuzzy
@@ -11564,27 +11564,27 @@ msgstr "Avastati read enne GEDCOM-i päist <b>0&nbsp;HEAD</b>.  Puhastamise käi
 
 #: uploadgedcom.php:626
 msgid "Invalid place encodings were detected.  These errors should be fixed."
-msgstr ""
+msgstr "Leiti sobimatud koha kodeeringud. Vead tuleb parandada."
 
 #: uploadgedcom.php:634
 msgid "Example of invalid place from your GEDCOM:"
-msgstr ""
+msgstr "Sobimatu koha näidis GEDCOM failist:"
 
 #: uploadgedcom.php:641
 msgid "Detected invalid date formats, on cleanup these will be changed to format of DD MMM YYYY (eg. 1 JAN 2004)."
-msgstr ""
+msgstr "Leiti vigased kuupäevad, puhastamise käigus teisendatakse need formaati DD MMM YYYY (st. 1 JAN 2004)."
 
 #: uploadgedcom.php:650
 msgid "Day before Month (DD MM YYYY)"
-msgstr ""
+msgstr "Päev enne kuud (DD MM YYYY)"
 
 #: uploadgedcom.php:650
 msgid "Month before Day (MM DD YYYY)"
-msgstr ""
+msgstr "Kuu enne päeva (MM DD YYYY)"
 
 #: uploadgedcom.php:653
 msgid "Example of invalid date from your GEDCOM:"
-msgstr ""
+msgstr "Sobimatu kuupäeva näide GEDCOM failist:"
 
 #: uploadgedcom.php:661
 msgid "ANSI file encoding detected.\tPhpGedView works best with files encoded in UTF-8."
@@ -11596,12 +11596,12 @@ msgstr ""
 
 #: uploadgedcom.php:737
 msgid "Change Individual ID to:"
-msgstr ""
+msgstr "Muuda isiku ID:"
 
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
 msgid "Do not change"
-msgstr ""
+msgstr "Ära muuda"
 
 #: uploadgedcom.php:795
 #, fuzzy
@@ -11663,7 +11663,7 @@ msgstr "Importimise valikud"
 #: useradmin.php:274
 #: useradmin.php:484
 msgid "Update User Account"
-msgstr ""
+msgstr "Uuenda kasutaja konto"
 
 #: useradmin.php:345
 #: useradmin.php:639
@@ -11680,7 +11680,7 @@ msgstr ""
 #: useradmin.php:390
 #: useradmin.php:823
 msgid "Automatically accept changes made by this user"
-msgstr ""
+msgstr "Aktsepteeri selle kasutaja muudatusi automaatselt"
 
 #: useradmin.php:392
 #: useradmin.php:825
@@ -11707,17 +11707,17 @@ msgstr ""
 #: useradmin.php:457
 #: useradmin.php:883
 msgid "Allow this user to edit his account information"
-msgstr ""
+msgstr "Luba kasutajal muuta oma kasutajainfot"
 
 #: useradmin.php:476
 #: useradmin.php:903
 msgid "Admin comments on user"
-msgstr ""
+msgstr "Administraatori kommentaar kasutaja kohta"
 
 #: useradmin.php:480
 #: useradmin.php:907
 msgid "Admin warning at date"
-msgstr ""
+msgstr "Admini hoiatus kuupäeval"
 
 #: useradmin.php:560
 #: useradmin.php:1087
@@ -11740,7 +11740,7 @@ msgstr ""
 
 #: useradmin.php:576
 msgid " Languages"
-msgstr ""
+msgstr " Keeled"
 
 #: useradmin.php:577
 #: useradmin.php:588
@@ -11763,12 +11763,12 @@ msgstr ""
 
 #: useradmin.php:680
 msgid "Are you sure you want to delete the user"
-msgstr ""
+msgstr "Kas soovid kindlasti selle kasutaja kustutada?"
 
 #: useradmin.php:758
 #: useradmin.php:912
 msgid "Create User"
-msgstr ""
+msgstr "Loo kasutaja"
 
 #: useradmin.php:811
 msgid "Access"
@@ -11828,7 +11828,7 @@ msgstr ""
 
 #: useradmin.php:1084
 msgid "Select an option below:"
-msgstr ""
+msgstr "Tee järgnevad valikud:"
 
 #: useradmin.php:1093
 msgid "Send message to all users"
@@ -11836,11 +11836,11 @@ msgstr ""
 
 #: useradmin.php:1094
 msgid "Send message to users who have never logged in"
-msgstr ""
+msgstr "Saada kasutajatele, kes pole kunagi sisse loginud"
 
 #: useradmin.php:1095
 msgid "Send message to users who have not logged in for 6 months"
-msgstr ""
+msgstr "Saada kasutajatele, kes pole 6 kuu jooksul sisse loginud"
 
 #: useradmin.php:1153
 msgid "Total number of users"
@@ -11993,19 +11993,19 @@ msgstr ""
 
 #: blocks/gedcom_block.php:36
 msgid "GEDCOM Welcome"
-msgstr ""
+msgstr "GEDCOM Tervitus"
 
 #: blocks/gedcom_favorites.php:36
 msgid "GEDCOM Favorites"
-msgstr ""
+msgstr "Selle GEDCOMi lemmikud"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
-msgstr ""
+msgstr "Selle GEDCOM lemmikud"
 
 #: blocks/gedcom_favorites.php:100
 msgid "Are you sure you want to remove this item from your list of Favorites?"
-msgstr ""
+msgstr "Kas soovid kindlasti selle lemmiku nimekirjast eemaldada?"
 
 #: blocks/gedcom_favorites.php:155
 #, fuzzy
@@ -12014,32 +12014,32 @@ msgstr "Lisa uus märkus"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
-msgstr ""
+msgstr "Sisesta Isiku, perekonna või allika ID"
 
 #: blocks/gedcom_favorites.php:173
 msgid "OR<br />Enter a URL and a title"
-msgstr ""
+msgstr "VÕI<br />sisesta URL ja pealkiri"
 
 #: blocks/gedcom_favorites.php:178
 msgid "Enter an optional note about this favorite"
-msgstr ""
+msgstr "Lisa märkus selle lemmiku kohta (pole kohustuslik)."
 
 #: blocks/gedcom_news.php:36
 msgid "GEDCOM News"
-msgstr ""
+msgstr "GEDCOM uudised"
 
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
 msgid "News"
-msgstr ""
+msgstr "Uudised"
 
 #: blocks/gedcom_news.php:91
 msgid "No News articles have been submitted."
-msgstr ""
+msgstr "Ühtegi uudist pole sisestatud."
 
 #: blocks/gedcom_news.php:159
 msgid "Are you sure you want to delete this News entry?"
-msgstr ""
+msgstr "Kas oled kindel, et soovid selle uudise kustutada?"
 
 #: blocks/gedcom_news.php:165
 #, fuzzy
@@ -12048,56 +12048,56 @@ msgstr "Lisa uus märkus"
 
 #: blocks/gedcom_news.php:196
 msgid "No limit"
-msgstr ""
+msgstr "Piiramata"
 
 #: blocks/gedcom_news.php:197
 msgid "Age of item"
-msgstr ""
+msgstr "Uudise vanusega"
 
 #: blocks/gedcom_news.php:198
 msgid "Number of items"
-msgstr ""
+msgstr "Uudiste arvuga"
 
 #: blocks/gedcom_stats.php:40
 #: blocks/gedcom_stats.php:91
 #: blocks/rss_block.php:70
 msgid "GEDCOM Statistics"
-msgstr ""
+msgstr "GEDCOMi statistika"
 
 #: blocks/gedcom_stats.php:145
 #: blocks/gedcom_stats.php:330
 msgid "Total users"
-msgstr ""
+msgstr "Kasutajaid"
 
 #: blocks/gedcom_stats.php:159
 #: blocks/gedcom_stats.php:277
 msgid "Earliest birth year"
-msgstr ""
+msgstr "Kõige varem sündinud"
 
 #: blocks/gedcom_stats.php:166
 #: blocks/gedcom_stats.php:285
 msgid "Latest birth year"
-msgstr ""
+msgstr "Viimasena sündinud"
 
 #: blocks/gedcom_stats.php:173
 #: blocks/gedcom_stats.php:293
 msgid "Earliest death year"
-msgstr ""
+msgstr "Kõige varem surnud"
 
 #: blocks/gedcom_stats.php:180
 #: blocks/gedcom_stats.php:301
 msgid "Latest death year"
-msgstr ""
+msgstr "Viimasena surnud"
 
 #: blocks/gedcom_stats.php:188
 #: blocks/gedcom_stats.php:309
 msgid "Person who lived the longest"
-msgstr ""
+msgstr "Kõige pikaealisem isik"
 
 #: blocks/gedcom_stats.php:204
 #: blocks/gedcom_stats.php:325
 msgid "Family with the most children"
-msgstr ""
+msgstr "Suurima laste arvuga perekond"
 
 #: blocks/gedcom_stats.php:219
 msgid "View statistics as graphs"
@@ -12105,15 +12105,15 @@ msgstr ""
 
 #: blocks/gedcom_stats.php:227
 msgid "Most Common Surnames"
-msgstr ""
+msgstr "Enim kasutatud perekonnanimed"
 
 #: blocks/gedcom_stats.php:259
 msgid "Show common surnames?"
-msgstr ""
+msgstr "Näita sagedamini esinevaid perekonnanimesid."
 
 #: blocks/gedcom_stats.php:268
 msgid "Select the stats to show in this block"
-msgstr ""
+msgstr "Vali selles blokis näidatavad statistikud"
 
 #: blocks/gedcom_stats.php:339
 msgid "Show link to Statistics charts?"
@@ -12139,7 +12139,7 @@ msgstr ""
 
 #: blocks/html_block.php:36
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: blocks/html_block.php:41
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -12179,11 +12179,11 @@ msgstr[1] ""
 #: blocks/login_block.php:53
 #: blocks/login_block.php:61
 msgid "Logout"
-msgstr ""
+msgstr "Logi välja"
 
 #: blocks/login_block.php:58
 msgid "Logged in as "
-msgstr ""
+msgstr "Sisse loginud kui "
 
 #: blocks/random_media.php:38
 #, fuzzy
@@ -12193,7 +12193,7 @@ msgstr "Leia Meedia"
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
 msgid "Random Picture"
-msgstr ""
+msgstr "Juhuslik pilt"
 
 #: blocks/random_media.php:196
 msgid "Next image"
@@ -12222,11 +12222,11 @@ msgstr ""
 
 #: blocks/recent_changes.php:111
 msgid "Should this block be hidden when it is empty?"
-msgstr ""
+msgstr "Kas see blokk peaks tühjana olema peidetud?"
 
 #: blocks/recent_changes.php:119
 msgid "If you hide an empty block, you will not be able to change its configuration until it becomes visible by no longer being empty."
-msgstr ""
+msgstr "Kui peidad tühja bloki, siis ei saa sa seda enne uuesti seadistada, kui see blokk ei ole tühi."
 
 #: blocks/review_changes.php:39
 #, fuzzy
@@ -12235,11 +12235,11 @@ msgstr "Viimased muudatused"
 
 #: blocks/review_changes.php:83
 msgid "PhpGedView - Review changes"
-msgstr ""
+msgstr "PhpGedView - Vaata muudatusi"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
-msgstr ""
+msgstr "Andmebaasis on tehtud muudatusi.  Need muudtused tulb üle vaadata ja kinnitada enne kui kõik kasutajad neid nägema hakkavad to all users. Kasuta allpool listud linki PhpGedView saidile liikumiseks, sisselogimiseks ja muudatuset ülevaatamiseks."
 
 #: blocks/review_changes.php:113
 msgid "Last email reminder was sent "
@@ -12251,11 +12251,11 @@ msgstr ""
 
 #: blocks/review_changes.php:149
 msgid "Send out reminder emails?"
-msgstr ""
+msgstr "Kas saata välja meeldetuletusi?"
 
 #: blocks/review_changes.php:158
 msgid "Reminder email frequency (days)"
-msgstr ""
+msgstr "Meeldetuletuste sagedus (päevades)"
 
 #: blocks/rss_block.php:38
 #: blocks/rss_block.php:53
@@ -12264,23 +12264,23 @@ msgstr ""
 
 #: blocks/rss_block.php:69
 msgid "Upcoming Events"
-msgstr ""
+msgstr "Saabuvad sündmused"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
-msgstr ""
+msgstr "10 sagedamini esinevat perekonnanime"
 
 #: blocks/theme_select.php:36
 msgid "Theme Select"
-msgstr ""
+msgstr "Teema valik"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
-msgstr ""
+msgstr "Muuda kujundust"
 
 #: blocks/todays_events.php:38
 msgid "On This Day"
-msgstr ""
+msgstr "Sellel päeval"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
@@ -12327,15 +12327,15 @@ msgstr ""
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
 msgid "Most Viewed Items"
-msgstr ""
+msgstr "Kõige enam vaadatud kirjed"
 
 #: blocks/top10_pageviews.php:77
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
-msgstr ""
+msgstr "vaatamiste loendurid peavad olema GEDCOMis seadistatud, Sektsioonis Kuva ja paigutus alajaotuses Peida ja näita."
 
 #: blocks/top10_pageviews.php:112
 msgid "There are currently no hits to show."
-msgstr ""
+msgstr "Ei ole ühtegi vaatamist."
 
 #: blocks/top10_pageviews.php:138
 msgid "Place counts before or after name?"
@@ -12348,15 +12348,15 @@ msgstr "Kasutajanimi"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
-msgstr ""
+msgstr "Minu päevik"
 
 #: blocks/user_blog.php:56
 msgid "You have not created any Journal items."
-msgstr ""
+msgstr "Sa ei ole teinud päevikusse ühtegi kannet."
 
 #: blocks/user_blog.php:90
 msgid "Are you sure you want to delete this Journal entry?"
-msgstr ""
+msgstr "Kas soovid kindlasti selle sissekande tühistada?"
 
 #: blocks/user_blog.php:94
 #, fuzzy
@@ -12370,7 +12370,7 @@ msgstr "Kasutajanimi"
 
 #: blocks/user_favorites.php:60
 msgid "My Favorites"
-msgstr ""
+msgstr "Minu lemmikud"
 
 #: blocks/user_messages.php:38
 #, fuzzy
@@ -12379,32 +12379,32 @@ msgstr "Kasutajanimi"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
-msgstr ""
+msgstr "Minu sõnumid"
 
 #: blocks/user_messages.php:58
 #: blocks/user_messages.php:128
 msgid "Are you sure you want to delete this message?  It cannot be retrieved later."
-msgstr ""
+msgstr "Kas soovid kindlasti valitud sõnumid kustutada? Kustutatud sõnumit ei saa taastada."
 
 #: blocks/user_messages.php:60
 msgid "You have no pending messages."
-msgstr ""
+msgstr "Sul ei ole lugemata kirju."
 
 #: blocks/user_messages.php:87
 msgid "Date Sent:"
-msgstr ""
+msgstr "Saatmise kuupäev:"
 
 #: blocks/user_messages.php:126
 msgid "Reply"
-msgstr ""
+msgstr "Vasta"
 
 #: blocks/user_messages.php:131
 msgid "Delete Selected Messages"
-msgstr ""
+msgstr "Kustuta valitud sõnumid"
 
 #: blocks/user_messages.php:136
 msgid "Broadcast to all users"
-msgstr ""
+msgstr "Saada kõigile kasutajatele"
 
 #: blocks/user_welcome.php:36
 #, fuzzy
@@ -12413,11 +12413,11 @@ msgstr "Kasutajanimi"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
-msgstr ""
+msgstr "Minu esivanemate puu"
 
 #: blocks/user_welcome.php:56
 msgid "My Individual Record"
-msgstr ""
+msgstr "Minu isiklik kirje"
 
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
@@ -12436,15 +12436,15 @@ msgstr "Muuda nime"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
-msgstr ""
+msgstr "Peidetud"
 
 #: includes/accesskeyHeaders.php:36
 msgid "Skip to Content"
-msgstr ""
+msgstr "Skip to Content"
 
 #: includes/accesskeyHeaders.php:36
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: includes/accesskeyHeaders.php:37
 #, fuzzy
@@ -12457,39 +12457,39 @@ msgstr "0"
 
 #: includes/accesskeyHeaders.php:38
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: includes/accesskeyHeaders.php:39
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: includes/authentication.php:93
 msgid "PhpGedView Authentication System"
-msgstr ""
+msgstr "PhpGedView autentimissüsteem"
 
 #: includes/authentication.php:95
 msgid "You must enter a valid login ID and password to access this resource"
-msgstr ""
+msgstr "Ligipääsemiseks pead sisestama kehtiva kasutaja ID ja parooli"
 
 #: includes/authentication.php:453
 #: includes/authentication.php:510
 msgid "This message was sent while viewing the following URL: "
-msgstr ""
+msgstr "See sõnum saadet järgmiselt veebiaadressilt: "
 
 #: includes/authentication.php:461
 msgid "You sent the following message to a PhpGedView administrator:"
-msgstr ""
+msgstr "Saatsid järgmise sõnumi PhpGedView administraatorile:"
 
 #: includes/authentication.php:469
 msgid "You sent the following message to a PhpGedView user:"
-msgstr ""
+msgstr "Saatsid järgmise sõnumi PhpGedView kasutajale:"
 
 #: includes/authentication.php:475
 #: includes/authentication.php:482
 #: includes/authentication.php:524
 #: includes/authentication.php:530
 msgid "The following message has been sent to your PhpGedView user account from "
-msgstr ""
+msgstr "Järgnev sõnum saadeti sinu PhpGedView kasutajakontole "
 
 #: includes/family_nav.php:84
 msgid "Parents Family"
@@ -12766,7 +12766,7 @@ msgstr ""
 #: includes/classes/class_menubar.php:68
 #: includes/classes/class_menubar.php:115
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
@@ -12779,7 +12779,7 @@ msgstr "Tabeli stiil"
 #: includes/classes/class_menubar.php:545
 #: includes/classes/class_menubar.php:551
 msgid "Lists"
-msgstr ""
+msgstr "Nimekirjad"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
@@ -12790,15 +12790,15 @@ msgstr "Leia Meedia"
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
 msgid "Reports"
-msgstr ""
+msgstr "Raportid"
 
 #: includes/classes/class_menubar.php:826
 msgid "Printer-friendly Version"
-msgstr ""
+msgstr "Printerisõbralik versioon"
 
 #: includes/classes/class_menubar.php:932
 msgid "Help with this page"
-msgstr ""
+msgstr "Selle lehekülje spikker"
 
 #: includes/classes/class_menubar.php:968
 msgid "Wiki Main Page"
@@ -12814,11 +12814,11 @@ msgstr ""
 
 #: includes/classes/class_menubar.php:1118
 msgid "Favorites"
-msgstr ""
+msgstr "Lemmikud"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
-msgstr ""
+msgstr "Lisa oma lemmikute hulka"
 
 #: includes/classes/class_note.php:49
 msgid "…"
@@ -12827,25 +12827,25 @@ msgstr ""
 #: includes/classes/class_person.php:576
 #: includes/classes/class_person.php:633
 msgid "Unable to find family with ID"
-msgstr ""
+msgstr "Ei leia perekonda, mille ID on"
 
 #: includes/classes/class_person.php:760
 msgid "Family with Parents"
-msgstr ""
+msgstr "Perekond vanematega"
 
 #: includes/classes/class_person.php:779
 #: includes/classes/class_person.php:786
 msgid "Father's Family with "
-msgstr ""
+msgstr "Isa perekond abikaasaga: "
 
 #: includes/classes/class_person.php:780
 #: includes/classes/class_person.php:785
 msgid "Mother's Family with "
-msgstr ""
+msgstr "Ema perekond abikaasaga: "
 
 #: includes/classes/class_person.php:803
 msgid "Family with"
-msgstr ""
+msgstr "Perekond abikaasaga: "
 
 #: includes/classes/class_person.php:1836
 #, fuzzy
@@ -12854,11 +12854,11 @@ msgstr "Päis"
 
 #: includes/classes/class_person.php:1840
 msgid "month"
-msgstr ""
+msgstr "kuu"
 
 #: includes/classes/class_person.php:1842
 msgid "months"
-msgstr ""
+msgstr "kuid"
 
 #: includes/classes/class_stats.php:448
 #: includes/classes/class_stats.php:450
@@ -12886,7 +12886,7 @@ msgstr ""
 #: includes/classes/class_stats.php:783
 #: includes/classes/class_stats.php:785
 msgid "Living"
-msgstr ""
+msgstr "Elus"
 
 #: includes/classes/class_stats.php:774
 #: includes/classes/class_stats.php:777
@@ -12996,7 +12996,7 @@ msgstr ""
 #: includes/controllers/descendancy_ctrl.php:226
 #: includes/controllers/descendancy_ctrl.php:313
 msgid "Start at parents"
-msgstr ""
+msgstr "Alusta vanematest"
 
 #: includes/controllers/descendancy_ctrl.php:332
 #, fuzzy
@@ -13015,7 +13015,7 @@ msgstr "Muuda nime"
 
 #: includes/controllers/family_ctrl.php:379
 msgid "Add a child to this family"
-msgstr ""
+msgstr "Lisa laps sellesse perekonda"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -13034,7 +13034,7 @@ msgstr "Kustuta nimi"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
-msgstr ""
+msgstr "Perekonna kustutamine eemaldab seose perekonnliikmete vahel, kuid perekonnas olevad isikud jätab alles. Kas soovite kindlasti kustutada selle perekonna?"
 
 #: includes/controllers/family_ctrl.php:509
 #: includes/controllers/individual_ctrl.php:732
@@ -13043,7 +13043,7 @@ msgstr ""
 #: includes/controllers/repository_ctrl.php:322
 #: includes/controllers/source_ctrl.php:330
 msgid "Add to Clippings Cart"
-msgstr ""
+msgstr "Lisa väljalõigete korvi"
 
 #: includes/controllers/individual_ctrl.php:493
 #, fuzzy
@@ -13061,7 +13061,7 @@ msgstr ""
 
 #: includes/controllers/individual_ctrl.php:830
 msgid "Half-Sibling"
-msgstr ""
+msgstr "Poolvend / poolõde"
 
 #: includes/controllers/individual_ctrl.php:836
 #: includes/controllers/individual_ctrl.php:837
@@ -13091,7 +13091,7 @@ msgstr ""
 #: includes/controllers/repository_ctrl.php:79
 #: includes/controllers/repository_ctrl.php:168
 msgid "Repository Information"
-msgstr ""
+msgstr "Hoidla informatsioon"
 
 #: includes/controllers/repository_ctrl.php:198
 #, fuzzy
@@ -13108,7 +13108,7 @@ msgstr ""
 
 #: includes/controllers/search_ctrl.php:879
 msgid "People"
-msgstr ""
+msgstr "Isikuid"
 
 #: includes/controllers/search_ctrl.php:883
 msgid "Site: "
@@ -13120,7 +13120,7 @@ msgstr ""
 
 #: includes/controllers/search_ctrl.php:918
 msgid "to"
-msgstr ""
+msgstr "kuni"
 
 #: includes/controllers/search_ctrl.php:933
 msgid "Be sure to select at least one remote site."
@@ -13133,7 +13133,7 @@ msgstr ""
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
 msgid "Source Information"
-msgstr ""
+msgstr "Allika informatsioon"
 
 #: includes/controllers/source_ctrl.php:199
 #: includes/controllers/source_ctrl.php:206
@@ -13153,43 +13153,43 @@ msgstr ""
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "January"
-msgstr ""
+msgstr "jaanuar"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "February"
-msgstr ""
+msgstr "veebruar"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "August"
-msgstr ""
+msgstr "august"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "September"
-msgstr ""
+msgstr "september"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "October"
-msgstr ""
+msgstr "oktoober"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "November"
-msgstr ""
+msgstr "november"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "December"
-msgstr ""
+msgstr "detsember"
 
 #: includes/extras/functions.pl.php:128
 #: includes/extras/functions.sl.php:113
@@ -13201,19 +13201,19 @@ msgstr ""
 #: includes/extras/functions.sl.php:114
 #: includes/functions/functions_date.php:83
 msgid "Stillborn"
-msgstr ""
+msgstr "Surnult sündinud"
 
 #: includes/extras/functions.pl.php:148
 #: includes/extras/functions.sl.php:123
 #: includes/functions/functions_date.php:88
 msgid "day"
-msgstr ""
+msgstr "päev"
 
 #: includes/extras/functions.pl.php:149
 #: includes/extras/functions.sl.php:124
 #: includes/functions/functions_date.php:89
 msgid "days"
-msgstr ""
+msgstr "päevi"
 
 #: includes/extras/functions.pl.php:150
 #: includes/functions/functions_date.php:90
@@ -13227,11 +13227,11 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:366
 msgid "Informant"
-msgstr ""
+msgstr "Koputaja"
 
 #: includes/extras/functions.pl.php:370
 msgid "Lodger"
-msgstr ""
+msgstr "Öömajaline"
 
 #: includes/extras/functions.pl.php:374
 msgid "Slave"
@@ -13247,7 +13247,7 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:386
 msgid "Nurse"
-msgstr ""
+msgstr "Lapsehoidja"
 
 #: includes/extras/functions.pl.php:390
 msgid "Attendant"
@@ -13259,15 +13259,15 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:398
 msgid "Friend"
-msgstr ""
+msgstr "Sõber"
 
 #: includes/extras/functions.pl.php:402
 msgid "Servant"
-msgstr ""
+msgstr "Teenija"
 
 #: includes/extras/functions.pl.php:406
 msgid "Seller"
-msgstr ""
+msgstr "Müüja"
 
 #: includes/extras/functions.pl.php:410
 msgid "Owner"
@@ -13311,11 +13311,11 @@ msgstr ""
 
 #: includes/functions/functions.php:2004
 msgid "The script timed out before a relationship could be found."
-msgstr ""
+msgstr "Aeg sai täis seost leidmata."
 
 #: includes/functions/functions_charts.php:288
 msgid "Children"
-msgstr ""
+msgstr "Lapsed"
 
 #: includes/functions/functions_charts.php:293
 #, fuzzy
@@ -13325,16 +13325,16 @@ msgstr "Lisa laps"
 #: includes/functions/functions_charts.php:448
 #: includes/functions/functions_charts.php:938
 msgid "This family remained childless"
-msgstr ""
+msgstr "Perekonnas polnud lapsi"
 
 #: includes/functions/functions_charts.php:487
 #: includes/functions/functions_charts.php:514
 msgid "Family Group Information"
-msgstr ""
+msgstr "Info perekonna kohta"
 
 #: includes/functions/functions_charts.php:521
 msgid "No facts for this family."
-msgstr ""
+msgstr "Selle perekonna kohta pole fakte sisestatud."
 
 #: includes/functions/functions_charts.php:532
 #, fuzzy
@@ -13569,68 +13569,68 @@ msgstr ""
 
 #: includes/functions/functions_print.php:166
 msgid "Family with spouse"
-msgstr ""
+msgstr "Perekond abikaasaga"
 
 #: includes/functions/functions_print.php:209
 msgid "Zoom in/out on this box."
-msgstr ""
+msgstr "Suurenda / vähenda."
 
 #: includes/functions/functions_print.php:267
 msgid "Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person."
-msgstr ""
+msgstr "Viitab selle isiku tabelitele, prekondadele ja lähedastele sugulastele. Kliki seda ikooni, et vaadata seda tabelit sellest isikust alates."
 
 #: includes/functions/functions_print.php:575
 msgid "Are you sure you want to delete this fact?"
-msgstr ""
+msgstr "Kas soovid kindlasti selle GEDCOM fakti kustutada?"
 
 #: includes/functions/functions_print.php:582
 msgid "Are you sure you want to delete this person?"
-msgstr ""
+msgstr "Kas soovid kindlasti selle isiku GEDCOM failist kustutada?"
 
 #: includes/functions/functions_print.php:661
 msgid "Print"
-msgstr ""
+msgstr "Prindi"
 
 #: includes/functions/functions_print.php:662
 msgid "Back to normal view"
-msgstr ""
+msgstr "Tagasi tavalisele lehele"
 
 #: includes/functions/functions_print.php:730
 msgid "Total Database Queries: "
-msgstr ""
+msgstr "Kokku andmebaasi päringuid: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total privacy checks: "
-msgstr ""
+msgstr "Kokku privaatsuskontrolle: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total Memory Usage:"
-msgstr ""
+msgstr "Kasutatud kogumälu:"
 
 #: includes/functions/functions_print.php:881
 msgid "For technical support or genealogy questions, please contact"
-msgstr ""
+msgstr "Tehnilistes või genealoogilistes küsimustes võta ühendust"
 
 #: includes/functions/functions_print.php:885
 msgid "For technical support and information contact"
-msgstr ""
+msgstr "Tehnilise abi saamiseks võta ühendust"
 
 #: includes/functions/functions_print.php:891
 msgid "For help with genealogy questions contact"
-msgstr ""
+msgstr "Genealoogilistes küsimustes võta ühendust"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
 msgid "Technical help contact"
-msgstr ""
+msgstr "Tehnilise abi kontakt"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
-msgstr ""
+msgstr "Märkus"
 
 #: includes/functions/functions_print.php:1330
 msgid "For more information contact"
-msgstr ""
+msgstr "Täiendava informatsioni saamiseks võtke ühendust"
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
@@ -13639,7 +13639,7 @@ msgstr ""
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
-msgstr ""
+msgstr "<b>Selle lehekülje või punkti kohta spikker puudub.</b>"
 
 #: includes/functions/functions_print.php:1468
 msgid "<span style=\"font-weight: bold\">The language variable does not exist. Please report this as it is an error.</span>"
@@ -13687,7 +13687,7 @@ msgstr ""
 
 #: includes/functions/functions_print.php:2239
 msgid "Status"
-msgstr ""
+msgstr "Staatus"
 
 #: includes/functions/functions_print.php:2380
 #, fuzzy
@@ -13705,7 +13705,7 @@ msgstr "Kustuta hoidla"
 #: includes/functions/functions_print_facts.php:1149
 #: includes/functions/functions_print_facts.php:1455
 msgid "Copy"
-msgstr ""
+msgstr "Kopeeri"
 
 #: includes/functions/functions_print_facts.php:242
 #, fuzzy
@@ -13715,11 +13715,11 @@ msgstr "Abiellunud"
 #: includes/functions/functions_print_facts.php:446
 #: includes/functions/functions_print_facts.php:448
 msgid "Unrecognized GEDCOM Code"
-msgstr ""
+msgstr "Tundmatu GEDCOM kood"
 
 #: includes/functions/functions_print_facts.php:448
 msgid "This is an error, and we would like to fix it. Please report this error to"
-msgstr ""
+msgstr "See on viga ja sooviksime selle parandada. Palun teata ka sellest veast"
 
 #: includes/functions/functions_print_lists.php:76
 msgid "Show only males."
@@ -13739,7 +13739,7 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:84
 msgid "Alive in Year"
-msgstr ""
+msgstr "Elus aastal"
 
 #: includes/functions/functions_print_lists.php:85
 #: includes/functions/functions_print_lists.php:467
@@ -13748,7 +13748,7 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:86
 msgid "Alive "
-msgstr ""
+msgstr "Elus "
 
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
@@ -13757,7 +13757,7 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:88
 msgid "Dead "
-msgstr ""
+msgstr "Surnud "
 
 #: includes/functions/functions_print_lists.php:89
 #: includes/functions/functions_print_lists.php:475
@@ -16337,7 +16337,7 @@ msgstr ""
 
 #: modules/googlemap/pedigree_map.php:740
 msgid "Birth:"
-msgstr ""
+msgstr "Sündinud:"
 
 #: modules/googlemap/pedigree_map.php:842
 msgid "Zoom&nbsp;in"
@@ -16798,7 +16798,7 @@ msgstr "Leia Meedia"
 
 #: modules/media/media.php:63
 msgid "There are no media objects for this individual."
-msgstr ""
+msgstr "Selle isiku kohta pole meedia objekte sisestatud"
 
 #: modules/notes/notes.php:60
 msgid "Show all notes"
@@ -16816,7 +16816,7 @@ msgstr "Kustuta see isik"
 
 #: modules/personal_facts/personal_facts.php:72
 msgid "Events of close relatives"
-msgstr ""
+msgstr "Lähemate sugulaste sündmused"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
@@ -16837,11 +16837,11 @@ msgstr "Lisa laps"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
-msgstr ""
+msgstr "Lisa mees sellesse perekonda"
 
 #: modules/relatives/relatives.php:161
 msgid "Add a wife to this family"
-msgstr ""
+msgstr "Lisa naine sellesse prekonda"
 
 #: modules/relatives/relatives.php:218
 msgid "Add marriage details"
@@ -16849,7 +16849,7 @@ msgstr ""
 
 #: modules/relatives/relatives.php:408
 msgid "Link this person to an existing family as a child"
-msgstr ""
+msgstr "Lisa see isik olemasolevasse perekonda lapsena"
 
 #: modules/relatives/relatives.php:415
 #, fuzzy
@@ -16858,7 +16858,7 @@ msgstr "Lisa uus märkus"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
-msgstr ""
+msgstr "Lisa see isik olemasolevasse perekonda mehena"
 
 #: modules/relatives/relatives.php:435
 #, fuzzy
@@ -16867,7 +16867,7 @@ msgstr "Lisa uus märkus"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
-msgstr ""
+msgstr "Lisa see isik olemasolevasse perekonda naisena"
 
 #: modules/sitemap/admin-config.php:40
 msgid "Sitemap"
@@ -16988,10 +16988,10 @@ msgstr ""
 
 #: modules/sources_tab/sources_tab.php:77
 msgid "There are no Source citations for this individual."
-msgstr ""
+msgstr "Selle isiku kohta pole allikaviiteid sisestatud"
 
 #: themes/cloudy/footer.php:174
 #: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
-msgstr ""
+msgstr "Seda GEDCOMi on muudetud."
 
