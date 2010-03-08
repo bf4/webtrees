@@ -24,38 +24,38 @@ msgstr "Tambahkan item Media baru"
 #: addremotelink.php:43
 #: addsearchlink.php:35
 msgid "<b>Access Denied</b><br />You do not have access to this resource."
-msgstr ""
+msgstr "<b>Akses Tertolak</b><br />Anda tidak mempunyai akses ke sumberdaya ini."
 
 #: addmedia.php:80
 #: addremotelink.php:45
 msgid "This user name cannot edit this GEDCOM."
-msgstr ""
+msgstr "Nama pengguna ini tidak dapat menyunting GEDCOM ini."
 
 #: addmedia.php:81
 #: addremotelink.php:47
 msgid "Editing this GEDCOM has been disabled by the administrator."
-msgstr ""
+msgstr "Penyuntingan GEDCOM ini telah dinonaktifkan oleh administrator."
 
 #: addmedia.php:83
 #: addremotelink.php:49
 msgid "Privacy settings prevent you from editing this record."
-msgstr ""
+msgstr "Setelan privasi mencegah Anda menyunting rekaman ini."
 
 #: addmedia.php:84
 #: addremotelink.php:51
 msgid "You have no access to"
-msgstr ""
+msgstr "Anda tidak mempunyai akses ke"
 
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
 #: addremotelink.php:274
 msgid "Close Window"
-msgstr ""
+msgstr "Tutup Jendela"
 
 #: addmedia.php:192
 msgid "Media file already exists."
-msgstr ""
+msgstr "Berkas Media sudah ada."
 
 #: addmedia.php:196
 #: addmedia.php:211
@@ -63,107 +63,107 @@ msgstr ""
 #: client.php:414
 #: client.php:424
 msgid "There was an error uploading your file."
-msgstr ""
+msgstr "Ada kesalahan pengunggahan berkas Anda."
 
 #: addmedia.php:207
 msgid "Media thumbnail already exists."
-msgstr ""
+msgstr "Thumbnail Media sudah ada."
 
 #: addmedia.php:273
 msgid "Blank name or illegal characters in name"
-msgstr ""
+msgstr "Nama kosong atau karakter ilegal pada nama"
 
 #: addmedia.php:303
 #: addmedia.php:454
 msgid "This file is linked to another genealogical database on this server.  It cannot be deleted, moved, or renamed until these links have been removed."
-msgstr ""
+msgstr "Berkas ini terkait ke basisdata genealogis lain di server ini. Ia tidak dapat dihapus, dipindah, atau digantinama hingga kaitan ini dibuang."
 
 #: addmedia.php:304
 #: addmedia.php:455
 msgid "Media file could not be moved or renamed."
-msgstr ""
+msgstr "Berkas Media tidak dapat dipindahkan atau digantinama."
 
 #: addmedia.php:305
 #: addmedia.php:456
 msgid "Media file could not be moved."
-msgstr ""
+msgstr "Berkas Media tidak dapat dipindahkan."
 
 #: addmedia.php:409
 msgid "Paste the following ID into your editing fields to reference the newly created record "
-msgstr ""
+msgstr "Tempel ID beriktu ke field suntingan Anda untuk merujuk rekaman yang baru diciptakan "
 
 #: addmedia.php:415
 #: addmedia.php:564
 #: addmedia.php:572
 msgid "Update successful"
-msgstr ""
+msgstr "Pemutakhiran berhasil"
 
 #: addremotelink.php:36
 #: addremotelink.php:116
 #: addsearchlink.php:63
 msgid "Add Remote Link"
-msgstr ""
+msgstr "Tambahkan Pranala Luar"
 
 #: addremotelink.php:64
 msgid "You have selected the same site."
-msgstr ""
+msgstr "Anda telah memilih situs yang sama."
 
 #: addremotelink.php:67
 msgid "You have selected a remote site."
-msgstr ""
+msgstr "Anda telah memilih situs luar."
 
 #: addremotelink.php:75
 #: addremotelink.php:85
 #: addremotelink.php:183
 msgid "Site"
-msgstr ""
+msgstr "Situs"
 
 #: addremotelink.php:80
 msgid "Database ID"
-msgstr ""
+msgstr "ID Basisdata"
 
 #: addremotelink.php:121
 #: addsearchlink.php:74
 msgid "Relationship to current person"
-msgstr ""
+msgstr "Hubungan terhadap orang ini"
 
 #: addremotelink.php:140
 msgid "Site Location"
-msgstr ""
+msgstr "Lokasi Situs"
 
 #: addremotelink.php:150
 msgid "Local site"
-msgstr ""
+msgstr "Situs lokal"
 
 #: addremotelink.php:158
 #: addremotelink.php:188
 msgid "Existing remote site"
-msgstr ""
+msgstr "Situs luar yang ada"
 
 #: addremotelink.php:163
 msgid "New remote site"
-msgstr ""
+msgstr "Situs luar baru"
 
 #: addremotelink.php:173
 msgid "Person ID"
-msgstr ""
+msgstr "ID Orang"
 
 #: addremotelink.php:202
 msgid "Type in a new site."
-msgstr ""
+msgstr "Ketik situs baru."
 
 #: addremotelink.php:205
 #: addremotelink.php:227
 msgid "Title:"
-msgstr ""
+msgstr "Judul:"
 
 #: addremotelink.php:208
 msgid "Site URL:"
-msgstr ""
+msgstr "URL Situs:"
 
 #: addremotelink.php:211
 msgid "Example:"
-msgstr ""
+msgstr "Contoh:"
 
 #: addremotelink.php:214
 msgid "Database ID:"
@@ -185,7 +185,7 @@ msgstr ""
 
 #: addremotelink.php:250
 msgid "Admin Option"
-msgstr ""
+msgstr "Pilihan Admin"
 
 #: addremotelink.php:256
 msgid "Do not update the CHAN (Last Change) record"
@@ -199,35 +199,35 @@ msgstr "Tambahkan istri"
 
 #: addsearchlink.php:31
 msgid "Add Local Link"
-msgstr ""
+msgstr "Tambah Pranala Lokal"
 
 #: addsearchlink.php:77
 msgid "Same as current"
-msgstr ""
+msgstr "Sama seperti yang berlaku"
 
 #: addsearchlink.php:78
 msgid "Mother"
-msgstr ""
+msgstr "Ibu"
 
 #: addsearchlink.php:79
 msgid "Father"
-msgstr ""
+msgstr "Ayah"
 
 #: addsearchlink.php:80
 msgid "Husband"
-msgstr ""
+msgstr "Suami"
 
 #: addsearchlink.php:81
 msgid "Wife"
-msgstr ""
+msgstr "Istri"
 
 #: addsearchlink.php:82
 msgid "Son"
-msgstr ""
+msgstr "Putra"
 
 #: addsearchlink.php:83
 msgid "Daughter"
-msgstr ""
+msgstr "Putri"
 
 #: admin.php:51
 #: admin.php:137
@@ -348,7 +348,7 @@ msgstr ""
 
 #: admin.php:266
 msgid "User administration"
-msgstr ""
+msgstr "Administrasi Pengguna"
 
 #: admin.php:268
 msgid "Backup"
@@ -380,7 +380,7 @@ msgstr ""
 
 #: admin.php:302
 msgid "Loading..."
-msgstr ""
+msgstr "Memuat..."
 
 #: admin.php:314
 msgid "Content of log file"
@@ -391,7 +391,7 @@ msgstr ""
 #: ancestry.php:237
 #: ancestry.php:254
 msgid "Ancestry Chart"
-msgstr ""
+msgstr "Bagan Leluhur"
 
 #: ancestry.php:72
 #: compact.php:82
@@ -414,7 +414,7 @@ msgstr "Daftar Nama"
 
 #: ancestry.php:105
 msgid "Booklet"
-msgstr ""
+msgstr "Booklet"
 
 #: ancestry.php:123
 #, fuzzy
@@ -424,7 +424,7 @@ msgstr "Perlihatkan tugas yang tidak dikerjakan"
 #: ancestry.php:130
 #: calendar.php:404
 msgid "Individuals"
-msgstr ""
+msgstr "Individu"
 
 #: ancestry.php:136
 #: calendar.php:405
@@ -436,7 +436,7 @@ msgstr "Susun Keluarga"
 #: branches.php:74
 #: compact.php:90
 msgid "View"
-msgstr ""
+msgstr "Tampilkan"
 
 #: ancestry.php:149
 #: branches.php:241
@@ -450,7 +450,7 @@ msgstr "Perlihatkan tugas di masa yang akan datang"
 
 #: ancestry.php:192
 msgid "Click on any of the boxes to get more information about that person."
-msgstr ""
+msgstr "Klik pada kotak manapun untuk memeroleh informasi lebih lanjut tentang orang tersebut."
 
 #: autocomplete.php:196
 msgid "Age"
@@ -479,11 +479,11 @@ msgstr "Cari dengan cara bagaimana menurut Anda nama tersebut ditulis (Pengucapa
 
 #: branches.php:79
 msgid "Basic"
-msgstr ""
+msgstr "Dasar"
 
 #: branches.php:81
 msgid "Daitch-Mokotoff"
-msgstr ""
+msgstr "Daitch-Mokotoff"
 
 #: branches.php:104
 msgid "Pedigree Chart Root Person"
@@ -491,39 +491,39 @@ msgstr ""
 
 #: branches.php:166
 msgid "Yes"
-msgstr ""
+msgstr "Ya"
 
 #: calendar.php:102
 msgid "Anniversary Calendar"
-msgstr ""
+msgstr "Kalender Ulangtahun"
 
 #: calendar.php:122
 msgid "On This Day ..."
-msgstr ""
+msgstr "Pada Hari Ini ..."
 
 #: calendar.php:125
 msgid "In This Month ..."
-msgstr ""
+msgstr "Pada Bulan Ini ..."
 
 #: calendar.php:128
 msgid "In This Year ..."
-msgstr ""
+msgstr "Pada Tahun Ini ..."
 
 #: calendar.php:137
 msgid "Day:"
-msgstr ""
+msgstr "Hari:"
 
 #: calendar.php:152
 msgid "Month:"
-msgstr ""
+msgstr "Bulan:"
 
 #: calendar.php:172
 msgid "Year:"
-msgstr ""
+msgstr "Tahun:"
 
 #: calendar.php:182
 msgid "Show"
-msgstr ""
+msgstr "Perlihatkan"
 
 #: calendar.php:187
 #: calendar.php:204
@@ -532,17 +532,17 @@ msgstr ""
 #: calendar.php:209
 #: calendar.php:441
 msgid "All People"
-msgstr ""
+msgstr "Semua Orang"
 
 #: calendar.php:191
 #: calendar.php:518
 msgid "Living People"
-msgstr ""
+msgstr "Orang yang Hidup"
 
 #: calendar.php:195
 #: calendar.php:521
 msgid "Recent Years (&lt; 100 yrs)"
-msgstr ""
+msgstr "Tahun Belakangan (&lt; 100 tahun)"
 
 #: calendar.php:201
 #, fuzzy
@@ -623,7 +623,7 @@ msgstr "Emigrasi"
 
 #: calendar.php:274
 msgid "Custom Event"
-msgstr ""
+msgstr "Peristiwa Pilihan"
 
 #: calendar.php:282
 #: calendar.php:284
@@ -634,7 +634,7 @@ msgstr "Tampilkan arsip"
 #: calendar.php:287
 #: calendar.php:289
 msgid "View Month"
-msgstr ""
+msgstr "Tampilkan Bulan"
 
 #: calendar.php:292
 #: calendar.php:294
@@ -654,21 +654,21 @@ msgstr "Susun Keluarga"
 
 #: calendar.php:477
 msgid "Day not set"
-msgstr ""
+msgstr "Hari tidak ditetapkan"
 
 #: calendar.php:524
 #: calendar.php:606
 msgid "Male"
-msgstr ""
+msgstr "Laki-laki"
 
 #: calendar.php:527
 #: calendar.php:610
 msgid "Female"
-msgstr ""
+msgstr "Perempuan"
 
 #: calendar.php:536
 msgid "Filter"
-msgstr ""
+msgstr "Penyaring"
 
 #: calendar.php:614
 msgid "unknown"
@@ -732,45 +732,45 @@ msgstr "Bagan Kliping"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
-msgstr ""
+msgstr "Kaitan lain yang mana dari keluarga ini yang ingin Anda tambahkan?"
 
 #: clippings.php:62
 msgid "Add just this family record."
-msgstr ""
+msgstr "Hanya tambahkan rekaman keluarga ini."
 
 #: clippings.php:63
 msgid "Add parents' records together with this family record."
-msgstr ""
+msgstr "Tambahkan rekaman orangtua bersama dengan rekaman keluarga ini."
 
 #: clippings.php:64
 msgid "Add parents' and children's records together with this family record."
-msgstr ""
+msgstr "Tambahkan rekaman orangtua dan anak bersama dengan rekaman keluarga ini."
 
 #: clippings.php:65
 msgid "Add parents' and all descendants' records together with this family record."
-msgstr ""
+msgstr "Tambahkan rekaman orangtua dan seluruh keturunan bersama dengan rekaman keluarga ini."
 
 #: clippings.php:66
 #: clippings.php:87
 #: clippings.php:99
 msgid "Continue Adding"
-msgstr ""
+msgstr "Lanjutkan Penambahan"
 
 #: clippings.php:74
 msgid "Which links from this person would you also like to add?"
-msgstr ""
+msgstr "Kaitan mana dari orang ini yang ingin Anda tambahkan?"
 
 #: clippings.php:78
 msgid "Add just this person."
-msgstr ""
+msgstr "Hanya tambahkan orang ini."
 
 #: clippings.php:79
 msgid "Add this person, his parents, and siblings."
-msgstr ""
+msgstr "Tambahkan orang ini, orangtua dan saudaranya."
 
 #: clippings.php:80
 msgid "Add this person and his direct line ancestors."
-msgstr ""
+msgstr "Tambahkan orang ini dan leluhur langsungnya."
 
 #: clippings.php:81
 #: clippings.php:83
@@ -781,19 +781,19 @@ msgstr "Jumlah hari yang dimunculkan"
 
 #: clippings.php:82
 msgid "Add this person, his direct line ancestors, and their families."
-msgstr ""
+msgstr "Tambahkan orang ini, leluhur langsungnya, dan keluarga mereka."
 
 #: clippings.php:84
 msgid "Add this person, his spouse, and children."
-msgstr ""
+msgstr "Tambahkan orang ini, pasangan dan anak-anaknya."
 
 #: clippings.php:85
 msgid "Add this person, his spouse, and all descendants."
-msgstr ""
+msgstr "Tambahkan orang ini, pasangan dan semua keturunannya."
 
 #: clippings.php:93
 msgid "Which records linked to this source should be added?"
-msgstr ""
+msgstr "Rekaman yang mana terkait dengan sumber ini yang seharusnya ditambahkan?"
 
 #: clippings.php:97
 #, fuzzy
@@ -802,19 +802,19 @@ msgstr "Hapus Sumber ini"
 
 #: clippings.php:98
 msgid "Add this source and families/people linked to it."
-msgstr ""
+msgstr "Tambahkan sumber ini dan keluarga/orang yang terkait sumber tersebut."
 
 #: clippings.php:107
 msgid "Some items could not be added due to privacy restrictions"
-msgstr ""
+msgstr "Beberapa item tidak dapat ditambahkan sehubungan dengan pembatasan privasi"
 
 #: clippings.php:127
 msgid "Add Individual By ID"
-msgstr ""
+msgstr "Tambah Individu Berdasarkan ID"
 
 #: clippings.php:140
 msgid "Add"
-msgstr ""
+msgstr "Tambahkan"
 
 #: clippings.php:150
 #, fuzzy
@@ -823,15 +823,15 @@ msgstr "Bagan Kliping"
 
 #: clippings.php:157
 msgid "File Information"
-msgstr ""
+msgstr "Informasi Berkas"
 
 #: clippings.php:159
 msgid "File Type"
-msgstr ""
+msgstr "Pilih Jenis Berkas"
 
 #: clippings.php:168
 msgid "Zip File(s)"
-msgstr ""
+msgstr "Berkas Zip"
 
 #: clippings.php:171
 msgid "Include Media (automatically zips files)"
@@ -863,11 +863,11 @@ msgstr ""
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
-msgstr ""
+msgstr "Konversi dari UTF-8 ke ANSI (ISO-8859-1)"
 
 #: clippings.php:215
 msgid "Remove custom PGV tags? (eg. _PGVU, _THUM)"
-msgstr ""
+msgstr "Ambil tag PGV pilihan? (eg. _PGVU, _THUM)"
 
 #: clippings.php:218
 msgid "Convert media path to"
@@ -921,12 +921,12 @@ msgstr ""
 #: descendancy.php:146
 #: descendancy.php:152
 msgid "Descendancy Chart"
-msgstr ""
+msgstr "Bagan Keturunan"
 
 #: descendancy.php:120
 #: edit_interface.php:296
 msgid "The requested GEDCOM record could not be found.  This could be caused by a link to an invalid person or by a corrupt GEDCOM file."
-msgstr ""
+msgstr "Rekaman GEDCOM yang diminta tidak dapat ditemukan.  Hal ini dapat disebabkan oleh kaitan ke orang yang keliru atau berkas GEDCOM yang rusak."
 
 #: dir_editor.php:87
 msgid "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" alt=\"\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing."
@@ -963,7 +963,7 @@ msgstr "Hapus Nama"
 #: edit_interface.php:2464
 #: edit_interface.php:2725
 msgid "Cancel"
-msgstr ""
+msgstr "Batal"
 
 #: dir_editor.php:240
 msgid "Remove all nonessential files"
@@ -976,7 +976,7 @@ msgstr ""
 
 #: downloadgedcom.php:136
 msgid "Options:"
-msgstr ""
+msgstr "Pilihan:"
 
 #: downloadgedcom.php:169
 msgid ""
@@ -988,16 +988,16 @@ msgstr ""
 
 #: editconfig_gedcom.php:433
 msgid "The Media Firewall root directory you requested does not exist.  You must create it first."
-msgstr ""
+msgstr "Direktori root Firewall Media yang Anda minta tidak ada.  Anda harus membuatnya terlebih dahulu."
 
 #: editconfig_gedcom.php:444
 msgid "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable."
-msgstr ""
+msgstr "Direktori media terproteksi tidak dapat dibuat di direktori root Firewall Media. Silakan buat directori ini dan jadikan dapat tertulis secara global."
 
 #: editconfig_gedcom.php:456
 #: editconfig_gedcom.php:468
 msgid "The protected media directory in the Media Firewall root directory is not world writable. "
-msgstr ""
+msgstr "Direktori media terproteksi di root directori Firewall Media tidak dapat ditulisi secara global. "
 
 #: editconfig_gedcom.php:487
 msgid "Download GEDCOM configuration."
@@ -1075,7 +1075,7 @@ msgstr ""
 #: editconfig_gedcom.php:2225
 #: edit_privacy.php:807
 msgid "Reset"
-msgstr ""
+msgstr "Kembalikan"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
@@ -1088,7 +1088,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:900
 msgid "Maximum upload size: "
-msgstr ""
+msgstr "Ukuran unggah maksimum: "
 
 #: editconfig_gedcom.php:903
 #: editconfig_gedcom.php:924
@@ -1107,7 +1107,7 @@ msgstr ""
 #: edit_merge.php:76
 #: edit_merge.php:79
 msgid "Unable to find record with ID"
-msgstr ""
+msgstr "Tidak dapat menemukan rekaman dengan ID"
 
 #: editconfig_gedcom.php:987
 msgid "Calendar format"
@@ -1180,7 +1180,7 @@ msgstr ""
 #: editlang_edit_settings.php:486
 #: edit_privacy.php:97
 msgid "No"
-msgstr ""
+msgstr "Tidak"
 
 #: editconfig_gedcom.php:1013
 msgid "Display Hebrew Gershayim"
@@ -1370,11 +1370,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1331
 msgid "Welcome"
-msgstr ""
+msgstr "Selamat Datang"
 
 #: editconfig_gedcom.php:1332
 msgid "MyGedView"
-msgstr ""
+msgstr "GedViewSaya"
 
 #: editconfig_gedcom.php:1337
 msgid "Welcome text on Login page"
@@ -1466,11 +1466,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1474
 msgid "Landscape"
-msgstr ""
+msgstr "Lanskap"
 
 #: editconfig_gedcom.php:1475
 msgid "Portrait"
-msgstr ""
+msgstr "Potret"
 
 #: editconfig_gedcom.php:1480
 msgid "Place levels to show in person boxes"
@@ -1513,7 +1513,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1509
 msgid "Personal Facts and Details"
-msgstr ""
+msgstr "Fakta dan Rincian Diri"
 
 #: editconfig_gedcom.php:1510
 msgid "Notes"
@@ -1531,11 +1531,11 @@ msgstr "Cari Media"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
-msgstr ""
+msgstr "Kerabat Dekat"
 
 #: editconfig_gedcom.php:1514
 msgid "Tree"
-msgstr ""
+msgstr "Silsilah"
 
 #: editconfig_gedcom.php:1516
 msgid "Last Visited Tab For Individual"
@@ -1555,11 +1555,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1581
 msgid "after"
-msgstr ""
+msgstr "Setelah"
 
 #: editconfig_gedcom.php:1582
 msgid "before"
-msgstr ""
+msgstr "Sebelum"
 
 #: editconfig_gedcom.php:1587
 msgid "Maximum number of surnames"
@@ -1575,11 +1575,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1597
 msgid "Table"
-msgstr ""
+msgstr "Tabel"
 
 #: editconfig_gedcom.php:1598
 msgid "Tagcloud"
-msgstr ""
+msgstr "Tagcloud"
 
 #: editconfig_gedcom.php:1608
 #: editconfig_gedcom.php:1609
@@ -1786,7 +1786,7 @@ msgstr ""
 #: editconfig_gedcom.php:1944
 #: edit_merge.php:150
 msgid "Record"
-msgstr ""
+msgstr "Rekaman"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
@@ -1963,7 +1963,7 @@ msgstr ""
 
 #: editgedcoms.php:187
 msgid "File not found."
-msgstr ""
+msgstr "Berkas tidak ditemukan."
 
 #: editgedcoms.php:191
 msgid "Import"
@@ -2038,31 +2038,31 @@ msgstr ""
 
 #: editlang_edit_settings.php:357
 msgid "Sunday"
-msgstr ""
+msgstr "Ahad"
 
 #: editlang_edit_settings.php:357
 msgid "Monday"
-msgstr ""
+msgstr "Senin"
 
 #: editlang_edit_settings.php:357
 msgid "Tuesday"
-msgstr ""
+msgstr "Selasa"
 
 #: editlang_edit_settings.php:357
 msgid "Wednesday"
-msgstr ""
+msgstr "Rabu"
 
 #: editlang_edit_settings.php:357
 msgid "Thursday"
-msgstr ""
+msgstr "Kamis"
 
 #: editlang_edit_settings.php:357
 msgid "Friday"
-msgstr ""
+msgstr "Jumat"
 
 #: editlang_edit_settings.php:357
 msgid "Saturday"
-msgstr ""
+msgstr "Sabtu"
 
 #: editlang_edit_settings.php:378
 msgid "Text direction"
@@ -2119,7 +2119,7 @@ msgstr ""
 #: editnews.php:34
 #: editnews.php:52
 msgid "Add/Edit Journal/News entry"
-msgstr ""
+msgstr "Tambah/Sunting masukan Jurnal/Berita"
 
 #: editnews.php:57
 #, fuzzy
@@ -2128,48 +2128,48 @@ msgstr "Gaya Presentasi"
 
 #: editnews.php:64
 msgid "Please enter some text for this News or Journal entry."
-msgstr ""
+msgstr "Silakan masukkan beberapa teks untuk masukan Berita atau Jurnal."
 
 #: editnews.php:88
 msgid "Entry Text:"
-msgstr ""
+msgstr "Teks Masukan:"
 
 #: editnews.php:125
 msgid "News/Journal entry successfully saved."
-msgstr ""
+msgstr "Masukan Berita/Jurnal berhasil disimpan."
 
 #: edituser.php:71
 msgid "Duplicate user name.  A user with that user name already exists.  Please choose another user name."
-msgstr ""
+msgstr "Nama pengguna ganda. Pengguna dengan nama tersebut telah ada.  Silakan pilih nama pengguna yang lain."
 
 #: edituser.php:85
 msgid "User name contains invalid characters"
-msgstr ""
+msgstr "Nama pengguna mengandung karakter yang keliru"
 
 #: edituser.php:129
 msgid "You must enter a user name."
-msgstr ""
+msgstr "Anda harus memasukkan nama pengguna."
 
 #: edituser.php:134
 #: edituser.php:139
 msgid "You must enter a first and last name."
-msgstr ""
+msgstr "Anda harus memasukkan nama depan dan belakang."
 
 #: edituser.php:144
 msgid "You must enter an email address."
-msgstr ""
+msgstr "Anda harus memasukkan alamat email."
 
 #: edituser.php:149
 msgid "Passwords do not match."
-msgstr ""
+msgstr "Sandi tidak cocok."
 
 #: edituser.php:154
 msgid "Passwords must contain at least 6 characters."
-msgstr ""
+msgstr "Sandi harus mengandung setidaknya 6 karakter."
 
 #: edituser.php:174
 msgid "My Account"
-msgstr ""
+msgstr "Akun Saya"
 
 #: edituser.php:176
 #: edituser.php:301
@@ -2193,7 +2193,7 @@ msgstr "Sunting Nama"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
-msgstr ""
+msgstr "ID rekaman GEDCOM INDI"
 
 #: edituser.php:218
 msgid "Password"
@@ -2210,19 +2210,19 @@ msgstr "Sandi"
 
 #: edituser.php:229
 msgid "Change Language"
-msgstr ""
+msgstr "Ganti Bahasa"
 
 #: edituser.php:245
 msgid "Email Address"
-msgstr ""
+msgstr "Alamat Email"
 
 #: edituser.php:251
 msgid "My Theme"
-msgstr ""
+msgstr "Tema Saya"
 
 #: edituser.php:253
 msgid "Site Default"
-msgstr ""
+msgstr "Default Situs"
 
 #: edituser.php:266
 msgid "Preferred Contact Method"
@@ -2245,20 +2245,20 @@ msgstr "Teliti Perubahan GEDCOM"
 #: edit_changes.php:66
 #: edit_changes.php:84
 msgid "Undo successful"
-msgstr ""
+msgstr "Pengurungan berhasil"
 
 #: edit_changes.php:71
 #: edit_changes.php:99
 msgid "Changes successfully accepted into database"
-msgstr ""
+msgstr "Perubahan berhasil diterima ke dalam basisdata"
 
 #: edit_changes.php:104
 msgid "There are currently no changes to be reviewed."
-msgstr ""
+msgstr "Saat ini tidak ada perubahan untuk diteliti."
 
 #: edit_changes.php:116
 msgid "View Change Diff"
-msgstr ""
+msgstr "Tampilkan Perbedaan Perubahan"
 
 #: edit_changes.php:117
 #, fuzzy
@@ -2268,33 +2268,33 @@ msgstr "Teliti Perubahan GEDCOM"
 #: edit_changes.php:118
 #: edit_interface.php:413
 msgid "Edit raw GEDCOM record"
-msgstr ""
+msgstr "Sunting bahan rekaman GEDCOM"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
-msgstr ""
+msgstr "Perubahan berikut dibuat terhadap rekaman ini:"
 
 #: edit_changes.php:122
 #: edit_changes.php:131
 msgid "Accept"
-msgstr ""
+msgstr "Terima"
 
 #: edit_changes.php:123
 msgid "Type"
-msgstr ""
+msgstr "Jenis"
 
 #: edit_changes.php:125
 msgid "Date"
-msgstr ""
+msgstr "Tanggal"
 
 #: edit_changes.php:127
 #: edit_changes.php:144
 msgid "Undo"
-msgstr ""
+msgstr "Urungkan"
 
 #: edit_changes.php:136
 msgid "Send Message"
-msgstr ""
+msgstr "Kirim Pesan"
 
 #: edit_changes.php:159
 #: edit_changes.php:170
@@ -2305,11 +2305,11 @@ msgstr "Perubahan Terkini"
 #: edit_changes.php:163
 #: edit_changes.php:181
 msgid "Undo all changes"
-msgstr ""
+msgstr "Urungkan semua perubahan"
 
 #: edit_changes.php:181
 msgid "Are you sure you want to undo all of the changes for this GEDCOM?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin mengurungkan semua perubahan untuk GEDCOM ini?"
 
 #: edit_changes.php:186
 msgid "Decide for each change to either accept or reject it.<br /><br />To accept all changes at once, click <b>\"Accept all changes\"</b> in the box below.<br />To get more information about a change,<br />click <b>\"View change diff\"</b> to see the differences,<br />or click <b>\"View GEDCOM record\"</b> to see the new data in GEDCOM format."
@@ -2341,11 +2341,11 @@ msgstr ""
 #: edit_interface.php:2076
 #: edit_merge.php:179
 msgid "GEDCOM record successfully deleted."
-msgstr ""
+msgstr "Rekaman GEDCOM berhasil dihapus."
 
 #: edit_interface.php:575
 msgid "Family"
-msgstr ""
+msgstr "Keluarga"
 
 #: edit_interface.php:580
 msgid "PEDI"
@@ -2353,20 +2353,20 @@ msgstr "Kerabat"
 
 #: edit_interface.php:584
 msgid "Adopted"
-msgstr ""
+msgstr "Adopsi"
 
 #: edit_interface.php:585
 msgid "Foster"
-msgstr ""
+msgstr "Orangtua angkat"
 
 #: edit_interface.php:586
 msgid "Sealing"
-msgstr ""
+msgstr "Penyegelan"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
 msgid "Set link"
-msgstr ""
+msgstr "Tetapkan kaitan"
 
 #: edit_interface.php:751
 #: edit_interface.php:902
@@ -2375,7 +2375,7 @@ msgstr ""
 #: edit_interface.php:1161
 #: edit_interface.php:1224
 msgid "You must provide a "
-msgstr ""
+msgstr "Anda harus menyediakan "
 
 #: edit_interface.php:751
 #: edit_interface.php:768
@@ -2389,7 +2389,7 @@ msgstr "Judul"
 #: edit_interface.php:760
 #: edit_interface.php:838
 msgid "Create a new source"
-msgstr ""
+msgstr "Ciptakan sumber baru"
 
 #: edit_interface.php:765
 msgid "ABBR"
@@ -2423,15 +2423,15 @@ msgstr "Nomor Telepon"
 
 #: edit_interface.php:810
 msgid "Associate events with this source"
-msgstr ""
+msgstr "Peristiwa yang terkait dengan sumber ini"
 
 #: edit_interface.php:814
 msgid "Select Events"
-msgstr ""
+msgstr "Pilih Peristiwa"
 
 #: edit_interface.php:891
 msgid "New source created successfully."
-msgstr ""
+msgstr "Sumber baru berhasil diciptakan."
 
 #: edit_interface.php:911
 msgid "Create a new Shared Note"
@@ -2493,7 +2493,7 @@ msgstr "Hapus Repositori"
 
 #: edit_interface.php:1330
 msgid "Paste the following Repository ID into your editing fields to reference this Repository "
-msgstr ""
+msgstr "Tempel ID Repositori berikut ke field suntingan Anda untuk merujuk Repositori ini "
 
 #: edit_interface.php:2126
 #, fuzzy
@@ -2506,26 +2506,26 @@ msgstr "Susun anak"
 
 #: edit_interface.php:2322
 msgid "Sort by birth dates"
-msgstr ""
+msgstr "Urutkan berdasarkan tanggal lahir"
 
 #: edit_interface.php:2350
 msgid "Child"
-msgstr ""
+msgstr "Anak"
 
 #: edit_interface.php:2362
 #: edit_interface.php:2371
 #: edit_interface.php:2405
 #: edit_interface.php:2425
 msgid "Spouse"
-msgstr ""
+msgstr "Pasangan"
 
 #: edit_interface.php:2389
 msgid "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes."
-msgstr ""
+msgstr "Gunakan halaman ini untuk mengubah atau atau membuang anggota keluarga.<br /><br />Untuk tiap anggota dalam keluarga, Anda dapat menggunakan Ubah kaitan untuk memilih orang yang berbeda untuk mengisi peran tersebut dalam keluarga. Anda juga dapat menggunakan Buang kaitan untuk membuang orang itu dari keluarga.<br /><br />Jika Anda selesai mengubah anggota keluarga, klik tombol Simpan untuk menyimpan perubahan."
 
 #: edit_interface.php:2394
 msgid "Change Family Members"
-msgstr ""
+msgstr "Ganti Anggota Keluarga"
 
 #: edit_interface.php:2412
 #: edit_interface.php:2432
@@ -2541,39 +2541,39 @@ msgstr "Susun Keluarga"
 
 #: edit_interface.php:2724
 msgid "Sort by marriage date"
-msgstr ""
+msgstr "Urutkan berdasarkan tanggal nikah"
 
 #: edit_merge.php:58
 msgid "You entered the same IDs.  You cannot merge the same records."
-msgstr ""
+msgstr "Anda memasukkan ID yang sama. Anda tidak dapat menggabungkan rekaman yang sama."
 
 #: edit_merge.php:91
 msgid "Records are not the same type.  Cannot merge records that are not the same type."
-msgstr ""
+msgstr "Jenis rekaman tidak sama. Tidak dapat menggabungkan rekaman yang jenisnya tidak sama."
 
 #: edit_merge.php:121
 msgid "Merge Step 2 of 3"
-msgstr ""
+msgstr "Penggabungan Langkah 2 dari 3"
 
 #: edit_merge.php:123
 msgid "The following facts were exactly the same in both records and will be merged automatically."
-msgstr ""
+msgstr "Fakta berikut sama persis pada kedua rekaman dan akan digabungkan secara otomatis."
 
 #: edit_merge.php:145
 msgid "No matching facts found"
-msgstr ""
+msgstr "Tidak ada fakta yang cocok ditemukan"
 
 #: edit_merge.php:148
 msgid "The following facts did not match.  Select the information you would like to keep."
-msgstr ""
+msgstr "Fakta berikut tidak cocok. Pilih informasi yang ingin Anda pertahankan."
 
 #: edit_merge.php:175
 msgid "Merge Step 3 of 3"
-msgstr ""
+msgstr "Penggabungan Langkah 3 dari 3"
 
 #: edit_merge.php:191
 msgid "Updating linked record"
-msgstr ""
+msgstr "Memutakhirkan rekaman terkait"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
@@ -2592,38 +2592,38 @@ msgstr ""
 
 #: edit_merge.php:248
 msgid "Merge more records."
-msgstr ""
+msgstr "Gabungkan rekaman lagi."
 
 #: edit_merge.php:281
 msgid "Merge Step 1 of 3"
-msgstr ""
+msgstr "Penggabungan Langkah 1 dari 3"
 
 #: edit_merge.php:284
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
-msgstr ""
+msgstr "Pilih dua rekaman GEDCOM untuk digabungkan. Jenis rekaman harus sama."
 
 #: edit_merge.php:287
 msgid "Merge To ID:"
-msgstr ""
+msgstr "Gabungkan Hingga ID:"
 
 #: edit_merge.php:302
 #: edit_merge.php:319
 msgid "Find Individual ID"
-msgstr ""
+msgstr "Cari ID Individu"
 
 #: edit_merge.php:303
 #: edit_merge.php:320
 msgid "Find Family ID"
-msgstr ""
+msgstr "Cari ID Keluarga"
 
 #: edit_merge.php:304
 #: edit_merge.php:321
 msgid "Find Source ID"
-msgstr ""
+msgstr "Cari ID Sumber"
 
 #: edit_merge.php:307
 msgid "Merge From ID:"
-msgstr ""
+msgstr "Gabungkan Dari ID:"
 
 #: edit_privacy.php:122
 #: edit_privacy.php:126
@@ -2788,7 +2788,7 @@ msgstr ""
 
 #: edit_privacy.php:633
 msgid "Choose: "
-msgstr ""
+msgstr "Pilih: "
 
 #: edit_privacy.php:647
 #: edit_privacy.php:685
@@ -2824,7 +2824,7 @@ msgstr ""
 
 #: expand_view.php:32
 msgid "Private"
-msgstr ""
+msgstr "Pribadi"
 
 #: expand_view.php:72
 #, fuzzy
@@ -2839,7 +2839,7 @@ msgstr "Rekaman ini telah dimutakhirkan. Klik di sini untuk memperlihatkan perub
 #: family.php:100
 #: familybook.php:218
 msgid "Parents"
-msgstr ""
+msgstr "Orangtua:"
 
 #: family.php:101
 msgid "Grandparents"
@@ -2847,55 +2847,55 @@ msgstr ""
 
 #: family.php:137
 msgid "Show couple on timeline chart"
-msgstr ""
+msgstr "Perlihatkan pasangan pada bagan gariswaktu"
 
 #: family.php:137
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: family.php:138
 msgid "Show children on timeline chart"
-msgstr ""
+msgstr "Perlihatkan anak pada bagan gariswaktu"
 
 #: family.php:138
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: family.php:139
 msgid "Show family on timeline chart"
-msgstr ""
+msgstr "Perlihatkan keluarga pada bagan gariswaktu"
 
 #: family.php:139
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #: family.php:141
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: family.php:159
 msgid "Search Engine Spider Detected"
-msgstr ""
+msgstr "Mesin Pencari Laba-Laba Terdeteksi"
 
 #: familybook.php:243
 #: fanchart.php:345
 msgid "Siblings"
-msgstr ""
+msgstr "Saudara"
 
 #: familybook.php:244
 #: fanchart.php:346
 msgid "Sibling"
-msgstr ""
+msgstr "Saudara"
 
 #: familybook.php:340
 msgid "Family of:&nbsp;"
-msgstr ""
+msgstr "Keluarga:&nbsp;"
 
 #: familybook.php:371
 #: familybook.php:383
 #: familybook.php:387
 msgid "Family Book Chart"
-msgstr ""
+msgstr "Bagan Buku Keluarga"
 
 #: familybook.php:458
 #: hourglass.php:115
@@ -2905,22 +2905,22 @@ msgstr "Perlihatkan semua sumber"
 
 #: familybook.php:481
 msgid "Descent Steps"
-msgstr ""
+msgstr "Langkah Turun"
 
 #: famlist.php:109
 #: famlist.php:121
 #: famlist.php:141
 #: famlist.php:240
 msgid "(unknown)"
-msgstr ""
+msgstr "(anonim)"
 
 #: famlist.php:174
 msgid "Choose a letter to show families whose name starts with that letter."
-msgstr ""
+msgstr "Pilih huruf untuk menunjukkan keluarga yang namanya bermula dengan huruf tersebut."
 
 #: famlist.php:184
 msgid "Skip Surname lists"
-msgstr ""
+msgstr "Lewati Daftar marga"
 
 #: famlist.php:187
 #, fuzzy
@@ -2942,24 +2942,24 @@ msgstr ""
 
 #: fanchart.php:105
 msgid "PHP server misconfiguration: GD 2.x library required to use image functions."
-msgstr ""
+msgstr "Miskonfigurasi server PHP: Librari GD 2.x diperlukan untuk menggunakan fungsi gambar."
 
 #: fanchart.php:106
 #: fanchart.php:111
 msgid "http://www.php.net/gd"
-msgstr ""
+msgstr "http://www.php.net/gd"
 
 #: fanchart.php:110
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
-msgstr ""
+msgstr "Miskonfigurasi server PHP: Librari FreeType diperlukan untuk menggunakan font TrueType."
 
 #: fanchart.php:117
 msgid "Font file not found on PHP server"
-msgstr ""
+msgstr "Berkas Font tidak ditemukan di server PHP"
 
 #: fanchart.php:295
 msgid "Pedigree Tree"
-msgstr ""
+msgstr "Silsilah Kerabat"
 
 #: fanchart.php:297
 msgid "Pedigree Map"
@@ -2976,18 +2976,18 @@ msgstr "Periksa kekerabatan berdasarkan pernikahan"
 #: fanchart.php:429
 #: fanchart.php:454
 msgid "Circle Diagram"
-msgstr ""
+msgstr "Diagram Lingkaran"
 
 #: fanchart.php:306
 #: hourglass.php:39
 #: hourglass.php:44
 #: hourglass.php:48
 msgid "Hourglass Chart"
-msgstr ""
+msgstr "Bagan Gelaswaktu"
 
 #: fanchart.php:307
 msgid "Interactive Tree"
-msgstr ""
+msgstr "Silsilah Interaktif"
 
 #: fanchart.php:489
 #: help_text.php:4299
@@ -2996,7 +2996,7 @@ msgstr "Lebar"
 
 #: fanchart.php:498
 msgid "This Fanchart image cannot be printed directly by your browser. Use right-click then save and print."
-msgstr ""
+msgstr "Gambar kipas ini tidak dapat dicetak langsung oleh perambah Anda. Gunakan klik-kanan, kemudian simpan dan cetak."
 
 #: faq.php:159
 #: faq.php:247
@@ -3030,7 +3030,7 @@ msgstr "Penampakan FAQ"
 
 #: faq.php:189
 msgid "No FAQ ID has been specified !"
-msgstr ""
+msgstr "Tidak ada ID FAQ yang ditentukan!"
 
 #: faq.php:202
 #: help_text.php:4149
@@ -3039,7 +3039,7 @@ msgstr ""
 
 #: faq.php:250
 msgid "The FAQ list is empty."
-msgstr ""
+msgstr "Daftar FAQ kosong."
 
 #: faq.php:265
 #: help_text.php:5054
@@ -3053,12 +3053,12 @@ msgstr "Posisi FAQ"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin menghapus masukan FAQ?"
 
 #: find.php:97
 #: find.php:202
 msgid "Find Family List"
-msgstr ""
+msgstr "Cari Daftar Keluarga"
 
 #: find.php:100
 #: find.php:205
@@ -3087,16 +3087,16 @@ msgstr "Tambahkan Catatan baru"
 #: find.php:116
 #: find.php:217
 msgid "Find Source"
-msgstr ""
+msgstr "Cari Sumber"
 
 #: find.php:120
 #: find.php:220
 msgid "Find Special Characters"
-msgstr ""
+msgstr "Cari Karakter Khusus"
 
 #: find.php:163
 msgid "Please enter more than one character"
-msgstr ""
+msgstr "Silakan masukkan lebih dari satu karakter"
 
 #: find.php:239
 #: find.php:259
@@ -3106,11 +3106,11 @@ msgstr "Daftar Nama"
 
 #: find.php:283
 msgid "Media contains:"
-msgstr ""
+msgstr "Media mengandung:"
 
 #: find.php:291
 msgid "Show thumbnails"
-msgstr ""
+msgstr "Perlihatkan thumbnail"
 
 #: find.php:296
 #: find.php:317
@@ -3118,15 +3118,15 @@ msgstr ""
 #: find.php:359
 #: find.php:380
 msgid "Display all"
-msgstr ""
+msgstr "Tampilkan semua"
 
 #: find.php:311
 msgid "Place contains:"
-msgstr ""
+msgstr "Tempat mengandung:"
 
 #: find.php:332
 msgid "Repository contains:"
-msgstr ""
+msgstr "Repositori mengandung:"
 
 #: find.php:353
 msgid "Shared Note contains:"
@@ -3134,11 +3134,11 @@ msgstr ""
 
 #: find.php:374
 msgid "Source contains:"
-msgstr ""
+msgstr "Sumber mengandung:"
 
 #: find.php:403
 msgid "Magnify"
-msgstr ""
+msgstr "Perbesar"
 
 #: find.php:432
 #: find.php:457
@@ -3148,27 +3148,27 @@ msgstr ""
 #: find.php:693
 #: find.php:715
 msgid "No results found."
-msgstr ""
+msgstr "Tidak ada hasil yang ditemukan."
 
 #: find.php:487
 msgid "Current directory"
-msgstr ""
+msgstr "Direktori berlaku"
 
 #: find.php:501
 msgid "External objects"
-msgstr ""
+msgstr "Objek luar"
 
 #: find.php:572
 msgid "The filename entered does not exist."
-msgstr ""
+msgstr "Namaberkas yang dimasukkan tidak ada."
 
 #: find.php:574
 msgid "Image Dimensions"
-msgstr ""
+msgstr "Dimensi Gambar"
 
 #: find.php:577
 msgid "This media object is linked to the following:"
-msgstr ""
+msgstr "Media objek ini terkait ke berikut:"
 
 #: find.php:584
 #, fuzzy
@@ -3182,19 +3182,19 @@ msgstr "Tampilkan arsip"
 
 #: find.php:593
 msgid "View Object"
-msgstr ""
+msgstr "Tampilkan Objek"
 
 #: find.php:599
 msgid "This media object is not linked to any GEDCOM record."
-msgstr ""
+msgstr "Media objek ini tidak terkait ke rekaman GEDCOM manapun."
 
 #: find.php:641
 msgid "Places found"
-msgstr ""
+msgstr "Tempat yang ditemukan"
 
 #: find.php:665
 msgid "Repositories found"
-msgstr ""
+msgstr "Repositori yang ditemukan"
 
 #: find.php:690
 msgid "Shared Notes found"
@@ -3300,7 +3300,7 @@ msgstr ""
 
 #: gedrecord.php:45
 msgid "This page has been disabled by the site administrator."
-msgstr ""
+msgstr "Halaman ini dinonaktifkan oleh administrator situs."
 
 #: help_text.php:68
 msgid "Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, \"this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62).\"<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required."
@@ -5313,15 +5313,15 @@ msgstr "Sunting Jender"
 #: help_text.php:2474
 #: imageview.php:32
 msgid "Image Viewer"
-msgstr ""
+msgstr "Penampil Gambar"
 
 #: help_text.php:2479
 msgid "PhpGedView User Login"
-msgstr ""
+msgstr "Catatmasuk Pengguna PhpGedView"
 
 #: help_text.php:2484
 msgid "PhpGedView Message"
-msgstr ""
+msgstr "Pesan PhpGedView"
 
 #: help_text.php:2489
 msgid "Print logfile"
@@ -5334,7 +5334,7 @@ msgstr "Teks Bantuan Pencarian"
 
 #: help_text.php:2499
 msgid "Statistics Plot"
-msgstr ""
+msgstr "Plot Statistik"
 
 #: help_text.php:2508
 msgid "This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev[\"BIRT\"]&nbsp;=&nbsp;\"*\";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character."
@@ -9286,35 +9286,35 @@ msgstr ""
 
 #: help_text.php:5555
 msgid "Help Contents"
-msgstr ""
+msgstr "Daftar Bantuan"
 
 #: imageview.php:180
 msgid "View image details"
-msgstr ""
+msgstr "Tampilkan rincian gambar"
 
 #: index.php:309
 #: index.php:370
 #: index_edit.php:199
 msgid "MyGedView Portal"
-msgstr ""
+msgstr "Portal GedViewSaya"
 
 #: index.php:371
 msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
-msgstr ""
+msgstr "Halaman GedViewSaya Anda membolehkan Anda menyimpan pembatasbuku dari orang favorit Anda, melacak peristiwa yang akan datang, dan berkolaborasi dengan pengguna PhpGedView yang lain."
 
 #: index.php:445
 #: index_edit.php:472
 msgid "Customize MyGedView Portal"
-msgstr ""
+msgstr "Atur Portal GedViewSaya"
 
 #: index.php:451
 #: index_edit.php:473
 msgid "Customize this GEDCOM Welcome page"
-msgstr ""
+msgstr "Atur Halaman-depan-GEDCOM ini"
 
 #: index_edit.php:83
 msgid "?"
-msgstr ""
+msgstr "?"
 
 #: index_edit.php:154
 #: index_edit.php:158
@@ -9322,11 +9322,11 @@ msgstr ""
 #: index_edit.php:160
 #: index_edit.php:161
 msgid "&nbsp;"
-msgstr ""
+msgstr "&nbsp;"
 
 #: index_edit.php:231
 msgid "Configuration file updated successfully."
-msgstr ""
+msgstr "Konfigurasi berkas berhasil dimutakhirkan."
 
 #: index_edit.php:278
 msgid "The cache files have been removed."
@@ -9334,81 +9334,81 @@ msgstr ""
 
 #: index_edit.php:285
 msgid "Configure"
-msgstr ""
+msgstr "Pengaturan"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
-msgstr ""
+msgstr "Blok ini tidak dapat diatur."
 
 #: index_edit.php:478
 msgid "Main Section Blocks"
-msgstr ""
+msgstr "Blok Bagian Utama"
 
 #: index_edit.php:483
 msgid "Available Blocks"
-msgstr ""
+msgstr "Blok yang Tersedia"
 
 #: index_edit.php:486
 msgid "Right Section Blocks"
-msgstr ""
+msgstr "Blok Bagian Kanan"
 
 #: index_edit.php:492
 #: index_edit.php:551
 msgid "Move Up"
-msgstr ""
+msgstr "Pindah ke Atas"
 
 #: index_edit.php:494
 #: index_edit.php:553
 msgid "Move Down"
-msgstr ""
+msgstr "Pindah ke Bawah"
 
 #: index_edit.php:511
 msgid "Move Right"
-msgstr ""
+msgstr "Pindah ke Kanan"
 
 #: index_edit.php:531
 msgid "Move Left"
-msgstr ""
+msgstr "Pindah ke Kiri"
 
 #: index_edit.php:560
 msgid "Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction."
-msgstr ""
+msgstr "Highlight blok nama kemudian klik pada salah satu ikon panah untuk memindah blok terhighlight tersebut pada arah yang ditandakan."
 
 #: index_edit.php:565
 msgid "Use these blocks as the default block configuration for all users?"
-msgstr ""
+msgstr "Gunakan blok berikut sebagai pengaturan blok default untuk semua pengguna?"
 
 #: index_edit.php:574
 msgid "Reset to Default Blocks"
-msgstr ""
+msgstr "Kembalikan ke Blok Default"
 
 #: indilist.php:174
 msgid "Choose a letter to show individuals whose family name starts with that letter."
-msgstr ""
+msgstr "Pilih huruf untuk menunjukkan individu yang nama keluarganya bermula dengan huruf tersebut."
 
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
-msgstr ""
+msgstr "Pilih huruf untuk menunjukkan individu yang nama pertamanya bermula dengan huruf tersebut."
 
 #: individual.php:287
 msgid "Hit Count:"
-msgstr ""
+msgstr "Hitungan Kunjungan:"
 
 #: individual.php:294
 msgid "The information for this individual was linked from a remote site."
-msgstr ""
+msgstr "Informasi untuk individu ini dikaitkan dari situs luar."
 
 #: individual.php:319
 msgid "Pedigree Chart"
-msgstr ""
+msgstr "Bagan Kerabat"
 
 #: individual.php:321
 msgid "Timeline Chart"
-msgstr ""
+msgstr "Bagan Gariswaktu"
 
 #: individual.php:325
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: install.php:102
 #: install.php:391
@@ -9445,11 +9445,11 @@ msgstr ""
 
 #: install.php:470
 msgid "Next &gt;"
-msgstr ""
+msgstr "Selanjutnya &gt;"
 
 #: install.php:480
 msgid "&lt; Previous"
-msgstr ""
+msgstr "&lt; Sebelumnya"
 
 #: install.php:502
 msgid "Checking for errors..."
@@ -9582,13 +9582,13 @@ msgstr ""
 #: login_register.php:168
 #: login_register.php:217
 msgid "You must enter a password."
-msgstr ""
+msgstr "Anda harus memasukkan sandi."
 
 #: install.php:1077
 #: login_register.php:174
 #: login_register.php:222
 msgid "You must confirm the password."
-msgstr ""
+msgstr "Anda harus mengonfirmasi sandi."
 
 #: install.php:1084
 msgid "Create the default administrative user."
@@ -9615,12 +9615,12 @@ msgstr "Buang Orang"
 #: inverselink.php:53
 #: media.php:765
 msgid "To Family"
-msgstr ""
+msgstr "Ke Kekeluarga"
 
 #: inverselink.php:56
 #: media.php:770
 msgid "To Source"
-msgstr ""
+msgstr "Ke Sumber"
 
 #: inverselink.php:59
 #, fuzzy
@@ -9639,15 +9639,15 @@ msgstr "Cari Media"
 
 #: inverselink.php:117
 msgid "Media ID"
-msgstr ""
+msgstr "ID Media"
 
 #: inverselink.php:143
 msgid "Enter Individual ID"
-msgstr ""
+msgstr "Masukkan ID Individu"
 
 #: inverselink.php:174
 msgid "Source"
-msgstr ""
+msgstr "Sumber"
 
 #: inverselink.php:188
 #, fuzzy
@@ -9657,98 +9657,98 @@ msgstr "Hapus Repositori"
 #: lifespan.php:41
 #: lifespan.php:54
 msgid "Lifespan Chart"
-msgstr ""
+msgstr "Bagan Rentanghidup"
 
 #: lifespan.php:66
 msgid "Add another person to chart:<br />Person ID:"
-msgstr ""
+msgstr "Tambahkan orang lain ke bagan:<br />ID orang:"
 
 #: lifespan.php:70
 msgid "Include Immediate Family"
-msgstr ""
+msgstr "Termasuk Keluarga Dekat"
 
 #: lifespan.php:75
 msgid "Show Timeline chart"
-msgstr ""
+msgstr "Munculkan Bagan Garis waktu"
 
 #: lifespan.php:303
 msgid "Speed"
-msgstr ""
+msgstr "Kecepatan"
 
 #: lifespan.php:304
 msgid "Begin Year"
-msgstr ""
+msgstr "Tahun Bermula"
 
 #: lifespan.php:305
 msgid "End Year"
-msgstr ""
+msgstr "Tahun Berakhir"
 
 #: lifespan.php:321
 msgid "Search"
-msgstr ""
+msgstr "Cari"
 
 #: lifespan.php:322
 msgid "Clear Chart"
-msgstr ""
+msgstr "Bersihkan Bagan"
 
 #: lifespan.php:329
 msgid "Individual"
-msgstr ""
+msgstr "Individu"
 
 #: login.php:120
 msgid "Unable to authenticate user."
-msgstr ""
+msgstr "Tidak dapat mengotentifikasi pengguna."
 
 #: login.php:206
 #: login.php:226
 msgid "Login"
-msgstr ""
+msgstr "Catatmasuk"
 
 #: login.php:238
 msgid "Account Information"
-msgstr ""
+msgstr "Informasi Akun"
 
 #: login.php:239
 msgid "No account?"
-msgstr ""
+msgstr "Tidak ada akun?"
 
 #: login.php:240
 #: login_register.php:202
 #: login_register.php:283
 #: login_register.php:317
 msgid "Request new user account"
-msgstr ""
+msgstr "Minta akun pengguna baru"
 
 #: login.php:241
 msgid "Lost your password?"
-msgstr ""
+msgstr "Kehilangan sandi Anda?"
 
 #: login.php:242
 msgid "Request new password"
-msgstr ""
+msgstr "Minta sandi baru"
 
 #: login_register.php:58
 #: login_register.php:80
 #: login_register.php:82
 #: login_register.php:94
 msgid "Lost password request"
-msgstr ""
+msgstr "Permintaan kehilangan sandi"
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
-msgstr ""
+msgstr "Sandi baru telah diminta untuk nama pengguna Anda."
 
 #: login_register.php:131
 msgid "Recommendation:"
-msgstr ""
+msgstr "Rekomendasi:"
 
 #: login_register.php:132
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
-msgstr ""
+msgstr "Silakan klik pada pranala di bawah atau temaple pada perambah Anda, catatmasuk dengan sandi yang baru, dan segera ganti untuk menjaga integritas keamanan data Anda."
 
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
-msgstr ""
+msgstr "Silakan masukkan hubungan Anda ke data pada isian Komentar."
 
 #: login_register.php:287
 #, fuzzy
@@ -9757,106 +9757,106 @@ msgstr "Nama pengguna"
 
 #: login_register.php:288
 msgid "Desired password"
-msgstr ""
+msgstr "Sandi yang diinginkan"
 
 #: login_register.php:316
 #: login_register.php:433
 #: login_register.php:454
 msgid "Comments"
-msgstr ""
+msgstr "Komentar"
 
 #: login_register.php:318
 msgid "Fields marked with * are mandatory."
-msgstr ""
+msgstr "Isian yang ditandai dengan * adalah wajib."
 
 #: login_register.php:356
 msgid "New Account confirmation"
-msgstr ""
+msgstr "Konfirmasi Akun Baru"
 
 #: login_register.php:376
 #: login_register.php:405
 #: login_register.php:409
 #: login_register.php:486
 msgid "Back"
-msgstr ""
+msgstr "Kembali"
 
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
-msgstr ""
+msgstr "Informasi tentang permintaan diperlihatkan dibawah pranala di bawah."
 
 #: login_register.php:423
 msgid "Please click on the following link and fill in the requested data to confirm your request and email address."
-msgstr ""
+msgstr "Silakan klik pada pranala berikut dan isilah data yang diminta untuk mengonfirmasikan permintaan dan alamat email Anda."
 
 #: login_register.php:432
 #: login_register.php:516
 msgid "Verification code:"
-msgstr ""
+msgstr "Kode verifikasi:"
 
 #: login_register.php:434
 msgid "If you didn't request an account, you can just delete this message."
-msgstr ""
+msgstr "Jika Anda tidak meminta akun, Anda dapat menghapus pesan ini."
 
 #: login_register.php:435
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
-msgstr ""
+msgstr "Anda tidak akan mendapat email lagi dari situs ini, karena permintaan akun akan dihapus secara otomatis setelah tujuh hari."
 
 #: login_register.php:444
 #: login_register.php:565
 msgid "Hello Administrator ..."
-msgstr ""
+msgstr "Halo Administrator ..."
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
-msgstr ""
+msgstr "Pengguna menerima email dengan informasi yang diperlukan untuk mengonfirmasi permintaan aksesnya."
 
 #: login_register.php:456
 msgid "You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account."
-msgstr ""
+msgstr "Anda akan diberitahu lewat email saat pengguna prospektif ini telah mengonfirmasikan permintaannya. Anda kemudian dapat menyempurnakan proses dengan mengaktifkan nama penggunanya. Pengguna baru tidak akan dapat mencatatmasuk hingga Anda mengaktifkan akunnya."
 
 #: login_register.php:457
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
-msgstr ""
+msgstr "You will be informed by email when this prospective user has confirmed his request. After this, the user will be able to login without any action on your part."
 
 #: login_register.php:506
 #: login_register.php:513
 #: login_register.php:541
 #: login_register.php:544
 msgid "User verification"
-msgstr ""
+msgstr "Verifikasi pengguna"
 
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
-msgstr ""
+msgstr "Kirim"
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
-msgstr ""
+msgstr "Silakan klik pada pranala di bawah untuk mencatatmasuk ke situs Anda. Anda harus menyunting pengguna untuk mengaktifkan akunnya sehingga ia dapat tercatatmasuk ke situs Anda."
 
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
-msgstr ""
+msgstr "Anda tidak harus mengambil tindakan apapun; pengguna sekarang dapat tercatatmasuk."
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
-msgstr ""
+msgstr "Anda telah mengkonfirmasikan permintaan Anda menjadi pengguna terdaftar."
 
 #: login_register.php:591
 msgid "The Administrator has been informed.  As soon as he gives you permission to login, you can login with your user name and password."
-msgstr ""
+msgstr "Administrator telah diberitahu. Setelah ia memberi Anda izin untuk tercatatmasuk, Anda dapat tercatatmasuk dengan nama pengguna dan sandi Anda."
 
 #: login_register.php:592
 msgid "You can now login with your user name and password."
-msgstr ""
+msgstr "Sekarang Anda dapat tercatatmasuk dengan nama pengguna dan sandi Anda."
 
 #: login_register.php:597
 msgid "Data was not correct, please try again"
-msgstr ""
+msgstr "Data tidak benar, silakan coba lagi"
 
 #: login_register.php:603
 msgid "Could not verify the information you entered.  Please try again or contact the site administrator for more information."
-msgstr ""
+msgstr "Tidak dapat memverifikasi informasi yang Anda masukkan. Silakan coba lagi atau hubungi administrator situs untuk informasi lebih lanjut."
 
 #: manageservers.php:118
 #: manageservers.php:121
@@ -9881,7 +9881,7 @@ msgstr ""
 
 #: manageservers.php:206
 msgid "Hide Details"
-msgstr ""
+msgstr "Sembunyikan Rincian"
 
 #: manageservers.php:231
 msgid "Manually mark Search Engines by IP"
@@ -9903,7 +9903,7 @@ msgstr "Buang Orang"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin menghapus Sumber ini dari berkas GEDCOM?"
 
 #: manageservers.php:344
 msgid "View Connections"
@@ -9925,15 +9925,15 @@ msgstr ""
 
 #: media.php:100
 msgid "Media file moved."
-msgstr ""
+msgstr "Berkas Media dipindahkan."
 
 #: media.php:116
 msgid "The execution time limit was reached.  Try the command again to move the rest of the files."
-msgstr ""
+msgstr "Batas waktu eksekusi tercapai.  Cobalah perintah lagi untuk memindahkan berkas yang tersisa."
 
 #: media.php:173
 msgid "The execution time limit was reached.  Try the command again on a smaller directory."
-msgstr ""
+msgstr "Batas waktu eksekusi tercapai.  Cobalah perintah lagi pada direktori yang lebih kecil."
 
 #: media.php:181
 #: media.php:189
@@ -9944,16 +9944,16 @@ msgstr "Tetapkan Izin Media"
 #: media.php:183
 #: media.php:191
 msgid "Permissions Not Set"
-msgstr ""
+msgstr "Izin Tidak Ditetapkan"
 
 #: media.php:310
 msgid "Uploading media files is not allowed because multi-media items have been disabled or because the media directory is not writable."
-msgstr ""
+msgstr "Pengunggahan berkas media tidak diperbolehkan karena item multi-media dinonaktifkan atau karena direktori media tidak dapat ditulisi."
 
 #: media.php:338
 #: media.php:339
 msgid "Directory does not exist."
-msgstr ""
+msgstr "Direktori tidak ada."
 
 #: media.php:373
 #: media.php:374
@@ -9964,12 +9964,12 @@ msgstr ""
 #: media.php:388
 #: media.php:389
 msgid "Directory not empty."
-msgstr ""
+msgstr "Direktori tidak kosong."
 
 #: media.php:410
 #: media.php:411
 msgid "Media and thumbnail directories successfully removed."
-msgstr ""
+msgstr "Media dan direktori thumbnail berhasil dibuang."
 
 #: media.php:414
 #: media.php:415
@@ -9982,36 +9982,36 @@ msgstr "Pindahkan Direktori Media"
 #: media.php:420
 #: media.php:421
 msgid "Media directory successfully removed."
-msgstr ""
+msgstr "Direktori Media berhasil dibuang."
 
 #: media.php:424
 #: media.php:425
 #: media.php:427
 #: media.php:428
 msgid "Thumbnail directory not removed."
-msgstr ""
+msgstr "Direktori thumbnail tidak dibuang."
 
 #: media.php:430
 #: media.php:431
 msgid "Thumbnail directory successfully removed."
-msgstr ""
+msgstr "Direktori thumbnail berhasil dibuang."
 
 #: media.php:543
 #: media.php:901
 #: media.php:942
 msgid "Move to protected"
-msgstr ""
+msgstr "Pindahkan ke terproteksi"
 
 #: media.php:553
 #: media.php:899
 #: media.php:941
 msgid "Move to standard"
-msgstr ""
+msgstr "Pindahkan ke standar"
 
 #: media.php:562
 #: media.php:905
 msgid "Correct read/write/execute permissions"
-msgstr ""
+msgstr "Izin baca/tulis/eksekusi yang benar"
 
 #: media.php:634
 #: media.php:638
@@ -10022,12 +10022,12 @@ msgstr ""
 
 #: media.php:638
 msgid "This media object does not exist as a file on this server.  It cannot be deleted, moved, or renamed."
-msgstr ""
+msgstr "Objek media ini tidak ada sebagai berkas pada server ini. Ia tidak dapat dihapus, dipindah, atau digantinama."
 
 #: media.php:646
 #: media.php:647
 msgid "Media file successfully deleted."
-msgstr ""
+msgstr "Berkas Media berhasil dihapus."
 
 #: media.php:660
 #: media.php:661
@@ -10070,7 +10070,7 @@ msgstr "Hapus Nama"
 
 #: media.php:1046
 msgid "Are you sure you want to remove this object from the database?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin membuang objek ini dari basisdata?"
 
 #: media.php:1046
 #, fuzzy
@@ -10088,15 +10088,15 @@ msgstr ""
 
 #: mediafirewall.php:319
 msgid "Error: The Media Firewall was launched from a directory other than the media directory."
-msgstr ""
+msgstr "Kesalahan: Firewall Media diluncurkan dari directori selain direktori media."
 
 #: mediafirewall.php:335
 msgid "No Media Found"
-msgstr ""
+msgstr "Tidak ada Media yang Ditemukan"
 
 #: mediafirewall.php:352
 msgid "Privacy restrictions prevent you from viewing this item"
-msgstr ""
+msgstr "Batas pribadi mencegah Anda menampilkan item ini"
 
 #: mediafirewall.php:530
 #, fuzzy
@@ -10106,19 +10106,19 @@ msgstr "Informasi ini pribadi dan tidak diperlihatkan."
 #: medialist.php:53
 #: medialist.php:57
 msgid "MultiMedia Objects"
-msgstr ""
+msgstr "Daftar Objek MultiMedia"
 
 #: medialist.php:131
 msgid "Media objects per page"
-msgstr ""
+msgstr "objek media tiap halaman"
 
 #: medialist.php:169
 msgid "Apply filter"
-msgstr ""
+msgstr "Terapkan penyaring"
 
 #: medialist.php:216
 msgid "Media Objects found"
-msgstr ""
+msgstr "Objek Media ditemukan"
 
 #: medialist.php:334
 #: medialist.php:336
@@ -10143,15 +10143,15 @@ msgstr ""
 #: medialist.php:404
 #: medialist.php:408
 msgid "Media Format"
-msgstr ""
+msgstr "Format Media"
 
 #: mediaviewer.php:104
 msgid "Download File"
-msgstr ""
+msgstr "Unduh Berkas"
 
 #: mediaviewer.php:143
 msgid "The image relates to:"
-msgstr ""
+msgstr "Gambar berhubungan terhadap:"
 
 #: mediaviewer.php:147
 msgid "Total links"
@@ -10160,41 +10160,41 @@ msgstr ""
 #: message.php:47
 #: message.php:52
 msgid "No recipient user was provided.  Cannot continue."
-msgstr ""
+msgstr "Tidak ada pengguna penerima yang tersedia. Tidak dapat melanjutkan."
 
 #: message.php:70
 #: message.php:79
 #: message.php:159
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "Silakan masukkan alamat email yang benar."
 
 #: message.php:167
 msgid "Please enter a message subject."
-msgstr ""
+msgstr "Silakan masukkan perihal pesan."
 
 #: message.php:172
 msgid "Please enter some message text before sending."
-msgstr ""
+msgstr "Silakan masukkan beberapa teks pesan sebelum mengirim."
 
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
-msgstr ""
+msgstr "<b>Untuk Diperhatikan:</b> Informasi pribadi individu yang hidup hanya akan diberikan kepada kerabat keluarga dan teman dekat. Anda akan diminta untuk memverifikasi hubungan Anda sebelum Anda menerima data pribadi apapun. Kadangkala informasi orang yang meninggal dapat juga bersifat pribadi. Jika ini masalahnya, hal ini karena tidak ada cukup informasi mengenai orang tersebut untuk menentukan apakah ia hidup atau tidak, dan kami mungkin tidak mempunyai informasi lebih lanjut tentang orang ini.<br /><br />Sebelum mengajukan pertanyaan, pastikan bahwa Anda menanyakan tentang orang yang benar dengan memeriksa tanggal, tempat, dan kerabat dekat. Jika Anda mengirimkan perubahan  terhadap data genealogis, silakan menyebutkan sumber Anda mendapatkan data."
 
 #: message.php:197
 msgid "Your Name:"
-msgstr ""
+msgstr "Nama Anda:"
 
 #: message.php:198
 msgid "Email Address:"
-msgstr ""
+msgstr "Alamat Email:"
 
 #: message.php:198
 msgid "Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  You email address will not be used in any other way besides responding to this inquiry."
-msgstr ""
+msgstr "Silakan sediakan alamat email sehingga kami dapat menghubungi Anda sebagai jawaban pesan ini. Jika Anda tidak menyediakan alamat email Anda, Kami tidak akan dapat menjawab pertanyaan Anda. Alamat email Anda tidak akan digunakan untuk keperluan lain di samping menjawab pertanyaan ini."
 
 #: message.php:200
 msgid "Subject:"
-msgstr ""
+msgstr "Perihal:"
 
 #: message.php:211
 #, fuzzy
@@ -10203,15 +10203,15 @@ msgstr "Badan FAQ"
 
 #: message.php:218
 msgid "Message Deleted"
-msgstr ""
+msgstr "Pesan Dihapus"
 
 #: module.php:214
 msgid "Unknown action: [action]."
-msgstr ""
+msgstr "Aksi tidak dikenal: [aksi]."
 
 #: module.php:224
 msgid "Unknown module type."
-msgstr ""
+msgstr "Jenis modul tidak dikenal."
 
 #: module_admin.php:42
 msgid "Show to public"
@@ -10272,7 +10272,7 @@ msgstr "Hapus Nama"
 #: module_admin.php:303
 #: module_admin.php:354
 msgid "Description"
-msgstr ""
+msgstr "Uraian"
 
 #: module_admin.php:205
 msgid "Version / PGV"
@@ -10334,7 +10334,7 @@ msgstr ""
 #: placelist.php:58
 #: placelist.php:312
 msgid "Place Hierarchy"
-msgstr ""
+msgstr "Hirarki Tempat"
 
 #: placelist.php:55
 #: placelist.php:59
@@ -10345,12 +10345,12 @@ msgstr "Daftar Nama"
 
 #: placelist.php:118
 msgid "Place connections found"
-msgstr ""
+msgstr "Keterkaitan tempat ditemukan"
 
 #: placelist.php:125
 #: placelist.php:157
 msgid "Top Level"
-msgstr ""
+msgstr "Level Teratas"
 
 #: placelist.php:307
 #: placelist.php:432
@@ -10362,36 +10362,36 @@ msgstr "Halaman"
 
 #: placelist.php:309
 msgid "Place Hierarchy after"
-msgstr ""
+msgstr "Hirarki Tempat setelah"
 
 #: placelist.php:354
 msgid "View all records found in this place"
-msgstr ""
+msgstr "Tampilkan semua rekaman yang ditemukan di tempat ini"
 
 #: placelist.php:468
 msgid "Total Unique Places"
-msgstr ""
+msgstr "Total Tempat Spesifik"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
-msgstr ""
+msgstr "Perlihatkan Tempat dalam Hirarki"
 
 #: placelist.php:477
 msgid "Show All Places in a List"
-msgstr ""
+msgstr "Perlihatkan Semua Tempat dalam Daftar"
 
 #: placelist.php:483
 #: placelist.php:488
 msgid "Places are encoded in the form: "
-msgstr ""
+msgstr "Tempat tersusun dengan urutan: "
 
 #: placelist.php:488
 msgid "City, County, State/Province, Country"
-msgstr ""
+msgstr "Kota, Distrik, Negara Bagian/Provinsi, Negara"
 
 #: placelist.php:488
 msgid "(Default)"
-msgstr ""
+msgstr "(Default)"
 
 #: printlog.php:90
 #: printlog.php:112
@@ -10425,22 +10425,22 @@ msgstr ""
 #: relationship.php:140
 #: relationship.php:141
 msgid "Mother-in-law"
-msgstr ""
+msgstr "Ibu mertua"
 
 #: relationship.php:143
 #: relationship.php:144
 msgid "Father-in-law"
-msgstr ""
+msgstr "Ayah mertua"
 
 #: relationship.php:149
 #: relationship.php:154
 msgid "Step-Mother"
-msgstr ""
+msgstr "Ibu Tiri"
 
 #: relationship.php:157
 #: relationship.php:162
 msgid "Step-Father"
-msgstr ""
+msgstr "Ayah Tiri"
 
 #: relationship.php:169
 #: relationship.php:171
@@ -10451,27 +10451,27 @@ msgstr ""
 #: relationship.php:177
 #: relationship.php:178
 msgid "Brother-in-law"
-msgstr ""
+msgstr "Saudara ipar"
 
 #: relationship.php:185
 #: relationship.php:186
 msgid "Daughter-in-law"
-msgstr ""
+msgstr "Anak perempuan saudara ipar"
 
 #: relationship.php:188
 #: relationship.php:189
 msgid "Son-in-law"
-msgstr ""
+msgstr "Anak laki-laki saudara ipar"
 
 #: relationship.php:194
 #: relationship.php:195
 msgid "step daughter"
-msgstr ""
+msgstr "anak tiri perempuan"
 
 #: relationship.php:197
 #: relationship.php:198
 msgid "step son"
-msgstr ""
+msgstr "anak tiri laki-laki"
 
 #: relationship.php:209
 #: relationship.php:210
@@ -10479,7 +10479,7 @@ msgstr ""
 #: relationship.php:223
 #, php-format
 msgid "%2$d x great niece"
-msgstr ""
+msgstr " keponakan perempuan %2$d x"
 
 #: relationship.php:212
 #: relationship.php:213
@@ -10487,17 +10487,17 @@ msgstr ""
 #: relationship.php:226
 #, php-format
 msgid "%2$d x great nephew"
-msgstr ""
+msgstr "keponakan laki-laki %2$d x"
 
 #: relationship.php:233
 #: relationship.php:234
 msgid "Step-Sister"
-msgstr ""
+msgstr "Saudari Tiri"
 
 #: relationship.php:236
 #: relationship.php:237
 msgid "Step-Brother"
-msgstr ""
+msgstr "Saudara Tiri"
 
 #: relationship.php:251
 #: relationship.php:252
@@ -10509,7 +10509,7 @@ msgstr ""
 #: relationship.php:343
 #, php-format
 msgid "%2$d x great aunt"
-msgstr ""
+msgstr "bibi nenek %2$d x"
 
 #: relationship.php:254
 #: relationship.php:255
@@ -10521,7 +10521,7 @@ msgstr ""
 #: relationship.php:346
 #, php-format
 msgid "%2$d x great uncle"
-msgstr ""
+msgstr "paman nenek %2$d x"
 
 #: relationship.php:293
 #: relationship.php:294
@@ -10529,7 +10529,7 @@ msgstr ""
 #: relationship.php:302
 #, php-format
 msgid "%3$d x great granddaughter"
-msgstr ""
+msgstr "cicit perempuan %3$d x"
 
 #: relationship.php:296
 #: relationship.php:297
@@ -10537,21 +10537,21 @@ msgstr ""
 #: relationship.php:305
 #, php-format
 msgid "%3$d x great grandson"
-msgstr ""
+msgstr "cicit laki-laki %3$d x"
 
 #: relationship.php:313
 #: relationship.php:314
 #: relationship.php:383
 #: relationship.php:384
 msgid "Sister"
-msgstr ""
+msgstr "Saudari"
 
 #: relationship.php:318
 #: relationship.php:319
 #: relationship.php:386
 #: relationship.php:387
 msgid "Brother"
-msgstr ""
+msgstr "Saudara"
 
 #: relationship.php:358
 #: relationship.php:359
@@ -10559,17 +10559,17 @@ msgstr ""
 #: relationship.php:368
 #, php-format
 msgid "%d x cousin"
-msgstr ""
+msgstr "sepupu perempuan %d x"
 
 #: relationship.php:375
 #: relationship.php:376
 msgid "Half-Sister"
-msgstr ""
+msgstr "Saudari Seayah/ibu"
 
 #: relationship.php:378
 #: relationship.php:379
 msgid "Half-Brother"
-msgstr ""
+msgstr "Saudara Seayah/ibu"
 
 #: relationship.php:419
 #: relationship.php:420
@@ -10577,33 +10577,33 @@ msgstr ""
 #: relationship.php:423
 #, php-format
 msgid "%1$s is the %2$s of %3$s."
-msgstr ""
+msgstr "%1$s adalah %2$ dari %3$."
 
 #: relationship.php:485
 #: relationship.php:564
 msgid "Relationship Chart"
-msgstr ""
+msgstr "Bagan Kekerabatan"
 
 #: relationship.php:535
 msgid "and"
-msgstr ""
+msgstr "dan"
 
 #: relationship.php:579
 msgid "Person 1"
-msgstr ""
+msgstr "Orang 1"
 
 #: relationship.php:609
 msgid "Person 2"
-msgstr ""
+msgstr "Orang 2"
 
 #: relationship.php:677
 #: relationship.php:698
 msgid "Show path"
-msgstr ""
+msgstr "Perlihatkan jalur"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
-msgstr ""
+msgstr "Tidak ada kaitan (lain) antara dua individu yang ditemukan."
 
 #: relationship.php:737
 msgid "No other link between the two individuals could be found."
@@ -10612,7 +10612,7 @@ msgstr ""
 #: reportengine.php:147
 #: reportengine.php:153
 msgid "Choose a report to run"
-msgstr ""
+msgstr "Pilih laporan untuk dijalankan"
 
 #: reportengine.php:154
 #, fuzzy
@@ -10622,7 +10622,7 @@ msgstr "Hapus Repositori"
 #: reportengine.php:170
 #: reportengine.php:219
 msgid "Enter report values"
-msgstr ""
+msgstr "Masukkan nilai laporan"
 
 #: reportengine.php:220
 #, fuzzy
@@ -10631,16 +10631,16 @@ msgstr "Hapus Repositori"
 
 #: reportengine.php:312
 msgid "Select a date"
-msgstr ""
+msgstr "Pilih tanggal"
 
 #: reportengine.php:344
 msgid "Download report"
-msgstr ""
+msgstr "Unduh laporan"
 
 #: rss.php:116
 #: rss.php:119
 msgid "Feed created by PhpGedView"
-msgstr ""
+msgstr "Umpan dibuat oleh PhpGedView"
 
 #: rss.php:192
 #: rss.php:209
@@ -10650,74 +10650,74 @@ msgstr ""
 #: rss.php:309
 #: rss.php:328
 msgid "genealogy"
-msgstr ""
+msgstr "Genealogi"
 
 #: rss.php:321
 msgid "Feed not available"
-msgstr ""
+msgstr "Umpan tidak tersedia"
 
 #: rss.php:323
 msgid "There is no RSS feed available for this PhpGedView site"
-msgstr ""
+msgstr "Tidak ada umpan RSS yang tersedia untuk situs PhpGedView ini"
 
 #: search.php:85
 msgid "Please enter a Given name, Last name, or Place in addition to Year"
-msgstr ""
+msgstr "Silakan masukkan Nama depan, Nama belakang, atau Tempat sebagai tambahan Tahun"
 
 #: search.php:126
 msgid "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender "
-msgstr ""
+msgstr "Silakan masukkan salah satu berikut: Nama, Tanggal Lahir, Tempat Lahir, Tanggal Wafat, Tempat Wafat, dan Jender "
 
 #: search.php:129
 msgid "Please search again with more information than just gender"
-msgstr ""
+msgstr "Silakan cari lagir dengan informasi lebih dari sekedar jender saja"
 
 #: search.php:163
 #: search.php:584
 #: search.php:596
 #: search.php:616
 msgid "General Search"
-msgstr ""
+msgstr "Pencarian umum"
 
 #: search.php:169
 #: search.php:263
 msgid "Enter Search terms"
-msgstr ""
+msgstr "Masukkan term pencarian"
 
 #: search.php:183
 #: search.php:275
 msgid "Search for"
-msgstr ""
+msgstr "Cari apa"
 
 #: search.php:219
 msgid "Exclude Filter"
-msgstr ""
+msgstr "Keluarkan Penyaring"
 
 #: search.php:227
 msgid "Exclude some non-genealogical data"
-msgstr ""
+msgstr "Keluarkan beberapa data non-genealogis"
 
 #: search.php:234
 msgid "Off"
-msgstr ""
+msgstr "Meninggal"
 
 #: search.php:240
 #: search.php:382
 msgid "Associates"
-msgstr ""
+msgstr "Kerabat"
 
 #: search.php:246
 #: search.php:387
 msgid "Show related persons/families"
-msgstr ""
+msgstr "Perlihatkan keluarga/orang yang berkerabat"
 
 #: search.php:270
 msgid "Replace with"
-msgstr ""
+msgstr "Ganti dengan"
 
 #: search.php:293
 msgid "Entire record"
-msgstr ""
+msgstr "Seluruh rekaman"
 
 #: search.php:299
 msgid "Whole words only"
@@ -10740,11 +10740,11 @@ msgstr "Catatan Kepala"
 
 #: search.php:354
 msgid "Soundex type:"
-msgstr ""
+msgstr "Jenis Pengucapan:"
 
 #: search.php:369
 msgid "Individuals'<br />names to print:"
-msgstr ""
+msgstr "Nama individu<br />untuk dicetak:"
 
 #: search.php:374
 #, fuzzy
@@ -10753,34 +10753,34 @@ msgstr "Daftar Nama"
 
 #: search.php:377
 msgid "All names"
-msgstr ""
+msgstr "Semua nama"
 
 #: search.php:399
 #: search.php:578
 #: search.php:590
 #: search.php:604
 msgid "Multi Site Search"
-msgstr ""
+msgstr "Pencarian Banyak Situs"
 
 #: search.php:404
 msgid "Sites to search"
-msgstr ""
+msgstr "Situs yang dicari"
 
 #: search.php:428
 msgid "No known Servers<br />No results will be found"
-msgstr ""
+msgstr "Tidak ada Server yang dikenal<br />Tidak ada hasil yang akan ditemukan"
 
 #: search.php:439
 msgid "Basic site search"
-msgstr ""
+msgstr "Pencarian situs dasar"
 
 #: search.php:443
 msgid "search"
-msgstr ""
+msgstr "cari"
 
 #: search.php:455
 msgid "Advanced site search"
-msgstr ""
+msgstr "Pencarian situs mahir"
 
 #: search.php:461
 #, fuzzy
@@ -10789,19 +10789,19 @@ msgstr "Daftar Nama"
 
 #: search.php:473
 msgid "Birth date: "
-msgstr ""
+msgstr "Tanggal lahir: "
 
 #: search.php:481
 msgid "Birth Place: "
-msgstr ""
+msgstr "Tempat lahir: "
 
 #: search.php:489
 msgid "Death date: "
-msgstr ""
+msgstr "Tanggal wafat: "
 
 #: search.php:497
 msgid "Death Place: "
-msgstr ""
+msgstr "Tempat wafat: "
 
 #: search.php:505
 #, fuzzy
@@ -10810,44 +10810,44 @@ msgstr "Sunting Jender"
 
 #: search.php:522
 msgid "Databases to search in"
-msgstr ""
+msgstr "Basisdata untuk dicari"
 
 #: search.php:548
 msgid "Results per page"
-msgstr ""
+msgstr "Hasil tiap halaman"
 
 #: search.php:563
 msgid "Other Searches"
-msgstr ""
+msgstr "Pencarian Lain"
 
 #: search.php:569
 #: search.php:585
 #: search.php:617
 msgid "Soundex Search"
-msgstr ""
+msgstr "Cari Pengucapan"
 
 #: search.php:570
 #: search.php:586
 #: search.php:597
 #: search.php:618
 msgid "Advanced Search"
-msgstr ""
+msgstr "Pencarian Mahir"
 
 #: searchhelp.php:89
 msgid "Any word"
-msgstr ""
+msgstr "Kata apapun"
 
 #: searchhelp.php:92
 msgid "All words"
-msgstr ""
+msgstr "Semua kata"
 
 #: searchhelp.php:95
 msgid "Exact phrase"
-msgstr ""
+msgstr "Frase tepat"
 
 #: searchhelp.php:100
 msgid "Search in"
-msgstr ""
+msgstr "Cari dalam"
 
 #: searchhelp.php:104
 #, fuzzy
@@ -10856,19 +10856,19 @@ msgstr "Nama pengguna"
 
 #: searchhelp.php:107
 msgid "Modules Help"
-msgstr ""
+msgstr "Bantuan Modul"
 
 #: searchhelp.php:112
 msgid "Administrator Help"
-msgstr ""
+msgstr "Bantuan Administrator"
 
 #: searchhelp.php:126
 msgid "Close window"
-msgstr ""
+msgstr "Tutup Jendela"
 
 #: searchhelp.php:197
 msgid "Results found:"
-msgstr ""
+msgstr "Hasil yang ditemukan:"
 
 #: search_advanced.php:113
 #: search_advanced.php:166
@@ -10878,7 +10878,7 @@ msgstr ""
 #: search_advanced.php:265
 #: search_advanced.php:280
 msgid "Exact"
-msgstr ""
+msgstr "Tepat"
 
 #: search_advanced.php:117
 #: search_advanced.php:121
@@ -10899,7 +10899,7 @@ msgstr ""
 #: statistics.php:714
 #: timeline.php:148
 msgid "years"
-msgstr ""
+msgstr "tahun"
 
 #: search_advanced.php:167
 #: search_advanced.php:229
@@ -10928,7 +10928,7 @@ msgstr ""
 
 #: search_advanced.php:299
 msgid "Add More Fields"
-msgstr ""
+msgstr "Tambah Field Lagi"
 
 #: search_engine.php:50
 msgid "PhpGedView automatically provides search engines with smaller data files with fewer links.  The data is limited to the individual and immediate family, without adding information about grand parents or grand children.  Many reports and server-intensive pages like the calendar are off limits to the spiders.<br /><br />Attempts by the spiders to go to those pages result in showing this page.  If you are seeing this text, the software believes you are a search engine spider.  Below is the list of pages that are allowed to be spidered and will provide the abbreviated data.<br /><br />Real users who follow search engine links into this site will see the full pages and data, and not this page."
@@ -10938,15 +10938,15 @@ msgstr ""
 #: search_engine.php:69
 #: uploadgedcom.php:1106
 msgid "Welcome page"
-msgstr ""
+msgstr "Halaman Sambutan"
 
 #: statistics.php:57
 msgid "Total males"
-msgstr ""
+msgstr "jumlah laki-laki ="
 
 #: statistics.php:58
 msgid "Total females"
-msgstr ""
+msgstr "jumlah perempuan ="
 
 #: statistics.php:59
 msgid "Total living"
@@ -10999,7 +10999,7 @@ msgstr ""
 
 #: statistics.php:113
 msgid "Average age at death"
-msgstr ""
+msgstr "Umur rata-rata saat meninggal"
 
 #: statistics.php:127
 msgid "Top age at death"
@@ -11074,7 +11074,7 @@ msgstr ""
 #: statistics.php:232
 #: statistics.php:558
 msgid "Age in year of marriage"
-msgstr ""
+msgstr "umur dalam tahun nikah"
 
 #: statistics.php:235
 msgid "Youngest male"
@@ -11118,7 +11118,7 @@ msgstr ""
 
 #: statistics.php:278
 msgid "Average number of children per family"
-msgstr ""
+msgstr "Rata-rata anak tiap keluarga"
 
 #: statistics.php:279
 msgid "Number of families without children"
@@ -11160,15 +11160,15 @@ msgstr ""
 #: statistics.php:331
 #: statistics.php:358
 msgid "Media objects"
-msgstr ""
+msgstr "Objek media"
 
 #: statistics.php:334
 msgid "Other records"
-msgstr ""
+msgstr "Rekaman Lain"
 
 #: statistics.php:345
 msgid "Total events"
-msgstr ""
+msgstr "Total peristiwa"
 
 #: statistics.php:348
 msgid "First event"
@@ -11216,39 +11216,39 @@ msgstr ""
 
 #: statistics.php:517
 msgid "Fill in the following parameters for the plot"
-msgstr ""
+msgstr "isilah parameter berikut untuk plot"
 
 #: statistics.php:520
 msgid "Select chart type:"
-msgstr ""
+msgstr "sepanjang aksis X:"
 
 #: statistics.php:526
 msgid "Month of birth"
-msgstr ""
+msgstr "Bulan lahir"
 
 #: statistics.php:530
 msgid "Month of death"
-msgstr ""
+msgstr "Bulan wafat"
 
 #: statistics.php:534
 msgid "Month of marriage"
-msgstr ""
+msgstr "Bulan nikah"
 
 #: statistics.php:538
 msgid "Month of first marriage"
-msgstr ""
+msgstr "Bulan nikah pertama"
 
 #: statistics.php:550
 msgid "Age related to birth year"
-msgstr ""
+msgstr "umur sehubungan dengan tahun lahir"
 
 #: statistics.php:554
 msgid "Age related to death year"
-msgstr ""
+msgstr "umur sehubungan dengan tahun wafat"
 
 #: statistics.php:562
 msgid "Age in year of first marriage"
-msgstr ""
+msgstr "umur dalam tahun nikah pertama"
 
 #: statistics.php:566
 #: statisticsplot.php:785
@@ -11275,7 +11275,7 @@ msgstr ""
 #: statistics.php:588
 #: statistics.php:602
 msgid "boundaries for ages:"
-msgstr ""
+msgstr "batas aksis X (umur):"
 
 #: statistics.php:592
 #: statistics.php:594
@@ -11293,7 +11293,7 @@ msgstr ""
 
 #: statistics.php:614
 msgid "boundaries for month:"
-msgstr ""
+msgstr "batas aksis X (bulan):"
 
 #: statistics.php:617
 msgid "months after marriage"
@@ -11313,7 +11313,7 @@ msgstr ""
 
 #: statistics.php:626
 msgid "boundaries for numbers:"
-msgstr ""
+msgstr "batas aksis X (jumlah):"
 
 #: statistics.php:629
 msgid "interval one child"
@@ -11365,11 +11365,11 @@ msgstr ""
 
 #: statistics.php:669
 msgid "Categories:"
-msgstr ""
+msgstr "sepanjang aksis Z:"
 
 #: statistics.php:675
 msgid "none"
-msgstr ""
+msgstr "tidak ada"
 
 #: statistics.php:679
 #, fuzzy
@@ -11378,20 +11378,20 @@ msgstr "Catatan Kepala"
 
 #: statistics.php:683
 msgid "date periods"
-msgstr ""
+msgstr "periode tanggal"
 
 #: statistics.php:685
 msgid "boundaries for date periods:"
-msgstr ""
+msgstr "batas aksis X (periode tanggal):"
 
 #: statistics.php:719
 msgid "results:"
-msgstr ""
+msgstr "sepanjang aksis Y:"
 
 #: statistics.php:724
 #: statisticsplot.php:768
 msgid "numbers"
-msgstr ""
+msgstr "jumlah untuk keluarga"
 
 #: statistics.php:727
 #: statisticsplot.php:791
@@ -11401,16 +11401,16 @@ msgstr "Perubahan Terkini"
 
 #: statistics.php:735
 msgid "show the plot"
-msgstr ""
+msgstr "perlihatkan plot"
 
 #: statistics.php:736
 msgid "reset"
-msgstr ""
+msgstr "kembalikan"
 
 #: statistics.php:751
 #: statistics.php:754
 msgid "Statistics"
-msgstr ""
+msgstr "Statistik"
 
 #: statistics.php:820
 #: statistics.php:821
@@ -11436,105 +11436,105 @@ msgstr ""
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid " not implemented:"
-msgstr ""
+msgstr " tidak diterapkan:"
 
 #: statisticsplot.php:728
 msgid "Jan"
-msgstr ""
+msgstr "Jan"
 
 #: statisticsplot.php:729
 msgid "Feb"
-msgstr ""
+msgstr "Feb"
 
 #: statisticsplot.php:730
 msgid "March"
-msgstr ""
+msgstr "Maret"
 
 #: statisticsplot.php:731
 msgid "April"
-msgstr ""
+msgstr "April"
 
 #: statisticsplot.php:732
 msgid "May"
-msgstr ""
+msgstr "Mei"
 
 #: statisticsplot.php:733
 msgid "June"
-msgstr ""
+msgstr "Juni"
 
 #: statisticsplot.php:734
 msgid "July"
-msgstr ""
+msgstr "Juli"
 
 #: statisticsplot.php:735
 msgid "Aug"
-msgstr ""
+msgstr "Agust"
 
 #: statisticsplot.php:736
 msgid "Sep"
-msgstr ""
+msgstr "Sep"
 
 #: statisticsplot.php:737
 msgid "Oct"
-msgstr ""
+msgstr "Okt"
 
 #: statisticsplot.php:738
 msgid "Nov"
-msgstr ""
+msgstr "Nov"
 
 #: statisticsplot.php:739
 msgid "Dec"
-msgstr ""
+msgstr "Des"
 
 #: statisticsplot.php:805
 msgid " per gender"
-msgstr ""
+msgstr " / lelaki-perempuan"
 
 #: statisticsplot.php:807
 msgid " per time period"
-msgstr ""
+msgstr " / tiap periodewaktu"
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "Counts "
-msgstr ""
+msgstr "Jumlah "
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "of"
-msgstr ""
+msgstr "dari"
 
 #: statisticsplot.php:928
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: timeline.php:38
 msgid "PhpGedView Timeline"
-msgstr ""
+msgstr "Gariswaktu PhpGedView"
 
 #: timeline.php:298
 msgid "Show Age Marker"
-msgstr ""
+msgstr "Perlihatlan Petanda Umur"
 
 #: timeline.php:337
 msgid "Zoom In"
-msgstr ""
+msgstr "Perbesar"
 
 #: timeline.php:338
 msgid "Zoom Out"
-msgstr ""
+msgstr "Perkecil"
 
 #: timeline.php:345
 msgid "Show Lifespan chart"
-msgstr ""
+msgstr "Munculkan Bagan Selang hidup"
 
 #: timeline.php:350
 msgid "In most recent browsers you can click and drag the boxes around on the chart."
-msgstr ""
+msgstr "Pada perambah terkini, Anda dapat meng-klik dan menyeret kotak di sekitar bagan."
 
 #: uploadgedcom.php:173
 #: uploadgedcom.php:1056
@@ -11611,7 +11611,7 @@ msgstr ""
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
 msgid "Do not change"
-msgstr ""
+msgstr "Jangan diganti"
 
 #: uploadgedcom.php:795
 msgid "Import complete"
@@ -11622,7 +11622,7 @@ msgstr ""
 #: uploadgedcom.php:1128
 #: uploadgedcom.php:1133
 msgid "sec."
-msgstr ""
+msgstr "detik."
 
 #: uploadgedcom.php:805
 msgid "Please be patient"
@@ -11648,7 +11648,7 @@ msgstr ""
 #: uploadgedcom.php:1104
 #: uploadgedcom.php:1117
 msgid "Execution time:"
-msgstr ""
+msgstr "Waktu eksekusi:"
 
 #: uploadgedcom.php:1105
 #, fuzzy
@@ -11842,11 +11842,11 @@ msgstr ""
 
 #: useradmin.php:1094
 msgid "Send message to users who have never logged in"
-msgstr ""
+msgstr "Kirim pesan kepada para pengguna yang tidak pernah mencatatmasuk"
 
 #: useradmin.php:1095
 msgid "Send message to users who have not logged in for 6 months"
-msgstr ""
+msgstr "Kirim pesan kepada para pengguna yang tidak mencatatmasuk selama 6 bulan"
 
 #: useradmin.php:1153
 msgid "Total number of users"
@@ -11993,23 +11993,23 @@ msgstr "Gaya bagan"
 #: blocks/charts.php:167
 #: blocks/gedcom_favorites.php:130
 msgid "No such ID exists in this GEDCOM file."
-msgstr ""
+msgstr "Tidak ada ID yang demikian pada berkas GEDCOM ini."
 
 #: blocks/gedcom_block.php:36
 msgid "GEDCOM Welcome"
-msgstr ""
+msgstr "Sambutan GEDCOM"
 
 #: blocks/gedcom_favorites.php:36
 msgid "GEDCOM Favorites"
-msgstr ""
+msgstr "Favorit GEDCOM"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
-msgstr ""
+msgstr "Favorit GEDCOM Ini"
 
 #: blocks/gedcom_favorites.php:100
 msgid "Are you sure you want to remove this item from your list of Favorites?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin membuang item ini dari daftar Favorit Anda?"
 
 #: blocks/gedcom_favorites.php:155
 #, fuzzy
@@ -12018,32 +12018,32 @@ msgstr "Tambahkan Catatan baru"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
-msgstr ""
+msgstr "Masukkan Orang, Keluarga, atau ID Sumber"
 
 #: blocks/gedcom_favorites.php:173
 msgid "OR<br />Enter a URL and a title"
-msgstr ""
+msgstr "ATAU<br />Masukkan URL dan judul"
 
 #: blocks/gedcom_favorites.php:178
 msgid "Enter an optional note about this favorite"
-msgstr ""
+msgstr "Masukkan catatan pilihan tentang kesukaan ini"
 
 #: blocks/gedcom_news.php:36
 msgid "GEDCOM News"
-msgstr ""
+msgstr "Berita GEDCOM"
 
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
 msgid "News"
-msgstr ""
+msgstr "Berita"
 
 #: blocks/gedcom_news.php:91
 msgid "No News articles have been submitted."
-msgstr ""
+msgstr "Tidak ada Artikel berita yang dikirim."
 
 #: blocks/gedcom_news.php:159
 msgid "Are you sure you want to delete this News entry?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin menghapus masukan Berita ini?"
 
 #: blocks/gedcom_news.php:165
 #, fuzzy
@@ -12052,11 +12052,11 @@ msgstr "Tambahkan Catatan baru"
 
 #: blocks/gedcom_news.php:196
 msgid "No limit"
-msgstr ""
+msgstr "Tidak dibatasi"
 
 #: blocks/gedcom_news.php:197
 msgid "Age of item"
-msgstr ""
+msgstr "Usia item"
 
 #: blocks/gedcom_news.php:198
 #, fuzzy
@@ -12067,42 +12067,42 @@ msgstr "Jumlah hari yang dimunculkan"
 #: blocks/gedcom_stats.php:91
 #: blocks/rss_block.php:70
 msgid "GEDCOM Statistics"
-msgstr ""
+msgstr "Statistik GEDCOM"
 
 #: blocks/gedcom_stats.php:145
 #: blocks/gedcom_stats.php:330
 msgid "Total users"
-msgstr ""
+msgstr "Total pengguna"
 
 #: blocks/gedcom_stats.php:159
 #: blocks/gedcom_stats.php:277
 msgid "Earliest birth year"
-msgstr ""
+msgstr "Tahun Lahir Terawal"
 
 #: blocks/gedcom_stats.php:166
 #: blocks/gedcom_stats.php:285
 msgid "Latest birth year"
-msgstr ""
+msgstr "Tahun Lahir Terakhir"
 
 #: blocks/gedcom_stats.php:173
 #: blocks/gedcom_stats.php:293
 msgid "Earliest death year"
-msgstr ""
+msgstr "Tahun Wafat Terawal"
 
 #: blocks/gedcom_stats.php:180
 #: blocks/gedcom_stats.php:301
 msgid "Latest death year"
-msgstr ""
+msgstr "Tahun Wafat Terakhir"
 
 #: blocks/gedcom_stats.php:188
 #: blocks/gedcom_stats.php:309
 msgid "Person who lived the longest"
-msgstr ""
+msgstr "Orang yang hidup terlama"
 
 #: blocks/gedcom_stats.php:204
 #: blocks/gedcom_stats.php:325
 msgid "Family with the most children"
-msgstr ""
+msgstr "Keluarga dengan anak terbanyak"
 
 #: blocks/gedcom_stats.php:219
 msgid "View statistics as graphs"
@@ -12110,15 +12110,15 @@ msgstr ""
 
 #: blocks/gedcom_stats.php:227
 msgid "Most Common Surnames"
-msgstr ""
+msgstr "Marga yang Paling Umum"
 
 #: blocks/gedcom_stats.php:259
 msgid "Show common surnames?"
-msgstr ""
+msgstr "Perlihatkan marga umum?"
 
 #: blocks/gedcom_stats.php:268
 msgid "Select the stats to show in this block"
-msgstr ""
+msgstr "Pilih status yang akan diperlihatkan pada blok ini"
 
 #: blocks/gedcom_stats.php:339
 msgid "Show link to Statistics charts?"
@@ -12127,7 +12127,7 @@ msgstr ""
 #: blocks/getting_started.php:48
 #: blocks/getting_started.php:59
 msgid "Get Started"
-msgstr ""
+msgstr "Mulai saja"
 
 #: blocks/getting_started.php:60
 msgid "Choose one of these options to get started using PhpGedView"
@@ -12144,7 +12144,7 @@ msgstr ""
 
 #: blocks/html_block.php:36
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: blocks/html_block.php:41
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -12152,7 +12152,7 @@ msgstr ""
 
 #: blocks/html_block.php:41
 msgid "to change what is printed here.</p>"
-msgstr ""
+msgstr "untuk mengubah apa yang dicetak di sini.</p>"
 
 #: blocks/logged_in.php:36
 #, fuzzy
@@ -12182,11 +12182,11 @@ msgstr[0] ""
 #: blocks/login_block.php:53
 #: blocks/login_block.php:61
 msgid "Logout"
-msgstr ""
+msgstr "Catatkeluar"
 
 #: blocks/login_block.php:58
 msgid "Logged in as "
-msgstr ""
+msgstr "Tercatatmasuk sebagai "
 
 #: blocks/random_media.php:38
 #, fuzzy
@@ -12196,23 +12196,23 @@ msgstr "Cari Media"
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
 msgid "Random Picture"
-msgstr ""
+msgstr "Gambar Acak"
 
 #: blocks/random_media.php:196
 msgid "Next image"
-msgstr ""
+msgstr "Gambar selanjutnya"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Play"
-msgstr ""
+msgstr "Maikan"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Stop"
-msgstr ""
+msgstr "Stop"
 
 #: blocks/random_media.php:341
 #, fuzzy
@@ -12225,11 +12225,11 @@ msgstr ""
 
 #: blocks/recent_changes.php:111
 msgid "Should this block be hidden when it is empty?"
-msgstr ""
+msgstr "Apakah sebaiknya blok ini tersembunyi ketika kosong?"
 
 #: blocks/recent_changes.php:119
 msgid "If you hide an empty block, you will not be able to change its configuration until it becomes visible by no longer being empty."
-msgstr ""
+msgstr "Jika Anda menyembunyikan blok kosong, Anda tidak akan dapat mengubah pengaturannya hingga tampak karena tidak kosong lagi."
 
 #: blocks/review_changes.php:39
 #, fuzzy
@@ -12238,52 +12238,52 @@ msgstr "Perubahan Terkini"
 
 #: blocks/review_changes.php:83
 msgid "PhpGedView - Review changes"
-msgstr ""
+msgstr "PhpGedView - Review perubahan"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
-msgstr ""
+msgstr "Perubahan online telah dibuat terhadap basisdata genealogis. Perubahan tersebut perlu diteliti dan diterima sebelum ditampilkan ke para pengguna. Silakan gunakan URL di bawah untuk memasuki situs PhpGedView itu dan catatmasuk untuk meneliti perubahan."
 
 #: blocks/review_changes.php:113
 msgid "Last email reminder was sent "
-msgstr ""
+msgstr "Pengingat email terakhir telah terkirim "
 
 #: blocks/review_changes.php:114
 msgid "Next email reminder will be sent after "
-msgstr ""
+msgstr "Pengingat email berikutnya akan dikirim setelah "
 
 #: blocks/review_changes.php:149
 msgid "Send out reminder emails?"
-msgstr ""
+msgstr "Kirim email pengingat?"
 
 #: blocks/review_changes.php:158
 msgid "Reminder email frequency (days)"
-msgstr ""
+msgstr "Frekuensi email pengingat (hari)"
 
 #: blocks/rss_block.php:38
 #: blocks/rss_block.php:53
 msgid "RSS Feeds"
-msgstr ""
+msgstr "Umpan RSS"
 
 #: blocks/rss_block.php:69
 msgid "Upcoming Events"
-msgstr ""
+msgstr "Peristiwa yang Akan Datang"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
-msgstr ""
+msgstr "10 Marga Teratas"
 
 #: blocks/theme_select.php:36
 msgid "Theme Select"
-msgstr ""
+msgstr "Pilih Tema"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
-msgstr ""
+msgstr "Ganti Tema"
 
 #: blocks/todays_events.php:38
 msgid "On This Day"
-msgstr ""
+msgstr "Pada Hari Ini"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
@@ -12305,21 +12305,21 @@ msgstr ""
 #: blocks/upcoming_events.php:200
 #: blocks/yahrzeit.php:281
 msgid "Allow calendar events download?"
-msgstr ""
+msgstr "Izinkan unduh peristiwa kalender?"
 
 #: blocks/todo.php:39
 #: blocks/todo.php:72
 msgid "&quot;To Do&quot; tasks"
-msgstr ""
+msgstr "&quot;Tugas&quot; untuk dilakukan"
 
 #: blocks/todo.php:113
 msgid "There are no &quot;To Do&quot; tasks."
-msgstr ""
+msgstr "Tidak ada &quot;To Do&quot; tuga."
 
 #: blocks/top10_givnnames.php:37
 #: blocks/top10_givnnames.php:78
 msgid "Top 10 Given Names"
-msgstr ""
+msgstr "10 Nama Depan Teratas"
 
 #: blocks/top10_givnnames.php:130
 #: blocks/top10_pageviews.php:131
@@ -12331,19 +12331,19 @@ msgstr "Jumlah hari yang dimunculkan"
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
 msgid "Most Viewed Items"
-msgstr ""
+msgstr "Item yang Paling Banyak Ditampilkan"
 
 #: blocks/top10_pageviews.php:77
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
-msgstr ""
+msgstr "Penghitung kunjungan harus diaktifkan pada pengaturan GEDCOM, bagian Tampilan dan Layout, kelompok Sembunyikan dan Perlihatkan."
 
 #: blocks/top10_pageviews.php:112
 msgid "There are currently no hits to show."
-msgstr ""
+msgstr "Saat ini tidak ada kunjungan untuk diperlihatkan."
 
 #: blocks/top10_pageviews.php:138
 msgid "Place counts before or after name?"
-msgstr ""
+msgstr "Letakkan hitungan sebelum atau sesudah nama?"
 
 #: blocks/user_blog.php:36
 #, fuzzy
@@ -12352,15 +12352,15 @@ msgstr "Nama pengguna"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
-msgstr ""
+msgstr "Jurnal Saya"
 
 #: blocks/user_blog.php:56
 msgid "You have not created any Journal items."
-msgstr ""
+msgstr "Anda tidak membuat item Jurnal apapun."
 
 #: blocks/user_blog.php:90
 msgid "Are you sure you want to delete this Journal entry?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin menghapus masukan Jurnal ini?"
 
 #: blocks/user_blog.php:94
 #, fuzzy
@@ -12374,7 +12374,7 @@ msgstr "Nama pengguna"
 
 #: blocks/user_favorites.php:60
 msgid "My Favorites"
-msgstr ""
+msgstr "Favorit Saya"
 
 #: blocks/user_messages.php:38
 #, fuzzy
@@ -12383,32 +12383,32 @@ msgstr "Nama pengguna"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
-msgstr ""
+msgstr "Pesan Saya"
 
 #: blocks/user_messages.php:58
 #: blocks/user_messages.php:128
 msgid "Are you sure you want to delete this message?  It cannot be retrieved later."
-msgstr ""
+msgstr "Apakah Anda yakin ingin menghapus pesan ini? Ia tidak dapat diambil kemudian."
 
 #: blocks/user_messages.php:60
 msgid "You have no pending messages."
-msgstr ""
+msgstr "Anda tidak mempunyai pesan tertunda."
 
 #: blocks/user_messages.php:87
 msgid "Date Sent:"
-msgstr ""
+msgstr "Tanggal Pengiriman:"
 
 #: blocks/user_messages.php:126
 msgid "Reply"
-msgstr ""
+msgstr "Balas"
 
 #: blocks/user_messages.php:131
 msgid "Delete Selected Messages"
-msgstr ""
+msgstr "Hapus Pesan Terpilih"
 
 #: blocks/user_messages.php:136
 msgid "Broadcast to all users"
-msgstr ""
+msgstr "Siarkan ke seluruh pengguna"
 
 #: blocks/user_welcome.php:36
 #, fuzzy
@@ -12417,21 +12417,21 @@ msgstr "Nama pengguna"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
-msgstr ""
+msgstr "Kerabat Saya"
 
 #: blocks/user_welcome.php:56
 msgid "My Individual Record"
-msgstr ""
+msgstr "Rekaman Pribadi Saya"
 
 #: blocks/yahrzeit.php:37
 #: blocks/yahrzeit.php:85
 msgid "Upcoming Yahrzeiten"
-msgstr ""
+msgstr "Yahrzeiten yang Akan Datang"
 
 #: blocks/yahrzeit.php:154
 #: blocks/yahrzeit.php:202
 msgid "Anniversary"
-msgstr ""
+msgstr "Ulangtahun"
 
 #: blocks/yahrzeit.php:218
 #, fuzzy
@@ -12440,15 +12440,15 @@ msgstr "Sunting Nama"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
-msgstr ""
+msgstr "Sembunyikan"
 
 #: includes/accesskeyHeaders.php:36
 msgid "Skip to Content"
-msgstr ""
+msgstr "Lewati ke DaftarIsi"
 
 #: includes/accesskeyHeaders.php:36
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: includes/accesskeyHeaders.php:37
 #, fuzzy
@@ -12461,51 +12461,51 @@ msgstr "0"
 
 #: includes/accesskeyHeaders.php:38
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: includes/accesskeyHeaders.php:39
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: includes/authentication.php:93
 msgid "PhpGedView Authentication System"
-msgstr ""
+msgstr "Sistem Otentifikasi PhpGedView"
 
 #: includes/authentication.php:95
 msgid "You must enter a valid login ID and password to access this resource"
-msgstr ""
+msgstr "Anda harus memasukkan ID catatmasuk dan sandi yang benar untuk mengakses sumberdaya ini"
 
 #: includes/authentication.php:453
 #: includes/authentication.php:510
 msgid "This message was sent while viewing the following URL: "
-msgstr ""
+msgstr "Pesan ini telah terkirim saat menampilkan URL berikut: "
 
 #: includes/authentication.php:461
 msgid "You sent the following message to a PhpGedView administrator:"
-msgstr ""
+msgstr "Anda telah mengirim pesan berikut ke administrator  PhpGedView:"
 
 #: includes/authentication.php:469
 msgid "You sent the following message to a PhpGedView user:"
-msgstr ""
+msgstr "Anda telah mengirim pesan berikut ke pengguna PhpGedView:"
 
 #: includes/authentication.php:475
 #: includes/authentication.php:482
 #: includes/authentication.php:524
 #: includes/authentication.php:530
 msgid "The following message has been sent to your PhpGedView user account from "
-msgstr ""
+msgstr "Pesan berikut telah terkirim ke akun pengguna PhpGedView Anda dari "
 
 #: includes/family_nav.php:84
 msgid "Parents Family"
-msgstr ""
+msgstr "Rumah Tangga Orangtua"
 
 #: includes/family_nav.php:224
 msgid "Step-Parent Family"
-msgstr ""
+msgstr "Rumah Tangga Orangtua Angkat"
 
 #: includes/family_nav.php:363
 msgid "Immediate Family"
-msgstr ""
+msgstr "Rumah Tangga"
 
 #: includes/media_reorder.php:37
 #: includes/media_tab_head.php:63
@@ -12515,22 +12515,22 @@ msgstr "Susun Keluarga"
 
 #: includes/media_reorder.php:38
 msgid "Click a row, then drag-and-drop to re-order media "
-msgstr ""
+msgstr "Klik sebuah baris, kemudian seret dan lepas untuk menyusunkembali media "
 
 #: includes/media_reorder.php:57
 #: includes/media_reorder.php:210
 msgid "Saves the sorted media to the database"
-msgstr ""
+msgstr "Simpan media yang diurutkan ke basisdata"
 
 #: includes/media_reorder.php:58
 #: includes/media_reorder.php:211
 msgid "Reset to the original order"
-msgstr ""
+msgstr "Kembalikan ke susunan awal"
 
 #: includes/media_reorder.php:59
 #: includes/media_reorder.php:212
 msgid "Quit and return"
-msgstr ""
+msgstr "Keluar dan kembali"
 
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
 #: includes/session.php:476
@@ -12540,35 +12540,35 @@ msgstr "utf8_unicode_ci"
 #: includes/sort_tables_utf8.php:75
 #: includes/sort_tables_utf8.php:85
 msgid "(לא-ידוע)"
-msgstr ""
+msgstr "(לא ידוע)"
 
 #: includes/sort_tables_utf8.php:76
 #: includes/sort_tables_utf8.php:86
 msgid "(غير معروف)"
-msgstr ""
+msgstr "(غير معروف)"
 
 #: includes/sort_tables_utf8.php:77
 #: includes/sort_tables_utf8.php:87
 msgid "(άγνωστος/η)"
-msgstr ""
+msgstr "(άγνωστος/η)"
 
 #: includes/sort_tables_utf8.php:78
 #: includes/sort_tables_utf8.php:88
 msgid "(неопределено)"
-msgstr ""
+msgstr "(неопределено)"
 
 #: includes/sort_tables_utf8.php:79
 #: includes/sort_tables_utf8.php:89
 msgid "(未知)"
-msgstr ""
+msgstr "(未知)"
 
 #: includes/sort_tables_utf8.php:80
 msgid "(vô danh)"
-msgstr ""
+msgstr "(vô danh)"
 
 #: includes/sort_tables_utf8.php:90
 msgid "(không biết tuổi)"
-msgstr ""
+msgstr "(không biết tuổi)"
 
 #: includes/specialchars.php:56
 msgid "Czech"
@@ -12761,12 +12761,12 @@ msgstr ""
 
 #: includes/classes/class_media.php:243
 msgid "Media Firewall error: >Unknown Mimetype< for file"
-msgstr ""
+msgstr "Kesalahan Firewall Media: >JenisMime tidak dikenal< untuk berkas"
 
 #: includes/classes/class_menubar.php:68
 #: includes/classes/class_menubar.php:115
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
@@ -12779,7 +12779,7 @@ msgstr "Gaya bagan"
 #: includes/classes/class_menubar.php:545
 #: includes/classes/class_menubar.php:551
 msgid "Lists"
-msgstr ""
+msgstr "Daftar"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
@@ -12790,62 +12790,62 @@ msgstr "Atur Media"
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
 msgid "Reports"
-msgstr ""
+msgstr "Laporan"
 
 #: includes/classes/class_menubar.php:826
 msgid "Printer-friendly Version"
-msgstr ""
+msgstr "Versi akrab-pencetak"
 
 #: includes/classes/class_menubar.php:932
 msgid "Help with this page"
-msgstr ""
+msgstr "Bantuan tentang halaman ini"
 
 #: includes/classes/class_menubar.php:968
 msgid "Wiki Main Page"
-msgstr ""
+msgstr "Halaman Utama Wiki"
 
 #: includes/classes/class_menubar.php:972
 msgid "Wiki User's Guide"
-msgstr ""
+msgstr "Panduan Pengguna Wiki"
 
 #: includes/classes/class_menubar.php:977
 msgid "Wiki Administrator's Guide"
-msgstr ""
+msgstr "Panduan Administrator Wiki"
 
 #: includes/classes/class_menubar.php:1118
 msgid "Favorites"
-msgstr ""
+msgstr "Favorit"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
-msgstr ""
+msgstr "Tambahkan ke Favorit Saya"
 
 #: includes/classes/class_note.php:49
 msgid "…"
-msgstr ""
+msgstr "…"
 
 #: includes/classes/class_person.php:576
 #: includes/classes/class_person.php:633
 msgid "Unable to find family with ID"
-msgstr ""
+msgstr "Tidak dapat menemukan keluarga dengan ID"
 
 #: includes/classes/class_person.php:760
 msgid "Family with Parents"
-msgstr ""
+msgstr "Keluarga dengan Orangtua"
 
 #: includes/classes/class_person.php:779
 #: includes/classes/class_person.php:786
 msgid "Father's Family with "
-msgstr ""
+msgstr "Keluarga Ayah dengan "
 
 #: includes/classes/class_person.php:780
 #: includes/classes/class_person.php:785
 msgid "Mother's Family with "
-msgstr ""
+msgstr "Keluarga Ibu dengan "
 
 #: includes/classes/class_person.php:803
 msgid "Family with"
-msgstr ""
+msgstr "Keluarga dengan"
 
 #: includes/classes/class_person.php:1836
 #, fuzzy
@@ -12854,11 +12854,11 @@ msgstr "Catatan Kepala"
 
 #: includes/classes/class_person.php:1840
 msgid "month"
-msgstr ""
+msgstr "bulan"
 
 #: includes/classes/class_person.php:1842
 msgid "months"
-msgstr ""
+msgstr "bulan"
 
 #: includes/classes/class_stats.php:448
 #: includes/classes/class_stats.php:450
@@ -12888,7 +12888,7 @@ msgstr ""
 #: includes/classes/class_stats.php:783
 #: includes/classes/class_stats.php:785
 msgid "Living"
-msgstr ""
+msgstr "Hidup"
 
 #: includes/classes/class_stats.php:774
 #: includes/classes/class_stats.php:777
@@ -12942,22 +12942,22 @@ msgstr "Lebar"
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
 msgid "marriage"
-msgstr ""
+msgstr "nikah"
 
 #: includes/classes/class_stats.php:1924
 #: includes/classes/class_stats.php:3820
 msgid "adoption"
-msgstr ""
+msgstr "adopsi"
 
 #: includes/classes/class_stats.php:1925
 #: includes/classes/class_stats.php:3821
 msgid "burial"
-msgstr ""
+msgstr "pemakaman"
 
 #: includes/classes/class_stats.php:1926
 #: includes/classes/class_stats.php:3822
 msgid "census added"
-msgstr ""
+msgstr "sensus ditambahkan"
 
 #: includes/classes/class_stats.php:2672
 #: includes/classes/class_stats.php:2673
@@ -12985,20 +12985,20 @@ msgstr "Susun anak"
 
 #: includes/classes/class_stats.php:3552
 msgid "Count"
-msgstr ""
+msgstr "Jumlah"
 
 #: includes/classes/class_treenav.php:168
 msgid "View this tree in the full page interactive tree"
-msgstr ""
+msgstr "Tampilkan silsilah ini dalam silsilah interaktif halaman penuh"
 
 #: includes/classes/class_treenav.php:169
 msgid "Show or hide multiple spouses"
-msgstr ""
+msgstr "Munculkan atau sembunyikan banyak pasangan"
 
 #: includes/controllers/descendancy_ctrl.php:226
 #: includes/controllers/descendancy_ctrl.php:313
 msgid "Start at parents"
-msgstr ""
+msgstr "Mulai dari orangtua"
 
 #: includes/controllers/descendancy_ctrl.php:332
 #, fuzzy
@@ -13017,7 +13017,7 @@ msgstr "Sunting Nama"
 
 #: includes/controllers/family_ctrl.php:379
 msgid "Add a child to this family"
-msgstr ""
+msgstr "Tambahkan anak ke keluarga ini"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -13036,7 +13036,7 @@ msgstr "Hapus Nama"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
-msgstr ""
+msgstr "Menghapus keluarga akan melepas semua individu satu sama lain, namun akan meninggalkan individu di tempat.  Apakah Anda yakin ingin menghapus keluarga ini?"
 
 #: includes/controllers/family_ctrl.php:509
 #: includes/controllers/individual_ctrl.php:732
@@ -13064,14 +13064,14 @@ msgstr ""
 
 #: includes/controllers/individual_ctrl.php:830
 msgid "Half-Sibling"
-msgstr ""
+msgstr "Saudara Seayah/ibu"
 
 #: includes/controllers/individual_ctrl.php:836
 #: includes/controllers/individual_ctrl.php:837
 #: includes/controllers/individual_ctrl.php:838
 #: includes/controllers/individual_ctrl.php:855
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #: includes/controllers/note_ctrl.php:80
 #: includes/controllers/note_ctrl.php:169
@@ -13089,12 +13089,12 @@ msgstr ""
 
 #: includes/controllers/remotelink_ctrl.php:400
 msgid "Successfully added link"
-msgstr ""
+msgstr "Berhasil menambahkan kaitan"
 
 #: includes/controllers/repository_ctrl.php:79
 #: includes/controllers/repository_ctrl.php:168
 msgid "Repository Information"
-msgstr ""
+msgstr "Informasi Repositori"
 
 #: includes/controllers/repository_ctrl.php:198
 #, fuzzy
@@ -13103,40 +13103,40 @@ msgstr "Hapus Repositori"
 
 #: includes/controllers/repository_ctrl.php:217
 msgid "Are you sure you want to delete this Repository?"
-msgstr ""
+msgstr "Apakag Anda yakin ingin menghapus Repositori ini dari basisdata?"
 
 #: includes/controllers/search_ctrl.php:819
 msgid "Be sure to select an option to search for."
-msgstr ""
+msgstr "Pastikan untuk memilih opsi yang dicari."
 
 #: includes/controllers/search_ctrl.php:879
 msgid "People"
-msgstr ""
+msgstr "Orang"
 
 #: includes/controllers/search_ctrl.php:883
 msgid "Site: "
-msgstr ""
+msgstr "Situs: "
 
 #: includes/controllers/search_ctrl.php:883
 msgid " contained the following"
-msgstr ""
+msgstr " mengandung hal-hal berikut"
 
 #: includes/controllers/search_ctrl.php:918
 msgid "to"
-msgstr ""
+msgstr "hingga"
 
 #: includes/controllers/search_ctrl.php:933
 msgid "Be sure to select at least one remote site."
-msgstr ""
+msgstr "Pastikan untuk memilih setidaknya satu situs luar."
 
 #: includes/controllers/search_ctrl.php:988
 msgid "Result Page"
-msgstr ""
+msgstr "Halaman Hasil"
 
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
 msgid "Source Information"
-msgstr ""
+msgstr "Informasi Sumber"
 
 #: includes/controllers/source_ctrl.php:199
 #: includes/controllers/source_ctrl.php:206
@@ -13146,77 +13146,77 @@ msgstr "Sunting Nama"
 
 #: includes/controllers/timeline_ctrl.php:275
 msgid "Husband's age"
-msgstr ""
+msgstr "Umur suami"
 
 #: includes/controllers/timeline_ctrl.php:282
 msgid "Wife's age"
-msgstr ""
+msgstr "Umur istri"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "January"
-msgstr ""
+msgstr "Januari"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "February"
-msgstr ""
+msgstr "Februari"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "August"
-msgstr ""
+msgstr "Agustus"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "September"
-msgstr ""
+msgstr "September"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "October"
-msgstr ""
+msgstr "Oktober"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "November"
-msgstr ""
+msgstr "November"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "December"
-msgstr ""
+msgstr "Desember"
 
 #: includes/extras/functions.pl.php:128
 #: includes/extras/functions.sl.php:113
 #: includes/functions/functions_date.php:82
 msgid "Infant"
-msgstr ""
+msgstr "Anak-anak"
 
 #: includes/extras/functions.pl.php:129
 #: includes/extras/functions.sl.php:114
 #: includes/functions/functions_date.php:83
 msgid "Stillborn"
-msgstr ""
+msgstr "Bayi"
 
 #: includes/extras/functions.pl.php:148
 #: includes/extras/functions.sl.php:123
 #: includes/functions/functions_date.php:88
 msgid "day"
-msgstr ""
+msgstr "hari"
 
 #: includes/extras/functions.pl.php:149
 #: includes/extras/functions.sl.php:124
 #: includes/functions/functions_date.php:89
 msgid "days"
-msgstr ""
+msgstr "hari"
 
 #: includes/extras/functions.pl.php:150
 #: includes/functions/functions_date.php:90
@@ -13230,11 +13230,11 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:366
 msgid "Informant"
-msgstr ""
+msgstr "Informan"
 
 #: includes/extras/functions.pl.php:370
 msgid "Lodger"
-msgstr ""
+msgstr "Lodger"
 
 #: includes/extras/functions.pl.php:374
 msgid "Slave"
@@ -13242,7 +13242,7 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:378
 msgid "Attending"
-msgstr ""
+msgstr "Attending"
 
 #: includes/extras/functions.pl.php:382
 msgid "Guardian"
@@ -13250,11 +13250,11 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:386
 msgid "Nurse"
-msgstr ""
+msgstr "Perawat"
 
 #: includes/extras/functions.pl.php:390
 msgid "Attendant"
-msgstr ""
+msgstr "Attendant"
 
 #: includes/extras/functions.pl.php:394
 msgid "Employee"
@@ -13262,15 +13262,15 @@ msgstr ""
 
 #: includes/extras/functions.pl.php:398
 msgid "Friend"
-msgstr ""
+msgstr "Teman"
 
 #: includes/extras/functions.pl.php:402
 msgid "Servant"
-msgstr ""
+msgstr "Pelayan"
 
 #: includes/extras/functions.pl.php:406
 msgid "Seller"
-msgstr ""
+msgstr "Penjual"
 
 #: includes/extras/functions.pl.php:410
 msgid "Owner"
@@ -13282,31 +13282,31 @@ msgstr ""
 
 #: includes/functions/functions.php:188
 msgid "File successfully uploaded"
-msgstr ""
+msgstr "Berkas berhasil diunggah"
 
 #: includes/functions/functions.php:191
 msgid "Uploaded file exceeds the allowed size"
-msgstr ""
+msgstr "Berkas yang diunggah melampaui ukuran yang diperbolehkan"
 
 #: includes/functions/functions.php:193
 msgid "File was only partially uploaded, please try again"
-msgstr ""
+msgstr "Berkas hanya diunggah sebagian, silakan coba lagi"
 
 #: includes/functions/functions.php:195
 msgid "No file was received. Please upload again."
-msgstr ""
+msgstr "Tidak ada berkas yang diterima. Silakan unggah lagi."
 
 #: includes/functions/functions.php:197
 msgid "Missing PHP temporary directory"
-msgstr ""
+msgstr "Kehilangan direktori sementara PHP"
 
 #: includes/functions/functions.php:199
 msgid "PHP failed to write to disk"
-msgstr ""
+msgstr "PHP gagal menulis ke kandar"
 
 #: includes/functions/functions.php:201
 msgid "PHP blocked file by extension"
-msgstr ""
+msgstr "PHP mencegah berkas berdasarkan ekstensi"
 
 #: includes/functions/functions.php:355
 msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
@@ -13314,11 +13314,11 @@ msgstr ""
 
 #: includes/functions/functions.php:2004
 msgid "The script timed out before a relationship could be found."
-msgstr ""
+msgstr "Waktu skrip habis sebelum kekerabatan ditemukan."
 
 #: includes/functions/functions_charts.php:288
 msgid "Children"
-msgstr ""
+msgstr "Anak"
 
 #: includes/functions/functions_charts.php:293
 #, fuzzy
@@ -13328,16 +13328,16 @@ msgstr "Tambahkan anak"
 #: includes/functions/functions_charts.php:448
 #: includes/functions/functions_charts.php:938
 msgid "This family remained childless"
-msgstr ""
+msgstr "Keluarga ini tidak memiliki anak"
 
 #: includes/functions/functions_charts.php:487
 #: includes/functions/functions_charts.php:514
 msgid "Family Group Information"
-msgstr ""
+msgstr "Informasi Kelompok Keluarga"
 
 #: includes/functions/functions_charts.php:521
 msgid "No facts for this family."
-msgstr ""
+msgstr "Tidak ada fakta untuk keluarga ini."
 
 #: includes/functions/functions_charts.php:532
 #, fuzzy
@@ -13393,20 +13393,20 @@ msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 #: includes/functions/functions_edit.php:2376
 #: includes/functions/functions_edit.php:2385
 msgid "Please reload the previous page to make sure you are working with the most recent record."
-msgstr ""
+msgstr "Silakan gunakan tombol Halaman Sebelumnya perambah Anda dan muatkembali halaman sebelumnya untuk memastikan Anda bekerja dengan rekaman terkini."
 
 #: includes/functions/functions_edit.php:424
 #: includes/functions/functions_edit.php:746
 msgid "Save and go to new record"
-msgstr ""
+msgstr "Simpan dan menuju ke rekaman baru ini"
 
 #: includes/functions/functions_edit.php:1371
 msgid "No Temple - Living Ordinance"
-msgstr ""
+msgstr "Tidak ada Kuil - Ordinansi Hidup"
 
 #: includes/functions/functions_edit.php:1458
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
-msgstr ""
+msgstr "Catatan: Anda harus mengaktifkan fitur 'Gunakan Pembatasan privasi GEDCOM (RESN)' untuk penyetelan ini agar menimbulkan efek."
 
 #: includes/functions/functions_edit.php:1674
 msgid "Shared Note using Assistant"
@@ -13426,7 +13426,7 @@ msgstr "Tambahkan item Media baru"
 #: includes/functions/functions_edit.php:2375
 #: includes/functions/functions_edit.php:2384
 msgid "An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it."
-msgstr ""
+msgstr "Kesalahan terjadi saat membuat formulir Sunting. Pengguna lain mungkin mengganti rekaman ini semenjak sebelumnya Anda tampilkan."
 
 #: includes/functions/functions_export.php:464
 #: includes/functions/functions_export.php:510
@@ -13478,7 +13478,7 @@ msgstr ""
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
 msgid "Invalid GEDCOM format"
-msgstr ""
+msgstr "Format GEDCOM keliru"
 
 #: includes/functions/functions_mediadb.php:120
 #: includes/functions/functions_mediadb.php:139
@@ -13494,73 +13494,73 @@ msgstr ""
 
 #: includes/functions/functions_mediadb.php:977
 msgid "Upload successful."
-msgstr ""
+msgstr "Pengunggahan berhasil."
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
 msgid "Upload"
-msgstr ""
+msgstr "Unggah"
 
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
 msgid "Media file to upload"
-msgstr ""
+msgstr "Berkas Media untuk diunggah"
 
 #: includes/functions/functions_mediadb.php:1038
 #: includes/functions/functions_mediadb.php:1057
 #: includes/functions/functions_mediadb.php:1193
 #: includes/functions/functions_mediadb.php:1220
 msgid "Use the &laquo;Browse&raquo; button to search your local computer for the desired file."
-msgstr ""
+msgstr "Gunakan tombol &laquo;Browse&raquo; mencari berkas yang diinginkan di komputer lokal Anda."
 
 #: includes/functions/functions_mediadb.php:1044
 #: includes/functions/functions_mediadb.php:1212
 msgid "Automatic thumbnail"
-msgstr ""
+msgstr "Thumbnail otomatis"
 
 #: includes/functions/functions_mediadb.php:1047
 #: includes/functions/functions_mediadb.php:1215
 msgid "Generate thumbnail automatically from "
-msgstr ""
+msgstr "Bangun thumbnail otomatis dari "
 
 #: includes/functions/functions_mediadb.php:1053
 #: includes/functions/functions_mediadb.php:1220
 msgid "Thumbnail to upload"
-msgstr ""
+msgstr "Thumbnail untuk diunggah"
 
 #: includes/functions/functions_mediadb.php:1063
 #: includes/functions/functions_mediadb.php:1228
 #: includes/functions/functions_mediadb.php:1248
 msgid "File name on server"
-msgstr ""
+msgstr "Nama berkas pada server"
 
 #: includes/functions/functions_mediadb.php:1067
 #: includes/functions/functions_mediadb.php:1229
 #: includes/functions/functions_mediadb.php:1256
 msgid "Do not change to keep original file name."
-msgstr ""
+msgstr "Jangan ganti nama berkas awal."
 
 #: includes/functions/functions_mediadb.php:1076
 #: includes/functions/functions_mediadb.php:1282
 msgid "Folder name on server"
-msgstr ""
+msgstr "Nama folder di server"
 
 #: includes/functions/functions_mediadb.php:1083
 #: includes/functions/functions_mediadb.php:1290
 msgid "Other folder... please type in"
-msgstr ""
+msgstr "Folder lain... silakan ketik"
 
 #: includes/functions/functions_mediadb.php:1157
 msgid "Enter or search for the ID of the person, family, or source to which this media item should be linked."
-msgstr ""
+msgstr "Masukkan atau cari ID orang, keluarga, atau sumber yang akan dikaitkan dengan item media ini."
 
 #: includes/functions/functions_mediadb.php:1230
 msgid "You may enter a URL, beginning with &laquo;http://&raquo;."
-msgstr ""
+msgstr "Anda dapat memasukkan URL, dimulai dengan &laquo;http://&raquo;."
 
 #: includes/functions/functions_mediadb.php:1312
 msgid "This entry is ignored if you have entered a URL into the file name field."
-msgstr ""
+msgstr "Isian ini diabaikan jika Anda memasukkan URL ke isian nama berkas."
 
 #. I18N: This is the country/chapman code for "Unknown"
 #: includes/functions/functions_places.php:333
@@ -13570,68 +13570,68 @@ msgstr "Tidak diketahui"
 
 #: includes/functions/functions_print.php:166
 msgid "Family with spouse"
-msgstr ""
+msgstr "Keluarga dengan pasangan"
 
 #: includes/functions/functions_print.php:209
 msgid "Zoom in/out on this box."
-msgstr ""
+msgstr "Perbesar/perkecil kotak ini."
 
 #: includes/functions/functions_print.php:267
 msgid "Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person."
-msgstr ""
+msgstr "Pranala ke bagan, keluarga, dan kerabat dekat dari orang ini. Klik ikon ini untuk memperlihatkan halaman ini, bermula dari orang ini."
 
 #: includes/functions/functions_print.php:575
 msgid "Are you sure you want to delete this fact?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin menghapus fakta GEDCOM ini?"
 
 #: includes/functions/functions_print.php:582
 msgid "Are you sure you want to delete this person?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin menghapus orang ini dari berkas GEDCOM?"
 
 #: includes/functions/functions_print.php:661
 msgid "Print"
-msgstr ""
+msgstr "Cetak"
 
 #: includes/functions/functions_print.php:662
 msgid "Back to normal view"
-msgstr ""
+msgstr "Kembali ke tampilan normal"
 
 #: includes/functions/functions_print.php:730
 msgid "Total Database Queries: "
-msgstr ""
+msgstr "Total Kueri Basisdata: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total privacy checks: "
-msgstr ""
+msgstr "Total pemeriksaan pribadi: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total Memory Usage:"
-msgstr ""
+msgstr "Penggunaan Memori Total:"
 
 #: includes/functions/functions_print.php:881
 msgid "For technical support or genealogy questions, please contact"
-msgstr ""
+msgstr "Untuk dukungan teknis atau pertanyaan genealogi, silakan hubungi"
 
 #: includes/functions/functions_print.php:885
 msgid "For technical support and information contact"
-msgstr ""
+msgstr "Untuk dukungan dan informasi teknis hubungi"
 
 #: includes/functions/functions_print.php:891
 msgid "For help with genealogy questions contact"
-msgstr ""
+msgstr "Untuk bantuan tentang pertanyaan genealogi hubungi"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
 msgid "Technical help contact"
-msgstr ""
+msgstr "Kontak bantuan teknis"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
-msgstr ""
+msgstr "Catatan"
 
 #: includes/functions/functions_print.php:1330
 msgid "For more information contact"
-msgstr ""
+msgstr "Untuk informasi lebih lanjut hubungi"
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
@@ -13640,7 +13640,7 @@ msgstr ""
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
-msgstr ""
+msgstr "<b>Teks Bantuan untuk halaman ini atau item belum tersedia.</b>"
 
 #: includes/functions/functions_print.php:1468
 msgid "<span style=\"font-weight: bold\">The language variable does not exist. Please report this as it is an error.</span>"
@@ -13649,46 +13649,46 @@ msgstr ""
 #: includes/functions/functions_print.php:1802
 #: includes/functions/functions_print.php:1804
 msgid "nephew"
-msgstr ""
+msgstr "keponakan laki-laki"
 
 #: includes/functions/functions_print.php:1812
 #: includes/functions/functions_print.php:1814
 msgid "niece"
-msgstr ""
+msgstr "keponakan perempuan"
 
 #: includes/functions/functions_print.php:1879
 #: includes/functions/functions_print.php:2083
 msgid "on the date of death"
-msgstr ""
+msgstr "pada hari kematian"
 
 #: includes/functions/functions_print.php:1881
 #: includes/functions/functions_print.php:2085
 msgid "after death"
-msgstr ""
+msgstr "setelah wafat"
 
 #: includes/functions/functions_print.php:1975
 msgid "Mother's age"
-msgstr ""
+msgstr "Umur ibu"
 
 #: includes/functions/functions_print.php:1984
 msgid "Father's age"
-msgstr ""
+msgstr "Umur ayah"
 
 #: includes/functions/functions_print.php:1988
 msgid "Parent's age"
-msgstr ""
+msgstr "Umur orangtua"
 
 #: includes/functions/functions_print.php:2233
 msgid "LDS Temple"
-msgstr ""
+msgstr "Kuil LDS"
 
 #: includes/functions/functions_print.php:2235
 msgid "LDS Temple Code:"
-msgstr ""
+msgstr "Kode Kuil LDS:"
 
 #: includes/functions/functions_print.php:2239
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: includes/functions/functions_print.php:2380
 #, fuzzy
@@ -13706,7 +13706,7 @@ msgstr "Hapus Repositori"
 #: includes/functions/functions_print_facts.php:1149
 #: includes/functions/functions_print_facts.php:1455
 msgid "Copy"
-msgstr ""
+msgstr "Salin"
 
 #: includes/functions/functions_print_facts.php:242
 #, fuzzy
@@ -13716,90 +13716,90 @@ msgstr "Pernikahan"
 #: includes/functions/functions_print_facts.php:446
 #: includes/functions/functions_print_facts.php:448
 msgid "Unrecognized GEDCOM Code"
-msgstr ""
+msgstr "Kode GEDCOM tidak dikenal"
 
 #: includes/functions/functions_print_facts.php:448
 msgid "This is an error, and we would like to fix it. Please report this error to"
-msgstr ""
+msgstr "Ini adalah kesalahan, dan kami ingin memperbaikinya. Silakan laporkan kesalahan ini kepada"
 
 #: includes/functions/functions_print_lists.php:76
 msgid "Show only males."
-msgstr ""
+msgstr "Hanya perlihatkan laki-laki."
 
 #: includes/functions/functions_print_lists.php:78
 msgid "Show only females."
-msgstr ""
+msgstr "Hanya perlihatkan perempuan."
 
 #: includes/functions/functions_print_lists.php:80
 msgid "Show only persons of whom the gender is not known."
-msgstr ""
+msgstr "Hanya perlihatkan orang yang jendernya tidak diketahui."
 
 #: includes/functions/functions_print_lists.php:83
 msgid "Show persons alive in the indicated year."
-msgstr ""
+msgstr "Perlihatkan orang hidup di tahun yang ditetapkan."
 
 #: includes/functions/functions_print_lists.php:84
 msgid "Alive in Year"
-msgstr ""
+msgstr "Hidup pada Tahun"
 
 #: includes/functions/functions_print_lists.php:85
 #: includes/functions/functions_print_lists.php:467
 msgid "Show people who are alive or couples where both partners are alive."
-msgstr ""
+msgstr "Perlihatkan orang yang hidup atau pasangan yang keduanya hidup."
 
 #: includes/functions/functions_print_lists.php:86
 msgid "Alive "
-msgstr ""
+msgstr "Hidup "
 
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
 msgid "Show people who are dead or couples where both partners are deceased."
-msgstr ""
+msgstr "Perlihatkan orang yang meninggal atau pasangan yang keduanya meninggal."
 
 #: includes/functions/functions_print_lists.php:88
 msgid "Dead "
-msgstr ""
+msgstr "Wafat "
 
 #: includes/functions/functions_print_lists.php:89
 #: includes/functions/functions_print_lists.php:475
 msgid "Show «roots» couples or individuals.  These people may also be called «patriarchs».  They are individuals who have no parents recorded in the database."
-msgstr ""
+msgstr "Perlihatkan pasangan atau individu «akar».  Orang-orang ini juga disebut «patriarkh». Mereka adalah individu yang tidak mempunyai orangtua yang terekam dalam basisdata."
 
 #: includes/functions/functions_print_lists.php:90
 #: includes/functions/functions_print_lists.php:476
 msgid "Roots"
-msgstr ""
+msgstr "Akar"
 
 #: includes/functions/functions_print_lists.php:91
 #: includes/functions/functions_print_lists.php:477
 msgid "Show «leaves» couples or individuals.  These are individuals who are alive but have no children recorded in the database."
-msgstr ""
+msgstr "Perlihatkan pasangan atau individu «ranting».  Mereka adalah individu yang hidup, namun tidak mempunyai anak yang terekam dalam basisdata."
 
 #: includes/functions/functions_print_lists.php:92
 #: includes/functions/functions_print_lists.php:478
 msgid "Leaves"
-msgstr ""
+msgstr "Ranting"
 
 #: includes/functions/functions_print_lists.php:94
 msgid "Show persons born more than 100 years ago."
-msgstr ""
+msgstr "Perlihatkan orang yang lahir lebih dari 100 tahun lalu."
 
 #: includes/functions/functions_print_lists.php:96
 msgid "Show persons born within the last 100 years."
-msgstr ""
+msgstr "Perlihatkan orang yang lahir selama 100 tahun terakhir."
 
 #: includes/functions/functions_print_lists.php:98
 msgid "Show people who died more than 100 years ago."
-msgstr ""
+msgstr "Perlihatkan orang yang meninggal lebih dari 100 tahun lalu."
 
 #: includes/functions/functions_print_lists.php:100
 msgid "Show people who died within the last 100 years."
-msgstr ""
+msgstr "Perlihatkan orang yang meninggal selama 100 tahun terakhir."
 
 #: includes/functions/functions_print_lists.php:102
 #: includes/functions/functions_print_lists.php:488
 msgid "Reset to the list defaults."
-msgstr ""
+msgstr "Kembalikan default ke daftar."
 
 #: includes/functions/functions_print_lists.php:394
 #: includes/functions/functions_print_lists.php:779
@@ -13825,19 +13825,19 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:468
 msgid "Both alive "
-msgstr ""
+msgstr "Hidup keduanya "
 
 #: includes/functions/functions_print_lists.php:469
 msgid "Show couples where only the female partner is deceased."
-msgstr ""
+msgstr "Perlihatkan pasangan dengan hanya pasangan wanita yang meninggal."
 
 #: includes/functions/functions_print_lists.php:470
 msgid "Widower"
-msgstr ""
+msgstr "Duda"
 
 #: includes/functions/functions_print_lists.php:471
 msgid "Show couples where only the male partner is deceased."
-msgstr ""
+msgstr "Perlihatkan pasangan dengan hanya pasangan pria yang meninggal."
 
 #: includes/functions/functions_print_lists.php:472
 #, fuzzy
@@ -13846,23 +13846,23 @@ msgstr "Lebar"
 
 #: includes/functions/functions_print_lists.php:474
 msgid "Both dead "
-msgstr ""
+msgstr "Wafat keduanya "
 
 #: includes/functions/functions_print_lists.php:480
 msgid "Show couples with an unknown marriage date."
-msgstr ""
+msgstr "Perlihatkan pasangan dengan tanggal nikah tidak diketahui."
 
 #: includes/functions/functions_print_lists.php:482
 msgid "Show couples who married more than 100 years ago."
-msgstr ""
+msgstr "Perlihatkan pasangan yang menikah lebih dari 100 tahun lalu."
 
 #: includes/functions/functions_print_lists.php:484
 msgid "Show couples who married within the last 100 years."
-msgstr ""
+msgstr "Perlihatkan pasangan yang menikah selama 100 tahun terakhir."
 
 #: includes/functions/functions_print_lists.php:486
 msgid "Show divorced couples."
-msgstr ""
+msgstr "Perlihatkan pasangan yang bercerai."
 
 #: includes/functions/functions_print_lists.php:807
 msgid "Decade of marriage"
@@ -13875,7 +13875,7 @@ msgstr ""
 #: includes/functions/functions_print_lists.php:1264
 #: includes/functions/functions_print_lists.php:1315
 msgid "Spouses"
-msgstr ""
+msgstr "Pasangan-pasangan"
 
 #: includes/functions/functions_print_lists.php:1523
 msgid "Total changes"
@@ -13883,15 +13883,15 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:2130
 msgid "Sort by this column."
-msgstr ""
+msgstr "Urutkan berdasarkan kolom ini."
 
 #: includes/functions/functions_privacy.php:865
 msgid "Details about this person are private. Personal details will not be included."
-msgstr ""
+msgstr "Rincian tentang orang ini bersifat pribadi. Rincian personal tidak akan dimasukkan."
 
 #: includes/functions/functions_privacy.php:877
 msgid "Details about this family are private. Family details will not be included."
-msgstr ""
+msgstr "Rincian tentang keluarga ini bersifat pribadi. Rincian keluarga tidak akan dimasukkan."
 
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
@@ -15290,19 +15290,19 @@ msgstr ""
 #: modules/clippings/clippings.php:90
 #: modules/clippings/clippings.php:281
 msgid "Download Now"
-msgstr ""
+msgstr "Unduh Sekarang"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
-msgstr ""
+msgstr "Individu ini diunduh dari:"
 
 #: modules/clippings/clippings_ctrl.php:365
 msgid "This Family was downloaded from:"
-msgstr ""
+msgstr "Keluarga ini diunduh dari:"
 
 #: modules/clippings/clippings_ctrl.php:380
 msgid "This Source was downloaded from:"
-msgstr ""
+msgstr "Sumber ini diunduh dari:"
 
 #: modules/clippings/pgv_module.php:46
 #, fuzzy
@@ -16271,14 +16271,14 @@ msgstr ""
 #: modules/googlemap/googlemap.php:118
 #: modules/googlemap/googlemap.php:119
 msgid "Activate"
-msgstr ""
+msgstr "Aktifkan"
 
 #: modules/googlemap/gg_map_content.php:62
 #: modules/googlemap/gg_map_content.php:63
 #: modules/googlemap/googlemap.php:122
 #: modules/googlemap/googlemap.php:123
 msgid "Deactivate"
-msgstr ""
+msgstr "Nonaktifkan"
 
 #: modules/googlemap/googlemap.php:607
 msgid "Redraw map"
@@ -16352,7 +16352,7 @@ msgstr ""
 
 #: modules/googlemap/pedigree_map.php:740
 msgid "Birth:"
-msgstr ""
+msgstr "Lahir:"
 
 #: modules/googlemap/pedigree_map.php:842
 msgid "Zoom&nbsp;in"
@@ -16736,7 +16736,7 @@ msgstr ""
 
 #: modules/lightbox/functions/lb_head.php:97
 msgid "Drag-and-drop thumbnails to re-order media items"
-msgstr ""
+msgstr "Seret dan lepas thumbnail untuk menyusunkembali item media"
 
 #: modules/lightbox/functions/lb_head.php:144
 #: modules/lightbox/functions/lb_head.php:161
@@ -16763,7 +16763,7 @@ msgstr ""
 #: modules/lightbox/functions/lb_head.php:232
 #: modules/lightbox/functions/lb_head.php:249
 msgid "Re-order media (window)"
-msgstr ""
+msgstr "Susunkembali media (jendela)"
 
 #: modules/lightbox/functions/lb_indi_doors_0.php:43
 #: modules/lightbox/functions/lb_indi_doors_0.php:47
@@ -16775,7 +16775,7 @@ msgstr ""
 #: modules/lightbox/functions/lb_indi_doors_0.php:55
 #: modules/lightbox/functions/lb_indi_doors_1.php:58
 msgid "Research Assistant"
-msgstr ""
+msgstr "Asisten Riset"
 
 #: modules/lightbox/functions/lightbox_print_media.php:132
 msgid "Photo"
@@ -16816,7 +16816,7 @@ msgstr "Cari Media"
 
 #: modules/media/media.php:63
 msgid "There are no media objects for this individual."
-msgstr ""
+msgstr "Tidak ada objek media untuk orang ini."
 
 #: modules/notes/notes.php:60
 #, fuzzy
@@ -16835,11 +16835,11 @@ msgstr "Hapus individu ini"
 
 #: modules/personal_facts/personal_facts.php:72
 msgid "Events of close relatives"
-msgstr ""
+msgstr "Peristiwa dari kerabat dekat"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
-msgstr ""
+msgstr "Fakta sejarah"
 
 #: modules/personal_facts/pgv_module.php:42
 msgid "Personal Facts"
@@ -16856,19 +16856,19 @@ msgstr "Tambahkan anak"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
-msgstr ""
+msgstr "Tambahkan suami ke keluarga ini"
 
 #: modules/relatives/relatives.php:161
 msgid "Add a wife to this family"
-msgstr ""
+msgstr "Tambahkan istri ke keluarga ini"
 
 #: modules/relatives/relatives.php:218
 msgid "Add marriage details"
-msgstr ""
+msgstr "Tambahkan rincian nikah"
 
 #: modules/relatives/relatives.php:408
 msgid "Link this person to an existing family as a child"
-msgstr ""
+msgstr "Kaitkan orang ini kepada keluarga yang ada sebagai anak"
 
 #: modules/relatives/relatives.php:415
 #, fuzzy
@@ -16877,7 +16877,7 @@ msgstr "Tambahkan Catatan baru"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
-msgstr ""
+msgstr "Kaitkan orang ini kepada keluarga yang ada sebagai suami"
 
 #: modules/relatives/relatives.php:435
 #, fuzzy
@@ -16886,7 +16886,7 @@ msgstr "Tambahkan Catatan baru"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
-msgstr ""
+msgstr "Kaitkan orang ini kepada keluarga yang ada sebagai istri"
 
 #: modules/sitemap/admin-config.php:40
 msgid "Sitemap"
@@ -17007,12 +17007,12 @@ msgstr ""
 
 #: modules/sources_tab/sources_tab.php:77
 msgid "There are no Source citations for this individual."
-msgstr ""
+msgstr "Tidak ada Kutipan Sumber untuk orang ini."
 
 #: themes/cloudy/footer.php:174
 #: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
-msgstr ""
+msgstr "Perubahan telah dibuat pada GEDCOM ini."
 
 #~ msgid "FAMC:HUSB:SURN"
 #~ msgstr "Marga Ayah"

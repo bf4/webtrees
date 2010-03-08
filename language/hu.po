@@ -24,38 +24,38 @@ msgstr "Új média-elem hozzáadása"
 #: addremotelink.php:43
 #: addsearchlink.php:35
 msgid "<b>Access Denied</b><br />You do not have access to this resource."
-msgstr ""
+msgstr "<b>Hozzáférés megtagadva</b><br />Megfelelő jogosultság hiányában nem tekintheti meg ezt a forrást."
 
 #: addmedia.php:80
 #: addremotelink.php:45
 msgid "This user name cannot edit this GEDCOM."
-msgstr ""
+msgstr "Ez a felhasználó nem szerkesztheti ezt a GEDCOM-állományt."
 
 #: addmedia.php:81
 #: addremotelink.php:47
 msgid "Editing this GEDCOM has been disabled by the administrator."
-msgstr ""
+msgstr "A rendszer adminisztrátora nem engedélyezi ennek a GEDCOM-nak a szerkesztését."
 
 #: addmedia.php:83
 #: addremotelink.php:49
 msgid "Privacy settings prevent you from editing this record."
-msgstr ""
+msgstr "A diszkréciós beállítások alapján Ön nem szerkesztheti ezt a rekordot."
 
 #: addmedia.php:84
 #: addremotelink.php:51
 msgid "You have no access to"
-msgstr ""
+msgstr "Önnek ehhez nincs jogosultsága: "
 
 #: addmedia.php:86
 #: addmedia.php:596
 #: addremotelink.php:54
 #: addremotelink.php:274
 msgid "Close Window"
-msgstr ""
+msgstr "Ablak bezárás"
 
 #: addmedia.php:192
 msgid "Media file already exists."
-msgstr ""
+msgstr "A Média állomány már létezik."
 
 #: addmedia.php:196
 #: addmedia.php:211
@@ -63,15 +63,15 @@ msgstr ""
 #: client.php:414
 #: client.php:424
 msgid "There was an error uploading your file."
-msgstr ""
+msgstr "Hiba történt az Ön GEDCOM-állományának feltöltése közben."
 
 #: addmedia.php:207
 msgid "Media thumbnail already exists."
-msgstr ""
+msgstr "A Média előnézet már létezik."
 
 #: addmedia.php:273
 msgid "Blank name or illegal characters in name"
-msgstr ""
+msgstr "Érvénytelen karakterek a névben."
 
 #: addmedia.php:303
 #: addmedia.php:454
@@ -81,42 +81,42 @@ msgstr ""
 #: addmedia.php:304
 #: addmedia.php:455
 msgid "Media file could not be moved or renamed."
-msgstr ""
+msgstr "Média állományt nem lehetett átrakni vagy átnevezni."
 
 #: addmedia.php:305
 #: addmedia.php:456
 msgid "Media file could not be moved."
-msgstr ""
+msgstr "Média állományt nem lehetett átrakni."
 
 #: addmedia.php:409
 msgid "Paste the following ID into your editing fields to reference the newly created record "
-msgstr ""
+msgstr "Illessze be a következő azonosítót a szerkesztett mezőkbe, hogy hivatkozhasson erre a forrásra."
 
 #: addmedia.php:415
 #: addmedia.php:564
 #: addmedia.php:572
 msgid "Update successful"
-msgstr ""
+msgstr "A frissítés sikeresen megtörtént"
 
 #: addremotelink.php:36
 #: addremotelink.php:116
 #: addsearchlink.php:63
 msgid "Add Remote Link"
-msgstr ""
+msgstr "Külső link hozzáadás"
 
 #: addremotelink.php:64
 msgid "You have selected the same site."
-msgstr ""
+msgstr "Ugyanazt az weboldalt választotta."
 
 #: addremotelink.php:67
 msgid "You have selected a remote site."
-msgstr ""
+msgstr "Egy Külső weboldalt választott."
 
 #: addremotelink.php:75
 #: addremotelink.php:85
 #: addremotelink.php:183
 msgid "Site"
-msgstr ""
+msgstr "Weboldal"
 
 #: addremotelink.php:80
 #, fuzzy
@@ -126,7 +126,7 @@ msgstr "Adatbázis szerver"
 #: addremotelink.php:121
 #: addsearchlink.php:74
 msgid "Relationship to current person"
-msgstr ""
+msgstr "Kapcsolat az aktuális személyhez"
 
 #: addremotelink.php:140
 #, fuzzy
@@ -135,29 +135,29 @@ msgstr "Biztonságos kapcsolat"
 
 #: addremotelink.php:150
 msgid "Local site"
-msgstr ""
+msgstr "Azonos weboldal"
 
 #: addremotelink.php:158
 #: addremotelink.php:188
 msgid "Existing remote site"
-msgstr ""
+msgstr "Használjon egy bejegyzett weboldalt."
 
 #: addremotelink.php:163
 msgid "New remote site"
-msgstr ""
+msgstr "Másik weboldal"
 
 #: addremotelink.php:173
 msgid "Person ID"
-msgstr ""
+msgstr "Személy azonosítószáma"
 
 #: addremotelink.php:202
 msgid "Type in a new site."
-msgstr ""
+msgstr "Írjon be egy új weboldalt."
 
 #: addremotelink.php:205
 #: addremotelink.php:227
 msgid "Title:"
-msgstr ""
+msgstr "Cím:"
 
 #: addremotelink.php:208
 #, fuzzy
@@ -166,7 +166,7 @@ msgstr "A fő weboldal URL-je"
 
 #: addremotelink.php:211
 msgid "Example:"
-msgstr ""
+msgstr "Példa:"
 
 #: addremotelink.php:214
 #, fuzzy
@@ -205,35 +205,35 @@ msgstr "Feleség hozzáadása"
 
 #: addsearchlink.php:31
 msgid "Add Local Link"
-msgstr ""
+msgstr "Helyi link hozzáadása"
 
 #: addsearchlink.php:77
 msgid "Same as current"
-msgstr ""
+msgstr "Aktuálissal azonos"
 
 #: addsearchlink.php:78
 msgid "Mother"
-msgstr ""
+msgstr "Anya"
 
 #: addsearchlink.php:79
 msgid "Father"
-msgstr ""
+msgstr "Apa"
 
 #: addsearchlink.php:80
 msgid "Husband"
-msgstr ""
+msgstr "Férj"
 
 #: addsearchlink.php:81
 msgid "Wife"
-msgstr ""
+msgstr "Feleség"
 
 #: addsearchlink.php:82
 msgid "Son"
-msgstr ""
+msgstr "Fiúgyermek"
 
 #: addsearchlink.php:83
 msgid "Daughter"
-msgstr ""
+msgstr "Lánygyermek"
 
 #: admin.php:51
 #: admin.php:137
@@ -253,27 +253,27 @@ msgstr "Napló-állományok archiválása"
 
 #: admin.php:105
 msgid "Edit Image Manipulation Configuration"
-msgstr ""
+msgstr "A képszerkesztés beállításai"
 
 #: admin.php:138
 msgid "Current Server Time:"
-msgstr ""
+msgstr "Jelenlegi szerver idő:"
 
 #: admin.php:140
 msgid "Current User Time:"
-msgstr ""
+msgstr "Jelenlegi felhasználói idő:"
 
 #: admin.php:145
 msgid "Your <i>config.php</i> file is still writable.  For security, you should set the permissions of this file back to read-only when you have finished configuring your site."
-msgstr ""
+msgstr "A <i>config.php</b> fájl írható. Biztonsági okokból, érdemes visszaállítani csak olvashatóra, miután befejezte a konfigurálást."
 
 #: admin.php:150
 msgid "User accounts awaiting verification by admin"
-msgstr ""
+msgstr "Felhasználók várnak az adminisztrátor aktiválására"
 
 #: admin.php:155
 msgid "One or more user accounts have warnings"
-msgstr ""
+msgstr "Egy vagy több felhasználónak figyelmeztetései vannak"
 
 #: admin.php:166
 #: admin.php:186
@@ -305,11 +305,11 @@ msgstr "_Felhasználó Adminisztrálás"
 
 #: admin.php:191
 msgid "View readme.txt file"
-msgstr ""
+msgstr "readme.txt állomány tekintése"
 
 #: admin.php:191
 msgid "README documentation"
-msgstr ""
+msgstr "OLVASSEL Dokumentáció"
 
 #: admin.php:194
 #, fuzzy
@@ -322,11 +322,11 @@ msgstr "PHP információ"
 
 #: admin.php:205
 msgid "Manage GEDCOMs and edit Privacy"
-msgstr ""
+msgstr "GEDCOM-kezelés és diszkréciós beállítások"
 
 #: admin.php:207
 msgid "Merge records"
-msgstr ""
+msgstr "Rekordok összefűzése"
 
 #: admin.php:210
 #, fuzzy
@@ -359,7 +359,7 @@ msgstr "Konfigurációs segítség"
 
 #: admin.php:262
 msgid "User Information Migration tool"
-msgstr ""
+msgstr "Felhasználói adat migrációs eszköz"
 
 #: admin.php:266
 #, fuzzy
@@ -368,7 +368,7 @@ msgstr "_Felhasználó Adminisztrálás"
 
 #: admin.php:268
 msgid "Backup"
-msgstr ""
+msgstr "Biztonsági mentés"
 
 #: admin.php:272
 #, fuzzy
@@ -387,7 +387,7 @@ msgstr "_Támogatott nyelvek konfigurációja"
 
 #: admin.php:282
 msgid "You have not configured the languages your site will support.<br />PhpGedView will use its default actions."
-msgstr ""
+msgstr "Nem állította be, hogy mely nyelveket használja az oldal.<br />A PhpGedView az alapértelmezettet fogja használni."
 
 #: admin.php:287
 #: changelanguage.php:46
@@ -397,18 +397,18 @@ msgstr "Új nyelvi állományok és beállítások hozzáadása"
 
 #: admin.php:302
 msgid "Loading..."
-msgstr ""
+msgstr "Betöltés"
 
 #: admin.php:314
 msgid "Content of log file"
-msgstr ""
+msgstr "A napló-állomány tartalma"
 
 #: ancestry.php:37
 #: ancestry.php:51
 #: ancestry.php:237
 #: ancestry.php:254
 msgid "Ancestry Chart"
-msgstr ""
+msgstr "Könyv az ősfáról"
 
 #: ancestry.php:72
 #: compact.php:82
@@ -431,7 +431,7 @@ msgstr "Név lista"
 
 #: ancestry.php:105
 msgid "Booklet"
-msgstr ""
+msgstr "Füzet"
 
 #: ancestry.php:123
 #, fuzzy
@@ -454,7 +454,7 @@ msgstr "Családok sorrendje"
 #: branches.php:74
 #: compact.php:90
 msgid "View"
-msgstr ""
+msgstr "Mutat"
 
 #: ancestry.php:149
 #: branches.php:241
@@ -464,7 +464,7 @@ msgstr "Az ősfa generációinak száma"
 
 #: ancestry.php:170
 msgid "Show Details"
-msgstr ""
+msgstr "Részletek mutatása"
 
 #: ancestry.php:192
 msgid "Click on any of the boxes to get more information about that person."
@@ -497,11 +497,11 @@ msgstr "Hasonló nevek keresése:"
 
 #: branches.php:79
 msgid "Basic"
-msgstr ""
+msgstr "Russell"
 
 #: branches.php:81
 msgid "Daitch-Mokotoff"
-msgstr ""
+msgstr "Daitch-Mokotoff"
 
 #: branches.php:104
 msgid "Pedigree Chart Root Person"
@@ -509,39 +509,39 @@ msgstr "A családfa-grafikon kezdő személye"
 
 #: branches.php:166
 msgid "Yes"
-msgstr ""
+msgstr "Igen"
 
 #: calendar.php:102
 msgid "Anniversary Calendar"
-msgstr ""
+msgstr "Évfordulók"
 
 #: calendar.php:122
 msgid "On This Day ..."
-msgstr ""
+msgstr "Ezen a napon az Ön múltjában..."
 
 #: calendar.php:125
 msgid "In This Month ..."
-msgstr ""
+msgstr "Ebben a hónapban az Ön múltjában ..."
 
 #: calendar.php:128
 msgid "In This Year ..."
-msgstr ""
+msgstr "Ebben az évben az Ön múltjában..."
 
 #: calendar.php:137
 msgid "Day:"
-msgstr ""
+msgstr "Nap:"
 
 #: calendar.php:152
 msgid "Month:"
-msgstr ""
+msgstr "Hónap"
 
 #: calendar.php:172
 msgid "Year:"
-msgstr ""
+msgstr "Év:"
 
 #: calendar.php:182
 msgid "Show"
-msgstr ""
+msgstr "Mutat"
 
 #: calendar.php:187
 #: calendar.php:204
@@ -550,17 +550,17 @@ msgstr ""
 #: calendar.php:209
 #: calendar.php:441
 msgid "All People"
-msgstr ""
+msgstr "Az összes személy"
 
 #: calendar.php:191
 #: calendar.php:518
 msgid "Living People"
-msgstr ""
+msgstr "Élő személyek"
 
 #: calendar.php:195
 #: calendar.php:521
 msgid "Recent Years (&lt; 100 yrs)"
-msgstr ""
+msgstr "Az utóbbi évekből (&lt; 100 év)"
 
 #: calendar.php:201
 #, fuzzy
@@ -571,13 +571,13 @@ msgstr "Nem szerkesztése"
 #: calendar.php:215
 #: calendar.php:438
 msgid "Males"
-msgstr ""
+msgstr "Férfiak"
 
 #: calendar.php:218
 #: calendar.php:221
 #: calendar.php:439
 msgid "Females"
-msgstr ""
+msgstr "Nők"
 
 #: calendar.php:226
 #, fuzzy
@@ -641,7 +641,7 @@ msgstr "Kivándorlás"
 
 #: calendar.php:274
 msgid "Custom Event"
-msgstr ""
+msgstr "Egyéni esemény"
 
 #: calendar.php:282
 #: calendar.php:284
@@ -652,7 +652,7 @@ msgstr "Archívum megtekintése"
 #: calendar.php:287
 #: calendar.php:289
 msgid "View Month"
-msgstr ""
+msgstr "Adott hónapban"
 
 #: calendar.php:292
 #: calendar.php:294
@@ -672,25 +672,25 @@ msgstr "Családok sorrendje"
 
 #: calendar.php:477
 msgid "Day not set"
-msgstr ""
+msgstr "A nap nincs megadva"
 
 #: calendar.php:524
 #: calendar.php:606
 msgid "Male"
-msgstr ""
+msgstr "Férfi"
 
 #: calendar.php:527
 #: calendar.php:610
 msgid "Female"
-msgstr ""
+msgstr "Nő"
 
 #: calendar.php:536
 msgid "Filter"
-msgstr ""
+msgstr "Szűrő"
 
 #: calendar.php:614
 msgid "unknown"
-msgstr ""
+msgstr "ismeretlen"
 
 #: changelanguage.php:51
 #: changelanguage.php:166
@@ -699,7 +699,7 @@ msgstr "A támogatott nyelvek konfigurálása"
 
 #: changelanguage.php:117
 msgid "Return to the Admin menu"
-msgstr ""
+msgstr "Vissza az Adminisztráció menüjébe"
 
 #: changelanguage.php:155
 #, fuzzy
@@ -719,7 +719,7 @@ msgstr "Aktív"
 #: changelanguage.php:183
 #: changelanguage.php:199
 msgid "Edit settings"
-msgstr ""
+msgstr "Beállítások szerkesztése"
 
 #: changelanguage.php:227
 #: changelanguage.php:250
@@ -752,45 +752,45 @@ msgstr "A családfa ágak kosarának engedélyezése"
 
 #: clippings.php:58
 msgid "Which other links from this family would you like to add?"
-msgstr ""
+msgstr "Melyik ágat szeretné ebből a családból szintén hozzáadni?"
 
 #: clippings.php:62
 msgid "Add just this family record."
-msgstr ""
+msgstr "Csak ennek a családnak a rekordját adjuk hozzá."
 
 #: clippings.php:63
 msgid "Add parents' records together with this family record."
-msgstr ""
+msgstr "Szülők hozzáadása ezzel a családrekorddal."
 
 #: clippings.php:64
 msgid "Add parents' and children's records together with this family record."
-msgstr ""
+msgstr "Szülők és gyerekek hozzáadása ezzel a családrekorddal."
 
 #: clippings.php:65
 msgid "Add parents' and all descendants' records together with this family record."
-msgstr ""
+msgstr "Szülők, és az összes leszármazottak hozzáadása ezzel a családrekorddal."
 
 #: clippings.php:66
 #: clippings.php:87
 #: clippings.php:99
 msgid "Continue Adding"
-msgstr ""
+msgstr "Hozzáadás folytatása"
 
 #: clippings.php:74
 msgid "Which links from this person would you also like to add?"
-msgstr ""
+msgstr "Melyik ágat szeretné ettől a személytől szintén hozzáadni?"
 
 #: clippings.php:78
 msgid "Add just this person."
-msgstr ""
+msgstr "Csak ennek a személynek a hozzáadása."
 
 #: clippings.php:79
 msgid "Add this person, his parents, and siblings."
-msgstr ""
+msgstr "Ennek a személynek, a szüleinek és a testvéreinek a hozzáadása."
 
 #: clippings.php:80
 msgid "Add this person and his direct line ancestors."
-msgstr ""
+msgstr "Ennek a személynek és az egyenes ági felmenőinek a hozzáadása."
 
 #: clippings.php:81
 #: clippings.php:83
@@ -801,19 +801,19 @@ msgstr "Az ősfa generációinak száma"
 
 #: clippings.php:82
 msgid "Add this person, his direct line ancestors, and their families."
-msgstr ""
+msgstr "Ennek a személynek, az egyenes ágbi felmenőinek és azok családjainak hozzáadása."
 
 #: clippings.php:84
 msgid "Add this person, his spouse, and children."
-msgstr ""
+msgstr "Ennek a személynek, a házastársának és a gyerekeinek a hozzáadása."
 
 #: clippings.php:85
 msgid "Add this person, his spouse, and all descendants."
-msgstr ""
+msgstr "Ennek a személynek, a házastársának és az összes leszármazottjának a hozzáadása."
 
 #: clippings.php:93
 msgid "Which records linked to this source should be added?"
-msgstr ""
+msgstr "Mely rekordok adjuk hozzá, amelyek hivatkoznak erre a forrásra?"
 
 #: clippings.php:97
 #, fuzzy
@@ -822,11 +822,11 @@ msgstr "Forrás törlése"
 
 #: clippings.php:98
 msgid "Add this source and families/people linked to it."
-msgstr ""
+msgstr "Forrás hozzáadása, az erre hivatkozó családokkal/személyekkel együtt"
 
 #: clippings.php:107
 msgid "Some items could not be added due to privacy restrictions"
-msgstr ""
+msgstr "Néhány elemet nem sikerült hozzáadni személyes adatok védelme miatt"
 
 #: clippings.php:127
 #, fuzzy
@@ -835,7 +835,7 @@ msgstr "Személy azonosító előtag"
 
 #: clippings.php:140
 msgid "Add"
-msgstr ""
+msgstr "Hozzáadás"
 
 #: clippings.php:150
 #, fuzzy
@@ -849,11 +849,11 @@ msgstr "PHP információ"
 
 #: clippings.php:159
 msgid "File Type"
-msgstr ""
+msgstr "Fájltípus választása"
 
 #: clippings.php:168
 msgid "Zip File(s)"
-msgstr ""
+msgstr "Zip (tömörített) fájl(ok)"
 
 #: clippings.php:171
 msgid "Include Media (automatically zips files)"
@@ -869,11 +869,11 @@ msgstr ""
 
 #: clippings.php:206
 msgid "Visitor"
-msgstr ""
+msgstr "Látogató"
 
 #: clippings.php:207
 msgid "Authenticated user"
-msgstr ""
+msgstr "Autentikus felhasználó"
 
 #: clippings.php:208
 #, fuzzy
@@ -887,11 +887,11 @@ msgstr "_Felhasználó Adminisztrálás"
 
 #: clippings.php:212
 msgid "Convert from UTF-8 to ANSI (ISO-8859-1)"
-msgstr ""
+msgstr "Át szeretné konvertálni ezt a GEDCOM-ot UTF-8-ról ANSI (ISO-8859-1)-ra?"
 
 #: clippings.php:215
 msgid "Remove custom PGV tags? (eg. _PGVU, _THUM)"
-msgstr ""
+msgstr "Eltávolítani a hozzá adott PGV toldalékokat? (pl._PGVU,_THUM)"
 
 #: clippings.php:218
 msgid "Convert media path to"
@@ -946,12 +946,12 @@ msgstr "Személy azonosító előtag"
 #: descendancy.php:146
 #: descendancy.php:152
 msgid "Descendancy Chart"
-msgstr ""
+msgstr "Leszármazottak"
 
 #: descendancy.php:120
 #: edit_interface.php:296
 msgid "The requested GEDCOM record could not be found.  This could be caused by a link to an invalid person or by a corrupt GEDCOM file."
-msgstr ""
+msgstr "A kért Gedcom rekord nem található. Ez vagy egy érvénytelen személyre mutató hivatkozás miatt lehet, vagy sérült Gedcom fájl következtében."
 
 #: dir_editor.php:87
 msgid "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" alt=\"\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing."
@@ -969,7 +969,7 @@ msgstr ""
 
 #: dir_editor.php:150
 msgid "Associated files:"
-msgstr ""
+msgstr "Kapcsolódó fájlok:"
 
 #: dir_editor.php:238
 #: editgedcoms.php:203
@@ -988,7 +988,7 @@ msgstr "Név törlése"
 #: edit_interface.php:2464
 #: edit_interface.php:2725
 msgid "Cancel"
-msgstr ""
+msgstr "Mégse"
 
 #: dir_editor.php:240
 msgid "Remove all nonessential files"
@@ -1032,7 +1032,7 @@ msgstr "_GEDCOM: Konfiguráció állomány"
 
 #: editconfig_gedcom.php:487
 msgid "Upload the file to your index directory: "
-msgstr ""
+msgstr "Az állomány feltöltése az index könyvtárba."
 
 #: editconfig_gedcom.php:620
 #: editconfig_gedcom.php:666
@@ -1064,7 +1064,7 @@ msgstr "Feltöltési útvonal"
 #: editconfig_gedcom.php:680
 #: edit_privacy.php:145
 msgid "Return to the GEDCOM management menu"
-msgstr ""
+msgstr "Vissza a GEDCOM-állományok kezelése menüjébe"
 
 #: editconfig_gedcom.php:837
 msgid "Results found"
@@ -1106,7 +1106,7 @@ msgstr "Konfigurációs segítség"
 #: editconfig_gedcom.php:2225
 #: edit_privacy.php:807
 msgid "Reset"
-msgstr ""
+msgstr "Visszaállít"
 
 #: editconfig_gedcom.php:886
 #: editconfig_gedcom.php:887
@@ -1120,7 +1120,7 @@ msgstr "Feltöltési útvonal"
 
 #: editconfig_gedcom.php:900
 msgid "Maximum upload size: "
-msgstr ""
+msgstr "Maximum feltöltési nagyság: "
 
 #: editconfig_gedcom.php:903
 #: editconfig_gedcom.php:924
@@ -1139,7 +1139,7 @@ msgstr "Az ősfa és a leszármazottak grafikonja esetében alapértelmezett sze
 #: edit_merge.php:76
 #: edit_merge.php:79
 msgid "Unable to find record with ID"
-msgstr ""
+msgstr "Nem található ilyen azonosítójú rekord"
 
 #: editconfig_gedcom.php:987
 msgid "Calendar format"
@@ -1212,7 +1212,7 @@ msgstr "Megjeleníti a héber ezreseket"
 #: editlang_edit_settings.php:486
 #: edit_privacy.php:97
 msgid "No"
-msgstr ""
+msgstr "Nem"
 
 #: editconfig_gedcom.php:1013
 msgid "Display Hebrew Gershayim"
@@ -1257,27 +1257,27 @@ msgstr ""
 #: editconfig_gedcom.php:1080
 #: editconfig_gedcom.php:1091
 msgid "Disable logging"
-msgstr ""
+msgstr "Loggolás tiltása"
 
 #: editconfig_gedcom.php:1081
 #: editconfig_gedcom.php:1092
 msgid "Daily"
-msgstr ""
+msgstr "Napi"
 
 #: editconfig_gedcom.php:1082
 #: editconfig_gedcom.php:1093
 msgid "Weekly"
-msgstr ""
+msgstr "Heti"
 
 #: editconfig_gedcom.php:1083
 #: editconfig_gedcom.php:1094
 msgid "Monthly"
-msgstr ""
+msgstr "Havi"
 
 #: editconfig_gedcom.php:1084
 #: editconfig_gedcom.php:1095
 msgid "Yearly"
-msgstr ""
+msgstr "Éves"
 
 #: editconfig_gedcom.php:1089
 msgid "Archive ChangeLog files"
@@ -1312,7 +1312,7 @@ msgstr "Multimédia-elemek könyvtára"
 
 #: editconfig_gedcom.php:1151
 msgid "Media path should not contain a drive letter; media may not be displayed."
-msgstr ""
+msgstr "Célszerű, hogy a média-állományok elérési útja ne tartalmazza a meghajtó betűjelét, mivel egyes esetekben így az állomány nem jelenik meg."
 
 #: editconfig_gedcom.php:1156
 msgid "Multi-Media directory levels to keep"
@@ -1403,7 +1403,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1331
 msgid "Welcome"
-msgstr ""
+msgstr "Üdvözöljük"
 
 #: editconfig_gedcom.php:1332
 #, fuzzy
@@ -1420,19 +1420,19 @@ msgstr ""
 
 #: editconfig_gedcom.php:1340
 msgid "Predefined text that states all users can request a user account"
-msgstr ""
+msgstr "Szövegváltozat, mely szerint minden felhasználó igényelhet hozzáférést"
 
 #: editconfig_gedcom.php:1341
 msgid "Predefined text that states admin will decide on each request for a user account"
-msgstr ""
+msgstr "Szövegváltozat, mely szerint az adminisztrátor dönti el, hogy elfogadja-e a hozzáféréshez benyújtott igényeket"
 
 #: editconfig_gedcom.php:1342
 msgid "Predefined text that states only family members can request a user account"
-msgstr ""
+msgstr "Szövegváltozat, mely szerint kizárólag családtagok igényelhetnek hozzáférést"
 
 #: editconfig_gedcom.php:1343
 msgid "Choose user defined welcome text typed below"
-msgstr ""
+msgstr "Az alább begépelt egyéni üdvözlő szöveg kiválasztása"
 
 #: editconfig_gedcom.php:1348
 msgid "Standard header for custom Welcome text"
@@ -1468,7 +1468,7 @@ msgstr ""
 #: editconfig_gedcom.php:1421
 #: editconfig_gedcom.php:1422
 msgid "Common Surnames"
-msgstr ""
+msgstr "Gyakori vezetéknevek"
 
 #: editconfig_gedcom.php:1427
 msgid "Min. no. of occurrences to be a \"Common Surname\""
@@ -1500,11 +1500,11 @@ msgstr "Az ősfa alapértelmezett nézete:"
 
 #: editconfig_gedcom.php:1474
 msgid "Landscape"
-msgstr ""
+msgstr "Fekvő"
 
 #: editconfig_gedcom.php:1475
 msgid "Portrait"
-msgstr ""
+msgstr "Álló"
 
 #: editconfig_gedcom.php:1480
 msgid "Place levels to show in person boxes"
@@ -1521,21 +1521,21 @@ msgstr "Ráközelítés a cellákra"
 #: editconfig_gedcom.php:1490
 #: editconfig_gedcom.php:1500
 msgid "Disabled"
-msgstr ""
+msgstr "Tiltva"
 
 #: editconfig_gedcom.php:1491
 #: editconfig_gedcom.php:1501
 msgid "On Mouse Over"
-msgstr ""
+msgstr "Az egér áthúzására"
 
 #: editconfig_gedcom.php:1492
 msgid "On Mouse Down"
-msgstr ""
+msgstr "Az egérgomb nyomvatartására"
 
 #: editconfig_gedcom.php:1493
 #: editconfig_gedcom.php:1502
 msgid "On Mouse Click"
-msgstr ""
+msgstr "Egérkattintásra"
 
 #: editconfig_gedcom.php:1498
 msgid "PopUp links on charts"
@@ -1547,7 +1547,7 @@ msgstr "Alapoldal mutatása a személyek oldalán"
 
 #: editconfig_gedcom.php:1509
 msgid "Personal Facts and Details"
-msgstr ""
+msgstr "Személyes adatok"
 
 #: editconfig_gedcom.php:1510
 msgid "Notes"
@@ -1565,7 +1565,7 @@ msgstr "Média keresése"
 
 #: editconfig_gedcom.php:1513
 msgid "Close Relatives"
-msgstr ""
+msgstr "Közeli családtagok"
 
 #: editconfig_gedcom.php:1514
 msgid "Tree"
@@ -1573,7 +1573,7 @@ msgstr ""
 
 #: editconfig_gedcom.php:1516
 msgid "Last Visited Tab For Individual"
-msgstr ""
+msgstr "\"Utoljára látogatott\" fül egy személyhez"
 
 #: editconfig_gedcom.php:1522
 msgid "Automatically expand list of events of close relatives"
@@ -1589,11 +1589,11 @@ msgstr "Postai irányítószám pozíciója"
 
 #: editconfig_gedcom.php:1581
 msgid "after"
-msgstr ""
+msgstr "után"
 
 #: editconfig_gedcom.php:1582
 msgid "before"
-msgstr ""
+msgstr "előtt"
 
 #: editconfig_gedcom.php:1587
 msgid "Maximum number of surnames"
@@ -1609,11 +1609,11 @@ msgstr ""
 
 #: editconfig_gedcom.php:1597
 msgid "Table"
-msgstr ""
+msgstr "Táblázat"
 
 #: editconfig_gedcom.php:1598
 msgid "Tagcloud"
-msgstr ""
+msgstr "Lebegőpanel"
 
 #: editconfig_gedcom.php:1608
 #: editconfig_gedcom.php:1609
@@ -1816,12 +1816,12 @@ msgstr ""
 
 #: editconfig_gedcom.php:1943
 msgid "Facts"
-msgstr ""
+msgstr "Események"
 
 #: editconfig_gedcom.php:1944
 #: edit_merge.php:150
 msgid "Record"
-msgstr ""
+msgstr "rekord"
 
 #: editconfig_gedcom.php:1972
 #: editconfig_gedcom.php:1973
@@ -1843,11 +1843,11 @@ msgstr "Témák könyvtára"
 
 #: editconfig_gedcom.php:2011
 msgid "Other, please type in"
-msgstr ""
+msgstr "Egyéb, kérjük, gépelje be"
 
 #: editconfig_gedcom.php:2017
 msgid "does not exist"
-msgstr ""
+msgstr "nem létezik"
 
 #: editconfig_gedcom.php:2025
 msgid "Display theme dropdown selector for theme changes"
@@ -1874,7 +1874,7 @@ msgstr "Kapcsolattartási forma"
 #: editconfig_gedcom.php:2078
 #: editconfig_gedcom.php:2108
 msgid "PhpGedView internal messaging"
-msgstr ""
+msgstr "PhpGedView belső üzenet"
 
 #: editconfig_gedcom.php:2079
 #: editconfig_gedcom.php:2109
@@ -1884,12 +1884,12 @@ msgstr "Belső üzenet email-el megerősítve"
 #: editconfig_gedcom.php:2081
 #: editconfig_gedcom.php:2111
 msgid "PhpGedView sends emails with no storage"
-msgstr ""
+msgstr "A PhpGedView az email-eket tárolás nélkül küldi el"
 
 #: editconfig_gedcom.php:2083
 #: editconfig_gedcom.php:2113
 msgid "Mailto link"
-msgstr ""
+msgstr "Levélküldési hivatkozás"
 
 #: editconfig_gedcom.php:2084
 #: editconfig_gedcom.php:2114
@@ -1908,7 +1908,7 @@ msgstr "A támogatás formája"
 #: editconfig_gedcom.php:2130
 #: editconfig_gedcom.php:2131
 msgid "Web Site and META Tag Settings"
-msgstr ""
+msgstr "META tag-ek beállítási lehetőségei"
 
 #: editconfig_gedcom.php:2136
 msgid "Main WebSite URL"
@@ -2004,7 +2004,7 @@ msgstr ""
 
 #: editgedcoms.php:187
 msgid "File not found."
-msgstr ""
+msgstr "Az állomány nem található."
 
 #: editgedcoms.php:191
 #, fuzzy
@@ -2013,15 +2013,15 @@ msgstr "Import Lehetőségek"
 
 #: editgedcoms.php:193
 msgid "This GEDCOM has not yet been imported."
-msgstr ""
+msgstr "Ezt a GEDCOM-állományt még nem importálta."
 
 #: editgedcoms.php:199
 msgid "Export"
-msgstr ""
+msgstr "Export"
 
 #: editgedcoms.php:203
 msgid "Are you sure you want to delete this GEDCOM"
-msgstr ""
+msgstr "Biztosan törölni szeretné ezt a GEDCOM-állományt?"
 
 #: editgedcoms.php:208
 #, fuzzy
@@ -2030,7 +2030,7 @@ msgstr "GEDCOM-állomány letöltése"
 
 #: editgedcoms.php:213
 msgid "Check"
-msgstr ""
+msgstr "Ellenőrzés"
 
 #: editlang_edit_settings.php:81
 msgid "Language File Edit Utility"
@@ -2081,31 +2081,31 @@ msgstr "A hét kezdőnapja"
 
 #: editlang_edit_settings.php:357
 msgid "Sunday"
-msgstr ""
+msgstr "Vasárnap"
 
 #: editlang_edit_settings.php:357
 msgid "Monday"
-msgstr ""
+msgstr "Hétfő"
 
 #: editlang_edit_settings.php:357
 msgid "Tuesday"
-msgstr ""
+msgstr "Kedd"
 
 #: editlang_edit_settings.php:357
 msgid "Wednesday"
-msgstr ""
+msgstr "Szerda"
 
 #: editlang_edit_settings.php:357
 msgid "Thursday"
-msgstr ""
+msgstr "Csütörtök"
 
 #: editlang_edit_settings.php:357
 msgid "Friday"
-msgstr ""
+msgstr "Péntek"
 
 #: editlang_edit_settings.php:357
 msgid "Saturday"
-msgstr ""
+msgstr "Szombat"
 
 #: editlang_edit_settings.php:378
 msgid "Text direction"
@@ -2113,11 +2113,11 @@ msgstr "Szöveg írásának iránya"
 
 #: editlang_edit_settings.php:386
 msgid "Left to right"
-msgstr ""
+msgstr "Balról jobbra"
 
 #: editlang_edit_settings.php:391
 msgid "Right to left"
-msgstr ""
+msgstr "Jobbról balra"
 
 #: editlang_edit_settings.php:402
 msgid "Surname first"
@@ -2153,7 +2153,7 @@ msgstr "Nyelvi állományok"
 
 #: editlang_edit_settings.php:530
 msgid "ERROR! The file does not exist..."
-msgstr ""
+msgstr "HIBA! Az állomány nem létezik..."
 
 #: editlang_edit_settings.php:539
 msgid "This optional file does not exist."
@@ -2162,7 +2162,7 @@ msgstr ""
 #: editnews.php:34
 #: editnews.php:52
 msgid "Add/Edit Journal/News entry"
-msgstr ""
+msgstr "Hírlap vagy hír hozzáadás/szerkesztése"
 
 #: editnews.php:57
 #, fuzzy
@@ -2171,53 +2171,53 @@ msgstr "Prezentációs stílus"
 
 #: editnews.php:64
 msgid "Please enter some text for this News or Journal entry."
-msgstr ""
+msgstr "Kérem írja be a közölni kívánt információt ehhez a hírhez vagy hírlap-bejegyzéshez."
 
 #: editnews.php:88
 msgid "Entry Text:"
-msgstr ""
+msgstr "Szövegbevitel:"
 
 #: editnews.php:125
 msgid "News/Journal entry successfully saved."
-msgstr ""
+msgstr "A Hír/Hírlap-bejegyzést sikeresen mentettük."
 
 #: edituser.php:71
 msgid "Duplicate user name.  A user with that user name already exists.  Please choose another user name."
-msgstr ""
+msgstr "A megadott felhasználónév már foglalt. Válasszon másikat."
 
 #: edituser.php:85
 msgid "User name contains invalid characters"
-msgstr ""
+msgstr "A felhasználónév érvénytelen karaktereket tartalmaz"
 
 #: edituser.php:129
 msgid "You must enter a user name."
-msgstr ""
+msgstr "Adja meg a felhasználónevet"
 
 #: edituser.php:134
 #: edituser.php:139
 msgid "You must enter a first and last name."
-msgstr ""
+msgstr "Adja meg a teljes nevét"
 
 #: edituser.php:144
 msgid "You must enter an email address."
-msgstr ""
+msgstr "Adjon meg egy e-mail címet"
 
 #: edituser.php:149
 msgid "Passwords do not match."
-msgstr ""
+msgstr "A jelszavak nem egyeznek"
 
 #: edituser.php:154
 msgid "Passwords must contain at least 6 characters."
-msgstr ""
+msgstr "A jelszónak legalább 6 karakterből kell állnia."
 
 #: edituser.php:174
 msgid "My Account"
-msgstr ""
+msgstr "Felhasználói adataim"
 
 #: edituser.php:176
 #: edituser.php:301
 msgid "Update MyAccount"
-msgstr ""
+msgstr "A felhasználói adataim frissítése"
 
 #: edituser.php:180
 #: edit_changes.php:124
@@ -2236,7 +2236,7 @@ msgstr "Név szerkesztése"
 
 #: edituser.php:200
 msgid "GEDCOM INDI record ID"
-msgstr ""
+msgstr "A felhasználó azonosítója a GEDCOM-ban"
 
 #: edituser.php:218
 msgid "Password"
@@ -2244,7 +2244,7 @@ msgstr "Jelszó"
 
 #: edituser.php:219
 msgid "Leave password blank if you want to keep the current password."
-msgstr ""
+msgstr "Hagyja üresen a jelszó mezőt, ha meg szeretné tartani a régi jelszót"
 
 #: edituser.php:223
 #, fuzzy
@@ -2258,15 +2258,15 @@ msgstr "Nyelv"
 
 #: edituser.php:245
 msgid "Email Address"
-msgstr ""
+msgstr "Email cím"
 
 #: edituser.php:251
 msgid "My Theme"
-msgstr ""
+msgstr "Az én témám"
 
 #: edituser.php:253
 msgid "Site Default"
-msgstr ""
+msgstr "Alapértelmezett"
 
 #: edituser.php:266
 #, fuzzy
@@ -2275,7 +2275,7 @@ msgstr "Kapcsolattartási forma"
 
 #: edituser.php:281
 msgid "Visible to other users when online"
-msgstr ""
+msgstr "Bejelentkezés után látható"
 
 #: edituser.php:290
 #, fuzzy
@@ -2291,20 +2291,20 @@ msgstr "A GEDCOM-változások áttekintése"
 #: edit_changes.php:66
 #: edit_changes.php:84
 msgid "Undo successful"
-msgstr ""
+msgstr "Sikeres visszavonás"
 
 #: edit_changes.php:71
 #: edit_changes.php:99
 msgid "Changes successfully accepted into database"
-msgstr ""
+msgstr "A változásokat sikeresen mentettük az adatbázisba."
 
 #: edit_changes.php:104
 msgid "There are currently no changes to be reviewed."
-msgstr ""
+msgstr "Jelenleg nincs olyan változás, melyet ellenőrizni kellene."
 
 #: edit_changes.php:116
 msgid "View Change Diff"
-msgstr ""
+msgstr "Változások megtekintése"
 
 #: edit_changes.php:117
 #, fuzzy
@@ -2319,25 +2319,25 @@ msgstr "A felhasználók láthatják a nyers GEDCOM-rekordot"
 
 #: edit_changes.php:120
 msgid "The following changes were made to this record:"
-msgstr ""
+msgstr "A következő változások történtek ezen a személyen:"
 
 #: edit_changes.php:122
 #: edit_changes.php:131
 msgid "Accept"
-msgstr ""
+msgstr "Elfogad"
 
 #: edit_changes.php:123
 msgid "Type"
-msgstr ""
+msgstr "Típus"
 
 #: edit_changes.php:125
 msgid "Date"
-msgstr ""
+msgstr "Dátum"
 
 #: edit_changes.php:127
 #: edit_changes.php:144
 msgid "Undo"
-msgstr ""
+msgstr "Visszavonás"
 
 #: edit_changes.php:136
 #, fuzzy
@@ -2353,11 +2353,11 @@ msgstr "Aktuális változások blokk"
 #: edit_changes.php:163
 #: edit_changes.php:181
 msgid "Undo all changes"
-msgstr ""
+msgstr "Minden Változtatás Visszavonása"
 
 #: edit_changes.php:181
 msgid "Are you sure you want to undo all of the changes for this GEDCOM?"
-msgstr ""
+msgstr "Biztosan vissza von minden változtatást ebben a GEDCOM -ban?"
 
 #: edit_changes.php:186
 msgid "Decide for each change to either accept or reject it.<br /><br />To accept all changes at once, click <b>\"Accept all changes\"</b> in the box below.<br />To get more information about a change,<br />click <b>\"View change diff\"</b> to see the differences,<br />or click <b>\"View GEDCOM record\"</b> to see the new data in GEDCOM format."
@@ -2389,11 +2389,11 @@ msgstr ""
 #: edit_interface.php:2076
 #: edit_merge.php:179
 msgid "GEDCOM record successfully deleted."
-msgstr ""
+msgstr "A GEDCOM-bejegyzést sikeresen töröltük"
 
 #: edit_interface.php:575
 msgid "Family"
-msgstr ""
+msgstr "Család"
 
 #: edit_interface.php:580
 msgid "PEDI"
@@ -2401,15 +2401,15 @@ msgstr "Felmenő rokonság"
 
 #: edit_interface.php:584
 msgid "Adopted"
-msgstr ""
+msgstr "Örökbefogadott"
 
 #: edit_interface.php:585
 msgid "Foster"
-msgstr ""
+msgstr "Nevelő"
 
 #: edit_interface.php:586
 msgid "Sealing"
-msgstr ""
+msgstr "Befogadás"
 
 #: edit_interface.php:604
 #: edit_interface.php:652
@@ -2424,7 +2424,7 @@ msgstr "Hivatkozások megtartása"
 #: edit_interface.php:1161
 #: edit_interface.php:1224
 msgid "You must provide a "
-msgstr ""
+msgstr "Meg kell adnia egy "
 
 #: edit_interface.php:751
 #: edit_interface.php:768
@@ -2477,11 +2477,11 @@ msgstr ""
 
 #: edit_interface.php:814
 msgid "Select Events"
-msgstr ""
+msgstr "Válasszon eseményt"
 
 #: edit_interface.php:891
 msgid "New source created successfully."
-msgstr ""
+msgstr "Az új forrást sikeresen létrehoztuk."
 
 #: edit_interface.php:911
 #, fuzzy
@@ -2491,7 +2491,7 @@ msgstr "Új GEDCOM-állomány létrehozása"
 #: edit_interface.php:921
 #: edit_interface.php:1189
 msgid "Shared Note"
-msgstr ""
+msgstr "Közös jegyzet"
 
 #: edit_interface.php:1018
 msgid "New Shared Note created successfully."
@@ -2544,7 +2544,7 @@ msgstr "Szervezet egyedülálló tényei"
 
 #: edit_interface.php:1330
 msgid "Paste the following Repository ID into your editing fields to reference this Repository "
-msgstr ""
+msgstr "Ragassza be ennek a Szervezet azonosítószámát az ön szerkesztési mezőjébe, hogy ez a Szervezet legyen a referencia"
 
 #: edit_interface.php:2126
 msgid "Record copied to clipboard"
@@ -2556,26 +2556,26 @@ msgstr "Gyerekek új sorrendje"
 
 #: edit_interface.php:2322
 msgid "Sort by birth dates"
-msgstr ""
+msgstr "Sorrend születési dátum szerint"
 
 #: edit_interface.php:2350
 msgid "Child"
-msgstr ""
+msgstr "Gyermek"
 
 #: edit_interface.php:2362
 #: edit_interface.php:2371
 #: edit_interface.php:2405
 #: edit_interface.php:2425
 msgid "Spouse"
-msgstr ""
+msgstr "Házastárs"
 
 #: edit_interface.php:2389
 msgid "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes."
-msgstr ""
+msgstr "Használja ezt az oldalt hogy változtasson vagy töröljön családtagokat.<br /><br />Minden családtagnál használhatja a Változtat linket hogy válasszon egy másik személyt a helyében. Az Eltávolít linket használhatja hogy a személyt eltávolítsa a családból.<br /><br />Miután készen van a változtatásokkal, nyomja meg a Mentés gombot, hogy elmentse a változtatásokat."
 
 #: edit_interface.php:2394
 msgid "Change Family Members"
-msgstr ""
+msgstr "Családtagok változtatása"
 
 #: edit_interface.php:2412
 #: edit_interface.php:2432
@@ -2591,39 +2591,39 @@ msgstr "Családok sorrendje"
 
 #: edit_interface.php:2724
 msgid "Sort by marriage date"
-msgstr ""
+msgstr "Sorrend házassági dátum szerint"
 
 #: edit_merge.php:58
 msgid "You entered the same IDs.  You cannot merge the same records."
-msgstr ""
+msgstr "Ön ugyanazt az azonosítót adta meg mindkétszer. Egy rekord nem fűzhető össze saját magával."
 
 #: edit_merge.php:91
 msgid "Records are not the same type.  Cannot merge records that are not the same type."
-msgstr ""
+msgstr "A kiválasztott rekordok típusa nem egyezik meg, így azok nem fűzhetők össze."
 
 #: edit_merge.php:121
 msgid "Merge Step 2 of 3"
-msgstr ""
+msgstr "Összefűzés -  2. lépés a 3-ból"
 
 #: edit_merge.php:123
 msgid "The following facts were exactly the same in both records and will be merged automatically."
-msgstr ""
+msgstr "A következő események a két rekordban megegyeznek és automatikusan összefűzésre kerülnek."
 
 #: edit_merge.php:145
 msgid "No matching facts found"
-msgstr ""
+msgstr "Nem találtunk egyező eseményeket."
 
 #: edit_merge.php:148
 msgid "The following facts did not match.  Select the information you would like to keep."
-msgstr ""
+msgstr "A következő események nem egyeznek meg. Kérjük jelölje ki, hogy melyik információt tartsuk meg."
 
 #: edit_merge.php:175
 msgid "Merge Step 3 of 3"
-msgstr ""
+msgstr "Összefűzés -  3. lépés a 3-ból"
 
 #: edit_merge.php:191
 msgid "Updating linked record"
-msgstr ""
+msgstr "Összekapcsolt rekordok frissítése"
 
 #: edit_merge.php:225
 #: edit_merge.php:231
@@ -2642,19 +2642,19 @@ msgstr ""
 
 #: edit_merge.php:248
 msgid "Merge more records."
-msgstr ""
+msgstr "További rekordok összefűzése"
 
 #: edit_merge.php:281
 msgid "Merge Step 1 of 3"
-msgstr ""
+msgstr "Összefűzés -  1. lépés a 3-ból"
 
 #: edit_merge.php:284
 msgid "Select two GEDCOM records to merge.  The records must be of the same type."
-msgstr ""
+msgstr "Válassza ki a 2 összefűzendő GEDCOM-rekordot! A rekordok típusának meg kell egyezni."
 
 #: edit_merge.php:287
 msgid "Merge To ID:"
-msgstr ""
+msgstr "Célrekord azonosítója:"
 
 #: edit_merge.php:302
 #: edit_merge.php:319
@@ -2676,12 +2676,12 @@ msgstr "Forrás azonosító előtag"
 
 #: edit_merge.php:307
 msgid "Merge From ID:"
-msgstr ""
+msgstr "Forrásrekord azonosítója:"
 
 #: edit_privacy.php:122
 #: edit_privacy.php:126
 msgid "Unable to find individual with id"
-msgstr ""
+msgstr "Nem található ilyen azonosítójú személy"
 
 #: edit_privacy.php:135
 #, fuzzy
@@ -2695,11 +2695,11 @@ msgstr "_GEDCOM: Bizalmas beállítások"
 
 #: edit_privacy.php:159
 msgid "Performing update."
-msgstr ""
+msgstr "A frissítés folyamatban"
 
 #: edit_privacy.php:162
 msgid "Config file read."
-msgstr ""
+msgstr "A konfigurációs állomány olvasása."
 
 #: edit_privacy.php:298
 #: edit_privacy.php:301
@@ -2761,7 +2761,7 @@ msgstr ""
 
 #: edit_privacy.php:442
 msgid "Add new setting for Privacy by ID"
-msgstr ""
+msgstr "Új személy-alapú diszkréciós szabály hozzáadása"
 
 #: edit_privacy.php:448
 #: edit_privacy.php:479
@@ -2785,7 +2785,7 @@ msgstr "Legidősebbet felülre"
 
 #: edit_privacy.php:473
 msgid "Edit existing settings for Privacy by ID"
-msgstr ""
+msgstr "A létező személy-alapú diszkréciós szabályok szerkesztése"
 
 #: edit_privacy.php:480
 #: edit_privacy.php:573
@@ -2801,7 +2801,7 @@ msgstr ""
 
 #: edit_privacy.php:521
 msgid "Add new setting for User Privacy"
-msgstr ""
+msgstr "Új felhasználó-alapú diszkréciós szabály hozzáadása"
 
 #: edit_privacy.php:526
 #: edit_privacy.php:571
@@ -2812,11 +2812,11 @@ msgstr "Felhasználói név"
 #: edit_privacy.php:528
 #: edit_privacy.php:574
 msgid "Show?"
-msgstr ""
+msgstr "Hozzáférhető?"
 
 #: edit_privacy.php:566
 msgid "Edit existing settings for User Privacy"
-msgstr ""
+msgstr "A létező felhasználó-alapú diszkréciós szabályok szerkesztése"
 
 #: edit_privacy.php:610
 #: edit_privacy.php:612
@@ -2825,43 +2825,43 @@ msgstr ""
 
 #: edit_privacy.php:622
 msgid "Add new setting for Global Fact Privacy"
-msgstr ""
+msgstr "Új kifejezés-alapú diszkréciós szabály hozzáadása"
 
 #: edit_privacy.php:625
 #: edit_privacy.php:665
 #: edit_privacy.php:718
 #: edit_privacy.php:766
 msgid "Name of fact"
-msgstr ""
+msgstr "Kifejezés neve"
 
 #: edit_privacy.php:626
 #: edit_privacy.php:666
 #: edit_privacy.php:719
 #: edit_privacy.php:767
 msgid "Choice"
-msgstr ""
+msgstr "Választás"
 
 #: edit_privacy.php:633
 msgid "Choose: "
-msgstr ""
+msgstr "Válasszon: "
 
 #: edit_privacy.php:647
 #: edit_privacy.php:685
 #: edit_privacy.php:748
 #: edit_privacy.php:791
 msgid "Show fact details"
-msgstr ""
+msgstr "Kifejezés részletezése hozzáférhető"
 
 #: edit_privacy.php:648
 #: edit_privacy.php:684
 #: edit_privacy.php:749
 #: edit_privacy.php:790
 msgid "Show fact"
-msgstr ""
+msgstr "Kifejezés hozzáférhető"
 
 #: edit_privacy.php:660
 msgid "Edit existing settings for Global Fact Privacy"
-msgstr ""
+msgstr "A létező kifejezés-alapú diszkréciós szabályok szerkesztése"
 
 #: edit_privacy.php:701
 #: edit_privacy.php:703
@@ -2870,15 +2870,15 @@ msgstr ""
 
 #: edit_privacy.php:713
 msgid "Add new setting for Facts Privacy by ID"
-msgstr ""
+msgstr "Új személy- és kifejezés-alapú diszkréciós szabály hozzáadása"
 
 #: edit_privacy.php:760
 msgid "Edit existing settings for Facts Privacy by ID"
-msgstr ""
+msgstr "A létező személy- és kifejezés-alapú diszkréciós szabályok szerkesztése"
 
 #: expand_view.php:32
 msgid "Private"
-msgstr ""
+msgstr "Bizalmas"
 
 #: expand_view.php:72
 #, fuzzy
@@ -2893,7 +2893,7 @@ msgstr "A rekordot módosították. A változások megtekintéséhez kattintson 
 #: family.php:100
 #: familybook.php:218
 msgid "Parents"
-msgstr ""
+msgstr "Szülők:"
 
 #: family.php:101
 msgid "Grandparents"
@@ -2906,15 +2906,15 @@ msgstr "Üres szövegdobozok feltüntetése az ősfán"
 
 #: family.php:137
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: family.php:138
 msgid "Show children on timeline chart"
-msgstr ""
+msgstr "Gyerek feltüntetése kronológiai grafikonon"
 
 #: family.php:138
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: family.php:139
 #, fuzzy
@@ -2923,29 +2923,29 @@ msgstr "Üres szövegdobozok feltüntetése az ősfán"
 
 #: family.php:139
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #: family.php:141
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: family.php:159
 msgid "Search Engine Spider Detected"
-msgstr ""
+msgstr "Keresőmotor detektálva"
 
 #: familybook.php:243
 #: fanchart.php:345
 msgid "Siblings"
-msgstr ""
+msgstr "Testvér"
 
 #: familybook.php:244
 #: fanchart.php:346
 msgid "Sibling"
-msgstr ""
+msgstr "Testvér"
 
 #: familybook.php:340
 msgid "Family of:&nbsp;"
-msgstr ""
+msgstr "A következő személy családja:&nbsp;"
 
 #: familybook.php:371
 #: familybook.php:383
@@ -2962,7 +2962,7 @@ msgstr "Források mutatása"
 
 #: familybook.php:481
 msgid "Descent Steps"
-msgstr ""
+msgstr "Leszármazási lépések"
 
 #: famlist.php:109
 #: famlist.php:121
@@ -3001,20 +3001,20 @@ msgstr ""
 
 #: fanchart.php:105
 msgid "PHP server misconfiguration: GD 2.x library required to use image functions."
-msgstr ""
+msgstr "PHP-szerver beállítási hiba: a GDlib 2.x szükséges a képi funkciók használatához."
 
 #: fanchart.php:106
 #: fanchart.php:111
 msgid "http://www.php.net/gd"
-msgstr ""
+msgstr "http://www.php.net/gd"
 
 #: fanchart.php:110
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
-msgstr ""
+msgstr "PHP-szerver beállítási hiba: a FreeType library szükséges a TrueType betűkészletek használatához."
 
 #: fanchart.php:117
 msgid "Font file not found on PHP server"
-msgstr ""
+msgstr "A betűkészlet nem található a PHP szerveren"
 
 #: fanchart.php:295
 #, fuzzy
@@ -3037,14 +3037,14 @@ msgstr "Házastárson keresztüli rokonság ellenőrzése"
 #: fanchart.php:429
 #: fanchart.php:454
 msgid "Circle Diagram"
-msgstr ""
+msgstr "Családi kör"
 
 #: fanchart.php:306
 #: hourglass.php:39
 #: hourglass.php:44
 #: hourglass.php:48
 msgid "Hourglass Chart"
-msgstr ""
+msgstr "Homokóra diagram"
 
 #: fanchart.php:307
 msgid "Interactive Tree"
@@ -3057,7 +3057,7 @@ msgstr "A kör szélessége"
 
 #: fanchart.php:498
 msgid "This Fanchart image cannot be printed directly by your browser. Use right-click then save and print."
-msgstr ""
+msgstr "Ezt a Családi kör képet nem lehet közvetlenül megjeleníteni az ön böngészőjében. Kattintson jobb egérgombbal rajta, majd nyomtassa ki."
 
 #: faq.php:159
 #: faq.php:247
@@ -3091,7 +3091,7 @@ msgstr "GYÍK láthatósága"
 
 #: faq.php:189
 msgid "No FAQ ID has been specified !"
-msgstr ""
+msgstr "Semmi GYÍK azonosító nem lett megadva!"
 
 #: faq.php:202
 #: help_text.php:4149
@@ -3100,7 +3100,7 @@ msgstr "GYIK elem szerkesztése"
 
 #: faq.php:250
 msgid "The FAQ list is empty."
-msgstr ""
+msgstr "A GYÍK lista üres."
 
 #: faq.php:265
 #: help_text.php:5054
@@ -3114,12 +3114,12 @@ msgstr "GYÍK pozíció"
 
 #: faq.php:308
 msgid "Are you sure you want to delete this FAQ entry?"
-msgstr ""
+msgstr "Biztos benne hogy ezt az GYÍK-ot ki akarja törölni?"
 
 #: find.php:97
 #: find.php:202
 msgid "Find Family List"
-msgstr ""
+msgstr "Család-lista keresése"
 
 #: find.php:100
 #: find.php:205
@@ -3148,16 +3148,16 @@ msgstr "Új megjegyzés hozzáfűzése"
 #: find.php:116
 #: find.php:217
 msgid "Find Source"
-msgstr ""
+msgstr "Találj Forrást"
 
 #: find.php:120
 #: find.php:220
 msgid "Find Special Characters"
-msgstr ""
+msgstr "Speciális karakter keresése"
 
 #: find.php:163
 msgid "Please enter more than one character"
-msgstr ""
+msgstr "Több mint egy betűt adjon meg"
 
 #: find.php:239
 #: find.php:259
@@ -3167,7 +3167,7 @@ msgstr "Név lista"
 
 #: find.php:283
 msgid "Media contains:"
-msgstr ""
+msgstr "A Média tartalma:"
 
 #: find.php:291
 #, fuzzy
@@ -3180,11 +3180,11 @@ msgstr "Kisképek használat a személyes oldalakon"
 #: find.php:359
 #: find.php:380
 msgid "Display all"
-msgstr ""
+msgstr "Mutass mindent"
 
 #: find.php:311
 msgid "Place contains:"
-msgstr ""
+msgstr "Hely tartalmazza:"
 
 #: find.php:332
 #, fuzzy
@@ -3193,7 +3193,7 @@ msgstr "Szervezethez tények hozzáadása"
 
 #: find.php:353
 msgid "Shared Note contains:"
-msgstr ""
+msgstr "Közös jegyzet tartalma:"
 
 #: find.php:374
 #, fuzzy
@@ -3202,7 +3202,7 @@ msgstr "Biztonságos kapcsolat"
 
 #: find.php:403
 msgid "Magnify"
-msgstr ""
+msgstr "Nagyít"
 
 #: find.php:432
 #: find.php:457
@@ -3212,7 +3212,7 @@ msgstr ""
 #: find.php:693
 #: find.php:715
 msgid "No results found."
-msgstr ""
+msgstr "Nincs találat"
 
 #: find.php:487
 #, fuzzy
@@ -3221,19 +3221,19 @@ msgstr "Témák könyvtára"
 
 #: find.php:501
 msgid "External objects"
-msgstr ""
+msgstr "Külső objektumok"
 
 #: find.php:572
 msgid "The filename entered does not exist."
-msgstr ""
+msgstr "Ezen a néven nem létezik GEDCOM-állomány"
 
 #: find.php:574
 msgid "Image Dimensions"
-msgstr ""
+msgstr "Kép méretei"
 
 #: find.php:577
 msgid "This media object is linked to the following:"
-msgstr ""
+msgstr "Ez a média ehhez van hozzákapcsolva:"
 
 #: find.php:584
 #, fuzzy
@@ -3247,23 +3247,23 @@ msgstr "Archívum megtekintése"
 
 #: find.php:593
 msgid "View Object"
-msgstr ""
+msgstr "Elem megjelenítése"
 
 #: find.php:599
 msgid "This media object is not linked to any GEDCOM record."
-msgstr ""
+msgstr "Ez a Média nincsen semmi GEDCOM adathoz hozzákapcsolva."
 
 #: find.php:641
 msgid "Places found"
-msgstr ""
+msgstr "Talált helyek"
 
 #: find.php:665
 msgid "Repositories found"
-msgstr ""
+msgstr "Talált Szervezetek"
 
 #: find.php:690
 msgid "Shared Notes found"
-msgstr ""
+msgstr "Talált közös jegyzetek"
 
 #: find.php:712
 #, fuzzy
@@ -3272,17 +3272,17 @@ msgstr "Mutasd az összes forrást"
 
 #: gedcheck.php:37
 msgid "Gedcom checker"
-msgstr ""
+msgstr "Gedcom ellenőrző"
 
 #: gedcheck.php:70
 msgid "Critical"
-msgstr ""
+msgstr "Kritikus"
 
 #: gedcheck.php:98
 #: gedcheck.php:838
 #: gedcheck.php:853
 msgid "Level"
-msgstr ""
+msgstr "Szint"
 
 #: gedcheck.php:104
 #, fuzzy
@@ -3291,23 +3291,23 @@ msgstr "Hivatkozások megtartása"
 
 #: gedcheck.php:106
 msgid "Same tab/window"
-msgstr ""
+msgstr "Ugyanazon fül/ablak"
 
 #: gedcheck.php:107
 msgid "New tab/window"
-msgstr ""
+msgstr "Új fül/ablak"
 
 #: gedcheck.php:109
 msgid "Lines of GEDCOM context"
-msgstr ""
+msgstr "GEDCOM tartalom sorai"
 
 #: gedcheck.php:117
 msgid "Records with errors"
-msgstr ""
+msgstr "Hibás bejegyzések"
 
 #: gedcheck.php:118
 msgid "All records"
-msgstr ""
+msgstr "Összes bejegyzés"
 
 #: gedcheck.php:125
 msgid "This module checks the format of a GEDCOM file against the <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM Specification</a>.  It also checks for a number of common errors in your data.  Note that there are lots of versions, extensions and variations on the specification so you should not be concerned with any issues other than those flagged as \"Critical\".  The explanation for all the line-by-line errors can be found in the specification, so please check there before asking for help."
@@ -3315,7 +3315,7 @@ msgstr ""
 
 #: gedcheck.php:168
 msgid "missing"
-msgstr ""
+msgstr "hiányzó"
 
 #: gedcheck.php:169
 #: help_text.php:4884
@@ -3324,49 +3324,49 @@ msgstr "többszörös"
 
 #: gedcheck.php:170
 msgid "invalid"
-msgstr ""
+msgstr "érvénytelen"
 
 #: gedcheck.php:171
 msgid "too many"
-msgstr ""
+msgstr "túl sok"
 
 #: gedcheck.php:172
 msgid "too few"
-msgstr ""
+msgstr "túl kevés"
 
 #: gedcheck.php:173
 msgid "does not link back"
-msgstr ""
+msgstr "nem hivatkozik vissza"
 
 #: gedcheck.php:836
 #: gedcheck.php:855
 #: gedcheck.php:858
 msgid "tag"
-msgstr ""
+msgstr "címke"
 
 #: gedcheck.php:903
 msgid "data"
-msgstr ""
+msgstr "adat"
 
 #: gedcheck.php:905
 msgid "Nothing references this record"
-msgstr ""
+msgstr "Nincs hivatkozás erre a bejegyzésre"
 
 #: gedcheck.php:912
 msgid "spacing"
-msgstr ""
+msgstr "térköz"
 
 #: gedcheck.php:941
 msgid "see"
-msgstr ""
+msgstr "lát"
 
 #: gedcheck.php:953
 msgid "No errors found at this level."
-msgstr ""
+msgstr "Nincs hiba találat ezen a szinten."
 
 #: gedrecord.php:45
 msgid "This page has been disabled by the site administrator."
-msgstr ""
+msgstr "Ezt az oldalt az internetcím adminisztrátora lekapcsolta."
 
 #: help_text.php:68
 msgid "Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, \"this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62).\"<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required."
@@ -5379,7 +5379,7 @@ msgstr "Nem szerkesztése"
 #: help_text.php:2474
 #: imageview.php:32
 msgid "Image Viewer"
-msgstr ""
+msgstr "Képnéző"
 
 #: help_text.php:2479
 #, fuzzy
@@ -5403,7 +5403,7 @@ msgstr "Keresési Segítség"
 
 #: help_text.php:2499
 msgid "Statistics Plot"
-msgstr ""
+msgstr "Statisztikai görbe"
 
 #: help_text.php:2508
 msgid "This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev[\"BIRT\"]&nbsp;=&nbsp;\"*\";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character."
@@ -9364,26 +9364,26 @@ msgstr ""
 
 #: help_text.php:5555
 msgid "Help Contents"
-msgstr ""
+msgstr "A Segítség tartalomjegyzéke"
 
 #: imageview.php:180
 msgid "View image details"
-msgstr ""
+msgstr "Képrészletek megtekintése"
 
 #: index.php:309
 #: index.php:370
 #: index_edit.php:199
 msgid "MyGedView Portal"
-msgstr ""
+msgstr "MyGedView Portál"
 
 #: index.php:371
 msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
-msgstr ""
+msgstr "Az Ön MyGedView oldalán kiválaszthatja az Önnek kedves személyeket, figyelheti az elkövetkezendő eseményeket, és kapcsolatba léphet más felhasználókkal."
 
 #: index.php:445
 #: index_edit.php:472
 msgid "Customize MyGedView Portal"
-msgstr ""
+msgstr "Állítsa be az Ön személyes oldalát"
 
 #: index.php:451
 #: index_edit.php:473
@@ -9393,7 +9393,7 @@ msgstr "Egyéni üdvözlő szöveg"
 
 #: index_edit.php:83
 msgid "?"
-msgstr ""
+msgstr "?"
 
 #: index_edit.php:154
 #: index_edit.php:158
@@ -9401,7 +9401,7 @@ msgstr ""
 #: index_edit.php:160
 #: index_edit.php:161
 msgid "&nbsp;"
-msgstr ""
+msgstr "&nbsp;"
 
 #: index_edit.php:231
 #, fuzzy
@@ -9410,7 +9410,7 @@ msgstr "A támogatott nyelvek konfigurálása"
 
 #: index_edit.php:278
 msgid "The cache files have been removed."
-msgstr ""
+msgstr "Az átmeneti fájlok törlésre kerültek"
 
 #: index_edit.php:285
 #, fuzzy
@@ -9419,49 +9419,49 @@ msgstr "_GEDCOM: Konfiguráció"
 
 #: index_edit.php:319
 msgid "This block cannot be configured."
-msgstr ""
+msgstr "Ezt a Blokkot nem lehet beállítani."
 
 #: index_edit.php:478
 msgid "Main Section Blocks"
-msgstr ""
+msgstr "Központi szekció blokkjai"
 
 #: index_edit.php:483
 msgid "Available Blocks"
-msgstr ""
+msgstr "Rendelkezésre álló Blokkok"
 
 #: index_edit.php:486
 msgid "Right Section Blocks"
-msgstr ""
+msgstr "Jobb oldali blokkok"
 
 #: index_edit.php:492
 #: index_edit.php:551
 msgid "Move Up"
-msgstr ""
+msgstr "Felfelé"
 
 #: index_edit.php:494
 #: index_edit.php:553
 msgid "Move Down"
-msgstr ""
+msgstr "Lefelé"
 
 #: index_edit.php:511
 msgid "Move Right"
-msgstr ""
+msgstr "Jobbra"
 
 #: index_edit.php:531
 msgid "Move Left"
-msgstr ""
+msgstr "Balra"
 
 #: index_edit.php:560
 msgid "Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction."
-msgstr ""
+msgstr "Jelöljön ki egy Blokkot és kattintson az egyik nyílra hogy, áthelyezze a kijelölt Blokkot a megadott irányba."
 
 #: index_edit.php:565
 msgid "Use these blocks as the default block configuration for all users?"
-msgstr ""
+msgstr "Legyen ez a blokkbeállítás az alapértelmezett minden felhasználónak?"
 
 #: index_edit.php:574
 msgid "Reset to Default Blocks"
-msgstr ""
+msgstr "Az alapértelmezett blokkok visszaállítása"
 
 #: indilist.php:174
 msgid "Choose a letter to show individuals whose family name starts with that letter."
@@ -9469,15 +9469,15 @@ msgstr ""
 
 #: indilist.php:268
 msgid "Choose a letter to show individuals who have a given name which starts with that letter."
-msgstr ""
+msgstr "Válasszon egy betűt amivel személyek keresztneve kezdődik."
 
 #: individual.php:287
 msgid "Hit Count:"
-msgstr ""
+msgstr "Számláló:"
 
 #: individual.php:294
 msgid "The information for this individual was linked from a remote site."
-msgstr ""
+msgstr "Az információ ennek a személynek egy külső weboldalról lett ide kapcsolva."
 
 #: individual.php:319
 #, fuzzy
@@ -9486,11 +9486,11 @@ msgstr "A családfa-grafikon kezdő személye"
 
 #: individual.php:321
 msgid "Timeline Chart"
-msgstr ""
+msgstr "Kronológia"
 
 #: individual.php:325
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: install.php:102
 #: install.php:391
@@ -9499,15 +9499,15 @@ msgstr ""
 
 #: install.php:127
 msgid "Site is currently unavailable"
-msgstr ""
+msgstr "A honlap jelenleg nem érhető el"
 
 #: install.php:181
 msgid "Your current database configuration is bad.  Please check your database connection parameters and configure again."
-msgstr ""
+msgstr "Az Ön aktuális adatbázis-beállításai hibásak. Kérjük, ellenőrizze a kapcsolat paramétereit és végezze el újból a beállításokat."
 
 #: install.php:350
 msgid "Unable to add user.  Please try again."
-msgstr ""
+msgstr "Nem sikerült a felhasználót hozzáadni. Kérjük lépjen vissza, és próbálja meg újra."
 
 #: install.php:410
 msgid "*Your settings will not<br />be saved until step 6"
@@ -9525,23 +9525,23 @@ msgstr "Konfigurációs segítség"
 
 #: install.php:452
 msgid "Download config.php"
-msgstr ""
+msgstr "Letöltés config.php"
 
 #: install.php:470
 msgid "Next &gt;"
-msgstr ""
+msgstr "Következő &gt;"
 
 #: install.php:480
 msgid "&lt; Previous"
-msgstr ""
+msgstr "&lt; Előző"
 
 #: install.php:502
 msgid "Checking for errors..."
-msgstr ""
+msgstr "Hibák ellenõrzése..."
 
 #: install.php:507
 msgid "Checking required PHP version:"
-msgstr ""
+msgstr "Szükséges PHP verzió ellenőrzése:"
 
 #: install.php:508
 #, fuzzy
@@ -9550,7 +9550,7 @@ msgstr "Nemzeti lobogót ábrázoló kép neve"
 
 #: install.php:516
 msgid "Checking for minimum database support:"
-msgstr ""
+msgstr "Minimális adatbázis-támogatás ellenörzése:"
 
 #: install.php:517
 msgid "You do not have any of the supported database extensions."
@@ -9589,7 +9589,7 @@ msgstr ""
 
 #: install.php:563
 msgid "Unable to change memory limit."
-msgstr ""
+msgstr "Nem sikerült megváltoztatni a memória korlátozást."
 
 #: install.php:564
 msgid "Your current memory limit is"
@@ -9646,7 +9646,7 @@ msgstr ""
 #: install.php:763
 #: install.php:769
 msgid "Basic Settings"
-msgstr ""
+msgstr "Alap beállítások"
 
 #: install.php:764
 #: install.php:826
@@ -9657,12 +9657,12 @@ msgstr "Haladó név tények"
 #: install.php:875
 #: install.php:881
 msgid "&nbsp;&nbsp;page views in&nbsp;&nbsp;"
-msgstr ""
+msgstr "&nbsp;&nbsp;oldalmegtekintés ennyi másodperc alatt&nbsp;&nbsp;"
 
 #: install.php:876
 #: install.php:880
 msgid "&nbsp;&nbsp;seconds"
-msgstr ""
+msgstr "&nbsp;&nbsp;másodperc"
 
 #: install.php:1072
 #: login_register.php:168
@@ -9675,15 +9675,15 @@ msgstr "Felhasználónév és jelszó"
 #: login_register.php:174
 #: login_register.php:222
 msgid "You must confirm the password."
-msgstr ""
+msgstr "Ismételje meg a jelszót"
 
 #: install.php:1084
 msgid "Create the default administrative user."
-msgstr ""
+msgstr "Hozza létre az Adminisztrátort!"
 
 #: install.php:1085
 msgid "You must first create your main administrative user.  This user will have privileges to update the configuration files, view private data, and create other users."
-msgstr ""
+msgstr "Először az Adminisztrátort kell létrehoznia.  Ennek a felhasználónak van jogosultsága a beállítások módosítására, személyes adatok megtekintésére és további felhasználók létrehozására."
 
 #: install.php:1104
 msgid "The following administrative users already exist:"
@@ -9702,7 +9702,7 @@ msgstr "Személy visszavonása"
 #: inverselink.php:53
 #: media.php:765
 msgid "To Family"
-msgstr ""
+msgstr "Családhoz"
 
 #: inverselink.php:56
 #: media.php:770
@@ -9717,7 +9717,7 @@ msgstr "Szervezet Törlése"
 
 #: inverselink.php:62
 msgid "To Shared Note"
-msgstr ""
+msgstr "Közös jegyzethez"
 
 #: inverselink.php:67
 #: inverselink.php:116
@@ -9748,11 +9748,11 @@ msgstr "Szervezet Törlése"
 #: lifespan.php:41
 #: lifespan.php:54
 msgid "Lifespan Chart"
-msgstr ""
+msgstr "Élettartam grafikon"
 
 #: lifespan.php:66
 msgid "Add another person to chart:<br />Person ID:"
-msgstr ""
+msgstr "Új személy hozzáadása:<br />Személyi azonosító:"
 
 #: lifespan.php:70
 #, fuzzy
@@ -9761,23 +9761,23 @@ msgstr "Házasságnévvel"
 
 #: lifespan.php:75
 msgid "Show Timeline chart"
-msgstr ""
+msgstr "Idővonal grafikon"
 
 #: lifespan.php:303
 msgid "Speed"
-msgstr ""
+msgstr "Sebesség"
 
 #: lifespan.php:304
 msgid "Begin Year"
-msgstr ""
+msgstr "Kezdő év"
 
 #: lifespan.php:305
 msgid "End Year"
-msgstr ""
+msgstr "Utolsó év"
 
 #: lifespan.php:321
 msgid "Search"
-msgstr ""
+msgstr "Keres"
 
 #: lifespan.php:322
 #, fuzzy
@@ -9791,7 +9791,7 @@ msgstr "Személy azonosító előtag"
 
 #: login.php:120
 msgid "Unable to authenticate user."
-msgstr ""
+msgstr "Nem sikerült azonosítani a felhasználót."
 
 #: login.php:206
 #: login.php:226
@@ -9806,18 +9806,18 @@ msgstr "PHP információ"
 
 #: login.php:239
 msgid "No account?"
-msgstr ""
+msgstr "Még nem regisztrálta magát?"
 
 #: login.php:240
 #: login_register.php:202
 #: login_register.php:283
 #: login_register.php:317
 msgid "Request new user account"
-msgstr ""
+msgstr "Regisztráció kérése"
 
 #: login.php:241
 msgid "Lost your password?"
-msgstr ""
+msgstr "Elfelejtette a jelszavát?"
 
 #: login.php:242
 #, fuzzy
@@ -9829,23 +9829,23 @@ msgstr "Felhasználónév és jelszó"
 #: login_register.php:82
 #: login_register.php:94
 msgid "Lost password request"
-msgstr ""
+msgstr "Új jelszó kérése"
 
 #: login_register.php:127
 msgid "A new password was requested for your user name."
-msgstr ""
+msgstr "Az Ön felhasználónevéhez új jelszót igényeltek!"
 
 #: login_register.php:131
 msgid "Recommendation:"
-msgstr ""
+msgstr "Ajánlások:"
 
 #: login_register.php:132
 msgid "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure."
-msgstr ""
+msgstr "Kattintson az alábbi hivatkozásra, jelentkezzen be az új jelszóval majd változtassa meg ahhoz hogy az adatai biztonságban maradjanak."
 
 #: login_register.php:256
 msgid "Please enter your relationship to the data in the Comments field."
-msgstr ""
+msgstr "Kérem, írja be a kapcsolatát az adathoz a megjegyzés mezőbe."
 
 #: login_register.php:287
 #, fuzzy
@@ -9861,43 +9861,43 @@ msgstr "Az adatbázis jelszava"
 #: login_register.php:433
 #: login_register.php:454
 msgid "Comments"
-msgstr ""
+msgstr "Megjegyzések"
 
 #: login_register.php:318
 msgid "Fields marked with * are mandatory."
-msgstr ""
+msgstr "A * -gal jelölt mezők, kötelezők."
 
 #: login_register.php:356
 msgid "New Account confirmation"
-msgstr ""
+msgstr "Új azonosító visszaigazolása"
 
 #: login_register.php:376
 #: login_register.php:405
 #: login_register.php:409
 #: login_register.php:486
 msgid "Back"
-msgstr ""
+msgstr "Vissza"
 
 #: login_register.php:422
 msgid "Information about the request is shown under the link below."
-msgstr ""
+msgstr "A következő adatokat használtuk."
 
 #: login_register.php:423
 msgid "Please click on the following link and fill in the requested data to confirm your request and email address."
-msgstr ""
+msgstr "Kérem kattintson a következő linkre, és töltse ki a kért adatokat, hogy ellenőrizni tudjuk az adatait és az email címét."
 
 #: login_register.php:432
 #: login_register.php:516
 msgid "Verification code:"
-msgstr ""
+msgstr "Ellenőrző kód:"
 
 #: login_register.php:434
 msgid "If you didn't request an account, you can just delete this message."
-msgstr ""
+msgstr "Ha nem Ön kérte ezt az adatot, akkor nyugodtan törölheti ezt az üzenetet."
 
 #: login_register.php:435
 msgid "You won't get any more email from this site, because the account request will be deleted automatically after seven days."
-msgstr ""
+msgstr "Nem fog kapni több levelet a rendszertől, mivel a felhasználói azonosítója 7 napon belül további figyelmeztetés nélkül törlésre kerül."
 
 #: login_register.php:444
 #: login_register.php:565
@@ -9907,15 +9907,15 @@ msgstr "_Felhasználó Adminisztrálás"
 
 #: login_register.php:455
 msgid "The user received an email with the information necessary to confirm his access request."
-msgstr ""
+msgstr "A felhasználó kapott egy emailt a fontosabb adatokkal, ahhoz hogy ellenőrizni tudja az azonosítóját."
 
 #: login_register.php:456
 msgid "You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account."
-msgstr ""
+msgstr "Amint a felhasználó elvégezte ezt az ellenőrzést, email-ben kap értesítést, így jogot adhat a felhasználónak a bejelentkezéshez."
 
 #: login_register.php:457
 msgid "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part."
-msgstr ""
+msgstr "Ön kapni fog egy email-t amint a jövendő felhasználó ellenőrizte magát. Csak az ellenőrzés után tud a felhasználó bejelentkezni az ön beavatkozása nélkül."
 
 #: login_register.php:506
 #: login_register.php:513
@@ -9928,48 +9928,48 @@ msgstr "_Felhasználó Adminisztrálás"
 #: login_register.php:517
 #: message.php:212
 msgid "Send"
-msgstr ""
+msgstr "Elküld"
 
 #: login_register.php:567
 msgid "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site."
-msgstr ""
+msgstr "Kérem, kattintson a lenti hivatkozásra, jelentkezzen be, és adjon a felhasználónak jogot a bejelntkezéshez."
 
 #: login_register.php:568
 msgid "You do not have to take any action; the user can now login."
-msgstr ""
+msgstr "Nem kell mást csinálnia, a felhasználó most már be tud jelentkezni."
 
 #: login_register.php:590
 msgid "You have confirmed your request to become a registered user."
-msgstr ""
+msgstr "Önt regisztrált felhasználóként azonosítottuk."
 
 #: login_register.php:591
 msgid "The Administrator has been informed.  As soon as he gives you permission to login, you can login with your user name and password."
-msgstr ""
+msgstr "Az adminisztrátort értesítettük. Amint ő megadja az engedélyt a bejelentkezéshez, be tud majd jelentkezni a felhasználónevével és jelszavával."
 
 #: login_register.php:592
 msgid "You can now login with your user name and password."
-msgstr ""
+msgstr "Most már be tud jelentkezni a felhasználó nevével és a kódjával."
 
 #: login_register.php:597
 msgid "Data was not correct, please try again"
-msgstr ""
+msgstr "Hibás adat!<br />Kérem próbálja újra!"
 
 #: login_register.php:603
 msgid "Could not verify the information you entered.  Please try again or contact the site administrator for more information."
-msgstr ""
+msgstr "Nem lehetett ellenőrizni a megadott információt. Kérem lépjen vissza, és próbálja meg újra."
 
 #: manageservers.php:118
 #: manageservers.php:121
 msgid "Invalid IP address."
-msgstr ""
+msgstr "Érvénytelen IP cím."
 
 #: manageservers.php:163
 msgid "Failed to authenticate to remote site"
-msgstr ""
+msgstr "A távoli oldallal való azonosítás nem sikerült"
 
 #: manageservers.php:170
 msgid "Please do not leave remote site title or URL blank"
-msgstr ""
+msgstr "Kérem töltse ki a távoli oldal címét, vagy URL-jét"
 
 #: manageservers.php:183
 msgid "The remote server could not be removed because its Connections list is not empty."
@@ -9981,11 +9981,11 @@ msgstr ""
 
 #: manageservers.php:206
 msgid "Hide Details"
-msgstr ""
+msgstr "Részletek elrejtése"
 
 #: manageservers.php:231
 msgid "Manually mark Search Engines by IP"
-msgstr ""
+msgstr "Keresőmotor megjelölése IP cím alapján"
 
 #: manageservers.php:259
 #: manageservers.php:306
@@ -9994,7 +9994,7 @@ msgstr ""
 
 #: manageservers.php:279
 msgid "Ban Sites by IP"
-msgstr ""
+msgstr "Oldal kitiltása Ip cím alapján"
 
 #: manageservers.php:325
 #, fuzzy
@@ -10003,7 +10003,7 @@ msgstr "Személy visszavonása"
 
 #: manageservers.php:340
 msgid "Are you sure you want to delete this Source?"
-msgstr ""
+msgstr "Biztosan törölni szeretné ezt a forrást a GEDCOM-állományból?"
 
 #: manageservers.php:344
 #, fuzzy
@@ -10013,7 +10013,7 @@ msgstr "Biztonságos kapcsolat"
 #: manageservers.php:368
 #: manageservers.php:444
 msgid "Site URL/IP"
-msgstr ""
+msgstr "Oldal URL-je/IP címe"
 
 #: manageservers.php:430
 #, fuzzy
@@ -10022,7 +10022,7 @@ msgstr "Új megjegyzés hozzáfűzése"
 
 #: media.php:92
 msgid "Directory could not be created"
-msgstr ""
+msgstr "A mappát nem sikerült létrehozni"
 
 #: media.php:100
 msgid "Media file moved."
@@ -10049,12 +10049,12 @@ msgstr ""
 
 #: media.php:310
 msgid "Uploading media files is not allowed because multi-media items have been disabled or because the media directory is not writable."
-msgstr ""
+msgstr "Média állományok feltöltése nem megengedett mert multi-média elemek használata nem megengedett vagy mert a média mappa nem irható."
 
 #: media.php:338
 #: media.php:339
 msgid "Directory does not exist."
-msgstr ""
+msgstr "A mappa nem létezik."
 
 #: media.php:373
 #: media.php:374
@@ -10065,12 +10065,12 @@ msgstr ""
 #: media.php:388
 #: media.php:389
 msgid "Directory not empty."
-msgstr ""
+msgstr "A mappa nem üres."
 
 #: media.php:410
 #: media.php:411
 msgid "Media and thumbnail directories successfully removed."
-msgstr ""
+msgstr "Média és előnézet mappák sikeresen törölve."
 
 #: media.php:414
 #: media.php:415
@@ -10083,19 +10083,19 @@ msgstr "Multimédia könyvtárak szintjeinek kezelése"
 #: media.php:420
 #: media.php:421
 msgid "Media directory successfully removed."
-msgstr ""
+msgstr "A média mappa sikeresen törölve."
 
 #: media.php:424
 #: media.php:425
 #: media.php:427
 #: media.php:428
 msgid "Thumbnail directory not removed."
-msgstr ""
+msgstr "Előnézet mappa nem lett törölve."
 
 #: media.php:430
 #: media.php:431
 msgid "Thumbnail directory successfully removed."
-msgstr ""
+msgstr "Előnézet mappa sikeresen törölve."
 
 #: media.php:543
 #: media.php:901
@@ -10119,7 +10119,7 @@ msgstr ""
 #: media.php:650
 #: media.php:651
 msgid "Media file could not be deleted."
-msgstr ""
+msgstr "Média állományt nem lehetett kitörölni."
 
 #: media.php:638
 msgid "This media object does not exist as a file on this server.  It cannot be deleted, moved, or renamed."
@@ -10128,17 +10128,17 @@ msgstr ""
 #: media.php:646
 #: media.php:647
 msgid "Media file successfully deleted."
-msgstr ""
+msgstr "Média állomány sikeresen törölve."
 
 #: media.php:660
 #: media.php:661
 msgid "Thumbnail file successfully deleted."
-msgstr ""
+msgstr "Előnézet állomány sikeresen törölve."
 
 #: media.php:664
 #: media.php:665
 msgid "Thumbnail file could not be deleted."
-msgstr ""
+msgstr "Előnézet állományt nem lehetett kitörölni."
 
 #: media.php:751
 #, fuzzy
@@ -10158,11 +10158,11 @@ msgstr "Kisképek használat a személyes oldalakon"
 
 #: media.php:939
 msgid "Are you sure you want to delete this folder?"
-msgstr ""
+msgstr "Biztos benne hogy, ezt a mappát ki akarja törölni?"
 
 #: media.php:1038
 msgid "Are you sure you want to delete this file?"
-msgstr ""
+msgstr "Biztosan törölni kívánja ezt az állományt?"
 
 #: media.php:1038
 #, fuzzy
@@ -10171,7 +10171,7 @@ msgstr "Név törlése"
 
 #: media.php:1046
 msgid "Are you sure you want to remove this object from the database?"
-msgstr ""
+msgstr "Biztosan kívánja ennek az elemnek a törlését az adatbázisból?"
 
 #: media.php:1046
 #, fuzzy
@@ -10185,7 +10185,7 @@ msgstr "Kisképek használat a személyes oldalakon"
 
 #: media.php:1170
 msgid "The media folder is corrupted."
-msgstr ""
+msgstr "A média mappa hibás."
 
 #: mediafirewall.php:319
 msgid "Error: The Media Firewall was launched from a directory other than the media directory."
@@ -10193,7 +10193,7 @@ msgstr ""
 
 #: mediafirewall.php:335
 msgid "No Media Found"
-msgstr ""
+msgstr "Nincs média"
 
 #: mediafirewall.php:352
 msgid "Privacy restrictions prevent you from viewing this item"
@@ -10212,7 +10212,7 @@ msgstr "Multimédia-elemek könyvtára"
 
 #: medialist.php:131
 msgid "Media objects per page"
-msgstr ""
+msgstr "/oldal"
 
 #: medialist.php:169
 msgid "Apply filter"
@@ -10220,7 +10220,7 @@ msgstr ""
 
 #: medialist.php:216
 msgid "Media Objects found"
-msgstr ""
+msgstr "média elem"
 
 #: medialist.php:334
 #: medialist.php:336
@@ -10265,41 +10265,41 @@ msgstr ""
 #: message.php:47
 #: message.php:52
 msgid "No recipient user was provided.  Cannot continue."
-msgstr ""
+msgstr "Nincs megadva címzett. Nem lehet folytatni."
 
 #: message.php:70
 #: message.php:79
 #: message.php:159
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "Írjon be egy érvényes e-mail címet!"
 
 #: message.php:167
 msgid "Please enter a message subject."
-msgstr ""
+msgstr "Írja be az üzenet tárgyát!"
 
 #: message.php:172
 msgid "Please enter some message text before sending."
-msgstr ""
+msgstr "Írja be az üzenet szövegét!"
 
 #: message.php:181
 msgid "<b>Please Note:</b> Private information of living individuals will only be given to family relatives and close friends.  You will be asked to verify your relationship before you will receive any private data.  Sometimes information of dead persons may also be private.  If this is the case, it is because there is not enough information known about the person to determine whether they are alive or not and we probaby do not have more information on this person.<br /><br />Before asking a question, please verify that you are inquiring about the correct person by checking dates, places, and close relatives.  If you are submitting changes to the genealogical data, please include the sources where you obtained the data."
-msgstr ""
+msgstr "<b>Figyelem:</b> Az élő személyek személyes adatait csak a család hozzátartozói és a közeli barátok láthatják. Mielőtt bármilyen személyes adatot megkaphatna, megkérjük hogy ellenőrizze a rokonságát. Lehetséges, hogy elhunyt személyek adatai sem hozzáférhetőek. Ebben az esetben, lehetséges hogy nincs elég információ arról hogy életben vannak-e még, vagy nincs elég egyéb információ róluk.<br /><br />Mielőtt kérdezne, győződjön meg arról, hogy a megfelelő személyről van szó. Ellenőrizze le a dátumokat, helyeket és a közeli hozzátartozókat. Ha leszármazási adatokkal szolgál, kérem adja meg adja meg az információk forrását is."
 
 #: message.php:197
 msgid "Your Name:"
-msgstr ""
+msgstr "Az Ön neve:"
 
 #: message.php:198
 msgid "Email Address:"
-msgstr ""
+msgstr "E-mail cím:"
 
 #: message.php:198
 msgid "Please provide your email address so that we may contact you in response to this message.  If you do not provide your email address we will not be able to respond to your inquiry.  You email address will not be used in any other way besides responding to this inquiry."
-msgstr ""
+msgstr "Kérem adja meg az e-mail címét, hogy üzenetére válaszolhassunk. E-mail címét kizárólag ebből a célból fogjuk felhasználni."
 
 #: message.php:200
 msgid "Subject:"
-msgstr ""
+msgstr "Tárgy:"
 
 #: message.php:211
 #, fuzzy
@@ -10308,15 +10308,15 @@ msgstr "GYÍK szövegtörzs"
 
 #: message.php:218
 msgid "Message Deleted"
-msgstr ""
+msgstr "Üzenet törölve"
 
 #: module.php:214
 msgid "Unknown action: [action]."
-msgstr ""
+msgstr "Ismeretlen tevékenység: [action]."
 
 #: module.php:224
 msgid "Unknown module type."
-msgstr ""
+msgstr "Ismeretlen modultípus."
 
 #: module_admin.php:42
 #, fuzzy
@@ -10325,15 +10325,15 @@ msgstr "Források mutatása"
 
 #: module_admin.php:46
 msgid "Show only to authenticated users"
-msgstr ""
+msgstr "Csak regisztrált felhasználók"
 
 #: module_admin.php:50
 msgid "Show only to admin users"
-msgstr ""
+msgstr "Csak az adminisztrátorok"
 
 #: module_admin.php:54
 msgid "Hide even from admin users"
-msgstr ""
+msgstr "Az adminisztrátorok sem"
 
 #: module_admin.php:183
 msgid "Below is the list of all the modules installed in this instance of PhpGedView.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them."
@@ -10346,7 +10346,7 @@ msgstr "_GEDCOM: Adminisztráció oldal"
 
 #: module_admin.php:191
 msgid "Installed Modules"
-msgstr ""
+msgstr "Telepített modulok"
 
 #: module_admin.php:192
 #, fuzzy
@@ -10364,7 +10364,7 @@ msgstr "Média Kezelés"
 
 #: module_admin.php:202
 msgid "Mod Settings"
-msgstr ""
+msgstr "Mod Beállítások"
 
 #: module_admin.php:203
 #: module_admin.php:251
@@ -10384,7 +10384,7 @@ msgstr "\"Leírás\" META tag"
 
 #: module_admin.php:205
 msgid "Version / PGV"
-msgstr ""
+msgstr "Változat / PGV"
 
 #: module_admin.php:206
 msgid "Tab?"
@@ -10404,7 +10404,7 @@ msgstr ""
 #: module_admin.php:305
 #: module_admin.php:356
 msgid "Access Level"
-msgstr ""
+msgstr "Hozzáférési szint"
 
 #: module_admin.php:253
 #: module_admin.php:304
@@ -10422,7 +10422,7 @@ msgstr "Új média-elem hozzáadása"
 #: notelist.php:32
 #: search.php:213
 msgid "Shared Notes"
-msgstr ""
+msgstr "Közös jegyzetek"
 
 #: pedigree.php:90
 #, fuzzy
@@ -10436,13 +10436,13 @@ msgstr "Legidősebbet felülre"
 
 #: pedigree.php:128
 msgid "Oldest at bottom"
-msgstr ""
+msgstr "Legidősebb alúl"
 
 #: placelist.php:54
 #: placelist.php:58
 #: placelist.php:312
 msgid "Place Hierarchy"
-msgstr ""
+msgstr "Helyszínek hierarchiája"
 
 #: placelist.php:55
 #: placelist.php:59
@@ -10459,7 +10459,7 @@ msgstr "Biztonságos kapcsolat"
 #: placelist.php:125
 #: placelist.php:157
 msgid "Top Level"
-msgstr ""
+msgstr "Felső szint"
 
 #: placelist.php:307
 #: placelist.php:432
@@ -10471,11 +10471,11 @@ msgstr "Oldal"
 
 #: placelist.php:309
 msgid "Place Hierarchy after"
-msgstr ""
+msgstr "Helyszínek hierarchiája után"
 
 #: placelist.php:354
 msgid "View all records found in this place"
-msgstr ""
+msgstr "Ehhez a helyhez kötődő rekordok"
 
 #: placelist.php:468
 #, fuzzy
@@ -10484,30 +10484,30 @@ msgstr "Helyszínek tisztítása"
 
 #: placelist.php:476
 msgid "Show Places in Hierarchy"
-msgstr ""
+msgstr "A helyszínek hierarchiában"
 
 #: placelist.php:477
 msgid "Show All Places in a List"
-msgstr ""
+msgstr "Az összes helyszín egy listában"
 
 #: placelist.php:483
 #: placelist.php:488
 msgid "Places are encoded in the form: "
-msgstr ""
+msgstr "A helyek az alábbiak alapján rangsoroltak:"
 
 #: placelist.php:488
 msgid "City, County, State/Province, Country"
-msgstr ""
+msgstr "város, megye, állam/tartomány, ország"
 
 #: placelist.php:488
 msgid "(Default)"
-msgstr ""
+msgstr "(Alapértelmezett)"
 
 #: printlog.php:90
 #: printlog.php:112
 #: printlog.php:157
 msgid "Refresh"
-msgstr ""
+msgstr "Frissítés"
 
 #: printlog.php:91
 #: printlog.php:113
@@ -10518,11 +10518,11 @@ msgstr "Az adatbázis neve"
 #: printlog.php:91
 #: printlog.php:113
 msgid "IP address"
-msgstr ""
+msgstr "IP cím"
 
 #: printlog.php:91
 msgid "Log Message"
-msgstr ""
+msgstr "Log üzenet"
 
 #: printlog.php:113
 #, fuzzy
@@ -10531,58 +10531,58 @@ msgstr "Keresési Segítség"
 
 #: printlog.php:113
 msgid "Query"
-msgstr ""
+msgstr "Lekérdezés"
 
 #: relationship.php:140
 #: relationship.php:141
 msgid "Mother-in-law"
-msgstr ""
+msgstr "Anyós"
 
 #: relationship.php:143
 #: relationship.php:144
 msgid "Father-in-law"
-msgstr ""
+msgstr "Após"
 
 #: relationship.php:149
 #: relationship.php:154
 msgid "Step-Mother"
-msgstr ""
+msgstr "Mostoha anya"
 
 #: relationship.php:157
 #: relationship.php:162
 msgid "Step-Father"
-msgstr ""
+msgstr "Mostoha apa"
 
 #: relationship.php:169
 #: relationship.php:171
 #: relationship.php:174
 msgid "Sister-in-law"
-msgstr ""
+msgstr "Sógornő"
 
 #: relationship.php:177
 #: relationship.php:178
 msgid "Brother-in-law"
-msgstr ""
+msgstr "Sógor"
 
 #: relationship.php:185
 #: relationship.php:186
 msgid "Daughter-in-law"
-msgstr ""
+msgstr "unokahúg"
 
 #: relationship.php:188
 #: relationship.php:189
 msgid "Son-in-law"
-msgstr ""
+msgstr "unokaöcs"
 
 #: relationship.php:194
 #: relationship.php:195
 msgid "step daughter"
-msgstr ""
+msgstr "féltestvér (lány)"
 
 #: relationship.php:197
 #: relationship.php:198
 msgid "step son"
-msgstr ""
+msgstr "féltestvér"
 
 #: relationship.php:209
 #: relationship.php:210
@@ -10590,7 +10590,7 @@ msgstr ""
 #: relationship.php:223
 #, php-format
 msgid "%2$d x great niece"
-msgstr ""
+msgstr "%2$d x dédunokahúg"
 
 #: relationship.php:212
 #: relationship.php:213
@@ -10598,17 +10598,17 @@ msgstr ""
 #: relationship.php:226
 #, php-format
 msgid "%2$d x great nephew"
-msgstr ""
+msgstr "%2$d x dédunokaöcs"
 
 #: relationship.php:233
 #: relationship.php:234
 msgid "Step-Sister"
-msgstr ""
+msgstr "Mostoha lánytestvér"
 
 #: relationship.php:236
 #: relationship.php:237
 msgid "Step-Brother"
-msgstr ""
+msgstr "Mostoha fiútestvér"
 
 #: relationship.php:251
 #: relationship.php:252
@@ -10620,7 +10620,7 @@ msgstr ""
 #: relationship.php:343
 #, php-format
 msgid "%2$d x great aunt"
-msgstr ""
+msgstr "%2$d x dédnagynéni"
 
 #: relationship.php:254
 #: relationship.php:255
@@ -10632,7 +10632,7 @@ msgstr ""
 #: relationship.php:346
 #, php-format
 msgid "%2$d x great uncle"
-msgstr ""
+msgstr "%2$d x dédnagybácsi"
 
 #: relationship.php:293
 #: relationship.php:294
@@ -10640,7 +10640,7 @@ msgstr ""
 #: relationship.php:302
 #, php-format
 msgid "%3$d x great granddaughter"
-msgstr ""
+msgstr "%3$d x dédunoka (lány)"
 
 #: relationship.php:296
 #: relationship.php:297
@@ -10648,21 +10648,21 @@ msgstr ""
 #: relationship.php:305
 #, php-format
 msgid "%3$d x great grandson"
-msgstr ""
+msgstr "%3$d x dédunoka (fiú)"
 
 #: relationship.php:313
 #: relationship.php:314
 #: relationship.php:383
 #: relationship.php:384
 msgid "Sister"
-msgstr ""
+msgstr "Lánytestvér"
 
 #: relationship.php:318
 #: relationship.php:319
 #: relationship.php:386
 #: relationship.php:387
 msgid "Brother"
-msgstr ""
+msgstr "Fiútestvér"
 
 #: relationship.php:358
 #: relationship.php:359
@@ -10670,17 +10670,17 @@ msgstr ""
 #: relationship.php:368
 #, php-format
 msgid "%d x cousin"
-msgstr ""
+msgstr "%d x unokaöcs"
 
 #: relationship.php:375
 #: relationship.php:376
 msgid "Half-Sister"
-msgstr ""
+msgstr "Fél lánytestvér"
 
 #: relationship.php:378
 #: relationship.php:379
 msgid "Half-Brother"
-msgstr ""
+msgstr "Fél fiútestvér"
 
 #: relationship.php:419
 #: relationship.php:420
@@ -10688,7 +10688,7 @@ msgstr ""
 #: relationship.php:423
 #, php-format
 msgid "%1$s is the %2$s of %3$s."
-msgstr ""
+msgstr "%1$s a %2$s -ik a %3$s -ból/ből."
 
 #: relationship.php:485
 #: relationship.php:564
@@ -10698,15 +10698,15 @@ msgstr "Diszkréció rokonság alapján"
 
 #: relationship.php:535
 msgid "and"
-msgstr ""
+msgstr "és"
 
 #: relationship.php:579
 msgid "Person 1"
-msgstr ""
+msgstr "1. személy"
 
 #: relationship.php:609
 msgid "Person 2"
-msgstr ""
+msgstr "2. személy"
 
 #: relationship.php:677
 #: relationship.php:698
@@ -10716,7 +10716,7 @@ msgstr "Feltöltési útvonal"
 
 #: relationship.php:735
 msgid "No link between the two individuals could be found."
-msgstr ""
+msgstr "A két személy között nem lelhető fel rokoni kapcsolat."
 
 #: relationship.php:737
 msgid "No other link between the two individuals could be found."
@@ -10725,7 +10725,7 @@ msgstr ""
 #: reportengine.php:147
 #: reportengine.php:153
 msgid "Choose a report to run"
-msgstr ""
+msgstr "Válasszon ki egy jelentést"
 
 #: reportengine.php:154
 #, fuzzy
@@ -10735,7 +10735,7 @@ msgstr "Szervezet Törlése"
 #: reportengine.php:170
 #: reportengine.php:219
 msgid "Enter report values"
-msgstr ""
+msgstr "Adjon meg értékeket a jelentéshez"
 
 #: reportengine.php:220
 #, fuzzy
@@ -10744,7 +10744,7 @@ msgstr "Szervezet Törlése"
 
 #: reportengine.php:312
 msgid "Select a date"
-msgstr ""
+msgstr "Dátumválasztás"
 
 #: reportengine.php:344
 #, fuzzy
@@ -10754,7 +10754,7 @@ msgstr "GEDCOM-állomány letöltése"
 #: rss.php:116
 #: rss.php:119
 msgid "Feed created by PhpGedView"
-msgstr ""
+msgstr "A hírcsatornát a PhpGedView táplálja"
 
 #: rss.php:192
 #: rss.php:209
@@ -10769,57 +10769,57 @@ msgstr "E-mail cím genealógiai kérdésekhez"
 
 #: rss.php:321
 msgid "Feed not available"
-msgstr ""
+msgstr "Hírcsatorna nem áll rendelkezésre"
 
 #: rss.php:323
 msgid "There is no RSS feed available for this PhpGedView site"
-msgstr ""
+msgstr "RSS hírcsatorna nem áll rendelkezésre erről a PhpGedView weboldalról"
 
 #: search.php:85
 msgid "Please enter a Given name, Last name, or Place in addition to Year"
-msgstr ""
+msgstr "Kérem adjon meg keresztnevet, vezetéknevet vagy helyet az év mellett"
 
 #: search.php:126
 msgid "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender "
-msgstr ""
+msgstr "Írja be valamelyiket: Név, Születési dátum, Születés helye, Halálozási dátum, Halálozás helye, és Nem "
 
 #: search.php:129
 msgid "Please search again with more information than just gender"
-msgstr ""
+msgstr "Keressen újra de több információval mint csak a nem"
 
 #: search.php:163
 #: search.php:584
 #: search.php:596
 #: search.php:616
 msgid "General Search"
-msgstr ""
+msgstr "Általános keresés"
 
 #: search.php:169
 #: search.php:263
 msgid "Enter Search terms"
-msgstr ""
+msgstr "Keresőkifejezés megadása:"
 
 #: search.php:183
 #: search.php:275
 msgid "Search for"
-msgstr ""
+msgstr "Keresd"
 
 #: search.php:219
 msgid "Exclude Filter"
-msgstr ""
+msgstr "Szűrő nélkül"
 
 #: search.php:227
 msgid "Exclude some non-genealogical data"
-msgstr ""
+msgstr "Kizárása a nem genealógiai adatoknak"
 
 #: search.php:234
 msgid "Off"
-msgstr ""
+msgstr "Igen"
 
 #: search.php:240
 #: search.php:382
 msgid "Associates"
-msgstr ""
+msgstr "Kapcsolatok"
 
 #: search.php:246
 #: search.php:387
@@ -10833,7 +10833,7 @@ msgstr ""
 
 #: search.php:293
 msgid "Entire record"
-msgstr ""
+msgstr "Összes rekord"
 
 #: search.php:299
 msgid "Whole words only"
@@ -10856,11 +10856,11 @@ msgstr "Fejléc"
 
 #: search.php:354
 msgid "Soundex type:"
-msgstr ""
+msgstr "Hangzási típus:"
 
 #: search.php:369
 msgid "Individuals'<br />names to print:"
-msgstr ""
+msgstr "Személyek<br />neveit kiírni:"
 
 #: search.php:374
 #, fuzzy
@@ -10869,7 +10869,7 @@ msgstr "Név lista"
 
 #: search.php:377
 msgid "All names"
-msgstr ""
+msgstr "Az összes név"
 
 #: search.php:399
 #: search.php:578
@@ -10880,7 +10880,7 @@ msgstr ""
 
 #: search.php:404
 msgid "Sites to search"
-msgstr ""
+msgstr "Keresendő oldal"
 
 #: search.php:428
 msgid "No known Servers<br />No results will be found"
@@ -10892,7 +10892,7 @@ msgstr ""
 
 #: search.php:443
 msgid "search"
-msgstr ""
+msgstr "keres"
 
 #: search.php:455
 #, fuzzy
@@ -10906,19 +10906,19 @@ msgstr "Név lista"
 
 #: search.php:473
 msgid "Birth date: "
-msgstr ""
+msgstr "Születési dátum: "
 
 #: search.php:481
 msgid "Birth Place: "
-msgstr ""
+msgstr "Születési hely: "
 
 #: search.php:489
 msgid "Death date: "
-msgstr ""
+msgstr "Halálozási dátum: "
 
 #: search.php:497
 msgid "Death Place: "
-msgstr ""
+msgstr "Halálozás helye: "
 
 #: search.php:505
 #, fuzzy
@@ -10932,17 +10932,17 @@ msgstr "Az adatbázis felhasználóneve"
 
 #: search.php:548
 msgid "Results per page"
-msgstr ""
+msgstr "Oldalankénti találat"
 
 #: search.php:563
 msgid "Other Searches"
-msgstr ""
+msgstr "Egyéb keresések"
 
 #: search.php:569
 #: search.php:585
 #: search.php:617
 msgid "Soundex Search"
-msgstr ""
+msgstr "Hangzási keresés"
 
 #: search.php:570
 #: search.php:586
@@ -10954,19 +10954,19 @@ msgstr "Haladó név tények"
 
 #: searchhelp.php:89
 msgid "Any word"
-msgstr ""
+msgstr "Bármilyen szó"
 
 #: searchhelp.php:92
 msgid "All words"
-msgstr ""
+msgstr "Minden szó"
 
 #: searchhelp.php:95
 msgid "Exact phrase"
-msgstr ""
+msgstr "Pontos frázis"
 
 #: searchhelp.php:100
 msgid "Search in"
-msgstr ""
+msgstr "Keresd ebben"
 
 #: searchhelp.php:104
 #, fuzzy
@@ -10975,7 +10975,7 @@ msgstr "Felhasználói név"
 
 #: searchhelp.php:107
 msgid "Modules Help"
-msgstr ""
+msgstr "Segítség a modulokhoz"
 
 #: searchhelp.php:112
 #, fuzzy
@@ -10984,11 +10984,11 @@ msgstr "_Adminisztrálás"
 
 #: searchhelp.php:126
 msgid "Close window"
-msgstr ""
+msgstr "Ablak bezárás"
 
 #: searchhelp.php:197
 msgid "Results found:"
-msgstr ""
+msgstr "Talált eredmény:"
 
 #: search_advanced.php:113
 #: search_advanced.php:166
@@ -11019,7 +11019,7 @@ msgstr ""
 #: statistics.php:714
 #: timeline.php:148
 msgid "years"
-msgstr ""
+msgstr "év"
 
 #: search_advanced.php:167
 #: search_advanced.php:229
@@ -11044,7 +11044,7 @@ msgstr ""
 #: search_advanced.php:268
 #: search_advanced.php:283
 msgid "Sounds like"
-msgstr ""
+msgstr "Úgy hanzik mint"
 
 #: search_advanced.php:299
 msgid "Add More Fields"
@@ -11063,56 +11063,56 @@ msgstr "A bejelentkező oldal üdvözlő szövege \"Hitelesített módban\""
 
 #: statistics.php:57
 msgid "Total males"
-msgstr ""
+msgstr "férfiak száma  ="
 
 #: statistics.php:58
 msgid "Total females"
-msgstr ""
+msgstr "nők száma      ="
 
 #: statistics.php:59
 msgid "Total living"
-msgstr ""
+msgstr "Életbenlévök"
 
 #: statistics.php:60
 msgid "Total dead"
-msgstr ""
+msgstr "Elhúnytak"
 
 #: statistics.php:74
 #: statistics.php:184
 msgid "Events"
-msgstr ""
+msgstr "Események"
 
 #: statistics.php:77
 msgid "Total births"
-msgstr ""
+msgstr "Születések száma"
 
 #: statistics.php:78
 msgid "Total deaths"
-msgstr ""
+msgstr "Halálesetek száma"
 
 #: statistics.php:85
 msgid "Births by century"
-msgstr ""
+msgstr "Születés századok szerint"
 
 #: statistics.php:86
 msgid "Deaths by century"
-msgstr ""
+msgstr "Halálozás századok szerint"
 
 #: statistics.php:93
 msgid "Earliest birth"
-msgstr ""
+msgstr "Legrégibb születés"
 
 #: statistics.php:94
 msgid "Earliest death"
-msgstr ""
+msgstr "Legrégibb haláleset"
 
 #: statistics.php:101
 msgid "Latest birth"
-msgstr ""
+msgstr "Legutolsó születés"
 
 #: statistics.php:102
 msgid "Latest death"
-msgstr ""
+msgstr "Legutolsó haláleset"
 
 #: statistics.php:110
 msgid "Lifespan"
@@ -11120,15 +11120,15 @@ msgstr ""
 
 #: statistics.php:113
 msgid "Average age at death"
-msgstr ""
+msgstr "Átlagos életkor"
 
 #: statistics.php:127
 msgid "Top age at death"
-msgstr ""
+msgstr "Legidősebb halott"
 
 #: statistics.php:142
 msgid "Oldest living people"
-msgstr ""
+msgstr "Legidősebb élő személy"
 
 #: statistics.php:160
 #, fuzzy
@@ -11142,7 +11142,7 @@ msgstr "Élő személyek nevéhez hozzáférhet"
 
 #: statistics.php:168
 msgid "Top surnames"
-msgstr ""
+msgstr "Leggyakoribb családnevek"
 
 #: statistics.php:169
 #, fuzzy
@@ -11151,7 +11151,7 @@ msgstr "Élő személyek nevéhez hozzáférhet"
 
 #: statistics.php:187
 msgid "Total marriages"
-msgstr ""
+msgstr "Házasságok száma"
 
 #: statistics.php:188
 #, fuzzy
@@ -11160,60 +11160,60 @@ msgstr "Mutasd az összes forrást"
 
 #: statistics.php:195
 msgid "Marriages by century"
-msgstr ""
+msgstr "Házasság századok szerint"
 
 #: statistics.php:196
 msgid "Divorces by century"
-msgstr ""
+msgstr "Válás századok szerint"
 
 #: statistics.php:203
 msgid "Earliest marriage"
-msgstr ""
+msgstr "Legrégibb házasság"
 
 #: statistics.php:204
 msgid "Earliest divorce"
-msgstr ""
+msgstr "Legrégibb elválás"
 
 #: statistics.php:211
 msgid "Latest marriage"
-msgstr ""
+msgstr "Legutolsó házasság"
 
 #: statistics.php:212
 msgid "Latest divorce"
-msgstr ""
+msgstr "Legutolsó válás"
 
 #: statistics.php:220
 msgid "Length of marriage"
-msgstr ""
+msgstr "Házasság hossza"
 
 #: statistics.php:223
 msgid "Longest marriage"
-msgstr ""
+msgstr "Leghosszab házasság"
 
 #: statistics.php:224
 msgid "Shortest marriage"
-msgstr ""
+msgstr "Legrövidebb házasság"
 
 #: statistics.php:232
 #: statistics.php:558
 msgid "Age in year of marriage"
-msgstr ""
+msgstr "év a házasságban."
 
 #: statistics.php:235
 msgid "Youngest male"
-msgstr ""
+msgstr "Legfiatalabb férfi"
 
 #: statistics.php:236
 msgid "Youngest female"
-msgstr ""
+msgstr "Legfiatalabb nő"
 
 #: statistics.php:243
 msgid "Oldest male"
-msgstr ""
+msgstr "Legidősebb férfi"
 
 #: statistics.php:244
 msgid "Oldest female"
-msgstr ""
+msgstr "Legidősebb nő"
 
 #: statistics.php:255
 msgid "Age at birth of child"
@@ -11221,19 +11221,19 @@ msgstr ""
 
 #: statistics.php:258
 msgid "Youngest father"
-msgstr ""
+msgstr "Legfiatalabb apa"
 
 #: statistics.php:259
 msgid "Youngest mother"
-msgstr ""
+msgstr "Legfiatalabb anya"
 
 #: statistics.php:266
 msgid "Oldest father"
-msgstr ""
+msgstr "Legőregebb apa"
 
 #: statistics.php:267
 msgid "Oldest mother"
-msgstr ""
+msgstr "Legőregebb anya"
 
 #: statistics.php:275
 msgid "Children in family"
@@ -11241,11 +11241,11 @@ msgstr ""
 
 #: statistics.php:278
 msgid "Average number of children per family"
-msgstr ""
+msgstr "Gyermekek száma átlagosan családonként"
 
 #: statistics.php:279
 msgid "Number of families without children"
-msgstr ""
+msgstr "Gyermek nélküli családok száma"
 
 #: statistics.php:290
 #, fuzzy
@@ -11258,11 +11258,11 @@ msgstr ""
 
 #: statistics.php:302
 msgid "Age difference"
-msgstr ""
+msgstr "Évkór különbség"
 
 #: statistics.php:305
 msgid "Age between siblings"
-msgstr ""
+msgstr "Évkó különbség tesvérek között"
 
 #: statistics.php:306
 msgid "Top age between siblings"
@@ -11270,11 +11270,11 @@ msgstr ""
 
 #: statistics.php:313
 msgid "Age between husband and wife"
-msgstr ""
+msgstr "Évkór különbség férj és feleség között"
 
 #: statistics.php:314
 msgid "Age between wife and husband"
-msgstr ""
+msgstr "Évkór különbség feleség és férj között"
 
 #: statistics.php:328
 msgid "Records"
@@ -11283,23 +11283,23 @@ msgstr ""
 #: statistics.php:331
 #: statistics.php:358
 msgid "Media objects"
-msgstr ""
+msgstr "Média objektumok"
 
 #: statistics.php:334
 msgid "Other records"
-msgstr ""
+msgstr "Egyéb adatok"
 
 #: statistics.php:345
 msgid "Total events"
-msgstr ""
+msgstr "Események száma"
 
 #: statistics.php:348
 msgid "First event"
-msgstr ""
+msgstr "Az első esemény"
 
 #: statistics.php:349
 msgid "Last event"
-msgstr ""
+msgstr "Az utólsó esemény"
 
 #: statistics.php:372
 #: statisticsplot.php:837
@@ -11310,7 +11310,7 @@ msgstr "Személy azonosító előtag"
 #: statistics.php:373
 #: statisticsplot.php:843
 msgid "Families with sources"
-msgstr ""
+msgstr "Családok forrással"
 
 #: statistics.php:386
 #, fuzzy
@@ -11319,7 +11319,7 @@ msgstr "Helyszínek tisztítása"
 
 #: statistics.php:389
 msgid "Birth places"
-msgstr ""
+msgstr "Születések helyszínei"
 
 #: statistics.php:390
 #, fuzzy
@@ -11328,11 +11328,11 @@ msgstr "Helyszínek tisztítása"
 
 #: statistics.php:397
 msgid "Marriage places"
-msgstr ""
+msgstr "Házasságok helyszínei"
 
 #: statistics.php:398
 msgid "Events in countries"
-msgstr ""
+msgstr "Események országok szerint"
 
 #: statistics.php:415
 msgid "Create your own chart"
@@ -11340,39 +11340,39 @@ msgstr ""
 
 #: statistics.php:517
 msgid "Fill in the following parameters for the plot"
-msgstr ""
+msgstr "Töltse ki az adatokat az ábrának"
 
 #: statistics.php:520
 msgid "Select chart type:"
-msgstr ""
+msgstr "az x-tengely mentén:"
 
 #: statistics.php:526
 msgid "Month of birth"
-msgstr ""
+msgstr "Születési hónap"
 
 #: statistics.php:530
 msgid "Month of death"
-msgstr ""
+msgstr "Elhalálozási hónap"
 
 #: statistics.php:534
 msgid "Month of marriage"
-msgstr ""
+msgstr "Házasságkötési hónap"
 
 #: statistics.php:538
 msgid "Month of first marriage"
-msgstr ""
+msgstr "Az első házasságkötés hónapja"
 
 #: statistics.php:550
 msgid "Age related to birth year"
-msgstr ""
+msgstr "év a születési évhez viszonyítva."
 
 #: statistics.php:554
 msgid "Age related to death year"
-msgstr ""
+msgstr "év a halálozási évhez viszonyítva."
 
 #: statistics.php:562
 msgid "Age in year of first marriage"
-msgstr ""
+msgstr "év az első házasságban."
 
 #: statistics.php:566
 #: statisticsplot.php:785
@@ -11387,20 +11387,20 @@ msgstr "Személy azonosító előtag"
 
 #: statistics.php:574
 msgid "Birth by country"
-msgstr ""
+msgstr "Születés ország szerint"
 
 #: statistics.php:578
 msgid "Marriage by country"
-msgstr ""
+msgstr "Házasság ország szerint"
 
 #: statistics.php:582
 msgid "Death by country"
-msgstr ""
+msgstr "Halálozás ország szerint"
 
 #: statistics.php:588
 #: statistics.php:602
 msgid "boundaries for ages:"
-msgstr ""
+msgstr "év vonal (x-tengely):"
 
 #: statistics.php:592
 #: statistics.php:594
@@ -11414,11 +11414,11 @@ msgstr ""
 #: statistics.php:711
 #: statistics.php:714
 msgid "interval"
-msgstr ""
+msgstr "intervallummal"
 
 #: statistics.php:614
 msgid "boundaries for month:"
-msgstr ""
+msgstr "hónap vonal (x-tengely):"
 
 #: statistics.php:617
 msgid "months after marriage"
@@ -11438,7 +11438,7 @@ msgstr ""
 
 #: statistics.php:626
 msgid "boundaries for numbers:"
-msgstr ""
+msgstr "számok vonal (x-tengely):"
 
 #: statistics.php:629
 msgid "interval one child"
@@ -11450,7 +11450,7 @@ msgstr ""
 
 #: statistics.php:638
 msgid "Map type"
-msgstr ""
+msgstr "Térkép típusa"
 
 #: statistics.php:642
 #, fuzzy
@@ -11464,39 +11464,39 @@ msgstr "Vezetéknév hagyomány"
 
 #: statistics.php:657
 msgid "Geographical area"
-msgstr ""
+msgstr "Földrajzi terület"
 
 #: statistics.php:660
 msgid "World"
-msgstr ""
+msgstr "Világ"
 
 #: statistics.php:661
 msgid "Europe"
-msgstr ""
+msgstr "Európa"
 
 #: statistics.php:662
 msgid "South America"
-msgstr ""
+msgstr "Dél-Amerika"
 
 #: statistics.php:663
 msgid "Asia"
-msgstr ""
+msgstr "Ázsia"
 
 #: statistics.php:664
 msgid "Middle East"
-msgstr ""
+msgstr "Közel-Kelet"
 
 #: statistics.php:665
 msgid "Africa"
-msgstr ""
+msgstr "Afrika"
 
 #: statistics.php:669
 msgid "Categories:"
-msgstr ""
+msgstr "a z-tengely mentén:"
 
 #: statistics.php:675
 msgid "none"
-msgstr ""
+msgstr "semmi"
 
 #: statistics.php:679
 #, fuzzy
@@ -11505,20 +11505,20 @@ msgstr "Fejléc"
 
 #: statistics.php:683
 msgid "date periods"
-msgstr ""
+msgstr "periódusok. Z-tengely periódus másodperceinek ellenőrzése"
 
 #: statistics.php:685
 msgid "boundaries for date periods:"
-msgstr ""
+msgstr "periódusok vonal (z-tengely):"
 
 #: statistics.php:719
 msgid "results:"
-msgstr ""
+msgstr "az y-tengely mentén:"
 
 #: statistics.php:724
 #: statisticsplot.php:768
 msgid "numbers"
-msgstr ""
+msgstr "számok"
 
 #: statistics.php:727
 #: statisticsplot.php:791
@@ -11528,21 +11528,21 @@ msgstr "Aktuális változások blokk"
 
 #: statistics.php:735
 msgid "show the plot"
-msgstr ""
+msgstr "az ábra feltüntetése"
 
 #: statistics.php:736
 msgid "reset"
-msgstr ""
+msgstr "eredeti értékek"
 
 #: statistics.php:751
 #: statistics.php:754
 msgid "Statistics"
-msgstr ""
+msgstr "Statisztika"
 
 #: statistics.php:820
 #: statistics.php:821
 msgid "Others"
-msgstr ""
+msgstr "Egyéb"
 
 #: statistics.php:824
 #: statistics.php:825
@@ -11556,88 +11556,88 @@ msgstr ""
 
 #: statisticsplot.php:648
 msgid "less than"
-msgstr ""
+msgstr "kevesebb mint"
 
 #: statisticsplot.php:723
 #: statisticsplot.php:928
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid " not implemented:"
-msgstr ""
+msgstr "nincs megvalósítva:"
 
 #: statisticsplot.php:728
 msgid "Jan"
-msgstr ""
+msgstr "jan"
 
 #: statisticsplot.php:729
 msgid "Feb"
-msgstr ""
+msgstr "febr"
 
 #: statisticsplot.php:730
 msgid "March"
-msgstr ""
+msgstr "március"
 
 #: statisticsplot.php:731
 msgid "April"
-msgstr ""
+msgstr "április"
 
 #: statisticsplot.php:732
 msgid "May"
-msgstr ""
+msgstr "május"
 
 #: statisticsplot.php:733
 msgid "June"
-msgstr ""
+msgstr "június"
 
 #: statisticsplot.php:734
 msgid "July"
-msgstr ""
+msgstr "július"
 
 #: statisticsplot.php:735
 msgid "Aug"
-msgstr ""
+msgstr "aug"
 
 #: statisticsplot.php:736
 msgid "Sep"
-msgstr ""
+msgstr "szept"
 
 #: statisticsplot.php:737
 msgid "Oct"
-msgstr ""
+msgstr "okt"
 
 #: statisticsplot.php:738
 msgid "Nov"
-msgstr ""
+msgstr "nov"
 
 #: statisticsplot.php:739
 msgid "Dec"
-msgstr ""
+msgstr "dec"
 
 #: statisticsplot.php:805
 msgid " per gender"
-msgstr ""
+msgstr " / személy"
 
 #: statisticsplot.php:807
 msgid " per time period"
-msgstr ""
+msgstr " / időszak"
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "Counts "
-msgstr ""
+msgstr "Darabszám"
 
 #: statisticsplot.php:817
 #: statisticsplot.php:819
 #: statisticsplot.php:822
 msgid "of"
-msgstr ""
+msgstr "/"
 
 #: statisticsplot.php:928
 #: statisticsplot.php:932
 #: statisticsplot.php:991
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: timeline.php:38
 #, fuzzy
@@ -11646,34 +11646,34 @@ msgstr "A PhpGedView URL-je"
 
 #: timeline.php:298
 msgid "Show Age Marker"
-msgstr ""
+msgstr "életkor jelző"
 
 #: timeline.php:337
 msgid "Zoom In"
-msgstr ""
+msgstr "Nagyítás"
 
 #: timeline.php:338
 msgid "Zoom Out"
-msgstr ""
+msgstr "Kicsinyítés"
 
 #: timeline.php:345
 msgid "Show Lifespan chart"
-msgstr ""
+msgstr "Élettartam grafikon"
 
 #: timeline.php:350
 msgid "In most recent browsers you can click and drag the boxes around on the chart."
-msgstr ""
+msgstr "Az elterjedtebb böngészők támogatják a szövegdobozok grafikonon belüli mozgatását."
 
 #: uploadgedcom.php:173
 #: uploadgedcom.php:1056
 #: uploadgedcom.php:1166
 #: useradmin.php:1022
 msgid "Continue"
-msgstr ""
+msgstr "Folytatás"
 
 #: uploadgedcom.php:483
 msgid "A GEDCOM with this file name has already been imported into the database."
-msgstr ""
+msgstr "Ezzel a névvel már van adatbázisba importált GEDCOM."
 
 #: uploadgedcom.php:485
 msgid "This GEDCOM file is <em>not</em> synchronized with the database.  It may not contain the latest version of your data.  To re-import from the database rather than the file, you should download and re-upload."
@@ -11681,20 +11681,20 @@ msgstr ""
 
 #: uploadgedcom.php:487
 msgid "A GEDCOM file with the same name has been found. If you choose to continue, the old GEDCOM file will be replaced with the file that you uploaded and the Import process will begin again.  If you choose to cancel, the old GEDCOM will remain unchanged."
-msgstr ""
+msgstr "Ha Ön a folytatás mellet dönt, a korábbi GEDCOM-állományt az Ön által feltöltöttre fogjuk lecserélni és az importálási folyamat újrakezdődik. Ha a megszakítást választja, a korábbi GEDCOM-állomány érintetlen marad."
 
 #: uploadgedcom.php:496
 msgid "Do you want to erase the old data and replace it with this new data?"
-msgstr ""
+msgstr "Ki szeretné törölni a régi adatokat és kicserélni ezzel az új adatokkal?"
 
 #: uploadgedcom.php:546
 msgid "Performing GEDCOM validation..."
-msgstr ""
+msgstr "GEDCOM ellenőrzés kezdődik, válassza ki a kívánt lehetőségeket, majd kattintson a 'Tisztítás' gombra."
 
 #: uploadgedcom.php:583
 #: uploadgedcom.php:674
 msgid "Valid GEDCOM detected. No cleanup required."
-msgstr ""
+msgstr "Érvényes GEDCOM-ot észleltem. Nincs szükség tisztításra."
 
 #: uploadgedcom.php:618
 #, fuzzy
@@ -11703,27 +11703,27 @@ msgstr "A GEDCOM-állomány fejléce <b>(0&nbsp;HEAD)</b> előtti sorokat talál
 
 #: uploadgedcom.php:626
 msgid "Invalid place encodings were detected.  These errors should be fixed."
-msgstr ""
+msgstr "Érvénytelen helyszín-kódolást találtunk, melyeket javítani lenne szükséges. Az észlelt érvénytelen helyszínt a következő minta mutatja be: "
 
 #: uploadgedcom.php:634
 msgid "Example of invalid place from your GEDCOM:"
-msgstr ""
+msgstr "Hibás helyszín a GEDCOM-állományból:"
 
 #: uploadgedcom.php:641
 msgid "Detected invalid date formats, on cleanup these will be changed to format of DD MMM YYYY (eg. 1 JAN 2004)."
-msgstr ""
+msgstr "Hibás dátumformátumokat találtam, a tisztítás után ezek a következő formátumra cseréljük: Év Hónap Nap (pl. 2004. január 1.)."
 
 #: uploadgedcom.php:650
 msgid "Day before Month (DD MM YYYY)"
-msgstr ""
+msgstr "Nap a hónap előtt (NN HH ÉÉÉÉ)"
 
 #: uploadgedcom.php:650
 msgid "Month before Day (MM DD YYYY)"
-msgstr ""
+msgstr "Hónap a nap előtt (HH NN ÉÉÉÉ)"
 
 #: uploadgedcom.php:653
 msgid "Example of invalid date from your GEDCOM:"
-msgstr ""
+msgstr "Hibás dátum a GEDCOM-állományból:"
 
 #: uploadgedcom.php:661
 msgid "ANSI file encoding detected.\tPhpGedView works best with files encoded in UTF-8."
@@ -11731,7 +11731,7 @@ msgstr ""
 
 #: uploadgedcom.php:665
 msgid "Convert this ANSI encoded GEDCOM to UTF-8?"
-msgstr ""
+msgstr "Át szeretné konvertálni ezt a GEDCOM-ot ANSI-ból UTF-8-ba?"
 
 #: uploadgedcom.php:737
 #, fuzzy
@@ -11741,7 +11741,7 @@ msgstr "_GEDCOM: Személy azonosító változtatása"
 #: uploadgedcom.php:741
 #: uploadgedcom.php:746
 msgid "Do not change"
-msgstr ""
+msgstr "Ne változtasd meg"
 
 #: uploadgedcom.php:795
 #, fuzzy
@@ -11753,15 +11753,15 @@ msgstr "Import Lehetőségek"
 #: uploadgedcom.php:1128
 #: uploadgedcom.php:1133
 msgid "sec."
-msgstr ""
+msgstr "mp."
 
 #: uploadgedcom.php:805
 msgid "Please be patient"
-msgstr ""
+msgstr "KÉRJÜK, LEGYEN TÜRELEMMEL"
 
 #: uploadgedcom.php:831
 msgid "Import Progress..."
-msgstr ""
+msgstr "Az importálás folyamatban..."
 
 #: uploadgedcom.php:904
 #, fuzzy
@@ -11770,11 +11770,11 @@ msgstr "GEDCOM-állomány címe"
 
 #: uploadgedcom.php:908
 msgid "The status bars below will let you know how the Import is progressing.  If the time limit runs out the Import will be stopped and you will be asked to press a <b>Continue</b> button.  If you don't see the <b>Continue</b> button, you must restart the Import with a smaller time limit value."
-msgstr ""
+msgstr "A lenti állapotjelzők mutatják, hogy az importálási folyamat hogy halad. Ha az időkorlát letelt, az importálás megáll, és <b>Folytatás</b> gombra kattintva lehet folytatni. Ha nem látja a <b>Folytatás</b> gombot, újra kell kezdenie az importálási folyamatot kisebb időkorláttal."
 
 #: uploadgedcom.php:1040
 msgid "The execution time limit was reached.  Click the Continue button below to resume importing the GEDCOM file."
-msgstr ""
+msgstr "A maximum futtatási idő lejárt. Kattintson a Folytatás gombra hogy, folytassa a GEDCOM állomány importálását."
 
 #: uploadgedcom.php:1104
 #: uploadgedcom.php:1117
@@ -11789,11 +11789,11 @@ msgstr "Kattintson ide hogy folytassa"
 
 #: uploadgedcom.php:1118
 msgid "Bytes read:"
-msgstr ""
+msgstr "Byte beolvasva:"
 
 #: uploadgedcom.php:1119
 msgid "Found record"
-msgstr ""
+msgstr "Rekordot találtunk"
 
 #: uploadgedcom.php:1138
 #, fuzzy
@@ -11804,7 +11804,7 @@ msgstr "Import Lehetőségek"
 #: useradmin.php:274
 #: useradmin.php:484
 msgid "Update User Account"
-msgstr ""
+msgstr "Felhasználói jogosultság frissítése"
 
 #: useradmin.php:345
 #: useradmin.php:639
@@ -11816,7 +11816,7 @@ msgstr "_Felhasználó Adminisztrálás"
 #: useradmin.php:362
 #: useradmin.php:800
 msgid "Access level"
-msgstr ""
+msgstr "Hozzáférési szint"
 
 #: useradmin.php:390
 #: useradmin.php:823
@@ -11827,7 +11827,7 @@ msgstr "Automatikusan generált előnézet képek"
 #: useradmin.php:392
 #: useradmin.php:825
 msgid "Limit access to related people"
-msgstr ""
+msgstr "A hozzáférés korlátozása bizonyos személyekre"
 
 #: useradmin.php:394
 #: useradmin.php:827
@@ -11839,13 +11839,13 @@ msgstr "Rokonsági fok maximális nagysága"
 #: useradmin.php:592
 #: useradmin.php:830
 msgid "User verified himself"
-msgstr ""
+msgstr "A felhasználó megerősítette jelentkezését"
 
 #: useradmin.php:398
 #: useradmin.php:593
 #: useradmin.php:831
 msgid "User approved by Admin"
-msgstr ""
+msgstr "A felhasználót elfogadta az adminisztrátor"
 
 #: useradmin.php:457
 #: useradmin.php:883
@@ -11856,12 +11856,12 @@ msgstr "A látogatók kérhetnek regisztrációt"
 #: useradmin.php:476
 #: useradmin.php:903
 msgid "Admin comments on user"
-msgstr ""
+msgstr "Adminisztrátor megjegyzése a felhasználóról"
 
 #: useradmin.php:480
 #: useradmin.php:907
 msgid "Admin warning at date"
-msgstr ""
+msgstr "Adminisztrátor figyelmeztetés ezen a dátumon"
 
 #: useradmin.php:560
 #: useradmin.php:1087
@@ -11892,11 +11892,11 @@ msgstr "Nyelv"
 #: useradmin.php:588
 #: useradmin.php:629
 msgid "Privileges"
-msgstr ""
+msgstr "Jogosultságok"
 
 #: useradmin.php:590
 msgid "Date registered"
-msgstr ""
+msgstr "Regisztráció dátuma"
 
 #: useradmin.php:591
 #, fuzzy
@@ -11905,20 +11905,20 @@ msgstr "Bejelentkezett felhasználók"
 
 #: useradmin.php:661
 msgid "Never"
-msgstr ""
+msgstr "Soha"
 
 #: useradmin.php:680
 msgid "Are you sure you want to delete the user"
-msgstr ""
+msgstr "Valóban törölni kívánja ezt a felhasználót?"
 
 #: useradmin.php:758
 #: useradmin.php:912
 msgid "Create User"
-msgstr ""
+msgstr "Felhasználó létrehozása"
 
 #: useradmin.php:811
 msgid "Access"
-msgstr ""
+msgstr "Hozzáfér"
 
 #: useradmin.php:817
 #, fuzzy
@@ -11933,27 +11933,27 @@ msgstr "Helyszínek tisztítása"
 
 #: useradmin.php:937
 msgid "Number of months since the last login for a user's account to be considered inactive: "
-msgstr ""
+msgstr "Ha ennyi hónapig nem jelentkezik be egy felhasználó, inaktívnak tekintjük:"
 
 #: useradmin.php:957
 msgid "User's account has been inactive too long: "
-msgstr ""
+msgstr "A felhasználó túl sokáig volt inaktív:"
 
 #: useradmin.php:968
 msgid "User didn't verify within 7 days."
-msgstr ""
+msgstr "A felhasználó nem jelzett vissza 7 napja."
 
 #: useradmin.php:978
 msgid "User not verified by administrator."
-msgstr ""
+msgstr "A felhasználót nem ellenőrizte az adminisztrátor."
 
 #: useradmin.php:1010
 msgid "GEDCOM no longer active, remove user references."
-msgstr ""
+msgstr "A GEDCOM már nem aktív, felhasználói hivatkozások eltávolítása"
 
 #: useradmin.php:1016
 msgid "Nothing found to cleanup"
-msgstr ""
+msgstr "Nincs mit tisztítani"
 
 #: useradmin.php:1037
 #, fuzzy
@@ -11962,35 +11962,35 @@ msgstr "Név törlése"
 
 #: useradmin.php:1045
 msgid "Unset GEDCOM rights for "
-msgstr ""
+msgstr "Gedcom jog feloldása a következőnél"
 
 #: useradmin.php:1055
 msgid "Unset root ID for "
-msgstr ""
+msgstr "Gyökér azonosító feloldása a következőnél"
 
 #: useradmin.php:1065
 msgid "Unset GEDCOM ID for "
-msgstr ""
+msgstr "GEDCOM azonosító feloldása"
 
 #: useradmin.php:1084
 msgid "Select an option below:"
-msgstr ""
+msgstr "Válasszon az alábbi lehetőségek közül:"
 
 #: useradmin.php:1093
 msgid "Send message to all users"
-msgstr ""
+msgstr "Üzenetküldés minden felhasználónak"
 
 #: useradmin.php:1094
 msgid "Send message to users who have never logged in"
-msgstr ""
+msgstr "Küldj üzenet azoknak a felhasználóknak akik még soha nem jelentkeztek be"
 
 #: useradmin.php:1095
 msgid "Send message to users who have not logged in for 6 months"
-msgstr ""
+msgstr "Küldj üzenet azoknak a felhasználóknak akik 6 hónapja nem jelentkeztek be"
 
 #: useradmin.php:1153
 msgid "Total number of users"
-msgstr ""
+msgstr "Felhasználók száma"
 
 #: useradmin.php:1156
 #: useradmin.php:1157
@@ -12006,12 +12006,12 @@ msgstr "_GEDCOM: Adminisztráció oldal"
 #: useradmin.php:1172
 #: useradmin.php:1173
 msgid "Users with warnings"
-msgstr ""
+msgstr "Felhasználók figyelmeztetéssel"
 
 #: useradmin.php:1177
 #: useradmin.php:1178
 msgid "Unverified by User"
-msgstr ""
+msgstr "Felhasználó által nem ellenőrzött"
 
 #: useradmin.php:1182
 #: useradmin.php:1183
@@ -12053,7 +12053,7 @@ msgstr ""
 
 #: usermigrate.php:76
 msgid "Results"
-msgstr ""
+msgstr "Eredmények"
 
 #: usermigrate.php:89
 msgid "ZIP file successfully created."
@@ -12065,7 +12065,7 @@ msgstr ""
 
 #: usermigrate.php:96
 msgid "Files included in this backup"
-msgstr ""
+msgstr "A mentésben lévő fájlok"
 
 #: usermigrate.php:107
 msgid "No files found for backup."
@@ -12073,7 +12073,7 @@ msgstr ""
 
 #: usermigrate.php:141
 msgid "Choose an option or click the link below to return to the Administration menu"
-msgstr ""
+msgstr "Végrehajtsuk az exportálást a felhasználói adatállományokból?"
 
 #: usermigrate.php:159
 msgid "One or more files already exist. Do you want to overwrite them?"
@@ -12094,27 +12094,27 @@ msgstr ""
 #: usermigrate.php:209
 #: usermigrate.php:218
 msgid "Import successful"
-msgstr ""
+msgstr "Importálás sikeresen történt"
 
 #: usermigrate.php:181
 msgid "Import failed"
-msgstr ""
+msgstr "Az importálás sikertelen volt"
 
 #: usermigrate.php:186
 msgid "Importing messages"
-msgstr ""
+msgstr "Üzenetek importálása"
 
 #: usermigrate.php:188
 msgid "No Messages seem to be present in the system."
-msgstr ""
+msgstr "A rendszerben nem tárolunk üzeneteket."
 
 #: usermigrate.php:195
 msgid "Importing favorites"
-msgstr ""
+msgstr "Kedvencek importálása"
 
 #: usermigrate.php:197
 msgid "No Favorites seem to be present in the system."
-msgstr ""
+msgstr "A rendszerben nem tárolunk  kedvenceket."
 
 #: usermigrate.php:204
 #, fuzzy
@@ -12123,7 +12123,7 @@ msgstr "Import Lehetőségek"
 
 #: usermigrate.php:206
 msgid "No News seems to be present in the system."
-msgstr ""
+msgstr "A rendszerben nem tárolunk híreket."
 
 #: usermigrate.php:213
 #, fuzzy
@@ -12132,7 +12132,7 @@ msgstr "Import Lehetőségek"
 
 #: usermigrate.php:215
 msgid "No Blocks seems to be present in the system."
-msgstr ""
+msgstr "A rendszerben nem tárolunk blokkokat."
 
 #: blocks/charts.php:40
 #, fuzzy
@@ -12142,7 +12142,7 @@ msgstr "A grafikon stílusa"
 #: blocks/charts.php:167
 #: blocks/gedcom_favorites.php:130
 msgid "No such ID exists in this GEDCOM file."
-msgstr ""
+msgstr "Az azonosító nem létezik ebben a GEDCOM állományban."
 
 #: blocks/gedcom_block.php:36
 #, fuzzy
@@ -12156,11 +12156,11 @@ msgstr "GEDCOM-állomány címe"
 
 #: blocks/gedcom_favorites.php:57
 msgid "This GEDCOM's Favorites"
-msgstr ""
+msgstr "Kedvencek ebből a GEDCOM-ból"
 
 #: blocks/gedcom_favorites.php:100
 msgid "Are you sure you want to remove this item from your list of Favorites?"
-msgstr ""
+msgstr "Biztosan el kívánja távolítani ezt az elemet a Kedvencek közül?"
 
 #: blocks/gedcom_favorites.php:155
 #, fuzzy
@@ -12169,15 +12169,15 @@ msgstr "Új megjegyzés hozzáfűzése"
 
 #: blocks/gedcom_favorites.php:163
 msgid "Enter a Person, Family, or Source ID"
-msgstr ""
+msgstr "Írjon be egy Személy, Család vagy Forrás azonosítóját"
 
 #: blocks/gedcom_favorites.php:173
 msgid "OR<br />Enter a URL and a title"
-msgstr ""
+msgstr "VAGY<br />Írjon be egy URL-t és egy címet"
 
 #: blocks/gedcom_favorites.php:178
 msgid "Enter an optional note about this favorite"
-msgstr ""
+msgstr "Beírhat egy tetszőleges jegyzetet erről a kedvencről"
 
 #: blocks/gedcom_news.php:36
 #, fuzzy
@@ -12187,15 +12187,15 @@ msgstr "GEDCOM-állomány címe"
 #: blocks/gedcom_news.php:87
 #: blocks/rss_block.php:71
 msgid "News"
-msgstr ""
+msgstr "Hírek"
 
 #: blocks/gedcom_news.php:91
 msgid "No News articles have been submitted."
-msgstr ""
+msgstr "Nem érkezett új hír."
 
 #: blocks/gedcom_news.php:159
 msgid "Are you sure you want to delete this News entry?"
-msgstr ""
+msgstr "Biztosan törli ezt a hír bejegyzést?"
 
 #: blocks/gedcom_news.php:165
 #, fuzzy
@@ -12227,37 +12227,37 @@ msgstr "GEDCOM-állomány címe"
 #: blocks/gedcom_stats.php:145
 #: blocks/gedcom_stats.php:330
 msgid "Total users"
-msgstr ""
+msgstr "Felhasználók száma"
 
 #: blocks/gedcom_stats.php:159
 #: blocks/gedcom_stats.php:277
 msgid "Earliest birth year"
-msgstr ""
+msgstr "Legrégibb születési év"
 
 #: blocks/gedcom_stats.php:166
 #: blocks/gedcom_stats.php:285
 msgid "Latest birth year"
-msgstr ""
+msgstr "Legutolsó születési év"
 
 #: blocks/gedcom_stats.php:173
 #: blocks/gedcom_stats.php:293
 msgid "Earliest death year"
-msgstr ""
+msgstr "Legkorábbi halálozási év"
 
 #: blocks/gedcom_stats.php:180
 #: blocks/gedcom_stats.php:301
 msgid "Latest death year"
-msgstr ""
+msgstr "Legkésőbbi halálozási év"
 
 #: blocks/gedcom_stats.php:188
 #: blocks/gedcom_stats.php:309
 msgid "Person who lived the longest"
-msgstr ""
+msgstr "Legidősebb személy"
 
 #: blocks/gedcom_stats.php:204
 #: blocks/gedcom_stats.php:325
 msgid "Family with the most children"
-msgstr ""
+msgstr "Legnagyobb gyermekes család"
 
 #: blocks/gedcom_stats.php:219
 msgid "View statistics as graphs"
@@ -12265,7 +12265,7 @@ msgstr ""
 
 #: blocks/gedcom_stats.php:227
 msgid "Most Common Surnames"
-msgstr ""
+msgstr "Leggyakoribb vezetéknevek:"
 
 #: blocks/gedcom_stats.php:259
 #, fuzzy
@@ -12274,7 +12274,7 @@ msgstr "Élő személyek nevéhez hozzáférhet"
 
 #: blocks/gedcom_stats.php:268
 msgid "Select the stats to show in this block"
-msgstr ""
+msgstr "Válassza azokat a statisztikákat amit ez a Blokk mutasson"
 
 #: blocks/gedcom_stats.php:339
 #, fuzzy
@@ -12301,7 +12301,7 @@ msgstr ""
 
 #: blocks/html_block.php:36
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: blocks/html_block.php:41
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -12309,7 +12309,7 @@ msgstr ""
 
 #: blocks/html_block.php:41
 msgid "to change what is printed here.</p>"
-msgstr ""
+msgstr "megváltoztassa amit ide kiírt.</p>"
 
 #: blocks/logged_in.php:36
 #, fuzzy
@@ -12341,11 +12341,11 @@ msgstr[1] ""
 #: blocks/login_block.php:53
 #: blocks/login_block.php:61
 msgid "Logout"
-msgstr ""
+msgstr "Kilépés"
 
 #: blocks/login_block.php:58
 msgid "Logged in as "
-msgstr ""
+msgstr "Bejelentkezve mint"
 
 #: blocks/random_media.php:38
 #, fuzzy
@@ -12355,23 +12355,23 @@ msgstr "Média keresése"
 #: blocks/random_media.php:191
 #: blocks/rss_block.php:74
 msgid "Random Picture"
-msgstr ""
+msgstr "Meglepetés-kép"
 
 #: blocks/random_media.php:196
 msgid "Next image"
-msgstr ""
+msgstr "Következő kép"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Play"
-msgstr ""
+msgstr "Lejátszás"
 
 #: blocks/random_media.php:200
 #: blocks/random_media.php:201
 #: blocks/random_media.php:202
 msgid "Stop"
-msgstr ""
+msgstr "Megállítás"
 
 #: blocks/random_media.php:341
 #, fuzzy
@@ -12384,11 +12384,11 @@ msgstr ""
 
 #: blocks/recent_changes.php:111
 msgid "Should this block be hidden when it is empty?"
-msgstr ""
+msgstr "Rejtve legyen ez a Blokk amikor üres?"
 
 #: blocks/recent_changes.php:119
 msgid "If you hide an empty block, you will not be able to change its configuration until it becomes visible by no longer being empty."
-msgstr ""
+msgstr "Amikor elrejt egy üres blokkot, akkor nem lehet megváltoztatni a konfigurációját amig a blokk megint látható nem lesz mert már nem lesz üres."
 
 #: blocks/review_changes.php:39
 #, fuzzy
@@ -12397,40 +12397,40 @@ msgstr "Aktuális változások blokk"
 
 #: blocks/review_changes.php:83
 msgid "PhpGedView - Review changes"
-msgstr ""
+msgstr "PhpGedView - Változások Megtekintése"
 
 #: blocks/review_changes.php:84
 msgid "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes."
-msgstr ""
+msgstr "Online változások történtek a genealógiai adatbázisban. Ezeket a változásokat meg kell tekinteni és elfogadni hogy a többi felhasználó is megtekinthesse. Kérem, használja a lenti URL címet hogy abba a PhpGedView weboldalra menjen és bejelentkezzen hogy megnézze a változásokat."
 
 #: blocks/review_changes.php:113
 msgid "Last email reminder was sent "
-msgstr ""
+msgstr "Az utolsó emlékeztető email el lett küldve "
 
 #: blocks/review_changes.php:114
 msgid "Next email reminder will be sent after "
-msgstr ""
+msgstr "A következő emlékeztető email el lesz küldve"
 
 #: blocks/review_changes.php:149
 msgid "Send out reminder emails?"
-msgstr ""
+msgstr "Emlékeztető email küldése?"
 
 #: blocks/review_changes.php:158
 msgid "Reminder email frequency (days)"
-msgstr ""
+msgstr "Ismételt emlékeztető email (napok)"
 
 #: blocks/rss_block.php:38
 #: blocks/rss_block.php:53
 msgid "RSS Feeds"
-msgstr ""
+msgstr "RSS hírcsatorna"
 
 #: blocks/rss_block.php:69
 msgid "Upcoming Events"
-msgstr ""
+msgstr "Elkövetkező események"
 
 #: blocks/rss_block.php:72
 msgid "Top 10 Surnames"
-msgstr ""
+msgstr "Top 10 vezetéknév blokk"
 
 #: blocks/theme_select.php:36
 #, fuzzy
@@ -12439,11 +12439,11 @@ msgstr "Témák könyvtára"
 
 #: blocks/theme_select.php:47
 msgid "Change Theme"
-msgstr ""
+msgstr "Asztaltéma-váltás"
 
 #: blocks/todays_events.php:38
 msgid "On This Day"
-msgstr ""
+msgstr "A mai napon... blokk"
 
 #: blocks/todays_events.php:127
 #: blocks/upcoming_events.php:152
@@ -12466,7 +12466,7 @@ msgstr ""
 #: blocks/upcoming_events.php:200
 #: blocks/yahrzeit.php:281
 msgid "Allow calendar events download?"
-msgstr ""
+msgstr "Megengedjük a naptári események letöltését?"
 
 #: blocks/todo.php:39
 #: blocks/todo.php:72
@@ -12492,19 +12492,19 @@ msgstr "Napok száma feltüntetése"
 #: blocks/top10_pageviews.php:36
 #: blocks/top10_pageviews.php:71
 msgid "Most Viewed Items"
-msgstr ""
+msgstr "Leggyakoribban nézet elemek"
 
 #: blocks/top10_pageviews.php:77
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
-msgstr ""
+msgstr "A számlálót be kell kapcsolni a GEDCOM konfigurációjában hogy ez a Blokk működjön."
 
 #: blocks/top10_pageviews.php:112
 msgid "There are currently no hits to show."
-msgstr ""
+msgstr "Jelenleg nincs találat."
 
 #: blocks/top10_pageviews.php:138
 msgid "Place counts before or after name?"
-msgstr ""
+msgstr "Helyezze a számlálót a név elé vagy mögé?"
 
 #: blocks/user_blog.php:36
 #, fuzzy
@@ -12513,15 +12513,15 @@ msgstr "Felhasználói név"
 
 #: blocks/user_blog.php:53
 msgid "My Journal"
-msgstr ""
+msgstr "Az én hírlapom"
 
 #: blocks/user_blog.php:56
 msgid "You have not created any Journal items."
-msgstr ""
+msgstr "Ön még nem hozott létre hírlap-bejegyzést."
 
 #: blocks/user_blog.php:90
 msgid "Are you sure you want to delete this Journal entry?"
-msgstr ""
+msgstr "Biztosan törli ezt a hírlap-bejegyzést?"
 
 #: blocks/user_blog.php:94
 #, fuzzy
@@ -12545,32 +12545,32 @@ msgstr "Felhasználói név"
 
 #: blocks/user_messages.php:52
 msgid "My Messages"
-msgstr ""
+msgstr "Üzeneteim"
 
 #: blocks/user_messages.php:58
 #: blocks/user_messages.php:128
 msgid "Are you sure you want to delete this message?  It cannot be retrieved later."
-msgstr ""
+msgstr "Biztosan töröljük ezt az üzenetet?"
 
 #: blocks/user_messages.php:60
 msgid "You have no pending messages."
-msgstr ""
+msgstr "Nincs új üzenete."
 
 #: blocks/user_messages.php:87
 msgid "Date Sent:"
-msgstr ""
+msgstr "Adat elküldve:"
 
 #: blocks/user_messages.php:126
 msgid "Reply"
-msgstr ""
+msgstr "Válasz"
 
 #: blocks/user_messages.php:131
 msgid "Delete Selected Messages"
-msgstr ""
+msgstr "Kiválasztott üzenetek törlése"
 
 #: blocks/user_messages.php:136
 msgid "Broadcast to all users"
-msgstr ""
+msgstr "Üzenet az összes felhasználónak"
 
 #: blocks/user_welcome.php:36
 #, fuzzy
@@ -12579,7 +12579,7 @@ msgstr "Felhasználói név"
 
 #: blocks/user_welcome.php:55
 msgid "My Pedigree"
-msgstr ""
+msgstr "Családfám"
 
 #: blocks/user_welcome.php:56
 #, fuzzy
@@ -12594,7 +12594,7 @@ msgstr ""
 #: blocks/yahrzeit.php:154
 #: blocks/yahrzeit.php:202
 msgid "Anniversary"
-msgstr ""
+msgstr "Évforduló"
 
 #: blocks/yahrzeit.php:218
 #, fuzzy
@@ -12603,15 +12603,15 @@ msgstr "Név szerkesztése"
 
 #: blocks/yahrzeit.php:220
 msgid "Hidden"
-msgstr ""
+msgstr "Rejtett"
 
 #: includes/accesskeyHeaders.php:36
 msgid "Skip to Content"
-msgstr ""
+msgstr "Ugrás a Tartalomjegyzékhez"
 
 #: includes/accesskeyHeaders.php:36
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: includes/accesskeyHeaders.php:37
 #, fuzzy
@@ -12624,47 +12624,47 @@ msgstr "0"
 
 #: includes/accesskeyHeaders.php:38
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: includes/accesskeyHeaders.php:39
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: includes/authentication.php:93
 msgid "PhpGedView Authentication System"
-msgstr ""
+msgstr "PhpGedView azonosítási rendszer"
 
 #: includes/authentication.php:95
 msgid "You must enter a valid login ID and password to access this resource"
-msgstr ""
+msgstr "Ezt a forrást csak érvényes felhasználónévvel és jelszóval érheti el"
 
 #: includes/authentication.php:453
 #: includes/authentication.php:510
 msgid "This message was sent while viewing the following URL: "
-msgstr ""
+msgstr "Az üzenetet az alábbi linkre kattintva küldheti el"
 
 #: includes/authentication.php:461
 msgid "You sent the following message to a PhpGedView administrator:"
-msgstr ""
+msgstr "A következő üzenetet küldte el a PhpGedView-adminisztrátorának:"
 
 #: includes/authentication.php:469
 msgid "You sent the following message to a PhpGedView user:"
-msgstr ""
+msgstr "A következő üzenetet küldte el egy PhpGedView-felhasználónak:"
 
 #: includes/authentication.php:475
 #: includes/authentication.php:482
 #: includes/authentication.php:524
 #: includes/authentication.php:530
 msgid "The following message has been sent to your PhpGedView user account from "
-msgstr ""
+msgstr "Ön a következő üzenetet kapta a következő címről:"
 
 #: includes/family_nav.php:84
 msgid "Parents Family"
-msgstr ""
+msgstr "Szülők családja"
 
 #: includes/family_nav.php:224
 msgid "Step-Parent Family"
-msgstr ""
+msgstr "Mostoha szülök családja"
 
 #: includes/family_nav.php:363
 msgid "Immediate Family"
@@ -12735,91 +12735,91 @@ msgstr ""
 
 #: includes/specialchars.php:56
 msgid "Czech"
-msgstr ""
+msgstr "Cseh"
 
 #: includes/specialchars.php:57
 msgid "Slovak"
-msgstr ""
+msgstr "Szlovák"
 
 #: includes/specialchars.php:58
 msgid "Danish"
-msgstr ""
+msgstr "Dán"
 
 #: includes/specialchars.php:59
 msgid "German"
-msgstr ""
+msgstr "Német"
 
 #: includes/specialchars.php:60
 msgid "English"
-msgstr ""
+msgstr "Angol"
 
 #: includes/specialchars.php:61
 msgid "Spanish"
-msgstr ""
+msgstr "Spanyol"
 
 #: includes/specialchars.php:63
 msgid "French"
-msgstr ""
+msgstr "Francia"
 
 #: includes/specialchars.php:65
 msgid "Greek"
-msgstr ""
+msgstr "Görög"
 
 #: includes/specialchars.php:67
 msgid "Italian"
-msgstr ""
+msgstr "Olasz"
 
 #: includes/specialchars.php:68
 msgid "Hungarian"
-msgstr ""
+msgstr "Magyar"
 
 #: includes/specialchars.php:69
 msgid "Lithuanian"
-msgstr ""
+msgstr "Litván"
 
 #: includes/specialchars.php:70
 msgid "Dutch"
-msgstr ""
+msgstr "Holland"
 
 #: includes/specialchars.php:71
 msgid "Norwegian"
-msgstr ""
+msgstr "Norvég"
 
 #: includes/specialchars.php:73
 msgid "Polish"
-msgstr ""
+msgstr "Lengyel"
 
 #: includes/specialchars.php:74
 msgid "Portuguese"
-msgstr ""
+msgstr "Portugál"
 
 #: includes/specialchars.php:76
 msgid "Finnish"
-msgstr ""
+msgstr "Finn"
 
 #: includes/specialchars.php:77
 msgid "Swedish"
-msgstr ""
+msgstr "Svéd"
 
 #: includes/specialchars.php:78
 msgid "Turkish"
-msgstr ""
+msgstr "Török"
 
 #: includes/specialchars.php:79
 msgid "Hebrew"
-msgstr ""
+msgstr "Héber"
 
 #: includes/specialchars.php:80
 msgid "Arabic"
-msgstr ""
+msgstr "Arab"
 
 #: includes/specialchars.php:81
 msgid "Russian"
-msgstr ""
+msgstr "Orosz"
 
 #: includes/specialchars.php:82
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnám"
 
 #. I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
 #: includes/classes/class_i18n.php:60
@@ -12933,7 +12933,7 @@ msgstr ""
 #: includes/classes/class_menubar.php:68
 #: includes/classes/class_menubar.php:115
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: includes/classes/class_menubar.php:222
 #: includes/classes/class_menubar.php:229
@@ -12946,7 +12946,7 @@ msgstr "A grafikon stílusa"
 #: includes/classes/class_menubar.php:545
 #: includes/classes/class_menubar.php:551
 msgid "Lists"
-msgstr ""
+msgstr "Listák"
 
 #: includes/classes/class_menubar.php:566
 #: includes/classes/class_menubar.php:646
@@ -12957,27 +12957,27 @@ msgstr "Média Kezelés"
 #: includes/classes/class_menubar.php:727
 #: includes/classes/class_menubar.php:734
 msgid "Reports"
-msgstr ""
+msgstr "Jelentések"
 
 #: includes/classes/class_menubar.php:826
 msgid "Printer-friendly Version"
-msgstr ""
+msgstr "Nyomtatható változat"
 
 #: includes/classes/class_menubar.php:932
 msgid "Help with this page"
-msgstr ""
+msgstr "Segítség ehhez az oldalhoz"
 
 #: includes/classes/class_menubar.php:968
 msgid "Wiki Main Page"
-msgstr ""
+msgstr "Wiki start oldala"
 
 #: includes/classes/class_menubar.php:972
 msgid "Wiki User's Guide"
-msgstr ""
+msgstr "Wiki felhasználói oldal"
 
 #: includes/classes/class_menubar.php:977
 msgid "Wiki Administrator's Guide"
-msgstr ""
+msgstr "Wiki adminisztrátori oldal"
 
 #: includes/classes/class_menubar.php:1118
 #, fuzzy
@@ -12986,7 +12986,7 @@ msgstr "Kedvencek ikon"
 
 #: includes/classes/class_menubar.php:1154
 msgid "Add to My Favorites"
-msgstr ""
+msgstr "Hozzáadás a Kedvencekhez"
 
 #: includes/classes/class_note.php:49
 msgid "…"
@@ -12995,7 +12995,7 @@ msgstr ""
 #: includes/classes/class_person.php:576
 #: includes/classes/class_person.php:633
 msgid "Unable to find family with ID"
-msgstr ""
+msgstr "Nem található ilyen azonosítójú család"
 
 #: includes/classes/class_person.php:760
 #, fuzzy
@@ -13005,16 +13005,16 @@ msgstr "Családhoz tények hozzáadása"
 #: includes/classes/class_person.php:779
 #: includes/classes/class_person.php:786
 msgid "Father's Family with "
-msgstr ""
+msgstr "Apa családja mással"
 
 #: includes/classes/class_person.php:780
 #: includes/classes/class_person.php:785
 msgid "Mother's Family with "
-msgstr ""
+msgstr "Anya családja mással"
 
 #: includes/classes/class_person.php:803
 msgid "Family with"
-msgstr ""
+msgstr "Család házastárssal -"
 
 #: includes/classes/class_person.php:1836
 #, fuzzy
@@ -13023,11 +13023,11 @@ msgstr "Fejléc"
 
 #: includes/classes/class_person.php:1840
 msgid "month"
-msgstr ""
+msgstr "hónap"
 
 #: includes/classes/class_person.php:1842
 msgid "months"
-msgstr ""
+msgstr "hónap"
 
 #: includes/classes/class_stats.php:448
 #: includes/classes/class_stats.php:450
@@ -13057,7 +13057,7 @@ msgstr ""
 #: includes/classes/class_stats.php:783
 #: includes/classes/class_stats.php:785
 msgid "Living"
-msgstr ""
+msgstr "Életben van"
 
 #: includes/classes/class_stats.php:774
 #: includes/classes/class_stats.php:777
@@ -13086,7 +13086,7 @@ msgstr ""
 #: includes/classes/class_stats.php:3128
 #: includes/classes/class_stats.php:3281
 msgid "century"
-msgstr ""
+msgstr "évszázad"
 
 #: includes/classes/class_stats.php:1822
 #: includes/classes/class_stats.php:1823
@@ -13111,22 +13111,22 @@ msgstr "A kör szélessége"
 #: includes/classes/class_stats.php:1923
 #: includes/classes/class_stats.php:3819
 msgid "marriage"
-msgstr ""
+msgstr "házasság"
 
 #: includes/classes/class_stats.php:1924
 #: includes/classes/class_stats.php:3820
 msgid "adoption"
-msgstr ""
+msgstr "örökbefogadás"
 
 #: includes/classes/class_stats.php:1925
 #: includes/classes/class_stats.php:3821
 msgid "burial"
-msgstr ""
+msgstr "temetés"
 
 #: includes/classes/class_stats.php:1926
 #: includes/classes/class_stats.php:3822
 msgid "census added"
-msgstr ""
+msgstr "népszámláláshoz adva"
 
 #: includes/classes/class_stats.php:2672
 #: includes/classes/class_stats.php:2673
@@ -13138,7 +13138,7 @@ msgstr ""
 
 #: includes/classes/class_stats.php:2683
 msgid "Average age"
-msgstr ""
+msgstr "Átlagéletkor"
 
 #: includes/classes/class_stats.php:2883
 #: includes/classes/class_stats.php:2885
@@ -13167,7 +13167,7 @@ msgstr ""
 #: includes/controllers/descendancy_ctrl.php:226
 #: includes/controllers/descendancy_ctrl.php:313
 msgid "Start at parents"
-msgstr ""
+msgstr "Kezdjük a szülőknél"
 
 #: includes/controllers/descendancy_ctrl.php:332
 #, fuzzy
@@ -13187,7 +13187,7 @@ msgstr "Név szerkesztése"
 
 #: includes/controllers/family_ctrl.php:379
 msgid "Add a child to this family"
-msgstr ""
+msgstr "Gyermek hozzáadása a családhoz"
 
 #: includes/controllers/family_ctrl.php:411
 #: includes/controllers/individual_ctrl.php:655
@@ -13206,7 +13206,7 @@ msgstr "Név törlése"
 
 #: includes/controllers/family_ctrl.php:452
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
-msgstr ""
+msgstr "A család törlése minden személyi összefüggést egymáshoz kitöröl de a személyek megmaradnak. Biztos benne hogy, ki akarja törölni ezt a családot?"
 
 #: includes/controllers/family_ctrl.php:509
 #: includes/controllers/individual_ctrl.php:732
@@ -13230,23 +13230,23 @@ msgstr "Oldal"
 
 #: includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
-msgstr ""
+msgstr "Mostoha szülök"
 
 #: includes/controllers/individual_ctrl.php:830
 msgid "Half-Sibling"
-msgstr ""
+msgstr "Féltestvér"
 
 #: includes/controllers/individual_ctrl.php:836
 #: includes/controllers/individual_ctrl.php:837
 #: includes/controllers/individual_ctrl.php:838
 #: includes/controllers/individual_ctrl.php:855
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #: includes/controllers/note_ctrl.php:80
 #: includes/controllers/note_ctrl.php:169
 msgid "Shared Note Information"
-msgstr ""
+msgstr "Közös jegyzet információja"
 
 #: includes/controllers/note_ctrl.php:217
 #, fuzzy
@@ -13255,7 +13255,7 @@ msgstr "Forrás törlése"
 
 #: includes/controllers/note_ctrl.php:218
 msgid "Are you sure you want to delete this Shared Note?"
-msgstr ""
+msgstr "Biztosan törölni szeretné ezt a közös jegyzetet?"
 
 #: includes/controllers/remotelink_ctrl.php:400
 msgid "Successfully added link"
@@ -13274,35 +13274,35 @@ msgstr "Szervezet Törlése"
 
 #: includes/controllers/repository_ctrl.php:217
 msgid "Are you sure you want to delete this Repository?"
-msgstr ""
+msgstr "Biztos ki akarja törölni ezt a Szervezetet az adatbázisból?"
 
 #: includes/controllers/search_ctrl.php:819
 msgid "Be sure to select an option to search for."
-msgstr ""
+msgstr "Válasszon keresendő opciót"
 
 #: includes/controllers/search_ctrl.php:879
 msgid "People"
-msgstr ""
+msgstr "Személyek"
 
 #: includes/controllers/search_ctrl.php:883
 msgid "Site: "
-msgstr ""
+msgstr "Weboldal: "
 
 #: includes/controllers/search_ctrl.php:883
 msgid " contained the following"
-msgstr ""
+msgstr "a következőt tartalmazta"
 
 #: includes/controllers/search_ctrl.php:918
 msgid "to"
-msgstr ""
+msgstr "bezárólag"
 
 #: includes/controllers/search_ctrl.php:933
 msgid "Be sure to select at least one remote site."
-msgstr ""
+msgstr "Válasszon legalább egy távoli oldalt"
 
 #: includes/controllers/search_ctrl.php:988
 msgid "Result Page"
-msgstr ""
+msgstr "Találati oldal"
 
 #: includes/controllers/source_ctrl.php:80
 #: includes/controllers/source_ctrl.php:169
@@ -13318,87 +13318,87 @@ msgstr "Diszkréciós beállítások"
 
 #: includes/controllers/timeline_ctrl.php:275
 msgid "Husband's age"
-msgstr ""
+msgstr "Férj életkora"
 
 #: includes/controllers/timeline_ctrl.php:282
 msgid "Wife's age"
-msgstr ""
+msgstr "Feleség életkora"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "January"
-msgstr ""
+msgstr "január"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "February"
-msgstr ""
+msgstr "február"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "August"
-msgstr ""
+msgstr "augusztus"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "September"
-msgstr ""
+msgstr "szeptember"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "October"
-msgstr ""
+msgstr "október"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "November"
-msgstr ""
+msgstr "november"
 
 #: includes/extras/functions.el.php:41
 #: includes/extras/functions.pl.php:43
 #: includes/extras/functions.sl.php:43
 msgid "December"
-msgstr ""
+msgstr "december"
 
 #: includes/extras/functions.pl.php:128
 #: includes/extras/functions.sl.php:113
 #: includes/functions/functions_date.php:82
 msgid "Infant"
-msgstr ""
+msgstr "Csecsemő"
 
 #: includes/extras/functions.pl.php:129
 #: includes/extras/functions.sl.php:114
 #: includes/functions/functions_date.php:83
 msgid "Stillborn"
-msgstr ""
+msgstr "Halva született"
 
 #: includes/extras/functions.pl.php:148
 #: includes/extras/functions.sl.php:123
 #: includes/functions/functions_date.php:88
 msgid "day"
-msgstr ""
+msgstr "nap"
 
 #: includes/extras/functions.pl.php:149
 #: includes/extras/functions.sl.php:124
 #: includes/functions/functions_date.php:89
 msgid "days"
-msgstr ""
+msgstr "nap"
 
 #: includes/extras/functions.pl.php:150
 #: includes/functions/functions_date.php:90
 msgid "week"
-msgstr ""
+msgstr "hét"
 
 #: includes/extras/functions.pl.php:153
 #: includes/functions/functions_date.php:91
 msgid "weeks"
-msgstr ""
+msgstr "hét"
 
 #: includes/extras/functions.pl.php:366
 #, fuzzy
@@ -13407,7 +13407,7 @@ msgstr "Dátum formátum"
 
 #: includes/extras/functions.pl.php:370
 msgid "Lodger"
-msgstr ""
+msgstr "Albérlő"
 
 #: includes/extras/functions.pl.php:374
 #, fuzzy
@@ -13416,39 +13416,39 @@ msgstr "Mentés"
 
 #: includes/extras/functions.pl.php:378
 msgid "Attending"
-msgstr ""
+msgstr "Gondozás"
 
 #: includes/extras/functions.pl.php:382
 msgid "Guardian"
-msgstr ""
+msgstr "Gyámja"
 
 #: includes/extras/functions.pl.php:386
 msgid "Nurse"
-msgstr ""
+msgstr "Nővér"
 
 #: includes/extras/functions.pl.php:390
 msgid "Attendant"
-msgstr ""
+msgstr "Gondozó"
 
 #: includes/extras/functions.pl.php:394
 msgid "Employee"
-msgstr ""
+msgstr "Munkavállaló"
 
 #: includes/extras/functions.pl.php:398
 msgid "Friend"
-msgstr ""
+msgstr "Barát"
 
 #: includes/extras/functions.pl.php:402
 msgid "Servant"
-msgstr ""
+msgstr "Szolga"
 
 #: includes/extras/functions.pl.php:406
 msgid "Seller"
-msgstr ""
+msgstr "Eladó"
 
 #: includes/extras/functions.pl.php:410
 msgid "Owner"
-msgstr ""
+msgstr "Tulajdonos"
 
 #: includes/extras/functions.pl.php:414
 msgid "Ward"
@@ -13456,19 +13456,19 @@ msgstr ""
 
 #: includes/functions/functions.php:188
 msgid "File successfully uploaded"
-msgstr ""
+msgstr "Az állomány feltöltése sikeresen befejeződött"
 
 #: includes/functions/functions.php:191
 msgid "Uploaded file exceeds the allowed size"
-msgstr ""
+msgstr "A feltölteni kívánt állomány elérte a maximális méretet"
 
 #: includes/functions/functions.php:193
 msgid "File was only partially uploaded, please try again"
-msgstr ""
+msgstr "Az állomány csak részben töltődött fel, kérem próbálja meg újra"
 
 #: includes/functions/functions.php:195
 msgid "No file was received. Please upload again."
-msgstr ""
+msgstr "Nem érkezett feltöltött állomány. Töltse fel újból."
 
 #: includes/functions/functions.php:197
 msgid "Missing PHP temporary directory"
@@ -13484,15 +13484,15 @@ msgstr ""
 
 #: includes/functions/functions.php:355
 msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
-msgstr ""
+msgstr "Hiba!!! Nem írható a PhpGedView beállítási fájlja. Kérem ellenőrizze a fájlok és könyvtárak jogosultságait, majd próbálja újra."
 
 #: includes/functions/functions.php:2004
 msgid "The script timed out before a relationship could be found."
-msgstr ""
+msgstr "A program túllépte az időkorlátot, mielőtt rokonsági kapcsolatot talált volna."
 
 #: includes/functions/functions_charts.php:288
 msgid "Children"
-msgstr ""
+msgstr "Gyerekek"
 
 #: includes/functions/functions_charts.php:293
 #, fuzzy
@@ -13502,16 +13502,16 @@ msgstr "Gyermek hozzáadása"
 #: includes/functions/functions_charts.php:448
 #: includes/functions/functions_charts.php:938
 msgid "This family remained childless"
-msgstr ""
+msgstr "Gyermektelen család"
 
 #: includes/functions/functions_charts.php:487
 #: includes/functions/functions_charts.php:514
 msgid "Family Group Information"
-msgstr ""
+msgstr "Információk erről a családról"
 
 #: includes/functions/functions_charts.php:521
 msgid "No facts for this family."
-msgstr ""
+msgstr "Nincs tény jegyezve ennek a családnak."
 
 #: includes/functions/functions_charts.php:532
 #, fuzzy
@@ -13538,24 +13538,24 @@ msgstr ""
 
 #: includes/functions/functions_date.php:120
 msgid "1 year"
-msgstr ""
+msgstr "1 év"
 
 #: includes/functions/functions_date.php:137
 msgid "1 month"
-msgstr ""
+msgstr "1 hónap"
 
 #: includes/functions/functions_date.php:153
 msgid "1 day"
-msgstr ""
+msgstr "1 nap"
 
 #: includes/functions/functions_date.php:170
 msgid "1 hour"
-msgstr ""
+msgstr "1 óra"
 
 #: includes/functions/functions_date.php:186
 #: includes/functions/functions_date.php:198
 msgid "1 minute"
-msgstr ""
+msgstr "1 perc"
 
 #. I18N: This is a space separated list of initial letters for lists of names, etc.  Multi-letter characters are OK, e.g. "A B C CS D DZ DZS E F G GY H ..."  You may use upper/lowers case, such as "D Dz Dzs".
 #: includes/functions/functions_db.php:256
@@ -13572,7 +13572,7 @@ msgstr ""
 #: includes/functions/functions_edit.php:424
 #: includes/functions/functions_edit.php:746
 msgid "Save and go to new record"
-msgstr ""
+msgstr "Mentsd el és megy az új rekordhoz"
 
 #: includes/functions/functions_edit.php:1371
 msgid "No Temple - Living Ordinance"
@@ -13609,7 +13609,7 @@ msgstr ""
 #: includes/functions/functions_export.php:598
 #: includes/functions/functions_export.php:638
 msgid "Creating"
-msgstr ""
+msgstr "Létrehozás"
 
 #: includes/functions/functions_export.php:493
 #: includes/functions/functions_export.php:531
@@ -13617,7 +13617,7 @@ msgstr ""
 #: includes/functions/functions_export.php:616
 #: includes/functions/functions_export.php:658
 msgid "Creation of new file failed, a file with that name already exists:"
-msgstr ""
+msgstr "Az új állományt nem hozható létre, ezen a néven már létezik egy állomány:"
 
 #: includes/functions/functions_export.php:502
 #: includes/functions/functions_export.php:540
@@ -13625,7 +13625,7 @@ msgstr ""
 #: includes/functions/functions_export.php:625
 #: includes/functions/functions_export.php:667
 msgid "Creation of new file successful:"
-msgstr ""
+msgstr "Az új állomány sikeresen létrejött:"
 
 #: includes/functions/functions_export.php:505
 #: includes/functions/functions_export.php:543
@@ -13633,7 +13633,7 @@ msgstr ""
 #: includes/functions/functions_export.php:628
 #: includes/functions/functions_export.php:670
 msgid "Cannot create"
-msgstr ""
+msgstr "Nem hozható létre"
 
 #: includes/functions/functions_export.php:505
 #: includes/functions/functions_export.php:543
@@ -13641,14 +13641,14 @@ msgstr ""
 #: includes/functions/functions_export.php:628
 #: includes/functions/functions_export.php:670
 msgid "Check access rights on this directory."
-msgstr ""
+msgstr "Kérjük, ellenőrizze a könyvtár jogosultságait!"
 
 #: includes/functions/functions_export.php:547
 #: includes/functions/functions_export.php:592
 #: includes/functions/functions_export.php:632
 #: includes/functions/functions_export.php:674
 msgid "File is not created."
-msgstr ""
+msgstr "Az állomány nem jött létre."
 
 #: includes/functions/functions_import.php:615
 #: includes/functions/functions_import.php:641
@@ -13661,16 +13661,16 @@ msgstr "GEDCOM-hibák elrejtése"
 #: includes/functions/functions_mediadb.php:779
 #: includes/functions/functions_mediadb.php:802
 msgid "Security Warning: Could not create file <b><i>index.php</i></b> in "
-msgstr ""
+msgstr "Biztonsági Figyelmeztetés: Az állomány <b><i>index.php</i></b>, nem létezik itt"
 
 #: includes/functions/functions_mediadb.php:774
 #: includes/functions/functions_mediadb.php:797
 msgid "Directory created"
-msgstr ""
+msgstr "Könyvtár létrehozása"
 
 #: includes/functions/functions_mediadb.php:977
 msgid "Upload successful."
-msgstr ""
+msgstr "A feltöltés sikeres volt."
 
 #: includes/functions/functions_mediadb.php:1027
 #: includes/functions/functions_mediadb.php:1110
@@ -13681,7 +13681,7 @@ msgstr "Feltöltési útvonal"
 #: includes/functions/functions_mediadb.php:1034
 #: includes/functions/functions_mediadb.php:1191
 msgid "Media file to upload"
-msgstr ""
+msgstr "Média állomány"
 
 #: includes/functions/functions_mediadb.php:1038
 #: includes/functions/functions_mediadb.php:1057
@@ -13699,29 +13699,29 @@ msgstr "Automatikusan generált előnézet képek"
 #: includes/functions/functions_mediadb.php:1047
 #: includes/functions/functions_mediadb.php:1215
 msgid "Generate thumbnail automatically from "
-msgstr ""
+msgstr "Automatikus előnézet generálása:"
 
 #: includes/functions/functions_mediadb.php:1053
 #: includes/functions/functions_mediadb.php:1220
 msgid "Thumbnail to upload"
-msgstr ""
+msgstr "Előnézet"
 
 #: includes/functions/functions_mediadb.php:1063
 #: includes/functions/functions_mediadb.php:1228
 #: includes/functions/functions_mediadb.php:1248
 msgid "File name on server"
-msgstr ""
+msgstr "Az állomány neve a szerveren"
 
 #: includes/functions/functions_mediadb.php:1067
 #: includes/functions/functions_mediadb.php:1229
 #: includes/functions/functions_mediadb.php:1256
 msgid "Do not change to keep original file name."
-msgstr ""
+msgstr "Ne változtassa meg hogy, az eredeti neve az állománynak megmaradjon."
 
 #: includes/functions/functions_mediadb.php:1076
 #: includes/functions/functions_mediadb.php:1282
 msgid "Folder name on server"
-msgstr ""
+msgstr "Mappa neve a szerveren"
 
 #: includes/functions/functions_mediadb.php:1083
 #: includes/functions/functions_mediadb.php:1290
@@ -13748,55 +13748,55 @@ msgstr "Ismeretlen"
 
 #: includes/functions/functions_print.php:166
 msgid "Family with spouse"
-msgstr ""
+msgstr "Családtagok házastárssal"
 
 #: includes/functions/functions_print.php:209
 msgid "Zoom in/out on this box."
-msgstr ""
+msgstr "Doboz kicsinyítése/nagyítása."
 
 #: includes/functions/functions_print.php:267
 msgid "Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person."
-msgstr ""
+msgstr "Hivatkozások ennek a személynek grafikonjaira, a családjára és közeli hozzátartozóira. Klikkeljen erre az ikonra ahhoz, hogy az oldal ezzel a személlyel kezdődjön."
 
 #: includes/functions/functions_print.php:575
 msgid "Are you sure you want to delete this fact?"
-msgstr ""
+msgstr "Valóban törli ezt a GEDCOM-adatot?"
 
 #: includes/functions/functions_print.php:582
 msgid "Are you sure you want to delete this person?"
-msgstr ""
+msgstr "Biztosan törölni szeretné ezt a személyt a GEDCOM-állományból?"
 
 #: includes/functions/functions_print.php:661
 msgid "Print"
-msgstr ""
+msgstr "Nyomtatás"
 
 #: includes/functions/functions_print.php:662
 msgid "Back to normal view"
-msgstr ""
+msgstr "Vissza a normál nézethez"
 
 #: includes/functions/functions_print.php:730
 msgid "Total Database Queries: "
-msgstr ""
+msgstr "Összes adatbázis-lekérdezés: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total privacy checks: "
-msgstr ""
+msgstr "Összes diszkréciós szabály: "
 
 #: includes/functions/functions_print.php:730
 msgid "Total Memory Usage:"
-msgstr ""
+msgstr "Felhasznált Memória:"
 
 #: includes/functions/functions_print.php:881
 msgid "For technical support or genealogy questions, please contact"
-msgstr ""
+msgstr "Technikai és genealógiai jellegű segítség"
 
 #: includes/functions/functions_print.php:885
 msgid "For technical support and information contact"
-msgstr ""
+msgstr "Technikai jellegű segítség:"
 
 #: includes/functions/functions_print.php:891
 msgid "For help with genealogy questions contact"
-msgstr ""
+msgstr "Genealógiai jellegű segítség:"
 
 #: includes/functions/functions_print.php:926
 #: includes/functions/functions_print.php:929
@@ -13806,11 +13806,11 @@ msgstr "E-mail cím genealógiai kérdésekhez"
 
 #: includes/functions/functions_print.php:1211
 msgid "Note"
-msgstr ""
+msgstr "Megjegyzés:"
 
 #: includes/functions/functions_print.php:1330
 msgid "For more information contact"
-msgstr ""
+msgstr "További információt itt kérhet:"
 
 #: includes/functions/functions_print.php:1367
 #: includes/functions/functions_print.php:1378
@@ -13820,7 +13820,7 @@ msgstr "PHP információ"
 
 #: includes/functions/functions_print.php:1450
 msgid "<b>Help text for this page or item is not yet available.</b>"
-msgstr ""
+msgstr "<b>Ennek az oldalnak vagy elemnek még nincsen Segítsége.</b>"
 
 #: includes/functions/functions_print.php:1468
 msgid "<span style=\"font-weight: bold\">The language variable does not exist. Please report this as it is an error.</span>"
@@ -13829,22 +13829,22 @@ msgstr ""
 #: includes/functions/functions_print.php:1802
 #: includes/functions/functions_print.php:1804
 msgid "nephew"
-msgstr ""
+msgstr "unokaöcs"
 
 #: includes/functions/functions_print.php:1812
 #: includes/functions/functions_print.php:1814
 msgid "niece"
-msgstr ""
+msgstr "unokahúg"
 
 #: includes/functions/functions_print.php:1879
 #: includes/functions/functions_print.php:2083
 msgid "on the date of death"
-msgstr ""
+msgstr "a haláleset dámunán"
 
 #: includes/functions/functions_print.php:1881
 #: includes/functions/functions_print.php:2085
 msgid "after death"
-msgstr ""
+msgstr "haláleset után"
 
 #: includes/functions/functions_print.php:1975
 msgid "Mother's age"
@@ -13856,19 +13856,19 @@ msgstr ""
 
 #: includes/functions/functions_print.php:1988
 msgid "Parent's age"
-msgstr ""
+msgstr "Szülők életkora"
 
 #: includes/functions/functions_print.php:2233
 msgid "LDS Temple"
-msgstr ""
+msgstr "UNSZ templom"
 
 #: includes/functions/functions_print.php:2235
 msgid "LDS Temple Code:"
-msgstr ""
+msgstr "UNSZ templom kódja:"
 
 #: includes/functions/functions_print.php:2239
 msgid "Status"
-msgstr ""
+msgstr "Státusz"
 
 #: includes/functions/functions_print.php:2380
 #, fuzzy
@@ -13886,7 +13886,7 @@ msgstr "Szervezet Törlése"
 #: includes/functions/functions_print_facts.php:1149
 #: includes/functions/functions_print_facts.php:1455
 msgid "Copy"
-msgstr ""
+msgstr "Másol"
 
 #: includes/functions/functions_print_facts.php:242
 #, fuzzy
@@ -13896,11 +13896,11 @@ msgstr "Házasság"
 #: includes/functions/functions_print_facts.php:446
 #: includes/functions/functions_print_facts.php:448
 msgid "Unrecognized GEDCOM Code"
-msgstr ""
+msgstr "Ismeretlen GEDCOM-kód"
 
 #: includes/functions/functions_print_facts.php:448
 msgid "This is an error, and we would like to fix it. Please report this error to"
-msgstr ""
+msgstr "Ez egy programhiba, és szeretnénk kijavítani. Kérjük jelezze felénk a hibát:"
 
 #: includes/functions/functions_print_lists.php:76
 #, fuzzy
@@ -13909,24 +13909,24 @@ msgstr "Élő személyek nevéhez hozzáférhet"
 
 #: includes/functions/functions_print_lists.php:78
 msgid "Show only females."
-msgstr ""
+msgstr "Csak nők mutatása."
 
 #: includes/functions/functions_print_lists.php:80
 msgid "Show only persons of whom the gender is not known."
-msgstr ""
+msgstr "Csak azokat a személyeket mutasd, akiknek a neme nem ismert."
 
 #: includes/functions/functions_print_lists.php:83
 msgid "Show persons alive in the indicated year."
-msgstr ""
+msgstr "Mutasd az élő személyeket a kiválasztott évben"
 
 #: includes/functions/functions_print_lists.php:84
 msgid "Alive in Year"
-msgstr ""
+msgstr "Élő az Évben"
 
 #: includes/functions/functions_print_lists.php:85
 #: includes/functions/functions_print_lists.php:467
 msgid "Show people who are alive or couples where both partners are alive."
-msgstr ""
+msgstr "Mutasd azokat a személyeket akik életben vannak, vagy párokat akik mindketten életben vannak."
 
 #: includes/functions/functions_print_lists.php:86
 #, fuzzy
@@ -13936,26 +13936,26 @@ msgstr "Aktív"
 #: includes/functions/functions_print_lists.php:87
 #: includes/functions/functions_print_lists.php:473
 msgid "Show people who are dead or couples where both partners are deceased."
-msgstr ""
+msgstr "Mutasd csak azokat a személyeket akik elhunytak, avgy azokat a párokat, akik mindketten elhunytak."
 
 #: includes/functions/functions_print_lists.php:88
 msgid "Dead "
-msgstr ""
+msgstr "Elhunyt"
 
 #: includes/functions/functions_print_lists.php:89
 #: includes/functions/functions_print_lists.php:475
 msgid "Show «roots» couples or individuals.  These people may also be called «patriarchs».  They are individuals who have no parents recorded in the database."
-msgstr ""
+msgstr "Mutasd a «gyökér» párokat vagy személyeket. Ezek az emberek «pátriárkák». Ők azok, akiknek nincs szülő bejegyezve az adatbázisban."
 
 #: includes/functions/functions_print_lists.php:90
 #: includes/functions/functions_print_lists.php:476
 msgid "Roots"
-msgstr ""
+msgstr "Gyökerek"
 
 #: includes/functions/functions_print_lists.php:91
 #: includes/functions/functions_print_lists.php:477
 msgid "Show «leaves» couples or individuals.  These are individuals who are alive but have no children recorded in the database."
-msgstr ""
+msgstr "Mutasd a «levél» párokat vagy személyeket. Ők azok, akik élnek, de nincs gyermekük az adatbázisban."
 
 #: includes/functions/functions_print_lists.php:92
 #: includes/functions/functions_print_lists.php:478
@@ -13965,24 +13965,24 @@ msgstr "Mentés"
 
 #: includes/functions/functions_print_lists.php:94
 msgid "Show persons born more than 100 years ago."
-msgstr ""
+msgstr "Mutasd azokat a személyeket akik több mint 100 éve születtek."
 
 #: includes/functions/functions_print_lists.php:96
 msgid "Show persons born within the last 100 years."
-msgstr ""
+msgstr "Mutasd az elmúlt 100 évben született személyeket"
 
 #: includes/functions/functions_print_lists.php:98
 msgid "Show people who died more than 100 years ago."
-msgstr ""
+msgstr "Mutasd azokat a személyeket, akik több mint 100 éve hunytak el."
 
 #: includes/functions/functions_print_lists.php:100
 msgid "Show people who died within the last 100 years."
-msgstr ""
+msgstr "Mutasd azokat a személyeket, akik az utolsó 100 évben hunytak el."
 
 #: includes/functions/functions_print_lists.php:102
 #: includes/functions/functions_print_lists.php:488
 msgid "Reset to the list defaults."
-msgstr ""
+msgstr "Visszaállítás a lista alapértelmezett értékeire."
 
 #: includes/functions/functions_print_lists.php:394
 #: includes/functions/functions_print_lists.php:779
@@ -14009,19 +14009,19 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:468
 msgid "Both alive "
-msgstr ""
+msgstr "Mindketten élnek"
 
 #: includes/functions/functions_print_lists.php:469
 msgid "Show couples where only the female partner is deceased."
-msgstr ""
+msgstr "Mutasd azokat a párokat, ahol a csak a nő hunyt el."
 
 #: includes/functions/functions_print_lists.php:470
 msgid "Widower"
-msgstr ""
+msgstr "Özvegyember"
 
 #: includes/functions/functions_print_lists.php:471
 msgid "Show couples where only the male partner is deceased."
-msgstr ""
+msgstr "Mutasd azokat a párokat, ahol csak a férfi hunyt el."
 
 #: includes/functions/functions_print_lists.php:472
 #, fuzzy
@@ -14030,19 +14030,19 @@ msgstr "A kör szélessége"
 
 #: includes/functions/functions_print_lists.php:474
 msgid "Both dead "
-msgstr ""
+msgstr "Mindketten halottak"
 
 #: includes/functions/functions_print_lists.php:480
 msgid "Show couples with an unknown marriage date."
-msgstr ""
+msgstr "Mutasd azokat a párokat, akiknek nem ismert a házasságkötési dátumuk."
 
 #: includes/functions/functions_print_lists.php:482
 msgid "Show couples who married more than 100 years ago."
-msgstr ""
+msgstr "Mutasd azokat a párokat, akik több mint 100 éve házasodtak."
 
 #: includes/functions/functions_print_lists.php:484
 msgid "Show couples who married within the last 100 years."
-msgstr ""
+msgstr "Mutasd azokat a párokat, akik az utóbbi 100 évben házasodtak."
 
 #: includes/functions/functions_print_lists.php:486
 #, fuzzy
@@ -14055,28 +14055,28 @@ msgstr ""
 
 #: includes/functions/functions_print_lists.php:1033
 msgid "Total Shared Notes"
-msgstr ""
+msgstr "Közös jegyzetek száma"
 
 #: includes/functions/functions_print_lists.php:1264
 #: includes/functions/functions_print_lists.php:1315
 msgid "Spouses"
-msgstr ""
+msgstr "Házastársak"
 
 #: includes/functions/functions_print_lists.php:1523
 msgid "Total changes"
-msgstr ""
+msgstr "Változások száma"
 
 #: includes/functions/functions_print_lists.php:2130
 msgid "Sort by this column."
-msgstr ""
+msgstr "Rendezés ezen oszlop szerint"
 
 #: includes/functions/functions_privacy.php:865
 msgid "Details about this person are private. Personal details will not be included."
-msgstr ""
+msgstr "Ennek a személynek az adatai bizalmasak. A személyes adatok így nem lesznek csatolva."
 
 #: includes/functions/functions_privacy.php:877
 msgid "Details about this family are private. Family details will not be included."
-msgstr ""
+msgstr "Ennek a családnak a további információ nem nyilvánosak. Ezek a családi részletek nem lesznek csatolva."
 
 #: includes/functions/functions_privacy.php:883
 msgid "Details about this media are private. Media details will not be included."
@@ -15480,15 +15480,15 @@ msgstr "GEDCOM-állomány letöltése"
 
 #: modules/clippings/clippings_ctrl.php:322
 msgid "This Individual was downloaded from:"
-msgstr ""
+msgstr "Ez a személy innen lett letöltve:"
 
 #: modules/clippings/clippings_ctrl.php:365
 msgid "This Family was downloaded from:"
-msgstr ""
+msgstr "Ez a család innen lett letöltve:"
 
 #: modules/clippings/clippings_ctrl.php:380
 msgid "This Source was downloaded from:"
-msgstr ""
+msgstr "Ez a forrás innen lett letöltve:"
 
 #: modules/clippings/pgv_module.php:46
 #, fuzzy
@@ -15521,7 +15521,7 @@ msgstr ""
 
 #: modules/GEDFact_assistant/_CENS/census_3_search_add.php:51
 msgid "You must enter a name"
-msgstr ""
+msgstr "Adja meg a nevét"
 
 #: modules/GEDFact_assistant/_CENS/census_3_search_add.php:91
 #: modules/GEDFact_assistant/_CENS/census_3_search_add.php:94
@@ -16228,14 +16228,14 @@ msgstr "_GEDCOM: Konfiguráció állomány"
 #: modules/googlemap/googlemap.php:656
 #: modules/googlemap/googlemap.php:864
 msgid "Manage GoogleMap configuration"
-msgstr ""
+msgstr "Googlemap konfiguráció kezelése"
 
 #: modules/googlemap/admin-config.php:54
 #: modules/googlemap/editconfig.php:452
 #: modules/googlemap/gg_map_content.php:89
 #: modules/googlemap/googlemap.php:149
 msgid "Edit geographic place locations"
-msgstr ""
+msgstr "Földrajzi helyszínek szerkesztése"
 
 #: modules/googlemap/admin-config.php:58
 #: modules/googlemap/gg_map_content.php:92
@@ -16250,39 +16250,39 @@ msgstr "Előnézet"
 
 #: modules/googlemap/editconfig.php:63
 msgid "Postfix"
-msgstr ""
+msgstr "Utótag"
 
 #: modules/googlemap/editconfig.php:71
 msgid "Prefix / Postfix order"
-msgstr ""
+msgstr "Előtag / Utótag sorrendje"
 
 #: modules/googlemap/editconfig.php:75
 msgid "No pre/postfix"
-msgstr ""
+msgstr "Elő/utótag nélkűl"
 
 #: modules/googlemap/editconfig.php:76
 msgid "Normal, prefix, postfix, both"
-msgstr ""
+msgstr "Normál, előtag, utótag, mindkettő"
 
 #: modules/googlemap/editconfig.php:77
 msgid "Normal, postfix, prefix, both"
-msgstr ""
+msgstr "Normál, utótag, előtag, mindkettő"
 
 #: modules/googlemap/editconfig.php:78
 msgid "Prefix, postfix, both, normal"
-msgstr ""
+msgstr "Előtag, utótag, mindkettő, normál"
 
 #: modules/googlemap/editconfig.php:79
 msgid "Postfix, prefix, both, normal"
-msgstr ""
+msgstr "Utótag, előtag, mindkettő, normál"
 
 #: modules/googlemap/editconfig.php:80
 msgid "Prefix, postfix, normal, both"
-msgstr ""
+msgstr "Előtag, utótag, normál, mindkettő"
 
 #: modules/googlemap/editconfig.php:81
 msgid "Postfix, prefix, normal, both"
-msgstr ""
+msgstr "Utótag, előtag, normál, mindkettő"
 
 #: modules/googlemap/editconfig.php:96
 #, fuzzy
@@ -16291,31 +16291,31 @@ msgstr "_Felhasználó Adminisztrálás"
 
 #: modules/googlemap/editconfig.php:215
 msgid "Enable GoogleMap"
-msgstr ""
+msgstr "Googlemap bekapcsolva"
 
 #: modules/googlemap/editconfig.php:224
 msgid "GoogleMap API key"
-msgstr ""
+msgstr "Google Map API kulcs"
 
 #: modules/googlemap/editconfig.php:228
 msgid "Default map type"
-msgstr ""
+msgstr "Alapértelmezett térkép típus"
 
 #: modules/googlemap/editconfig.php:231
 #: modules/googlemap/gg_map_content.php:31
 #: modules/googlemap/googlemap.php:608
 msgid "Map"
-msgstr ""
+msgstr "Térkép"
 
 #: modules/googlemap/editconfig.php:232
 #: modules/googlemap/googlemap.php:609
 msgid "Satellite"
-msgstr ""
+msgstr "Szatelit"
 
 #: modules/googlemap/editconfig.php:233
 #: modules/googlemap/googlemap.php:610
 msgid "Hybrid"
-msgstr ""
+msgstr "Ősszevetve"
 
 #: modules/googlemap/editconfig.php:234
 #: modules/googlemap/googlemap.php:611
@@ -16324,12 +16324,12 @@ msgstr ""
 
 #: modules/googlemap/editconfig.php:239
 msgid "Size of map (in pixels)"
-msgstr ""
+msgstr "Térkép nagysága (pixel)"
 
 #: modules/googlemap/editconfig.php:243
 #: modules/googlemap/editconfig.php:263
 msgid "Height"
-msgstr ""
+msgstr "Magasság"
 
 #: modules/googlemap/editconfig.php:248
 msgid "Use Googlemap for Place Hierarchy"
@@ -16374,19 +16374,19 @@ msgstr ""
 
 #: modules/googlemap/editconfig.php:335
 msgid "Zoom factor of map"
-msgstr ""
+msgstr "Térkép nagyítása"
 
 #: modules/googlemap/editconfig.php:338
 msgid "Min."
-msgstr ""
+msgstr "Min."
 
 #: modules/googlemap/editconfig.php:343
 msgid "Max."
-msgstr ""
+msgstr "Max."
 
 #: modules/googlemap/editconfig.php:352
 msgid "Precision"
-msgstr ""
+msgstr "Pontosság"
 
 #: modules/googlemap/editconfig.php:362
 #: modules/googlemap/editconfig.php:371
@@ -16405,27 +16405,27 @@ msgstr "Mentés"
 
 #: modules/googlemap/editconfig.php:375
 msgid "City"
-msgstr ""
+msgstr "Város"
 
 #: modules/googlemap/editconfig.php:383
 msgid "Neighborhood"
-msgstr ""
+msgstr "Környék"
 
 #: modules/googlemap/editconfig.php:391
 msgid "House"
-msgstr ""
+msgstr "Ház"
 
 #: modules/googlemap/editconfig.php:399
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #: modules/googlemap/editconfig.php:411
 msgid "Default top level value"
-msgstr ""
+msgstr "Alapértelmezett legmagasabb szint értéke"
 
 #: modules/googlemap/editconfig.php:415
 msgid "Number of levels"
-msgstr ""
+msgstr "Szintek száma"
 
 #: modules/googlemap/editconfig.php:432
 #, fuzzy
@@ -16434,7 +16434,7 @@ msgstr "Konfigurációs segítség"
 
 #: modules/googlemap/flags.php:43
 msgid "Select flag"
-msgstr ""
+msgstr "Zászló választás"
 
 #: modules/googlemap/flags.php:46
 msgid "<b>The flags directory doesn't exist</b><br /><br />To make the flags work, copy the <b>flags</b> directory from <b>images</b> directory to <b>places</b> directory, or download the flags from the full version."
@@ -16443,12 +16443,12 @@ msgstr ""
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
 msgid "Change flag"
-msgstr ""
+msgstr "Zászló csere"
 
 #: modules/googlemap/flags.php:83
 #: modules/googlemap/flags.php:86
 msgid "Remove flag"
-msgstr ""
+msgstr "Zászló tőrlés"
 
 #: modules/googlemap/flags.php:168
 msgid "Countries"
@@ -16458,7 +16458,7 @@ msgstr ""
 #: modules/googlemap/googlemap.php:97
 #: modules/googlemap/googlemap.php:651
 msgid "GoogleMap module disabled"
-msgstr ""
+msgstr "Googlemap module lekapcsolva"
 
 #: modules/googlemap/gg_map_content.php:58
 #: modules/googlemap/gg_map_content.php:59
@@ -16478,11 +16478,11 @@ msgstr "Aktív"
 
 #: modules/googlemap/googlemap.php:607
 msgid "Redraw map"
-msgstr ""
+msgstr "Térkép újrarajzolása"
 
 #: modules/googlemap/googlemap.php:857
 msgid "No map data for this person"
-msgstr ""
+msgstr "Nincsen térképe annek a személynek"
 
 #: modules/googlemap/googlemap.php:940
 msgid "This place has no coordinates"
@@ -16490,7 +16490,7 @@ msgstr ""
 
 #: modules/googlemap/googlemap.php:942
 msgid "Edit geographic location"
-msgstr ""
+msgstr "Földrajzi helyek szerkesztése"
 
 #: modules/googlemap/pedigree_map.php:134
 msgid "for"
@@ -16551,7 +16551,7 @@ msgstr ""
 
 #: modules/googlemap/pedigree_map.php:740
 msgid "Birth:"
-msgstr ""
+msgstr "Született:"
 
 #: modules/googlemap/pedigree_map.php:842
 msgid "Zoom&nbsp;in"
@@ -16668,16 +16668,16 @@ msgstr ""
 #: modules/googlemap/places.php:600
 #: modules/googlemap/places_edit.php:804
 msgid "Zoom factor"
-msgstr ""
+msgstr "Nagyítási szint"
 
 #: modules/googlemap/places.php:188
 #: modules/googlemap/places.php:601
 msgid "Icon"
-msgstr ""
+msgstr "Ikon"
 
 #: modules/googlemap/places.php:327
 msgid "File containing places (CSV)"
-msgstr ""
+msgstr "Az állomány tartalmaz helyszíneket (CSV)"
 
 #: modules/googlemap/places.php:332
 msgid "Server file containing places (CSV)"
@@ -16685,23 +16685,23 @@ msgstr ""
 
 #: modules/googlemap/places.php:346
 msgid "Clear all place-locations before import?"
-msgstr ""
+msgstr "Minden helyszín tőrlése importálás elött?"
 
 #: modules/googlemap/places.php:350
 msgid "Update existing places only?"
-msgstr ""
+msgstr "Csak a már meglévő helyszínek frissitése?"
 
 #: modules/googlemap/places.php:354
 msgid "Overwrite location-data with data from file?"
-msgstr ""
+msgstr "Helyszín adatok átírása az állomány adataiból?"
 
 #: modules/googlemap/places.php:523
 msgid "Location not removed: this location contains sub-locations"
-msgstr ""
+msgstr "Helyszín nem lett törőlve: ez a helyszín alsó-helyszíneket tartalmaz"
 
 #: modules/googlemap/places.php:556
 msgid "Remove this location?"
-msgstr ""
+msgstr "Ennek a helyszín törlése?"
 
 #: modules/googlemap/places.php:587
 #, fuzzy
@@ -16711,35 +16711,35 @@ msgstr "Kattintson ide hogy folytassa"
 #: modules/googlemap/places.php:606
 #: modules/googlemap/places_edit.php:662
 msgid "No places found"
-msgstr ""
+msgstr "Helyszíneket nem találtunk"
 
 #: modules/googlemap/places.php:649
 msgid "Add place"
-msgstr ""
+msgstr "Helyszín hozzáadás"
 
 #: modules/googlemap/places.php:652
 msgid "Import from current GEDCOM"
-msgstr ""
+msgstr "Importálás a GEDCOM-ból"
 
 #: modules/googlemap/places.php:653
 msgid "Import from all GEDCOMs"
-msgstr ""
+msgstr "Importálás minden GEDCOM-ból"
 
 #: modules/googlemap/places.php:656
 msgid "Import from file"
-msgstr ""
+msgstr "Importálás egy állományból"
 
 #: modules/googlemap/places.php:664
 msgid "Export current view to file"
-msgstr ""
+msgstr "Jelen oldal exportálása egy állományba"
 
 #: modules/googlemap/places.php:671
 msgid "Export all locations to file"
-msgstr ""
+msgstr "Minden helyszín exportálása egy állományba"
 
 #: modules/googlemap/places_edit.php:643
 msgid "Use this value"
-msgstr ""
+msgstr "Használd ezt az értéket"
 
 #: modules/googlemap/places_edit.php:743
 msgid "Search on this level"
@@ -16752,19 +16752,19 @@ msgstr "Keresés és csere"
 
 #: modules/googlemap/places_edit.php:788
 msgid "N"
-msgstr ""
+msgstr "É"
 
 #: modules/googlemap/places_edit.php:789
 msgid "S"
-msgstr ""
+msgstr "D"
 
 #: modules/googlemap/places_edit.php:798
 msgid "E"
-msgstr ""
+msgstr "K"
 
 #: modules/googlemap/places_edit.php:799
 msgid "W"
-msgstr ""
+msgstr "Ny"
 
 #: modules/lightbox/admin-config.php:40
 #: modules/lightbox/lb_editconfig.php:42
@@ -17016,7 +17016,7 @@ msgstr "Média keresése"
 
 #: modules/media/media.php:63
 msgid "There are no media objects for this individual."
-msgstr ""
+msgstr "Ennek a személynek nincs Multimédia-elemei."
 
 #: modules/notes/notes.php:60
 #, fuzzy
@@ -17035,11 +17035,11 @@ msgstr "A személy törlése"
 
 #: modules/personal_facts/personal_facts.php:72
 msgid "Events of close relatives"
-msgstr ""
+msgstr "Közeli családtagok eseményei"
 
 #: modules/personal_facts/personal_facts.php:75
 msgid "Historical facts"
-msgstr ""
+msgstr "Történelmi események"
 
 #: modules/personal_facts/pgv_module.php:42
 msgid "Personal Facts"
@@ -17056,11 +17056,11 @@ msgstr "Gyermek hozzáadása"
 
 #: modules/relatives/relatives.php:115
 msgid "Add a husband to this family"
-msgstr ""
+msgstr "Férj hozzáadása a családhoz"
 
 #: modules/relatives/relatives.php:161
 msgid "Add a wife to this family"
-msgstr ""
+msgstr "Feleség hozzáadása a családhoz"
 
 #: modules/relatives/relatives.php:218
 #, fuzzy
@@ -17069,7 +17069,7 @@ msgstr "Házastársi kapcsolatok ellenőrzése"
 
 #: modules/relatives/relatives.php:408
 msgid "Link this person to an existing family as a child"
-msgstr ""
+msgstr "Ezt a személyt hozzákapcsolni egy létező családhoz mint gyermek"
 
 #: modules/relatives/relatives.php:415
 #, fuzzy
@@ -17078,7 +17078,7 @@ msgstr "Új megjegyzés hozzáfűzése"
 
 #: modules/relatives/relatives.php:427
 msgid "Link this person to an existing family as a husband"
-msgstr ""
+msgstr "Ezt a személyt hozzákapcsolni egy létező családhoz mint férj"
 
 #: modules/relatives/relatives.php:435
 #, fuzzy
@@ -17087,7 +17087,7 @@ msgstr "Új megjegyzés hozzáfűzése"
 
 #: modules/relatives/relatives.php:447
 msgid "Link this person to an existing family as a wife"
-msgstr ""
+msgstr "Ezt a személyt hozzákapcsolni egy létező családhoz mint feleség"
 
 #: modules/sitemap/admin-config.php:40
 msgid "Sitemap"
@@ -17210,12 +17210,12 @@ msgstr "Küldő neve"
 
 #: modules/sources_tab/sources_tab.php:77
 msgid "There are no Source citations for this individual."
-msgstr ""
+msgstr "Ennek a személynek nincs Forrás-hivatkozásai."
 
 #: themes/cloudy/footer.php:174
 #: themes/colors/footer.php:63
 msgid "Changes have been made to this GEDCOM."
-msgstr ""
+msgstr "A jelenlegi GEDCOM megváltozott."
 
 #~ msgid "FAMC:HUSB:SURN"
 #~ msgstr "Apa vezetékneve"
