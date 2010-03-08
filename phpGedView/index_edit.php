@@ -151,7 +151,7 @@ reset($SortedBlocks);
 
 // Build sorted table of block summary descriptions
 global $pgv_lang;
-i18n::translate('&nbsp;') = "";
+$pgv_lang["block_summary_table"] = "";
 $SortedBlocks = array_flip($SortedBlocks);
 foreach($SortedBlocks as $key => $b) {
 	$temp = $PGV_BLOCKS[$b]["descr"];
