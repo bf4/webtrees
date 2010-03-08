@@ -107,7 +107,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$syndURL = str_replace("&", "&amp;", $syndURL);
 	$feed->syndicationURL = $syndURL;
 
-	$feedDesc = str_replace("#GEDCOM_TITLE#", $feed->title, $pgv_lang["rss_descr"]);
+	$feedDesc =  i18n::translate('News and links from the %s site', $feed->title);
 	$feed->description = $feedDesc;
 	$feed->copyright = $author . " (c) " . date("Y");
 	$feed->category="genealogy";
