@@ -102,13 +102,13 @@ if ($surn) {
 	if ($rootid) {
 		$person = Person::getInstance($rootid);
 		echo "<p class=\"center\">", i18n::translate('Pedigree Chart Root Person'), " : <a title=\"", $person->getXref(), "\" href=\"{$person->getLinkUrl()}\">{$person->getFullName()}</a>";
-		echo "<br />{$pgv_lang["direct-ancestors"]} : ", count($_SESSION['user_ancestors']), "</p>";
+		echo "<br />".i18n::translate('Direct line ancestors-ancestors')." : ", count($_SESSION['user_ancestors']), "</p>";
 	}
 }
 print_footer();
 
 function print_fams($person, $famid=null) {
-	global $pgv_lang, $surn, $surn_lang, $TEXT_DIRECTION;
+	global $UNKNOWN_NN, $PEDIGREE_TYPES, $surn, $surn_lang, $TEXT_DIRECTION;
 	// select person name according to searched surname
 	$person_name = "";
 	foreach ($person->getAllNames() as $n=>$name) {
@@ -143,7 +143,7 @@ function print_fams($person, $famid=null) {
 		"<a target=\"_blank\" class=\"{$class}\" title=\"".$person->getXref()."\" href=\"{$person->getLinkUrl()}\">".PrintReady($person_name)."</a> ".
 		$person->getBirthDeathYears()." {$sosa}"; 
 	if ($famid && $person->getChildFamilyPedigree($famid)) {
-		$current = "<span class='red'>".$pgv_lang[$person->getChildFamilyPedigree($famid)]."</span> ".$current;
+		$current = "<span class='red'>".$PEDIGREE_TYPES[$person->getChildFamilyPedigree($famid)]."</span> ".$current;
 	}
 	// spouses and children
 	if (count($person->getSpouseFamilies())<1) {
@@ -173,7 +173,7 @@ function print_fams($person, $famid=null) {
 				}
 				//How can we use check_NN($names) or something else to replace the unknown unknown name from the page language to the language of the spouse's name?
 				else if ($name['fullNN']=="@P.N. @N.N.") {
-					$spouse_name = $pgv_lang["NN".$person_lang].", ".$pgv_lang["NN".$person_lang];
+					$spouse_name = $UNKNOWN_NN["NN".$person_lang].", ".$UNKNOWN_NN["NN".$person_lang];
 					break;
 				}
 			}
@@ -236,7 +236,6 @@ function indis_array($surn, $soundex_std, $soundex_dm) {
 }
 
 function sosa_gen($sosa) {
-	global $pgv_lang;
 	$gen = (int)log($sosa, 2)+1;
 	return "<sup title=\"".i18n::translate('Generations')."\">{$gen}</sup>";
 }
