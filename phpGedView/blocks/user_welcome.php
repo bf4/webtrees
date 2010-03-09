@@ -41,7 +41,7 @@ $PGV_BLOCKS["print_welcome_block"]["config"]	= array("cache"=>0);
 
 //-- function to print the welcome block
 function print_welcome_block($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	$id="user_welcome";
 	$title = i18n::translate('Welcome')." ".getUserFullName(PGV_USER_ID);
