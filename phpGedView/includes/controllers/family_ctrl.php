@@ -70,7 +70,6 @@ class FamilyRoot extends BaseController {
 			$pbheight,
 			$bheight,
 			$GEDCOM,
-			$pgv_lang,
 			$CONTACT_EMAIL,
 			$show_famlink,
 			$pgv_changes
@@ -221,11 +220,9 @@ class FamilyRoot extends BaseController {
 	}
 
 	function getPageTitle() {
-		global $pgv_lang;
 		if ($this->family) {
 			return PrintReady($this->title);
-		}
-		else {
+		} else {
 			return i18n::translate('Unable to find record with ID');
 		}
 	}
@@ -235,7 +232,7 @@ class FamilyRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getChartsMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
@@ -315,7 +312,7 @@ class FamilyRoot extends BaseController {
 	*/
 	function &getReportsMenu() {
 	/**
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
@@ -341,7 +338,7 @@ class FamilyRoot extends BaseController {
 	* get the family page edit menu
 	*/
 	function &getEditMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $pgv_changes;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_changes;
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
@@ -470,7 +467,7 @@ class FamilyRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getOtherMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";

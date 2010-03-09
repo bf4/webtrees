@@ -94,7 +94,7 @@ class DescendancyControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS, $show_full;
+	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS, $show_full;
 
 	$this->sexarray["M"] = i18n::translate('Male');
 	$this->sexarray["F"] = i18n::translate('Female');
@@ -197,7 +197,6 @@ class DescendancyControllerRoot extends BaseController {
  * @param int $depth the descendancy depth to show
  */
 function print_child_descendancy(&$person, $depth) {
-	global $pgv_lang;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent;
 	global $personcount;
 
@@ -265,7 +264,6 @@ function print_child_descendancy(&$person, $depth) {
  * @param int $depth the descendancy depth to show
  */
 function print_family_descendancy(&$person, &$family, $depth) {
-	global $pgv_lang;
 	global $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent, $personcount;
 
 	if (is_null($family)) return;

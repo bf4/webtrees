@@ -78,7 +78,7 @@ class AncestryControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM_DEFAULT_TAB, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
+		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM_DEFAULT_TAB, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
 		global $DEFAULT_PEDIGREE_GENERATIONS, $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $OLD_PGENS, $box_width, $Dbwidth, $Dbheight;
 		global $show_full;
 
@@ -147,7 +147,7 @@ class AncestryControllerRoot extends BaseController {
 	 * @param int $depth the ascendancy depth to show
 	 */
 	function print_child_ascendancy($pid, $sosa, $depth) {
-		global $pgv_lang, $TEXT_DIRECTION, $OLD_PGENS;
+		global $TEXT_DIRECTION, $OLD_PGENS;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent;
 		global $SHOW_EMPTY_BOXES, $pidarr, $box_width;
 

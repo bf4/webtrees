@@ -145,7 +145,7 @@ class TreeNav {
 	* @param string $height the height parameter for the outer style
 	*/
 	function drawViewport($id='', $width='', $height='') {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $CONTACT_EMAIL, $SERVER_URL;
+		global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $CONTACT_EMAIL, $SERVER_URL;
 		if (empty($id)) $id = $this->rootPerson->getXref();
 		$widthS = "";
 		$heightS = "";
@@ -244,7 +244,7 @@ class TreeNav {
 	* @param Person $person the person to print the details for
 	*/
 	function getDetails(&$person) {
-		global $pgv_lang, $SHOW_ID_NUMBERS, $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
+		global $SHOW_ID_NUMBERS, $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
 		global $TEXT_DIRECTION;
 
 		if (empty($person)) $person = $this->rootPerson;

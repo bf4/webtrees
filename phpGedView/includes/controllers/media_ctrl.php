@@ -168,8 +168,6 @@ class MediaControllerRoot extends IndividualController{
 	* @return string the title of the page to go in the <title> tags
 	*/
 	function getPageTitle() {
-		global $pgv_lang, $GEDCOM;
-
 		if (!is_null($this->mediaobject)) {
 			$name = $this->mediaobject->getFullName();
 			return $name." - ".$this->mediaobject->getXref();
@@ -187,7 +185,7 @@ class MediaControllerRoot extends IndividualController{
 	*/
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TOTAL_NAMES;
-		global $NAME_LINENUM, $SEX_LINENUM, $pgv_lang, $pgv_changes;
+		global $NAME_LINENUM, $SEX_LINENUM, $pgv_changes;
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
@@ -303,7 +301,7 @@ class MediaControllerRoot extends IndividualController{
 	*/
 	function &getOtherMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $THEME_DIR;
-		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART, $pgv_lang;
+		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 		//-- main other menu item
@@ -363,7 +361,7 @@ class MediaControllerRoot extends IndividualController{
 	* @return array
 	*/
 	function getFacts($includeFileName=true) {
-		global $pgv_changes, $GEDCOM, $pgv_lang, $MEDIA_TYPES;
+		global $pgv_changes, $GEDCOM, $MEDIA_TYPES;
 
 		$ignore = array("TITL","FILE");
 		if ($this->show_changes) {
@@ -436,11 +434,9 @@ class MediaControllerRoot extends IndividualController{
 	* @return string
 	*/
 	function getLocalFilename() {
-		global $pgv_lang;
 		if ($this->mediaobject) {
 			return $this->mediaobject->getLocalFilename();
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
