@@ -98,7 +98,7 @@ class IndividualControllerRoot extends BaseController {
 	* Initialization function
 	*/
 	function init() {
-		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
+		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $CHARACTER_SET;
 		global $USE_QUICK_UPDATE, $DEFAULT_PIN_STATE, $pid;
 		global $Fam_Navigator;
 
@@ -348,12 +348,10 @@ class IndividualControllerRoot extends BaseController {
 	* @return string the title of the page to go in the <title> tags
 	*/
 	function getPageTitle() {
-		global $pgv_lang;
 		if ($this->indi) {
 			$name = $this->indi->getFullName();
 			return $name." - ".$this->indi->getXref()." - ".i18n::translate('Individual Information');
-		}
-		else {
+		} else {
 			return i18n::translate('Unable to find record with ID');
 		}
 	}
@@ -469,7 +467,7 @@ class IndividualControllerRoot extends BaseController {
 	* @param Event $event the event object
 	*/
 	function print_name_record(&$event) {
-		global $pgv_lang, $UNDERLINE_NAME_QUOTES, $NAME_REVERSE;
+		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE;
 		global $lang_short_cut, $LANGUAGE;
 
 		if (!$event->canShowDetails()) {
@@ -551,7 +549,7 @@ class IndividualControllerRoot extends BaseController {
 	* @param Event $event the Event object
 	*/
 	function print_sex_record(&$event) {
-		global $pgv_lang, $sex;
+		global $sex;
 
 		if (!$event->canShowDetails()) return false;
 		$factrec = $event->getGedComRecord();
@@ -598,7 +596,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
-		global $pgv_lang, $pgv_changes, $USE_QUICK_UPDATE;
+		global $pgv_changes, $USE_QUICK_UPDATE;
 		if ($TEXT_DIRECTION=="rtl") {
 			$ff="_rtl";
 		} else {
@@ -706,7 +704,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function &getOtherMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
-		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART, $pgv_lang;
+		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 		//-- main other menu item
@@ -811,7 +809,6 @@ class IndividualControllerRoot extends BaseController {
 	* @return array an array of Person that will be used to iterate through on the indivudal.php page
 	*/
 	function buildFamilyList(&$family, $type) {
-		global $pgv_lang;
 		$people = array();
 		if (!is_object($family)) return $people;
 		$labels = array();
@@ -837,9 +834,9 @@ class IndividualControllerRoot extends BaseController {
 				$labels["mother"] = i18n::translate('Partner');
 				$labels["father"] = i18n::translate('Partner');
 			} elseif ($family->isDivorced()) {
-				$labels["parent"] = $pgv_lang["ex-spouse"];
-				$labels["mother"] = $pgv_lang["ex-wife"];
-				$labels["father"] = $pgv_lang["ex-husband"];
+				$labels["parent"] = i18n::translate('Ex-Spouse');
+				$labels["mother"] = i18n::translate('Ex-Wife');
+				$labels["father"] = i18n::translate('Ex-Husband');
 			} else {
 				$marr_rec = $family->getMarriageRecord();
 				if (!empty($marr_rec)) {
@@ -849,14 +846,9 @@ class IndividualControllerRoot extends BaseController {
 						$labels["mother"] = i18n::translate('Wife');
 						$labels["father"] = i18n::translate('Husband');
 					} else {
-						if (isset($pgv_lang[$type])) {
-							$label = $pgv_lang[$type];
-						} else {
-							$label = i18n::translate('Partner');
-						}
-						$labels["parent"] = $label;
-						$labels["mother"] = $label;
-						$labels["father"] = $label;
+						$labels["parent"] = i18n::translate('Partner');
+						$labels["mother"] = i18n::translate('Partner');
+						$labels["father"] = i18n::translate('Partner');
 					}
 				} else {
 					$labels["parent"] = i18n::translate('Spouse');

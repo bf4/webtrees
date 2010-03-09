@@ -84,7 +84,7 @@ class HourglassControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init($rootid='', $show_full=1, $generations=3) {
-		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bheight, $bwidth, $bhalfheight, $GEDCOM_DEFAULT_TAB, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
+		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bheight, $bwidth, $bhalfheight, $GEDCOM_DEFAULT_TAB, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
 		global $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $show_full;
 
 		// Extract parameters from from
@@ -220,7 +220,7 @@ class HourglassControllerRoot extends BaseController {
 	 * @return void
 	 */
 	function print_descendency($pid, $count, $showNav=true) {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth, $bhalfheight;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $bheight, $bwidth, $bhalfheight;
 		global $lastGenSecondFam;
 
 		if ($count>$this->dgenerations) return 0;

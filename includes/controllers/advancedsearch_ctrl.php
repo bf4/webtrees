@@ -120,7 +120,6 @@ class AdvancedSearchController extends SearchController {
 	}
 
 	function getPageTitle() {
-		global $pgv_lang;
 		if ($this->action=="advanced") return i18n::translate('Advanced Search');
 		else parent :: getPageTitle();
 	}
@@ -458,8 +457,6 @@ class AdvancedSearchController extends SearchController {
 	}
 
 	function PrintResults() {
-		global $pgv_lang;
-
 		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 		$ret = true;
 		if (count($this->myindilist)>0) {

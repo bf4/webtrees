@@ -329,7 +329,7 @@ class LifespanControllerRoot extends BaseController {
 
 	//method used to place the person boxes onto the timeline
 	function fillTL($ar, $int, $top) {
-		global $maxX, $zindex, $pgv_lang;
+		global $maxX, $zindex;
 
 		$zindex = count($ar);
 
