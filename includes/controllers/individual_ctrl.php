@@ -1011,7 +1011,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 			if ($newchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
 			$pedi = $newchildren[$i]->getChildFamilyPedigree($family->getXref());
-			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
+			if ($pedi && isset($PEDIGREE_TYPES[$pedi])) $label .= " (".$PEDIGREE_TYPES[$pedi].")";
 			$newchildren[$i]->setLabel($label);
 		}
 		$num = count($delchildren);
@@ -1026,7 +1026,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 			if ($delchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
 			$pedi = $delchildren[$i]->getChildFamilyPedigree($family->getXref());
-			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
+			if ($pedi && isset($PEDIGREE_TYPES[$pedi])) $label .= " (".$PEDIGREE_TYPES[$pedi].")";
 			$delchildren[$i]->setLabel($label);
 		}
 		if (!is_null($newhusb)) $people['newhusb'] = $newhusb;

@@ -56,6 +56,13 @@ $MEDIA_TYPES=array(
 	'other'      =>i18n::translate('Other'),
 );
 
+$PEDIGREE_TYPES=array(
+	'adopted'=>i18n::translate('adopted'),
+	'birth'  =>i18n::translate('birth'),
+	'foster' =>i18n::translate('foster'),
+	'sealing'=>i18n::translate('sealing'),
+);
+
 // TEMP tags - LDS temple codes
 $TEMPLE_CODES = array(
 	'ABA'  =>'Aba, Nigeria',
