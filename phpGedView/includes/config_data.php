@@ -34,6 +34,32 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CONFIG_DATA_PHP', '');
 
+// Unknown surname in various scripts
+$UNKNOWN_NN=array(
+	'NN'          =>i18n::translate('(unknown)'),
+	'NNhebrew'    =>i18n::translate('(לא-ידוע)'),
+	'NNarabic'    =>i18n::translate('(غير معروف)'),
+	'NNgreek'     =>i18n::translate('(άγνωστος/η)'),
+	'NNrussian'   =>i18n::translate('(неопределено)'),
+	'NNchinese'   =>i18n::translate('(未知)'),
+	'NNvietnamese'=>i18n::translate('(vô danh)'),
+	'NNthai'      =>i18n::translate('(unknown)'),
+	'NNother'     =>i18n::translate('(unknown)'),
+);
+
+// Unknown givne name in various scripts
+$UNKNOWN_PN=array(
+	'PN'          =>i18n::translate('(unknown)'),
+	'PNhebrew'    =>i18n::translate('(לא-ידוע)'),
+	'PNarabic'    =>i18n::translate('(غير معروف)'),
+	'PNgreek'     =>i18n::translate('(άγνωστος/η)'),
+	'PNrussian'   =>i18n::translate('(неопределено)'),
+	'PNchinese'   =>i18n::translate('(未知)'),
+	'PNvietnamese'=>i18n::translate('(không biết tuổi)'),
+	'PNthai'      =>i18n::translate('(unknown)'),
+	'PNother'     =>i18n::translate('(unknown)'),
+);
+
 // Type attribute of a media object
 $MEDIA_TYPES=array(
 	'audio'      =>i18n::translate('Audio'),
@@ -56,6 +82,7 @@ $MEDIA_TYPES=array(
 	'other'      =>i18n::translate('Other'),
 );
 
+// BIRT:PEDI values
 $PEDIGREE_TYPES=array(
 	'adopted'=>i18n::translate('adopted'),
 	'birth'  =>i18n::translate('birth'),

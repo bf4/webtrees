@@ -1829,7 +1829,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		}
 	}
 	if ($summary!="") {
-		$return .= "<b>", $summary, "</b>";
+		$return .= "<b>". $summary. "</b>";
 	}
 
 	return $return;
@@ -1965,7 +1965,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		}
 	}
 	if ($summary!="") {
-		$return .= "<b>", $summary, "</b>";
+		$return .= "<b>". $summary. "</b>";
 	}
 
 	return $return;
