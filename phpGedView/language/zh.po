@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-09 19:15+0000\n"
+"POT-Creation-Date: 2010-03-09 23:21+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -90,7 +90,7 @@ msgid "Average age at death"
 msgstr "去世的平均年龄"
 
 #: ../statistics.php:114 ../statistics.php:130 ../statistics.php:145
-#: ../includes/functions/functions_print_lists.php:1962
+#: ../includes/functions/functions_print_lists.php:2016
 #: ../includes/classes/class_stats.php:696
 #: ../includes/classes/class_stats.php:698
 #: ../includes/classes/class_stats.php:706
@@ -101,7 +101,7 @@ msgid "Males"
 msgstr ""
 
 #: ../statistics.php:115 ../statistics.php:131 ../statistics.php:146
-#: ../includes/functions/functions_print_lists.php:1962
+#: ../includes/functions/functions_print_lists.php:2016
 #: ../includes/classes/class_stats.php:695
 #: ../includes/classes/class_stats.php:699
 #: ../includes/classes/class_stats.php:705
@@ -120,7 +120,7 @@ msgid "Oldest living people"
 msgstr ""
 
 #: ../statistics.php:157 ../editconfig_gedcom.php:1387
-#: ../editconfig_gedcom.php:1388 ../includes/classes/class_stats.php:3552
+#: ../editconfig_gedcom.php:1388 ../includes/classes/class_stats.php:3582
 msgid "Names"
 msgstr "名字"
 
@@ -145,7 +145,7 @@ msgstr "显示健在人员名单"
 
 #: ../statistics.php:183 ../find.php:454
 #: ../includes/functions/functions_print_lists.php:780
-#: ../includes/classes/class_stats.php:3298 ../statisticsplot.php:783
+#: ../includes/classes/class_stats.php:3328 ../statisticsplot.php:783
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:484
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:512
 #: ../calendar.php:443
@@ -161,11 +161,11 @@ msgstr ""
 msgid "Total divorces"
 msgstr ""
 
-#: ../statistics.php:195 ../includes/classes/class_stats.php:2457
+#: ../statistics.php:195 ../includes/classes/class_stats.php:2487
 msgid "Marriages by century"
 msgstr ""
 
-#: ../statistics.php:196 ../includes/classes/class_stats.php:2540
+#: ../statistics.php:196 ../includes/classes/class_stats.php:2570
 msgid "Divorces by century"
 msgstr ""
 
@@ -243,16 +243,16 @@ msgid "Children in family"
 msgstr ""
 
 #: ../statistics.php:278 ../includes/functions/functions_rss.php:196
-#: ../includes/classes/class_stats.php:3129 ../blocks/gedcom_stats.php:209
+#: ../includes/classes/class_stats.php:3159 ../blocks/gedcom_stats.php:209
 #: ../blocks/gedcom_stats.php:331
 msgid "Average number of children per family"
 msgstr "平均家庭里的孩子数量"
 
-#: ../statistics.php:279 ../includes/classes/class_stats.php:3299
+#: ../statistics.php:279 ../includes/classes/class_stats.php:3329
 msgid "Number of families without children"
 msgstr ""
 
-#: ../statistics.php:290 ../includes/classes/class_stats.php:3064
+#: ../statistics.php:290 ../includes/classes/class_stats.php:3094
 #, fuzzy
 msgid "Largest families"
 msgstr "语言文件"
@@ -420,8 +420,8 @@ msgstr ""
 msgid "Age in year of first marriage"
 msgstr ""
 
-#: ../statistics.php:566 ../includes/classes/class_stats.php:3127
-#: ../includes/classes/class_stats.php:3128 ../statisticsplot.php:785
+#: ../statistics.php:566 ../includes/classes/class_stats.php:3157
+#: ../includes/classes/class_stats.php:3158 ../statisticsplot.php:785
 #, fuzzy
 msgid "Number of children"
 msgstr "重新排列孩子"
@@ -536,7 +536,7 @@ msgstr "姓放在前后"
 #: ../statistics.php:651 ../search_advanced.php:238 ../search_advanced.php:275
 #: ../branches.php:70 ../includes/functions/functions_print_lists.php:1262
 #: ../includes/functions/functions_print_lists.php:1311
-#: ../includes/controllers/advancedsearch_ctrl.php:151 ../help_text.php:1267
+#: ../includes/controllers/advancedsearch_ctrl.php:150 ../help_text.php:1267
 msgid "SURN"
 msgstr "姓氏"
 
@@ -633,7 +633,7 @@ msgstr "统计"
 #: ../includes/classes/class_menubar.php:532
 #: ../includes/classes/class_menubar.php:559
 #: ../includes/classes/class_menubar.php:577
-#: ../includes/controllers/advancedsearch_ctrl.php:468
+#: ../includes/controllers/advancedsearch_ctrl.php:465
 #: ../includes/controllers/search_ctrl.php:772
 #: ../modules/googlemap/placehierarchy.php:238
 #: ../modules/individuals/pgv_module.php:47 ../calendar.php:404
@@ -725,7 +725,7 @@ msgid "View"
 msgstr "试图"
 
 #: ../ancestry.php:149 ../descendancy.php:98 ../pedigree.php:86
-#: ../hourglass.php:98 ../branches.php:241 ../fanchart.php:474
+#: ../hourglass.php:98 ../branches.php:240 ../fanchart.php:474
 #: ../modules/googlemap/pedigree_map.php:164 ../familybook.php:441
 #, fuzzy
 msgid "Generations"
@@ -781,8 +781,8 @@ msgid "Message successfully sent to %s"
 msgstr "信被送"
 
 #: ../message.php:153 ../useradmin.php:572 ../useradmin.php:606
-#: ../edit_changes.php:136 ../includes/classes/class_stats.php:3690
-#: ../includes/classes/class_stats.php:3692
+#: ../edit_changes.php:136 ../includes/classes/class_stats.php:3720
+#: ../includes/classes/class_stats.php:3722
 #: ../includes/classes/class_stats_ui.php:285 ../blocks/logged_in.php:92
 #: ../blocks/user_messages.php:134
 msgid "Send Message"
@@ -923,9 +923,9 @@ msgstr "显示"
 #: ../includes/functions/functions_print_facts.php:257
 #: ../includes/functions/functions_print_facts.php:701
 #: ../includes/functions/functions_print_facts.php:1581
-#: ../includes/functions/functions_privacy.php:851
-#: ../includes/functions/functions_privacy.php:880
-#: ../includes/functions/functions_privacy.php:886
+#: ../includes/functions/functions_privacy.php:850
+#: ../includes/functions/functions_privacy.php:879
+#: ../includes/functions/functions_privacy.php:885
 #: ../includes/classes/class_gedcomrecord.php:474
 #: ../includes/classes/class_gedcomrecord.php:605
 #: ../includes/classes/class_gedcomrecord.php:618
@@ -935,7 +935,7 @@ msgstr "显示"
 #: ../includes/classes/class_person.php:220
 #: ../includes/classes/class_person.php:245
 #: ../includes/classes/class_reportbase.php:2166
-#: ../includes/controllers/family_ctrl.php:177
+#: ../includes/controllers/family_ctrl.php:176
 #: ../includes/controllers/source_ctrl.php:80
 #: ../includes/controllers/repository_ctrl.php:79
 #: ../includes/controllers/note_ctrl.php:80
@@ -979,8 +979,8 @@ msgstr "显示"
 #: ../modules/individuals/individuals.php:169
 #: ../modules/individuals/individuals.php:202
 #: ../modules/families/families.php:169 ../modules/families/families.php:227
-#: ../modules/descendancy/descendancy.php:177
-#: ../modules/descendancy/descendancy.php:210
+#: ../modules/descendancy/descendancy.php:175
+#: ../modules/descendancy/descendancy.php:207
 msgid "Private"
 msgstr "个人隐私"
 
@@ -991,7 +991,7 @@ msgstr "兄弟"
 
 #: ../pedigree.php:392 ../fanchart.php:346
 #: ../includes/controllers/hourglass_ctrl.php:458
-#: ../includes/controllers/individual_ctrl.php:822 ../familybook.php:244
+#: ../includes/controllers/individual_ctrl.php:819 ../familybook.php:244
 msgid "Sibling"
 msgstr "兄弟姐妹"
 
@@ -1002,6 +1002,12 @@ msgstr ""
 #: ../module.php:224
 msgid "Unknown module type."
 msgstr ""
+
+#: ../themes/mercury/templates/personbox_template.php:59
+#: ../themes/belgianchocolate/templates/personbox_template.php:59
+#, fuzzy
+msgid "loading"
+msgstr "读取中..."
 
 #: ../themes/fab/header.php:109 ../includes/functions/functions_print.php:775
 #: ../blocks/login_block.php:52 ../blocks/login_block.php:60
@@ -1041,8 +1047,8 @@ msgstr "登陆"
 #: ../modules/individuals/individuals.php:58
 #: ../modules/individuals/individuals.php:100
 #: ../modules/families/families.php:58 ../modules/families/families.php:100
-#: ../modules/descendancy/descendancy.php:55
-#: ../modules/descendancy/descendancy.php:86 ../searchhelp.php:125
+#: ../modules/descendancy/descendancy.php:54
+#: ../modules/descendancy/descendancy.php:85 ../searchhelp.php:125
 msgid "Search"
 msgstr "搜索"
 
@@ -1196,7 +1202,7 @@ msgstr ""
 
 #: ../indilist.php:93 ../indilist.php:167 ../indilist.php:169
 #: ../indilist.php:256 ../indilist.php:258 ../editconfig_gedcom.php:1515
-#: ../includes/classes/class_stats.php:3551
+#: ../includes/classes/class_stats.php:3581
 #: ../includes/classes/class_stats_ui.php:240
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:60
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:64
@@ -1210,7 +1216,10 @@ msgid "ALL"
 msgstr "所有"
 
 #: ../indilist.php:109 ../indilist.php:121 ../indilist.php:141
-#: ../indilist.php:240 ../includes/sort_tables_utf8.php:81
+#: ../indilist.php:240 ../includes/config_data.php:39
+#: ../includes/config_data.php:46 ../includes/config_data.php:47
+#: ../includes/config_data.php:52 ../includes/config_data.php:59
+#: ../includes/config_data.php:60 ../includes/sort_tables_utf8.php:81
 #: ../includes/sort_tables_utf8.php:82 ../includes/sort_tables_utf8.php:91
 #: ../includes/sort_tables_utf8.php:92
 #: ../includes/functions/functions_print_lists.php:1236
@@ -1375,7 +1384,7 @@ msgstr ""
 #: ../includes/classes/class_stats_ui.php:278
 #: ../includes/classes/class_stats_ui.php:355
 #: ../includes/classes/class_stats_ui.php:452
-#: ../includes/controllers/individual_ctrl.php:582 ../dir_editor.php:238
+#: ../includes/controllers/individual_ctrl.php:580 ../dir_editor.php:238
 #: ../faq.php:308 ../edit_privacy.php:474 ../edit_privacy.php:566
 #: ../edit_privacy.php:660 ../edit_privacy.php:759
 #: ../blocks/gedcom_news.php:159 ../blocks/user_messages.php:85
@@ -1533,12 +1542,12 @@ msgstr "个人"
 
 #: ../individual.php:46 ../editconfig_gedcom.php:978 ../family.php:39
 #: ../note.php:51 ../mediaviewer.php:48
-#: ../includes/controllers/family_ctrl.php:229
+#: ../includes/controllers/family_ctrl.php:226
 #: ../includes/controllers/source_ctrl.php:170
 #: ../includes/controllers/repository_ctrl.php:169
 #: ../includes/controllers/note_ctrl.php:170
-#: ../includes/controllers/media_ctrl.php:177
-#: ../includes/controllers/individual_ctrl.php:357 ../repo.php:51
+#: ../includes/controllers/media_ctrl.php:175
+#: ../includes/controllers/individual_ctrl.php:355 ../repo.php:51
 #: ../source.php:51 ../edit_merge.php:76 ../edit_merge.php:79
 msgid "Unable to find record with ID"
 msgstr "無法查找記錄"
@@ -1560,8 +1569,8 @@ msgstr "這個記錄被更新了。  點擊這裡顯示更改。"
 #: ../includes/functions/functions_print.php:2073
 #: ../includes/functions/functions_print.php:2108
 #: ../includes/classes/class_stats.php:1821
-#: ../includes/classes/class_stats.php:2670
-#: ../includes/classes/class_stats.php:2671
+#: ../includes/classes/class_stats.php:2700
+#: ../includes/classes/class_stats.php:2701
 #: ../includes/classes/class_person.php:276
 #: ../includes/controllers/timeline_ctrl.php:273
 #: ../includes/controllers/timeline_ctrl.php:280
@@ -1615,12 +1624,12 @@ msgid "M"
 msgstr ""
 
 #: ../individual.php:329 ../family.php:141 ../edit_changes.php:117
-#: ../includes/controllers/family_ctrl.php:497
+#: ../includes/controllers/family_ctrl.php:494
 #: ../includes/controllers/source_ctrl.php:312
 #: ../includes/controllers/repository_ctrl.php:304
 #: ../includes/controllers/note_ctrl.php:305
-#: ../includes/controllers/media_ctrl.php:326
-#: ../includes/controllers/individual_ctrl.php:724
+#: ../includes/controllers/media_ctrl.php:324
+#: ../includes/controllers/individual_ctrl.php:722
 msgid "View GEDCOM Record"
 msgstr "看家谱的纪录"
 
@@ -1678,11 +1687,11 @@ msgstr "设置帮助"
 msgid "Download config.php"
 msgstr ""
 
-#: ../install.php:470 ../modules/batch_update/batch_update.php:102
+#: ../install.php:470 ../modules/batch_update/batch_update.php:106
 msgid "Next &gt;"
 msgstr "下一个"
 
-#: ../install.php:480 ../modules/batch_update/batch_update.php:101
+#: ../install.php:480 ../modules/batch_update/batch_update.php:105
 msgid "&lt; Previous"
 msgstr "上一个"
 
@@ -1864,7 +1873,7 @@ msgstr ""
 #: ../includes/functions/functions_print.php:2122
 #: ../includes/functions/functions_print_facts.php:1602
 #: ../includes/functions/functions_print_facts.php:1612
-#: ../includes/classes/class_stats.php:3765
+#: ../includes/classes/class_stats.php:3795
 #: ../modules/googlemap/editconfig.php:217
 #: ../modules/googlemap/editconfig.php:250
 #: ../modules/googlemap/editconfig.php:283
@@ -1873,14 +1882,14 @@ msgstr ""
 #: ../modules/googlemap/editconfig.php:316
 #: ../modules/googlemap/editconfig.php:327
 #: ../modules/relatives/relatives.php:229
-#: ../modules/batch_update/batch_update.php:359 ../usermigrate.php:162
+#: ../modules/batch_update/batch_update.php:364 ../usermigrate.php:162
 #: ../usermigrate.php:163 ../edit_privacy.php:101
 #: ../blocks/upcoming_events.php:157 ../blocks/upcoming_events.php:169
 #: ../blocks/upcoming_events.php:204 ../blocks/top10_givnnames.php:154
 #: ../blocks/charts.php:202 ../blocks/todays_events.php:132
 #: ../blocks/todays_events.php:144 ../blocks/todays_events.php:179
 #: ../blocks/random_media.php:426 ../blocks/random_media.php:435
-#: ../blocks/review_changes.php:153 ../blocks/recent_changes.php:115
+#: ../blocks/review_changes.php:153 ../blocks/recent_changes.php:114
 #: ../blocks/gedcom_stats.php:260 ../blocks/gedcom_stats.php:340
 msgid "Yes"
 msgstr "是"
@@ -1927,7 +1936,7 @@ msgstr "是"
 #: ../includes/functions/functions_print_facts.php:303
 #: ../includes/functions/functions_print_facts.php:1602
 #: ../includes/functions/functions_print_facts.php:1612
-#: ../includes/classes/class_stats.php:3766
+#: ../includes/classes/class_stats.php:3796
 #: ../modules/googlemap/editconfig.php:216
 #: ../modules/googlemap/editconfig.php:249
 #: ../modules/googlemap/editconfig.php:282
@@ -1936,14 +1945,14 @@ msgstr "是"
 #: ../modules/googlemap/editconfig.php:315
 #: ../modules/googlemap/editconfig.php:326
 #: ../modules/relatives/relatives.php:231
-#: ../modules/batch_update/batch_update.php:358 ../usermigrate.php:164
+#: ../modules/batch_update/batch_update.php:363 ../usermigrate.php:164
 #: ../edit_privacy.php:95 ../blocks/upcoming_events.php:156
 #: ../blocks/upcoming_events.php:168 ../blocks/upcoming_events.php:205
 #: ../blocks/top10_givnnames.php:155 ../blocks/charts.php:201
 #: ../blocks/todays_events.php:131 ../blocks/todays_events.php:143
 #: ../blocks/todays_events.php:180 ../blocks/random_media.php:428
 #: ../blocks/random_media.php:437 ../blocks/review_changes.php:156
-#: ../blocks/recent_changes.php:114 ../blocks/gedcom_stats.php:262
+#: ../blocks/recent_changes.php:113 ../blocks/gedcom_stats.php:262
 #: ../blocks/gedcom_stats.php:341
 msgid "No"
 msgstr "不"
@@ -2155,21 +2164,21 @@ msgstr ""
 msgid "To manage users, use the <a href=\"useradmin.php\">User Administration</a> page."
 msgstr ""
 
-#: ../inverselink.php:50 ../includes/controllers/media_ctrl.php:246
+#: ../inverselink.php:50 ../includes/controllers/media_ctrl.php:244
 #: ../modules/lightbox/functions/lb_link.php:63
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:44
 #: ../media.php:760
 msgid "To Person"
 msgstr "到个人"
 
-#: ../inverselink.php:53 ../includes/controllers/media_ctrl.php:251
+#: ../inverselink.php:53 ../includes/controllers/media_ctrl.php:249
 #: ../modules/lightbox/functions/lb_link.php:68
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:47
 #: ../media.php:765
 msgid "To Family"
 msgstr "到家庭"
 
-#: ../inverselink.php:56 ../includes/controllers/media_ctrl.php:256
+#: ../inverselink.php:56 ../includes/controllers/media_ctrl.php:254
 #: ../modules/lightbox/functions/lb_link.php:73
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:50
 #: ../media.php:770
@@ -2231,7 +2240,7 @@ msgstr "删除Repository"
 msgid "Shared Note"
 msgstr ""
 
-#: ../inverselink.php:218 ../includes/controllers/media_ctrl.php:234
+#: ../inverselink.php:218 ../includes/controllers/media_ctrl.php:232
 #: ../modules/lightbox/functions/lb_link.php:54
 #: ../modules/lightbox/functions/lb_link.php:57 ../edit_interface.php:604
 #: ../edit_interface.php:652 ../media.php:758
@@ -2296,7 +2305,7 @@ msgstr "在个人框架里显示图像"
 #: ../includes/functions/functions_print.php:179
 #: ../includes/functions/functions_print.php:355
 #: ../includes/functions/functions_print.php:356
-#: ../includes/controllers/individual_ctrl.php:354
+#: ../includes/controllers/individual_ctrl.php:353
 #: ../modules/family_nav/family_nav.php:612
 #: ../modules/family_nav/family_nav.php:614
 #: ../modules/family_nav/family_nav.php:634
@@ -2342,12 +2351,12 @@ msgstr "个人的代码号编码"
 #: ../includes/functions/functions_print_facts.php:266
 #: ../includes/functions/functions_print_facts.php:711
 #: ../includes/functions/functions_print_facts.php:1589
-#: ../includes/classes/class_stats.php:2954
-#: ../includes/classes/class_stats.php:2980
-#: ../includes/classes/class_stats.php:2991
-#: ../includes/classes/class_stats.php:3001
+#: ../includes/classes/class_stats.php:2984
+#: ../includes/classes/class_stats.php:3010
+#: ../includes/classes/class_stats.php:3021
+#: ../includes/classes/class_stats.php:3031
 #: ../includes/controllers/ancestry_ctrl.php:203
-#: ../includes/controllers/descendancy_ctrl.php:287
+#: ../includes/controllers/descendancy_ctrl.php:285
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:617
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:646
 #: ../modules/relatives/relatives.php:51
@@ -2785,8 +2794,8 @@ msgstr "个人记录和详细资料"
 #: ../editconfig_gedcom.php:1513
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:53
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:56
-#: ../modules/relatives/relatives.php:314
-#: ../modules/relatives/relatives.php:328
+#: ../modules/relatives/relatives.php:316
+#: ../modules/relatives/relatives.php:330
 msgid "Close Relatives"
 msgstr "近亲"
 
@@ -2907,7 +2916,7 @@ msgstr ""
 msgid "Show all Notes and Source references on Notes and Sources tabs"
 msgstr ""
 
-#: ../editconfig_gedcom.php:1732 ../modules/relatives/relatives.php:321
+#: ../editconfig_gedcom.php:1732 ../modules/relatives/relatives.php:323
 #: ../help_text.php:3132 ../help_text.php:3613
 msgid "Show Date Differences"
 msgstr "显示日期不同"
@@ -3279,11 +3288,11 @@ msgstr "检查"
 #: ../includes/functions/functions_print_facts.php:1448
 #: ../includes/classes/class_stats_ui.php:354
 #: ../includes/classes/class_stats_ui.php:451
-#: ../includes/controllers/media_ctrl.php:200
-#: ../includes/controllers/media_ctrl.php:208
+#: ../includes/controllers/media_ctrl.php:198
+#: ../includes/controllers/media_ctrl.php:206
+#: ../includes/controllers/individual_ctrl.php:577
 #: ../includes/controllers/individual_ctrl.php:579
-#: ../includes/controllers/individual_ctrl.php:581
-#: ../includes/controllers/individual_ctrl.php:608 ../changelanguage.php:227
+#: ../includes/controllers/individual_ctrl.php:606 ../changelanguage.php:227
 #: ../changelanguage.php:250
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:204
 #: ../modules/googlemap/places.php:628 ../faq.php:268 ../faq.php:305
@@ -3315,34 +3324,34 @@ msgstr ""
 
 #: ../family.php:112 ../modules/relatives/relatives.php:102
 #: ../modules/relatives/relatives.php:103
-#: ../modules/relatives/relatives.php:333 ../edit_interface.php:357
+#: ../modules/relatives/relatives.php:335 ../edit_interface.php:357
 msgid "Add a new father"
 msgstr "添加爸爸"
 
 #: ../family.php:117 ../modules/relatives/relatives.php:148
 #: ../modules/relatives/relatives.php:149
-#: ../modules/relatives/relatives.php:336 ../edit_interface.php:355
+#: ../modules/relatives/relatives.php:338 ../edit_interface.php:355
 msgid "Add a new mother"
 msgstr "添加母亲"
 
 #: ../family.php:137 ../includes/classes/class_menubar.php:347
 #: ../includes/classes/class_menubar.php:357
-#: ../includes/controllers/family_ctrl.php:266
-#: ../includes/controllers/family_ctrl.php:277
+#: ../includes/controllers/family_ctrl.php:263
+#: ../includes/controllers/family_ctrl.php:274
 msgid "Show couple on timeline chart"
 msgstr "在时间表上显示父母"
 
 #: ../family.php:138 ../includes/classes/class_menubar.php:348
 #: ../includes/classes/class_menubar.php:367
-#: ../includes/controllers/family_ctrl.php:267
-#: ../includes/controllers/family_ctrl.php:287
+#: ../includes/controllers/family_ctrl.php:264
+#: ../includes/controllers/family_ctrl.php:284
 msgid "Show children on timeline chart"
 msgstr "在时间表上显示孩子"
 
 #: ../family.php:139 ../includes/classes/class_menubar.php:349
 #: ../includes/classes/class_menubar.php:377
-#: ../includes/controllers/family_ctrl.php:268
-#: ../includes/controllers/family_ctrl.php:297
+#: ../includes/controllers/family_ctrl.php:265
+#: ../includes/controllers/family_ctrl.php:294
 msgid "Show family on timeline chart"
 msgstr "在时间表上显示家庭"
 
@@ -3367,10 +3376,10 @@ msgstr "年:"
 #: ../timeline.php:278 ../includes/functions/functions_edit.php:1488
 #: ../includes/functions/functions.php:837
 #: ../includes/classes/class_stats.php:1833
-#: ../includes/classes/class_stats.php:2683
-#: ../includes/classes/class_stats.php:3551
+#: ../includes/classes/class_stats.php:2713
+#: ../includes/classes/class_stats.php:3581
 #: ../includes/controllers/individual_ctrl.php:105
-#: ../includes/controllers/individual_ctrl.php:570
+#: ../includes/controllers/individual_ctrl.php:568
 #: ../includes/controllers/descendancy_ctrl.php:99 ../statisticsplot.php:802
 #: ../calendar.php:524 ../calendar.php:606 ../blocks/top10_givnnames.php:95
 msgid "Male"
@@ -3379,10 +3388,10 @@ msgstr "男性"
 #: ../timeline.php:280 ../includes/functions/functions_edit.php:1490
 #: ../includes/functions/functions.php:839
 #: ../includes/classes/class_stats.php:1833
-#: ../includes/classes/class_stats.php:2683
-#: ../includes/classes/class_stats.php:3551
+#: ../includes/classes/class_stats.php:2713
+#: ../includes/classes/class_stats.php:3581
 #: ../includes/controllers/individual_ctrl.php:106
-#: ../includes/controllers/individual_ctrl.php:572
+#: ../includes/controllers/individual_ctrl.php:570
 #: ../includes/controllers/descendancy_ctrl.php:100 ../statisticsplot.php:803
 #: ../calendar.php:527 ../calendar.php:610 ../blocks/top10_givnnames.php:90
 msgid "Female"
@@ -3395,11 +3404,11 @@ msgstr "女性"
 #: ../includes/functions/functions_edit.php:1492
 #: ../includes/functions/functions_print.php:1928
 #: ../includes/functions/functions.php:841
-#: ../includes/classes/class_serviceclient.php:89
+#: ../includes/classes/class_serviceclient.php:87
 #: ../includes/classes/class_stats.php:907
 #: ../includes/classes/class_stats.php:908
-#: ../includes/classes/class_stats.php:3281
-#: ../includes/classes/class_stats.php:3551
+#: ../includes/classes/class_stats.php:3311
+#: ../includes/classes/class_stats.php:3581
 #: ../includes/classes/class_gewebservice.php:95
 #: ../includes/classes/class_gewebservice.php:97
 #: ../includes/classes/class_geclippings.php:326
@@ -3413,7 +3422,7 @@ msgstr "女性"
 #: ../includes/classes/class_gedownloadgedcom.php:89
 #: ../includes/controllers/pedigree_ctrl.php:281
 #: ../includes/controllers/individual_ctrl.php:107
-#: ../includes/controllers/individual_ctrl.php:574
+#: ../includes/controllers/individual_ctrl.php:572
 #: ../includes/controllers/descendancy_ctrl.php:101
 #: ../modules/family_nav/family_nav.php:759
 #: ../modules/family_nav/family_nav.php:762
@@ -3919,7 +3928,7 @@ msgstr "上载错误。"
 #: ../search_advanced.php:37 ../search_advanced.php:143 ../search.php:570
 #: ../search.php:586 ../search.php:597 ../search.php:618
 #: ../includes/classes/class_menubar.php:864
-#: ../includes/controllers/advancedsearch_ctrl.php:124
+#: ../includes/controllers/advancedsearch_ctrl.php:123
 msgid "Advanced Search"
 msgstr ""
 
@@ -3955,8 +3964,8 @@ msgstr ""
 #: ../includes/functions/functions_charts.php:789
 #: ../includes/functions/functions_charts.php:809
 #: ../includes/classes/class_person.php:1581
-#: ../includes/controllers/individual_ctrl.php:821
-#: ../includes/controllers/individual_ctrl.php:887
+#: ../includes/controllers/individual_ctrl.php:818
+#: ../includes/controllers/individual_ctrl.php:879
 #: ../modules/googlemap/pedigree_map.php:650 ../edit_interface.php:2337
 #: ../edit_interface.php:2340 ../addremotelink.php:129
 msgid "Father"
@@ -3968,7 +3977,7 @@ msgstr "爸爸"
 #: ../includes/functions/functions_print_lists.php:777
 #: ../includes/functions/functions_print_lists.php:787
 #: ../includes/functions/functions_print_lists.php:1609
-#: ../includes/controllers/advancedsearch_ctrl.php:148 ../help_text.php:815
+#: ../includes/controllers/advancedsearch_ctrl.php:147 ../help_text.php:815
 #: ../blocks/yahrzeit.php:217
 msgid "GIVN"
 msgstr "名："
@@ -3979,8 +3988,8 @@ msgstr "名："
 #: ../includes/functions/functions_charts.php:790
 #: ../includes/functions/functions_charts.php:810
 #: ../includes/classes/class_person.php:1590
-#: ../includes/controllers/individual_ctrl.php:820
-#: ../includes/controllers/individual_ctrl.php:888
+#: ../includes/controllers/individual_ctrl.php:817
+#: ../includes/controllers/individual_ctrl.php:880
 #: ../modules/googlemap/pedigree_map.php:648 ../edit_interface.php:2336
 #: ../edit_interface.php:2341 ../addremotelink.php:128
 msgid "Mother"
@@ -4010,8 +4019,8 @@ msgstr "詳細資料在這個人員專用。"
 #: ../relationship.php:128 ../relationship.php:129 ../addsearchlink.php:81
 #: ../includes/functions/functions_print.php:1904
 #: ../includes/functions/functions_print.php:2126
-#: ../includes/controllers/individual_ctrl.php:849
-#: ../includes/controllers/individual_ctrl.php:863 ../edit_interface.php:618
+#: ../includes/controllers/individual_ctrl.php:846
+#: ../includes/controllers/individual_ctrl.php:855 ../edit_interface.php:618
 #: ../edit_interface.php:2358 ../edit_interface.php:2367
 #: ../addremotelink.php:131
 msgid "Wife"
@@ -4020,8 +4029,8 @@ msgstr "妻子"
 #: ../relationship.php:132 ../relationship.php:133 ../addsearchlink.php:80
 #: ../includes/functions/functions_print.php:1902
 #: ../includes/functions/functions_print.php:2126
-#: ../includes/controllers/individual_ctrl.php:850
-#: ../includes/controllers/individual_ctrl.php:864 ../edit_interface.php:620
+#: ../includes/controllers/individual_ctrl.php:847
+#: ../includes/controllers/individual_ctrl.php:856 ../edit_interface.php:620
 #: ../edit_interface.php:2360 ../edit_interface.php:2369
 #: ../addremotelink.php:130
 msgid "Husband"
@@ -4037,7 +4046,7 @@ msgstr ""
 
 #: ../relationship.php:149 ../relationship.php:154
 #: ../includes/family_nav.php:278
-#: ../includes/controllers/individual_ctrl.php:828
+#: ../includes/controllers/individual_ctrl.php:825
 #: ../modules/family_nav/family_nav.php:305
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:531
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:577
@@ -4048,7 +4057,7 @@ msgstr ""
 
 #: ../relationship.php:157 ../relationship.php:162
 #: ../includes/family_nav.php:235
-#: ../includes/controllers/individual_ctrl.php:829
+#: ../includes/controllers/individual_ctrl.php:826
 #: ../modules/family_nav/family_nav.php:261
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:437
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:479
@@ -4128,12 +4137,14 @@ msgid "%3$d x great grandson"
 msgstr ""
 
 #: ../relationship.php:313 ../relationship.php:314 ../relationship.php:383
-#: ../relationship.php:384 ../includes/controllers/individual_ctrl.php:823
+#: ../relationship.php:384 ../includes/controllers/individual_ctrl.php:820
+#: ../modules/relatives/relatives.php:284
 msgid "Sister"
 msgstr "姐妹"
 
 #: ../relationship.php:318 ../relationship.php:319 ../relationship.php:386
-#: ../relationship.php:387 ../includes/controllers/individual_ctrl.php:824
+#: ../relationship.php:387 ../includes/controllers/individual_ctrl.php:821
+#: ../modules/relatives/relatives.php:283
 msgid "Brother"
 msgstr "兄弟"
 
@@ -4144,12 +4155,12 @@ msgid "%d x cousin"
 msgstr ""
 
 #: ../relationship.php:375 ../relationship.php:376
-#: ../includes/controllers/individual_ctrl.php:831
+#: ../includes/controllers/individual_ctrl.php:828
 msgid "Half-Sister"
 msgstr "半姐妹"
 
 #: ../relationship.php:378 ../relationship.php:379
-#: ../includes/controllers/individual_ctrl.php:832
+#: ../includes/controllers/individual_ctrl.php:829
 msgid "Half-Brother"
 msgstr "半兄弟"
 
@@ -4172,11 +4183,11 @@ msgstr ""
 msgid "Relationship Chart"
 msgstr "关系图"
 
-#: ../relationship.php:535 ../includes/classes/class_stats.php:2952
-#: ../includes/classes/class_stats.php:2977
-#: ../includes/classes/class_stats.php:2988
-#: ../includes/classes/class_stats.php:2998
-#: ../includes/classes/class_stats.php:3672
+#: ../relationship.php:535 ../includes/classes/class_stats.php:2982
+#: ../includes/classes/class_stats.php:3007
+#: ../includes/classes/class_stats.php:3018
+#: ../includes/classes/class_stats.php:3028
+#: ../includes/classes/class_stats.php:3702
 #: ../includes/controllers/ancestry_ctrl.php:204
 msgid "and"
 msgstr "並且"
@@ -4203,7 +4214,7 @@ msgstr "显示连接路线"
 
 #: ../relationship.php:702 ../find.php:432 ../find.php:457 ../find.php:608
 #: ../find.php:646 ../find.php:670 ../find.php:693 ../find.php:715
-#: ../placelist.php:424 ../includes/controllers/advancedsearch_ctrl.php:474
+#: ../placelist.php:424 ../includes/controllers/advancedsearch_ctrl.php:471
 #: ../includes/controllers/search_ctrl.php:823
 #: ../includes/controllers/search_ctrl.php:934
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:462
@@ -4592,7 +4603,7 @@ msgstr "总共来源"
 #: ../includes/functions/functions_print_lists.php:483
 #: ../includes/functions/functions_print_lists.php:485
 #: ../includes/functions/functions_print_lists.php:503
-#: ../modules/descendancy/descendancy.php:143
+#: ../modules/descendancy/descendancy.php:141
 #: ../modules/relatives/relatives.php:189
 #: ../modules/relatives/relatives.php:233 ../calendar.php:253
 #: ../help_text.php:905
@@ -4620,6 +4631,10 @@ msgstr ""
 
 #: ../branches.php:81 ../search.php:362
 msgid "Daitch-Mokotoff"
+msgstr ""
+
+#: ../branches.php:105
+msgid "Direct line ancestors-ancestors"
 msgstr ""
 
 #: ../note.php:127 ../note.php:129
@@ -5134,12 +5149,12 @@ msgstr ""
 msgid "View Change Diff"
 msgstr "观看更改差額"
 
-#: ../edit_changes.php:118 ../includes/controllers/family_ctrl.php:441
+#: ../edit_changes.php:118 ../includes/controllers/family_ctrl.php:438
 #: ../includes/controllers/source_ctrl.php:213
 #: ../includes/controllers/repository_ctrl.php:205
 #: ../includes/controllers/note_ctrl.php:206
-#: ../includes/controllers/media_ctrl.php:215
-#: ../includes/controllers/individual_ctrl.php:675 ../edit_interface.php:413
+#: ../includes/controllers/media_ctrl.php:213
+#: ../includes/controllers/individual_ctrl.php:673 ../edit_interface.php:413
 #: ../media.php:1021
 msgid "Edit raw GEDCOM record"
 msgstr "更改家谱编程源文件"
@@ -5157,22 +5172,22 @@ msgid "Undo"
 msgstr "使复原"
 
 #: ../edit_changes.php:159 ../edit_changes.php:170
-#: ../includes/controllers/family_ctrl.php:427
+#: ../includes/controllers/family_ctrl.php:424
 #: ../includes/controllers/source_ctrl.php:262
 #: ../includes/controllers/repository_ctrl.php:254
 #: ../includes/controllers/note_ctrl.php:255
-#: ../includes/controllers/media_ctrl.php:281
-#: ../includes/controllers/individual_ctrl.php:666
+#: ../includes/controllers/media_ctrl.php:279
+#: ../includes/controllers/individual_ctrl.php:664
 msgid "Accept all changes"
 msgstr "接受所有变化"
 
 #: ../edit_changes.php:163 ../edit_changes.php:181
-#: ../includes/controllers/family_ctrl.php:421
+#: ../includes/controllers/family_ctrl.php:418
 #: ../includes/controllers/source_ctrl.php:257
 #: ../includes/controllers/repository_ctrl.php:249
 #: ../includes/controllers/note_ctrl.php:250
-#: ../includes/controllers/media_ctrl.php:278
-#: ../includes/controllers/individual_ctrl.php:663
+#: ../includes/controllers/media_ctrl.php:276
+#: ../includes/controllers/individual_ctrl.php:661
 msgid "Undo all changes"
 msgstr "返回所有的变化"
 
@@ -5481,17 +5496,19 @@ msgid "Same as current"
 msgstr "保存为现在的样子"
 
 #: ../addsearchlink.php:82 ../includes/functions/functions_charts.php:305
-#: ../includes/controllers/individual_ctrl.php:869
+#: ../includes/controllers/individual_ctrl.php:861
 #: ../modules/googlemap/googlemap.php:795
-#: ../modules/googlemap/googlemap.php:830 ../edit_interface.php:2346
+#: ../modules/googlemap/googlemap.php:830
+#: ../modules/relatives/relatives.php:277 ../edit_interface.php:2346
 #: ../addremotelink.php:132
 msgid "Son"
 msgstr "儿子"
 
 #: ../addsearchlink.php:83 ../includes/functions/functions_charts.php:306
-#: ../includes/controllers/individual_ctrl.php:868
+#: ../includes/controllers/individual_ctrl.php:860
 #: ../modules/googlemap/googlemap.php:791
-#: ../modules/googlemap/googlemap.php:826 ../edit_interface.php:2348
+#: ../modules/googlemap/googlemap.php:826
+#: ../modules/relatives/relatives.php:278 ../edit_interface.php:2348
 #: ../addremotelink.php:133
 msgid "Daughter"
 msgstr "女儿"
@@ -5553,7 +5570,8 @@ msgstr "显示个人/家庭"
 
 #: ../search.php:258 ../search.php:572 ../search.php:600 ../search.php:613
 #: ../includes/classes/class_menubar.php:871
-#: ../includes/controllers/search_ctrl.php:313 ../help_text.php:5184
+#: ../includes/controllers/search_ctrl.php:313
+#: ../modules/batch_update/plugins/search_replace.php:41 ../help_text.php:5184
 msgid "Search and Replace"
 msgstr ""
 
@@ -5565,7 +5583,7 @@ msgstr ""
 msgid "Entire record"
 msgstr ""
 
-#: ../search.php:299 ../modules/batch_update/plugins/search_replace.php:101
+#: ../search.php:299 ../modules/batch_update/plugins/search_replace.php:109
 msgid "Whole words only"
 msgstr ""
 
@@ -5692,55 +5710,85 @@ msgstr ""
 msgid "Quit and return"
 msgstr ""
 
-#: ../includes/config_data.php:39
-#, fuzzy
-msgid "Audio"
-msgstr "管理"
-
-#: ../includes/config_data.php:40
-msgid "Book"
+#: ../includes/config_data.php:40 ../includes/config_data.php:53
+#: ../includes/sort_tables_utf8.php:75 ../includes/sort_tables_utf8.php:85
+msgid "(לא-ידוע)"
 msgstr ""
 
-#: ../includes/config_data.php:41
-#, fuzzy
+#: ../includes/config_data.php:41 ../includes/config_data.php:54
+#: ../includes/sort_tables_utf8.php:76 ../includes/sort_tables_utf8.php:86
+msgid "(غير معروف)"
+msgstr ""
+
+#: ../includes/config_data.php:42 ../includes/config_data.php:55
+#: ../includes/sort_tables_utf8.php:77 ../includes/sort_tables_utf8.php:87
+msgid "(άγνωστος/η)"
+msgstr ""
+
+#: ../includes/config_data.php:43 ../includes/config_data.php:56
+#: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
+msgid "(неопределено)"
+msgstr ""
+
+#: ../includes/config_data.php:44 ../includes/config_data.php:57
+#: ../includes/sort_tables_utf8.php:79 ../includes/sort_tables_utf8.php:89
+msgid "(未知)"
+msgstr ""
+
+#: ../includes/config_data.php:45 ../includes/sort_tables_utf8.php:80
+msgid "(vô danh)"
+msgstr ""
+
+#: ../includes/config_data.php:58 ../includes/sort_tables_utf8.php:90
+msgid "(không biết tuổi)"
+msgstr ""
+
+#: ../includes/config_data.php:65
+msgid "Audio"
+msgstr "录音"
+
+#: ../includes/config_data.php:66
+msgid "Book"
+msgstr "书"
+
+#: ../includes/config_data.php:67
 msgid "Card"
-msgstr "图表"
+msgstr "卡片"
 
-#: ../includes/config_data.php:42
-#, fuzzy
+#: ../includes/config_data.php:68
 msgid "Certificate"
-msgstr "Verfification code:"
+msgstr "证书"
 
-#: ../includes/config_data.php:43
+#: ../includes/config_data.php:69
 msgid "Coat of Arms"
 msgstr ""
 
-#: ../includes/config_data.php:44
+#: ../includes/config_data.php:70
 #: ../modules/lightbox/functions/lightbox_print_media.php:140
 msgid "Document"
-msgstr ""
+msgstr "文件"
 
-#: ../includes/config_data.php:45
+#: ../includes/config_data.php:71
 msgid "Electronic"
-msgstr ""
+msgstr "电子文件"
 
-#: ../includes/config_data.php:46
+#: ../includes/config_data.php:72
 msgid "Microfiche"
-msgstr ""
+msgstr "微制图"
 
-#: ../includes/config_data.php:47
+#: ../includes/config_data.php:73
 msgid "Microfilm"
-msgstr ""
+msgstr "微制图片"
 
-#: ../includes/config_data.php:48
+#: ../includes/config_data.php:74
 msgid "Magazine"
-msgstr ""
+msgstr "杂志"
 
-#: ../includes/config_data.php:49
+#: ../includes/config_data.php:75
 msgid "Manuscript"
-msgstr ""
+msgstr "原文"
 
-#: ../includes/config_data.php:50
+#: ../includes/config_data.php:76
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:57
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:60
 #: ../modules/googlemap/placehierarchy.php:505
@@ -5752,49 +5800,66 @@ msgstr ""
 msgid "Map"
 msgstr ""
 
-#: ../includes/config_data.php:51
-#, fuzzy
+#: ../includes/config_data.php:77
 msgid "Newspaper"
-msgstr "新闻"
+msgstr "报纸"
 
-#: ../includes/config_data.php:52
+#: ../includes/config_data.php:78
 #: ../modules/lightbox/functions/lightbox_print_media.php:132
 msgid "Photo"
-msgstr ""
+msgstr "照片"
 
-#: ../includes/config_data.php:53
+#: ../includes/config_data.php:79
 msgid "Tombstone"
-msgstr ""
+msgstr "墓碑"
 
-#: ../includes/config_data.php:54
-#, fuzzy
+#: ../includes/config_data.php:80
 msgid "Video"
-msgstr "试图"
+msgstr "录像"
 
-#: ../includes/config_data.php:55
-#, fuzzy
+#: ../includes/config_data.php:81
 msgid "Painting"
-msgstr "创建中"
+msgstr "毛笔画"
 
-#: ../includes/config_data.php:56
+#: ../includes/config_data.php:82
 #: ../includes/functions/functions_media_reorder.php:104
 #: ../includes/functions/functions_print_facts.php:686
 #: ../includes/functions/functions_print_facts.php:1558
-#: ../includes/classes/class_stats.php:3457
-#: ../includes/classes/class_stats.php:3458
-#: ../includes/classes/class_stats.php:3620
-#: ../includes/classes/class_stats.php:3621
-#: ../includes/controllers/family_ctrl.php:480
+#: ../includes/classes/class_stats.php:3487
+#: ../includes/classes/class_stats.php:3488
+#: ../includes/classes/class_stats.php:3650
+#: ../includes/classes/class_stats.php:3651
+#: ../includes/controllers/family_ctrl.php:477
 #: ../includes/controllers/source_ctrl.php:289
 #: ../includes/controllers/repository_ctrl.php:281
 #: ../includes/controllers/note_ctrl.php:282
-#: ../includes/controllers/media_ctrl.php:310
-#: ../includes/controllers/media_ctrl.php:380
-#: ../includes/controllers/media_ctrl.php:390
-#: ../includes/controllers/individual_ctrl.php:713
+#: ../includes/controllers/media_ctrl.php:308
+#: ../includes/controllers/media_ctrl.php:378
+#: ../includes/controllers/media_ctrl.php:388
+#: ../includes/controllers/individual_ctrl.php:711
 #: ../modules/lightbox/functions/lightbox_print_media.php:157
 msgid "Other"
-msgstr ""
+msgstr "其他"
+
+#: ../includes/config_data.php:87
+#, fuzzy
+msgid "adopted"
+msgstr "adopted 领养"
+
+#: ../includes/config_data.php:88 ../includes/classes/class_stats.php:1921
+#: ../includes/classes/class_stats.php:3847
+msgid "birth"
+msgstr "出生"
+
+#: ../includes/config_data.php:89
+#, fuzzy
+msgid "foster"
+msgstr "foster 领养"
+
+#: ../includes/config_data.php:90
+#, fuzzy
+msgid "sealing"
+msgstr "Sealing"
 
 #: ../includes/specialchars.php:56
 msgid "Czech"
@@ -5909,34 +5974,6 @@ msgstr "您寄發了以下消息到PhpGedView 用戶帳號:"
 msgid "The following message has been sent to your PhpGedView user account from "
 msgstr "以下消息寄發了到您的PhpGedView 用戶帳號:"
 
-#: ../includes/sort_tables_utf8.php:75 ../includes/sort_tables_utf8.php:85
-msgid "(לא-ידוע)"
-msgstr ""
-
-#: ../includes/sort_tables_utf8.php:76 ../includes/sort_tables_utf8.php:86
-msgid "(غير معروف)"
-msgstr ""
-
-#: ../includes/sort_tables_utf8.php:77 ../includes/sort_tables_utf8.php:87
-msgid "(άγνωστος/η)"
-msgstr ""
-
-#: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
-msgid "(неопределено)"
-msgstr ""
-
-#: ../includes/sort_tables_utf8.php:79 ../includes/sort_tables_utf8.php:89
-msgid "(未知)"
-msgstr ""
-
-#: ../includes/sort_tables_utf8.php:80
-msgid "(vô danh)"
-msgstr ""
-
-#: ../includes/sort_tables_utf8.php:90
-msgid "(không biết tuổi)"
-msgstr ""
-
 #: ../includes/extras/functions.el.php:41
 #: ../includes/extras/functions.pl.php:43
 #: ../includes/extras/functions.sl.php:43
@@ -6012,7 +6049,7 @@ msgstr "十二月"
 #: ../includes/extras/functions.pl.php:127
 #: ../includes/extras/functions.sl.php:112
 #: ../includes/functions/functions_date.php:81
-#: ../includes/controllers/individual_ctrl.php:867 ../edit_interface.php:2350
+#: ../includes/controllers/individual_ctrl.php:859 ../edit_interface.php:2350
 msgid "Child"
 msgstr "儿女"
 
@@ -6194,7 +6231,7 @@ msgid "Children"
 msgstr "孩子"
 
 #: ../includes/functions/functions_charts.php:291
-#: ../includes/controllers/descendancy_ctrl.php:332
+#: ../includes/controllers/descendancy_ctrl.php:330
 msgid "No children"
 msgstr "沒有孩子"
 
@@ -6204,14 +6241,14 @@ msgid "1 child"
 msgstr "添加儿女"
 
 #: ../includes/functions/functions_charts.php:295
-#: ../includes/classes/class_stats.php:2883
-#: ../includes/classes/class_stats.php:2885
+#: ../includes/classes/class_stats.php:2913
+#: ../includes/classes/class_stats.php:2915
 #, fuzzy
 msgid "children"
 msgstr "重新排列孩子"
 
 #: ../includes/functions/functions_charts.php:304
-#: ../includes/controllers/family_ctrl.php:379
+#: ../includes/controllers/family_ctrl.php:376
 msgid "Add a child to this family"
 msgstr "添加孩子到这个家庭"
 
@@ -6479,8 +6516,8 @@ msgstr ""
 
 #: ../includes/functions/functions_edit.php:1511
 #: ../includes/functions/functions_edit.php:1512
-#: ../includes/controllers/individual_ctrl.php:527
-#: ../includes/controllers/individual_ctrl.php:628 ../help_text.php:4169
+#: ../includes/controllers/individual_ctrl.php:525
+#: ../includes/controllers/individual_ctrl.php:626 ../help_text.php:4169
 msgid "Edit Name"
 msgstr "编辑名字"
 
@@ -6893,18 +6930,83 @@ msgstr "日期"
 msgid "EVEN"
 msgstr "活動"
 
-#: ../includes/functions/functions_print_lists.php:1879 ../calendar.php:588
+#: ../includes/functions/functions_print_lists.php:1781
+#: ../includes/functions/functions_print_lists.php:1917
+msgid "More events exist for today, but privacy restrictions prevent you from seeing them."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1783
+#: ../includes/functions/functions_print_lists.php:1919
+msgid "Events exist for today, but privacy restrictions prevent you from seeing them."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1788
+#: ../includes/functions/functions_print_lists.php:1924
+#, fuzzy
+msgid "No events for living people exist for today."
+msgstr "只显示现在活着人的事情？"
+
+#: ../includes/functions/functions_print_lists.php:1792
+#: ../includes/functions/functions_print_lists.php:1928
+msgid "No events exist for today."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1801
+#: ../includes/functions/functions_print_lists.php:1937
+msgid "More events exist for tomorrow, but privacy restrictions prevent you from seeing them."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1803
+#: ../includes/functions/functions_print_lists.php:1939
+#, php-format
+msgid "More events exist for the next %s days, but privacy restrictions prevent you from seeing them."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1807
+#: ../includes/functions/functions_print_lists.php:1943
+msgid "Events exist for tomorrow, but privacy restrictions prevent you from seeing them."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1809
+#: ../includes/functions/functions_print_lists.php:1945
+#, php-format
+msgid "Events exist for the next %s days, but privacy restrictions prevent you from seeing them."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1816
+#: ../includes/functions/functions_print_lists.php:1952
+msgid "No events for living people exist for tomorrow."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1818
+#: ../includes/functions/functions_print_lists.php:1954
+#, php-format
+msgid "No events for living people exist for the next %s days."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1824
+#: ../includes/functions/functions_print_lists.php:1960
+msgid "No events exist for tomorrow."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1826
+#: ../includes/functions/functions_print_lists.php:1962
+#, php-format
+msgid "No events exist for the next %s days."
+msgstr ""
+
+#: ../includes/functions/functions_print_lists.php:1905 ../calendar.php:588
 #: ../blocks/yahrzeit.php:141
 #, php-format
 msgid "%s year anniversary"
 msgstr "%s 年週年紀念"
 
-#: ../includes/functions/functions_print_lists.php:1962
-#: ../includes/classes/class_stats.php:2683
+#: ../includes/functions/functions_print_lists.php:2016
+#: ../includes/classes/class_stats.php:2713
 msgid "Average age"
 msgstr ""
 
-#: ../includes/functions/functions_print_lists.php:2130
+#: ../includes/functions/functions_print_lists.php:2182
 msgid "Sort by this column."
 msgstr ""
 
@@ -7090,12 +7192,12 @@ msgstr "我的收藏"
 #: ../includes/functions/functions_print.php:990
 #: ../includes/functions/functions_print.php:1068
 #: ../includes/classes/class_menubar.php:1154
-#: ../includes/controllers/family_ctrl.php:518
+#: ../includes/controllers/family_ctrl.php:515
 #: ../includes/controllers/source_ctrl.php:337
 #: ../includes/controllers/repository_ctrl.php:329
 #: ../includes/controllers/note_ctrl.php:330
-#: ../includes/controllers/media_ctrl.php:342
-#: ../includes/controllers/individual_ctrl.php:738
+#: ../includes/controllers/media_ctrl.php:340
+#: ../includes/controllers/individual_ctrl.php:736
 msgid "Add to My Favorites"
 msgstr "添加來我的收藏"
 
@@ -7115,10 +7217,10 @@ msgstr "注"
 #: ../includes/classes/class_stats.php:1527
 #: ../includes/classes/class_stats.php:1627
 #: ../includes/classes/class_stats.php:1957
-#: ../includes/classes/class_stats.php:2068
-#: ../includes/classes/class_stats.php:2349
-#: ../includes/classes/class_stats.php:2848
-#: ../includes/classes/class_stats.php:2956 ../help_text.php:5059
+#: ../includes/classes/class_stats.php:2098
+#: ../includes/classes/class_stats.php:2379
+#: ../includes/classes/class_stats.php:2878
+#: ../includes/classes/class_stats.php:2986 ../help_text.php:5059
 msgid "This information is private and cannot be shown."
 msgstr "詳細資料在這個人員專用。"
 
@@ -7434,15 +7536,15 @@ msgstr ""
 msgid "1 minute"
 msgstr ""
 
-#: ../includes/functions/functions_privacy.php:865
+#: ../includes/functions/functions_privacy.php:864
 msgid "Details about this person are private. Personal details will not be included."
 msgstr "關於這個人員的詳細資料專用。  私有詳細資料不會是包括的。"
 
-#: ../includes/functions/functions_privacy.php:877
+#: ../includes/functions/functions_privacy.php:876
 msgid "Details about this family are private. Family details will not be included."
 msgstr ""
 
-#: ../includes/functions/functions_privacy.php:883
+#: ../includes/functions/functions_privacy.php:882
 msgid "Details about this media are private. Media details will not be included."
 msgstr ""
 
@@ -7459,7 +7561,7 @@ msgid "???"
 msgstr "Unknown"
 
 #: ../includes/functions/functions_places.php:337
-#: ../includes/classes/class_note.php:49
+#: ../includes/classes/class_note.php:48
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:198
 msgid "…"
 msgstr ""
@@ -7484,7 +7586,7 @@ msgstr "管理媒体"
 
 #: ../includes/classes/class_menubar.php:222
 #: ../includes/classes/class_menubar.php:229
-#: ../includes/controllers/family_ctrl.php:259
+#: ../includes/controllers/family_ctrl.php:256
 msgid "Charts"
 msgstr "图表"
 
@@ -7561,7 +7663,7 @@ msgstr "显示帮助"
 msgid "Change Theme"
 msgstr "改变背景主题"
 
-#: ../includes/classes/class_media.php:243
+#: ../includes/classes/class_media.php:241
 msgid "Media Firewall error: >Unknown Mimetype< for file"
 msgstr ""
 
@@ -7629,11 +7731,11 @@ msgid "Nobody at all"
 msgstr ""
 
 #: ../includes/classes/class_stats.php:1821
-#: ../includes/classes/class_stats.php:2670
-#: ../includes/classes/class_stats.php:2671
-#: ../includes/classes/class_stats.php:3127
-#: ../includes/classes/class_stats.php:3128
-#: ../includes/classes/class_stats.php:3281
+#: ../includes/classes/class_stats.php:2700
+#: ../includes/classes/class_stats.php:2701
+#: ../includes/classes/class_stats.php:3157
+#: ../includes/classes/class_stats.php:3158
+#: ../includes/classes/class_stats.php:3311
 msgid "century"
 msgstr ""
 
@@ -7645,55 +7747,50 @@ msgstr ""
 msgid "Average age related to death century"
 msgstr ""
 
-#: ../includes/classes/class_stats.php:1921
-#: ../includes/classes/class_stats.php:3817
-msgid "birth"
-msgstr "出生"
-
 #: ../includes/classes/class_stats.php:1922
-#: ../includes/classes/class_stats.php:3818
+#: ../includes/classes/class_stats.php:3848
 msgid "death"
 msgstr "去世"
 
 #: ../includes/classes/class_stats.php:1923
-#: ../includes/classes/class_stats.php:3819
+#: ../includes/classes/class_stats.php:3849
 msgid "marriage"
 msgstr "结婚"
 
 #: ../includes/classes/class_stats.php:1924
-#: ../includes/classes/class_stats.php:3820
+#: ../includes/classes/class_stats.php:3850
 msgid "adoption"
 msgstr "代养儿女"
 
 #: ../includes/classes/class_stats.php:1925
-#: ../includes/classes/class_stats.php:3821
+#: ../includes/classes/class_stats.php:3851
 msgid "burial"
 msgstr "埋葬"
 
 #: ../includes/classes/class_stats.php:1926
-#: ../includes/classes/class_stats.php:3822
+#: ../includes/classes/class_stats.php:3852
 msgid "census added"
 msgstr "人口调查加入档案"
 
-#: ../includes/classes/class_stats.php:2672
-#: ../includes/classes/class_stats.php:2673
-#: ../includes/classes/class_stats.php:2677
-#: ../includes/classes/class_stats.php:2681
-#: ../includes/classes/class_stats.php:2683
+#: ../includes/classes/class_stats.php:2702
+#: ../includes/classes/class_stats.php:2703
+#: ../includes/classes/class_stats.php:2707
+#: ../includes/classes/class_stats.php:2711
+#: ../includes/classes/class_stats.php:2713
 msgid "Average age in century of marriage"
 msgstr ""
 
-#: ../includes/classes/class_stats.php:3336
-#: ../includes/classes/class_stats.php:3338
+#: ../includes/classes/class_stats.php:3366
+#: ../includes/classes/class_stats.php:3368
 #, fuzzy
 msgid "grandchildren"
 msgstr "重新排列孩子"
 
-#: ../includes/classes/class_stats.php:3552
+#: ../includes/classes/class_stats.php:3582
 msgid "Count"
 msgstr ""
 
-#: ../includes/classes/class_stats.php:3654 ../blocks/logged_in.php:80
+#: ../includes/classes/class_stats.php:3684 ../blocks/logged_in.php:80
 msgid "No logged-in and no anonymous users"
 msgstr ""
 
@@ -7907,59 +8004,59 @@ msgstr ""
 msgid "utf8_unicode_ci"
 msgstr "utf8_unicode_ci"
 
-#: ../includes/controllers/family_ctrl.php:177
+#: ../includes/controllers/family_ctrl.php:176
 #: ../modules/sitemap/index.php:236 ../modules/sitemap/index.php:393
 #, fuzzy
 msgid "Family Information"
 msgstr "PHP信息"
 
-#: ../includes/controllers/family_ctrl.php:350
-#: ../includes/controllers/family_ctrl.php:361
+#: ../includes/controllers/family_ctrl.php:347
+#: ../includes/controllers/family_ctrl.php:358
 msgid "Edit Family"
 msgstr "编辑家庭"
 
-#: ../includes/controllers/family_ctrl.php:370 ../edit_interface.php:2394
+#: ../includes/controllers/family_ctrl.php:367 ../edit_interface.php:2394
 msgid "Change Family Members"
 msgstr "改变家庭成员"
 
-#: ../includes/controllers/family_ctrl.php:389
-#: ../modules/relatives/relatives.php:288 ../edit_interface.php:2270
+#: ../includes/controllers/family_ctrl.php:386
+#: ../modules/relatives/relatives.php:290 ../edit_interface.php:2270
 #: ../help_text.php:5124
 msgid "Re-order children"
 msgstr "重新排列孩子"
 
-#: ../includes/controllers/family_ctrl.php:404
+#: ../includes/controllers/family_ctrl.php:401
 #: ../includes/controllers/source_ctrl.php:239
 #: ../includes/controllers/repository_ctrl.php:231
 #: ../includes/controllers/note_ctrl.php:232
-#: ../includes/controllers/media_ctrl.php:266
-#: ../includes/controllers/individual_ctrl.php:652 ../help_text.php:5204
+#: ../includes/controllers/media_ctrl.php:264
+#: ../includes/controllers/individual_ctrl.php:650 ../help_text.php:5204
 msgid "This record has been updated.  Click here to show changes."
 msgstr "這個記錄被更新了。  點擊這裡顯示更改。"
 
-#: ../includes/controllers/family_ctrl.php:411
+#: ../includes/controllers/family_ctrl.php:408
 #: ../includes/controllers/source_ctrl.php:247
 #: ../includes/controllers/repository_ctrl.php:239
 #: ../includes/controllers/note_ctrl.php:240
-#: ../includes/controllers/media_ctrl.php:270
-#: ../includes/controllers/individual_ctrl.php:655
+#: ../includes/controllers/media_ctrl.php:268
+#: ../includes/controllers/individual_ctrl.php:653
 msgid "Click here to hide changes."
 msgstr "隐蔽变化纪录"
 
-#: ../includes/controllers/family_ctrl.php:451
+#: ../includes/controllers/family_ctrl.php:448
 msgid "Delete family"
 msgstr "删除家庭"
 
-#: ../includes/controllers/family_ctrl.php:452
+#: ../includes/controllers/family_ctrl.php:449
 msgid "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?"
 msgstr ""
 
-#: ../includes/controllers/family_ctrl.php:509
+#: ../includes/controllers/family_ctrl.php:506
 #: ../includes/controllers/source_ctrl.php:328
 #: ../includes/controllers/repository_ctrl.php:320
 #: ../includes/controllers/note_ctrl.php:321
-#: ../includes/controllers/media_ctrl.php:335
-#: ../includes/controllers/individual_ctrl.php:732
+#: ../includes/controllers/media_ctrl.php:333
+#: ../includes/controllers/individual_ctrl.php:730
 msgid "Add to Clippings Cart"
 msgstr "加入到图片收集"
 
@@ -8038,15 +8135,15 @@ msgstr "删除这个来源"
 msgid "Are you sure you want to delete this Shared Note?"
 msgstr ""
 
-#: ../includes/controllers/media_ctrl.php:223 ../media.php:1046
+#: ../includes/controllers/media_ctrl.php:221 ../media.php:1046
 msgid "Remove object"
 msgstr "取消文件"
 
-#: ../includes/controllers/media_ctrl.php:225 ../media.php:1046
+#: ../includes/controllers/media_ctrl.php:223 ../media.php:1046
 msgid "Are you sure you want to remove this object from the database?"
 msgstr ""
 
-#: ../includes/controllers/media_ctrl.php:232
+#: ../includes/controllers/media_ctrl.php:230
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:253
 #: ../media.php:751
 #, fuzzy
@@ -8065,7 +8162,7 @@ msgstr ""
 msgid "Wife's age"
 msgstr ""
 
-#: ../includes/controllers/individual_ctrl.php:493
+#: ../includes/controllers/individual_ctrl.php:491
 #: ../modules/GEDFact_assistant/_MEDIA/media_5_input.php:75
 #: ../modules/GEDFact_assistant/_MEDIA/media_query_1a.php:48
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:50
@@ -8075,67 +8172,81 @@ msgstr ""
 msgid "Name"
 msgstr "编辑名字"
 
-#: ../includes/controllers/individual_ctrl.php:528 ../help_text.php:4013
+#: ../includes/controllers/individual_ctrl.php:526 ../help_text.php:4013
 msgid "Delete Name"
 msgstr "刪除名字"
 
-#: ../includes/controllers/individual_ctrl.php:568 ../calendar.php:201
+#: ../includes/controllers/individual_ctrl.php:566 ../calendar.php:201
 msgid "Gender"
 msgstr "性別"
 
-#: ../includes/controllers/individual_ctrl.php:619
-#: ../modules/relatives/relatives.php:400 ../edit_interface.php:2686
+#: ../includes/controllers/individual_ctrl.php:617
+#: ../modules/relatives/relatives.php:402 ../edit_interface.php:2686
 #: ../help_text.php:5129
 msgid "Reorder Families"
 msgstr "重新改动家庭摆列"
 
-#: ../includes/controllers/individual_ctrl.php:634 ../help_text.php:3528
+#: ../includes/controllers/individual_ctrl.php:632 ../help_text.php:3528
 msgid "Add new Name"
 msgstr "增加名字"
 
-#: ../includes/controllers/individual_ctrl.php:640 ../help_text.php:4184
+#: ../includes/controllers/individual_ctrl.php:638 ../help_text.php:4184
 msgid "Edit Gender"
 msgstr "更改性别"
 
-#: ../includes/controllers/individual_ctrl.php:681 ../help_text.php:4018
+#: ../includes/controllers/individual_ctrl.php:679 ../help_text.php:4018
 msgid "Delete this individual"
 msgstr "删除这个人"
 
-#: ../includes/controllers/individual_ctrl.php:819
+#: ../includes/controllers/individual_ctrl.php:816
 #: ../modules/googlemap/pedigree_map.php:652
 msgid "Parent"
 msgstr "家长"
 
-#: ../includes/controllers/individual_ctrl.php:827
+#: ../includes/controllers/individual_ctrl.php:824
 msgid "Step-Parent"
 msgstr ""
 
-#: ../includes/controllers/individual_ctrl.php:830
+#: ../includes/controllers/individual_ctrl.php:827
 msgid "Half-Sibling"
 msgstr "半兄弟姐妹"
 
-#: ../includes/controllers/individual_ctrl.php:836
-#: ../includes/controllers/individual_ctrl.php:837
-#: ../includes/controllers/individual_ctrl.php:838
-#: ../includes/controllers/individual_ctrl.php:855
+#: ../includes/controllers/individual_ctrl.php:833
+#: ../includes/controllers/individual_ctrl.php:834
+#: ../includes/controllers/individual_ctrl.php:835
+#: ../includes/controllers/individual_ctrl.php:849
+#: ../includes/controllers/individual_ctrl.php:850
+#: ../includes/controllers/individual_ctrl.php:851
 msgid "Partner"
 msgstr "配偶"
 
-#: ../includes/controllers/individual_ctrl.php:848
-#: ../includes/controllers/individual_ctrl.php:862 ../edit_interface.php:2362
+#: ../includes/controllers/individual_ctrl.php:837
+msgid "Ex-Spouse"
+msgstr "前夫妻"
+
+#: ../includes/controllers/individual_ctrl.php:838
+msgid "Ex-Wife"
+msgstr "前妻"
+
+#: ../includes/controllers/individual_ctrl.php:839
+msgid "Ex-Husband"
+msgstr "前夫"
+
+#: ../includes/controllers/individual_ctrl.php:845
+#: ../includes/controllers/individual_ctrl.php:854 ../edit_interface.php:2362
 #: ../edit_interface.php:2371 ../edit_interface.php:2405
 #: ../edit_interface.php:2425
 msgid "Spouse"
 msgstr "配偶"
 
-#: ../includes/controllers/descendancy_ctrl.php:226
-#: ../includes/controllers/descendancy_ctrl.php:313
+#: ../includes/controllers/descendancy_ctrl.php:225
+#: ../includes/controllers/descendancy_ctrl.php:311
 msgid "Start at parents"
 msgstr "从父母开始"
 
 #. I18N: This is the GEDCOM label for "Number of Children"
-#: ../includes/controllers/descendancy_ctrl.php:325
-#: ../includes/controllers/descendancy_ctrl.php:330 ../help_text.php:1003
+#: ../includes/controllers/descendancy_ctrl.php:323
+#: ../includes/controllers/descendancy_ctrl.php:328 ../help_text.php:1003
 msgid "NCHI"
 msgstr "几个孩子"
 
@@ -8534,7 +8645,7 @@ msgstr ""
 
 #. I18N: This is the title of a tab or sidebar item 
 #: ../modules/family_nav/pgv_module.php:18
-#: ../modules/family_nav/family_nav.php:817
+#: ../modules/family_nav/family_nav.php:816
 #: ../modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php:70
 msgid "Family Navigator"
 msgstr ""
@@ -9976,7 +10087,7 @@ msgid "All"
 msgstr ""
 
 #. I18N: This is the title of a tab on the sidebar
-#: ../modules/descendancy/descendancy.php:239
+#: ../modules/descendancy/descendancy.php:236
 #: ../modules/descendancy/pgv_module.php:47
 msgid "Descendancy"
 msgstr ""
@@ -9996,9 +10107,8 @@ msgid "Empty Cart"
 msgstr "清空收集箱"
 
 #: ../modules/clippings/index.php:289
-#, fuzzy
 msgid "Name / Description"
-msgstr "介绍"
+msgstr "名字/說明"
 
 #: ../modules/clippings/pgv_module.php:46
 #, fuzzy
@@ -10055,40 +10165,48 @@ msgstr "添加一個妻子來這個家庭"
 msgid "Add marriage details"
 msgstr "增加婚姻"
 
-#: ../modules/relatives/relatives.php:407
+#: ../modules/relatives/relatives.php:276 ../help_text.php:3578
+msgid "Add a son or daughter"
+msgstr "添加儿女"
+
+#: ../modules/relatives/relatives.php:282 ../help_text.php:3573
+msgid "Add a brother or sister"
+msgstr "添加兄弟姐妹"
+
+#: ../modules/relatives/relatives.php:409
 msgid "Link this person to an existing family as a child"
 msgstr "把这个人当作个孩子连接到一个现有的家庭里去"
 
-#: ../modules/relatives/relatives.php:414
+#: ../modules/relatives/relatives.php:416
 msgid "Add a new wife"
 msgstr "添加一個妻子"
 
-#: ../modules/relatives/relatives.php:420 ../help_text.php:4714
+#: ../modules/relatives/relatives.php:422 ../help_text.php:4714
 msgid "Add a wife using an existing person"
 msgstr "用已有的个人当这人的妻子"
 
-#: ../modules/relatives/relatives.php:426
+#: ../modules/relatives/relatives.php:428
 msgid "Link this person to an existing family as a husband"
 msgstr "把这个人当作个丈夫连接到一个现有的家庭里去"
 
-#: ../modules/relatives/relatives.php:434
+#: ../modules/relatives/relatives.php:436
 msgid "Add a new husband"
 msgstr "添加一個丈夫"
 
-#: ../modules/relatives/relatives.php:440 ../help_text.php:4709
+#: ../modules/relatives/relatives.php:442 ../help_text.php:4709
 msgid "Add a husband using an existing person"
 msgstr "用已有的个人当这人的丈夫"
 
-#: ../modules/relatives/relatives.php:446
+#: ../modules/relatives/relatives.php:448
 msgid "Link this person to an existing family as a wife"
 msgstr "把这个人当作个妻子连接到一个现有的家庭里去"
 
-#: ../modules/relatives/relatives.php:454 ../edit_interface.php:362
+#: ../modules/relatives/relatives.php:456 ../edit_interface.php:362
 #: ../help_text.php:3553
 msgid "Add a child to create a one-parent family"
 msgstr ""
 
-#: ../modules/relatives/relatives.php:462 ../help_text.php:4724
+#: ../modules/relatives/relatives.php:464 ../help_text.php:4724
 msgid "Link remote person"
 msgstr "连接远方个人"
 
@@ -10096,69 +10214,121 @@ msgstr "连接远方个人"
 msgid "There are no media objects for this individual."
 msgstr ""
 
-#: ../modules/batch_update/plugins/married_names.php:98
+#: ../modules/batch_update/plugins/married_names.php:36
+msgid "Add missing married names"
+msgstr ""
+
+#: ../modules/batch_update/plugins/married_names.php:40
+msgid "You can make it easier to search for married women by recording their married name.<br />However not all women take their husband's surname, so beware of introducing incorrect information into your database."
+msgstr ""
+
+#: ../modules/batch_update/plugins/married_names.php:106
 #, fuzzy
 msgid "Surname Option"
 msgstr "姓放在前后"
 
-#: ../modules/batch_update/plugins/married_names.php:101
+#: ../modules/batch_update/plugins/married_names.php:109
 msgid "Wife's surname replaced by husband's surname"
 msgstr ""
 
-#: ../modules/batch_update/plugins/married_names.php:103
+#: ../modules/batch_update/plugins/married_names.php:111
 msgid "Wife's maiden surname becomes new given name"
 msgstr ""
 
-#: ../modules/batch_update/plugins/search_replace.php:78
+#: ../modules/batch_update/plugins/death_y.php:34
+msgid "Add missing death records"
+msgstr ""
+
+#: ../modules/batch_update/plugins/death_y.php:38
+msgid "You can improve the performance of PGV by ensuring that all individuals have (where appropriate) an &laquo;end of life&raquo; event."
+msgstr ""
+
+#: ../modules/batch_update/plugins/birth_y.php:34
+msgid "Add missing birth records"
+msgstr ""
+
+#: ../modules/batch_update/plugins/birth_y.php:38
+msgid "You can improve the performance of PGV by ensuring that all individuals have a &laquo;start of life&raquo; event."
+msgstr ""
+
+#: ../modules/batch_update/plugins/name_format.php:34
+msgid "Fix name slashes and spaces"
+msgstr ""
+
+#: ../modules/batch_update/plugins/name_format.php:38
+msgid "Correct NAME records of the form 'John/DOE/' or 'John /DOE', as produced by older genealogy programs."
+msgstr ""
+
+#: ../modules/batch_update/plugins/tmglatlon.php:34
+msgid "Fix TMG latlon data"
+msgstr ""
+
+#: ../modules/batch_update/plugins/tmglatlon.php:38
+msgid "Converts The Master Genealogist's proprietary lat/lon format to the GEDCOM 5.5.1 standard that PGV can read.  Note: changes are not highlighted in the final output shown below."
+msgstr ""
+
+#: ../modules/batch_update/plugins/search_replace.php:45
+msgid "Search and/or replace data in your GEDCOM using simple searches or advanced pattern matching."
+msgstr ""
+
+#: ../modules/batch_update/plugins/search_replace.php:86
 msgid "The regex appears to contain an error.  It can't be used."
 msgstr ""
 
-#: ../modules/batch_update/plugins/search_replace.php:88
+#: ../modules/batch_update/plugins/search_replace.php:96
 msgid "Search text/pattern"
 msgstr ""
 
-#: ../modules/batch_update/plugins/search_replace.php:93
+#: ../modules/batch_update/plugins/search_replace.php:101
 msgid "Replacement text"
 msgstr ""
 
-#: ../modules/batch_update/plugins/search_replace.php:98
+#: ../modules/batch_update/plugins/search_replace.php:106
 msgid "Search method"
 msgstr ""
 
-#: ../modules/batch_update/plugins/search_replace.php:100
+#: ../modules/batch_update/plugins/search_replace.php:108
 msgid "Exact text"
 msgstr ""
 
-#: ../modules/batch_update/plugins/search_replace.php:102
+#: ../modules/batch_update/plugins/search_replace.php:110
 msgid "Wildcards"
 msgstr ""
 
-#: ../modules/batch_update/plugins/search_replace.php:103
+#: ../modules/batch_update/plugins/search_replace.php:111
 msgid "Regular expression"
 msgstr ""
 
-#: ../modules/batch_update/plugins/search_replace.php:106
+#: ../modules/batch_update/plugins/search_replace.php:114
 msgid "Case insensitive"
 msgstr ""
 
-#: ../modules/batch_update/plugins/search_replace.php:109
+#: ../modules/batch_update/plugins/search_replace.php:117
 msgid "Tick this box to match both upper and lower case letters."
 msgstr ""
 
-#: ../modules/batch_update/batch_update.php:111
+#: ../modules/batch_update/plugins/duplicate_links.php:34
+msgid "Remove duplicate links"
+msgstr ""
+
+#: ../modules/batch_update/plugins/duplicate_links.php:38
+msgid "A common error is to have multiple links to the same record, for example listing the same child more than once in a family record."
+msgstr ""
+
+#: ../modules/batch_update/batch_update.php:115
 msgid "Nothing found."
 msgstr ""
 
-#: ../modules/batch_update/batch_update.php:356
+#: ../modules/batch_update/batch_update.php:361
 #, fuzzy
 msgid "Update the CHAN record"
 msgstr "不要更改CHAN纪录"
 
-#: ../modules/batch_update/batch_update.php:368
+#: ../modules/batch_update/batch_update.php:373
 msgid "Update"
 msgstr ""
 
-#: ../modules/batch_update/batch_update.php:369
+#: ../modules/batch_update/batch_update.php:374
 msgid "Update all"
 msgstr ""
 
@@ -15006,17 +15176,9 @@ msgstr ""
 msgid "<center>--- This is a general help text for multiple pages ---</center><br />~Add Shared Note~<br />When you click the <b>Add a new Shared Note</b> link, a new window will open.  You can choose to link to an existing shared note, or you can create a new shared note and at the same time create a link to it.<br /><br />~General info about adding~<br />When you have added a fact, note, source, or multimedia file to a record in the database, the addition still has to be approved by a user who has Accept rights.<br /><br />Until the changes have been Accepted, they are identified as \"pending\" by a differently colored border.  All users with Edit rights can see these changes as well as the original information.  Users who do not have Edit rights will only see the original information. When the addition has been Accepted, the borders will disappear and the new data will display normally, replacing the old.  At that time, users without Edit rights will see the new data too."
 msgstr ""
 
-#: ../help_text.php:3573
-msgid "Add a brother or sister"
-msgstr "添加兄弟姐妹"
-
 #: ../help_text.php:3574
 msgid "You can add a child to this family when you click this link.  \"This Family\", in this case, is the father and mother of the principal person of this screen.<br /><br />Keep in mind that you are going to add a sibling of that person.  Adding a brother or sister is simple: Just click the link, fill out the boxes in the pop up screen and that's all.<br /><br />If you have to add a son or daughter of the principal person, scroll down a little and click the link in \"Family with Spouse\"."
 msgstr ""
-
-#: ../help_text.php:3578
-msgid "Add a son or daughter"
-msgstr "添加儿女"
 
 #: ../help_text.php:3579
 msgid "You can add a child to this family when you click this link.  \"This Family\", in this case, is the principal person of this screen and his or her spouse.<br /><br />Keep in mind that you are going to add a son or daughter of that person.  Adding a son or daughter is simple: Just click the link, fill out the boxes in the popup screen and that's all.<br /><br />If you have to add a brother or sister of the principal person, scroll up a little and click the link in \"Family with Parents\"."
@@ -15383,7 +15545,7 @@ msgstr ""
 #: ../blocks/charts.php:225 ../blocks/html_block.php:119
 #: ../blocks/top10_pageviews.php:154 ../blocks/gedcom_news.php:216
 #: ../blocks/top10_surnames.php:154 ../blocks/review_changes.php:163
-#: ../blocks/recent_changes.php:127 ../blocks/gedcom_stats.php:351
+#: ../blocks/recent_changes.php:126 ../blocks/gedcom_stats.php:351
 msgid "Cache file life"
 msgstr ""
 
@@ -15536,7 +15698,7 @@ msgid "<ul><li>The <b>View Day</b> button will display the events of the chosen 
 msgstr ""
 
 #: ../help_text.php:3953 ../blocks/upcoming_events.php:144
-#: ../blocks/yahrzeit.php:261 ../blocks/recent_changes.php:105
+#: ../blocks/yahrzeit.php:261 ../blocks/recent_changes.php:104
 msgid "Number of days to show"
 msgstr "显示几天"
 
@@ -18129,11 +18291,21 @@ msgstr "用户日记"
 msgid "My Journal"
 msgstr "我的日记"
 
-#: ../blocks/recent_changes.php:111
+#: ../blocks/recent_changes.php:81
+#, php-format
+msgid "There have been no changes within the last %s days."
+msgstr ""
+
+#: ../blocks/recent_changes.php:83
+#, php-format
+msgid "Changes made within the last %s days"
+msgstr ""
+
+#: ../blocks/recent_changes.php:110
 msgid "Should this block be hidden when it is empty?"
 msgstr ""
 
-#: ../blocks/recent_changes.php:119
+#: ../blocks/recent_changes.php:118
 msgid "If you hide an empty block, you will not be able to change its configuration until it becomes visible by no longer being empty."
 msgstr ""
 
