@@ -29,7 +29,15 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-class plugin extends base_plugin {
+class birth_y_bu_plugin extends base_plugin {
+	static function getName() {
+		return i18n::translate('Add missing birth records');
+	}
+
+	static function getDescription() {
+		return i18n::translate('You can improve the performance of PGV by ensuring that all individuals have a &laquo;start of life&raquo; event.');
+	}
+	
 	static function doesRecordNeedUpdate($xref, $gedrec) {
 		return !preg_match('/^1\s+'.PGV_EVENTS_BIRT.'\b/m', $gedrec);
 	}
