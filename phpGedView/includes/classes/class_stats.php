@@ -1965,7 +1965,7 @@ class stats {
 				if (isset($eventTypes[$row['fact']])) {
 					$result=$eventTypes[$row['fact']];
 				} else {
-					$result='';
+					$result=i18n::translate($row['fact']);
 				}
 				break;
 			case 'name':
@@ -2054,6 +2054,36 @@ class stats {
 				." i_sex='{$sex}'"
 			.' ORDER BY'
 				." married.d_julianday2-birth.d_julianday1 {$age_dir}"
+			//testing
+			/*
+			. 'SELECT'
+				.' fam.f_id AS famid,'
+				." fam.{$sex_field},"
+				.' married.d_julianday2-birth.d_julianday1 AS age,'
+				.' indi.i_id AS i_id'
+			.' FROM'
+				." {$TBLPREFIX}families AS fam"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_ged_id} AND birth.d_fact = 'BIRT'"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS birth_act ON birth_act.d_file = {$this->_ged_id} AND birth_act.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM')"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id} AND married.d_fact = 'MARR'"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_ged_id}"
+			.' WHERE'
+				.' birth.d_gid = indi.i_id AND'
+				.' birth_act.d_gid = indi.i_id AND'
+				.' married.d_gid = fam.f_id AND'
+				." indi.i_id = fam.{$sex_field} AND"
+				." fam.f_file = {$this->_ged_id} AND"
+				.' ((birth.d_julianday1 <> 0) OR (birth_act.d_julianday1 <> 0)) AND'
+				.' ((married.d_julianday2 > birth.d_julianday1) OR (married.d_julianday2 > birth_act.d_julianday1)) AND'
+				.' birth.d_julianday1 <= birth_act.d_julianday1 AND'
+				." i_sex='{$sex}'"
+			.' ORDER BY'
+				." married.d_julianday2-birth.d_julianday1 {$age_dir}"
+			*/
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
