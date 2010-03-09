@@ -399,10 +399,9 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 	$cache_privacy = true;
 
 	//-- start of user specific privacy checks
-	$username = $pgv_USER_NAME;
-	if ($username) {
-		if (isset($user_privacy[$username]["all"])) {
-			if ($user_privacy[$username]["all"] >= $pgv_USER_ACCESS_LEVEL) {
+	if ($pgv_USER_ID) {
+		if (isset($user_privacy[$pgv_USER_NAME]["all"])) {
+			if ($user_privacy[$pgv_USER_NAME]["all"] >= $pgv_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
 				return true;
 			} else {
@@ -410,8 +409,8 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 				return false;
 			}
 		}
-		if (isset($user_privacy[$username][$pid])) {
-			if ($user_privacy[$username][$pid] >= $pgv_USER_ACCESS_LEVEL) {
+		if (isset($user_privacy[$pgv_USER_NAME][$pid])) {
+			if ($user_privacy[$pgv_USER_NAME][$pid] >= $pgv_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
 				return true;
 			} else {
@@ -460,7 +459,7 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 			if ($type=="INDI") {
 				$gedrec = find_person_record($pid, $ged_id);
 				$isdead = is_dead($gedrec);
-				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($username, 'relationship_privacy')=="Y") {
+				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($pgv_USER_ID, 'relationship_privacy')=="Y") {
 					if ($isdead) {
 						if ($SHOW_DEAD_PEOPLE>=$pgv_USER_ACCESS_LEVEL) {
 							if ($PRIVACY_BY_YEAR && $SHOW_DEAD_PEOPLE==$pgv_USER_ACCESS_LEVEL) {
@@ -485,8 +484,8 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;
 						}
-						if (get_user_setting($username, 'max_relation_path')>0) {
-							$path_length = get_user_setting($username, 'max_relation_path');
+						if (get_user_setting($pgv_USER_ID, 'max_relation_path')>0) {
+							$path_length = get_user_setting($pgv_USER_ID, 'max_relation_path');
 						} else {
 							$path_length = $MAX_RELATION_PATH_LENGTH;
 						}
@@ -576,7 +575,7 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 				return false;
 			}
 		} else {
-			if (empty($username)) {
+			if (empty($pgv_USER_ID)) {
 				if ($cache_privacy) {
 					$privacy_cache[$pkey] = false;
 				}
