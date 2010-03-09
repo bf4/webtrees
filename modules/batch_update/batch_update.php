@@ -78,10 +78,14 @@ class batch_update {
 			$html.='<option value="" selected="selected"></option>';
 		}
 
-		foreach ($this->plugins as $plugin) {
-			$html.='<option value="'.$plugin.'"'.($plugin==$this->plugin ? ' selected="selected"' : '').'>'.$pgv_lang['bu_'.$plugin].'</option>';
+		foreach ($this->plugins as $class=>$plugin) {
+			$html.='<option value="'.$class.'"'.($this->plugin==$class ? ' selected="selected"' : '').'>'.$plugin->getName().'</option>';
 		}
-		$html.='</select><br/><i>'.$pgv_lang['bu_'.$this->plugin.'_desc'].'</i></td></tr>';
+		$html.='</select>';
+		if ($this->PLUGIN) {
+			$html.='<br/><i>'.$this->PLUGIN->getDescription().'</i>';
+		}
+		$html.='</td></tr>';
 
 		// If a plugin is selected, display the details
 		if ($this->PLUGIN) {
@@ -119,15 +123,14 @@ class batch_update {
 	// Constructor - initialise variables and validate user-input
 	function __construct() {
 		$this->plugins=self::getPluginList();              // List of available plugins
-		$this->plugin =safe_GET('plugin', $this->plugins); // User parameters
+		$this->plugin =safe_GET('plugin', array_keys($this->plugins)); // User parameters
 		$this->xref   =safe_GET('xref',   PGV_REGEX_XREF);
 		$this->action =safe_GET('action');
 		$this->data   =safe_GET('data');
 
 		// Don't do any processing until a plugin is chosen.
 		if ($this->plugin) {
-			require PGV_ROOT.'/modules/batch_update/plugins/'.$this->plugin.'.php';
-			$this->PLUGIN=new plugin;
+			$this->PLUGIN=new $this->plugin;
 			$this->PLUGIN->getOptions();
 			$this->getAllXrefs();
 
@@ -279,7 +282,9 @@ class batch_update {
 		$dir_handle=opendir($dir);
 		while ($file=readdir($dir_handle)) {
 			if (substr($file, -4)=='.php') {
-				$array[]=basename($file, '.php');
+				require dirname(__FILE__).'/plugins/'.$file;
+				$class=basename($file, '.php').'_bu_plugin';
+				$array[$class]=new $class;
 			}
 		}
 		closedir($dir_handle);

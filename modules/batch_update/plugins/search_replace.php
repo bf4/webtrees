@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-class plugin extends base_plugin {
+class search_replace_bu_plugin extends base_plugin {
 	var $search =null; // Search string
 	var $replace=null; // Replace string
 	var $method =null; // simple/wildcards/regex
@@ -37,6 +37,14 @@ class plugin extends base_plugin {
 	var $case   =null; // "i" for case insensitive, "" for case sensitive
 	var $error  =null; // Message for bad user parameters
 
+	static function getName() {
+		return i18n::translate('Search and Replace');
+	}
+
+	static function getDescription() {
+		return i18n::translate('Search and/or replace data in your GEDCOM using simple searches or advanced pattern matching.');
+	}
+	
 	// Default is to operate on INDI records
 	function getRecordTypesToUpdate() {
 		return array('INDI', 'FAM', 'SOUR', 'REPO', 'NOTE', 'OBJE');

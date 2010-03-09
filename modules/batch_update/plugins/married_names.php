@@ -29,9 +29,17 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-class plugin extends base_plugin {
+class married_names_bu_plugin extends base_plugin {
 	var $surname=null; // User option: add or replace husband's surname
 
+	static function getName() {
+		return i18n::translate('Add missing married names');
+	}
+
+	static function getDescription() {
+		return i18n::translate('You can make it easier to search for married women by recording their married name.<br />However not all women take their husband\'s surname, so beware of introducing incorrect information into your database.');
+	}
+	
 	function doesRecordNeedUpdate($xref, $gedrec) {
 		return preg_match('/^1 SEX F/m', $gedrec) && preg_match('/^1 NAME /m', $gedrec) && self::_surnames_to_add($xref, $gedrec);
 	}
