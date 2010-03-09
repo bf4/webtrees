@@ -42,7 +42,6 @@ class Note extends GedcomRecord {
 	// The 'name' of a note record is the first line.  This can be
 	// somewhat unwieldy if lots of CONC records are used.  Limit to 100 chars
 	protected function _addName($type, $value, $gedrec) {
-		global $pgv_lang;
 		if (UTF8_strlen($value)<100) {
 			parent::_addName($type, $value, $gedrec);
 		} else {
