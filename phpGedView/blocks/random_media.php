@@ -80,7 +80,7 @@ if ($MULTI_MEDIA) {
 
 	//-- function to display a random picture from the gedcom
 	function print_random_media($block = true, $config="", $side, $index) {
-		global $pgv_lang, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
 		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 		global $PGV_BLOCKS, $ctype, $action;
@@ -322,7 +322,7 @@ function openPic(filename, width, height) {
 
 
 	function print_random_media_config($config) {
-		global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION;
+		global $PGV_BLOCKS, $TEXT_DIRECTION;
 
 		$defaultConfig = $PGV_BLOCKS['print_random_media']['config'];
 		if (empty($config)) $config = $defaultConfig;

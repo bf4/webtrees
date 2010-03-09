@@ -41,7 +41,7 @@ $PGV_BLOCKS["print_gedcom_block"]["config"]		= array("cache"=>0);
 
 //-- function to print the gedcom block
 function print_gedcom_block($block = true, $config="", $side, $index) {
-	global $hitCount, $pgv_lang, $SHOW_COUNTER;
+	global $hitCount, $SHOW_COUNTER;
 
 	$id = "gedcom_welcome";
 	$title = PrintReady(get_gedcom_setting(PGV_GED_ID, 'title'));
