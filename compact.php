@@ -429,7 +429,7 @@ function print_td_person($n) {
 function print_arrow_person($n, $arrow_dir) {
 	global $treeid;
 	global $view, $showids, $showthumbs;
-	global $pgv_lang, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	$pid = $treeid[$n];
 

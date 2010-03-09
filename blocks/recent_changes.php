@@ -45,7 +45,7 @@ $PGV_BLOCKS["print_recent_changes"]["config"]   = array(
 //-- Recent Changes block
 //-- this block prints a list of changes that have occurred recently in your gedcom
 function print_recent_changes($block=true, $config="", $side, $index) {
-	global $pgv_lang, $ctype;
+	global $ctype;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 
 	$block = true;  // Always restrict this block's height
@@ -77,11 +77,10 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 
 	$content = "";
 // Print block content
-	$pgv_lang["global_num1"] = $config["days"];  // Make this visible
 	if (count($found_facts)==0) {
-		$content .= print_text("recent_changes_none",0,1);
+		$content .= i18n::translate('There have been no changes within the last %s days.', $config["days"]);
 	} else {
-		$content .= print_text("recent_changes_some",0,1);
+		$content .= i18n::translate('Changes made within the last %s days', $config["days"]);
 		// sortable table
 		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 		ob_start();
@@ -98,7 +97,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 }
 
 function print_recent_changes_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS;
+	global $ctype, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_recent_changes"]["config"]["cache"];
 
