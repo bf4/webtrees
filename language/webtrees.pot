@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webtrees 1.0\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-09 18:45+0000\n"
+"POT-Creation-Date: 2010-03-09 19:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -8432,7 +8432,7 @@ msgstr ""
 msgid "Personal Facts"
 msgstr ""
 
-#. I18N: This is the title of a tab or sidebar item
+#. I18N: This is the title of a tab or sidebar item 
 #: ../modules/family_nav/pgv_module.php:18
 #: ../modules/family_nav/family_nav.php:817
 #: ../modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php:70
