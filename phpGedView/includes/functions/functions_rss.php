@@ -61,7 +61,7 @@ function iso8601_date($time) {
 * $dataArray[2] = data
 */
 function getUpcomingEvents() {
-	global $pgv_lang, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 	global $DAYS_TO_SHOW_LIMIT, $SERVER_URL;
 
@@ -98,7 +98,7 @@ function getUpcomingEvents() {
 * $dataArray[2] = data
 */
 function getTodaysEvents() {
-	global $pgv_lang, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 	global $SERVER_URL;
 	global $DAYS_TO_SHOW_LIMIT;
@@ -127,7 +127,7 @@ function getTodaysEvents() {
 * @TODO does not print the family with most children due to the embedded html in that function.
 */
 function getGedcomStats() {
-	global $pgv_lang, $day, $month, $year, $PGV_BLOCKS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $SERVER_URL, $RTLOrd;
+	global $day, $month, $year, $PGV_BLOCKS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $SERVER_URL, $RTLOrd;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
 	if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
@@ -280,7 +280,7 @@ function getGedcomNews() {
 * @TODO Possibly turn list into a <ul> list
 */
 function getTop10Surnames() {
-	global $pgv_lang, $SERVER_URL, $TEXT_DIRECTION;
+	global $SERVER_URL, $TEXT_DIRECTION;
 	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
 
 	$data = "";
@@ -436,7 +436,7 @@ function getRecentChanges() {
 * $dataArray[5] = file size, $dataArray[5] = media title
 */
 function getRandomMedia() {
-	global $pgv_lang, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
 	global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $PGV_BLOCKS, $ctype, $action;
