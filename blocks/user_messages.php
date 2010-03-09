@@ -43,7 +43,7 @@ $PGV_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
 
 //-- print user messages
 function print_user_messages($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
 
 	$usermessages = getUserMessages(PGV_USER_NAME);
 
