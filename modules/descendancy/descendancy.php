@@ -36,7 +36,6 @@ if (!defined('PGV_AUTOCOMPLETE_LIMIT')) define('PGV_AUTOCOMPLETE_LIMIT', 500);
 class descendancy_Sidebar extends Sidebar {
 
 	public function getContent() {
-		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 		$out = '<script type="text/javascript">
@@ -131,7 +130,6 @@ class descendancy_Sidebar extends Sidebar {
 	}
 	
 	public function getFamilyLi(&$family, &$person, $generations=0) {
-		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$out = '';
 		$out .= '<li id="sb_desc_'.$family->getXref().'" class="sb_desc_indi_li"><a href="sidebar.php?sb_action=descendancy&amp;famid='.$family->getXref().'" title="'.$family->getXref().'" class="sb_desc_indi">';
@@ -152,7 +150,7 @@ class descendancy_Sidebar extends Sidebar {
 	}
 
 	public function search($query) {
-		global $TBLPREFIX, $pgv_lang, $PGV_IMAGES, $PGV_IMAGE_DIR;
+		global $TBLPREFIX, $PGV_IMAGES, $PGV_IMAGE_DIR;
 		if (strlen($query)<2) return '';
 		$sql=
 		"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
@@ -196,7 +194,6 @@ class descendancy_Sidebar extends Sidebar {
 	}
 	
 	public function loadChildren($famid, $generations=0) {
-		global $pgv_lang;
 		$out = '<ul>';
 		$family = Family::getInstance($famid);
 		if ($family->canDisplayDetails()) {

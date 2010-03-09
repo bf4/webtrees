@@ -45,7 +45,7 @@ require_once PGV_ROOT.'includes/cssparser.inc.php';
  * @param string $legend optional legend of the fieldset
  */
 function print_indi_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES, $MAX_ALIVE_AGE;
 
 	if ($option=="MARR_PLAC") return;
@@ -438,7 +438,7 @@ function print_indi_table($datalist, $legend="", $option="") {
  * @param string $legend optional legend of the fieldset
  */
 function print_fam_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $lang_short_cut, $LANGUAGE;
 
 	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
@@ -819,7 +819,7 @@ function print_fam_table($datalist, $legend="", $option="") {
  * @param string $legend optional legend of the fieldset
  */
 function print_sour_table($datalist, $legend=null) {
-	global $pgv_lang, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) {
@@ -956,7 +956,7 @@ T2;
  * @param string $legend optional legend of the fieldset
  */
 function print_note_table($datalist, $legend=null) {
-	global $pgv_lang, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) {
@@ -1044,7 +1044,7 @@ function print_note_table($datalist, $legend=null) {
  * @param string $legend optional legend of the fieldset
  */
 function print_repo_table($repos, $legend='') {
-	global $pgv_lang, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 
 	if (!$repos) {
@@ -1107,7 +1107,7 @@ function print_repo_table($repos, $legend='') {
  * @param string $legend optional legend of the fieldset
  */
 function print_media_table($datalist, $legend="") {
-	global $pgv_lang, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_MEDIA_FILENAME;
 
 	if (count($datalist)<1) return;
@@ -1201,7 +1201,7 @@ function print_media_table($datalist, $legend="") {
  * @param string $listFormat presentation style: "style2 = sortable list, "style3" = cloud
  */
 function print_surn_table($datalist, $target="INDI", $listFormat="") {
-	global $pgv_lang, $GEDCOM, $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
+	global $GEDCOM, $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
 	global $SURNAME_LIST_STYLE;
 	if (count($datalist)<1) return;
 
@@ -1302,7 +1302,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 // @param $surnames array (of SURN, of array of SPFX_SURN, of array of PID)
 // @param $type string, indilist or famlist
 function format_surname_table($surnames, $type) {
-	global $pgv_lang, $GEDCOM;
+	global $GEDCOM;
 
 	require_once PGV_ROOT.'js/sorttable.js.htm';
 	$table_id ='ID'.floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1516,7 +1516,7 @@ function format_surname_list($surnames, $style, $totals) {
  * @param array $datalist contain records that were extracted from the database.
  */
 function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=true) {
-	global $pgv_lang, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	require_once PGV_ROOT.'js/sorttable.js.htm';
 	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
@@ -1630,7 +1630,7 @@ function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=
  * @param array $datalist contain records that were extracted from the database.
  */
 function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false, $sort_by_event=false) {
-	global $pgv_lang, $TEXT_DIRECTION, $SERVER_URL;
+	global $TEXT_DIRECTION, $SERVER_URL;
 	require_once PGV_ROOT.'js/sorttable.js.htm';
 	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1772,38 +1772,64 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	}
 
 	// Print a final summary message about restricted/filtered facts
-	$pgv_lang["global_num1"] = $endjd-$startjd+1;		// This is the number of days
-
 	$summary = "";
-
 	if ($endjd==client_jd()) {
 		// We're dealing with the Today's Events block
 		if ($private!=0) {
 			// We lost some output due to Privacy restrictions
-			if ($output!=0) $summary = "more_today_privacy";
-			else $summary = "none_today_privacy";
+			if ($output!=0) {
+				$summary = i18n::translate('More events exist for today, but privacy restrictions prevent you from seeing them.');
+			} else {
+				$summary = i18n::translate('Events exist for today, but privacy restrictions prevent you from seeing them.');
+			}
 		} else if ($filter!=0) {
 			// We lost some output due to filtering for living people
-			if ($output==0) $summary = "none_today_living";
-		} else if ($output==0) $summary = "none_today_all";
+			if ($output==0) {
+				$summary = i18n::translate('No events for living people exist for today.');
+			}
+		} else {
+			if ($output==0) {
+				$summary = i18n::translate('No events exist for today.');
+			}
+		}
 	} else {
 		// We're dealing with the Upcoming Events block
 		if ($private!=0) {
 			// We lost some output due to Privacy restrictions
-			if ($output!=0) $summary = "more_events_privacy";
-			else $summary = "no_events_privacy";
+			if ($output!=0) {
+				if ($endjd==$startjd) {
+					$summary = i18n::translate('More events exist for tomorrow, but privacy restrictions prevent you from seeing them.');
+				} else {
+					$summary = i18n::translate('More events exist for the next %s days, but privacy restrictions prevent you from seeing them.', $endjd-$startjd+1);
+				}
+			} else {
+				if ($endjd==$startjd) {
+					$summary = i18n::translate('Events exist for tomorrow, but privacy restrictions prevent you from seeing them.');
+				} else {
+					$summary = i18n::translate('Events exist for the next %s days, but privacy restrictions prevent you from seeing them.', $endjd-$startjd+1);
+				}
+			}
 		} else if ($filter!=0) {
 			// We lost some output due to filtering for living people
-			if ($output==0) $summary = "no_events_living";
-		} else if ($output==0) $summary = "no_events_all";
-		// If we're only looking at tomorrow, change the messages to refer
-		// to tomorrow instead of "the next 1 days"
-		if ($summary!="" && $endjd==$startjd) $summary .= "1";
+			if ($output==0) {
+				if ($endjd==$startjd) {
+					$summary = i18n::translate('No events for living people exist for tomorrow.');
+				} else {
+					$summary = i18n::translate('No events for living people exist for the next %s days.', $endjd-$startjd+1);
+				}
+			}
+		} else {
+			if ($output==0) {
+				if ($endjd==$startjd) {
+					$summary = i18n::translate('No events exist for tomorrow.');
+				} else {
+					$summary = i18n::translate('No events exist for the next %s days.', $endjd-$startjd+1);
+				}
+			}
+		}
 	}
 	if ($summary!="") {
-		$return .= "<b>";
-		$return .= print_text($summary, 0, 1);
-		$return .= "</b>";
+		$return .= "<b>", $summary, "</b>";
 	}
 
 	return $return;
@@ -1815,7 +1841,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
  * This performs the same function as print_events_table(), but formats the output differently.
  */
 function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $sort_by_event=false) {
-	global $pgv_lang, $TEXT_DIRECTION;
+	global $TEXT_DIRECTION;
 
 	// Did we have any output?  Did we skip anything?
 	$output = 0;
@@ -1882,36 +1908,64 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 	}
 
 	// Print a final summary message about restricted/filtered facts
-	$pgv_lang["global_num1"] = $endjd-$startjd+1;		// This is the number of days
-
 	$summary = "";
-
 	if ($endjd==client_jd()) {
 		// We're dealing with the Today's Events block
 		if ($private!=0) {
 			// We lost some output due to Privacy restrictions
-			if ($output!=0) $summary = "more_today_privacy";
-			else $summary = "none_today_privacy";
+			if ($output!=0) {
+				$summary = i18n::translate('More events exist for today, but privacy restrictions prevent you from seeing them.');
+			} else {
+				$summary = i18n::translate('Events exist for today, but privacy restrictions prevent you from seeing them.');
+			}
 		} else if ($filter!=0) {
 			// We lost some output due to filtering for living people
-			if ($output==0) $summary = "none_today_living";
-		} else if ($output==0) $summary = "none_today_all";
+			if ($output==0) {
+				$summary = i18n::translate('No events for living people exist for today.');
+			}
+		} else {
+			if ($output==0) {
+				$summary = i18n::translate('No events exist for today.');
+			}
+		}
 	} else {
 		// We're dealing with the Upcoming Events block
 		if ($private!=0) {
 			// We lost some output due to Privacy restrictions
-			if ($output!=0) $summary = "more_events_privacy";
-			else $summary = "no_events_privacy";
+			if ($output!=0) {
+				if ($endjd==$startjd) {
+					$summary = i18n::translate('More events exist for tomorrow, but privacy restrictions prevent you from seeing them.');
+				} else {
+					$summary = i18n::translate('More events exist for the next %s days, but privacy restrictions prevent you from seeing them.', $endjd-$startjd+1);
+				}
+			} else {
+				if ($endjd==$startjd) {
+					$summary = i18n::translate('Events exist for tomorrow, but privacy restrictions prevent you from seeing them.');
+				} else {
+					$summary = i18n::translate('Events exist for the next %s days, but privacy restrictions prevent you from seeing them.', $endjd-$startjd+1);
+				}
+			}
 		} else if ($filter!=0) {
 			// We lost some output due to filtering for living people
-			if ($output==0) $summary = "no_events_living";
-		} else if ($output==0) $summary = "no_events_all";
-		if ($summary!="" && $endjd==$startjd) $summary .= "1";
+			if ($output==0) {
+				if ($endjd==$startjd) {
+					$summary = i18n::translate('No events for living people exist for tomorrow.');
+				} else {
+					$summary = i18n::translate('No events for living people exist for the next %s days.', $endjd-$startjd+1);
+				}
+			}
+		} else {
+			if ($output==0) {
+				if ($endjd==$startjd) {
+					$summary = i18n::translate('No events exist for tomorrow.');
+				} else {
+					$summary = i18n::translate('No events exist for the next %s days.', $endjd-$startjd+1);
+				}
+			}
+		}
 	}
 	if ($summary!="") {
-		$return .= "<b>";
-		$return .= print_text($summary, 0, 1);
-		$return .= "</b>";
+		$return .= "<b>", $summary, "</b>";
 	}
 
 	return $return;
@@ -1924,7 +1978,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
  * @param string $title
  */
 function print_chart_by_age($data, $title) {
-	global $pgv_lang, $GEDCOM;
+	global $GEDCOM;
 	global $view, $stylesheet, $print_stylesheet;
 
 	$css = new cssparser(false);
@@ -2002,7 +2056,6 @@ function print_chart_by_age($data, $title) {
  * @param string $title
  */
 function print_chart_by_decade($data, $title) {
-	global $pgv_lang;
 	global $view, $stylesheet, $print_stylesheet;
 
 	$css = new cssparser(false);
@@ -2088,7 +2141,6 @@ function get_align($txt) {
  * @param none
  */
 function load_behaviour() {
-	global $pgv_lang;
 	require_once PGV_ROOT.'js/prototype.js.htm';
 	require_once PGV_ROOT.'js/behaviour.js.htm';
 	require_once PGV_ROOT.'js/overlib.js.htm';
