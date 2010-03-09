@@ -228,7 +228,7 @@ if ($ct==0) {
 		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertSlashes", "qm"); print i18n::translate('Convert media folder separators to');?></td>
 		<td class="list_value">
 		<input type="radio" name="conv_slashes" value="forward" <?php if ($controller->conv_slashes=='forward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print i18n::translate('Forward slashes : /');?><br />
-		<input type="radio" name="conv_slashes" value="backward" <?php if ($controller->conv_slashes=='backward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print i18n::translate('Backslashes : \');?>
+		<input type="radio" name="conv_slashes" value="backward" <?php if ($controller->conv_slashes=='backward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print i18n::translate('Backslashes : \\');?>
 		</td></tr>
 
 		<tr><td class="topbottombar" colspan="2">
