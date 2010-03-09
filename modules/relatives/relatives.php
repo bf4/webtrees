@@ -247,7 +247,7 @@ class relatives_Tab extends Tab {
 	* @return html table rows
 	*/
 	function printChildrenRows(&$family, &$people, $type) {
-		global $personcount, $pgv_lang;
+		global $personcount;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$elderdate = $family->getMarriageDate();
 		foreach($people["children"] as $key=>$child) {
@@ -272,14 +272,16 @@ class relatives_Tab extends Tab {
 		}
 		if (isset($family) && !$this->controller->isPrintPreview() && $this->controller->canedit) {
 			if ($type == "spouse") {
-				$action = "add_son_daughter";
-				$child_m = "son";
-				$child_f = "daughter";
+				$action  = "add_son_daughter";
+				$child_u = i18n::translate('Add a son or daughter');
+				$child_m = i18n::translate('Son');
+				$child_f = i18n::translate('Daughter');
 			}
 			else {
-				$action = "add_sibling";
-				$child_m = "brother";
-				$child_f = "sister";
+				$action  = "add_sibling";
+				$child_u = i18n::translate('Add a brother or sister');
+				$child_m = i18n::translate('Brother');
+				$child_f = i18n::translate('Sister');
 			}
 		?>
 			<tr>
@@ -289,10 +291,10 @@ class relatives_Tab extends Tab {
 					<?php }?>
 				</td>
 				<td class="facts_value"><?php print_help_link($action, "qm"); ?>
-					<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>');"><?php print $pgv_lang[$action]; ?></a>
+					<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>');"><?php echo $child_u; ?></a>
 					<span style='white-space:nowrap;'>
-						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','M');"><?php echo Person::sexImage('M', 'small', '', $pgv_lang[$child_m]); ?></a>
-						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','F');"><?php echo Person::sexImage('F', 'small', '', $pgv_lang[$child_f]); ?></a>
+						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','M');"><?php echo Person::sexImage('M', 'small', '', $child_m); ?></a>
+						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','F');"><?php echo Person::sexImage('F', 'small', '', $child_f); ?></a>
 					</span>
 				</td>
 			</tr>
