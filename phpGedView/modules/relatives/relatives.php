@@ -326,7 +326,6 @@ class relatives_Tab extends Tab {
 		$families = $this->controller->indi->getChildFamilies();
 		if (count($families)==0) {
 			if (/**!$this->controller->isPrintPreview() &&**/ $this->controller->canedit) {
-			print "<span class=\"subheaders\">".i18n::translate('Close Relatives')."</span>";
 				?>
 				<table class="facts_table">
 					<tr>
