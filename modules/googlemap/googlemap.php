@@ -80,13 +80,8 @@ class googlemap_Tab extends Tab {
 		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD, $GOOGLEMAP_PH_CONTROLS;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
 
-		$out = "";
 		ob_start();
-
-		// Header Info ------------------------------------------------------------------------------------
-		if (file_exists("modules/googlemap/defaultconfig.php") ) {
-			//Content Info ------------------------------------------------------------
-			?>
+		?>
 <div id="gg_map_content">
 <table border="0" width="100%">
 	<tr>
@@ -186,14 +181,7 @@ class googlemap_Tab extends Tab {
 </div>
 </td></tr></table></div>
 		<?php
-		} else {
-			$out .= "<div id=\"googlemap_content\" class=\"tab_page\" style=\"display:block; \" >";
-			$out .= "MAPS NOT INSTALLED";
-			$out .= "</div>";
-		}
-		$out .= ob_get_contents();
-		ob_end_clean();
-		return $out;
+		return ob_get_clean();
 	}
 
 	public function hasContent() {
