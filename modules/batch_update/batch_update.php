@@ -53,8 +53,6 @@ class batch_update {
 
 	// Main entry point - called by the PGV framework in response to module.php?mod=batch_update
 	function main() {
-		global $pgv_lang;
-
 		// HTML common to all pages
 		$html=
 			mod_print_header(i18n::translate('Batch Update')).
@@ -356,7 +354,6 @@ class base_plugin {
 
 	// Default option is just the "don't update CHAN record"
 	function getOptionsForm() {
-		global $pgv_lang;
 		return
 			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Update the CHAN record').':</td>'.
 			'<td class="optionbox wrap"><select name="chan" onchange="this.form.submit();">'.
@@ -367,8 +364,6 @@ class base_plugin {
 
 	// Default buttons are update and update_all
 	function getActionButtons($xref) {
-		global $pgv_lang;
-
 		return array(
 			batch_update::createSubmitButton(i18n::translate('Update'),     $xref, 'update'),
 			batch_update::createSubmitButton(i18n::translate('Update all'), $xref, 'update_all')

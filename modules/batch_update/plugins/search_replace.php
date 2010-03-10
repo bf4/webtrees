@@ -90,7 +90,12 @@ class search_replace_bu_plugin extends base_plugin {
 	}
 
 	function getOptionsForm() {
-		global $pgv_lang;
+		$descriptions=array(
+			'exact'=>i18n::translate('Match the exact text, even if it occurs in the middle of a word.'),
+			'words'=>i18n::translate('Match the exact text, unless it occurs in the middle of a word.'),
+			'wildcards'=>i18n::translate('Use a &laquo;?&raquo; to match a single character, use &laquo;*&raquo; to match zero or more characters.'),
+			'regex'=>i18n::translate('Regular expressions are an advanced pattern matching technique.  See <a href="http://php.net/manual/en/regexp.reference.php" target="_new">php.net/manual/en/regexp.reference.php</a> for futher details.'),
+		);
 
 		return
 			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Search text/pattern').':</td>'.
@@ -109,7 +114,7 @@ class search_replace_bu_plugin extends base_plugin {
 			'<option value="words"'    .($this->method=='words'     ? ' selected="selected"' : '').'>'.i18n::translate('Whole words only')    .'</option>'.
 			'<option value="wildcards"'.($this->method=='wildcards' ? ' selected="selected"' : '').'>'.i18n::translate('Wildcards').'</option>'.
 			'<option value="regex"'    .($this->method=='regex'     ? ' selected="selected"' : '').'>'.i18n::translate('Regular expression')    .'</option>'.
-			'</select><br/><i>'.$pgv_lang['bu_'.$this->method.'_desc'].'</i>'.$this->error.'</td></tr>'.
+			'</select><br/><i>'.$descriptions[$this->method].'</i>'.$this->error.'</td></tr>'.
 
 			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Case insensitive').':</td>'.
 			'<td class="optionbox wrap">'.
