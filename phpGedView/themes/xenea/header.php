@@ -121,7 +121,7 @@ else if ($view!='simple'){?>
 				<form action="search.php" method="get">
 				<input type="hidden" name="action" value="general" />
 				<input type="hidden" name="topsearch" value="yes" />
-				<input type="text" name="query" accesskey="<?php echo i18n::translate('S'); ?>" size="12" value="<?php echo i18n::translate('Search'); ?>" onfocus="if (this.value == '<?php echo i18n::translate('Search'); ?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search'); ?>';" />
+				<input type="text" name="query" size="12" value="<?php echo i18n::translate('Search'); ?>" onfocus="if (this.value == '<?php echo i18n::translate('Search'); ?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search'); ?>';" />
 				<input type="submit" name="search" value="&gt;" />
 				</form>
 				</td>

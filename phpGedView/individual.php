@@ -314,24 +314,7 @@ foreach($controller->modules as $mod) {
 <?php 
 	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
-	?>
-		<div class="accesskeys">
-			<a class="accesskeys" href="<?php echo "pedigree.php?rootid=$pid&amp;show_full=$showFull";?>" title="<?php echo i18n::translate('Pedigree Chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('P'); ?>"><?php echo i18n::translate('Pedigree Chart') ?></a>
-			<a class="accesskeys" href="<?php echo "descendancy.php?pid=$pid&amp;show_full=$showFull";?>" title="<?php echo i18n::translate('Descendancy Chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('D'); ?>"><?php echo i18n::translate('Descendancy Chart') ?></a>
-			<a class="accesskeys" href="<?php echo "timeline.php?pids[]=$pid";?>" title="<?php echo i18n::translate('Timeline Chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('T'); ?>"><?php echo i18n::translate('Timeline Chart') ?></a>
-			<?php
-				if (PGV_USER_GEDCOM_ID) {
-			?>
-			<a class="accesskeys" href="<?php echo "relationship.php?show_full=$showFull&amp;pid1=", PGV_USER_GEDCOM_ID, "&amp;pid2=", $controller->pid;?>" title="<?php echo i18n::translate('Relationship to me') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('M'); ?>"><?php echo i18n::translate('Relationship to me') ?></a>
-			<?php }
-			if ($controller->canShowGedcomRecord()) {
-			?>
-			<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php echo i18n::translate('View GEDCOM Record') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('G'); ?>"><?php echo i18n::translate('View GEDCOM Record') ?></a>
-			<?php
-			}
-		?>
-		</div>
-		<?php } ?>
+	} ?>
 </div>
 <?php
 if (!$controller->indi->canDisplayDetails()) {

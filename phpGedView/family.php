@@ -70,22 +70,15 @@ $show_full = "1";
 	}
 //-->
 </script>
+<?php
+if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview() && $controller->accept_success) {
+	print "<b>".i18n::translate('Changes successfully accepted into database')."</b><br />";
+}
+?>
 <table align="center" width="95%">
 	<tr>
 		<td>
-		<?php
-		print_family_header($controller->famid);
-		?>
-		</td>
-		<td>
-			<?php
-			if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview()) : 
-			if ($controller->accept_success)
-			{
-				print "<b>".i18n::translate('Changes successfully accepted into database')."</b><br />";
-			}
-			endif;	// view != preview
-			?>
+		<?php print_family_header($controller->famid); ?>
 		</td>
 	</tr>
 </table>
@@ -128,25 +121,6 @@ $show_full = "1";
 					</td>
 				</tr>
 			</table>
-		</td>
-		<td class="noprint"> <!--//blank cell for access keys//-->
-			<div class="accesskeys">
-			<?php
-				if (empty($SEARCH_SPIDER)) {
-				?>
-				<a class="accesskeys" href="<?php echo 'timeline.php?pids[0]=' . $controller->parents['HUSB'].'&amp;pids[1]='.$controller->parents['WIFE'];?>" title="<?php echo i18n::translate('Show couple on timeline chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('P'); ?>"><?php echo i18n::translate('Show couple on timeline chart') ?></a>
-				<a class="accesskeys" href="<?php echo 'timeline.php?' . $controller->getChildrenUrlTimeline();?>" title="<?php echo i18n::translate('Show children on timeline chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('D'); ?>"><?php echo i18n::translate('Show children on timeline chart') ?></a>
-				<a class="accesskeys" href="<?php echo 'timeline.php?pids[0]=' .$controller->getHusband().'&amp;pids[1]='.$controller->getWife().'&amp;'.$controller->getChildrenUrlTimeline(2);?>" title="<?php echo i18n::translate('Show family on timeline chart') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('T'); ?>"><?php echo i18n::translate('Show family on timeline chart') ?></a>
-					<?php if ($SHOW_GEDCOM_RECORD) { ?>
-				<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php echo i18n::translate('View GEDCOM Record') ?>" tabindex="-1" accesskey="<?php echo i18n::translate('G'); ?>"><?php echo i18n::translate('View GEDCOM Record') ?></a>
-					<?php } ?>
-			<?php } ?>
-			</div>
-			<?php
-				if ($controller->accept_success) {
-					echo "<b>".i18n::translate('Changes successfully accepted into database')."</b><br />";
-				}
-			?>
 		</td>
 	</tr>
 </table>
