@@ -243,7 +243,7 @@ $i = 0;
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php _help_link("GOOGLEMAP_PH_help", "qm", "GOOGLEMAP_PH"); echo i18n::translate('Use Googlemap for Place Hierarchy');?></td>
+		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_help", "qm", "GOOGLEMAP_PH"); echo i18n::translate('Use Googlemap for Place Hierarchy');?></td>
 		<td class="optionbox">
 			<select name="NEW_GM_PLACE_HIERARCHY" tabindex="<?php $i++; echo $i?>;">
 				<option value="0" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="0") echo "selected=\"selected\""; ?>><?php echo i18n::translate('No');?></option>
@@ -410,7 +410,7 @@ $i = 0;
 		<td class="optionbox"><input type="text" name="NEW_GM_DEFAULT_TOP_LEVEL" value="<?php echo $GM_DEFAULT_TOP_VALUE;?>" size="20" tabindex="<?php $i++; echo $i?>" onfocus="getHelp('GM_DEFAULT_LEVEL_0_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php _help_link("GM_NOF_LEVELS_help", "qm", "GM_NOF_LEVELS"); echo i18n::translate('Number of levels');?></td>
+		<td class="descriptionbox"><?php print_help_link("GM_NOF_LEVELS_help", "qm", "GM_NOF_LEVELS"); echo i18n::translate('Number of levels');?></td>
 		<td class="optionbox">
 			<select name="NEW_GM_LEVEL_COUNT" dir="ltr" tabindex="<?php $i++; echo $i?>" onchange="showSelectedLevels()">
 				<option value="1"<?php if ($GM_MAX_NOF_LEVELS == 1) echo " selected=\"selected\"";?>>1</option>
