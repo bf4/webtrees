@@ -192,7 +192,7 @@ if ($action=='createuser' || $action=='edituser2') {
 					$headers="From: ".$PHPGEDVIEW_EMAIL;
 					$message["from"]=PGV_USER_NAME;
 					$message["subject"]=i18n::translate('Approval of account at %s', $serverURL);
-					$message["body"]=i18n::translate('The administrator at the PhpGedView site %s has approved your application for an account.  You may now login by accessing the following link: %s#', $serverURL, $serverURL));
+					$message["body"]=i18n::translate('The administrator at the PhpGedView site %s has approved your application for an account.  You may now login by accessing the following link: %s#', $serverURL, $serverURL);
 					$message["created"]="";
 					$message["method"]="messaging2";
 					addMessage($message);
