@@ -35,29 +35,31 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_CONFIG_DATA_PHP', '');
 
 // Unknown surname in various scripts
+// TODO: This is extremely poor I18N - there is not a 1:1 correlation between script and language
 $UNKNOWN_NN=array(
-	'NN'          =>i18n::translate('(unknown)'),
-	'NNhebrew'    =>i18n::translate('(לא-ידוע)'),
-	'NNarabic'    =>i18n::translate('(غير معروف)'),
-	'NNgreek'     =>i18n::translate('(άγνωστος/η)'),
-	'NNrussian'   =>i18n::translate('(неопределено)'),
-	'NNchinese'   =>i18n::translate('(未知)'),
-	'NNvietnamese'=>i18n::translate('(vô danh)'),
-	'NNthai'      =>i18n::translate('(unknown)'),
-	'NNother'     =>i18n::translate('(unknown)'),
+	'NN'          =>'(unknown)',
+	'NNhebrew'    =>'(לא-ידוע)',
+	'NNarabic'    =>'(غير معروف)',
+	'NNgreek'     =>'(άγνωστος/η)',
+	'NNrussian'   =>'(неопределено)',
+	'NNchinese'   =>'(未知)',
+	'NNvietnamese'=>'(vô danh)',
+	'NNthai'      =>'(unknown)',
+	'NNother'     =>'(unknown)',
 );
 
 // Unknown givne name in various scripts
+// TODO: This is extremely poor I18N - there is not a 1:1 correlation between script and language
 $UNKNOWN_PN=array(
-	'PN'          =>i18n::translate('(unknown)'),
-	'PNhebrew'    =>i18n::translate('(לא-ידוע)'),
-	'PNarabic'    =>i18n::translate('(غير معروف)'),
-	'PNgreek'     =>i18n::translate('(άγνωστος/η)'),
-	'PNrussian'   =>i18n::translate('(неопределено)'),
-	'PNchinese'   =>i18n::translate('(未知)'),
-	'PNvietnamese'=>i18n::translate('(không biết tuổi)'),
-	'PNthai'      =>i18n::translate('(unknown)'),
-	'PNother'     =>i18n::translate('(unknown)'),
+	'PN'          =>'(unknown)',
+	'PNhebrew'    =>'(לא-ידוע)',
+	'PNarabic'    =>'(غير معروف)',
+	'PNgreek'     =>'(άγνωστος/η)',
+	'PNrussian'   =>'(неопределено)',
+	'PNchinese'   =>'(未知)',
+	'PNvietnamese'=>'(không biết tuổi)',
+	'PNthai'      =>'(unknown)',
+	'PNother'     =>'(unknown)',
 );
 
 // Type attribute of a media object
