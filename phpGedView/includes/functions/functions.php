@@ -3022,7 +3022,7 @@ function CheckPageViews() {
 		if ($sleepTime > 0) {
 			// The configured page view rate has been exceeded
 			// - Log a message and then sleep to slow things down
-			$text = print_text("maxviews_exceeded", 0, 1);
+			$text = "Permitted page view rate of {$MAX_VIEWS} per {$MAX_VIEW_TIME} seconds exceeded.";
 			AddToLog($text);
 			sleep($sleepTime);
 		}
