@@ -33,13 +33,7 @@ class lightbox_Tab extends media_Tab {
 		global $CONTACT_EMAIL, $pid, $tabno;
 		global $Fam_Navigator, $NAV_ALBUM;
 
-		$out = "<div id=\"lightbox2\">";
-		$out .= "<span class=\"subheaders\">" . $this->getName() . "</span>";
-		$out .= "&nbsp;&nbsp;";
 		ob_start();
-		// ---------- Help link --------------------
-		print_help_link("lb_general", "qm");
-		// --------- Header include -------------
 		$mediacnt = $this->get_media_count();
 		require_once 'modules/lightbox/functions/lb_head.php';
 		echo "<div id=\"lightbox2_content\">";

@@ -313,8 +313,6 @@ class relatives_Tab extends Tab {
 		$saved_ABBREVIATE_CHART_LABELS = $ABBREVIATE_CHART_LABELS;
 		$ABBREVIATE_CHART_LABELS = false; // Override GEDCOM configuration
 		
-		$out = "<span class=\"subheaders\">".i18n::translate('Close Relatives')."</span><div id=\"relatives_content\">";
-
 		ob_start();
 		if (!$this->controller->isPrintPreview()) {
 		?>
@@ -474,10 +472,7 @@ class relatives_Tab extends Tab {
 		unset($show_full);
 		if (isset($saved_show_full)) $show_full = $saved_show_full;
 
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .= "</div>";
-		return $out;
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 
 	public function hasContent() {

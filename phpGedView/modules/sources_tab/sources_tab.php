@@ -42,8 +42,6 @@ class sources_tab_Tab extends Tab {
 		/*if (isset($_COOKIE['row_sour2'])) $SHOW_LEVEL2_SOURCES = ($_COOKIE['row_sour2']);
 		else*/ $SHOW_LEVEL2_SOURCES = $SHOW_LEVEL2_NOTES;
 
-		$out = "<span class=\"subheaders\">".$this->getName()."</span><div id=\"sources_content\">";
-
 		ob_start();
 		?>
 		<table class="facts_table">
@@ -100,10 +98,7 @@ class sources_tab_Tab extends Tab {
 			</script>
 	<?php
 		}
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .= "</div>";
-		return $out;
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 
 	function get_source_count() {
