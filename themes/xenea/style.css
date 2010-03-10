@@ -1010,12 +1010,6 @@ h4 {
 	font-weight: bold;
 }
 
-.accesskeys{
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-}
-
 /* Style for the top and bottom bar */
 .topbottombar {
 	color: white;
