@@ -2,15 +2,6 @@
 require_once("includes/classes/class_module.php");
 require_once("modules/lightbox/lightbox.php");
 
-// Load PGV embeding language file
-global $language_settings, $LANGUAGE;
-
-// Load other language file if needed
-if (isset($LANGUAGE)) {
-	require_once 'modules/lightbox/languages/lang.en.php';
-	if($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists("modules/lightbox/languages/lang.{$language_settings[$LANGUAGE]['lang_short_cut']}.php")){require_once "modules/lightbox/languages/lang.{$language_settings[$LANGUAGE]['lang_short_cut']}.php";}
-}
-
 class lightbox_PGVModule extends PGVModule {
 	protected $name = 'lightbox';
 	protected $description = 'Adds a tab (Album) to the individual page which an alternate way to view and work with media.';
