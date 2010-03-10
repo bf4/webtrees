@@ -86,7 +86,6 @@ class googlemap_Tab extends Tab {
 <table border="0" width="100%">
 	<tr>
 		<td><?php 
-		print "<span class=\"subheaders\">".$this->getName()."</span>\n";
 		if (!$GOOGLEMAP_ENABLED) {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".i18n::translate('GoogleMap module disabled')."</td></tr>\n";
@@ -103,20 +102,18 @@ class googlemap_Tab extends Tab {
 				function SetMarkersAndBounds () {}
 			//-->
 			</script> <?php
-		}else{
-			if(empty($SEARCH_SPIDER)) {
-				$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
-				$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
-				$tNew = preg_replace("/&/", "&amp;", $tNew);
-				if($SESSION_HIDE_GOOGLEMAP=="true") {
-					print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
-					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Activate')."\" title=\"".i18n::translate('Activate')."\" />";
-					print " ".i18n::translate('Activate')."</a></span>\n";
-				} else {
-					print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
-					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Deactivate')."\" title=\"".i18n::translate('Deactivate')."\" />";
-					print " ".i18n::translate('Deactivate')."</a></span>\n";
-				}
+		} else {
+			$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
+			$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
+			$tNew = preg_replace("/&/", "&amp;", $tNew);
+			if ($SESSION_HIDE_GOOGLEMAP=="true") {
+				print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
+				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Activate')."\" title=\"".i18n::translate('Activate')."\" />";
+				print " ".i18n::translate('Activate')."</a></span>\n";
+			} else {
+				print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
+				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Deactivate')."\" title=\"".i18n::translate('Deactivate')."\" />";
+				print " ".i18n::translate('Deactivate')."</a></span>\n";
 			}
 
 			if (!$this->controller->indi->canDisplayName()) {
@@ -127,47 +124,45 @@ class googlemap_Tab extends Tab {
 				print "\n\t</table>\n<br />";
 				print "<script type=\"text/javascript\">\n";
 				print "function ResizeMap ()\n{\n}\n</script>\n";
-			}else{
-				if(empty($SEARCH_SPIDER)) {
-					if($SESSION_HIDE_GOOGLEMAP=="false") {
-						print "<table width=\"100%\" border=\"0\" class=\"facts_table\">\n";
-						print "<tr><td valign=\"top\">\n";
-						print "<div id=\"googlemap_left\">\n";
-						print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
-						print "<div id=\"map_pane\" style=\"border: 1px solid gray; color:black; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
-						if (PGV_USER_IS_ADMIN) {
-							print "<table width=\"100%\"><tr>\n";
-							print "<td width=\"33%\" align=\"left\">\n";
-							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".i18n::translate('Manage GoogleMap configuration')."</a>";
-							print "</td>\n";
-							print "<td width=\"33%\" align=\"center\">\n";
-							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=places\">".i18n::translate('Edit geographic place locations')."</a>";
-							print "</td>\n";
-							print "<td width=\"33%\" align=\"right\">\n";
-							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=placecheck\">".i18n::translate('Place Check')."</a>";
-							print "</td>\n";
-							print "</tr></table>\n";
-						}
-						print "</div>\n";
+			} else {
+				if($SESSION_HIDE_GOOGLEMAP=="false") {
+					print "<table width=\"100%\" border=\"0\" class=\"facts_table\">\n";
+					print "<tr><td valign=\"top\">\n";
+					print "<div id=\"googlemap_left\">\n";
+					print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
+					print "<div id=\"map_pane\" style=\"border: 1px solid gray; color:black; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
+					if (PGV_USER_IS_ADMIN) {
+						print "<table width=\"100%\"><tr>\n";
+						print "<td width=\"33%\" align=\"left\">\n";
+						print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".i18n::translate('Manage GoogleMap configuration')."</a>";
 						print "</td>\n";
-						print "<td valign=\"top\" width=\"30%\">\n";
-						print "<div id=\"googlemap_content\">\n";
-						//setup_map();
-
-						$famids = array();
-						$families = $this->controller->indi->getSpouseFamilies();
-						foreach($families as $famid=>$family) {
-							$famids[] = $family->getXref();
-						}
-						$this->controller->indi->add_family_facts(false);
-						create_indiv_buttons();
-						build_indiv_map($this->controller->getIndiFacts(), $famids);
-						print "</div>\n";
-						print "</td>";
-
+						print "<td width=\"33%\" align=\"center\">\n";
+						print "<a href=\"module.php?mod=googlemap&amp;pgvaction=places\">".i18n::translate('Edit geographic place locations')."</a>";
+						print "</td>\n";
+						print "<td width=\"33%\" align=\"right\">\n";
+						print "<a href=\"module.php?mod=googlemap&amp;pgvaction=placecheck\">".i18n::translate('Place Check')."</a>";
+						print "</td>\n";
 						print "</tr></table>\n";
-
 					}
+					print "</div>\n";
+					print "</td>\n";
+					print "<td valign=\"top\" width=\"30%\">\n";
+					print "<div id=\"googlemap_content\">\n";
+					//setup_map();
+
+					$famids = array();
+					$families = $this->controller->indi->getSpouseFamilies();
+					foreach ($families as $famid=>$family) {
+						$famids[] = $family->getXref();
+					}
+					$this->controller->indi->add_family_facts(false);
+					create_indiv_buttons();
+					build_indiv_map($this->controller->getIndiFacts(), $famids);
+					print "</div>\n";
+					print "</td>";
+
+					print "</tr></table>\n";
+
 				}
 			}
 		}
@@ -185,9 +180,9 @@ class googlemap_Tab extends Tab {
 	}
 
 	public function hasContent() {
-		global $GOOGLEMAP_ENABLED;
-		if (!$GOOGLEMAP_ENABLED && !PGV_USER_IS_ADMIN) return false;
-		return true;
+		global $GOOGLEMAP_ENABLED, $SEARCH_SPIDER;
+
+		return !$SEARCH_SPIDER && ($GOOGLEMAP_ENABLED || PGV_USER_IS_ADMIN);
 	}
 
 	public function getJSCallback() {
