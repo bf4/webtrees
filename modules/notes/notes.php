@@ -39,8 +39,6 @@ class notes_Tab extends Tab {
 		global $SHOW_LEVEL2_NOTES;
 		global $NAV_NOTES;
 
-		$out = "<span class=\"subheaders\">".$this->getName()."</span><div id=\"notes_content\">";
-
 		ob_start();
 		?>
 <table class="facts_table">
@@ -111,10 +109,7 @@ if (!$SHOW_LEVEL2_NOTES) {
 			</script>
 	<?php
 		}
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .= "</div>";
-		return $out;
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 
 	function get_note_count() {

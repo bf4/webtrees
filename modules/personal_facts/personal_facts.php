@@ -43,7 +43,6 @@ class personal_facts_Tab extends Tab {
 		if (isset($_COOKIE['row_histo'])) $EXPAND_HISTO_EVENTS = ($_COOKIE['row_histo']);
 		else*/ $EXPAND_HISTO_EVENTS = false;
 
-		$out = "<span class=\"subheaders\">".$this->getName()."</span><div id=\"facts_content\">";
 		//-- only need to add family facts on this tab
 		if (!isset($this->controller->skipFamilyFacts)) $this->controller->indi->add_family_facts();
 
@@ -112,10 +111,7 @@ class personal_facts_Tab extends Tab {
 		//-->
 		</script>
 		<?php
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .= "</div>";
-		return $out;
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 	
 	public function hasContent() {

@@ -39,14 +39,12 @@ class media_Tab extends Tab {
 		global $CONTACT_EMAIL, $MULTI_MEDIA;
 		global $NAV_MEDIA;
 		
-		$out = "<span class=\"subheaders\">".$this->getName()."</span>";
-
 		ob_start();
 		// For Reorder media ------------------------------------
 		if (PGV_USER_CAN_EDIT) {
-			$out .= "<center>";
+			echo "<center>";
 			require_once './includes/media_tab_head.php';
-			$out .= "</center>";
+			echo "</center>";
 		}
 		?>
 		<div id="media_content">
@@ -78,9 +76,7 @@ class media_Tab extends Tab {
 		</table>
 			</div>
 	<?php
-		$out .= ob_get_contents();
-		ob_end_clean();
-		return $out;
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 	
 	/**

@@ -42,16 +42,12 @@ outdiv.style.width = (parent.offsetWidth-30) + "px";';
 	}
 	
 	public function getContent() {
-		$out = "<div id=\"tree_content\">";
 		ob_start();
 		$inav = new TreeNav($this->controller->pid,'treetab');
 		$inav->generations = 5;
 		$inav->zoomLevel = -1;
 		$inav->drawViewport('treetab', "auto", "500px");
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .= "</div>";
-		return $out;
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 	
 	public function hasContent() {
