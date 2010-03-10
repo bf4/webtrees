@@ -74,10 +74,10 @@ class googlemap_Tab extends Tab {
 
 	public function getContent() {
 		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
-		global $LANGUAGE;
+		global $LANGUAGE, $TBLPREFIX;
 		global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
-		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD, $GOOGLEMAP_PH_CONTROLS;
+		global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD, $GOOGLEMAP_PH_CONTROLS;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
 
 		ob_start();
@@ -102,11 +102,15 @@ class googlemap_Tab extends Tab {
 				function SetMarkersAndBounds () {}
 			//-->
 			</script> <?php
-		} else {
-			$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
-			$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
-			$tNew = preg_replace("/&/", "&amp;", $tNew);
-			if ($SESSION_HIDE_GOOGLEMAP=="true") {
+		}else{
+			$tNew = str_replace(array("&HIDE_GOOGLEMAP=true", "&HIDE_GOOGLEMAP=false", "action=ajax&module=googlemap&"), "", $_SERVER["REQUEST_URI"]);
+			$tab = PGV_DB::prepare("SELECT mod_taborder AS tab FROM {$TBLPREFIX}module WHERE mod_name=?")
+				->execute(array('googlemap'))
+				->fetchOneRow();
+			$tab = $tab->tab-2;
+			$tNew .= "&tab=".$tab;
+			$tNew = str_replace("&", "&amp;", $tNew);
+			if($SESSION_HIDE_GOOGLEMAP=="true") {
 				print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
 				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".i18n::translate('Activate')."\" title=\"".i18n::translate('Activate')."\" />";
 				print " ".i18n::translate('Activate')."</a></span>\n";
@@ -174,7 +178,7 @@ class googlemap_Tab extends Tab {
 	</tr>
 </table>
 </div>
-</td></tr></table></div>
+</div>
 		<?php
 		return ob_get_clean();
 	}
@@ -1068,7 +1072,9 @@ function build_indiv_map($indifacts, $famids) {
 				}
 			}
 		}
-		echo "}</script>";
+		?>
+		} </script>
+		<?php
 		echo "<div style=\"overflow: auto; overflow-x: hidden; overflow-y: auto; height: {$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
 		foreach($markers as $marker) {
 			echo "<tr><td class=\"facts_label\">";
