@@ -347,9 +347,9 @@ if (!$controller->indi->canDisplayDetails()) {
 		foreach($controller->modules as $mod) {
 			if ($mod!=$controller->static_tab && $mod->hasTab()) {
 				if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
-					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getTitle(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $mod->getTitle(); ?></span></a></li>
+					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $mod->getTitle(); ?></span></a></li>
 				<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
-					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getTitle(); ?>" href="individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
+					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" href="individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
 						<span><?php echo $mod->getTitle()?></span>
 						</a></li>
 				<?php } 
