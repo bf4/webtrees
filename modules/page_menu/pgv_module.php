@@ -43,7 +43,7 @@ class page_menu_PGVModule extends PGVModule {
 
 	public function getName() {
 		// TODO what is this module?
-		return 'Unknown';
+		return 'page_menu';
 	}
 
 	public function getTitle() {
