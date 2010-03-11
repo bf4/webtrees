@@ -2,7 +2,10 @@
 /**
  * Header for Cloudy theme
  *
- * PhpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -259,7 +262,7 @@ else { ?>
 						<?php if (empty($SEARCH_SPIDER)) { ?>
 						<td>
 							<div align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" >
-								<?php print_lang_form(1); ?>
+								<?php print_lang_form(); ?>
 							</div>
 						</td>
 						<?php } ?>
