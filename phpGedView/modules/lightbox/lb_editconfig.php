@@ -2,7 +2,10 @@
 /**
  * Online UI for editing config.php site configuration variables
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 17 September 2005
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage GoogleMap
  * @see config.php
  * @version $Id: editconfig.php,v$

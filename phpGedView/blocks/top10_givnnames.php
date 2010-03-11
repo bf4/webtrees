@@ -4,7 +4,10 @@
  *
  * This block will show the top 10 given names that occur most frequently in the active gedcom
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +26,7 @@
  *
  * @version $Id$
  * @author kiwi_pgv
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  */
 

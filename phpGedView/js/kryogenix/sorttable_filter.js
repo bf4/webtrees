@@ -2,7 +2,10 @@
  *
  * Additional filtering functions for sorttable.js
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @see sorttable.js
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */

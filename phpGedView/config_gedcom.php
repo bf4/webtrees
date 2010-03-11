@@ -7,7 +7,10 @@
  * file.  Once edited, a new file named gedcom.ged_conf.php that is specific to the GEDCOM is stored
  * in the $INDEX_DIRECTORY.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -26,7 +29,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Admin
  * @see editconfig_gedcom.php
  * @version $Id$

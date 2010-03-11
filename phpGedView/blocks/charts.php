@@ -4,7 +4,10 @@
  *
  * This block prints pedigree, descendency, or hourglass charts for the chosen person
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +26,7 @@
  *
  * @version $Id$
  * -- Slightly modified (rtl in table values) 2006/06/09 18:00:00 pfblair
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  */
 

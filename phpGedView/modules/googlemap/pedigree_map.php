@@ -7,7 +7,10 @@
  * markers where the location exists with identical spelling in both your
  * GEDCOM '2 PLAC' tag (within the '1 BIRT' event) and the place_locations table.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -27,7 +30,7 @@
  * @author Nigel Osborne
  * @Developed for the 'Our-Families' web site (http://www.our-families.info)
  * @modified and added to PGV by Łukasz Wileński
- * @package PhpGedView
+ * @package webtrees
  * $Id$
  */
 

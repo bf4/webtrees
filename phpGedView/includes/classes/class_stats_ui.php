@@ -5,7 +5,10 @@
  * This class provides access to additional non-stats features of PGV
  * for use in the Advanced HTML block.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,7 +27,7 @@
  *
  * @version $Id$
  * @author Patrick Kellum
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Lists
  */
 

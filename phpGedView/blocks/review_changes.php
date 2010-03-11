@@ -4,7 +4,10 @@
  *
  * This block prints the changes that still need to be reviewed and accepted by an administrator
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -24,7 +27,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @ersion $Id$
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  * @todo add a time configuration option
  */
