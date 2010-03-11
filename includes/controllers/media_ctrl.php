@@ -377,7 +377,7 @@ class MediaControllerRoot extends IndividualController{
 		sort_facts($facts);
 //		if ($includeFileName) $facts[] = new Event("1 FILE ".$this->mediaobject->getFilename());
 		$mediaType = $this->mediaobject->getMediatype();
-		if (array_key_exists($mediaType, $MEDIA_TYPES)) $facts[] = new Event("1 TYPE ".$MEDIA_TYPE[$mediaType]]);
+		if (array_key_exists($mediaType, $MEDIA_TYPES)) $facts[] = new Event("1 TYPE ".$MEDIA_TYPE[$mediaType]);
 		else $facts[] = new Event("1 TYPE ".i18n::translate('Other'));
 
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes)) {
