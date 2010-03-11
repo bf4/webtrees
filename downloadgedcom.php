@@ -169,7 +169,7 @@ print_header(i18n::translate('Download GEDCOM'));
 	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertSlashes", "qm"); print i18n::translate('Convert media folder separators to');?></td>
 		<td class="list_value">
 		<input type="radio" name="conv_slashes" value="forward" <?php if ($conv_slashes=='forward') print "checked=\"checked\" "; ?>/>&nbsp;&nbsp;<?php print i18n::translate('Forward slashes : /');?><br />
-		<input type="radio" name="conv_slashes" value="backward" <?php if ($conv_slashes=='backward') print "checked=\"checked\" "; ?>/>&nbsp;&nbsp;<?php print i18n::translate('Backslashes : \');?>
+		<input type="radio" name="conv_slashes" value="backward" <?php if ($conv_slashes=='backward') print "checked=\"checked\" "; ?>/>&nbsp;&nbsp;<?php print i18n::translate('Backslashes : \\');?>
 		</td></tr>
 	<tr><td class="facts_label03" colspan="2">
 	<input type="submit" value="<?php print i18n::translate('Download Now'); ?>" />
