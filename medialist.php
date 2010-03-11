@@ -258,7 +258,7 @@ if ($ct>0) {
 		}
 	}
 	echo "</td>";
-	echo "<td align=\"center\">", print_text("page_x_of_y", 0, 1), "</td>";
+	echo "<td align=\"center\">", i18n::translate('Page %s of %s', $currentPage, $lastPage), "</td>";
 	echo "<td class=\"width30\" align=\"", $TEXT_DIRECTION == "ltr"?"right":"left", "\">";
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($ct>$max) {
@@ -463,7 +463,7 @@ Plus other Media Options - MediaViewer page') . "\" />";
 		}
 	}
 	echo "</td>";
-	echo "<td align=\"center\">", print_text("page_x_of_y", 0, 1), "</td>";
+	echo "<td align=\"center\">", i18n::translate('Page %s of %s', $currentPage, $lastPage), "</td>";
 	echo "<td class=\"width30\" align=\"", $TEXT_DIRECTION == "ltr"?"right":"left", "\">";
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($ct>$max) {
