@@ -227,7 +227,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		$content .= "<td>";
 		if ($config['allowDownload']=='yes') {
 			$uri = $SERVER_URL.basename($_SERVER['REQUEST_URI']);
-			$alt = i18n::translate('Download file %s', 'hCal-events.ics'));
+			$alt = i18n::translate('Download file %s', 'hCal-events.ics');
 			if (count($yahrzeits)) {
 				$content .= "<a href=\"http://feeds.technorati.com/events/{$uri}\"><img src=\"images/hcal.png\" border=\"0\" alt=\"{$alt}\" title=\"{$alt}\" /></a>";
 			}
