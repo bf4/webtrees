@@ -154,32 +154,32 @@ if (!$controller->isPrintPreview()) {
 		<input type="hidden" name="pgvaction" value="pedigree_map" />
 		<table class="pedigree_table <?php echo $TEXT_DIRECTION; ?>" width="555">
 			<tr>
-				<td colspan="5" class="topbottombar" style="text-align:center; "><?php print_help_link("PEDIGREE_MAP", "qm", "PEDIGREE_MAP1"); ?>
-					<?php echo i18n::translate('Options:'); ?>
+				<td colspan="5" class="topbottombar" style="text-align:center; ">
+					<?php echo i18n::translate('Pedigree Chart Options'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap"><?php print_help_link("rootid", "qm", "PEDIGREE_MAP1"); ?>
+				<td class="descriptionbox wrap"><?php print_help_link("rootid", "qm"); ?>
 					<?php echo i18n::translate('Root Person ID'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-				<?php print_help_link("PEDIGREE_GENERATIONS", "qm", "PEDIGREE_MAP1"); ?>
+				<?php print_help_link("PEDIGREE_GENERATIONS", "qm"); ?>
 				<?php echo i18n::translate('Generations'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("PEDIGREE_MAP_clustersize", "qm", "PEDIGREE_MAP1"); ?>
-					<?php echo $pgv_lang["PEDIGREE_MAP_clustersize"]; ?>
+					<?php print_help_link("PEDIGREE_MAP_clustersize", "qm"); ?>
+					<?php echo i18n::translate('Cluster Size'); ?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					print_help_link("PEDIGREE_MAP_hideflags", "qm", "PEDIGREE_MAP1");
-					echo $pgv_lang["PEDIGREE_MAP_hideflags"];
+					print_help_link("PEDIGREE_MAP_hideflags", "qm");
+					echo i18n::translate('Hide flags');
 					?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					print_help_link("PEDIGREE_MAP_hidelines", "qm", "PEDIGREE_MAP1");
-					echo $pgv_lang["PEDIGREE_MAP_hidelines"];
+					print_help_link("PEDIGREE_MAP_hidelines", "qm");
+					echo i18n::translate('Hide lines');
 					?>
 				</td>
 			</tr>
