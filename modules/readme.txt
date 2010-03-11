@@ -18,7 +18,10 @@ CONTENTS
 -------------------------------------------------------
 LICENSE
 
-PhpGedView: Genealogy Viewer
+webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 Copyright (C) 2002 to 2005  John Finlay and Others
 
 This program is free software; you can redistribute it and/or modify

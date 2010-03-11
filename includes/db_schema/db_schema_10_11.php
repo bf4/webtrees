@@ -25,7 +25,10 @@
  * It shouldn't do anything that might take more than a few
  * seconds, for systems with low timeout values.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2009 John Finlay
  *
  * This program is free software; you can redistribute it and/or modify

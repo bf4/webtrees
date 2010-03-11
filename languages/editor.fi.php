@@ -2,7 +2,10 @@
 /**
  * Finnish texts
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -23,7 +26,7 @@
  *
  *
  * @author PGV Developers
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Languages
  * @translator Matti Valve, Marko Kohtala
  * @version $Id$

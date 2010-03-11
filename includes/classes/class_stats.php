@@ -5,7 +5,10 @@
 * This class provides a quick & easy method for accessing statistics
 * about the GEDCOM.
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2010 PGV Development Team.  All rights reserved.
 *
 * Modifications Copyright (c) 2010 Greg Roach
@@ -26,7 +29,7 @@
 *
 * @version $Id$
 * @author Patrick Kellum
-* @package PhpGedView
+* @package webtrees
 * @subpackage Lists
 */
 

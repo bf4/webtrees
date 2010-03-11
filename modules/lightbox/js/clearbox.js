@@ -1,5 +1,5 @@
 /* clearbox.js - Author Brian Holland .... email webman@windmillway.f2s.com    -  (modified from Clearbox.js - Author Pyro ... email pyrex@chello.hu)
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland

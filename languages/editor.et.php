@@ -2,7 +2,10 @@
 /**
  * Estonian texts
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2006 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  *
  *
  * @author Anu Mullari
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Languages
  * $Id$
  */

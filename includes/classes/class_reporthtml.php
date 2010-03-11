@@ -4,7 +4,10 @@
  *
  * used by the SAX parser to generate HTML reports from the XML report file.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Reports
  * @version $Id$
  */
@@ -38,7 +41,7 @@ require_once PGV_ROOT."includes/classes/class_reportbase.php";
 /**
 * Main PGV Report Class for HTML
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 */
 class PGVReportBaseHTML extends PGVReportBase {
@@ -591,7 +594,7 @@ $PGVReportRoot = $pgvreport;
 /**
 * Cell element - HTML
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info and fix border and filling
 */
@@ -800,7 +803,7 @@ class PGVRCellHTML extends PGVRCell {
 /**
 * HTML element - HTML Report
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -853,7 +856,7 @@ class PGVRHtmlHTML extends PGVRHtml {
 /**
 * TextBox element - HTML Report
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 */
 class PGVRTextBoxHTML extends PGVRTextBox {
@@ -1121,7 +1124,7 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 /**
 * Text element - HTML Report
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -1282,7 +1285,7 @@ class PGVRTextHTML extends PGVRText {
 /**
 * Footnote element
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -1440,7 +1443,7 @@ class PGVRFootnoteHTML extends PGVRFootnote {
 /**
 * PageHeader element
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -1460,7 +1463,7 @@ class PGVRPageHeaderHTML extends PGVRPageHeader {
 /**
 * Image element
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -1537,7 +1540,7 @@ class PGVRImageHTML extends PGVRImage {
 /**
 * Line element - HTML Report
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */

@@ -6,7 +6,7 @@
  * @author Dobrica Pavlinusic
  * @see http://svn.rot13.org/index.cgi/js_locale/view/trunk/locale.js
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */

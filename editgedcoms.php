@@ -2,7 +2,10 @@
 /**
  * UI for online updating of the config file.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,7 +25,7 @@
  * This Page Is Valid XHTML 1.0 Transitional! > 12 September 2005
  *
  * @author PGV Development Team
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Admin
  * @version $Id$
  */

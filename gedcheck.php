@@ -3,7 +3,10 @@
 // Check a GEDCOM file for compliance with the 5.5.1 specification
 // and other common errors.
 //
-// phpGedView: Genealogy Viewer
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// Derived from PhpGedView
 // Copyright (C) 2006-2009 Greg Roach, all rights reserved
 //
 // This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 // @author Greg Roach
-// @package PhpGedView
+// @package webtrees
 // @subpackage Admin
 // @version $Id$
 //

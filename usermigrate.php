@@ -3,7 +3,10 @@
  * Exports users and their data to either SQL queries (Index mode) or
  * authenticate.php and xxxxxx.dat files (MySQL mode).
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2006  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @author Boudewijn Sjouke	sjouke@users.sourceforge.net
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Admin
  * @version $Id$
  */

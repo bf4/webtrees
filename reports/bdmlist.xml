@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PGVReport access="PRIV_PUBLIC" icon="place">
 	<!--
-	@package PhpGedView
+	@package webtrees
 	@subpackage Reports
 	@version $Id$
 	-->

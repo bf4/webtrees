@@ -4,7 +4,10 @@
  *
  * used by the SAX parser to generate PDF reports from the XML report file.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Reports
  * @version $Id$
  * @link http://www.adobe.com/devnet/pdf/
@@ -44,7 +47,7 @@ require_once PGV_ROOT."library/tcpdf/tcpdf.php";
 /**
 * Main PGV Report Class for PDF
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 */
 class PGVReportBasePDF extends PGVReportBase {
@@ -267,7 +270,7 @@ class PGVReportBasePDF extends PGVReportBase {
 * PGV Report PDF Class
 *
 * This class inherits from the TCPDF class and is used to generate the PDF document
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 */
 class PGVRPDF extends TCPDF {
@@ -622,7 +625,7 @@ $PGVReportRoot = $pgvreport;
 /**
 * Cell element - PDF
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 */
 class PGVRCellPDF extends PGVRCell {
@@ -760,7 +763,7 @@ class PGVRCellPDF extends PGVRCell {
 /**
 * HTML element - PDF Report
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -802,7 +805,7 @@ class PGVRHtmlPDF extends PGVRHtml {
 /**
 * TextBox element
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -1122,7 +1125,7 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 /**
 * Text element
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -1262,7 +1265,7 @@ class PGVRTextPDF extends PGVRText {
 /**
 * Footnote element
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -1415,7 +1418,7 @@ class PGVRFootnotePDF extends PGVRFootnote {
 /**
 * PageHeader element
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 */
 class PGVRPageHeaderPDF extends PGVRPageHeader {
@@ -1439,7 +1442,7 @@ class PGVRPageHeaderPDF extends PGVRPageHeader {
 /**
 * PGVRImagePDF class element
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 */
 class PGVRImagePDF extends PGVRImage {
@@ -1510,7 +1513,7 @@ class PGVRImagePDF extends PGVRImage {
 /**
 * Line element
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */

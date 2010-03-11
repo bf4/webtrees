@@ -5,7 +5,10 @@
 * cannot be called from here because they would cause an infinite
 * back to here.
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 * Author: Mike Elliott (coloredpixels)
 *
@@ -25,7 +28,7 @@
 *
 * This Page Is Valid XHTML 1.0 Transitional! > 21 August 2005
 *
-* @package PhpGedView
+* @package webtrees
 * @version $Id$
 */
 

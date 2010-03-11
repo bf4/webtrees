@@ -2,7 +2,10 @@
 /**
  * Hebrew Language Help-file
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -22,7 +25,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Languages
  * @author Meliza Amity
  * @version $Id$

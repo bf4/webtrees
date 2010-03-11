@@ -23,7 +23,10 @@
  * See the PGVServiceLogic.class.php file for details about how this was
  * done in PhpGedView.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2005  PGV Development Team
  *
  * This library is free software; you can redistribute it and/or modify it
@@ -42,7 +45,7 @@
  * Or by writing to the Free Software Foundation, Inc., 59 Temple Place, Suite
  * 330,Boston, MA 02111-1307 USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Webservice
  * @version $Id$
  */

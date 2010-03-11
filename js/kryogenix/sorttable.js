@@ -6,7 +6,7 @@
  * @author Stuart Langridge
  * @see http://www.kryogenix.org/code/browser/sorttable/
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */

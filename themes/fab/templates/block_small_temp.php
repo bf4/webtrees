@@ -6,10 +6,6 @@
 // $title - the title of the block
 // $content - the content of the block
 //
-// webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
 // Copyright (C) 2010 Greg Roach.  All rights reserved.
 
 if (!defined('PGV_PHPGEDVIEW')) {

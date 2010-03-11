@@ -2,7 +2,10 @@
 /**
  * Norwegian texts
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -25,7 +28,7 @@
  *
  * @translator Geir Håkon Eikland
  * @translator Thomas Rindal
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Languages
  */
 

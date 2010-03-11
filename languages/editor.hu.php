@@ -2,7 +2,10 @@
 /**
  * Hungarian texts
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -24,7 +27,7 @@
  *
  * @author PGV Developers
  * @author Hrotkó Gábor <roti@al.pmmf.hu>
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Languages
  * @version $Id$
  */

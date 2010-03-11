@@ -5,7 +5,7 @@
  *
  * used by the SAX parser to generate PDF reports from the XML report file.
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Reports
  * @version $Id$
  */
