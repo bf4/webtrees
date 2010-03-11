@@ -1762,9 +1762,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		$return .= i18n::translate('Total events').": ".$output;
 		if ($allow_download) {
 			$uri = $SERVER_URL.basename($_SERVER["REQUEST_URI"]);
-			global $whichFile;
-			$whichFile = "hCal-events.ics";
-			$title = print_text("download_file", 0, 1);
+			$title = i18n::translate('Download file %s', 'hCal-events.ics');
 			$return .= "<br /><a href=\"".encode_url("http://feeds.technorati.com/events/{$uri}")."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
 		}
 		$return .= "</td>";
