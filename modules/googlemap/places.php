@@ -647,7 +647,7 @@ foreach ($placelist as $place) {
 ?>
 	<table class="facts_table">
 		<tr>
-			<td class="optionbox" colspan="2"><?php print_help_link("PL_ADD_LOCATION_, "qm", "PL_ADD_LOCATION");?><a href="javascript:;" onclick="add_place_location(<?php echo $parent;?>);return false;"><?php echo i18n::translate('Add place');?></a></td>
+			<td class="optionbox" colspan="2"><?php print_help_link("PL_ADD_LOCATION", "qm", "PL_ADD_LOCATION");?><a href="javascript:;" onclick="add_place_location(<?php echo $parent;?>);return false;"><?php echo i18n::translate('Add place');?></a></td>
 		</tr>
 		<tr>
 			<td class="optionbox"><?php print_help_link("PL_IMPORT_GEDCOM", "qm", "PL_IMPORT_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr"><?php echo i18n::translate('Import from current GEDCOM');?></a></td>
