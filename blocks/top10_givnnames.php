@@ -66,7 +66,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	//Print block header
 
 	$id="top10givennames";
-	$title = print_help_link("index_common_given_names", "qm","",false,true);
+	$title='';
 	if ($PGV_BLOCKS["print_block_givn_top10"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -78,7 +78,9 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= str_replace("10", $config["num"], i18n::translate('Top 10 Given Names'));
+	// I18N: There are separate lists of male/female names, containing %d names each
+	$title .= i18n::plural('Top Given Names', 'Top %d Given Names', $config['num'], $config['num']);
+	$title .= help_link('index_common_given_names');
 
 	$content = '<div class="normal_inner_block">';
 	//Select List or Table
@@ -137,8 +139,8 @@ function print_block_givn_top10_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("style", "qm");
 	print i18n::translate('Presentation Style');
+	print help_link('style');
 	?>
 	</td><td class="optionbox">
 		<select name="infoStyle">
@@ -149,8 +151,8 @@ function print_block_givn_top10_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("showUnknown", "qm");
 	print i18n::translate('Show unknown gender');
+	print help_link('showUnknown');
 	?>
 	</td><td class="optionbox">
 		<select name="showUnknown">
@@ -162,8 +164,8 @@ function print_block_givn_top10_config($config) {
 <?php	// Cache file life
 	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
-			print_help_link("cache_life", "qm");
 			print i18n::translate('Cache file life');
+			print help_link('cache_life');
 		print "</td><td class=\"optionbox\">";
 			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
 		print "</td></tr>";

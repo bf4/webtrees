@@ -60,7 +60,7 @@ function print_todo($block=true, $config='', $side, $index) {
 	}
 
 	$id='todo';
-	$title = print_help_link('todo', 'qm','',false,true);
+	$title='';
 	if ($PGV_BLOCKS['print_todo']['canconfig']) {
 		if ($ctype=='gedcom' && PGV_USER_GEDCOM_ADMIN || $ctype=='user' && PGV_USER_ID) {
 			if ($ctype=='gedcom') {
@@ -72,8 +72,8 @@ function print_todo($block=true, $config='', $side, $index) {
 			$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= i18n::translate('&quot;To Do&quot; tasks');
-	$content = "";
+	$title.=i18n::translate('&quot;To Do&quot; tasks').help_link('todo');
+	$content='';
 
 	require_once PGV_ROOT.'js/sorttable.js.htm';
 	require_once PGV_ROOT.'includes/classes/class_gedcomrecord.php';
@@ -132,9 +132,9 @@ function print_todo_config($config) {
 	}
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('todo_show_other', 'qm');
-	print i18n::translate('Show other users\' tasks')."</td>";
-	print '</td><td class="optionbox">';
+	print i18n::translate('Show other users\' tasks');
+	print help_link('todo_show_other');
+	print '</td></td><td class="optionbox">';
 	print '<select name="show_other">';
 	foreach (array('yes', 'no') as $option) {
 		print "<option value=\"{$option}\"";
@@ -145,9 +145,9 @@ function print_todo_config($config) {
 	print '</select></td></tr>';
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('todo_show_unassigned', 'qm');
-	print i18n::translate('Show unassigned tasks')."</td>";
-	print '</td><td class="optionbox">';
+	print i18n::translate('Show unassigned tasks');
+	print help_link('todo_show_unassigned');
+	print '</td></td><td class="optionbox">';
 	print '<select name="show_unassigned">';
 	foreach (array('yes', 'no') as $option) {
 		print "<option value=\"{$option}\"";
@@ -158,9 +158,9 @@ function print_todo_config($config) {
 	print '</select></td></tr>';
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('todo_show_future', 'qm');
-	print i18n::translate('Show future tasks')."</td>";
-	print '</td><td class="optionbox">';
+	print i18n::translate('Show future tasks');
+	print help_link('todo_show_future');
+	print '</td></td><td class="optionbox">';
 	print '<select name="show_future">';
 	foreach (array('yes', 'no') as $option) {
 		print "<option value=\"{$option}\"";

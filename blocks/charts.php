@@ -97,7 +97,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	}
 
 	$id = "charts_block";
-	$title = print_help_link("index_charts", "qm", "", false, true);
+	$title='';
 	if ($PGV_BLOCKS["print_charts_block"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -125,6 +125,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 				$title .= $name." ".i18n::translate('Tree');
 				break;
 		}
+		$title .= help_link('index_charts');
 		$content = "";
 		$content .= "<script src=\"js/phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
 		if ($show_full==0) {

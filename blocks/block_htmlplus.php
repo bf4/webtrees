@@ -138,11 +138,6 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	$id = "html_block{$HTML_BLOCK_COUNT}";
 	$title = "";
 	if ($config['title'] != '') {
-		if (PGV_USER_GEDCOM_ADMIN) {
-			$title .= print_help_link('index_htmlplus_a', 'qm_ah', '', false, true);
-		} else {
-			$title .= print_help_link('index_htmlplus', 'qm', '', false, true);
-		}
 		if ($PGV_BLOCKS['print_htmlplus_block']['canconfig']) {
 			if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 				if ($ctype=="gedcom") {
@@ -157,6 +152,11 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 		}
 		$title .= $config['title'];
 	}
+	if (PGV_USER_GEDCOM_ADMIN) {
+		$title .= help_link('index_htmlplus_a');
+	} else {
+		$title .= help_link('index_htmlplus');
+	}
 
 	$content = $config['html'];
 	if ($config['title'] == '' && $PGV_BLOCKS['print_htmlplus_block']['canconfig']) {
@@ -167,10 +167,9 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$content .= "<br />"
-			.print_help_link('index_htmlplus_ahelp', 'qm_ah', '', false, true)
 			."<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=500,scrollbars=1,resizable=1'); return false;\">"
 			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{i18n::translate('Configure')}\" title=\"{i18n::translate('Configure')}\" /></a>"
-			;
+			.help_link('index_htmlplus_ahelp');
 		}
 	}
 
@@ -214,17 +213,17 @@ function print_htmlplus_block_config($config)
 
 	// title
 	$config['title'] = htmlentities($config['title'], ENT_COMPAT, 'UTF-8');
-	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
-		.print_help_link('index_htmlplus_title', 'qm_ah', '', false, true)
-		.i18n::translate('TITL')."</td>"
-		."\t\t<td class=\"optionbox\"><input type=\"text\" name=\"title\" size=\"30\" value=\"{$config['title']}\" /></td>\n\t</tr>\n"
+	print "<tr><td class=\"descriptionbox wrap width33\">"
+		.i18n::translate('TITL')
+		.help_link('index_htmlplus_title')
+		."</td><td class=\"optionbox\"><input type=\"text\" name=\"title\" size=\"30\" value=\"{$config['title']}\" /></td></tr>"
 	;
 
 	// templates
-	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
-		.print_help_link('index_htmlplus_template', 'qm_ah', '', false, true)
-		."{i18n::translate('Templates')}</td>\n"
-		."\t\t<td class=\"optionbox\">\n"
+	print "<tr><td class=\"descriptionbox wrap width33\">"
+		."{i18n::translate('Templates')}"
+		.help_link('index_htmlplus_template')
+		."</td><td class=\"optionbox\">"
 	;
 	if($useFCK)
 	{
@@ -260,9 +259,9 @@ function print_htmlplus_block_config($config)
 		if($config['gedcom'] == '__current__'){$sel_current = ' selected="selected"';}else{$sel_current = '';}
 		if($config['gedcom'] == '__default__'){$sel_default = ' selected="selected"';}else{$sel_default = '';}
 		print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
-			.print_help_link('index_htmlplus_gedcom', 'qm_ah', '', false, true)
-			."{i18n::translate('Family Tree')}</td>\n"
-			."\t\t<td class=\"optionbox\">\n"
+			.i18n::translate('Family Tree')
+			.help_link('index_htmlplus_gedcom')
+			."</td><td class=\"optionbox\">\n"
 			."\t\t\t<select name=\"gedcom\">\n"
 			."\t\t\t\t<option value=\"__current__\"{$sel_current}>{i18n::translate('Current')}</option>\n"
 			."\t\t\t\t<option value=\"__default__\"{$sel_default}>{i18n::translate('Default')}</option>\n"
@@ -279,10 +278,10 @@ function print_htmlplus_block_config($config)
 
 	// html
 	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">\n"
-		.print_help_link('index_htmlplus_content', 'qm_ah', '', false, true)
-		."{i18n::translate('Content')}<br />\n\t\t\t<br />\n"
-		."\t\t</td>\n"
-		."\t\t<td class=\"optionbox\">\n\t\t\t"
+		.i18n::translate('Content')
+		.help_link('index_htmlplus_content')
+		."<br /><br /></td>"
+		."<td class=\"optionbox\">"
 	;
 	if($useFCK)
 	{
@@ -308,18 +307,22 @@ function print_htmlplus_block_config($config)
 	// compatibility mode
 	if($config['compat'] == 1){$compat = ' checked="checked"';}else{$compat = '';}
 	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
-		.print_help_link('index_htmlplus_compat', 'qm_ah', '', false, true)
-		."{i18n::translate('Compatibility Mode')}</td>\n"
-		."\t\t<td class=\"optionbox\"><input type=\"checkbox\" name=\"compat\" value=\"1\"{$compat} /></td>\n"
+		.i18n::translate('Compatibility Mode')
+		.help_link('index_htmlplus_compat')
+		."</td>\n<td class=\"optionbox\"><input type=\"checkbox\" name=\"compat\" value=\"1\"{$compat} /></td>\n"
 		."\t</tr>\n"
 	;
 
 	// extended features
-	if($config['ui'] == 1){$ui = ' checked="checked"';}else{$ui = '';}
+	if ($config['ui'] == 1) {
+		$ui = ' checked="checked"';
+	} else {
+		$ui = '';
+	}
 	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
-		.print_help_link('index_htmlplus_ui', 'qm_ah', '', false, true)
-		."{i18n::translate('Extended Interface')}</td>\n"
-		."\t\t<td class=\"optionbox\"><input type=\"checkbox\" name=\"ui\" value=\"1\"{$ui} /></td>\n"
+		.i18n::translate('Extended Interface')
+		.help_link('index_htmlplus_ui')
+		."</td><td class=\"optionbox\"><input type=\"checkbox\" name=\"ui\" value=\"1\"{$ui} /></td>\n"
 		."\t</tr>\n"
 	;
 
@@ -327,9 +330,9 @@ function print_htmlplus_block_config($config)
 	if($ctype == 'gedcom')
 	{
 		print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
-			.print_help_link('cache_life', 'qm', '', false, true)
-			."{i18n::translate('Cache file life')}</td>\n"
-			."\t\t<td class=\"optionbox\">"
+			.i18n::translate('Cache file life')
+			.help_link('cache_life')
+			."</td><td class=\"optionbox\">"
 			."<input type=\"text\" name=\"cache\" size=\"2\" value=\"{$config['cache']}\" /></td>\n"
 			."\t</tr>\n"
 		;
