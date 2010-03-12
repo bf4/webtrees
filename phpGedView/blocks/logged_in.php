@@ -75,8 +75,8 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	}
 
 	$id = "logged_in_users";
-	$title = print_help_link("index_loggedin", "qm", "", false, true);
-	$title.=i18n::translate('Users Logged In');
+	$title=i18n::translate('Users Logged In');
+	$title.=help_link('index_loggedin');
 	$content='<table width="90%">';
 	$LoginUsers=count($loggedusers);
 	if ($LoginUsers==0 && $NumAnonymous==0) {

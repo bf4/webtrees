@@ -56,8 +56,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	if (!is_array($userfavs)) $userfavs = array();
 
 	$id = "gedcom_favorites";
-	$title = print_help_link("index_favorites", "qm", "", false, true);
-	$title .= i18n::translate('This GEDCOM\'s Favorites')."&nbsp;&nbsp;";
+	$title = i18n::translate('This GEDCOM\'s Favorites').help_link('index_favorites');
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 	$title .= "(".count($userfavs).")";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
@@ -154,8 +153,8 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		<br />
 		';
 		$uniqueID = floor(microtime() * 1000000);
-		$content .= print_help_link("index_add_favorites", "qm", "", false, true);
 		$content .= "<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>";
+		$content .= help_link('index_add_favorites');
 		$content .= "<br /><div id=\"add_ged_fav\" style=\"display: none;\">\n";
 		$content .= "<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n";
 		$content .= "<input type=\"hidden\" name=\"action\" value=\"addfav\" />\n";

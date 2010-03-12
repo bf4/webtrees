@@ -70,11 +70,6 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 
 	$id = "gedcom_news";
 	$title = "";
-	if(PGV_USER_GEDCOM_ADMIN) {
-		$title .= print_help_link('index_gedcom_news_a', 'qm_ah',"", false, true);
-	} else {
-		$title .= print_help_link('index_gedcom_news', 'qm', "", false, true);
-	}
 	if ($PGV_BLOCKS['print_gedcom_news']['canconfig']) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -88,6 +83,11 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		}
 	}
 	$title .= i18n::translate('News');
+	if(PGV_USER_GEDCOM_ADMIN) {
+		$title .= help_link('index_gedcom_news_a');
+	} else {
+		$title .= help_link('index_gedcom_news');
+	}
 	$content = "";
 	if(count($usernews) == 0)
 	{
@@ -170,8 +170,8 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	}
 	if ($config['limit'] == 'date' || $config['limit'] == 'count') {
 		if ($printedAddLink) $content .= "&nbsp;&nbsp;|&nbsp;&nbsp;";
-		$content .= print_help_link("gedcom_news_archive", "qm", "", false, true);
-		$content .= "<a href=\"".encode_url("index.php?gedcom_news_archive=yes&ctype={$ctype}")."\">".i18n::translate('View archive')."</a><br />";
+		$content .= "<a href=\"".encode_url("index.php?gedcom_news_archive=yes&ctype={$ctype}")."\">".i18n::translate('View archive')."</a>";
+		$content .= help_link('gedcom_news_archive').'<br />';
 	}
 
 	global $THEME_DIR;
@@ -191,35 +191,28 @@ function print_gedcom_news_config($config)
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_gedcom_news"]["config"]["cache"];
 
 	// Limit Type
-	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link("gedcom_news_limit", "qm");
-	print i18n::translate('Limit display by:').'</td>';
-	$output = '<td class="optionbox">'
-	.'<select name="limit">'
-	.'<option value="nolimit"'.($config['limit'] == 'nolimit'?' selected="selected"':'').">".i18n::translate('No limit')."</option>\n"
-	.'<option value="date"'.($config['limit'] == 'date'?' selected="selected"':'').">".i18n::translate('Age of item')."</option>\n"
-	.'<option value="count"'.($config['limit'] == 'count'?' selected="selected"':'').">".i18n::translate('Number of items')."</option>\n"
-	.'</select></td></tr>'
-	;
-	print $output;
+	echo
+		'<tr><td class="descriptionbox wrap width33">',
+		i18n::translate('Limit display by:'), help_link('gedcom_news_limit'),
+		'</td><td class="optionbox"><select name="limit"><option value="nolimit"',
+		($config['limit'] == 'nolimit'?' selected="selected"':'').">",
+		i18n::translate('No limit')."</option>",
+		'<option value="date"'.($config['limit'] == 'date'?' selected="selected"':'').">".i18n::translate('Age of item')."</option>",
+		'<option value="count"'.($config['limit'] == 'count'?' selected="selected"':'').">".i18n::translate('Number of items')."</option>",
+		'</select></td></tr>';
 
 	// Flag to look for
-	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link("gedcom_news_flag", "qm");
-	print i18n::translate('Limit:').'</td>';
-	$output = '<td class="optionbox"><input type="text" name="flag" size="4" maxlength="4" value="'
-	.$config['flag']
-	.'" /></td></tr>';
-	print $output;
+	echo '<tr><td class="descriptionbox wrap width33">';
+	echo i18n::translate('Limit:'), help_link('gedcom_news_flag');
+	echo '</td><td class="optionbox"><input type="text" name="flag" size="4" maxlength="4" value="'.$config['flag'].'" /></td></tr>';
 
 	// Cache file life
 	if ($ctype=="gedcom") {
-		print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life", "qm");
-		print i18n::translate('Cache file life');
-		print "</td><td class=\"optionbox\">";
-		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
-		print "</td></tr>";
+		echo '<tr><td class="descriptionbox wrap width33">';
+		echo i18n::translate('Cache file life'), help_link('cache_life');
+		echo '</td><td class="optionbox">';
+		echo '<input type="text" name="cache" size="2" value="', $config['cache'], '" />';
+		echo "</td></tr>";
 	}
 }
 ?>

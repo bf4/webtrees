@@ -94,7 +94,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 		}
 		if (PGV_USER_CAN_EDIT) {
 			$id="review_changes_block";
-			$title = print_help_link("review_changes", "qm","",false,true);
+			$title='';
 			if ($PGV_BLOCKS["review_changes_block"]["canconfig"]) {
 				if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 					if ($ctype=="gedcom") {
@@ -106,8 +106,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 				}
 			}
-			$title .= i18n::translate('Review GEDCOM Changes');
-
+			$title.=i18n::translate('Review GEDCOM Changes').help_link('review_changes');
 			$content = "";
 			if (PGV_USER_CAN_ACCEPT) {
 				$content .= "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".i18n::translate('Accept / Reject Changes')."</a><br />";
@@ -161,12 +160,11 @@ function review_changes_block_config($config) {
 	print i18n::translate('Reminder email frequency (days)')."&nbsp;<input type='text' name='days' value='".$config["days"]."' size='2' />";
 	// Cache file life
 	if ($ctype=="gedcom") {
-		print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life", "qm");
-		print i18n::translate('Cache file life');
-		print "</td><td class=\"optionbox\">";
-		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
-		print "</td></tr>";
+		echo "<tr><td class=\"descriptionbox wrap width33\">";
+		echo i18n::translate('Cache file life'), help_link('cache_life');
+		echo "</td><td class=\"optionbox\">";
+		echo "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		echo "</td></tr>";
 	}
 	// Cache file life is not configurable by user:  anything other than "no cache" doesn't make sense
 	print "<input type=\"hidden\" name=\"cache\" value=\"0\" />";
