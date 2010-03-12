@@ -1346,12 +1346,22 @@ function print_privacy_error($username) {
 	}
 }
 
+// Print a link for a popup help window
+function help_link($help_topic) {
+	global $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
+
+	if ($SEARCH_SPIDER || !$_SESSION['show_context_help']) {
+		return '';
+	} else {
+		return
+			'<a class="help" tabindex="0" title="'.$title.'" href="javascript:" onclick="helpPopup(\''.$help_topic.'\'); return false;"> '.
+			($PGV_USE_HELPIMG ?  '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['help']['small'].'" class="icon" width="15" height="15" alt="" />' : i18n::translate('?')).
+			' </a>';
+	}
+}
+
 /* Function to print popup help boxes
-* @param string $help The variable that needs to be processed.
-* @param int $helpText The text to be printed if the theme does not use images for help links
-* @param int $show_desc The text to be shown as JavaScript description
-* @param boolean $use_print_text If the text needs to be printed with the print_text() function
-* @param boolean $return return the text instead of printing it
+* This function is deprecated.   
 */
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
 	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
