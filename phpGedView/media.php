@@ -788,25 +788,25 @@ if (check_media_structure()) {
 	<input type="hidden" name="all" value="true" />
 	<input type="hidden" name="subclick" />
 	<table class="fact_table center width75 <?php print $TEXT_DIRECTION; ?>">
-	<tr><td class="topbottombar" colspan="4"><?php print_help_link("manage_media", "qm", "manage_media");print i18n::translate('Manage MultiMedia'); ?></td></tr>
+	<tr><td class="topbottombar" colspan="4"><?php echo i18n::translate('Manage MultiMedia'), help_link('manage_media'); ?></td></tr>
 	<?php
 	if ($TEXT_DIRECTION=='ltr') $legendAlign = 'align="right"';
 	else $legendAlign = 'align="left"';
 	?>
 
 	<!-- // NOTE: Row 1 left: Sort sequence -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("sortby", "qm", "sortby"); ?><?php print i18n::translate('Sequence'); ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Sequence'), help_link('sortby'); ?></td>
 	<td class="optionbox wrap"><select name="sortby">
 		<option value="title" <?php if ($sortby=='title') print "selected=\"selected\"";?>><?php print i18n::translate('TITL');?></option>
 		<option value="file" <?php if ($sortby=='file') print "selected=\"selected\"";?>><?php print i18n::translate('FILE');?></option>
 	</select></td>
 
 	<!-- // NOTE: Row 1 right, Upload media files -->
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("upload_media", "qm", "upload_media"); print i18n::translate('Upload Media files'); ?></td>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Upload Media files'), help_link('upload_media'); ?></td>
 	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".i18n::translate('Upload Media files')."</a>"; ?></td></tr>
 
 	<!-- // NOTE: Row 2 left: Filter options -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("simple_filter", "qm", "filter"); print i18n::translate('Filter');?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Filter'), help_link('simple_filter'); ?></td>
 	<td class="optionbox wrap">
 		<?php
 			// Directory pick list
@@ -829,11 +829,11 @@ if (check_media_structure()) {
 		<input type="text" name="filter" value="<?php if($filter) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print i18n::translate('Filter');?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print i18n::translate('Display all'); ?>" onclick="this.form.subclick.value=this.name" /></td>
 
 	<!-- // NOTE: Row 2 right: Add media -->
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("add_media", "qm"); ?><?php print i18n::translate('Add Media'); ?></td>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Add Media'), help_link('add_media'); ?></td>
 	<td class="optionbox wrap"><a href="javascript: <?php echo i18n::translate('Add Media'); ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1'); return false;"> <?php echo i18n::translate('Add a new Media item'); ?></a></td></tr>
 
 	<!-- // NOTE: Row 3 left: Show thumbnails -->
-	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("show_thumb", "qm", "show_thumbnail"); ?><?php print i18n::translate('Show thumbnails'); ?></td>
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Show thumbnails'), help_link('show_thumb'); ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="showthumb" value="true" <?php if ($showthumb) print "checked=\"checked\""; ?> onclick="submit();" /></td>
 
 	<!-- // NOTE: Row 3 right: Generate missing thumbnails -->
@@ -843,7 +843,7 @@ if (check_media_structure()) {
 		if (!empty($subclick)) $tempURL .= "subclick={$subclick}&";
 		$tempURL .= "action=thumbnail&sortby={$sortby}&all=yes&level={$level}&directory={$directory}".$thumbget;
 		?>
-	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("gen_missing_thumbs", "qm"); ?><?php print i18n::translate('Missing thumbnails'); ?></td>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php echo i18n::translate('Missing thumbnails'), help_link('gen_missing_thumbs'); ?></td>
 	<td class="optionbox wrap"><a href="<?php print encode_url($tempURL);?>"><?php print i18n::translate('Create missing thumbnails');?></a></td></tr>
 	</table>
 </form>
@@ -900,12 +900,12 @@ if (check_media_structure()) {
 				print "<input type=\"hidden\" name=\"sortby\" value=\"{$sortby}\" />";
 			if ($USE_MEDIA_FIREWALL) {
 				print "<input type=\"submit\" value=\"".i18n::translate('Move to standard')."\" onclick=\"this.form.action.value='movedirstandard';\" />";
-				print_help_link("move_mediadirs", "qm", "move_mediadirs");
 				print "<input type=\"submit\" value=\"".i18n::translate('Move to protected')."\" onclick=\"this.form.action.value='movedirprotected';\" />";
+				print help_link('move_mediadirs');
 				print "<br />";
 			}
-				print_help_link("setperms", "qm", "setperms");
 				print "<input type=\"submit\" value=\"".i18n::translate('Correct read/write/execute permissions')."\" onclick=\"this.form.action.value='setpermsfix';\" />";
+				print help_link('setperms');
 
 				print "</form>";
 

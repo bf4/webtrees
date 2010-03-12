@@ -208,25 +208,25 @@ $tab=0;		// initialize tab index
 		<table class="center facts_table width50">
 			<tr><td class="topbottombar" colspan="2"><?php print i18n::translate('Login'); ?></td></tr>
 			<tr>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("username", "qm", "username"); print i18n::translate('User name'); ?></td>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('User name'), help_link('username'); ?></td>
 				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" tabindex="<?php echo ++$tab; ?>" name="username" value="<?php print htmlentities($username,ENT_COMPAT,'UTF-8'); ?>" size="20" class="formField" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("password", "qm", "password"); print i18n::translate('Password'); ?></td>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('Password'), help_link('password'); ?></td>
 				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" tabindex="<?php echo ++$tab; ?>" name="password" size="20" class="formField" /></td>
 			</tr>
 			<tr>
 				<td class="topbottombar" colspan="2">
+					<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php print i18n::translate('Login'); ?>" />
 					<?php
 					if ($SHOW_CONTEXT_HELP) {
 						if ($REQUIRE_AUTHENTICATION) {
-							print_help_link("login_buttons_aut", "qm", "login");
+							echo help_link('login_buttons_aut');
 						} else {
-							print_help_link("login_buttons", "qm", "login");
+							echo help_link('login_buttons');
 						}
 					}
 					?>
-					<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php print i18n::translate('Login'); ?>" />&nbsp;
 				</td>
 			</tr>
 		</table>
@@ -239,9 +239,9 @@ if (!isset($_COOKIE[$sessname])) print "<center><div class=\"error width50\">".i
 if ($USE_REGISTRATION_MODULE) { ?>
 	<table class="center facts_table width50">
 	<tr><td class="topbottombar" colspan="2"><?php print i18n::translate('Account Information'); ?></td></tr>
-	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_user", "qm", "requestaccount"); print i18n::translate('No account?'); ?></td>
-	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=register"><?php print i18n::translate('Request new user account'); ?></a></td></tr>
-	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_password", "qm", "lost_password"); print i18n::translate('Lost your password?'); ?></td>
+	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('No account?'), help_link('new_user'); ?></td>
+	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=register"><?php echo i18n::translate('Request new user account'); ?></a></td></tr>
+	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('Lost your password?'), help_link('new_password'); ?></td>
 	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=pwlost"><?php print i18n::translate('Request new password'); ?></a></td></tr>
 	<tr><td class="topbottombar ltr" colspan="2">&nbsp;</td></tr>
 	</table>

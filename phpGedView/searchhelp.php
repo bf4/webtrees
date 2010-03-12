@@ -73,19 +73,22 @@ print '<form name="entersearch" action="'.PGV_SCRIPT_NAME.'" method="post" onsub
 print "<input name=\"action\" type=\"hidden\" value=\"search\" />";
 print "<table class=\"facts_table $TEXT_DIRECTION\">";
 print "<tr><td colspan=\"2\" class=\"topbottombar\">";
-print_help_link("hs_title", "qm", "hs_title");
-print i18n::translate('Search Help Text')."</td></tr>";
+print i18n::translate('Search Help Text');
+print help_link('hs_title');
+print "</td></tr>";
 
 // Enter the keyword(s)
 print "<tr><td class=\"descriptionbox width20 wrap vmiddle\">";
-print_help_link("hs_keyword_advice", "qm", "hs_keyword");
-print i18n::translate('Search for')."</td>";
+print i18n::translate('Search for');
+print help_link('hs_keyword_advice');
+print "</td>";
 print "<td class=\"optionbox\"><input type=\"text\" name=\"searchtext\" dir=\"ltr\" value=\"".$searchtext."\" /></td></tr>";
 
 // How to search
 print "<tr ><td class=\"descriptionbox width20 wrap vmiddle\">";
-print_help_link("hs_searchhow_advice", "qm", "hs_searchhow");
-print i18n::translate('Search type')."</td>";
+print i18n::translate('Search type');
+print help_link('hs_searchhow_advice');
+print "</td>";
 print "<td class=\"optionbox\">";
 print "<input type=\"radio\" name=\"searchhow\" dir=\"ltr\" value=\"any\"";
 if ($searchhow == "any") print " checked=\"checked\"";
@@ -99,8 +102,9 @@ print " />".i18n::translate('Exact phrase')."<br />";
 print "</td></tr>";
 
 print "<tr><td rowspan=\"2\" class=\"descriptionbox width20 wrap vmiddle\">";
-print_help_link("hs_searchin_advice", "qm", "hs_searchin");
-print i18n::translate('Search in')."</td>";
+print i18n::translate('Search in');
+print help_link('hs_searchin_advice');
+print "</td>";
 print "<td class=\"optionbox\">";
 print "<input type=\"checkbox\" name=\"searchuser\" dir=\"ltr\" value=\"yes\"";
 if ($searchuser == "yes") print " checked=\"checked\"";

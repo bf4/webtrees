@@ -163,7 +163,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 <!--	/**************************************************** General Search Form *************************************************************/ -->
 			<?php if($controller->action == "general") { ?>
 				<td colspan="3" class="facts_label03" style="text-align:center;">
-					<?php print i18n::translate('General Search'); print_help_link("search_enter_terms", "qm"); ?>
+					<?php echo i18n::translate('General Search'), help_link('search_enter_terms'); ?>
 				</td>
 	</tr>
 	<!-- // search terms -->
@@ -219,7 +219,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 	<!-- Choice to Exclude non-genealogical data -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print_help_link("search_exclude_tags", "qm"); print i18n::translate('Exclude Filter'); ?>
+			<?php echo i18n::translate('Exclude Filter'), help_link('search_exclude_tags'); ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="radio" name="tagfilter" value="on"
@@ -240,13 +240,13 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 	<!-- Choice to show related persons/families (associates) -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print_help_link("search_include_ASSO", "qm"); print i18n::translate('Associates'); ?>
+			<?php echo i18n::translate('Associates'), help_link('search_include_ASSO'); ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="checkbox" name="showasso" value="on"
 				<?php
 	if ($controller->showasso == "on") print " checked=\"checked\" "; ?> />
-				<?php print i18n::translate('Show related persons/families'); ?>
+				<?php echo i18n::translate('Show related persons/families'); ?>
 		</td>
 	</tr>
 			<?php
@@ -258,15 +258,15 @@ if ($controller->action == "replace")
 	if (PGV_USER_CAN_EDIT) {
 ?>
 				<td colspan="3" class="facts_label03" style="text-align: center;">
-					<?php print i18n::translate('Search and Replace'); print_help_link('search_replace', 'qm'); ?>
+					<?php echo i18n::translate('Search and Replace'), help_link('search_replace'); ?>
 				</td>
 	</tr>
 	<!-- // search terms -->
 	<tr>
-		<td class="list_label" style="padding: 5px;"><?php print i18n::translate('Enter Search terms'); ?></td>
+		<td class="list_label" style="padding: 5px;"><?php echo i18n::translate('Enter Search terms'); ?></td>
 		<td class="list_value" style="padding: 5px;"><input tabindex="1" id="firstfocus" name="query" value="" type="text"/></td>
 			<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="3">
-			<input tabindex="2" type="submit" value="<?php print i18n::translate('Search'); ?>" />
+			<input tabindex="2" type="submit" value="<?php echo i18n::translate('Search'); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -312,7 +312,7 @@ if ($controller->action == "replace")
 if ($controller->action == "soundex") {
 ?>
 				<td colspan="3" class="facts_label03" style="text-align:center; ">
-					<?php print i18n::translate('Search the way you think the name is written (Soundex)'); print_help_link("soundex_search", "qm"); ?>
+					<?php echo i18n::translate('Search the way you think the name is written (Soundex)'), help_link('soundex_search'); ?>
 				</td>
 	</tr>
 	<!-- // search terms -->
@@ -399,7 +399,7 @@ if ($controller->action == "multisite") {
 ?>
 					<input type="hidden" name="subaction" value="basic" />
 					<td colspan="3" class="facts_label03" style="text-align:center; ">
-						<?php print i18n::translate('Multi Site Search'); print_help_link("multi_site_search", "qm"); ?>
+						<?php echo i18n::translate('Multi Site Search'), help_link('multi_site_search'); ?>
 					</td>
 	</tr>
 	<tr>
