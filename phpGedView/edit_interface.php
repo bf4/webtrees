@@ -340,31 +340,27 @@ elseif ($type=="FAM") {
 
 if (strstr($action, "addchild")) {
 	if (empty($famid)) {
-		print_help_link("edit_add_unlinked_person", "qm", "add_unlinked_person");
-		echo "<b>", i18n::translate('Add an unlinked person'), "</b>\n";
+		echo "<b>", i18n::translate('Add an unlinked person'), "</b>", help_link('edit_add_unlinked_person');
 	}
 	else {
-		print_help_link("edit_add_child", "qm", "add_child");
-		echo "<b>", i18n::translate('Add child'), "</b>\n";
+		echo "<b>", i18n::translate('Add child'), "</b>", help_link('edit_add_child');
 	}
 }
 else if (strstr($action, "addspouse")) {
-	print_help_link("edit_add_spouse", "qm", "add_".strtolower($famtag));
 	echo "<b>", $pgv_lang["add_".strtolower($famtag)], "</b>\n";
+	echo help_link('edit_add_spouse');
 }
 else if (strstr($action, "addnewparent")) {
-	print_help_link("edit_add_parent", "qm", "add");
 	if ($famtag=="WIFE") {
 		echo "<b>", i18n::translate('Add a new mother'), "</b>\n";
 	} else {
 		echo "<b>", i18n::translate('Add a new father'), "</b>\n";
 	}
+	echo help_link('edit_add_parent');
 }
 else if (strstr($action, "addopfchild")) {
-	print_help_link("edit_add_child", "qm", "add_opf_child");
-	echo "<b>", i18n::translate('Add a child to create a one-parent family'), "</b>";
-}
-else {
+	echo "<b>", i18n::translate('Add a child to create a one-parent family'), '</b>', help_link('edit_add_child');
+} else {
 	echo "<b>", i18n::translate($type), "</b>";
 }
 //------------------------------------------------------------------------------
@@ -413,8 +409,7 @@ case 'editraw':
 		exit;
 	}
 	else {
-		echo "<br /><b>", i18n::translate('Edit raw GEDCOM record'), "</b>";
-		print_help_link("edit_edit_raw", "qm", "edit_raw");
+		echo "<br /><b>", i18n::translate('Edit raw GEDCOM record'), '</b>', help_link('edit_edit_raw');
 		echo "<form method=\"post\" action=\"edit_interface.php\">\n";
 		echo "<input type=\"hidden\" name=\"action\" value=\"updateraw\" />\n";
 		echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
@@ -425,8 +420,7 @@ case 'editraw':
 		if (PGV_USER_IS_ADMIN) {
 			echo "<table class=\"facts_table\">\n";
 			echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-			print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-			echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+			echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 			if ($NO_UPDATE_CHAN) {
 				echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 			} else {
@@ -465,8 +459,7 @@ case 'edit':
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
@@ -517,8 +510,7 @@ case 'add':
 
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
@@ -591,8 +583,7 @@ case 'addfamlink':
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
@@ -631,8 +622,7 @@ case 'linkspouse':
 	add_simple_tag("0 PLAC", "MARR");
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
@@ -765,38 +755,37 @@ case 'addnewsource':
 		<input type="hidden" name="action" value="addsourceaction" />
 		<input type="hidden" name="pid" value="newsour" />
 		<table class="facts_table">
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("ABBR", "qm", "ABBR"); echo i18n::translate('ABBR'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('ABBR'), help_link('ABBR'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ABBR" id="ABBR" value="" size="40" maxlength="255" /> <?php print_specialchar_link("ABBR", false); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("TITL", "qm", "TITL"); echo i18n::translate('TITL'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('TITL'), help_link('TITL'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="TITL" id="TITL" value="" size="60" /> <?php print_specialchar_link("TITL", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("_HEB", "qm", "_HEB"); echo i18n::translate('_HEB'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('_HEB'), help_link('_HEB'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="_HEB" id="_HEB" value="" size="60" /> <?php print_specialchar_link("_HEB", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("ROMN", "qm", "ROMN"); echo i18n::translate('ROMN'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('ROMN'), help_link('ROMN'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ROMN" id="ROMN" value="" size="60" /> <?php print_specialchar_link("ROMN", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("AUTH", "qm", "AUTH"); echo i18n::translate('AUTH'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('AUTH'), help_link('AUTH'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="AUTH" id="AUTH" value="" size="40" maxlength="255" /> <?php print_specialchar_link("AUTH", false); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("PUBL", "qm", "PUBL"); echo i18n::translate('PUBL'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('PUBL'), help_link('PUBL'); ?></td>
 			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="PUBL" id="PUBL" rows="5" cols="60"></textarea><br /><?php print_specialchar_link("PUBL", true); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("REPO", "qm", "edit_repo"); echo i18n::translate('REPO'); ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); print_addnewrepository_link("REPO"); ?></td></tr>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('REPO'), help_link('REPO'); ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); echo help_link('REPO'); print_addnewrepository_link("REPO"); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("CALN", "qm", "CALN"); echo i18n::translate('CALN'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('CALN'), help_link('CALN'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
 		<?php
 			if (PGV_USER_IS_ADMIN) {
 				echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-				print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-				echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+				echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">";
 				if ($NO_UPDATE_CHAN) {
 					echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 				} else {
@@ -809,12 +798,12 @@ case 'addnewsource':
 			}
 		?>
 		</table>
-			<?php print_help_link("edit_SOUR_EVEN", "qm", "source_events"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" />
-			<?php echo i18n::translate('Associate events with this source'); ?></a>
+			<a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" />
+			<?php echo i18n::translate('Associate events with this source'); ?></a><?php echo help_link('edit_SOUR_EVEN'); ?>
 			<div id="events" style="display: none;">
 			<table class="facts_table">
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_EVEN", "qm", "source_events"); echo i18n::translate('Select Events'); ?></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('Select Events'), help_link('edit_SOUR_EVEN'); ?></td>
 				<td class="optionbox wrap"><select name="EVEN[]" multiple="multiple" size="5">
 					<?php
 					$parts = explode(',', $INDI_FACTS_ADD);
@@ -920,8 +909,7 @@ case 'addnewnote':
 			echo "<table class=\"facts_table\">";
 				echo "<tr>";
 					echo "<td class=\"descriptionbox\" ", $TEXT_DIRECTION, " wrap=\"nowrap\">";
-						print_help_link("SHARED_NOTE", "qm", "shared_note");
-					echo i18n::translate('Shared Note');
+					echo i18n::translate('Shared Note'), help_link('SHARED_NOTE');
 					echo "</td>";
 					echo "<td class=\"optionbox wrap\" ><textarea name=\"NOTE\" id=\"NOTE\" rows=\"15\" cols=\"87\"></textarea>";
 						print_specialchar_link("NOTE", true);
@@ -929,8 +917,7 @@ case 'addnewnote':
 				echo "</tr>";
 			if (PGV_USER_IS_ADMIN) {
 				echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-				print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-				echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+				echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 				if ($NO_UPDATE_CHAN) {
 					echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 				} else {
@@ -1133,8 +1120,7 @@ case 'editsource':
 	
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
@@ -1189,7 +1175,7 @@ case 'editnote':
 		?>
 		<table class="facts_table">
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("SHARED_NOTE", "qm", "shared_note"); echo i18n::translate('Shared Note'); ?></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('Shared Note'), help_link('SHARED_NOTE'); ?></td>
 				<td class="optionbox wrap">
 					<textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="90"><?php
 						echo htmlspecialchars($note_content);
@@ -1199,8 +1185,7 @@ case 'editnote':
 			<?php $tabkey++; 
 			if (PGV_USER_IS_ADMIN) {
 			echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-			print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-			echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+			echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 			if ($NO_UPDATE_CHAN) {
 				echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 			} else {
@@ -1240,38 +1225,37 @@ case 'addnewrepository':
 		<input type="hidden" name="action" value="addrepoaction" />
 		<input type="hidden" name="pid" value="newrepo" />
 		<table class="facts_table">
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_NAME", "qm", "REPO"); echo i18n::translate('NAME'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('NAME'), help_link('edit_REPO_NAME'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="NAME" id="NAME" value="" size="40" maxlength="255" /> <?php print_specialchar_link("NAME", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("_HEB", "qm", "_HEB"); echo i18n::translate('_HEB'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('_HEB'), help_link('_HEB'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="_HEB" id="_HEB" value="" size="40" maxlength="255" /> <?php print_specialchar_link("_HEB", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("ROMN", "qm", "ROMN"); echo i18n::translate('ROMN'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('ROMN'), help_link('ROMN'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ROMN" id="ROMN" value="" size="40" maxlength="255" /> <?php print_specialchar_link("ROMN", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("ADDR", "qm", "ADDR"); echo i18n::translate('ADDR'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('ADDR'), help_link('ADDR'); ?></td>
 			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="ADDR" id="ADDR" rows="5" cols="60"></textarea><?php print_specialchar_link("ADDR", true); ?> </td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("PHON", "qm", "PHON"); echo i18n::translate('PHON'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('PHON'), help_link('PHON'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="PHON" id="PHON" value="" size="40" maxlength="255" /> </td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("FAX", "qm", "FAX"); echo i18n::translate('FAX'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('FAX'), help_link('FAX'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="FAX" id="FAX" value="" size="40" /></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("EMAIL", "qm", "emailadress"); echo i18n::translate('EMAIL'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('EMAIL'), help_link('EMAIL'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="EMAIL" id="EMAIL" value="" size="40" maxlength="255" /></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("URL", "qm", "WWW"); echo i18n::translate('WWW'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('WWW'), help_link('URL'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="WWW" id="WWW" value="" size="40" maxlength="255" /> </td></tr>
 		<?php
 			if (PGV_USER_IS_ADMIN) {
 				echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-				print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-				echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+				echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 				if ($NO_UPDATE_CHAN) {
 					echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 				} else {
@@ -2270,8 +2254,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 case 'reorder_children':
 	require_once PGV_ROOT.'js/prototype.js.htm';
 	require_once PGV_ROOT.'js/scriptaculous.js.htm';
-	echo "<br /><b>", i18n::translate('Re-order children'), "</b>";
-	print_help_link("reorder_children", "qm", "reorder_children");
+	echo "<br /><b>", i18n::translate('Re-order children'), "</b>", help_link('reorder_children');
 	?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="reorder_update" />
@@ -2636,8 +2619,7 @@ case 'edit_family':
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
@@ -2686,8 +2668,7 @@ case 'reorder_update':
 case 'reorder_fams':
 	require_once PGV_ROOT.'js/prototype.js.htm';
 	require_once PGV_ROOT.'js/scriptaculous.js.htm';
-	echo "<br /><b>", i18n::translate('Reorder Families'), "</b>";
-	print_help_link("reorder_families", "qm", "reorder_families");
+	echo "<br /><b>", i18n::translate('Reorder Families'), "</b>", help_link('reorder_families');
 	?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="reorder_fams_update" />

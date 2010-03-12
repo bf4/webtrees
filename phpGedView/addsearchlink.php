@@ -63,18 +63,22 @@ if(isset($pid) && isset($server) && isset($indiName))
 				<table class="facts_table" align="center">
 					<tr>
 						<td class="facts_label03" colspan="3" align="center">
-							<?php print_help_link("link_remote", "qm"); ?> <?php echo i18n::translate('Add Remote Link');?>
+							<?php echo i18n::translate('Add Remote Link'), help_link('link_remote'); ?>
 						</td>
 					</tr>
 					<tr>
-						<td class="descriptionbox width20" id="tdId"><?php print_help_link('link_person_id', 'qm');?> Local Person ID</td>
+						<td class="descriptionbox width20" id="tdId">
+							<?php echo i18n::translate('Local Person ID'), help_link('link_person_id'); ?>
+						</td>
 						<td class="optionbox"><input type="text" id="pid" name="pid" size="14"/></td>
 						<td class="optionbox" rowspan="2"><br/>
 							<input type="submit" value="<?php echo i18n::translate('Add Link');?>" id="btnSubmit" name="btnSubmit" value="add"/>
 						</td>
 					</tr>
 					<tr>
-						<td class="descriptionbox width20"><?php print_help_link('link_remote_rel', 'qm');?> <?php echo i18n::translate('Relationship to current person');?></td>
+						<td class="descriptionbox width20">
+							<?php echo i18n::translate('Relationship to current person'), help_link('link_remote_rel'); ?>
+						</td>
 						<td class="optionbox">
 							<select id="cbRelationship" name="cbRelationship">
 								<option value="self" selected><?php echo i18n::translate('Same as current');?></option>

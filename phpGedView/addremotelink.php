@@ -116,12 +116,12 @@ if (!$success) {
 <table class="facts_table">
 	<tr>
 		<td class="title" colspan="2">
-			<?php print_help_link("link_remote", "qm", "title_remote_link"); echo i18n::translate('Add Remote Link'); ?>
+			<?php echo i18n::translate('Add Remote Link'), help_link('link_remote'); ?>
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("link_remote_rel", "qm", "label_rel_to_current"); ?>
-			<?php echo i18n::translate('Relationship to current person'); ?>
+		<td class="descriptionbox wrap width20">
+			<?php echo i18n::translate('Relationship to current person'), help_link('link_remote_rel'); ?>
 		</td>
 		<td class="optionbox">
 			<select id="cbRelationship" name="cbRelationship">
@@ -147,8 +147,9 @@ if (!$success) {
 	</tr>
 	<?php if ($controller->server_list || $controller->gedcom_list) { ?>
 	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("link_remote_location", "qm", "label_location"); ?>
-		<?php echo i18n::translate('Site Location'); ?></td>
+		<td class="descriptionbox wrap width20">
+			<?php echo i18n::translate('Site Location'), help_link('link_remote_location'); ?>
+		</td>
 		<td class="optionbox">
 			<?php
 				echo '<input type="radio" id="local" name="location" value="local" onclick="swapComponents(\'local\')"';
@@ -179,20 +180,15 @@ if (!$success) {
 
 	<tr>
 		<td class="descriptionbox wrap width20">
-			<?php
-				print_help_link("link_person_id", "qm", "label_local_id");
-				echo i18n::translate('Person ID');
-			?>
+			<?php echo i18n::translate('Person ID'), help_link('link_person_id'); ?>
 		</td>
 		<td class="optionbox">
 			<input type="text" id="txtPID" name="txtPID" size="14" value="<?php echo $controller->form_txtPID; ?>" />
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("link_remote_site", "qm", "label_site"); ?>
-			<span id="labelSite">
-				<?php echo i18n::translate('Site'); ?>
-			</span>
+		<td class="descriptionbox wrap width20">
+			<span id="labelSite"><?php echo i18n::translate('Site'); ?></span><?php echo help_link('link_remote_site'); ?>
 		</td>
 		<td class="optionbox" id="tdUrlText">
 			<div id="existingContent">
@@ -257,8 +253,7 @@ if (!$success) {
 	<?php
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), '</td><td class="optionbox wrap">';
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {

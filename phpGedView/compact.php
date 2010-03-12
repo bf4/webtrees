@@ -75,72 +75,69 @@ if ($view != "preview") {
 	//-->
 	</script>
 	<?php
-	print "\n\t</td><td><form name=\"people\" id=\"people\" method=\"get\" action=\"?\">";
-	print "\n\t\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t";
-	print "<tr>";
+	echo "\n\t</td><td><form name=\"people\" id=\"people\" method=\"get\" action=\"?\">";
+	echo "\n\t\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t";
+	echo "<tr>";
 
 	// NOTE: Root ID
-	print "<td class=\"descriptionbox\">";
-	print_help_link("rootid", "qm");
-	print i18n::translate('Root Person ID')."&nbsp;</td>";
-	print "<td class=\"optionbox vmiddle\">";
-	print "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
+	echo "<td class=\"descriptionbox\">";
+	echo i18n::translate('Root Person ID'), help_link('rootid'), "</td>";
+	echo "<td class=\"optionbox vmiddle\">";
+	echo "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
 	print_findindi_link("rootid","");
 	print "</td>";
 
 	// NOTE: submit
-	print "<td class=\"facts_label03\" rowspan=\"3\">";
-	print "<input type=\"submit\" value=\"".i18n::translate('View')."\" />";
-	print "</td>\n</tr>\n";
+	echo "<td class=\"facts_label03\" rowspan=\"3\">";
+	echo "<input type=\"submit\" value=\"".i18n::translate('View')."\" />";
+	echo "</td>\n</tr>\n";
 
 	if ($SHOW_ID_NUMBERS) {
-		print "<tr>\n";
-		print "<td class=\"descriptionbox\">";
-		print_help_link("SHOW_ID_NUMBERS", "qm");
-		print i18n::translate('Show ID numbers next to names');
-		print "</td>\n";
-		print "<td class=\"optionbox\">\n";
-		print "<input name=\"showids\" type=\"checkbox\" value=\"1\"";
-		if ($showids) print " checked=\"checked\"";
-		print " /></td>\n</tr>\n";
+		echo "<tr>\n";
+		echo "<td class=\"descriptionbox\">";
+		echo i18n::translate('Show ID numbers next to names'), help_link('SHOW_ID_NUMBERS');
+		echo "</td>\n";
+		echo "<td class=\"optionbox\">\n";
+		echo "<input name=\"showids\" type=\"checkbox\" value=\"1\"";
+		if ($showids) echo " checked=\"checked\"";
+		echo " /></td>\n</tr>\n";
 	}
 
 	if ($SHOW_HIGHLIGHT_IMAGES) {
-		print "<tr>\n";
-		print "<td class=\"descriptionbox\">";
-		print_help_link("SHOW_HIGHLIGHT_IMAGES", "qm");
-		print i18n::translate('Show highlight images in people boxes');
-		print "</td>\n";
-		print "<td class=\"optionbox\">\n";
-		print "<input name=\"showthumbs\" type=\"checkbox\" value=\"1\"";
+		echo "<tr>\n";
+		echo "<td class=\"descriptionbox\">";
+		echo i18n::translate('Show highlight images in people boxes'), help_link('SHOW_HIGHLIGHT_IMAGES');
+		echo "</td>\n";
+		echo "<td class=\"optionbox\">\n";
+		echo "<input name=\"showthumbs\" type=\"checkbox\" value=\"1\"";
 		if ($showthumbs) print " checked=\"checked\"";
-		print " /></td>\n</tr>\n";
+		echo " /></td>\n</tr>\n";
 	}
 
-	print "</table>";
-	print "</form>\n";
+	echo "</table>";
+	echo "</form>\n";
 }
-print "</td></tr></table>";
+echo "</td></tr></table>";
 
 // process the tree
 $treeid = ancestry_array($rootid, 5);
-print "<br />";
-print "<table width='100%' border='0' cellpadding='0' cellspacing='0'>";
+echo "<br />";
+echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>";
 
 // 1
-print "<tr>";
+echo "<tr>";
 print_td_person(16);
-print "<td></td>";
-print "<td></td>";
-print "<td></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "<td></td>";
 print_td_person(18);
-print "<td></td>";
+echo "<td></td>";
 print_td_person(24);
-print "<td></td>";
-print "<td></td>";
-print "<td></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "<td></td>";
 print_td_person(26);
-print "</tr>";
+echo "</tr>";
 
 // 2
 print "<tr>";

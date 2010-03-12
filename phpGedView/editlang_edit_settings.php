@@ -204,7 +204,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_lang_use = $pgv_lang_use[$ln];
 	}
 	echo "<tr>";
-	echo '<td class="facts_label" >', print_help_link("active", "qm"), i18n::translate('Active'), "</td>";
+	echo '<td class="facts_label" >', i18n::translate('Active'), help_link('active'), "</td>";
 	write_td_with_textdir_check();
 
 	if ($v_lang_use) {
@@ -224,8 +224,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_original_lang_name = $pgv_lang_self[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("original_lang_name", "qm");
-	echo i18n::translate('Original name of language in %s', $pgv_lang[$d_LangName]);
+	echo i18n::translate('Original name of language in %s', $pgv_lang[$d_LangName]), help_link('original_lang_name');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_original_lang_name" size="30" value="', $v_original_lang_name, '" />';
@@ -237,8 +236,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_lang_shortcut = $lang_short_cut[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("lang_shortcut", "qm");
-	echo i18n::translate('Abbreviation for language files');
+	echo i18n::translate('Abbreviation for language files'), help_link('lang_shortcut');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_lang_shortcut" size="2" value="', $v_lang_shortcut, "\" onchange=\"document.Form1.action.value=''; submit();\" />";
@@ -250,8 +248,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_lang_langcode = $lang_langcode[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("lang_langcode", "qm");
-	echo i18n::translate('Language detection codes');
+	echo i18n::translate('Language detection codes'), help_link('lang_langcode');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_lang_langcode" size="70" value="', $v_lang_langcode, '" />';
@@ -263,8 +260,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_flagsfile = $flagsfile[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("flagsfile", "qm");
-	echo i18n::translate('Flag file');
+	echo i18n::translate('Flag file'), help_link('flagsfile');
 	echo "</td>";
 	write_td_with_textdir_check();
 	$dire = "images/flags";
@@ -325,8 +321,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_date_format = $DATE_FORMAT_array[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("date_format", "qm");
-	echo i18n::translate('Date format');
+	echo i18n::translate('Date format'), help_link('date_format');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_date_format" size="30" value="', $v_date_format. '" />';
@@ -338,8 +333,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_time_format = $TIME_FORMAT_array[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("time_format", "qm");
-	echo i18n::translate('Time format');
+	echo i18n::translate('Time format'), help_link('time_format');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_time_format" size="30" value="', $v_time_format, '" />';
@@ -351,8 +345,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_week_start = $WEEK_START_array[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("week_start", "qm");
-	echo i18n::translate('Week starting day');
+	echo i18n::translate('Week starting day'), help_link('week_start');
 	echo "</td>";
 	write_td_with_textdir_check();
 
@@ -377,8 +370,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_text_direction = $TEXT_DIRECTION_array[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("text_direction", "qm");
-	echo i18n::translate('Text direction');
+	echo i18n::translate('Text direction'), help_link('text_direction');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<select size="1" name="v_text_direction">';
@@ -401,8 +393,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_name_reverse = $NAME_REVERSE_array[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("name_reverse", "qm");
-	echo i18n::translate('Surname first');
+	echo i18n::translate('Surname first'), help_link('name_reverse');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<select size="1" name="v_name_reverse">';
@@ -425,8 +416,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_alphabet_upper = $ALPHABET_upper[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("alphabet_upper", "qm");
-	echo i18n::translate('Alphabet upper case');
+	echo i18n::translate('Alphabet upper case'), help_link('alphabet_upper');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_alphabet_upper" size="80" value="', $v_alphabet_upper, '" />';
@@ -438,8 +428,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_alphabet_lower = $ALPHABET_lower[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("alphabet_lower", "qm");
-	echo i18n::translate('Alphabet lower case');
+	echo i18n::translate('Alphabet lower case'), help_link('alphabet_lower');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_alphabet_lower" size="80" value="', $v_alphabet_lower, '" />';
@@ -451,8 +440,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_multi_letter_alphabet = $MULTI_LETTER_ALPHABET[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("multi_letter_alphabet", "qm");
-	echo i18n::translate('Multi-letter alphabet');
+	echo i18n::translate('Multi-letter alphabet'), help_link('multi_letter_alphabet');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_multi_letter_alphabet" size="50" value="', $v_multi_letter_alphabet, '" />';
@@ -464,8 +452,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_multi_letter_equiv = $MULTI_LETTER_EQUIV[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("multi_letter_equiv", "qm");
-	echo i18n::translate('Multi-letter equivalents');
+	echo i18n::translate('Multi-letter equivalents'), help_link('multi_letter_equiv');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_multi_letter_equiv" size="50" value="', $v_multi_letter_equiv, '" />';
@@ -477,8 +464,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_dictionary_sort = $DICTIONARY_SORT[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("dictionary_sort", "qm");
-	echo i18n::translate('Use dictionary rules while sorting');
+	echo i18n::translate('Use dictionary rules while sorting'), help_link('dictionary_sort');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<select size="1" name="v_dictionary_sort">';
@@ -501,8 +487,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$v_collation = $COLLATION[$ln];
 	}
 	echo '<td class="facts_label" >';
-	print_help_link("collation", "qm");
-	echo i18n::translate('Database collation sequence');
+	echo i18n::translate('Database collation sequence'), help_link('collation');
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_collation" size="30" value="', $v_collation, '" />';
@@ -521,8 +506,7 @@ if ($action != "save" && $action != "toggleActive") {
 
 	if ($action != "new_lang") {
 		echo '<tr><td class="facts_label" >';
-		print_help_link("lang_filenames", "qm");
-		echo i18n::translate('Language files');
+		echo i18n::translate('Language files'), help_link('lang_filenames');
 		echo '</td>';
 		write_td_with_textdir_check();
 

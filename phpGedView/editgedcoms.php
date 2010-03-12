@@ -95,8 +95,7 @@ if (($action=="setdefault") && in_array($default_ged, $all_gedcoms)) {
 // Default gedcom choice
 print "<br />";
 if (PGV_USER_IS_ADMIN && count($all_gedcoms)>1) {
-	print_help_link("default_gedcom", "qm");
-	print i18n::translate('Default GEDCOM')."&nbsp;";
+	echo i18n::translate('Default GEDCOM'), ' ', help_link('default_gedcom');
 	print "<select name=\"default_ged\" class=\"header_select\" onchange=\"document.defaultform.submit();\">";
 	if (!in_array($DEFAULT_GEDCOM, $all_gedcoms)) {
 		echo '<option value="" selected="selected" onclick="document.defaultform.submit();">', htmlspecialchars($DEFAULT_GEDCOM), '</option>';
@@ -110,24 +109,20 @@ if (PGV_USER_IS_ADMIN && count($all_gedcoms)>1) {
 	print "</select><br /><br />";
 }
 
-print_help_link('SECURITY_CHECK_GEDCOM_DOWNLOADABLE', 'qm');
-print '<a href="editgedcoms.php?check_download=true">'.i18n::translate('Check if GEDCOM files are downloadable')."</a>\n";
+echo'<a href="editgedcoms.php?check_download=true">', i18n::translate('Check if GEDCOM files are downloadable'), '</a>', help_link('SECURITY_CHECK_GEDCOM_DOWNLOADABLE');
 // Print table heading
 print "<table class=\"gedcom_table\">";
 if (PGV_USER_IS_ADMIN) {
 	print "<tr><td class=\"list_label\">";
-	print_help_link("help_addgedcom.php", "qm");
-	print "<a href=\"editconfig_gedcom.php?source=add_form\">".i18n::translate('Add GEDCOM')."</a>";
+	print "<a href=\"editconfig_gedcom.php?source=add_form\">".i18n::translate('Add GEDCOM')."</a>".help_link('help_addgedcom.php');
 	print "</td>";
 	print "<td class=\"list_label\">";
-	print_help_link("help_uploadgedcom.php", "qm");
-	print "<a href=\"editconfig_gedcom.php?source=upload_form\">".i18n::translate('Upload GEDCOM')."</a>";
+	print "<a href=\"editconfig_gedcom.php?source=upload_form\">".i18n::translate('Upload GEDCOM')."</a>".help_link('help_uploadgedcom.php');
 	print "</td>";
 }
 if (PGV_USER_IS_ADMIN) {
 	print "<td class=\"list_label\">";
-	print_help_link("help_addnewgedcom.php", "qm");
-	print "<a href=\"editconfig_gedcom.php?source=add_new_form\">".i18n::translate('Create a new GEDCOM')."</a>";
+	print "<a href=\"editconfig_gedcom.php?source=add_new_form\">".i18n::translate('Create a new GEDCOM')."</a>".help_link('help_addnewgedcom.php');
 	print "</td>";
 }
 print  "<td class=\"list_label\"><a href=\"admin.php\">" . i18n::translate('Return to the Admin menu') . "</a></td></tr>";

@@ -153,7 +153,7 @@ switch ($action) {
 			}
 		}
 		print "</select>\n\n";
-		print_help_link("add_new_language", "qm");
+		print help_link("add_new_language");
 		print "</td>";
 		print "<td class=\"facts_value center\"><input type=\"submit\" value=\"" . i18n::translate('Add new language') . "\" onclick=\"return helpPopup03('" . "action=new_lang" . "&amp;" . session_name() . "=" . session_id() . "'); \" /></td></tr>";
 		$USERLANG = $LANGUAGE;
@@ -167,7 +167,7 @@ switch ($action) {
 		print "<table class=\"facts_table center $TEXT_DIRECTION\" style=\"width:70%; \">";
 		print "<tr><td class=\"facts_label03\" colspan=\"7\">";
 		print i18n::translate('Configuration of supported languages');
-		print_help_link("config_lang_utility", "qm");
+		print help_link("config_lang_utility");
 		print "</td></tr>";
 
 		print "<tr>";

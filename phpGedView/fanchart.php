@@ -444,18 +444,16 @@ if ($view != "preview") {
 
 	// NOTE: rootid
 	echo "<td class=\"descriptionbox\">";
-	print_help_link("rootid", "qm", "root_person");
-	echo i18n::translate('Root Person ID')."</td>";
-	echo "<td class=\"optionbox\">";
+	echo i18n::translate('Root Person ID'), help_link('rootid');
+	echo "</td><td class=\"optionbox\">";
 	echo "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
 	print_findindi_link("rootid","");
 	echo "</td>";
 
 	// NOTE: fan style
 	echo "<td rowspan=\"3\" class=\"descriptionbox\">";
-	print_help_link("fan_style", "qm", "chart_style");
-	echo i18n::translate('Circle Diagram')."</td>";
-	echo "<td rowspan=\"3\" class=\"optionbox\">";
+	echo i18n::translate('Circle Diagram'), help_link('fan_style');
+	echo "</td><td rowspan=\"3\" class=\"optionbox\">";
 	echo "<input type=\"radio\" name=\"fan_style\" value=\"2\"";
 	if ($fan_style==2) echo " checked=\"checked\"";
 	echo " /> 1/2";
@@ -473,9 +471,8 @@ if ($view != "preview") {
 
 	// NOTE: generations
 	echo "<tr><td class=\"descriptionbox\">";
-	print_help_link("PEDIGREE_GENERATIONS", "qm", "generations");
-	echo i18n::translate('Generations')."</td>";
-	echo "<td class=\"optionbox\">";
+	echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS');
+	echo "</td><td class=\"optionbox\">";
 	echo "<select name=\"PEDIGREE_GENERATIONS\">";
 	// Can only show 9 generations (256 ancestors) as graphics library has integer degree resolution
 	for ($i=2; $i<=min(9,$MAX_PEDIGREE_GENERATIONS); $i++) {
@@ -488,15 +485,13 @@ if ($view != "preview") {
 	echo "</tr><tr>";
 	// NOTE: fan width
 	echo "<td class=\"descriptionbox\">";
-	print_help_link("fan_width", "qm", "fan_width");
-	echo i18n::translate('Width')."</td>";
-	echo "<td class=\"optionbox\">";
+	echo i18n::translate('Width'), help_link('fan_width');
+	echo "</td><td class=\"optionbox\">";
 	echo "<input type=\"text\" size=\"3\" name=\"fan_width\" value=\"$fan_width\" /> <b>%</b> ";
 	echo "</td>";
 	echo "</tr></table>";
 	echo "</form><br />";
-}
-else {
+} else {
 	echo "<script language='JavaScript' type='text/javascript'>";
 	echo "if (IE) document.write('<span class=\"warning\">".str_replace("'", "\'", i18n::translate('This Fanchart image cannot be printed directly by your browser. Use right-click then save and print.'))."</span>');";
 	echo "</script>";
