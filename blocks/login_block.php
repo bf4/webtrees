@@ -65,13 +65,13 @@ function print_login_block($block = true, $config="", $side, $index) {
 		$content .= "<br /><br /></form></div>";
 	} else {
 		$id="login_block";
-		$title = "";
-
 		$i = 0;			// Initialize tab index
-
-		if ($USE_REGISTRATION_MODULE) $title .= print_help_link("index_login_register", "qm", "", false, true);
-		else $title .= print_help_link("index_login", "qm", "", false, true);
-		$title .= i18n::translate('Login');
+		$title = i18n::translate('Login');
+		if ($USE_REGISTRATION_MODULE) {
+			$title.=help_link('index_login_register');
+		} else {
+			$title.=help_link('index_login');
+		}
 		$content = "<div class=\"center\"><form method=\"post\" action=\"$LOGIN_URL\" name=\"loginform\" onsubmit=\"t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;\">";
 		$content .= "<input type=\"hidden\" name=\"url\" value=\"index.php\" />";
 		$content .= "<input type=\"hidden\" name=\"ged\" value=\"";
@@ -89,9 +89,9 @@ function print_login_block($block = true, $config="", $side, $index) {
 		$content .= "<tr><td ";
 		$content .= write_align_with_textdir_check("right", true);
 		$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
-		$content .= print_help_link("username", "qm", "username", false, true);
-		$content .= i18n::translate('User name')."</td>";
-		$content .= "<td ";
+		$content .= i18n::translate('User name');
+		$content .= help_link('username');
+		$content .= "</td><td ";
 		$content .= write_align_with_textdir_check("left", true);
 		$content .= " class=\"{$TEXT_DIRECTION}\"><input type=\"text\" tabindex=\"{$i}\" name=\"username\"  size=\"20\" class=\"formField\" />";
 		$content .= "</td></tr>";
@@ -101,9 +101,9 @@ function print_login_block($block = true, $config="", $side, $index) {
 		$content .= "<tr><td ";
 		$content .= write_align_with_textdir_check("right", true);
 		$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
-		$content .= print_help_link("password", "qm", "password", false, true);
-		$content .= i18n::translate('Password')."</td>";
-		$content .= "<td ";
+		$content .= i18n::translate('Password');
+		$content .= help_link('password');
+		$content .= "</td><td ";
 		$content .= write_align_with_textdir_check("left", true);
 		$content .= " class=\"{$TEXT_DIRECTION}\"><input type=\"password\" tabindex=\"{$i}\" name=\"password\"  size=\"20\" class=\"formField\" />";
 		$content .= "</td></tr>";
@@ -121,9 +121,9 @@ function print_login_block($block = true, $config="", $side, $index) {
 			$content .= "<tr><td ";
 			$content .= write_align_with_textdir_check("right", true);
 			$content .= " class=\"{$TEXT_DIRECTION} wrap width50\"><br />";
-			$content .= print_help_link("new_user", "qm", "", false, true);
-			$content .= i18n::translate('No account?')."</td>";
-			$content .= "<td ";
+			$content .= i18n::translate('No account?');
+			$content .= help_link('new_user');
+			$content .= "</td><td ";
 			$content .= write_align_with_textdir_check("left", true);
 			$content .= " class=\"{$TEXT_DIRECTION}\"><br />";
 			$content .= "<a href=\"login_register.php?action=register\" tabindex=\"{$i}\">";
@@ -136,9 +136,9 @@ function print_login_block($block = true, $config="", $side, $index) {
 			$content .= "<tr><td ";
 			$content .= write_align_with_textdir_check("right", true);
 			$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
-			$content .= print_help_link("new_password", "qm", "", false, true);
-			$content .= i18n::translate('Lost your password?')."</td>";
-			$content .= "<td ";
+			$content .= i18n::translate('Lost your password?');
+			$content .= help_link('new_password');
+			$content .= "</td><td ";
 			$content .= write_align_with_textdir_check("left", true);
 			$content .= " class=\"{$TEXT_DIRECTION}\">";
 			$content .= "<a href=\"login_register.php?action=pwlost\" tabindex=\"{$i}\">";

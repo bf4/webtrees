@@ -285,20 +285,17 @@ $controller->checkPrivacy();
 				echo $indi->getSexImage('large', '', i18n::translate('unknown'));
 			}
 		?>
- 			<a href="individual.php?pid=<?php echo $pid; ?>">&nbsp;<?php echo PrintReady($indi->getFullName()); ?><br />
+ 			<a href="individual.php?pid=<?php echo $pid; ?>">&nbsp;<?php echo PrintReady($indi->getFullName()); ?><br /><br />
  			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) echo PrintReady($addname); ?>
 			</a>
 			<input type="hidden" name="pids[<?php echo $p; ?>]" value="<?php echo htmlentities($pid, ENT_COMPAT, 'UTF-8'); ?>" />
 			<?php if (!$controller->isPrintPreview()) {
-				echo "<br />";
-				print_help_link("remove_person", "qm");
 				?>
 				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
-				<span class="details1"><?php echo i18n::translate('Remove Person'); ?></span></a>
+				<span class="details1"><?php echo i18n::translate('Remove Person'), help_link('remove_person'); ?></span></a>
 			<?php if (!empty($controller->birthyears[$pid])) { ?>
 				<span class="details1"><br />
-				<?php print_help_link("show_age_marker", "qm"); ?>
-				<?php echo i18n::translate('Show Age Marker'); ?>
+				<?php echo i18n::translate('Show Age Marker'), help_link('show_age_marker'); ?>
 				<input type="checkbox" name="agebar<?php echo $p; ?>" value="ON" onclick="showhide('agebox<?php echo $p; ?>', this);" />
 				</span>
 			<?php }
@@ -311,10 +308,9 @@ $controller->checkPrivacy();
 			<input type="hidden" name="pids[<?php echo $p; ?>]" value="<?php echo htmlentities($pid, ENT_COMPAT, 'UTF-8'); ?>" />
 			<?php if (!$controller->isPrintPreview()) {
 				echo "<br />";
-				print_help_link("remove_person", "qm");
 				?>
 				<a href="timeline.php?<?php echo $controller->pidlinks; ?>&amp;scale=<?php echo $controller->scale; ?>&amp;remove=<?php echo $pid;?>" >
-				<span class="details1"><?php echo i18n::translate('Remove Person'); ?></span></a>
+				<span class="details1"><?php echo i18n::translate('Remove Person'), help_link('remove_person'); ?></span></a>
 			<?php } ?>
 			<br />
 		<?php } ?>
@@ -324,8 +320,7 @@ $controller->checkPrivacy();
 		if (!isset($col)) $col = 0;
 		?>
 		<td class="person<?php print $col; ?>" style="padding: 5px" valign="top">
-			<?php print_help_link("add_person", "qm"); ?>
-			<?php print i18n::translate('Add another person to chart:<br />Person ID:');?>&nbsp;
+			<?php echo i18n::translate('Add another person to chart:<br />Person ID:'), help_link('add_person');?>&nbsp;
 			<input class="pedigree_form" type="text" size="5" id="newpid" name="newpid" />&nbsp;
 			<?php print_findindi_link("newpid",""); ?>
 			<br />

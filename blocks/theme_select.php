@@ -46,8 +46,7 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $themeformcount;
 
 	$id="theme_select";
-	$title = i18n::translate('Change Theme');
-	$title .= print_help_link("change_theme", "qm","",false,true);
+	$title=i18n::translate('Change Theme').help_link('change_theme');
 
 	$theme_menu=MenuBar::getThemeMenu();
 	$content='<div class="center theme_form"><br />'.$theme_menu->getMenuAsDropdown().'<br /<br /></div>';

@@ -52,8 +52,7 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 	global $LANGUAGE;
 
 	$id="rss_block";
-	$title = print_help_link("rss_feed", "qm","",false,true);
-	$title .= i18n::translate('RSS Feeds');
+	$title=i18n::translate('RSS Feeds').help_link('rss_feed');
 	$content = "<div class=\"center\">";
 	$content .= "<form method=\"post\" action=\"\" name=\"rssform\">";
 	$content .= "<br />";

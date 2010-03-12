@@ -64,7 +64,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	if (count($found_facts)==0 and $HideEmpty=="yes") return false;
 // Print block header
 	$id="recent_changes";
-	$title = print_help_link("recent_changes", "qm","",false,true);
+	$title='';
 	if ($PGV_BLOCKS["print_recent_changes"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -76,7 +76,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= i18n::translate('Recent Changes');
+	$title.=i18n::translate('Recent Changes').help_link('recent_changes');
 
 	$content = "";
 // Print block content
@@ -124,12 +124,11 @@ function print_recent_changes_config($config) {
 
 	// Cache file life
 	if ($ctype=="gedcom") {
-		print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life", "qm");
-		print i18n::translate('Cache file life');
-		print "</td><td class=\"optionbox\">";
-		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
-		print "</td></tr>";
+		echo "<tr><td class=\"descriptionbox wrap width33\">";
+		echo i18n::translate('Cache file life'), help_link('cache_life');
+		echo "</td><td class=\"optionbox\">";
+		echo "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		echo "</td></tr>";
 	}
 }
 ?>

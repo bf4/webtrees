@@ -117,12 +117,11 @@ function print_html_block_config($config) {
 	<?php
 	// Cache file life
 	if ($ctype=="gedcom") {
-  	print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life", "qm");
-		print i18n::translate('Cache file life');
-		print "</td><td class=\"optionbox\">";
-		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
-		print "</td></tr>";
+  	echo "<tr><td class=\"descriptionbox wrap width33\">";
+		echo i18n::translate('Cache file life'), help_link('cache_life');
+		echo "</td><td class=\"optionbox\">";
+		echo "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		echo "</td></tr>";
 	}
 }
 ?>

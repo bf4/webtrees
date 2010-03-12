@@ -179,7 +179,7 @@ if ($MULTI_MEDIA) {
 				$content = "";
 				$id = "";
 					$id = "random_picture$index";
-					$title = print_help_link("index_media", "qm", "random_picture", false, true);
+					$title='';
 				if ($PGV_BLOCKS["print_random_media"]["canconfig"]) {
 					if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 						if ($ctype=="gedcom") {
@@ -192,6 +192,7 @@ if ($MULTI_MEDIA) {
 					}
 				}
 				$title .= i18n::translate('Random Picture');
+				$title .= help_link('index_media');
 				$content = "<div id=\"random_picture_container$index\">";
 				if ($config['controls']=='yes') {
 					if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
@@ -336,9 +337,10 @@ function openPic(filename, width, height) {
 		}
 
 		print "<tr><td class=\"descriptionbox wrap width33\">";
-			print_help_link("random_media_persons_or_all", "qm");
-			print i18n::translate('Show only persons, events, or all?');
-		print "</td>";?>
+		print i18n::translate('Show only persons, events, or all?');
+		print help_link('random_media_persons_or_all');
+		print "</td>";
+	?>
 	<td class="optionbox"><select name="filter">
 	<option value="indi"
 	<?php if ($config["filter"]=="indi") print " selected=\"selected\"";?>><?php print i18n::translate('Persons'); ?></option>
@@ -350,7 +352,11 @@ function openPic(filename, width, height) {
 	</tr>
 
 	<tr>
-	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_filter", "qm"); print i18n::translate('Filter'); ?></td>
+	<td class="descriptionbox wrap width33">
+<?php
+	echo i18n::translate('Filter'), help_link('random_media_filter');
+?>
+	</td>
 		<td class="optionbox">
 			<center><b><?php echo i18n::translate('FORM'); ?></b></center>
 			<table class="width100">
@@ -423,7 +429,12 @@ function openPic(filename, width, height) {
 	</tr>
 
 	<tr>
-	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_ajax_controls", "qm"); print i18n::translate('Show slideshow controls?'); ?></td>
+	<td class="descriptionbox wrap width33">
+	<?php
+	print i18n::translate('Show slideshow controls?');
+	print help_link('random_media_ajax_controls');
+	?>
+	</td>
 		<td class="optionbox"><select name="controls">
 		<option value="yes"
 		<?php if ($config["controls"]=="yes") print " selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
@@ -432,7 +443,12 @@ function openPic(filename, width, height) {
 	</select></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_start_slide", "qm"); print i18n::translate('Start slideshow on page load?'); ?></td>
+	<td class="descriptionbox wrap width33">
+	<?php
+	print i18n::translate('Start slideshow on page load?');
+	print help_link('random_media_start_slide');
+	?>
+	</td>
 		<td class="optionbox"><select name="start">
 		<option value="yes"
 		<?php if ($config["start"]=="yes") print " selected=\"selected\""; ?>><?php print i18n::translate('Yes'); ?></option>
