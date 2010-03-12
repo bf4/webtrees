@@ -190,7 +190,7 @@ class stats {
 			{
 				// re-merge, just in case
 				$new_tags[] = "#{$full_tag}#";
-				$new_values[] = print_help_link(join(':', $params), 'qm', '', false, true);
+				$new_values[] = help_link(join(':', $params));
 			}
 			/*
 			* Parse language variables.
