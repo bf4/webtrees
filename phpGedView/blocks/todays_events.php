@@ -79,7 +79,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 
   //-- Start output
   $id ="on_this_day_events";
-  $title = print_help_link("index_onthisday", "qm","",false,true);
+	$title='';
   if ($PGV_BLOCKS["print_todays_events"]["canconfig"]) {
 	if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -92,6 +92,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	}
   }
   $title .= i18n::translate('On This Day ...');
+  $title .= help_link('index_onthisday');
 
   $content = "";
 	switch ($infoStyle) {
@@ -138,8 +139,8 @@ function print_todays_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("basic_or_all", "qm");
 	print i18n::translate('Show only Births, Deaths, and Marriages?');
+	print help_link('basic_or_all');
 	?>
 	</td><td class="optionbox">
 		<select name="onlyBDM">
@@ -150,10 +151,10 @@ function print_todays_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("style", "qm");
-	print i18n::translate('Presentation Style')."</td>";
+	print i18n::translate('Presentation Style');
+	print help_link('style');
 	?>
-	<td class="optionbox">
+	</td><td class="optionbox">
 		<select name="infoStyle">
 			<option value="style1"<?php if ($config["infoStyle"]=="style1") print " selected=\"selected\"";?>><?php print i18n::translate('List'); ?></option>
 			<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print i18n::translate('Table'); ?></option>
@@ -162,10 +163,10 @@ function print_todays_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("sort_style", "qm");
-	print i18n::translate('Sort Style')."</td>";
+	print i18n::translate('Sort Style');
+	print help_link('sort_style');
 	?>
-	<td class="optionbox">
+	</td><td class="optionbox">
 		<select name="sortStyle">
 			<option value="alpha"<?php if ($config["sortStyle"]=="alpha") print " selected=\"selected\"";?>><?php print i18n::translate('Alphabetically'); ?></option>
 			<option value="anniv"<?php if ($config["sortStyle"]=="anniv") print " selected=\"selected\"";?>><?php print i18n::translate('By Anniversary'); ?></option>
@@ -174,10 +175,10 @@ function print_todays_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("cal_dowload", "qm");
-	print i18n::translate('Allow calendar events download?')."</td>";
+	print i18n::translate('Allow calendar events download?');
+	print help_link('cal_dowload');
 	?>
-	<td class="optionbox">
+	</td><td class="optionbox">
 		<select name="allowDownload">
 			<option value="yes"<?php if ($config["allowDownload"]=="yes") print " selected=\"selected\"";?>><?php print i18n::translate('Yes'); ?></option>
 			<option value="no"<?php if ($config["allowDownload"]=="no") print " selected=\"selected\"";?>><?php print i18n::translate('No'); ?></option>
