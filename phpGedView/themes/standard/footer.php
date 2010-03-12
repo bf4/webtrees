@@ -43,8 +43,7 @@ echo "</div> <!-- closing div id=\"content\" -->";
 	<img src="<?php echo $PGV_IMAGE_DIR, '/', $PGV_IMAGES['gedview']['other']; ?>" width="100" height="45" border="0" alt="<?php echo PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): ""; ?>"
 		title="<?php echo PGV_PHPGEDVIEW, PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "" ;?>" /></a><br />
 <br />
-<?php print_help_link("preview", "qm"); ?>
-<a href="<?php echo PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(); ?>"><?php echo i18n::translate('Printer-friendly Version'); ?></a>
+<a href="<?php echo PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(); ?>"><?php echo i18n::translate('Printer-friendly Version'), help_link('preview'); ?></a>
 <br />
 <?php
 if ($SHOW_STATS || PGV_DEBUG) {
