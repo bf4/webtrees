@@ -412,19 +412,18 @@ if ($view!="preview") {
 	</td><td width="50px">&nbsp;</td><td><form method="get" name="people" action="?">
 	<table><tr>
 
-		<!-- // NOTE: Root ID -->
+	<!-- // NOTE: Root ID -->
 	<td class="descriptionbox">
-	<?php print_help_link("desc_rootid", "qm");
-	print i18n::translate('Root Person ID') . "</td>";?>
+		<?php echo i18n::translate('Root Person ID'), help_link('desc_rootid'); ?>
+	</td>
 	<td class="optionbox">
-	<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php print $pid ?>"	/>
-	<?php print_findindi_link("pid","");?>
+		<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php print $pid ?>"	/>
+		<?php print_findindi_link("pid","");?>
 	</td>
 
 	<!-- // NOTE: Show Details -->
 	<td class="descriptionbox">
-	<?php print_help_link("show_full", "qm");
-	print i18n::translate('Show Details')?>
+	<?php echo i18n::translate('Show Details'), help_link('show_full'); ?>
 	</td>
 	<td class="optionbox">
 	<input type="hidden" name="show_full" value="<?php print $show_full;?>" />
@@ -439,9 +438,8 @@ if ($view!="preview") {
 	</td></tr>
 
 	<!-- // NOTE: Generations -->
-	<tr><td class="descriptionbox" >
-	<?php print_help_link("desc_generations", "qm");
-	print i18n::translate('Generations')?>
+	<tr><td class="descriptionbox">
+	<?php echo i18n::translate('Generations'), help_link('desc_generations'); ?>
 	</td>
 	<td class="optionbox">
 	<select name="generations">
@@ -457,8 +455,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Show spouses -->
 	<td class="descriptionbox">
-	<?php print_help_link("show_spouse", "qm");
-	print i18n::translate('Show spouses')?>
+		<?php echo i18n::translate('Show spouses'), help_link('show_spouse'); ?>
 	</td>
 	<td class="optionbox">
 	<input type="checkbox" value="1" name="show_spouse"
@@ -468,8 +465,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Box width -->
 	<tr><td class="descriptionbox">
-	<?php print_help_link("box_width", "qm");
-	print i18n::translate('Box width')?>
+		<?php echo i18n::translate('Box width'), help_link('box_width'); ?>
 	</td>
 	<td class="optionbox"><input type="text" size="3" name="box_width" value="<?php print $box_width; ?>" />
 	<b>%</b>
@@ -480,8 +476,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Descent steps -->
 	<tr><td class="descriptionbox">
-	<?php print_help_link("fambook_descent", "qm");
-	print i18n::translate('Descent Steps')?>
+		<?php echo i18n::translate('Descent Steps'), help_link('fambook_descent'); ?>
 	</td>
 	<td class="optionbox"><input type="text" size="3" name="descent" value="<?php print $descent;?>" />
 	</td>

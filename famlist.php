@@ -153,12 +153,12 @@ foreach ($initials as $letter=>$count) {
 	if ($count) {
 		if ($showList && $letter==$alpha && $show_all=='no') {
 			if ($surname) {
-				$html='<a href="famlistlist.php?alpha='.urlencode($letter).'" class="warning">'.$html.'</a>';
+				$html='<a href="famlist.php?alpha='.urlencode($letter).'" class="warning">'.$html.'</a>';
 			} else {
 				$html='<span class="warning">'.$html.'</span>';
 			}
 		} else {
-			$html='<a href="famlistlist.php?alpha='.urlencode($letter).'">'.$html.'</a>';
+			$html='<a href="famlist.php?alpha='.urlencode($letter).'">'.$html.'</a>';
 		}
 	}
 	$list[]=$html;
@@ -173,9 +173,9 @@ if (!$SEARCH_SPIDER) {
 	}
 }
 echo '<div class="alpha_index"><p class="center">';
-print_help_link('alpha', 'qm', 'alpha_index');
-print i18n::translate('Choose a letter to show families whose name starts with that letter.')."<br />";
-echo join(' | ', $list), '</p>';
+echo i18n::translate('Choose a letter to show families whose name starts with that letter.');
+echo help_link('alpha');
+echo '<br />', join(' | ', $list), '</p>';
 
 // Search spiders don't get an option to show/hide the surname sublists,
 // nor does it make sense on the all/unknown/surname views
@@ -183,25 +183,25 @@ if (!$SEARCH_SPIDER) {
 	echo '<p class="center">';
 	if ($alpha!='@' && $alpha!=',' && !$surname) {
 		if ($surname_sublist=='yes') {
-			print_help_link('skip_sublist', 'qm', 'skip_surnames');
 			echo '<a href="', $url, '&amp;surname_sublist=no">', i18n::translate('Skip Surname lists'), '</a>';
+			echo help_link('skip_sublist', 'qm', 'skip_surnames');
 		} else {
-			print_help_link('skip_sublist', 'qm', 'show_surnames');
 			echo '<a href="', $url, '&amp;surname_sublist=yes">', i18n::translate('Show Surname lists'), '</a>';
+			echo help_link('skip_sublist', 'qm', 'show_surnames');
 		}
 		echo '&nbsp;&nbsp;&nbsp;';
 	}
 	if ($showList) {
-		print_help_link('show_marnm', 'qm', 'show_marnms');
 		if ($SHOW_MARRIED_NAMES) {
 			echo '<a href="', $url, '&amp;show_marnm=no">', i18n::translate('Exclude married names'), '</a>';
 		} else {
 			echo '<a href="', $url, '&amp;show_marnm=yes">', i18n::translate('Include married names'), '</a>';
 		}
-		echo '&nbsp;&nbsp;&nbsp;';
+		echo help_link('show_marnm');
+		echo '<br />';
+		echo help_link('name_list');
+		echo '</p>';
 	}
-	print_help_link('name_list', 'qm');
-	echo '</p>';
 }
 echo '</div>';
 
@@ -267,9 +267,9 @@ if ($showList) {
 					echo '</h2>';
 				}
 				echo '<div class="alpha_index"><p class="center">';
-				print_help_link('alpha', 'qm', 'alpha_index');
-				echo i18n::translate('Choose a letter to show families where a spouse has a given name which starts with that letter.'), '<br />';
-				echo join(' | ', $list), '</p></div>';
+				echo i18n::translate('Choose a letter to show families where a spouse has a given name which starts with that letter.');
+				echo help_link('alpha');
+				echo '<br />', join(' | ', $list), '</p></div>';
 			}
 		}
 		if ($showList) {

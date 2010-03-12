@@ -69,29 +69,20 @@ if ($view!="preview") {
 	<table class="list_table <?php echo $TEXT_DIRECTION; ?>">
 
 		<!-- // NOTE: Root ID -->
-	<tr><td class="descriptionbox">
-	<?php
-	print_help_link("rootid", "qm", "root_person");
-	echo i18n::translate('Root Person ID'); ?></td>
+	<tr>
+		<td class="descriptionbox"><?php echo i18n::translate('Root Person ID'), help_link('rootid'); ?></td>
 	<td class="optionbox">
 	<input class="pedigree_form" type="text" name="rootid" id="rootid" size="3" value="<?php echo htmlentities($controller->rootid, ENT_COMPAT, 'UTF-8'); ?>" />
 	<?php print_findindi_link("rootid", ""); ?>
 	</td>
 
 	<!-- // NOTE: Box width -->
-	<td class="descriptionbox">
-	<?php
-	print_help_link("box_width", "qm", "box_width");
-	echo i18n::translate('Box width'); ?></td>
+	<td class="descriptionbox"><?php echo i18n::translate('Box width'), help_link('box_width'); ?></td>
 	<td class="optionbox"><input type="text" size="3" name="box_width" value="<?php echo htmlentities($box_width, ENT_COMPAT, 'UTF-8'); ?>" /> <b>%</b>
 	</td>
 
 	<!-- // NOTE: chart style -->
-	<td rowspan="2" class="descriptionbox">
-	<?php
-	print_help_link("chart_style", "qm", "chart_style");
-	echo i18n::translate('Layout'); ?>
-	</td>
+	<td rowspan="2" class="descriptionbox"><?php echo i18n::translate('Layout'), help_link('chart_style'); ?></td>
 	<td rowspan="2" class="optionbox">
 	<input type="radio" name="chart_style" value="0"
 	<?php
@@ -111,7 +102,6 @@ if ($view!="preview") {
 	<!-- // NOTE: show cousins -->
 	<br />
 	<?php
-	print_help_link("show_cousins", "qm", "show_cousins");
 	echo '<input ';
 	if ($controller->chart_style=="0") {
 		echo 'disabled="disabled" ';
@@ -123,7 +113,7 @@ if ($view!="preview") {
 		echo '0" onclick="document.people.show_cousins.value=\'1\';"';
 	}
 	echo ' />';
-	echo i18n::translate('Show cousins');
+	echo i18n::translate('Show cousins'), help_link('show_cousins');
 
 	echo '<br /><input type="radio" name="chart_style" value="2"';
 	if ($controller->chart_style=="2") {
@@ -148,8 +138,7 @@ if ($view!="preview") {
 	<!-- // NOTE: generations -->
 	<tr><td class="descriptionbox">
 	<?php
-	print_help_link("PEDIGREE_GENERATIONS", "qm", "generations");
-	echo i18n::translate('Generations'); ?></td>
+	echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?></td>
 
 	<td class="optionbox">
 	<select name="PEDIGREE_GENERATIONS">
@@ -169,8 +158,7 @@ if ($view!="preview") {
 
 	<td class="descriptionbox">
 	<?php
-	print_help_link("show_full", "qm", "show_details");
-	echo i18n::translate('Show Details');
+	echo i18n::translate('Show Details'), help_link('show_full');
 	?>
 	</td>
 	<td class="optionbox">

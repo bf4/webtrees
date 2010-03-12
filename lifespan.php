@@ -65,9 +65,8 @@ if (!$controller->isPrintPreview()) {
 		?>
 	<table>
 		<tr><td class="person<?php print $col; ?>" style="padding: 5px" valign="top">
-			<?php print_help_link("add_person", "qm"); ?>
-			<?php print i18n::translate('Add another person to chart:<br />Person ID:');?>&nbsp;
-			<input class="pedigree_form" type="text" size="5" id="newpid" name="newpid" />&nbsp;
+			<?php echo i18n::translate('Add another person to chart'), help_link('add_person'), '<br />', i18n::translate('Person ID:'); ?>
+			<input class="pedigree_form" type="text" size="5" id="newpid" name="newpid" />
 			<?php print_findindi_link("newpid",""); ?>
 			<br />
 			<div style="text-align: center"><input type="checkbox" checked="checked" value="yes" name="addFamily"/><?php print i18n::translate('Include Immediate Family');?></div>
@@ -302,15 +301,13 @@ var oldMx = 0;
 
 	<table>
 		<tr>
-			<td><?php print_help_link("timeline_control", "qm"); ?></td>
+			<td rowspan="2"><?php echo help_link('timeline_control'); ?></td>
 			<td align="center"><?php print i18n::translate('Speed');?></td>
 				<td align="center"><?php print i18n::translate('Begin Year');?></td>
 				<td align="center"><?php print i18n::translate('End Year');?></td>
 				<td align="center"><?php print i18n::translate('PLAC');?></td>
 		</tr>
 		<tr>
-
-			<td></td>
 			<td><select name="speedMenu" size="1">
 				<option value="4">1</option>
 				<option value="3">2</option>

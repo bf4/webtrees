@@ -179,36 +179,31 @@ echo '<tr><td class="topbottombar" colspan="2"><h2>', i18n::translate('My Accoun
 echo '<tr><td class="topbottombar" colspan="2"><input type="submit" tabindex="', ++$tab, '" value="', i18n::translate('Update MyAccount'), '" /></td></tr>';
 
 echo '<tr><td class="descriptionbox width20 wrap">';
-echo print_help_link('edituser_username', 'qm', '', false, true);
-echo i18n::translate('User name'), '</td><td class="optionbox">';
+echo i18n::translate('User name'), help_link('edituser_username'), '</td><td class="optionbox">';
 echo '<input type="text" name="form_username" tabindex="', ++$tab, '" value="', PGV_USER_NAME, '" />';
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_firstname', 'qm', '', false, true);
-echo i18n::translate('First Name'), '</td><td class="optionbox">';
+echo i18n::translate('First Name'), help_link('edituser_firstname'), '</td><td class="optionbox">';
 echo '<input type="text" name="form_firstname" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'firstname'), '" />';
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_lastname', 'qm', '', false, true);
-echo i18n::translate('Last Name'), '</td><td class="optionbox">';
+echo i18n::translate('Last Name'),  help_link('edituser_lastname'), '</td><td class="optionbox">';
 echo '<input type="text" name="form_lastname" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'lastname'), '" />';
 echo '</td></tr>';
 
 $person=Person::getInstance(PGV_USER_GEDCOM_ID);
 if ($person) {
 	echo '<tr><td class="descriptionbox wrap">';
-	echo print_help_link("edituser_gedcomid", "qm", '', false, true);
-	echo i18n::translate('GEDCOM INDI record ID'), '</td><td class="optionbox">';
+	echo i18n::translate('GEDCOM INDI record ID'), help_link('edituser_gedcomid'), '</td><td class="optionbox">';
 	echo $person->format_list('span');
 	echo '</td></tr>';
 }
 
 $person=Person::getInstance(PGV_USER_ROOT_ID);
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_rootid', 'qm', '', false, true);
-echo i18n::translate('Pedigree Chart Root Person'), '</td><td class="optionbox">';
+echo i18n::translate('Pedigree Chart Root Person'), help_link('edituser_rootid'), '</td><td class="optionbox">';
 echo '<input type="text" name="form_rootid" id="rootid" tabindex="', ++$tab, '" value="', PGV_USER_ROOT_ID, '" />';
 echo print_findindi_link('rootid', '', true), '<br/>';
 if ($person) {
@@ -217,19 +212,16 @@ if ($person) {
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_password', 'qm', '', false, true);
 echo i18n::translate('Password'), '</td><td class="optionbox">';
-echo '<input type="password" name="form_pass1" tabindex="', ++$tab, '" /> ', i18n::translate('Leave password blank if you want to keep the current password.'), '</td></tr>';
+echo '<input type="password" name="form_pass1" tabindex="', ++$tab, '" /> ', i18n::translate('Leave password blank if you want to keep the current password.'), help_link('edituser_password'), '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_conf_password', 'qm', '', false, true);
-echo i18n::translate('Confirm Password'), '</td><td class="optionbox">';
+echo i18n::translate('Confirm Password'), help_link('edituser_conf_password'), '</td><td class="optionbox">';
 echo '<input type="password" name="form_pass2" tabindex="', ++$tab, '" /></td></tr>';
 
 if ($ENABLE_MULTI_LANGUAGE) {
 	echo '<tr><td class="descriptionbox wrap">';
-	echo print_help_link('edituser_change_lang', 'qm', '', false, true);
-	echo i18n::translate('Change Language'), '</td><td class="optionbox" valign="top">';
+	echo i18n::translate('Change Language'), help_link('edituser_change_lang'), '</td><td class="optionbox" valign="top">';
 	echo '<select name="form_language" tabindex="', ++$tab, '">';
 	foreach ($pgv_language as $key=> $value) {
 		if ($language_settings[$key]["pgv_lang_use"]) {
@@ -244,14 +236,12 @@ if ($ENABLE_MULTI_LANGUAGE) {
 }
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_email', 'qm', '', false, true);
-echo i18n::translate('Email Address'), '</td><td class="optionbox" valign="top">';
+echo i18n::translate('Email Address'), help_link('edituser_email'), '</td><td class="optionbox" valign="top">';
 echo '<input type="text" name="form_email" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'email'), '" size="50" /></td></tr>';
 
 if ($ALLOW_USER_THEMES) {
 	echo '<tr><td class="descriptionbox wrap">';
-	echo print_help_link('edituser_user_theme', 'qm', '', false, true);
-	echo i18n::translate('My Theme'), '</td><td class="optionbox" valign="top">';
+	echo i18n::translate('My Theme'), help_link('edituser_user_theme'), '</td><td class="optionbox" valign="top">';
 	echo '<select name="form_theme" tabindex="', ++$tab, '">';
 		echo '<option value="">', i18n::translate('Site Default'), '</option>';
 		foreach (get_theme_names() as $themename=>$themedir) {
@@ -265,8 +255,7 @@ if ($ALLOW_USER_THEMES) {
 }
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('edituser_user_contact', 'qm', '', false, true);
-echo i18n::translate('Preferred Contact Method'), '</td><td class="optionbox">';
+echo i18n::translate('Preferred Contact Method'), help_link('edituser_user_contact'), '</td><td class="optionbox">';
 echo '<select name="form_contact_method" tabindex="', ++$tab, '">';
 foreach ($ALL_CONTACT_METHODS as $key=>$value) {
 	if ($PGV_STORE_MESSAGES || $key>=2) {
@@ -280,8 +269,7 @@ foreach ($ALL_CONTACT_METHODS as $key=>$value) {
 echo '</select></td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link('useradmin_visibleonline', 'qm', '', false, true);
-echo i18n::translate('Visible to other users when online'), '</td><td class="optionbox">';
+echo i18n::translate('Visible to other users when online'), help_link('useradmin_visibleonline'), '</td><td class="optionbox">';
 echo '<input type="checkbox" name="form_visible_online" tabindex="', ++$tab, '" value="Y"';
 if (get_user_setting(PGV_USER_ID, 'visibleonline')=='Y') {
 	echo ' checked="checked"';
@@ -289,8 +277,7 @@ if (get_user_setting(PGV_USER_ID, 'visibleonline')=='Y') {
 echo ' /></td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
-echo print_help_link("edituser_user_default_tab", "qm", '', false, true);
-echo i18n::translate('Default Tab to show on Individual Information page'), '</td><td class="optionbox">';
+echo i18n::translate('Default Tab to show on Individual Information page'), help_link('edituser_user_default_tab'), '</td><td class="optionbox">';
 echo '<select name="form_default_tab" tabindex="', ++$tab, '">';
 foreach ($ALL_DEFAULT_TABS as $key=>$value) {
 	echo '<option value="', $key,'"';

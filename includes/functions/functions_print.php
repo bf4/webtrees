@@ -1354,9 +1354,9 @@ function help_link($help_topic) {
 		return '';
 	} else {
 		return
-			'<a class="help" tabindex="0" href="help: '.$help_topic.'" onclick="helpPopup(\''.$help_topic.'\'); return false;"> '.
+			'<a class="help" tabindex="0" href="help: '.$help_topic.'" onclick="helpPopup(\''.$help_topic.'\'); return false;">&nbsp;'.
 			($PGV_USE_HELPIMG ?  '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['help']['small'].'" class="icon" width="15" height="15" alt="" />' : i18n::translate('?')).
-			' </a>';
+			'&nbsp;</a>';
 	}
 }
 

@@ -189,12 +189,14 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	            <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Informational'); ?></td>                            
 	    	</tr>
 			<tr>
-				<td class="optionbox width50"><?php print_help_link("readmefile", "qm", "readme_documentation"); ?><a
-					href="readme.txt" target="manual"
-					title="<?php echo i18n::translate('View readme.txt file'); ?>"><?php echo i18n::translate('README documentation');?></a></td>
-				<td class="optionbox width50"><?php print_help_link("phpinfo", "qm", "phpinfo"); ?><a
-					href="pgvinfo.php?action=phpinfo"
-					title="<?php echo i18n::translate('Show PHP information page'); ?>"><?php echo i18n::translate('PHP information');?></a></td>
+				<td class="optionbox width50">
+					<a href="readme.txt" target="manual" title="<?php echo i18n::translate('View readme.txt file'); ?>"><?php echo i18n::translate('README documentation'); ?></a>
+					<?php echo help_link('readmefile'); ?>
+				</td>
+				<td class="optionbox width50">
+					<a href="pgvinfo.php?action=phpinfo" title="<?php echo i18n::translate('Show PHP information page'); ?>"><?php echo i18n::translate('PHP information'); ?></a>
+					<?php echo help_link('phpinfo'); ?>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -204,19 +206,19 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	            <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Data and GEDCOM administration'); ?></td>                            
 	    	</tr>
 			<tr>
-				<td class="optionbox width50"><?php print_help_link("edit_gedcoms", "qm", "manage_gedcoms"); ?><a
-					href="editgedcoms.php"><?php echo i18n::translate('Manage GEDCOMs and edit Privacy');?></a></td>
-				<td class="optionbox width50"><?php print_help_link("help_edit_merge.php", "qm", "merge_records"); ?><a
-					href="edit_merge.php"><?php echo i18n::translate('Merge records'); ?></a></td>
+				<td class="optionbox width50"><a
+					href="editgedcoms.php"><?php echo i18n::translate('Manage GEDCOMs and edit Privacy');?></a><?php echo help_link('edit_gedcoms'); ?></td>
+				<td class="optionbox width50"><a
+					href="edit_merge.php"><?php echo i18n::translate('Merge records'); ?></a><?php echo help_link('help_edit_merge.php'); ?></td>
 			</tr>
 			<tr>
-				<td class="optionbox width50"><?php if (PGV_USER_IS_ADMIN) { print_help_link("help_dir_editor.php", "qm", "index_dir_cleanup"); echo "<a href=\"dir_editor.php\">".i18n::translate('Cleanup Index directory')."</a>"; } ?>&nbsp;</td>
+				<td class="optionbox width50"><?php if (PGV_USER_IS_ADMIN) {  echo '<a href="dir_editor.php">', i18n::translate('Cleanup Index directory'), '</a>', help_link('help_dir_editor.php'); } ?></td>
 				<td class="optionbox width50"><?php if ($d_pgv_changes != "") echo $d_pgv_changes; else echo "&nbsp;"; ?></td>
 			</tr>
 			<?php if (PGV_USER_GEDCOM_ADMIN && is_dir('./modules/batch_update')) { ?>
 			<tr>
-				<td class="optionbox with50"><?php print_help_link("batch_update", "qm", "batch_update"); ?><a
-					href="module.php?mod=batch_update"><?php echo i18n::translate('Batch Update'); ?></a></td>
+				<td class="optionbox with50"><a
+					href="module.php?mod=batch_update"><?php echo i18n::translate('Batch Update'); ?></a><?php echo help_link('batch_update'); ?></td>
 				<td class="optionbox width50">&nbsp;</td>
 			</tr>
 			<?php } ?>
@@ -231,16 +233,16 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 			<td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Unlinked Records'); ?></td>                            
 		</tr>
 		<tr>
-			<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_person", "qm", "add_unlinked_person"); ?>
-				<a href="javascript: <?php echo i18n::translate('Add an unlinked person'); ?> "onclick="addnewchild(''); return false;"><?php echo i18n::translate('Add an unlinked person'); ?></a>
+			<td class="optionbox with50">
+				<a href="javascript: <?php echo i18n::translate('Add an unlinked person'); ?> "onclick="addnewchild(''); return false;"><?php echo i18n::translate('Add an unlinked person'); ?></a><?php echo help_link('edit_add_unlinked_person'); ?>
 			</td>
-			<td class="optionbox width50"><?php print_help_link("edit_add_unlinked_source", "qm", "add_unlinked_source"); ?>
-				<a href="javascript: <?php echo i18n::translate('Add an unlinked source'); ?> "onclick="addnewsource(''); return false;"><?php echo i18n::translate('Add an unlinked source'); ?></a>
+			<td class="optionbox width50">
+				<a href="javascript: <?php echo i18n::translate('Add an unlinked source'); ?> "onclick="addnewsource(''); return false;"><?php echo i18n::translate('Add an unlinked source'); ?></a><?php echo help_link('edit_add_unlinked_source'); ?>
 			</td>
 		</tr>
 		<tr>
-			<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_note", "qm", "add_unlinked_note"); ?><a
-				href="javascript: <?php echo i18n::translate('Add an unlinked note'); ?> "onclick="addnewnote(''); return false;"><?php echo i18n::translate('Add an unlinked note'); ?></a>
+			<td class="optionbox with50"><a
+				href="javascript: <?php echo i18n::translate('Add an unlinked note'); ?> "onclick="addnewnote(''); return false;"><?php echo i18n::translate('Add an unlinked note'); ?></a><?php echo help_link('edit_add_unlinked_note'); ?>
 			</td>
 			<td class="optionbox width50">
 				&nbsp;
@@ -259,26 +261,26 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
             <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Site administration'); ?></td>                            
 		</tr>
 		<tr>
-			<td class="optionbox width50"><?php print_help_link("help_editconfig.php", "qm", "configuration"); ?><a
-				href="install.php?step=4"><?php echo i18n::translate('Configuration');?></a></td>
-			<td class="optionbox width50"><?php print_help_link("um_tool", "qm", "um_header"); ?><a
-				href="usermigrate.php?proceed=migrate"><?php echo i18n::translate('User Information Migration tool');?></a></td>
+			<td class="optionbox width50"><a
+				href="install.php?step=4"><?php echo i18n::translate('Configuration');?></a><?php echo help_link('help_editconfig.php'); ?></td>
+			<td class="optionbox width50"><a
+				href="usermigrate.php?proceed=migrate"><?php echo i18n::translate('User Information Migration tool');?></a><?php echo help_link('um_tool'); ?></td>
 		</tr>
 		<tr>
-			<td class="optionbox width50"><?php print_help_link("help_useradmin.php", "qm", "user_admin"); ?><a
-				href="useradmin.php"><?php echo i18n::translate('User administration');?></a></td>
-			<td class="optionbox width50"><?php print_help_link("um_bu", "qm", "um_backup"); ?><a
-				href="usermigrate.php?proceed=backup"><?php echo i18n::translate('Backup');?></a></td>
+			<td class="optionbox width50"><a
+				href="useradmin.php"><?php echo i18n::translate('User administration');?></a><?php echo help_link('help_useradmin.php'); ?></td>
+			<td class="optionbox width50"><a
+				href="usermigrate.php?proceed=backup"><?php echo i18n::translate('Backup');?></a><?php echo help_link('um_bu'); ?></td>
 		</tr>
 		<tr>
-			<td class="optionbox width50"><?php print_help_link("help_faq.php", "qm", "faq_list"); ?><a
-				href="faq.php"><?php echo i18n::translate('FAQ List');?></a></td>
-			<td class="optionbox width50"><?php print_help_link("help_managesites", "qm", "link_manage_servers"); ?><a
-				href="manageservers.php"><?php echo i18n::translate('Manage Sites');?></a></td>
+			<td class="optionbox width50"><a
+				href="faq.php"><?php echo i18n::translate('FAQ List');?></a><?php echo help_link('help_faq.php'); ?></td>
+			<td class="optionbox width50"><a
+				href="manageservers.php"><?php echo i18n::translate('Manage Sites');?></a><?php echo help_link('help_managesites'); ?></td>
 		</tr>
 		<tr>
-			<td class="optionbox width50"><?php print_help_link("help_changelanguage.php", "qm", "enable_disable_lang"); ?><a
-				href="changelanguage.php?action=editold"><?php echo i18n::translate('Configure supported languages');?></a>
+			<td class="optionbox width50"><a
+				href="changelanguage.php?action=editold"><?php echo i18n::translate('Configure supported languages');?><?php echo help_link('help_changelanguage.php'); ?></a>
 				<?php
 				if (!file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
 					echo "<br /><span class=\"error\">";
@@ -286,8 +288,8 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 					echo "</span>";
 				}
 				?></td>
-			<td class="optionbox width50"><?php print_help_link("add_new_language", "qm", "add_new_language"); ?><a
-				href="changelanguage.php?action=addnew"><?php echo i18n::translate('Add files and settings for a new language');?></a>
+			<td class="optionbox width50"><a
+				href="changelanguage.php?action=addnew"><?php echo i18n::translate('Add files and settings for a new language');?></a><?php echo help_link('add_new_language'); ?>
 			</td>
 		</tr>
 		<tr>

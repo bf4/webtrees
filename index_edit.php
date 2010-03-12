@@ -312,8 +312,8 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 	if ($PGV_BLOCKS[$block[0]]["canconfig"]) {
 		eval($block[0]."_config(\$block[1]);");
 		print "<tr><td colspan=\"2\" class=\"topbottombar\">";
-		print_help_link("click_here", "qm");
 		print "<input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"document.block.submit();\" />";
+		print help_link('click_here');
 		print "&nbsp;&nbsp;<input type =\"button\" value=\"".i18n::translate('Cancel')."\" onclick=\"window.close()\" />";
 		print "</td></tr>";
 	}
@@ -322,8 +322,8 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 		print i18n::translate('This block cannot be configured.');
 		print "</td></tr>";
 		print "<tr><td colspan=\"2\" class=\"topbottombar\">";
-		print_help_link("click_here", "qm");
 		print "<input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"parentrefresh();\" />";
+		print help_link('click_here');
 		print "</td></tr>";
 	}
 	print "</table>";
@@ -471,9 +471,9 @@ else {
 	<table dir="ltr" border="1" width="400px">
 	<tr><td class="topbottombar" colspan="7">
 	<?php
-	print_help_link("portal_config_intructions", "qm");
 	if ($ctype=="user") print "<b>".UTF8_strtoupper(i18n::translate('Customize MyGedView Portal'))."</b>";
 	else print "<b>".UTF8_strtoupper(i18n::translate('Customize this GEDCOM Welcome page'))."</b>";
+	echo help_link('portal_config_intructions');
 	print "</td></tr>";
 	// NOTE: Row 1: Column legends
 	print "<tr>";
@@ -496,7 +496,7 @@ else {
 		print "<br />";
 		print "<a tabindex=\"-1\" onclick=\"move_down_block('main_select');\" title=\"".i18n::translate('Move Down')."\">".$IconDarrow."</a>";
 		print "<br /><br />";
-		print_help_link("block_move_up", "qm");
+		print help_link('block_move_up');
 
 	print "</td>";
 	// NOTE: Row 2 column 2: Left (Main) block list
@@ -517,7 +517,7 @@ else {
 		print "<br />";
 		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'main_select');\" title=\"".i18n::translate('Add')."\">".$IconLarrow."</a>";
 		print "<br /><br />";
-		print_help_link("block_move_right", "qm");
+		print help_link('block_move_right');
 
 	print "</td>";
 	// Row 2 column 4: Middle (Available) block list
@@ -537,7 +537,7 @@ else {
 		print "<br />";
 		print "<a tabindex=\"-1\" onclick=\"move_left_right_block('available_select', 'right_select');\" title=\"".i18n::translate('Add')."\">".$IconRarrow."</a>";
 		print "<br /><br />";
-		print_help_link("block_move_right", "qm");
+		print help_link('block_move_right');
 	print "</td>";
 	// NOTE: Row 2 column 6: Right block list
 	print "<td class=\"optionbox\" dir=\"".$TEXT_DIRECTION."\">";
@@ -555,7 +555,7 @@ else {
 		print "<br />";
 		print "<a tabindex=\"-1\" onclick=\"move_down_block('right_select');\" title=\"".i18n::translate('Move Down')."\">".$IconDarrow."</a>";
 		print "<br /><br />";
-		print_help_link("block_move_up", "qm");
+		print help_link('block_move_up');
 	print "</td>";
 	print "</tr>";
 	// NOTE: Row 3 columns 1-7: Summary description of currently selected block
@@ -568,22 +568,21 @@ else {
 		print i18n::translate('Use these blocks as the default block configuration for all users?')."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br /><br />\n";
 	}
 
-	if ($ctype=='user') {
-		print_help_link("block_default_portal", "qm");
-	}
-	else {
-		print_help_link("block_default_index", "qm");
-	}
 	print "<input type=\"button\" value=\"".i18n::translate('Reset to Default Blocks')."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=reset&amp;name=".str_replace("'", "\'", $name)."';\" />\n";
+	if ($ctype=='user') {
+		echo help_link('block_default_portal');
+	} else {
+		echo help_link('block_default_index');
+	}
 	print "&nbsp;&nbsp;";
-	print_help_link("click_here", "qm");
 	print "<input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"select_options(); save_form();\" />\n";
+	print help_link('click_here');
 	print "&nbsp;&nbsp;";
 	print "<input type =\"button\" value=\"".i18n::translate('Cancel')."\" onclick=\"window.close()\" />";
 	if (PGV_USER_GEDCOM_ADMIN && $ctype!="user") {
 		print "<br />";
-		print_help_link("clear_cache", "qm");
 		print "<input type =\"button\" value=\"".i18n::translate('Clear cache files')."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=clearcache&amp;name=".str_replace("'", "\'", $name)."';\" />";
+		print help_link('clear_cache');
 	}
 	print "</td></tr></table>";
 	print "</form>\n";

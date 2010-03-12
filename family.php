@@ -104,13 +104,11 @@ if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview() && $controller->acce
 						if (!$controller->isPrintPreview() && $controller->display && PGV_USER_CAN_EDIT) {
 							$husb = $controller->getHusband();
 							if (empty($husb)) { ?>
-								<?php print_help_link("edit_add_parent", "qm"); ?>
-			<a href="javascript <?php echo i18n::translate('Add a new father'); ?>" onclick="return addnewparentfamily('', 'HUSB', '<?php echo $controller->famid; ?>');"><?php echo i18n::translate('Add a new father'); ?></a><br />
+			<a href="javascript <?php echo i18n::translate('Add a new father'); ?>" onclick="return addnewparentfamily('', 'HUSB', '<?php echo $controller->famid; ?>');"><?php echo i18n::translate('Add a new father'), help_link('edit_add_parent'); ?></a><br />
 						<?php }
 							$wife = $controller->getWife();
 							if (empty($wife))  { ?>
-								<?php print_help_link("edit_add_parent", "qm"); ?>
-			<a href="javascript <?php echo i18n::translate('Add a new mother'); ?>" onclick="return addnewparentfamily('', 'WIFE', '<?php echo $controller->famid; ?>');"><?php echo i18n::translate('Add a new mother'); ?></a><br />
+			<a href="javascript <?php echo i18n::translate('Add a new mother'); ?>" onclick="return addnewparentfamily('', 'WIFE', '<?php echo $controller->famid; ?>');"><?php echo i18n::translate('Add a new mother'), help_link('edit_add_parent'); ?></a><br />
 						<?php }
 						}
 						?>

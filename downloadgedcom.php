@@ -137,7 +137,7 @@ print_header(i18n::translate('Download GEDCOM'));
 	<input type="hidden" name="ged" value="<?php print $ged; ?>" />
 	<table class="list_table width50" border="0" valign="top">
 	<tr><td colspan="2" class="facts_label03"><?php print i18n::translate('Options:'); ?></td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("file_type", "qm"); print i18n::translate('File Type') ?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('File Type'), help_link('file_type'); ?></td>
 		<td class="optionbox">
 		<?php if ($TEXT_DIRECTION=='ltr') { ?>
 			<input type="radio" name="filetype" checked="checked" value="gedcom" />&nbsp;&nbsp;GEDCOM<br/><input type="radio" name="filetype" value="gramps" />&nbsp;&nbsp;Gramps XML
@@ -145,9 +145,9 @@ print_header(i18n::translate('Download GEDCOM'));
 			GEDCOM&nbsp;&nbsp;<?php print getLRM();?><input type="radio" name="filetype" checked="checked" value="gedcom" /><?php print getLRM();?><br />Gramps XML&nbsp;&nbsp;<?php print getLRM();?><input type="radio" name="filetype" value="gramps" /><?php print getLRM();?>
 		<?php } ?>
 		</td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("download_zipped", "qm"); print i18n::translate('Zip File(s)'); ?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Zip File(s)'), help_link('download_zipped'); ?></td>
 		<td class="list_value"><input type="checkbox" name="zip" value="yes" checked="checked" /></td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("apply_privacy", "qm"); print i18n::translate('Apply privacy settings?'); ?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Apply privacy settings?'), help_link('apply_privacy'); ?></td>
 		<td class="list_value">
 		<?php if (PGV_USER_IS_ADMIN) { ?>
 			<input type="radio" name="privatize_export" value="none" checked="checked" />&nbsp;&nbsp;<?php print i18n::translate('None'); ?><br />
@@ -160,13 +160,13 @@ print_header(i18n::translate('Download GEDCOM'));
 		<input type="radio" name="privatize_export" value="gedadmin" />&nbsp;&nbsp;<?php print i18n::translate('GEDCOM administrator'); ?><br />
 		<input type="radio" name="privatize_export" value="admin"<?php if (!PGV_USER_IS_ADMIN) print " DISABLED"; ?> />&nbsp;&nbsp;<?php print i18n::translate('Site administrator'); ?>
 		</td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("utf8_ansi", "qm"); print i18n::translate('Convert from UTF-8 to ANSI (ISO-8859-1)'); ?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Convert from UTF-8 to ANSI (ISO-8859-1)'), help_link('utf8_ansi'); ?></td>
 		<td class="list_value"><input type="checkbox" name="convert" value="yes" /></td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("remove_tags", "qm"); print i18n::translate('Remove custom PGV tags? (eg. _PGVU, _THUM)'); ?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Remove custom PGV tags? (eg. _PGVU, _THUM)'), help_link('remove_tags'); ?></td>
 		<td class="list_value"><input type="checkbox" name="remove" value="yes" checked="checked" /></td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertPath", "qm"); print i18n::translate('Convert media path to');?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Convert media path to'), help_link('convertPath');?></td>
 		<td class="list_value"><input type="text" name="conv_path" size="30" value="<?php echo getLRM(), $conv_path, getLRM();?>" /></td></tr>
-	<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertSlashes", "qm"); print i18n::translate('Convert media folder separators to');?></td>
+	<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Convert media folder separators to'), help_link('convertSlashes');?></td>
 		<td class="list_value">
 		<input type="radio" name="conv_slashes" value="forward" <?php if ($conv_slashes=='forward') print "checked=\"checked\" "; ?>/>&nbsp;&nbsp;<?php print i18n::translate('Forward slashes : /');?><br />
 		<input type="radio" name="conv_slashes" value="backward" <?php if ($conv_slashes=='backward') print "checked=\"checked\" "; ?>/>&nbsp;&nbsp;<?php print i18n::translate('Backslashes : \\');?>

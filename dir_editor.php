@@ -241,7 +241,7 @@ function removeAll() {
 		<button type="submit"><?php print i18n::translate('Delete');?></button>
 		<button type="button" onclick="ul_clear(); return false;"><?php print i18n::translate('Cancel');?></button><br /><br />
 		<button type="button" onclick="removeAll(); return false;"><?php print i18n::translate('Remove all nonessential files');?></button>
-		<?php print_help_link("help_dir_editor.php", "qm", '', false, false); ?></td>
+		</td>
 	</tr>
 </table>
 </form>

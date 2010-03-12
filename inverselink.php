@@ -115,9 +115,8 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists(PGV_ROOT.'modules/GEDF
 		echo '<input type="hidden" name="ged" value="', $GEDCOM, '" />';
 		echo '<table class="facts_table center ', $TEXT_DIRECTION, '">';
 		echo '<tr><td class="topbottombar" colspan="2">';
-		print_help_link("add_media_linkid", "qm", "link_media");
-		echo i18n::translate('Link Media'), ' ', $toitems, '</td></tr>';
-		echo '<tr><td class="descriptionbox width20 wrap">', i18n::translate('Media ID'), '</td>';
+		echo i18n::translate('Link Media'), help_link('add_media_linkid'), ' ', $toitems;
+		echo '</td></tr><tr><td class="descriptionbox width20 wrap">', i18n::translate('Media ID'), '</td>';
 		echo '<td class="optionbox wrap">';
 		if (!empty($mediaid)) {
 			//-- Get the title of this existing Media item

@@ -58,20 +58,17 @@ if ($view!="preview") {
 	echo '<input type="hidden" name="show_full" value="', $controller->show_full, '" />';
 	echo '<table class="list_table ', $TEXT_DIRECTION, '">';
 	echo '<tr><td class="descriptionbox">';
-	print_help_link("desc_rootid", "qm", "root_person");
-	echo i18n::translate('Root Person ID'), "&nbsp;</td>";
+	echo i18n::translate('Root Person ID'), help_link('desc_rootid'), '</td>';
 	echo '<td class="optionbox">';
 	echo '<input class="pedigree_form" type="text" id="pid" name="pid" size="3" value="', $controller->pid, '" />';
 	print_findindi_link("pid", "");
 	echo '</td>';
 	echo '<td class="descriptionbox">';
-	print_help_link("box_width", "qm", "box_width");
-	print i18n::translate('Box width') . "&nbsp;</td>";
+	echo i18n::translate('Box width'), help_link('box_width'), '</td>';
 	echo '<td class="optionbox"><input type="text" size="3" name="box_width" value="', $controller->box_width, '" />';
 	echo '<b>%</b></td>';
 	echo '<td rowspan="2" class="descriptionbox">';
-	print_help_link("chart_style", "qm", "chart_style");
-	echo i18n::translate('Layout');
+	echo i18n::translate('Layout'), help_link('chart_style');
 	echo '</td><td rowspan="2" class="optionbox">';
 	echo '<input type="radio" name="chart_style" value="0"';
 	if ($controller->chart_style==0) {
@@ -97,8 +94,7 @@ if ($view!="preview") {
 	echo '<input type="submit" value="', i18n::translate('View'), '" />';
 	echo '</td></tr>';
 	echo '<tr><td class="descriptionbox">';
-	print_help_link("desc_generations", "qm", "generations");
-	echo i18n::translate('Generations'), '&nbsp;</td>';
+	echo i18n::translate('Generations'), help_link('desc_generations'), '</td>';
 	echo '<td class="optionbox"><select name="generations">';
 	for ($i=2; $i<=$MAX_DESCENDANCY_GENERATIONS; $i++) {
 		echo '<option value="', $i, '"';
@@ -108,8 +104,7 @@ if ($view!="preview") {
 		echo '>', $i, '</option>';
 	}
 	echo '</select></td><td class="descriptionbox">';
-	print_help_link("show_full", "qm", "show_details");
-	echo i18n::translate('Show Details');
+	echo i18n::translate('Show Details'), help_link('show_full');
 	echo '</td><td class="optionbox"><input type="checkbox" value="';
 	if ($controller->show_full) {
 		echo '1" checked="checked" onclick="document.people.show_full.value=\'0\';"';
