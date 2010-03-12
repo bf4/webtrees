@@ -54,8 +54,8 @@ if (PGV_USER_IS_ADMIN) echo " - ".PGV_VERSION_TEXT;
 echo '</a><br />';
 echo "\n\t<br />";
 
-print_help_link("preview", "qm");
 echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
+echo help_link('preview');
 echo "<br />";
 
 if ($SHOW_STATS || PGV_DEBUG) {
