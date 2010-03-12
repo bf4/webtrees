@@ -38,7 +38,7 @@
 // ***  LINKS tags --- This will be added later **** =========================================
 /*
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-		print_help_link("edit_add_SHARED_NOTE", "qm");
+		echo help_link("edit_add_SHARED_NOTE");
 		echo "Links: <br />";
 	echo "</td><td class=\"optionbox wrap\">\n";
 		// print_indi_list(fetch_linked_indi('N1', "NOTE", "1"));  //  *** NOTE THIS needs fixing to replace "N1" with a variable, or use another function ***
@@ -46,7 +46,7 @@
 		echo "*** Not implemented yet ***";
 	echo "</td></tr>\n";
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-		print_help_link("edit_add_SHARED_NOTE", "qm");
+		echo help_link("edit_add_SHARED_NOTE");
 		echo "Add Links: <br />";
 	echo "</td><td class=\"optionbox wrap\">\n";
 		// include ('modules/GEDFact_assistant/_CENS/census_query1.php');
@@ -59,7 +59,7 @@
 /*
 	$linksAddLinks  =	 "";
 	$linksAddLinks .=	 "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-	// $linksAddLinks .=	 print_help_link("edit_add_SHARED_NOTE", "qm");
+	// $linksAddLinks .=	 help_link("edit_add_SHARED_NOTE");
 	$linksAddLinks .=	 "Currently Linked to: ";
 	$linksAddLinks .=	 "</td>";
 	$linksAddLinks .=	 "<td class=\"optionbox wrap\">\n";
@@ -71,7 +71,7 @@
 	
 	$linksAddLinks .=	 "<tr>";
 	$linksAddLinks .=	 "<td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-	// $linksAddLinks .=	print_help_link("edit_add_SHARED_NOTE", "qm");
+	// $linksAddLinks .=	help_link("edit_add_SHARED_NOTE");
 	$linksAddLinks .=	 "Add Other Links: ";
 	$linksAddLinks .= "</td><td class=\"optionbox wrap\">\n";
 	// $linksAddLinks .=	// include ('modules/GEDFact_assistant/_CENS/census_query1.php');
