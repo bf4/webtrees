@@ -230,8 +230,8 @@ function showSite(siteID) {
 	<table class="width100" align="center">
 		<tr>
 		<td class="facts_label">
-			<?php print_help_link("help_manual_search_engines", "qm"); ?>
 			<b><?php echo i18n::translate('Manually mark Search Engines by IP');?></b>
+			<?php echo help_link('help_manual_search_engines'); ?>
 		</td>
 		</tr>
 		<tr>
@@ -278,8 +278,8 @@ function showSite(siteID) {
 	<table class="width100" align="center">
 		<tr>
 		<td class="facts_label">
-			<?php print_help_link("help_banning", "qm"); ?>
 			<b><?php echo i18n::translate('Ban Sites by IP');?></b>
+			<?php echo help_link('help_banning'); ?>
 		</td>
 		</tr>
 		<tr>
@@ -429,8 +429,8 @@ if (empty($errorServer)) {
 	<table class="width100">
 		<tr>
 		<td class="facts_label" colspan="2">
-			<?php print_help_link("help_remotesites", "qm"); ?>
 			<b><?php print i18n::translate('Add new site');?></b>
+			<?php echo help_link('help_remotesites'); ?>
 		</td>
 		</tr>
 		<tr>
@@ -443,8 +443,7 @@ if (empty($errorServer)) {
 		</tr>
 		<tr>
 		<td class="facts_label width20">
-			<?php print_help_link('link_remote_site', 'qm');?>
-			<?php print i18n::translate('Site URL/IP');?>
+			<?php echo i18n::translate('Site URL/IP'), help_link('link_remote_site'); ?>
 		</td>
 		<td class="facts_value">
 			<input type="text" size="66" name="serverURL" value="<?php echo PrintReady($serverURL);?>" />

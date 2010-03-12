@@ -81,20 +81,17 @@ if (!$controller->isPrintPreview()) {
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap"><?php print_help_link("rootid", "qm", "root_person"); ?>
-					<?php echo i18n::translate('Root Person ID'); ?>
+				<td class="descriptionbox wrap">
+					<?php echo i18n::translate('Root Person ID'), help_link('rootid'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-				<?php print_help_link("PEDIGREE_GENERATIONS", "qm", "generations"); ?>
-				<?php echo i18n::translate('Generations'); ?>
+					<?php echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("talloffset", "qm", "orientation"); ?>
-					<?php echo i18n::translate('Orientation'); ?>
+					<?php echo i18n::translate('Orientation'), help_link('talloffset'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("show_full", "qm", "show_details"); ?>
-					<?php echo i18n::translate('Show Details'); ?>
+					<?php echo i18n::translate('Show Details'), help_link('show_full'); ?>
 				</td>
 			</tr>
 

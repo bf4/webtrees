@@ -295,9 +295,8 @@ if ($action=="update") {
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
 				print "<a href=\"javascript: ".i18n::translate('General Privacy settings')."\" onclick=\"expand_layer('general-privacy-options');return false\"><img id=\"general-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";
-				print_help_link("general_privacy", "qm", "general_privacy");
 				?>
-				<a href="javascript: <?php print i18n::translate('General Privacy settings'); ?>" onclick="expand_layer('general-privacy-options');return false"><b><?php print i18n::translate('General Privacy settings'); ?></b></a>
+				<a href="javascript: <?php print i18n::translate('General Privacy settings'); ?>" onclick="expand_layer('general-privacy-options');return false"><b><?php echo i18n::translate('General Privacy settings'), help_link('general_privacy'); ?></b></a>
 			</td>
 		</tr>
 	</table>
@@ -307,7 +306,7 @@ if ($action=="update") {
 		<table class="facts_table">
 			<tr>
 				<td class="descriptionbox wrap width20 <?php print $TEXT_DIRECTION; ?>">
-					<?php print_help_link("SHOW_DEAD_PEOPLE", "qm", "SHOW_DEAD_PEOPLE"); print i18n::translate('Show dead people'); ?>
+					<?php echo i18n::translate('Show dead people'), help_link('SHOW_DEAD_PEOPLE'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_DEAD_PEOPLE"><?php write_access_option($SHOW_DEAD_PEOPLE); ?></select>
@@ -315,7 +314,7 @@ if ($action=="update") {
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_LIVING_NAMES", "qm", "SHOW_LIVING_NAMES"); print i18n::translate('Show living names'); ?>
+					<?php echo i18n::translate('Show living names'), help_link('SHOW_LIVING_NAMES'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_LIVING_NAMES"><?php write_access_option($SHOW_LIVING_NAMES); ?></select>
@@ -323,7 +322,7 @@ if ($action=="update") {
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_SOURCES", "qm", "SHOW_SOURCES"); print i18n::translate('Show sources'); ?>
+					<?php echo i18n::translate('Show sources'), help_link('SHOW_SOURCES'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_SOURCES"><?php write_access_option($SHOW_SOURCES); ?></select>
@@ -331,7 +330,7 @@ if ($action=="update") {
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("ENABLE_CLIPPINGS_CART", "qm", "ENABLE_CLIPPINGS_CART"); print i18n::translate('Enable Clippings Cart'); ?>
+					<?php echo i18n::translate('Enable Clippings Cart'), help_link('ENABLE_CLIPPINGS_CART'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_ENABLE_CLIPPINGS_CART"><?php write_access_option($ENABLE_CLIPPINGS_CART); ?></select>
@@ -340,7 +339,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_MULTISITE_SEARCH", "qm", "SHOW_MULTISITE_SEARCH"); print i18n::translate('Show Multi-Site Search'); ?>
+					<?php echo i18n::translate('Show Multi-Site Search'), help_link('SHOW_MULTISITE_SEARCH'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_MULTISITE_SEARCH"><?php write_access_option($SHOW_MULTISITE_SEARCH); ?></select>
@@ -349,7 +348,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("PRIVACY_BY_YEAR", "qm", "PRIVACY_BY_YEAR"); print i18n::translate('Limit Privacy by age of event'); ?>
+					<?php echo i18n::translate('Limit Privacy by age of event'), help_link('PRIVACY_BY_YEAR'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_PRIVACY_BY_YEAR"><?php write_yes_no($PRIVACY_BY_YEAR); ?></select>
@@ -358,7 +357,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("PRIVACY_BY_RESN", "qm", "PRIVACY_BY_RESN"); print i18n::translate('Use GEDCOM (RESN) Privacy restriction'); ?>
+					<?php echo i18n::translate('Use GEDCOM (RESN) Privacy restriction'), help_link('PRIVACY_BY_RESN'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_PRIVACY_BY_RESN"><?php write_yes_no($PRIVACY_BY_RESN); ?></select>
@@ -367,7 +366,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("SHOW_PRIVATE_RELATIONSHIPS", "qm", "SHOW_PRIVATE_RELATIONSHIPS"); print i18n::translate('Show private relationships'); ?>
+					<?php echo i18n::translate('Show private relationships'), help_link('SHOW_PRIVATE_RELATIONSHIPS'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_PRIVATE_RELATIONSHIPS"><?php write_yes_no($SHOW_PRIVATE_RELATIONSHIPS); ?></select>
@@ -376,7 +375,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("USE_RELATIONSHIP_PRIVACY", "qm", "USE_RELATIONSHIP_PRIVACY"); print i18n::translate('Use relationship privacy'); ?>
+					<?php echo i18n::translate('Use relationship privacy'), help_link('USE_RELATIONSHIP_PRIVACY'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_USE_RELATIONSHIP_PRIVACY"><?php write_yes_no($USE_RELATIONSHIP_PRIVACY); ?></select>
@@ -385,7 +384,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("MAX_RELATION_PATH_LENGTH", "qm", "MAX_RELATION_PATH_LENGTH"); print i18n::translate('Max. relation path length'); ?>
+					<?php echo i18n::translate('Max. relation path length'), help_link('MAX_RELATION_PATH_LENGTH'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_MAX_RELATION_PATH_LENGTH"><?php
@@ -402,7 +401,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("CHECK_MARRIAGE_RELATIONS", "qm", "CHECK_MARRIAGE_RELATIONS"); print i18n::translate('Check marriage relations'); ?>
+					<?php echo i18n::translate('Check marriage relations'), help_link('CHECK_MARRIAGE_RELATIONS'); ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_CHECK_MARRIAGE_RELATIONS"><?php write_yes_no($CHECK_MARRIAGE_RELATIONS); ?></select>
@@ -411,7 +410,7 @@ if ($action=="update") {
 
 			<tr>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("MAX_ALIVE_AGE", "qm", "MAX_ALIVE_AGE"); print i18n::translate('Age at which to assume a person is dead'); ?>
+					<?php echo i18n::translate('Age at which to assume a person is dead'), help_link('MAX_ALIVE_AGE'); ?>
 				</td>
 				<td class="optionbox">
 					<input type="text" name="v_MAX_ALIVE_AGE" value="<?php print $MAX_ALIVE_AGE; ?>" size="5" />
@@ -427,8 +426,8 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
-				print "<a href=\"javascript: ".i18n::translate('Privacy settings by ID')."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?><?php print_help_link("person_privacy", "qm", "person_privacy"); ?>
-				<a href="javascript: <?php print i18n::translate('Privacy settings by ID'); ?>" onclick="expand_layer('person-privacy-options');return false"><b><?php print i18n::translate('Privacy settings by ID'); ?></b></a>
+				print "<a href=\"javascript: ".i18n::translate('Privacy settings by ID')."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
+				<a href="javascript: <?php echo i18n::translate('Privacy settings by ID'); ?>" onclick="expand_layer('person-privacy-options');return false"><b><?php echo i18n::translate('Privacy settings by ID'); ?></b></a><?php echo help_link('person_privacy'); ?>
 			</td>
 		</tr>
 	</table>
@@ -506,8 +505,7 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php print "<a href=\"javascript: ".i18n::translate('User Privacy settings')."\" onclick=\"expand_layer('user-privacy-options');return false\"><img id=\"user-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
-				<?php print_help_link("user_privacy", "qm", "user_privacy"); ?>
-				<a href="javascript: <?php print i18n::translate('User Privacy settings'); ?>" onclick="expand_layer('user-privacy-options');return false"><b><?php print i18n::translate('User Privacy settings'); ?></b></a>
+				<a href="javascript: <?php print i18n::translate('User Privacy settings'); ?>" onclick="expand_layer('user-privacy-options');return false"><b><?php echo i18n::translate('User Privacy settings'); ?></b></a><?php echo help_link('user_privacy'); ?>
 			</td>
 		</tr>
 	</table>
@@ -607,8 +605,7 @@ if ($action=="update") {
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
 				print "<a href=\"javascript: ".i18n::translate('Global Fact Privacy settings')."\" onclick=\"expand_layer('global-facts-options');return false\"><img id=\"global-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
-				<?php print_help_link("global_facts", "qm", "global_facts"); ?>
-				<a href="javascript: <?php print i18n::translate('Global Fact Privacy settings'); ?>" onclick="expand_layer('global-facts-options');return false"><b><?php print i18n::translate('Global Fact Privacy settings'); ?></b></a>
+				<a href="javascript: <?php print i18n::translate('Global Fact Privacy settings'); ?>" onclick="expand_layer('global-facts-options');return false"><b><?php echo i18n::translate('Global Fact Privacy settings'); ?></b></a><?php echo help_link('global_facts'); ?>
 			</td>
 		</tr>
 	</table>
@@ -698,8 +695,7 @@ if ($action=="update") {
 		<tr>
 			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php print "<a href=\"javascript: ".i18n::translate('Facts Privacy settings by ID')."\" onclick=\"expand_layer('person-facts-options');return false\"><img id=\"person-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
-				<?php print_help_link("person_facts", "qm", "person_facts"); ?>
-				<a href="javascript: <?php print i18n::translate('Facts Privacy settings by ID'); ?>" onclick="expand_layer('person-facts-options');return false"><b><?php print i18n::translate('Facts Privacy settings by ID'); ?></b></a>
+				<a href="javascript: <?php print i18n::translate('Facts Privacy settings by ID'); ?>" onclick="expand_layer('person-facts-options');return false"><b><?php echo i18n::translate('Facts Privacy settings by ID'); ?></b></a><?php echo help_link('person_facts'); ?>
 			</td>
 		</tr>
 	</table>
