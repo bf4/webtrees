@@ -189,7 +189,7 @@ switch($step) {
 
 		if (!empty($_SESSION['install_config']['INDEX_DIRECTORY'])
 			&& !is_writable($_SESSION['install_config']['INDEX_DIRECTORY'])) {
-				$error['msg'] = print_text("sanity_err6",0,1);
+				$error['msg'] = i18n::translate('The <i></i> directory is not writable.', $INDEX_DIRECTORY);
 				$error['help'] = '';
 				$errors[] = $error;
 		}
@@ -242,7 +242,7 @@ switch($step) {
 			$INDEX_DIRECTORY = $_SESSION['install_config']['INDEX_DIRECTORY'];
 		}
 		if (!is_writable($INDEX_DIRECTORY)) {
-			$error['msg'] = print_text("sanity_err6",0,1);
+			$error['msg'] = i18n::translate('The <i></i> directory is not writable.', $INDEX_DIRECTORY);
 			$error['help'] = '';
 			$errors[] = $error;
 		}
@@ -509,8 +509,8 @@ function checkEnvironment() {
 		echo '<tr><td valign="top">';
 		echo i18n::translate('Checking required PHP version:'), '<br />';
 		echo '<span class="error">', i18n::translate('Failed'), '</span><br />';
-		echo print_text("pgv_requires_version", 0, 1), '<br />';
-		echo print_text("using_php_version", 0, 1), '</td></tr>';
+		echo i18n::translate('PhpGedView requires PHP version %s or higher.', PGV_REQUIRED_PHP_VERSION), '<br />';
+		echo echo i18n::translate('You are using PHP version %s', PHP_VERSION), '</td></tr>';
 	}
 
 	// Check we have one or more PDO drivers available
@@ -778,9 +778,7 @@ function printConfigForm(){
 				<td class="descriptionbox wrap width30"><?php echo i18n::translate('PhpGedView URL'), help_link('SERVER_URL'); ?></td>
 				<td class="optionbox wrap"><input type="text" name="NEW_SERVER_URL" value="<?php print $SERVER_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SERVER_URL_help');" size="50" />
 				<br /><?php
-					global $GUESS_URL;
-					$GUESS_URL = PGV_SERVER_NAME.PGV_SCRIPT_PATH;
-					print_text("server_url_note");
+					echo i18n::translate('This should be the URL to your PhpGedView folder.  You should only change this setting if you are sure you know what you are doing.  PhpGedView has determined this value to be <b>%s</b>', PGV_SERVER_NAME.PGV_SCRIPT_PATH);
 					?>
 				</td>
 			</tr>

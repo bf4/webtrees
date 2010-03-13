@@ -132,7 +132,7 @@ if (isset($GEDCOMPATH)) {
 				AddToLog("Gedcom ".$path.$GEDFILENAME." uploaded");
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
 			} else {
-				$error = print_text("upload_error", 0, 1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
+				$error = i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
 				$action = "upload_form";
 			}
 		} else {
@@ -141,7 +141,7 @@ if (isset($GEDCOMPATH)) {
 				$bakfile = $upload_path.$GEDFILENAME.".bak";
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
 			} else {
-				$error = print_text("upload_error", 0, 1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
+				$error = i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
 				$action = "upload_form";
 			}
 		}
@@ -485,14 +485,14 @@ if ($action=="update") {
 	$whichFile = $INDEX_DIRECTORY.$FILE."_conf.php";
 	if (!is_writable($whichFile)) {
 		$errors = true;
-		$error_msg .= "<span class=\"error\"><b>".print_text("gedcom_config_write_error", 0, 1)."</b></span><br />";
+		$error_msg .= "<span class=\"error\"><b>".i18n::translate('E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.', $whichFile)."</b></span><br />";
 		$_SESSION[$gedcom_config]=$configtext;
 		$error_msg .= "<br /><br /><a href=\"".encode_url("config_download.php?file={$gedcom_config}")."\">".i18n::translate('Download GEDCOM configuration.')."</a> ".i18n::translate('Upload the file to your index directory: ')."$INDEX_DIRECTORY<br /><br />\n";
 	}
 	$fp = @fopen($whichFile, "wb");
 	if (!$fp) {
 		$errors = true;
-		$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error", 0, 1)."</span><br />\n";
+		$error_msg .= "<span class=\"error\">".i18n::translate('E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.', $whichFile)."</span><br />\n";
 	}
 	else {
 		fwrite($fp, $configtext);
@@ -531,7 +531,7 @@ if ($action=="update") {
 			$fp = @fopen($whichFile, "wb");
 			if (!$fp) {
 				$errors = true;
-				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error", 0, 1)."</span><br />\n";
+				$error_msg .= "<span class=\"error\">".i18n::translate('E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.', $whichFile)."</span><br />\n";
 			} else {
 				fwrite($fp, $httext);
 				fclose($fp);
@@ -552,7 +552,7 @@ if ($action=="update") {
 			$fp = @fopen($whichFile, "wb");
 			if (!$fp) {
 				$errors = true;
-				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error", 0, 1)."</span><br />\n";
+				$error_msg .= "<span class=\"error\">".i18n::translate('E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.', $whichFile)."</span><br />\n";
 			} else {
 				fwrite($fp, $httext);
 				fclose($fp);
@@ -1312,7 +1312,7 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Media Firewall')."\" oncli
 			<?php echo i18n::translate('Media Firewall Root Directory'), help_link('MEDIA_FIREWALL_ROOTDIR'); ?>
 		</td>
 		<td class="optionbox"><input type="text" name="NEW_MEDIA_FIREWALL_ROOTDIR" size="50" dir="ltr" value="<?php print ($MEDIA_FIREWALL_ROOTDIR == $INDEX_DIRECTORY) ? "" : $MEDIA_FIREWALL_ROOTDIR; ?>" onfocus="getHelp('MEDIA_FIREWALL_ROOTDIR_help');" tabindex="<?php $i++; print $i; ?>" /><br />
-		<?php print_text("MEDIA_FIREWALL_ROOTDIR_note"); ?></td>
+		<?php echo i18n::translate('When this field is empty, the <b>%s</b> directory will be used.', $INDEX_DIRECTORY); ?></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
@@ -2404,21 +2404,21 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Web Site and META Tag Sett
 			<?php echo i18n::translate('Author META tag'), help_link('META_AUTHOR'); ?>
 		</td>
 		<td class="optionbox"><input type="text" dir="ltr" name="NEW_META_AUTHOR" value="<?php print $META_AUTHOR; ?>" onfocus="getHelp('META_AUTHOR_help');" tabindex="<?php $i++; print $i; ?>" /><br />
-		<?php print print_text("META_AUTHOR_descr"); ?></td>
+		<?php echo i18n::translate('Leave this field empty to use the full name of the Genealogy contact.'); ?></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Publisher META tag'), help_link('META_PUBLISHER'); ?>
 		</td>
 		<td class="optionbox"><input type="text" dir="ltr" name="NEW_META_PUBLISHER" value="<?php print $META_PUBLISHER; ?>" onfocus="getHelp('META_PUBLISHER_help');" tabindex="<?php $i++; print $i; ?>" /><br />
-		<?php print print_text("META_PUBLISHER_descr"); ?></td>
+		<?php echo i18n::translate('Leave this field empty to use the full name of the  Genealogy contact.'); ?></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php echo i18n::translate('Copyright META tag'), help_link('META_COPYRIGHT'); ?>
 		</td>
 		<td class="optionbox"><input type="text" dir="ltr" name="NEW_META_COPYRIGHT" value="<?php print $META_COPYRIGHT; ?>" onfocus="getHelp('META_COPYRIGHT_help');" tabindex="<?php $i++; print $i; ?>" /><br />
-		<?php print print_text("META_COPYRIGHT_descr"); ?></td>
+		<?php echo i18n::translate('Leave this field empty to use the full name of the  Genealogy contact.'); ?></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">

@@ -59,7 +59,6 @@ define('PGV_SCHEMA_VERSION', 16);
 define('PGV_REQUIRED_PHP_VERSION',     '5.2.0');  // 5.2.3 is recommended
 define('PGV_REQUIRED_MYSQL_VERSION',   '5.0.13'); // For: prepared statements within stored procedures
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
-define('PGV_ACTUAL_PHP_VERSION',       PHP_VERSION);	// Function print_text() needs this
 
 // Regular expressions for validating user input, etc.
 define('PGV_REGEX_XREF',     '[A-Za-z0-9:_-]+');

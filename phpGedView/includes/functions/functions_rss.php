@@ -381,11 +381,10 @@ function getRecentChanges() {
 // Start output
 	if (count($found_facts)==0 and $HideEmpty=="yes") return false;
 // Print block content
-	$pgv_lang["global_num1"] = $configDays; // Make this visible
 	if (count($found_facts)==0) {
-		print_text("recent_changes_none", 0, 1);
+		echo i18n::translate('<b>There have been no changes within the last %s days.</b>', $configDays);
 	} else {
-		print_text("recent_changes_some", 0, 1);
+		echo i18n::translate('<b>Changes made within the last %s days</b>', $configDays);
 		foreach($found_facts as $gid=>$factarr) {
 			$record=GedcomRecord::getInstance($gid);
 			if ($record && $record->canDisplayDetails()) {

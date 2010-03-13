@@ -62,7 +62,7 @@ print_header(i18n::translate('Upload Media files'));
 		if (value.substr(0,1) == "/") value = value.substr(1, value.length-1);
 		result = value.split("/");
 		if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS; ?>) {
-			alert('<?php print_text("max_media_depth"); ?>');
+			alert('<?php echo i18n::translate('You can enter no more than %s subdirectory names', $MEDIA_DIRECTORY_LEVELS); ?>');
 			folder.focus();
 			return false;
 		}

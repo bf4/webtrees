@@ -88,7 +88,7 @@ if (($action=="setdefault") && in_array($default_ged, $all_gedcoms)) {
 	$DEFAULT_GEDCOM=get_site_setting('DEFAULT_GEDCOM');
 }
 ?>
-<h2><?php print_text("current_gedcoms"); ?></h2>
+<h2><?php echo i18n::translate('Current GEDCOMs'); ?></h2>
 <form name="defaultform" method="get" action="editgedcoms.php">
 <input type="hidden" name="action" value="setdefault" />
 <?php
@@ -160,7 +160,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		// Row 2: GEDCOM file name & functions
 		print "<tr>";
 		print "<td valign=\"top\">";		// Column 1 (row legend)
-		print_text("ged_gedcom");
+		echo i18n::translate('GEDCOM file');
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 2 (file name & notices)
@@ -218,7 +218,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		// Row 3: Configuration file
 		print "<tr>";
 		print "<td valign=\"top\">";		// Column 1  (row legend)
-		print_text("ged_config");
+		echo i18n::translate('Configuration file');
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 2  (file name & notices)
@@ -237,7 +237,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		// Row 4: Privacy File
 		print "<tr>";
 		print "<td valign=\"top\">";		// Column 1  (row legend)
-		print_text("ged_privacy");
+		echo i18n::translate('Privacy file');
 		print "</td>";
 
 		print "<td valign=\"top\">";		// Column 2  (file name & notices)
@@ -256,7 +256,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		// Row 5: Search Log File
 		print "<tr>";
 		print "<td valign=\"top\">";		// Column 1  (row legend)
-		print_text("ged_search");
+		echo i18n::translate('SearchLog files');
 		print "</td>";
 
 		unset($SEARCHLOG_CREATE);
@@ -310,7 +310,7 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		// Row 6: Change Log File
 		print "<tr>";
 		print "<td valign=\"top\">";		// Column 1  (row legend)
-		print_text("ged_change");
+		echo i18n::translate('ChangeLog files');
 		print "</td>";
 		print "<td valign=\"top\">";		// Column 2  (notices)
 		if (!isset($CHANGELOG_CREATE)) {
