@@ -1202,15 +1202,15 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 
 			if ($thumbSupport != "") {
 				$thumbSupport = substr($thumbSupport, 2); // Trim off first ", "
-				print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-				print i18n::translate('Automatic thumbnail'), help_link('generate_thumb');
-				print "</td><td class=\"optionbox wrap\">";
-				print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked=\"checked\" />";
-				print "&nbsp;&nbsp;&nbsp;" . i18n::translate('Generate thumbnail automatically from ') . $thumbSupport;
-				print "</td></tr>";
+				echo "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+				echo i18n::translate('Automatic thumbnail'), help_link('generate_thumb');
+				echo "</td><td class=\"optionbox wrap\">";
+				echo "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked=\"checked\" />";
+				echo "&nbsp;&nbsp;&nbsp;" . i18n::translate('Generate thumbnail automatically from ') . $thumbSupport;
+				echo "</td></tr>";
 			}
-			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-			print i18n::translate('Thumbnail to upload').help_link('upload_thumbnail_file')."</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\" /><br /><sub>" . i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.') . "</sub></td></tr>";
+			echo "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+			echo i18n::translate('Thumbnail to upload').help_link('upload_thumbnail_file')."</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\" /><br /><sub>" . i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.') . "</sub></td></tr>";
 		}
 		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />";
 	}
@@ -1234,18 +1234,18 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$folder = $parts["dirname"] . "/";
 		}
 
-		print "\n<tr>";
-		print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">\n";
-		print "<input name=\"oldFilename\" type=\"hidden\" value=\"" . addslashes($fileName) . "\" />";
-		print i18n::translate('File name on server'), help_link('upload_server_file');
-		print "</td>\n";
-		print "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
+		echo "\n<tr>";
+		echo "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">\n";
+		echo "<input name=\"oldFilename\" type=\"hidden\" value=\"" . addslashes($fileName) . "\" />";
+		echo i18n::translate('File name on server'), help_link('upload_server_file');
+		echo "</td>\n";
+		echo "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
 		if (PGV_USER_GEDCOM_ADMIN) {
-			print "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName, ENT_COMPAT, 'UTF-8') . "\" size=\"40\"";
+			echo "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName, ENT_COMPAT, 'UTF-8') . "\" size=\"40\"";
 			if ($isExternal)
-				print " />";
+				echo " />";
 			else
-				print " /><br /><sub>" . i18n::translate('Do not change to keep original file name.') . "</sub>";
+				echo " /><br /><sub>" . i18n::translate('Do not change to keep original file name.') . "</sub>";
 		} else {
 /*   $thumbnail = thumbnail_file($fileName, true, false, $pid);
 			if (!empty($thumbnail)) {
@@ -1253,11 +1253,11 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 				print " alt=\"\" title=\"\" />";
 			} */
-			print $fileName;
-			print "<input name=\"filename\" type=\"hidden\" value=\"" . htmlentities($fileName, ENT_COMPAT, 'UTF-8') . "\" size=\"40\" />";
+			echo $fileName;
+			echo "<input name=\"filename\" type=\"hidden\" value=\"" . htmlentities($fileName, ENT_COMPAT, 'UTF-8') . "\" size=\"40\" />";
 		}
-		print "</td>";
-		print "</tr>\n";
+		echo "</td>";
+		echo "</tr>";
 
 	}
 

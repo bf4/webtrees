@@ -278,27 +278,27 @@ if ($action=="edituser") {
 	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='<?php echo encode_url("useradmin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
 	</td></tr>
 	<tr>
-	<td class="descriptionbox width20 wrap"><?php print_help_link("useradmin_username", "qm", "username"); echo i18n::translate('User name'); ?></td>
+	<td class="descriptionbox width20 wrap"><?php echo i18n::translate('User name'), help_link('useradmin_username'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" value="<?php echo $username; ?>" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname", "qm", "firstname"); echo i18n::translate('First Name'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('First Name'), help_link('useradmin_firstname'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" value="<?php echo PrintReady(get_user_setting($user_id, 'firstname')); ?>" size="50" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname", "qm", "lastname");echo i18n::translate('Last Name'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Last Name'), help_link('useradmin_lastname'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" value="<?php echo PrintReady(get_user_setting($user_id, 'lastname')); ?>" size="50" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_password", "qm", "password"); echo i18n::translate('Password'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Password'), _help_link('useradmin_password'); ?></td>
 	<td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /><br /><?php echo i18n::translate('Leave password blank if you want to keep the current password.'); ?></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_conf_password", "qm", "confirm"); echo i18n::translate('Confirm Password'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Confirm Password'), help_link('useradmin_conf_password'); ?></td>
 	<td class="optionbox wrap"><input type="password" name="pass2" tabindex="<?php echo ++$tab; ?>" /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_gedcomid", "qm", "gedcomid"); echo i18n::translate('GEDCOM INDI record ID'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('GEDCOM INDI record ID'), help_link('useradmin_gedcomid'); ?></td>
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
@@ -320,7 +320,7 @@ if ($action=="edituser") {
 	}
 	?>
 	</table></td></tr><tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid", "qm", "rootid"); echo i18n::translate('Pedigree Chart Root Person'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Pedigree Chart Root Person'), help_link('useradmin_rootid'); ?></td>
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
@@ -345,7 +345,7 @@ if ($action=="edituser") {
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin", "qm", "can_admin"); echo i18n::translate('User can administer'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('User can administer'), help_link('useradmin_can_admin'); ?></td>
 	<?php
 	// Forms won't send the value of checkboxes if they are disabled :-(  Instead, create a hidden field
 	if ($user_id==PGV_USER_ID) {
@@ -362,7 +362,7 @@ if ($action=="edituser") {
 
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit", "qm", "can_edit"); echo i18n::translate('Access level'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Access level'), help_link('useradmin_can_edit'); ?></td>
 	<td class="optionbox wrap">
 	<table class="<?php echo $TEXT_DIRECTION; ?>">
 	<?php
@@ -390,16 +390,16 @@ if ($action=="edituser") {
 	</table>
 	</td>
 	</tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept", "qm", "user_auto_accept"); echo i18n::translate('Automatically accept changes made by this user'); ?></td>
+	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Automatically accept changes made by this user'), help_link('useradmin_auto_accept'); ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="new_auto_accept" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'auto_accept')=='Y') echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_relation_priv", "qm", "user_relationship_priv"); echo i18n::translate('Limit access to related people'); ?></td>
+	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Limit access to related people'), help_link('useradmin_relation_priv'); ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="new_relationship_privacy" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'relationship_privacy')=="Y") echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_path_length", "qm", "user_path_length"); echo i18n::translate('Max relationship privacy path length'); ?></td>
+	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Max relationship privacy path length'), help_link('useradmin_path_length'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="new_max_relation_path" tabindex="<?php echo ++$tab; ?>" value="<?php echo get_user_setting($user_id, 'max_relation_path'); ?>" size="5" /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_email", "qm", "emailadress"); echo i18n::translate('Email Address'); ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" dir="ltr" value="<?php echo get_user_setting($user_id, 'email'); ?>" size="50" /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verified", "qm", "verified"); echo i18n::translate('User verified himself'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin", "qm", "verified_by_admin"); echo i18n::translate('User approved by Admin'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified_by_admin')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_change_lang", "qm", "change_lang");echo i18n::translate('Change Language'); ?></td><td class="optionbox wrap" valign="top"><?php
+	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Email Address'), help_link('useradmin_email'); ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" dir="ltr" value="<?php echo get_user_setting($user_id, 'email'); ?>" size="50" /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('User verified himself'), help_link('useradmin_verified'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('User approved by Admin'), help_link('useradmin_verbyadmin'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" <?php if (get_user_setting($user_id, 'verified_by_admin')=="yes") echo "checked=\"checked\""; ?> /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Change Language'), help_link('edituser_change_lang'); ?></td><td class="optionbox wrap" valign="top"><?php
 	if ($ENABLE_MULTI_LANGUAGE) {
 		$tab++;
 		echo "<select name=\"user_language\" tabindex=\"", $tab, "\" dir=\"ltr\" style=\"{ font-size: 9pt; }\">";
@@ -417,7 +417,7 @@ if ($action=="edituser") {
 	<?php
 	if ($ALLOW_USER_THEMES) {
 		?>
-		<tr><td class="descriptionbox wrap" valign="top" align="left"><?php print_help_link("useradmin_user_theme", "qm", "user_theme"); echo i18n::translate('My Theme'); ?></td><td class="optionbox wrap" valign="top">
+		<tr><td class="descriptionbox wrap" valign="top" align="left"><?php echo i18n::translate('My Theme'), help_link('useradmin_user_theme'); ?></td><td class="optionbox wrap" valign="top">
 		<select name="user_theme" tabindex="<?php echo ++$tab; ?>" dir="ltr">
 		<option value=""><?php echo i18n::translate('Site Default'); ?></option>
 		<?php
@@ -433,7 +433,7 @@ if ($action=="edituser") {
 	}
 	?>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_contact", "qm", "user_contact_method"); echo i18n::translate('Preferred Contact Method'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Preferred Contact Method'), help_link('useradmin_user_contact'); ?></td>
 	<td class="optionbox wrap"><select name="new_contact_method" tabindex="<?php echo ++$tab; ?>">
 	<?php
 	if ($PGV_STORE_MESSAGES) {
@@ -453,15 +453,15 @@ if ($action=="edituser") {
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline", "qm", "visibleonline"); echo i18n::translate('Visible to other users when online'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Visible to other users when online'), help_link('useradmin_visibleonline'); ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="visibleonline" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'visibleonline')=='Y') echo "checked=\"checked\""; ?> /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_editaccount", "qm", "editaccount"); echo i18n::translate('Allow this user to edit his account information'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Allow this user to edit his account information'), help_link('useradmin_editaccount'); ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="editaccount" tabindex="<?php echo ++$tab; ?>" value="Y" <?php if (get_user_setting($user_id, 'editaccount')=='Y') echo "checked=\"checked\""; ?> /></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab", "qm", "user_default_tab"); echo i18n::translate('Default Tab to show on Individual Information page'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Default Tab to show on Individual Information page'), help_link('useradmin_user_default_tab'); ?></td>
 	<td class="optionbox wrap"><select name="new_default_tab" tabindex="<?php echo ++$tab; ?>">
 	<?php
 	foreach ($ALL_DEFAULT_TABS as $key=>$value) {
@@ -476,11 +476,11 @@ if ($action=="edituser") {
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment", "qm", "comment"); echo i18n::translate('Admin comments on user'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Admin comments on user'), help_link('useradmin_comment'); ?></td>
 	<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php echo ++$tab; ?>" ><?php $tmp = PrintReady(get_user_setting($user_id, 'comment')); echo $tmp; ?></textarea></td>
 	</tr>
 	<tr>
-	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp", "qm", "comment_exp"); echo i18n::translate('Admin warning at date'); ?></td>
+	<td class="descriptionbox wrap"><?php echo i18n::translate('Admin warning at date'), help_link('useradmin_comment_exp'); ?></td>
 	<td class="optionbox wrap"><input type="text" name="new_comment_exp" id="new_comment_exp" tabindex="<?php echo ++$tab; ?>" value="<?php echo get_user_setting($user_id, 'comment_exp'); ?>" />&nbsp;&nbsp;<?php print_calendar_popup("new_comment_exp"); ?></td>
 	</tr>
 	<tr><td class="topbottombar" colspan="2">
@@ -761,12 +761,12 @@ if ($action == "createform") {
 	<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Create User'); ?>" />
 	<input type="button" tabindex="<?php echo ++$tab; ?>" value="<?php echo i18n::translate('Back'); ?>" onclick="window.location='useradmin.php';"/>
 	</td></tr>
-		<tr><td class="descriptionbox wrap width20"><?php print_help_link("useradmin_username", "qm", "username"); echo i18n::translate('User name'); ?></td><td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname", "qm", "firstname"); echo i18n::translate('First Name'); ?></td><td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname", "qm", "lastname"); echo i18n::translate('Last Name'); ?></td><td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_password", "qm", "password"); echo i18n::translate('Password'); ?></td><td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_conf_password", "qm", "confirm"); echo i18n::translate('Confirm Password'); ?></td><td class="optionbox wrap"><input type="password" name="pass2" tabindex="<?php echo ++$tab; ?>" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_gedcomid", "qm", "gedcomid"); echo i18n::translate('GEDCOM INDI record ID'); ?></td><td class="optionbox wrap">
+		<tr><td class="descriptionbox wrap width20"><?php echo i18n::translate('User name'), help_link('useradmin_username'); ?></td><td class="optionbox wrap"><input type="text" name="username" tabindex="<?php echo ++$tab; ?>" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('First Name'), help_link('useradmin_firstname'); ?></td><td class="optionbox wrap"><input type="text" name="firstname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Last Name'), help_link('useradmin_lastname'); ?></td><td class="optionbox wrap"><input type="text" name="lastname" tabindex="<?php echo ++$tab; ?>" size="50" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Password'), help_link('useradmin_password'); ?></td><td class="optionbox wrap"><input type="password" name="pass1" tabindex="<?php echo ++$tab; ?>" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Confirm Password'), help_link('useradmin_conf_password'); ?></td><td class="optionbox wrap"><input type="password" name="pass2" tabindex="<?php echo ++$tab; ?>" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('GEDCOM INDI record ID'), help_link('useradmin_gedcomid'); ?></td><td class="optionbox wrap">
 
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
@@ -783,7 +783,7 @@ if ($action == "createform") {
 		?>
 		</table>
 		</td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid", "qm", "rootid"); echo i18n::translate('Pedigree Chart Root Person'); ?></td><td class="optionbox wrap">
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Pedigree Chart Root Person'), help_link('useradmin_rootid'); ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
 		foreach ($all_gedcoms as $ged_id=>$ged_name) {
@@ -799,8 +799,8 @@ if ($action == "createform") {
 		echo "</table>";
 		?>
 		</td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin", "qm", "can_admin"); echo i18n::translate('User can administer'); ?></td><td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit", "qm", "can_edit");echo i18n::translate('Access level'); ?></td><td class="optionbox wrap">
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('User can administer'), help_link('useradmin_can_admin'); ?></td><td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Access level'), help_link('useradmin_can_edit'); ?></td><td class="optionbox wrap">
 		<table class="<?php echo $TEXT_DIRECTION; ?>">
 		<?php
 		foreach ($all_gedcoms as $ged_id=>$ged_name) {
@@ -823,16 +823,16 @@ if ($action == "createform") {
 		?>
 		</table>
 		</td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept", "qm", "user_auto_accept");echo i18n::translate('Automatically accept changes made by this user'); ?></td>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Automatically accept changes made by this user'), help_link('useradmin_auto_accept'); ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="new_auto_accept" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_relation_priv", "qm", "user_relationship_priv");echo i18n::translate('Limit access to related people'); ?></td>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Limit access to related people'), help_link('useradmin_relation_priv'); ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="new_relationship_privacy" tabindex="<?php echo ++$tab; ?>" value="Y" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_path_length", "qm", "user_path_length"); echo i18n::translate('Max relationship privacy path length'); ?></td>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Max relationship privacy path length'), help_link('useradmin_path_length');  ?></td>
 			<td class="optionbox wrap"><input type="text" name="new_max_relation_path" tabindex="<?php echo ++$tab; ?>" value="0" size="5" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_email", "qm", "emailadress"); echo i18n::translate('Email Address'); ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" value="" size="50" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verified", "qm", "verified"); echo i18n::translate('User verified himself'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin", "qm", "verified_by_admin"); echo i18n::translate('User approved by Admin'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_change_lang", "qm", "change_lang");echo i18n::translate('Change Language'); ?></td><td class="optionbox wrap" valign="top"><?php
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Email Address'), help_link('useradmin_email');  ?></td><td class="optionbox wrap"><input type="text" name="emailaddress" tabindex="<?php echo ++$tab; ?>" value="" size="50" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('User verified himself'), help_link('useradmin_verified'); ?></td><td class="optionbox wrap"><input type="checkbox" name="verified" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('User approved by Admin'), help_link('useradmin_verbyadmin');  ?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php echo ++$tab; ?>" value="yes" checked="checked" /></td></tr>
+		<tr><td class="descriptionbox wrap"><?php echo i18n::translate('Change Language'), help_link('useradmin_change_lang'); ?></td><td class="optionbox wrap" valign="top"><?php
 
 		$user_lang = get_user_setting(PGV_USER_ID, 'language');
 		if ($ENABLE_MULTI_LANGUAGE) {
@@ -852,7 +852,7 @@ if ($action == "createform") {
 		else echo "&nbsp;";
 		?></td></tr>
 		<?php if ($ALLOW_USER_THEMES) { ?>
-			<tr><td class="descriptionbox wrap" valign="top" align="left"><?php print_help_link("useradmin_user_theme", "qm", "user_theme"); echo i18n::translate('My Theme'); ?></td><td class="optionbox wrap" valign="top">
+			<tr><td class="descriptionbox wrap" valign="top" align="left"><?php echo i18n::translate('My Theme'), help_link('useradmin_user_theme'); ?></td><td class="optionbox wrap" valign="top">
 			<select name="new_user_theme" tabindex="<?php echo ++$tab; ?>">
 			<option value="" selected="selected"><?php echo i18n::translate('Site Default'); ?></option>
 			<?php
@@ -865,7 +865,7 @@ if ($action == "createform") {
 			</td></tr>
 		<?php } ?>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_contact", "qm", "user_contact_method"); echo i18n::translate('Preferred Contact Method'); ?></td>
+			<td class="descriptionbox wrap"><?php echo i18n::translate('Preferred Contact Method'), help_link('useradmin_user_contact');  ?></td>
 			<td class="optionbox wrap"><select name="new_contact_method" tabindex="<?php echo ++$tab; ?>">
 			<?php if ($PGV_STORE_MESSAGES) { ?>
 				<option value="messaging"><?php echo i18n::translate('PhpGedView internal messaging'); ?></option>
@@ -879,15 +879,15 @@ if ($action == "createform") {
 			</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline", "qm", "visibleonline"); echo i18n::translate('Visible to other users when online'); ?></td>
+			<td class="descriptionbox wrap"><?php echo i18n::translate('Visible to other users when online'), help_link('useradmin_visibleonline'); ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="visibleonline" tabindex="<?php echo ++$tab; ?>" value="Y" <?php echo "checked=\"checked\""; ?> /></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_editaccount", "qm", "editaccount"); echo i18n::translate('Allow this user to edit his account information'); ?></td>
+			<td class="descriptionbox wrap"><?php echo i18n::translate('Allow this user to edit his account information'), help_link('useradmin_editaccount'); ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="editaccount" tabindex="<?php echo ++$tab; ?>" value="Y" <?php echo "checked=\"checked\""; ?> /></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab", "qm", "user_default_tab"); echo i18n::translate('Default Tab to show on Individual Information page'); ?></td>
+			<td class="descriptionbox wrap"><?php echo i18n::translate('Default Tab to show on Individual Information page'), help_link('useradmin_user_default_tab'); ?></td>
 			<td class="optionbox wrap"><select name="new_default_tab" tabindex="<?php echo ++$tab; ?>">
 			<?php
 			foreach ($ALL_DEFAULT_TABS as $key=>$value) {
@@ -903,11 +903,11 @@ if ($action == "createform") {
 		</tr>
 		<?php if (PGV_USER_IS_ADMIN) { ?>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment", "qm", "comment"); echo i18n::translate('Admin comments on user'); ?></td>
+			<td class="descriptionbox wrap"><?php echo i18n::translate('Admin comments on user'), help_link('useradmin_comment'); ?></td>
 			<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php echo ++$tab; ?>" ></textarea></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp", "qm", "comment_exp"); echo i18n::translate('Admin warning at date'); ?></td>
+			<td class="descriptionbox wrap"><?php echo i18n::translate('Admin warning at date'), help_link('useradmin_comment_exp'); ?></td>
 			<td class="optionbox wrap"><input type="text" name="new_comment_exp" tabindex="<?php echo ++$tab; ?>" id="new_comment_exp" />&nbsp;&nbsp;<?php print_calendar_popup("new_comment_exp"); ?></td>
 		</tr>
 		<?php } ?>
