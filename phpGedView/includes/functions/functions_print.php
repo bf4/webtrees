@@ -1360,51 +1360,6 @@ function help_link($help_topic) {
 	}
 }
 
-/* Function to print popup help boxes
-* This function is deprecated.   
-*/
-function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
-	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
-
-	loadLangFile('pgv_help');
-
-	$output='';
-	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {
-		$output.=' <a class="help" tabindex="0" title="';
-		if (isset($pgv_lang[$show_desc])) {
-			$desc = $pgv_lang[$show_desc];
-		} else {
-			$show_desc = "";
-		}
-		if ($show_desc) {
-			$output.=i18n::translate('Information about:').' '.$desc.'" href="javascript:// ';
-			if ($use_print_text) {
-				$output.=print_text($show_desc, 0, 1);
-			} else {
-				if (stristr($desc, "\"")) {
-					$output.=str_replace('\"', '\'', $desc);
-				} else {
-					$output.=strip_tags($desc);
-				}
-			}
-		} else {
-			$output.=i18n::translate('Information about:').'" href="javascript:// ';
-			$output.=$help;
-		}
-		$output.="\" onclick=\"helpPopup('$help'); return false;\">";
-		if ($PGV_USE_HELPIMG) {
-			$output.='<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['help']['small'].'" class="icon" width="15" height="15" alt="" /></a>';
-		} else {
-			$output.=$pgv_lang[$helpText].'&nbsp;&nbsp;</a>';
-		}
-	}
-
-	if (!$return) {
-		echo $output;
-	}
-	return $output;
-}
-
 /**
 * print a language variable
 *
