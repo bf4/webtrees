@@ -228,8 +228,8 @@ function getHelp(which) {
 
 if ($action=="generate") {
 	echo "<h3>";
-	print_help_link("SITEMAP", "qm", "SITEMAP");
 	echo i18n::translate('Generate Sitemap files');
+	echo help_link('SITEMAP');
 	echo "</h3>\n";
 	echo "<table class=\"facts_table\">\n";
 	echo "<tr><td class=\"topbottombar\">", i18n::translate('Selected items to store in Sitemap:'), "</td></tr>\n";
@@ -279,13 +279,13 @@ if ($action=="") {
 	$i = 0;
 ?>
 
-<h3><?php print_help_link("SITEMAP", "qm", "SITEMAP"); echo i18n::translate('Generate Sitemap files')?></h3>
+<h3><?php echo i18n::translate('Generate Sitemap files'), help_link('SITEMAP'); ?></h3>
 
 <form method="post" enctype="multipart/form-data" id="sitemap" name="sitemap" action="module.php?mod=sitemap">
 	<input type="hidden" name="action" value="generate" />
 	<table class="facts_table width100">
 		<tr>
-			<td class="descriptionbox wrap width30"><?php print_help_link("SM_GEDCOM_SELECT", "qm", "SM_GEDCOM_SELECT"); echo i18n::translate('GEDCOMs to store in Sitemap:');?></td>
+			<td class="descriptionbox wrap width30"><?php echo i18n::translate('GEDCOMs to store in Sitemap:'), help_link('SM_GEDCOM_SELECT'); ?></td>
 			<td class="optionbox" colspan="3">
 <?php
 	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
@@ -303,7 +303,7 @@ if ($action=="") {
 		</tr>
 		<tr>
 			<td class="descriptionbox wrap width30" rowspan="6">
-				<?php print_help_link("SM_ITEM_SELECT", "qm", "SM_ITEM_SELECT"); echo i18n::translate('Selected items to store in Sitemap:');?>
+				<?php echo i18n::translate('Selected items to store in Sitemap:'), help_link('SM_ITEM_SELECT'); ?>
 			</td>
 			<td class="topbottombar"><?php echo i18n::translate('Item');?></td>
 			<td class="topbottombar"><?php echo i18n::translate('Priority');?></td>

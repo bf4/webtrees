@@ -59,8 +59,8 @@ class sources_tab_Tab extends Tab {
 				<td></td>
 				<td class="descriptionbox rela">
 					<input id="checkbox_sour2" type="checkbox" <?php if ($SHOW_LEVEL2_SOURCES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_sour2');" />
-					<label for="checkbox_sour2"><?php echo i18n::translate('Show all sources');?></label>
-					<?php print_help_link("show_fact_sources", "qm", "show_fact_sources");?>
+					<label for="checkbox_sour2"><?php echo i18n::translate('Show all sources'), help_link('show_fact_sources'); ?></label>
+					
 				</td>
 			</tr>
 			<?php
@@ -80,7 +80,7 @@ class sources_tab_Tab extends Tab {
 			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 			?>
 				<tr>
-					<td class="facts_label"><?php print_help_link("add_source", "qm"); ?><?php echo i18n::translate('Add Source Citation'); ?></td>
+					<td class="facts_label"><?php echo i18n::translate('Add Source Citation'), help_link('add_source'); ?></td>
 					<td class="facts_value">
 					<a href="javascript:;" onclick="add_new_record('<?php echo $this->controller->pid; ?>','SOUR'); return false;"><?php echo i18n::translate('Add a new Source Citation'); ?></a>
 					<br />
