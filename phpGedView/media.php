@@ -76,7 +76,7 @@ function dir_is_writable($dir) {
  * used by the routines that move files between the standard media directory and the protected media directory
  */
 function move_file($src, $dest) {
-	global $pgv_lang, $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY;
+	global $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY;
 
 	// sometimes thumbnail files are set to something like "images/media.gif", this ensures we do not move them
 	// check to make sure the src file is in the standard or protected media directories
@@ -109,7 +109,7 @@ function move_file($src, $dest) {
 * and vice-versa.  Operates directly on the filesystem, does not use the db.
 */
 function move_files($path, $protect) {
-	global $MEDIA_FIREWALL_THUMBS, $TIME_LIMIT, $starttime, $pgv_lang;
+	global $MEDIA_FIREWALL_THUMBS, $TIME_LIMIT, $starttime;
 	if ($dir=@opendir($path)) {
 		while (($element=readdir($dir))!== false) {
 			$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
@@ -163,7 +163,7 @@ function move_files($path, $protect) {
 * Operates directly on the filesystem, does not use the db.
 */
 function set_perms($path) {
-	global $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY, $TIME_LIMIT, $starttime, $pgv_lang;
+	global $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY, $TIME_LIMIT, $starttime;
 	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $path."/")==0){
 		return false;
 	}
@@ -741,7 +741,7 @@ if (check_media_structure()) {
  * @param string $mediaid
  */
 	function print_link_menu($mediaid) {
-		global $pgv_lang, $TEXT_DIRECTION;
+		global $TEXT_DIRECTION;
 
 		$classSuffix = "";
 		if ($TEXT_DIRECTION=="rtl") $classSuffix = "_rtl";
@@ -1067,10 +1067,16 @@ if (check_media_structure()) {
 							// Move image between standard and protected directories
 							if ($USE_MEDIA_FIREWALL && ($media["EXISTS"] > 1)) {
 								$tempURL = "media.php?";
-								if ($media["EXISTS"] == 2) $tempURL .= "action=moveprotected";
-								if ($media["EXISTS"] == 3) $tempURL .= "action=movestandard";
+								if ($media["EXISTS"] == 2) {
+									$tempURL .= "action=moveprotected";
+									$message=i18n::translate('Move to protected directory');
+								}
+								if ($media["EXISTS"] == 3) {
+									$tempURL .= "action=movestandard";
+									$message=i18n::translate('Move to standard directory');
+								}
 								$tempURL .= "&showthumb={$showthumb}&sortby={$sortby}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile=".$media["GEDFILE"];
-								print "<a href=\"".encode_url($tempURL)."\">".$pgv_lang["moveto_".$media["EXISTS"]]."</a><br />";
+								print "<a href=\"".encode_url($tempURL)."\">".$message."</a><br />";
 							}
 
 							// Generate thumbnail
@@ -1153,8 +1159,34 @@ if (check_media_structure()) {
 
 						if ($USE_MEDIA_FIREWALL) {
 							print "<br /><br />";
-							if ($media["EXISTS"])      { print $pgv_lang["media_dir_".$media["EXISTS"]]."<br />"; }
-							if ($media["THUMBEXISTS"]) { print $pgv_lang["thumb_dir_".$media["THUMBEXISTS"]]."<br />"; }
+							if ($media["EXISTS"]) {
+								switch ($media["EXISTS"]) {
+								case 1:
+									echo i18n::translate('This media object is located on an external server');
+									break;
+								case 2:
+									echo i18n::translate('This media object is in the standard media directory');
+									break;
+								case 3:
+									echo i18n::translate('This media object is in the protected media directory');
+									break;
+								}
+								echo '<br />';
+							}
+							if ($media["THUMBEXISTS"]) {
+								switch ($media["EXISTS"]) {
+								case 1:
+									echo i18n::translate('This thumbnail is located on an external server');
+									break;
+								case 2:
+									echo i18n::translate('This thumbnail is in the standard media directory');
+									break;
+								case 3:
+									echo i18n::translate('This thumbnail is in the protected media directory');
+									break;
+								}
+								echo '<br />';
+							}
 						}
 
 						print "\n\t\t\t</td></tr>";

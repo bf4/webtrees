@@ -47,7 +47,7 @@ $PGV_BLOCKS["print_user_news"]["config"]	= array("cache"=>0);
  *
  */
 function print_user_news($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
 
 	$usernews = getUserNews(PGV_USER_ID);
 
@@ -63,30 +63,11 @@ function print_user_news($block=true, $config="", $side, $index) {
 		$mon = date("M", $news["date"]);
 		$year = date("Y", $news["date"]);
 		$content .= "<div class=\"person_box\">";
-		$ct = preg_match("/#(.+)#/", $news["title"], $match);
-		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) {
-				$news["title"] = str_replace($match[0], $pgv_lang[$match[1]], $news["title"]);
-			}
-		}
-		$content .= "<span class=\"news_title\">".PrintReady($news["title"])."</span><br />";
+		$content .= "<span class=\"news_title\">".embed_globals($news["title"])."</span><br />";
 		$content .= "<span class=\"news_date\">".format_timestamp($news["date"])."</span><br /><br />";
-		if (preg_match("/#(.+)#/", $news["text"], $match)) {
-			if (isset($pgv_lang[$match[1]])) {
-				$news["text"] = str_replace($match[0], $pgv_lang[$match[1]], $news["text"]);
-			}
-		}
-		if (preg_match("/#(.+)#/", $news["text"], $match)) {
-			if (isset($pgv_lang[$match[1]])) {
-				$news["text"] = str_replace($match[0], $pgv_lang[$match[1]], $news["text"]);
-			}
-			if (isset($$match[1])) {
-				$news["text"] = str_replace($match[0], $$match[1], $news["text"]);
-			}
-		}
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);
 		$trans = array_flip($trans);
-		$news["text"] = strtr($news["text"], $trans);
+		$news["text"] = strtr($news["text"], embed_globals($news["text"]));
 		$news["text"] = nl2br($news["text"]);
 		$content .= PrintReady($news["text"])."<br /><br />";
 		$content .= "<a href=\"javascript:;\" onclick=\"editnews('$key'); return false;\">".i18n::translate('Edit')."</a> | ";

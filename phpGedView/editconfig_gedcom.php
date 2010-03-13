@@ -2126,10 +2126,17 @@ print "&nbsp;<a href=\"javascript: ".i18n::translate('Edit Options')."\" onclick
 		</td>
 		<td class="optionbox"><select name="NEW_SURNAME_TRADITION" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('SURNAME_TRADITION_help');">
 			<?php
-				foreach (array('paternal', 'spanish', 'portuguese', 'icelandic', 'polish', 'none') as $value) {
+				foreach (array(
+					'paternal'=>i18n::translate('Paternal'),
+					'spanish'=>i18n::translate('Spanish'),
+					'portuguese'=>i18n::translate('Portuguese'),
+					'icelandic'=>i18n::translate('Icelandic'),
+					'polish'=>i18n::translate('Polish'),
+					'none'=>i18n::translate('None')
+				) as $value=>$desc) {
 					print '<option value="'.$value.'"';
 					if ($SURNAME_TRADITION==$value) print ' selected="selected"';
-					print '>'.$pgv_lang["tradition_".$value].'</option>';
+					print '>'.$desc.'</option>';
 				}
 			?>
 			</select>

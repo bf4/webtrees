@@ -71,9 +71,9 @@ if (count($all_geds)==0) {
 $critical=0; $error=1; $warning=2; $info=3;
 $levels=array(
 	$critical=>i18n::translate('Critical'),
-	$error   =>$pgv_lang['error'   ],
-	$warning =>$pgv_lang['warning' ],
-	$info    =>$pgv_lang['info'    ],
+	$error   =>i18n::translate('Error'),
+	$warning =>i18n::translate('Warning'),
+	$info    =>i18n::translate('Info'),
 );
 
 // Default values
@@ -168,12 +168,12 @@ $EOL='[\n\r]+';
 ////////////////////////////////////////////////////////////////////////////////
 // Create error messages
 ////////////////////////////////////////////////////////////////////////////////
-function missing ($text) { global $pgv_lang; return i18n::translate('missing') .' &lrm;'.$text.' &lrm;'; }
-function multiple($text) { global $pgv_lang; return i18n::translate('multiple').' &lrm;'.$text.' &lrm;'; }
-function invalid ($text) { global $pgv_lang; return i18n::translate('invalid') .' &lrm;'.$text.' &lrm;'; }
-function too_many($text) { global $pgv_lang; return i18n::translate('too many').' &lrm;'.$text.' &lrm;'; }
-function too_few ($text) { global $pgv_lang; return i18n::translate('too few') .' &lrm;'.$text.' &lrm;'; }
-function no_link ($text) { global $pgv_lang; return '&lrm;'.$text.'&lrm; '.i18n::translate('does not link back');}
+function missing ($text) { return i18n::translate('missing') .' &lrm;'.$text.' &lrm;'; }
+function multiple($text) { return i18n::translate('multiple').' &lrm;'.$text.' &lrm;'; }
+function invalid ($text) { return i18n::translate('invalid') .' &lrm;'.$text.' &lrm;'; }
+function too_many($text) { return i18n::translate('too many').' &lrm;'.$text.' &lrm;'; }
+function too_few ($text) { return i18n::translate('too few') .' &lrm;'.$text.' &lrm;'; }
+function no_link ($text) { return '&lrm;'.$text.'&lrm; '.i18n::translate('does not link back');}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Create a link to a PGV object

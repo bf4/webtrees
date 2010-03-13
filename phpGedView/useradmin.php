@@ -50,7 +50,13 @@ $ALL_THEMES_DIRS=array();
 foreach (get_theme_names() as $themename=>$themedir) {
 	$ALL_THEME_DIRS[]=$themedir;
 }
-$ALL_EDIT_OPTIONS=array('none', 'access', 'edit', 'accept', 'admin');
+$ALL_EDIT_OPTIONS=array(
+	'none'=>i18n::translate('None'),
+	'access'=>i18n::translate('Access'),
+	'edit'=>i18n::translate('Edit'),
+	'accept'=>i18n::translate('Accept'),
+	'admin'=>i18n::translate('Admin GEDCOM')
+);
 
 // Extract form actions (GET overrides POST if both set)
 $action                  =safe_POST('action',  $ALL_ACTIONS);
@@ -182,7 +188,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				foreach ($all_gedcoms as $ged_id=>$ged_name) {
 					set_user_gedcom_setting($user_id, $ged_id, 'gedcomid', safe_POST_xref('gedcomid'.$ged_id));
 					set_user_gedcom_setting($user_id, $ged_id, 'rootid',   safe_POST_xref('rootid'.$ged_id));
-					set_user_gedcom_setting($user_id, $ged_id, 'canedit',  safe_POST('canedit'.$ged_id,  $ALL_EDIT_OPTIONS));
+					set_user_gedcom_setting($user_id, $ged_id, 'canedit',  safe_POST('canedit'.$ged_id, array_keys($ALL_EDIT_OPTIONS)));
 				}
 				// If we're verifying a new user, send them a message to let them know
 				if ($newly_verified && $action=='edituser2') {
@@ -371,18 +377,12 @@ if ($action=="edituser") {
 		echo "<tr><td>$ged_name:&nbsp;&nbsp;</td><td>";
 		$tab++;
 		echo "<select name=\"{$varname}\" id=\"{$varname}\" tabindex=\"{$tab}\">\n";
-		foreach ($ALL_EDIT_OPTIONS as $EDIT_OPTION) {
+		foreach ($ALL_EDIT_OPTIONS as $EDIT_OPTION=>$desc) {
 			echo '<option value="', $EDIT_OPTION, '" ';
 			if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')==$EDIT_OPTION) {
 				echo 'selected="selected" ';
 			}
-			echo '>';
-			if ($EDIT_OPTION=='admin') {
-				echo $pgv_lang[$EDIT_OPTION.'_gedcom'];
-			} else {
-				echo $pgv_lang[$EDIT_OPTION];
-			}
-			echo '</option>';
+			echo '>', $desc, '</option>';
 		}
 		echo "</select></td></tr>";
 	}

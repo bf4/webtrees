@@ -56,8 +56,7 @@ $news_id = safe_GET("news_id");
  * blocks that can be used to customize the portals
  * their names and the function to call them
  * "name" is the name of the block in the lists
- * "descr" is the name of a $pgv_lang variable to describe this block
- * - eg: "whatever" here means that $pgv_lang["whatever"] describes this block
+ * "descr" is a description of this block
  * "type" the options are "user" or "gedcom" or undefined
  * - The type determines which lists the block is available in.
  * - Leaving the type undefined allows it to be on both the user and gedcom portal

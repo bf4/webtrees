@@ -51,7 +51,7 @@ $PGV_BLOCKS['print_todo']['config']   =array(
 
 // this block prints a list of _TODO events in your gedcom
 function print_todo($block=true, $config='', $side, $index) {
-	global $pgv_lang, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
+	global $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 
 	$block=true; // Always restrict this block's height
 
@@ -125,7 +125,7 @@ function print_todo($block=true, $config='', $side, $index) {
 }
 
 function print_todo_config($config) {
-	global $pgv_lang, $PGV_BLOCKS, $DAYS_TO_SHOW_LIMIT;
+	global $PGV_BLOCKS, $DAYS_TO_SHOW_LIMIT;
 
 	if (empty($config)) {
 		$config=$PGV_BLOCKS['print_todo']['config'];
@@ -136,11 +136,11 @@ function print_todo_config($config) {
 	print help_link('todo_show_other');
 	print '</td></td><td class="optionbox">';
 	print '<select name="show_other">';
-	foreach (array('yes', 'no') as $option) {
+	foreach (array('yes'=>i18n::translate('Yes'), 'no'=>i18n::translate('No')) as $option=>$desc) {
 		print "<option value=\"{$option}\"";
 		if ($config['show_other']==$option)
 			print " selected=\"selected\"";
-		print ">{$pgv_lang[$option]}</option>";
+		print ">{$desc}</option>";
 	}
 	print '</select></td></tr>';
 
@@ -149,11 +149,11 @@ function print_todo_config($config) {
 	print help_link('todo_show_unassigned');
 	print '</td></td><td class="optionbox">';
 	print '<select name="show_unassigned">';
-	foreach (array('yes', 'no') as $option) {
+	foreach (array('yes'=>i18n::translate('Yes'), 'no'=>i18n::translate('No')) as $option=>$desc) {
 		print "<option value=\"{$option}\"";
 		if ($config['show_unassigned']==$option)
 			print " selected=\"selected\"";
-		print ">{$pgv_lang[$option]}</option>";
+		print ">{$desc}</option>";
 	}
 	print '</select></td></tr>';
 
@@ -162,11 +162,11 @@ function print_todo_config($config) {
 	print help_link('todo_show_future');
 	print '</td></td><td class="optionbox">';
 	print '<select name="show_future">';
-	foreach (array('yes', 'no') as $option) {
+	foreach (array('yes'=>i18n::translate('Yes'), 'no'=>i18n::translate('No')) as $option=>$desc) {
 		print "<option value=\"{$option}\"";
 		if ($config['show_future']==$option)
 			print " selected=\"selected\"";
-		print ">{$pgv_lang[$option]}</option>";
+		print ">{$desc}</option>";
 	}
 	print '</select></td></tr>';
 
