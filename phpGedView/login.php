@@ -161,30 +161,26 @@ if ($WELCOME_TEXT_AUTH_MODE!="0") {
 	if (empty($help_message) || !isset($help_message)) {
 		switch ($WELCOME_TEXT_AUTH_MODE){
 			case "1":
-				$help_message = "welcome_text_auth_mode_1";
-				print_text($help_message);
+				echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.');
 				break;
 			case "2":
-				$help_message = "welcome_text_auth_mode_2";
-				print_text($help_message);
+				i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorized</u> users only.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved.');
 				break;
 			case "3":
-				$help_message = "welcome_text_auth_mode_3";
-				print_text($help_message);
+				i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>family members only</u>.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying the information you provide, the administrator will either approve or decline your request for an account.  You will receive an email when your request is approved.');
 				break;
 			case "4":
 				if ($WELCOME_TEXT_CUST_HEAD == "true"){
-					$help_message = "welcome_text_cust_head";
-					print_text($help_message);
+					echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website.');
 				}
 				echo embed_globals($WELCOME_TEXT_AUTH_MODE_4);
 				break;
 		}
+	} else {
+		print_text($help_message);
 	}
-	else print_text($help_message);
 	echo "</td></tr></table><br /><br />\n";
-}
-else {
+} else {
 	if (!empty($help_message) || isset($help_message)) {
 		loadLangFile("pgv_help");
 		echo "<table class=\"center width60 ltr\"><tr><td>";
