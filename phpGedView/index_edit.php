@@ -419,9 +419,9 @@ else {
 	<?php
 	print "var block_descr = new Array();\n";
 	foreach($PGV_BLOCKS as $b=>$block) {
-		print "block_descr['$b'] = '".str_replace("'", "\\'", print_text($block["descr"],0,1))."';\n";
+		print "block_descr['$b'] = '".str_replace("'", "\\'", embed_globals($block["descr"]))."';\n";
 	}
-	print "block_descr['advice1'] = '".str_replace("'", "\\'", print_text('index_edit_advice',0,1))."';\n";
+	print "block_descr['advice1'] = '".str_replace("'", "\\'", i18n::translate('Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction.')."';\n";
 	?>
 
 
@@ -594,7 +594,7 @@ else {
 	print "\n\t<div id=\"help\" class=\"tab_page\" style=\"position: absolute; display: none; top: auto; left: auto; z-index: 2; \">\n\t";
 
 	print "<br /><center><input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"expand_layer('configure', true); expand_layer('help', false);\" /></center><br /><br />\n";
-	print_text("block_summaries");
+	echo i18n::translate("Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>");
 
 	// end of 2nd tab
 	print "</div>\n";
