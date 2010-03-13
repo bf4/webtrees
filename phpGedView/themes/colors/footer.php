@@ -2,10 +2,7 @@
 /**
  * Footer for Colors theme
  *
- * webtrees: Web based Family History software
- * Copyright (C) 2010 webtrees development team.
- *
- * Derived from PhpGedView
+ * PhpGedView: Genealogy Viewer
  * Copyright (C) 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,7 +19,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package webtrees
+ * @package PhpGedView
  * @subpackage Themes
  * @version $Id$
  */
@@ -43,6 +40,7 @@ if(empty($SEARCH_SPIDER)) { ?>
   <div class="blanco" ><?php print_user_links(); ?></div>
   <div>
     <?php print_theme_dropdown(); ?>
+    <?php print_lang_form(); ?>
   </div><br />
 <?php 
 }
@@ -55,7 +53,6 @@ echo '</a><br />';
 echo "\n\t<br />";
 
 echo '<a href="', PGV_SCRIPT_NAME, '?view=preview&amp;', get_query_string(), '">', i18n::translate('Printer-friendly Version'), '</a>';
-echo help_link('preview');
 echo "<br />";
 
 if ($SHOW_STATS || PGV_DEBUG) {
