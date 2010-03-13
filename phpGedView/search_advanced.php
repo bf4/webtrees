@@ -143,7 +143,7 @@ print_header(i18n::translate('Advanced Search'));
 <table id="field_table" class="list_table $TEXT_DIRECTION" width="35%" border="0">
 	<tr>
 		<td colspan="4" class="facts_label03" style="text-align:center; ">
-			<?php print i18n::translate('Advanced Search'), help_link('advanced_search'); ?>
+			<?php echo i18n::translate('Advanced Search'), help_link('advanced_search'); ?>
 		</td>
 	</tr>
 	<!-- // search terms -->
