@@ -10003,17 +10003,15 @@ msgstr "אילן יוחסין"
 
 #: ../modules/googlemap/pedigree_map.php:169 ../help_text.php:2952
 msgid "Cluster Size"
-msgstr ""
+msgstr "גודל אשכול"
 
 #: ../modules/googlemap/pedigree_map.php:173 ../help_text.php:2957
-#, fuzzy
 msgid "Hide flags"
-msgstr "הסתר פרטים"
+msgstr "החבא דגלים"
 
 #: ../modules/googlemap/pedigree_map.php:178 ../help_text.php:2962
-#, fuzzy
 msgid "Hide lines"
-msgstr "הסתר פרטים"
+msgstr "החבא קוים"
 
 #: ../modules/googlemap/pedigree_map.php:332
 msgid "individual displayed out of the normal total of"
@@ -10365,15 +10363,15 @@ msgstr "נראה שבביטוי הרגיל יש שגיאה. לא ניתן להש
 
 #: ../modules/batch_update/plugins/search_replace.php:97
 msgid "Match the exact text, even if it occurs in the middle of a word."
-msgstr ""
+msgstr "התאם את הטכסט המדויק גם אם הוא נימצא באמצע מילה."
 
 #: ../modules/batch_update/plugins/search_replace.php:98
 msgid "Match the exact text, unless it occurs in the middle of a word."
-msgstr ""
+msgstr "התאם את הטכסט המדויק רק אם הוא לא נימצא באמצע מילה"
 
 #: ../modules/batch_update/plugins/search_replace.php:99
 msgid "Use a &laquo;?&raquo; to match a single character, use &laquo;*&raquo; to match zero or more characters."
-msgstr ""
+msgstr "השתמש ב-&laquo;?&raquo; כדי להתאים תו בודד, השתמש ב-&laquo;*&raquo; כדי להתאים אפס או יותר תוים."
 
 #: ../modules/batch_update/plugins/search_replace.php:100
 msgid "Regular expressions are an advanced pattern matching technique.  See <a href=\"http://php.net/manual/en/regexp.reference.php\" target=\"_new\">php.net/manual/en/regexp.reference.php</a> for futher details."

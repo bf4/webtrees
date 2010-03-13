@@ -10001,17 +10001,15 @@ msgstr "Diagram rodowy"
 
 #: ../modules/googlemap/pedigree_map.php:169 ../help_text.php:2952
 msgid "Cluster Size"
-msgstr ""
+msgstr "Wielkość klastra"
 
 #: ../modules/googlemap/pedigree_map.php:173 ../help_text.php:2957
-#, fuzzy
 msgid "Hide flags"
-msgstr "Ukryj szczegóły"
+msgstr "Ukryj flagi"
 
 #: ../modules/googlemap/pedigree_map.php:178 ../help_text.php:2962
-#, fuzzy
 msgid "Hide lines"
-msgstr "Ukryj szczegóły"
+msgstr "Ukryj linie"
 
 #: ../modules/googlemap/pedigree_map.php:332
 msgid "individual displayed out of the normal total of"
@@ -10362,15 +10360,15 @@ msgstr "Wyrażenia regularne zawierają błąd i nie będą użyte."
 
 #: ../modules/batch_update/plugins/search_replace.php:97
 msgid "Match the exact text, even if it occurs in the middle of a word."
-msgstr ""
+msgstr "Dopasuje dokładny tekst, nawet jeśli występuje w środku wyrazu."
 
 #: ../modules/batch_update/plugins/search_replace.php:98
 msgid "Match the exact text, unless it occurs in the middle of a word."
-msgstr ""
+msgstr "Dopasuje dokładny tekst, tylko gdy jest wyrazem."
 
 #: ../modules/batch_update/plugins/search_replace.php:99
 msgid "Use a &laquo;?&raquo; to match a single character, use &laquo;*&raquo; to match zero or more characters."
-msgstr ""
+msgstr "Użyj &laquo;?&raquo; by zastąpić pojedynczy dowolny znak, lub użyj &laquo;*&raquo; by zastąpić wiele dowolnych znaków."
 
 #: ../modules/batch_update/plugins/search_replace.php:100
 msgid "Regular expressions are an advanced pattern matching technique.  See <a href=\"http://php.net/manual/en/regexp.reference.php\" target=\"_new\">php.net/manual/en/regexp.reference.php</a> for futher details."

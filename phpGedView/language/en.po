@@ -9982,17 +9982,15 @@ msgstr "Pedigree Chart"
 
 #: ../modules/googlemap/pedigree_map.php:169 ../help_text.php:2952
 msgid "Cluster Size"
-msgstr ""
+msgstr "Cluster Size"
 
 #: ../modules/googlemap/pedigree_map.php:173 ../help_text.php:2957
-#, fuzzy
 msgid "Hide flags"
-msgstr "Hide Details"
+msgstr "Hide flags"
 
 #: ../modules/googlemap/pedigree_map.php:178 ../help_text.php:2962
-#, fuzzy
 msgid "Hide lines"
-msgstr "Hide Details"
+msgstr "Hide lines"
 
 #: ../modules/googlemap/pedigree_map.php:332
 msgid "individual displayed out of the normal total of"
@@ -10344,15 +10342,15 @@ msgstr "The regex appears to contain an error.  It can't be used."
 
 #: ../modules/batch_update/plugins/search_replace.php:97
 msgid "Match the exact text, even if it occurs in the middle of a word."
-msgstr ""
+msgstr "Match the exact text, even if it occurs in the middle of a word."
 
 #: ../modules/batch_update/plugins/search_replace.php:98
 msgid "Match the exact text, unless it occurs in the middle of a word."
-msgstr ""
+msgstr "Match the exact text, unless it occurs in the middle of a word."
 
 #: ../modules/batch_update/plugins/search_replace.php:99
 msgid "Use a &laquo;?&raquo; to match a single character, use &laquo;*&raquo; to match zero or more characters."
-msgstr ""
+msgstr "Use a &laquo;?&raquo; to match a single character, use &laquo;*&raquo; to match zero or more characters."
 
 #: ../modules/batch_update/plugins/search_replace.php:100
 msgid "Regular expressions are an advanced pattern matching technique.  See <a href=\"http://php.net/manual/en/regexp.reference.php\" target=\"_new\">php.net/manual/en/regexp.reference.php</a> for futher details."

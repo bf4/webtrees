@@ -10008,17 +10008,15 @@ msgstr "Árbol de Ascendientes"
 
 #: ../modules/googlemap/pedigree_map.php:169 ../help_text.php:2952
 msgid "Cluster Size"
-msgstr ""
+msgstr "Tamaño del grupo"
 
 #: ../modules/googlemap/pedigree_map.php:173 ../help_text.php:2957
-#, fuzzy
 msgid "Hide flags"
-msgstr "Ocultar detalles"
+msgstr "Ocultar banderas"
 
 #: ../modules/googlemap/pedigree_map.php:178 ../help_text.php:2962
-#, fuzzy
 msgid "Hide lines"
-msgstr "Ocultar detalles"
+msgstr "Ocultar líneas"
 
 #: ../modules/googlemap/pedigree_map.php:332
 msgid "individual displayed out of the normal total of"
@@ -10370,15 +10368,15 @@ msgstr "La expresión regular parece contener un error.  No puede utilizarse."
 
 #: ../modules/batch_update/plugins/search_replace.php:97
 msgid "Match the exact text, even if it occurs in the middle of a word."
-msgstr ""
+msgstr "Coincidir con el texto exacto, incluso en mitad de una palabra."
 
 #: ../modules/batch_update/plugins/search_replace.php:98
 msgid "Match the exact text, unless it occurs in the middle of a word."
-msgstr ""
+msgstr "Coincidir con el texto exacto, salvo que ocurra en mitad de una palabra."
 
 #: ../modules/batch_update/plugins/search_replace.php:99
 msgid "Use a &laquo;?&raquo; to match a single character, use &laquo;*&raquo; to match zero or more characters."
-msgstr ""
+msgstr "Use una &laquo;?&raquo; para coincidir con un solo carácter, use &laquo;*&raquo; para coincidir con cero o más caracteres."
 
 #: ../modules/batch_update/plugins/search_replace.php:100
 msgid "Regular expressions are an advanced pattern matching technique.  See <a href=\"http://php.net/manual/en/regexp.reference.php\" target=\"_new\">php.net/manual/en/regexp.reference.php</a> for futher details."

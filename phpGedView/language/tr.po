@@ -10372,15 +10372,15 @@ msgstr "The regex Düzenli ifadede bir hata içerdiği belirlendi. Kullanamaz."
 
 #: ../modules/batch_update/plugins/search_replace.php:97
 msgid "Match the exact text, even if it occurs in the middle of a word."
-msgstr ""
+msgstr "Eğer ki kelimenin ortasında gerçekleşse bile tam metni eşle."
 
 #: ../modules/batch_update/plugins/search_replace.php:98
 msgid "Match the exact text, unless it occurs in the middle of a word."
-msgstr ""
+msgstr "Kelimenin ortasında gerçekleşmedikçe tam metni eşle."
 
 #: ../modules/batch_update/plugins/search_replace.php:99
 msgid "Use a &laquo;?&raquo; to match a single character, use &laquo;*&raquo; to match zero or more characters."
-msgstr ""
+msgstr "Sıfır veya daha çok karakterleri eşlemek için &laquo;*&raquo; karakter kullanın, tek karakter eşlemek için &laquo;?&raquo; karakteri kullanın."
 
 #: ../modules/batch_update/plugins/search_replace.php:100
 msgid "Regular expressions are an advanced pattern matching technique.  See <a href=\"http://php.net/manual/en/regexp.reference.php\" target=\"_new\">php.net/manual/en/regexp.reference.php</a> for futher details."

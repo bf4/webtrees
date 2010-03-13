@@ -10382,15 +10382,15 @@ msgstr "Dieser reguläre Ausdruck (regex) enthält Fehler und ist deshalb nicht 
 
 #: ../modules/batch_update/plugins/search_replace.php:97
 msgid "Match the exact text, even if it occurs in the middle of a word."
-msgstr ""
+msgstr "Genauer Text, selbst wenn dieser mitten im Wort vorkommt."
 
 #: ../modules/batch_update/plugins/search_replace.php:98
 msgid "Match the exact text, unless it occurs in the middle of a word."
-msgstr ""
+msgstr "Genauer Text, wenn dieser nicht mitten im Wort vorkommt."
 
 #: ../modules/batch_update/plugins/search_replace.php:99
 msgid "Use a &laquo;?&raquo; to match a single character, use &laquo;*&raquo; to match zero or more characters."
-msgstr ""
+msgstr "&laquo;?&raquo; ist einem einzelnen beliebigen Zeichen gleich; &laquo;*&raquo; ist einem oder mehreren beliebigen Zeichen gleich."
 
 #: ../modules/batch_update/plugins/search_replace.php:100
 msgid "Regular expressions are an advanced pattern matching technique.  See <a href=\"http://php.net/manual/en/regexp.reference.php\" target=\"_new\">php.net/manual/en/regexp.reference.php</a> for futher details."

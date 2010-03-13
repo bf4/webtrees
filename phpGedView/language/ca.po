@@ -10377,15 +10377,15 @@ msgstr "L'expressió regular sembla contenir un error. No pot emprar-se."
 
 #: ../modules/batch_update/plugins/search_replace.php:97
 msgid "Match the exact text, even if it occurs in the middle of a word."
-msgstr ""
+msgstr "Coincidint exactament amb el tex, fins i tot entremig d'una paraula."
 
 #: ../modules/batch_update/plugins/search_replace.php:98
 msgid "Match the exact text, unless it occurs in the middle of a word."
-msgstr ""
+msgstr "Coincidint exactament amb el text, llevat que sigui entremig d'una paraula."
 
 #: ../modules/batch_update/plugins/search_replace.php:99
 msgid "Use a &laquo;?&raquo; to match a single character, use &laquo;*&raquo; to match zero or more characters."
-msgstr ""
+msgstr "Empreu un &laquo;?&raquo; per a que coincideixi amb un sol caràcter, empreu &laquo;*&raquo; per a que coincideixi amb zero o més caràcters."
 
 #: ../modules/batch_update/plugins/search_replace.php:100
 msgid "Regular expressions are an advanced pattern matching technique.  See <a href=\"http://php.net/manual/en/regexp.reference.php\" target=\"_new\">php.net/manual/en/regexp.reference.php</a> for futher details."

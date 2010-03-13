@@ -10040,17 +10040,15 @@ msgstr "Anetræ"
 
 #: ../modules/googlemap/pedigree_map.php:169 ../help_text.php:2952
 msgid "Cluster Size"
-msgstr ""
+msgstr "Klyngestørrelse"
 
 #: ../modules/googlemap/pedigree_map.php:173 ../help_text.php:2957
-#, fuzzy
 msgid "Hide flags"
-msgstr "Skjul detaljer"
+msgstr "Skjul flag"
 
 #: ../modules/googlemap/pedigree_map.php:178 ../help_text.php:2962
-#, fuzzy
 msgid "Hide lines"
-msgstr "Skjul detaljer"
+msgstr "Skjul linjer"
 
 #: ../modules/googlemap/pedigree_map.php:332
 msgid "individual displayed out of the normal total of"
