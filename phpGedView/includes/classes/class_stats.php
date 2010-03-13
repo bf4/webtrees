@@ -150,7 +150,6 @@ class stats {
 	* Get tags and their parsed results.
 	*/
 	function getTags($text) {
-		global $pgv_lang;
 		static $funcs;
 
 		// Retrive all class methods
@@ -391,7 +390,7 @@ class stats {
 	}
 
 	function chartIndisWithSources($params=null) {
-		global $pgv_lang, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
@@ -432,7 +431,7 @@ class stats {
 	}
 
 	function chartFamsWithSources($params=null) {
-		global $pgv_lang, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
@@ -637,7 +636,7 @@ class stats {
 	}
 
 	function chartSex($params=null) {
-		global $pgv_lang, $TEXT_DIRECTION, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TEXT_DIRECTION, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_female = strtolower($params[1]);}else{$color_female = 'ffd1dc';}
@@ -715,7 +714,7 @@ class stats {
 	}
 
 	function chartMortality($params=null) {
-		global $pgv_lang, $TEXT_DIRECTION, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TEXT_DIRECTION, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_living = strtolower($params[1]);}else{$color_living = 'ffffff';}
@@ -813,7 +812,7 @@ class stats {
 	function totalMediaUnknown() {return $this->_totalMediaType('unknown');}
 
 	function chartMedia($params=null) {
-		global $pgv_lang, $TEXT_DIRECTION, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y, $MEDIA_TYPES;
+		global $TEXT_DIRECTION, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y, $MEDIA_TYPES;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
@@ -880,7 +879,7 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT') {
-		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir, $DBTYPE, $TEXT_DIRECTION;
+		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir, $DBTYPE, $TEXT_DIRECTION;
 		if ($birth_death == 'MARR') {
 			$query_field = "'".str_replace('|', "','", PGV_EVENTS_MARR)."'";
 		} else if ($birth_death == 'DIV') {
@@ -1077,7 +1076,7 @@ class stats {
 	}
 
 	function chartDistribution($chart_shows='world', $chart_type='', $surname='') {
-		global $pgv_lang, $pgv_lang_use, $iso3166;
+		global $iso3166;
 		global $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_CHART_COLOR3, $PGV_STATS_MAP_X, $PGV_STATS_MAP_Y;
 
 		if ($this->totalPlaces()==0) return '';
@@ -1257,7 +1256,7 @@ class stats {
 	}
 
 	function statsBirth($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -1322,7 +1321,7 @@ class stats {
 	}
 
 	function statsDeath($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -1419,7 +1418,7 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	function _longlifeQuery($type='full', $sex='F') {
-		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir;
+		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
 
 		$sex_search = ' 1=1';
 		if ($sex == 'F') {
@@ -1507,7 +1506,7 @@ class stats {
 	}
 
 	function _topTenOldest($type='list', $sex='BOTH', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
 
 		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
@@ -1583,7 +1582,7 @@ class stats {
 	}
 
 	function _topTenOldestAlive($type='list', $sex='BOTH', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
 
 		if (!PGV_USER_CAN_ACCESS) return i18n::translate('This information is private and cannot be shown.');
 		if ($sex == 'F') {
@@ -1703,7 +1702,7 @@ class stats {
 	}
 
 	function statsAge($simple=true, $related='BIRT', $sex='BOTH', $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
 
 		if ($simple) {
 			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '230x250';}
@@ -1877,7 +1876,7 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	function _eventQuery($type, $direction, $facts) {
-		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir;
+		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
 		$eventTypes = array(
 			'BIRT'=>i18n::translate('birth'),
 			'DEAT'=>i18n::translate('death'),
@@ -1986,7 +1985,7 @@ class stats {
 	* Query the database for marriage tags.
 	*/
 	function _marriageQuery($type='full', $age_dir='ASC', $sex='F', $show_years=false) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
 		if ($sex == 'F') {$sex_field = 'f_wife';}else{$sex_field = 'f_husb';}
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$rows=self::_runSQL(''
@@ -2087,7 +2086,7 @@ class stats {
 	}
 
 	function _ageOfMarriageQuery($type='list', $age_dir='ASC', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$hrows=self::_runSQL(''
@@ -2224,7 +2223,7 @@ class stats {
 	}
 
 	function _ageBetweenSpousesQuery($type='list', $age_dir='DESC', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		if ($age_dir=='DESC') {
 			$query1 = ' MIN(wifebirth.d_julianday2-husbbirth.d_julianday1) AS age';
@@ -2299,7 +2298,7 @@ class stats {
 	}
 
 	function _parentsQuery($type='full', $age_dir='ASC', $sex='F', $show_years=false) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
 		if ($sex == 'F') {$sex_field = 'WIFE';}else{$sex_field = 'HUSB';}
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$rows=self::_runSQL(''
@@ -2368,7 +2367,7 @@ class stats {
 	}
 
 	function statsMarr($simple=true, $first=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -2451,7 +2450,7 @@ class stats {
 	}
 
 	function statsDiv($simple=true, $first=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) AS total FROM {$TBLPREFIX}dates "
@@ -2560,7 +2559,7 @@ class stats {
 	function lastDivorcePlace() {return $this->_mortalityQuery('place', 'DESC', 'DIV');}
 
 	function statsMarrAge($simple=true, $sex='M', $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
 
 		if ($simple) {
 			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '200x250';}
@@ -2815,7 +2814,7 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	function _familyQuery($type='full') {
-		global $TBLPREFIX, $pgv_lang;
+		global $TBLPREFIX;
 		$rows=self::_runSQL(''
 			.' SELECT'
 				.' f_numchil AS tot,'
@@ -2851,7 +2850,7 @@ class stats {
 	}
 
 	function _topTenFamilyQuery($type='list', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		global $TBLPREFIX, $TEXT_DIRECTION;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		$rows=self::_runSQL(''
 			.' SELECT'
@@ -2892,7 +2891,7 @@ class stats {
 	}
 
 	function _ageBetweenSiblingsQuery($type='list', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $TEXT_DIRECTION, $lang_short_cut, $LANGUAGE;
 		if ($params === null) {$params = array();}
 		if (isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		if (isset($params[1])) {$one = $params[1];}else{$one = false;} // each family only once if true
@@ -3014,7 +3013,7 @@ class stats {
 	function topTenLargestFamilyList($params=null) {return $this->_topTenFamilyQuery('list', $params);}
 
 	function chartLargestFamilies($params=null) {
-		global $TBLPREFIX, $pgv_lang, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_L_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $TBLPREFIX, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_L_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_L_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
@@ -3071,7 +3070,7 @@ class stats {
 	}
 
 	function statsChildren($simple=true, $sex='BOTH', $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
 
 		if ($simple) {
 			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '220x200';}
@@ -3216,7 +3215,7 @@ class stats {
 	}
 
 	function chartNoChildrenFamilies($year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
 
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '220x200';}
 		$sizes = explode('x', $size);
@@ -3291,7 +3290,7 @@ class stats {
 	}
 
 	function _topTenGrandFamilyQuery($type='list', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		global $TBLPREFIX, $TEXT_DIRECTION;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		$rows=self::_runSQL(''
 			.' SELECT'
@@ -3398,7 +3397,7 @@ class stats {
 	static function commonSurnamesListTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('list', true, $params);}
 
 	function chartCommonSurnames($params=null) {
-		global $pgv_lang, $COMMON_NAMES_THRESHOLD, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $COMMON_NAMES_THRESHOLD, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
@@ -3462,7 +3461,7 @@ class stats {
 	* Original block created by kiwi_pgv
 	*/
 	static function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null) {
-		global $TEXT_DIRECTION, $GEDCOM, $TBLPREFIX, $pgv_lang;
+		global $TEXT_DIRECTION, $GEDCOM, $TBLPREFIX;
 		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
 		static $sort_flags = array('count'=>SORT_NUMERIC, 'rcount'=>SORT_NUMERIC, 'alpha'=>SORT_STRING, 'ralpha'=>SORT_STRING);
 
@@ -3576,7 +3575,7 @@ class stats {
 	static function commonGivenUnknownTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'table', false, $params);}
 
 	function chartCommonGiven($params=null) {
-		global $pgv_lang, $COMMON_NAMES_THRESHOLD, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
+		global $COMMON_NAMES_THRESHOLD, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
@@ -3620,7 +3619,7 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function _usersLoggedIn($type='nolist') {
-		global $PGV_SESSION_TIME, $pgv_lang;
+		global $PGV_SESSION_TIME;
 		// Log out inactive users
 		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name) {
 			if ($user_id != PGV_USER_ID) {
@@ -3720,7 +3719,7 @@ class stats {
 	static function userLastName() {return get_user_setting(getUserId(), 'lastname');}
 
 	static function _getLatestUserData($type='userid', $params=null) {
-		global $DATE_FORMAT, $TIME_FORMAT, $pgv_lang;
+		global $DATE_FORMAT, $TIME_FORMAT;
 		static $user_id = null;
 
 		if ($user_id === null) {
@@ -3796,7 +3795,6 @@ class stats {
 	* Leave for backwards compatability? Anybody using this?
 	*/
 	static function _getEventType($type) {
-		global $pgv_lang;
 		$eventTypes=array(
 			'BIRT'=>i18n::translate('birth'),
 			'DEAT'=>i18n::translate('death'),

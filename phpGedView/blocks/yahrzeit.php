@@ -49,7 +49,7 @@ $PGV_BLOCKS['print_yahrzeit']['config']   =array(
 
 // this block prints a list of upcoming yahrzeit events of people in your gedcom
 function print_yahrzeit($block=true, $config='', $side, $index) {
-	global $pgv_lang, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 	global $DAYS_TO_SHOW_LIMIT, $SHOW_MARRIED_NAMES, $SERVER_URL;
 
@@ -247,7 +247,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 }
 
 function print_yahrzeit_config($config) {
-	global $pgv_lang, $PGV_BLOCKS, $DAYS_TO_SHOW_LIMIT;
+	global $PGV_BLOCKS, $DAYS_TO_SHOW_LIMIT;
 
 	if (empty($config)) $config=$PGV_BLOCKS["print_yahrzeit"]["config"];
 
@@ -270,11 +270,11 @@ function print_yahrzeit_config($config) {
 	print help_link('style');
 	print '</td><td class="optionbox">';
 	print '<select name="infoStyle">';
-	foreach (array('style1', 'style2') as $style) {
+	foreach (array('style1'=>i18n::translate('List'), 'style2'=>i18n::translate('Table')) as $style=>$desc) {
 		print "<option value=\"{$style}\"";
 		if ($config['infoStyle']==$style)
 			print " selected=\"selected\"";
-		print ">{$pgv_lang[$style]}</option>";
+		print ">{$desc}</option>";
 	}
 	print '</select></td></tr>';
 
@@ -283,11 +283,11 @@ function print_yahrzeit_config($config) {
 	print help_link('cal_dowload');
 	print '</td><td class="optionbox">';
 	print '<select name="allowDownload">';
-	foreach (array('yes', 'no') as $value) {
+	foreach (array('yes'=>i18n::translate('Yes'), 'no'=>i18n::translate('No')) as $value=>$desc) {
 		print "<option value=\"{$value}\"";
 		if ($config['allowDownload']==$value)
 			print " selected=\"selected\"";
-		print ">{$pgv_lang[$value]}</option>";
+		print ">{$desc}</option>";
 	}
 	print '</select>';
 

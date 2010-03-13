@@ -53,7 +53,7 @@ $PGV_BLOCKS['print_gedcom_news']['config']		= array(
  */
 function print_gedcom_news($block = true, $config='', $side, $index)
 {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype, $PGV_BLOCKS;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype, $PGV_BLOCKS;
 
 	if(empty($config)) {
 		$config = $PGV_BLOCKS['print_gedcom_news']['config'];
@@ -153,7 +153,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 
 function print_gedcom_news_config($config)
 {
-	global $pgv_lang, $ctype, $PGV_BLOCKS;
+	global $ctype, $PGV_BLOCKS;
 	if (empty ($config)) $config = $PGV_BLOCKS["print_gedcom_news"]["config"];
 	if (!isset ($config["limit"])) $config["limit"] = "nolimit";
 	if (!isset ($config["flag"])) $config["flag"] = 0;
