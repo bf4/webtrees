@@ -9490,25 +9490,25 @@ msgid "(in childhood)"
 msgstr "(dzieciństwo)"
 
 #: ../includes/classes/class_i18n.php:168
-#, fuzzy, php-format
+#, php-format
 msgid "%d year"
 msgstr "%d rok"
 
 #. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
 #: ../includes/classes/class_i18n.php:174
-#, fuzzy, php-format
+#, php-format
 msgid "%d month"
 msgstr "%d miesiąc"
 
 #. I18N: Part of an age string. e.g 7 weeks and 3 days
 #: ../includes/classes/class_i18n.php:178
-#, fuzzy, php-format
+#, php-format
 msgid "%d week"
 msgstr "%d tydzień"
 
 #. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
 #: ../includes/classes/class_i18n.php:182
-#, fuzzy, php-format
+#, php-format
 msgid "%d day"
 msgstr "%d dzień"
 
@@ -11695,7 +11695,6 @@ msgid "Descendancy"
 msgstr ""
 
 #: ../modules/clippings/pgv_module.php:49
-#, fuzzy
 msgid "Clippings"
 msgstr "Wycinki"
 
@@ -20028,12 +20027,12 @@ msgid "Users Logged In"
 msgstr "Zalogowani użytkownicy"
 
 #: ../blocks/logged_in.php:86
-#, fuzzy, php-format
+#, php-format
 msgid "%d anonymous logged-in user"
 msgstr "%d zalogowany anoniomowo użytkownik"
 
 #: ../blocks/logged_in.php:89
-#, fuzzy, php-format
+#, php-format
 msgid "%d logged-in user"
 msgstr "%d zalogowany użytkownik"
 
