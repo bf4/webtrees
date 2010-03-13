@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_USER_WELCOME_PHP', '');
 
 $PGV_BLOCKS["print_welcome_block"]["name"]		= i18n::translate('User Welcome');
-$PGV_BLOCKS["print_welcome_block"]["descr"]		= "welcome_descr";
+$PGV_BLOCKS["print_welcome_block"]["descr"]		= i18n::translate('The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page.');
 $PGV_BLOCKS["print_welcome_block"]["type"]		= "user";
 $PGV_BLOCKS["print_welcome_block"]["canconfig"]	= false;
 $PGV_BLOCKS["print_welcome_block"]["config"]	= array("cache"=>0);

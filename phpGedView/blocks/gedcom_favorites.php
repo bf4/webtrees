@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_GEDCOM_FAVORITES_PHP', '');
 
 $PGV_BLOCKS["print_gedcom_favorites"]["name"]     = i18n::translate('GEDCOM Favorites');
-$PGV_BLOCKS["print_gedcom_favorites"]["descr"]    = "gedcom_favorites_descr";
+$PGV_BLOCKS["print_gedcom_favorites"]["descr"]    = i18n::translate('The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history.');
 $PGV_BLOCKS["print_gedcom_favorites"]["canconfig"]= false;
 $PGV_BLOCKS["print_gedcom_favorites"]["config"]   = array("cache"=>7);
 

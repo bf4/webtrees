@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_GEDCOM_NEWS_PHP', '');
 
 $PGV_BLOCKS['print_gedcom_news']['name']		= i18n::translate('GEDCOM News');
-$PGV_BLOCKS['print_gedcom_news']['descr']		= 'gedcom_news_descr';
+$PGV_BLOCKS['print_gedcom_news']['descr']		= i18n::translate('The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child.');
 $PGV_BLOCKS['print_gedcom_news']['type']		= 'gedcom';
 $PGV_BLOCKS['print_gedcom_news']['canconfig']	= true;
 $PGV_BLOCKS['print_gedcom_news']['config']		= array(

@@ -39,7 +39,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_RSS_BLOCK_PHP', '');
 
 $PGV_BLOCKS["print_RSS_block"]["name"]			= i18n::translate('RSS Feeds');
-$PGV_BLOCKS["print_RSS_block"]["descr"]			= "rss_descr";
+$PGV_BLOCKS["print_RSS_block"]["descr"]			= i18n::translate('News and links from the #GEDCOM_TITLE# site');
 $PGV_BLOCKS["print_RSS_block"]["type"]			= "gedcom";
 $PGV_BLOCKS["print_RSS_block"]["canconfig"]		= false;
 $PGV_BLOCKS["print_RSS_block"]["config"]		= array("cache"=>0);

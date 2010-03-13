@@ -39,7 +39,7 @@ define('PGV_USER_FAVORITES_PHP', '');
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $PGV_BLOCKS["print_user_favorites"]["name"]			= i18n::translate('User Favorites');
-$PGV_BLOCKS["print_user_favorites"]["descr"]		= "user_favorites_descr";
+$PGV_BLOCKS["print_user_favorites"]["descr"]		= i18n::translate('The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them.');
 $PGV_BLOCKS["print_user_favorites"]["type"]			= "user";
 $PGV_BLOCKS["print_user_favorites"]["canconfig"]	= false;
 $PGV_BLOCKS["print_user_favorites"]["config"]		= array("cache"=>0);

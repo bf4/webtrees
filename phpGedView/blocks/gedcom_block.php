@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_GEDCOM_BLOCK_PHP', '');
 
 $PGV_BLOCKS["print_gedcom_block"]["name"]		= i18n::translate('GEDCOM Welcome');
-$PGV_BLOCKS["print_gedcom_block"]["descr"]		= "gedcom_descr";
+$PGV_BLOCKS["print_gedcom_block"]["descr"]		= i18n::translate('The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time.');
 $PGV_BLOCKS["print_gedcom_block"]["type"]		= "gedcom";
 $PGV_BLOCKS["print_gedcom_block"]["canconfig"]	= false;
 $PGV_BLOCKS["print_gedcom_block"]["config"]		= array("cache"=>0);

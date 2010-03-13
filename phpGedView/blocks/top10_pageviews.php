@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_TOP10_PAGEVIEWS_PHP', '');
 
 $PGV_BLOCKS["top10_pageviews"]["name"]		= i18n::translate('Most Viewed Items');
-$PGV_BLOCKS["top10_pageviews"]["descr"]		= "top10_pageviews_descr";
+$PGV_BLOCKS["top10_pageviews"]["descr"]		= i18n::translate('This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings.');
 $PGV_BLOCKS["top10_pageviews"]["canconfig"]	= true;
 $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 	"cache"=>1,

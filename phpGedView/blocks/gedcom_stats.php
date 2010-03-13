@@ -41,7 +41,7 @@ require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 require_once PGV_ROOT.'includes/classes/class_stats.php';
 
 $PGV_BLOCKS['print_gedcom_stats']['name']     =i18n::translate('GEDCOM Statistics');
-$PGV_BLOCKS['print_gedcom_stats']['descr']    ='gedcom_stats_descr';
+$PGV_BLOCKS['print_gedcom_stats']['descr']    =i18n::translate('The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration.');
 $PGV_BLOCKS['print_gedcom_stats']['canconfig']=true;
 $PGV_BLOCKS['print_gedcom_stats']['config']   =array(
 	'cache'               =>1,

@@ -39,7 +39,7 @@ define('PGV_RANDOM_MEDIA_PHP', '');
 //-- only enable this block if multi media has been enabled
 if ($MULTI_MEDIA) {
 	$PGV_BLOCKS['print_random_media']['name']		= i18n::translate('Random Media');
-	$PGV_BLOCKS['print_random_media']['descr']		= 'random_media_descr';
+	$PGV_BLOCKS['print_random_media']['descr']		= i18n::translate('The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events.');
 	$PGV_BLOCKS['print_random_media']['canconfig']	= true;
 	$PGV_BLOCKS['print_random_media']['config']		= array(
 		'cache'   =>0,

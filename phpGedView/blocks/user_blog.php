@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_USER_BLOG_PHP', '');
 
 $PGV_BLOCKS["print_user_news"]["name"]		= i18n::translate('User Journal');
-$PGV_BLOCKS["print_user_news"]["descr"]		= "user_news_descr";
+$PGV_BLOCKS["print_user_news"]["descr"]		= i18n::translate('The User Journal block lets the user keep notes or a journal online.');
 $PGV_BLOCKS["print_user_news"]["type"]		= "user";
 $PGV_BLOCKS["print_user_news"]["canconfig"]	= false;
 $PGV_BLOCKS["print_user_news"]["config"]	= array("cache"=>0);

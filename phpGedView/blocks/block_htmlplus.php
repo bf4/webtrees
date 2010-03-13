@@ -41,7 +41,7 @@ require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 require_once PGV_ROOT.'includes/classes/class_stats.php';
 
 $PGV_BLOCKS['print_htmlplus_block']['name']			= i18n::translate('Advanced HTML');
-$PGV_BLOCKS['print_htmlplus_block']['descr']		= 'htmlplus_block_descr';
+$PGV_BLOCKS['print_htmlplus_block']['descr']		= i18n::translate('This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text.');
 $PGV_BLOCKS['print_htmlplus_block']['canconfig']	= true;
 $PGV_BLOCKS['print_htmlplus_block']['config']		= array(
 	'cache'=>0,

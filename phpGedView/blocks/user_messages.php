@@ -39,7 +39,7 @@ define('PGV_USER_MESSAGES_PHP', '');
 require_once PGV_ROOT.'includes/functions/functions_print_facts.php';
 
 $PGV_BLOCKS["print_user_messages"]["name"]		= i18n::translate('User Messages');
-$PGV_BLOCKS["print_user_messages"]["descr"]		= "user_messages_descr";
+$PGV_BLOCKS["print_user_messages"]["descr"]		= i18n::translate('The User Messages block shows a list of the messages that have been sent to the active user.');
 $PGV_BLOCKS["print_user_messages"]["type"]		= "user";
 $PGV_BLOCKS["print_user_messages"]["canconfig"]	= false;
 $PGV_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
