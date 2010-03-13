@@ -37,7 +37,7 @@ $help = safe_GET("help");
 
 print_simple_header(i18n::translate('Configuration help'));
 print '<span class="helpheader">';
-print_text("config_help");
+echo i18n::translate('Configuration help');
 print '</span><br /><br /><span class="helptext">';
 if ($help == "help_contents_help") {
 		if (PGV_USER_IS_ADMIN) {
@@ -53,10 +53,10 @@ print_text($help);
 }
 print "</span><br /><br />";
 print "<a href=\"help_text.php?help=help_contents_help\"><b>";
-print_text("help_contents");
+echo i18n::translate('Help Contents');
 print "</b></a><br />";
 print "<a href=\"javascript:;\" onclick=\"window.close();\"><b>";
-print_text("close_window");
+echo i18n::translate('Close Window');
 print "</b></a>";
 print_simple_footer();
 ?>

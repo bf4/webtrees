@@ -65,11 +65,14 @@ class stats_ui extends stats
 		$content = '';
 		if(!count($userfavs)) {
 			if($isged) {
-				if(PGV_USER_GEDCOM_ADMIN){$content .= print_text('no_favorites', 0, 1);}
-				else{$content .= print_text('no_gedcom_favorites', 0, 1);}
+				if(PGV_USER_GEDCOM_ADMIN) {
+					$content .= i18n::translate('You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.');
+				} else {
+					$content .= i18n::translate('At this moment there are no selected Favorites.	The admin can add Favorites to display at startup.');
+				}
 			}
 			else {
-				print_text('no_favorites', 0, 1);
+				$content .= i18n::translate('You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.');
 			}
 		}
 		else {
@@ -405,45 +408,12 @@ class stats_ui extends stats
 			$content .= "<div class=\"news_box\" id=\"{$news['anchor']}\">\n";
 
 			// Look for $pgv_lang and $GLOBALS substitutions in the News title
-			$newsTitle = print_text($news['title'], 0, 2);
-			$ct = preg_match("/#(.+)#/", $newsTitle, $match);
-			if($ct > 0) {
-				if(isset($pgv_lang[$match[1]])) {
-					$newsTitle = str_replace($match[0], $pgv_lang[$match[1]], $newsTitle);
-				}
-			}
+			$newsTitle = embed_globals($news['title']);
 			$content .= "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n";
 			$content .= "<span class=\"news_date\">".format_timestamp($news['date'])."</span><br /><br />\n";
 
 			// Look for $pgv_lang and $GLOBALS substitutions in the News text
-			$newsText = print_text($news['text'], 0, 2);
-			$ct = preg_match("/#(.+)#/", $newsText, $match);
-			if($ct > 0) {
-				if(isset($pgv_lang[$match[1]])) {
-					$newsText = str_replace($match[0], $pgv_lang[$match[1]], $newsText);
-				}
-			}
-			$ct = preg_match("/#(.+)#/", $newsText, $match);
-			if($ct > 0) {
-				$varname = $match[1];
-				if(isset($pgv_lang[$varname])) {
-					$newsText = str_replace($match[0], $pgv_lang[$varname], $newsText);
-				}
-				else {
-					if(defined('PGV_'.$varname)) {
-						// e.g. global $VERSION is now constant PGV_VERSION
-						$varname='PGV_'.$varname;
-					}
-					if(defined($varname)) 	{
-						$newsText = str_replace($match[0], constant($varname), $newsText);
-					}
-					else {
-						if(isset($$varname)) {
-							$newsText = str_replace($match[0], $$varname, $newsText);
-						}
-					}
-				}
-			}
+			$newsText = embed_globals($news['text']);
 			$trans = get_html_translation_table(HTML_SPECIALCHARS);
 			$trans = array_flip($trans);
 			$newsText = strtr($newsText, $trans);

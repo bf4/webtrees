@@ -118,8 +118,7 @@ if ($ct==0) {
 	// -- new lines, added by Jans, to display helptext when cart is empty
 	if ($controller->action!='add') {
 
-		loadLangFile("pgv_help");
-		print_text("help_clippings.php");
+		echo i18n::translate('The Clippings Cart allows you to take extracts ("clippings") from this family tree and bundle them up into a single file for downloading and subsequent importing into your own genealogy program.  The downloadable file is recorded in GEDCOM format.<br /><ul><li>How to take clippings?<br />This is really simple. Whenever you see a clickable name (individual, family, or source) you can go to the Details page of that name. There you will see the <b>Add to Clippings Cart</b> option.  When you click that link you will be offered several options to download.</li><li>How to download?<br />Once you have items in your cart, you can download them just by clicking the <b>Download Now</b> link.  Follow the instructions and links.</li></ul>');
 
 		echo PGV_JS_START;
 		echo 'var pastefield;';

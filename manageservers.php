@@ -145,7 +145,7 @@ if ($action=='addServer') {
 			if (stristr($server['url'], $turl)) {
 				if (empty($gedcom_id) || (strpos($server['gedcom'], "_DBID $gedcom_id")!==false)) {
 					$whichFile = $server['name'];
-					$errorServer = print_text("error_remote_duplicate",0,1);
+					$errorServer = i18n::translate('This remote database is already in the list as <i>%s</i>', $server['name']);
 					break;
 				}
 			}

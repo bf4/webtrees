@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_RECENT_CHANGES_PHP', '');
 
 $PGV_BLOCKS["print_recent_changes"]["name"]     = i18n::translate('Recent Changes');
-$PGV_BLOCKS["print_recent_changes"]["descr"]    = "recent_changes_descr";
+$PGV_BLOCKS["print_recent_changes"]["descr"]    = i18n::translate('The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard.');
 $PGV_BLOCKS["print_recent_changes"]["canconfig"]= true;
 $PGV_BLOCKS["print_recent_changes"]["config"]   = array(
 	"cache"=>1,

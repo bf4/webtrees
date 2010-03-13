@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_GEDCOM_FAVORITES_PHP', '');
 
 $PGV_BLOCKS["print_gedcom_favorites"]["name"]     = i18n::translate('GEDCOM Favorites');
-$PGV_BLOCKS["print_gedcom_favorites"]["descr"]    = "gedcom_favorites_descr";
+$PGV_BLOCKS["print_gedcom_favorites"]["descr"]    = i18n::translate('The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history.');
 $PGV_BLOCKS["print_gedcom_favorites"]["canconfig"]= false;
 $PGV_BLOCKS["print_gedcom_favorites"]["config"]   = array("cache"=>7);
 
@@ -93,8 +93,11 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$cellSpacing = "3px";
 	}
 	if (count($userfavs)==0) {
-		if (PGV_USER_GEDCOM_ADMIN) $content .= print_text("no_favorites",0,1);
-		else $content .= print_text("no_gedcom_favorites",0,1);
+		if (PGV_USER_GEDCOM_ADMIN) {
+			$content .= i18n::translate('You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.');
+		} else {
+			$content .= i18n::translate('At this moment there are no selected Favorites.	The admin can add Favorites to display at startup.');
+		}
 	} else {
 		$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center $TEXT_DIRECTION\">";
 		foreach($userfavs as $key=>$favorite) {

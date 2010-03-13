@@ -153,11 +153,11 @@ if ($type=="full") {
 } else {
 	print_simple_header(i18n::translate('PhpGedView User Login'));
 }
-print "<div class=\"center\">\n";
+echo "<div class=\"center\">\n";
 
 if ($WELCOME_TEXT_AUTH_MODE!="0") {
 	loadLangFile("pgv_help");
-	print "<div id=\"welcome\">";
+	echo "<div id=\"welcome\">";
 	if (empty($help_message) || !isset($help_message)) {
 		switch ($WELCOME_TEXT_AUTH_MODE){
 			case "1":
@@ -177,19 +177,19 @@ if ($WELCOME_TEXT_AUTH_MODE!="0") {
 					$help_message = "welcome_text_cust_head";
 					print_text($help_message);
 				}
-				print print_text($WELCOME_TEXT_AUTH_MODE_4,0,2);
+				echo embed_globals($WELCOME_TEXT_AUTH_MODE_4);
 				break;
 		}
 	}
 	else print_text($help_message);
-	print "</div>\n";
+	echo "</div>\n";
 }
 else {
 	if (!empty($help_message) || isset($help_message)) {
 		loadLangFile("pgv_help");
-		print "<div class=\"help\">";
+		echo "<div class=\"help\">";
 		print_text($help_message);
-		print "</div>\n";
+		echo "</div>\n";
 	}
 }
 $tab=0;		// initialize tab index
@@ -236,7 +236,7 @@ if ($USE_REGISTRATION_MODULE) { ?>
 		<a href="login_register.php?action=pwlost"><?php print i18n::translate('Request new password'); ?></a></div>
 <?php
 }
-print "</div>";
+echo "</div>";
 ?>
 <script language="JavaScript" type="text/javascript">
 	document.loginform.username.focus();

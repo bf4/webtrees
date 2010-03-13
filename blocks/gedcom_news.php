@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_GEDCOM_NEWS_PHP', '');
 
 $PGV_BLOCKS['print_gedcom_news']['name']		= i18n::translate('GEDCOM News');
-$PGV_BLOCKS['print_gedcom_news']['descr']		= 'gedcom_news_descr';
+$PGV_BLOCKS['print_gedcom_news']['descr']		= i18n::translate('The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child.');
 $PGV_BLOCKS['print_gedcom_news']['type']		= 'gedcom';
 $PGV_BLOCKS['print_gedcom_news']['canconfig']	= true;
 $PGV_BLOCKS['print_gedcom_news']['config']		= array(
@@ -111,44 +111,13 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		//		print "<div class=\"person_box\" id=\"{$news['anchor']}\">\n";
 		$content .= "<div class=\"news_box\" id=\"{$news['anchor']}\">\n";
 
-		// Look for $pgv_lang, $GLOBALS substitutions in the News title
-		$newsTitle = print_text($news['title'], 0, 2);
-		$ct = preg_match("/#(.+)#/", $newsTitle, $match);
-		if($ct > 0) {
-			if(isset($pgv_lang[$match[1]])) {
-				$newsTitle = str_replace("$match[0]", $pgv_lang[$match[1]], $newsTitle);
-			}
-		}
+		// Look for $GLOBALS substitutions in the News title
+		$newsTitle = embed_globals($news['title']);
 		$content .= "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n";
 		$content .= "<span class=\"news_date\">".format_timestamp($news['date'])."</span><br /><br />\n";
 
-		// Look for $pgv_lang, $GLOBALS substitutions in the News text
-		$newsText = print_text($news['text'], 0, 2);
-		$ct = preg_match("/#(.+)#/", $newsText, $match);
-		if($ct > 0) {
-			if(isset($pgv_lang[$match[1]])) {
-				$newsText = str_replace("$match[0]", $pgv_lang[$match[1]], $newsText);
-			}
-		}
-		$ct = preg_match("/#(.+)#/", $newsText, $match);
-		if ($ct > 0) {
-			$varname = $match[1];
-			if (isset($pgv_lang[$varname])) {
-				$newsText = str_replace("$match[0]", $pgv_lang[$varname], $newsText);
-			} else {
-				if (defined('PGV_'.$varname)) {
-					// e.g. global $VERSION is now constant PGV_VERSION
-					$varname='PGV_'.$varname;
-				}
-				if (defined($varname)) {
-					$newsText = str_replace("$match[0]", constant($varname), $newsText);
-				} else {
-					if (isset($$varname)) {
-						$newsText = str_replace("$match[0]", $$varname, $newsText);
-					}
-				}
-			}
-		}
+		// Look for $GLOBALS substitutions in the News text
+		$newsText = embed_globals($news['text']);
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);
 		$trans = array_flip($trans);
 		$newsText = strtr($newsText, $trans);

@@ -954,16 +954,6 @@ class MenuBar
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_help");
 			$menu->addSubmenu($submenu);
 		}
-		//-- searchhelp sub menu
-		if (file_exists(PGV_ROOT.'searchhelp.php')) {
-			$submenu = new Menu(i18n::translate('Search Help Text'), "#");
-			if (!empty($PGV_IMAGES["search"]["small"]))
-				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_search");
-			$submenu->addOnclick("window.open('searchhelp.php', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');");
-			$menu->addSubmenu($submenu);
-		}
-
 		//-- add wiki links
 		$menu->addSeparator();
 		$submenu = new Menu(i18n::translate('Wiki Main Page'), PGV_PHPGEDVIEW_WIKI.'/en/index.php?title=Main_Page" target="_blank');

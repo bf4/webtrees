@@ -97,8 +97,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 					$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"images/buttons/head.gif\" alt=\"".i18n::translate('Click to choose person as Head of family.')."\" title=\"".i18n::translate('Click to choose person as Head of family.')."\" />";
 				}
 				global $tempStringHead;
-				$tempStringHead = PrintReady($headImg);
-				print_text("click_choose_head");
+				echo i18n::translate('Click %s to choose person as Head of family.', $headImg);
 				?>
 				<br /><br />
 				<?php echo i18n::translate('Click Name to add person to Add Links List.'); ?>

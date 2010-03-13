@@ -39,7 +39,7 @@ define('PGV_UPCOMING_EVENTS_PHP', '');
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $PGV_BLOCKS["print_upcoming_events"]["name"]		= i18n::translate('Upcoming Events');
-$PGV_BLOCKS["print_upcoming_events"]["descr"]		= "upcoming_events_descr";
+$PGV_BLOCKS["print_upcoming_events"]["descr"]		= i18n::translate('The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look.');
 $PGV_BLOCKS["print_upcoming_events"]["infoStyle"]	= "style2";
 $PGV_BLOCKS["print_upcoming_events"]["sortStyle"]	= "alpha";
 $PGV_BLOCKS["print_upcoming_events"]["canconfig"]	= true;

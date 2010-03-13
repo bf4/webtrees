@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_TOP10SURNAMES_PHP', '');
 
 $PGV_BLOCKS["print_block_name_top10"]["name"]		= i18n::translate('Top 10 Surnames');
-$PGV_BLOCKS["print_block_name_top10"]["descr"]		= "block_top10_descr";
+$PGV_BLOCKS["print_block_name_top10"]["descr"]		= i18n::translate('This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list.');
 $PGV_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
 $PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
 	"cache"=>7,

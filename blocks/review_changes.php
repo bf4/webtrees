@@ -40,7 +40,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_REVIEW_CHANGES_PHP', '');
 
 $PGV_BLOCKS["review_changes_block"]["name"]			= i18n::translate('Pending Changes');
-$PGV_BLOCKS["review_changes_block"]["descr"]		= "review_changes_descr";
+$PGV_BLOCKS["review_changes_block"]["descr"]		= i18n::translate('The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed.');
 $PGV_BLOCKS["review_changes_block"]["canconfig"]	= false;
 $PGV_BLOCKS["review_changes_block"]["config"]		= array(
 	"cache"=>0,

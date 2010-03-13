@@ -228,40 +228,13 @@ function getGedcomNews() {
 		$data = "";
 
 		// Look for $pgv_lang and $GLOBALS substitutions in the News title
-		$newsTitle = print_text($news["title"], 0, 2);
-		$ct = preg_match("/#(.+)#/", $newsTitle, $match);
-		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) $newsTitle = str_replace($match[0], $pgv_lang[$match[1]], $newsTitle);
-		}
+		$newsTitle = embed_globals($news["title"]);
 		$itemArray[0] = $newsTitle;
 
 		$itemArray[1] = iso8601_date($news["date"]);
 
 		// Look for $pgv_lang and $GLOBALS substitutions in the News text
-		$newsText = print_text($news["text"], 0, 2);
-		$ct = preg_match("/#(.+)#/", $newsText, $match);
-		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) $newsText = str_replace($match[0], $pgv_lang[$match[1]], $newsText);
-		}
-		$ct = preg_match("/#(.+)#/", $newsText, $match);
-		if ($ct>0) {
-			$varname = $match[1];
-			if (isset($pgv_lang[$varname])) {
-				$newsText = str_replace($match[0], $pgv_lang[$varname], $newsText);
-			} else {
-				if (defined('PGV_'.$varname)) {
-					// e.g. global $VERSION is now constant PGV_VERSION
-					$varname='PGV_'.$varname;
-				}
-				if (defined($varname)) {
-					$newsText = str_replace($match[0], constant($varname), $newsText);
-				} else {
-					if (isset($$varname)) {
-						$newsText = str_replace($match[0], $$varname, $newsText);
-					}
-				}
-			}
-		}
+		$newsText = embed_globals($news["text"]);
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);
 		$trans = array_flip($trans);
 		$newsText = strtr($newsText, $trans);
@@ -408,11 +381,10 @@ function getRecentChanges() {
 // Start output
 	if (count($found_facts)==0 and $HideEmpty=="yes") return false;
 // Print block content
-	$pgv_lang["global_num1"] = $configDays; // Make this visible
 	if (count($found_facts)==0) {
-		print_text("recent_changes_none", 0, 1);
+		echo i18n::translate('<b>There have been no changes within the last %s days.</b>', $configDays);
 	} else {
-		print_text("recent_changes_some", 0, 1);
+		echo i18n::translate('<b>Changes made within the last %s days</b>', $configDays);
 		foreach($found_facts as $gid=>$factarr) {
 			$record=GedcomRecord::getInstance($gid);
 			if ($record && $record->canDisplayDetails()) {

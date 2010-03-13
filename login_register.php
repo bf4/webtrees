@@ -100,13 +100,13 @@ switch ($action) {
 		if (!$user_id) {
 			AddToLog("New password requests for user ".$user_name." that does not exist");
 			print "<span class=\"warning\">";
-			print_text("user_not_found");
+			echo i18n::translate('Could not verify the information you entered.  Please try again or contact the site administrator for more information.');
 			print "</span><br />";
 		} else {
 			if (get_user_setting($user_id, 'email')=='') {
 				AddToLog("Unable to send password to user ".$user_name." because they do not have an email address");
 				print "<span class=\"warning\">";
-				print_text("user_not_found");
+				echo i18n::translate('Could not verify the information you entered.  Please try again or contact the site administrator for more information.');
 				print "</span><br />";
 			} else {
 				$passchars = "abcdefghijklmnopqrstuvqxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -133,7 +133,7 @@ switch ($action) {
 				$mail_body .= i18n::translate('Password') . ": " . $user_new_pw . "\r\n\r\n";
 				$mail_body .= i18n::translate('Recommendation:') . "\r\n";
 				$mail_body .= i18n::translate('Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure.') . "\r\n\r\n";
-				$mail_body .= print_text("mail04_line05", 0, 1) . "\r\n\r\n";
+				$mail_body .= i18n::translate('After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password.') . "\r\n\r\n";
 
 				if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".PGV_SERVER_NAME.PGV_SCRIPT_PATH."\">".PGV_SERVER_NAME.PGV_SCRIPT_PATH."</a>";
 				else $mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH;
@@ -272,7 +272,7 @@ switch ($action) {
 			<?php
 				if ($SHOW_REGISTER_CAUTION) {
 					echo "<center><table class=\"width50 ", $TEXT_DIRECTION, "\"><tr><td>";
-					print_text("acceptable_use");
+					echo i18n::translate('<div class="largeError">Notice:</div><div class="error">By completing and submitting this form, you agree:<ul><li>to protect the privacy of living people listed on our site;</li><li>and in the text box below, to explain to whom you are related, or to provide us with information on someone who should be listed on our site.</li></ul></div>');
 					echo "<br />";
 					echo "</td></tr></table></center>";
 				}
@@ -374,7 +374,7 @@ switch ($action) {
 				AddToLog("User registration requested for: ".$user_name);
 
 				if (get_user_id($user_name)) {
-					print "<span class=\"warning\">".print_text("duplicate_username",0,1)."</span><br /><br />";
+					print "<span class=\"warning\">".i18n::translate('Duplicate user name.  A user with that user name already exists.  Please choose another user name.')."</span><br /><br />";
 					print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
 				}
 				else if ($user_password01 == $user_password02) {
@@ -403,11 +403,11 @@ switch ($action) {
 						}
 						$user_created_ok = true;
 					} else {
-						print "<span class=\"warning\">".print_text("user_create_error",0,1)."<br /></span>";
+						print "<span class=\"warning\">".i18n::translate('Unable to add user.  Please try again.')."<br /></span>";
 						print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
 					}
 				} else {
-					print "<span class=\"warning\">".print_text("password_mismatch",0,1)."</span><br />";
+					print "<span class=\"warning\">".i18n::translate('Passwords do not match.')."</span><br />";
 					print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
 				}
 				if ($user_created_ok) {
@@ -484,7 +484,7 @@ switch ($action) {
 				}
 				print "</div>";
 			} else {
-				print "<span class=\"error\">".print_text("invalid_username",0,1)."</span><br />";
+				print "<span class=\"error\">".i18n::translate('User name contains invalid characters')."</span><br />";
 				print "<a href=\"javascript:history.back()\">".i18n::translate('Back')."</a><br />";
 			}
 		} else {

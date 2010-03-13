@@ -39,7 +39,7 @@ define('PGV_TODAYS_EVENTS_PHP', '');
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $PGV_BLOCKS["print_todays_events"]["name"]		= i18n::translate('On This Day');
-$PGV_BLOCKS["print_todays_events"]["descr"]		= "todays_events_descr";
+$PGV_BLOCKS["print_todays_events"]["descr"]		= i18n::translate('The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown.');
 $PGV_BLOCKS["print_todays_events"]["infoStyle"]	= "style2";
 $PGV_BLOCKS["print_todays_events"]["sortStyle"]	= "alpha";
 $PGV_BLOCKS["print_todays_events"]["canconfig"]	= true;

@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_LOGGED_IN_PHP', '');
 
 $PGV_BLOCKS["print_logged_in_users"]["name"]		= i18n::translate('Logged In Users');
-$PGV_BLOCKS["print_logged_in_users"]["descr"]		= "logged_in_users_descr";
+$PGV_BLOCKS["print_logged_in_users"]["descr"]		= i18n::translate('The Logged In Users block shows a list of the users who are currently logged in.');
 $PGV_BLOCKS["print_logged_in_users"]["canconfig"]	= false;
 $PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
 

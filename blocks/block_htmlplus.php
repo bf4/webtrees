@@ -41,7 +41,7 @@ require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 require_once PGV_ROOT.'includes/classes/class_stats.php';
 
 $PGV_BLOCKS['print_htmlplus_block']['name']			= i18n::translate('Advanced HTML');
-$PGV_BLOCKS['print_htmlplus_block']['descr']		= 'htmlplus_block_descr';
+$PGV_BLOCKS['print_htmlplus_block']['descr']		= i18n::translate('This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text.');
 $PGV_BLOCKS['print_htmlplus_block']['canconfig']	= true;
 $PGV_BLOCKS['print_htmlplus_block']['config']		= array(
 	'cache'=>0,
@@ -114,9 +114,9 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	 *   contain embedded keywords.
 	 */
 	// Title
-	$config['title'] = print_text($config['title'],0,2);
+	$config['title'] = embed_globals($config['title']);
 	// Content
-	$config['html'] = print_text($config['html'],0,2);
+	$config['html'] = embed_globals($config['html']);
 
 	/*
 	 * Second Pass.
@@ -168,7 +168,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 			}
 			$content .= "<br />"
 			."<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=500,scrollbars=1,resizable=1'); return false;\">"
-			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{i18n::translate('Configure')}\" title=\"{i18n::translate('Configure')}\" /></a>"
+			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" title=\"".i18n::translate('Configure')."\" /></a>"
 			.help_link('index_htmlplus_ahelp');
 		}
 	}
@@ -221,7 +221,7 @@ function print_htmlplus_block_config($config)
 
 	// templates
 	print "<tr><td class=\"descriptionbox wrap width33\">"
-		."{i18n::translate('Templates')}"
+		.i18n::translate('Templates')
 		.help_link('index_htmlplus_template')
 		."</td><td class=\"optionbox\">"
 	;
@@ -243,7 +243,7 @@ function print_htmlplus_block_config($config)
 	{
 		print "\t\t\t<select name=\"template\" onchange=\"document.block.html.value=document.block.template.options[document.block.template.selectedIndex].value;\">\n";
 	}
-	print "\t\t\t\t<option value=\"\">{i18n::translate('Custom')}</option>\n";
+	print "\t\t\t\t<option value=\"\">".i18n::translate('Custom')."</option>\n";
 	foreach($templates as $tpl)
 	{
 		print "\t\t\t\t<option value=\"{$tpl['template']}\">{$tpl['title']}</option>\n";
@@ -263,8 +263,8 @@ function print_htmlplus_block_config($config)
 			.help_link('index_htmlplus_gedcom')
 			."</td><td class=\"optionbox\">\n"
 			."\t\t\t<select name=\"gedcom\">\n"
-			."\t\t\t\t<option value=\"__current__\"{$sel_current}>{i18n::translate('Current')}</option>\n"
-			."\t\t\t\t<option value=\"__default__\"{$sel_default}>{i18n::translate('Default')}</option>\n"
+			."\t\t\t\t<option value=\"__current__\"{$sel_current}>".i18n::translate('Current')."</option>\n"
+			."\t\t\t\t<option value=\"__default__\"{$sel_default}>".i18n::translate('Default')."</option>\n"
 		;
 		foreach($gedcoms as $ged_id=>$ged_name)
 		{

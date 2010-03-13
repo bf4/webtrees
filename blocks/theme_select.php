@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_THEME_SELECT_PHP', '');
 
 $PGV_BLOCKS["print_block_theme_select"]["name"]			= i18n::translate('Theme Select');
-$PGV_BLOCKS["print_block_theme_select"]["descr"]		= "theme_select_descr";
+$PGV_BLOCKS["print_block_theme_select"]["descr"]		= i18n::translate('The Theme Select block displays the Theme selector even when the Change Theme feature is disabled.');
 $PGV_BLOCKS["print_block_theme_select"]["type"]			= "gedcom";
 $PGV_BLOCKS["print_block_theme_select"]["canconfig"]	= false;
 $PGV_BLOCKS["print_block_theme_select"]["config"]		= array("cache"=>-1);

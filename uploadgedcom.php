@@ -366,7 +366,7 @@ elseif ($action == "upload_form") {
 
 if (!empty ($error)) {
 	echo "<span class=\"error\">", $error, "</span><br />\n";
-	print_text("common_upload_errors");
+	echo i18n::translate('This error probably means that the file you tried to upload exceeded the limit set by your host.  The default limit in PHP is 2MB.  You can contact your host\'s Support group to have them increase the limit in the php.ini file, or you can upload the file using FTP.  Use the <a href="uploadgedcom.php?action=add_form"><b>Add GEDCOM</b></a> page to add a GEDCOM file you have uploaded using FTP.');;
 	echo "<br />\n";
 }
 ?>
@@ -490,8 +490,8 @@ if ($verify == "verify_gedcom") {
 		// NOTE: Check for existing changes
 		foreach ($pgv_changes as $cid => $changes) {
 			if ($changes[0]["gedcom"] == $GEDFILENAME) {
-				print_text("changes_present");
-				print "<br /><br />";
+				echo i18n::translate('The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import.');
+				echo "<br /><br />";
 				break;
 			}
 		}

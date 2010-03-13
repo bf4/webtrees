@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_HTML_BLOCK_PHP', '');
 
 $PGV_BLOCKS["print_html_block"]["name"]			= i18n::translate('HTML');
-$PGV_BLOCKS["print_html_block"]["descr"]		= "html_block_descr";
+$PGV_BLOCKS["print_html_block"]["descr"]		= i18n::translate('This is a simple HTML block that you can place on your page to add any sort of message you may want.');
 $PGV_BLOCKS["print_html_block"]["canconfig"]= true;
 $PGV_BLOCKS["print_html_block"]["config"]		= array(
 	"cache"=>1,

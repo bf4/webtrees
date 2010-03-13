@@ -39,7 +39,7 @@ if (isset($_REQUEST['help'])) $help=$_REQUEST['help'];
 
 print_simple_header(i18n::translate('Configuration help'));
 echo '<span class="helpheader">';
-print_text("config_help");
+echo i18n::translate('Configuration help');
 echo '</span><br /><br /><span class="helptext">';
 if ($help == "help_contents_help") {
 		if (PGV_USER_IS_ADMIN) {
@@ -55,10 +55,10 @@ print_text($help);
 }
 echo "</span><br /><br />";
 echo "<a href=\"help_text.php?help=help_contents_help\"><b>";
-print_text("help_contents");
+echo i18n::translate('Help Contents');
 echo "</b></a><br />";
 echo "<a href=\"javascript:;\" onclick=\"window.close();\"><b>";
-print_text("close_window");
+echo i18n::translate('Close Window');
 echo "</b></a>";
 print_simple_footer();
 ?>

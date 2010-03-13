@@ -38,7 +38,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_YAHRZEIT_PHP', '');
 
 $PGV_BLOCKS['print_yahrzeit']['name']     =i18n::translate('Upcoming Yahrzeiten');
-$PGV_BLOCKS['print_yahrzeit']['descr']    ='yahrzeit_descr';
+$PGV_BLOCKS['print_yahrzeit']['descr']    =i18n::translate('The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look.');
 $PGV_BLOCKS['print_yahrzeit']['canconfig']=true;
 $PGV_BLOCKS['print_yahrzeit']['config']   =array(
 	'cache'        =>1,

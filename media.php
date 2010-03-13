@@ -290,7 +290,7 @@ function checkpath(folder) {
 	if (value.substr(0, 1) == "/") value = value.substr(1, value.length-1);
 	result = value.split("/");
 	if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS; ?>) {
-		alert('<?php print_text("max_media_depth"); ?>');
+		alert('<?php echo i18n::translate('You can enter no more than %s subdirectory names', $MEDIA_DIRECTORY_LEVELS); ?>');
 		folder.focus();
 		return false;
 	}
@@ -464,16 +464,16 @@ if (check_media_structure()) {
 					$thumbnail = str_replace("$MEDIA_DIRECTORY", $MEDIA_DIRECTORY."thumbs/", check_media_depth($media["FILE"], "NOTRUNC"));
 					if (!$media["THUMBEXISTS"]) {
 						if (generate_thumbnail($media["FILE"], $thumbnail)) {
-							print_text("thumb_genned");
-							AddToChangeLog(print_text("thumb_genned", 0, 1));
+							echo i18n::translate('Thumbnail #thumbnail# generated automatically.', $thumbnail);
+							AddToChangeLog("Thumbnail {$thumbnail} generated automatically.");
 						}
 						else {
-							print "<span class=\"error\">";
-							print_text("thumbgen_error");
-							print "</span>";
-							AddToChangeLog(print_text("thumbgen_error", 0, 1));
+							echo "<span class=\"error\">";
+							echo i18n::translate('Thumbnail #thumbnail# could not be generated automatically.', $thumbnail);
+							echo "</span>";
+							AddToChangeLog("Thumbnail {$thumbnail} could not be generated automatically.");
 						}
-						print "<br />";
+						echo "<br />";
 					}
 				}
 			}
@@ -482,19 +482,19 @@ if (check_media_structure()) {
 			if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
 				$thumbnail = str_replace("$MEDIA_DIRECTORY", $MEDIA_DIRECTORY."thumbs/", check_media_depth($filename, "NOTRUNC"));
 				if (generate_thumbnail($filename, $thumbnail)) {
-					print_text("thumb_genned");
-					AddToChangeLog(print_text("thumb_genned", 0, 1));
+					echo i18n::translate('Thumbnail #thumbnail# generated automatically.', $thumbnail);
+					AddToChangeLog("Thumbnail {$thumbnail} generated automatically.");
 				}
 				else {
-					print "<span class=\"error\">";
-					print_text("thumbgen_error");
-					print "</span>";
-					AddToChangeLog(print_text("thumbgen_error", 0, 1));
+					echo "<span class=\"error\">";
+					echo i18n::translate('Thumbnail #thumbnail# could not be generated automatically.', $thumbnail);
+					echo "</span>";
+					AddToChangeLog("Thumbnail {$thumbnail} could not be generated automatically.");
 				}
 			}
 		}
 		$action = "filter";
-		print "</td></tr></table>";
+		echo "</td></tr></table>";
 	}
 
 	// Move single file and optionally its corresponding thumbnail to protected dir
@@ -682,16 +682,16 @@ if (check_media_structure()) {
 					else $gedrec = find_gedcom_record($pid, PGV_GED_ID);
 					$gedrec = remove_subrecord($gedrec, "OBJE", $xref, -1);
 					if (replace_gedrec($pid, $gedrec, true, $xref)) {
-						print_text("record_updated");
-						AddToChangeLog(print_text("record_updated", 0, 1));
+						echo i18n::translate('Record %s successfully updated.', $pid);
+						AddToChangeLog("Record $pid successfully updated.");
 					} else {
 						$finalResult = false;
-						print "<span class=\"error\">";
-						print_text("record_not_updated");
-						print "</span>";
-						AddToChangeLog(print_text("record_not_updated", 0, 1));
+						echo "<span class=\"error\">";
+						echo i18n::translate('Record %s could not be updated.', $pid);
+						echo "</span>";
+						AddToChangeLog("Record $pid could not be updated.");
 					}
-					print "<br />";
+					echo "<br />";
 				}
 
 				// Record changes to the Media object
@@ -701,14 +701,14 @@ if (check_media_structure()) {
 
 					// Remove media object from gedcom
 					if (delete_gedrec($xref)) {
-						print_text("record_removed");
-						AddToChangeLog(print_text("record_removed", 0, 1));
+						echo i18n::translate('Record %s successfully removed from GEDCOM.', $xref);
+						AddToChangeLog("Record $xref successfully removed from GEDCOM.);
 					} else {
 						$finalResult = false;
 						print "<span class=\"error\">";
-						print_text("record_not_removed");
+						echo i18n::translate('Record %s could not be removed from GEDCOM.', $xref);
 						print "</span>";
-						AddToChangeLog(print_text("record_not_removed", 0, 1));
+						AddToChangeLog("Record $xref could not be removed from GEDCOM.");
 					}
 					print "<br />";
 
@@ -717,14 +717,14 @@ if (check_media_structure()) {
 						$xref = get_new_xref("OBJE");
 						$objerec = preg_replace("/0 @.*@ OBJE/", "0 @".$xref."@ OBJE", $objerec);
 						if(append_gedrec($objerec)) {
-							print_text("record_added");
-							AddToChangeLog(print_text("record_added", 0, 1));
+							echo i18n::translate('Record %s successfully added to GEDCOM.', $xref);
+							AddToChangeLog("Record $xref successfully added to GEDCOM.");
 						} else {
 							$finalResult = false;
-							print "<span class=\"error\">";
-							print_text("record_not_added");
-							print "</span>";
-							AddToChangeLog(print_text("record_not_added", 0, 1));
+							echo "<span class=\"error\">";
+							echo i18n::translate('Record %s could not be added to GEDCOM.', $xref);
+							echo "</span>";
+							AddToChangeLog("Record $xref could not be added to GEDCOM.");
 						}
 						print "<br />";
 					}

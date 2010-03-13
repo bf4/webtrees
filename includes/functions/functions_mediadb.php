@@ -962,9 +962,9 @@ function process_uploadMedia_form() {
 							$thumbnail = $thumbFolderName.$mediaFile;
 							$okThumb = generate_thumbnail($folderName.$mediaFile, $thumbnail, "OVERWRITE");
 							if (!$okThumb) {
-								$error .= print_text("thumbgen_error", 0, 1);
+								$error .= i18n::translate('Thumbnail %s could not be generated automatically.', $thumbnail);
 							} else {
-								print_text("thumb_genned");
+								echo i18n::translate('Thumbnail %s generated automatically.', $thumbnail);
 								print "<br />";
 								AddToLog("Media thumbnail {$thumbnail} generated");
 							}
@@ -1090,7 +1090,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 				print "</select></span>\n";
 				if (PGV_USER_IS_ADMIN) {
 					echo '<br /><span dir="ltr"><input name="folder', $i, '" type="text" size="40" value="" tabindex="', $tab++, '" onblur="checkpath(this)" /></span>';
-					if ($i==1) echo '<br /><sub>', print_text("server_folder_advice", 0, 1), '</sub>';
+					if ($i==1) echo '<br /><sub>', i18n::translate('You can enter up to %s folder names to follow the default &laquo%sraquo;.<br />Do not enter the &laquo;%s&raquo; part of the destination folder name.', $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY), '</sub>';
 				} else echo '<input name="folder', $i, '" type="hidden" value="" />';
 			echo '</td></tr>';
 		} else {
@@ -1139,7 +1139,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	if ($action == "newentry") {
 		echo i18n::translate('Add a new Media item');
 	} else {
-		echo print_text('edit_media', 0 , 1);
+		echo i18n::translate('Edit Media Item (%s)', $pid);
 	}
 	echo "</td></tr>";
 	echo "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /></td></tr>";
@@ -1297,7 +1297,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		if (PGV_USER_IS_ADMIN) {
 			echo '<br /><span dir="ltr"><input type="text" name="folder" size="40" value="', $folder, '" onblur="checkpath(this)" /></span>';
 			if ($MEDIA_DIRECTORY_LEVELS>0) {
-				echo '<br /><sub>', print_text("server_folder_advice", 0, 1), '</sub>';
+				echo '<br /><sub>', i18n::translate('You can enter up to %s folder names to follow the default &laquo;%s&raquo;.<br />Do not enter the &laquo;%s&raquo; part of the destination folder name.', $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY, $MEDIA_DIRECTORY), '</sub>';
 			}
 			if ($gedfile == "FILE") {
 				echo '<br /><sub>', i18n::translate('This entry is ignored if you have entered a URL into the file name field.'), '</sub>';

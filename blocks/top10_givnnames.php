@@ -38,7 +38,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_TOP10_GIVNNAMES_PHP', '');
 
 $PGV_BLOCKS["print_block_givn_top10"]["name"]		= i18n::translate('Top 10 Given Names');
-$PGV_BLOCKS["print_block_givn_top10"]["descr"]		= "block_givn_top10_descr";
+$PGV_BLOCKS["print_block_givn_top10"]["descr"]		= i18n::translate('This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable.');
 $PGV_BLOCKS["print_block_givn_top10"]["type"]		= "both";
 $PGV_BLOCKS["print_block_givn_top10"]["infoStyle"]	= "style2";
 $PGV_BLOCKS["print_block_givn_top10"]["canconfig"]	= true;

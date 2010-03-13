@@ -252,9 +252,7 @@ if ($action=="update") {
 	$PRIVACY_MODULE = $INDEX_DIRECTORY.$GEDCOM."_priv.php";
 	$fp = @fopen($PRIVACY_MODULE, "wb");
 	if (!$fp) {
-		global $whichFile;
-		$whichFile = $PRIVACY_MODULE;
-		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
+		print "<span class=\"error\">".i18n::translate('E R R O R !!!<br />Could not write to file <i>%s</i>.  Please check it for proper Write permissions.', $PRIVACY_MODULE)."<br /></span>\n";
 	} else {
 		fwrite($fp, $configtext);
 		fclose($fp);

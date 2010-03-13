@@ -231,7 +231,7 @@ if ($action == "choose" && $paramok) {
 		foreach ($rem_exist_links as $remLinkId) {
 			global $linkToId;
 			$linkToId = PrintReady($remLinkId);
-			print_text("link_deleted");
+			echo i18n::translate('Link to #GLOBALS[remLinkId]# deleted', $remLinkId);
 			echo '<br />';
 			if ($update_CHAN=='no_change') {
 				unlinkMedia($remLinkId, 'OBJE', $mediaid, 1, false);
@@ -251,7 +251,7 @@ if ($action == "choose" && $paramok) {
 		foreach ($add_more_links as $addLinkId) {
 			global $unlinkFromId;
 			$$unlinkFromId = PrintReady($addLinkId);
-			print_text("link_added");
+			echo i18n::translate('Link to %s added', $addLinkId);
 			if ($update_CHAN=='no_change') {
 				linkMedia($mediaid, $addLinkId, 1, false);
 			} else {

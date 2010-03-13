@@ -98,7 +98,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								}
 								global $tempStringHead;
 								$tempStringHead = PrintReady($headImg);
-								print_text("click_choose_head");
+								echo i18n::translate('Click %s to choose person as Head of family.', $tempStringHead);
 								?>
 								</font>
 								</td>

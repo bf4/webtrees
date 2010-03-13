@@ -40,7 +40,7 @@ define('PGV_TODO_PHP', '');
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
 $PGV_BLOCKS['print_todo']['name']     =i18n::translate('&quot;To Do&quot; tasks');
-$PGV_BLOCKS['print_todo']['descr']    ='todo_descr';
+$PGV_BLOCKS['print_todo']['descr']    =i18n::translate('The To Do block lists all outstanding _TODO facts in the database.');
 $PGV_BLOCKS['print_todo']['canconfig']=true;
 $PGV_BLOCKS['print_todo']['config']   =array(
 	'cache'          =>0,
