@@ -74,7 +74,7 @@ function expand_urls($text) {
 function print_fact(&$eventObj, $noedit=false) {
 	global $nonfacts;
 	global $PGV_IMAGE_DIR, $PGV_MENUS_AS_LISTS;
-	global $pgv_lang, $GEDCOM;
+	global $GEDCOM;
 	global $lang_short_cut, $LANGUAGE;
 	global $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION;
@@ -233,7 +233,14 @@ function print_fact(&$eventObj, $noedit=false) {
 		//echo "<td class=\"facts_value facts_value$styleadd\">";
 		if ((showFactDetails($factref, $pid)) && (FactViewRestricted($pid, $factrec))) {
 			if (isset($resn_value)) {
-				echo "<img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
+				switch($resn_value) {
+				case 'privacy':
+					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />';
+				case 'confidential':
+					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />';
+				case 'locked':
+					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />';
+				}
 				echo help_link('RESN');
 			}
 		}
@@ -358,7 +365,14 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($ct>0) echo " - ", i18n::translate('_PGVU'), ": ", $match[1];
 			// -- Find RESN tag
 			if (isset($resn_value)) {
-				echo "<img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
+				switch($resn_value) {
+				case 'privacy':
+					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />';
+				case 'confidential':
+					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />';
+				case 'locked':
+					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />';
+				}
 				echo help_link('RESN');
 			}
 			if (preg_match("/\n2 FAMC @(.+)@/", $factrec, $match)) {
@@ -425,12 +439,7 @@ function print_fact(&$eventObj, $noedit=false) {
 							//echo $eventObj->Icon(), ' '; // print incorrect fact icon !!!
 							echo "<img src=\"{$PGV_IMAGE_DIR}/facts/", $factref, ".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
 						else echo "<span class=\"label\">", $label, ": </span>";
-						$value = htmlspecialchars($match[$i][2], ENT_COMPAT, 'UTF-8');
-						if (isset($pgv_lang[strtolower($value)])) {
-							echo $pgv_lang[strtolower($value)];
-						} else {
-							echo PrintReady($value);
-						}
+						echo htmlspecialchars($match[$i][2], ENT_COMPAT, 'UTF-8');
 						echo "<br />";
 					}
 				}
@@ -508,7 +517,6 @@ function print_repository_record($sid) {
  * @param boolean $return	whether to return the data or print the data
  */
 function print_fact_sources($factrec, $level, $return=false) {
-	global $pgv_lang;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES, $EXPAND_SOURCES;
 	$printDone = false;
 	$data = "";
@@ -584,7 +592,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 //-- Print the links to multi-media objects
 function print_media_links($factrec, $level, $pid='') {
 	global $MULTI_MEDIA, $TEXT_DIRECTION, $TBLPREFIX;
-	global $pgv_lang, $SEARCH_SPIDER, $view;
+	global $SEARCH_SPIDER, $view;
 	global $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 	global $GEDCOM, $SHOW_ID_NUMBERS, $MEDIA_TYPES;
@@ -854,7 +862,6 @@ function print_address_structure($factrec, $level) {
 }
 
 function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
-	global $pgv_lang;
 	global $view;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
 	if ($SHOW_SOURCES<PGV_USER_ACCESS_LEVEL) return;
@@ -923,7 +930,14 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 				if ($resn_tag > 0) $resn_value = strtolower(trim($rmatch[1]));
 				// -- Find RESN tag
 				if (isset($resn_value)) {
-					echo "<img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
+					switch($resn_value) {
+					case 'privacy':
+						echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />';
+					case 'confidential':
+						echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />';
+					case 'locked':
+						echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />';
+					}
 					echo help_link('RESN');
 				}
 				$cs = preg_match("/$nlevel EVEN (.*)/", $srec, $cmatch);
@@ -968,7 +982,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
  *	$textSOUR["TEXT2"] = +1 (array) Text from source
  */
 function printSourceStructure($textSOUR) {
-	global $pgv_lang, $GEDCOM;
+	global $GEDCOM;
 
 	$ged_id=get_id_from_gedcom($GEDCOM);
 	$data='';
@@ -1091,7 +1105,7 @@ function getSourceStructure($srec) {
  * @param boolean $noedit	Whether or not to allow this fact to be edited
  */
 function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
-	global $pgv_lang, $pgv_changes, $GEDCOM;
+	global $pgv_changes, $GEDCOM;
 	global $view;
 	global $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
@@ -1207,7 +1221,14 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			if ($resn_tag > 0) $resn_value = strtolower(trim($rmatch[1]));
 			// -- Find RESN tag
 			if (isset($resn_value)) {
-				echo "<br /><img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
+				switch($resn_value) {
+				case 'privacy':
+					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />';
+				case 'confidential':
+					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />';
+				case 'locked':
+					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />';
+				}
 				echo help_link('RESN');
 			}
 			echo "<br />\n";
@@ -1426,7 +1447,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
  */
 function print_main_media_row($rtype, $rowm, $pid) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION, $SERVER_URL;
-	global $SHOW_ID_NUMBERS, $GEDCOM, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
+	global $SHOW_ID_NUMBERS, $GEDCOM, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER, $MEDIA_TYPES;
 
 	if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
