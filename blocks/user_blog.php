@@ -52,8 +52,8 @@ function print_user_news($block=true, $config="", $side, $index) {
 	$usernews = getUserNews(PGV_USER_ID);
 
 	$id="user_news";
-	$title = print_help_link("mygedview_myjournal", "qm","",false,true);
-	$title .= i18n::translate('My Journal');
+	$title = i18n::translate('My Journal');
+	$title .= help_link('mygedview_myjournal');
 	$content = "";
 	if (count($usernews)==0) {
 		$content .= i18n::translate('You have not created any Journal items.').' ';

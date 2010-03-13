@@ -73,7 +73,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 	}
 
 	$id="yahrzeit";
-	$title = print_help_link('yahrzeit', 'qm','',false,true);
+	$title='';
 	if ($PGV_BLOCKS['print_yahrzeit']['canconfig']) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -86,6 +86,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		}
 	}
 	$title .= i18n::translate('Upcoming Yahrzeiten');
+	$title .= help_link('yahrzeit');
 	$content = "";
 
 	// The standard anniversary rules cover most of the Yahrzeit rules, we just
@@ -258,15 +259,15 @@ function print_yahrzeit_config($config) {
 	if ($config['days']>$DAYS_TO_SHOW_LIMIT) $config['days']=$DAYS_TO_SHOW_LIMIT;
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('days_to_show', 'qm');
 	print i18n::translate('Number of days to show');
+	print help_link('days_to_show');
 	print '</td><td class="optionbox">';
 	print '<input type="text" name="days" size="2" value="'.$config['days'].'" />';
 	print '</td></tr>';
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('style', 'qm');
 	print i18n::translate('Presentation Style');
+	print help_link('style');
 	print '</td><td class="optionbox">';
 	print '<select name="infoStyle">';
 	foreach (array('style1', 'style2') as $style) {
@@ -278,8 +279,8 @@ function print_yahrzeit_config($config) {
 	print '</select></td></tr>';
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link("cal_dowload", "qm");
 	print i18n::translate('Allow calendar events download?');
+	print help_link('cal_dowload');
 	print '</td><td class="optionbox">';
 	print '<select name="allowDownload">';
 	foreach (array('yes', 'no') as $value) {

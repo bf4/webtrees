@@ -51,8 +51,8 @@ function print_user_messages($block=true, $config="", $side, $index) {
 	$usermessages = getUserMessages(PGV_USER_NAME);
 
 	$id="user_messages";
-	$title = print_help_link("mygedview_message", "qm", "", false, true);
-	$title .= i18n::translate('My Messages')."&nbsp;&nbsp;";
+	$title = i18n::translate('My Messages');
+	$title .= help_link('mygedview_message');
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 	$title .= "(".count($usermessages).")";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
