@@ -2,7 +2,10 @@
 /**
  * File contains var's to glue Help_text for PHPGedView together
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * Modifications copyright (c) 2010 Greg Roach
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Help
  * @author John Finlay & Jans Luder
  * @version $Id$
@@ -136,12 +139,12 @@ $pgv_lang["help_validategedcom.php"]		="#pgv_lang[validate_gedcom_help]#";
 $pgv_lang["help_edit_privacy.php"]		="~#pgv_lang[edit_privacy_title]#~<br /><br />#pgv_lang[edit_privacy_help]##pgv_lang[more_help_advice]#<br />#pgv_lang[readme_help]#";
 
 //Specials for contents
-$vpos = strpos($pgv_lang["enter_terms"], ":", 0);
-if ($vpos>0) $enter_terms = substr($pgv_lang["enter_terms"], 0, $vpos);
-else $enter_terms = $pgv_lang["enter_terms"];
-$vpos = strpos($pgv_lang["soundex_search"], ":", 0);
-if ($vpos>0) $soundex_search = substr($pgv_lang["soundex_search"], 0, $vpos);
-else $soundex_search = $pgv_lang["soundex_search"];
+$vpos = strpos(i18n::translate('Enter Search terms'), ":", 0);
+if ($vpos>0) $enter_terms = substr(i18n::translate('Enter Search terms'), 0, $vpos);
+else $enter_terms = i18n::translate('Enter Search terms');
+$vpos = strpos(i18n::translate('Search the way you think the name is written (Soundex)'), ":", 0);
+if ($vpos>0) $soundex_search = substr(i18n::translate('Search the way you think the name is written (Soundex)'), 0, $vpos);
+else $soundex_search = i18n::translate('Search the way you think the name is written (Soundex)');
 
 $pgv_lang["help_used_in_contents"]		= "<div class=\"name_head center\"><b>#pgv_lang[page_help]#</b></div><br />#pgv_lang[help_help_items]#";
 $pgv_lang["search_used_in_contents"]		= "<div class=\"name_head center\"><b>#pgv_lang[search]#</b></div><ul><li><a href=\"#header_search\">#pgv_lang[header]#</a></li><li><a href=\"#menu_search\">#pgv_lang[menu]#</a></li><li><a href=\"#help_search\">#pgv_lang[search]#</li><li><a href=\"#search_enter_terms\">$enter_terms</a></li></ul><br /><br /><a href=\"#top\">$UpArrow </a><a name=\"header_search\"></a>#pgv_lang[header_search_help]#<br /><br /><a href=\"#top\">$UpArrow </a><a name=\"menu_search\"></a>#pgv_lang[menu_search_help]#<br /><a href=\"#top\">$UpArrow </a><a name=\"help_search\"></a>#pgv_lang[help_search.php]#<br /><a href=\"#top\">$UpArrow </a><a name=\"search_enter_terms\"></a>#pgv_lang[search_enter_terms_help]#";
@@ -150,7 +153,7 @@ $pgv_lang["search_used_in_contents"]		= "<div class=\"name_head center\"><b>#pgv
 /*-- Var's for Menu Item: Help contents
 	The var $pgv_lang["help_contents_help"] contains all the vars below.
 	example: $pgv_lang["h1"] >>> help_index.php will be the var $pgv_lang["help_index.php"],
-	to be displayed if the text of $pgv_lang["welcome_page"] is clicked in the Help Contents
+	to be displayed if the text of i18n::translate('Welcome page') is clicked in the Help Contents
 */
 $pgv_lang["h1"]		= "help_index.php,welcome_page";
 $pgv_lang["h2"]		= "index_myged_help,mygedview";

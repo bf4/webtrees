@@ -25,7 +25,7 @@ class lightbox_Tab extends media_Tab {
 	
 	public function getContent() {
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
-		global $pgv_lang, $pgv_changes, $view;
+		global $pgv_changes, $view;
 		global $GEDCOM, $MEDIATYPE, $pgv_changes;
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
@@ -33,13 +33,7 @@ class lightbox_Tab extends media_Tab {
 		global $CONTACT_EMAIL, $pid, $tabno;
 		global $Fam_Navigator, $NAV_ALBUM;
 
-		$out = "<div id=\"lightbox2\">";
-		$out .= "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>";
-		$out .= "&nbsp;&nbsp;";
 		ob_start();
-		// ---------- Help link --------------------
-		print_help_link("lb_general", "qm");
-		// --------- Header include -------------
 		$mediacnt = $this->get_media_count();
 		require_once 'modules/lightbox/functions/lb_head.php';
 		echo "<div id=\"lightbox2_content\">";

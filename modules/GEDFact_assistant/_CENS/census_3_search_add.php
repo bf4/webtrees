@@ -4,7 +4,10 @@
  *
  * Census Search and Add Area File
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2007 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
@@ -48,7 +51,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						var findInput = document.getElementById('personid');
 							txt = findInput.value;
 						if (txt=="") {
-							alert("<?php echo $pgv_lang["enter_name"]; ?>");
+							alert("<?php echo i18n::translate('You must enter a name'); ?>");
 						}else{
 							var win02 = window.open(
 								"module.php?mod=GEDFact_assistant&pgvaction=_CENS/census_3_find&callback=paste_id&action=filter&type=indi&multiple=&filter="+txt, "win02", "resizable=1, menubar=0, scrollbars=1, top=180, left=600, HEIGHT=400, WIDTH=450 ");
@@ -72,7 +75,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 				<?php
 				//-- Add Family Members to Census  -------------------------------------------
-				global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
+				global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
 				global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
 				global $TEXT_DIRECTION, $GEDCOM; 
 				// echo "CENS = " . $censyear;
@@ -88,10 +91,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								// Header text with "Head" button =================================================
 								if (isset($PGV_IMAGES["head"]["button"])) {
 									$headImg  = "<img class=\"headimg vmiddle\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["head"]["button"]."\" />";
-									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["head"]["button"]."\" alt=\"".$pgv_lang["click_choose_head_text"]."\" title=\"".$pgv_lang["click_choose_head_text"]."\" />";
+									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["head"]["button"]."\" alt=\"".i18n::translate('Click to choose person as Head of family.')."\" title=\"".i18n::translate('Click to choose person as Head of family.')."\" />";
 								} else {
 									$headImg  = "<img class=\"headimg vmiddle\" src=\"images/buttons/head.gif\" />";
-									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"images/buttons/head.gif\" alt=\"".$pgv_lang["click_choose_head_text"]."\" title=\"".$pgv_lang["click_choose_head_text"]."\" />";
+									$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"images/buttons/head.gif\" alt=\"".i18n::translate('Click to choose person as Head of family.')."\" title=\"".i18n::translate('Click to choose person as Head of family.')."\" />";
 								}
 								global $tempStringHead;
 								$tempStringHead = PrintReady($headImg);
@@ -125,8 +128,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							foreach ($people["children"] as $key=>$child) {
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
-								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);
 								$chfulln = addslashes($chfulln);													// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
@@ -155,8 +158,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$married = GedcomDate::Compare($censdate, $marrdate);
 							$nam     = $people["husb"]->getAllNames();
 							$fulln   = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-							$fulln   = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-							$fulln   = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+							$fulln   = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+							$fulln   = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 							$givn    = rtrim($nam[0]['givn'],'*');
 							$surn    = $nam[0]['surname'];
 							if (isset($nam[1])) {
@@ -253,7 +256,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									</a> 
 									<?php print "\n" ;
 									}else{
-										print $pgv_lang["private"];
+										print i18n::translate('Private');
 									}
 									?>
 									</font>
@@ -281,8 +284,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$married = GedcomDate::Compare($censdate, $marrdate);
 							$nam     = $people["wife"]->getAllNames();
 							$fulln   = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-							$fulln   = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-							$fulln   = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+							$fulln   = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+							$fulln   = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 							$givn    = rtrim($nam[0]['givn'],'*');
 							$surn    = $nam[0]['surname'];
 							// Get wifes married name if available
@@ -388,7 +391,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									</a> 
 									<?php print "\n" ;
 									}else{
-										print $pgv_lang["private"];
+										print i18n::translate('Private');
 									}
 									?>
 									</font>
@@ -411,8 +414,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									foreach ($chchildren as $key=>$chchild) {
 										$chnam   = $chchild->getAllNames();
 										$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
-										$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+										$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+										$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);
 										$chfulln = addslashes($chfulln);														// Child's Full Name// Child's Full Name
 										$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 										$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
@@ -430,8 +433,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								}
 								$nam   = $child->getAllNames();
 								$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-								$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-								$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+								$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+								$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 								$givn  = rtrim($nam[0]['givn'],'*');
 								$surn  = $nam[0]['surname'];
 								if (isset($nam[1])) {
@@ -541,7 +544,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 												</a>
 												<?php print "\n" ;
 											}else{
-													print $pgv_lang["private"];
+													print i18n::translate('Private');
 											}
 											?>
 											</font>
@@ -571,8 +574,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							foreach ($people["children"] as $key=>$child) {
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
-								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);
 								$chfulln = addslashes($chfulln);													// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
@@ -602,8 +605,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$married = GedcomDate::Compare($censdate, $marrdate);
 							$nam   = $people["husb"]->getAllNames();
 							$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-							$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-							$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+							$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+							$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 							$givn  = rtrim($nam[0]['givn'],'*');
 							$surn  = $nam[0]['surname'];
 							if (isset($nam[1])) {
@@ -612,7 +615,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							}
 							$menu = new Menu();
 							if ($people["husb"]->getLabel() == ".") {
-								$menu->addLabel($pgv_lang["stepdad"]."\n");
+								$menu->addLabel(i18n::translate('Step-Father')."\n");
 							}else{
 								$menu->addLabel($people["husb"]->getLabel()."\n");
 							}
@@ -657,7 +660,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											}
 										?>", "<?php
 										if ($people["husb"]->getLabel() == ".") {
-											print PrintReady($pgv_lang["stepdad"]);											 // label = Relationship
+											print PrintReady(i18n::translate('Step-Father'));											 // label = Relationship
 										}else{
 											print PrintReady($people["husb"]->getLabel());									 // label = Relationship
 										}
@@ -709,7 +712,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									</a> 
 									<?php print "\n" ;
 									}else{
-										print $pgv_lang["private"];
+										print i18n::translate('Private');
 									}
 									?>
 									</font>
@@ -739,8 +742,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$married = GedcomDate::Compare($censdate, $marrdate);
 							$nam   = $people["wife"]->getAllNames();
 							$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-							$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-							$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+							$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+							$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 							$givn  = rtrim($nam[0]['givn'],'*');
 							$surn  = $nam[0]['surname'];
 							// Get wifes married name if available
@@ -759,7 +762,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							}
 							$menu = new Menu();
 							if ($people["wife"]->getLabel() == ".") {
-								$menu->addLabel($pgv_lang["stepmom"]."\n");
+								$menu->addLabel(i18n::translate('Step-Mother')."\n");
 							}else{
 								$menu->addLabel($people["wife"]->getLabel()."\n");
 							}
@@ -804,7 +807,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											}
 										?>", "<?php
 										if ($people["wife"]->getLabel() == ".") {
-											print PrintReady($pgv_lang["stepmom"]);											 // label = Relationship
+											print PrintReady(i18n::translate('Step-Mother'));											 // label = Relationship
 										}else{
 											print PrintReady($people["wife"]->getLabel());									 // label = Relationship
 										}
@@ -856,7 +859,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									</a> 
 									<?php print "\n" ;
 									}else{
-										print $pgv_lang["private"];
+										print i18n::translate('Private');
 									}
 									?>
 									</font>
@@ -878,8 +881,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									foreach ($chchildren as $key=>$chchild) {
 										$chnam   = $chchild->getAllNames();
 										$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
-										$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+										$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+										$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);
 										$chfulln = addslashes($chfulln);														// Child's Full Name
 										$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 										$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
@@ -890,8 +893,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							
 								$nam   = $child->getAllNames();
 								$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-								$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-								$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+								$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+								$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 								$givn  = rtrim($nam[0]['givn'],'*');
 								$surn  = $nam[0]['surname'];
 								if (isset($nam[1])) {
@@ -984,7 +987,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										</a> 
 										<?php print "\n" ;
 										}else{
-											print $pgv_lang["private"];
+											print i18n::translate('Private');
 										}
 										?>
 										</font>
@@ -1016,8 +1019,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							foreach ($people["children"] as $key=>$child) {
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
-								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+								$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);
 								$chfulln = addslashes($chfulln);													// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
@@ -1045,8 +1048,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$married = GedcomDate::Compare($censdate, $marrdate);
 							$nam     = $people["husb"]->getAllNames();
 							$fulln   = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-							$fulln   = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-							$fulln   = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+							$fulln   = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+							$fulln   = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 							$givn    = rtrim($nam[0]['givn'],'*');
 							$surn    = $nam[0]['surname'];
 							if (isset($nam[1])) {
@@ -1151,7 +1154,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									</a>
 									<?php print "\n" ;
 									}else{
-										print $pgv_lang["private"];
+										print i18n::translate('Private');
 										}
 										?>
 									</font>
@@ -1180,8 +1183,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$nam     = $people["wife"]->getAllNames();
 							$fulln   = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 							//$fulln   = str_replace('"', '\"', $fulln);
-							$fulln   = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-							$fulln   = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+							$fulln   = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+							$fulln   = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 							$givn    = rtrim($nam[0]['givn'],'*');
 							$surn    = $nam[0]['surname'];
 							// Get wifes married name if available
@@ -1298,7 +1301,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										</a>
 										<?php print "\n" ;
 									}else{
-										print $pgv_lang["private"];
+										print i18n::translate('Private');
 									}
 									?>
 									</font>
@@ -1324,8 +1327,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								foreach ($chchildren as $key=>$chchild) {
 									$chnam   = $chchild->getAllNames();
 									$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
-									$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-									$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);
+									$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+									$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);
 									$chfulln = addslashes($chfulln);														// Child's Full Name// Child's Full Name
 									$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 									$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
@@ -1337,8 +1340,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							// Get Spouse child's details
 							$nam   = $child->getAllNames();
 							$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-							$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-							$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+							$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+							$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 							$givn  = rtrim($nam[0]['givn'],'*');
 							$surn  = $nam[0]['surname'];
 							if (isset($nam[1])) {
@@ -1439,7 +1442,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									</a>
 									<?php print "\n" ;
 								}else{
-									print $pgv_lang["private"];
+									print i18n::translate('Private');
 								}
 								?>
 									</font>
@@ -1472,7 +1475,7 @@ require_once 'includes/functions/functions_charts.php';
 
 function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0, $personcount="1", $currpid, $censyear) {
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;
-	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
+	global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
@@ -1512,18 +1515,18 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 				
 				if ($TEXT_DIRECTION=="rtl") {
 				$spouselinks .= "\n\t\t\t<table class=\"rtlnav person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b> (" .$person->getFullName(). ")<br />";
+				$spouselinks .= "<b>" . i18n::translate('Family') . "</b> (" .$person->getFullName(). ")<br />";
 				$parentlinks .= "\n\t\t\t<table class=\"rtlnav person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
+				$parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				$step_parentlinks .= "\n\t\t\t<table class=\"rtlnav person_box$isF\"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
+				$step_parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				}else{
 				$spouselinks .= "\n\t\t\t<table class=\"ltrnav person_box$isF\"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b> (" .$person->getFullName(). ")<br />";
+				$spouselinks .= "<b>" . i18n::translate('Family') . "</b> (" .$person->getFullName(). ")<br />";
 				$parentlinks .= "\n\t\t\t<table class=\"ltrnav person_box$isF\"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
+				$parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				$step_parentlinks .= "\n\t\t\t<table class=\"ltrnav person_box$isF\"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
+				$step_parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				}
 
 				$persons       = "";
@@ -1550,8 +1553,8 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 								$chfulln = str_replace('"', "", $chfulln);											// Must remove quotes completely here
-								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);			// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
 								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
@@ -1562,9 +1565,9 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						//-- Parent Husband ------------------------------
 						if ($husb || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") { 
-								$title = $pgv_lang["familybook_chart"].": ".$famid;
+								$title = i18n::translate('Family Book Chart').": ".$famid;
 							}else{
-								$title = $famid." :".$pgv_lang["familybook_chart"];
+								$title = $famid." :".i18n::translate('Family Book Chart');
 							}
 							if ($husb) {
 								//-- Parent Husbands Parents ----------------------
@@ -1581,16 +1584,16 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								//-- Parent Husbands Details ----------------------
 								$person_parent="Yes";
 								if ($TEXT_DIRECTION=="ltr") { 
-									$title = $pgv_lang["indi_info"].": ".$husb->getXref();
+									$title = i18n::translate('Individual Information').": ".$husb->getXref();
 								}else{
-									$title = $husb->getXref()." :".$pgv_lang["indi_info"];
+									$title = $husb->getXref()." :".i18n::translate('Individual Information');
 								}
 								$tmp=$husb->getXref();
 								if ($husb->canDisplayName()) {
 									$nam   = $husb->getAllNames();
 									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-									$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-									$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+									$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+									$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 									$givn  = rtrim($nam[0]['givn'],'*');
 									$surn  = $nam[0]['surn'];
 									if (isset($nam[1]) ) {
@@ -1644,7 +1647,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$parentlinks .= PrintReady($husb->getFullName());								// Full Name (Link)
 									$parentlinks .= "</a>";
 								}else{
-									$parentlinks .= $pgv_lang["private"];
+									$parentlinks .= i18n::translate('Private');
 								}
 								$parentlinks .= "\n";
 								$natdad = "yes";
@@ -1654,9 +1657,9 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						//-- Parent Wife ------------------------------
 						if ($wife || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") { 
-								$title = $pgv_lang["familybook_chart"].": ".$famid;
+								$title = i18n::translate('Family Book Chart').": ".$famid;
 							}else{
-								$title = $famid." :".$pgv_lang["familybook_chart"];
+								$title = $famid." :".i18n::translate('Family Book Chart');
 							}
 							if ($wife) {
 								//-- Parent Wifes Parents ----------------------
@@ -1673,17 +1676,17 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								//-- Parent Wifes Details ----------------------
 								$person_parent="Yes";
 								if ($TEXT_DIRECTION=="ltr") { 
-									$title = $pgv_lang["indi_info"].": ".$wife->getXref();
+									$title = i18n::translate('Individual Information').": ".$wife->getXref();
 								} else {
-									$title = $wife->getXref()." :".$pgv_lang["indi_info"];
+									$title = $wife->getXref()." :".i18n::translate('Individual Information');
 								}
 								$tmp=$wife->getXref();
 								if ($wife->canDisplayName()) {
 									$married = GedcomDate::Compare($censdate, $marrdate);
 									$nam   = $wife->getAllNames();
 									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-									$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-									$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+									$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+									$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 									$givn  = rtrim($nam[0]['givn'],'*');
 									$surn  = $nam[0]['surname'];
 									// Get wifes married name if available
@@ -1747,7 +1750,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$parentlinks .= PrintReady($wife->getFullName());								// Full Name (Link)
 									$parentlinks .= "</a>";
 								}else{
-									$parentlinks .= $pgv_lang["private"];
+									$parentlinks .= i18n::translate('Private');
 								}
 								$parentlinks .= "\n";
 								$natmom = "yes";
@@ -1775,8 +1778,8 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 								$chfulln = str_replace('"', "", $chfulln);											// Must remove quotes completely here
-								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);			// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
 								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
@@ -1789,9 +1792,9 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						}else{
 							if ( ($husb || $num>0) && $husb->getLabel() != "." ) {
 								if ($TEXT_DIRECTION=="ltr") { 
-									$title = $pgv_lang["familybook_chart"].": ".$famid;
+									$title = i18n::translate('Family Book Chart').": ".$famid;
 								}else{
-									$title = $famid." :".$pgv_lang["familybook_chart"];
+									$title = $famid." :".i18n::translate('Family Book Chart');
 								}
 								if ($husb) {
 									//-- Step Husbands Parents -----------------------------
@@ -1808,16 +1811,16 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									//-- Step Husband Details ------------------------------
 									$person_step="Yes";
 									if ($TEXT_DIRECTION=="ltr") {
-										$title = $pgv_lang["indi_info"].": ".$husb->getXref();
+										$title = i18n::translate('Individual Information').": ".$husb->getXref();
 									}else{
-										$title = $husb->getXref()." :".$pgv_lang["indi_info"];
+										$title = $husb->getXref()." :".i18n::translate('Individual Information');
 									}
 									$tmp=$husb->getXref();
 									if ($husb->canDisplayName()) {
 										$nam   = $husb->getAllNames();
 										$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-										$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-										$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+										$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+										$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 										//$fulln = strip_tags($husb->getFullName());
 										$givn  = rtrim($nam[0]['givn'],'*');
 										$surn  = $nam[0]['surname'];
@@ -1872,7 +1875,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$parentlinks .= PrintReady($husb->getFullName());								// Full Name (Link)
 									$parentlinks .= "</a>";
 									}else{
-										$parentlinks .= $pgv_lang["private"];
+										$parentlinks .= i18n::translate('Private');
 									}
 									$parentlinks .= "\n";
 								}
@@ -1884,9 +1887,9 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						}else{
 							if ($wife || $num>0) {
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = $pgv_lang["familybook_chart"].": ".$famid;
+									$title = i18n::translate('Family Book Chart').": ".$famid;
 								}else{
-									$title = $famid." :".$pgv_lang["familybook_chart"];
+									$title = $famid." :".i18n::translate('Family Book Chart');
 								}
 								if ($wife) {
 									//-- Step Wifes Parents ---------------------------
@@ -1903,17 +1906,17 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									//-- Step Wife Details ------------------------------
 									$person_step="Yes";
 									if ($TEXT_DIRECTION=="ltr") {
-										$title = $pgv_lang["indi_info"].": ".$wife->getXref();
+										$title = i18n::translate('Individual Information').": ".$wife->getXref();
 									}else{
-										$title = $wife->getXref()." :".$pgv_lang["indi_info"];
+										$title = $wife->getXref()." :".i18n::translate('Individual Information');
 									}
 									$tmp=$wife->getXref();
 									if ($wife->canDisplayName()) {
 										$married = GedcomDate::Compare($censdate, $marrdate);
 										$nam   = $wife->getAllNames();
 										$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-										$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-										$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+										$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+										$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 										//$fulln = strip_tags($wife->getFullName());
 										$givn  = rtrim($nam[0]['givn'],'*');
 										$surn  = $nam[0]['surname'];
@@ -1978,7 +1981,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$parentlinks .= PrintReady($wife->getFullName());								// Full Name (Link)
 									$parentlinks .= "</a>";
 									}else{
-										$parentlinks .= $pgv_lang["private"];
+										$parentlinks .= i18n::translate('Private');
 									}
 									$parentlinks .= "\n";
 								}
@@ -2004,8 +2007,8 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								$chnam   = $child->getAllNames();
 								$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 								$chfulln = str_replace('"', "", $chfulln);											// Must remove quotes completely here
-								$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-								$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+								$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+								$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);			// Child's Full Name
 								$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 								$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
 								$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
@@ -2015,9 +2018,9 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						//-- Spouse -----------------------------------------
 						if ($spouse || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
-								$title = $pgv_lang["familybook_chart"].": ".$famid;
+								$title = i18n::translate('Family Book Chart').": ".$famid;
 							}else{
-								$title = $famid." :".$pgv_lang["familybook_chart"];
+								$title = $famid." :".i18n::translate('Family Book Chart');
 							}
 							if ($spouse) {
 							
@@ -2035,17 +2038,17 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 
 								//-- Spouse Details -----------------------------
 								if ($TEXT_DIRECTION=="ltr") { 
-									$title = $pgv_lang["indi_info"].": ".$spouse->getXref();
+									$title = i18n::translate('Individual Information').": ".$spouse->getXref();
 								}else{
-									$title = $spouse->getXref()." :".$pgv_lang["indi_info"];
+									$title = $spouse->getXref()." :".i18n::translate('Individual Information');
 								}
 								$tmp=$spouse->getXref();
 								if ($spouse->canDisplayName()) {
 									$married = GedcomDate::Compare($censdate, $marrdate);
 									$nam   = $spouse->getAllNames();
 									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-									$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-									$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+									$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+									$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 									$givn  = rtrim($nam[0]['givn'],'*');
 									$surn  = $nam[0]['surname'];
 									if (isset($nam[1])) {
@@ -2107,7 +2110,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$spouselinks .= PrintReady($spouse->getFullName());								// Full Name (Link)
 									$spouselinks .= "</a>";
 								}else{
-									$spouselinks .= $pgv_lang["private"];
+									$spouselinks .= i18n::translate('Private');
 								}
 								$spouselinks .= "</a>\n";
 								if ($spouse->getFullName() != "") {
@@ -2144,8 +2147,8 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$chnam   = $chchild->getAllNames();
 										$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 										$chfulln = str_replace('"', "", $chfulln);												// Must remove quotes completely here
-										$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-										$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);				// Child's Full Name
+										$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+										$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);				// Child's Full Name
 										$chdob   = ($chchild->getBirthDate()->minJD()+$chchild->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 										$chdod   = ($chchild->getDeathDate()->minJD()+$chchild->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
 										$chBLD   = ($chfulln.", ".$chdob.", ".$chdod);
@@ -2166,14 +2169,14 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								}
 								
 								// Childs Details -------------------------
-								$title = $pgv_lang["indi_info"].": ".$cpid;
+								$title = i18n::translate('Individual Information').": ".$cpid;
 								// $spouselinks .= "\n\t\t\t\to&nbsp;&nbsp;";
 								$spouselinks .= "<li>\n";
 								if ($child->canDisplayName()) {
 									$nam   = $child->getAllNames();
 									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-									$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-									$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+									$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+									$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 									$givn  = rtrim($nam[0]['givn'],'*');
 									$surn  = $nam[0]['surname'];
 									if (isset($nam[1]) && isset($ChHusbName)) {
@@ -2238,7 +2241,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$spouselinks .= "</a>";
 									$spouselinks .= "</li>\n";
 								}else{ 
-									$spouselinks .= $pgv_lang["private"];
+									$spouselinks .= i18n::translate('Private');
 								}
 							}
 						}
@@ -2255,19 +2258,19 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 				
 				<?php
 				if ($persons != "Yes") {
-					$spouselinks  .= "(" . $pgv_lang['none'] . ")</td></tr></table>\n\t\t";
+					$spouselinks  .= "(" . i18n::translate('None') . ")</td></tr></table>\n\t\t";
 				}else{
 					$spouselinks  .= "</td></tr></table>\n\t\t";
 				}
 				
 				if ($person_parent != "Yes") {
-					$parentlinks .= "(" . $pgv_lang['unknown'] . ")</td></tr></table>\n\t\t";
+					$parentlinks .= "(" . i18n::translate('unknown') . ")</td></tr></table>\n\t\t";
 				}else{
 					$parentlinks .= "</td></tr></table>\n\t\t";
 				}
 				
 				if ($person_step != "Yes") {
-					$step_parentlinks .= "(" . $pgv_lang['unknown'] . ")</td></tr></table>\n\t\t";
+					$step_parentlinks .= "(" . i18n::translate('unknown') . ")</td></tr></table>\n\t\t";
 				}else{
 					$step_parentlinks .= "</td></tr></table>\n\t\t";
 				}

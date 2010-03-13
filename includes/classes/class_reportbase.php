@@ -4,7 +4,10 @@
  *
  * used by the SAX parser to generate reports from the XML report file.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -23,7 +26,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Reports
  * @version $Id$
  */
@@ -60,7 +63,7 @@ if (!isset($embed_fonts)) {
  * Main PGV Report Class
  *
  * Document wide functions and variable defaults that will be inherited of the report modules
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Reports
  */
 class PGVReportBase {
@@ -458,7 +461,7 @@ class PGVReportBase {
 /**
  * Main PGV Report Element class that all other page elements are extended from
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Reports
  */
 class PGVRElement {
@@ -548,7 +551,7 @@ class PGVRElement {
 /**
 * HTML element class
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -593,7 +596,7 @@ class PGVRHtml extends PGVRElement {
 /**
  * Cell element class
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 */
 class PGVRCell extends PGVRElement {
@@ -746,7 +749,7 @@ class PGVRCell extends PGVRElement {
 /**
  * TextBox element class
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -891,7 +894,7 @@ class PGVRTextBox extends PGVRElement {
 /**
  * Text element class
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -957,7 +960,7 @@ class PGVRText extends PGVRElement {
 /**
  * Footnote element class
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -1055,7 +1058,7 @@ class PGVRFootnote extends PGVRElement {
 /**
  * PageHeader element class
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -1093,7 +1096,7 @@ class PGVRPageHeader extends PGVRElement {
 /**
  * Image element class
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -1176,7 +1179,7 @@ class PGVRImage extends PGVRElement {
 /**
  * Line element class
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Reports
 * @todo add info
 */
@@ -2163,7 +2166,7 @@ function PGVRGetPersonNameSHandler($attrs) {
 		}
 		if (!$record->canDisplayName()) {
 			global $pgv_lang;
-			$currentElement->addText($pgv_lang["private"]);
+			$currentElement->addText(i18n::translate('Private'));
 		} else {
 			$name = $record->getFullName();
 			$name = preg_replace("/<span class=\"starredname\">(.*)<\/span> ?/", "\\1* ", $name); //restores the * for underlining a given name

@@ -2,7 +2,10 @@
 /**
  * Header for colors theme
  *
- * PhpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Themes
  * @version $Id$
  */
@@ -29,8 +32,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $SEARCH_SPIDER, $TEXT_DIRECTION, $SHARED_THEME_DIR, $DATE_FORMAT, $VIEW;
-$displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMAT); 
+global $DATE_FORMAT;
+
+$displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMAT);
+
 if (!isset($view)) $view = safe_REQUEST($_REQUEST, 'view', PGV_REGEX_XREF);
 $menubar = new MenuBar();
 ?>
@@ -50,7 +55,7 @@ $menubar = new MenuBar();
 		<link rel="stylesheet" href="<?php echo $stylesheet; ?>" type="text/css" media="all" />
 		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) { ?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
-			<link rel="stylesheet" href="<?php echo $SHARED_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+			<link rel="stylesheet" href="<?php echo SHARED_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required
 		if (PGV_USE_LIGHTBOX) {
@@ -91,7 +96,7 @@ $menubar = new MenuBar();
 	<?php if ($TEXT_DIRECTION=='rtl') {?>
 		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
 	<?php }?>
-	<link type="text/css" href="<?php echo $SHARED_THEME_DIR?>modules.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo SHARED_THEME_DIR?>modules.css" rel="Stylesheet" />
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>
 <!-- begin header section -->
@@ -116,8 +121,8 @@ else if ($view!='simple'){?>
 			<form action="search.php" method="post">
 				<input type="hidden" name="action" value="general" />
 				<input type="hidden" name="topsearch" value="yes" />
-				<input type="text" class="formbut" accesskey="<?php echo $pgv_lang["accesskey_search"]?>" name="query" size="15" value="<?php echo $pgv_lang['search']?>" onfocus="if (this.value == '<?php echo $pgv_lang['search']?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo $pgv_lang['search']?>';" />
-				<input type="image" src="<?php echo $PGV_IMAGE_DIR ?>/go.gif" align="top" title="<?php echo $pgv_lang['search']?>" />
+				<input type="text" class="formbut" name="query" size="15" value="<?php echo i18n::translate('Search')?>" onfocus="if (this.value == '<?php echo i18n::translate('Search')?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search')?>';" />
+				<input type="image" src="<?php echo $PGV_IMAGE_DIR ?>/go.gif" align="top" title="<?php echo i18n::translate('Search')?>" />
 			</form>
 			</div>
 			<div align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>">

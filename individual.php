@@ -4,7 +4,10 @@
 *
 * Display all of the information about an individual
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Charts
 * @version $Id$
 */
@@ -43,7 +46,7 @@ session_write_close();
 print_header($controller->getPageTitle());
 
 if (!$controller->indi){
-	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
+	echo "<b>", i18n::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();
 	exit;
 }
@@ -219,8 +222,8 @@ jQuery(document).ready(function(){
 		</div>
 		<div id="indi_name">
 		<?php
-		if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", $pgv_lang["accept_successful"], "</b><br />";
-		if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; 
+		if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", i18n::translate('Changes successfully accepted into database'), "</b><br />";
+		if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".i18n::translate('This record has been marked for deletion upon admin approval.')."</span>"; 
 		?>
 		<span class="name_head"><?php
 		if ($TEXT_DIRECTION=="rtl") echo "&nbsp;";
@@ -266,7 +269,7 @@ jQuery(document).ready(function(){
 				$bdate=$controller->indi->getBirthDate();
 				$age = GedcomDate::GetAgeGedcom($bdate);
 				if ($age!="")
-					$summary.= "<dt class=\"label\">".$pgv_lang["age"]."</dt><dd class=\"field\">".get_age_at_event($age, true)."</dd>";
+					$summary.= "<dt class=\"label\">".i18n::translate('Age')."</dt><dd class=\"field\">".get_age_at_event($age, true)."</dd>";
 			}
 			$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
 			if ($SHOW_LDS_AT_GLANCE) {
@@ -284,14 +287,14 @@ jQuery(document).ready(function(){
 		if($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 			//print indi counter only if displaying a non-private person
 			require PGV_ROOT.'includes/hitcount.php';
-			echo "{$pgv_lang["hit_count"]} {$hitCount}\n</div>";
+			echo i18n::translate('Hit Count:'), " ", $hitCount;
 		}
 		// if individual is a remote individual
 		// if information for this information is based on a remote site
 		if ($controller->indi->isRemote())
 		{
 			?><br />
-			<?php echo $pgv_lang["indi_is_remote"]; ?><!--<br />--><!--take this out if you want break the remote site and the fact that it was remote into two separate lines-->
+			<?php echo i18n::translate('The information for this individual was linked from a remote site.'); ?><!--<br />--><!--take this out if you want break the remote site and the fact that it was remote into two separate lines-->
 			<a href="<?php echo encode_url($controller->indi->getLinkUrl()); ?>"><?php echo $controller->indi->getLinkTitle(); ?></a>
 			<?php
 		}
@@ -314,24 +317,7 @@ foreach($controller->modules as $mod) {
 <?php 
 	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
-	?>
-		<div class="accesskeys">
-			<a class="accesskeys" href="<?php echo "pedigree.php?rootid=$pid&amp;show_full=$showFull";?>" title="<?php echo $pgv_lang["pedigree_chart"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_pedigree"]; ?>"><?php echo $pgv_lang["pedigree_chart"] ?></a>
-			<a class="accesskeys" href="<?php echo "descendancy.php?pid=$pid&amp;show_full=$showFull";?>" title="<?php echo $pgv_lang["descend_chart"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_descendancy"]; ?>"><?php echo $pgv_lang["descend_chart"] ?></a>
-			<a class="accesskeys" href="<?php echo "timeline.php?pids[]=$pid";?>" title="<?php echo $pgv_lang["timeline_chart"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_timeline"]; ?>"><?php echo $pgv_lang["timeline_chart"] ?></a>
-			<?php
-				if (PGV_USER_GEDCOM_ID) {
-			?>
-			<a class="accesskeys" href="<?php echo "relationship.php?show_full=$showFull&amp;pid1=", PGV_USER_GEDCOM_ID, "&amp;pid2=", $controller->pid;?>" title="<?php echo $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php echo $pgv_lang["relationship_to_me"] ?></a>
-			<?php }
-			if ($controller->canShowGedcomRecord()) {
-			?>
-			<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php echo $pgv_lang["view_gedcom"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_gedcom"]; ?>"><?php echo $pgv_lang["view_gedcom"] ?></a>
-			<?php
-			}
-		?>
-		</div>
-		<?php } ?>
+	} ?>
 </div>
 <?php
 if (!$controller->indi->canDisplayDetails()) {
@@ -347,10 +333,10 @@ if (!$controller->indi->canDisplayDetails()) {
 		foreach($controller->modules as $mod) {
 			if ($mod!=$controller->static_tab && $mod->hasTab()) {
 				if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
-					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
+					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $mod->getTitle(); ?></span></a></li>
 				<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
-					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getName(); ?>" href="individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
-						<span><?php echo $pgv_lang[$mod->getName()]?></span>
+					<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" href="individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
+						<span><?php echo $mod->getTitle()?></span>
 						</a></li>
 				<?php } 
 				if ($mod->getTab()->hasContent()) $tabcount++; 
@@ -359,7 +345,7 @@ if (!$controller->indi->canDisplayDetails()) {
 		if ($controller->static_tab) {
 			?><li class="ui-state-default ui-corner-top static_tab" style="float: <?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>">
 				<a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>">
-					<span><?php echo $pgv_lang[$controller->static_tab->getName()]?></span>
+					<span><?php echo $controller->static_tab->getTitle(); ?></span>
 				</a>
 				<a id="pin" href="#pin"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
 			</li><?php 
@@ -398,7 +384,7 @@ echo PGV_JS_END;
 
 if ($SEARCH_SPIDER) {
 	if($SHOW_SPIDER_TAGLINE)
-		echo $pgv_lang["label_search_engine_detected"], ": ", $SEARCH_SPIDER;
+		echo i18n::translate('Search Engine Spider Detected'), ": ", $SEARCH_SPIDER;
 	echo "</div></body></html>";
 } else {
 	print_footer();

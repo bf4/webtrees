@@ -2,7 +2,10 @@
 /**
  * Top-of-page menu for Minimal theme
  *
- * PhpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (c) 2002 to 2008  John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Themes
  * @version $Id$
  */
@@ -119,7 +122,6 @@ $menubar = new MenuBar();
 	</tr>
 </table>
 <img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" width="100%" height="3" alt="" />
-<?php require PGV_ROOT.'includes/accesskeyHeaders.php'; ?>
 </div>
 <!-- close div for div id="header" -->
 <?php

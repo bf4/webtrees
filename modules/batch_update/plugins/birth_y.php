@@ -2,7 +2,10 @@
 /**
  * Batch Update plugin for phpGedView - add missing 1 BIRT/DEAT Y
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2008 Greg Roach.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * $Id$
  */
@@ -29,7 +32,15 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-class plugin extends base_plugin {
+class birth_y_bu_plugin extends base_plugin {
+	static function getName() {
+		return i18n::translate('Add missing birth records');
+	}
+
+	static function getDescription() {
+		return i18n::translate('You can improve the performance of PGV by ensuring that all individuals have a &laquo;start of life&raquo; event.');
+	}
+	
 	static function doesRecordNeedUpdate($xref, $gedrec) {
 		return !preg_match('/^1\s+'.PGV_EVENTS_BIRT.'\b/m', $gedrec);
 	}

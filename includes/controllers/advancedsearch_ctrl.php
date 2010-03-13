@@ -3,7 +3,10 @@
 /**
  * Controller for the Advanced Search Page
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009	PGV Development Team. All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -23,7 +26,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */
@@ -120,8 +123,7 @@ class AdvancedSearchController extends SearchController {
 	}
 
 	function getPageTitle() {
-		global $pgv_lang;
-		if ($this->action=="advanced") return $pgv_lang["advanced_search"];
+		if ($this->action=="advanced") return i18n::translate('Advanced Search');
 		else parent :: getPageTitle();
 	}
 
@@ -458,20 +460,18 @@ class AdvancedSearchController extends SearchController {
 	}
 
 	function PrintResults() {
-		global $pgv_lang;
-
 		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 		$ret = true;
 		if (count($this->myindilist)>0) {
 			echo '<br /><div class="center">';
 			uasort($this->myindilist, array('GedcomRecord', 'Compare'));
-			print_indi_table($this->myindilist, $pgv_lang["individuals"]." @ ".PrintReady(get_gedcom_setting(PGV_GEDCOM, 'title'), true));
+			print_indi_table($this->myindilist, i18n::translate('Individuals')." @ ".PrintReady(get_gedcom_setting(PGV_GEDCOM, 'title'), true));
 			print "</div>";
 		}
 		else {
 			$ret = false;
 			if ($this->isPostBack) {
-				echo '<br /><div class="warning" style=" text-align: center;"><i>', $pgv_lang['no_results'], '</i><br /></div>';
+				echo '<br /><div class="warning" style=" text-align: center;"><i>', i18n::translate('No results found.'), '</i><br /></div>';
 			}
 		}
 		return $ret;

@@ -2,7 +2,10 @@
 /**
 * List branches by surname
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Lists
 * @version $Id$
 */
@@ -58,7 +61,7 @@ if ($surn=='*') {
 }
 
 //-- form
-print_header($pgv_lang["branch_list"]." - ".$surn);
+print_header(i18n::translate('Branches')." - ".$surn);
 if ($ENABLE_AUTOCOMPLETE) {
 	require PGV_ROOT.'/js/autocomplete.js.htm';
 }
@@ -67,18 +70,18 @@ if ($ENABLE_AUTOCOMPLETE) {
 	<table class="center facts_table width50">
 		<tr>
 			<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>">
-				<?php print_help_link("surname", "qm", "surname"); echo i18n::translate('SURN'); ?></td>
+				<?php echo i18n::translate('SURN'), help_link('surname'); ?></td>
 			<td class="optionbox <?php echo $TEXT_DIRECTION; ?>">
 				<input type="text" name="surn" id="SURN" value="<?php echo $surn?>" />
 				<input type="hidden" name="ged" id="ged" value="<?php echo $ged?>" />
-				<input type="submit" value="<?php echo $pgv_lang['view']; ?>" />
-				<input type="submit" value="<?php echo $pgv_lang['random_surn']; ?>" onclick="document.surnlist.surn.value='*';" />
+				<input type="submit" value="<?php echo i18n::translate('View'); ?>" />
+				<input type="submit" value="<?php echo i18n::translate('Random surname'); ?>" onclick="document.surnlist.surn.value='*';" />
 				<p class="details1">
-					<?php print_help_link("soundex_search", "qm", "soundex_search"); echo $pgv_lang["soundex_search"]?><br />
+					<?php echo i18n::translate('Search the way you think the name is written (Soundex)'), help_link('soundex_search'); ?><br />
 					<input type="checkbox" name="soundex_std" id="soundex_std" value="1" <?php if ($soundex_std) echo " checked=\"checked\"" ?> />
-					<label for="soundex_std"><?php echo $pgv_lang["search_russell"]?></label>
+					<label for="soundex_std"><?php echo i18n::translate('Basic')?></label>
 					<input type="checkbox" name="soundex_dm" id="soundex_dm" value="1" <?php if ($soundex_dm) echo " checked=\"checked\"" ?> />
-					<label for="soundex_dm"><?php echo $pgv_lang["search_DM"]?></label>
+					<label for="soundex_dm"><?php echo i18n::translate('Daitch-Mokotoff')?></label>
 				</p>
 			</td>
 		</tr>
@@ -101,14 +104,14 @@ if ($surn) {
 	echo "</fieldset>";
 	if ($rootid) {
 		$person = Person::getInstance($rootid);
-		echo "<p class=\"center\">{$pgv_lang['rootid']} : <a title=\"", $person->getXref(), "\" href=\"{$person->getLinkUrl()}\">{$person->getFullName()}</a>";
-		echo "<br />{$pgv_lang["direct-ancestors"]} : ", count($_SESSION['user_ancestors']), "</p>";
+		echo "<p class=\"center\">", i18n::translate('Pedigree Chart Root Person'), " : <a title=\"", $person->getXref(), "\" href=\"{$person->getLinkUrl()}\">{$person->getFullName()}</a>";
+		echo "<br />".i18n::translate('Direct line ancestors-ancestors')." : ", count($_SESSION['user_ancestors']), "</p>";
 	}
 }
 print_footer();
 
 function print_fams($person, $famid=null) {
-	global $pgv_lang, $surn, $surn_lang, $TEXT_DIRECTION;
+	global $UNKNOWN_NN, $PEDIGREE_TYPES, $surn, $surn_lang, $TEXT_DIRECTION;
 	// select person name according to searched surname
 	$person_name = "";
 	foreach ($person->getAllNames() as $n=>$name) {
@@ -143,7 +146,7 @@ function print_fams($person, $famid=null) {
 		"<a target=\"_blank\" class=\"{$class}\" title=\"".$person->getXref()."\" href=\"{$person->getLinkUrl()}\">".PrintReady($person_name)."</a> ".
 		$person->getBirthDeathYears()." {$sosa}"; 
 	if ($famid && $person->getChildFamilyPedigree($famid)) {
-		$current = "<span class='red'>".$pgv_lang[$person->getChildFamilyPedigree($famid)]."</span> ".$current;
+		$current = "<span class='red'>".$PEDIGREE_TYPES[$person->getChildFamilyPedigree($famid)]."</span> ".$current;
 	}
 	// spouses and children
 	if (count($person->getSpouseFamilies())<1) {
@@ -163,7 +166,7 @@ function print_fams($person, $famid=null) {
 				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".PGV_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
 			}
 			else if ($family->getMarriage()) {
-				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".$pgv_lang["yes"]."\">".PGV_ICON_RINGS."</span>&nbsp;";
+				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".i18n::translate('Yes')."\">".PGV_ICON_RINGS."</span>&nbsp;";
 			}
 			$spouse_name = $spouse->getListName();
 			foreach ($spouse->getAllNames() as $n=>$name) {
@@ -173,7 +176,7 @@ function print_fams($person, $famid=null) {
 				}
 				//How can we use check_NN($names) or something else to replace the unknown unknown name from the page language to the language of the spouse's name?
 				else if ($name['fullNN']=="@P.N. @N.N.") {
-					$spouse_name = $pgv_lang["NN".$person_lang].", ".$pgv_lang["NN".$person_lang];
+					$spouse_name = $UNKNOWN_NN["NN".$person_lang].", ".$UNKNOWN_NN["NN".$person_lang];
 					break;
 				}
 			}
@@ -236,8 +239,7 @@ function indis_array($surn, $soundex_std, $soundex_dm) {
 }
 
 function sosa_gen($sosa) {
-	global $pgv_lang;
 	$gen = (int)log($sosa, 2)+1;
-	return "<sup title=\"".$pgv_lang["generation_number"]."\">{$gen}</sup>";
+	return "<sup title=\"".i18n::translate('Generations')."\">{$gen}</sup>";
 }
 ?>

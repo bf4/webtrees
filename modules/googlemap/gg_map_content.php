@@ -2,7 +2,10 @@
 /**
  * Google map module for phpGedView
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * $Id$
  * @author windmillway
@@ -28,14 +31,14 @@ if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 	require_once PGV_ROOT.'modules/googlemap/googlemap.php';
 
 //	echo "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
-	echo '<span class="subheaders">', $pgv_lang["googlemap"], "</span>\n";
+	echo '<span class="subheaders">', i18n::translate('Map'), "</span>\n";
 
 	if (!$GOOGLEMAP_ENABLED) {
 		echo "<table class=\"facts_table\">\n";
-		echo '<tr><td id="no_tab8" colspan="2" class="facts_value">', $pgv_lang["gm_disabled"], "</td></tr>\n";
+		echo '<tr><td id="no_tab8" colspan="2" class="facts_value">', i18n::translate('GoogleMap module disabled'), "</td></tr>\n";
 		if (PGV_USER_IS_ADMIN) {
 			echo "<tr><td align=\"center\" colspan=\"2\">\n";
-			echo '<a href="module.php?mod=googlemap&amp;pgvaction=editconfig">', $pgv_lang["gm_manage"], '</a>';
+			echo '<a href="module.php?mod=googlemap&amp;pgvaction=editconfig">', i18n::translate('Manage GoogleMap configuration'), '</a>';
 			echo '</td>';
 			echo "</tr>\n";
 		}
@@ -55,12 +58,12 @@ if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 			$tNew = str_replace("&", "&amp;", $tNew);
 			if ($SESSION_HIDE_GOOGLEMAP == "true") {
 				echo '&nbsp;&nbsp;&nbsp;<span class="font9"><a href="', $tNew, '&amp;HIDE_GOOGLEMAP=false">';
-				echo '<img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["plus"]["other"], '" border="0" width="11" height="11" alt="', $pgv_lang["activate"], '" title="', $pgv_lang["activate"], '" />';
-				echo ' ', $pgv_lang["activate"], "</a></span>\n";
+				echo '<img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["plus"]["other"], '" border="0" width="11" height="11" alt="', i18n::translate('Activate'), '" title="', i18n::translate('Activate'), '" />';
+				echo ' ', i18n::translate('Activate'), "</a></span>\n";
 				} else {
 					echo '&nbsp;&nbsp;&nbsp;<span class="font9"><a href="', $tNew, '&amp;HIDE_GOOGLEMAP=true">';
-					echo '<img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["minus"]["other"], '" border="0" width="11" height="11" alt="', $pgv_lang["deactivate"], '" title="', $pgv_lang["deactivate"], '" />';
-					echo ' ', $pgv_lang["deactivate"], "</a></span>\n";
+					echo '<img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["minus"]["other"], '" border="0" width="11" height="11" alt="', i18n::translate('Deactivate'), '" title="', i18n::translate('Deactivate'), '" />';
+					echo ' ', i18n::translate('Deactivate'), "</a></span>\n";
 				}
 		}
 		if (!$controller->indi->canDisplayName()) {
@@ -83,13 +86,13 @@ if (file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 					if (PGV_USER_IS_ADMIN) {
 						echo "<table width=\"100%\"><tr>\n";
 						echo "<td width=\"33%\" align=\"left\">\n";
-						echo '<a href="module.php?mod=googlemap&amp;pgvaction=editconfig">', $pgv_lang["gm_manage"], '</a>';
+						echo '<a href="module.php?mod=googlemap&amp;pgvaction=editconfig">', i18n::translate('Manage GoogleMap configuration'), '</a>';
 						echo "</td>\n";
 						echo "<td width=\"33%\" align=\"center\">\n";
-						echo '<a href="module.php?mod=googlemap&amp;pgvaction=places">', $pgv_lang["edit_place_locations"], '</a>';
+						echo '<a href="module.php?mod=googlemap&amp;pgvaction=places">', i18n::translate('Edit geographic place locations'), '</a>';
 						echo "</td>\n";
 						echo "<td width=\"33%\" align=\"right\">\n";
-						echo '<a href="module.php?mod=googlemap&amp;pgvaction=placecheck">', $pgv_lang["placecheck"], '</a>';
+						echo '<a href="module.php?mod=googlemap&amp;pgvaction=placecheck">', i18n::translate('Place Check'), '</a>';
 						echo "</td>\n";
 						echo "</tr></table>\n";
 					}

@@ -2,7 +2,10 @@
 /**
 * Returns data for autocompletion
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Edit
 * @version $Id$
 */
@@ -118,7 +121,7 @@ if ($FORMAT=="json") {
 * @return Array of string
 */
 function autocomplete_INDI($FILTER, $OPTION) {
-	global $pgv_lang, $MAX_ALIVE_AGE;
+	global $MAX_ALIVE_AGE;
 
 	// when adding ASSOciate $OPTION may contain :
 	// current INDI/FAM [, current event date]
@@ -193,7 +196,7 @@ function autocomplete_INDI($FILTER, $OPTION) {
 			// display
 			$data[$person->getXref()]=$person->getFullName();
 			if ($OPTION && $event_date && $person->getBirthDate()->isOK()) {
-				$data[$person->getXref()].=" <span class=\"age\">(".$pgv_lang["age"]." ".$person->getBirthDate()->MinDate()->getAge(false, $event_jd).")</span>";
+				$data[$person->getXref()].=" <span class=\"age\">(".i18n::translate('Age')." ".$person->getBirthDate()->MinDate()->getAge(false, $event_jd).")</span>";
 			} else {
 				$data[$person->getXref()].=" <u>".ltrim($person->getBirthYear(), "0")."-".ltrim($person->getDeathYear(), "0")."</u>";
 			}

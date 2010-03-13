@@ -3,7 +3,10 @@
  * Allows user to select a person on their server to create a remote link
  * to a person selected from the search results.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2005  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +23,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */
@@ -28,11 +31,11 @@
 define('PGV_SCRIPT_NAME', 'addsearchlink.php');
 require './config.php';
 
-print_simple_header($pgv_lang["title_search_link"]);
+print_simple_header(i18n::translate('Add Local Link'));
 
 //-- only allow users with editing access to this page
 if (!PGV_USER_CAN_EDIT) {
-	print $pgv_lang["access_denied"];
+	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	print_simple_footer();
 	exit;
 }
@@ -60,27 +63,31 @@ if(isset($pid) && isset($server) && isset($indiName))
 				<table class="facts_table" align="center">
 					<tr>
 						<td class="facts_label03" colspan="3" align="center">
-							<?php print_help_link("link_remote", "qm"); ?> <?php echo $pgv_lang["title_remote_link"];?>
+							<?php echo i18n::translate('Add Remote Link'), help_link('link_remote'); ?>
 						</td>
 					</tr>
 					<tr>
-						<td class="descriptionbox width20" id="tdId"><?php print_help_link('link_person_id', 'qm');?> Local Person ID</td>
+						<td class="descriptionbox width20" id="tdId">
+							<?php echo i18n::translate('Local Person ID'), help_link('link_person_id'); ?>
+						</td>
 						<td class="optionbox"><input type="text" id="pid" name="pid" size="14"/></td>
 						<td class="optionbox" rowspan="2"><br/>
-							<input type="submit" value="<?php echo $pgv_lang['label_add_remote_link'];?>" id="btnSubmit" name="btnSubmit" value="add"/>
+							<input type="submit" value="<?php echo i18n::translate('Add Link');?>" id="btnSubmit" name="btnSubmit" value="add"/>
 						</td>
 					</tr>
 					<tr>
-						<td class="descriptionbox width20"><?php print_help_link('link_remote_rel', 'qm');?> <?php echo $pgv_lang["label_rel_to_current"];?></td>
+						<td class="descriptionbox width20">
+							<?php echo i18n::translate('Relationship to current person'), help_link('link_remote_rel'); ?>
+						</td>
 						<td class="optionbox">
 							<select id="cbRelationship" name="cbRelationship">
-								<option value="self" selected><?php echo $pgv_lang["current_person"];?></option>
-								<option value="mother"><?php echo $pgv_lang["mother"];?></option>
-								<option value="father"><?php echo $pgv_lang["father"];?></option>
-								<option value="husband"><?php echo $pgv_lang["husband"];?></option>
-								<option value="wife"><?php echo $pgv_lang["wife"];?></option>
-								<option value="son"><?php echo $pgv_lang["son"];?></option>
-								<option value="daughter"><?php echo $pgv_lang["daughter"];?></option>
+								<option value="self" selected><?php echo i18n::translate('Same as current');?></option>
+								<option value="mother"><?php echo i18n::translate('Mother');?></option>
+								<option value="father"><?php echo i18n::translate('Father');?></option>
+								<option value="husband"><?php echo i18n::translate('Husband');?></option>
+								<option value="wife"><?php echo i18n::translate('Wife');?></option>
+								<option value="son"><?php echo i18n::translate('Son');?></option>
+								<option value="daughter"><?php echo i18n::translate('Daughter');?></option>
 							</select>
 						</td>
 					</tr>

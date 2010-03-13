@@ -2,7 +2,10 @@
 /**
  * Class file for a Shared Note (NOTE) object
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage DataModel
  * @version $Id$
  */
@@ -42,11 +45,10 @@ class Note extends GedcomRecord {
 	// The 'name' of a note record is the first line.  This can be
 	// somewhat unwieldy if lots of CONC records are used.  Limit to 100 chars
 	protected function _addName($type, $value, $gedrec) {
-		global $pgv_lang;
 		if (UTF8_strlen($value)<100) {
 			parent::_addName($type, $value, $gedrec);
 		} else {
-			parent::_addName($type, UTF8_substr($value, 0, 100).$pgv_lang['ellipsis'], $gedrec);
+			parent::_addName($type, UTF8_substr($value, 0, 100).i18n::translate('…'), $gedrec);
 		}
 	}
 

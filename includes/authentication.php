@@ -9,7 +9,10 @@
  * You can extend PhpGedView to work with other systems by implementing the functions in this file.
  * Other possible options are to use LDAP for authentication.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -28,7 +31,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage DB
  * @version $Id$
  */
@@ -85,14 +88,13 @@ function authenticateUser($user_name, $password, $basic=false) {
  * @TODO do we need to set the user language and other jobs done in login.php? Should that loading be moved to a function called from the authenticateUser function?
  */
 function basicHTTPAuthenticateUser() {
-	global $pgv_lang;
 	$user_id = getUserId();
 	if (empty($user_id)){ //not logged in.
 		if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])
 				|| (! authenticateUser($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], true))) {
-			header('WWW-Authenticate: Basic realm="' . $pgv_lang["basic_realm"] . '"');
+			header('WWW-Authenticate: Basic realm="' . i18n::translate('PhpGedView Authentication System') . '"');
 			header('HTTP/1.0 401 Unauthorized');
-			echo $pgv_lang["basic_auth_failure"] ;
+			echo i18n::translate('You must enter a valid login ID and password to access this resource') ;
 			exit;
 		}
 	} else { //already logged in or successful basic authentication
@@ -419,7 +421,7 @@ function AddToChangeLog($LogString, $ged="") {
 //----------------------------------- addMessage
 //-- stores a new message in the database
 function addMessage($message) {
-	global $TBLPREFIX, $CONTACT_METHOD, $pgv_lang,$CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL;
+	global $TBLPREFIX, $CONTACT_METHOD, $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array, $DATE_FORMAT, $DATE_FORMAT_array, $TIME_FORMAT, $TIME_FORMAT_array, $WEEK_START, $WEEK_START_array;
 	global $PHPGEDVIEW_EMAIL;
 
@@ -448,17 +450,17 @@ function addMessage($message) {
 	//-- setup the message body for the "from" user
 	$email2 = $message["body"];
 	if (isset($message["from_name"]))
-		$email2 = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$email2;
+		$email2 = i18n::translate('Your Name:')." ".$message["from_name"]."\r\n".i18n::translate('Email Address:')." ".$message["from_email"]."\r\n\r\n".$email2;
 	if (!empty($message["url"]))
-		$email2 .= "\r\n\r\n--------------------------------------\r\n\r\n".$pgv_lang["viewing_url"]."\r\n".$SERVER_URL.$message["url"]."\r\n";
+		$email2 .= "\r\n\r\n--------------------------------------\r\n\r\n".i18n::translate('This message was sent while viewing the following URL: ')."\r\n".$SERVER_URL.$message["url"]."\r\n";
 	$email2 .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
 	$email2 .= "DNS LOOKUP: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."\r\n";
 	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
-	$subject2 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
+	$subject2 = "[".i18n::translate('PhpGedView Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 	$from ="";
 	if (!$user_id_from) {
 		$from = $message["from"];
-		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".$email2;
+		$email2 = i18n::translate('You sent the following message to a PhpGedView administrator:')."\r\n\r\n".$email2;
 		$fromFullName = $message["from"];
 	} else {
 		$fromFullName = getUserFullName($user_id_from);
@@ -466,20 +468,20 @@ function addMessage($message) {
 			$from = hex4email($fromFullName,$CHARACTER_SET). " <".get_user_setting($user_id_from, 'email').">";
 		else
 			$from = get_user_setting($user_id_from, 'email');
-		$email2 = $pgv_lang["message_email2"]."\r\n\r\n".$email2;
+		$email2 = i18n::translate('You sent the following message to a PhpGedView user:')."\r\n\r\n".$email2;
 
 	}
 	if ($message["method"]!="messaging") {
-		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
+		$subject1 = "[".i18n::translate('PhpGedView Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 		if (!$user_id_from) {
-			$email1 = $pgv_lang["message_email1"];
+			$email1 = i18n::translate('The following message has been sent to your PhpGedView user account from ');
 			if (!empty($message["from_name"])) {
 				$email1 .= $message["from_name"]."\r\n\r\n".$message["body"];
 			} else {
 				$email1 .= $from."\r\n\r\n".$message["body"];
 			}
 		} else {
-			$email1 = $pgv_lang["message_email1"];
+			$email1 = i18n::translate('The following message has been sent to your PhpGedView user account from ');
 			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
 		}
 		if (!isset($message["no_from"])) {
@@ -503,11 +505,11 @@ function addMessage($message) {
 		loadLanguage($to_lang, true);
 	}
 	if (isset($message["from_name"]))
-		$message["body"] = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$message["body"];
+		$message["body"] = i18n::translate('Your Name:')." ".$message["from_name"]."\r\n".i18n::translate('Email Address:')." ".$message["from_email"]."\r\n\r\n".$message["body"];
 	//-- [ phpgedview-Feature Requests-1588353 ] Supress admin IP address in Outgoing PGV Email
 	if (!userIsAdmin($user_id_from)) {
 		if (!empty($message["url"]))
-			$message["body"] .= "\r\n\r\n--------------------------------------\r\n\r\n".$pgv_lang["viewing_url"]."\r\n".$SERVER_URL.$message["url"]."\r\n";
+			$message["body"] .= "\r\n\r\n--------------------------------------\r\n\r\n".i18n::translate('This message was sent while viewing the following URL: ')."\r\n".$SERVER_URL.$message["url"]."\r\n";
 		$message["body"] .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
 		$message["body"] .= "DNS LOOKUP: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."\r\n";
 		$message["body"] .= "LANGUAGE: $LANGUAGE\r\n";
@@ -519,15 +521,15 @@ function addMessage($message) {
 			->execute(array(get_next_id("messages", "m_id"), $message["from"], $message["to"], $message["subject"], $message["body"], $message["created"]));
 	}
 	if ($message["method"]!="messaging") {
-		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
+		$subject1 = "[".i18n::translate('PhpGedView Message').($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 		if (!$user_id_from) {
-			$email1 = $pgv_lang["message_email1"];
+			$email1 = i18n::translate('The following message has been sent to your PhpGedView user account from ');
 			if (!empty($message["from_name"]))
 				$email1 .= $message["from_name"]."\r\n\r\n".$message["body"];
 			else
 				$email1 .= $from."\r\n\r\n".$message["body"];
 		} else {
-			$email1 = $pgv_lang["message_email1"];
+			$email1 = i18n::translate('The following message has been sent to your PhpGedView user account from ');
 			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
 		}
 		if (!$user_id_to) {

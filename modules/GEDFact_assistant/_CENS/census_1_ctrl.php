@@ -4,7 +4,10 @@
  *
  * Census information about an individual
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Census Assistant
  * @version $Id$
  */
@@ -31,7 +34,7 @@
 	exit;
 }
 
-global $summary, $theme_name, $pgv_lang, $censyear, $censdate;
+global $summary, $theme_name, $censyear, $censdate;
  
 $pid = safe_get('pid');
 
@@ -69,7 +72,7 @@ $currpid=$pid;
 	// Header of assistant window =====================================================
 	echo "<div class=\"cens_header\">";
 		echo "<div class=\"cens_header_left\">";
-			echo $pgv_lang["head"];
+			echo i18n::translate('Head of Household:');
 			echo " &nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
 		echo "</div>";
 			if ($summary) {
@@ -99,10 +102,10 @@ $currpid=$pid;
 	?>
 	<div class="optionbox cens_textinput">
 		<div class="cens_textinput_left">
-			<input type="button" value="<?php echo $pgv_lang["cens_add_insert"]; ?>" onclick="insertRowToTable('', '', '', '', '', '', '', '', 'Age', '', '', '', '', '', '');" />
+			<input type="button" value="<?php echo i18n::translate('Add/Insert Blank Row'); ?>" onclick="insertRowToTable('', '', '', '', '', '', '', '', 'Age', '', '', '', '', '', '');" />
 		</div>
 		<div class="cens_textinput_right">
-			<?php echo $pgv_lang["add"]; ?><br>
+			<?php echo i18n::translate('Add'); ?><br>
 			<input  type="radio" name="totallyrad" value="0" checked="checked" />
 		</div>	
 	<?php

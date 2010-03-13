@@ -4,7 +4,10 @@
  *
  * This block prints basic information about the active gedcom
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  * @version $Id$
  */
@@ -33,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_GEDCOM_BLOCK_PHP', '');
 
-$PGV_BLOCKS["print_gedcom_block"]["name"]		= $pgv_lang["gedcom_block"];
+$PGV_BLOCKS["print_gedcom_block"]["name"]		= i18n::translate('GEDCOM Welcome');
 $PGV_BLOCKS["print_gedcom_block"]["descr"]		= "gedcom_descr";
 $PGV_BLOCKS["print_gedcom_block"]["type"]		= "gedcom";
 $PGV_BLOCKS["print_gedcom_block"]["canconfig"]	= false;
@@ -41,17 +44,17 @@ $PGV_BLOCKS["print_gedcom_block"]["config"]		= array("cache"=>0);
 
 //-- function to print the gedcom block
 function print_gedcom_block($block = true, $config="", $side, $index) {
-	global $hitCount, $pgv_lang, $SHOW_COUNTER;
+	global $hitCount, $SHOW_COUNTER;
 
 	$id = "gedcom_welcome";
 	$title = PrintReady(get_gedcom_setting(PGV_GED_ID, 'title'));
 	$content = "<div class=\"center\">";
 	$content .= "<br />".format_timestamp(client_time())."<br />\n";
 	if ($SHOW_COUNTER)
-		$content .=  $pgv_lang["hit_count"]." ".$hitCount."<br />\n";
+		$content .=  i18n::translate('Hit Count:')." ".$hitCount."<br />\n";
 	$content .=  "\n<br />";
 	if (PGV_USER_GEDCOM_ADMIN) {
-		$content .=  "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name=".PGV_GEDCOM."&ctype=gedcom")."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1'); return false;\">".$pgv_lang["customize_gedcom_page"]."</a><br />\n";
+		$content .=  "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name=".PGV_GEDCOM."&ctype=gedcom")."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1'); return false;\">".i18n::translate('Customize this GEDCOM Welcome page')."</a><br />\n";
 	}
 	$content .=  "</div>";
 

@@ -2,7 +2,10 @@
 /**
 * Base class for all gedcom records
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage DataModel
 * @version $Id$
 */
@@ -451,7 +454,7 @@ class GedcomRecord {
 	// ['list'] = a version of the name as might appear in lists, e.g. 'van Gogh, Vincent' or 'Unknown, John'
 	// ['sort'] = a sortable version of the name (not for display), e.g. 'Gogh, Vincent' or '@N.N., John'
 	protected function _getAllNames($fact='!', $level=1) {
-		global $pgv_lang, $WORD_WRAPPED_NOTES;
+		global $WORD_WRAPPED_NOTES;
 
 		if (is_null($this->_getAllNames)) {
 			$this->_getAllNames=array();
@@ -471,7 +474,7 @@ class GedcomRecord {
 					$this->_addName($this->getType(), $this->getFallBackName(), null);
 				}
 			} else {
-				$this->_addName($this->getType(), $pgv_lang['private'], null);
+				$this->_addName($this->getType(), i18n::translate('Private'), null);
 			}
 		}
 		return $this->_getAllNames;
@@ -598,12 +601,11 @@ class GedcomRecord {
 
 	// Get the three variants of the name
 	function getFullName() {
-		global $pgv_lang;
 		if ($this->canDisplayName()) {
 			$tmp=$this->getAllNames();
 			return $tmp[$this->getPrimaryName()]['full'];
 		} else {
-			return $pgv_lang['private'];
+			return i18n::translate('Private');
 		}
 	}
 	function getSortName() {
@@ -612,12 +614,11 @@ class GedcomRecord {
 		return $tmp[$this->getPrimaryName()]['sort'];
 	}
 	function getListName() {
-		global $pgv_lang;
 		if ($this->canDisplayName()) {
 			$tmp=$this->getAllNames();
 			return $tmp[$this->getPrimaryName()]['list'];
 		} else {
-			return $pgv_lang['private'];
+			return i18n::translate('Private');
 		}
 	}
 	// Get the fullname in an alternative character set

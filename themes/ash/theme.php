@@ -2,7 +2,10 @@
 /**
  * Ash theme
  *
- * PhpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Themes/Colors
  * @version $Id$
  */
@@ -31,6 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 $theme_name       = "Ash";
 $SHARED_THEME_DIR = "themes/colors/";
+define('SHARED_THEME_DIR', $SHARED_THEME_DIR);
 $stylesheet       = $SHARED_THEME_DIR . "css/ash.css"; 
 $print_stylesheet = $SHARED_THEME_DIR . "css/ash.css"; 
 include('themes/colors/theme.inc');

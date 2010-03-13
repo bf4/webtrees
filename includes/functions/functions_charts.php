@@ -2,7 +2,10 @@
 /**
  * Functions used for charts
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -197,7 +200,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		$marriage = $family->getMarriage();
 		if ($marriage->canShow()) {
 			$marriage->print_simple_fact();
-		} else print $pgv_lang["private"];
+		} else print i18n::translate('Private');
 		print "</a>";
 	}
 	else print "<br />\n";
@@ -285,14 +288,14 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	$numchil=$family->getNumberOfChildren();
 	print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"2\"><tr>";
 	if ($sosa>0) print "<td></td>";
-	print "<td><span class=\"subheaders\">".$pgv_lang["children"]."</span>";
+	print "<td><span class=\"subheaders\">".i18n::translate('Children')."</span>";
 	echo '<span class="font11">&nbsp;&nbsp;', getLRM(), '(';
 	if ($numchil==0) {
-		echo $pgv_lang["no_children"];
+		echo i18n::translate('No children');
 	} else if ($numchil==1) {
-		echo $pgv_lang["known_child"];
+		echo i18n::translate('1 child');
 	} else {
-		echo $numchil, '&nbsp;', $pgv_lang["known_children"];
+		echo $numchil, '&nbsp;', i18n::translate('children');
 	}
 	echo ')', getLRM(), '</span>';
 	print "<br />";
@@ -300,10 +303,10 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	if ($view!="preview" && $sosa==0 && PGV_USER_CAN_EDIT) {
 		print "<br />";
 		print "<span class='nowrap font12'>";
-		print_help_link("add_child", "qm", "add_child_to_family");
-		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . $pgv_lang["add_child_to_family"] . "</a>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', $pgv_lang["son"     ])."]</a>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', $pgv_lang["daughter"])."]</a>";
+		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . i18n::translate('Add a child to this family') . "</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', i18n::translate('Son'     ))."]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', i18n::translate('Daughter'))."]</a>";
+		print help_link('add_child');
 		print "</span>";
 		print "<br /><br />";
 	}
@@ -445,8 +448,8 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 			$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
 			if ($ct>0) $nchi = $match[1];
 		}
-		if ($nchi=="0") print "<img src=\"images/small/childless.gif\" alt=\"".$pgv_lang["childless_family"]."\" title=\"".$pgv_lang["childless_family"]."\" /> ".$pgv_lang["childless_family"];
-//		else print $pgv_lang["no_children"];
+		if ($nchi=="0") print "<img src=\"images/small/childless.gif\" alt=\"".i18n::translate('This family remained childless')."\" title=\"".i18n::translate('This family remained childless')."\" /> ".i18n::translate('This family remained childless');
+//		else print i18n::translate('No children');
 		print "</td></tr>";
    }
    else {
@@ -466,7 +469,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
  * @param int $sosa optional child sosa number
  */
 function print_family_facts(&$family, $sosa = 0) {
-	global $pgv_lang, $pbwidth, $pbheight, $view;
+	global $pbwidth, $pbheight, $view;
 	global $nonfacts;
 	global $TEXT_DIRECTION, $GEDCOM, $SHOW_ID_NUMBERS;
 	global $show_changes, $pgv_changes;
@@ -484,7 +487,7 @@ function print_family_facts(&$family, $sosa = 0) {
 
 		if (count($indifacts) > 0) {
 			sort_facts($indifacts);
-			print "\n\t<span class=\"subheaders\">" . $pgv_lang["family_group_info"];
+			print "\n\t<span class=\"subheaders\">" . i18n::translate('Family Group Information');
 			if ($SHOW_ID_NUMBERS and $famid != "") print "&nbsp;&nbsp;&nbsp;($famid)";
 			print "</span><br />\n\t<table class=\"facts_table\">";
 			/* @var $value Event */
@@ -511,14 +514,14 @@ function print_family_facts(&$family, $sosa = 0) {
 		}
 		else {
 			if ($sosa==0) {
-				print "\n\t<span class=\"subheaders\">" . $pgv_lang["family_group_info"];
+				print "\n\t<span class=\"subheaders\">" . i18n::translate('Family Group Information');
 				if ($SHOW_ID_NUMBERS and $famid != "") print "&nbsp;&nbsp;&nbsp;($famid)";
 				print "</span><br />\n\t";
 			}
 			print "<table class=\"facts_table\">";
 			if ($sosa == 0) {
 				print "<tr><td class=\"messagebox\" colspan=\"2\">";
-				print $pgv_lang["no_family_facts"];
+				print i18n::translate('No facts for this family.');
 				print "</td></tr>\n";
 			}
 		}
@@ -528,38 +531,38 @@ function print_family_facts(&$family, $sosa = 0) {
 			
 			// -- new note
 			print "<tr><td class=\"descriptionbox\">";
-			print_help_link("add_note", "qm" ,"add_note_lbl");
-			print $pgv_lang["add_note_lbl"] . "</td>";
-			print "<td class=\"optionbox\">";
-			print "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','NOTE');\">" . $pgv_lang["add_note"] . "</a>";
+			print i18n::translate('Add Note');
+			print help_link('add_note');
+			print "</td><td class=\"optionbox\">";
+			print "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','NOTE');\">" . i18n::translate('Add a new Note') . "</a>";
 			print "<br />\n";
 			print "</td></tr>\n";
 			
 			// -- new shared note
 			print "<tr><td class=\"descriptionbox\">";
-			print_help_link("add_shared_note", "qm" ,"add_shared_note_lbl");
-			print $pgv_lang["add_shared_note_lbl"] . "</td>";
-			print "<td class=\"optionbox\">";
-			print "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','SHARED_NOTE');\">" . $pgv_lang["add_shared_note"] . "</a>";
+			print i18n::translate('Add Shared Note');
+			print help_link('add_shared_note');
+			print "</td><td class=\"optionbox\">";
+			print "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','SHARED_NOTE');\">" . i18n::translate('Add a new Shared Note') . "</a>";
 			print "<br />\n";
 			print "</td></tr>\n";
 			
 			// -- new media
 			print "<tr><td class=\"descriptionbox\">";
-			print_help_link("add_media", "qm", "add_media_lbl");
-			print $pgv_lang["add_media_lbl"] . "</td>";
-			print "<td class=\"optionbox\">";
-			print "<a href=\"javascript: ".$pgv_lang["add_media_lbl"]."\" onclick=\"window.open('addmedia.php?action=showmediaform&linktoid={$famid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["add_media"]."</a>";
+			print i18n::translate('Add Media');
+			print help_link('add_media');
+			print "</td><td class=\"optionbox\">";
+			print "<a href=\"javascript: ".i18n::translate('Add Media')."\" onclick=\"window.open('addmedia.php?action=showmediaform&linktoid={$famid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".i18n::translate('Add a new Media item')."</a>";
 			print "<br />\n";
-			print "<a href=\"javascript:;\" onclick=\"window.open('inverselink.php?linktoid={$famid}&linkto=family', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["link_to_existing_media"]."</a>";
+			print "<a href=\"javascript:;\" onclick=\"window.open('inverselink.php?linktoid={$famid}&linkto=family', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;\">".i18n::translate('Link to an existing Media item')."</a>";
 			print "</td></tr>\n";
 			
 			// -- new source citation
 			print "<tr><td class=\"descriptionbox\">";
-			print_help_link("add_source", "qm", "add_source_lbl");
-			print $pgv_lang["add_source_lbl"] . "</td>";
-			print "<td class=\"optionbox\">";
-			print "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','SOUR');\">" . $pgv_lang["add_source"] . "</a>";
+			print i18n::translate('Add Source Citation');
+			print help_link('add_source');
+			print "</td><td class=\"optionbox\">";
+			print "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','SOUR');\">" . i18n::translate('Add a new Source Citation') . "</a>";
 			print "<br />\n";
 			print "</td></tr>\n";
 			// -- end new objects
@@ -580,7 +583,7 @@ function print_family_facts(&$family, $sosa = 0) {
  * @param string $gparid optional gd-parent ID (descendancy booklet)
  */
 function print_sosa_family($famid, $childid, $sosa, $label="", $parid="", $gparid="", $personcount="1") {
-	global $pgv_lang, $pbwidth, $pbheight, $view;
+	global $pbwidth, $pbheight, $view;
 
 	if ($view != "preview") print "<hr />";
 	print "\r\n\r\n<p style='page-break-before:always' />\r\n";
@@ -677,7 +680,7 @@ function ancestry_array($rootid, $maxgen=0) {
  * @param string $dir arrow direction 0=left 1=right 2=up 3=down (default=2)
  */
 function print_url_arrow($id, $url, $label, $dir=2) {
-	global $pgv_lang, $view;
+	global $view;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $TEXT_DIRECTION;
 
@@ -720,8 +723,8 @@ function get_sosa_name($sosa) {
 		case "swedish":
 			$sosaname = "";
 			$addname = "";
-			$father = UTF8_strtolower($pgv_lang["father"]);
-			$mother = UTF8_strtolower($pgv_lang["mother"]);
+			$father = UTF8_strtolower(i18n::translate('Father'));
+			$mother = UTF8_strtolower(i18n::translate('Mother'));
 			$grand = "be".($LANGUAGE == "danish"?"dste":"ste");
 			$great = "olde";
 			$tip = "tip".($LANGUAGE == "danish"?"-":"p-");
@@ -779,21 +782,21 @@ function get_sosa_name($sosa) {
 			if ($gen == 3) $sosaname .= "betovergroot";
 			if ($gen == 2) $sosaname .= "overgroot";
 			if ($gen == 1) $sosaname .= "groot";
-			if ($sosa%2==0) $sosaname .= $pgv_lang["father"];
-			else $sosaname .= $pgv_lang["mother"];
+			if ($sosa%2==0) $sosaname .= i18n::translate('Father');
+			else $sosaname .= i18n::translate('Mother');
 			$sosaname = strtolower($sosaname);
 			break;
 
 		case "finnish":
 		    $sosaname = "";
-			$father = UTF8_strtolower($pgv_lang["father"]);
-			$mother = UTF8_strtolower($pgv_lang["mother"]);
+			$father = UTF8_strtolower(i18n::translate('Father'));
+			$mother = UTF8_strtolower(i18n::translate('Mother'));
 	//		$father = "isä";
 	//		$mother = "äiti";
-	//		$pgv_lang["sosa_2"]= "äidin";	//Grand (mother)
+	//		i18n::translate('Father')= "äidin";	//Grand (mother)
 			for ($i=$gen; $i>0; $i--){
 				if (!(floor($sosa/(pow(2,$i)))%2)) $sosaname .= $father."n";
-	//			else $sosaname .= $pgv_lang["sosa_2"];
+	//			else $sosaname .= i18n::translate('Father');
 				else $sosaname .= UTF8_substr($mother, 0,2)."din";
 			}
 			if ($sosa%2==0) $sosaname .= $father;
@@ -806,13 +809,13 @@ function get_sosa_name($sosa) {
 		case "hebrew":
 		    $sosaname = "";
 			$addname = "";
-			$father = $pgv_lang["father"];
-			$mother = $pgv_lang["mother"];
+			$father = i18n::translate('Father');
+			$mother = i18n::translate('Mother');
 			$greatf = $pgv_lang["sosa_greatfather"];
 			$greatm = $pgv_lang["sosa_greatmother"];
 			$of = $pgv_lang["sosa_of"];
-			$grandfather = $pgv_lang["sosa_4"];
-			$grandmother = $pgv_lang["sosa_5"];
+			$grandfather = i18n::translate('Grandfather');
+			$grandmother = i18n::translate('Grandmother');
 	//		$father = "Aba";
 	//		$mother = "Ima";
 	//		$grandfather = "Saba";
@@ -895,7 +898,7 @@ function find_last_spouse($pid) {
  */
 function print_cousins($famid, $personcount="1") {
 	global $show_full, $bheight, $bwidth;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 	global $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -935,7 +938,7 @@ function print_cousins($famid, $personcount="1") {
 		$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
 		if ($ct>0) $nchi = $match[1];
 		else $nchi = "";
-		if ($nchi=="0") print "&nbsp;<img src=\"images/small/childless.gif\" alt=\"".$pgv_lang["childless_family"]."\" title=\"".$pgv_lang["childless_family"]."\" />";
+		if ($nchi=="0") print "&nbsp;<img src=\"images/small/childless.gif\" alt=\"".i18n::translate('This family remained childless')."\" title=\"".i18n::translate('This family remained childless')."\" />";
 	}
 	$show_full = $save_show_full;
 	if ($save_show_full) {

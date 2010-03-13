@@ -4,7 +4,10 @@
  * Called when a 404 error occurs in the media directory
  * Serves images from the index directory
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,7 +25,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @package PhpGedView
+ * @package webtrees
  * @version $Id$
  */
 
@@ -316,7 +319,7 @@ if (!$serverFilename) {
 	$exp = explode("?", $requestedfile);
 	$pathinfo = pathinfo($exp[0]);
 	$ext = @strtolower($pathinfo['extension']);
-	if (!$debug_mediafirewall) sendErrorAndExit($ext, $pgv_lang["media_firewall_invalid_dir"], $requestedfile);
+	if (!$debug_mediafirewall) sendErrorAndExit($ext, i18n::translate('Error: The Media Firewall was launched from a directory other than the media directory.'), $requestedfile);
 }
 
 $isThumb = false;
@@ -332,7 +335,7 @@ if (strpos($_SERVER['REQUEST_URI'], '/thumbs/')) {
 if (!file_exists($serverFilename)) {
 	// the requested file MAY be in the gedcom, but it does NOT exist on the server.  bail.
 	// Note: the 404 error status is still in effect.
-	if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["no_media"], $serverFilename);
+	if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), i18n::translate('No Media Found'), $serverFilename);
 }
 
 if (empty($controller->pid)) {
@@ -341,7 +344,7 @@ if (empty($controller->pid)) {
 		// only show these files to admin users
 		// bail since current user is not admin
 		// Note: the 404 error status is still in effect.
-//		if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["media_privacy"], $serverFilename);
+//		if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), i18n::translate('Privacy restrictions prevent you from viewing this item'), $serverFilename);
 	}
 }
 
@@ -349,7 +352,7 @@ if (empty($controller->pid)) {
 if (!$controller->mediaobject->canDisplayDetails()) {
 	// if no permissions, bail
 	// Note: the 404 error status is still in effect
-	if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["media_privacy"]);
+	if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), i18n::translate('Privacy restrictions prevent you from viewing this item'));
 }
 
 $protocol = $_SERVER["SERVER_PROTOCOL"];  // determine if we are using HTTP/1.0 or HTTP/1.1
@@ -527,7 +530,7 @@ if ( $generatewatermark ) {
 
 	} else {
 		// this image is defective.  log it
-		AddToLog("Media Firewall error: >".$pgv_lang["media_broken"]."< in file >".$serverFilename."< (".getImageInfoForLog($serverFilename).") memory used: ".memory_get_usage());
+		AddToLog("Media Firewall error: >".i18n::translate('This media file is broken and cannot be watermarked')."< in file >".$serverFilename."< (".getImageInfoForLog($serverFilename).") memory used: ".memory_get_usage());
 
 		// set usewatermark to false so image will simply be passed through below
 		$usewatermark = false;

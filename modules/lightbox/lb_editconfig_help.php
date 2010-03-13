@@ -2,7 +2,10 @@
 /**
  * English Language Configure Help file for PHPGedView
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @version $Id$
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Admin
  * $Id$
  */
@@ -30,11 +33,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lightbox:lang, lightbox:help_text");
-
 $help = safe_GET("help");
 
-print_simple_header($pgv_lang["config_help"]);
+print_simple_header(i18n::translate('Configuration help'));
 print '<span class="helpheader">';
 print_text("config_help");
 print '</span><br /><br /><span class="helptext">';

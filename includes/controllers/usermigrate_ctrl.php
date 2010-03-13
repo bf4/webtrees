@@ -4,7 +4,10 @@
  * Exports users and their data to either SQL queries (Index mode) or
  * authenticate.php and xxxxxx.dat files (MySQL mode).
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010 PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -24,7 +27,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @author Boudewijn Sjouke	sjouke@users.sourceforge.net
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Admin
  * @version $Id$
  */
@@ -118,10 +121,11 @@ class UserMigrateControllerRoot extends BaseController {
 	 * @return string
 	 */
 	function getPageTitle() {
-		global $pgv_lang;
-
-		if ($this->proceed == "backup") return $pgv_lang["um_backup"];
-		else return $pgv_lang["um_header"];
+		if ($this->proceed == "backup") {
+			return i18n::translate('Backup');
+		} else {
+			return i18n::translate('User Information Migration tool');
+		}
 	}
 
 	/**
@@ -282,7 +286,7 @@ class UserMigrateControllerRoot extends BaseController {
 	 *
 	 */
 	function import() {
-		global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang;
+		global $INDEX_DIRECTORY, $TBLPREFIX;
 
 		if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
 			$this->impSuccess = false;
@@ -372,7 +376,7 @@ class UserMigrateControllerRoot extends BaseController {
 
 		if ((file_exists($INDEX_DIRECTORY."favorites.dat")) == false) {
 			$this->favSuccess = false;
-			print $pgv_lang["um_nofav"]."<br /><br />";
+			print i18n::translate('No Favorites seem to be present in the system.')."<br /><br />";
 		}
 		else {
 			PGV_DB::exec("DELETE FROM {$TBLPREFIX}favorites");

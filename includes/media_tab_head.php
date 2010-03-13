@@ -2,7 +2,10 @@
 /**
  * Provides media tab header for reorder media Items using drag and drop
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2009  PHPGedView Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
@@ -60,7 +63,7 @@ require_once PGV_ROOT.'js/scriptaculous.js.htm';
 		// print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
 			//Popup Reorder Media
 			print "<td class=\"width15 center wrap\" valign=\"top\">";
-			print "<button type=\"button\" title=\"". $pgv_lang["reorder_media"]."\" onclick=\"reorder_media();\">". $pgv_lang["reorder_media"] ."</button>";
+			print "<button type=\"button\" title=\"". i18n::translate('Re-order media')."\" onclick=\"reorder_media();\">". i18n::translate('Re-order media') ."</button>";
 		print "</td>";
 		//print "<td width=\"5%\">&nbsp;</td>";
 		print "\n";

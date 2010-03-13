@@ -2,7 +2,10 @@
 /**
 * System for generating menus.
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 *
-* @package PhpGedView
+* @package webtrees
 * @version $Id$
 */
 
@@ -43,7 +46,6 @@ class Menu {
 	var $hoverclass = '';
 	var $submenuclass = '';
 	var $iconclass = '';
-	var $accesskey = null;
 	var $target = null;
 	var $parentmenu = null;
 	var $submenus;
@@ -105,11 +107,6 @@ class Menu {
 		$this->iconclass = $iconclass;
 	}
 
-	function addAccesskey($accesskey)
-	{
-		$this->accesskey = $accesskey;
-	}
-
 	function addTarget($target)
 	{
 		$this->target = $target;
@@ -133,9 +130,6 @@ class Menu {
 			return "\t".'<li class="separator"><span></span></li>'."\n";
 		}
 		if ($this->link) {
-			if ($this->accesskey !== null) {
-				$link = ' accesskey="'.$this->accesskey.'"';
-			}
 			if ($this->target !== null)	{
 				$link .= ' target="'.$this->target.'"';
 			}
@@ -254,10 +248,6 @@ class Menu {
 		{
 			$link .= "\" onclick=\"{$this->onclick}";
 		}
-		if ($this->accesskey !== null)
-		{
-			$link .= '" accesskey="'.$this->accesskey;
-		}
 		if ($this->target !== null)
 		{
 			$link .= '" target="'.$this->target;
@@ -370,7 +360,6 @@ class Menu {
 			'icon'=>'icon',
 			'hovericon'=>'hovericon',
 			'link'=>'link',
-			'accesskey'=>'accesskey',
 			'class'=>'class',
 			'hoverclass'=>'hoverclass',
 			'flyout'=>'flyout',

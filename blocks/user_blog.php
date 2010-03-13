@@ -4,7 +4,10 @@
  *
  * This block allows users to have their own blog
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  * @version $Id$
  */
@@ -33,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_USER_BLOG_PHP', '');
 
-$PGV_BLOCKS["print_user_news"]["name"]		= $pgv_lang["user_news_block"];
+$PGV_BLOCKS["print_user_news"]["name"]		= i18n::translate('User Journal');
 $PGV_BLOCKS["print_user_news"]["descr"]		= "user_news_descr";
 $PGV_BLOCKS["print_user_news"]["type"]		= "user";
 $PGV_BLOCKS["print_user_news"]["canconfig"]	= false;
@@ -49,11 +52,11 @@ function print_user_news($block=true, $config="", $side, $index) {
 	$usernews = getUserNews(PGV_USER_ID);
 
 	$id="user_news";
-	$title = print_help_link("mygedview_myjournal", "qm","",false,true);
-	$title .= $pgv_lang["my_journal"];
+	$title = i18n::translate('My Journal');
+	$title .= help_link('mygedview_myjournal');
 	$content = "";
 	if (count($usernews)==0) {
-		$content .= $pgv_lang["no_journal"].' ';
+		$content .= i18n::translate('You have not created any Journal items.').' ';
 	}
 	foreach($usernews as $key=>$news) {
 		$day = date("j", $news["date"]);
@@ -86,12 +89,12 @@ function print_user_news($block=true, $config="", $side, $index) {
 		$news["text"] = strtr($news["text"], $trans);
 		$news["text"] = nl2br($news["text"]);
 		$content .= PrintReady($news["text"])."<br /><br />";
-		$content .= "<a href=\"javascript:;\" onclick=\"editnews('$key'); return false;\">".$pgv_lang["edit"]."</a> | ";
-		$content .= "<a href=\"".encode_url("index.php?action=deletenews&news_id={$key}&ctype={$ctype}")."\" onclick=\"return confirm('".$pgv_lang["confirm_journal_delete"]."');\">".$pgv_lang["delete"]."</a><br />";
+		$content .= "<a href=\"javascript:;\" onclick=\"editnews('$key'); return false;\">".i18n::translate('Edit')."</a> | ";
+		$content .= "<a href=\"".encode_url("index.php?action=deletenews&news_id={$key}&ctype={$ctype}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to delete this Journal entry?')."');\">".i18n::translate('Delete')."</a><br />";
 		$content .= "</div><br />";
 	}
 	if (PGV_USER_ID) {
-		$content .= "<br /><a href=\"javascript:;\" onclick=\"addnews('".PGV_USER_ID."'); return false;\">".$pgv_lang["add_journal"]."</a>";
+		$content .= "<br /><a href=\"javascript:;\" onclick=\"addnews('".PGV_USER_ID."'); return false;\">".i18n::translate('Add a new Journal entry')."</a>";
 	}
 
 	global $THEME_DIR;

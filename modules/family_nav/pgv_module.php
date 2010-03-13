@@ -1,10 +1,6 @@
 <?php
-require_once("includes/classes/class_module.php");
-require_once("modules/family_nav/family_nav.php");
-
-global $pgv_lang;
-if (isset($pgv_lang["fam_navigator"])) $pgv_lang['family_nav'] = $pgv_lang["fam_navigator"];
-else $pgv_lang['family_nav'] = "Family Navigator";
+require_once PGV_ROOT.'includes/classes/class_module.php';
+require_once PGV_ROOT.'modules/family_nav/family_nav.php';
 
 class family_nav_PGVModule extends PGVModule {
 	protected $name = 'family_nav';
@@ -13,6 +9,14 @@ class family_nav_PGVModule extends PGVModule {
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 	protected $_sidebar = null;
+
+	public function getName() {
+		return 'family_nav';
+	}
+
+	public function getTitle() {
+		return i18n::translate('Family Navigator');
+	}
 
 	public function hasSidebar() { return true; }
 	

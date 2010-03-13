@@ -4,7 +4,10 @@
  * To embed the tree for use in mashups or on blogs use code such as this:
  * <script type="text/javascript" src="http://yourserver/phpgedview/treenav.php?navAjax=embed&rootid=I14&width=400&height=300"></script>
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +26,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 29 August 2005
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */
@@ -41,7 +44,7 @@ if (!empty($_REQUEST['jsname'])) $name = $_REQUEST['jsname'];
 $nav = new TreeNav($rootid, $name, $zoom);
 $nav->generations=6;
 $nav->zoomLevel-=1;
-print_header($pgv_lang["interactive_tree"]);
+print_header(i18n::translate('Interactive Tree'));
 $nav->drawViewport('', "", "600px");
 print_footer();
 ?>

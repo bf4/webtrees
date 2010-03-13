@@ -2,7 +2,10 @@
 /**
  * Reorder media Items using drag and drop
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
@@ -40,7 +43,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 function media_reorder_row($rtype, $rowm, $pid) {
 
     global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
-    global $SHOW_ID_NUMBERS, $GEDCOM, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
+    global $SHOW_ID_NUMBERS, $GEDCOM, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
     global $SEARCH_SPIDER;
     global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $mediaType;
@@ -97,10 +100,13 @@ function media_reorder_row($rtype, $rowm, $pid) {
 		//print media info
 		$ttype2 = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
 		if ($ttype2>0) {
-			$mediaType = trim($match[1]);
-			$varName = "TYPE__".strtolower($mediaType);
-			if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
-//		print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
+			$varName = strtolower($match[1]);
+			if (array_key_exists($varName, $MEDIA_TYPES)) {
+				$mediaType = $MEDIA_TYPES[$varName];
+			} else {
+				$mediaType = i18n::translate('Other');
+			}
+			print "<br /><span class=\"label\">".i18n::translate('Type').": </span> <span class=\"field\">$mediaType</span>";
 		}
 
 		print "\n" . "</td><td>&nbsp;</td>" . "\n";

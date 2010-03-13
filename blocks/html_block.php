@@ -4,7 +4,10 @@
  *
  * This block will print simple HTML text entered by an admin
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  * @version $Id$
  */
@@ -33,12 +36,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_HTML_BLOCK_PHP', '');
 
-$PGV_BLOCKS["print_html_block"]["name"]			= $pgv_lang["html_block_name"];
+$PGV_BLOCKS["print_html_block"]["name"]			= i18n::translate('HTML');
 $PGV_BLOCKS["print_html_block"]["descr"]		= "html_block_descr";
 $PGV_BLOCKS["print_html_block"]["canconfig"]= true;
 $PGV_BLOCKS["print_html_block"]["config"]		= array(
 	"cache"=>1,
-	"html"=>$pgv_lang["html_block_sample_part1"]." <img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["admin"]["small"]."\" alt=\"".$pgv_lang["config_block"]."\" /> ".$pgv_lang["html_block_sample_part2"]
+	"html"=>i18n::translate('<p class="blockhc"><b>Put your title here</b></p><br /><p>Click the configure button')." <img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["admin"]["small"]."\" alt=\"".i18n::translate('Configure')."\" /> ".i18n::translate('to change what is printed here.</p>')
 );
 
 function print_html_block($block=true, $config="", $side, $index) {
@@ -74,7 +77,7 @@ function print_html_block($block=true, $config="", $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$content .= "<br /><a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$content .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" title=\"".$pgv_lang["config_block"]."\" /></a>\n";
+			$content .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" title=\"".i18n::translate('Configure')."\" /></a>\n";
 		}
 	}
 
@@ -114,12 +117,11 @@ function print_html_block_config($config) {
 	<?php
 	// Cache file life
 	if ($ctype=="gedcom") {
-  	print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life", "qm");
-		print $pgv_lang["cache_life"];
-		print "</td><td class=\"optionbox\">";
-		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
-		print "</td></tr>";
+  	echo "<tr><td class=\"descriptionbox wrap width33\">";
+		echo i18n::translate('Cache file life'), help_link('cache_life');
+		echo "</td><td class=\"optionbox\">";
+		echo "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		echo "</td></tr>";
 	}
 }
 ?>

@@ -2,7 +2,10 @@
 /**
  * Login Page.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 29 August 2005
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */
@@ -117,7 +120,7 @@ if ($action=='login') {
 		header("Location: ".encode_url($url, false));
 		exit;
 	} else {
-		$message = $pgv_lang["no_login"];
+		$message = i18n::translate('Unable to authenticate user.');
 	}
 } else {
 	$tSERVER_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $SERVER_URL);
@@ -145,8 +148,11 @@ if ($action=='login') {
 	}
 }
 
-if ($type=="full") print_header($pgv_lang["login_head"]);
-else print_simple_header($pgv_lang["login_head"]);
+if ($type=="full") {
+	print_header(i18n::translate('PhpGedView User Login'));
+} else {
+	print_simple_header(i18n::translate('PhpGedView User Login'));
+}
 print "<div class=\"center\">\n";
 
 if ($WELCOME_TEXT_AUTH_MODE!="0") {
@@ -200,27 +206,27 @@ $tab=0;		// initialize tab index
 		?>
 		<!--table-->
 		<table class="center facts_table width50">
-			<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["login"]; ?></td></tr>
+			<tr><td class="topbottombar" colspan="2"><?php print i18n::translate('Login'); ?></td></tr>
 			<tr>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("username", "qm", "username"); print $pgv_lang["username"]; ?></td>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('User name'), help_link('username'); ?></td>
 				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" tabindex="<?php echo ++$tab; ?>" name="username" value="<?php print htmlentities($username,ENT_COMPAT,'UTF-8'); ?>" size="20" class="formField" /></td>
 			</tr>
 			<tr>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("password", "qm", "password"); print $pgv_lang["password"]; ?></td>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('Password'), help_link('password'); ?></td>
 				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" tabindex="<?php echo ++$tab; ?>" name="password" size="20" class="formField" /></td>
 			</tr>
 			<tr>
 				<td class="topbottombar" colspan="2">
+					<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php print i18n::translate('Login'); ?>" />
 					<?php
 					if ($SHOW_CONTEXT_HELP) {
 						if ($REQUIRE_AUTHENTICATION) {
-							print_help_link("login_buttons_aut", "qm", "login");
+							echo help_link('login_buttons_aut');
 						} else {
-							print_help_link("login_buttons", "qm", "login");
+							echo help_link('login_buttons');
 						}
 					}
 					?>
-					<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php print $pgv_lang["login"]; ?>" />&nbsp;
 				</td>
 			</tr>
 		</table>
@@ -228,15 +234,15 @@ $tab=0;		// initialize tab index
 <?php
 
 $sessname = session_name();
-if (!isset($_COOKIE[$sessname])) print "<center><div class=\"error width50\">".$pgv_lang["cookie_help"]."</div></center><br /><br />";
+if (!isset($_COOKIE[$sessname])) print "<center><div class=\"error width50\">".i18n::translate('This site uses cookies to keep track of your login status.<br /><br />Cookies do not appear to be enabled in your browser. You must enable cookies for this site before you can login.  You can consult your browser\'s help documentation for information on enabling cookies.')."</div></center><br /><br />";
 
 if ($USE_REGISTRATION_MODULE) { ?>
 	<table class="center facts_table width50">
-	<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["account_information"]; ?></td></tr>
-	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_user", "qm", "requestaccount"); print $pgv_lang["no_account_yet"]; ?></td>
-	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=register"><?php print $pgv_lang["requestaccount"]; ?></a></td></tr>
-	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_password", "qm", "lost_password"); print $pgv_lang["lost_password"]; ?></td>
-	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=pwlost"><?php print $pgv_lang["requestpassword"]; ?></a></td></tr>
+	<tr><td class="topbottombar" colspan="2"><?php print i18n::translate('Account Information'); ?></td></tr>
+	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('No account?'), help_link('new_user'); ?></td>
+	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=register"><?php echo i18n::translate('Request new user account'); ?></a></td></tr>
+	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php echo i18n::translate('Lost your password?'), help_link('new_password'); ?></td>
+	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=pwlost"><?php print i18n::translate('Request new password'); ?></a></td></tr>
 	<tr><td class="topbottombar ltr" colspan="2">&nbsp;</td></tr>
 	</table>
 <?php

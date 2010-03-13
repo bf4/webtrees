@@ -2,7 +2,10 @@
 /**
  * Classes and libraries for module system
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2010 PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Modules
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
@@ -36,17 +39,15 @@ class clippings_Sidebar extends Sidebar {
 	var $clippingCtrl;
 	
 	public function getTitle() {
-		global $pgv_lang;
-		return $pgv_lang["clippings_cart"];
+		return i18n::translate('Family Tree Clippings Cart');
 	}
 
 	public function getCartList() {
-		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $cart, $GEDCOM;
 		$out ='<ul>';
 		$ct = count($cart);
-		if ($ct==0) $out .= '<br /><br />'.$pgv_lang["cart_is_empty"].'<br /><br />';
+		if ($ct==0) $out .= '<br /><br />'.i18n::translate('Your Clippings Cart is empty.').'<br /><br />';
 		else {
 			for ($i=0; $i<$ct; $i++) {
 				$clipping = $cart[$i];
@@ -78,7 +79,7 @@ class clippings_Sidebar extends Sidebar {
 							$out .= '</a>';
 						}
 						$out .= '<a	class="remove_cart" href="sidebar.php?sb_action=clippings&amp;remove='.$i.'">
-						<img src="'. $PGV_IMAGE_DIR. "/". $PGV_IMAGES["remove"]["other"].'" border="0" alt="'.$pgv_lang["remove"].'" title="'.$pgv_lang["remove"].'" /></a>';
+						<img src="'. $PGV_IMAGE_DIR. "/". $PGV_IMAGES["remove"]["other"].'" border="0" alt="'.i18n::translate('Remove').'" title="'.i18n::translate('Remove').'" /></a>';
 						$out .='</li>';
 					}
 				}
@@ -86,15 +87,14 @@ class clippings_Sidebar extends Sidebar {
 		}
 		$out .= '</ul>';
 		if (count($cart)>0) {
-			$out .= '<a href="sidebar.php?sb_action=clippings&amp;empty=true" class="remove_cart">'.$pgv_lang["empty_cart"].'</a>'.print_help_link("empty_cart", "qm",'',false,true);
-			$out .= '<br /><a href="sidebar.php?sb_action=clippings&amp;download=true" class="add_cart">'.$pgv_lang['download_now'].'</a>';
+			$out .= '<a href="sidebar.php?sb_action=clippings&amp;empty=true" class="remove_cart">'.i18n::translate('Empty Cart').'</a>'.help_link('empty_cart');
+			$out .= '<br /><a href="sidebar.php?sb_action=clippings&amp;download=true" class="add_cart">'.i18n::translate('Download Now').'</a>';
 		}
 		$out .= '<br />';
 		return $out;
 	}
 	public function getContent() {
 		require_once PGV_ROOT.'modules/clippings/clippings_ctrl.php';
-		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $cart, $GEDCOM;
 
@@ -118,12 +118,12 @@ class clippings_Sidebar extends Sidebar {
 				$root = GedcomRecord::getInstance($this->controller->pid);
 				if ($root && $root->canDisplayDetails()) 
 					$out .= '<a href="sidebar.php?sb_action=clippings&amp;add='.$root->getXref().'" class="add_cart">
-					<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['clippings']['small'].'" width="20" /> '.str_replace("#NAME#", PrintReady($root->getListName()), $pgv_lang["add_name_to_cart"]).'</a>';
+					<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['clippings']['small'].'" width="20" /> '.i18n::translate('Add %s to cart', $root->getListName()).'</a>';
 			}
 			else if ($this->controller->famid && !id_in_cart($this->controller->pid)) {
 				$fam = Family::getInstance($this->controller->famid);
 				if ($fam && $fam->canDisplayDetails()) {
-					$out .= '<a href="sidebar.php?sb_action=clippings&amp;add='.$fam->getXref().'" class="add_cart"> '.str_replace("#NAME#", PrintReady($fam->getFullName()), $pgv_lang["add_name_to_cart"]).'</a><br />';
+					$out .= '<a href="sidebar.php?sb_action=clippings&amp;add='.$fam->getXref().'" class="add_cart"> '.i18n::translate('Add %s to cart', $fam->getFullName()).'</a><br />';
 				}
 			}
 			$out .= '</div>';
@@ -132,7 +132,7 @@ class clippings_Sidebar extends Sidebar {
 	}
 
 	public function askAddOptions(&$person) {
-		global $pgv_lang,$MAX_PEDIGREE_GENERATIONS;
+		global $MAX_PEDIGREE_GENERATIONS;
 		$out = "<b>".$person->getFullName()."</b>";
 		$out .= PGV_JS_START;
 		$out .= 'function radAncestors(elementid) {var radFamilies=document.getElementById(elementid);radFamilies.checked=true;}
@@ -148,15 +148,15 @@ class clippings_Sidebar extends Sidebar {
 			<input type="hidden" name="mod" value="clippings" />
 			<input type="hidden" name="pgv_action" value="index" />
 			<table>
-			<tr><td class="topbottombar">'.$pgv_lang["which_links"].'
+			<tr><td class="topbottombar">'.i18n::translate('Which other links from this family would you like to add?').'
 			<input type="hidden" name="pid" value="'.$person->getXref().'" />
 			<input type="hidden" name="type" value="'.$person->getType().'" />
 			<input type="hidden" name="action" value="add1" /></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" />'.$pgv_lang["just_family"].'</td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="parents" />'.$pgv_lang["parents_and_family"].'</td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="members" />'.$pgv_lang["parents_and_child"].'</td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" />'.$pgv_lang["parents_desc"].'</td></tr>
-			<tr><td class="topbottombar"><input type="submit" value="'.$pgv_lang["continue"].'" /></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" />'.i18n::translate('Add just this family record.').'</td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="parents" />'.i18n::translate('Add parents\' records together with this family record.').'</td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="members" />'.i18n::translate('Add parents\' and children\'s records together with this family record.').'</td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" />'.i18n::translate('Add parents\' and all descendants\' records together with this family record.').'</td></tr>
+			<tr><td class="topbottombar"><input type="submit" value="'.i18n::translate('Continue Adding').'" /></td></tr>
 			</table>
 			</form>';
 		}
@@ -164,35 +164,35 @@ class clippings_Sidebar extends Sidebar {
 			$out .= '<form action="module.php" method="get" onsubmit="continueAjax(this); return false;">
 			<input type="hidden" name="mod" value="clippings" />
 			<input type="hidden" name="pgv_action" value="index" />
-		'.$pgv_lang["which_p_links"].'
+		'.i18n::translate('Which links from this person would you also like to add?').'
 		<input type="hidden" name="pid" value="'.$person->getXref().'" />
 		<input type="hidden" name="type" value="'.$person->getType().'" />
 		<input type="hidden" name="action" value="add1" />
 		<ul>
-		<li><input type="radio" name="others" checked value="none" />'.$pgv_lang["just_person"].'</li>
-		<li><input type="radio" name="others" value="parents" />'.$pgv_lang["person_parents_sibs"].'</li>
-		<li><input type="radio" name="others" value="ancestors" id="ancestors" />'.$pgv_lang["person_ancestors"].'<br />
-				'.$pgv_lang["enter_person_generations"].'<input type="text" size="4" name="level1" value="'.$MAX_PEDIGREE_GENERATIONS.'" onfocus="radAncestors(\'ancestors\');"/></li>
-		<li><input type="radio" name="others" value="ancestorsfamilies" id="ancestorsfamilies" />'.$pgv_lang["person_ancestor_fams"].'<br />
-				'.$pgv_lang["enter_person_generations"].' <input type="text" size="4" name="level2" value="'. $MAX_PEDIGREE_GENERATIONS.'" onfocus="radAncestors(\'ancestorsfamilies\');" /></li>
-		<li><input type="radio" name="others" value="members" />'.$pgv_lang["person_spouse"].'</li>
-		<li><input type="radio" name="others" value="descendants" id="descendants" />'.$pgv_lang["person_desc"].'<br >
-				'.$pgv_lang["enter_person_generations"].' <input type="text" size="4" name="level3" value="'.$MAX_PEDIGREE_GENERATIONS.'" onfocus="radAncestors(\'descendants\');" /></li>
+		<li><input type="radio" name="others" checked value="none" />'.i18n::translate('Add just this person.').'</li>
+		<li><input type="radio" name="others" value="parents" />'.i18n::translate('Add this person, his parents, and siblings.').'</li>
+		<li><input type="radio" name="others" value="ancestors" id="ancestors" />'.i18n::translate('Add this person and his direct line ancestors.').'<br />
+				'.i18n::translate('Number of generations:').'<input type="text" size="4" name="level1" value="'.$MAX_PEDIGREE_GENERATIONS.'" onfocus="radAncestors(\'ancestors\');"/></li>
+		<li><input type="radio" name="others" value="ancestorsfamilies" id="ancestorsfamilies" />'.i18n::translate('Add this person, his direct line ancestors, and their families.').'<br />
+				'.i18n::translate('Number of generations:').' <input type="text" size="4" name="level2" value="'. $MAX_PEDIGREE_GENERATIONS.'" onfocus="radAncestors(\'ancestorsfamilies\');" /></li>
+		<li><input type="radio" name="others" value="members" />'.i18n::translate('Add this person, his spouse, and children.').'</li>
+		<li><input type="radio" name="others" value="descendants" id="descendants" />'.i18n::translate('Add this person, his spouse, and all descendants.').'<br >
+				'.i18n::translate('Number of generations:').' <input type="text" size="4" name="level3" value="'.$MAX_PEDIGREE_GENERATIONS.'" onfocus="radAncestors(\'descendants\');" /></li>
 		</ul>
-		<input type="submit" value="'.$pgv_lang["continue"].'" />
+		<input type="submit" value="'.i18n::translate('Continue Adding').'" />
 		</form>';
 		} else if ($person->getType()=='SOUR')  {
 			$out .= '<form action="module.php" method="get" onsubmit="continueAjax(this); return false;">
 		<input type="hidden" name="mod" value="clippings" />
 		<input type="hidden" name="pgv_action" value="index" />
 		<table>
-		<tr><td class="topbottombar">'.$pgv_lang["which_s_links"].'
+		<tr><td class="topbottombar">'.i18n::translate('Which records linked to this source should be added?').'
 		<input type="hidden" name="pid" value="'.$person->getXref().'" />
 		<input type="hidden" name="type" value="'.$person->getType().'" />
 		<input type="hidden" name="action" value="add1" /></td></tr>
-		<tr><td class="optionbox"><input type="radio" name="others" checked value="none" />'.$pgv_lang["just_source"].'</td></tr>
-		<tr><td class="optionbox"><input type="radio" name="others" value="linked" />'.$pgv_lang["linked_source"].'</td></tr>
-		<tr><td class="topbottombar"><input type="submit" value="'.$pgv_lang["continue"].'" />
+		<tr><td class="optionbox"><input type="radio" name="others" checked value="none" />'.i18n::translate('Add just this source.').'</td></tr>
+		<tr><td class="optionbox"><input type="radio" name="others" value="linked" />'.i18n::translate('Add this source and families/people linked to it.').'</td></tr>
+		<tr><td class="topbottombar"><input type="submit" value="'.i18n::translate('Continue Adding').'" />
 		</table>
 		</form>';
 		}
@@ -201,7 +201,7 @@ class clippings_Sidebar extends Sidebar {
 	}
 	
 	public function downloadForm() {
-		global $pgv_lang, $TEXT_DIRECTION;
+		global $TEXT_DIRECTION;
 		$controller = $this->clippingCtrl;
 		$out = PGV_JS_START;
 		$out .= 'function cancelDownload() {
@@ -214,9 +214,9 @@ class clippings_Sidebar extends Sidebar {
 		<input type="hidden" name="pgv_action" value="index" />
 		<input type="hidden" name="action" value="download" />
 		<table>
-		<tr><td colspan="2" class="topbottombar"><h2>'.$pgv_lang["file_information"].'</h2></td></tr>
+		<tr><td colspan="2" class="topbottombar"><h2>'.i18n::translate('File Information').'</h2></td></tr>
 		<tr>
-		<td class="descriptionbox width50 wrap">'.print_help_link("file_type", "qm", "", false, true). $pgv_lang["choose_file_type"].'</td>
+		<td class="descriptionbox width50 wrap">'.i18n::translate('File Type').help_link('file_type').'</td>
 		<td class="optionbox">';
 		if ($TEXT_DIRECTION=='ltr') {
 			$out .= '<input type="radio" name="filetype" checked="checked" value="gedcom" />&nbsp;GEDCOM<br/><input type="radio" name="filetype" value="gramps" DISABLED />&nbsp;Gramps XML <!-- GRAMPS doesn\'t work right now -->';
@@ -226,10 +226,10 @@ class clippings_Sidebar extends Sidebar {
 		$out .= '
 		</td></tr>
 
-		<tr><td class="descriptionbox width50 wrap">'.print_help_link("zip", "qm", "", false, true). $pgv_lang["zip_files"].'</td>
+		<tr><td class="descriptionbox width50 wrap">'.i18n::translate('Zip File(s)').help_link('zip').'</td>
 		<td class="optionbox"><input type="checkbox" name="Zip" value="yes" checked="checked" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap">'.print_help_link("include_media", "qm", "", false, true).$pgv_lang["include_media"].'</td>
+		<tr><td class="descriptionbox width50 wrap">'.i18n::translate('Include Media (automatically zips files)').help_link('include_media').'</td>
 		<td class="optionbox"><input type="checkbox" name="IncludeMedia" value="yes" checked="checked" /></td></tr>
 		';
 		
@@ -260,25 +260,25 @@ class clippings_Sidebar extends Sidebar {
 			$radioPrivatizeAdmin = 'DISABLED ';
 		}
 		$out .= '
-		<tr><td class="descriptionbox width50 wrap">'.print_help_link("apply_privacy", "qm", "", false, true).$pgv_lang["apply_privacy"].'</td>
+		<tr><td class="descriptionbox width50 wrap">'.i18n::translate('Apply privacy settings?').help_link('apply_privacy').'</td>
 		<td class="list_value">
-		<input type="radio" name="privatize_export" value="none" '.$radioPrivatizeNone.'/>&nbsp;'.$pgv_lang["none"].'<br />
-		<input type="radio" name="privatize_export" value="visitor" '.$radioPrivatizeVisitor.'/>&nbsp;'.$pgv_lang["visitor"].'<br />
-		<input type="radio" name="privatize_export" value="user" '.$radioPrivatizeUser.'/>&nbsp;'.$pgv_lang["user"].'<br />
-		<input type="radio" name="privatize_export" value="gedadmin" '.$radioPrivatizeGedadmin.'/>&nbsp;'.$pgv_lang["gedadmin"].'<br />
-		<input type="radio" name="privatize_export" value="admin" '.$radioPrivatizeAdmin.'/>&nbsp;'.$pgv_lang["siteadmin"].'
+		<input type="radio" name="privatize_export" value="none" '.$radioPrivatizeNone.'/>&nbsp;'.i18n::translate('None').'<br />
+		<input type="radio" name="privatize_export" value="visitor" '.$radioPrivatizeVisitor.'/>&nbsp;'.i18n::translate('Visitor').'<br />
+		<input type="radio" name="privatize_export" value="user" '.$radioPrivatizeUser.'/>&nbsp;'.i18n::translate('Authenticated user').'<br />
+		<input type="radio" name="privatize_export" value="gedadmin" '.$radioPrivatizeGedadmin.'/>&nbsp;'.i18n::translate('GEDCOM administrator').'<br />
+		<input type="radio" name="privatize_export" value="admin" '.$radioPrivatizeAdmin.'/>&nbsp;'.i18n::translate('Site administrator').'
 		</td></tr>
 
-		<tr><td class="descriptionbox width50 wrap">'.print_help_link("utf8_ansi", "qm", "", false, true).$pgv_lang["utf8_to_ansi"].'</td>
+		<tr><td class="descriptionbox width50 wrap">'.i18n::translate('Convert from UTF-8 to ANSI (ISO-8859-1)').help_link('utf8_ansi').'</td>
 		<td class="optionbox"><input type="checkbox" name="convert" value="yes" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap">'. print_help_link("remove_tags", "qm", "", false, true).$pgv_lang["remove_custom_tags"].'</td>
+		<tr><td class="descriptionbox width50 wrap">'.i18n::translate('Remove custom PGV tags? (eg. _PGVU, _THUM)').help_link('remove_tags').'</td>
 		<td class="optionbox"><input type="checkbox" name="remove" value="yes" checked="checked" />
 		<input type="hidden" name="conv_path" value="'.getLRM(). $controller->conv_path. getLRM().'" /></td></tr>
 
 		<tr><td class="topbottombar" colspan="2">
-		<input type="button" value="'.$pgv_lang["cancel"].'" onclick="cancelDownload();" />
-		<input type="submit" value="'.$pgv_lang["download_now"].'" />
+		<input type="button" value="'.i18n::translate('Cancel').'" onclick="cancelDownload();" />
+		<input type="submit" value="'.i18n::translate('Download Now').'" />
 		</form>';
 		
 		return $out;

@@ -3,7 +3,10 @@
  * MyGedView page allows a logged in user the abilty
  * to keep bookmarks, see a list of upcoming events, etc.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +23,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */
@@ -306,7 +309,7 @@ if ($action=="ajax") {
 
 if ($ctype=="user") {
 	$helpindex = "index_myged_help";
-	print_header($pgv_lang["mygedview"]);
+	print_header(i18n::translate('MyGedView Portal'));
 } else {
 	print_header(get_gedcom_setting(PGV_GED_ID, 'title'));
 }
@@ -345,7 +348,7 @@ echo PGV_JS_START;
 		if (!target) return false;
 
 		target.style.height = (target.offsetHeight) + "px";
-		if (loading) target.innerHTML = "<br /><br /><?php print $pgv_lang['loading']; ?><br /><br />";
+		if (loading) target.innerHTML = "<br /><br /><?php print i18n::translate('Loading...'); ?><br /><br />";
 
 		var oXmlHttp = createXMLHttp();
 		link = "index.php?action=ajax&block="+block+"&side="+side+"&bindex="+bindex+"&ctype="+ctype;
@@ -367,8 +370,8 @@ echo PGV_JS_END;
 print "<table width=\"100%\"><tr><td>";		// This is needed so that page footers print in the right place
 if ($ctype=="user") {
 	print "<div align=\"center\" style=\"width: 99%;\">";
-	print "<h1>".$pgv_lang["mygedview"]."</h1>";
-	print $pgv_lang["mygedview_desc"];
+	print "<h1>".i18n::translate('MyGedView Portal')."</h1>";
+	print i18n::translate('Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users.');
 	print "<br /><br /></div>";
 }
 if (count($ublocks["main"])!=0) {
@@ -397,7 +400,7 @@ if (count($ublocks["main"])!=0) {
 				ob_end_flush();
 			} else {
 				// Interactive users get the blocks via ajax
-				echo '<div id="block_main_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars($pgv_lang["loading"]),  '"/></div>';
+				echo '<div id="block_main_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars(i18n::translate('Loading...')),  '"/></div>';
 				echo PGV_JS_START, "jQuery('#block_main_{$bindex}').load('{$url}');", PGV_JS_END;
 			}
 		}
@@ -428,7 +431,7 @@ if (count($ublocks["right"])!=0) {
 				ob_end_flush();
 			} else {
 				// Interactive users get the blocks via ajax
-				echo '<div id="block_right_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars($pgv_lang["loading"]),  '"/></div>';
+				echo '<div id="block_right_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars(i18n::translate('Loading...')),  '"/></div>';
 				echo PGV_JS_START, "jQuery('#block_right_{$bindex}').load('{$url}');", PGV_JS_END;
 			}
 		}
@@ -441,14 +444,14 @@ print "</td></tr></table><br />";		// Close off that table
 
 if ($ctype=="user" && !$welcome_block_present) {
 	print "<div align=\"center\" style=\"width: 99%;\">";
-	print_help_link("mygedview_customize", "qm");
-	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>";
+	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize MyGedView Portal')."</a>";
+	echo help_link('mygedview_customize');
 	print "</div>";
 }
 if ($ctype=="gedcom" && !$gedcom_block_present) {
 	if (PGV_USER_IS_ADMIN) {
 		print "<div align=\"center\" style=\"width: 99%;\">";
-		print "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$GEDCOM}&ctype=gedcom", false)."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_gedcom_page"]."</a>";
+		print "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$GEDCOM}&ctype=gedcom", false)."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize this GEDCOM Welcome page')."</a>";
 		print "</div>";
 	}
 }

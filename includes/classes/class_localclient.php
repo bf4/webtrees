@@ -1,7 +1,10 @@
 <?php
 /**
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage DataModel
  * @version $Id$
  */
@@ -54,7 +57,7 @@ class LocalClient extends ServiceClient {
 	 * @param string $remoteid	the id of the record to get
 	 */
 	function getRemoteRecord($remoteid) {
-		$rec = find_gedcom_record($remoteid, $this->gedfile);
+		$rec = find_gedcom_record($remoteid, PGV_GED_ID);
 		$rec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $rec);
 		return $rec;
 	}
@@ -68,7 +71,7 @@ class LocalClient extends ServiceClient {
 	 */
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
 		//-- get the record from the database
-		$gedrec = find_gedcom_record($xref, $this->gedfile);
+		$gedrec = find_gedcom_record($xref, PGV_GED_ID);
 		$gedrec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $gedrec);
 		$gedrec = $this->checkIds($gedrec);
 		if (empty($localrec)) return $gedrec;

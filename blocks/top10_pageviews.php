@@ -4,7 +4,10 @@
  *
  * This block will show the top 10 records from the Gedcom that have been viewed the most
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  * @version $Id$
  */
@@ -33,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_TOP10_PAGEVIEWS_PHP', '');
 
-$PGV_BLOCKS["top10_pageviews"]["name"]		= $pgv_lang["top10_pageviews"];
+$PGV_BLOCKS["top10_pageviews"]["name"]		= i18n::translate('Most Viewed Items');
 $PGV_BLOCKS["top10_pageviews"]["descr"]		= "top10_pageviews_descr";
 $PGV_BLOCKS["top10_pageviews"]["canconfig"]	= true;
 $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
@@ -43,7 +46,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 	);
 
 function top10_pageviews($block=true, $config="", $side, $index) {
-	global $TBLPREFIX, $pgv_lang, $INDEX_DIRECTORY, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_COUNTER, $SHOW_SOURCES, $TEXT_DIRECTION;
+	global $TBLPREFIX, $INDEX_DIRECTORY, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_COUNTER, $SHOW_SOURCES, $TEXT_DIRECTION;
 
 	if (empty($config)) {
 		$config = $PGV_BLOCKS["top10_pageviews"]["config"];
@@ -56,7 +59,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 	}
 
 	$id = "top10hits";
-	$title = print_help_link("index_top10_pageviews", "qm", "", false, true);
+	$title='';
 	if ($PGV_BLOCKS["top10_pageviews"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -65,16 +68,17 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= $pgv_lang["top10_pageviews"];
+	$title .= i18n::translate('Most Viewed Items');
+	$title .= help_link('index_top10_pageviews');
 	$content = "";
 
 	// if the counter file does not exist then don't do anything
 	if (!$SHOW_COUNTER) {
 		if (PGV_USER_IS_ADMIN) {
-			$content .= "<span class=\"error\">".$pgv_lang["top10_pageviews_msg"]."</span>";
+			$content .= "<span class=\"error\">".i18n::translate('Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group.')."</span>";
 		}
 	} else {
 		// load the lines from the file
@@ -109,7 +113,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 			}
 			$content .= "</table>";
 		} else {
-			$content .= "<b>".$pgv_lang["top10_pageviews_nohits"]."</b>";
+			$content .= "<b>".i18n::translate('There are currently no hits to show.')."</b>";
 		}
 	}
 
@@ -122,36 +126,36 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 }
 
 function top10_pageviews_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS;
+	global $ctype, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["top10_pageviews"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["top10_pageviews"]["config"]["cache"];
 
 	// Number of items to show
 	print "<tr><td class=\"descriptionbox wrap width33\">";
-	print $pgv_lang["num_to_show"];
+	print i18n::translate('Number of items to show');
 	print "</td><td class=\"optionbox\">";
 	print "<input type=\"text\" name=\"num\" size=\"2\" value=\"".$config["num"]."\" />";
 	print "</td></tr>";
 
 	// Count position
 	print "<tr><td class=\"descriptionbox wrap width33\">";
-	print $pgv_lang["before_or_after"];
+	print i18n::translate('Place counts before or after name?');
 	print "</td><td class=\"optionbox\">";
 	print "<select name=\"count_placement\">";
 	print "<option value=\"left\"";
 	if ($config["count_placement"]=="left") print " selected=\"selected\"";
-	print ">".$pgv_lang["before"]."</option>";
+	print ">".i18n::translate('before')."</option>";
 	print "<option value=\"right\"";
 	if ($config["count_placement"]=="right") print " selected=\"selected\"";
-	print ">".$pgv_lang["after"]."</option>";
+	print ">".i18n::translate('after')."</option>";
 	print "</select>";
 	print "</td></tr>";
 
 	// Cache file life
 	if ($ctype=="gedcom") {
 		print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life", "qm");
-		print $pgv_lang["cache_life"];
+		print i18n::translate('Cache file life');
+		print help_link('cache_life');
 		print "</td><td class=\"optionbox\">";
 		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
 		print "</td></tr>";

@@ -2,7 +2,10 @@
 /**
  * Batch Update plugin for phpGedView - convert TMG lat/lon data
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2008 Greg Roach.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * $Id$
  */
@@ -29,8 +32,15 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-class plugin extends base_plugin {
+class tmglatlon_bu_plugin extends base_plugin {
+	static function getName() {
+		return i18n::translate('Fix TMG latlon data');
+	}
 
+	static function getDescription() {
+		return i18n::translate('Converts The Master Genealogist\'s proprietary lat/lon format to the GEDCOM 5.5.1 standard that PGV can read.  Note: changes are not highlighted in the final output shown below.');
+	}
+	
 	// the default getActionPreview crashes on certain records, override the preview to just show the "after" results instead of the changes
 	// try removing this when bug 2177311 is fixed
 	function getActionPreview($xref, $gedrec) {

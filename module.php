@@ -2,7 +2,10 @@
 /**
  * Module system for adding features to phpGedView.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  * @author Patrick Kellum
@@ -211,7 +214,7 @@ switch($modinfo['Module']['type'])
 			default:
 			{
 				print_header($results['title'], $results['head']);
-				print str_replace('[action]', $results['action'], $pgv_lang['module_error_unknown_action_v2']);
+				print str_replace('[action]', $results['action'], i18n::translate('Unknown action: [action].'));
 				print_footer();
 				exit;
 			}
@@ -221,7 +224,7 @@ switch($modinfo['Module']['type'])
 	default:
 	{
 		print_header(get_gedcom_setting(PGV_GED_ID, 'title'));
-		print $pgv_lang['module_error_unknown_type'];
+		print i18n::translate('Unknown module type.');
 		print_footer();
 		break;
 	}

@@ -4,7 +4,10 @@
  *
  * Display media Items using Lightbox
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
@@ -98,9 +101,9 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 		<input type="hidden" id="ord2" name="order2" value="" />
 
 		<center>
-		<button type="submit" title="<?php print $pgv_lang["reorder_media_save"];?>" onclick="saveOrder();" ><?php print $pgv_lang["save"];?></button>&nbsp;
-		<button type="submit" title="<?php print $pgv_lang["reorder_media_reset"];?>" onclick="document.reorder_form.action.value='al_reset_media_update'; document.reorder_form.submit();"><?php print $pgv_lang["reset"];?></button>&nbsp;
-		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo PGV_SCRIPT_NAME, "?pid=", $pid, "&tab=", $tabno; ?>'"><?php print $pgv_lang["cancel"];?></button>
+		<button type="submit" title="<?php print i18n::translate('Saves the sorted media to the database');?>" onclick="saveOrder();" ><?php print i18n::translate('Save');?></button>&nbsp;
+		<button type="submit" title="<?php print i18n::translate('Reset to the original order');?>" onclick="document.reorder_form.action.value='al_reset_media_update'; document.reorder_form.submit();"><?php print i18n::translate('Reset');?></button>&nbsp;
+		<button type="button" title="<?php print i18n::translate('Quit and return');?>" onClick="location.href='<?php echo PGV_SCRIPT_NAME, "?pid=", $pid, "&tab=", $tabno; ?>'"><?php print i18n::translate('Cancel');?></button>
 <?php
 /*
 		// Debug ---------------------------------------------------------------------------
@@ -144,7 +147,7 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 /*
 	echo '<td valign="top" align="center" width="220px">', "\n" ;
 		echo "<table cellpadding=\"0\" style=\"margin-top:2px; margin-left:0px;\" ><tr><td width=\"220px\" class=\"optionbox\" align=\"center\">";
-		echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
+		echo "<b>", i18n::translate('View Album of ...'), "</b><br /><br />" . "\n" ;
 			$controller->fam_nav();
 		echo "<br />";
 		echo "</td></tr></table>";

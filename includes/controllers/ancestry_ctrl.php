@@ -2,7 +2,10 @@
 /**
  * Controller for the Ancestry Page
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -78,7 +81,7 @@ class AncestryControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM_DEFAULT_TAB, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
+		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM_DEFAULT_TAB, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
 		global $DEFAULT_PEDIGREE_GENERATIONS, $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $OLD_PGENS, $box_width, $Dbwidth, $Dbheight;
 		global $show_full;
 
@@ -147,7 +150,7 @@ class AncestryControllerRoot extends BaseController {
 	 * @param int $depth the ascendancy depth to show
 	 */
 	function print_child_ascendancy($pid, $sosa, $depth) {
-		global $pgv_lang, $TEXT_DIRECTION, $OLD_PGENS;
+		global $TEXT_DIRECTION, $OLD_PGENS;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent;
 		global $SHOW_EMPTY_BOXES, $pidarr, $box_width;
 
@@ -165,9 +168,9 @@ class AncestryControllerRoot extends BaseController {
 		print "</td>";
 		print "<td>";
 		if ($TEXT_DIRECTION=="ltr") {
-			$label = $pgv_lang["ancestry_chart"].": ".$pid;
+			$label = i18n::translate('Ancestry Chart').": ".$pid;
 		} else {
-			$label = $pid." :".$pgv_lang["ancestry_chart"];
+			$label = $pid." :".i18n::translate('Ancestry Chart');
 		}
 		if ($sosa>1) print_url_arrow($pid, encode_url("?rootid={$pid}&PEDIGREE_GENERATIONS={$OLD_PGENS}&show_full={$this->show_full}&box_width={$box_width}&chart_style={$this->chart_style}"), $label, 3);
 		print "</td>";
@@ -200,12 +203,12 @@ class AncestryControllerRoot extends BaseController {
 		if (($parents || $SHOW_EMPTY_BOXES) && $new && $depth>0) {
 			// print marriage info
 			print "<span class=\"details1\" style=\"white-space: nowrap;\" >";
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" align=\"middle\" alt=\"\" /><a href=\"javascript: ".$pgv_lang["view_family"]."\" onclick=\"expand_layer('sosa_".$sosa."'); return false;\" class=\"top\"><img id=\"sosa_".$sosa."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".$pgv_lang["view_family"]."\" /></a> ";
-			print "&nbsp;<span class=\"person_box\">&nbsp;".($sosa*2)."&nbsp;</span>&nbsp;".$pgv_lang["and"];
+			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" align=\"middle\" alt=\"\" /><a href=\"javascript: ".i18n::translate('View Family')."\" onclick=\"expand_layer('sosa_".$sosa."'); return false;\" class=\"top\"><img id=\"sosa_".$sosa."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".i18n::translate('View Family')."\" /></a> ";
+			print "&nbsp;<span class=\"person_box\">&nbsp;".($sosa*2)."&nbsp;</span>&nbsp;".i18n::translate('and');
 			print "&nbsp;<span class=\"person_boxF\">&nbsp;".($sosa*2+1)." </span>&nbsp;";
 			if (!empty($family)) {
 				$marriage = $family->getMarriage();
-				if ($marriage->canShow()) $marriage->print_simple_fact(); else print $pgv_lang["private"];
+				if ($marriage->canShow()) $marriage->print_simple_fact(); else print i18n::translate('Private');
 			}
 			print "</span>";
 			// display parents recursively

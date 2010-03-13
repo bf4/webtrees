@@ -4,7 +4,10 @@
  *
  * Display media Items using Lightbox
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -23,7 +26,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
@@ -49,7 +52,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	$fn=1;
 
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
-	global $pgv_lang, $pgv_changes, $view;
+	global $pgv_changes, $view;
 	global $GEDCOM, $MEDIATYPE;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 
@@ -129,7 +132,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	// Set type of media from call in album
 	switch ($kind) {
 	case 1:
-		$tt=$pgv_lang["ROW_TYPE__photo"];
+		$tt=i18n::translate('Photo');
 		$sqlmm.="AND (m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE photo%';
 		$vars[]='%TYPE map%';
@@ -137,7 +140,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		$vars[]='%TYPE tombstone%';
 		break;
 	case 2:
-		$tt=$pgv_lang["ROW_TYPE__document"];
+		$tt=i18n::translate('Document');
 		$sqlmm.="AND (m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE card%';
 		$vars[]='%TYPE certificate%';
@@ -147,14 +150,14 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		$vars[]='%TYPE newspaper%';
 		break;
 	case 3:
-		$tt=$pgv_lang["ROW_TYPE__census"];
+		$tt=i18n::translate('Census');
 		$sqlmm.="AND (m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE electronic%';
 		$vars[]='%TYPE fiche%';
 		$vars[]='%TYPE film%';
 		break;
 	case 4:
-		$tt=$pgv_lang["ROW_TYPE__other"];
+		$tt=i18n::translate('Other');
 		$sqlmm.="AND (m_gedrec NOT LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ? OR m_gedrec LIKE ?)";
 		$vars[]='%TYPE %';
 		$vars[]='%TYPE coat%';
@@ -165,7 +168,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		break;
 	case 5:
 	default:
-		$tt      = $pgv_lang["ROW_TYPE__notinDB"];
+		$tt      = i18n::translate('Not in DB');
 		break;
 	}
 
@@ -396,7 +399,9 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 			echo '</td></tr></table>' . "\n";
 			if ($kind==3 && $numm > 0) {
 				echo "<font size='1'>";
-				echo $pgv_lang["census_text"];
+				echo i18n::translate('"UK census images have been obtained from "The National Archives", the custodian of the original records, and appear here with their approval on the condition that no commercial use is made of them without permission.
+Requests for commercial publication of these or other UK census images appearing on this website should be directed to: Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom."
+');
 				echo "</font>";
 			}
 			echo '</td>'. "\n";

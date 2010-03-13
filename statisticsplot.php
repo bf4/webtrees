@@ -5,7 +5,10 @@
  * number of persons -> periodes of 50 years from 1700-2000
  * age -> periodes of 10 years (different for 0-1,1-5,5-10,10-20 etc)
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +26,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @version $Id$
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Lists
  */
 
@@ -641,11 +644,11 @@ function calc_axis($xas_grenzen) {
 	if ($x_as==21 && $hulpar[0]==1) {
 		$xdata[0] = 0;
 	} elseif ($x_as==16 && $hulpar[0]==0) {
-		$xdata[0] = $pgv_lang["bef"];
+		$xdata[0] = i18n::translate('before');
 	} elseif ($x_as==16 && $hulpar[0]<0) {
-		$xdata[0] = $pgv_lang["over"]." ".$hulpar[0];
+		$xdata[0] = i18n::translate('over')." ".$hulpar[0];
 	} else {
-		$xdata[0] = $pgv_lang["less"]." ".$hulpar[0];
+		$xdata[0] = i18n::translate('less than')." ".$hulpar[0];
 	}
 	$xgrenzen[0] = $hulpar[0]-1;
 	while (isset($hulpar[$i])) {
@@ -670,7 +673,7 @@ function calc_axis($xas_grenzen) {
 		$xmax = $i+1;
 	else
 		$xmax = $i;
-	$xdata[$xmax] = $pgv_lang["over"]." ".$hulpar[$i-1];
+	$xdata[$xmax] = i18n::translate('over')." ".$hulpar[$i-1];
 	$xgrenzen[$xmax] = 10000;
 	$xmax = $xmax+1;
 	if ($xmax > 20) $xmax = 20;
@@ -720,23 +723,23 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 	global $pgv_lang, $stats;
 
 	if (!function_exists($myfunc)) {
-		echo $myfunc, " ", $pgv_lang["stplnoim"];
+		echo $myfunc, " ", i18n::translate(' not implemented:');
 		exit;
 	}
 
 	$monthdata= array();
-	$monthdata[] = $pgv_lang["jan_1st"];
-	$monthdata[] = $pgv_lang["feb_1st"];
-	$monthdata[] = $pgv_lang["mar_1st"];
-	$monthdata[] = $pgv_lang["apr_1st"];
-	$monthdata[] = $pgv_lang["may_1st"];
-	$monthdata[] = $pgv_lang["jun_1st"];
-	$monthdata[] = $pgv_lang["jul_1st"];
-	$monthdata[] = $pgv_lang["aug_1st"];
-	$monthdata[] = $pgv_lang["sep_1st"];
-	$monthdata[] = $pgv_lang["oct_1st"];
-	$monthdata[] = $pgv_lang["nov_1st"];
-	$monthdata[] = $pgv_lang["dec_1st"];
+	$monthdata[] = i18n::translate('Jan');
+	$monthdata[] = i18n::translate('Feb');
+	$monthdata[] = i18n::translate('March');
+	$monthdata[] = i18n::translate('April');
+	$monthdata[] = i18n::translate('May');
+	$monthdata[] = i18n::translate('June');
+	$monthdata[] = i18n::translate('July');
+	$monthdata[] = i18n::translate('Aug');
+	$monthdata[] = i18n::translate('Sep');
+	$monthdata[] = i18n::translate('Oct');
+	$monthdata[] = i18n::translate('Nov');
+	$monthdata[] = i18n::translate('Dec');
 	foreach ($monthdata as $key=>$month) {
 		$monthdata[$key] = $month;
 	}
@@ -765,7 +768,7 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 		$zgiven = $zg;
 		$title = $pgv_lang["$titstr"];
 		$xtitle = $pgv_lang["$xt"];
-		$ytitle = $pgv_lang["stplnumbers"];
+		$ytitle = i18n::translate('numbers');
 		$grenzen_xas = $gx;
 		$grenzen_zas = $gz;
 		if ($xg == true) {
@@ -780,15 +783,15 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 		if ($y_as == 201) {
 			$percentage = false;
 			if ($current == 13 || $current == 15 || $current == 16 || $current == 21) {
-				$ytitle = $pgv_lang["statnfam"];
+				$ytitle = i18n::translate('Total families');
 			} elseif ($current == 14) {
-				$ytitle = $pgv_lang["stat_21_nok"];
+				$ytitle = i18n::translate('Number of children');
 			} else {
-				$ytitle = $pgv_lang["statnnames"];
+				$ytitle = i18n::translate('Total individuals');
 			}
 		} elseif ($y_as == 202) {
 			$percentage = true;
-			$ytitle = $pgv_lang["stplperc"];
+			$ytitle = i18n::translate('percentage');
 		}
 		$male_female = false;
 		if ($z_as == 300) {
@@ -799,12 +802,12 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 		} elseif ($z_as == 301) {
 			$male_female = true;
 			$zgiven = true;
-			$legend[0] = $pgv_lang["male"];
-			$legend[1] = $pgv_lang["female"];
+			$legend[0] = i18n::translate('Male');
+			$legend[1] = i18n::translate('Female');
 			$zmax = 2;
-			$xtitle = $xtitle.$pgv_lang["stplmf"];
+			$xtitle = $xtitle.i18n::translate(' per gender');
 		} elseif ($z_as == 302) {
-			$xtitle= $xtitle.$pgv_lang["stplipot"];
+			$xtitle= $xtitle.i18n::translate(' per time period');
 		}
 		//-- reset the data array
 		for($i=0; $i<$zmax; $i++) {
@@ -814,12 +817,12 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 		}
 		$myfunc();
 		if ($indfam == "IND") {
-			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrpers;
+			$hstr = $title."|" .i18n::translate('Counts ')." ".$n1." ".i18n::translate('of')." ".$nrpers;
 		} elseif ($x_as==21) {
-			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$stats->totalChildren();
+			$hstr = $title."|" .i18n::translate('Counts ')." ".$n1." ".i18n::translate('of')." ".$stats->totalChildren();
 		}
 		else {
-			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrfam;
+			$hstr = $title."|" .i18n::translate('Counts ')." ".$n1." ".i18n::translate('of')." ".$nrfam;
 		}
 		myplot($hstr, $zmax, $xdata, $xtitle, $ydata, $ytitle, $legend);
 	}
@@ -834,13 +837,13 @@ function print_sources_stats_chart($type){
 	switch ($type) {
 	case '9':
 		echo '<div id="google_charts" class="center">';
-		echo '<b>', $pgv_lang["stat_9_indi"], '</b><br /><br />';
+		echo '<b>', i18n::translate('Individuals with sources'), '</b><br /><br />';
 		echo $stats->chartIndisWithSources($params);
 		echo '</div><br />';
 		break;
 	case '8':
 		echo '<div id="google_charts" class="center">';
-		echo '<b>', $pgv_lang["stat_8_fam"], '</b><br /><br />';
+		echo '<b>', i18n::translate('Families with sources'), '</b><br /><br />';
 		echo $stats->chartFamsWithSources($params);
 		echo '</div><br />';
 		break;
@@ -911,8 +914,8 @@ else {
 	unset($savedInput);
 }
 
-print_simple_header($pgv_lang["statistiek_list"]);
-echo "\n\t<center><h2>", $pgv_lang["statistiek_list"], "</h2>\n\t";
+print_simple_header(i18n::translate('Statistics Plot'));
+echo "<center><h2>", i18n::translate('Statistics Plot'), "</h2>\n\t";
 echo "</center><br />";
 
 $nrpers = $_SESSION[$GEDCOM."nrpers"];
@@ -925,11 +928,11 @@ $nrfemale = $_SESSION[$GEDCOM."nrfemale"];
 
 //-- out of range values
 if (($y_as < 201) || ($y_as > 202)) {
-	echo $pgv_lang["stpl"], $y_as, $pgv_lang["stplnoim"], "<br/>";
+	echo i18n::translate('...'), $y_as, i18n::translate(' not implemented:'), "<br/>";
 	exit;
 }
 if (($z_as < 300) || ($z_as > 302)) {
-	echo $pgv_lang["stpl"], $z_as, $pgv_lang["stplnoim"], "<br/>";
+	echo i18n::translate('...'), $z_as, i18n::translate(' not implemented:'), "<br/>";
 	exit;
 }
 
@@ -988,11 +991,11 @@ case '9':
 	print_sources_stats_chart($x_as);
 	break;
 default:
-	echo $pgv_lang["stpl"], $x_as, $pgv_lang["stplnoim"], "<br/>";
+	echo i18n::translate('...'), $x_as, i18n::translate(' not implemented:'), "<br/>";
 	exit;
 }
 echo "<br /><div class =\"center noprint\">";
-echo "<input type=\"button\" value=\"", $pgv_lang["close_window"], "\" onclick=\"window.close()\" /><br /><br />";
+echo "<input type=\"button\" value=\"", i18n::translate('Close Window'), "\" onclick=\"window.close()\" /><br /><br />";
 echo "</div>\n";
 print_simple_footer();
 ?>

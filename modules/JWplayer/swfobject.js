@@ -1,5 +1,5 @@
 /* swfobject.js - Author Brian Holland .... email webman@windmillway.f2s.com    
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
 */

@@ -1,7 +1,10 @@
 <?php
 /**
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Tools
  * @version $Id$
  */
@@ -45,7 +48,6 @@ class GEDownloadGedcom extends GrampsExport
   * @param string $personID - the ID (I1, I2, I3) of the person the is being created
   */
 	function create_person($personRec = "", $personID = "") {
-		global $pgv_lang;
 		$check = $this->query_dom("./people/person[@id=\"$personID\"]");
 		if ($check == null)
 		{
@@ -85,9 +87,9 @@ class GEDownloadGedcom extends GrampsExport
 					}
 				}
 				if (empty($surn))
-					$surn = $pgv_lang["unknown"];
+					$surn = i18n::translate('unknown');
 				if (empty($givn))
-					$givn = $pgv_lang["unknown"];
+					$givn = i18n::translate('unknown');
 
 				$eFirstName = $this->dom->createElement("first");
 				$etFirstName = $this->dom->createTextNode($givn);
@@ -242,7 +244,6 @@ class GEDownloadGedcom extends GrampsExport
 	 * @param int $tag -  the name of the GEDCOM tag (FAMC, FAMS). This is used to allow the same function to work with childin and parent_in_family relations
 	 */
 	function create_fam_relation($eParent, $personRec, $tag) {
-		global $pgv_lang;
 		$famid = get_gedcom_value($tag, 1, $personRec);
 		$handle = $famid;
 		$created = false;

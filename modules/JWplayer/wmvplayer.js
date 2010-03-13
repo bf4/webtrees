@@ -1,5 +1,5 @@
 /* wmvplayer.js - PhpGedView Author Brian Holland     
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
 */

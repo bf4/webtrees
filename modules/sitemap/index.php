@@ -2,7 +2,10 @@
 /**
  * Display a diff between two language files to help in translating.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Languages
  * @version $Id$
  */
@@ -204,7 +207,7 @@ if ($action=="sendIndex") {
 	exit;
 }
 
-print_header($pgv_lang["generate_sitemap"]);
+print_header(i18n::translate('Generate Sitemap files'));
 
 ?>
 <script language="JavaScript" type="text/javascript">
@@ -225,24 +228,24 @@ function getHelp(which) {
 
 if ($action=="generate") {
 	echo "<h3>";
-	print_help_link("SITEMAP", "qm", "SITEMAP");
-	echo $pgv_lang["generate_sitemap"];
+	echo i18n::translate('Generate Sitemap files');
+	echo help_link('SITEMAP');
 	echo "</h3>\n";
 	echo "<table class=\"facts_table\">\n";
-	echo "<tr><td class=\"topbottombar\">", $pgv_lang["selected_item"], "</td></tr>\n";
-	if (isset($_POST["welcome_page"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["welcome_page"], "</td></tr>\n";
-	if (isset($_POST["indi_recs"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["sm_indi_info"], "</td></tr>\n";
-	if (isset($_POST["indi_list"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["sm_individual_list"], "</td></tr>\n";
-	if (isset($_POST["fam_recs"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["sm_family_info"], "</td></tr>\n";
-	if (isset($_POST["fam_list"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["sm_family_list"], "</td></tr>\n";
-	if (isset($_POST["GEDCOM_Privacy"])) echo "<tr><td class=\"optionbox\">", $pgv_lang["gedcoms_privacy"], "</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">", i18n::translate('Selected items to store in Sitemap:'), "</td></tr>\n";
+	if (isset($_POST["welcome_page"])) echo "<tr><td class=\"optionbox\">", i18n::translate('Welcome page'), "</td></tr>\n";
+	if (isset($_POST["indi_recs"])) echo "<tr><td class=\"optionbox\">", i18n::translate('Individual Information'), "</td></tr>\n";
+	if (isset($_POST["indi_list"])) echo "<tr><td class=\"optionbox\">", i18n::translate('Individual List'), "</td></tr>\n";
+	if (isset($_POST["fam_recs"])) echo "<tr><td class=\"optionbox\">", i18n::translate('Family Information'), "</td></tr>\n";
+	if (isset($_POST["fam_list"])) echo "<tr><td class=\"optionbox\">", i18n::translate('Family List'), "</td></tr>\n";
+	if (isset($_POST["GEDCOM_Privacy"])) echo "<tr><td class=\"optionbox\">", i18n::translate('No links to private information'), "</td></tr>\n";
 
-	echo "<tr><td class=\"topbottombar\">", $pgv_lang["gedcoms_selected"], "</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">", i18n::translate('GEDCOMs to store in Sitemap:'), "</td></tr>\n";
 	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 		if (isset($_POST["GEDCOM_{$ged_id}"])) echo "<tr><td class=\"optionbox\">", get_gedcom_setting($ged_id, 'title'), "</td></tr>\n";
 	}
 
-	echo "<tr><td class=\"topbottombar\">", $pgv_lang["sitemaps_generated"], "</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">", i18n::translate('The following Sitemap files have been generated and can be downloaded:'), "</td></tr>\n";
 	$filecounter = 0;
 	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 		if (isset($_POST["GEDCOM_{$ged_id}"])) {
@@ -267,7 +270,7 @@ if ($action=="generate") {
 		}
 		echo "\">SitemapIndex.xml</a></td></tr>\n";
 	}
-	echo "<tr><td class=\"topbottombar\">", $pgv_lang["sitemaps_placement"], "</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">", i18n::translate('Place all the files in the root of your PhpGedView installation.'), "</td></tr>\n";
 	echo "</table>\n";
 	echo "<br />\n";
 }
@@ -276,13 +279,13 @@ if ($action=="") {
 	$i = 0;
 ?>
 
-<h3><?php print_help_link("SITEMAP", "qm", "SITEMAP"); echo $pgv_lang["generate_sitemap"]?></h3>
+<h3><?php echo i18n::translate('Generate Sitemap files'), help_link('SITEMAP'); ?></h3>
 
 <form method="post" enctype="multipart/form-data" id="sitemap" name="sitemap" action="module.php?mod=sitemap">
 	<input type="hidden" name="action" value="generate" />
 	<table class="facts_table width100">
 		<tr>
-			<td class="descriptionbox wrap width30"><?php print_help_link("SM_GEDCOM_SELECT", "qm", "SM_GEDCOM_SELECT"); echo $pgv_lang["gedcoms_selected"];?></td>
+			<td class="descriptionbox wrap width30"><?php echo i18n::translate('GEDCOMs to store in Sitemap:'), help_link('SM_GEDCOM_SELECT'); ?></td>
 			<td class="optionbox" colspan="3">
 <?php
 	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
@@ -295,20 +298,20 @@ if ($action=="") {
 			<td class="descriptionbox wrap width30">
 			</td>
 			<td class="optionbox" colspan="3">
-				<input type="checkbox" name="GEDCOM_Privacy" tabindex="<?php $i++; echo $i?>" checked><?php echo $pgv_lang["gedcoms_privacy"];?>
+				<input type="checkbox" name="GEDCOM_Privacy" tabindex="<?php $i++; echo $i?>" checked><?php echo i18n::translate('No links to private information');?>
 			</td>
 		</tr>
 		<tr>
 			<td class="descriptionbox wrap width30" rowspan="6">
-				<?php print_help_link("SM_ITEM_SELECT", "qm", "SM_ITEM_SELECT"); echo $pgv_lang["selected_item"];?>
+				<?php echo i18n::translate('Selected items to store in Sitemap:'), help_link('SM_ITEM_SELECT'); ?>
 			</td>
-			<td class="topbottombar"><?php echo $pgv_lang["sm_item"];?></td>
-			<td class="topbottombar"><?php echo $pgv_lang["sm_priority"];?></td>
-			<td class="topbottombar"><?php echo $pgv_lang["sm_updates"];?></td>
+			<td class="topbottombar"><?php echo i18n::translate('Item');?></td>
+			<td class="topbottombar"><?php echo i18n::translate('Priority');?></td>
+			<td class="topbottombar"><?php echo i18n::translate('Updates');?></td>
 		</tr>
 		<tr>
 			<td class="optionbox">
-				<input type="checkbox" name="welcome_page" tabindex="<?php $i++; echo $i?>" checked><?php echo $pgv_lang["welcome_page"];?>
+				<input type="checkbox" name="welcome_page" tabindex="<?php $i++; echo $i?>" checked><?php echo i18n::translate('Welcome page');?>
 			</td>
 			<td class="optionbox">
 				<select name="welcome_priority" tabindex="<?php $i++; echo $i?>">
@@ -325,18 +328,18 @@ if ($action=="") {
 			</td>
 			<td class="optionbox">
 				<select name="welcome_update" tabindex="<?php $i++; echo $i?>">
-					<option value="always"><?php echo $pgv_lang["sm_always"];?></option>
-					<option value="hourly"><?php echo $pgv_lang["sm_hourly"];?></option>
-					<option value="daily"><?php echo $pgv_lang["sm_daily"];?></option>
-					<option value="weekly"><?php echo $pgv_lang["sm_weekly"];?></option>
-					<option value="monthly" selected="selected"><?php echo $pgv_lang["sm_monthly"];?></option>
-					<option value="yearly"><?php echo $pgv_lang["sm_yearly"];?></option>
-					<option value="never"><?php echo $pgv_lang["sm_never"];?></option>
+					<option value="always"><?php echo i18n::translate('always');?></option>
+					<option value="hourly"><?php echo i18n::translate('hourly');?></option>
+					<option value="daily"><?php echo i18n::translate('daily');?></option>
+					<option value="weekly"><?php echo i18n::translate('weekly');?></option>
+					<option value="monthly" selected="selected"><?php echo i18n::translate('monthly');?></option>
+					<option value="yearly"><?php echo i18n::translate('yearly');?></option>
+					<option value="never"><?php echo i18n::translate('never');?></option>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<td class="optionbox"><input type="checkbox" name="indi_recs" tabindex="<?php $i++; echo $i?>" checked><?php echo $pgv_lang["sm_indi_info"];?></td>
+			<td class="optionbox"><input type="checkbox" name="indi_recs" tabindex="<?php $i++; echo $i?>" checked><?php echo i18n::translate('Individual Information');?></td>
 			<td class="optionbox">
 				<select name="indirec_priority" tabindex="<?php $i++; echo $i?>">
 					<option value="1">0.1</option>
@@ -352,18 +355,18 @@ if ($action=="") {
 			</td>
 			<td class="optionbox">
 				<select name="indirec_update" tabindex="<?php $i++; echo $i?>">
-					<option value="always"><?php echo $pgv_lang["sm_always"];?></option>
-					<option value="hourly"><?php echo $pgv_lang["sm_hourly"];?></option>
-					<option value="daily"><?php echo $pgv_lang["sm_daily"];?></option>
-					<option value="weekly"><?php echo $pgv_lang["sm_weekly"];?></option>
-					<option value="monthly" selected="selected"><?php echo $pgv_lang["sm_monthly"];?></option>
-					<option value="yearly"><?php echo $pgv_lang["sm_yearly"];?></option>
-					<option value="never"><?php echo $pgv_lang["sm_never"];?></option>
+					<option value="always"><?php echo i18n::translate('always');?></option>
+					<option value="hourly"><?php echo i18n::translate('hourly');?></option>
+					<option value="daily"><?php echo i18n::translate('daily');?></option>
+					<option value="weekly"><?php echo i18n::translate('weekly');?></option>
+					<option value="monthly" selected="selected"><?php echo i18n::translate('monthly');?></option>
+					<option value="yearly"><?php echo i18n::translate('yearly');?></option>
+					<option value="never"><?php echo i18n::translate('never');?></option>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<td class="optionbox"><input type="checkbox" name="indi_list" tabindex="<?php $i++; echo $i?>"><?php echo $pgv_lang["sm_individual_list"];?></td>
+			<td class="optionbox"><input type="checkbox" name="indi_list" tabindex="<?php $i++; echo $i?>"><?php echo i18n::translate('Individual List');?></td>
 			<td class="optionbox">
 				<select name="indilist_priority" tabindex="<?php $i++; echo $i?>">
 					<option value="1">0.1</option>
@@ -379,18 +382,18 @@ if ($action=="") {
 			</td>
 			<td class="optionbox">
 				<select name="indilist_update" tabindex="<?php $i++; echo $i?>">
-					<option value="always"><?php echo $pgv_lang["sm_always"];?></option>
-					<option value="hourly"><?php echo $pgv_lang["sm_hourly"];?></option>
-					<option value="daily"><?php echo $pgv_lang["sm_daily"];?></option>
-					<option value="weekly"><?php echo $pgv_lang["sm_weekly"];?></option>
-					<option value="monthly" selected="selected"><?php echo $pgv_lang["sm_monthly"];?></option>
-					<option value="yearly"><?php echo $pgv_lang["sm_yearly"];?></option>
-					<option value="never"><?php echo $pgv_lang["sm_never"];?></option>
+					<option value="always"><?php echo i18n::translate('always');?></option>
+					<option value="hourly"><?php echo i18n::translate('hourly');?></option>
+					<option value="daily"><?php echo i18n::translate('daily');?></option>
+					<option value="weekly"><?php echo i18n::translate('weekly');?></option>
+					<option value="monthly" selected="selected"><?php echo i18n::translate('monthly');?></option>
+					<option value="yearly"><?php echo i18n::translate('yearly');?></option>
+					<option value="never"><?php echo i18n::translate('never');?></option>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<td class="optionbox"><input type="checkbox" name="fam_recs" tabindex="<?php $i++; echo $i?>" checked><?php echo $pgv_lang["sm_family_info"];?></td>
+			<td class="optionbox"><input type="checkbox" name="fam_recs" tabindex="<?php $i++; echo $i?>" checked><?php echo i18n::translate('Family Information');?></td>
 			<td class="optionbox">
 				<select name="famrec_priority" tabindex="<?php $i++; echo $i?>">
 					<option value="1">0.1</option>
@@ -406,18 +409,18 @@ if ($action=="") {
 			</td>
 			<td class="optionbox">
 				<select name="famrec_update" tabindex="<?php $i++; echo $i?>">
-					<option value="always"><?php echo $pgv_lang["sm_always"];?></option>
-					<option value="hourly"><?php echo $pgv_lang["sm_hourly"];?></option>
-					<option value="daily"><?php echo $pgv_lang["sm_daily"];?></option>
-					<option value="weekly"><?php echo $pgv_lang["sm_weekly"];?></option>
-					<option value="monthly" selected="selected"><?php echo $pgv_lang["sm_monthly"];?></option>
-					<option value="yearly"><?php echo $pgv_lang["sm_yearly"];?></option>
-					<option value="never"><?php echo $pgv_lang["sm_never"];?></option>
+					<option value="always"><?php echo i18n::translate('always');?></option>
+					<option value="hourly"><?php echo i18n::translate('hourly');?></option>
+					<option value="daily"><?php echo i18n::translate('daily');?></option>
+					<option value="weekly"><?php echo i18n::translate('weekly');?></option>
+					<option value="monthly" selected="selected"><?php echo i18n::translate('monthly');?></option>
+					<option value="yearly"><?php echo i18n::translate('yearly');?></option>
+					<option value="never"><?php echo i18n::translate('never');?></option>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<td class="optionbox"><input type="checkbox" name="fam_list" tabindex="<?php $i++; echo $i?>"><?php echo $pgv_lang["sm_family_list"];?></td>
+			<td class="optionbox"><input type="checkbox" name="fam_list" tabindex="<?php $i++; echo $i?>"><?php echo i18n::translate('Family List');?></td>
 			<td class="optionbox">
 				<select name="famlist_priority" tabindex="<?php $i++; echo $i?>">
 					<option value="1">0.1</option>
@@ -433,18 +436,18 @@ if ($action=="") {
 			</td>
 			<td class="optionbox">
 				<select name="famlist_update" tabindex="<?php $i++; echo $i?>">
-					<option value="always"><?php echo $pgv_lang["sm_always"];?></option>
-					<option value="hourly"><?php echo $pgv_lang["sm_hourly"];?></option>
-					<option value="daily"><?php echo $pgv_lang["sm_daily"];?></option>
-					<option value="weekly"><?php echo $pgv_lang["sm_weekly"];?></option>
-					<option value="monthly" selected="selected"><?php echo $pgv_lang["sm_monthly"];?></option>
-					<option value="yearly"><?php echo $pgv_lang["sm_yearly"];?></option>
-					<option value="never"><?php echo $pgv_lang["sm_never"];?></option>
+					<option value="always"><?php echo i18n::translate('always');?></option>
+					<option value="hourly"><?php echo i18n::translate('hourly');?></option>
+					<option value="daily"><?php echo i18n::translate('daily');?></option>
+					<option value="weekly"><?php echo i18n::translate('weekly');?></option>
+					<option value="monthly" selected="selected"><?php echo i18n::translate('monthly');?></option>
+					<option value="yearly"><?php echo i18n::translate('yearly');?></option>
+					<option value="never"><?php echo i18n::translate('never');?></option>
 				</select>
 			</td>
 		</tr>
 	</table>
-	<center><input id="savebutton" type="submit" value="<?php echo $pgv_lang["sm_generate"];?>" /></center><br /><br />
+	<center><input id="savebutton" type="submit" value="<?php echo i18n::translate('Generate');?>" /></center><br /><br />
 </form>
 
 <?php

@@ -2,7 +2,10 @@
 /**
  * Classes and libraries for module system
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2010 John Finlay
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Modules
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
@@ -39,6 +42,14 @@ class all_tab_PGVModule extends PGVModule {
 	protected $pgvVersion = '4.2.2';
 	protected $_tab = null;
 	
+	public function getName() {
+		return 'all_tab';
+	}
+
+	public function getTitle() {
+		return i18n::translate('All');
+	}
+
 	/**
 	 * get the tab for this
 	 * @return Tab

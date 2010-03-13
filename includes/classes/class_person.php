@@ -2,7 +2,10 @@
 /**
 * Class file for a person
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage DataModel
 * @version $Id$
 */
@@ -130,7 +133,7 @@ class Person extends GedcomRecord {
 					$this->_getBirthDate=new GedcomDate('');
 				}
 			} else {
-				$this->_getBirthDate=new GedcomDate("({$pgv_lang['private']})");
+				$this->_getBirthDate=new GedcomDate("(".i18n::translate('Private').")");
 			}
 		}
 		return $this->_getBirthDate;
@@ -154,7 +157,7 @@ class Person extends GedcomRecord {
 					$this->_getBirthPlace='';
 				}
 			} else {
-				$this->_getBirthPlace=$pgv_lang['private'];
+				$this->_getBirthPlace=i18n::translate('Private');
 			}
 		}
 		return $this->_getBirthPlace;
@@ -178,7 +181,7 @@ class Person extends GedcomRecord {
 					$this->_getBirthPlace='';
 				}
 			} else {
-				$this->_getBirthPlace=$pgv_lang['private'];
+				$this->_getBirthPlace=i18n::translate('Private');
 			}
 		}
 		$censbirthplace = $this->_getBirthPlace;
@@ -217,7 +220,7 @@ class Person extends GedcomRecord {
 					$this->_getDeathDate=new GedcomDate('');
 				}
 			} else {
-				$this->_getDeathDate=new GedcomDate("({$pgv_lang['private']})");
+				$this->_getDeathDate=new GedcomDate("(".i18n::translate('Private').")");
 			}
 		}
 		return $this->_getDeathDate;
@@ -242,7 +245,7 @@ class Person extends GedcomRecord {
 					$this->_getDeathPlace='';
 				}
 			} else {
-				$this->_getDeathPlace=$pgv_lang['private'];
+				$this->_getDeathPlace=i18n::translate('Private');
 			}
 		}
 		return $this->_getDeathPlace;
@@ -273,7 +276,7 @@ class Person extends GedcomRecord {
 			&& $this->getDeathYear() && empty($this->getDeathDate()->qual1)) {
 			$age = get_age_at_event(GedcomDate::GetAgeGedcom($this->getBirthDate(), $this->getDeathDate()), false);
 			if (!empty($age)) {
-				$tmp .= '<span class="age"> ('.$pgv_lang['age'].' '.$age.')</span>';
+				$tmp .= '<span class="age"> ('.i18n::translate('Age').' '.$age.')</span>';
 			}
 		}
 		if ($classname) {
@@ -530,9 +533,9 @@ class Person extends GedcomRecord {
 				if ($gap>1 && $gap<180 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
 				// children with same date means twin
 				/**if ($gap==0 && $counter>1) {
-					if ($this->getSex()=='M') $label .= $pgv_lang['twin_brother'];
-					else if ($this->getSex()=='F') $label .= $pgv_lang['twin_sister'];
-					else $label .= $pgv_lang['twin'];
+					if ($this->getSex()=='M') $label .= i18n::translate('Twin brother');
+					else if ($this->getSex()=='F') $label .= i18n::translate('Twin sister');
+					else $label .= i18n::translate('Twin');
 					}**/
 				// gap in years or months
 				$gap = round($gap*12/365.25); // months
@@ -546,7 +549,8 @@ class Person extends GedcomRecord {
 				$label .= '</div>';
 			}
 		}
-		if ($counter) $label .= '<div class="'.strrev($TEXT_DIRECTION).'">'.$pgv_lang['number_sign'].$counter.'</div>';
+		// I18N: This is an abbreviation for a number.  i.e. #7 means number 7
+		if ($counter) $label .= '<div class="'.strrev($TEXT_DIRECTION).'">'.i18n::translate('#%d', $counter).'</div>';
 		$label .= $this->label;
 		if ($gap!=0 && $counter<1) $label .= '<br />&nbsp;';
 		return $label;
@@ -573,7 +577,7 @@ class Person extends GedcomRecord {
 			foreach ($this->getSpouseFamilyIds() as $famid) {
 				$family=Family::getInstance($famid);
 				if (is_null($family)) {
-					echo '<span class="warning">', $pgv_lang['unable_to_find_family'], ' ', $famid, '</span>';
+					echo '<span class="warning">', i18n::translate('Unable to find family with ID'), ' ', $famid, '</span>';
 				} else {
 					// only include family if it is displayable by current user
 					if ($SHOW_LIVING_NAMES || $family->canDisplayDetails()) {
@@ -630,7 +634,7 @@ class Person extends GedcomRecord {
 			foreach ($this->getChildFamilyIds() as $famid) {
 				$family=Family::getInstance($famid);
 				if (is_null($family)) {
-					echo '<span class="warning">', $pgv_lang['unable_to_find_family'], ' ', $famid, '</span>';
+					echo '<span class="warning">', i18n::translate('Unable to find family with ID'), ' ', $famid, '</span>';
 				} else {
 					// only include family if it is displayable by current user
 					if ($SHOW_LIVING_NAMES || $family->canDisplayDetails()) {
@@ -757,7 +761,7 @@ class Person extends GedcomRecord {
 				if ($temp!='birth' && isset($pgv_lang[$temp])) return $pgv_lang[$temp].' ';
 			}
 		}
-		return $pgv_lang['as_child'];
+		return i18n::translate('Family with Parents');
 	}
 	/**
 	* get the correct label for a step family
@@ -776,16 +780,16 @@ class Person extends GedcomRecord {
 				$wife = $fam->getWife();
 				$husb = $fam->getHusband();
 				if ((is_null($husb) || !$husb->equals($father)) && (is_null($wife)||$wife->equals($mother))) {
-					if ($mother->getSex()=='M') $label = $pgv_lang['fathers_family_with'];
-					else $label = $pgv_lang['mothers_family_with'];
+					if ($mother->getSex()=='M') $label = i18n::translate('Father\'s Family with ');
+					else $label = i18n::translate('Mother\'s Family with ');
 					if (!is_null($father)) $label .= $father->getFullName();
-					else $label .= $pgv_lang['unknown'];
+					else $label .= i18n::translate('unknown');
 				}
 				else if ((is_null($wife) || !$wife->equals($mother)) && (is_null($husb)||$husb->equals($father))) {
-					if ($father->getSex()=='F') $label = $pgv_lang['mothers_family_with'];
-					else $label = $pgv_lang['fathers_family_with'];
+					if ($father->getSex()=='F') $label = i18n::translate('Mother\'s Family with ');
+					else $label = i18n::translate('Father\'s Family with ');
 					if (!is_null($mother)) $label .= $mother->getFullName();
-					else $label .= $pgv_lang['unknown'];
+					else $label .= i18n::translate('unknown');
 				}
 				if ($label!='Unknown Family') return $label;
 			}
@@ -800,9 +804,9 @@ class Person extends GedcomRecord {
 	function getSpouseFamilyLabel(&$family) {
 		global $pgv_lang;
 
-		$label = $pgv_lang['family_with'] . ' ';
+		$label = i18n::translate('Family with') . ' ';
 		if (is_null($family)) {
-			return $label . $pgv_lang['unknown'];
+			return $label . i18n::translate('unknown');
 		}
 		$famlink = get_sub_record(1, '1 FAMS @'.$family->getXref().'@', $this->gedrec);
 		if (preg_match('/2 PEDI (.*)/', $famlink, $fmatch)) {
@@ -817,11 +821,11 @@ class Person extends GedcomRecord {
 		$wife = $family->getWife();
 		if ($this->equals($husb)) {
 			if (!is_null($wife)) $label .= $wife->getFullName();
-			else $label .= $pgv_lang['unknown'];
+			else $label .= i18n::translate('unknown');
 		}
 		else {
 			if (!is_null($husb)) $label .= $husb->getFullName();
-			else $label .= $pgv_lang['unknown'];
+			else $label .= i18n::translate('unknown');
 		}
 		return $label;
 	}
@@ -1577,7 +1581,7 @@ class Person extends GedcomRecord {
 			// want the default name, not the one selected for display on the indilist.
 			$primary=$husb->getPrimaryName();
 			$husb->setPrimaryName(null);
-			$txt .= $pgv_lang['father'].': '.PrintReady($husb->getListName()).'<br />';
+			$txt .= i18n::translate('Father').': '.PrintReady($husb->getListName()).'<br />';
 			$husb->setPrimaryName($primary);
 		}
 		$wife = $fam->getWife();
@@ -1586,7 +1590,7 @@ class Person extends GedcomRecord {
 			// want the default name, not the one selected for display on the indilist.
 			$primary=$wife->getPrimaryName();
 			$wife->setPrimaryName(null);
-			$txt .= $pgv_lang['mother'].': '.PrintReady($wife->getListName());
+			$txt .= i18n::translate('Mother').': '.PrintReady($wife->getListName());
 			$wife->setPrimaryName($primary);
 		}
 		$txt .= '</div>';
@@ -1774,8 +1778,8 @@ class Person extends GedcomRecord {
 		// from that character set.  Otherwise use the one in the language file.
 		if (strpos($givn, '@P.N.')!==false || $surn=='@N.N.' || $surns[0]=='@N.N.') {
 			if (strpos($givn, '@P.N.')!==false && ($surn=='@N.N.' || $surns[0]=='@N.N.')) {
-				$PN=$pgv_lang['PN'];
-				$NN=$pgv_lang['NN'];
+				$PN=i18n::translate('(unknown)');
+				$NN=i18n::translate('(unknown)');
 			} else {
 				if ($surn!=='')
 					$PN=$unknownPN[whatLanguage($surn)];
@@ -1833,13 +1837,13 @@ function DefaultGetLabel(&$label, &$gap) {
 	global $pgv_lang;
 
 	if (($gap==12)||($gap==-12)) {
-		$label .= round($gap/12).' '.$pgv_lang['year1']; // 1 year
+		$label .= round($gap/12).' '.i18n::translate('year'); // 1 year
 	} elseif ($gap>20 or $gap<-20) {
-		$label .= round($gap/12).' '.$pgv_lang['years']; // x years
+		$label .= round($gap/12).' '.i18n::translate('years'); // x years
 	} elseif (($gap==1)||($gap==-1)) {
-		$label .= $gap.' '.$pgv_lang['month1']; // 1 month
+		$label .= $gap.' '.i18n::translate('month'); // 1 month
 	} elseif ($gap!=0) {
-		$label .= $gap.' '.$pgv_lang['months']; // x months
+		$label .= $gap.' '.i18n::translate('months'); // x months
 	}
 }
 ?>

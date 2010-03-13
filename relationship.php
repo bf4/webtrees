@@ -2,7 +2,10 @@
 /**
  * Calculates the relationship between two individuals in the gedcom
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 20 August 2005
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -125,77 +128,77 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 	if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 0 && $generationsYounger == 0) {
 		// check for spouse
 		if ($mf=="F") {
-			if (isset($pgv_lang["wife"]))
-				$relationshipDescription = $pgv_lang["wife"];
+			if (isset(i18n::translate('Wife')))
+				$relationshipDescription = i18n::translate('Wife');
 		}
 		else {
-			if (isset($pgv_lang["husband"]))
-				$relationshipDescription = $pgv_lang["husband"];
+			if (isset(i18n::translate('Husband')))
+				$relationshipDescription = i18n::translate('Husband');
 		}
 	}
 	//check if relationship is parent in law or step parent
 	else if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 1 && $generationsYounger == 0) {
 		// is this an in-law relationship?
 		if(!$lastRelationshipIsSpouse) {
-			if (isset($pgv_lang["mother_in_law"]) && $mf=="F") {
-				$relationshipDescription = $pgv_lang["mother_in_law"];
+			if (isset(i18n::translate('Mother-in-law')) && $mf=="F") {
+				$relationshipDescription = i18n::translate('Mother-in-law');
 			}
-			else if (isset($pgv_lang["father_in_law"])) {
-				$relationshipDescription = $pgv_lang["father_in_law"];
+			else if (isset(i18n::translate('Father-in-law'))) {
+				$relationshipDescription = i18n::translate('Father-in-law');
 			}
 		}
 		else {
 			// step relationship
-			if (isset($pgv_lang["stepmom"]) && $mf=="F") {
+			if (isset(i18n::translate('Step-Mother')) && $mf=="F") {
 				if (!empty($firstRelationshipIsSpouse) || $path_to_find>0) {
-					$relationshipDescription = $pgv_lang["sosa_3"];
+					$relationshipDescription = i18n::translate('Mother');
 				}
 				else {
-					$relationshipDescription = $pgv_lang["stepmom"];
+					$relationshipDescription = i18n::translate('Step-Mother');
 				}
 			}
-			else if (isset($pgv_lang["stepdad"])) {
+			else if (isset(i18n::translate('Step-Father'))) {
 				if (!empty($firstRelationshipIsSpouse) || $path_to_find>0) {
-					$relationshipDescription = $pgv_lang["sosa_2"];
+					$relationshipDescription = i18n::translate('Father');
 				}
 				else {
-					$relationshipDescription = $pgv_lang["stepdad"];
+					$relationshipDescription = i18n::translate('Step-Father');
 				}
 			}
 		}
 	}
 	//checks for brother in law, sister in law realtionships
 	else if ($numberOfSpouses == 1 && $numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder == 0) {
-		if (isset($pgv_lang["sister_in_law"]) && $mf=="F") {
+		if (isset(i18n::translate('Sister-in-law')) && $mf=="F") {
 			if (in_arrayr("brother", $node)) {
-				$relationshipDescription = $pgv_lang["brothers_wife"];
+				$relationshipDescription = i18n::translate('Sister-in-law');
 			}
 			else {
-				$relationshipDescription = $pgv_lang["sister_in_law"];
+				$relationshipDescription = i18n::translate('Sister-in-law');
 			}
 		}
-		else if (isset($pgv_lang["brother_in_law"])) {
-			$relationshipDescription = $pgv_lang["brother_in_law"];
+		else if (isset(i18n::translate('Brother-in-law'))) {
+			$relationshipDescription = i18n::translate('Brother-in-law');
 		}
 	}
 	//check if relationship is child in law
 	else if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 0 && $generationsYounger == 1) {
 		// is this an in-law relationship?
 		if($lastRelationshipIsSpouse) {
-			if (isset($pgv_lang["daughter_in_law"]) && $mf=="F") {
-				$relationshipDescription = $pgv_lang["daughter_in_law"];
+			if (isset(i18n::translate('Daughter-in-law')) && $mf=="F") {
+				$relationshipDescription = i18n::translate('Daughter-in-law');
 			}
-			else if (isset($pgv_lang["son_in_law"])) {
-				$relationshipDescription = $pgv_lang["son_in_law"];
+			else if (isset(i18n::translate('Son-in-law'))) {
+				$relationshipDescription = i18n::translate('Son-in-law');
 			}
 		}
 		else {
 			// step relationship
-			if (isset($pgv_lang["step_daughter"]) && $mf=="F") {
-				$relationshipDescription = $pgv_lang["step_daughter"];
+			if (isset(i18n::translate('step daughter')) && $mf=="F") {
+				$relationshipDescription = i18n::translate('step daughter');
 			}
-			else if (isset($pgv_lang["step_son"])) {
-				$relationshipDescription = $pgv_lang["step_son"];
+			else if (isset(i18n::translate('step son'))) {
+				$relationshipDescription = i18n::translate('step son');
 			}
 		}
 	}
@@ -206,11 +209,11 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 				$relationshipDescription = $pgv_lang["bosa_sisters_offspring_$bosa"];
 			}
 			else {
-				if ($mf=="F" && isset($pgv_lang["n_x_sisters_daughter"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_sisters_daughter"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				if ($mf=="F" && isset(i18n::translate('%2$d x great niece'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great niece'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
 				}
-				else if(isset($pgv_lang["n_x_sisters_son"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_sisters_son"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				else if(isset(i18n::translate('%2$d x great nephew'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great nephew'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
 				}
 			}
 		}
@@ -219,22 +222,22 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 				$relationshipDescription = $pgv_lang["bosa_brothers_offspring_$bosa"];
 			}
 			else {
-				if ($mf=="F" && isset($pgv_lang["n_x_brothers_daughter"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_brothers_daughter"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				if ($mf=="F" && isset(i18n::translate('%2$d x great niece'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great niece'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
 				}
-				else if(isset($pgv_lang["n_x_brothers_son"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_brothers_son"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				else if(isset(i18n::translate('%2$d x great nephew'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great nephew'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
 				}
 			}
 		}
 	}
 	// check for step siblings
 	else if($numberOfSpouses == 1 && $generationsYounger == 1 && $generationsOlder == 1 && !$firstRelationshipIsSpouse && !$lastRelationshipIsSpouse && $numberOfSiblings == 0 && $bosa <= 3) {
-		if ($node["length"]!=8 && isset($pgv_lang["stepsister"]) && $mf=="F") {
-			$relationshipDescription = $pgv_lang["stepsister"];
+		if ($node["length"]!=8 && isset(i18n::translate('Step-Sister')) && $mf=="F") {
+			$relationshipDescription = i18n::translate('Step-Sister');
 		}
-		else if ($node["length"]!=8 && isset($pgv_lang["stepbrother"])) {
-			$relationshipDescription = $pgv_lang["stepbrother"];
+		else if ($node["length"]!=8 && isset(i18n::translate('Step-Brother'))) {
+			$relationshipDescription = i18n::translate('Step-Brother');
 		}
 	}
 	//checks for aunt/uncle relationship by marriage
@@ -248,19 +251,19 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 		else {
 			// if line is through father
 			if(floor($sosa/pow(2,$generationsOlder-1)) == 2) {
-				if ($mf=="F" && isset($pgv_lang["n_x_paternal_aunt_bm"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_paternal_aunt_bm"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				if ($mf=="F" && isset(i18n::translate('%2$d x great aunt'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great aunt'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
 				}
-				else if(isset($pgv_lang["n_x_paternal_uncle_bm"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_paternal_uncle_bm"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				else if(isset(i18n::translate('%2$d x great uncle'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great uncle'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
 				}
 			}
 			else {
-				if ($mf=="F" && isset($pgv_lang["n_x_maternal_aunt_bm"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_maternal_aunt_bm"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				if ($mf=="F" && isset(i18n::translate('%2$d x great aunt'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great aunt'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
 				}
-				else if(isset($pgv_lang["n_x_maternal_uncle_bm"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_maternal_uncle_bm"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				else if(isset(i18n::translate('%2$d x great uncle'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great uncle'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
 				}
 			}
 		}
@@ -272,7 +275,7 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 	else if ($numberOfSiblings == 0 && $generationsOlder > 0 && $generationsYounger == 0) {
 		// the get_sosa_name is probably the best way of getting this name
 		$relationshipDescription = get_sosa_name($sosa);
-		if(($relationshipDescription==(($sosa%2) ? $pgv_lang["mother"] : $pgv_lang["father"]) . " " . floor($sosa/2))&&($generationsOlder > 3)) {
+		if(($relationshipDescription==(($sosa%2) ? i18n::translate('Mother') : i18n::translate('Father')) . " " . floor($sosa/2))&&($generationsOlder > 3)) {
 			// the sosa route didn't find a name - lets see if we can find a great grandparent this way
 			if (isset($pgv_lang["n_x_great_grandmother"]) && ($mf=="F")) {
 				$relationshipDescription = sprintf( $pgv_lang["n_x_great_grandmother"], $generationsOlder-2);
@@ -290,19 +293,19 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 		else {
 			// if line is through son
 			if(floor($bosa/pow(2,$generationsYounger-1)) == 2) {
-				if ($mf=="F" && isset($pgv_lang["n_x_granddaughter_from_son"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_granddaughter_from_son"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				if ($mf=="F" && isset(i18n::translate('%3$d x great granddaughter'))) {
+					$relationshipDescription = sprintf(i18n::translate('%3$d x great granddaughter'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
 				}
-				else if(isset($pgv_lang["n_x_grandson_from_son"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_grandson_from_son"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				else if(isset(i18n::translate('%3$d x great grandson'))) {
+					$relationshipDescription = sprintf(i18n::translate('%3$d x great grandson'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
 				}
 			}
 			else {
-				if ($mf=="F" && isset($pgv_lang["n_x_granddaughter_from_daughter"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_granddaughter_from_daughter"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				if ($mf=="F" && isset(i18n::translate('%3$d x great granddaughter'))) {
+					$relationshipDescription = sprintf(i18n::translate('%3$d x great granddaughter'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
 				}
-				else if(isset($pgv_lang["n_x_grandson_from_daughter"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_grandson_from_daughter"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				else if(isset(i18n::translate('%3$d x great grandson'))) {
+					$relationshipDescription = sprintf(i18n::translate('%3$d x great grandson'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
 				}
 			}
 		}
@@ -310,13 +313,13 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 	//checks for sibling realtionships
 	else if ($numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder == 0) {
 		if ($mf=="F") {
-			if (isset($pgv_lang["sister"])) {
-				$relationshipDescription = $pgv_lang["sister"];
+			if (isset(i18n::translate('Sister'))) {
+				$relationshipDescription = i18n::translate('Sister');
 			}
 		}
 		else {
-			if (isset($pgv_lang["brother"])) {
-				$relationshipDescription = $pgv_lang["brother"];
+			if (isset(i18n::translate('Brother'))) {
+				$relationshipDescription = i18n::translate('Brother');
 			}
 		}
 	}
@@ -331,19 +334,19 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 		else {
 			// if line is through father
 			if(floor($sosa/pow(2,$generationsOlder-1)) == 2) {
-				if ($mf=="F" && isset($pgv_lang["n_x_paternal_aunt"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_paternal_aunt"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				if ($mf=="F" && isset(i18n::translate('%2$d x great aunt'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great aunt'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
 				}
-				else if(isset($pgv_lang["n_x_paternal_uncle"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_paternal_uncle"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				else if(isset(i18n::translate('%2$d x great uncle'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great uncle'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
 				}
 			}
 			else {
-				if ($mf=="F" && isset($pgv_lang["n_x_maternal_aunt"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_maternal_aunt"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				if ($mf=="F" && isset(i18n::translate('%2$d x great aunt'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great aunt'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
 				}
-				else if(isset($pgv_lang["n_x_maternal_uncle"])) {
-					$relationshipDescription = sprintf($pgv_lang["n_x_maternal_uncle"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				else if(isset(i18n::translate('%2$d x great uncle'))) {
+					$relationshipDescription = sprintf(i18n::translate('%2$d x great uncle'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
 				}
 			}
 		}
@@ -355,8 +358,8 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 			if(isset($pgv_lang["female_cousin_" . $degree]) && ($pgv_lang["female_cousin_" . $degree] != "")) {
 				$relationshipDescription = $pgv_lang["female_cousin_" . $degree];
 			}
-			else if(isset($pgv_lang["female_cousin_n"]) && ($pgv_lang["female_cousin_n"] != "")) {
-				$relationshipDescription = sprintf($pgv_lang["female_cousin_n"], $degree);
+			else if(isset(i18n::translate('%d x cousin')) && (i18n::translate('%d x cousin') != "")) {
+				$relationshipDescription = sprintf(i18n::translate('%d x cousin'), $degree);
 			}
 		}
 		else {
@@ -364,27 +367,27 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 			if(isset($pgv_lang["male_cousin_" . $degree]) && ($pgv_lang["male_cousin_" . $degree] != "")) {
 				$relationshipDescription = $pgv_lang["male_cousin_" . $degree];
 			}
-			else if(isset($pgv_lang["male_cousin_n"]) && ($pgv_lang["male_cousin_n"] != "")) {
-				$relationshipDescription = sprintf($pgv_lang["male_cousin_n"], $degree);
+			else if(isset(i18n::translate('%d x cousin')) && (i18n::translate('%d x cousin') != "")) {
+				$relationshipDescription = sprintf(i18n::translate('%d x cousin'), $degree);
 			}
 		}
 	}
 	// Check for half sibling relationships
 	else if($numberOfSpouses == 0 && $generationsYounger == 1 && $generationsOlder == 1 && $numberOfSiblings == 0) {
 		if ($path_to_find==0) {
-			if (isset($pgv_lang["halfsister"]) && $mf=="F") {
-				$relationshipDescription = $pgv_lang["halfsister"];
+			if (isset(i18n::translate('Half-Sister')) && $mf=="F") {
+				$relationshipDescription = i18n::translate('Half-Sister');
 			}
-			else if (isset($pgv_lang["halfbrother"])) {
-				$relationshipDescription = $pgv_lang["halfbrother"];
+			else if (isset(i18n::translate('Half-Brother'))) {
+				$relationshipDescription = i18n::translate('Half-Brother');
 			}
 		}
 		else {
-			if (isset($pgv_lang["sister"]) && $mf=="F") {
-				$relationshipDescription = $pgv_lang["sister"];
+			if (isset(i18n::translate('Sister')) && $mf=="F") {
+				$relationshipDescription = i18n::translate('Sister');
 			}
-			else if (isset($pgv_lang["brother"])) {
-				$relationshipDescription = $pgv_lang["brother"];
+			else if (isset(i18n::translate('Brother'))) {
+				$relationshipDescription = i18n::translate('Brother');
 			}
 		}
 	}
@@ -416,11 +419,11 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 	}
 
 	if($relationshipDescription != false) {
-		if(($mf=="F") && isset($pgv_lang["relationship_female_1_is_the_2_of_3"])) {
-			$sentence = sprintf($pgv_lang["relationship_female_1_is_the_2_of_3"], $pid2Name, $relationshipDescription, $pid1Name);
+		if(($mf=="F") && isset(i18n::translate('%1$s is the %2$s of %3$s.'))) {
+			$sentence = sprintf(i18n::translate('%1$s is the %2$s of %3$s.'), $pid2Name, $relationshipDescription, $pid1Name);
 		}
-		else if(isset($pgv_lang["relationship_male_1_is_the_2_of_3"])) {
-			$sentence = sprintf($pgv_lang["relationship_male_1_is_the_2_of_3"], $pid2Name, $relationshipDescription, $pid1Name);
+		else if(isset(i18n::translate('%1$s is the %2$s of %3$s.'))) {
+			$sentence = sprintf(i18n::translate('%1$s is the %2$s of %3$s.'), $pid2Name, $relationshipDescription, $pid1Name);
 		}
 	}
 	else if(($pid1 == $node["path"][0]) && ($pid2 == $node["path"][count($node["path"])-1]) && $firstRelationshipIsSpouse) {
@@ -482,7 +485,7 @@ if (empty($pid1)) {
 $check_node = true;
 $disp = true;
 
-$title_string .= $pgv_lang["relationship_chart"];
+$title_string .= i18n::translate('Relationship Chart');
 // -- print html header information
 print_header($title_string);
 
@@ -532,7 +535,7 @@ if ($pid2) {
 		$indirec = Person::getInstance($pid2);
 	}
 	if ($indirec) {
-		$title_string.=' '.$pgv_lang['and'].' '.$indirec->getFullName();
+		$title_string.=' '.i18n::translate('and').' '.$indirec->getFullName();
 	} else {
 		$pid2='';
 	}
@@ -561,7 +564,7 @@ if ($view!="preview") {
 
 	<!-- // Relationship header -->
 	<tr><td colspan="2" class="topbottombar center">
-	<?php print $pgv_lang["relationship_chart"]?>
+	<?php print i18n::translate('Relationship Chart')?>
 	</td>
 
 	<!-- // Empty space -->
@@ -569,14 +572,12 @@ if ($view!="preview") {
 
 	<!-- // Options header -->
 	<td colspan="2" class="topbottombar center">
-	<?php print $pgv_lang["options"]?>
+	<?php print i18n::translate('Options:')?>
 	</td></tr>
 
 	<!-- // Person 1 -->
 	<tr><td class="descriptionbox">
-	<?php
-	print_help_link("relationship_id", "qm");
-	print $pgv_lang["person1"]?>
+	<?php echo print i18n::translate('Person 1'), help_link('relationship_id'); ?>
 	</td>
 	<td class="optionbox vmiddle">
 	<input tabindex="1" class="pedigree_form" type="text" name="pid1" id="pid1" size="3" value="<?php print $pid1 ?>" />
@@ -589,9 +590,7 @@ if ($view!="preview") {
 
 	<!-- // Show details -->
 	<td class="descriptionbox">
-	<?php
-	print_help_link("show_full", "qm");
-	print $pgv_lang["show_details"];?>
+	<?php echo i18n::translate('Show Details'), help_link('show_full'); ?>
 	</td>
 	<td class="optionbox vmiddle">
 	<input type="hidden" name="show_full" value="<?php print $show_full ?>" />
@@ -604,9 +603,7 @@ if ($view!="preview") {
 
 	<!-- // Person 2 -->
 	<tr><td class="descriptionbox">
-	<?php
-	print_help_link("relationship_id", "qm");
-	print $pgv_lang["person2"]?>
+	<?php echo i18n::translate('Person 2'), help_link('relationship_id'); ?>
 	</td>
 	<td class="optionbox vmiddle">
 	<input tabindex="2" class="pedigree_form" type="text" name="pid2" id="pid2" size="3" value="<?php print $pid2 ?>" />
@@ -620,8 +617,7 @@ if ($view!="preview") {
 	<!-- // Line up generations -->
 	<td class="descriptionbox">
 	<?php
-	print_help_link("line_up_generations", "qm");
-	print $pgv_lang["line_up_generations"]?>
+	echo i18n::translate('Line up the same generations'), help_link('line_up_generations'); ?>
 	</td>
 	<td class="optionbox">
 	<input tabindex="5" type="checkbox" name="pretty" value="2"
@@ -644,10 +640,7 @@ if ($view!="preview") {
 	if ($pretty) print "block";
 	else print "none";
 	?>">
-	<?php
-	print_help_link("oldest_top", "qm");
-	print $pgv_lang["oldest_top"];
-	?>
+	<?php echo i18n::translate('Show oldest top'), help_link('oldest_top'); ?>
 	</div>
 	</td><td class="optionbox">
 	<div id="oldtop2" style="display:
@@ -674,7 +667,7 @@ if ($view!="preview") {
 			$check_node=$node;
 		}
 		foreach($_SESSION["relationships"] as $indexval => $node) {
-			if ($i==0) print $pgv_lang["show_path"].": </td><td class=\"list_value\" style=\"padding: 3px;\">";
+			if ($i==0) print i18n::translate('Show path').": </td><td class=\"list_value\" style=\"padding: 3px;\">";
 			if ($i>0) print " | ";
 			if ($i==$path_to_find){
 				print "<span class=\"error\" style=\"valign: middle\">".($i+1)."</span>";
@@ -695,11 +688,11 @@ if ($view!="preview") {
 				$disp = false;
 			}
 			if ($disp) {
-				echo $pgv_lang["show_path"], ": </td>";
+				echo i18n::translate('Show path'), ": </td>";
 				echo "\n\t\t<td class=\"optionbox\">";
 				echo " <span class=\"error vmmiddle\">";
 				$check_node = get_relationship($pid1, $pid2, $followspouse, 0, true, $path_to_find);
-				echo $check_node ? "1" : "&nbsp;".$pgv_lang["no_results"], "</span></td>";
+				echo $check_node ? "1" : "&nbsp;".i18n::translate('No results found.'), "</span></td>";
 				$prt = true;
 			}
 		}
@@ -713,9 +706,7 @@ if ($view!="preview") {
 
 	<!-- // Check relationships by marriage -->
 	<td class="descriptionbox">
-	<?php
-	print_help_link("follow_spouse", "qm");
-	print $pgv_lang["follow_spouse"];?>
+	<?php echo i18n::translate('Check relationships by marriage'), help_link('follow_spouse'); ?>
 	</td>
 	<td class="optionbox" id="followspousebox">
 	<input tabindex="6" type="checkbox" name="followspouse" value="1"
@@ -732,9 +723,9 @@ if ($view!="preview") {
 			echo "<td class=\"topbottombar wrap vmiddle center\" colspan=\"2\">";
 			if (isset($_SESSION["relationships"])) {
 				if ($path_to_find==0) {
-					echo "<span class=\"error\">", $pgv_lang["no_link_found"], "</span><br />";
+					echo "<span class=\"error\">", i18n::translate('No link between the two individuals could be found.'), "</span><br />";
 				} else {
-					echo "<span class=\"error\">", $pgv_lang["no_other_link_found"], "</span><br />";
+					echo "<span class=\"error\">", i18n::translate('No other link between the two individuals could be found.'), "</span><br />";
 				}
 			}
 			if (!$followspouse) {
@@ -743,11 +734,11 @@ if ($view!="preview") {
 				document.getElementById("followspousebox").className='facts_valuered';
 				</script>
 				<?php
-				echo "<input class=\"error\" type=\"submit\" value=\"", $pgv_lang["follow_spouse"], "\" onclick=\"people.followspouse.checked='checked';\"/>";
+				echo "<input class=\"error\" type=\"submit\" value=\"", i18n::translate('Check relationships by marriage'), "\" onclick=\"people.followspouse.checked='checked';\"/>";
 			}
 			echo "</td>";
 		} else {
-			echo "<td class=\"topbottombar vmiddle center\" colspan=\"2\"><input type=\"submit\" value=\"", $pgv_lang["next_path"], "\" onclick=\"document.people.path_to_find.value='", $path_to_find+1, "';\" /></td>\n";
+			echo "<td class=\"topbottombar vmiddle center\" colspan=\"2\"><input type=\"submit\" value=\"", i18n::translate('Find next path'), "\" onclick=\"document.people.path_to_find.value='", $path_to_find+1, "';\" /></td>\n";
 		}
 		$pass = true;
 	}
@@ -759,7 +750,7 @@ if ($view!="preview") {
 
 	<!-- // View button -->
 	<td class="topbottombar vmiddle center" colspan="2">
-	<input tabindex="7" type="submit" value="<?php print $pgv_lang["view"]?>" />
+	<input tabindex="7" type="submit" value="<?php print i18n::translate('View')?>" />
 	</td></tr>
 
 
@@ -774,7 +765,7 @@ else {
 </div>
 <?php
 if ($show_full==0) {
-	echo '<br /><span class="details2">', $pgv_lang['charts_click_box'], '</span><br />';
+	echo '<br /><span class="details2">', i18n::translate('Click on any of the boxes to get more information about that person.'), '</span><br />';
 }
 ?>
 <div id="relationship_chart<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl";?>" style="position:relative; z-index:1; width:98%;">

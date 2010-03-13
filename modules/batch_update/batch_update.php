@@ -2,7 +2,10 @@
 /**
  * Batch Update module for phpGedView
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @author Greg Roach
  * $Id$
@@ -53,11 +56,9 @@ class batch_update {
 
 	// Main entry point - called by the PGV framework in response to module.php?mod=batch_update
 	function main() {
-		global $pgv_lang;
-
 		// HTML common to all pages
 		$html=
-			mod_print_header($pgv_lang['batch_update']).
+			mod_print_header(i18n::translate('Batch Update')).
 			self::getJavascript().
 			'<form id="batch_update_form" action="module.php" method="get">'.
 			'<input type="hidden" name="mod" value="batch_update">'.
@@ -65,7 +66,7 @@ class batch_update {
 			'<input type="hidden" name="action" value="">'. // will be set by javascript for next update
 			'<input type="hidden" name="data"   value="">'. // will be set by javascript for next update
 			'<table class="list_table width100"><tr valign="top">'.
-			'<td class="list_label">'.$pgv_lang['gedcom_file'].'</td>'.
+			'<td class="list_label">'.i18n::translate('GEDCOM File:').'</td>'.
 			'<td class="optionbox wrap"><select name="GEDCOM" onchange="reset_reload();">';
 
 		$all_gedcoms=get_all_gedcoms();
@@ -73,15 +74,19 @@ class batch_update {
 		foreach ($all_gedcoms as $ged_id=>$gedcom) {
 			$html.='<option value="'.$gedcom.'"'.($ged_id==PGV_GED_ID ? ' selected="selected"' : '').'>'.get_gedcom_setting($ged_id, 'title').'</option>';
 		}
-		$html.='</select></td></tr><tr valign="top"><td class="list_label">'.$pgv_lang['batch_update'].':</td><td class="optionbox wrap"><select name="plugin" onchange="reset_reload();">';
+		$html.='</select></td></tr><tr valign="top"><td class="list_label">'.i18n::translate('Batch Update').':</td><td class="optionbox wrap"><select name="plugin" onchange="reset_reload();">';
 		if (!$this->plugin) {
 			$html.='<option value="" selected="selected"></option>';
 		}
 
-		foreach ($this->plugins as $plugin) {
-			$html.='<option value="'.$plugin.'"'.($plugin==$this->plugin ? ' selected="selected"' : '').'>'.$pgv_lang['bu_'.$plugin].'</option>';
+		foreach ($this->plugins as $class=>$plugin) {
+			$html.='<option value="'.$class.'"'.($this->plugin==$class ? ' selected="selected"' : '').'>'.$plugin->getName().'</option>';
 		}
-		$html.='</select><br/><i>'.$pgv_lang['bu_'.$this->plugin.'_desc'].'</i></td></tr>';
+		$html.='</select>';
+		if ($this->PLUGIN) {
+			$html.='<br/><i>'.$this->PLUGIN->getDescription().'</i>';
+		}
+		$html.='</td></tr>';
 
 		// If a plugin is selected, display the details
 		if ($this->PLUGIN) {
@@ -98,8 +103,8 @@ class batch_update {
 
 					$html.=
 						'</table><br/><table class="list_table width100"><tr valign="middle"><td class="list_label center width20">'.
-						self::createSubmitButton($pgv_lang['prev'], $this->prev_xref).
-						self::createSubmitButton($pgv_lang['next'], $this->next_xref).
+						self::createSubmitButton(i18n::translate('&lt; Previous'), $this->prev_xref).
+						self::createSubmitButton(i18n::translate('Next &gt;'), $this->next_xref).
 						'</td><td class="optionbox width80"><h1><a href="'.$object->getLinkUrl().'">'.$object->getFullName().'</a>'.
 						'</h1></td>'.
 						'</tr><tr><td valign="top" class="list_label center width20">'.
@@ -108,7 +113,7 @@ class batch_update {
 						$this->PLUGIN->getActionPreview($this->curr_xref, $this->record);
 						'</td></tr>';
 				} else {
-					$html.='<tr><td colspan=2>'.$pgv_lang['bu_nothing'].'</td></tr>';
+					$html.='<tr><td colspan=2>'.i18n::translate('Nothing found.').'</td></tr>';
 				}
 			}
 		}
@@ -119,15 +124,14 @@ class batch_update {
 	// Constructor - initialise variables and validate user-input
 	function __construct() {
 		$this->plugins=self::getPluginList();              // List of available plugins
-		$this->plugin =safe_GET('plugin', $this->plugins); // User parameters
+		$this->plugin =safe_GET('plugin', array_keys($this->plugins)); // User parameters
 		$this->xref   =safe_GET('xref',   PGV_REGEX_XREF);
 		$this->action =safe_GET('action');
 		$this->data   =safe_GET('data');
 
 		// Don't do any processing until a plugin is chosen.
 		if ($this->plugin) {
-			require PGV_ROOT.'/modules/batch_update/plugins/'.$this->plugin.'.php';
-			$this->PLUGIN=new plugin;
+			$this->PLUGIN=new $this->plugin;
 			$this->PLUGIN->getOptions();
 			$this->getAllXrefs();
 
@@ -279,7 +283,9 @@ class batch_update {
 		$dir_handle=opendir($dir);
 		while ($file=readdir($dir_handle)) {
 			if (substr($file, -4)=='.php') {
-				$array[]=basename($file, '.php');
+				require dirname(__FILE__).'/plugins/'.$file;
+				$class=basename($file, '.php').'_bu_plugin';
+				$array[$class]=new $class;
 			}
 		}
 		closedir($dir_handle);
@@ -351,22 +357,19 @@ class base_plugin {
 
 	// Default option is just the "don't update CHAN record"
 	function getOptionsForm() {
-		global $pgv_lang;
 		return
-			'<tr valign="top"><td class="list_label width20">'.$pgv_lang['bu_update_chan'].':</td>'.
+			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Update the CHAN record').':</td>'.
 			'<td class="optionbox wrap"><select name="chan" onchange="this.form.submit();">'.
-			'<option value="no"' .($this->chan ? '' : ' selected="selected"').'>'.$pgv_lang['no'] .'</option>'.
-			'<option value="yes"'.($this->chan ? ' selected="selected"' : '').'>'.$pgv_lang['yes'].'</option>'.
+			'<option value="no"' .($this->chan ? '' : ' selected="selected"').'>'.i18n::translate('No') .'</option>'.
+			'<option value="yes"'.($this->chan ? ' selected="selected"' : '').'>'.i18n::translate('Yes').'</option>'.
 			'</select></td></tr>';
 	}
 
 	// Default buttons are update and update_all
 	function getActionButtons($xref) {
-		global $pgv_lang;
-
 		return array(
-			batch_update::createSubmitButton($pgv_lang['bu_button_update'],     $xref, 'update'),
-			batch_update::createSubmitButton($pgv_lang['bu_button_update_all'], $xref, 'update_all')
+			batch_update::createSubmitButton(i18n::translate('Update'),     $xref, 'update'),
+			batch_update::createSubmitButton(i18n::translate('Update all'), $xref, 'update_all')
 		);
 	}
 

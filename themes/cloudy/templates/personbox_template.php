@@ -6,7 +6,10 @@
  * $name, $classfacts, $genderImage, $BirthDeath, $isF, $outBoxAdd,
  * $addname, $showid, $float
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +26,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Themes
  * @version $Id$
  */
@@ -56,7 +59,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			<div id="inout2-<?php print $boxID; ?>" style="display: block;"><?php print $BirthDeath; ?></div>
 		</div>
 		<div id="inout-<?php print $boxID; ?>" style="display: none;">
-			<div id="LOADING-inout-<?php print $boxID; ?>"><?php print $pgv_lang['loading']; ?></div>
+			<div id="LOADING-inout-<?php print $boxID; ?>"><?php print i18n::translate('Loading...'); ?></div>
 		</div>
 </td></tr></table>
 </div>

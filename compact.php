@@ -2,7 +2,10 @@
 /**
  * Compact pedigree tree
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -41,7 +44,7 @@ $name   =$person->getFullName();
 $addname=$person->getAddName();
 
 // -- print html header information
-print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
+print_header(PrintReady($name) . " " . i18n::translate('Compact Chart'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
@@ -55,7 +58,7 @@ if (PGV_USE_LIGHTBOX) {
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"${cellwidth}px\" valign=\"top\">\n\t\t";
-print "<h2>" . $pgv_lang["compact_chart"] . ":";
+print "<h2>" . i18n::translate('Compact Chart') . ":";
 print "<br />".PrintReady($name) ;
 if ($addname != "") print "<br />" . PrintReady($addname);
 print "</h2>";
@@ -72,72 +75,69 @@ if ($view != "preview") {
 	//-->
 	</script>
 	<?php
-	print "\n\t</td><td><form name=\"people\" id=\"people\" method=\"get\" action=\"?\">";
-	print "\n\t\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t";
-	print "<tr>";
+	echo "\n\t</td><td><form name=\"people\" id=\"people\" method=\"get\" action=\"?\">";
+	echo "\n\t\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t";
+	echo "<tr>";
 
 	// NOTE: Root ID
-	print "<td class=\"descriptionbox\">";
-	print_help_link("rootid", "qm");
-	print $pgv_lang["root_person"]."&nbsp;</td>";
-	print "<td class=\"optionbox vmiddle\">";
-	print "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
+	echo "<td class=\"descriptionbox\">";
+	echo i18n::translate('Root Person ID'), help_link('rootid'), "</td>";
+	echo "<td class=\"optionbox vmiddle\">";
+	echo "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
 	print_findindi_link("rootid","");
 	print "</td>";
 
 	// NOTE: submit
-	print "<td class=\"facts_label03\" rowspan=\"3\">";
-	print "<input type=\"submit\" value=\"".$pgv_lang["view"]."\" />";
-	print "</td>\n</tr>\n";
+	echo "<td class=\"facts_label03\" rowspan=\"3\">";
+	echo "<input type=\"submit\" value=\"".i18n::translate('View')."\" />";
+	echo "</td>\n</tr>\n";
 
 	if ($SHOW_ID_NUMBERS) {
-		print "<tr>\n";
-		print "<td class=\"descriptionbox\">";
-		print_help_link("SHOW_ID_NUMBERS", "qm");
-		print $pgv_lang["SHOW_ID_NUMBERS"];
-		print "</td>\n";
-		print "<td class=\"optionbox\">\n";
-		print "<input name=\"showids\" type=\"checkbox\" value=\"1\"";
-		if ($showids) print " checked=\"checked\"";
-		print " /></td>\n</tr>\n";
+		echo "<tr>\n";
+		echo "<td class=\"descriptionbox\">";
+		echo i18n::translate('Show ID numbers next to names'), help_link('SHOW_ID_NUMBERS');
+		echo "</td>\n";
+		echo "<td class=\"optionbox\">\n";
+		echo "<input name=\"showids\" type=\"checkbox\" value=\"1\"";
+		if ($showids) echo " checked=\"checked\"";
+		echo " /></td>\n</tr>\n";
 	}
 
 	if ($SHOW_HIGHLIGHT_IMAGES) {
-		print "<tr>\n";
-		print "<td class=\"descriptionbox\">";
-		print_help_link("SHOW_HIGHLIGHT_IMAGES", "qm");
-		print $pgv_lang["SHOW_HIGHLIGHT_IMAGES"];
-		print "</td>\n";
-		print "<td class=\"optionbox\">\n";
-		print "<input name=\"showthumbs\" type=\"checkbox\" value=\"1\"";
+		echo "<tr>\n";
+		echo "<td class=\"descriptionbox\">";
+		echo i18n::translate('Show highlight images in people boxes'), help_link('SHOW_HIGHLIGHT_IMAGES');
+		echo "</td>\n";
+		echo "<td class=\"optionbox\">\n";
+		echo "<input name=\"showthumbs\" type=\"checkbox\" value=\"1\"";
 		if ($showthumbs) print " checked=\"checked\"";
-		print " /></td>\n</tr>\n";
+		echo " /></td>\n</tr>\n";
 	}
 
-	print "</table>";
-	print "</form>\n";
+	echo "</table>";
+	echo "</form>\n";
 }
-print "</td></tr></table>";
+echo "</td></tr></table>";
 
 // process the tree
 $treeid = ancestry_array($rootid, 5);
-print "<br />";
-print "<table width='100%' border='0' cellpadding='0' cellspacing='0'>";
+echo "<br />";
+echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>";
 
 // 1
-print "<tr>";
+echo "<tr>";
 print_td_person(16);
-print "<td></td>";
-print "<td></td>";
-print "<td></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "<td></td>";
 print_td_person(18);
-print "<td></td>";
+echo "<td></td>";
 print_td_person(24);
-print "<td></td>";
-print "<td></td>";
-print "<td></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "<td></td>";
 print_td_person(26);
-print "</tr>";
+echo "</tr>";
 
 // 2
 print "<tr>";
@@ -301,7 +301,7 @@ print "<br />";
 print_footer();
 
 function print_td_person($n) {
-	global $treeid, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
+	global $treeid, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $USE_SILHOUETTE, $PGV_IMAGES;
 	global $showids, $showthumbs;
 
@@ -309,9 +309,9 @@ function print_td_person($n) {
 	$pid = $treeid[$n];
 
 	if ($TEXT_DIRECTION=="ltr") {
-		$title = $pgv_lang["indi_info"].": ".$pid;
+		$title = i18n::translate('Individual Information').": ".$pid;
 	} else {
-		$title = $pid." :".$pgv_lang["indi_info"];
+		$title = $pid." :".i18n::translate('Individual Information');
 	}
 
 	if ($pid) {
@@ -429,7 +429,7 @@ function print_td_person($n) {
 function print_arrow_person($n, $arrow_dir) {
 	global $treeid;
 	global $view, $showids, $showthumbs;
-	global $pgv_lang, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	$pid = $treeid[$n];
 
@@ -444,9 +444,9 @@ function print_arrow_person($n, $arrow_dir) {
 		}
 	}
 	if ($TEXT_DIRECTION=="ltr") {
-		$title = $pgv_lang["compact_chart"].": ".$pid;
+		$title = i18n::translate('Compact Chart').": ".$pid;
 	} else {
-		$title = $pid." :".$pgv_lang["compact_chart"];
+		$title = $pid." :".i18n::translate('Compact Chart');
 	}
 	$arrow_img = "<img id='arrow$n' src='".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='$title' title='$title' />";
 	$hideArrow = "<img id='arrow$n' src='".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='$title' title='$title' style='visibility:hidden;' />";

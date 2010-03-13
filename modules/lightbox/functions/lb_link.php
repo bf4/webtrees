@@ -4,7 +4,10 @@
  *
  * Display media Items using Lightbox
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2007  PHPGedView Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
@@ -40,7 +43,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	 */
 //	function print_link_menu2($mediaid) {
         $mediaid=$media["XREF"];
-		global $pgv_lang, $TEXT_DIRECTION;
+		global $TEXT_DIRECTION;
 
 		$classSuffix = "";
 		if ($TEXT_DIRECTION=="rtl") $classSuffix = "_rtl";
@@ -51,26 +54,26 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			$menu->addIcon("modules/lightbox/images/image_link.gif");
 		}
 		if ($LB_ML_THUMB_LINKS == "both") {
-			$menu->addLabel($pgv_lang["set_link"], "down");
+			$menu->addLabel(i18n::translate('Set link'), "down");
 		}
 		if ($LB_ML_THUMB_LINKS == "text") {
-			$menu->addLabel($pgv_lang["set_link"]);
+			$menu->addLabel(i18n::translate('Set link'));
 		}
 		$menu->addOnclick("return ilinkitem('$mediaid','person')");
 		$menu->addClass("", "", "submenu");
 		$menu->addFlyout("left");
 
-		$submenu = new Menu($pgv_lang["to_person"], "#");
+		$submenu = new Menu(i18n::translate('To Person'), "#");
 		$submenu->addOnclick("return ilinkitem('$mediaid','person')");
 		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
 		$menu->addSubMenu($submenu);
 
-		$submenu = new Menu($pgv_lang["to_family"], "#");
+		$submenu = new Menu(i18n::translate('To Family'), "#");
 		$submenu->addOnclick("return ilinkitem('$mediaid','family')");
 		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
 		$menu->addSubMenu($submenu);
 
-		$submenu = new Menu($pgv_lang["to_source"], "#");
+		$submenu = new Menu(i18n::translate('To Source'), "#");
 		$submenu->addOnclick("return ilinkitem('$mediaid','source')");
 		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
 		$menu->addSubMenu($submenu);

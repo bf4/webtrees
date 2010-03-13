@@ -5,7 +5,10 @@
  * Display immediate family members table for fast navigation
  * ( Currently used with Facts and Details tab, and Album Tab pages )
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,9 +25,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Includes
- * @version $Id: family_nav.php 6884 2010-01-31 09:44:55Z windmillway $
+ * @version $Id$
  * @author Brian Holland
  */
 
@@ -81,7 +84,7 @@ class family_nav_Tab extends Tab {
 		
 	 // Start Family Nav Table ----------------------------
 		echo "<table class=\"nav_content\" cellpadding=\"0\">"; 
-		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
+		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
 		global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
 		global $TEXT_DIRECTION;
 
@@ -98,10 +101,10 @@ class family_nav_Tab extends Tab {
 				<td style="padding-bottom:4px;" align="center" colspan="2">
 				<?php
 				echo "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
-				echo "<b>".$pgv_lang["parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				echo "<b>".i18n::translate('Parents Family')."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>";
 				//echo "<a href=\"family.php?famid=".$famid."\">";
-				//echo "<b>".$pgv_lang["parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				//echo "<b>".i18n::translate('Parents Family')."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				//echo "</a>";
 				?>
 				</td>
@@ -244,10 +247,10 @@ class family_nav_Tab extends Tab {
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
 				echo "<a style=\"padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
-				echo "<b>".$pgv_lang["step_parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				echo "<b>".i18n::translate('Step-Parent Family')."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>";
 				//echo "<a href=\"family.php?famid=".$famid."\">";
-				//echo "<b>".$pgv_lang["step_parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				//echo "<b>".i18n::translate('Step-Parent Family')."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				//echo "</a>";
 				?>
 				</td>
@@ -258,7 +261,7 @@ class family_nav_Tab extends Tab {
 			if (isset($people["husb"]) ) {
 				$menu = new Menu();
 				if ($people["husb"]->getLabel() == ".") {
-					$menu->addLabel($pgv_lang["stepdad"]."\n");
+					$menu->addLabel(i18n::translate('Step-Father')."\n");
 				}else{
 					$menu->addLabel($people["husb"]->getLabel()."\n");
 				}
@@ -302,7 +305,7 @@ class family_nav_Tab extends Tab {
 			if (isset($people["wife"]) ) {
 				$menu = new Menu();
 				if ($people["wife"]->getLabel() == ".") {
-					$menu->addLabel($pgv_lang["stepmom"]."\n");
+					$menu->addLabel(i18n::translate('Step-Mother')."\n");
 				}else{
 					$menu->addLabel($people["wife"]->getLabel()."\n");
 				}
@@ -389,10 +392,10 @@ class family_nav_Tab extends Tab {
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
 				echo "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
-				echo "<b>".$pgv_lang["immediate_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				echo "<b>".i18n::translate('Immediate Family')."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>";
 				//echo "<a href=\"family.php?famid=".$famid."\">";
-				//echo "<b>".$pgv_lang["immediate_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				//echo "<b>".i18n::translate('Immediate Family')."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				//echo "</a>";
 				?>
 				</td>
@@ -543,7 +546,7 @@ class family_nav_Tab extends Tab {
 
 function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;
-	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
+	global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
@@ -578,9 +581,9 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 		if ($show_famlink && (empty($SEARCH_SPIDER))) {
 			if ($LINK_ICONS!="disabled") {
 				//-- draw a box for the family flyout
-				$parentlinks 		.= "<span class=\"flyout4\"><b>".$pgv_lang['parents']."</b></span><br />";
-				$step_parentlinks 	.= "<span class=\"flyout4\"><b>".$pgv_lang['parents']."</b></span><br />";
-				$spouselinks 		.= "<span class=\"flyout4\"><b>".$pgv_lang['family']."</b></span><br />";
+				$parentlinks 		.= "<span class=\"flyout4\"><b>".i18n::translate('Parents')."</b></span><br />";
+				$step_parentlinks 	.= "<span class=\"flyout4\"><b>".i18n::translate('Parents')."</b></span><br />";
+				$spouselinks 		.= "<span class=\"flyout4\"><b>".i18n::translate('Family')."</b></span><br />";
 				
 				$persons 			 = "";
 				$person_parent 		 = "";
@@ -602,16 +605,16 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						// Husband ------------------------------
 						if ($husb || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
-								$title = $pgv_lang["familybook_chart"].": ".$famid;
+								$title = i18n::translate('Family Book Chart').": ".$famid;
 							}else{
-								$title = $famid." :".$pgv_lang["familybook_chart"];
+								$title = $famid." :".i18n::translate('Family Book Chart');
 							}
 							if ($husb) {
 								$person_parent="Yes";
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = $pgv_lang["indi_info"].": ".$husb->getXref();
+									$title = i18n::translate('Individual Information').": ".$husb->getXref();
 								}else{
-									$title = $husb->getXref()." :".$pgv_lang["indi_info"];
+									$title = $husb->getXref()." :".i18n::translate('Individual Information');
 								}
 								$parentlinks .= "<a id=\"phusb\" href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($husb->getLinkUrl())."');\">";
 								$parentlinks .= "&nbsp;".PrintReady($husb->getFullName());
@@ -624,16 +627,16 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						// Wife ------------------------------
 						if ($wife || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
-								$title = $pgv_lang["familybook_chart"].": ".$famid;
+								$title = i18n::translate('Family Book Chart').": ".$famid;
 							}else{
-								$title = $famid." :".$pgv_lang["familybook_chart"];
+								$title = $famid." :".i18n::translate('Family Book Chart');
 							}
 							if ($wife) {
 								$person_parent="Yes";
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = $pgv_lang["indi_info"].": ".$wife->getXref();
+									$title = i18n::translate('Individual Information').": ".$wife->getXref();
 								}else{
-									$title = $wife->getXref()." :".$pgv_lang["indi_info"];
+									$title = $wife->getXref()." :".i18n::translate('Individual Information');
 								}
 								$parentlinks .= "<a id=\"pwife\" href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($wife->getLinkUrl())."');\">";
 								$parentlinks .= "&nbsp;".PrintReady($wife->getFullName());
@@ -660,16 +663,16 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 							// Husband -----------------------
 							if ($husb || $num>0) {
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = $pgv_lang["familybook_chart"].": ".$famid;
+									$title = i18n::translate('Family Book Chart').": ".$famid;
 								}else{
-									$title = $famid." :".$pgv_lang["familybook_chart"];
+									$title = $famid." :".i18n::translate('Family Book Chart');
 								}
 								if ($husb) {
 									$person_step="Yes";
 									if ($TEXT_DIRECTION=="ltr") {
-										$title = $pgv_lang["indi_info"].": ".$husb->getXref();
+										$title = i18n::translate('Individual Information').": ".$husb->getXref();
 									}else{
-										$title = $husb->getXref()." :".$pgv_lang["indi_info"];
+										$title = $husb->getXref()." :".i18n::translate('Individual Information');
 									}
 									$parentlinks .= "<a id=\"shusb\" href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($husb->getLinkUrl())."');\">";
 									$parentlinks .= "&nbsp;".PrintReady($husb->getFullName());
@@ -684,16 +687,16 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 							// Wife ----------------------------
 							if ($wife || $num>0) {
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = $pgv_lang["familybook_chart"].": ".$famid;
+									$title = i18n::translate('Family Book Chart').": ".$famid;
 								}else{
-									$title = $famid." :".$pgv_lang["familybook_chart"];
+									$title = $famid." :".i18n::translate('Family Book Chart');
 								}
 								if ($wife) {
 									$person_step="Yes";
 									if ($TEXT_DIRECTION=="ltr") {
-										$title = $pgv_lang["indi_info"].": ".$wife->getXref();
+										$title = i18n::translate('Individual Information').": ".$wife->getXref();
 									}else{
-										$title = $wife->getXref()." :".$pgv_lang["indi_info"];
+										$title = $wife->getXref()." :".i18n::translate('Individual Information');
 									}
 									$parentlinks .= "<a id=\"swife\" href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($wife->getLinkUrl())."');\">";
 									$parentlinks .= "&nbsp;".PrintReady($wife->getFullName());
@@ -716,15 +719,15 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						// Spouse ------------------------------
 						if ($spouse || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
-								$title = $pgv_lang["familybook_chart"].": ".$famid;
+								$title = i18n::translate('Family Book Chart').": ".$famid;
 							}else{
-								$title = $famid." :".$pgv_lang["familybook_chart"];
+								$title = $famid." :".i18n::translate('Family Book Chart');
 							}
 							if ($spouse) {
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = $pgv_lang["indi_info"].": ".$spouse->getXref();
+									$title = i18n::translate('Individual Information').": ".$spouse->getXref();
 								}else{
-									$title = $spouse->getXref()." :".$pgv_lang["indi_info"];
+									$title = $spouse->getXref()." :".i18n::translate('Individual Information');
 								}
 								$spouselinks .= "<a id=\"spouse\" href=\"".encode_url($spouse->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($spouse->getLinkUrl())."');\">";
 								$spouselinks .= "&nbsp;".PrintReady($spouse->getFullName());
@@ -740,7 +743,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						foreach($children as $c=>$child) {
 							if ($child) {
 								$persons="Yes";
-									$title = $pgv_lang["indi_info"].": ".$child->getXref();
+									$title = i18n::translate('Individual Information').": ".$child->getXref();
 									$spouselinks .= "<li id=\"flyout3\">";
 									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
 									$spouselinks .= PrintReady($child->getFullName());
@@ -753,13 +756,13 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 				}
 				
 				if ($persons != "Yes") {
-					$spouselinks  .= "&nbsp;(".$pgv_lang['none'].")\n\t\t";
+					$spouselinks  .= "&nbsp;(".i18n::translate('None').")\n\t\t";
 				}
 				if ($person_parent != "Yes") {
-					$parentlinks .= "&nbsp;(".$pgv_lang['unknown'].")\n\t\t";
+					$parentlinks .= "&nbsp;(".i18n::translate('unknown').")\n\t\t";
 				}
 				if ($person_step != "Yes") {
-					$step_parentlinks .= "&nbsp;(".$pgv_lang['unknown'].")\n\t\t";
+					$step_parentlinks .= "&nbsp;(".i18n::translate('unknown').")\n\t\t";
 				}
 			}
 		}
@@ -775,7 +778,6 @@ class family_nav_Sidebar extends Sidebar {
 	var $indi;
 	
 	public function getContent() {
-		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 		$out = '<div id="sb_family_nav_content">';

@@ -2,7 +2,10 @@
 /**
  * Batch Update plugin for phpGedView - fix spacing in names, particularly that before/after the surname slashes
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2008 Greg Roach.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * $Id$
  */
@@ -29,7 +32,15 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-class plugin extends base_plugin {
+class name_format_bu_plugin extends base_plugin {
+	static function getName() {
+		return i18n::translate('Fix name slashes and spaces');
+	}
+
+	static function getDescription() {
+		return i18n::translate('Correct NAME records of the form \'John/DOE/\' or \'John /DOE\', as produced by older genealogy programs.');
+	}
+	
 	static function doesRecordNeedUpdate($xref, $gedrec) {
 		return
 			preg_match('/^(?:1 NAME|2 _MARNM|2 _AKA) [^\/\n]*\/[^\/\n]*$/m', $gedrec) ||

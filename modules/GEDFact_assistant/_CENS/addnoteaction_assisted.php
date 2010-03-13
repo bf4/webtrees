@@ -2,7 +2,10 @@
 /**
 * Include for GEDFact Assistant - Census.
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Edit
 * @version $Id$
 */
@@ -107,12 +110,12 @@
 	}
 	
 	if ($xref != "none") {
-		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]." (".$xref.")<br /><br />";
+		echo "<br /><br />\n".i18n::translate('New Shared Note created successfully.')." (".$xref.")<br /><br />";
 		echo "<br /><br />";
 		echo " &nbsp;&nbsp;&nbsp; The Census event (when saved) will be linked to Indi id's: &nbsp;&nbsp;&nbsp;&nbsp; ". $pid_array;
 		echo "<br /><br />";
 		echo "<br /><br />";
-		echo "&nbsp;&nbsp;&nbsp; <a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "&nbsp;&nbsp;&nbsp; <a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".i18n::translate('Paste the following ID into your editing fields to reference the newly created record ')." <b>$xref</b></a>\n";
 		echo "<br /><br /><br /><br />";
 
 		?>

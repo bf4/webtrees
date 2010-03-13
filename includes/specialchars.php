@@ -20,7 +20,10 @@
  *
  * Other special characters are all listed at the bottom.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -37,7 +40,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Languages
  * @version $Id$
  */
@@ -53,33 +56,33 @@ loadLangFile("pgv_confighelp");
 
 $specialchar_languages = array(
 	"af" => "Afrikaans",
-	"cs" => $pgv_lang["lang_name_czech"], // Czech
-	"sk" => $pgv_lang["lang_name_slovak"], // Slovak
-	"da" => $pgv_lang["lang_name_danish"], // Danish
-	"de" => $pgv_lang["lang_name_german"], // German
-	"en" => $pgv_lang["lang_name_english"],
-	"es" => $pgv_lang["lang_name_spanish"], // Spanish
+	"cs" => i18n::translate('Czech'), // Czech
+	"sk" => i18n::translate('Slovak'), // Slovak
+	"da" => i18n::translate('Danish'), // Danish
+	"de" => i18n::translate('German'), // German
+	"en" => i18n::translate('English'),
+	"es" => i18n::translate('Spanish'), // Spanish
 	"eu" => "Euskara", // Basque
-	"fr" => $pgv_lang["lang_name_french"], // French
+	"fr" => i18n::translate('French'), // French
 	"gd-ie" => "Gaeilge", // Irish
-	"el" => $pgv_lang["lang_name_greek"],
+	"el" => i18n::translate('Greek'),
 	"is" => "Íslenska", // Icelandic
-	"it" => $pgv_lang["lang_name_italian"],
-	"hu" => $pgv_lang["lang_name_hungarian"], // Hungarian
-	"lt" => $pgv_lang["lang_name_lithuanian"], // Lithuanian
-	"nl" => $pgv_lang["lang_name_dutch"], // Dutch
-	"no" => $pgv_lang["lang_name_norwegian"], // Norwegian
+	"it" => i18n::translate('Italian'),
+	"hu" => i18n::translate('Hungarian'), // Hungarian
+	"lt" => i18n::translate('Lithuanian'), // Lithuanian
+	"nl" => i18n::translate('Dutch'), // Dutch
+	"no" => i18n::translate('Norwegian'), // Norwegian
 	"hawaiian" => "‘Olelo Hawai‘i",
-	"pl" => $pgv_lang["lang_name_polish"], // Polish
-	"pt" => $pgv_lang["lang_name_portuguese"],
+	"pl" => i18n::translate('Polish'), // Polish
+	"pt" => i18n::translate('Portuguese'),
 	"sl" => "Slovenšcina", // Slovenian
-	"fi" => $pgv_lang["lang_name_finnish"], // Finnish
-	"sv" => $pgv_lang["lang_name_swedish"], // Swedish
-	"tr" => $pgv_lang["lang_name_turkish"], // Turkish
-	"he" => $pgv_lang["lang_name_hebrew"],
-	"ar" => $pgv_lang["lang_name_arabic"],
-	"ru" => $pgv_lang["lang_name_russian"],
-	"vi" => $pgv_lang["lang_name_vietnamese"], // Vietnamese
+	"fi" => i18n::translate('Finnish'), // Finnish
+	"sv" => i18n::translate('Swedish'), // Swedish
+	"tr" => i18n::translate('Turkish'), // Turkish
+	"he" => i18n::translate('Hebrew'),
+	"ar" => i18n::translate('Arabic'),
+	"ru" => i18n::translate('Russian'),
+	"vi" => i18n::translate('Vietnamese'), // Vietnamese
 );
 
 switch ($language_filter) {

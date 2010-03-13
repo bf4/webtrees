@@ -2,7 +2,10 @@
 /**
  * Customizable FAQ page
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 01 September 2005
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -34,7 +37,7 @@ loadLangFile("pgv_confighelp");
 global $PGV_IMAGES, $faqs;
 
 // -- print html header information
-print_header($pgv_lang["faq_list"]);
+print_header(i18n::translate('FAQ List'));
 
 // -- Get all of the _POST variables we're interested in
 $action     = safe_REQUEST($_REQUEST, 'action',      PGV_REGEX_UNSAFE, 'show');
@@ -155,30 +158,26 @@ if ($action=="add") {
 	echo '<input type="hidden" name="oldOrder" value="" />';
 	echo '<table class="center list_table ', $TEXT_DIRECTION, '">';
 	echo '<tr><td class="topbottombar" colspan="2">';
-	print_help_link("add_faq_item","qm","add_faq_item");
-	echo $pgv_lang["add_faq_item"], '</td></tr>';
+	echo i18n::translate('Add FAQ item'), help_link('add_faq_item');
+	echo '</td></tr><tr><td class="descriptionbox" colspan="2">';
+	echo i18n::translate('FAQ Header'), help_link('add_faq_header');
+	echo '</td></tr><tr><td class="optionbox" colspan="2"><input type="text" name="header" size="90" tabindex="', $i++, '" /></td></tr>';
 	echo '<tr><td class="descriptionbox" colspan="2">';
-	print_help_link("add_faq_header","qm","add_faq_header");
-	echo $pgv_lang["add_faq_header"], '</td></tr>';
-	echo '<tr><td class="optionbox" colspan="2"><input type="text" name="header" size="90" tabindex="', $i++, '" /></td></tr>';
-	echo '<tr><td class="descriptionbox" colspan="2">';
-	print_help_link("add_faq_body","qm","add_faq_body");
-	echo $pgv_lang["add_faq_body"], '</td></tr>';
-	echo '<tr><td class="optionbox" colspan="2"><textarea name="body" rows="10" cols="90" tabindex="', $i++, '"></textarea></td></tr>';
+	echo i18n::translate('FAQ Body'), help_link("add_faq_body","qm","add_faq_body");
+	echo '</td></tr><tr><td class="optionbox" colspan="2"><textarea name="body" rows="10" cols="90" tabindex="', $i++, '"></textarea></td></tr>';
 	echo '<tr><td class="descriptionbox">';
-	print_help_link("add_faq_order","qm","add_faq_order");
-	echo $pgv_lang["add_faq_order"], '</td><td class="descriptionbox">';
-	print_help_link("add_faq_visibility","qm","add_faq_order");
-	echo $pgv_lang["add_faq_visibility"], '</td></tr>';
-	echo '<tr><td class="optionbox"><input type="text" name="order" size="3" tabindex="', $i++, '" /></td>';
+	echo i18n::translate('FAQ Position'), help_link('add_faq_order');
+	echo '</td><td class="descriptionbox">';
+	echo i18n::translate('FAQ Visibility'), help_link('add_faq_visibility');
+	echo '</td></tr><tr><td class="optionbox"><input type="text" name="order" size="3" tabindex="', $i++, '" /></td>';
 	echo '<td class="optionbox">';
 		echo '<select name="whichGEDCOM" tabindex="', $i++, '" />';
-			echo '<option value="*all*">', $pgv_lang["all"], '</option>';
+			echo '<option value="*all*">', i18n::translate('ALL'), '</option>';
 			echo '<option value="', $GEDCOM, '" selected="selected">', $GEDCOM, '</option';
 		echo '</select>';
 	echo '</td></tr>';
-	echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', $pgv_lang["save"], '" tabindex="', $i++, '" />';
-	echo '&nbsp;<input type="button" value="', $pgv_lang["cancel"], '" onclick="window.location=\'faq.php\'"; tabindex="', $i++, '" /></td></tr>';
+	echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', i18n::translate('Save'), '" tabindex="', $i++, '" />';
+	echo '&nbsp;<input type="button" value="', i18n::translate('Cancel'), '" onclick="window.location=\'faq.php\'"; tabindex="', $i++, '" /></td></tr>';
 	echo '</table>';
 	echo '</form>';
 }
@@ -186,7 +185,7 @@ if ($action=="add") {
 if ($action == "edit") {
 	if ($id == NULL) {
 		$error = true;
-		$error_message =  $pgv_lang["no_id"];
+		$error_message =  i18n::translate('No FAQ ID has been specified !');
 		$action = "show";
 	} else {
 		$faqs = get_faq_data($id);
@@ -198,38 +197,35 @@ if ($action == "edit") {
 		echo '<input type="hidden" name="id" value="', $id, '" />';
 		echo '<table class="center list_table ', $TEXT_DIRECTION, '">';
 		echo '<tr><td class="topbottombar" colspan="2">';
-		print_help_link("edit_faq_item","qm","edit_faq_item");
-		echo $pgv_lang["edit_faq_item"], '</td></tr>';
+		echo i18n::translate('Edit FAQ item'), help_link('edit_faq_item');
+		echo '</td></tr>';
 		foreach ($faqs as $id => $data) {
 			echo '<input type="hidden" name="pidh" value="', htmlspecialchars($data["header"]["pid"]), '" />';
 			echo '<input type="hidden" name="pidb" value="', htmlspecialchars($data["body"]["pid"]), '" />';
 			echo '<input type="hidden" name="oldGEDCOM" value="', htmlspecialchars($data["header"]["gedcom"]), '" />';
 			echo '<input type="hidden" name="oldOrder" value="', htmlspecialchars($id), '" />';
 			echo '<tr><td class="descriptionbox" colspan="2">';
-			print_help_link("add_faq_header","qm","add_faq_header");
-			echo $pgv_lang["add_faq_header"], '</td></tr>';
-			echo '<tr><td class="optionbox" colspan="2"><input type="text" name="header" size="90" tabindex="', $i++, '" value="', htmlspecialchars($data["header"]["text"]), '" /></td></tr>';
+			echo i18n::translate('FAQ Header'), help_link('add_faq_header');
+			echo '</td></tr><tr><td class="optionbox" colspan="2"><input type="text" name="header" size="90" tabindex="', $i++, '" value="', htmlspecialchars($data["header"]["text"]), '" /></td></tr>';
 			echo '<tr><td class="descriptionbox" colspan="2">';
-			print_help_link("add_faq_body","qm","add_faq_body");
-			echo $pgv_lang["add_faq_body"], '</td></tr>';
-			echo '<tr><td class="optionbox" colspan="2"><textarea name="body" rows="10" cols="90" tabindex="', $i++, '">', htmlspecialchars($data["body"]["text"]), '</textarea></td></tr>';
+			echo i18n::translate('FAQ Body'), help_link('add_faq_body');
+			echo '</td></tr><tr><td class="optionbox" colspan="2"><textarea name="body" rows="10" cols="90" tabindex="', $i++, '">', htmlspecialchars($data["body"]["text"]), '</textarea></td></tr>';
 			echo '<tr><td class="descriptionbox">';
-			print_help_link("add_faq_order","qm","add_faq_order");
-			echo $pgv_lang["add_faq_order"], '</td><td class="descriptionbox">';
-			print_help_link("add_faq_visibility","qm","add_faq_order");
-			echo $pgv_lang["add_faq_visibility"], '</td></tr>';
-			echo '<tr><td class="optionbox"><input type="text" name="order" size="3" tabindex="', $i++, '" value="', $id, '" /></td>';
+			echo i18n::translate('FAQ Position'), help_link('add_faq_order');
+			echo '</td><td class="descriptionbox">';
+			echo i18n::translate('FAQ Visibility'), help_link('add_faq_visibility');
+			echo '</td></tr><tr><td class="optionbox"><input type="text" name="order" size="3" tabindex="', $i++, '" value="', $id, '" /></td>';
 			echo '<td class="optionbox">';
 				echo '<select name="whichGEDCOM" tabindex="', $i++, '" />';
-					echo '<option value="*all*"';if ($data["header"]["gedcom"]=="*all*") echo ' selected="selected"';echo '>', $pgv_lang["all"], '</option>';
+					echo '<option value="*all*"';if ($data["header"]["gedcom"]=="*all*") echo ' selected="selected"';echo '>', i18n::translate('ALL'), '</option>';
 					echo '<option value="', $GEDCOM, '"';
 					if ($data["header"]["gedcom"]==$GEDCOM) echo ' selected="selected"';
 					echo '>', $GEDCOM, '</option';
 				echo '</select>';
 			echo '</td></tr>';
 		}
-		echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', $pgv_lang["save"], '" tabindex="', $i++, '" />';
-		echo '&nbsp;<input type="button" value="', $pgv_lang["cancel"], '" onclick=window.location="faq.php"; tabindex="', $i++, '" /></td></tr>';
+		echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', i18n::translate('Save'), '" tabindex="', $i++, '" />';
+		echo '&nbsp;<input type="button" value="', i18n::translate('Cancel'), '" onclick=window.location="faq.php"; tabindex="', $i++, '" /></td></tr>';
 		echo '</table>';
 		echo '</form>';
 	}
@@ -243,11 +239,11 @@ if ($action == "show") {
 	if (count($faqs) == 0) {
 		if (PGV_USER_GEDCOM_ADMIN) {
 			echo '<tr><td class="width20 list_label">';
-			print_help_link("add_faq_item","qm","add_faq_item");
-			echo '<a href="faq.php?action=add">', $pgv_lang["add_faq_item"], '</a>';
+			echo '<a href="faq.php?action=add">', i18n::translate('Add FAQ item'), '</a>';
+			echo help_link('add_faq_item');
 			echo '</td></tr>';
 		} else {
-			echo '<tr><td class="error center">', $pgv_lang["no_faq_items"], '</td></tr>';
+			echo '<tr><td class="error center">', i18n::translate('The FAQ list is empty.'), '</td></tr>';
 		}
 	} else {
 		// NOTE: Add a preview link
@@ -255,17 +251,18 @@ if ($action == "show") {
 			echo '<tr>';
 			if ($adminedit) {
 				echo '<td class="descriptionbox center" colspan="2">';
-				print_help_link("add_faq_item","qm","add_faq_item");
-				echo '<a href="faq.php?action=add">', $pgv_lang["add"], '</a></td>';
+				echo '<a href="faq.php?action=add">', i18n::translate('Add'), '</a>';
+				echo help_link('add_faq_item');
+				echo '</td>';
 			}
 			echo '<td class="descriptionbox center" colspan="2">';
 
 			if ($adminedit) {
-				print_help_link("preview_faq_item","qm","preview_faq_item");
-				echo '<a href="faq.php?adminedit=0">', $pgv_lang["preview"], '</a>';
+				echo '<a href="faq.php?adminedit=0">', i18n::translate('Preview'), '</a>';
+				echo help_link('preview_faq_item');
 			} else {
-				print_help_link("restore_faq_edits","qm","restore_faq_edits");
-				echo '<a href="faq.php?adminedit=1">', $pgv_lang["edit"], '</a>';
+				echo '<a href="faq.php?adminedit=1">', i18n::translate('Edit'), '</a>';
+				echo help_link('restore_faq_edits');
 			}
 			echo '</td>';
 
@@ -282,8 +279,8 @@ if ($action == "show") {
 				// NOTE: Print the position of the current item
 				if ($adminedit) {
 					echo '<td class="descriptionbox width20 $TEXT_DIRECTION" colspan="4">';
-					echo $pgv_lang["position_item"], ': ', $id, ', ';
-					if ($data["header"]["gedcom"]=="*all*") echo $pgv_lang["all"];
+					echo i18n::translate('Position item'), ': ', $id, ', ';
+					if ($data["header"]["gedcom"]=="*all*") echo i18n::translate('ALL');
 					else echo PrintReady($data["header"]["gedcom"]);
 					echo '</td>';
 				}
@@ -295,17 +292,17 @@ if ($action == "show") {
 				// NOTE: Print the edit options of the current item
 				if (PGV_USER_GEDCOM_ADMIN && $adminedit) {
 					echo '<td class="optionbox center">';
-					print_help_link("moveup_faq_item","qm","moveup_faq_item");
-					echo '<a href="', encode_url('faq.php?action=commit&type=moveup&id='.$id.'&pidh='.$data["header"]["pid"].'&pidb='.$data["body"]["pid"]), '"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["uarrow"]["other"], '" border="0" alt="" /></a></td>';
-					echo '<td class="optionbox center">';
-					print_help_link("movedown_faq_item","qm","movedown_faq_item");
+					echo '<a href="', encode_url('faq.php?action=commit&type=moveup&id='.$id.'&pidh='.$data["header"]["pid"].'&pidb='.$data["body"]["pid"]), '"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["uarrow"]["other"], '" border="0" alt="" /></a>';
+					echo help_link('moveup_faq_item');
+					echo '</td><td class="optionbox center">';
 					echo '<a href="', encode_url('faq.php?action=commit&type=movedown&id='.$id.'&pidh='.$data["header"]["pid"].'&pidb='.$data["body"]["pid"]), '"><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["darrow"]["other"], '" border="0" alt="" /></a>';
+					echo help_link('movedown_faq_item');
 					echo '</td><td class="optionbox center">';
-					print_help_link("edit_faq_item","qm","edit_faq_item");
-					echo '<a href="', encode_url('faq.php?action=edit&id='.$id), '">', $pgv_lang["edit"], '</a>';
+					echo '<a href="', encode_url('faq.php?action=edit&id='.$id), '">', i18n::translate('Edit'), '</a>';
+					echo help_link('edit_faq_item');
 					echo '</td><td class="optionbox center">';
-					print_help_link("delete_faq_item","qm","delete_faq_item");
-					echo '<a href="', encode_url('faq.php?action=commit&type=delete&id='.$id.'&pidh='.$data["header"]["pid"].'&amp;pidb='.$data["body"]["pid"].'&oldGEDCOM='.$data["header"]["gedcom"]), '" onclick="return confirm(\'', $pgv_lang["confirm_faq_delete"], '\');">', $pgv_lang["delete"], '</a>';
+					echo '<a href="', encode_url('faq.php?action=commit&type=delete&id='.$id.'&pidh='.$data["header"]["pid"].'&amp;pidb='.$data["body"]["pid"].'&oldGEDCOM='.$data["header"]["gedcom"]), '" onclick="return confirm(\'', i18n::translate('Are you sure you want to delete this FAQ entry?'), '\');">', i18n::translate('Delete'), '</a>';
+					echo help_link('delete_faq_item');
 					echo '</td>';
 				}
 				// NOTE: Print the body text of the current item

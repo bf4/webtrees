@@ -4,7 +4,10 @@
  *
  * This block will print a users favorites
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,7 +25,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * $Id$
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  */
 
@@ -35,7 +38,7 @@ define('PGV_USER_FAVORITES_PHP', '');
 
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
-$PGV_BLOCKS["print_user_favorites"]["name"]			= $pgv_lang["user_favorites_block"];
+$PGV_BLOCKS["print_user_favorites"]["name"]			= i18n::translate('User Favorites');
 $PGV_BLOCKS["print_user_favorites"]["descr"]		= "user_favorites_descr";
 $PGV_BLOCKS["print_user_favorites"]["type"]			= "user";
 $PGV_BLOCKS["print_user_favorites"]["canconfig"]	= false;
@@ -43,7 +46,7 @@ $PGV_BLOCKS["print_user_favorites"]["config"]		= array("cache"=>0);
 
 //-- print user favorites
 function print_user_favorites($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TEXT_DIRECTION, $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TEXT_DIRECTION, $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype;
 	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE, $ENABLE_AUTOCOMPLETE;
 
 	// Override GEDCOM configuration temporarily
@@ -56,8 +59,8 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	if (!is_array($userfavs)) $userfavs = array();
 
 	$id="user_favorites";
-	$title = print_help_link("mygedview_favorites", "qm","",false, true);
-	$title .= $pgv_lang["my_favorites"]."&nbsp;&nbsp;";
+	$title = i18n::translate('My Favorites');
+	$title .= help_link('mygedview_favorites');
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 	$title .= "(".count($userfavs).")";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
@@ -94,14 +97,14 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 		$cellSpacing = "3px";
 	}
 	if (count($userfavs)==0) {
-		$content .= print_text("no_favorites",0,1);
+		$content .= i18n::translate('You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.');
 	} else {
 		$mygedcom = $GEDCOM;
 		$current_gedcom = $GEDCOM;
 		$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center $TEXT_DIRECTION\">";
 		foreach($userfavs as $key=>$favorite) {
 			if (isset($favorite["id"])) $key=$favorite["id"];
-			$removeFavourite = "<a class=\"font9\" href=\"".encode_url("index.php?ctype={$ctype}&action=deletefav&fv_id={$key}")."\" onclick=\"return confirm('".$pgv_lang["confirm_fav_remove"]."');\">".$pgv_lang["remove"]."</a><br />";
+			$removeFavourite = "<a class=\"font9\" href=\"".encode_url("index.php?ctype={$ctype}&action=deletefav&fv_id={$key}")."\" onclick=\"return confirm('".i18n::translate('Are you sure you want to remove this item from your list of Favorites?')."');\">".i18n::translate('Remove')."</a><br />";
 			$current_gedcom = $GEDCOM;
 			$GEDCOM = $favorite["file"];
 			$content .= "<tr><td>";
@@ -131,7 +134,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 					if ($record) {
 						$content.=$record->format_list('span');
 					} else {
-						$content.=$pgv_lang['invalid_id'];
+						$content.=i18n::translate('No such ID exists in this GEDCOM file.');
 					}
 					$content .= "<br />".PrintReady($favorite["note"]);
 				}
@@ -153,8 +156,8 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	<br />
 	';
 	$uniqueID = floor(microtime() * 1000000);
-	$content .= print_help_link("index_add_favorites", "qm","",false,true);
-	$content .= "<b><a href=\"javascript: ".$pgv_lang["add_favorite"]." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".$pgv_lang["add_favorite"]."</a></b>";
+	$content .= "<b><a href=\"javascript: ".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>";
+	$content .= help_link('index_add_favorites');
 	$content .= "<br /><div id=\"add_user_fav\" style=\"display: none;\">";
 	$content .= "<form name=\"addufavform\" method=\"post\" action=\"index.php\">";
 	$content .= "<input type=\"hidden\" name=\"action\" value=\"addfav\" />";
@@ -162,7 +165,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$content .= "<input type=\"hidden\" name=\"favtype\" value=\"user\" />";
 	$content .= "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />";
 	$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center $TEXT_DIRECTION\">";
-	$content .= "<tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
+	$content .= "<tr><td>".i18n::translate('Enter a Person, Family, or Source ID')." <br />";
 	$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";
 
 	$content .= print_findindi_link("gid{$uniqueID}",'',true)."\n";
@@ -172,15 +175,15 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$content .= print_findnote_link("gid{$uniqueID}",'',true)."\n";
 	$content .= print_findmedia_link("gid{$uniqueID}",'1','',true)."\n";
 
-	$content .= "<br />".$pgv_lang["add_fav_or_enter_url"];
-	$content .= "<table><tr><td>".$pgv_lang["url"]."</td><td><input type=\"text\" name=\"url\" size=\"40\" value=\"\" /></td></tr>";
-	$content .= "<tr><td>".$pgv_lang["title"]."</td><td><input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" /></td></tr></table>";
+	$content .= "<br />".i18n::translate('OR<br />Enter a URL and a title');
+	$content .= "<table><tr><td>".i18n::translate('URL')."</td><td><input type=\"text\" name=\"url\" size=\"40\" value=\"\" /></td></tr>";
+	$content .= "<tr><td>".i18n::translate('Title:')."</td><td><input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" /></td></tr></table>";
 	if ($block) $content .= "\n</td></tr><tr><td><br />";
 	else $content .= "\n</td><td>";
-	$content .= $pgv_lang["add_fav_enter_note"];
+	$content .= i18n::translate('Enter an optional note about this favorite');
 	$content .= "<br /><textarea name=\"favnote\" rows=\"6\" cols=\"50\"></textarea>";
 	$content .= "</td></tr></table>";
-	$content .= "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" style=\"font-size: 8pt; \" />";
+	$content .= "<br /><input type=\"submit\" value=\"".i18n::translate('Add')."\" style=\"font-size: 8pt; \" />";
 	$content .= "</form></div>";
 
 	global $THEME_DIR;

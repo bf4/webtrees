@@ -2,7 +2,10 @@
 /**
  * Startup and session logic
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage admin
  * @version $Id$
  */
@@ -306,9 +309,6 @@ ignore_user_abort(false);
 if (empty($PGV_MEMORY_LIMIT)) $PGV_MEMORY_LIMIT = '32M';
 @ini_set('memory_limit', $PGV_MEMORY_LIMIT);
 
-// Application configuration data - things that aren't (yet) user-editable
-require PGV_ROOT.'includes/config_data.php';
-
 //--load common functions
 require  PGV_ROOT.'includes/functions/functions.php';
 require  PGV_ROOT.'includes/functions/functions_name.php';
@@ -469,6 +469,9 @@ unset($locale, $translate);
 
 require PGV_ROOT.'includes/classes/class_i18n.php';
 i18n::init();
+
+// Application configuration data - things that aren't (yet) user-editable
+require PGV_ROOT.'includes/config_data.php';
 
 // Tell the database to sort/compare using the language's preferred collatation settings
 try {

@@ -2,7 +2,10 @@
 /**
  * German FAQ texts
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  *
  *
  * @author PGV Developers
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Languages
  * @version $Id$
  */

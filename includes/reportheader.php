@@ -5,7 +5,7 @@
  *
  * used by the SAX parser to generate PDF reports from the XML report file.
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Reports
  * @version $Id$
  */
@@ -109,7 +109,7 @@ function PGVReportSHandler($attrs) {
 }
 
 function PGVRvarSHandler($attrs) {
-	global $text, $vars, $pgv_lang, $fact, $desc, $type, $generation;
+	global $text, $vars, $fact, $desc, $type, $generation;
 
 	$var = $attrs["var"];
 	if (!empty($var)) {

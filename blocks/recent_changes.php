@@ -4,7 +4,10 @@
  *
  * This block will print a list of recent changes
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  * @version $Id$
  */
@@ -33,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_RECENT_CHANGES_PHP', '');
 
-$PGV_BLOCKS["print_recent_changes"]["name"]     = $pgv_lang["recent_changes_block"];
+$PGV_BLOCKS["print_recent_changes"]["name"]     = i18n::translate('Recent Changes');
 $PGV_BLOCKS["print_recent_changes"]["descr"]    = "recent_changes_descr";
 $PGV_BLOCKS["print_recent_changes"]["canconfig"]= true;
 $PGV_BLOCKS["print_recent_changes"]["config"]   = array(
@@ -45,7 +48,7 @@ $PGV_BLOCKS["print_recent_changes"]["config"]   = array(
 //-- Recent Changes block
 //-- this block prints a list of changes that have occurred recently in your gedcom
 function print_recent_changes($block=true, $config="", $side, $index) {
-	global $pgv_lang, $ctype;
+	global $ctype;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 
 	$block = true;  // Always restrict this block's height
@@ -61,7 +64,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	if (count($found_facts)==0 and $HideEmpty=="yes") return false;
 // Print block header
 	$id="recent_changes";
-	$title = print_help_link("recent_changes", "qm","",false,true);
+	$title='';
 	if ($PGV_BLOCKS["print_recent_changes"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -70,18 +73,17 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= $pgv_lang["recent_changes"];
+	$title.=i18n::translate('Recent Changes').help_link('recent_changes');
 
 	$content = "";
 // Print block content
-	$pgv_lang["global_num1"] = $config["days"];  // Make this visible
 	if (count($found_facts)==0) {
-		$content .= print_text("recent_changes_none",0,1);
+		$content .= i18n::translate('There have been no changes within the last %s days.', $config["days"]);
 	} else {
-		$content .= print_text("recent_changes_some",0,1);
+		$content .= i18n::translate('Changes made within the last %s days', $config["days"]);
 		// sortable table
 		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 		ob_start();
@@ -98,36 +100,35 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 }
 
 function print_recent_changes_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS;
+	global $ctype, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_recent_changes"]["config"]["cache"];
 
-	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["days_to_show"]."</td>";?>
+	print "<tr><td class=\"descriptionbox wrap width33\">".i18n::translate('Number of days to show')."</td>";?>
 	<td class="optionbox">
 		<input type="text" name="days" size="2" value="<?php print $config["days"]; ?>" />
 	</td></tr>
 
 	<?php
-	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["show_empty_block"]."</td>";?>
+	print "<tr><td class=\"descriptionbox wrap width33\">".i18n::translate('Should this block be hidden when it is empty?')."</td>";?>
 	<td class="optionbox">
 		<select name="hide_empty">
-			<option value="no"<?php if ($config["hide_empty"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-			<option value="yes"<?php if ($config["hide_empty"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+			<option value="no"<?php if ($config["hide_empty"]=="no") print " selected=\"selected\"";?>><?php print i18n::translate('No'); ?></option>
+			<option value="yes"<?php if ($config["hide_empty"]=="yes") print " selected=\"selected\"";?>><?php print i18n::translate('Yes'); ?></option>
 		</select>
 	</td></tr>
 	<tr><td colspan="2" class="optionbox wrap">
-		<span class="error"><?php print $pgv_lang["hide_block_warn"]; ?></span>
+		<span class="error"><?php print i18n::translate('If you hide an empty block, you will not be able to change its configuration until it becomes visible by no longer being empty.'); ?></span>
 	</td></tr>
 	<?php
 
 	// Cache file life
 	if ($ctype=="gedcom") {
-		print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life", "qm");
-		print $pgv_lang["cache_life"];
-		print "</td><td class=\"optionbox\">";
-		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
-		print "</td></tr>";
+		echo "<tr><td class=\"descriptionbox wrap width33\">";
+		echo i18n::translate('Cache file life'), help_link('cache_life');
+		echo "</td><td class=\"optionbox\">";
+		echo "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		echo "</td></tr>";
 	}
 }
 ?>

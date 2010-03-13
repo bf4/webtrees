@@ -3,7 +3,10 @@
 *
 * Import specific functions
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * Modifications Copyright (c) 2010 Greg Roach
@@ -23,7 +26,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * @version $Id$
-* @package PhpGedView
+* @package webtrees
 * @subpackage DB
 */
 
@@ -572,7 +575,7 @@ function reformat_record_import($rec) {
 * @param boolean $update whether or not this is an updated record that has been accepted
 */
 function import_record($gedrec, $ged_id, $update) {
-	global $TBLPREFIX, $pgv_lang, $USE_RIN, $MAX_IDS, $fpnewged, $GENERATE_UIDS;
+	global $TBLPREFIX, $USE_RIN, $MAX_IDS, $fpnewged, $GENERATE_UIDS;
 
 	static $sql_insert_indi=null;
 	static $sql_insert_fam=null;
@@ -612,7 +615,7 @@ function import_record($gedrec, $ged_id, $update) {
 		$xref=$match[1];
 		$type=$match[1];
 	} else {
-		echo $pgv_lang['invalid_gedformat'], '<br /><pre>', $gedrec, '</pre>';
+		echo i18n::translate('Invalid GEDCOM format'), '<br /><pre>', $gedrec, '</pre>';
 		return;
 	}
 
@@ -638,7 +641,7 @@ function import_record($gedrec, $ged_id, $update) {
 		if (preg_match('/0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
 			list(,$xref, $type)=$match;
 		} else {
-			echo $pgv_lang['invalid_gedformat'], '<br /><pre>', $gedrec, '</pre>';
+			echo i18n::translate('Invalid GEDCOM format'), '<br /><pre>', $gedrec, '</pre>';
 			return;
 		}
 	}

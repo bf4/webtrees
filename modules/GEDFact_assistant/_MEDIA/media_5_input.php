@@ -4,7 +4,10 @@
  *
  * Media Link information about an individual
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Census Assistant
  * @version $Id$
  */
@@ -57,9 +60,9 @@
 
 // Various JavaScript variables required --------------------------------- ?>
 <script language="javascript" type="text/javascript">
-	var ifamily			= "<?php echo $pgv_lang["open_nav"];		?>";
-	var remove			= "<?php echo $pgv_lang["remove"];			?>";
-	var linkExists		= "<?php echo $pgv_lang["link_exists"];		?>";
+	var ifamily			= "<?php echo i18n::translate('Open Family Navigator');		?>";
+	var remove			= "<?php echo i18n::translate('Remove');			?>";
+	var linkExists		= "<?php echo i18n::translate('This link already exists');		?>";
 	var imageDir		= "<?php echo $PGV_IMAGE_DIR;				?>";
 </script>
 
@@ -72,9 +75,9 @@ echo '<script src="modules/GEDFact_assistant/_MEDIA/media_5_input.js" type="text
 		<tr>
 			<th class="topbottombar" width="10"  style="font-weight:100;" align="left">#</th>
 			<th class="topbottombar" width="55"  style="font-weight:100;" align="left">ID:</th>
-			<th class="topbottombar" width="370" style="font-weight:100;" align="left"><?php echo $pgv_lang["name"];?></th>
-			<th class="topbottombar" width="20"  style="font-weight:100;" align="left"><?php echo $pgv_lang["remove"];?></th>
-			<th class="topbottombar" width="20"  style="font-weight:100;" align="left"><?php echo $pgv_lang["nav"];?></th>
+			<th class="topbottombar" width="370" style="font-weight:100;" align="left"><?php echo i18n::translate('Name');?></th>
+			<th class="topbottombar" width="20"  style="font-weight:100;" align="left"><?php echo i18n::translate('Remove');?></th>
+			<th class="topbottombar" width="20"  style="font-weight:100;" align="left"><?php echo i18n::translate('Navigator');?></th>
 		</tr>
 		</thead>
 		<tbody></tbody>

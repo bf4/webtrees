@@ -2,7 +2,10 @@
 /**
  * Popup window for viewing images
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @version $Id$
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Media
  */
 
@@ -29,7 +32,8 @@ require './config.php';
 
 $filename=decrypt(safe_GET('filename'));
 
-print_simple_header($pgv_lang["imageview"]);
+print_simple_header(i18n::translate('Image Viewer'));
+
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -170,13 +174,13 @@ print_simple_header($pgv_lang["imageview"]);
 print "<form name=\"zoomform\" onsubmit=\"setzoom(document.getElementById('zoomval').value); return false;\" action=\"imageview.php\">";
 $isExternal = isFileExternal($filename);
 if (!$isExternal && !media_exists($filename) ) {
-	print "<span class=\"error\">".$pgv_lang["file_not_found"]."&nbsp;".$filename."</span>";
-	print "<br /><br /><div class=\"center\"><a href=\"javascript:;\" onclick=\"self.close();\">".$pgv_lang["close_window"]."</a></div>\n";
+	print "<span class=\"error\">".i18n::translate('File not found.')."&nbsp;".$filename."</span>";
+	print "<br /><br /><div class=\"center\"><a href=\"javascript:;\" onclick=\"self.close();\">".i18n::translate('Close Window')."</a></div>\n";
 } else {
 	print "<center><font size=\"6\"><a href=\"javascript:;\" onclick=\"zoomin(); return false;\">+</a> <a href=\"javascript:;\" onclick=\"zoomout();\">&ndash;</a> </font>";
 	print "<input type=\"text\" size=\"2\" name=\"zoomval\" id=\"zoomval\" value=\"100\" />%\n";
-	print "<input type=\"button\" value=\"".$pgv_lang["reset"]."\" onclick=\"resetimage(); return false;\" />\n";
-	print "<br /><a href=\"javascript:;\" onclick=\"window.opener.location='mediaviewer.php?filename=".encrypt(str_replace($MEDIA_DIRECTORY, "", $filename))."'; window.close();\">".$pgv_lang['view_img_details']."</a>\n";
+	print "<input type=\"button\" value=\"".i18n::translate('Reset')."\" onclick=\"resetimage(); return false;\" />\n";
+	print "<br /><a href=\"javascript:;\" onclick=\"window.opener.location='mediaviewer.php?filename=".encrypt(str_replace($MEDIA_DIRECTORY, "", $filename))."'; window.close();\">".i18n::translate('View image details')."</a>\n";
 	print "</center>\n";
 	$imgsize = findImageSize($filename);
 	$imgwidth = $imgsize[0]+2;
@@ -193,6 +197,6 @@ if (!$isExternal && !media_exists($filename) ) {
 print "</form>\n";
 print "<div style=\"position: relative; \">\n";
 print "</div>\n";
-print "<div class=\"center\"><br /><a href=\"javascript:;\" onclick=\"window.close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
+print "<div class=\"center\"><br /><a href=\"javascript:;\" onclick=\"window.close();\">".i18n::translate('Close Window')."</a></div><br />\n";
 print_simple_footer();
 ?>

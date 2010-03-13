@@ -7,7 +7,7 @@
  * $Id$
  *
  * @author http://www.phpclasses.org/browse/package/1289.html
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  */
 

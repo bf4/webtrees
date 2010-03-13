@@ -2,7 +2,10 @@
 /**
  * Cloudy theme
  *
- * PhpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @author w.a. bastein http://genealogy.bastein.biz
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Themes
  * @version $Id$
  */
@@ -42,7 +45,7 @@ $print_footerfile = PGV_THEME_DIR."print_footer.php";     //-- Print Preview Foo
 $print_headerfile = PGV_THEME_DIR."print_header.php";     //-- Print Preview Header information for the site
 $PGV_IMAGE_DIR = "themes/cloudy/images";                //-- directory to look for images
 $FAVICON=$PGV_IMAGE_DIR."/favicon.ico";
-$PGV_USE_HELPIMG = true;                                // set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
+$PGV_USE_HELPIMG = true;                                // set to true to use image for help questionmark, set to false to use i18n::translate('?')
 
 //-- variables for image names
 //- PGV main icons

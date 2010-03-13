@@ -2,7 +2,10 @@
 /**
  * Standard theme
  *
- * PhpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Themes
  * @version $Id$
  */
@@ -40,7 +43,7 @@ $footerfile = PGV_THEME_DIR."footer.php";	//-- Footer information for the site
 $print_footerfile = PGV_THEME_DIR."print_footer.php";	//-- Print Preview Footer information for the site
 $print_headerfile = PGV_THEME_DIR."print_header.php";	//-- Print Preview Header information for the site
 
-$PGV_USE_HELPIMG = true;		// set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
+$PGV_USE_HELPIMG = true;		// set to true to use image for help questionmark, set to false to use i18n::translate('?')
 $PGV_IMAGE_DIR = "images";		//-- directory to look for images
 $PGV_MENU_LOCATION = "top";
 

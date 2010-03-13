@@ -4,7 +4,10 @@
  *
  * Media Link information about an individual
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
@@ -38,12 +41,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	//-- Search Function ------------------------------------------------------------
 	?>
 	<tr>
-		<td class="descriptionbox font9 center"><?php echo $pgv_lang['search_add_links'];?></td>
+		<td class="descriptionbox font9 center"><?php echo i18n::translate('Search for People to add to Add Links list.');?></td>
 	</tr>
 	<tr>
 		<td id="srch" class="optionbox center">
 			<script>
-			var enter_name = "<?php echo $pgv_lang['enter_name']; ?>";
+			var enter_name = "<?php echo i18n::translate('You must enter a name'); ?>";
 				function findindi(persid) {
 					var findInput = document.getElementById('personid');
 					txt = findInput.value;
@@ -61,7 +64,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			<?php
 			echo '<input id="personid" type="text" value="" />';
 			echo '<a href="javascript: onclick=findindi()">' ;
-			echo '&nbsp;<font size="2">&nbsp;', $pgv_lang["search"], '</font>';
+			echo '&nbsp;<font size="2">&nbsp;', i18n::translate('Search'), '</font>';
 			echo '</a>';
 			?>
 		</td>
@@ -74,7 +77,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 	<?php
 	//-- Add Family Members to Census  -------------------------------------------
-	global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
+	global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
 	global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
 	global $TEXT_DIRECTION, $GEDCOM, $censyear, $censdate; 
 	// echo "CENS = " . $censyear;
@@ -88,17 +91,17 @@ if (!defined('PGV_PHPGEDVIEW')) {
 				// Header text with "Head" button =================================================
 				if (isset($PGV_IMAGES["head"]["button"])) {
 					$headImg  = "<img class=\"headimg vmiddle\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["head"]["button"]."\" />";
-					$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["head"]["button"]."\" alt=\"".$pgv_lang["click_choose_head_text"]."\" title=\"".$pgv_lang["click_choose_head_text"]."\" />";
+					$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["head"]["button"]."\" alt=\"".i18n::translate('Click to choose person as Head of family.')."\" title=\"".i18n::translate('Click to choose person as Head of family.')."\" />";
 				} else {
 					$headImg  = "<img class=\"headimg vmiddle\" src=\"images/buttons/head.gif\" />";
-					$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"images/buttons/head.gif\" alt=\"".$pgv_lang["click_choose_head_text"]."\" title=\"".$pgv_lang["click_choose_head_text"]."\" />";
+					$headImg2 = "<img class=\"headimg2 vmiddle\" src=\"images/buttons/head.gif\" alt=\"".i18n::translate('Click to choose person as Head of family.')."\" title=\"".i18n::translate('Click to choose person as Head of family.')."\" />";
 				}
 				global $tempStringHead;
 				$tempStringHead = PrintReady($headImg);
 				print_text("click_choose_head");
 				?>
 				<br /><br />
-				<?php echo $pgv_lang["add_indi_to_link_list"]; ?>
+				<?php echo i18n::translate('Click Name to add person to Add Links List.'); ?>
 			</td>
 		</tr>
 
@@ -193,7 +196,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						</a> 
 						<?php print "\n" ;
 						}else{
-							print $pgv_lang["private"];
+							print i18n::translate('Private');
 						}
 						?>
 						</font>
@@ -286,7 +289,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						</a> 
 						<?php print "\n" ;
 						}else{
-							print $pgv_lang["private"];
+							print i18n::translate('Private');
 						}
 						?>
 						</font>
@@ -397,7 +400,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									</a>
 									<?php print "\n" ;
 								}else{
-										print $pgv_lang["private"];
+										print i18n::translate('Private');
 								}
 								?>
 								</font>
@@ -434,7 +437,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 				}
 				$menu = new Menu();
 				if ($people["husb"]->getLabel() == ".") {
-					$menu->addLabel("&nbsp;" . $pgv_lang["stepdad"] . "&nbsp;". "\n");
+					$menu->addLabel("&nbsp;" . i18n::translate('Step-Father') . "&nbsp;". "\n");
 				}else{
 					$menu->addLabel("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
 				}
@@ -476,7 +479,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								echo PrintReady($fulln);
 							?>", "<?php
 							if ($people["husb"]->getLabel() == ".") {
-								print PrintReady($pgv_lang["stepdad"]);							 // label = Relationship
+								print PrintReady(i18n::translate('Step-Father'));							 // label = Relationship
 							}else{
 								print PrintReady($people["husb"]->getLabel());					 // label = Relationship
 							}
@@ -504,7 +507,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							</a> 
 							<?php print "\n" ;
 						}else{
-							print $pgv_lang["private"];
+							print i18n::translate('Private');
 						}
 						?>
 						</font>
@@ -528,7 +531,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 				}
 				$menu = new Menu();
 				if ($people["husb"]->getLabel() == ".") {
-					$menu->addLabel("&nbsp;" . $pgv_lang["stepmom"] . "&nbsp;". "\n");
+					$menu->addLabel("&nbsp;" . i18n::translate('Step-Mother') . "&nbsp;". "\n");
 				}else{
 					$menu->addLabel("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
 				}
@@ -574,7 +577,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							//	}
 							?>", "<?php
 							if ($people["wife"]->getLabel() == ".") {
-								print PrintReady($pgv_lang["stepmom"]);							 // label = Relationship
+								print PrintReady(i18n::translate('Step-Mother'));							 // label = Relationship
 							}else{
 								print PrintReady($people["wife"]->getLabel());					 // label = Relationship
 							}
@@ -607,7 +610,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						</a> 
 						<?php print "\n" ;
 						}else{
-							print $pgv_lang["private"];
+							print i18n::translate('Private');
 						}
 						?>
 						</font>
@@ -687,7 +690,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							</a> 
 							<?php print "\n" ;
 							}else{
-								print $pgv_lang["private"];
+								print i18n::translate('Private');
 							}
 							?>
 							</font>
@@ -738,7 +741,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						<font size=1>
 							<?php
 							if ($people["husb"]->getXref()==$pid) {
-								print "&nbsp" .($people["husb"]->getLabel())." ".$pgv_lang["head"];
+								print "&nbsp" .($people["husb"]->getLabel())." ".i18n::translate('Head of Household:');
 							}else{
 								if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 								$menu->printMenu();
@@ -797,7 +800,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						</a> 
 						<?php print "\n" ;
 						}else{
-							print $pgv_lang["private"];
+							print i18n::translate('Private');
 							}
 							?>
 						</font>
@@ -836,7 +839,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						<font size=1>
 							<?php
 							if ($people["wife"]->getXref()==$pid) {
-								print "&nbsp" .($people["wife"]->getLabel())." ".$pgv_lang["head"];
+								print "&nbsp" .($people["wife"]->getLabel())." ".i18n::translate('Head of Household:');
 							}else{
 								if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 								$menu->printMenu();
@@ -903,7 +906,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							</a>
 							<?php print "\n" ;
 						}else{
-							print $pgv_lang["private"];
+							print i18n::translate('Private');
 						}
 						?>
 						</font>
@@ -1002,7 +1005,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						</a>
 						<?php print "\n" ;
 					}else{
-						print $pgv_lang["private"];
+						print i18n::translate('Private');
 					}
 					?>
 						</font>
@@ -1032,7 +1035,7 @@ require_once PGV_ROOT.'includes/functions/functions_charts.php';
  */
 function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0, $personcount="1", $currpid, $censyear) {
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $ZOOM_BOXES, $LINK_ICONS, $view, $GEDCOM;
-	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
+	global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
@@ -1069,18 +1072,18 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 				//-- draw a box for the family popup
 				if ($TEXT_DIRECTION=="rtl") {
 				$spouselinks .= "\n\t\t\t<table id=\"flyoutFamRTL\" class=\"person_box$isF\"><tr><td class=\"name2 font9 rtl\">";
-				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b> (" .$person->getFullName(). ")<br />";
+				$spouselinks .= "<b>" . i18n::translate('Family') . "</b> (" .$person->getFullName(). ")<br />";
 				$parentlinks .= "\n\t\t\t<table id=\"flyoutParRTL\" class=\"person_box$isF\"><tr><td class=\"name2 font9 rtl\">";
-				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
+				$parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				$step_parentlinks .= "\n\t\t\t<table id=\"flyoutStepRTL\" class=\"person_box$isF\"><tr><td class=\"name2 font9 rtl\">";
-				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
+				$step_parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				}else{
 				$spouselinks .= "\n\t\t\t<table id=\"flyoutFam\" class=\"person_box$isF\"><tr><td class=\"name2 font9 ltr\">";
-				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b> (" .$person->getFullName(). ")<br />";
+				$spouselinks .= "<b>" . i18n::translate('Family') . "</b> (" .$person->getFullName(). ")<br />";
 				$parentlinks .= "\n\t\t\t<table id=\"flyoutPar\" class=\"person_box$isF\"><tr><td class=\"name2 font9 ltr\">";
-				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
+				$parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				$step_parentlinks .= "\n\t\t\t<table id=\"flyoutStep\" class=\"person_box$isF\"><tr><td class=\"name2 font9 ltr\">";
-				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b> (" .$person->getFullName(). ")<br />";
+				$step_parentlinks .= "<b>" . i18n::translate('Parents') . "</b> (" .$person->getFullName(). ")<br />";
 				}
 				$persons       = "";
 				$person_parent = "";
@@ -1101,16 +1104,16 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						// Husband ------------------------------
 						if ($husb || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") { 
-								$title = $pgv_lang["familybook_chart"].": ".$famid;
+								$title = i18n::translate('Family Book Chart').": ".$famid;
 							}else{
-								$title = $famid." :".$pgv_lang["familybook_chart"];
+								$title = $famid." :".i18n::translate('Family Book Chart');
 							}
 							if ($husb) {
 								$person_parent="Yes";
 								if ($TEXT_DIRECTION=="ltr") { 
-									$title = $pgv_lang["indi_info"].": ".$husb->getXref();
+									$title = i18n::translate('Individual Information').": ".$husb->getXref();
 								}else{
-									$title = $husb->getXref()." :".$pgv_lang["indi_info"];
+									$title = $husb->getXref()." :".i18n::translate('Individual Information');
 								}
 								$tmp=$husb->getXref();
 								if ($husb->canDisplayName()) {
@@ -1147,7 +1150,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$parentlinks .= "</a>";
 									
 								}else{
-									$parentlinks .= $pgv_lang["private"];
+									$parentlinks .= i18n::translate('Private');
 								}
 								$parentlinks .= "\n";
 								$natdad = "yes";
@@ -1157,16 +1160,16 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						// Wife ------------------------------
 						if ($wife || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") { 
-								$title = $pgv_lang["familybook_chart"].": ".$famid;
+								$title = i18n::translate('Family Book Chart').": ".$famid;
 							}else{
-								$title = $famid." :".$pgv_lang["familybook_chart"];
+								$title = $famid." :".i18n::translate('Family Book Chart');
 							}
 							if ($wife) {
 								$person_parent="Yes";
 								if ($TEXT_DIRECTION=="ltr") { 
-									$title = $pgv_lang["indi_info"].": ".$wife->getXref();
+									$title = i18n::translate('Individual Information').": ".$wife->getXref();
 								}else{
-									$title = $wife->getXref()." :".$pgv_lang["indi_info"];
+									$title = $wife->getXref()." :".i18n::translate('Individual Information');
 								}
 								$tmp=$wife->getXref();
 								if ($wife->canDisplayName()) {
@@ -1216,7 +1219,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									// $parentlinks .= "</div></a>";
 									$parentlinks .= "</a>";
 								}else{
-									$parentlinks .= $pgv_lang["private"];
+									$parentlinks .= i18n::translate('Private');
 								}
 								$parentlinks .= "<br />\n";
 								$natmom = "yes";
@@ -1241,16 +1244,16 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 							// Husband -----------------------
 							if ( ($husb || $num>0) && $husb->getLabel() != "." ) {
 								if ($TEXT_DIRECTION=="ltr") { 
-									$title = $pgv_lang["familybook_chart"].": ".$famid;
+									$title = i18n::translate('Family Book Chart').": ".$famid;
 								}else{
-									$title = $famid." :".$pgv_lang["familybook_chart"];
+									$title = $famid." :".i18n::translate('Family Book Chart');
 								}
 								if ($husb) {
 									$person_step="Yes";
 									if ($TEXT_DIRECTION=="ltr") {
-										$title = $pgv_lang["indi_info"].": ".$husb->getXref();
+										$title = i18n::translate('Individual Information').": ".$husb->getXref();
 									}else{
-										$title = $husb->getXref()." :".$pgv_lang["indi_info"];
+										$title = $husb->getXref()." :".i18n::translate('Individual Information');
 									}
 									$tmp=$husb->getXref();
 									if ($husb->canDisplayName()) {
@@ -1268,7 +1271,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$parentlinks .= PrintReady($husb->getFullName());
 										$parentlinks .= "</a>";
 									}else{
-										$parentlinks .= $pgv_lang["private"];
+										$parentlinks .= i18n::translate('Private');
 									}
 									$parentlinks .= "<br />\n";
 								}
@@ -1280,16 +1283,16 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 							// Wife ----------------------------
 							if ($wife || $num>0) {
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = $pgv_lang["familybook_chart"].": ".$famid;
+									$title = i18n::translate('Family Book Chart').": ".$famid;
 								}else{
-									$title = $famid." :".$pgv_lang["familybook_chart"];
+									$title = $famid." :".i18n::translate('Family Book Chart');
 								}
 								if ($wife) {
 									$person_step="Yes";
 									if ($TEXT_DIRECTION=="ltr") {
-										$title = $pgv_lang["indi_info"].": ".$wife->getXref();
+										$title = i18n::translate('Individual Information').": ".$wife->getXref();
 									}else{
-										$title = $wife->getXref()." :".$pgv_lang["indi_info"];
+										$title = $wife->getXref()." :".i18n::translate('Individual Information');
 									}
 									$tmp=$wife->getXref();
 									if ($wife->canDisplayName()) {
@@ -1306,7 +1309,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$parentlinks .= PrintReady($wife->getFullName());
 										$parentlinks .= "</a>";
 									}else{
-										$parentlinks .= $pgv_lang["private"];
+										$parentlinks .= i18n::translate('Private');
 									}
 									$parentlinks .= "<br />\n";
 								}
@@ -1327,15 +1330,15 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						// Spouse ------------------------------
 						if ($spouse || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
-								$title = $pgv_lang["familybook_chart"].": ".$famid;
+								$title = i18n::translate('Family Book Chart').": ".$famid;
 							}else{
-								$title = $famid." :".$pgv_lang["familybook_chart"];
+								$title = $famid." :".i18n::translate('Family Book Chart');
 							}
 							if ($spouse) {
 								if ($TEXT_DIRECTION=="ltr") { 
-									$title = $pgv_lang["indi_info"].": ".$spouse->getXref();
+									$title = i18n::translate('Individual Information').": ".$spouse->getXref();
 								}else{
-									$title = $spouse->getXref()." :".$pgv_lang["indi_info"];
+									$title = $spouse->getXref()." :".i18n::translate('Individual Information');
 								}
 								$tmp=$spouse->getXref();
 								if ($spouse->canDisplayName()) {
@@ -1389,7 +1392,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										//}
 										$spouselinks .= "</a>";
 								}else{
-									$spouselinks .= $pgv_lang["private"];
+									$spouselinks .= i18n::translate('Private');
 								}
 								$spouselinks .= "</a>";
 								if ($spouse->getFullName() != "") {
@@ -1405,7 +1408,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 							$cpid = $child->getXref();
 							if ($child) {
 								$persons="Yes";
-									$title = $pgv_lang["indi_info"].": ".$cpid;
+									$title = i18n::translate('Individual Information').": ".$cpid;
 									if ($child->canDisplayName()) {
 										$nam   = $child->getAllNames();
 										$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
@@ -1448,7 +1451,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$spouselinks .= PrintReady($child->getFullName());							// Full Name
 									$spouselinks .= "</a>";
 									}else{ 
-										$spouselinks .= $pgv_lang["private"];
+										$spouselinks .= i18n::translate('Private');
 									}
 									$spouselinks .= "</li>\n";
 							}
@@ -1459,19 +1462,19 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 				}
 
 				if ($persons != "Yes") {
-					$spouselinks  .= "(" . $pgv_lang['none'] . ")</td></tr></table>\n\t\t";
+					$spouselinks  .= "(" . i18n::translate('None') . ")</td></tr></table>\n\t\t";
 				}else{
 					$spouselinks  .= "</td></tr></table>\n\t\t";
 				}
 				
 				if ($person_parent != "Yes") {
-					$parentlinks .= "(" . $pgv_lang['unknown'] . ")</td></tr></table>\n\t\t";
+					$parentlinks .= "(" . i18n::translate('unknown') . ")</td></tr></table>\n\t\t";
 				}else{
 					$parentlinks .= "</td></tr></table>\n\t\t";
 				}
 				
 				if ($person_step != "Yes") {
-					$step_parentlinks .= "(" . $pgv_lang['unknown'] . ")</td></tr></table>\n\t\t";
+					$step_parentlinks .= "(" . i18n::translate('unknown') . ")</td></tr></table>\n\t\t";
 				}else{
 					$step_parentlinks .= "</td></tr></table>\n\t\t";
 				}

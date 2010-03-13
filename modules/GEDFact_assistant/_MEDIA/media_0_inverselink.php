@@ -4,7 +4,10 @@
  *
  * Media Link information about an individual
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage GEDFact_assistant
  * @version $Id$
 */
@@ -41,21 +44,21 @@ if (empty($linktoid) || empty($linkto)) {
 } else {
 	switch ($linkto) {
 	case 'person':
-		$toitems = $pgv_lang['to_person'];
+		$toitems = i18n::translate('To Person');
 		break;
 	case 'family':
-		$toitems = $pgv_lang['to_family'];
+		$toitems = i18n::translate('To Family');
 		break;
 	case 'source':
-		$toitems = $pgv_lang['to_source'];
+		$toitems = i18n::translate('To Source');
 		break;
 	}
 }
 if (PGV_USER_IS_ADMIN) {
-	print_simple_header($pgv_lang["link_media"]." ".$toitems);
+	print_simple_header(i18n::translate('Link Media')." ".$toitems);
 }else{
-	print_simple_header($pgv_lang["admin"]);
-	echo $pgv_lang["no_login"];
+	print_simple_header(i18n::translate('Admin'));
+	echo i18n::translate('Unable to authenticate user.');
 }
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
@@ -68,13 +71,11 @@ if (!empty($linktoid)) $paramok = displayDetailsById($linktoid);
 
 if ($action == "choose" && $paramok) {
 
-global $pgv_lang;
-
 	?>
 	<script language="JavaScript" type="text/javascript">
 	<!--
 	// Javascript variables
-	var id_empty = "<?php echo $pgv_lang['id_empty']; ?>";
+	var id_empty = "<?php echo i18n::translate('When adding a Link, the ID field cannot be empty.'); ?>";
 	
 	var pastefield;
 	var language_filter, magnify;
@@ -125,9 +126,8 @@ global $pgv_lang;
 	echo '<input type="hidden" name="ged" value="', $GEDCOM, '" />';
 	echo '<table class="facts_table center ', $TEXT_DIRECTION, '">';
 	echo '<tr><td class="topbottombar" colspan="2">';
-	print_help_link("add_media_linkid", "qm", "link_media");
-	echo $pgv_lang["link_media"], ' ', $toitems, '</td></tr>';
-	echo '<tr><td class="descriptionbox width20 wrap">', $pgv_lang["media_id"], '</td>';
+	echo i18n::translate('Link Media'), ' ', $toitems, help_link('add_media_linkid');
+	echo '</td></tr><tr><td class="descriptionbox width20 wrap">', i18n::translate('Media ID'), '</td>';
 	echo '<td class="optionbox wrap">';
 	if (!empty($mediaid)) {
 		//-- Get the title of this existing Media item
@@ -154,7 +154,7 @@ global $pgv_lang;
 		echo '<img src = ', $thumbnail, ' class="thumbheight" />';
 		echo '</td></tr></table>';
 		echo '</td></tr>';
-		echo '<tr><td class="descriptionbox width20 wrap">', $pgv_lang["current_links"], '</td>';
+		echo '<tr><td class="descriptionbox width20 wrap">', i18n::translate('Links'), '</td>';
 		echo '<td class="optionbox wrap">';
 		require 'modules/GEDFact_assistant/_MEDIA/media_query_1a.php';
 		echo '</td></tr>';
@@ -163,7 +163,7 @@ global $pgv_lang;
 	if (!isset($linktoid)) { $linktoid = ""; }
 	
 	echo '<tr><td class="descriptionbox wrap">';
-	echo $pgv_lang["add_more_links"];
+	echo i18n::translate('Add links');
 	echo '<td class="optionbox wrap ">';
 	if ($linktoid=="") {
 		// ----
@@ -180,9 +180,9 @@ global $pgv_lang;
 	echo '</td><td style=" padding-bottom:2px; vertical-align:middle">';
 		echo '&nbsp;';
 		if (isset($PGV_IMAGES["add"]["other"])) { 
-			echo '<a href="#"><img style="border-style:none;" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', $pgv_lang['add'], ' "title="', $pgv_lang['add'], '" align="middle" name="addLink" value="" onClick="javascript:blankwin(); return false;" />';
+			echo '<a href="#"><img style="border-style:none;" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', i18n::translate('Add'), ' "title="', i18n::translate('Add'), '" align="middle" name="addLink" value="" onClick="javascript:blankwin(); return false;" />';
 			} else {
-			echo '<button name="addLink" value="" type="button" onClick="javascript:blankwin(); return false;">', $pgv_lang["add"], '</button>';
+			echo '<button name="addLink" value="" type="button" onClick="javascript:blankwin(); return false;">', i18n::translate('Add'), '</button>';
 		}
 		echo '&nbsp;&nbsp;&nbsp;&nbsp;';
 		print_findindi_link("gid", "");
@@ -191,7 +191,7 @@ global $pgv_lang;
 		echo '&nbsp;';
 		print_findsource_link("gid");
 	echo '</td></tr></table>';
-	print "<sub>" . $pgv_lang["add_linkid_advice"] . "</sub>";
+	print "<sub>" . i18n::translate('Enter or search for the ID of the person, family, or source to which this media item should be linked.') . "</sub>";
 
 	
 	echo '<br /><br />';
@@ -201,10 +201,9 @@ global $pgv_lang;
 	// Admin Option CHAN log update override =======================
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm");
-		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
 		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" value=\"no_change\"/ >\n";
-		echo $pgv_lang["no_update_CHANs"], "<br /><br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) records'), help_link('no_update_CHAN'), '<br /><br />';
 		echo "</td></tr>\n";
 	}
 	echo '</tr>';
@@ -213,12 +212,12 @@ global $pgv_lang;
 	echo '<tr><td colspan="2">';
 	echo '</td></tr>';
 	echo '<tr><td class="topbottombar" colspan="2">';
-	echo '<center><input type="submit" value="', $pgv_lang["save"], '" onclick="javascript:shiftlinks();" />';
+	echo '<center><input type="submit" value="', i18n::translate('Save'), '" onclick="javascript:shiftlinks();" />';
 	echo '</center></td></tr>';
 	require 'modules/GEDFact_assistant/_MEDIA/media_7_parse_addLinksTbl.php';
 	echo '</table>';
 	echo '</form>';
-	echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close(); winNav.close(); ">', $pgv_lang["close_window"], '</a><br /></center>';
+	echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close(); winNav.close(); ">', i18n::translate('Close Window'), '</a><br /></center>';
 	// print_simple_footer();
 	
 } elseif ($action == "update" && $paramok) {
@@ -269,16 +268,16 @@ global $pgv_lang;
 	}
 	
 	if ($update_CHAN=='no_change') {
-		echo $pgv_lang["no_CHANs_update"];
+		echo i18n::translate('No CHAN (Last Change) records were updated');
 		echo '<br />';
 	}
 	
-	echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close(); winNav.close(); ">', $pgv_lang["close_window"], '</a><br /></center>';
+	echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close(); winNav.close(); ">', i18n::translate('Close Window'), '</a><br /></center>';
 	print_simple_footer();
 		
 } else {
 	// echo '<center>You must be logged in as an Administrator<center>';
-	echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close(); winNav.close();">', $pgv_lang["close_window"], '</a><br /></center>';
+	echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close(); winNav.close();">', i18n::translate('Close Window'), '</a><br /></center>';
 	//print_simple_footer();
 }
 

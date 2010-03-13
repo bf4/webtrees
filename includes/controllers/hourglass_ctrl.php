@@ -2,7 +2,10 @@
 /**
  * Controller for the Hourglass Page
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -84,7 +87,7 @@ class HourglassControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init($rootid='', $show_full=1, $generations=3) {
-		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bheight, $bwidth, $bhalfheight, $GEDCOM_DEFAULT_TAB, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
+		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bheight, $bwidth, $bhalfheight, $GEDCOM_DEFAULT_TAB, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
 		global $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $show_full;
 
 		// Extract parameters from from
@@ -220,7 +223,7 @@ class HourglassControllerRoot extends BaseController {
 	 * @return void
 	 */
 	function print_descendency($pid, $count, $showNav=true) {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth, $bhalfheight;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $bheight, $bwidth, $bhalfheight;
 		global $lastGenSecondFam;
 
 		if ($count>$this->dgenerations) return 0;
@@ -379,7 +382,7 @@ class HourglassControllerRoot extends BaseController {
 					print "\n\t\t<div class=\"center\" id=\"childarrow\" dir=\"".$TEXT_DIRECTION."\"";
 					print " style=\"position:absolute; width:".$bwidth."px; \">";
 					if ($this->view!="preview") {
-						print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',3);\" onmouseout=\"swap_image('larrow',3);\">";
+						print "<a href=\"javascript: ".i18n::translate('Show')."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',3);\" onmouseout=\"swap_image('larrow',3);\">";
 						print "<img id=\"larrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
 						print "</a><br />";
 
@@ -426,7 +429,7 @@ class HourglassControllerRoot extends BaseController {
 					foreach($cfamids as $famid=>$family) {
 						if (!is_null($family)) {
 							if(!is_null($family->getHusband()) || !is_null($family->getWife())) {
-								print "<span class=\"name1\"><br />".$pgv_lang["parents"]."<br /></span>";
+								print "<span class=\"name1\"><br />".i18n::translate('Parents')."<br /></span>";
 								$husb = $family->getHusband();
 								if (!empty($husb)) {
 									$spid = $husb->getXref();
@@ -454,8 +457,8 @@ class HourglassControllerRoot extends BaseController {
 							}
 							$children = $family->getChildren();
 							$num = $family->getNumberOfChildren();
-							if ($num>2) print "<span class=\"name1\"><br />".$pgv_lang["siblings"]."<br /></span>";
-							if ($num==2) print "<span class=\"name1\"><br />".$pgv_lang["sibling"]."<br /></span>";
+							if ($num>2) print "<span class=\"name1\"><br />".i18n::translate('Siblings')."<br /></span>";
+							if ($num==2) print "<span class=\"name1\"><br />".i18n::translate('Sibling')."<br /></span>";
 							foreach($children as $id=>$child) {
 								$cid = $child->getXref();
 								if ($cid!=$pid) {

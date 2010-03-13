@@ -4,7 +4,10 @@
  *
  * GEDFact Census information about an individual
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Census Assistant
  * @version $Id$
  */
@@ -37,7 +40,7 @@ global $USE_THUMBS_MAIN, $mediacnt, $tabno;
 global $linkToID;
 global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 
-		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
+		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full; 
 		global $famid;
@@ -48,7 +51,7 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 			$bdate=$controller->indi->getBirthDate();
 			$age = GedcomDate::GetAgeGedcom($bdate);
 			if ($age!="")
-				$summary.= "<span class=\"label\">".$pgv_lang["age"].":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
+				$summary.= "<span class=\"label\">".i18n::translate('Age').":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
 		}
 		$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
 

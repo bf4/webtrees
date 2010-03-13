@@ -2,7 +2,10 @@
 /**
  * Displays a place hierachy
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Googlemap
  * @author Łukasz Wileński <wooc@users.sourceforge.net>
  * $Id$
@@ -168,7 +171,7 @@ function set_levelm($level, $parent) {
 }
 
 function create_map() {
-	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION, $pgv_lang;
+	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION;
 	// create the map
 	//<!-- start of map display -->
 	echo "\n<br /><br />\n";
@@ -183,13 +186,13 @@ function create_map() {
 	if (PGV_USER_IS_ADMIN) {
 		echo "<table style=\"width: ", $GOOGLEMAP_PH_XSIZE, "px\">";
 		echo "<tr><td align=\"left\">\n";
-		echo "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">", $pgv_lang["gm_manage"], "</a>";
+		echo "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
 		echo "</td>\n";
 		echo "<td align=\"center\">\n";
-		echo "<a href=\"module.php?mod=googlemap&pgvaction=places\">", $pgv_lang["edit_place_locations"], "</a>";
+		echo "<a href=\"module.php?mod=googlemap&pgvaction=places\">", i18n::translate('Edit geographic place locations'), "</a>";
 		echo "</td>\n";
 		echo "<td align=\"right\">\n";
-		echo "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">", $pgv_lang["placecheck"], "</a>";
+		echo "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">", i18n::translate('Place Check'), "</a>";
 		echo "</td></tr>\n";
 		echo "</table>\n";
 	}
@@ -217,7 +220,7 @@ function check_place($place_names, $place) {
 }
 
 function print_how_many_people($level, $parent) {
-	global $GEDCOM, $pgv_lang, $stats;
+	global $GEDCOM, $stats;
 
 	$place_count_indi = 0;
 	$place_count_fam = 0;
@@ -235,11 +238,11 @@ function print_how_many_people($level, $parent) {
 			$place_count_fam=$place['tot'];
 		}
 	}
-	echo "<br /><br />", $pgv_lang["stat_individuals"], ": ", $place_count_indi, ", ", $pgv_lang["stat_families"], ": ", $place_count_fam;
+	echo "<br /><br />", i18n::translate('Individuals'), ": ", $place_count_indi, ", ", i18n::translate('Families'), ": ", $place_count_fam;
 }
 
 function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $placelevels, $lastlevel=false){
-	global $GOOGLEMAP_COORD, $GOOGLEMAP_PH_MARKER, $GM_DISP_SHORT_PLACE, $GM_DISP_COUNT, $pgv_lang;
+	global $GOOGLEMAP_COORD, $GOOGLEMAP_PH_MARKER, $GM_DISP_SHORT_PLACE, $GM_DISP_COUNT;
 	if (($place2['lati'] == NULL) || ($place2['long'] == NULL) || (($place2['lati'] == "0") && ($place2['long'] == "0"))) {
 		echo "var icon_type = new GIcon();\n";
 			echo "	icon_type.image = \"modules/googlemap/images/marker_yellow.png\";\n";
@@ -265,7 +268,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 				if (!$GM_DISP_SHORT_PLACE) {
 					echo addslashes(substr($placelevels, 2));
 				} else {
-					echo $pgv_lang["pl_unknown"];
+					echo i18n::translate('Unknown');
 				}
 			} else {
 				if (!$GM_DISP_SHORT_PLACE) {
@@ -278,9 +281,9 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			$placename = $place2['place'].$placelevels;
 			if ($place2['place'] == "Unknown") {
 				if (!$GM_DISP_SHORT_PLACE) {
-					echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
+					echo PrintReady(addslashes(i18n::translate('Unknown').$placelevels));
 				} else {
-					echo $pgv_lang["pl_unknown"];
+					echo i18n::translate('Unknown');
 				}
 			} else {
 				if (!$GM_DISP_SHORT_PLACE) {
@@ -299,9 +302,9 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 				print_how_many_people($level+1, $parent);
 			}
 		}
-		echo "<br />", $pgv_lang["gm_no_coord"];
+		echo "<br />", i18n::translate('This place has no coordinates');
 		if (PGV_USER_IS_ADMIN)
-			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=", $levelm, "&display=inactive'>", $pgv_lang["pl_edit"], "</a>";
+			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=", $levelm, "&display=inactive'>", i18n::translate('Edit geographic location'), "</a>";
 		echo "</div></td>\", icon_type, \"", str_replace(array('&lrm;', '&rlm;'), array(PGV_UTF8_LRM, PGV_UTF8_RLM), PrintReady(addslashes($place2['place']))), "\");\n";
 	} else {
 		$lati = str_replace(array('N', 'S', ','), array('', '-', '.'), $place2['lati']);
@@ -349,7 +352,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 				if (!$GM_DISP_SHORT_PLACE) {
 					echo addslashes(substr($placelevels, 2));
 				} else {
-					echo $pgv_lang["pl_unknown"];
+					echo i18n::translate('Unknown');
 				}
 			} else {
 				if (!$GM_DISP_SHORT_PLACE) {
@@ -362,9 +365,9 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			$placename = $place2['place'].$placelevels;
 			if ($place2['place'] == "Unknown"){
 				if (!$GM_DISP_SHORT_PLACE) {
-					echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
+					echo PrintReady(addslashes(i18n::translate('Unknown').$placelevels));
 				} else {
-					echo $pgv_lang["pl_unknown"];
+					echo i18n::translate('Unknown');
 				}
 			} else {
 				if (!$GM_DISP_SHORT_PLACE) {
@@ -396,7 +399,6 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 }
 
 function create_buttons($numfound, $level) {
-	global $pgv_lang;
 	?>
 	<style type="text/css">
 	#map_type
@@ -439,7 +441,7 @@ function create_buttons($numfound, $level) {
 }
 
 function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $place_names) {
-	global $GOOGLEMAP_MAP_TYPE, $GM_MAX_NOF_LEVELS, $GOOGLEMAP_PH_WHEEL, $GOOGLEMAP_PH_CONTROLS, $pgv_lang;
+	global $GOOGLEMAP_MAP_TYPE, $GM_MAX_NOF_LEVELS, $GOOGLEMAP_PH_WHEEL, $GOOGLEMAP_PH_CONTROLS;
 	?>
 	<?php echo create_buttons($numfound, $level);?>
 	<script type="text/javascript">
@@ -502,11 +504,11 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		var button4 = document.createElement('li');
 		var button5 = document.createElement('li');
 
-		button1.innerHTML = '<?php echo $pgv_lang["gm_redraw_map"]?>';
-		button2.innerHTML = '<?php echo $pgv_lang["gm_map"]?>';
-		button3.innerHTML = '<?php echo $pgv_lang["gm_satellite"]?>';
-		button4.innerHTML = '<?php echo $pgv_lang["gm_hybrid"]?>';
-		button5.innerHTML = '<?php echo $pgv_lang["gm_physical"]?>';
+		button1.innerHTML = '<?php echo i18n::translate('Redraw map')?>';
+		button2.innerHTML = '<?php echo i18n::translate('Map')?>';
+		button3.innerHTML = '<?php echo i18n::translate('Satellite')?>';
+		button4.innerHTML = '<?php echo i18n::translate('Hybrid')?>';
+		button5.innerHTML = '<?php echo i18n::translate('Terrain')?>';
 
 		button1.onclick = function() { <?php
 			if ($numfound>1) {
@@ -611,10 +613,10 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 							echo "icon_type.infoWindowAnchor = new GPoint(5, 1);\n";
 							echo "var point = new GLatLng(0, 0);\n";
 							echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><b>";
-							echo substr($placelevels, 2), "</b><br />", $pgv_lang["gm_no_coord"];
+							echo substr($placelevels, 2), "</b><br />", i18n::translate('This place has no coordinates');
 							if (PGV_USER_IS_ADMIN)
-								echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>", $pgv_lang["pl_edit"], "</a>";
-							echo "<br /></div></td>\", icon_type, \"", $pgv_lang["pl_edit"], "\");\n";
+								echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>", i18n::translate('Edit geographic location'), "</a>";
+							echo "<br /></div></td>\", icon_type, \"", i18n::translate('Edit geographic location'), "\");\n";
 							echo "place_map.addOverlay(marker);\n";
 							echo "bounds.extend(point);\n";
 							break;
@@ -643,7 +645,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 				}
 			}
 			else if ($level>0){ //if unknown place display the upper level place
-				$placelevels = ", ".$pgv_lang["pl_unknown"].$placelevels;
+				$placelevels = ", ".i18n::translate('Unknown').$placelevels;
 				$linklevels .= "&amp;parent[".$level."]=";
 				$break = false;
 				for ($i=1;$i<=$GM_MAX_NOF_LEVELS;$i++) {
@@ -668,10 +670,10 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		echo "icon_type.image = \"modules/googlemap/images/marker_yellow.png\"";
 		echo "var point = new GLatLng(0, 0);\n";
 		echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'>";
-		echo "<br />", $pgv_lang["gm_no_coord"];
+		echo "<br />", i18n::translate('This place has no coordinates');
 		if (PGV_USER_IS_ADMIN)
-			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>", $pgv_lang["pl_edit"], "</a>";
-		echo "<br /></div></td>\", icon_type, \"", $pgv_lang["pl_edit"], "\");\n";
+			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>", i18n::translate('Edit geographic location'), "</a>";
+		echo "<br /></div></td>\", icon_type, \"", i18n::translate('Edit geographic location'), "\");\n";
 		echo "place_map.addOverlay(marker);\n";
 		echo "bounds.extend(point);\n";
 	}

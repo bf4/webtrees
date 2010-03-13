@@ -28,7 +28,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id$
+ * @version $Id: _countries.php 7024 2010-02-28 11:32:11Z greg $
  */
 
 $countries=array(

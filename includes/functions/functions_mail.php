@@ -2,7 +2,10 @@
 /**
  * Mail specific functions
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @version $Id$
  */
 
@@ -39,7 +42,7 @@ define('PGV_FUNCTIONS_MAIL_PHP', '');
  */
 function pgvMail($to, $from, $subject, $message) {
 	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_FROM_NAME, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL;
-	global $pgv_lang, $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $TEXT_DIRECTION;
+	global $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $TEXT_DIRECTION;
 	$mailFormat = "plain";
 	//$mailFormat = "html";
 	//$mailFormat = "multipart";

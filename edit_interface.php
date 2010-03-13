@@ -2,7 +2,10 @@
 /**
 * PopUp Window to provide editing features.
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * Modifications Copyright (c) 2010 Greg Roach
@@ -21,7 +24,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Edit
 * @version $Id$
 */
@@ -275,27 +278,27 @@ else {
 if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	//echo "pid: $pid<br />";
 	//echo "gedrec: $gedrec<br />";
-	echo $pgv_lang["access_denied"];
+	echo i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	//-- display messages as to why the editing access was denied
 	if (!PGV_USER_CAN_EDIT) {
-		echo "<br />", $pgv_lang["user_cannot_edit"];
+		echo "<br />", i18n::translate('This user name cannot edit this GEDCOM.');
 	}
 	if (!$ALLOW_EDIT_GEDCOM) {
-		echo "<br />", $pgv_lang["gedcom_editing_disabled"];
+		echo "<br />", i18n::translate('Editing this GEDCOM has been disabled by the administrator.');
 	}
 	if (!$disp) {
-		echo "<br />", $pgv_lang["privacy_prevented_editing"];
+		echo "<br />", i18n::translate('Privacy settings prevent you from editing this record.');
 		if (!empty($pid)) {
-			echo "<br />", $pgv_lang["privacy_not_granted"], " pid $pid.";
+			echo "<br />", i18n::translate('You have no access to'), " pid $pid.";
 		}
 		if (!empty($famid)) {
-			echo "<br />", $pgv_lang["privacy_not_granted"], " famid $famid.";
+			echo "<br />", i18n::translate('You have no access to'), " famid $famid.";
 		}
 	}
 	if (empty($gedrec)) {
-		echo "<br /><span class=\"error\">", $pgv_lang["record_not_found"], "</span>";
+		echo "<br /><span class=\"error\">", i18n::translate('The requested GEDCOM record could not be found.  This could be caused by a link to an invalid person or by a corrupt GEDCOM file.'), "</span>";
 	}
-	echo "<br /><br /><div class=\"center\"><a href=\"javascript: ", $pgv_lang["close_window"], "\" onclick=\"window.close();\">", $pgv_lang["close_window"], "</a></div>\n";
+	echo "<br /><br /><div class=\"center\"><a href=\"javascript: ", i18n::translate('Close Window'), "\" onclick=\"window.close();\">", i18n::translate('Close Window'), "</a></div>\n";
 	print_simple_footer();
 	exit;
 }
@@ -337,31 +340,27 @@ elseif ($type=="FAM") {
 
 if (strstr($action, "addchild")) {
 	if (empty($famid)) {
-		print_help_link("edit_add_unlinked_person", "qm", "add_unlinked_person");
-		echo "<b>", $pgv_lang["add_unlinked_person"], "</b>\n";
+		echo "<b>", i18n::translate('Add an unlinked person'), "</b>", help_link('edit_add_unlinked_person');
 	}
 	else {
-		print_help_link("edit_add_child", "qm", "add_child");
-		echo "<b>", $pgv_lang["add_child"], "</b>\n";
+		echo "<b>", i18n::translate('Add child'), "</b>", help_link('edit_add_child');
 	}
 }
 else if (strstr($action, "addspouse")) {
-	print_help_link("edit_add_spouse", "qm", "add_".strtolower($famtag));
 	echo "<b>", $pgv_lang["add_".strtolower($famtag)], "</b>\n";
+	echo help_link('edit_add_spouse');
 }
 else if (strstr($action, "addnewparent")) {
-	print_help_link("edit_add_parent", "qm", "add");
 	if ($famtag=="WIFE") {
-		echo "<b>", $pgv_lang["add_mother"], "</b>\n";
+		echo "<b>", i18n::translate('Add a new mother'), "</b>\n";
 	} else {
-		echo "<b>", $pgv_lang["add_father"], "</b>\n";
+		echo "<b>", i18n::translate('Add a new father'), "</b>\n";
 	}
+	echo help_link('edit_add_parent');
 }
 else if (strstr($action, "addopfchild")) {
-	print_help_link("edit_add_child", "qm", "add_opf_child");
-	echo "<b>", $pgv_lang["add_opf_child"], "</b>";
-}
-else {
+	echo "<b>", i18n::translate('Add a child to create a one-parent family'), '</b>', help_link('edit_add_child');
+} else {
 	echo "<b>", i18n::translate($type), "</b>";
 }
 //------------------------------------------------------------------------------
@@ -373,7 +372,7 @@ case 'delete':
 	if (!empty($linenum)) {
 		if ($linenum===0) {
 			if (delete_gedrec($pid)) {
-				echo $pgv_lang["gedrec_deleted"];
+				echo i18n::translate('GEDCOM record successfully deleted.');
 			}
 		}
 		else {
@@ -390,7 +389,7 @@ case 'delete':
 			}
 			$success = (replace_gedrec($pid, $newged, $update_CHAN));
 			if ($success) {
-				echo "<br /><br />", $pgv_lang["gedrec_deleted"];
+				echo "<br /><br />", i18n::translate('GEDCOM record successfully deleted.');
 			}
 		}
 	}
@@ -399,44 +398,42 @@ case 'delete':
 //-- echo a form to edit the raw gedcom record in a large textarea
 case 'editraw':
 	if (!checkFactEdit($gedrec)) {
-		echo "<br />", $pgv_lang["privacy_prevented_editing"];
+		echo "<br />", i18n::translate('Privacy settings prevent you from editing this record.');
 		if (!empty($pid)) {
-			echo "<br />", $pgv_lang["privacy_not_granted"], " pid $pid.";
+			echo "<br />", i18n::translate('You have no access to'), " pid $pid.";
 		}
 		if (!empty($famid)) {
-			echo "<br />", $pgv_lang["privacy_not_granted"], " famid $famid.";
+			echo "<br />", i18n::translate('You have no access to'), " famid $famid.";
 		}
 		print_simple_footer();
 		exit;
 	}
 	else {
-		echo "<br /><b>", $pgv_lang["edit_raw"], "</b>";
-		print_help_link("edit_edit_raw", "qm", "edit_raw");
+		echo "<br /><b>", i18n::translate('Edit raw GEDCOM record'), '</b>', help_link('edit_edit_raw');
 		echo "<form method=\"post\" action=\"edit_interface.php\">\n";
 		echo "<input type=\"hidden\" name=\"action\" value=\"updateraw\" />\n";
 		echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
-		echo "<input id=\"savebutton2\" type=\"submit\" value=\"", $pgv_lang["save"], "\" /><br />\n";
+		echo "<input id=\"savebutton2\" type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />\n";
 		print_specialchar_link("newgedrec", true);
 		echo "<br />\n";
 		echo "<textarea name=\"newgedrec\" id=\"newgedrec\" rows=\"20\" cols=\"80\" dir=\"ltr\">", $gedrec, "</textarea>\n<br />";
 		if (PGV_USER_IS_ADMIN) {
 			echo "<table class=\"facts_table\">\n";
 			echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-			print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-			echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+			echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 			if ($NO_UPDATE_CHAN) {
 				echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 			} else {
 				echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 			}
-			echo $pgv_lang["no_update_CHAN"], "<br />\n";
+			echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 			$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 			echo format_fact_date($event, false, true);
 			echo "</td></tr>\n";
 			echo "</table>";
 		}
 
-		echo "<input id=\"savebutton\" type=\"submit\" value=\"", $pgv_lang["save"], "\" /><br />";
+		echo "<input id=\"savebutton\" type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />";
 		echo "</form>";
 		echo PGV_JS_START;
 		echo "textbox = document.getElementById('newgedrec');";
@@ -456,20 +453,19 @@ case 'edit':
 	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	echo "<input type=\"hidden\" id=\"pids_array_edit\" name=\"pids_array_edit\" value=\"no_array\" />\n";
-	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["save"], "\" /><br />\n";
+	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />\n";
 
 	echo "<table class=\"facts_table\">";
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
 			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		}
-		echo $pgv_lang["no_update_CHAN"], "<br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 		echo format_fact_date($event, false, true);
 		echo "</td></tr>\n";
@@ -492,7 +488,7 @@ case 'edit':
 		}
 	}
 
-	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["save"], "\" /><br />\n";
+	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />\n";
 	echo "</form>\n";
 	break;
 //------------------------------------------------------------------------------
@@ -507,21 +503,20 @@ case 'add':
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	echo "<input type=\"hidden\" id=\"pids_array_add\" name=\"pids_array_add\" value=\"no_array\" />\n";
 
-	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["add"], "\" /><br />\n";
+	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Add'), "\" /><br />\n";
 	echo "<table class=\"facts_table\">";
 
 	create_add_form($fact);
 
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
 			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		}
-		echo $pgv_lang["no_update_CHAN"], "<br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 		echo format_fact_date($event, false, true);
 		echo "</td></tr>\n";
@@ -545,7 +540,7 @@ case 'add':
 	//-- RESN missing in new structure, RESN can be added to all level 1 tags
 	if (!in_array("RESN", $tags)) print_add_layer("RESN");
 
-	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["add"], "\" /><br />\n";
+	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Add'), "\" /><br />\n";
 	echo "</form>\n";
 // }
 	break;
@@ -572,7 +567,7 @@ case 'addfamlink':
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	echo "<input type=\"hidden\" name=\"famtag\" value=\"$famtag\" />\n";
 	echo "<table class=\"facts_table\">";
-	echo "<tr><td class=\"facts_label\">", $pgv_lang["family"], "</td>";
+	echo "<tr><td class=\"facts_label\">", i18n::translate('Family'), "</td>";
 	echo "<td class=\"facts_value\"><input type=\"text\" id=\"famid\" name=\"famid\" size=\"8\" /> ";
 	print_findfamily_link("famid");
 	echo "\n</td></tr>";
@@ -581,27 +576,26 @@ case 'addfamlink':
 		echo "<td class=\"facts_value\"><select name=\"pedigree\">";
 		echo "<option value=\"\"></option>";
 		echo "<option value=\"birth\" >", i18n::translate('BIRT'), "</option>";
-		echo "<option value=\"adopted\" >", $pgv_lang["adopted"], "</option>";
-		echo "<option value=\"foster\" >", $pgv_lang["foster"], "</option>";
-		echo "<option value=\"sealing\" >", $pgv_lang["sealing"], "</option>";
+		echo "<option value=\"adopted\" >", i18n::translate('Adopted'), "</option>";
+		echo "<option value=\"foster\" >", i18n::translate('Foster'), "</option>";
+		echo "<option value=\"sealing\" >", i18n::translate('Sealing'), "</option>";
 		echo "</select></td></tr>";
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
 			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		}
-		echo $pgv_lang["no_update_CHAN"], "<br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 		echo format_fact_date($event, false, true);
 		echo "</td></tr>\n";
 	}
 	echo "</table>\n";
-	echo "<input type=\"submit\" value=\"", $pgv_lang["set_link"], "\" /><br />\n";
+	echo "<input type=\"submit\" value=\"", i18n::translate('Set link'), "\" /><br />\n";
 	echo "</form>\n";
 	break;
 //------------------------------------------------------------------------------
@@ -615,9 +609,9 @@ case 'linkspouse':
 	echo "<table class=\"facts_table\">";
 	echo "<tr><td class=\"facts_label\">";
 	if ($famtag=="WIFE") {
-		echo $pgv_lang["wife"];
+		echo i18n::translate('Wife');
 	} else {
-		echo $pgv_lang["husband"];
+		echo i18n::translate('Husband');
 	}
 	echo "</td>";
 	echo "<td class=\"facts_value\"><input id=\"spouseid\" type=\"text\" name=\"spid\" size=\"8\" /> ";
@@ -628,14 +622,13 @@ case 'linkspouse':
 	add_simple_tag("0 PLAC", "MARR");
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
 			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		}
-		echo $pgv_lang["no_update_CHAN"], "<br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 		echo format_fact_date($event, false, true);
 		echo "</td></tr>\n";
@@ -649,7 +642,7 @@ case 'linkspouse':
 	print_add_layer("SHARED_NOTE");
 	print_add_layer("OBJE");
 	print_add_layer("RESN");
-	echo "<input type=\"submit\" value=\"", $pgv_lang["set_link"], "\" /><br />\n";
+	echo "<input type=\"submit\" value=\"", i18n::translate('Set link'), "\" /><br />\n";
 	echo "</form>\n";
 	break;
 //------------------------------------------------------------------------------
@@ -748,7 +741,7 @@ case 'addnewsource':
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].i18n::translate('TITL'); ?>');
+				alert('<?php echo i18n::translate('You must provide a ').i18n::translate('TITL'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -757,61 +750,60 @@ case 'addnewsource':
 	<?php
 	echo PGV_JS_END;
 	?>
-	<b><?php echo $pgv_lang['create_source']; $tabkey = 1; ?></b>
+	<b><?php echo i18n::translate('Create a new source'); $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addsourceaction" />
 		<input type="hidden" name="pid" value="newsour" />
 		<table class="facts_table">
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("ABBR", "qm", "ABBR"); echo i18n::translate('ABBR'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('ABBR'), help_link('ABBR'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ABBR" id="ABBR" value="" size="40" maxlength="255" /> <?php print_specialchar_link("ABBR", false); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("TITL", "qm", "TITL"); echo i18n::translate('TITL'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('TITL'), help_link('TITL'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="TITL" id="TITL" value="" size="60" /> <?php print_specialchar_link("TITL", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("_HEB", "qm", "_HEB"); echo i18n::translate('_HEB'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('_HEB'), help_link('_HEB'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="_HEB" id="_HEB" value="" size="60" /> <?php print_specialchar_link("_HEB", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("ROMN", "qm", "ROMN"); echo i18n::translate('ROMN'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('ROMN'), help_link('ROMN'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ROMN" id="ROMN" value="" size="60" /> <?php print_specialchar_link("ROMN", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("AUTH", "qm", "AUTH"); echo i18n::translate('AUTH'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('AUTH'), help_link('AUTH'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="AUTH" id="AUTH" value="" size="40" maxlength="255" /> <?php print_specialchar_link("AUTH", false); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("PUBL", "qm", "PUBL"); echo i18n::translate('PUBL'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('PUBL'), help_link('PUBL'); ?></td>
 			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="PUBL" id="PUBL" rows="5" cols="60"></textarea><br /><?php print_specialchar_link("PUBL", true); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("REPO", "qm", "edit_repo"); echo i18n::translate('REPO'); ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); print_addnewrepository_link("REPO"); ?></td></tr>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('REPO'), help_link('REPO'); ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); echo help_link('REPO'); print_addnewrepository_link("REPO"); ?></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("CALN", "qm", "CALN"); echo i18n::translate('CALN'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('CALN'), help_link('CALN'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
 		<?php
 			if (PGV_USER_IS_ADMIN) {
 				echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-				print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-				echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+				echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">";
 				if ($NO_UPDATE_CHAN) {
 					echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 				} else {
 					echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 				}
-				echo $pgv_lang["no_update_CHAN"], "<br />\n";
+				echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 				$event = new Event(get_sub_record(1, "1 CHAN", ""));
 				echo format_fact_date($event, false, true);
 				echo "</td></tr>\n";
 			}
 		?>
 		</table>
-			<?php print_help_link("edit_SOUR_EVEN", "qm", "source_events"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" />
-			<?php echo $pgv_lang["source_events"]; ?></a>
+			<a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" />
+			<?php echo i18n::translate('Associate events with this source'); ?></a><?php echo help_link('edit_SOUR_EVEN'); ?>
 			<div id="events" style="display: none;">
 			<table class="facts_table">
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_EVEN", "qm", "source_events"); echo $pgv_lang['select_events']; ?></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('Select Events'), help_link('edit_SOUR_EVEN'); ?></td>
 				<td class="optionbox wrap"><select name="EVEN[]" multiple="multiple" size="5">
 					<?php
 					$parts = explode(',', $INDI_FACTS_ADD);
@@ -835,7 +827,7 @@ case 'addnewsource':
 			</table>
 			</div>
 		<br /><br />
-		<input type="submit" value="<?php echo $pgv_lang["create_source"]; ?>" />
+		<input type="submit" value="<?php echo i18n::translate('Create a new source'); ?>" />
 	</form>
 	<?php
 	break;
@@ -888,8 +880,8 @@ case 'addsourceaction':
 	$xref = append_gedrec($newgedrec, $update_CHAN);
 	$link = "source.php?sid=$xref&show_changes=yes";
 	if ($xref) {
-		echo "<br /><br />\n", $pgv_lang["new_source_created"], "<br /><br />";
-		echo "<a href=\"javascript://SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">", $pgv_lang["paste_id_into_field"], " <b>$xref</b></a>\n";
+		echo "<br /><br />\n", i18n::translate('New source created successfully.'), "<br /><br />";
+		echo "<a href=\"javascript://SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">", i18n::translate('Paste the following ID into your editing fields to reference the newly created record '), " <b>$xref</b></a>\n";
 	}
 	break;
 //------------------------------------------------------------------------------
@@ -899,7 +891,7 @@ case 'addnewnote':
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].i18n::translate('TITL'); ?>');
+				alert('<?php echo i18n::translate('You must provide a ').i18n::translate('TITL'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -908,7 +900,7 @@ case 'addnewnote':
 	<?php
 	echo PGV_JS_END;
 	?>
-	<b><?php echo $pgv_lang['create_shared_note']; $tabkey = 1; ?></b>
+	<b><?php echo i18n::translate('Create a new Shared Note'); $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addnoteaction" />
 		<input type="hidden" name="noteid" value="newnote" />
@@ -917,8 +909,7 @@ case 'addnewnote':
 			echo "<table class=\"facts_table\">";
 				echo "<tr>";
 					echo "<td class=\"descriptionbox\" ", $TEXT_DIRECTION, " wrap=\"nowrap\">";
-						print_help_link("SHARED_NOTE", "qm", "shared_note");
-					echo $pgv_lang["shared_note"];
+					echo i18n::translate('Shared Note'), help_link('SHARED_NOTE');
 					echo "</td>";
 					echo "<td class=\"optionbox wrap\" ><textarea name=\"NOTE\" id=\"NOTE\" rows=\"15\" cols=\"87\"></textarea>";
 						print_specialchar_link("NOTE", true);
@@ -926,14 +917,13 @@ case 'addnewnote':
 				echo "</tr>";
 			if (PGV_USER_IS_ADMIN) {
 				echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-				print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-				echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+				echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 				if ($NO_UPDATE_CHAN) {
 					echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 				} else {
 					echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 				}
-				echo $pgv_lang["no_update_CHAN"], "<br />\n";
+				echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 				$event = new Event(get_sub_record(1, "1 CHAN", ""));
 				echo format_fact_date($event, false, true);
 				echo "</td></tr>\n";
@@ -941,7 +931,7 @@ case 'addnewnote':
 			$tabkey++;
 			echo "</table>";
 			echo "<br /><br />";
-			echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
+			echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
 		?>
 	</form>
 	<?php
@@ -1015,8 +1005,8 @@ case 'addnoteaction':
 	// -------------------------------------------------
 	
 	if ($xref != "none") {
-		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]." (".$xref.")<br /><br />";
-		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "<br /><br />\n".i18n::translate('New Shared Note created successfully.')." (".$xref.")<br /><br />";
+		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".i18n::translate('Paste the following ID into your editing fields to reference the newly created record ')." <b>$xref</b></a>\n";
 		echo "<br /><br /><br /><br />";
 		echo "<br /><br /><br /><br />";
 	}
@@ -1032,7 +1022,7 @@ case 'addnewnote_assisted':
 		function check_form(frm) {
 			/*
 			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].i18n::translate('TITL'); ?>');
+				alert('<?php echo i18n::translate('You must provide a ').i18n::translate('TITL'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -1044,7 +1034,7 @@ case 'addnewnote_assisted':
 	?>
 	
 	<div class="center font11" style="width:100%;">
-		<b><?php echo $pgv_lang["create_shared_note_assisted"]; $tabkey = 1; ?></b>
+		<b><?php echo i18n::translate('Create a new Shared Note using Assistant'); $tabkey = 1; ?></b>
 		<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 			<input type="hidden" name="action" value="addnoteaction_assisted" />
 			<input type="hidden" name="noteid" value="newnote" />
@@ -1071,7 +1061,7 @@ case 'addmedia_links':
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].i18n::translate('TITL'); ?>');
+				alert('<?php echo i18n::translate('You must provide a ').i18n::translate('TITL'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -1098,7 +1088,7 @@ case 'editsource':
 	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
-	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["save"], "\" /><br />\n";
+	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />\n";
 
 	echo "<table class=\"facts_table\">";
 	$gedlines = explode("\n", $gedrec); // -- find the number of lines in the record
@@ -1130,14 +1120,13 @@ case 'editsource':
 	
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
 			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		}
-		echo $pgv_lang["no_update_CHAN"], "<br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 		echo format_fact_date($event, false, true);
 		echo "</td></tr>\n";
@@ -1148,7 +1137,7 @@ case 'editsource':
 	print_add_layer("OBJE");
 	//-- RESN missing in new structure, RESN can be added to all level 1 tags
 	if ($tag && !in_array("RESN", $tags)) print_add_layer("RESN");
-	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["save"], "\" /><br />\n";
+	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />\n";
 	echo "</form>\n";
 	break;
 //------------------------------------------------------------------------------
@@ -1158,7 +1147,7 @@ case 'editnote':
 	?>
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].i18n::translate('TITL'); ?>');
+				alert('<?php echo i18n::translate('You must provide a ').i18n::translate('TITL'); ?>');
 				frm.TITL.focus();
 				return false;
 			}
@@ -1167,7 +1156,7 @@ case 'editnote':
 	<?php
 	echo PGV_JS_END;
 	?>
-	<b><?php echo $pgv_lang['edit_shared_note']; $tabkey = 1; echo "&nbsp;&nbsp;(" . $pid . ")";?></b><br /><br />
+	<b><?php echo i18n::translate('Edit Shared Note'); $tabkey = 1; echo "&nbsp;&nbsp;(" . $pid . ")";?></b><br /><br />
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="update" />
 		<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
@@ -1186,7 +1175,7 @@ case 'editnote':
 		?>
 		<table class="facts_table">
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("SHARED_NOTE", "qm", "shared_note"); echo $pgv_lang["shared_note"]; ?></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('Shared Note'), help_link('SHARED_NOTE'); ?></td>
 				<td class="optionbox wrap">
 					<textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="90"><?php
 						echo htmlspecialchars($note_content);
@@ -1196,21 +1185,20 @@ case 'editnote':
 			<?php $tabkey++; 
 			if (PGV_USER_IS_ADMIN) {
 			echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-			print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-			echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+			echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 			if ($NO_UPDATE_CHAN) {
 				echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 			} else {
 				echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 			}
-			echo $pgv_lang["no_update_CHAN"], "<br />\n";
+			echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 			$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 			echo format_fact_date($event, false, true);
 			echo "</td></tr>\n";
 			} ?>
 		</table>
 		<br /><br />
-		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" />
+		<input type="submit" value="<?php echo i18n::translate('Save'); ?>" />
 	</form>
 	<?php
 	break;
@@ -1221,7 +1209,7 @@ case 'addnewrepository':
 	?>
 		function check_form(frm) {
 			if (frm.NAME.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"], " ", i18n::translate('NAME'); ?>');
+				alert('<?php echo i18n::translate('You must provide a '), " ", i18n::translate('NAME'); ?>');
 				frm.NAME.focus();
 				return false;
 			}
@@ -1230,58 +1218,57 @@ case 'addnewrepository':
 	<?php
 	echo PGV_JS_END;
 	?>
-	<b><?php echo $pgv_lang["create_repository"];
+	<b><?php echo i18n::translate('Create Repository');
 	$tabkey = 1;
 	?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addrepoaction" />
 		<input type="hidden" name="pid" value="newrepo" />
 		<table class="facts_table">
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_NAME", "qm", "REPO"); echo i18n::translate('NAME'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('NAME'), help_link('edit_REPO_NAME'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="NAME" id="NAME" value="" size="40" maxlength="255" /> <?php print_specialchar_link("NAME", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("_HEB", "qm", "_HEB"); echo i18n::translate('_HEB'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('_HEB'), help_link('_HEB'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="_HEB" id="_HEB" value="" size="40" maxlength="255" /> <?php print_specialchar_link("_HEB", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
 			<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("ROMN", "qm", "ROMN"); echo i18n::translate('ROMN'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('ROMN'), help_link('ROMN'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ROMN" id="ROMN" value="" size="40" maxlength="255" /> <?php print_specialchar_link("ROMN", false); ?></td></tr>
 			<?php $tabkey++; ?>
 			<?php } ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("ADDR", "qm", "ADDR"); echo i18n::translate('ADDR'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('ADDR'), help_link('ADDR'); ?></td>
 			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="ADDR" id="ADDR" rows="5" cols="60"></textarea><?php print_specialchar_link("ADDR", true); ?> </td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("PHON", "qm", "PHON"); echo i18n::translate('PHON'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('PHON'), help_link('PHON'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="PHON" id="PHON" value="" size="40" maxlength="255" /> </td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("FAX", "qm", "FAX"); echo i18n::translate('FAX'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('FAX'), help_link('FAX'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="FAX" id="FAX" value="" size="40" /></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("EMAIL", "qm", "emailadress"); echo i18n::translate('EMAIL'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('EMAIL'), help_link('EMAIL'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="EMAIL" id="EMAIL" value="" size="40" maxlength="255" /></td></tr>
 			<?php $tabkey++; ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("URL", "qm", "WWW"); echo i18n::translate('WWW'); ?></td>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php echo i18n::translate('WWW'), help_link('URL'); ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="WWW" id="WWW" value="" size="40" maxlength="255" /> </td></tr>
 		<?php
 			if (PGV_USER_IS_ADMIN) {
 				echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-				print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-				echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+				echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 				if ($NO_UPDATE_CHAN) {
 					echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 				} else {
 					echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 				}
-				echo $pgv_lang["no_update_CHAN"], "<br />\n";
+				echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 				$event = new Event(get_sub_record(1, "1 CHAN", ""));
 				echo format_fact_date($event, false, true);
 				echo "</td></tr>\n";
 			}
 		?>
 		</table>
-		<input type="submit" value="<?php echo $pgv_lang["create_repository"]; ?>" />
+		<input type="submit" value="<?php echo i18n::translate('Create Repository'); ?>" />
 	</form>
 	<?php
 	break;
@@ -1326,8 +1313,8 @@ case 'addrepoaction':
 	$xref = append_gedrec($newgedrec, $update_CHAN);
 	$link = "repo.php?rid=$xref&show_changes=yes";
 	if ($xref) {
-		echo "<br /><br />\n", $pgv_lang["new_repo_created"], "<br /><br />";
-		echo "<a href=\"javascript://REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">", $pgv_lang["paste_rid_into_field"], " <b>$xref</b></a>\n";
+		echo "<br /><br />\n", i18n::translate('New Repository created'), "<br /><br />";
+		echo "<a href=\"javascript://REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">", i18n::translate('Paste the following Repository ID into your editing fields to reference this Repository '), " <b>$xref</b></a>\n";
 	}
 	break;
 //------------------------------------------------------------------------------
@@ -1340,7 +1327,7 @@ case 'updateraw':
 	}
 	$newgedrec = trim($newgedrec);
 	$success = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec, $update_CHAN)));
-	if ($success) echo "<br /><br />", $pgv_lang["update_successful"];
+	if ($success) echo "<br /><br />", i18n::translate('Update successful');
 	break;
 	
 //----------------------------------------------------------------------------------
@@ -1399,7 +1386,7 @@ case 'update':
 			foreach ($_FILES as $upload) {
 				if (!empty($upload['tmp_name'])) {
 					if (!move_uploaded_file($upload['tmp_name'], $MEDIA_DIRECTORY.$folder.basename($upload['name']))) {
-						$error .= "<br />".$pgv_lang["upload_error"]."<br />".file_upload_error_text($upload['error']);
+						$error .= "<br />".i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($upload['error']);
 						$uploaded_files[] = "";
 					}
 					else {
@@ -1556,7 +1543,7 @@ case 'update':
 		
 		$success  = (replace_gedrec($pid, $newged, $update_CHAN));
 		if ($success) {
-			echo "<br /><br />", $pgv_lang["update_successful"], " - ", $pid;
+			echo "<br /><br />", i18n::translate('Update successful'), " - ", $pid;
 		}
 		
 	} // end foreach $cens_pids  -------------
@@ -1615,7 +1602,7 @@ case 'addchildaction':
 	$xref = append_gedrec($gedrec, $update_CHAN);
 	$link = "individual.php?pid=$xref&show_changes=yes";
 	if ($xref) {
-		echo "<br /><br />", $pgv_lang["update_successful"];
+		echo "<br /><br />", i18n::translate('Update successful');
 		$gedrec = "";
 		if (!empty($famid)) {
 			// Insert new child at the right place [ 1686246 ]
@@ -1678,7 +1665,7 @@ case 'addspouseaction':
 	}
 	$xref = append_gedrec($gedrec, $update_CHAN);
 	$link = "individual.php?pid=$xref&show_changes=yes";
-	if ($xref) echo "<br /><br />", $pgv_lang["update_successful"];
+	if ($xref) echo "<br /><br />", i18n::translate('Update successful');
 	else exit;
 	$spouserec = $gedrec;
 	$success = true;
@@ -1857,7 +1844,7 @@ case 'addnewparentaction':
 	}
 	$xref = append_gedrec($gedrec, $update_CHAN);
 	$link = "individual.php?pid=$xref&show_changes=yes";
-	if ($xref) echo "<br /><br />", $pgv_lang["update_successful"];
+	if ($xref) echo "<br /><br />", i18n::translate('Update successful');
 	else exit;
 	$spouserec = $gedrec;
 	$success = true;
@@ -1983,7 +1970,7 @@ case 'addopfchildaction':
 			echo "<pre>$indirec</pre>";
 		}
 		if (replace_gedrec($pid, $indirec, $update_CHAN) && append_gedrec($gedrec, $update_CHAN) && append_gedrec($famrec, $update_CHAN)) {
-			echo "<br /><br />", $pgv_lang["update_successful"];
+			echo "<br /><br />", i18n::translate('Update successful');
 			$success = true;
 		}
 	}
@@ -1995,12 +1982,12 @@ case 'deleteperson':
 		echo "<pre>$gedrec</pre>";
 	}
 	if (!checkFactEdit($gedrec)) {
-		echo "<br />", $pgv_lang["privacy_prevented_editing"];
-		if (!empty($pid)) echo "<br />", $pgv_lang["privacy_not_granted"], " pid $pid.";
-		if (!empty($famid)) echo "<br />", $pgv_lang["privacy_not_granted"], " famid $famid.";
+		echo "<br />", i18n::translate('Privacy settings prevent you from editing this record.');
+		if (!empty($pid)) echo "<br />", i18n::translate('You have no access to'), " pid $pid.";
+		if (!empty($famid)) echo "<br />", i18n::translate('You have no access to'), " famid $famid.";
 	}
 	else {
-		if (delete_person($pid, $gedrec)) echo "<br /><br />", $pgv_lang["gedrec_deleted"];
+		if (delete_person($pid, $gedrec)) echo "<br /><br />", i18n::translate('GEDCOM record successfully deleted.');
 	}
 	break;
 //------------------------------------------------------------------------------
@@ -2010,13 +1997,13 @@ case 'deletefamily':
 		echo "<pre>$gedrec</pre>";
 	}
 	if (!checkFactEdit($gedrec)) {
-		echo "<br />", $pgv_lang["privacy_prevented_editing"];
-		if (!empty($pid)) echo "<br />", $pgv_lang["privacy_not_granted"], " pid $pid.";
-		if (!empty($famid)) echo "<br />", $pgv_lang["privacy_not_granted"], " famid $famid.";
+		echo "<br />", i18n::translate('Privacy settings prevent you from editing this record.');
+		if (!empty($pid)) echo "<br />", i18n::translate('You have no access to'), " pid $pid.";
+		if (!empty($famid)) echo "<br />", i18n::translate('You have no access to'), " famid $famid.";
 	}
 	else
 	{
-		if (delete_family($famid, $gedrec)) echo "<br /><br />", $pgv_lang["gedrec_deleted"];
+		if (delete_family($famid, $gedrec)) echo "<br /><br />", i18n::translate('GEDCOM record successfully deleted.');
 	}
 	break;
 
@@ -2073,7 +2060,7 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 			$success = $success && delete_gedrec($pid);
 		}
 		if ($success) {
-			echo "<br /><br />".$pgv_lang["gedrec_deleted"];
+			echo "<br /><br />".i18n::translate('GEDCOM record successfully deleted.');
 		}
 	}
 	break;
@@ -2123,7 +2110,7 @@ case 'copy':
 		}
 		if (count($_SESSION["clipboard"])>9) array_pop($_SESSION["clipboard"]);
 		$_SESSION["clipboard"][] = array("type"=>$type, "factrec"=>$factrec, "fact"=>$fact);
-		echo "<b>", $pgv_lang["record_copied"], "</b>\n";
+		echo "<b>", i18n::translate('Record copied to clipboard'), "</b>\n";
 		$success = true;
 	}
 	break;
@@ -2135,7 +2122,7 @@ case 'paste':
 		echo "<pre>$gedrec</pre>";
 	}
 	$success = replace_gedrec($pid, $gedrec, $update_CHAN);
-	if ($success) echo "<br /><br />", $pgv_lang["update_successful"];
+	if ($success) echo "<br /><br />", i18n::translate('Update successful');
 	break;
 
 
@@ -2159,7 +2146,7 @@ case 'reset_media_update': // Reset sort using popup
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
 	if ($success) { 
-		echo "<br />", $pgv_lang["update_successful"], "<br /><br />";
+		echo "<br />", i18n::translate('Update successful'), "<br /><br />";
 	}
 	break;
 
@@ -2183,7 +2170,7 @@ case 'reorder_media_update': // Update sort using popup
 		echo "<pre>$newgedrec</pre>";
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
-	if ($success) echo "<br />", $pgv_lang["update_successful"], "<br /><br />";
+	if ($success) echo "<br />", i18n::translate('Update successful'), "<br /><br />";
 		// $mediaordsuccess='yes';
 		if ($_COOKIE['lasttabs'][strlen($_COOKIE['lasttabs'])-1]==8) {
 			$link = "individual.php?pid=$pid&tab=7&show_changes=yes";
@@ -2207,7 +2194,7 @@ case 'al_reset_media_update': // Reset sort using Album Page
 		}
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
-	if ($success) echo "<br />", $pgv_lang["update_successful"], "<br /><br />";
+	if ($success) echo "<br />", i18n::translate('Update successful'), "<br /><br />";
 		if (!file_exists(PGV_ROOT.'modules/googlemap/defaultconfig.php')) {
 			$tabno = "7";
 		}else{
@@ -2267,8 +2254,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 case 'reorder_children':
 	require_once PGV_ROOT.'js/prototype.js.htm';
 	require_once PGV_ROOT.'js/scriptaculous.js.htm';
-	echo "<br /><b>", $pgv_lang["reorder_children"], "</b>";
-	print_help_link("reorder_children", "qm", "reorder_children");
+	echo "<br /><b>", i18n::translate('Re-order children'), "</b>", help_link('reorder_children');
 	?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="reorder_update" />
@@ -2318,9 +2304,9 @@ case 'reorder_children':
 				}
 			);
 		<?php echo PGV_JS_END; ?>
-		<button type="submit"><?php echo $pgv_lang["save"]; ?></button>
-		<button type="submit" onclick="document.reorder_form.action.value='reorder_children'; document.reorder_form.submit();"><?php echo $pgv_lang["sort_by_birth"]; ?></button>
-		<button type="submit" onclick="window.close();"><?php echo $pgv_lang["cancel"]; ?></button>
+		<button type="submit"><?php echo i18n::translate('Save'); ?></button>
+		<button type="submit" onclick="document.reorder_form.action.value='reorder_children'; document.reorder_form.submit();"><?php echo i18n::translate('Sort by birth dates'); ?></button>
+		<button type="submit" onclick="window.close();"><?php echo i18n::translate('Cancel'); ?></button>
 	</form>
 	<?php
 	break;
@@ -2333,21 +2319,21 @@ case 'changefamily':
 	$children = $family->getChildren();
 	if (count($children)>0) {
 		if (!is_null($father)) {
-			if ($father->getSex()=="F") $father->setLabel($pgv_lang["mother"]);
-			else $father->setLabel($pgv_lang["father"]);
+			if ($father->getSex()=="F") $father->setLabel(i18n::translate('Mother'));
+			else $father->setLabel(i18n::translate('Father'));
 		}
 		if (!is_null($mother)) {
-			if ($mother->getSex()=="M") $mother->setLabel($pgv_lang["father"]);
-			else $mother->setLabel($pgv_lang["mother"]);
+			if ($mother->getSex()=="M") $mother->setLabel(i18n::translate('Father'));
+			else $mother->setLabel(i18n::translate('Mother'));
 		}
 		for ($i=0; $i<count($children); $i++) {
 			if (!is_null($children[$i])) {
 				if ($children[$i]->getSex()=="M") {
-					$children[$i]->setLabel($pgv_lang["son"]);
+					$children[$i]->setLabel(i18n::translate('Son'));
 				} elseif ($children[$i]->getSex()=="F") {
-					$children[$i]->setLabel($pgv_lang["daughter"]);
+					$children[$i]->setLabel(i18n::translate('Daughter'));
 				} else {
-					$children[$i]->setLabel($pgv_lang["child"]);
+					$children[$i]->setLabel(i18n::translate('Child'));
 				}
 			}
 		}
@@ -2355,20 +2341,20 @@ case 'changefamily':
 	else {
 		if (!is_null($father)) {
 			if ($father->getSex()=="F") {
-				$father->setLabel($pgv_lang["wife"]);
+				$father->setLabel(i18n::translate('Wife'));
 			} elseif ($father->getSex()=="M") {
-				$father->setLabel($pgv_lang["husband"]);
+				$father->setLabel(i18n::translate('Husband'));
 			} else {
-				$father->setLabel($pgv_lang["spouse"]);
+				$father->setLabel(i18n::translate('Spouse'));
 			}
 		}
 		if (!is_null($mother)) {
 			if ($mother->getSex()=="F") {
-				$mother->setLabel($pgv_lang["wife"]);
+				$mother->setLabel(i18n::translate('Wife'));
 			} elseif ($mother->getSex()=="M") {
-				$mother->setLabel($pgv_lang["husband"]);
+				$mother->setLabel(i18n::translate('Husband'));
 			} else {
-				$father->setLabel($pgv_lang["spouse"]);
+				$father->setLabel(i18n::translate('Spouse'));
 			}
 		}
 	}
@@ -2386,12 +2372,12 @@ case 'changefamily':
 		}
 	<?php echo PGV_JS_END; ?>
 	<br /><br />
-	<?php echo $pgv_lang["change_family_instr"]; ?>
+	<?php echo i18n::translate('Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes.'); ?>
 	<form name="changefamform" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="changefamily_update" />
 		<input type="hidden" name="famid" value="<?php echo $famid; ?>" />
 		<table class="width50 <?php echo $TEXT_DIRECTION; ?>">
-			<tr><td colspan="3" class="topbottombar"><?php echo $pgv_lang["change_family_members"]; ?></td></tr>
+			<tr><td colspan="3" class="topbottombar"><?php echo i18n::translate('Change Family Members'); ?></td></tr>
 			<tr>
 			<?php
 			if (!is_null($father)) {
@@ -2402,14 +2388,14 @@ case 'changefamily':
 			}
 			else {
 			?>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>"><b><?php echo $pgv_lang["spouse"]; ?></b><input type="hidden" name="HUSB" value="" /></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>"><b><?php echo i18n::translate('Spouse'); ?></b><input type="hidden" name="HUSB" value="" /></td>
 				<td id="HUSBName" class="optionbox wrap <?php echo $TEXT_DIRECTION; ?>"></td>
 			<?php
 			}
 			?>
 				<td class="optionbox wrap <?php echo $TEXT_DIRECTION; ?>">
-					<a href="javascript:;" id="husbrem" style="display: <?php echo is_null($father) ? 'none':'block'; ?>;" onclick="document.changefamform.HUSB.value=''; document.getElementById('HUSBName').innerHTML=''; this.style.display='none'; return false;"><?php echo $pgv_lang["remove"]; ?></a>
-					<a href="javascript:;" onclick="nameElement = document.getElementById('HUSBName'); remElement = document.getElementById('husbrem'); return findIndi(document.changefamform.HUSB);"><?php echo $pgv_lang["change"]; ?></a><br />
+					<a href="javascript:;" id="husbrem" style="display: <?php echo is_null($father) ? 'none':'block'; ?>;" onclick="document.changefamform.HUSB.value=''; document.getElementById('HUSBName').innerHTML=''; this.style.display='none'; return false;"><?php echo i18n::translate('Remove'); ?></a>
+					<a href="javascript:;" onclick="nameElement = document.getElementById('HUSBName'); remElement = document.getElementById('husbrem'); return findIndi(document.changefamform.HUSB);"><?php echo i18n::translate('Change'); ?></a><br />
 				</td>
 			</tr>
 			<tr>
@@ -2422,14 +2408,14 @@ case 'changefamily':
 			}
 			else {
 			?>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>"><b><?php echo $pgv_lang["spouse"]; ?></b><input type="hidden" name="WIFE" value="" /></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>"><b><?php echo i18n::translate('Spouse'); ?></b><input type="hidden" name="WIFE" value="" /></td>
 				<td id="WIFEName" class="optionbox wrap <?php echo $TEXT_DIRECTION; ?>"></td>
 			<?php
 			}
 			?>
 				<td class="optionbox wrap <?php echo $TEXT_DIRECTION; ?>">
-					<a href="javascript:;" id="wiferem" style="display: <?php echo is_null($mother) ? 'none':'block'; ?>;" onclick="document.changefamform.WIFE.value=''; document.getElementById('WIFEName').innerHTML=''; this.style.display='none'; return false;"><?php echo $pgv_lang["remove"]; ?></a>
-					<a href="javascript:;" onclick="nameElement = document.getElementById('WIFEName'); remElement = document.getElementById('wiferem'); return findIndi(document.changefamform.WIFE);"><?php echo $pgv_lang["change"]; ?></a><br />
+					<a href="javascript:;" id="wiferem" style="display: <?php echo is_null($mother) ? 'none':'block'; ?>;" onclick="document.changefamform.WIFE.value=''; document.getElementById('WIFEName').innerHTML=''; this.style.display='none'; return false;"><?php echo i18n::translate('Remove'); ?></a>
+					<a href="javascript:;" onclick="nameElement = document.getElementById('WIFEName'); remElement = document.getElementById('wiferem'); return findIndi(document.changefamform.WIFE);"><?php echo i18n::translate('Change'); ?></a><br />
 				</td>
 			</tr>
 			<?php
@@ -2441,8 +2427,8 @@ case 'changefamily':
 				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>"><b><?php echo $child->getLabel(); ?></b><input type="hidden" name="CHIL<?php echo $i; ?>" value="<?php echo $child->getXref(); ?>" /></td>
 				<td id="CHILName<?php echo $i; ?>" class="optionbox wrap"><?php echo PrintReady($child->getFullName()); ?></td>
 				<td class="optionbox wrap <?php echo $TEXT_DIRECTION; ?>">
-					<a href="javascript:;" id="childrem<?php echo $i; ?>" style="display: block;" onclick="document.changefamform.CHIL<?php echo $i; ?>.value=''; document.getElementById('CHILName<?php echo $i; ?>').innerHTML=''; this.style.display='none'; return false;"><?php echo $pgv_lang["remove"]; ?></a>
-					<a href="javascript:;" onclick="nameElement = document.getElementById('CHILName<?php echo $i; ?>'); remElement = document.getElementById('childrem<?php echo $i; ?>'); return findIndi(document.changefamform.CHIL<?php echo $i; ?>);"><?php echo $pgv_lang["change"]; ?></a><br />
+					<a href="javascript:;" id="childrem<?php echo $i; ?>" style="display: block;" onclick="document.changefamform.CHIL<?php echo $i; ?>.value=''; document.getElementById('CHILName<?php echo $i; ?>').innerHTML=''; this.style.display='none'; return false;"><?php echo i18n::translate('Remove'); ?></a>
+					<a href="javascript:;" onclick="nameElement = document.getElementById('CHILName<?php echo $i; ?>'); remElement = document.getElementById('childrem<?php echo $i; ?>'); return findIndi(document.changefamform.CHIL<?php echo $i; ?>);"><?php echo i18n::translate('Change'); ?></a><br />
 				</td>
 			</tr>
 				<?php
@@ -2451,17 +2437,17 @@ case 'changefamily':
 			}
 				?>
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>"><b><?php echo $pgv_lang["add_child"]; ?></b><input type="hidden" name="CHIL<?php echo $i; ?>" value="" /></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>"><b><?php echo i18n::translate('Add child'); ?></b><input type="hidden" name="CHIL<?php echo $i; ?>" value="" /></td>
 				<td id="CHILName<?php echo $i; ?>" class="optionbox wrap"></td>
 				<td class="optionbox wrap <?php echo $TEXT_DIRECTION; ?>">
-					<a href="javascript:;" id="childrem<?php echo $i; ?>" style="display: none;" onclick="document.changefamform.CHIL<?php echo $i; ?>.value=''; document.getElementById('CHILName<?php echo $i; ?>').innerHTML=''; this.style.display='none'; return false;"><?php echo $pgv_lang["remove"]; ?></a>
-					<a href="javascript:;" onclick="nameElement = document.getElementById('CHILName<?php echo $i; ?>'); remElement = document.getElementById('childrem<?php echo $i; ?>'); return findIndi(document.changefamform.CHIL<?php echo $i; ?>);"><?php echo $pgv_lang["change"]; ?></a><br />
+					<a href="javascript:;" id="childrem<?php echo $i; ?>" style="display: none;" onclick="document.changefamform.CHIL<?php echo $i; ?>.value=''; document.getElementById('CHILName<?php echo $i; ?>').innerHTML=''; this.style.display='none'; return false;"><?php echo i18n::translate('Remove'); ?></a>
+					<a href="javascript:;" onclick="nameElement = document.getElementById('CHILName<?php echo $i; ?>'); remElement = document.getElementById('childrem<?php echo $i; ?>'); return findIndi(document.changefamform.CHIL<?php echo $i; ?>);"><?php echo i18n::translate('Change'); ?></a><br />
 				</td>
 			</tr>
 		</table>
-		<!-- <a href="javascript: <?php echo $pgv_lang["add_unlinked_person"]; ?>" onclick="addnewchild(''); return false;"><?php echo $pgv_lang["add_unlinked_person"]; ?></a><br />-->
+		<!-- <a href="javascript: <?php echo i18n::translate('Add an unlinked person'); ?>" onclick="addnewchild(''); return false;"><?php echo i18n::translate('Add an unlinked person'); ?></a><br />-->
 		<br />
-		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" /><input type="button" value="<?php echo $pgv_lang["cancel"]; ?>" onclick="window.close();" />
+		<input type="submit" value="<?php echo i18n::translate('Save'); ?>" /><input type="button" value="<?php echo i18n::translate('Cancel'); ?>" onclick="window.close();" />
 	</form>
 	<?php
 	break;
@@ -2603,7 +2589,7 @@ case 'changefamily_update':
 
 	if ($updated) {
 		$success = replace_gedrec($famid, $gedrec, $update_CHAN);
-		if ($success) echo "<br /><br />", $pgv_lang["update_successful"];
+		if ($success) echo "<br /><br />", i18n::translate('Update successful');
 	}
 	break;
 //------------------------------------------------------------------------------
@@ -2613,7 +2599,7 @@ case 'edit_family':
 	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
 	echo "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
-	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["save"], "\" /><br />\n";
+	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />\n";
 	echo "<table class=\"facts_table\">";
 
 	$gedlines = explode("\n", $gedrec); // -- find the number of lines in the record
@@ -2633,14 +2619,13 @@ case 'edit_family':
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
 			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		}
-		echo $pgv_lang["no_update_CHAN"], "<br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
 		echo format_fact_date($event, false, true);
 		echo "</td></tr>\n";
@@ -2651,7 +2636,7 @@ case 'edit_family':
 	print_add_layer("OBJE");
 	//-- RESN missing in new structure, RESN can be added to all level 1 tags
 	if (!in_array("RESN", $tags)) print_add_layer("RESN");
-	echo "<br /><input type=\"submit\" value=\"", $pgv_lang["save"], "\" /><br />\n";
+	echo "<br /><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /><br />\n";
 	echo "</form>\n";
 	break;
 //------------------------------------------------------------------------------
@@ -2677,14 +2662,13 @@ case 'reorder_update':
 		echo "<pre>$newgedrec</pre>";
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
-	if ($success) echo "<br /><br />", $pgv_lang["update_successful"];
+	if ($success) echo "<br /><br />", i18n::translate('Update successful');
 	break;
 //------------------------------------------------------------------------------
 case 'reorder_fams':
 	require_once PGV_ROOT.'js/prototype.js.htm';
 	require_once PGV_ROOT.'js/scriptaculous.js.htm';
-	echo "<br /><b>", $pgv_lang["reorder_families"], "</b>";
-	print_help_link("reorder_families", "qm", "reorder_families");
+	echo "<br /><b>", i18n::translate('Reorder Families'), "</b>", help_link('reorder_families');
 	?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="reorder_fams_update" />
@@ -2720,9 +2704,9 @@ case 'reorder_fams':
 				}
 			);
 		<?php echo PGV_JS_END; ?>
-		<button type="submit"><?php echo $pgv_lang["save"]; ?></button>
-		<button type="submit" onclick="document.reorder_form.action.value='reorder_fams'; document.reorder_form.submit();"><?php echo $pgv_lang["sort_by_marriage"]; ?></button>
-		<button type="submit" onclick="window.close();"><?php echo $pgv_lang["cancel"]; ?></button>
+		<button type="submit"><?php echo i18n::translate('Save'); ?></button>
+		<button type="submit" onclick="document.reorder_form.action.value='reorder_fams'; document.reorder_form.submit();"><?php echo i18n::translate('Sort by marriage date'); ?></button>
+		<button type="submit" onclick="window.close();"><?php echo i18n::translate('Cancel'); ?></button>
 	</form>
 	<?php
 	break;
@@ -2749,7 +2733,7 @@ case 'reorder_fams_update':
 	}
 	$success = (replace_gedrec($pid, $newgedrec, $update_CHAN));
 	if ($success) {
-		echo "<br /><br />", $pgv_lang["update_successful"];
+		echo "<br /><br />", i18n::translate('Update successful');
 	}
 	break;
 //------------------------------------------------------------------------------
@@ -2794,13 +2778,13 @@ if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG ) {
 // Decide whether to print footer or not ================================================
 if ($action == 'addmedia_links' || $action == 'addnewnote_assisted' ) {
 	// Do not print footer.
-	echo "<br /><div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">", $pgv_lang["close_window"], "</a></div>\n";
+	echo "<br /><div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">", i18n::translate('Close Window'), "</a></div>\n";
 }else if (isset($closeparent) && $closeparent=="yes" ) {
-	// echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');window.opener.close();\">", $pgv_lang["close_window"], "</a></div><br />\n";
-	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">", $pgv_lang["close_window"], "</a></div><br />\n";
+	// echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');window.opener.close();\">", i18n::translate('Close Window'), "</a></div><br />\n";
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">", i18n::translate('Close Window'), "</a></div><br />\n";
 	print_simple_footer();
 }else{
-	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">", $pgv_lang["close_window"], "</a></div><br />\n";
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">", i18n::translate('Close Window'), "</a></div><br />\n";
 	print_simple_footer();
 }
 

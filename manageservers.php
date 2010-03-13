@@ -4,7 +4,10 @@
 *
 *  Allow a user the ability to manage servers i.e. allowing, banning, deleting
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * Modifications Copyright (c) 2010 Greg Roach
@@ -23,7 +26,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Admin
 * @version $Id$
 * @author rbennett
@@ -36,13 +39,13 @@ require_once PGV_ROOT.'includes/functions/functions_edit.php';
 require_once PGV_ROOT.'includes/functions/functions_import.php';
 require_once PGV_ROOT.'includes/classes/class_serviceclient.php';
 
-print_header($pgv_lang["title_manage_servers"]);
+print_header(i18n::translate('Manage Sites'));
 //-- only allow gedcom admins here
 if (!PGV_USER_GEDCOM_ADMIN) {
-	print $pgv_lang["access_denied"];
+	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	//-- display messages as to why the editing access was denied
-	if (!PGV_USER_GEDCOM_ADMIN) print "<br />".$pgv_lang["user_cannot_edit"];
-	print "<br /><br /><div class=\"center\"><a href=\"javascript: ".$pgv_lang["close_window"]."\" onclick=\"window.close();\">".$pgv_lang["close_window"]."</a></div>\n";
+	if (!PGV_USER_GEDCOM_ADMIN) print "<br />".i18n::translate('This user name cannot edit this GEDCOM.');
+	print "<br /><br /><div class=\"center\"><a href=\"javascript: ".i18n::translate('Close Window')."\" onclick=\"window.close();\">".i18n::translate('Close Window')."</a></div>\n";
 	print_footer();
 	exit;
 }
@@ -115,10 +118,10 @@ if ($action=='addBanned' || $action=='addSearch' || $action=='deleteBanned' || $
 		}
 	} else {
 		if ($action=='addBanned') {
-			$errorBanned=$pgv_lang['error_ban_server'];
+			$errorBanned=i18n::translate('Invalid IP address.');
 		}
 		if ($action=='addSearch') {
-			$errorSearch=$pgv_lang['error_ban_server'];
+			$errorSearch=i18n::translate('Invalid IP address.');
 		}
 	}
 	$action='showForm';
@@ -160,14 +163,14 @@ if ($action=='addServer') {
 			$service = new ServiceClient($gedcom_string);
 			$sid = $service->authenticate();
 			if (empty($sid) || PEAR::isError($sid)) {
-				$errorServer = $pgv_lang["error_siteauth_failed"];
+				$errorServer = i18n::translate('Failed to authenticate to remote site');
 			} else {
 				$serverID = append_gedrec($gedcom_string);
 				accept_changes($serverID."_".$GEDCOM);
 				$remoteServers = get_server_list(); // refresh the list
 			}
 		}
-	} else $errorServer = $pgv_lang["error_url_blank"];
+	} else $errorServer = i18n::translate('Please do not leave remote site title or URL blank');
 
 	$action = 'showForm';
 }
@@ -180,13 +183,13 @@ if ($action=='deleteServer') {
 		$sid = $address;
 
 		if (count_linked_indi($sid, 'SOUR', PGV_GED_ID) || count_linked_fam($sid, 'SOUR', PGV_GED_ID)) {
-			$errorDelete = $pgv_lang["error_remove_site_linked"];
+			$errorDelete = i18n::translate('The remote server could not be removed because its Connections list is not empty.');
 		} else {
 			// No references exist:  it's OK to delete this source
 			if (delete_gedrec($sid)) {
 				accept_changes($sid."_".$GEDCOM);
 			} else {
-				$errorDelete = $pgv_lang["error_remove_site"];
+				$errorDelete = i18n::translate('The remote server could not be removed.');
 			}
 		}
 	}
@@ -203,10 +206,10 @@ function showSite(siteID) {
 	buttonShow = document.getElementById("buttonShow_"+siteID);
 	siteDetails = document.getElementById("siteDetails_"+siteID);
 	if (siteDetails.style.display=='none') {
-		buttonShow.innerHTML='<?php echo $pgv_lang["hide_details"];?>';
+		buttonShow.innerHTML='<?php echo i18n::translate('Hide Details');?>';
 		siteDetails.style.display='block';
 	} else {
-		buttonShow.innerHTML='<?php echo $pgv_lang["show_details"];?>';
+		buttonShow.innerHTML='<?php echo i18n::translate('Show Details');?>';
 		siteDetails.style.display='none';
 	}
 }
@@ -218,7 +221,7 @@ function showSite(siteID) {
 <table class="width66" align="center">
 <tr>
 	<td colspan="2" class="title" align="center">
-	<?php echo $pgv_lang["title_manage_servers"];?>
+	<?php echo i18n::translate('Manage Sites');?>
 	</td>
 </tr>
 <tr>
@@ -227,8 +230,8 @@ function showSite(siteID) {
 	<table class="width100" align="center">
 		<tr>
 		<td class="facts_label">
-			<?php print_help_link("help_manual_search_engines", "qm"); ?>
-			<b><?php echo $pgv_lang["label_manual_search_engines"];?></b>
+			<b><?php echo i18n::translate('Manually mark Search Engines by IP');?></b>
+			<?php echo help_link('help_manual_search_engines'); ?>
 		</td>
 		</tr>
 		<tr>
@@ -241,22 +244,22 @@ function showSite(siteID) {
 	foreach ($search_engines as $ip_address=>$ip_comment) {
 		echo '<tr><td>';
 		if (isset($PGV_IMAGES["remove"]["other"])) {
-			echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["remove"]["other"], '" alt="', $pgv_lang['delete'], '" name="deleteSearch" value="', $ip_address, '">';
+			echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["remove"]["other"], '" alt="', i18n::translate('Delete'), '" name="deleteSearch" value="', $ip_address, '">';
 		} else {
-			echo '<button name="deleteSearch" value="', $ip_address, '" type="submit">', $pgv_lang["remove"], '</button>';
+			echo '<button name="deleteSearch" value="', $ip_address, '" type="submit">', i18n::translate('Remove'), '</button>';
 		}
 		echo '</td><td><span dir="ltr"><input type="text" name="address', ++$index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
 		echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
 	}
 	echo '<tr><td valign="top"><input name="action" type="hidden" value="addSearch"/>';
 	if (isset($PGV_IMAGES["add"]["other"])) {
-		echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', $pgv_lang['add'], '">';
+		echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', i18n::translate('Add'), '">';
 	} else {
-		echo '<input type="submit" value="', $pgv_lang['add'], '" />';
+		echo '<input type="submit" value="', i18n::translate('Add'), '" />';
 	}
 	echo '</td><td valign="top"><span dir="ltr"><input type="text" id="txtAddIp" name="address" size="16"  value="', empty($errorSearch) ? '':$address, '" /></span></td>';
 	echo '<td><input type="text" id="txtAddComment" name="comment" size="60"  value="" />';
-	echo '<br />', $pgv_lang["enter_comment"], '</td></tr>';
+	echo '<br />', i18n::translate('You may enter a comment here.'), '</td></tr>';
 
 	if (!empty($errorSearch)) {
 		print '<tr><td colspan="2"><span class="warning">';
@@ -275,8 +278,8 @@ function showSite(siteID) {
 	<table class="width100" align="center">
 		<tr>
 		<td class="facts_label">
-			<?php print_help_link("help_banning", "qm"); ?>
-			<b><?php echo $pgv_lang["label_banned_servers"];?></b>
+			<b><?php echo i18n::translate('Ban Sites by IP');?></b>
+			<?php echo help_link('help_banning'); ?>
 		</td>
 		</tr>
 		<tr>
@@ -288,22 +291,22 @@ function showSite(siteID) {
 	foreach ($banned as $ip_address=>$ip_comment) {
 		echo '<tr><td>';
 		if (isset($PGV_IMAGES["remove"]["other"])) {
-			echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["remove"]["other"], '" alt="', $pgv_lang['delete'], '" name="deleteBanned" value="', $ip_address, '">';
+			echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["remove"]["other"], '" alt="', i18n::translate('Delete'), '" name="deleteBanned" value="', $ip_address, '">';
 		} else {
-			echo '<button name="deleteBanned" value="', $ip_address, '" type="submit">', $pgv_lang["remove"], '</button>';
+			echo '<button name="deleteBanned" value="', $ip_address, '" type="submit">', i18n::translate('Remove'), '</button>';
 		}
 		echo '</td><td><span dir="ltr"><input type="text" name="address', ++$index, '" size="16" value="', $ip_address, '" readonly /></span></td>';
 		echo '<td><input type="text" name="comment', ++$index, '" size="60" value="', $ip_comment, '" readonly /></td></tr>';
 	}
 	echo '<tr><td valign="top"><input name="action" type="hidden" value="addBanned"/>';
 	if (isset($PGV_IMAGES["add"]["other"])) {
-		echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', $pgv_lang['add'], '">';
+		echo '<input type="image" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', i18n::translate('Add'), '">';
 	} else {
-		echo '<input type="submit" value="', $pgv_lang['add'], '" />';
+		echo '<input type="submit" value="', i18n::translate('Add'), '" />';
 	}
 	echo '</td><td valign="top"><span dir="ltr"><input type="text" id="txtAddIp" name="address" size="16"  value="', empty($errorBanned) ? '':$address, '" /></span></td>';
 	echo '<td><input type="text" id="txtAddComment" name="comment" size="60"  value="" />';
-	echo '<br />', $pgv_lang["enter_comment"], '</td></tr>';
+	echo '<br />', i18n::translate('You may enter a comment here.'), '</td></tr>';
 
 	if (!empty($errorBanned)) {
 		print '<tr><td colspan="2"><span class="warning">';
@@ -322,7 +325,7 @@ function showSite(siteID) {
 	<table class="width100">
 		<tr>
 		<td class="facts_label">
-			<b><?php echo $pgv_lang["label_added_servers"];?></b>
+			<b><?php echo i18n::translate('Remote Servers');?></b>
 		</td>
 		</tr>
 		<tr>
@@ -337,11 +340,11 @@ function showSite(siteID) {
 ?>
 			<tr>
 				<td>
-				<button type="submit" onclick="return (confirm('<?php echo $pgv_lang["confirm_delete_source"];?>'))" name="deleteServer" value="<?php echo $sid;?>"><?php echo $pgv_lang["remove"];?></button>
+				<button type="submit" onclick="return (confirm('<?php echo i18n::translate('Are you sure you want to delete this Source?');?>'))" name="deleteServer" value="<?php echo $sid;?>"><?php echo i18n::translate('Remove');?></button>
 				&nbsp;&nbsp;
-				<button id="buttonShow_<?php echo $sid;?>" type="button" onclick="showSite('<?php echo $sid;?>');"><?php echo $pgv_lang["show_details"];?></button>
+				<button id="buttonShow_<?php echo $sid;?>" type="button" onclick="showSite('<?php echo $sid;?>');"><?php echo i18n::translate('Show Details');?></button>
 				&nbsp;&nbsp;
-				<button type="button" onclick="window.open('source.php?sid=<?php echo $sid;?>&ged=<?php echo $GEDCOM;?>')"><?php echo $pgv_lang["title_view_conns"];?></button>
+				<button type="button" onclick="window.open('source.php?sid=<?php echo $sid;?>&ged=<?php echo $GEDCOM;?>')"><?php echo i18n::translate('View Connections');?></button>
 				&nbsp;&nbsp;
 				<?php echo PrintReady($serverTitle); ?>
 				<div id="siteDetails_<?php echo $sid;?>" style="display:none">
@@ -349,7 +352,7 @@ function showSite(siteID) {
 					<table>
 					<tr>
 						<td class="facts_label width20">
-						<?php print $pgv_lang["id"];?>
+						<?php print i18n::translate('ID');?>
 						</td>
 						<td class="facts_value">
 						<?php echo $sid;?>
@@ -357,7 +360,7 @@ function showSite(siteID) {
 					</tr>
 					<tr>
 						<td class="facts_label width20">
-						<?php print $pgv_lang["title"];?>
+						<?php print i18n::translate('Title:');?>
 						</td>
 						<td class="facts_value">
 						<?php echo PrintReady($serverTitle);?>
@@ -365,7 +368,7 @@ function showSite(siteID) {
 					</tr>
 					<tr>
 						<td class="facts_label width20">
-						<?php print $pgv_lang["label_server_url"];?>
+						<?php print i18n::translate('Site URL/IP');?>
 						</td>
 						<td class="facts_value">
 						<?php echo PrintReady($serverURL);?>
@@ -373,7 +376,7 @@ function showSite(siteID) {
 					</tr>
 					<tr>
 						<td class="facts_label width20">
-						<?php echo $pgv_lang["label_gedcom_id2"];?>
+						<?php echo i18n::translate('Database ID:');?>
 						</td>
 						<td class="facts_value">
 						<?php echo PrintReady($gedcom_id);?>
@@ -381,7 +384,7 @@ function showSite(siteID) {
 					</tr>
 					<tr>
 						<td class="facts_label width20">
-						<?php print $pgv_lang["label_username_id"];?>
+						<?php print i18n::translate('Username');?>
 						</td>
 						<td class="facts_value">
 						<?php echo PrintReady($username);?>
@@ -426,13 +429,13 @@ if (empty($errorServer)) {
 	<table class="width100">
 		<tr>
 		<td class="facts_label" colspan="2">
-			<?php print_help_link("help_remotesites", "qm"); ?>
-			<b><?php print $pgv_lang["label_new_server"];?></b>
+			<b><?php print i18n::translate('Add new site');?></b>
+			<?php echo help_link('help_remotesites'); ?>
 		</td>
 		</tr>
 		<tr>
 		<td class="facts_label width20">
-			<?php print $pgv_lang["title"];?>
+			<?php print i18n::translate('Title:');?>
 		</td>
 		<td class="facts_value">
 			<input type="text" size="66" name="serverTitle" value="<?php echo PrintReady($serverTitle);?>" />
@@ -440,17 +443,16 @@ if (empty($errorServer)) {
 		</tr>
 		<tr>
 		<td class="facts_label width20">
-			<?php print_help_link('link_remote_site', 'qm');?>
-			<?php print $pgv_lang["label_server_url"];?>
+			<?php echo i18n::translate('Site URL/IP'), help_link('link_remote_site'); ?>
 		</td>
 		<td class="facts_value">
 			<input type="text" size="66" name="serverURL" value="<?php echo PrintReady($serverURL);?>" />
-			<br /><?php echo $pgv_lang["example"];?>&nbsp;&nbsp;http://www.remotesite.com/phpGedView/genservice.php?wsdl
+			<br /><?php echo i18n::translate('Example:');?>&nbsp;&nbsp;http://www.remotesite.com/phpGedView/genservice.php?wsdl
 		</td>
 		</tr>
 		<tr>
 		<td class="facts_label width20">
-			<?php echo $pgv_lang["label_gedcom_id2"];?>
+			<?php echo i18n::translate('Database ID:');?>
 		</td>
 		<td class="facts_value">
 			<input type="text" name="gedcom_id" value="<?php echo PrintReady($gedcom_id);?>" />
@@ -458,7 +460,7 @@ if (empty($errorServer)) {
 		</tr>
 		<tr>
 		<td class="facts_label width20">
-			<?php print $pgv_lang["label_username_id"];?>
+			<?php print i18n::translate('Username');?>
 		</td>
 		<td class="facts_value">
 			<input type="text" name="username" value="<?php echo PrintReady($username);?>" />
@@ -466,7 +468,7 @@ if (empty($errorServer)) {
 		</tr>
 		<tr>
 		<td class="facts_label width20">
-			<?php print $pgv_lang["label_password_id"];?>
+			<?php print i18n::translate('Password');?>
 		</td>
 		<td class="facts_value">
 			<input type="password" name="password" />
@@ -474,7 +476,7 @@ if (empty($errorServer)) {
 		</tr>
 		<tr>
 		<td class="facts_value" align="center" colspan="2">
-			<input type="submit" value="<?php echo $pgv_lang['add'];?>" />
+			<input type="submit" value="<?php echo i18n::translate('Add');?>" />
 			<input name="action" type="hidden" value="addServer"/>
 <?php
 	if (!empty($errorServer)) {

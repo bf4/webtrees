@@ -2,7 +2,10 @@
 /**
  * Classes and libraries for module system
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2010 PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Modules
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
@@ -34,7 +37,7 @@ require_once PGV_ROOT.'includes/classes/class_tab.php';
 class personal_facts_Tab extends Tab {
 	
 	public function getContent() {
-		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $EXPAND_RELATIVES_EVENTS;
+		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_RELATIVES_EVENTS;
 		global $n_chil, $n_gchi, $n_ggch;
 		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE, $lang_short_cut;
 		global $NAV_FACTS;
@@ -43,7 +46,6 @@ class personal_facts_Tab extends Tab {
 		if (isset($_COOKIE['row_histo'])) $EXPAND_HISTO_EVENTS = ($_COOKIE['row_histo']);
 		else*/ $EXPAND_HISTO_EVENTS = false;
 
-		$out = "<span class=\"subheaders\">".$pgv_lang["personal_facts"]."</span><div id=\"facts_content\">";
 		//-- only need to add family facts on this tab
 		if (!isset($this->controller->skipFamilyFacts)) $this->controller->indi->add_family_facts();
 
@@ -59,7 +61,7 @@ class personal_facts_Tab extends Tab {
 			$indifacts = $this->controller->getIndiFacts();
 			if (count($indifacts)==0) {?>
 				<tr>
-					<td id="no_tab1" colspan="2" class="facts_value"><?php echo $pgv_lang["no_tab1"]?>
+					<td id="no_tab1" colspan="2" class="facts_value"><?php echo i18n::translate('There are no Facts for this individual.')?>
 					</td>
 				</tr>
 			<?php }
@@ -69,10 +71,10 @@ class personal_facts_Tab extends Tab {
 				<td valign="top"></td>
 				<td class="descriptionbox rela">
 					<input id="checkbox_rela_facts" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" />
-					<label for="checkbox_rela_facts"><?php echo $pgv_lang["relatives_events"]?></label>
+					<label for="checkbox_rela_facts"><?php echo i18n::translate('Events of close relatives')?></label>
 					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
 						<input id="checkbox_histo" type="checkbox" <?php if ($EXPAND_HISTO_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_histo');" />
-						<label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
+						<label for="checkbox_histo"><?php echo i18n::translate('Historical facts')?></label>
 					<?php }?>
 				</td>
 			</tr>
@@ -112,10 +114,7 @@ class personal_facts_Tab extends Tab {
 		//-->
 		</script>
 		<?php
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .= "</div>";
-		return $out;
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 	
 	public function hasContent() {

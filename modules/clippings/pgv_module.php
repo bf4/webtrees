@@ -2,7 +2,10 @@
 /**
  * Classes and libraries for module system
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2010 John Finlay
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Modules
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
@@ -31,10 +34,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 require_once(PGV_ROOT."includes/classes/class_module.php");
 require_once(PGV_ROOT."modules/clippings/clippings.php");
 
-// Load PGV embeding language file
-global $pgv_lang;
-
-
 class clippings_PGVModule extends PGVModule {
 	protected $name = 'clippings';
 	protected $description = 'Clippings Cart PGV Module';
@@ -42,6 +41,14 @@ class clippings_PGVModule extends PGVModule {
 	protected $pgvVersion = '4.2.2';
 	protected $_sidebar = null;
 	
+	public function getName() {
+		return 'clippings';
+	}
+
+	public function getTitle() {
+		return i18n::translate('Clippings');
+	}
+
 	/**
 	 * does this module implement a menu
 	 * should be overidden in extending classes
@@ -70,14 +77,14 @@ class clippings_PGVModule extends PGVModule {
 	 */
 	public function &getMenu() { 
 		global $ENABLE_CLIPPINGS_CART;
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
 			return $menu;
 		}
 		//-- main clippings menu item
-		$menu = new Menu($pgv_lang["clippings_cart"], encode_url('module.php?mod=clippings&amp;ged='.$GEDCOM), "down");
+		$menu = new Menu(i18n::translate('Family Tree Clippings Cart'), encode_url('module.php?mod=clippings&amp;ged='.$GEDCOM), "down");
 		if (!empty($PGV_IMAGES["clippings"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["large"]);
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_clippings");

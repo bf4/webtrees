@@ -2,7 +2,10 @@
 /**
  * Class that defines a media object
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -211,8 +214,6 @@ class Media extends GedcomRecord {
 	 * @return nothing
 	 */
 	function setFileProperties() {
-		global $pgv_lang;
-
 		if ($this->fileExists()) {
 			$this->filesizeraw = @filesize($this->getServerFilename());
 			$imgsize=@getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype ['mime']=mimetype
@@ -240,7 +241,7 @@ class Media extends GedcomRecord {
 				if ($this->fileExists()) {
 					// alert the admin if we cannot determine the mime type of an existing file
 					// as the media firewall will be unable to serve this file properly
-					AddToLog($pgv_lang['unknown_mime'].' >'.$this->file.'<');
+					AddToLog(i18n::translate('Media Firewall error: >Unknown Mimetype< for file').' >'.$this->file.'<');
 				}
 			} else {
 				$this->mime=$mime[$this->ext];

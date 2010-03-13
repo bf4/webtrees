@@ -2,7 +2,10 @@
 /**
 * Various functions used by the Edit interface
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * Modifications Copyright (c) 2010 Greg Roach
@@ -21,7 +24,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Edit
 * @see functions_places.php
 * @version $Id$
@@ -75,9 +78,9 @@ function checkChangeTime($pid, $gedrec, $last_time) {
 		}
 	}
 	if (isset($_REQUEST['linenum']) && $changeTime!=0 && $last_time && $changeTime > $last_time) {
-		echo "<span class=\"error\">", str_replace("#PID#", $pid, $pgv_lang["edit_concurrency_msg2"]), "<br /><br />";
-		if (!empty($changeUser)) echo str_replace(array("#CHANGEUSER#", "#CHANGEDATE#"), array($changeUser, date("d M Y H:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"]), "<br /><br />";
-		echo $pgv_lang["edit_concurrency_reload"], "</span>";
+		echo "<span class=\"error\">", i18n::translate('The record with id %s was changed by another user since you last accessed it.', $pid), "<br /><br />";
+		if (!empty($changeUser)) echo i18n::translate('This record was last changed by <i>%s</i> at %s', $changeUser, date("d M Y H:i:s", $changeTime)), "<br /><br />";
+		echo i18n::translate('Please reload the previous page to make sure you are working with the most recent record.'), "</span>";
 		print_simple_footer();
 		exit;
 	}
@@ -418,10 +421,10 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 	echo "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	echo "<input type=\"hidden\" name=\"famtag\" value=\"$famtag\" />\n";
-	echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />\n";
+	echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />\n";
 	echo "<input type=\"hidden\" name=\"goto\" value=\"\" />\n";
 	if (preg_match('/^add(child|spouse|newparent|newrepository)/', $nextaction)) {
-		echo "<input type=\"submit\" value=\"{$pgv_lang['saveandgo']}\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
+		echo "<input type=\"submit\" value=\"", i18n::translate('Save and go to new record'), "\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
 	}
 	echo "<table class=\"facts_table\">";
 
@@ -716,14 +719,13 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
 			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		}
-		echo $pgv_lang["no_update_CHAN"], "<br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) record'), "<br />\n";
 		if (isset($famrec)) {
 			$event = new Event(get_sub_record(1, "1 CHAN", $famrec));
 			echo format_fact_date($event, false, true);
@@ -741,9 +743,9 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 		print_add_layer('SHARED_NOTE', 1);
 		print_add_layer('OBJE', 1);
 	}
-	echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />\n";
+	echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />\n";
 	if (preg_match('/^add(child|spouse|newparent|source)/', $nextaction)) {
-		echo "<input type=\"submit\" value=\"{$pgv_lang['saveandgo']}\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
+		echo "<input type=\"submit\" value=\"", i18n::translate('Save and go to new record'), "\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
 	}
 	echo "</form>\n";
 	?>
@@ -945,7 +947,7 @@ function print_calendar_popup($id, $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	// calendar button
-	$text = $pgv_lang["select_date"];
+	$text = i18n::translate('Select a date');
 	if (isset($PGV_IMAGES["calendar"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["button"]."\" name=\"img".$id."\" id=\"img".$id."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = ' ';
@@ -962,7 +964,7 @@ function print_calendar_popup($id, $asString=false) {
 function print_addnewmedia_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
 	
-	$text = $pgv_lang["add_media"];
+	$text = i18n::translate('Add a new Media item');
 	if (isset($PGV_IMAGES["addmedia"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addmedia"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo '&nbsp;&nbsp;&nbsp;<a href="javascript:;" onclick="pastefield=document.getElementById(\'', $element_id, '\'); window.open(\'addmedia.php?action=showmediaform&linktoid={$linkToID}&level={$level}\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">';
@@ -975,7 +977,7 @@ function print_addnewmedia_link($element_id) {
 function print_addnewrepository_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
-	$text = $pgv_lang["create_repository"];
+	$text = i18n::translate('Create Repository');
 	if (isset($PGV_IMAGES["addrepository"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addrepository"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"addnewrepository(document.getElementById('", $element_id, "')); return false;\">";
@@ -989,7 +991,7 @@ function print_addnewrepository_link($element_id) {
 function print_addnewnote_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
 	
-	$text = $pgv_lang["create_shared_note"];
+	$text = i18n::translate('Create a new Shared Note');
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewnote(document.getElementById('", $element_id, "')); return false;\">";
@@ -1002,7 +1004,7 @@ function print_addnewnote_link($element_id) {
 */
 function print_addnewnote_assisted_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
-	$text = $pgv_lang["create_shared_note_assisted"];
+	$text = i18n::translate('Create a new Shared Note using Assistant');
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewnote_assisted(document.getElementById('", $element_id, "'), '", $pid, "' ); return false;\">";
@@ -1016,7 +1018,7 @@ function print_addnewnote_assisted_link($element_id) {
 
 function print_editnote_link($note_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	$text = $pgv_lang["edit_shared_note"];
+	$text = i18n::translate('Edit Shared Note');
 	if (isset($PGV_IMAGES["note"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "<a href=\"javascript: var win02=window.open('edit_interface.php?action=editnote&pid=$note_id', 'win02', 'top=70, left=70, width=620, height=500, resizable=1, scrollbars=1 ' )\">";
@@ -1030,7 +1032,7 @@ function print_editnote_link($note_id) {
 function print_addnewsource_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
-	$text = $pgv_lang["create_source"];
+	$text = i18n::translate('Create a new source');
 	if (isset($PGV_IMAGES["addsource"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addsource"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"addnewsource(document.getElementById('", $element_id, "')); return false;\">";
@@ -1066,7 +1068,7 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $lang_short_cut, $LANGUAGE;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
 	global $action, $event_add;
-	global $CensDate;
+	global $CensDate, $MEDIA_TYPES;
 	
 if (substr($tag, 0, strpos($tag, "CENS"))) {
 	$event_add="census_add";
@@ -1246,17 +1248,17 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 	}else{
 		if (!in_array($fact, $emptyfacts)) {
 			if ($fact=="DATE") {
-				print_help_link("def_gedcom_date", "qm", "date");
+				echo help_link('def_gedcom_date');
 			} elseif ($fact=="FORM" && $upperlevel!='OBJE') {
-				print_help_link("FORM", "qm", "media_format");
+				echo help_link('FORM');
 			} elseif ($fact=="NOTE" && $islink){
 				if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
-					print_help_link("edit_add_GEDFact_ASSISTED", "qm", "GEDFact Assistant");
+					echo help_link('edit_add_GEDFact_ASSISTED');
 				}else{
-					print_help_link("edit_add_SHARED_NOTE", "qm", "add_shared_note");
+					echo help_link('edit_add_SHARED_NOTE');
 				}
 			} else {
-				print_help_link($fact, "qm", $fact);
+				echo help_link($fact);
 			}
 		}
 		if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
@@ -1284,7 +1286,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 	// tag name
 	if (!empty($label)) {
 		if ($label=="Note" && $islink){
-			echo $pgv_lang["shared_note"];
+			echo i18n::translate('Shared Note');
 		}else{
 			 echo $label;
 		}
@@ -1295,7 +1297,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
 				//	use $label (GEDFact Assistant); 
 			}else{
-				echo $pgv_lang["shared_note"];
+				echo i18n::translate('Shared Note');
 			}
 			*/
 		} else {
@@ -1350,7 +1352,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 			echo "<input type=\"checkbox\" ";
 			if ($value=="Y") echo " checked=\"checked\"";
 			echo " onclick=\"if (this.checked) ", $element_id, ".value='Y'; else ", $element_id, ".value=''; \" />";
-			echo $pgv_lang["yes"];
+			echo i18n::translate('Yes');
 		}
 /*
 		// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page && action is ADD a new CENS event 
@@ -1368,7 +1370,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 	}
 	else if ($fact=="TEMP") {
 		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >\n";
-		echo "<option value=''>", $pgv_lang["no_temple"], "</option>\n";
+		echo "<option value=''>", i18n::translate('No Temple - Living Ordinance'), "</option>\n";
 		foreach($TEMPLE_CODES as $code=>$temple) {
 			echo "<option value=\"$code\"";
 			if ($code==$value) echo " selected=\"selected\"";
@@ -1390,11 +1392,11 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 	}
 	else if ($fact=="PEDI") {
 		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >";
-		foreach (array(''       =>$pgv_lang["unknown"],
+		foreach (array(''       =>i18n::translate('unknown'),
 										"birth"  =>i18n::translate('BIRT'),
-										"adopted"=>$pgv_lang["adopted"],
-										"foster" =>$pgv_lang["foster"],
-										"sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
+										"adopted"=>i18n::translate('Adopted'),
+										"foster" =>i18n::translate('Foster'),
+										"sealing"=>i18n::translate('Sealing')) as $k=>$v) {
 			echo "<option value='$k'";
 			if (UTF8_strtolower($value)==$k)
 				echo " selected=\"selected\"";
@@ -1455,7 +1457,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		<?php
 		if (!$PRIVACY_BY_RESN && $level==1) {
 			// warn user that level 1 RESN tags have no effect when PRIVACY_BY_RESN is false
-			echo "<small>", $pgv_lang["resn_disabled"], "</small>";
+			echo "<small>", i18n::translate('Note: You must enable the \'Use GEDCOM (RESN) Privacy restriction\' feature for this setting to take effect.'), "</small>";
 		}
 		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", $value, "\" />\n";
 		echo "<table><tr valign=\"top\">\n";
@@ -1476,39 +1478,27 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		echo "<option value=\"\"></option>\n";
 		echo "<option value=\"Y\"";
 		if ($value=="Y") echo " selected=\"selected\"";
-		echo ">", $pgv_lang["yes"], "</option>\n";
+		echo ">", i18n::translate('Yes'), "</option>\n";
 		echo "<option value=\"N\"";
 		if ($value=="N") echo " selected=\"selected\"";
-		echo ">", $pgv_lang["no"], "</option>\n";
+		echo ">", i18n::translate('No'), "</option>\n";
 		echo "</select>\n";
 	}
 	else if ($fact=="SEX") {
 		echo "<select tabindex=\"", $tabkey, "\" id=\"", $element_id, "\" name=\"", $element_name, "\">\n<option value=\"M\"";
 		if ($value=="M") echo " selected=\"selected\"";
-		echo ">", $pgv_lang["male"], "</option>\n<option value=\"F\"";
+		echo ">", i18n::translate('Male'), "</option>\n<option value=\"F\"";
 		if ($value=="F") echo " selected=\"selected\"";
-		echo ">", $pgv_lang["female"], "</option>\n<option value=\"U\"";
+		echo ">", i18n::translate('Female'), "</option>\n<option value=\"U\"";
 		if ($value=="U" || empty($value)) echo " selected=\"selected\"";
-		echo ">", $pgv_lang["unknown"], "</option>\n</select>\n";
+		echo ">", i18n::translate('unknown'), "</option>\n</select>\n";
 	}
 	else if ($fact == "TYPE" && $level == '3') {
-		//-- Build array of currently defined values for this Media Fact
-		foreach ($pgv_lang as $varname => $typeValue) {
-			if (substr($varname, 0, 6) == "TYPE__") {
-				if ($varname != "TYPE__other") $type[strtolower(substr($varname, 6))] = $typeValue;
-			}
-		}
-		//-- Sort the array into a meaningful order
-		array_flip($type);
-		asort($type);
-		array_flip($type);
-		//-- Add "Other" at the end of the list
-		$type["other"] = $pgv_lang["TYPE__other"];
 		//-- Build the selector for the Media "TYPE" Fact
 		echo "<select tabindex=\"", $tabkey, "\" name=\"text[]\">";
-		if ($value=='') echo "<option selected=\"selected\" value=\"\" > ", $pgv_lang["choose"], " </option>";
+		if ($value=='') echo "<option selected=\"selected\" value=\"\" > ", i18n::translate('Choose: '), " </option>";
 		$selectedValue = strtolower($value);
-		foreach ($type as $typeName => $typeValue) {
+		foreach ($MEDIA_TYPES as $typeName => $typeValue) {
 			echo "<option value=\"", $typeName, "\" ";
 			if ($selectedValue == $typeName) echo "selected=\"selected\" ";
 			echo "> ", $typeValue, " </option>";
@@ -1520,8 +1510,8 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" onchange=\"updateTextName('", $element_id, "');\" value=\"", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "\" />";
 		echo "<span id=\"", $element_id, "_display\">", PrintReady(htmlspecialchars($value, ENT_COMPAT, 'UTF-8')), "</span>";
 		echo " <a href=\"#edit_name\" onclick=\"convertHidden('", $element_id, "'); return false;\"> ";
-		if (isset($PGV_IMAGES["edit_indi"]["small"])) echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["edit_indi"]["small"], "\" border=\"0\" width=\"20\" alt=\"", $pgv_lang["edit_name"], "\" align=\"top\" />";
-		else echo "<span class=\"age\">[", $pgv_lang["edit_name"], "]</span>";
+		if (isset($PGV_IMAGES["edit_indi"]["small"])) echo "<img src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["edit_indi"]["small"], "\" border=\"0\" width=\"20\" alt=\"", i18n::translate('Edit Name'), "\" align=\"top\" />";
+		else echo "<span class=\"age\">[", i18n::translate('Edit Name'), "]</span>";
 		echo "</a>";
 	} else {
 		// textarea
@@ -1614,7 +1604,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 				}
 				if (strpos($bdm, 'B')!==false) {
 					echo '&nbsp;<input type="checkbox" name="SOUR_INDI" ', $level1_checked, ' value="Y" />';
-					echo $pgv_lang['individual'];
+					echo i18n::translate('Individual');
 					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
 						foreach ($matches[1] as $match) {
 							if (!in_array($match, explode('|', PGV_EVENTS_DEAT))) {
@@ -1636,7 +1626,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 				}
 				if (strpos($bdm, 'M')!==false) {
 					echo '&nbsp;<input type="checkbox" name="SOUR_FAM" ', $level1_checked, ' value="Y" />';
-					echo $pgv_lang["family"];
+					echo i18n::translate('Family');
 					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
 						foreach ($matches[1] as $match) {
 							echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
@@ -1670,8 +1660,8 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 					if ($type_pid->getType()=="INDI" ) { 
 						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-						echo "<a href=\"javascript:ADD;\" onclick=\"addnewnote_assisted(document.getElementById('", $element_id, "'), '", $pid, "' ); return false;\" title=\"".$pgv_lang["create_shared_note_assisted"]."\" alt=\"".$pgv_lang["create_shared_note_assisted"]."\">";
-						echo $pgv_lang["shared_note_assisted"];
+						echo "<a href=\"javascript:ADD;\" onclick=\"addnewnote_assisted(document.getElementById('", $element_id, "'), '", $pid, "' ); return false;\" title=\"".i18n::translate('Create a new Shared Note using Assistant')."\" alt=\"".i18n::translate('Create a new Shared Note using Assistant')."\">";
+						echo i18n::translate('Shared Note using Assistant');
 						echo "</a>";
 						print_addnewnote_assisted_link($element_id);
 					}
@@ -1745,11 +1735,11 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	global $islink;
 	if ($tag=="SOUR") {
 		//-- Add new source to fact
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_source"], "</a>";
-		print_help_link("edit_add_SOUR", "qm", "add_source");
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Source Citation'), "</a>";
+		echo help_link('edit_add_SOUR');
 		echo "<br />";
 		echo "<div id=\"newsource\" style=\"display: none;\">\n";
-		if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
+		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
 		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 SOUR
 		$source = "SOUR @";
@@ -1776,17 +1766,17 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="ASSO" || $tag=="ASSO2") {
 		//-- Add a new ASSOciate
 		if ($tag=="ASSO") {
-			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso');\"><img id=\"newasso_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_asso"], "</a>";
-			print_help_link("edit_add_ASSO", "qm", "add_asso");
+			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso');\"><img id=\"newasso_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Associate'), "</a>";
+			echo help_link('edit_add_ASSO');
 			echo "<br />";
 			echo "<div id=\"newasso\" style=\"display: none;\">\n";
 		} else {
-			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso2');\"><img id=\"newasso2_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_asso"], "</a>";
-			print_help_link("edit_add_ASSO", "qm", "add_asso");
+			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso2');\"><img id=\"newasso2_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Associate'), "</a>";
+			echo help_link('edit_add_ASSO');
 			echo "<br />";
 			echo "<div id=\"newasso2\" style=\"display: none;\">\n";
 		}
-		if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
+		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
 		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 ASSO
 		add_simple_tag(($level)." ASSO @");
@@ -1801,11 +1791,11 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="NOTE") {
 		//-- Retrieve existing note or add new note to fact
 		$text = '';
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote');\"><img id=\"newnote_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_note"], "</a>";
-		print_help_link("edit_add_NOTE", "qm", "add_note");
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote');\"><img id=\"newnote_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Note'), "</a>";
+		echo help_link('edit_add_NOTE');
 		echo "<br />\n";
 		echo "<div id=\"newnote\" style=\"display: none;\">\n";
-		if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
+		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
 		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 NOTE
 		add_simple_tag(($level)." NOTE ".$text);
@@ -1814,11 +1804,11 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="SHARED_NOTE") {
 		//-- Retrieve existing shared note or add new shared note to fact
 		$text = '';
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshared_note');\"><img id=\"newshared_note_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_shared_note"], "</a>";
-		print_help_link("edit_add_SHARED_NOTE", "qm", "add_shared_note");
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshared_note');\"><img id=\"newshared_note_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Shared Note'), "</a>";
+		echo help_link('edit_add_SHARED_NOTE');
 		echo "<br />\n";
 		echo "<div id=\"newshared_note\" style=\"display: none;\">\n";
-		if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
+		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
 		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 SHARED NOTE
 		add_simple_tag(($level)." SHARED_NOTE ");
@@ -1827,11 +1817,11 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	}
 	if ($tag=="OBJE") {
 		//-- Add new obje to fact
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newobje');\"><img id=\"newobje_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", $pgv_lang["add_obje"], "</a>";
-		print_help_link("add_media", "qm", "add_obje");
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newobje');\"><img id=\"newobje_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Multimedia object'), "</a>";
+		echo help_link('add_media');
 		echo "<br />";
 		echo "<div id=\"newobje\" style=\"display: none;\">\n";
-		if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
+		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
 		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		add_simple_tag($level." OBJE");
 		echo "</table></div>";
@@ -1844,10 +1834,10 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 			//-- Retrieve existing resn or add new resn to fact
 			$text = '';
 			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('RESN'), "</a>";
-			print_help_link("RESN", "qm", "RESN");
+			echo help_link('RESN');
 			echo "<br />\n";
 			echo "<div id=\"newresn\" style=\"display: none;\">\n";
-			if ($printSaveButton) echo "<input type=\"submit\" value=\"", $pgv_lang["save"], "\" />";
+			if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
 			echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 			// 2 RESN
 			add_simple_tag(($level)." RESN ".$text);
@@ -2274,7 +2264,7 @@ function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
 		replace_gedrec($linktoid, $newrec, $chan);
 		return true;
 	} else {
-		echo "<br /><center>", $pgv_lang["invalid_id"], "</center>";
+		echo "<br /><center>", i18n::translate('No such ID exists in this GEDCOM file.'), "</center>";
 		return false;
 	}
 }
@@ -2372,8 +2362,8 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$tags=array();
 	$gedlines = explode("\n", $gedrec); // -- find the number of lines in the record
 	if (!isset($gedlines[$linenum])) {
-		echo "<span class=\"error\">", $pgv_lang["edit_concurrency_msg1"], "<br /><br />";
-		echo $pgv_lang["edit_concurrency_reload"], "</span>";
+		echo "<span class=\"error\">", i18n::translate('An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it.'), "<br /><br />";
+		echo i18n::translate('Please reload the previous page to make sure you are working with the most recent record.'), "</span>";
 		return;
 	}
 	$fields = explode(' ', $gedlines[$linenum]);
@@ -2381,8 +2371,8 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$level = $glevel;
 
 	if ($level!=1 && preg_match("~/@.*/@~i", trim($fields[1]))) {
-		echo "<span class=\"error\">", $pgv_lang["edit_concurrency_msg1"], "<br /><br />";
-		echo $pgv_lang["edit_concurrency_reload"], "</span>";
+		echo "<span class=\"error\">", i18n::translate('An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it.'), "<br /><br />";
+		echo i18n::translate('Please reload the previous page to make sure you are working with the most recent record.'), "</span>";
 		return;
 	}
 

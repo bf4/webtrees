@@ -2,7 +2,10 @@
 /**
  * Facility in Census assistant that will allow a user to search for a person id
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */
@@ -81,29 +84,29 @@ require 'includes/specialchars.php';
 
 switch ($type) {
 	case "indi" :
-		print_simple_header($pgv_lang["find_individual"]);
+		print_simple_header(i18n::translate('Find Individual ID'));
 		break;
 	case "fam" :
-		print_simple_header($pgv_lang["find_fam_list"]);
+		print_simple_header(i18n::translate('Find Family List'));
 		break;
 	case "media" :
-		print_simple_header($pgv_lang["find_media"]);
+		print_simple_header(i18n::translate('Find Media'));
 		$action="filter";
 		break;
 	case "place" :
-		print_simple_header($pgv_lang["find_place"]);
+		print_simple_header(i18n::translate('Find Place'));
 		$action="filter";
 		break;
 	case "repo" :
-		print_simple_header($pgv_lang["repo_list"]);
+		print_simple_header(i18n::translate('Repositories'));
 		$action="filter";
 		break;
 	case "source" :
-		print_simple_header($pgv_lang["find_source"]);
+		print_simple_header(i18n::translate('Find Source'));
 		$action="filter";
 		break;
 	case "specialchar" :
-		print_simple_header($pgv_lang["find_specialchar"]);
+		print_simple_header(i18n::translate('Find Special Characters'));
 		$action="filter";
 		break;
 }
@@ -142,7 +145,7 @@ switch ($type) {
 		if (document.forms[0].subclick) button = document.forms[0].subclick.value;
 		else button = "";
 		if (frm.filter.value.length<2&button!="all") {
-			alert("<?php print $pgv_lang["search_more_chars"]; ?>");
+			alert("<?php print i18n::translate('Please enter more than one character'); ?>");
 			frm.filter.focus();
 			return false;
 		}
@@ -177,25 +180,25 @@ print "<tr><td style=\"padding: 10px;\" valign=\"top\" class=\"facts_label03 wid
 
 switch ($type) {
 	case "indi" :
-		print $pgv_lang["find_individual"];
+		print i18n::translate('Find Individual ID');
 		break;
 	case "fam" :
-		print $pgv_lang["find_fam_list"];
+		print i18n::translate('Find Family List');
 		break;
 	case "media" :
-		print $pgv_lang["find_media"];
+		print i18n::translate('Find Media');
 		break;
 	case "place" :
-		print $pgv_lang["find_place"];
+		print i18n::translate('Find Place');
 		break;
 	case "repo" :
-		print $pgv_lang["repo_list"];
+		print i18n::translate('Repositories');
 		break;
 	case "source" :
-		print $pgv_lang["find_source"];
+		print i18n::translate('Find Source');
 		break;
 	case "specialchar" :
-		print $pgv_lang["find_specialchar"];
+		print i18n::translate('Find Special Characters');
 		break;
 }
 
@@ -215,12 +218,12 @@ switch ($type) {
 /*
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["name_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+		print i18n::translate('Name contains:')." <input type=\"text\" name=\"filter\" value=\"";
 		if ($filter) print $filter;
 		print "\" />";
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" value=\"".$pgv_lang["filter"]."\" /><br />";
+		print "<input type=\"submit\" value=\"".i18n::translate('Filter')."\" /><br />";
 		print "</td></tr></table>";
 */
 		print "</form></div>";
@@ -236,12 +239,12 @@ switch ($type) {
 		print "<input type=\"hidden\" name=\"multiple\" value=\"$multiple\" />";
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["name_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+		print i18n::translate('Name contains:')." <input type=\"text\" name=\"filter\" value=\"";
 		if ($filter) print $filter;
 		print "\" />";
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" value=\"".$pgv_lang["filter"]."\" /><br />";
+		print "<input type=\"submit\" value=\"".i18n::translate('Filter')."\" /><br />";
 		print "</td></tr></table>";
 		print "</form></div>";
 	}
@@ -260,20 +263,20 @@ switch ($type) {
 		print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["media_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+		print i18n::translate('Media contains:')." <input type=\"text\" name=\"filter\" value=\"";
 		if ($filter) print $filter;
 		print "\" />";
-		print_help_link("simple_filter","qm");
+		print help_link('simple_filter');
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" wstyle=\"padding: 5px;\">";
 		print "<input type=\"checkbox\" name=\"showthumb\" value=\"true\"";
 		if( $showthumb) print "checked=\"checked\"";
-		print "onclick=\"javascript: this.form.submit();\" />".$pgv_lang["show_thumbnail"];
-		print_help_link("show_thumb","qm");
+		print "onclick=\"javascript: this.form.submit();\" />".i18n::translate('Show thumbnails');
+		print help_link('show_thumb');
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-		print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+		print "<input type=\"submit\" name=\"search\" value=\"".i18n::translate('Filter')."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+		print "<input type=\"submit\" name=\"all\" value=\"".i18n::translate('Display all')."\" onclick=\"this.form.subclick.value=this.name\" />";
 		print "</td></tr></table>";
 		print "</form></div>";
 	}
@@ -288,13 +291,13 @@ switch ($type) {
 		print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["place_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+		print i18n::translate('Place contains:')." <input type=\"text\" name=\"filter\" value=\"";
 		if ($filter) print $filter;
 		print "\" />";
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-		print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+		print "<input type=\"submit\" name=\"search\" value=\"".i18n::translate('Filter')."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+		print "<input type=\"submit\" name=\"all\" value=\"".i18n::translate('Display all')."\" onclick=\"this.form.subclick.value=this.name\" />";
 		print "</td></tr></table>";
 		print "</form></div>";
 	}
@@ -309,13 +312,13 @@ switch ($type) {
 		print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["repo_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+		print i18n::translate('Repository contains:')." <input type=\"text\" name=\"filter\" value=\"";
 		if ($filter) print $filter;
 		print "\" />";
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-		print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+		print "<input type=\"submit\" name=\"search\" value=\"".i18n::translate('Filter')."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+		print "<input type=\"submit\" name=\"all\" value=\"".i18n::translate('Display all')."\" onclick=\"this.form.subclick.value=this.name\" />";
 		print "</td></tr></table>";
 		print "</form></div>";
 	}
@@ -330,13 +333,13 @@ switch ($type) {
 		print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["source_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+		print i18n::translate('Source contains:')." <input type=\"text\" name=\"filter\" value=\"";
 		if ($filter) print $filter;
 		print "\" />";
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-		print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+		print "<input type=\"submit\" name=\"search\" value=\"".i18n::translate('Filter')."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+		print "<input type=\"submit\" name=\"all\" value=\"".i18n::translate('Display all')."\" onclick=\"this.form.subclick.value=this.name\" />";
 		print "</td></tr></table>";
 		print "</form></div>";
 	}
@@ -352,14 +355,14 @@ switch ($type) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label\" style=\"padding: 5px;\">";
 		print "<select id=\"language_filter\" name=\"language_filter\" onchange=\"submit();\">";
-		print "\n\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
+		print "\n\t<option value=\"\">".i18n::translate('Change Language')."</option>";
 		$language_options = "";
 		foreach($specialchar_languages as $key=>$value) {
 			$language_options.= "\n\t<option value=\"$key\">$value</option>";
 		}
 		$language_options = str_replace("\"$language_filter\"","\"$language_filter\" selected",$language_options);
 		print $language_options;
-		print "</select><br /><a href=\"javascript:;\" onclick=\"setMagnify()\">".$pgv_lang["magnify"]."</a>";
+		print "</select><br /><a href=\"javascript:;\" onclick=\"setMagnify()\">".i18n::translate('Magnify')."</a>";
 		print "</td></tr></table>";
 		print "</form></div>";
 	}
@@ -368,7 +371,7 @@ print "</td></tr>";
 print "</table>"; // Close table with find options
 
 print "<br />";
-print "<a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br />\n";
+print "<a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".i18n::translate('Close Window')."</a><br />\n";
 print "<br />";
 
 if ($action=="filter") {
@@ -390,15 +393,15 @@ if ($action=="filter") {
 				$wholename = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 				$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 				$fulln = str_replace('"', '\'', $fulln);									// Replace double quotes
-				$fulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulln);
-				$fulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulln);
+				$fulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulln);
+				$fulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulln);
 				$givn  = rtrim($nam[0]['givn'],'*');
 				$surn  = $nam[0]['surname'];
 				if (isset($nam[1])) {
 					$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 					$fulmn = str_replace('"', '\'', $fulmn);								// Replace double quotes
-					$fulmn = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $fulmn);
-					$fulmn = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $fulmn);
+					$fulmn = str_replace("@N.N.", "(".i18n::translate('unknown').")", $fulmn);
+					$fulmn = str_replace("@P.N.", "(".i18n::translate('unknown').")", $fulmn);
 					$marn  = $nam[1]['surname'];
 				} else {
 					$fulmn = $fulln;
@@ -437,8 +440,8 @@ if ($action=="filter") {
 						$chnam   = $child->getAllNames();
 						$chfulln = rtrim($chnam[0]['givn'],'*')." ".$chnam[0]['surname'];
 						$chfulln = str_replace('"', "", $chfulln);											// Must remove quotes completely here
-						$chfulln = str_replace("@N.N.", "(".$pgv_lang['unknown'].")", $chfulln);
-						$chfulln = str_replace("@P.N.", "(".$pgv_lang['unknown'].")", $chfulln);			// Child's Full Name
+						$chfulln = str_replace("@N.N.", "(".i18n::translate('unknown').")", $chfulln);
+						$chfulln = str_replace("@P.N.", "(".i18n::translate('unknown').")", $chfulln);			// Child's Full Name
 						$chdob   = ($child->getBirthDate()->minJD()+$child->getBirthDate()->maxJD())/2;		// Child's Date of Birth (Julian)
 						if (!isset($chdob)) { $chdob = ""; }
 						$chdod   = ($child->getDeathDate()->minJD()+$child->getDeathDate()->maxJD())/2;		// Child's Date of Death (Julian)
@@ -481,10 +484,10 @@ if ($action=="filter") {
 				echo "</li>";
 			echo "<hr />";
 			}
-			echo '</td></tr><tr><td class="list_label">', $pgv_lang['total_indis'], ' ', count($myindilist), '</tr></td>';
+			echo '</td></tr><tr><td class="list_label">', i18n::translate('Total individuals'), ' ', count($myindilist), '</tr></td>';
 		} else {
 			print "<td class=\"list_value_wrap\">";
-			print $pgv_lang["no_results"];
+			print i18n::translate('No results found.');
 			print "</td></tr>";
 		}
 		print "</table>";
@@ -509,10 +512,10 @@ if ($action=="filter") {
 			foreach($myfamlist as $family) {
 				echo $family->format_list('li', true);
 			}
-			echo '</ul></td></tr><tr><td class="list_label">', $pgv_lang['total_fams'], ' ', count($myfamlist), '</tr></td>';
+			echo '</ul></td></tr><tr><td class="list_label">', i18n::translate('Total families'), ' ', count($myfamlist), '</tr></td>';
 		} else {
 			print "<td class=\"list_value_wrap\">";
-			print $pgv_lang["no_results"];
+			print i18n::translate('No results found.');
 			print "</td></tr>";
 		}
 		print "</table>";
@@ -542,7 +545,7 @@ if ($action=="filter") {
 		// Tell the user where he is
 		print "<tr>";
 			print "<td class=\"topbottombar\" colspan=\"2\">";
-				print $pgv_lang["current_dir"];
+				print i18n::translate('Current directory');
 				print "<br />";
 				print substr($directory,0,-1);
 			print "</td>";
@@ -556,7 +559,7 @@ if ($action=="filter") {
 				print $uplink."</td></tr>";
 			}
 			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION\" colspan=\"2\">";
-			print "<a href=\"".encode_url("find.php?directory={$directory}&thumbdir=".str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory)."&level={$level}{$thumbget}&external_links=http&type=media&choose={$choose}")."\">".$pgv_lang["external_objects"]."</a>";
+			print "<a href=\"".encode_url("find.php?directory={$directory}&thumbdir=".str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory)."&level={$level}{$thumbget}&external_links=http&type=media&choose={$choose}")."\">".i18n::translate('External objects')."</a>";
 			print "</td></tr>";
 			foreach ($dirs as $indexval => $dir) {
 				print "<tr><td class=\"list_value $TEXT_DIRECTION\" colspan=\"2\">";
@@ -627,35 +630,35 @@ if ($action=="filter") {
 							print "<a href=\"javascript:;\" onclick=\"pasteid('".addslashes($media["FILE"])."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
 						}
 						else print "<a href=\"javascript:;\" onclick=\"pasteid('".$media["XREF"]."','".addslashes($media["TITL"])."','".addslashes($media["THUMB"])."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
-						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">".$pgv_lang["view"]."</a><br />";
-						if (!$media["EXISTS"] && !isFileExternal($media["FILE"])) print $media["FILE"]."<br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
+						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">".i18n::translate('View')."</a><br />";
+						if (!$media["EXISTS"] && !isFileExternal($media["FILE"])) print $media["FILE"]."<br /><span class=\"error\">".i18n::translate('The filename entered does not exist.')."</span><br />";
 						else if (!isFileExternal($media["FILE"]) && !empty($imgsize[0])) {
-							print "<br /><sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
+							print "<br /><sub>&nbsp;&nbsp;".i18n::translate('Image Dimensions')." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
 						}
 						if ($media["LINKED"]) {
-							print $pgv_lang["media_linked"]."<br />";
+							print i18n::translate('This media object is linked to the following:')."<br />";
 							foreach ($media["LINKS"] as $indi => $type_record) {
 								if ($type_record!='INDI' && $type_record!='FAM' && $type_record!='SOUR' && $type_record!='OBJE') continue;
 								$record=GedcomRecord::getInstance($indi);
 								echo '<br /><a href="'.encode_url($record->getLinkUrl()).'">';
 								switch($type_record) {
 								case 'INDI':
-									echo $pgv_lang['view_person'], ' - ';
+									echo i18n::translate('View Person'), ' - ';
 									break;
 								case 'FAM':
-									echo $pgv_lang['view_family'], ' - ';
+									echo i18n::translate('View Family'), ' - ';
 									break;
 								case 'SOUR':
-									echo $pgv_lang['view_source'], ' - ';
+									echo i18n::translate('View Source'), ' - ';
 									break;
 								case 'OBJE':
-									echo $pgv_lang['view_object'], ' - ';
+									echo i18n::translate('View Object'), ' - ';
 									break;
 								}
 								echo PrintReady($record->getFullName()), '</a>';
 							}
 						} else {
-							print $pgv_lang["media_not_linked"];
+							print i18n::translate('This media object is not linked to any GEDCOM record.');
 						}
 						print "\n\t\t\t</td>";
 					}
@@ -664,7 +667,7 @@ if ($action=="filter") {
 		}
 		else {
 			print "<tr><td class=\"list_value_wrap\">";
-			print $pgv_lang["no_results"];
+			print i18n::translate('No results found.');
 			print "</td></tr>";
 		}
 		print "</table>";
@@ -694,12 +697,12 @@ if ($action=="filter") {
 					print "<li><a href=\"javascript:;\" onclick=\"pasteid('".preg_replace(array("/'/",'/"/'), array("\'",'&quot;'), $placetext)."');\">".PrintReady($revplace)."</a></li>\n";
 				}
 				print "\n\t\t</ul></td></tr>";
-				print "<tr><td class=\"list_label\">".$pgv_lang["total_places"]." ".$ctplace;
+				print "<tr><td class=\"list_label\">".i18n::translate('Places found')." ".$ctplace;
 				print "</td></tr>";
 			}
 			else {
 				print "<tr><td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
-				print $pgv_lang["no_results"];
+				print i18n::translate('No results found.');
 				print "</td></tr>";
 			}
 		}
@@ -718,12 +721,12 @@ if ($action=="filter") {
 				echo "</span></a></li>";
 			}
 			print "</ul></td></tr>";
-			print "<tr><td class=\"list_label\">".$pgv_lang["repos_found"]." ".count($repo_list);
+			print "<tr><td class=\"list_label\">".i18n::translate('Repositories found')." ".count($repo_list);
 			print "</td></tr>";
 		}
 		else {
 			print "<tr><td class=\"list_value_wrap\">";
-			print $pgv_lang["no_results"];
+			print i18n::translate('No results found.');
 			print "</td></tr>";
 		}
 		print "</table>";
@@ -743,14 +746,14 @@ if ($action=="filter") {
 			foreach ($mysourcelist as $source) {
 				echo '<li><a href="javascript:;" onclick="pasteid(\'', $source->getXref(), "', '", preg_replace("/(['\"])/", "\\$1", PrintReady($source->getFullName())), '\'); return false;"><span class="list_item">', PrintReady($source->getFullName()), '</span></a></li>';
 			}
-			echo '</ul></td></tr><tr><td class="list_label">', $pgv_lang['total_sources'], ' ', count($mysourcelist), '</td></tr>';
+			echo '</ul></td></tr><tr><td class="list_label">', i18n::translate('Total Sources'), ' ', count($mysourcelist), '</td></tr>';
 		}
 		else {
-			echo '<tr><td class="list_value_wrap">', $pgv_lang['no_results'], '</td></tr>';
+			echo '<tr><td class="list_value_wrap">', i18n::translate('No results found.'), '</td></tr>';
 		}
 		print '</table>';
 		if (PGV_USER_CAN_EDIT) {
-			print_help_link('edit_add_unlinked_source', 'qm'); ?><a href="javascript: <?php print $pgv_lang['add_unlinked_source']; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang['add_unlinked_source']; ?></a>
+			?><a href="javascript: <?php print i18n::translate('Add an unlinked source'); ?>" onclick="addnewsource(''); return false;"><?php echo i18n::translate('Add an unlinked source'), help_link('edit_add_unlinked_source'); ?></a>
 		<?php
 		}
 	}

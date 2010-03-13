@@ -4,7 +4,10 @@
  *
  * Provides links for administrators to get to other administrative areas of the site
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -40,7 +43,7 @@ if (!isset($action)) $action = "";
 
 if ($action == "phpinfo") {
 	$helpindex = "phpinfo_help";
-	print_header($pgv_lang["phpinfo"]);
+	print_header(i18n::translate('PHP information'));
 	?>
 	<div class="center">
 	<?php

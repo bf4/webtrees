@@ -4,7 +4,10 @@
  *
  * Census information about an individual
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Census Assistant
  * @version $Id$
  */
@@ -40,107 +43,107 @@
 <script>
 
 //Load Language variables for Edit header and tooltip ============================
-var HeaderName        = "<?php echo $pgv_lang["header_Name"];?>";
-var TTEditName        = "<?php echo $pgv_lang["tt_edit_Name"];?>";
-var HeaderRela        = "<?php echo $pgv_lang["header_Rela"];?>";
-var TTEditRela        = "<?php echo $pgv_lang["tt_edit_Rela"];?>";
-var HeaderMCond       = "<?php echo $pgv_lang["header_MCond"];?>";
-var TTEditMCond       = "<?php echo $pgv_lang["tt_edit_MCond"];?>";
-var HeaderAsset       = "<?php echo $pgv_lang["header_Asset"];?>";
-var TTEditAsset       = "<?php echo $pgv_lang["tt_edit_Asset"];?>";
-var HeaderAge         = "<?php echo $pgv_lang["header_Age"];?>";
-var TTEditAge         = "<?php echo $pgv_lang["tt_edit_Age"];?>";
-var HeaderRace        = "<?php echo $pgv_lang["header_Race"];?>";
-var TTEditRace        = "<?php echo $pgv_lang["tt_edit_Race"];?>";
-var HeaderSex         = "<?php echo $pgv_lang["header_Sex"];?>";
-var TTEditSex         = "<?php echo $pgv_lang["tt_edit_Sex"];?>";
-var HeaderYOB         = "<?php echo $pgv_lang["header_YOB"];?>";
-var TTEditYOB         = "<?php echo $pgv_lang["tt_edit_YOB"];?>";
-var HeaderBmth        = "<?php echo $pgv_lang["header_Bmth"];?>";
-var TTEditBmth        = "<?php echo $pgv_lang["tt_edit_Bmth"];?>";
-var HeaderYrsM        = "<?php echo $pgv_lang["header_YrsM"];?>";
-var TTEditYrsM        = "<?php echo $pgv_lang["tt_edit_YrsM"];?>";
-var HeaderChilB       = "<?php echo $pgv_lang["header_ChilB"];?>";
-var TTEditChilB       = "<?php echo $pgv_lang["tt_edit_ChilB"];?>";
-var HeaderChilL       = "<?php echo $pgv_lang["header_ChilL"];?>";
-var TTEditChilL       = "<?php echo $pgv_lang["tt_edit_ChilL"];?>";
-var HeaderChilD       = "<?php echo $pgv_lang["header_ChilD"];?>";
-var TTEditChilD       = "<?php echo $pgv_lang["tt_edit_ChilD"];?>";
-var HeaderAgeM        = "<?php echo $pgv_lang["header_AgM"];?>";
-var TTEditAgeM        = "<?php echo $pgv_lang["tt_edit_AgM"];?>";
-var HeaderOccu        = "<?php echo $pgv_lang["header_Occu"];?>";
-var TTEditOccu        = "<?php echo $pgv_lang["tt_edit_Occu"];?>";
-var HeaderBplace      = "<?php echo $pgv_lang["header_Bplace"];?>";    // Full format
-var TTEditBplace      = "<?php echo $pgv_lang["tt_edit_Bplace"];?>";   // Full format
-var HeaderBP          = "<?php echo $pgv_lang["header_BP"];?>";        // Chapman format
-var TTEditBP          = "<?php echo $pgv_lang["tt_edit_BP"];?>";       // Chapman format
-var HeaderFBP         = "<?php echo $pgv_lang["header_FBP"];?>";       // Chapman format
-var TTEditFBP         = "<?php echo $pgv_lang["tt_edit_FBP"];?>";      // Chapman format
-var HeaderMBP         = "<?php echo $pgv_lang["header_MBP"];?>";       // Chapman format
-var TTEditMBP         = "<?php echo $pgv_lang["tt_edit_MBP"];?>";      // Chapman format
-var HeaderNL          = "<?php echo $pgv_lang["header_NL"];?>";        
-var TTEditNL          = "<?php echo $pgv_lang["tt_edit_NL"];?>";       
-var HeaderHealth      = "<?php echo $pgv_lang["header_Health"];?>";
-var TTEditHealth      = "<?php echo $pgv_lang["tt_edit_Health"];?>";
-var HeaderYrsUS       = "<?php echo $pgv_lang["header_YrsUS"];?>";
-var TTEditYrsUS       = "<?php echo $pgv_lang["tt_edit_YrsUS"];?>";
-var HeaderYOI         = "<?php echo $pgv_lang["header_YOI"];?>";
-var TTEditYOI         = "<?php echo $pgv_lang["tt_edit_YOI"];?>";
-var HeaderNA          = "<?php echo $pgv_lang["header_NA"];?>";
-var TTEditNA          = "<?php echo $pgv_lang["tt_edit_NA"];?>";
-var HeaderYON         = "<?php echo $pgv_lang["header_YON"];?>";
-var TTEditYON         = "<?php echo $pgv_lang["tt_edit_YON"];?>";
-var HeaderEngL        = "<?php echo $pgv_lang["header_EngL"];?>";
-var TTEditEngL        = "<?php echo $pgv_lang["tt_edit_EngL"];?>";
-var HeaderEng         = "<?php echo $pgv_lang["header_Eng"];?>";
-var TTEditEng         = "<?php echo $pgv_lang["tt_edit_Eng"];?>";
-var HeaderInd         = "<?php echo $pgv_lang["header_Ind"];?>";
-var TTEditInd         = "<?php echo $pgv_lang["tt_edit_Ind"];?>";
-var HeaderEmp         = "<?php echo $pgv_lang["header_Emp"];?>";
-var TTEditEmp         = "<?php echo $pgv_lang["tt_edit_Emp"];?>";
-var HeaderEmR         = "<?php echo $pgv_lang["header_EmR"];?>";
-var TTEditEmR         = "<?php echo $pgv_lang["tt_edit_EmR"];?>";
-var HeaderEmD         = "<?php echo $pgv_lang["header_EmD"];?>";
-var TTEditEmD         = "<?php echo $pgv_lang["tt_edit_EmD"];?>";
-var HeaderEmH         = "<?php echo $pgv_lang["header_EmH"];?>";
-var TTEditEmH         = "<?php echo $pgv_lang["tt_edit_EmH"];?>";
-var HeaderEmN         = "<?php echo $pgv_lang["header_EmN"];?>";
-var TTEditEmN         = "<?php echo $pgv_lang["tt_edit_EmN"];?>";
-var HeaderEduc        = "<?php echo $pgv_lang["header_Educ"];?>";
-var TTEditEduc        = "<?php echo $pgv_lang["tt_edit_Educ"];?>";
-var HeaderBIC         = "<?php echo $pgv_lang["header_BIC"];?>";
-var TTEditBIC         = "<?php echo $pgv_lang["tt_edit_BIC"];?>";
-var HeaderBOE         = "<?php echo $pgv_lang["header_BOE"];?>";
-var TTEditBOE         = "<?php echo $pgv_lang["tt_edit_BOE"];?>";
-var HeaderInfirm      = "<?php echo $pgv_lang["header_Infirm"];?>";
-var TTEditInfirm      = "<?php echo $pgv_lang["tt_edit_Infirm"];?>";
-var HeaderVet         = "<?php echo $pgv_lang["header_Vet"];?>";
-var TTEditVet         = "<?php echo $pgv_lang["tt_edit_Vet"];?>";
-var HeaderTenure      = "<?php echo $pgv_lang["header_Tenure"];?>";
-var TTEditTenure      = "<?php echo $pgv_lang["tt_edit_Tenure"];?>";
-var HeaderParent      = "<?php echo $pgv_lang["header_Parent"];?>";
-var TTEditParent      = "<?php echo $pgv_lang["tt_edit_Parent"];?>";
-var HeaderMmth        = "<?php echo $pgv_lang["header_Mmth"];?>";
-var TTEditMmth        = "<?php echo $pgv_lang["tt_edit_Mmth"];?>";
-var HeaderMnse        = "<?php echo $pgv_lang["header_Mnse"];?>";
-var TTEditMnse        = "<?php echo $pgv_lang["tt_edit_Mnse"];?>";
-var HeaderWksu        = "<?php echo $pgv_lang["header_Wksu"];?>";
-var TTEditWksu        = "<?php echo $pgv_lang["tt_edit_Wksu"];?>";
-var HeaderMnsu        = "<?php echo $pgv_lang["header_Mnsu"];?>";
-var TTEditMnsu        = "<?php echo $pgv_lang["tt_edit_Mnsu"];?>";
-var HeaderHome        = "<?php echo $pgv_lang["header_Home"];?>";
-var TTEditHome        = "<?php echo $pgv_lang["tt_edit_Home"];?>";
-var HeaderSitu        = "<?php echo $pgv_lang["header_Situ"];?>";
-var TTEditSitu        = "<?php echo $pgv_lang["tt_edit_Situ"];?>";
-var HeaderWar         = "<?php echo $pgv_lang["header_War"];?>";
-var TTEditWar         = "<?php echo $pgv_lang["tt_edit_War"];?>";
-var HeaderInfirm1910  = "<?php echo $pgv_lang["header_Infirm1910"];?>";
-var TTEditInfirm1910  = "<?php echo $pgv_lang["tt_edit_Infirm1910"];?>";
-var HeaderEducpre1890 = "<?php echo $pgv_lang["header_Educpre1890"];?>";
-var TTEditEducpre1890 = "<?php echo $pgv_lang["tt_edit_Educpre1890"];?>";
+var HeaderName        = "<?php echo i18n::translate('Name');?>";
+var TTEditName        = "<?php echo i18n::translate('Full Name or Married name if married');?>";
+var HeaderRela        = "<?php echo i18n::translate('Relation');?>";
+var TTEditRela        = "<?php echo i18n::translate('Relationship to Head of Household - Head, Wife, Son etc');?>";
+var HeaderMCond       = "<?php echo i18n::translate('MC');?>";
+var TTEditMCond       = "<?php echo i18n::translate('Marital Condition - M,S,U,W,D - Married, Single, Unmarried, Widowed or Divorced');?>";
+var HeaderAsset       = "<?php echo i18n::translate('Assets');?>";
+var TTEditAsset       = "<?php echo i18n::translate('Assets = O,R - value,rent - Y,N,R - Y,N,F  =  Owned,Rented - Value,Rent - Radio - Farm');?>";
+var HeaderAge         = "<?php echo i18n::translate('Age');?>";
+var TTEditAge         = "<?php echo i18n::translate('Age at last birthday');?>";
+var HeaderRace        = "<?php echo i18n::translate('Race');?>";
+var TTEditRace        = "<?php echo i18n::translate('Race or Color - B.W,M,A,I,C - Black, White, Mulatto, Asian, Indian, Chinese etc');?>";
+var HeaderSex         = "<?php echo i18n::translate('Sex');?>";
+var TTEditSex         = "<?php echo i18n::translate('Male(M) or Female(F)');?>";
+var HeaderYOB         = "<?php echo i18n::translate('DOB');?>";
+var TTEditYOB         = "<?php echo i18n::translate('Date of Birth - mmm yyyy');?>";
+var HeaderBmth        = "<?php echo i18n::translate('Bmth');?>";
+var TTEditBmth        = "<?php echo i18n::translate('If born within Census year - mmm - Month of birth');?>";
+var HeaderYrsM        = "<?php echo i18n::translate('YrsM');?>";
+var TTEditYrsM        = "<?php echo i18n::translate('Years Married or if married in Census Year - yy or Y');?>";
+var HeaderChilB       = "<?php echo i18n::translate('ChB');?>";
+var TTEditChilB       = "<?php echo i18n::translate('Children born alive - nn');?>";
+var HeaderChilL       = "<?php echo i18n::translate('ChL');?>";
+var TTEditChilL       = "<?php echo i18n::translate('Children still living - nn');?>";
+var HeaderChilD       = "<?php echo i18n::translate('ChD');?>";
+var TTEditChilD       = "<?php echo i18n::translate('Children who have died - nn');?>";
+var HeaderAgeM        = "<?php echo i18n::translate('AgM');?>";
+var TTEditAgeM        = "<?php echo i18n::translate('Age at first marriage - yy');?>";
+var HeaderOccu        = "<?php echo i18n::translate('Occupation');?>";
+var TTEditOccu        = "<?php echo i18n::translate('Occupation');?>";
+var HeaderBplace      = "<?php echo i18n::translate('Birthplace');?>";    // Full format
+var TTEditBplace      = "<?php echo i18n::translate('Birthplace (Full format)');?>";   // Full format
+var HeaderBP          = "<?php echo i18n::translate('BP');?>";        // Chapman format
+var TTEditBP          = "<?php echo i18n::translate('Birthplace - xx or xxx - State/Country (Chapman format)');?>";       // Chapman format
+var HeaderFBP         = "<?php echo i18n::translate('FBP');?>";       // Chapman format
+var TTEditFBP         = "<?php echo i18n::translate('Father\'s Birthplace - xx or xxx - State or Country (Chapman format)');?>";      // Chapman format
+var HeaderMBP         = "<?php echo i18n::translate('MBP');?>";       // Chapman format
+var TTEditMBP         = "<?php echo i18n::translate('Mother\'s Birthplace - xx or xxx - State or Country (Chapman format)');?>";      // Chapman format
+var HeaderNL          = "<?php echo i18n::translate('NL');?>";        
+var TTEditNL          = "<?php echo i18n::translate('If Foreign Born - Native Language');?>";       
+var HeaderHealth      = "<?php echo i18n::translate('Health');?>";
+var TTEditHealth      = "<?php echo i18n::translate('Health - 12345 = 1.Blind, 2.Deaf&Dumb, 3.Idiotic, 4.Insane, 5.Disabled etc');?>";
+var HeaderYrsUS       = "<?php echo i18n::translate('YUS');?>";
+var TTEditYrsUS       = "<?php echo i18n::translate('If Foreign Born - yy -Years in the USA');?>";
+var HeaderYOI         = "<?php echo i18n::translate('YOI');?>";
+var TTEditYOI         = "<?php echo i18n::translate('If Foreign Born - yyyy - Year of Immigration');?>";
+var HeaderNA          = "<?php echo i18n::translate('N/A');?>";
+var TTEditNA          = "<?php echo i18n::translate('If Foreign Born - N,A - Naturalized, Alien');?>";
+var HeaderYON         = "<?php echo i18n::translate('YON');?>";
+var TTEditYON         = "<?php echo i18n::translate('If Foreign Born - yyyy - Year of Naturalization');?>";
+var HeaderEngL        = "<?php echo i18n::translate('EngL');?>";
+var TTEditEngL        = "<?php echo i18n::translate('English spoken?, if not, Native Language');?>";
+var HeaderEng         = "<?php echo i18n::translate('Eng?');?>";
+var TTEditEng         = "<?php echo i18n::translate('English spoken? - Y/N');?>";
+var HeaderInd         = "<?php echo i18n::translate('Industry');?>";
+var TTEditInd         = "<?php echo i18n::translate('Industry');?>";
+var HeaderEmp         = "<?php echo i18n::translate('Employ');?>";
+var TTEditEmp         = "<?php echo i18n::translate('Employment - Yes, No, Worker, Employer etc');?>";
+var HeaderEmR         = "<?php echo i18n::translate('EmR');?>";
+var TTEditEmR         = "<?php echo i18n::translate('Employer? - Y/N');?>";
+var HeaderEmD         = "<?php echo i18n::translate('EmD');?>";
+var TTEditEmD         = "<?php echo i18n::translate('Employed? - Y/N');?>";
+var HeaderEmH         = "<?php echo i18n::translate('WH');?>";
+var TTEditEmH         = "<?php echo i18n::translate('Working at Home? - Y/N');?>";
+var HeaderEmN         = "<?php echo i18n::translate('EmN');?>";
+var TTEditEmN         = "<?php echo i18n::translate('UnEmployed? - Y/N');?>";
+var HeaderEduc        = "<?php echo i18n::translate('Edu');?>";
+var TTEditEduc        = "<?php echo i18n::translate('Education - xxx - At School? Y/N, Can Read? Y/N, Can Write? Y/N');?>";
+var HeaderBIC         = "<?php echo i18n::translate('BIC');?>";
+var TTEditBIC         = "<?php echo i18n::translate('Born in County - Y/N - (UK 1841 only)');?>";
+var HeaderBOE         = "<?php echo i18n::translate('BOE');?>";
+var TTEditBOE         = "<?php echo i18n::translate('Born outside England - SCO,IRE,WAL,FOReign - (UK 1841 only)');?>";
+var HeaderInfirm      = "<?php echo i18n::translate('Infirm');?>";
+var TTEditInfirm      = "<?php echo i18n::translate('Infirmaties - 1234 - 1.Deaf&Dumb, 2.Blind, 3.Lunatic, 4.Imbecile/feeble-minded');?>";
+var HeaderVet         = "<?php echo i18n::translate('Vet');?>";
+var TTEditVet         = "<?php echo i18n::translate('War Veteran? - Y/N');?>";
+var HeaderTenure      = "<?php echo i18n::translate('Ten');?>";
+var TTEditTenure      = "<?php echo i18n::translate('Tenure - xx - Owned/Rented, (if owned)Free/Mortgaged - eg OM, or R-, or OF');?>";
+var HeaderParent      = "<?php echo i18n::translate('Par');?>";
+var TTEditParent      = "<?php echo i18n::translate('Parentage - xx = Father if foreign born Y/N/-, Mother if foreign born Y/N/- = eg YY, YN, NY, or -');?>";
+var HeaderMmth        = "<?php echo i18n::translate('Mmth');?>";
+var TTEditMmth        = "<?php echo i18n::translate('Marriage month - mmm = If married within Census year - Month of marriage');?>";
+var HeaderMnse        = "<?php echo i18n::translate('MnsE');?>";
+var TTEditMnse        = "<?php echo i18n::translate('Months Employed - xx = Months employed during Census Year');?>";
+var HeaderWksu        = "<?php echo i18n::translate('WksU');?>";
+var TTEditWksu        = "<?php echo i18n::translate('Weeks Unemployed - xx = Weeks unemployed during Census Year');?>";
+var HeaderMnsu        = "<?php echo i18n::translate('MnsU');?>";
+var TTEditMnsu        = "<?php echo i18n::translate('Months Unemployed - xx = Months unemployed during Census Year');?>";
+var HeaderHome        = "<?php echo i18n::translate('Home');?>";
+var TTEditHome        = "<?php echo i18n::translate('Home Ownership - x-x-x-xxxx = O/R-F/M-F/H-#### = Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number');?>";
+var HeaderSitu        = "<?php echo i18n::translate('Situ');?>";
+var TTEditSitu        = "<?php echo i18n::translate('Situation - 3 parameters - Diseases, Infimaties, Convict/Pauper etc');?>";
+var HeaderWar         = "<?php echo i18n::translate('War');?>";
+var TTEditWar         = "<?php echo i18n::translate('War or Expedition');?>";
+var HeaderInfirm1910  = "<?php echo i18n::translate('Infirm');?>";
+var TTEditInfirm1910  = "<?php echo i18n::translate('Infirmaties - xx = Whether blind (both eyes) Y/N, Whether Deaf and Dumb Y/N');?>";
+var HeaderEducpre1890 = "<?php echo i18n::translate('Edu');?>";
+var TTEditEducpre1890 = "<?php echo i18n::translate('Education - xxx = At School, Cannot Read, Cannot Write = eg x--, xxx, or -xx etc');?>";
 
-var HeaderLang        = "<?php echo $pgv_lang["header_Lang"];?>";
-var TTEditLang        = "<?php echo $pgv_lang["tt_edit_Lang"];?>";
+var HeaderLang        = "<?php echo i18n::translate('Lang');?>";
+var TTEditLang        = "<?php echo i18n::translate('If Foreign Born - Native Language');?>";
 
 // Load Edit Table variables =====================================================
 var INPUT_NAME_PREFIX = 'InputCell_'; // this is being set via script

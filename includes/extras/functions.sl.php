@@ -1,7 +1,10 @@
 <?php
 /**
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @version $Id$
  */
 
@@ -40,7 +43,7 @@ function date_localisation_sl(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	static $LOCATIVE_MONTHS=NULL;
 
 	if (empty($NOMINATIVE_MONTHS)) {
-		$NOMINATIVE_MONTHS=array($pgv_lang['jan'], $pgv_lang['feb'], $pgv_lang['mar'], $pgv_lang['apr'], $pgv_lang['may'], $pgv_lang['jun'], $pgv_lang['jul'], $pgv_lang['aug'], $pgv_lang['sep'], $pgv_lang['oct'], $pgv_lang['nov'], $pgv_lang['dec']);
+		$NOMINATIVE_MONTHS=array(i18n::translate('January'), i18n::translate('February'), i18n::translate('March'), i18n::translate('April'), i18n::translate('May'), i18n::translate('June'), i18n::translate('July'), i18n::translate('August'), i18n::translate('September'), i18n::translate('October'), i18n::translate('November'), i18n::translate('December'));
 		$GENITIVE_MONTHS=array('januarja', 'februarja', 'marca', 'aprila', 'maja', 'junija', 'julija', 'avgusta', 'septembra', 'oktobra', 'novembra', 'decembra');
 		$INSTRUMENTAL_MONTHS=array('januarjem', 'feruarjem', 'marcem', 'aprilom', 'majem', 'julijem', 'junijem', 'avgustom', 'septembrom', 'oktobrom', 'novembrom', 'decembrom');
 		$LOCATIVE_MONTHS=array('januarju', 'februarju', 'marcu', 'aprilu', 'maju', 'juniju', 'juliju', 'avgustu', 'septembru', 'oktobru', 'novembru', 'decembru');
@@ -109,19 +112,19 @@ function age_localisation_sl(&$agestring, &$show_years) {
 			'/(\d+)d/i'
 		),
 		array(
-			$pgv_lang['child'],
-			$pgv_lang['infant'],
-	 		$pgv_lang['stillborn'],
-			$show_years ? '1 '.$pgv_lang['year1'] : '1',
+			i18n::translate('Child'),
+			i18n::translate('Infant'),
+	 		i18n::translate('Stillborn'),
+			$show_years ? '1 '.i18n::translate('year') : '1',
 			$show_years ? '2 '."leti" : '2', $show_years ? '3 '."leta" : '3', $show_years ? '4 '."leta" : '4',
 			$show_years ? '101 '."leto" : '101', $show_years ? '102 '."leti" : '102', $show_years ? '103 '."leta" : '103',
 			$show_years ? '104 '."leta" : '104',
-			$show_years ? '$1 '.$pgv_lang['years'] : '$1',
-			'1 '.$pgv_lang['month1'],
+			$show_years ? '$1 '.i18n::translate('years') : '$1',
+			'1 '.i18n::translate('month'),
 			'2 '."meseca", '3 '."mesece", '4 '."mesece",
-	 		'$1 '.$pgv_lang['months'],
-			'1 '.$pgv_lang['day1'],
-			'$1 '.$pgv_lang['days']
+	 		'$1 '.i18n::translate('months'),
+			'1 '.i18n::translate('day'),
+			'$1 '.i18n::translate('days')
 		),
 		$agestring
 	);
@@ -133,14 +136,14 @@ function date_diff_localisation_sl(&$label, &$gap) {
 	global $pgv_lang;
 
 	$yrs = round($gap/12);
-	if ($gap == 12 || $gap == -12) $label .= $yrs." ".$pgv_lang["year1"]; // 1 leto
+	if ($gap == 12 || $gap == -12) $label .= $yrs." ".i18n::translate('year'); // 1 leto
 	else if (($yrs == 2 ) || ($yrs == -2 )) $label .= $yrs." leti"; // 2 leti
 	else if (($yrs > 2 && $yrs < 5) || ($yrs < -2 && $yrs > -5)) $label .= $yrs." leta"; // +- 3 in 4 leta
-	else if ($yrs > 4 or $yrs < -4) $label .= $yrs." ".$pgv_lang["years"]; // x let
-	else if ($gap == 1 || $gap == -1) $label .= $gap." ".$pgv_lang["month1"]; // 1 meses
+	else if ($yrs > 4 or $yrs < -4) $label .= $yrs." ".i18n::translate('years'); // x let
+	else if ($gap == 1 || $gap == -1) $label .= $gap." ".i18n::translate('month'); // 1 meses
 	else if (($gap == 2 ) || ($gap == -2 )) $label .= $gap." meseca"; // 2 meseca
 	else if (($gap > 2 && $gap < 5) || ($gap < -2 && $gap > -5)) $label .= $gap." mesece"; // 3-4 mesece
-	else if ($gap != 0) $label .= $gap." ".$pgv_lang["months"]; // x mesecev
+	else if ($gap != 0) $label .= $gap." ".i18n::translate('months'); // x mesecev
 }
 ////////////////////////////////////////////////////////////////////////////////
 // Localise a number of people. Lokalizacija števila oseb. //Glej  lifespan.php
@@ -149,13 +152,13 @@ function num_people_localisation_sl(&$count) {
 	global $pgv_lang;
 
 	if ($count == 1)
-		print "<br /><b>".$count." ".$pgv_lang["individual"]."</b>"; // 1 oseba
+		print "<br /><b>".$count." ".i18n::translate('Individual')."</b>"; // 1 oseba
 	else if ($count == 2)
 		print "<br /><b>".$count." osebi</b>"; // 2 osebi
 	else if ($count > 2 && $count < 5)
 		print "<br /><b>".$count." osebe</b>"; // 3-4 osebe
 	else
-		print "<br /><b>".$count." ".$pgv_lang["stat_individuals"]."</b>"; // x oseb
+		print "<br /><b>".$count." ".i18n::translate('Individuals')."</b>"; // x oseb
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Localise the _AKAN, _AKA, ALIA and _INTE facts. Lokalizacja dejstev _AKAN, _AKA, ALIA i _INTE.

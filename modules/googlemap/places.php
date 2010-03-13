@@ -2,7 +2,10 @@
 /**
  * Online UI for editing config.php site configuration variables
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -23,7 +26,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 17 September 2005
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage GoogleMap
  * @see config.php
  * $Id$
@@ -35,8 +38,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 require PGV_ROOT.'modules/googlemap/defaultconfig.php';
-
-loadLangFile('pgv_lang, pgv_confighelp, pgv_help, googlemap:lang, googlemap:help_text');
 
 if (isset($_REQUEST['action']))	 $action=$_REQUEST['action'];
 if (isset($_REQUEST['parent']))	 $parent=$_REQUEST['parent'];
@@ -156,9 +157,9 @@ function findFiles($path) {
 }
 
 if (!PGV_USER_IS_ADMIN) {
-	echo "<span class=\"subheaders\">{$pgv_lang['edit_place_locations']}</span><br /><br />";
+	echo "<span class=\"subheaders\">".i18n::translate('Edit geographic place locations')."</span><br /><br />";
 	echo "<table class=\"facts_table\">\n";
-	echo "<tr><td colspan=\"2\" class=\"facts_value\">", $pgv_lang["gm_admin_error"];
+	echo "<tr><td colspan=\"2\" class=\"facts_value\">", i18n::translate('Page only for Administrators');
 	echo "</td></tr></table>\n";
 	echo "<br /><br /><br />\n";
 	print_footer();
@@ -175,22 +176,22 @@ if ($action=="ExportFile" && PGV_USER_IS_ADMIN) {
 	$outputFileName=preg_replace('/[:;\/\\\(\)\{\}\[\] $]/', '_', implode('-', $tmp)).'.csv';
 	header('Content-Type: application/octet-stream');
 	header('Content-Disposition: attachment; filename="'.$outputFileName.'"');
-	echo "\"{$pgv_lang["gm_level"]}\";\"{$pgv_lang["pl_country"]}\";";
-	if ($maxLevel>0) echo "\"{$pgv_lang["pl_state"]}\";";
-	if ($maxLevel>1) echo "\"{$pgv_lang["pl_county"]}\";";
-	if ($maxLevel>2) echo "\"{$pgv_lang["pl_city"]}\";";
-	if ($maxLevel>3) echo "\"{$pgv_lang["pl_place"]}\";";
-	if ($maxLevel>4) echo "\"{$pgv_lang["pl_place"]}\";";
-	if ($maxLevel>5) echo "\"{$pgv_lang["pl_place"]}\";";
-	if ($maxLevel>6) echo "\"{$pgv_lang["pl_place"]}\";";
-	if ($maxLevel>7) echo "\"{$pgv_lang["pl_place"]}\";";
-	echo "\"{$pgv_lang["placecheck_long"]}\";\"{$pgv_lang["placecheck_lati"]}\";";
-	echo "\"{$pgv_lang["pl_zoom_factor"]}\";\"{$pgv_lang["pl_place_icon"]}\"\r\n";
+	echo "\"".i18n::translate('Level')."\";\"".i18n::translate('Country')."\";";
+	if ($maxLevel>0) echo '"', i18n::translate('State'), '";';
+	if ($maxLevel>1) echo '"', i18n::translate('County'), '";';
+	if ($maxLevel>2) echo '"', i18n::translate('City'), '";';
+	if ($maxLevel>3) echo '"', i18n::translate('Place'), '";';
+	if ($maxLevel>4) echo '"', i18n::translate('Place'), '";';
+	if ($maxLevel>5) echo '"', i18n::translate('Place'), '";';
+	if ($maxLevel>6) echo '"', i18n::translate('Place'), '";';
+	if ($maxLevel>7) echo '"', i18n::translate('Place'), '";';
+	echo '"', i18n::translate('Longitude'), '";"', i18n::translate('Latitude'), '";';
+	echo '"', i18n::translate('Zoom factor'), '";"', i18n::translate('Icon'), PGV_EOL;
 	outputLevel($parent);
 	exit;
 }
 
-print_header($pgv_lang["edit_place_locations"]);
+print_header(i18n::translate('Edit geographic place locations'));
 
 if ($action=="ImportGedcom") {
 	$placelist=array();
@@ -324,12 +325,12 @@ if ($action=="ImportFile") {
 	<input type="hidden" name="action" value="ImportFile2" />
 	<table class="facts_table">
 		<tr>
-			<td class="descriptionbox"><?php print_help_link("PLIF_FILENAME", "qm", "PLIF_FILENAME");?><?php echo $pgv_lang["pl_places_filename"];?></td>
+			<td class="descriptionbox"><?php echo i18n::translate('File containing places (CSV)'), help_link('PLIF_FILENAME'); ?></td>
 			<td class="optionbox"><input type="file" name="placesfile" size="50"></td>
 		</tr>
 		<?php if (count($placefiles)>0) { ?>
 		<tr>
-			<td class="descriptionbox"><?php print_help_link("PLIF_LOCALFILE", "qm", "pl_places_localfile");?><?php echo $pgv_lang["pl_places_localfile"];?></td>
+			<td class="descriptionbox"><?php echo i18n::translate('Server file containing places (CSV)'), help_link('PLIF_LOCALFILE'); ?></td>
 			<td class="optionbox">
 				<select name="localfile">
 					<option></option>
@@ -343,19 +344,19 @@ if ($action=="ImportFile") {
 		</tr>
 		<?php } ?>
 		<tr>
-			<td class="descriptionbox"><?php print_help_link("PLIF_CLEAN", "qm", "PLIF_CLEAN");?><?php echo $pgv_lang["pl_clean_db"];?></td>
+			<td class="descriptionbox"><?php echo i18n::translate('Clear all place-locations before import?'), help_link('PLIF_CLEAN');?></td>
 			<td class="optionbox"><input type="checkbox" name="cleardatabase"></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php print_help_link("PLIF_UPDATE", "qm", "PLIF_UPDATE");?><?php echo $pgv_lang["pl_update_only"];?></td>
+			<td class="descriptionbox"><?php echo i18n::translate('Update existing places only?'), help_link('PLIF_UPDATE'); ?></td>
 			<td class="optionbox"><input type="checkbox" name="updateonly"></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php print_help_link("PLIF_OVERWRITE", "qm", "PLIF_OVERWRITE");?><?php echo $pgv_lang["pl_overwrite_data"];?></td>
+			<td class="descriptionbox"><?php echo i18n::translate('Overwrite location-data with data from file?'), help_link('PLIF_OVERWRITE'); ?></td>
 			<td class="optionbox"><input type="checkbox" name="overwritedata"></td>
 		</tr>
 	</table>
-	<input id="savebutton" type="submit" value="<?php echo $pgv_lang["continue"];?>" /><br />
+	<input id="savebutton" type="submit" value="<?php echo i18n::translate('Continue Adding');?>" /><br />
 </form>
 <?php
 	print_footer();
@@ -520,7 +521,7 @@ if ($action=="DeleteRecord") {
 		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 			->execute(array($deleteRecord));
 	} else {
-		echo "<table class=\"facts_table\"><tr><td class=\"optionbox\">{$pgv_lang['pl_delete_error']}</td></tr></table>";
+		echo "<table class=\"facts_table\"><tr><td class=\"optionbox\">".i18n::translate('Location not removed: this location contains sub-locations')."</td></tr></table>";
 	}
 }
 
@@ -553,7 +554,7 @@ function add_place_location(placeid) {
 }
 
 function delete_place(placeid) {
-	var answer=confirm("<?php echo $pgv_lang["pl_remove_location"];?>");
+	var answer=confirm("<?php echo i18n::translate('Remove this location?');?>");
 	if (answer == true) {
 		window.location = "<?php echo $_SERVER["REQUEST_URI"]; ?>&action=DeleteRecord&deleteRecord=" + placeid;
 	}
@@ -563,31 +564,31 @@ function delete_place(placeid) {
 </script>
 <?php
 
-echo "<span class=\"subheaders\">{$pgv_lang['edit_place_locations']}: </span>";
+echo "<span class=\"subheaders\">".i18n::translate('Edit geographic place locations').": </span>";
 $where_am_i=place_id_to_hierarchy($parent);
 foreach (array_reverse($where_am_i, true) as $id=>$place) {
 	if ($id==$parent) {
 		if ($place != "Unknown") {
 			echo PrintReady($place);
 		} else {
-			echo $pgv_lang["pl_unknown"];
+			echo i18n::translate('Unknown');
 		}
 	} else {
 		echo "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}&display={$display}\">";
 		if ($place != "Unknown") {
 			echo PrintReady($place), "</a>";
 		} else {
-			echo $pgv_lang["pl_unknown"], "</a>";
+			echo i18n::translate('Unknown'), "</a>";
 		}
 	}
 	echo " - ";
 }
-echo "<a href=\"module.php?mod=googlemap&pgvaction=places&parent=0&display=$display\">{$pgv_lang['top_level']}</a>";
+echo "<a href=\"module.php?mod=googlemap&pgvaction=places&parent=0&display=$display\">".i18n::translate('Top Level')."</a>";
 echo "<br /><br /><form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&parent=$parent&display=$display\">";
-echo "\n<table><tr><td class=\"optionbox\">", $pgv_lang["list_inactive"], ": <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
+echo "\n<table><tr><td class=\"optionbox\">", i18n::translate('Click here to show inactive places'), ": <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
 if ($display == 'inactive') echo " checked=\"checked\"";
-echo ">\n<input type=\"submit\" value=\"", $pgv_lang["view"], "\" >";
-print_help_link("PLE_ACTIVE", "qm", "PLE_ACTIVE");
+echo ">\n<input type=\"submit\" value=\"", i18n::translate('View'), "\" >";
+echo help_link('PLE_ACTIVE');
 echo "</td></tr></table>";
 echo "</form>";
 
@@ -597,19 +598,19 @@ echo "<table class=\"facts_table\"><tr>";
 echo "<th class=\"descriptionbox\">", i18n::translate('PLAC'), "</th>";
 echo "<th class=\"descriptionbox\">", i18n::translate('LATI'), "</th>";
 echo "<th class=\"descriptionbox\">", i18n::translate('LONG'), "</th>";
-echo "<th class=\"descriptionbox\">{$pgv_lang['pl_zoom_factor']}</th>";
-echo "<th class=\"descriptionbox\">{$pgv_lang['pl_place_icon']}</th>";
+echo "<th class=\"descriptionbox\">".i18n::translate('Zoom factor')."</th>";
+echo "<th class=\"descriptionbox\">".i18n::translate('Icon')."</th>";
 echo "<th class=\"descriptionbox\" colspan=\"2\">";
-print_help_link('PL_EDIT_LOCATION', 'qm', 'PL_EDIT_LOCATION');
-echo "{$pgv_lang['pl_edit']}</th></tr>";
+echo help_link('PL_EDIT_LOCATION');
+echo i18n::translate('Edit geographic location'), "</th></tr>";
 if (count($placelist) == 0)
-	echo "<tr><td colspan=\"7\" class=\"facts_value\">{$pgv_lang['pl_no_places_found']}</td></tr>";
+	echo "<tr><td colspan=\"7\" class=\"facts_value\">", i18n::translate('No places found'), "</td></tr>";
 foreach ($placelist as $place) {
 	echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places&parent={$place['place_id']}&display={$display}\">";
 	if ($place["place"] != "Unknown")
 			echo PrintReady($place["place"]), "</a></td>";
 		else
-			echo $pgv_lang["pl_unknown"], "</a></td>";
+			echo i18n::translate('Unknown'), "</a></td>";
 	echo "<td class=\"optionbox\">{$place['lati']}</td>";
 	echo "<td class=\"optionbox\">{$place['long']}</td>";
 	echo "<td class=\"optionbox\">{$place['zoom']}</td>";
@@ -627,13 +628,13 @@ foreach ($placelist as $place) {
 		echo "<img src=\"", $place["icon"], " \"width=\"25\" height=\"15\">";
 	}
 	echo "</td>";
-	echo "<td class=\"optionbox\"><a href=\"javascript:;\" onclick=\"edit_place_location({$place['place_id']});return false;\">{$pgv_lang["edit"]}</a></td>";
+	echo "<td class=\"optionbox\"><a href=\"javascript:;\" onclick=\"edit_place_location({$place['place_id']});return false;\">", i18n::translate('Edit'), "</a></td>";
 	$noRows=
 		PGV_DB::prepare("SELECT COUNT(pl_id) FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=?")
 		->execute(array($place["place_id"]))
 		->fetchOne();
 	if ($noRows==0) { ?>
-	<td class="optionbox"><a href="javascript:;" onclick="delete_place(<?php echo $place["place_id"], ");return false;\">";?><img src="images/remove.gif" border="0" alt="<?php echo $pgv_lang["remove"];?>" /></a></td>
+	<td class="optionbox"><a href="javascript:;" onclick="delete_place(<?php echo $place["place_id"], ");return false;\">";?><img src="images/remove.gif" border="0" alt="<?php echo i18n::translate('Remove');?>" /></a></td>
 <?php       } else { ?>
 		<td class="optionbox"><img src="images/remove-dis.png" border="0" alt="" /> </td>
 <?php       } ?>
@@ -646,34 +647,34 @@ foreach ($placelist as $place) {
 ?>
 	<table class="facts_table">
 		<tr>
-			<td class="optionbox" colspan="2"><?php print_help_link("PL_ADD_LOCATION_, "qm", "PL_ADD_LOCATION");?><a href="javascript:;" onclick="add_place_location(<?php echo $parent;?>);return false;"><?php echo $pgv_lang["pl_add_place"];?></a></td>
+			<td class="optionbox" colspan="2"><a href="javascript:;" onclick="add_place_location(<?php echo $parent;?>);return false;"><?php echo i18n::translate('Add place');?></a><?php echo help_link('PL_ADD_LOCATION'); ?></td>
 		</tr>
 		<tr>
-			<td class="optionbox"><?php print_help_link("PL_IMPORT_GEDCOM", "qm", "PL_IMPORT_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr"><?php echo $pgv_lang["pl_import_gedcom"];?></a></td>
-			<td class="optionbox"><?php print_help_link("PL_IMPORT_ALL_GEDCOM", "qm", "PL_IMPORT_ALL_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=all"><?php echo $pgv_lang["pl_import_all_gedcom"];?></a></td>
+			<td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr"><?php echo i18n::translate('Import from current GEDCOM');?></a><?php echo help_link('PL_IMPORT_GEDCOM'); ?></td>
+			<td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=all"><?php echo i18n::translate('Import from all GEDCOMs');?></a><?php echo help_link('PL_IMPORT_ALL_GEDCOM'); ?></td>
 		</tr>
 		<tr>
-			<td class="optionbox" colspan="2"><?php print_help_link("PL_IMPORT_FILE", "qm", "PL_IMPORT_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportFile&mode=add"><?php echo $pgv_lang["pl_import_file"];?></a></td>
+			<td class="optionbox" colspan="2"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportFile&mode=add"><?php echo i18n::translate('Import from file');?></a><?php echo help_link('PL_IMPORT_FILE'); ?></td>
 		</tr>
 		<tr>
 			<td class="optionbox">
 <?php
 	if (count($where_am_i)<=4) {
-		print_help_link("PL_EXPORT_FILE", "qm", "PL_EXPORT_FILE");
 		echo "<a href=\"module.php?mod=googlemap&pgvaction=places&action=ExportFile&parent={$parent}\">";
-		echo "{$pgv_lang['pl_export_file']}</a>";
+		echo i18n::translate('Export current view to file'), "</a>";
+		echo help_link('PL_EXPORT_FILE');
 	} else {
 		echo "&nbsp;";
 	}
 	echo "</td><td class=\"optionbox\">";
-	print_help_link("PL_EXPORT_ALL_FILE", "qm", "PL_EXPORT_ALL_FILE");
 	echo "<a href=\"module.php?mod=googlemap&pgvaction=places&action=ExportFile&parent=0\">";
-	echo "{$pgv_lang['pl_export_all_file']}</a>";
+	echo i18n::translate('Export all locations to file'), "</a>";
+	echo help_link('PL_EXPORT_ALL_FILE');
 	echo "</td></tr></table><br />";
 if(empty($SEARCH_SPIDER))
 	print_footer();
 else {
-	echo $pgv_lang["label_search_engine_detected"], ": ", $SEARCH_SPIDER;
+	echo i18n::translate('Search Engine Spider Detected'), ": ", $SEARCH_SPIDER;
 	echo "\n</div>\n\t</body>\n</html>";
 }
 ?>

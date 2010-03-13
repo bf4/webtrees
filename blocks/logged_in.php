@@ -4,7 +4,10 @@
  *
  * This block will print a list of the users who are currently logged in
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  * @version $Id$
  */
@@ -33,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_LOGGED_IN_PHP', '');
 
-$PGV_BLOCKS["print_logged_in_users"]["name"]		= $pgv_lang["logged_in_users_block"];
+$PGV_BLOCKS["print_logged_in_users"]["name"]		= i18n::translate('Logged In Users');
 $PGV_BLOCKS["print_logged_in_users"]["descr"]		= "logged_in_users_descr";
 $PGV_BLOCKS["print_logged_in_users"]["canconfig"]	= false;
 $PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
@@ -49,7 +52,7 @@ $PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
  * prints a list of other users who are logged in
  */
 function print_logged_in_users($block = true, $config = "", $side, $index) {
-	global $pgv_lang, $PGV_SESSION_TIME, $TEXT_DIRECTION;
+	global $PGV_SESSION_TIME, $TEXT_DIRECTION;
 
 	$block = true; // Always restrict this block's height
 
@@ -72,8 +75,8 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	}
 
 	$id = "logged_in_users";
-	$title = print_help_link("index_loggedin", "qm", "", false, true);
-	$title.=i18n::translate('Users Logged In');
+	$title=i18n::translate('Users Logged In');
+	$title.=help_link('index_loggedin');
 	$content='<table width="90%">';
 	$LoginUsers=count($loggedusers);
 	if ($LoginUsers==0 && $NumAnonymous==0) {
@@ -89,7 +92,7 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		foreach ($loggedusers as $user_id=>$user_name) {
 			$content .= "<tr><td><br />".PrintReady(getUserFullName($user_id))." - ".$user_name;
 			if (PGV_USER_ID!=$user_id && get_user_setting($user_id, 'contactmethod')!="none") {
-				$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user_id . "');\">" . $pgv_lang["message"] . "</a>";
+				$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user_id . "');\">" . i18n::translate('Send Message') . "</a>";
 			}
 			$content .= "</td></tr>";
 		}

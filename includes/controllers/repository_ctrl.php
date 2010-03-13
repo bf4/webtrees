@@ -2,7 +2,10 @@
 /**
 * Controller for the repository page view
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Charts
 * @version $Id$
 */
@@ -60,7 +63,7 @@ class RepositoryControllerRoot extends BaseController {
 	* initialize the controller
 	*/
 	function init() {
-		global $pgv_lang, $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
+		global $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
 
 		$this->rid = safe_GET_xref('rid');
 
@@ -76,7 +79,7 @@ class RepositoryControllerRoot extends BaseController {
 		$this->repository->ged_id=PGV_GED_ID; // This record is from a file
 
 		if (!$this->repository->canDisplayDetails()) {
-			print_header($pgv_lang["private"]." ".$pgv_lang["repo_info"]);
+			print_header(i18n::translate('Private')." ".i18n::translate('Repository Information'));
 			print_privacy_error($CONTACT_EMAIL);
 			print_footer();
 			exit;
@@ -163,12 +166,10 @@ class RepositoryControllerRoot extends BaseController {
 	* @return string
 	*/
 	function getPageTitle() {
-		global $pgv_lang;
 		if ($this->repository) {
-			return $this->repository->getFullName()." - ".$this->rid." - ".$pgv_lang["repo_info"];
-		}
-		else {
-			return $pgv_lang["unable_to_find_record"];
+			return $this->repository->getFullName()." - ".$this->rid." - ".i18n::translate('Repository Information');
+		} else {
+			return i18n::translate('Unable to find record with ID');
 		}
 	}
 	/**
@@ -184,7 +185,7 @@ class RepositoryControllerRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getEditMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $pgv_changes;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_changes;
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
@@ -195,7 +196,7 @@ class RepositoryControllerRoot extends BaseController {
 		}
 
 		// edit repository menu
-		$menu = new Menu($pgv_lang['edit_repo']);
+		$menu = new Menu(i18n::translate('Edit Repository'));
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN)
 			$menu->addOnclick('return edit_raw(\''.$this->rid.'\');');
 		if (!empty($PGV_IMAGES["edit_repo"]["small"]))
@@ -204,7 +205,7 @@ class RepositoryControllerRoot extends BaseController {
 
 		// edit repository / edit_raw
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
-			$submenu = new Menu($pgv_lang['edit_raw']);
+			$submenu = new Menu(i18n::translate('Edit raw GEDCOM record'));
 			$submenu->addOnclick("return edit_raw('".$this->rid."');");
 			if (!empty($PGV_IMAGES["edit_repo"]["small"]))
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_repo']['small']}");
@@ -213,8 +214,8 @@ class RepositoryControllerRoot extends BaseController {
 		}
 
 		// edit repository / delete_repository
-		$submenu = new Menu($pgv_lang['delete_repo']);
-		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_repo"]."')) return deleterepository('".$this->rid."'); else return false;");
+		$submenu = new Menu(i18n::translate('Delete Repository'));
+		$submenu->addOnclick("if (confirm('".i18n::translate('Are you sure you want to delete this Repository?')."')) return deleterepository('".$this->rid."'); else return false;");
 		if (!empty($PGV_IMAGES["edit_repo"]["small"]))
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_repo']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -230,7 +231,7 @@ class RepositoryControllerRoot extends BaseController {
 			// edit_repo / show/hide changes
 			if (!$this->show_changes)
 			{
-				$submenu = new Menu($pgv_lang['show_changes'], encode_url("repo.php?rid={$this->rid}&show_changes=yes"));
+				$submenu = new Menu(i18n::translate('This record has been updated.  Click here to show changes.'), encode_url("repo.php?rid={$this->rid}&show_changes=yes"));
 				if (!empty($PGV_IMAGES["edit_repo"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_repo']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -238,7 +239,7 @@ class RepositoryControllerRoot extends BaseController {
 			}
 			else
 			{
-				$submenu = new Menu($pgv_lang['hide_changes'], encode_url("repo.php?rid={$this->rid}&show_changes=no"));
+				$submenu = new Menu(i18n::translate('Click here to hide changes.'), encode_url("repo.php?rid={$this->rid}&show_changes=no"));
 				if (!empty($PGV_IMAGES["edit_repo"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_repo']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -248,12 +249,12 @@ class RepositoryControllerRoot extends BaseController {
 			if (PGV_USER_CAN_ACCEPT)
 			{
 				// edit_repository / accept_all
-				$submenu = new Menu($pgv_lang["undo_all"], encode_url("repo.php?rid={$this->rid}&action=undo"));
+				$submenu = new Menu(i18n::translate('Undo all changes'), encode_url("repo.php?rid={$this->rid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				if (!empty($PGV_IMAGES["edit_repo"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_repo']['small']}");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang['accept_all'], encode_url("repo.php?rid={$this->rid}&action=accept"));
+				$submenu = new Menu(i18n::translate('Accept all changes'), encode_url("repo.php?rid={$this->rid}&action=accept"));
 				if (!empty($PGV_IMAGES["edit_repo"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_repo']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -268,7 +269,7 @@ class RepositoryControllerRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getOtherMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
@@ -280,7 +281,7 @@ class RepositoryControllerRoot extends BaseController {
 		}
 
 			// other menu
-		$menu = new Menu($pgv_lang['other']);
+		$menu = new Menu(i18n::translate('Other'));
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		if ($SHOW_GEDCOM_RECORD)
 		{
@@ -303,7 +304,7 @@ class RepositoryControllerRoot extends BaseController {
 		if ($SHOW_GEDCOM_RECORD)
 		{
 				// other / view_gedcom
-				$submenu = new Menu($pgv_lang['view_gedcom']);
+				$submenu = new Menu(i18n::translate('View GEDCOM Record'));
 				if ($this->show_changes && $this->userCanEdit())
 				{
 					$submenu->addLink("javascript:show_gedcom_record('new');");
@@ -319,7 +320,7 @@ class RepositoryControllerRoot extends BaseController {
 		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL)
 		{
 				// other / add_to_cart
-				$submenu = new Menu($pgv_lang['add_to_cart'], encode_url("clippings.php?action=add&id={$this->rid}&type=repo"));
+				$submenu = new Menu(i18n::translate('Add to Clippings Cart'), encode_url("clippings.php?action=add&id={$this->rid}&type=repo"));
 				if (!empty($PGV_IMAGES["clippings"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -328,7 +329,7 @@ class RepositoryControllerRoot extends BaseController {
 		if ($this->repository->canDisplayDetails() && !empty($this->uname))
 		{
 				// other / add_to_my_favorites
-				$submenu = new Menu($pgv_lang['add_to_my_favorites'], encode_url("repo.php?action=addfav&rid={$this->rid}&gid={$this->rid}"));
+				$submenu = new Menu(i18n::translate('Add to My Favorites'), encode_url("repo.php?action=addfav&rid={$this->rid}&gid={$this->rid}"));
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);

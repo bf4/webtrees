@@ -4,7 +4,10 @@
  *
  * Display media Items using Lightbox 4.1
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
@@ -41,7 +44,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 function lightbox_print_media_row($rtype, $rowm, $pid) {
 
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
-	global $SHOW_ID_NUMBERS, $GEDCOM, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
+	global $SHOW_ID_NUMBERS, $GEDCOM, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
 	global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i, $notes, $q, $LB_TT_BALLOON, $theme_name ;
@@ -59,7 +62,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 				print "</td>". "\n";
 				print "<td class=\"description_box\" valign=\"top\" colspan=\"3\" nowrap=\"nowrap\" >";
 					print "<center><br /><img src=\"themes/" . strtolower($theme_name) . "/images/media.gif\" height=\"30\" border=\"0\" />";
-					print "<font size=\"1\"><br />" . $pgv_lang["file_not_found"] . "</font></center>";
+					print "<font size=\"1\"><br />" . i18n::translate('File not found.') . "</font></center>";
 				print "</td>";
 			print "</tr>". "\n";
 		} else if (!file_exists($rowm['m_file'])) {
@@ -71,7 +74,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 				print "</td>". "\n";
 				print "<td class=\"description_box\" valign=\"top\" colspan=\"3\" nowrap=\"nowrap\" >";
 					print "<center><br /><img src=\"themes/" . strtolower($theme_name) . "/images/media.gif\" height=\"30\" border=\"0\" />";
-					print "<font size=\"1\"><br />" . $pgv_lang["file_not_found"] . "</font></center>";
+					print "<font size=\"1\"><br />" . i18n::translate('File not found.') . "</font></center>";
 				print "</td>";
 				print "</tr>". "\n";
 
@@ -195,13 +198,13 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 		$menu = new Menu();
 		// Truncate media title to 13 chars and add ellipsis
 		$mtitle = $rawTitle;
-		if (UTF8_strlen($rawTitle)>16) $mtitle = UTF8_substr($rawTitle, 0, 13).$pgv_lang["ellipsis"];
+		if (UTF8_strlen($rawTitle)>16) $mtitle = UTF8_substr($rawTitle, 0, 13).i18n::translate('…');
 		$mtitle = PrintReady(htmlspecialchars($mtitle));
 
 		// Continue menu construction
 		// If media file is missing from "media" directory, but is referenced in Gedcom
 		if (!media_exists($rowm['m_file']) && !media_exists($mainMedia)) {
-			$menu->addLabel("\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . $pgv_lang["edit"]." (". $rowm["m_media"].")" . "\n", "right");
+			$menu->addLabel("\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . i18n::translate('Edit')." (". $rowm["m_media"].")" . "\n", "right");
 		} else {
 			$menu->addLabel("\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . PrintReady($mtitle) . "\n", "right");
 		}
@@ -216,12 +219,12 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 
 			// View Notes
 			if (strpos($rowm['m_gedrec'], "\n1 NOTE")) {
-				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_viewnotes"] . "&nbsp;&nbsp;", "#", "right");
+				$submenu = new Menu("&nbsp;&nbsp;" . i18n::translate('View Notes') . "&nbsp;&nbsp;", "#", "right");
 				// Notes Tooltip ----------------------------------------------------
 				$sonclick  = "TipTog(";
 				// Contents of Notes
 				$sonclick .= "'";
-				$sonclick .= "&lt;font color=#008800>&lt;b>" . $pgv_lang["notes"] . ":&lt;/b>&lt;/font>&lt;br />";
+				$sonclick .= "&lt;font color=#008800>&lt;b>" . i18n::translate('Notes') . ":&lt;/b>&lt;/font>&lt;br />";
 				$sonclick .= $notes;
 				$sonclick .= "'";
 				// Notes Tooltip Parameters
@@ -233,29 +236,29 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 				$menu->addSubMenu($submenu);
 			}
 			//View Details
-			$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_viewdetails"] . "&nbsp;&nbsp;", $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"], "right");
+			$submenu = new Menu("&nbsp;&nbsp;" . i18n::translate('View Details') . "&nbsp;&nbsp;", $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"], "right");
 			$submenu->addClass($submenu_class, $submenu_hoverclass);
 			$menu->addSubMenu($submenu);
 			//View Source
 			if (strpos($rowm['m_gedrec'], "\n1 SOUR") && displayDetailsById($sour, "SOUR")) {
-				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_viewsource"] . "&nbsp;&nbsp;", $SERVER_URL . "source.php?sid=" . $sour, "right");
+				$submenu = new Menu("&nbsp;&nbsp;" . i18n::translate('View Source') . "&nbsp;&nbsp;", $SERVER_URL . "source.php?sid=" . $sour, "right");
 				$submenu->addClass($submenu_class, $submenu_hoverclass);
 				$menu->addSubMenu($submenu);
 			}
 			if (PGV_USER_CAN_EDIT) {
 				// Edit Media
-				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_editmedia"] . "&nbsp;&nbsp;", "#", "right");
+				$submenu = new Menu("&nbsp;&nbsp;" . i18n::translate('Edit Media') . "&nbsp;&nbsp;", "#", "right");
 				$submenu->addOnclick("return window.open('addmedia.php?action=editmedia&amp;pid={$rowm['m_media']}&amp;linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=700,resizable=1,scrollbars=1');");
 				$submenu->addClass($submenu_class, $submenu_hoverclass);
 				$menu->addSubMenu($submenu);
 				if (PGV_USER_IS_ADMIN) {
 					// Manage Links
-					$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["add_or_remove_links"] . "&nbsp;&nbsp;", "#", "right");
+					$submenu = new Menu("&nbsp;&nbsp;" . i18n::translate('Manage links') . "&nbsp;&nbsp;", "#", "right");
 					$submenu->addOnclick("return window.open('inverselink.php?mediaid={$rowm['m_media']}&amp;linkto=manage', '_blank', 'top=50,left=50,width=570,height=650,resizable=1,scrollbars=1');");
 					$submenu->addClass($submenu_class, $submenu_hoverclass);
 					$menu->addSubMenu($submenu);
 					// Unlink Media
-					$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_unlinkmedia"] . "&nbsp;&nbsp;", "#", "right");
+					$submenu = new Menu("&nbsp;&nbsp;" . i18n::translate('Unlink Media') . "&nbsp;&nbsp;", "#", "right");
 					$submenu->addOnclick("return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');");
 					$submenu->addClass($submenu_class, $submenu_hoverclass);
 					$menu->addSubMenu($submenu);

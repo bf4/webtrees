@@ -4,7 +4,10 @@
  *
  * This block will print a list of upcoming yahrzeit (hebrew death anniversaries)
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  * @author Greg Roach, fisharebest@users.sourceforge.net
  * @version $Id$
@@ -34,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_YAHRZEIT_PHP', '');
 
-$PGV_BLOCKS['print_yahrzeit']['name']     =$pgv_lang['yahrzeit_block'];
+$PGV_BLOCKS['print_yahrzeit']['name']     =i18n::translate('Upcoming Yahrzeiten');
 $PGV_BLOCKS['print_yahrzeit']['descr']    ='yahrzeit_descr';
 $PGV_BLOCKS['print_yahrzeit']['canconfig']=true;
 $PGV_BLOCKS['print_yahrzeit']['config']   =array(
@@ -70,7 +73,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 	}
 
 	$id="yahrzeit";
-	$title = print_help_link('yahrzeit', 'qm','',false,true);
+	$title='';
 	if ($PGV_BLOCKS['print_yahrzeit']['canconfig']) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -79,10 +82,11 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= $pgv_lang['yahrzeit_block'];
+	$title .= i18n::translate('Upcoming Yahrzeiten');
+	$title .= help_link('yahrzeit');
 	$content = "";
 
 	// The standard anniversary rules cover most of the Yahrzeit rules, we just
@@ -138,7 +142,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 				$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\">".PrintReady($ind->getFullName())."</a>".$ind->getSexImage();
 				$content .= "<div class=\"indent\">";
 				$content .= $yahrzeit['date']->Display(true);
-				$content .= ', '.str_replace("#year_var#", $yahrzeit['anniv'], $pgv_lang["year_anniversary"]);
+				$content .= ', '.i18n::translate('%s year anniversary', $yahrzeit['anniv']);
 				$content .= "</div>";
 			}
 		break;
@@ -151,7 +155,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		$content .= "<th class=\"list_label\">".i18n::translate('NAME')."</th>";
 		$content .= "<th style=\"display:none\">GIVN</th>";
 		$content .= "<th class=\"list_label\">".i18n::translate('DATE')."</th>";
-		$content .= "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"{$pgv_lang['anniversary']}\" title=\"{$pgv_lang['anniversary']}\" border=\"0\" /></th>";
+		$content .= "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".i18n::translate('Anniversary')."\" title=\"".i18n::translate('Anniversary')."\" border=\"0\" /></th>";
 		$content .= "<th class=\"list_label\">".i18n::translate('_YART')."</th>";
 		$content .= "</tr>";
 
@@ -199,7 +203,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 					// hCalendar:dtstart and hCalendar:summary
 					//TODO does this work??
 					$content .= "<abbr class=\"dtstart\" title=\"".strip_tags($yahrzeit['date']->Display(false,'Ymd',array()))."\"></abbr>";
-					$content .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".i18n::translate($yahrzeit['fact'])." : ".PrintReady(strip_tags($ind->getFullName()))."\"></abbr>";
+					$content .= "<abbr class=\"summary\" title=\"".i18n::translate('Anniversary')." #$anniv ".i18n::translate($yahrzeit['fact'])." : ".PrintReady(strip_tags($ind->getFullName()))."\"></abbr>";
 				}
 
 				// upcomming yahrzeit dates
@@ -215,18 +219,16 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		$content .= "<tr class=\"sortbottom\">";
 		$content .= "<td class=\"list_label\">";
 		$content .= '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.i18n::translate('GIVN').'</a><br />';
-		$content .= $pgv_lang["total_names"].": ".$count;
+		$content .= i18n::translate('Total Names').": ".$count;
 		if ($hidden) {
-			$content .= "<br /><span class=\"warning\">{$pgv_lang['hidden']} : {$hidden}</span>";
+			$content .= "<br /><span class=\"warning\">".i18n::translate('Hidden')." : {$hidden}</span>";
 		}
 		$content .= "</td>";
 		$content .= "<td style=\"display:none\">GIVN</td>";
 		$content .= "<td>";
 		if ($config['allowDownload']=='yes') {
 			$uri = $SERVER_URL.basename($_SERVER['REQUEST_URI']);
-			global $whichFile;
-			$whichFile = 'hCal-events.ics';
-			$alt = print_text('download_file',0,1);
+			$alt = i18n::translate('Download file %s', 'hCal-events.ics');
 			if (count($yahrzeits)) {
 				$content .= "<a href=\"http://feeds.technorati.com/events/{$uri}\"><img src=\"images/hcal.png\" border=\"0\" alt=\"{$alt}\" title=\"{$alt}\" /></a>";
 			}
@@ -257,15 +259,15 @@ function print_yahrzeit_config($config) {
 	if ($config['days']>$DAYS_TO_SHOW_LIMIT) $config['days']=$DAYS_TO_SHOW_LIMIT;
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('days_to_show', 'qm');
-	print $pgv_lang['days_to_show'];
+	print i18n::translate('Number of days to show');
+	print help_link('days_to_show');
 	print '</td><td class="optionbox">';
 	print '<input type="text" name="days" size="2" value="'.$config['days'].'" />';
 	print '</td></tr>';
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link('style', 'qm');
-	print $pgv_lang['style'];
+	print i18n::translate('Presentation Style');
+	print help_link('style');
 	print '</td><td class="optionbox">';
 	print '<select name="infoStyle">';
 	foreach (array('style1', 'style2') as $style) {
@@ -277,8 +279,8 @@ function print_yahrzeit_config($config) {
 	print '</select></td></tr>';
 
 	print '<tr><td class="descriptionbox wrap width33">';
-	print_help_link("cal_dowload", "qm");
-	print $pgv_lang["cal_download"];
+	print i18n::translate('Allow calendar events download?');
+	print help_link('cal_dowload');
 	print '</td><td class="optionbox">';
 	print '<select name="allowDownload">';
 	foreach (array('yes', 'no') as $value) {

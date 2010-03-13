@@ -2,7 +2,10 @@
 /**
  * Footer for print-friendly Cloudy theme pages
  *
- * PhpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (c) 2002 to 2008  John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @author w.a. bastein http://genealogy.bastein.biz
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Themes
  * @version $Id$
  */

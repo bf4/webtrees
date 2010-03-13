@@ -4,7 +4,10 @@
 *
 * See http://www.phpgedview.net/privacy.php for more information on privacy in PhpGedView
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -22,7 +25,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * @version $Id$
-* @package PhpGedView
+* @package webtrees
 * @subpackage Privacy
 */
 
@@ -399,10 +402,9 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 	$cache_privacy = true;
 
 	//-- start of user specific privacy checks
-	$username = $pgv_USER_NAME;
-	if ($username) {
-		if (isset($user_privacy[$username]["all"])) {
-			if ($user_privacy[$username]["all"] >= $pgv_USER_ACCESS_LEVEL) {
+	if ($pgv_USER_ID) {
+		if (isset($user_privacy[$pgv_USER_NAME]["all"])) {
+			if ($user_privacy[$pgv_USER_NAME]["all"] >= $pgv_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
 				return true;
 			} else {
@@ -410,8 +412,8 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 				return false;
 			}
 		}
-		if (isset($user_privacy[$username][$pid])) {
-			if ($user_privacy[$username][$pid] >= $pgv_USER_ACCESS_LEVEL) {
+		if (isset($user_privacy[$pgv_USER_NAME][$pid])) {
+			if ($user_privacy[$pgv_USER_NAME][$pid] >= $pgv_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
 				return true;
 			} else {
@@ -460,7 +462,7 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 			if ($type=="INDI") {
 				$gedrec = find_person_record($pid, $ged_id);
 				$isdead = is_dead($gedrec);
-				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($username, 'relationship_privacy')=="Y") {
+				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($pgv_USER_ID, 'relationship_privacy')=="Y") {
 					if ($isdead) {
 						if ($SHOW_DEAD_PEOPLE>=$pgv_USER_ACCESS_LEVEL) {
 							if ($PRIVACY_BY_YEAR && $SHOW_DEAD_PEOPLE==$pgv_USER_ACCESS_LEVEL) {
@@ -485,8 +487,8 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;
 						}
-						if (get_user_setting($username, 'max_relation_path')>0) {
-							$path_length = get_user_setting($username, 'max_relation_path');
+						if (get_user_setting($pgv_USER_ID, 'max_relation_path')>0) {
+							$path_length = get_user_setting($pgv_USER_ID, 'max_relation_path');
 						} else {
 							$path_length = $MAX_RELATION_PATH_LENGTH;
 						}
@@ -576,7 +578,7 @@ function displayDetailsById($pid, $type = "INDI", $sitemap = false) {
 				return false;
 			}
 		} else {
-			if (empty($username)) {
+			if (empty($pgv_USER_ID)) {
 				if ($cache_privacy) {
 					$privacy_cache[$pkey] = false;
 				}
@@ -796,7 +798,7 @@ function showFactDetails($fact, $pid) {
 * @return string the privatized gedcom record
 */
 function privatize_gedcom($gedrec) {
-	global $pgv_lang, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
+	global $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
 
 	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')(.*)/', $gedrec, $match)) {
@@ -848,7 +850,7 @@ function privatize_gedcom($gedrec) {
 						}
 					}
 				} else {
-					$newrec.="\n1 NAME {$pgv_lang['private']}";
+					$newrec.="\n1 NAME ".i18n::translate('Private');
 				}
 				// Just show the 1 FAMC/FAMS tag, not any subtags, which may contain private data
 				if (preg_match_all('/\n1 FAM[CS] @('.PGV_REGEX_XREF.')@/', $gedrec, $matches, PREG_SET_ORDER)) {
@@ -862,7 +864,7 @@ function privatize_gedcom($gedrec) {
 				if (preg_match('/\n1 SEX [MFU]/', $gedrec, $match)) {
 					$newrec.=$match[0];
 				}
-				$newrec .= "\n1 NOTE {$pgv_lang['person_private']}";
+				$newrec .= "\n1 NOTE ".i18n::translate('Details about this person are private. Personal details will not be included.');
 				break;
 			case 'FAM':
 				$newrec="0 @{$gid}@ FAM";
@@ -874,16 +876,16 @@ function privatize_gedcom($gedrec) {
 						}
 					}
 				}
-				$newrec .= "\n1 NOTE {$pgv_lang['family_private']}";
+				$newrec .= "\n1 NOTE ".i18n::translate('Details about this family are private. Family details will not be included.');
 				break;
 			case 'SOUR':
-				$newrec="0 @{$gid}@ SOUR\n1 TITL {$pgv_lang['private']}";
+				$newrec="0 @{$gid}@ SOUR\n1 TITL ".i18n::translate('Private');
 				break;
 			case 'OBJE':
-				$newrec="0 @{$gid}@ OBJE\n1 NOTE {$pgv_lang['media_private']}";
+				$newrec="0 @{$gid}@ OBJE\n1 NOTE ".i18n::translate('Details about this media are private. Media details will not be included.');
 				break;
 			default:
-				$newrec="0 @{$gid}@ {$type}\n1 NOTE {$pgv_lang['private']}";
+				$newrec="0 @{$gid}@ {$type}\n1 NOTE ".i18n::translate('Private');
 			}
 			return $newrec;
 		}

@@ -2,7 +2,10 @@
 /**
  * Repositories List
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Lists
  * @version $Id$
  */
@@ -28,8 +31,8 @@ define('PGV_SCRIPT_NAME', 'repolist.php');
 require './config.php';
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
 
-print_header($pgv_lang['repo_list']);
-echo '<div class="center"><h2>', $pgv_lang['repo_list'], '</h2>';
+print_header(i18n::translate('Repositories'));
+echo '<div class="center"><h2>', i18n::translate('Repositories'), '</h2>';
 print_repo_table(get_repo_list(PGV_GED_ID));
 echo '</div>';
 print_footer();

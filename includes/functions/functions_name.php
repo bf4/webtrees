@@ -2,7 +2,10 @@
 /**
  * Name Specific Functions
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @version $Id$
  */
 
@@ -84,7 +87,7 @@ function strip_prefix($lastname){
  * @return string
  */
 function check_NN($names) {
-	global $pgv_lang, $UNDERLINE_NAME_QUOTES;
+	global $UNDERLINE_NAME_QUOTES;
 	global $unknownNN, $unknownPN;
 
 	$fullname = '';
@@ -103,7 +106,7 @@ function check_NN($names) {
 		return $names;
 	}
 	if (count($names) == 2 && stristr($names[0], '@N.N') && stristr($names[1], '@N.N')){
-		$fullname = $pgv_lang['NN']. ' + '. $pgv_lang['NN'];
+		$fullname = i18n::translate('(unknown)'). ' + '. i18n::translate('(unknown)');
 	} else {
 		for($i=0; $i<count($names); $i++) {
 			$lang = whatLanguage($names[$i]);
@@ -133,7 +136,7 @@ function check_NN($names) {
 	if (substr($fullname,-1)==',') $fullname = substr($fullname,0,strlen($fullname)-1);
 	if (substr($fullname,0,2)==', ') $fullname = substr($fullname,2);
 	$fullname = trim($fullname);
-	if (empty($fullname)) return $pgv_lang['NN'];
+	if (empty($fullname)) return i18n::translate('(unknown)');
 
 	return $fullname;
 }

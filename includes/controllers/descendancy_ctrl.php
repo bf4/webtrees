@@ -2,7 +2,10 @@
 /**
  * Controller for the Descendancy Page
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -94,11 +97,11 @@ class DescendancyControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS, $show_full;
+	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS, $show_full;
 
-	$this->sexarray["M"] = $pgv_lang["male"];
-	$this->sexarray["F"] = $pgv_lang["female"];
-	$this->sexarray["U"] = $pgv_lang["unknown"];
+	$this->sexarray["M"] = i18n::translate('Male');
+	$this->sexarray["F"] = i18n::translate('Female');
+	$this->sexarray["U"] = i18n::translate('unknown');
 
 	// Extract parameters from form
 	$this->pid        =safe_GET_xref('pid');
@@ -197,7 +200,6 @@ class DescendancyControllerRoot extends BaseController {
  * @param int $depth the descendancy depth to show
  */
 function print_child_descendancy(&$person, $depth) {
-	global $pgv_lang;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent;
 	global $personcount;
 
@@ -223,7 +225,7 @@ function print_child_descendancy(&$person, $depth) {
 			$parid=$parents["HUSB"];
 			if ($parid=="") $parid=$parents["WIFE"];
 			if ($parid!="") {
-				print_url_arrow($parid.$personcount.$person->getXref(), encode_url("?pid={$parid}&generations={$this->generations}&chart_style={$this->chart_style}&show_full={$this->show_full}&box_width={$this->box_width}"), $pgv_lang["start_at_parents"], 2);
+				print_url_arrow($parid.$personcount.$person->getXref(), encode_url("?pid={$parid}&generations={$this->generations}&chart_style={$this->chart_style}&show_full={$this->show_full}&box_width={$this->box_width}"), i18n::translate('Start at parents'), 2);
 				$personcount++;
 			}
 		}
@@ -265,7 +267,6 @@ function print_child_descendancy(&$person, $depth) {
  * @param int $depth the descendancy depth to show
  */
 function print_family_descendancy(&$person, &$family, $depth) {
-	global $pgv_lang;
 	global $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent, $personcount;
 
 	if (is_null($family)) return;
@@ -284,7 +285,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		print "<li>";
 		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"".($Dindent+4)."\" border=\"0\" alt=\"\" />";
 		print "<span class=\"details1\" style=\"white-space: nowrap; \" >";
-		print "<a href=\"#\" onclick=\"expand_layer('".$famid.$personcount."'); return false;\" class=\"top\"><img id=\"".$famid.$personcount."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".$pgv_lang["view_family"]."\" /></a>";
+		print "<a href=\"#\" onclick=\"expand_layer('".$famid.$personcount."'); return false;\" class=\"top\"><img id=\"".$famid.$personcount."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".i18n::translate('View Family')."\" /></a>";
 		$marriage = $family->getMarriage();
 		if ($marriage->canShow()) {
 			echo ' <a href="', encode_url($family->getLinkUrl()), '" class="details1">';
@@ -310,7 +311,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 				$parid=$parents["HUSB"];
 				if ($parid=="") $parid=$parents["WIFE"];
 				if ($parid!="") {
-					print_url_arrow($parid.$personcount.$person->getXref(), encode_url("?pid={$parid}&generations={$this->generations}&show_full={$this->show_full}&box_width={$this->box_width}"), $pgv_lang["start_at_parents"], 2);
+					print_url_arrow($parid.$personcount.$person->getXref(), encode_url("?pid={$parid}&generations={$this->generations}&show_full={$this->show_full}&box_width={$this->box_width}"), i18n::translate('Start at parents'), 2);
 					$personcount++;
 				}
 			}
@@ -329,7 +330,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 			if (strpos($family->getGedcomRecord(), "\n1 NCHI 0")) {
 				print i18n::translate('NCHI').": ".count($children);
 			} else {
-				print $pgv_lang["no_children"];
+				print i18n::translate('No children');
 			}
 		}
 		print "</td></tr></table>";

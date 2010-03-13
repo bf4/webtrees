@@ -2,7 +2,10 @@
 /**
 * Various functions used to generate the PhpGedView RSS feed.
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -20,7 +23,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * @version $Id$
-* @package PhpGedView
+* @package webtrees
 * @subpackage RSS
 */
 
@@ -61,11 +64,11 @@ function iso8601_date($time) {
 * $dataArray[2] = data
 */
 function getUpcomingEvents() {
-	global $pgv_lang, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 	global $DAYS_TO_SHOW_LIMIT, $SERVER_URL;
 
-	$dataArray[0] = $pgv_lang["upcoming_events"];
+	$dataArray[0] = i18n::translate('Upcoming Events');
 	$dataArray[1] = time();
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_upcoming_events"]["config"];
@@ -98,12 +101,12 @@ function getUpcomingEvents() {
 * $dataArray[2] = data
 */
 function getTodaysEvents() {
-	global $pgv_lang, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_BLOCKS;
 	global $SERVER_URL;
 	global $DAYS_TO_SHOW_LIMIT;
 
-	$dataArray[0] = $pgv_lang["on_this_day"];
+	$dataArray[0] = i18n::translate('On This Day ...');
 	$dataArray[1] = time();
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_todays_events"]["config"];
@@ -127,13 +130,13 @@ function getTodaysEvents() {
 * @TODO does not print the family with most children due to the embedded html in that function.
 */
 function getGedcomStats() {
-	global $pgv_lang, $day, $month, $year, $PGV_BLOCKS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $SERVER_URL, $RTLOrd;
+	global $day, $month, $year, $PGV_BLOCKS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $SERVER_URL, $RTLOrd;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
 	if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
 
 	$data = "";
-	$dataArray[0] = $pgv_lang["gedcom_stats"] . " - " . get_gedcom_setting(PGV_GED_ID, 'title');
+	$dataArray[0] = i18n::translate('GEDCOM Statistics') . " - " . get_gedcom_setting(PGV_GED_ID, 'title');
 
 	$head = find_gedcom_record("HEAD", PGV_GED_ID);
 	$ct=preg_match("/1 SOUR (.*)/", $head, $match);
@@ -143,12 +146,10 @@ function getGedcomStats() {
 		if ($tt>0) $title = trim($tmatch[1]);
 		else $title = trim($match[1]);
 		if (!empty($title)) {
-			$text = strip_tags(str_replace(array("#SOFTWARE#", "#CREATED_SOFTWARE#"), $title, $pgv_lang["gedcom_created_using"]));
 			$tt = preg_match("/2 VERS (.*)/", $softrec, $tmatch);
 			if ($tt>0) $version = trim($tmatch[1]);
 			else $version="";
-			$text = strip_tags(str_replace(array("#VERSION#", "#CREATED_VERSION#"), $version, $text));
-			$data .= $text;
+			$data .= strip_tags(i18n::translate('This GEDCOM was created using %s %s', $title, $version));
 		}
 	}
 	$ct=preg_match("/1 DATE (.+)/", $head, $match);
@@ -158,9 +159,9 @@ function getGedcomStats() {
 
 		$date=new GedcomDate($date);
 		if (empty($title)){
-			$data .= str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on"]);
+			$data .= i18n::translate('This GEDCOM was created on <b>%s</b>', $date->Display(false));
 		} else {
-			$data .= str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on2"]);
+			$data .= i18n::translate(' on <b>%s</b>', $date->Display(false));
 		}
 	}
 
@@ -168,37 +169,37 @@ function getGedcomStats() {
 
 	$data .= " <br />";
 	if (!isset($config["stat_indi"]) || $config["stat_indi"]=="yes"){
-		$data .= $stats->totalIndividuals()." - " .$pgv_lang["stat_individuals"]."<br />";
+		$data .= $stats->totalIndividuals()." - " .i18n::translate('Individuals')."<br />";
 	}
 	if (!isset($config["stat_fam"]) || $config["stat_fam"]=="yes"){
-		$data .= $stats->totalFamilies()." - ".$pgv_lang["stat_families"]."<br />";
+		$data .= $stats->totalFamilies()." - ".i18n::translate('Families')."<br />";
 	}
 	if (!isset($config["stat_sour"]) || $config["stat_sour"]=="yes"){
-		$data .= $stats->totalSources()." - ".$pgv_lang["stat_sources"]."<br /> ";
+		$data .= $stats->totalSources()." - ".i18n::translate('Sources')."<br /> ";
 	}
 	if (!isset($config["stat_other"]) || $config["stat_other"]=="yes"){
-		$data .= $stats->totalOtherRecords()." - ".$pgv_lang["stat_other"]."<br />";
+		$data .= $stats->totalOtherRecords()." - ".i18n::translate('Other records')."<br />";
 	}
 	if (!isset($config["stat_first_birth"]) || $config["stat_first_birth"]=="yes") {
-		$data .= $pgv_lang["stat_earliest_birth"]." - ".$stats->firstBirthYear()."<br />";
+		$data .= i18n::translate('Earliest birth year')." - ".$stats->firstBirthYear()."<br />";
 	}
 	if (!isset($config["stat_last_birth"]) || $config["stat_last_birth"]=="yes") {
-		$data .= $pgv_lang["stat_latest_birth"]." - ".$stats->lastBirthYear()."<br />";
+		$data .= i18n::translate('Latest birth year')." - ".$stats->lastBirthYear()."<br />";
 	}
 	if (!isset($config["stat_long_life"]) || $config["stat_long_life"]=="yes") {
-		$data .= $pgv_lang["stat_longest_life"]." - ".$stats->LongestLifeAge()."<br />";
+		$data .= i18n::translate('Person who lived the longest')." - ".$stats->LongestLifeAge()."<br />";
 	}
 	if (!isset($config["stat_avg_life"]) || $config["stat_avg_life"]=="yes") {
-		$data .= $pgv_lang["stat_avg_age_at_death"]." - ".$stats->averageLifespan()."<br />";
+		$data .= i18n::translate('Average age at death')." - ".$stats->averageLifespan()."<br />";
 	}
 	if (!isset($config["stat_most_chil"]) || $config["stat_most_chil"]=="yes") {
-		$data .= $pgv_lang["stat_most_children"] . $stats->largestFamilySize().' - '.$stats->largestFamily()."<br />";
+		$data .= i18n::translate('Family with the most children') . $stats->largestFamilySize().' - '.$stats->largestFamily()."<br />";
 	}
 	if (!isset($config["stat_avg_chil"]) || $config["stat_avg_chil"]=="yes") {
-		$data .= $pgv_lang["stat_average_children"]." - ".$stats->averageChildren()."<br />";
+		$data .= i18n::translate('Average number of children per family')." - ".$stats->averageChildren()."<br />";
 	}
 	if (!isset($config["show_common_surnames"]) || $config["show_common_surnames"]=="yes") {
-		$data .="<b>".$pgv_lang["common_surnames"]."</b><br />".$stats->commonSurnames();
+		$data .="<b>".i18n::translate('Most Common Surnames')."</b><br />".$stats->commonSurnames();
 	}
 
 	$data = strip_tags($data, '<a><br><b>');
@@ -282,7 +283,7 @@ function getGedcomNews() {
 * @TODO Possibly turn list into a <ul> list
 */
 function getTop10Surnames() {
-	global $pgv_lang, $SERVER_URL, $TEXT_DIRECTION;
+	global $SERVER_URL, $TEXT_DIRECTION;
 	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
 
 	$data = "";
@@ -298,7 +299,7 @@ function getTop10Surnames() {
 	if (isset($config["num"])) $numName = $config["num"];
 	else $numName = 10;
 
-	$dataArray[0] = str_replace("10", $numName, $pgv_lang["block_top10_title"]);
+	$dataArray[0] = str_replace("10", $numName, i18n::translate('Top 10 Surnames'));
 	$dataArray[1] = time();
 
 	$surnames = get_common_surnames($numName);
@@ -342,7 +343,7 @@ function getRecentChanges() {
 	if (isset($config["hide_empty"])) $HideEmpty = $config["hide_empty"];
 	else $HideEmpty = "no";
 
-	$dataArray[0] = $pgv_lang["recent_changes"];
+	$dataArray[0] = i18n::translate('Recent Changes');
 	$dataArray[1] = time();//FIXME - get most recent change time
 
 	$recentText = "<ul>";
@@ -438,7 +439,7 @@ function getRecentChanges() {
 * $dataArray[5] = file size, $dataArray[5] = media title
 */
 function getRandomMedia() {
-	global $pgv_lang, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
 	global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $PGV_BLOCKS, $ctype, $action;
@@ -447,7 +448,7 @@ function getRandomMedia() {
 	if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all
 	else $filter = "all";
 
-	$dataArray[0] = $pgv_lang["random_picture"];
+	$dataArray[0] = i18n::translate('Random Picture');
 	$dataArray[1] = time();//FIXME - get most recent change time
 
 	$randomMedia = "";

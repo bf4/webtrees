@@ -2,7 +2,10 @@
 /**
  * Interface to edit place locations
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010 PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Edit
  * @version $Id$
  */
@@ -40,11 +43,11 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 
 if (!isset($countrySelected)) $countrySelected="Countries";
 
-print_simple_header($pgv_lang["flags_edit"]);
+print_simple_header(i18n::translate('Select flag'));
 
 if (!is_dir('./places/flags/')) {
-	echo '<br /><div class="optionbox wrap">', $pgv_lang["pl_no_flags"], '</div><br />';
-	echo '<div class="center"><a href="javascript:;" onclick="window.close();">', $pgv_lang["close_window"], "</a></div><br />\n";
+	echo '<br /><div class="optionbox wrap">', i18n::translate('<b>The flags directory doesn\'t exist</b><br /><br />To make the flags work, copy the <b>flags</b> directory from <b>images</b> directory to <b>places</b> directory, or download the flags from the full version.'), '</div><br />';
+	echo '<div class="center"><a href="javascript:;" onclick="window.close();">', i18n::translate('Close Window'), "</a></div><br />\n";
 	print_simple_footer();
 	exit;
 }
@@ -80,10 +83,10 @@ if ($action == "ChangeFlag") {
 		function edit_close() {
 <?php if($_POST["selcountry"] == "Countries") { ?>
 			window.opener.document.editplaces.icon.value = "places/flags/<?php echo $flags[$_POST["FLAGS"]];?>.gif";
-			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/flags/<?php echo $country[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo $pgv_lang["pl_remove_flag"]?></a>";
+			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/flags/<?php echo $country[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo i18n::translate('Change flag')?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo i18n::translate('Remove flag')?></a>";
 <?php } else { ?>
 			window.opener.document.editplaces.icon.value = "places/<?php echo $countrySelected, "/flags/", $flags[$_POST["FLAGS"]];?>.gif";
-			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/<?php echo $countrySelected, "/flags/", $flags[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo $pgv_lang["pl_remove_flag"]?></a>";
+			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/<?php echo $countrySelected, "/flags/", $flags[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo i18n::translate('Change flag')?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo i18n::translate('Remove flag')?></a>";
 <?php } ?>
 			window.close();
 		}
@@ -93,7 +96,7 @@ if ($action == "ChangeFlag") {
 	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
 		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	}
-	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">", $pgv_lang["close_window"], "</a></div><br />\n";
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">", i18n::translate('Close Window'), "</a></div><br />\n";
 	print_simple_footer();
 	exit;
 }
@@ -159,13 +162,13 @@ function getHelp(which) {
 <form method="post" id="flags" name="flags" action="module.php?mod=googlemap&pgvaction=flags&countrySelected=<?php echo $countrySelected;?>">
 	<input type="hidden" name="action" value="ChangeFlag" />
 	<input type="hidden" name="selcountry" value="<?php echo $countrySelected;?>" />
-	<input id="savebutton" name="save1" type="submit" disabled="true" value="<?php echo $pgv_lang["save"];?>" /><br />
+	<input id="savebutton" name="save1" type="submit" disabled="true" value="<?php echo i18n::translate('Save');?>" /><br />
 	<table class="facts_table">
 		<tr>
 			<td class="optionbox" colspan="4">
-				<?php print_help_link("PLE_FLAGS", "qm", "PLE_FLAGS");?>
+				<?php echo help_link('PLE_FLAGS'); ?>
 				<select name="COUNTRYSELECT" dir="ltr" tabindex="0" onchange="selectCountry()">
-					<option value="Countries"><?php echo $pgv_lang["pl_countries"]; ?></option>
+					<option value="Countries"><?php echo i18n::translate('Countries'); ?></option>
 					<?php foreach ($countryList as $country_key=>$country_name) {
 						echo "<option value=\"", $country_key, "\"";
 						if ($countrySelected == $country_key) echo " selected=\"selected\" ";
@@ -195,10 +198,10 @@ function getHelp(which) {
 ?>
 		</tr>
 	</table>
-	<input id="savebutton" name="save2" type="submit" disabled="true" value="<?php echo $pgv_lang["save"];?>" /><br />
+	<input id="savebutton" name="save2" type="submit" disabled="true" value="<?php echo i18n::translate('Save');?>" /><br />
 </form>
 <?php
-echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">", $pgv_lang["close_window"], "</a></div><br />\n";
+echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">", i18n::translate('Close Window'), "</a></div><br />\n";
 
 print_simple_footer();
 ?>

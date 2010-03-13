@@ -2,7 +2,10 @@
 /**
  * Classes and libraries for module system
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2010 John Finlay
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Modules
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
@@ -42,16 +45,12 @@ outdiv.style.width = (parent.offsetWidth-30) + "px";';
 	}
 	
 	public function getContent() {
-		$out = "<div id=\"tree_content\">";
 		ob_start();
 		$inav = new TreeNav($this->controller->pid,'treetab');
 		$inav->generations = 5;
 		$inav->zoomLevel = -1;
-		$inav->drawViewport('treetab', "500px", "auto");
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .= "</div>";
-		return $out;
+		$inav->drawViewport('treetab', "auto", "500px");
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 	
 	public function hasContent() {

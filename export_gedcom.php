@@ -2,7 +2,10 @@
 /**
  * Exports data from the database to a gedcom file
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -45,12 +48,12 @@ if (empty($gedcoms)) {
 // Which gedcom have we requested to export
 $export = safe_GET('export', $gedcoms);
 
-print_simple_header($pgv_lang['ged_export']);
+print_simple_header(i18n::translate('Export'));
 
 if ($export) {
 	$ged_id = get_id_from_gedcom($export);
 	$filename = get_gedcom_setting($ged_id, 'path');
-	echo '<h1>', $pgv_lang['ged_export'], '</h1>';
+	echo '<h1>', i18n::translate('Export'), '</h1>';
 	echo '<p>', htmlspecialchars(filename_decode($export)), ' => ', $filename, '</p>';
 	flush();
 	$gedout = fopen($filename.'.tmp', 'w');
@@ -84,5 +87,5 @@ if ($export) {
 	echo '</ul>';
 }
 
-echo '<p><a href="javascript: ', $pgv_lang['close_window'], '" onclick="window.close();">', $pgv_lang['close_window'], '</a></p>';
+echo '<p><a href="javascript: ', i18n::translate('Close Window'), '" onclick="window.close();">', i18n::translate('Close Window'), '</a></p>';
 print_simple_footer();

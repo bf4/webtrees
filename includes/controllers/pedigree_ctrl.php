@@ -1,7 +1,10 @@
 <?php
 /**
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -273,19 +276,15 @@ class PedigreeControllerRoot extends BaseController {
 	 * @return string	the title of the page to go in the <title> tags
 	 */
 	function getPageTitle() {
-		global $pgv_lang, $GEDCOM;
-
-		$name = $pgv_lang['unknown'];
-		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
-		return $name." ".$pgv_lang["index_header"];
+		return $this->getPersonName()." ".i18n::translate('Pedigree Tree');
 	}
 
 	function getPersonName() {
-		global $pgv_lang;
-
-		$name = $pgv_lang['unknown'];
-		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
-		return $name;
+		if (is_null($this->rootPerson)) {
+			return i18n::translate('unknown');
+		} else {
+			return $this->rootPerson->getFullName();
+		}
 	}
 
 	function adjust_subtree($index, $diff) {

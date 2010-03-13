@@ -7,7 +7,10 @@
  * is used to allow SVN to reliably merge changes for users that have
  * customised their local copy of this file.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2010 PGV Development Team.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -33,6 +36,64 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 define('PGV_CONFIG_DATA_PHP', '');
+
+// Unknown surname in various scripts
+// TODO: This is extremely poor I18N - there is not a 1:1 correlation between script and language
+$UNKNOWN_NN=array(
+	'NN'          =>'(unknown)',
+	'NNhebrew'    =>'(לא-ידוע)',
+	'NNarabic'    =>'(غير معروف)',
+	'NNgreek'     =>'(άγνωστος/η)',
+	'NNrussian'   =>'(неопределено)',
+	'NNchinese'   =>'(未知)',
+	'NNvietnamese'=>'(vô danh)',
+	'NNthai'      =>'(unknown)',
+	'NNother'     =>'(unknown)',
+);
+
+// Unknown givne name in various scripts
+// TODO: This is extremely poor I18N - there is not a 1:1 correlation between script and language
+$UNKNOWN_PN=array(
+	'PN'          =>'(unknown)',
+	'PNhebrew'    =>'(לא-ידוע)',
+	'PNarabic'    =>'(غير معروف)',
+	'PNgreek'     =>'(άγνωστος/η)',
+	'PNrussian'   =>'(неопределено)',
+	'PNchinese'   =>'(未知)',
+	'PNvietnamese'=>'(không biết tuổi)',
+	'PNthai'      =>'(unknown)',
+	'PNother'     =>'(unknown)',
+);
+
+// Type attribute of a media object
+$MEDIA_TYPES=array(
+	'audio'      =>i18n::translate('Audio'),
+	'book'       =>i18n::translate('Book'),
+	'card'       =>i18n::translate('Card'),
+	'certificate'=>i18n::translate('Certificate'),
+	'coat'       =>i18n::translate('Coat of Arms'),
+	'document'   =>i18n::translate('Document'),
+	'electronic' =>i18n::translate('Electronic'),
+	'fiche'      =>i18n::translate('Microfiche'),
+	'film'       =>i18n::translate('Microfilm'),
+	'magazine'   =>i18n::translate('Magazine'),
+	'manuscript' =>i18n::translate('Manuscript'),
+	'map'        =>i18n::translate('Map'),
+	'newspaper'  =>i18n::translate('Newspaper'),
+	'photo'      =>i18n::translate('Photo'),
+	'tombstone'  =>i18n::translate('Tombstone'),
+	'video'      =>i18n::translate('Video'),
+	'painting'   =>i18n::translate('Painting'),
+	'other'      =>i18n::translate('Other'),
+);
+
+// BIRT:PEDI values
+$PEDIGREE_TYPES=array(
+	'adopted'=>i18n::translate('adopted'),
+	'birth'  =>i18n::translate('birth'),
+	'foster' =>i18n::translate('foster'),
+	'sealing'=>i18n::translate('sealing'),
+);
 
 // TEMP tags - LDS temple codes
 $TEMPLE_CODES = array(

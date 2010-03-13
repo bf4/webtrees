@@ -4,7 +4,10 @@
  *
  * Provides links for administrators to get to other administrative areas of the site
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +26,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 01 September 2005
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Admin
  * @version $Id$
  */
@@ -37,10 +40,10 @@ loadLangFile("sitemap:lang, sitemap:help_text");
 
 if (PGV_USER_IS_ADMIN) { ?>
    <tr>
-	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["sitemap"]; ?></td>
+	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo i18n::translate('Sitemap'); ?></td>
    </tr>
    <tr>
-      <td class="optionbox"><?php print_help_link("SITEMAP", "qm", "SITEMAP");?><a href="module.php?mod=sitemap"><?php print $pgv_lang["generate_sitemap"];?></a>
+      <td class="optionbox"><a href="module.php?mod=sitemap"><?php print i18n::translate('Generate Sitemap files');?></a><?php echo help_link('SITEMAP');?>
 	  </td>
       <td class="optionbox">&nbsp;
 	  </td>

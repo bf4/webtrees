@@ -2,7 +2,10 @@
 /**
  * English texts
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -23,7 +26,7 @@
  *
  *
  * @author PGV Developers
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Languages
  * @version $Id$
  */
@@ -1277,12 +1280,12 @@ $pgv_lang["no_events_all"]			= "No events exist for the next #pgv_lang[global_nu
 $pgv_lang["no_events_all1"]			= "No events exist for tomorrow.";
 $pgv_lang["no_events_privacy"]		= "Events exist for the next #pgv_lang[global_num1]# days, but privacy restrictions prevent you from seeing them.";
 $pgv_lang["no_events_privacy1"]		= "Events exist for tomorrow, but privacy restrictions prevent you from seeing them.";
-$pgv_lang["more_events_privacy"]	= "<br />More events exist for the next #pgv_lang[global_num1]# days, but privacy restrictions prevent you from seeing them.";
-$pgv_lang["more_events_privacy1"]	= "<br />More events exist for tomorrow, but privacy restrictions prevent you from seeing them.";
+$pgv_lang["more_events_privacy"]	= "More events exist for the next #pgv_lang[global_num1]# days, but privacy restrictions prevent you from seeing them.";
+$pgv_lang["more_events_privacy1"]	= "More events exist for tomorrow, but privacy restrictions prevent you from seeing them.";
 $pgv_lang["none_today_living"]		= "No events for living people exist for today.";
 $pgv_lang["none_today_all"]			= "No events exist for today.";
 $pgv_lang["none_today_privacy"]		= "Events exist for today, but privacy restrictions prevent you from seeing them.";
-$pgv_lang["more_today_privacy"]		= "<br />More events exist for today, but privacy restrictions prevent you from seeing them.";
+$pgv_lang["more_today_privacy"]		= "More events exist for today, but privacy restrictions prevent you from seeing them.";
 $pgv_lang["chat"]					= "Chat";
 $pgv_lang["users_logged_in"]		= "Users Logged In";
 $pgv_lang["anon_user"]				= "1 anonymous logged-in user";

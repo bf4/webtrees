@@ -4,7 +4,10 @@
  *
  * Census information about an individual
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Census Assistant
  * @version $Id$
  */
@@ -35,7 +38,7 @@
 // ***  LINKS tags --- This will be added later **** =========================================
 /*
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-		print_help_link("edit_add_SHARED_NOTE", "qm");
+		echo help_link("edit_add_SHARED_NOTE");
 		echo "Links: <br />";
 	echo "</td><td class=\"optionbox wrap\">\n";
 		// print_indi_list(fetch_linked_indi('N1', "NOTE", "1"));  //  *** NOTE THIS needs fixing to replace "N1" with a variable, or use another function ***
@@ -43,7 +46,7 @@
 		echo "*** Not implemented yet ***";
 	echo "</td></tr>\n";
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-		print_help_link("edit_add_SHARED_NOTE", "qm");
+		echo help_link("edit_add_SHARED_NOTE");
 		echo "Add Links: <br />";
 	echo "</td><td class=\"optionbox wrap\">\n";
 		// include ('modules/GEDFact_assistant/_CENS/census_query1.php');
@@ -56,7 +59,7 @@
 /*
 	$linksAddLinks  =	 "";
 	$linksAddLinks .=	 "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-	// $linksAddLinks .=	 print_help_link("edit_add_SHARED_NOTE", "qm");
+	// $linksAddLinks .=	 help_link("edit_add_SHARED_NOTE");
 	$linksAddLinks .=	 "Currently Linked to: ";
 	$linksAddLinks .=	 "</td>";
 	$linksAddLinks .=	 "<td class=\"optionbox wrap\">\n";
@@ -68,7 +71,7 @@
 	
 	$linksAddLinks .=	 "<tr>";
 	$linksAddLinks .=	 "<td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-	// $linksAddLinks .=	print_help_link("edit_add_SHARED_NOTE", "qm");
+	// $linksAddLinks .=	help_link("edit_add_SHARED_NOTE");
 	$linksAddLinks .=	 "Add Other Links: ";
 	$linksAddLinks .= "</td><td class=\"optionbox wrap\">\n";
 	// $linksAddLinks .=	// include ('modules/GEDFact_assistant/_CENS/census_query1.php');
@@ -90,7 +93,7 @@
  
 /*
 function print_indi_list($datalist, $legend="", $option="") {
-	global $pgv_lang, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES;
 
 	if ($option=="MARR_PLAC") return;
@@ -116,7 +119,7 @@ function print_indi_list($datalist, $legend="", $option="") {
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">&nbsp; INDI &nbsp;</th>";
 	echo '<th class="list_label">'.i18n::translate('NAME').'</th>';
-	echo "<th class=\"list_label\">&nbsp;".$pgv_lang["add"]."&nbsp; </th>";
+	echo "<th class=\"list_label\">&nbsp;".i18n::translate('Add')."&nbsp; </th>";
 	echo "</tr></thead>\n";
 
 	//-- table body

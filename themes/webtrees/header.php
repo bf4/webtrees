@@ -145,7 +145,7 @@ function SetCookie(cookieName,cookieValue,nDays)
 					<form action="search.php" method="get">
 						<input type="hidden" name="action" value="general" />
 						<input type="hidden" name="topsearch" value="yes" />
-						<input type="text" name="query" accesskey="<?php echo $pgv_lang["accesskey_search"]?>" size="12" value="<?php echo $pgv_lang['search']?>" onfocus="if (this.value == '<?php echo $pgv_lang['search']?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo $pgv_lang['search']?>';" />
+						<input type="text" name="query" size="12" value="<?php echo i18n::translate('Search')?>" onfocus="if (this.value == '<?php echo i18n::translate('Search')?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo i18n::translate('Search')?>';" />
 						<input type="submit" name="search" value="&gt;" />
 					</form>
 				<?php } ?>

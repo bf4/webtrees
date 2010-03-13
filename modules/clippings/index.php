@@ -5,7 +5,10 @@
  * Uses the $_SESSION["cart"] to store the ids of clippings to download
  * @TODO print a message if people are not included due to privacy
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id: index.php 6652 2010-01-01 20:32:39Z yalnifj $
  */
@@ -34,7 +37,7 @@ $controller = new ClippingsController();
 $controller->init();
 
 // -- print html header information
-print_header($pgv_lang["clip_cart"]);
+print_header(i18n::translate('Clippings Cart'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
@@ -43,7 +46,7 @@ echo 'function radAncestors(elementid) {var radFamilies=document.getElementById(
 echo PGV_JS_END;
 
 if (count($cart)==0) {?>
-<h2><?php print $pgv_lang["clippings_cart"];?></h2>
+<h2><?php print i18n::translate('Family Tree Clippings Cart');?></h2>
 <?php }
 
 if ($controller->action=='add') {
@@ -54,15 +57,15 @@ if ($controller->action=='add') {
 		<input type="hidden" name="mod" value="clippings" />
 		<input type="hidden" name="pgv_action" value="index" />
 		<table>
-			<tr><td class="topbottombar"><?php print $pgv_lang["which_links"]?>
+			<tr><td class="topbottombar"><?php print i18n::translate('Which other links from this family would you like to add?')?>
 			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
 			<input type="hidden" name="type" value="<?php print $controller->type ?>" />
 			<input type="hidden" name="action" value="add1" /></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_family"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print $pgv_lang["parents_and_family"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="members" /><?php print $pgv_lang["parents_and_child"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" /><?php print $pgv_lang["parents_desc"]?></td></tr>
-			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" /></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print i18n::translate('Add just this family record.')?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print i18n::translate('Add parents\' records together with this family record.')?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="members" /><?php print i18n::translate('Add parents\' and children\'s records together with this family record.')?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" /><?php print i18n::translate('Add parents\' and all descendants\' records together with this family record.')?></td></tr>
+			<tr><td class="topbottombar"><input type="submit" value="<?php print i18n::translate('Continue Adding')?>" /></td></tr>
 
 		</table>
 		</form>
@@ -72,20 +75,20 @@ if ($controller->action=='add') {
 		<input type="hidden" name="mod" value="clippings" />
 		<input type="hidden" name="pgv_action" value="index" />
 		<table>
-			<tr><td class="topbottombar"><?php print $pgv_lang["which_p_links"]?>
+			<tr><td class="topbottombar"><?php print i18n::translate('Which links from this person would you also like to add?')?>
 			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
 			<input type="hidden" name="type" value="<?php print $controller->type ?>" />
 			<input type="hidden" name="action" value="add1" /></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_person"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print $pgv_lang["person_parents_sibs"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="ancestors" id="ancestors" /><?php print $pgv_lang["person_ancestors"]?><br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["enter_person_generations"] ?> <input type="text" size="5" name="level1" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('ancestors');"/></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="ancestorsfamilies" id="ancestorsfamilies" /><?php print $pgv_lang["person_ancestor_fams"]?><br >
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["enter_person_generations"] ?> <input type="text" size="5" name="level2" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('ancestorsfamilies');" /></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="members" /><?php print $pgv_lang["person_spouse"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" id="descendants" /><?php print $pgv_lang["person_desc"]?><br >
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["enter_person_generations"] ?> <input type="text" size="5" name="level3" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('descendants');" /></td></tr>
-			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" />
+			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print i18n::translate('Add just this person.')?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print i18n::translate('Add this person, his parents, and siblings.')?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="ancestors" id="ancestors" /><?php print i18n::translate('Add this person and his direct line ancestors.')?><br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print i18n::translate('Number of generations:') ?> <input type="text" size="5" name="level1" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('ancestors');"/></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="ancestorsfamilies" id="ancestorsfamilies" /><?php print i18n::translate('Add this person, his direct line ancestors, and their families.')?><br >
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print i18n::translate('Number of generations:') ?> <input type="text" size="5" name="level2" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('ancestorsfamilies');" /></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="members" /><?php print i18n::translate('Add this person, his spouse, and children.')?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" id="descendants" /><?php print i18n::translate('Add this person, his spouse, and all descendants.')?><br >
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print i18n::translate('Number of generations:') ?> <input type="text" size="5" name="level3" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('descendants');" /></td></tr>
+			<tr><td class="topbottombar"><input type="submit" value="<?php print i18n::translate('Continue Adding')?>" />
 		</table>
 		</form>
 	<?php } else if ($controller->type=='sour')  {?>
@@ -93,13 +96,13 @@ if ($controller->action=='add') {
 		<input type="hidden" name="mod" value="clippings" />
 		<input type="hidden" name="pgv_action" value="index" />
 		<table>
-			<tr><td class="topbottombar"><?php print $pgv_lang["which_s_links"]?>
+			<tr><td class="topbottombar"><?php print i18n::translate('Which records linked to this source should be added?')?>
 			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
 			<input type="hidden" name="type" value="<?php print $controller->type ?>" />
 			<input type="hidden" name="action" value="add1" /></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_source"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="linked" /><?php print $pgv_lang["linked_source"]?></td></tr>
-			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" />
+			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print i18n::translate('Add just this source.')?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="linked" /><?php print i18n::translate('Add this source and families/people linked to it.')?></td></tr>
+			<tr><td class="topbottombar"><input type="submit" value="<?php print i18n::translate('Continue Adding')?>" />
 		</table>
 		</form>
 	<?php }
@@ -107,7 +110,7 @@ if ($controller->action=='add') {
 $ct = count($cart);
 
 if ($controller->privCount>0) {
-	print "<span class=\"error\">".$pgv_lang["clipping_privacy"]."</span><br /><br />\n";
+	print "<span class=\"error\">".i18n::translate('Some items could not be added due to privacy restrictions')."</span><br /><br />\n";
 }
 
 if ($ct==0) {
@@ -129,8 +132,7 @@ if ($ct==0) {
 		<table>
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
-				<?php print $pgv_lang["add_individual_by_id"];
-				print_help_link("add_by_id", "qm");?>
+				<?php echo i18n::translate('Add Individual By ID'), help_link('add_by_id'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -142,7 +144,7 @@ if ($ct==0) {
 				<?php print_findindi_link('cart_item_id', ''); ?>
 				<?php print_findfamily_link('cart_item_id', ''); ?>
 				<?php print_findsource_link('cart_item_id', ''); ?>
-				<input type="submit" value="<?php print $pgv_lang["add"];?>"/>
+				<input type="submit" value="<?php print i18n::translate('Add');?>"/>
 
 			</td>
 		</tr>
@@ -152,7 +154,7 @@ if ($ct==0) {
 	}
 
 	// -- end new lines
-	print "\r\n\t\t<br /><br />".$pgv_lang["cart_is_empty"]."<br /><br />";
+	print "\r\n\t\t<br /><br />".i18n::translate('Your Clippings Cart is empty.')."<br /><br />";
 } else {
 	if ($controller->action != 'download' && $controller->action != 'add') { ?>
 		<table><tr><td class="width33" valign="top" rowspan="3">
@@ -161,9 +163,9 @@ if ($ct==0) {
 		<input type="hidden" name="pgv_action" value="index" />
 		<input type="hidden" name="action" value="download" />
 		<table>
-		<tr><td colspan="2" class="topbottombar"><h2><?php print $pgv_lang["file_information"] ?></h2></td></tr>
+		<tr><td colspan="2" class="topbottombar"><h2><?php print i18n::translate('File Information') ?></h2></td></tr>
 		<tr>
-		<td class="descriptionbox width50 wrap"><?php print_help_link("file_type", "qm"); print $pgv_lang["choose_file_type"] ?></td>
+		<td class="descriptionbox width50 wrap"><?php echo i18n::translate('File Type'), help_link('file_type'); ?></td>
 		<td class="optionbox">
 		<?php if ($TEXT_DIRECTION=='ltr') { ?>
 			<input type="radio" name="filetype" checked="checked" value="gedcom" />&nbsp;GEDCOM<br/><input type="radio" name="filetype" value="gramps" DISABLED />&nbsp;Gramps XML <!-- GRAMPS doesn't work right now -->
@@ -172,10 +174,10 @@ if ($ct==0) {
 		<?php } ?>
 		</td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("zip", "qm"); print $pgv_lang["zip_files"]; ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Zip File(s)'), help_link('zip'); ?></td>
 		<td class="optionbox"><input type="checkbox" name="Zip" value="yes" checked="checked" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("include_media", "qm"); print $pgv_lang["include_media"]; ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Include Media (automatically zips files)'), help_link('include_media'); ?></td>
 		<td class="optionbox"><input type="checkbox" name="IncludeMedia" value="yes" checked="checked" /></td></tr>
 
 		<?php
@@ -207,32 +209,32 @@ if ($ct==0) {
 		}
 		?>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("apply_privacy", "qm"); print $pgv_lang["apply_privacy"]; ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Apply privacy settings?'), help_link('apply_privacy'); ?></td>
 		<td class="list_value">
-		<input type="radio" name="privatize_export" value="none" <?php print $radioPrivatizeNone; ?>/>&nbsp;<?php print $pgv_lang["none"]; ?><br />
-		<input type="radio" name="privatize_export" value="visitor" <?php print $radioPrivatizeVisitor; ?>/>&nbsp;<?php print $pgv_lang["visitor"]; ?><br />
-		<input type="radio" name="privatize_export" value="user" <?php print $radioPrivatizeUser; ?>/>&nbsp;<?php print $pgv_lang["user"]; ?><br />
-		<input type="radio" name="privatize_export" value="gedadmin" <?php print $radioPrivatizeGedadmin; ?>/>&nbsp;<?php print $pgv_lang["gedadmin"]; ?><br />
-		<input type="radio" name="privatize_export" value="admin" <?php print $radioPrivatizeAdmin; ?>/>&nbsp;<?php print $pgv_lang["siteadmin"]; ?>
+		<input type="radio" name="privatize_export" value="none" <?php print $radioPrivatizeNone; ?>/>&nbsp;<?php print i18n::translate('None'); ?><br />
+		<input type="radio" name="privatize_export" value="visitor" <?php print $radioPrivatizeVisitor; ?>/>&nbsp;<?php print i18n::translate('Visitor'); ?><br />
+		<input type="radio" name="privatize_export" value="user" <?php print $radioPrivatizeUser; ?>/>&nbsp;<?php print i18n::translate('Authenticated user'); ?><br />
+		<input type="radio" name="privatize_export" value="gedadmin" <?php print $radioPrivatizeGedadmin; ?>/>&nbsp;<?php print i18n::translate('GEDCOM administrator'); ?><br />
+		<input type="radio" name="privatize_export" value="admin" <?php print $radioPrivatizeAdmin; ?>/>&nbsp;<?php print i18n::translate('Site administrator'); ?>
 		</td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("utf8_ansi", "qm"); print $pgv_lang["utf8_to_ansi"]; ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Convert from UTF-8 to ANSI (ISO-8859-1)'), help_link('utf8_ansi'); ?></td>
 		<td class="optionbox"><input type="checkbox" name="convert" value="yes" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("remove_tags", "qm"); print $pgv_lang["remove_custom_tags"]; ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Remove custom PGV tags? (eg. _PGVU, _THUM)'), help_link('remove_tags'); ?></td>
 		<td class="optionbox"><input type="checkbox" name="remove" value="yes" checked="checked" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertPath", "qm"); print $pgv_lang["convertPath"];?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Convert media path to'), help_link('convertPath'); ?></td>
 		<td class="list_value"><input type="text" name="conv_path" size="30" value="<?php echo getLRM(), $controller->conv_path, getLRM();?>" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertSlashes", "qm"); print $pgv_lang["convertSlashes"];?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Convert media folder separators to'), help_link('convertSlashes'); ?></td>
 		<td class="list_value">
-		<input type="radio" name="conv_slashes" value="forward" <?php if ($controller->conv_slashes=='forward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print $pgv_lang["forwardSlashes"];?><br />
-		<input type="radio" name="conv_slashes" value="backward" <?php if ($controller->conv_slashes=='backward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print $pgv_lang["backSlashes"];?>
+		<input type="radio" name="conv_slashes" value="forward" <?php if ($controller->conv_slashes=='forward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print i18n::translate('Forward slashes : /');?><br />
+		<input type="radio" name="conv_slashes" value="backward" <?php if ($controller->conv_slashes=='backward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print i18n::translate('Backslashes : \\');?>
 		</td></tr>
 
 		<tr><td class="topbottombar" colspan="2">
-		<input type="submit" value="<?php print $pgv_lang["download_now"]; ?>" />
+		<input type="submit" value="<?php print i18n::translate('Download Now'); ?>" />
 		</form>
 		</td></tr>
 		</table>
@@ -255,7 +257,7 @@ if ($ct==0) {
 		<table>
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
-				<?php print_help_link("add_by_id", "qm"); print $pgv_lang["add_individual_by_id"]; ?>
+				<?php echo i18n::translate('Add Individual By ID'), help_link('add_by_id'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -267,7 +269,7 @@ if ($ct==0) {
 				<?php print_findindi_link('cart_item_id', ''); ?>
 				<?php print_findfamily_link('cart_item_id', ''); ?>
 				<?php print_findsource_link('cart_item_id', ''); ?>
-				<input type="submit" value="<?php print $pgv_lang["add"];?>"/>
+				<input type="submit" value="<?php print i18n::translate('Add');?>"/>
 
 			</td>
 		</tr>
@@ -276,18 +278,18 @@ if ($ct==0) {
 
 
 	<?php } ?>
-	<br /><?php print_help_link("empty_cart", "qm");?><a href="module.php?mod=clippings&amp;pgv_action=index&amp;action=empty"><?php print $pgv_lang["empty_cart"];?></a>
+	<br /><a href="module.php?mod=clippings&amp;pgv_action=index&amp;action=empty"><?php echo i18n::translate('Empty Cart');?></a><?php echo help_link('empty_cart'); ?>
 	</td></tr>
 
-	<tr><td class="topbottombar"><h2><?php print_help_link("clip_cart", "qm"); print $pgv_lang["clippings_cart"];?></h2></td></tr>
+	<tr><td class="topbottombar"><h2><?php echo i18n::translate('Family Tree Clippings Cart'), help_link('clip_cart'); ?></h2></td></tr>
 
 	<tr><td valign="top">
 	<table id="mycart" class="sortable list_table width100">
 		<tr>
-			<th class="list_label"><?php echo $pgv_lang["type"]?></th>
-			<th class="list_label"><?php echo $pgv_lang["id"]?></th>
-			<th class="list_label"><?php echo $pgv_lang["name_description"]?></th>
-			<th class="list_label"><?php echo $pgv_lang["remove"]?></th>
+			<th class="list_label"><?php echo i18n::translate('Type')?></th>
+			<th class="list_label"><?php echo i18n::translate('ID')?></th>
+			<th class="list_label"><?php echo i18n::translate('Name / Description')?></th>
+			<th class="list_label"><?php echo i18n::translate('Remove')?></th>
 		</tr>
 <?php
 	for ($i=0; $i<$ct; $i++) {
@@ -313,7 +315,7 @@ if ($ct==0) {
 			if ($record) echo '<a href="', encode_url($record->getLinkUrl()), '">', PrintReady($record->getListName()), '</a>';
 			?>
 			</td>
-			<td class="list_value center vmiddle"><a href="module.php?mod=clippings&amp;action=remove&amp;item=<?php echo $i;?>"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"];?>" border="0" alt="<?php echo $pgv_lang["remove"]?>" title="<?php echo $pgv_lang["remove"];?>" /></a></td>
+			<td class="list_value center vmiddle"><a href="module.php?mod=clippings&amp;action=remove&amp;item=<?php echo $i;?>"><img src="<?php echo $PGV_IMAGE_DIR, "/", $PGV_IMAGES["remove"]["other"];?>" border="0" alt="<?php echo i18n::translate('Remove')?>" title="<?php echo i18n::translate('Remove');?>" /></a></td>
 		</tr>
 		<?php
 		}

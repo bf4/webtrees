@@ -1,7 +1,10 @@
 <?php
 /**
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @version $Id$
  */
 
@@ -40,7 +43,7 @@ function date_localisation_pl(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	static $LOCATIVE_MONTHS=NULL;
 
 	if (empty($NOMINATIVE_MONTHS)) {
-		$NOMINATIVE_MONTHS=array($pgv_lang['jan'], $pgv_lang['feb'], $pgv_lang['mar'], $pgv_lang['apr'], $pgv_lang['may'], $pgv_lang['jun'], $pgv_lang['jul'], $pgv_lang['aug'], $pgv_lang['sep'], $pgv_lang['oct'], $pgv_lang['nov'], $pgv_lang['dec']);
+		$NOMINATIVE_MONTHS=array(i18n::translate('January'), i18n::translate('February'), i18n::translate('March'), i18n::translate('April'), i18n::translate('May'), i18n::translate('June'), i18n::translate('July'), i18n::translate('August'), i18n::translate('September'), i18n::translate('October'), i18n::translate('November'), i18n::translate('December'));
 		$GENITIVE_MONTHS=array('stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia');
 		$INSTRUMENTAL_MONTHS=array('styczniem', 'lutym', 'marcem', 'kwietniem', 'majem', 'czerwcem', 'lipcem', 'sierpniem', 'wrześniem', 'październikiem', 'listopadem', 'grudniem');
 		$LOCATIVE_MONTHS=array('styczniu', 'lutym', 'marcu', 'kwietniu', 'maju', 'czerwcu', 'lipcu', 'sierpniu', 'wrześniu', 'październiku', 'listopadzie', 'grudniu');
@@ -124,33 +127,33 @@ function age_localisation_pl(&$agestring, &$show_years) {
 			'/(\d+)w/i'
 		),
 		array(
-			$pgv_lang['child'],
-			$pgv_lang['infant'],
-	 		$pgv_lang['stillborn'],
-			$show_years ? '1 '.$pgv_lang['year1'] : '1',
-			$show_years ? '2 '.$pgv_lang["years2"] : '2', $show_years ? '3 '.$pgv_lang["years2"] : '3', $show_years ? '4 '.$pgv_lang["years2"] : '4',
-			$show_years ? '22 '.$pgv_lang["years2"] : '22', $show_years ? '23 '.$pgv_lang["years2"] : '23', $show_years ? '24 '.$pgv_lang["years2"] : '24',
-			$show_years ? '32 '.$pgv_lang["years2"] : '32', $show_years ? '33 '.$pgv_lang["years2"] : '33', $show_years ? '34 '.$pgv_lang["years2"] : '34',
-			$show_years ? '42 '.$pgv_lang["years2"] : '42', $show_years ? '43 '.$pgv_lang["years2"] : '43', $show_years ? '44 '.$pgv_lang["years2"] : '44',
-			$show_years ? '52 '.$pgv_lang["years2"] : '52', $show_years ? '53 '.$pgv_lang["years2"] : '53', $show_years ? '54 '.$pgv_lang["years2"] : '54',
-			$show_years ? '62 '.$pgv_lang["years2"] : '62', $show_years ? '63 '.$pgv_lang["years2"] : '63', $show_years ? '64 '.$pgv_lang["years2"] : '64',
-			$show_years ? '72 '.$pgv_lang["years2"] : '72', $show_years ? '73 '.$pgv_lang["years2"] : '73', $show_years ? '74 '.$pgv_lang["years2"] : '74',
-			$show_years ? '82 '.$pgv_lang["years2"] : '82', $show_years ? '83 '.$pgv_lang["years2"] : '83', $show_years ? '84 '.$pgv_lang["years2"] : '84',
-			$show_years ? '92 '.$pgv_lang["years2"] : '92', $show_years ? '93 '.$pgv_lang["years2"] : '93', $show_years ? '94 '.$pgv_lang["years2"] : '94',
-			$show_years ? '102 '.$pgv_lang["years2"] : '102', $show_years ? '103 '.$pgv_lang["years2"] : '103', $show_years ? '104 '.$pgv_lang["years2"] : '104',
-			$show_years ? '122 '.$pgv_lang["years2"] : '122', $show_years ? '123 '.$pgv_lang["years2"] : '123', $show_years ? '124 '.$pgv_lang["years2"] : '124',
-			$show_years ? '132 '.$pgv_lang["years2"] : '132', $show_years ? '133 '.$pgv_lang["years2"] : '133', $show_years ? '134 '.$pgv_lang["years2"] : '134',
-			$show_years ? '$1 '.$pgv_lang['years'] : '$1',
-			'1 '.$pgv_lang['month1'],
+			i18n::translate('Child'),
+			i18n::translate('Infant'),
+	 		i18n::translate('Stillborn'),
+			$show_years ? '1 '.i18n::translate('year') : '1',
+			$show_years ? '2 '.i18n::translate('years') : '2', $show_years ? '3 '.i18n::translate('years') : '3', $show_years ? '4 '.i18n::translate('years') : '4',
+			$show_years ? '22 '.i18n::translate('years') : '22', $show_years ? '23 '.i18n::translate('years') : '23', $show_years ? '24 '.i18n::translate('years') : '24',
+			$show_years ? '32 '.i18n::translate('years') : '32', $show_years ? '33 '.i18n::translate('years') : '33', $show_years ? '34 '.i18n::translate('years') : '34',
+			$show_years ? '42 '.i18n::translate('years') : '42', $show_years ? '43 '.i18n::translate('years') : '43', $show_years ? '44 '.i18n::translate('years') : '44',
+			$show_years ? '52 '.i18n::translate('years') : '52', $show_years ? '53 '.i18n::translate('years') : '53', $show_years ? '54 '.i18n::translate('years') : '54',
+			$show_years ? '62 '.i18n::translate('years') : '62', $show_years ? '63 '.i18n::translate('years') : '63', $show_years ? '64 '.i18n::translate('years') : '64',
+			$show_years ? '72 '.i18n::translate('years') : '72', $show_years ? '73 '.i18n::translate('years') : '73', $show_years ? '74 '.i18n::translate('years') : '74',
+			$show_years ? '82 '.i18n::translate('years') : '82', $show_years ? '83 '.i18n::translate('years') : '83', $show_years ? '84 '.i18n::translate('years') : '84',
+			$show_years ? '92 '.i18n::translate('years') : '92', $show_years ? '93 '.i18n::translate('years') : '93', $show_years ? '94 '.i18n::translate('years') : '94',
+			$show_years ? '102 '.i18n::translate('years') : '102', $show_years ? '103 '.i18n::translate('years') : '103', $show_years ? '104 '.i18n::translate('years') : '104',
+			$show_years ? '122 '.i18n::translate('years') : '122', $show_years ? '123 '.i18n::translate('years') : '123', $show_years ? '124 '.i18n::translate('years') : '124',
+			$show_years ? '132 '.i18n::translate('years') : '132', $show_years ? '133 '.i18n::translate('years') : '133', $show_years ? '134 '.i18n::translate('years') : '134',
+			$show_years ? '$1 '.i18n::translate('years') : '$1',
+			'1 '.i18n::translate('month'),
 			'2 miesiące', '3 miesiące', '4 miesiące',
 			'22 miesiące', '23 miesiące', '24 miesiące',
-	 		'$1 '.$pgv_lang['months'],
-			'1 '.$pgv_lang['day1'],
-			'$1 '.$pgv_lang['days'],
-			'1 '.$pgv_lang['week1'],
+	 		'$1 '.i18n::translate('months'),
+			'1 '.i18n::translate('day'),
+			'$1 '.i18n::translate('days'),
+			'1 '.i18n::translate('week'),
 			'2 tygodnie', '3 tygodnie', '4 tygodnie',
 			'22 tygodnie', '23 tygodnie', '24 tygodnie',
-			'$1 '.$pgv_lang['weeks']
+			'$1 '.i18n::translate('weeks')
 		),
 		$agestring
 	);
@@ -158,10 +161,10 @@ function age_localisation_pl(&$agestring, &$show_years) {
 function age2_localisation_pl($years) {
 	global $pgv_lang;
 
-	if ($years==1) $years .= " ".$pgv_lang["year1"];
-	else if ($years > 1 && $years < 5) $years .= " ".$pgv_lang["years2"];
-	else if (substr($years, -1, 1) > 1 && substr($years, -1, 1) < 5 && substr($years, -2, 1) != 1) $years .= " ".$pgv_lang["years2"];
-	else $years .= " ".$pgv_lang["years"];
+	if ($years==1) $years .= " ".i18n::translate('year');
+	else if ($years > 1 && $years < 5) $years .= " ".i18n::translate('years');
+	else if (substr($years, -1, 1) > 1 && substr($years, -1, 1) < 5 && substr($years, -2, 1) != 1) $years .= " ".i18n::translate('years');
+	else $years .= " ".i18n::translate('years');
 	return $years;
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -171,13 +174,13 @@ function date_diff_localisation_pl(&$label, &$gap) {
 	global $pgv_lang;
 
 	$yrs = round($gap/12);
-	if ($gap == 12 || $gap == -12) $label .= $yrs." ".$pgv_lang["year1"]; // 1 rok
-	else if (($yrs > 1 && $yrs < 5) || ($yrs < -1 && $yrs > -5)) $label .= $yrs." ".$pgv_lang["years2"]; // 2-4 lata
-	else if (($yrs > 21 || $yrs < -21) && substr($yrs, -1, 1) > 1 && substr($yrs, -1, 1) < 5 && substr($yrs, -2, 1) != 1) $label .= $yrs." ".$pgv_lang["years2"];
-	else if ($gap > 20 or $gap < -20) $label .= $yrs." ".$pgv_lang["years"]; // x lat
-	else if ($gap == 1 || $gap == -1) $label .= $gap." ".$pgv_lang["month1"]; // 1 miesiąc
+	if ($gap == 12 || $gap == -12) $label .= $yrs." ".i18n::translate('year'); // 1 rok
+	else if (($yrs > 1 && $yrs < 5) || ($yrs < -1 && $yrs > -5)) $label .= $yrs." ".i18n::translate('years'); // 2-4 lata
+	else if (($yrs > 21 || $yrs < -21) && substr($yrs, -1, 1) > 1 && substr($yrs, -1, 1) < 5 && substr($yrs, -2, 1) != 1) $label .= $yrs." ".i18n::translate('years');
+	else if ($gap > 20 or $gap < -20) $label .= $yrs." ".i18n::translate('years'); // x lat
+	else if ($gap == 1 || $gap == -1) $label .= $gap." ".i18n::translate('month'); // 1 miesiąc
 	else if (($gap > 1 && $gap < 5) || ($gap < -1 && $gap > -5)) $label .= $gap." miesiące"; // 2-4 miesiące
-	else if ($gap != 0) $label .= $gap." ".$pgv_lang["months"]; // x miesięcy
+	else if ($gap != 0) $label .= $gap." ".i18n::translate('months'); // x miesięcy
 }
 ////////////////////////////////////////////////////////////////////////////////
 // Localise a number of people. Lokalizacja liczby osób.
@@ -186,13 +189,13 @@ function num_people_localisation_pl(&$count) {
 	global $pgv_lang;
 
 	if ($count == 1)
-		print "<br /><b>".$count." ".$pgv_lang["individual"]."</b>"; // 1 osoba
+		print "<br /><b>".$count." ".i18n::translate('Individual')."</b>"; // 1 osoba
 	else if ($count > 1 && $count < 5)
-		print "<br /><b>".$count." ".$pgv_lang["individuals"]."</b>"; // 2-4 osoby
+		print "<br /><b>".$count." ".i18n::translate('Individuals')."</b>"; // 2-4 osoby
 	else if ($count > 21 && substr($count, -1, 1) > 1 && substr($count, -1, 1) < 5 && substr($count, -2, 1) != 1)
-		print "<br /><b>".$count." ".$pgv_lang["individuals"]."</b>"; // x2-x4 osoby
+		print "<br /><b>".$count." ".i18n::translate('Individuals')."</b>"; // x2-x4 osoby
 	else
-		print "<br /><b>".$count." ".$pgv_lang["stat_individuals"]."</b>"; // x osób
+		print "<br /><b>".$count." ".i18n::translate('Individuals')."</b>"; // x osób
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Localise the _AKAN, _AKA, ALIA and _INTE facts. Lokalizacja faktów _AKAN, _AKA, ALIA i _INTE.
@@ -363,55 +366,55 @@ function rela_localisation_pl(&$rela, &$pid2) {
 		if (!empty($record)) {
 			$sex = $record->getSex();
 			switch ($rela) {
-				case $pgv_lang["informant"]:
+				case i18n::translate('Informant'):
 					if ($sex == "M")		$rela = "Informator";
 					else if ($sex == "F")   $rela = "Informatorka";
 					break;
-				case $pgv_lang["lodger"]:
+				case i18n::translate('Lodger'):
 					if ($sex == "M")		$rela = "Lokator";
 					else if ($sex == "F")   $rela = "Lokatorka";
 					break;
-				case $pgv_lang["slave"]:
+				case i18n::translate('Slave'):
 					if ($sex == "M")		$rela = "Niewolnik";
 					else if ($sex == "F")   $rela = "Niewolnica";
 					break;
-				case $pgv_lang["attending"]:
+				case i18n::translate('Attending'):
 					if ($sex == "M")		$rela = "Obsługujący";
 					else if ($sex == "F")   $rela = "Obsługująca";
 					break;
-				case $pgv_lang["guardian"]:
+				case i18n::translate('Guardian'):
 					if ($sex == "M")		$rela = "Opiekun";
 					else if ($sex == "F")   $rela = "Opiekunka";
 					break;
-				case $pgv_lang["nurse"]:
+				case i18n::translate('Nurse'):
 					if ($sex == "M")		$rela = "Pielęgniarz";
 					else if ($sex == "F")   $rela = "Pielęgniarka";
 					break;
-				case $pgv_lang["attendant"]:
+				case i18n::translate('Attendant'):
 					if ($sex == "M")		$rela = "Pomocnik";
 					else if ($sex == "F")   $rela = "Pomocnica";
 					break;
-				case $pgv_lang["employee"]:
+				case i18n::translate('Employee'):
 					if ($sex == "M")		$rela = "Pracownik";
 					else if ($sex == "F")   $rela = "Pracownica";
 					break;
-				case $pgv_lang["friend"]:
+				case i18n::translate('Friend'):
 					if ($sex == "M")		$rela = "Przyjaciel";
 					else if ($sex == "F")   $rela = "Przyjaciółka";
 					break;
-				case $pgv_lang["servant"]:
+				case i18n::translate('Servant'):
 					if ($sex == "M")		$rela = "Służący";
 					else if ($sex == "F")   $rela = "Służąca";
 					break;
-				case $pgv_lang["seller"]:
+				case i18n::translate('Seller'):
 					if ($sex == "M")		$rela = "Sprzedawca";
 					else if ($sex == "F")   $rela = "Sprzedawczyni";
 					break;
-				case $pgv_lang["owner"]:
+				case i18n::translate('Owner'):
 					if ($sex == "M")		$rela = "Właściciel";
 					else if ($sex == "F")   $rela = "Właścicielka";
 					break;
-				case $pgv_lang["ward"]:
+				case i18n::translate('Ward'):
 					if ($sex == "M")		$rela = "Wychowanek";
 					else if ($sex == "F")   $rela = "Wychowanka";
 					break;

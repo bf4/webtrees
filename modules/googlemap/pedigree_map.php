@@ -7,7 +7,10 @@
  * markers where the location exists with identical spelling in both your
  * GEDCOM '2 PLAC' tag (within the '1 BIRT' event) and the place_locations table.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -27,7 +30,7 @@
  * @author Nigel Osborne
  * @Developed for the 'Our-Families' web site (http://www.our-families.info)
  * @modified and added to PGV by Łukasz Wileński
- * @package PhpGedView
+ * @package webtrees
  * $Id$
  */
 
@@ -79,10 +82,10 @@ print_header($controller->getPageTitle());
 
 if (!$GOOGLEMAP_ENABLED) {
 	echo "<table class=\"facts_table\">\n";
-	echo "<tr><td class=\"facts_value\">", $pgv_lang["gm_disabled"], "</td></tr>\n";
+	echo "<tr><td class=\"facts_value\">", i18n::translate('GoogleMap module disabled'), "</td></tr>\n";
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td align=\"center\">\n";
-		echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">", $pgv_lang["gm_manage"], "</a>";
+		echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
 		echo "</td></tr>\n";
 	}
 	echo "</table><br />";
@@ -131,7 +134,7 @@ if (!$GOOGLEMAP_ENABLED) {
 	<?php
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 echo '<div><table><tr><td valign="middle">';
-echo "<h2>" . $pgv_lang["pedigree_map"] . " " . $pgv_lang["pm_for"] . " ";
+echo "<h2>" . i18n::translate('Pedigree Map') . " " . i18n::translate('for') . " ";
 echo PrintReady($controller->getPersonName())."</h2>";
 
 // -- print the form to change the number of displayed generations
@@ -151,32 +154,28 @@ if (!$controller->isPrintPreview()) {
 		<input type="hidden" name="pgvaction" value="pedigree_map" />
 		<table class="pedigree_table <?php echo $TEXT_DIRECTION; ?>" width="555">
 			<tr>
-				<td colspan="5" class="topbottombar" style="text-align:center; "><?php print_help_link("PEDIGREE_MAP", "qm", "PEDIGREE_MAP1"); ?>
-					<?php echo $pgv_lang["options"]; ?>
+				<td colspan="5" class="topbottombar" style="text-align:center; ">
+					<?php echo i18n::translate('Pedigree Chart Options'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap"><?php print_help_link("rootid", "qm", "PEDIGREE_MAP1"); ?>
-					<?php echo $pgv_lang["root_person"]; ?>
+				<td class="descriptionbox wrap">
+					<?php echo i18n::translate('Root Person ID'), help_link('rootid'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-				<?php print_help_link("PEDIGREE_GENERATIONS", "qm", "PEDIGREE_MAP1"); ?>
-				<?php echo $pgv_lang["generations"]; ?>
+					<?php echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("PEDIGREE_MAP_clustersize", "qm", "PEDIGREE_MAP1"); ?>
-					<?php echo $pgv_lang["PEDIGREE_MAP_clustersize"]; ?>
+					<?php echo i18n::translate('Cluster Size'), help_link('PEDIGREE_MAP_clustersize'); ?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					print_help_link("PEDIGREE_MAP_hideflags", "qm", "PEDIGREE_MAP1");
-					echo $pgv_lang["PEDIGREE_MAP_hideflags"];
+					echo i18n::translate('Hide flags'), help_link('PEDIGREE_MAP_hideflags');
 					?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					print_help_link("PEDIGREE_MAP_hidelines", "qm", "PEDIGREE_MAP1");
-					echo $pgv_lang["PEDIGREE_MAP_hidelines"];
+					echo i18n::translate('Hide lines'), help_link('PEDIGREE_MAP_hidelines');
 					?>
 				</td>
 			</tr>
@@ -224,7 +223,7 @@ if (!$controller->isPrintPreview()) {
 			</tr>
 			<tr>
 				<td class="topbottombar" colspan="5">
-					<input type="submit" value="<?php echo $pgv_lang["view"]; ?>" />
+					<input type="submit" value="<?php echo i18n::translate('View'); ?>" />
 				</td>
 			</tr>
 		</table>
@@ -250,7 +249,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 	if (!empty($person)) {
 		$pid = $controller->treeid[$i];
 		$name = $person->getFullName();
-		if ($name == $pgv_lang["private"]) $priv++;
+		if ($name == i18n::translate('Private')) $priv++;
 		$place = $person->getBirthPlace();
 		if (empty($place)) {
 			$latlongval[$i] = NULL;
@@ -304,13 +303,13 @@ echo " background-image: url('images/loading.gif'); background-position: center;
 if (PGV_USER_IS_ADMIN) {
 	echo "<table width=\"100%\">";
 	echo "<tr><td align=\"left\">\n";
-	echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">", $pgv_lang["gm_manage"], "</a>";
+	echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">", i18n::translate('Manage GoogleMap configuration'), "</a>";
 	echo "</td>\n";
 	echo "<td align=\"center\">\n";
-	echo "<a href=\"module.php?mod=googlemap&pgvaction=places\">", $pgv_lang["edit_place_locations"], "</a>";
+	echo "<a href=\"module.php?mod=googlemap&pgvaction=places\">", i18n::translate('Edit geographic place locations'), "</a>";
 	echo "</td>\n";
 	echo "<td align=\"right\">\n";
-	echo "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">", $pgv_lang["placecheck"], "</a>";
+	echo "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">", i18n::translate('Place Check'), "</a>";
 	echo "</td></tr>\n";
 	echo "</table>\n";
 }
@@ -330,18 +329,18 @@ echo "	<td valign=\"top\">";
 		$miss=$total-$count-$priv;
 		echo "<strong>".$count."</strong>\n";
 		if ($count == 1) {
-			echo " ".$pgv_lang["pm_individual_displayed"]." \n";
+			echo " ".i18n::translate('individual displayed out of the normal total of')." \n";
 		} else if ($count > 1 && $count < 5) {
-			echo " ".$pgv_lang["pm_2individuals_displayed"]." \n";
+			echo " ".i18n::translate('individuals displayed out of the normal total of')." \n";
 		} else if ($count > 21 && substr($count, -1, 1) > 1 && substr($count, -1, 1) < 5 && substr($count, -2, 1) != 1) {
-			echo " ".$pgv_lang["pm_2individuals_displayed"]." \n";
+			echo " ".i18n::translate('individuals displayed out of the normal total of')." \n";
 		} else {
-			echo " ".$pgv_lang["pm_individuals_displayed"]." \n";
+			echo " ".i18n::translate('individuals displayed out of the normal total of')." \n";
 		}
 		echo "<strong>".$total."</strong>\n";
-		echo " ".$pgv_lang["pm_from"]." \n";
+		echo " ".i18n::translate('from')." \n";
 		echo "<strong>".$curgen."</strong>\n";
-		echo " ".$pgv_lang["pm_gens"]."<br />\n";
+		echo " ".i18n::translate('generations')."<br />\n";
 		echo "</td>\n";
 		echo "  </tr>\n";
 		echo "  <tr>\n";
@@ -349,26 +348,26 @@ echo "	<td valign=\"top\">";
 		if ($priv!=0) {
 			echo "<strong>".$priv."</strong> \n";
 			if ($priv == 1) {
-				echo " ".$pgv_lang["pm_individual_private"]." \n";
+				echo " ".i18n::translate('individual is private.')." \n";
 			} else {
-				echo " ".$pgv_lang["pm_individuals_private"]." \n";
+				echo " ".i18n::translate('individuals are private.')." \n";
 			}
 		}
 		if ($count+$priv != $total) {
 			if ($miscount == 1) {
 				echo "<strong>".$miscount."</strong> ";
-				echo " ".$pgv_lang["pm_missing_birth"]."<br />\n";
+				echo " ".i18n::translate('individual is missing birth place map coordinates:')."<br />\n";
 			} else if ($miscount > 1 && $miscount < 5) {
 				echo "<strong>".$miscount."</strong> ";
-				echo " ".$pgv_lang["pm_2missing_births"]."<br />\n";
+				echo " ".i18n::translate('individuals are missing birth place map coordinates:')."<br />\n";
 			} else if ($miscount > 21 && substr($miscount, -1, 1) > 1 && substr($miscount, -1, 1) < 5 && substr($miscount, -2, 1) != 1) {
 				echo "<strong>".$miscount."</strong> ";
-				echo " ".$pgv_lang["pm_2missing_births"]."<br />\n";
+				echo " ".i18n::translate('individuals are missing birth place map coordinates:')."<br />\n";
 			} else if ($miscount == 0) {
-				echo " ".$pgv_lang["pm_missings"]."<br />\n";
+				echo " ".i18n::translate('No ancestors in the database.')."<br />\n";
 			} else {
 				echo "<strong>".$miscount."</strong> ";
-				echo " ".$pgv_lang["pm_missing_births"]."<br />\n";
+				echo " ".i18n::translate('individuals are missing birth place map coordinates:')."<br />\n";
 			}
 			echo $missing . "<br />\n";
 		}
@@ -547,11 +546,11 @@ function Map_type() {}
 		var button4 = document.createElement('li');
 		var button5 = document.createElement('li');
 
-		button1.innerHTML = '<?php echo $pgv_lang["gm_redraw_map"]?>';
-		button2.innerHTML = '<?php echo $pgv_lang["gm_map"]?>';
-		button3.innerHTML = '<?php echo $pgv_lang["gm_satellite"]?>';
-		button4.innerHTML = '<?php echo $pgv_lang["gm_hybrid"]?>';
-		button5.innerHTML = '<?php echo $pgv_lang["gm_physical"]?>';
+		button1.innerHTML = '<?php echo i18n::translate('Redraw map')?>';
+		button2.innerHTML = '<?php echo i18n::translate('Map')?>';
+		button3.innerHTML = '<?php echo i18n::translate('Satellite')?>';
+		button4.innerHTML = '<?php echo i18n::translate('Hybrid')?>';
+		button5.innerHTML = '<?php echo i18n::translate('Terrain')?>';
 
 		button1.onclick = function() { pm_map.setCenter(bounds.getCenter(), pm_map.getBoundsZoomLevel(bounds)); return false; };
 		button2.onclick = function() { pm_map.setMapType(G_NORMAL_MAP); return false; };
@@ -621,7 +620,7 @@ $curgen=1;
 $priv=0;
 $count=0;
 $event = "<img src='modules/googlemap/images/sq1.png' width='10' height='10'>" .
-	 "<strong>&nbsp;".$pgv_lang["pm_root"].":&nbsp;</strong>";
+	 "<strong>&nbsp;".i18n::translate('Root').":&nbsp;</strong>";
 $colored_line = array("1"=>"#FF0000","2"=>"#0000FF","3"=>"#00FF00",
 				"4"=>"#FFFF00","5"=>"#00FFFF","6"=>"#FF00FF",
 				"7"=>"#C0C0FF","8"=>"#808000");
@@ -645,22 +644,22 @@ for ($i=0; $i<($controller->treesize); $i++) {
 			} // Checking each time now to set sex
 		if ($curgen == 2) {
 			if ($sex == "F") {
-				$relationship = $pgv_lang["mother"];
+				$relationship = i18n::translate('Mother');
 			} else if ($sex == "M") {
-				$relationship = $pgv_lang["father"];
+				$relationship = i18n::translate('Father');
 			} else {
-					$relationship = $pgv_lang["parent"];
+					$relationship = i18n::translate('Parent');
 			}
 			$event = "<img src='modules/googlemap/images/sq2.png' width='10' height='10'>" .
 				 "<strong>&nbsp;".$relationship.":&nbsp;</strong>";
 		}
 		if ($curgen == 3) {
 			if ($sex == "F") {
-				$relationship = $pgv_lang["pm_grandmother"];
+				$relationship = i18n::translate('Grandmother');
 			} else if ($sex == "M") {
-				$relationship = $pgv_lang["pm_grandfather"];
+				$relationship = i18n::translate('Grandfather');
 			} else {
-				$relationship = $pgv_lang["pm_grandparent"];
+				$relationship = i18n::translate('Grandparent');
 			}
 			// experiment
 			$sosa = "sosa_" . ($i+1);
@@ -693,16 +692,16 @@ for ($i=0; $i<($controller->treesize); $i++) {
 					 " height='10'><strong>&nbsp;".$relationship.":&nbsp;</strong>";
 				} else {
 					if ($sex == "F") {
-						$relationship = $pgv_lang["pm_grandmother"];
+						$relationship = i18n::translate('Grandmother');
 					} else if ($sex == "M") {
-						$relationship = $pgv_lang["pm_grandfather"];
+						$relationship = i18n::translate('Grandfather');
 					} else {
-						$relationship = $pgv_lang["pm_grandparent"]; 
+						$relationship = i18n::translate('Grandparent'); 
 					}
 					$event = "<img src='modules/googlemap/images/sq".$curgen.".png' width='10'" .
-						 " height='10'><strong>&nbsp;".$pgv_lang["pm_gt"]."&nbsp;</strong>";
+						 " height='10'><strong>&nbsp;".i18n::translate('Gt')."&nbsp;</strong>";
 					for ($x=1; $x<($curgen-3); $x++) {
-						$event .= "<strong>".$pgv_lang["pm_gt"]."&nbsp;</strong>";
+						$event .= "<strong>".i18n::translate('Gt')."&nbsp;</strong>";
 					}
 					$event .= "<strong>".$relationship.":&nbsp;</strong>";
 				}
@@ -733,11 +732,11 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		// end of add image
 
 		$dataleft  = $image . $event . addslashes($name);
-		$datamid   = " <span><a href='individual.php?pid=". $pid . "' id='alturl' title='" . $pgv_lang["indi_info"] . "'>";
+		$datamid   = " <span><a href='individual.php?pid=". $pid . "' id='alturl' title='" . i18n::translate('Individual Information') . "'>";
 		if ($TEXT_DIRECTION == "rtl") $datamid .= PrintReady("(".$pid.")");
 		else $datamid .= "(". $pid . ")";
 		$datamid  .= "</a></span>";
-		$dataright = "<br /><strong>". $pgv_lang["birth"] . "&nbsp;</strong>" .
+		$dataright = "<br /><strong>". i18n::translate('Birth:') . "&nbsp;</strong>" .
 				addslashes($bdate->Display(false))."<br />".$bplace;
 	
 		$latlongval[$i] = get_lati_long_placelocation($person->getBirthPlace());
@@ -800,7 +799,7 @@ for ($i=0; $i<($controller->treesize); $i++) {
 				if ($hideflags) echo "&hideflags=1";
 				if ($hidelines) echo "&hidelines=1";
 				if ($clustersize != 5) echo "&clustersize=". $clustersize; // ignoring the default of 5
-				echo "' title='" . $pgv_lang["pedigree_map"] . "'>" . $dataleft . "</a>" . $datamid . $dataright . "</div>\", \"".$marker_number."\");\n";
+				echo "' title='" . i18n::translate('Pedigree Map') . "'>" . $dataleft . "</a>" . $datamid . $dataright . "</div>\", \"".$marker_number."\");\n";
 				echo "pm_map.addOverlay(marker);\n";
 	
 				if (!$hidelines) {
@@ -839,11 +838,11 @@ document.getElementById("side_bar").innerHTML = side_bar_html;
 // === create the context menu div ===
 	  var contextmenu = document.createElement("div");
 	  contextmenu.style.visibility="hidden";
-	  contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["pm_zoom_in"];?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["pm_zoom_out"];?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["zoom_in_here"];?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["zoom_out_here"];?>&nbsp;&nbsp;</div></a>'
-							+ '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo $pgv_lang["centre_map"];?>&nbsp;&nbsp;</div></a>';
+	  contextmenu.innerHTML = '<a href="javascript:zoomIn()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom&nbsp;in');?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomOut()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom&nbsp;out');?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomInHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom&nbsp;in&nbsp;here');?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:zoomOutHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Zoom&nbsp;out&nbsp;here');?>&nbsp;&nbsp;</div></a>'
+							+ '<a href="javascript:centreMapHere()"><div class="optionbox">&nbsp;&nbsp;<?php echo i18n::translate('Centre&nbsp;map&nbsp;here');?>&nbsp;&nbsp;</div></a>';
 	  pm_map.getContainer().appendChild(contextmenu);
 
 	  // === listen for singlerightclick ===

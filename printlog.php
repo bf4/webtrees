@@ -2,7 +2,10 @@
 /**
  * Print logfiles
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @version $Id$
  */
 
@@ -34,7 +37,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 
 loadLangFile("pgv_confighelp");
 
-print_simple_header("Print logfile");
+print_simple_header(i18n::translate('Print logfile'));
 
 $logfile=safe_GET('logfile');
 
@@ -85,10 +88,10 @@ if ($auth) {
 	echo "<table class=\"facts_table ", $TEXT_DIRECTION, "\">";
 
 	if (($logtype == "syslog") || ($logtype == "gedlog")) {
-		echo "<tr><td colspan=\"3\" class=\"topbottombar\">", $pgv_lang["logfile_content"], " [", getLRM(), $INDEX_DIRECTORY, $logfile, "]</td></tr>";
+		echo "<tr><td colspan=\"3\" class=\"topbottombar\">", i18n::translate('Content of log file'), " [", getLRM(), $INDEX_DIRECTORY, $logfile, "]</td></tr>";
 		echo "<tr><td colspan=\"3\" class=\"topbottombar\">";
-		echo "<input type=\"button\" value=\"", $pgv_lang["back"], "\" onclick='self.close()';/>&nbsp;<input type=\"button\" value=\"", $pgv_lang["refresh"], "\" onclick='window.location.reload()';/></td></tr>";
-		echo "<tr><td class=\"list_label width10\">", $pgv_lang["date_time"], "</td><td class=\"list_label width10\">", $pgv_lang["ip_address"], "</td><td class=\"list_label width80\">", $pgv_lang["log_message"], "</td></tr>";
+		echo "<input type=\"button\" value=\"", i18n::translate('Back'), "\" onclick='self.close()';/>&nbsp;<input type=\"button\" value=\"", i18n::translate('Refresh'), "\" onclick='window.location.reload()';/></td></tr>";
+		echo "<tr><td class=\"list_label width10\">", i18n::translate('Date and time'), "</td><td class=\"list_label width10\">", i18n::translate('IP address'), "</td><td class=\"list_label width80\">", i18n::translate('Log Message'), "</td></tr>";
 		for ($i = 0; $i < $num ; $i++)	{
 			echo "<tr>";
 			$result = explode(' - ', $lines[$i], 3);
@@ -107,10 +110,10 @@ if ($auth) {
 	}
 
 	if ($logtype == "searchlog") {
-		echo "<tr><td colspan=\"6\" class=\"topbottombar\">", $pgv_lang["logfile_content"], " [", getLRM(), $INDEX_DIRECTORY, $logfile, "]</td></tr>";
+		echo "<tr><td colspan=\"6\" class=\"topbottombar\">", i18n::translate('Content of log file'), " [", getLRM(), $INDEX_DIRECTORY, $logfile, "]</td></tr>";
 		echo "<tr><td colspan=\"6\" class=\"topbottombar\">";
-		echo "<input type=\"button\" value=\"", $pgv_lang["back"], "\" onclick='self.close()';/>&nbsp;<input type=\"button\" value=\"", $pgv_lang["refresh"], "\" onclick='window.location.reload()';/></td></tr>";
-		echo "<tr><td class=\"list_label width10\">", $pgv_lang["date_time"], "</td><td class=\"list_label width10\">", $pgv_lang["ip_address"], "</td><td class=\"list_label width10\">", $pgv_lang["user_name"], "</td><td class=\"list_label width10\">", $pgv_lang["searchtype"], "</td><td class=\"list_label width10\">", $pgv_lang["type"], "</td><td class=\"list_label width50\">", $pgv_lang["query"], "</td></tr>";
+		echo "<input type=\"button\" value=\"", i18n::translate('Back'), "\" onclick='self.close()';/>&nbsp;<input type=\"button\" value=\"", i18n::translate('Refresh'), "\" onclick='window.location.reload()';/></td></tr>";
+		echo "<tr><td class=\"list_label width10\">", i18n::translate('Date and time'), "</td><td class=\"list_label width10\">", i18n::translate('IP address'), "</td><td class=\"list_label width10\">", i18n::translate('Username'), "</td><td class=\"list_label width10\">", i18n::translate('Search type'), "</td><td class=\"list_label width10\">", i18n::translate('Type'), "</td><td class=\"list_label width50\">", i18n::translate('Query'), "</td></tr>";
 		for ($i = 0; $i < $num ; $i++) {
 			echo "<tr>";
 			$result1 = explode('<br />', $lines[$i], 4);
@@ -154,12 +157,12 @@ if ($auth) {
 		}
 		echo "<tr><td colspan=\"6\" class=\"topbottombar\">";
 	}
-	echo"<input type=\"button\" value=\"", $pgv_lang["back"], "\" onclick='self.close()';/>&nbsp;<input type=\"button\" value=\"", $pgv_lang["refresh"], "\" onclick='window.location.reload()';/></td></tr>";
+	echo"<input type=\"button\" value=\"", i18n::translate('Back'), "\" onclick='self.close()';/>&nbsp;<input type=\"button\" value=\"", i18n::translate('Refresh'), "\" onclick='window.location.reload()';/></td></tr>";
 	echo "</table>";
 	echo "<br /><br />";
 } else {
 	echo "Not authorized!<br /><br />";
-	echo "<input type=\"button\" value=\"", $pgv_lang["back"], "\" onclick='self.close()';/><br /><br />";
+	echo "<input type=\"button\" value=\"", i18n::translate('Back'), "\" onclick='self.close()';/><br /><br />";
 }
 
 print_simple_footer();

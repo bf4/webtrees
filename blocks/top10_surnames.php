@@ -4,7 +4,10 @@
  *
  * This block will show the top 10 surnames that occur most frequently in the active gedcom
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,7 +25,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @version $Id$
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  */
 
@@ -33,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_TOP10SURNAMES_PHP', '');
 
-$PGV_BLOCKS["print_block_name_top10"]["name"]		= $pgv_lang["block_top10"];
+$PGV_BLOCKS["print_block_name_top10"]["name"]		= i18n::translate('Top 10 Surnames');
 $PGV_BLOCKS["print_block_name_top10"]["descr"]		= "block_top10_descr";
 $PGV_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
 $PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
@@ -54,7 +57,7 @@ function top_surname_sort($a, $b) {
 }
 
 function print_block_name_top10($block=true, $config="", $side, $index) {
-	global $pgv_lang, $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SURNAME_LIST_STYLE;
+	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SURNAME_LIST_STYLE;
 
 	if (empty($config)) {
 		$config=$PGV_BLOCKS["print_block_name_top10"]["config"];
@@ -100,7 +103,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 	}
 
 	$id="top10surnames";
-	$title = print_help_link("index_common_names", "qm","",false,true);
+	$title='';
 	if ($PGV_BLOCKS["print_block_name_top10"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -109,10 +112,12 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".i18n::translate('Configure')."\" /></a>";
 		}
 	}
-	$title .= str_replace("10", $config["num"], $pgv_lang["block_top10_title"]);
+	// I18N: There are separate lists of male/female names, containing %d names each
+	$title .= i18n::plural('Top Surnames', 'Top %d Surnames', $config['num'], $config['num']);
+	$title .= help_link('index_common_names');
 
 	switch ($SURNAME_LIST_STYLE) {
 	case 'style3':
@@ -135,12 +140,12 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 }
 
 function print_block_name_top10_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS;
+	global $ctype, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_name_top10"]["config"]["cache"];
 ?>
 	<tr>
-		<td class="descriptionbox wrap width33"><?php print $pgv_lang["num_to_show"] ?></td>
+		<td class="descriptionbox wrap width33"><?php print i18n::translate('Number of items to show') ?></td>
 	<td class="optionbox">
 		<input type="text" name="num" size="2" value="<?php print $config["num"]; ?>" />
 	</td></tr>
@@ -150,8 +155,8 @@ function print_block_name_top10_config($config) {
 	// Cache file life
 	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
-			print_help_link("cache_life", "qm");
-			print $pgv_lang["cache_life"];
+			print i18n::translate('Cache file life');
+			print help_link('cache_life');
 		print "</td><td class=\"optionbox\">";
 			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
 		print "</td></tr>";

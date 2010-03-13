@@ -101,20 +101,6 @@ body,
 color:#494949;
 }
 
-/*	Local Fixes							 */
-
-.maxHeight {
-max-height:400px;
-height:auto!important;
-}
-/*
-div.small_inner_block {
-font-size: 13px;
-}
-*/
-/*		Begin Colors layout				 */
-/*		TopLinks Layout Begin			 */
-
 #toplinks {
 width:100%;
 height:36px;
@@ -217,9 +203,7 @@ color: red;
 
 /*   End Edit Facts  */
 
-.facts_label .submenu a,
-.flyout, .flyout a, 
-.flyoutrtl, .flyoutrtl a {
+.facts_label .submenu a {
 background: #fff;
 color: #000;
 }
@@ -617,18 +601,24 @@ width:99%;
 background:#f0f9ff;
 border:1px solid #999;
 padding:3px;
+margin-bottom: 8px;
+margin-top: 5px;
 }
 
 .person_boxF {
 background:#fff0f0;
 border:1px solid #ff2080;
 padding:3px;
+margin-bottom: 8px;
+margin-top: 5px;
 }
 
 .person_boxNN {
 background:#fff;
 border:1px dashed #CCC;
 padding:3px;
+margin-bottom: 8px;
+margin-top: 5px;
 }
 
 .person_box:target, 
@@ -1170,12 +1160,6 @@ font-size: 30px;
 vertical-align:bottom;
 }
 
-.accesskeys {
-width:1px;
-height:1px;
-overflow:hidden;
-}
-
 .topbottombar {
 font-size: 12px;
 font-weight: bold;
@@ -1569,19 +1553,6 @@ background:#0A246A;
 color:#FFF;
 }
 
-.flyout { 
-text-align: left;
-margin-top: -20px;
-right: 210px;
-padding: 3px;
-}
-
-.flyoutrtl { 
-text-align: right;
-margin-top: -20px;
-left: 210px;
-padding: 3px;
-}
 .sublinks_cell .submenuitem {
 background: #fff;
 } 

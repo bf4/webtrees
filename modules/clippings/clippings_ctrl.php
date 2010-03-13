@@ -2,7 +2,10 @@
 /**
 * Controller for the Clippings Page
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Charts
 * @version $Id: clippings_ctrl.php 6607 2009-12-23 17:43:48Z yalnifj $
 */
@@ -92,7 +95,7 @@ class ClippingsControllerRoot extends BaseController {
 	}
 	//----------------beginning of function definitions for ClippingsControllerRoot
 	function init() {
-		global $PRIV_HIDE, $PRIV_PUBLIC, $ENABLE_CLIPPINGS_CART, $SCRIPT_NAME, $pgv_lang, $SERVER_URL, $CONTACT_EMAIL, $HOME_SITE_TEXT, $HOME_SITE_URL, $MEDIA_DIRECTORY;
+		global $PRIV_HIDE, $PRIV_PUBLIC, $ENABLE_CLIPPINGS_CART, $SCRIPT_NAME, $SERVER_URL, $CONTACT_EMAIL, $HOME_SITE_TEXT, $HOME_SITE_URL, $MEDIA_DIRECTORY;
 		global $GEDCOM, $CHARACTER_SET, $cart;
 
 		if (!isset ($ENABLE_CLIPPINGS_CART))
@@ -319,7 +322,7 @@ class ClippingsControllerRoot extends BaseController {
 							$filetext .= "1 SOUR @SPGV1@\n";
 							$filetext .= "2 PAGE " . $dSERVER_URL . "/individual.php?pid=" . $clipping['id'] . "\n";
 							$filetext .= "2 DATA\n";
-							$filetext .= "3 TEXT " . $pgv_lang["indi_downloaded_from"] . "\n";
+							$filetext .= "3 TEXT " . i18n::translate('This Individual was downloaded from:') . "\n";
 							$filetext .= "4 CONT " . $dSERVER_URL . "/individual.php?pid=" . $clipping['id'] . "\n";
 							break;
 
@@ -362,7 +365,7 @@ class ClippingsControllerRoot extends BaseController {
 							$filetext .= "1 SOUR @SPGV1@\n";
 							$filetext .= "2 PAGE " . $dSERVER_URL . $path . "family.php?famid=" . $clipping['id'] . "\n";
 							$filetext .= "2 DATA\n";
-							$filetext .= "3 TEXT " . $pgv_lang["family_downloaded_from"] . "\n";
+							$filetext .= "3 TEXT " . i18n::translate('This Family was downloaded from:') . "\n";
 							$filetext .= "4 CONT " . $dSERVER_URL . "/family.php?famid=" . $clipping['id'] . "\n";
 							break;
 
@@ -377,7 +380,7 @@ class ClippingsControllerRoot extends BaseController {
 //								$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
 							}
 							$filetext .= trim($record) . "\n";
-							$filetext .= "1 NOTE " . $pgv_lang["source_downloaded_from"] . "\n";
+							$filetext .= "1 NOTE " . i18n::translate('This Source was downloaded from:') . "\n";
 							$filetext .= "2 CONT " . $dSERVER_URL . "/source.php?sid=" . $clipping['id'] . "\n";
 							break;
 
@@ -467,7 +470,7 @@ class ClippingsControllerRoot extends BaseController {
 	 */
 	function zip_cart()
 	{
-		global $INDEX_DIRECTORY,$pgv_lang;
+		global $INDEX_DIRECTORY;
 
 		switch ($this->filetype) {
 		case 'gedcom':
@@ -503,7 +506,7 @@ class ClippingsControllerRoot extends BaseController {
 		}
 		else
 		{
-			print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."$tempFileName ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+			print i18n::translate('Cannot create')." ".$INDEX_DIRECTORY."$tempFileName ".i18n::translate('Check access rights on this directory.')."<br /><br />";
 		}
 	}
 	/**
@@ -546,7 +549,7 @@ class ClippingsControllerRoot extends BaseController {
 	 * @param
 	 */
 	function add_clipping($clipping) {
-		global $cart, $pgv_lang, $SHOW_SOURCES, $MULTI_MEDIA, $GEDCOM;
+		global $cart, $SHOW_SOURCES, $MULTI_MEDIA, $GEDCOM;
 		if (($clipping['id'] == false) || ($clipping['id'] == ""))
 		return false;
 		

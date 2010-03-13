@@ -4,7 +4,10 @@
  *
  * Use the $pids array to set which individuals to show on the chart
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +26,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 08 August 2005
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -38,7 +41,7 @@ $controller->init();
 $zoomfactor = 10;
 //if peeps !null then pass new array for zooming
 
-print_header($pgv_lang["lifespan_chart"]);
+print_header(i18n::translate('Lifespan Chart'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 ?>
@@ -51,7 +54,7 @@ if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 	//-->
 	</script>
 
-<h2><?php print $pgv_lang["lifespan_chart"]; ?></h2>
+<h2><?php print i18n::translate('Lifespan Chart'); ?></h2>
 <table><tr><td>
 <form name="people" action="lifespan.php">
 
@@ -62,17 +65,16 @@ if (!$controller->isPrintPreview()) {
 		?>
 	<table>
 		<tr><td class="person<?php print $col; ?>" style="padding: 5px" valign="top">
-			<?php print_help_link("add_person", "qm"); ?>
-			<?php print $pgv_lang["add_another"];?>&nbsp;
-			<input class="pedigree_form" type="text" size="5" id="newpid" name="newpid" />&nbsp;
+			<?php echo i18n::translate('Add another person to chart'), help_link('add_person'), '<br />', i18n::translate('Person ID:'); ?>
+			<input class="pedigree_form" type="text" size="5" id="newpid" name="newpid" />
 			<?php print_findindi_link("newpid",""); ?>
 			<br />
-			<div style="text-align: center"><input type="checkbox" checked="checked" value="yes" name="addFamily"/><?php print $pgv_lang["include_family"];?></div>
+			<div style="text-align: center"><input type="checkbox" checked="checked" value="yes" name="addFamily"/><?php print i18n::translate('Include Immediate Family');?></div>
 			<br />
-			<div style="text-align: center"><input type="submit" value="<?php print $pgv_lang["show"]; ?>" /></div>
+			<div style="text-align: center"><input type="submit" value="<?php print i18n::translate('Show'); ?>" /></div>
 		</td></tr>
 	</table>
-	<?php if (count($controller->pids)<11) { ?><br /><a href="timeline.php"><b><?php print $pgv_lang["switch_timeline"]; ?></b></a><br /><br /><?php } ?>
+	<?php if (count($controller->pids)<11) { ?><br /><a href="timeline.php"><b><?php print i18n::translate('Show Timeline chart'); ?></b></a><br /><br /><?php } ?>
 	<?php }?>
 
 </form>
@@ -299,15 +301,13 @@ var oldMx = 0;
 
 	<table>
 		<tr>
-			<td><?php print_help_link("timeline_control", "qm"); ?></td>
-			<td align="center"><?php print $pgv_lang["timeline_scrollSpeed"];?></td>
-				<td align="center"><?php print $pgv_lang["timeline_beginYear"];?></td>
-				<td align="center"><?php print $pgv_lang["timeline_endYear"];?></td>
+			<td rowspan="2"><?php echo help_link('timeline_control'); ?></td>
+			<td align="center"><?php print i18n::translate('Speed');?></td>
+				<td align="center"><?php print i18n::translate('Begin Year');?></td>
+				<td align="center"><?php print i18n::translate('End Year');?></td>
 				<td align="center"><?php print i18n::translate('PLAC');?></td>
 		</tr>
 		<tr>
-
-			<td></td>
 			<td><select name="speedMenu" size="1">
 				<option value="4">1</option>
 				<option value="3">2</option>
@@ -318,16 +318,16 @@ var oldMx = 0;
 			<td><input type="text" name="beginYear" size="5" value="<?php if (isset($beginYear)) print $beginYear; ?>" /></td>
 			<td><input type="text" name="endYear" size="5" value="<?php if (isset($endYear)) print $endYear; ?>" /></td>
 			<td><input type="text" name="place" size="15" value="<?php if (isset($place)) print $place; ?>"/></td>
-			<td><input type="submit" name="search" value="<?php print $pgv_lang["search"]; ?>" /></td>
-		<td><input type="button" value="<?php print $pgv_lang["clear_chart"]; ?>" onclick="window.location = 'lifespan.php?clear=1';" /></td>
+			<td><input type="submit" name="search" value="<?php print i18n::translate('Search'); ?>" /></td>
+		<td><input type="button" value="<?php print i18n::translate('Clear Chart'); ?>" onclick="window.location = 'lifespan.php?clear=1';" /></td>
 		</tr>
 	</table>
 	<?php if(count($controller->people) > 0){
 	// Allow special processing for different languages
 	$func="num_people_localisation_{$lang_short_cut[$LANGUAGE]}";
 	if (!function_exists($func)) {
-		if(count($controller->people) == 1) print "<br /><b>".count($controller->people)." ".$pgv_lang["individual"]."</b>";
-		else print "<br /><b>".count($controller->people)." ".$pgv_lang["individuals"]."</b>";
+		if(count($controller->people) == 1) print "<br /><b>".count($controller->people)." ".i18n::translate('Individual')."</b>";
+		else print "<br /><b>".count($controller->people)." ".i18n::translate('Individuals')."</b>";
 	}
 	else
 		// Localise the num of people

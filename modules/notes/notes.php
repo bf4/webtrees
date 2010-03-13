@@ -2,7 +2,10 @@
 /**
  * Classes and libraries for module system
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2010 PGV Development Team. All Rights Reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Modules
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
@@ -35,11 +38,9 @@ class notes_Tab extends Tab {
 	protected $noteCount = null;
 
 	public function getContent() {
-		global $pgv_lang, $CONTACT_EMAIL, $FACT_COUNT;
+		global $CONTACT_EMAIL, $FACT_COUNT;
 		global $SHOW_LEVEL2_NOTES;
 		global $NAV_NOTES;
-
-		$out = "<span class=\"subheaders\">".$pgv_lang["notes"]."</span><div id=\"notes_content\">";
 
 		ob_start();
 		?>
@@ -57,8 +58,8 @@ if (!$this->controller->indi->canDisplayDetails()) {
 			type="checkbox"
 			<?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?>
 			onclick="toggleByClassName('TR', 'row_note2');" /> <label
-			for="checkbox_note2"><?php echo $pgv_lang["show_fact_notes"];?></label>
-			<?php print_help_link("show_fact_sources", "qm", "show_fact_notes");?>
+			for="checkbox_note2"><?php echo i18n::translate('Show all notes'); ?></label>
+			<?php echo help_link('show_fact_sources'); ?>
 		</td>
 	</tr>
 	<?php
@@ -77,21 +78,21 @@ if (!$this->controller->indi->canDisplayDetails()) {
 			print_main_notes($factrec->getGedcomRecord(), $i, $this->controller->pid, $factrec->getLineNumber(), true);
 		}
 	}
-	if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
+	if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".i18n::translate('There are no Notes for this individual.')."</td></tr>\n";
 	//-- New Note Link
 	if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 		?>
 	<tr>
-		<td class="facts_label"><?php print_help_link("add_note", "qm"); ?><?php echo $pgv_lang["add_note_lbl"]; ?></td>
+		<td class="facts_label"><?php echo i18n::translate('Add Note'), help_link('add_note'); ?></td>
 		<td class="facts_value"><a href="javascript:;"
-			onclick="add_new_record('<?php echo $this->controller->pid; ?>','NOTE'); return false;"><?php echo $pgv_lang["add_note"]; ?></a>
+			onclick="add_new_record('<?php echo $this->controller->pid; ?>','NOTE'); return false;"><?php echo i18n::translate('Add a new Note'); ?></a>
 		<br />
 		</td>
 	</tr>
 	<tr>
-		<td class="facts_label"><?php print_help_link("add_shared_note", "qm"); ?><?php echo $pgv_lang["add_shared_note_lbl"]; ?></td>
+		<td class="facts_label"><?php echo i18n::translate('Add Shared Note'), help_link('add_shared_note'); ?></td>
 		<td class="facts_value"><a href="javascript:;"
-			onclick="add_new_record('<?php echo $this->controller->pid; ?>','SHARED_NOTE'); return false;"><?php echo $pgv_lang["add_shared_note"]; ?></a>
+			onclick="add_new_record('<?php echo $this->controller->pid; ?>','SHARED_NOTE'); return false;"><?php echo i18n::translate('Add a new Shared Note'); ?></a>
 		<br />
 		</td>
 	</tr>
@@ -111,10 +112,7 @@ if (!$SHOW_LEVEL2_NOTES) {
 			</script>
 	<?php
 		}
-		$out .= ob_get_contents();
-		ob_end_clean();
-		$out .= "</div>";
-		return $out;
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 
 	function get_note_count() {

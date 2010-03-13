@@ -2,7 +2,10 @@
 /**
 * Controller for the timeline chart
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Charts
 * @version $Id$
 */
@@ -177,7 +180,7 @@ class TimelineControllerRoot extends BaseController {
 
 	function print_time_fact($event) {
 		global $basexoffset, $baseyoffset, $factcount, $TEXT_DIRECTION;
-		global $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
+		global $lang_short_cut, $LANGUAGE, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
 		global $familyfacts, $GEDCOM;
 		/* @var $event Event */
 		$factrec = $event->getGedComRecord();
@@ -270,16 +273,16 @@ class TimelineControllerRoot extends BaseController {
 					}
 					if (!empty($ageh) && $ageh > 0) {
 						if (empty($agew)) {
-							echo '<span class="age"> ', PrintReady("({$pgv_lang["age"]} {$ageh})"), '</span>';
+							echo '<span class="age"> ', i18n::translate('Age'), ' ', $ageh, '</span>';
 						} else {
-							echo '<span class="age"> ', PrintReady("({$pgv_lang["husb_age"]} {$ageh},"), ' ';
+							echo '<span class="age"> ', i18n::translate('Husband\'s age'), ' ', $ageh, ' ';
 						}
 					}
 					if (!empty($agew) && $agew > 0) {
 						if (empty($ageh)) {
-							echo '<span class="age"> ', PrintReady("({$pgv_lang["age"]} {$agew})"), '</span>';
+							echo '<span class="age"> ', i18n::translate('Age'), ' ', $agew, '</span>';
 						} else {
-							echo PrintReady("{$pgv_lang["wife_age"]} {$agew})"), '</span>';
+							echo i18n::translate('Wife\'s age'), ' ', $agew, '</span>';
 						}
 					}
 				}
@@ -313,7 +316,7 @@ class TimelineControllerRoot extends BaseController {
 						if ($ct>0) {
 							print " <a href=\"".encode_url("family.php?famid={$match[1]}&ged={$GEDCOM}")."\">";
 							if (displayDetailsById($match[1])||showLivingNameById($match[1])) print $event->getParentObject()->getFullName();
-							else print $pgv_lang["private"];
+							else print i18n::translate('Private');
 							print "</a>";
 						}
 					}

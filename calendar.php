@@ -4,7 +4,10 @@
  *
  * Displays events on a daily, monthly, or yearly calendar.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,7 +27,7 @@
  * This Page Is Valid XHTML 1.0 Transitional! > 3 September 2005
  *
  * $Id$
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Calendar
  */
 
@@ -99,7 +102,7 @@ if ($cal_date->d>$days_in_month && $action=='today')
 	$action='calendar';
 
 // Print the header stuff
-print_header($pgv_lang['anniversary_calendar']);
+print_header(i18n::translate('Anniversary Calendar'));
 echo '<div style="text-align: center;" id="calendar_page">';
 
 if ($view!='preview') {
@@ -119,13 +122,13 @@ echo '<tr><td class="facts_label" colspan="8"><h2>';
 
 switch ($action) {
 case 'today':
-	echo $pgv_lang['on_this_day'].'<br/>'.$ged_date->Display(false);
+	echo i18n::translate('On This Day ...').'<br/>'.$ged_date->Display(false);
 	break;
 case 'calendar':
-	echo $pgv_lang['in_this_month'].'<br/>'.$ged_date->Display(false, 'F Y');
+	echo i18n::translate('In This Month ...').'<br/>'.$ged_date->Display(false, 'F Y');
 	break;
 case 'year':
-	echo $pgv_lang['in_this_year'].'<br/>'.$ged_date->Display(false, 'Y');
+	echo i18n::translate('In This Year ...').'<br/>'.$ged_date->Display(false, 'Y');
 	break;
 }
 echo '</h2></td></tr>';
@@ -133,8 +136,7 @@ echo '</h2></td></tr>';
 if ($view!='preview') {
 	// Day selector
 	echo '<tr><td class="descriptionbox vmiddle">';
-	print_help_link('annivers_date_select', 'qm', 'day');
-	echo $pgv_lang['day'].'</td><td colspan="7" class="optionbox">';
+	echo i18n::translate('Day'), help_link('annivers_date_select'), '</td><td colspan="7" class="optionbox">';
 	for($d=1; $d<=$days_in_month; $d++) {
 		// Format the day number using the calendar
 		$tmp=new GedcomDate($cal_date->Format("@ {$d} O E")); $d_fmt=$tmp->date1->Format('j');
@@ -148,8 +150,7 @@ if ($view!='preview') {
 	echo "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$tmp->Display(true, NULL, array()).'</b></a>';
 	// Month selector
 	echo '<tr><td class="descriptionbox vmiddle">';
-	print_help_link('annivers_month_select', 'qm', 'month');
-	echo $pgv_lang['month'].'</td>';
+	echo i18n::translate('Month'), help_link('annivers_month_select'), '</td>';
 	echo '<td class="optionbox" colspan="7">';
 	for ($n=1; $n<=$cal_date->NUM_MONTHS(); ++$n) {
 		$m=$cal_date->NUM_TO_MONTH($n);
@@ -168,8 +169,7 @@ if ($view!='preview') {
 	echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day=".min($cal_date->d, $today->DaysInMonth())."&month={$today_month}&year={$today->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\"><b>".$today->Format('F Y').'</b></a></td></tr>';
 	// Year selector
 	echo '<tr><td class="descriptionbox vmiddle">';
-	print_help_link('annivers_year_select', 'qm', 'year');
-	echo $pgv_lang['year'].'</td>';
+	echo i18n::translate('Year'), help_link('annivers_year_select'), '</td>';
 	echo "<td class=\"optionbox vmiddle\">";
 	echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year=".($cal_date->y==1?-1:$cal_date->y-1)."&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">-1</a>";
 	echo " <input type=\"text\" name=\"year\" value=\"{$year}\" size=\"7\" /> ";
@@ -178,61 +178,58 @@ if ($view!='preview') {
 	echo "</td> ";
 	// Filtering options
 	echo "<td class=\"descriptionbox vmiddle\">";
-	print_help_link("annivers_show", "qm", "show");
-	echo $pgv_lang["show"].":&nbsp;</td>";
+	echo i18n::translate('Show'), help_link('annivers_show'), '</td>';
 	echo "<td class=\"optionbox vmiddle\">";
 	echo "<select class=\"list_value\" name=\"filterof\" onchange=\"document.dateform.submit();\">";
 	echo "<option value=\"all\"";
 	if ($filterof == "all") echo " selected=\"selected\"";
-	echo ">".$pgv_lang["all_people"]."</option>";
+	echo ">".i18n::translate('All People')."</option>";
 	if (!$HIDE_LIVE_PEOPLE || PGV_USER_ID) {
 		echo "<option value=\"living\"";
 		if ($filterof == "living") echo " selected=\"selected\"";
-		echo ">".$pgv_lang["living_only"]."</option>";
+		echo ">".i18n::translate('Living People')."</option>";
 	}
 	echo "<option value=\"recent\"";
 	if ($filterof == "recent") echo " selected=\"selected\"";
-	echo ">".$pgv_lang["recent_events"]."</option>";
+	echo ">".i18n::translate('Recent Years (&lt; 100 yrs)')."</option>";
 	echo "</select>";
 
 	echo "</td>";
 	echo "<td class=\"descriptionbox vmiddle\">";
-	print_help_link("annivers_sex", "qm", "sex");
-	echo $pgv_lang["sex"].":&nbsp;</td>";
+	echo i18n::translate('Gender'), help_link('annivers_sex'), '</td>';
 	echo "<td class=\"optionbox vmiddle\">";
 	if ($filtersx=="") {
-		echo Person::sexImage('M', 'large', 'vertical-align: middle', $pgv_lang['all_people']);
-		echo Person::sexImage('F', 'large', 'vertical-align: middle', $pgv_lang['all_people']), ' | ';
+		echo Person::sexImage('M', 'large', 'vertical-align: middle', i18n::translate('All People'));
+		echo Person::sexImage('F', 'large', 'vertical-align: middle', i18n::translate('All People')), ' | ';
 	} else {
 		echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=&action={$action}")."\">";
-		echo Person::sexImage('M', 'small', 'vertical-align: middle', $pgv_lang['all_people']);
-		echo Person::sexImage('F', 'small', 'vertical-align: middle', $pgv_lang['all_people']), '</a> | ';
+		echo Person::sexImage('M', 'small', 'vertical-align: middle', i18n::translate('All People'));
+		echo Person::sexImage('F', 'small', 'vertical-align: middle', i18n::translate('All People')), '</a> | ';
 	}
 	if ($filtersx=="M") {
-		echo Person::sexImage('M', 'large', 'vertical-align: middle', $pgv_lang['males']), ' | ';
+		echo Person::sexImage('M', 'large', 'vertical-align: middle', i18n::translate('Males')), ' | ';
 	} else {
 		echo "<a href=\"", encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=M&action={$action}"), "\">";
-		echo Person::sexImage('M', 'small', 'vertical-align: middle', $pgv_lang['males']), '</a> | ';
+		echo Person::sexImage('M', 'small', 'vertical-align: middle', i18n::translate('Males')), '</a> | ';
 	}
 	if ($filtersx=="F")
-		echo Person::sexImage('F', 'large', 'vertical-align: middle', $pgv_lang['females']), ' | ';
+		echo Person::sexImage('F', 'large', 'vertical-align: middle', i18n::translate('Females')), ' | ';
 	else {
 		echo "<a href=\"", encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=F&action={$action}"), "\">";
-		echo Person::sexImage('F', 'small', 'vertical-align: middle', $pgv_lang['females']), '</a>';
+		echo Person::sexImage('F', 'small', 'vertical-align: middle', i18n::translate('Females')), '</a>';
 	}
 	echo "</td>";
 	echo "<td class=\"descriptionbox vmiddle\">";
-	print_help_link("annivers_event", "qm", "showcal");
-	echo $pgv_lang["showcal"]."&nbsp;</td>";
+	echo i18n::translate('Show events of'), help_link('annivers_event'), '</td>';
 	echo "<td class=\"optionbox\">";
 	echo "<input type=\"hidden\" name=\"filterev\" value=\"$filterev\" />";
 	echo "<select class=\"list_value\" name=\"filterev\" onchange=\"document.dateform.submit();\">";
 	echo "<option value=\"bdm\"";
 	if ($filterev == "bdm") echo " selected=\"selected\"";
-	echo ">".$pgv_lang["bdm"]."</option>";
+	echo ">".i18n::translate('Births, Deaths, Marriages')."</option>";
 	echo "<option value=\"all\"";
 	if ($filterev == "all") echo " selected=\"selected\"";
-	echo ">".$pgv_lang["all"]."</option>";
+	echo ">".i18n::translate('ALL')."</option>";
 	echo "<option value=\"BIRT\"";
 	if ($filterev == "BIRT") echo " selected=\"selected\"";
 	echo ">".i18n::translate('BIRT')."</option>";
@@ -271,38 +268,40 @@ if ($view!='preview') {
 	echo ">".i18n::translate('EMIG')."</option>";
 	echo "<option value=\"EVEN\"";
 	if ($filterev == "EVEN") echo " selected=\"selected\"";
-	echo ">".$pgv_lang["custom_event"]."</option>";
+	echo ">".i18n::translate('Custom Event')."</option>";
 	echo "</select>";
 	echo "</td></tr>";
 	// Day/Month/Year and calendar selector
-	echo '<tr><td class="topbottombar" colspan="8">';
-	print_help_link("day_month", "qm", "view");
-
+	echo '<tr><td class="topbottombar" colspan="4">';
 	if ($action=='today') {
-		echo "<span class=\"error\">{$pgv_lang['viewday']}</span>";
+		echo "<span class=\"error\">", i18n::translate('View Day'), "</span>";
 	} else {
-		echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=today")."\">{$pgv_lang['viewday']}</a>";
+		echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=today")."\">", i18n::translate('View Day'), "</a>";
 	}
 	if ($action=='calendar') {
-		echo " | <span class=\"error\">{$pgv_lang['viewmonth']}</span>";
+		echo " | <span class=\"error\">", i18n::translate('View Month'), "</span>";
 	} else {
-		echo " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=calendar")."\">{$pgv_lang['viewmonth']}</a>";
+		echo " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=calendar")."\">", i18n::translate('View Month'), "</a>";
 	}
 	if ($action=='year') {
-		echo " | <span class=\"error\">{$pgv_lang['viewyear']}</span>";
+		echo " | <span class=\"error\">", i18n::translate('View Year'), "</span>";
 	} else {
-		echo " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=year")."\">{$pgv_lang['viewyear']}</a>";
+		echo " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=year")."\">", i18n::translate('View Year'), "</a>";
 	}
-
-	foreach (array('gregorian', 'julian', 'jewish', 'french', 'hijri') as $newcal) {
+	echo help_link('day_month');
+	echo '</td><td class="topbottombar" colspan="4">';
+	foreach (array('gregorian', 'julian', 'jewish', 'french', 'hijri') as $n=>$newcal) {
 		$tmp=$cal_date->convert_to_cal($newcal);
+		if ($n) {
+			echo ' | ';
+		}
 		if ($tmp->InValidRange()) {
 			if ($tmp->CALENDAR_ESCAPE()==$cal_date->CALENDAR_ESCAPE()) {
-				echo " | <span class=\"error\">{$pgv_lang['cal_'.$newcal]}</span>";
+				echo "<span class=\"error\">{$pgv_lang['cal_'.$newcal]}</span>";
 			} else {
 				$newcalesc=urlencode($tmp->CALENDAR_ESCAPE());
 				$tmpmonth=$tmp->FormatGedcomMonth();
-				echo " | <a href=\"".encode_url("calendar.php?cal={$newcalesc}&day={$tmp->d}&month={$tmpmonth}&year={$tmp->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$pgv_lang['cal_'.$newcal]}</a>";
+				echo "<a href=\"".encode_url("calendar.php?cal={$newcalesc}&day={$tmp->d}&month={$tmpmonth}&year={$tmp->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$pgv_lang['cal_'.$newcal]}</a>";
 			}
 		}
 	}
@@ -401,8 +400,8 @@ case 'year':
 case 'today':
 	echo "<table class=\"center {$TEXT_DIRECTION} width100\"><tr>";
 	// Table headings
-	echo "<td class=\"descriptionbox center width50\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['indis']['small']}\" border=\"0\" title=\"{$pgv_lang['individuals']}\" alt=\"{$pgv_lang['individuals']}\" />&nbsp;&nbsp;&nbsp;{$pgv_lang['individuals']}</td>";
-	echo "<td class=\"descriptionbox center width50\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['cfamily']['small']}\" border=\"0\" title=\"{$pgv_lang['families']}\" alt=\"{$pgv_lang['families']}\" />&nbsp;&nbsp;&nbsp;{$pgv_lang['families']}</td>";
+	echo "<td class=\"descriptionbox center width50\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['indis']['small']}\" border=\"0\" title=\"", i18n::translate('Individuals'), "\" alt=\"", i18n::translate('Individuals'), "\" />&nbsp;&nbsp;&nbsp;", i18n::translate('Individuals'), "</td>";
+	echo "<td class=\"descriptionbox center width50\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['cfamily']['small']}\" border=\"0\" title=\"", i18n::translate('Families'), "\" alt=\"", i18n::translate('Families'), "\" />&nbsp;&nbsp;&nbsp;", i18n::translate('Families'), "</td>";
 	echo "</tr><tr>";
 	// Table rows
 	$males=0;
@@ -432,15 +431,15 @@ case 'today':
 	echo '</td>';
 	echo "</tr><tr>";
 	// Table footers
-	echo "<td class=\"descriptionbox\">{$pgv_lang['total_indis']} ";
+	echo "<td class=\"descriptionbox\">", i18n::translate('Total individuals'), " ";
 	echo count($indis);
 	echo "<br />";
-	echo Person::sexImage('M', 'small', 'vertical-align: middle', $pgv_lang['stat_males']), "&nbsp;{$males}&nbsp;&nbsp;&nbsp;&nbsp;";
-	echo Person::sexImage('F', 'small', 'vertical-align: middle', $pgv_lang['stat_females']), "&nbsp;{$females}&nbsp;&nbsp;&nbsp;&nbsp;";
+	echo Person::sexImage('M', 'small', 'vertical-align: middle', i18n::translate('Males')), "&nbsp;{$males}&nbsp;&nbsp;&nbsp;&nbsp;";
+	echo Person::sexImage('F', 'small', 'vertical-align: middle', i18n::translate('Females')), "&nbsp;{$females}&nbsp;&nbsp;&nbsp;&nbsp;";
 	if (count($indis)!=$males+$females)
-		echo Person::sexImage('U', 'small', 'vertical-align: middle', $pgv_lang['all_people']), '&nbsp;', count($indis)-$males-$females;
+		echo Person::sexImage('U', 'small', 'vertical-align: middle', i18n::translate('All People')), '&nbsp;', count($indis)-$males-$females;
 	echo "</td>";
-	echo "<td class=\"descriptionbox\">{$pgv_lang['total_fams']} ".count($fams)."</td>";
+	echo "<td class=\"descriptionbox\">", i18n::translate('Total families'), " ".count($fams)."</td>";
 	echo "</tr></table>";
 
 	break;
@@ -474,7 +473,7 @@ case 'calendar':
 			echo "<td class=\"optionbox wrap\">";
 		if ($d<1 || $d>$days_in_month)
 			if (count($cal_facts[0])>0) {
-				echo "<span class=\"cal_day\">{$pgv_lang['day_not_set']}</span><br style=\"clear: both\" />";
+				echo "<span class=\"cal_day\">", i18n::translate('Day not set'), "</span><br style=\"clear: both\" />";
 				echo "<div class=\"details1\" style=\"height: 150px; overflow: auto;\">";
 				echo calendar_list_text($cal_facts[0], "", "", false);
 				echo "</div>";
@@ -515,25 +514,25 @@ if ($view=="preview") {
 	// Print details of any filtering
 	$filters=array();
 	if ($filterof=='living') {
-		$filters[]=$pgv_lang['living_only'];
+		$filters[]=i18n::translate('Living People');
 	}
 	if ($filterof=='recent') {
-		$filters[]=$pgv_lang['recent_events'];
+		$filters[]=i18n::translate('Recent Years (&lt; 100 yrs)');
 	}
 	if ($filtersx=='M') {
-		$filters[]=$pgv_lang["male"];
+		$filters[]=i18n::translate('Male');
 	}
 	if ($filtersx=='F') {
-		$filters[]=$pgv_lang["female"];
+		$filters[]=i18n::translate('Female');
 	}
 	if ($filterev=='bdm') {
-		$filters[]=$pgv_lang['bdm'];
+		$filters[]=i18n::translate('Births, Deaths, Marriages');
 	} elseif ($filterev!='all') {
 			$filters[].=i18n::translate($filterev);
 	}
 	$filtertext=implode(' - ', $filters);
 	if (!empty($filters)) {
-		$filtertext="({$pgv_lang['filter']}: {$filtertext})";
+		$filtertext="(".i18n::translate('Filter').": {$filtertext})";
 	}
 	echo '<br />', get_gedcom_setting(PGV_GED_ID, 'title'), ' ', $filtertext;
 }
@@ -585,7 +584,7 @@ function calendar_fact_text($fact, $show_places) {
 	global $pgv_lang, $TEXT_DIRECTION;
 	$text=i18n::translate($fact['fact']).' - '.$fact['date']->Display(true, "", array());
 	if ($fact['anniv']>0)
-		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.str_replace('#year_var#', $fact['anniv'], $pgv_lang['year_anniversary']).')</span>';
+		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.i18n::translate('%s year anniversary', $fact['anniv']).')</span>';
 	if ($show_places && !empty($fact['plac']))
 		$text.=' - '.$fact['plac'];
 	return $text;
@@ -603,15 +602,15 @@ function calendar_list_text($list, $tag1, $tag2, $show_sex_symbols) {
 		if ($show_sex_symbols && $tmp->getType()=='INDI')
 			switch ($tmp->getSex()) {
 			case 'M':
-				echo Person::sexImage('M', 'small', 'vertical-align: middle', $pgv_lang['male']);
+				echo Person::sexImage('M', 'small', 'vertical-align: middle', i18n::translate('Male'));
 				++$males;
 				break;
 			case 'F':
-				echo Person::sexImage('F', 'small', 'vertical-align: middle', $pgv_lang['female']);
+				echo Person::sexImage('F', 'small', 'vertical-align: middle', i18n::translate('Female'));
 				++$females;
 				break;
 			default:
-				echo Person::sexImage('U', 'small', 'vertical-align: middle', $pgv_lang['unknown']);
+				echo Person::sexImage('U', 'small', 'vertical-align: middle', i18n::translate('unknown'));
 				break;
 			}
 			echo "<div class=\"indent\">".$facts."</div>{$tag2}";

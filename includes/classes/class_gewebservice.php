@@ -1,7 +1,10 @@
 <?php
 /**
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Tools
  * @version $Id$
  */
@@ -42,7 +45,7 @@ class GEWebService extends GrampsExport
  * @return GrampsXML for the person
  */
 function create_person($personRec = "", $personID = "") {
-		global $pgv_lang, $eRoot;
+		global $eRoot;
 		if (!isset($this->dom))
 		{
 	     $this->dom = new DomDocument("1.0", "UTF-8");
@@ -92,9 +95,9 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 					}
 				}
 				if (empty($surn))
-					$surn = $pgv_lang["unknown"];
+					$surn = i18n::translate('unknown');
 				if (empty($givn))
-					$givn = $pgv_lang["unknown"];
+					$givn = i18n::translate('unknown');
 
 				$eFirstName = $this->dom->createElement("first");
 				$etFirstName = $this->dom->createTextNode($givn);

@@ -2,7 +2,10 @@
 /**
  * Classes and libraries for module system
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2009 John Finlay
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Modules
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
@@ -36,15 +39,11 @@ if (!defined('PGV_AUTOCOMPLETE_LIMIT')) define('PGV_AUTOCOMPLETE_LIMIT', 500);
 class families_Sidebar extends Sidebar {
 
 	public function getContent() {
-		global $SHOW_MARRIED_NAMES, $pgv_lang;
+		global $SHOW_MARRIED_NAMES;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 		// Fetch a list of the initial letters of all surnames in the database
 		$initials=get_indilist_salpha($SHOW_MARRIED_NAMES, false, PGV_GED_ID);
-		// If there are no individuals in the database, do something sensible
-		if (!$initials) {
-			$initials[]='@';
-		}
 
 		$out = '<script type="text/javascript">
 		<!--
@@ -59,7 +58,7 @@ class families_Sidebar extends Sidebar {
 		
 		jQuery(document).ready(function(){
 			jQuery("#sb_fam_name").focus(function(){this.select();});
-			jQuery("#sb_fam_name").blur(function(){if (this.value=="") this.value="'.$pgv_lang['search'].'";});
+			jQuery("#sb_fam_name").blur(function(){if (this.value=="") this.value="'.i18n::translate('Search').'";});
 			var famtimerid = null;
 			jQuery("#sb_fam_name").keyup(function(e) {
 				if (famtimerid) window.clearTimeout(famtimerid);
@@ -101,15 +100,15 @@ class families_Sidebar extends Sidebar {
 		//-->
 		</script>
 		<form method="post" action="sidebar.php" onsubmit="return false;">
-		<input type="text" name="sb_fam_name" id="sb_fam_name" value="'.$pgv_lang['search'].'" />
+		<input type="text" name="sb_fam_name" id="sb_fam_name" value="'.i18n::translate('Search').'" />
 		<p>';
-		foreach ($initials as $letter) {
+		foreach ($initials as $letter=>$count) {
 			switch ($letter) {
 				case '@':
-					$html=$pgv_lang['NN'];
+					$html=i18n::translate('(unknown)');
 					break;
 				case ',':
-					$html=$pgv_lang['none'];
+					$html=i18n::translate('None');
 					break;
 				default:
 					$html=$letter;
@@ -155,7 +154,7 @@ class families_Sidebar extends Sidebar {
 	}
 
 	public function getSurnameFams($alpha, $surname) {
-		global $SHOW_MARRIED_NAMES, $pgv_lang;
+		global $SHOW_MARRIED_NAMES;
 		$families=get_famlist_fams($surname, $alpha, '', $SHOW_MARRIED_NAMES, PGV_GED_ID);
 		$out = '<ul>';
 		$private_count = 0;
@@ -170,13 +169,13 @@ class families_Sidebar extends Sidebar {
 			}
 			else $private_count++;
 		}
-		if ($private_count>0) $out .= '<li>'.PrintReady($pgv_lang['private'].' ('.$private_count.')').'</li>';
+		if ($private_count>0) $out .= '<li>'.PrintReady(i18n::translate('Private').' ('.$private_count.')').'</li>';
 		$out .= '</ul>';
 		return $out;
 	}
 
 	public function search($query) {
-		global $TBLPREFIX, $pgv_lang;
+		global $TBLPREFIX;
 		if (strlen($query)<2) return '';
 
 		//-- search for INDI names
@@ -228,7 +227,7 @@ class families_Sidebar extends Sidebar {
 			}
 			else $private_count++;
 		}
-		if ($private_count>0) $out .= '<li>'.PrintReady($pgv_lang['private'].' ('.$private_count.')').'</li>';
+		if ($private_count>0) $out .= '<li>'.PrintReady(i18n::translate('Private').' ('.$private_count.')').'</li>';
 		$out .= '</ul>';
 		return $out;
 	}

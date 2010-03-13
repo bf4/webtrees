@@ -2,7 +2,10 @@
 /**
  * Parses gedcom file and displays record for given id in raw text
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @version $Id$
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  */
 
@@ -37,12 +40,12 @@ $pid=safe_GET_xref('pid');
 <html  xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $CHARACTER_SET; ?>" />
-		<title><?php echo $pgv_lang["record"], ': ',$pid ; ?></title>
+		<title><?php echo i18n::translate('Record'), ': ',$pid ; ?></title>
 	</head>
 	<body><?php
 
 if (!$SHOW_GEDCOM_RECORD && !PGV_USER_CAN_ACCEPT) {
-	echo "<span class=\"error\">", $pgv_lang["ged_noshow"], "</span>\n";
+	echo "<span class=\"error\">", i18n::translate('This page has been disabled by the site administrator.'), "</span>\n";
 	echo "</body></html>";
 	exit;
 }

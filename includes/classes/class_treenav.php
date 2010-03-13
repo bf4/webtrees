@@ -2,7 +2,10 @@
 /**
 * Class file for the tree navigator
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @version $Id$
 */
 
@@ -145,7 +148,7 @@ class TreeNav {
 	* @param string $height the height parameter for the outer style
 	*/
 	function drawViewport($id='', $width='', $height='') {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $CONTACT_EMAIL, $SERVER_URL;
+		global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $CONTACT_EMAIL, $SERVER_URL;
 		if (empty($id)) $id = $this->rootPerson->getXref();
 		$widthS = "";
 		$heightS = "";
@@ -154,7 +157,7 @@ class TreeNav {
 		?>
 		<?php $this->setupJS(); ?>
 
-		<div id="out_<?php print $this->name; ?>" dir="ltr" style="position: relative; <?php print $widthS.$heightS; ?>text-align: center; overflow: hidden;">
+		<div id="out_<?php print $this->name; ?>" dir="ltr" style="position: relative; <?php print $widthS.$heightS; ?>text-align: center; overflow: hidden; border: 1px solid;">
 			<div id="in_<?php print $this->name; ?>" style="position: relative; left: -20px; width: auto; cursor: move;" onmousedown="dragStart(event, 'in_<?php print $this->name; ?>', <?php print $this->name; ?>);" onmouseup="dragStop(event);">
 			<?php $parent=null;
 			//if ($this->rootPerson!=null && !$this->rootPerson->canDisplayDetails()) print_privacy_error($CONTACT_EMAIL);
@@ -165,9 +168,9 @@ class TreeNav {
 			<table>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other'];?>" border="0" alt="zoomin" /></a></td></tr>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other'];?>" border="0" alt="zoomout" /></a></td></tr>
-				<tr><td <?php if (is_null($this->rootPerson) || PGV_SCRIPT_NAME=='treenav.php') print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print $pgv_lang["load_full_tree"]; ?>"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" alt="" /></a></td></tr>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print $pgv_lang["hide_show_spouses"]; ?>"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" alt="" /></a></td></tr>
-				<tr><td><?php print_help_link('help_treenav.php','qm'); ?></td></tr>
+				<tr><td <?php if (is_null($this->rootPerson) || PGV_SCRIPT_NAME=='treenav.php') print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print i18n::translate('View this tree in the full page interactive tree'); ?>"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" alt="" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print i18n::translate('Show or hide multiple spouses'); ?>"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" alt="" /></a></td></tr>
+				<tr><td><?php echo help_link('help_treenav.php'); ?></td></tr>
 				<tr><td><img id="<?php print $this->name; ?>_loading" src="<?php print $SERVER_URL; ?>images/loading.gif" style="display: none;" alt="Loading..." /></td></tr>
 			</table>
 			</div>
@@ -244,7 +247,7 @@ class TreeNav {
 	* @param Person $person the person to print the details for
 	*/
 	function getDetails(&$person) {
-		global $pgv_lang, $SHOW_ID_NUMBERS, $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
+		global $SHOW_ID_NUMBERS, $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
 		global $TEXT_DIRECTION;
 
 		if (empty($person)) $person = $this->rootPerson;

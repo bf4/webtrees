@@ -2,7 +2,10 @@
 /**
  * Classes and libraries for module system
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2010 PGV Development Team. All Rights Reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Modules
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
@@ -36,17 +39,15 @@ class media_Tab extends Tab {
 	protected $mediaCount = null;
 	
 	public function getContent() {
-		global $CONTACT_EMAIL, $pgv_lang, $MULTI_MEDIA;
+		global $CONTACT_EMAIL, $MULTI_MEDIA;
 		global $NAV_MEDIA;
 		
-		$out = "<span class=\"subheaders\">".$pgv_lang["media"]."</span>";
-
 		ob_start();
 		// For Reorder media ------------------------------------
 		if (PGV_USER_CAN_EDIT) {
-			$out .= "<center>";
+			echo "<center>";
 			require_once './includes/media_tab_head.php';
-			$out .= "</center>";
+			echo "</center>";
 		}
 		?>
 		<div id="media_content">
@@ -60,15 +61,15 @@ class media_Tab extends Tab {
 		}
 		else {
 			$media_found = print_main_media($this->controller->pid, 0, true);
-			if (!$media_found) print "<tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr>\n";
+			if (!$media_found) print "<tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".i18n::translate('There are no media objects for this individual.')."</td></tr>\n";
 			//-- New Media link
 			if (!$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
 		?>
 				<tr>
-					<td class="facts_label"><?php print_help_link("add_media", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
+					<td class="facts_label"><?php print i18n::translate('Add Media'), help_link('add_media'); ?></td>
 					<td class="facts_value">
-						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&linktoid=<?php print $this->controller->pid; ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
-						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php print $this->controller->pid; ?>&linkto=person', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
+						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&linktoid=<?php print $this->controller->pid; ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo i18n::translate('Add a new Media item'); ?></a><br />
+						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php print $this->controller->pid; ?>&linkto=person', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo i18n::translate('Link to an existing Media item'); ?></a>
 					</td>
 				</tr>
 			<?php
@@ -78,9 +79,7 @@ class media_Tab extends Tab {
 		</table>
 			</div>
 	<?php
-		$out .= ob_get_contents();
-		ob_end_clean();
-		return $out;
+		return '<div id="'.$this->getName().'_content">'.ob_get_clean().'</div>';
 	}
 	
 	/**

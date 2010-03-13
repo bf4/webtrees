@@ -2,7 +2,10 @@
 /**
  * Classes and libraries for module system
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2009 John Finlay
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Modules
  * @version $Id: class_media.php 5451 2009-05-05 22:15:34Z fisharebest $
  */
@@ -36,7 +39,6 @@ if (!defined('PGV_AUTOCOMPLETE_LIMIT')) define('PGV_AUTOCOMPLETE_LIMIT', 500);
 class descendancy_Sidebar extends Sidebar {
 
 	public function getContent() {
-		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 		$out = '<script type="text/javascript">
@@ -52,7 +54,7 @@ class descendancy_Sidebar extends Sidebar {
 		
 		jQuery(document).ready(function(){
 			jQuery("#sb_desc_name").focus(function(){this.select();});
-			jQuery("#sb_desc_name").blur(function(){if (this.value=="") this.value="'.$pgv_lang['search'].'";});
+			jQuery("#sb_desc_name").blur(function(){if (this.value=="") this.value="'.i18n::translate('Search').'";});
 			var dtimerid = null;
 			jQuery("#sb_desc_name").keyup(function(e) {
 				if (dtimerid) window.clearTimeout(dtimerid);
@@ -83,7 +85,7 @@ class descendancy_Sidebar extends Sidebar {
 		//-->
 		</script>
 		<form method="post" action="sidebar.php" onsubmit="return false;">
-		<input type="text" name="sb_desc_name" id="sb_desc_name" value="'.$pgv_lang['search'].'" />';
+		<input type="text" name="sb_desc_name" id="sb_desc_name" value="'.i18n::translate('Search').'" />';
 		$out .= '</form><div id="sb_desc_content">';
 
 		if ($this->controller) {
@@ -131,7 +133,6 @@ class descendancy_Sidebar extends Sidebar {
 	}
 	
 	public function getFamilyLi(&$family, &$person, $generations=0) {
-		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$out = '';
 		$out .= '<li id="sb_desc_'.$family->getXref().'" class="sb_desc_indi_li"><a href="sidebar.php?sb_action=descendancy&amp;famid='.$family->getXref().'" title="'.$family->getXref().'" class="sb_desc_indi">';
@@ -152,7 +153,7 @@ class descendancy_Sidebar extends Sidebar {
 	}
 
 	public function search($query) {
-		global $TBLPREFIX, $pgv_lang, $PGV_IMAGES, $PGV_IMAGE_DIR;
+		global $TBLPREFIX, $PGV_IMAGES, $PGV_IMAGE_DIR;
 		if (strlen($query)<2) return '';
 		$sql=
 		"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
@@ -174,7 +175,7 @@ class descendancy_Sidebar extends Sidebar {
 			}
 			else $private_count++;
 		}
-		if ($private_count>0) $out .= '<li>'.$pgv_lang['private'].' ('.$private_count.')</li>';
+		if ($private_count>0) $out .= '<li>'.i18n::translate('Private').' ('.$private_count.')</li>';
 		$out .= '</ul>';
 		return $out;
 	}
@@ -196,7 +197,6 @@ class descendancy_Sidebar extends Sidebar {
 	}
 	
 	public function loadChildren($famid, $generations=0) {
-		global $pgv_lang;
 		$out = '<ul>';
 		$family = Family::getInstance($famid);
 		if ($family->canDisplayDetails()) {
@@ -207,7 +207,7 @@ class descendancy_Sidebar extends Sidebar {
 					if ($child->canDisplayName()) $out .= $this->getPersonLi($child, $generations-1);
 					else $private++;
 				}
-				if ($private>0) $out .= '<li class="sb_desc_indi_li">'.$pgv_lang['private'].' ('.$private.')</li>';
+				if ($private>0) $out .= '<li class="sb_desc_indi_li">'.i18n::translate('Private').' ('.$private.')</li>';
 			}
 			else {
 				$out .= "No children";

@@ -4,7 +4,10 @@
 *
 * Allow a user the ability to add links to people from other servers and other gedcoms.
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 *
-* @package PhpGedView
+* @package webtrees
 * @subpackage Charts
 * @version $Id$
 */
@@ -253,7 +256,7 @@ class RemoteLinkController extends BaseController {
 	}
 
 	function addLink() {
-		global $pgv_lang, $GEDCOM;
+		global $GEDCOM;
 
 		switch ($this->form_location) {
 		case 'remote':
@@ -397,7 +400,7 @@ class RemoteLinkController extends BaseController {
 				}
 				break;
 			}
-			echo '<b>', $pgv_lang['link_success'], '</b>';
+			echo '<b>', i18n::translate('Successfully added link'), '</b>';
 			return true;
 		}
 		return false;

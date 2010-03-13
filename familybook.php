@@ -4,7 +4,10 @@
  *
  * Set the root person using the $pid variable
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -55,7 +58,7 @@ $name  =$person->getFullName();
 
 function print_descendency($pid, $count) {
 	global $show_spouse, $dgenerations, $bwidth, $bheight, $bhalfheight;
-	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full, $pgv_lang;
+	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full;
 	if ($count>=$dgenerations) return 0;
 	print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
 	print "<tr>";
@@ -169,7 +172,7 @@ function print_descendency($pid, $count) {
 				print "\n\t\t<div class=\"center\" id=\"childarrow.$pid\" dir=\"".$TEXT_DIRECTION."\"";
 				print " style=\"position:absolute; width:".$bwidth."px; \">";
 				if ($view!="preview") {
-					print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"return togglechildrenbox('$pid');\" onmouseover=\"swap_image('larrow.$pid',3);\" onmouseout=\"swap_image('larrow.$pid',3);\">";
+					print "<a href=\"javascript: ".i18n::translate('Show')."\" onclick=\"return togglechildrenbox('$pid');\" onmouseover=\"swap_image('larrow.$pid',3);\" onmouseout=\"swap_image('larrow.$pid',3);\">";
 					print "<img id=\"larrow.$pid\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
 					print "</a>";
 				}
@@ -215,7 +218,7 @@ function print_descendency($pid, $count) {
 					if ($famrec) {
 						$parents = find_parents($cfamids[$f]);
 						if($parents) {
-							print "<span class=\"name1\"><br />".$pgv_lang["parents"]."<br /></span>";
+							print "<span class=\"name1\"><br />".i18n::translate('Parents')."<br /></span>";
 							if (!empty($parents["HUSB"])) {
 								$spid = $parents["HUSB"];
 								$spouse=Person::getInstance($spid);
@@ -240,8 +243,8 @@ function print_descendency($pid, $count) {
 							}
 						}
 						$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
-						if ($num>2) print "<span class=\"name1\"><br />".$pgv_lang["siblings"]."<br /></span>";
-						if ($num==2) print "<span class=\"name1\"><br />".$pgv_lang["sibling"]."<br /></span>";
+						if ($num>2) print "<span class=\"name1\"><br />".i18n::translate('Siblings')."<br /></span>";
+						if ($num==2) print "<span class=\"name1\"><br />".i18n::translate('Sibling')."<br /></span>";
 						for($i=0; $i<$num; $i++) {
 							//-- add the following line to stop a bad PHP bug
 							if ($i>=$num) break;
@@ -329,7 +332,7 @@ function print_person_pedigree($pid, $count) {
 }
 function print_family_book($pid, $descent)
 {
-	global $generations, $dgenerations, $pgv_lang, $firstrun;
+	global $generations, $dgenerations, $firstrun;
 	if ($descent==0) return;
 		$famids = find_sfamily_ids($pid);
 		if (count($famids)>0 || empty($firstrun)) {
@@ -337,7 +340,7 @@ function print_family_book($pid, $descent)
 				$pid=check_rootid($pid);
 				$person=Person::getInstance($pid);
 				$name=$person->getFullName();
-				print "\n\t<h2 style=\"text-align: center\">".$pgv_lang["family_of"].PrintReady($name)."</h2>";
+				print "\n\t<h2 style=\"text-align: center\">".i18n::translate('Family of:&nbsp;').PrintReady($name)."</h2>";
 				print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr>\n";
 
 				//-- descendancy
@@ -368,7 +371,7 @@ function print_family_book($pid, $descent)
 }
 
 // -- print html header information
-print_header(PrintReady($name)." ".$pgv_lang["familybook_chart"]);
+print_header(PrintReady($name)." ".i18n::translate('Family Book Chart'));
 
 if ($ENABLE_AUTOCOMPLETE) require PGV_ROOT.'js/autocomplete.js.htm';
 
@@ -380,11 +383,11 @@ if (PGV_USE_LIGHTBOX) {
 // ==========================================================================================
 
 if ($view=="preview") {
-	print "<h2 style=\"text-align: center\">".$pgv_lang["familybook_chart"].":&nbsp;&nbsp;&nbsp;".PrintReady($name)."</h2>";
+	print "<h2 style=\"text-align: center\">".i18n::translate('Family Book Chart').":&nbsp;&nbsp;&nbsp;".PrintReady($name)."</h2>";
 } else {
 	print "<!-- // NOTE: Start table header -->";
 	print "<table><tr><td valign=\"top\">";
-	print "<h2>".$pgv_lang["familybook_chart"].":<br />".PrintReady($name)."</h2>";
+	print "<h2>".i18n::translate('Family Book Chart').":<br />".PrintReady($name)."</h2>";
 }
 ?>
 
@@ -409,19 +412,18 @@ if ($view!="preview") {
 	</td><td width="50px">&nbsp;</td><td><form method="get" name="people" action="?">
 	<table><tr>
 
-		<!-- // NOTE: Root ID -->
+	<!-- // NOTE: Root ID -->
 	<td class="descriptionbox">
-	<?php print_help_link("desc_rootid", "qm");
-	print $pgv_lang["root_person"] . "</td>";?>
+		<?php echo i18n::translate('Root Person ID'), help_link('desc_rootid'); ?>
+	</td>
 	<td class="optionbox">
-	<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php print $pid ?>"	/>
-	<?php print_findindi_link("pid","");?>
+		<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php print $pid ?>"	/>
+		<?php print_findindi_link("pid","");?>
 	</td>
 
 	<!-- // NOTE: Show Details -->
 	<td class="descriptionbox">
-	<?php print_help_link("show_full", "qm");
-	print $pgv_lang["show_details"]?>
+	<?php echo i18n::translate('Show Details'), help_link('show_full'); ?>
 	</td>
 	<td class="optionbox">
 	<input type="hidden" name="show_full" value="<?php print $show_full;?>" />
@@ -432,13 +434,12 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Submit button -->
 	<td rowspan="4" class="topbottombar vmiddle">
-	<input type="submit" value="<?php print $pgv_lang["view"] ?>" />
+	<input type="submit" value="<?php print i18n::translate('View') ?>" />
 	</td></tr>
 
 	<!-- // NOTE: Generations -->
-	<tr><td class="descriptionbox" >
-	<?php print_help_link("desc_generations", "qm");
-	print $pgv_lang["generations"]?>
+	<tr><td class="descriptionbox">
+	<?php echo i18n::translate('Generations'), help_link('desc_generations'); ?>
 	</td>
 	<td class="optionbox">
 	<select name="generations">
@@ -454,8 +455,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Show spouses -->
 	<td class="descriptionbox">
-	<?php print_help_link("show_spouse", "qm");
-	print $pgv_lang["show_spouses"]?>
+		<?php echo i18n::translate('Show spouses'), help_link('show_spouse'); ?>
 	</td>
 	<td class="optionbox">
 	<input type="checkbox" value="1" name="show_spouse"
@@ -465,8 +465,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Box width -->
 	<tr><td class="descriptionbox">
-	<?php print_help_link("box_width", "qm");
-	print $pgv_lang["box_width"]?>
+		<?php echo i18n::translate('Box width'), help_link('box_width'); ?>
 	</td>
 	<td class="optionbox"><input type="text" size="3" name="box_width" value="<?php print $box_width; ?>" />
 	<b>%</b>
@@ -477,8 +476,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Descent steps -->
 	<tr><td class="descriptionbox">
-	<?php print_help_link("fambook_descent", "qm");
-	print $pgv_lang["descent_steps"]?>
+		<?php echo i18n::translate('Descent Steps'), help_link('fambook_descent'); ?>
 	</td>
 	<td class="optionbox"><input type="text" size="3" name="descent" value="<?php print $descent;?>" />
 	</td>
@@ -493,7 +491,7 @@ if ($view!="preview") {
 	</td></tr></table>
 <?php
 	if ($show_full==0) {
-		echo '<br /><span class="details2">', $pgv_lang['charts_click_box'], '</span><br />';
+		echo '<br /><span class="details2">', i18n::translate('Click on any of the boxes to get more information about that person.'), '</span><br />';
 	}
 } ?>
 <div id="familybook_chart<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl"; ?>" style="<?php if ($view=="preview") print "top: 1px;"; else print "width:98%; direction:".$TEXT_DIRECTION."; z-index:1;";?>" >

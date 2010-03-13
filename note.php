@@ -3,7 +3,10 @@
 * Displays the details about a shared note record.  Also shows how many people and families
 * reference this shared note.
 *
-* phpGedView: Genealogy Viewer
+* webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
 * Copyright (C) 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -20,7 +23,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* @package PhpGedView
+* @package webtrees
 * @version $Id$
 */
 
@@ -48,12 +51,12 @@ if (PGV_USE_LIGHTBOX) {
 }
 
 if (!$controller->note){
-	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
+	echo "<b>", i18n::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();
 	exit;
 }
 else if ($controller->note->isMarkedDeleted()) {
-	echo '<span class="error">', $pgv_lang['record_marked_deleted'], '</span>';
+	echo '<span class="error">', i18n::translate('This record has been marked for deletion upon admin approval.'), '</span>';
 }
 
 echo PGV_JS_START;
@@ -71,7 +74,7 @@ echo PGV_JS_END;
 
 echo '<table class="list_table width80"><tr><td>';
 if ($controller->accept_success) {
-	echo '<b>', $pgv_lang['accept_successful'], '</b><br />';
+	echo '<b>', i18n::translate('Changes successfully accepted into database'), '</b><br />';
 }
 echo '<span class="name_head">', PrintReady(htmlspecialchars($controller->note->getFullName()));
 if ($SHOW_ID_NUMBERS) {
@@ -91,12 +94,12 @@ if ($nt==1) {
 echo '<tr><td align="left" class="descriptionbox ', $TEXT_DIRECTION, '">';
 	echo '<center>';
 	if (!empty($PGV_IMAGES["notes"]["small"]) && $SHOW_FACT_ICONS)
-		echo '<img src="', $PGV_IMAGE_DIR, "/", $PGV_IMAGES["notes"]["small"], '" alt="', $pgv_lang["shared_note"], '" title="', $pgv_lang["shared_note"], '" align="middle" /> ';
-	echo $pgv_lang["shared_note"], "</center>";
+		echo '<img src="', $PGV_IMAGE_DIR, "/", $PGV_IMAGES["notes"]["small"], '" alt="', i18n::translate('Shared Note'), '" title="', i18n::translate('Shared Note'), '" align="middle" /> ';
+	echo i18n::translate('Shared Note'), "</center>";
 	echo '<br /><br />';
 	if (PGV_USER_CAN_EDIT) {
 		echo "<a href=\"javascript: edit_note()\"> ";
-		echo $pgv_lang['edit'];
+		echo i18n::translate('Edit');
 		echo "</a>";
 	}
 	echo '</td><td class="optionbox wrap width80 ', $TEXT_DIRECTION, '">';
@@ -123,12 +126,11 @@ if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	print_add_new_fact($controller->nid, $notefacts, 'NOTE');
 	// new media
 	echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
-	print_help_link('add_media', 'qm', 'add_media_lbl');
-	echo $pgv_lang['add_media_lbl'] , '</td>';
-	echo '<td class="optionbox ', $TEXT_DIRECTION, '">';
-	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
+	echo i18n::translate('Add Media'), help_link('add_media');
+	echo '</td><td class="optionbox ', $TEXT_DIRECTION, '">';
+	echo '<a href="javascript: ', i18n::translate('Add Media'), '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', i18n::translate('Add a new Media item'), '</a>';
 	echo '<br />';
-	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid=', $controller->nid, '&linkto=note\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', $pgv_lang['link_to_existing_media'], '</a>';
+	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid=', $controller->nid, '&linkto=note\', \'_blank\', \'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1\'); return false;">', i18n::translate('Link to an existing Media item'), '</a>';
 	echo '</td></tr>';
 }
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';

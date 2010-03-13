@@ -4,7 +4,10 @@
  *
  * Various printing functions used to print fact records
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * Modifications Copyright (c) 2010 Greg Roach
@@ -23,7 +26,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */
@@ -151,24 +154,24 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($SHOW_FACT_ICONS)
 				echo $eventObj->Icon(), ' ';
 			echo i18n::translate($factref);
-			if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", $pgv_lang["number_sign"], $n_chil++;
-			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", $pgv_lang["number_sign"], $n_gchi++;
-			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", $pgv_lang["number_sign"], $n_ggch++;
+			if ($fact=="_BIRT_CHIL" and isset($n_chil)) echo "<br />", i18n::translate('#%d', $n_chil++);
+			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) echo "<br />", i18n::translate('#%d', $n_gchi++);
+			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) echo "<br />", i18n::translate('#%d', $n_ggch++);
 			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
-				$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
+				$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 				$menu->addOnclick("return edit_record('$pid', $linenum);");
 				$menu->addClass("", "", "submenu");
-				$submenu = new Menu($pgv_lang["edit"], "#", "right");
+				$submenu = new Menu(i18n::translate('Edit'), "#", "right");
 				$submenu->addOnclick("return edit_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
 
-				$submenu = new Menu($pgv_lang["copy"], "#", "right");
+				$submenu = new Menu(i18n::translate('Copy'), "#", "right");
 				$submenu->addOnclick("return copy_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
 
-				$submenu = new Menu($pgv_lang["delete"], "#", "right");
+				$submenu = new Menu(i18n::translate('Delete'), "#", "right");
 				$submenu->addOnclick("return delete_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
@@ -200,21 +203,21 @@ function print_fact(&$eventObj, $noedit=false) {
 				echo $eventObj->Icon(), ' ';
 			echo i18n::translate($factref);
 			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
-				$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
+				$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 				$menu->addOnclick("return edit_record('$pid', $linenum);");
 				$menu->addClass("", "", "submenu");
 
-				$submenu = new Menu($pgv_lang["edit"], "#", "right");
+				$submenu = new Menu(i18n::translate('Edit'), "#", "right");
 				$submenu->addOnclick("return edit_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
 
-				$submenu = new Menu($pgv_lang["delete"], "#", "right");
+				$submenu = new Menu(i18n::translate('Delete'), "#", "right");
 				$submenu->addOnclick("return delete_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
 
-				$submenu = new Menu($pgv_lang["copy"], "#", "right");
+				$submenu = new Menu(i18n::translate('Copy'), "#", "right");
 				$submenu->addOnclick("return copy_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
@@ -231,7 +234,7 @@ function print_fact(&$eventObj, $noedit=false) {
 		if ((showFactDetails($factref, $pid)) && (FactViewRestricted($pid, $factrec))) {
 			if (isset($resn_value)) {
 				echo "<img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
-				print_help_link("RESN", "qm");
+				echo help_link('RESN');
 			}
 		}
 		if ((showFactDetails($factref, $pid)) && (!FactViewRestricted($pid, $factrec))) {
@@ -254,7 +257,7 @@ function print_fact(&$eventObj, $noedit=false) {
 					if ($spouse->canDisplayName()) {
 						echo PrintReady($spouse->getFullName());
 					} else {
-						echo $pgv_lang["private"];
+						echo i18n::translate('Private');
 					}
 					echo "</a>";
 				}
@@ -263,7 +266,7 @@ function print_fact(&$eventObj, $noedit=false) {
 					echo "<a href=\"", encode_url("family.php?famid={$pid}"), "\">";
 					if ($TEXT_DIRECTION == "ltr") echo " ", getLRM();
 					else echo " ", getRLM();
-					echo "[", $pgv_lang["view_family"];
+					echo "[", i18n::translate('View Family');
 					if ($SHOW_ID_NUMBERS) echo " ", getLRM(), "($pid)", getLRM();
 					if ($TEXT_DIRECTION == "ltr") echo getLRM(), "]</a>\n";
 					else echo getRLM(), "]</a>\n";
@@ -295,12 +298,12 @@ function print_fact(&$eventObj, $noedit=false) {
 				/* -- see the format_fact_date function where this is handled
 				else if ($event=="Y") {
 					if (get_sub_record(2, "2 DATE", $factrec)=="") {
-						echo $pgv_lang["yes"], "<br />";
+						echo i18n::translate('Yes'), "<br />";
 					}
 				}*/
 				elseif ($event=="N") {
 					if (get_sub_record(2, "2 DATE", $factrec)=="") {
-						echo $pgv_lang["no"];
+						echo i18n::translate('No');
 					}
 				} elseif (strstr("URL WWW ", $fact." ")) {
 					echo "<a href=\"", $event, "\" target=\"new\">", PrintReady($event), "</a>";
@@ -356,7 +359,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			// -- Find RESN tag
 			if (isset($resn_value)) {
 				echo "<img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
-				print_help_link("RESN", "qm");
+				echo help_link('RESN');
 			}
 			if (preg_match("/\n2 FAMC @(.+)@/", $factrec, $match)) {
 				echo "<br/><span class=\"label\">", i18n::translate('FAMC'), ":</span> ";
@@ -443,9 +446,9 @@ function print_fact(&$eventObj, $noedit=false) {
 		echo "\n\t\t</tr>";
 	} else {
 		// -- catch all unknown codes here
-		$body = $pgv_lang["unrecognized_code"]." ".$fact;
+		$body = i18n::translate('Unrecognized GEDCOM Code')." ".$fact;
 		$userName=getUserFullName($CONTACT_EMAIL);
-		if (!$HIDE_GEDCOM_ERRORS) echo "\n\t\t<tr><td class=\"descriptionbox $styleadd\"><span class=\"error\">", $pgv_lang["unrecognized_code"], ": $fact</span></td><td class=\"optionbox\">$event<br />", $pgv_lang["unrecognized_code_msg"], " <a href=\"javascript:;\" onclick=\"message('$CONTACT_EMAIL', '', '', '$body'); return false;\">", $userName, "</a>.</td></tr>";
+		if (!$HIDE_GEDCOM_ERRORS) echo "\n\t\t<tr><td class=\"descriptionbox $styleadd\"><span class=\"error\">", i18n::translate('Unrecognized GEDCOM Code'), ": $fact</span></td><td class=\"optionbox\">$event<br />", i18n::translate('This is an error, and we would like to fix it. Please report this error to'), " <a href=\"javascript:;\" onclick=\"message('$CONTACT_EMAIL', '', '', '$body'); return false;\">", $userName, "</a>.</td></tr>";
 	}
 }
 //------------------- end print fact function
@@ -518,7 +521,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 			$srec = get_sub_record($level, "$level SOUR ", $factrec, $j+1);
 			$srec = substr($srec, 6); // remove "2 SOUR"
 			$srec = str_replace("\n".($level+1)." CONT ", "<br/>", $srec); // remove n+1 CONT
-			$data .= "<br /><span class=\"label\">".$pgv_lang["source"].":</span> <span class=\"field\">".PrintReady($srec)."</span><br />";
+			$data .= "<br /><span class=\"label\">".i18n::translate('Source').":</span> <span class=\"field\">".PrintReady($srec)."</span><br />";
 			$printDone = true;
 		}
 	}
@@ -539,10 +542,10 @@ function print_fact_sources($factrec, $level, $return=false) {
 			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
 			if ($lt>0) {
 				$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"";
-				if ($plusminus=="plus") $data .= $pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
-				else $data .= $pgv_lang["hide_details"]."\" title=\"".$pgv_lang["hide_details"]."\" /></a> ";
+				if ($plusminus=="plus") $data .= i18n::translate('Show Details')."\" title=\"".i18n::translate('Show Details')."\" /></a> ";
+				else $data .= i18n::translate('Hide Details')."\" title=\"".i18n::translate('Hide Details')."\" /></a> ";
 			}
-			$data .= $pgv_lang["source"].":</span> <span class=\"field\">";
+			$data .= i18n::translate('Source').":</span> <span class=\"field\">";
 			$source=Source::getInstance($sid);
 			if ($source) {
 				$data .= "<a href=\"".encode_url($source->getLinkUrl())."\">".PrintReady($source->getFullName())."</a>";
@@ -584,7 +587,7 @@ function print_media_links($factrec, $level, $pid='') {
 	global $pgv_lang, $SEARCH_SPIDER, $view;
 	global $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
-	global $GEDCOM, $SHOW_ID_NUMBERS;
+	global $GEDCOM, $SHOW_ID_NUMBERS, $MEDIA_TYPES;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 	if (!$MULTI_MEDIA) return;
 	$nlevel = $level+1;
@@ -668,7 +671,7 @@ function print_media_links($factrec, $level, $pid='') {
 				if (!empty($row["m_ext"])) {
 					echo "\n\t\t\t<br /><span class=\"label\">", i18n::translate('FORM'), ": </span> <span class=\"field\">", $row["m_ext"], "</span>";
 					if($imgsize[2]!==false) {
-						echo "\n\t\t\t<span class=\"label\"><br />", $pgv_lang["image_size"], ": </span> <span class=\"field\" style=\"direction: ltr;\">" , $imgsize[0] , ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") , $imgsize[1] , "</span>";
+						echo "\n\t\t\t<span class=\"label\"><br />", i18n::translate('Image Dimensions'), ": </span> <span class=\"field\" style=\"direction: ltr;\">" , $imgsize[0] , ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") , $imgsize[1] , "</span>";
 					}
 				}
 				if (preg_match('/2 DATE (.+)/', get_sub_record("FILE", 1, $row["m_gedrec"]), $match)) {
@@ -679,10 +682,13 @@ function print_media_links($factrec, $level, $pid='') {
 				$ttype = preg_match("/".($nlevel+1)." TYPE (.*)/", $row["m_gedrec"], $match);
 				if ($ttype>0) {
 					$mediaType = $match[1];
-					$varName = "TYPE__".strtolower($mediaType);
-					if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
-					else $mediaType = $pgv_lang["TYPE__other"];
-					echo "\n\t\t\t<br /><span class=\"label\">", $pgv_lang["type"], ": </span> <span class=\"field\">$mediaType</span>";
+					$varName = strtolower($mediaType);
+					if (array_key_exists($varName, $MEDIA_TYPES)) {
+						$mediaType = $MEDIA_TYPES[$varName];
+					} else {
+						$mediaType = i18n::translate('Other');
+					}
+					echo "\n\t\t\t<br /><span class=\"label\">", i18n::translate('Type'), ": </span> <span class=\"field\">$mediaType</span>";
 				}
 				//echo "</span>";
 				echo "<br />\n";
@@ -695,7 +701,7 @@ function print_media_links($factrec, $level, $pid='') {
 						if ($spouse->canDisplayName()) {
 							echo PrintReady($spouse->getFullName());
 						} else {
-							echo $pgv_lang["private"];
+							echo i18n::translate('Private');
 						}
 						echo "</a>";
 					}
@@ -705,7 +711,7 @@ function print_media_links($factrec, $level, $pid='') {
 						if ($ct>0) {
 							$famid = trim($match[1]);
 							if(empty($SEARCH_SPIDER)) {
-								echo "<a href=\"", encode_url("family.php?famid={$famid}"), "\">[", $pgv_lang["view_family"];
+								echo "<a href=\"", encode_url("family.php?famid={$famid}"), "\">[", i18n::translate('View Family');
 								if ($SHOW_ID_NUMBERS) echo " " . getLRM() . "($famid)" . getLRM();
 								echo "]</a>\n";
 							}
@@ -877,21 +883,21 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			$temp = preg_match("/^\d (\w*)/", $factrec, $factname);
 			echo i18n::translate($factname[1]);
 			if (!$noedit && PGV_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="red" && $view!="preview") {
-				$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
+				$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 				$menu->addOnclick("return edit_record('$pid', $linenum);");
 				$menu->addClass("", "", "submenu");
 
-				$submenu = new Menu($pgv_lang["edit"], "#", "right");
+				$submenu = new Menu(i18n::translate('Edit'), "#", "right");
 				$submenu->addOnclick("return edit_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
 
-				$submenu = new Menu($pgv_lang["delete"], "#", "right");
+				$submenu = new Menu(i18n::translate('Delete'), "#", "right");
 				$submenu->addOnclick("return delete_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
 
-				$submenu = new Menu($pgv_lang["copy"], "#", "right");
+				$submenu = new Menu(i18n::translate('Copy'), "#", "right");
 				$submenu->addOnclick("return copy_record('$pid', $linenum);");
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
@@ -918,7 +924,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 				// -- Find RESN tag
 				if (isset($resn_value)) {
 					echo "<img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
-					print_help_link("RESN", "qm");
+					echo help_link('RESN');
 				}
 				$cs = preg_match("/$nlevel EVEN (.*)/", $srec, $cmatch);
 				if ($cs>0) {
@@ -1132,21 +1138,21 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			echo i18n::translate($factname);
 		}
 		if (!$noedit && PGV_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="change_old" && $view!="preview") {
-			$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
+			$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 			$menu->addOnclick("return edit_record('$pid', $linenum);");
 			$menu->addClass("", "", "submenu");
 
-			$submenu = new Menu($pgv_lang["edit"], "#", "right");
+			$submenu = new Menu(i18n::translate('Edit'), "#", "right");
 			$submenu->addOnclick("return edit_record('$pid', $linenum);");
 			$submenu->addClass("submenuitem", "submenuitem_hover");
 			$menu->addSubMenu($submenu);
 
-			$submenu = new Menu($pgv_lang["delete"], "#", "right");
+			$submenu = new Menu(i18n::translate('Delete'), "#", "right");
 			$submenu->addOnclick("return delete_record('$pid', $linenum);");
 			$submenu->addClass("submenuitem", "submenuitem_hover");
 			$menu->addSubMenu($submenu);
 
-			$submenu = new Menu($pgv_lang["copy"], "#", "right");
+			$submenu = new Menu(i18n::translate('Copy'), "#", "right");
 			$submenu->addOnclick("return copy_record('$pid', $linenum);");
 			$submenu->addClass("submenuitem", "submenuitem_hover");
 			$menu->addSubMenu($submenu);
@@ -1202,7 +1208,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			// -- Find RESN tag
 			if (isset($resn_value)) {
 				echo "<br /><img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
-					print_help_link("RESN", "qm");
+				echo help_link('RESN');
 			}
 			echo "<br />\n";
 			print_fact_sources($nrec, $nlevel);
@@ -1421,7 +1427,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 function print_main_media_row($rtype, $rowm, $pid) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION, $SERVER_URL;
 	global $SHOW_ID_NUMBERS, $GEDCOM, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
-	global $SEARCH_SPIDER;
+	global $SEARCH_SPIDER, $MEDIA_TYPES;
 
 	if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 		//echo $rowm['m_media'], " no privacy ";
@@ -1438,21 +1444,21 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	$linenum = 0;
 	echo "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["media"]["small"], "\" alt=\"\" /><br />", i18n::translate('OBJE');
 	if ($rowm['mm_gid']==$pid && PGV_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
-		$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
+		$menu = new Menu(i18n::translate('Edit'), "#", "right", "down");
 		$menu->addOnclick("return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1');");
 		$menu->addClass("", "", "submenu");
 
-		$submenu = new Menu($pgv_lang["edit"], "#", "right");
+		$submenu = new Menu(i18n::translate('Edit'), "#", "right");
 		$submenu->addOnclick("return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1');");
 		$submenu->addClass("submenuitem", "submenuitem_hover");
 		$menu->addSubMenu($submenu);
 
-		$submenu = new Menu($pgv_lang["delete"], "#", "right");
+		$submenu = new Menu(i18n::translate('Delete'), "#", "right");
 		$submenu->addOnclick("return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');");
 		$submenu->addClass("submenuitem", "submenuitem_hover");
 		$menu->addSubMenu($submenu);
 
-		$submenu = new Menu($pgv_lang["copy"], "#", "right");
+		$submenu = new Menu(i18n::translate('Copy'), "#", "right");
 		$submenu->addOnclick("return copy_record('".$rowm['m_media']."', 'media');");
 		$submenu->addClass("submenuitem", "submenuitem_hover");
 		$menu->addSubMenu($submenu);
@@ -1537,7 +1543,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if (!empty($rowm["m_ext"])) {
 			echo "\n\t\t\t<br /><span class=\"label\">", i18n::translate('FORM'), ": </span> <span class=\"field\">", $rowm["m_ext"], "</span>";
 			if(isset($imgsize) and $imgsize[2]!==false) {
-				echo "\n\t\t\t<span class=\"label\"><br />", $pgv_lang["image_size"], ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imgsize[0], $TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM(). " ") : " x ", $imgsize[1], "</span>";
+				echo "\n\t\t\t<span class=\"label\"><br />", i18n::translate('Image Dimensions'), ": </span> <span class=\"field\" style=\"direction: ltr;\">", $imgsize[0], $TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM(). " ") : " x ", $imgsize[1], "</span>";
 			}
 		}
 		if (preg_match('/2 DATE (.+)/', get_sub_record("FILE", 1, $rowm["m_gedrec"]), $match)) {
@@ -1548,10 +1554,13 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$ttype = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
 		if ($ttype>0) {
 			$mediaType = trim($match[1]);
-			$varName = "TYPE__".strtolower($mediaType);
-			if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
-			else $mediaType = $pgv_lang["TYPE__other"];
-			echo "\n\t\t\t<br /><span class=\"label\">", $pgv_lang["type"], ": </span> <span class=\"field\">$mediaType</span>";
+			$varName = strtolower($mediaType);
+			if (array_key_exists($varName, $MEDIA_TYPES)) {
+				$mediaType = $MEDIA_TYPES[$varName];
+			} else {
+				$mediaType = i18n::translate('Other');
+			}
+			echo "\n\t\t\t<br /><span class=\"label\">", i18n::translate('Type'), ": </span> <span class=\"field\">$mediaType</span>";
 		}
 		echo "</span>";
 		echo "<br />\n";
@@ -1572,7 +1581,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				if ($spouse->canDisplayName()) {
 					echo PrintReady($spouse->getFullName());
 				} else {
-					echo $pgv_lang["private"];
+					echo i18n::translate('Private');
 				}
 				echo "</a>";
 			}
@@ -1580,7 +1589,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				if ($view!="preview" && $spouse) echo " - ";
 				if ($view!="preview") {
 						$famid = $rowm['mm_gid'];
-						echo "<a href=\"", encode_url("family.php?famid={$famid}"), "\">[", $pgv_lang["view_family"];
+						echo "<a href=\"", encode_url("family.php?famid={$famid}"), "\">[", i18n::translate('View Family');
 						if ($SHOW_ID_NUMBERS) echo " " . getLRM() . "($famid)" . getLRM();
 						echo "]</a>\n";
 				}
@@ -1593,7 +1602,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			if (empty($prim)) $prim = get_gedcom_value("_PRIM", 1, $rowm["m_gedrec"]);
 			if (!empty($prim)) {
 				echo "<span class=\"label\">", i18n::translate('_PRIM'), ":</span> ";
-				if ($prim=="Y") echo $pgv_lang["yes"]; else echo $pgv_lang["no"];
+				if ($prim=="Y") echo i18n::translate('Yes'); else echo i18n::translate('No');
 				echo "<br />\n";
 			}
 		}
@@ -1603,7 +1612,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			if (empty($thum)) $thum = get_gedcom_value("_THUM", 1, $rowm["m_gedrec"]);
 			if (!empty($thum)) {
 				echo "<span class=\"label\">", i18n::translate('_THUM'), ":</span> ";
-				if ($thum=="Y") echo $pgv_lang["yes"]; else echo $pgv_lang["no"];
+				if ($thum=="Y") echo i18n::translate('Yes'); else echo i18n::translate('No');
 				echo "<br />\n";
 			}
 		}

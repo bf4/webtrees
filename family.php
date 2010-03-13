@@ -4,7 +4,10 @@
  *
  * You must supply a $famid value with the identifier for the family.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2010  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Charts
  * @version $Id$
  */
@@ -36,7 +39,7 @@ $controller->init();
 print_header($controller->getPageTitle());
 // completely prevent display if privacy dictates so
 if (!$controller->family){
-	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
+	echo "<b>", i18n::translate('Unable to find record with ID'), "</b><br /><br />";
 	print_footer();
 	exit;
 }
@@ -57,7 +60,7 @@ $PEDIGREE_FULL_DETAILS = "1";		// Override GEDCOM configuration
 $show_full = "1";
 
 ?>
-<?php if ($controller->family->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
+<?php if ($controller->family->isMarkedDeleted()) echo "<span class=\"error\">".i18n::translate('This record has been marked for deletion upon admin approval.')."</span>"; ?>
 <script language="JavaScript" type="text/javascript">
 <!--
 	function show_gedcom_record(shownew) {
@@ -70,22 +73,15 @@ $show_full = "1";
 	}
 //-->
 </script>
+<?php
+if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview() && $controller->accept_success) {
+	print "<b>".i18n::translate('Changes successfully accepted into database')."</b><br />";
+}
+?>
 <table align="center" width="95%">
 	<tr>
 		<td>
-		<?php
-		print_family_header($controller->famid);
-		?>
-		</td>
-		<td>
-			<?php
-			if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview()) : 
-			if ($controller->accept_success)
-			{
-				print "<b>".$pgv_lang["accept_successful"]."</b><br />";
-			}
-			endif;	// view != preview
-			?>
+		<?php print_family_header($controller->famid); ?>
 		</td>
 	</tr>
 </table>
@@ -97,8 +93,8 @@ $show_full = "1";
 		<td> <!--//parents pedigree chart and Family Details//-->
 			<table align="left" width="100%">
 				<tr>
-					<td class="subheaders" valign="top"><?php echo $pgv_lang["parents"];?></td>
-					<td class="subheaders" valign="top"><?php echo $pgv_lang["gparents"];?></td>
+					<td class="subheaders" valign="top"><?php echo i18n::translate('Parents');?></td>
+					<td class="subheaders" valign="top"><?php echo i18n::translate('Grandparents');?></td>
 				</tr>
 				<tr>
 					<td colspan="2">
@@ -108,13 +104,11 @@ $show_full = "1";
 						if (!$controller->isPrintPreview() && $controller->display && PGV_USER_CAN_EDIT) {
 							$husb = $controller->getHusband();
 							if (empty($husb)) { ?>
-								<?php print_help_link("edit_add_parent", "qm"); ?>
-			<a href="javascript <?php echo $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('', 'HUSB', '<?php echo $controller->famid; ?>');"><?php echo $pgv_lang["add_father"]; ?></a><br />
+			<a href="javascript <?php echo i18n::translate('Add a new father'); ?>" onclick="return addnewparentfamily('', 'HUSB', '<?php echo $controller->famid; ?>');"><?php echo i18n::translate('Add a new father'), help_link('edit_add_parent'); ?></a><br />
 						<?php }
 							$wife = $controller->getWife();
 							if (empty($wife))  { ?>
-								<?php print_help_link("edit_add_parent", "qm"); ?>
-			<a href="javascript <?php echo $pgv_lang["add_mother"]; ?>" onclick="return addnewparentfamily('', 'WIFE', '<?php echo $controller->famid; ?>');"><?php echo $pgv_lang["add_mother"]; ?></a><br />
+			<a href="javascript <?php echo i18n::translate('Add a new mother'); ?>" onclick="return addnewparentfamily('', 'WIFE', '<?php echo $controller->famid; ?>');"><?php echo i18n::translate('Add a new mother'), help_link('edit_add_parent'); ?></a><br />
 						<?php }
 						}
 						?>
@@ -129,25 +123,6 @@ $show_full = "1";
 				</tr>
 			</table>
 		</td>
-		<td class="noprint"> <!--//blank cell for access keys//-->
-			<div class="accesskeys">
-			<?php
-				if (empty($SEARCH_SPIDER)) {
-				?>
-				<a class="accesskeys" href="<?php echo 'timeline.php?pids[0]=' . $controller->parents['HUSB'].'&amp;pids[1]='.$controller->parents['WIFE'];?>" title="<?php echo $pgv_lang['parents_timeline'] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang['accesskey_family_parents_timeline']; ?>"><?php echo $pgv_lang['parents_timeline'] ?></a>
-				<a class="accesskeys" href="<?php echo 'timeline.php?' . $controller->getChildrenUrlTimeline();?>" title="<?php echo $pgv_lang["children_timeline"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang['accesskey_family_children_timeline']; ?>"><?php echo $pgv_lang['children_timeline'] ?></a>
-				<a class="accesskeys" href="<?php echo 'timeline.php?pids[0]=' .$controller->getHusband().'&amp;pids[1]='.$controller->getWife().'&amp;'.$controller->getChildrenUrlTimeline(2);?>" title="<?php echo $pgv_lang['family_timeline'] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang['accesskey_family_timeline']; ?>"><?php echo $pgv_lang['family_timeline'] ?></a>
-					<?php if ($SHOW_GEDCOM_RECORD) { ?>
-				<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php echo $pgv_lang["view_gedcom"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_family_gedcom"]; ?>"><?php echo $pgv_lang["view_gedcom"] ?></a>
-					<?php } ?>
-			<?php } ?>
-			</div>
-			<?php
-				if ($controller->accept_success) {
-					echo "<b>".$pgv_lang["accept_successful"]."</b><br />";
-				}
-			?>
-		</td>
 	</tr>
 </table>
 <br />
@@ -156,6 +131,6 @@ if(empty($SEARCH_SPIDER))
 	print_footer();
 else {
 	if($SHOW_SPIDER_TAGLINE)
-		echo $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+		echo i18n::translate('Search Engine Spider Detected').": ".$SEARCH_SPIDER;
 	echo "\n</div>\n\t</body>\n</html>";
 }

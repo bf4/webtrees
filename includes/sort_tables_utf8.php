@@ -1,6 +1,9 @@
 <?php
 /**
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,7 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @version $Id$
  */
 
@@ -58,7 +61,7 @@ define('PGV_SORT_TABLES_UTF8_PHP', '');
  */
 
 global $DICTIONARY_SORT, $LANGUAGE;
-global $UCDiacritWhole, $LCDiacritWhole, $unknownNN, $unknownPN, $pgv_lang;
+global $UCDiacritWhole, $LCDiacritWhole, $unknownNN, $unknownPN;
 global $UTF8_ranges, $UTF8_numbers, $UTF8_brackets, $UTF8_LC_letters;
 
 if (!isset($DICTIONARY_SORT[$LANGUAGE])) $DICTIONARY_SORT[$LANGUAGE] = false;
@@ -72,24 +75,24 @@ if ($DICTIONARY_SORT[$LANGUAGE]) {
 }
 
 $unknownNN = array(
-	'hebrew'    =>$pgv_lang['NNhebrew'],
-	'arabic'    =>$pgv_lang['NNarabic'],
-	'greek'     =>$pgv_lang['NNgreek'],
-	'russian'   =>$pgv_lang['NNrussian'],
-	'chinese'   =>$pgv_lang['NNchinese'],
-	'vietnamese'=>$pgv_lang['NNvietnamese'],
-	'thai'      =>$pgv_lang['NNthai'],
-	'other'     =>$pgv_lang['NNother'],
+	'hebrew'    =>i18n::translate('(לא-ידוע)'),
+	'arabic'    =>i18n::translate('(غير معروف)'),
+	'greek'     =>i18n::translate('(άγνωστος/η)'),
+	'russian'   =>i18n::translate('(неопределено)'),
+	'chinese'   =>i18n::translate('(未知)'),
+	'vietnamese'=>i18n::translate('(vô danh)'),
+	'thai'      =>i18n::translate('(unknown)'),
+	'other'     =>i18n::translate('(unknown)'),
 );
 $unknownPN = array(
-	'hebrew'    =>$pgv_lang['PNhebrew'],
-	'arabic'    =>$pgv_lang['PNarabic'],
-	'greek'     =>$pgv_lang['PNgreek'],
-	'russian'   =>$pgv_lang['PNrussian'],
-	'chinese'   =>$pgv_lang['PNchinese'],
-	'vietnamese'=>$pgv_lang['PNvietnamese'],
-	'thai'      =>$pgv_lang['PNthai'],
-	'other'     =>$pgv_lang['PNother'],
+	'hebrew'    =>i18n::translate('(לא-ידוע)'),
+	'arabic'    =>i18n::translate('(غير معروف)'),
+	'greek'     =>i18n::translate('(άγνωστος/η)'),
+	'russian'   =>i18n::translate('(неопределено)'),
+	'chinese'   =>i18n::translate('(未知)'),
+	'vietnamese'=>i18n::translate('(không biết tuổi)'),
+	'thai'      =>i18n::translate('(unknown)'),
+	'other'     =>i18n::translate('(unknown)'),
 );
 
 // Table of UTF8 code ranges

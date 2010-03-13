@@ -4,7 +4,10 @@
  *
  * This block will print a form that allows the visitor to change the theme
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Blocks
  * @version $Id$
  */
@@ -33,19 +36,17 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_THEME_SELECT_PHP', '');
 
-$PGV_BLOCKS["print_block_theme_select"]["name"]			= $pgv_lang["theme_select_block"];
+$PGV_BLOCKS["print_block_theme_select"]["name"]			= i18n::translate('Theme Select');
 $PGV_BLOCKS["print_block_theme_select"]["descr"]		= "theme_select_descr";
 $PGV_BLOCKS["print_block_theme_select"]["type"]			= "gedcom";
 $PGV_BLOCKS["print_block_theme_select"]["canconfig"]	= false;
 $PGV_BLOCKS["print_block_theme_select"]["config"]		= array("cache"=>-1);
 
 function print_block_theme_select($style=0, $config="", $side, $index) {
-	global $pgv_lang;
-	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang, $themeformcount;
+	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $themeformcount;
 
 	$id="theme_select";
-	$title = $pgv_lang["change_theme"];
-	$title .= print_help_link("change_theme", "qm","",false,true);
+	$title=i18n::translate('Change Theme').help_link('change_theme');
 
 	$theme_menu=MenuBar::getThemeMenu();
 	$content='<div class="center theme_form"><br />'.$theme_menu->getMenuAsDropdown().'<br /<br /></div>';

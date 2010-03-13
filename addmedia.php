@@ -7,7 +7,10 @@
  * and then add these records later.
  * Requires SQL mode.
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +26,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * @package PhpGedView
+ * @package webtrees
  * @subpackage MediaDB
  * @version $Id$
  */
@@ -75,15 +78,15 @@ if ($action=="update" || $action=="newentry") {
 }
 
 if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
-	print $pgv_lang["access_denied"];
+	print i18n::translate('<b>Access Denied</b><br />You do not have access to this resource.');
 	//-- display messages as to why the editing access was denied
-	if (!PGV_USER_CAN_EDIT) print "<br />".$pgv_lang["user_cannot_edit"];
-	if (!$ALLOW_EDIT_GEDCOM) print "<br />".$pgv_lang["gedcom_editing_disabled"];
+	if (!PGV_USER_CAN_EDIT) print "<br />".i18n::translate('This user name cannot edit this GEDCOM.');
+	if (!$ALLOW_EDIT_GEDCOM) print "<br />".i18n::translate('Editing this GEDCOM has been disabled by the administrator.');
 	if (!$disp) {
-		print "<br />".$pgv_lang["privacy_prevented_editing"];
-		if (!empty($pid)) print "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
+		print "<br />".i18n::translate('Privacy settings prevent you from editing this record.');
+		if (!empty($pid)) print "<br />".i18n::translate('You have no access to')." pid $pid.";
 	}
-	print "<br /><br /><div class=\"center\"><a href=\"javascript: ".$pgv_lang["close_window"]."\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a></div>\n";
+	print "<br /><br /><div class=\"center\"><a href=\"javascript: ".i18n::translate('Close Window')."\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".i18n::translate('Close Window')."</a></div>\n";
 	print_simple_footer();
 	exit;
 }
@@ -189,11 +192,11 @@ if ($action=="newentry") {
 			$newFile = $realFolderName.$mediaFile;
 			// Copy main media file into the destination directory
 			if (file_exists(filename_decode($newFile))) {
-				$error .= $pgv_lang["media_exists"]."&nbsp;&nbsp;".$newFile."<br />";
+				$error .= i18n::translate('Media file already exists.')."&nbsp;&nbsp;".$newFile."<br />";
 			} else {
 				if (!move_uploaded_file($_FILES["mediafile"]["tmp_name"], filename_decode($newFile))) {
 					// the file cannot be copied
-					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile"]["error"])."<br />";
+					$error .= i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES["mediafile"]["error"])."<br />";
 				} else {
 					@chmod(filename_decode($newFile), PGV_PERM_FILE);
 					AddToLog("Media file {$folderName}{$mediaFile} uploaded");
@@ -204,11 +207,11 @@ if ($action=="newentry") {
 			$newThum = $realThumbFolderName.$mediaFile;
 			// Copy user-supplied thumbnail file into the destination directory
 			if (file_exists(filename_decode($newThum))) {
-				$error .= $pgv_lang["media_thumb_exists"]."&nbsp;&nbsp;".$newThum."<br />";
+				$error .= i18n::translate('Media thumbnail already exists.')."&nbsp;&nbsp;".$newThum."<br />";
 			} else {
 				if (!move_uploaded_file($_FILES["thumbnail"]["tmp_name"], filename_decode($newThum))) {
 					// the file cannot be copied
-					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
+					$error .= i18n::translate('There was an error uploading your file.')."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
 				} else {
 					@chmod(filename_decode($newThum), PGV_PERM_FILE);
 					AddToLog("Media file {$thumbFolderName}{$mediaFile} uploaded");
@@ -221,7 +224,7 @@ if ($action=="newentry") {
 			$whichFile2 = $realFolderName.$mediaFile;
 			if (!copy(filename_decode($whichFile1), filename_decode($whichFile2))) {
 				// the file cannot be copied
-				$error .= $pgv_lang["upload_error"]."<br />".print_text('copy_error', 0, 1)."<br />";
+				$error .= i18n::translate('There was an error uploading your file.')."<br />".print_text('copy_error', 0, 1)."<br />";
 			} else {
 				@chmod(filename_decode($whichFile2), PGV_PERM_FILE);
 				AddToLog("Media file {$folderName}{$mediaFile} copied from {$thumbFolderName}{$mediaFile}");
@@ -270,7 +273,7 @@ if ($action=="newentry") {
 				}
 			}
 			if ($mediaFile=="") {
-				echo '<span class="error">', $pgv_lang["illegal_chars"], "</span><br />\n";
+				echo '<span class="error">', i18n::translate('Blank name or illegal characters in name'), "</span><br />\n";
 				$finalResult = false;
 			} else $finalResult = true;
 		} else {
@@ -300,9 +303,9 @@ if ($action=="newentry") {
 			$finalResult = true;
 			if ($filename!=$oldFilename || $folder!=$oldFolder) {
 				if ($multi_gedcom) {
-					echo '<span class="error">', $pgv_lang["multiple_gedcoms"], '<br /><br /><b>';
-					if ($filename!=$oldFilename) print $pgv_lang["media_file_not_renamed"];
-					else print $pgv_lang["media_file_not_moved"];
+					echo '<span class="error">', i18n::translate('This file is linked to another genealogical database on this server.  It cannot be deleted, moved, or renamed until these links have been removed.'), '<br /><br /><b>';
+					if ($filename!=$oldFilename) print i18n::translate('Media file could not be moved or renamed.');
+					else print i18n::translate('Media file could not be moved.');
 					print "</b></span><br />";
 					$finalResult = false;
 				} else {
@@ -406,13 +409,13 @@ if ($action=="newentry") {
 			if ($link) {
 				AddToChangeLog("Media ID ".$media_id." successfully added to $linktoid.");
 			} else {
-				echo "<a href=\"javascript://OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">", $pgv_lang["paste_id_into_field"], " <b>$mediaid</b></a><br /><br />\n";
+				echo "<a href=\"javascript://OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">", i18n::translate('Paste the following ID into your editing fields to reference the newly created record '), " <b>$mediaid</b></a><br /><br />\n";
 				echo PGV_JS_START;
 				echo "openerpasteid('", $mediaid, "');";
 				echo PGV_JS_END;
 			}
 		}
-		print $pgv_lang["update_successful"];
+		print i18n::translate('Update successful');
 	}
 }
 // **** end action "newentry"
@@ -451,9 +454,9 @@ if ($action == "update") {
 
 	if ($filename!=$oldFilename || $folder!=$oldFolder) {
 		if ($multi_gedcom) {
-			echo '<span class="error">', $pgv_lang["multiple_gedcoms"], '<br /><br /><b>';
-			if ($filename!=$oldFilename) print $pgv_lang["media_file_not_renamed"];
-			else print $pgv_lang["media_file_not_moved"];
+			echo '<span class="error">', i18n::translate('This file is linked to another genealogical database on this server.  It cannot be deleted, moved, or renamed until these links have been removed.'), '<br /><br /><b>';
+			if ($filename!=$oldFilename) print i18n::translate('Media file could not be moved or renamed.');
+			else print i18n::translate('Media file could not be moved.');
 			print "</b></span><br />";
 			$finalResult = false;
 		} else if (!$isExternal) {
@@ -561,7 +564,7 @@ if ($action == "update") {
 		}
 	}
 
-	if ($finalResult) print $pgv_lang["update_successful"];
+	if ($finalResult) print i18n::translate('Update successful');
 }
 // **** end action "update"
 
@@ -569,7 +572,7 @@ if ($action == "update") {
 if ($action=="delete") {
 	if (delete_gedrec($pid)) {
 		AddToChangeLog("Media ID ".$pid." successfully deleted.");
-		print $pgv_lang["update_successful"];
+		print i18n::translate('Update successful');
 	}
 }
 // **** end action "delete"
@@ -593,7 +596,7 @@ if ($action=="editmedia") {
 // **** end action "editmedia"
 
 print "<br />";
-print "<div class=\"center\"><a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a></div>\n";
+print "<div class=\"center\"><a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".i18n::translate('Close Window')."</a></div>\n";
 print "<br />";
 print_simple_footer();
 ?>

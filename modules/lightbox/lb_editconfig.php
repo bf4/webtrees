@@ -2,7 +2,10 @@
 /**
  * Online UI for editing config.php site configuration variables
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 17 September 2005
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage GoogleMap
  * @see config.php
  * @version $Id: editconfig.php,v$
@@ -33,22 +36,21 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $pgv_lang, $pid, $GEDCOM ;
+global $pid, $GEDCOM ;
 
 $pid=safe_get('pid');
 $action = safe_POST("action");
 
-loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lightbox:lang, lightbox:help_text");
-print_header($pgv_lang["configure_lightbox"]);
+print_header(i18n::translate('Lightbox-Album Configuration'));
 
 require PGV_ROOT.'modules/lightbox/lb_defaultconfig.php';
 
-print "<span class=\"subheaders\">".$pgv_lang["configure_lightbox"]."</span>";
+print "<span class=\"subheaders\">".i18n::translate('Lightbox-Album Configuration')."</span>";
 print "<br /><br />";
 
 if (!PGV_USER_IS_ADMIN) {
 	print "<table class=\"facts_table\">\n";
-	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["lb_admin_error"];
+	print "<tr><td colspan=\"2\" class=\"facts_value\">".i18n::translate('Page only for Administrators');
 	print "</td></tr></table>\n";
 	print "<br/><br/><br/>\n";
 	print_footer();
@@ -100,13 +102,13 @@ $i = 0;
 	<table class="facts_table">
 
 		<tr >
-		<td class="descriptionbox" width="400"><?php print_help_link("mediatab", "qm", "mediatab"); ?><b><?php print $pgv_lang["mediatab"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_appearance"];?></td>
+		<td class="descriptionbox" width="400"><b><?php print i18n::translate('Individual Page - Media Tab');?></b><?php echo help_link('mediatab'); ?><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print i18n::translate('Appearance');?></td>
 		<td class="optionbox">
 			<select name="NEW_mediatab" tabindex="<?php $i++; print $i?>" onfocus="getHelp('mediatab_help');">
-				<option value="1" <?php if ($mediatab==1) print "selected=\"selected\""; ?>><?php print $pgv_lang["show"];?></option>
-				<option value="0" <?php if ($mediatab==0) print "selected=\"selected\""; ?>><?php print $pgv_lang["hide"];?></option>
+				<option value="1" <?php if ($mediatab==1) print "selected=\"selected\""; ?>><?php print i18n::translate('Show');?></option>
+				<option value="0" <?php if ($mediatab==0) print "selected=\"selected\""; ?>><?php print i18n::translate('Hide');?></option>
 			</select>
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["show"];?>&nbsp;&nbsp;<?php print $pgv_lang["hide"];?>
+		&nbsp;&nbsp;&nbsp; <?php print i18n::translate('Show');?>&nbsp;&nbsp;<?php print i18n::translate('Hide');?>
 		</td>
 		</tr>
 	<tr><td><br>
@@ -114,14 +116,14 @@ $i = 0;
 
 
 		<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_al_head_links", "qm", "lb_al_head_links");?><b><?php print $pgv_lang["lb_al_head_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td>
+		<td class="descriptionbox"><b><?php print i18n::translate('Individual Page - Album Tab Header');?></b><?php echo help_link('lb_al_head_links'); ?><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print i18n::translate('Link appearance');?></td>
 		<td class="optionbox">
 			<select name="NEW_LB_AL_HEAD_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_AL_HEAD_LINKS_help');">
-				<option value="icon" <?php if ($LB_AL_HEAD_LINKS=="icon") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_icon"];?></option>
-				<option value="text" <?php if ($LB_AL_HEAD_LINKS=="text") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_text"];?></option>
-				<option value="both" <?php if ($LB_AL_HEAD_LINKS=="both") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_both"];?></option>
+				<option value="icon" <?php if ($LB_AL_HEAD_LINKS=="icon") print "selected=\"selected\""; ?>><?php print i18n::translate('Icon');?></option>
+				<option value="text" <?php if ($LB_AL_HEAD_LINKS=="text") print "selected=\"selected\""; ?>><?php print i18n::translate('Text');?></option>
+				<option value="both" <?php if ($LB_AL_HEAD_LINKS=="both") print "selected=\"selected\""; ?>><?php print i18n::translate('Both');?></option>
 			</select>
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_both"];?>
+		&nbsp;&nbsp;&nbsp; <?php print i18n::translate('Icon');?>&nbsp;&nbsp;<?php print i18n::translate('Text');?>&nbsp;&nbsp;<?php print i18n::translate('Both');?>
 		</td>
 		</tr>
 	<tr><td>
@@ -129,12 +131,12 @@ $i = 0;
 
 
 		<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_tt_balloon", "qm", "lb_tt_balloon");?><b><?php print $pgv_lang["lb_tt_balloon"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_ttAppearance"];?></td>
+		<td class="descriptionbox"><b><?php print i18n::translate('Individual Page - Album Tab Thumbnail - Notes Tooltip');?></b><?php echo help_link('lb_tt_balloon'); ?><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print i18n::translate('Notes - Tooltip appearance');?></td>
 		<td class="optionbox"><select name="NEW_LB_TT_BALLOON" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_AL_THUMB_LINKS_help');">
-				<option value="true"  <?php if ($LB_TT_BALLOON=="true")  print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_balloon_true"];?></option>
-				<option value="false" <?php if ($LB_TT_BALLOON=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_balloon_false"];?></option>
+				<option value="true"  <?php if ($LB_TT_BALLOON=="true")  print "selected=\"selected\""; ?>><?php print i18n::translate('Balloon');?></option>
+				<option value="false" <?php if ($LB_TT_BALLOON=="false") print "selected=\"selected\""; ?>><?php print i18n::translate('Normal');?></option>
 			</select>
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_balloon_true"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_balloon_false"];?>
+		&nbsp;&nbsp;&nbsp; <?php print i18n::translate('Balloon');?>&nbsp;&nbsp;<?php print i18n::translate('Normal');?>
 		</td>
 		</tr>
 	<tr><td>
@@ -142,12 +144,12 @@ $i = 0;
 
 
 		<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_al_thumb_links", "qm", "lb_al_thumb_links");?><b><?php print $pgv_lang["lb_al_thumb_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td>
+		<td class="descriptionbox"><b><?php print i18n::translate('Individual Page - Album Tab Thumbnails');?></b><?php echo help_link('lb_al_thumb_links'); ?><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print i18n::translate('Link appearance');?></td>
 		<td class="optionbox"><select name="NEW_LB_AL_THUMB_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_AL_THUMB_LINKS_help');">
-				<option value="icon" <?php if ($LB_AL_THUMB_LINKS=="icon") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_icon"];?></option>
-				<option value="text" <?php if ($LB_AL_THUMB_LINKS=="text") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_text"];?></option>
+				<option value="icon" <?php if ($LB_AL_THUMB_LINKS=="icon") print "selected=\"selected\""; ?>><?php print i18n::translate('Icon');?></option>
+				<option value="text" <?php if ($LB_AL_THUMB_LINKS=="text") print "selected=\"selected\""; ?>><?php print i18n::translate('Text');?></option>
 			</select>
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>
+		&nbsp;&nbsp;&nbsp; <?php print i18n::translate('Icon');?>&nbsp;&nbsp;<?php print i18n::translate('Text');?>
 		</td>
 		</tr>
 	<tr><td>
@@ -155,7 +157,7 @@ $i = 0;
 
 
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_ss_speed", "qm", "lb_ss_speed");?><b><?php print $pgv_lang["lb_ss_speed"];?></b></td>
+		<td class="descriptionbox"><b><?php print i18n::translate('Slide Show speed');?></b><?php echo help_link('lb_ss_speed'); ?></td>
 		<td class="optionbox"><select name="NEW_LB_SS_SPEED" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_SS_SPEED_help');" />
 				<option value= "2" <?php if ($LB_SS_SPEED == 2)  print "selected=\"selected\""; ?>><?php print  "2";?></option>
 				<option value= "3" <?php if ($LB_SS_SPEED == 3)  print "selected=\"selected\""; ?>><?php print  "3";?></option>
@@ -171,45 +173,45 @@ $i = 0;
 				<option value="20" <?php if ($LB_SS_SPEED ==20)  print "selected=\"selected\""; ?>><?php print "20";?></option>
 				<option value="25" <?php if ($LB_SS_SPEED ==25)  print "selected=\"selected\""; ?>><?php print "25";?></option>
 			</select>
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_ss_SpeedAdvice"];?>
+		&nbsp;&nbsp;&nbsp; <?php print i18n::translate('Slide show timing in seconds');?>
 		</td>
 		</tr>
 	<tr><td>
 	</td></tr>
 
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_music_file", "qm", "lb_music_file");?><b><?php print $pgv_lang["lb_music_file"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_MP3Only"];?></td>
+		<td class="descriptionbox"><b><?php print i18n::translate('Slideshow sound track'); ?></b><?php echo help_link('lb_music_file'); ?><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print i18n::translate('(mp3 only)'); ?></td>
 		<td class="optionbox">
 			<input type="text" name="NEW_LB_MUSIC_FILE" value="<?php print $LB_MUSIC_FILE;?>" size="60" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_MUSIC_FILE_help');" /><br />
-		<?php print $pgv_lang["lb_musicFileAdvice"];?>
+		<?php print i18n::translate('Location of sound track file (Leave blank for no sound track)');?>
 		</td>
 		</tr>
 	<tr><td>
 	</td></tr>
 
 		<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_transition", "qm", "lb_transition");?><b><?php print $pgv_lang["lb_transition"];?></b></td>
+		<td class="descriptionbox"><b><?php print i18n::translate('Image Transition speed');?></b><?php echo help_link('lb_transition'); ?></td>
 		<td class="optionbox"><select name="NEW_LB_TRANSITION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_TRANSITION_help');">
-				<option value="none"   <?php if ($LB_TRANSITION=="none")   print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_none"];?></option>
-				<option value="normal" <?php if ($LB_TRANSITION=="normal") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_normal"];?></option>
-				<option value="double" <?php if ($LB_TRANSITION=="double") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_double"];?></option>
-				<option value="warp"   <?php if ($LB_TRANSITION=="warp")   print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_warp"];?></option>
+				<option value="none"   <?php if ($LB_TRANSITION=="none")   print "selected=\"selected\""; ?>><?php print i18n::translate('None');?></option>
+				<option value="normal" <?php if ($LB_TRANSITION=="normal") print "selected=\"selected\""; ?>><?php print i18n::translate('Normal');?></option>
+				<option value="double" <?php if ($LB_TRANSITION=="double") print "selected=\"selected\""; ?>><?php print i18n::translate('Double');?></option>
+				<option value="warp"   <?php if ($LB_TRANSITION=="warp")   print "selected=\"selected\""; ?>><?php print i18n::translate('Warp');?></option>
 						</select>
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_none"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_normal"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_double"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_warp"];?>
+		&nbsp;&nbsp;&nbsp; <?php print i18n::translate('None');?>&nbsp;&nbsp;<?php print i18n::translate('Normal');?>&nbsp;&nbsp;<?php print i18n::translate('Double');?>&nbsp;&nbsp;<?php print i18n::translate('Warp');?>
 		</td>
 		</tr>
 	<tr><td>
 	</td></tr>
 
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_url_dimensions", "qm", "lb_url_dimensions");?><b><?php print $pgv_lang["lb_url_dimensions"];?><b></td>
+		<td class="descriptionbox"><b><?php print i18n::translate('URL Window dimensions');?><b><?php echo help_link('lb_url_dimensions'); ?></td>
 		<td class="optionbox">
 			<input type="text" name="NEW_LB_URL_WIDTH"  value="<?php print $LB_URL_WIDTH;?>"  size="4" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_TRANSITION_help');" />
-			<?php print $pgv_lang["lb_width"];?>
+			<?php print i18n::translate('Width');?>
 			&nbsp;&nbsp;&nbsp;
 			<input type="text" name="NEW_LB_URL_HEIGHT" value="<?php print $LB_URL_HEIGHT;?>" size="4" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_TRANSITION_help');" />
-			<?php print $pgv_lang["lb_height"];?><br />
-		<?php print $pgv_lang["lb_url_dimensionsAdvice"];?>
+			<?php print i18n::translate('Height');?><br />
+		<?php print i18n::translate('Width and height of URL window in pixels');?>
 		</td>
 		</tr>
 	<tr><td><br>
@@ -218,15 +220,15 @@ $i = 0;
 
 
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_ml_thumb_links", "qm", "lb_ml_thumb_links");?><b><?php print $pgv_lang["lb_ml_thumb_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td>
+		<td class="descriptionbox"><b><?php print i18n::translate('Multimedia Page - Thumbnails');?></b><?php echo help_link('lb_ml_thumb_links'); ?><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print i18n::translate('Link appearance');?></td>
 		<td class="optionbox">
 			<select name="NEW_LB_ML_THUMB_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_ML_THUMB_LINKS_help');" />
-				<option value= "none" <?php if ($LB_ML_THUMB_LINKS == "none")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_none"];?></option>
-				<option value= "text" <?php if ($LB_ML_THUMB_LINKS == "text")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_text"];?></option>
-				<option value= "icon" <?php if ($LB_ML_THUMB_LINKS == "icon")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_icon"];?></option>
-				<option value= "both" <?php if ($LB_ML_THUMB_LINKS == "both")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_both"];?></option>
+				<option value= "none" <?php if ($LB_ML_THUMB_LINKS == "none")  print "selected=\"selected\""; ?>><?php print  i18n::translate('None');?></option>
+				<option value= "text" <?php if ($LB_ML_THUMB_LINKS == "text")  print "selected=\"selected\""; ?>><?php print  i18n::translate('Text');?></option>
+				<option value= "icon" <?php if ($LB_ML_THUMB_LINKS == "icon")  print "selected=\"selected\""; ?>><?php print  i18n::translate('Icon');?></option>
+				<option value= "both" <?php if ($LB_ML_THUMB_LINKS == "both")  print "selected=\"selected\""; ?>><?php print  i18n::translate('Both');?></option>
 			</select>
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_none"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_both"];?>
+		&nbsp;&nbsp;&nbsp; <?php print i18n::translate('None');?>&nbsp;&nbsp;<?php print i18n::translate('Text');?>&nbsp;&nbsp;<?php print i18n::translate('Icon');?>&nbsp;&nbsp;<?php print i18n::translate('Both');?>
 		</td>
 		</tr>
 	<tr><td>
@@ -242,14 +244,14 @@ $i = 0;
 		 <tr>
 
 				<td class="descriptionbox" colspan="2" align="center">
-						<input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["save_config"];?>" onclick="closeHelp();" />
+						<input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print i18n::translate('Save configuration');?>" onclick="closeHelp();" />
 						&nbsp;&nbsp;
-						<input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"];?>" />
+						<input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print i18n::translate('Reset');?>" />
 						&nbsp;&nbsp;
 			<?php if ($pid){ ?>
-				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" 		onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&tab=<?php echo $tabno;?>&gedcom=<?php echo $GEDCOM;?>'" />
+				<INPUT TYPE="button" VALUE="<?php print i18n::translate('Return to Album page');?>" 		onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&tab=<?php echo $tabno;?>&gedcom=<?php echo $GEDCOM;?>'" />
 			<?php }else{ ?>
-				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAdminConfigPage"];?>" 	onclick="javascript:window.location='admin.php'" />
+				<INPUT TYPE="button" VALUE="<?php print i18n::translate('Return to Admin Page');?>" 	onclick="javascript:window.location='admin.php'" />
 			<?php } ?>
 			
 			</td>
@@ -263,7 +265,7 @@ $i = 0;
 if(empty($SEARCH_SPIDER))
 	print_footer();
 else {
-	print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+	print i18n::translate('Search Engine Spider Detected').": ".$SEARCH_SPIDER;
 	print "\n</div>\n\t</body>\n</html>";
 }
 

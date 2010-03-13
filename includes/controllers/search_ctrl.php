@@ -3,7 +3,10 @@
 /**
  * Controller for the Search Page
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Display
  * @version $Id$
  */
@@ -109,7 +112,7 @@ class SearchControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-		global $pgv_lang, $ALLOW_CHANGE_GEDCOM, $GEDCOM;
+		global $ALLOW_CHANGE_GEDCOM, $GEDCOM;
 
 		if ($this->action=='') {
 			$this->action='general';
@@ -127,7 +130,7 @@ class SearchControllerRoot extends BaseController {
 		// Get the query and remove slashes
 		if (isset ($_REQUEST["query"])) {
 			// Reset the "Search" text from the page header
-			if ($_REQUEST["query"] == $pgv_lang["search"] || strlen($_REQUEST["query"])<2 || preg_match("/^\.+$/", $_REQUEST["query"])>0) {
+			if ($_REQUEST["query"] == i18n::translate('Search') || strlen($_REQUEST["query"])<2 || preg_match("/^\.+$/", $_REQUEST["query"])>0) {
 				$this->query="";
 				$this->myquery="";
 			} else {
@@ -286,27 +289,33 @@ class SearchControllerRoot extends BaseController {
 			$this->TopSearch();
 		}
 		// If we want to show associated persons, build the list
-		if ($this->action == "general") {
+		switch ($this->action) {
+		case 'general':
 			$this->GeneralSearch();
-		} elseif ($this->action == "soundex") {
+			break;
+		case 'soundex':
 			$this->SoundexSearch();
-		} elseif ($this->action == "replace") {
+			break;
+		case 'replace':
 			$this->SearchAndReplace();
-		} elseif ($this->action == "multisite") {
+			return;
+		case 'multisite':
 			$this->MultiSiteSearch();
+			break;
+
 		}
 	}
 
 	function getPageTitle() {
-		global $pgv_lang;
-		if ($this->action == "general") {
-			return $pgv_lang["search_general"];
-		} elseif ($this->action == "soundex") {
-			return $pgv_lang["search_soundex"];
-		} elseif ($this->action == "replace") {
-			return $pgv_lang["search_replace"];
-		} elseif ($this->action == "multisite") {
-			return $pgv_lang["multi_site_search"];
+		switch ($this->action) {
+		case 'general':
+			return i18n::translate('General Search');
+		case 'soundex':
+			return i18n::translate('Soundex Search');
+		case 'replace':
+			return i18n::translate('Search and Replace');
+		case 'multisite':
+			return i18n::translate('Multi Site Search');
 		}
 	}
 
@@ -739,7 +748,7 @@ class SearchControllerRoot extends BaseController {
 
 	function printResults() {
 		require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
-		global $GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $global_facts;
+		global $GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $global_facts;
 		//-- all privacy settings must be global if we are going to load up privacy files
 		global $SHOW_DEAD_PEOPLE,$SHOW_LIVING_NAMES,$SHOW_SOURCES,$MAX_ALIVE_AGE,$USE_RELATIONSHIP_PRIVACY,$MAX_RELATION_PATH_LENGTH;
 		global $CHECK_MARRIAGE_RELATIONS,$PRIVACY_BY_YEAR,$PRIVACY_BY_RESN,$SHOW_PRIVATE_RELATIONSHIPS,$person_privacy,$user_privacy;
@@ -763,7 +772,7 @@ class SearchControllerRoot extends BaseController {
 						$somethingPrinted = true;
 						usort($datalist, array('GedcomRecord', 'Compare'));
 						$GEDCOM=$gedcom;
-						print_indi_table($datalist, $pgv_lang['individuals'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
+						print_indi_table($datalist, i18n::translate('Individuals').' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
 					}
 				}
 				// Split families by gedcom
@@ -778,7 +787,7 @@ class SearchControllerRoot extends BaseController {
 						$somethingPrinted = true;
 						usort($datalist, array('GedcomRecord', 'Compare'));
 						$GEDCOM=$gedcom;
-						print_fam_table($datalist, $pgv_lang['families'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
+						print_fam_table($datalist, i18n::translate('Families').' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
 					}
 				}
 				// Split sources by gedcom
@@ -793,7 +802,7 @@ class SearchControllerRoot extends BaseController {
 						$somethingPrinted = true;
 						usort($datalist, array('GedcomRecord', 'Compare'));
 						$GEDCOM=$gedcom;
-						print_sour_table($datalist, $pgv_lang['sources'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
+						print_sour_table($datalist, i18n::translate('Sources').' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
 					}
 				}
 				// Split notes by gedcom
@@ -808,15 +817,15 @@ class SearchControllerRoot extends BaseController {
 						$somethingPrinted = true;
 						usort($datalist, array('GedcomRecord', 'Compare'));
 						$GEDCOM=$gedcom;
-						print_note_table($datalist, $pgv_lang['notes'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
+						print_note_table($datalist, i18n::translate('Notes').' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
 					}
 				}
 				$GEDCOM=$OLD_GEDCOM;
 			} else
 			if (isset ($this->query)) {
-				print "<br /><div class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i><br />";
+				print "<br /><div class=\"warning\" style=\" text-align: center;\"><i>".i18n::translate('No results found.')."</i><br />";
 				if (!isset ($this->srindi) && !isset ($this->srfams) && !isset ($this->srsour) && !isset ($this->srnote)) {
-					print "<i>".$pgv_lang["no_search_for"]."</i><br />";
+					print "<i>".i18n::translate('Be sure to select an option to search for.')."</i><br />";
 				}
 				echo '</div>';
 			}
@@ -876,11 +885,11 @@ class SearchControllerRoot extends BaseController {
 										if (!$displayed_once) {
 											if (!$no_results_found) {
 												$no_results_found = true;
-												print "<tr><td class=\"list_label\" colspan=\"2\" width=\"100%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["large"]."\" border=\"0\" width=\"25\" alt=\"\" /> ".$pgv_lang["people"]."</td></tr>";
+												print "<tr><td class=\"list_label\" colspan=\"2\" width=\"100%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["large"]."\" border=\"0\" width=\"25\" alt=\"\" /> ".i18n::translate('People')."</td></tr>";
 												print "<tr><td><table id=\"multiResultsInTbl\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ><tr>";
 											}
 											$displayed_once = true;
-											print "<td class=\"list_label\" colspan=\"2\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >".$pgv_lang["site_list"]."<a href=\"".encode_url($siteURL)."\" target=\"_blank\">".$siteName."</a>".$pgv_lang["site_had"]."</td></tr>";
+											print "<td class=\"list_label\" colspan=\"2\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >".i18n::translate('Site: ')."<a href=\"".encode_url($siteURL)."\" target=\"_blank\">".$siteName."</a>".i18n::translate(' contained the following')."</td></tr>";
 										}
 										print "<tr><td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" valign=\"center\" ><ul>";
 										print "<li class=\"$TEXT_DIRECTION\" dir=\"$TEXT_DIRECTION\">";
@@ -904,7 +913,7 @@ class SearchControllerRoot extends BaseController {
 
 										/*******************************  Remote Links Per Result *************************************************/
 										if (PGV_USER_CAN_EDIT) {
-											print "<td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >"."<ul style=\"list-style: NONE\"><li><a href=\"javascript:;\" "."onclick=\"return open_link('".$key."', '".$person->PID."', '".$person->getFullName()."');\">"."<b>".$pgv_lang["title_search_link"]."</b></a></ul></li></td></tr>\n";
+											print "<td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >"."<ul style=\"list-style: NONE\"><li><a href=\"javascript:;\" "."onclick=\"return open_link('".$key."', '".$person->PID."', '".$person->getFullName()."');\">"."<b>".i18n::translate('Add Local Link')."</b></a></ul></li></td></tr>\n";
 										}
 									}
 								}
@@ -915,8 +924,8 @@ class SearchControllerRoot extends BaseController {
 							}
 							if ($this->multiTotalResults > 0) {
 								print "</tr><tr><td align=\"left\">Displaying individuals ";
-								print (($this->multiResultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ". (($this->multiResultsPerPage * $this->resultsPageNum) + $pageResultsNum);
-								print " ".$pgv_lang["of"]." ". ($this->multiTotalResults)."</td></tr></table>";
+								print (($this->multiResultsPerPage * $this->resultsPageNum) + 1)." ".i18n::translate('to')." ". (($this->multiResultsPerPage * $this->resultsPageNum) + $pageResultsNum);
+								print " ".i18n::translate('of')." ". ($this->multiTotalResults)."</td></tr></table>";
 								$this->multiTotalResults = 0;
 							} else
 							print "</tr></table>";
@@ -925,12 +934,12 @@ class SearchControllerRoot extends BaseController {
 					}
 					echo '</div>';
 					if (!$no_results_found && $this->multiTotalResults == 0 && (isset ($this->multiquery) || isset ($this->name) || isset ($this->birthdate) || isset ($this->birthplace) || isset ($this->deathdate) || isset ($this->deathplace) || isset ($this->gender))) {
-						print "<table align=\"center\" \><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".$pgv_lang["no_results"]."</i></b></font><br /></td></tr></table>";
+						print "<table align=\"center\" \><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".i18n::translate('No results found.')."</i></b></font><br /></td></tr></table>";
 					}
 				}
 			} else
 			if ($sitesChecked < 1 && $this->isPostBack) {
-				print "<table align=\"center\" \><tr><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".$pgv_lang["no_search_site"]."</i></b></font><br /></td></tr></table>";
+				print "<table align=\"center\" \><tr><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".i18n::translate('Be sure to select at least one remote site.')."</i></b></font><br /></td></tr></table>";
 			}
 
 			print "</table>";
@@ -984,8 +993,7 @@ class SearchControllerRoot extends BaseController {
 	 * in the query string usually from input values in a form i.e. 'action', 'query', 'showasso' etc.
 	 */
 	function printPageResultsLinks($inputFieldNames, $totalResults, $resultsPerPage) {
-		global $pgv_lang;
-		print "<br /><table align='center'><tr><td>".$pgv_lang['result_page']." &nbsp;&nbsp;";
+		print "<br /><table align='center'><tr><td>".i18n::translate('Result Page')." &nbsp;&nbsp;";
 		// Prints the '<<' linking to the previous page if it's not on the first page
 		if ($this->resultsPageNum > 0) {
 			print " <a href='";

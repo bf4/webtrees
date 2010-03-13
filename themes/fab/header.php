@@ -1,6 +1,10 @@
 <?php
 // Header for FAB theme
 //
+// webtrees: Web based Family History software
+// Copyright (C) 2010 webtrees development team.
+//
+// Derived from PhpGedView
 // Modifications Copyright (c) 2010 Greg Roach
 //
 // This program is free software; you can redistribute it and/or modify
@@ -17,7 +21,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// @package PhpGedView
+// @package webtrees
 // @subpackage Themes
 // @version $Id$
 
@@ -106,12 +110,12 @@ if ($view!='simple') {
 		if (PGV_USER_ID) {
 			echo
 				'<li><a href="edituser.php" class="link">', getUserFullName(PGV_USER_ID), '</a></li>',
-				' | <li><a href="index.php?logout=1" class="link">', $pgv_lang['logout'], '</a></li>';
+				' | <li><a href="index.php?logout=1" class="link">', i18n::translate('Logout'), '</a></li>';
 			if (PGV_USER_GEDCOM_ADMIN) {
-				echo ' | <li><a href="admin.php" class="link">', $pgv_lang['admin'], '</a></li>';
+				echo ' | <li><a href="admin.php" class="link">', i18n::translate('Admin'), '</a></li>';
 			}
 			if (PGV_USER_CAN_ACCEPT && exists_pending_change()) {
-				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', $pgv_lang['review_changes_block'], '</a></li>';
+				echo ' | <li><a href="javascript:;" onclick="window.open(\'edit_changes.php\',\'_blank\',\'width=600,height=500,resizable=1,scrollbars=1\'); return false;" style="color:red;">', i18n::translate('Pending Changes'), '</a></li>';
 			}
 			echo ' | ', MenuBar::getFavouritesMenu()->getMenuAsList();
 			global $ENABLE_MULTI_LANGUAGE, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
@@ -124,17 +128,17 @@ if ($view!='simple') {
 		} else {
 			global $LOGIN_URL;
 			if (PGV_SCRIPT_NAME==basename($LOGIN_URL)) {
-				echo '<li><a href="', $LOGIN_URL, '" class="link">', $pgv_lang['login'], '</a></li>';
+				echo '<li><a href="', $LOGIN_URL, '" class="link">', i18n::translate('Login'), '</a></li>';
 			} else {
 				$QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
-				echo '<li><a href="', $LOGIN_URL, '?url=', PGV_SCRIPT_PATH, PGV_SCRIPT_NAME, decode_url(normalize_query_string($QUERY_STRING.'&amp;ged='.PGV_GEDCOM)), '" class="link">', $pgv_lang['login'], '</a></li>';
+				echo '<li><a href="', $LOGIN_URL, '?url=', PGV_SCRIPT_PATH, PGV_SCRIPT_NAME, decode_url(normalize_query_string($QUERY_STRING.'&amp;ged='.PGV_GEDCOM)), '" class="link">', i18n::translate('Login'), '</a></li>';
 			}
 		}
 		echo
 			' | <form style="display:inline;" action="search.php" method="get">',
 			'<input type="hidden" name="action" value="general" />',
 			'<input type="hidden" name="topsearch" value="yes" />',
-			'<input type="text" name="query" size="20" value="', $pgv_lang['search'], '" onfocus="if (this.value==\'', $pgv_lang['search'], '\') this.value=\'\'; focusHandler();" onblur="if (this.value==\'\') this.value=\'', $pgv_lang['search'], '\';" />',
+			'<input type="text" name="query" size="20" value="', i18n::translate('Search'), '" onfocus="if (this.value==\'', i18n::translate('Search'), '\') this.value=\'\'; focusHandler();" onblur="if (this.value==\'\') this.value=\'', i18n::translate('Search'), '\';" />',
 			'</form>',
 			'</ul></div>';
 		$menu_items=array(
@@ -153,7 +157,7 @@ if ($view!='simple') {
 
 		// Help menu
 		global $helpindex, $action;
-		$menu = new Menu($pgv_lang["page_help"], "#", "down");
+		$menu = new Menu(i18n::translate('Help'), "#", "down");
 		if (empty($helpindex)) {
 			$menu->addOnclick("return helpPopup('help_".PGV_SCRIPT_NAME."&amp;action=".$action."');");
 		} else {

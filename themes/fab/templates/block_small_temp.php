@@ -6,7 +6,6 @@
 // $title - the title of the block
 // $content - the content of the block
 //
-// phpGedView: Genealogy Viewer
 // Copyright (C) 2010 Greg Roach.  All rights reserved.
 
 if (!defined('PGV_PHPGEDVIEW')) {

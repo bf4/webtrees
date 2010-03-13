@@ -2,7 +2,10 @@
 /**
  * Batch Update plugin for phpGedView - add missing 2 _MARNM records
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2008 Greg Roach.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Module
  * $Id$
  */
@@ -29,9 +32,17 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-class plugin extends base_plugin {
+class married_names_bu_plugin extends base_plugin {
 	var $surname=null; // User option: add or replace husband's surname
 
+	static function getName() {
+		return i18n::translate('Add missing married names');
+	}
+
+	static function getDescription() {
+		return i18n::translate('You can make it easier to search for married women by recording their married name.<br />However not all women take their husband\'s surname, so beware of introducing incorrect information into your database.');
+	}
+	
 	function doesRecordNeedUpdate($xref, $gedrec) {
 		return preg_match('/^1 SEX F/m', $gedrec) && preg_match('/^1 NAME /m', $gedrec) && self::_surnames_to_add($xref, $gedrec);
 	}
@@ -93,16 +104,14 @@ class plugin extends base_plugin {
 	}
 
 	function getOptionsForm() {
-		global $pgv_lang;
-
 		return
 			parent::getOptionsForm().
-			'<tr valign="top"><td class="list_label width20">'.$pgv_lang['bu_surname_option'].'</td>'.
+			'<tr valign="top"><td class="list_label width20">'.i18n::translate('Surname Option').'</td>'.
 			'<td class="optionbox"><select name="surname" onchange="reset_reload();"><option value="replace"'.
 			($this->surname=='replace' ? ' selected="selected"' : '').
-			'">'.$pgv_lang['bu_surname_replace'].'</option><option value="add"'.
+			'">'.i18n::translate('Wife\'s surname replaced by husband\'s surname').'</option><option value="add"'.
 			($this->surname=='add' ? ' selected="selected"' : '').
-			'">'.$pgv_lang['bu_surname_add'].'</option></select></td></tr>'
+			'">'.i18n::translate('Wife\'s maiden surname becomes new given name').'</option></select></td></tr>'
 		 	;
 	}
 }

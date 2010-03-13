@@ -4,7 +4,10 @@
  *
  * Media Link information about an individual
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Census Assistant
  * @version $Id$
  */
@@ -31,7 +34,7 @@
 	exit;
 }
 
-global $summary, $theme_name, $pgv_lang, $TEXT_DIRECTION, $censyear, $censdate;
+global $summary, $theme_name, $TEXT_DIRECTION, $censyear, $censdate;
  
 $pid = safe_get('pid');
 
@@ -67,11 +70,11 @@ if ($pid=="") {
 
 	echo '<table width=400 class="facts_table center ', $TEXT_DIRECTION, '">';
 	echo '<tr><td class="topbottombar" colspan="1">';
-	echo '<b>', $pgv_lang["fam_nav"], '</b>';
+	echo '<b>', i18n::translate('Family Navigator'), '</b>';
 	echo '</td></tr>';
 	echo '<tr>';
 //	echo '<td class="optionbox wrap" valign="top" align="left" width="50%" >';
-//	echo $pgv_lang["add_fam_other_links"];
+//	echo i18n::translate('Add Family, and Search links');
 //	echo '</td>';
 	echo '<td valign="top" width=400>';
 	//-- Search  and Add Family Members Area ========================================= 

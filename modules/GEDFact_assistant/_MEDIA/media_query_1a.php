@@ -4,7 +4,10 @@
  *
  * Media Link information about an individual
  *
- * phpGedView: Genealogy Viewer
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage GEDFact_assistant
  * @version $Id$
 */
@@ -45,10 +48,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	echo "<tr>";
 	echo '<td class="topbottombar" width="15"  style="font-weight:100;" >#</td>';
 	echo '<td class="topbottombar" width="50"  style="font-weight:100;" >ID:</td>';
-	echo '<td class="topbottombar" width="340" style="font-weight:100;" >', $pgv_lang["name"], '</td>';
-	echo '<td class="topbottombar" width="20"  style="font-weight:100;" >', $pgv_lang["keep"], '</td>';
-	echo '<td class="topbottombar" width="20"  style="font-weight:100;" >', $pgv_lang["remove"], '</td>';
-	echo '<td class="topbottombar" width="20"  style="font-weight:100;" >', $pgv_lang["nav"], '</td>';
+	echo '<td class="topbottombar" width="340" style="font-weight:100;" >', i18n::translate('Name'), '</td>';
+	echo '<td class="topbottombar" width="20"  style="font-weight:100;" >', i18n::translate('Keep'), '</td>';
+	echo '<td class="topbottombar" width="20"  style="font-weight:100;" >', i18n::translate('Remove'), '</td>';
+	echo '<td class="topbottombar" width="20"  style="font-weight:100;" >', i18n::translate('Navigator'), '</td>';
 	echo "</tr>";
 
 	$keys = array_keys($links);
@@ -79,16 +82,16 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 		$nam = $idrecord->getFullName();
 		echo $nam;
 		echo "</td>";
-		echo "<td align='center'><input alt='", $pgv_lang["keep_link"], 		"', title='", $pgv_lang["keep_link"], 		"' type='radio' id='", $link, "_off' name='", $link, "' checked /></td>";
-		echo "<td align='center'><input alt='", $pgv_lang["remove_link"], 	"', title='", $pgv_lang["remove_link"], 	"' type='radio' id='", $link, "_on'  name='", $link, "' /></td>";
+		echo "<td align='center'><input alt='", i18n::translate('Keep Link in list'), 		"', title='", i18n::translate('Keep Link in list'), 		"' type='radio' id='", $link, "_off' name='", $link, "' checked /></td>";
+		echo "<td align='center'><input alt='", i18n::translate('Remove Link from list'), 	"', title='", i18n::translate('Remove Link from list'), 	"' type='radio' id='", $link, "_on'  name='", $link, "' /></td>";
 
 		if ($record->getType()=='INDI') {
 			?>
-			<td align="center"><a href="#"><img style="border-style:none; margin-top:5px;" src="<?php echo $PGV_IMAGE_DIR;?>/buttons/family.gif" alt="<?php echo $pgv_lang["open_nav"]; ?>" title="<?php echo $pgv_lang["open_nav"]; ?>" name="family_'<?php echo $link; ?>'" onclick="javascript:openFamNav('<?php echo $link; ?>');" /></a></td>
+			<td align="center"><a href="#"><img style="border-style:none; margin-top:5px;" src="<?php echo $PGV_IMAGE_DIR;?>/buttons/family.gif" alt="<?php echo i18n::translate('Open Family Navigator'); ?>" title="<?php echo i18n::translate('Open Family Navigator'); ?>" name="family_'<?php echo $link; ?>'" onclick="javascript:openFamNav('<?php echo $link; ?>');" /></a></td>
 			<?php
 		} elseif ($record->getType()=='FAM') {
 			?>
-			<td align="center"><a href="#"><img style="border-style:none; margin-top:5px;" src="<?php echo $PGV_IMAGE_DIR;?>/buttons/family.gif" alt="<?php echo $pgv_lang["open_nav"]; ?>" title="<?php echo $pgv_lang["open_nav"]; ?>" name="family_'<?php echo $link; ?>'" onclick="javascript:openFamNav('<?php echo $head; ?>');" /></a></td>
+			<td align="center"><a href="#"><img style="border-style:none; margin-top:5px;" src="<?php echo $PGV_IMAGE_DIR;?>/buttons/family.gif" alt="<?php echo i18n::translate('Open Family Navigator'); ?>" title="<?php echo i18n::translate('Open Family Navigator'); ?>" name="family_'<?php echo $link; ?>'" onclick="javascript:openFamNav('<?php echo $head; ?>');" /></a></td>
 			<?php
 		} else { 
 			echo '<td></td>';
