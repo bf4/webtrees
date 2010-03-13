@@ -33,15 +33,15 @@ define('PGV_SCRIPT_NAME', 'login.php');
 require './config.php';
 
 // Extract query parameters
-$url     =safe_POST('url',      PGV_REGEX_URL);
-$type    =safe_POST('type',     array('full', 'simple'));
-$action  =safe_POST('action');
-$username=safe_POST('username', PGV_REGEX_USERNAME);
-$password=safe_POST('password', PGV_REGEX_PASSWORD);
-$usertime=safe_POST('usertime');
-$pid     =safe_POST('pid',      PGV_REGEX_XREF);
-$ged     =safe_POST('ged',      get_all_gedcoms(), $GEDCOM);
-$help_message=safe_GET('help_messge');
+$url         =safe_POST('url',      PGV_REGEX_URL);
+$type        =safe_POST('type',     array('full', 'simple'));
+$action      =safe_POST('action');
+$username    =safe_POST('username', PGV_REGEX_USERNAME);
+$password    =safe_POST('password', PGV_REGEX_PASSWORD);
+$usertime    =safe_POST('usertime');
+$pid         =safe_POST('pid',      PGV_REGEX_XREF);
+$ged         =safe_POST('ged',      get_all_gedcoms(), $GEDCOM);
+$help_message=safe_GET('help_message');
 
 // Some variables can come from the URL as well as the form
 if (!$url)    $url   =safe_GET('url',  PGV_REGEX_URL);
@@ -155,39 +155,31 @@ if ($type=="full") {
 }
 echo "<div class=\"center\">\n";
 
-if ($WELCOME_TEXT_AUTH_MODE!="0") {
-	loadLangFile("pgv_help");
-	echo "<table class=\"center width60 ".$TEXT_DIRECTION."\"><tr><td>";
-	if (empty($help_message) || !isset($help_message)) {
-		switch ($WELCOME_TEXT_AUTH_MODE){
-			case "1":
-				echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.');
-				break;
-			case "2":
-				i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorized</u> users only.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved.');
-				break;
-			case "3":
-				i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>family members only</u>.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying the information you provide, the administrator will either approve or decline your request for an account.  You will receive an email when your request is approved.');
-				break;
-			case "4":
-				if ($WELCOME_TEXT_CUST_HEAD == "true"){
-					echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website.');
-				}
-				echo embed_globals($WELCOME_TEXT_AUTH_MODE_4);
-				break;
+echo "<table class=\"center width60 ltr\"><tr><td>";
+switch ($help_message) {
+case 'mygedview_login_help':
+	echo i18n::translate('In order to access the MyGedView Portal page, you must be a registered user on the system.  On the MyGedView Portal page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of PhpGedView pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView.');
+	break;
+default:
+	switch ($WELCOME_TEXT_AUTH_MODE){
+	case 1:
+		echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.');
+		break;
+	case 2:
+		i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorized</u> users only.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved.');
+		break;
+	case 3:
+		i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>family members only</u>.<br /><br />If you have a user account you can login on this page.  If you don\'t have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying the information you provide, the administrator will either approve or decline your request for an account.  You will receive an email when your request is approved.');
+		break;
+	case 4:
+		echo i18n::translate('<center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website.');
+		if ($WELCOME_TEXT_CUST_HEAD) {
+			echo embed_globals($WELCOME_TEXT_AUTH_MODE_4);
 		}
-	} else {
-		print_text($help_message);
-	}
-	echo "</td></tr></table><br /><br />\n";
-} else {
-	if (!empty($help_message) || isset($help_message)) {
-		loadLangFile("pgv_help");
-		echo "<table class=\"center width60 ltr\"><tr><td>";
-		print_text($help_message);
-		echo "</td></tr></table><br /><br />\n";
+		break;
 	}
 }
+echo '</td></tr></table><br /><br />';
 $tab=0;		// initialize tab index
 	?>
 	<form name="loginform" method="post" action="<?php print $LOGIN_URL; ?>" onsubmit="t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;">
