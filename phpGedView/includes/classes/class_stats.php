@@ -3644,18 +3644,10 @@ class stats {
 		if (($LoginUsers == 0) and ($NumAnonymous == 0)) {
 			return i18n::translate('No logged-in and no anonymous users');
 		}
-		$Advisory = 'anon_user';
-		if ($NumAnonymous > 1) {$Advisory .= 's';}
 		if ($NumAnonymous > 0) {
-			$pgv_lang['global_num1'] = $NumAnonymous; // Make it visible
-			$content .= '<b>'.print_text($Advisory, 0, 1).'</b>';
-		}
-		$Advisory = 'login_user';
-		if ($LoginUsers > 1) {
-			$Advisory .= 's';
+			$content.='<b>'.i18n::plural('%d anonymous logged-in user', '%d anonymous logged-in users', $NumAnonymous, $NumAnonymous).'</b>';
 		}
 		if ($LoginUsers > 0) {
-			$pgv_lang['global_num1'] = $LoginUsers; // Make it visible
 			if ($NumAnonymous) {
 				if ($type == 'list') {
 					$content .= "<br /><br />\n";
@@ -3663,10 +3655,11 @@ class stats {
 					$content .= " ".i18n::translate('and')." ";
 				}
 			}
+			$content.='<b>'.i18n::plural('%d logged-in user', '%d logged-in users', $LoginUsers, $LoginUsers).'</b>';
 			if ($type == 'list') {
-				$content .= '<b>'.print_text($Advisory, 0, 1)."</b>\n<ul>\n";
+				$content .= '<ul>';
 			} else {
-				$content .= '<b>'.print_text($Advisory, 0, 1)."</b>: ";
+				$content .= ': ';
 			}
 		}
 		if (PGV_USER_ID) {
