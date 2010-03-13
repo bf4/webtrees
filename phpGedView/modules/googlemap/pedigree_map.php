@@ -159,27 +159,23 @@ if (!$controller->isPrintPreview()) {
 				</td>
 			</tr>
 			<tr>
-				<td class="descriptionbox wrap"><?php print_help_link("rootid", "qm"); ?>
-					<?php echo i18n::translate('Root Person ID'); ?>
+				<td class="descriptionbox wrap">
+					<?php echo i18n::translate('Root Person ID'), help_link('rootid'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-				<?php print_help_link("PEDIGREE_GENERATIONS", "qm"); ?>
-				<?php echo i18n::translate('Generations'); ?>
+					<?php echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php print_help_link("PEDIGREE_MAP_clustersize", "qm"); ?>
-					<?php echo i18n::translate('Cluster Size'); ?>
+					<?php echo i18n::translate('Cluster Size'), help_link('PEDIGREE_MAP_clustersize'); ?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					print_help_link("PEDIGREE_MAP_hideflags", "qm");
-					echo i18n::translate('Hide flags');
+					echo i18n::translate('Hide flags'), help_link('PEDIGREE_MAP_hideflags');
 					?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					print_help_link("PEDIGREE_MAP_hidelines", "qm");
-					echo i18n::translate('Hide lines');
+					echo i18n::translate('Hide lines'), help_link('PEDIGREE_MAP_hidelines');
 					?>
 				</td>
 			</tr>
