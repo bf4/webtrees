@@ -234,7 +234,7 @@ function print_fact(&$eventObj, $noedit=false) {
 		if ((showFactDetails($factref, $pid)) && (FactViewRestricted($pid, $factrec))) {
 			if (isset($resn_value)) {
 				echo "<img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
-				print_help_link("RESN", "qm");
+				echo help_link('RESN');
 			}
 		}
 		if ((showFactDetails($factref, $pid)) && (!FactViewRestricted($pid, $factrec))) {
@@ -359,7 +359,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			// -- Find RESN tag
 			if (isset($resn_value)) {
 				echo "<img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
-				print_help_link("RESN", "qm");
+				echo help_link('RESN');
 			}
 			if (preg_match("/\n2 FAMC @(.+)@/", $factrec, $match)) {
 				echo "<br/><span class=\"label\">", i18n::translate('FAMC'), ":</span> ";
@@ -924,7 +924,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 				// -- Find RESN tag
 				if (isset($resn_value)) {
 					echo "<img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
-					print_help_link("RESN", "qm");
+					echo help_link('RESN');
 				}
 				$cs = preg_match("/$nlevel EVEN (.*)/", $srec, $cmatch);
 				if ($cs>0) {
@@ -1208,7 +1208,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			// -- Find RESN tag
 			if (isset($resn_value)) {
 				echo "<br /><img src=\"images/RESN_", $resn_value, ".gif\" alt=\"", $pgv_lang[$resn_value], "\" title=\"", $pgv_lang[$resn_value], "\" />\n";
-					print_help_link("RESN", "qm");
+				echo help_link('RESN');
 			}
 			echo "<br />\n";
 			print_fact_sources($nrec, $nlevel);

@@ -719,8 +719,7 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm", "no_update_CHAN");
-		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
@@ -1249,17 +1248,17 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 	}else{
 		if (!in_array($fact, $emptyfacts)) {
 			if ($fact=="DATE") {
-				print_help_link("def_gedcom_date", "qm", "date");
+				echo help_link('def_gedcom_date');
 			} elseif ($fact=="FORM" && $upperlevel!='OBJE') {
-				print_help_link("FORM", "qm", "media_format");
+				echo help_link('FORM');
 			} elseif ($fact=="NOTE" && $islink){
 				if (file_exists(PGV_ROOT.'modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
-					print_help_link("edit_add_GEDFact_ASSISTED", "qm", "GEDFact Assistant");
+					echo help_link('edit_add_GEDFact_ASSISTED');
 				}else{
-					print_help_link("edit_add_SHARED_NOTE", "qm", "add_shared_note");
+					echo help_link('edit_add_SHARED_NOTE');
 				}
 			} else {
-				print_help_link($fact, "qm", $fact);
+				echo help_link($fact);
 			}
 		}
 		if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
@@ -1737,7 +1736,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="SOUR") {
 		//-- Add new source to fact
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Source Citation'), "</a>";
-		print_help_link("edit_add_SOUR", "qm", "add_source");
+		echo help_link('edit_add_SOUR');
 		echo "<br />";
 		echo "<div id=\"newsource\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
@@ -1768,12 +1767,12 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		//-- Add a new ASSOciate
 		if ($tag=="ASSO") {
 			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso');\"><img id=\"newasso_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Associate'), "</a>";
-			print_help_link("edit_add_ASSO", "qm", "add_asso");
+			echo help_link('edit_add_ASSO');
 			echo "<br />";
 			echo "<div id=\"newasso\" style=\"display: none;\">\n";
 		} else {
 			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso2');\"><img id=\"newasso2_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Associate'), "</a>";
-			print_help_link("edit_add_ASSO", "qm", "add_asso");
+			echo help_link('edit_add_ASSO');
 			echo "<br />";
 			echo "<div id=\"newasso2\" style=\"display: none;\">\n";
 		}
@@ -1793,7 +1792,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		//-- Retrieve existing note or add new note to fact
 		$text = '';
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote');\"><img id=\"newnote_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Note'), "</a>";
-		print_help_link("edit_add_NOTE", "qm", "add_note");
+		echo help_link('edit_add_NOTE');
 		echo "<br />\n";
 		echo "<div id=\"newnote\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
@@ -1806,7 +1805,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		//-- Retrieve existing shared note or add new shared note to fact
 		$text = '';
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshared_note');\"><img id=\"newshared_note_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Shared Note'), "</a>";
-		print_help_link("edit_add_SHARED_NOTE", "qm", "add_shared_note");
+		echo help_link('edit_add_SHARED_NOTE');
 		echo "<br />\n";
 		echo "<div id=\"newshared_note\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
@@ -1819,7 +1818,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="OBJE") {
 		//-- Add new obje to fact
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newobje');\"><img id=\"newobje_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('Add a new Multimedia object'), "</a>";
-		print_help_link("add_media", "qm", "add_obje");
+		echo help_link('add_media');
 		echo "<br />";
 		echo "<div id=\"newobje\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";
@@ -1835,7 +1834,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 			//-- Retrieve existing resn or add new resn to fact
 			$text = '';
 			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"", $PGV_IMAGE_DIR, "/", $PGV_IMAGES["plus"]["other"], "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ", i18n::translate('RESN'), "</a>";
-			print_help_link("RESN", "qm", "RESN");
+			echo help_link('RESN');
 			echo "<br />\n";
 			echo "<div id=\"newresn\" style=\"display: none;\">\n";
 			if ($printSaveButton) echo "<input type=\"submit\" value=\"", i18n::translate('Save'), "\" />";

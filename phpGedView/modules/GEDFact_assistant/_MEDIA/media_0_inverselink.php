@@ -201,10 +201,9 @@ if ($action == "choose" && $paramok) {
 	// Admin Option CHAN log update override =======================
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm");
 		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
 		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" value=\"no_change\"/ >\n";
-		echo i18n::translate('Do not update the CHAN (Last Change) records'), "<br /><br />\n";
+		echo i18n::translate('Do not update the CHAN (Last Change) records'), help_link('no_update_CHAN'), '<br /><br />';
 		echo "</td></tr>\n";
 	}
 	echo '</tr>';
