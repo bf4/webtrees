@@ -271,16 +271,15 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 		if ($fams) {
 			$query.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 		}
-		$where=array();
+		$query.=" WHERE n_file=?";
 		foreach ($alphabet as $letter2) {
 			if ($letter==$letter2) {
-				$where[]="n_surn LIKE '{$letter2}%'";
+				$query.="AND n_surn LIKE '{$letter2}%'";
 			} else {
-				$where[]="n_surn NOT LIKE '{$letter2}%'";
+				$query.="AND n_surn NOT LIKE '{$letter2}%'";
 			}
 		}
-		$query.=" WHERE ".implode(" AND ", $where);
-		$alphas[$letter]=PGV_DB::prepare($query)->fetchOne();
+		$alphas[$letter]=PGV_DB::prepare($query)->execute(array(PGV_GED_ID))->fetchOne();
 	}
 	// Now repeat for all letters not in our alphabet.
 	// This includes "@" (unknown) and "," (none)
@@ -295,12 +294,12 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	if ($fams) {
 		$query.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 	}
-	$where=array();
+	$query.=" WHERE n_file=?";
 	foreach ($alphabet as $letter) {
-		$where[]="n_surn NOT LIKE '{$letter}%'";
+		$query.=" AND n_surn NOT LIKE '{$letter}%'";
 	}
-	$query.=" WHERE ".implode(" AND ", $where)." GROUP BY LEFT(n_surn, 1)";
-	foreach (PGV_DB::prepare($query)->fetchAssoc() as $letter=>$count) {
+	$query.=" GROUP BY LEFT(n_surn, 1)";
+	foreach (PGV_DB::prepare($query)->execute(array(PGV_GED_ID))->fetchAssoc() as $letter=>$count) {
 		$alphas[$letter]=$count;
 	}
 	// Force "," and "@" first to the end of the list
