@@ -661,13 +661,9 @@ if ($action == "listusers") {
 		echo "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">";
 		if ((int)get_user_setting($user_id, 'reg_timestamp') > (int)get_user_setting($user_id, 'sessiontime')) {
-			echo i18n::translate('Never');
-			$pgv_lang["global_string1"] = formatElapsedTime(time() - (int)get_user_setting($user_id, 'reg_timestamp'));
-			echo '<br />', getLRM(), '(', print_text('elapsedAgo', 0, 1), getLRM(), ')';
+			echo i18n::translate('Never'), '<br />', i18n::time_ago(time() - (int)get_user_setting($user_id, 'reg_timestamp'));
 		} else {
-			$pgv_lang["global_string1"] = formatElapsedTime(time() - (int)get_user_setting($user_id, 'sessiontime'));
-			echo format_timestamp((int)get_user_setting($user_id, 'sessiontime'));
-			echo '<br />', getLRM(), '(', print_text('elapsedAgo', 0, 1), getLRM(), ')';
+			echo format_timestamp((int)get_user_setting($user_id, 'sessiontime')), '<br />', i18n::time_ago(time() - (int)get_user_setting($user_id, 'sessiontime'));
 		}
 		echo "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">";

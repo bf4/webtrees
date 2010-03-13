@@ -201,4 +201,36 @@ class i18n {
 			return i18n::translate('(aged %s)', $string);
 		}
 	}
+
+	// Convert a number of seconds into a relative time.  e.g. 630 => "10 hours, 30 minutes ago"
+	static function time_ago($seconds) {
+		$year=365*24*60*60;
+		$month=30*24*60*60;
+		$day=24*60*60;
+		$hour=60*60;
+		$minute=60;
+
+		// TODO: Display two units (years+months), (months+days), etc.
+		// This requires "contexts".  i.e. "%d months" has a different translation
+		// in different contexts.
+		// We must AVOID combining phrases to make sentences.
+		if ($seconds>$year) {
+			$years=floor($seconds/$year);
+			return i18n::plural('%d year ago', '%d years ago', $years, $years);
+		} elseif ($seconds>$month) {
+			$months=floor($seconds/$month);
+			return i18n::plural('%d month ago', '%d months ago', $months, $months);
+		} elseif ($seconds>$day) {
+			$days=floor($seconds/$day);
+			return i18n::plural('%d day ago', '%d days ago', $days, $days);
+		} elseif ($seconds>$hour) {
+			$hours=floor($seconds/$hour);
+			return i18n::plural('%d hour ago', '%d hours ago', $hours, $hours);
+		} elseif ($seconds>$minute) {
+			$minutes=floor($seconds/$minute);
+			return i18n::plural('%d minute ago', '%d minutes ago', $minutes, $minutes);
+		} else {
+			return i18n::plural('%d second ago', '%d seconds ago', $seconds, $seconds);
+		}
+	}
 }
