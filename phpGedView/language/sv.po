@@ -1144,7 +1144,7 @@ msgstr "Tillämpa integritetsinställningar?"
 #: ../modules/clippings/clippings.php:265 ../famlist.php:128
 #: ../famlist.php:147
 msgid "None"
-msgstr ""
+msgstr "Inga"
 
 #: ../downloadgedcom.php:154 ../downloadgedcom.php:157 ../clippings.php:206
 #: ../modules/clippings/index.php:214 ../modules/clippings/clippings.php:266
@@ -1212,7 +1212,7 @@ msgstr "Tillbaka"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "NOTERING: Stora GEDCOM kan ta lång tid att processa innan nerladdning. Om PHP-tidsinställningen är för kort är det inte säkert att din nerladdning blir komplett.<br /><br />Du kan kontrollera din nerladdad GEDCOM-fil efter <b>0 TRLR</b> raden i slutet av filen för att försäkra dig om att filen är komplett. GEDCOM-filen är text, du kan använda en texteditor, men var försiktig så att du <u>inte</u> sparar GEDCOM-filen efter du kontrollerat den.<br /><br />Vanligtvis kan det ta lika lång tid att ladda ner som det tog att importera din GEDCOM."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -1404,9 +1404,8 @@ msgstr "Markera manuellt Sökmotorspindlar via IP-adress"
 #: ../edit_privacy.php:658 ../edit_privacy.php:756
 #: ../blocks/gedcom_news.php:131 ../blocks/user_messages.php:88
 #: ../blocks/user_messages.php:131 ../blocks/user_blog.php:74 ../media.php:942
-#, fuzzy
 msgid "Delete"
-msgstr "Radera namn"
+msgstr "Radera"
 
 #: ../manageservers.php:249 ../manageservers.php:296 ../manageservers.php:343
 #: ../index_edit.php:516 ../index_edit.php:536 ../clippings.php:281
@@ -2354,9 +2353,8 @@ msgstr "Visa markerade bilder i personboxar"
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:2172
 #: ../modules/googlemap/pedigree_map.php:735 ../modules/sitemap/index.php:237
 #: ../modules/sitemap/index.php:342
-#, fuzzy
 msgid "Individual Information"
-msgstr "GEDCOM-ID Prefix"
+msgstr "Personlig information"
 
 #: ../expand_view.php:75 ../find.php:590
 #: ../includes/functions/functions_mediadb.php:1594
@@ -2404,7 +2402,7 @@ msgstr "Den skyddade mediamappen i mediabrandväggens rootmapp är inte skrivbar
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "FEL!!!<br />Kunde inte skriva till filen <i>#GLOBALS[whichFile]#</i>.Kontrollera att filen har skrivrättighter."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -2527,32 +2525,28 @@ msgid "Calendar format"
 msgstr "Kalenderformat"
 
 #: ../editconfig_gedcom.php:998
-#, fuzzy
 msgid "No calendar conversion"
-msgstr "Tillåt nerladdning av kalenderhändelser?"
+msgstr "Ingen kalenderkonvertering"
 
 #: ../editconfig_gedcom.php:999
-#, fuzzy
 msgid "Gregorian"
-msgstr "Tyska"
+msgstr "Gregoriansk"
 
 #: ../editconfig_gedcom.php:1000
-#, fuzzy
 msgid "Julian"
-msgstr "Jan"
+msgstr "Juliansk"
 
 #: ../editconfig_gedcom.php:1001 ../includes/specialchars.php:66
 msgid "French"
 msgstr "Franska"
 
 #: ../editconfig_gedcom.php:1002
-#, fuzzy
 msgid "Jewish"
-msgstr "Svenska"
+msgstr "Judisk"
 
 #: ../editconfig_gedcom.php:1003
 msgid "Jewish and Gregorian"
-msgstr ""
+msgstr "Judisk och Gregoriansk"
 
 #: ../editconfig_gedcom.php:1004 ../includes/specialchars.php:82
 msgid "Hebrew"
@@ -2560,11 +2554,11 @@ msgstr "Hebreiska"
 
 #: ../editconfig_gedcom.php:1005
 msgid "Hebrew and Gregorian"
-msgstr ""
+msgstr "Hebreisk och Gregoriansk"
 
 #: ../editconfig_gedcom.php:1006
 msgid "Hijri"
-msgstr ""
+msgstr "Hijri"
 
 #: ../editconfig_gedcom.php:1007 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -3104,9 +3098,8 @@ msgid "Surname tradition"
 msgstr "Efternamnstradition"
 
 #: ../editconfig_gedcom.php:2130
-#, fuzzy
 msgid "Paternal"
-msgstr "Partner"
+msgstr "Faders"
 
 #: ../editconfig_gedcom.php:2131 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -3118,7 +3111,7 @@ msgstr "Portugisiska"
 
 #: ../editconfig_gedcom.php:2133
 msgid "Icelandic"
-msgstr ""
+msgstr "Isländska"
 
 #: ../editconfig_gedcom.php:2134 ../includes/specialchars.php:76
 msgid "Polish"
@@ -3254,18 +3247,16 @@ msgid "Author META tag"
 msgstr "Författare META tag"
 
 #: ../editconfig_gedcom.php:2414
-#, fuzzy
 msgid "Leave this field empty to use the full name of the Genealogy contact."
-msgstr "Lämna detta fält tomt för att använda den för närvarande aktiva databasens titel för detta värde."
+msgstr "Lämna detta fält tomt för att använda Släktforskningskontakt fulla namn för detta värde."
 
 #: ../editconfig_gedcom.php:2418 ../help_text.php:2912
 msgid "Publisher META tag"
 msgstr "Utgivare META tag"
 
 #: ../editconfig_gedcom.php:2421 ../editconfig_gedcom.php:2428
-#, fuzzy
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
-msgstr "Lämna detta fält tomt för att använda den för närvarande aktiva databasens titel för detta värde."
+msgstr "Lämna detta fält tomt för att använda Släktforskningskontakt fulla namn för detta värde."
 
 #: ../editconfig_gedcom.php:2425 ../help_text.php:2887
 msgid "Copyright META tag"
@@ -3342,9 +3333,8 @@ msgid "Return to the Admin menu"
 msgstr "Tillbaka till administratörsmenyn"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "GEDCOM-titel"
+msgstr "GEDCOM-fil"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3383,9 +3373,8 @@ msgid "Check"
 msgstr "Kontrollera"
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "Konfiguration"
+msgstr "Konfigurationsfil"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3415,19 +3404,16 @@ msgid "Edit"
 msgstr "Ändra"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Arkivera loggfiler"
+msgstr "Integritetsfil"
 
 #: ../editgedcoms.php:259
-#, fuzzy
 msgid "SearchLog files"
-msgstr "Arkivera sökningsloggfiler"
+msgstr "Sökningsloggfiler"
 
 #: ../editgedcoms.php:313
-#, fuzzy
 msgid "ChangeLog files"
-msgstr "Arkivera ändringslogfiler"
+msgstr "Ändringslog-filer"
 
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
@@ -4660,9 +4646,8 @@ msgstr "Visa person"
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:244
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:623
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:652
-#, fuzzy
 msgid "View Source"
-msgstr "Visa arkiv"
+msgstr "Visa källa"
 
 #: ../find.php:596 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:626
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:655
@@ -4788,9 +4773,8 @@ msgstr "Toppnivå"
 #: ../search.php:340 ../modules/googlemap/places.php:183
 #: ../modules/googlemap/places.php:184 ../modules/googlemap/places.php:185
 #: ../modules/googlemap/places.php:186 ../modules/googlemap/places.php:187
-#, fuzzy
 msgid "Place"
-msgstr "Sida"
+msgstr "Ort"
 
 #: ../placelist.php:312
 msgid "Place Hierarchy after"
@@ -4859,7 +4843,7 @@ msgstr "Om du väljer att fortsätta kommer den gamla GEDCOM-filen att ersättas
 
 #: ../uploadgedcom.php:493
 msgid "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import."
-msgstr ""
+msgstr "Den nuvarande GEDCOM-filen har ändringar som inte är accepterade. Om du fortsätter med importen kommer dessa ändringar att skrivas till databasen. Du bör kolla dessa ändringar innan du fortsätter med importen."
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
@@ -5452,7 +5436,7 @@ msgstr "Töm cache-filerna"
 
 #: ../index_edit.php:597
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr ""
+msgstr "Här är en kort beskrivning för varje område som du kan placera på Välkommen eller Min GedViewPortal sidan.<br /><table border='1' align='center'><tr><td class='list_value'><b>Namn</b></td><td class='list_value'><b>Beskrivning</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40 ../help_text.php:3888
 msgid "Clippings Cart"
@@ -5711,7 +5695,7 @@ msgstr "Hela posten"
 
 #: ../search.php:302 ../modules/batch_update/plugins/search_replace.php:117
 msgid "Whole words only"
-msgstr ""
+msgstr "Endast hela ord"
 
 #: ../search.php:321
 msgid "Given name"
@@ -5724,9 +5708,8 @@ msgstr "Efternamn"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "Rubrik"
+msgstr "År"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -6401,13 +6384,13 @@ msgstr "Lägg till nytt källcitat"
 #: ../modules/googlemap/pedigree_map.php:660
 #: ../modules/googlemap/pedigree_map.php:697
 msgid "Grandfather"
-msgstr ""
+msgstr "Morfar"
 
 #: ../includes/functions/functions_charts.php:818
 #: ../modules/googlemap/pedigree_map.php:658
 #: ../modules/googlemap/pedigree_map.php:695
 msgid "Grandmother"
-msgstr ""
+msgstr "Mormor"
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
 #: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:71
@@ -7982,7 +7965,7 @@ msgstr "Familj med"
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "Du har inte angett några favoriter. För att lägga till personer till dina favoriter, sök reda på personens detaljer och klicka på 'Lägg till mina favoriter' eller använd ID fältet för att lägga till en person genom att ange dess ID nummer."
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8168,9 +8151,8 @@ msgstr "utf8_swedish_ci"
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:239 ../modules/sitemap/index.php:396
-#, fuzzy
 msgid "Family Information"
-msgstr "PHP Info"
+msgstr "Familjeinformation"
 
 #: ../includes/controllers/family_ctrl.php:350
 #: ../includes/controllers/family_ctrl.php:361
@@ -8330,9 +8312,8 @@ msgstr ""
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "Ändra namn"
+msgstr "Namn"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -9659,7 +9640,7 @@ msgstr "Terräng"
 #: ../modules/googlemap/editconfig.php:51 ../gedcheck.php:101
 #: ../gedcheck.php:841 ../gedcheck.php:856
 msgid "Level"
-msgstr ""
+msgstr "Nivå"
 
 #: ../modules/googlemap/places.php:180
 #: ../modules/googlemap/places_edit.php:775
@@ -9886,11 +9867,11 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
@@ -9898,7 +9879,7 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:802
 msgid "W"
-msgstr ""
+msgstr "O"
 
 #: ../modules/googlemap/places_edit.php:812
 #: ../modules/googlemap/places_edit.php:820
@@ -10119,7 +10100,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:341 ../edit_merge.php:228
 #: ../edit_merge.php:234
 msgid "from"
-msgstr ""
+msgstr "från"
 
 #: ../modules/googlemap/pedigree_map.php:343
 #, fuzzy
@@ -12584,17 +12565,15 @@ msgstr "Kritiskt"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr ""
+msgstr "Fel"
 
 #: ../gedcheck.php:75
-#, fuzzy
 msgid "Warning"
-msgstr "Målning"
+msgstr "Varning"
 
 #: ../gedcheck.php:76
-#, fuzzy
 msgid "Info"
-msgstr "Sagesman"
+msgstr "Info"
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -18194,7 +18173,7 @@ msgstr "Klicka på länken nedan, logga in med ditt nya lösenord. Ändra sedan 
 
 #: ../login_register.php:136
 msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
-msgstr ""
+msgstr "Efter att du logat in, välj 'Mitt konto'-länken under 'Min GedViewPortal'-menyn, fyll i lösenordsfälten för att ändra dit lösenord."
 
 #: ../login_register.php:142
 #, php-format
@@ -18360,7 +18339,7 @@ msgstr "Härstamning antal steg"
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Kommande händelser-blocket visar en lista av händelser som kommer att inträffa de närmaste 30 dagarna i den aktiva GEDCOM-filen. För en användares MyGedView-sidan visar området en lista endast levande personer. För en GEDCOM välkomstsida visar den en lista på alla personer."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18405,7 +18384,7 @@ msgstr "Avancerad HTML"
 
 #: ../blocks/block_htmlplus.php:44
 msgid "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text."
-msgstr ""
+msgstr "Detta är ett HTML-område som du kan placera på din sida för att lägga till vilken sorts meddelande som du helst. Du kan lägga in refernser till information från din GEDCOM i HTML-texten."
 
 #: ../blocks/block_htmlplus.php:49 ../blocks/html_block.php:44
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -18416,38 +18395,32 @@ msgid "to change what is printed here.</p>"
 msgstr "för att ändra vad som skrivs här.</p>"
 
 #: ../blocks/block_htmlplus.php:224
-#, fuzzy
 msgid "Templates"
-msgstr "LDS Tempel"
+msgstr "Mall"
 
 #: ../blocks/block_htmlplus.php:246
-#, fuzzy
 msgid "Custom"
-msgstr "Specialhändelse"
+msgstr "Special"
 
 #: ../blocks/block_htmlplus.php:262
-#, fuzzy
 msgid "Family Tree"
-msgstr "Familj"
+msgstr "Släktträd"
 
 #: ../blocks/block_htmlplus.php:266
-#, fuzzy
 msgid "Current"
-msgstr "Aktuell GEDCOM"
+msgstr "Nuvarande"
 
 #: ../blocks/block_htmlplus.php:267
-#, fuzzy
 msgid "Default"
-msgstr "(Standard)"
+msgstr "Standard"
 
 #: ../blocks/block_htmlplus.php:281
-#, fuzzy
 msgid "Content"
-msgstr "Hjälpinnehåll"
+msgstr "Innehåll"
 
 #: ../blocks/block_htmlplus.php:310
 msgid "Compatibility Mode"
-msgstr ""
+msgstr "Kompatibilitetsmod"
 
 #: ../blocks/block_htmlplus.php:323
 #, fuzzy
@@ -18460,7 +18433,7 @@ msgstr "Diagramområde"
 
 #: ../blocks/charts.php:44
 msgid "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
-msgstr ""
+msgstr "Diagramområde tillåter dig att placera ett diagram på välkomst eller min Gedview portal-sidan. Du kan konfigurera området för att visa anträd, stamträd eller timglasdiagrammet. Du kan också välja startperson."
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
@@ -18468,11 +18441,11 @@ msgstr "HTML-område"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
-msgstr ""
+msgstr "Detta är ett enkelt HTML-område som du kan sätta på dina sida för att lägga till valfri information i."
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "Inloggningsområdet skriver ut användarnamn och lösenord så att användaren kan logga in."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18480,7 +18453,7 @@ msgstr "Område för mest besökta artikel"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "Detta område visar de 10 poster som har blivit besökta oftast. Detta område kräver att träffräknaren är aktiverad i GEDCOM-konfigurationsinställningen. "
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18500,7 +18473,7 @@ msgstr "På denna dagen..."
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "På denna dag i din historia... området visar en lista på händelser som hänt denna dag. Du kan konfigurera detaljnivån som ska visas."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18508,7 +18481,7 @@ msgstr "Område med användarens favoriter"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "Användarområdet för favoriter visar en lista över användarens favoritkompisar i systemet så att man enkelt kan länka till dem."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18516,7 +18489,7 @@ msgstr ""
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "Välkomstområdet för GEDCOM-filen fungerar på samma sätt som välkomstområdet för användare genom att välkomna besökaren till sajten och visa titeln på den aktiva GEDCOM-filen och den nuvarande tiden och datumen."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18537,7 +18510,7 @@ msgstr "GEDCOM-nyhetsområde"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "GEDCOM-nyhetsområdet visar besökaren nyheter, nya publiceringar eller artiklar som postats av administratören.<br /><br />Nyhetersområdet är ett bra ställe att annonsera en uppdaterad GEDCOM-fil eller en släktträff."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18557,7 +18530,7 @@ msgstr "Antal artiklar"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "Detta område visar en tabell över de 10 vanligaste efternamnen i databasen"
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18571,7 +18544,7 @@ msgstr "Inloggad anvädarområde"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "Inloggade användarområdet visar en lista på användare som är inloggade för tillfället."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18583,7 +18556,7 @@ msgstr "Kommande judiska dödsdagar"
 
 #: ../blocks/yahrzeit.php:41
 msgid "The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Blocket kommande judiska dödsdagar visar årsdagar av dödsdatum, som infaller i en nära framtid. Du kan konfigurera perioden som visas och administratören kan konfigurera hur lång in i framtiden man ska kolla efter dödsdagar."
 
 #: ../blocks/gedcom_block.php:39
 msgid "GEDCOM Welcome"
@@ -18595,7 +18568,7 @@ msgstr "Meddelandeområde för användare"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "Meddelandeområdet för användare visar en lista på meddelande som har sänts till den aktiva användaren."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18607,7 +18580,7 @@ msgstr "Slumpmässigt mediaområde"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "Det slumpmässiga mediaområdet väljer ett foto eller annan mediaartikel i den aktiva databasen och visar den för användaren.<br /><br />Administratören bestämmer om det område kan visa mediaartiklar associerade med personer eller händelser."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18633,7 +18606,7 @@ msgstr "Favoriterområdet för GEDCOM-filer"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "Favoriterområde för GEDCOM-filerna tillåter adminstratören möjligheten att välja deras favoritpersoneri GEDCOM-filen så att besökarna kan hitta dem enkelt. Detta är ett sätt att markera personer som är betydelsefulla in din familjehistoria."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18641,16 +18614,15 @@ msgstr "Välkomstblock för användare"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "Välkomstområdet för användaren visar den aktuella datumen och tiden. snabblänkar för att ändra inställningar eller att hoppa till sin egen antavla och en länk att modifiera portalen."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
 msgstr "RSS flöden"
 
 #: ../blocks/rss_block.php:42
-#, fuzzy
 msgid "News and links from the #GEDCOM_TITLE# site"
-msgstr "Nyheter och länkar från %s-sajten"
+msgstr "Nyheter och länkar från #GEDCOM_TITLE#-sajten"
 
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
@@ -18670,11 +18642,11 @@ msgstr "Tema väljarområde"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "Tema-väljarområdet visar tema-väljaren även om temaväljaren är avstängd."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "Ej accepterade ändringar-området visar en lista av poster, för användare med redigeringsrättighter, som har ändrats online som behöver kontrolleras och accepteras. Dessa ändringar väntar på att bli accepterade eller avslagna.<br /><br />Om detta område är aktiverad, kommer användare med acceptera rättigheter kommer att få ett mail om dagen med en notis om att det finns ändringar att kontrollera."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18706,7 +18678,7 @@ msgstr "Användarens dagboksområde"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "Användarens dagboksområde låter användaren att ha anteckningar eller en dagbok online."
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18714,7 +18686,7 @@ msgstr "Min dagbok"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "Nyligen ändrade området kommer att lista alla ändringar som har gjorts i GEDCOM-filen den senaste månaden. Detta område kan hjälpa dig att förbli uppdaterad om vilka ändringar som gjorts. Ändringarna upptäcks genom att kontrollera CHAN-taggen."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18736,7 +18708,7 @@ msgstr "Om du döljer ett tomt område, kan du inte längre ändra konfiguration
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "Statistikområdet för GEDCOM-filer visar lite grundläggande information om databasen som när den skapades och hur många personer som är med i GEDCOM-filen.<br /><br />Den har också en lista för de vanligaste efternamnen. Du kan konfigurera detta område att inte visa vanligaste efternamnslistan och du kan också konfigurera GEDCOM-filen så att det läggs till eller tas bort namn från listan. Du kan ange tröskelvärdet för listan i konfiguration för GEDCOM-filen."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
@@ -18822,14 +18794,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Miniatyrbildsmappen togs bort."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Generera miniatyrbilder automatiskt från "
+msgstr "Miniatyrbilder #thumbnail# genererades automatiskt."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "Miniatyrbild kunde inte raderas."
+msgstr "Miniatyrbilden #thumbnail# kunde inte genereras automatiskt. "
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"
@@ -18906,45 +18876,40 @@ msgid "Delete file"
 msgstr "Radera fil"
 
 #: ../media.php:1072
-#, fuzzy
 msgid "Move to protected directory"
-msgstr "Flytta till skyddade"
+msgstr "Flytta till den skyddad mappen"
 
 #: ../media.php:1076
-#, fuzzy
 msgid "Move to standard directory"
-msgstr "Flytta till vanliga"
+msgstr "Flytta till den vanliga mappen"
 
 #: ../media.php:1090
 msgid "Create thumbnail"
 msgstr "Skapa miniatyrbilder"
 
 #: ../media.php:1165
-#, fuzzy
 msgid "This media object is located on an external server"
-msgstr "Detta mediaobjekt är inte länkat till någon GEDCOM-post."
+msgstr "Mediaobjektet finns på en extern server"
 
 #: ../media.php:1168
-#, fuzzy
 msgid "This media object is in the standard media directory"
-msgstr "Detta mediaobjekt är inte länkat till någon GEDCOM-post."
+msgstr "Mediaobjektet finns i den vanliga mediamappen"
 
 #: ../media.php:1171
-#, fuzzy
 msgid "This media object is in the protected media directory"
-msgstr "Detta mediaobjekt är inte länkat till någon GEDCOM-post."
+msgstr "Mediaobjektet finns i den skyddad mediamappen"
 
 #: ../media.php:1179
 msgid "This thumbnail is located on an external server"
-msgstr ""
+msgstr "Miniatyrmediaobjektet finns på en extern server"
 
 #: ../media.php:1182
 msgid "This thumbnail is in the standard media directory"
-msgstr ""
+msgstr "Miniatyrmediaobjektet finns i den vanliga mediamappen"
 
 #: ../media.php:1185
 msgid "This thumbnail is in the protected media directory"
-msgstr ""
+msgstr "Miniatyrmediaobjektet finns i den skyddade mediamappen"
 
 #: ../media.php:1205
 msgid "The media folder is corrupted."

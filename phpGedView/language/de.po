@@ -1198,7 +1198,7 @@ msgstr "zurück"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "ANMERKUNG: Große Datenbanken benötigen vor dem Herunterladen u.U. eine längere Berechnungszeit. Wenn dabei ein PHP-Timeout auftritt, ist die Datei vermutlich nicht vollständig.<br /><br />Prüfen Sie daher, ob die heruntergeladene Datei im GEDCOM-Format in der letzten Zeile <b>0&nbsp;TRLR</b> enthält. Dateien im XML-Format enthalten als letzte Zeile <b>&lt;/database&gt;</b>. Diese Dateien sind Textdateien, die mit einem einfachen Texteditor geöffnet werden können. Aber achten Sie darauf, die Datei nach dem Öffnen <u>nicht</u> zu speichern.<br /><br />Üblicherweise benötigt das Herunterladen etwa ebensolang wie der Importvorgang."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -2380,7 +2380,7 @@ msgstr "Das geschützte Medien-Verzeichnis im Media-Firewall Verzeichnis ist nic
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "F E H L E R !!!<br />Die Datei <i>#GLOBALS[whichFile]#</i> konnte nicht geschrieben werden.  Bitte prüfen Sie, ob diese Datei die richtigen Schreib-Rechte hat."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -3080,9 +3080,8 @@ msgid "Surname tradition"
 msgstr "Nachnamens-Tradition"
 
 #: ../editconfig_gedcom.php:2130
-#, fuzzy
 msgid "Paternal"
-msgstr "Partner"
+msgstr "väterliche"
 
 #: ../editconfig_gedcom.php:2131 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -3094,7 +3093,7 @@ msgstr "Portugiesisch"
 
 #: ../editconfig_gedcom.php:2133
 msgid "Icelandic"
-msgstr ""
+msgstr "isländische"
 
 #: ../editconfig_gedcom.php:2134 ../includes/specialchars.php:76
 msgid "Polish"
@@ -3230,18 +3229,16 @@ msgid "Author META tag"
 msgstr "META Tag Autor"
 
 #: ../editconfig_gedcom.php:2414
-#, fuzzy
 msgid "Leave this field empty to use the full name of the Genealogy contact."
-msgstr "Lassen Sie dieses Feld leer, um den Titel der aktuellen GEDCOM-Datei zu verwenden."
+msgstr "Lassen Sie dieses Feld leer, um den vollständigen Namen der GEDCOM-Kontaktperson zu verwenden."
 
 #: ../editconfig_gedcom.php:2418 ../help_text.php:2912
 msgid "Publisher META tag"
 msgstr "META Tag Publisher"
 
 #: ../editconfig_gedcom.php:2421 ../editconfig_gedcom.php:2428
-#, fuzzy
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
-msgstr "Lassen Sie dieses Feld leer, um den Titel der aktuellen GEDCOM-Datei zu verwenden."
+msgstr "Lassen Sie dieses Feld leer, um den vollständigen Namen der GEDCOM-Kontaktperson zu verwenden."
 
 #: ../editconfig_gedcom.php:2425 ../help_text.php:2887
 msgid "Copyright META tag"
@@ -3318,9 +3315,8 @@ msgid "Return to the Admin menu"
 msgstr "Zurück zum Verwaltungs-Menü"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "GEDCOM-Datei Bezeichnung"
+msgstr "GEDCOM-Datei"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3359,9 +3355,8 @@ msgid "Check"
 msgstr "Prüfen"
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "Konfiguration"
+msgstr "Konfigurations-Datei"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3391,19 +3386,16 @@ msgid "Edit"
 msgstr "Bearbeiten"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Log-Dateien erzeugen"
+msgstr "Datenschutzdatei"
 
 #: ../editgedcoms.php:259
-#, fuzzy
 msgid "SearchLog files"
-msgstr "SearchLog-Dateien Archiv"
+msgstr "SearchLog-Dateien"
 
 #: ../editgedcoms.php:313
-#, fuzzy
 msgid "ChangeLog files"
-msgstr "ChangeLog-Dateien Archiv"
+msgstr "ChangeLog-Dateien"
 
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
@@ -8793,7 +8785,7 @@ msgstr "CHAN (Letzte Änderung) Datensätze nicht aktualisieren"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:234
 msgid "Link to #GLOBALS[remLinkId]# deleted"
-msgstr ""
+msgstr "Verbindung mit #GLOBALS[remLinkId]# gelöscht"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:254
 #, php-format
@@ -12509,17 +12501,15 @@ msgstr "Kritisch"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #: ../gedcheck.php:75
-#, fuzzy
 msgid "Warning"
-msgstr "Gemälde"
+msgstr "Warnung"
 
 #: ../gedcheck.php:76
-#, fuzzy
 msgid "Info"
-msgstr "Informant"
+msgstr "Information"
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -18747,14 +18737,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Miniaturbild-Verzeichnis erfolgreich entfernt."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Miniaturbild automatisch erstellen aus "
+msgstr "Miniaturbild #thumbnail# wurde automatisch erstellt."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "Miniaturbild konnte nicht gelöscht werden."
+msgstr "Miniaturbild #thumbnail# konnte nicht automatisch erstellt werden."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"

@@ -1198,7 +1198,7 @@ msgstr "חזור"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "הערה: יתכן שזמן העיבוד לפני הורדת מאגרי מידע גדולים לוקח זמן רב.  אם משך הזמן של PHP להורדה אינו מספיק, יתכן והקובץ שהורד אינו שלם.  <br /><br />כדי לוודא שהוא הורד בצורה נכונה, בדוק שהשורה האחרונה של קובץ במבנה GEDCOM היא <b>0&nbsp;TRLR</b> או שהשורה האחרונה של הקובץ במבנה XML היא <b>&lt;/database&gt;</b>.  הקבצים הללו הם טכסט; תוכל להשתמש בעורך טכסט (text editor), מתאים, אבל תודא ש<u>לא</u> תשמור את הקובץ שהורדת אחרי שבדקת אותו.<br /><br />בד\"כ ההורדה אורכת משך זמן דומה למשך ייבוא קובץ ה-GEDCOM המקורי שלך."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -1580,7 +1580,7 @@ msgstr "הרשומה הזאת סומנה למחיקה לאחר אישור המנ
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:54
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:44
 msgid "Age"
-msgstr ""
+msgstr "גיל"
 
 #: ../individual.php:290 ../blocks/gedcom_block.php:54
 msgid "Hit Count:"
@@ -2380,7 +2380,7 @@ msgstr "ספריית המדיה המוגנת הנמצאת בספריית השו�
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "ש ג י א ה !!!<br />לא ניתן לכתוב לקובץ <i>#GLOBALS[whichFile]#</i>. נא בדוק שיש הרשאת כתיבה."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -2503,32 +2503,28 @@ msgid "Calendar format"
 msgstr "מבנה לוח שנה"
 
 #: ../editconfig_gedcom.php:998
-#, fuzzy
 msgid "No calendar conversion"
-msgstr "הרשה הורדת אירועי לוח שנה?"
+msgstr "אין תרגום מבנה תאריך"
 
 #: ../editconfig_gedcom.php:999
-#, fuzzy
 msgid "Gregorian"
-msgstr "גרמנית"
+msgstr "גרגוריאני"
 
 #: ../editconfig_gedcom.php:1000
-#, fuzzy
 msgid "Julian"
-msgstr "ינואר"
+msgstr "יוליאני"
 
 #: ../editconfig_gedcom.php:1001 ../includes/specialchars.php:66
 msgid "French"
 msgstr "צרפתית"
 
 #: ../editconfig_gedcom.php:1002
-#, fuzzy
 msgid "Jewish"
-msgstr "שוודית"
+msgstr "יהודי"
 
 #: ../editconfig_gedcom.php:1003
 msgid "Jewish and Gregorian"
-msgstr ""
+msgstr "יהודי וגרגוריאני"
 
 #: ../editconfig_gedcom.php:1004 ../includes/specialchars.php:82
 msgid "Hebrew"
@@ -2536,11 +2532,11 @@ msgstr "עברית"
 
 #: ../editconfig_gedcom.php:1005
 msgid "Hebrew and Gregorian"
-msgstr ""
+msgstr "עברי וגרגוריאני"
 
 #: ../editconfig_gedcom.php:1006
 msgid "Hijri"
-msgstr ""
+msgstr "לוח שנה מוסלמי"
 
 #: ../editconfig_gedcom.php:1007 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -3080,9 +3076,8 @@ msgid "Surname tradition"
 msgstr "מסורת שם משפחה"
 
 #: ../editconfig_gedcom.php:2130
-#, fuzzy
 msgid "Paternal"
-msgstr "שותף"
+msgstr "לפי אב"
 
 #: ../editconfig_gedcom.php:2131 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -3094,7 +3089,7 @@ msgstr "פורטוגזית"
 
 #: ../editconfig_gedcom.php:2133
 msgid "Icelandic"
-msgstr ""
+msgstr "איסלנדי"
 
 #: ../editconfig_gedcom.php:2134 ../includes/specialchars.php:76
 msgid "Polish"
@@ -3230,18 +3225,16 @@ msgid "Author META tag"
 msgstr "תווית META של מחבר"
 
 #: ../editconfig_gedcom.php:2414
-#, fuzzy
 msgid "Leave this field empty to use the full name of the Genealogy contact."
-msgstr "השאר שדה זה ריק כדי להשתמש בכותרת של ה-GEDCOM הפעיל עבור הערך זה."
+msgstr "השאר שדה זה ריק כדי להשתמש בשם המלא של הקשר לנתוני שושלת יוחסין."
 
 #: ../editconfig_gedcom.php:2418 ../help_text.php:2912
 msgid "Publisher META tag"
 msgstr "תווית META של מוציא לאור"
 
 #: ../editconfig_gedcom.php:2421 ../editconfig_gedcom.php:2428
-#, fuzzy
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
-msgstr "השאר שדה זה ריק כדי להשתמש בכותרת של ה-GEDCOM הפעיל עבור הערך זה."
+msgstr "השאר שדה זה ריק כדי להשתמש בשם המלא של הקשר לנתוני שושלת יוחסין."
 
 #: ../editconfig_gedcom.php:2425 ../help_text.php:2887
 msgid "Copyright META tag"
@@ -3318,9 +3311,8 @@ msgid "Return to the Admin menu"
 msgstr "חזור לתפריט הניהול"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "כותרת GEDCOM"
+msgstr "קובץ GEDCOM"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3359,9 +3351,8 @@ msgid "Check"
 msgstr "בדוק"
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "תצורה"
+msgstr "קובץ תצורה"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3391,19 +3382,16 @@ msgid "Edit"
 msgstr "ערך"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "גנוז קבצי יומן"
+msgstr "קובץ פרטיות"
 
 #: ../editgedcoms.php:259
-#, fuzzy
 msgid "SearchLog files"
-msgstr "שמור קבצי לוג של החיפוש"
+msgstr "קובצי לוג של החיפוש"
 
 #: ../editgedcoms.php:313
-#, fuzzy
 msgid "ChangeLog files"
-msgstr "שמור קבצי לוג של השינויים"
+msgstr "קובצי לוג השינויים"
 
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
@@ -4825,7 +4813,7 @@ msgstr "נימצא קובץ GEDCOM בעל שם זהה. אם תבחר להמשי�
 
 #: ../uploadgedcom.php:493
 msgid "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import."
-msgstr ""
+msgstr "שינויים לא מאושרים קיימים עבור ה-GEDCOM הנוכחי. אם תמשיך בייבוא זה, השינויים שממתינים לאישור יבוטלו. עליך לעיין בשינויים הממתינים לפני שתמשיך בייבוא."
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
@@ -5416,7 +5404,7 @@ msgstr "cache נקה קובצי"
 
 #: ../index_edit.php:597
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr ""
+msgstr "כאן תמצא תאור קצר של כל אזור שניתן לשים על דף הברוך הבא או דף MyGedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>שם</b></td><td class='list_value'><b>תאור</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40 ../help_text.php:3888
 msgid "Clippings Cart"
@@ -5687,9 +5675,8 @@ msgstr "משפחה"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "כותרת"
+msgstr "שנה"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -7933,7 +7920,7 @@ msgstr "משפחה עם"
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "לא בחרת מועדפים.<br /><br />כדי להוסיף אדם, משפחה או מקור לרשימת המועדפים שלך, לחץ על קישור <b>הוסף מועדף חדש</b> כדי להציג מספר שדות שבהם ניתן למלא או לחפש קוד זיהוי. במקום קוד זיהוי ניתן למלא URL וכותרת."
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8277,9 +8264,8 @@ msgstr "גיל האישה"
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "ערוך שם"
+msgstr "שם"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -8787,7 +8773,7 @@ msgstr "אל תעדכן רשומות CHAN (שינוי האחרון)"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:234
 msgid "Link to #GLOBALS[remLinkId]# deleted"
-msgstr ""
+msgstr "הקישור ל#GLOBALS[remLinkId]# נמחק"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:254
 #, php-format
@@ -12498,17 +12484,15 @@ msgstr "קריטי"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr ""
+msgstr "שגיאה"
 
 #: ../gedcheck.php:75
-#, fuzzy
 msgid "Warning"
-msgstr "תמונה"
+msgstr "התראה"
 
 #: ../gedcheck.php:76
-#, fuzzy
 msgid "Info"
-msgstr "מוסר מידע"
+msgstr "מידע"
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -18110,7 +18094,7 @@ msgstr "הקש על הקישור מתחת או הדבק אותו לדפדפן ש
 
 #: ../login_register.php:136
 msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
-msgstr ""
+msgstr "אחרי שהתחברת, בחר בקישור המשתמש שלי מתחת לתפריט דף MyGedView ומלא את שדות הסיסמא כדי לשנות את הסיסמא שלך."
 
 #: ../login_register.php:142
 #, php-format
@@ -18276,7 +18260,7 @@ msgstr "רמות צאצאים"
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "אזור אירועים קרובים מראה רשימה של אירועים שיתרחשו בקרוב. תוכל לקבוע את כמות הנתונים שתראה, והמנהלן יכול לקבוע את תחום הזמן הקובע לאזור."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18300,9 +18284,8 @@ msgid "Top 10 Given Names"
 msgstr "עשרת השמות הפרטיים השכיחים"
 
 #: ../blocks/top10_givnnames.php:41
-#, fuzzy
 msgid "This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable."
-msgstr "האזור מציג רשימה של השמות הפרטיים השכיחים במאגר הנתונים הזה. ניתן להגדיר את מספר השמות שיופיעו ברשימה."
+msgstr "האזור מציג טבלה של 10 שמות פרטיים השכיחים במאגר הנתונים. ניתן לשנות את המספר של השמות הפרטיים שמוצגים באזור."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_givnnames.php:82
@@ -18321,7 +18304,7 @@ msgstr "HTML מתקדם"
 
 #: ../blocks/block_htmlplus.php:44
 msgid "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text."
-msgstr ""
+msgstr "זהו אזור HTML שתוכל לשים בדף שלך כדי להוסיף הודעה כלשהיא. ניתן להניס הפניות קישור למידע מקובץ ה-GEDCOM שלך לתוך טכסט ה-HTML."
 
 #: ../blocks/block_htmlplus.php:49 ../blocks/html_block.php:44
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -18332,43 +18315,36 @@ msgid "to change what is printed here.</p>"
 msgstr "כדי לראות מה שמודפס כאן.</p>"
 
 #: ../blocks/block_htmlplus.php:224
-#, fuzzy
 msgid "Templates"
-msgstr "מקדש מורמונים "
+msgstr "תבניות"
 
 #: ../blocks/block_htmlplus.php:246
-#, fuzzy
 msgid "Custom"
-msgstr "מאורע מותאם"
+msgstr "מותאם"
 
 #: ../blocks/block_htmlplus.php:262
-#, fuzzy
 msgid "Family Tree"
-msgstr "משפחה"
+msgstr "אילן יוחסין"
 
 #: ../blocks/block_htmlplus.php:266
-#, fuzzy
 msgid "Current"
-msgstr "ספירה"
+msgstr "נוכחי"
 
 #: ../blocks/block_htmlplus.php:267
-#, fuzzy
 msgid "Default"
-msgstr "(ברירת המחדל)"
+msgstr "ברירת מחדל"
 
 #: ../blocks/block_htmlplus.php:281
-#, fuzzy
 msgid "Content"
-msgstr "תוכן העזרה"
+msgstr "תוכן"
 
 #: ../blocks/block_htmlplus.php:310
 msgid "Compatibility Mode"
-msgstr ""
+msgstr "צורת תאימות"
 
 #: ../blocks/block_htmlplus.php:323
-#, fuzzy
 msgid "Extended Interface"
-msgstr "ערוך מגדר"
+msgstr "מקשר מורחב"
 
 #: ../blocks/charts.php:43
 msgid "Charts Block"
@@ -18376,7 +18352,7 @@ msgstr "אזור תרשימים"
 
 #: ../blocks/charts.php:44
 msgid "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
-msgstr ""
+msgstr "אזור התרשימים מאפשר לשים תרשים על הדף ברוכים הבאים או על הפורטל MyGedView.  ניתן לקנפג את האזור כך שיראה אב-אבות, צאצאים או שעון חול.  אפשר גם לבחור את אדם המוצא של התרשים."
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
@@ -18384,11 +18360,11 @@ msgstr "HTML"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
-msgstr ""
+msgstr "זהו אזור HTML פשוט שתוכל לשים על הדף שלך ולהוסיף בו כל הודעה שתרצה."
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "אזור התחברות מקבל קוד משתמש וסיסמא עבור התחברות משתמשים לאתר."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18396,7 +18372,7 @@ msgstr "הפריטים הנצפים ביותר"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "אזור זה מציג את עשרת הרשומות הכי נצפות. מונה הפגיעות בהגדרת התצורה של ה-GEDCOM חייב לפעול כדי שהאזור יהיה פעיל."
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18416,7 +18392,7 @@ msgstr "ביום הזה"
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "אזור ביום הזה - בהיסטוריה שלך ... מראה רשימה של אירועים שהתרחשו היום. אם אין אירועים, תוכל לקבוע את כמות הנתונים שתראה."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18424,7 +18400,7 @@ msgstr "מועדפים של משתמש"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "אזור מועדפים של המשתמש מראה למשתמש רשימה של האנשים המועדפים שלו בתוך מאגר המידע כך שיוכל לעבור בקלות בעזרת הקישור אל נתוניהם."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18432,7 +18408,7 @@ msgstr "התחל"
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "אזור GEDCOM ברוכים הבאים פועלת בצורה דומה לאזור ברוכים הבאים של המשתמש. הוא מברך את המבקר לאתר ומראה את הכותרת של מאגר הנתונים הפעיל ואת היום והשעה הנוכחיים."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18452,7 +18428,7 @@ msgstr "חדשות GEDCOM"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "אזור החדשות של GEDCOM מראה למבקר חדשות או כתבות שהמנהלן העלה למערכת.<br /><br />אזור החדשות הוא מקום טוב להודיע על עדכון מאגר הנתונים,  על מפגש משפחתי או על לידת ילד."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18472,7 +18448,7 @@ msgstr "מספר כניסות"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "האזור מציג טבלה של 10 שמות המשפחה השכיחים במאגר הנתונים. ניתן לשנות את המספר של שמות המשפחה שמוצגים באזור. ניתן לקבוע הגדרות בתצורת ה-GEDCOM כך ששמות מסוימים לא יופיעו ברשימה."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18486,7 +18462,7 @@ msgstr "משתמשים מחוברים"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "אזור משתמשים מחוברים מראה רשימה של המשתמשים המחוברים עכשיו לאתר."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18498,7 +18474,7 @@ msgstr "ימי שנה קרובים"
 
 #: ../blocks/yahrzeit.php:41
 msgid "The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "אזור ימי שנה קרובים מראה רשימה של פטירות לפי תאריך עברי שיתרחשו בקרוב. תוכל לקבוע את התקופה שתראה, והמנהלן יכול לקבוע את תחום הזמן הקובע לאזור."
 
 #: ../blocks/gedcom_block.php:39
 msgid "GEDCOM Welcome"
@@ -18510,7 +18486,7 @@ msgstr "הודעות המשתמש"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "אזור הודעות המשתמש מראה רשימה של הודעות שנשלחו למשתמש פעיל."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18522,7 +18498,7 @@ msgstr "מדיה אקראית"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "אזור מדיה אקראית מראה בצורה אקראית תמונה או פריט מדיה אחר ממאגר הנתונים הפעיל ומציג אותו למשתמש.<br /><br />המנהלן קובע אם האזור יראה פרטי מדיה הקשורים או לאנשים או למאורעות."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18548,7 +18524,7 @@ msgstr "מועדפי GEDCOM"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "אזור מועדפי GEDCOM מאפשר למנהלן האתר לציין אנשים במאגר הנתונים כך שכולם ימצאו אותם בקלות. זו דרך להדגיש את האנשים החשובים בהיסטורית משפחתך."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18556,16 +18532,15 @@ msgstr "ברוכים הבאים של המשתמש"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "אזור ברוכים הבאים של המשתמש מראה למשתמש את היום והזמן הנוכחיים, קישורים מהירים לעדכון נתוני קוד המשתמש וקישור לתרשים אילן היוחסין שלו וקישור להתאמת דף הפורטל MyGedView."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
 msgstr "הזנות RSS"
 
 #: ../blocks/rss_block.php:42
-#, fuzzy
 msgid "News and links from the #GEDCOM_TITLE# site"
-msgstr "חדשות וקישורים מאתר ה-%s "
+msgstr "חדשות וקישורים מאתר ה-#GEDCOM_TITLE# "
 
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
@@ -18573,7 +18548,7 @@ msgstr "&quot;משימות - To Do&quot; לביצוע"
 
 #: ../blocks/todo.php:43
 msgid "The To Do block lists all outstanding _TODO facts in the database."
-msgstr ""
+msgstr "אזור &quot;משימות - To Do&quot; מציג את כל עובדות <span dir=\"ltr\">_TODO</span> שעדיין לא טופלו בקובץ ה-GEDCOM שלך."
 
 #: ../blocks/todo.php:116
 msgid "There are no &quot;To Do&quot; tasks."
@@ -18585,11 +18560,11 @@ msgstr "בחירת עיצוב"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "האזור לבחירת עיצוב מציג את תיבת הבחירה גם אם שינוי העיצוב אינו פעיל."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "אזור השינויים שלא התקבלו מראה למשתמשים בעלי הרשאת עדכון את הרשומות ששונו באון ליין ושיש עדיין לבדוק ולאשר אותן. השינויים ממתינים לאישור או דחייה.<br /><br />אם האזור פעיל, אז המשתמשים בעלי הרשאת אישור יקבלו דואר אלקטרוני פעם ביום עם הודעה שיש שינויים לבדיקה."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18621,7 +18596,7 @@ msgstr "יומן המשתמש"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "אזור יומן המשתמש מאפשר למשתמש לשמור הערות או כניסות יומן בתוך המערכת."
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18629,7 +18604,7 @@ msgstr "היומן שלי"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "אזור השינויים האחרונים מציג את כל השינויים שנעשו למאגר המידע בחודש האחרון. האזור יעזור לך להיות מעודכן לגבי השינויים. השינויים מוצגים על סמך נתון CHAN (תאריך השינוי האחרון) שמוגדר בתקן של ה-GEDCOM."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18651,7 +18626,7 @@ msgstr "אם תסתיר אזור ריק, לא תוכל לשנות את ההגד�
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "אזור סטטיסטיקות GEDCOM מראה למבקרים נתונים בסיסיים על מאגר הנתונים, כמו למשל מתי הוא נוצר וכמה אנשים נכללים בו.<br /><br />הוא כולל רשימה של שמות משפחה שכיחים. ניתן לעצב את האזור לא להראות את רשימת השמות השכיחים וניתן להגדיר את ה-GEDCOM להסיר או להוסיף שמות מהרשימה. ניתן לקבוע את הסף להופעה ברשימה בהגדרת התצורה של קובץ ה-GEDCOM."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
@@ -18736,14 +18711,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "תיקיית התמונות המזעריות הוסרה בהצלחה."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "צור תמונה מזערית אוטומטית מ-"
+msgstr "תמונה מזערית #thumbnail# נוצרה אוטומטית."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "לא ניתן למחוק את קובץ התמונה המזערית."
+msgstr "לא ניתן ליצור בצורה אוטומטית תמונה מזערית #thumbnail#."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"
@@ -18819,45 +18792,40 @@ msgid "Delete file"
 msgstr "מחק קובץ"
 
 #: ../media.php:1072
-#, fuzzy
 msgid "Move to protected directory"
-msgstr "העבר למוגן"
+msgstr "העבר לתיקייה מוגנת"
 
 #: ../media.php:1076
-#, fuzzy
 msgid "Move to standard directory"
-msgstr "העבר לרגיל"
+msgstr "העבר לתיקייה רגילה"
 
 #: ../media.php:1090
 msgid "Create thumbnail"
 msgstr "צור תמונה מזערית"
 
 #: ../media.php:1165
-#, fuzzy
 msgid "This media object is located on an external server"
-msgstr "המדיה הזו אינה מקושרת לשום רשומת GEDCOM."
+msgstr "ישות המדיה הזו נמצאת על שרת חיצוני"
 
 #: ../media.php:1168
-#, fuzzy
 msgid "This media object is in the standard media directory"
-msgstr "המדיה הזו אינה מקושרת לשום רשומת GEDCOM."
+msgstr "ישות המדיה הזו נמצאת בתיקיית המדיה הרגילה"
 
 #: ../media.php:1171
-#, fuzzy
 msgid "This media object is in the protected media directory"
-msgstr "המדיה הזו אינה מקושרת לשום רשומת GEDCOM."
+msgstr "ישות המדיה הזו נמצאת בתיקיית המדיה המוגנת"
 
 #: ../media.php:1179
 msgid "This thumbnail is located on an external server"
-msgstr ""
+msgstr "התמונה הממוזערת הזו נמצאת על שרת חיצוני"
 
 #: ../media.php:1182
 msgid "This thumbnail is in the standard media directory"
-msgstr ""
+msgstr "התמונה הממוזערת הזו נמצאת בתיקיית המדיה הרגילה"
 
 #: ../media.php:1185
 msgid "This thumbnail is in the protected media directory"
-msgstr ""
+msgstr "התמונה הממוזערת הזו נמצאת בתיקיית המדיה המוגנת"
 
 #: ../media.php:1205
 msgid "The media folder is corrupted."

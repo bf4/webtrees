@@ -1208,7 +1208,7 @@ msgstr "Tilbake"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "NB! Store slektsfiler (GEDCOM) kan ta lang tid å forberede før en nedlastning (download).  Dersom PHP melder at tiden har gått ut før nedlastningen er ferdig, så kan det være at du ikke har mottatt hele filen.  For å sjekke om den nedlastede slektsfilen er korrekt, kan se om filen inneholder linjen <b>0 TRLR</b> på slutten.  Som en tommelfinger-regel vil tiden det tar å laste ned slektsfilen, være like lang som det tok å importere den (avhengig av hastigheten på internett-tilkoblingen din)."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -1400,9 +1400,8 @@ msgstr "Merk søkemaskiner manuelt ved IP"
 #: ../edit_privacy.php:658 ../edit_privacy.php:756
 #: ../blocks/gedcom_news.php:131 ../blocks/user_messages.php:88
 #: ../blocks/user_messages.php:131 ../blocks/user_blog.php:74 ../media.php:942
-#, fuzzy
 msgid "Delete"
-msgstr "Slett navn"
+msgstr "Slett"
 
 #: ../manageservers.php:249 ../manageservers.php:296 ../manageservers.php:343
 #: ../index_edit.php:516 ../index_edit.php:536 ../clippings.php:281
@@ -2393,7 +2392,7 @@ msgstr "Den beskyttede mediakatalogen i rotkatalogen til Mediabrannmuren er skri
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "F E I L !!!<br />Kunne ikke skrive til filen <i>#GLOBALS[whichFile]#</i>.  Kontroller korrekte skrivetilganger."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -2516,32 +2515,28 @@ msgid "Calendar format"
 msgstr "Format på kalender"
 
 #: ../editconfig_gedcom.php:998
-#, fuzzy
 msgid "No calendar conversion"
-msgstr "Tillat nedlasting av hendelser fra kalenderen?"
+msgstr "Ingen kalenderkonvertering"
 
 #: ../editconfig_gedcom.php:999
-#, fuzzy
 msgid "Gregorian"
-msgstr "Tysk"
+msgstr "Gregoriansk"
 
 #: ../editconfig_gedcom.php:1000
-#, fuzzy
 msgid "Julian"
-msgstr "Jan"
+msgstr "Juliansk"
 
 #: ../editconfig_gedcom.php:1001 ../includes/specialchars.php:66
 msgid "French"
 msgstr "Fransk"
 
 #: ../editconfig_gedcom.php:1002
-#, fuzzy
 msgid "Jewish"
-msgstr "Svensk"
+msgstr "Jødisk"
 
 #: ../editconfig_gedcom.php:1003
 msgid "Jewish and Gregorian"
-msgstr ""
+msgstr "Jødisk og Gregoriansk"
 
 #: ../editconfig_gedcom.php:1004 ../includes/specialchars.php:82
 msgid "Hebrew"
@@ -2549,11 +2544,11 @@ msgstr "Hebraisk"
 
 #: ../editconfig_gedcom.php:1005
 msgid "Hebrew and Gregorian"
-msgstr ""
+msgstr "Hebraisk og Gregoriansk"
 
 #: ../editconfig_gedcom.php:1006
 msgid "Hijri"
-msgstr ""
+msgstr "Hijri"
 
 #: ../editconfig_gedcom.php:1007 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -3093,9 +3088,8 @@ msgid "Surname tradition"
 msgstr "Etternavnstradisjon"
 
 #: ../editconfig_gedcom.php:2130
-#, fuzzy
 msgid "Paternal"
-msgstr "Partner"
+msgstr "Patronymikon"
 
 #: ../editconfig_gedcom.php:2131 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -3107,7 +3101,7 @@ msgstr "Portugisisk"
 
 #: ../editconfig_gedcom.php:2133
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandsk"
 
 #: ../editconfig_gedcom.php:2134 ../includes/specialchars.php:76
 msgid "Polish"
@@ -3243,18 +3237,16 @@ msgid "Author META tag"
 msgstr "META tag: Forfatter"
 
 #: ../editconfig_gedcom.php:2414
-#, fuzzy
 msgid "Leave this field empty to use the full name of the Genealogy contact."
-msgstr "La feltet være tomt for å bruke titlen til den aktive slektsbasen."
+msgstr "La feltet være tomt for å bruke det fulle navnet til slektsbasens kontaktperson."
 
 #: ../editconfig_gedcom.php:2418 ../help_text.php:2912
 msgid "Publisher META tag"
 msgstr "META tag: Utgiver"
 
 #: ../editconfig_gedcom.php:2421 ../editconfig_gedcom.php:2428
-#, fuzzy
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
-msgstr "La feltet være tomt for å bruke titlen til den aktive slektsbasen."
+msgstr "La feltet være tomt for å bruke det fulle navnet til slektsbasens kontaktperson."
 
 #: ../editconfig_gedcom.php:2425 ../help_text.php:2887
 msgid "Copyright META tag"
@@ -3331,9 +3323,8 @@ msgid "Return to the Admin menu"
 msgstr "Tilbake til Admin-meny"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "Tittel til Slektsbasen"
+msgstr "GEDCOMfil"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3372,9 +3363,8 @@ msgid "Check"
 msgstr "Sjekk"
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "Program-innstillinger"
+msgstr "Konfigurasjonsfil"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3404,19 +3394,16 @@ msgid "Edit"
 msgstr "Endre"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Arkiver logfiler"
+msgstr "Personvernfil"
 
 #: ../editgedcoms.php:259
-#, fuzzy
 msgid "SearchLog files"
-msgstr "Arkivere søke-logg-filer"
+msgstr "Søke-logg-filer"
 
 #: ../editgedcoms.php:313
-#, fuzzy
 msgid "ChangeLog files"
-msgstr "Arkiver endringsloggfiler"
+msgstr "Filer for endringslogg"
 
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
@@ -4844,7 +4831,7 @@ msgstr "Dersom du velger å fortsette, vil den eksisterende slektsfilen bli erst
 
 #: ../uploadgedcom.php:493
 msgid "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import."
-msgstr ""
+msgstr "Denne slektsbasen har endringer på vent.  Dersom du fortsetter denne importen, vil disse endringene bli lagt til databasen uten at du at du får godkjent dem først.  Du BØR se gjennom endringene før du fortsetter importen!"
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
@@ -5437,7 +5424,7 @@ msgstr "Rens hurtigminne-filen"
 
 #: ../index_edit.php:597
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr ""
+msgstr "Her er en kort beskrivelse for hver av de rammene du har valgt for sidene Velkommen eller Min GedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>Navn</b></td><td class='list_value'><b>Beskrivelse</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40 ../help_text.php:3888
 msgid "Clippings Cart"
@@ -5695,7 +5682,7 @@ msgstr "Hele posten"
 
 #: ../search.php:302 ../modules/batch_update/plugins/search_replace.php:117
 msgid "Whole words only"
-msgstr ""
+msgstr "Kun hele ord"
 
 #: ../search.php:321
 msgid "Given name"
@@ -5708,9 +5695,8 @@ msgstr "Etternavn"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "Toppfelt"
+msgstr "År"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -6382,13 +6368,13 @@ msgstr "Legg til en ny kildehenvisning"
 #: ../modules/googlemap/pedigree_map.php:660
 #: ../modules/googlemap/pedigree_map.php:697
 msgid "Grandfather"
-msgstr ""
+msgstr "Morfar"
 
 #: ../includes/functions/functions_charts.php:818
 #: ../modules/googlemap/pedigree_map.php:658
 #: ../modules/googlemap/pedigree_map.php:695
 msgid "Grandmother"
-msgstr ""
+msgstr "Mormor"
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
 #: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:71
@@ -7961,7 +7947,7 @@ msgstr "Familie med"
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "<i>Du har ikke valgt noen favoritter enda!</i><br />For å legge til en person til dine favoritter, kan du enten finne siden med fakta om personen og så klikke på linken <br />\"Legg til i Mine favoritter\" eller bruk ID-feltet under for å legge til en person ved hjelp av personens ID-nummer."
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8307,9 +8293,8 @@ msgstr "Konens alder"
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "Rediger navn"
+msgstr "Navn"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -10076,7 +10061,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:341 ../edit_merge.php:228
 #: ../edit_merge.php:234
 msgid "from"
-msgstr ""
+msgstr "fra"
 
 #: ../modules/googlemap/pedigree_map.php:343
 #, fuzzy
@@ -12540,17 +12525,15 @@ msgstr "Kritisk"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr ""
+msgstr "Feil"
 
 #: ../gedcheck.php:75
-#, fuzzy
 msgid "Warning"
-msgstr "Maleri"
+msgstr "Varsel"
 
 #: ../gedcheck.php:76
-#, fuzzy
 msgid "Info"
-msgstr "Informant"
+msgstr "Info"
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -18151,7 +18134,7 @@ msgstr "Vennligst klikk på linken under. Logg deg inn med det nye passordet. Du
 
 #: ../login_register.php:136
 msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
-msgstr ""
+msgstr "Etter at du har logget deg inn, velg da 'Min konto' i menyen 'Min GedView' og angi et nytt passord i feltet for å endre passordet ditt."
 
 #: ../login_register.php:142
 #, php-format
@@ -18317,7 +18300,7 @@ msgstr "Etterkommerledd"
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Rammen for kommende begivenheter viser en liste med begivenheter i den aktive slektsfilen som vil skje de neste 30 dagene.  For en bruker vil denne rammen bare vise levende personer.  På hovedsiden vil alle personer/familier bli vist (NB. Her vil personvern-valg kunne redusere listen)."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18343,7 +18326,7 @@ msgstr "Topp 10 fornavn"
 
 #: ../blocks/top10_givnnames.php:41
 msgid "This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable."
-msgstr ""
+msgstr "Denne blokka viser en tabell av de 10 mest brukte fornavn i databasen.  Antallet fornavn som skal vises i denne blokka er konfigurerbart."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_givnnames.php:82
@@ -18362,7 +18345,7 @@ msgstr "Avansert HTML"
 
 #: ../blocks/block_htmlplus.php:44
 msgid "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text."
-msgstr ""
+msgstr "Dette er en HTML-ramme som du kan plassere på siden din for å vise ulike beskjeder.  Du kan legge inn referanser til opplysninger i slektsbasen din inn i HTML-teksten."
 
 #: ../blocks/block_htmlplus.php:49 ../blocks/html_block.php:44
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -18373,43 +18356,36 @@ msgid "to change what is printed here.</p>"
 msgstr "for å endre det som skal stå her.</p>"
 
 #: ../blocks/block_htmlplus.php:224
-#, fuzzy
 msgid "Templates"
-msgstr "Mormoner-tempel"
+msgstr "Maler"
 
 #: ../blocks/block_htmlplus.php:246
-#, fuzzy
 msgid "Custom"
-msgstr "Egendef. hendelse"
+msgstr "Brukertilpasset"
 
 #: ../blocks/block_htmlplus.php:262
-#, fuzzy
 msgid "Family Tree"
-msgstr "Familie"
+msgstr "Slektstre"
 
 #: ../blocks/block_htmlplus.php:266
-#, fuzzy
 msgid "Current"
-msgstr "Antall"
+msgstr "Nåværende valg"
 
 #: ../blocks/block_htmlplus.php:267
-#, fuzzy
 msgid "Default"
-msgstr "(Standard)"
+msgstr "Standardvalg"
 
 #: ../blocks/block_htmlplus.php:281
-#, fuzzy
 msgid "Content"
-msgstr "Emner i Hjelp"
+msgstr "Innhold"
 
 #: ../blocks/block_htmlplus.php:310
 msgid "Compatibility Mode"
-msgstr ""
+msgstr "Kompatibilitetsmodus"
 
 #: ../blocks/block_htmlplus.php:323
-#, fuzzy
 msgid "Extended Interface"
-msgstr "Endre kjønn"
+msgstr "Utvidet grenesnitt"
 
 #: ../blocks/charts.php:43
 msgid "Charts Block"
@@ -18417,7 +18393,7 @@ msgstr "Diagramblokken"
 
 #: ../blocks/charts.php:44
 msgid "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
-msgstr ""
+msgstr "Med Diagramblokken kan du plassere et diagram på velkomstsiden eller MyGedView-siden Du kan konfigurere blokken til å vise et anediagram, etterkommerdiagram eller timeglassvisning.  Du kan også bestemme rotpersonen til diagrammet."
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
@@ -18425,11 +18401,11 @@ msgstr "Rammen Enkle beskjeder (HTML)"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
-msgstr ""
+msgstr "Dette er en enkel ramme som du kan legge på siden din for å vise en beskjed (i HTML-format)."
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "Rammen for 'Logg inn' skriver et brukernavn og passord for brukere slik at de kan logg seg inn."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18437,7 +18413,7 @@ msgstr "Rammen Vist flest ganger"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "Denne rammen vil vise de 10 mest viste personen/familiene.  Denne rammen krever at telleren er aktivert i innstillingene for konfigurasjonen for slektsfilen."
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18457,7 +18433,7 @@ msgstr "Rammen Årsdag for hendelser i slekten"
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "Rammen for Årsdag for hendelser viser en personliste som er knyttet til hendelser i den aktive slektsfilen dagen i dag.  Dersom det ikke er noen hendelser, vises heller ikke rammen.  På \"din\" GedView side vil denne rammen bare vise levende personer.  På hovedsiden vil alle personer / familier bli vist (NB. Her vil personvern-valg kunne redusere listen)."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18465,7 +18441,7 @@ msgstr "Rammen Brukeres favoritter-personer"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "Rammen for brukeres Favoritter viser en liste med deres egne \"favoritt-personer\" i slekten slik at de lett kan finnes igjen."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18473,7 +18449,7 @@ msgstr "Kom i gang"
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "Rammen for informasjon virker på samme måte som den enkelte brukers velkomstmelding, ved at besøkende på siden ønskes velkommen, viser tittelen på standard aktive slektsfil og gjeldende dato og tid."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18493,7 +18469,7 @@ msgstr "Rammen Nyheter for slektsbasen"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "Nyhetsrammen viser besøkende siste nytt eller artikler lagt inn av en bruker med administrator-rettigheter.<br />Rammen er et fint sted å bekjentgjøre oppdatering av slektsbasen eller et slektstevne."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18513,7 +18489,7 @@ msgstr "Antall artikler"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "Rammen viser en tabell med de 10 mest viste etternavnene i slektsbasen"
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18527,7 +18503,7 @@ msgstr "Rammen Brukere som er logget inn"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "Rammen for brukere som er logget inn, viser en liste med bruker som er logget inn på det gjeldende tidspunktet..."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18539,7 +18515,7 @@ msgstr "Kommende Yahrzeiten"
 
 #: ../blocks/yahrzeit.php:41
 msgid "The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Blokka Kommende Yahrzeiten viser årsdager for dødsdatoer som inntreffer i nær framtid.  Du kan konfigurere tiden fram, og administratoren kan konfigurere hvor langt inn i framtida denne blokka skal vise."
 
 #: ../blocks/gedcom_block.php:39
 msgid "GEDCOM Welcome"
@@ -18551,7 +18527,7 @@ msgstr "Rammen Bruker-beskjeder"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "Rammen for bruker-beskjeder viser en liste med beskjeder som har blitt sendt til de aktive brukerne."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18563,7 +18539,7 @@ msgstr "Rammen Tilfeldig utvalgt bilde- / mediefil"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "Rammen for tilfeldig viste bilde / mediefil velger et tilfeldig foto eller annet medie-objekt i den aktive slektsbasen og viser det til brukeren."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18589,7 +18565,7 @@ msgstr "Rammen Favoritter i slektsbasen"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "Rammen for Favoritter gir administrator på nettstedet muligheten til å velge ut noen sentrale personer i slektsfilen som vil være av interesse for de fleste besøkende. På den måten kan de lett finne disse favoritt-personene og er en måte å fremheve disse personene som sentrale i slekthistorien."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18597,16 +18573,15 @@ msgstr "Rammen Bruker/eier-info"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "Rammen for brukeres egen siden viser brukeren, gjeldende dato og tid, hurtiglinker for endre egen konto eller å gå til deres eget slektstre, og en link for å tilpasse egen siden."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
 msgstr "RSS lenker"
 
 #: ../blocks/rss_block.php:42
-#, fuzzy
 msgid "News and links from the #GEDCOM_TITLE# site"
-msgstr "Nyheter og lenker fra nettstedet %s"
+msgstr "Nyheter og lenker fra nettstedet #GEDCOM_TITLE#"
 
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
@@ -18614,7 +18589,7 @@ msgstr "&quot;Skulle ha gjort&quot;-gjøremål"
 
 #: ../blocks/todo.php:43
 msgid "The To Do block lists all outstanding _TODO facts in the database."
-msgstr ""
+msgstr "Skulle ha gjort-blokka lister alle utestående _TODO fakta i databasen."
 
 #: ../blocks/todo.php:116
 msgid "There are no &quot;To Do&quot; tasks."
@@ -18626,11 +18601,11 @@ msgstr "Rammen Velg stil"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "Rammen for stilvalg viser valgfeltet for ønsket stil selv om valget for å bytte stil ikke er aktivert."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "Rammen Endringer på vent, vil gi brukere med rett til å endre opplysninger online, en mulighet til å se en endringsliste før disse er blitt godkjent.  Disse endringen kan enten bli godkjent eller forkastet.<br /><br />Dersom denne rammen er aktiv, vil brukere med rettighet til å godkjenne motta en e-post daglig som en påminning om å sjekke endringer."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18662,7 +18637,7 @@ msgstr "Rammen Notatblokk for bruker"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "Rammen med en notatblokk lar den enkelte bruker legge inn notater eller som en online-oppslagstavle."
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18670,7 +18645,7 @@ msgstr "Min notatblokk"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "Rammen <i>Siste endringer</i> vil vise en liste med alle endringer som er gjort i slektsbasen/-filen den siste måneden.  Denne rammen kan hjelpe deg til å holde deg oppdatert med de endringene som er gjort.  Endringene som vises er knyttet til CHAN-merket (tag)."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18692,7 +18667,7 @@ msgstr "Dersom du velger å ikke vise en tom ramme, vil du heller ikke kunne end
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "Rammen for statistikk viser besøkende en del basis-informasjon om slektsfilen, slik som når den ble lagd og hvor mange personer, familier og kilder som finnes i slektsbasen.<br /><br />Den har også en liste med de etternavnene som er registrert flest ganger i slektsbasen.  Du kan velge om du vil vise disse etternavnene i rammen eller ikke.<br />Du kan også velge at visse navn ikke skal vises i listen eller legge legge til navn som du mener bør være med (selv om de ikke fyller kravet om å være med i listen).<br />Du kan angi antall ganger et navn må være registrert for å vises i listen i konfigurasjonsfilen for slektsbasen."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
@@ -18778,14 +18753,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Mappen for minityrbildene er nå slettet."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Lag miniatyrbilde(r) automatisk fra "
+msgstr "Miniatyrbilde(r) er lagd automatisk."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "Klarte ikke å slette miniatyrbilde-fil."
+msgstr "Klarte ikke å lage miniatyrbilde(r) for "
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"
@@ -18861,45 +18834,40 @@ msgid "Delete file"
 msgstr "Slett fil"
 
 #: ../media.php:1072
-#, fuzzy
 msgid "Move to protected directory"
-msgstr "Flytt til beskyttet"
+msgstr "Flytt til den beskyttede media-mappa"
 
 #: ../media.php:1076
-#, fuzzy
 msgid "Move to standard directory"
-msgstr "Flytt til standard"
+msgstr "Flytt til standard media-mappe"
 
 #: ../media.php:1090
 msgid "Create thumbnail"
 msgstr "Lag miniatyrbilde(r)"
 
 #: ../media.php:1165
-#, fuzzy
 msgid "This media object is located on an external server"
-msgstr "Dette media-objektet er ikke knyttet til noe(n) i slektsfilen."
+msgstr "Dette mediaobjektet er lagret på en ekstern tjener"
 
 #: ../media.php:1168
-#, fuzzy
 msgid "This media object is in the standard media directory"
-msgstr "Dette media-objektet er ikke knyttet til noe(n) i slektsfilen."
+msgstr "Dette mediaobjektet er lagret i standard media-mappe"
 
 #: ../media.php:1171
-#, fuzzy
 msgid "This media object is in the protected media directory"
-msgstr "Dette media-objektet er ikke knyttet til noe(n) i slektsfilen."
+msgstr "Dette mediaobjektet er lagret i den beskyttede media-mappa"
 
 #: ../media.php:1179
 msgid "This thumbnail is located on an external server"
-msgstr ""
+msgstr "Dette miniatyrbildet er lagret på en ekstern tjener"
 
 #: ../media.php:1182
 msgid "This thumbnail is in the standard media directory"
-msgstr ""
+msgstr "Dette miniatyrbildet er lagret i standard media-mappe"
 
 #: ../media.php:1185
 msgid "This thumbnail is in the protected media directory"
-msgstr ""
+msgstr "Dette miniatyrbildet er lagret i den beskyttede media-mappa"
 
 #: ../media.php:1205
 msgid "The media folder is corrupted."

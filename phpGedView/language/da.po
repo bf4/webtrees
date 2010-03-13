@@ -1212,7 +1212,7 @@ msgstr "Tilbage"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "NB! Store GEDCOM-filer kan tage lang tid at downloade. Hvis PHP giver besked om, at tiden er udløbet førend downloading er færdig, så kan det være, at du ikke har modtaget hele filen. For at checke om den downloadede GEDCOM-fil er korrekt, kan du se om filen indeholder linien <b>0&nbsp;TRLR</b> til slut. Du kan kontrollere dette ved at se i filen med en tekst-editor (såsom Microsoft Wordpad). HUSK ikke at gemme filen efter at have kigget i den!!! Som en tommelfingerregel kan det tage lige så lang tid at downloade GEDCOM-filen, som det tog at importere den afhængig af hastigheden på din internetforbindelse."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -2397,7 +2397,7 @@ msgstr "Den beskyttede media mappe i Media Firewall rode mappen er ikke skrivbar
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "F E J L ! Kan ikke skrive til slægtsdatabasens (GEDCOM) konfigurationsfil. Kontrollér venligst om der er de rigtige skriverettigheder til filen."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -3097,9 +3097,8 @@ msgid "Surname tradition"
 msgstr "Tradition for efternavnet"
 
 #: ../editconfig_gedcom.php:2130
-#, fuzzy
 msgid "Paternal"
-msgstr "partner"
+msgstr "fædrende"
 
 #: ../editconfig_gedcom.php:2131 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -3111,7 +3110,7 @@ msgstr "Portugisisk"
 
 #: ../editconfig_gedcom.php:2133
 msgid "Icelandic"
-msgstr ""
+msgstr "islandsk"
 
 #: ../editconfig_gedcom.php:2134 ../includes/specialchars.php:76
 msgid "Polish"
@@ -3247,18 +3246,16 @@ msgid "Author META tag"
 msgstr "META tag: Forfatter"
 
 #: ../editconfig_gedcom.php:2414
-#, fuzzy
 msgid "Leave this field empty to use the full name of the Genealogy contact."
-msgstr "Lad feltet stå tomt for at anvende titlen på den aktive slægtsdatabase."
+msgstr "Lad feltet stå tomt for at anvende det fulde navn på slægtsdatabasens kontaktperson."
 
 #: ../editconfig_gedcom.php:2418 ../help_text.php:2912
 msgid "Publisher META tag"
 msgstr "META tag: Udgiver"
 
 #: ../editconfig_gedcom.php:2421 ../editconfig_gedcom.php:2428
-#, fuzzy
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
-msgstr "Lad feltet stå tomt for at anvende titlen på den aktive slægtsdatabase."
+msgstr "Lad feltet stå tomt for at anvende det fulde navn på slægtsdatabasens kontaktperson."
 
 #: ../editconfig_gedcom.php:2425 ../help_text.php:2887
 msgid "Copyright META tag"
@@ -3335,9 +3332,8 @@ msgid "Return to the Admin menu"
 msgstr "Tilbage til Admin menu"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "Titel på slægtsdatabasen"
+msgstr "GEDCOM-fil"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3376,9 +3372,8 @@ msgid "Check"
 msgstr "Check"
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "Hjemmesideindstillinger"
+msgstr "Konfigurationsfil"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3408,19 +3403,16 @@ msgid "Edit"
 msgstr "Ændre"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Arkiver logfiler"
+msgstr "Privatlivsfil"
 
 #: ../editgedcoms.php:259
-#, fuzzy
 msgid "SearchLog files"
-msgstr "Arkiver søgelogfiler"
+msgstr "Søgelogfiler"
 
 #: ../editgedcoms.php:313
-#, fuzzy
 msgid "ChangeLog files"
-msgstr "Arkiver ændringslogfiler"
+msgstr "Ændringslogfiler"
 
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
@@ -8818,7 +8810,7 @@ msgstr "Opdatér ikke CHAN (Sidst ændret) poster"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:234
 msgid "Link to #GLOBALS[remLinkId]# deleted"
-msgstr ""
+msgstr "Link til #GLOBALS[remLinkId]# slettet"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:254
 #, php-format
@@ -12534,17 +12526,15 @@ msgstr "Kritisk"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr ""
+msgstr "Fejl"
 
 #: ../gedcheck.php:75
-#, fuzzy
 msgid "Warning"
-msgstr "Malleri"
+msgstr "Advarsel"
 
 #: ../gedcheck.php:76
-#, fuzzy
 msgid "Info"
-msgstr "Hjemmelsmand"
+msgstr "Information"
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -18772,14 +18762,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Mappe med miniaturebilleder blev fjernet."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Opret miniature automatisk fra "
+msgstr "Miniaturebillede #thumbnail# blev oprettet automatisk."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "Miniaturebilledet kunne ikke slettes."
+msgstr "Miniaturebillede #thumbnail# kunne ikke oprettes automatisk."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"

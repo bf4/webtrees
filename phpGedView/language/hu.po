@@ -313,7 +313,7 @@ msgstr "Források"
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:227
 #: ../modules/notes/pgv_module.php:49
 msgid "Notes"
-msgstr ""
+msgstr "Jegyzetek"
 
 #: ../statistics.php:337 ../includes/functions/functions_rss.php:181
 #: ../blocks/gedcom_stats.php:140 ../blocks/gedcom_stats.php:315
@@ -1132,7 +1132,7 @@ msgstr "Alkalmazás a bizalmas beállításoknak?"
 #: ../modules/clippings/clippings.php:265 ../famlist.php:128
 #: ../famlist.php:147
 msgid "None"
-msgstr ""
+msgstr "Semmi"
 
 #: ../downloadgedcom.php:154 ../downloadgedcom.php:157 ../clippings.php:206
 #: ../modules/clippings/index.php:214 ../modules/clippings/clippings.php:266
@@ -1200,7 +1200,7 @@ msgstr "Vissza"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "Megjegyzés: A nagyméretű GEDCOM-állományok letöltés előtti feldolgozása hosszú időt vehet igénybe. Ha PHP előre definiált futási ideje letelik a letöltés befejezése előtt, akkor Ön egy nem teljes állományt kaphat.<br/><br/>A helyes letöltést ellenőrizheti az állomány végén található értékkel: <b>0&nbsp;TRLR</b>. GEDCOM állományok sima írott szöveggel vannak írva így bármilyen szövegolvasó szoftverrel kitudja nyitni, de biztos legyen benne hogy <u>ne</u> spórolja meg a GEDCOM állományt az ellenőrzés után.<br/><br/>Általánosságban a letöltés kb. annyi ideig tart, mint az adott GEDCOM-állomány importálása."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -1392,9 +1392,8 @@ msgstr "Keresőmotor megjelölése IP cím alapján"
 #: ../edit_privacy.php:658 ../edit_privacy.php:756
 #: ../blocks/gedcom_news.php:131 ../blocks/user_messages.php:88
 #: ../blocks/user_messages.php:131 ../blocks/user_blog.php:74 ../media.php:942
-#, fuzzy
 msgid "Delete"
-msgstr "Név törlése"
+msgstr "Töröl"
 
 #: ../manageservers.php:249 ../manageservers.php:296 ../manageservers.php:343
 #: ../index_edit.php:516 ../index_edit.php:536 ../clippings.php:281
@@ -1584,7 +1583,7 @@ msgstr "A rekordot módosították. A változások megtekintéséhez kattintson 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:54
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:44
 msgid "Age"
-msgstr ""
+msgstr "Életkór"
 
 #: ../individual.php:290 ../blocks/gedcom_block.php:54
 msgid "Hit Count:"
@@ -2337,9 +2336,8 @@ msgstr "Mutassunk képrészletet a személyek dobozában"
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:2172
 #: ../modules/googlemap/pedigree_map.php:735 ../modules/sitemap/index.php:237
 #: ../modules/sitemap/index.php:342
-#, fuzzy
 msgid "Individual Information"
-msgstr "Személy azonosító előtag"
+msgstr "Személyes adatok"
 
 #: ../expand_view.php:75 ../find.php:590
 #: ../includes/functions/functions_mediadb.php:1594
@@ -2387,7 +2385,7 @@ msgstr ""
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "H I B A !!!<br />Nem írható a következő fájl: <i>#GLOBALS[whichFile]#</i>. Kérem ellenőrizze a megfelelő írási jogokat."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -2516,27 +2514,24 @@ msgid "No calendar conversion"
 msgstr "Megengedjük a naptári események letöltését?"
 
 #: ../editconfig_gedcom.php:999
-#, fuzzy
 msgid "Gregorian"
-msgstr "Német"
+msgstr "Gregorián"
 
 #: ../editconfig_gedcom.php:1000
-#, fuzzy
 msgid "Julian"
-msgstr "jan"
+msgstr "Juliánusz"
 
 #: ../editconfig_gedcom.php:1001 ../includes/specialchars.php:66
 msgid "French"
 msgstr "Francia"
 
 #: ../editconfig_gedcom.php:1002
-#, fuzzy
 msgid "Jewish"
-msgstr "Svéd"
+msgstr "Zsidó"
 
 #: ../editconfig_gedcom.php:1003
 msgid "Jewish and Gregorian"
-msgstr ""
+msgstr "Zsidó és Gregorián"
 
 #: ../editconfig_gedcom.php:1004 ../includes/specialchars.php:82
 msgid "Hebrew"
@@ -2544,11 +2539,11 @@ msgstr "Héber"
 
 #: ../editconfig_gedcom.php:1005
 msgid "Hebrew and Gregorian"
-msgstr ""
+msgstr "Héber és Gregorián"
 
 #: ../editconfig_gedcom.php:1006
 msgid "Hijri"
-msgstr ""
+msgstr "Hijri"
 
 #: ../editconfig_gedcom.php:1007 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -3088,9 +3083,8 @@ msgid "Surname tradition"
 msgstr "Vezetéknév hagyomány"
 
 #: ../editconfig_gedcom.php:2130
-#, fuzzy
 msgid "Paternal"
-msgstr "Partner"
+msgstr "Apai"
 
 #: ../editconfig_gedcom.php:2131 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -3102,7 +3096,7 @@ msgstr "Portugál"
 
 #: ../editconfig_gedcom.php:2133
 msgid "Icelandic"
-msgstr ""
+msgstr "Izlandi"
 
 #: ../editconfig_gedcom.php:2134 ../includes/specialchars.php:76
 msgid "Polish"
@@ -3239,18 +3233,16 @@ msgid "Author META tag"
 msgstr "\"Szerző\" META tag"
 
 #: ../editconfig_gedcom.php:2414
-#, fuzzy
 msgid "Leave this field empty to use the full name of the Genealogy contact."
-msgstr "Kérjük, hagyja üresen ezt a mezőt, ha az aktuális GEDCOM-állomány címét szeretné itt használni."
+msgstr "Kérjük, hagyja üresen ezt a mezőt, ha GEDCOM-állományhoz megadott kapcsolattartó nevét szeretné itt használni. "
 
 #: ../editconfig_gedcom.php:2418 ../help_text.php:2912
 msgid "Publisher META tag"
 msgstr "\"Kiadó\" META tag"
 
 #: ../editconfig_gedcom.php:2421 ../editconfig_gedcom.php:2428
-#, fuzzy
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
-msgstr "Kérjük, hagyja üresen ezt a mezőt, ha az aktuális GEDCOM-állomány címét szeretné itt használni."
+msgstr "Kérjük, hagyja üresen ezt a mezőt, ha GEDCOM-állományhoz megadott kapcsolattartó nevét szeretné itt használni. "
 
 #: ../editconfig_gedcom.php:2425 ../help_text.php:2887
 msgid "Copyright META tag"
@@ -3327,9 +3319,8 @@ msgid "Return to the Admin menu"
 msgstr "Vissza az Adminisztráció menüjébe"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "GEDCOM-állomány címe"
+msgstr "GEDCOM-állomány"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3368,9 +3359,8 @@ msgid "Check"
 msgstr "Ellenőrzés"
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "Beállítások"
+msgstr "Konfigurációs állomány"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3400,19 +3390,16 @@ msgid "Edit"
 msgstr "Szerkeszt"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Napló-állományok archiválása"
+msgstr "Bizalmassági állomány"
 
 #: ../editgedcoms.php:259
-#, fuzzy
 msgid "SearchLog files"
-msgstr "Napló-állományok archiválása"
+msgstr "Keresési Naplók állományai"
 
 #: ../editgedcoms.php:313
-#, fuzzy
 msgid "ChangeLog files"
-msgstr "Zászló csere"
+msgstr "Változások Naplója állományai"
 
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
@@ -4641,9 +4628,8 @@ msgstr "Személy megjelenítése"
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:244
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:623
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:652
-#, fuzzy
 msgid "View Source"
-msgstr "Archívum megtekintése"
+msgstr "Forrás megjelenítése"
 
 #: ../find.php:596 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:626
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:655
@@ -4770,9 +4756,8 @@ msgstr "Felső szint"
 #: ../search.php:340 ../modules/googlemap/places.php:183
 #: ../modules/googlemap/places.php:184 ../modules/googlemap/places.php:185
 #: ../modules/googlemap/places.php:186 ../modules/googlemap/places.php:187
-#, fuzzy
 msgid "Place"
-msgstr "Oldal"
+msgstr "Helyszín"
 
 #: ../placelist.php:312
 msgid "Place Hierarchy after"
@@ -4841,7 +4826,7 @@ msgstr "Ha Ön a folytatás mellet dönt, a korábbi GEDCOM-állományt az Ön �
 
 #: ../uploadgedcom.php:493
 msgid "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import."
-msgstr ""
+msgstr "Az aktuális GEDCOM -nak vannak függőben változtatásai. Ha folytatja az importálást akkor ezek a függőben levő változtatások azonnal bekerülnek az adatbázisba. Meg kellene tekintenie a függőben levő változtatásokat még mielőtt folytatná az importálást."
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
@@ -5434,7 +5419,7 @@ msgstr "Átmeneti fájlok törlése"
 
 #: ../index_edit.php:597
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr ""
+msgstr "Egy rövid leírás minden egyes blokkról amit a Üdvözöljük vagy a MyGedView Portál oldalra tud tenni.<br /><table border='1' align='center'><tr><td class='list_value'><b>Név</b></td><td class='list_value'><b>Leírás</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40 ../help_text.php:3888
 msgid "Clippings Cart"
@@ -5692,7 +5677,7 @@ msgstr "Összes rekord"
 
 #: ../search.php:302 ../modules/batch_update/plugins/search_replace.php:117
 msgid "Whole words only"
-msgstr ""
+msgstr "Csak egész szavak"
 
 #: ../search.php:321
 msgid "Given name"
@@ -5705,9 +5690,8 @@ msgstr "Vezetéknév"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "Fejléc"
+msgstr "Év"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -6380,13 +6364,13 @@ msgstr "Új forrás idézés hozzáadása"
 #: ../modules/googlemap/pedigree_map.php:660
 #: ../modules/googlemap/pedigree_map.php:697
 msgid "Grandfather"
-msgstr ""
+msgstr "Nagyapa"
 
 #: ../includes/functions/functions_charts.php:818
 #: ../modules/googlemap/pedigree_map.php:658
 #: ../modules/googlemap/pedigree_map.php:695
 msgid "Grandmother"
-msgstr ""
+msgstr "Nagyanya"
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
 #: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:71
@@ -7820,7 +7804,7 @@ msgstr "Forrás nélkül"
 #: ../modules/googlemap/places_edit.php:268
 #: ../modules/googlemap/places_edit.php:271
 msgid "Unknown"
-msgstr ""
+msgstr "Ismeretlen"
 
 #: ../includes/classes/class_stats.php:733
 #: ../includes/classes/class_stats.php:736
@@ -7956,7 +7940,7 @@ msgstr "Család házastárssal -"
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "Önnek nincsenek kijelölt Kedvencei.<br /><br />Ha egy személyt, családot vagy forrást fel kíván venni Kedvencek közé, keresse meg és kattintson a <b>Új kedvenc hozzáadása</b> hivatkozásra, vagy használja az alábbi beviteli mezőt az azonosító alapján történő felvételhez. Azonosító szám helyett be írhat egy URL -t és egy címet."
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8142,9 +8126,8 @@ msgstr "utf8_hungarian_ci"
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:239 ../modules/sitemap/index.php:396
-#, fuzzy
 msgid "Family Information"
-msgstr "PHP információ"
+msgstr "Család információ"
 
 #: ../includes/controllers/family_ctrl.php:350
 #: ../includes/controllers/family_ctrl.php:361
@@ -8302,9 +8285,8 @@ msgstr "Feleség életkora"
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "Név szerkesztése"
+msgstr "Név"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -10079,7 +10061,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:341 ../edit_merge.php:228
 #: ../edit_merge.php:234
 msgid "from"
-msgstr ""
+msgstr "kezdettel"
 
 #: ../modules/googlemap/pedigree_map.php:343
 #, fuzzy
@@ -12548,17 +12530,15 @@ msgstr "Kritikus"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr ""
+msgstr "Hiba"
 
 #: ../gedcheck.php:75
-#, fuzzy
 msgid "Warning"
-msgstr "Festmény"
+msgstr "Figyelmeztetés"
 
 #: ../gedcheck.php:76
-#, fuzzy
 msgid "Info"
-msgstr "Tudósító"
+msgstr "Információ"
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -18160,7 +18140,7 @@ msgstr "Kattintson az alábbi hivatkozásra, jelentkezzen be az új jelszóval m
 
 #: ../login_register.php:136
 msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
-msgstr ""
+msgstr "Miután be jelentkezett, válassza a 'Felhasználói adataim' linket a 'MyGedView Portál' menü alatt és töltse ki a jelszó mezőket hogy megváltoztassa a jelszavát."
 
 #: ../login_register.php:142
 #, php-format
@@ -18326,7 +18306,7 @@ msgstr "Leszármazási lépések"
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Az Elkövetkező események blokk az aktív GEDCOM-ból olyan eseményeket mutat, amelyek a következő 30 napban lesznek aktuálisak. A felhasználó oldalán ez a rész csak élő személyeket mutathat. A GEDCOM-oldalon minden személyt felsorol."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18370,7 +18350,7 @@ msgstr "Fejlettebb HTML"
 
 #: ../blocks/block_htmlplus.php:44
 msgid "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text."
-msgstr ""
+msgstr "Ez egy HTML blokk, amit az oldalára helyezhet mindenféle információkkal. A Gedcom-ban lévő információkra utaló hivatkozásokat is betehet."
 
 #: ../blocks/block_htmlplus.php:49 ../blocks/html_block.php:44
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -18381,38 +18361,32 @@ msgid "to change what is printed here.</p>"
 msgstr "megváltoztassa amit ide kiírt.</p>"
 
 #: ../blocks/block_htmlplus.php:224
-#, fuzzy
 msgid "Templates"
-msgstr "UNSZ templom"
+msgstr "Sablonok"
 
 #: ../blocks/block_htmlplus.php:246
-#, fuzzy
 msgid "Custom"
-msgstr "Egyéni esemény"
+msgstr "Egyéni"
 
 #: ../blocks/block_htmlplus.php:262
-#, fuzzy
 msgid "Family Tree"
-msgstr "Család"
+msgstr "Családfa"
 
 #: ../blocks/block_htmlplus.php:266
-#, fuzzy
 msgid "Current"
-msgstr "Aktuális GEDCOM-állományok"
+msgstr "Jelenlegi"
 
 #: ../blocks/block_htmlplus.php:267
-#, fuzzy
 msgid "Default"
-msgstr "(Alapértelmezett)"
+msgstr "Alapértelmezett"
 
 #: ../blocks/block_htmlplus.php:281
-#, fuzzy
 msgid "Content"
-msgstr "A Segítség tartalomjegyzéke"
+msgstr "Tartalomjegyzék"
 
 #: ../blocks/block_htmlplus.php:310
 msgid "Compatibility Mode"
-msgstr ""
+msgstr "Kompatibilitási mód"
 
 #: ../blocks/block_htmlplus.php:323
 #, fuzzy
@@ -18425,7 +18399,7 @@ msgstr "Grafikon blokk"
 
 #: ../blocks/charts.php:44
 msgid "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
-msgstr ""
+msgstr "A Grafikonok blokk segítségével, grafikont helyezhet el az üdvözlő, vagy a MyGedView oldalon. Beállíthatja a dobozt, hogy milyen nézetet használjon: ősök, leszármazottak vagy homokóra. Beállíthatja a kezdőszemélyt is."
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
@@ -18433,11 +18407,11 @@ msgstr "HTML"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
-msgstr ""
+msgstr "Ez egy egyszerű HTML Blokk amit az oldalra lehet tenni hogy, bármilyen saját üzenetet hozáadhasson."
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "A bejelentkező blokk felhasználónév és jelszó bevitelt tesz lehetővé a bejelentkezéshez."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18445,7 +18419,7 @@ msgstr "Leggyakoribban nézet elemek"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "Ez a Blokk feltünteti a 10 leggyakoribban megtekintetet adatot. Ennek a Blokknak kell hogy a Számláló be legyen kapcsolva a GEDCOM konfigurációjánál."
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18465,7 +18439,7 @@ msgstr "A mai napon... blokk"
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "A mai napon az Ön múltjában ... blokk, az aktív GEDCOM-ból olyan eseményeket mutat, amelyeknek a mai napon történetek. Ha nincs ilyen esemény, akkor ez a rész üres marad. A felhasználó oldalán, ez a rész csak élő személyeket mutathat. A GEDCOM-oldalon minden személyt felsorol."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18473,7 +18447,7 @@ msgstr "Felhasználói kedvencek blokk"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "A Felhasználói kedvencek blokk a kedvenc személyek listáját tartalmazza, hogy így könnyebben megtalálhassák őket."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18481,7 +18455,7 @@ msgstr ""
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "A GEDCOM Üdvözlő blokk hasonlóan működik mint a Felhasználó üdvözlő blokk, azaz üdvözli a látogatót, az aktív GEDCOM címét, az időt és a dátumot jeleníti meg.."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18501,7 +18475,7 @@ msgstr "GEDCOM hírblokk"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "A GEDCOM hírblokk az adminisztrátor által bevitt híreket mutatja.<br /><br />A Hírek szolgálhat például a GEDCOM-állomány frissítésének, vagy családok újraegyesítésének bejelentésére vagy gyermek születésére."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18521,7 +18495,7 @@ msgstr "Egységek száma"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "Ez a blokk egy táblázatban megmutatja az adatbázisban lévő 10 leggyakoribb keresztnevet."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18535,7 +18509,7 @@ msgstr "Bejelentkezett felhasználók blokk"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "A bejelentkezett felhasználók blokk az éppen bejelentkezett felhasználókat mutatja."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18559,7 +18533,7 @@ msgstr "Felhasználói üzenetek blokk"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "A Felhasználói üzenetek blokk az aktív felhasználónak elküldött üzenetek listáját tartalmazza."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18571,7 +18545,7 @@ msgstr "Véletlen média blokk"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "A Véletlen média blokk véletlenszerűen választ ki egy képet vagy egyéb médiát a jelenlegi GEDCOM-ból, és megjeleníti azt a felhasználónak."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18597,7 +18571,7 @@ msgstr "GEDCOM Kedvencek blokk"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "A GEDCOM Kedvencek blokkba az adminisztrátor választhatja be a kedvenc személyeket, így a látogatók könnyebben megtalálhatják őket. Ezzel a módszerrel kiemelhetők a fontosabb személyek a család történetéből."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18605,16 +18579,15 @@ msgstr "Felhasználó üdvözlő blokk"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "A Felhasználó üdvözlő blokk a jelenlegi időt és dátumot tünteti fel, a hivatkozást ahol módosíthatják a felhasználói beállításaikat vagy a saját családfájukra ugorhatnak, és a hivatkozást, ahol személyes oldalukat állíthatják be."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
 msgstr "RSS hírcsatorna"
 
 #: ../blocks/rss_block.php:42
-#, fuzzy
 msgid "News and links from the #GEDCOM_TITLE# site"
-msgstr "Újdonságok a %s oldalról"
+msgstr "Újdonságok a #GEDCOM_TITLE# oldalról"
 
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
@@ -18634,11 +18607,11 @@ msgstr "Asztaltéma-választó blokk"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "Az asztaltéma-választó blokk megmutatja az asztaltéma-választó felületet akkor is, ha a váltás nincs engedélyezve."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "A Változások Függőben Blokk sorolja fel azokat a változtatásokat, amelyeket egy adminisztrátornak el kell fogadnia. Ezek a változások függőben vannak mindaddig amíg el nem fogadják vagy elutasítják őket.<br /><br />Ha ez a Blokk be van kapcsolva, akkor felhasználok elfogadási engedéllyel, kapnak egy emailt naponta egyszer hogy változás történt amit meg kell tekinteni."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18670,7 +18643,7 @@ msgstr "Felhasználói hírlap blokk"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "A felhasználók hírlapjához saját feljegyzések készíthetőek."
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18678,7 +18651,7 @@ msgstr "Az én hírlapom"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "Az Aktuális változások blokkjában találhat minden olyan, a GEDCOM-állományt érintő változást, mely az elmúlt hónapban történt. Ez a blokk segíti Önt a változások naprakész követésében. A változások felismerése a CHAN elem alapján történik."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18700,7 +18673,7 @@ msgstr "Amikor elrejt egy üres blokkot, akkor nem lehet megváltoztatni a konfi
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "A GEDCOM Statisztika blokk alapvető dolgokat mutat a jelenlegi GEDCOM-ból, mint a létrehozás dátuma, és hány személy található benne."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
@@ -18787,14 +18760,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Előnézet mappa sikeresen törölve."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Automatikus előnézet generálása:"
+msgstr "Előnézet #thumbnail# automatikusan generálva."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "Előnézet állományt nem lehetett kitörölni."
+msgstr "Előnézet #thumbnail# nem lehetett automatikusan generálni."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"

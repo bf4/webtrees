@@ -1136,7 +1136,7 @@ msgstr ""
 #: ../modules/clippings/clippings.php:265 ../famlist.php:128
 #: ../famlist.php:147
 msgid "None"
-msgstr ""
+msgstr "Tidak ada"
 
 #: ../downloadgedcom.php:154 ../downloadgedcom.php:157 ../clippings.php:206
 #: ../modules/clippings/index.php:214 ../modules/clippings/clippings.php:266
@@ -1397,9 +1397,8 @@ msgstr ""
 #: ../edit_privacy.php:658 ../edit_privacy.php:756
 #: ../blocks/gedcom_news.php:131 ../blocks/user_messages.php:88
 #: ../blocks/user_messages.php:131 ../blocks/user_blog.php:74 ../media.php:942
-#, fuzzy
 msgid "Delete"
-msgstr "Hapus Nama"
+msgstr "Hapus"
 
 #: ../manageservers.php:249 ../manageservers.php:296 ../manageservers.php:343
 #: ../index_edit.php:516 ../index_edit.php:536 ../clippings.php:281
@@ -2346,7 +2345,7 @@ msgstr "Perlihatkan gambar highlight di kotak orang"
 #: ../modules/googlemap/pedigree_map.php:735 ../modules/sitemap/index.php:237
 #: ../modules/sitemap/index.php:342
 msgid "Individual Information"
-msgstr ""
+msgstr "Informasi Individu"
 
 #: ../expand_view.php:75 ../find.php:590
 #: ../includes/functions/functions_mediadb.php:1594
@@ -2517,31 +2516,28 @@ msgid "Calendar format"
 msgstr ""
 
 #: ../editconfig_gedcom.php:998
-#, fuzzy
 msgid "No calendar conversion"
-msgstr "Izinkan unduh peristiwa kalender?"
+msgstr "Tidak ada konversi kalender"
 
 #: ../editconfig_gedcom.php:999
 msgid "Gregorian"
-msgstr ""
+msgstr "Gregorian"
 
 #: ../editconfig_gedcom.php:1000
-#, fuzzy
 msgid "Julian"
-msgstr "Jan"
+msgstr "Julian"
 
 #: ../editconfig_gedcom.php:1001 ../includes/specialchars.php:66
 msgid "French"
 msgstr ""
 
 #: ../editconfig_gedcom.php:1002
-#, fuzzy
 msgid "Jewish"
-msgstr "Berita"
+msgstr "Yahudi"
 
 #: ../editconfig_gedcom.php:1003
 msgid "Jewish and Gregorian"
-msgstr ""
+msgstr "Yahudi dan Gregorian"
 
 #: ../editconfig_gedcom.php:1004 ../includes/specialchars.php:82
 msgid "Hebrew"
@@ -2549,11 +2545,11 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:1005
 msgid "Hebrew and Gregorian"
-msgstr ""
+msgstr "Yunani dan Gregorian"
 
 #: ../editconfig_gedcom.php:1006
 msgid "Hijri"
-msgstr ""
+msgstr "Hijriah"
 
 #: ../editconfig_gedcom.php:1007 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -4651,9 +4647,8 @@ msgstr "Tampilkan Orang"
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:244
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:623
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:652
-#, fuzzy
 msgid "View Source"
-msgstr "Tampilkan arsip"
+msgstr "Tampilkan Sumber"
 
 #: ../find.php:596 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:626
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:655
@@ -4779,9 +4774,8 @@ msgstr "Level Teratas"
 #: ../search.php:340 ../modules/googlemap/places.php:183
 #: ../modules/googlemap/places.php:184 ../modules/googlemap/places.php:185
 #: ../modules/googlemap/places.php:186 ../modules/googlemap/places.php:187
-#, fuzzy
 msgid "Place"
-msgstr "Halaman"
+msgstr "Tempat"
 
 #: ../placelist.php:312
 msgid "Place Hierarchy after"
@@ -4850,7 +4844,7 @@ msgstr ""
 
 #: ../uploadgedcom.php:493
 msgid "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import."
-msgstr ""
+msgstr "GEDCOM yang berlaku memiliki penelitian perubahan tertunda. Jika Anda melanjutkan Impor ini, perubahan tertunda tersebut akan segera terkirim ke basisdata. Anda sebaiknya meneliti perubahan tertunda sebelum melanjutkan Impor ini."
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
@@ -5442,7 +5436,7 @@ msgstr ""
 
 #: ../index_edit.php:597
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr ""
+msgstr "Berikut adalah uraian singkat dari tiap blok yang dapat Anda tempatkan pada halaman Selamat Datang atau Portal GedViewSaya.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nama</b></td><td class='list_value'><b>Uraian</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40 ../help_text.php:3888
 msgid "Clippings Cart"
@@ -5700,7 +5694,7 @@ msgstr "Seluruh rekaman"
 
 #: ../search.php:302 ../modules/batch_update/plugins/search_replace.php:117
 msgid "Whole words only"
-msgstr ""
+msgstr "Hanya seluruh kata"
 
 #: ../search.php:321
 msgid "Given name"
@@ -5713,9 +5707,8 @@ msgstr "Nama belakang"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "Catatan Kepala"
+msgstr "Tahun"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -5880,7 +5873,7 @@ msgstr "Manuskrip"
 #: ../modules/googlemap/gg_map_content.php:34
 #: ../modules/googlemap/pedigree_map.php:550
 msgid "Map"
-msgstr ""
+msgstr "Peta"
 
 #: ../includes/config_data.php:82
 msgid "Newspaper"
@@ -6388,13 +6381,13 @@ msgstr "Tambahkan Kutipan Sumber baru"
 #: ../modules/googlemap/pedigree_map.php:660
 #: ../modules/googlemap/pedigree_map.php:697
 msgid "Grandfather"
-msgstr ""
+msgstr "Kakek"
 
 #: ../includes/functions/functions_charts.php:818
 #: ../modules/googlemap/pedigree_map.php:658
 #: ../modules/googlemap/pedigree_map.php:695
 msgid "Grandmother"
-msgstr ""
+msgstr "Nenek"
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
 #: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:71
@@ -7828,7 +7821,7 @@ msgstr "Perlihatkan semua sumber"
 #: ../modules/googlemap/places_edit.php:268
 #: ../modules/googlemap/places_edit.php:271
 msgid "Unknown"
-msgstr ""
+msgstr "Total orang yang tak diketahui"
 
 #: ../includes/classes/class_stats.php:733
 #: ../includes/classes/class_stats.php:736
@@ -7965,7 +7958,7 @@ msgstr "Keluarga dengan"
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "Anda belum memilih favorit apapun.<br /><br />Untuk menambah individu, keluarga, atau sumber ke favorit Anda, klik pada pranala <b>Tambah kesukaan baru</b> untuk menampilkan beberapa isian di mana Anda dapat memasukkan atau mencari nomor ID. Selain nomor ID, Anda dapat memasukkan URL atau judul."
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8152,7 +8145,7 @@ msgstr "utf8_unicode_ci"
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:239 ../modules/sitemap/index.php:396
 msgid "Family Information"
-msgstr ""
+msgstr "Informasi Keluarga"
 
 #: ../includes/controllers/family_ctrl.php:350
 #: ../includes/controllers/family_ctrl.php:361
@@ -8311,9 +8304,8 @@ msgstr "Umur istri"
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "Sunting Nama"
+msgstr "Nama"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -9860,11 +9852,11 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
@@ -9872,7 +9864,7 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:802
 msgid "W"
-msgstr ""
+msgstr "Rb"
 
 #: ../modules/googlemap/places_edit.php:812
 #: ../modules/googlemap/places_edit.php:820
@@ -10090,7 +10082,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:341 ../edit_merge.php:228
 #: ../edit_merge.php:234
 msgid "from"
-msgstr ""
+msgstr "Sejak"
 
 #: ../modules/googlemap/pedigree_map.php:343
 msgid "generations"
@@ -18155,7 +18147,7 @@ msgstr "Silakan klik pada pranala di bawah atau temaple pada perambah Anda, cata
 
 #: ../login_register.php:136
 msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
-msgstr ""
+msgstr "Setelah Anda tercatatmasuk, pilih pranala «Akun Saya» di bawah menu «Portal GedViewSaya» dan isilah isian sandi untuk mengubah sandi Anda."
 
 #: ../login_register.php:142
 #, php-format
@@ -18321,7 +18313,7 @@ msgstr "Langkah Turun"
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Blok Peristiwa yang Akan Datang memperlihatkan ulangtahun peristiwa yang akan terjadi dalam waktu dekat. Anda dapat mengatur jumlah rincian yang diperlihatkan, dan Administrator dapat mengatur sejauh mana blok ini akan melihat."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18346,7 +18338,7 @@ msgstr "10 Nama Depan Teratas"
 
 #: ../blocks/top10_givnnames.php:41
 msgid "This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable."
-msgstr ""
+msgstr "Blok ini memperlihatkan tabel 10 nama depan yang paling sering muncul di basisdata. Jumlah aktual nama depan yang diperlihatkan di blok ini dapat diatur."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_givnnames.php:82
@@ -18365,7 +18357,7 @@ msgstr "HTML Mahir"
 
 #: ../blocks/block_htmlplus.php:44
 msgid "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text."
-msgstr ""
+msgstr "Ini adalah blok HTML yang dapat Anda letakkan pada halaman Anda untuk menambah pesan singkat apapun yang mungkin Anda inginkan.  Anda dapat menyisipkan rujukan ke informasi dari GEDCOM Anda ke teks HTML."
 
 #: ../blocks/block_htmlplus.php:49 ../blocks/html_block.php:44
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -18376,43 +18368,36 @@ msgid "to change what is printed here.</p>"
 msgstr "untuk mengubah apa yang dicetak di sini.</p>"
 
 #: ../blocks/block_htmlplus.php:224
-#, fuzzy
 msgid "Templates"
-msgstr "Kuil LDS"
+msgstr "Templat"
 
 #: ../blocks/block_htmlplus.php:246
-#, fuzzy
 msgid "Custom"
-msgstr "Peristiwa Pilihan"
+msgstr "Pilihan"
 
 #: ../blocks/block_htmlplus.php:262
-#, fuzzy
 msgid "Family Tree"
-msgstr "Keluarga"
+msgstr "Silsilah Keluarga"
 
 #: ../blocks/block_htmlplus.php:266
-#, fuzzy
 msgid "Current"
-msgstr "Jumlah"
+msgstr "Berlaku"
 
 #: ../blocks/block_htmlplus.php:267
-#, fuzzy
 msgid "Default"
-msgstr "(Default)"
+msgstr "Default"
 
 #: ../blocks/block_htmlplus.php:281
-#, fuzzy
 msgid "Content"
-msgstr "Daftar Bantuan"
+msgstr "Daftar Isi"
 
 #: ../blocks/block_htmlplus.php:310
 msgid "Compatibility Mode"
-msgstr ""
+msgstr "Modus Kompatibilitas"
 
 #: ../blocks/block_htmlplus.php:323
-#, fuzzy
 msgid "Extended Interface"
-msgstr "Sunting Jender"
+msgstr "Antarmuka Diperluas"
 
 #: ../blocks/charts.php:43
 msgid "Charts Block"
@@ -18420,7 +18405,7 @@ msgstr "Bagan blok"
 
 #: ../blocks/charts.php:44
 msgid "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
-msgstr ""
+msgstr "Bagan blok memungkinkan Anda menempatkan bagan pada Halaman Sambutan atau portal MyGedView.  Anda dapat mengatur blok untuk menunjukkan leluhur, keturunan, atau tampilan gelas waktu.  Anda juga dapat memilih orang acuan untuk bagan tersebut."
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
@@ -18428,11 +18413,11 @@ msgstr "HTML"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
-msgstr ""
+msgstr "Ini adalah blok HTML sederhana yang dapat Anda tempatkan pada halaman Anda untuk menambah pesan singkat apapun yang mungkin Anda inginkan."
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "Blok Catatmasuk menerima nama pengguna dan sandi bagi pengguna untuk mencatatmasuk."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18440,7 +18425,7 @@ msgstr "Item yang Paling Banyak Ditampilkan"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "Blok ini akan menunjukkan 10 rekaman yang paling banyak ditampilkan. Blok ini memerlukan Penghitung Kunjungan diaktikfna pada pengaturan konfigurasi GEDCOM."
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18460,7 +18445,7 @@ msgstr "Pada Hari Ini"
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "Blok Pada Hari Ini, pada Sejarah Anda... memperlihatkan shows ulangtahun peristiwa untuk hari ini. Anda dapat mengatur jumlah rincian yang diperlihatkan."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18468,7 +18453,7 @@ msgstr "Favorit Pengguna"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "Blok Favorit Pengguna memperlihatkan kepada pengguna daftar orang favoritnya di basisdata sehingga ia dapat dengan mudah menuju kepadanya."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18476,7 +18461,7 @@ msgstr "Mulai saja"
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "Blok Sambutan GEDCOM bekerja seperti blok Sambutan Pengguna. Ia menyambut pengunjung situs dan menampilkan judul basisdata yang sedang aktif sebagaimana juga tanggal dan waktu."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18497,7 +18482,7 @@ msgstr "Berita GEDCOM"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "Blok Berita GEDCOM memperlihatkan kepada pengunjung rilis berita atau artikel yang dikirimkan oleh pengguna admin.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18517,7 +18502,7 @@ msgstr "Jumlah item"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "Blok ini memperlihatkan tabel 10 marga yang paling sering muncul di basisdata. Jumlah aktual marga yang diperlihatkan di blok ini dapat diatur. Anda dapat mengatur GEDCOM untuk membuang nama dari daftar ini."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18531,7 +18516,7 @@ msgstr "Pengguna yang Tercatatmasuk"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "Blok Pengguna yang Tercatatmasuk memperlihatkan daftar pengguna yang sedang tercatatmasuk."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18543,7 +18528,7 @@ msgstr "Yahrzeiten yang Akan Datang"
 
 #: ../blocks/yahrzeit.php:41
 msgid "The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Blok Yahrzeiten yang Akan Datang memperlihatkan ulangtahun tanggal kematian yang akan terjadi di waktu dekat. Anda dapat mengatur periode yang diperlihatkan, dan Administrator dapat mengatur sejauh mana blok ini akan melihat."
 
 #: ../blocks/gedcom_block.php:39
 msgid "GEDCOM Welcome"
@@ -18555,7 +18540,7 @@ msgstr "Pesan Pengguna"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "Blok Pesan Pengguna memperlihatkan daftar pesan terkirim ke pengguna aktif."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18567,7 +18552,7 @@ msgstr "Media Acak"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "Blok Media Acak memilih acak foto atau item media lain dari basisdata yang sedang aktif dan menampilkannya ke pengguna.<br /><br />Administrator menentukan apakah blok ini dapat memperlihatkan item media yang berhubungan dengan seseorang atau suatu peristiwa."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18593,7 +18578,7 @@ msgstr "Favorit GEDCOM"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "Blok Favorit GEDCOM memberi Administrator kemampuan untuk memilih individu dari basisdata, sehingga informasinya mudah diakses khalayak. Ini adalah cara menekankan orang yang penting dalam sejarah keluarga Anda."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18601,16 +18586,15 @@ msgstr "Sambutan Pengguna"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "Blok Sambutan Pengguna memperlihatkan kepada pengguna tanggal dan waktu terkini, pranala cepat untuk mengubah akunnya atau menuju Bagan Kerabatnya, dan pranala untuk mengatur halaman Portal GedViewSaya-nya."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
 msgstr "Umpan RSS"
 
 #: ../blocks/rss_block.php:42
-#, fuzzy
 msgid "News and links from the #GEDCOM_TITLE# site"
-msgstr "Berita dan pranala dari situs %s"
+msgstr "Berita dan pranala dari situs #GEDCOM_TITLE#"
 
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
@@ -18618,7 +18602,7 @@ msgstr "&quot;Tugas&quot; untuk dilakukan"
 
 #: ../blocks/todo.php:43
 msgid "The To Do block lists all outstanding _TODO facts in the database."
-msgstr ""
+msgstr "Blok Untuk Dilakukan mendaftar semua fakta _TODO yang luarbiasa di basisdata."
 
 #: ../blocks/todo.php:116
 msgid "There are no &quot;To Do&quot; tasks."
@@ -18630,11 +18614,11 @@ msgstr "Pilih Tema"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "Blok Pilih Tema menampilkan Pilihan teman walaupun fitur Ganti Tema dinonaktifkan."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "blok Perubahan Tertunda akan memberi pengguna dengan hak Sunting daftar rekaman yang telah berubah secara online yang hal tersebut masih perlu diteliti dan diterima. Perubahan ini tertunda penerimaan atau penolakannya.<br /><br />Jika blok ini diaktifkan, pengguna dengan hak Terima akan menerima email sekali sehari yang memberitahukan bahwa perubahan tersebut perlu diteliti."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18666,7 +18650,7 @@ msgstr "Jurnal Pengguna"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "Blok Jurnal Pengguna membolehkan pengguna membuat catatan atau jurnal online."
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18674,7 +18658,7 @@ msgstr "Jurnal Saya"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "Blok Perubahan Terkini akan mendaftar semua perubahan yang dibuat pada basisdata selama sebulan terakhir. Blok ini dapat membantu Anda tetap mengikuti perubahan yang dibuat. Perubahan dideteksi otomatis, menggunakan tag CHAN yang didefinisikan dalam standar GEDCOM."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18696,7 +18680,7 @@ msgstr "Jika Anda menyembunyikan blok kosong, Anda tidak akan dapat mengubah pen
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "Blok Statistik GEDCOM memperlihatkan kepada pengunjung beberapa informasi dasar tentang basisdata, seperti kapan pembuatannya dan berapa orang kandungannya.<br /><br />Ia juga mempunyai daftar marga yang paling sering. Anda dapat mengatur blok ini agar tidak memperlihatkan Daftar marga yang sering, dan Anda juga dapat mengatur GEDCOM untuk membuang atau menambah nama ke daftar ini. Anda dapat menetapkan batas tampilan untuk daftar ini pada pengaturan GEDCOM."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
@@ -18781,13 +18765,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Direktori thumbnail berhasil dibuang."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Bangun thumbnail otomatis dari "
+msgstr "Thumbnail #thumbnail# dibangun secara otomatis."
 
 #: ../media.php:472 ../media.php:490
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr ""
+msgstr "Thumbnail #thumbnail# tidak dapat dibangun secara otomatis."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"
@@ -18863,45 +18846,40 @@ msgid "Delete file"
 msgstr "Hapus berkas"
 
 #: ../media.php:1072
-#, fuzzy
 msgid "Move to protected directory"
-msgstr "Pindahkan ke terproteksi"
+msgstr "Pindahkan ke direktori terproteksi"
 
 #: ../media.php:1076
-#, fuzzy
 msgid "Move to standard directory"
-msgstr "Pindahkan ke standar"
+msgstr "Pindahkan ke direktori standar"
 
 #: ../media.php:1090
 msgid "Create thumbnail"
 msgstr "Ciptakan thumbnail"
 
 #: ../media.php:1165
-#, fuzzy
 msgid "This media object is located on an external server"
-msgstr "Media objek ini tidak terkait ke rekaman GEDCOM manapun."
+msgstr "Media objek ini terletak di server luar"
 
 #: ../media.php:1168
-#, fuzzy
 msgid "This media object is in the standard media directory"
-msgstr "Media objek ini tidak terkait ke rekaman GEDCOM manapun."
+msgstr "Media objek ini ada di direktori media standar"
 
 #: ../media.php:1171
-#, fuzzy
 msgid "This media object is in the protected media directory"
-msgstr "Media objek ini tidak terkait ke rekaman GEDCOM manapun."
+msgstr "Media objek ini ada di direktori media terproteksi"
 
 #: ../media.php:1179
 msgid "This thumbnail is located on an external server"
-msgstr ""
+msgstr "Thumbnail ini terletak di server luar"
 
 #: ../media.php:1182
 msgid "This thumbnail is in the standard media directory"
-msgstr ""
+msgstr "Thumbnail ini ada di direktori media standar"
 
 #: ../media.php:1185
 msgid "This thumbnail is in the protected media directory"
-msgstr ""
+msgstr "Thumbnail ini ada di direktori media terproteksi"
 
 #: ../media.php:1205
 msgid "The media folder is corrupted."

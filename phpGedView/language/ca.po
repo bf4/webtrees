@@ -1198,7 +1198,7 @@ msgstr "Enrere"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "NOTA: Els GEDCOMs voluminosos poden requerir força temps de procés abans de descarregar-los. Si s'esgota el temps previst a PHP abans de que la descàrrega sigui total, us pot quedar un fitxer incomplet.<br /><br />Per estar segur de que el fitxer GEDCOM s'ha descarregat correctament, comproveu que la darrera línea sigui <b>0&nbsp;TRLR</b> o que la darrera línea d'un fitxer en format XML sigui <b></database></b>. Aquests fitxers son de text; podeu fer servir un editor apropiat, però assegureu-vos de <u>no</u> desar els fitxers descarregats, sense revisar-los abans.<br /><br />En general cal el mateix temps per descarregar que per importar un fitxer GEDCOM."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -2380,7 +2380,7 @@ msgstr "El directori multimèdia protegit al directori arrel Tallafoc Multimèdi
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "E R R O R !!!<br />No pot escriure's al fitxer <i>#GLOBALS[whichFile]#</i>. Reviseu-ne les propietats."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -3080,9 +3080,8 @@ msgid "Surname tradition"
 msgstr "Tradició dels cognoms"
 
 #: ../editconfig_gedcom.php:2130
-#, fuzzy
 msgid "Paternal"
-msgstr "Parella"
+msgstr "Paternal"
 
 #: ../editconfig_gedcom.php:2131 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -3094,7 +3093,7 @@ msgstr "Portuguès"
 
 #: ../editconfig_gedcom.php:2133
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandesa"
 
 #: ../editconfig_gedcom.php:2134 ../includes/specialchars.php:76
 msgid "Polish"
@@ -3230,18 +3229,16 @@ msgid "Author META tag"
 msgstr "METAetiqueta de l'autor"
 
 #: ../editconfig_gedcom.php:2414
-#, fuzzy
 msgid "Leave this field empty to use the full name of the Genealogy contact."
-msgstr "Deixeu aquest camp en blanc si voleu que hi surti el títol de la base de dades activa."
+msgstr "Deixeu aquest camp en blanc si voleu que hi surti el nom complet del  Contacte genealògic."
 
 #: ../editconfig_gedcom.php:2418 ../help_text.php:2912
 msgid "Publisher META tag"
 msgstr "METAetiqueta de l'editor"
 
 #: ../editconfig_gedcom.php:2421 ../editconfig_gedcom.php:2428
-#, fuzzy
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
-msgstr "Deixeu aquest camp en blanc si voleu que hi surti el títol de la base de dades activa."
+msgstr "Deixeu aquest camp en blanc si voleu que hi surti el nom complet del  Contacte genealògic."
 
 #: ../editconfig_gedcom.php:2425 ../help_text.php:2887
 msgid "Copyright META tag"
@@ -3318,9 +3315,8 @@ msgid "Return to the Admin menu"
 msgstr "Torna al menú d'Administració"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "Títol del Gedcom"
+msgstr "Arxiu Gedcom"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3359,9 +3355,8 @@ msgid "Check"
 msgstr "Comprova"
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "Configuració"
+msgstr "Arxiu de Configuració"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3391,19 +3386,16 @@ msgid "Edit"
 msgstr "Edita"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Arxiva els fitxers de registre"
+msgstr "Fitxer de privadesa"
 
 #: ../editgedcoms.php:259
-#, fuzzy
 msgid "SearchLog files"
-msgstr "Arxiva els fitxers de registre de recerca"
+msgstr "Fitxers SearchLog"
 
 #: ../editgedcoms.php:313
-#, fuzzy
 msgid "ChangeLog files"
-msgstr "Arxiva els fitxers ChangeLog"
+msgstr "Fitxers ChangeLog"
 
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
@@ -8790,7 +8782,7 @@ msgstr "No actualitzis el registre CHAN (darrer canvi)"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:234
 msgid "Link to #GLOBALS[remLinkId]# deleted"
-msgstr ""
+msgstr "Eliminat l'enllaç a #GLOBALS[remLinkId]#"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:254
 #, php-format
@@ -12504,17 +12496,15 @@ msgstr "Crític"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: ../gedcheck.php:75
-#, fuzzy
 msgid "Warning"
-msgstr "Pintura"
+msgstr "Avís"
 
 #: ../gedcheck.php:76
-#, fuzzy
 msgid "Info"
-msgstr "Informant"
+msgstr "Informació"
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -18742,14 +18732,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Eliminat correctament el directori de miniatures."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Generar miniatura automàticament des de "
+msgstr "Generada automàticament la miniatura de #thumbnail#."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "No s'ha pogut eliminar el fitxer miniatura"
+msgstr "La miniatura de #thumbnail# no pot generar-se automàticament."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"

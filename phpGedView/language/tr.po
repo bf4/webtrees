@@ -1198,7 +1198,7 @@ msgstr "geri dön"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "<b>Not:</b> Büyük veritabanları indirme vermeden önce uzun bir zaman işlem yapabilir. Eğer PHP zaman aşımı uygularsa indirme bitmeden önce indirilen veritabanı dosyası tam olmayabilir.<br /><br /> Dosya doğru olarak indirildiğinden emin olmak için GEDCOM biçiminde indiriyorsanız son satırında <b>0&nbsp;TRLR</b> olduğunu kontrol edin, yada XML biçiminde indiriyorsanız son satırında <b>&lt;/database&gt;</b> olduğunu kontrol edin. <br /><br />Bu dosyalar metindir siz herhangi bir uygun metin editörü kullanarak açabilir içeriğini görebilirsiniz. İndirdiğiniz dosyaları kontrol için açtığınızda kesinlikle <b><u>kaydetmeyin</u></b> dosyanız bozulabilir.<br /><br /> Genelde GEDCOM dosya indirildiğinde uzun zaman alıyorsa içeri aktarırken de uzun zaman alabilir."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -1580,7 +1580,7 @@ msgstr "Bu kayıt yönetici onayı üzerine silmek için işaretlendi."
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:54
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:44
 msgid "Age"
-msgstr ""
+msgstr "Yaş"
 
 #: ../individual.php:290 ../blocks/gedcom_block.php:54
 msgid "Hit Count:"
@@ -2381,7 +2381,7 @@ msgstr "Media firewall kök klasöründe korunmuş media klasörü yazılabilir 
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "HATA!!! GEDCOM yapılandırma dosyasına yazamıyorum."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -2504,32 +2504,28 @@ msgid "Calendar format"
 msgstr "Takvim türü"
 
 #: ../editconfig_gedcom.php:998
-#, fuzzy
 msgid "No calendar conversion"
-msgstr "İzin verilen takvim olaylarını indir?"
+msgstr "Takvim dönüştürme hayır"
 
 #: ../editconfig_gedcom.php:999
-#, fuzzy
 msgid "Gregorian"
-msgstr "Almanca"
+msgstr "Miladi"
 
 #: ../editconfig_gedcom.php:1000
-#, fuzzy
 msgid "Julian"
-msgstr "Oca"
+msgstr "Jüliyen"
 
 #: ../editconfig_gedcom.php:1001 ../includes/specialchars.php:66
 msgid "French"
 msgstr "Fransızca"
 
 #: ../editconfig_gedcom.php:1002
-#, fuzzy
 msgid "Jewish"
-msgstr "İsveççe"
+msgstr "Yahudi"
 
 #: ../editconfig_gedcom.php:1003
 msgid "Jewish and Gregorian"
-msgstr ""
+msgstr "Yahudice ve Miladi"
 
 #: ../editconfig_gedcom.php:1004 ../includes/specialchars.php:82
 msgid "Hebrew"
@@ -2537,11 +2533,11 @@ msgstr "İbranice"
 
 #: ../editconfig_gedcom.php:1005
 msgid "Hebrew and Gregorian"
-msgstr ""
+msgstr "İbrani ve Miladi"
 
 #: ../editconfig_gedcom.php:1006
 msgid "Hijri"
-msgstr ""
+msgstr "Hijri"
 
 #: ../editconfig_gedcom.php:1007 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -3081,9 +3077,8 @@ msgid "Surname tradition"
 msgstr "Soyadı geleneği"
 
 #: ../editconfig_gedcom.php:2130
-#, fuzzy
 msgid "Paternal"
-msgstr "Ortak"
+msgstr "Babaya ait"
 
 #: ../editconfig_gedcom.php:2131 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -3095,7 +3090,7 @@ msgstr "Portekizce"
 
 #: ../editconfig_gedcom.php:2133
 msgid "Icelandic"
-msgstr ""
+msgstr "İzlanda"
 
 #: ../editconfig_gedcom.php:2134 ../includes/specialchars.php:76
 msgid "Polish"
@@ -3319,9 +3314,8 @@ msgid "Return to the Admin menu"
 msgstr "Yönetim sayfasına geri dön"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "GEDCOM veritabanın başlığı"
+msgstr "GEDCOM dosyası"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3360,9 +3354,8 @@ msgid "Check"
 msgstr "Denetle"
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "Genel ayarlar"
+msgstr "Yapılandırma dosyası"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3392,19 +3385,16 @@ msgid "Edit"
 msgstr "Düzenle"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Sistemin günlüklerini arşivle"
+msgstr "Mahremiyet dosyası"
 
 #: ../editgedcoms.php:259
-#, fuzzy
 msgid "SearchLog files"
-msgstr "Günlük-Aramaların kütüğü"
+msgstr "Arama-Günlük dosyalar"
 
 #: ../editgedcoms.php:313
-#, fuzzy
 msgid "ChangeLog files"
-msgstr "Değişen-Dosyaların kütüğü"
+msgstr "DeğişenLog dosyalar"
 
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
@@ -4756,9 +4746,8 @@ msgstr "geri dön"
 #: ../search.php:340 ../modules/googlemap/places.php:183
 #: ../modules/googlemap/places.php:184 ../modules/googlemap/places.php:185
 #: ../modules/googlemap/places.php:186 ../modules/googlemap/places.php:187
-#, fuzzy
 msgid "Place"
-msgstr "Sayfa"
+msgstr "Yer"
 
 #: ../placelist.php:312
 msgid "Place Hierarchy after"
@@ -4827,7 +4816,7 @@ msgstr "Aynı isimli bir GEDCOM dosya bulundu. Eğer devam etmeyi seçerseniz GE
 
 #: ../uploadgedcom.php:493
 msgid "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import."
-msgstr ""
+msgstr "Geçerli GEDCOM da değişiklikler olmuştur incelemeniz için askıya alınmıştır. Eğer bu içeri aktarıma devam ederseniz buradaki değişiklikler veritabanına gönderip uygulanacaktır. İçeri aktarıma devam etmeden bu değişiklikleri incelemelisiniz."
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
@@ -5419,7 +5408,7 @@ msgstr "Önbellek Dosyaları Temizle"
 
 #: ../index_edit.php:597
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr ""
+msgstr "Sizin Hoş geldiniz veya Benim GedView Anasayfam sayfasında yerleştirebileceğiniz blokların her birinin kısa bir tanımlaması buradadır.<br /><table border='1' align='center'><tr><td class='list_value'><b>İsim</b></td><td class='list_value'><b>Açıklaması</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40 ../help_text.php:3888
 msgid "Clippings Cart"
@@ -5690,9 +5679,8 @@ msgstr "Soy isim"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "Başlık"
+msgstr "Sene"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -6363,13 +6351,13 @@ msgstr "Hadiseye yeni bir kaynak alıntısını ekle"
 #: ../modules/googlemap/pedigree_map.php:660
 #: ../modules/googlemap/pedigree_map.php:697
 msgid "Grandfather"
-msgstr ""
+msgstr "Dede"
 
 #: ../includes/functions/functions_charts.php:818
 #: ../modules/googlemap/pedigree_map.php:658
 #: ../modules/googlemap/pedigree_map.php:695
 msgid "Grandmother"
-msgstr ""
+msgstr "Anneanne"
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
 #: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:71
@@ -7936,7 +7924,7 @@ msgstr "Ailesiyle"
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "Halen <b>Benim Sık Kullanılanlar</b>a hiç kimseyi eklemediniz. <b>Benim Sık Kullanılanlar</b>a bir şahsı eklemek için aşağıdaki <b>Sık Kullanılanlara yeni ekle</b> başındaki \"<b>+</b>\" artı ikona basın açılacak açılacak alanda <b>Kişi, Aile, veya Kaynak ID gir</b> in altına ID bilgisi girilir bilmiyorsanız gireceğinize göre sağındaki ikonu seçip arama yapınız veya daha altındaki alana web sitelerinizi ekleyebilirsiniz ve bu <b>Sık Kullanılanlara yeni ekle</b> alanınıza ekleyecekleriniz hakkında bir açıklama gire bileceğiniz <b>Bu sık kullanılanlarınız hakkında bir açıklama gir</b> alana detaylı bilgi girebilirsiniz ve Ekle butona basarak eklemenizi bitirebilirsiniz."
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8280,9 +8268,8 @@ msgstr "Hanımın yaşı"
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "İsmini düzenle"
+msgstr "İsim"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -8790,7 +8777,7 @@ msgstr "DEĞİŞİKLİK (Son Değişiklik) kayıtlarını güncelleme hayır"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:234
 msgid "Link to #GLOBALS[remLinkId]# deleted"
-msgstr ""
+msgstr "#GLOBALS[remLinkId]# link silindi"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:254
 #, php-format
@@ -10045,7 +10032,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:341 ../edit_merge.php:228
 #: ../edit_merge.php:234
 msgid "from"
-msgstr ""
+msgstr "Ebeveyni"
 
 #: ../modules/googlemap/pedigree_map.php:343
 #, fuzzy
@@ -12504,17 +12491,15 @@ msgstr "Kritik"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr ""
+msgstr "Hata"
 
 #: ../gedcheck.php:75
-#, fuzzy
 msgid "Warning"
-msgstr "Boyanmış"
+msgstr "Uyarı"
 
 #: ../gedcheck.php:76
-#, fuzzy
 msgid "Info"
-msgstr "Bilgiveren"
+msgstr "Bilgi"
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -18116,7 +18101,7 @@ msgstr "Lütfen şimdi aşağıdaki bağlantıyı tıklayıp yeni şifreniz ile 
 
 #: ../login_register.php:136
 msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
-msgstr ""
+msgstr "Soyağacı websitesine giriş yaptıktan sonra 'Benim GedView Anasayfam' nden 'Profil ayarlarım' linkini tıklatın açılan sayfada 'Şifre ve Şifre tekrarla' her iki alanını yeni aynı şifrenizi girerek aşağıdaki 'Benim üyelik verilerimi güncelleştir' butonunu tıklamanız yeterli olacaktır."
 
 #: ../login_register.php:142
 #, php-format
@@ -18282,7 +18267,7 @@ msgstr "Nesil Adımları"
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "X gün içinde gelecek hadise yıldönümlerini gösteren blok tur. Bu blok gelecek x gün seçeneği blok konfigürasyondan istediğiniz seçeneği ayarlayarak gelecek yıl dönümleri göstermenize imkan tanır."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18307,7 +18292,7 @@ msgstr "Eniyi Belirlenmiş 10 İsimler"
 
 #: ../blocks/top10_givnnames.php:41
 msgid "This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable."
-msgstr ""
+msgstr "Bu blok, sık sık veritabanında meydana gelen ilk 10 çocuğun bir tablosunu gösterir. Bu blokta gösterilen ilk adların asıl sayısı, ayarlanabilirdir."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_givnnames.php:82
@@ -18326,7 +18311,7 @@ msgstr "Gelişmiş HTML Blok"
 
 #: ../blocks/block_htmlplus.php:44
 msgid "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text."
-msgstr ""
+msgstr "Bu gelişmiş HTML bloğu PhpGedViewin hazırladığı örnek kodlar ve değişkenler içerir bu örnek tablolar ve değişkenler istediklerinizi içinden alarak gelişmiş HTML bloğunda kendinize özel bloklar hazırlamanıza imkan verir."
 
 #: ../blocks/block_htmlplus.php:49 ../blocks/html_block.php:44
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -18337,43 +18322,36 @@ msgid "to change what is printed here.</p>"
 msgstr "açılacak sayfada mesajınızı yazın.</p>"
 
 #: ../blocks/block_htmlplus.php:224
-#, fuzzy
 msgid "Templates"
-msgstr "LDS Temple"
+msgstr "Şablonlar"
 
 #: ../blocks/block_htmlplus.php:246
-#, fuzzy
 msgid "Custom"
-msgstr "Kişisel hadise"
+msgstr "Özel"
 
 #: ../blocks/block_htmlplus.php:262
-#, fuzzy
 msgid "Family Tree"
-msgstr "Aile"
+msgstr "Aile Ağacı"
 
 #: ../blocks/block_htmlplus.php:266
-#, fuzzy
 msgid "Current"
-msgstr "Sayı"
+msgstr "Şimdiki"
 
 #: ../blocks/block_htmlplus.php:267
-#, fuzzy
 msgid "Default"
-msgstr "(Varsayılan / Default)"
+msgstr "Varsayılan"
 
 #: ../blocks/block_htmlplus.php:281
-#, fuzzy
 msgid "Content"
-msgstr "Yardım içeriği"
+msgstr "İçerik"
 
 #: ../blocks/block_htmlplus.php:310
 msgid "Compatibility Mode"
-msgstr ""
+msgstr "Uygunluk Modu"
 
 #: ../blocks/block_htmlplus.php:323
-#, fuzzy
 msgid "Extended Interface"
-msgstr "Cinsiyet Düzenle"
+msgstr "Uzatılmış Arabirim"
 
 #: ../blocks/charts.php:43
 msgid "Charts Block"
@@ -18381,7 +18359,7 @@ msgstr "Blok Çizgeleri"
 
 #: ../blocks/charts.php:44
 msgid "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
-msgstr ""
+msgstr "Bu blok Çizgeler bloğudur, Hoş geldiniz sayfasında veya <b>#GLOBALS[HOME_SITE_TEXT]#</b>da yerleştirmenize izin verir. Bu bloğa <b>Soyağacı Ağaç Çizelgesi</b>, <b>Kum saati Çizelgesi</b> ve <b>Şahsı İzleyen Nesiller Çizelgesi</b> kısa Çizgeleri yerleştirebilirsiniz bu şekilde ziyaretçilerinize kısa bir örneklemede yapabilirsiniz."
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
@@ -18389,11 +18367,11 @@ msgstr "HTML Blok"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
-msgstr ""
+msgstr "Bu HTML blok PhpGedViewiniz için ziyaretçilerinize mesaj verebileceğiniz blok ve HTML kodlarını kullanabileceğiniz bir blok tur. Bu blok sayesinde ziyaretçilerinize vereceğiniz mesajı istediğiniz gibi HTML kodlarıyla şekillendirerek mesajlarınızı yayınlamanızı sağlar."
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "Bu blok giriş bloğudur, üyeler siteye giriş yapmak için kullanıcı adını ve şifresiniz girebileceği bir bloktur."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18401,7 +18379,7 @@ msgstr "Ençok Görüntülenen Blok Parçaları"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "Bu blok GEDCOM içinde en çok ziyaret edilen X kişilerin ziyaret edilme sayılarını yani sayaçlarını gösterir."
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18421,7 +18399,7 @@ msgstr "\"Bugünkü hadise\" kutusu"
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "Bu blok Bugünkü hadiseler... bloğudur bu blok günlük yıl dönümleri Doğum, Ölüm, Evlenme, Hadise vs tüm yıl dönümleri göstermesini sağlar günlük olarak."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18429,7 +18407,7 @@ msgstr "Üye - \"Sık Kullanılanlar\" kutusu"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "Bu blok üyeye kendine özel favorilerin ekenmesine izin verir."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18437,7 +18415,7 @@ msgstr "Başlangıç Al"
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "Bu GEDCOM için Hoş geldiniz bloku. Bu sitedeki bu GEDCOM kayıtları için siteye gelenleri karşılar ve günün tarihi ve saati gösterir."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18457,7 +18435,7 @@ msgstr "GEDCOM - \"Haberler\" kutusu"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "GEDCOM haber bloğu, bir admin kullanıcısı tarafından ilan edilen ziyaretçi haber tahliyeleri veya makaleleri gösterir.<br /><br /><br />Haber bloğu, önemli bir veritabanı güncelleştirmesi, bir aile birleşmesi, veya bir çocuğun doğumunu ilan etmesi için iyi bir yerdir."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18477,7 +18455,7 @@ msgstr "Parçaların numarası"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "Bu blok en çok olan soy adların bir listesini yayınlar. Bu blokta gösterilecek soyadların liste adet sayısını blok konfigürasyondan ayarlayabilirsiniz."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18491,7 +18469,7 @@ msgstr "Bağlı bulunan ziyaretçiler kutusu"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "Bu blok kullanıcılara kimler çevrimiçi olduğunu gösteren bir bloktur."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18503,7 +18481,7 @@ msgstr "Gelecek Yahrzeiten"
 
 #: ../blocks/yahrzeit.php:41
 msgid "The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Gelecek Yahrzeiten bloğu yakın gelecekte meydana gelecek olan ölüm yıldönümlerini gösterir. Siz gösterilen dönemi ayarlayabilirsiniz, bu blok ne kadar uzak gelecekten gösterecek."
 
 #: ../blocks/gedcom_block.php:39
 msgid "GEDCOM Welcome"
@@ -18515,7 +18493,7 @@ msgstr "Kişisel mesajlar kutusu"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "Bu blok Kişisel mesajlar kutusu gösterir, Bu blokta diğer üyelere mesaj gönderme ve mesaj alma imkanı sağlar."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18527,7 +18505,7 @@ msgstr "\"Rasgele medya\" kutusu"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "Bu blok rastgele medya dosyaları gösterir, Soyağacında kayıtlı fotoğrafları ve kime ait olduğunu bilgisiyle beraberinde gösterir, Ayrıca manüel olarak bir sonraki resimleri görme, veya sonraki resimleri otomatik olarak değiştirebilir.<br /><br />Bu blokta medya dosyaların gösterilmesi hakkında yönetici veya sahibi kısıtlamış olabilir."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18553,7 +18531,7 @@ msgstr "GEDCOM - \"Sık kullanılanlar\" kutusu"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "Bilgisine kolayca ulaşmak istediğiniz GEDCOM deki şahısları Sık Kullanılanlar ekleyerek kolayca ulaşılmasını sağlayan blok tur. Aile tarihlerinizde önemli yıl dönümlerini kaçırılmasını engeller."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18561,16 +18539,15 @@ msgstr "Üye - \"Hoş geldin\" kutusu"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "Bu blok üyeye üye adı ile hoş geldin der ve şahsi ayarların linkini verir, tarih verir bu bloğu ister sağda ister solda gösterebilirsiniz."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
 msgstr "RSS Kanalları"
 
 #: ../blocks/rss_block.php:42
-#, fuzzy
 msgid "News and links from the #GEDCOM_TITLE# site"
-msgstr "Haberler ve bağlantılar %s sitesindendir"
+msgstr "Haberler ve bağlantılar #GEDCOM_TITLE# sitesindendir"
 
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
@@ -18578,7 +18555,7 @@ msgstr "&quot;To Do&quot; görevler"
 
 #: ../blocks/todo.php:43
 msgid "The To Do block lists all outstanding _TODO facts in the database."
-msgstr ""
+msgstr "Bloğu yapmak veritabanında tüm seçkin _TODO niteliklerini listeler."
 
 #: ../blocks/todo.php:116
 msgid "There are no &quot;To Do&quot; tasks."
@@ -18590,11 +18567,11 @@ msgstr "\"Tema seçme\" kutusu"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "Bu blok tema seçme bloğudur üyeler kendi zevklerine göre site görümünü mevcut temalar için de seçim yapabilecekleri bir bloktur."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "Ilımlıdaki Değişiklikler Bloğu çevrimiçin yapılan değişiklilerin bir listesini verir. Bu blokta çevrimiçi iken GEDCOM içinde yapılan değişikliklerin yönetici onayı için askıya alınıp yönetici tarafından görülerek bu değişiklikleri inceler uygunluğuna göre değişiklikleri kabul eder veya ret eder."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18626,7 +18603,7 @@ msgstr "Üye - \"Günlük\" kutusu"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "Kullanıcı günlüğü, bu blok kullanıcı çevrimiçi olduğunda istediği notların tutmasını sağlar isterse bu günlüğünü ekleyerek devam etmesini sağlar"
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18634,7 +18611,7 @@ msgstr "Benim günlüğüm"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "Bu blok son x günden bu yana GEDCOM içinde yapılan değişikliklerin bir listesini yayınlar, Ziyaretçi bu listeye bakarak son x gününden itibaren kimlerin bilgileri güncellendiğini görür."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18656,7 +18633,7 @@ msgstr "Eğer blok boş olduğu zaman gizle diye ayarlarsanız blok dolup göste
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "GEDCOM İstatistik Bloğu veritabanı hakkında ziyaretçilere bazı temel bilgileri gösterir.<br /><br />Ayrıca en çok olan soy adlar listesine sahiptir. Siz bu bloğun istatistik verilerin gösterim seçenekleri hakkında blok konfigürasyondan ayarlayabilirsiniz."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
@@ -18741,14 +18718,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Tırnak önizleme klasörü başarılı biçimde kaldırıldı."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Otomatik olarak tırnak önizleme üret "
+msgstr "Tırnak önizleme #thumbnail# otomatikman üretildi."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "Tırnak önizleme dosyası silinemiyor."
+msgstr "Tırnak önizleme #thumbnail# otomatikman üretilemedi."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"
@@ -18824,45 +18799,40 @@ msgid "Delete file"
 msgstr "Dosya sil"
 
 #: ../media.php:1072
-#, fuzzy
 msgid "Move to protected directory"
-msgstr "Korumalıya taşı"
+msgstr "Korumalı klasöre taşı"
 
 #: ../media.php:1076
-#, fuzzy
 msgid "Move to standard directory"
-msgstr "Normale taşı"
+msgstr "Normal klasöre taşı"
 
 #: ../media.php:1090
 msgid "Create thumbnail"
 msgstr "Tırnak önizleme oluştur"
 
 #: ../media.php:1165
-#, fuzzy
 msgid "This media object is located on an external server"
-msgstr "Bu media öbjesi hiçbir kişiye bağlı değil ve GEDCOM a kayıtlı değil."
+msgstr "Bu media nesnesi dış sunucuda lokale yerleştirilir"
 
 #: ../media.php:1168
-#, fuzzy
 msgid "This media object is in the standard media directory"
-msgstr "Bu media öbjesi hiçbir kişiye bağlı değil ve GEDCOM a kayıtlı değil."
+msgstr "Bu media nesnesi normal media klasöründedir"
 
 #: ../media.php:1171
-#, fuzzy
 msgid "This media object is in the protected media directory"
-msgstr "Bu media öbjesi hiçbir kişiye bağlı değil ve GEDCOM a kayıtlı değil."
+msgstr "Bu media nesnesi korumalı media klasöründedir"
 
 #: ../media.php:1179
 msgid "This thumbnail is located on an external server"
-msgstr ""
+msgstr "Bu tırnak önizleme dış sunucuda lokale yerleştirilir"
 
 #: ../media.php:1182
 msgid "This thumbnail is in the standard media directory"
-msgstr ""
+msgstr "Bu tırnak önizleme normal media klasöründedir"
 
 #: ../media.php:1185
 msgid "This thumbnail is in the protected media directory"
-msgstr ""
+msgstr "Bu tırnak önizleme korumalı media klasöründedir"
 
 #: ../media.php:1205
 msgid "The media folder is corrupted."

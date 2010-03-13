@@ -1198,7 +1198,7 @@ msgstr "Nazaj"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "OPOZORILO: Obsežne podatkovne baze zahtevajo pred prenosom daljši čas priprave. Če se čas vmesnika PHP izteče pred koncem prenosa, datoteka mogoče ne bo v celoti prenesena.<br /><br />Če se želite prepričati, ali je datoteka pravilno prenesena, preverite, ali se zadnja vrstica datoteke v obliki GEDCOM glasi <b>0&nbsp;TRLR</b> ali pa da se zadnja vrstica v obliki XML glasi <b></database></b>.  Te datoteke so v tekstni obliki in zato lahko uporabite ustrezen urejevalnik, vendar pazite, da  datoteke <u>ne</u> shranite, potem ko ste jo po prenosu ogledali.<br /><br />V splošnem lahko traja prenos tako dolgo, kot je bilo potrebno za uvoz vaše GEDCOM datoteke."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -1390,9 +1390,8 @@ msgstr "Ročno označi iskalne stroje po IP-jihh"
 #: ../edit_privacy.php:658 ../edit_privacy.php:756
 #: ../blocks/gedcom_news.php:131 ../blocks/user_messages.php:88
 #: ../blocks/user_messages.php:131 ../blocks/user_blog.php:74 ../media.php:942
-#, fuzzy
 msgid "Delete"
-msgstr "Izbriši ime"
+msgstr "Izbriši"
 
 #: ../manageservers.php:249 ../manageservers.php:296 ../manageservers.php:343
 #: ../index_edit.php:516 ../index_edit.php:536 ../clippings.php:281
@@ -1581,7 +1580,7 @@ msgstr "Ta zapis je bil označen za izbris in čaka upraviteljevo odobritev."
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:54
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:44
 msgid "Age"
-msgstr ""
+msgstr "Starost"
 
 #: ../individual.php:290 ../blocks/gedcom_block.php:54
 msgid "Hit Count:"
@@ -2381,7 +2380,7 @@ msgstr "Imenik zaščitenih fotografij v izhodiščnem imeniku požarnega zidu f
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "N A P A K A !!!<br />Datoteke <i>#GLOBALS[whichFile]#</i> ni možno zapisati.  Preverite dovoljenje za pisanje."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -2504,32 +2503,28 @@ msgid "Calendar format"
 msgstr "Oblika koledarja"
 
 #: ../editconfig_gedcom.php:998
-#, fuzzy
 msgid "No calendar conversion"
-msgstr "Omogoči naložitev pregleda dogodkov?"
+msgstr "Brez spremembe koledarja"
 
 #: ../editconfig_gedcom.php:999
-#, fuzzy
 msgid "Gregorian"
-msgstr "Nemščina"
+msgstr "gregorjanski"
 
 #: ../editconfig_gedcom.php:1000
-#, fuzzy
 msgid "Julian"
-msgstr "januarja"
+msgstr "julijanski"
 
 #: ../editconfig_gedcom.php:1001 ../includes/specialchars.php:66
 msgid "French"
 msgstr ""
 
 #: ../editconfig_gedcom.php:1002
-#, fuzzy
 msgid "Jewish"
-msgstr "Novice"
+msgstr "židovski"
 
 #: ../editconfig_gedcom.php:1003
 msgid "Jewish and Gregorian"
-msgstr ""
+msgstr "židovski in gregorjanski"
 
 #: ../editconfig_gedcom.php:1004 ../includes/specialchars.php:82
 msgid "Hebrew"
@@ -2537,11 +2532,11 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:1005
 msgid "Hebrew and Gregorian"
-msgstr ""
+msgstr "hebrejski in gregorjanski"
 
 #: ../editconfig_gedcom.php:1006
 msgid "Hijri"
-msgstr ""
+msgstr "hijri"
 
 #: ../editconfig_gedcom.php:1007 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -3081,9 +3076,8 @@ msgid "Surname tradition"
 msgstr "Tradicija priimka"
 
 #: ../editconfig_gedcom.php:2130
-#, fuzzy
 msgid "Paternal"
-msgstr "Roditelj"
+msgstr "Očetova"
 
 #: ../editconfig_gedcom.php:2131 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -3095,7 +3089,7 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:2133
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandska"
 
 #: ../editconfig_gedcom.php:2134 ../includes/specialchars.php:76
 msgid "Polish"
@@ -3231,18 +3225,16 @@ msgid "Author META tag"
 msgstr "META oznaka avtorja"
 
 #: ../editconfig_gedcom.php:2414
-#, fuzzy
 msgid "Leave this field empty to use the full name of the Genealogy contact."
-msgstr "Pusti to polje prazno za uporabo naslova trenutno aktivne baze podatkov."
+msgstr "Pusti to polje prazno za uporabo polnega imena Kontakt za rodoslovje."
 
 #: ../editconfig_gedcom.php:2418 ../help_text.php:2912
 msgid "Publisher META tag"
 msgstr "META oznaka izdajatelja"
 
 #: ../editconfig_gedcom.php:2421 ../editconfig_gedcom.php:2428
-#, fuzzy
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
-msgstr "Pusti to polje prazno za uporabo naslova trenutno aktivne baze podatkov."
+msgstr "Pusti to polje prazno za uporabo polnega imena Kontakt za rodoslovje."
 
 #: ../editconfig_gedcom.php:2425 ../help_text.php:2887
 msgid "Copyright META tag"
@@ -3319,9 +3311,8 @@ msgid "Return to the Admin menu"
 msgstr "Vrni se na meni upravitelja"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "GEDCOM naslov"
+msgstr "Datoteka GEDCOM"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3360,9 +3351,8 @@ msgid "Check"
 msgstr "Preveri"
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "Nastavitve"
+msgstr "Nastavitvena datoteka"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3392,19 +3382,16 @@ msgid "Edit"
 msgstr "Uredi"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Arhiviraj datoteke dnevnikov"
+msgstr "Datoteka zasebnosti"
 
 #: ../editgedcoms.php:259
-#, fuzzy
 msgid "SearchLog files"
-msgstr "Arhiviraj dnevnike iskanja"
+msgstr "Datoteka iskalnega dnevnika"
 
 #: ../editgedcoms.php:313
-#, fuzzy
 msgid "ChangeLog files"
-msgstr "Arhiviraj dnevnike sprememb"
+msgstr "Datoteke dnevnikov sprememb"
 
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
@@ -4756,9 +4743,8 @@ msgstr "Najvišja raven"
 #: ../search.php:340 ../modules/googlemap/places.php:183
 #: ../modules/googlemap/places.php:184 ../modules/googlemap/places.php:185
 #: ../modules/googlemap/places.php:186 ../modules/googlemap/places.php:187
-#, fuzzy
 msgid "Place"
-msgstr "Stran"
+msgstr "Kraj"
 
 #: ../placelist.php:312
 msgid "Place Hierarchy after"
@@ -4827,7 +4813,7 @@ msgstr "GEDCOM datoteka z istime imenom že obstaja. Če boste nadaljevali, bo s
 
 #: ../uploadgedcom.php:493
 msgid "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import."
-msgstr ""
+msgstr "V trenutnem GEDCOM-u je treba pregledati nerazrešene spremembe. Če boste nadaljevali ta uvoz podatkov, bodo sprememenjeni podatki nemudoma poslani v podatkovno bazo. Priporočljivo je, da pred nadaljevanjem vnosa pregledate spremembe."
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
@@ -5418,7 +5404,7 @@ msgstr "Počisti vmesne datoteke"
 
 #: ../index_edit.php:597
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr ""
+msgstr "Tu je kratek opis posameznih blokov, ki jih lahko postavite na Zdravo, ali Uporabnikov portal stran.<br /><table border='1' align='center'><tr><td class='list_value'><b>Ime</b></td><td class='list_value'><b>Opis</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40 ../help_text.php:3888
 msgid "Clippings Cart"
@@ -5676,7 +5662,7 @@ msgstr "Celoten zapis"
 
 #: ../search.php:302 ../modules/batch_update/plugins/search_replace.php:117
 msgid "Whole words only"
-msgstr ""
+msgstr "Samo cele besede"
 
 #: ../search.php:321
 msgid "Given name"
@@ -5689,9 +5675,8 @@ msgstr "Priimek"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "Glava"
+msgstr "Leto"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -7935,7 +7920,7 @@ msgstr "Družina z"
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "Niste izbrali priljubljenih zaznamkov.<br /><br />Osebo, družino ali vir dodate med priljubljene zaznamke tako, da kliknete na povezavo <b>Dodaj novo priljubljeno osebo</b>, ki bo odkrila polja, v katera lahko vstavite ali iščete ID-številke.  Namesto ID-številke ahko vnesete URL in naslov."
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8279,9 +8264,8 @@ msgstr "Starost žene"
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "Popravi ime"
+msgstr "Ime"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -8789,7 +8773,7 @@ msgstr "Ne dodaj zapisov CHAN (Last Change)"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:234
 msgid "Link to #GLOBALS[remLinkId]# deleted"
-msgstr ""
+msgstr "Povezava na #GLOBALS[remLinkId]# izbrisana"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:254
 #, php-format
@@ -12504,17 +12488,15 @@ msgstr "Kritično"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr ""
+msgstr "Napaka"
 
 #: ../gedcheck.php:75
-#, fuzzy
 msgid "Warning"
-msgstr "likovno delo"
+msgstr "Opozorilo"
 
 #: ../gedcheck.php:76
-#, fuzzy
 msgid "Info"
-msgstr "obveščevalec"
+msgstr "Informacije"
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -18115,7 +18097,7 @@ msgstr "Kliknite na spodno povezavo ali pa jo prelepite v brskalnik. Prijavite s
 
 #: ../login_register.php:136
 msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
-msgstr ""
+msgstr "Potem ko ste se prijavili izberite povezavo «Moj račun» v meniju «Uporabnikov portal» in izpolnite polji za geslo."
 
 #: ../login_register.php:142
 #, php-format
@@ -18281,7 +18263,7 @@ msgstr "Število rodov"
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Prihajajoči dogodki kažejo bližnje obletnice. Nastavite lahko količino podrobnosti. Upravitelj lahko nastavi tudi, kako daleč v prihodnost bo ta sklop kazal."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18306,7 +18288,7 @@ msgstr "Deset najpogostejših osebnih imen"
 
 #: ../blocks/top10_givnnames.php:41
 msgid "This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable."
-msgstr ""
+msgstr "Ta sklop kaže razpredelnico desetih najpogostejših osebnih imen v podatkovni bazi. Število prikazanih osebnih imen je nastavljivo."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_givnnames.php:82
@@ -18325,7 +18307,7 @@ msgstr "Napredni HTML"
 
 #: ../blocks/block_htmlplus.php:44
 msgid "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text."
-msgstr ""
+msgstr "To je HTML-jev sklop, ki ga lahko namestite na svojo stran za dodajanje kakršnihkoli želenih sporočil. V HTML-jevo besedilo lahko vnesete tudi reference podatkov iz vašega GEDCOM-a."
 
 #: ../blocks/block_htmlplus.php:49 ../blocks/html_block.php:44
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -18336,43 +18318,36 @@ msgid "to change what is printed here.</p>"
 msgstr "za spremembo tu natisnjenih podatkov.</p>"
 
 #: ../blocks/block_htmlplus.php:224
-#, fuzzy
 msgid "Templates"
-msgstr "Mormonsko svetišče"
+msgstr "Predloge"
 
 #: ../blocks/block_htmlplus.php:246
-#, fuzzy
 msgid "Custom"
-msgstr "Uporabniški dogodek"
+msgstr "Standardno"
 
 #: ../blocks/block_htmlplus.php:262
-#, fuzzy
 msgid "Family Tree"
-msgstr "Družina"
+msgstr "Družinsko drevo"
 
 #: ../blocks/block_htmlplus.php:266
-#, fuzzy
 msgid "Current"
-msgstr "Prešteto"
+msgstr "Trenutni"
 
 #: ../blocks/block_htmlplus.php:267
-#, fuzzy
 msgid "Default"
-msgstr "(privzeto)"
+msgstr "Privzeti"
 
 #: ../blocks/block_htmlplus.php:281
-#, fuzzy
 msgid "Content"
-msgstr "Vsebina napotkov"
+msgstr "Vsebina"
 
 #: ../blocks/block_htmlplus.php:310
 msgid "Compatibility Mode"
-msgstr ""
+msgstr "Kompatibilni način"
 
 #: ../blocks/block_htmlplus.php:323
-#, fuzzy
 msgid "Extended Interface"
-msgstr "Določi spol"
+msgstr "Razširjeni vmesnik"
 
 #: ../blocks/charts.php:43
 msgid "Charts Block"
@@ -18380,7 +18355,7 @@ msgstr "Blok preglednic"
 
 #: ../blocks/charts.php:44
 msgid "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
-msgstr ""
+msgstr "Blok preglednic vam omogoča postavitev preglednic na pozdravno stran ali na stran MyGedView portala.  Blok lahko nastavite tako, da vam kaže prednike, potomce ali oboje hkrati. Izberete lahko tudi izhodiščno osebo."
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
@@ -18388,11 +18363,11 @@ msgstr "HTML"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
-msgstr ""
+msgstr "To je preprost HTML-jev sklop, ki ga lahko namestite na svoje stran za dodajanje kakršnihkoli želenih sporočil."
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "Sklop Prijava sprejme uporabnikovo ime in geslo in tako omogoči uporabniku vstop."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18400,7 +18375,7 @@ msgstr "Najpogosteje gledani zapisi"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "V tem sklopu je prizakanih deset najpogosteje gledanih zapisov. Ta sklop zahteva vključitev štetja zadetkov v GEDCOM-ovih konfiguracijskih nastavitvah."
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18420,7 +18395,7 @@ msgstr "Na današnji dan"
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "Na današnji dan v vaši zgodovini... Sklop kaže obletnice za danes. Nastavite lahko količino prikazanih podrobnosti."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18428,7 +18403,7 @@ msgstr "Uporabnikove najbolj priljubljene osebe"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "Sklop Uporabnikove najbolj priljubljene osebe kaže uporabniku seznam njegovih najbolj priljubljenih oseb v podatkovni bazi za preprostejši vpogled v njihove zapise."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18436,7 +18411,7 @@ msgstr "Začni"
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "Sklop GEDCOM-ov pozdrav deluje tako kot pozdravna stran za uporabnika. Pozdravi obiskovalca spletne strani in prikaže naslov trenutno aktivirane podatkovne baze kot tudi tekoči datum in čas."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18456,7 +18431,7 @@ msgstr "GEDCOM-ove novice"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "Sklop GEDCOM-ove novice kaže uporabniku novice ali članke, ki jih posreduje uporabnik z upraviteljskimi pooblastili.<br /><br />Ta sklop je primerno mesto za naznanjanje pomembnih sprememb v podatkovni bazi, družinskih srečanj ali obvestil o rojstvu otroka."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18476,7 +18451,7 @@ msgstr "Število prikazanih novic"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "Ta sklop prikazuje razpredelnico desetih najpogostejših priimkov v podatkovni bazi. Število prikazanih priimkov je nastavljivo. GEDCOM lahko nastavite tako, da s tega seznama določene priimke lahko odstranite."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18490,7 +18465,7 @@ msgstr "Prijavljeni uporabniki"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "Sklop Prijavljeni uporabniki kaže seznam trenutno prijavljenih uporabnikov."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18502,7 +18477,7 @@ msgstr "Bližnje obletnice"
 
 #: ../blocks/yahrzeit.php:41
 msgid "The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Bližnje obletnice kažejo obletnice smrti, ki se bodo zgodile v bližnji prihodnosti. Nastavite lahko obdobje prikaza. Upravitelj lahko nastavi, kako daleč v prihodnost kaže sklop."
 
 #: ../blocks/gedcom_block.php:39
 msgid "GEDCOM Welcome"
@@ -18514,7 +18489,7 @@ msgstr "Sporočila za uporabnike"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "Sklop Sporočila za uporabnike kaže seznam sporočil, ki so bila poslana aktivnim uporabnikom."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18526,7 +18501,7 @@ msgstr "Naključne fotografije"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "Sklop Naključne fotografije naključno izbere fotografijo ali drugo slikovno gradivo iz trenutno aktivirane podatkovne baze in jo prikaže uporabniku.<br /><br />Upravitelj določi, ali je slikovno gradivo prikazano v povezavi z osebo ali dogodkom."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18552,7 +18527,7 @@ msgstr "GEDCOM-ove najljubše osebe"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "Sklop GEDCOM-ove najljubše osebe daje upravitelju možnost, da določi osebe iz podatkovne baze, katerih podatki bodo preprosto dostopni vsem uporabnikom. Tako lahko izpostavite osebe, ki so še posebej pomembne za zgodovino rodbine."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18560,16 +18535,15 @@ msgstr "Pozdravna stran za uporabnika"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "Sklop Pozdravna stran za uporabnika kaže uporabniku tekoči datum in čas, hitre povezave za prenovo uporabniškega računa ali za hiter vpogled v njegovo preglednico prednikov in povezavo za za spremebe osebnega portala MyGedView po lastnih željah."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
 msgstr "RSS objave"
 
 #: ../blocks/rss_block.php:42
-#, fuzzy
 msgid "News and links from the #GEDCOM_TITLE# site"
-msgstr "Novice in povezave s spletne strani %s"
+msgstr "Novice in povezave s spletne strani #GEDCOM_TITLE#"
 
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
@@ -18577,7 +18551,7 @@ msgstr "&quot;Domače naloge&quot;"
 
 #: ../blocks/todo.php:43
 msgid "The To Do block lists all outstanding _TODO facts in the database."
-msgstr ""
+msgstr "Sklop Domače naloge navaja vsa pomembna _TODO dejstva v bazi."
 
 #: ../blocks/todo.php:116
 msgid "There are no &quot;To Do&quot; tasks."
@@ -18589,11 +18563,11 @@ msgstr "Izbira teme"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "Sklop Izbira teme prikazuje tematski izbirnik, tudi kadar je izključena funkcija spreminjanja teme."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "Nerazrešene skupine sprememb bodo omogočale uporabnikom s pravicami urejanja dostop do seznama spremenjenih zapisov, ki jih je treba še pregledati in odobriti. Spremembe čakajo na potrditev ali zavrnitev.<br /><br />Če je ta skupina omogočena, bodo uporabniki s pravicami odobravanja prejeli dnevno e-sporočilo z obvestilom, da je treba pregledati spremembe."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18625,7 +18599,7 @@ msgstr "Uporabnikov dnevnik"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "Sklop Uporabnikov dnevnik omogoča uporabniku elektronske zapiske ali elektronski dnevnik."
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18633,7 +18607,7 @@ msgstr "Moj dnevnik"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "Sklop Zadnje spremembe bo izpisal vse spremembe, ki so bile narejene v bazi zadnji mesec. Ta sklop vam pomaga slediti narejenim spremembam. Spremembe so zaznane samodejno z oznako CHAN, ki je definirana v standardu GEDCOM."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18655,7 +18629,7 @@ msgstr "Če skrijete prazen sklop, ne boste mogli spreminjati njegih nastavitev,
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "Sklop GEDCOM-ovi statistični podatki kaže obiskovalcu osnovne podatke o podatkovnih bazah, npr. kdaj je bila ustvarjena in koliko ljudi vključuje.<br /><br />Vsebuje tudi seznam najpogostejših priimkov. Sklop lahko nastavite tako, da ne prikazuje seznama najpogostejših priimkov, GEDCOM pa lahko nastavite tudi tako, da s seznama odstranite ali dodate priimke. V GEDCOM-ovih nastavitvah lahko določite mejno število pojavitev za ta seznam."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
@@ -18740,14 +18714,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Imenik sličic je bil uspešno odstranjen."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Samodejno izdelaj sličice iz "
+msgstr "Sličica #thumbnail# je bila samodejno izdelana."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "Sličice ni bilo mogoče izbrisati."
+msgstr "Sličica #thumbnail# ne more biti samodejno izdelana."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"
@@ -18823,45 +18795,40 @@ msgid "Delete file"
 msgstr "Izbriši datoteko"
 
 #: ../media.php:1072
-#, fuzzy
 msgid "Move to protected directory"
-msgstr "Premakni v zaščiteno"
+msgstr "Premakni v zaščiteni imenik"
 
 #: ../media.php:1076
-#, fuzzy
 msgid "Move to standard directory"
-msgstr "Premakni v standardno"
+msgstr "Premakni v standardni imenik"
 
 #: ../media.php:1090
 msgid "Create thumbnail"
 msgstr "Izdelaj sličico"
 
 #: ../media.php:1165
-#, fuzzy
 msgid "This media object is located on an external server"
-msgstr "Ta fotografija ni povezano z nobenim GEDCOM-ovim zapisom."
+msgstr "Fotografija se nahaja na zunanjem strežniku"
 
 #: ../media.php:1168
-#, fuzzy
 msgid "This media object is in the standard media directory"
-msgstr "Ta fotografija ni povezano z nobenim GEDCOM-ovim zapisom."
+msgstr "Fotografija je v standardnem imeniku fotografij"
 
 #: ../media.php:1171
-#, fuzzy
 msgid "This media object is in the protected media directory"
-msgstr "Ta fotografija ni povezano z nobenim GEDCOM-ovim zapisom."
+msgstr "Fotografija je zaščitenem imeniku fotografij"
 
 #: ../media.php:1179
 msgid "This thumbnail is located on an external server"
-msgstr ""
+msgstr "Sličica se nahaja na zunanjem strežniku"
 
 #: ../media.php:1182
 msgid "This thumbnail is in the standard media directory"
-msgstr ""
+msgstr "Sličica je v standarnem imeniku fotografij"
 
 #: ../media.php:1185
 msgid "This thumbnail is in the protected media directory"
-msgstr ""
+msgstr "Sličica je v zaščitenem imeniku fotografij"
 
 #: ../media.php:1205
 msgid "The media folder is corrupted."

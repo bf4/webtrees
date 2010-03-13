@@ -1209,7 +1209,7 @@ msgstr "Πίσω"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "NOTE: Large GEDCOMs can take a long time to process before downloading.  If PHP times out before the download is complete, then you may not get a complete download.  You can check the downloaded GEDCOM for the 0 TRLR line at the end of the file to make sure it downloaded correctly.  In general it could take as much time to download as it took to import your GEDCOM."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -2404,7 +2404,7 @@ msgstr "Ο προστατευμένος κατάλογος μέσων, μέσα 
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "Error!!! Cannot write to the GEDCOM configuration file."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -3257,18 +3257,16 @@ msgid "Author META tag"
 msgstr "Author META tag"
 
 #: ../editconfig_gedcom.php:2414
-#, fuzzy
 msgid "Leave this field empty to use the full name of the Genealogy contact."
-msgstr "Leave this field empty to use the currently active GEDCOM's title for this value."
+msgstr "Leave this field empty to use the GEDCOM contact user's full name for this value."
 
 #: ../editconfig_gedcom.php:2418 ../help_text.php:2912
 msgid "Publisher META tag"
 msgstr "Publisher META tag"
 
 #: ../editconfig_gedcom.php:2421 ../editconfig_gedcom.php:2428
-#, fuzzy
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
-msgstr "Leave this field empty to use the currently active GEDCOM's title for this value."
+msgstr "Leave this field empty to use the GEDCOM contact user's full name for this value."
 
 #: ../editconfig_gedcom.php:2425 ../help_text.php:2887
 msgid "Copyright META tag"
@@ -3345,9 +3343,8 @@ msgid "Return to the Admin menu"
 msgstr "Go back to the Admin menu"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "Enter a title that describes the data in this GEDCOM file"
+msgstr "GEDCOM Αρχείο"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3386,9 +3383,8 @@ msgid "Check"
 msgstr ""
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "Διαμόρφωση"
+msgstr "Αρχείο Προσαρμογών"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3418,9 +3414,8 @@ msgid "Edit"
 msgstr "Edit"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Archive Log Files"
+msgstr "Privacy File"
 
 #: ../editgedcoms.php:259
 #, fuzzy

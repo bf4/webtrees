@@ -1133,7 +1133,7 @@ msgstr ""
 #: ../modules/clippings/clippings.php:265 ../famlist.php:128
 #: ../famlist.php:147
 msgid "None"
-msgstr ""
+msgstr "Không hạn chế"
 
 #: ../downloadgedcom.php:154 ../downloadgedcom.php:157 ../clippings.php:206
 #: ../modules/clippings/index.php:214 ../modules/clippings/clippings.php:266
@@ -1201,7 +1201,7 @@ msgstr "Quay về"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "Xin chú ý: Những tập tin GEDCOM lớn sẽ lấy nhiều thời gian đặng gom trước khi lấy xuống được. Nếu PHP chấm dứt trước khi việc lấy xuống hoàn tất, có thể là bạn sẽ không có một tập tin hoàn diện.<br /><br /> Đặng chắc chắn là tập tin lấy xuống hoàn diện, kiểm soát rằng hàng cuối cùng là <b>0&nbsp;TRLR</b>. Trong những tập tin GEDCOM chỉ có chữ thường và bạn có thể dùng chương trình đọc/viết nào cũng được, nhưng xin <u>đừng</u> đổi sau khi xem.<br /><br />Thông thường, sẽ cần cùng thời gian đặng lấy xuống như lúc gửi tập tin GEDCOM lên."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -1394,9 +1394,8 @@ msgstr ""
 #: ../edit_privacy.php:658 ../edit_privacy.php:756
 #: ../blocks/gedcom_news.php:131 ../blocks/user_messages.php:88
 #: ../blocks/user_messages.php:131 ../blocks/user_blog.php:74 ../media.php:942
-#, fuzzy
 msgid "Delete"
-msgstr "Xoá Tên"
+msgstr "Xoá Đi"
 
 #: ../manageservers.php:249 ../manageservers.php:296 ../manageservers.php:343
 #: ../index_edit.php:516 ../index_edit.php:536 ../clippings.php:281
@@ -2344,7 +2343,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:735 ../modules/sitemap/index.php:237
 #: ../modules/sitemap/index.php:342
 msgid "Individual Information"
-msgstr ""
+msgstr "Chi tiết cá nhân"
 
 #: ../expand_view.php:75 ../find.php:590
 #: ../includes/functions/functions_mediadb.php:1594
@@ -2392,7 +2391,7 @@ msgstr ""
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "Có sự sai lầm!!! Không viết vào tập tin Cấu Hình GEDCOM được."
 
 #: ../editconfig_gedcom.php:490
 #, fuzzy
@@ -4651,7 +4650,7 @@ msgstr "Cho Xem Cá Nhân"
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:623
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:652
 msgid "View Source"
-msgstr ""
+msgstr "Cho Xem Nguồn"
 
 #: ../find.php:596 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:626
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:655
@@ -4778,9 +4777,8 @@ msgstr "Hàng cao nhất"
 #: ../search.php:340 ../modules/googlemap/places.php:183
 #: ../modules/googlemap/places.php:184 ../modules/googlemap/places.php:185
 #: ../modules/googlemap/places.php:186 ../modules/googlemap/places.php:187
-#, fuzzy
 msgid "Place"
-msgstr "Trang"
+msgstr "Nơi"
 
 #: ../placelist.php:312
 msgid "Place Hierarchy after"
@@ -4849,7 +4847,7 @@ msgstr "Nếu bạn muốn tiếp tục, cái tập tin bạn gửi lên sẽ th
 
 #: ../uploadgedcom.php:493
 msgid "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import."
-msgstr ""
+msgstr "Cái GEDCOM hiện tại có chuyện đổi, đang chờ xét lại. Nếu bạn tiếp tục thu nhập, những chuyện đổi này sẽ giao vào kho dữ kiện tức thì. Bạn  nên xét lại những chuyện đang chờ đổi trước khi thu nhập."
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
@@ -5717,9 +5715,8 @@ msgstr "Tên Họ"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "Côlectơ"
+msgstr "Năm"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -6401,13 +6398,13 @@ msgstr "Thêm Nguồn Sự Dẫn mới"
 #: ../modules/googlemap/pedigree_map.php:660
 #: ../modules/googlemap/pedigree_map.php:697
 msgid "Grandfather"
-msgstr ""
+msgstr "Ông ngoại"
 
 #: ../includes/functions/functions_charts.php:818
 #: ../modules/googlemap/pedigree_map.php:658
 #: ../modules/googlemap/pedigree_map.php:695
 msgid "Grandmother"
-msgstr ""
+msgstr "Bà ngoại"
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
 #: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:71
@@ -7980,7 +7977,7 @@ msgstr "Gia đình của"
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "Bạn chưa có lựa người ưa chuộng. Đặng lựa người ưa chuộng, xin <b>Tìm Kiếm</b> chi tiết người đó và nhấn vào cái mối <b>Thêm vào Ưa Chuộng của Tôi</b> trong mối <b>Cái khác</b>, hay là dùng cái hộp <b>Tìm Nhận Diện</b> dưới đây đặng thêm người theo số Nhận Diện"
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8166,9 +8163,8 @@ msgstr "utf8_turkish_ci"
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:239 ../modules/sitemap/index.php:396
-#, fuzzy
 msgid "Family Information"
-msgstr "Nhận biết PHP"
+msgstr "Chi tiết về gia đình "
 
 #: ../includes/controllers/family_ctrl.php:350
 #: ../includes/controllers/family_ctrl.php:361
@@ -8330,9 +8326,8 @@ msgstr ""
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "Sửa Tên"
+msgstr "Tên"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -9882,7 +9877,7 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:802
 msgid "W"
-msgstr ""
+msgstr "4"
 
 #: ../modules/googlemap/places_edit.php:812
 #: ../modules/googlemap/places_edit.php:820
@@ -10099,7 +10094,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:341 ../edit_merge.php:228
 #: ../edit_merge.php:234
 msgid "from"
-msgstr ""
+msgstr "từ"
 
 #: ../modules/googlemap/pedigree_map.php:343
 msgid "generations"
@@ -18330,7 +18325,7 @@ msgstr ""
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Cái khối Sự Việc Sắp Xảy Tới cho xem danh sách của những sự việc đã xảy đến trong vòng 30 ngày trước đây trong kho dữ kiện đang dùng.<br /><br />Trong Trang GedView của Tôi, khối này ghi kết những người còn sống. Trong Trang Chào Mừng của  GEDCOM, nó sẽ ghi kết tất cả mọi người."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18438,11 +18433,11 @@ msgstr "Khối HTML"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
-msgstr ""
+msgstr "Đây là một khối HTML bạn có thể để trong trang của bạn đặng thêm bất cứ thông báo nào bạn muốn."
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "Khối Truy Nhập chấp nhận một tên truy nhập cùng với mật khẩu đặng cho thành viên truy nhập."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18450,7 +18445,7 @@ msgstr "Đoạn 'Trang được nhìn nhiều nhất'"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "Đoạn này sẽ trưng bày 10 cái ký lục được viếng nhiều nhất. Đoạn này cần phải có bộ phận Tổng Số Viếng Thăm trong cấu hình GEDCOM chạy."
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18470,7 +18465,7 @@ msgstr "Khối Sự Việc Trong Ngày Nay"
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "Cái khối Sự Việc Trong Ngày Nay, trong Quá Khứ Của Bạn... cho xem danh sách của những sự việc đã xảy đến trong ngày hôm nay trong kho dữ kiện đang dùng.<br /><br />Nếu không có sự việc nào hết, sẽ không trưng bày khối nào. Trong Trang GedView của Tôi, khối này ghi kết những người còn sống. Trong Trang Chào Mừng của GEDCOM, nó sẽ ghi kết tất cả mọi người."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18478,7 +18473,7 @@ msgstr "Khối Ưa Chuộng của Thành Viên"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "Cái khối Ưa Chuộng của Thành Viên cho xem danh sách của những người ưa thích bởi thành viên đặng thành viên có thể nhìn người đó nhanh nhẹn."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18486,7 +18481,7 @@ msgstr ""
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "Cái khối Chào Mừng GEDCOM cũng chạy giống như cái khối Chào Mừng Thành Viên. Khối đó chào mừng người đến thăm site và phô trương tên của kho dữ kiện đang dùng cùng với ngày và giờ hiện tại."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18507,7 +18502,7 @@ msgstr "Khối tin tức GEDCOM"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "Khối tin tức GEDCOM cho người thăm viếng xem  những tin tức mới hay là những bài báo đăng lên bởi thành viên quản lý.<br /><br />Nên dùng khối tin tức đặng loan báo một cập nhật quan trọng của kho dữ kiện, một cuộc họp mặt gia đình, hoặc sự ra đời của một đứa bé."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18529,7 +18524,7 @@ msgstr "Số ngày đặng trưng bày"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "Khối này cho xem 10 tên họ phổ thông nhất trong kho dữ kiện. Số tên họ trưng bày có thể sửa được. Bạn có thể thay đổi GEDCOM đặng bớt tên trong danh sách này."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18543,7 +18538,7 @@ msgstr "Khối Thành Viên đã  Truy Nhập"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "Cái khối Thành Viên đã Truy Nhập cho xem danh sách của những thành viên đang trên cái Website này."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18567,7 +18562,7 @@ msgstr "Khối Thư Tín của Thành Viên"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "Cái khối Thư Tín của Thành Viên cho xem danh sách của những thư điện tử có gửi tới thành viên đã truy nhập."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18579,7 +18574,7 @@ msgstr "Khối  Môi Thể tuyển lựa tình cờ"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "Cái khối Môi Thể tuyển lựa Tình Cờ sẽ lựa tình cờ một hình hoặc môi thể  khác đặng phô bày cho thành viên."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18606,7 +18601,7 @@ msgstr "Khối Ưa Chuộng GEDCOM"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "Cái khối Ưa Chuộng GEDCOM dùng cho quản lý chỉ định một vài người trong kho dữ kiện đặng chuyện biết về họ có thể xem được một cách nhanh nhẹn bởi tất cả mọi người. Đấy là một cách đề cao những người quan trọng trong lịch sử của gia đình của bạn."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18614,16 +18609,15 @@ msgstr "Khối Chào Mừng Thành Viên"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "Cái khối Chào Mừng Thành Viên cho thành viên xem ngày và giờ hiện tại, những mối liên lạc đặng thay đổi tài khoản của mình hay là đi đến <b>Đồ Thị Dòng Giống</b> của mình, và mối liên lạc đặng sửa đổi <b>Trang GedView của Tôi</b> của mình."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
 msgstr "Nơi cung cấp RSS"
 
 #: ../blocks/rss_block.php:42
-#, fuzzy
 msgid "News and links from the #GEDCOM_TITLE# site"
-msgstr "Tin tức và  mối liên lạc từ website %s"
+msgstr "Tin tức và  mối liên lạc từ website #GEDCOM_TITLE#"
 
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
@@ -18643,11 +18637,11 @@ msgstr "Khối chọn nền của Website"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "Khối Chọn Nền của Website biểu lộ cái món Chọn Nền dù cho đã  tắt phần Đổi Nền."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "Khối Chuyện đang Chờ Đổi dùng cho thành viên với quyền Sửa xem danh sách những ký lục đã đổi trực tuyến, còn cần phải kiểm. Những chuyện đổi này chỉ chính thức hoá sau khi được chấp nhận.<br /><br /> Nếu khối này cho chạy, những thành viên với quyền Chấp Thuận sẽ nhận thư điện tử mỗi ngày báo cho biết có chuyện đổi, cần xét lại."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18679,7 +18673,7 @@ msgstr "Khối nhật ký của thành viên"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "Khối nhật ký của thành viên cho phép thành viên ghi chuyện hoặc giữ nhật ký trực tuyến."
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18687,7 +18681,7 @@ msgstr "Nhật ký của tôi"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "Cái khối Thay Đổi Mới Đây sẽ kê khai tất cả những sự biến đổi trong tháng vừa qua. Cái khối này cho phép biết những chuyện sửa đổi hiện hành. Chuyện sửa đổi sẽ tự nhiên khám phá bằng cái thẻ CHAN định rõ trong tiêu chuẩn GEDCOM."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18709,7 +18703,7 @@ msgstr ""
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "Cái khối thống kê GEDCOM cho khách kiến thức cơ bản về kho dữ kiện, <br />như khi tạo ra và có bao nhiêu người trong đó.<br /><br />Trong đó cũng có danh sách của những tên họ thông thường nhất. Bạn có thể thay đổi khối này đặng không phô bày danh sách tên họ thông thường, và bạn cũng có thể thay đổi GEDCOM đặng thêm hay bớt tên trong danh sách này. Bạn có thể đặt mức thống kê cho danh sách này trong cấu hình GEDCOM."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
@@ -18794,13 +18788,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr ""
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Tự động tạo ra bức chân dung nhỏ từ"
+msgstr "Bức chân dung nhỏ đã được tự động tạo ra."
 
 #: ../media.php:472 ../media.php:490
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr ""
+msgstr "Không tạo ra được bức chân dung nhỏ cho"
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"

@@ -1136,7 +1136,7 @@ msgstr ""
 #: ../modules/clippings/clippings.php:265 ../famlist.php:128
 #: ../famlist.php:147
 msgid "None"
-msgstr ""
+msgstr "Nici unul"
 
 #: ../downloadgedcom.php:154 ../downloadgedcom.php:157 ../clippings.php:206
 #: ../modules/clippings/index.php:214 ../modules/clippings/clippings.php:266
@@ -1397,9 +1397,8 @@ msgstr ""
 #: ../edit_privacy.php:658 ../edit_privacy.php:756
 #: ../blocks/gedcom_news.php:131 ../blocks/user_messages.php:88
 #: ../blocks/user_messages.php:131 ../blocks/user_blog.php:74 ../media.php:942
-#, fuzzy
 msgid "Delete"
-msgstr "Şterge numele"
+msgstr "Şterge"
 
 #: ../manageservers.php:249 ../manageservers.php:296 ../manageservers.php:343
 #: ../index_edit.php:516 ../index_edit.php:536 ../clippings.php:281
@@ -2346,7 +2345,7 @@ msgstr "Arată imaginile evidenţiate în căsuţele persoanelor"
 #: ../modules/googlemap/pedigree_map.php:735 ../modules/sitemap/index.php:237
 #: ../modules/sitemap/index.php:342
 msgid "Individual Information"
-msgstr ""
+msgstr "Informaţii individ"
 
 #: ../expand_view.php:75 ../find.php:590
 #: ../includes/functions/functions_mediadb.php:1594
@@ -2517,31 +2516,28 @@ msgid "Calendar format"
 msgstr ""
 
 #: ../editconfig_gedcom.php:998
-#, fuzzy
 msgid "No calendar conversion"
-msgstr "Permiteţi descărcarea evenimentelor din calendar ?"
+msgstr "Fără conversie de calendar"
 
 #: ../editconfig_gedcom.php:999
 msgid "Gregorian"
-msgstr ""
+msgstr "Gregorian"
 
 #: ../editconfig_gedcom.php:1000
-#, fuzzy
 msgid "Julian"
-msgstr "Ian"
+msgstr "Iulian"
 
 #: ../editconfig_gedcom.php:1001 ../includes/specialchars.php:66
 msgid "French"
 msgstr ""
 
 #: ../editconfig_gedcom.php:1002
-#, fuzzy
 msgid "Jewish"
-msgstr "Ştiri"
+msgstr "Evreiesc"
 
 #: ../editconfig_gedcom.php:1003
 msgid "Jewish and Gregorian"
-msgstr ""
+msgstr "Evreiesc şi Gregorian"
 
 #: ../editconfig_gedcom.php:1004 ../includes/specialchars.php:82
 msgid "Hebrew"
@@ -2549,11 +2545,11 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:1005
 msgid "Hebrew and Gregorian"
-msgstr ""
+msgstr "Ebraic şi Gregorian"
 
 #: ../editconfig_gedcom.php:1006
 msgid "Hijri"
-msgstr ""
+msgstr "Hijri"
 
 #: ../editconfig_gedcom.php:1007 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -4651,9 +4647,8 @@ msgstr "Vizualizează persoană"
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:244
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:623
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:652
-#, fuzzy
 msgid "View Source"
-msgstr "Vizualizează arhiva"
+msgstr "Vizualizează sursă"
 
 #: ../find.php:596 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:626
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:655
@@ -4779,9 +4774,8 @@ msgstr "Nivelul superior"
 #: ../search.php:340 ../modules/googlemap/places.php:183
 #: ../modules/googlemap/places.php:184 ../modules/googlemap/places.php:185
 #: ../modules/googlemap/places.php:186 ../modules/googlemap/places.php:187
-#, fuzzy
 msgid "Place"
-msgstr "Pagina"
+msgstr "Loc"
 
 #: ../placelist.php:312
 msgid "Place Hierarchy after"
@@ -4850,7 +4844,7 @@ msgstr ""
 
 #: ../uploadgedcom.php:493
 msgid "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import."
-msgstr ""
+msgstr "GEDCOM-ul curent are modificări în aşteptare.  Dacă veţi continua acest Import, aceste modificări în aşteptare vor fi salvate în baza de date imediat.  Ar trebui să verificaţi modificările din aşteptare înainte să continuaţi cu Importul."
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
@@ -5442,7 +5436,7 @@ msgstr ""
 
 #: ../index_edit.php:597
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr ""
+msgstr "Aici este o scurtă descriere de la fiecare bloc pe care-l puteţi pune pe pagina Bine aţi venit sau pagina Portalul MyGedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nume</b></td><td class='list_value'><b>Descriere</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40 ../help_text.php:3888
 msgid "Clippings Cart"
@@ -5701,7 +5695,7 @@ msgstr "Înregistrare întreagă"
 
 #: ../search.php:302 ../modules/batch_update/plugins/search_replace.php:117
 msgid "Whole words only"
-msgstr ""
+msgstr "Doar cuvinte întregi"
 
 #: ../search.php:321
 msgid "Given name"
@@ -5714,9 +5708,8 @@ msgstr "Nume"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "Antet"
+msgstr "An"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -5882,7 +5875,7 @@ msgstr "Manuscris"
 #: ../modules/googlemap/gg_map_content.php:34
 #: ../modules/googlemap/pedigree_map.php:550
 msgid "Map"
-msgstr ""
+msgstr "Hartă"
 
 #: ../includes/config_data.php:82
 msgid "Newspaper"
@@ -6390,13 +6383,13 @@ msgstr "Adaugă o nouă citaţie de sursă"
 #: ../modules/googlemap/pedigree_map.php:660
 #: ../modules/googlemap/pedigree_map.php:697
 msgid "Grandfather"
-msgstr ""
+msgstr "Bunicul"
 
 #: ../includes/functions/functions_charts.php:818
 #: ../modules/googlemap/pedigree_map.php:658
 #: ../modules/googlemap/pedigree_map.php:695
 msgid "Grandmother"
-msgstr ""
+msgstr "Bunica"
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
 #: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:71
@@ -7968,7 +7961,7 @@ msgstr "Familie cu"
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "Nu aţi selectat nici un favorit.<br /><br />Pentru a adăuga un individ, o familie, sau o sursă la favoriţi, daţi click pe linkul <b>Adaugă un nou favorit</b> pentru a afişa câteva câmpuri unde puteţi introduce sau căuta după un ID.  În loc de un ID, puteţi introduce un URL şi un titlu."
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8155,7 +8148,7 @@ msgstr "utf8_romanian_ci"
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:239 ../modules/sitemap/index.php:396
 msgid "Family Information"
-msgstr ""
+msgstr "Informaţii familie"
 
 #: ../includes/controllers/family_ctrl.php:350
 #: ../includes/controllers/family_ctrl.php:361
@@ -8315,9 +8308,8 @@ msgstr ""
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "Editează numele"
+msgstr "Nume"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -9864,11 +9856,11 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
@@ -9876,7 +9868,7 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:802
 msgid "W"
-msgstr ""
+msgstr "Mi"
 
 #: ../modules/googlemap/places_edit.php:812
 #: ../modules/googlemap/places_edit.php:820
@@ -10094,7 +10086,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:341 ../edit_merge.php:228
 #: ../edit_merge.php:234
 msgid "from"
-msgstr ""
+msgstr "de la"
 
 #: ../modules/googlemap/pedigree_map.php:343
 msgid "generations"
@@ -18158,7 +18150,7 @@ msgstr "Vă rugăm să daţi click pe linkul de mai jos sau sa-l copiaţi si să
 
 #: ../login_register.php:136
 msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
-msgstr ""
+msgstr "După ce v-aţi autentificat, selectaţi linkul «Contul meu» de sub meniul «Portalul MyGedView» şi completaţi câmpurile de parole pentru a vă schimba parola."
 
 #: ../login_register.php:142
 #, php-format
@@ -18324,7 +18316,7 @@ msgstr "Paşi descendenţi"
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Blocul cu evenimentele următoare arată aniversări pentru evenimentele care se vor produce în viitorul apropiat.  Puteţi să configuraţi ce detalii for fi afişate, şi administratorul poate să configureze de cât de departe din viitor va afişa acest bloc detaliile."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18368,7 +18360,7 @@ msgstr "HTML avansat"
 
 #: ../blocks/block_htmlplus.php:44
 msgid "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text."
-msgstr ""
+msgstr "Acesta este un block HTML simplu pe care-l puteţi pune pe pagina dumneavoastră şi să adăugaţi ce mesaje doriţi.  Puteţi insera referinţe către informaţii din GEDCOM-ul dv. in textul HTML."
 
 #: ../blocks/block_htmlplus.php:49 ../blocks/html_block.php:44
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -18379,38 +18371,32 @@ msgid "to change what is printed here.</p>"
 msgstr "pentru a schimba ce este tipărit aici.</p>"
 
 #: ../blocks/block_htmlplus.php:224
-#, fuzzy
 msgid "Templates"
-msgstr "Templu LDS"
+msgstr "Template-uri"
 
 #: ../blocks/block_htmlplus.php:246
-#, fuzzy
 msgid "Custom"
-msgstr "Eveniment personalizat"
+msgstr "Personalizat"
 
 #: ../blocks/block_htmlplus.php:262
-#, fuzzy
 msgid "Family Tree"
-msgstr "Familie"
+msgstr "Arborele genealogic"
 
 #: ../blocks/block_htmlplus.php:266
-#, fuzzy
 msgid "Current"
-msgstr "Părinte"
+msgstr "Curent"
 
 #: ../blocks/block_htmlplus.php:267
-#, fuzzy
 msgid "Default"
-msgstr "(Implicit)"
+msgstr "Implicit"
 
 #: ../blocks/block_htmlplus.php:281
-#, fuzzy
 msgid "Content"
-msgstr "Cuprins ajutor"
+msgstr "Conţinut"
 
 #: ../blocks/block_htmlplus.php:310
 msgid "Compatibility Mode"
-msgstr ""
+msgstr "Modul de compatibilitate"
 
 #: ../blocks/block_htmlplus.php:323
 #, fuzzy
@@ -18423,7 +18409,7 @@ msgstr "Blocul de diagrame"
 
 #: ../blocks/charts.php:44
 msgid "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
-msgstr ""
+msgstr "Blocul de diagrame vă permite să plasaţi o diagramă pe pagina de introducere sau pagina MyGedView.  Puteţi considera blocul să arate strămoşi, descendenţi, sau vederea clepsidră.  Puteţi de-asemenea să alegeţi persoana rădăcină pentru diagramă."
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
@@ -18431,11 +18417,11 @@ msgstr "HTML"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
-msgstr ""
+msgstr "Acesta este un block HTML simplu pe care-l puteţi pune pe pagina dumneavoastră şi să adăugaţi ce mesaje doriţi."
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "Blocul de autentificare acceptă un nume de utilizator si o parolă pentru ca utilizatorii să se poată autentifica."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18443,7 +18429,7 @@ msgstr "Cele mai vizualizate articole"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "Acest bloc va arăta 10 înregistrări care au fost vizualizate cel mai mult.  Acest bloc necesită activarea Contoarelor de accesare în setările configuraţiei GEDCOM-ului."
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18463,7 +18449,7 @@ msgstr "În această zi"
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "Blocul 'În această zi', în istoricul dumneavoastră... arată aniversările evenimentelor pentru astăzi.  Puteţi configura ce detalii vor fi afişate."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18471,7 +18457,7 @@ msgstr "Favoriţii utilizatorului"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "Blocul cu favoriţii utilizatorului arată utilizatorului o listă cu persoanele sale favorite ca să poată face uşor legături către ei."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18479,7 +18465,7 @@ msgstr ""
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "Blocul de introducere GEDCOM funcţionează la fel ca blocul cu introducerea pentru utilizator.  Urează 'Bine ai venit' utilizatorului şi arată titlul bazei de date active, precum si data si ora curentă."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18500,7 +18486,7 @@ msgstr "Ştiri GEDCOM"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "Blocul cu ştirile GEDCOM arată vizitatorilor ştirile sau articolele postate de un administrator.<br /><br />Blocul pentru ştiri este un loc bun pentru a anunţa un update la baza de date, o reuniune de familie, sau naşterea unui copil."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18520,7 +18506,7 @@ msgstr "Numărul de articole"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "Acest bloc arată un tabel cu 10 din cele mai frecvente nume de familie din baza de date.  Numărul efectiv de nume de familie afişate în acest bloc este configurabil.  Puteţi să configuraţi GEDCOMul să şteargă nume din listă."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18534,7 +18520,7 @@ msgstr "Utilizatorii autentificaţi"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "Blocul cu utilizatorii autentificaţi arată o listă cu utilizatorii care sunt autentificaţi în acest moment."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18546,7 +18532,7 @@ msgstr "Yahrzeiten următoare"
 
 #: ../blocks/yahrzeit.php:41
 msgid "The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Blocul cu următoarele Yahrzeiten arată aniversările dăţilor deceselor care vor avea loc în viitor.  Puteţi configura peroada arătată, şi administratorul poate configura de cât de departe din viitor va afişa acest bloc detaliile."
 
 #: ../blocks/gedcom_block.php:39
 msgid "GEDCOM Welcome"
@@ -18558,7 +18544,7 @@ msgstr "Mesajele utilizatorilor"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "Blocul cu mesajele utilizatorilor arată o listă cu mesaje care au fost trimise către utilizatorul activ."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18570,7 +18556,7 @@ msgstr "Media aleatoare"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "Blocul cu media aleatoare selectează la întâmplare o fotografie sau alte elemente media din baza de date curentă şi le afişează utilizatorului.<br /><br />Administratorul determină dacă acest bloc poate arata elemente media asociate cu persoane sau evenimente."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18596,7 +18582,7 @@ msgstr "Favoriţii GEDCOM"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "Blocul cu favoriţii GEDCOM oferă administratorului posibilitatea de a desemna indivizi din baza de date individuals astfel încât informaţiile despre ei sunt uşor accesibile de către restul de utilizatori.  Aceasta este o metodă de a evidenţia persoane care sunt importante în istoria familiei voastre."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18604,16 +18590,15 @@ msgstr "Introducere utilizator"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "Blocul cu introducerea pentru utilizator arată data si ora curentă, linkuri rapide pentru a-şi edita contul sau să meargă la diagrama sa proprie cu arborele genealogic, şi un link pentru a-şi personaliza pagina sa de portal MyGedView."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
 msgstr "Feed RSS"
 
 #: ../blocks/rss_block.php:42
-#, fuzzy
 msgid "News and links from the #GEDCOM_TITLE# site"
-msgstr "Ştiri si linkuri de la siteul %s"
+msgstr "Ştiri si linkuri de la siteul #GEDCOM_TITLE#"
 
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
@@ -18633,11 +18618,11 @@ msgstr "Alege tema"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "Blocul pentru ales tema afişează lista cu teme chiar şi când opţiunea 'Alege tema' este dezactivată."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "Blocul cu Modificările în aşteptare va afişa pentru utilizatorii cu dreptul de Editare o listă cu înregistrările care au fost modificate online şi care aşteaptă verificarea si acceptarea.  Aceste modificări aşteaptă acceptarea sau respingerea.<br /><br />Dacă acest bloc este activat, utilizatorii cu drepturi de Acceptare vor primi un email zilnic care îi va anunţa că există modificări care au nevoie de verificare."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18669,7 +18654,7 @@ msgstr "Jurnalul utilizatorului"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "Blocul cu jurnalul utilizatorului lasă utilizatorul să păstreze notiţe sau un jurnal online."
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18677,7 +18662,7 @@ msgstr "Jurnalul meu"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "Blocul cu schimbările recente afişează toate schimbările care au fost făcute la baza de date in ultima lunăâ.  Acest bloc vă poate ajuta să fiţi la curent cu schimbările care au fost făcute.  Schimbarile sunt detectate automat, folosind tagul chan definit in standardul GEDCOM."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18699,7 +18684,7 @@ msgstr "Dacă ascundeţi un bloc gol, nu veţi putea să-i schimbaţi configura�
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "Blocul cu statistici GEDCOM arată vizitatorului informaţii de bază despre baza de date, cum ar fi când a fost creată şi câţi oameni sunt în ea.<br /><br />Are de-asemenea şi o lista cu cele mai frecvente nume de familie.  Puteţi configura acest bloc să nu arate lista numelor de familie frecvente, şi puteţi de-asemenea să configuraţi GEDCOM-ul să şteargă sau să adauge nume la această listă.  Puteţi seta pragul de repetiţie pentru această listă în configuraţia GEDCOM-ului."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
@@ -18784,13 +18769,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Directorul cu thumbnailuri a fost şters cu succes."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Generează thumbnail automat din "
+msgstr "Thumbnailul #thumbnail# a fost generat automat."
 
 #: ../media.php:472 ../media.php:490
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr ""
+msgstr "Thumbnailul #thumbnail# nu a putut fi generat automat."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"
@@ -18866,45 +18850,40 @@ msgid "Delete file"
 msgstr "Şterge fişierul"
 
 #: ../media.php:1072
-#, fuzzy
 msgid "Move to protected directory"
-msgstr "Mută în protejat"
+msgstr "Mută în directorul protejat"
 
 #: ../media.php:1076
-#, fuzzy
 msgid "Move to standard directory"
-msgstr "Mută în standard"
+msgstr "Mută în directorul standard"
 
 #: ../media.php:1090
 msgid "Create thumbnail"
 msgstr "Crează thumbnail"
 
 #: ../media.php:1165
-#, fuzzy
 msgid "This media object is located on an external server"
-msgstr "Acest obiect media nu este legat de nici o înregistrare GEDCOM."
+msgstr "Acest obiect media este localizat pe un server extern"
 
 #: ../media.php:1168
-#, fuzzy
 msgid "This media object is in the standard media directory"
-msgstr "Acest obiect media nu este legat de nici o înregistrare GEDCOM."
+msgstr "Acest obiect media este în directorul media standard"
 
 #: ../media.php:1171
-#, fuzzy
 msgid "This media object is in the protected media directory"
-msgstr "Acest obiect media nu este legat de nici o înregistrare GEDCOM."
+msgstr "Acest obiect media este în directorul media protejat"
 
 #: ../media.php:1179
 msgid "This thumbnail is located on an external server"
-msgstr ""
+msgstr "Acest thumbnail este localizat pe un server extern"
 
 #: ../media.php:1182
 msgid "This thumbnail is in the standard media directory"
-msgstr ""
+msgstr "Acest thumbnail este în directorul media standard"
 
 #: ../media.php:1185
 msgid "This thumbnail is in the protected media directory"
-msgstr ""
+msgstr "Acest thumbnail este în directorul media protejat"
 
 #: ../media.php:1205
 msgid "The media folder is corrupted."

@@ -1137,7 +1137,7 @@ msgstr "Aplicar medidas de privacidade?"
 #: ../modules/clippings/clippings.php:265 ../famlist.php:128
 #: ../famlist.php:147
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 #: ../downloadgedcom.php:154 ../downloadgedcom.php:157 ../clippings.php:206
 #: ../modules/clippings/index.php:214 ../modules/clippings/clippings.php:266
@@ -1205,7 +1205,7 @@ msgstr "Voltar"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "Observação: O processamento, que é feito antes do download, de GEDCOMs muito grandes pode ser demorado. Caso o PHP encerre o processamento por \"time out\", o arquivo poderá estar imcompleto.<br /><br />Para saber se o arquivo está integro, utilize um editor de texto qualquer e verifique se a última linha do arquivo GEDCOM é um <b>0&nbsp;TRLR</b>. <u>Não</u> salve o arquivo GEDCOM após verifica-lo.<br /><br />O processo de \"download\" pode demorar tanto quanto para o processo de envio do GEDCOM."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -1397,9 +1397,8 @@ msgstr "IPs de Robos de Sites de Pesquisa"
 #: ../edit_privacy.php:658 ../edit_privacy.php:756
 #: ../blocks/gedcom_news.php:131 ../blocks/user_messages.php:88
 #: ../blocks/user_messages.php:131 ../blocks/user_blog.php:74 ../media.php:942
-#, fuzzy
 msgid "Delete"
-msgstr "Excluir Nome"
+msgstr "Excluir"
 
 #: ../manageservers.php:249 ../manageservers.php:296 ../manageservers.php:343
 #: ../index_edit.php:516 ../index_edit.php:536 ../clippings.php:281
@@ -2347,9 +2346,8 @@ msgstr "Exibir imagens de destaque na página de pessoas"
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:2172
 #: ../modules/googlemap/pedigree_map.php:735 ../modules/sitemap/index.php:237
 #: ../modules/sitemap/index.php:342
-#, fuzzy
 msgid "Individual Information"
-msgstr "Fatos/Eventos da Pessoa"
+msgstr "Informação Pessoal"
 
 #: ../expand_view.php:75 ../find.php:590
 #: ../includes/functions/functions_mediadb.php:1594
@@ -2526,27 +2524,24 @@ msgid "No calendar conversion"
 msgstr ""
 
 #: ../editconfig_gedcom.php:999
-#, fuzzy
 msgid "Gregorian"
-msgstr "Alemão"
+msgstr "Gregoriano"
 
 #: ../editconfig_gedcom.php:1000
-#, fuzzy
 msgid "Julian"
-msgstr "Jan"
+msgstr "Juliano"
 
 #: ../editconfig_gedcom.php:1001 ../includes/specialchars.php:66
 msgid "French"
 msgstr "Francês"
 
 #: ../editconfig_gedcom.php:1002
-#, fuzzy
 msgid "Jewish"
-msgstr "Sueco"
+msgstr "Judeu"
 
 #: ../editconfig_gedcom.php:1003
 msgid "Jewish and Gregorian"
-msgstr ""
+msgstr "Judeu e Gregoriano"
 
 #: ../editconfig_gedcom.php:1004 ../includes/specialchars.php:82
 msgid "Hebrew"
@@ -2554,11 +2549,11 @@ msgstr "Hebraico"
 
 #: ../editconfig_gedcom.php:1005
 msgid "Hebrew and Gregorian"
-msgstr ""
+msgstr "Hebreu e Gregoriano"
 
 #: ../editconfig_gedcom.php:1006
 msgid "Hijri"
-msgstr ""
+msgstr "Hijri"
 
 #: ../editconfig_gedcom.php:1007 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -3333,7 +3328,6 @@ msgid "Return to the Admin menu"
 msgstr ""
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
 msgstr "Arquivo GEDCOM"
 
@@ -3375,9 +3369,8 @@ msgid "Check"
 msgstr ""
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
-msgstr "Configuração"
+msgstr "Arquivo de Configuração"
 
 #: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:816 ../note.php:102
@@ -3407,9 +3400,8 @@ msgid "Edit"
 msgstr ""
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Frequência de arquivamento dos Logs"
+msgstr "Arquivo de Privacidade"
 
 #: ../editgedcoms.php:259
 #, fuzzy
@@ -4657,9 +4649,8 @@ msgstr "Exibir a Pessoa"
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:244
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:623
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:652
-#, fuzzy
 msgid "View Source"
-msgstr "Exibir arquivo"
+msgstr "Exibir a Fonte"
 
 #: ../find.php:596 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:626
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:655
@@ -4785,9 +4776,8 @@ msgstr "Países"
 #: ../search.php:340 ../modules/googlemap/places.php:183
 #: ../modules/googlemap/places.php:184 ../modules/googlemap/places.php:185
 #: ../modules/googlemap/places.php:186 ../modules/googlemap/places.php:187
-#, fuzzy
 msgid "Place"
-msgstr "Página"
+msgstr "Local"
 
 #: ../placelist.php:312
 msgid "Place Hierarchy after"
@@ -4856,7 +4846,7 @@ msgstr "Um arquivo GEDCOM com este nome já existe. Se você escolher continuar,
 
 #: ../uploadgedcom.php:493
 msgid "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import."
-msgstr ""
+msgstr "Esta árvore (GEDCOM) tem alterações pendentes, que serão aceitas automaticamente, caso a importação prossiga. Revise as alterações pendentes antes de continuar com a importação."
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
@@ -5452,7 +5442,7 @@ msgstr ""
 
 #: ../index_edit.php:597
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr ""
+msgstr "Descrição sucinta de cada bloco que você pode colocar em Bem-Vindo ou na página Meu Portal.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nome</b></td><td class='list_value'><b>Descrição</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40 ../help_text.php:3888
 msgid "Clippings Cart"
@@ -5726,9 +5716,8 @@ msgstr "Sobrenome"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "Cabeçalho"
+msgstr "Ano"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -6404,13 +6393,13 @@ msgstr "Adicionar Citação à Fonte"
 #: ../modules/googlemap/pedigree_map.php:660
 #: ../modules/googlemap/pedigree_map.php:697
 msgid "Grandfather"
-msgstr ""
+msgstr "Avô"
 
 #: ../includes/functions/functions_charts.php:818
 #: ../modules/googlemap/pedigree_map.php:658
 #: ../modules/googlemap/pedigree_map.php:695
 msgid "Grandmother"
-msgstr ""
+msgstr "Avó"
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
 #: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:71
@@ -7986,7 +7975,7 @@ msgstr "Família com"
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "Não há favoritos. Para adicionar uma pessoa ao <b>Meus Favoritos</b>, procure os detalhes da Pessoa que você deseja adicionar e clique em \"Adicione aos Meus Favoritos\" ou use a caixa abaixo para adicioná-lo pelo seu ID (ex: I21), ou informe uma URL e um título."
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8172,9 +8161,8 @@ msgstr "utf8_spanish_ci"
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:239 ../modules/sitemap/index.php:396
-#, fuzzy
 msgid "Family Information"
-msgstr "Informações do PHP"
+msgstr "Informações da Família"
 
 #: ../includes/controllers/family_ctrl.php:350
 #: ../includes/controllers/family_ctrl.php:361
@@ -8334,9 +8322,8 @@ msgstr ""
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "Alterar Nome"
+msgstr "Nome"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -10115,7 +10102,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:341 ../edit_merge.php:228
 #: ../edit_merge.php:234
 msgid "from"
-msgstr ""
+msgstr "de"
 
 #: ../modules/googlemap/pedigree_map.php:343
 msgid "generations"
@@ -18193,7 +18180,7 @@ msgstr "Agora clique no link abaixo, conecte com sua nova senha e altere-a para 
 
 #: ../login_register.php:136
 msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
-msgstr ""
+msgstr "Após identificar-se, clique em 'Minha Conta' da opção de menu 'Meu Portal' e altere sua senha."
 
 #: ../login_register.php:142
 #, php-format
@@ -18361,7 +18348,7 @@ msgstr "Máximo de Quebras"
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "o bloco 'Próximos Eventos' exibe uma lista dos eventos deste banco de dados que ocorrerão dentro dos próximos 30 dias.  Em <b>Meu Portal</b> o bloco somente exibirá a lista das pessoas vivas.  Na <b>Página Inicial</b> exibirá a lista de todas as pessoas."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18405,7 +18392,7 @@ msgstr "HTML Avançado"
 
 #: ../blocks/block_htmlplus.php:44
 msgid "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text."
-msgstr ""
+msgstr "Este é um blobo de HTML, que permite incluir qualquer mensagem em sua página. A mensagem pode conter informações extraidas diretamente do GEDCOM."
 
 #: ../blocks/block_htmlplus.php:49 ../blocks/html_block.php:44
 msgid "<p class=\"blockhc\"><b>Put your title here</b></p><br /><p>Click the configure button"
@@ -18417,7 +18404,7 @@ msgstr "para alterar o que está impresso aqui.</p>"
 
 #: ../blocks/block_htmlplus.php:224
 msgid "Templates"
-msgstr ""
+msgstr "Modelos"
 
 #: ../blocks/block_htmlplus.php:246
 #, fuzzy
@@ -18440,9 +18427,8 @@ msgid "Default"
 msgstr "(Padrão)"
 
 #: ../blocks/block_htmlplus.php:281
-#, fuzzy
 msgid "Content"
-msgstr "Índice da Ajuda"
+msgstr "Conteúdo"
 
 #: ../blocks/block_htmlplus.php:310
 msgid "Compatibility Mode"
@@ -18468,11 +18454,11 @@ msgstr "HTML"
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
-msgstr ""
+msgstr "O bloco de HTML simples, permite que você inclua uma mensagem qualquer na sua página."
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "O bloco 'Conectar' solicita Nome e Senha para os usuários conectaram-se ao site."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18480,7 +18466,7 @@ msgstr "Os mais visitados"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "Este bloco mostrará os 10 registros mais visualizados. Este bloco requer, que a opção Contadores de Acesso, localizada na configuração da GEDCOM, esteja habilitada."
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18500,7 +18486,7 @@ msgstr "Este dia em nossa História"
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "o bloco 'Este dia em nossa História' mostra uma lista de eventos deste banco de dados que ocorram hoje.  Se não for encontrado nenhum evento, este bloco não será exibido.  Em <b>Meu Portal</b> o bloco somente exibirá a lista das pessoas vivas.  Na <b>Página Inicial</b> exibirá a lista de todas as pessoas."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18508,7 +18494,7 @@ msgstr "Meus Favoritos"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "O bloco 'Meus Favoritos' exibe a lista de favoritos do usuário no sistema. Isto permite um fácil acesso aos mesmos."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18516,7 +18502,7 @@ msgstr ""
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "O bloco 'Bem-Vindo - Site' funciona da mesma forma que o o bloco 'Bem-Vindo - Usuário'. Exibe o titulo do arquivo de genealogia, bem como a data e hora corrente."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18537,7 +18523,7 @@ msgstr "Notícias"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "O bloco 'Notícias' mostrará aos visitantes notícias ou artigos publicados pelo usuário Administrador.  'Notícias' é um bom local para anunciar alterações no banco de dados ou uma reunião familiar."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18557,7 +18543,7 @@ msgstr "Qtde de Itens"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "Este bloco mostra uma tabela com os 10 sobrenomes mais populares do banco de dados."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18571,7 +18557,7 @@ msgstr "Usuários Conectados"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "O bloco 'Usuários Conectados' exibe a lista dos usuários que estão conectados."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18595,7 +18581,7 @@ msgstr "Minhas Mensagens"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "O bloco 'Minhas Mensagens' exibe a lista das mensagens que foram enviadas ao usuário."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18607,7 +18593,7 @@ msgstr "Imagem Aleatória"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "O bloco 'Imagem Aleatória' exibe aleatoriamente uma foto ou outra mídia do banco de dados."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18633,7 +18619,7 @@ msgstr "Favoritos - Site"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "O bloco 'Favoritos - Site' permite ao administrador a  capacidade de selecionar suas pessoas favoritas do banco de dados de forma que os visitantes possam facilmente encontrá-los. Esta é uma forma de evidenciar as pessoas que são importantes em sua história."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18641,16 +18627,15 @@ msgstr "Bem-Vindo - Usuário"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "O bloco 'Bem-Vindo - Usuário' exibe o nome do usuário, data e hora corrente, bem como links que permitem acessar rapidamente a sua conta, seus dados, sua árvore genealógica e link para customizar a página <b>Meu Portal<b/>."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
 msgstr "Alimentação da RSS"
 
 #: ../blocks/rss_block.php:42
-#, fuzzy
 msgid "News and links from the #GEDCOM_TITLE# site"
-msgstr "Notícias e links do site %s"
+msgstr "Notícias e links do site #GEDCOM_TITLE#"
 
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
@@ -18670,11 +18655,11 @@ msgstr "Seleção de Temas"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "O bloco Seleção de Temas permite selecionar outro tema para o site."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "O Bloco de Pendências permite aos usuários, com permissão de Edição Imediata, de rever a lista de registros com as alterações pendentes. Estas alterações precisam ser aceitas ou rejeitadas.<br /><br />Caso este bloco seja habilitado, usuários com permissão de Edição Imediata, receberão um email uma vez ao dia para lembra-los das pendências."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18706,7 +18691,7 @@ msgstr "Minhas Notícias"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "O bloco 'Meu Jornal' permite ao usuário a manutenção de notícias ou um Jornal on-line."
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18714,7 +18699,7 @@ msgstr "Meu Diário"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "O bloco 'Últimas Alterações' mostrará uma lista das últimas atualizações que foram efetuadas no banco de dados no último mês.  Este bloco pode ajudá-lo a ficar em dia com as mudanças do site.  As mudanças se baseiam na expressão CHAN."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18736,7 +18721,7 @@ msgstr "Se um bloco não é exibido quando está vazio, então ele só poderá s
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "O bloco 'Dados Estatísticos' exibe ao visitante algumas informações básicas sobre do banco de dados como por exemplo quando foi criado e quantas pessoas estão cadastradas no mesmo e sobrenomes mais comuns."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
@@ -18822,14 +18807,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Pasta de Miniaturas excluída com sucesso."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Gerar Miniatura automaticamente de "
+msgstr "Miniatura #thumbnail# gerada automaticamente."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "Não foi possível excluir a Miniatura."
+msgstr "Miniatura #thumbnail# não foi gerada."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"

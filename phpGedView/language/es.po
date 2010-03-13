@@ -1198,7 +1198,7 @@ msgstr "Regresar"
 
 #: ../downloadgedcom.php:182
 msgid "NOTE: Large databases can take a long time to process before downloading.  If PHP times out before the download finishes, the downloaded file may not be complete.<br /><br />To make sure that the file was downloaded correctly, check that the last line of a file in GEDCOM format is <b>0&nbsp;TRLR</b> or that the last line of a file in XML format is <b>&lt;/database&gt;</b>.  These files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your original GEDCOM file."
-msgstr ""
+msgstr "NOTA: Los archivos GEDCOM de gran tamaño pueden demorar mucho tiempo de proceso antes de su descarga. Si expira el plazo para el proceso PHP antes de que termine la descarga, ésta podría quedar incompleta.<br /><br />Para asegurarse de que el GEDCOM se descargó correctamente, compruebe la existencia de la línea <b>0&nbsp;TRLR</b> al final del archivo.  Los archivos GEDCOM son de texto, puede utilizar cualquier editor de texto para comprobarlo, pero asegúrese de <u>no guardar</u> el archivo GEDCOM después de haberlo inspeccionado.<br /><br />En general, podría costar tanto tiempo descargarlo como costó importar su archivo GEDCOM."
 
 #: ../indilist.php:96 ../indilist.php:170 ../indilist.php:172
 #: ../indilist.php:259 ../indilist.php:261 ../editconfig_gedcom.php:1646
@@ -2380,7 +2380,7 @@ msgstr "El directorio protegido de objetos en el directorio raíz del cortafuego
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 msgid "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions."
-msgstr ""
+msgstr "¡¡¡ E R R O R !!!<br />No se pudo escribir el archivo <i>#GLOBALS[whichFile]#</i>. Verifique si posee permisos de escritura adecuados."
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
@@ -3080,9 +3080,8 @@ msgid "Surname tradition"
 msgstr "Tradición de apellidos"
 
 #: ../editconfig_gedcom.php:2130
-#, fuzzy
 msgid "Paternal"
-msgstr "Compañero/a"
+msgstr "Paterno"
 
 #: ../editconfig_gedcom.php:2131 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -3094,7 +3093,7 @@ msgstr "Portugués"
 
 #: ../editconfig_gedcom.php:2133
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandés"
 
 #: ../editconfig_gedcom.php:2134 ../includes/specialchars.php:76
 msgid "Polish"
@@ -3230,18 +3229,16 @@ msgid "Author META tag"
 msgstr "Etiqueta META Author"
 
 #: ../editconfig_gedcom.php:2414
-#, fuzzy
 msgid "Leave this field empty to use the full name of the Genealogy contact."
-msgstr "Deje este campo en blanco para usar el título de la base de datos activa en el momento."
+msgstr "Deje este campo en blanco para utilizar el nombre completo del Contacto para genealogía."
 
 #: ../editconfig_gedcom.php:2418 ../help_text.php:2912
 msgid "Publisher META tag"
 msgstr "Etiqueta META Publisher"
 
 #: ../editconfig_gedcom.php:2421 ../editconfig_gedcom.php:2428
-#, fuzzy
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
-msgstr "Deje este campo en blanco para usar el título de la base de datos activa en el momento."
+msgstr "Deje este campo en blanco para utilizar el nombre completo del Contacto para genealogía."
 
 #: ../editconfig_gedcom.php:2425 ../help_text.php:2887
 msgid "Copyright META tag"
@@ -3318,9 +3315,8 @@ msgid "Return to the Admin menu"
 msgstr "Regresar al menú de Administración"
 
 #: ../editgedcoms.php:163
-#, fuzzy
 msgid "GEDCOM file"
-msgstr "Título"
+msgstr "Archivo"
 
 #: ../editgedcoms.php:179
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
@@ -3359,7 +3355,6 @@ msgid "Check"
 msgstr "Comprobar"
 
 #: ../editgedcoms.php:221
-#, fuzzy
 msgid "Configuration file"
 msgstr "Configuración"
 
@@ -3391,19 +3386,16 @@ msgid "Edit"
 msgstr "Editar"
 
 #: ../editgedcoms.php:240
-#, fuzzy
 msgid "Privacy file"
-msgstr "Directorio para archivos Log:"
+msgstr "Archivo de privacidad"
 
 #: ../editgedcoms.php:259
-#, fuzzy
 msgid "SearchLog files"
-msgstr "Archivar los ficheros SearchLog"
+msgstr "Archivos SearchLog"
 
 #: ../editgedcoms.php:313
-#, fuzzy
 msgid "ChangeLog files"
-msgstr "Archivar los ficheros ChangeLog"
+msgstr "Archivos ChangeLog"
 
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
@@ -8786,7 +8778,7 @@ msgstr "No actualizar los registros CHAN (último cambio)"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:234
 msgid "Link to #GLOBALS[remLinkId]# deleted"
-msgstr ""
+msgstr "Vínculo a #GLOBALS[remLinkId]# borrado"
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:254
 #, php-format
@@ -12497,17 +12489,15 @@ msgstr "Crítico"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: ../gedcheck.php:75
-#, fuzzy
 msgid "Warning"
-msgstr "Pintura"
+msgstr "Aviso"
 
 #: ../gedcheck.php:76
-#, fuzzy
 msgid "Info"
-msgstr "Informador"
+msgstr "Información"
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -18735,14 +18725,12 @@ msgid "Thumbnail directory successfully removed."
 msgstr "Directorio de miniaturas eliminado con éxito."
 
 #: ../media.php:467 ../media.php:485
-#, fuzzy
 msgid "Thumbnail #thumbnail# generated automatically."
-msgstr "Generar miniatura automáticamente a partir de "
+msgstr "Miniatura #thumbnail# generada automáticamente."
 
 #: ../media.php:472 ../media.php:490
-#, fuzzy
 msgid "Thumbnail #thumbnail# could not be generated automatically."
-msgstr "No se pudo borrar el archivo de miniatura."
+msgstr "No se pudo generar automáticamente la miniatura #thumbnail#."
 
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"

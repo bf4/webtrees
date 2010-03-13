@@ -1138,7 +1138,7 @@ msgstr "Rakenda privaatsusseaded?"
 #: ../modules/clippings/clippings.php:265 ../famlist.php:128
 #: ../famlist.php:147
 msgid "None"
-msgstr ""
+msgstr "Puudub"
 
 #: ../downloadgedcom.php:154 ../downloadgedcom.php:157 ../clippings.php:206
 #: ../modules/clippings/index.php:214 ../modules/clippings/clippings.php:266
@@ -1399,9 +1399,8 @@ msgstr ""
 #: ../edit_privacy.php:658 ../edit_privacy.php:756
 #: ../blocks/gedcom_news.php:131 ../blocks/user_messages.php:88
 #: ../blocks/user_messages.php:131 ../blocks/user_blog.php:74 ../media.php:942
-#, fuzzy
 msgid "Delete"
-msgstr "Kustuta nimi"
+msgstr "Kustuta"
 
 #: ../manageservers.php:249 ../manageservers.php:296 ../manageservers.php:343
 #: ../index_edit.php:516 ../index_edit.php:536 ../clippings.php:281
@@ -2352,7 +2351,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:735 ../modules/sitemap/index.php:237
 #: ../modules/sitemap/index.php:342
 msgid "Individual Information"
-msgstr ""
+msgstr "Isiku informatsioon"
 
 #: ../expand_view.php:75 ../find.php:590
 #: ../includes/functions/functions_mediadb.php:1594
@@ -4661,9 +4660,8 @@ msgstr "Vaata isikut"
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:244
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:623
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:652
-#, fuzzy
 msgid "View Source"
-msgstr "Vaata arhiivi"
+msgstr "Vaata allikat"
 
 #: ../find.php:596 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:626
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:655
@@ -4790,9 +4788,8 @@ msgstr "Kõrgeimale tasemele"
 #: ../search.php:340 ../modules/googlemap/places.php:183
 #: ../modules/googlemap/places.php:184 ../modules/googlemap/places.php:185
 #: ../modules/googlemap/places.php:186 ../modules/googlemap/places.php:187
-#, fuzzy
 msgid "Place"
-msgstr "Lk"
+msgstr "Koht"
 
 #: ../placelist.php:312
 msgid "Place Hierarchy after"
@@ -5457,7 +5454,7 @@ msgstr ""
 
 #: ../index_edit.php:597
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
-msgstr ""
+msgstr "Lühidalt on kirjeldatud iga blokki, mida saad paigutada lehtedele Tere,  või Minu GedView portaal.<br /><table border='1' align='center'><tr><td class='list_value'><b>Nimi</b></td><td class='list_value'><b>Kirjeldus</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40 ../help_text.php:3888
 msgid "Clippings Cart"
@@ -5732,9 +5729,8 @@ msgstr "Perekonnanimi"
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
 #: ../calendar.php:172
-#, fuzzy
 msgid "Year"
-msgstr "Päis"
+msgstr "Aasta"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -5901,7 +5897,7 @@ msgstr "Käsikiri"
 #: ../modules/googlemap/gg_map_content.php:34
 #: ../modules/googlemap/pedigree_map.php:550
 msgid "Map"
-msgstr ""
+msgstr "Kaart"
 
 #: ../includes/config_data.php:82
 msgid "Newspaper"
@@ -6410,13 +6406,13 @@ msgstr "Lisa uus allika viide"
 #: ../modules/googlemap/pedigree_map.php:660
 #: ../modules/googlemap/pedigree_map.php:697
 msgid "Grandfather"
-msgstr ""
+msgstr "Vanaisa"
 
 #: ../includes/functions/functions_charts.php:818
 #: ../modules/googlemap/pedigree_map.php:658
 #: ../modules/googlemap/pedigree_map.php:695
 msgid "Grandmother"
-msgstr ""
+msgstr "Vanaema"
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
 #: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:71
@@ -7991,7 +7987,7 @@ msgstr "Perekond abikaasaga: "
 #: ../includes/classes/class_stats_ui.php:75 ../blocks/user_favorites.php:100
 #: ../blocks/gedcom_favorites.php:97
 msgid "You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title."
-msgstr ""
+msgstr "Sul ei ole valitud ühtegi lemmikut.<br /><br />Isiku, perekonna või allika lisamiseks oma lemmikute hulka vajuta linki <b>Lisa uus lemmik</b>, mis avab väljad ID numbri sisestamiseks või valimiseks. ID numbri asemel võid sisestada URL-i ja pealkirja."
 
 #: ../includes/classes/class_stats_ui.php:71 ../blocks/gedcom_favorites.php:99
 msgid "At this moment there are no selected Favorites.\tThe admin can add Favorites to display at startup."
@@ -8178,7 +8174,7 @@ msgstr "utf8_estonian_ci"
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:239 ../modules/sitemap/index.php:396
 msgid "Family Information"
-msgstr ""
+msgstr "Perekonna informatsioon"
 
 #: ../includes/controllers/family_ctrl.php:350
 #: ../includes/controllers/family_ctrl.php:361
@@ -8337,9 +8333,8 @@ msgstr ""
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
 msgid "Name"
-msgstr "Muuda nime"
+msgstr "Nimi"
 
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
@@ -9871,11 +9866,11 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
@@ -9883,7 +9878,7 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:802
 msgid "W"
-msgstr ""
+msgstr "K"
 
 #: ../modules/googlemap/places_edit.php:812
 #: ../modules/googlemap/places_edit.php:820
@@ -10101,7 +10096,7 @@ msgstr ""
 #: ../modules/googlemap/pedigree_map.php:341 ../edit_merge.php:228
 #: ../edit_merge.php:234
 msgid "from"
-msgstr ""
+msgstr "alates"
 
 #: ../modules/googlemap/pedigree_map.php:343
 msgid "generations"
@@ -18333,7 +18328,7 @@ msgstr "Järeltulijad"
 
 #: ../blocks/upcoming_events.php:42
 msgid "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look."
-msgstr ""
+msgstr "Saabuvate sündmuste plokk näitab lähemas tulevikus saabuvaid sündmuste aastapäevi. Võid muuta näidatavate detailide hulka ning administraator saab määrata, kui kaugele ette tähtpäevi näidatakse."
 
 #: ../blocks/upcoming_events.php:156 ../blocks/todays_events.php:131
 msgid "Show only events of living people?"
@@ -18445,7 +18440,7 @@ msgstr ""
 
 #: ../blocks/login_block.php:40
 msgid "The Login block accepts a user name and password for users to login."
-msgstr ""
+msgstr "Sisselogimise blokis saab sisestada kasutajanime ja parooli, et sisse logida."
 
 #: ../blocks/top10_pageviews.php:39 ../blocks/top10_pageviews.php:74
 msgid "Most Viewed Items"
@@ -18453,7 +18448,7 @@ msgstr "Kõige enam vaadatud kirjed"
 
 #: ../blocks/top10_pageviews.php:40
 msgid "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings."
-msgstr ""
+msgstr "See blokk kuvab 10 tihedamini vaadatud kirjet. See blokk eeldab, et GEDCOM seadistustes on lubatud vaatamiste loendurid."
 
 #: ../blocks/top10_pageviews.php:81
 msgid "Hit counters must be enabled in the GEDCOM configuration, Display and Layout section, Hide and Show group."
@@ -18473,7 +18468,7 @@ msgstr "Sellel päeval"
 
 #: ../blocks/todays_events.php:42
 msgid "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown."
-msgstr ""
+msgstr "Sellel päeval ... plokk näitab tänaseid tähtpäevi. Võid muuta näidatavate detailide hulka."
 
 #: ../blocks/user_favorites.php:41
 msgid "User Favorites"
@@ -18481,7 +18476,7 @@ msgstr "Kasutaja lemmikud"
 
 #: ../blocks/user_favorites.php:42
 msgid "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them."
-msgstr ""
+msgstr "Kasutaja lemmikute blokk kuvab kasutajale tema tähtsamad isikud andmebaasis, võimaldades neile kergesti ligi pääseda."
 
 #: ../blocks/getting_started.php:51 ../blocks/getting_started.php:60
 msgid "Get Started"
@@ -18489,7 +18484,7 @@ msgstr ""
 
 #: ../blocks/getting_started.php:52 ../blocks/gedcom_block.php:40
 msgid "The GEDCOM Welcome block works the same as the User Welcome block.  It welcomes the visitor to the site and displays the title of the currently active database as well as the current date and time."
-msgstr ""
+msgstr "GEDCOM tervitusblokk toimib samuti kui kasutaja tervitusblokk.  Siin tervitatakse külastajat, samuti kuvatakse aktiivse andmebaasi nimi, käesolev kuupäev ja kelaaeg."
 
 #: ../blocks/getting_started.php:61
 msgid "Choose one of these options to get started using PhpGedView"
@@ -18510,7 +18505,7 @@ msgstr "GEDCOM uudised"
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
-msgstr ""
+msgstr "GEDCOM uudiste blokis kuvatakse kasutajale admin kasutaja poolt postitatud uudisartikleid.<br /><br />Uudiste blokk on hea koht, kus teada anda tähtsamatest andmebaasi uuendustest ja suguvõsa kokkutulekutest või lapse sünnist."
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
@@ -18530,7 +18525,7 @@ msgstr "Uudiste arvuga"
 
 #: ../blocks/top10_surnames.php:40
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
-msgstr ""
+msgstr "See blokk kuvab 10 kõige sagedamini andmebaasis esinevat perekonnanime.  Tegelikult näidatavate perekonnanimede arvu saad määrata.  GEDCOM seadistustes saad selles listis olevaid nimesid eemaldada."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
@@ -18544,7 +18539,7 @@ msgstr "Sisseloginud kasutajad"
 
 #: ../blocks/logged_in.php:40
 msgid "The Logged In Users block shows a list of the users who are currently logged in."
-msgstr ""
+msgstr "Sisseloginud kasutajate blokk kuvab hetkel sisse loginud kasutajad."
 
 #: ../blocks/logged_in.php:78
 msgid "Users Logged In"
@@ -18568,7 +18563,7 @@ msgstr "Kasutaja sõnumid"
 
 #: ../blocks/user_messages.php:42
 msgid "The User Messages block shows a list of the messages that have been sent to the active user."
-msgstr ""
+msgstr "Kasutaja sõnumite blokk kuvab sõnumid, mis on saadetud sellele kasutajale."
 
 #: ../blocks/user_messages.php:54
 msgid "My Messages"
@@ -18580,7 +18575,7 @@ msgstr "Juhuslik pilt"
 
 #: ../blocks/random_media.php:42
 msgid "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events."
-msgstr ""
+msgstr "Juhusliku pildi blokk kuvab kasutajale juhuslikult valitud foto või muu meedia objekti andmebaasist.<br /><br />Administraator saab määrata, kas see blokk näitab isikute või sündmustega seotud meedia objekte."
 
 #: ../blocks/random_media.php:200
 msgid "Next image"
@@ -18606,7 +18601,7 @@ msgstr "Selle GEDCOMi lemmikud"
 
 #: ../blocks/gedcom_favorites.php:40
 msgid "The GEDCOM Favorites block gives the administrator the ability to designate individuals from the database so that their information is easily accessible to all.  This is a way to highlight people who are important in your family history."
-msgstr ""
+msgstr "Selle GEDCOMi lemmikud võimaldab administraatoril valida andmebaasist isikud, kelle andmed võiksid olla kergesti kättesaadavad kõigile. Sel moel saab välja tuua perekonnaajaloo tähtsamad isikud."
 
 #: ../blocks/user_welcome.php:39
 msgid "User Welcome"
@@ -18614,7 +18609,7 @@ msgstr "Kasutaja tervitus"
 
 #: ../blocks/user_welcome.php:40
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
-msgstr ""
+msgstr "Kasutaja tervituse blokk näitab kasutajale jooksvat kuupäeva ja kellaaega, kiirlinke kasutajakonto muutmiseks või oma esivanemate tabeli kuvamiseks või oma GedView portaali muutmiseks."
 
 #: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
 msgid "RSS Feeds"
@@ -18642,11 +18637,11 @@ msgstr "Teema valik"
 
 #: ../blocks/theme_select.php:40
 msgid "The Theme Select block displays the Theme selector even when the Change Theme feature is disabled."
-msgstr ""
+msgstr "Teema valiku blokk kuvab teema valiku dialoogi ka siis kui teema valik muidu on blokeereitud."
 
 #: ../blocks/review_changes.php:43
 msgid "The Pending Changes block will give users with Edit rights a list of the records that have been changed online and that still need to be reviewed and accepted.  These changes are pending acceptance or rejection.<br /><br />If this block is enabled, users with Accept rights will receive an email once a day notifying them that changes need to be reviewed."
-msgstr ""
+msgstr "Läbivaatamata muudatuste blokk võimaldab muutmisõigusega kasutajal vaadata muudetud kirjete loendit ja mis tuleb üle vaadata ja kinnitada.  Need muudatused ootavad vastuvõtmist või tühistamist.<br /><br />Kui see blokk on seadistatud, siis kinnitamisõigusega kasutajad saavad kord päevas e-maili, mis teavitab muudatustest."
 
 #: ../blocks/review_changes.php:86
 msgid "PhpGedView - Review changes"
@@ -18678,7 +18673,7 @@ msgstr "Kasutaja päevik"
 
 #: ../blocks/user_blog.php:40
 msgid "The User Journal block lets the user keep notes or a journal online."
-msgstr ""
+msgstr "Kasutaja päevik võimaldab kasutajal teha märkmeid või pidada päevikut veebis."
 
 #: ../blocks/user_blog.php:55
 msgid "My Journal"
@@ -18686,7 +18681,7 @@ msgstr "Minu päevik"
 
 #: ../blocks/recent_changes.php:40
 msgid "The Recent Changes block will list all of the changes that have been made to the database in the last month.  This block can help you stay current with the changes that have been made.  Changes are detected automatically, using the CHAN tag defined in the GEDCOM Standard."
-msgstr ""
+msgstr "Viimaste muudatuste blokk näitab anmebaasis viimase kuu jooksul tehtud muudatusi.  Selle bloki abil saad olla kursis tehtud muudatustega.  Muudatused tehakse kindlaks automaatselt, kasutades GEDCOM standardi CHAN tagi."
 
 #: ../blocks/recent_changes.php:84
 #, php-format
@@ -18708,7 +18703,7 @@ msgstr "Kui peidad tühja bloki, siis ei saa sa seda enne uuesti seadistada, kui
 
 #: ../blocks/gedcom_stats.php:44
 msgid "The GEDCOM Statistics block shows the visitor some basic information about the database, such as when it was created and how many people are in it.<br /><br />It also has a list of the most frequent surnames.  You can configure this block to not show the Frequent Surnames list, and you can also configure the GEDCOM to remove or add names to this list.  You can set the occurrence threshold for this list in the GEDCOM configuration."
-msgstr ""
+msgstr "GEDCOM statistika blokk näitab külastajale andmebaasi põhiinfot, näiteks millal andmebaas loodi ja kui palju inimesi on selles.<br /><br />Samuti on seal sagedamini esinevate perekonnanimde loend. Selle bloki konfigureerimisel saab perekonnanimede näitamise ära jätta ja samuti saab sellesse loendisse nimesid lisada ja sealt nimesid eemaldada.  Võid ka määrata nimede esinemissageduse, sellesse loendisse ilmumiseks."
 
 #: ../blocks/gedcom_stats.php:110
 #, php-format
