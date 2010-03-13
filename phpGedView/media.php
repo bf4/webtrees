@@ -290,7 +290,7 @@ function checkpath(folder) {
 	if (value.substr(0, 1) == "/") value = value.substr(1, value.length-1);
 	result = value.split("/");
 	if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS; ?>) {
-		alert('<?php print_text("max_media_depth"); ?>');
+		alert('<?php echo i18n::translate('You can enter no more than %s subdirectory names', $MEDIA_DIRECTORY_LEVELS); ?>');
 		folder.focus();
 		return false;
 	}
@@ -464,16 +464,16 @@ if (check_media_structure()) {
 					$thumbnail = str_replace("$MEDIA_DIRECTORY", $MEDIA_DIRECTORY."thumbs/", check_media_depth($media["FILE"], "NOTRUNC"));
 					if (!$media["THUMBEXISTS"]) {
 						if (generate_thumbnail($media["FILE"], $thumbnail)) {
-							print_text("thumb_genned");
-							AddToChangeLog(print_text("thumb_genned", 0, 1));
+							echo i18n::translate('Thumbnail #thumbnail# generated automatically.', $thumbnail);
+							AddToChangeLog("Thumbnail {$thumbnail} generated automatically.");
 						}
 						else {
-							print "<span class=\"error\">";
-							print_text("thumbgen_error");
-							print "</span>";
-							AddToChangeLog(print_text("thumbgen_error", 0, 1));
+							echo "<span class=\"error\">";
+							echo i18n::translate('Thumbnail #thumbnail# could not be generated automatically.', $thumbnail);
+							echo "</span>";
+							AddToChangeLog("Thumbnail {$thumbnail} could not be generated automatically.");
 						}
-						print "<br />";
+						echo "<br />";
 					}
 				}
 			}
@@ -482,19 +482,19 @@ if (check_media_structure()) {
 			if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
 				$thumbnail = str_replace("$MEDIA_DIRECTORY", $MEDIA_DIRECTORY."thumbs/", check_media_depth($filename, "NOTRUNC"));
 				if (generate_thumbnail($filename, $thumbnail)) {
-					print_text("thumb_genned");
-					AddToChangeLog(print_text("thumb_genned", 0, 1));
+					echo i18n::translate('Thumbnail #thumbnail# generated automatically.', $thumbnail);
+					AddToChangeLog("Thumbnail {$thumbnail} generated automatically.");
 				}
 				else {
-					print "<span class=\"error\">";
-					print_text("thumbgen_error");
-					print "</span>";
-					AddToChangeLog(print_text("thumbgen_error", 0, 1));
+					echo "<span class=\"error\">";
+					echo i18n::translate('Thumbnail #thumbnail# could not be generated automatically.', $thumbnail);
+					echo "</span>";
+					AddToChangeLog("Thumbnail {$thumbnail} could not be generated automatically.");
 				}
 			}
 		}
 		$action = "filter";
-		print "</td></tr></table>";
+		echo "</td></tr></table>";
 	}
 
 	// Move single file and optionally its corresponding thumbnail to protected dir

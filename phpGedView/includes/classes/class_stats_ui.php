@@ -65,11 +65,14 @@ class stats_ui extends stats
 		$content = '';
 		if(!count($userfavs)) {
 			if($isged) {
-				if(PGV_USER_GEDCOM_ADMIN){$content .= print_text('no_favorites', 0, 1);}
-				else{$content .= print_text('no_gedcom_favorites', 0, 1);}
+				if(PGV_USER_GEDCOM_ADMIN) {
+					$content .= i18n::translate('You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.');
+				} else {
+					$content .= i18n::translate('At this moment there are no selected Favorites.	The admin can add Favorites to display at startup.');
+				}
 			}
 			else {
-				print_text('no_favorites', 0, 1);
+				$content .= i18n::translate('You have not selected any favorites.<br /><br />To add an individual, a family, or a source to your favorites, click on the <b>Add a new favorite</b> link to reveal some fields where you can enter or search for an ID number.  Instead of an ID number, you can enter a URL and a title.');
 			}
 		}
 		else {
