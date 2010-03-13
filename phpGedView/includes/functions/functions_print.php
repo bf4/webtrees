@@ -2299,7 +2299,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 				if ($newRow) {
 					$newRow = false;
 					echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, '">';
-					print_help_link("add_from_clipboard", "qm");
+					echo help_link('add_from_clipboard');
 					echo i18n::translate('Add from clipboard'), '</td>';
 					echo '<td class="optionbox wrap"><form method="get" name="newFromClipboard" action="" onsubmit="return false;">';
 					echo '<select id="newClipboardFact" name="newClipboardFact">';
