@@ -68,12 +68,6 @@ case 'ABBR':
 	$text=i18n::translate('Use this field for storing an abbreviated version of a title.  This field is used in conjunction with the title field on sources.  By default PGV will first use the title and then the abbreviated title.<br /><br />According to the GEDCOM 5.5 specification, "this entry is to provide a short title used for sorting, filing, and retrieving source records (pg 62)."<br /><br />In PhpGedView the abbreviated title is optional, but in other genealogical programs it is required.');
 	break;
 
-case 'ADOP':
-	// I18N: This is the GEDCOM label for "Adoption"
-	$title=i18n::translate('ADOP');
-	$text='';
-	break;
-
 case 'ADDR':
 	// I18N: This is the GEDCOM label for "Address"
 	$title=i18n::translate('ADDR');
@@ -89,6 +83,12 @@ case 'ADR1':
 case 'ADR2':	
 	// I18N: This is the GEDCOM label for "Address 2"
 	$title=i18n::translate('ADR2');
+	$text='';
+	break;
+
+case 'ADOP':
+	// I18N: This is the GEDCOM label for "Adoption"
+	$title=i18n::translate('ADOP');
 	$text='';
 	break;
 
@@ -388,6 +388,18 @@ case 'COMM':
 	$text='';
 	break;
 
+case 'CONC':	
+	// I18N: This is the GEDCOM label for "Concatenation"
+	$title=i18n::translate('CONC');
+	$text='';
+	break;
+
+case 'CONT':	
+	// I18N: This is the GEDCOM label for "Continued"
+	$title=i18n::translate('CONT');
+	$text='';
+	break;
+
 case 'CONF':	
 	// I18N: This is the GEDCOM label for "Confirmation"
 	$title=i18n::translate('CONF');
@@ -525,6 +537,12 @@ case 'DSCR':
 case 'EDUC':	
 	// I18N: This is the GEDCOM label for "Education"
 	$title=i18n::translate('EDUC');
+	$text='';
+	break;
+
+case 'EMAI':
+	// I18N: This is the GEDCOM label for "Email Address"
+	$title=i18n::translate('EMAI');
 	$text='';
 	break;
 
@@ -810,6 +828,12 @@ case 'FORM':
 	$text=i18n::translate('This is an optional field that can be used to enter the file format of the multimedia object.  Some genealogy programs may look at this field to determine how to handle the item.  However, since media do not transfer across computer systems very well, this field is not very important.');
 	break;
 
+case 'GEDC':	
+	// I18N: This is the GEDCOM label for "Gedcom"
+	$title=i18n::translate('GEDC');
+	$text='';
+	break;
+
 case 'GIVN':
 	// I18N: This is the GEDCOM label for "Given Names"
 	$title=i18n::translate('GIVN');
@@ -819,6 +843,12 @@ case 'GIVN':
 case 'GRAD':	
 	// I18N: This is the GEDCOM label for "Graduation"
 	$title=i18n::translate('GRAD');
+	$text='';
+	break;
+
+case 'HEAD':	
+	// I18N: This is the GEDCOM label for "Header"
+	$title=i18n::translate('HEAD');
 	$text='';
 	break;
 
@@ -837,6 +867,24 @@ case 'IDNO':
 case 'IMMI':	
 	// I18N: This is the GEDCOM label for "Immigration"
 	$title=i18n::translate('IMMI');
+	$text='';
+	break;
+
+case 'INDI':	
+	// I18N: This is the GEDCOM label for "Individual"
+	$title=i18n::translate('INDI');
+	$text='';
+	break;
+
+case 'INFL':	
+	// I18N: This is the GEDCOM label for "Infant"
+	$title=i18n::translate('INFL');
+	$text='';
+	break;
+
+case 'LANG':	
+	// I18N: This is the GEDCOM label for "Language"
+	$title=i18n::translate('LANG');
 	$text='';
 	break;
 
@@ -970,12 +1018,6 @@ case 'NAME':
 
 case 'NAME:FONE':	
 	// I18N: This is the GEDCOM label for "Phonetic Name"
-	$title=i18n::translate('NAME:FONE');
-	$text='';
-	break;
-
-case 'NAME:FONE':	
-	// I18N: This is the GEDCOM label for "Romanized Name"
 	$title=i18n::translate('NAME:FONE');
 	$text='';
 	break;
@@ -1262,6 +1304,18 @@ case 'STAT:DATE':
 	$text='';
 	break;
 
+case 'SUBM':	
+	// I18N: This is the GEDCOM label for "Submitter"
+	$title=i18n::translate('SUBM');
+	$text='';
+	break;
+
+case 'SUBN':	
+	// I18N: This is the GEDCOM label for "Submission"
+	$title=i18n::translate('SUBN');
+	$text='';
+	break;
+
 case 'SURN':
 	// I18N: This is the GEDCOM label for "Surname"
 	$title=i18n::translate('SURN');
@@ -1310,6 +1364,12 @@ case 'TITL:_HEB':
 	$text='';
 	break;
 
+case 'TRLR':	
+	// I18N: This is the GEDCOM label for "Trailer"
+	$title=i18n::translate('TRLR');
+	$text='';
+	break;
+
 case 'TYPE':
 	// I18N: This is the GEDCOM label for "Type"
 	$title=i18n::translate('TYPE');
@@ -1320,6 +1380,12 @@ case 'URL':
 	// I18N: This is the GEDCOM label for "Web URL"
 	$title=i18n::translate('URL');
 	$text=i18n::translate('Enter the URL address including the http://.<br /><br />An example URL looks like this: <b>http://www.phpgedview.net/</b> Leave this field blank if you do not want to include a URL.');
+	break;
+
+case 'VERS':	
+	// I18N: This is the GEDCOM label for "Version"
+	$title=i18n::translate('VERS');
+	$text='';
 	break;
 
 case 'WIFE':	
@@ -2431,7 +2497,7 @@ case '__BRTM_SIBL':
 	//////////////////////////////////////////////////////////////////////////////
 
 case 'addmedia.php':
-	$title=i18n::translate('Add a new Media item');
+	$title=i18n::translate('Add Media Tool');
 	$text='';
 	break;
 
@@ -2442,6 +2508,56 @@ case 'addremotelink.php':
 
 case 'addsearchlink.php':
 	$title=i18n::translate('Add Local Link');
+	$text='';
+	break;
+
+case 'admin.php':
+	$title=i18n::translate('Administration');
+	$text='';
+	break;
+
+case 'ancestry.php':
+	$title=i18n::translate('Ancestry Chart');
+	$text='';
+	break;
+
+case 'branches.php':
+	$title=i18n::translate('Branches');
+	$text='';
+	break;
+
+case 'calendar.php':
+	$title=i18n::translate('Calendar');
+	$text='';
+	break;
+
+case 'changelanguage.php':
+	$title=i18n::translate('Configuration of supported languages');
+	$text='';
+	break;
+
+case 'checklang.php':
+	$title=i18n::translate('checklang');
+	$text='';
+	break;
+
+case 'clippings.php':
+	$title=i18n::translate('Clippings Cart');
+	$text='';
+	break;
+
+case 'compact.php':
+	$title=i18n::translate('Compact Chart');
+	$text='';
+	break;
+
+case 'descendancy.php':
+	$title=i18n::translate('Descendancy Chart');
+	$text='';
+	break;
+
+case 'dir_editor.php':
+	$title=i18n::translate('Cleanup Index directory');
 	$text='';
 	break;
 
@@ -2460,6 +2576,31 @@ case 'edit_interface.php':
 	$text='';
 	break;
 
+case 'edit_merge.php':
+	$title=i18n::translate('Merge records');
+	$text='';
+	break;
+
+case 'edit_privacy.php':
+	$title=i18n::translate('Edit privacy settings');
+	$text='';
+	break;
+
+case 'editconfig_gedcom.php':
+	$title=i18n::translate('GEDCOM Configuration');
+	$text='';
+	break;
+
+case 'editgedcoms.php':
+	$title=i18n::translate('GEDCOM Administration');
+	$text='';
+	break;
+
+case 'edituser.php':
+	$title=i18n::translate('User administration');
+	$text='';
+	break;
+
 case 'editnews.php':
 	$title=i18n::translate('Add/Edit Journal/News entry');
 	$text='';
@@ -2470,8 +2611,88 @@ case 'export_gedcom.php':
 	$text='';
 	break;
 
+case 'family.php':
+	$title=i18n::translate('Family');
+	$text='';
+	break;
+
+case 'familybook.php':
+	$title=i18n::translate('Family Book Chart');
+	$text='';
+	break;
+
+case 'famlist.php':
+	$title=i18n::translate('Families :');
+	$text='';
+	break;
+
+case 'fanchart.php':
+	$title=i18n::translate('Circle Diagram');
+	$text='';
+	break;
+
+case 'faq.php':
+	$title=i18n::translate('FAQ List');
+	$text='';
+	break;
+	
+case 'find.php':
+	$title=i18n::translate('Find Individual ID');
+	$text='';
+	break;
+
+case 'gedcheck.php':
+	$title=i18n::translate('Gedcom checker');
+	$text='';
+	break;
+
+case 'gedrecord.php':
+	$title=i18n::translate('Record:');
+	$text='';
+	break;
+
+case 'help_text.php':
+	$title=i18n::translate('Information about:');
+	$text='';
+	break;
+
+case 'hourglass.php':
+	$title=i18n::translate('Hourglass Chart');
+	$text='';
+	break;
+
 case 'imageview.php':
 	$title=i18n::translate('Image Viewer');
+	$text='';
+	break;
+
+case 'index.php':
+	$title=i18n::translate('My Gedview Page');
+	$text='';
+	break;
+
+case 'indilist.php':
+	$title=i18n::translate('Individuals :');
+	$text='';
+	break;
+
+case 'individual.php':
+	$title=i18n::translate('Individual Information');
+	$text='';
+	break;
+
+case 'install.php':
+	$title=i18n::translate('Installation Wizard:');
+	$text='';
+	break;
+
+case 'inverselink.php':
+	$title=i18n::translate('Link Media');
+	$text='';
+	break;
+
+case 'lifespan.php':
+	$title=i18n::translate('Lifespan Chart');
 	$text='';
 	break;
 
@@ -2480,8 +2701,43 @@ case 'login.php':
 	$text='';
 	break;
 
+case 'manageservers.php':
+	$title=i18n::translate('Manage Sites');
+	$text='';
+	break;
+
+case 'media.php':
+	$title=i18n::translate('Manage MultiMedia');
+	$text='';
+	break;
+
+case 'medialist.php':
+	$title=i18n::translate('MultiMedia Objects');
+	$text='';
+	break;
+	
 case 'message.php':
 	$title=i18n::translate('PhpGedView Message');
+	$text='';
+	break;
+
+case 'module_admin.php':
+	$title=i18n::translate('Module Administration');
+	$text='';
+	break;
+
+case 'notelist.php':
+	$title=i18n::translate('Shared Notes');
+	$text='';
+	break;
+
+case 'pedigree.php':
+	$title=i18n::translate('Pedigree Tree');
+	$text='';
+	break;
+
+case 'placelist.php':
+	$title=i18n::translate('Place Hierarchy');
 	$text='';
 	break;
 
@@ -2490,8 +2746,48 @@ case 'printlog.php':
 	$text='';
 	break;
 
-case 'searchhelp.php':
-	$title=i18n::translate('Search Help Text');
+case 'relationship.php':
+	$title=i18n::translate('Relationship Chart');
+	$text='';
+	break;
+
+case 'repolist.php':
+	$title=i18n::translate('Repositories');
+	$text='';
+	break;
+
+case 'reportengine.php':
+	$title=i18n::translate('Choose a report to run');
+	$text='';
+	break;
+
+case 'rss.php':
+	$title=i18n::translate('RSS feed');
+	$text='';
+	break;
+
+case 'search.php':
+	$title=i18n::translate('Search');
+	$text='';
+	break;
+
+case 'search_advanced.php':
+	$title=i18n::translate('Advanced Search');
+	$text='';
+	break;
+
+case 'search_engine.php':
+	$title=i18n::translate('Search Engine Spider Detected:');
+	$text='';
+	break;
+
+case 'sourcelist.php':
+	$title=i18n::translate('Sources');
+	$text='';
+	break;
+
+case 'statistics.php':
+	$title=i18n::translate('Statistics');
 	$text='';
 	break;
 
@@ -2500,9 +2796,40 @@ case 'statisticsplot.php':
 	$text='';
 	break;
 
+case 'timeline.php':
+	$title=i18n::translate('PhpGedView Timeline');
+	$text='';
+	break;
+
+case 'treenav.php':
+	$title=i18n::translate('Interactive Tree');
+	$text='';
+	break;
+
+case 'uploadgedcom.php':
+	$title=i18n::translate('Upload GEDCOM');
+	$text='';
+	break;
+
+case 'uploadmedia.php':
+	$title=i18n::translate('Upload Media files');
+	$text='';
+	break;
+
+case 'useradmin.php':
+	$title=i18n::translate('User administration');
+	$text='';
+	break;
+
+case 'usermigrate.php':
+	$title=i18n::translate('Backup');
+	$text='';
+	break;
+
 	//////////////////////////////////////////////////////////////////////////////
 	// This section contains an entry for every configuration item
 	//////////////////////////////////////////////////////////////////////////////
+
 case 'ABBREVIATE_CHART_LABELS':
 	$title=i18n::translate('Abbreviate chart labels');
 	$text=i18n::translate('This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev["BIRT"]&nbsp;=&nbsp;"*";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character.');
@@ -2806,6 +3133,11 @@ case 'LANG_SELECTION':
 case 'LINK_ICONS':
 	$title=i18n::translate('PopUp links on charts');
 	$text=i18n::translate('Allows the user to select links to other charts and close relatives of the person.<br /><br />Set to <b>Disabled</b> to disable this feature.  Set to <b>On Mouse Over</b> to popup the links when the user mouses over the icon in the box.  Set to <b>On Mouse Click</b> to popup the links when the user clicks on the icon in the box.');
+	break;
+
+case 'LOG_LANG_ERROR':
+	$title=i18n::translate('Logfile for Language Errors');
+	$text=i18n::translate('');
 	break;
 
 case 'LOGFILE_CREATE':
@@ -3321,18 +3653,6 @@ case 'SUBLIST_TRIGGER_F':
 case 'SUBLIST_TRIGGER_I':
 	$title=i18n::translate('Maximum number of surnames');
 	$text=i18n::translate('Long lists of persons with the same surname can be broken into smaller sub-lists according to the first letter of the individual\'s given name.<br /><br />This option determines when sub-listing of surnames will occur.  To disable sub-listing completely, set this option to zero.');
-	break;
-
-case 'SUBM':	
-	// I18N: This is the GEDCOM label for "Submitter"
-	$title=i18n::translate('SUBM');
-	$text='';
-	break;
-
-case 'SUBN':	
-	// I18N: This is the GEDCOM label for "Submission"
-	$title=i18n::translate('SUBN');
-	$text='';
 	break;
 
 case 'SUPPORT_METHOD':
