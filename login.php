@@ -207,9 +207,9 @@ $tab=0;		// initialize tab index
 		<?php
 		if (!empty($message)) print "<span class='error'><br /><b>$message</b><br /><br /></span>\r\n";
 		?>
-									<?php print_help_link("username_help", "qm", "username"); ?><label id="username-lbl" for="username" class="required"><?php echo i18n::translate('User name'), help_link('username'); ?></label>
+									<label id="username-lbl" for="username" class="required"><?php echo i18n::translate('User name'), help_link('username'); ?></label>
 				<input type="text" tabindex="<?php echo ++$tab; ?>" name="username" id="username" value="<?php print htmlentities($username,ENT_COMPAT,'UTF-8'); ?>" class="inputbox validate-username required" size="25" /><br />
-												<?php print_help_link("password_help", "qm", "password"); ?><label id="password-lbl" for="password" class=" required"><?php echo i18n::translate('Password'), help_link('password'); ?></label>
+												<label id="password-lbl" for="password" class=" required"><?php echo i18n::translate('Password'), help_link('password'); ?></label>
 				<input type="password" tabindex="<?php echo ++$tab; ?>" name="password" id="password" value="" class="inputbox validate-password required" size="25"/>
 		</fieldset>
 					<?php
