@@ -149,8 +149,9 @@ class stats_ui extends stats
 				';
 			$uniqueID = floor(microtime() * 1000000);
 			if($isged) {
-				$content .= print_help_link('index_add_favorites', 'qm', '', false, true)
-					."<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>"
+				$content .=
+					"<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>"
+				 	.help_link('index_add_favorites')
 					."<br />\n<div id=\"add_ged_fav\" style=\"display: none;\">\n"
 					."<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n"
 					."<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n"
@@ -158,8 +159,9 @@ class stats_ui extends stats
 
 			}
 			else {
-				$content .= print_help_link('index_add_favorites', 'qm', '', false, true)
-					."<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>"
+				$content .=
+					"<b><a href=\"javascript://".i18n::translate('Add a new favorite')." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;".i18n::translate('Add a new favorite')."</a></b>"
+					.help_link('index_add_favorites')
 					."<br />\n<div id=\"add_user_fav\" style=\"display: none;\">\n"
 					."<form name=\"addufavform\" method=\"post\" action=\"index.php\">\n"
 					."<input type=\"hidden\" name=\"favtype\" value=\"user\" />\n"
@@ -464,8 +466,9 @@ class stats_ui extends stats
 		}
 		if($limit == 'date' || $limit == 'count') {
 			if($printedAddLink){$content .= '&nbsp;&nbsp;|&nbsp;&nbsp;';}
-			$content .= print_help_link('gedcom_news_archive', 'qm', '', false, true);
-			$content .= "<a href=\"".encode_url("index.php?gedcom_news_archive=yes&ctype={$ctype}")."\">".i18n::translate('View archive')."</a><br />\n";
+			$content .= "<a href=\"".encode_url("index.php?gedcom_news_archive=yes&ctype={$ctype}")."\">".i18n::translate('View archive')."</a>";
+			$content .= help_link('gedcom_news_archive');
+			$content .= '<br />';
 		}
 		return $content;
 	}

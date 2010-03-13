@@ -526,11 +526,11 @@ class IndividualControllerRoot extends BaseController {
 		echo "\n\t\t</dl>";
 		if ($this->total_names>1 && !$this->isPrintPreview() && $this->userCanEdit() && !strpos($factrec, 'PGV_OLD')) {
 			echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Edit Name'), "</a> | ";
-			echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Delete Name'), "</a>\n";
+			echo "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">", i18n::translate('Delete Name'), "</a>";
 			if ($this->name_count==2) {
-				print_help_link("delete_name", "qm");
+				echo help_link('delete_name');
 			}
-			echo "<br />\n";
+			echo "<br />";
 		}
 		if (preg_match("/\d (NOTE)|(SOUR)/", $factrec)>0) {
 			// -- find sources for this name
