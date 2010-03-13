@@ -132,8 +132,7 @@ if ($ct==0) {
 		<table>
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
-				<?php print i18n::translate('Add Individual By ID');
-				print_help_link("add_by_id", "qm");?>
+				<?php echo i18n::translate('Add Individual By ID'), help_link('add_by_id'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -166,7 +165,7 @@ if ($ct==0) {
 		<table>
 		<tr><td colspan="2" class="topbottombar"><h2><?php print i18n::translate('File Information') ?></h2></td></tr>
 		<tr>
-		<td class="descriptionbox width50 wrap"><?php print_help_link("file_type", "qm"); print i18n::translate('File Type') ?></td>
+		<td class="descriptionbox width50 wrap"><?php echo i18n::translate('File Type'), help_link('file_type'); ?></td>
 		<td class="optionbox">
 		<?php if ($TEXT_DIRECTION=='ltr') { ?>
 			<input type="radio" name="filetype" checked="checked" value="gedcom" />&nbsp;GEDCOM<br/><input type="radio" name="filetype" value="gramps" DISABLED />&nbsp;Gramps XML <!-- GRAMPS doesn't work right now -->
@@ -175,10 +174,10 @@ if ($ct==0) {
 		<?php } ?>
 		</td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("zip", "qm"); print i18n::translate('Zip File(s)'); ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Zip File(s)'), help_link('zip'); ?></td>
 		<td class="optionbox"><input type="checkbox" name="Zip" value="yes" checked="checked" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("include_media", "qm"); print i18n::translate('Include Media (automatically zips files)'); ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Include Media (automatically zips files)'), help_link('include_media'); ?></td>
 		<td class="optionbox"><input type="checkbox" name="IncludeMedia" value="yes" checked="checked" /></td></tr>
 
 		<?php
@@ -210,7 +209,7 @@ if ($ct==0) {
 		}
 		?>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("apply_privacy", "qm"); print i18n::translate('Apply privacy settings?'); ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Apply privacy settings?'), help_link('apply_privacy'); ?></td>
 		<td class="list_value">
 		<input type="radio" name="privatize_export" value="none" <?php print $radioPrivatizeNone; ?>/>&nbsp;<?php print i18n::translate('None'); ?><br />
 		<input type="radio" name="privatize_export" value="visitor" <?php print $radioPrivatizeVisitor; ?>/>&nbsp;<?php print i18n::translate('Visitor'); ?><br />
@@ -219,16 +218,16 @@ if ($ct==0) {
 		<input type="radio" name="privatize_export" value="admin" <?php print $radioPrivatizeAdmin; ?>/>&nbsp;<?php print i18n::translate('Site administrator'); ?>
 		</td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("utf8_ansi", "qm"); print i18n::translate('Convert from UTF-8 to ANSI (ISO-8859-1)'); ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Convert from UTF-8 to ANSI (ISO-8859-1)'), help_link('utf8_ansi'); ?></td>
 		<td class="optionbox"><input type="checkbox" name="convert" value="yes" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("remove_tags", "qm"); print i18n::translate('Remove custom PGV tags? (eg. _PGVU, _THUM)'); ?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Remove custom PGV tags? (eg. _PGVU, _THUM)'), help_link('remove_tags'); ?></td>
 		<td class="optionbox"><input type="checkbox" name="remove" value="yes" checked="checked" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertPath", "qm"); print i18n::translate('Convert media path to');?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Convert media path to'), help_link('convertPath'); ?></td>
 		<td class="list_value"><input type="text" name="conv_path" size="30" value="<?php echo getLRM(), $controller->conv_path, getLRM();?>" /></td></tr>
 
-		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertSlashes", "qm"); print i18n::translate('Convert media folder separators to');?></td>
+		<tr><td class="descriptionbox width50 wrap"><?php echo i18n::translate('Convert media folder separators to'), help_link('convertSlashes'); ?></td>
 		<td class="list_value">
 		<input type="radio" name="conv_slashes" value="forward" <?php if ($controller->conv_slashes=='forward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print i18n::translate('Forward slashes : /');?><br />
 		<input type="radio" name="conv_slashes" value="backward" <?php if ($controller->conv_slashes=='backward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print i18n::translate('Backslashes : \\');?>
@@ -258,7 +257,7 @@ if ($ct==0) {
 		<table>
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
-				<?php print_help_link("add_by_id", "qm"); print i18n::translate('Add Individual By ID'); ?>
+				<?php echo i18n::translate('Add Individual By ID'), help_link('add_by_id'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -279,10 +278,10 @@ if ($ct==0) {
 
 
 	<?php } ?>
-	<br /><?php print_help_link("empty_cart", "qm");?><a href="module.php?mod=clippings&amp;pgv_action=index&amp;action=empty"><?php print i18n::translate('Empty Cart');?></a>
+	<br /><a href="module.php?mod=clippings&amp;pgv_action=index&amp;action=empty"><?php echo i18n::translate('Empty Cart');?></a><?php echo help_link('empty_cart'); ?>
 	</td></tr>
 
-	<tr><td class="topbottombar"><h2><?php print_help_link("clip_cart", "qm"); print i18n::translate('Family Tree Clippings Cart');?></h2></td></tr>
+	<tr><td class="topbottombar"><h2><?php echo i18n::translate('Family Tree Clippings Cart'), help_link('clip_cart'); ?></h2></td></tr>
 
 	<tr><td valign="top">
 	<table id="mycart" class="sortable list_table width100">

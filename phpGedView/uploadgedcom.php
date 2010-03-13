@@ -288,7 +288,7 @@ if ($action == "add_form") {
 		echo $PGV_IMAGES["plus"]["other"];
 	}
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-	print_help_link("add_gedcom", "qm", "add_gedcom");
+	echo help_link('add_gedcom');
 	echo "&nbsp;<a href=\"javascript: ";
 	if ($import_existing) {
 		echo i18n::translate('Import');
@@ -327,8 +327,7 @@ if ($action == "add_form") {
 	?>
 	<tr>
 	<td class="descriptionbox width20 wrap">
-	<?php print_help_link("gedcom_path", "qm","gedcom_path");?>
-	<?php echo i18n::translate('GEDCOM File:'); ?></td>
+	<?php echo i18n::translate('GEDCOM File:'), help_link('gedcom_path'); ?></td>
 	<td class="optionbox"><input type="text" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME) && strlen($GEDFILENAME) > 4) echo get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path'); ?>"
 					size="60" dir ="ltr" tabindex="<?php $i++; echo $i?>"	<?php if ((!$no_upload && isset($GEDFILENAME)) && (empty($error))) echo "disabled "; ?> />
 	</td>
@@ -348,8 +347,8 @@ elseif ($action == "upload_form") {
 		echo $PGV_IMAGES["plus"]["other"];
 	}
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-	print_help_link("upload_gedcom", "qm", "upload_gedcom");
 	echo "&nbsp;<a href=\"javascript: ", i18n::translate('Upload GEDCOM'), "\" onclick=\"expand_layer('upload_gedcom');return false\">", i18n::translate('Upload GEDCOM'), "</a>";
+	echo help_link('upload_gedcom');
 	echo "</td></tr>";
 	echo "<tr><td class=\"optionbox wrap\">";
 	echo "<div id=\"upload_gedcom\" style=\"display: ";
@@ -407,8 +406,8 @@ elseif ($action == "add_new_form") {
 		echo $PGV_IMAGES["plus"]["other"];
 	}
 	echo "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-	print_help_link("add_gedcom_instructions", "qm", "add_new_gedcom");
 	echo "&nbsp;<a href=\"javascript: ", i18n::translate('Create a new GEDCOM'), "\" onclick=\"expand_layer('add_new_gedcom');return false\">", i18n::translate('Create a new GEDCOM'), "</a>";
+	echo help_link('add_gedcom_instructions');
 	echo "</td></tr>";
 	echo "<tr><td class=\"optionbox\">";
 	echo "<div id=\"add-form\" style=\"display: ";
@@ -460,8 +459,8 @@ if ($verify == "verify_gedcom") {
 		else
 		print $PGV_IMAGES["plus"]["other"];
 		print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-		print_help_link("verify_gedcom", "qm", "verify_gedcom");
 		print "&nbsp;<a href=\"javascript: ".i18n::translate('Verify GEDCOM')."\" onclick=\"expand_layer('verify_gedcom');return false\">".i18n::translate('Verify GEDCOM')."</a>";
+		print help_link('verify_gedcom');
 		print "</td></tr>";
 		print "<tr><td class=\"optionbox\" colspan=\"2\">";
 		print "<div id=\"verify_gedcom\" style=\"display: ";
@@ -512,7 +511,7 @@ if ($verify == "verify_gedcom") {
 			?>
 			<tr>
 			<td class="descriptionbox wrap width20">
-			<?php print_help_link("keep_media", "qm", "keep_media"); print i18n::translate('Keep media links');?></td>
+			<?php echo i18n::translate('Keep media links'), help_link('keep_media'); ?></td>
 			<td class="optionbox">
 			<select name="keepmedia">
 			<option value="yes" <?php if ($keepmedia) print "selected=\"selected\"";?>><?php print i18n::translate('Yes'); ?></option>
@@ -535,8 +534,8 @@ if ($verify == "validate_form") {
 	else
 	print $PGV_IMAGES["plus"]["other"];
 	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-	print_help_link("validate_gedcom", "qm", "validate_gedcom");
 	print "&nbsp;<a href=\"javascript: ".i18n::translate('Validate GEDCOM')."\" onclick=\"expand_layer('validate_gedcom');return false\">".i18n::translate('Validate GEDCOM')."</a>";
+	print help_link('validate_gedcom');
 	print "</td></tr>";
 	print "<tr><td class=\"optionbox\">";
 	print "<div id=\"validate_gedcom\" style=\"display: ";
@@ -596,29 +595,29 @@ if ($verify == "validate_form") {
 			// NOTE: Check for BOM cleanup
 			if ($l_BOMcleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print_help_link("BOM_detected", "qm", "BOM_detected");
 				print "<span class=\"error\">".i18n::translate('A Byte Order Mark (BOM) was detected at the beginning of the file. On cleanup, this special code will be removed.')."</span>\n";
+				print help_link('BOM_detected');
 				print "</td></tr>";
 			}
 			// NOTE: Check for head cleanup
 			if ($l_headcleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print_help_link("invalid_header", "qm", "invalid_header");
 				print "<span class=\"error\">".i18n::translate('Detected lines before the GEDCOM header <b>0&nbsp;HEAD</b>.  On cleanup, these lines will be removed.')."</span>\n";
+				print help_link('invalid_header');
 				print "</td></tr>";
 			}
 			// NOTE: Check for mac file cleanup
 			if ($l_macfilecleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print_help_link("macfile_detected", "qm", "macfile_detected");
 				print "<span class=\"error\">".i18n::translate('Macintosh file detected.  On cleanup your file will be converted to a DOS file.')."</span>\n";
+				print help_link('macfile_detected');
 				print "</td></tr>";
 			}
 			// NOTE: Check for line endings cleanup
 			if ($l_lineendingscleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-				print_help_link("empty_lines_detected", "qm", "empty_lines_detected");
 				print "<span class=\"error\">".i18n::translate('Empty lines were detected in your GEDCOM file.	On cleanup, these empty lines will be removed.')."</span>\n";
+				print help_link('empty_lines_detected');
 				print "</td></tr>";
 			}
 			// NOTE: Check for place cleanup
@@ -629,8 +628,8 @@ if ($verify == "validate_form") {
 				print "<span class=\"error\">".i18n::translate('Invalid place encodings were detected.  These errors should be fixed.')."</span>\n";
 				print "</td></tr>";
 				print "<tr><td class=\"descriptionbox wrap width20\">";
-				print_help_link("cleanup_places", "qm", "cleanup_places");
 				print i18n::translate('Cleanup Places');
+				print help_link('cleanup_places');
 				print "</td><td class=\"optionbox\" colspan=\"2\"><select name=\"cleanup_places\">\n";
 				print "<option value=\"YES\" selected=\"selected\">".i18n::translate('Yes')."</option>\n<option value=\"NO\">".i18n::translate('No')."</option>\n</select>";
 				print "</td></tr>";
@@ -644,8 +643,8 @@ if ($verify == "validate_form") {
 				print "<span class=\"error\">".i18n::translate('Detected invalid date formats, on cleanup these will be changed to format of DD MMM YYYY (eg. 1 JAN 2004).')."</span>\n";
 				print "\n<table class=\"facts_table\">";
 				print "<tr><td class=\"descriptionbox width20\">";
-				print_help_link("detected_date", "qm");
 				print i18n::translate('Date format');
+				print help_link('detected_date');
 
 				print "</td><td class=\"optionbox\" colspan=\"2\">";
 				if (isset ($datesample["choose"])) {
@@ -664,8 +663,8 @@ if ($verify == "validate_form") {
 				print "<span class=\"error\">".i18n::translate('ANSI file encoding detected.	PhpGedView works best with files encoded in UTF-8.')."</span>\n";
 				print "\n<table class=\"facts_table\">";
 				print "<tr><td class=\"descriptionbox wrap width20\">";
-				print_help_link("detected_ansi2utf", "qm", "ansi_to_utf8");
 				print i18n::translate('Convert this ANSI encoded GEDCOM to UTF-8?');
+				print help_link('detected_ansi2utf');
 				print "</td><td class=\"optionbox\"><select name=\"utf8convert\">\n";
 				print "<option value=\"YES\" selected=\"selected\">".i18n::translate('Yes')."</option>\n";
 				print "<option value=\"NO\">".i18n::translate('No')."</option>\n</select>";
@@ -701,8 +700,8 @@ if ($import == true) {
 	else
 	print $PGV_IMAGES["plus"]["other"];
 	print "\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
-	print_help_link("import_options", "qm", "import_options");
 	print "&nbsp;<a href=\"javascript: ".i18n::translate('Import Options')."\" onclick=\"expand_layer('import_options');return false\">".i18n::translate('Import Options')."</a>";
+	print help_link('import_options');
 	print "</td></tr>";
 	print "<tr><td class=\"optionbox\" colspan=\"2\">";
 	print "<div id=\"import_options\" style=\"display: ";
@@ -714,10 +713,9 @@ if ($import == true) {
 	print "\n<table class=\"facts_table\">";
 
 	// NOTE: Time limit for import
-	// TODO: Write help text
 	print "<tr><td class=\"descriptionbox width20 wrap\">";
-	print_help_link("time_limit", "qm", "time_limit");
 	print i18n::translate('Time limit:');
+	print help_link('time_limit');
 	print "</td><td class=\"optionbox\"><input type=\"text\" name=\"timelimit\" value=\"".$timelimit."\" size=\"5\"";
 	if ($startimport == "true")
 	print " disabled ";
@@ -725,10 +723,9 @@ if ($import == true) {
 	print "</td></tr>";
 
 	// NOTE: Auto-click "Continue" button
-	// TODO: Write help text
 	print "<tr><td class=\"descriptionbox width20 wrap\">";
-	print_help_link("autoContinue", "qm", "autoContinue");
 	print i18n::translate('Automatically press «Continue» button');
+	print help_link('autoContinue');
 	print "</td><td class=\"optionbox\"><select name=\"autoContinue\">\n";
 	print "<option value=\"YES\" selected=\"selected\">".i18n::translate('Yes')."</option>\n";
 	print "<option value=\"NO\">".i18n::translate('No')."</option>\n</select>";
@@ -736,8 +733,8 @@ if ($import == true) {
 
 	// NOTE: change XREF to RIN, REFN, or Don't change
 	print "<tr><td class=\"descriptionbox wrap\">";
-	print_help_link("change_indi2id", "qm", "change_id");
 	print i18n::translate('Change Individual ID to:');
+	print help_link('change_indi2id');
 	print "</td><td class=\"optionbox\">";
 	if ($startimport == "true") {
 		if ($xreftype == "NA")
