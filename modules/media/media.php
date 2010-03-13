@@ -66,7 +66,7 @@ class media_Tab extends Tab {
 			if (!$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
 		?>
 				<tr>
-					<td class="facts_label"><?php print_help_link("add_media", "qm"); ?><?php print i18n::translate('Add Media'); ?></td>
+					<td class="facts_label"><?php print i18n::translate('Add Media'), help_link('add_media'); ?></td>
 					<td class="facts_value">
 						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&linktoid=<?php print $this->controller->pid; ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo i18n::translate('Add a new Media item'); ?></a><br />
 						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php print $this->controller->pid; ?>&linkto=person', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo i18n::translate('Link to an existing Media item'); ?></a>
