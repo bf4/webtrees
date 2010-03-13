@@ -215,7 +215,7 @@ function getGedcomStats() {
 * @TODO prepend relative URL's in news items with $SERVER_URL
 */
 function getGedcomNews() {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype, $SERVER_URL;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype, $SERVER_URL;
 
 	$usernews = getUserNews(PGV_GEDCOM);
 
@@ -227,13 +227,13 @@ function getGedcomNews() {
 		$year = date("Y", $news["date"]);
 		$data = "";
 
-		// Look for $pgv_lang and $GLOBALS substitutions in the News title
+		// Look for $GLOBALS substitutions in the News title
 		$newsTitle = embed_globals($news["title"]);
 		$itemArray[0] = $newsTitle;
 
 		$itemArray[1] = iso8601_date($news["date"]);
 
-		// Look for $pgv_lang and $GLOBALS substitutions in the News text
+		// Look for $GLOBALS substitutions in the News text
 		$newsText = embed_globals($news["text"]);
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);
 		$trans = array_flip($trans);
@@ -303,7 +303,7 @@ function getTop10Surnames() {
 * @TODO use date of most recent change instead of curent time
 */
 function getRecentChanges() {
-	global $pgv_lang, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
 	global $objectlist, $SERVER_URL;
 
