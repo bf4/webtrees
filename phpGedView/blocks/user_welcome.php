@@ -59,8 +59,8 @@ function print_welcome_block($block=true, $config="", $side, $index) {
 		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"".encode_url("individual.php?pid=".PGV_USER_GEDCOM_ID)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"".i18n::translate('My Individual Record')."\" title=\"".i18n::translate('My Individual Record')."\" /><br />".i18n::translate('My Individual Record')."</a></td>";
 	}
 	$content .= "</tr><tr><td class=\"center\" colspan=\"3\">";
-	$content .= print_help_link("mygedview_customize", "qm","",false,true);
 	$content .= "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name=".PGV_USER_NAME."&ctype=user")."', '_blank', 'top=50,left=10,width=600,height=350,scrollbars=1,resizable=1');\">".i18n::translate('Customize MyGedView Portal')."</a>";
+	$content .= help_link('mygedview_customize');
 	$content .= "<br />".format_timestamp(client_time());
 	$content .= "</td>";
 	$content .= "</tr></table>";

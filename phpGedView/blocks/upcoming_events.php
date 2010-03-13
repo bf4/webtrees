@@ -90,7 +90,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 
 	// Output starts here
 	$id="upcoming_events";
-	$title = print_help_link("index_events", "qm","",false, true);
+	$title='';
 	if ($PGV_BLOCKS["print_upcoming_events"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -103,6 +103,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 		}
 	}
 	$title .= i18n::translate('Upcoming Events');
+	$title .= help_link('index_events');
 
 	$content = "";
 	switch ($infoStyle) {
@@ -143,8 +144,8 @@ function print_upcoming_events_config($config) {
 	?>
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("days_to_show", "qm");
 	print i18n::translate('Number of days to show');
+	print help_link('days_to_show');
 	?>
 	</td><td class="optionbox">
 		<input type="text" name="days" size="2" value="<?php print $config["days"]; ?>" />
@@ -163,8 +164,8 @@ function print_upcoming_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("basic_or_all", "qm");
 	print i18n::translate('Show only Births, Deaths, and Marriages?');
+	print help_link('basic_or_all');
 	?>
 	</td><td class="optionbox">
 		<select name="onlyBDM">
@@ -175,8 +176,8 @@ function print_upcoming_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("style", "qm");
 	print i18n::translate('Presentation Style');
+	print help_link('style');
 	?>
 	</td><td class="optionbox">
 		<select name="infoStyle">
@@ -187,10 +188,10 @@ function print_upcoming_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print_help_link("sort_style", "qm");
-	print i18n::translate('Sort Style')."</td>";
+	print i18n::translate('Sort Style');
+	print help_link('sort_style');
 	?>
-	<td class="optionbox">
+	</td><td class="optionbox">
 		<select name="sortStyle">
 			<option value="alpha"<?php if ($config["sortStyle"]=="alpha") print " selected=\"selected\"";?>><?php print i18n::translate('Alphabetically'); ?></option>
 			<option value="anniv"<?php if ($config["sortStyle"]=="anniv") print " selected=\"selected\"";?>><?php print i18n::translate('By Anniversary'); ?></option>
@@ -199,10 +200,10 @@ function print_upcoming_events_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
- 	print_help_link("cal_download", "qm");
-	print i18n::translate('Allow calendar events download?')."</td>";
+	print i18n::translate('Allow calendar events download?');
+ 	print help_link('cal_download');
 	?>
-	<td class="optionbox">
+	</td><td class="optionbox">
 		<select name="allowDownload">
 			<option value="yes"<?php if ($config["allowDownload"]=="yes") print " selected=\"selected\"";?>><?php print i18n::translate('Yes'); ?></option>
 			<option value="no"<?php if ($config["allowDownload"]=="no") print " selected=\"selected\"";?>><?php print i18n::translate('No'); ?></option>
