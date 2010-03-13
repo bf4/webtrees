@@ -266,13 +266,13 @@ switch ($type) {
 		print i18n::translate('Media contains:')." <input type=\"text\" name=\"filter\" value=\"";
 		if ($filter) print $filter;
 		print "\" />";
-		print_help_link("simple_filter","qm");
+		print help_link('simple_filter');
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" wstyle=\"padding: 5px;\">";
 		print "<input type=\"checkbox\" name=\"showthumb\" value=\"true\"";
 		if( $showthumb) print "checked=\"checked\"";
 		print "onclick=\"javascript: this.form.submit();\" />".i18n::translate('Show thumbnails');
-		print_help_link("show_thumb","qm");
+		print help_link('show_thumb');
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 		print "<input type=\"submit\" name=\"search\" value=\"".i18n::translate('Filter')."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
@@ -753,7 +753,7 @@ if ($action=="filter") {
 		}
 		print '</table>';
 		if (PGV_USER_CAN_EDIT) {
-			print_help_link('edit_add_unlinked_source', 'qm'); ?><a href="javascript: <?php print i18n::translate('Add an unlinked source'); ?>" onclick="addnewsource(''); return false;"><?php print i18n::translate('Add an unlinked source'); ?></a>
+			?><a href="javascript: <?php print i18n::translate('Add an unlinked source'); ?>" onclick="addnewsource(''); return false;"><?php echo i18n::translate('Add an unlinked source'), help_link('edit_add_unlinked_source'); ?></a>
 		<?php
 		}
 	}

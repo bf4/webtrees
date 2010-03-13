@@ -296,13 +296,13 @@ if ($type == "media" && $MULTI_MEDIA) {
 	echo i18n::translate('Media contains:'), " <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) echo $filter;
 	echo "\" />";
-	print_help_link("simple_filter", "qm");
+	echo help_link('simple_filter');
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" wstyle=\"padding: 5px;\">";
 	echo "<input type=\"checkbox\" name=\"showthumb\" value=\"true\"";
 	if( $showthumb) echo "checked=\"checked\"";
 	echo "onclick=\"javascript: this.form.submit();\" />", i18n::translate('Show thumbnails');
-	print_help_link("show_thumb", "qm");
+	echo help_link('show_thumb');
 	echo "</td></tr>";
 	echo "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 	echo "<input type=\"submit\" name=\"search\" value=\"", i18n::translate('Filter'), "\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
