@@ -1032,8 +1032,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 	// Print 5 forms for uploading images
 	for($i=1; $i<6; $i++) {
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-			print_help_link("upload_media_file", "qm", "upload_media");
-			echo i18n::translate('Media file to upload');
+			echo i18n::translate('Media file to upload'), help_link('upload_media_file');
 			echo '</td>';
 			echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 			echo '<input name="mediafile', $i, '" type="file" size="40" tabindex="', $tab++, '" />';
@@ -1042,8 +1041,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 		if ($thumbSupport != "") {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-				print_help_link("generate_thumb", "qm", "generate_thumbnail");
-				echo i18n::translate('Automatic thumbnail');
+				echo i18n::translate('Automatic thumbnail'), help_link('generate_thumb');
 				echo '</td><td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 				echo '<input type="checkbox" name="genthumb', $i, '" value="yes" checked="checked" tabindex="', $tab++, '" />';
 				echo '&nbsp;&nbsp;&nbsp;', i18n::translate('Generate thumbnail automatically from '), $thumbSupport;
@@ -1051,8 +1049,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 		}
 
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-			print_help_link("upload_thumbnail_file", "qm", "upload_media");
-			echo i18n::translate('Thumbnail to upload');
+			echo i18n::translate('Thumbnail to upload'), help_link('upload_thumbnail_file');
 			echo '</td>';
 			echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 			echo '<input name="thumbnail', $i, '" type="file" tabindex="', $tab++, '" size="40" />';
@@ -1061,8 +1058,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 		if (PGV_USER_GEDCOM_ADMIN) {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-				print_help_link("upload_server_file", "qm", "upload_media");
-				echo i18n::translate('File name on server');
+				echo i18n::translate('File name on server'), help_link('upload_server_file');
 				echo '</td>';
 				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 				echo '<input name="filename', $i, '" type="text" tabindex="', $tab++, '" size="40" />';
@@ -1074,8 +1070,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 		if (PGV_USER_GEDCOM_ADMIN && $MEDIA_DIRECTORY_LEVELS>0) {
 			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
-				print_help_link("upload_server_folder", "qm", "upload_media");
-				echo i18n::translate('Folder name on server');
+				echo i18n::translate('Folder name on server'), help_link('upload_server_folder');
 				echo '</td>';
 				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
 
@@ -1150,9 +1145,8 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	echo "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"", i18n::translate('Save'), "\" /></td></tr>";
 	if ($linktoid == "new" || ($linktoid == "" && $action != "update")) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, "wrap width25\">";
-		print_help_link("add_media_linkid", "qm");
-		echo i18n::translate('Enter a Person, Family, or Source ID'), "</td>";
-		echo "<td class=\"optionbox wrap\"><input type=\"text\" name=\"gid\" id=\"gid\" size=\"6\" value=\"\" />";
+		echo i18n::translate('Enter a Person, Family, or Source ID'), help_link('add_media_linkid');
+		echo "</td><td class=\"optionbox wrap\"><input type=\"text\" name=\"gid\" id=\"gid\" size=\"6\" value=\"\" />";
 		print_findindi_link("gid", "");
 		print_findfamily_link("gid");
 		print_findsource_link("gid");
@@ -1189,8 +1183,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	if ($gedfile == "FILE") {
 		// Box for user to choose to upload file from local computer
 		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-		print_help_link("upload_media_file", "qm");
-		print i18n::translate('Media file to upload') . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"mediafile\"";
+		print i18n::translate('Media file to upload').help_link('upload_media_file')."</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"mediafile\"";
 		print " onchange=\"updateFormat(this.value);\"";
 		print " size=\"40\" /><br /><sub>" . i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.') . "</sub></td></tr>";
 		// Check for thumbnail generation support
@@ -1210,16 +1203,14 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			if ($thumbSupport != "") {
 				$thumbSupport = substr($thumbSupport, 2); // Trim off first ", "
 				print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-				print_help_link("generate_thumb", "qm", "generate_thumbnail");
-				print i18n::translate('Automatic thumbnail');
+				print i18n::translate('Automatic thumbnail'), help_link('generate_thumb');
 				print "</td><td class=\"optionbox wrap\">";
 				print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked=\"checked\" />";
 				print "&nbsp;&nbsp;&nbsp;" . i18n::translate('Generate thumbnail automatically from ') . $thumbSupport;
 				print "</td></tr>";
 			}
 			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-			print_help_link("upload_thumbnail_file", "qm");
-			print i18n::translate('Thumbnail to upload') . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\" /><br /><sub>" . i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.') . "</sub></td></tr>";
+			print i18n::translate('Thumbnail to upload').help_link('upload_thumbnail_file')."</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\" /><br /><sub>" . i18n::translate('Use the &laquo;Browse&raquo; button to search your local computer for the desired file.') . "</sub></td></tr>";
 		}
 		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />";
 	}
@@ -1246,8 +1237,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "\n<tr>";
 		print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">\n";
 		print "<input name=\"oldFilename\" type=\"hidden\" value=\"" . addslashes($fileName) . "\" />";
-		print_help_link("upload_server_file", "qm", "upload_media");
-		print i18n::translate('File name on server');
+		print i18n::translate('File name on server'), help_link('upload_server_file');
 		print "</td>\n";
 		print "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
 		if (PGV_USER_GEDCOM_ADMIN) {
@@ -1274,14 +1264,13 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	// Box for user to choose the folder to store the image
 	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0) {
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, 'wrap width25">';
-		print_help_link("upload_server_folder", "qm");
 		if (empty($folder)) {
 			if (!empty($_SESSION['upload_folder'])) $folder = $_SESSION['upload_folder'];
 			else $folder = '';
 		}
 		// Strip $MEDIA_DIRECTORY from the folder name
 		if (substr($folder, 0, strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $folder = substr($folder, strlen($MEDIA_DIRECTORY));
-		echo i18n::translate('Folder name on server'), '</td><td class="optionbox wrap">';
+		echo i18n::translate('Folder name on server'), help_link('upload_server_folder'), '</td><td class="optionbox wrap">';
 		//-- don't let regular users change the location of media items
 		if ($action!='update' || PGV_USER_GEDCOM_ADMIN) {
 			$mediaFolders = get_media_folders();
@@ -1480,8 +1469,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-		print_help_link("no_update_CHAN", "qm");
-		echo i18n::translate('Admin Option'), "</td><td class=\"optionbox wrap\">\n";
+		echo i18n::translate('Admin Option'), help_link('no_update_CHAN'), "</td><td class=\"optionbox wrap\">\n";
 		if ($NO_UPDATE_CHAN) {
 			echo "<input type=\"checkbox\" checked=\"checked\" name=\"preserve_last_changed\" />\n";
 		} else {
