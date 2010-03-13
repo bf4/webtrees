@@ -192,49 +192,7 @@ class stats {
 				$new_tags[] = "#{$full_tag}#";
 				$new_values[] = help_link(join(':', $params));
 			}
-			/*
-			* Parse language variables.
-			*/
-			// pgv_lang - long
-			elseif ($tags[$i] == 'lang')
-			{
-				// re-merge, just in case
-				$params = join(':', $params);
-				$new_tags[] = "#{$full_tag}#";
-				$new_values[] = print_text($pgv_lang[$params], 0, 2);
-			}
-			// pgv_lang
-			elseif (isset($pgv_lang[$tags[$i]]))
-			{
-				$new_tags[] = "#{$full_tag}#";
-				$new_values[] = print_text($pgv_lang[$tags[$i]], 0, 2);
-			}
-			// factarray
-			elseif (i18n::is_translated($tags[$i]))
-			{
-				$new_tags[] = "#{$full_tag}#";
-				$new_values[] = i18n::translate($tags[$i]);
-			}
-			// GLOBALS
-			elseif (isset($GLOBALS[$tags[$i]]))
-			{
-				$new_tags[] = "#{$full_tag}#";
-				$new_values[] = $GLOBALS[$tags[$i]];
-			}
-			// CONSTANTS
-			elseif (substr($tags[$i], 0, 4) == 'PGV_' & defined($tags[$i]))
-			{
-				$new_tags[] = "#{$full_tag}#";
-				$new_values[] = constant($tags[$i]);
-			}
-			// OLD GLOBALS THAT ARE NOW CONSTANTS
-			elseif (defined("PGV_{$tags[$i]}"))
-			{
-				$new_tags[] = "#PGV_{$tags[$i]}#";
-				$new_values[] = constant("PGV_{$tags[$i]}");
-			}
 		}
-		unset($tags);
 		return array($new_tags, $new_values);
 	}
 

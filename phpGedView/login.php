@@ -153,11 +153,11 @@ if ($type=="full") {
 } else {
 	print_simple_header(i18n::translate('PhpGedView User Login'));
 }
-print "<div class=\"center\">\n";
+echo "<div class=\"center\">\n";
 
 if ($WELCOME_TEXT_AUTH_MODE!="0") {
 	loadLangFile("pgv_help");
-	print "<table class=\"center width60 ".$TEXT_DIRECTION."\"><tr><td>";
+	echo "<table class=\"center width60 ".$TEXT_DIRECTION."\"><tr><td>";
 	if (empty($help_message) || !isset($help_message)) {
 		switch ($WELCOME_TEXT_AUTH_MODE){
 			case "1":
@@ -177,19 +177,19 @@ if ($WELCOME_TEXT_AUTH_MODE!="0") {
 					$help_message = "welcome_text_cust_head";
 					print_text($help_message);
 				}
-				print print_text($WELCOME_TEXT_AUTH_MODE_4,0,2);
+				echo embed_globals($WELCOME_TEXT_AUTH_MODE_4);
 				break;
 		}
 	}
 	else print_text($help_message);
-	print "</td></tr></table><br /><br />\n";
+	echo "</td></tr></table><br /><br />\n";
 }
 else {
 	if (!empty($help_message) || isset($help_message)) {
 		loadLangFile("pgv_help");
-		print "<table class=\"center width60 ltr\"><tr><td>";
+		echo "<table class=\"center width60 ltr\"><tr><td>";
 		print_text($help_message);
-		print "</td></tr></table><br /><br />\n";
+		echo "</td></tr></table><br /><br />\n";
 	}
 }
 $tab=0;		// initialize tab index

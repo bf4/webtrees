@@ -1360,6 +1360,32 @@ function help_link($help_topic) {
 	}
 }
 
+// Embed global variables and constants in a string.
+// Variables can be specified explicitly with #GLOBALS[variable]# or implicity with #variable#
+// This function is used by the blocks.
+// TODO: There are potential security risks - authorised users may determine the value of
+// site configuration settings.  Also, this logic is legacy, from PGV.  The blocks need better
+// handling of I18N.  Perhaps separate texts for each language?
+function embed_globals($text) {
+	if (preg_match_all('/#GLOBALS\[([A-Za-z_][A-Za-z0-9_]*)\]#/', $text, $matches, PREG_SET_ORDER)) {
+		foreach ($matches as $match) {
+			if (isset($GLOBALS[$match[1]])) {
+				$text=str_replace($match[0], $GLOBALS[$match[1]], $text);
+			}
+		}
+	}
+	if (preg_match_all('/#([A-Za-z_][A-Za-z0-9_]*)#/', $text, $matches, PREG_SET_ORDER)) {
+		foreach ($matches as $match) {
+			if (isset($GLOBALS[$match[1]])) {
+				$text=str_replace($match[0], $GLOBALS[$match[1]], $text);
+			} elseif (defined($match[1])) {
+				$text=str_replace($match[0], constant($match[1]), $text);
+			}
+		}
+	}
+	return $text;
+}
+
 /**
 * print a language variable
 *
@@ -1375,13 +1401,6 @@ function help_link($help_topic) {
 * The second parameter is $level for the nested vars in a sentence.  This indicates
 * that the function has been called recursively.
 * The third parameter $noprint is for returning the text instead of printing it
-* This parameter, when set to 2 means, in addition to NOT printing the result,
-* the input string $help is text that needs to be interpreted instead of being
-* the name of a $pgv_lang array entry.  This lets you use this function to work
-* on something other than $pgv_lang array entries, but coded according to the
-* same rules.
-* When we want it to return text we need to code:
-* print_text($mytext, 0, 2);
 * @param string $help The variable that needs to be processed.
 * @param int $level The position of the embedded variable
 * @param int $noprint The switch if the text needs to be printed or returned
@@ -1409,14 +1428,10 @@ function print_text($help, $level=0, $noprint=0){
 		$sentence = $value;
 	}
 	if ($sentence===false) {
-		if ($noprint == 2) {
-			$sentence = $help;
+		if (isset($pgv_lang[$help])) {
+			$sentence = $pgv_lang[$help];
 		} else {
-			if (isset($pgv_lang[$help])) {
-				$sentence = $pgv_lang[$help];
-			} else {
-				$sentence = i18n::translate('<b>Help text for this page or item is not yet available.</b>');
-			}
+			$sentence = i18n::translate('<b>Help text for this page or item is not yet available.</b>');
 		}
 	}
 	$mod_sentence = "";
