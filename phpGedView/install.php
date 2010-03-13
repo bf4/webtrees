@@ -502,56 +502,56 @@ function checkEnvironment() {
 	global $pgv_lang;
 
 	$success = true;
-	print "<h4>".i18n::translate('Checking for errors...')."</h4>";
-	print "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
+	echo "<h4>".i18n::translate('Checking for errors...')."</h4>";
+	echo "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
 	$phpcheck = (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0);
 	if ($phpcheck) {
 		echo '<tr><td valign="top">';
 		echo i18n::translate('Checking required PHP version:'), '<br />';
 		echo '<span class="error">', i18n::translate('Failed'), '</span><br />';
 		echo i18n::translate('PhpGedView requires PHP version %s or higher.', PGV_REQUIRED_PHP_VERSION), '<br />';
-		echo echo i18n::translate('You are using PHP version %s', PHP_VERSION), '</td></tr>';
+		echo i18n::translate('You are using PHP version %s', PHP_VERSION), '</td></tr>';
 	}
 
 	// Check we have one or more PDO drivers available
 	if (!extension_loaded('pdo') || !PGV_DB::getAvailableDrivers()) {
-		print "<tr><td valign=\"top\">";
-		print i18n::translate('Checking for minimum database support:')."<br />";
-		print "<span class=\"error\">".i18n::translate('You do not have any of the supported database extensions.')."</span><br />";
-		print "</td></tr>";
+		echo "<tr><td valign=\"top\">";
+		echo i18n::translate('Checking for minimum database support:')."<br />";
+		echo "<span class=\"error\">".i18n::translate('You do not have any of the supported database extensions.')."</span><br />";
+		echo "</td></tr>";
 	}
 
 	//config.php file
-	print "<tr><td valign=\"top\">";
-	print $pgv_lang["checking_config.php"]."<br />";
+	echo "<tr><td valign=\"top\">";
+	echo $pgv_lang["checking_config.php"]."<br />";
 	if (!file_exists(PGV_ROOT.'config.php')) {
-		print "<span class=\"error\">".$pgv_lang["config.php_missing"]."</span><br />".$pgv_lang["config.php_missing_instr"];
+		echo "<span class=\"error\">".$pgv_lang["config.php_missing"]."</span><br />".$pgv_lang["config.php_missing_instr"];
 	}
 	else if (!file_is_writeable('config.php')) {
-		print "<span class=\"warning\">".$pgv_lang["config.php_not_writable"]."</span><br />".$pgv_lang["config.php_not_writable_instr"];
+		echo "<span class=\"warning\">".$pgv_lang["config.php_not_writable"]."</span><br />".$pgv_lang["config.php_not_writable_instr"];
 	}
 	else {
-		print "<span class=\"pass\">".i18n::translate('Passed')."</span><br />".$pgv_lang["config.php_writable"];
+		echo "<span class=\"pass\">".i18n::translate('Passed')."</span><br />".$pgv_lang["config.php_writable"];
 	}
-	print "</td></tr>";
-	print "</table>\r\n";
+	echo "</td></tr>";
+	echo "</table>\r\n";
 
 	//-- warnings
 	$has_warnings = false;
-	print "<h4>".i18n::translate('Checking for warnings...')."</h4>";
-	print "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
+	echo "<h4>".i18n::translate('Checking for warnings...')."</h4>";
+	echo "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
 	//set timelimit
 	//-- to do: This doesn't work if the time limit is already at 300 and can't be changed
 	$oldtimelimit = @ini_get("max_execution_time");
 	@set_time_limit(300);
 	$newtimelimit = @ini_get("max_execution_time");
 	if ($newtimelimit!=300) {
-		print "<tr><td valign=\"top\">";
-		print i18n::translate('Checking for ability to change timelimit:')."<br />";
+		echo "<tr><td valign=\"top\">";
+		echo i18n::translate('Checking for ability to change timelimit:')."<br />";
 		$has_warnings = true;
 		print "<span class=\"warning\">".i18n::translate('Unable to change time limit.')."</span><br />".i18n::translate('You may not be able to run all functions on large databases with many individuals.')."<br />";
-		print i18n::translate('Your maximum time limit is')." ".$oldtimelimit;
-		print "</td></tr>";
+		echo i18n::translate('Your maximum time limit is')." ".$oldtimelimit;
+		echo "</td></tr>";
 	}
 	//set memory limit
 	//-- to do: This doesn't work if the memory limit is already at 38M and can't be changed
@@ -560,52 +560,52 @@ function checkEnvironment() {
 	$memorylimit = @ini_get('memory_limit');
 	if ($memorylimit!="38M") {
 		$has_warnings = true;
-		print "<tr><td valign=\"top\">";
-		print i18n::translate('Checking for ability to change memory limit:')."<br />";
+		echo "<tr><td valign=\"top\">";
+		echo i18n::translate('Checking for ability to change memory limit:')."<br />";
 
-		print "<span class=\"warning\">".i18n::translate('Unable to change memory limit.')."</span>".i18n::translate('You may not be able to run all functions on large databases with many individuals.')."<br />";
-		print i18n::translate('Your current memory limit is')." ".$oldmemorylimit;
-		print "</td></tr>";
+		echo "<span class=\"warning\">".i18n::translate('Unable to change memory limit.')."</span>".i18n::translate('You may not be able to run all functions on large databases with many individuals.')."<br />";
+		echo i18n::translate('Your current memory limit is')." ".$oldmemorylimit;
+		echo "</td></tr>";
 	}
 
 	//file uploads
 	$uploads = @ini_get("file_uploads");
 	if ($uploads!="on" && $uploads!="On" && $uploads!=="1" && $uploads!==1) {
 		$has_warnings = true;
-		print "<tr><td valign=\"top\">";
-		print i18n::translate('Checking for ability to upload files:')."<br />";
+		echo "<tr><td valign=\"top\">";
+		echo i18n::translate('Checking for ability to upload files:')."<br />";
 
-		print i18n::translate('Your maximum upload file size is:')." ".ini_get("upload_max_filesize")."<br />";
-		print "</td></tr>";
+		echo i18n::translate('Your maximum upload file size is:')." ".ini_get("upload_max_filesize")."<br />";
+		echo "</td></tr>";
 	}
 
 	// gd library
 	if (!function_exists('imagecreatefromjpeg')) {
 		$has_warnings = true;
-		print "<tr><td valign=\"top\">";
-		print i18n::translate('Checking for GD image library:')."<br />";
+		echo "<tr><td valign=\"top\">";
+		echo i18n::translate('Checking for GD image library:')."<br />";
 
-		print "<span class=\"warning\">".i18n::translate('You do not have the GD image library.  You will not be able to automatically create image thumbnails.')."</span><br />";
-		print "</td></tr>";
+		echo "<span class=\"warning\">".i18n::translate('You do not have the GD image library.  You will not be able to automatically create image thumbnails.')."</span><br />";
+		echo "</td></tr>";
 	}
 
 	//-- xml sax library
 	if (!function_exists('xml_parser_create')) {
 		$has_warnings = true;
-		print "<tr><td valign=\"top\">";
-		print i18n::translate('Checking for SAX XML library:')."<br />";
+		echo "<tr><td valign=\"top\">";
+		echo i18n::translate('Checking for SAX XML library:')."<br />";
 
-		print "<span class=\"warning\">".i18n::translate('You do not have the SAX XML library.  You will not be able to run any reports or some other auxiliary functions.')."</span><br />";
-		print "</td></tr>";
+		echo "<span class=\"warning\">".i18n::translate('You do not have the SAX XML library.  You will not be able to run any reports or some other auxiliary functions.')."</span><br />";
+		echo "</td></tr>";
 	}
 
 	if (!class_exists('DomDocument')) {
 		$has_warnings = true;
-		print "<tr><td valign=\"top\">";
-		print i18n::translate('Checking for DOM XML library:')."<br />";
+		echo "<tr><td valign=\"top\">";
+		echo i18n::translate('Checking for DOM XML library:')."<br />";
 
-		print "<span class=\"warning\">".i18n::translate('You do not have the DOM XML library.  You will not be able to export XML.')."</span><br />";
-		print "</td></tr>";
+		echo "<span class=\"warning\">".i18n::translate('You do not have the DOM XML library.  You will not be able to export XML.')."</span><br />";
+		echo "</td></tr>";
 	}
 
 	if (!function_exists('GregorianToJD')) {
