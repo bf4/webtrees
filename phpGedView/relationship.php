@@ -577,9 +577,7 @@ if ($view!="preview") {
 
 	<!-- // Person 1 -->
 	<tr><td class="descriptionbox">
-	<?php
-	print_help_link("relationship_id", "qm");
-	print i18n::translate('Person 1')?>
+	<?php echo print i18n::translate('Person 1'), help_link('relationship_id'); ?>
 	</td>
 	<td class="optionbox vmiddle">
 	<input tabindex="1" class="pedigree_form" type="text" name="pid1" id="pid1" size="3" value="<?php print $pid1 ?>" />
@@ -592,9 +590,7 @@ if ($view!="preview") {
 
 	<!-- // Show details -->
 	<td class="descriptionbox">
-	<?php
-	print_help_link("show_full", "qm");
-	print i18n::translate('Show Details');?>
+	<?php echo i18n::translate('Show Details'), help_link('show_full'); ?>
 	</td>
 	<td class="optionbox vmiddle">
 	<input type="hidden" name="show_full" value="<?php print $show_full ?>" />
@@ -607,9 +603,7 @@ if ($view!="preview") {
 
 	<!-- // Person 2 -->
 	<tr><td class="descriptionbox">
-	<?php
-	print_help_link("relationship_id", "qm");
-	print i18n::translate('Person 2')?>
+	<?php echo i18n::translate('Person 2'), help_link('relationship_id'); ?>
 	</td>
 	<td class="optionbox vmiddle">
 	<input tabindex="2" class="pedigree_form" type="text" name="pid2" id="pid2" size="3" value="<?php print $pid2 ?>" />
@@ -623,8 +617,7 @@ if ($view!="preview") {
 	<!-- // Line up generations -->
 	<td class="descriptionbox">
 	<?php
-	print_help_link("line_up_generations", "qm");
-	print i18n::translate('Line up the same generations')?>
+	echo i18n::translate('Line up the same generations'), help_link('line_up_generations'); ?>
 	</td>
 	<td class="optionbox">
 	<input tabindex="5" type="checkbox" name="pretty" value="2"
@@ -647,10 +640,7 @@ if ($view!="preview") {
 	if ($pretty) print "block";
 	else print "none";
 	?>">
-	<?php
-	print_help_link("oldest_top", "qm");
-	print i18n::translate('Show oldest top');
-	?>
+	<?php echo i18n::translate('Show oldest top'), help_link('oldest_top'); ?>
 	</div>
 	</td><td class="optionbox">
 	<div id="oldtop2" style="display:
@@ -716,9 +706,7 @@ if ($view!="preview") {
 
 	<!-- // Check relationships by marriage -->
 	<td class="descriptionbox">
-	<?php
-	print_help_link("follow_spouse", "qm");
-	print i18n::translate('Check relationships by marriage');?>
+	<?php echo i18n::translate('Check relationships by marriage'), help_link('follow_spouse'); ?>
 	</td>
 	<td class="optionbox" id="followspousebox">
 	<input tabindex="6" type="checkbox" name="followspouse" value="1"
