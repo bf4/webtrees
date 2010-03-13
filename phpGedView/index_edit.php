@@ -421,7 +421,7 @@ else {
 	foreach($PGV_BLOCKS as $b=>$block) {
 		print "block_descr['$b'] = '".str_replace("'", "\\'", embed_globals($block["descr"]))."';\n";
 	}
-	print "block_descr['advice1'] = '".str_replace("'", "\\'", i18n::translate('Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction.')."';\n";
+	print "block_descr['advice1'] = '".str_replace("'", "\\'", i18n::translate('Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction.'))."';\n";
 	?>
 
 
