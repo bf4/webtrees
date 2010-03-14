@@ -170,18 +170,6 @@ direction: rtl;
 text-align: right;
 }
 
-.activeflag,.brightflag {
-border:none;
-height:15px;
-opacity: 1;
-}
-
-.dimflag {
-height:15px;
-border:none;
-opacity: .4;
-}
-
 /*	End Toplinks Section				 */
 
 /*   Edit Facts */
@@ -601,24 +589,18 @@ width:99%;
 background:#f0f9ff;
 border:1px solid #999;
 padding:3px;
-margin-bottom: 8px;
-margin-top: 5px;
 }
 
 .person_boxF {
 background:#fff0f0;
 border:1px solid #ff2080;
 padding:3px;
-margin-bottom: 8px;
-margin-top: 5px;
 }
 
 .person_boxNN {
 background:#fff;
 border:1px dashed #CCC;
 padding:3px;
-margin-bottom: 8px;
-margin-top: 5px;
 }
 
 .person_box:target, 
@@ -1158,6 +1140,12 @@ color:#000;
 .title {
 font-size: 30px;
 vertical-align:bottom;
+}
+
+.accesskeys {
+width:1px;
+height:1px;
+overflow:hidden;
 }
 
 .topbottombar {
