@@ -17924,6 +17924,7 @@ msgid "upload_media_file"
 msgstr ""
 
 #: ../help_text.php:5686
+#, fuzzy, php-format
 msgid "In this field you specify the location and name, on your local computer, of the media file you wish to upload to the server.  You can use the <b>Browse</b> button to search your local computer for the desired file.<br /><br />The uploaded file will have the same name on the server, and it will be uploaded to the directory specified in the <b>Folder on server</b> field.<br /><br />If you do not see the <b>Folder on server</b> field or cannot change it, you do not have sufficient permissions or your GEDCOM configuration has been set to allow no directory levels beyond the default <b>%s</b>.  In this case, the media file will be uploaded to the directory <b>%s</b>."
 msgstr "En aquest camp especifiqueu la localització i nom, al vostre ordinador, del fitxer multimèdia que voleu carregar al servidor. Podeu emprar el botó <b>Cercar</b> per localitzar-lo.<br /><br />El fitxer carregat tindrà el mateix nom al servidor i es dipositarà al directori especificat al camp <b>Carpeta al servidor</b>. Si no veieu aquest camp o no podeu canviar-lo, és que la configuració del GEDCOM s'ha fet de forma que no hi hagi nivells de carpetes per sota de <b>%s</b> on s'emmagatzemen normalment els fitxers multimèdia.<br /><br />Podeu deixar aquest camp en blanc, si el que preteneu és carregar un fitxer de miniatures i deixar-lo al costat de la imatge principal."
 

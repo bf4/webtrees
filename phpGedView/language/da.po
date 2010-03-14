@@ -2346,6 +2346,7 @@ msgstr "Den beskyttede media mappe i Media Firewall rode mappen er ikke skrivbar
 #: ../editconfig_gedcom.php:488 ../editconfig_gedcom.php:495
 #: ../editconfig_gedcom.php:534 ../editconfig_gedcom.php:555
 #: ../edit_privacy.php:255
+#, fuzzy, php-format
 msgid "E R R O R !!!<br />Could not write to file <i>%s</i>.  Please check it for proper Write permissions."
 msgstr "F E J L ! Kan ikke skrive til slægtsdatabasens (GEDCOM) konfigurationsfil. Kontrollér venligst om der er de rigtige skriverettigheder til filen."
 
@@ -4299,6 +4300,7 @@ msgid "Configuration of supported languages"
 msgstr "Konfiguration af understøttede sprog"
 
 #: ../editlang_edit_settings.php:222
+#, fuzzy, php-format
 msgid "Original name of language in %s"
 msgstr "Sprogets navn på dets eget sprog"
 
