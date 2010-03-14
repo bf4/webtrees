@@ -24,7 +24,11 @@
  *
  * @version $Id$
  */
-
+ 
+if (!defined('PGV_PHPGEDVIEW') || !defined('PGV_SCRIPT_NAME') || PGV_SCRIPT_NAME!='help_text.php') {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
 switch ($help) {
 
@@ -266,9 +270,3 @@ case 'PEDIGREE_MAP_hideflags':
 	$text=('Hide the flags that are configured in the googlemap module.  Ususally these are for countries and states.&nbsp; This serves as a visual queue that the markers around the flag are from the general area, and not the specific spot.');
 	break;
 }
-
-if (!$text) {
-	$text=i18n::translate('The help text has not been written for this item.');
-}
-
-?>
