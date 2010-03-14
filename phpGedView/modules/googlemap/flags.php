@@ -155,7 +155,7 @@ else {
 	<table class="facts_table">
 		<tr>
 			<td class="optionbox" colspan="4">
-				<?php echo help_link('PLE_FLAGS'); ?>
+				<?php echo help_link('PLE_FLAGS','googlemap'); ?>
 				<select name="COUNTRYSELECT" dir="ltr" tabindex="0" onchange="selectCountry()">
 					<option value="Countries"><?php echo i18n::translate('Countries'); ?></option>
 					<?php foreach ($countryList as $country_key=>$country_name) {
