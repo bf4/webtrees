@@ -40,7 +40,7 @@ case 'LIGHTBOX_CONFIG':
 
 case 'lb_tt_balloon':
 	$title=i18n::translate('Album Tab Thumbnail - Notes Link Tooltip');
-	$text=('This option lets you determine whether the \"View Notes\" link should show a \"Balloon\" Tooltip or \"Normal\" Tooltip when clicked. <br /><br />The link shown here show you the Notes associated with a Media item(if available).<br />');
+	$text=('This option lets you determine whether the \'View Notes\' link should show a \'Balloon\' Tooltip or \'Normal\' Tooltip when clicked. <br /><br />The link shown here show you the Notes associated with a Media item (if available).<br />');
 	break;
 	
 // VERSION 4.1.3 
