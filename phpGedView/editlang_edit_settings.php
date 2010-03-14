@@ -154,17 +154,12 @@ if ($action == "new_lang") {
 }
 
 if ($action != "save" && $action != "toggleActive") {
-	echo PGV_JS_START, "var helpWin;\n";
-	echo "function helpPopup(which) {\n";
-	echo "if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');\n";
-	echo "else helpWin.location = 'editconfig_help.php?help='+which;\n";
-	echo "return false;\n";
-	echo "}\n";
-	echo "function CheckFileSelect() {\n";
-	echo "if (document.Form1.v_u_lang_filename.value != \"\"){\n";
-	echo "document.Form1.v_lang_filename.value = document.Form1.v_u_lang_filename.value;\n";
-	echo "}\n";
-	echo "}\n";
+	echo PGV_JS_START;
+	echo "function CheckFileSelect() {";
+	echo " if (document.Form1.v_u_lang_filename.value != \"\"){";
+	echo "  document.Form1.v_lang_filename.value = document.Form1.v_u_lang_filename.value;";
+	echo " }";
+	echo "}";
 	echo PGV_JS_END;
 
 	if ($action == "new_lang") {

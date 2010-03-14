@@ -296,7 +296,7 @@ if (!$CONFIGURED) {
 	if (PGV_SCRIPT_NAME!='admin.php'
 	&& PGV_SCRIPT_NAME!='login.php'
 	&& PGV_SCRIPT_NAME!='install.php'
-	&& PGV_SCRIPT_NAME!='editconfig_help.php') {
+	&& PGV_SCRIPT_NAME!='help_text.php') {
 		header('Location: install.php');
 		exit;
 	}
@@ -635,13 +635,13 @@ if (!isset($_SESSION['pgv_user'])) $_SESSION['pgv_user'] = '';
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='yes') $_SESSION['show_context_help'] = true;
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION['show_context_help'] = false;
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
-if (PGV_SCRIPT_NAME!='install.php' && PGV_SCRIPT_NAME!='editconfig_help.php') {
+if (PGV_SCRIPT_NAME!='install.php' && PGV_SCRIPT_NAME!='help_text.php') {
 	if (!PGV_DB::isConnected() || !PGV_ADMIN_USER_EXISTS) {
 		header('Location: install.php');
 		exit;
 	}
 
-	if (!get_gedcom_setting(PGV_GED_ID, 'imported') && !in_array(PGV_SCRIPT_NAME, array('editconfig_gedcom.php', 'help_text.php', 'editconfig_help.php', 'editgedcoms.php', 'downloadgedcom.php', 'uploadgedcom.php', 'login.php', 'admin.php', 'config_download.php', 'addnewgedcom.php', 'validategedcom.php', 'addmedia.php', 'importgedcom.php', 'client.php', 'edit_privacy.php', 'gedcheck.php', 'printlog.php', 'useradmin.php', 'export_gedcom.php', 'edit_changes.php'))) {
+	if (!get_gedcom_setting(PGV_GED_ID, 'imported') && !in_array(PGV_SCRIPT_NAME, array('editconfig_gedcom.php', 'help_text.php', 'editgedcoms.php', 'downloadgedcom.php', 'uploadgedcom.php', 'login.php', 'admin.php', 'config_download.php', 'addnewgedcom.php', 'validategedcom.php', 'addmedia.php', 'importgedcom.php', 'client.php', 'edit_privacy.php', 'gedcheck.php', 'printlog.php', 'useradmin.php', 'export_gedcom.php', 'edit_changes.php'))) {
 		header('Location: editgedcoms.php');
 		exit;
 	}

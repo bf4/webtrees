@@ -143,20 +143,6 @@ $i = 0;
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-	var helpWin;
-	function helpPopup(which) {
-		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which, '_blank', 'left=50, top=50, width=500, height=320, resizable=1, scrollbars=1');
-		else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
-		return false;
-	}
-	function getHelp(which) {
-		if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=editconfig_help&help='+which;
-	}
-
-	function closeHelp() {
-		if (helpWin) helpWin.close();
-	}
-
 	function showSelectedLevels() {
 		if (document.configform.NEW_GM_LEVEL_COUNT.value >= 1) {
 			document.getElementById('level1').style.display = 'block';

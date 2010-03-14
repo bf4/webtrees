@@ -131,7 +131,7 @@ if ($ct==0) {
 		<table>
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
-				<?php echo i18n::translate('Add Individual By ID'), help_link('add_by_id'); ?>
+				<?php echo i18n::translate('Add Individual By ID'), help_link('add_by_id', 'clippings'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -256,7 +256,7 @@ if ($ct==0) {
 		<table>
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
-				<?php echo i18n::translate('Add Individual By ID'), help_link('add_by_id'); ?>
+				<?php echo i18n::translate('Add Individual By ID'), help_link('add_by_id', 'clippings'); ?>
 			</td>
 		</tr>
 		<tr>
@@ -277,10 +277,10 @@ if ($ct==0) {
 
 
 	<?php } ?>
-	<br /><a href="module.php?mod=clippings&amp;pgv_action=index&amp;action=empty"><?php echo i18n::translate('Empty Cart');?></a><?php echo help_link('empty_cart'); ?>
+	<br /><a href="module.php?mod=clippings&amp;pgv_action=index&amp;action=empty"><?php echo i18n::translate('Empty Cart');?></a><?php echo help_link('empty_cart', 'clippings'); ?>
 	</td></tr>
 
-	<tr><td class="topbottombar"><h2><?php echo i18n::translate('Family Tree Clippings Cart'), help_link('clip_cart'); ?></h2></td></tr>
+	<tr><td class="topbottombar"><h2><?php echo i18n::translate('Family Tree Clippings Cart'), help_link('clip_cart', 'clippings'); ?></h2></td></tr>
 
 	<tr><td valign="top">
 	<table id="mycart" class="sortable list_table width100">

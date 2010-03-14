@@ -274,12 +274,6 @@ if ($action=="update") {
 	function paste_id(value) {
 		pastefield.value=value;
 	}
-	var helpWin;
-	function helpPopup(which) {
-		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-		else helpWin.location = 'editconfig_help.php?help='+which;
-		return false;
-	}
 //-->
 </script>
 

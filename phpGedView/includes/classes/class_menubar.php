@@ -924,7 +924,7 @@ class MenuBar
 		if (!empty($PGV_IMAGES["help"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["large"]);
 		if (empty($helpindex))
-			$menu->addOnclick("return helpPopup('help_".PGV_SCRIPT_NAME."&amp;action=".$action."');");
+			$menu->addOnclick("return helpPopup('".PGV_SCRIPT_NAME."');");
 		else
 			$menu->addOnclick("return helpPopup('".$helpindex."');");
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_help");
@@ -935,7 +935,7 @@ class MenuBar
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_help"]["small"]);
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_help");
 		if (empty($helpindex))
-			$submenu->addOnclick("return helpPopup('help_".PGV_SCRIPT_NAME."&amp;action=".$action."');");
+			$submenu->addOnclick("return helpPopup('".PGV_SCRIPT_NAME."');");
 		else
 			$submenu->addOnclick("return helpPopup('".$helpindex."');");
 		$menu->addSubmenu($submenu);

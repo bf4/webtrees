@@ -634,18 +634,6 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-	var helpWin;
-	function helpPopup(which) {
-		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which, '_blank', 'left=50, top=50, width=500, height=320, resizable=1, scrollbars=1');
-		else helpWin.location = 'editconfig_help.php?help='+which;
-		return false;
-	}
-	function getHelp(which) {
-		if ((helpWin)&&(!helpWin.closed)) helpWin.location='editconfig_help.php?help='+which;
-	}
-	function closeHelp() {
-		if (helpWin) helpWin.close();
-	}
 	function show_jewish() {
 		var cal=document.getElementById('NEW_CALENDAR_FORMAT');
 		if (cal.options[cal.selectedIndex].value.match(/jewish|hebrew/)) {

@@ -209,23 +209,6 @@ if ($action=="sendIndex") {
 
 print_header(i18n::translate('Generate Sitemap files'));
 
-?>
-<script language="JavaScript" type="text/javascript">
-<!--
-var helpWin;
-function helpPopup(which) {
-	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=sitemap&pgvaction=sitemap_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-	else helpWin.location = 'modules/sitemap/sitemap_help.php?help='+which;
-	return false;
-}
-
-function getHelp(which) {
-	if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=sitemap&pgvaction=sitemap_help&help='+which;
-}
-//-->
-</script>
-<?php
-
 if ($action=="generate") {
 	echo "<h3>";
 	echo i18n::translate('Generate Sitemap files');

@@ -225,7 +225,7 @@ if ($ct==0) {
 		</td></tr>
 
 		<tr><td class="topbottombar" colspan="2">
-		<input type="submit" value="<?php print i18n::translate('Download Now'); ?>" />
+		<input type="submit" value="<?php echo i18n::translate('Download Now'); ?>" />
 		</td></tr>
 		</form>
 
@@ -267,10 +267,10 @@ if ($ct==0) {
 
 
 	<?php } ?>
-	<br /><a href="clippings.php?action=empty"><?php print i18n::translate('Empty Cart'), help_link('empty_cart'); ?></a>
+	<br /><a href="clippings.php?action=empty"><?php print i18n::translate('Empty Cart'), help_link('empty_cart', 'clippings'); ?></a>
 	</td></tr>
 
-	<tr><td class="topbottombar"><h2><?php echo i18n::translate('Family Tree Clippings Cart'), help_link('clip_cart'); ?></h2></td></tr>
+	<tr><td class="topbottombar"><h2><?php echo i18n::translate('Family Tree Clippings Cart'), help_link('clip_cart', 'clippings'); ?></h2></td></tr>
 
 	<tr><td valign="top">
 	<table id="mycart" class="sortable list_table width100">

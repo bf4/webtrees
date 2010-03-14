@@ -87,7 +87,7 @@ class clippings_Sidebar extends Sidebar {
 		}
 		$out .= '</ul>';
 		if (count($cart)>0) {
-			$out .= '<a href="sidebar.php?sb_action=clippings&amp;empty=true" class="remove_cart">'.i18n::translate('Empty Cart').'</a>'.help_link('empty_cart');
+			$out .= '<a href="sidebar.php?sb_action=clippings&amp;empty=true" class="remove_cart">'.i18n::translate('Empty Cart').'</a>'.help_link('empty_cart', 'clippings');
 			$out .= '<br /><a href="sidebar.php?sb_action=clippings&amp;download=true" class="add_cart">'.i18n::translate('Download Now').'</a>';
 		}
 		$out .= '<br />';

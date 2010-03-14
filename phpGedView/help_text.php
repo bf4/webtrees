@@ -28,29 +28,6 @@
 define('PGV_SCRIPT_NAME', 'help_text.php');
 require './config.php';
 
-// TODO: incorporate help_text_vars.php
-
-/* TODO: This block of code belongs somewhere else.  In print_help_link() perhaps?
-require PGV_ROOT.'includes/help_text_vars.php';
-if ($help=='help_useradmin.php' && $action=='edituser') {
-	$help='edit_useradmin_help';
-}
-if ($help=='help_login_register.php' && $action=='pwlost') {
-	$help='help_login_lost_pw.php';
-}
-if ($help=='help_contents_help') {
-	if (PGV_USER_IS_ADMIN) {
-		$help='admin_help_contents_help';
-		echo i18n::translate('<b>HELP CONTENTS<br /><br />ADMINISTRATOR HELP ITEMS</b> added to the beginning of the list.');
-	} else {
-		echo i18n::translate('<b>HELP CONTENTS</b>');
-	}
-	print_help_index($help);
-} else {
-	print_text($help);
-}
-*/
-
 $help=safe_GET('help');
 switch ($help) {
 	//////////////////////////////////////////////////////////////////////////////
@@ -2561,11 +2538,6 @@ case 'dir_editor.php':
 	$text='';
 	break;
 
-case 'editconfig_help.php':
-	$title=i18n::translate('Configuration help');
-	$text='';
-	break;
-
 case 'edit_changes.php':
 	$title=i18n::translate('Review GEDCOM Changes');
 	$text='';
@@ -3784,11 +3756,6 @@ case 'active':
 	$text=i18n::translate('Allow users to select this language if the option <b>Allow user to change language</b> is enabled.');
 	break;
 
-case 'add_by_id':
-	$title=i18n::translate('add_by_id');
-	$text=i18n::translate('This input box lets you enter an individual\'s ID number so he can be added to the Clippings Cart.  Once added you\'ll be offered options to link that individual\'s relations to your Clippings Cart.<br /><br />If you do not know an individual\'s ID number, you can perform a search by name by pressing the Person icon next to the Add button.');
-	break;
-
 case 'add_child':
 	$title=i18n::translate('Add child');
 	$text=i18n::translate('You can add a child to this family by clicking this link.<br /><br />Adding a child is simple: Just click the link, fill out the boxes in the pop up screen, and that\'s all.');
@@ -4204,11 +4171,6 @@ case 'click_here':
 	$text=i18n::translate('Click this button to save your changes.<br /><br />You will be returned to the Welcome or MyGedView Portal page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly.');
 	break;
 
-case 'clip_cart':
-	$title=i18n::translate('Clippings Cart');
-	$text=i18n::translate('This box shows the contents of your Clippings Cart.  The <i>Types</i> column indicates the type of each entry, which can be Individual (INDI), Family (FAM), Source (SOUR), Repository (REPO), Note (NOTE), and Media (OBJE);  each is represented by its own icon.  The <i>ID</i> column shows the ID number for each item of that particular type.  The <i>Name / Description</i> column gives either the name of the family or individual, or a description of the item.  The Remove button will remove that record from the Clippings Cart.  <b>Confirmation to remove is NOT asked for.</b>');
-	break;
-
 case 'clip_download':
 	$title=i18n::translate('clip_download');
 	$text=i18n::translate('When you click this link you will be taken to the next page.  If any of the clippings in your cart refer to multimedia items, these items will also be displayed on that page.<br /><br />Simply follow the instructions.');
@@ -4598,11 +4560,6 @@ case 'edituser_user_theme':
 case 'edituser_username':
 	$title=i18n::translate('edituser_username');
 	$text=i18n::translate('In this box you can change your user name.  If you no longer like your user name or if have other reasons to change it, you can do so using this form.<br /><br />The username is <u>case sensitive</u>. That means that <b>John</b> is not the same as <b>john</b> or <b>JOHN</b>.<br /><br />You should <u>only</u> use characters from the alphabets that PhpGedView supports.  You may use uppercase and lower case letters with or without diacritical marks, numbers, dash (-), and underscore (_). Do <u>not</u> use punctuation marks or spaces.');
-	break;
-
-case 'empty_cart':
-	$title=i18n::translate('Empty Cart');
-	$text=i18n::translate('When you click this link your Clippings Cart will be totally emptied.<br /><br />If you don\'t want to remove all persons, families, etc. from the Clippings Cart, you can remove items individually by clicking the <b>Remove</b> link in the Name boxes.  There is <u>no</u> confirmation dialog when you click either of these links;  the requested deletion takes place immediately.');
 	break;
 
 case 'empty_lines_detected':
@@ -5875,13 +5832,15 @@ case 'zip':
 	$text=i18n::translate('Select this option as to save your clippings in a ZIP file.  For more information about ZIP files, please visit <a href="http://www.winzip.com" target="_blank">http://www.winzip.com</a>.');
 default:
 	$title=i18n::translate('Help');
-	$text=i18n::translate('No help is available for this subject.');
+	$text=i18n::translate('The help text has been written for this item.');
+	// If we've been called from a module, allow the module to provide the help text
+	$mod=safe_GET('mod', PGV_REGEX_ALPHANUM);
+	if (file_exists(PGV_ROOT.'modules/'.$mod.'/help_text.php')) {
+		require PGV_ROOT.'modules/'.$mod.'/help_text.php';
+	}
 	break;
 }
 
-if (!$text) {
-	$text=i18n::translate('The help text has been written for this item.');
-}
 
 print_simple_header(i18n::translate('Help for «%s»', htmlspecialchars($title)));
 echo '<h1>', htmlspecialchars($title), '</h1>';

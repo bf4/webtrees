@@ -34,10 +34,14 @@ if (!document.getElementById)	// Check if browser supports the getElementByID fu
 }
 
 var helpWin;
-function helpPopup(which) {
+function helpPopup(which, mod) {
 	if (which==null) which = "help_contents_help";
-	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('help_text.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-	else helpWin.location = 'help_text.php?help='+which;
+	if (mod!='') which=which+'&mod='+mod;
+	if ((!helpWin)||(helpWin.closed)) {
+		helpWin = window.open('help_text.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+	} else {
+		helpWin.location = 'help_text.php?help='+which;
+	}
 	return false;
 }
 function getHelp(which) {

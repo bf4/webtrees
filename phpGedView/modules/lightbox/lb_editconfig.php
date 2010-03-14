@@ -77,25 +77,6 @@ if ($action=='update' && !isset($security_user)) {
 $i = 0;
 
 ?>
-<script language="JavaScript" type="text/javascript">
-	<!--
-	var helpWin;
-
-	function helpPopup(which) {
-		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=lightbox&pgvaction=lb_editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-		else helpWin.location = 'modules/lightbox/lb_editconfig_help.php?help='+which;
-		return false;
-	}
-	function getHelp(which) {
-		if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=lightbox&pgvaction=lb_editconfig_help&help='+which;
-	}
-
-	function closeHelp() {
-		if (helpWin) helpWin.close();
-	}
-	//-->
-</script>
-
 <form method="post" name="configform" action="<?php print encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}"); ?>">
 <input type="hidden" name="action" value="update" />
 

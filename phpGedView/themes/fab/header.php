@@ -156,13 +156,8 @@ if ($view!='simple') {
 		}
 
 		// Help menu
-		global $helpindex, $action;
 		$menu = new Menu(i18n::translate('Help'), "#", "down");
-		if (empty($helpindex)) {
-			$menu->addOnclick("return helpPopup('help_".PGV_SCRIPT_NAME."&amp;action=".$action."');");
-		} else {
-			$menu->addOnclick("return helpPopup('".$helpindex."');");
-		}
+		$menu->addOnclick('return helpPopup("'.PGV_SCRIPT_NAME.'");');
 		$menu_items[]=$menu;
 		echo
 			'<div style="float:', PGV_CSS_ALIGN, '; clear:', PGV_CSS_ALIGN, '; font-size:175%;">',

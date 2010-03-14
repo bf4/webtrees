@@ -1347,14 +1347,14 @@ function print_privacy_error($username) {
 }
 
 // Print a link for a popup help window
-function help_link($help_topic) {
+function help_link($help_topic, $module='') {
 	global $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
 
 	if ($SEARCH_SPIDER || !$_SESSION['show_context_help']) {
 		return '';
 	} else {
 		return
-			'<a class="help" tabindex="0" href="help: '.$help_topic.'" onclick="helpPopup(\''.$help_topic.'\'); return false;">&nbsp;'.
+			'<a class="help" tabindex="0" href="help: '.$help_topic.'" onclick="helpPopup(\''.$help_topic.'\',\''.$module.'\'); return false;">&nbsp;'.
 			($PGV_USE_HELPIMG ?  '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['help']['small'].'" class="icon" width="15" height="15" alt="" />' : i18n::translate('?')).
 			'&nbsp;</a>';
 	}

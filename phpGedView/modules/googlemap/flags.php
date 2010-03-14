@@ -122,17 +122,6 @@ else {
 		window.close();
 	}
 
-var helpWin;
-function helpPopup(which) {
-	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which, '_blank', 'left=50, top=50, width=500, height=320, resizable=1, scrollbars=1');
-	else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
-	return false;
-}
-
-function getHelp(which) {
-	if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=editconfig_help&help='+which;
-}
-
 //-->
 </script>
 <?php
