@@ -319,7 +319,7 @@ function getRelationshipSentence($path, $pid1, $pid2) {
 					'%1$s female cousin, %2$d time removed', '%1$s female cousin, %2$d times removed',
 					$removed, i18n::ordinal_word(min($up, $down)), $removed
 				);
-			case 'chi': return i18n::plural('%1$s cousin', '%2$d time removed', '%1$s cousin, %2$d times removed',
+			case 'chi': return i18n::plural('%1$s cousin, %2$d time removed', '%1$s cousin, %2$d times removed',
 				$removed, i18n::ordinal_word(min($up, $down)), $removed
 				);
 			}
