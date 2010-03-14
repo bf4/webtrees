@@ -325,12 +325,12 @@ if ($action=="ImportFile") {
 	<input type="hidden" name="action" value="ImportFile2" />
 	<table class="facts_table">
 		<tr>
-			<td class="descriptionbox"><?php echo i18n::translate('File containing places (CSV)'), help_link('PLIF_FILENAME'); ?></td>
+			<td class="descriptionbox"><?php echo i18n::translate('File containing places (CSV)'), help_link('PLIF_FILENAME','googlemap'); ?></td>
 			<td class="optionbox"><input type="file" name="placesfile" size="50"></td>
 		</tr>
 		<?php if (count($placefiles)>0) { ?>
 		<tr>
-			<td class="descriptionbox"><?php echo i18n::translate('Server file containing places (CSV)'), help_link('PLIF_LOCALFILE'); ?></td>
+			<td class="descriptionbox"><?php echo i18n::translate('Server file containing places (CSV)'), help_link('PLIF_LOCALFILE','googlemap'); ?></td>
 			<td class="optionbox">
 				<select name="localfile">
 					<option></option>
@@ -344,15 +344,15 @@ if ($action=="ImportFile") {
 		</tr>
 		<?php } ?>
 		<tr>
-			<td class="descriptionbox"><?php echo i18n::translate('Clear all place-locations before import?'), help_link('PLIF_CLEAN');?></td>
+			<td class="descriptionbox"><?php echo i18n::translate('Clear all place-locations before import?'), help_link('PLIF_CLEAN','googlemap');?></td>
 			<td class="optionbox"><input type="checkbox" name="cleardatabase"></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php echo i18n::translate('Update existing places only?'), help_link('PLIF_UPDATE'); ?></td>
+			<td class="descriptionbox"><?php echo i18n::translate('Update existing places only?'), help_link('PLIF_UPDATE','googlemap'); ?></td>
 			<td class="optionbox"><input type="checkbox" name="updateonly"></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox"><?php echo i18n::translate('Overwrite location-data with data from file?'), help_link('PLIF_OVERWRITE'); ?></td>
+			<td class="descriptionbox"><?php echo i18n::translate('Overwrite location-data with data from file?'), help_link('PLIF_OVERWRITE','googlemap'); ?></td>
 			<td class="optionbox"><input type="checkbox" name="overwritedata"></td>
 		</tr>
 	</table>
@@ -577,7 +577,7 @@ echo "<br /><br /><form name=\"active\" method=\"post\" action=\"module.php?mod=
 echo "\n<table><tr><td class=\"optionbox\">", i18n::translate('Click here to show inactive places'), ": <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
 if ($display == 'inactive') echo " checked=\"checked\"";
 echo ">\n<input type=\"submit\" value=\"", i18n::translate('View'), "\" >";
-echo help_link('PLE_ACTIVE');
+echo help_link('PLE_ACTIVE','googlemap');
 echo "</td></tr></table>";
 echo "</form>";
 
@@ -590,7 +590,7 @@ echo "<th class=\"descriptionbox\">", i18n::translate('LONG'), "</th>";
 echo "<th class=\"descriptionbox\">".i18n::translate('Zoom factor')."</th>";
 echo "<th class=\"descriptionbox\">".i18n::translate('Icon')."</th>";
 echo "<th class=\"descriptionbox\" colspan=\"2\">";
-echo help_link('PL_EDIT_LOCATION');
+echo help_link('PL_EDIT_LOCATION','googlemap');
 echo i18n::translate('Edit geographic location'), "</th></tr>";
 if (count($placelist) == 0)
 	echo "<tr><td colspan=\"7\" class=\"facts_value\">", i18n::translate('No places found'), "</td></tr>";
@@ -636,14 +636,14 @@ foreach ($placelist as $place) {
 ?>
 	<table class="facts_table">
 		<tr>
-			<td class="optionbox" colspan="2"><a href="javascript:;" onclick="add_place_location(<?php echo $parent;?>);return false;"><?php echo i18n::translate('Add place');?></a><?php echo help_link('PL_ADD_LOCATION'); ?></td>
+			<td class="optionbox" colspan="2"><a href="javascript:;" onclick="add_place_location(<?php echo $parent;?>);return false;"><?php echo i18n::translate('Add place');?></a><?php echo help_link('PL_ADD_LOCATION','googlemap'); ?></td>
 		</tr>
 		<tr>
-			<td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr"><?php echo i18n::translate('Import from current GEDCOM');?></a><?php echo help_link('PL_IMPORT_GEDCOM'); ?></td>
-			<td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=all"><?php echo i18n::translate('Import from all GEDCOMs');?></a><?php echo help_link('PL_IMPORT_ALL_GEDCOM'); ?></td>
+			<td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr"><?php echo i18n::translate('Import from current GEDCOM');?></a><?php echo help_link('PL_IMPORT_GEDCOM','googlemap'); ?></td>
+			<td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=all"><?php echo i18n::translate('Import from all GEDCOMs');?></a><?php echo help_link('PL_IMPORT_ALL_GEDCOM','googlemap'); ?></td>
 		</tr>
 		<tr>
-			<td class="optionbox" colspan="2"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportFile&mode=add"><?php echo i18n::translate('Import from file');?></a><?php echo help_link('PL_IMPORT_FILE'); ?></td>
+			<td class="optionbox" colspan="2"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportFile&mode=add"><?php echo i18n::translate('Import from file');?></a><?php echo help_link('PL_IMPORT_FILE','googlemap'); ?></td>
 		</tr>
 		<tr>
 			<td class="optionbox">
@@ -651,14 +651,14 @@ foreach ($placelist as $place) {
 	if (count($where_am_i)<=4) {
 		echo "<a href=\"module.php?mod=googlemap&pgvaction=places&action=ExportFile&parent={$parent}\">";
 		echo i18n::translate('Export current view to file'), "</a>";
-		echo help_link('PL_EXPORT_FILE');
+		echo help_link('PL_EXPORT_FILE','googlemap');
 	} else {
 		echo "&nbsp;";
 	}
 	echo "</td><td class=\"optionbox\">";
 	echo "<a href=\"module.php?mod=googlemap&pgvaction=places&action=ExportFile&parent=0\">";
 	echo i18n::translate('Export all locations to file'), "</a>";
-	echo help_link('PL_EXPORT_ALL_FILE');
+	echo help_link('PL_EXPORT_ALL_FILE','googlemap');
 	echo "</td></tr></table><br />";
 if(empty($SEARCH_SPIDER))
 	print_footer();
