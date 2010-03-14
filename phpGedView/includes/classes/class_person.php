@@ -119,8 +119,6 @@ class Person extends GedcomRecord {
 	* @return GedcomDate the birth date
 	*/
 	function getBirthDate() {
-		global $pgv_lang;
-
 		if (is_null($this->_getBirthDate)) {
 			if ($this->canDisplayDetails()) {
 				foreach ($this->getAllBirthDates() as $date) {
@@ -144,7 +142,6 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getBirthPlace() {
-		global $pgv_lang;
 		if (is_null($this->_getBirthPlace)) {
 			if ($this->canDisplayDetails()) {
 				foreach ($this->getAllBirthPlaces() as $place) {
@@ -168,7 +165,6 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getCensBirthPlace() {
-		global $pgv_lang;
 		if (is_null($this->_getBirthPlace)) {
 			if ($this->canDisplayDetails()) {
 				foreach ($this->getAllBirthPlaces() as $place) {
@@ -206,8 +202,6 @@ class Person extends GedcomRecord {
 	* @return GedcomDate the death date in the GEDCOM format of '1 JAN 2006'
 	*/
 	function getDeathDate($estimate = true) {
-		global $pgv_lang;
-
 		if (is_null($this->_getDeathDate)) {
 			if ($this->canDisplayDetails()) {
 				foreach ($this->getAllDeathDates() as $date) {
@@ -231,8 +225,6 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getDeathPlace() {
-		global $pgv_lang;
-
 		if (is_null($this->_getDeathPlace)) {
 			if ($this->canDisplayDetails()) {
 				foreach ($this->getAllDeathPlaces() as $place) {
@@ -264,7 +256,6 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getBirthDeathYears($age_at_death=true, $classname='details1') {
-		global $pgv_lang;
 		if (!$this->getBirthYear()) {
 			return '';
 		}
@@ -519,7 +510,7 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getLabel($elderdate='', $counter=0) {
-		global $pgv_lang, $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION;
+		global $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION;
 		$label = '';
 		$gap = 0;
 		if (is_object($elderdate) && $elderdate->isOK()) {
@@ -571,7 +562,7 @@ class Person extends GedcomRecord {
 	* @return array array of Family objects
 	*/
 	function getSpouseFamilies() {
-		global $pgv_lang, $SHOW_LIVING_NAMES;
+		global $SHOW_LIVING_NAMES;
 		if (is_null($this->spouseFamilies)) {
 			$this->spouseFamilies=array();
 			foreach ($this->getSpouseFamilyIds() as $famid) {
@@ -627,7 +618,7 @@ class Person extends GedcomRecord {
 	* @return array array of Family objects indexed by family id
 	*/
 	function getChildFamilies() {
-		global $pgv_lang, $SHOW_LIVING_NAMES;
+		global $SHOW_LIVING_NAMES;
 
 		if (is_null($this->childFamilies)) {
 			$this->childFamilies=array();
@@ -769,7 +760,6 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getStepFamilyLabel(&$family) {
-		global $pgv_lang;
 		$label = 'Unknown Family';
 		if (is_null($family)) return $label;
 		$childfams = $this->getChildFamilies();
@@ -1375,8 +1365,6 @@ class Person extends GedcomRecord {
 	*
 	*/
 	function add_asso_facts() {
-		global $pgv_lang;
-
 		$associates=array_merge(
 			fetch_linked_indi($this->getXref(), 'ASSO', $this->ged_id),
 			fetch_linked_fam ($this->getXref(), 'ASSO', $this->ged_id)
@@ -1568,7 +1556,6 @@ class Person extends GedcomRecord {
 	* @return string a div block with father & mother names
 	*/
 	function getPrimaryParentsNames($classname='', $display='') {
-		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$fam = $this->getPrimaryChildFamily();
 		if (!$fam) return '';
 		$txt = '<div';
@@ -1631,7 +1618,7 @@ class Person extends GedcomRecord {
 	// 2 GIVN Carlos
 	// 2 SURN Vasquez,Sante
 	protected function _addName($type, $full, $gedrec) {
-		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $unknownNN, $unknownPN, $pgv_lang;
+		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $unknownNN, $unknownPN;
 
 		// Look for GIVN/SURN at level n+1
 		$sublevel=1+(int)$gedrec[0];
@@ -1834,8 +1821,6 @@ class Person extends GedcomRecord {
 
 // Localise a date differences.  This is a default function, and may be overridden in includes/extras/functions.xx.php
 function DefaultGetLabel(&$label, &$gap) {
-	global $pgv_lang;
-
 	if (($gap==12)||($gap==-12)) {
 		$label .= round($gap/12).' '.i18n::translate('year'); // 1 year
 	} elseif ($gap>20 or $gap<-20) {

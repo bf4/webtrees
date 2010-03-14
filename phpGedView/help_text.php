@@ -5,6 +5,10 @@
  * This file also serves as a database of fact and label descriptions,
  * allowing them to be discovered by xgettext, so we may use them dynamically
  * in the rest of the code.
+ * Help links are generated using help_link('help_topic')
+ *
+ * Help text for modules belongs in modules/XXX/help_text.php
+ * Module help links are generated using help_link('help_topic', 'module')
  *
  * Copyright (C) 2010 Greg Roach
  *

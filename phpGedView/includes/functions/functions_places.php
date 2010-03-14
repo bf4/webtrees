@@ -35,7 +35,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_FUNCTIONS_PLACE_PHP', '');
 
 function get_plac_label() {
-	global $pgv_lang;
 	global $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -52,7 +51,7 @@ function get_plac_label() {
 }
 
 function setup_place_subfields($element_id) {
-	global $pgv_lang, $PGV_PLACES_SETUP;
+	global $PGV_PLACES_SETUP;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
 
 	if (!empty($PGV_PLACES_SETUP)) return;

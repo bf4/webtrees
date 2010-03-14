@@ -45,7 +45,7 @@ $PGV_BLOCKS["print_html_block"]["config"]		= array(
 );
 
 function print_html_block($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_IMAGES, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $ctype;
+	global $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_IMAGES, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $ctype;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_html_block"]["config"];
 	if (!isset($HTML_BLOCK_COUNT)) $HTML_BLOCK_COUNT = 0;
@@ -53,21 +53,7 @@ function print_html_block($block=true, $config="", $side, $index) {
 
 	$id = "html_block$HTML_BLOCK_COUNT";
 	$title = "";
-
-	$ct = preg_match("/#(.+)#/", $config["html"], $match);
-	if ($ct>0) {
-		if (isset($pgv_lang[$match[1]])) $config["html"] = str_replace($match[0], $pgv_lang[$match[1]], $config["html"]);
-	}
-	$ct = preg_match("/#(.+)#/", $config["html"], $match);
-	if ($ct>0) {
-		if (isset($pgv_lang[$match[1]])) $config["html"] = str_replace($match[0], $pgv_lang[$match[1]], $config["html"]);
-		$varname = $match[1];
-		if (!empty($$varname)) {
-			$value = $$varname;
-			$config["html"] = str_replace($match[0], $value, $config["html"]);
-		}
-	}
-	$content = $config["html"];
+	$content = embed_globals($config['html']);
 
 	if ($PGV_BLOCKS["print_html_block"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
@@ -90,7 +76,7 @@ function print_html_block($block=true, $config="", $side, $index) {
 }
 
 function print_html_block_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
+	global $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
 	$useFCK = file_exists(PGV_ROOT.'modules/FCKeditor/fckeditor.php');
 	if($useFCK){
 		require PGV_ROOT.'modules/FCKeditor/fckeditor.php';

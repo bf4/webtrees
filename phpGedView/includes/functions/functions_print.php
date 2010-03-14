@@ -443,7 +443,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 * @param boolean $use_alternate_styles
 */
 function print_header($title, $head="", $use_alternate_styles=true) {
-	global $pgv_lang, $bwidth;
+	global $bwidth;
 	global $HOME_SITE_URL, $HOME_SITE_TEXT, $SERVER_URL;
 	global $BROWSERTYPE, $SEARCH_SPIDER;
 	global $view, $cart;
@@ -645,7 +645,7 @@ function print_simple_header($title) {
 
 // -- print the html to close the page
 function print_footer() {
-	global $pgv_lang, $view;
+	global $view;
 	global $SHOW_STATS, $QUERY_STRING, $footerfile, $print_footerfile, $ALLOW_CHANGE_GEDCOM, $printlink;
 	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count;
 
@@ -728,7 +728,7 @@ function clustrmaps() {
 * prints out the execution time and the databse queries
 */
 function execution_stats() {
-	global $start_time, $pgv_lang, $PRIVACY_CHECKS;
+	global $start_time, $PRIVACY_CHECKS;
 
 	return sprintf("<div class=\"execution_stats\">".i18n::translate('Execution time:')." %.3f ".i18n::translate('sec.')." ".i18n::translate('Total Database Queries: ')." %d. ".i18n::translate('Total privacy checks: ')." %d. ".i18n::translate('Total Memory Usage:')." %.0f KB.</div>",
 		microtime(true)-$start_time,
@@ -767,7 +767,7 @@ function print_lang_form($option=0) {
 * this function will print login/logout links and other links based on user privileges
 */
 function print_user_links() {
-	global $pgv_lang, $QUERY_STRING, $GEDCOM;
+	global $QUERY_STRING, $GEDCOM;
 	global $LOGIN_URL, $SEARCH_SPIDER;
 
 	if (PGV_USER_ID) {
@@ -791,8 +791,6 @@ function print_user_links() {
 // Print a link to allow email/messaging contact with a user
 // Optionally specify a method (used for webmaster/genealogy contacts)
 function user_contact_link($user_id, $method=null) {
-	global $pgv_lang;
-
 	if (is_null($method)) {
 		$method=get_user_setting($user_id, 'contactmethod');
 	}
@@ -822,8 +820,6 @@ function user_contact_link($user_id, $method=null) {
 // Print a menu item to allow email/messaging contact with a user
 // Optionally specify a method (used for webmaster/genealogy contacts)
 function user_contact_menu($user_id, $method=null) {
-	global $pgv_lang;
-
 	if (is_null($method)) {
 		$method=get_user_setting($user_id, 'contactmethod');
 	}
@@ -860,7 +856,7 @@ function print_contact_links() { // This function is used by 3rd party themes.
 }
 
 function contact_links() {
-	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
+	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD;
 
 	$webmaster_user_id=get_user_id($WEBMASTER_EMAIL);
 	if ($WEBMASTER_EMAIL==$CONTACT_EMAIL) {
@@ -899,7 +895,7 @@ function contact_links() {
 }
 
 function contact_menus() {
-	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
+	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD;
 
 	$webmaster_user_id=get_user_id($WEBMASTER_EMAIL);
 	if ($WEBMASTER_EMAIL==$CONTACT_EMAIL) {
@@ -939,7 +935,7 @@ function contact_menus() {
 
 //-- print user favorites
 function print_favorite_selector($option=0) {
-	global $pgv_lang, $GEDCOM, $SHOW_ID_NUMBERS, $INDEX_DIRECTORY, $QUERY_STRING;
+	global $GEDCOM, $SHOW_ID_NUMBERS, $INDEX_DIRECTORY, $QUERY_STRING;
 	global $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 	global $controller; // Pages with a controller can be added to the favorites
 
@@ -1152,7 +1148,6 @@ function print_favorite_selector($option=0) {
 * @return boolean
 */
 function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false) {
-	global $pgv_lang;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_SOURCES, $EXPAND_NOTES;
 	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
@@ -1244,7 +1239,6 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 * @param boolean $return whether to return text or print the data
 */
 function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
-	global $pgv_lang;
 	global $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -1315,7 +1309,7 @@ function print_gedcom_title_link($InHeader=FALSE) {
 
 //-- function to print a privacy error with contact method
 function print_privacy_error($username) {
-	global $pgv_lang, $CONTACT_METHOD, $SUPPORT_METHOD, $WEBMASTER_EMAIL;
+	global $CONTACT_METHOD, $SUPPORT_METHOD, $WEBMASTER_EMAIL;
 
 	$method = $CONTACT_METHOD;
 	if ($username==$WEBMASTER_EMAIL) {
@@ -1384,78 +1378,6 @@ function embed_globals($text) {
 		}
 	}
 	return $text;
-}
-
-/**
-* print a language variable
-*
-* It accepts any kind of language variable. This can be a single variable but also
-* a variable with included variables that needs to be converted.
-* print_text, which used to be called print_help_text, now takes 3 parameters
-* of which only the 1st is mandatory
-* The first parameter is the variable that needs to be processed.  At nesting level zero,
-* this is the name of a $pgv_lang array entry.  "whatever" refers to
-* $pgv_lang["whatever"].  At nesting levels greater than zero, this is the name of
-* any global variable, but *without* the $ in front.  For example, VERSION or
-* pgv_lang["whatever"] or factarray["rowname"].
-* The second parameter is $level for the nested vars in a sentence.  This indicates
-* that the function has been called recursively.
-* The third parameter $noprint is for returning the text instead of printing it
-* @param string $help The variable that needs to be processed.
-* @param int $level The position of the embedded variable
-* @param int $noprint The switch if the text needs to be printed or returned
-*/
-function print_text($help, $level=0, $noprint=0){
-	global $pgv_lang, $faqlist, $COMMON_NAMES_THRESHOLD;
-	global $INDEX_DIRECTORY, $LANGUAGE;
-	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
-	global $repeat, $thumbnail, $xref, $pid;
-
-	$sentence = false;
-	if ($level>0) {
-		// Map legacy global variables (e.g. $VERSION) onto their replacement constants (e.g. PGV_VERSION)
-		if ((preg_match('/^([A-Z_]+)$/', $help, $match) || preg_match('/^GLOBALS\[\'([A-Z_])\'\]+$/', $help, $match)) && defined('PGV_'.$match[1])) {
-			$help='PGV_'.$match[1];
-		}
-		$value = false;
-		// Only allow access to constants prefixed by PGV_
-		if (substr($help, 0, 4)=='PGV_' && defined($help)) {
-			$value=constant($help);
-		} else {
-			eval("if (isset(\$$help)) \$value = \$$help;");
-		}
-		if ($value===false) return false;
-		$sentence = $value;
-	}
-	if ($sentence===false) {
-		if (isset($pgv_lang[$help])) {
-			$sentence = $pgv_lang[$help];
-		} else {
-			$sentence = i18n::translate('<b>Help text for this page or item is not yet available.</b>');
-		}
-	}
-	$mod_sentence = "";
-	$replace = "";
-	$replace_text = "";
-	$sub = "";
-	$pos1 = 0;
-	$pos2 = 0;
-	$ct = preg_match_all('/#([a-zA-Z0-9_.\-\[\]]+)#/', $sentence, $match, PREG_SET_ORDER);
-	for($i=0; $i<$ct; $i++) {
-		$value = "";
-		$newreplace = str_replace(array("[", "]"), array("['", "']"), $match[$i][1]);
-		$value = print_text($newreplace, $level+1);
-		if ($value!==false) {
-			$sentence = str_replace($match[$i][0], $value, $sentence);
-		} elseif ($noprint==0 && $level==0) {
-			$sentence = str_replace($match[$i][0], $match[$i][1].": ".i18n::translate('<span style="font-weight: bold">The language variable does not exist. Please report this as it is an error.</span>'), $sentence);
-		}
-	}
-	// ------ Replace paired ~  by tag_start and tag_end (those vars contain CSS classes)
-	$sentence=preg_replace('/~([^<>]{1,})~/e', "'<span class=\"helpstart\">'.UTF8_strtoupper('\\1').'</span>'", $sentence);
-	if ($noprint>0) return $sentence;
-	if ($level>0) return $sentence;
-	echo $sentence;
 }
 
 function print_help_index($help){
@@ -1929,7 +1851,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 * @param string $pid child ID
 */
 function format_parents_age($pid, $birth_date=null) {
-	global $pgv_lang, $SHOW_PARENTS_AGE;
+	global $SHOW_PARENTS_AGE;
 
 	$html='';
 	if ($SHOW_PARENTS_AGE) {
@@ -1993,7 +1915,7 @@ function format_parents_age($pid, $birth_date=null) {
 * @param boolean $time option to print TIME value
 */
 function format_fact_date(&$eventObj, $anchor=false, $time=false) {
-	global $pgv_lang, $pid, $SEARCH_SPIDER;
+	global $pid, $SEARCH_SPIDER;
 	global $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -2122,7 +2044,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 * @param boolean $lds option to print LDS TEMPle and STATus
 */
 function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
-	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $pgv_lang, $SEARCH_SPIDER;
+	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $SEARCH_SPIDER;
 	if ($eventObj==null) return '';
 	if (!is_object($eventObj)) {
 		pgv_error_handler("2", "Object was not sent in, please use Event object", __FILE__, __LINE__);
@@ -2234,7 +2156,7 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 * @param string $key indi pid
 */
 function format_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
-	global $pgv_lang, $LANGUAGE, $TEXT_DIRECTION;
+	global $LANGUAGE, $TEXT_DIRECTION;
 
 	$html='';
 	$person = GedcomRecord::getInstance($key);
@@ -2286,7 +2208,7 @@ function CheckFactUnique($uniquefacts, $recfacts, $type) {
 * @param string $type the type of record INDI, FAM, SOUR etc
 */
 function print_add_new_fact($id, $usedfacts, $type) {
-	global $pgv_lang, $TEXT_DIRECTION;
+	global $TEXT_DIRECTION;
 	global $INDI_FACTS_ADD,    $FAM_FACTS_ADD,    $NOTE_FACTS_ADD,    $SOUR_FACTS_ADD,    $REPO_FACTS_ADD;
 	global $INDI_FACTS_UNIQUE, $FAM_FACTS_UNIQUE, $NOTE_FACTS_UNIQUE, $SOUR_FACTS_UNIQUE, $REPO_FACTS_UNIQUE;
 	global $INDI_FACTS_QUICK,  $FAM_FACTS_QUICK,  $NOTE_FACTS_QUICK,  $SOUR_FACTS_QUICK,  $REPO_FACTS_QUICK;
@@ -2414,7 +2336,7 @@ function init_calendar_popup() {
 * @param string $ged The GEDCOM to search in
 */
 function print_findindi_link($element_id, $indiname, $asString=false, $multiple=false, $ged='', $filter='') {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	$text = i18n::translate('Find Individual ID');
 	if (empty($ged)) $ged=$GEDCOM;
@@ -2428,7 +2350,7 @@ function print_findindi_link($element_id, $indiname, $asString=false, $multiple=
 }
 
 function print_findplace_link($element_id, $ged='', $asString=false) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
 	$text = i18n::translate('Find Place');
@@ -2442,7 +2364,7 @@ function print_findplace_link($element_id, $ged='', $asString=false) {
 }
 
 function print_findfamily_link($element_id, $ged='', $asString=false) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
 	$text = i18n::translate('Find Family ID');
@@ -2456,7 +2378,7 @@ function print_findfamily_link($element_id, $ged='', $asString=false) {
 }
 
 function print_specialchar_link($element_id, $vert, $asString=false) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	$text = i18n::translate('Find Special Characters');
 	if (isset($PGV_IMAGES["keyboard"]["button"])) $Link = "<img id=\"".$element_id."_spec\" name=\"".$element_id."_spec\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["keyboard"]["button"]."\"  alt=\"".$text."\"  title=\"".$text."\" border=\"0\" align=\"middle\" />";
@@ -2469,8 +2391,6 @@ function print_specialchar_link($element_id, $vert, $asString=false) {
 }
 
 function print_autopaste_link($element_id, $choices, $concat=1, $name=1, $submit=0) {
-	global $pgv_lang;
-
 	echo "<small>";
 	foreach ($choices as $indexval => $choice) {
 		echo " &nbsp;<a href=\"javascript:;\" onclick=\"document.getElementById('", $element_id, "').value ";
@@ -2484,7 +2404,7 @@ function print_autopaste_link($element_id, $choices, $concat=1, $name=1, $submit
 }
 
 function print_findsource_link($element_id, $sourcename="", $asString=false, $ged='') {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
 	$text = i18n::translate('Find Source ID');
@@ -2499,7 +2419,7 @@ function print_findsource_link($element_id, $sourcename="", $asString=false, $ge
 
 // Shared Notes =============================================
 function print_findnote_link($element_id, $notename="", $asString=false, $ged='') {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
 	$text = i18n::translate('Find Shared Note');
@@ -2514,7 +2434,7 @@ function print_findnote_link($element_id, $notename="", $asString=false, $ged=''
 // ========================================================
 
 function print_findrepository_link($element_id, $ged='', $asString=false) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
 	$text = i18n::translate('Find Repository');
@@ -2528,7 +2448,7 @@ function print_findrepository_link($element_id, $ged='', $asString=false) {
 }
 
 function print_findmedia_link($element_id, $choose="", $ged='', $asString=false) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
 	$text = i18n::translate('Find Media');

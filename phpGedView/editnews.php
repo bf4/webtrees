@@ -128,7 +128,7 @@ if ($action=="compose") {
 		print i18n::translate('News/Journal entry successfully saved.');
 	}
 } else if ($action=="delete") {
-	if (deleteNews($news_id)) print $pgv_lang["news_deleted"];
+	if (deleteNews($news_id)) echo i18n::translate('The news/journal entry has been deleted.'];
 }
 print "<center><br /><br /><a href=\"javascript:;\" onclick=\"if (window.opener.refreshpage) window.opener.refreshpage(); window.close();\">".i18n::translate('Close Window')."</a><br /></center>";
 

@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_class_SIDEBAR_PHP', '');
+define('PGV_CLASS_SIDEBAR_PHP', '');
 
 /**
  * Defines the base class for a sidebar

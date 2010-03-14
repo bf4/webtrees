@@ -48,26 +48,6 @@
  *	'whatever 1' is the text that is to appear for this sub-menu entry.  If you code this as
  *		shown, the text will appear exactly as entered no matter what the page language is.
  *
- *		If you replace the '"whatever 1"' (replace the quotation marks too) with something like
- *		'$pgv_lang["whatever_1"]' (don't enter the apostrophes), you can then make the text vary
- *		according to the page language.  You should put your English text into file
- *		"languages/extra.en.php" like this:
- *			$pgv_lang["whatever_1"] = "My submenu title 1";
- *
- *		Similar entries should appear in each of the other "languages/extra.xx.php" files, where
- *		"xx" corresponds to the language (Dutch is "nl", French is "fr", German is "de" etc.)
- *		You should have a "languages/extra.xx.php" file for each of the languages your site
- *		supports.  You don't need these files for unsupported languages.
- *
- *		If the "languages/extra.xx.php" (including the English version) file doesn't exist, you
- *		can create your own by copying the "languages/lang.xx.php" file and giving it the new
- *		name.  Delete all the existing $pgv_lang["xxxx"] entries, and add your own.
- *
- *		When PhpGedView can't find the desired "languages/extra.xx.php" file or the desired text
- *		within that file, the English version will be used.  If the desired text doesn't exist
- *		anywhere, you will see an error message instead.  This is probably not desirable.
- *
- *
  * 'whatever 2' is the URL required to launch the desired module, web site, or PhpGedView
  *		script.  You need to provide all of the input parameters or variables that the script
  *		needs.  For example, to get to the Yahoo web site, you'd replace '"whatever 2"' with

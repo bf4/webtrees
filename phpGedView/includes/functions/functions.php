@@ -699,8 +699,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
  * @return string
  */
 function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
-	global $SHOW_PEDIGREE_PLACES, $pgv_lang;
-	global $GEDCOM;
+	global $SHOW_PEDIGREE_PLACES, $GEDCOM;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (empty($gedrec)) {
@@ -1867,7 +1866,7 @@ function gedcomsort($a, $b) {
  * @param int $path_to_find which path in the relationship to find, 0 is the shortest path, 1 is the next shortest path, etc
  */
 function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignore_cache=false, $path_to_find=0) {
-	global $TIME_LIMIT, $start_time, $pgv_lang, $NODE_CACHE, $NODE_CACHE_LENGTH, $USE_RELATIONSHIP_PRIVACY, $pgv_changes;
+	global $TIME_LIMIT, $start_time, $NODE_CACHE, $NODE_CACHE_LENGTH, $USE_RELATIONSHIP_PRIVACY, $pgv_changes;
 
 	$pid1 = strtoupper($pid1);
 	$pid2 = strtoupper($pid2);

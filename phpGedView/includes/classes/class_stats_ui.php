@@ -46,8 +46,7 @@ class stats_ui extends stats
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function _getFavorites($isged=true) {
-		global $GEDCOM, $pgv_lang;
-		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION, $INDEX_DIRECTORY;
+		global $GEDCOM, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION, $INDEX_DIRECTORY;
 		global $show_full, $PEDIGREE_FULL_DETAILS;
 
 		// Override GEDCOM configuration temporarily
@@ -213,7 +212,7 @@ class stats_ui extends stats
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function userMessages() {
-		global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
+		global $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
 
 		$usermessages = getUserMessages(PGV_USER_NAME);
 
@@ -322,7 +321,7 @@ class stats_ui extends stats
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function userJournal() {
-		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
+		global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
 
 		$usernews = getUserNews(PGV_USER_ID);
 		$content = '';
@@ -334,28 +333,8 @@ class stats_ui extends stats
 			$mon = date('M', $news['date']);
 			$year = date('Y', $news['date']);
 			$content .= "<div class=\"person_box\">";
-			$ct = preg_match("/#(.+)#/", $news['title'], $match);
-			if($ct > 0) {
-				if(isset($pgv_lang[$match[1]])) {
-					$news['title'] = str_replace($match[0], $pgv_lang[$match[1]], $news['title']);
-				}
-			}
-			$content .= '<span class="news_title">'.PrintReady($news['title'])."</span><br />\n"
-				.'<span class="news_date">'.format_timestamp($news['date'])."</span><br />\n<br />\n"
-			;
-			if(preg_match("/#(.+)#/", $news['text'], $match)) {
-				if(isset($pgv_lang[$match[1]])) {
-					$news['text'] = str_replace($match[0], $pgv_lang[$match[1]], $news['text']);
-				}
-			}
-			if(preg_match("/#(.+)#/", $news['text'], $match)) {
-				if(isset($pgv_lang[$match[1]])) {
-					$news['text'] = str_replace($match[0], $pgv_lang[$match[1]], $news['text']);
-				}
-				if(isset($$match[1])) {
-					$news['text'] = str_replace($match[0], $$match[1], $news['text']);
-				}
-			}
+			$news['title']=embed_globals($news['title'];
+			$news['text' ]=embed_globals($news['text' ];
 			$trans = array_flip(get_html_translation_table(HTML_SPECIALCHARS));
 			$news['text'] = strtr($news['text'], $trans);
 			$content .= PrintReady($news['text'])."<br />\n<br />\n"
@@ -377,7 +356,7 @@ class stats_ui extends stats
 ///////////////////////////////////////////////////////////////////////////////
 
 	static function gedcomNews($params=null) {
-		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $PGV_BLOCKS;
+		global $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $PGV_BLOCKS;
 
 		if($params === null){$params = array();}
 		if(isset($params[0]) && $params[0] != ''){$limit = strtolower($params[0]);}else{$limit = 'count';}
@@ -407,12 +386,12 @@ class stats_ui extends stats
 			}
 			$content .= "<div class=\"news_box\" id=\"{$news['anchor']}\">\n";
 
-			// Look for $pgv_lang and $GLOBALS substitutions in the News title
+			// Look for $GLOBALS substitutions in the News title
 			$newsTitle = embed_globals($news['title']);
 			$content .= "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n";
 			$content .= "<span class=\"news_date\">".format_timestamp($news['date'])."</span><br /><br />\n";
 
-			// Look for $pgv_lang and $GLOBALS substitutions in the News text
+			// Look for $GLOBALS substitutions in the News text
 			$newsText = embed_globals($news['text']);
 			$trans = get_html_translation_table(HTML_SPECIALCHARS);
 			$trans = array_flip($trans);
