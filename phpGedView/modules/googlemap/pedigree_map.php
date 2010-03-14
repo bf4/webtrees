@@ -163,7 +163,7 @@ if (!$controller->isPrintPreview()) {
 					<?php echo i18n::translate('Root Person ID'), help_link('rootid'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS','googlemap'); ?>
+					<?php echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php echo i18n::translate('Cluster Size'), help_link('PEDIGREE_MAP_clustersize','googlemap'); ?>
