@@ -38,6 +38,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_RSS_BLOCK_PHP', '');
 
+global $GEDCOM_TITLE;
 $PGV_BLOCKS["print_RSS_block"]["name"]			= i18n::translate('RSS Feeds');
 $PGV_BLOCKS["print_RSS_block"]["descr"]			= i18n::translate('News and links from the %s site', $GEDCOM_TITLE);
 $PGV_BLOCKS["print_RSS_block"]["type"]			= "gedcom";
