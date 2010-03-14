@@ -125,6 +125,26 @@ function getRelationshipSentence($path, $pid1, $pid2) {
 	case 'parbro': return /* I18N: uncle       */ i18n::translate('parent\'s brother');
 	case 'parsib': return /* I18N: aunt/uncle  */ i18n::translate('parent\'s sibling');
 
+	case 'wifsis': return /* I18N: sister-in-law  */ i18n::translate('wife\'s sister');
+	case 'hussis': return /* I18N: sister-in-law  */ i18n::translate('husband\'s sister');
+	case 'sposis': return /* I18N: sister-in-law  */ i18n::translate('spouses\'s sister');
+	case 'wifbro': return /* I18N: brother-in-law */ i18n::translate('wife\'s brother');
+	case 'husbro': return /* I18N: brother-in-law */ i18n::translate('husband\'s brother');
+	case 'spobro': return /* I18N: brother-in-law */ i18n::translate('spouses\'s brother');
+
+	case 'browif': return /* I18N: sister-in-law  */ i18n::translate('brother\'s wife');
+	case 'sishub': return /* I18N: brother-in-law */ i18n::translate('sister\'s husband');
+
+	case 'husmot': return /* I18N: mother-in-law  */ i18n::translate('husband\'s mother');
+	case 'wifmot': return /* I18N: mother-in-law  */ i18n::translate('wife\'s mother');
+	case 'spomot': return /* I18N: mother-in-law  */ i18n::translate('souses\'s mother');
+	case 'husfat': return /* I18N: father-in-law  */ i18n::translate('husband\'s father');
+	case 'wiffat': return /* I18N: father-in-law  */ i18n::translate('wife\'s father');
+	case 'spofat': return /* I18N: father-in-law  */ i18n::translate('souses\'s father');
+
+	case 'sonwif': return /* I18N: daughter-in-law */ i18n::translate('son\'s wife');
+	case 'dauhus': return /* I18N: son-in-law      */ i18n::translate('daughter\'s husband');
+
 	// Level Three relationships
 	case 'motmotmot': return /* I18N: great-grandmother */ i18n::translate('mother\'s mother\'s mother');
 	case 'motmotfat': return /* I18N: great-grandfather */ i18n::translate('mother\'s mother\'s father');
@@ -247,7 +267,6 @@ function getRelationshipSentence($path, $pid1, $pid2) {
 	case 'parparsis': return /* I18N: great-aunt        */ i18n::translate('parent\'s parent\'s sister');
 	case 'parparbro': return /* I18N: great-uncle       */ i18n::translate('parent\'s parent\'s brother');
 	case 'parparsib': return /* I18N: great-aunt/uncle  */ i18n::translate('parent\'s parent\'s sibling');
-
 	}
 
 	// Look for generic/pattern relationships.
@@ -292,15 +311,15 @@ function getRelationshipSentence($path, $pid1, $pid2) {
 			switch($last) {
 			case 'son':
 				return i18n::plural(
-					'%s male cousin, %d time removed', '%s male cousin, %d times removed',
+					'%$1s male cousin, %$2d time removed', '%$1s male cousin, %$2d times removed',
 					$removed, i18n::ordinal_word(min($up, $down)), $removed
 				);
 			case 'dau':
 				return i18n::plural(
-					'%s female cousin, %d time removed', '%s female cousin, %d times removed',
+					'%$1s female cousin, %$2d time removed', '%$1s female cousin, %$2d times removed',
 					$removed, i18n::ordinal_word(min($up, $down)), $removed
 				);
-			case 'chi': return i18n::plural('%s cousin, %d time removed', '%s cousin, %d times removed',
+			case 'chi': return i18n::plural('%$1s cousin, %$2d time removed', '%$1s cousin, %$2d times removed',
 				$removed, i18n::ordinal_word(min($up, $down)), $removed
 				);
 			}
