@@ -137,7 +137,7 @@ else if ($view!='simple'){?>
 				<td width="10"><img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="18" alt="" /></td>
 				<td><div id="favtheme" align="<?php echo $TEXT_DIRECTION=="rtl"?"right":"left" ?>" class="blanco"><?php print_theme_dropdown(1); ?></div><?php print_user_links(); ?></td>
 				<td valign="top"></td>
-				<td><div align="center"><?php print_lang_form(1); ?></div></td>
+				<td><div align="center"><?php print_lang_form(); ?></div></td>
 				<td><div id="favdate" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>" class="blanco"><?php print_favorite_selector(1); ?><?php echo $displayDate; ?>
 
 
