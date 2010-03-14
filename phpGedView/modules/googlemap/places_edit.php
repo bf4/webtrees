@@ -748,7 +748,7 @@ if ($action=="add") {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php _help_link("PLE_PRECISION_help", "qm", "PLE_PRECISION");?><?php echo i18n::translate('Precision');?></td>
+		<td class="descriptionbox"><?php echo i18n::translate('Precision'), help_link("PLE_PRECISION");?></td>
 		<?php
 			$exp = explode(".", $place_lati);
 			if (isset($exp[1])) {
