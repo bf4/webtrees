@@ -739,7 +739,7 @@ if ($action=="add") {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php echo i18n::translate('PLAC'), help_link('PLE_PLACES');?></td>
+		<td class="descriptionbox"><?php echo i18n::translate('PLAC'), help_link('PLE_PLACES','googlemap');?></td>
 		 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo htmlspecialchars($place_name) ?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />
 		<div id="INDI_PLAC_pop" style="display: inline;">
 		<?php print_specialchar_link("NEW_PLACE_NAME", false);?></div>
@@ -748,7 +748,7 @@ if ($action=="add") {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php echo i18n::translate('Precision'), help_link("PLE_PRECISION");?></td>
+		<td class="descriptionbox"><?php echo i18n::translate('Precision'), help_link('PLE_PRECISION','googlemap');?></td>
 		<?php
 			$exp = explode(".", $place_lati);
 			if (isset($exp[1])) {
@@ -784,7 +784,7 @@ if ($action=="add") {
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php echo i18n::translate('LATI'), help_link('PLE_LATLON_CTRL'); ?></td>
+		<td class="descriptionbox"><?php echo i18n::translate('LATI'), help_link('PLE_LATLON_CTRL','googlemap'); ?></td>
 		<td class="optionbox">
 			<select name="LATI_CONTROL" tabindex="<?php echo ++$i;?>" onchange="updateMap();">
 				<option value="" <?php if ($place_lati == null) echo " selected=\"selected\"";?>></option>
@@ -794,7 +794,7 @@ if ($action=="add") {
 			<input type="text" name="NEW_PLACE_LATI" value="<?php if ($place_lati != null) echo abs($place_lati);?>" size="20" tabindex="<?php echo ++$i;?>" onchange="updateMap();" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php echo i18n::translate('LONG'), help_link('PLE_LATLON_CTRL'); ?></td>
+		<td class="descriptionbox"><?php echo i18n::translate('LONG'), help_link('PLE_LATLON_CTRL','googlemap'); ?></td>
 		<td class="optionbox">
 			<select name="LONG_CONTROL" tabindex="<?php echo ++$i;?>" onchange="updateMap();">
 				<option value="" <?php if ($place_long == null) echo " selected=\"selected\"";?>></option>
@@ -804,12 +804,12 @@ if ($action=="add") {
 			<input type="text" name="NEW_PLACE_LONG" value="<?php if ($place_long != null) echo abs($place_long);?>" size="20" tabindex="<?php echo ++$i;?>" onchange="updateMap();" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php echo i18n::translate('Zoom factor'), help_link('PLE_ZOOM'); ?></td>
+		<td class="descriptionbox"><?php echo i18n::translate('Zoom factor'), help_link('PLE_ZOOM','googlemap'); ?></td>
 		<td class="optionbox">
 			<input type="text" name="NEW_ZOOM_FACTOR" value="<?php echo $zoomfactor;?>" size="20" tabindex="<?php echo ++$i;?>" onchange="updateMap();" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php echo i18n::translate('Flag'), help_link('PLE_ICON'); ?></td>
+		<td class="descriptionbox"><?php echo i18n::translate('Flag'), help_link('PLE_ICON','googlemap'); ?></td>
 		<td class="optionbox">
 			<div id="flagsDiv">
 <?php
