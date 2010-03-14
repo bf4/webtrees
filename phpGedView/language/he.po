@@ -1224,7 +1224,7 @@ msgstr "הכול"
 #: ../modules/families/families.php:108 ../famlist.php:112 ../famlist.php:124
 #: ../famlist.php:144 ../famlist.php:243
 msgid "(unknown)"
-msgstr "(unknown)"
+msgstr ""
 
 #: ../indilist.php:176
 msgid "Choose a letter to show individuals whose family name starts with that letter."
@@ -1311,7 +1311,7 @@ msgstr "התגלה עכביש של מנוע חיפוש"
 
 #: ../search_engine.php:53
 msgid "PhpGedView automatically provides search engines with smaller data files with fewer links.  The data is limited to the individual and immediate family, without adding information about grand parents or grand children.  Many reports and server-intensive pages like the calendar are off limits to the spiders.<br /><br />Attempts by the spiders to go to those pages result in showing this page.  If you are seeing this text, the software believes you are a search engine spider.  Below is the list of pages that are allowed to be spidered and will provide the abbreviated data.<br /><br />Real users who follow search engine links into this site will see the full pages and data, and not this page."
-msgstr "PhpGedView automatically provides search engines with smaller data files with fewer links.  The data is limited to the individual and immediate family, without adding information about grand parents or grand children.  Many reports and server-intensive pages like the calendar are off limits to the spiders.<br /><br />Attempts by the spiders to go to those pages result in showing this page.  If you are seeing this text, the software believes you are a search engine spider.  Below is the list of pages that are allowed to be spidered and will provide the abbreviated data.<br /><br />Real users who follow search engine links into this site will see the full pages and data, and not this page."
+msgstr ""
 
 #: ../search_engine.php:63 ../search_engine.php:72 ../uploadgedcom.php:1106
 #: ../includes/classes/class_menubar.php:67 ../modules/sitemap/index.php:219
@@ -2036,7 +2036,7 @@ msgstr "שם הדומיין שולח"
 
 #: ../install.php:913 ../help_text.php:3345
 msgid "SMTP Port"
-msgstr "SMTP Port"
+msgstr ""
 
 #: ../install.php:917 ../help_text.php:3325
 msgid "Use name and password"
@@ -2360,7 +2360,7 @@ msgstr "העלה את הקובץ לתיקיית האינדקסים שלך: "
 
 #: ../editconfig_gedcom.php:594
 msgid "Welcome to Your Genealogy"
-msgstr ""
+msgstr "ברוכים הבאים לחקר שושלת היוחסין שלך"
 
 #: ../editconfig_gedcom.php:596
 msgid "The genealogy information on this website is powered by <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>.  This page provides an introduction and overview to this genealogy.<br /><br />To begin working with the data, choose one of the charts from the Charts menu, go to the Individual list, or search for a name or place.<br /><br />If you have trouble using the site, you can click on the Help icon to give you information on how to use the page that you are currently viewing.<br /><br />Thank you for visiting this site."
@@ -2691,7 +2691,7 @@ msgstr "ברוך הבא"
 
 #: ../editconfig_gedcom.php:1413 ../includes/classes/class_menubar.php:119
 msgid "MyGedView"
-msgstr "MyGedView"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1419 ../help_text.php:3740
 msgid "Welcome text on Login page"
@@ -5109,7 +5109,7 @@ msgstr "בעיית קונפיגורציה של שרת ה-PHP: תיקיית GD 2.
 
 #: ../fanchart.php:109 ../fanchart.php:114
 msgid "http://www.php.net/gd"
-msgstr "http://www.php.net/gd"
+msgstr ""
 
 #: ../fanchart.php:113
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
@@ -5268,19 +5268,19 @@ msgstr "כדי שתהיה לך גישה לדף דף MyGedView, אתה חייב �
 
 #: ../login.php:166
 msgid "<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don't have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved."
-msgstr ""
+msgstr "<center><b>ברוכים הבאים לאתר הזה של חקר שושלת היוחסין</b></center><br />גישה לאתר זה מותרת לכל המשתמשים בעלי קוד משתמש באתר.<br /><br />אם יש לך קוד משתמש, תוכל להתחבר למערכת באמצעות הדף הזה. אם אין לך קוד משתמש, תוכל לבקש קוד משתמש ע\"י לחיצה על הקישור המתאים מלמטה.<br /><br />מנהלן האתר יבדוק את נתוניך ויפעיל את קוד המשתמש שלך. תקבל דואר אלקטרוני אחרי שקוד המשתמש שלך יאושר."
 
 #: ../login.php:169
 msgid "<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorized</u> users only.<br /><br />If you have a user account you can login on this page.  If you don't have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved."
-msgstr ""
+msgstr "<center><b>ברוכים הבאים לאתר הזה של חקר שושלת היוחסין</b></center><br />גישה לאתר זה מותרת רק למשתמשים <u>מורשים.</u><br /><br />אם יש לך קוד משתמש תוכל להתחבר למערכת באמצעות הדף הזה. אם אין לך קוד משתמש, תוכל לבקש קוד משתמש ע\"י לחיצה על הקישור מלמטה.<br /><br />מנהלן האתר יבדוק את נתוניך ויאשר או ידחה את בקשתך. תקבל דואר אלקטרוני אחרי שבקשתך תאושר."
 
 #: ../login.php:172
 msgid "<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>family members only</u>.<br /><br />If you have a user account you can login on this page.  If you don't have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying the information you provide, the administrator will either approve or decline your request for an account.  You will receive an email when your request is approved."
-msgstr ""
+msgstr "<center><b>ברוכים הבאים לאתר הזה של חקר שושלת היוחסין</b></center><br />גישה לאתר זה מותרת <u>רק לבני משפחה</u>.<br />אם יש לך קוד משתמש תוכל להתחבר למערכת באמצעות הדף הזה. אם אין לך קוד משתמש, תוכל לבקש קוד משתמש ע\"י לחיצה על הקישור המתאים מלמטה.<br /><br />מנהלן האתר יבדוק את נתוניך ויאשר או ידחה את בקשתך. תקבל דואר אלקטרוני אחרי שבקשתך תאושר."
 
 #: ../login.php:175
 msgid "<center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website."
-msgstr ""
+msgstr "<center><b>ברוכים הבאים לאתר הזה של חקר שושלת היוחסין</b></center><br />גישה לאתר זה מותרת למשתמשים בעלי קוד משתמש וסיסמא."
 
 #: ../login.php:225 ../help_text.php:4235
 msgid "This site uses cookies to keep track of your login status.<br /><br />Cookies do not appear to be enabled in your browser. You must enable cookies for this site before you can login.  You can consult your browser's help documentation for information on enabling cookies."
@@ -5337,7 +5337,7 @@ msgstr "שאילתא"
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -5998,7 +5998,7 @@ msgstr "ההודעה הבאה נשלחה למשתמש ה-PhpGedView שלך מ-"
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
-msgstr "(לא-ידוע)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:79 ../includes/sort_tables_utf8.php:89
 msgid "(غير معروف)"
@@ -6006,23 +6006,23 @@ msgstr "(غير-معروف)"
 
 #: ../includes/sort_tables_utf8.php:80 ../includes/sort_tables_utf8.php:90
 msgid "(άγνωστος/η)"
-msgstr "(άγνωστος/η)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:81 ../includes/sort_tables_utf8.php:91
 msgid "(неопределено)"
-msgstr "(неопределено)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:82 ../includes/sort_tables_utf8.php:92
 msgid "(未知)"
-msgstr "(未知)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:83
 msgid "(vô danh)"
-msgstr "(vô danh)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:93
 msgid "(không biết tuổi)"
-msgstr "(không biết tuổi)"
+msgstr ""
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
@@ -7472,14 +7472,14 @@ msgstr "העתק"
 #: ../includes/functions/functions_print_facts.php:935
 #: ../includes/functions/functions_print_facts.php:1226
 msgid "Privacy"
-msgstr ""
+msgstr "אישי"
 
 #: ../includes/functions/functions_print_facts.php:240
 #: ../includes/functions/functions_print_facts.php:372
 #: ../includes/functions/functions_print_facts.php:937
 #: ../includes/functions/functions_print_facts.php:1228
 msgid "Confidential"
-msgstr ""
+msgstr "סודי"
 
 #: ../includes/functions/functions_print_facts.php:252
 msgid "MARR_"
@@ -7557,7 +7557,7 @@ msgstr "דואר אלקטרוני"
 #: ../modules/googlemap/googlemap.php:326 ../help_text.php:1362
 #: ../blocks/user_favorites.php:179 ../blocks/gedcom_favorites.php:179
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Role"
 #: ../includes/functions/functions_print_facts.php:947
@@ -7630,7 +7630,7 @@ msgstr "בלתי ידוע"
 #: ../includes/classes/class_note.php:51
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:201
 msgid "…"
-msgstr "…"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:134 ../blocks/user_welcome.php:58
 msgid "My Pedigree"
@@ -8131,7 +8131,7 @@ msgstr ""
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
 #: ../includes/session.php:478
 msgid "utf8_unicode_ci"
-msgstr "utf8_unicode_ci"
+msgstr ""
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:222 ../modules/sitemap/index.php:379
@@ -8455,7 +8455,7 @@ msgstr "תרשים סטטיסטי"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -10076,7 +10076,7 @@ msgstr "סבא"
 #: ../modules/googlemap/pedigree_map.php:702
 #: ../modules/googlemap/pedigree_map.php:704
 msgid "Gt"
-msgstr "Gt"
+msgstr ""
 
 #: ../modules/googlemap/pedigree_map.php:739
 msgid "Birth:"
@@ -14508,7 +14508,7 @@ msgstr "ברית מילה של אח"
 
 #: ../help_text.php:2481
 msgid "Add Media Tool"
-msgstr ""
+msgstr "כלי להוספת פרט מדיה חדש"
 
 #: ../help_text.php:2511
 msgid "Calendar"
@@ -14560,19 +14560,19 @@ msgstr ""
 
 #: ../help_text.php:2816
 msgid "This is a comma separated list of GEDCOM fact tags that will be shown on the add/edit name form.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store names in several different alphabets."
-msgstr "This is a comma separated list of GEDCOM fact tags that will be shown on the add/edit name form.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store names in several different alphabets."
+msgstr ""
 
 #: ../help_text.php:2821
 msgid "This is a comma separated list of GEDCOM fact tags that will be shown when you add or edit place names.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store place names in several different alphabets."
-msgstr "This is a comma separated list of GEDCOM fact tags that will be shown when you add or edit place names.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store place names in several different alphabets."
+msgstr ""
 
 #: ../help_text.php:2826
 msgid "If you have an environment with multiple GEDCOMs, setting this value to <b>Yes</b> allows your site visitors <u>and</u> users to have the option of changing GEDCOMs.  Setting it to <b>No</b> disables GEDCOM switching for both visitors <u>and</u> logged in users."
-msgstr "If you have an environment with multiple GEDCOMs, setting this value to <b>Yes</b> allows your site visitors <u>and</u> users to have the option of changing GEDCOMs.  Setting it to <b>No</b> disables GEDCOM switching for both visitors <u>and</u> logged in users."
+msgstr ""
 
 #: ../help_text.php:2831
 msgid "This option enables online editing features for this database so that users with Edit privileges may update data online."
-msgstr "This option enables online editing features for this database so that users with Edit privileges may update data online."
+msgstr ""
 
 #: ../help_text.php:2836
 msgid "Gives users the option of selecting their own theme from a menu.<br /><br />Even with this option set, the theme currently in effect may not provide for such a menu.  To be effective, this option requires the <b>Allow users to select their own theme</b> option to be set as well."
@@ -14580,27 +14580,27 @@ msgstr "Gives users the option of selecting their own theme from a menu.<br /><b
 
 #: ../help_text.php:2841
 msgid "Gives users the option of selecting their own theme."
-msgstr "Gives users the option of selecting their own theme."
+msgstr ""
 
 #: ../help_text.php:2846
 msgid "Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality."
-msgstr "Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality."
+msgstr ""
 
 #: ../help_text.php:2851
 msgid "The GEDCOM file you are importing has a special 3-byte code at the beginning.  This special code is used by some programs to indicate that the file has been recorded in the UTF-8 character set.<br /><br />Although this special code is not really an error, PhpGedView will not work properly when the input file contains the code.  You should let PhpGedView remove the code."
-msgstr "The GEDCOM file you are importing has a special 3-byte code at the beginning.  This special code is used by some programs to indicate that the file has been recorded in the UTF-8 character set.<br /><br />Although this special code is not really an error, PhpGedView will not work properly when the input file contains the code.  You should let PhpGedView remove the code."
+msgstr ""
 
 #: ../help_text.php:2856
 msgid "Dates can be recorded in various calendars such as Gregorian, Julian, or the Jewish Calendar.  This option allows you to convert dates to a preferred calendar.  For example, you could select Gregorian to convert Julian and Hebrew dates to Gregorian.  The converted date is shown in parentheses after the regular date.<br /><br />Dates are only converted if they are valid for the calendar.  For example, only dates between 22&nbsp;SEP&nbsp;1792 and 31&nbsp;DEC&nbsp;1805 will be converted to the French Republican calendar and only dates after 15&nbsp;OCT&nbsp;1582 will be converted to the Gregorian calendar.<br /><br />Hebrew is the same as Jewish, but using Hebrew characters.  Arabic is the same as Hijri, but using Arabic characters.<br /><br />Note: Since the Jewish and Hijri calendar day starts at dusk, any event taking place from dusk till midnight will display as one day prior to the correct date.  The display of Hebrew and Arabic can be problematic in old browsers, which may display text backwards (left to right) or not at all."
-msgstr "Dates can be recorded in various calendars such as Gregorian, Julian, or the Jewish Calendar.  This option allows you to convert dates to a preferred calendar.  For example, you could select Gregorian to convert Julian and Hebrew dates to Gregorian.  The converted date is shown in parentheses after the regular date.<br /><br />Dates are only converted if they are valid for the calendar.  For example, only dates between 22&nbsp;SEP&nbsp;1792 and 31&nbsp;DEC&nbsp;1805 will be converted to the French Republican calendar and only dates after 15&nbsp;OCT&nbsp;1582 will be converted to the Gregorian calendar.<br /><br />Hebrew is the same as Jewish, but using Hebrew characters.  Arabic is the same as Hijri, but using Arabic characters.<br /><br />Note: Since the Jewish and Hijri calendar day starts at dusk, any event taking place from dusk till midnight will display as one day prior to the correct date.  The display of Hebrew and Arabic can be problematic in old browsers, which may display text backwards (left to right) or not at all."
+msgstr ""
 
 #: ../help_text.php:2861
 msgid "How often should the program archive Changelog files."
-msgstr "How often should the program archive Changelog files."
+msgstr ""
 
 #: ../help_text.php:2866
 msgid "This is the character set of your GEDCOM file.  UTF-8 is the default and should work for almost all sites.  If you export your GEDCOM using IBM Windows encoding, you should put WINDOWS here.<br /><br />NOTE: PhpGedView can't support UNICODE (UTF-16) because the support is missing in PHP."
-msgstr "This is the character set of your GEDCOM file.  UTF-8 is the default and should work for almost all sites.  If you export your GEDCOM using IBM Windows encoding, you should put WINDOWS here.<br /><br />NOTE: PhpGedView can't support UNICODE (UTF-16) because the support is missing in PHP."
+msgstr ""
 
 #: ../help_text.php:2871
 msgid "This should be a comma or space separated list of facts, in addition to Birth and Death, that you want to appear in chart boxes such as the Pedigree chart.  This list requires you to use fact tags as defined in the GEDCOM 5.5.1 Standard.  For example, if you wanted the occupation to show up in the box, you would add \"OCCU\" to this field."
@@ -14608,31 +14608,31 @@ msgstr ""
 
 #: ../help_text.php:2876
 msgid "Check children's dates when determining whether a person is dead.  On older systems and large GEDCOMs this can slow down the response time of your site."
-msgstr "Check children's dates when determining whether a person is dead.  On older systems and large GEDCOMs this can slow down the response time of your site."
+msgstr ""
 
 #: ../help_text.php:2881
 msgid "Check relationships that are related by marriage."
-msgstr "Check relationships that are related by marriage."
+msgstr ""
 
 #: ../help_text.php:2886
 msgid "If you wish to use a version control system such as CVS to archive changes to your GEDCOM file and your configuration or privacy settings, enter the command here.  Leave the box blank if you do not wish to use a version control system.  Valid options are <b>cvs</b> and <b>svn</b>."
-msgstr "If you wish to use a version control system such as CVS to archive changes to your GEDCOM file and your configuration or privacy settings, enter the command here.  Leave the box blank if you do not wish to use a version control system.  Valid options are <b>cvs</b> and <b>svn</b>."
+msgstr ""
 
 #: ../help_text.php:2891
 msgid "If the number of times that a certain surname occurs is lower than the threshold, it will not appear in the list.  It can be added here manually.  If more than one surname is entered, they must be separated by a comma.  <b>Surnames are case-sensitive.</b>"
-msgstr "If the number of times that a certain surname occurs is lower than the threshold, it will not appear in the list.  It can be added here manually.  If more than one surname is entered, they must be separated by a comma.  <b>Surnames are case-sensitive.</b>"
+msgstr ""
 
 #: ../help_text.php:2896
 msgid "If you want to remove a surname from the Common Surname list without increasing the threshold value, you can do that by entering the surname here.  If more than one surname is entered, they must be separated by a comma. <b>Surnames are case-sensitive.</b>  Surnames entered here will also be removed from the Top-10 list on the Welcome page."
-msgstr "If you want to remove a surname from the Common Surname list without increasing the threshold value, you can do that by entering the surname here.  If more than one surname is entered, they must be separated by a comma. <b>Surnames are case-sensitive.</b>  Surnames entered here will also be removed from the Top-10 list on the Welcome page."
+msgstr ""
 
 #: ../help_text.php:2901
 msgid "This is the number of times that a surname must occur before it shows up in the Common Surname list on the Welcome page."
-msgstr "This is the number of times that a surname must occur before it shows up in the Common Surname list on the Welcome page."
+msgstr ""
 
 #: ../help_text.php:2906
 msgid "The person to contact about the genealogical data on this site."
-msgstr "The person to contact about the genealogical data on this site."
+msgstr ""
 
 #: ../help_text.php:2911
 msgid "The method to be used to contact the Genealogy contact about genealogy questions.<ul><li>The <b>Mailto link</b> option will create a \"mailto\" link that can be clicked to send an email using the mail client on the user's PC.</li><li>The <b>PhpGedView internal messaging</b> option will use a messaging system internal to PhpGedView, and no emails will be sent.</li><li>The <b>Internal messaging with emails</b> option is the default.  It will use the PhpGedView messaging system and will also send copies of the messages via email.</li><li>The <b>PhpGedView sends emails with no storage</b> option allows PhpGedView to handle the messaging and will send the messages as emails, but will not store the messages internally.  This option is similar to the <b>Mailto link</b> option, except that the message will be sent by PhpGedView instead of the user's workstation.</li><li>The <b>No contact method</b> option results in your users having no way of contacting you.</li></ul>"
@@ -14640,11 +14640,11 @@ msgstr ""
 
 #: ../help_text.php:2916
 msgid "Enter the maximum number of days to show in Upcoming Events blocks.  This number cannot be greater than 30. If you enter a larger value, 30 will be used.<br /><br />The value you enter here determines how far ahead PhpGedView looks when searching for upcoming events.  The results of this search, done once daily, are copied into a temporary file.<br /><br />No Upcoming Events blocks on Index or Portal pages can request more days than this value.  The larger you make this, the longer it will take to build the daily database extract, and the longer it will take to display the block, even when you request to display a number of days less than this setting."
-msgstr "Enter the maximum number of days to show in Upcoming Events blocks.  This number cannot be greater than 30. If you enter a larger value, 30 will be used.<br /><br />The value you enter here determines how far ahead PhpGedView looks when searching for upcoming events.  The results of this search, done once daily, are copied into a temporary file.<br /><br />No Upcoming Events blocks on Index or Portal pages can request more days than this value.  The larger you make this, the longer it will take to build the daily database extract, and the longer it will take to display the block, even when you request to display a number of days less than this setting."
+msgstr ""
 
 #: ../help_text.php:2921
 msgid "The DNS or IP address of the computer hosting your database server.  This setting is ignored if you are using an SQLite database."
-msgstr "The DNS or IP address of the computer hosting your database server.  This setting is ignored if you are using an SQLite database."
+msgstr ""
 
 #: ../help_text.php:2926
 msgid "The database in the server you want PhpGedView to use.<br /><br />The username you enter in the Database Username field must have Create, Insert, Update, Delete, and Select privileges on this database.  In SQLite you need to set this to a file name in a directory that is writable by PHP such as your index directory (index/phpgedview.db)."
@@ -14656,7 +14656,7 @@ msgstr "The database password for the user you entered in the קוד משתמש 
 
 #: ../help_text.php:2936
 msgid "The TCP Port that should be used when connecting to your database server.  Leave this setting blank to use the default port for your particular type of database.  This setting is ignored if you are using an SQLite database."
-msgstr "The TCP Port that should be used when connecting to your database server.  Leave this setting blank to use the default port for your particular type of database.  This setting is ignored if you are using an SQLite database."
+msgstr ""
 
 #: ../help_text.php:2941
 msgid "The type of database to connect to.<br /><br />PhpGedView can use any database that has a PDO driver available.  You need to ensure that your php.ini file loads both the <b>php_pdo</b> library and the appropriate driver for your database, e.g. <b>php_pdo_mysql</b>.<br /><br />Most databases require a username and password.  You also need to create the database before installing PhpGedView. However, SQLite does not need Database Host, Database Username, or Database Password, but you will need to set a file path for your database in the Database Name field.  PhpGedView will create the SQLite database file for you."
@@ -14664,7 +14664,7 @@ msgstr "The type of database to connect to.<br /><br />PhpGedView can use any da
 
 #: ../help_text.php:2946
 msgid "The database username required to login to your database.  This setting is ignored if you are using an SQLite database."
-msgstr "The database username required to login to your database.  This setting is ignored if you are using an SQLite database."
+msgstr ""
 
 #: ../help_text.php:2951
 msgid "Controls whether PhpGedView should use the database's built-in sorting and collation facilities.  It is generally quicker to use the database to sort and filter data rather than PHP, although not all databases/versions provide this feature.  The collation sequence used for each language is set in that language's settings page.<br /><br /><span class=\"warning\">IMPORTANT: You should only set this value to YES if you do so BEFORE the database tables are created for the first time. Selecting it on an existing database could cause your data to become corrupted.</span><br /><br />MySQL and PostgreSQL both offer good support for UTF-8, although not all collation sequences are available in earlier versions of MySQL.  Other databases offer little or no support for UTF-8. If you are unsure of your database's support of UTF-8, you should set this value to <b>No</b>.<br /><br />This <a href='http://en.wikipedia.org/wiki/UTF-8' target='_blank' title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about UTF-8."
@@ -14672,11 +14672,11 @@ msgstr ""
 
 #: ../help_text.php:2956
 msgid "Set the default number of generations to display on Descendancy and Pedigree charts."
-msgstr "Set the default number of generations to display on Descendancy and Pedigree charts."
+msgstr ""
 
 #: ../help_text.php:2961
 msgid "Show single and double quotes when displaying Hebrew dates.<br /><br />Setting this to <b>Yes</b> will display February 8 1969 as <span lang='he-IL' dir='rtl'>&#1499;'&#160;&#1513;&#1489;&#1496;&#160;&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm; while setting it to <b>No</b> will display it as <span lang='he-IL' dir='rtl'>&#1499;&#160;&#1513;&#1489;&#1496;&#160;&#1514;&#1513;&#1499;&#1496;</span>&lrm;.  This has no impact on the Jewish year setting since quotes are not used in Jewish dates displayed with Latin characters.<br /><br />Note: This setting is similar to the PHP 5.0 Calendar constants CAL_JEWISH_ADD_ALAFIM_GERESH and CAL_JEWISH_ADD_GERESHAYIM.  This single setting affects both."
-msgstr "Show single and double quotes when displaying Hebrew dates.<br /><br />Setting this to <b>Yes</b> will display February 8 1969 as <span lang='he-IL' dir='rtl'>&#1499;'&#160;&#1513;&#1489;&#1496;&#160;&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm; while setting it to <b>No</b> will display it as <span lang='he-IL' dir='rtl'>&#1499;&#160;&#1513;&#1489;&#1496;&#160;&#1514;&#1513;&#1499;&#1496;</span>&lrm;.  This has no impact on the Jewish year setting since quotes are not used in Jewish dates displayed with Latin characters.<br /><br />Note: This setting is similar to the PHP 5.0 Calendar constants CAL_JEWISH_ADD_ALAFIM_GERESH and CAL_JEWISH_ADD_GERESHAYIM.  This single setting affects both."
+msgstr ""
 
 #: ../help_text.php:2966
 msgid "Show Alafim in Hebrew calendars.<br /><br />Setting this to <b>Yes</b> will display the year 1969 as <span lang=\"he-IL\" dir='rtl'>&#1492;'&#160;&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm; while setting it to <b>No</b> will display the year as <span lang=\"he-IL\" dir='rtl'>&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm;.  This has no impact on the Jewish year setting.  The year will display as 5729 regardless of this setting.<br /><br />Note: This setting is similar to the PHP 5.0 Calendar constant CAL_JEWISH_ADD_ALAFIM."
@@ -14684,7 +14684,7 @@ msgstr ""
 
 #: ../help_text.php:2971
 msgid "This option controls whether or not to automatically close the Edit window after a successful update."
-msgstr "This option controls whether or not to automatically close the Edit window after a successful update."
+msgstr ""
 
 #: ../help_text.php:2976
 msgid "This option determines whether Autocomplete should be active while information is being entered into certain fields on input forms.  When this option is set to <b>Yes</b>, text input fields for which Autocomplete is possible are indicated by a differently colored background.<br /><br />When Autocomplete is active, PhpGedView will search its database for possible matches according to what you have already entered.  As you enter more information, the list of possible matches is refined.  When you see the desired input in the list of matches, you can move the mouse cursor to that line of the list and then click the left mouse button to complete the input.<br /><br />The disadvantages of Autocomplete are that it slows the program, entails significant database activity, and also results in more data being sent to the browser."
@@ -14692,27 +14692,27 @@ msgstr "This option determines whether Autocomplete should be active while infor
 
 #: ../help_text.php:2981
 msgid "The clippings cart allows users to add people to a temporary file that they can download in GEDCOM format for subsequent import into their genealogy software."
-msgstr "The clippings cart allows users to add people to a temporary file that they can download in GEDCOM format for subsequent import into their genealogy software."
+msgstr ""
 
 #: ../help_text.php:2986
 msgid "Set to <b>Yes</b> to allow users to override the site's default language.  They can do this through their browser's preferred language configuration, configuration options on their Account page, or through links or buttons on most PhpGedView pages."
-msgstr "Set to <b>Yes</b> to allow users to override the site's default language.  They can do this through their browser's preferred language configuration, configuration options on their Account page, or through links or buttons on most PhpGedView pages."
+msgstr ""
 
 #: ../help_text.php:2991
 msgid "This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS' target='_blank' title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats."
-msgstr "This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS' target='_blank' title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats."
+msgstr ""
 
 #: ../help_text.php:2996
 msgid "This option controls whether or not to automatically display content of a <i>Note</i> record on the Individual page."
-msgstr "This option controls whether or not to automatically display content of a <i>Note</i> record on the Individual page."
+msgstr ""
 
 #: ../help_text.php:3001
 msgid "This option controls whether or not to automatically expand the <i>Events of close relatives</i> list."
-msgstr "This option controls whether or not to automatically expand the <i>Events of close relatives</i> list."
+msgstr ""
 
 #: ../help_text.php:3006
 msgid "This option controls whether or not to automatically display content of a <i>Source</i> record on the Individual page."
-msgstr "This option controls whether or not to automatically display content of a <i>Source</i> record on the Individual page."
+msgstr ""
 
 #: ../help_text.php:3011
 msgid "This is the list of GEDCOM facts that your users can add to families.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Family Facts</i> list."
@@ -14720,7 +14720,7 @@ msgstr "This is the list of GEDCOM facts that your users can add to families.  Y
 
 #: ../help_text.php:3016
 msgid "This is the short list of GEDCOM family facts that appears next to the full list and can be added with a single click."
-msgstr "This is the short list of GEDCOM family facts that appears next to the full list and can be added with a single click."
+msgstr ""
 
 #: ../help_text.php:3021
 msgid "This is the list of GEDCOM facts that your users can only add <u>once</u> to families.  For example, if MARR is in this list, users will not be able to add more than one MARR record to a family.  Fact names that appear in this list must not also appear in the <i>Family Add Facts</i> list."
@@ -14728,23 +14728,23 @@ msgstr "This is the list of GEDCOM facts that your users can only add <u>once</u
 
 #: ../help_text.php:3026
 msgid "When a new family record is added online in PhpGedView, a new ID for that family will be generated automatically. The family ID will have this prefix."
-msgstr "When a new family record is added online in PhpGedView, a new ID for that family will be generated automatically. The family ID will have this prefix."
+msgstr ""
 
 #: ../help_text.php:3031
 msgid "Change this to point to the icon you want to display in peoples' favorites menu when they bookmark your site."
-msgstr "Change this to point to the icon you want to display in peoples' favorites menu when they bookmark your site."
+msgstr ""
 
 #: ../help_text.php:3036
 msgid "Source citations can include fields to record the quality of the data (primary, secondary, etc.) and the date the event was recorded in the source.  If you don't use these fields, you can disable them when creating new source citations."
-msgstr "Source citations can include fields to record the quality of the data (primary, secondary, etc.) and the date the event was recorded in the source.  If you don't use these fields, you can disable them when creating new source citations."
+msgstr ""
 
 #: ../help_text.php:3041
 msgid "This option allows you to choose which tab opens automatically on the Individual page when that page is accessed."
-msgstr "This option allows you to choose which tab opens automatically on the Individual page when that page is accessed."
+msgstr ""
 
 #: ../help_text.php:3046
 msgid "When a new individual record is added online in PhpGedView, a new ID for that individual will be generated automatically. The individual ID will have this prefix."
-msgstr "When a new individual record is added online in PhpGedView, a new ID for that individual will be generated automatically. The individual ID will have this prefix."
+msgstr ""
 
 #: ../help_text.php:3051
 msgid "<b>GUID</b> in this context is an acronym for «Globally Unique ID».<br /><br />GUIDs are intended to help identify each individual in a manner that is repeatable, so that central organizations such as the Family History Center of the LDS Church in Salt Lake City, or even compatible programs running on your own server, can determine whether they are dealing with the same person no matter where the GEDCOM originates.  The goal of the Family History Center is to have a central repository of genealogical data and expose it through web services. This will enable any program to access the data and update their data within it.<br /><br />If you do not intend to share this GEDCOM with anyone else, you do not need to let PhpGedView create these GUIDs; however, doing so will do no harm other than increasing the size of your GEDCOM."
@@ -14756,15 +14756,15 @@ msgstr ""
 
 #: ../help_text.php:3061
 msgid "This option will enable all privacy settings and hide the details of living people.<br /><br />Living people are defined to be those who do not have an event more recent than the number of years specified in variable $MAX_ALIVE_AGE.  For this purpose, births of children are considered to be such events as well."
-msgstr "This option will enable all privacy settings and hide the details of living people.<br /><br />Living people are defined to be those who do not have an event more recent than the number of years specified in variable $MAX_ALIVE_AGE.  For this purpose, births of children are considered to be such events as well."
+msgstr ""
 
 #: ../help_text.php:3066
 msgid "The legend used to identify the link to your main Home page."
-msgstr "The legend used to identify the link to your main Home page."
+msgstr ""
 
 #: ../help_text.php:3071
 msgid "Each PhpGedView page includes a link to your main Home page.  The appearance of this link is controlled by the theme being used.  You enter the actual URL to your Home site here."
-msgstr "Each PhpGedView page includes a link to your main Home page.  The appearance of this link is controlled by the theme being used.  You enter the actual URL to your Home site here."
+msgstr ""
 
 #: ../help_text.php:3076
 msgid "The path to a readable and writable directory where PhpGedView should store index files (include the trailing \"/\").  PhpGedView does not require this directory's name to be \"index\".  You can choose any name you like.<br /><br />For security, this directory should be placed somewhere in the server's file space that is not accessible from the Internet. An example of such a structure follows:<br /><b>PhpGedView:</b> dir1/dir2/dir3/PhpGedView<br /><b>Index:</b> dir1/dir4/dir5/dir6/index<br /><br />For the example shown, you would enter <b>../../dir4/dir5/dir6/index/</b> in this field."
@@ -14776,7 +14776,7 @@ msgstr "This is the list of GEDCOM facts that your users can add to individuals.
 
 #: ../help_text.php:3086
 msgid "This is the short list of GEDCOM individual facts that appears next to the full list and can be added with a single click."
-msgstr "This is the short list of GEDCOM individual facts that appears next to the full list and can be added with a single click."
+msgstr ""
 
 #: ../help_text.php:3091
 msgid "This is the list of GEDCOM facts that your users can only add <u>once</u> to individuals.  For example, if BIRT is in this list, users will not be able to add more than one BIRT record to an individual.  Fact names that appear in this list must not also appear in the <i>Individual Add Facts</i> list."
@@ -14784,7 +14784,7 @@ msgstr "This is the list of GEDCOM facts that your users can only add <u>once</u
 
 #: ../help_text.php:3096
 msgid "Use Jewish Ashkenazi pronunciations.<br /><br />When set to <b>Yes</b> the months Cheshvan and Teves will be spelled with Ashkenazi pronunciation.  Setting it to <b>No</b> will change the months to Hesvan and Tevet.  This only affects the Jewish setting.  The Hebrew setting will always use the Hebrew alphabet."
-msgstr "Use Jewish Ashkenazi pronunciations.<br /><br />When set to <b>Yes</b> the months Cheshvan and Teves will be spelled with Ashkenazi pronunciation.  Setting it to <b>No</b> will change the months to Hesvan and Tevet.  This only affects the Jewish setting.  The Hebrew setting will always use the Hebrew alphabet."
+msgstr ""
 
 #: ../help_text.php:3101
 msgid "Assign the default language for the site.<br /><br />When the <b>Allow user to change language</b> option is set, users can override this setting through their browser's preferred language configuration, configuration options on their Account page, or through links or buttons on most PhpGedView pages."
@@ -14804,11 +14804,11 @@ msgstr ""
 
 #: ../help_text.php:3121
 msgid "How often should the program archive log files."
-msgstr "How often should the program archive log files."
+msgstr ""
 
 #: ../help_text.php:3126
 msgid "You only need to enter a Login URL if you want to redirect to a different site or location when your users login.  This is very useful if you need to switch from http to https when your users login.  Include the full URL to <i>login.php</i>.  For example, https://www.yourserver.com/phpgedview/login.php ."
-msgstr "You only need to enter a Login URL if you want to redirect to a different site or location when your users login.  This is very useful if you need to switch from http to https when your users login.  Include the full URL to <i>login.php</i>.  For example, https://www.yourserver.com/phpgedview/login.php ."
+msgstr ""
 
 #: ../help_text.php:3131
 msgid "If this person has any events other than Death, Burial, or Cremation more recent than this number of years, he is considered to be \"alive\".  Children's birth dates are considered to be such events for this purpose."
@@ -14816,11 +14816,11 @@ msgstr ""
 
 #: ../help_text.php:3136
 msgid "Set the maximum number of generations to display on Descendancy charts."
-msgstr "Set the maximum number of generations to display on Descendancy charts."
+msgstr ""
 
 #: ../help_text.php:3141
 msgid "Set the maximum number of generations to display on Pedigree charts."
-msgstr "Set the maximum number of generations to display on Pedigree charts."
+msgstr ""
 
 #: ../help_text.php:3146
 msgid "If the <i>Use relationship privacy</i> option is enabled, logged-in users will only be able to see or edit individuals within this number of relationship steps.<br /><br />This option sets the default for all users who have access to this genealogical database.  The Administrator can override this option for individual users by editing the user's account details."
@@ -14828,7 +14828,7 @@ msgstr "If the <i>השתמש בפרטיות בקשרי משפחה</i> option is 
 
 #: ../help_text.php:3151
 msgid "This option limits the rate at which a user can view pages.<br /><br />If that rate is exceeded, PhpGedView treats the session as a hacking attempt;  the session will be terminated with a suitable message.  These two values should place a reasonable limit on the amount of bandwith and downloaded bytes from the server.  This feature can be switched off by setting the time interval to 0."
-msgstr "This option limits the rate at which a user can view pages.<br /><br />If that rate is exceeded, PhpGedView treats the session as a hacking attempt;  the session will be terminated with a suitable message.  These two values should place a reasonable limit on the amount of bandwith and downloaded bytes from the server.  This feature can be switched off by setting the time interval to 0."
+msgstr ""
 
 #: ../help_text.php:3156
 msgid "A value of 0 will ignore all directories in the file path for the media object.  A value of 1 will retain the first directory containing this image.  Increasing the numbers increases number of parent directories to retain in the path.<br /><br />For example, if you link an image in your GEDCOM with a path like <b>C:\\Documents&nbsp;and&nbsp;Settings\\User\\My&nbsp;Documents\\My&nbsp;Pictures\\Genealogy\\Surname&nbsp;Line\\grandpa.jpg</b>, a value of 0 will translate this path to <b>./media/grandpa.jpg</b>.  A value of 1 will translate this to <b>./media/Surname&nbsp;Line/grandpa.jpg</b>, etc.  Most people will only need to use a 0.  However, it is possible that some media objects kept in different directories have identical names and would overwrite each other when this option is set to 0.  Non-zero settings allow you to keep some organization in your media thereby preventing name collisions."
@@ -14840,7 +14840,7 @@ msgstr ""
 
 #: ../help_text.php:3166
 msgid "When a multimedia link is found starting with for example http://, ftp://, mms:// it will not be altered when set to <b>Yes</b>. For example, http://www.myfamily.com/photo/dad.jpg will stay http://www.myfamily.com/photo/dad.jpg.  When set to <b>No</b>, the link will be handled as a standard reference and the media depth will be used.  For example: http://www.myfamily.com/photo/dad.jpg will be changed to ./media/dad.jpg"
-msgstr "When a multimedia link is found starting with for example http://, ftp://, mms:// it will not be altered when set to <b>Yes</b>. For example, http://www.myfamily.com/photo/dad.jpg will stay http://www.myfamily.com/photo/dad.jpg.  When set to <b>No</b>, the link will be handled as a standard reference and the media depth will be used.  For example: http://www.myfamily.com/photo/dad.jpg will be changed to ./media/dad.jpg"
+msgstr ""
 
 #: ../help_text.php:3171
 #, php-format
@@ -14849,15 +14849,15 @@ msgstr "Directory in which the protected Media directory can be created.  כאש
 
 #: ../help_text.php:3176
 msgid "When an image is in the protected Media directory, should its thumbnail be protected as well?"
-msgstr "When an image is in the protected Media directory, should its thumbnail be protected as well?"
+msgstr ""
 
 #: ../help_text.php:3181
 msgid "When a new media record is added online in PhpGedView, a new ID for that media will be generated automatically. The media ID will have this prefix."
-msgstr "When a new media record is added online in PhpGedView, a new ID for that media will be generated automatically. The media ID will have this prefix."
+msgstr ""
 
 #: ../help_text.php:3186
 msgid "The value to place in the Audience meta tag in the HTML page header."
-msgstr "The value to place in the Audience meta tag in the HTML page header."
+msgstr ""
 
 #: ../help_text.php:3191
 msgid "The value to place in the Author meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact."
@@ -14869,7 +14869,7 @@ msgstr "The value to place in the Copyright meta tag in the HTML page header.  L
 
 #: ../help_text.php:3201
 msgid "The value to place in the Description meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database."
-msgstr "The value to place in the Description meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database."
+msgstr ""
 
 #: ../help_text.php:3206
 msgid "The value to place in the Keywords meta tag in the HTML page header.  Some search engines will use the Keywords meta tag to help index your page.<br /><br />The Most Common Surnames list that appears in the GEDCOM Statistics block on your Welcome page can also be added to anything you enter here."
@@ -14877,11 +14877,11 @@ msgstr "The value to place in the Keywords meta tag in the HTML page header.  So
 
 #: ../help_text.php:3211
 msgid "The value to place in the Page-topic meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database."
-msgstr "The value to place in the Page-topic meta tag in the HTML page header.  Leave this field empty to use the title of the currently active database."
+msgstr ""
 
 #: ../help_text.php:3216
 msgid "The value to place in the Page-type meta tag in the HTML page header."
-msgstr "The value to place in the Page-type meta tag in the HTML page header."
+msgstr ""
 
 #: ../help_text.php:3221
 msgid "The value to place in the Publisher meta tag in the HTML page header.  Leave this field empty to use the full name of the Genealogy contact."
@@ -14889,15 +14889,15 @@ msgstr "The value to place in the Publisher meta tag in the HTML page header.  L
 
 #: ../help_text.php:3226
 msgid "The value to place in the Revisit meta tag in the HTML page header.  Some web crawlers ignore this value."
-msgstr "The value to place in the Revisit meta tag in the HTML page header.  Some web crawlers ignore this value."
+msgstr ""
 
 #: ../help_text.php:3231
 msgid "The value to place in the Robots meta tag in the HTML page header.  Some robots or web crawlers ignore this value."
-msgstr "The value to place in the Robots meta tag in the HTML page header.  Some robots or web crawlers ignore this value."
+msgstr ""
 
 #: ../help_text.php:3236
 msgid "Anything on this line will be added to the TITLE tag in the HTML page header after the regular page title and before the PhpGedView credit."
-msgstr "Anything on this line will be added to the TITLE tag in the HTML page header after the regular page title and before the PhpGedView credit."
+msgstr ""
 
 #: ../help_text.php:3241
 msgid "GEDCOM 5.5.1 allows you to link pictures, videos, and other multimedia objects into your GEDCOM.  If you do not include multimedia objects in your GEDCOM, you can disable the multimedia features by setting this value to <b>No</b>.<br /><br />See the Multimedia section in the <a href=\"readme.txt\">readme.txt</a> file for more information about including media in your site."
@@ -14909,7 +14909,7 @@ msgstr "Which page should users see after they have logged in?<br /><br />The ch
 
 #: ../help_text.php:3251
 msgid "This option controls whether or not to show the Birth and Death details of an individual on charts."
-msgstr "This option controls whether or not to show the Birth and Death details of an individual on charts."
+msgstr ""
 
 #: ../help_text.php:3256 ../help_text.php:4335
 msgid "Here you can set the number of generations to display on this page.<br /><br />The right number for you depends of the size of your screen and whether you show details or not.  Processing time will increase as you increase the number of generations."
@@ -14929,15 +14929,15 @@ msgstr ""
 
 #: ../help_text.php:3276
 msgid "This option indicates whether the Pedigree chart should be generated in landscape or portrait mode."
-msgstr "This option indicates whether the Pedigree chart should be generated in landscape or portrait mode."
+msgstr ""
 
 #: ../help_text.php:3281
 msgid "Set the ID of the default person to display on Pedigree and Descendancy charts."
-msgstr "Set the ID of the default person to display on Pedigree and Descendancy charts."
+msgstr ""
 
 #: ../help_text.php:3286
 msgid "This option controls whether or not to show the individual's gender icon on charts.<br /><br />Since the gender is also indicated by the color of the box, this option doesn't conceal the gender. The option simply removes some duplicate information from the box."
-msgstr "This option controls whether or not to show the individual's gender icon on charts.<br /><br />Since the gender is also indicated by the color of the box, this option doesn't conceal the gender. The option simply removes some duplicate information from the box."
+msgstr ""
 
 #: ../help_text.php:3291
 msgid "The maximum amount of memory that can be consumed by PhpGedView scripts.  The default is 32 Mb.  Many hosts disable this option in their PHP configuration; changing this value may not actually affect the current maximum memory setting."
@@ -14945,15 +14945,15 @@ msgstr "The maximum amount of memory that can be consumed by PhpGedView scripts.
 
 #: ../help_text.php:3296
 msgid "The path to store PhpGedView session files.<br /><br />Some hosts do not have PHP configured properly and sessions are not maintained between page requests.  This option lets site administrators overcome that problem by saving files in one of their local directories.  The ./index/ directory is a good choice if you need to change this.  The default is to leave the field empty, which will use the Save path as configured in <i>php.ini</i>."
-msgstr "The path to store PhpGedView session files.<br /><br />Some hosts do not have PHP configured properly and sessions are not maintained between page requests.  This option lets site administrators overcome that problem by saving files in one of their local directories.  The ./index/ directory is a good choice if you need to change this.  The default is to leave the field empty, which will use the Save path as configured in <i>php.ini</i>."
+msgstr ""
 
 #: ../help_text.php:3301
 msgid "The time in seconds that a PhpGedView session remains active before requiring a login.  The default is 7200, which is 2 hours."
-msgstr "The time in seconds that a PhpGedView session remains active before requiring a login.  The default is 7200, which is 2 hours."
+msgstr ""
 
 #: ../help_text.php:3306
 msgid "In normal mail headers for external mails, the email address as well as the name are used. Some mail systems will not accept this. When set to <b>Yes</b>, only the email address will be used."
-msgstr "In normal mail headers for external mails, the email address as well as the name are used. Some mail systems will not accept this. When set to <b>Yes</b>, only the email address will be used."
+msgstr ""
 
 #: ../help_text.php:3311
 msgid "Use SMTP to send e-mails from PhpGedView.<br /><br />This option requires access to an SMTP mail server.  When set to <b>No</b> PhpGedView will use the e-mail system built into PHP on this server."
@@ -14961,23 +14961,23 @@ msgstr "Use SMTP to send e-mails from PhpGedView.<br /><br />This option require
 
 #: ../help_text.php:3316
 msgid "The password required for authentication with the SMTP server."
-msgstr "The password required for authentication with the SMTP server."
+msgstr ""
 
 #: ../help_text.php:3321
 msgid "The user name required for authentication with the SMTP server."
-msgstr "The user name required for authentication with the SMTP server."
+msgstr ""
 
 #: ../help_text.php:3326
 msgid "Use name and password authentication to connect to the SMTP server.<br /><br />Some SMTP servers require all connections to be authenticated before they will accept outbound e-mails."
-msgstr "Use name and password authentication to connect to the SMTP server.<br /><br />Some SMTP servers require all connections to be authenticated before they will accept outbound e-mails."
+msgstr ""
 
 #: ../help_text.php:3331
 msgid "Enter the name to be used in the &laquo;From:&raquo; field of e-mails originating at this site.<br /><br />For example, if your name is <b>John Smith</b> and you are the site administrator for a site that is  known as <b>Jones Genealogy</b>, you could enter something like <b>John Smith</b> or <b>Jones Genealogy</b> or even <b>John Smith, Administrator: Jones Genealogy</b>.  You may enter whatever you wish, but HTML is not permitted."
-msgstr "Enter the name to be used in the &laquo;From:&raquo; field of e-mails originating at this site.<br /><br />For example, if your name is <b>John Smith</b> and you are the site administrator for a site that is  known as <b>Jones Genealogy</b>, you could enter something like <b>John Smith</b> or <b>Jones Genealogy</b> or even <b>John Smith, Administrator: Jones Genealogy</b>.  You may enter whatever you wish, but HTML is not permitted."
+msgstr ""
 
 #: ../help_text.php:3336
 msgid "This is the domain part of a valid e-mail address on the SMTP server.<br /><br />For example, if you have an e-mail account such as <b>yourname@abc.xyz.com</b>, you would enter <b>abc.xyz.com</b> here."
-msgstr "This is the domain part of a valid e-mail address on the SMTP server.<br /><br />For example, if you have an e-mail account such as <b>yourname@abc.xyz.com</b>, you would enter <b>abc.xyz.com</b> here."
+msgstr ""
 
 #: ../help_text.php:3341
 msgid "This is the name of the SMTP mail server.  Example: <b>smtp.foo.bar.com</b>.<br /><br />Configuration values for some e-mail providers:<br /><br /><b>Gmail<br /></b><br /><b>Outgoing server (SMTP) name:</b> smtp.gmail.com<br /><b>SMTP Port:</b> 465 or 587<br /><b>Secure connection:</b> SSL<br /><br /><b>Hotmail<br /></b><br /><b>Outgoing server (SMTP) name:</b> smtp.live.com<br /><b>SMTP Port:</b> 25 or 587<br /><b>Secure connection:</b> TLS<br /><br /><b>Yahoo Mail Plus (currently a paid service)<br /></b><br /><b>Outgoing server (SMTP) name:</b> smtp.mail.yahoo.com<br /><b>SMTP Port:</b> 25"
@@ -14985,31 +14985,31 @@ msgstr "This is the name of the SMTP mail server.  Example: <b>smtp.foo.bar.com<
 
 #: ../help_text.php:3346
 msgid "The port number to be used for connections to the SMTP server.  Generally, this is port <b>25</b>."
-msgstr "The port number to be used for connections to the SMTP server.  Generally, this is port <b>25</b>."
+msgstr ""
 
 #: ../help_text.php:3351
 msgid "Transport Layer Security (TLS) and Secure Sockets Layer (SSL) are Internet data encryption protocols.<br /><br />TLS 1.0, 1.1 and 1.2 are standardized developments of SSL 3.0. TLS 1.0 and SSL 3.1 are equivalent. Further work on SSL is now done under the new name, TLS.<br /><br />If your SMTP Server requires the SSL protocol during login, you should select the <b>SSL</b> option. If your SMTP Server requires the TLS protocol during login, you should select the <b>TLS</b> option."
-msgstr "Transport Layer Security (TLS) and Secure Sockets Layer (SSL) are Internet data encryption protocols.<br /><br />TLS 1.0, 1.1 and 1.2 are standardized developments of SSL 3.0. TLS 1.0 and SSL 3.1 are equivalent. Further work on SSL is now done under the new name, TLS.<br /><br />If your SMTP Server requires the SSL protocol during login, you should select the <b>SSL</b> option. If your SMTP Server requires the TLS protocol during login, you should select the <b>TLS</b> option."
+msgstr ""
 
 #: ../help_text.php:3356
 msgid "Specifies whether messages sent through PhpGedView can be stored in the database.  If set to <b>Yes</b> users will be able to retrieve their messages when they login to PhpGedView.  If set to <b>No</b> messages will only be emailed."
-msgstr "Specifies whether messages sent through PhpGedView can be stored in the database.  If set to <b>Yes</b> users will be able to retrieve their messages when they login to PhpGedView.  If set to <b>No</b> messages will only be emailed."
+msgstr ""
 
 #: ../help_text.php:3361
 msgid "E-mail address to be used in the &laquo;From:&raquo; field of e-mails that PhpGedView creates automatically.<br /><br />PhpGedView can automatically create e-mails to notify administrators of changes that need to be reviewed.  PhpGedView also sends notification e-mails to users who have requested an account.<br /><br />Usually, the &laquo;From:&raquo; field of these automatically created e-mails is something like <i>From: phpgedview-noreply@yoursite</i> to show that no response to the e-mail is required.  To guard against spam or other e-mail abuse, some e-mail systems require each message's &laquo;From:&raquo; field to reflect a valid e-mail account and will not accept messages that are apparently from account <i>phpgedview-noreply</i>."
-msgstr "E-mail address to be used in the &laquo;From:&raquo; field of e-mails that PhpGedView creates automatically.<br /><br />PhpGedView can automatically create e-mails to notify administrators of changes that need to be reviewed.  PhpGedView also sends notification e-mails to users who have requested an account.<br /><br />Usually, the &laquo;From:&raquo; field of these automatically created e-mails is something like <i>From: phpgedview-noreply@yoursite</i> to show that no response to the e-mail is required.  To guard against spam or other e-mail abuse, some e-mail systems require each message's &laquo;From:&raquo; field to reflect a valid e-mail account and will not accept messages that are apparently from account <i>phpgedview-noreply</i>."
+msgstr ""
 
 #: ../help_text.php:3366
 msgid "Different countries use different ways to write the address. This option will enable you to place the postal code either before or after the city name."
-msgstr "Different countries use different ways to write the address. This option will enable you to place the postal code either before or after the city name."
+msgstr ""
 
 #: ../help_text.php:3371
 msgid "When adding new close relatives, you can add source citations to the records (e.g. INDI, FAM) or the facts (BIRT, MARR, DEAT).  This option controls which checkboxes are ticked by default."
-msgstr "When adding new close relatives, you can add source citations to the records (e.g. INDI, FAM) or the facts (BIRT, MARR, DEAT).  This option controls which checkboxes are ticked by default."
+msgstr ""
 
 #: ../help_text.php:3376
 msgid "The GEDCOM 5.5.1 specification includes the option of using RESN tags to set Privacy options for people and facts in the GEDCOM file.  Enabling this option will tell the program to look for level 1 RESN tags in GEDCOM records.  Level 2+ RESN tags are automatically applied and will not be affected by this setting.  Note that this might slow down some of the functions of PhpGedView such as the Individual list."
-msgstr "The GEDCOM 5.5.1 specification includes the option of using RESN tags to set Privacy options for people and facts in the GEDCOM file.  Enabling this option will tell the program to look for level 1 RESN tags in GEDCOM records.  Level 2+ RESN tags are automatically applied and will not be affected by this setting.  Note that this might slow down some of the functions of PhpGedView such as the Individual list."
+msgstr ""
 
 #: ../help_text.php:3381
 msgid "The <b>Limit Privacy by age of event</b> setting will hide the details of people based on how old they were at specific events regardless of whether they are dead or alive.<br /><br />Use this setting along with the <b>Age at which to assume a person is dead</b> setting.  For example, if you made the Age setting 100 and set this option to <b>Yes</b>, all persons, alive or dead, born less than 100 years ago would be set to private.  People who were married less than 85 years ago and people who died less than 75 years ago would also be marked as private.  Please note that using this option will slow down your performance somewhat."
@@ -15017,11 +15017,11 @@ msgstr "The <b>הגבל את הפרטיות לפי גיל האירוע</b> setti
 
 #: ../help_text.php:3386
 msgid "This is a comma separated list of GEDCOM fact tags that will always be shown on the Quick Update form whether or not they already exist in the individual's record.  For example, if BIRT is in the list, fields for birth date and birth place will always be shown on the form."
-msgstr "This is a comma separated list of GEDCOM fact tags that will always be shown on the Quick Update form whether or not they already exist in the individual's record.  For example, if BIRT is in the list, fields for birth date and birth place will always be shown on the form."
+msgstr ""
 
 #: ../help_text.php:3391
 msgid "This is a comma separated list of GEDCOM fact tags that will always be shown on the Family tabs of the Quick Update form whether or not they already exist in the family's record.  For example, if MARR is in the list, then fields for marriage date and marriage place will always be shown on the form."
-msgstr "This is a comma separated list of GEDCOM fact tags that will always be shown on the Family tabs of the Quick Update form whether or not they already exist in the family's record.  For example, if MARR is in the list, then fields for marriage date and marriage place will always be shown on the form."
+msgstr ""
 
 #: ../help_text.php:3396
 msgid "This is the list of GEDCOM facts that your users can add to repositories.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Repository Facts</i> list."
@@ -15029,7 +15029,7 @@ msgstr "This is the list of GEDCOM facts that your users can add to repositories
 
 #: ../help_text.php:3401
 msgid "This is the short list of GEDCOM repository facts that appears next to the full list and can be added with a single click."
-msgstr "This is the short list of GEDCOM repository facts that appears next to the full list and can be added with a single click."
+msgstr ""
 
 #: ../help_text.php:3406
 msgid "This is the list of GEDCOM facts that your users can only add <u>once</u> to repositories.  For example, if NAME is in this list, users will not be able to add more than one NAME record to a repository.  Fact names that appear in this list must not also appear in the <i>Repository Add Facts</i> list."
@@ -15037,7 +15037,7 @@ msgstr "This is the list of GEDCOM facts that your users can only add <u>once</u
 
 #: ../help_text.php:3411
 msgid "When a new repository record is added online in PhpGedView, a new ID for that repository will be generated automatically. The repository ID will have this prefix."
-msgstr "When a new repository record is added online in PhpGedView, a new ID for that repository will be generated automatically. The repository ID will have this prefix."
+msgstr ""
 
 #: ../help_text.php:3416
 msgid "If the option <b>Allow visitors to request account registration</b> is enabled this setting controls whether the admin must approve the registration.<br /><br />Setting this to <b>Yes</b> will require that all new users first verify themselves and then be approved by an admin before they can login.  With this setting on <b>No</b>, the <b>User approved by Admin</b> checkbox will be checked automatically when users verify their account, thus allowing an immediate login afterwards without admin intervention."
@@ -15045,11 +15045,11 @@ msgstr "If the option <b>אפשר למשתמשים לבקש רישום באתר<
 
 #: ../help_text.php:3421
 msgid "Enabling this option will force all visitors to login before they can view any data on the site."
-msgstr "Enabling this option will force all visitors to login before they can view any data on the site."
+msgstr ""
 
 #: ../help_text.php:3426
 msgid "The format to be used as the default feed format for the site. The numeric suffixes <u>do not</u> indicate version: they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS' target='_blank'title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats."
-msgstr "The format to be used as the default feed format for the site. The numeric suffixes <u>do not</u> indicate version: they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS' target='_blank'title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats."
+msgstr ""
 
 #: ../help_text.php:3431
 msgid "If the Media Firewall is enabled, should copies of watermarked full size images be stored on the server in addition to the same images without watermarks?<br /><br />When set to <b>Yes</b>, full-sized watermarked images will be produced more quickly at the expense of higher server disk space requirements."
@@ -15061,39 +15061,39 @@ msgstr "If the Media Firewall is enabled, should copies of watermarked thumbnail
 
 #: ../help_text.php:3441
 msgid "How often should the program archive Searchlog files."
-msgstr "How often should the program archive Searchlog files."
+msgstr ""
 
 #: ../help_text.php:3446
 msgid "For security reasons, GEDCOM files should not be in a location where they can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOM files can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded."
-msgstr "For security reasons, GEDCOM files should not be in a location where they can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOM files can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded."
+msgstr ""
 
 #: ../help_text.php:3451
 msgid "If you use https or a port other than the default, you will need to enter the URL to access your server here."
-msgstr "If you use https or a port other than the default, you will need to enter the URL to access your server here."
+msgstr ""
 
 #: ../help_text.php:3456
 msgid "This option controls whether or not the Close Relatives tab should show differences between birth dates of spouses, between marriage date and birth date of first child, and between birth dates of children."
-msgstr "This option controls whether or not the Close Relatives tab should show differences between birth dates of spouses, between marriage date and birth date of first child, and between birth dates of children."
+msgstr ""
 
 #: ../help_text.php:3461
 msgid "This option will enable links, identified by question marks, next to items on many pages.  These links allow users to get information or help about those items."
-msgstr "This option will enable links, identified by question marks, next to items on many pages.  These links allow users to get information or help about those items."
+msgstr ""
 
 #: ../help_text.php:3466
 msgid "Show hit counters on Portal and Individual pages."
-msgstr "Show hit counters on Portal and Individual pages."
+msgstr ""
 
 #: ../help_text.php:3471
 msgid "Set the privacy access level for all dead people."
-msgstr "Set the privacy access level for all dead people."
+msgstr ""
 
 #: ../help_text.php:3476
 msgid "This option controls whether or not to show empty boxes on Pedigree charts."
-msgstr "This option controls whether or not to show empty boxes on Pedigree charts."
+msgstr ""
 
 #: ../help_text.php:3481
 msgid "This option controls whether or not to show estimated dates for birth and death instead of leaving blanks on individual lists and charts for individuals whose dates are not known."
-msgstr "This option controls whether or not to show estimated dates for birth and death instead of leaving blanks on individual lists and charts for individuals whose dates are not known."
+msgstr ""
 
 #: ../help_text.php:3486
 msgid "Set this to <b>Yes</b> to display icons near Fact names on the Personal Facts and Details page.  Fact icons will be displayed only if they exist in the <i>images/facts</i> directory of the current theme."
@@ -15101,7 +15101,7 @@ msgstr "Set this to <b>כן</b> to display icons near Fact names on the עובד
 
 #: ../help_text.php:3491
 msgid "Setting this to <b>Yes</b> will place links on individuals, sources, and families to let users bring up another window containing the raw data taken right out of the GEDCOM file."
-msgstr "Setting this to <b>Yes</b> will place links on individuals, sources, and families to let users bring up another window containing the raw data taken right out of the GEDCOM file."
+msgstr ""
 
 #: ../help_text.php:3496
 msgid "If you have enabled multimedia in your site, you can have PhpGedView display a thumbnail image next to the person's name in charts and boxes.<br /><br />Currently, PhpGedView uses the first multimedia object listed in the GEDCOM record as the highlight image.  For people with multiple images, you should arrange the multimedia objects such that the one you wish to be highlighted appears first, before any others.<br /><br />See the Multimedia section in the <a href=\"readme.txt\">readme.txt</a> file for more information about including media in your site."
@@ -15113,11 +15113,11 @@ msgstr "This option controls whether or not to show ID numbers in parentheses af
 
 #: ../help_text.php:3506
 msgid "This option controls whether or not to show GEDCOM record last change date on lists."
-msgstr "This option controls whether or not to show GEDCOM record last change date on lists."
+msgstr ""
 
 #: ../help_text.php:3511
 msgid "Setting this option to <b>Yes</b> will show status codes for LDS ordinances in chart boxes.<ul><li><b>B</b> - Baptism</li><li><b>E</b> - Endowed</li><li><b>S</b> - Sealed to spouse</li><li><b>P</b> - Sealed to parents</li></ul>A person who has all of the ordinances done will have <b>BESP</b> printed after their name.  Missing ordinances are indicated by <b>_</b> in place of the corresponding letter code.  For example, <b>BE__</b> indicates missing <b>S</b> and <b>P</b> ordinances."
-msgstr "Setting this option to <b>Yes</b> will show status codes for LDS ordinances in chart boxes.<ul><li><b>B</b> - Baptism</li><li><b>E</b> - Endowed</li><li><b>S</b> - Sealed to spouse</li><li><b>P</b> - Sealed to parents</li></ul>A person who has all of the ordinances done will have <b>BESP</b> printed after their name.  Missing ordinances are indicated by <b>_</b> in place of the corresponding letter code.  For example, <b>BE__</b> indicates missing <b>S</b> and <b>P</b> ordinances."
+msgstr ""
 
 #: ../help_text.php:3516
 msgid "This option controls whether Notes and Source references that are attached to Facts should be shown on the Notes and Sources tabs of the Individual page.<br /><br />Ordinarily, the Notes and Sources tabs show only Notes and Source references that are attached directly to the individual's database record.  These are <i>level 1</i> Notes and Source references.<br /><br />The <b>Yes</b> option causes these tabs to also show Notes and Source references that are part of the various Facts in the individual's database record.  These are <i>level 2</i> Notes and Source references because the various Facts are at level 1."
@@ -15125,39 +15125,39 @@ msgstr "This option controls whether Notes and Source references that are attach
 
 #: ../help_text.php:3521
 msgid "This determines how much of the Place information is shown in the Place fields on lists.<br /><br />Setting the value to <b>9</b> will ensure that all Place information will be shown.  Setting the value to <b>0</b> (zero) will hide places completely.  Setting the value to <b>1</b> will show the topmost level, which is normally the country.  Setting it to <b>2</b> will show the topmost two levels.  The second topmost level, below the country, is often the state, province, or territory. Etc."
-msgstr "This determines how much of the Place information is shown in the Place fields on lists.<br /><br />Setting the value to <b>9</b> will ensure that all Place information will be shown.  Setting the value to <b>0</b> (zero) will hide places completely.  Setting the value to <b>1</b> will show the topmost level, which is normally the country.  Setting it to <b>2</b> will show the topmost two levels.  The second topmost level, below the country, is often the state, province, or territory. Etc."
+msgstr ""
 
 #: ../help_text.php:3526
 msgid "Should the names of living people be shown to the public?"
-msgstr "Should the names of living people be shown to the public?"
+msgstr ""
 
 #: ../help_text.php:3531
 msgid "This option will show the married names of females on the Individual list.  This option requires that you calculate the married names when you import the GEDCOM file."
-msgstr "This option will show the married names of females on the Individual list.  This option requires that you calculate the married names when you import the GEDCOM file."
+msgstr ""
 
 #: ../help_text.php:3536
 msgid "The Media Viewer can show a link which, when clicked, will download the Media file to the local PC.<br /><br />You may want to hide the download link for security reasons."
-msgstr "The Media Viewer can show a link which, when clicked, will download the Media file to the local PC.<br /><br />You may want to hide the download link for security reasons."
+msgstr ""
 
 #: ../help_text.php:3541
 msgid "The Media Viewer can show the name of the Media file being viewed.  This option determines whether that file name is shown to users or not.<br /><br />You may want to hide the file name for security reasons."
-msgstr "The Media Viewer can show the name of the Media file being viewed.  This option determines whether that file name is shown to users or not.<br /><br />You may want to hide the file name for security reasons."
+msgstr ""
 
 #: ../help_text.php:3546
 msgid "Multi-site search allows users to search across multiple PhpGedView websites which you have setup in the Manage Sites administration area or remotely linked to.  This option controls whether the Multi-site Search feature is available to everyone or only to authenticated users."
-msgstr "Multi-site search allows users to search across multiple PhpGedView websites which you have setup in the Manage Sites administration area or remotely linked to.  This option controls whether the Multi-site Search feature is available to everyone or only to authenticated users."
+msgstr ""
 
 #: ../help_text.php:3551
 msgid "If the Media Firewall is enabled, users will see watermarks if they do not have the privilege level specified here."
-msgstr "If the Media Firewall is enabled, users will see watermarks if they do not have the privilege level specified here."
+msgstr ""
 
 #: ../help_text.php:3556
 msgid "This option controls whether or not to show age of father and mother next to child's birthdate on charts."
-msgstr "This option controls whether or not to show age of father and mother next to child's birthdate on charts."
+msgstr ""
 
 #: ../help_text.php:3561
 msgid "This sets how much of the place information is shown in the person boxes on charts.<br /><br />Setting the value to 9 will guarantee to show all place levels.  Setting the value to 0 will hide places completely.  Setting the value to 1 will show the first level, setting it to 2 will show the first two levels, etc."
-msgstr "This sets how much of the place information is shown in the person boxes on charts.<br /><br />Setting the value to 9 will guarantee to show all place levels.  Setting the value to 0 will hide places completely.  Setting the value to 1 will show the first level, setting it to 2 will show the first two levels, etc."
+msgstr ""
 
 #: ../help_text.php:3566
 msgid "This option will retain family links in privatized records.  This means that you will see empty \"private\" boxes on the pedigree chart and on other charts with private people.<br /><br />This is similar to the behavior of PhpGedView versions prior to v4.0.<br /><br />This setting is off by default.  It is recommended instead of turning this on, to point your pedigree root person in your GEDCOM configuration to a person who is not private."
@@ -15169,7 +15169,7 @@ msgstr ""
 
 #: ../help_text.php:3576
 msgid "Births, marriages, and deaths of relatives are important events in one's life. This option controls whether or not to show these events on the <i>Personal facts and details</i> tab on the Individual page.<br /><br />The events affected by this option are:<ul><li>Death of spouse</li><li>Birth and death of children</li><li>Death of parents</li><li>Birth and death of siblings</li><li>Death of grand-parents</li><li>Birth and death of parents' siblings</li></ul>"
-msgstr "Births, marriages, and deaths of relatives are important events in one's life. This option controls whether or not to show these events on the <i>Personal facts and details</i> tab on the Individual page.<br /><br />The events affected by this option are:<ul><li>Death of spouse</li><li>Birth and death of children</li><li>Death of parents</li><li>Birth and death of siblings</li><li>Death of grand-parents</li><li>Birth and death of parents' siblings</li></ul>"
+msgstr ""
 
 #: ../help_text.php:3580
 msgid "Show Research Assistant"
@@ -15177,23 +15177,23 @@ msgstr "הראה עזרה למחקר"
 
 #: ../help_text.php:3581
 msgid "What type of user can view the Research Assistant module if it is installed?"
-msgstr "What type of user can view the Research Assistant module if it is installed?"
+msgstr ""
 
 #: ../help_text.php:3586
 msgid "Set the privacy access level for all Sources.  If the user does not have access to Sources, the Source list will be removed from the Lists menu and the Sources tab will not be shown on the Individual Details page."
-msgstr "Set the privacy access level for all Sources.  If the user does not have access to Sources, the Source list will be removed from the Lists menu and the Sources tab will not be shown on the Individual Details page."
+msgstr ""
 
 #: ../help_text.php:3591
 msgid "On pages generated for search engines, display as the last line the particular search engine the page detected.  If this option is on, it can bias Google&reg; AdSense towards search engine optimization tools."
-msgstr "On pages generated for search engines, display as the last line the particular search engine the page detected.  If this option is on, it can bias Google&reg; AdSense towards search engine optimization tools."
+msgstr ""
 
 #: ../help_text.php:3596
 msgid "Show runtime statistics and database queries at the bottom of every page."
-msgstr "Show runtime statistics and database queries at the bottom of every page."
+msgstr ""
 
 #: ../help_text.php:3601
 msgid "When a new source record is added online in PhpGedView, a new ID for that source will be generated automatically.  The source ID will have this prefix."
-msgstr "When a new source record is added online in PhpGedView, a new ID for that source will be generated automatically.  The source ID will have this prefix."
+msgstr ""
 
 #: ../help_text.php:3606
 msgid "This is the list of GEDCOM facts that your users can add to sources.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>Unique Source Facts</i> list."
@@ -15201,7 +15201,7 @@ msgstr "This is the list of GEDCOM facts that your users can add to sources.  Yo
 
 #: ../help_text.php:3611
 msgid "This is the short list of GEDCOM source facts that appears next to the full list and can be added with a single click."
-msgstr "This is the short list of GEDCOM source facts that appears next to the full list and can be added with a single click."
+msgstr ""
 
 #: ../help_text.php:3616
 msgid "This is the list of GEDCOM facts that your users can only add <u>once</u> to sources.  For example, if TITL is in this list, users will not be able to add more than one TITL record to a source.  Fact names that appear in this list must not also appear in the <i>Source Add Facts</i> list."
@@ -15217,11 +15217,11 @@ msgstr "מספר מכסימלי של שמות משפחה של משפחות"
 
 #: ../help_text.php:3626
 msgid "Long lists of families with the same name can be broken into smaller sub-lists according to the first letter of the given name.<br /><br />This option determines when sub-listing of family names will occur.  To disable sub-listing completely, set this option to zero."
-msgstr "Long lists of families with the same name can be broken into smaller sub-lists according to the first letter of the given name.<br /><br />This option determines when sub-listing of family names will occur.  To disable sub-listing completely, set this option to zero."
+msgstr ""
 
 #: ../help_text.php:3631
 msgid "Long lists of persons with the same surname can be broken into smaller sub-lists according to the first letter of the individual's given name.<br /><br />This option determines when sub-listing of surnames will occur.  To disable sub-listing completely, set this option to zero."
-msgstr "Long lists of persons with the same surname can be broken into smaller sub-lists according to the first letter of the individual's given name.<br /><br />This option determines when sub-listing of surnames will occur.  To disable sub-listing completely, set this option to zero."
+msgstr ""
 
 #: ../help_text.php:3636
 msgid "The method to be used to contact the Support contact about technical questions.<ul><li>The <b>Mailto link</b> option will create a \"mailto\" link that can be clicked to send an email using the mail client on the user's PC.</li><li>The <b>PhpGedView internal messaging</b> option will use a messaging system internal to PhpGedView, and no emails will be sent.</li><li>The <b>Internal messaging with emails</b> option is the default.  It will use the PhpGedView messaging system and will also send copies of the messages via email.</li><li>The <b>PhpGedView sends emails with no storage</b> option allows PhpGedView to handle the messaging and will send the messages as emails, but will not store the messages internally.  This option is similar to the <b>Mailto link</b> option, except that the message will be sent by PhpGedView instead of the user's workstation.</li><li>The <b>No contact method</b> option results in your users having no way of contacting you.</li></ul>"
@@ -15233,7 +15233,7 @@ msgstr "Lists of surnames, as they appear in the עשרת השמות השכיח�
 
 #: ../help_text.php:3646
 msgid "When you add new members to a family, PhpGedView can supply default values for surnames according to regional custom.<br /><br /><ul><li>In the <b>Paternal</b> tradition, all family members share the father's surname.</li><li>In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.</li><li>In the <b>Icelandic</b> tradition, children receive their male parent's given name as a surname, with a suffix that denotes gender.</li><li>In the <b>Polish</b> tradition, all family members share the father's surname. For some surnames, the suffix indicates gender.  The suffixes <i>ski</i>, <i>cki</i>, and <i>dzki</i> indicate male, while the corresponding suffixes <i>ska</i>, <i>cka</i>, and <i>dzka</i> indicate female.</li></ul>"
-msgstr "When you add new members to a family, PhpGedView can supply default values for surnames according to regional custom.<br /><br /><ul><li>In the <b>Paternal</b> tradition, all family members share the father's surname.</li><li>In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.</li><li>In the <b>Icelandic</b> tradition, children receive their male parent's given name as a surname, with a suffix that denotes gender.</li><li>In the <b>Polish</b> tradition, all family members share the father's surname. For some surnames, the suffix indicates gender.  The suffixes <i>ski</i>, <i>cki</i>, and <i>dzki</i> indicate male, while the corresponding suffixes <i>ska</i>, <i>cka</i>, and <i>dzka</i> indicate female.</li></ul>"
+msgstr ""
 
 #: ../help_text.php:3651
 msgid "In past versions of PGV the pending edits were stored in the GEDCOM file and the changed records were then \"accepted\" into the database.  Starting with v4.1 pending changes are no longer stored in the GEDCOM file but in the changes file.  <br /><br />Setting this value to true will update the GEDCOM file when changes are accepted into the database.  This will keep the GEDCOM file synchronized with the database.  For greater compatibility with previous versions the default value of this field is on.<br /><br />You may want to turn it off to conserve memory when accepting changes."
@@ -15249,11 +15249,11 @@ msgstr ""
 
 #: ../help_text.php:3666
 msgid "This is the width (in pixels) that the program will use when automatically generating thumbnails.  The default setting is 100."
-msgstr "This is the width (in pixels) that the program will use when automatically generating thumbnails.  The default setting is 100."
+msgstr ""
 
 #: ../help_text.php:3671
 msgid "The maximum time in seconds that PhpGedView should be allowed to run.<br /><br />The default is 1 minute.  Depending on the size of your GEDCOM file, you may need to increase this time limit when you need to build the indexes.  Set this value to 0 to allow PHP to run forever.<br /><br />CAUTION: Setting this to 0 or setting it too high could cause your site to hang on certain operating systems until the script finishes.  Setting it to 0 means it may never finish until a server administrator kills the process or restarts the server.  A large Pedigree chart can take a very long time to run; leaving this value as low as possible ensures that someone cannot crash your server by requesting an excessively large chart."
-msgstr "The maximum time in seconds that PhpGedView should be allowed to run.<br /><br />The default is 1 minute.  Depending on the size of your GEDCOM file, you may need to increase this time limit when you need to build the indexes.  Set this value to 0 to allow PHP to run forever.<br /><br />CAUTION: Setting this to 0 or setting it too high could cause your site to hang on certain operating systems until the script finishes.  Setting it to 0 means it may never finish until a server administrator kills the process or restarts the server.  A large Pedigree chart can take a very long time to run; leaving this value as low as possible ensures that someone cannot crash your server by requesting an excessively large chart."
+msgstr ""
 
 #: ../help_text.php:3676
 msgid "Many programs will place the preferred given name in \"quotes\" in the GEDCOM.  The usual convention for this is to underline the preferred given name.  Enabling this option will convert any names surrounded by quotes to &lt;span&gt; with a CSS class of \"starredname\".<br /><br />For example, if the name in the GEDCOM were 1&nbsp;NAME&nbsp;Gustave&nbsp;\"Jean&nbsp;Paul\"&nbsp;Charles&nbsp;/Wilson/ enabling this option would change the part of the name enclosed in quotes to &lt;span&nbsp;class=\"starredname\"&gt;Jean&nbsp;Paul&lt;/span&gt; for printing purposes.  Depending on other settings, the browser would then display that name as <b>Gustave&nbsp;<u>Jean&nbsp;Paul</u>&nbsp;Charles&nbsp;Wilson</b> or <b>Wilson,&nbsp;Gustave&nbsp;<u>Jean&nbsp;Paul</u> Charles</b>"
@@ -15273,15 +15273,15 @@ msgstr "When this option is <b>כן</b>, clicking on images will produce the Med
 
 #: ../help_text.php:3696
 msgid "Gives visitors the option of registering themselves for an account on the site.<br /><br />The visitor will receive an email message with a code to verify his application for an account.  After verification, the Administrator will have to approve the registration before it becomes active."
-msgstr "Gives visitors the option of registering themselves for an account on the site.<br /><br />The visitor will receive an email message with a code to verify his application for an account.  After verification, the Administrator will have to approve the registration before it becomes active."
+msgstr ""
 
 #: ../help_text.php:3701
 msgid "<b>No</b> means that authenticated users can see the details of all living people.  <b>Yes</b> means that users can only see the private information of living people they are related to.<br /><br />This option sets the default for all users who have access to this genealogical database.  The Administrator can override this option for individual users by editing the user's account details."
-msgstr "<b>No</b> means that authenticated users can see the details of all living people.  <b>Yes</b> means that users can only see the private information of living people they are related to.<br /><br />This option sets the default for all users who have access to this genealogical database.  The Administrator can override this option for individual users by editing the user's account details."
+msgstr ""
 
 #: ../help_text.php:3706
 msgid "Set to <b>Yes</b> to use the RIN number instead of the GEDCOM ID when asked for Individual IDs in configuration files, user settings, and charts.  This is useful for genealogy programs that do not consistently export GEDCOMs with the same ID assigned to each individual but always use the same RIN."
-msgstr "Set to <b>Yes</b> to use the RIN number instead of the GEDCOM ID when asked for Individual IDs in configuration files, user settings, and charts.  This is useful for genealogy programs that do not consistently export GEDCOMs with the same ID assigned to each individual but always use the same RIN."
+msgstr ""
 
 #: ../help_text.php:3711
 msgid "Use silhouette images when no highlighted image for that person has been specified.  The images used are specific to the gender of the person in question.<br /><br /><table><tr><td wrap valign=\"middle\">This image might be used when the gender of the person is unknown: </td><td><img src=\"images/silhouette_unknown.gif\" width=\"40\" alt=\"Silhouette image\" title=\"Silhouette image\" /></td></tr></table>"
@@ -15293,11 +15293,11 @@ msgstr "This option determines whether PhpGedView should send the large or the s
 
 #: ../help_text.php:3721
 msgid "If the Media Firewall is enabled, should thumbnails be watermarked? Your media lists will load faster if you don't watermark the thumbnails."
-msgstr "If the Media Firewall is enabled, should thumbnails be watermarked? Your media lists will load faster if you don't watermark the thumbnails."
+msgstr ""
 
 #: ../help_text.php:3726
 msgid "The person to be contacted about technical questions or errors encountered on your site."
-msgstr "The person to be contacted about technical questions or errors encountered on your site."
+msgstr ""
 
 #: ../help_text.php:3731
 msgid "Choose to display a standard header for your custom Welcome text.  When your users change language, this header will appear in the new language.<br /><br />If set to <b>Yes</b>, the header will look look this:<div class=\"list_value_wrap\"><center><b>Welcome to this Genealogy website</b></center><br />Access is permitted to users who have an account and a password for this website.<br /></div>"
@@ -15313,7 +15313,7 @@ msgstr ""
 
 #: ../help_text.php:3746
 msgid "Some genealogy programs wrap notes at word boundaries while others wrap notes anywhere.  This can cause PhpGedView to run words together.  Setting this to <b>Yes</b> will add a space between words where they are wrapped in the original GEDCOM."
-msgstr "Some genealogy programs wrap notes at word boundaries while others wrap notes anywhere.  This can cause PhpGedView to run words together.  Setting this to <b>Yes</b> will add a space between words where they are wrapped in the original GEDCOM."
+msgstr ""
 
 #: ../help_text.php:3751
 msgid "Allows a user to zoom boxes on charts to get more information.<br /><br />Set to <b>Disabled</b> to disable this feature.  Set to <b>On Mouse Over</b> to zoom boxes when the user mouses over the icon in the box.  Set to <b>On Mouse Click</b> to zoom boxes when the user clicks on the icon in the box."
@@ -15369,11 +15369,11 @@ msgstr ""
 
 #: ../help_text.php:3800
 msgid "This option will let you add an item to the FAQ page."
-msgstr "This option will let you add an item to the FAQ page."
+msgstr ""
 
 #: ../help_text.php:3805
 msgid "This field controls the order in which the FAQ items are displayed.<br /><br />You do not have to enter the numbers sequentially.  If you leave holes in the numbering scheme, you can insert other items later.  For example, if you use the numbers 1, 6, 11, 16, you can later insert items with the missing sequence numbers.  Negative numbers and zero are allowed, and can be used to insert items in front of the first one.<br /><br />When more than one FAQ item has the same position number, only one of these items will be visible."
-msgstr "This field controls the order in which the FAQ items are displayed.<br /><br />You do not have to enter the numbers sequentially.  If you leave holes in the numbering scheme, you can insert other items later.  For example, if you use the numbers 1, 6, 11, 16, you can later insert items with the missing sequence numbers.  Negative numbers and zero are allowed, and can be used to insert items in front of the first one.<br /><br />When more than one FAQ item has the same position number, only one of these items will be visible."
+msgstr ""
 
 #: ../help_text.php:3810
 #, php-format
@@ -15698,11 +15698,11 @@ msgstr "לחיצה על תו בתוך אינדקס אלף-בית תציג רשי
 
 #: ../help_text.php:4050
 msgid "Lower case alphabet letters in this language.  This alphabet is used while sorting lists of names."
-msgstr "Lower case alphabet letters in this language.  This alphabet is used while sorting lists of names."
+msgstr ""
 
 #: ../help_text.php:4055
 msgid "Upper case alphabet letters in this language.  This alphabet is used while sorting lists of names."
-msgstr "Upper case alphabet letters in this language.  This alphabet is used while sorting lists of names."
+msgstr ""
 
 #: ../help_text.php:4059
 msgid "annivers_date_select"
@@ -15888,7 +15888,7 @@ msgstr "לחיצה על הקישור הזה תעביר אותך לדף הבא. �
 
 #: ../help_text.php:4185
 msgid "If you are using the database's built-in collation rules, this option specifies the collation sequence to use for this language.  You should ensure that your database supports all the collation sequences you intend to use.<br /><br />The use of database collation is controlled in the site configuration settings."
-msgstr "If you are using the database's built-in collation rules, this option specifies the collation sequence to use for this language.  You should ensure that your database supports all the collation sequences you intend to use.<br /><br />The use of database collation is controlled in the site configuration settings."
+msgstr ""
 
 #: ../help_text.php:4189
 msgid "Commit Google&reg; translated changes"
@@ -15916,11 +15916,11 @@ msgstr "עזרת תצורה"
 
 #: ../help_text.php:4205
 msgid "This page collects all of the major topics of Configuration Help into one place.  You can view the information on your screen, or you can print it for later use."
-msgstr "This page collects all of the major topics of Configuration Help into one place.  You can view the information on your screen, or you can print it for later use."
+msgstr ""
 
 #: ../help_text.php:4210
 msgid "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
-msgstr ""
+msgstr "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
 
 #: ../help_text.php:4214
 msgid "context"
@@ -15977,7 +15977,7 @@ msgstr "מספר הימים שיש להציג"
 
 #: ../help_text.php:4255
 msgid "Enter the number of days to show.  This number cannot be greater than <b>#DAYS_TO_SHOW_LIMIT#</b>.  If you enter a larger value, that limit will be used.<br /><br />The limit shown is set by the administrator in the GEDCOM configuration, Display and Layout section, Hide &amp; Show sub-section."
-msgstr ""
+msgstr "הכנס את הימים שיש להראות. המספר לא יכול להיות גדול מ<b>#DAYS_TO_SHOW_LIMIT#</b>. אם תכניס ערך גדול יותר, התוכנה תשתמש בערך הגבולי.<br /><br />הערך הגבולי הוגדר ע\"י המנהלן כחלק מהגדרות ה-GEDCOM, בפסקה תצוגה ומבנה, פיסקת משנה הסתר והראה."
 
 #: ../help_text.php:4259
 msgid "def_gedcom_date"
@@ -16057,7 +16057,7 @@ msgstr "מחק ישותם FAQ"
 
 #: ../help_text.php:4305
 msgid "This option will let you delete an item from the FAQ page"
-msgstr "This option will let you delete an item from the FAQ page"
+msgstr ""
 
 #: ../help_text.php:4309
 msgid "delete_gedcom"
@@ -16257,7 +16257,7 @@ msgstr "דף זה מאפשר לך לערוך את רשומת ה-GEDCOM הלא מ
 
 #: ../help_text.php:4451
 msgid "This option will let you edit an item on the FAQ page."
-msgstr "This option will let you edit an item on the FAQ page."
+msgstr ""
 
 #: ../help_text.php:4455
 msgid "edit_gedcoms"
@@ -16499,7 +16499,7 @@ msgstr "כאשר תיבת בחירה זו <b>לא</b> נבחרה, בודקים �
 
 #: ../help_text.php:4636
 msgid "This option lets you search the text associated with configuration options.<br /><br />As you type letters, the search will find all configuration options that contain that letter sequence.  The search becomes more precise as you type more letters."
-msgstr "This option lets you search the text associated with configuration options.<br /><br />As you type letters, the search will find all configuration options that contain that letter sequence.  The search becomes more precise as you type more letters."
+msgstr ""
 
 #: ../help_text.php:4640
 msgid "gedcom_configfile"
@@ -16535,7 +16535,7 @@ msgstr ""
 
 #: ../help_text.php:4666
 msgid "Enter a descriptive title to be displayed when users are choosing among GEDCOM datasets at your site."
-msgstr "Enter a descriptive title to be displayed when users are choosing among GEDCOM datasets at your site."
+msgstr ""
 
 #: ../help_text.php:4670 ../media.php:847
 msgid "Create missing thumbnails"
@@ -16771,7 +16771,7 @@ msgstr ""
 
 #: ../help_text.php:4826
 msgid "This block displays a list of frequently occurring surnames from this database. A surname must occur at least #COMMON_NAMES_THRESHOLD# times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name."
-msgstr ""
+msgstr "האזור מציג רשימה של שמות המשפחה השכיחים במאגר הנתונים הזה. על שם המשפחה להופיע לפחות #COMMON_NAMES_THRESHOLD# פעמים כדי שהוא יופיע ברשימה זו. מנהלן האתר יכול לשנות את הסף הזה.<br /><br />ניתן ללחוץ על השמות ברשימה זו. כאשר לוחצים על שם, מועברים לאנשים, ומקבלים מידע נוסף על השם."
 
 #: ../help_text.php:4830
 msgid "index_events"
@@ -16947,7 +16947,7 @@ msgstr "--- טכסט העזרה הזה זהה למה שהמשתמש (או המב
 
 #: ../help_text.php:4941
 msgid "Should existing media links be retained in the database when a replacement GEDCOM is being uploaded. The <b>No</b> option removes existing media links from the database, while the <b>Yes</b> option keeps them.<br /><br />This option is useful when you export your GEDCOM from PhpGedView to an off-line GEDCOM maintenance program that does not handle embedded media pointers properly, and then subsequently re-import that changed GEDCOM into PhpGedView.  Under such circumstances, the media pointers within the GEDCOM you exported to your off-line editing program are destroyed, and you would have to re-link all of your media files to the proper Person, Family, and Source records after you re-import the GEDCOM into PhpGedView.<br /><br />The <b>Yes</b> option tells PhpGedView to keep the existing media links so that you do not have to re-create them after you import the changed GEDCOM, but this requires the off-line editing program to always produce the same Person, Family, and Source identification numbers.<br /><br /><i>Family Tree Maker</i> is one of several off-line editing programs that does <u>not</u> properly handle media object pointers within the GEDCOM.  <i>Legacy</i>, among many others, <u>does</u> handle these properly."
-msgstr "Should existing media links be retained in the database when a replacement GEDCOM is being uploaded. The <b>No</b> option removes existing media links from the database, while the <b>Yes</b> option keeps them.<br /><br />This option is useful when you export your GEDCOM from PhpGedView to an off-line GEDCOM maintenance program that does not handle embedded media pointers properly, and then subsequently re-import that changed GEDCOM into PhpGedView.  Under such circumstances, the media pointers within the GEDCOM you exported to your off-line editing program are destroyed, and you would have to re-link all of your media files to the proper Person, Family, and Source records after you re-import the GEDCOM into PhpGedView.<br /><br />The <b>Yes</b> option tells PhpGedView to keep the existing media links so that you do not have to re-create them after you import the changed GEDCOM, but this requires the off-line editing program to always produce the same Person, Family, and Source identification numbers.<br /><br /><i>Family Tree Maker</i> is one of several off-line editing programs that does <u>not</u> properly handle media object pointers within the GEDCOM.  <i>Legacy</i>, among many others, <u>does</u> handle these properly."
+msgstr ""
 
 #: ../help_text.php:4945
 msgid "Help Text Debug Option"
@@ -16963,11 +16963,11 @@ msgstr "הדף מיועד לשמש מתרגמים. ניתן לתרגם, להשו
 
 #: ../help_text.php:4961
 msgid "These codes allow PhpGedView to detect the Preferred Language setting of the browser being used. PhpGedView determines the language actually being requested by the browser by matching the browser's language code against this list.  Individual list entries must be separated by a semicolon."
-msgstr "These codes allow PhpGedView to detect the Preferred Language setting of the browser being used. PhpGedView determines the language actually being requested by the browser by matching the browser's language code against this list.  Individual list entries must be separated by a semicolon."
+msgstr ""
 
 #: ../help_text.php:4966
 msgid "This code defines an abbreviation for the language name.  This abbreviation forms part of the name of each of the language files used by PhpGedView.  For example, the abbreviation used for French is <b>fr</b>, and consequently the file names for French are <i>configure_help.<b>fr</b>.php</i>, <i>countries.<b>fr</b>.php</i>, <i>facts.<b>fr</b>.php</i>, <i>help_text.<b>fr</b>.php</i>, and <i>lang.<b>fr</b>.php</i>"
-msgstr "This code defines an abbreviation for the language name.  This abbreviation forms part of the name of each of the language files used by PhpGedView.  For example, the abbreviation used for French is <b>fr</b>, and consequently the file names for French are <i>configure_help.<b>fr</b>.php</i>, <i>countries.<b>fr</b>.php</i>, <i>facts.<b>fr</b>.php</i>, <i>help_text.<b>fr</b>.php</i>, and <i>lang.<b>fr</b>.php</i>"
+msgstr ""
 
 #: ../help_text.php:4970
 msgid "Language to edit"
@@ -16975,7 +16975,7 @@ msgstr "שפת עריכה"
 
 #: ../help_text.php:4971
 msgid "In this list box you select the language whose messages you want to edit."
-msgstr "In this list box you select the language whose messages you want to edit."
+msgstr ""
 
 #: ../help_text.php:4975
 msgid "Language to export"
@@ -16983,7 +16983,7 @@ msgstr "שפה שאותה רוצים לייצא"
 
 #: ../help_text.php:4976
 msgid "From this list box you can select the language whose messages you want to export.<br /><br />The routine currently only exports the contents of the <i>configure_help.xx.php</i>, <i>help_text.xx.php</i>, and <i>lang.xx.php</i> files.  The output is an HTML file that you can print from your browser."
-msgstr "From this list box you can select the language whose messages you want to export.<br /><br />The routine currently only exports the contents of the <i>configure_help.xx.php</i>, <i>help_text.xx.php</i>, and <i>lang.xx.php</i> files.  The output is an HTML file that you can print from your browser."
+msgstr ""
 
 #: ../help_text.php:4980
 msgid "lifespan_add_person"
@@ -17184,7 +17184,7 @@ msgstr ""
 
 #: ../help_text.php:5121
 msgid "#pgv_lang[help_help_items]#"
-msgstr "#pgv_lang[help_help_items]#"
+msgstr ""
 
 #: ../help_text.php:5125
 msgid "menu_lists"
@@ -17241,7 +17241,7 @@ msgstr "העבר ישות FAQ למטה"
 
 #: ../help_text.php:5161
 msgid "This option will let you move an item downwards on the FAQ page.<br /><br />Each time you use this option, the FAQ Position number of this item is increased by one.  You can achieve the same effect by editing the item in question and changing the FAQ Position field.  When more than one FAQ item has the same position number, only one of these items will be visible."
-msgstr "This option will let you move an item downwards on the FAQ page.<br /><br />Each time you use this option, the FAQ Position number of this item is increased by one.  You can achieve the same effect by editing the item in question and changing the FAQ Position field.  When more than one FAQ item has the same position number, only one of these items will be visible."
+msgstr ""
 
 #: ../help_text.php:5165
 msgid "Move FAQ item up"
@@ -17249,11 +17249,11 @@ msgstr "העבר ישות FAQ למעלה"
 
 #: ../help_text.php:5166
 msgid "This option will let you move an item upwards on the FAQ page.<br /><br />Each time you use this option, the FAQ Position number of this item is reduced by one.  You can achieve the same effect by editing the item in question and changing the FAQ Position field.  When more than one FAQ item has the same position number, only one of these items will be visible."
-msgstr "This option will let you move an item upwards on the FAQ page.<br /><br />Each time you use this option, the FAQ Position number of this item is reduced by one.  You can achieve the same effect by editing the item in question and changing the FAQ Position field.  When more than one FAQ item has the same position number, only one of these items will be visible."
+msgstr ""
 
 #: ../help_text.php:5171
 msgid "Multi-letter combinations that are to be treated as a single distinct letter when sorting lists of names and titles in this language.<br /><br />Some languages, Hungarian and Slovak for example, consider certain combinations of letters to be distinct letters in their own right.  The order in which you specify these letter combinations determines the order in which they are inserted into the normal alphabet during sorting.  This is important when several multi-letter combinations have the same first letter.  Except for <b>ch</b>, these letter combinations are inserted into the normal alphabet according to their first letter.  <b>ch</b> is always inserted after <b>h</b>."
-msgstr "Multi-letter combinations that are to be treated as a single distinct letter when sorting lists of names and titles in this language.<br /><br />Some languages, Hungarian and Slovak for example, consider certain combinations of letters to be distinct letters in their own right.  The order in which you specify these letter combinations determines the order in which they are inserted into the normal alphabet during sorting.  This is important when several multi-letter combinations have the same first letter.  Except for <b>ch</b>, these letter combinations are inserted into the normal alphabet according to their first letter.  <b>ch</b> is always inserted after <b>h</b>."
+msgstr ""
 
 #: ../help_text.php:5176
 msgid "In some languages, multiple letters are often treated as equivalent to a single letter when generating lists of names.<br /><br />For example, in Dutch, names beginning with IJ are listed together with names beginning with Y. In Norwegian, names beginning with AA are listed with &Aring;. In some languages, there are letters that can be written as one character or two. For example in Slovakian, the two characters D and \\xC5\\xBE can be written as the single character \\xC7\\x85. By specifying equivalents here, you can allow names beginning with these letters to be grouped together on the individual list pages.<br /><br />You should specify a comma-separated list of equivalents. To support databases that don't recognize UTF-8 encoding, you should specify both upper and lower case equivalents. This example demonstrates the format to use.<br /><br />Aa=&Aring;,aa=&aring;"
@@ -17325,7 +17325,7 @@ msgstr "התיבה מציגה רשימת שמות משפחה או שמות מל�
 
 #: ../help_text.php:5226
 msgid "In some languages the surname should be displayed first instead of the default to display it last.  Enabling this option will display the surname first.  Hungarian, Chinese, and Japanese are examples where the surname (the family name) is usually given first."
-msgstr "In some languages the surname should be displayed first instead of the default to display it last.  Enabling this option will display the surname first.  Hungarian, Chinese, and Japanese are examples where the surname (the family name) is usually given first."
+msgstr ""
 
 #: ../help_text.php:5230
 msgid "new_dir"
@@ -17341,7 +17341,7 @@ msgstr "שפת המקור"
 
 #: ../help_text.php:5236
 msgid "From this list box you can select the language whose messages you want to compare with those of another language.<br /><br />All changes and additions to language files are first made to the <b>English</b> language files, so you would normally select English as one of the languages to compare."
-msgstr "From this list box you can select the language whose messages you want to compare with those of another language.<br /><br />All changes and additions to language files are first made to the <b>English</b> language files, so you would normally select English as one of the languages to compare."
+msgstr ""
 
 #: ../help_text.php:5240
 msgid "new_password"
@@ -17389,7 +17389,7 @@ msgstr "שפה משנית"
 
 #: ../help_text.php:5271
 msgid "From this list box you can select the language which you want to compare with the language selected in the <b>Source</b> list box.<br /><br />After you have made your choice, click the <b>Compare</b> button to get a list of all additions and subtractions in all four files of both languages.<br /><br />To refresh your memory:<br /><b>Addition</b> means: It is <u>in</u> the Source file, but <u>not</u> in the Secondary file.<br /><br /><b>Subtraction</b> means: It is <u>not</u> in the Source file, but it <u>is</u> in the Secondary file.  This might happen when a given message is no longer used and therefore was removed from the English files.  You can safely remove the corresponding message from the secondary language files."
-msgstr "From this list box you can select the language which you want to compare with the language selected in the <b>Source</b> list box.<br /><br />After you have made your choice, click the <b>Compare</b> button to get a list of all additions and subtractions in all four files of both languages.<br /><br />To refresh your memory:<br /><b>Addition</b> means: It is <u>in</u> the Source file, but <u>not</u> in the Secondary file.<br /><br /><b>Subtraction</b> means: It is <u>not</u> in the Source file, but it <u>is</u> in the Secondary file.  This might happen when a given message is no longer used and therefore was removed from the English files.  You can safely remove the corresponding message from the secondary language files."
+msgstr ""
 
 #: ../help_text.php:5276
 msgid "When this check box is checked, the chart will be printed with oldest people at the top.  When it is unchecked, youngest people will appear at the top.<br /><br />Note: This option works only if <b>Line up the same generations</b> is also checked."
@@ -17397,7 +17397,7 @@ msgstr "כאשר התיבה נבחרת, האנשים המבוגרים יוצגו
 
 #: ../help_text.php:5280
 msgid "Original name of language in #D_LANGNAME#"
-msgstr ""
+msgstr "שם המקורי של השפה ב#D_LANGNAME#"
 
 #: ../help_text.php:5281
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."
@@ -17417,11 +17417,11 @@ msgstr "These settings define facts that are hidden for a specific person, famil
 
 #: ../help_text.php:5301
 msgid "These settings allow administrators to override default privacy settings for a particular person, family, source, or media object.<br /><br />Suppose for example you have a child who died in infancy. Normally because the child is dead, its details would be shown to public users. However, you and everyone else in your family are still private. You don't want to remove the death record for the child but you want to hide the details and make them private. If this child had the ID of I100 you should enter the following privacy settings:<br />ID: I100<br />Show to: Show only to authenticated users<br /><br />This works the other way as well. If you wanted to make public the details of someone (ID I101) who you know to be dead but don't have a death date for, you could add the following:<br />ID: I101<br />Show to: Show to public"
-msgstr "These settings allow administrators to override default privacy settings for a particular person, family, source, or media object.<br /><br />Suppose for example you have a child who died in infancy. Normally because the child is dead, its details would be shown to public users. However, you and everyone else in your family are still private. You don't want to remove the death record for the child but you want to hide the details and make them private. If this child had the ID of I100 you should enter the following privacy settings:<br />ID: I100<br />Show to: Show only to authenticated users<br /><br />This works the other way as well. If you wanted to make public the details of someone (ID I101) who you know to be dead but don't have a death date for, you could add the following:<br />ID: I101<br />Show to: Show to public"
+msgstr ""
 
 #: ../help_text.php:5306
 msgid "This page provides extensive information about the server on which PhpGedView is being hosted.  Many configuration details about the server's software, as it relates to PHP and PhpGedView, can be viewed."
-msgstr "This page provides extensive information about the server on which PhpGedView is being hosted.  Many configuration details about the server's software, as it relates to PHP and PhpGedView, can be viewed."
+msgstr ""
 
 #: ../help_text.php:5310
 msgid "ppp_default_form"
@@ -17613,7 +17613,7 @@ msgstr "שחזר פונקציונאליות של עריכת FAQ"
 
 #: ../help_text.php:5441
 msgid "This option restores the FAQ page to what an admin user normally sees, so that individual FAQ items may be edited."
-msgstr "This option restores the FAQ page to what an admin user normally sees, so that individual FAQ items may be edited."
+msgstr ""
 
 #: ../help_text.php:5446
 msgid "This block will list all of the records that have been changed online and that still need to be reviewed and accepted into the database."
@@ -17625,7 +17625,7 @@ msgstr ""
 
 #: ../help_text.php:5456
 msgid "The ATOM/RSS feed available in PhpGedView allows anyone to view, using a suitable feed aggregator, the contents of your site's Welcome page without visiting the site. Most aggregators will pop up a notice letting the user know when something has changed on a page being monitored. This essentially allows anyone to monitor your PhpGedView site without needing to visit it regularly.<br /><br />The Feed block is used to customize the link to the feed, allowing specific feed types (most readers can deal with most types so this can usually be left at the default), and the specific module you would like in your feed. The language of the feed and the GEDCOM used will be based on the language and GEDCOM active in PhpGedView when you select the feed.<br /><br />The types of feed that can be generated include ATOM, RSS 2.0, RSS 1.0, RSS 0.92, HTML and JavaScript. The first four types are for feed aggregators, while JavaScript and HTML are meant to enable inclusion of the feeds in other web pages.  Note that the numbers of the RSS feed indicate different styles, not a different version.<br /><br />There is an option to select authentication that will log the user in, and allow the user to view, using a suitable RSS aggregator, any information that he could normally view if logged in. Basic Authentication uses <i>Basic HTTP Authentication</i> to log the user in. Future enhancements might allow <i>Digest Authentication</i>.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS_(file_format)' target='_blank' alt='Wikipedia article' title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats. <i>Basic HTTP Authentication</i> is discussed in this <a href='http://en.wikipedia.org/wiki/Basic_authentication_scheme' target='_blank' alt='Wikipedia article' title='Wikipedia article'><b>Wikipedia article</b></a>, while <i>Digest Authentication</i> is discussed in this <a http://en.wikipedia.org/wiki/Digest_access_authentication' target='_blank' alt='Wikipedia article' title='Wikipedia article'><b>Wikipedia article</b></a>."
-msgstr "The ATOM/RSS feed available in PhpGedView allows anyone to view, using a suitable feed aggregator, the contents of your site's Welcome page without visiting the site. Most aggregators will pop up a notice letting the user know when something has changed on a page being monitored. This essentially allows anyone to monitor your PhpGedView site without needing to visit it regularly.<br /><br />The Feed block is used to customize the link to the feed, allowing specific feed types (most readers can deal with most types so this can usually be left at the default), and the specific module you would like in your feed. The language of the feed and the GEDCOM used will be based on the language and GEDCOM active in PhpGedView when you select the feed.<br /><br />The types of feed that can be generated include ATOM, RSS 2.0, RSS 1.0, RSS 0.92, HTML and JavaScript. The first four types are for feed aggregators, while JavaScript and HTML are meant to enable inclusion of the feeds in other web pages.  Note that the numbers of the RSS feed indicate different styles, not a different version.<br /><br />There is an option to select authentication that will log the user in, and allow the user to view, using a suitable RSS aggregator, any information that he could normally view if logged in. Basic Authentication uses <i>Basic HTTP Authentication</i> to log the user in. Future enhancements might allow <i>Digest Authentication</i>.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS_(file_format)' target='_blank' alt='Wikipedia article' title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats. <i>Basic HTTP Authentication</i> is discussed in this <a href='http://en.wikipedia.org/wiki/Basic_authentication_scheme' target='_blank' alt='Wikipedia article' title='Wikipedia article'><b>Wikipedia article</b></a>, while <i>Digest Authentication</i> is discussed in this <a http://en.wikipedia.org/wiki/Digest_access_authentication' target='_blank' alt='Wikipedia article' title='Wikipedia article'><b>Wikipedia article</b></a>."
+msgstr ""
 
 #: ../help_text.php:5461
 msgid "Save edited message to language file."
@@ -17841,7 +17841,7 @@ msgstr "עם האופציה הזו תוכל לקבוע את צורת התצוג�
 
 #: ../help_text.php:5611
 msgid "Identifies which direction is used to write text in the chosen language.  Most languages are written from left to right.  Arabic and Hebrew are examples of languages that are written in the opposite direction (right to left)."
-msgstr "Identifies which direction is used to write text in the chosen language.  Most languages are written from left to right.  Arabic and Hebrew are examples of languages that are written in the opposite direction (right to left)."
+msgstr ""
 
 #: ../help_text.php:5615
 msgid "text_faq"
@@ -17857,7 +17857,7 @@ msgstr ""
 
 #: ../help_text.php:5626
 msgid "The maximum time the import is allowed to run for processing the GEDCOM file."
-msgstr "The maximum time the import is allowed to run for processing the GEDCOM file."
+msgstr ""
 
 #: ../help_text.php:5630
 msgid "timeline_control"
@@ -17939,11 +17939,11 @@ msgstr "ההגדרות של קובץ ה-GEDCOM שלך מאפשרות עד ל-%s 
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b><span dir=\"ltr\">#MEDIA_DIRECTORY#</span></b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-<span dir=\"ltr\">#MEDIA_DIRECTORY#</span>, למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תיווצר בצורה אוטומטית."
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
-msgstr "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
+msgstr ""
 
 #: ../help_text.php:5705
 msgid "upload_server_file"
@@ -18118,7 +18118,7 @@ msgstr "המנהלן איפשר עד %s רמות של תיקיות מתחת לב
 
 #: ../help_text.php:5821
 msgid "The day of the week that starts a new week in this language.  Most languages start the week on Sunday, but some start on Monday or other days."
-msgstr "The day of the week that starts a new week in this language.  Most languages start the week on Sunday, but some start on Monday or other days."
+msgstr ""
 
 #: ../help_text.php:5825
 msgid "Welcome to your new PhpGedView website."
@@ -18447,7 +18447,7 @@ msgstr "אזור התרשימים מאפשר לשים תרשים על הדף ב�
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
-msgstr "HTML"
+msgstr ""
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."

@@ -313,7 +313,7 @@ msgstr "Fonts"
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:227
 #: ../modules/notes/pgv_module.php:49
 msgid "Notes"
-msgstr "Notes"
+msgstr ""
 
 #: ../statistics.php:337 ../includes/functions/functions_rss.php:181
 #: ../blocks/gedcom_stats.php:140 ../blocks/gedcom_stats.php:315
@@ -441,7 +441,7 @@ msgstr "límits per edats:"
 #: ../statistics.php:697 ../statistics.php:700 ../statistics.php:703
 #: ../statistics.php:706 ../statistics.php:709
 msgid "interval"
-msgstr "interval"
+msgstr ""
 
 #: ../statistics.php:594 ../statistics.php:596 ../statistics.php:598
 #: ../statistics.php:607 ../statistics.php:609 ../statistics.php:694
@@ -546,7 +546,7 @@ msgstr "Amèrica del Sud"
 
 #: ../statistics.php:659
 msgid "Asia"
-msgstr "Asia"
+msgstr ""
 
 #: ../statistics.php:660
 msgid "Middle East"
@@ -558,7 +558,7 @@ msgstr "Àfrica"
 
 #: ../statistics.php:665
 msgid "Categories:"
-msgstr "Categories:"
+msgstr ""
 
 #: ../statistics.php:671
 msgid "none"
@@ -1444,7 +1444,7 @@ msgstr "Mostra connexions"
 #: ../edit_privacy.php:469 ../edit_privacy.php:516 ../edit_privacy.php:561
 #: ../edit_privacy.php:704 ../edit_privacy.php:751
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: ../manageservers.php:363 ../manageservers.php:438 ../editnews.php:90
 #: ../includes/classes/class_stats_ui.php:186 ../addremotelink.php:212
@@ -1910,7 +1910,7 @@ msgstr "Si"
 #: ../blocks/review_changes.php:158 ../blocks/recent_changes.php:116
 #: ../blocks/gedcom_stats.php:265 ../blocks/gedcom_stats.php:344
 msgid "No"
-msgstr "No"
+msgstr ""
 
 #: ../install.php:689 ../help_text.php:3655
 msgid "Database Table Prefix"
@@ -2582,7 +2582,7 @@ msgstr "Activa les característiques multimèdia"
 
 #: ../editconfig_gedcom.php:1169 ../editconfig_gedcom.php:1170
 msgid "General"
-msgstr "General"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1177 ../help_text.php:3165
 msgid "Keep links"
@@ -2691,7 +2691,7 @@ msgstr "Benvingut"
 
 #: ../editconfig_gedcom.php:1413 ../includes/classes/class_menubar.php:119
 msgid "MyGedView"
-msgstr "MyGedView"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1419 ../help_text.php:3740
 msgid "Welcome text on Login page"
@@ -3054,7 +3054,7 @@ msgstr "Tradició dels cognoms"
 
 #: ../editconfig_gedcom.php:2118
 msgid "Paternal"
-msgstr "Paternal"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2119 ../includes/specialchars.php:64
 msgid "Spanish"
@@ -4663,7 +4663,7 @@ msgstr "Bàsic"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -5109,7 +5109,7 @@ msgstr "Problema de configuració del servidor PHP: cal la llibreria GD 2.x per 
 
 #: ../fanchart.php:109 ../fanchart.php:114
 msgid "http://www.php.net/gd"
-msgstr "http://www.php.net/gd"
+msgstr ""
 
 #: ../fanchart.php:113
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
@@ -5337,7 +5337,7 @@ msgstr "Pregunta"
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -5815,7 +5815,7 @@ msgstr "Escut d'Armes"
 #: ../includes/config_data.php:75
 #: ../modules/lightbox/functions/lightbox_print_media.php:143
 msgid "Document"
-msgstr "Document"
+msgstr ""
 
 #: ../includes/config_data.php:76
 msgid "Electronic"
@@ -5827,7 +5827,7 @@ msgstr "Microfitxa"
 
 #: ../includes/config_data.php:78
 msgid "Microfilm"
-msgstr "Microfilm"
+msgstr ""
 
 #: ../includes/config_data.php:79
 msgid "Magazine"
@@ -6107,7 +6107,7 @@ msgstr "Fill/a"
 #: ../includes/extras/functions.sl.php:116
 #: ../includes/functions/functions_date.php:85
 msgid "Infant"
-msgstr "Infant"
+msgstr ""
 
 #: ../includes/extras/functions.pl.php:132
 #: ../includes/extras/functions.sl.php:117
@@ -6167,7 +6167,7 @@ msgstr "setmanes"
 
 #: ../includes/extras/functions.pl.php:369
 msgid "Informant"
-msgstr "Informant"
+msgstr ""
 
 #: ../includes/extras/functions.pl.php:373
 msgid "Lodger"
@@ -7442,7 +7442,7 @@ msgstr "Temps d'script esgotat abans de trobar vincles."
 #: ../includes/functions/functions_db.php:259
 #: ../includes/functions/functions_db.php:330
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
-msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+msgstr ""
 
 #: ../includes/functions/functions_db.php:2060 ../edit_interface.php:375
 #: ../edit_interface.php:392 ../edit_interface.php:1990
@@ -7542,7 +7542,7 @@ msgstr "Telèfon"
 #: ../modules/googlemap/googlemap.php:314 ../edit_interface.php:1247
 #: ../help_text.php:766
 msgid "FAX"
-msgstr "FAX"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../includes/functions/functions_print_facts.php:846
@@ -7630,7 +7630,7 @@ msgstr "Desconegut"
 #: ../includes/classes/class_note.php:51
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:201
 msgid "…"
-msgstr "…"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:134 ../blocks/user_welcome.php:58
 msgid "My Pedigree"
@@ -8131,7 +8131,7 @@ msgstr ""
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
 #: ../includes/session.php:478
 msgid "utf8_unicode_ci"
-msgstr "utf8_unicode_ci"
+msgstr ""
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:222 ../modules/sitemap/index.php:379
@@ -8413,7 +8413,7 @@ msgstr "Gen"
 
 #: ../statisticsplot.php:732
 msgid "Feb"
-msgstr "Feb"
+msgstr ""
 
 #: ../statisticsplot.php:738
 msgid "Aug"
@@ -8425,11 +8425,11 @@ msgstr "Set"
 
 #: ../statisticsplot.php:740
 msgid "Oct"
-msgstr "Oct"
+msgstr ""
 
 #: ../statisticsplot.php:741
 msgid "Nov"
-msgstr "Nov"
+msgstr ""
 
 #: ../statisticsplot.php:742
 msgid "Dec"
@@ -8455,7 +8455,7 @@ msgstr "Gràfic estadístic"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -8533,7 +8533,7 @@ msgstr "Icona"
 #: ../modules/lightbox/lb_editconfig.php:208
 #: ../modules/lightbox/lb_editconfig.php:212
 msgid "Text"
-msgstr "Text"
+msgstr ""
 
 #: ../modules/lightbox/lb_editconfig.php:105
 #: ../modules/lightbox/lb_editconfig.php:107
@@ -8560,7 +8560,7 @@ msgstr "Globus"
 #: ../modules/lightbox/lb_editconfig.php:177
 #: ../modules/lightbox/lb_editconfig.php:181
 msgid "Normal"
-msgstr "Normal"
+msgstr ""
 
 #: ../modules/lightbox/lb_editconfig.php:128
 msgid "Individual Page - Album Tab Thumbnails"
@@ -9755,7 +9755,7 @@ msgstr "Dades de la taula de llocs GoogleMap"
 
 #: ../modules/googlemap/placecheck.php:290
 msgid "Zoom="
-msgstr "Zoom="
+msgstr ""
 
 #: ../modules/googlemap/placecheck.php:342
 msgid "Total unique places"
@@ -9810,15 +9810,15 @@ msgstr "Màxim"
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr "N"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr "S"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
-msgstr "E"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:802
 msgid "W"
@@ -9837,7 +9837,7 @@ msgstr "Esborra la bandera"
 
 #: ../modules/googlemap/editconfig.php:56
 msgid "Prefix"
-msgstr "Prefix"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:64
 msgid "Postfix"
@@ -12397,7 +12397,7 @@ msgstr "Uruguai"
 #. I18N: This is the country/chapman code for "USA"
 #: ../language/_countries.php:528
 msgid "USA"
-msgstr "USA"
+msgstr ""
 
 #. I18N: This is the country/chapman code for "Uzbekistan"
 #: ../language/_countries.php:530
@@ -12499,7 +12499,7 @@ msgstr "Crític"
 
 #: ../gedcheck.php:74
 msgid "Error"
-msgstr "Error"
+msgstr ""
 
 #: ../gedcheck.php:75
 msgid "Warning"
@@ -15606,7 +15606,7 @@ msgstr ""
 
 #: ../help_text.php:3990
 msgid "_User Information migrate (Index --&gt;&gt; SQL)"
-msgstr "_User Information migrate (Index --&gt;&gt; SQL)"
+msgstr ""
 
 #: ../help_text.php:3994
 msgid "ah25"
@@ -15920,7 +15920,7 @@ msgstr "Aquesta pàgina és un recull de la majoria de temes de l'ajuda de confi
 
 #: ../help_text.php:4210
 msgid "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
-msgstr ""
+msgstr "Aquesta pàgina es fa servir per controlar quines opcions d'idioma tenen disponibles els vostres usuaris. Per exemple, podeu configurar-la de tal forma que solament estiguin disponibles l'alemany i el francès. Això serà adequat si no us cal comunicar-vos amb els vostres usuaris en hongarès.<br /><br />Podeu també fer servir aquesta pàgina per modificar certs aspectes del PhpGedView que depenen de l'idioma seleccionat. Per exemple, aquí és on dieu al PhpGedView com formatar els camps de data i hora.<br /><br />Els idiomes actius que tenen el caixetí grisós no poden desactivar-se perquè s'estan fent servir. Mireu al capdavall de la pàgina per veure quins idiomes  es fan servir. Quan un idioma ja no es fa servir més pel GEDCOM o pels usuaris, podeu desactivar-lo.<br /><br />Tots els canvis es desen en un nou fitxer anomenat  <b>lang_settings.php</b> creat al directori <b>#INDEX_DIRECTORY#</b>. Qualsevol canvi es farà en aquest nou fitxer i el PhpGedView farà servir solament <u>aquest</u> fitxer. Podeu tornar als paràmetres originals per defecte esborrant aquest fitxer.<br /><br />Si us cal comunicar problemes amb els vostres paràmetres d'idioma, contacteu amb l'equip de suport de PhpGedView tant si aquest fitxer és present con si no."
 
 #: ../help_text.php:4214
 msgid "context"
@@ -15977,7 +15977,7 @@ msgstr "Nombre de dies a mostrar"
 
 #: ../help_text.php:4255
 msgid "Enter the number of days to show.  This number cannot be greater than <b>#DAYS_TO_SHOW_LIMIT#</b>.  If you enter a larger value, that limit will be used.<br /><br />The limit shown is set by the administrator in the GEDCOM configuration, Display and Layout section, Hide &amp; Show sub-section."
-msgstr ""
+msgstr "Entreu el nombre de dies a veure. No pot ésser major de <b>#DAYS_TO_SHOW_LIMIT#</b>. Si en poseu més, es farà servir aquest valor.<br /><br />El límit el posa l'administrador en configurar el GEDCOM, Secció Visualització i presentació, Sotssecció Amagar &amp; Mostrar."
 
 #: ../help_text.php:4259
 msgid "def_gedcom_date"
@@ -16771,7 +16771,7 @@ msgstr ""
 
 #: ../help_text.php:4826
 msgid "This block displays a list of frequently occurring surnames from this database. A surname must occur at least #COMMON_NAMES_THRESHOLD# times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name."
-msgstr ""
+msgstr "Aquest bloc us mostra una llista amb els cognoms més repetits a la base de dades. Un cognom ha de repetir-se #COMMON_NAMES_THRESHOLD# cops abans d'aparèixer aquí. És l'administrador qui decideix aquesta quantitat.<br /><br />Quan polseu un cognom de la llista, us mena a Persones, on disposeu de més detalls sobre el nom."
 
 #: ../help_text.php:4830
 msgid "index_events"
@@ -17184,7 +17184,7 @@ msgstr ""
 
 #: ../help_text.php:5121
 msgid "#pgv_lang[help_help_items]#"
-msgstr "#pgv_lang[help_help_items]#"
+msgstr ""
 
 #: ../help_text.php:5125
 msgid "menu_lists"
@@ -17397,7 +17397,7 @@ msgstr "Quan heu marcat aquest selector, al començament del gràfic hi sortiran
 
 #: ../help_text.php:5280
 msgid "Original name of language in #D_LANGNAME#"
-msgstr ""
+msgstr "Nom original de l'idioma #D_LANGNAME#"
 
 #: ../help_text.php:5281
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."
@@ -17938,7 +17938,7 @@ msgstr "La configuració del GEDCOM permet fins a %s nivells de carpetes a parti
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "Seleccioneu els fitxers del vostre ordinador a carregar al servidor. Tots els fitxers col·locaran al directori <b>#MEDIA_DIRECTORY#</b> o a un dels seus sotsdirectoris.<br /><br />Els noms de carpeta que especifiqueu s'afegiran a #MEDIA_DIRECTORY#. Per exemple, #MEDIA_DIRECTORY#lamevafamilia. Si el directori de miniatures no existeix, es crearà automàticament."
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
@@ -18446,7 +18446,7 @@ msgstr ""
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
-msgstr "HTML"
+msgstr ""
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."

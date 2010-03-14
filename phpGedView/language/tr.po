@@ -1444,7 +1444,7 @@ msgstr "Bağlantıları Görüntüle"
 #: ../edit_privacy.php:469 ../edit_privacy.php:516 ../edit_privacy.php:561
 #: ../edit_privacy.php:704 ../edit_privacy.php:751
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: ../manageservers.php:363 ../manageservers.php:438 ../editnews.php:90
 #: ../includes/classes/class_stats_ui.php:186 ../addremotelink.php:212
@@ -1455,7 +1455,7 @@ msgstr "Başlık"
 
 #: ../manageservers.php:371 ../manageservers.php:446
 msgid "Site URL/IP"
-msgstr "Site URL/IP"
+msgstr ""
 
 #: ../manageservers.php:379 ../manageservers.php:455 ../addremotelink.php:221
 msgid "Database ID:"
@@ -1727,7 +1727,7 @@ msgstr "SAX XML kütüphane için kontrol et:"
 
 #: ../install.php:586
 msgid "You do not have the SAX XML library.  You will not be able to run any reports or some other auxiliary functions."
-msgstr "You do not have the SAX XML library.  You will not be able to run any reports or some other auxiliary functions."
+msgstr ""
 
 #: ../install.php:593
 msgid "Checking for DOM XML library:"
@@ -1751,7 +1751,7 @@ msgstr "Tüm uyarı kontroleri geçti."
 
 #: ../install.php:615
 msgid "If any of the warnings do not pass you may still be able to run PhpGedView on this server, but some functionality may be disabled or you may experience poor performance."
-msgstr "If any of the warnings do not pass you may still be able to run PhpGedView on this server, but some functionality may be disabled or you may experience poor performance."
+msgstr ""
 
 #: ../install.php:638 ../help_text.php:2940
 msgid "Database Type"
@@ -2514,7 +2514,7 @@ msgstr "İbrani ve Miladi"
 
 #: ../editconfig_gedcom.php:994
 msgid "Hijri"
-msgstr "Hijri"
+msgstr ""
 
 #: ../editconfig_gedcom.php:995 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -3170,7 +3170,7 @@ msgstr "PhpGedView sunucuda Kaydetmeden E-postaları yolla"
 #: ../editconfig_gedcom.php:2329 ../editconfig_gedcom.php:2363
 #: ../useradmin.php:450 ../useradmin.php:872
 msgid "Mailto link"
-msgstr "Mailto link"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2330 ../editconfig_gedcom.php:2364
 #: ../useradmin.php:451 ../useradmin.php:873
@@ -3231,7 +3231,7 @@ msgstr "Sayfa içerik META tag"
 
 #: ../editconfig_gedcom.php:2434 ../help_text.php:3185
 msgid "Audience META tag"
-msgstr "Audience META tag"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2441 ../help_text.php:3215
 msgid "Page-type META tag"
@@ -4663,7 +4663,7 @@ msgstr "Temel"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -5337,7 +5337,7 @@ msgstr "Sorgula"
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -5913,7 +5913,7 @@ msgstr "Çekçe"
 
 #: ../includes/specialchars.php:60
 msgid "Slovak"
-msgstr "Slovak"
+msgstr ""
 
 #: ../includes/specialchars.php:61
 msgid "Danish"
@@ -7366,7 +7366,7 @@ msgstr "Ebeveynin yaşı"
 
 #: ../includes/functions/functions_print.php:2138
 msgid "LDS Temple"
-msgstr "LDS Temple"
+msgstr ""
 
 #: ../includes/functions/functions_print.php:2140
 msgid "LDS Temple Code:"
@@ -7630,7 +7630,7 @@ msgstr "Bilinmeyen"
 #: ../includes/classes/class_note.php:51
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:201
 msgid "…"
-msgstr "…"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:134 ../blocks/user_welcome.php:58
 msgid "My Pedigree"
@@ -8225,7 +8225,7 @@ msgstr "Şahıslar"
 
 #: ../includes/controllers/search_ctrl.php:892
 msgid "Site: "
-msgstr "Site: "
+msgstr ""
 
 #: ../includes/controllers/search_ctrl.php:892
 msgid " contained the following"
@@ -8455,7 +8455,7 @@ msgstr "İstatistik Alanı"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -8560,7 +8560,7 @@ msgstr "Balon"
 #: ../modules/lightbox/lb_editconfig.php:177
 #: ../modules/lightbox/lb_editconfig.php:181
 msgid "Normal"
-msgstr "Normal"
+msgstr ""
 
 #: ../modules/lightbox/lb_editconfig.php:128
 msgid "Individual Page - Album Tab Thumbnails"
@@ -9806,7 +9806,7 @@ msgstr "Ev"
 #: ../modules/googlemap/places_edit.php:783
 #: ../modules/googlemap/editconfig.php:386
 msgid "Max"
-msgstr "Max"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
@@ -9905,7 +9905,7 @@ msgstr "Yer Aşamanın içinde yer işaretlerin tipi"
 
 #: ../modules/googlemap/editconfig.php:260
 msgid "Standard"
-msgstr "Standard"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:267
 msgid "Display short placenames"
@@ -10104,7 +10104,7 @@ msgstr ""
 
 #: ../modules/sitemap/admin-config.php:43
 msgid "Sitemap"
-msgstr "Sitemap"
+msgstr ""
 
 #: ../modules/sitemap/admin-config.php:46 ../modules/sitemap/index.php:210
 #: ../modules/sitemap/index.php:214 ../modules/sitemap/index.php:265
@@ -10691,7 +10691,7 @@ msgstr "Bir uzak siteyi seçtiniz."
 
 #: ../addremotelink.php:78 ../addremotelink.php:88 ../addremotelink.php:191
 msgid "Site"
-msgstr "Site"
+msgstr ""
 
 #: ../addremotelink.php:83
 msgid "Database ID"
@@ -10723,7 +10723,7 @@ msgstr "Yeni site tipi gir."
 
 #: ../addremotelink.php:215
 msgid "Site URL:"
-msgstr "Site URL:"
+msgstr ""
 
 #: ../addremotelink.php:224
 msgid "Username: "
@@ -17184,7 +17184,7 @@ msgstr ""
 
 #: ../help_text.php:5121
 msgid "#pgv_lang[help_help_items]#"
-msgstr "#pgv_lang[help_help_items]#"
+msgstr ""
 
 #: ../help_text.php:5125
 msgid "menu_lists"
@@ -17397,7 +17397,7 @@ msgstr ""
 
 #: ../help_text.php:5280
 msgid "Original name of language in #D_LANGNAME#"
-msgstr ""
+msgstr "Bu dilin #D_LANGNAME# dilindeki gerçek ismi"
 
 #: ../help_text.php:5281
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."
@@ -17939,7 +17939,7 @@ msgstr ""
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "Serverinize yüklemek için yerel bilgisayarınızdan dosyaları seçin. Dızın <b>#MEDIA_DIRECTORY#</b> ya da onun alt dizininin birisine tüm dosya yüklenecek..<br /><br />Sizin belirttiğiniz dosya adlar #MEDIA_DIRECTORY# ilave edilecekler. örneğin #MEDIA_DIRECTORY#benimailem.Tırnak önizleme dızın var olmazsa otomatik olarak oluşturulacak."
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
@@ -18200,7 +18200,7 @@ msgstr "Merhaba...<br /><br />Yeni şifreniz (%s) kullanıcı adınıza kayıtl�
 
 #: ../login_register.php:259
 msgid "Please enter your relationship to the data in the Comments field."
-msgstr "Please enter your relationship to the data in the Comments field."
+msgstr ""
 
 #: ../login_register.php:275
 msgid "<div class=\"largeError\">Notice:</div><div class=\"error\">By completing and submitting this form, you agree:<ul><li>to protect the privacy of living people listed on our site;</li><li>and in the text box below, to explain to whom you are related, or to provide us with information on someone who should be listed on our site.</li></ul></div>"

@@ -341,7 +341,7 @@ msgstr ""
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:52
 #: ../modules/media/pgv_module.php:49
 msgid "Media"
-msgstr "Media"
+msgstr ""
 
 #: ../statistics.php:375 ../statisticsplot.php:840
 msgid "Individuals with sources"
@@ -1444,7 +1444,7 @@ msgstr ""
 #: ../edit_privacy.php:469 ../edit_privacy.php:516 ../edit_privacy.php:561
 #: ../edit_privacy.php:704 ../edit_privacy.php:751
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: ../manageservers.php:363 ../manageservers.php:438 ../editnews.php:90
 #: ../includes/classes/class_stats_ui.php:186 ../addremotelink.php:212
@@ -2486,7 +2486,7 @@ msgstr "Fără conversie de calendar"
 
 #: ../editconfig_gedcom.php:987
 msgid "Gregorian"
-msgstr "Gregorian"
+msgstr ""
 
 #: ../editconfig_gedcom.php:988
 msgid "Julian"
@@ -2514,7 +2514,7 @@ msgstr "Ebraic şi Gregorian"
 
 #: ../editconfig_gedcom.php:994
 msgid "Hijri"
-msgstr "Hijri"
+msgstr ""
 
 #: ../editconfig_gedcom.php:995 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -2691,7 +2691,7 @@ msgstr "Bine aţi venit"
 
 #: ../editconfig_gedcom.php:1413 ../includes/classes/class_menubar.php:119
 msgid "MyGedView"
-msgstr "MyGedView"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1419 ../help_text.php:3740
 msgid "Welcome text on Login page"
@@ -4073,11 +4073,11 @@ msgstr "Soţ"
 
 #: ../relationship.php:143 ../relationship.php:144
 msgid "Mother-in-law"
-msgstr "Mother-in-law"
+msgstr ""
 
 #: ../relationship.php:146 ../relationship.php:147
 msgid "Father-in-law"
-msgstr "Father-in-law"
+msgstr ""
 
 #: ../relationship.php:152 ../relationship.php:157
 #: ../includes/family_nav.php:281
@@ -4107,23 +4107,23 @@ msgstr ""
 
 #: ../relationship.php:180 ../relationship.php:181
 msgid "Brother-in-law"
-msgstr "Brother-in-law"
+msgstr ""
 
 #: ../relationship.php:188 ../relationship.php:189
 msgid "Daughter-in-law"
-msgstr "Daughter-in-law"
+msgstr ""
 
 #: ../relationship.php:191 ../relationship.php:192
 msgid "Son-in-law"
-msgstr "Son-in-law"
+msgstr ""
 
 #: ../relationship.php:197 ../relationship.php:198
 msgid "step daughter"
-msgstr "step daughter"
+msgstr ""
 
 #: ../relationship.php:200 ../relationship.php:201
 msgid "step son"
-msgstr "step son"
+msgstr ""
 
 #: ../relationship.php:212 ../relationship.php:213 ../relationship.php:225
 #: ../relationship.php:226
@@ -4157,7 +4157,7 @@ msgstr "%2$d x mătuşă"
 #: ../relationship.php:348 ../relationship.php:349
 #, php-format
 msgid "%2$d x great uncle"
-msgstr "%2$d x great uncle"
+msgstr ""
 
 #: ../relationship.php:296 ../relationship.php:297 ../relationship.php:304
 #: ../relationship.php:305
@@ -4203,7 +4203,7 @@ msgstr "Frate vitreg"
 #: ../relationship.php:426
 #, php-format
 msgid "%1$s is the %2$s of %3$s."
-msgstr "%1$s is the %2$s of %3$s."
+msgstr ""
 
 #: ../relationship.php:488 ../relationship.php:567
 #: ../includes/functions/functions_print_lists.php:218
@@ -4508,7 +4508,7 @@ msgstr "Numele conţine:"
 #: ../medialist.php:148 ../calendar.php:535 ../blocks/random_media.php:357
 #: ../media.php:809 ../media.php:829
 msgid "Filter"
-msgstr "Filter"
+msgstr ""
 
 #: ../find.php:286 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:296
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:266
@@ -4663,7 +4663,7 @@ msgstr "De bază"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -4897,7 +4897,7 @@ msgstr ""
 #: ../uploadgedcom.php:795 ../uploadgedcom.php:844 ../uploadgedcom.php:1128
 #: ../uploadgedcom.php:1133 ../includes/functions/functions_print.php:733
 msgid "sec."
-msgstr "sec."
+msgstr ""
 
 #: ../uploadgedcom.php:801 ../admin.php:210
 #: ../includes/classes/class_menubar.php:156 ../blocks/getting_started.php:65
@@ -5109,7 +5109,7 @@ msgstr "Serverul PHP este configurat greşit: librăria GD 2.x este necesară pe
 
 #: ../fanchart.php:109 ../fanchart.php:114
 msgid "http://www.php.net/gd"
-msgstr "http://www.php.net/gd"
+msgstr ""
 
 #: ../fanchart.php:113
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
@@ -5337,7 +5337,7 @@ msgstr ""
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -5794,7 +5794,7 @@ msgstr ""
 
 #: ../includes/config_data.php:70
 msgid "Audio"
-msgstr "Audio"
+msgstr ""
 
 #: ../includes/config_data.php:71
 msgid "Book"
@@ -5802,7 +5802,7 @@ msgstr "Carte"
 
 #: ../includes/config_data.php:72
 msgid "Card"
-msgstr "Card"
+msgstr ""
 
 #: ../includes/config_data.php:73
 msgid "Certificate"
@@ -5815,11 +5815,11 @@ msgstr ""
 #: ../includes/config_data.php:75
 #: ../modules/lightbox/functions/lightbox_print_media.php:143
 msgid "Document"
-msgstr "Document"
+msgstr ""
 
 #: ../includes/config_data.php:76
 msgid "Electronic"
-msgstr "Electronic"
+msgstr ""
 
 #: ../includes/config_data.php:77
 msgid "Microfiche"
@@ -5827,7 +5827,7 @@ msgstr "Microfişă"
 
 #: ../includes/config_data.php:78
 msgid "Microfilm"
-msgstr "Microfilm"
+msgstr ""
 
 #: ../includes/config_data.php:79
 msgid "Magazine"
@@ -5864,7 +5864,7 @@ msgstr "Piatră funerară"
 
 #: ../includes/config_data.php:85
 msgid "Video"
-msgstr "Video"
+msgstr ""
 
 #: ../includes/config_data.php:86
 msgid "Painting"
@@ -6070,7 +6070,7 @@ msgstr "Iulie"
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
 msgid "August"
-msgstr "August"
+msgstr ""
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
@@ -7108,7 +7108,7 @@ msgstr "Uploadează fişiere media"
 #: ../includes/functions/functions_mediadb.php:1029
 #: ../includes/functions/functions_mediadb.php:1107
 msgid "Upload"
-msgstr "Upload"
+msgstr ""
 
 #: ../includes/functions/functions_mediadb.php:1035
 #: ../includes/functions/functions_mediadb.php:1186
@@ -7542,7 +7542,7 @@ msgstr "Telefon"
 #: ../modules/googlemap/googlemap.php:314 ../edit_interface.php:1247
 #: ../help_text.php:766
 msgid "FAX"
-msgstr "FAX"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../includes/functions/functions_print_facts.php:846
@@ -8225,7 +8225,7 @@ msgstr "Oameni"
 
 #: ../includes/controllers/search_ctrl.php:892
 msgid "Site: "
-msgstr "Site: "
+msgstr ""
 
 #: ../includes/controllers/search_ctrl.php:892
 msgid " contained the following"
@@ -8413,27 +8413,27 @@ msgstr "Ian"
 
 #: ../statisticsplot.php:732
 msgid "Feb"
-msgstr "Feb"
+msgstr ""
 
 #: ../statisticsplot.php:738
 msgid "Aug"
-msgstr "Aug"
+msgstr ""
 
 #: ../statisticsplot.php:739
 msgid "Sep"
-msgstr "Sep"
+msgstr ""
 
 #: ../statisticsplot.php:740
 msgid "Oct"
-msgstr "Oct"
+msgstr ""
 
 #: ../statisticsplot.php:741
 msgid "Nov"
-msgstr "Nov"
+msgstr ""
 
 #: ../statisticsplot.php:742
 msgid "Dec"
-msgstr "Dec"
+msgstr ""
 
 #: ../statisticsplot.php:808
 msgid " per gender"
@@ -8455,7 +8455,7 @@ msgstr "Graficul statisticilor"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -9810,11 +9810,11 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr "N"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr "S"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
@@ -10691,7 +10691,7 @@ msgstr "Aţi ales un site de la distanţă."
 
 #: ../addremotelink.php:78 ../addremotelink.php:88 ../addremotelink.php:191
 msgid "Site"
-msgstr "Site"
+msgstr ""
 
 #: ../addremotelink.php:83
 msgid "Database ID"
@@ -17939,7 +17939,7 @@ msgstr ""
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "Selectaţi fişiere de pe calculatorul dumneavoastră pentru a putea fi uploadate pe serverul dumneavoastră.  Toate fişierele for fi uploadate în directorul <b>#MEDIA_DIRECTORY#</b> sau unul din subdirectoarele lui.<br /><br />Numele directoarelor specificate vor fi adăugate la #MEDIA_DIRECTORY#. De exemplu, #MEDIA_DIRECTORY#familia_mea. Dacă directorul pentru thumbnailuri nu există, este creat automat."
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
@@ -18447,7 +18447,7 @@ msgstr "Blocul de diagrame vă permite să plasaţi o diagramă pe pagina de int
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
-msgstr "HTML"
+msgstr ""
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."
@@ -18602,7 +18602,7 @@ msgstr "Start"
 #: ../blocks/random_media.php:204 ../blocks/random_media.php:205
 #: ../blocks/random_media.php:206
 msgid "Stop"
-msgstr "Stop"
+msgstr ""
 
 #: ../blocks/random_media.php:346
 msgid "Persons"

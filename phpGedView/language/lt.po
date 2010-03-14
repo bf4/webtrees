@@ -2163,7 +2163,7 @@ msgstr "Susieti Media"
 #: ../inverselink.php:119
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:130
 msgid "Media ID"
-msgstr "Media ID"
+msgstr ""
 
 #: ../inverselink.php:145
 msgid "Enter Individual ID"
@@ -5794,7 +5794,7 @@ msgstr ""
 
 #: ../includes/config_data.php:70
 msgid "Audio"
-msgstr "Audio"
+msgstr ""
 
 #: ../includes/config_data.php:71
 msgid "Book"
@@ -6556,7 +6556,7 @@ msgstr "Globoti"
 
 #: ../includes/functions/functions_edit.php:1399 ../edit_interface.php:581
 msgid "Sealing"
-msgstr "Sealing"
+msgstr ""
 
 #: ../includes/functions/functions_edit.php:1460
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."

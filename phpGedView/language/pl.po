@@ -1444,7 +1444,7 @@ msgstr "Zobacz połączenia"
 #: ../edit_privacy.php:469 ../edit_privacy.php:516 ../edit_privacy.php:561
 #: ../edit_privacy.php:704 ../edit_privacy.php:751
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: ../manageservers.php:363 ../manageservers.php:438 ../editnews.php:90
 #: ../includes/classes/class_stats_ui.php:186 ../addremotelink.php:212
@@ -1930,7 +1930,7 @@ msgstr "Katalog z plikiem index"
 
 #: ../install.php:766 ../help_text.php:3450
 msgid "PhpGedView URL"
-msgstr "PhpGedView URL"
+msgstr ""
 
 #: ../install.php:769
 #, php-format
@@ -2514,7 +2514,7 @@ msgstr "hebrajski i gregoriański"
 
 #: ../editconfig_gedcom.php:994
 msgid "Hijri"
-msgstr "Hijri"
+msgstr ""
 
 #: ../editconfig_gedcom.php:995 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -2574,7 +2574,7 @@ msgstr "Limit czasu PHP:"
 
 #: ../editconfig_gedcom.php:1149 ../editconfig_gedcom.php:1150
 msgid "Multimedia"
-msgstr "Multimedia"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1157 ../help_text.php:3240
 msgid "Enable multimedia features"
@@ -3304,7 +3304,7 @@ msgstr "%s nie może zostać pobrany."
 #: ../uploadgedcom.php:294 ../uploadgedcom.php:300 ../uploadgedcom.php:1116
 #: ../usermigrate.php:146
 msgid "Import"
-msgstr "Import"
+msgstr ""
 
 #: ../editgedcoms.php:191
 msgid "This GEDCOM has not yet been imported."
@@ -3643,7 +3643,7 @@ msgstr "Zakładka?"
 
 #: ../module_admin.php:208
 msgid "Menu?"
-msgstr "Menu?"
+msgstr ""
 
 #: ../module_admin.php:209
 msgid "Sidebar?"
@@ -4663,7 +4663,7 @@ msgstr "Podstawowy"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -5337,7 +5337,7 @@ msgstr "Zapytanie"
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -5998,31 +5998,31 @@ msgstr "Poniższa wiadomość została nadesłana na twoje konto od "
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
-msgstr "(לא-ידוע)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:79 ../includes/sort_tables_utf8.php:89
 msgid "(غير معروف)"
-msgstr "(غير معروف)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:80 ../includes/sort_tables_utf8.php:90
 msgid "(άγνωστος/η)"
-msgstr "(άγνωστος/η)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:81 ../includes/sort_tables_utf8.php:91
 msgid "(неопределено)"
-msgstr "(неопределено)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:82 ../includes/sort_tables_utf8.php:92
 msgid "(未知)"
-msgstr "(未知)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:83
 msgid "(vô danh)"
-msgstr "(vô danh)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:93
 msgid "(không biết tuổi)"
-msgstr "(không biết tuổi)"
+msgstr ""
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
@@ -7374,7 +7374,7 @@ msgstr "Kod Świątyni Mormońskiej:"
 
 #: ../includes/functions/functions_print.php:2144
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #: ../includes/functions/functions_print.php:2225 ../help_text.php:3814
 msgid "Add from clipboard"
@@ -7630,7 +7630,7 @@ msgstr "Nieznane"
 #: ../includes/classes/class_note.php:51
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:201
 msgid "…"
-msgstr "…"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:134 ../blocks/user_welcome.php:58
 msgid "My Pedigree"
@@ -8342,7 +8342,7 @@ msgstr "Rodzeństwo przyrodnie"
 #: ../includes/controllers/individual_ctrl.php:853
 #: ../includes/controllers/individual_ctrl.php:854
 msgid "Partner"
-msgstr "Partner"
+msgstr ""
 
 #: ../includes/controllers/individual_ctrl.php:840
 msgid "Ex-Spouse"
@@ -8455,7 +8455,7 @@ msgstr "Wykres statystyk"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -8663,7 +8663,7 @@ msgstr "Zamknij"
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:48
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:53
 msgid "Album"
-msgstr "Album"
+msgstr ""
 
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:58
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:61
@@ -9755,7 +9755,7 @@ msgstr "Tablica miejsc GoogleMap"
 
 #: ../modules/googlemap/placecheck.php:290
 msgid "Zoom="
-msgstr "Zoom="
+msgstr ""
 
 #: ../modules/googlemap/placecheck.php:342
 msgid "Total unique places"
@@ -9810,19 +9810,19 @@ msgstr "Maksimum"
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr "N"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr "S"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
-msgstr "E"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:802
 msgid "W"
-msgstr "W"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:812
 #: ../modules/googlemap/places_edit.php:820
@@ -9933,7 +9933,7 @@ msgstr "Współczynnik powiększenia mapy"
 
 #: ../modules/googlemap/editconfig.php:325
 msgid "Min."
-msgstr "Min."
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:330
 msgid "Max."
@@ -12552,7 +12552,7 @@ msgstr "nie ma odnośnika powrotu"
 
 #: ../gedcheck.php:839 ../gedcheck.php:858 ../gedcheck.php:861
 msgid "tag"
-msgstr "tag"
+msgstr ""
 
 #: ../gedcheck.php:906
 msgid "data"
@@ -15920,7 +15920,7 @@ msgstr "Ta strona zbiera w jednym miejscu wszystkie główne tematy pomocy konfi
 
 #: ../help_text.php:4210
 msgid "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
-msgstr ""
+msgstr "Ta strona umożliwia kontrolę nad ustawieniami językowymi. Na przykład możesz pozostawić swoim użytkownikom wybór wyłącznie między niemieckim i francuskim. Ta opcja przydaje się na przykład wtedy, kiedy nie potrafisz porozumiewać się z użykownikami po węgiersku.<br /><br />Tutaj możesz także zmienić pewne aspekty PhpGedView, które zależą od wybranego języka. Na przykład możesz określić format daty i godziny.<br /><br />Aktywnych i zacieniowanych szarym kolorem języków nie można wyłączyć, ponieważ są aktualnie w użyciu. Na dole tabelki możesz zobaczyć, gdzie język jest używany. Kiedy język przestanie być używany, będzie można go wyłączyć.<br /><br />Wszystkie wprowadzone przez ciebie zmiany zostaną zapisane w nowym pliku o nazwie <b>lang_settings.php</b>, utworzonym w katalogu <b>#INDEX_DIRECTORY#</b>. Kolejne zmiany będą dokonywane i zapisywane wyłącznie w tym nowym pliku. Możesz powrócić do oryginalnych domyślnych ustawień językowych usuwając ten plik.<br /><br />Jeśli zgłaszasz problem z ustawieniami językowymi, poinformuj zespół pomocy technicznej, czy ten nowy plik istnieje."
 
 #: ../help_text.php:4214
 msgid "context"
@@ -15977,7 +15977,7 @@ msgstr "Liczba dni do pokazania"
 
 #: ../help_text.php:4255
 msgid "Enter the number of days to show.  This number cannot be greater than <b>#DAYS_TO_SHOW_LIMIT#</b>.  If you enter a larger value, that limit will be used.<br /><br />The limit shown is set by the administrator in the GEDCOM configuration, Display and Layout section, Hide &amp; Show sub-section."
-msgstr ""
+msgstr "Wprowadź liczbę dni do wyświetlenia. Liczba nie może być większa niż <b>#DAYS_TO_SHOW_LIMIT#</b>. Jeśli wprowadzisz większą liczbę, zostanie zastosowana maksymalna dozwolona liczba.<br /><br />Limit jest ustawiony przez administratora w konfiguracji GEDCOM, sekcji Wygląd i układ, podsekcji Ukryj i pokaż."
 
 #: ../help_text.php:4259
 msgid "def_gedcom_date"
@@ -16771,7 +16771,7 @@ msgstr ""
 
 #: ../help_text.php:4826
 msgid "This block displays a list of frequently occurring surnames from this database. A surname must occur at least #COMMON_NAMES_THRESHOLD# times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name."
-msgstr ""
+msgstr "Ten blok wyświetla listę nazwisk, które występują w bazie danych najczęściej. Aby pojawiło się na liście, nazwisko musi wystąpić co najmniej #COMMON_NAMES_THRESHOLD# razy. Administrator może zmieniać tą wartość progową.<br /><br />Kliknięcie na nazwisko z listy spowoduje przeniesienie do strony Lista osób, gdzie zobaczysz więcej szczegółów o danym nazwisku."
 
 #: ../help_text.php:4830
 msgid "index_events"
@@ -17176,7 +17176,7 @@ msgstr "W tym menu pojawiają się wszystkie bazy genealogiczne dostępne na tej
 
 #: ../help_text.php:5115
 msgid "Menu"
-msgstr "Menu"
+msgstr ""
 
 #: ../help_text.php:5116 ../help_text.php:5120
 msgid "<div class=\"name_head\"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href=\"#menu_fam\">Welcome page</a><br /></li><li><a href=\"#menu_myged\">MyGedView Portal</a><br /></li><li><a href=\"#menu_charts\">Charts</a><br /></li><li><a href=\"#menu_lists\">Lists</a><br /></li><li><a href=\"#menu_annical\">Anniversary Calendar</a><br /></li><li><a href=\"#menu_clip\">Family Tree Clippings Cart</a><br /></li><li><a href=\"#menu_search\">Search</a><br /></li><li><a href=\"#menu_help\">Help</a></li></ul>"
@@ -17184,7 +17184,7 @@ msgstr ""
 
 #: ../help_text.php:5121
 msgid "#pgv_lang[help_help_items]#"
-msgstr "#pgv_lang[help_help_items]#"
+msgstr ""
 
 #: ../help_text.php:5125
 msgid "menu_lists"
@@ -17397,7 +17397,7 @@ msgstr "Zaznaczenie tej opcji spowoduje wyświetlenie najstarszych osób u góry
 
 #: ../help_text.php:5280
 msgid "Original name of language in #D_LANGNAME#"
-msgstr ""
+msgstr "Nazwa języka w oryginale w #D_LANGNAME#"
 
 #: ../help_text.php:5281
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."
@@ -17939,7 +17939,7 @@ msgstr "Twoja konfiguracja GEDCOM pozwala na maksymalnie %s poziomów katalogu p
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "Wybierz pliki ze swojego komputera do wgrania na serwer. Wszystkie pliki zostaną wgrane do katalogu <b>#MEDIA_DIRECTORY#</b> lub jednego z jego podkatalogów.<br /><br />Podane przez ciebie nazwy katalogów zostaną dołączone do nazwy katalogu #MEDIA_DIRECTORY#, np. #MEDIA_DIRECTORY#mojarodzina. Jeśli katalog miniaturek nie istnieje, zostanie utworzony automatycznie."
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
@@ -18447,7 +18447,7 @@ msgstr "Blok diagramów pozwala umieścić na stronie głównej lub stronie port
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
-msgstr "HTML"
+msgstr ""
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."

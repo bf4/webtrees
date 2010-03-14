@@ -301,7 +301,7 @@ msgstr "Objets MultiMédia"
 #: ../sourcelist.php:34 ../sourcelist.php:35 ../blocks/gedcom_stats.php:134
 #: ../blocks/gedcom_stats.php:299
 msgid "Sources"
-msgstr "Sources"
+msgstr ""
 
 #: ../statistics.php:336 ../editconfig_gedcom.php:1629
 #: ../includes/controllers/search_ctrl.php:820
@@ -313,7 +313,7 @@ msgstr "Sources"
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:227
 #: ../modules/notes/pgv_module.php:49
 msgid "Notes"
-msgstr "Notes"
+msgstr ""
 
 #: ../statistics.php:337 ../includes/functions/functions_rss.php:181
 #: ../blocks/gedcom_stats.php:140 ../blocks/gedcom_stats.php:315
@@ -538,7 +538,7 @@ msgstr "Monde"
 
 #: ../statistics.php:657
 msgid "Europe"
-msgstr "Europe"
+msgstr ""
 
 #: ../statistics.php:658
 msgid "South America"
@@ -874,11 +874,11 @@ msgstr "Options"
 
 #: ../pedigree.php:91
 msgid "Orientation"
-msgstr "Orientation"
+msgstr ""
 
 #: ../pedigree.php:119 ../editconfig_gedcom.php:1584
 msgid "Portrait"
-msgstr "Portrait"
+msgstr ""
 
 #: ../pedigree.php:122 ../editconfig_gedcom.php:1583
 msgid "Landscape"
@@ -2183,7 +2183,7 @@ msgstr "Famille"
 #: ../inverselink.php:176 ../includes/functions/functions_print_facts.php:532
 #: ../includes/functions/functions_print_facts.php:556
 msgid "Source"
-msgstr "Source"
+msgstr ""
 
 #: ../inverselink.php:190
 msgid "Repository"
@@ -2514,7 +2514,7 @@ msgstr "Hébreu et grégorien"
 
 #: ../editconfig_gedcom.php:994
 msgid "Hijri"
-msgstr "Hijri"
+msgstr ""
 
 #: ../editconfig_gedcom.php:995 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -2869,7 +2869,7 @@ msgstr "Style de présentation des listes"
 #: ../blocks/top10_givnnames.php:148 ../blocks/todays_events.php:160
 #: ../blocks/yahrzeit.php:273
 msgid "Table"
-msgstr "Table"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1727
 msgid "Tagcloud"
@@ -3304,7 +3304,7 @@ msgstr "%s ne peut être transféré du serveur."
 #: ../uploadgedcom.php:294 ../uploadgedcom.php:300 ../uploadgedcom.php:1116
 #: ../usermigrate.php:146
 msgid "Import"
-msgstr "Import"
+msgstr ""
 
 #: ../editgedcoms.php:191
 msgid "This GEDCOM has not yet been imported."
@@ -3313,7 +3313,7 @@ msgstr "Ce fichier GEDCOM n'a pas encore été chargé."
 #: ../editgedcoms.php:197 ../usermigrate.php:147 ../export_gedcom.php:51
 #: ../export_gedcom.php:56 ../help_text.php:2586
 msgid "Export"
-msgstr "Export"
+msgstr ""
 
 #: ../editgedcoms.php:201
 msgid "Are you sure you want to delete this GEDCOM"
@@ -3385,7 +3385,7 @@ msgstr "Journal des modifications"
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:1529
 #: ../familybook.php:221
 msgid "Parents"
-msgstr "Parents"
+msgstr ""
 
 #: ../family.php:97
 msgid "Grandparents"
@@ -3631,7 +3631,7 @@ msgstr ""
 #: ../module_admin.php:205 ../module_admin.php:253 ../module_admin.php:304
 #: ../module_admin.php:355
 msgid "Description"
-msgstr "Description"
+msgstr ""
 
 #: ../module_admin.php:206
 msgid "Version / PGV"
@@ -3974,7 +3974,7 @@ msgstr "Recherche avancée"
 #: ../search_advanced.php:246 ../search_advanced.php:268
 #: ../search_advanced.php:283
 msgid "Exact"
-msgstr "Exact"
+msgstr ""
 
 #: ../search_advanced.php:170 ../search_advanced.php:232
 #: ../search_advanced.php:247 ../search_advanced.php:269
@@ -4663,7 +4663,7 @@ msgstr "Russell"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -4897,7 +4897,7 @@ msgstr "Import terminé"
 #: ../uploadgedcom.php:795 ../uploadgedcom.php:844 ../uploadgedcom.php:1128
 #: ../uploadgedcom.php:1133 ../includes/functions/functions_print.php:733
 msgid "sec."
-msgstr "sec."
+msgstr ""
 
 #: ../uploadgedcom.php:801 ../admin.php:210
 #: ../includes/classes/class_menubar.php:156 ../blocks/getting_started.php:65
@@ -4951,7 +4951,7 @@ msgstr "enregistrements trouvés"
 #: ../includes/functions/functions_print_facts.php:1584
 #: ../modules/clippings/index.php:288
 msgid "Type"
-msgstr "Type"
+msgstr ""
 
 #: ../uploadgedcom.php:1138
 msgid "Import Statistics"
@@ -4959,7 +4959,7 @@ msgstr "Statistiques d'importation"
 
 #: ../admin.php:54 ../admin.php:140 ../help_text.php:2496
 msgid "Administration"
-msgstr "Administration"
+msgstr ""
 
 #: ../admin.php:78
 msgid "View log files"
@@ -5219,7 +5219,7 @@ msgstr "Les modifications suivantes ont été faites pour cet individu"
 
 #: ../edit_changes.php:128
 msgid "Date"
-msgstr "Date"
+msgstr ""
 
 #: ../edit_changes.php:130 ../edit_changes.php:147
 msgid "Undo"
@@ -5794,7 +5794,7 @@ msgstr "Annuler les modifications"
 
 #: ../includes/config_data.php:70
 msgid "Audio"
-msgstr "Audio"
+msgstr ""
 
 #: ../includes/config_data.php:71
 msgid "Book"
@@ -5815,7 +5815,7 @@ msgstr "armoiries"
 #: ../includes/config_data.php:75
 #: ../modules/lightbox/functions/lightbox_print_media.php:143
 msgid "Document"
-msgstr "Document"
+msgstr ""
 
 #: ../includes/config_data.php:76
 msgid "Electronic"
@@ -5823,15 +5823,15 @@ msgstr "Électronique"
 
 #: ../includes/config_data.php:77
 msgid "Microfiche"
-msgstr "Microfiche"
+msgstr ""
 
 #: ../includes/config_data.php:78
 msgid "Microfilm"
-msgstr "Microfilm"
+msgstr ""
 
 #: ../includes/config_data.php:79
 msgid "Magazine"
-msgstr "Magazine"
+msgstr ""
 
 #: ../includes/config_data.php:80
 msgid "Manuscript"
@@ -5856,7 +5856,7 @@ msgstr "Journal"
 #: ../includes/config_data.php:83
 #: ../modules/lightbox/functions/lightbox_print_media.php:135
 msgid "Photo"
-msgstr "Photo"
+msgstr ""
 
 #: ../includes/config_data.php:84
 msgid "Tombstone"
@@ -6018,7 +6018,7 @@ msgstr "(??)"
 
 #: ../includes/sort_tables_utf8.php:83
 msgid "(vô danh)"
-msgstr "(vô danh)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:93
 msgid "(không biết tuổi)"
@@ -7299,7 +7299,7 @@ msgstr "Favoris"
 
 #: ../includes/functions/functions_print.php:1209
 msgid "Note"
-msgstr "Note"
+msgstr ""
 
 #: ../includes/functions/functions_print.php:1322
 #: ../includes/classes/class_stats.php:954
@@ -7442,7 +7442,7 @@ msgstr "La recherche s'est achevée avant qu'un lien de parenté ne soit trouvé
 #: ../includes/functions/functions_db.php:259
 #: ../includes/functions/functions_db.php:330
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
-msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+msgstr ""
 
 #: ../includes/functions/functions_db.php:2060 ../edit_interface.php:375
 #: ../edit_interface.php:392 ../edit_interface.php:1990
@@ -7557,7 +7557,7 @@ msgstr "Adresse courriel"
 #: ../modules/googlemap/googlemap.php:326 ../help_text.php:1362
 #: ../blocks/user_favorites.php:179 ../blocks/gedcom_favorites.php:179
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Role"
 #: ../includes/functions/functions_print_facts.php:947
@@ -7630,7 +7630,7 @@ msgstr "inconnu"
 #: ../includes/classes/class_note.php:51
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:201
 msgid "…"
-msgstr "…"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:134 ../blocks/user_welcome.php:58
 msgid "My Pedigree"
@@ -7835,7 +7835,7 @@ msgstr "mariage"
 #: ../includes/classes/class_stats.php:1884
 #: ../includes/classes/class_stats.php:3802
 msgid "adoption"
-msgstr "adoption"
+msgstr ""
 
 #: ../includes/classes/class_stats.php:1885
 #: ../includes/classes/class_stats.php:3803
@@ -8131,7 +8131,7 @@ msgstr ""
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
 #: ../includes/session.php:478
 msgid "utf8_unicode_ci"
-msgstr "utf8_unicode_ci"
+msgstr ""
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:222 ../modules/sitemap/index.php:379
@@ -8325,7 +8325,7 @@ msgstr "Supprimer la fiche de cet individu"
 #: ../includes/controllers/individual_ctrl.php:819
 #: ../modules/googlemap/pedigree_map.php:651
 msgid "Parent"
-msgstr "Parent"
+msgstr ""
 
 #: ../includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
@@ -8409,7 +8409,7 @@ msgstr " n'est pas implémenté:"
 
 #: ../statisticsplot.php:731
 msgid "Jan"
-msgstr "Jan"
+msgstr ""
 
 #: ../statisticsplot.php:732
 msgid "Feb"
@@ -8421,15 +8421,15 @@ msgstr "Août"
 
 #: ../statisticsplot.php:739
 msgid "Sep"
-msgstr "Sep"
+msgstr ""
 
 #: ../statisticsplot.php:740
 msgid "Oct"
-msgstr "Oct"
+msgstr ""
 
 #: ../statisticsplot.php:741
 msgid "Nov"
-msgstr "Nov"
+msgstr ""
 
 #: ../statisticsplot.php:742
 msgid "Dec"
@@ -8455,7 +8455,7 @@ msgstr "Graphique statistique"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -8663,7 +8663,7 @@ msgstr ""
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:48
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:53
 msgid "Album"
-msgstr "Album"
+msgstr ""
 
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:58
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:61
@@ -9567,7 +9567,7 @@ msgstr "Actualiser"
 #: ../modules/googlemap/googlemap.php:597
 #: ../modules/googlemap/pedigree_map.php:551
 msgid "Satellite"
-msgstr "Satellite"
+msgstr ""
 
 #: ../modules/googlemap/placehierarchy.php:510
 #: ../modules/googlemap/places_edit.php:410
@@ -9609,11 +9609,11 @@ msgstr "Ville"
 
 #: ../modules/googlemap/places.php:188 ../modules/googlemap/placecheck.php:237
 msgid "Longitude"
-msgstr "Longitude"
+msgstr ""
 
 #: ../modules/googlemap/places.php:188 ../modules/googlemap/placecheck.php:237
 msgid "Latitude"
-msgstr "Latitude"
+msgstr ""
 
 #: ../modules/googlemap/places.php:189 ../modules/googlemap/places.php:590
 #: ../modules/googlemap/places_edit.php:807
@@ -9806,19 +9806,19 @@ msgstr "Maison"
 #: ../modules/googlemap/places_edit.php:783
 #: ../modules/googlemap/editconfig.php:386
 msgid "Max"
-msgstr "Max"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr "N"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr "S"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
-msgstr "E"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:802
 msgid "W"
@@ -10691,7 +10691,7 @@ msgstr "Vous avez sélectionné un site distant."
 
 #: ../addremotelink.php:78 ../addremotelink.php:88 ../addremotelink.php:191
 msgid "Site"
-msgstr "Site"
+msgstr ""
 
 #: ../addremotelink.php:83
 msgid "Database ID"
@@ -12536,7 +12536,7 @@ msgstr "balise manquante"
 
 #: ../gedcheck.php:172 ../help_text.php:5180
 msgid "multiple"
-msgstr "multiple"
+msgstr ""
 
 #: ../gedcheck.php:174
 msgid "too many"
@@ -15566,7 +15566,7 @@ msgstr ""
 
 #: ../help_text.php:3965
 msgid "_Administration"
-msgstr "_Administration"
+msgstr ""
 
 #: ../help_text.php:3969
 msgid "ah19"
@@ -15920,7 +15920,7 @@ msgstr ""
 
 #: ../help_text.php:4210
 msgid "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
-msgstr ""
+msgstr "Ce module vous aide à configurer les langues utilisables avec PhpGedView.<br /><br />Attention : au premier changement, PhpGedView va créer un nouveau fichier <tt>lang_settings.php</tt> dans le répertoire <tt>#INDEX_DIRECTORY#</tt>.<br /><br />Ensuite PhpGedView utilisera uniquement ce fichier. Par conséquent, pour tout problème relatif à une langue, merci de préciser que vous utilisez un fichier modifié de votre répertoire <tt>#INDEX_DIRECTORY#</tt>."
 
 #: ../help_text.php:4214
 msgid "context"
@@ -15977,7 +15977,7 @@ msgstr "Nombre de jours à afficher"
 
 #: ../help_text.php:4255
 msgid "Enter the number of days to show.  This number cannot be greater than <b>#DAYS_TO_SHOW_LIMIT#</b>.  If you enter a larger value, that limit will be used.<br /><br />The limit shown is set by the administrator in the GEDCOM configuration, Display and Layout section, Hide &amp; Show sub-section."
-msgstr ""
+msgstr "Saisissez le nombre de jours à afficher. Ce nombre ne pourra pas excéder <b>#DAYS_TO_SHOW_LIMIT#</b>.  Si vous entrez une valeur plus grande, la valeur limite sera utilisée.<br /><br />La limite est spécifiée par l'administrateur dans la configuration du GEDCOM, section «Affichage», sous-section «Cacher/Montrer»."
 
 #: ../help_text.php:4259
 msgid "def_gedcom_date"
@@ -16771,7 +16771,7 @@ msgstr ""
 
 #: ../help_text.php:4826
 msgid "This block displays a list of frequently occurring surnames from this database. A surname must occur at least #COMMON_NAMES_THRESHOLD# times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name."
-msgstr ""
+msgstr "Ce bloc affiche la liste des noms de familles les plus fréquents. Leur nombre est déterminé par l'administrateur.<br /><br />En cliquant sur un nom de la liste, vous afficherez la page <b>Liste des individus</b>, qui vous donnera davantage de détails."
 
 #: ../help_text.php:4830
 msgid "index_events"
@@ -17176,7 +17176,7 @@ msgstr "Tous les fichiers GEDCOM disponibles sur le site sont présentés ici. C
 
 #: ../help_text.php:5115
 msgid "Menu"
-msgstr "Menu"
+msgstr ""
 
 #: ../help_text.php:5116 ../help_text.php:5120
 msgid "<div class=\"name_head\"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href=\"#menu_fam\">Welcome page</a><br /></li><li><a href=\"#menu_myged\">MyGedView Portal</a><br /></li><li><a href=\"#menu_charts\">Charts</a><br /></li><li><a href=\"#menu_lists\">Lists</a><br /></li><li><a href=\"#menu_annical\">Anniversary Calendar</a><br /></li><li><a href=\"#menu_clip\">Family Tree Clippings Cart</a><br /></li><li><a href=\"#menu_search\">Search</a><br /></li><li><a href=\"#menu_help\">Help</a></li></ul>"
@@ -17184,7 +17184,7 @@ msgstr ""
 
 #: ../help_text.php:5121
 msgid "#pgv_lang[help_help_items]#"
-msgstr "#pgv_lang[help_help_items]#"
+msgstr ""
 
 #: ../help_text.php:5125
 msgid "menu_lists"
@@ -17397,7 +17397,7 @@ msgstr "Option pour afficher les résultats dans le sens parents-enfants du haut
 
 #: ../help_text.php:5280
 msgid "Original name of language in #D_LANGNAME#"
-msgstr ""
+msgstr "Nom d'origine de la langue en #D_LANGNAME#"
 
 #: ../help_text.php:5281
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."
@@ -17405,7 +17405,7 @@ msgstr ""
 
 #: ../help_text.php:5285
 msgid "Page"
-msgstr "Page"
+msgstr ""
 
 #: ../help_text.php:5291
 msgid "In this box you type your password.<br /><br /><b>The password is case sensitive.</b>  This means that <b>MyPassword</b> is <u>not</u> the same as <b>mypassword</b> or <b>MYPASSWORD</b>."
@@ -17939,7 +17939,7 @@ msgstr "Votre configuration GEDCOM permet jusqu'à  %s niveaux de répertoires a
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "Choisir un fichier sur votre poste. Il sera copié sur le serveur dans le dossier <b>#MEDIA_DIRECTORY#</b> ou un de ses sous-dossiers.<br /><br />Le nom du dossier sera ajouté à #MEDIA_DIRECTORY#. Par exemple, #MEDIA_DIRECTORY#famille. Si le dossier de vignettes n'existe pas, il sera créé automatiquement."
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."

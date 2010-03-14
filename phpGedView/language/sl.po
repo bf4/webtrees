@@ -1930,7 +1930,7 @@ msgstr "Imenik Index"
 
 #: ../install.php:766 ../help_text.php:3450
 msgid "PhpGedView URL"
-msgstr "PhpGedView URL"
+msgstr ""
 
 #: ../install.php:769
 #, php-format
@@ -4478,7 +4478,7 @@ msgstr "Poišči vir"
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:109
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:201
 msgid "Find Special Characters"
-msgstr "Find Special Characters"
+msgstr ""
 
 #: ../find.php:166 ../search.php:51 ../search.php:73 ../search.php:100
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:174
@@ -4508,7 +4508,7 @@ msgstr "Ime vsebuje:"
 #: ../medialist.php:148 ../calendar.php:535 ../blocks/random_media.php:357
 #: ../media.php:809 ../media.php:829
 msgid "Filter"
-msgstr "Filter"
+msgstr ""
 
 #: ../find.php:286 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:296
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:266
@@ -4663,7 +4663,7 @@ msgstr "Osnovno"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -5109,7 +5109,7 @@ msgstr "Napačna nastavitev PHP strežnika: za uporabo slikovnih funkcij je zaht
 
 #: ../fanchart.php:109 ../fanchart.php:114
 msgid "http://www.php.net/gd"
-msgstr "http://www.php.net/gd"
+msgstr ""
 
 #: ../fanchart.php:113
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
@@ -5337,7 +5337,7 @@ msgstr "Poizvedba"
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -6002,27 +6002,27 @@ msgstr "(לא ידוע)"
 
 #: ../includes/sort_tables_utf8.php:79 ../includes/sort_tables_utf8.php:89
 msgid "(غير معروف)"
-msgstr "(غير معروف)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:80 ../includes/sort_tables_utf8.php:90
 msgid "(άγνωστος/η)"
-msgstr "(άγνωστος/η)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:81 ../includes/sort_tables_utf8.php:91
 msgid "(неопределено)"
-msgstr "(неопределено)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:82 ../includes/sort_tables_utf8.php:92
 msgid "(未知)"
-msgstr "(未知)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:83
 msgid "(vô danh)"
-msgstr "(vô danh)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:93
 msgid "(không biết tuổi)"
-msgstr "(không biết tuổi)"
+msgstr ""
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
@@ -7630,7 +7630,7 @@ msgstr "Neznano"
 #: ../includes/classes/class_note.php:51
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:201
 msgid "…"
-msgstr "…"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:134 ../blocks/user_welcome.php:58
 msgid "My Pedigree"
@@ -8455,7 +8455,7 @@ msgstr "Izris statističnih podatkov"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -8663,7 +8663,7 @@ msgstr "Zapri okno"
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:48
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:53
 msgid "Album"
-msgstr "Album"
+msgstr ""
 
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:58
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:61
@@ -8782,7 +8782,7 @@ msgstr "Ta povezava že obstaja"
 #: ../modules/GEDFact_assistant/_MEDIA/media_query_1a.php:54
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:56
 msgid "Navigator"
-msgstr "Navigator"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:78
 msgid "When adding a Link, the ID field cannot be empty."
@@ -9837,11 +9837,11 @@ msgstr "Odstrani zastavo"
 
 #: ../modules/googlemap/editconfig.php:56
 msgid "Prefix"
-msgstr "Prefix"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:64
 msgid "Postfix"
-msgstr "Postfix"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:72
 msgid "Prefix / Postfix order"
@@ -9853,27 +9853,27 @@ msgstr "Brez pre/postfix"
 
 #: ../modules/googlemap/editconfig.php:77
 msgid "Normal, prefix, postfix, both"
-msgstr "Normal, prefix, postfix, both"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:78
 msgid "Normal, postfix, prefix, both"
-msgstr "Normal, postfix, prefix, both"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:79
 msgid "Prefix, postfix, both, normal"
-msgstr "Prefix, postfix, both, normal"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:80
 msgid "Postfix, prefix, both, normal"
-msgstr "Postfix, prefix, both, normal"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:81
 msgid "Prefix, postfix, normal, both"
-msgstr "Prefix, postfix, normal, both"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:82
 msgid "Postfix, prefix, normal, both"
-msgstr "Postfix, prefix, normal, both"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:202
 msgid "Enable GoogleMap"
@@ -9933,11 +9933,11 @@ msgstr "Faktor povečave zemljevida"
 
 #: ../modules/googlemap/editconfig.php:325
 msgid "Min."
-msgstr "Min."
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:330
 msgid "Max."
-msgstr "Max."
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:349
 #: ../modules/googlemap/editconfig.php:358
@@ -9950,15 +9950,15 @@ msgstr "cifer"
 
 #: ../modules/googlemap/editconfig.php:398
 msgid "Default top level value"
-msgstr "Default top level value"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:402
 msgid "Number of levels"
-msgstr "Number of levels"
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:419
 msgid "Configuration per level"
-msgstr "Configuration per level"
+msgstr ""
 
 #: ../modules/googlemap/googlemap.php:94
 #: ../modules/googlemap/googlemap.php:639
@@ -10076,7 +10076,7 @@ msgstr "Stari starši"
 #: ../modules/googlemap/pedigree_map.php:702
 #: ../modules/googlemap/pedigree_map.php:704
 msgid "Gt"
-msgstr "Gt"
+msgstr ""
 
 #: ../modules/googlemap/pedigree_map.php:739
 msgid "Birth:"
@@ -17397,7 +17397,7 @@ msgstr ""
 
 #: ../help_text.php:5280
 msgid "Original name of language in #D_LANGNAME#"
-msgstr ""
+msgstr "Izvorno ime jezika v #D_LANGNAME#"
 
 #: ../help_text.php:5281
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."
@@ -17939,7 +17939,7 @@ msgstr ""
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "Izberi datoteke na lokalnem računalniku za naložitev na strežnik. Vse datoteke bodo naložene v imenik <b>#MEDIA_DIRECTORY#</b> ali v enega od podimenikov.<br /><br />Podana imena datotek bodo dodana k #MEDIA_DIRECTORY#. Na primer, #MEDIA_DIRECTORY#druzina. Če imenik sličic ne obstaja, bo narejen avtomatsko."
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
@@ -18447,7 +18447,7 @@ msgstr "Blok preglednic vam omogoča postavitev preglednic na pozdravno stran al
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
-msgstr "HTML"
+msgstr ""
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."

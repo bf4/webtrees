@@ -6556,7 +6556,7 @@ msgstr "foster 领养"
 
 #: ../includes/functions/functions_edit.php:1399 ../edit_interface.php:581
 msgid "Sealing"
-msgstr "Sealing"
+msgstr ""
 
 #: ../includes/functions/functions_edit.php:1460
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
@@ -7442,7 +7442,7 @@ msgstr "找不到关系。"
 #: ../includes/functions/functions_db.php:259
 #: ../includes/functions/functions_db.php:330
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
-msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+msgstr ""
 
 #: ../includes/functions/functions_db.php:2060 ../edit_interface.php:375
 #: ../edit_interface.php:392 ../edit_interface.php:1990
@@ -8131,7 +8131,7 @@ msgstr ""
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
 #: ../includes/session.php:478
 msgid "utf8_unicode_ci"
-msgstr "utf8_unicode_ci"
+msgstr ""
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:222 ../modules/sitemap/index.php:379
@@ -17939,7 +17939,7 @@ msgstr ""
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "选择上载的文件。所有文件会上载到 <b>#MEDIA_DIRECTORY#</b> 或其分目录。<br /><br />这些文件名会到#MEDIA_DIRECTORY#。 例如，#MEDIA_DIRECTORY#myfamily。 如果制图目录不存在，会被自动创建。"
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
@@ -18160,7 +18160,7 @@ msgstr ""
 #: ../login_register.php:61 ../login_register.php:83 ../login_register.php:85
 #: ../login_register.php:97
 msgid "Lost password request"
-msgstr "Lost password request"
+msgstr ""
 
 #: ../login_register.php:103 ../login_register.php:109
 #: ../login_register.php:605
@@ -18191,7 +18191,7 @@ msgstr ""
 #: ../login_register.php:142
 #, php-format
 msgid "Data request at %s"
-msgstr "Data request at %s"
+msgstr ""
 
 #: ../login_register.php:146
 #, php-format
@@ -18255,7 +18255,7 @@ msgstr "You won't get any mail again from this system, because the account will 
 #: ../login_register.php:439
 #, php-format
 msgid "Your registration at %s"
-msgstr "Your registration at %s"
+msgstr ""
 
 #: ../login_register.php:446 ../login_register.php:567
 msgid "Hello Administrator ..."
@@ -18281,7 +18281,7 @@ msgstr ""
 #: ../login_register.php:464
 #, php-format
 msgid "New registration at %s"
-msgstr "New registration at %s"
+msgstr ""
 
 #: ../login_register.php:475
 #, php-format

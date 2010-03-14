@@ -5109,7 +5109,7 @@ msgstr "Ошибка конфигурации PHP сервера: требует
 
 #: ../fanchart.php:109 ../fanchart.php:114
 msgid "http://www.php.net/gd"
-msgstr "http://www.php.net/gd"
+msgstr ""
 
 #: ../fanchart.php:113
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
@@ -5337,7 +5337,7 @@ msgstr ""
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -8131,7 +8131,7 @@ msgstr ""
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
 #: ../includes/session.php:478
 msgid "utf8_unicode_ci"
-msgstr "utf8_unicode_ci"
+msgstr ""
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:222 ../modules/sitemap/index.php:379
@@ -15920,7 +15920,7 @@ msgstr ""
 
 #: ../help_text.php:4210
 msgid "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
-msgstr ""
+msgstr "С помощью этого модуля Вы можете просто подключить или отключить (поставив или убрав \"галочки\") поддерживаемые языки в PhpGedView. Кроме этого Вы можете также наладить специфичные установки страны и языка."
 
 #: ../help_text.php:4214
 msgid "context"
@@ -17397,7 +17397,7 @@ msgstr ""
 
 #: ../help_text.php:5280
 msgid "Original name of language in #D_LANGNAME#"
-msgstr ""
+msgstr "Оригинальное название языка в  #D_LANGNAME#"
 
 #: ../help_text.php:5281
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."

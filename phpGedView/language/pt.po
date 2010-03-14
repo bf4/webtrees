@@ -1089,7 +1089,7 @@ msgstr "Exibir cônjuges"
 
 #: ../downloadgedcom.php:130 ../downloadgedcom.php:133 ../help_text.php:4359
 msgid "Download GEDCOM"
-msgstr "Download GEDCOM"
+msgstr ""
 
 #: ../downloadgedcom.php:140 ../clippings.php:159
 #: ../modules/clippings/index.php:167 ../modules/clippings/clippings.php:219
@@ -1444,7 +1444,7 @@ msgstr "Exibir Conexões"
 #: ../edit_privacy.php:469 ../edit_privacy.php:516 ../edit_privacy.php:561
 #: ../edit_privacy.php:704 ../edit_privacy.php:751
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: ../manageservers.php:363 ../manageservers.php:438 ../editnews.php:90
 #: ../includes/classes/class_stats_ui.php:186 ../addremotelink.php:212
@@ -1455,7 +1455,7 @@ msgstr "Título"
 
 #: ../manageservers.php:371 ../manageservers.php:446
 msgid "Site URL/IP"
-msgstr "Site URL/IP"
+msgstr ""
 
 #: ../manageservers.php:379 ../manageservers.php:455 ../addremotelink.php:221
 msgid "Database ID:"
@@ -1767,11 +1767,11 @@ msgstr ""
 
 #: ../install.php:668 ../help_text.php:2945
 msgid "Database Username"
-msgstr "Database Username"
+msgstr ""
 
 #: ../install.php:672 ../help_text.php:2930
 msgid "Database Password"
-msgstr "Database Password"
+msgstr ""
 
 #: ../install.php:676 ../help_text.php:2925
 msgid "Database Name"
@@ -2514,7 +2514,7 @@ msgstr "Hebreu e Gregoriano"
 
 #: ../editconfig_gedcom.php:994
 msgid "Hijri"
-msgstr "Hijri"
+msgstr ""
 
 #: ../editconfig_gedcom.php:995 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -3275,7 +3275,7 @@ msgstr "GEDCOMs Cadastrados"
 
 #: ../editgedcoms.php:98
 msgid "Default GEDCOM"
-msgstr "Default GEDCOM"
+msgstr ""
 
 #: ../editgedcoms.php:112 ../help_text.php:3445
 msgid "Check if GEDCOM files are downloadable"
@@ -4129,13 +4129,13 @@ msgstr "enteado"
 #: ../relationship.php:226
 #, php-format
 msgid "%2$d x great niece"
-msgstr "%2$d x great niece"
+msgstr ""
 
 #: ../relationship.php:215 ../relationship.php:216 ../relationship.php:228
 #: ../relationship.php:229
 #, php-format
 msgid "%2$d x great nephew"
-msgstr "%2$d x great nephew"
+msgstr ""
 
 #: ../relationship.php:236 ../relationship.php:237
 msgid "Step-Sister"
@@ -4150,14 +4150,14 @@ msgstr "Irmão Adotivo"
 #: ../relationship.php:345 ../relationship.php:346
 #, php-format
 msgid "%2$d x great aunt"
-msgstr "%2$d x great aunt"
+msgstr ""
 
 #: ../relationship.php:257 ../relationship.php:258 ../relationship.php:265
 #: ../relationship.php:266 ../relationship.php:340 ../relationship.php:341
 #: ../relationship.php:348 ../relationship.php:349
 #, php-format
 msgid "%2$d x great uncle"
-msgstr "%2$d x great uncle"
+msgstr ""
 
 #: ../relationship.php:296 ../relationship.php:297 ../relationship.php:304
 #: ../relationship.php:305
@@ -4663,7 +4663,7 @@ msgstr "Russell"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -5109,7 +5109,7 @@ msgstr "Servidor PHP desconfigurado: Biblioteca GD requirida para uso de funçõ
 
 #: ../fanchart.php:109 ../fanchart.php:114
 msgid "http://www.php.net/gd"
-msgstr "http://www.php.net/gd"
+msgstr ""
 
 #: ../fanchart.php:113
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
@@ -5337,7 +5337,7 @@ msgstr ""
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -6516,7 +6516,7 @@ msgstr ""
 
 #: ../includes/functions/functions_edit.php:1373
 msgid "No Temple - Living Ordinance"
-msgstr "No Temple - Living Ordinance"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Husband"
 #: ../includes/functions/functions_edit.php:1383
@@ -6556,7 +6556,7 @@ msgstr "Adotivo"
 
 #: ../includes/functions/functions_edit.php:1399 ../edit_interface.php:581
 msgid "Sealing"
-msgstr "Sealing"
+msgstr ""
 
 #: ../includes/functions/functions_edit.php:1460
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
@@ -7374,7 +7374,7 @@ msgstr ""
 
 #: ../includes/functions/functions_print.php:2144
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #: ../includes/functions/functions_print.php:2225 ../help_text.php:3814
 msgid "Add from clipboard"
@@ -7442,7 +7442,7 @@ msgstr "O tempo destinado à pesquisa encerrou antes de encontrar um relacioname
 #: ../includes/functions/functions_db.php:259
 #: ../includes/functions/functions_db.php:330
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
-msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+msgstr ""
 
 #: ../includes/functions/functions_db.php:2060 ../edit_interface.php:375
 #: ../edit_interface.php:392 ../edit_interface.php:1990
@@ -7542,7 +7542,7 @@ msgstr "Telefone"
 #: ../modules/googlemap/googlemap.php:314 ../edit_interface.php:1247
 #: ../help_text.php:766
 msgid "FAX"
-msgstr "FAX"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../includes/functions/functions_print_facts.php:846
@@ -8409,7 +8409,7 @@ msgstr " não implementado:"
 
 #: ../statisticsplot.php:731
 msgid "Jan"
-msgstr "Jan"
+msgstr ""
 
 #: ../statisticsplot.php:732
 msgid "Feb"
@@ -8429,7 +8429,7 @@ msgstr "Out"
 
 #: ../statisticsplot.php:741
 msgid "Nov"
-msgstr "Nov"
+msgstr ""
 
 #: ../statisticsplot.php:742
 msgid "Dec"
@@ -8455,7 +8455,7 @@ msgstr "Grafico das Estatísticas"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -9806,23 +9806,23 @@ msgstr "Casa"
 #: ../modules/googlemap/places_edit.php:783
 #: ../modules/googlemap/editconfig.php:386
 msgid "Max"
-msgstr "Max"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr "N"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr "S"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
-msgstr "E"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:802
 msgid "W"
-msgstr "W"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:812
 #: ../modules/googlemap/places_edit.php:820
@@ -9933,11 +9933,11 @@ msgstr "Fator de zoom para o mapa"
 
 #: ../modules/googlemap/editconfig.php:325
 msgid "Min."
-msgstr "Min."
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:330
 msgid "Max."
-msgstr "Max."
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:349
 #: ../modules/googlemap/editconfig.php:358
@@ -10691,7 +10691,7 @@ msgstr "Site remoto selecionado."
 
 #: ../addremotelink.php:78 ../addremotelink.php:88 ../addremotelink.php:191
 msgid "Site"
-msgstr "Site"
+msgstr ""
 
 #: ../addremotelink.php:83
 msgid "Database ID"
@@ -15510,7 +15510,7 @@ msgstr ""
 
 #: ../help_text.php:3930
 msgid "_GEDCOM: Configure"
-msgstr "_GEDCOM: Configure"
+msgstr ""
 
 #: ../help_text.php:3934
 msgid "ah12"
@@ -17176,7 +17176,7 @@ msgstr "Todas os Bancos de Dados (B.D.) disponíveis neste site estão listadas 
 
 #: ../help_text.php:5115
 msgid "Menu"
-msgstr "Menu"
+msgstr ""
 
 #: ../help_text.php:5116 ../help_text.php:5120
 msgid "<div class=\"name_head\"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href=\"#menu_fam\">Welcome page</a><br /></li><li><a href=\"#menu_myged\">MyGedView Portal</a><br /></li><li><a href=\"#menu_charts\">Charts</a><br /></li><li><a href=\"#menu_lists\">Lists</a><br /></li><li><a href=\"#menu_annical\">Anniversary Calendar</a><br /></li><li><a href=\"#menu_clip\">Family Tree Clippings Cart</a><br /></li><li><a href=\"#menu_search\">Search</a><br /></li><li><a href=\"#menu_help\">Help</a></li></ul>"
@@ -17184,7 +17184,7 @@ msgstr ""
 
 #: ../help_text.php:5121
 msgid "#pgv_lang[help_help_items]#"
-msgstr "#pgv_lang[help_help_items]#"
+msgstr ""
 
 #: ../help_text.php:5125
 msgid "menu_lists"
@@ -17939,7 +17939,7 @@ msgstr "A configuração do GEDCOM permite até %s niveis de subpastas em <b>%s<
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "Selecione os arquivos de seu computador a serem enviados para o servidor. Todos os arquivos serão gravados na pasta <b>#MEDIA_DIRECTORY#</b> ou em uma de suas sub-pastas.<br /><br />Nomes de pasta especificados serão concatenados com #MEDIA_DIRECTORY#. Exemplo, #MEDIA_DIRECTORY#minhafamilia. A pasta de miniaturas é criada automaticamente caso não exista."
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
@@ -18447,7 +18447,7 @@ msgstr ""
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
-msgstr "HTML"
+msgstr ""
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."

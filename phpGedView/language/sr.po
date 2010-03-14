@@ -1004,7 +1004,7 @@ msgstr "Odjava"
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:60
 #: ../help_text.php:3909 ../blocks/getting_started.php:67
 msgid "Admin"
-msgstr "Admin"
+msgstr ""
 
 #: ../themes/fab/header.php:118 ../blocks/review_changes.php:42
 msgid "Pending Changes"
@@ -4601,7 +4601,7 @@ msgstr "Pogledaj izvor"
 #: ../find.php:596 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:626
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:655
 msgid "View Object"
-msgstr "View Object"
+msgstr ""
 
 #: ../find.php:602 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:632
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:661 ../media.php:1156
@@ -4663,7 +4663,7 @@ msgstr ""
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -5337,7 +5337,7 @@ msgstr ""
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -6002,27 +6002,27 @@ msgstr "(לא ידוע)"
 
 #: ../includes/sort_tables_utf8.php:79 ../includes/sort_tables_utf8.php:89
 msgid "(غير معروف)"
-msgstr "(غير معروف)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:80 ../includes/sort_tables_utf8.php:90
 msgid "(άγνωστος/η)"
-msgstr "(άγνωστος/η)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:81 ../includes/sort_tables_utf8.php:91
 msgid "(неопределено)"
-msgstr "(неопределено)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:82 ../includes/sort_tables_utf8.php:92
 msgid "(未知)"
-msgstr "(未知)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:83
 msgid "(vô danh)"
-msgstr "(vô danh)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:93
 msgid "(không biết tuổi)"
-msgstr "(không biết tuổi)"
+msgstr ""
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
@@ -7630,7 +7630,7 @@ msgstr ""
 #: ../includes/classes/class_note.php:51
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:201
 msgid "…"
-msgstr "…"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:134 ../blocks/user_welcome.php:58
 msgid "My Pedigree"
@@ -8409,19 +8409,19 @@ msgstr ""
 
 #: ../statisticsplot.php:731
 msgid "Jan"
-msgstr "Jan"
+msgstr ""
 
 #: ../statisticsplot.php:732
 msgid "Feb"
-msgstr "Feb"
+msgstr ""
 
 #: ../statisticsplot.php:738
 msgid "Aug"
-msgstr "Aug"
+msgstr ""
 
 #: ../statisticsplot.php:739
 msgid "Sep"
-msgstr "Sep"
+msgstr ""
 
 #: ../statisticsplot.php:740
 msgid "Oct"
@@ -8429,11 +8429,11 @@ msgstr "Okt"
 
 #: ../statisticsplot.php:741
 msgid "Nov"
-msgstr "Nov"
+msgstr ""
 
 #: ../statisticsplot.php:742
 msgid "Dec"
-msgstr "Dec"
+msgstr ""
 
 #: ../statisticsplot.php:808
 msgid " per gender"

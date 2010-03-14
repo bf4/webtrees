@@ -1464,7 +1464,7 @@ msgstr ""
 #: ../manageservers.php:387 ../manageservers.php:463 ../printlog.php:116
 #: ../edit_privacy.php:515 ../edit_privacy.php:560
 msgid "Username"
-msgstr "Username"
+msgstr ""
 
 #: ../manageservers.php:432
 msgid "Add new site"
@@ -1594,7 +1594,7 @@ msgstr ""
 
 #: ../install.php:172
 msgid "Your current database configuration is bad.  Please check your database connection parameters and configure again."
-msgstr "Your current database configuration is bad.  Please check your database connection parameters and configure again."
+msgstr ""
 
 #: ../install.php:180 ../install.php:233
 msgid "The <i></i> directory is not writable."
@@ -1759,7 +1759,7 @@ msgstr "Τύπος Βάσης Δεδομένων"
 
 #: ../install.php:660 ../help_text.php:2920
 msgid "Database Host"
-msgstr "Database Host"
+msgstr ""
 
 #: ../install.php:664 ../help_text.php:2935
 msgid "Database Port"
@@ -1926,11 +1926,11 @@ msgstr ""
 
 #: ../install.php:762 ../help_text.php:3075
 msgid "Index file directory"
-msgstr "Index file directory"
+msgstr ""
 
 #: ../install.php:766 ../help_text.php:3450
 msgid "PhpGedView URL"
-msgstr "PhpGedView URL"
+msgstr ""
 
 #: ../install.php:769
 #, php-format
@@ -1943,7 +1943,7 @@ msgstr "Allow GEDCOM Switching"
 
 #: ../install.php:783 ../help_text.php:3695
 msgid "Allow visitors to request account registration"
-msgstr "Allow visitors to request account registration"
+msgstr ""
 
 #: ../install.php:792 ../help_text.php:3415
 msgid "Require an administrator to approve new user registrations"
@@ -1951,15 +1951,15 @@ msgstr ""
 
 #: ../install.php:801 ../help_text.php:2840
 msgid "Allow users to select their own theme"
-msgstr "Allow users to select their own theme"
+msgstr ""
 
 #: ../install.php:817 ../help_text.php:3125
 msgid "Login URL"
-msgstr "Login URL"
+msgstr ""
 
 #: ../install.php:822 ../help_text.php:3355
 msgid "Allow messages to be stored online"
-msgstr "Allow messages to be stored online"
+msgstr ""
 
 #: ../install.php:831 ../help_text.php:3305
 msgid "Use simple mail headers in external mails"
@@ -2247,7 +2247,7 @@ msgstr "Εμφάνιση αριθμών ID δίπλα στα ονόματα"
 
 #: ../compact.php:109 ../editconfig_gedcom.php:1240 ../help_text.php:3495
 msgid "Show highlight images in people boxes"
-msgstr "Show highlight images in people boxes"
+msgstr ""
 
 #: ../compact.php:312 ../compact.php:314 ../includes/family_nav.php:584
 #: ../includes/family_nav.php:586 ../includes/family_nav.php:606
@@ -2352,11 +2352,11 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:490
 msgid "Download GEDCOM configuration."
-msgstr "Download GEDCOM configuration."
+msgstr ""
 
 #: ../editconfig_gedcom.php:490
 msgid "Upload the file to your index directory: "
-msgstr "Upload the file to your index directory: "
+msgstr ""
 
 #: ../editconfig_gedcom.php:594
 msgid "Welcome to Your Genealogy"
@@ -2462,7 +2462,7 @@ msgstr "Enter a title that describes the data in this GEDCOM file"
 #: ../editconfig_gedcom.php:928 ../changelanguage.php:178
 #: ../changelanguage.php:194 ../help_text.php:3100
 msgid "Language"
-msgstr "Language"
+msgstr ""
 
 #: ../editconfig_gedcom.php:943 ../editconfig_gedcom.php:2220 ../admin.php:287
 msgid "You have not configured the languages your site will support.<br />PhpGedView will use its default actions."
@@ -2506,7 +2506,7 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:992 ../includes/specialchars.php:82
 msgid "Hebrew"
-msgstr "Hebrew"
+msgstr ""
 
 #: ../editconfig_gedcom.php:993
 msgid "Hebrew and Gregorian"
@@ -2522,11 +2522,11 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:1011 ../help_text.php:2965
 msgid "Display Hebrew Thousands"
-msgstr "Display Hebrew Thousands"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1022 ../help_text.php:2960
 msgid "Display Hebrew Gershayim"
-msgstr "Display Hebrew Gershayim"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1033 ../help_text.php:3095
 msgid "Jewish Ashkenaz pronunciation"
@@ -2578,7 +2578,7 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:1157 ../help_text.php:3240
 msgid "Enable multimedia features"
-msgstr "Enable multimedia features"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1169 ../editconfig_gedcom.php:1170
 msgid "General"
@@ -2586,11 +2586,11 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:1177 ../help_text.php:3165
 msgid "Keep links"
-msgstr "Keep links"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1188 ../help_text.php:3160
 msgid "MultiMedia directory"
-msgstr "MultiMedia directory"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1192
 msgid "Media path should not contain a drive letter; media may not be displayed."
@@ -2675,7 +2675,7 @@ msgstr "Ενεργοποίηση Προστασίας Προσωπικών Δε�
 
 #: ../editconfig_gedcom.php:1389 ../help_text.php:2875
 msgid "Check child dates"
-msgstr "Check child dates"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1399 ../help_text.php:3420
 msgid "Require visitor authentication"
@@ -2715,7 +2715,7 @@ msgstr "Predefined text that states only family members can apply for a user acc
 
 #: ../editconfig_gedcom.php:1426
 msgid "Choose user defined welcome text typed below"
-msgstr "Choose user defined welcome text typed below"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1432 ../help_text.php:3730
 msgid "Standard header for custom Welcome text"
@@ -2751,11 +2751,11 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:1530 ../help_text.php:2890
 msgid "Names to add to Common Surnames (comma separated)"
-msgstr "Names to add to Common Surnames (comma separated)"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1537 ../help_text.php:2895
 msgid "Names to remove from Common Surnames (comma separated)"
-msgstr "Names to remove from Common Surnames (comma separated)"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1562 ../help_text.php:2955
 msgid "Pedigree generations"
@@ -2775,7 +2775,7 @@ msgstr "Default Pedigree Chart Layout"
 
 #: ../editconfig_gedcom.php:1590 ../help_text.php:3560
 msgid "Place levels to show in person boxes"
-msgstr "Place levels to show in person boxes"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1596 ../help_text.php:3520
 msgid "Place levels to show on lists"
@@ -2787,19 +2787,19 @@ msgstr "Zoom Boxes on Charts"
 
 #: ../editconfig_gedcom.php:1605 ../editconfig_gedcom.php:1617
 msgid "Disabled"
-msgstr "Disabled"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1606 ../editconfig_gedcom.php:1618
 msgid "On Mouse Over"
-msgstr "On Mouse Over"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1607
 msgid "On Mouse Down"
-msgstr "On Mouse Down"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1608 ../editconfig_gedcom.php:1619
 msgid "On Mouse Click"
-msgstr "On Mouse Click"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1614 ../help_text.php:3110
 msgid "PopUp links on charts"
@@ -2889,7 +2889,7 @@ msgstr "Εμφάνιση άδειων κουτιών στα γενεαλογικ
 
 #: ../editconfig_gedcom.php:1761 ../help_text.php:2810
 msgid "Abbreviate chart labels"
-msgstr "Abbreviate chart labels"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1771 ../help_text.php:3250
 msgid "Show Birth and Death details on charts"
@@ -2913,15 +2913,15 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:1819 ../help_text.php:3490
 msgid "Allow users to see raw GEDCOM records"
-msgstr "Allow users to see raw GEDCOM records"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1829 ../help_text.php:3055
 msgid "Hide GEDCOM errors"
-msgstr "Hide GEDCOM errors"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1839 ../help_text.php:3745
 msgid "Add spaces where notes were wrapped"
-msgstr "Add spaces where notes were wrapped"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1849 ../help_text.php:3485
 msgid "Show Fact icons"
@@ -3062,7 +3062,7 @@ msgstr "Ισπανικά"
 
 #: ../editconfig_gedcom.php:2120 ../includes/specialchars.php:77
 msgid "Portuguese"
-msgstr "Portuguese"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2121
 msgid "Icelandic"
@@ -3070,7 +3070,7 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:2122 ../includes/specialchars.php:76
 msgid "Polish"
-msgstr "Polish"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2135 ../help_text.php:2815
 msgid "Advanced name facts"
@@ -3121,7 +3121,7 @@ msgstr "Show contextual ? help by default"
 
 #: ../editconfig_gedcom.php:2238 ../help_text.php:3660
 msgid "Theme directory"
-msgstr "Theme directory"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2249
 msgid "Other, please type in"
@@ -3175,7 +3175,7 @@ msgstr "Mailto Link"
 #: ../editconfig_gedcom.php:2330 ../editconfig_gedcom.php:2364
 #: ../useradmin.php:451 ../useradmin.php:873
 msgid "No contact method"
-msgstr "No contact method"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2336 ../help_text.php:3725
 msgid "Support contact"
@@ -3191,7 +3191,7 @@ msgstr "META Tag Επιλογές Διαμόρφωσης"
 
 #: ../editconfig_gedcom.php:2387 ../help_text.php:3070
 msgid "Main WebSite URL"
-msgstr "Main WebSite URL"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2393 ../help_text.php:3065
 msgid "Main WebSite text"
@@ -3199,7 +3199,7 @@ msgstr "Main WebSite Text"
 
 #: ../editconfig_gedcom.php:2399 ../help_text.php:3190
 msgid "Author META tag"
-msgstr "Author META tag"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2402
 msgid "Leave this field empty to use the full name of the Genealogy contact."
@@ -3207,7 +3207,7 @@ msgstr "Leave this field empty to use the GEDCOM contact user's full name for th
 
 #: ../editconfig_gedcom.php:2406 ../help_text.php:3220
 msgid "Publisher META tag"
-msgstr "Publisher META tag"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2409 ../editconfig_gedcom.php:2416
 msgid "Leave this field empty to use the full name of the  Genealogy contact."
@@ -3215,11 +3215,11 @@ msgstr "Leave this field empty to use the GEDCOM contact user's full name for th
 
 #: ../editconfig_gedcom.php:2413 ../help_text.php:3195
 msgid "Copyright META tag"
-msgstr "Copyright META tag"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2420 ../help_text.php:3200
 msgid "Description META tag"
-msgstr "Description META tag"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2423 ../editconfig_gedcom.php:2430
 msgid "Leave this field empty to use the title of the currently active database."
@@ -3231,7 +3231,7 @@ msgstr "Page-Topic META tag"
 
 #: ../editconfig_gedcom.php:2434 ../help_text.php:3185
 msgid "Audience META tag"
-msgstr "Audience META tag"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2441 ../help_text.php:3215
 msgid "Page-type META tag"
@@ -3239,19 +3239,19 @@ msgstr "Page Type META tag"
 
 #: ../editconfig_gedcom.php:2448 ../help_text.php:3230
 msgid "Robots META tag"
-msgstr "Robots META tag"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2455 ../help_text.php:3225
 msgid "How often should crawlers revisit META tag"
-msgstr "How often should crawlers revisit META tag"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2462 ../help_text.php:3205
 msgid "Keywords META tag"
-msgstr "Keywords META tag"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2469 ../help_text.php:3235
 msgid "Add to TITLE header tag"
-msgstr "Add to TITLE header tag"
+msgstr ""
 
 #: ../editconfig_gedcom.php:2475 ../help_text.php:2990
 msgid "Enable RSS"
@@ -3275,7 +3275,7 @@ msgstr "Υπάρχοντα GEDCOMs"
 
 #: ../editgedcoms.php:98
 msgid "Default GEDCOM"
-msgstr "Default GEDCOM"
+msgstr ""
 
 #: ../editgedcoms.php:112 ../help_text.php:3445
 msgid "Check if GEDCOM files are downloadable"
@@ -3317,11 +3317,11 @@ msgstr ""
 
 #: ../editgedcoms.php:201
 msgid "Are you sure you want to delete this GEDCOM"
-msgstr "Are you sure you want to delete this GEDCOM"
+msgstr ""
 
 #: ../editgedcoms.php:206
 msgid "Download"
-msgstr "Download"
+msgstr ""
 
 #: ../editgedcoms.php:211
 msgid "Check"
@@ -3356,7 +3356,7 @@ msgstr "Αρχείο Προσαρμογών"
 #: ../help_text.php:4500 ../help_text.php:4950 ../blocks/gedcom_news.php:130
 #: ../blocks/user_blog.php:73 ../media.php:1020
 msgid "Edit"
-msgstr "Edit"
+msgstr ""
 
 #: ../editgedcoms.php:240
 msgid "Privacy file"
@@ -3571,19 +3571,19 @@ msgstr "Σε πιο πρόσφατους φυλλομετρητές μπορεί
 
 #: ../module_admin.php:43 ../includes/functions/functions.php:234
 msgid "Show to public"
-msgstr "Show to public"
+msgstr ""
 
 #: ../module_admin.php:47 ../includes/functions/functions.php:238
 msgid "Show only to authenticated users"
-msgstr "Show only to authenticated users"
+msgstr ""
 
 #: ../module_admin.php:51 ../includes/functions/functions.php:242
 msgid "Show only to admin users"
-msgstr "Show only to admin users"
+msgstr ""
 
 #: ../module_admin.php:55 ../includes/functions/functions.php:246
 msgid "Hide even from admin users"
-msgstr "Hide even from admin users"
+msgstr ""
 
 #: ../module_admin.php:96 ../module_admin.php:183 ../admin.php:182
 #: ../help_text.php:2701
@@ -3617,7 +3617,7 @@ msgstr ""
 #: ../module_admin.php:202 ../editlang_edit_settings.php:202
 #: ../changelanguage.php:182 ../changelanguage.php:198 ../help_text.php:3759
 msgid "Active"
-msgstr "Active"
+msgstr ""
 
 #: ../module_admin.php:203
 msgid "Mod Settings"
@@ -3742,12 +3742,12 @@ msgstr "Αφήστε κενό τον κωδικό πρόσβασης για να
 #: ../useradmin.php:307 ../useradmin.php:765 ../edituser.php:199
 #: ../login_register.php:316
 msgid "GEDCOM INDI record ID"
-msgstr "GEDCOM INDI record ID"
+msgstr ""
 
 #: ../useradmin.php:329 ../useradmin.php:782 ../branches.php:107
 #: ../edituser.php:206 ../help_text.php:5450
 msgid "Pedigree Chart Root Person"
-msgstr "Pedigree Chart Root Person"
+msgstr ""
 
 #: ../useradmin.php:354 ../useradmin.php:642 ../useradmin.php:798
 msgid "User can administer"
@@ -3771,7 +3771,7 @@ msgstr ""
 
 #: ../useradmin.php:400 ../useradmin.php:595 ../useradmin.php:829
 msgid "User verified himself"
-msgstr "User verified himself"
+msgstr ""
 
 #: ../useradmin.php:401 ../useradmin.php:596 ../useradmin.php:830
 msgid "User approved by Admin"
@@ -3799,7 +3799,7 @@ msgstr "Προτιμητέα Μέθοδος Επικοινωνίας"
 
 #: ../useradmin.php:456 ../useradmin.php:878 ../edituser.php:272
 msgid "Visible to other users when online"
-msgstr "Visible to other users when online"
+msgstr ""
 
 #: ../useradmin.php:460 ../useradmin.php:882
 msgid "Allow this user to edit his account information"
@@ -3841,7 +3841,7 @@ msgstr " Γλώσσες"
 
 #: ../useradmin.php:580 ../useradmin.php:591 ../useradmin.php:632
 msgid "Privileges"
-msgstr "Privileges"
+msgstr ""
 
 #: ../useradmin.php:593
 msgid "Date registered"
@@ -4286,18 +4286,18 @@ msgstr "Εύρεση επόμενης διαδρομής"
 
 #: ../editlang_edit_settings.php:84 ../help_text.php:4465
 msgid "Language File Edit Utility"
-msgstr "Language File Edit Utility"
+msgstr ""
 
 #: ../editlang_edit_settings.php:166 ../admin.php:292 ../changelanguage.php:49
 #: ../changelanguage.php:134 ../help_text.php:3844
 msgid "Add files and settings for a new language"
-msgstr "Add files and settings for a new language"
+msgstr ""
 
 #: ../editlang_edit_settings.php:168 ../editlang_edit_settings.php:601
 #: ../changelanguage.php:54 ../changelanguage.php:169 ../help_text.php:2516
 #: ../help_text.php:4209
 msgid "Configuration of supported languages"
-msgstr "Configuration of supported languages"
+msgstr ""
 
 #: ../editlang_edit_settings.php:222
 #, php-format
@@ -4310,7 +4310,7 @@ msgstr "Shortcut for language files"
 
 #: ../editlang_edit_settings.php:246 ../help_text.php:4960
 msgid "Language detection codes"
-msgstr "Language detection codes"
+msgstr ""
 
 #: ../editlang_edit_settings.php:258 ../help_text.php:4625
 msgid "Flag file"
@@ -4663,7 +4663,7 @@ msgstr "Βασικό"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -4795,7 +4795,7 @@ msgstr ""
 
 #: ../uploadgedcom.php:498
 msgid "Do you want to erase the old data and replace it with this new data?"
-msgstr "Do you want to erase the old data and replace it with this new data?"
+msgstr ""
 
 #: ../uploadgedcom.php:514 ../help_text.php:4940
 msgid "Keep media links"
@@ -4803,7 +4803,7 @@ msgstr ""
 
 #: ../uploadgedcom.php:531 ../uploadgedcom.php:537 ../help_text.php:5805
 msgid "Validate GEDCOM"
-msgstr "Validate GEDCOM"
+msgstr ""
 
 #: ../uploadgedcom.php:548
 msgid "Performing GEDCOM validation..."
@@ -4823,7 +4823,7 @@ msgstr "Detected lines before the GEDCOM header (0 HEAD).  On cleanup these line
 
 #: ../uploadgedcom.php:612 ../help_text.php:5060
 msgid "Macintosh file detected.  On cleanup your file will be converted to a DOS file."
-msgstr "Macintosh file detected.  On cleanup your file will be converted to a DOS file."
+msgstr ""
 
 #: ../uploadgedcom.php:619
 msgid "Empty lines were detected in your GEDCOM file.\tOn cleanup, these empty lines will be removed."
@@ -4835,7 +4835,7 @@ msgstr "Invalid place encodings were detected.  These errors should be fixed.  T
 
 #: ../uploadgedcom.php:631 ../help_text.php:4164
 msgid "Cleanup Places"
-msgstr "Cleanup Places"
+msgstr ""
 
 #: ../uploadgedcom.php:636
 msgid "Example of invalid place from your GEDCOM:"
@@ -4855,7 +4855,7 @@ msgstr "Μήνας πριν από Ημέρα (ΜΜ ΗΗ ΕΕΕΕ)"
 
 #: ../uploadgedcom.php:655
 msgid "Example of invalid date from your GEDCOM:"
-msgstr "Example of invalid date from your GEDCOM:"
+msgstr ""
 
 #: ../uploadgedcom.php:663
 msgid "ANSI file encoding detected.\tPhpGedView works best with files encoded in UTF-8."
@@ -4880,7 +4880,7 @@ msgstr ""
 
 #: ../uploadgedcom.php:736
 msgid "Change Individual ID to:"
-msgstr "Change Individual ID to:"
+msgstr ""
 
 #: ../uploadgedcom.php:741 ../uploadgedcom.php:746
 #: ../includes/functions/functions_print_facts.php:242
@@ -4897,7 +4897,7 @@ msgstr "Import Complete"
 #: ../uploadgedcom.php:795 ../uploadgedcom.php:844 ../uploadgedcom.php:1128
 #: ../uploadgedcom.php:1133 ../includes/functions/functions_print.php:733
 msgid "sec."
-msgstr "sec."
+msgstr ""
 
 #: ../uploadgedcom.php:801 ../admin.php:210
 #: ../includes/classes/class_menubar.php:156 ../blocks/getting_started.php:65
@@ -4967,7 +4967,7 @@ msgstr "View logfiles"
 
 #: ../admin.php:108
 msgid "Edit Image Manipulation Configuration"
-msgstr "Edit Image Manipulation Configuration"
+msgstr ""
 
 #: ../admin.php:141
 msgid "Current Server Time:"
@@ -5109,7 +5109,7 @@ msgstr "Εσφαλμένη ρύθμιση του PHP server: απαιτείτα�
 
 #: ../fanchart.php:109 ../fanchart.php:114
 msgid "http://www.php.net/gd"
-msgstr "http://www.php.net/gd"
+msgstr ""
 
 #: ../fanchart.php:113
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
@@ -5174,7 +5174,7 @@ msgstr "Ο Λογαριασμός μου"
 
 #: ../edituser.php:179 ../edituser.php:291
 msgid "Update MyAccount"
-msgstr "Update MyAccount"
+msgstr ""
 
 #: ../edit_changes.php:46 ../edit_changes.php:64 ../edit_changes.php:139
 #: ../help_text.php:2546 ../help_text.php:5445
@@ -5192,7 +5192,7 @@ msgstr "There are currently no changes that need to be reviewed."
 
 #: ../edit_changes.php:119 ../blocks/review_changes.php:130
 msgid "View Change Diff"
-msgstr "View Change Diff"
+msgstr ""
 
 #: ../edit_changes.php:120 ../includes/controllers/family_ctrl.php:497
 #: ../includes/controllers/source_ctrl.php:315
@@ -5211,7 +5211,7 @@ msgstr "Εμφάνιση εγγραφής GEDCOM"
 #: ../includes/controllers/individual_ctrl.php:676 ../edit_interface.php:412
 #: ../media.php:1024
 msgid "Edit raw GEDCOM record"
-msgstr "Edit raw GEDCOM record"
+msgstr ""
 
 #: ../edit_changes.php:123
 msgid "The following changes were made to this record:"
@@ -5223,7 +5223,7 @@ msgstr "Ημερομηνία"
 
 #: ../edit_changes.php:130 ../edit_changes.php:147
 msgid "Undo"
-msgstr "Undo"
+msgstr ""
 
 #: ../edit_changes.php:162 ../edit_changes.php:173
 #: ../includes/controllers/family_ctrl.php:427
@@ -5909,7 +5909,7 @@ msgstr ""
 
 #: ../includes/specialchars.php:59
 msgid "Czech"
-msgstr "Czech"
+msgstr ""
 
 #: ../includes/specialchars.php:60
 msgid "Slovak"
@@ -5917,7 +5917,7 @@ msgstr ""
 
 #: ../includes/specialchars.php:61
 msgid "Danish"
-msgstr "Danish"
+msgstr ""
 
 #: ../includes/specialchars.php:62
 msgid "German"
@@ -5937,7 +5937,7 @@ msgstr "Ιταλικά"
 
 #: ../includes/specialchars.php:71
 msgid "Hungarian"
-msgstr "Hungarian"
+msgstr ""
 
 #: ../includes/specialchars.php:72
 msgid "Lithuanian"
@@ -5945,19 +5945,19 @@ msgstr ""
 
 #: ../includes/specialchars.php:73
 msgid "Dutch"
-msgstr "Dutch"
+msgstr ""
 
 #: ../includes/specialchars.php:74
 msgid "Norwegian"
-msgstr "Norwegian"
+msgstr ""
 
 #: ../includes/specialchars.php:79
 msgid "Finnish"
-msgstr "Finnish"
+msgstr ""
 
 #: ../includes/specialchars.php:80
 msgid "Swedish"
-msgstr "Swedish"
+msgstr ""
 
 #: ../includes/specialchars.php:81
 msgid "Turkish"
@@ -6338,13 +6338,13 @@ msgstr ""
 #: ../includes/functions/functions_charts.php:562
 #: ../modules/sources_tab/sources_tab.php:83
 msgid "Add Source Citation"
-msgstr "Add Source Citation"
+msgstr ""
 
 #: ../includes/functions/functions_charts.php:565
 #: ../includes/functions/functions_edit.php:1738
 #: ../modules/sources_tab/sources_tab.php:85 ../help_text.php:3894
 msgid "Add a new Source Citation"
-msgstr "Add a new Source Citation"
+msgstr ""
 
 #: ../includes/functions/functions_charts.php:817
 #: ../modules/googlemap/pedigree_map.php:660
@@ -6516,7 +6516,7 @@ msgstr "Κοινόχρηστη σημείωση"
 
 #: ../includes/functions/functions_edit.php:1373
 msgid "No Temple - Living Ordinance"
-msgstr "No Temple - Living Ordinance"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Husband"
 #: ../includes/functions/functions_edit.php:1383
@@ -6556,7 +6556,7 @@ msgstr "Θετός"
 
 #: ../includes/functions/functions_edit.php:1399 ../edit_interface.php:581
 msgid "Sealing"
-msgstr "Sealing"
+msgstr ""
 
 #: ../includes/functions/functions_edit.php:1460
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
@@ -6646,7 +6646,7 @@ msgstr "Άκυρη μορφή GEDCOM 5.5"
 #: ../includes/functions/functions_export.php:601
 #: ../includes/functions/functions_export.php:641
 msgid "Creating"
-msgstr "Creating"
+msgstr ""
 
 #: ../includes/functions/functions_export.php:496
 #: ../includes/functions/functions_export.php:534
@@ -6654,7 +6654,7 @@ msgstr "Creating"
 #: ../includes/functions/functions_export.php:619
 #: ../includes/functions/functions_export.php:661
 msgid "Creation of new file failed, a file with that name already exists:"
-msgstr "Creation of new file failed, a file with that name already exists:"
+msgstr ""
 
 #: ../includes/functions/functions_export.php:505
 #: ../includes/functions/functions_export.php:543
@@ -6671,7 +6671,7 @@ msgstr "Creation of new file succeful:"
 #: ../includes/functions/functions_export.php:673
 #: ../modules/clippings/clippings_ctrl.php:509
 msgid "Cannot create"
-msgstr "Cannot create"
+msgstr ""
 
 #: ../includes/functions/functions_export.php:508
 #: ../includes/functions/functions_export.php:546
@@ -6680,7 +6680,7 @@ msgstr "Cannot create"
 #: ../includes/functions/functions_export.php:673
 #: ../modules/clippings/clippings_ctrl.php:509
 msgid "Check access rights on this directory."
-msgstr "Check access rights on this directory."
+msgstr ""
 
 #: ../includes/functions/functions_export.php:550 ../usermigrate.php:191
 #: ../usermigrate_cli.php:150
@@ -6692,7 +6692,7 @@ msgstr "No messages seem to be present in the system."
 #: ../includes/functions/functions_export.php:635
 #: ../includes/functions/functions_export.php:677
 msgid "File is not created."
-msgstr "File is not created."
+msgstr ""
 
 #: ../includes/functions/functions_export.php:595
 #: ../includes/controllers/usermigrate_ctrl.php:379 ../usermigrate.php:200
@@ -7408,11 +7408,11 @@ msgstr "Η Αποστολή Αρχείου ολοκληρώθηκε με επι�
 
 #: ../includes/functions/functions.php:192
 msgid "Uploaded file exceeds the allowed size"
-msgstr "Uploaded file exceeds the allowed size"
+msgstr ""
 
 #: ../includes/functions/functions.php:194
 msgid "File was only partially uploaded, please try again"
-msgstr "File was only partially uploaded, please try again"
+msgstr ""
 
 #: ../includes/functions/functions.php:196
 msgid "No file was received. Please upload again."
@@ -7542,7 +7542,7 @@ msgstr "Τηλέφωνο"
 #: ../modules/googlemap/googlemap.php:314 ../edit_interface.php:1247
 #: ../help_text.php:766
 msgid "FAX"
-msgstr "FAX"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../includes/functions/functions_print_facts.php:846
@@ -7630,7 +7630,7 @@ msgstr ""
 #: ../includes/classes/class_note.php:51
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:201
 msgid "…"
-msgstr "…"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:134 ../blocks/user_welcome.php:58
 msgid "My Pedigree"
@@ -8131,7 +8131,7 @@ msgstr ""
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
 #: ../includes/session.php:478
 msgid "utf8_unicode_ci"
-msgstr "utf8_unicode_ci"
+msgstr ""
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:222 ../modules/sitemap/index.php:379
@@ -8160,7 +8160,7 @@ msgstr ""
 #: ../includes/controllers/media_ctrl.php:267
 #: ../includes/controllers/individual_ctrl.php:653 ../help_text.php:5500
 msgid "This record has been updated.  Click here to show changes."
-msgstr "This record has been updated.  Click here to show changes."
+msgstr ""
 
 #: ../includes/controllers/family_ctrl.php:411
 #: ../includes/controllers/source_ctrl.php:250
@@ -8455,7 +8455,7 @@ msgstr "Σχεδίαση στατιστικών"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -8463,7 +8463,7 @@ msgstr "Προσθήκη νέας γλώσσας"
 
 #: ../changelanguage.php:186 ../changelanguage.php:202
 msgid "Edit settings"
-msgstr "Edit settings"
+msgstr ""
 
 #: ../changelanguage.php:262
 msgid "Languages used"
@@ -10582,7 +10582,7 @@ msgstr "The privacy settings prevent you from editing this record."
 #: ../edit_interface.php:2001 ../edit_interface.php:2002
 #: ../addremotelink.php:54 ../addmedia.php:87
 msgid "You have no access to"
-msgstr "You have no access to"
+msgstr ""
 
 #: ../edit_interface.php:346 ../edit_interface.php:2440 ../help_text.php:3764
 msgid "Add child"
@@ -10597,7 +10597,7 @@ msgstr "Γενεαλόγιο"
 #: ../edit_interface.php:1025 ../edit_interface.php:1064
 #: ../edit_interface.php:1150 ../edit_interface.php:1212
 msgid "You must provide a "
-msgstr "You must provide a "
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Abbreviation"
 #: ../edit_interface.php:758 ../help_text.php:48
@@ -10634,7 +10634,7 @@ msgstr ""
 
 #: ../edit_interface.php:883
 msgid "New source created successfully."
-msgstr "New source created successfully."
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Web Home Page"
 #: ../edit_interface.php:1253 ../help_text.php:1386
@@ -11022,7 +11022,7 @@ msgstr "Δεν ορίστηκε ημέρα"
 
 #: ../edit_privacy.php:121 ../edit_privacy.php:125
 msgid "Unable to find individual with id"
-msgstr "Unable to find individual with id"
+msgstr ""
 
 #: ../edit_privacy.php:134 ../help_text.php:2561
 msgid "Edit privacy settings"
@@ -11046,11 +11046,11 @@ msgstr ""
 
 #: ../edit_privacy.php:301 ../help_text.php:3470
 msgid "Show dead people"
-msgstr "Show dead people"
+msgstr ""
 
 #: ../edit_privacy.php:309 ../help_text.php:3525
 msgid "Show living names"
-msgstr "Show living names"
+msgstr ""
 
 #: ../edit_privacy.php:317 ../help_text.php:3585
 msgid "Show sources"
@@ -11058,7 +11058,7 @@ msgstr ""
 
 #: ../edit_privacy.php:325 ../help_text.php:2980
 msgid "Enable Clippings Cart"
-msgstr "Enable Clippings Cart"
+msgstr ""
 
 #: ../edit_privacy.php:334 ../help_text.php:3545
 msgid "Show Multi-Site Search"
@@ -11078,19 +11078,19 @@ msgstr ""
 
 #: ../edit_privacy.php:370 ../help_text.php:3700
 msgid "Use relationship privacy"
-msgstr "Use relationship privacy"
+msgstr ""
 
 #: ../edit_privacy.php:379 ../help_text.php:3145
 msgid "Max. relation path length"
-msgstr "Max. relation path length"
+msgstr ""
 
 #: ../edit_privacy.php:396 ../help_text.php:2880
 msgid "Check marriage relations"
-msgstr "Check marriage relations"
+msgstr ""
 
 #: ../edit_privacy.php:405 ../help_text.php:3130
 msgid "Age at which to assume a person is dead"
-msgstr "Age at which to assume a person is dead"
+msgstr ""
 
 #: ../edit_privacy.php:421 ../edit_privacy.php:422 ../help_text.php:5300
 msgid "Privacy settings by ID"
@@ -11103,7 +11103,7 @@ msgstr "Add new setting for Person Privacy"
 #: ../edit_privacy.php:439 ../edit_privacy.php:471 ../edit_privacy.php:615
 #: ../edit_privacy.php:655 ../edit_privacy.php:707 ../edit_privacy.php:755
 msgid "Show to?"
-msgstr "Show to?"
+msgstr ""
 
 #: ../edit_privacy.php:463
 msgid "Edit existing settings for Privacy by ID"
@@ -11115,7 +11115,7 @@ msgstr ""
 
 #: ../edit_privacy.php:510
 msgid "Add new setting for User Privacy"
-msgstr "Add new setting for User Privacy"
+msgstr ""
 
 #: ../edit_privacy.php:517 ../edit_privacy.php:563
 msgid "Show?"
@@ -11123,7 +11123,7 @@ msgstr "Εμφάνιση?"
 
 #: ../edit_privacy.php:555
 msgid "Edit existing settings for User Privacy"
-msgstr "Edit existing settings for User Privacy"
+msgstr ""
 
 #: ../edit_privacy.php:599 ../edit_privacy.php:600 ../help_text.php:4685
 msgid "Global Fact Privacy settings"
@@ -11131,12 +11131,12 @@ msgstr ""
 
 #: ../edit_privacy.php:610
 msgid "Add new setting for Global Fact Privacy"
-msgstr "Add new setting for Global Fact Privacy"
+msgstr ""
 
 #: ../edit_privacy.php:613 ../edit_privacy.php:653 ../edit_privacy.php:705
 #: ../edit_privacy.php:753
 msgid "Name of fact"
-msgstr "Name of fact"
+msgstr ""
 
 #: ../edit_privacy.php:614 ../edit_privacy.php:654 ../edit_privacy.php:706
 #: ../edit_privacy.php:754
@@ -11146,16 +11146,16 @@ msgstr "Επιλογή"
 #: ../edit_privacy.php:635 ../edit_privacy.php:673 ../edit_privacy.php:735
 #: ../edit_privacy.php:778
 msgid "Show fact details"
-msgstr "Show fact details"
+msgstr ""
 
 #: ../edit_privacy.php:636 ../edit_privacy.php:672 ../edit_privacy.php:736
 #: ../edit_privacy.php:777
 msgid "Show fact"
-msgstr "Show fact"
+msgstr ""
 
 #: ../edit_privacy.php:648
 msgid "Edit existing settings for Global Fact Privacy"
-msgstr "Edit existing settings for Global Fact Privacy"
+msgstr ""
 
 #: ../edit_privacy.php:689 ../edit_privacy.php:690 ../help_text.php:5295
 msgid "Facts Privacy settings by ID"
@@ -14580,7 +14580,7 @@ msgstr "Gives users the option of selecting their own theme.<br />from a drop do
 
 #: ../help_text.php:2841
 msgid "Gives users the option of selecting their own theme."
-msgstr "Gives users the option of selecting their own theme."
+msgstr ""
 
 #: ../help_text.php:2846
 msgid "Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality."
@@ -14804,7 +14804,7 @@ msgstr ""
 
 #: ../help_text.php:3121
 msgid "How often should the program archive log files."
-msgstr "How often should the program archive log files."
+msgstr ""
 
 #: ../help_text.php:3126
 msgid "You only need to enter a Login URL if you want to redirect to a different site or location when your users login.  This is very useful if you need to switch from http to https when your users login.  Include the full URL to <i>login.php</i>.  For example, https://www.yourserver.com/phpgedview/login.php ."
@@ -14897,7 +14897,7 @@ msgstr "The value to place in the robots meta tag in the HTML page header.  Many
 
 #: ../help_text.php:3236
 msgid "Anything on this line will be added to the TITLE tag in the HTML page header after the regular page title and before the PhpGedView credit."
-msgstr "Anything on this line will be added to the TITLE tag in the HTML page header after the regular page title and before the PhpGedView credit."
+msgstr ""
 
 #: ../help_text.php:3241
 msgid "GEDCOM 5.5.1 allows you to link pictures, videos, and other multimedia objects into your GEDCOM.  If you do not include multimedia objects in your GEDCOM, you can disable the multimedia features by setting this value to <b>No</b>.<br /><br />See the Multimedia section in the <a href=\"readme.txt\">readme.txt</a> file for more information about including media in your site."
@@ -15189,7 +15189,7 @@ msgstr ""
 
 #: ../help_text.php:3596
 msgid "Show runtime statistics and database queries at the bottom of every page."
-msgstr "Show runtime statistics and database queries at the bottom of every page."
+msgstr ""
 
 #: ../help_text.php:3601
 msgid "When a new source record is added online in PhpGedView, a new ID for that source will be generated automatically.  The source ID will have this prefix."
@@ -15510,7 +15510,7 @@ msgstr ""
 
 #: ../help_text.php:3930
 msgid "_GEDCOM: Configure"
-msgstr "_GEDCOM: Configure"
+msgstr ""
 
 #: ../help_text.php:3934
 msgid "ah12"
@@ -15518,7 +15518,7 @@ msgstr ""
 
 #: ../help_text.php:3935
 msgid "_GEDCOM: Import"
-msgstr "_GEDCOM: Import"
+msgstr ""
 
 #: ../help_text.php:3939
 msgid "ah13"
@@ -15526,7 +15526,7 @@ msgstr ""
 
 #: ../help_text.php:3940
 msgid "_GEDCOM: Upload"
-msgstr "_GEDCOM: Upload"
+msgstr ""
 
 #: ../help_text.php:3944
 msgid "ah14"
@@ -15534,7 +15534,7 @@ msgstr ""
 
 #: ../help_text.php:3945
 msgid "_GEDCOM: Validate"
-msgstr "_GEDCOM: Validate"
+msgstr ""
 
 #: ../help_text.php:3949
 msgid "ah15"
@@ -15542,7 +15542,7 @@ msgstr ""
 
 #: ../help_text.php:3950
 msgid "_GEDCOM: Convert ANSI to UTF-8"
-msgstr "_GEDCOM: Convert ANSI to UTF-8"
+msgstr ""
 
 #: ../help_text.php:3954
 msgid "ah16"
@@ -15638,7 +15638,7 @@ msgstr ""
 
 #: ../help_text.php:4010
 msgid "_GEDCOM: Add vs Upload"
-msgstr "_GEDCOM: Add vs Upload"
+msgstr ""
 
 #: ../help_text.php:4014
 msgid "ah4"
@@ -15646,7 +15646,7 @@ msgstr ""
 
 #: ../help_text.php:4015
 msgid "_GEDCOM: Configuration file"
-msgstr "_GEDCOM: Configuration file"
+msgstr ""
 
 #: ../help_text.php:4019
 msgid "ah5"
@@ -15654,7 +15654,7 @@ msgstr ""
 
 #: ../help_text.php:4020
 msgid "_GEDCOM: Default"
-msgstr "_GEDCOM: Default"
+msgstr ""
 
 #: ../help_text.php:4024
 msgid "ah6"
@@ -15686,7 +15686,7 @@ msgstr ""
 
 #: ../help_text.php:4040
 msgid "_GEDCOM: Download"
-msgstr "_GEDCOM: Download"
+msgstr ""
 
 #: ../help_text.php:4044
 msgid "alpha"
@@ -15900,7 +15900,7 @@ msgstr ""
 
 #: ../help_text.php:4194
 msgid "Language File Comparison Utility"
-msgstr "Language File Comparison Utility"
+msgstr ""
 
 #: ../help_text.php:4195
 msgid "This utility will compare two sets of language files to produce a list of the additions and subtractions between them.<br /><br />You should also check the various CHANGELOG files for changes to the English versions.  The English files should be used as the reference from which all others are produced."
@@ -15920,7 +15920,7 @@ msgstr ""
 
 #: ../help_text.php:4210
 msgid "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
-msgstr ""
+msgstr "This module will help you to edit the language specific settings for the usage inside PhpGedView.<br />Please note that if you have made a change to the original language settings of PhpGedView a new file (#INDEX_DIRECTORY#lang_settings.php) is created inside your #INDEX_DIRECTORY#-directory.<br />All your further changes will be made to this new file and PhpGedView will use only THIS file.<br />So if you have problem with your language settings please report that you have this new file inside your #INDEX_DIRECTORY#-directory!"
 
 #: ../help_text.php:4214
 msgid "context"
@@ -16277,7 +16277,7 @@ msgstr ""
 
 #: ../help_text.php:4475
 msgid "Edit Privacy"
-msgstr "Edit Privacy"
+msgstr ""
 
 #: ../help_text.php:4476
 msgid "On this page you can make all the Privacy settings for the selected GEDCOM.<br /><br />You can check under the page title to see that you are editing the correct privacy file.  It is displayed like this: (path/nameofyourgedcom_priv.php)<br /><br />If you need more settings, you can make changes to the privacy file manually. You can read more about this on the PhpGedView web site."
@@ -16421,11 +16421,11 @@ msgstr ""
 
 #: ../help_text.php:4576
 msgid "--- End extra Admin Info ---"
-msgstr "--- End extra Admin Info ---"
+msgstr ""
 
 #: ../help_text.php:4580
 msgid "Language File Export Utility"
-msgstr "Language File Export Utility"
+msgstr ""
 
 #: ../help_text.php:4581
 msgid "You can create documentation for administrators.<br /><br />This utility will produce an HTML version of the Configuration Help file in the selected language.  You can use your browser to look at this file, which is formatted for printing."
@@ -16453,7 +16453,7 @@ msgstr "Here you can change the fan chart width from 50% to 300%.<br />Normal va
 
 #: ../help_text.php:4600
 msgid "Language file type to edit"
-msgstr "Language file type to edit"
+msgstr ""
 
 #: ../help_text.php:4601 ../help_text.php:4956
 msgid "PhpGedView has implemented support for many different languages.  This has been achieved by keeping all text that is visible to users in files completely separate from the main program.  There is a set of eight files for each supported language, and the various texts have been separated into one of these files according to function.  <b>Not all language files need to be present.</b>  When a given text is not yet available in translated form, PhpGedView will always use the English version.<br /><br />The files in each language set are:<br /><ul><li><b><i>admin.xx.php</i></b>&nbsp;&nbsp;This file contains terms and common expressions for use during the administration of PhpGedView and the genealogical databases.<br /><br /></li><li><b><i>configure_help.xx.php</i></b>&nbsp;&nbsp;This file contains Help text for use during configuration of PhpGedView.  The Help text is not intended to be viewed by ordinary users.<br /><br /></li><li><b><i>countries.xx.php</i></b>&nbsp;&nbsp;This is a list of country names, taken from the Web site of the Statistics Division, United Nations Department of Economic and Social Affairs.  This is the relevant <a href=\"http://unstats.un.org/unsd/methods/m49/m49alpha.htm\" target=\"_blank\"><b>link</b></a> to the English list.  The list is available in either English or French.<br /><br /></li><li><b><i>editor.xx.php</i></b>&nbsp;&nbsp;This file contains terms and common expressions for use during the editing of entries in the genealogical databases.<br /><br /></li><li><b><i>facts.xx.php</i></b>&nbsp;&nbsp;This file contains the textual equivalents of the GEDCOM Fact codes found in the GEDCOM 5.5.1 Standard.  It also contains additional Fact codes not found in the Standard but used by various genealogy programs.<br /><br />An English copy of the <a href=\"http://www.phpgedview.net/ged551-5.pdf\" target=\"_blank\"><b>GEDCOM 5.5.1 Standard</b></a> can be downloaded in PDF (Portable Document Format).<br /><br /></li><li><b><i>faqlist.xx.php</i></b>&nbsp;&nbsp;This file is a set of <b>f</b>requently <b>a</b>sked <b>q</b>uestions that have been collected by the PhpGedView development team.  Each FAQ has two entries in this file.  One entry is the FAQ heading (usually the question), and the other is the FAQ body (usually the answer).  Replacements for the <b><i>faqlist.xx.php</i></b> files, which are updated frequently, may be downloaded from the PhpGedView home site.<br /><br />The administrator can use the FAQs in this file to build an FAQ list that is specific to his site.<br /><br /></li><li><b><i>help_text.xx.php</i></b>&nbsp;&nbsp;This file contains Help text for ordinary users.  Some Help topics in this file address the needs of administrators, and are hidden from users who do not have Admin rights.<br /><br /></li><li><b><i>lang.xx.php</i></b>&nbsp;&nbsp;Many terms and common expressions are found in this file.</li></ul><br />PhpGedView also supports an optional ninth language file, <b><i>extra.xx.php</i></b>.  This file is always loaded after all the others and provides a means whereby a site administrator can override or alter any standard text in the selected language.  It can also be used to provide a title for the genealogical databases that varies according to the currently active language.<br /><br />The contents of this additional file are completely up to the site administrator;  this file will <b>never</b> be distributed with any version of PhpGedView.  The administrator should never make changes to the standard language files;  all local changes should be concentrated in this optional file."
@@ -16695,7 +16695,7 @@ msgstr ""
 
 #: ../help_text.php:4775
 msgid "Hide translated"
-msgstr "Hide translated"
+msgstr ""
 
 #: ../help_text.php:4776
 msgid "If set to <b>Yes</b> you will only see those messages of your selected language file which have not been translated.  This means the new message does <u>not</u> appear in the target language file.<br /><br />Some language files contain English text for various untranslated messages.  This routine cannot identify these untranslated items, since they already are present in the target file.  The assumption is, \"If the message is present in the target file, it must have been translated.\""
@@ -16771,7 +16771,7 @@ msgstr ""
 
 #: ../help_text.php:4826
 msgid "This block displays a list of frequently occurring surnames from this database. A surname must occur at least #COMMON_NAMES_THRESHOLD# times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name."
-msgstr ""
+msgstr "A list of the surnames in this GEDCOM are displayed in this block. The number of names displayed is set by the site administrator.<br />(Current setting is surnames who are present in the GEDCOM more than #COMMON_NAMES_THRESHOLD# times)<br /><br />The names are clickable. Clicking on a name will take you to the Άτομα, where you will get more details about the name."
 
 #: ../help_text.php:4830
 msgid "index_events"
@@ -16943,7 +16943,7 @@ msgstr ""
 
 #: ../help_text.php:4936
 msgid "--- This help text is the same text that site visitors will read. --- <br />--- To save space, we did not make a special admin text for this item. ---"
-msgstr "--- This help text is the same text that site visitors will read. --- <br />--- To save space, we did not make a special admin text for this item. ---"
+msgstr ""
 
 #: ../help_text.php:4941
 msgid "Should existing media links be retained in the database when a replacement GEDCOM is being uploaded. The <b>No</b> option removes existing media links from the database, while the <b>Yes</b> option keeps them.<br /><br />This option is useful when you export your GEDCOM from PhpGedView to an off-line GEDCOM maintenance program that does not handle embedded media pointers properly, and then subsequently re-import that changed GEDCOM into PhpGedView.  Under such circumstances, the media pointers within the GEDCOM you exported to your off-line editing program are destroyed, and you would have to re-link all of your media files to the proper Person, Family, and Source records after you re-import the GEDCOM into PhpGedView.<br /><br />The <b>Yes</b> option tells PhpGedView to keep the existing media links so that you do not have to re-create them after you import the changed GEDCOM, but this requires the off-line editing program to always produce the same Person, Family, and Source identification numbers.<br /><br /><i>Family Tree Maker</i> is one of several off-line editing programs that does <u>not</u> properly handle media object pointers within the GEDCOM.  <i>Legacy</i>, among many others, <u>does</u> handle these properly."
@@ -16971,7 +16971,7 @@ msgstr "This code defines the shortcut which is used to name the language files 
 
 #: ../help_text.php:4970
 msgid "Language to edit"
-msgstr "Language to edit"
+msgstr ""
 
 #: ../help_text.php:4971
 msgid "In this list box you select the language whose messages you want to edit."
@@ -16979,7 +16979,7 @@ msgstr "Language File Edit Utility >> <b>Language to edit</b><br /><br />From th
 
 #: ../help_text.php:4975
 msgid "Language to export"
-msgstr "Language to export"
+msgstr ""
 
 #: ../help_text.php:4976
 msgid "From this list box you can select the language whose messages you want to export.<br /><br />The routine currently only exports the contents of the <i>configure_help.xx.php</i>, <i>help_text.xx.php</i>, and <i>lang.xx.php</i> files.  The output is an HTML file that you can print from your browser."
@@ -17184,7 +17184,7 @@ msgstr ""
 
 #: ../help_text.php:5121
 msgid "#pgv_lang[help_help_items]#"
-msgstr "#pgv_lang[help_help_items]#"
+msgstr ""
 
 #: ../help_text.php:5125
 msgid "menu_lists"
@@ -17261,7 +17261,7 @@ msgstr ""
 
 #: ../help_text.php:5181
 msgid "<center>--- This is a general help text for multiple pages ---</center>"
-msgstr "<center>--- This is a general help text for multiple pages ---</center>"
+msgstr ""
 
 #: ../help_text.php:5185
 msgid "mygedview_customize"
@@ -17337,7 +17337,7 @@ msgstr ""
 
 #: ../help_text.php:5235
 msgid "Source language"
-msgstr "Source language"
+msgstr ""
 
 #: ../help_text.php:5236
 msgid "From this list box you can select the language whose messages you want to compare with those of another language.<br /><br />All changes and additions to language files are first made to the <b>English</b> language files, so you would normally select English as one of the languages to compare."
@@ -17385,7 +17385,7 @@ msgstr ""
 
 #: ../help_text.php:5270
 msgid "Secondary language"
-msgstr "Secondary language"
+msgstr ""
 
 #: ../help_text.php:5271
 msgid "From this list box you can select the language which you want to compare with the language selected in the <b>Source</b> list box.<br /><br />After you have made your choice, click the <b>Compare</b> button to get a list of all additions and subtractions in all four files of both languages.<br /><br />To refresh your memory:<br /><b>Addition</b> means: It is <u>in</u> the Source file, but <u>not</u> in the Secondary file.<br /><br /><b>Subtraction</b> means: It is <u>not</u> in the Source file, but it <u>is</u> in the Secondary file.  This might happen when a given message is no longer used and therefore was removed from the English files.  You can safely remove the corresponding message from the secondary language files."
@@ -17397,7 +17397,7 @@ msgstr "This check box selected the chart will be printed with oldest people at 
 
 #: ../help_text.php:5280
 msgid "Original name of language in #D_LANGNAME#"
-msgstr ""
+msgstr "Original name of language in #D_LANGNAME#"
 
 #: ../help_text.php:5281
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."
@@ -17811,7 +17811,7 @@ msgstr ""
 
 #: ../help_text.php:5591
 msgid "+++ Begin extra Admin Info +++"
-msgstr "+++ Begin extra Admin Info +++"
+msgstr ""
 
 #: ../help_text.php:5595
 msgid "stat"
@@ -18118,7 +18118,7 @@ msgstr ""
 
 #: ../help_text.php:5821
 msgid "The day of the week that starts a new week in this language.  Most languages start the week on Sunday, but some start on Monday or other days."
-msgstr "The day of the week that starts a new week in this language.  Most languages start the week on Sunday, but some start on Monday or other days."
+msgstr ""
 
 #: ../help_text.php:5825
 msgid "Welcome to your new PhpGedView website."
@@ -18447,7 +18447,7 @@ msgstr ""
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
-msgstr "HTML"
+msgstr ""
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."

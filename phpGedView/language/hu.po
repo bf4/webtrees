@@ -2514,7 +2514,7 @@ msgstr "Héber és Gregorián"
 
 #: ../editconfig_gedcom.php:994
 msgid "Hijri"
-msgstr "Hijri"
+msgstr ""
 
 #: ../editconfig_gedcom.php:995 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -2691,7 +2691,7 @@ msgstr "Üdvözöljük"
 
 #: ../editconfig_gedcom.php:1413 ../includes/classes/class_menubar.php:119
 msgid "MyGedView"
-msgstr "MyGedView"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1419 ../help_text.php:3740
 msgid "Welcome text on Login page"
@@ -3304,7 +3304,7 @@ msgstr ""
 #: ../uploadgedcom.php:294 ../uploadgedcom.php:300 ../uploadgedcom.php:1116
 #: ../usermigrate.php:146
 msgid "Import"
-msgstr "Import"
+msgstr ""
 
 #: ../editgedcoms.php:191
 msgid "This GEDCOM has not yet been imported."
@@ -3313,7 +3313,7 @@ msgstr "Ezt a GEDCOM-állományt még nem importálta."
 #: ../editgedcoms.php:197 ../usermigrate.php:147 ../export_gedcom.php:51
 #: ../export_gedcom.php:56 ../help_text.php:2586
 msgid "Export"
-msgstr "Export"
+msgstr ""
 
 #: ../editgedcoms.php:201
 msgid "Are you sure you want to delete this GEDCOM"
@@ -4663,7 +4663,7 @@ msgstr "Russell"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -5109,7 +5109,7 @@ msgstr "PHP-szerver beállítási hiba: a GDlib 2.x szükséges a képi funkció
 
 #: ../fanchart.php:109 ../fanchart.php:114
 msgid "http://www.php.net/gd"
-msgstr "http://www.php.net/gd"
+msgstr ""
 
 #: ../fanchart.php:113
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
@@ -5337,7 +5337,7 @@ msgstr "Lekérdezés"
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -8342,7 +8342,7 @@ msgstr "Féltestvér"
 #: ../includes/controllers/individual_ctrl.php:853
 #: ../includes/controllers/individual_ctrl.php:854
 msgid "Partner"
-msgstr "Partner"
+msgstr ""
 
 #: ../includes/controllers/individual_ctrl.php:840
 msgid "Ex-Spouse"
@@ -8455,7 +8455,7 @@ msgstr "Statisztikai görbe"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -9806,7 +9806,7 @@ msgstr "Ház"
 #: ../modules/googlemap/places_edit.php:783
 #: ../modules/googlemap/editconfig.php:386
 msgid "Max"
-msgstr "Max"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
@@ -9933,11 +9933,11 @@ msgstr "Térkép nagyítása"
 
 #: ../modules/googlemap/editconfig.php:325
 msgid "Min."
-msgstr "Min."
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:330
 msgid "Max."
-msgstr "Max."
+msgstr ""
 
 #: ../modules/googlemap/editconfig.php:349
 #: ../modules/googlemap/editconfig.php:358
@@ -15518,7 +15518,7 @@ msgstr ""
 
 #: ../help_text.php:3935
 msgid "_GEDCOM: Import"
-msgstr "_GEDCOM: Import"
+msgstr ""
 
 #: ../help_text.php:3939
 msgid "ah13"
@@ -15920,7 +15920,7 @@ msgstr "Ez az oldal összefoglalja nagyobb vonalakban a Konfiguráció Segitség
 
 #: ../help_text.php:4210
 msgid "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
-msgstr ""
+msgstr "Ez a modul támogatja Önt a PhpGedView nyelvi beállításainak módosításában.<br /><br />fehívjuk figyelmét arra, hogy amennyiben megváltoztatja a nyelvi beállításokat, egy új állomány (#INDEX_DIRECTORY#lang_settings.php) jön létre az #INDEX_DIRECTORY# könyvtárban. Minden további változtatás ezt az állományt érinti, illetve a PhpGedView is ezt használja.<br />Tehát ha probléma adódik a nyelvi beállításokkal, jelezze, hogy Önnél már ez az új állomány taláható az #INDEX_DIRECTORY# könyvtárban!"
 
 #: ../help_text.php:4214
 msgid "context"
@@ -16771,7 +16771,7 @@ msgstr ""
 
 #: ../help_text.php:4826
 msgid "This block displays a list of frequently occurring surnames from this database. A surname must occur at least #COMMON_NAMES_THRESHOLD# times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name."
-msgstr ""
+msgstr "A GEDCOM-állományban legtöbbet előforduló vezetéknevek láthatók ebben a blokkban. A feltüntetett nevek számát az adminisztrátor szabja meg. <br /><br />A nevek természetesen kattinthatóak, így bővebben tájékozódhat az adott személyről az Személyek listája útján."
 
 #: ../help_text.php:4830
 msgid "index_events"
@@ -17184,7 +17184,7 @@ msgstr ""
 
 #: ../help_text.php:5121
 msgid "#pgv_lang[help_help_items]#"
-msgstr "#pgv_lang[help_help_items]#"
+msgstr ""
 
 #: ../help_text.php:5125
 msgid "menu_lists"
@@ -17397,7 +17397,7 @@ msgstr ""
 
 #: ../help_text.php:5280
 msgid "Original name of language in #D_LANGNAME#"
-msgstr ""
+msgstr "A nyelv #D_LANGNAME# neve"
 
 #: ../help_text.php:5281
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."
@@ -17939,7 +17939,7 @@ msgstr ""
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "Válasszon állományokat a számítógépéről amit a szerverre fel akar tölteni. Minden álomány a <b>#MEDIA_DIRECTORY#</b> mappába lesz feltöltve vagy az alatta levő mappába.<br /><br />Az ön által választott mappa név a #MEDIA_DIRECTORY# -hoz lesz kapcsolva. Például, #MEDIA_DIRECTORY#csaladom. Ha az előnézet mappa nem létezik akkor létre lesz hozva."
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
@@ -18447,7 +18447,7 @@ msgstr "A Grafikonok blokk segítségével, grafikont helyezhet el az üdvözlő
 
 #: ../blocks/html_block.php:39
 msgid "HTML"
-msgstr "HTML"
+msgstr ""
 
 #: ../blocks/html_block.php:40
 msgid "This is a simple HTML block that you can place on your page to add any sort of message you may want."

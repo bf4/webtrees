@@ -1004,7 +1004,7 @@ msgstr "Odhlásit se"
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:60
 #: ../help_text.php:3909 ../blocks/getting_started.php:67
 msgid "Admin"
-msgstr "Admin"
+msgstr ""
 
 #: ../themes/fab/header.php:118 ../blocks/review_changes.php:42
 msgid "Pending Changes"
@@ -1444,7 +1444,7 @@ msgstr ""
 #: ../edit_privacy.php:469 ../edit_privacy.php:516 ../edit_privacy.php:561
 #: ../edit_privacy.php:704 ../edit_privacy.php:751
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: ../manageservers.php:363 ../manageservers.php:438 ../editnews.php:90
 #: ../includes/classes/class_stats_ui.php:186 ../addremotelink.php:212
@@ -2430,7 +2430,7 @@ msgstr "Uložit konfiguraci"
 #: ../modules/lightbox/lb_editconfig.php:230 ../modules/lightbox/album.php:105
 #: ../modules/googlemap/editconfig.php:445 ../edit_privacy.php:794
 msgid "Reset"
-msgstr "Reset"
+msgstr ""
 
 #: ../editconfig_gedcom.php:874 ../editconfig_gedcom.php:875
 msgid "GEDCOM Basics"
@@ -2691,7 +2691,7 @@ msgstr "Vítejte"
 
 #: ../editconfig_gedcom.php:1413 ../includes/classes/class_menubar.php:119
 msgid "MyGedView"
-msgstr "MyGedView"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1419 ../help_text.php:3740
 msgid "Welcome text on Login page"
@@ -4755,7 +4755,7 @@ msgstr "město, kraj, stát, země"
 
 #: ../placelist.php:487
 msgid "(Default)"
-msgstr "(Default)"
+msgstr ""
 
 #: ../uploadgedcom.php:254 ../uploadgedcom.php:592
 #, php-format
@@ -5109,7 +5109,7 @@ msgstr "Špatná konfigurace PHP serveru: pro práci s obrázky je třeba knihov
 
 #: ../fanchart.php:109 ../fanchart.php:114
 msgid "http://www.php.net/gd"
-msgstr "http://www.php.net/gd"
+msgstr ""
 
 #: ../fanchart.php:113
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
@@ -5337,7 +5337,7 @@ msgstr ""
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -6516,7 +6516,7 @@ msgstr ""
 
 #: ../includes/functions/functions_edit.php:1373
 msgid "No Temple - Living Ordinance"
-msgstr "No Temple - Living Ordinance"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Husband"
 #: ../includes/functions/functions_edit.php:1383
@@ -7542,7 +7542,7 @@ msgstr "Telefon"
 #: ../modules/googlemap/googlemap.php:314 ../edit_interface.php:1247
 #: ../help_text.php:766
 msgid "FAX"
-msgstr "FAX"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../includes/functions/functions_print_facts.php:846
@@ -15920,7 +15920,7 @@ msgstr ""
 
 #: ../help_text.php:4210
 msgid "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
-msgstr ""
+msgstr "Tento modul vám pomůže upravovat nastavení specifické pro daný jazyk pro použití v PhpGedView.<br />Povšimněte si prosím, že, pokud jste změnili původní jazykové nastavení PhpGedView, byl ve vaší složce #INDEX_DIRECTORY# vytvořen nový soubor (#INDEX_DIRECTORY#lang_settings.php).<br />Všechny vaše další změny se budou zapisovat do tohoto souboru a PhpGedView bude používat pouze TENTO soubor.<br />Takže, pokud jste měli potíže se svým národním nastavením, prosím všimněte si, že tento nový soubor máte ve složce #INDEX_DIRECTORY#!"
 
 #: ../help_text.php:4214
 msgid "context"
@@ -16771,7 +16771,7 @@ msgstr ""
 
 #: ../help_text.php:4826
 msgid "This block displays a list of frequently occurring surnames from this database. A surname must occur at least #COMMON_NAMES_THRESHOLD# times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name."
-msgstr ""
+msgstr "V tomto bloku jsou zobrazena příjmení, která se v tomto GEDCOMu vyskytují nejčastěji.<br />Minimální četnost výskytu jednoho příjmení potřebnou k tomu, aby příjmení bylo zařazeno mezi nejčastější může nastavit administrátor.<br />(Současné nastavení tohoto limitu je #COMMON_NAMES_THRESHOLD#)<br />Na jména můžete kliknout. Jedním kliknutím na jméno se dostanete na Seznam osob, kde získáte další informace o tomto jménu."
 
 #: ../help_text.php:4830
 msgid "index_events"
@@ -17176,7 +17176,7 @@ msgstr "V menu jsou zařazeny všechny dostupné GEDCOMy. Každý GEDCOM má svo
 
 #: ../help_text.php:5115
 msgid "Menu"
-msgstr "Menu"
+msgstr ""
 
 #: ../help_text.php:5116 ../help_text.php:5120
 msgid "<div class=\"name_head\"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href=\"#menu_fam\">Welcome page</a><br /></li><li><a href=\"#menu_myged\">MyGedView Portal</a><br /></li><li><a href=\"#menu_charts\">Charts</a><br /></li><li><a href=\"#menu_lists\">Lists</a><br /></li><li><a href=\"#menu_annical\">Anniversary Calendar</a><br /></li><li><a href=\"#menu_clip\">Family Tree Clippings Cart</a><br /></li><li><a href=\"#menu_search\">Search</a><br /></li><li><a href=\"#menu_help\">Help</a></li></ul>"
@@ -17184,7 +17184,7 @@ msgstr ""
 
 #: ../help_text.php:5121
 msgid "#pgv_lang[help_help_items]#"
-msgstr "#pgv_lang[help_help_items]#"
+msgstr ""
 
 #: ../help_text.php:5125
 msgid "menu_lists"
@@ -17397,7 +17397,7 @@ msgstr "Je-li toto políčko zaškrtnuté, budou se schémata tisknout s nejstar
 
 #: ../help_text.php:5280
 msgid "Original name of language in #D_LANGNAME#"
-msgstr ""
+msgstr "Jak tento jazyk označuje jazyk #D_LANGNAME#"
 
 #: ../help_text.php:5281
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."

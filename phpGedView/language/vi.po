@@ -7442,7 +7442,7 @@ msgstr "Sự tìm kiếm gián đoạn trước khi tìm thấy mối liên hệ
 #: ../includes/functions/functions_db.php:259
 #: ../includes/functions/functions_db.php:330
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
-msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+msgstr ""
 
 #: ../includes/functions/functions_db.php:2060 ../edit_interface.php:375
 #: ../edit_interface.php:392 ../edit_interface.php:1990

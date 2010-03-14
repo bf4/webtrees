@@ -341,7 +341,7 @@ msgstr ""
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:52
 #: ../modules/media/pgv_module.php:49
 msgid "Media"
-msgstr "Media"
+msgstr ""
 
 #: ../statistics.php:375 ../statisticsplot.php:840
 msgid "Individuals with sources"
@@ -546,7 +546,7 @@ msgstr "America del Sud"
 
 #: ../statistics.php:659
 msgid "Asia"
-msgstr "Asia"
+msgstr ""
 
 #: ../statistics.php:660
 msgid "Middle East"
@@ -554,7 +554,7 @@ msgstr "Medio Oriente"
 
 #: ../statistics.php:661
 msgid "Africa"
-msgstr "Africa"
+msgstr ""
 
 #: ../statistics.php:665
 msgid "Categories:"
@@ -594,7 +594,7 @@ msgstr "mostra il grafico"
 
 #: ../statistics.php:730
 msgid "reset"
-msgstr "reset"
+msgstr ""
 
 #: ../statistics.php:745 ../statistics.php:748
 #: ../includes/classes/class_menubar.php:248
@@ -997,7 +997,7 @@ msgstr ""
 #: ../themes/fab/header.php:113 ../includes/functions/functions_print.php:778
 #: ../blocks/login_block.php:55 ../blocks/login_block.php:63
 msgid "Logout"
-msgstr "Logout"
+msgstr ""
 
 #: ../themes/fab/header.php:115 ../includes/functions/functions_print.php:776
 #: ../includes/classes/class_menubar.php:150
@@ -1444,7 +1444,7 @@ msgstr "Vedere Connessioni"
 #: ../edit_privacy.php:469 ../edit_privacy.php:516 ../edit_privacy.php:561
 #: ../edit_privacy.php:704 ../edit_privacy.php:751
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: ../manageservers.php:363 ../manageservers.php:438 ../editnews.php:90
 #: ../includes/classes/class_stats_ui.php:186 ../addremotelink.php:212
@@ -1459,7 +1459,7 @@ msgstr "URL/IP del sito"
 
 #: ../manageservers.php:379 ../manageservers.php:455 ../addremotelink.php:221
 msgid "Database ID:"
-msgstr "Database ID:"
+msgstr ""
 
 #: ../manageservers.php:387 ../manageservers.php:463 ../printlog.php:116
 #: ../edit_privacy.php:515 ../edit_privacy.php:560
@@ -1480,7 +1480,7 @@ msgstr "Esempio:"
 #: ../login_register.php:133 ../login_register.php:517
 #: ../blocks/login_block.php:104
 msgid "Password"
-msgstr "Password"
+msgstr ""
 
 #: ../lifespan.php:44 ../lifespan.php:57
 #: ../includes/classes/class_menubar.php:246
@@ -1629,7 +1629,7 @@ msgstr "Configurazione salvata con successo"
 
 #: ../install.php:443
 msgid "Download config.php"
-msgstr "Download config.php"
+msgstr ""
 
 #: ../install.php:461 ../modules/batch_update/batch_update.php:107
 msgid "Next &gt;"
@@ -1759,7 +1759,7 @@ msgstr "Tipo di Database"
 
 #: ../install.php:660 ../help_text.php:2920
 msgid "Database Host"
-msgstr "Database Host"
+msgstr ""
 
 #: ../install.php:664 ../help_text.php:2935
 msgid "Database Port"
@@ -1771,7 +1771,7 @@ msgstr "Database Username:"
 
 #: ../install.php:672 ../help_text.php:2930
 msgid "Database Password"
-msgstr "Database Password"
+msgstr ""
 
 #: ../install.php:676 ../help_text.php:2925
 msgid "Database Name"
@@ -1910,7 +1910,7 @@ msgstr "Si"
 #: ../blocks/review_changes.php:158 ../blocks/recent_changes.php:116
 #: ../blocks/gedcom_stats.php:265 ../blocks/gedcom_stats.php:344
 msgid "No"
-msgstr "No"
+msgstr ""
 
 #: ../install.php:689 ../help_text.php:3655
 msgid "Database Table Prefix"
@@ -1930,7 +1930,7 @@ msgstr "Cartella del file Index"
 
 #: ../install.php:766 ../help_text.php:3450
 msgid "PhpGedView URL"
-msgstr "PhpGedView URL"
+msgstr ""
 
 #: ../install.php:769
 #, php-format
@@ -2008,7 +2008,7 @@ msgstr ""
 
 #: ../install.php:864 ../install.php:870
 msgid "&nbsp;&nbsp;page views in&nbsp;&nbsp;"
-msgstr "&nbsp;&nbsp;page views in&nbsp;&nbsp;"
+msgstr ""
 
 #: ../install.php:865 ../install.php:869
 msgid "&nbsp;&nbsp;seconds"
@@ -2163,7 +2163,7 @@ msgstr "Collega multimedia"
 #: ../inverselink.php:119
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:130
 msgid "Media ID"
-msgstr "Media ID"
+msgstr ""
 
 #: ../inverselink.php:145
 msgid "Enter Individual ID"
@@ -2209,7 +2209,7 @@ msgstr "Impostare link"
 #: ../includes/functions/functions_print_lists.php:1684 ../edit_merge.php:153
 #: ../blocks/todo.php:85
 msgid "Record"
-msgstr "Record"
+msgstr ""
 
 #: ../gedrecord.php:48
 msgid "This page has been disabled by the site administrator."
@@ -2430,7 +2430,7 @@ msgstr "Salva configurazione"
 #: ../modules/lightbox/lb_editconfig.php:230 ../modules/lightbox/album.php:105
 #: ../modules/googlemap/editconfig.php:445 ../edit_privacy.php:794
 msgid "Reset"
-msgstr "Reset"
+msgstr ""
 
 #: ../editconfig_gedcom.php:874 ../editconfig_gedcom.php:875
 msgid "GEDCOM Basics"
@@ -2498,11 +2498,11 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:990
 msgid "Jewish"
-msgstr "Jewish"
+msgstr ""
 
 #: ../editconfig_gedcom.php:991
 msgid "Jewish and Gregorian"
-msgstr "Jewish and Gregorian"
+msgstr ""
 
 #: ../editconfig_gedcom.php:992 ../includes/specialchars.php:82
 msgid "Hebrew"
@@ -2510,11 +2510,11 @@ msgstr ""
 
 #: ../editconfig_gedcom.php:993
 msgid "Hebrew and Gregorian"
-msgstr "Hebrew and Gregorian"
+msgstr ""
 
 #: ../editconfig_gedcom.php:994
 msgid "Hijri"
-msgstr "Hijri"
+msgstr ""
 
 #: ../editconfig_gedcom.php:995 ../includes/specialchars.php:83
 msgid "Arabic"
@@ -2873,7 +2873,7 @@ msgstr "Tabella"
 
 #: ../editconfig_gedcom.php:1727
 msgid "Tagcloud"
-msgstr "Tagcloud"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1737 ../editconfig_gedcom.php:1738
 msgid "Hide and Show"
@@ -3275,7 +3275,7 @@ msgstr ""
 
 #: ../editgedcoms.php:98
 msgid "Default GEDCOM"
-msgstr "Default GEDCOM"
+msgstr ""
 
 #: ../editgedcoms.php:112 ../help_text.php:3445
 msgid "Check if GEDCOM files are downloadable"
@@ -4663,7 +4663,7 @@ msgstr "Base"
 
 #: ../branches.php:84 ../search.php:365
 msgid "Daitch-Mokotoff"
-msgstr "Daitch-Mokotoff"
+msgstr ""
 
 #: ../branches.php:108
 msgid "Direct line ancestors-ancestors"
@@ -4755,7 +4755,7 @@ msgstr "Città, Provincia/Contea, Regione/Stato, Nazione"
 
 #: ../placelist.php:487
 msgid "(Default)"
-msgstr "(Default)"
+msgstr ""
 
 #: ../uploadgedcom.php:254 ../uploadgedcom.php:592
 #, php-format
@@ -4897,7 +4897,7 @@ msgstr "Importazione completata"
 #: ../uploadgedcom.php:795 ../uploadgedcom.php:844 ../uploadgedcom.php:1128
 #: ../uploadgedcom.php:1133 ../includes/functions/functions_print.php:733
 msgid "sec."
-msgstr "sec."
+msgstr ""
 
 #: ../uploadgedcom.php:801 ../admin.php:210
 #: ../includes/classes/class_menubar.php:156 ../blocks/getting_started.php:65
@@ -5109,7 +5109,7 @@ msgstr "PHP server errata: libreria GD 2.x necessario per utilizzare funzioni di
 
 #: ../fanchart.php:109 ../fanchart.php:114
 msgid "http://www.php.net/gd"
-msgstr "http://www.php.net/gd"
+msgstr ""
 
 #: ../fanchart.php:113
 msgid "PHP server misconfiguration: FreeType library required to use TrueType fonts."
@@ -5337,7 +5337,7 @@ msgstr "Interrogazione"
 
 #: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
 msgid "?"
-msgstr "?"
+msgstr ""
 
 #: ../index_edit.php:234
 msgid "Configuration file updated successfully."
@@ -5641,7 +5641,7 @@ msgstr "Escludi alcuni dati non genealogici"
 
 #: ../search.php:237
 msgid "Off"
-msgstr "Off"
+msgstr ""
 
 #: ../search.php:243 ../search.php:385
 msgid "Associates"
@@ -5794,7 +5794,7 @@ msgstr "Chiudi e torna indietro"
 
 #: ../includes/config_data.php:70
 msgid "Audio"
-msgstr "Audio"
+msgstr ""
 
 #: ../includes/config_data.php:71
 msgid "Book"
@@ -5827,7 +5827,7 @@ msgstr "Microschede"
 
 #: ../includes/config_data.php:78
 msgid "Microfilm"
-msgstr "Microfilm"
+msgstr ""
 
 #: ../includes/config_data.php:79
 msgid "Magazine"
@@ -5864,7 +5864,7 @@ msgstr "Lapide"
 
 #: ../includes/config_data.php:85
 msgid "Video"
-msgstr "Video"
+msgstr ""
 
 #: ../includes/config_data.php:86
 msgid "Painting"
@@ -5998,31 +5998,31 @@ msgstr "Il messaggio seguente è stato inviato al tuo utente PhpGedView da "
 
 #: ../includes/sort_tables_utf8.php:78 ../includes/sort_tables_utf8.php:88
 msgid "(לא-ידוע)"
-msgstr "(לא-ידוע)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:79 ../includes/sort_tables_utf8.php:89
 msgid "(غير معروف)"
-msgstr "(غير معروف)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:80 ../includes/sort_tables_utf8.php:90
 msgid "(άγνωστος/η)"
-msgstr "(άγνωστος/η)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:81 ../includes/sort_tables_utf8.php:91
 msgid "(неопределено)"
-msgstr "(неопределено)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:82 ../includes/sort_tables_utf8.php:92
 msgid "(未知)"
-msgstr "(未知)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:83
 msgid "(vô danh)"
-msgstr "(vô danh)"
+msgstr ""
 
 #: ../includes/sort_tables_utf8.php:93
 msgid "(không biết tuổi)"
-msgstr "(không biết tuổi)"
+msgstr ""
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
@@ -7442,7 +7442,7 @@ msgstr "Lo script è scaduto prima di trovare una relazione."
 #: ../includes/functions/functions_db.php:259
 #: ../includes/functions/functions_db.php:330
 msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
-msgstr "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+msgstr ""
 
 #: ../includes/functions/functions_db.php:2060 ../edit_interface.php:375
 #: ../edit_interface.php:392 ../edit_interface.php:1990
@@ -7472,7 +7472,7 @@ msgstr "Copia"
 #: ../includes/functions/functions_print_facts.php:935
 #: ../includes/functions/functions_print_facts.php:1226
 msgid "Privacy"
-msgstr "Privacy"
+msgstr ""
 
 #: ../includes/functions/functions_print_facts.php:240
 #: ../includes/functions/functions_print_facts.php:372
@@ -7542,7 +7542,7 @@ msgstr "Telefono"
 #: ../modules/googlemap/googlemap.php:314 ../edit_interface.php:1247
 #: ../help_text.php:766
 msgid "FAX"
-msgstr "FAX"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../includes/functions/functions_print_facts.php:846
@@ -7630,7 +7630,7 @@ msgstr "Sconosciuto"
 #: ../includes/classes/class_note.php:51
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:201
 msgid "…"
-msgstr "…"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:134 ../blocks/user_welcome.php:58
 msgid "My Pedigree"
@@ -7718,7 +7718,7 @@ msgstr "Contenuti"
 
 #: ../includes/classes/class_menubar.php:959
 msgid "Wiki Main Page"
-msgstr "Wiki Main Page"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:963
 msgid "Wiki User's Guide"
@@ -7726,7 +7726,7 @@ msgstr "Wiki Guida per l'utente"
 
 #: ../includes/classes/class_menubar.php:968
 msgid "Wiki Administrator's Guide"
-msgstr "Wiki Administrator's Guide"
+msgstr ""
 
 #: ../includes/classes/class_menubar.php:987 ../help_text.php:4771
 msgid "Hide Contextual Help"
@@ -8131,7 +8131,7 @@ msgstr ""
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
 #: ../includes/session.php:478
 msgid "utf8_unicode_ci"
-msgstr "utf8_unicode_ci"
+msgstr ""
 
 #: ../includes/controllers/family_ctrl.php:179
 #: ../modules/sitemap/index.php:222 ../modules/sitemap/index.php:379
@@ -8342,7 +8342,7 @@ msgstr "Fratellastro"
 #: ../includes/controllers/individual_ctrl.php:853
 #: ../includes/controllers/individual_ctrl.php:854
 msgid "Partner"
-msgstr "Partner"
+msgstr ""
 
 #: ../includes/controllers/individual_ctrl.php:840
 msgid "Ex-Spouse"
@@ -8413,7 +8413,7 @@ msgstr "Gen"
 
 #: ../statisticsplot.php:732
 msgid "Feb"
-msgstr "Feb"
+msgstr ""
 
 #: ../statisticsplot.php:738
 msgid "Aug"
@@ -8429,7 +8429,7 @@ msgstr "Ott"
 
 #: ../statisticsplot.php:741
 msgid "Nov"
-msgstr "Nov"
+msgstr ""
 
 #: ../statisticsplot.php:742
 msgid "Dec"
@@ -8455,7 +8455,7 @@ msgstr "Statistiche del tracciato"
 #: ../statisticsplot.php:931 ../statisticsplot.php:935
 #: ../statisticsplot.php:994
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: ../changelanguage.php:158
 msgid "Add new language"
@@ -9810,11 +9810,11 @@ msgstr ""
 
 #: ../modules/googlemap/places_edit.php:791
 msgid "N"
-msgstr "N"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:792
 msgid "S"
-msgstr "S"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:801
 msgid "E"
@@ -12507,7 +12507,7 @@ msgstr "Avvertenza"
 
 #: ../gedcheck.php:76
 msgid "Info"
-msgstr "Info"
+msgstr ""
 
 #: ../gedcheck.php:112
 msgid "Lines of GEDCOM context"
@@ -12552,7 +12552,7 @@ msgstr "non restituisce il collegamento"
 
 #: ../gedcheck.php:839 ../gedcheck.php:858 ../gedcheck.php:861
 msgid "tag"
-msgstr "tag"
+msgstr ""
 
 #: ../gedcheck.php:906
 msgid "data"
@@ -17176,7 +17176,7 @@ msgstr ""
 
 #: ../help_text.php:5115
 msgid "Menu"
-msgstr "Menu"
+msgstr ""
 
 #: ../help_text.php:5116 ../help_text.php:5120
 msgid "<div class=\"name_head\"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href=\"#menu_fam\">Welcome page</a><br /></li><li><a href=\"#menu_myged\">MyGedView Portal</a><br /></li><li><a href=\"#menu_charts\">Charts</a><br /></li><li><a href=\"#menu_lists\">Lists</a><br /></li><li><a href=\"#menu_annical\">Anniversary Calendar</a><br /></li><li><a href=\"#menu_clip\">Family Tree Clippings Cart</a><br /></li><li><a href=\"#menu_search\">Search</a><br /></li><li><a href=\"#menu_help\">Help</a></li></ul>"
@@ -17939,7 +17939,7 @@ msgstr ""
 
 #: ../help_text.php:5696
 msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr ""
+msgstr "Seleziona i file da caricare nel server dal tuo computer. Tutti i file saranno caricati nella cartella <b>#MEDIA_DIRECTORY#</b> o in una delle sue sottocartelle.<br /><br />I nomi cartella che specificherai saranno aggiunti a #MEDIA_DIRECTORY#. Per esempio, #MEDIA_DIRECTORY#miafamiglia. Se la cartella anteprima non esiste, viene creata automaticamente."
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
@@ -18515,7 +18515,7 @@ msgstr "Aggiungi un GEDCOM da una posizione file"
 
 #: ../blocks/gedcom_news.php:39
 msgid "GEDCOM News"
-msgstr "GEDCOM News"
+msgstr ""
 
 #: ../blocks/gedcom_news.php:40
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
@@ -18523,7 +18523,7 @@ msgstr "Il blocco GEDCOM News mostra al visitatore le notizie o gli articoli ins
 
 #: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
 msgid "News"
-msgstr "News"
+msgstr ""
 
 #: ../blocks/gedcom_news.php:168
 msgid "No limit"
@@ -18597,12 +18597,12 @@ msgstr "Immagine successiva"
 #: ../blocks/random_media.php:204 ../blocks/random_media.php:205
 #: ../blocks/random_media.php:206
 msgid "Play"
-msgstr "Play"
+msgstr ""
 
 #: ../blocks/random_media.php:204 ../blocks/random_media.php:205
 #: ../blocks/random_media.php:206
 msgid "Stop"
-msgstr "Stop"
+msgstr ""
 
 #: ../blocks/random_media.php:346
 msgid "Persons"
