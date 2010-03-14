@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-14 16:51+0000\n"
+"POT-Creation-Date: 2010-03-14 18:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -4886,15 +4886,18 @@ msgid "%s cousin"
 msgstr ""
 
 #: ../relationship.php:314
-msgid "%$1s male cousin, %$2d time removed"
+#, php-format
+msgid "%1$s male cousin, %2$d time removed"
 msgstr ""
 
 #: ../relationship.php:319
-msgid "%$1s female cousin, %$2d time removed"
+#, php-format
+msgid "%1$s female cousin, %2$d time removed"
 msgstr ""
 
 #: ../relationship.php:322
-msgid "%$1s cousin, %$2d time removed"
+#, php-format
+msgid "%1$s cousin"
 msgstr ""
 
 #. I18N: These strings are used to build paths of relationships, such as "father's wife's husband's brother"
@@ -10551,7 +10554,7 @@ msgstr ""
 msgid "Export current view to file"
 msgstr ""
 
-#: ../modules/googlemap/places.php:660
+#: ../modules/googlemap/places.php:660 ../modules/googlemap/help_text.php:126
 msgid "Export all locations to file"
 msgstr ""
 
@@ -10766,14 +10769,17 @@ msgid "Size of map (in pixels)"
 msgstr ""
 
 #: ../modules/googlemap/editconfig.php:235
+#: ../modules/googlemap/help_text.php:222
 msgid "Use Googlemap for Place Hierarchy"
 msgstr ""
 
 #: ../modules/googlemap/editconfig.php:245
+#: ../modules/googlemap/help_text.php:227
 msgid "Size of Place Hierarchy map (in pixels)"
 msgstr ""
 
 #: ../modules/googlemap/editconfig.php:256
+#: ../modules/googlemap/help_text.php:232
 msgid "Type of place markers in Place Hierarchy"
 msgstr ""
 
@@ -10782,6 +10788,7 @@ msgid "Standard"
 msgstr ""
 
 #: ../modules/googlemap/editconfig.php:267
+#: ../modules/googlemap/help_text.php:237
 msgid "Display short placenames"
 msgstr ""
 
@@ -10790,10 +10797,12 @@ msgid "Display indis and families count"
 msgstr ""
 
 #: ../modules/googlemap/editconfig.php:289
+#: ../modules/googlemap/help_text.php:247
 msgid "Use mouse wheel for zoom"
 msgstr ""
 
 #: ../modules/googlemap/editconfig.php:300
+#: ../modules/googlemap/help_text.php:252
 msgid "Hide map controls"
 msgstr ""
 
@@ -10865,7 +10874,7 @@ msgstr "Hijo"
 msgid "No map data for this person"
 msgstr ""
 
-#: ../modules/googlemap/flags.php:46
+#: ../modules/googlemap/flags.php:46 ../modules/googlemap/help_text.php:168
 msgid "Select flag"
 msgstr ""
 
@@ -10877,24 +10886,164 @@ msgstr ""
 msgid "Countries"
 msgstr ""
 
+#: ../modules/googlemap/help_text.php:36
+msgid "Configure Google-map"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:41
+msgid "Enable Google-map"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:46
+msgid "Google-map API key"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:51
+msgid "Google-map type"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:56
+msgid "Google-map size"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:61
+msgid "Google-map zoom factor"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:66
+msgid "Precision of the latitude and longitude"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:71
+msgid "Default value for top-level"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:76
+msgid "This indicates the number of levels used within Googlemap"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:81
+msgid "Prefix for names used on this level"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:86
+msgid "Postfix for names used on this level"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:91
+msgid "Order of the pre/postfix to use"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:96
+msgid "Edit or delete location"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:101
+msgid "Add geographic location"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:106
+msgid "Import geographic locations from GEDCOM"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:111
+msgid "Import geographic locations from all GEDCOMs"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:116
+msgid "Import geographic locations from file"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:121
+msgid "Export locations to file"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:131
+msgid "Display Map Coordinates"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:138
+msgid "Edit Google Map Places"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:143
+msgid "Enter place name"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:148
+msgid "Enter precision"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:153
+msgid "Enter latitude or Longitude"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:158
+msgid "Enter zoom level"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:163
+msgid "Select an icon"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:173
+#: ../modules/googlemap/help_text.php:178
+msgid "Enter filename"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:183
+msgid "Clean placelocation database"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:188
+msgid "Update existing records"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:193
+msgid "Overwrite location data"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:198
+msgid "List inactive places"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:205
+msgid "Place Checking Tool"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:210
+msgid "Place Check - List Filtering Optons"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:215
+msgid "Include matched places"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:242
+msgid "Display indis and families counts"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:259
+#: ../modules/googlemap/pedigree_map.php:169 ../help_text.php:3260
+msgid "Cluster Size"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:264
+#: ../modules/googlemap/pedigree_map.php:178 ../help_text.php:3270
+msgid "Hide lines"
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:269
+#: ../modules/googlemap/pedigree_map.php:173 ../help_text.php:3265
+msgid "Hide flags"
+msgstr ""
+
 #: ../modules/googlemap/pedigree_map.php:137
 msgid "for"
 msgstr ""
 
 #: ../modules/googlemap/pedigree_map.php:158
 msgid "Pedigree Chart Options"
-msgstr ""
-
-#: ../modules/googlemap/pedigree_map.php:169 ../help_text.php:3260
-msgid "Cluster Size"
-msgstr ""
-
-#: ../modules/googlemap/pedigree_map.php:173 ../help_text.php:3265
-msgid "Hide flags"
-msgstr ""
-
-#: ../modules/googlemap/pedigree_map.php:178 ../help_text.php:3270
-msgid "Hide lines"
 msgstr ""
 
 #: ../modules/googlemap/pedigree_map.php:332
@@ -11069,6 +11218,30 @@ msgstr ""
 
 #: ../modules/sitemap/index.php:433
 msgid "Generate"
+msgstr ""
+
+#: ../modules/sitemap/help_text.php:35
+msgid "Sitemap information"
+msgstr ""
+
+#: ../modules/sitemap/help_text.php:36
+msgid "This module generates Sitemap files for use by search engines. Currently, only the Google search engine supports Sitemap files.<br /><br />There is a Sitemap file for each GEDCOM on your site, and when your site has more than one GEDCOM there is also an index Sitemap file that points to each of the GEDCOMs.  The Sitemap files contain links to pages of your site that you want the search engine to index.<br /><br />After this module has generated the Sitemap files, you should inspect them and make whatever changes are necessary.  You should copy these files to the server directory where PhpGedView is installed, and then log into the <a href=\\\"https://www.google.com/webmasters/sitemaps/\\\" target=\\\"_blank\\\">Google webmaster tools</a> site to make Google aware of their presence.<br /><br />For more information on Google and Sitemap files, visit the <a href=\\\"https://www.google.com/webmasters/sitemaps/docs/en/about.html\\\" target=\\\"_blank\\\">Google webmaster tools</a> site."
+msgstr ""
+
+#: ../modules/sitemap/help_text.php:40
+msgid "Select GEDCOMs"
+msgstr ""
+
+#: ../modules/sitemap/help_text.php:41
+msgid "Select the GEDCOMs for which you want to create a Sitemap file. You must select at least one.<br /><br />When the <b>No links to private information</b> option is selected, only links to data that is publicly available will be included."
+msgstr ""
+
+#: ../modules/sitemap/help_text.php:45
+msgid "Select items"
+msgstr ""
+
+#: ../modules/sitemap/help_text.php:46
+msgid "Select the elements to be included in the Sitemap file.<br /><br />A priority can be specified for all selected elements. This priority is relative to the other priorities in the file.  The update frequency can also be specified. This is an indication of how frequently the data in these items might change. This can influence the time between visits by the search engine, and thus will influence the amount of traffic the site generates."
 msgstr ""
 
 #: ../modules/all_tab/pgv_module.php:50
