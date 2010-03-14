@@ -27,4 +27,4 @@ default: $(MO)
 # (b) to update an existing .PO file with new msgid strings
 ################################################################################
 $(POT): $(PHP) Makefile
-	xgettext --package-name=$(PACKAGE) --package-version=1.0 --msgid-bugs-address=i18n@webtrees.net --output=$@ --no-wrap --language=PHP --add-comments=I18N --from-code=utf-8 --keyword --keyword=translate --keyword=plural --keyword=noop $(PHP)
+	xgettext --package-name=$(PACKAGE) --package-version=1.0 --msgid-bugs-address=i18n@webtrees.net --output=$@ --no-wrap --language=PHP --add-comments=I18N --from-code=utf-8 --keyword --keyword=translate --keyword=plural:1,2 --keyword=noop $(PHP)

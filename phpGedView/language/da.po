@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-14 18:58+0000\n"
+"POT-Creation-Date: 2010-03-14 19:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -4887,17 +4887,23 @@ msgstr ""
 #: ../relationship.php:314
 #, php-format
 msgid "%1$s male cousin, %2$d time removed"
-msgstr ""
+msgid_plural "%1$s male cousin, %2$d times removed"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../relationship.php:319
 #, php-format
 msgid "%1$s female cousin, %2$d time removed"
-msgstr ""
+msgid_plural "%1$s female cousin, %2$d times removed"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../relationship.php:322
 #, php-format
 msgid "%1$s cousin"
-msgstr ""
+msgid_plural "%2$d time removed"
+msgstr[0] ""
+msgstr[1] ""
 
 #. I18N: These strings are used to build paths of relationships, such as "father's wife's husband's brother"
 #: ../relationship.php:350
@@ -8664,12 +8670,16 @@ msgstr "Ingen logget ind og ingen anonyme brugere"
 #: ../includes/classes/class_stats.php:3647 ../blocks/logged_in.php:86
 #, php-format
 msgid "%d anonymous logged-in user"
-msgstr ""
+msgid_plural "%d anonymous logged-in users"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../includes/classes/class_stats.php:3657 ../blocks/logged_in.php:89
 #, php-format
 msgid "%d logged-in user"
-msgstr ""
+msgid_plural "%d logged-in users"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../includes/classes/class_treenav.php:171
 msgid "View this tree in the full page interactive tree"
@@ -8852,25 +8862,33 @@ msgstr ""
 #: ../includes/classes/class_i18n.php:168
 #, php-format
 msgid "%d year"
-msgstr ""
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
 
 #. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
 #: ../includes/classes/class_i18n.php:174
 #, php-format
 msgid "%d month"
-msgstr ""
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
 
 #. I18N: Part of an age string. e.g 7 weeks and 3 days
 #: ../includes/classes/class_i18n.php:178
 #, php-format
 msgid "%d week"
-msgstr ""
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
 
 #. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
 #: ../includes/classes/class_i18n.php:182
 #, php-format
 msgid "%d day"
-msgstr ""
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged less than 21 years)
 #: ../includes/classes/class_i18n.php:191
@@ -8959,32 +8977,44 @@ msgstr ""
 #: ../includes/classes/class_i18n.php:241
 #, php-format
 msgid "%d year ago"
-msgstr ""
+msgid_plural "%d years ago"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../includes/classes/class_i18n.php:244
 #, php-format
 msgid "%d month ago"
-msgstr ""
+msgid_plural "%d months ago"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../includes/classes/class_i18n.php:247
 #, php-format
 msgid "%d day ago"
-msgstr ""
+msgid_plural "%d days ago"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../includes/classes/class_i18n.php:250
 #, php-format
 msgid "%d hour ago"
-msgstr ""
+msgid_plural "%d hours ago"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../includes/classes/class_i18n.php:253
 #, php-format
 msgid "%d minute ago"
-msgstr ""
+msgid_plural "%d minutes ago"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../includes/classes/class_i18n.php:255
 #, php-format
 msgid "%d second ago"
-msgstr ""
+msgid_plural "%d seconds ago"
+msgstr[0] ""
+msgstr[1] ""
 
 #. I18N: This is the name of the MySQL collation that applies to your language.  A list is available at http://dev.mysql.com/doc/refman/5.0/en/charset-unicode-sets.html
 #: ../includes/session.php:478
@@ -19427,8 +19457,11 @@ msgstr ""
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_givnnames.php:82
+#, php-format
 msgid "Top Given Names"
-msgstr ""
+msgid_plural "Top %d Given Names"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../blocks/top10_givnnames.php:135 ../blocks/top10_pageviews.php:135
 #: ../blocks/top10_surnames.php:148
@@ -19589,8 +19622,11 @@ msgstr ""
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
+#, php-format
 msgid "Top Surnames"
-msgstr ""
+msgid_plural "Top %d Surnames"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../blocks/logged_in.php:39
 msgid "Logged In Users"
