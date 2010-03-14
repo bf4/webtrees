@@ -163,19 +163,19 @@ if (!$controller->isPrintPreview()) {
 					<?php echo i18n::translate('Root Person ID'), help_link('rootid'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS'); ?>
+					<?php echo i18n::translate('Generations'), help_link('PEDIGREE_GENERATIONS','googlemap'); ?>
 				</td>
 				<td class="descriptionbox wrap">
-					<?php echo i18n::translate('Cluster Size'), help_link('PEDIGREE_MAP_clustersize'); ?>
+					<?php echo i18n::translate('Cluster Size'), help_link('PEDIGREE_MAP_clustersize','googlemap'); ?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					echo i18n::translate('Hide flags'), help_link('PEDIGREE_MAP_hideflags');
+					echo i18n::translate('Hide flags'), help_link('PEDIGREE_MAP_hideflags','googlemap');
 					?>
 				</td>
 				<td class="descriptionbox wrap">
 					<?php
-					echo i18n::translate('Hide lines'), help_link('PEDIGREE_MAP_hidelines');
+					echo i18n::translate('Hide lines'), help_link('PEDIGREE_MAP_hidelines','googlemap');
 					?>
 				</td>
 			</tr>
