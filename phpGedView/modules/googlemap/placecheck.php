@@ -116,9 +116,9 @@ if (!isset ($_POST["matching"])) {$matching=0;} else {$matching=1;}
 echo "<td>";
 echo "<table>";
 echo "<tr><td colspan='2' class='descriptionbox' align='center'>";
-echo "<strong>", i18n::translate('List filtering options'), "</strong>", help_link('PLACECHECK_FILTER');
+echo "<strong>", i18n::translate('List filtering options'), "</strong>", help_link('PLACECHECK_FILTER','googlemap');
 echo "</td></tr><tr><td class='descriptionbox'>";
-echo i18n::translate('Include fully matched places: '), help_link('PLACECHECK_MATCH');
+echo i18n::translate('Include fully matched places: '), help_link('PLACECHECK_MATCH','googlemap');
 echo "</td><td class='optionbox'><input type=\"checkbox\" name=\"matching\" value=\"active\"";
 if($matching==1) {
 	echo " checked=\"checked\"";
