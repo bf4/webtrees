@@ -702,7 +702,7 @@ if (check_media_structure()) {
 					// Remove media object from gedcom
 					if (delete_gedrec($xref)) {
 						echo i18n::translate('Record %s successfully removed from GEDCOM.', $xref);
-						AddToChangeLog("Record $xref successfully removed from GEDCOM.);
+						AddToChangeLog("Record $xref successfully removed from GEDCOM.");
 					} else {
 						$finalResult = false;
 						print "<span class=\"error\">";
