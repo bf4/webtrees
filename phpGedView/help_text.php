@@ -3113,7 +3113,7 @@ case 'LINK_ICONS':
 
 case 'LOG_LANG_ERROR':
 	$title=i18n::translate('Logfile for Language Errors');
-	$text=i18n::translate('');
+	$text='';
 	break;
 
 case 'LOGFILE_CREATE':
