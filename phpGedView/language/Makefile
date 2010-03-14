@@ -16,6 +16,7 @@ default: $(MO)
 # Merge new msgid strings into the existing .PO files
 ################################################################################
 %.po: $(POT)
+	msguniq --output-file=$@ --unique --use-first --no-wrap $@
 	msgmerge --update --no-wrap --silent --backup=none $@ $(POT)
 	touch $@
 
