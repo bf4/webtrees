@@ -34,411 +34,315 @@ require './config.php';
 require_once PGV_ROOT.'includes/functions/functions_charts.php';
 require_once PGV_ROOT.'includes/classes/class_person.php';
 
-function getRelationshipSentence($node, $pid1, $pid2) {
-	global $pgv_lang, $lang_short_cut, $LANGUAGE, $path_to_find;
-	$relationshipDescription = false;
-	$sentence = false;
-	$started = false;
-	$finished = false;
-	$numberOfSiblings = 0;
-	$generationsOlder = 0;
-	$generationsYounger = 0;
-	$sosa = 1;
-	$bosa = 1;
-	$numberOfSpouses = 0;
-	$lastRelationshipIsSpouse = false;
-	$lastRelationshipIsSibling = false;
-	$lastRelationshipButOneIsSibling = false;
-	$checkFirstRelationship = false;
-	$firstRelationshipIsSpouse = false;
-	$siblingIsSister = false;
+function getRelationshipSentence($path, $pid1, $pid2) {
+	// Look for paths with *specific* names first.
+	// Note that every combination must be listed separately, as the same english
+	// name can be used for many different relationships.  e.g.
+	// brother's wife & husband's sister = sister-in-law.
+	//
+	// For this reason, we need to use a "generic" english relationships,
+	// which will need translating into specific english relationships, even
+	// for english.
+	//
+	// $path is an array of the 12 possible gedcom family relationships:
+	// mother/father/parent
+	// brother/sister/sibling
+	// husband/wife/spouse
+	// son/daughter/child
+	//
+	// This is always the shortest path, so "father, daughter" is "half-sister", not "sister".
+	//
+	// This is very repetitive in english, but necessary in order to handle the
+	// complexities of other languages.
+	//
+	// TODO: handle unmarried partners, so need male-partner, female-partner, unknown-partner
 
-	// sanity check - helps to prevent the possibility of recursing too deeply
-	if($pid1 == $pid2)
-		return false;
+	// Make each relationship parts the same length, for simpler matching.
+	$combined_path='';
+	foreach ($path as $rel) {
+		$combined_path.=substr($rel, 0, 3);
+	}
+	switch ($combined_path) {
+	//  Level One relationships
+	case 'mot': return i18n::translate('mother');
+	case 'fat': return i18n::translate('father');
+	case 'par': return i18n::translate('parent');
+	case 'hus': return i18n::translate('husband');
+	case 'wif': return i18n::translate('wife');
+	case 'spo': return i18n::translate('spouse');
+	case 'bro': return i18n::translate('brother'); // TODO: elder-brother, younger-brother, twin-brother
+	case 'sis': return i18n::translate('sister');  // TODO: elder-sister,  younger-sister,  twin-sister
+	case 'sib': return i18n::translate('sibling');
+	case 'son': return i18n::translate('son');
+	case 'dau': return i18n::translate('daughter');
+	case 'chi': return i18n::translate('child');
+	
+	// Level Two relationships
+	case 'motmot':  return /* I18N: grandmother */ i18n::translate('mother\'s mother');
+	case 'motfat':  return /* I18N: grandfather */ i18n::translate('mother\'s father');
+	case 'motpar':  return /* I18N: grandparent */ i18n::translate('mother\'s parent');
+	case 'fatmot':  return /* I18N: grandmother */ i18n::translate('father\'s mother');
+	case 'fatfat':  return /* I18N: grandfather */ i18n::translate('father\'s father');
+	case 'fatpar':  return /* I18N: grandparent */ i18n::translate('father\'s parent');
+	case 'parmot':  return /* I18N: grandmother */ i18n::translate('parent\'s mother');
+	case 'parfat':  return /* I18N: grandfather */ i18n::translate('parent\'s father');
+	case 'parpar':  return /* I18N: grandparent */ i18n::translate('parent\'s parent');
 
-	foreach($node["path"] as $index=>$pid) {
-		// only start looking for relationships from the first pid passed in
-		if($pid == $pid1) {
-			$started = true;
-			$checkFirstRelationship = true;
-					continue;
-		}
-		if($started) {
-			$lastRelationshipIsSpouse = false;
-			$lastRelationshipButOneIsSibling = $lastRelationshipIsSibling;
-			$lastRelationshipIsSibling = false;
-			// look to see if we can find a relationship
-			switch ($node["relations"][$index]) {
-			case "self":
-				break;
-			case "sister":
-				$siblingIsSister = true;
-			case "brother":
-				$numberOfSiblings++;
-				$lastRelationshipIsSibling = true;
-				break;
-			case "mother":
-				$generationsOlder++;
-				$sosa = $sosa * 2 + 1;
-				break;
-			case "father":
-				$generationsOlder++;
-				$sosa = $sosa * 2;
-				break;
-			case "son":
-				$generationsYounger++;
-				$bosa = $bosa * 2;
-				break;
-			case "daughter":
-				$generationsYounger++;
-				$bosa = $bosa * 2 + 1;
-				break;
-			case "husband":
-			case "wife":
-				$numberOfSpouses++;
-				$lastRelationshipIsSpouse = true;
-				if($checkFirstRelationship) {
-					$firstRelationshipIsSpouse = true;
-				}
-				break;
-			}
-			$checkFirstRelationship = false;
-		}
-		if($pid == $pid2) {
-			// we have found the second individual - look no further
-			$finished = true;
-			break;
-		}
-	}
-	// sanity check
-	if(!$started || !$finished) {
-		// passed in pid's are not found in the array!!!
-		return false;
+	case 'daumot':  return /* I18N: granddaughter */ i18n::translate('daughter\'s daughter');
+	case 'dauson':  return /* I18N: grandson      */ i18n::translate('daughter\'s son');
+	case 'dauchi':  return /* I18N: grandchild    */ i18n::translate('daughter\'s child');
+	case 'sondau':  return /* I18N: granddaughter */ i18n::translate('son\'s daughter');
+	case 'sonfat':  return /* I18N: grandson      */ i18n::translate('son\'s son');
+	case 'sonchi':  return /* I18N: grandchild    */ i18n::translate('son\'s child');
+	case 'chidau':  return /* I18N: granddaughter */ i18n::translate('child\'s daughter');
+	case 'chison':  return /* I18N: grandson      */ i18n::translate('child\'s son');
+	case 'chichi':  return /* I18N: grandchild    */ i18n::translate('child\'s child');
+
+	case 'mothus': return /* I18N: step-father */ i18n::translate('mother\'s husband');
+	case 'mothus': return /* I18N: step-father */ i18n::translate('mother\'s husband');
+	case 'fatwif': return /* I18N: step-mother */ i18n::translate('father\'s wife');
+	case 'fatwif': return /* I18N: step-mother */ i18n::translate('father\'s wife');
+	case 'parspo': return /* I18N: step-parent */ i18n::translate('parent\'s spouse');
+	case 'parspo': return /* I18N: step-parent */ i18n::translate('parent\'s spouse');
+
+	case 'motson': return /* I18N: half-brother */ i18n::translate('mother\'s son');
+	case 'motdau': return /* I18N: half-sister  */ i18n::translate('mother\'s daughter');
+	case 'motchi': return /* I18N: half-sibling */ i18n::translate('mother\'s child');
+	case 'fatson': return /* I18N: half-brother */ i18n::translate('father\'s son');
+	case 'fatdau': return /* I18N: half-sister  */ i18n::translate('father\'s daughter');
+	case 'fatchi': return /* I18N: half-sibling */ i18n::translate('father\'s child');
+	case 'parson': return /* I18N: half-brother */ i18n::translate('parent\'s son');
+	case 'pardau': return /* I18N: half-sister  */ i18n::translate('parent\'s daughter');
+	case 'parchi': return /* I18N: half-sibling */ i18n::translate('parent\'s child');
+
+	case 'motsis': return /* I18N: aunt        */ i18n::translate('mother\'s sister');
+	case 'motbro': return /* I18N: uncle       */ i18n::translate('mother\'s brother');
+	case 'motsib': return /* I18N: aunt/uncle  */ i18n::translate('mother\'s sibling');
+	case 'fatsis': return /* I18N: aunt        */ i18n::translate('father\'s sister');
+	case 'fatbro': return /* I18N: uncle       */ i18n::translate('father\'s brother');
+	case 'fatsib': return /* I18N: aunt/uncle  */ i18n::translate('father\'s sibling');
+	case 'parsis': return /* I18N: aunt        */ i18n::translate('parent\'s sister');
+	case 'parbro': return /* I18N: uncle       */ i18n::translate('parent\'s brother');
+	case 'parsib': return /* I18N: aunt/uncle  */ i18n::translate('parent\'s sibling');
+
+	// Level Three relationships
+	case 'motmotmot': return /* I18N: great-grandmother */ i18n::translate('mother\'s mother\'s mother');
+	case 'motmotfat': return /* I18N: great-grandfather */ i18n::translate('mother\'s mother\'s father');
+	case 'motmotpar': return /* I18N: great-grandparent */ i18n::translate('mother\'s mother\'s parent');
+	case 'motfatmot': return /* I18N: great-grandmother */ i18n::translate('mother\'s father\'s mother');
+	case 'motfatfat': return /* I18N: great-grandfather */ i18n::translate('mother\'s father\'s father');
+	case 'motfatpar': return /* I18N: great-grandparent */ i18n::translate('mother\'s father\'s parent');
+	case 'motparmot': return /* I18N: great-grandmother */ i18n::translate('mother\'s parent\'s mother');
+	case 'motparfat': return /* I18N: great-grandfather */ i18n::translate('mother\'s parent\'s father');
+	case 'motparpar': return /* I18N: great-grandparent */ i18n::translate('mother\'s parent\'s parent');
+	case 'fatmotmot': return /* I18N: great-grandmother */ i18n::translate('father\'s mother\'s mother');
+	case 'fatmotfat': return /* I18N: great-grandfather */ i18n::translate('father\'s mother\'s father');
+	case 'fatmotpar': return /* I18N: great-grandparent */ i18n::translate('father\'s mother\'s parent');
+	case 'fatfatmot': return /* I18N: great-grandmother */ i18n::translate('father\'s father\'s mother');
+	case 'fatfatfat': return /* I18N: great-grandfather */ i18n::translate('father\'s father\'s father');
+	case 'fatfatpar': return /* I18N: great-grandparent */ i18n::translate('father\'s father\'s parent');
+	case 'fatparmot': return /* I18N: great-grandmother */ i18n::translate('father\'s parent\'s mother');
+	case 'fatparfat': return /* I18N: great-grandfather */ i18n::translate('father\'s parent\'s father');
+	case 'fatparpar': return /* I18N: great-grandparent */ i18n::translate('father\'s parent\'s parent');
+	case 'parmotmot': return /* I18N: great-grandmother */ i18n::translate('parent\'s mother\'s mother');
+	case 'parmotfat': return /* I18N: great-grandfather */ i18n::translate('parent\'s mother\'s father');
+	case 'parmotpar': return /* I18N: great-grandparent */ i18n::translate('parent\'s mother\'s parent');
+	case 'parfatmot': return /* I18N: great-grandmother */ i18n::translate('parent\'s father\'s mother');
+	case 'parfatfat': return /* I18N: great-grandfather */ i18n::translate('parent\'s father\'s father');
+	case 'parfatpar': return /* I18N: great-grandparent */ i18n::translate('parent\'s father\'s parent');
+	case 'parparmot': return /* I18N: great-grandmother */ i18n::translate('parent\'s parent\'s mother');
+	case 'parparfat': return /* I18N: great-grandfather */ i18n::translate('parent\'s parent\'s father');
+	case 'parparpar': return /* I18N: great-grandparent */ i18n::translate('parent\'s parent\'s parent');
+
+	case 'motmotsis': return /* I18N: great-aunt        */ i18n::translate('mother\'s mother\'s sister');
+	case 'motmotbro': return /* I18N: great-uncle       */ i18n::translate('mother\'s mother\'s brother');
+	case 'motmotsib': return /* I18N: great-aunt/uncle  */ i18n::translate('mother\'s mother\'s sibling');
+	case 'motfatsis': return /* I18N: great-aunt        */ i18n::translate('mother\'s father\'s sister');
+	case 'motfatbro': return /* I18N: great-uncle       */ i18n::translate('mother\'s father\'s brother');
+	case 'motfatsib': return /* I18N: great-aunt/uncle  */ i18n::translate('mother\'s father\'s sibling');
+	case 'motparsis': return /* I18N: great-aunt        */ i18n::translate('mother\'s parent\'s sister');
+	case 'motparbro': return /* I18N: great-uncle       */ i18n::translate('mother\'s parent\'s brother');
+	case 'motparsib': return /* I18N: great-aunt/uncle  */ i18n::translate('mother\'s parent\'s sibling');
+	case 'fatmotsis': return /* I18N: great-aunt        */ i18n::translate('father\'s mother\'s sister');
+	case 'fatmotbro': return /* I18N: great-uncle       */ i18n::translate('father\'s mother\'s brother');
+	case 'fatmotsib': return /* I18N: great-aunt/uncle  */ i18n::translate('father\'s mother\'s sibling');
+	case 'fatfatsis': return /* I18N: great-aunt        */ i18n::translate('father\'s father\'s sister');
+	case 'fatfatbro': return /* I18N: great-uncle       */ i18n::translate('father\'s father\'s brother');
+	case 'fatfatsib': return /* I18N: great-aunt/uncle  */ i18n::translate('father\'s father\'s sibling');
+	case 'fatparsis': return /* I18N: great-aunt        */ i18n::translate('father\'s parent\'s sister');
+	case 'fatparbro': return /* I18N: great-uncle       */ i18n::translate('father\'s parent\'s brother');
+	case 'fatparsib': return /* I18N: great-aunt/uncle  */ i18n::translate('father\'s parent\'s sibling');
+	case 'parmotsis': return /* I18N: great-aunt        */ i18n::translate('parent\'s mother\'s sister');
+	case 'parmotbro': return /* I18N: great-uncle       */ i18n::translate('parent\'s mother\'s brother');
+	case 'parmotsib': return /* I18N: great-aunt/uncle  */ i18n::translate('parent\'s mother\'s sibling');
+	case 'parfatsis': return /* I18N: great-aunt        */ i18n::translate('parent\'s father\'s sister');
+	case 'parfatbro': return /* I18N: great-uncle       */ i18n::translate('parent\'s father\'s brother');
+	case 'parfatsib': return /* I18N: great-aunt/uncle  */ i18n::translate('parent\'s father\'s sibling');
+	case 'parparsis': return /* I18N: great-aunt        */ i18n::translate('parent\'s parent\'s sister');
+	case 'parparbro': return /* I18N: great-uncle       */ i18n::translate('parent\'s parent\'s brother');
+	case 'parparsib': return /* I18N: great-aunt/uncle  */ i18n::translate('parent\'s parent\'s sibling');
+
+	case 'daudaudau': return /* I18N: great-granddaughter */ i18n::translate('daughter\'s daughter\'s daughter');
+	case 'daudauson': return /* I18N: great-grandson      */ i18n::translate('daughter\'s daughter\'s son');
+	case 'daudauchi': return /* I18N: great-grandchild    */ i18n::translate('daughter\'s daughter\'s child');
+	case 'dausondau': return /* I18N: great-granddaughter */ i18n::translate('daughter\'s son\'s daughter');
+	case 'dausonson': return /* I18N: great-grandson      */ i18n::translate('daughter\'s son\'s son');
+	case 'dausonchi': return /* I18N: great-grandchild    */ i18n::translate('daughter\'s son\'s child');
+	case 'dauchidau': return /* I18N: great-granddaughter */ i18n::translate('daughter\'s child\'s daughter');
+	case 'dauchison': return /* I18N: great-grandson      */ i18n::translate('daughter\'s child\'s son');
+	case 'dauchichi': return /* I18N: great-grandchild    */ i18n::translate('daughter\'s child\'s child');
+	case 'sondaudau': return /* I18N: great-granddaughter */ i18n::translate('son\'s daughter\'s daughter');
+	case 'sondauson': return /* I18N: great-grandson      */ i18n::translate('son\'s daughter\'s son');
+	case 'sondauchi': return /* I18N: great-grandchild    */ i18n::translate('son\'s daughter\'s child');
+	case 'sonsondau': return /* I18N: great-granddaughter */ i18n::translate('son\'s son\'s daughter');
+	case 'sonsonson': return /* I18N: great-grandson      */ i18n::translate('son\'s son\'s son');
+	case 'sonsonchi': return /* I18N: great-grandchild    */ i18n::translate('son\'s son\'s child');
+	case 'sonchidau': return /* I18N: great-granddaughter */ i18n::translate('son\'s child\'s daughter');
+	case 'sonchison': return /* I18N: great-grandson      */ i18n::translate('son\'s child\'s son');
+	case 'sonchichi': return /* I18N: great-grandchild    */ i18n::translate('son\'s child\'s child');
+	case 'chidaudau': return /* I18N: great-granddaughter */ i18n::translate('child\'s daughter\'s daughter');
+	case 'chidauson': return /* I18N: great-grandson      */ i18n::translate('child\'s daughter\'s son');
+	case 'chidauchi': return /* I18N: great-grandchild    */ i18n::translate('child\'s daughter\'s child');
+	case 'chisondau': return /* I18N: great-granddaughter */ i18n::translate('child\'s son\'s daughter');
+	case 'chisonson': return /* I18N: great-grandson      */ i18n::translate('child\'s son\'s son');
+	case 'chisonchi': return /* I18N: great-grandchild    */ i18n::translate('child\'s son\'s child');
+	case 'chichidau': return /* I18N: great-granddaughter */ i18n::translate('child\'s child\'s daughter');
+	case 'chichison': return /* I18N: great-grandson      */ i18n::translate('child\'s child\'s son');
+	case 'chichichi': return /* I18N: great-grandchild    */ i18n::translate('child\'s child\'s child');
+
+	case 'mothusson': return /* I18N: step-brother */ i18n::translate('mother\'s husband\'s son');
+	case 'mothusdau': return /* I18N: step-sister  */ i18n::translate('mother\'s husband\'s daughter');
+	case 'mothuschi': return /* I18N: step-sibling */ i18n::translate('mother\'s husband\'s child');
+	case 'fatwifson': return /* I18N: step-brother */ i18n::translate('father\'s wife\'s son');
+	case 'fatwifdau': return /* I18N: step-sister  */ i18n::translate('father\'s wife\'s daughter');
+	case 'fatwifchi': return /* I18N: step-sibling */ i18n::translate('father\'s wife\'s child');
+	case 'parsposon': return /* I18N: step-brother */ i18n::translate('parent\'s spouse\'s son');
+	case 'parspodau': return /* I18N: step-sister  */ i18n::translate('parent\'s spouse\'s daughter');
+	case 'parspochi': return /* I18N: step-sibling */ i18n::translate('parent\'s spouse\'s child');
+
+	case 'motmotsis': return /* I18N: great-aunt        */ i18n::translate('mother\'s mother\'s sister');
+	case 'motmotbro': return /* I18N: great-uncle       */ i18n::translate('mother\'s mother\'s brother');
+	case 'motmotsib': return /* I18N: great-aunt/uncle  */ i18n::translate('mother\'s mother\'s sibling');
+	case 'motfatsis': return /* I18N: great-aunt        */ i18n::translate('mother\'s father\'s sister');
+	case 'motfatbro': return /* I18N: great-uncle       */ i18n::translate('mother\'s father\'s brother');
+	case 'motfatsib': return /* I18N: great-aunt/uncle  */ i18n::translate('mother\'s father\'s sibling');
+	case 'motparsis': return /* I18N: great-aunt        */ i18n::translate('mother\'s parent\'s sister');
+	case 'motparbro': return /* I18N: great-uncle       */ i18n::translate('mother\'s parent\'s brother');
+	case 'motparsib': return /* I18N: great-aunt/uncle  */ i18n::translate('mother\'s parent\'s sibling');
+	case 'fatmotsis': return /* I18N: great-aunt        */ i18n::translate('father\'s mother\'s sister');
+	case 'fatmotbro': return /* I18N: great-uncle       */ i18n::translate('father\'s mother\'s brother');
+	case 'fatmotsib': return /* I18N: great-aunt/uncle  */ i18n::translate('father\'s mother\'s sibling');
+	case 'fatfatsis': return /* I18N: great-aunt        */ i18n::translate('father\'s father\'s sister');
+	case 'fatfatbro': return /* I18N: great-uncle       */ i18n::translate('father\'s father\'s brother');
+	case 'fatfatsib': return /* I18N: great-aunt/uncle  */ i18n::translate('father\'s father\'s sibling');
+	case 'fatparsis': return /* I18N: great-aunt        */ i18n::translate('father\'s parent\'s sister');
+	case 'fatparbro': return /* I18N: great-uncle       */ i18n::translate('father\'s parent\'s brother');
+	case 'fatparsib': return /* I18N: great-aunt/uncle  */ i18n::translate('father\'s parent\'s sibling');
+	case 'parmotsis': return /* I18N: great-aunt        */ i18n::translate('parent\'s mother\'s sister');
+	case 'parmotbro': return /* I18N: great-uncle       */ i18n::translate('parent\'s mother\'s brother');
+	case 'parmotsib': return /* I18N: great-aunt/uncle  */ i18n::translate('parent\'s mother\'s sibling');
+	case 'parfatsis': return /* I18N: great-aunt        */ i18n::translate('parent\'s father\'s sister');
+	case 'parfatbro': return /* I18N: great-uncle       */ i18n::translate('parent\'s father\'s brother');
+	case 'parfatsib': return /* I18N: great-aunt/uncle  */ i18n::translate('parent\'s father\'s sibling');
+	case 'parparsis': return /* I18N: great-aunt        */ i18n::translate('parent\'s parent\'s sister');
+	case 'parparbro': return /* I18N: great-uncle       */ i18n::translate('parent\'s parent\'s brother');
+	case 'parparsib': return /* I18N: great-aunt/uncle  */ i18n::translate('parent\'s parent\'s sibling');
+
 	}
 
-	$person1 = find_person_record($pid1, PGV_GED_ID);
-	$person2 = find_person_record($pid2, PGV_GED_ID);
-	$mf = "NN";
-	if (strpos($person2, "1 SEX F")!==false) $mf="F";
-	if (strpos($person2, "1 SEX M")!==false) $mf="M";
-
-	// now look to see if we can find some text to describe the relationship
-	//check if relationship is parent
-	if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 0 && $generationsYounger == 0) {
-		// check for spouse
-		if ($mf=="F") {
-			if (isset(i18n::translate('Wife')))
-				$relationshipDescription = i18n::translate('Wife');
-		}
-		else {
-			if (isset(i18n::translate('Husband')))
-				$relationshipDescription = i18n::translate('Husband');
+	// Look for generic/pattern relationships.
+	// TODO: these are heavily based on english relationship names.
+	// We need feedback from other languages to improve this.
+	if (preg_match('/^((?:mot|fat|par)*)(bro|sis|sib)$/', $combined_path, $match)) {
+		$up=strlen($match[1])/3;
+		$last=substr($combined_path, -3, 3);
+		switch($last) {
+		case 'bro': return i18n::translate('great x %d aunt',       $up-1);
+		case 'sis': return i18n::translate('great x %d uncle',      $up-1);
+		case 'sib': return i18n::translate('great x %d aunt/uncle', $up-1);
 		}
 	}
-	//check if relationship is parent in law or step parent
-	else if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 1 && $generationsYounger == 0) {
-		// is this an in-law relationship?
-		if(!$lastRelationshipIsSpouse) {
-			if (isset(i18n::translate('Mother-in-law')) && $mf=="F") {
-				$relationshipDescription = i18n::translate('Mother-in-law');
-			}
-			else if (isset(i18n::translate('Father-in-law'))) {
-				$relationshipDescription = i18n::translate('Father-in-law');
-			}
-		}
-		else {
-			// step relationship
-			if (isset(i18n::translate('Step-Mother')) && $mf=="F") {
-				if (!empty($firstRelationshipIsSpouse) || $path_to_find>0) {
-					$relationshipDescription = i18n::translate('Mother');
-				}
-				else {
-					$relationshipDescription = i18n::translate('Step-Mother');
-				}
-			}
-			else if (isset(i18n::translate('Step-Father'))) {
-				if (!empty($firstRelationshipIsSpouse) || $path_to_find>0) {
-					$relationshipDescription = i18n::translate('Father');
-				}
-				else {
-					$relationshipDescription = i18n::translate('Step-Father');
-				}
+	if (preg_match('/^((?:mot|fat|par)*)(?:bro|sis|sib)((?:son|dau|chi)*)$/', $combined_path, $match)) {
+		$up  =strlen($match[1])/3;
+		$down=strlen($match[2])/3;
+		$last=substr($combined_path, -3, 3);
+		if ($down==0) {
+			switch($last) {
+			case 'mot': return i18n::translate('great x %d grandmother', $up-2);
+			case 'fat': return i18n::translate('great x %d grandfather', $up-2);
+			case 'par': return i18n::translate('great x %d grandparent', $up-2);
 			}
 		}
-	}
-	//checks for brother in law, sister in law realtionships
-	else if ($numberOfSpouses == 1 && $numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder == 0) {
-		if (isset(i18n::translate('Sister-in-law')) && $mf=="F") {
-			if (in_arrayr("brother", $node)) {
-				$relationshipDescription = i18n::translate('Sister-in-law');
-			}
-			else {
-				$relationshipDescription = i18n::translate('Sister-in-law');
+		if ($up==0) {
+			switch($last) {
+			case 'son': return i18n::translate('great x %d grandson',      $down-2);
+			case 'dau': return i18n::translate('great x %d granddaughter', $down-2);
+			case 'chi': return i18n::translate('great x %d grandchild',    $down-2);
 			}
 		}
-		else if (isset(i18n::translate('Brother-in-law'))) {
-			$relationshipDescription = i18n::translate('Brother-in-law');
-		}
-	}
-	//check if relationship is child in law
-	else if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 0 && $generationsYounger == 1) {
-		// is this an in-law relationship?
-		if($lastRelationshipIsSpouse) {
-			if (isset(i18n::translate('Daughter-in-law')) && $mf=="F") {
-				$relationshipDescription = i18n::translate('Daughter-in-law');
+		// Cousins.  http://en.wikipedia.org/wiki/File:CousinTree.svg
+		if ($up==$down) {
+			switch($last) {
+			case 'son': return i18n::translate('%s male cousin',   i18n::ordinal_word($up-1));
+			case 'dau': return i18n::translate('%s female cousin', i18n::ordinal_word($up-1));
+			case 'chi': return i18n::translate('%s cousin',        i18n::ordinal_word($up-1));
 			}
-			else if (isset(i18n::translate('Son-in-law'))) {
-				$relationshipDescription = i18n::translate('Son-in-law');
-			}
-		}
-		else {
-			// step relationship
-			if (isset(i18n::translate('step daughter')) && $mf=="F") {
-				$relationshipDescription = i18n::translate('step daughter');
-			}
-			else if (isset(i18n::translate('step son'))) {
-				$relationshipDescription = i18n::translate('step son');
-			}
-		}
-	}
-	//checks for niece/nephew relationship
-	else if (($firstRelationshipIsSpouse || $numberOfSpouses == 0) && $numberOfSiblings == 1 && $generationsYounger >= 1 && $generationsOlder == 0) {
-		if($siblingIsSister) {
-			if (isset($pgv_lang["bosa_sisters_offspring_$bosa"])) {
-				$relationshipDescription = $pgv_lang["bosa_sisters_offspring_$bosa"];
-			}
-			else {
-				if ($mf=="F" && isset(i18n::translate('%2$d x great niece'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great niece'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
-				}
-				else if(isset(i18n::translate('%2$d x great nephew'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great nephew'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
-				}
-			}
-		}
-		else {
-			if (isset($pgv_lang["bosa_brothers_offspring_$bosa"])) {
-				$relationshipDescription = $pgv_lang["bosa_brothers_offspring_$bosa"];
-			}
-			else {
-				if ($mf=="F" && isset(i18n::translate('%2$d x great niece'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great niece'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
-				}
-				else if(isset(i18n::translate('%2$d x great nephew'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great nephew'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
-				}
-			}
-		}
-	}
-	// check for step siblings
-	else if($numberOfSpouses == 1 && $generationsYounger == 1 && $generationsOlder == 1 && !$firstRelationshipIsSpouse && !$lastRelationshipIsSpouse && $numberOfSiblings == 0 && $bosa <= 3) {
-		if ($node["length"]!=8 && isset(i18n::translate('Step-Sister')) && $mf=="F") {
-			$relationshipDescription = i18n::translate('Step-Sister');
-		}
-		else if ($node["length"]!=8 && isset(i18n::translate('Step-Brother'))) {
-			$relationshipDescription = i18n::translate('Step-Brother');
-		}
-	}
-	//checks for aunt/uncle relationship by marriage
-	else if (($numberOfSiblings == 1) && ($generationsYounger == 0) && ($generationsOlder >= 1) && ($numberOfSpouses == 1) && $lastRelationshipIsSpouse && $lastRelationshipButOneIsSibling) {
-		if ($mf=="F" && isset($pgv_lang["sosa_aunt_bm_$sosa"])) {
-			$relationshipDescription = $pgv_lang["sosa_aunt_bm_$sosa"];
-		}
-		else if (isset($pgv_lang["sosa_uncle_bm_$sosa"])) {
-			$relationshipDescription = $pgv_lang["sosa_uncle_bm_$sosa"];
-		}
-		else {
-			// if line is through father
-			if(floor($sosa/pow(2,$generationsOlder-1)) == 2) {
-				if ($mf=="F" && isset(i18n::translate('%2$d x great aunt'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great aunt'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
-				}
-				else if(isset(i18n::translate('%2$d x great uncle'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great uncle'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
-				}
-			}
-			else {
-				if ($mf=="F" && isset(i18n::translate('%2$d x great aunt'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great aunt'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
-				}
-				else if(isset(i18n::translate('%2$d x great uncle'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great uncle'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
-				}
-			}
-		}
-	}
-	// from here on only check for blood relatives
-	else if($numberOfSpouses > 0) {
-	}
-	//check if relationship is parent or grandparent
-	else if ($numberOfSiblings == 0 && $generationsOlder > 0 && $generationsYounger == 0) {
-		// the get_sosa_name is probably the best way of getting this name
-		$relationshipDescription = get_sosa_name($sosa);
-		if(($relationshipDescription==(($sosa%2) ? i18n::translate('Mother') : i18n::translate('Father')) . " " . floor($sosa/2))&&($generationsOlder > 3)) {
-			// the sosa route didn't find a name - lets see if we can find a great grandparent this way
-			if (isset($pgv_lang["n_x_great_grandmother"]) && ($mf=="F")) {
-				$relationshipDescription = sprintf( $pgv_lang["n_x_great_grandmother"], $generationsOlder-2);
-			}
-			else if (isset($pgv_lang["n_x_great_grandfather"])) {
-				$relationshipDescription = sprintf( $pgv_lang["n_x_great_grandfather"], $generationsOlder-2);
-			}
-		}
-	}
-	//checks for son/daughter and grandson/granddaughter
-	else if ($numberOfSiblings == 0 && $generationsYounger > 0 && $generationsOlder == 0) {
-		if (isset($pgv_lang["bosa_$bosa"])) {
-			$relationshipDescription = $pgv_lang["bosa_$bosa"];
-		}
-		else {
-			// if line is through son
-			if(floor($bosa/pow(2,$generationsYounger-1)) == 2) {
-				if ($mf=="F" && isset(i18n::translate('%3$d x great granddaughter'))) {
-					$relationshipDescription = sprintf(i18n::translate('%3$d x great granddaughter'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
-				}
-				else if(isset(i18n::translate('%3$d x great grandson'))) {
-					$relationshipDescription = sprintf(i18n::translate('%3$d x great grandson'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
-				}
-			}
-			else {
-				if ($mf=="F" && isset(i18n::translate('%3$d x great granddaughter'))) {
-					$relationshipDescription = sprintf(i18n::translate('%3$d x great granddaughter'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
-				}
-				else if(isset(i18n::translate('%3$d x great grandson'))) {
-					$relationshipDescription = sprintf(i18n::translate('%3$d x great grandson'), $generationsYounger, $generationsYounger-1, $generationsYounger-2);
-				}
-			}
-		}
-	}
-	//checks for sibling realtionships
-	else if ($numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder == 0) {
-		if ($mf=="F") {
-			if (isset(i18n::translate('Sister'))) {
-				$relationshipDescription = i18n::translate('Sister');
-			}
-		}
-		else {
-			if (isset(i18n::translate('Brother'))) {
-				$relationshipDescription = i18n::translate('Brother');
-			}
-		}
-	}
-	//checks for blood aunt/uncle relationship
-	else if (($numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder >= 1) && $lastRelationshipIsSibling) {
-		if ($mf=="F" && isset($pgv_lang["sosa_aunt_$sosa"])) {
-			$relationshipDescription = $pgv_lang["sosa_aunt_$sosa"];
-		}
-		else if (isset($pgv_lang["sosa_uncle_$sosa"])) {
-			$relationshipDescription = $pgv_lang["sosa_uncle_$sosa"];
-		}
-		else {
-			// if line is through father
-			if(floor($sosa/pow(2,$generationsOlder-1)) == 2) {
-				if ($mf=="F" && isset(i18n::translate('%2$d x great aunt'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great aunt'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
-				}
-				else if(isset(i18n::translate('%2$d x great uncle'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great uncle'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
-				}
-			}
-			else {
-				if ($mf=="F" && isset(i18n::translate('%2$d x great aunt'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great aunt'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
-				}
-				else if(isset(i18n::translate('%2$d x great uncle'))) {
-					$relationshipDescription = sprintf(i18n::translate('%2$d x great uncle'), $generationsOlder, $generationsOlder-1, $generationsOlder-2);
-				}
-			}
-		}
-	}
-	//checks for nth cousin
-	else if ($numberOfSiblings == 1 && $generationsYounger > 0 && $generationsOlder > 0 && ($generationsYounger == $generationsOlder)) {
-		$degree = $generationsYounger;
-		if ($mf=="F") {
-			if(isset($pgv_lang["female_cousin_" . $degree]) && ($pgv_lang["female_cousin_" . $degree] != "")) {
-				$relationshipDescription = $pgv_lang["female_cousin_" . $degree];
-			}
-			else if(isset(i18n::translate('%d x cousin')) && (i18n::translate('%d x cousin') != "")) {
-				$relationshipDescription = sprintf(i18n::translate('%d x cousin'), $degree);
-			}
-		}
-		else {
-			// treat unknown gender as male
-			if(isset($pgv_lang["male_cousin_" . $degree]) && ($pgv_lang["male_cousin_" . $degree] != "")) {
-				$relationshipDescription = $pgv_lang["male_cousin_" . $degree];
-			}
-			else if(isset(i18n::translate('%d x cousin')) && (i18n::translate('%d x cousin') != "")) {
-				$relationshipDescription = sprintf(i18n::translate('%d x cousin'), $degree);
-			}
-		}
-	}
-	// Check for half sibling relationships
-	else if($numberOfSpouses == 0 && $generationsYounger == 1 && $generationsOlder == 1 && $numberOfSiblings == 0) {
-		if ($path_to_find==0) {
-			if (isset(i18n::translate('Half-Sister')) && $mf=="F") {
-				$relationshipDescription = i18n::translate('Half-Sister');
-			}
-			else if (isset(i18n::translate('Half-Brother'))) {
-				$relationshipDescription = i18n::translate('Half-Brother');
-			}
-		}
-		else {
-			if (isset(i18n::translate('Sister')) && $mf=="F") {
-				$relationshipDescription = i18n::translate('Sister');
-			}
-			else if (isset(i18n::translate('Brother'))) {
-				$relationshipDescription = i18n::translate('Brother');
+		} else {
+			$removed=abs($down-$up);
+			switch($last) {
+			case 'son':
+				return i18n::plural(
+					'%s male cousin, %d time removed', '%s male cousin, %d times removed',
+					$removed, i18n::ordinal_word(min($up, $down)), $removed
+				);
+			case 'dau':
+				return i18n::plural(
+					'%s female cousin, %d time removed', '%s female cousin, %d times removed',
+					$removed, i18n::ordinal_word(min($up, $down)), $removed
+				);
+			case 'chi': return i18n::plural('%s cousin, %d time removed', '%s cousin, %d times removed',
+				$removed, i18n::ordinal_word(min($up, $down)), $removed
+				);
 			}
 		}
 	}
 
-	$langStr = str_replace("-", "_", $lang_short_cut[$LANGUAGE]);
-	// check for language specific override of relationship
-	$getLanguageSpecificRelationship = "getRelationshipText_" . $langStr;
-	if(function_exists($getLanguageSpecificRelationship)) {
-		$relationshipDescription = $getLanguageSpecificRelationship($relationshipDescription, $node, $pid1, $pid2);
-	}
+	// TODO: break the relationship down into sub-relationships.  e.g. cousin's cousin.
 
-	// check for language specific override of relationship
-	// functions to get locale specific names (eg Finnish genitive)
-	$getLanguageSpecificName = "getFirstRelationsName_" . $langStr;
-	if(function_exists($getLanguageSpecificName)) {
-		$pid1Name = PrintReady($getLanguageSpecificName($pid1));
+	// We don't have a specific name for this relationship, and we can't match it with a pattern.
+	// Just spell it out.
+	switch (array_pop($path)) {
+	case 'mother':   $relationship=i18n::translate('mother'  ); break;
+	case 'father':   $relationship=i18n::translate('father'  ); break;
+	case 'parent':   $relationship=i18n::translate('parent'  ); break;
+	case 'husband':  $relationship=i18n::translate('husband' ); break;
+	case 'wife':     $relationship=i18n::translate('wife'    ); break;
+	case 'spouse':   $relationship=i18n::translate('spouse'  ); break;
+	case 'brother':  $relationship=i18n::translate('brother' ); break;
+	case 'sister':   $relationship=i18n::translate('sister'  ); break;
+	case 'sibling':  $relationship=i18n::translate('sibling' ); break;
+	case 'son':      $relationship=i18n::translate('son'     ); break;
+	case 'daughter': $relationship=i18n::translate('daughter'); break;
+	case 'child':    $relationship=i18n::translate('child'   ); break;
 	}
-	else {
-		$person = Person::getInstance($pid1);
-		$pid1Name = PrintReady($person->getFullName());
-	}
-	$getLanguageSpecificName = "getSecondRelationsName_" . $langStr;
-	if(function_exists($getLanguageSpecificName)) {
-		$pid2Name = PrintReady($getLanguageSpecificName($pid2));
-	}
-	else {
-		$person = Person::getInstance($pid2);
-		$pid2Name = PrintReady($person->getFullName());
-	}
-
-	if($relationshipDescription != false) {
-		if(($mf=="F") && isset(i18n::translate('%1$s is the %2$s of %3$s.'))) {
-			$sentence = sprintf(i18n::translate('%1$s is the %2$s of %3$s.'), $pid2Name, $relationshipDescription, $pid1Name);
-		}
-		else if(isset(i18n::translate('%1$s is the %2$s of %3$s.'))) {
-			$sentence = sprintf(i18n::translate('%1$s is the %2$s of %3$s.'), $pid2Name, $relationshipDescription, $pid1Name);
-		}
-	}
-	else if(($pid1 == $node["path"][0]) && ($pid2 == $node["path"][count($node["path"])-1]) && $firstRelationshipIsSpouse) {
-		// if no relationship was found it may be nice to check if this is a spouses relation
-		$firstRelationPid = $node["path"][1];
-		//get their relationship
-		$sentence1 = getRelationshipSentence($node, $pid1, $firstRelationPid);
-		//    get the relationship beteeen them and %pid2
-		$sentence2 = getRelationshipSentence($node, $firstRelationPid, $pid2);
-		//    if both the above gave strings then concatenate
-		if(($sentence1 != false)&&($sentence2 != false)) {
-			$sentence = $sentence1 . "<br/>" . $sentence2;
+	while ($path) {
+		switch (array_pop($path)) {
+			// I18N: These strings are used to build paths of relationships, such as "father's wife's husband's brother"
+		case 'mother':   $relationship=i18n::translate('mother\'s %s',   $relationship); break;
+		case 'father':   $relationship=i18n::translate('father\'s %s',   $relationship); break;
+		case 'parent':   $relationship=i18n::translate('parent\'s %s',   $relationship); break;
+		case 'husband':  $relationship=i18n::translate('husband\'s %s',  $relationship); break;
+		case 'wife':     $relationship=i18n::translate('wife\'s %s',     $relationship); break;
+		case 'spouse':   $relationship=i18n::translate('spouse\'s %s',   $relationship); break;
+		case 'brother':  $relationship=i18n::translate('brother\'s %s',  $relationship); break;
+		case 'sister':   $relationship=i18n::translate('sister\'s %s',   $relationship); break;
+		case 'sibling':  $relationship=i18n::translate('sibling\'s %s',  $relationship); break;
+		case 'son':      $relationship=i18n::translate('son\'s %s',      $relationship); break;
+		case 'daughter': $relationship=i18n::translate('daughter\'s %s', $relationship); break;
+		case 'child':    $relationship=i18n::translate('child\'s %s',    $relationship); break;
 		}
 	}
-	return $sentence;
+	return $relationship;
 }
 
 $show_full=$PEDIGREE_FULL_DETAILS;
@@ -993,7 +897,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 				print "</td></tr></table></div>\n";
 			}
 
-			$sentence = getRelationshipSentence($node, $pid1, $pid2);
+			$sentence = getRelationshipSentence(array_slice($node['relations'], 1), $pid1, $pid2);
 			if($sentence != false) {
 				print "<div style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":1px; top:".abs($Dbaseyoffset-70)."px; z-index:1;\">";
 				print "<h4>";

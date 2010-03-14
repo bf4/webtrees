@@ -202,6 +202,28 @@ class i18n {
 		}
 	}
 
+	// 5=>fifth, 9=>ninth, etc.  Used for Nth cousins, etc.
+	static function ordinal_word($n) {
+		switch ($n) {
+		case 1:  return i18n::translate('first');
+		case 2:  return i18n::translate('second');
+		case 3:  return i18n::translate('third');
+		case 4:  return i18n::translate('fourth');
+		case 5:  return i18n::translate('fifth');
+		case 6:  return i18n::translate('sixth');
+		case 7:  return i18n::translate('seventh');
+		case 8:  return i18n::translate('eighth');
+		case 9:  return i18n::translate('ninth');
+		case 10: return i18n::translate('tenth');
+		case 11: return i18n::translate('eleventh');
+		case 12: return i18n::translate('twelfth');
+		case 13: return i18n::translate('thirteenth');
+		case 14: return i18n::translate('fourteenth');
+		case 15: return i18n::translate('fifteenth');
+		default: return i18n::translate('%d x', $n);
+		}
+	}
+
 	// Convert a number of seconds into a relative time.  e.g. 630 => "10 hours, 30 minutes ago"
 	static function time_ago($seconds) {
 		$year=365*24*60*60;
