@@ -1,6 +1,6 @@
 <?php
 /**
- * Colors theme
+ * Ash theme
  *
  * webtrees: Web based Family History software
  * Copyright (C) 2010 webtrees development team.
@@ -23,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package webtrees
- * @subpackage Themes
+ * @subpackage Themes/Colors
  * @version $Id$
  */
 
@@ -32,8 +32,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$theme_name       =  "Default Color";
-$stylesheet       =  "themes/colors/css/ash.css"; 
-$print_stylesheet =  "themes/colors/css/ash.css"; 
+$theme_name       = "Default Color";
+$SHARED_THEME_DIR = "themes/colors/";
+define('SHARED_THEME_DIR', $SHARED_THEME_DIR);
+$stylesheet       = $SHARED_THEME_DIR . "css/ash.css"; 
+$print_stylesheet = $SHARED_THEME_DIR . "css/ash.css"; 
+include('themes/colors/theme.inc');
 
-include('theme.inc');
