@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-14 11:59+0000\n"
+"POT-Creation-Date: 2010-03-14 16:51+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -702,7 +702,7 @@ msgid "Show cousins"
 msgstr "Cho xem các hạ"
 
 #: ../ancestry.php:135 ../descendancy.php:94 ../pedigree.php:140
-#: ../hourglass.php:94 ../compact.php:92 ../relationship.php:753
+#: ../hourglass.php:94 ../compact.php:92 ../relationship.php:676
 #: ../find.php:574 ../branches.php:77 ../fanchart.php:469
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:604
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:633
@@ -720,7 +720,7 @@ msgstr ""
 
 #: ../ancestry.php:161 ../descendancy.php:107 ../pedigree.php:94
 #: ../hourglass.php:82 ../manageservers.php:212 ../manageservers.php:345
-#: ../relationship.php:593 ../includes/functions/functions_print.php:557
+#: ../relationship.php:516 ../includes/functions/functions_print.php:557
 #: ../includes/functions/functions_print.php:1201
 #: ../includes/functions/functions_print_facts.php:553 ../familybook.php:426
 #: ../blocks/charts.php:202 ../blocks/user_messages.php:99
@@ -728,7 +728,7 @@ msgid "Show Details"
 msgstr "Xem Chi Tiết"
 
 #: ../ancestry.php:183 ../descendancy.php:125 ../descendancy.php:133
-#: ../pedigree.php:147 ../hourglass.php:141 ../relationship.php:768
+#: ../pedigree.php:147 ../hourglass.php:141 ../relationship.php:691
 #: ../familybook.php:494 ../blocks/charts.php:132
 msgid "Click on any of the boxes to get more information about that person."
 msgstr ""
@@ -868,7 +868,7 @@ msgid "Pedigree Tree"
 msgstr "Đồ Thị Dòng Giống"
 
 #: ../pedigree.php:80 ../downloadgedcom.php:139 ../useradmin.php:945
-#: ../relationship.php:575 ../usermigrate.php:60
+#: ../relationship.php:498 ../usermigrate.php:60
 msgid "Options:"
 msgstr "Món lựa chọn được:"
 
@@ -1205,7 +1205,7 @@ msgstr "Xin chú ý: Những tập tin GEDCOM lớn sẽ lấy nhiều thời gi
 #: ../modules/googlemap/placecheck.php:102 ../faq.php:175 ../faq.php:220
 #: ../faq.php:283 ../medialist.php:163 ../calendar.php:232
 #: ../blocks/user_messages.php:88 ../blocks/random_media.php:350
-#: ../blocks/rss_block.php:69 ../famlist.php:96 ../famlist.php:170
+#: ../blocks/rss_block.php:70 ../famlist.php:96 ../famlist.php:170
 #: ../famlist.php:172 ../famlist.php:259 ../famlist.php:261
 msgid "ALL"
 msgstr "Tất cả"
@@ -3994,8 +3994,8 @@ msgstr ""
 msgid "Sounds like"
 msgstr ""
 
-#: ../search_advanced.php:221 ../relationship.php:162 ../relationship.php:278
-#: ../addsearchlink.php:86 ../includes/functions/functions_charts.php:726
+#: ../search_advanced.php:221 ../addsearchlink.php:86
+#: ../includes/functions/functions_charts.php:726
 #: ../includes/functions/functions_charts.php:785
 #: ../includes/functions/functions_charts.php:792
 #: ../includes/functions/functions_charts.php:812
@@ -4018,8 +4018,8 @@ msgstr "Bố"
 msgid "GIVN"
 msgstr "Tên Gọi"
 
-#: ../search_advanced.php:258 ../relationship.php:154 ../relationship.php:278
-#: ../addsearchlink.php:85 ../includes/functions/functions_charts.php:727
+#: ../search_advanced.php:258 ../addsearchlink.php:85
+#: ../includes/functions/functions_charts.php:727
 #: ../includes/functions/functions_charts.php:786
 #: ../includes/functions/functions_charts.php:793
 #: ../includes/functions/functions_charts.php:813
@@ -4051,161 +4051,913 @@ msgstr ""
 msgid "This media file is broken and cannot be watermarked"
 msgstr ""
 
-#: ../relationship.php:131 ../relationship.php:132 ../addsearchlink.php:88
-#: ../includes/functions/functions_print.php:1809
-#: ../includes/functions/functions_print.php:2031
-#: ../includes/controllers/individual_ctrl.php:849
-#: ../includes/controllers/individual_ctrl.php:858 ../edit_interface.php:612
-#: ../edit_interface.php:2344 ../edit_interface.php:2353
-#: ../addremotelink.php:134
-msgid "Wife"
-msgstr "Vợ"
-
-#: ../relationship.php:135 ../relationship.php:136 ../addsearchlink.php:87
-#: ../includes/functions/functions_print.php:1807
-#: ../includes/functions/functions_print.php:2031
-#: ../includes/controllers/individual_ctrl.php:850
-#: ../includes/controllers/individual_ctrl.php:859 ../edit_interface.php:614
-#: ../edit_interface.php:2346 ../edit_interface.php:2355
-#: ../addremotelink.php:133
-msgid "Husband"
-msgstr "Chồng"
-
-#: ../relationship.php:143 ../relationship.php:144
-msgid "Mother-in-law"
+#: ../relationship.php:67 ../relationship.php:334
+msgid "mother"
 msgstr ""
 
-#: ../relationship.php:146 ../relationship.php:147
-msgid "Father-in-law"
+#: ../relationship.php:68 ../relationship.php:335
+msgid "father"
 msgstr ""
 
-#: ../relationship.php:152 ../relationship.php:157
-#: ../includes/family_nav.php:281
-#: ../includes/controllers/individual_ctrl.php:828
-#: ../modules/family_nav/family_nav.php:308
-#: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:533
-#: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:579
-#: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:765
-#: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:810
-msgid "Step-Mother"
-msgstr "Mẹ kế"
-
-#: ../relationship.php:160 ../relationship.php:165
-#: ../includes/family_nav.php:238
-#: ../includes/controllers/individual_ctrl.php:829
-#: ../modules/family_nav/family_nav.php:264
-#: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:439
-#: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:481
-#: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:618
-#: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:663
-msgid "Step-Father"
-msgstr "Dưỡng phụ"
-
-#: ../relationship.php:172 ../relationship.php:174 ../relationship.php:177
-msgid "Sister-in-law"
+#: ../relationship.php:69 ../relationship.php:336
+msgid "parent"
 msgstr ""
 
-#: ../relationship.php:180 ../relationship.php:181
-msgid "Brother-in-law"
+#: ../relationship.php:70 ../relationship.php:337
+msgid "husband"
 msgstr ""
 
-#: ../relationship.php:188 ../relationship.php:189
-msgid "Daughter-in-law"
+#: ../relationship.php:71 ../relationship.php:338
+msgid "wife"
 msgstr ""
 
-#: ../relationship.php:191 ../relationship.php:192
-msgid "Son-in-law"
+#: ../relationship.php:72 ../relationship.php:339
+msgid "spouse"
 msgstr ""
 
-#: ../relationship.php:197 ../relationship.php:198
-msgid "step daughter"
+#: ../relationship.php:73 ../relationship.php:340
+msgid "brother"
 msgstr ""
 
-#: ../relationship.php:200 ../relationship.php:201
-msgid "step son"
+#: ../relationship.php:74 ../relationship.php:341
+msgid "sister"
 msgstr ""
 
-#: ../relationship.php:212 ../relationship.php:213 ../relationship.php:225
+#: ../relationship.php:75 ../relationship.php:342
+msgid "sibling"
+msgstr ""
+
+#: ../relationship.php:76 ../relationship.php:343
+msgid "son"
+msgstr ""
+
+#: ../relationship.php:77 ../relationship.php:344
+msgid "daughter"
+msgstr ""
+
+#: ../relationship.php:78 ../relationship.php:345
+msgid "child"
+msgstr ""
+
+#. I18N: grandmother
+#: ../relationship.php:81
+msgid "mother's mother"
+msgstr ""
+
+#. I18N: grandfather
+#: ../relationship.php:82
+msgid "mother's father"
+msgstr ""
+
+#. I18N: grandparent
+#: ../relationship.php:83
+msgid "mother's parent"
+msgstr ""
+
+#. I18N: grandmother
+#: ../relationship.php:84
+msgid "father's mother"
+msgstr ""
+
+#. I18N: grandfather
+#: ../relationship.php:85
+msgid "father's father"
+msgstr ""
+
+#. I18N: grandparent
+#: ../relationship.php:86
+msgid "father's parent"
+msgstr ""
+
+#. I18N: grandmother
+#: ../relationship.php:87
+msgid "parent's mother"
+msgstr ""
+
+#. I18N: grandfather
+#: ../relationship.php:88
+msgid "parent's father"
+msgstr ""
+
+#. I18N: grandparent
+#: ../relationship.php:89
+msgid "parent's parent"
+msgstr ""
+
+#. I18N: granddaughter
+#: ../relationship.php:91
+msgid "daughter's daughter"
+msgstr ""
+
+#. I18N: grandson
+#: ../relationship.php:92
+msgid "daughter's son"
+msgstr ""
+
+#. I18N: grandchild
+#: ../relationship.php:93
+msgid "daughter's child"
+msgstr ""
+
+#. I18N: granddaughter
+#: ../relationship.php:94
+msgid "son's daughter"
+msgstr ""
+
+#. I18N: grandson
+#: ../relationship.php:95
+msgid "son's son"
+msgstr ""
+
+#. I18N: grandchild
+#: ../relationship.php:96
+msgid "son's child"
+msgstr ""
+
+#. I18N: granddaughter
+#: ../relationship.php:97
+msgid "child's daughter"
+msgstr ""
+
+#. I18N: grandson
+#: ../relationship.php:98
+msgid "child's son"
+msgstr ""
+
+#. I18N: grandchild
+#: ../relationship.php:99
+msgid "child's child"
+msgstr ""
+
+#. I18N: step-father
+#: ../relationship.php:101 ../relationship.php:102
+msgid "mother's husband"
+msgstr ""
+
+#. I18N: step-mother
+#: ../relationship.php:103 ../relationship.php:104
+msgid "father's wife"
+msgstr ""
+
+#. I18N: step-parent
+#: ../relationship.php:105 ../relationship.php:106
+msgid "parent's spouse"
+msgstr ""
+
+#. I18N: half-brother
+#: ../relationship.php:108
+msgid "mother's son"
+msgstr ""
+
+#. I18N: half-sister
+#: ../relationship.php:109
+msgid "mother's daughter"
+msgstr ""
+
+#. I18N: half-sibling
+#: ../relationship.php:110
+msgid "mother's child"
+msgstr ""
+
+#. I18N: half-brother
+#: ../relationship.php:111
+msgid "father's son"
+msgstr ""
+
+#. I18N: half-sister
+#: ../relationship.php:112
+msgid "father's daughter"
+msgstr ""
+
+#. I18N: half-sibling
+#: ../relationship.php:113
+msgid "father's child"
+msgstr ""
+
+#. I18N: half-brother
+#: ../relationship.php:114
+msgid "parent's son"
+msgstr ""
+
+#. I18N: half-sister
+#: ../relationship.php:115
+msgid "parent's daughter"
+msgstr ""
+
+#. I18N: half-sibling
+#: ../relationship.php:116
+msgid "parent's child"
+msgstr ""
+
+#. I18N: aunt
+#: ../relationship.php:118
+msgid "mother's sister"
+msgstr ""
+
+#. I18N: uncle
+#: ../relationship.php:119
+msgid "mother's brother"
+msgstr ""
+
+#. I18N: aunt/uncle
+#: ../relationship.php:120
+msgid "mother's sibling"
+msgstr ""
+
+#. I18N: aunt
+#: ../relationship.php:121
+msgid "father's sister"
+msgstr ""
+
+#. I18N: uncle
+#: ../relationship.php:122
+msgid "father's brother"
+msgstr ""
+
+#. I18N: aunt/uncle
+#: ../relationship.php:123
+msgid "father's sibling"
+msgstr ""
+
+#. I18N: aunt
+#: ../relationship.php:124
+msgid "parent's sister"
+msgstr ""
+
+#. I18N: uncle
+#: ../relationship.php:125
+msgid "parent's brother"
+msgstr ""
+
+#. I18N: aunt/uncle
+#: ../relationship.php:126
+msgid "parent's sibling"
+msgstr ""
+
+#. I18N: sister-in-law
+#: ../relationship.php:128
+msgid "wife's sister"
+msgstr ""
+
+#. I18N: sister-in-law
+#: ../relationship.php:129
+msgid "husband's sister"
+msgstr ""
+
+#. I18N: sister-in-law
+#: ../relationship.php:130
+msgid "spouses's sister"
+msgstr ""
+
+#. I18N: brother-in-law
+#: ../relationship.php:131
+msgid "wife's brother"
+msgstr ""
+
+#. I18N: brother-in-law
+#: ../relationship.php:132
+msgid "husband's brother"
+msgstr ""
+
+#. I18N: brother-in-law
+#: ../relationship.php:133
+msgid "spouses's brother"
+msgstr ""
+
+#. I18N: sister-in-law
+#: ../relationship.php:135
+msgid "brother's wife"
+msgstr ""
+
+#. I18N: brother-in-law
+#: ../relationship.php:136
+msgid "sister's husband"
+msgstr ""
+
+#. I18N: mother-in-law
+#: ../relationship.php:138
+msgid "husband's mother"
+msgstr ""
+
+#. I18N: mother-in-law
+#: ../relationship.php:139
+msgid "wife's mother"
+msgstr ""
+
+#. I18N: mother-in-law
+#: ../relationship.php:140
+msgid "souses's mother"
+msgstr ""
+
+#. I18N: father-in-law
+#: ../relationship.php:141
+msgid "husband's father"
+msgstr ""
+
+#. I18N: father-in-law
+#: ../relationship.php:142
+msgid "wife's father"
+msgstr ""
+
+#. I18N: father-in-law
+#: ../relationship.php:143
+msgid "souses's father"
+msgstr ""
+
+#. I18N: daughter-in-law
+#: ../relationship.php:145
+msgid "son's wife"
+msgstr ""
+
+#. I18N: son-in-law
+#: ../relationship.php:146
+msgid "daughter's husband"
+msgstr ""
+
+#. I18N: great-grandmother
+#: ../relationship.php:149
+msgid "mother's mother's mother"
+msgstr ""
+
+#. I18N: great-grandfather
+#: ../relationship.php:150
+msgid "mother's mother's father"
+msgstr ""
+
+#. I18N: great-grandparent
+#: ../relationship.php:151
+msgid "mother's mother's parent"
+msgstr ""
+
+#. I18N: great-grandmother
+#: ../relationship.php:152
+msgid "mother's father's mother"
+msgstr ""
+
+#. I18N: great-grandfather
+#: ../relationship.php:153
+msgid "mother's father's father"
+msgstr ""
+
+#. I18N: great-grandparent
+#: ../relationship.php:154
+msgid "mother's father's parent"
+msgstr ""
+
+#. I18N: great-grandmother
+#: ../relationship.php:155
+msgid "mother's parent's mother"
+msgstr ""
+
+#. I18N: great-grandfather
+#: ../relationship.php:156
+msgid "mother's parent's father"
+msgstr ""
+
+#. I18N: great-grandparent
+#: ../relationship.php:157
+msgid "mother's parent's parent"
+msgstr ""
+
+#. I18N: great-grandmother
+#: ../relationship.php:158
+msgid "father's mother's mother"
+msgstr ""
+
+#. I18N: great-grandfather
+#: ../relationship.php:159
+msgid "father's mother's father"
+msgstr ""
+
+#. I18N: great-grandparent
+#: ../relationship.php:160
+msgid "father's mother's parent"
+msgstr ""
+
+#. I18N: great-grandmother
+#: ../relationship.php:161
+msgid "father's father's mother"
+msgstr ""
+
+#. I18N: great-grandfather
+#: ../relationship.php:162
+msgid "father's father's father"
+msgstr ""
+
+#. I18N: great-grandparent
+#: ../relationship.php:163
+msgid "father's father's parent"
+msgstr ""
+
+#. I18N: great-grandmother
+#: ../relationship.php:164
+msgid "father's parent's mother"
+msgstr ""
+
+#. I18N: great-grandfather
+#: ../relationship.php:165
+msgid "father's parent's father"
+msgstr ""
+
+#. I18N: great-grandparent
+#: ../relationship.php:166
+msgid "father's parent's parent"
+msgstr ""
+
+#. I18N: great-grandmother
+#: ../relationship.php:167
+msgid "parent's mother's mother"
+msgstr ""
+
+#. I18N: great-grandfather
+#: ../relationship.php:168
+msgid "parent's mother's father"
+msgstr ""
+
+#. I18N: great-grandparent
+#: ../relationship.php:169
+msgid "parent's mother's parent"
+msgstr ""
+
+#. I18N: great-grandmother
+#: ../relationship.php:170
+msgid "parent's father's mother"
+msgstr ""
+
+#. I18N: great-grandfather
+#: ../relationship.php:171
+msgid "parent's father's father"
+msgstr ""
+
+#. I18N: great-grandparent
+#: ../relationship.php:172
+msgid "parent's father's parent"
+msgstr ""
+
+#. I18N: great-grandmother
+#: ../relationship.php:173
+msgid "parent's parent's mother"
+msgstr ""
+
+#. I18N: great-grandfather
+#: ../relationship.php:174
+msgid "parent's parent's father"
+msgstr ""
+
+#. I18N: great-grandparent
+#: ../relationship.php:175
+msgid "parent's parent's parent"
+msgstr ""
+
+#. I18N: great-aunt
+#: ../relationship.php:177 ../relationship.php:243
+msgid "mother's mother's sister"
+msgstr ""
+
+#. I18N: great-uncle
+#: ../relationship.php:178 ../relationship.php:244
+msgid "mother's mother's brother"
+msgstr ""
+
+#. I18N: great-aunt/uncle
+#: ../relationship.php:179 ../relationship.php:245
+msgid "mother's mother's sibling"
+msgstr ""
+
+#. I18N: great-aunt
+#: ../relationship.php:180 ../relationship.php:246
+msgid "mother's father's sister"
+msgstr ""
+
+#. I18N: great-uncle
+#: ../relationship.php:181 ../relationship.php:247
+msgid "mother's father's brother"
+msgstr ""
+
+#. I18N: great-aunt/uncle
+#: ../relationship.php:182 ../relationship.php:248
+msgid "mother's father's sibling"
+msgstr ""
+
+#. I18N: great-aunt
+#: ../relationship.php:183 ../relationship.php:249
+msgid "mother's parent's sister"
+msgstr ""
+
+#. I18N: great-uncle
+#: ../relationship.php:184 ../relationship.php:250
+msgid "mother's parent's brother"
+msgstr ""
+
+#. I18N: great-aunt/uncle
+#: ../relationship.php:185 ../relationship.php:251
+msgid "mother's parent's sibling"
+msgstr ""
+
+#. I18N: great-aunt
+#: ../relationship.php:186 ../relationship.php:252
+msgid "father's mother's sister"
+msgstr ""
+
+#. I18N: great-uncle
+#: ../relationship.php:187 ../relationship.php:253
+msgid "father's mother's brother"
+msgstr ""
+
+#. I18N: great-aunt/uncle
+#: ../relationship.php:188 ../relationship.php:254
+msgid "father's mother's sibling"
+msgstr ""
+
+#. I18N: great-aunt
+#: ../relationship.php:189 ../relationship.php:255
+msgid "father's father's sister"
+msgstr ""
+
+#. I18N: great-uncle
+#: ../relationship.php:190 ../relationship.php:256
+msgid "father's father's brother"
+msgstr ""
+
+#. I18N: great-aunt/uncle
+#: ../relationship.php:191 ../relationship.php:257
+msgid "father's father's sibling"
+msgstr ""
+
+#. I18N: great-aunt
+#: ../relationship.php:192 ../relationship.php:258
+msgid "father's parent's sister"
+msgstr ""
+
+#. I18N: great-uncle
+#: ../relationship.php:193 ../relationship.php:259
+msgid "father's parent's brother"
+msgstr ""
+
+#. I18N: great-aunt/uncle
+#: ../relationship.php:194 ../relationship.php:260
+msgid "father's parent's sibling"
+msgstr ""
+
+#. I18N: great-aunt
+#: ../relationship.php:195 ../relationship.php:261
+msgid "parent's mother's sister"
+msgstr ""
+
+#. I18N: great-uncle
+#: ../relationship.php:196 ../relationship.php:262
+msgid "parent's mother's brother"
+msgstr ""
+
+#. I18N: great-aunt/uncle
+#: ../relationship.php:197 ../relationship.php:263
+msgid "parent's mother's sibling"
+msgstr ""
+
+#. I18N: great-aunt
+#: ../relationship.php:198 ../relationship.php:264
+msgid "parent's father's sister"
+msgstr ""
+
+#. I18N: great-uncle
+#: ../relationship.php:199 ../relationship.php:265
+msgid "parent's father's brother"
+msgstr ""
+
+#. I18N: great-aunt/uncle
+#: ../relationship.php:200 ../relationship.php:266
+msgid "parent's father's sibling"
+msgstr ""
+
+#. I18N: great-aunt
+#: ../relationship.php:201 ../relationship.php:267
+msgid "parent's parent's sister"
+msgstr ""
+
+#. I18N: great-uncle
+#: ../relationship.php:202 ../relationship.php:268
+msgid "parent's parent's brother"
+msgstr ""
+
+#. I18N: great-aunt/uncle
+#: ../relationship.php:203 ../relationship.php:269
+msgid "parent's parent's sibling"
+msgstr ""
+
+#. I18N: great-granddaughter
+#: ../relationship.php:205
+msgid "daughter's daughter's daughter"
+msgstr ""
+
+#. I18N: great-grandson
+#: ../relationship.php:206
+msgid "daughter's daughter's son"
+msgstr ""
+
+#. I18N: great-grandchild
+#: ../relationship.php:207
+msgid "daughter's daughter's child"
+msgstr ""
+
+#. I18N: great-granddaughter
+#: ../relationship.php:208
+msgid "daughter's son's daughter"
+msgstr ""
+
+#. I18N: great-grandson
+#: ../relationship.php:209
+msgid "daughter's son's son"
+msgstr ""
+
+#. I18N: great-grandchild
+#: ../relationship.php:210
+msgid "daughter's son's child"
+msgstr ""
+
+#. I18N: great-granddaughter
+#: ../relationship.php:211
+msgid "daughter's child's daughter"
+msgstr ""
+
+#. I18N: great-grandson
+#: ../relationship.php:212
+msgid "daughter's child's son"
+msgstr ""
+
+#. I18N: great-grandchild
+#: ../relationship.php:213
+msgid "daughter's child's child"
+msgstr ""
+
+#. I18N: great-granddaughter
+#: ../relationship.php:214
+msgid "son's daughter's daughter"
+msgstr ""
+
+#. I18N: great-grandson
+#: ../relationship.php:215
+msgid "son's daughter's son"
+msgstr ""
+
+#. I18N: great-grandchild
+#: ../relationship.php:216
+msgid "son's daughter's child"
+msgstr ""
+
+#. I18N: great-granddaughter
+#: ../relationship.php:217
+msgid "son's son's daughter"
+msgstr ""
+
+#. I18N: great-grandson
+#: ../relationship.php:218
+msgid "son's son's son"
+msgstr ""
+
+#. I18N: great-grandchild
+#: ../relationship.php:219
+msgid "son's son's child"
+msgstr ""
+
+#. I18N: great-granddaughter
+#: ../relationship.php:220
+msgid "son's child's daughter"
+msgstr ""
+
+#. I18N: great-grandson
+#: ../relationship.php:221
+msgid "son's child's son"
+msgstr ""
+
+#. I18N: great-grandchild
+#: ../relationship.php:222
+msgid "son's child's child"
+msgstr ""
+
+#. I18N: great-granddaughter
+#: ../relationship.php:223
+msgid "child's daughter's daughter"
+msgstr ""
+
+#. I18N: great-grandson
+#: ../relationship.php:224
+msgid "child's daughter's son"
+msgstr ""
+
+#. I18N: great-grandchild
+#: ../relationship.php:225
+msgid "child's daughter's child"
+msgstr ""
+
+#. I18N: great-granddaughter
 #: ../relationship.php:226
-#, php-format
-msgid "%2$d x great niece"
+msgid "child's son's daughter"
 msgstr ""
 
-#: ../relationship.php:215 ../relationship.php:216 ../relationship.php:228
+#. I18N: great-grandson
+#: ../relationship.php:227
+msgid "child's son's son"
+msgstr ""
+
+#. I18N: great-grandchild
+#: ../relationship.php:228
+msgid "child's son's child"
+msgstr ""
+
+#. I18N: great-granddaughter
 #: ../relationship.php:229
-#, php-format
-msgid "%2$d x great nephew"
+msgid "child's child's daughter"
 msgstr ""
 
-#: ../relationship.php:236 ../relationship.php:237
-msgid "Step-Sister"
-msgstr "Chị (em) cùng cha khác mẹ, chị (em) cùng mẹ khác cha"
-
-#: ../relationship.php:239 ../relationship.php:240
-msgid "Step-Brother"
-msgstr "Anh (em) cùng cha khác mẹ, anh (em) cùng mẹ khác cha"
-
-#: ../relationship.php:254 ../relationship.php:255 ../relationship.php:262
-#: ../relationship.php:263 ../relationship.php:337 ../relationship.php:338
-#: ../relationship.php:345 ../relationship.php:346
-#, php-format
-msgid "%2$d x great aunt"
+#. I18N: great-grandson
+#: ../relationship.php:230
+msgid "child's child's son"
 msgstr ""
 
-#: ../relationship.php:257 ../relationship.php:258 ../relationship.php:265
-#: ../relationship.php:266 ../relationship.php:340 ../relationship.php:341
-#: ../relationship.php:348 ../relationship.php:349
-#, php-format
-msgid "%2$d x great uncle"
+#. I18N: great-grandchild
+#: ../relationship.php:231
+msgid "child's child's child"
 msgstr ""
 
-#: ../relationship.php:296 ../relationship.php:297 ../relationship.php:304
+#. I18N: step-brother
+#: ../relationship.php:233
+msgid "mother's husband's son"
+msgstr ""
+
+#. I18N: step-sister
+#: ../relationship.php:234
+msgid "mother's husband's daughter"
+msgstr ""
+
+#. I18N: step-sibling
+#: ../relationship.php:235
+msgid "mother's husband's child"
+msgstr ""
+
+#. I18N: step-brother
+#: ../relationship.php:236
+msgid "father's wife's son"
+msgstr ""
+
+#. I18N: step-sister
+#: ../relationship.php:237
+msgid "father's wife's daughter"
+msgstr ""
+
+#. I18N: step-sibling
+#: ../relationship.php:238
+msgid "father's wife's child"
+msgstr ""
+
+#. I18N: step-brother
+#: ../relationship.php:239
+msgid "parent's spouse's son"
+msgstr ""
+
+#. I18N: step-sister
+#: ../relationship.php:240
+msgid "parent's spouse's daughter"
+msgstr ""
+
+#. I18N: step-sibling
+#: ../relationship.php:241
+msgid "parent's spouse's child"
+msgstr ""
+
+#: ../relationship.php:279
+#, php-format
+msgid "great x %d aunt"
+msgstr ""
+
+#: ../relationship.php:280
+#, php-format
+msgid "great x %d uncle"
+msgstr ""
+
+#: ../relationship.php:281
+#, php-format
+msgid "great x %d aunt/uncle"
+msgstr ""
+
+#: ../relationship.php:290
+#, php-format
+msgid "great x %d grandmother"
+msgstr ""
+
+#: ../relationship.php:291
+#, php-format
+msgid "great x %d grandfather"
+msgstr ""
+
+#: ../relationship.php:292
+#, php-format
+msgid "great x %d grandparent"
+msgstr ""
+
+#: ../relationship.php:297
+#, php-format
+msgid "great x %d grandson"
+msgstr ""
+
+#: ../relationship.php:298
+#, php-format
+msgid "great x %d granddaughter"
+msgstr ""
+
+#: ../relationship.php:299
+#, php-format
+msgid "great x %d grandchild"
+msgstr ""
+
 #: ../relationship.php:305
 #, php-format
-msgid "%3$d x great granddaughter"
+msgid "%s male cousin"
 msgstr ""
 
-#: ../relationship.php:299 ../relationship.php:300 ../relationship.php:307
-#: ../relationship.php:308
+#: ../relationship.php:306
 #, php-format
-msgid "%3$d x great grandson"
+msgid "%s female cousin"
 msgstr ""
 
-#: ../relationship.php:316 ../relationship.php:317 ../relationship.php:386
-#: ../relationship.php:387 ../includes/controllers/individual_ctrl.php:823
-#: ../modules/relatives/relatives.php:287
-msgid "Sister"
-msgstr "Anh (Em) Gái"
-
-#: ../relationship.php:321 ../relationship.php:322 ../relationship.php:389
-#: ../relationship.php:390 ../includes/controllers/individual_ctrl.php:824
-#: ../modules/relatives/relatives.php:286
-msgid "Brother"
-msgstr "Anh (Em) Trai"
-
-#: ../relationship.php:361 ../relationship.php:362 ../relationship.php:370
-#: ../relationship.php:371
+#: ../relationship.php:307
 #, php-format
-msgid "%d x cousin"
+msgid "%s cousin"
 msgstr ""
 
-#: ../relationship.php:378 ../relationship.php:379
-#: ../includes/controllers/individual_ctrl.php:831
-msgid "Half-Sister"
-msgstr "Chị (em) cùng cha khác mẹ, chị (em) cùng mẹ khác cha"
+#: ../relationship.php:314
+msgid "%$1s male cousin, %$2d time removed"
+msgstr ""
 
-#: ../relationship.php:381 ../relationship.php:382
-#: ../includes/controllers/individual_ctrl.php:832
-msgid "Half-Brother"
-msgstr "Anh (em) cùng cha khác mẹ, anh (em) cùng mẹ khác cha"
+#: ../relationship.php:319
+msgid "%$1s female cousin, %$2d time removed"
+msgstr ""
 
-#: ../relationship.php:422 ../relationship.php:423 ../relationship.php:425
-#: ../relationship.php:426
+#: ../relationship.php:322
+msgid "%$1s cousin, %$2d time removed"
+msgstr ""
+
+#. I18N: These strings are used to build paths of relationships, such as "father's wife's husband's brother"
+#: ../relationship.php:350
 #, php-format
-msgid "%1$s is the %2$s of %3$s."
+msgid "mother's %s"
 msgstr ""
 
-#: ../relationship.php:488 ../relationship.php:567
+#: ../relationship.php:351
+#, php-format
+msgid "father's %s"
+msgstr ""
+
+#: ../relationship.php:352
+#, php-format
+msgid "parent's %s"
+msgstr ""
+
+#: ../relationship.php:353
+#, php-format
+msgid "husband's %s"
+msgstr ""
+
+#: ../relationship.php:354
+#, php-format
+msgid "wife's %s"
+msgstr ""
+
+#: ../relationship.php:355
+#, php-format
+msgid "spouse's %s"
+msgstr ""
+
+#: ../relationship.php:356
+#, php-format
+msgid "brother's %s"
+msgstr ""
+
+#: ../relationship.php:357
+#, php-format
+msgid "sister's %s"
+msgstr ""
+
+#: ../relationship.php:358
+#, php-format
+msgid "sibling's %s"
+msgstr ""
+
+#: ../relationship.php:359
+#, php-format
+msgid "son's %s"
+msgstr ""
+
+#: ../relationship.php:360
+#, php-format
+msgid "daughter's %s"
+msgstr ""
+
+#: ../relationship.php:361
+#, php-format
+msgid "child's %s"
+msgstr ""
+
+#: ../relationship.php:411 ../relationship.php:490
 #: ../includes/functions/functions_print_lists.php:218
 #: ../includes/functions/functions_print.php:122
 #: ../includes/functions/functions_print.php:123
@@ -4218,7 +4970,7 @@ msgstr ""
 msgid "Relationship Chart"
 msgstr "Đồ Thị Họ Hàng"
 
-#: ../relationship.php:538 ../includes/classes/class_stats.php:2942
+#: ../relationship.php:461 ../includes/classes/class_stats.php:2942
 #: ../includes/classes/class_stats.php:2967
 #: ../includes/classes/class_stats.php:2978
 #: ../includes/classes/class_stats.php:2988
@@ -4227,27 +4979,27 @@ msgstr "Đồ Thị Họ Hàng"
 msgid "and"
 msgstr "và"
 
-#: ../relationship.php:580
+#: ../relationship.php:503
 msgid "Person 1"
 msgstr "Người 1"
 
-#: ../relationship.php:606
+#: ../relationship.php:529
 msgid "Person 2"
 msgstr "Người 2"
 
-#: ../relationship.php:620 ../help_text.php:4985
+#: ../relationship.php:543 ../help_text.php:4985
 msgid "Line up the same generations"
 msgstr "Đồng chỉnh những thế hệ cùng như nhau"
 
-#: ../relationship.php:643 ../help_text.php:5275
+#: ../relationship.php:566 ../help_text.php:5275
 msgid "Show oldest top"
 msgstr "Sắp đặt già nhất phía trên"
 
-#: ../relationship.php:670 ../relationship.php:691
+#: ../relationship.php:593 ../relationship.php:614
 msgid "Show path"
 msgstr "Cho coi đường"
 
-#: ../relationship.php:695 ../find.php:435 ../find.php:460 ../find.php:611
+#: ../relationship.php:618 ../find.php:435 ../find.php:460 ../find.php:611
 #: ../find.php:649 ../find.php:673 ../find.php:696 ../find.php:718
 #: ../placelist.php:425 ../includes/controllers/advancedsearch_ctrl.php:474
 #: ../includes/controllers/search_ctrl.php:826
@@ -4268,19 +5020,19 @@ msgstr "Cho coi đường"
 msgid "No results found."
 msgstr "Không tìm thấy gì hẽt."
 
-#: ../relationship.php:709 ../relationship.php:737 ../help_text.php:4630
+#: ../relationship.php:632 ../relationship.php:660 ../help_text.php:4630
 msgid "Check relationships by marriage"
 msgstr "Theo mối liên hệ bằng sự kết hôn"
 
-#: ../relationship.php:726
+#: ../relationship.php:649
 msgid "No link between the two individuals could be found."
 msgstr "Không tìm thấy liên hệ nào (khác) hai người này."
 
-#: ../relationship.php:728
+#: ../relationship.php:651
 msgid "No other link between the two individuals could be found."
 msgstr ""
 
-#: ../relationship.php:741 ../help_text.php:5260
+#: ../relationship.php:664 ../help_text.php:5260
 msgid "Find next path"
 msgstr "Tìm đường kế tiếp"
 
@@ -5578,6 +6330,24 @@ msgstr ""
 msgid "Same as current"
 msgstr "Giống như cái Hiện Tại"
 
+#: ../addsearchlink.php:87 ../includes/functions/functions_print.php:1807
+#: ../includes/functions/functions_print.php:2031
+#: ../includes/controllers/individual_ctrl.php:850
+#: ../includes/controllers/individual_ctrl.php:859 ../edit_interface.php:614
+#: ../edit_interface.php:2346 ../edit_interface.php:2355
+#: ../addremotelink.php:133
+msgid "Husband"
+msgstr "Chồng"
+
+#: ../addsearchlink.php:88 ../includes/functions/functions_print.php:1809
+#: ../includes/functions/functions_print.php:2031
+#: ../includes/controllers/individual_ctrl.php:849
+#: ../includes/controllers/individual_ctrl.php:858 ../edit_interface.php:612
+#: ../edit_interface.php:2344 ../edit_interface.php:2353
+#: ../addremotelink.php:134
+msgid "Wife"
+msgstr "Vợ"
+
 #: ../addsearchlink.php:89 ../includes/functions/functions_charts.php:307
 #: ../includes/controllers/individual_ctrl.php:864
 #: ../modules/googlemap/googlemap.php:785
@@ -6225,6 +6995,26 @@ msgstr ""
 msgid "Step-Parent Family"
 msgstr ""
 
+#: ../includes/family_nav.php:238
+#: ../includes/controllers/individual_ctrl.php:829
+#: ../modules/family_nav/family_nav.php:264
+#: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:439
+#: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:481
+#: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:618
+#: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:663
+msgid "Step-Father"
+msgstr "Dưỡng phụ"
+
+#: ../includes/family_nav.php:281
+#: ../includes/controllers/individual_ctrl.php:828
+#: ../modules/family_nav/family_nav.php:308
+#: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:533
+#: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:579
+#: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:765
+#: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:810
+msgid "Step-Mother"
+msgstr "Mẹ kế"
+
 #: ../includes/family_nav.php:366 ../modules/family_nav/family_nav.php:395
 msgid "Immediate Family"
 msgstr ""
@@ -6359,16 +7149,16 @@ msgid "Grandmother"
 msgstr "Bà ngoại"
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
-#: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:71
+#: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:72
 msgid "Upcoming Events"
 msgstr "Khối Sự Việc Sắp Xảy Tới "
 
 #: ../includes/functions/functions_rss.php:109 ../calendar.php:125
-#: ../blocks/todays_events.php:94 ../blocks/rss_block.php:70
+#: ../blocks/todays_events.php:94 ../blocks/rss_block.php:71
 msgid "On This Day ..."
 msgstr "Trong Ngày Này, trong Quá Khứ Của Bạn..."
 
-#: ../includes/functions/functions_rss.php:139 ../blocks/rss_block.php:72
+#: ../includes/functions/functions_rss.php:139 ../blocks/rss_block.php:73
 #: ../blocks/gedcom_stats.php:43 ../blocks/gedcom_stats.php:94
 msgid "GEDCOM Statistics"
 msgstr "Khối thống kê GEDCOM"
@@ -6413,13 +7203,13 @@ msgid "Most Common Surnames"
 msgstr "Tên họ thông thường nhất"
 
 #: ../includes/functions/functions_rss.php:275 ../blocks/top10_surnames.php:39
-#: ../blocks/rss_block.php:74
+#: ../blocks/rss_block.php:75
 msgid "Top 10 Surnames"
 msgstr "Khối 10 tên họ phổ thông nhất"
 
 #: ../includes/functions/functions_rss.php:319
 #: ../includes/functions/functions_print_lists.php:1619 ../help_text.php:5385
-#: ../blocks/rss_block.php:75 ../blocks/recent_changes.php:39
+#: ../blocks/rss_block.php:76 ../blocks/recent_changes.php:39
 #: ../blocks/recent_changes.php:79
 msgid "Recent Changes"
 msgstr "Khối Thay Đổi Mới Đây"
@@ -6447,7 +7237,7 @@ msgid "CHAN"
 msgstr "Cập Nhật Hóa"
 
 #: ../includes/functions/functions_rss.php:423 ../blocks/random_media.php:194
-#: ../blocks/rss_block.php:76
+#: ../blocks/rss_block.php:77
 msgid "Random Picture"
 msgstr "Bức ảnh tuyển lựa tình cờ"
 
@@ -8098,32 +8888,97 @@ msgstr ""
 msgid "(aged %s)"
 msgstr ""
 
+#: ../includes/classes/class_i18n.php:208
+msgid "first"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:209
+msgid "second"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:210
+msgid "third"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:211
+msgid "fourth"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:212
+msgid "fifth"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:213
+msgid "sixth"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:214
+msgid "seventh"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:215
+msgid "eighth"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:216
+msgid "ninth"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:217
+msgid "tenth"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:218
+msgid "eleventh"
+msgstr ""
+
 #: ../includes/classes/class_i18n.php:219
+msgid "twelfth"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:220
+msgid "thirteenth"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:221
+msgid "fourteenth"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:222
+msgid "fifteenth"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:223
+#, php-format
+msgid "%d x"
+msgstr ""
+
+#: ../includes/classes/class_i18n.php:241
 #, php-format
 msgid "%d year ago"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:222
+#: ../includes/classes/class_i18n.php:244
 #, php-format
 msgid "%d month ago"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:225
+#: ../includes/classes/class_i18n.php:247
 #, php-format
 msgid "%d day ago"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:228
+#: ../includes/classes/class_i18n.php:250
 #, php-format
 msgid "%d hour ago"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:231
+#: ../includes/classes/class_i18n.php:253
 #, php-format
 msgid "%d minute ago"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:233
+#: ../includes/classes/class_i18n.php:255
 #, php-format
 msgid "%d second ago"
 msgstr ""
@@ -8327,6 +9182,16 @@ msgstr "Xóa nhân vật này"
 msgid "Parent"
 msgstr "Cha Mẹ"
 
+#: ../includes/controllers/individual_ctrl.php:823
+#: ../modules/relatives/relatives.php:287
+msgid "Sister"
+msgstr "Anh (Em) Gái"
+
+#: ../includes/controllers/individual_ctrl.php:824
+#: ../modules/relatives/relatives.php:286
+msgid "Brother"
+msgstr "Anh (Em) Trai"
+
 #: ../includes/controllers/individual_ctrl.php:827
 msgid "Step-Parent"
 msgstr ""
@@ -8334,6 +9199,14 @@ msgstr ""
 #: ../includes/controllers/individual_ctrl.php:830
 msgid "Half-Sibling"
 msgstr ""
+
+#: ../includes/controllers/individual_ctrl.php:831
+msgid "Half-Sister"
+msgstr "Chị (em) cùng cha khác mẹ, chị (em) cùng mẹ khác cha"
+
+#: ../includes/controllers/individual_ctrl.php:832
+msgid "Half-Brother"
+msgstr "Anh (em) cùng cha khác mẹ, anh (em) cùng mẹ khác cha"
 
 #: ../includes/controllers/individual_ctrl.php:836
 #: ../includes/controllers/individual_ctrl.php:837
@@ -10733,7 +11606,7 @@ msgstr ""
 msgid "Password: "
 msgstr ""
 
-#: ../rss.php:113 ../blocks/rss_block.php:42
+#: ../rss.php:113 ../blocks/rss_block.php:43
 #, php-format
 msgid "News and links from the %s site"
 msgstr ""
@@ -18521,7 +19394,7 @@ msgstr "Khối tin tức GEDCOM"
 msgid "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child."
 msgstr "Khối tin tức GEDCOM cho người thăm viếng xem  những tin tức mới hay là những bài báo đăng lên bởi thành viên quản lý.<br /><br />Nên dùng khối tin tức đặng loan báo một cập nhật quan trọng của kho dữ kiện, một cuộc họp mặt gia đình, hoặc sự ra đời của một đứa bé."
 
-#: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:73
+#: ../blocks/gedcom_news.php:85 ../blocks/rss_block.php:74
 msgid "News"
 msgstr "Tin tức"
 
@@ -18624,7 +19497,7 @@ msgstr "Khối Chào Mừng Thành Viên"
 msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
 msgstr "Cái khối Chào Mừng Thành Viên cho thành viên xem ngày và giờ hiện tại, những mối liên lạc đặng thay đổi tài khoản của mình hay là đi đến <b>Đồ Thị Dòng Giống</b> của mình, và mối liên lạc đặng sửa đổi <b>Trang GedView của Tôi</b> của mình."
 
-#: ../blocks/rss_block.php:41 ../blocks/rss_block.php:55
+#: ../blocks/rss_block.php:42 ../blocks/rss_block.php:56
 msgid "RSS Feeds"
 msgstr "Nơi cung cấp RSS"
 
@@ -18921,6 +19794,12 @@ msgstr "Gia đình với tên họ %s"
 #: ../famlist.php:270
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
 msgstr ""
+
+#~ msgid "Step-Sister"
+#~ msgstr "Chị (em) cùng cha khác mẹ, chị (em) cùng mẹ khác cha"
+
+#~ msgid "Step-Brother"
+#~ msgstr "Anh (em) cùng cha khác mẹ, anh (em) cùng mẹ khác cha"
 
 #~ msgid "<b>Help text for this page or item is not yet available.</b>"
 #~ msgstr "<b>Hướng dẫn cho trang hay món này chưa có.</b>"
