@@ -232,7 +232,7 @@ $i = 0;
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox"><?php echo i18n::translate('Use Googlemap for Place Hierarchy'), help_link('GOOGLEMAP_PH_help'); ?></td>
+		<td class="descriptionbox"><?php echo i18n::translate('Use Googlemap for Place Hierarchy'), help_link('GOOGLEMAP_PH'); ?></td>
 		<td class="optionbox">
 			<select name="NEW_GM_PLACE_HIERARCHY" tabindex="<?php $i++; echo $i?>;">
 				<option value="0" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="0") echo "selected=\"selected\""; ?>><?php echo i18n::translate('No');?></option>
