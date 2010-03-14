@@ -485,14 +485,14 @@ if ($action=="update") {
 	$whichFile = $INDEX_DIRECTORY.$FILE."_conf.php";
 	if (!is_writable($whichFile)) {
 		$errors = true;
-		$error_msg .= "<span class=\"error\"><b>".i18n::translate('E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.', $whichFile)."</b></span><br />";
+		$error_msg .= "<span class=\"error\"><b>".i18n::translate('E R R O R !!!<br />Could not write to file <i>%s</i>.  Please check it for proper Write permissions.', $whichFile)."</b></span><br />";
 		$_SESSION[$gedcom_config]=$configtext;
 		$error_msg .= "<br /><br /><a href=\"".encode_url("config_download.php?file={$gedcom_config}")."\">".i18n::translate('Download GEDCOM configuration.')."</a> ".i18n::translate('Upload the file to your index directory: ')."$INDEX_DIRECTORY<br /><br />\n";
 	}
 	$fp = @fopen($whichFile, "wb");
 	if (!$fp) {
 		$errors = true;
-		$error_msg .= "<span class=\"error\">".i18n::translate('E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.', $whichFile)."</span><br />\n";
+		$error_msg .= "<span class=\"error\">".i18n::translate('E R R O R !!!<br />Could not write to file <i>%s</i>.  Please check it for proper Write permissions.', $whichFile)."</span><br />\n";
 	}
 	else {
 		fwrite($fp, $configtext);
@@ -531,7 +531,7 @@ if ($action=="update") {
 			$fp = @fopen($whichFile, "wb");
 			if (!$fp) {
 				$errors = true;
-				$error_msg .= "<span class=\"error\">".i18n::translate('E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.', $whichFile)."</span><br />\n";
+				$error_msg .= "<span class=\"error\">".i18n::translate('E R R O R !!!<br />Could not write to file <i>%s</i>.  Please check it for proper Write permissions.', $whichFile)."</span><br />\n";
 			} else {
 				fwrite($fp, $httext);
 				fclose($fp);
@@ -552,7 +552,7 @@ if ($action=="update") {
 			$fp = @fopen($whichFile, "wb");
 			if (!$fp) {
 				$errors = true;
-				$error_msg .= "<span class=\"error\">".i18n::translate('E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.', $whichFile)."</span><br />\n";
+				$error_msg .= "<span class=\"error\">".i18n::translate('E R R O R !!!<br />Could not write to file <i>%s</i>.  Please check it for proper Write permissions.', $whichFile)."</span><br />\n";
 			} else {
 				fwrite($fp, $httext);
 				fclose($fp);

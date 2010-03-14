@@ -231,7 +231,7 @@ if ($action == "choose" && $paramok) {
 		foreach ($rem_exist_links as $remLinkId) {
 			global $linkToId;
 			$linkToId = PrintReady($remLinkId);
-			echo i18n::translate('Link to #GLOBALS[remLinkId]# deleted', $remLinkId);
+			echo i18n::translate('Link to %s deleted', $remLinkId);
 			echo '<br />';
 			if ($update_CHAN=='no_change') {
 				unlinkMedia($remLinkId, 'OBJE', $mediaid, 1, false);

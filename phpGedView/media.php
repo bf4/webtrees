@@ -464,12 +464,12 @@ if (check_media_structure()) {
 					$thumbnail = str_replace("$MEDIA_DIRECTORY", $MEDIA_DIRECTORY."thumbs/", check_media_depth($media["FILE"], "NOTRUNC"));
 					if (!$media["THUMBEXISTS"]) {
 						if (generate_thumbnail($media["FILE"], $thumbnail)) {
-							echo i18n::translate('Thumbnail #thumbnail# generated automatically.', $thumbnail);
+							echo i18n::translate('Thumbnail %s generated automatically.', $thumbnail);
 							AddToChangeLog("Thumbnail {$thumbnail} generated automatically.");
 						}
 						else {
 							echo "<span class=\"error\">";
-							echo i18n::translate('Thumbnail #thumbnail# could not be generated automatically.', $thumbnail);
+							echo i18n::translate('Thumbnail %s could not be generated automatically.', $thumbnail);
 							echo "</span>";
 							AddToChangeLog("Thumbnail {$thumbnail} could not be generated automatically.");
 						}
@@ -482,12 +482,12 @@ if (check_media_structure()) {
 			if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
 				$thumbnail = str_replace("$MEDIA_DIRECTORY", $MEDIA_DIRECTORY."thumbs/", check_media_depth($filename, "NOTRUNC"));
 				if (generate_thumbnail($filename, $thumbnail)) {
-					echo i18n::translate('Thumbnail #thumbnail# generated automatically.', $thumbnail);
+					echo i18n::translate('Thumbnail %s generated automatically.', $thumbnail);
 					AddToChangeLog("Thumbnail {$thumbnail} generated automatically.");
 				}
 				else {
 					echo "<span class=\"error\">";
-					echo i18n::translate('Thumbnail #thumbnail# could not be generated automatically.', $thumbnail);
+					echo i18n::translate('Thumbnail %s could not be generated automatically.', $thumbnail);
 					echo "</span>";
 					AddToChangeLog("Thumbnail {$thumbnail} could not be generated automatically.");
 				}
