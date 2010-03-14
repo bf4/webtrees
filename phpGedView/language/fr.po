@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-14 11:23+0000\n"
+"POT-Creation-Date: 2010-03-14 11:59+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -763,9 +763,9 @@ msgid "Please enter a valid email address."
 msgstr "Merci de fournir une adresse courriel valide."
 
 #: ../message.php:141
-#, fuzzy, php-format
+#, php-format
 msgid "Message successfully sent to %s"
-msgstr "Message envoyé"
+msgstr ""
 
 #: ../message.php:156 ../useradmin.php:575 ../useradmin.php:609
 #: ../edit_changes.php:139 ../includes/classes/class_stats.php:3673
@@ -991,9 +991,8 @@ msgstr "Type de module inconnu."
 
 #: ../themes/mercury/templates/personbox_template.php:62
 #: ../themes/belgianchocolate/templates/personbox_template.php:62
-#, fuzzy
 msgid "loading"
-msgstr "Chargement..."
+msgstr ""
 
 #: ../themes/fab/header.php:113 ../includes/functions/functions_print.php:778
 #: ../blocks/login_block.php:55 ../blocks/login_block.php:63
@@ -1175,9 +1174,8 @@ msgstr "oblique : /"
 
 #: ../downloadgedcom.php:172 ../clippings.php:224
 #: ../modules/clippings/index.php:232
-#, fuzzy
 msgid "Backslashes : \\"
-msgstr "oblique : /"
+msgstr ""
 
 #: ../downloadgedcom.php:175 ../clippings.php:228
 #: ../modules/clippings/index.php:236 ../modules/clippings/clippings.php:91
@@ -1491,14 +1489,12 @@ msgid "Lifespan Chart"
 msgstr "Ligne de temps"
 
 #: ../lifespan.php:68
-#, fuzzy
 msgid "Add another person to chart"
-msgstr "Ajouter une personne au diagramme "
+msgstr ""
 
 #: ../lifespan.php:68
-#, fuzzy
 msgid "Person ID:"
-msgstr "ID individu [local]"
+msgstr ""
 
 #: ../lifespan.php:72
 msgid "Include Immediate Family"
@@ -1601,9 +1597,8 @@ msgid "Your current database configuration is bad.  Please check your database c
 msgstr "Mauvais fichier de configuration.  Veuillez vérifier vos paramètres de connexion à la base de données et recommencer la configuration."
 
 #: ../install.php:180 ../install.php:233
-#, fuzzy
 msgid "The <i></i> directory is not writable."
-msgstr "Répertoire Media non supprimé."
+msgstr ""
 
 #: ../install.php:341 ../login_register.php:406
 msgid "Unable to add user.  Please try again."
@@ -1657,9 +1652,9 @@ msgid "Failed"
 msgstr "Echec"
 
 #: ../install.php:500
-#, fuzzy, php-format
+#, php-format
 msgid "PhpGedView requires PHP version %s or higher."
-msgstr "Vérification de la version de PHP:"
+msgstr ""
 
 #: ../install.php:501
 #, php-format
@@ -2150,14 +2145,12 @@ msgid "To Source"
 msgstr "à une source"
 
 #: ../inverselink.php:62
-#, fuzzy
 msgid "To Repository"
-msgstr "Supprimer ce dépôt d'archives"
+msgstr ""
 
 #: ../inverselink.php:65
-#, fuzzy
 msgid "To Shared Note"
-msgstr "Ajouter une nouvelle note partagée"
+msgstr ""
 
 #: ../inverselink.php:70 ../inverselink.php:118
 #: ../modules/GEDFact_assistant/_MEDIA/media_query_3a.php:34
@@ -2865,9 +2858,8 @@ msgid "Maximum number of surnames"
 msgstr "Nombre maximal de noms de famille"
 
 #: ../editconfig_gedcom.php:1717
-#, fuzzy
 msgid "Maximum number of family names of surnames"
-msgstr "Nombre maximal de noms de famille"
+msgstr ""
 
 #: ../editconfig_gedcom.php:1723 ../help_text.php:3640
 msgid "Surname list style"
@@ -3595,36 +3587,32 @@ msgstr "Ne montrer à personne"
 
 #: ../module_admin.php:96 ../module_admin.php:183 ../admin.php:182
 #: ../help_text.php:2701
-#, fuzzy
 msgid "Module Administration"
-msgstr "_Gestion des utilisateurs"
+msgstr ""
 
 #: ../module_admin.php:184
 msgid "Below is the list of all the modules installed in this instance of PhpGedView.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them."
 msgstr ""
 
 #: ../module_admin.php:185
-#, fuzzy
 msgid "Return to Administration page"
-msgstr "_GEDCOM : Administration"
+msgstr ""
 
 #: ../module_admin.php:192
 msgid "Installed Modules"
 msgstr ""
 
 #: ../module_admin.php:193
-#, fuzzy
 msgid "Manage Menus"
-msgstr "Gestion des objets MultiMédia"
+msgstr ""
 
 #: ../module_admin.php:194
 msgid "Manage Tabs"
 msgstr ""
 
 #: ../module_admin.php:195
-#, fuzzy
 msgid "Manage Sidebars"
-msgstr "Gestion des objets MultiMédia"
+msgstr ""
 
 #: ../module_admin.php:202 ../editlang_edit_settings.php:202
 #: ../changelanguage.php:182 ../changelanguage.php:198 ../help_text.php:3759
@@ -3637,9 +3625,8 @@ msgstr ""
 
 #: ../module_admin.php:204 ../module_admin.php:252 ../module_admin.php:303
 #: ../module_admin.php:354
-#, fuzzy
 msgid "Module Name"
-msgstr "Supprimer le nom"
+msgstr ""
 
 #: ../module_admin.php:205 ../module_admin.php:253 ../module_admin.php:304
 #: ../module_admin.php:355
@@ -3655,9 +3642,8 @@ msgid "Tab?"
 msgstr ""
 
 #: ../module_admin.php:208
-#, fuzzy
 msgid "Menu?"
-msgstr "Menu"
+msgstr ""
 
 #: ../module_admin.php:209
 msgid "Sidebar?"
@@ -4840,9 +4826,8 @@ msgid "Macintosh file detected.  On cleanup your file will be converted to a DOS
 msgstr "Fichier au format Macintosh. Au chargement, il sera converti au format DOS."
 
 #: ../uploadgedcom.php:619
-#, fuzzy
 msgid "Empty lines were detected in your GEDCOM file.\tOn cleanup, these empty lines will be removed."
-msgstr "Lignes trouvées avant le premier marqueur GEDCOM (0 HEAD). Au chargement, elles seront supprimées."
+msgstr ""
 
 #: ../uploadgedcom.php:628
 msgid "Invalid place encodings were detected.  These errors should be fixed."
@@ -5052,9 +5037,8 @@ msgid "Add an unlinked source"
 msgstr "Ajouter une source isolée"
 
 #: ../admin.php:245
-#, fuzzy
 msgid "Add an unlinked note"
-msgstr "Ajouter une nouvelle note"
+msgstr ""
 
 #: ../admin.php:265
 msgid "Configuration"
@@ -5324,9 +5308,8 @@ msgid "Request new password"
 msgstr "Demander un nouveau mot de passe"
 
 #: ../printlog.php:40 ../help_text.php:2721
-#, fuzzy
 msgid "Print logfile"
-msgstr "Archivage des journaux"
+msgstr ""
 
 #: ../printlog.php:93 ../printlog.php:115 ../printlog.php:160
 msgid "Refresh"
@@ -5580,9 +5563,8 @@ msgid "Add Remote Link"
 msgstr "Ajouter un lien distant"
 
 #: ../addsearchlink.php:71
-#, fuzzy
 msgid "Local Person ID"
-msgstr "Code individu"
+msgstr ""
 
 #: ../addsearchlink.php:75 ../addremotelink.php:270
 msgid "Add Link"
@@ -5909,9 +5891,8 @@ msgid "Other"
 msgstr "Autres"
 
 #: ../includes/config_data.php:92
-#, fuzzy
 msgid "adopted"
-msgstr "Adopté"
+msgstr ""
 
 #: ../includes/config_data.php:93 ../includes/classes/class_stats.php:1881
 #: ../includes/classes/class_stats.php:3799
@@ -5919,14 +5900,12 @@ msgid "birth"
 msgstr "naissance"
 
 #: ../includes/config_data.php:94
-#, fuzzy
 msgid "foster"
-msgstr "Adoptif"
+msgstr ""
 
 #: ../includes/config_data.php:95
-#, fuzzy
 msgid "sealing"
-msgstr "Scellement"
+msgstr ""
 
 #: ../includes/specialchars.php:59
 msgid "Czech"
@@ -6446,14 +6425,14 @@ msgid "Recent Changes"
 msgstr "Bloc «Modifications récentes»"
 
 #: ../includes/functions/functions_rss.php:385
-#, fuzzy, php-format
+#, php-format
 msgid "<b>There have been no changes within the last %s days.</b>"
-msgstr "Affichage des couples mariés depuis moins de 100 ans."
+msgstr ""
 
 #: ../includes/functions/functions_rss.php:387
-#, fuzzy, php-format
+#, php-format
 msgid "<b>Changes made within the last %s days</b>"
-msgstr "Affichage des couples mariés depuis moins de 100 ans."
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Last Change"
 #: ../includes/functions/functions_rss.php:396
@@ -6613,9 +6592,8 @@ msgid "LONG"
 msgstr "Longitude"
 
 #: ../includes/functions/functions_edit.php:1664
-#, fuzzy
 msgid "Shared Note using Assistant"
-msgstr "Montrer l'assistant de recherche"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Date of entry in original source"
 #: ../includes/functions/functions_edit.php:1756
@@ -7004,9 +6982,9 @@ msgstr "Événement"
 
 #: ../includes/functions/functions_print_lists.php:1765
 #: ../blocks/yahrzeit.php:231
-#, fuzzy, php-format
+#, php-format
 msgid "Download file %s"
-msgstr "Télécharger le fichier"
+msgstr ""
 
 #: ../includes/functions/functions_print_lists.php:1782
 #: ../includes/functions/functions_print_lists.php:1918
@@ -7035,9 +7013,9 @@ msgstr "<br />d'autres événements existent pour demain, mais leur accès est r
 
 #: ../includes/functions/functions_print_lists.php:1804
 #: ../includes/functions/functions_print_lists.php:1940
-#, fuzzy, php-format
+#, php-format
 msgid "More events exist for the next %s days, but privacy restrictions prevent you from seeing them."
-msgstr "Objet MultiMédia est protégé"
+msgstr ""
 
 #: ../includes/functions/functions_print_lists.php:1808
 #: ../includes/functions/functions_print_lists.php:1944
@@ -7046,9 +7024,9 @@ msgstr "Des événements existent pour demain, mais leur accès est restreint."
 
 #: ../includes/functions/functions_print_lists.php:1810
 #: ../includes/functions/functions_print_lists.php:1946
-#, fuzzy, php-format
+#, php-format
 msgid "Events exist for the next %s days, but privacy restrictions prevent you from seeing them."
-msgstr "Objet MultiMédia est protégé"
+msgstr ""
 
 #: ../includes/functions/functions_print_lists.php:1817
 #: ../includes/functions/functions_print_lists.php:1953
@@ -7106,15 +7084,15 @@ msgstr "Dossier créé"
 
 #: ../includes/functions/functions_mediadb.php:965 ../addmedia.php:241
 #: ../media.php:472 ../media.php:490
-#, fuzzy, php-format
+#, php-format
 msgid "Thumbnail %s could not be generated automatically."
-msgstr "Impossible de créer une vignette pour "
+msgstr ""
 
 #: ../includes/functions/functions_mediadb.php:967 ../addmedia.php:243
 #: ../media.php:467 ../media.php:485
-#, fuzzy, php-format
+#, php-format
 msgid "Thumbnail %s generated automatically."
-msgstr "Une image vignette a été créée automatiquement."
+msgstr ""
 
 #: ../includes/functions/functions_mediadb.php:979
 msgid "Upload successful."
@@ -7187,9 +7165,9 @@ msgid "You can enter up to %s folder names to follow the default &laquo%sraquo;.
 msgstr ""
 
 #: ../includes/functions/functions_mediadb.php:1142
-#, fuzzy, php-format
+#, php-format
 msgid "Edit Media Item (%s)"
-msgstr "Editer les détails de cet objet Multimedia "
+msgstr ""
 
 #: ../includes/functions/functions_mediadb.php:1148
 #: ../includes/classes/class_stats_ui.php:176 ../blocks/user_favorites.php:168
@@ -7504,9 +7482,8 @@ msgid "Confidential"
 msgstr "Confidentiel"
 
 #: ../includes/functions/functions_print_facts.php:252
-#, fuzzy
 msgid "MARR_"
-msgstr "Mariage"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Cemetery"
 #: ../includes/functions/functions_print_facts.php:351
@@ -7934,9 +7911,9 @@ msgstr "Famille avec "
 
 #. I18N This is a report footer. %s is the name of the application.
 #: ../includes/classes/class_reportbase.php:247
-#, fuzzy, php-format
+#, php-format
 msgid "Generated by %s"
-msgstr "Générer"
+msgstr ""
 
 #: ../includes/classes/class_stats_ui.php:68
 #: ../includes/classes/class_stats_ui.php:74 ../blocks/user_favorites.php:100
@@ -8127,9 +8104,9 @@ msgid "%d year ago"
 msgstr ""
 
 #: ../includes/classes/class_i18n.php:222
-#, fuzzy, php-format
+#, php-format
 msgid "%d month ago"
-msgstr "1 mois"
+msgstr ""
 
 #: ../includes/classes/class_i18n.php:225
 #, php-format
@@ -8142,9 +8119,9 @@ msgid "%d hour ago"
 msgstr ""
 
 #: ../includes/classes/class_i18n.php:231
-#, fuzzy, php-format
+#, php-format
 msgid "%d minute ago"
-msgstr "1 minute"
+msgstr ""
 
 #: ../includes/classes/class_i18n.php:233
 #, php-format
@@ -8295,9 +8272,8 @@ msgstr "Confirmez-vous la suppression de cet objet ?"
 #: ../includes/controllers/media_ctrl.php:233
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:256
 #: ../media.php:754
-#, fuzzy
 msgid "Manage links"
-msgstr "Conserver les liens"
+msgstr ""
 
 #: ../includes/controllers/remotelink_ctrl.php:403
 msgid "Successfully added link"
@@ -8663,9 +8639,8 @@ msgid "Pause Slideshow"
 msgstr ""
 
 #: ../modules/lightbox/functions/lb_call_js.php:58
-#, fuzzy
 msgid "Start Slideshow"
-msgstr "Démarrer le diaporama au chargement de la page ?"
+msgstr ""
 
 #: ../modules/lightbox/functions/lb_call_js.php:59
 msgid "Turn Music On/Off"
@@ -8680,9 +8655,8 @@ msgid "Zoom is enabled ... Use mousewheel or i and o keys to zoom in and out"
 msgstr ""
 
 #: ../modules/lightbox/functions/lb_call_js.php:62
-#, fuzzy
 msgid "Close Lightbox window"
-msgstr "Fermer automatiquement la fenêtre d'édition"
+msgstr ""
 
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:46
 #: ../modules/lightbox/functions/lb_indi_doors_0.php:50
@@ -8720,14 +8694,12 @@ msgid "View Details"
 msgstr "Afficher détails"
 
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:250
-#, fuzzy
 msgid "Edit Media"
-msgstr "Choisir un objet MultiMédia"
+msgstr ""
 
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:261
-#, fuzzy
 msgid "Unlink Media"
-msgstr "Choisir un objet MultiMédia"
+msgstr ""
 
 #: ../modules/lightbox/functions/lb_head.php:100
 msgid "Drag-and-drop thumbnails to re-order media items"
@@ -8821,14 +8793,12 @@ msgid "Links"
 msgstr ""
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:166
-#, fuzzy
 msgid "Add links"
-msgstr "Conserver les liens"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:206
-#, fuzzy
 msgid "Do not update the CHAN (Last Change) records"
-msgstr "Conserver la date de mise à jour (CHAN)"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:234
 #, php-format
@@ -8841,9 +8811,8 @@ msgid "Link to %s added"
 msgstr ""
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:271
-#, fuzzy
 msgid "No CHAN (Last Change) records were updated"
-msgstr "Conserver la date de mise à jour (CHAN)"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:44
 msgid "Search for People to add to Add Links list."
@@ -8884,9 +8853,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_query_1a.php:85
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:88
-#, fuzzy
 msgid "Keep Link in list"
-msgstr "Conserver les liens"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_MEDIA/media_query_1a.php:86
 #: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:89
@@ -8938,9 +8906,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:50
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:45
-#, fuzzy
 msgid "MC"
-msgstr "Macao région administrative spéciale de Chine"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:51
 msgid "Marital Condition - M,S,U,W,D - Married, Single, Unmarried, Widowed or Divorced"
@@ -8980,9 +8947,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:60
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:46
-#, fuzzy
 msgid "DOB"
-msgstr "République dominicaine"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:61
 msgid "Date of Birth - mmm yyyy"
@@ -9008,9 +8974,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:66
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:49
-#, fuzzy
 msgid "ChB"
-msgstr "Cuba"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:67
 msgid "Children born alive - nn"
@@ -9018,9 +8983,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:68
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:50
-#, fuzzy
 msgid "ChL"
-msgstr "Chili"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:69
 msgid "Children still living - nn"
@@ -9028,9 +8992,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:70
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:51
-#, fuzzy
 msgid "ChD"
-msgstr "République démocratique du Congo"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:71
 msgid "Children who have died - nn"
@@ -9038,9 +9001,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:72
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:52
-#, fuzzy
 msgid "AgM"
-msgstr "Arménie"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:73
 msgid "Age at first marriage - yy"
@@ -9064,9 +9026,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:78
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:55
-#, fuzzy
 msgid "BP"
-msgstr "Baptême"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:79
 msgid "Birthplace - xx or xxx - State/Country (Chapman format)"
@@ -9083,9 +9044,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:82
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:57
-#, fuzzy
 msgid "MBP"
-msgstr "Gambie"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:83
 msgid "Mother's Birthplace - xx or xxx - State or Country (Chapman format)"
@@ -9093,9 +9053,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:84
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:58
-#, fuzzy
 msgid "NL"
-msgstr "Nouvelle-Calédonie"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:85
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:146
@@ -9106,9 +9065,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:86
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:64
-#, fuzzy
 msgid "Health"
-msgstr "Aide"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:87
 msgid "Health - 12345 = 1.Blind, 2.Deaf&Dumb, 3.Idiotic, 4.Insane, 5.Disabled etc"
@@ -9116,9 +9074,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:88
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:59
-#, fuzzy
 msgid "YUS"
-msgstr "Australie"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:89
 msgid "If Foreign Born - yy -Years in the USA"
@@ -9135,9 +9092,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:92
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:61
-#, fuzzy
 msgid "N/A"
-msgstr "Saint-Kitts-et-Nevis"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:93
 msgid "If Foreign Born - N,A - Naturalized, Alien"
@@ -9145,9 +9101,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:94
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:62
-#, fuzzy
 msgid "YON"
-msgstr "Oman"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:95
 msgid "If Foreign Born - yyyy - Year of Naturalization"
@@ -9190,9 +9145,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:104
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:67
-#, fuzzy
 msgid "EmR"
-msgstr "Éire"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:105
 msgid "Employer? - Y/N"
@@ -9218,9 +9172,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:110
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:70
-#, fuzzy
 msgid "EmN"
-msgstr "Angleterre"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:111
 msgid "UnEmployed? - Y/N"
@@ -9239,9 +9192,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:114
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:73
-#, fuzzy
 msgid "BIC"
-msgstr "Burundi"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:115
 msgid "Born in County - Y/N - (UK 1841 only)"
@@ -9249,9 +9201,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:116
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:74
-#, fuzzy
 msgid "BOE"
-msgstr "Belgique"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:117
 msgid "Born outside England - SCO,IRE,WAL,FOReign - (UK 1841 only)"
@@ -9369,9 +9320,8 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:145
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:75
-#, fuzzy
 msgid "Lang"
-msgstr "Langue"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/addnoteaction_assisted.php:113
 #: ../edit_interface.php:1008
@@ -9404,9 +9354,8 @@ msgid "Marital Condition - Married, Single, Unmarried, Widowed or Divorced"
 msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:46
-#, fuzzy
 msgid "Date of Birth"
-msgstr "Format de date"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:47
 msgid "Month of birth - If born within Census year"
@@ -9765,14 +9714,12 @@ msgid "Select Next Level..."
 msgstr ""
 
 #: ../modules/googlemap/placecheck.php:119
-#, fuzzy
 msgid "List filtering options"
-msgstr "Voir les sous-répertoires"
+msgstr ""
 
 #: ../modules/googlemap/placecheck.php:121
-#, fuzzy
 msgid "Include fully matched places: "
-msgstr "Inclure les noms de mariage"
+msgstr ""
 
 #: ../modules/googlemap/placecheck.php:133
 msgid "Key to colors used below"
@@ -9795,9 +9742,8 @@ msgid "this place level is blank in your GEDCOM file, but exists as 'unknown'<br
 msgstr ""
 
 #: ../modules/googlemap/placecheck.php:153
-#, fuzzy
 msgid "Place list for GEDCOM file"
-msgstr "Synchroniser le fichier GEDCOM avec les modifications dans la base de données"
+msgstr ""
 
 #: ../modules/googlemap/placecheck.php:227
 msgid "GEDCOM File Place Data<br />(2 PLAC tag)"
@@ -9835,14 +9781,12 @@ msgid "Change flag"
 msgstr "Changer de drapeau"
 
 #: ../modules/googlemap/places_edit.php:746
-#, fuzzy
 msgid "Search on this level"
-msgstr "L'option de recherche par texte"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:747
-#, fuzzy
 msgid "Search all"
-msgstr "Recherche et remplace"
+msgstr ""
 
 #: ../modules/googlemap/places_edit.php:751
 #: ../modules/googlemap/editconfig.php:339
@@ -10064,9 +10008,8 @@ msgid "for"
 msgstr "pour"
 
 #: ../modules/googlemap/pedigree_map.php:158
-#, fuzzy
 msgid "Pedigree Chart Options"
-msgstr "Arbre d'ascendance"
+msgstr ""
 
 #: ../modules/googlemap/pedigree_map.php:169 ../help_text.php:3260
 msgid "Cluster Size"
@@ -10100,14 +10043,12 @@ msgid "generations"
 msgstr "générations"
 
 #: ../modules/googlemap/pedigree_map.php:351
-#, fuzzy
 msgid "individual is private."
-msgstr "Préfixe Individu"
+msgstr ""
 
 #: ../modules/googlemap/pedigree_map.php:353
-#, fuzzy
 msgid "individuals are private."
-msgstr "Préfixe Individu"
+msgstr ""
 
 #: ../modules/googlemap/pedigree_map.php:359
 msgid "individual is missing birth place map coordinates:"
@@ -10267,15 +10208,14 @@ msgid "Descendancy"
 msgstr ""
 
 #: ../modules/clippings/pgv_module.php:49
-#, fuzzy
 msgid "Clippings"
-msgstr "Extraction de données"
+msgstr ""
 
 #: ../modules/clippings/clippings.php:121
 #: ../modules/clippings/clippings.php:126
-#, fuzzy, php-format
+#, php-format
 msgid "Add %s to cart"
-msgstr "Ajouter à mes favoris"
+msgstr ""
 
 #: ../modules/clippings/clippings_ctrl.php:325
 msgid "This Individual was downloaded from:"
@@ -10387,18 +10327,16 @@ msgid "There are no media objects for this individual."
 msgstr "Aucun objet MultiMédia lié à cet individu."
 
 #: ../modules/batch_update/plugins/married_names.php:39
-#, fuzzy
 msgid "Add missing married names"
-msgstr "Exclure les noms de mariage"
+msgstr ""
 
 #: ../modules/batch_update/plugins/married_names.php:43
 msgid "You can make it easier to search for married women by recording their married name.<br />However not all women take their husband's surname, so beware of introducing incorrect information into your database."
 msgstr ""
 
 #: ../modules/batch_update/plugins/married_names.php:109
-#, fuzzy
 msgid "Surname Option"
-msgstr "Mode de transmission du nom"
+msgstr ""
 
 #: ../modules/batch_update/plugins/married_names.php:112
 msgid "Wife's surname replaced by husband's surname"
@@ -10417,9 +10355,8 @@ msgid "You can improve the performance of PGV by ensuring that all individuals h
 msgstr ""
 
 #: ../modules/batch_update/plugins/birth_y.php:37
-#, fuzzy
 msgid "Add missing birth records"
-msgstr "leurs coordonnées de lieu de naissance manquantes"
+msgstr ""
 
 #: ../modules/batch_update/plugins/birth_y.php:41
 msgid "You can improve the performance of PGV by ensuring that all individuals have a &laquo;start of life&raquo; event."
@@ -10474,9 +10411,8 @@ msgid "Replacement text"
 msgstr ""
 
 #: ../modules/batch_update/plugins/search_replace.php:114
-#, fuzzy
 msgid "Search method"
-msgstr "Préférence du contact Généalogie"
+msgstr ""
 
 #: ../modules/batch_update/plugins/search_replace.php:116
 msgid "Exact text"
@@ -10499,9 +10435,8 @@ msgid "Tick this box to match both upper and lower case letters."
 msgstr ""
 
 #: ../modules/batch_update/plugins/duplicate_links.php:37
-#, fuzzy
 msgid "Remove duplicate links"
-msgstr "Conserver les liens MultiMédia"
+msgstr ""
 
 #: ../modules/batch_update/plugins/duplicate_links.php:41
 msgid "A common error is to have multiple links to the same record, for example listing the same child more than once in a family record."
@@ -10512,9 +10447,8 @@ msgid "Nothing found."
 msgstr ""
 
 #: ../modules/batch_update/batch_update.php:361
-#, fuzzy
 msgid "Update the CHAN record"
-msgstr "Conserver la date de mise à jour (CHAN)"
+msgstr ""
 
 #: ../modules/batch_update/batch_update.php:371
 msgid "Update"
@@ -10875,9 +10809,9 @@ msgid "Media thumbnail already exists."
 msgstr "La vignette existe déjà."
 
 #: ../addmedia.php:225
-#, fuzzy, php-format
+#, php-format
 msgid "The file %s could not be copied from %s"
-msgstr "Impossible de déplacer le fichier MultiMédia."
+msgstr ""
 
 #: ../addmedia.php:274 ../media.php:506 ../media.php:528
 msgid "Blank name or illegal characters in name"
@@ -10896,14 +10830,14 @@ msgid "Media file could not be moved."
 msgstr "Impossible de déplacer le fichier MultiMédia."
 
 #: ../addmedia.php:341 ../addmedia.php:525
-#, fuzzy, php-format
+#, php-format
 msgid "Main media file <b>%s%s</b> does not exist."
-msgstr "Le fichier optionnel n'existe pas..."
+msgstr ""
 
 #: ../addmedia.php:346 ../addmedia.php:530
-#, fuzzy, php-format
+#, php-format
 msgid "Main media file <b>%s</b> successfully renamed to <b>%s</b>."
-msgstr "Le fichier MultiMédia a été supprimé."
+msgstr ""
 
 #: ../addmedia.php:349 ../addmedia.php:533
 #, php-format
@@ -10917,9 +10851,9 @@ msgstr ""
 
 #: ../addmedia.php:360 ../addmedia.php:394 ../addmedia.php:544
 #: ../addmedia.php:578
-#, fuzzy, php-format
+#, php-format
 msgid "Main media file <b>%s</b> could not be renamed to <b>%s</b>."
-msgstr "Impossible de déplacer ou renommer le fichier MultiMédia."
+msgstr ""
 
 #: ../addmedia.php:363 ../addmedia.php:397 ../addmedia.php:547
 #: ../addmedia.php:581
@@ -10929,19 +10863,19 @@ msgstr ""
 
 #: ../addmedia.php:366 ../addmedia.php:400 ../addmedia.php:550
 #: ../addmedia.php:584
-#, fuzzy, php-format
+#, php-format
 msgid "Main media file could not be moved and renamed from <b>%s%s</b> to <b>%s%s</b>."
-msgstr "Impossible de déplacer ou renommer le fichier MultiMédia."
+msgstr ""
 
 #: ../addmedia.php:375 ../addmedia.php:559
-#, fuzzy, php-format
+#, php-format
 msgid "Thumbnail file <b>%s%s</b> does not exist."
-msgstr "Le fichier optionnel n'existe pas..."
+msgstr ""
 
 #: ../addmedia.php:380 ../addmedia.php:564
-#, fuzzy, php-format
+#, php-format
 msgid "Thumbnail file <b>%s</b> successfully renamed to <b>%s</b>."
-msgstr "Vignette supprimée."
+msgstr ""
 
 #: ../addmedia.php:383 ../addmedia.php:567
 #, php-format
@@ -11014,14 +10948,12 @@ msgid "In This Year ..."
 msgstr "Cette année-là..."
 
 #: ../calendar.php:139
-#, fuzzy
 msgid "Day"
-msgstr "Jour"
+msgstr ""
 
 #: ../calendar.php:153
-#, fuzzy
 msgid "Month"
-msgstr "Mois"
+msgstr ""
 
 #: ../calendar.php:186 ../calendar.php:202 ../calendar.php:203
 #: ../calendar.php:206 ../calendar.php:207 ../calendar.php:440
@@ -11037,9 +10969,8 @@ msgid "Recent Years (&lt; 100 yrs)"
 msgstr "Événements récents (- 100 ans)"
 
 #: ../calendar.php:223
-#, fuzzy
 msgid "Show events of"
-msgstr "Montrer les événements de"
+msgstr ""
 
 #: ../calendar.php:229 ../calendar.php:529
 msgid "Births, Deaths, Marriages"
@@ -12945,15 +12876,13 @@ msgstr "Commentaire"
 
 #. I18N: This is the GEDCOM label for "Concatenation"
 #: ../help_text.php:374
-#, fuzzy
 msgid "CONC"
-msgstr "Confirmation"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Continued"
 #: ../help_text.php:380
-#, fuzzy
 msgid "CONT"
-msgstr "Confirmation"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Confirmation"
 #: ../help_text.php:386
@@ -13052,9 +12981,8 @@ msgstr "Études"
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../help_text.php:526
-#, fuzzy
 msgid "EMAI"
-msgstr "Adresse courriel"
+msgstr ""
 
 #: ../help_text.php:533
 msgid "Enter the email address.<br /><br />An example email address looks like this: <b>name@hotmail.com</b>  Leave this field blank if you do not want to include an email address."
@@ -13266,9 +13194,8 @@ msgstr "Il s'agit d'un champ optionnel qui peut être utilisé pour renseigner l
 
 #. I18N: This is the GEDCOM label for "Gedcom"
 #: ../help_text.php:814
-#, fuzzy
 msgid "GEDC"
-msgstr "Études"
+msgstr ""
 
 #: ../help_text.php:821 ../help_text.php:4461
 msgid "In this field you should enter the given names for the person.  As an example, in the name \"John Robert Finlay\", the given names that should be entered here are \"John Robert\""
@@ -13291,21 +13218,18 @@ msgstr "N° identification"
 
 #. I18N: This is the GEDCOM label for "Individual"
 #: ../help_text.php:856
-#, fuzzy
 msgid "INDI"
-msgstr "Inde"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Infant"
 #: ../help_text.php:862
-#, fuzzy
 msgid "INFL"
-msgstr "Nouvelle-Calédonie"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Language"
 #: ../help_text.php:868
-#, fuzzy
 msgid "LANG"
-msgstr "Longitude"
+msgstr ""
 
 #. I18N: This is the GEDCOM label for "Legatee"
 #: ../help_text.php:880
@@ -14587,57 +14511,48 @@ msgid "Add Media Tool"
 msgstr "Utilitaire «Ajout média»"
 
 #: ../help_text.php:2511
-#, fuzzy
 msgid "Calendar"
-msgstr "Format du calendrier"
+msgstr ""
 
 #: ../help_text.php:2521
 msgid "checklang"
 msgstr ""
 
 #: ../help_text.php:2551
-#, fuzzy
 msgid "Edit Interface"
-msgstr "Editer le genre"
+msgstr ""
 
 #: ../help_text.php:2601
-#, fuzzy
 msgid "Families :"
-msgstr "Familles"
+msgstr ""
 
 #: ../help_text.php:2626
-#, fuzzy
 msgid "Record:"
-msgstr "Enregistrement"
+msgstr ""
 
 #: ../help_text.php:2631
 msgid "Information about:"
 msgstr "Aide sur : "
 
 #: ../help_text.php:2646
-#, fuzzy
 msgid "My Gedview Page"
-msgstr "Mon portail"
+msgstr ""
 
 #: ../help_text.php:2651
-#, fuzzy
 msgid "Individuals :"
-msgstr "Individus"
+msgstr ""
 
 #: ../help_text.php:2661
-#, fuzzy
 msgid "Installation Wizard:"
-msgstr "Assistant d'installation"
+msgstr ""
 
 #: ../help_text.php:2741
-#, fuzzy
 msgid "RSS feed"
-msgstr "Flux RSS"
+msgstr ""
 
 #: ../help_text.php:2756
-#, fuzzy
 msgid "Search Engine Spider Detected:"
-msgstr "Robot détecté"
+msgstr ""
 
 #: ../help_text.php:2811
 msgid "This option controls whether or not to abbreviate labels like <b>Birth</b> on charts with just the first letter like <b>B</b>.<br /><br />You can customize the abbreviations by supplying overriding values in the <i>languages/extra.xx.php</i> file for each language.  For example, if you want to use <b>*</b> instead of <b>N</b> to abbreviate the BIRT fact in the French language, you should put the following entry into the <i>languages/extra.fr.php</i> file:<br /><br /><code>$factAbbrev[\"BIRT\"]&nbsp;=&nbsp;\"*\";</code><br /><br />The lengths of abbreviations specified this way are not limited to 1 character."
@@ -15349,7 +15264,7 @@ msgid "Should the GeoNames database be used to provide more suggestions for plac
 msgstr ""
 
 #: ../help_text.php:3686
-msgid "See the Wiki for a description of how to use the Media Firewall. <a href=\"%s/en/index.php?title=Media_Firewall\" target=\"_blank\">%s</a>"
+msgid "See the Wiki for a description of how to use the Media Firewall. <a href=\"#PGV_PHPGEDVIEW_WIKI#/en/index.php?title=Media_Firewall\" target=\"_blank\">#PGV_PHPGEDVIEW_WIKI#</a>"
 msgstr ""
 
 #: ../help_text.php:3691
@@ -15389,7 +15304,7 @@ msgid "Choose to display a standard header for your custom Welcome text.  When y
 msgstr ""
 
 #: ../help_text.php:3736
-msgid "If you have opted for custom Welcome text, you can type that text here.  The text will NOT be translated into the language of the visitor, but will be shown exactly as you typed it.  However, if your custom text contains references to language variables that you can define in the various <i>languages/extra.xx.php</i> files, your site can show translated text.<br /><br />You can insert HTML tags into your custom Welcome text.<br /><br />The following description, taken from the Help text for the FAQ list, is equally applicable to the custom Welcome text.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href=\"http://htmlhelp.com/reference/html40/entities/\" target=\"_blank\">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable \"Add to Clippings Cart\", and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray[\"AFN\"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>%s&nbsp;%s</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>%s</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>%s</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang[\"faq_title1\"] = \"This is a sample FAQ title\";<br />$pgv_lang[\"faq_body1\"] = \"This is a sample FAQ body.\";"
+msgid "If you have opted for custom Welcome text, you can type that text here.  The text will NOT be translated into the language of the visitor, but will be shown exactly as you typed it.  However, if your custom text contains references to language variables that you can define in the various <i>languages/extra.xx.php</i> files, your site can show translated text.<br /><br />You can insert HTML tags into your custom Welcome text.<br /><br />The following description, taken from the Help text for the FAQ list, is equally applicable to the custom Welcome text.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href=\"http://htmlhelp.com/reference/html40/entities/\" target=\"_blank\">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable \"Add to Clippings Cart\", and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray[\"AFN\"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>#PGV_VERSION#&nbsp;#PGV_VERSION_RELEASE#</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM]#</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM_TITLE]#</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang[\"faq_title1\"] = \"This is a sample FAQ title\";<br />$pgv_lang[\"faq_body1\"] = \"This is a sample FAQ body.\";"
 msgstr ""
 
 #: ../help_text.php:3741
@@ -15445,11 +15360,11 @@ msgid "You can add all or some of this family's information to your Clippings Ca
 msgstr "Ajout famille au panier~<br /><br />Vous pouvez ajouter tout ou partie de cette information familiale à votre Extraction de données. À la prochaine étape vous pourrez choisir avec précision combien d'informations vous souhaitez ajouter :<ol><li>Ajouter seulement cette famille.</li><li>Ajouter les parents avec cette famille.</li><li>Ajouter les parents et les enfants avec la famille.</li><li>Ajouter les parents et tous les descendants avec la famille.</li></ol>"
 
 #: ../help_text.php:3790
-msgid "The text of the FAQ item is entered here.<br /><br />The text can be formatted. HTML tags such as &lt;b&gt; and &lt;br /&gt; are allowed, as are HTML entities such as &amp;amp; and &amp;nbsp;.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href=\"http://htmlhelp.com/reference/html40/entities/\" target=\"_blank\">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable \"Add to Clippings Cart\", and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray[\"AFN\"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>%s&nbsp;%s</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>%s</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>%s</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang[\"faq_title1\"] = \"This is a sample FAQ title\";<br />$pgv_lang[\"faq_body1\"] = \"This is a sample FAQ body.\";"
+msgid "The text of the FAQ item is entered here.<br /><br />The text can be formatted. HTML tags such as &lt;b&gt; and &lt;br /&gt; are allowed, as are HTML entities such as &amp;amp; and &amp;nbsp;.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href=\"http://htmlhelp.com/reference/html40/entities/\" target=\"_blank\">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable \"Add to Clippings Cart\", and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray[\"AFN\"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>#PGV_VERSION#&nbsp;#PGV_VERSION_RELEASE#</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM]#</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM_TITLE]#</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang[\"faq_title1\"] = \"This is a sample FAQ title\";<br />$pgv_lang[\"faq_body1\"] = \"This is a sample FAQ body.\";"
 msgstr ""
 
 #: ../help_text.php:3795
-msgid "This is the title or subject of the FAQ item.<br /><br />What you enter here can be formatted. HTML tags such as &lt;b&gt; and &lt;br /&gt; are allowed, as are HTML entities such as &amp;amp; and &amp;nbsp;.  HTML tags other than &lt;br /&gt; are probably not very useful in the FAQ title and should be avoided.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href=\"http://htmlhelp.com/reference/html40/entities/\" target=\"_blank\">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable \"Add to Clippings Cart\", and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray[\"AFN\"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>%s&nbsp;%s</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>%s</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>%s</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang[\"faq_title1\"] = \"This is a sample FAQ title\";<br />$pgv_lang[\"faq_body1\"] = \"This is a sample FAQ body.\";"
+msgid "This is the title or subject of the FAQ item.<br /><br />What you enter here can be formatted. HTML tags such as &lt;b&gt; and &lt;br /&gt; are allowed, as are HTML entities such as &amp;amp; and &amp;nbsp;.  HTML tags other than &lt;br /&gt; are probably not very useful in the FAQ title and should be avoided.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href=\"http://htmlhelp.com/reference/html40/entities/\" target=\"_blank\">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable \"Add to Clippings Cart\", and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray[\"AFN\"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>#PGV_VERSION#&nbsp;#PGV_VERSION_RELEASE#</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM]#</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM_TITLE]#</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang[\"faq_title1\"] = \"This is a sample FAQ title\";<br />$pgv_lang[\"faq_body1\"] = \"This is a sample FAQ body.\";"
 msgstr ""
 
 #: ../help_text.php:3800
@@ -16004,9 +15919,8 @@ msgid "This page collects all of the major topics of Configuration Help into one
 msgstr ""
 
 #: ../help_text.php:4210
-#, fuzzy
-msgid "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>%s</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
-msgstr "Ce module vous aide à configurer les langues utilisables avec PhpGedView.<br /><br />Attention : au premier changement, PhpGedView va créer un nouveau fichier <tt>lang_settings.php</tt> dans le répertoire <tt>%s</tt>.<br /><br />Ensuite PhpGedView utilisera uniquement ce fichier. Par conséquent, pour tout problème relatif à une langue, merci de préciser que vous utilisez un fichier modifié de votre répertoire <tt>%s</tt>."
+msgid "This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not."
+msgstr ""
 
 #: ../help_text.php:4214
 msgid "context"
@@ -16062,9 +15976,8 @@ msgid "Number of days to show"
 msgstr "Nombre de jours à afficher"
 
 #: ../help_text.php:4255
-#, fuzzy
-msgid "Enter the number of days to show.  This number cannot be greater than <b>%s</b>.  If you enter a larger value, that limit will be used.<br /><br />The limit shown is set by the administrator in the GEDCOM configuration, Display and Layout section, Hide &amp; Show sub-section."
-msgstr "Saisissez le nombre de jours à afficher. Ce nombre ne pourra pas excéder <b>%s</b>.  Si vous entrez une valeur plus grande, la valeur limite sera utilisée.<br /><br />La limite est spécifiée par l'administrateur dans la configuration du GEDCOM, section «Affichage», sous-section «Cacher/Montrer»."
+msgid "Enter the number of days to show.  This number cannot be greater than <b>#DAYS_TO_SHOW_LIMIT#</b>.  If you enter a larger value, that limit will be used.<br /><br />The limit shown is set by the administrator in the GEDCOM configuration, Display and Layout section, Hide &amp; Show sub-section."
+msgstr ""
 
 #: ../help_text.php:4259
 msgid "def_gedcom_date"
@@ -16171,9 +16084,8 @@ msgid "When you click this option, you will mark this Source to be deleted from 
 msgstr "Quand vous cliquez sur cette option, vous marquez cette source «à supprimer» de la base.<br /><br />Qu'est que cela signifie ?<br />Supposons que vous ayez une bonne raison pour vouloir supprimer cette source. En cliquant sur le lien, vous aurez une demande de confirmation de votre suppresssion. En continuant, vous aurez confirmation (après quelques instants) de la suppression.<br /><br />En naviguant sur le site, vous pourrez voir que la suppression n'est pas effective et que la source est toujours utilisable.<br /><br /><b>Ce n'est <u>pas</u> une erreur.</b> Comme toute modification demandée dans la base, celle-ci doit être validée par un administrateur, qui peut accepter ou refuser la modification. <br />C'est seulement après cette validation que la modification sera définitive, irréversible et effective pour l'ensemble des utilisateurs. Si il y a un doute sur votre demande, un administrateur prendra contact avec vous."
 
 #: ../help_text.php:4334
-#, fuzzy
 msgid "desc_generations"
-msgstr "Nombre de générations de l'arbre d'<b>ascendance</b>"
+msgstr ""
 
 #: ../help_text.php:4339
 msgid "desc_rootid"
@@ -16264,9 +16176,8 @@ msgid "This section allows you to add a new source citation to the fact that you
 msgstr "Cette section vous permet d'ajouter une source concernant l'événement que vous mettez à jour.<br /><br />Dans le champ «source», entrez le numéro de la source si celle-ci existe déjà. Cliquez sur le lien <b>Créer une nouvelle source</b> si vous désirez créer une nouvelle source. Dans le champ «Page», vous pouvez entrer les références (cote) ou toute autre information permettant de trouver la source. Dans le champ «Texte», vous pouvez entrer la transcription textuelle de la source."
 
 #: ../help_text.php:4400
-#, fuzzy
 msgid "edit_add_child"
-msgstr "Ajouter un enfant"
+msgstr ""
 
 #: ../help_text.php:4401
 msgid "With this page you can add a new child to the selected family.  Fill out the name of the child and the birth and death information if it is known.  If you don't know some information leave it blank.<br /><br />To add other facts besides birth and death, first add the new child to the database by saving the changes.  Then click on the child's name in the updated Family page or Close Relatives tab to view the child's Individual Information page.  From the Individual Information page you can add more detailed information."
@@ -16385,9 +16296,8 @@ msgid "edit_suffix"
 msgstr ""
 
 #: ../help_text.php:4495
-#, fuzzy
 msgid "edit_surname"
-msgstr "Nom de l'émetteur"
+msgstr ""
 
 #: ../help_text.php:4501
 msgid "Edit message from language file."
@@ -16530,9 +16440,8 @@ msgid "This value determines the number of descendant generations of the root pe
 msgstr "Cette valeur détermine le nombre de générations de descendants de l'individu racine qui sera affiché dans le format Sablier."
 
 #: ../help_text.php:4590
-#, fuzzy
 msgid "fan_style"
-msgstr "Style de présentation"
+msgstr ""
 
 #: ../help_text.php:4591
 msgid "This option controls the appearance of the diagram.<ul><li><b>1/2</b><br />Half circle 180&deg; diagram</li><li><b>3/4</b><br />Three-quarter 270&deg; diagram, sometimes called <i>Angel wing</i></li><li><b>4/4</b><br />Full circle 360&deg; diagram</li></ul>"
@@ -16641,9 +16550,8 @@ msgid "You can have different Privacy settings for each GEDCOM on your PhpGedVie
 msgstr "<b>#pgv_lang[general_settings]#.</b><br />Paramètre par défaut pour ce fichier GEDCOM.<br /><br />Si vous avez chargé plusieurs fichiers GEDCOM sur votre site, chacun peut avoir ses propres paramètres.<br /><br />Certains paramètres sont modifiables sur la page Modifier les règles de confidentialité.<br /><br /><b>Aide détaillée</b><br />Une aide plus détaillée est disponible.<br />Suivre les liens <b>?</b> de la page."
 
 #: ../help_text.php:4680
-#, fuzzy
 msgid "generate_thumb"
-msgstr "Largeur des vignettes"
+msgstr ""
 
 #: ../help_text.php:4681
 msgid "Your system can generate thumbnails for certain types of images automatically.  There may be support for BMP, GIF, JPG, and PNG files.  The types that your system supports are listed beside the checkbox.<br /><br />By clicking this checkbox, you signal the system that you are uploading images of this type and that you want it to try to generate thumbnails for them.  Leave the box unchecked if you want to provide your own thumbnails."
@@ -16758,9 +16666,8 @@ msgid "<dl><dt><b>FAQ List</b></dt><dd>The FAQ (Frequently Asked Questions) page
 msgstr "<dl><dt><b>Liste des FAQ (Foire aux questions)</b></dt><dd>La page FAQ (Questions Fréquemment Posées) peut contenir une vue d'ensemble du site ou une liste de questions et de réponses sur son utilisation.<br /><br />Le mode d'utilisation de la page FAQ est du ressort de l'administrateur. L'administrateur du site en contrôle le contenu ainsi que l'organisation.</dd></dl>"
 
 #: ../help_text.php:4755
-#, fuzzy
 msgid "help"
-msgstr "Aide"
+msgstr ""
 
 #: ../help_text.php:4756
 msgid "Of course, it would be ideal to create a program so simple and easy to use that it doesn't need any explanation at all; it should be as simple as reading a book.<br /><br />Although PhpGedView is very complicated, you should not notice that as you use it; almost everything can be used without explanation.  But, since we may have a lot of visitors and users who are not very experienced with the use of a computer or with the Internet, we offer you some help at certain places.<br /><br />You will find the following items in the Help menu:"
@@ -16863,9 +16770,8 @@ msgid "index_common_names"
 msgstr ""
 
 #: ../help_text.php:4826
-#, fuzzy
-msgid "This block displays a list of frequently occurring surnames from this database. A surname must occur at least %s times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name."
-msgstr "Ce bloc affiche la liste des noms de familles les plus fréquents. Leur nombre est déterminé par l'administrateur.<br /><br />En cliquant sur un nom de la liste, vous afficherez la page <b>Liste des individus</b>, qui vous donnera davantage de détails."
+msgid "This block displays a list of frequently occurring surnames from this database. A surname must occur at least #COMMON_NAMES_THRESHOLD# times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name."
+msgstr ""
 
 #: ../help_text.php:4830
 msgid "index_events"
@@ -16888,7 +16794,7 @@ msgid "index_gedcom_news_adm"
 msgstr ""
 
 #: ../help_text.php:4841
-msgid "The GEDCOM News text allows the use of <b>HTML tags</b> and <b>HTML entities</b>.  HTML should not be used in News titles.<br /><br />Be sure to always use both start and end tags.  It may help to have an understanding of HTML appropriate for a web site administrator. This program uses <b>Cascading Style Sheets (CSS)</b> as well. A different CSS is implemented for each theme.  You can use classes from these style sheets to control the appearance of your messages.<br /><br />If you need more help with this, the PhpGedView web site has some examples of how to use these tags in your GEDCOM News block.<br /><br />As with the FAQ list, GEDCOM News titles and News text allow embedded references to $pgv_lang, $factarray, and $GLOBALS variables to provide complete flexibility in the creation of News items that are sensitive to the currently active language.<br /><br />The following description, taken from the Help text for the FAQ list, is equally applicable to GEDCOM News items.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href=\"http://htmlhelp.com/reference/html40/entities/\" target=\"_blank\">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable \"Add to Clippings Cart\", and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray[\"AFN\"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>%s&nbsp;%s</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>%s</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>%s</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang[\"faq_title1\"] = \"This is a sample FAQ title\";<br />$pgv_lang[\"faq_body1\"] = \"This is a sample FAQ body.\";"
+msgid "The GEDCOM News text allows the use of <b>HTML tags</b> and <b>HTML entities</b>.  HTML should not be used in News titles.<br /><br />Be sure to always use both start and end tags.  It may help to have an understanding of HTML appropriate for a web site administrator. This program uses <b>Cascading Style Sheets (CSS)</b> as well. A different CSS is implemented for each theme.  You can use classes from these style sheets to control the appearance of your messages.<br /><br />If you need more help with this, the PhpGedView web site has some examples of how to use these tags in your GEDCOM News block.<br /><br />As with the FAQ list, GEDCOM News titles and News text allow embedded references to $pgv_lang, $factarray, and $GLOBALS variables to provide complete flexibility in the creation of News items that are sensitive to the currently active language.<br /><br />The following description, taken from the Help text for the FAQ list, is equally applicable to GEDCOM News items.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href=\"http://htmlhelp.com/reference/html40/entities/\" target=\"_blank\">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable \"Add to Clippings Cart\", and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray[\"AFN\"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>#PGV_VERSION#&nbsp;#PGV_VERSION_RELEASE#</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM]#</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM_TITLE]#</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang[\"faq_title1\"] = \"This is a sample FAQ title\";<br />$pgv_lang[\"faq_body1\"] = \"This is a sample FAQ body.\";"
 msgstr ""
 
 #: ../help_text.php:4845
@@ -16972,9 +16878,8 @@ msgid "You can login on almost every page of this program. You will usually do s
 msgstr "Vous n'aurez accès aux informations protégées qu'une fois connecté.<br />Pour cela, entrez votre <b>nom d'utilisateur</b> et votre <b>mot de passe</b>.<br /><br />~Demander un nouveau mot de passe~<br />Si vous avez perdu votre mot de passe, cliquez sur ce lien. Vous serez redirigé vers le formulaire de «Demande de mot de passe perdu»."
 
 #: ../help_text.php:4895
-#, fuzzy
 msgid "index_media"
-msgstr "Choisir un objet MultiMédia"
+msgstr ""
 
 #: ../help_text.php:4896
 msgid "In this block PhpGedView randomly chooses a media file to show you on each visit to this page.<br /><br />When you click on the picture, you will see its full-size version.  Below the picture you have a link to the person associated with the picture.  When you click on the picture caption, you will see the picture on the MultiMedia page. When you click on the person's name, you will be taken to the Individual Information page of that person."
@@ -17005,9 +16910,8 @@ msgid "The Welcome page consists of several separate blocks, and can be customiz
 msgstr ""
 
 #: ../help_text.php:4915
-#, fuzzy
 msgid "index_stats"
-msgstr "Chemin suivant"
+msgstr ""
 
 #: ../help_text.php:4916
 msgid "In this block you will see some statistics about the current GEDCOM file.  If you need more information than is listed, send a message to the contact at the bottom of the page."
@@ -17134,7 +17038,7 @@ msgid "In this field you enter the ID of the person you are linking to (e.g. I10
 msgstr "Dans ce champ vous saisissez l'identifiant (ID GEDCOM) de l'individu avec lequelle vous êtes lié (par exemple I100)."
 
 #: ../help_text.php:5021
-msgid "Use this form to link people to other people either from another site or another genealogical database accessible to your copy of PhpGedView.<br /><br />To add such a link, you must first select the relationship type, then choose a site already known to PhpGedView or define a new site, and then enter that site's ID of the person you want to link to.  PhpGedView will then automatically download information from the remote site as necessary.  The downloaded information does <u>not</u> become part of your genealogical database; it remains on the original site but is incorporated into the various pages where this remotely linked person is displayed.<br /><br />Refer to the Help link next to each element on the page for more information about that element.  You can also check the online English tutorial for more information: <a href=\"%s/en/index.php?title=How_To:Remote_Link_Individuals_Across_Websites_And_Databases\" target=\"_blank\">%s</a>."
+msgid "Use this form to link people to other people either from another site or another genealogical database accessible to your copy of PhpGedView.<br /><br />To add such a link, you must first select the relationship type, then choose a site already known to PhpGedView or define a new site, and then enter that site's ID of the person you want to link to.  PhpGedView will then automatically download information from the remote site as necessary.  The downloaded information does <u>not</u> become part of your genealogical database; it remains on the original site but is incorporated into the various pages where this remotely linked person is displayed.<br /><br />Refer to the Help link next to each element on the page for more information about that element.  You can also check the online English tutorial for more information: <a href=\"#PGV_PHPGEDVIEW_WIKI#/en/index.php?title=How_To:Remote_Link_Individuals_Across_Websites_And_Databases\" target=\"_blank\">#PGV_PHPGEDVIEW_WIKI#</a>."
 msgstr ""
 
 #: ../help_text.php:5025
@@ -17146,9 +17050,8 @@ msgid "This option allows you to choose whether data for the person you are link
 msgstr "Cette option vous permet de choisir si les données que vous liez à cet individu sont sur le même site mais d'une base de données généalogiques différente, ou si les données se trouvent sur un site distant accessible via Internet.<br /><br />Si l'individu est enregistré sur le même site, vous serez invité à sélectionner son identifiant (nom) et son ID (GEDCOM).<br /><br />Dans le cas d'un site distant, vous serez invité à saisir son URL, le nom de la base de données et l'ID (identifiant) de l'individu."
 
 #: ../help_text.php:5030
-#, fuzzy
 msgid "link_remote_rel"
-msgstr "Lier à une personne d'un autre site"
+msgstr ""
 
 #: ../help_text.php:5031
 msgid "Use this option to select the relationship the remote person has to the person you are linking them with on your site.  For example, selecting <i>Father</i> would mean that the person on the remote site is the father of the person you are linking them to locally."
@@ -17441,9 +17344,8 @@ msgid "From this list box you can select the language whose messages you want to
 msgstr ""
 
 #: ../help_text.php:5240
-#, fuzzy
 msgid "new_password"
-msgstr "Mot de passe"
+msgstr ""
 
 #: ../help_text.php:5241
 msgid "If you have forgotten your password, you can click this link to request a new password.<br /><br />You will be taken to the \"Lost Password Request\" page."
@@ -17494,7 +17396,7 @@ msgid "When this check box is checked, the chart will be printed with oldest peo
 msgstr "Option pour afficher les résultats dans le sens parents-enfants du haut vers le bas.<br/>Par défaut, c'est l'inverse : les individus les plus jeunes sont affichés en premier.<br /><br />Ne fonctionne que si l'option <a href=\"?help=line_up_generations_help\">Aligner par génération</a> est activée."
 
 #: ../help_text.php:5280
-msgid "Original name of language in %s"
+msgid "Original name of language in #D_LANGNAME#"
 msgstr ""
 
 #: ../help_text.php:5281
@@ -17626,9 +17528,8 @@ msgid "Should the slideshow start automatically when the page is loaded.<br /><b
 msgstr "Implique que le diaporama se lance automatiquement au chargement de la page.<br /><br />Le diaporama modifie le contenu du bloc sans chargement préalable des informations depuis le serveur (méthode streaming) et sans actualisation complète de la page en cours."
 
 #: ../help_text.php:5380
-#, fuzzy
 msgid "readme"
-msgstr "Bandeau"
+msgstr ""
 
 #: ../help_text.php:5381
 msgid "See <a href=\"readme.txt\" target=\"_blank\"><b>Readme.txt</b></a> for more information."
@@ -17655,9 +17556,8 @@ msgid "Every person in the database has a unique ID number on this site.  If you
 msgstr "Chaque personne figurant dans la base est identifiée par un numéro d'ID unique sur ce site. Si vous connaissez le numéro d'ID de votre enregistrement, entrez le ici. Si vous ne le connaissez pas ou ne pouvez pas le trouver à cause des règles de protections sur la vie privée, veuillez laisser assez de renseignements dans le champ Commentaires pour aider l'administrateur du site à vous identifier, afin de mettre à jour ce champ avec votre numéro d'ID."
 
 #: ../help_text.php:5400
-#, fuzzy
 msgid "relationship_id"
-msgstr "Autoriser l'accès aux détails privés des proches"
+msgstr ""
 
 #: ../help_text.php:5401
 msgid "If you have jumped from another page to this one by having clicked the <b>Relation to me</b> link, you will see here the relationship between yourself and that other individual.<br /><br />If you arrived at this page through the <b>Relationship Chart</b> menu entry on any page header, you have to type the identifier numbers of the two people whose relationship you wish to see.  If you don't know the identifier of the desired person, you can click the <b>Find ID</b> link."
@@ -17833,18 +17733,16 @@ msgid "When you click this link, the information about the repository, as it is 
 msgstr "Quand vous cliquez sur ce lien, les informations à propos du dépôt d'archives, telles qu'enregistrées dans la base de données, sont affichées dans une fenêtre popup."
 
 #: ../help_text.php:5540
-#, fuzzy
 msgid "show_source_gedcom"
-msgstr "Montrer les sources ?"
+msgstr ""
 
 #: ../help_text.php:5541
 msgid "When you click this link, the source's records will be displayed in raw database format."
 msgstr "Ce lien vous permet de visualiser l'enregistrement du fichier GEDCOM correspondant à cette source."
 
 #: ../help_text.php:5545
-#, fuzzy
 msgid "show_spouse"
-msgstr "Montrer les sources ?"
+msgstr ""
 
 #: ../help_text.php:5546
 msgid "By default this chart does not show spouses for the descendants because it makes the chart harder to read and understand.  Turning this option on will show spouses on the chart."
@@ -18022,19 +17920,17 @@ msgid "Unlike the <b>Add GEDCOM</b> function, the GEDCOM file you wish to add to
 msgstr "Le chargement d'un fichier sur le serveur peut se faire directement ici, sans programme de type <tt>ftp</tt>.<br /><br />Il suffit de sélectionner un fichier GEDCOM sur votre poste, soit en entrant le chemin complet comme par exemple <tt>C:\\Program Files\\PAF\\famille.ged</tt>, soit en utilisant le sélecteur de fichier sur la page.<br /><br />D'autres textes d'aide seront disponibles pendant le déroulement de la procédure."
 
 #: ../help_text.php:5685
-#, fuzzy
 msgid "upload_media_file"
-msgstr "Charger des objets MultiMédia"
+msgstr ""
 
 #: ../help_text.php:5686
-#, fuzzy, php-format
+#, php-format
 msgid "In this field you specify the location and name, on your local computer, of the media file you wish to upload to the server.  You can use the <b>Browse</b> button to search your local computer for the desired file.<br /><br />The uploaded file will have the same name on the server, and it will be uploaded to the directory specified in the <b>Folder on server</b> field.<br /><br />If you do not see the <b>Folder on server</b> field or cannot change it, you do not have sufficient permissions or your GEDCOM configuration has been set to allow no directory levels beyond the default <b>%s</b>.  In this case, the media file will be uploaded to the directory <b>%s</b>."
-msgstr "Dans ce champ vous spécifiez la localisation et le nom, sur votre ordinateur local, du fichier média que vous souhaitez télécharger sur le serveur. Vous pouvez utiliser le bouton <b>Parcourir</b> pour rechercher sur votre ordinateur le fichier souhaité.<br /><br />Le fichier téléchargé conservera le même nom sur le serveur et il sera téléchargé vers le répertoire spécifié dans le champ <b>Répertoire</b>.  Si vous ne voyez pas ce champ ou ne pouvez pas le changer, la configuration de votre fichier GEDCOM a été paramétrée pour vous interdire l'ajout de sous-répertoires au-delà du niveau de répertoire par défaut <b>%s</b> où sont normalement stockés les fichiers média.<br /><br />Vous pouvez laisser ce champ vide si vous voulez uniquement mettre à jour la vignette et faire de la vignette l'image principale."
+msgstr ""
 
 #: ../help_text.php:5690
-#, fuzzy
 msgid "upload_media_folder"
-msgstr "Charger des objets MultiMédia"
+msgstr ""
 
 #: ../help_text.php:5691
 #, php-format
@@ -18042,9 +17938,8 @@ msgid "Your GEDCOM configuration allows up to %s directory levels beyond the def
 msgstr "Votre configuration GEDCOM permet jusqu'à  %s niveaux de répertoires au delà du répertoire par défaut <b>%s</b> là où les fichiers média téléchargés sont normalement stockés. Ceci vous laisse organiser vos fichiers média, et ainsi vous n'avez pas à vous soucier de maintenir des noms uniques pour chacun des médias stocké.<br /><br />Dans ce champ, vous indiquez le répertoire de destination sur votre serveur où le fichier média doit être téléchargé et stocké.  Soyez attentif à l'utilisation des minuscules ou majuscules quand vous sélectionnez ou saisissez des noms de fichiers ou de dossiers, puisque ces noms sont sensibles aux majuscules/minuscules.<br /><br />Si le nom du répertoire que vous saisissez ici n'existe pas, il sera créé automatiquement. Si vous entrez plus de sous-dossiers ou sous-répertoires que les %s niveaux de répertoires autorisés par votre configuration GEDCOM, les informations entrées seront tronquées en conséquence.<br /><br />Les vignettes (miniatures) seront téléchargées ou créées dans une structure indentique, commençant par <b>%sthumbs/</b>."
 
 #: ../help_text.php:5696
-#, fuzzy
-msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>%s</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to %s. For example, %smyfamily. If the thumbnail directory does not exist, it is created automatically."
-msgstr "Choisir un fichier sur votre poste. Il sera copié sur le serveur dans le dossier <b>%s</b> ou un de ses sous-dossiers.<br /><br />Le nom du dossier sera ajouté à %s. Par exemple, %sfamille. Si le dossier de vignettes n'existe pas, il sera créé automatiquement."
+msgid "Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically."
+msgstr ""
 
 #: ../help_text.php:5701
 msgid "This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>."
@@ -18137,18 +18032,16 @@ msgid "On this page you can administer the current users and add new users.<br /
 msgstr "Sur cette page vous pouvez administrer les utilisateurs ou en ajouter de nouveaux.<br /><br /><b>Liste des utilisateurs</b><br />Dans ce tableau, les utilisateurs courants, leur statut et leurs droits sont affichés.  Vous pouvez <b>supprimer</b> ou <b>éditer</b> les utilisateurs.<br /><br /><b>Ajouter un nouvel utilisateur</b><br />Ce formulaire est presque identique à celui que les utilisateurs voient sur leur page <b>Mon compte</b>.<br /><br />Pour différentes rubriques il n'existe pas de texte d'aide spécifique pour l'administrateur. Dans ces cas là vous verrez s'afficher le message suivant :"
 
 #: ../help_text.php:5760
-#, fuzzy
 msgid "useradmin_path_length"
-msgstr "Degré de parenté pour l'accès aux détails privés"
+msgstr ""
 
 #: ../help_text.php:5761
 msgid "If <i>Limit access to related people</i> is enabled, this user will only be able to see or edit living individuals within this number of relationship steps."
 msgstr "Si <i>Limiter l'accès aux proches</i> est actif, cet utilisateur ne pourra voir ou éditer que les individus vivants dans le degré de parenté indiqué."
 
 #: ../help_text.php:5765
-#, fuzzy
 msgid "useradmin_relation_priv"
-msgstr "_Gestion des utilisateurs"
+msgstr ""
 
 #: ../help_text.php:5766
 msgid "If this box is checked, the user will only be allowed access to living people that they are related to.  They will be able to see anyone who is within the relationship path length set by their <i>Max relationship privacy path length</i> setting.  You can require relationship privacy for all of your users by turning on the global option in the GEDCOM privacy settings.<br /><br />This setting requires that the user be associated with a GEDCOM ID before they will be able to see any living people."
@@ -18488,9 +18381,8 @@ msgstr "Ce bloc affiche une table des 10 prénoms les plus fréquents présents 
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_givnnames.php:82
-#, fuzzy
 msgid "Top Given Names"
-msgstr "Top 10 des prénoms"
+msgstr ""
 
 #: ../blocks/top10_givnnames.php:135 ../blocks/top10_pageviews.php:135
 #: ../blocks/top10_surnames.php:148
@@ -18651,9 +18543,8 @@ msgstr "Le bloc «Top 10» affiche les 10 noms les plus fréquents."
 
 #. I18N: There are separate lists of male/female names, containing %d names each
 #: ../blocks/top10_surnames.php:119
-#, fuzzy
 msgid "Top Surnames"
-msgstr "Top des patronymes"
+msgstr ""
 
 #: ../blocks/logged_in.php:39
 msgid "Logged In Users"
@@ -18807,9 +18698,9 @@ msgid "There have been no changes within the last %s days."
 msgstr ""
 
 #: ../blocks/recent_changes.php:86
-#, fuzzy, php-format
+#, php-format
 msgid "Changes made within the last %s days"
-msgstr "Affichage des couples mariés depuis moins de 100 ans."
+msgstr ""
 
 #: ../blocks/recent_changes.php:113
 msgid "Should this block be hidden when it is empty?"
@@ -18938,29 +18829,29 @@ msgid "Thumbnail file could not be deleted."
 msgstr "Ce fichier vignette est protégé et ne peut pas être supprimé sans autorisation."
 
 #: ../media.php:690
-#, fuzzy, php-format
+#, php-format
 msgid "Record %s could not be updated."
-msgstr "Impossible de créer le dossier"
+msgstr ""
 
 #: ../media.php:704
-#, fuzzy, php-format
+#, php-format
 msgid "Record %s successfully removed from GEDCOM."
-msgstr "Enregistrement %s mis à jour."
+msgstr ""
 
 #: ../media.php:709
-#, fuzzy, php-format
+#, php-format
 msgid "Record %s could not be removed from GEDCOM."
-msgstr "Le serveur distant ne peut pas être supprimé."
+msgstr ""
 
 #: ../media.php:720
-#, fuzzy, php-format
+#, php-format
 msgid "Record %s successfully added to GEDCOM."
-msgstr "Enregistrement %s mis à jour."
+msgstr ""
 
 #: ../media.php:725
-#, fuzzy, php-format
+#, php-format
 msgid "Record %s could not be added to GEDCOM."
-msgstr "Impossible de créer le dossier"
+msgstr ""
 
 #: ../media.php:846
 msgid "Missing thumbnails"
