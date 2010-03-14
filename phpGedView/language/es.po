@@ -992,12 +992,6 @@ msgstr "Acción desconocida: [acción]."
 msgid "Unknown module type."
 msgstr "Tipo de módulo desconocido."
 
-#: ../themes/mercury/templates/personbox_template.php:62
-#: ../themes/belgianchocolate/templates/personbox_template.php:62
-#, fuzzy
-msgid "loading"
-msgstr "Cargando..."
-
 #: ../themes/fab/header.php:113 ../includes/functions/functions_print.php:778
 #: ../blocks/login_block.php:55 ../blocks/login_block.php:63
 msgid "Logout"
@@ -1174,12 +1168,6 @@ msgstr "Convertir separadores de carpetas de audiovisuales a"
 #: ../downloadgedcom.php:171 ../clippings.php:223
 #: ../modules/clippings/index.php:231
 msgid "Forward slashes : /"
-msgstr "Barras normales"
-
-#: ../downloadgedcom.php:172 ../clippings.php:224
-#: ../modules/clippings/index.php:232
-#, fuzzy
-msgid "Backslashes : \\"
 msgstr "Barras normales"
 
 #: ../downloadgedcom.php:175 ../clippings.php:228
@@ -1492,16 +1480,6 @@ msgstr "Contraseña"
 msgid "Lifespan Chart"
 msgstr "Período de vida"
 
-#: ../lifespan.php:68
-#, fuzzy
-msgid "Add another person to chart"
-msgstr "Agregar otra persona al diagrama:<br />Id Persona:"
-
-#: ../lifespan.php:68
-#, fuzzy
-msgid "Person ID:"
-msgstr "ID de la persona"
-
 #: ../lifespan.php:72
 msgid "Include Immediate Family"
 msgstr "Incluir la familia inmediata"
@@ -1630,11 +1608,6 @@ msgstr "El sitio no está disponible en este momento"
 msgid "Your current database configuration is bad.  Please check your database connection parameters and configure again."
 msgstr "Su configuración actual de la base de datos está mal.  Por favor revise su conexión a la base de datos y configure de nuevo."
 
-#: ../install.php:192 ../install.php:245
-#, fuzzy
-msgid "The <i></i> directory is not writable."
-msgstr "Directorio de objetos audiovisuales no eliminado."
-
 #: ../install.php:353 ../login_register.php:406
 msgid "Unable to add user.  Please try again."
 msgstr "No es posible agregar el usuario.  Por favor, inténtelo nuevamente."
@@ -1685,11 +1658,6 @@ msgstr "Comprobando la versión requerida de PHP:"
 #: ../install.php:511
 msgid "Failed"
 msgstr "Falló"
-
-#: ../install.php:512
-#, fuzzy, php-format
-msgid "PhpGedView requires PHP version %s or higher."
-msgstr "Comprobando la versión requerida de PHP:"
 
 #: ../install.php:513
 #, php-format
@@ -2502,29 +2470,9 @@ msgstr "Persona inicial por omisión en diagramas de Ascendientes y Descendiente
 msgid "Calendar format"
 msgstr "Formato del calendario"
 
-#: ../editconfig_gedcom.php:998
-#, fuzzy
-msgid "No calendar conversion"
-msgstr "¿Permitir la descarga de eventos del calendario?"
-
-#: ../editconfig_gedcom.php:999
-#, fuzzy
-msgid "Gregorian"
-msgstr "Alemán"
-
-#: ../editconfig_gedcom.php:1000
-#, fuzzy
-msgid "Julian"
-msgstr "Ene"
-
 #: ../editconfig_gedcom.php:1001 ../includes/specialchars.php:66
 msgid "French"
 msgstr "Francés"
-
-#: ../editconfig_gedcom.php:1002
-#, fuzzy
-msgid "Jewish"
-msgstr "Sueco"
 
 #: ../editconfig_gedcom.php:1003
 msgid "Jewish and Gregorian"
@@ -2882,11 +2830,6 @@ msgstr "antes de"
 #: ../editconfig_gedcom.php:1723 ../help_text.php:3322
 msgid "Maximum number of surnames"
 msgstr "Número máximo de apellidos"
-
-#: ../editconfig_gedcom.php:1729
-#, fuzzy
-msgid "Maximum number of family names of surnames"
-msgstr "Número máximo de nombres de familias"
 
 #: ../editconfig_gedcom.php:1735 ../help_text.php:3344
 msgid "Surname list style"
@@ -3636,11 +3579,6 @@ msgstr "Gestionar menús"
 msgid "Manage Tabs"
 msgstr "Gestionar pestañas"
 
-#: ../module_admin.php:195
-#, fuzzy
-msgid "Manage Sidebars"
-msgstr "Gestionar objetos audiovisuales"
-
 #: ../module_admin.php:202 ../editlang_edit_settings.php:207
 #: ../changelanguage.php:182 ../changelanguage.php:198 ../help_text.php:3463
 msgid "Active"
@@ -4324,11 +4262,6 @@ msgstr "Agregar archivos y ajustes para un nuevo idioma"
 msgid "Configuration of supported languages"
 msgstr "Configuración de idiomas"
 
-#: ../editlang_edit_settings.php:227
-#, php-format
-msgid "Original name of language in %s"
-msgstr "Nombre original del idioma en %s"
-
 #: ../editlang_edit_settings.php:239 ../help_text.php:4684
 msgid "Abbreviation for language files"
 msgstr "Abreviatura para los archivos de idioma"
@@ -4851,11 +4784,6 @@ msgstr "Se detectaron registros antes del encabezamiento GEDCOM <b>0&nbsp;HEAD</
 msgid "Macintosh file detected.  On cleanup your file will be converted to a DOS file."
 msgstr "Se detectó un archivo Macintosh. Al realizar limpieza será convertido a archivo DOS."
 
-#: ../uploadgedcom.php:619
-#, fuzzy
-msgid "Empty lines were detected in your GEDCOM file.\tOn cleanup, these empty lines will be removed."
-msgstr "Se detectaron registros antes del encabezamiento GEDCOM <b>0&nbsp;HEAD</b>. Al realizar limpieza, estos registros se eliminarán."
-
 #: ../uploadgedcom.php:628
 msgid "Invalid place encodings were detected.  These errors should be fixed."
 msgstr "Se detectaron codificaciones de lugar incorrectas. Estos errores deberían corregirse."
@@ -5304,11 +5232,6 @@ msgstr "¿Ha olvidado la contraseña?"
 msgid "Request new password"
 msgstr "Solicitar una nueva contraseña"
 
-#: ../printlog.php:40 ../help_text.php:2489
-#, fuzzy
-msgid "Print logfile"
-msgstr "Directorio para archivos Log:"
-
 #: ../printlog.php:93 ../printlog.php:115 ../printlog.php:160
 msgid "Refresh"
 msgstr "Refrescar"
@@ -5559,11 +5482,6 @@ msgstr "Agregar vínculo local"
 msgid "Add Remote Link"
 msgstr "Agregar vínculo remoto"
 
-#: ../addsearchlink.php:71
-#, fuzzy
-msgid "Local Person ID"
-msgstr "ID persona raíz"
-
 #: ../addsearchlink.php:75 ../addremotelink.php:270
 msgid "Add Link"
 msgstr "Agregar vínculo"
@@ -5675,13 +5593,6 @@ msgstr "Nombre"
 #: ../search.php:332
 msgid "Last name"
 msgstr "Apellido"
-
-#: ../search.php:348
-#: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
-#: ../calendar.php:172
-#, fuzzy
-msgid "Year"
-msgstr "Encabezamiento"
 
 #: ../search.php:357
 msgid "Soundex type:"
@@ -5889,25 +5800,10 @@ msgstr "Pintura"
 msgid "Other"
 msgstr "Otro"
 
-#: ../includes/config_data.php:92
-#, fuzzy
-msgid "adopted"
-msgstr "Adoptado"
-
 #: ../includes/config_data.php:93 ../includes/classes/class_stats.php:1881
 #: ../includes/classes/class_stats.php:3799
 msgid "birth"
 msgstr "nacimiento"
-
-#: ../includes/config_data.php:94
-#, fuzzy
-msgid "foster"
-msgstr "Adoptivo"
-
-#: ../includes/config_data.php:95
-#, fuzzy
-msgid "sealing"
-msgstr "Sellamiento"
 
 #: ../includes/specialchars.php:59
 msgid "Czech"
@@ -6424,16 +6320,6 @@ msgstr "10 apellidos más frecuentes"
 #: ../blocks/recent_changes.php:79
 msgid "Recent Changes"
 msgstr "Cambios recientes"
-
-#: ../includes/functions/functions_rss.php:385
-#, fuzzy, php-format
-msgid "<b>There have been no changes within the last %s days.</b>"
-msgstr "Mostrar parejas casadas los últimos 100 años."
-
-#: ../includes/functions/functions_rss.php:387
-#, fuzzy, php-format
-msgid "<b>Changes made within the last %s days</b>"
-msgstr "Mostrar parejas casadas los últimos 100 años."
 
 #. I18N: This is the GEDCOM label for "Last Change"
 #: ../includes/functions/functions_rss.php:396
@@ -6981,12 +6867,6 @@ msgstr "Fecha"
 msgid "EVEN"
 msgstr "Evento"
 
-#: ../includes/functions/functions_print_lists.php:1765
-#: ../blocks/yahrzeit.php:231
-#, fuzzy, php-format
-msgid "Download file %s"
-msgstr "Descargar arhivo"
-
 #: ../includes/functions/functions_print_lists.php:1782
 #: ../includes/functions/functions_print_lists.php:1918
 msgid "More events exist for today, but privacy restrictions prevent you from seeing them."
@@ -7012,22 +6892,10 @@ msgstr "No hay eventos para hoy."
 msgid "More events exist for tomorrow, but privacy restrictions prevent you from seeing them."
 msgstr "<br />Hay más eventos para mañana, pero las restricciones de privacidad le impiden verlos."
 
-#: ../includes/functions/functions_print_lists.php:1804
-#: ../includes/functions/functions_print_lists.php:1940
-#, fuzzy, php-format
-msgid "More events exist for the next %s days, but privacy restrictions prevent you from seeing them."
-msgstr "Las retricciones de privacidad no le permiten ver este elemento"
-
 #: ../includes/functions/functions_print_lists.php:1808
 #: ../includes/functions/functions_print_lists.php:1944
 msgid "Events exist for tomorrow, but privacy restrictions prevent you from seeing them."
 msgstr "Hay eventos para mañana, pero las restricciones de privacidad le impiden verlos."
-
-#: ../includes/functions/functions_print_lists.php:1810
-#: ../includes/functions/functions_print_lists.php:1946
-#, fuzzy, php-format
-msgid "Events exist for the next %s days, but privacy restrictions prevent you from seeing them."
-msgstr "Las retricciones de privacidad no le permiten ver este elemento"
 
 #: ../includes/functions/functions_print_lists.php:1817
 #: ../includes/functions/functions_print_lists.php:1953
@@ -7083,15 +6951,13 @@ msgstr "No se pudo crear el directorio"
 msgid "Directory created"
 msgstr "Directorio creado"
 
-#: ../includes/functions/functions_mediadb.php:965 ../addmedia.php:241
-#, fuzzy, php-format
+#: ../media.php:472 ../media.php:490
 msgid "Thumbnail %s could not be generated automatically."
-msgstr "No se pudo borrar el archivo de miniatura."
+msgstr "No se pudo generar automáticamente la miniatura %s."
 
-#: ../includes/functions/functions_mediadb.php:967 ../addmedia.php:243
-#, php-format
+#: ../media.php:467 ../media.php:485
 msgid "Thumbnail %s generated automatically."
-msgstr ""
+msgstr "Miniatura %s generada automáticamente."
 
 #: ../includes/functions/functions_mediadb.php:979
 msgid "Upload successful."
@@ -7162,11 +7028,6 @@ msgstr "Otra carpeta... por favor, introduzca su nombre"
 #, php-format
 msgid "You can enter up to %s folder names to follow the default &laquo%sraquo;.<br />Do not enter the &laquo;%s&raquo; part of the destination folder name."
 msgstr ""
-
-#: ../includes/functions/functions_mediadb.php:1142
-#, fuzzy, php-format
-msgid "Edit Media Item (%s)"
-msgstr "Editar los detalles de este objeto audiovisual"
 
 #: ../includes/functions/functions_mediadb.php:1148
 #: ../includes/classes/class_stats_ui.php:177 ../blocks/user_favorites.php:168
@@ -7473,11 +7334,6 @@ msgstr ""
 #: ../includes/functions/functions_print_facts.php:1461
 msgid "Copy"
 msgstr "Copiar"
-
-#: ../includes/functions/functions_print_facts.php:245
-#, fuzzy
-msgid "MARR_"
-msgstr "Matrimonio"
 
 #. I18N: This is the GEDCOM label for "Cemetery"
 #: ../includes/functions/functions_print_facts.php:344
@@ -8262,16 +8118,6 @@ msgstr "Edad del esposo"
 msgid "Wife's age"
 msgstr "Edad de la esposa"
 
-#: ../includes/controllers/individual_ctrl.php:494
-#: ../modules/GEDFact_assistant/_MEDIA/media_5_input.php:78
-#: ../modules/GEDFact_assistant/_MEDIA/media_query_1a.php:51
-#: ../modules/GEDFact_assistant/_CENS/census_query_1b.php:53
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:46
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:39
-#, fuzzy
-msgid "Name"
-msgstr "Editar nombre"
-
 #: ../includes/controllers/individual_ctrl.php:529 ../help_text.php:4028
 msgid "Delete Name"
 msgstr "Borrar nombre"
@@ -8805,12 +8651,6 @@ msgstr "Introduzca un nombre"
 msgid "Click to choose person as Head of family."
 msgstr "Haga clic para escoger la persona como cabeza de familia."
 
-#: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:100
-#: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:101
-#, fuzzy, php-format
-msgid "Click %s to choose person as Head of family."
-msgstr "Haga clic para escoger la persona como cabeza de familia."
-
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:103
 msgid "Click Name to add person to Add Links List."
 msgstr "Haga clic en el nombre para agregar la persona a la lista de Agregar Vínculos."
@@ -8879,12 +8719,6 @@ msgstr ""
 msgid "Relationship to Head of Household - Head, Wife, Son etc"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:50
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:45
-#, fuzzy
-msgid "MC"
-msgstr "Macao"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:51
 msgid "Marital Condition - M,S,U,W,D - Married, Single, Unmarried, Widowed or Divorced"
 msgstr ""
@@ -8921,12 +8755,6 @@ msgstr ""
 msgid "Male(M) or Female(F)"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:60
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:46
-#, fuzzy
-msgid "DOB"
-msgstr "República Dominicana"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:61
 msgid "Date of Birth - mmm yyyy"
 msgstr ""
@@ -8949,41 +8777,17 @@ msgstr ""
 msgid "Years Married or if married in Census Year - yy or Y"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:66
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:49
-#, fuzzy
-msgid "ChB"
-msgstr "Cuba"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:67
 msgid "Children born alive - nn"
 msgstr ""
-
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:68
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:50
-#, fuzzy
-msgid "ChL"
-msgstr "Chile"
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:69
 msgid "Children still living - nn"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:70
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:51
-#, fuzzy
-msgid "ChD"
-msgstr "República Democrática del Congo"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:71
 msgid "Children who have died - nn"
 msgstr ""
-
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:72
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:52
-#, fuzzy
-msgid "AgM"
-msgstr "Armenia"
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:73
 msgid "Age at first marriage - yy"
@@ -9005,12 +8809,6 @@ msgstr ""
 msgid "Birthplace (Full format)"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:78
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:55
-#, fuzzy
-msgid "BP"
-msgstr "Bautismo"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:79
 msgid "Birthplace - xx or xxx - State/Country (Chapman format)"
 msgstr ""
@@ -9024,21 +8822,9 @@ msgstr ""
 msgid "Father's Birthplace - xx or xxx - State or Country (Chapman format)"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:82
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:57
-#, fuzzy
-msgid "MBP"
-msgstr "Gambia"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:83
 msgid "Mother's Birthplace - xx or xxx - State or Country (Chapman format)"
 msgstr ""
-
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:84
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:58
-#, fuzzy
-msgid "NL"
-msgstr "Nueva Caledonia"
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:85
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:146
@@ -9047,21 +8833,9 @@ msgstr "Nueva Caledonia"
 msgid "If Foreign Born - Native Language"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:86
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:64
-#, fuzzy
-msgid "Health"
-msgstr "Ayuda"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:87
 msgid "Health - 12345 = 1.Blind, 2.Deaf&Dumb, 3.Idiotic, 4.Insane, 5.Disabled etc"
 msgstr ""
-
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:88
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:59
-#, fuzzy
-msgid "YUS"
-msgstr "Australia"
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:89
 msgid "If Foreign Born - yy -Years in the USA"
@@ -9076,21 +8850,9 @@ msgstr ""
 msgid "If Foreign Born - yyyy - Year of Immigration"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:92
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:61
-#, fuzzy
-msgid "N/A"
-msgstr "San Cristóbal y Nevis"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:93
 msgid "If Foreign Born - N,A - Naturalized, Alien"
 msgstr ""
-
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:94
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:62
-#, fuzzy
-msgid "YON"
-msgstr "Omán"
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:95
 msgid "If Foreign Born - yyyy - Year of Naturalization"
@@ -9131,12 +8893,6 @@ msgstr ""
 msgid "Employment - Yes, No, Worker, Employer etc"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:104
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:67
-#, fuzzy
-msgid "EmR"
-msgstr "Eire"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:105
 msgid "Employer? - Y/N"
 msgstr ""
@@ -9159,12 +8915,6 @@ msgstr ""
 msgid "Working at Home? - Y/N"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:110
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:70
-#, fuzzy
-msgid "EmN"
-msgstr "Inglaterra"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:111
 msgid "UnEmployed? - Y/N"
 msgstr ""
@@ -9180,21 +8930,9 @@ msgstr ""
 msgid "Education - xxx - At School? Y/N, Can Read? Y/N, Can Write? Y/N"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:114
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:73
-#, fuzzy
-msgid "BIC"
-msgstr "Burundi"
-
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:115
 msgid "Born in County - Y/N - (UK 1841 only)"
 msgstr ""
-
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:116
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:74
-#, fuzzy
-msgid "BOE"
-msgstr "Bélgica"
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:117
 msgid "Born outside England - SCO,IRE,WAL,FOReign - (UK 1841 only)"
@@ -9310,12 +9048,6 @@ msgstr ""
 msgid "Education - xxx = At School, Cannot Read, Cannot Write = eg x--, xxx, or -xx etc"
 msgstr ""
 
-#: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:145
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:75
-#, fuzzy
-msgid "Lang"
-msgstr "Idioma"
-
 #: ../modules/GEDFact_assistant/_CENS/addnoteaction_assisted.php:113
 #: ../edit_interface.php:1008
 msgid "New Shared Note created successfully."
@@ -9345,11 +9077,6 @@ msgstr ""
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:45
 msgid "Marital Condition - Married, Single, Unmarried, Widowed or Divorced"
 msgstr ""
-
-#: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:46
-#, fuzzy
-msgid "Date of Birth"
-msgstr "Formato fecha"
 
 #: ../modules/GEDFact_assistant/_CENS/census_note_decode.php:47
 msgid "Month of birth - If born within Census year"
@@ -10001,11 +9728,6 @@ msgstr "Países"
 msgid "for"
 msgstr "durante"
 
-#: ../modules/googlemap/pedigree_map.php:158
-#, fuzzy
-msgid "Pedigree Chart Options"
-msgstr "Árbol de Ascendientes"
-
 #: ../modules/googlemap/pedigree_map.php:169 ../help_text.php:2952
 msgid "Cluster Size"
 msgstr "Tamaño del grupo"
@@ -10201,17 +9923,6 @@ msgstr ""
 #: ../modules/descendancy/pgv_module.php:50
 msgid "Descendancy"
 msgstr ""
-
-#: ../modules/clippings/pgv_module.php:49
-#, fuzzy
-msgid "Clippings"
-msgstr "Carrito genealógico"
-
-#: ../modules/clippings/clippings.php:121
-#: ../modules/clippings/clippings.php:126
-#, fuzzy, php-format
-msgid "Add %s to cart"
-msgstr "Agregar a Favoritos"
 
 #: ../modules/clippings/clippings_ctrl.php:325
 msgid "This Individual was downloaded from:"
@@ -10788,11 +10499,6 @@ msgstr "El archivo audiovisual ya existe."
 msgid "Media thumbnail already exists."
 msgstr "La miniatura del archivo audiovisual ya existe."
 
-#: ../addmedia.php:225
-#, fuzzy, php-format
-msgid "The file %s could not be copied from %s"
-msgstr "No se pudo trasladar el archivo audiovisual."
-
 #: ../addmedia.php:274 ../media.php:506 ../media.php:528
 msgid "Blank name or illegal characters in name"
 msgstr "Nombre en blanco o con caracteres no permitidos"
@@ -10809,16 +10515,6 @@ msgstr "No se pudo trasladar o cambiar el nombre del archivo audiovisual."
 msgid "Media file could not be moved."
 msgstr "No se pudo trasladar el archivo audiovisual."
 
-#: ../addmedia.php:341 ../addmedia.php:525
-#, fuzzy, php-format
-msgid "Main media file <b>%s%s</b> does not exist."
-msgstr "El archivo opcional no existe."
-
-#: ../addmedia.php:346 ../addmedia.php:530
-#, fuzzy, php-format
-msgid "Main media file <b>%s</b> successfully renamed to <b>%s</b>."
-msgstr "Archivo audiovisual borrado con éxito."
-
 #: ../addmedia.php:349 ../addmedia.php:533
 #, php-format
 msgid "Main media file <b>%s</b> successfully moved from <b>%s</b> to <b>%s</b>."
@@ -10829,33 +10525,11 @@ msgstr ""
 msgid "Main media file successfully moved and renamed from <b>%s%s</b> to <b>%s%s</b>."
 msgstr ""
 
-#: ../addmedia.php:360 ../addmedia.php:394 ../addmedia.php:544
-#: ../addmedia.php:578
-#, fuzzy, php-format
-msgid "Main media file <b>%s</b> could not be renamed to <b>%s</b>."
-msgstr "No se pudo trasladar o cambiar el nombre del archivo audiovisual."
-
 #: ../addmedia.php:363 ../addmedia.php:397 ../addmedia.php:547
 #: ../addmedia.php:581
 #, php-format
 msgid "Main media file <b>%s</b> could not be moved from <b>%s</b> to <b>%s</b>."
 msgstr ""
-
-#: ../addmedia.php:366 ../addmedia.php:400 ../addmedia.php:550
-#: ../addmedia.php:584
-#, fuzzy, php-format
-msgid "Main media file could not be moved and renamed from <b>%s%s</b> to <b>%s%s</b>."
-msgstr "No se pudo trasladar o cambiar el nombre del archivo audiovisual."
-
-#: ../addmedia.php:375 ../addmedia.php:559
-#, fuzzy, php-format
-msgid "Thumbnail file <b>%s%s</b> does not exist."
-msgstr "El archivo opcional no existe."
-
-#: ../addmedia.php:380 ../addmedia.php:564
-#, fuzzy, php-format
-msgid "Thumbnail file <b>%s</b> successfully renamed to <b>%s</b>."
-msgstr "Archivo de miniatura borrado con éxito."
 
 #: ../addmedia.php:383 ../addmedia.php:567
 #, php-format
@@ -10927,16 +10601,6 @@ msgstr "En un mes como éste..."
 msgid "In This Year ..."
 msgstr "En este año ..."
 
-#: ../calendar.php:139
-#, fuzzy
-msgid "Day"
-msgstr "Día:"
-
-#: ../calendar.php:153
-#, fuzzy
-msgid "Month"
-msgstr "Mes:"
-
 #: ../calendar.php:186 ../calendar.php:202 ../calendar.php:203
 #: ../calendar.php:206 ../calendar.php:207 ../calendar.php:440
 msgid "All People"
@@ -10949,11 +10613,6 @@ msgstr "Personas vivas"
 #: ../calendar.php:194 ../calendar.php:520
 msgid "Recent Years (&lt; 100 yrs)"
 msgstr "Eventos recientes (&lt; 100 años)"
-
-#: ../calendar.php:223
-#, fuzzy
-msgid "Show events of"
-msgstr "Mostrar eventos de:"
 
 #: ../calendar.php:229 ../calendar.php:529
 msgid "Births, Deaths, Marriages"
@@ -11022,11 +10681,6 @@ msgstr "Actualizando."
 #: ../edit_privacy.php:161
 msgid "Config file read."
 msgstr "Leído el fichero de configuración."
-
-#: ../edit_privacy.php:255
-#, php-format
-msgid "E R R O R !!!<br />Could not write to file <i>%s</i>.  Please check it for proper Write permissions."
-msgstr ""
 
 #: ../edit_privacy.php:295 ../edit_privacy.php:297 ../help_text.php:4394
 msgid "General Privacy settings"
@@ -14435,11 +14089,6 @@ msgstr "Brit mila de un sobrino o una sobrina"
 msgid "__BRTM_SIBL"
 msgstr "Brit mila de un hermano"
 
-#: ../help_text.php:2459
-#, fuzzy
-msgid "Edit Interface"
-msgstr "Modificar sexo"
-
 #: ../help_text.php:2494 ../help_text.php:4509
 msgid "Search Help Text"
 msgstr "Buscar en los textos de ayuda"
@@ -15981,11 +15630,6 @@ msgstr "Usar esta opción marca este Repositorio para ser borrado de la base de 
 msgid "When you click this option, you will mark this Source to be deleted from the database.<br /><br />What does that mean?<br />Let's suppose you have a good reason to remove this source from the database. You click the link.  You will be asked to confirm your deletion request.  If you decide to continue, it can take a little time before you see a message that the source is deleted.<br /><br />When you continue with your visit, you will notice that the source is still visible and can be used as if the deletion had not occurred.<br /><br /><b>This is <u>not</u> an error.</b>  The site admin will get a message that a change has been made to the database, and that you removed the Source.<br />The administrator can accept or reject your change. Only after the administrator has accepted your change will the deletion actually occur <u>irreversibly</u>.  If there is any doubt about your change, the administrator will contact you."
 msgstr "Haciendo clic en este vínculo marcará esta fuente para su eliminación de la base de datos.<br /><br />¿Qué significa?<br />Supongamos que tiene una buena razón para eliminar esta fuente de la base de datos. Haga clic en el vínculo.  Se le pedirá que confirme la solicitud de eliminación.  Si decide continuar, puede pasar un poco de tiempo hasta que una nueva ventana aparece diciéndole que la fuente se ha borrado.<br /><br />Cuando continúe con su visita, observará que la fuente todavía es visible y puede utilizarse como si el borrado no hubiera ocurrido.<br /><br /><b>Esto <u>no</u> es un error.</b>  El administrador del sitio recibirá un mensaje advirtiéndole del cambio en la base de datos y de que eliminó la fuente.<br />El administrador puede aceptar o rechazar su cambio.  Sólo después de que el administrador haya aceptado su cambio ocurrirá de verdad el borrado <u>irreversiblemente</u>.  Si hay alguna duda sobre su cambio, el administrador se pondrá en contacto con Vd."
 
-#: ../help_text.php:4048
-#, fuzzy
-msgid "desc_generations"
-msgstr "Generaciones en el Árbol de ascendientes"
-
 #: ../help_text.php:4053
 msgid "desc_rootid"
 msgstr ""
@@ -16058,11 +15702,6 @@ msgstr ""
 msgid "This section allows you to add a new Note to the fact that you are currently editing.  Notes are free-form text and will appear in the Fact Details section of the page."
 msgstr "Esta sección le permite agregar una nueva nota al hecho que está modificando ahora.  Las notas son textos de formato libre y aparecerán entre los detalles del hecho en la página."
 
-#: ../help_text.php:4104
-#, fuzzy
-msgid "edit_add_SHARED_NOTE"
-msgstr "Nota compartida"
-
 #: ../help_text.php:4105
 msgid "Shared notes, like regular notes, are free-form text.  Unlike regular notes, each shared note can be linked to more than one person, family, source, or fact.<br /><br />By clicking the appropriate icon, you can establish a link to an existing shared note or create a new shared note and at the same time link to it.  If a link to an existing shared note has already been established, you can also edit that note's contents.<br /><ul><li><b>Link to an existing shared note</b><div style=\"padding-left:20px;\">If you already know the ID number of the desired shared note, you can enter that number directly into the field.<br /><br />When you click the <b>Find Shared Note</b> icon, you will be able to search the text of all existing shared notes and then choose one of them.  The ID number of the chosen note will be entered into the field automatically.<br /><br />You must click the <b>Add</b> button to update the original record.</div><br /></li><li><b>Create a new shared note</b><div style=\"padding-left:20px;\">When you click the <b>Create a new Shared Note</b> icon, a new window will open.  You can enter the text of the new note as you wish.  As with regular notes, you can enter URLs.<br /><br />When you click the <b>Save</b> button, you will see a message with the ID number of the newly created shared note.  You should click on this message to close the editing window and also copy that new ID number directly into the ID number field.  If you just close the window, the newly created ID number will not be copied automatically.<br /><br />You must click the <b>Add</b> button to update the original record.</div><br /></li><li><b>Edit an existing shared note</b><div style=\"padding-left:20px;\">When you click the <b>Edit Shared Note</b> icon, a new window will open.  You can change the text of the existing shared note as you wish.  As with regular notes, you can enter URLs.<br /><br />When you click the <b>Save</b> button, the text of the shared note will be updated.  You can close the window and then click the <b>Save</b> button again.<br /><br />When you change the text of a shared note, your change will be reflected in all places to which that shared note is currently linked.  New links that you establish after having made your change will also use the updated text.</div></li></ul>"
 msgstr ""
@@ -16074,11 +15713,6 @@ msgstr ""
 #: ../help_text.php:4110
 msgid "This section allows you to add a new source citation to the fact that you are currently editing.<br /><br />In the Source field you enter the ID for the source.  Click the <b>Create a new source</b> link if you need to enter a new source.  In the Citation Details field you would enter the page number or other information that might help someone find the information in the source.  In the Text field you would enter the text transcription from the source."
 msgstr "Esta sección le permita agregar una nueva cita a una fuente al hecho que está editando.<br /><br />En el campo Fuente debe introducir el ID para la fuente.  Haga clic en el vínculo <b>Crear una nueva fuente</b> si necesita agregar una nueva fuente.  En el campo Detalles de la Cita puede introducir el número de página u otra información que permita a otras personas encontrar esta información en la fuente.  En el campo Texto puede introducir la transcripción textual del fragmento de la fuente."
-
-#: ../help_text.php:4114
-#, fuzzy
-msgid "edit_add_child"
-msgstr "Agregar hijo"
 
 #: ../help_text.php:4115
 msgid "With this page you can add a new child to the selected family.  Fill out the name of the child and the birth and death information if it is known.  If you don't know some information leave it blank.<br /><br />To add other facts besides birth and death, first add the new child to the database by saving the changes.  Then click on the child's name in the updated Family page or Close Relatives tab to view the child's Individual Information page.  From the Individual Information page you can add more detailed information."
@@ -16195,11 +15829,6 @@ msgstr ""
 #: ../help_text.php:4204
 msgid "edit_suffix"
 msgstr ""
-
-#: ../help_text.php:4209
-#, fuzzy
-msgid "edit_surname"
-msgstr "Nombre del remitente"
 
 #: ../help_text.php:4215
 msgid "Edit message from language file."
@@ -16345,11 +15974,6 @@ msgstr ""
 msgid "This value determines the number of descendant generations of the root person that will be printed in Hourglass format."
 msgstr "Este valor determina el número de generaciones de descendientes que se muestran en el formato de Reloj de Arena."
 
-#: ../help_text.php:4309
-#, fuzzy
-msgid "fan_style"
-msgstr "Estilo del diagrama"
-
 #: ../help_text.php:4310
 msgid "This option controls the appearance of the diagram.<ul><li><b>1/2</b><br />Half circle 180&deg; diagram</li><li><b>3/4</b><br />Three-quarter 270&deg; diagram, sometimes called <i>Angel wing</i></li><li><b>4/4</b><br />Full circle 360&deg; diagram</li></ul>"
 msgstr "Esta opción controla la apariencia del diagrama en Abanico.<ul><li><b>1/2</b><br />Diagrama en semicírculo 180&deg;</li><br /><li><b>3/4</b><br />Diagrama a tres cuartos 270&deg; llamado a menudo <i>Ala de ángel</i></li><br /><li><b>4/4</b><br />Diagrama de círculo completo 360&deg;</li></ul>"
@@ -16453,11 +16077,6 @@ msgstr "Esta opción generará miniaturas para todos los archivos del directorio
 #: ../help_text.php:4395
 msgid "You can have different Privacy settings for each GEDCOM on your PhpGedView web site.  Check under the page title whether you are editing the correct GEDCOM.<br /><br />You can override these general settings by using the other Privacy forms on the Edit GEDCOM privacy settings page.<br /><br /><b>More help</b><br />More help is available by clicking the <b>?</b> next to items on the page."
 msgstr "Puede tener diferentes ajustes de Privacidad para cada GEDCOM de sus sitio PhpGedView.  Mire en el título de la página su está modificando el GEDCOM correcto.<br /><br />Estos ajustes generales pueden ser anulados utilizando los otros formularios de Privacidad en la página Editar Ajustes de Privacidad del Gedcom.<br /><br /><b>Más ayuda</b><br />Puede obtener más ayuda haciendo clic en la <b>?</b> que aparece junto a los elementos de la página."
-
-#: ../help_text.php:4399
-#, fuzzy
-msgid "generate_thumb"
-msgstr "Anchura de las miniaturas generadas"
 
 #: ../help_text.php:4400
 msgid "Your system can generate thumbnails for certain types of images automatically.  There may be support for BMP, GIF, JPG, and PNG files.  The types that your system supports are listed beside the checkbox.<br /><br />By clicking this checkbox, you signal the system that you are uploading images of this type and that you want it to try to generate thumbnails for them.  Leave the box unchecked if you want to provide your own thumbnails."
@@ -16566,11 +16185,6 @@ msgstr ""
 #: ../help_text.php:4470
 msgid "<dl><dt><b>FAQ List</b></dt><dd>The FAQ (Frequently Asked Questions) page can contain an overview or a list of questions and answers on the use of this genealogy site.<br /><br />The use to which the FAQ page is put is entirely up to the site administrator. The site administrator controls the content of each item and also the order in which the items are shown on the page.</dd></dl>"
 msgstr "<dl><dt><b>Lista de preguntas frecuentes</b></dt><dd>La página Preguntas Frecuentes puede contener una introducción o una lista de preguntas y respuestas sobre el uso de este sitio de genealogía.<br /><br />El uso de esta página queda completamente en las manos del administrador del sitio. Éste controla el contenido de cada entrada y el orden en que se presentan.</dd></dl>"
-
-#: ../help_text.php:4474
-#, fuzzy
-msgid "help"
-msgstr "Ayuda"
 
 #: ../help_text.php:4475
 msgid "Of course, it would be ideal to create a program so simple and easy to use that it doesn't need any explanation at all; it should be as simple as reading a book.<br /><br />Although PhpGedView is very complicated, you should not notice that as you use it; almost everything can be used without explanation.  But, since we may have a lot of visitors and users who are not very experienced with the use of a computer or with the Internet, we offer you some help at certain places.<br /><br />You will find the following items in the Help menu:"
@@ -16776,11 +16390,6 @@ msgstr ""
 msgid "You can login on almost every page of this program. You will usually do so on the first page, since you can only access privileged information when you are logged in.<br /><br />You can login by typing your <b>username</b> and <b>password</b> and then clicking the Login button."
 msgstr "Puede entrar e iniciar sesión autenticada desde casi cualquier página de este programa. Generalmente lo hará en la primera página, puesto que sólo puede acceder a la información restringida cuando está autenticado.<br /><br />Puede entrar introduciendo su <b>nombre de usuario</b> y <b>contraseña</b> y haciendo clic a continuación en el botón Entrar."
 
-#: ../help_text.php:4614
-#, fuzzy
-msgid "index_media"
-msgstr "Buscar objeto audiovisual"
-
 #: ../help_text.php:4615
 msgid "In this block PhpGedView randomly chooses a media file to show you on each visit to this page.<br /><br />When you click on the picture, you will see its full-size version.  Below the picture you have a link to the person associated with the picture.  When you click on the picture caption, you will see the picture on the MultiMedia page. When you click on the person's name, you will be taken to the Individual Information page of that person."
 msgstr "Ee este bloque, PhpGedView elegirá al azar un archivo audiovisual y la mostrará en cada visita a esta página.<br /><br />Si hace clic en la foto, la verá a tamaño completo.  Bajo la foto tiene un enlace a la persona asociada con la foto.  Si hace clic en el rótulo de la foto, verá la foto en la página Audiovisuales. Si hace clic en el nombre de la persona, irá a la página Información de la persona de esa persona."
@@ -16808,11 +16417,6 @@ msgstr ""
 #: ../help_text.php:4630
 msgid "The Welcome page consists of several separate blocks, and can be customized. On sites that have more than one genealogical database, you may see a different Welcome page for each.  Depending on how the administrator customized the site, you may see any of the following blocks on the Welcome page:<ul><li><a href=\"#index_welcome\"><b>Welcome</b></a></li><li><a href=\"#index_login\"><b>Login</b></a></li><li><a href=\"#index_events\"><b>Upcoming events</b></a></li><li><a href=\"#index_onthisday\"><b>On this Day in Your History</b></a></li><li><a href=\"#index_charts\"><b>Charts</b></a></li><li><a href=\"#index_favorites\"><b>GEDCOM Favorites</b></a></li><li><a href=\"#index_stats\"><b>GEDCOM Statistics</b></a></li><li><a href=\"#index_common_surnames\"><b>Most Common Surnames</b></a></li><li><a href=\"#index_media\"><b>Random Media</b></a></li><li><a href=\"#index_loggedin\"><b>Logged in Users</b></a></li><li><a href=\"#gedcom_news\"><b>GEDCOM News</b></a></li><li><a href=\"#recent_changes\"><b>Recent Changes</b></a></li></ul>"
 msgstr ""
-
-#: ../help_text.php:4634
-#, fuzzy
-msgid "index_stats"
-msgstr "Buscar otro camino"
 
 #: ../help_text.php:4635
 msgid "In this block you will see some statistics about the current GEDCOM file.  If you need more information than is listed, send a message to the contact at the bottom of the page."
@@ -16949,11 +16553,6 @@ msgstr ""
 #: ../help_text.php:4745
 msgid "This option allows you to choose whether data for the person you are linking to is on the same site but in a different genealogical database set, or whether the data is on a different site accessible through the Internet.<br /><br />If the person is on the same site, you will be asked to select the dataset identifier and enter the person's ID.<br /><br />For a remote site, you will be asked to enter its URL, a database identifier, and the person's remote ID."
 msgstr "Esta opción le permite elegir si los datos de la persona con la que vincula están en este mismo sitio en una base de datos diferente o si se encuentran en otro sitio distinto accesible en Internet.<br /><br />Si la persona está en el mismo sitio, se le pedirá que seleccione el identificador del conjunto de datos y el ID de la persona.<br /><br />Si se trata de otro sitio, se le pedirá que introduzca su URL, un identificador de base de datos y el ID de la persona remota."
-
-#: ../help_text.php:4749
-#, fuzzy
-msgid "link_remote_rel"
-msgstr "Vincular persona remota"
 
 #: ../help_text.php:4750
 msgid "Use this option to select the relationship the remote person has to the person you are linking them with on your site.  For example, selecting <i>Father</i> would mean that the person on the remote site is the father of the person you are linking them to locally."
@@ -17247,11 +16846,6 @@ msgstr "Nuevo idioma"
 msgid "From this list box you can select the language whose messages you want to compare with those of another language.<br /><br />All changes and additions to language files are first made to the <b>English</b> language files, so you would normally select English as one of the languages to compare."
 msgstr "En esta lista puede seleccionar el idioma cuyos mensajes desea comparar con los de otro idioma.<br /><br />Todos los cambios y adiciones a los archivos de idioma se hacen primero en los archivos del idioma <b>Inglés</b>, así que normalmente seleccionaría inglés como uno de los idiomas con los que comparar."
 
-#: ../help_text.php:4959
-#, fuzzy
-msgid "new_password"
-msgstr "Contraseña"
-
 #: ../help_text.php:4960
 msgid "If you have forgotten your password, you can click this link to request a new password.<br /><br />You will be taken to the \"Lost Password Request\" page."
 msgstr ""
@@ -17299,10 +16893,6 @@ msgstr "En esta caja de lista puede seleccionar el idioma que quiere comparar co
 #: ../help_text.php:4995
 msgid "When this check box is checked, the chart will be printed with oldest people at the top.  When it is unchecked, youngest people will appear at the top.<br /><br />Note: This option works only if <b>Line up the same generations</b> is also checked."
 msgstr "Cuando se marca esta casilla, el diagrama se presentará de manera que las personas mayores aparezcan al principio.  Cuando no está marcada, las personas más jóvenes aparecen al principio.<br /><br />Nota: Esta opción sólo funciona si se marca también la opción <b>Alinear las mismas generaciones</b>."
-
-#: ../help_text.php:4999
-msgid "Original name of language in %s"
-msgstr "Nombre original del idioma en %s"
 
 #: ../help_text.php:5000
 msgid "How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Cestina</b>, etc."
@@ -17432,11 +17022,6 @@ msgstr "¿Comenzar la presentación al cargar la página?"
 msgid "Should the slideshow start automatically when the page is loaded.<br /><br />The slideshow changes the contents of the block without preloading information from the server and without reloading the entire page."
 msgstr "Indica si debe arrancar la presentación automáticamente al cargar la página.<br /><br />La presentación cambia el contenido del bloque sin precargar información del servidor y sin recargar la página completa."
 
-#: ../help_text.php:5099
-#, fuzzy
-msgid "readme"
-msgstr "Encabezamiento"
-
 #: ../help_text.php:5100
 msgid "See <a href=\"readme.txt\" target=\"_blank\"><b>Readme.txt</b></a> for more information."
 msgstr ""
@@ -17460,11 +17045,6 @@ msgstr ""
 #: ../help_text.php:5115
 msgid "Every person in the database has a unique ID number on this site.  If you know the ID number for your own record, please enter it here.  If you don't know your ID number or could not find it because of privacy settings, please provide enough information in the Comments field to help the site administrator identify who you are on this site so that he can set the ID for you."
 msgstr "Cada persona de la base de datos tiene un número ID distinto en este sitio.  Si conoce el número ID de su propio registro, introdúzcalo aquí.  Si no lo conoce o no puede averiguarlo debido a la configuración de privacidad, proporcione por favor suficiente información en el campo Comentarios para permitir al administrador del sitio determinar cuál es el ID de su entrada en la base de datos y rellenarlo por Vd."
-
-#: ../help_text.php:5119
-#, fuzzy
-msgid "relationship_id"
-msgstr "Usar privacidad por parentesco"
 
 #: ../help_text.php:5120
 msgid "If you have jumped from another page to this one by having clicked the <b>Relation to me</b> link, you will see here the relationship between yourself and that other individual.<br /><br />If you arrived at this page through the <b>Relationship Chart</b> menu entry on any page header, you have to type the identifier numbers of the two people whose relationship you wish to see.  If you don't know the identifier of the desired person, you can click the <b>Find ID</b> link."
@@ -17638,19 +17218,9 @@ msgstr ""
 msgid "When you click this link, the information about the repository, as it is stored in the database, will be displayed in a popup window."
 msgstr "Si hace clic en este vínculo, se mostrará en una ventana emergente la información acerca del repositorio tal como está almacenada en la base de datos."
 
-#: ../help_text.php:5259
-#, fuzzy
-msgid "show_source_gedcom"
-msgstr "Mostrar fuentes"
-
 #: ../help_text.php:5260
 msgid "When you click this link, the source's records will be displayed in raw database format."
 msgstr "Si hace clic en este vínculo, se mostrarán ñps registros de esta fuente en el formato en bruto de la base de datos."
-
-#: ../help_text.php:5264
-#, fuzzy
-msgid "show_spouse"
-msgstr "Mostrar fuentes"
 
 #: ../help_text.php:5265
 msgid "By default this chart does not show spouses for the descendants because it makes the chart harder to read and understand.  Turning this option on will show spouses on the chart."
@@ -17827,19 +17397,9 @@ msgstr ""
 msgid "Unlike the <b>Add GEDCOM</b> function, the GEDCOM file you wish to add to your database does not have to be on your server.<br /><br />In Step 1 you select a GEDCOM file from your local computer. Type the complete path and file name in the text box or use the <b>Browse</b> button on the page.<br /><br />You can also use this function to upload a ZIP file containing the GEDCOM file. PhpGedView will recognize the ZIP file and extract the file and the filename automatically.<br /><br />If a GEDCOM file with the same name already exists in PhpGedView, it will, after your confirmation, be overwritten. However, all GEDCOM settings made previously will be preserved.<br /><br />You will find more help on other pages of the procedure."
 msgstr "Seleccione el archivo GEDCOM o ZIP de su equipo local a subir a su servidor.  Este archivo será subido al directorio <b>%s</b>.<br /><br />Si sube un archivo ZIP, debería contener sólo un one GEDCOM y ese GEDCOM se utilizará automáticamente en los próximos pasos."
 
-#: ../help_text.php:5404
-#, fuzzy
-msgid "upload_media_file"
-msgstr "Subir archivos audiovisuales"
-
 #: ../help_text.php:5405
 msgid "In this field you specify the location and name, on your local computer, of the media file you wish to upload to the server.  You can use the <b>Browse</b> button to search your local computer for the desired file.<br /><br />The uploaded file will have the same name on the server, and it will be uploaded to the directory specified in the <b>Folder on server</b> field.<br /><br />If you do not see the <b>Folder on server</b> field or cannot change it, you do not have sufficient permissions or your GEDCOM configuration has been set to allow no directory levels beyond the default <b>%s</b>.  In this case, the media file will be uploaded to the directory <b>%s</b>."
 msgstr "En este campo se indica el lugar y nombre, en su equipo local, del archivo audiovisual que desea subir al servidor,  Puede usar el botón <b>Examinar</b> para buscar en su equipo local el archivo deseado.<br /><br />El archivo será subido al servidor con el mismo nombre y será colocado en el directorio indicado en el campo <b>Carpeta en el servidor</b>.  Si no ve este campo o no puede cambiarlo, se debe a que no tiene permisos suficientes o que su configuración GEDCOM se ha fijado de modo que no permita niveles de directorio por debajo del <b>%s</b> predeterminado.  En este caso, el archivo audiovisual se subirá al directorio <b>%s</b>."
-
-#: ../help_text.php:5409
-#, fuzzy
-msgid "upload_media_folder"
-msgstr "Subir archivos audiovisuales"
 
 #: ../help_text.php:5410
 msgid "Your GEDCOM configuration allows up to %s directory levels beyond the default <b>%s</b> where uploaded media files are normally stored. This lets you organize your media files, and you don't need to be as concerned about maintaining unique names for each media file.<br /><br />In this field you specify the destination directory on your server where the uploaded media file is to be stored.  Be sure to pay attention to the case (upper or lower case) of what you enter or select here, since file and directory names are case sensitive.<br /><br />If the directory name you enter here does not exist, it will be created automatically. If you enter more than the additional %s directory levels permitted by your GEDCOM configuration, your input will be truncated accordingly.<br /><br />Thumbnails will be uploaded or created in an identical directory structure, starting with <b>%sthumbs/</b>."
@@ -17937,19 +17497,9 @@ msgstr ""
 msgid "On this page you can administer the current users and add new users.<br /><br /><b>User List</b><br />In this table the current users, their status, and their rights are displayed.  You can <b>delete</b> or <b>edit</b> users.<br /><br /><b>Add a new user</b><br />This form is almost the same as the one users see on the  <b>My Account</b> page.<br /><br />For several subjects we did not make special Help text for the administrator. In those cases you will see the following message:"
 msgstr "En esta página puede administrar los usuarios actuales y agregar nuevos usuarios.<br /><br /><b>Lista de usuarios</b><br />En esta tabla se muestran los usuarios actuales, su estado y sus privilegios.  Puede <b>eliminar</b> o <b>editar</b> usuarios.<br /><br /><b>Agregar un nuevo usuario</b><br />Este formulario es prácticamente el mismo que el que los usuarios ven en la página <b>Mi Cuenta</b>.<br /><br />Para algunos temas no se redactó un texto de ayuda especial para el administrador.  En esos casos, verá el siguiente mensaje:"
 
-#: ../help_text.php:5479
-#, fuzzy
-msgid "useradmin_path_length"
-msgstr "Máxima longitud del camino"
-
 #: ../help_text.php:5480
 msgid "If <i>Limit access to related people</i> is enabled, this user will only be able to see or edit living individuals within this number of relationship steps."
 msgstr "Si se activa <i>Limitar el acceso a familiares</i>, este usuario sólo podrá ver o editar personas vivas a menos de este número de pasos de parentesco."
-
-#: ../help_text.php:5484
-#, fuzzy
-msgid "useradmin_relation_priv"
-msgstr "_Administración de Usuarios"
 
 #: ../help_text.php:5485
 msgid "If this box is checked, the user will only be allowed access to living people that they are related to.  They will be able to see anyone who is within the relationship path length set by their <i>Max relationship privacy path length</i> setting.  You can require relationship privacy for all of your users by turning on the global option in the GEDCOM privacy settings.<br /><br />This setting requires that the user be associated with a GEDCOM ID before they will be able to see any living people."
@@ -18286,17 +17836,6 @@ msgstr "¿Permitir la descarga de eventos del calendario?"
 msgid "Top 10 Given Names"
 msgstr "Los 10 nombres de pila más corrientes"
 
-#: ../blocks/top10_givnnames.php:41
-#, fuzzy
-msgid "This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable."
-msgstr "Este bloque muestra la lista de los nombres de pila más corrientes en esta base de datos. Puede configurar cuántos nombres han de aparecer en la lista."
-
-#. I18N: There are separate lists of male/female names, containing %d names each
-#: ../blocks/top10_givnnames.php:82
-#, fuzzy
-msgid "Top Given Names"
-msgstr "Los 10 nombres de pila más corrientes"
-
 #: ../blocks/top10_givnnames.php:135 ../blocks/top10_pageviews.php:135
 #: ../blocks/top10_surnames.php:148
 msgid "Number of items to show"
@@ -18318,44 +17857,9 @@ msgstr ""
 msgid "to change what is printed here.</p>"
 msgstr "para cambiar lo que se muestra aquí.</p>"
 
-#: ../blocks/block_htmlplus.php:224
-#, fuzzy
-msgid "Templates"
-msgstr "Templo SUD"
-
-#: ../blocks/block_htmlplus.php:246
-#, fuzzy
-msgid "Custom"
-msgstr "Evento personalizado"
-
-#: ../blocks/block_htmlplus.php:262
-#, fuzzy
-msgid "Family Tree"
-msgstr "Familia"
-
-#: ../blocks/block_htmlplus.php:266
-#, fuzzy
-msgid "Current"
-msgstr "Número"
-
-#: ../blocks/block_htmlplus.php:267
-#, fuzzy
-msgid "Default"
-msgstr "(Por omisión)"
-
-#: ../blocks/block_htmlplus.php:281
-#, fuzzy
-msgid "Content"
-msgstr "Contenido de ayuda"
-
 #: ../blocks/block_htmlplus.php:310
 msgid "Compatibility Mode"
 msgstr ""
-
-#: ../blocks/block_htmlplus.php:323
-#, fuzzy
-msgid "Extended Interface"
-msgstr "Modificar sexo"
 
 #: ../blocks/charts.php:43
 msgid "Charts Block"
@@ -18461,12 +17965,6 @@ msgstr "Número de entradas"
 msgid "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list."
 msgstr ""
 
-#. I18N: There are separate lists of male/female names, containing %d names each
-#: ../blocks/top10_surnames.php:119
-#, fuzzy
-msgid "Top Surnames"
-msgstr "Apellidos más frecuentes"
-
 #: ../blocks/logged_in.php:39
 msgid "Logged In Users"
 msgstr "Bloque de usuarios presentes"
@@ -18549,11 +18047,6 @@ msgstr ""
 msgid "RSS Feeds"
 msgstr "Suscripciones RSS"
 
-#: ../blocks/rss_block.php:42
-#, fuzzy
-msgid "News and links from the %s site"
-msgstr "Noticias y vínculos del sitio %s"
-
 #: ../blocks/todo.php:42 ../blocks/todo.php:75
 msgid "&quot;To Do&quot; tasks"
 msgstr "Tareas pendientes"
@@ -18622,11 +18115,6 @@ msgstr ""
 #, php-format
 msgid "There have been no changes within the last %s days."
 msgstr ""
-
-#: ../blocks/recent_changes.php:86
-#, fuzzy, php-format
-msgid "Changes made within the last %s days"
-msgstr "Mostrar parejas casadas los últimos 100 años."
 
 #: ../blocks/recent_changes.php:113
 msgid "Should this block be hidden when it is empty?"
@@ -18722,14 +18210,6 @@ msgstr "Directorio de miniaturas no eliminado."
 msgid "Thumbnail directory successfully removed."
 msgstr "Directorio de miniaturas eliminado con éxito."
 
-#: ../media.php:467 ../media.php:485
-msgid "Thumbnail %s generated automatically."
-msgstr "Miniatura %s generada automáticamente."
-
-#: ../media.php:472 ../media.php:490
-msgid "Thumbnail %s could not be generated automatically."
-msgstr "No se pudo generar automáticamente la miniatura %s."
-
 #: ../media.php:546 ../media.php:903 ../media.php:945
 msgid "Move to protected"
 msgstr "Trasladar a protegido"
@@ -18762,31 +18242,6 @@ msgstr "Archivo de miniatura borrado con éxito."
 msgid "Thumbnail file could not be deleted."
 msgstr "No se pudo borrar el archivo de miniatura."
 
-#: ../media.php:690
-#, fuzzy, php-format
-msgid "Record %s could not be updated."
-msgstr "No se pudo crear el directorio"
-
-#: ../media.php:704
-#, fuzzy, php-format
-msgid "Record %s successfully removed from GEDCOM."
-msgstr "Registro %s actualizado con éxito."
-
-#: ../media.php:709
-#, fuzzy, php-format
-msgid "Record %s could not be removed from GEDCOM."
-msgstr "No se pudo suprimir el servidor remoto."
-
-#: ../media.php:720
-#, fuzzy, php-format
-msgid "Record %s successfully added to GEDCOM."
-msgstr "Registro %s actualizado con éxito."
-
-#: ../media.php:725
-#, fuzzy, php-format
-msgid "Record %s could not be added to GEDCOM."
-msgstr "No se pudo crear el directorio"
-
 #: ../media.php:846
 msgid "Missing thumbnails"
 msgstr "Miniaturas ausentes"
@@ -18803,34 +18258,9 @@ msgstr "¿Está seguro de querer borrar este archivo?"
 msgid "Delete file"
 msgstr "Borrar archivo"
 
-#: ../media.php:1072
-#, fuzzy
-msgid "Move to protected directory"
-msgstr "Trasladar a protegido"
-
-#: ../media.php:1076
-#, fuzzy
-msgid "Move to standard directory"
-msgstr "Trasladar a estándar"
-
 #: ../media.php:1090
 msgid "Create thumbnail"
 msgstr "Generar miniatura"
-
-#: ../media.php:1165
-#, fuzzy
-msgid "This media object is located on an external server"
-msgstr "Este objeto audiovisual no está vinculado a ningún registro GEDCOM."
-
-#: ../media.php:1168
-#, fuzzy
-msgid "This media object is in the standard media directory"
-msgstr "Este objeto audiovisual no está vinculado a ningún registro GEDCOM."
-
-#: ../media.php:1171
-#, fuzzy
-msgid "This media object is in the protected media directory"
-msgstr "Este objeto audiovisual no está vinculado a ningún registro GEDCOM."
 
 #: ../media.php:1179
 msgid "This thumbnail is located on an external server"
