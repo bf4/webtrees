@@ -311,15 +311,15 @@ function getRelationshipSentence($path, $pid1, $pid2) {
 			switch($last) {
 			case 'son':
 				return i18n::plural(
-					'%$1s male cousin, %$2d time removed', '%$1s male cousin, %$2d times removed',
+					'%1$s male cousin, %2$d time removed', '%1$s male cousin, %2$d times removed',
 					$removed, i18n::ordinal_word(min($up, $down)), $removed
 				);
 			case 'dau':
 				return i18n::plural(
-					'%$1s female cousin, %$2d time removed', '%$1s female cousin, %$2d times removed',
+					'%1$s female cousin, %2$d time removed', '%1$s female cousin, %2$d times removed',
 					$removed, i18n::ordinal_word(min($up, $down)), $removed
 				);
-			case 'chi': return i18n::plural('%$1s cousin, %$2d time removed', '%$1s cousin, %$2d times removed',
+			case 'chi': return i18n::plural('%1$s cousin', '%2$d time removed', '%1$s cousin, %2$d times removed',
 				$removed, i18n::ordinal_word(min($up, $down)), $removed
 				);
 			}
