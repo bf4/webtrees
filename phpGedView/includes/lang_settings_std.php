@@ -332,6 +332,35 @@ $language_settings['french']=array(
 'COLLATION'=>'utf8_unicode_ci'
 );
 
+//-- settings for croatian
+$language_settings['croatian']=array(
+'pgv_langname'=>'croatian',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Hrvatski',
+'lang_short_cut'=>'hr',
+'langcode'=>'hr;',
+'pgv_language'=>'languages/lang.hr.php',
+'confighelpfile'=>'languages/configure_help.hr.php',
+'helptextfile'=>'languages/help_text.hr.php',
+'factsfile'=>'languages/facts.hr.php',
+'adminfile'=>'languages/admin.hr.php',
+'editorfile'=>'languages/editor.hr.php',
+'countryfile'=>'languages/countries.hr.php',
+'faqlistfile'=>'languages/faqlist.hr.php',
+'extrafile'=>'languages/extra.hr.php',
+'DATE_FORMAT'=>'j F Y',
+'TIME_FORMAT'=>'g:i:sa',
+'WEEK_START'=>'0',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'ABCČĆDĐEFGHIJKLMNOPRSŠTUVZŽ',
+'ALPHABET_lower'=>'abcčćdđefghijklmnoprsštuvzž',
+'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_slovenian_ci'
+);
+
 //-- settings for indonesian
 $language_settings['indonesian']=array(
 'pgv_langname'=>'indonesian',
