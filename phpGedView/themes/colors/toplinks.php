@@ -29,6 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$menubar = new MenuBar();
 ?>
 <table id="toplinks">
 	<tr>
@@ -36,10 +37,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		<table align="<?php print $TEXT_DIRECTION=="ltr"?"left":"right" ?>">
 			<tr> 
 <?php
-	$menu = $menubar->getHomeMenu();
-	if (!isset($_COOKIE['pgv_embedded'])) {
-		$_COOKIE['pgv_embedded'] = 0;
-	}
 	$menu = $menubar->getGedcomMenu();
 	if($menu->link != "") {
 		echo "<td>";
