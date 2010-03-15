@@ -95,7 +95,7 @@ flush(); // Allow the browser to start fetching external stylesheets, javascript
 echo '<div id="header" class="block">'; // Every page has a header
 if ($view!='simple') {
 	echo
-		'<div style="float:', PGV_CSS_ALIGN, '; font-size:250%;">Fish&nbsp;&amp;&nbsp;Frogs</div>';
+		'<div style="float:', PGV_CSS_ALIGN, '; font-size:250%;">webtrees</div>';
 	// Print the user links
 	if ($SEARCH_SPIDER) {
 		// Search engines get a reduced menu

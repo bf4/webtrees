@@ -44,12 +44,6 @@ $menubar = new MenuBar();
 			&nbsp;
 		</td>
 		<?php
-		$menu = $menubar->getHomeMenu();
-		if($menu->link != "") {
-			print "\t<td width=\"7%\" valign=\"top\">\n";
-			$menu->printMenu();
-			print "\t</td>\n";
-		}
 		$menu = $menubar->getGedcomMenu();
 		if($menu->link != "") {
 			print "\t<td width=\"7%\" valign=\"top\">\n";

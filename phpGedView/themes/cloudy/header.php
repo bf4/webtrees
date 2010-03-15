@@ -166,13 +166,6 @@ else { ?>
 									</td>
 
 								<?php
-									$menu = $menubar->getHomeMenu();
-									if ($menu->link != "") {
-										echo '<td width="1">';
-										$menu->addLabel("", "none");
-										$menu->printMenu();
-										echo "</td>";
-									}
 									$menu = $menubar->getGedcomMenu();
 									if ($menu->link != "") {
 										echo '<td width="1">';
