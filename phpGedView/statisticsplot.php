@@ -636,7 +636,7 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 }
 
 function calc_axis($xas_grenzen) {
-	global $x_as, $xdata, $xmax, $xgrenzen, $pgv_lang;
+	global $x_as, $xdata, $xmax, $xgrenzen;
 
 	//calculate xdata and zdata elements out of given POST values
 	$hulpar = explode(",", $xas_grenzen);
@@ -680,7 +680,7 @@ function calc_axis($xas_grenzen) {
 }
 
 function calc_legend($grenzen_zas) {
-	global $legend, $zmax, $zgrenzen, $pgv_lang, $lang_short_cut, $LANGUAGE;
+	global $legend, $zmax, $zgrenzen, $lang_short_cut, $LANGUAGE;
 
 	// calculate the legend values
 	$hulpar = array();
@@ -720,7 +720,7 @@ function calc_legend($grenzen_zas) {
 function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $myfunc) {
 	global $x_as, $y_as, $z_as, $nrfam, $nrpers, $n1, $months;
 	global $legend, $xdata, $ydata, $xmax, $zmax, $zgrenzen, $xgiven, $zgiven, $percentage, $male_female;
-	global $pgv_lang, $stats;
+	global $stats;
 
 	if (!function_exists($myfunc)) {
 		echo $myfunc, " ", i18n::translate(' not implemented:');
@@ -766,8 +766,8 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 		}
 		$xgiven = $xg;
 		$zgiven = $zg;
-		$title = $pgv_lang["$titstr"];
-		$xtitle = $pgv_lang["$xt"];
+		$title = $titstr;
+		$xtitle = $xt;
 		$ytitle = i18n::translate('numbers');
 		$grenzen_xas = $gx;
 		$grenzen_zas = $gz;
@@ -829,7 +829,7 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 }
 
 function print_sources_stats_chart($type){
-	global $pgv_lang, $GEDCOM, $stats;
+	global $stats;
 
 	$params[0] = "700x200";
 	$params[1] = "ffffff";
@@ -915,16 +915,13 @@ else {
 }
 
 print_simple_header(i18n::translate('Statistics Plot'));
-echo "<center><h2>", i18n::translate('Statistics Plot'), "</h2>\n\t";
+echo "<center><h2>", i18n::translate('Statistics Plot'), "</h2>";
 echo "</center><br />";
 
 $nrpers = $_SESSION[$GEDCOM."nrpers"];
 $nrfam = $_SESSION[$GEDCOM."nrfam"];
 $nrmale = $_SESSION[$GEDCOM."nrmale"];
 $nrfemale = $_SESSION[$GEDCOM."nrfemale"];
-
-//error_reporting(E_ALL ^E_NOTICE);
-//-- no errors because then I cannot plot
 
 //-- out of range values
 if (($y_as < 201) || ($y_as > 202)) {
@@ -942,37 +939,37 @@ $g_xas = "1,2,3,4,5,6,7,8,9,10,11,12"; //should not be needed. but just for mont
 switch ($x_as) {
 case '11':
 	//---------		nr,  type,	  xgiven,	zgiven,	title,				xtitle,		ytitle,	boundaries_x, boundaries-z, function
-	set_params(11, "IND", true, 	false, "stat_11_mb",  "stplmonth", 	$y_as, 	$g_xas, 	$zgp, "bimo");  //plot Month of birth
+	set_params(11, "IND", true, 	false, i18n::translate('Month of birth'),  i18n::translate('month'), 	$y_as, 	$g_xas, 	$zgp, "bimo");
 	break;
 case '12':
-	set_params(12, "IND", true, 	false, "stat_12_md",  "stplmonth", 	$y_as, 	$g_xas, 	$zgp, "demo");  //plot Month of death
+	set_params(12, "IND", true, 	false, i18n::translate('Month of death'),  i18n::translate('month'), 	$y_as, 	$g_xas, 	$zgp, "demo");
 	break;
 case '13':
-	set_params(13, "FAM", true, 	false, "stat_13_mm",  "stplmonth", 	$y_as, 	$g_xas, 	$zgp, "mamo");  //plot Month of marriage
+	set_params(13, "FAM", true, 	false, i18n::translate('Month of marriage'),  i18n::translate('month'), 	$y_as, 	$g_xas, 	$zgp, "mamo");
 	break;
 case '14':
-	set_params(14, "FAM", true, 	false, "stat_14_mb1", "stplmonth", 	$y_as, 	$g_xas, 	$zgp, "bimo1"); //plot Month of birth of first child in a relation
+	set_params(14, "FAM", true, 	false, i18n::translate('Month of birth of first child in a relation'), i18n::translate('month'), 	$y_as, 	$g_xas, 	$zgp, "bimo1");
 	break;
 case '15':
-	set_params(15, "FAM", true, 	false, "stat_15_mm1", "stplmonth", 	$y_as, 	$g_xas, 	$zgp, "mamo1"); //plot Month of first marriage
+	set_params(15, "FAM", true, 	false, i18n::translate('Months between marriage and first child'), i18n::translate('month'), 	$y_as, 	$g_xas, 	$zgp, "mamo1");
 	break;
 case '16':
-	set_params(16, "FAM", false, 	false, "stat_16_mmb", "stplmarrbirth", $y_as, $xgm, 	$zgp, "mamam"); //plot Months between marriage and first child
+	set_params(16, "FAM", false, 	false, i18n::translate('Months between marriage and first child'), i18n::translate('Months between marriage and birth of first child'), $y_as, $xgm, 	$zgp, "mamam");
 	break;
 case '17':
-	set_params(17, "IND", false, 	false, "stat_17_arb", "stplage", 	$y_as, 	$xgl, 	$zgp, "agbi");  //plot Age related to birth year
+	set_params(17, "IND", false, 	false, i18n::translate('Age related to birth year'), i18n::translate('age'), 	$y_as, 	$xgl, 	$zgp, "agbi");
 	break;
 case '18':
-	set_params(18, "IND", false, 	false, "stat_18_ard", "stplage", 	$y_as, 	$xgl, 	$zgp, "agde");  //plot Age related to death year
+	set_params(18, "IND", false, 	false, i18n::translate('Age related to death year'), i18n::translate('age'), 	$y_as, 	$xgl, 	$zgp, "agde");
 	break;
 case '19':
-	set_params(19, "IND", false, 	false, "stat_19_arm", "stplage", 	$y_as, 	$xglm, 	$zgp, "agma");  //plot Age in year of marriage
+	set_params(19, "IND", false, 	false, i18n::translate('Age in year of marriage'), i18n::translate('age'), 	$y_as, 	$xglm, 	$zgp, "agma");
 	break;
 case '20':
-	set_params(20, "IND", false, 	false, "stat_20_arm1", "stplage", 	$y_as, 	$xglm, 	$zgp, "agma1"); //plot Age in year of first marriage
+	set_params(20, "IND", false, 	false, i18n::translate('Age in year of first marriage'), i18n::translate('age'), 	$y_as, 	$xglm, 	$zgp, "agma1");
 	break;
 case '21':
-	set_params(21, "FAM", false, 	false, "stat_21_nok", "stplnuch", 	$y_as, 	$xga, 	$zgp, "nuch");  //plot Number of children
+	set_params(21, "FAM", false, 	false, i18n::translate('Number of children'), i18n::translate('children'), 	$y_as, 	$xga, 	$zgp, "nuch");  //plot Number of children
 	break;
 case '1':
 	echo $stats->chartDistribution($chart_shows, $chart_type, $surname);
