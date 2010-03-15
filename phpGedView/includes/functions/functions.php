@@ -2837,13 +2837,60 @@ function get_relationship_name($nodes) {
 	// Look for generic/pattern relationships.
 	// TODO: these are heavily based on english relationship names.
 	// We need feedback from other languages to improve this.
+	// Dutch has special names for 8 generations of great-great-..., so these need explicit naming
 	if (preg_match('/^((?:mot|fat|par)*)(bro|sis|sib)$/', $combined_path, $match)) {
 		$up=strlen($match[1])/3;
 		$last=substr($combined_path, -3, 3);
-		switch($last) {
-		case 'bro': return i18n::translate('great x %d aunt',       $up-1);
-		case 'sis': return i18n::translate('great x %d uncle',      $up-1);
-		case 'sib': return i18n::translate('great x %d aunt/uncle', $up-1);
+		switch ($up) {
+		case 3:
+			switch ($last) {
+			case 'bro': return i18n::translate('great-great-aunt');
+			case 'sis': return i18n::translate('great-great-uncle');
+			case 'sib': return i18n::translate('great-great-aunt/uncle');
+			}
+			break;
+		case 4:
+			switch ($last) {
+			case 'bro': return i18n::translate('great-great-great-aunt');
+			case 'sis': return i18n::translate('great-great-great-uncle');
+			case 'sib': return i18n::translate('great-great-great-aunt/uncle');
+			}
+			break;
+		case 5:
+			switch ($last) {
+			case 'bro': return i18n::translate('great x4 aunt');
+			case 'sis': return i18n::translate('great x4 uncle');
+			case 'sib': return i18n::translate('great x4 aunt/uncle');
+			}
+			break;
+		case 6:
+			switch ($last) {
+			case 'bro': return i18n::translate('great x5 aunt');
+			case 'sis': return i18n::translate('great x5 uncle');
+			case 'sib': return i18n::translate('great x5 aunt/uncle');
+			}
+			break;
+		case 7:
+			switch ($last) {
+			case 'bro': return i18n::translate('great x6 aunt');
+			case 'sis': return i18n::translate('great x6 uncle');
+			case 'sib': return i18n::translate('great x6 aunt/uncle');
+			}
+			break;
+		case 8:
+			switch ($last) {
+			case 'bro': return i18n::translate('great x7 aunt');
+			case 'sis': return i18n::translate('great x7 uncle'1);
+			case 'sib': return i18n::translate('great x7 aunt/uncle');
+			}
+			break;
+		default:
+			switch ($last) {
+			case 'bro': return i18n::translate('great x%d aunt',       $up-1);
+			case 'sis': return i18n::translate('great x%d uncle',      $up-1);
+			case 'sib': return i18n::translate('great x%d aunt/uncle', $up-1);
+			}
+			break;
 		}
 	}
 	if (preg_match('/^((?:mot|fat|par)*)(?:bro|sis|sib)((?:son|dau|chi)*)$/', $combined_path, $match)) {
@@ -2851,29 +2898,120 @@ function get_relationship_name($nodes) {
 		$down=strlen($match[2])/3;
 		$last=substr($combined_path, -3, 3);
 		if ($down==0) {
-			switch($last) {
-			case 'mot': return i18n::translate('great x %d grandmother', $up-2);
-			case 'fat': return i18n::translate('great x %d grandfather', $up-2);
-			case 'par': return i18n::translate('great x %d grandparent', $up-2);
+			switch ($up) {
+			case 4:
+				switch ($last) {
+				case 'mot': return i18n::translate('great-great-grandmother');
+				case 'fat': return i18n::translate('great-great-grandfather');
+				case 'par': return i18n::translate('great-great-grandparent');
+				}
+				break;
+			case 5:
+				switch ($last) {
+				case 'mot': return i18n::translate('great-great-great-grandmother');
+				case 'fat': return i18n::translate('great-great-great-grandfather');
+				case 'par': return i18n::translate('great-great-great-grandparent');
+				}
+				break;
+			case 6:
+				switch ($last) {
+				case 'mot': return i18n::translate('great x4 grandmother');
+				case 'fat': return i18n::translate('great x4 grandfather');
+				case 'par': return i18n::translate('great x4 grandparent');
+				}
+				break;
+			case 7:
+				switch ($last) {
+				case 'mot': return i18n::translate('great x5 grandmother');
+				case 'fat': return i18n::translate('great x5 grandfather');
+				case 'par': return i18n::translate('great x5 grandparent');
+				}
+				break;
+			case 8:
+				switch ($last) {
+				case 'mot': return i18n::translate('great x6 grandmother');
+				case 'fat': return i18n::translate('great x6 grandfather');
+				case 'par': return i18n::translate('great x6 grandparent');
+				}
+				break;
+			case 9:
+				switch ($last) {
+				case 'mot': return i18n::translate('great x7 grandmother');
+				case 'fat': return i18n::translate('great x7 grandfather');
+				case 'par': return i18n::translate('great x7 grandparent');
+				}
+				break;
+			default:
+				switch ($last) {
+				case 'mot': return i18n::translate('great x %d grandmother', $up-2);
+				case 'fat': return i18n::translate('great x %d grandfather', $up-2);
+				case 'par': return i18n::translate('great x %d grandparent', $up-2);
+				}
+				break;
 			}
 		}
 		if ($up==0) {
-			switch($last) {
-			case 'son': return i18n::translate('great x %d grandson',      $down-2);
-			case 'dau': return i18n::translate('great x %d granddaughter', $down-2);
-			case 'chi': return i18n::translate('great x %d grandchild',    $down-2);
-			}
+			switch ($down) {
+			case 4:
+				switch ($last) {
+				case 'son': return i18n::translate('great-great-grandson');
+				case 'dau': return i18n::translate('great-great-granddaughter');
+				case 'chi': return i18n::translate('great-great-grandchild');
+				}
+				break;
+			case 5:
+				switch ($last) {
+				case 'son': return i18n::translate('great-great-great-grandson');
+				case 'dau': return i18n::translate('great-great-great-granddaughter');
+				case 'chi': return i18n::translate('great-great-great-grandchild');
+				}
+				break;
+			case 6:
+				switch ($last) {
+				case 'son': return i18n::translate('great x4 grandson');
+				case 'dau': return i18n::translate('great x4 granddaughter');
+				case 'chi': return i18n::translate('great x4 grandchild');
+				}
+				break;
+			case 7:
+				switch ($last) {
+				case 'son': return i18n::translate('great x5 grandson');
+				case 'dau': return i18n::translate('great x5 granddaughter');
+				case 'chi': return i18n::translate('great x5 grandchild');
+				}
+				break;
+			case 8:
+				switch ($last) {
+				case 'son': return i18n::translate('great x6 grandson');
+				case 'dau': return i18n::translate('great x6 granddaughter');
+				case 'chi': return i18n::translate('great x6 grandchild');
+				}
+				break;
+			case 9:
+				switch ($last) {
+				case 'son': return i18n::translate('great x7 grandson');
+				case 'dau': return i18n::translate('great x7 granddaughter');
+				case 'chi': return i18n::translate('great x7 grandchild');
+				}
+				break;
+			default:
+				switch ($last) {
+				case 'son': return i18n::translate('great x%d grandson',      $down-2);
+				case 'dau': return i18n::translate('great x%d granddaughter', $down-2);
+				case 'chi': return i18n::translate('great x%d grandchild',    $down-2);
+				}
+				break;
 		}
 		// Cousins.  http://en.wikipedia.org/wiki/File:CousinTree.svg
 		if ($up==$down) {
-			switch($last) {
+			switch ($last) {
 			case 'son': return i18n::translate('%s male cousin',   i18n::ordinal_word($up-1));
 			case 'dau': return i18n::translate('%s female cousin', i18n::ordinal_word($up-1));
 			case 'chi': return i18n::translate('%s cousin',        i18n::ordinal_word($up-1));
 			}
 		} else {
 			$removed=abs($down-$up);
-			switch($last) {
+			switch ($last) {
 			case 'son':
 				return i18n::plural(
 					'%1$s male cousin, %2$d time removed', '%1$s male cousin, %2$d times removed',
