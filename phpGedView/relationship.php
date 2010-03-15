@@ -125,6 +125,16 @@ function getRelationshipSentence($path, $pid1, $pid2) {
 	case 'parbro': return /* I18N: uncle       */ i18n::translate('parent\'s brother');
 	case 'parsib': return /* I18N: aunt/uncle  */ i18n::translate('parent\'s sibling');
 
+	case 'broson': return /* I18N: nephew       */ i18n::translate('bother\'s son');
+	case 'brodau': return /* I18N: niece        */ i18n::translate('bother\'s daughter');
+	case 'brochi': return /* I18N: nephew/neice */ i18n::translate('bother\'s child');
+	case 'sisson': return /* I18N: nephew       */ i18n::translate('sister\'s son');
+	case 'sisdau': return /* I18N: niece        */ i18n::translate('sister\'s daughter');
+	case 'sischi': return /* I18N: nephew/neice */ i18n::translate('sister\'s child');
+	case 'sibson': return /* I18N: nephew       */ i18n::translate('sibling\'s son');
+	case 'sibdau': return /* I18N: niece        */ i18n::translate('sibling\'s daughter');
+	case 'sibchi': return /* I18N: nephew/neice */ i18n::translate('sibling\'s child');
+
 	case 'wifsis': return /* I18N: sister-in-law  */ i18n::translate('wife\'s sister');
 	case 'hussis': return /* I18N: sister-in-law  */ i18n::translate('husband\'s sister');
 	case 'sposis': return /* I18N: sister-in-law  */ i18n::translate('spouses\'s sister');
