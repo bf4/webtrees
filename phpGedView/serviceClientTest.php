@@ -5,17 +5,15 @@ define('PGV_SCRIPT_NAME', 'serviceClientTest.php');
 require './config.php';
 
 ob_start();
-require_once './SOAP/Client.php';
+require_once './library/Zend/Soap/Client.php';
 
 //-- put your URL here
-$url = 'http://localhost/pgv-svn/genservice.php?wsdl';
+$url = 'http://localhost/phpgedview/gen2service.php?wsdl';
 print "Getting WSDL<br />";
 
 if (!class_exists('SoapClient')) {
-	print "Using PEAR:SOAP<br />";
-	$wsdl = new SOAP_WSDL($url);
-	print "Getting Proxy<br />";
-	$soap = $wsdl->getProxy();
+	print "Using Zend SOAP<br />";
+	$soap = new Zend_Soap_Client($url,array('soap_version' => SOAP_1_1 ));
 }
 else {
 	print "Using SOAP Extension<br />";
