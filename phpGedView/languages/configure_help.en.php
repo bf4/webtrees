@@ -560,6 +560,7 @@ $pgv_lang["lang_back_admin"]		= "Return to the Admin menu";
 $pgv_lang["lang_back_manage_gedcoms"]	= "Return to the GEDCOM management menu";
 $pgv_lang["lang_name_arabic"]		= "Arabic";
 $pgv_lang["lang_name_catalan"]		= "Catalan (Valencian)";
+$pgv_lang["lang_name_croatian"]		= "Croatian";
 $pgv_lang["lang_name_czech"]		= "Czech";
 $pgv_lang["lang_name_chinese"]		= "Chinese";
 $pgv_lang["lang_name_danish"]		= "Danish";

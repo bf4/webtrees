@@ -558,6 +558,7 @@ $pgv_lang["lang_name_vietnamese"]	= "wietnamski";
 $pgv_lang["lang_name_slovak"]		= "słowacki";
 $pgv_lang["lang_name_slovenian"]	= "słoweński";
 $pgv_lang["lang_name_estonian"]		= "estoński";
+$pgv_lang["lang_name_croatian"]		= "chorwacki";
 $pgv_lang["lang_language"]			= "Język";
 $pgv_lang["export_filename"]		= "Nazwa pliku wynikowego";
 $pgv_lang["lang_back"]				= "Powrót do menu konfiguracji plików językowych";
