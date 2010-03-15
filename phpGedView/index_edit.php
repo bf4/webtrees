@@ -132,11 +132,6 @@ if (file_exists(PGV_ROOT.'modules')) {
  * End loading list of Blocks in modules/XX/blocks directories
 */
 
-
-
-
-
-
 //	Build sorted table of block names, BUT:
 //		include in this table ONLY if the block is appropriate for this page
 //		If $BLOCK["type"] is	"both", include in both page types
@@ -150,20 +145,6 @@ foreach($PGV_BLOCKS as $key => $BLOCK) {
 	}
 }
 asort($SortedBlocks);
-reset($SortedBlocks);
-
-// Build sorted table of block summary descriptions
-global $pgv_lang;
-$pgv_lang["block_summary_table"] = "";
-$SortedBlocks = array_flip($SortedBlocks);
-foreach($SortedBlocks as $key => $b) {
-	$temp = $PGV_BLOCKS[$b]["descr"];
-	$pgv_lang["block_summary_table"] .= "<tr valign='top'>";
-	$pgv_lang["block_summary_table"] .= "<td>".$PGV_BLOCKS[$b]["name"]."</td>";
-	$pgv_lang["block_summary_table"] .= "<td>#pgv_lang[$temp]#</td>";
-	$pgv_lang["block_summary_table"] .= "</tr>";
-}
-$SortedBlocks = array_flip($SortedBlocks);
 
 //-- get the blocks list
 if ($ctype=="user") {
@@ -481,8 +462,6 @@ else {
 			print "<b>".i18n::translate('Main Section Blocks')."</b>";
 		print "</td>\n";
 		print "<td class=\"descriptionbox center vmiddle\" colspan=\"3\">";
-			print " <a href=\"javascript:;\" class=\"help\" tabindex=\"0\" onclick=\"expand_layer('help',true); expand_layer('configure', false);\">".$IconHelp."</a> \n";
-			// Need to create a real popup for this some time ;)
 			print "<b>".i18n::translate('Available Blocks')."</b>";
 		print "</td>\n";
 		print "<td class=\"descriptionbox center vmiddle\" colspan=\"2\">";
