@@ -282,7 +282,7 @@ function setup_place_subfields($element_id) {
  * @param string $element_id	id of PLAC input element in the form
  */
 function print_place_subfields($element_id) {
-	global $pgv_lang, $iso3166, $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
+	global $iso3166, $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
 
 	//if ($element_id=="DEAT_PLAC") return; // known bug - waiting for a patch
 	$plac_label = get_plac_label();
@@ -311,14 +311,18 @@ function print_place_subfields($element_id) {
 		if ($i==$istate) $subtagname=$element_id."_PLAC_STAE";
 		if ($i==$icounty) $subtagname=$element_id."_PLAC_CNTY";
 		if ($i==$icity) $subtagname=$element_id."_PLAC_CITY";
-		$key=strtolower($plac_label[$i]);
 		print "<small>";
-		if (isset($pgv_lang[$key])) print $pgv_lang[$key];
-		else print $plac_label[$i];
-		print "</small><br />";
-		if (PGV_DEBUG) {
-			print $subtagname."<br />\n";
+		// Translate certain tags.  The should be specified in english, as the gedcom file format is english.
+		switch (strtolower($plac_label[$i])) {
+		case 'country':  echo i18n::translate('Country'); break;
+		case 'state':    echo i18n::translate('State'); break;
+		case 'province': echo i18n::translate('Province'); break;
+		case 'county':   echo i18n::translate('County'); break;
+		case 'city':     echo i18n::translate('City'); break;
+		case 'parish':   echo i18n::translate('Parish'); break;
+		default:         echo $plac_label[$i]; break;
 		}
+		print "</small><br />";
 		print "<input type=\"text\" id=\"".$subtagid."\" name=\"".$subtagname."\" value=\"\" size=\"".$cols."\"";
 		print " tabindex=\"".($i+1)."\" ";
 		print " onblur=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";
