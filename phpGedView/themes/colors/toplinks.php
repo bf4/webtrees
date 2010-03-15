@@ -29,7 +29,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$menubar = new MenuBar();
 ?>
 <table id="toplinks">
 	<tr>
