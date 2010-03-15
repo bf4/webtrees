@@ -881,25 +881,11 @@ th {
 	border: solid black 1px;
 }
 
-/* This one is for the currently active language. */
-.activeflag {
-	height: 15px;
-	border: none;
-	opacity: 1;		/* IE's support is different */
-}
-
-/* This one is for an inactive language when the mouse is hovering over it */
+/* This one is for a place flag */
 .brightflag {
 	height: 15px;
 	border: none;
 	opacity: 1;		/* IE's support is different */
-}
-
-/* This one is for an inactive language when the mouse is not hovering over it */
-.dimflag {
-	height: 15px;
-	border: none;
-	opacity: 0.5;	/* IE's support is different */
 }
 
 .border1 {

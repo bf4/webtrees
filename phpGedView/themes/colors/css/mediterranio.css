@@ -170,16 +170,10 @@ direction: rtl;
 text-align: right;
 }
 
-.activeflag,.brightflag {
+.brightflag {
 border:none;
 height:15px;
 opacity: 1;
-}
-
-.dimflag {
-height:15px;
-border:none;
-opacity: .4;
 }
 
 /*	End Toplinks Section				 */
