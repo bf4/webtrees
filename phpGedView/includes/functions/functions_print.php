@@ -752,7 +752,7 @@ function print_lang_form($option=0) {
 		echo '<div class="lang_form">';
 		switch($option) {
 		case 1:
-			echo $language_menu->getMenuAsIcons();
+			echo $language_menu->getMenu();
 			break;
 		default:
 			echo $language_menu->getMenuAsDropdown();

@@ -37,7 +37,6 @@ loadLangFile("pgv_confighelp");
 $action              =safe_REQUEST($_REQUEST, 'action',                PGV_REGEX_UNSAFE);
 $ln                  =safe_REQUEST($_REQUEST, 'ln',                    PGV_REGEX_UNSAFE);
 $new_shortcut        =safe_REQUEST($_REQUEST, 'new_shortcut',          PGV_REGEX_UNSAFE);
-$v_flagsfile         =safe_REQUEST($_REQUEST, 'v_flagsfile',           PGV_REGEX_UNSAFE);
 $v_original_lang_name=safe_REQUEST($_REQUEST, 'v_original_lang_name',  PGV_REGEX_UNSAFE);
 $v_lang_shortcut     =safe_REQUEST($_REQUEST, 'v_lang_shortcut',       PGV_REGEX_UNSAFE);
 
@@ -124,19 +123,6 @@ if ($action == "new_lang") {
 	$countryfile[$ln]    = "languages/countries.".$new_shortcut.".php";
 	$faqlistfile[$ln]    = "languages/faqlist.".$new_shortcut.".php";
 	$extrafile[$ln]    = "languages/extra.".$new_shortcut.".php";
-
-
-	// Suggest a suitable flag file
-	$temp = strtolower($lng_codes[$new_shortcut][1]).".gif";
-	if (file_exists(PGV_ROOT.'images/flags/'.$temp)) {
-		$flag = $temp;						// long name takes precedence
-	} elseif (file_exists(PGV_ROOT.'images/flags/'.$new_shortcut.".gif")) {
-		$flag = $new_shortcut.".gif";		// use short name if long name doesn't exist
-	} else {
-		$flag = "new.gif";				// default if neither a long nor a short name exist
-	}
-	$flagsfile[$ln] = "images/flags/" . $flag;
-	$v_flagsfile=$flagsfile[$ln];
 
 	$DATE_FORMAT_array[$ln]  = "j F Y";
 	$TIME_FORMAT_array[$ln]  = "h:i:s";
@@ -247,67 +233,6 @@ if ($action != "save" && $action != "toggleActive") {
 	echo "</td>";
 	write_td_with_textdir_check();
 	echo '<input type="text" name="v_lang_langcode" size="70" value="', $v_lang_langcode, '" />';
-	echo "</td>";
-	echo "</tr>";
-
-	echo "<tr>";
-	if (!isset($v_flagsfile)) {
-		$v_flagsfile = $flagsfile[$ln];
-	}
-	echo '<td class="facts_label" >';
-	echo i18n::translate('Flag file'), help_link('flagsfile');
-	echo "</td>";
-	write_td_with_textdir_check();
-	$dire = "images/flags";
-	if (($handle = opendir($dire))) {
-		$flagfiles = array();
-		$sortedflags = array();
-		$cf=0;
-		print $dire."/";
-		while (false !== ($file = readdir($handle))) {
-			$pos1 = strpos($file, "gif");
-			if ($file != "." && $file != ".." && $pos1) {
-				$filelang = substr($file, 0, $pos1-1);
-				$fileflag = $dire."/".$filelang.".gif";
-				$flagfiles["file"][$cf]=$file;
-				$flagfiles["path"][$cf]=$fileflag;
-				$sortedflags[$file]=$cf;
-				$cf++;
-			}
-		}
-		closedir($handle);
-		$sortedflags = array_flip($sortedflags);
-		asort($sortedflags);
-		$sortedflags = array_flip($sortedflags);
-		reset($sortedflags);
-		if ($action != "new_lang") {
-			echo "&nbsp;&nbsp;&nbsp;<select name=\"v_flagsfile\" id=\"v_flagsfile\" onchange=\"document.getElementById('flag').src=document.getElementById('v_flagsfile').value;\">\n";
-			foreach ($sortedflags as $key=>$value) {
-				$i = $sortedflags[$key];
-				echo '<option value="', $flagfiles["path"][$i], '"';
-				if ($v_flagsfile == $flagfiles["path"][$i]){
-					echo ' selected="selected"';
-					$flag_i = $i;
-				}
-				echo ">", filename_encode($flagfiles["file"][$i]), "</option>\n";
-			}
-			echo "</select>\n";
-		} else {
-			foreach ($sortedflags as $key=>$value) {
-				$i = $sortedflags[$key];
-				if ($v_flagsfile == $flagfiles["path"][$i]){
-					$flag_i = $i;
-					break;
-				}
-			}
-			echo '<input type="hidden" name="v_flagsfile" value="', $v_flagsfile, '">';
-			echo $flagfiles["file"][$i];
-		}
-	}
-	if (isset($flag_i) && isset($flagfiles["path"][$flag_i])){
-		echo '<div style="display: inline; padding-left: 7px;">';
-		echo ' <img id="flag" src="', $flagfiles["path"][$flag_i], '" alt="" class="brightflag border1" /></div>';
-	}
 	echo "</td>";
 	echo "</tr>";
 
@@ -566,7 +491,6 @@ if ($action == "save") {
 		$languages[$ln]    = $ln;
 	}
 
-	$flagsfile[$ln]    = $v_flagsfile;
 	$pgv_lang_self[$ln]  = $_POST["v_original_lang_name"];
 	$pgv_lang_use[$ln]  = $_POST["v_lang_use"];
 	$lang_short_cut[$ln]  = $_POST["v_lang_shortcut"];

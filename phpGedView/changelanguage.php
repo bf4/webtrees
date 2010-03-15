@@ -280,11 +280,11 @@ switch ($action) {
 			}
 			print "</td><td class=\"facts_value\" colspan=\"2\" valign=\"top\">";
 			// Print language name and flag
-			print "<img src=\"".$language_settings[$key]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$key]."\" title=\"".$pgv_lang["lang_name_".$key]."\" />&nbsp;".$pgv_lang["lang_name_".$key]."<br />";
+			print "&nbsp;".$pgv_lang["lang_name_".$key]."<br />";
 		}
 		print "</td></tr><tr><td  class=\"facts_value\" colspan=\"5\" valign=\"top\">".i18n::translate('Users\' languages')."</td><td class=\"facts_value\" colspan=\"2\">";
 		foreach ($configuredlanguages["users"] as $key => $value) {
-			print "<img src=\"".$language_settings[$key]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$key]."\" title=\"".$pgv_lang["lang_name_".$key]."\" />&nbsp;<a href=\"".encode_url("useradmin.php?action=listusers&filter=language&usrlang={$key}")."\">".$pgv_lang["lang_name_".$key]."</a><br />";
+			print "&nbsp;<a href=\"".encode_url("useradmin.php?action=listusers&filter=language&usrlang={$key}")."\">".$pgv_lang["lang_name_".$key]."</a><br />";
 		}
 	print "</td></tr>";
 }

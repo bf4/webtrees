@@ -4621,11 +4621,6 @@ case 'firstname_i':
 	$text=i18n::translate('The surname you have chosen has more than %s individuals.<br /><br />To help you find the person you want, the list has been broken into smaller lists according to the first letter of the person\'s given name.  This alphabetical sub-index works the same as the alphabetical index for surnames.<br /><ul><li>Click a letter to see all of the first names which start with that letter.</li><li>Choose <b>(unknown)</b> to list all of the persons with unknown first names.</li><li>Choosing <b>ALL</b> will display a list of all persons with the previously chosen surname.</li></ul>Because there are many names, it may take a long time for this list to appear on your screen.', $SUBLIST_TRIGGER_I);
 	break;
 
-case 'flagsfile':
-	$title=i18n::translate('Flag file');
-	$text=i18n::translate('Name of the national flag image file for the selected language.<br /><br />Images for many countries are available from <a href="http://w3f.com/gifs/index.html"><b>The WWWeb Factory</b></a> site.<br /><br />When you find a flag image you like, right-click on it and save the image in a temporary folder. Next, open the saved image with a suitable image editor (IrfanView is recommended for Windows systems), reduce its size 50x32 pixels, which is the normal size used in PhpGedView, and then save it as a GIF file to the <i><b>images/flags</b></i> folder.<br /><br />Although you can use any name you wish, you should select a name consistent with the two-letter language shortcut.  For example, Croatian is represented by the two-letter code <i><b>hr</b></i>, so the Croatian flag would normally be named <i><b>hr.gif</b></i>.');
-	break;
-
 case 'follow_spouse':
 	$title=i18n::translate('Check relationships by marriage');
 	$text=i18n::translate('With this check box <b>un</b>checked, the relationships are only checked between blood relatives.  With this check box checked, relationships by marriage are also checked.  You will probably find more relationships by leaving this box checked.');

@@ -255,7 +255,7 @@ else { ?>
 						<?php if (empty($SEARCH_SPIDER)) { ?>
 						<td>
 							<div align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right"; ?>" >
-								<?php print_lang_form(); ?>
+								<?php print_lang_form(1); ?>
 							</div>
 						</td>
 						<?php } ?>

@@ -627,7 +627,7 @@ if ($action == "listusers") {
 			echo "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}\" />";
 		}
 		echo "</td>\n";
-		echo "\t<td class=\"optionbox wrap\">", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "<br /><img src=\"", $language_settings[get_user_setting($user_id, 'language')]["flagsfile"], "\" class=\"brightflag\" alt=\"", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "\" title=\"", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "\" /></td>\n";
+		echo "\t<td class=\"optionbox wrap\">", $pgv_lang["lang_name_".get_user_setting($user_id, 'language')], "</td>\n";
 		echo "\t<td class=\"optionbox\">";
 		echo "<a href=\"javascript: ", i18n::translate('Privileges'), "\" onclick=\"expand_layer('user-geds", $k, "'); return false;\"><img id=\"user-geds", $k, "_img\" src=\"", $PGV_IMAGE_DIR, "/";
 		if ($showprivs == false) echo $PGV_IMAGES["plus"]["other"];
@@ -1185,7 +1185,7 @@ if ($action == "cleanup2") {
 	asort($userlang);
 	echo "<tr valign=\"middle\"><td class=\"font11\">", i18n::translate('Users\' languages'), "</td>";
 	foreach ($userlang as $key=>$ulang) {
-		echo "\t<td class=\"font11\"><img src=\"", $language_settings[$ulang["langname"]]["flagsfile"], "\" class=\"brightflag\" alt=\"", $key, "\" title=\"", $key, "\" /></td><td>&nbsp;<a href=\"", encode_url("useradmin.php?action=listusers&filter=language&usrlang=".$ulang["langname"]), "\">", $key, "</a></td><td>", $ulang["number"], "</td></tr><tr class=\"vmiddle\"><td></td>\n";
+		echo "\t<td><a href=\"", encode_url("useradmin.php?action=listusers&filter=language&usrlang=".$ulang["langname"]), "\">", $key, "</a></td><td>", $ulang["number"], "</td></tr><tr class=\"vmiddle\"><td></td>\n";
 	}
 	echo "</tr></table>";
 	echo "</td></tr></table>";

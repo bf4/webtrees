@@ -372,7 +372,7 @@ function update_site_config($newconfig, $return = false) {
 // Save the languages the user has chosen to have active on the website
 function update_lang_settings() {
 	global $INDEX_DIRECTORY, $language_settings, $languages, $pgv_language, $lang_short_cut, $pgv_lang_self, $pgv_lang_use, $confighelpfile, $helptextfile;
-	global $flagsfile, $adminfile, $countryfile, $faqlistfile, $extrafile, $ALPHABET_lower, $ALPHABET_upper, $DATE_FORMAT_array, $editorfile, $lang_langcode;
+	global $adminfile, $countryfile, $faqlistfile, $extrafile, $ALPHABET_lower, $ALPHABET_upper, $DATE_FORMAT_array, $editorfile, $lang_langcode;
 	global $DICTIONARY_SORT, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV, $NAME_REVERSE_array, $TEXT_DIRECTION_array, $TIME_FORMAT_array, $WEEK_START_array, $COLLATION;
 
 	$Filename = $INDEX_DIRECTORY . "lang_settings.php";
@@ -408,7 +408,6 @@ function update_lang_settings() {
 				fwrite($fp, "'pgv_language'=>'{$pgv_language[$key]}',".PGV_EOL);
 				fwrite($fp, "'confighelpfile'=>'{$confighelpfile[$key]}',".PGV_EOL);
 				fwrite($fp, "'helptextfile'=>'{$helptextfile[$key]}',".PGV_EOL);
-				fwrite($fp, "'flagsfile'=>'{$flagsfile[$key]}',".PGV_EOL);
 				fwrite($fp, "'adminfile'=>'{$adminfile[$key]}',".PGV_EOL);
 				fwrite($fp, "'editorfile'=>'{$editorfile[$key]}',".PGV_EOL);
 				fwrite($fp, "'countryfile'=>'{$countryfile[$key]}',".PGV_EOL);
