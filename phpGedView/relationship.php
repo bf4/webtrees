@@ -70,12 +70,48 @@ function getRelationshipSentence($path, $pid1, $pid2) {
 	case 'hus': return i18n::translate('husband');
 	case 'wif': return i18n::translate('wife');
 	case 'spo': return i18n::translate('spouse');
-	case 'bro': return i18n::translate('brother'); // TODO: elder-brother, younger-brother, twin-brother
-	case 'sis': return i18n::translate('sister');  // TODO: elder-sister,  younger-sister,  twin-sister
-	case 'sib': return i18n::translate('sibling');
 	case 'son': return i18n::translate('son');
 	case 'dau': return i18n::translate('daughter');
 	case 'chi': return i18n::translate('child');
+	case 'bro':
+		$dob1=Person::GetInstance($pid1)->getBirthDate();
+		$dob2=Person::GetInstance($pid2)->getBirthDate();
+		if ($dob1->isOK() && $dob2->isOK()) {
+			if (abs($dob1->JD()-$dob2->JD())<2) {
+				return i18n::translate('twin brother');
+			} else if ($dob1->JD()<$dob2->JD()) {
+				return i18n::translate('younger brother');
+			} else {
+				return i18n::translate('elder brother');
+			}
+		}
+		return i18n::translate('brother');
+	case 'sis':
+		$dob1=Person::GetInstance($pid1)->getBirthDate();
+		$dob2=Person::GetInstance($pid2)->getBirthDate();
+		if ($dob1->isOK() && $dob2->isOK()) {
+			if (abs($dob1->JD()-$dob2->JD())<2) {
+				return i18n::translate('twin sister');
+			} else if ($dob1->JD()<$dob2->JD()) {
+				return i18n::translate('younger sister');
+			} else {
+				return i18n::translate('elder sister');
+			}
+		}
+		return i18n::translate('sister');
+	case 'sib':
+		$dob1=Person::GetInstance($pid1)->getBirthDate();
+		$dob2=Person::GetInstance($pid2)->getBirthDate();
+		if ($dob1->isOK() && $dob2->isOK()) {
+			if (abs($dob1->JD()-$dob2->JD())<2) {
+				return i18n::translate('twin sibling');
+			} else if ($dob1->JD()<$dob2->JD()) {
+				return i18n::translate('younger sibling');
+			} else {
+				return i18n::translate('elder sibling');
+			}
+		}
+		return i18n::translate('sibling');
 	
 	// Level Two relationships
 	case 'motmot':  return /* I18N: grandmother */ i18n::translate('mother\'s mother');
