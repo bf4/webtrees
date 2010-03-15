@@ -49,7 +49,7 @@ require_once PGV_ROOT.'includes/classes/class_date.php';
 * @see http://homepages.rootsweb.com/~pmcbride/gedcom/55gcch2.htm#AGE_AT_EVENT
 */
 function get_age_at_event($agestring, $show_years) {
-	global $pgv_lang, $lang_short_cut, $LANGUAGE;
+	global $lang_short_cut, $LANGUAGE;
 
 	// Allow special processing for different languages
 	$func="age_localisation_{$lang_short_cut[$LANGUAGE]}";
@@ -64,8 +64,6 @@ function get_age_at_event($agestring, $show_years) {
 
 // Localise an age.  This is a default function, and may be overridden in includes/extras/functions.xx.php
 function DefaultAgeLocalisation(&$agestring, &$show_years) {
-	global $pgv_lang;
-
 	$agestring=preg_replace(
 		array(
 			'/\bchi(ld)?\b/i',
