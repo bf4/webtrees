@@ -56,10 +56,6 @@ class i18n {
 		// settings, translations and other support for each language in one file.
 		// This makes it simple for users to add/remove/share languages.
 
-		// I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
-		self::$text_direction=i18n::noop('LANGUAGE_TEXT_DIRECTION');
-		// I18N: This is the name of the MySQL utf8 collation sequence for this language.  See http://dev.mysql.com/doc/refman/5.1/en/se-db2-collations.html
-		self::$collation=i18n::noop('LANGUAGE_COLLATION');
 		// I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
 		self::$long_date_format=i18n::noop('LANGUAGE_LONG_DATE_FORMAT');
 		// I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes

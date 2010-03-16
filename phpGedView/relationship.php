@@ -392,13 +392,13 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 				$dmax=0;
 				$depth=0;
 				foreach($node["path"] as $index=>$pid) {
-					if (($node["relations"][$index]=="father")||($node["relations"][$index]=="mother")) {
+					if ($node["relations"][$index]=="father" || $node["relations"][$index]=="mother" || $node["relations"][$index]=="parent") {
 
 					$depth++;
 					if ($depth>$dmax) $dmax=$depth;
 					if ($asc==0) $asc=1; // the first link is a parent link
 					}
-					if ($node["relations"][$index]=="child") {
+					if ($node["relations"][$index]=="son" || $node["relations"][$index]=="daughter" || $node["relations"][$index]=="child") {
 						$depth--;
 						if ($depth<$dmin) $dmin=$depth;
 						if ($asc==0) $asc=-1; // the first link is a child link
@@ -428,7 +428,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 				if (strpos($indirec, "1 SEX F")!==false) $mfstyle="F";
 				if (strpos($indirec, "1 SEX M")!==false) $mfstyle="";
 				$arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"];
-				if (($node["relations"][$index]=="father")||($node["relations"][$index]=="mother")) {
+				if ($node["relations"][$index]=="father" || $node["relations"][$index]=="mother" || $node["relations"][$index]=="parent") {
 					$line = $PGV_IMAGES["vline"]["other"];
 					$liney += $Dbheight;
 					$linex += $Dbwidth/2;
@@ -466,10 +466,8 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					}
 					else $yoffset += $Dbheight+$Dbyspacing+50;
 				}
-				if ($node["relations"][$index]=="sibling") {
+				if ($node["relations"][$index]=="brother" || $node["relations"][$index]=="sister" || $node["relations"][$index]=="sibling") {
 					$arrow_img = $PGV_IMAGE_DIR."/".$rArrow;
-					if ($mfstyle=="F") $node["relations"][$index]="sister";
-					if ($mfstyle=="") $node["relations"][$index]="brother";
 					$xoffset += $Dbwidth+$Dbxspacing+70;
 					$colNum ++;
 					//$rowNum is inherited from the box immediately to the left
@@ -486,10 +484,8 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 						$previous="";
 					}
 				}
-				if ($node["relations"][$index]=="spouse") {
+				if ($node["relations"][$index]=="husband" || $node["relations"][$index]=="wife" || $node["relations"][$index]=="spouse") {
 					$arrow_img = $PGV_IMAGE_DIR."/".$rArrow;
-					if ($mfstyle=="F") $node["relations"][$index]="wife";
-					if ($mfstyle=="") $node["relations"][$index]="husband";
 					$xoffset += $Dbwidth+$Dbxspacing+70;
 					$colNum ++;
 					//$rowNum is inherited from the box immediately to the left
@@ -506,9 +502,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 						$previous="";
 					}
 				}
-				if ($node["relations"][$index]=="child") {
-					if ($mfstyle=="F") $node["relations"][$index]="daughter";
-					if ($mfstyle=="") $node["relations"][$index]="son";
+				if ($node["relations"][$index]=="son" || $node["relations"][$index]=="daughter" || $node["relations"][$index]=="child") {
 					$line = $PGV_IMAGES["vline"]["other"];
 					$liney += $Dbheight;
 					$linex += $Dbwidth/2;

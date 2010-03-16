@@ -1694,8 +1694,6 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				} else {
 					if (isset($pgv_lang[$key])) {
 						$rela = $pgv_lang[$key];
-					} elseif (i18n::is_translated(strtoupper($key))) {
-						$rela = i18n::translate(strtoupper($key));
 					} else {
 						$rela = $rmatch[1];
 					}
