@@ -34,26 +34,6 @@ define('PGV_SCRIPT_NAME', 'index_edit.php');
 require './config.php';
 require_once PGV_ROOT.'includes/index_cache.php';
 
-/**
- * Block definition array
- *
- * The following block definition array defines the
- * blocks that can be used to customize the portals
- * their names and the function to call them
- * "name" is the name of the block in the lists
- * "descr" is the name of a pgv_lang var to describe this block.  Eg: if the block is
- * 			described by $pgv_lang["my_block_text"], put "my_block_text" here.
- * "type" the options are "user" or "gedcom" or undefined
- * - The type determines which lists the block is available in.
- * - Leaving the type undefined allows it to be on both the user and gedcom portal
- * @global $PGV_BLOCKS
- */
-
-loadLangFile("pgv_confighelp");
-
-global $pgv_lang, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION;
-global $GEDCOM_TITLE;
-
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];
 if (isset($_REQUEST['main'])) $main = $_REQUEST['main'];
@@ -83,17 +63,12 @@ if (!isset($side)) $side="main";
 if (!isset($index)) $index=1;
 
 // Define all the icons we're going to use
-$IconHelp = i18n::translate('?');
-if ($PGV_USE_HELPIMG) {
-	$IconHelp = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["small"]."\" class=\"icon\" width=\"15\" height=\"15\" alt=\"\" />";
-}
 $IconUarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
 $IconDarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
 $IconRarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
 $IconLarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
 $IconRDarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rdarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
 $IconLDarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["ldarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
-
 
 /**
  * Load List of Blocks in blocks directory (unchanged)
