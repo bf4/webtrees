@@ -135,7 +135,13 @@ if (empty($pgv_changes)) {
 			} else {
 				$output .= "<td class=\"list_value $TEXT_DIRECTION\">&nbsp;</td>";
 			}
-			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><b>".$pgv_lang[$change['type']]."</b></td>";
+			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><b>";
+			switch ($change['type']) {
+			case 'append':  $output.=i18n::translate('Append record'); break;
+			case 'delete':  $output.=i18n::translate('Delete record'); break;
+			case 'replace': $output.=i18n::translate('Replace record'); break;
+			}
+			echo "</b></td>";
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"javascript:;\" onclick=\"return reply('".$change['user']."', '".i18n::translate('Review GEDCOM Changes')."')\" alt=\"".i18n::translate('Send Message')."\">";
 			if ($user_id=get_user_id($change['user'])) {
 				$output.=PrintReady(getUserFullName($user_id));
