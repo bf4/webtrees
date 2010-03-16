@@ -163,9 +163,27 @@ class CalendarDate {
 	static function NUM_DAYS_OF_WEEK() {
 		return 7;
 	}
-	static function DAYS_OF_WEEK($n) {
-		static $days=array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
-		return $days[$n];
+	static function LONG_DAYS_OF_WEEK($n) {
+		switch ($n) {
+		case 0: return i18n::translate('Monday');
+		case 1: return i18n::translate('Tuesday');
+		case 2: return i18n::translate('Wednesday');
+		case 3: return i18n::translate('Thursday');
+		case 4: return i18n::translate('Friday');
+		case 5: return i18n::translate('Saturday');
+		case 6: return i18n::translate('Sunday');
+		}
+	}
+	static function SHORT_DAYS_OF_WEEK($n) {
+		switch ($n) {
+		case 0: return i18n::translate('Mon');
+		case 1: return i18n::translate('Tue');
+		case 2: return i18n::translate('Wed');
+		case 3: return i18n::translate('Thu');
+		case 4: return i18n::translate('Fri');
+		case 5: return i18n::translate('Sat');
+		case 6: return i18n::translate('Sun');
+		}
 	}
 	static function YMDtoJD($y, $m, $d) {
 		return 0;
@@ -348,21 +366,11 @@ class CalendarDate {
 	}
 
 	function FormatLongWeekday() {
-		global $pgv_lang;
-		$day=$this->DAYS_OF_WEEK($this->minJD % self::NUM_DAYS_OF_WEEK());
-		if (isset($pgv_lang[$day]))
-			return $pgv_lang[$day];
-		return $day;
+		return $this->LONG_DAYS_OF_WEEK($this->minJD % self::NUM_DAYS_OF_WEEK());
 	}
 
 	function FormatShortWeekday() {
-		global $pgv_lang;
-		$day=$this->DAYS_OF_WEEK($this->minJD % self::NUM_DAYS_OF_WEEK());
-		if (isset($pgv_lang[$day.'_1st']))
-			return $pgv_lang[$day.'_1st'];
-		if (isset($pgv_lang[$day]))
-			return $pgv_lang[$day];
-		return $day;
+		return $this->SHORT_DAYS_OF_WEEK($this->minJD % self::NUM_DAYS_OF_WEEK());
 	}
 
 	function FormatISOWeekday() {
@@ -844,9 +852,34 @@ class FrenchRDate extends CalendarDate {
 	static function NUM_MONTHS() {
 		return 13;
 	}
-	static function DAYS_OF_WEEK($n) {
-		static $days=array('primidi', 'duodi', 'tridi', 'quartidi', 'quintidi', 'sextidi', 'septidi', 'octidi', 'nonidi', 'decidi');
-		return $days[$n];
+	static function LONG_DAYS_OF_WEEK($n) {
+		switch ($n) {
+		case 0: return i18n::translate('Primidi');
+		case 1: return i18n::translate('Duodi');
+		case 2: return i18n::translate('Tridi');
+		case 3: return i18n::translate('Quartidi');
+		case 4: return i18n::translate('Quintidi');
+		case 5: return i18n::translate('Sextidi');
+		case 6: return i18n::translate('Septidi');
+		case 7: return i18n::translate('Octidi');
+		case 8: return i18n::translate('Nonidi');
+		case 9: return i18n::translate('Decidi');
+		}
+	}
+	static function SHORT_DAYS_OF_WEEK($n) {
+		// TODO: What are the abbreviations of these?
+		switch ($n) {
+		case 0: return i18n::translate('Primidi');
+		case 1: return i18n::translate('Duodi');
+		case 2: return i18n::translate('Tridi');
+		case 3: return i18n::translate('Quartidi');
+		case 4: return i18n::translate('Quintidi');
+		case 5: return i18n::translate('Sextidi');
+		case 6: return i18n::translate('Septidi');
+		case 7: return i18n::translate('Octidi');
+		case 8: return i18n::translate('Nonidi');
+		case 9: return i18n::translate('Decidi');
+		}
 	}
 	static function NUM_DAYS_OF_WEEK() {
 		return 10; // A "metric" week of 10 unimaginatively named days.
