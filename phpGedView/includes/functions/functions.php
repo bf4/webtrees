@@ -2005,9 +2005,9 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 			}
 			if (headers_sent()) {
-				print "\n<!-- Relationship $pid1-$pid2 NOT FOUND | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
-				echo execution_stats();
-				print "-->\n";
+				//print "\n<!-- Relationship $pid1-$pid2 NOT FOUND | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
+				//echo execution_stats();
+				//print "-->\n";
 			}
 			$NODE_CACHE["$pid1-$pid2"] = "NOT FOUND";
 			return false;
@@ -2273,9 +2273,9 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		unset($p1nodes[$shortest]);
 	} //-- end while loop
 	if (headers_sent()) {
-		echo "\n<!-- Relationship $pid1-$pid2 | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
-		echo execution_stats();
-		echo "-->\n";
+		//echo "\n<!-- Relationship $pid1-$pid2 | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
+		//echo execution_stats();
+		//echo "-->\n";
 	}
 	
 	// Convert "generic" relationships into sex-specific ones.
@@ -2283,26 +2283,26 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		switch ($resnode['relations'][$n]) {
 		case 'parent':
 			switch (Person::getInstance($pid)->getSex()) {
-			case 'M': $resnode['relations'][$n]='father';
-			case 'F': $resnode['relations'][$n]='mother';
+			case 'M': $resnode['relations'][$n]='father'; break;
+			case 'F': $resnode['relations'][$n]='mother'; break;
 			}
 			break;
 		case 'child':
 			switch (Person::getInstance($pid)->getSex()) {
-			case 'M': $resnode['relations'][$n]='son';
-			case 'F': $resnode['relations'][$n]='daughter';
+			case 'M': $resnode['relations'][$n]='son'; break;
+			case 'F': $resnode['relations'][$n]='daughter'; break;
 			}
 			break;
 		case 'spouse':
 			switch (Person::getInstance($pid)->getSex()) {
-			case 'M': $resnode['relations'][$n]='husband';
-			case 'F': $resnode['relations'][$n]='wife';
+			case 'M': $resnode['relations'][$n]='husband'; break;
+			case 'F': $resnode['relations'][$n]='wife'; break;
 			}
 			break;
 		case 'sibling':
 			switch (Person::getInstance($pid)->getSex()) {
-			case 'M': $resnode['relations'][$n]='brother';
-			case 'F': $resnode['relations'][$n]='sister';
+			case 'M': $resnode['relations'][$n]='brother'; break;
+			case 'F': $resnode['relations'][$n]='sister'; break;
 			}
 			break;
 		}
@@ -2312,6 +2312,9 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 
 // Convert the result of get_relationship into a relationship name.
 function get_relationship_name($nodes) {
+	if (!is_array($nodes)) {
+		return '';
+	}
 	$pid1=$nodes['path'][0];
 	$pid2=$nodes['path'][count($nodes['path'])-1];
 	$path=array_slice($nodes['relations'], 1);

@@ -635,79 +635,15 @@ for ($i=0; $i<($controller->treesize); $i++) {
 		$bplace = trim($person->getBirthPlace());
 		$bdate = $person->getBirthDate();
 		$name = $person->getFullName();
-		// Allow special processing for different languages
-		$func="rela_localisation_{$lang_short_cut[$LANGUAGE]}";
 
 		// -- check to see if we have moved to the next generation
 		if ($i+1 >= pow(2, $curgen)) {
 			$curgen++;
-			} // Checking each time now to set sex
-		if ($curgen == 2) {
-			if ($sex == "F") {
-				$relationship = i18n::translate('Mother');
-			} else if ($sex == "M") {
-				$relationship = i18n::translate('Father');
-			} else {
-					$relationship = i18n::translate('Parent');
-			}
-			$event = "<img src='modules/googlemap/images/sq2.png' width='10' height='10'>" .
-				 "<strong>&nbsp;".$relationship.":&nbsp;</strong>";
 		}
-		if ($curgen == 3) {
-			if ($sex == "F") {
-				$relationship = i18n::translate('Grandmother');
-			} else if ($sex == "M") {
-				$relationship = i18n::translate('Grandfather');
-			} else {
-				$relationship = i18n::translate('Grandparent');
-			}
-			// experiment
-			$sosa = "sosa_" . ($i+1);
-			if (!empty($pgv_lang[$sosa])) {
-				if (function_exists($func)) {
-					// Localise the relationship
-					$relationship = $func($pgv_lang[$sosa], $pid);
-				} else {
-					$relationship = $pgv_lang[$sosa];
-				}
-			}
-			$event = "<img src='modules/googlemap/images/sq3.png' width='10' height='10'>".
-				 "<strong>&nbsp;".$relationship.":&nbsp;</strong>";
-		}
-		if ($curgen > 3) {
-			$sosa = "sosa_" . ($i+1);
-			if (!empty($pgv_lang[$sosa])) { // use display language when available
-				if (function_exists($func)) {
-					// Localise the relationship
-					$relationship = $func($pgv_lang[$sosa], $pid);
-				} else {
-					$relationship = $pgv_lang[$sosa];
-				}
-				$event = "<img src='modules/googlemap/images/sq".$curgen.".png' width='10'" .
-					 " height='10'><strong>&nbsp;".$relationship.":&nbsp;</strong>";
-			} else {
-				$relationship = get_sosa_name($i+1);
-				if (!empty($relationship)) {
-					$event = "<img src='modules/googlemap/images/sq".$curgen.".png' width='10'" .
-					 " height='10'><strong>&nbsp;".$relationship.":&nbsp;</strong>";
-				} else {
-					if ($sex == "F") {
-						$relationship = i18n::translate('Grandmother');
-					} else if ($sex == "M") {
-						$relationship = i18n::translate('Grandfather');
-					} else {
-						$relationship = i18n::translate('Grandparent'); 
-					}
-					$event = "<img src='modules/googlemap/images/sq".$curgen.".png' width='10'" .
-						 " height='10'><strong>&nbsp;".i18n::translate('Gt')."&nbsp;</strong>";
-					for ($x=1; $x<($curgen-3); $x++) {
-						$event .= "<strong>".i18n::translate('Gt')."&nbsp;</strong>";
-					}
-					$event .= "<strong>".$relationship.":&nbsp;</strong>";
-				}
-			}
-		}
-	
+		$relationship=get_relationship_name(get_relationship($controller->rootid, $pid, false));
+		$event = "<img src='modules/googlemap/images/sq".($curgen+1).".png' width='10' height='10'>".
+			 "<strong>&nbsp;".$relationship.":&nbsp;</strong>";
+
 		// add thumbnail image
 		$image = "";
 		if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
