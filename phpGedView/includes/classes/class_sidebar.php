@@ -54,9 +54,7 @@ abstract class Sidebar {
 	 * @return string
 	 */
 	public function getTitle() {
-		global $pgv_lang;
-		if (isset($pgv_lang[$this->name])) return $pgv_lang[$this->name];
-		else return $this->name;
+		return i18n::translate('Sidebar');
 	}
 	
 	/**
