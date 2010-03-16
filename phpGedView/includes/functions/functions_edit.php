@@ -56,7 +56,7 @@ function newConnection() {
 * @param string $gedrec The latest gedcom record to check the CHAN:DATE:TIME (auto accept)
 */
 function checkChangeTime($pid, $gedrec, $last_time) {
-	global $pgv_changes, $pgv_lang;
+	global $pgv_changes;
 	//-- check if the record changes since last access
 	$changeTime = 0;
 	$changeUser = '';
@@ -257,8 +257,6 @@ function delete_gedrec($gid, $linkpid='') {
 
 //-- this function will check a GEDCOM record for valid gedcom format
 function check_gedcom($gedrec, $chan=true) {
-	global $pgv_lang;
-
 	$gedrec = trim(stripLRMRLM($gedrec));
 
 	$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
@@ -408,7 +406,7 @@ function undo_change($cid, $index) {
 * @param string $famtag how the new person is added to the family
 */
 function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag="CHIL", $sextag='') {
-	global $pgv_lang, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
+	global $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $NAME_REVERSE;
 	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $REVERSED_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $NO_UPDATE_CHAN;
@@ -944,7 +942,7 @@ function print_indi_form($nextaction, $famid, $linenum='', $namerec='', $famtag=
 * @see init_calendar_popup()
 */
 function print_calendar_popup($id, $asString=false) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	// calendar button
 	$text = i18n::translate('Select a date');
@@ -962,7 +960,7 @@ function print_calendar_popup($id, $asString=false) {
 * @todo add comments
 */
 function print_addnewmedia_link($element_id) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
 	
 	$text = i18n::translate('Add a new Media item');
 	if (isset($PGV_IMAGES["addmedia"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addmedia"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
@@ -975,7 +973,7 @@ function print_addnewmedia_link($element_id) {
 * @todo add comments
 */
 function print_addnewrepository_link($element_id) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	$text = i18n::translate('Create Repository');
 	if (isset($PGV_IMAGES["addrepository"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addrepository"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
@@ -989,7 +987,7 @@ function print_addnewrepository_link($element_id) {
 * @todo add comments
 */
 function print_addnewnote_link($element_id) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
 	
 	$text = i18n::translate('Create a new Shared Note');
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
@@ -1003,7 +1001,7 @@ function print_addnewnote_link($element_id) {
 * // Used in GEDFact CENS assistant =====================
 */
 function print_addnewnote_assisted_link($element_id) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
 	$text = i18n::translate('Create a new Shared Note using Assistant');
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
@@ -1017,7 +1015,7 @@ function print_addnewnote_assisted_link($element_id) {
 */
 
 function print_editnote_link($note_id) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	$text = i18n::translate('Edit Shared Note');
 	if (isset($PGV_IMAGES["note"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
@@ -1030,7 +1028,7 @@ function print_editnote_link($note_id) {
 * @todo add comments
 */
 function print_addnewsource_link($element_id) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	$text = i18n::translate('Create a new source');
 	if (isset($PGV_IMAGES["addsource"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addsource"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
@@ -1060,7 +1058,7 @@ function print_addnewsource_link($element_id) {
 * @param boolean $rowDisplay True to have the row displayed by default, false to hide it by default
 */
 function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose='', $rowDisplay=true) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
 	global $assorela, $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION, $pgv_changes;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
@@ -1461,13 +1459,18 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		}
 		echo "<input type=\"hidden\" id=\"", $element_id, "\" name=\"", $element_name, "\" value=\"", $value, "\" />\n";
 		echo "<table><tr valign=\"top\">\n";
-		foreach (array("none", "locked", "privacy", "confidential") as $resn_index => $resn_val) {
+		foreach (array(
+			'none'=>i18n::translate('None'),
+			'locked'=>i18n::translate('Do not change'),
+			'privacy'=>i18n::translate('Privacy'),
+			'confidential'=>i18n::translate('Confidential')
+		) as $resn_val => $text) {
 			if ($resn_val=="none") $resnv=""; else $resnv=$resn_val;
 			echo "<td><input tabindex=\"", $tabkey, "\" type=\"radio\" name=\"RESN_radio\" onclick=\"update_RESN_img('", $resn_val, "')\"";
 			echo " value=\"", $resnv, "\"";
 			if ($value==$resnv) echo " checked=\"checked\"";
-			echo " /><small>", $pgv_lang[$resn_val], "</small>";
-			echo "<br />&nbsp;<img id=\"RESN_", $resn_val, "\" src=\"images/RESN_", $resn_val, ".gif\"  alt=\"", $pgv_lang[$resn_val], "\" title=\"", $pgv_lang[$resn_val], "\" border=\"0\"";
+			echo " /><small>", $text, "</small>";
+			echo "<br />&nbsp;<img id=\"RESN_", $resn_val, "\" src=\"images/RESN_", $resn_val, ".gif\"  alt=\"", $text, "\" title=\"", $text, "\" border=\"0\"";
 			if ($value==$resnv) echo " style=\"display:inline\""; else echo " style=\"display:none\"";
 			echo " /></td>\n";
 		}
@@ -1729,7 +1732,7 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 * @param string $tag Gedcom tag name
 */
 function print_add_layer($tag, $level=2, $printSaveButton=true) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_DIRECTORY, $TEXT_DIRECTION, $PRIVACY_BY_RESN;
 	global $gedrec, $FULL_SOURCES;
 	global $islink;
@@ -2245,7 +2248,7 @@ function check_input_date($datestr) {
 * @return  bool success or failure
 */
 function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
-	global $pgv_lang, $pgv_changes;
+	global $pgv_changes;
 
 	if (empty($level)) $level = 1;
 	if ($level!=1) return false; // Level 2 items get linked elsewhere
@@ -2281,7 +2284,7 @@ function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
 * @return  bool success or failure
 */
 function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
-	global $pgv_lang, $pgv_changes;
+	global $pgv_changes;
 
 	if (empty($level)) $level = 1;
 	if ($level!=1) return false; // Level 2 items get unlinked elsewhere (maybe ??)
@@ -2308,7 +2311,7 @@ function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
 * @param string $fact the new fact we are adding
 */
 function create_add_form($fact) {
-	global $tags, $pgv_lang, $FULL_SOURCES;
+	global $tags, $FULL_SOURCES;
 
 	$tags = array();
 	
@@ -2354,7 +2357,7 @@ function create_add_form($fact) {
 * @param string $level0type the type of the level 0 gedcom record
 */
 function create_edit_form($gedrec, $linenum, $level0type) {
-	global $WORD_WRAPPED_NOTES, $pgv_lang;
+	global $WORD_WRAPPED_NOTES;
 	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
 	global $lang_short_cut, $LANGUAGE, $FULL_SOURCES, $TEXT_DIRECTION;
 	// global $TEXT_DIRECTION, $TBLPREFIX, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $SERVER_URL;
@@ -2618,7 +2621,6 @@ function insert_missing_subtags($level1tag, $add_date=false) {
 */
 function delete_person($pid, $gedrec='') {
 	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
-	global $pgv_lang;
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
@@ -2683,7 +2685,6 @@ function delete_person($pid, $gedrec='') {
 */
 function delete_family($pid, $gedrec='') {
 	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
-	global $pgv_lang;
 	if (empty($gedrec)) $gedrec = find_family_record($pid, PGV_GED_ID);
 	if (!empty($gedrec)) {
 		$success = true;

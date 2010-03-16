@@ -235,11 +235,11 @@ function print_fact(&$eventObj, $noedit=false) {
 			if (isset($resn_value)) {
 				switch($resn_value) {
 				case 'privacy':
-					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />';
+					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />'; break;
 				case 'confidential':
-					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />';
+					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />'; break;
 				case 'locked':
-					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />';
+					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />'; break;
 				}
 				echo help_link('RESN');
 			}
@@ -367,11 +367,11 @@ function print_fact(&$eventObj, $noedit=false) {
 			if (isset($resn_value)) {
 				switch($resn_value) {
 				case 'privacy':
-					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />';
+					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />'; break;
 				case 'confidential':
-					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />';
+					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />'; break;
 				case 'locked':
-					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />';
+					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />'; break;
 				}
 				echo help_link('RESN');
 			}
@@ -932,11 +932,11 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 				if (isset($resn_value)) {
 					switch($resn_value) {
 					case 'privacy':
-						echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />';
+						echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />'; break;
 					case 'confidential':
-						echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />';
+						echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />'; break;
 					case 'locked':
-						echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />';
+						echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />'; break;
 					}
 					echo help_link('RESN');
 				}
@@ -1223,11 +1223,11 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			if (isset($resn_value)) {
 				switch($resn_value) {
 				case 'privacy':
-					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />';
+					echo '<img src="images/RESN_privacy.gif" alt="', i18n::translate('Privacy'), ' title="', i18n::translate('Privacy'), '" />'; break;
 				case 'confidential':
-					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />';
+					echo '<img src="images/RESN_confidential.gif" alt="', i18n::translate('Confidential'), ' title="', i18n::translate('Confidential'), '" />'; break;
 				case 'locked':
-					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />';
+					echo '<img src="images/RESN_locked.gif" alt="', i18n::translate('Do not change'), ' title="', i18n::translate('Do not change'), '" />'; break;
 				}
 				echo help_link('RESN');
 			}
