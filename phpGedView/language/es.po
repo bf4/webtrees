@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-15 21:45+0000\n"
+"POT-Creation-Date: 2010-03-16 21:00+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -474,7 +474,7 @@ msgstr "intervalo"
 #: ../includes/extras/functions.pl.php:180
 #: ../includes/extras/functions.sl.php:122
 #: ../includes/extras/functions.sl.php:142
-#: ../includes/functions/functions_date.php:88
+#: ../includes/functions/functions_date.php:86
 #: ../includes/classes/class_person.php:1827
 msgid "years"
 msgstr "años"
@@ -771,7 +771,7 @@ msgid "Message successfully sent to %s"
 msgstr "Mensaje enviado con éxito a %s"
 
 #: ../message.php:156 ../useradmin.php:575 ../useradmin.php:609
-#: ../edit_changes.php:139 ../includes/classes/class_stats.php:3673
+#: ../edit_changes.php:145 ../includes/classes/class_stats.php:3673
 #: ../includes/classes/class_stats.php:3675
 #: ../includes/classes/class_stats_ui.php:292 ../blocks/logged_in.php:95
 #: ../blocks/user_messages.php:137
@@ -840,8 +840,8 @@ msgstr "Mensaje eliminado"
 #: ../message.php:223 ../manageservers.php:48 ../inverselink.php:223
 #: ../inverselink.php:228 ../inverselink.php:233
 #: ../editlang_edit_settings.php:534 ../find.php:415 ../imageview.php:178
-#: ../imageview.php:200 ../editnews.php:133 ../edit_changes.php:194
-#: ../index_edit.php:71 ../statisticsplot.php:995
+#: ../imageview.php:200 ../editnews.php:133 ../edit_changes.php:200
+#: ../index_edit.php:51 ../statisticsplot.php:995
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:425
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:220
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:275
@@ -1266,8 +1266,8 @@ msgstr "Seleccione un informe"
 msgid "Select report"
 msgstr "Seleccionar informe"
 
-#: ../reportengine.php:165 ../index_edit.php:296 ../index_edit.php:306
-#: ../index_edit.php:557 ../index_edit.php:575 ../help_text.php:4174
+#: ../reportengine.php:165 ../index_edit.php:271 ../index_edit.php:281
+#: ../index_edit.php:532 ../index_edit.php:550 ../help_text.php:4174
 msgid "Click here to continue"
 msgstr "Haga clic aquí para continuar"
 
@@ -1297,7 +1297,7 @@ msgstr "Descargar informe"
 
 #: ../reportengine.php:348 ../editlang_edit_settings.php:176
 #: ../editlang_edit_settings.php:458 ../uploadgedcom.php:1168
-#: ../index_edit.php:298 ../index_edit.php:560
+#: ../index_edit.php:273 ../index_edit.php:535
 #: ../includes/media_reorder.php:62 ../includes/media_reorder.php:215
 #: ../dir_editor.php:242 ../modules/lightbox/album.php:106
 #: ../modules/clippings/clippings.php:280 ../edit_interface.php:2309
@@ -1328,7 +1328,7 @@ msgid "Manage Sites"
 msgstr "Gestionar sitios"
 
 #: ../manageservers.php:45 ../downloadbackup.php:36 ../editnews.php:40
-#: ../index_edit.php:70 ../addsearchlink.php:38 ../edit_interface.php:281
+#: ../index_edit.php:50 ../addsearchlink.php:38 ../edit_interface.php:281
 #: ../addremotelink.php:46 ../addmedia.php:81 ../edit_merge.php:53
 msgid "<b>Access Denied</b><br />You do not have access to this resource."
 msgstr "<b>Acceso denegado</b><br />No tiene permiso para acceder a este recurso."
@@ -1393,7 +1393,7 @@ msgid "Delete"
 msgstr "Suprimir"
 
 #: ../manageservers.php:249 ../manageservers.php:296 ../manageservers.php:343
-#: ../index_edit.php:495 ../index_edit.php:515 ../clippings.php:281
+#: ../index_edit.php:470 ../index_edit.php:490 ../clippings.php:281
 #: ../clippings.php:307 ../includes/classes/class_stats_ui.php:85
 #: ../modules/GEDFact_assistant/_MEDIA/media_5_input.php:64
 #: ../modules/GEDFact_assistant/_MEDIA/media_5_input.php:79
@@ -1407,10 +1407,10 @@ msgid "Remove"
 msgstr "Borrar"
 
 #: ../manageservers.php:256 ../manageservers.php:258 ../manageservers.php:303
-#: ../manageservers.php:305 ../manageservers.php:479 ../index_edit.php:497
-#: ../index_edit.php:517 ../clippings.php:140 ../clippings.php:261
-#: ../includes/functions/functions_print.php:2244
-#: ../includes/functions/functions_print.php:2294
+#: ../manageservers.php:305 ../manageservers.php:479 ../index_edit.php:472
+#: ../index_edit.php:492 ../clippings.php:140 ../clippings.php:261
+#: ../includes/functions/functions_print.php:2242
+#: ../includes/functions/functions_print.php:2292
 #: ../includes/classes/class_stats_ui.php:191
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:183
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:185
@@ -1564,9 +1564,9 @@ msgid "This record has been marked for deletion upon admin approval."
 msgstr "Este registro ha sido marcado para borrar si lo aprueba el administrador."
 
 #: ../individual.php:272 ../timeline.php:404 ../autocomplete.php:199
-#: ../includes/functions/functions_print.php:1792
-#: ../includes/functions/functions_print.php:1978
-#: ../includes/functions/functions_print.php:2013
+#: ../includes/functions/functions_print.php:1790
+#: ../includes/functions/functions_print.php:1976
+#: ../includes/functions/functions_print.php:2011
 #: ../includes/classes/class_stats.php:1781
 #: ../includes/classes/class_stats.php:2660
 #: ../includes/classes/class_stats.php:2661
@@ -1825,7 +1825,7 @@ msgstr "Usar la clasificación UTF-8 de la propia base de datos"
 #: ../includes/functions/functions_edit.php:1481
 #: ../includes/functions/functions_print_lists.php:306
 #: ../includes/functions/functions_print_lists.php:685
-#: ../includes/functions/functions_print.php:2027
+#: ../includes/functions/functions_print.php:2025
 #: ../includes/functions/functions_print_facts.php:1626
 #: ../includes/functions/functions_print_facts.php:1636
 #: ../includes/classes/class_stats.php:3748
@@ -2218,7 +2218,7 @@ msgstr "Registro"
 msgid "This page has been disabled by the site administrator."
 msgstr "Esta página ha sido deshabilitada por el administrador del sitio"
 
-#: ../index.php:311 ../index.php:372 ../index_edit.php:183
+#: ../index.php:311 ../index.php:372 ../index_edit.php:158
 #: ../includes/classes/class_menubar.php:110
 msgid "MyGedView Portal"
 msgstr "MiGedView"
@@ -2227,11 +2227,11 @@ msgstr "MiGedView"
 msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
 msgstr "Su página MiGedView le permite guardar marcadores a sus personas favoritas, estar al tanto de los próximos eventos y colaborar con otros usuarios de PhpGedView."
 
-#: ../index.php:446 ../index_edit.php:455 ../blocks/user_welcome.php:62
+#: ../index.php:446 ../index_edit.php:430 ../blocks/user_welcome.php:62
 msgid "Customize MyGedView Portal"
 msgstr "Personalice su Portal personal"
 
-#: ../index.php:453 ../index_edit.php:456 ../blocks/gedcom_block.php:57
+#: ../index.php:453 ../index_edit.php:431 ../blocks/gedcom_block.php:57
 msgid "Customize this GEDCOM Welcome page"
 msgstr "Personalice la Página de Bienvenida de este GEDCOM"
 
@@ -2298,14 +2298,14 @@ msgstr "Mostrar miniaturas en las cajas de las personas"
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:2041
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:2043
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:2172
-#: ../modules/googlemap/pedigree_map.php:735 ../modules/sitemap/index.php:220
+#: ../modules/googlemap/pedigree_map.php:671 ../modules/sitemap/index.php:220
 #: ../modules/sitemap/index.php:325 ../help_text.php:2656
 msgid "Individual Information"
 msgstr "Información de personas"
 
 #: ../expand_view.php:75 ../find.php:590
 #: ../includes/functions/functions_mediadb.php:1594
-#: ../includes/functions/functions_print.php:1822
+#: ../includes/functions/functions_print.php:1820
 #: ../includes/functions/functions_print_facts.php:276
 #: ../includes/functions/functions_print_facts.php:722
 #: ../includes/functions/functions_print_facts.php:1613
@@ -3435,7 +3435,7 @@ msgstr "Cronograma"
 #: ../includes/controllers/individual_ctrl.php:108
 #: ../includes/controllers/individual_ctrl.php:571
 #: ../includes/controllers/descendancy_ctrl.php:102 ../statisticsplot.php:805
-#: ../calendar.php:523 ../calendar.php:605 ../blocks/top10_givnnames.php:100
+#: ../calendar.php:521 ../calendar.php:603 ../blocks/top10_givnnames.php:100
 msgid "Male"
 msgstr "Hombre"
 
@@ -3447,7 +3447,7 @@ msgstr "Hombre"
 #: ../includes/controllers/individual_ctrl.php:109
 #: ../includes/controllers/individual_ctrl.php:573
 #: ../includes/controllers/descendancy_ctrl.php:103 ../statisticsplot.php:806
-#: ../calendar.php:526 ../calendar.php:609 ../blocks/top10_givnnames.php:95
+#: ../calendar.php:524 ../calendar.php:607 ../blocks/top10_givnnames.php:95
 msgid "Female"
 msgstr "Mujer"
 
@@ -3456,7 +3456,7 @@ msgstr "Mujer"
 #: ../includes/family_nav.php:730 ../includes/family_nav.php:733
 #: ../includes/functions/functions_edit.php:1395
 #: ../includes/functions/functions_edit.php:1494
-#: ../includes/functions/functions_print.php:1833
+#: ../includes/functions/functions_print.php:1831
 #: ../includes/functions/functions.php:842
 #: ../includes/classes/class_serviceclient.php:90
 #: ../includes/classes/class_stats.php:867
@@ -3540,7 +3540,7 @@ msgstr "Mujer"
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:404
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:443
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:444
-#: ../calendar.php:613 ../blocks/top10_givnnames.php:105
+#: ../calendar.php:611 ../blocks/top10_givnnames.php:105
 msgid "unknown"
 msgstr "desconocido"
 
@@ -4004,8 +4004,7 @@ msgstr "Suena como"
 #: ../includes/functions/functions_charts.php:812
 #: ../includes/classes/class_person.php:1571
 #: ../includes/controllers/individual_ctrl.php:821
-#: ../includes/controllers/individual_ctrl.php:882
-#: ../modules/googlemap/pedigree_map.php:649 ../edit_interface.php:2323
+#: ../includes/controllers/individual_ctrl.php:882 ../edit_interface.php:2323
 #: ../edit_interface.php:2326 ../addremotelink.php:132
 msgid "Father"
 msgstr "Padre"
@@ -4028,8 +4027,7 @@ msgstr "Nombre de pila"
 #: ../includes/functions/functions_charts.php:813
 #: ../includes/classes/class_person.php:1580
 #: ../includes/controllers/individual_ctrl.php:820
-#: ../includes/controllers/individual_ctrl.php:883
-#: ../modules/googlemap/pedigree_map.php:647 ../edit_interface.php:2322
+#: ../includes/controllers/individual_ctrl.php:883 ../edit_interface.php:2322
 #: ../edit_interface.php:2327 ../addremotelink.php:131
 msgid "Mother"
 msgstr "Madre"
@@ -4058,9 +4056,9 @@ msgstr "Este archivo audiovisual está dañado y no se le puede poner la marca d
 #: ../includes/functions/functions_print_lists.php:218
 #: ../includes/functions/functions_print.php:122
 #: ../includes/functions/functions_print.php:123
+#: ../includes/functions/functions_print.php:1805
 #: ../includes/functions/functions_print.php:1807
-#: ../includes/functions/functions_print.php:1809
-#: ../includes/functions/functions_print.php:1812
+#: ../includes/functions/functions_print.php:1810
 #: ../includes/classes/class_menubar.php:247
 #: ../includes/classes/class_menubar.php:425
 #: ../includes/classes/class_menubar.php:438 ../help_text.php:2726
@@ -4174,31 +4172,31 @@ msgstr "Formato de hora"
 msgid "Week starting day"
 msgstr "Día de comienzo de la semana"
 
-#: ../editlang_edit_settings.php:273
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:174
 msgid "Sunday"
 msgstr "domingo"
 
-#: ../editlang_edit_settings.php:273
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:168
 msgid "Monday"
 msgstr "lunes"
 
-#: ../editlang_edit_settings.php:273
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:169
 msgid "Tuesday"
 msgstr "martes"
 
-#: ../editlang_edit_settings.php:273
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:170
 msgid "Wednesday"
 msgstr "miércoles"
 
-#: ../editlang_edit_settings.php:273
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:171
 msgid "Thursday"
 msgstr "jueves"
 
-#: ../editlang_edit_settings.php:273
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:172
 msgid "Friday"
 msgstr "viernes"
 
-#: ../editlang_edit_settings.php:273
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:173
 msgid "Saturday"
 msgstr "sábado"
 
@@ -4255,7 +4253,7 @@ msgid "This optional file does not exist."
 msgstr "El archivo opcional no existe."
 
 #: ../find.php:97 ../find.php:202
-#: ../includes/functions/functions_print.php:2341
+#: ../includes/functions/functions_print.php:2339
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:99
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:210
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:87
@@ -4273,7 +4271,7 @@ msgid "Find Family List"
 msgstr "Buscar familia"
 
 #: ../find.php:103 ../find.php:208
-#: ../includes/functions/functions_print.php:2454
+#: ../includes/functions/functions_print.php:2452
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:105
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:216
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:93
@@ -4283,7 +4281,7 @@ msgid "Find Media"
 msgstr "Buscar objeto audiovisual"
 
 #: ../find.php:107 ../find.php:211
-#: ../includes/functions/functions_print.php:2356
+#: ../includes/functions/functions_print.php:2354
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:109
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:219
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:97
@@ -4302,7 +4300,7 @@ msgid "Repositories"
 msgstr "Repositorios"
 
 #: ../find.php:115 ../find.php:217
-#: ../includes/functions/functions_print.php:2425
+#: ../includes/functions/functions_print.php:2423
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:117
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:225
 msgid "Find Shared Note"
@@ -4317,7 +4315,7 @@ msgid "Find Source"
 msgstr "Buscar fuente"
 
 #: ../find.php:123 ../find.php:223
-#: ../includes/functions/functions_print.php:2383
+#: ../includes/functions/functions_print.php:2381
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:125
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:231
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:109
@@ -4350,7 +4348,7 @@ msgstr "El nombre contiene:"
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:299
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:320
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:341
-#: ../medialist.php:148 ../calendar.php:535 ../blocks/random_media.php:357
+#: ../medialist.php:148 ../calendar.php:533 ../blocks/random_media.php:357
 #: ../media.php:809 ../media.php:829
 msgid "Filter"
 msgstr "Filtro"
@@ -4970,7 +4968,7 @@ msgstr "No se encontró el archivo de fuente en el servidor PHP"
 #: ../includes/classes/class_menubar.php:252
 #: ../includes/classes/class_menubar.php:476
 #: ../modules/googlemap/pedigree_map.php:137
-#: ../modules/googlemap/pedigree_map.php:802
+#: ../modules/googlemap/pedigree_map.php:738
 msgid "Pedigree Map"
 msgstr "Mapa de ascendientes"
 
@@ -5021,7 +5019,7 @@ msgstr "Mi cuenta"
 msgid "Update MyAccount"
 msgstr "Actualizar mi cuenta"
 
-#: ../edit_changes.php:46 ../edit_changes.php:64 ../edit_changes.php:139
+#: ../edit_changes.php:46 ../edit_changes.php:64 ../edit_changes.php:145
 #: ../help_text.php:2546 ../help_text.php:5440
 #: ../blocks/review_changes.php:109
 msgid "Review GEDCOM Changes"
@@ -5066,11 +5064,23 @@ msgstr "Este registro tuvo los cambios siguientes:"
 msgid "Date"
 msgstr "Fecha"
 
-#: ../edit_changes.php:130 ../edit_changes.php:147
+#: ../edit_changes.php:130 ../edit_changes.php:153
 msgid "Undo"
 msgstr "Deshacer"
 
-#: ../edit_changes.php:162 ../edit_changes.php:173
+#: ../edit_changes.php:140
+msgid "Append record"
+msgstr "Agregar registro"
+
+#: ../edit_changes.php:141
+msgid "Delete record"
+msgstr ""
+
+#: ../edit_changes.php:142
+msgid "Replace record"
+msgstr "Sustituir registro"
+
+#: ../edit_changes.php:168 ../edit_changes.php:179
 #: ../includes/controllers/family_ctrl.php:427
 #: ../includes/controllers/source_ctrl.php:265
 #: ../includes/controllers/repository_ctrl.php:257
@@ -5080,7 +5090,7 @@ msgstr "Deshacer"
 msgid "Accept all changes"
 msgstr "Aceptar todas las modificaciones"
 
-#: ../edit_changes.php:166 ../edit_changes.php:184
+#: ../edit_changes.php:172 ../edit_changes.php:190
 #: ../includes/controllers/family_ctrl.php:421
 #: ../includes/controllers/source_ctrl.php:260
 #: ../includes/controllers/repository_ctrl.php:252
@@ -5090,11 +5100,11 @@ msgstr "Aceptar todas las modificaciones"
 msgid "Undo all changes"
 msgstr "Deshacer todos los cambios"
 
-#: ../edit_changes.php:184
+#: ../edit_changes.php:190
 msgid "Are you sure you want to undo all of the changes for this GEDCOM?"
 msgstr "¿Está seguro de que quiere deshacer todos los cambios a este GEDCOM?"
 
-#: ../edit_changes.php:189
+#: ../edit_changes.php:195
 msgid "Decide for each change to either accept or reject it.<br /><br />To accept all changes at once, click <b>\"Accept all changes\"</b> in the box below.<br />To get more information about a change,<br />click <b>\"View change diff\"</b> to see the differences,<br />or click <b>\"View GEDCOM record\"</b> to see the new data in GEDCOM format."
 msgstr ""
 
@@ -5180,19 +5190,15 @@ msgstr "Tipo de búsqueda"
 msgid "Query"
 msgstr "Búsqueda"
 
-#: ../index_edit.php:86 ../includes/functions/functions_print.php:1352
-msgid "?"
-msgstr ""
-
-#: ../index_edit.php:215
+#: ../index_edit.php:190
 msgid "Configuration file updated successfully."
 msgstr "Archivo de configuración actualizado correctamente."
 
-#: ../index_edit.php:262
+#: ../index_edit.php:237
 msgid "The cache files have been removed."
 msgstr "Se han borrado los archivos recordados."
 
-#: ../index_edit.php:269 ../blocks/upcoming_events.php:102
+#: ../index_edit.php:244 ../blocks/upcoming_events.php:102
 #: ../blocks/top10_givnnames.php:78 ../blocks/block_htmlplus.php:49
 #: ../blocks/block_htmlplus.php:149 ../blocks/block_htmlplus.php:171
 #: ../blocks/charts.php:109 ../blocks/html_block.php:44
@@ -5205,55 +5211,55 @@ msgstr "Se han borrado los archivos recordados."
 msgid "Configure"
 msgstr "Bloque de Configuración"
 
-#: ../index_edit.php:303
+#: ../index_edit.php:278
 msgid "This block cannot be configured."
 msgstr "No se puede configurar este bloque."
 
-#: ../index_edit.php:405 ../index_edit.php:542
+#: ../index_edit.php:380 ../index_edit.php:517
 msgid "Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction."
 msgstr "Resalte un nombre de bloque y haga clic a continuación en uno de los iconos de flecha para mover ese bloque en la dirección indicada."
 
-#: ../index_edit.php:462
+#: ../index_edit.php:437
 msgid "Main Section Blocks"
 msgstr "Bloques de la Sección Principal"
 
-#: ../index_edit.php:465
+#: ../index_edit.php:440
 msgid "Available Blocks"
 msgstr "Bloques disponibles"
 
-#: ../index_edit.php:468
+#: ../index_edit.php:443
 msgid "Right Section Blocks"
 msgstr "Bloques de la Sección Derecha"
 
-#: ../index_edit.php:474 ../index_edit.php:533
+#: ../index_edit.php:449 ../index_edit.php:508
 msgid "Move Up"
 msgstr "Hacia arriba"
 
-#: ../index_edit.php:476 ../index_edit.php:535
+#: ../index_edit.php:451 ../index_edit.php:510
 msgid "Move Down"
 msgstr "Hacia abajo"
 
-#: ../index_edit.php:493
+#: ../index_edit.php:468
 msgid "Move Right"
 msgstr "Mover a la derecha"
 
-#: ../index_edit.php:513
+#: ../index_edit.php:488
 msgid "Move Left"
 msgstr "Mover a la izquierda"
 
-#: ../index_edit.php:547
+#: ../index_edit.php:522
 msgid "Use these blocks as the default block configuration for all users?"
 msgstr "¿Usar estos bloques como configuración predeterminada de bloques para todos los usuarios?"
 
-#: ../index_edit.php:550
+#: ../index_edit.php:525
 msgid "Reset to Default Blocks"
 msgstr "Reestablecer los bloques por omisión"
 
-#: ../index_edit.php:563 ../help_text.php:4169
+#: ../index_edit.php:538 ../help_text.php:4169
 msgid "Clear cache files"
 msgstr "Limpiar los archivos de recuerdo"
 
-#: ../index_edit.php:576
+#: ../index_edit.php:551
 msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
 msgstr ""
 
@@ -5423,8 +5429,8 @@ msgstr "Parentesco con la persona actual"
 msgid "Same as current"
 msgstr "La misma persona"
 
-#: ../addsearchlink.php:87 ../includes/functions/functions_print.php:1807
-#: ../includes/functions/functions_print.php:2031
+#: ../addsearchlink.php:87 ../includes/functions/functions_print.php:1805
+#: ../includes/functions/functions_print.php:2029
 #: ../includes/controllers/individual_ctrl.php:850
 #: ../includes/controllers/individual_ctrl.php:859 ../edit_interface.php:614
 #: ../edit_interface.php:2346 ../edit_interface.php:2355
@@ -5432,8 +5438,8 @@ msgstr "La misma persona"
 msgid "Husband"
 msgstr "Esposo"
 
-#: ../addsearchlink.php:88 ../includes/functions/functions_print.php:1809
-#: ../includes/functions/functions_print.php:2031
+#: ../addsearchlink.php:88 ../includes/functions/functions_print.php:1807
+#: ../includes/functions/functions_print.php:2029
 #: ../includes/controllers/individual_ctrl.php:849
 #: ../includes/controllers/individual_ctrl.php:858 ../edit_interface.php:612
 #: ../edit_interface.php:2344 ../edit_interface.php:2353
@@ -5961,20 +5967,20 @@ msgstr "diciembre"
 
 #: ../includes/extras/functions.pl.php:130
 #: ../includes/extras/functions.sl.php:115
-#: ../includes/functions/functions_date.php:84
+#: ../includes/functions/functions_date.php:82
 #: ../includes/controllers/individual_ctrl.php:862 ../edit_interface.php:2336
 msgid "Child"
 msgstr "Hijo"
 
 #: ../includes/extras/functions.pl.php:131
 #: ../includes/extras/functions.sl.php:116
-#: ../includes/functions/functions_date.php:85
+#: ../includes/functions/functions_date.php:83
 msgid "Infant"
 msgstr "Niño de corta edad"
 
 #: ../includes/extras/functions.pl.php:132
 #: ../includes/extras/functions.sl.php:117
-#: ../includes/functions/functions_date.php:86
+#: ../includes/functions/functions_date.php:84
 msgid "Stillborn"
 msgstr "Nacido muerto"
 
@@ -5983,7 +5989,7 @@ msgstr "Nacido muerto"
 #: ../includes/extras/functions.pl.php:177
 #: ../includes/extras/functions.sl.php:118
 #: ../includes/extras/functions.sl.php:139
-#: ../includes/functions/functions_date.php:87
+#: ../includes/functions/functions_date.php:85
 #: ../includes/classes/class_person.php:1825
 msgid "year"
 msgstr "año"
@@ -5992,7 +5998,7 @@ msgstr "año"
 #: ../includes/extras/functions.pl.php:181
 #: ../includes/extras/functions.sl.php:123
 #: ../includes/extras/functions.sl.php:143
-#: ../includes/functions/functions_date.php:89
+#: ../includes/functions/functions_date.php:87
 #: ../includes/classes/class_person.php:1829 ../statisticsplot.php:942
 #: ../statisticsplot.php:945 ../statisticsplot.php:948
 #: ../statisticsplot.php:951 ../statisticsplot.php:954
@@ -6003,30 +6009,30 @@ msgstr "mes"
 #: ../includes/extras/functions.pl.php:183
 #: ../includes/extras/functions.sl.php:125
 #: ../includes/extras/functions.sl.php:146
-#: ../includes/functions/functions_date.php:90
+#: ../includes/functions/functions_date.php:88
 #: ../includes/classes/class_person.php:1831
 msgid "months"
 msgstr "meses"
 
 #: ../includes/extras/functions.pl.php:151
 #: ../includes/extras/functions.sl.php:126
-#: ../includes/functions/functions_date.php:91
+#: ../includes/functions/functions_date.php:89
 msgid "day"
 msgstr "día"
 
 #: ../includes/extras/functions.pl.php:152
 #: ../includes/extras/functions.sl.php:127
-#: ../includes/functions/functions_date.php:92
+#: ../includes/functions/functions_date.php:90
 msgid "days"
 msgstr "días"
 
 #: ../includes/extras/functions.pl.php:153
-#: ../includes/functions/functions_date.php:93
+#: ../includes/functions/functions_date.php:91
 msgid "week"
 msgstr "semana"
 
 #: ../includes/extras/functions.pl.php:156
-#: ../includes/functions/functions_date.php:94
+#: ../includes/functions/functions_date.php:92
 msgid "weeks"
 msgstr "semanas"
 
@@ -6232,14 +6238,10 @@ msgid "Add a new Source Citation"
 msgstr "Añadir una nueva cita de fuente"
 
 #: ../includes/functions/functions_charts.php:817
-#: ../modules/googlemap/pedigree_map.php:660
-#: ../modules/googlemap/pedigree_map.php:697
 msgid "Grandfather"
 msgstr "Abuelo"
 
 #: ../includes/functions/functions_charts.php:818
-#: ../modules/googlemap/pedigree_map.php:658
-#: ../modules/googlemap/pedigree_map.php:695
 msgid "Grandmother"
 msgstr "Abuela"
 
@@ -6462,7 +6464,7 @@ msgstr "Editar nombre"
 
 #. I18N: This is the GEDCOM label for "Latitude"
 #: ../includes/functions/functions_edit.php:1542
-#: ../includes/functions/functions_print.php:2110
+#: ../includes/functions/functions_print.php:2108
 #: ../modules/googlemap/places.php:588
 #: ../modules/googlemap/places_edit.php:787 ../help_text.php:874
 msgid "LATI"
@@ -6470,7 +6472,7 @@ msgstr "Latitud"
 
 #. I18N: This is the GEDCOM label for "Longitude"
 #: ../includes/functions/functions_edit.php:1542
-#: ../includes/functions/functions_print.php:2116
+#: ../includes/functions/functions_print.php:2114
 #: ../modules/googlemap/places.php:589
 #: ../modules/googlemap/places_edit.php:797 ../help_text.php:886
 msgid "LONG"
@@ -6516,7 +6518,7 @@ msgstr "Ocurrió un error mientras se creaba el formulario de Edición.  Otro us
 #. I18N: This is the GEDCOM label for "Status Change Date"
 #: ../includes/functions/functions_edit.php:2503
 #: ../includes/functions/functions_edit.php:2576
-#: ../includes/functions/functions_print.php:2147 ../help_text.php:1284
+#: ../includes/functions/functions_print.php:2145 ../help_text.php:1284
 msgid "STAT:DATE"
 msgstr "Fecha del cambio de estado"
 
@@ -6708,7 +6710,7 @@ msgstr "Aniversario"
 #: ../includes/functions/functions_print_lists.php:122
 #: ../includes/functions/functions_print_lists.php:501
 #: ../includes/functions/functions_print_lists.php:505
-#: ../includes/functions/functions_print.php:2031 ../help_text.php:84
+#: ../includes/functions/functions_print.php:2029 ../help_text.php:84
 msgid "AGE"
 msgstr "Edad"
 
@@ -6935,7 +6937,7 @@ msgstr "No hay eventos para mañana."
 msgid "No events exist for the next %s days."
 msgstr ""
 
-#: ../includes/functions/functions_print_lists.php:1906 ../calendar.php:587
+#: ../includes/functions/functions_print_lists.php:1906 ../calendar.php:585
 #: ../blocks/yahrzeit.php:145
 #, php-format
 msgid "%s year anniversary"
@@ -7202,88 +7204,92 @@ msgstr "Esta información es privada y no puede mostrarse."
 msgid "For more information contact"
 msgstr "Para más información contacte con"
 
+#: ../includes/functions/functions_print.php:1352
+msgid "?"
+msgstr ""
+
+#: ../includes/functions/functions_print.php:1705
 #: ../includes/functions/functions_print.php:1707
-#: ../includes/functions/functions_print.php:1709
 msgid "nephew"
 msgstr "sobrino"
 
+#: ../includes/functions/functions_print.php:1715
 #: ../includes/functions/functions_print.php:1717
-#: ../includes/functions/functions_print.php:1719
 msgid "niece"
 msgstr "sobrina"
 
 #. I18N: This is the GEDCOM label for "Relationship"
-#: ../includes/functions/functions_print.php:1747 ../help_text.php:1164
+#: ../includes/functions/functions_print.php:1745 ../help_text.php:1164
 msgid "RELA"
 msgstr "Relación"
 
-#: ../includes/functions/functions_print.php:1784
-#: ../includes/functions/functions_print.php:1988
+#: ../includes/functions/functions_print.php:1782
+#: ../includes/functions/functions_print.php:1986
 msgid "on the date of death"
 msgstr "el día de su defunción"
 
-#: ../includes/functions/functions_print.php:1786
-#: ../includes/functions/functions_print.php:1990
+#: ../includes/functions/functions_print.php:1784
+#: ../includes/functions/functions_print.php:1988
 msgid "after death"
 msgstr "tras la defunción"
 
 #. I18N: This is the GEDCOM label for "Death of mother"
-#: ../includes/functions/functions_print.php:1878 ../help_text.php:1896
+#: ../includes/functions/functions_print.php:1876 ../help_text.php:1896
 msgid "_DEAT_MOTH"
 msgstr "Defunción de la madre"
 
-#: ../includes/functions/functions_print.php:1880
+#: ../includes/functions/functions_print.php:1878
 msgid "Mother's age"
 msgstr "Edad de la madre"
 
 #. I18N: This is the GEDCOM label for "Death of father"
-#: ../includes/functions/functions_print.php:1887 ../help_text.php:1854
+#: ../includes/functions/functions_print.php:1885 ../help_text.php:1854
 msgid "_DEAT_FATH"
 msgstr "Defunción del padre"
 
-#: ../includes/functions/functions_print.php:1889
+#: ../includes/functions/functions_print.php:1887
 msgid "Father's age"
 msgstr "Edad del padre"
 
-#: ../includes/functions/functions_print.php:1893
+#: ../includes/functions/functions_print.php:1891
 msgid "Parent's age"
 msgstr "Edad del progenitor"
 
-#: ../includes/functions/functions_print.php:2138
+#: ../includes/functions/functions_print.php:2136
 msgid "LDS Temple"
 msgstr "Templo SUD"
 
-#: ../includes/functions/functions_print.php:2140
+#: ../includes/functions/functions_print.php:2138
 msgid "LDS Temple Code:"
 msgstr "Código templo SUD:"
 
-#: ../includes/functions/functions_print.php:2144
+#: ../includes/functions/functions_print.php:2142
 msgid "Status"
 msgstr "Estatus"
 
-#: ../includes/functions/functions_print.php:2225 ../help_text.php:3814
+#: ../includes/functions/functions_print.php:2223 ../help_text.php:3814
 msgid "Add from clipboard"
 msgstr "Agregar desde el portapapeles"
 
-#: ../includes/functions/functions_print.php:2285
+#: ../includes/functions/functions_print.php:2283
 msgid "Add new fact"
 msgstr "Añadir nuevo hecho"
 
-#: ../includes/functions/functions_print.php:2292 ../calendar.php:271
+#: ../includes/functions/functions_print.php:2290 ../calendar.php:271
 msgid "Custom Event"
 msgstr "Evento personalizado"
 
-#: ../includes/functions/functions_print.php:2370 ../edit_merge.php:305
+#: ../includes/functions/functions_print.php:2368 ../edit_merge.php:305
 #: ../edit_merge.php:322
 msgid "Find Family ID"
 msgstr "Encontrar ID de la Familia"
 
-#: ../includes/functions/functions_print.php:2410 ../edit_merge.php:306
+#: ../includes/functions/functions_print.php:2408 ../edit_merge.php:306
 #: ../edit_merge.php:323
 msgid "Find Source ID"
 msgstr "Encontrar ID de la Fuente"
 
-#: ../includes/functions/functions_print.php:2440
+#: ../includes/functions/functions_print.php:2438
 msgid "Find Repository"
 msgstr "Encontrar repositorio"
 
@@ -7319,981 +7325,1197 @@ msgstr "PHP bloqueó el archivo por su extensión"
 msgid "Error!!! Cannot write to the PhpGedView configuration file.  Please check file and directory permissions and try again."
 msgstr "¡¡¡Error!!! No se pudo escribir el archivo de configuración de PhpGedView.  Por favor, compruebe los permisos de archivo y directorio y pruebe nuevamente."
 
-#: ../includes/functions/functions.php:1998
+#: ../includes/functions/functions.php:1996
 msgid "The script timed out before a relationship could be found."
 msgstr "Fuera de tiempo antes de que se encontrase un parentesco."
 
-#: ../includes/functions/functions.php:2586
-#: ../includes/functions/functions.php:2899
+#: ../includes/functions/functions.php:2350
+#: ../includes/functions/functions.php:2802
 msgid "mother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2587
-#: ../includes/functions/functions.php:2900
+#: ../includes/functions/functions.php:2351
+#: ../includes/functions/functions.php:2803
 msgid "father"
 msgstr ""
 
-#: ../includes/functions/functions.php:2588
-#: ../includes/functions/functions.php:2901
+#: ../includes/functions/functions.php:2352
+#: ../includes/functions/functions.php:2804
 msgid "parent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2589
-#: ../includes/functions/functions.php:2902
+#: ../includes/functions/functions.php:2353
+#: ../includes/functions/functions.php:2805
 msgid "husband"
 msgstr ""
 
-#: ../includes/functions/functions.php:2590
-#: ../includes/functions/functions.php:2903
+#: ../includes/functions/functions.php:2354
+#: ../includes/functions/functions.php:2806
 msgid "wife"
 msgstr ""
 
-#: ../includes/functions/functions.php:2591
-#: ../includes/functions/functions.php:2904
+#: ../includes/functions/functions.php:2355
+#: ../includes/functions/functions.php:2807
 msgid "spouse"
 msgstr ""
 
-#: ../includes/functions/functions.php:2592
-#: ../includes/functions/functions.php:2908
+#: ../includes/functions/functions.php:2356
+#: ../includes/functions/functions.php:2811
 msgid "son"
 msgstr ""
 
-#: ../includes/functions/functions.php:2593
-#: ../includes/functions/functions.php:2909
+#: ../includes/functions/functions.php:2357
+#: ../includes/functions/functions.php:2812
 msgid "daughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2594
-#: ../includes/functions/functions.php:2910
+#: ../includes/functions/functions.php:2358
+#: ../includes/functions/functions.php:2813
 msgid "child"
 msgstr ""
 
-#: ../includes/functions/functions.php:2600
+#: ../includes/functions/functions.php:2364
 msgid "twin brother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2602
+#: ../includes/functions/functions.php:2366
 msgid "younger brother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2604
+#: ../includes/functions/functions.php:2368
 msgid "elder brother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2607
-#: ../includes/functions/functions.php:2905
+#: ../includes/functions/functions.php:2371
+#: ../includes/functions/functions.php:2808
 msgid "brother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2613
+#: ../includes/functions/functions.php:2377
 msgid "twin sister"
 msgstr ""
 
-#: ../includes/functions/functions.php:2615
+#: ../includes/functions/functions.php:2379
 msgid "younger sister"
 msgstr ""
 
-#: ../includes/functions/functions.php:2617
+#: ../includes/functions/functions.php:2381
 msgid "elder sister"
 msgstr ""
 
-#: ../includes/functions/functions.php:2620
-#: ../includes/functions/functions.php:2906
+#: ../includes/functions/functions.php:2384
+#: ../includes/functions/functions.php:2809
 msgid "sister"
 msgstr ""
 
-#: ../includes/functions/functions.php:2626
+#: ../includes/functions/functions.php:2390
 msgid "twin sibling"
 msgstr ""
 
-#: ../includes/functions/functions.php:2628
+#: ../includes/functions/functions.php:2392
 msgid "younger sibling"
 msgstr ""
 
-#: ../includes/functions/functions.php:2630
+#: ../includes/functions/functions.php:2394
 msgid "elder sibling"
 msgstr ""
 
-#: ../includes/functions/functions.php:2633
-#: ../includes/functions/functions.php:2907
+#: ../includes/functions/functions.php:2397
+#: ../includes/functions/functions.php:2810
 msgid "sibling"
 msgstr ""
 
 #. I18N: grandmother
-#: ../includes/functions/functions.php:2636
+#: ../includes/functions/functions.php:2400
 msgid "mother's mother"
 msgstr ""
 
 #. I18N: grandfather
-#: ../includes/functions/functions.php:2637
+#: ../includes/functions/functions.php:2401
 msgid "mother's father"
 msgstr ""
 
 #. I18N: grandparent
-#: ../includes/functions/functions.php:2638
+#: ../includes/functions/functions.php:2402
 msgid "mother's parent"
 msgstr ""
 
 #. I18N: grandmother
-#: ../includes/functions/functions.php:2639
+#: ../includes/functions/functions.php:2403
 msgid "father's mother"
 msgstr ""
 
 #. I18N: grandfather
-#: ../includes/functions/functions.php:2640
+#: ../includes/functions/functions.php:2404
 msgid "father's father"
 msgstr ""
 
 #. I18N: grandparent
-#: ../includes/functions/functions.php:2641
+#: ../includes/functions/functions.php:2405
 msgid "father's parent"
 msgstr ""
 
 #. I18N: grandmother
-#: ../includes/functions/functions.php:2642
+#: ../includes/functions/functions.php:2406
 msgid "parent's mother"
 msgstr ""
 
 #. I18N: grandfather
-#: ../includes/functions/functions.php:2643
+#: ../includes/functions/functions.php:2407
 msgid "parent's father"
 msgstr ""
 
 #. I18N: grandparent
-#: ../includes/functions/functions.php:2644
+#: ../includes/functions/functions.php:2408
 msgid "parent's parent"
 msgstr ""
 
 #. I18N: granddaughter
-#: ../includes/functions/functions.php:2646
+#: ../includes/functions/functions.php:2410
 msgid "daughter's daughter"
 msgstr ""
 
 #. I18N: grandson
-#: ../includes/functions/functions.php:2647
+#: ../includes/functions/functions.php:2411
 msgid "daughter's son"
 msgstr ""
 
 #. I18N: grandchild
-#: ../includes/functions/functions.php:2648
+#: ../includes/functions/functions.php:2412
 msgid "daughter's child"
 msgstr ""
 
 #. I18N: granddaughter
-#: ../includes/functions/functions.php:2649
+#: ../includes/functions/functions.php:2413
 msgid "son's daughter"
 msgstr ""
 
 #. I18N: grandson
-#: ../includes/functions/functions.php:2650
+#: ../includes/functions/functions.php:2414
 msgid "son's son"
 msgstr ""
 
 #. I18N: grandchild
-#: ../includes/functions/functions.php:2651
+#: ../includes/functions/functions.php:2415
 msgid "son's child"
 msgstr ""
 
 #. I18N: granddaughter
-#: ../includes/functions/functions.php:2652
+#: ../includes/functions/functions.php:2416
 msgid "child's daughter"
 msgstr ""
 
 #. I18N: grandson
-#: ../includes/functions/functions.php:2653
+#: ../includes/functions/functions.php:2417
 msgid "child's son"
 msgstr ""
 
 #. I18N: grandchild
-#: ../includes/functions/functions.php:2654
+#: ../includes/functions/functions.php:2418
 msgid "child's child"
 msgstr ""
 
 #. I18N: step-father
-#: ../includes/functions/functions.php:2656
-#: ../includes/functions/functions.php:2657
+#: ../includes/functions/functions.php:2420
+#: ../includes/functions/functions.php:2421
 msgid "mother's husband"
 msgstr ""
 
 #. I18N: step-mother
-#: ../includes/functions/functions.php:2658
-#: ../includes/functions/functions.php:2659
+#: ../includes/functions/functions.php:2422
+#: ../includes/functions/functions.php:2423
 msgid "father's wife"
 msgstr ""
 
 #. I18N: step-parent
-#: ../includes/functions/functions.php:2660
-#: ../includes/functions/functions.php:2661
+#: ../includes/functions/functions.php:2424
+#: ../includes/functions/functions.php:2425
 msgid "parent's spouse"
 msgstr ""
 
 #. I18N: half-brother
-#: ../includes/functions/functions.php:2663
+#: ../includes/functions/functions.php:2427
 msgid "mother's son"
 msgstr ""
 
 #. I18N: half-sister
-#: ../includes/functions/functions.php:2664
+#: ../includes/functions/functions.php:2428
 msgid "mother's daughter"
 msgstr ""
 
 #. I18N: half-sibling
-#: ../includes/functions/functions.php:2665
+#: ../includes/functions/functions.php:2429
 msgid "mother's child"
 msgstr ""
 
 #. I18N: half-brother
-#: ../includes/functions/functions.php:2666
+#: ../includes/functions/functions.php:2430
 msgid "father's son"
 msgstr ""
 
 #. I18N: half-sister
-#: ../includes/functions/functions.php:2667
+#: ../includes/functions/functions.php:2431
 msgid "father's daughter"
 msgstr ""
 
 #. I18N: half-sibling
-#: ../includes/functions/functions.php:2668
+#: ../includes/functions/functions.php:2432
 msgid "father's child"
 msgstr ""
 
 #. I18N: half-brother
-#: ../includes/functions/functions.php:2669
+#: ../includes/functions/functions.php:2433
 msgid "parent's son"
 msgstr ""
 
 #. I18N: half-sister
-#: ../includes/functions/functions.php:2670
+#: ../includes/functions/functions.php:2434
 msgid "parent's daughter"
 msgstr ""
 
 #. I18N: half-sibling
-#: ../includes/functions/functions.php:2671
+#: ../includes/functions/functions.php:2435
 msgid "parent's child"
 msgstr ""
 
 #. I18N: aunt
-#: ../includes/functions/functions.php:2673
+#: ../includes/functions/functions.php:2437
 msgid "mother's sister"
 msgstr ""
 
 #. I18N: uncle
-#: ../includes/functions/functions.php:2674
+#: ../includes/functions/functions.php:2438
 msgid "mother's brother"
 msgstr ""
 
 #. I18N: aunt/uncle
-#: ../includes/functions/functions.php:2675
+#: ../includes/functions/functions.php:2439
 msgid "mother's sibling"
 msgstr ""
 
 #. I18N: aunt
-#: ../includes/functions/functions.php:2676
+#: ../includes/functions/functions.php:2440
 msgid "father's sister"
 msgstr ""
 
 #. I18N: uncle
-#: ../includes/functions/functions.php:2677
+#: ../includes/functions/functions.php:2441
 msgid "father's brother"
 msgstr ""
 
 #. I18N: aunt/uncle
-#: ../includes/functions/functions.php:2678
+#: ../includes/functions/functions.php:2442
 msgid "father's sibling"
 msgstr ""
 
 #. I18N: aunt
-#: ../includes/functions/functions.php:2679
+#: ../includes/functions/functions.php:2443
 msgid "parent's sister"
 msgstr ""
 
 #. I18N: uncle
-#: ../includes/functions/functions.php:2680
+#: ../includes/functions/functions.php:2444
 msgid "parent's brother"
 msgstr ""
 
 #. I18N: aunt/uncle
-#: ../includes/functions/functions.php:2681
+#: ../includes/functions/functions.php:2445
 msgid "parent's sibling"
 msgstr ""
 
 #. I18N: nephew
-#: ../includes/functions/functions.php:2683
+#: ../includes/functions/functions.php:2447
 msgid "bother's son"
 msgstr ""
 
 #. I18N: niece
-#: ../includes/functions/functions.php:2684
+#: ../includes/functions/functions.php:2448
 msgid "bother's daughter"
 msgstr ""
 
 #. I18N: nephew/neice
-#: ../includes/functions/functions.php:2685
+#: ../includes/functions/functions.php:2449
 msgid "bother's child"
 msgstr ""
 
 #. I18N: nephew
-#: ../includes/functions/functions.php:2686
+#: ../includes/functions/functions.php:2450
 msgid "sister's son"
 msgstr ""
 
 #. I18N: niece
-#: ../includes/functions/functions.php:2687
+#: ../includes/functions/functions.php:2451
 msgid "sister's daughter"
 msgstr ""
 
 #. I18N: nephew/neice
-#: ../includes/functions/functions.php:2688
+#: ../includes/functions/functions.php:2452
 msgid "sister's child"
 msgstr ""
 
 #. I18N: nephew
-#: ../includes/functions/functions.php:2689
+#: ../includes/functions/functions.php:2453
 msgid "sibling's son"
 msgstr ""
 
 #. I18N: niece
-#: ../includes/functions/functions.php:2690
+#: ../includes/functions/functions.php:2454
 msgid "sibling's daughter"
 msgstr ""
 
 #. I18N: nephew/neice
-#: ../includes/functions/functions.php:2691
+#: ../includes/functions/functions.php:2455
 msgid "sibling's child"
 msgstr ""
 
 #. I18N: sister-in-law
-#: ../includes/functions/functions.php:2693
+#: ../includes/functions/functions.php:2457
 msgid "wife's sister"
 msgstr ""
 
 #. I18N: sister-in-law
-#: ../includes/functions/functions.php:2694
+#: ../includes/functions/functions.php:2458
 msgid "husband's sister"
 msgstr ""
 
 #. I18N: sister-in-law
-#: ../includes/functions/functions.php:2695
+#: ../includes/functions/functions.php:2459
 msgid "spouses's sister"
 msgstr ""
 
 #. I18N: brother-in-law
-#: ../includes/functions/functions.php:2696
+#: ../includes/functions/functions.php:2460
 msgid "wife's brother"
 msgstr ""
 
 #. I18N: brother-in-law
-#: ../includes/functions/functions.php:2697
+#: ../includes/functions/functions.php:2461
 msgid "husband's brother"
 msgstr ""
 
 #. I18N: brother-in-law
-#: ../includes/functions/functions.php:2698
+#: ../includes/functions/functions.php:2462
 msgid "spouses's brother"
 msgstr ""
 
 #. I18N: sister-in-law
-#: ../includes/functions/functions.php:2700
+#: ../includes/functions/functions.php:2464
 msgid "brother's wife"
 msgstr ""
 
 #. I18N: brother-in-law
-#: ../includes/functions/functions.php:2701
+#: ../includes/functions/functions.php:2465
 msgid "sister's husband"
 msgstr ""
 
 #. I18N: mother-in-law
-#: ../includes/functions/functions.php:2703
+#: ../includes/functions/functions.php:2467
 msgid "husband's mother"
 msgstr ""
 
 #. I18N: mother-in-law
-#: ../includes/functions/functions.php:2704
+#: ../includes/functions/functions.php:2468
 msgid "wife's mother"
 msgstr ""
 
 #. I18N: mother-in-law
-#: ../includes/functions/functions.php:2705
+#: ../includes/functions/functions.php:2469
 msgid "souses's mother"
 msgstr ""
 
 #. I18N: father-in-law
-#: ../includes/functions/functions.php:2706
+#: ../includes/functions/functions.php:2470
 msgid "husband's father"
 msgstr ""
 
 #. I18N: father-in-law
-#: ../includes/functions/functions.php:2707
+#: ../includes/functions/functions.php:2471
 msgid "wife's father"
 msgstr ""
 
 #. I18N: father-in-law
-#: ../includes/functions/functions.php:2708
+#: ../includes/functions/functions.php:2472
 msgid "souses's father"
 msgstr ""
 
 #. I18N: daughter-in-law
-#: ../includes/functions/functions.php:2710
+#: ../includes/functions/functions.php:2474
 msgid "son's wife"
 msgstr ""
 
 #. I18N: son-in-law
-#: ../includes/functions/functions.php:2711
+#: ../includes/functions/functions.php:2475
 msgid "daughter's husband"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2714
+#: ../includes/functions/functions.php:2478
 msgid "mother's mother's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2715
+#: ../includes/functions/functions.php:2479
 msgid "mother's mother's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2716
+#: ../includes/functions/functions.php:2480
 msgid "mother's mother's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2717
+#: ../includes/functions/functions.php:2481
 msgid "mother's father's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2718
+#: ../includes/functions/functions.php:2482
 msgid "mother's father's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2719
+#: ../includes/functions/functions.php:2483
 msgid "mother's father's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2720
+#: ../includes/functions/functions.php:2484
 msgid "mother's parent's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2721
+#: ../includes/functions/functions.php:2485
 msgid "mother's parent's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2722
+#: ../includes/functions/functions.php:2486
 msgid "mother's parent's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2723
+#: ../includes/functions/functions.php:2487
 msgid "father's mother's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2724
+#: ../includes/functions/functions.php:2488
 msgid "father's mother's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2725
+#: ../includes/functions/functions.php:2489
 msgid "father's mother's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2726
+#: ../includes/functions/functions.php:2490
 msgid "father's father's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2727
+#: ../includes/functions/functions.php:2491
 msgid "father's father's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2728
+#: ../includes/functions/functions.php:2492
 msgid "father's father's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2729
+#: ../includes/functions/functions.php:2493
 msgid "father's parent's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2730
+#: ../includes/functions/functions.php:2494
 msgid "father's parent's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2731
+#: ../includes/functions/functions.php:2495
 msgid "father's parent's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2732
+#: ../includes/functions/functions.php:2496
 msgid "parent's mother's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2733
+#: ../includes/functions/functions.php:2497
 msgid "parent's mother's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2734
+#: ../includes/functions/functions.php:2498
 msgid "parent's mother's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2735
+#: ../includes/functions/functions.php:2499
 msgid "parent's father's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2736
+#: ../includes/functions/functions.php:2500
 msgid "parent's father's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2737
+#: ../includes/functions/functions.php:2501
 msgid "parent's father's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2738
+#: ../includes/functions/functions.php:2502
 msgid "parent's parent's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2739
+#: ../includes/functions/functions.php:2503
 msgid "parent's parent's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2740
+#: ../includes/functions/functions.php:2504
 msgid "parent's parent's parent"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2742
-#: ../includes/functions/functions.php:2808
+#: ../includes/functions/functions.php:2506
+#: ../includes/functions/functions.php:2572
 msgid "mother's mother's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2743
-#: ../includes/functions/functions.php:2809
+#: ../includes/functions/functions.php:2507
+#: ../includes/functions/functions.php:2573
 msgid "mother's mother's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2744
-#: ../includes/functions/functions.php:2810
+#: ../includes/functions/functions.php:2508
+#: ../includes/functions/functions.php:2574
 msgid "mother's mother's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2745
-#: ../includes/functions/functions.php:2811
+#: ../includes/functions/functions.php:2509
+#: ../includes/functions/functions.php:2575
 msgid "mother's father's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2746
-#: ../includes/functions/functions.php:2812
+#: ../includes/functions/functions.php:2510
+#: ../includes/functions/functions.php:2576
 msgid "mother's father's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2747
-#: ../includes/functions/functions.php:2813
+#: ../includes/functions/functions.php:2511
+#: ../includes/functions/functions.php:2577
 msgid "mother's father's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2748
-#: ../includes/functions/functions.php:2814
+#: ../includes/functions/functions.php:2512
+#: ../includes/functions/functions.php:2578
 msgid "mother's parent's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2749
-#: ../includes/functions/functions.php:2815
+#: ../includes/functions/functions.php:2513
+#: ../includes/functions/functions.php:2579
 msgid "mother's parent's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2750
-#: ../includes/functions/functions.php:2816
+#: ../includes/functions/functions.php:2514
+#: ../includes/functions/functions.php:2580
 msgid "mother's parent's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2751
-#: ../includes/functions/functions.php:2817
+#: ../includes/functions/functions.php:2515
+#: ../includes/functions/functions.php:2581
 msgid "father's mother's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2752
-#: ../includes/functions/functions.php:2818
+#: ../includes/functions/functions.php:2516
+#: ../includes/functions/functions.php:2582
 msgid "father's mother's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2753
-#: ../includes/functions/functions.php:2819
+#: ../includes/functions/functions.php:2517
+#: ../includes/functions/functions.php:2583
 msgid "father's mother's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2754
-#: ../includes/functions/functions.php:2820
+#: ../includes/functions/functions.php:2518
+#: ../includes/functions/functions.php:2584
 msgid "father's father's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2755
-#: ../includes/functions/functions.php:2821
+#: ../includes/functions/functions.php:2519
+#: ../includes/functions/functions.php:2585
 msgid "father's father's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2756
-#: ../includes/functions/functions.php:2822
+#: ../includes/functions/functions.php:2520
+#: ../includes/functions/functions.php:2586
 msgid "father's father's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2757
-#: ../includes/functions/functions.php:2823
+#: ../includes/functions/functions.php:2521
+#: ../includes/functions/functions.php:2587
 msgid "father's parent's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2758
-#: ../includes/functions/functions.php:2824
+#: ../includes/functions/functions.php:2522
+#: ../includes/functions/functions.php:2588
 msgid "father's parent's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2759
-#: ../includes/functions/functions.php:2825
+#: ../includes/functions/functions.php:2523
+#: ../includes/functions/functions.php:2589
 msgid "father's parent's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2760
-#: ../includes/functions/functions.php:2826
+#: ../includes/functions/functions.php:2524
+#: ../includes/functions/functions.php:2590
 msgid "parent's mother's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2761
-#: ../includes/functions/functions.php:2827
+#: ../includes/functions/functions.php:2525
+#: ../includes/functions/functions.php:2591
 msgid "parent's mother's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2762
-#: ../includes/functions/functions.php:2828
+#: ../includes/functions/functions.php:2526
+#: ../includes/functions/functions.php:2592
 msgid "parent's mother's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2763
-#: ../includes/functions/functions.php:2829
+#: ../includes/functions/functions.php:2527
+#: ../includes/functions/functions.php:2593
 msgid "parent's father's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2764
-#: ../includes/functions/functions.php:2830
+#: ../includes/functions/functions.php:2528
+#: ../includes/functions/functions.php:2594
 msgid "parent's father's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2765
-#: ../includes/functions/functions.php:2831
+#: ../includes/functions/functions.php:2529
+#: ../includes/functions/functions.php:2595
 msgid "parent's father's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2766
-#: ../includes/functions/functions.php:2832
+#: ../includes/functions/functions.php:2530
+#: ../includes/functions/functions.php:2596
 msgid "parent's parent's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2767
-#: ../includes/functions/functions.php:2833
+#: ../includes/functions/functions.php:2531
+#: ../includes/functions/functions.php:2597
 msgid "parent's parent's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2768
-#: ../includes/functions/functions.php:2834
+#: ../includes/functions/functions.php:2532
+#: ../includes/functions/functions.php:2598
 msgid "parent's parent's sibling"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2770
+#: ../includes/functions/functions.php:2534
 msgid "daughter's daughter's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2771
+#: ../includes/functions/functions.php:2535
 msgid "daughter's daughter's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2772
+#: ../includes/functions/functions.php:2536
 msgid "daughter's daughter's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2773
+#: ../includes/functions/functions.php:2537
 msgid "daughter's son's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2774
+#: ../includes/functions/functions.php:2538
 msgid "daughter's son's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2775
+#: ../includes/functions/functions.php:2539
 msgid "daughter's son's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2776
+#: ../includes/functions/functions.php:2540
 msgid "daughter's child's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2777
+#: ../includes/functions/functions.php:2541
 msgid "daughter's child's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2778
+#: ../includes/functions/functions.php:2542
 msgid "daughter's child's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2779
+#: ../includes/functions/functions.php:2543
 msgid "son's daughter's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2780
+#: ../includes/functions/functions.php:2544
 msgid "son's daughter's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2781
+#: ../includes/functions/functions.php:2545
 msgid "son's daughter's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2782
+#: ../includes/functions/functions.php:2546
 msgid "son's son's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2783
+#: ../includes/functions/functions.php:2547
 msgid "son's son's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2784
+#: ../includes/functions/functions.php:2548
 msgid "son's son's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2785
+#: ../includes/functions/functions.php:2549
 msgid "son's child's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2786
+#: ../includes/functions/functions.php:2550
 msgid "son's child's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2787
+#: ../includes/functions/functions.php:2551
 msgid "son's child's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2788
+#: ../includes/functions/functions.php:2552
 msgid "child's daughter's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2789
+#: ../includes/functions/functions.php:2553
 msgid "child's daughter's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2790
+#: ../includes/functions/functions.php:2554
 msgid "child's daughter's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2791
+#: ../includes/functions/functions.php:2555
 msgid "child's son's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2792
+#: ../includes/functions/functions.php:2556
 msgid "child's son's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2793
+#: ../includes/functions/functions.php:2557
 msgid "child's son's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2794
+#: ../includes/functions/functions.php:2558
 msgid "child's child's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2795
+#: ../includes/functions/functions.php:2559
 msgid "child's child's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2796
+#: ../includes/functions/functions.php:2560
 msgid "child's child's child"
 msgstr ""
 
 #. I18N: step-brother
-#: ../includes/functions/functions.php:2798
+#: ../includes/functions/functions.php:2562
 msgid "mother's husband's son"
 msgstr ""
 
 #. I18N: step-sister
-#: ../includes/functions/functions.php:2799
+#: ../includes/functions/functions.php:2563
 msgid "mother's husband's daughter"
 msgstr ""
 
 #. I18N: step-sibling
-#: ../includes/functions/functions.php:2800
+#: ../includes/functions/functions.php:2564
 msgid "mother's husband's child"
 msgstr ""
 
 #. I18N: step-brother
-#: ../includes/functions/functions.php:2801
+#: ../includes/functions/functions.php:2565
 msgid "father's wife's son"
 msgstr ""
 
 #. I18N: step-sister
-#: ../includes/functions/functions.php:2802
+#: ../includes/functions/functions.php:2566
 msgid "father's wife's daughter"
 msgstr ""
 
 #. I18N: step-sibling
-#: ../includes/functions/functions.php:2803
+#: ../includes/functions/functions.php:2567
 msgid "father's wife's child"
 msgstr ""
 
 #. I18N: step-brother
-#: ../includes/functions/functions.php:2804
+#: ../includes/functions/functions.php:2568
 msgid "parent's spouse's son"
 msgstr ""
 
 #. I18N: step-sister
-#: ../includes/functions/functions.php:2805
+#: ../includes/functions/functions.php:2569
 msgid "parent's spouse's daughter"
 msgstr ""
 
 #. I18N: step-sibling
-#: ../includes/functions/functions.php:2806
+#: ../includes/functions/functions.php:2570
 msgid "parent's spouse's child"
 msgstr ""
 
-#: ../includes/functions/functions.php:2844
-#, php-format
-msgid "great x %d aunt"
+#: ../includes/functions/functions.php:2611
+msgid "great-great-aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2845
-#, php-format
-msgid "great x %d uncle"
+#: ../includes/functions/functions.php:2612
+msgid "great-great-uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2846
-#, php-format
-msgid "great x %d aunt/uncle"
+#: ../includes/functions/functions.php:2613
+msgid "great-great-aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2855
+#: ../includes/functions/functions.php:2618
+msgid "great-great-great-aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2619
+msgid "great-great-great-uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2620
+msgid "great-great-great-aunt/uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2625
+msgid "great x4 aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2626
+msgid "great x4 uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2627
+msgid "great x4 aunt/uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2632
+msgid "great x5 aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2633
+msgid "great x5 uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2634
+msgid "great x5 aunt/uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2639
+msgid "great x6 aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2640
+msgid "great x6 uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2641
+msgid "great x6 aunt/uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2646
+msgid "great x7 aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2647
+msgid "great x7 uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2648
+msgid "great x7 aunt/uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2653
+#, php-format
+msgid "great x%d aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2654
+#, php-format
+msgid "great x%d uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2655
+#, php-format
+msgid "great x%d aunt/uncle"
+msgstr ""
+
+#: ../includes/functions/functions.php:2668
+msgid "great-great-grandmother"
+msgstr ""
+
+#: ../includes/functions/functions.php:2669
+msgid "great-great-grandfather"
+msgstr ""
+
+#: ../includes/functions/functions.php:2670
+msgid "great-great-grandparent"
+msgstr ""
+
+#: ../includes/functions/functions.php:2675
+msgid "great-great-great-grandmother"
+msgstr ""
+
+#: ../includes/functions/functions.php:2676
+msgid "great-great-great-grandfather"
+msgstr ""
+
+#: ../includes/functions/functions.php:2677
+msgid "great-great-great-grandparent"
+msgstr ""
+
+#: ../includes/functions/functions.php:2682
+msgid "great x4 grandmother"
+msgstr ""
+
+#: ../includes/functions/functions.php:2683
+msgid "great x4 grandfather"
+msgstr ""
+
+#: ../includes/functions/functions.php:2684
+msgid "great x4 grandparent"
+msgstr ""
+
+#: ../includes/functions/functions.php:2689
+msgid "great x5 grandmother"
+msgstr ""
+
+#: ../includes/functions/functions.php:2690
+msgid "great x5 grandfather"
+msgstr ""
+
+#: ../includes/functions/functions.php:2691
+msgid "great x5 grandparent"
+msgstr ""
+
+#: ../includes/functions/functions.php:2696
+msgid "great x6 grandmother"
+msgstr ""
+
+#: ../includes/functions/functions.php:2697
+msgid "great x6 grandfather"
+msgstr ""
+
+#: ../includes/functions/functions.php:2698
+msgid "great x6 grandparent"
+msgstr ""
+
+#: ../includes/functions/functions.php:2703
+msgid "great x7 grandmother"
+msgstr ""
+
+#: ../includes/functions/functions.php:2704
+msgid "great x7 grandfather"
+msgstr ""
+
+#: ../includes/functions/functions.php:2705
+msgid "great x7 grandparent"
+msgstr ""
+
+#: ../includes/functions/functions.php:2710
 #, php-format
 msgid "great x %d grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2856
+#: ../includes/functions/functions.php:2711
 #, php-format
 msgid "great x %d grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2857
+#: ../includes/functions/functions.php:2712
 #, php-format
 msgid "great x %d grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2862
-#, php-format
-msgid "great x %d grandson"
+#: ../includes/functions/functions.php:2721
+msgid "great-great-grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2863
-#, php-format
-msgid "great x %d granddaughter"
+#: ../includes/functions/functions.php:2722
+msgid "great-great-granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2864
-#, php-format
-msgid "great x %d grandchild"
+#: ../includes/functions/functions.php:2723
+msgid "great-great-grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2870
+#: ../includes/functions/functions.php:2728
+msgid "great-great-great-grandson"
+msgstr ""
+
+#: ../includes/functions/functions.php:2729
+msgid "great-great-great-granddaughter"
+msgstr ""
+
+#: ../includes/functions/functions.php:2730
+msgid "great-great-great-grandchild"
+msgstr ""
+
+#: ../includes/functions/functions.php:2735
+msgid "great x4 grandson"
+msgstr ""
+
+#: ../includes/functions/functions.php:2736
+msgid "great x4 granddaughter"
+msgstr ""
+
+#: ../includes/functions/functions.php:2737
+msgid "great x4 grandchild"
+msgstr ""
+
+#: ../includes/functions/functions.php:2742
+msgid "great x5 grandson"
+msgstr ""
+
+#: ../includes/functions/functions.php:2743
+msgid "great x5 granddaughter"
+msgstr ""
+
+#: ../includes/functions/functions.php:2744
+msgid "great x5 grandchild"
+msgstr ""
+
+#: ../includes/functions/functions.php:2749
+msgid "great x6 grandson"
+msgstr ""
+
+#: ../includes/functions/functions.php:2750
+msgid "great x6 granddaughter"
+msgstr ""
+
+#: ../includes/functions/functions.php:2751
+msgid "great x6 grandchild"
+msgstr ""
+
+#: ../includes/functions/functions.php:2756
+msgid "great x7 grandson"
+msgstr ""
+
+#: ../includes/functions/functions.php:2757
+msgid "great x7 granddaughter"
+msgstr ""
+
+#: ../includes/functions/functions.php:2758
+msgid "great x7 grandchild"
+msgstr ""
+
+#: ../includes/functions/functions.php:2763
+#, php-format
+msgid "great x%d grandson"
+msgstr ""
+
+#: ../includes/functions/functions.php:2764
+#, php-format
+msgid "great x%d granddaughter"
+msgstr ""
+
+#: ../includes/functions/functions.php:2765
+#, php-format
+msgid "great x%d grandchild"
+msgstr ""
+
+#: ../includes/functions/functions.php:2773
 #, php-format
 msgid "%s male cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2871
+#: ../includes/functions/functions.php:2774
 #, php-format
 msgid "%s female cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2872
+#: ../includes/functions/functions.php:2775
 #, php-format
 msgid "%s cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2879
+#: ../includes/functions/functions.php:2782
 #, php-format
 msgid "%1$s male cousin, %2$d time removed"
 msgid_plural "%1$s male cousin, %2$d times removed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/functions/functions.php:2884
+#: ../includes/functions/functions.php:2787
 #, php-format
 msgid "%1$s female cousin, %2$d time removed"
 msgid_plural "%1$s female cousin, %2$d times removed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/functions/functions.php:2887
+#: ../includes/functions/functions.php:2790
 #, php-format
 msgid "%1$s cousin, %2$d time removed"
 msgid_plural "%1$s cousin, %2$d times removed"
@@ -8301,62 +8523,62 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: These strings are used to build paths of relationships, such as "father's wife's husband's brother"
-#: ../includes/functions/functions.php:2915
+#: ../includes/functions/functions.php:2818
 #, php-format
 msgid "mother's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2916
+#: ../includes/functions/functions.php:2819
 #, php-format
 msgid "father's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2917
+#: ../includes/functions/functions.php:2820
 #, php-format
 msgid "parent's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2918
+#: ../includes/functions/functions.php:2821
 #, php-format
 msgid "husband's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2919
+#: ../includes/functions/functions.php:2822
 #, php-format
 msgid "wife's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2920
+#: ../includes/functions/functions.php:2823
 #, php-format
 msgid "spouse's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2921
+#: ../includes/functions/functions.php:2824
 #, php-format
 msgid "brother's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2922
+#: ../includes/functions/functions.php:2825
 #, php-format
 msgid "sister's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2923
+#: ../includes/functions/functions.php:2826
 #, php-format
 msgid "sibling's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2924
+#: ../includes/functions/functions.php:2827
 #, php-format
 msgid "son's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2925
+#: ../includes/functions/functions.php:2828
 #, php-format
 msgid "daughter's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2926
+#: ../includes/functions/functions.php:2829
 #, php-format
 msgid "child's %s"
 msgstr ""
@@ -8699,6 +8921,84 @@ msgstr "Mostrar ayuda contextual"
 msgid "Change Theme"
 msgstr "Cambiar el tema"
 
+#: ../includes/classes/class_date.php:179
+msgid "Mon"
+msgstr ""
+
+#: ../includes/classes/class_date.php:180
+msgid "Tue"
+msgstr ""
+
+#: ../includes/classes/class_date.php:181
+msgid "Wed"
+msgstr ""
+
+#: ../includes/classes/class_date.php:182
+msgid "Thu"
+msgstr ""
+
+#: ../includes/classes/class_date.php:183
+msgid "Fri"
+msgstr ""
+
+#: ../includes/classes/class_date.php:184
+msgid "Sat"
+msgstr ""
+
+#: ../includes/classes/class_date.php:185
+msgid "Sun"
+msgstr ""
+
+#: ../includes/classes/class_date.php:857
+#: ../includes/classes/class_date.php:872
+msgid "Primidi"
+msgstr ""
+
+#: ../includes/classes/class_date.php:858
+#: ../includes/classes/class_date.php:873
+msgid "Duodi"
+msgstr ""
+
+#: ../includes/classes/class_date.php:859
+#: ../includes/classes/class_date.php:874
+msgid "Tridi"
+msgstr ""
+
+#: ../includes/classes/class_date.php:860
+#: ../includes/classes/class_date.php:875
+msgid "Quartidi"
+msgstr ""
+
+#: ../includes/classes/class_date.php:861
+#: ../includes/classes/class_date.php:876
+msgid "Quintidi"
+msgstr ""
+
+#: ../includes/classes/class_date.php:862
+#: ../includes/classes/class_date.php:877
+msgid "Sextidi"
+msgstr ""
+
+#: ../includes/classes/class_date.php:863
+#: ../includes/classes/class_date.php:878
+msgid "Septidi"
+msgstr ""
+
+#: ../includes/classes/class_date.php:864
+#: ../includes/classes/class_date.php:879
+msgid "Octidi"
+msgstr ""
+
+#: ../includes/classes/class_date.php:865
+#: ../includes/classes/class_date.php:880
+msgid "Nonidi"
+msgstr ""
+
+#: ../includes/classes/class_date.php:866
+#: ../includes/classes/class_date.php:881
+msgid "Decidi"
+msgstr ""
+
 #: ../includes/classes/class_media.php:244
 msgid "Media Firewall error: >Unknown Mimetype< for file"
 msgstr "Error en el cortafuegos de objetos audiovisuales: >Tipo MIME desconocido< para el archivo"
@@ -8964,62 +9264,52 @@ msgstr "Agregar un artículo a Novedades"
 msgid "View archive"
 msgstr "Ver archivo"
 
-#. I18N: This is either ltr for languages written in left-to-right scripts such as latin or cyrillic and rtl for languages written in right-to-left scripts such as arabic or hebrew.
-#: ../includes/classes/class_i18n.php:60
-msgid "LANGUAGE_TEXT_DIRECTION"
-msgstr "ltr"
-
-#. I18N: This is the name of the MySQL utf8 collation sequence for this language.  See http://dev.mysql.com/doc/refman/5.1/en/se-db2-collations.html
-#: ../includes/classes/class_i18n.php:62
-msgid "LANGUAGE_COLLATION"
-msgstr "utf8_spanish_ci"
-
 #. I18N: This is the format string for full dates, such as 14 October 1908.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:64
+#: ../includes/classes/class_i18n.php:60
 msgid "LANGUAGE_LONG_DATE_FORMAT"
 msgstr "%j %F %Y"
 
 #. I18N: This is the format string for short dates, such as 14 Oct 1908.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:66
+#: ../includes/classes/class_i18n.php:62
 msgid "LANGUAGE_SHORT_DATE_FORMAT"
 msgstr "%j %F %Y"
 
 #. I18N: This is the format string for times with hours, minutes and seconds, such as 10:23:12pm.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:68
+#: ../includes/classes/class_i18n.php:64
 msgid "LANGUAGE_TIME_FORMAT_HM"
 msgstr "%g:%i%a"
 
 #. I18N: This is the puncutation symbol used to separate items in a list.  e.g. the <comma><space> in "red, green, yellow and blue"
-#: ../includes/classes/class_i18n.php:70
+#: ../includes/classes/class_i18n.php:66
 msgid "LANGUAGE_TIME_FORMAT_HMS"
 msgstr "%g:%i:%s%a"
 
 #. I18N: This is the format string for times with hours and seconds, such as 10:23pm.  See http://php.net/date for codes
-#: ../includes/classes/class_i18n.php:72
+#: ../includes/classes/class_i18n.php:68
 msgid "LANGUAGE_LIST_SEPARATOR"
 msgstr ", "
 
 #. I18N: This is the puncutation symbol used to separate the final items in a list.  e.g. the <space><comma><space> in "red, green, yellow and blue"
-#: ../includes/classes/class_i18n.php:74
+#: ../includes/classes/class_i18n.php:70
 msgid "LANGUAGE_LIST_SEPARATOR_LAST"
 msgstr ", "
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (stillborn)
-#: ../includes/classes/class_i18n.php:156
+#: ../includes/classes/class_i18n.php:152
 msgid "(stillborn)"
 msgstr ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (in infancy)
-#: ../includes/classes/class_i18n.php:159
+#: ../includes/classes/class_i18n.php:155
 msgid "(in infancy)"
 msgstr ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (in childhood)
-#: ../includes/classes/class_i18n.php:162
+#: ../includes/classes/class_i18n.php:158
 msgid "(in childhood)"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:168
+#: ../includes/classes/class_i18n.php:164
 #, php-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -9027,7 +9317,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
-#: ../includes/classes/class_i18n.php:174
+#: ../includes/classes/class_i18n.php:170
 #, php-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -9035,7 +9325,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: Part of an age string. e.g 7 weeks and 3 days
-#: ../includes/classes/class_i18n.php:178
+#: ../includes/classes/class_i18n.php:174
 #, php-format
 msgid "%d week"
 msgid_plural "%d weeks"
@@ -9043,7 +9333,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: Part of an age string. e.g 5 years, 4 months and 3 days
-#: ../includes/classes/class_i18n.php:182
+#: ../includes/classes/class_i18n.php:178
 #, php-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -9051,125 +9341,125 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged less than 21 years)
-#: ../includes/classes/class_i18n.php:191
+#: ../includes/classes/class_i18n.php:187
 #, php-format
 msgid "(aged less than %s)"
 msgstr ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged more than 21 years)
-#: ../includes/classes/class_i18n.php:194
+#: ../includes/classes/class_i18n.php:190
 #, php-format
 msgid "(aged more than %s)"
 msgstr ""
 
 #. I18N: Description of someone's age at an event.  e.g Died 14 Jan 1900 (aged 43 years)
+#: ../includes/classes/class_i18n.php:193
 #: ../includes/classes/class_i18n.php:197
-#: ../includes/classes/class_i18n.php:201
 #, php-format
 msgid "(aged %s)"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:208
+#: ../includes/classes/class_i18n.php:204
 msgid "first"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:209
+#: ../includes/classes/class_i18n.php:205
 msgid "second"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:210
+#: ../includes/classes/class_i18n.php:206
 msgid "third"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:211
+#: ../includes/classes/class_i18n.php:207
 msgid "fourth"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:212
+#: ../includes/classes/class_i18n.php:208
 msgid "fifth"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:213
+#: ../includes/classes/class_i18n.php:209
 msgid "sixth"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:214
+#: ../includes/classes/class_i18n.php:210
 msgid "seventh"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:215
+#: ../includes/classes/class_i18n.php:211
 msgid "eighth"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:216
+#: ../includes/classes/class_i18n.php:212
 msgid "ninth"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:217
+#: ../includes/classes/class_i18n.php:213
 msgid "tenth"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:218
+#: ../includes/classes/class_i18n.php:214
 msgid "eleventh"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:219
+#: ../includes/classes/class_i18n.php:215
 msgid "twelfth"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:220
+#: ../includes/classes/class_i18n.php:216
 msgid "thirteenth"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:221
+#: ../includes/classes/class_i18n.php:217
 msgid "fourteenth"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:222
+#: ../includes/classes/class_i18n.php:218
 msgid "fifteenth"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:223
+#: ../includes/classes/class_i18n.php:219
 #, php-format
 msgid "%d x"
 msgstr ""
 
-#: ../includes/classes/class_i18n.php:241
+#: ../includes/classes/class_i18n.php:237
 #, php-format
 msgid "%d year ago"
 msgid_plural "%d years ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/classes/class_i18n.php:244
+#: ../includes/classes/class_i18n.php:240
 #, php-format
 msgid "%d month ago"
 msgid_plural "%d months ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/classes/class_i18n.php:247
+#: ../includes/classes/class_i18n.php:243
 #, php-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/classes/class_i18n.php:250
+#: ../includes/classes/class_i18n.php:246
 #, php-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/classes/class_i18n.php:253
+#: ../includes/classes/class_i18n.php:249
 #, php-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/classes/class_i18n.php:255
+#: ../includes/classes/class_i18n.php:251
 #, php-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
@@ -9371,7 +9661,6 @@ msgid "Delete this individual"
 msgstr "Borrar esta persona"
 
 #: ../includes/controllers/individual_ctrl.php:819
-#: ../modules/googlemap/pedigree_map.php:651
 msgid "Parent"
 msgstr "Padre o madre"
 
@@ -9820,33 +10109,73 @@ msgstr "Reordenar objetos (ventana)"
 msgid "Configure Lightbox"
 msgstr "Configuración de Lightbox"
 
+#: ../modules/lightbox/help_text.php:38
+msgid "Configure all aspects of the Lightbox module here."
+msgstr "Configure todos los aspectos del módulo Lightbox aquí."
+
 #: ../modules/lightbox/help_text.php:42
 msgid "Album Tab Thumbnail - Notes Link Tooltip"
 msgstr "Miniatura de pestaña de álbum - Ayuda de enlaces superiores"
+
+#: ../modules/lightbox/help_text.php:43
+msgid "This option lets you determine whether the 'View Notes' link should show a 'Balloon' Tooltip or 'Normal' Tooltip when clicked. <br /><br />The link shown here show you the Notes associated with a Media item (if available).<br />"
+msgstr ""
 
 #: ../modules/lightbox/help_text.php:49
 msgid "Media Tab Appearance"
 msgstr "Apariencia de la pestaña de objetos"
 
+#: ../modules/lightbox/help_text.php:50
+msgid "This option lets you determine whether the Media tab should be shown on the Individual Information page.<br /><br />When this option is set to <b>Hide</b>, only the <b>Lightbox</b> tab will be shown.<br />"
+msgstr ""
+
 #: ../modules/lightbox/help_text.php:54
 msgid "Album Tab Header Link appearance"
 msgstr "Apariencia del vínculo al encabezamiento en la pestaña Álbum"
+
+#: ../modules/lightbox/help_text.php:55
+msgid "This option lets you determine whether the header area of the Lightbox tab, which contains links to control various aspects of the Lightbox module, should contain only icons, only text, or both.<br /><br />The <b>Icon</b> option is probably not very useful, since you won't see any indication of each icon's function until your mouse hovers over the icon.<br />"
+msgstr ""
 
 #: ../modules/lightbox/help_text.php:59
 msgid "Album Tab Thumbnails Link appearance"
 msgstr "Apariencia del vínculo a las miniaturas en la pestaña Álbum"
 
+#: ../modules/lightbox/help_text.php:60
+msgid "This option lets you determine whether the links area below each thumbnail should show an icon or text.  The links shown here let you edit the Media object's details or delete it.<br />"
+msgstr "Esta opción le permite determinar si los vínculos bajo cada miniatura deben mostrar un icono o texto.  Los vínculos que se muestran aquí le permiten modificar los detalles de un objeto o eliminarlo.<br />"
+
 #: ../modules/lightbox/help_text.php:64
 msgid "Thumbnails Link appearance"
 msgstr "Apariencia del enlace a miniaturas"
+
+#: ../modules/lightbox/help_text.php:65
+msgid "This option lets you determine whether the Links area above the Media object's details in the MultiMedia list should contain only icons, only text, or both.  The links shown here let you perform various editing actions on the Media object in question.<br /><br />The <b>None</b> option completely hides these links, and thus acts as if the user did not have any editing rights.<br />"
+msgstr ""
+
+#: ../modules/lightbox/help_text.php:70
+msgid "This option determines the length of time each image should be displayed before the Slide Show displays the next image in the sequence.<br />"
+msgstr "Esta opción determina cuánto tiempo se mostrará cada imagen en la presentación antes de pasar a la siguiente imagen.<br />"
 
 #: ../modules/lightbox/help_text.php:74
 msgid "Slideshow Sound Track"
 msgstr "Pista de sonido para la presentación"
 
+#: ../modules/lightbox/help_text.php:75
+msgid "This option lets you specify a sound track to be played whenever the slide show is active.  When you leave this field blank, no sound will play during the slide show.<br /><br />This feature only supports files in the mp3 format.<br />"
+msgstr "Esta opción le permite especificar una banda sonora a reproducir cada vez que se active la presentación.  Si deja este campo en blanco, no se reproducirá ningún sonido durante la presentación.<br /><br />Esta característica sólo admite archivos en formato mp3.<br />"
+
+#: ../modules/lightbox/help_text.php:80
+msgid "This option lets you specify the transition speed when the image changes.  This selection is applied during the slideshow.  It is also applied when you move to the next or previous image when the slideshow is not running.<br /><br />The <b>None</b> option eliminates image transitions so that the new image immediately replaces the old without visible adjustment of the new image's dimensions.<br />"
+msgstr ""
+
 #: ../modules/lightbox/help_text.php:84
 msgid "Lightbox URL Window dimensions"
 msgstr "Dimensiones para las ventanas para URL de Lightbox"
+
+#: ../modules/lightbox/help_text.php:85
+msgid "When clicking on a URL image thumbnail, this option lets you specify the Lightbox URL Window dimensions in pixels.<br /><br />This should normally be less than your current browser window dimensions, and certainly less than your screen resolution.<br />"
+msgstr "Si se hace clic en la miniatura de una imagen que corresponde a una URL, esta opción le permite especificar las dimensiones en píxeles de la ventana de Lightbox para la URL.<br /><br />Las dimensiones deberían ser menores que las de la ventana actual de navegador y, desde luego, menores que las de su pantalla.<br />"
 
 #: ../modules/notes/notes.php:61
 msgid "Show all notes"
@@ -11106,153 +11435,337 @@ msgstr "Países"
 msgid "Configure Google-map"
 msgstr "Configurar Google-map"
 
+#: ../modules/googlemap/help_text.php:37
+msgid "Configure all aspects of the Google Map module here."
+msgstr "Configure todos los aspectos del módulo Google Map aquí."
+
 #: ../modules/googlemap/help_text.php:41
 msgid "Enable Google-map"
 msgstr "Activar GoogleMap"
+
+#: ../modules/googlemap/help_text.php:42
+msgid "Using this option the functionality of the Googlemap can be enabled or disabled.<br />When disabled the Map-tab on the individual page is still shown, but will be left empty. The configuration link for administrators is still available. When disabled the Place Hierarchy has standard show."
+msgstr ""
 
 #: ../modules/googlemap/help_text.php:46
 msgid "Google-map API key"
 msgstr "Clave para el API de Google-map"
 
+#: ../modules/googlemap/help_text.php:47
+msgid "Insert your Google Map API key here.  You can request a key here: <a target=\\\"_blank\\\" href=\\\"http://www.google.com/apis/maps/\\\">http://www.google.com/apis/maps/</a>"
+msgstr ""
+
 #: ../modules/googlemap/help_text.php:51
 msgid "Google-map type"
 msgstr "Tipo de Google-map"
+
+#: ../modules/googlemap/help_text.php:52
+msgid "The type of map that will be shown by default. This can be Map, Satellite, Hybrid or Terrain."
+msgstr "El tipo de mapa que se mostrará por omisión. Puede ser Mapa, Satélite o Híbrido."
 
 #: ../modules/googlemap/help_text.php:56
 msgid "Google-map size"
 msgstr "Tamaño de Google-map"
 
+#: ../modules/googlemap/help_text.php:57
+msgid "The size of the map (in pixels) as shown on the Individual pages."
+msgstr "Tamaño del mapa (en pixels) en la página de Persona."
+
 #: ../modules/googlemap/help_text.php:61
 msgid "Google-map zoom factor"
 msgstr "Factor de ampliación de Google-map"
+
+#: ../modules/googlemap/help_text.php:62
+msgid "Minimum and maximum zoom factor for the Google map. 1 is the full map, 15 is single house. Note that 15 is only available in certain areas."
+msgstr "Los factores mínimo y máximo de ampliación para el mapa Google. Un 1 indica el mapa completo, 15 sería un edificio específico. Tome nota de que 15 sólo está disponible en algunas áreas."
 
 #: ../modules/googlemap/help_text.php:66
 msgid "Precision of the latitude and longitude"
 msgstr "Precisión de la latitud y la longitud"
 
+#: ../modules/googlemap/help_text.php:67
+msgid "This specifies the precision of the different levels when entering new geographic locations. For example a country will be specified with precision 0 (=0 digits after the decimal point), while a town needs 3 or 4 digits."
+msgstr "Esto especifica la precisión de los diferentes niveles al introducir nuevas ubicaciones geográficas. Por ejemplo, un país se especificaría con precisión 0 (=0 dígitos tras la coma decimal), mientras que una población necesita 3 o 4 dígitos."
+
 #: ../modules/googlemap/help_text.php:71
 msgid "Default value for top-level"
 msgstr "Valor predeterminado para el nivel más alto"
+
+#: ../modules/googlemap/help_text.php:72
+msgid "Here the default level for the highest level in the place-hierarchy can be defined. If a place cannot be found this name is added as the highest level (country) and the database is searched again."
+msgstr "Aquí se define el nivel predeterminado para el nivel más alto de la jerarquía de lugares. Si un lugar no puede encontrarse, este nombre se le añade como nivel más alto (país) y se busca en la base de datos de nuevo."
 
 #: ../modules/googlemap/help_text.php:76
 msgid "This indicates the number of levels used within Googlemap"
 msgstr "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />Este campo indica el número de niveles en la jerarquía de lugares que se utiliza en los módulos Googlemap.<br/>El valor predeterminado es 4 (País, Estado/Provincia, Condado, Lugar), que es generalmente adecuado. Si desea añadir un nivel extra (por ejemplo, para añadir lugares específicos como cementerios o escuelas) cambie este valor.  Si quiere eliminar un nivel (por ejemplo, condado) también puede cambiar este valor, pero tenga en cuenta que los archivos que contienen las ubicaciones de los lugares contienen una estructura de cuatro niveles."
 
+#: ../modules/googlemap/help_text.php:77
+msgid "This field indicates the number of levels in the places-hierarchy that is being used by the Googlemap modules.<br />The default value is 4 (Country, State, County, Place), which is usually good enough. If you want to add an extra level (for example to add specific location like cemeteries or schools) change this value. If you want to remove a level (for example county) you can also change this value, but keep in mind that the files containing the place-locations contain a 4-level structure."
+msgstr "Este campo indica el número de niveles en la jerarquía de lugares que se utiliza en los módulos Googlemap.<br/>El valor predeterminado es 4 (País, Estado/Provincia, Condado, Lugar), que es generalmente adecuado. Si desea añadir un nivel extra (por ejemplo, para añadir lugares específicos como cementerios o escuelas) cambie este valor.  Si quiere eliminar un nivel (por ejemplo, condado) también puede cambiar este valor, pero tenga en cuenta que los archivos que contienen las ubicaciones de los lugares contienen una estructura de cuatro niveles."
+
 #: ../modules/googlemap/help_text.php:81
 msgid "Prefix for names used on this level"
 msgstr "Prefijo para los nombres utilizados en este nivel"
+
+#: ../modules/googlemap/help_text.php:82
+msgid "This value will be added to the front of the names on this level. Multiple values can be used, seperated by semicolons."
+msgstr ""
 
 #: ../modules/googlemap/help_text.php:86
 msgid "Postfix for names used on this level"
 msgstr "Sufijo para los nombres utilizados en este nivel"
 
+#: ../modules/googlemap/help_text.php:87
+msgid "This value will be added to the back of the names on this level. Multiple values can be used, seperated by semilcolons."
+msgstr ""
+
 #: ../modules/googlemap/help_text.php:91
 msgid "Order of the pre/postfix to use"
 msgstr ""
+
+#: ../modules/googlemap/help_text.php:92
+msgid "This field indicates the order in which names are tried using the prefix and postfix. The possible values are:<br /><ul><li>No pre/postfix</li><li>Normal name, Prefix, Postfix, both</li><li>Normal name, Postfix, Prefix, both</li><li>Prefix, Postfix, both, Normal name</li><li>Postfix, Prefix, both, Normal name</li><li>Prefix, Postfix, Normal name, both</li><li>Postfix, Prefix, Normal name, both</li></ul>"
+msgstr "Este campo indica el orden en que se prueban los nombres usando el prefijo y el sufijo. Los valores posibles son:<br/><ul><li>Ni prefijo ni sufijo</li><li>Nombre normal, Prefijo, Sufijo, ambos</li><li>Nombre normal, Sufijo, Prefijo, ambos</li><li>Prefijo, Sufijo, ambos, Nombre normal</li><li>Sufijo, Prefijo, ambos, Nombre normal</li><li>Prefijo, Sufijo, Nombre normal, ambos</li><li>Sufijo, Prefijo, Nombre normal, ambos</li></ul>"
 
 #: ../modules/googlemap/help_text.php:96
 msgid "Edit or delete location"
 msgstr "Modificar o borrar posición"
 
+#: ../modules/googlemap/help_text.php:97
+msgid "Here you can edit the location or delete the location. When you click on Edit a new window will open where you can change the values of the geographic location.<br />If you click on the delete-icon the record will be deleted. This can only be done if there are no records connected to this location. If no records are connected the delete-icon is active, otherwise it is inactive."
+msgstr "Aquí puede modificar la ubicación o borrarla. Si hace clic en Modificar, se abrirá una nueva ventana en la que podrá cambiar los valores de la posición geográfica.<br/>Si hace clic en el icono Borrar, el registro se borrará. Sólo se puede hacer esto si no hay registros conectados a esta ubicación.  El icono se activa o desactiva según sea posible usarlo o no."
+
 #: ../modules/googlemap/help_text.php:101
 msgid "Add geographic location"
 msgstr "Agregar posición geográfica"
+
+#: ../modules/googlemap/help_text.php:102
+msgid "Use this to add a place to the location table. The location will be added at this level."
+msgstr "Utilice esto para agregar un lugar a la tabla de posiciones.  La posición se agregará a este nivel."
 
 #: ../modules/googlemap/help_text.php:106
 msgid "Import geographic locations from GEDCOM"
 msgstr "Importar posiciones geográficas del GEDCOM"
 
+#: ../modules/googlemap/help_text.php:107
+msgid "Import geographic location-data from current GEDCOM. The current GEDCOM will be scanned and all places will be added to the table. If latitude and longitude are available these will also be imported."
+msgstr "Importar datos de posición geográfica del GEDCOM actual.  El GEDCOM actual se analizará y todos los lugares se añadirán a la tabla.  Si hay datos de latitud y longitud, también se importarán éstos."
+
 #: ../modules/googlemap/help_text.php:111
 msgid "Import geographic locations from all GEDCOMs"
 msgstr "Importar posiciones geográficas de todos los GEDCOM"
+
+#: ../modules/googlemap/help_text.php:112
+msgid "Import geographic location-data from all GEDCOMs. All GEDCOMs will be scanned and all places will be added to the table. If latitude and longitude are available these will also be imported."
+msgstr "Importar datos de posición geográfica de todos los GEDCOM. Todos los GEDCOM se analizarán y todos los lugares se añadirán a la tabla. Si hay datos de latitud y longitud, también se importarán éstos."
 
 #: ../modules/googlemap/help_text.php:116
 msgid "Import geographic locations from file"
 msgstr "Importar posiciones geográficas de un archivo"
 
+#: ../modules/googlemap/help_text.php:117
+msgid "Import geographic location data from a file. The file should be formatted as CSV file on the local computer. The record separator used within the lines is ';'."
+msgstr "Importar los datos de posición geográficos de un archivo. El archivo debería tener formato CSV en el equipo local. El separador de registros utilizado dentro de las líneas es ';'."
+
 #: ../modules/googlemap/help_text.php:121
 msgid "Export locations to file"
 msgstr "Exportar posiciones a un archivo"
+
+#: ../modules/googlemap/help_text.php:122
+msgid "Export location data to a file. This option will save the data from the current view and all dependant data to a file. This means that if a country is selected and the states are shown, this option will save the data of the states, all the counties that are defined in those states and all places within those counties."
+msgstr "Exportar los datos de posición a un archivo. Esta opción guardará los datos de la vista actual y todos los datos dependientes a un archivo. Esto significa que si se selecciona un país y se muestran los estados o provincias, esta opción guardará los datos de los estados o provincias, todos los condados definidos en esos estados o provincias y todos los lugares en esos condados."
+
+#: ../modules/googlemap/help_text.php:127
+msgid "Export all location data to a file. This option will save all location data and transfer it to the local computer."
+msgstr "Exportar todos los datos de posición a un archivo. Esta opción guardará todos los datos de posición y los transferirá al equipo local."
 
 #: ../modules/googlemap/help_text.php:131
 msgid "Display Map Coordinates"
 msgstr "Mostrar coordenadas del mapa"
 
+#: ../modules/googlemap/help_text.php:132
+msgid "This options sets whether Latitude and Longitude are displayed on the pop-up window attached to map markers."
+msgstr ""
+
 #: ../modules/googlemap/help_text.php:138
 msgid "Edit Google Map Places"
 msgstr "Modificar los lugares de Google Map"
+
+#: ../modules/googlemap/help_text.php:139
+msgid "Here you can add, edit or delete Google Map place details."
+msgstr "Aquí puede agregar, modificar o borrar los detalles de los lugares para Google Map."
 
 #: ../modules/googlemap/help_text.php:143
 msgid "Enter place name"
 msgstr "Introduzca el nombre del lugar"
 
+#: ../modules/googlemap/help_text.php:144
+msgid "Here you can enter or change the name of the place.<br />The 'Search on this level' option allow to search the latitude and longitude of entered place name only among the places with that level.<br />The 'Search on this level' option allow to search the latitude and longitude of all places having entered name. Some the lower levels places can not be displayed with this method of search."
+msgstr "Aquí puede introducir o cambiar el nombre del sitio.<br />La opción 'Buscar en este nivel' le permite buscar la latitud y longitud del lugar introducido sólo entre los lugares de ese nivel.<br />La opción 'Buscar en este nivel' le permite buscar la latitud y longitud de todos los sitios tras introducir el nombre. Algunos de los lugares en niveles inferiores puede que no se muestren con este método de búsqueda."
+
 #: ../modules/googlemap/help_text.php:148
 msgid "Enter precision"
 msgstr "Introduzca la precisión"
+
+#: ../modules/googlemap/help_text.php:149
+msgid "Here you can enter the precision. Based on this setting the number of digits that will be used in the latitude and longitude is determined."
+msgstr "Aquí puede introducir la precisión. En función de este ajuste se determina el número de dígitos que se usarán para la latitud y la longitud."
 
 #: ../modules/googlemap/help_text.php:153
 msgid "Enter latitude or Longitude"
 msgstr "Introduzca latitud o longitud"
 
+#: ../modules/googlemap/help_text.php:154
+msgid "Here the latitude and longitude can be entered. First select the area you want to set (E/W or N/S). Next enter the value for latitude or longitude. This should be a decimal value.<br />The decimal value can be determined by converting the minutes and seconds using the following formula:<br />degrees_decimal = ((seconds / 60) + minutes) / 60 + degrees."
+msgstr "Aquí se pueden introducir la latitud y la longitud. Seleccione primero el área que desea fijar (E/O o N/S). Introduzca a continuación el valor para la latitud o la longitud. El formato es de grados y fracción decimal.<br/>El valor según este formato puede determinarse convirtiendo los minutos y segundos según la siguiente fórmula:<br/>grados_y_fracción_decimal = ((segundos / 60) + minutos) / 60 + grados."
+
 #: ../modules/googlemap/help_text.php:158
 msgid "Enter zoom level"
 msgstr "Introduzca el nivel de ampliación"
 
+#: ../modules/googlemap/help_text.php:159
+msgid "Here the zoom level can be entered. This value will be used as the minimal value when displaying this geographic location on a map."
+msgstr "Aquí puede introducir en nivel de acercamiento.  Este valor se utilizará como el valor mínimo al mostrar la posición geográfica en un mapa."
+
 #: ../modules/googlemap/help_text.php:163
 msgid "Select an icon"
 msgstr "Seleccione un icono"
+
+#: ../modules/googlemap/help_text.php:164
+msgid "Here an icon can be set or removed. Using this link a flag can be selected. When this geographic location is shown, this flag will be displayed."
+msgstr "Aquí se puede fijar o eliminar un icono. Utilizando este vínculo se puede seleccionar una bandera. Cuando se muestre esta posición geográfica, se mostrará esta bandera."
+
+#: ../modules/googlemap/help_text.php:169
+msgid "Using the pull down menu it is possible to select a country, of which a flag can be selected. If no flags are shown, then there are no flags defined for this country."
+msgstr "Utilizando el menú desplegable es posible seleccionar un país, para el que se puede seleccionar una bandera. Si no se muestra ninguna bandera, entonces es que no hay banderas definidas para este país."
 
 #: ../modules/googlemap/help_text.php:173
 #: ../modules/googlemap/help_text.php:178
 msgid "Enter filename"
 msgstr "Introduzca nombre de archivo"
 
+#: ../modules/googlemap/help_text.php:174
+msgid "Browse for the file on your computer which contains the place locations in CSV format."
+msgstr "Examine los archivos de su equipo para seleccionar un archivo que contenga las posiciones de los lugares en formato CSV."
+
+#: ../modules/googlemap/help_text.php:179
+msgid "Select a file from the list of files already on the server which contains the place locations in CSV format."
+msgstr "Seleccione un archivo de la lista de archivos ya presentes en el servidor que contenga las localizaciones de los lugares en formato CSV."
+
 #: ../modules/googlemap/help_text.php:183
 msgid "Clean placelocation database"
 msgstr "Limpiar la base de datos de posiciones de lugares"
+
+#: ../modules/googlemap/help_text.php:184
+msgid "When this option is selected the placelocation database will be cleared. This means that only the location stored in this table will be deleted. This will not change anything in the GEDCOM."
+msgstr "Si se selecciona esta opción se borrará la base de datos placelocation. Esto quiere decir que sólo la posición almacenada en esta tabla se borrará. Esto no cambiará nada en el GEDCOM."
 
 #: ../modules/googlemap/help_text.php:188
 msgid "Update existing records"
 msgstr "Actualizar los registros existentes"
 
+#: ../modules/googlemap/help_text.php:189
+msgid "Only update existing records.<br />When this option is selected only existing records will be updated. This can be used to fill in latitude and longitude of places that have been imported from a GEDCOM. No new places will be added to the database."
+msgstr "Sólo actualizar los registros existentes.<br/>Si se selecciona esta opción, sólo se actualizarán los registros existentes. Esto puede utilizarse para rellenar la latitud y longitud de los lugares que se han importado de un GEDCOM. No se agregarán nuevos lugares a la base de datos."
+
 #: ../modules/googlemap/help_text.php:193
 msgid "Overwrite location data"
 msgstr "Sobreescribir los datos de posición"
+
+#: ../modules/googlemap/help_text.php:194
+msgid "Overwrite location data in the database with data from the file.<br />When this option is selected, the location data in the database (latitude, longitude, zoomlevel and flag) are overwritten with the data in the file, if available. If the record is not already in the database a new record will be created, unless the Update-only  option is also selected."
+msgstr "Sobreescribir los datos de posición de la base de datos con los datos del archivo.<br/>Si se selecciona esta opción, los datos de posición en la base de datos ((latitud, longitud, nivel de ampliación y bandera) se sobreescriben con los datos del archivo, si están disponibles. Si el registro no está ya en la base de datos, se creará uno nuevo, a menos que se seleccione la opción de Sólo Actualizar se seleccione también."
 
 #: ../modules/googlemap/help_text.php:198
 msgid "List inactive places"
 msgstr "Listar lugares inactivos"
 
+#: ../modules/googlemap/help_text.php:199
+msgid "<strong>List places in the GoogleMaps table that are not used by any current GEDCOM(s).</strong><br /><br />The display is set, by default, to only display for editing here those places that exist on BOTH your GEDCOM files and your GoogleMap tables.<br /><br />When this option is checked, and \\\"View\\\" clicked, the list of places will display ALL places at this level.<br /><br />This is designed to speed up the display of the list when large place lists have been imported, but not all used.<br /><br />NOTE - if the option is checked the full list may take a few minutes to display."
+msgstr ""
+
 #: ../modules/googlemap/help_text.php:205
 msgid "Place Checking Tool"
 msgstr "Herramienta de comprobación de lugares"
+
+#: ../modules/googlemap/help_text.php:206
+msgid "<strong>This tool</strong> provides a way to compare places in your gedcom file with the matching entries in the googlemaps 'placelocations' table.<br /><br /><strong>The display</strong> can be structured for a specific gedcom file; for a specific country within that file; and for a particular area (e.g. state or county) within that country.<br /><br /><strong>Places</strong>are listed alphabetically so that minor spelling differences can be easily spotted, and corrected.<br /><br /><strong>From</strong> the results of the comparison you can click on place names for one of these three options:<br /><br /><strong>1 - </strong>For gedcom file places you will be taken to the Place Heirarchy view. Here you will see all records that are linked to that place.<br /><br /><strong>2 - </strong>For places that exist in the gedcom file, but not in the googlemap table (highlighted in red), you will get the googlemap \\\"Add place\\\" screen.<br /><br /><strong>3 - </strong>For places that exist in both the gedcom file and the googlemap table (perhaps without coordinates) you will get the googlemap \\\"edit place\\\" screen. Here you can edit any aspect of the place record for the googlemap display.<br /><br /><strong>Hovering</strong> over any place in the googlemap table columns will display the zoom level curently set for that place."
+msgstr ""
 
 #: ../modules/googlemap/help_text.php:210
 msgid "Place Check - List Filtering Optons"
 msgstr "Comprobación de lugares - Opciones de filtrado de la lista"
 
+#: ../modules/googlemap/help_text.php:211
+msgid "This section includes options to limit or extend the scope of the listed places.<br /><br />It is hoped to add more options in the future."
+msgstr "Esta sección incluye opciones para limitar o extender el alcance de los lugares listados.<br /><br />Se espera agregar más opciones en el futuro."
+
 #: ../modules/googlemap/help_text.php:215
 msgid "Include matched places"
 msgstr "Incluir sitios con correspondencia"
 
+#: ../modules/googlemap/help_text.php:216
+msgid "By default the list does NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables.<br />Fully matched means all levels exist in both the gedcom file and the GoogleMap tables; and the GoogleMap places have coordinates for every level.<br /><br />Check this block to include those matched places."
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:223
+msgid "Use this option to enable (Yes) or disable (No) the ability to substitute Googlemap for <strong>webtrees</strong> usual Place Hierarchy. To be able to set this option to YES, the Googlemap module must be also be enabled. CAUTION: Before using this option, it is recommended that you insert all places currently existing in your GED into the Googlemap tables."
+msgstr ""
+
+#: ../modules/googlemap/help_text.php:228
+msgid "The size of the map (in pixels) as shown on the Place Hierarchy pages."
+msgstr "El tamaño del mapa (en píxeles) en las páginas de la jerarquía de lugares."
+
+#: ../modules/googlemap/help_text.php:233
+msgid "Here you can specify what type of marker be able to use (standard or flag). If place has no flag, use standard marker."
+msgstr "Aquí puede especificar qué tipo de marcador se usará (estándar o bandera). Si el lugar no tiene bandera, usar el marcador estándar."
+
+#: ../modules/googlemap/help_text.php:238
+msgid "Here you can choose between two types of displaying places names in hierarchy. If set Yes the place has short name or actual level name, if No - full name.<br /><b>Examples:<br />Full name: </b>Chicago, Illinois, USA<br /><b>Short name: </b>Chicago<br /><b>Full name: </b>Illinois, USA<br /><b>Short name: </b>Illinois"
+msgstr "Aquí puede elegir entre dos formas de mostrar los nombres de los lugares en la jerarquía. Si pone Sí el lugar usará un nombre corto o el nombre del nivel.  Si no, se utilizará el nombre completo.<br /><b>Ejemplos:<br />Nombre completo: </b>Chicago, Illinois, USA<br /><b>Nombre corto: </b>Chicago<br /><b>Nombre completo: </b>Illinois, USA<br /><b>Nombre corto: </b>Illinois"
+
 #: ../modules/googlemap/help_text.php:242
 msgid "Display indis and families counts"
 msgstr "Mostrar totales de personas y familias"
+
+#: ../modules/googlemap/help_text.php:243
+msgid "Here you can specify if the counts of indis and families connected to the place is displayed. Now if GEDCOM file contains many people is recomended to turn it off."
+msgstr "Aquí puede especificar si se muestran los totals de personas y familias relacionadas con el lugar. Si el archivo GEDCOM contiene muchas personas se recomienda desactivarlo."
+
+#: ../modules/googlemap/help_text.php:248
+msgid "Here you can specify if the mouse wheel is enebled for zooming."
+msgstr "Aquí puede indicar si la rueda del #pgv_lang_es_mouse[mouse] se utiliza para acercar y alejar."
+
+#: ../modules/googlemap/help_text.php:253
+msgid "This option allow to hide map controls (i.e. the map type choice) if mouse is outside the map."
+msgstr "Esta opción permite ocultar los controles del mapa (por ejemplo, la opción de tipo de mapa) si el puntero está fuera del mapa."
 
 #: ../modules/googlemap/help_text.php:259
 #: ../modules/googlemap/pedigree_map.php:169 ../help_text.php:3260
 msgid "Cluster Size"
 msgstr "Tamaño del grupo"
 
+#: ../modules/googlemap/help_text.php:260
+msgid "The number of markers to be placed at one point before a trail of pins is started in a north east line behind the younger generations.  The 'trail' is usually only visable at high zoom values."
+msgstr "El número de marcadores a colocar en un punto antes de pasar a mostrar un rastro de agujas en una línea hacia el noreste tras las generaciones más jóvenes.  El 'rastro' sólo es visible si se acerca mucho el mapa."
+
 #: ../modules/googlemap/help_text.php:264
 #: ../modules/googlemap/pedigree_map.php:178 ../help_text.php:3270
 msgid "Hide lines"
 msgstr "Ocultar líneas"
 
+#: ../modules/googlemap/help_text.php:265 ../help_text.php:3271
+msgid "Hide the lines connecting the child to each parent if they exist on the map."
+msgstr "Ocultar las líneas que conectan una persona a sus padres si existen en el mapa."
+
 #: ../modules/googlemap/help_text.php:269
 #: ../modules/googlemap/pedigree_map.php:173 ../help_text.php:3265
 msgid "Hide flags"
 msgstr "Ocultar banderas"
+
+#: ../modules/googlemap/help_text.php:270
+msgid "Hide the flags that are configured in the googlemap module.  Ususally these are for countries and states.&nbsp; This serves as a visual queue that the markers around the flag are from the general area, and not the specific spot."
+msgstr "Ocultar las banderas configuradas en el módulo googlemap.  Generalmente son las de países y provincias o estados.&nbsp; Sirven como pista visual de que los marcadores alrededor de la vabdera son del área general y no del punto del mapa específico."
 
 #: ../modules/googlemap/pedigree_map.php:137
 msgid "for"
@@ -11307,37 +11820,27 @@ msgstr "No hay ascendientes en la base de datos."
 msgid "Root"
 msgstr "Raíz"
 
-#: ../modules/googlemap/pedigree_map.php:662
-#: ../modules/googlemap/pedigree_map.php:699
-msgid "Grandparent"
-msgstr "Abuelo o abuela"
-
-#: ../modules/googlemap/pedigree_map.php:702
-#: ../modules/googlemap/pedigree_map.php:704
-msgid "Gt"
-msgstr "Bis"
-
-#: ../modules/googlemap/pedigree_map.php:739
+#: ../modules/googlemap/pedigree_map.php:675
 msgid "Birth:"
 msgstr "Nac:"
 
-#: ../modules/googlemap/pedigree_map.php:841
+#: ../modules/googlemap/pedigree_map.php:777
 msgid "Zoom&nbsp;in"
 msgstr "Acercar"
 
-#: ../modules/googlemap/pedigree_map.php:842
+#: ../modules/googlemap/pedigree_map.php:778
 msgid "Zoom&nbsp;out"
 msgstr "Alejar"
 
-#: ../modules/googlemap/pedigree_map.php:843
+#: ../modules/googlemap/pedigree_map.php:779
 msgid "Zoom&nbsp;in&nbsp;here"
 msgstr "Acercar&nbsp;aquí"
 
-#: ../modules/googlemap/pedigree_map.php:844
+#: ../modules/googlemap/pedigree_map.php:780
 msgid "Zoom&nbsp;out&nbsp;here"
 msgstr "Alejar&nbsp;aquí"
 
-#: ../modules/googlemap/pedigree_map.php:845
+#: ../modules/googlemap/pedigree_map.php:781
 msgid "Centre&nbsp;map&nbsp;here"
 msgstr "Centrar&nbsp;el&nbsp;mapa&nbsp;aquí"
 
@@ -12223,11 +12726,11 @@ msgstr ""
 msgid "All People"
 msgstr "Todas las personas"
 
-#: ../calendar.php:190 ../calendar.php:517
+#: ../calendar.php:190 ../calendar.php:515
 msgid "Living People"
 msgstr "Personas vivas"
 
-#: ../calendar.php:194 ../calendar.php:520
+#: ../calendar.php:194 ../calendar.php:518
 msgid "Recent Years (&lt; 100 yrs)"
 msgstr "Eventos recientes (&lt; 100 años)"
 
@@ -12235,7 +12738,7 @@ msgstr "Eventos recientes (&lt; 100 años)"
 msgid "Show events of"
 msgstr ""
 
-#: ../calendar.php:229 ../calendar.php:529
+#: ../calendar.php:229 ../calendar.php:527
 msgid "Births, Deaths, Marriages"
 msgstr "Nacimientos, defunciones y matrimonios"
 
@@ -12279,7 +12782,7 @@ msgstr "Immigración"
 msgid "EMIG"
 msgstr "Emigración"
 
-#: ../calendar.php:476
+#: ../calendar.php:474
 msgid "Day not set"
 msgstr "Día no fijado"
 
@@ -16184,10 +16687,6 @@ msgstr ""
 
 #: ../help_text.php:3266
 msgid "Hide the flags that are configured in the googlemap module. Ususally these are for countries and states.  This serves as a visual queue that the markers around the flag are from the general area, and not the specific spot."
-msgstr ""
-
-#: ../help_text.php:3271
-msgid "Hide the lines connecting the child to each parent if they exist on the map."
 msgstr ""
 
 #: ../help_text.php:3276
@@ -20186,6 +20685,18 @@ msgstr "Familias con el apellido %s"
 #: ../famlist.php:270
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
 msgstr "Elija una letra para mostrar las familias en las que el nombre del cónyuge empieza por esa letra."
+
+#~ msgid "LANGUAGE_TEXT_DIRECTION"
+#~ msgstr "ltr"
+
+#~ msgid "LANGUAGE_COLLATION"
+#~ msgstr "utf8_spanish_ci"
+
+#~ msgid "Grandparent"
+#~ msgstr "Abuelo o abuela"
+
+#~ msgid "Gt"
+#~ msgstr "Bis"
 
 #~ msgid "Flag file"
 #~ msgstr "Nombre del archivo de bandera"
