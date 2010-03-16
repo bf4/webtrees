@@ -98,7 +98,7 @@ function print_family_header($famid) {
  * @param string $gparid optional gd-parent ID (descendancy booklet)
  */
 function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="", $personcount="1") {
-	global $pgv_lang, $view, $show_full, $show_famlink;
+	global $view, $show_full, $show_famlink;
 	global $TEXT_DIRECTION, $SHOW_EMPTY_BOXES, $SHOW_ID_NUMBERS, $LANGUAGE;
 	global $pbwidth, $pbheight;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
@@ -279,7 +279,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
  * @param string $label optional indi label (descendancy booklet)
  */
 function print_family_children($famid, $childid = "", $sosa = 0, $label="", $personcount="1") {
-	global $pgv_lang, $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
+	global $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $show_changes, $pgv_changes, $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 
@@ -705,161 +705,19 @@ function print_url_arrow($id, $url, $label, $dir=2) {
  * @param string $sosa sosa number
  */
 function get_sosa_name($sosa) {
-	global $LANGUAGE, $pgv_lang;
-
-	if ($sosa<2) return "";
-	$sosaname = "";
-	$sosanr = floor($sosa/2);
-	$gen = floor(log($sosanr) / log(2));
-
-    // first try a generic algorithm, this is later overridden
-	// by language specific algorithms.
-	if (!empty($pgv_lang["sosa_$sosa"])) {
-		$sosaname = $pgv_lang["sosa_$sosa"];
-	} elseif($gen > 2) {
-		switch ($LANGUAGE) {
-		case "danish":
-		case "norwegian":
-		case "swedish":
-			$sosaname = "";
-			$addname = "";
-			$father = UTF8_strtolower(i18n::translate('Father'));
-			$mother = UTF8_strtolower(i18n::translate('Mother'));
-			$grand = "be".($LANGUAGE == "danish"?"dste":"ste");
-			$great = "olde";
-			$tip = "tip".($LANGUAGE == "danish"?"-":"p-");
-			for($i = $gen; $i > 2; $i--) {
-				$sosaname .= $tip;
-			}
-			if ($gen >= 2) $sosaname .= $great;
-			if ($gen == 1) $sosaname .= $grand;
-
-			for ($i=$gen; $i>0; $i--){
-				if (!(floor($sosa/(pow(2,$i)))%2)) {
-					$addname .= $father;
-				} else {
-					$addname .= $mother;
-				}
-				if (($gen%2 && !($i%2)) || (!($gen%2) && $i%2)) {
-					$addname .= "s ";
-				}
-			}
-			if ($LANGUAGE == "swedish") {
-				$sosaname = $addname;
-			}
-			if ($sosa%2==0){
-				$sosaname .= $father;
-				if ($gen>0) {
-					$addname .= $father;
-				}
-			} else {
-				$sosaname .= $mother;
-				if ($gen>0) {
-					$addname .= $mother;
-				}
-			}
-			$sosaname = UTF8_str_split($sosaname);
-			$sosaname[0] = UTF8_strtoupper($sosaname[0]);
-			$sosaname = implode('', $sosaname);
-			if ($LANGUAGE != "swedish") if (!empty($addname)) $sosaname .= ($gen>5?"<br />&nbsp;&nbsp;&nbsp;&nbsp;":"")." <small>(".$addname.")</small>";
-			break;
-
-		case "dutch":
-			// reference: http://nl.wikipedia.org/wiki/Voorouder
-			// Our numbers are 2 less than those shown in the article.  We number parents
-			// as generation zero where the article numbers them as generation 2.
-		    $sosaname = "";
-		    // Please leave the following strings untranslated
-		    if ($gen & 512) break;					// 512 or higher
-			if ($gen & 256) $sosaname .= "hoog";	// 256 to 511
-			if ($gen & 128) $sosaname .= "opper";	// 128 to 511
-			if ($gen & 64) $sosaname .= "aarts";	// 64 to 511
-			if ($gen & 32) $sosaname .= "voor";		// 32 to 511
-			if ($gen & 16) $sosaname .= "edel";		// 16 to 511
-			if ($gen & 8) $sosaname .= "stam";		// 8 to 511
-			if ($gen & 4) $sosaname .= "oud";		// 4 to 511
-			$gen = $gen & 3;
-			if ($gen == 3) $sosaname .= "betovergroot";
-			if ($gen == 2) $sosaname .= "overgroot";
-			if ($gen == 1) $sosaname .= "groot";
-			if ($sosa%2==0) $sosaname .= i18n::translate('Father');
-			else $sosaname .= i18n::translate('Mother');
-			$sosaname = strtolower($sosaname);
-			break;
-
-		case "finnish":
-		    $sosaname = "";
-			$father = UTF8_strtolower(i18n::translate('Father'));
-			$mother = UTF8_strtolower(i18n::translate('Mother'));
-	//		$father = "isä";
-	//		$mother = "äiti";
-	//		i18n::translate('Father')= "äidin";	//Grand (mother)
-			for ($i=$gen; $i>0; $i--){
-				if (!(floor($sosa/(pow(2,$i)))%2)) $sosaname .= $father."n";
-	//			else $sosaname .= i18n::translate('Father');
-				else $sosaname .= UTF8_substr($mother, 0,2)."din";
-			}
-			if ($sosa%2==0) $sosaname .= $father;
-			else $sosaname .= $mother;
-			$sosaname = UTF8_str_split($sosaname);
-			$sosaname[0] = UTF8_strtoupper($sosaname[0]);
-			$sosaname = implode('',$sosaname);
-			break;
-
-		case "hebrew":
-		    $sosaname = "";
-			$addname = "";
-			$father = i18n::translate('Father');
-			$mother = i18n::translate('Mother');
-			$greatf = $pgv_lang["sosa_greatfather"];
-			$greatm = $pgv_lang["sosa_greatmother"];
-			$of = $pgv_lang["sosa_of"];
-			$grandfather = i18n::translate('Grandfather');
-			$grandmother = i18n::translate('Grandmother');
-	//		$father = "Aba";
-	//		$mother = "Ima";
-	//		$grandfather = "Saba";
-	//		$grandmother = "Savta";
-	//		$greatf = " raba";
-	//		$greatm = " rabta";
-	//		$of = " shel ";
-			for ($i=$gen; $i>=0; $i--) {
-				if ($i==0) {
-					if (!($sosa%2)) $addname .= "f";
-					else $addname .= "m";
-				}
-				else if (!(floor($sosa/(pow(2,$i)))%2)) $addname .= "f";
-				else $addname .= "m";
-				if ($i==0 || strlen($addname)==3) {
-					if (strlen($addname)==3) {
-						if (substr($addname, 2,1)=="f") $addname = $grandfather.$greatf;
-						else $addname = $grandmother.$greatm;
-					}
-					else if (strlen($addname)==2) {
-						if (substr($addname, 1,1)=="f") $addname = $grandfather;
-						else $addname = $grandmother;
-					}
-					else {
-						if ($addname=="f") $addname = $father;
-						else $addname = $mother;
-					}
-					$sosaname = $addname.($i<$gen-2?$of:"").$sosaname;
-					$addname="";
-				}
-			}
-			break;
-
-		default:
-			$paternal = (floor($sosa/pow(2,$gen)) == 2) ? "paternal" : "maternal";
-			$male = ($sosa%2==0) ? "male" : "female";
-			if (!empty($pgv_lang["sosa_{$paternal}_{$male}_n_generations"])) {
-				$sosaname = sprintf($pgv_lang["sosa_{$paternal}_{$male}_n_generations"], $gen+1, $gen, $gen-1);
-			}
-	    }
+	$relations=array();
+	while ($sosa>1) {
+		if ($sosa%2==1) {
+			$sosa-=1;
+			array_unshift($relations, 'mother');
+		} else {
+			array_unshift($relations, 'father');
+		}
+		$sosa/=2;
 	}
-
-	if (!empty($sosaname)) return "$sosaname<!-- sosa=$sosa nr=$sosanr gen=$gen -->";
-	else return  "<!-- sosa=$sosa nr=$sosanr gen=$gen -->";
+	array_unshift($relations, 'self');
+	$path=array('relations'=>$relations, 'path'=>$relations); // path is just a dummy
+	return get_relationship_name($path);
 }
 
 
