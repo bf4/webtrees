@@ -49,9 +49,6 @@ $default_ged=safe_GET('default_ged', $all_gedcoms);
  * @return mixed 	$url if file is downloadable, false if not
  */
 function check_gedcom_downloadable($gedfile) {
-	global $SERVER_URL, $pgv_lang;
-
-	//$url = $SERVER_URL;
 	$url = "http://localhost/";
 	if (substr($url,-1,1)!="/") $url .= "/";
 	$url .= rawurlencode($gedfile);
@@ -259,15 +256,14 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		echo i18n::translate('SearchLog files');
 		print "</td>";
 
-		unset($SEARCHLOG_CREATE);
-		unset($CHANGELOG_CREATE);
 		require get_config_file($ged_id);
 		print "<td valign=\"top\">";		// Column 2  (notices)
-		if (!isset($SEARCHLOG_CREATE)) {
-			print getLRM() . i18n::translate('None');
-		}
-		else {
-			print getLRM() . $pgv_lang[$SEARCHLOG_CREATE];
+		switch ($SEARCHLOG_CREATE) {
+		case 'none':    echo i18n::translate('None'); break;
+		case 'daily':   echo i18n::translate('Daily'); break;
+		case 'weekly':  echo i18n::translate('Weekly'); break;
+		case 'monthly': echo i18n::translate('Monthly'); break;
+		case 'yearly':  echo i18n::translate('Yearly'); break;
 		}
 		print "</td>";
 
@@ -313,11 +309,12 @@ foreach ($all_gedcoms as $ged_id=>$ged_name) {
 		echo i18n::translate('ChangeLog files');
 		print "</td>";
 		print "<td valign=\"top\">";		// Column 2  (notices)
-		if (!isset($CHANGELOG_CREATE)) {
-			print getLRM() . i18n::translate('None');
-		}
-		else {
-			print getLRM() . $pgv_lang[$CHANGELOG_CREATE];
+		switch ($CHANGELOG_CREATE) {
+		case 'none':    echo i18n::translate('None'); break;
+		case 'daily':   echo i18n::translate('Daily'); break;
+		case 'weekly':  echo i18n::translate('Weekly'); break;
+		case 'monthly': echo i18n::translate('Monthly'); break;
+		case 'yearly':  echo i18n::translate('Yearly'); break;
 		}
 		print "</td>";
 
