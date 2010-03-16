@@ -3001,6 +3001,7 @@ function get_relationship_name($nodes) {
 				case 'chi': return i18n::translate('great x%d grandchild',    $down-2);
 				}
 				break;
+			}
 		}
 		// Cousins.  http://en.wikipedia.org/wiki/File:CousinTree.svg
 		if ($up==$down) {
