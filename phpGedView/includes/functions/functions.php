@@ -2880,7 +2880,7 @@ function get_relationship_name($nodes) {
 		case 8:
 			switch ($last) {
 			case 'bro': return i18n::translate('great x7 aunt');
-			case 'sis': return i18n::translate('great x7 uncle'1);
+			case 'sis': return i18n::translate('great x7 uncle');
 			case 'sib': return i18n::translate('great x7 aunt/uncle');
 			}
 			break;
