@@ -517,7 +517,7 @@ a:hover .nameZoom {
 }
 
 .lang_form {
-	margin-top: 3px;
+	margin-bottom: 1px;
 }
 
 .selected-option {
@@ -531,7 +531,28 @@ a:hover .nameZoom {
 	color: white;
 }
 
-.thememenuitem {
+.langmenuitem, .langmenuitem_rtl {
+	color: white;
+	font: bold 11px tahoma, arial, helvetica, sans-serif;
+	text-decoration: none;
+	padding: 1px;
+}
+
+.langmenuitem a, .langmenuitem_rtl a {
+	color: white;
+}
+
+.langmenuitem_hover, .langmenuitem_hover_rtl {
+	color: red;
+	font: bold 11px tahoma, arial, helvetica, sans-serif;
+	text-decoration: none;
+	padding: 1px;
+}
+.langmenuitem_rtl, .langmenuitem_hover_rtl {
+	text-align: left;
+}
+
+.thememenuitem  {
 	color: white;
 	font: bold 11px tahoma, arial, helvetica, sans-serif;
 	text-decoration: none;

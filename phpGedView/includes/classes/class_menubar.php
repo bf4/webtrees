@@ -1052,7 +1052,7 @@ class MenuBar
 
 		if ($ENABLE_MULTI_LANGUAGE) {
 			$menu=new Menu(i18n::translate('Change Language'), '#', 'down');
-			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+			$menu->addClass("langmenuitem$ff", "langmenuitem_hover$ff", "submenu$ff");
 
 
 /* NEW CODE FOR USE WHEN WE SWITCH TO GETTEXT
