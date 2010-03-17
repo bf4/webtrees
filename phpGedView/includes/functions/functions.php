@@ -2610,50 +2610,50 @@ function get_relationship_name($nodes) {
 		switch ($up) {
 		case 3:
 			switch ($last) {
-			case 'bro': return i18n::translate('great-great-aunt');
-			case 'sis': return i18n::translate('great-great-uncle');
+			case 'bro': return i18n::translate('great-great-uncle');
+			case 'sis': return i18n::translate('great-great-aunt');
 			case 'sib': return i18n::translate('great-great-aunt/uncle');
 			}
 			break;
 		case 4:
 			switch ($last) {
-			case 'bro': return i18n::translate('great-great-great-aunt');
-			case 'sis': return i18n::translate('great-great-great-uncle');
-			case 'sib': return i18n::translate('great-great-great-aunt/uncle');
+			case 'bro': return i18n::translate('great-great-uncle');
+			case 'sis': return i18n::translate('great-great-aunt');
+			case 'sib': return i18n::translate('great-great-aunt/uncle');
 			}
 			break;
 		case 5:
 			switch ($last) {
-			case 'bro': return i18n::translate('great x4 aunt');
-			case 'sis': return i18n::translate('great x4 uncle');
+			case 'bro': return i18n::translate('great x4 uncle');
+			case 'sis': return i18n::translate('great x4 aunt');
 			case 'sib': return i18n::translate('great x4 aunt/uncle');
 			}
 			break;
 		case 6:
 			switch ($last) {
-			case 'bro': return i18n::translate('great x5 aunt');
-			case 'sis': return i18n::translate('great x5 uncle');
+			case 'bro': return i18n::translate('great x5 uncle');
+			case 'sis': return i18n::translate('great x5 aunt');
 			case 'sib': return i18n::translate('great x5 aunt/uncle');
 			}
 			break;
 		case 7:
 			switch ($last) {
-			case 'bro': return i18n::translate('great x6 aunt');
-			case 'sis': return i18n::translate('great x6 uncle');
+			case 'bro': return i18n::translate('great x6 uncle');
+			case 'sis': return i18n::translate('great x6 aunt');
 			case 'sib': return i18n::translate('great x6 aunt/uncle');
 			}
 			break;
 		case 8:
 			switch ($last) {
-			case 'bro': return i18n::translate('great x7 aunt');
-			case 'sis': return i18n::translate('great x7 uncle');
+			case 'bro': return i18n::translate('great x7 uncle');
+			case 'sis': return i18n::translate('great x7 aunt');
 			case 'sib': return i18n::translate('great x7 aunt/uncle');
 			}
 			break;
 		default:
 			switch ($last) {
-			case 'bro': return i18n::translate('great x%d aunt',       $up-1);
-			case 'sis': return i18n::translate('great x%d uncle',      $up-1);
+			case 'bro': return i18n::translate('great x%d uncle',      $up-1);
+			case 'sis': return i18n::translate('great x%d aunt',       $up-1);
 			case 'sib': return i18n::translate('great x%d aunt/uncle', $up-1);
 			}
 			break;
