@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-17 16:39+0000\n"
+"POT-Creation-Date: 2010-03-17 23:22+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -21,8 +21,8 @@ msgstr ""
 #: ../includes/functions/functions_print_lists.php:1397
 #: ../statisticsplot.php:790
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:462
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:487
-#: ../calendar.php:434
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:540
+#: ../calendar.php:494
 msgid "Total individuals"
 msgstr "tổng cộng các tên="
 
@@ -93,8 +93,8 @@ msgstr "Tuổi trung bình lúc chết"
 #: ../includes/classes/class_stats.php:656
 #: ../includes/classes/class_stats.php:658
 #: ../includes/classes/class_stats.php:666
-#: ../includes/classes/class_stats.php:667 ../calendar.php:210
-#: ../calendar.php:213 ../calendar.php:437 ../blocks/gedcom_stats.php:124
+#: ../includes/classes/class_stats.php:667 ../calendar.php:263
+#: ../calendar.php:266 ../calendar.php:497 ../blocks/gedcom_stats.php:124
 #: ../blocks/gedcom_stats.php:198
 msgid "Males"
 msgstr ""
@@ -104,8 +104,8 @@ msgstr ""
 #: ../includes/classes/class_stats.php:655
 #: ../includes/classes/class_stats.php:659
 #: ../includes/classes/class_stats.php:665
-#: ../includes/classes/class_stats.php:668 ../calendar.php:216
-#: ../calendar.php:219 ../calendar.php:438 ../blocks/gedcom_stats.php:125
+#: ../includes/classes/class_stats.php:668 ../calendar.php:269
+#: ../calendar.php:272 ../calendar.php:498 ../blocks/gedcom_stats.php:125
 #: ../blocks/gedcom_stats.php:199
 msgid "Females"
 msgstr ""
@@ -144,8 +144,8 @@ msgstr ""
 #: ../includes/functions/functions_print_lists.php:783
 #: ../includes/classes/class_stats.php:3288 ../statisticsplot.php:786
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:487
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:515
-#: ../calendar.php:442
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:565
+#: ../calendar.php:502
 msgid "Total families"
 msgstr "tổng cộng các gia đình ="
 
@@ -475,7 +475,7 @@ msgstr ""
 #: ../includes/extras/functions.sl.php:122
 #: ../includes/extras/functions.sl.php:142
 #: ../includes/functions/functions_date.php:86
-#: ../includes/classes/class_person.php:1827
+#: ../includes/classes/class_person.php:1817
 msgid "years"
 msgstr "năm"
 
@@ -626,7 +626,7 @@ msgstr "Thống Kê"
 #: ../includes/controllers/advancedsearch_ctrl.php:468
 #: ../includes/controllers/search_ctrl.php:775
 #: ../modules/googlemap/placehierarchy.php:241
-#: ../modules/individuals/pgv_module.php:50 ../calendar.php:403
+#: ../modules/individuals/pgv_module.php:50 ../calendar.php:463
 #: ../blocks/gedcom_stats.php:123 ../blocks/gedcom_stats.php:275
 msgid "Individuals"
 msgstr "Nhân Vật,"
@@ -642,7 +642,7 @@ msgstr "Nhân Vật,"
 #: ../includes/classes/class_menubar.php:589
 #: ../includes/controllers/search_ctrl.php:790
 #: ../modules/googlemap/placehierarchy.php:241
-#: ../modules/families/pgv_module.php:50 ../calendar.php:404
+#: ../modules/families/pgv_module.php:50 ../calendar.php:464
 #: ../blocks/gedcom_stats.php:131 ../blocks/gedcom_stats.php:291
 #: ../famlist.php:137 ../famlist.php:138
 msgid "Families"
@@ -708,7 +708,7 @@ msgstr "Cho xem các hạ"
 #: ../hourglass.php:94 ../compact.php:92 ../relationship.php:346
 #: ../find.php:574 ../branches.php:77 ../fanchart.php:469
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:604
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:633
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:682
 #: ../modules/googlemap/places.php:579
 #: ../modules/googlemap/pedigree_map.php:226 ../familybook.php:437
 msgid "View"
@@ -723,8 +723,8 @@ msgstr ""
 
 #: ../ancestry.php:161 ../descendancy.php:107 ../pedigree.php:94
 #: ../hourglass.php:82 ../manageservers.php:212 ../manageservers.php:345
-#: ../relationship.php:186 ../includes/functions/functions_print.php:557
-#: ../includes/functions/functions_print.php:1201
+#: ../relationship.php:186 ../includes/functions/functions_print.php:545
+#: ../includes/functions/functions_print.php:1189
 #: ../includes/functions/functions_print_facts.php:553 ../familybook.php:426
 #: ../blocks/charts.php:202 ../blocks/user_messages.php:99
 msgid "Show Details"
@@ -846,7 +846,7 @@ msgstr "Bức điện đã xoá bỏ"
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:220
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:275
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:280
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:374
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:421
 #: ../modules/googlemap/places_edit.php:150
 #: ../modules/googlemap/places_edit.php:168
 #: ../modules/googlemap/places_edit.php:831 ../modules/googlemap/flags.php:50
@@ -900,7 +900,7 @@ msgstr ""
 #: ../includes/controllers/hourglass_ctrl.php:385
 #: ../modules/lightbox/lb_editconfig.php:89
 #: ../modules/lightbox/lb_editconfig.php:92
-#: ../modules/googlemap/placecheck.php:143 ../calendar.php:181
+#: ../modules/googlemap/placecheck.php:143 ../calendar.php:234
 #: ../gedcheck.php:118 ../gedcheck.php:123 ../familybook.php:175
 msgid "Show"
 msgstr "Cho xem"
@@ -993,16 +993,23 @@ msgid "Unknown module type."
 msgstr ""
 
 #: ../themes/mercury/templates/personbox_template.php:62
+#: ../themes/minimal/templates/personbox_template.php:62
+#: ../themes/colors/templates/personbox_template.php:62
+#: ../themes/webtrees/templates/personbox_template.php:62
 #: ../themes/belgianchocolate/templates/personbox_template.php:62
-msgid "loading"
+#: ../themes/cloudy/templates/personbox_template.php:62
+#: ../themes/xenea/templates/personbox_template.php:62
+#: ../themes/standard/templates/personbox_template.php:62 ../index.php:350
+#: ../index.php:402 ../index.php:433 ../admin.php:307
+msgid "Loading..."
 msgstr ""
 
-#: ../themes/fab/header.php:113 ../includes/functions/functions_print.php:778
+#: ../themes/fab/header.php:113 ../includes/functions/functions_print.php:766
 #: ../blocks/login_block.php:55 ../blocks/login_block.php:63
 msgid "Logout"
 msgstr "Đăng ra"
 
-#: ../themes/fab/header.php:115 ../includes/functions/functions_print.php:776
+#: ../themes/fab/header.php:115 ../includes/functions/functions_print.php:764
 #: ../includes/classes/class_menubar.php:150
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:60
 #: ../help_text.php:3909 ../blocks/getting_started.php:67
@@ -1014,8 +1021,8 @@ msgid "Pending Changes"
 msgstr "Những chuyện đang chờ đổi"
 
 #: ../themes/fab/header.php:131 ../themes/fab/header.php:134 ../login.php:197
-#: ../login.php:208 ../includes/functions/functions_print.php:783
-#: ../includes/functions/functions_print.php:785 ../blocks/login_block.php:39
+#: ../login.php:208 ../includes/functions/functions_print.php:771
+#: ../includes/functions/functions_print.php:773 ../blocks/login_block.php:39
 #: ../blocks/login_block.php:69 ../blocks/login_block.php:114
 msgid "Login"
 msgstr "Khối Truy Nhập"
@@ -1045,16 +1052,6 @@ msgstr ""
 #: ../help_text.php:5281 ../help_text.php:5833
 msgid "Help"
 msgstr "Hướng dẫn"
-
-#: ../themes/minimal/templates/personbox_template.php:62
-#: ../themes/colors/templates/personbox_template.php:62
-#: ../themes/webtrees/templates/personbox_template.php:62
-#: ../themes/cloudy/templates/personbox_template.php:62
-#: ../themes/xenea/templates/personbox_template.php:62
-#: ../themes/standard/templates/personbox_template.php:62 ../index.php:350
-#: ../index.php:402 ../index.php:433 ../admin.php:307
-msgid "Loading..."
-msgstr ""
 
 #: ../themes/minimal/footer.php:41 ../themes/colors/footer.php:55
 #: ../themes/webtrees/footer.php:46 ../themes/cloudy/footer.php:170
@@ -1122,7 +1119,7 @@ msgstr ""
 #: ../modules/lightbox/lb_editconfig.php:181
 #: ../modules/lightbox/lb_editconfig.php:207
 #: ../modules/lightbox/lb_editconfig.php:212
-#: ../modules/family_nav/family_nav.php:759
+#: ../modules/family_nav/family_nav.php:753
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1464
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:2261
 #: ../modules/individuals/individuals.php:111
@@ -1208,7 +1205,7 @@ msgstr "Xin chú ý: Những tập tin GEDCOM lớn sẽ lấy nhiều thời gi
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:67
 #: ../modules/googlemap/placecheck.php:83
 #: ../modules/googlemap/placecheck.php:102 ../faq.php:175 ../faq.php:220
-#: ../faq.php:283 ../medialist.php:163 ../calendar.php:232
+#: ../faq.php:283 ../medialist.php:163 ../calendar.php:285
 #: ../blocks/user_messages.php:88 ../blocks/random_media.php:350
 #: ../blocks/rss_block.php:70 ../famlist.php:96 ../famlist.php:170
 #: ../famlist.php:172 ../famlist.php:259 ../famlist.php:261
@@ -1223,8 +1220,8 @@ msgstr "Tất cả"
 #: ../includes/functions/functions_print_lists.php:1283
 #: ../includes/functions/functions_name.php:109
 #: ../includes/functions/functions_name.php:139
-#: ../includes/classes/class_person.php:1768
-#: ../includes/classes/class_person.php:1769
+#: ../includes/classes/class_person.php:1758
+#: ../includes/classes/class_person.php:1759
 #: ../modules/individuals/individuals.php:108
 #: ../modules/families/families.php:108 ../famlist.php:112 ../famlist.php:124
 #: ../famlist.php:144 ../famlist.php:243
@@ -1365,8 +1362,8 @@ msgstr ""
 msgid "The remote server could not be removed."
 msgstr ""
 
-#: ../manageservers.php:209 ../includes/functions/functions_print.php:560
-#: ../includes/functions/functions_print.php:1202
+#: ../manageservers.php:209 ../includes/functions/functions_print.php:548
+#: ../includes/functions/functions_print.php:1190
 #: ../includes/functions/functions_print_facts.php:554
 msgid "Hide Details"
 msgstr "Giấu Chi Tiết"
@@ -1411,8 +1408,8 @@ msgstr "Rút ra"
 #: ../manageservers.php:256 ../manageservers.php:258 ../manageservers.php:303
 #: ../manageservers.php:305 ../manageservers.php:479 ../index_edit.php:472
 #: ../index_edit.php:492 ../clippings.php:140 ../clippings.php:261
-#: ../includes/functions/functions_print.php:2242
-#: ../includes/functions/functions_print.php:2292
+#: ../includes/functions/functions_print.php:2116
+#: ../includes/functions/functions_print.php:2166
 #: ../includes/classes/class_stats_ui.php:191
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:183
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:185
@@ -1566,9 +1563,8 @@ msgid "This record has been marked for deletion upon admin approval."
 msgstr ""
 
 #: ../individual.php:272 ../timeline.php:404 ../autocomplete.php:199
-#: ../includes/functions/functions_print.php:1790
-#: ../includes/functions/functions_print.php:1976
-#: ../includes/functions/functions_print.php:2011
+#: ../includes/functions/functions_print.php:1850
+#: ../includes/functions/functions_print.php:1885
 #: ../includes/classes/class_stats.php:1781
 #: ../includes/classes/class_stats.php:2660
 #: ../includes/classes/class_stats.php:2661
@@ -1827,7 +1823,7 @@ msgstr ""
 #: ../includes/functions/functions_edit.php:1484
 #: ../includes/functions/functions_print_lists.php:306
 #: ../includes/functions/functions_print_lists.php:685
-#: ../includes/functions/functions_print.php:2025
+#: ../includes/functions/functions_print.php:1899
 #: ../includes/functions/functions_print_facts.php:1626
 #: ../includes/functions/functions_print_facts.php:1636
 #: ../includes/classes/class_stats.php:3748
@@ -2176,7 +2172,7 @@ msgstr "Cho vào Nhận Diện cá nhân"
 
 #: ../inverselink.php:161 ../includes/family_nav.php:554
 #: ../includes/functions/functions_edit.php:1632
-#: ../modules/family_nav/family_nav.php:586
+#: ../modules/family_nav/family_nav.php:580
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1074
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1081
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:1518
@@ -2196,7 +2192,7 @@ msgstr ""
 
 #: ../inverselink.php:205 ../note.php:97 ../note.php:98
 #: ../includes/functions/functions_edit.php:1287
-#: ../includes/functions/functions_print.php:1207
+#: ../includes/functions/functions_print.php:1195
 #: ../modules/GEDFact_assistant/_CENS/census_4_text.php:60
 #: ../edit_interface.php:912 ../edit_interface.php:1178
 msgid "Shared Note"
@@ -2264,20 +2260,20 @@ msgstr ""
 #: ../includes/functions/functions_print.php:172
 #: ../includes/functions/functions_print.php:181
 #: ../includes/functions/functions_print.php:182
-#: ../includes/functions/functions_print.php:358
-#: ../includes/functions/functions_print.php:359
+#: ../includes/functions/functions_print.php:346
+#: ../includes/functions/functions_print.php:347
 #: ../includes/controllers/individual_ctrl.php:356
-#: ../modules/family_nav/family_nav.php:615
-#: ../modules/family_nav/family_nav.php:617
-#: ../modules/family_nav/family_nav.php:637
-#: ../modules/family_nav/family_nav.php:639
-#: ../modules/family_nav/family_nav.php:673
-#: ../modules/family_nav/family_nav.php:675
-#: ../modules/family_nav/family_nav.php:697
-#: ../modules/family_nav/family_nav.php:699
-#: ../modules/family_nav/family_nav.php:728
-#: ../modules/family_nav/family_nav.php:730
-#: ../modules/family_nav/family_nav.php:746
+#: ../modules/family_nav/family_nav.php:609
+#: ../modules/family_nav/family_nav.php:611
+#: ../modules/family_nav/family_nav.php:631
+#: ../modules/family_nav/family_nav.php:633
+#: ../modules/family_nav/family_nav.php:667
+#: ../modules/family_nav/family_nav.php:669
+#: ../modules/family_nav/family_nav.php:691
+#: ../modules/family_nav/family_nav.php:693
+#: ../modules/family_nav/family_nav.php:722
+#: ../modules/family_nav/family_nav.php:724
+#: ../modules/family_nav/family_nav.php:740
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1113
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1115
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1169
@@ -2307,7 +2303,6 @@ msgstr "Chi tiết cá nhân"
 
 #: ../expand_view.php:75 ../find.php:590
 #: ../includes/functions/functions_mediadb.php:1594
-#: ../includes/functions/functions_print.php:1820
 #: ../includes/functions/functions_print_facts.php:276
 #: ../includes/functions/functions_print_facts.php:722
 #: ../includes/functions/functions_print_facts.php:1613
@@ -2318,7 +2313,7 @@ msgstr "Chi tiết cá nhân"
 #: ../includes/controllers/ancestry_ctrl.php:206
 #: ../includes/controllers/descendancy_ctrl.php:288
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:620
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:649
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:698
 #: ../modules/relatives/relatives.php:54
 msgid "View Family"
 msgstr "Cho Xem Gia Đình"
@@ -2489,19 +2484,20 @@ msgstr ""
 msgid "No calendar conversion"
 msgstr ""
 
-#: ../editconfig_gedcom.php:987
+#: ../editconfig_gedcom.php:987 ../calendar.php:348
 msgid "Gregorian"
 msgstr ""
 
-#: ../editconfig_gedcom.php:988
+#: ../editconfig_gedcom.php:988 ../calendar.php:349
 msgid "Julian"
 msgstr ""
 
 #: ../editconfig_gedcom.php:989 ../includes/specialchars.php:66
+#: ../calendar.php:351
 msgid "French"
 msgstr ""
 
-#: ../editconfig_gedcom.php:990
+#: ../editconfig_gedcom.php:990 ../calendar.php:350
 msgid "Jewish"
 msgstr ""
 
@@ -2517,7 +2513,7 @@ msgstr ""
 msgid "Hebrew and Gregorian"
 msgstr ""
 
-#: ../editconfig_gedcom.php:994
+#: ../editconfig_gedcom.php:994 ../calendar.php:352
 msgid "Hijri"
 msgstr ""
 
@@ -3148,7 +3144,7 @@ msgstr ""
 msgid "PhpGedView reply address"
 msgstr ""
 
-#: ../editconfig_gedcom.php:2302 ../includes/functions/functions_print.php:930
+#: ../editconfig_gedcom.php:2302 ../includes/functions/functions_print.php:918
 #: ../help_text.php:2905
 msgid "Genealogy contact"
 msgstr ""
@@ -3378,8 +3374,8 @@ msgstr ""
 #: ../family.php:96 ../includes/family_nav.php:555
 #: ../includes/family_nav.php:556
 #: ../includes/controllers/hourglass_ctrl.php:432
-#: ../modules/family_nav/family_nav.php:584
-#: ../modules/family_nav/family_nav.php:585
+#: ../modules/family_nav/family_nav.php:578
+#: ../modules/family_nav/family_nav.php:579
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1076
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1078
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1083
@@ -3437,7 +3433,7 @@ msgstr "Đồ Thị Lịch Sử"
 #: ../includes/controllers/individual_ctrl.php:108
 #: ../includes/controllers/individual_ctrl.php:571
 #: ../includes/controllers/descendancy_ctrl.php:102 ../statisticsplot.php:805
-#: ../calendar.php:521 ../calendar.php:603 ../blocks/top10_givnnames.php:100
+#: ../calendar.php:581 ../calendar.php:663 ../blocks/top10_givnnames.php:100
 msgid "Male"
 msgstr "Nam"
 
@@ -3449,7 +3445,7 @@ msgstr "Nam"
 #: ../includes/controllers/individual_ctrl.php:109
 #: ../includes/controllers/individual_ctrl.php:573
 #: ../includes/controllers/descendancy_ctrl.php:103 ../statisticsplot.php:806
-#: ../calendar.php:524 ../calendar.php:607 ../blocks/top10_givnnames.php:95
+#: ../calendar.php:584 ../calendar.php:667 ../blocks/top10_givnnames.php:95
 msgid "Female"
 msgstr "Nữ"
 
@@ -3458,7 +3454,6 @@ msgstr "Nữ"
 #: ../includes/family_nav.php:730 ../includes/family_nav.php:733
 #: ../includes/functions/functions_edit.php:1393
 #: ../includes/functions/functions_edit.php:1497
-#: ../includes/functions/functions_print.php:1831
 #: ../includes/functions/functions.php:842
 #: ../includes/classes/class_serviceclient.php:90
 #: ../includes/classes/class_stats.php:867
@@ -3469,19 +3464,18 @@ msgstr "Nữ"
 #: ../includes/classes/class_gewebservice.php:100
 #: ../includes/classes/class_geclippings.php:329
 #: ../includes/classes/class_geclippings.php:331
-#: ../includes/classes/class_person.php:776
-#: ../includes/classes/class_person.php:782
-#: ../includes/classes/class_person.php:799
-#: ../includes/classes/class_person.php:814
-#: ../includes/classes/class_person.php:818
+#: ../includes/classes/class_person.php:777
+#: ../includes/classes/class_person.php:783
+#: ../includes/classes/class_person.php:797
+#: ../includes/classes/class_person.php:806
 #: ../includes/classes/class_gedownloadgedcom.php:90
 #: ../includes/classes/class_gedownloadgedcom.php:92
 #: ../includes/controllers/pedigree_ctrl.php:284
 #: ../includes/controllers/individual_ctrl.php:110
 #: ../includes/controllers/individual_ctrl.php:575
 #: ../includes/controllers/descendancy_ctrl.php:104
-#: ../modules/family_nav/family_nav.php:762
-#: ../modules/family_nav/family_nav.php:765
+#: ../modules/family_nav/family_nav.php:756
+#: ../modules/family_nav/family_nav.php:759
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1470
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1476
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:131
@@ -3536,13 +3530,13 @@ msgstr "Nữ"
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:2179
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:2267
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:2273
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:396
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:397
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:403
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:404
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:443
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:444
-#: ../calendar.php:611 ../blocks/top10_givnnames.php:105
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:441
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:442
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:448
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:449
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:488
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:489
+#: ../calendar.php:671 ../blocks/top10_givnnames.php:105
 msgid "unknown"
 msgstr ""
 
@@ -3785,7 +3779,7 @@ msgstr "Thành viên được chấp thuận bởi quản lý"
 #: ../useradmin.php:402 ../useradmin.php:831 ../find.php:399
 #: ../edituser.php:224 ../includes/classes/class_menubar.php:1054
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:409
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:358
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:405
 #: ../login_register.php:296
 msgid "Change Language"
 msgstr "Ðổi Ngôn Ngữ"
@@ -4000,7 +3994,7 @@ msgid "Sounds like"
 msgstr ""
 
 #: ../search_advanced.php:221 ../addsearchlink.php:86
-#: ../includes/classes/class_person.php:1571
+#: ../includes/classes/class_person.php:1561
 #: ../includes/controllers/individual_ctrl.php:821
 #: ../includes/controllers/individual_ctrl.php:882 ../edit_interface.php:2323
 #: ../edit_interface.php:2326 ../addremotelink.php:132
@@ -4019,7 +4013,7 @@ msgid "GIVN"
 msgstr "Tên Gọi"
 
 #: ../search_advanced.php:258 ../addsearchlink.php:85
-#: ../includes/classes/class_person.php:1580
+#: ../includes/classes/class_person.php:1570
 #: ../includes/controllers/individual_ctrl.php:820
 #: ../includes/controllers/individual_ctrl.php:883 ../edit_interface.php:2322
 #: ../edit_interface.php:2327 ../addremotelink.php:131
@@ -4050,9 +4044,12 @@ msgstr ""
 #: ../includes/functions/functions_print_lists.php:218
 #: ../includes/functions/functions_print.php:122
 #: ../includes/functions/functions_print.php:123
-#: ../includes/functions/functions_print.php:1805
-#: ../includes/functions/functions_print.php:1807
-#: ../includes/functions/functions_print.php:1810
+#: ../includes/functions/functions_print.php:1627
+#: ../includes/functions/functions_print.php:1639
+#: ../includes/functions/functions_print.php:1646
+#: ../includes/functions/functions_print.php:1678
+#: ../includes/functions/functions_print.php:1690
+#: ../includes/functions/functions_print.php:1697
 #: ../includes/classes/class_menubar.php:247
 #: ../includes/classes/class_menubar.php:425
 #: ../includes/classes/class_menubar.php:438 ../help_text.php:2726
@@ -4100,12 +4097,13 @@ msgstr "Cho coi đường"
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:703
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:726
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:748
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:490
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:518
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:670
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:705
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:729
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:752
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:543
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:568
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:719
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:757
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:781
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:804
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:826
 msgid "No results found."
 msgstr "Không tìm thấy gì hẽt."
 
@@ -4247,11 +4245,11 @@ msgid "This optional file does not exist."
 msgstr ""
 
 #: ../find.php:97 ../find.php:202
-#: ../includes/functions/functions_print.php:2339
+#: ../includes/functions/functions_print.php:2218
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:99
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:210
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:87
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:183
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:95
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:206
 #: ../edit_merge.php:304 ../edit_merge.php:321 ../help_text.php:2616
 msgid "Find Individual ID"
 msgstr "Kiếm Nhận Diện của Nhân Vật"
@@ -4259,27 +4257,27 @@ msgstr "Kiếm Nhận Diện của Nhân Vật"
 #: ../find.php:100 ../find.php:205
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:102
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:213
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:90
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:186
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:98
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:209
 msgid "Find Family List"
 msgstr "Tìm danh sách gia đình"
 
 #: ../find.php:103 ../find.php:208
-#: ../includes/functions/functions_print.php:2452
+#: ../includes/functions/functions_print.php:2331
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:105
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:216
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:93
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:189
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:101
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:212
 #: ../help_text.php:4610
 msgid "Find Media"
 msgstr "Tìm Môi Thể"
 
 #: ../find.php:107 ../find.php:211
-#: ../includes/functions/functions_print.php:2354
+#: ../includes/functions/functions_print.php:2233
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:109
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:219
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:97
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:192
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:105
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:215
 msgid "Find Place"
 msgstr "Tìm Nơi"
 
@@ -4287,45 +4285,47 @@ msgstr "Tìm Nơi"
 #: ../includes/classes/class_menubar.php:629
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:113
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:222
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:101
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:195
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:109
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:218
 #: ../help_text.php:2731 ../repolist.php:34 ../repolist.php:35
 msgid "Repositories"
 msgstr "Danh Sách của những Chổ Tàng Trữ"
 
 #: ../find.php:115 ../find.php:217
-#: ../includes/functions/functions_print.php:2423
+#: ../includes/functions/functions_print.php:2302
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:117
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:225
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:113
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:221
 msgid "Find Shared Note"
 msgstr ""
 
 #: ../find.php:119 ../find.php:220
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:121
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:228
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:105
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:198
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:117
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:224
 msgid "Find Source"
 msgstr "Tìm Kiếm Nguồn"
 
 #: ../find.php:123 ../find.php:223
-#: ../includes/functions/functions_print.php:2381
+#: ../includes/functions/functions_print.php:2260
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:125
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:231
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:109
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:201
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:121
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:227
 msgid "Find Special Characters"
 msgstr "Kiếm Chữ Đặc Biệt"
 
 #: ../find.php:166 ../search.php:51 ../search.php:73 ../search.php:100
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:174
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:148 ../media.php:280
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:170 ../media.php:280
 msgid "Please enter more than one character"
 msgstr ""
 
 #: ../find.php:242 ../find.php:262
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:272
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:242
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:268
 msgid "Name contains:"
 msgstr "Trong tên có"
 
@@ -4337,23 +4337,24 @@ msgstr "Trong tên có"
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:350
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:371
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:392
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:247
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:278
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:299
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:320
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:341
-#: ../medialist.php:148 ../calendar.php:533 ../blocks/random_media.php:357
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:273
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:304
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:325
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:346
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:367
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:388
+#: ../medialist.php:148 ../calendar.php:593 ../blocks/random_media.php:357
 #: ../media.php:809 ../media.php:829
 msgid "Filter"
 msgstr "Lọc"
 
 #: ../find.php:286 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:296
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:266
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:292
 msgid "Media contains:"
 msgstr ""
 
 #: ../find.php:294 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:304
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:274 ../media.php:836
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:300 ../media.php:836
 msgid "Show thumbnails"
 msgstr "Cho xem bức chân dung nhỏ"
 
@@ -4363,106 +4364,109 @@ msgstr "Cho xem bức chân dung nhỏ"
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:351
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:372
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:393
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:279
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:300
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:321
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:342 ../media.php:829
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:305
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:326
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:347
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:368
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:389 ../media.php:829
 msgid "Display all"
 msgstr ""
 
 #: ../find.php:314 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:324
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:294
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:320
 msgid "Place contains:"
 msgstr "Có trong nơi:"
 
 #: ../find.php:335 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:345
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:315
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:341
 msgid "Repository contains:"
 msgstr ""
 
 #: ../find.php:356 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:366
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:362
 msgid "Shared Note contains:"
 msgstr ""
 
 #: ../find.php:377 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:387
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:336
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:383
 msgid "Source contains:"
 msgstr ""
 
 #: ../find.php:406 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:416
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:365
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:412
 msgid "Magnify"
 msgstr "Phóng Đại"
 
 #: ../find.php:490 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:520
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:548 ../media.php:889
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:598 ../media.php:889
 msgid "Current directory"
 msgstr ""
 
 #: ../find.php:504 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:534
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:562
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:612
 msgid "External objects"
 msgstr ""
 
 #: ../find.php:575 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:605
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:634 ../media.php:1138
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:683 ../media.php:1138
 msgid "The filename entered does not exist."
 msgstr "Tên đánh vào của tập tin không có."
 
 #: ../find.php:577 ../includes/functions/functions_print_facts.php:682
 #: ../includes/functions/functions_print_facts.php:1567
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:607
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:636
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:685
 #: ../medialist.php:419 ../media.php:1149
 msgid "Image Dimensions"
 msgstr "Kích thước hình --"
 
 #: ../find.php:580 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:610
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:639
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:688
 msgid "This media object is linked to the following:"
 msgstr ""
 
 #: ../find.php:587 ../includes/functions/functions_mediadb.php:1591
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:617
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:646
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:695
 msgid "View Person"
 msgstr "Cho Xem Cá Nhân"
 
 #: ../find.php:593 ../includes/functions/functions_mediadb.php:1597
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:244
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:623
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:652
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:701
 msgid "View Source"
 msgstr "Cho Xem Nguồn"
 
 #: ../find.php:596 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:626
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:655
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:704
 msgid "View Object"
 msgstr ""
 
 #: ../find.php:602 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:632
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:661 ../media.php:1156
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:710 ../media.php:1156
 msgid "This media object is not linked to any GEDCOM record."
 msgstr ""
 
 #: ../find.php:644 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:674
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:700
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:752
 msgid "Places found"
 msgstr ""
 
 #: ../find.php:668 ../includes/functions/functions_print_lists.php:1063
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:698
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:724
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:776
 msgid "Repositories found"
 msgstr "Tìm thấy Chổ Tàng Trữ"
 
 #: ../find.php:693 ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:723
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:801
 msgid "Shared Notes found"
 msgstr ""
 
 #: ../find.php:715 ../includes/functions/functions_print_lists.php:932
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:745
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:749
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:823
 msgid "Total Sources"
 msgstr "Tổng số Nguồn"
 
@@ -4474,7 +4478,7 @@ msgstr "Tổng số Nguồn"
 #: ../includes/functions/functions_print_lists.php:506
 #: ../modules/descendancy/descendancy.php:144
 #: ../modules/relatives/relatives.php:192
-#: ../modules/relatives/relatives.php:236 ../calendar.php:250
+#: ../modules/relatives/relatives.php:236 ../calendar.php:303
 #: ../help_text.php:934
 msgid "MARR"
 msgstr "Hôn Lể"
@@ -4488,9 +4492,7 @@ msgstr ""
 msgid "Random surname"
 msgstr ""
 
-#: ../branches.php:80 ../search.php:315 ../includes/help_text_vars.php:145
-#: ../includes/help_text_vars.php:146 ../includes/help_text_vars.php:147
-#: ../help_text.php:5570
+#: ../branches.php:80 ../search.php:315 ../help_text.php:5570
 msgid "Search the way you think the name is written (Soundex)"
 msgstr "- Hoặc tìm theo âm học (Soundex):"
 
@@ -4733,7 +4735,7 @@ msgid "Import complete"
 msgstr "Thu nhận hoàn tất."
 
 #: ../uploadgedcom.php:795 ../uploadgedcom.php:844 ../uploadgedcom.php:1128
-#: ../uploadgedcom.php:1133 ../includes/functions/functions_print.php:733
+#: ../uploadgedcom.php:1133 ../includes/functions/functions_print.php:721
 msgid "sec."
 msgstr "giây"
 
@@ -4767,7 +4769,7 @@ msgid "The execution time limit was reached.  Click the Continue button below to
 msgstr ""
 
 #: ../uploadgedcom.php:1104 ../uploadgedcom.php:1117
-#: ../includes/functions/functions_print.php:733
+#: ../includes/functions/functions_print.php:721
 msgid "Execution time:"
 msgstr "Thời gian thi hành:"
 
@@ -4784,8 +4786,7 @@ msgid "Found record"
 msgstr "Kiếm được ký lục"
 
 #: ../uploadgedcom.php:1120 ../edit_changes.php:126 ../printlog.php:116
-#: ../clippings.php:278 ../includes/functions/functions_media_reorder.php:109
-#: ../includes/functions/functions_print_facts.php:699
+#: ../clippings.php:278 ../includes/functions/functions_print_facts.php:699
 #: ../includes/functions/functions_print_facts.php:1584
 #: ../modules/clippings/index.php:288
 msgid "Type"
@@ -4870,7 +4871,7 @@ msgstr ""
 msgid "Add an unlinked person"
 msgstr "Thêm người lẻ"
 
-#: ../admin.php:240 ../modules/GEDFact_assistant/_CENS/census_3_find.php:756
+#: ../admin.php:240
 msgid "Add an unlinked source"
 msgstr ""
 
@@ -5424,8 +5425,7 @@ msgstr ""
 msgid "Same as current"
 msgstr "Giống như cái Hiện Tại"
 
-#: ../addsearchlink.php:87 ../includes/functions/functions_print.php:1805
-#: ../includes/functions/functions_print.php:2029
+#: ../addsearchlink.php:87 ../includes/functions/functions_print.php:1903
 #: ../includes/controllers/individual_ctrl.php:850
 #: ../includes/controllers/individual_ctrl.php:859 ../edit_interface.php:614
 #: ../edit_interface.php:2346 ../edit_interface.php:2355
@@ -5433,8 +5433,7 @@ msgstr "Giống như cái Hiện Tại"
 msgid "Husband"
 msgstr "Chồng"
 
-#: ../addsearchlink.php:88 ../includes/functions/functions_print.php:1807
-#: ../includes/functions/functions_print.php:2029
+#: ../addsearchlink.php:88 ../includes/functions/functions_print.php:1903
 #: ../includes/controllers/individual_ctrl.php:849
 #: ../includes/controllers/individual_ctrl.php:858 ../edit_interface.php:612
 #: ../edit_interface.php:2344 ../edit_interface.php:2353
@@ -5478,8 +5477,7 @@ msgstr ""
 msgid "General Search"
 msgstr "Tìm đại thể"
 
-#: ../search.php:172 ../search.php:266 ../includes/help_text_vars.php:142
-#: ../includes/help_text_vars.php:143 ../includes/help_text_vars.php:144
+#: ../search.php:172 ../search.php:266
 msgid "Enter Search terms"
 msgstr "Cho vào những từ muốn Tìm"
 
@@ -5544,7 +5542,7 @@ msgstr "Tên Họ"
 
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
-#: ../calendar.php:172
+#: ../calendar.php:225
 msgid "Year"
 msgstr "Năm"
 
@@ -5735,7 +5733,7 @@ msgid "Painting"
 msgstr ""
 
 #: ../includes/config_data.php:87
-#: ../includes/functions/functions_media_reorder.php:107
+#: ../includes/functions/functions_media_reorder.php:108
 #: ../includes/functions/functions_print_facts.php:697
 #: ../includes/functions/functions_print_facts.php:1582
 #: ../includes/classes/class_stats.php:3447
@@ -5891,72 +5889,89 @@ msgstr ""
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2183 ../calendar.php:165
 msgid "January"
 msgstr "Tháng Giêng"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2184 ../calendar.php:166
 msgid "February"
 msgstr "Tháng Hai"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
-#: ../includes/extras/functions.sl.php:46 ../statisticsplot.php:733
+#: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2185 ../statisticsplot.php:733
+#: ../calendar.php:167
 msgid "March"
 msgstr "Tháng Ba"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
-#: ../includes/extras/functions.sl.php:46 ../statisticsplot.php:734
+#: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2186 ../statisticsplot.php:734
+#: ../calendar.php:168
 msgid "April"
 msgstr "Tháng Tư"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
-#: ../includes/extras/functions.sl.php:46 ../statisticsplot.php:735
+#: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2187 ../statisticsplot.php:735
+#: ../calendar.php:169
 msgid "May"
 msgstr "Tháng Nam"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
-#: ../includes/extras/functions.sl.php:46 ../statisticsplot.php:736
+#: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2188 ../statisticsplot.php:736
+#: ../calendar.php:170
 msgid "June"
 msgstr "Tháng Sáu"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
-#: ../includes/extras/functions.sl.php:46 ../statisticsplot.php:737
+#: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2189 ../statisticsplot.php:737
+#: ../calendar.php:171
 msgid "July"
 msgstr "Tháng Bảy"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2190 ../calendar.php:172
 msgid "August"
 msgstr "Tháng Tám"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2191 ../calendar.php:173
 msgid "September"
 msgstr "Tháng Chín"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2192 ../calendar.php:174
 msgid "October"
 msgstr "Tháng Mười"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2193 ../calendar.php:175
 msgid "November"
 msgstr "Tháng Mười Một"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
+#: ../includes/functions/functions_print.php:2194 ../calendar.php:176
 msgid "December"
 msgstr "Tháng Mười Hai"
 
@@ -5985,7 +6000,7 @@ msgstr "Chết lúc đẻ"
 #: ../includes/extras/functions.sl.php:118
 #: ../includes/extras/functions.sl.php:139
 #: ../includes/functions/functions_date.php:85
-#: ../includes/classes/class_person.php:1825
+#: ../includes/classes/class_person.php:1815
 msgid "year"
 msgstr "năm"
 
@@ -5994,7 +6009,7 @@ msgstr "năm"
 #: ../includes/extras/functions.sl.php:123
 #: ../includes/extras/functions.sl.php:143
 #: ../includes/functions/functions_date.php:87
-#: ../includes/classes/class_person.php:1829 ../statisticsplot.php:942
+#: ../includes/classes/class_person.php:1819 ../statisticsplot.php:942
 #: ../statisticsplot.php:945 ../statisticsplot.php:948
 #: ../statisticsplot.php:951 ../statisticsplot.php:954
 msgid "month"
@@ -6005,7 +6020,7 @@ msgstr "tháng"
 #: ../includes/extras/functions.sl.php:125
 #: ../includes/extras/functions.sl.php:146
 #: ../includes/functions/functions_date.php:88
-#: ../includes/classes/class_person.php:1831
+#: ../includes/classes/class_person.php:1821
 msgid "months"
 msgstr "tháng"
 
@@ -6083,17 +6098,17 @@ msgstr ""
 msgid "Ward"
 msgstr ""
 
-#: ../includes/family_nav.php:87 ../modules/family_nav/family_nav.php:104
+#: ../includes/family_nav.php:87
 msgid "Parents Family"
 msgstr ""
 
-#: ../includes/family_nav.php:227 ../modules/family_nav/family_nav.php:250
+#: ../includes/family_nav.php:227
 msgid "Step-Parent Family"
 msgstr ""
 
 #: ../includes/family_nav.php:238
 #: ../includes/controllers/individual_ctrl.php:829
-#: ../modules/family_nav/family_nav.php:264
+#: ../modules/family_nav/family_nav.php:258
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:439
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:481
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:618
@@ -6103,7 +6118,7 @@ msgstr "Dưỡng phụ"
 
 #: ../includes/family_nav.php:281
 #: ../includes/controllers/individual_ctrl.php:828
-#: ../modules/family_nav/family_nav.php:308
+#: ../modules/family_nav/family_nav.php:302
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:533
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:579
 #: ../modules/GEDFact_assistant/_CENS/census_3_search_add.php:765
@@ -6111,7 +6126,7 @@ msgstr "Dưỡng phụ"
 msgid "Step-Mother"
 msgstr "Mẹ kế"
 
-#: ../includes/family_nav.php:366 ../modules/family_nav/family_nav.php:395
+#: ../includes/family_nav.php:366 ../modules/family_nav/family_nav.php:389
 msgid "Immediate Family"
 msgstr ""
 
@@ -6124,16 +6139,16 @@ msgstr ""
 #: ../includes/functions/functions_print.php:168
 #: ../includes/classes/class_menubar.php:244
 #: ../includes/classes/class_menubar.php:329
-#: ../modules/family_nav/family_nav.php:608
-#: ../modules/family_nav/family_nav.php:610
-#: ../modules/family_nav/family_nav.php:630
-#: ../modules/family_nav/family_nav.php:632
-#: ../modules/family_nav/family_nav.php:666
-#: ../modules/family_nav/family_nav.php:668
-#: ../modules/family_nav/family_nav.php:690
-#: ../modules/family_nav/family_nav.php:692
-#: ../modules/family_nav/family_nav.php:722
-#: ../modules/family_nav/family_nav.php:724
+#: ../modules/family_nav/family_nav.php:602
+#: ../modules/family_nav/family_nav.php:604
+#: ../modules/family_nav/family_nav.php:624
+#: ../modules/family_nav/family_nav.php:626
+#: ../modules/family_nav/family_nav.php:660
+#: ../modules/family_nav/family_nav.php:662
+#: ../modules/family_nav/family_nav.php:684
+#: ../modules/family_nav/family_nav.php:686
+#: ../modules/family_nav/family_nav.php:716
+#: ../modules/family_nav/family_nav.php:718
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1106
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1108
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1162
@@ -6336,8 +6351,8 @@ msgid "This record was last changed by <i>%s</i> at %s"
 msgstr ""
 
 #: ../includes/functions/functions_edit.php:83
-#: ../includes/functions/functions_edit.php:2369
-#: ../includes/functions/functions_edit.php:2378
+#: ../includes/functions/functions_edit.php:2347
+#: ../includes/functions/functions_edit.php:2356
 msgid "Please reload the previous page to make sure you are working with the most recent record."
 msgstr ""
 
@@ -6411,12 +6426,12 @@ msgstr "Vợ"
 #: ../includes/functions/functions_print_lists.php:98
 #: ../includes/functions/functions_print_lists.php:100
 #: ../includes/functions/functions_print_lists.php:116
-#: ../includes/classes/class_person.php:805
 #: ../includes/controllers/lifespan_ctrl.php:499
 #: ../includes/controllers/lifespan_ctrl.php:528
 #: ../includes/controllers/lifespan_ctrl.php:547
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:454
-#: ../edit_interface.php:578 ../calendar.php:235 ../help_text.php:212
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:531
+#: ../edit_interface.php:578 ../calendar.php:288 ../help_text.php:212
 msgid "BIRT"
 msgstr "Sinh"
 
@@ -6467,7 +6482,7 @@ msgstr "Sửa Tên"
 
 #. I18N: This is the GEDCOM label for "Latitude"
 #: ../includes/functions/functions_edit.php:1545
-#: ../includes/functions/functions_print.php:2108
+#: ../includes/functions/functions_print.php:1982
 #: ../modules/googlemap/places.php:588
 #: ../modules/googlemap/places_edit.php:787 ../help_text.php:874
 msgid "LATI"
@@ -6475,7 +6490,7 @@ msgstr "Vĩ độ"
 
 #. I18N: This is the GEDCOM label for "Longitude"
 #: ../includes/functions/functions_edit.php:1545
-#: ../includes/functions/functions_print.php:2114
+#: ../includes/functions/functions_print.php:1988
 #: ../modules/googlemap/places.php:589
 #: ../modules/googlemap/places_edit.php:797 ../help_text.php:886
 msgid "LONG"
@@ -6487,7 +6502,7 @@ msgstr ""
 
 #. I18N: This is the GEDCOM label for "Date of entry in original source"
 #: ../includes/functions/functions_edit.php:1759
-#: ../includes/functions/functions_edit.php:2345
+#: ../includes/functions/functions_edit.php:2323
 #: ../includes/functions/functions_mediadb.php:1418
 #: ../includes/functions/functions_mediadb.php:1466
 #: ../includes/functions/functions_print_facts.php:1017 ../help_text.php:446
@@ -6508,20 +6523,20 @@ msgstr "Thêm một đồ đa môi thể mới"
 msgid "RESN"
 msgstr "Hạn Chế"
 
-#: ../includes/functions/functions_edit.php:2270 ../blocks/charts.php:171
+#: ../includes/functions/functions_edit.php:2248 ../blocks/charts.php:171
 #: ../blocks/user_favorites.php:137 ../blocks/gedcom_favorites.php:135
 msgid "No such ID exists in this GEDCOM file."
 msgstr "Không có Nhận Diện nào như vậy trong cái tập tin GEDCOM này"
 
-#: ../includes/functions/functions_edit.php:2368
-#: ../includes/functions/functions_edit.php:2377
+#: ../includes/functions/functions_edit.php:2346
+#: ../includes/functions/functions_edit.php:2355
 msgid "An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it."
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Status Change Date"
-#: ../includes/functions/functions_edit.php:2506
-#: ../includes/functions/functions_edit.php:2579
-#: ../includes/functions/functions_print.php:2145 ../help_text.php:1284
+#: ../includes/functions/functions_edit.php:2476
+#: ../includes/functions/functions_edit.php:2549
+#: ../includes/functions/functions_print.php:2019 ../help_text.php:1284
 msgid "STAT:DATE"
 msgstr ""
 
@@ -6676,7 +6691,7 @@ msgstr ""
 #: ../includes/functions/functions_print_lists.php:120
 #: ../includes/controllers/lifespan_ctrl.php:507
 #: ../includes/controllers/lifespan_ctrl.php:536
-#: ../includes/controllers/lifespan_ctrl.php:553 ../calendar.php:259
+#: ../includes/controllers/lifespan_ctrl.php:553 ../calendar.php:312
 #: ../help_text.php:458
 msgid "DEAT"
 msgstr "Tử"
@@ -6713,7 +6728,7 @@ msgstr ""
 #: ../includes/functions/functions_print_lists.php:122
 #: ../includes/functions/functions_print_lists.php:501
 #: ../includes/functions/functions_print_lists.php:505
-#: ../includes/functions/functions_print.php:2029 ../help_text.php:84
+#: ../includes/functions/functions_print.php:1903 ../help_text.php:84
 msgid "AGE"
 msgstr "Tuổi"
 
@@ -6797,7 +6812,7 @@ msgid "Show divorced couples."
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Divorce"
-#: ../includes/functions/functions_print_lists.php:490 ../calendar.php:256
+#: ../includes/functions/functions_print_lists.php:490 ../calendar.php:309
 #: ../help_text.php:502
 msgid "DIV"
 msgstr "Ly Dị"
@@ -6940,7 +6955,7 @@ msgstr ""
 msgid "No events exist for the next %s days."
 msgstr ""
 
-#: ../includes/functions/functions_print_lists.php:1906 ../calendar.php:585
+#: ../includes/functions/functions_print_lists.php:1906 ../calendar.php:645
 #: ../blocks/yahrzeit.php:145
 #, php-format
 msgid "%s year anniversary"
@@ -7098,78 +7113,78 @@ msgstr " Gia đình của chồng/vợ"
 msgid "Zoom in/out on this box."
 msgstr "Phóng ra/thu nhỏ cái hộp này."
 
-#: ../includes/functions/functions_print.php:270
+#: ../includes/functions/functions_print.php:258
 msgid "Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person."
 msgstr "Những mối liên lạc tới đồ thị, gia đình, và gia quyến của người này. Nhấn vào tượng này đặng xem trang này, bắt đầu bằng người này."
 
-#: ../includes/functions/functions_print.php:578
+#: ../includes/functions/functions_print.php:566
 msgid "Are you sure you want to delete this fact?"
 msgstr "Bạn có chắc là muốn xoá bỏ sự kiện GEDCOM này?"
 
-#: ../includes/functions/functions_print.php:585
+#: ../includes/functions/functions_print.php:573
 msgid "Are you sure you want to delete this person?"
 msgstr "Bạn có chắc chắn bạn muốn huỷ người này trong tập tin GEDCOM?"
 
-#: ../includes/functions/functions_print.php:592
+#: ../includes/functions/functions_print.php:580
 #: ../includes/controllers/repository_ctrl.php:218
 msgid "Are you sure you want to delete this Repository?"
 msgstr "Có chắc là muốn xóa Ký Lục này khỏi kho dữ kiện?"
 
-#: ../includes/functions/functions_print.php:664
+#: ../includes/functions/functions_print.php:652
 msgid "Print"
 msgstr "In"
 
-#: ../includes/functions/functions_print.php:665
+#: ../includes/functions/functions_print.php:653
 msgid "Back to normal view"
 msgstr "Trở lại trang thường"
 
-#: ../includes/functions/functions_print.php:733
+#: ../includes/functions/functions_print.php:721
 msgid "Total Database Queries: "
 msgstr "Tổng cộng lần hỏi kho dữ kiện:"
 
-#: ../includes/functions/functions_print.php:733
+#: ../includes/functions/functions_print.php:721
 msgid "Total privacy checks: "
 msgstr "Tổng cộng lần thẩm tra kín đáo:"
 
-#: ../includes/functions/functions_print.php:733
+#: ../includes/functions/functions_print.php:721
 msgid "Total Memory Usage:"
 msgstr "Tổng số Bộ Nhớ đang sài:"
 
-#: ../includes/functions/functions_print.php:774 ../blocks/login_block.php:60
+#: ../includes/functions/functions_print.php:762 ../blocks/login_block.php:60
 msgid "Logged in as "
 msgstr "Đăng nhập là"
 
-#: ../includes/functions/functions_print.php:880
+#: ../includes/functions/functions_print.php:868
 msgid "For technical support or genealogy questions, please contact"
 msgstr "Đặng hướng dẫn về chương trình này hay là hỏi về gia phả, xin liên lạc với"
 
-#: ../includes/functions/functions_print.php:884
+#: ../includes/functions/functions_print.php:872
 msgid "For technical support and information contact"
 msgstr "Đặng hướng dẫn hoặc có thêm chi tiết của chương trình này, xin liên lạc với"
 
-#: ../includes/functions/functions_print.php:890
+#: ../includes/functions/functions_print.php:878
 msgid "For help with genealogy questions contact"
 msgstr "Đặng hướng dẫn về gia phả, xin liên lạc với"
 
-#: ../includes/functions/functions_print.php:925
-#: ../includes/functions/functions_print.php:928
+#: ../includes/functions/functions_print.php:913
+#: ../includes/functions/functions_print.php:916
 msgid "Technical help contact"
 msgstr "Cần hướng dẫn kỹ thuật"
 
-#: ../includes/functions/functions_print.php:981
-#: ../includes/functions/functions_print.php:1061
+#: ../includes/functions/functions_print.php:969
+#: ../includes/functions/functions_print.php:1049
 #: ../includes/classes/class_menubar.php:1108
 msgid "Favorites"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:984
-#: ../includes/functions/functions_print.php:1064
+#: ../includes/functions/functions_print.php:972
+#: ../includes/functions/functions_print.php:1052
 #: ../includes/classes/class_menubar.php:1120 ../blocks/user_favorites.php:62
 msgid "My Favorites"
 msgstr "Ưa Chuộng của Tôi"
 
-#: ../includes/functions/functions_print.php:989
-#: ../includes/functions/functions_print.php:1067
+#: ../includes/functions/functions_print.php:977
+#: ../includes/functions/functions_print.php:1055
 #: ../includes/classes/class_menubar.php:1144
 #: ../includes/controllers/family_ctrl.php:518
 #: ../includes/controllers/source_ctrl.php:340
@@ -7180,18 +7195,18 @@ msgstr "Ưa Chuộng của Tôi"
 msgid "Add to My Favorites"
 msgstr "Thêm vào Ưa Chuộng của Tôi"
 
-#: ../includes/functions/functions_print.php:1025
-#: ../includes/functions/functions_print.php:1113
+#: ../includes/functions/functions_print.php:1013
+#: ../includes/functions/functions_print.php:1101
 #: ../includes/classes/class_menubar.php:1180
 #: ../blocks/gedcom_favorites.php:59
 msgid "This GEDCOM's Favorites"
 msgstr "Ưa Chuộng của GEDCOM này"
 
-#: ../includes/functions/functions_print.php:1209
+#: ../includes/functions/functions_print.php:1197
 msgid "Note"
 msgstr "Lời ghi"
 
-#: ../includes/functions/functions_print.php:1322
+#: ../includes/functions/functions_print.php:1310
 #: ../includes/classes/class_stats.php:954
 #: ../includes/classes/class_stats.php:1487
 #: ../includes/classes/class_stats.php:1587
@@ -7203,96 +7218,118 @@ msgstr "Lời ghi"
 msgid "This information is private and cannot be shown."
 msgstr "Chi tiết của người này không được bộc lộ."
 
-#: ../includes/functions/functions_print.php:1327
+#: ../includes/functions/functions_print.php:1315
 msgid "For more information contact"
 msgstr "Đặng có thêm chi tiết, xin liên lạc với"
 
-#: ../includes/functions/functions_print.php:1352
+#: ../includes/functions/functions_print.php:1340
 msgid "?"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:1705
-#: ../includes/functions/functions_print.php:1707
-msgid "nephew"
-msgstr ""
-
-#: ../includes/functions/functions_print.php:1715
-#: ../includes/functions/functions_print.php:1717
-msgid "niece"
-msgstr ""
-
-#. I18N: This is the GEDCOM label for "Relationship"
-#: ../includes/functions/functions_print.php:1745 ../help_text.php:1164
-msgid "RELA"
-msgstr "Tình Họ Hàng"
-
-#: ../includes/functions/functions_print.php:1782
-#: ../includes/functions/functions_print.php:1986
-msgid "on the date of death"
-msgstr ""
-
-#: ../includes/functions/functions_print.php:1784
-#: ../includes/functions/functions_print.php:1988
-msgid "after death"
+#: ../includes/functions/functions_print.php:1661
+msgid "Relationship"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Death of mother"
-#: ../includes/functions/functions_print.php:1876 ../help_text.php:1896
+#: ../includes/functions/functions_print.php:1750 ../help_text.php:1896
 msgid "_DEAT_MOTH"
 msgstr "Tữ của mẹ"
 
-#: ../includes/functions/functions_print.php:1878
+#: ../includes/functions/functions_print.php:1752
 msgid "Mother's age"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Death of father"
-#: ../includes/functions/functions_print.php:1885 ../help_text.php:1854
+#: ../includes/functions/functions_print.php:1759 ../help_text.php:1854
 msgid "_DEAT_FATH"
 msgstr "Tữ của bố"
 
-#: ../includes/functions/functions_print.php:1887
+#: ../includes/functions/functions_print.php:1761
 msgid "Father's age"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:1891
+#: ../includes/functions/functions_print.php:1765
 msgid "Parent's age"
 msgstr ""
 
-#: ../includes/functions/functions_print.php:2136
+#: ../includes/functions/functions_print.php:1860
+msgid "on the date of death"
+msgstr ""
+
+#: ../includes/functions/functions_print.php:1862
+msgid "after death"
+msgstr ""
+
+#: ../includes/functions/functions_print.php:2010
 msgid "LDS Temple"
 msgstr "Đền LDS "
 
-#: ../includes/functions/functions_print.php:2138
+#: ../includes/functions/functions_print.php:2012
 msgid "LDS Temple Code:"
 msgstr "Biên mã đền LDS"
 
-#: ../includes/functions/functions_print.php:2142
+#: ../includes/functions/functions_print.php:2016
 msgid "Status"
 msgstr "Tình trạng"
 
-#: ../includes/functions/functions_print.php:2223 ../help_text.php:3814
+#: ../includes/functions/functions_print.php:2097 ../help_text.php:3814
 msgid "Add from clipboard"
 msgstr " Thêm từ bảng kẹp tạm:"
 
-#: ../includes/functions/functions_print.php:2283
+#: ../includes/functions/functions_print.php:2157
 msgid "Add new fact"
 msgstr "Thêm sự kiện"
 
-#: ../includes/functions/functions_print.php:2290 ../calendar.php:271
+#: ../includes/functions/functions_print.php:2164 ../calendar.php:324
 msgid "Custom Event"
 msgstr "Sự việc riêng rẽ"
 
-#: ../includes/functions/functions_print.php:2368 ../edit_merge.php:305
+#: ../includes/functions/functions_print.php:2196
+#: ../includes/classes/class_date.php:185
+msgid "Sun"
+msgstr ""
+
+#: ../includes/functions/functions_print.php:2197
+#: ../includes/classes/class_date.php:179
+msgid "Mon"
+msgstr ""
+
+#: ../includes/functions/functions_print.php:2198
+#: ../includes/classes/class_date.php:180
+msgid "Tue"
+msgstr ""
+
+#: ../includes/functions/functions_print.php:2199
+#: ../includes/classes/class_date.php:181
+msgid "Wed"
+msgstr ""
+
+#: ../includes/functions/functions_print.php:2200
+#: ../includes/classes/class_date.php:182
+msgid "Thu"
+msgstr ""
+
+#: ../includes/functions/functions_print.php:2201
+#: ../includes/classes/class_date.php:183
+msgid "Fri"
+msgstr ""
+
+#: ../includes/functions/functions_print.php:2202
+#: ../includes/classes/class_date.php:184
+msgid "Sat"
+msgstr ""
+
+#: ../includes/functions/functions_print.php:2247 ../edit_merge.php:305
 #: ../edit_merge.php:322
 msgid "Find Family ID"
 msgstr "Kiếm Nhận Diện của Gia Đình"
 
-#: ../includes/functions/functions_print.php:2408 ../edit_merge.php:306
+#: ../includes/functions/functions_print.php:2287 ../edit_merge.php:306
 #: ../edit_merge.php:323
 msgid "Find Source ID"
 msgstr "Kiếm Nhận Diện của Nguồn"
 
-#: ../includes/functions/functions_print.php:2438
+#: ../includes/functions/functions_print.php:2317
 msgid "Find Repository"
 msgstr "Tìm Kiếm Chổ Tàng Trữ"
 
@@ -7337,47 +7374,47 @@ msgid "self"
 msgstr ""
 
 #: ../includes/functions/functions.php:2352
-#: ../includes/functions/functions.php:2808
+#: ../includes/functions/functions.php:2840
 msgid "mother"
 msgstr ""
 
 #: ../includes/functions/functions.php:2353
-#: ../includes/functions/functions.php:2809
+#: ../includes/functions/functions.php:2841
 msgid "father"
 msgstr ""
 
 #: ../includes/functions/functions.php:2354
-#: ../includes/functions/functions.php:2810
+#: ../includes/functions/functions.php:2842
 msgid "parent"
 msgstr ""
 
 #: ../includes/functions/functions.php:2355
-#: ../includes/functions/functions.php:2811
+#: ../includes/functions/functions.php:2843
 msgid "husband"
 msgstr ""
 
 #: ../includes/functions/functions.php:2356
-#: ../includes/functions/functions.php:2812
+#: ../includes/functions/functions.php:2844
 msgid "wife"
 msgstr ""
 
 #: ../includes/functions/functions.php:2357
-#: ../includes/functions/functions.php:2813
+#: ../includes/functions/functions.php:2845
 msgid "spouse"
 msgstr ""
 
 #: ../includes/functions/functions.php:2358
-#: ../includes/functions/functions.php:2817
+#: ../includes/functions/functions.php:2849
 msgid "son"
 msgstr ""
 
 #: ../includes/functions/functions.php:2359
-#: ../includes/functions/functions.php:2818
+#: ../includes/functions/functions.php:2850
 msgid "daughter"
 msgstr ""
 
 #: ../includes/functions/functions.php:2360
-#: ../includes/functions/functions.php:2819
+#: ../includes/functions/functions.php:2851
 msgid "child"
 msgstr ""
 
@@ -7394,7 +7431,7 @@ msgid "elder brother"
 msgstr ""
 
 #: ../includes/functions/functions.php:2373
-#: ../includes/functions/functions.php:2814
+#: ../includes/functions/functions.php:2846
 msgid "brother"
 msgstr ""
 
@@ -7411,7 +7448,7 @@ msgid "elder sister"
 msgstr ""
 
 #: ../includes/functions/functions.php:2386
-#: ../includes/functions/functions.php:2815
+#: ../includes/functions/functions.php:2847
 msgid "sister"
 msgstr ""
 
@@ -7428,7 +7465,7 @@ msgid "elder sibling"
 msgstr ""
 
 #: ../includes/functions/functions.php:2399
-#: ../includes/functions/functions.php:2816
+#: ../includes/functions/functions.php:2848
 msgid "sibling"
 msgstr ""
 
@@ -7727,7 +7764,7 @@ msgstr ""
 
 #. I18N: mother-in-law
 #: ../includes/functions/functions.php:2471
-msgid "souses's mother"
+msgid "spouses's mother"
 msgstr ""
 
 #. I18N: father-in-law
@@ -7742,7 +7779,7 @@ msgstr ""
 
 #. I18N: father-in-law
 #: ../includes/functions/functions.php:2474
-msgid "souses's father"
+msgid "spouses's father"
 msgstr ""
 
 #. I18N: daughter-in-law
@@ -7755,834 +7792,900 @@ msgstr ""
 msgid "daughter's husband"
 msgstr ""
 
-#. I18N: great-grandmother
+#. I18N: step-son
+#: ../includes/functions/functions.php:2479
+msgid "husband's son"
+msgstr ""
+
+#. I18N: step-son
 #: ../includes/functions/functions.php:2480
+msgid "wife's son"
+msgstr ""
+
+#. I18N: step-son
+#: ../includes/functions/functions.php:2481
+msgid "spouses's son"
+msgstr ""
+
+#. I18N: step-daughter
+#: ../includes/functions/functions.php:2482
+msgid "husband's daughter"
+msgstr ""
+
+#. I18N: step-daughter
+#: ../includes/functions/functions.php:2483
+msgid "wife's daughter"
+msgstr ""
+
+#. I18N: step-daughter
+#: ../includes/functions/functions.php:2484
+msgid "spouses's daughter"
+msgstr ""
+
+#. I18N: step-child
+#: ../includes/functions/functions.php:2485
+msgid "husband's child"
+msgstr ""
+
+#. I18N: step-child
+#: ../includes/functions/functions.php:2486
+msgid "wife's child"
+msgstr ""
+
+#. I18N: step-child
+#: ../includes/functions/functions.php:2487
+msgid "spouses's child"
+msgstr ""
+
+#. I18N: great-grandmother
+#: ../includes/functions/functions.php:2490
 msgid "mother's mother's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2481
+#: ../includes/functions/functions.php:2491
 msgid "mother's mother's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2482
+#: ../includes/functions/functions.php:2492
 msgid "mother's mother's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2483
+#: ../includes/functions/functions.php:2493
 msgid "mother's father's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2484
+#: ../includes/functions/functions.php:2494
 msgid "mother's father's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2485
+#: ../includes/functions/functions.php:2495
 msgid "mother's father's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2486
+#: ../includes/functions/functions.php:2496
 msgid "mother's parent's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2487
+#: ../includes/functions/functions.php:2497
 msgid "mother's parent's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2488
+#: ../includes/functions/functions.php:2498
 msgid "mother's parent's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2489
+#: ../includes/functions/functions.php:2499
 msgid "father's mother's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2490
+#: ../includes/functions/functions.php:2500
 msgid "father's mother's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2491
+#: ../includes/functions/functions.php:2501
 msgid "father's mother's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2492
+#: ../includes/functions/functions.php:2502
 msgid "father's father's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2493
+#: ../includes/functions/functions.php:2503
 msgid "father's father's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2494
+#: ../includes/functions/functions.php:2504
 msgid "father's father's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2495
+#: ../includes/functions/functions.php:2505
 msgid "father's parent's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2496
+#: ../includes/functions/functions.php:2506
 msgid "father's parent's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2497
+#: ../includes/functions/functions.php:2507
 msgid "father's parent's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2498
+#: ../includes/functions/functions.php:2508
 msgid "parent's mother's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2499
+#: ../includes/functions/functions.php:2509
 msgid "parent's mother's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2500
+#: ../includes/functions/functions.php:2510
 msgid "parent's mother's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2501
+#: ../includes/functions/functions.php:2511
 msgid "parent's father's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2502
+#: ../includes/functions/functions.php:2512
 msgid "parent's father's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2503
+#: ../includes/functions/functions.php:2513
 msgid "parent's father's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2504
+#: ../includes/functions/functions.php:2514
 msgid "parent's parent's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2505
+#: ../includes/functions/functions.php:2515
 msgid "parent's parent's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2506
+#: ../includes/functions/functions.php:2516
 msgid "parent's parent's parent"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2508
-#: ../includes/functions/functions.php:2574
+#: ../includes/functions/functions.php:2518
+#: ../includes/functions/functions.php:2584
 msgid "mother's mother's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2509
-#: ../includes/functions/functions.php:2575
+#: ../includes/functions/functions.php:2519
+#: ../includes/functions/functions.php:2585
 msgid "mother's mother's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2510
-#: ../includes/functions/functions.php:2576
+#: ../includes/functions/functions.php:2520
+#: ../includes/functions/functions.php:2586
 msgid "mother's mother's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2511
-#: ../includes/functions/functions.php:2577
+#: ../includes/functions/functions.php:2521
+#: ../includes/functions/functions.php:2587
 msgid "mother's father's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2512
-#: ../includes/functions/functions.php:2578
+#: ../includes/functions/functions.php:2522
+#: ../includes/functions/functions.php:2588
 msgid "mother's father's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2513
-#: ../includes/functions/functions.php:2579
+#: ../includes/functions/functions.php:2523
+#: ../includes/functions/functions.php:2589
 msgid "mother's father's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2514
-#: ../includes/functions/functions.php:2580
+#: ../includes/functions/functions.php:2524
+#: ../includes/functions/functions.php:2590
 msgid "mother's parent's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2515
-#: ../includes/functions/functions.php:2581
+#: ../includes/functions/functions.php:2525
+#: ../includes/functions/functions.php:2591
 msgid "mother's parent's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2516
-#: ../includes/functions/functions.php:2582
+#: ../includes/functions/functions.php:2526
+#: ../includes/functions/functions.php:2592
 msgid "mother's parent's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2517
-#: ../includes/functions/functions.php:2583
+#: ../includes/functions/functions.php:2527
+#: ../includes/functions/functions.php:2593
 msgid "father's mother's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2518
-#: ../includes/functions/functions.php:2584
+#: ../includes/functions/functions.php:2528
+#: ../includes/functions/functions.php:2594
 msgid "father's mother's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2519
-#: ../includes/functions/functions.php:2585
+#: ../includes/functions/functions.php:2529
+#: ../includes/functions/functions.php:2595
 msgid "father's mother's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2520
-#: ../includes/functions/functions.php:2586
+#: ../includes/functions/functions.php:2530
+#: ../includes/functions/functions.php:2596
 msgid "father's father's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2521
-#: ../includes/functions/functions.php:2587
+#: ../includes/functions/functions.php:2531
+#: ../includes/functions/functions.php:2597
 msgid "father's father's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2522
-#: ../includes/functions/functions.php:2588
+#: ../includes/functions/functions.php:2532
+#: ../includes/functions/functions.php:2598
 msgid "father's father's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2523
-#: ../includes/functions/functions.php:2589
+#: ../includes/functions/functions.php:2533
+#: ../includes/functions/functions.php:2599
 msgid "father's parent's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2524
-#: ../includes/functions/functions.php:2590
+#: ../includes/functions/functions.php:2534
+#: ../includes/functions/functions.php:2600
 msgid "father's parent's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2525
-#: ../includes/functions/functions.php:2591
+#: ../includes/functions/functions.php:2535
+#: ../includes/functions/functions.php:2601
 msgid "father's parent's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2526
-#: ../includes/functions/functions.php:2592
+#: ../includes/functions/functions.php:2536
+#: ../includes/functions/functions.php:2602
 msgid "parent's mother's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2527
-#: ../includes/functions/functions.php:2593
+#: ../includes/functions/functions.php:2537
+#: ../includes/functions/functions.php:2603
 msgid "parent's mother's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2528
-#: ../includes/functions/functions.php:2594
+#: ../includes/functions/functions.php:2538
+#: ../includes/functions/functions.php:2604
 msgid "parent's mother's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2529
-#: ../includes/functions/functions.php:2595
+#: ../includes/functions/functions.php:2539
+#: ../includes/functions/functions.php:2605
 msgid "parent's father's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2530
-#: ../includes/functions/functions.php:2596
+#: ../includes/functions/functions.php:2540
+#: ../includes/functions/functions.php:2606
 msgid "parent's father's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2531
-#: ../includes/functions/functions.php:2597
+#: ../includes/functions/functions.php:2541
+#: ../includes/functions/functions.php:2607
 msgid "parent's father's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2532
-#: ../includes/functions/functions.php:2598
+#: ../includes/functions/functions.php:2542
+#: ../includes/functions/functions.php:2608
 msgid "parent's parent's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2533
-#: ../includes/functions/functions.php:2599
+#: ../includes/functions/functions.php:2543
+#: ../includes/functions/functions.php:2609
 msgid "parent's parent's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2534
-#: ../includes/functions/functions.php:2600
+#: ../includes/functions/functions.php:2544
+#: ../includes/functions/functions.php:2610
 msgid "parent's parent's sibling"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2536
+#: ../includes/functions/functions.php:2546
 msgid "daughter's daughter's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2537
+#: ../includes/functions/functions.php:2547
 msgid "daughter's daughter's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2538
+#: ../includes/functions/functions.php:2548
 msgid "daughter's daughter's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2539
+#: ../includes/functions/functions.php:2549
 msgid "daughter's son's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2540
+#: ../includes/functions/functions.php:2550
 msgid "daughter's son's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2541
+#: ../includes/functions/functions.php:2551
 msgid "daughter's son's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2542
+#: ../includes/functions/functions.php:2552
 msgid "daughter's child's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2543
+#: ../includes/functions/functions.php:2553
 msgid "daughter's child's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2544
+#: ../includes/functions/functions.php:2554
 msgid "daughter's child's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2545
+#: ../includes/functions/functions.php:2555
 msgid "son's daughter's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2546
+#: ../includes/functions/functions.php:2556
 msgid "son's daughter's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2547
+#: ../includes/functions/functions.php:2557
 msgid "son's daughter's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2548
+#: ../includes/functions/functions.php:2558
 msgid "son's son's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2549
+#: ../includes/functions/functions.php:2559
 msgid "son's son's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2550
+#: ../includes/functions/functions.php:2560
 msgid "son's son's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2551
+#: ../includes/functions/functions.php:2561
 msgid "son's child's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2552
+#: ../includes/functions/functions.php:2562
 msgid "son's child's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2553
+#: ../includes/functions/functions.php:2563
 msgid "son's child's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2554
+#: ../includes/functions/functions.php:2564
 msgid "child's daughter's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2555
+#: ../includes/functions/functions.php:2565
 msgid "child's daughter's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2556
+#: ../includes/functions/functions.php:2566
 msgid "child's daughter's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2557
+#: ../includes/functions/functions.php:2567
 msgid "child's son's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2558
+#: ../includes/functions/functions.php:2568
 msgid "child's son's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2559
+#: ../includes/functions/functions.php:2569
 msgid "child's son's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2560
+#: ../includes/functions/functions.php:2570
 msgid "child's child's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2561
+#: ../includes/functions/functions.php:2571
 msgid "child's child's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2562
+#: ../includes/functions/functions.php:2572
 msgid "child's child's child"
 msgstr ""
 
 #. I18N: step-brother
-#: ../includes/functions/functions.php:2564
+#: ../includes/functions/functions.php:2574
 msgid "mother's husband's son"
 msgstr ""
 
 #. I18N: step-sister
-#: ../includes/functions/functions.php:2565
+#: ../includes/functions/functions.php:2575
 msgid "mother's husband's daughter"
 msgstr ""
 
 #. I18N: step-sibling
-#: ../includes/functions/functions.php:2566
+#: ../includes/functions/functions.php:2576
 msgid "mother's husband's child"
 msgstr ""
 
 #. I18N: step-brother
-#: ../includes/functions/functions.php:2567
+#: ../includes/functions/functions.php:2577
 msgid "father's wife's son"
 msgstr ""
 
 #. I18N: step-sister
-#: ../includes/functions/functions.php:2568
+#: ../includes/functions/functions.php:2578
 msgid "father's wife's daughter"
 msgstr ""
 
 #. I18N: step-sibling
-#: ../includes/functions/functions.php:2569
+#: ../includes/functions/functions.php:2579
 msgid "father's wife's child"
 msgstr ""
 
 #. I18N: step-brother
-#: ../includes/functions/functions.php:2570
+#: ../includes/functions/functions.php:2580
 msgid "parent's spouse's son"
 msgstr ""
 
 #. I18N: step-sister
-#: ../includes/functions/functions.php:2571
+#: ../includes/functions/functions.php:2581
 msgid "parent's spouse's daughter"
 msgstr ""
 
 #. I18N: step-sibling
-#: ../includes/functions/functions.php:2572
+#: ../includes/functions/functions.php:2582
 msgid "parent's spouse's child"
 msgstr ""
 
-#: ../includes/functions/functions.php:2613
-msgid "great-great-aunt"
+#. I18N: aunt
+#: ../includes/functions/functions.php:2612
+msgid "mother's brother's wife"
 msgstr ""
 
+#. I18N: uncle
 #: ../includes/functions/functions.php:2614
+msgid "mother's sister's husband"
+msgstr ""
+
+#. I18N: aunt
+#: ../includes/functions/functions.php:2619
+msgid "father's brother's wife"
+msgstr ""
+
+#. I18N: uncle
+#: ../includes/functions/functions.php:2621
+msgid "father's sister's husband"
+msgstr ""
+
+#. I18N: aunt
+#: ../includes/functions/functions.php:2626
+msgid "parent's brother's wife"
+msgstr ""
+
+#. I18N: uncle
+#: ../includes/functions/functions.php:2628
+msgid "parent's sister's husband"
+msgstr ""
+
+#: ../includes/functions/functions.php:2645
+#: ../includes/functions/functions.php:2652
 msgid "great-great-uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2615
+#: ../includes/functions/functions.php:2646
+#: ../includes/functions/functions.php:2653
+msgid "great-great-aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2647
+#: ../includes/functions/functions.php:2654
 msgid "great-great-aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2620
-msgid "great-great-great-aunt"
-msgstr ""
-
-#: ../includes/functions/functions.php:2621
-msgid "great-great-great-uncle"
-msgstr ""
-
-#: ../includes/functions/functions.php:2622
-msgid "great-great-great-aunt/uncle"
-msgstr ""
-
-#: ../includes/functions/functions.php:2627
-msgid "great x4 aunt"
-msgstr ""
-
-#: ../includes/functions/functions.php:2628
+#: ../includes/functions/functions.php:2659
 msgid "great x4 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2629
+#: ../includes/functions/functions.php:2660
+msgid "great x4 aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2661
 msgid "great x4 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2634
-msgid "great x5 aunt"
-msgstr ""
-
-#: ../includes/functions/functions.php:2635
+#: ../includes/functions/functions.php:2666
 msgid "great x5 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2636
+#: ../includes/functions/functions.php:2667
+msgid "great x5 aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2668
 msgid "great x5 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2641
-msgid "great x6 aunt"
-msgstr ""
-
-#: ../includes/functions/functions.php:2642
+#: ../includes/functions/functions.php:2673
 msgid "great x6 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2643
+#: ../includes/functions/functions.php:2674
+msgid "great x6 aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2675
 msgid "great x6 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2648
-msgid "great x7 aunt"
-msgstr ""
-
-#: ../includes/functions/functions.php:2649
+#: ../includes/functions/functions.php:2680
 msgid "great x7 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2650
+#: ../includes/functions/functions.php:2681
+msgid "great x7 aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2682
 msgid "great x7 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2655
-#, php-format
-msgid "great x%d aunt"
-msgstr ""
-
-#: ../includes/functions/functions.php:2656
+#: ../includes/functions/functions.php:2687
 #, php-format
 msgid "great x%d uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2657
+#: ../includes/functions/functions.php:2688
+#, php-format
+msgid "great x%d aunt"
+msgstr ""
+
+#: ../includes/functions/functions.php:2689
 #, php-format
 msgid "great x%d aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2668
+#: ../includes/functions/functions.php:2700
 msgid "great-great-grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2669
+#: ../includes/functions/functions.php:2701
 msgid "great-great-grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2670
+#: ../includes/functions/functions.php:2702
 msgid "great-great-grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2675
+#: ../includes/functions/functions.php:2707
 msgid "great-great-great-grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2676
+#: ../includes/functions/functions.php:2708
 msgid "great-great-great-grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2677
+#: ../includes/functions/functions.php:2709
 msgid "great-great-great-grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2682
+#: ../includes/functions/functions.php:2714
 msgid "great x4 grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2683
+#: ../includes/functions/functions.php:2715
 msgid "great x4 grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2684
+#: ../includes/functions/functions.php:2716
 msgid "great x4 grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2689
+#: ../includes/functions/functions.php:2721
 msgid "great x5 grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2690
+#: ../includes/functions/functions.php:2722
 msgid "great x5 grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2691
+#: ../includes/functions/functions.php:2723
 msgid "great x5 grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2696
+#: ../includes/functions/functions.php:2728
 msgid "great x6 grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2697
+#: ../includes/functions/functions.php:2729
 msgid "great x6 grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2698
+#: ../includes/functions/functions.php:2730
 msgid "great x6 grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2703
+#: ../includes/functions/functions.php:2735
 msgid "great x7 grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2704
+#: ../includes/functions/functions.php:2736
 msgid "great x7 grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2705
+#: ../includes/functions/functions.php:2737
 msgid "great x7 grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2710
+#: ../includes/functions/functions.php:2742
 #, php-format
 msgid "great x%d grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2711
+#: ../includes/functions/functions.php:2743
 #, php-format
 msgid "great x%d grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2712
+#: ../includes/functions/functions.php:2744
 #, php-format
 msgid "great x%d grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2723
+#: ../includes/functions/functions.php:2755
 msgid "great-great-grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2724
+#: ../includes/functions/functions.php:2756
 msgid "great-great-granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2725
+#: ../includes/functions/functions.php:2757
 msgid "great-great-grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2730
+#: ../includes/functions/functions.php:2762
 msgid "great-great-great-grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2731
+#: ../includes/functions/functions.php:2763
 msgid "great-great-great-granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2732
+#: ../includes/functions/functions.php:2764
 msgid "great-great-great-grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2737
+#: ../includes/functions/functions.php:2769
 msgid "great x4 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2738
+#: ../includes/functions/functions.php:2770
 msgid "great x4 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2739
+#: ../includes/functions/functions.php:2771
 msgid "great x4 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2744
+#: ../includes/functions/functions.php:2776
 msgid "great x5 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2745
+#: ../includes/functions/functions.php:2777
 msgid "great x5 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2746
+#: ../includes/functions/functions.php:2778
 msgid "great x5 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2751
+#: ../includes/functions/functions.php:2783
 msgid "great x6 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2752
+#: ../includes/functions/functions.php:2784
 msgid "great x6 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2753
+#: ../includes/functions/functions.php:2785
 msgid "great x6 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2758
+#: ../includes/functions/functions.php:2790
 msgid "great x7 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2759
+#: ../includes/functions/functions.php:2791
 msgid "great x7 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2760
+#: ../includes/functions/functions.php:2792
 msgid "great x7 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2765
+#: ../includes/functions/functions.php:2797
 #, php-format
 msgid "great x%d grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2766
+#: ../includes/functions/functions.php:2798
 #, php-format
 msgid "great x%d granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2767
+#: ../includes/functions/functions.php:2799
 #, php-format
 msgid "great x%d grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2779
+#: ../includes/functions/functions.php:2811
 #, php-format
 msgid "%s male cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2780
+#: ../includes/functions/functions.php:2812
 #, php-format
 msgid "%s female cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2781
+#: ../includes/functions/functions.php:2813
 #, php-format
 msgid "%s cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2788
+#: ../includes/functions/functions.php:2820
 #, php-format
 msgid "%1$s male cousin, %2$d time removed"
 msgid_plural "%1$s male cousin, %2$d times removed"
 msgstr[0] ""
 
-#: ../includes/functions/functions.php:2793
+#: ../includes/functions/functions.php:2825
 #, php-format
 msgid "%1$s female cousin, %2$d time removed"
 msgid_plural "%1$s female cousin, %2$d times removed"
 msgstr[0] ""
 
-#: ../includes/functions/functions.php:2796
+#: ../includes/functions/functions.php:2828
 #, php-format
 msgid "%1$s cousin, %2$d time removed"
 msgid_plural "%1$s cousin, %2$d times removed"
 msgstr[0] ""
 
 #. I18N: These strings are used to build paths of relationships, such as "father's wife's husband's brother"
-#: ../includes/functions/functions.php:2824
+#: ../includes/functions/functions.php:2856
 #, php-format
 msgid "mother's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2825
+#: ../includes/functions/functions.php:2857
 #, php-format
 msgid "father's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2826
+#: ../includes/functions/functions.php:2858
 #, php-format
 msgid "parent's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2827
+#: ../includes/functions/functions.php:2859
 #, php-format
 msgid "husband's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2828
+#: ../includes/functions/functions.php:2860
 #, php-format
 msgid "wife's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2829
+#: ../includes/functions/functions.php:2861
 #, php-format
 msgid "spouse's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2830
+#: ../includes/functions/functions.php:2862
 #, php-format
 msgid "brother's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2831
+#: ../includes/functions/functions.php:2863
 #, php-format
 msgid "sister's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2832
+#: ../includes/functions/functions.php:2864
 #, php-format
 msgid "sibling's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2833
+#: ../includes/functions/functions.php:2865
 #, php-format
 msgid "son's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2834
+#: ../includes/functions/functions.php:2866
 #, php-format
 msgid "daughter's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2835
+#: ../includes/functions/functions.php:2867
 #, php-format
 msgid "child's %s"
 msgstr ""
@@ -8859,18 +8962,18 @@ msgstr "Danh Sách của những Ða Môi Thể"
 msgid "Anniversary Calendar"
 msgstr "Lịch của những Ngày Kỷ Niệm"
 
-#: ../includes/classes/class_menubar.php:677 ../calendar.php:277
-#: ../calendar.php:279
+#: ../includes/classes/class_menubar.php:677 ../calendar.php:330
+#: ../calendar.php:332
 msgid "View Day"
 msgstr "Coi Ngày"
 
-#: ../includes/classes/class_menubar.php:683 ../calendar.php:282
-#: ../calendar.php:284
+#: ../includes/classes/class_menubar.php:683 ../calendar.php:335
+#: ../calendar.php:337
 msgid "View Month"
 msgstr "Coi Tháng"
 
-#: ../includes/classes/class_menubar.php:689 ../calendar.php:287
-#: ../calendar.php:289
+#: ../includes/classes/class_menubar.php:689 ../calendar.php:340
+#: ../calendar.php:342
 msgid "View Year"
 msgstr "Coi Năm"
 
@@ -8910,34 +9013,6 @@ msgstr "Trưng Bày Hướng Dẫn theo Hoàn Cảnh"
 #: ../includes/classes/class_menubar.php:1022 ../blocks/theme_select.php:49
 msgid "Change Theme"
 msgstr "Đổi nền của Website"
-
-#: ../includes/classes/class_date.php:179
-msgid "Mon"
-msgstr ""
-
-#: ../includes/classes/class_date.php:180
-msgid "Tue"
-msgstr ""
-
-#: ../includes/classes/class_date.php:181
-msgid "Wed"
-msgstr ""
-
-#: ../includes/classes/class_date.php:182
-msgid "Thu"
-msgstr ""
-
-#: ../includes/classes/class_date.php:183
-msgid "Fri"
-msgstr ""
-
-#: ../includes/classes/class_date.php:184
-msgid "Sat"
-msgstr ""
-
-#: ../includes/classes/class_date.php:185
-msgid "Sun"
-msgstr ""
 
 #: ../includes/classes/class_date.php:857
 #: ../includes/classes/class_date.php:872
@@ -9146,23 +9221,37 @@ msgstr ""
 msgid "Unable to find family with ID"
 msgstr "Không tìm thấy gia đình với Nhận Diện"
 
-#: ../includes/classes/class_person.php:755
-msgid "Family with Parents"
-msgstr "Gia đình của cha mẹ"
+#: ../includes/classes/class_person.php:750
+msgid "Family with adoptive parents"
+msgstr ""
 
-#: ../includes/classes/class_person.php:773
-#: ../includes/classes/class_person.php:780
+#: ../includes/classes/class_person.php:751
+msgid "Family with foster parents"
+msgstr ""
+
+#: ../includes/classes/class_person.php:752
+msgid "Family with sealing parents"
+msgstr ""
+
+#: ../includes/classes/class_person.php:756
+msgid "Family with parents"
+msgstr ""
+
+#: ../includes/classes/class_person.php:774
+#: ../includes/classes/class_person.php:781
 msgid "Father's Family with "
 msgstr "Gia đình của bố với "
 
-#: ../includes/classes/class_person.php:774
-#: ../includes/classes/class_person.php:779
+#: ../includes/classes/class_person.php:775
+#: ../includes/classes/class_person.php:780
 msgid "Mother's Family with "
 msgstr "Gia đình của mẹ với "
 
-#: ../includes/classes/class_person.php:797
-msgid "Family with"
-msgstr "Gia đình của"
+#. I18N: %s is the spouse name
+#: ../includes/classes/class_person.php:810
+#, php-format
+msgid "Family with %s"
+msgstr ""
 
 #. I18N This is a report footer. %s is the name of the application.
 #: ../includes/classes/class_reportbase.php:247
@@ -9620,7 +9709,7 @@ msgstr "Tên"
 msgid "Delete Name"
 msgstr "Xoá Tên"
 
-#: ../includes/controllers/individual_ctrl.php:569 ../calendar.php:199
+#: ../includes/controllers/individual_ctrl.php:569 ../calendar.php:252
 msgid "Gender"
 msgstr "Giới tính"
 
@@ -10185,7 +10274,7 @@ msgstr ""
 
 #. I18N: This is the title of a tab or sidebar item
 #: ../modules/family_nav/pgv_module.php:18
-#: ../modules/family_nav/family_nav.php:819
+#: ../modules/family_nav/family_nav.php:813
 #: ../modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php:73
 msgid "Family Navigator"
 msgstr ""
@@ -12703,68 +12792,224 @@ msgstr ""
 msgid "Month"
 msgstr ""
 
-#: ../calendar.php:186 ../calendar.php:202 ../calendar.php:203
-#: ../calendar.php:206 ../calendar.php:207 ../calendar.php:440
+#: ../calendar.php:177
+msgid "Vendémiaire"
+msgstr ""
+
+#: ../calendar.php:178
+msgid "Brumaire"
+msgstr ""
+
+#: ../calendar.php:179
+msgid "Frimaire"
+msgstr ""
+
+#: ../calendar.php:180
+msgid "Nivôse"
+msgstr ""
+
+#: ../calendar.php:181
+msgid "Pluviôse"
+msgstr ""
+
+#: ../calendar.php:182
+msgid "Ventôse"
+msgstr ""
+
+#: ../calendar.php:183
+msgid "Germinal"
+msgstr ""
+
+#: ../calendar.php:184
+msgid "Floréal"
+msgstr ""
+
+#: ../calendar.php:185
+msgid "Prairial"
+msgstr ""
+
+#: ../calendar.php:186
+msgid "Messidor"
+msgstr ""
+
+#: ../calendar.php:187
+msgid "Thermidor"
+msgstr ""
+
+#: ../calendar.php:188
+msgid "Fructidor"
+msgstr ""
+
+#: ../calendar.php:189
+msgid "jours complémentaires"
+msgstr ""
+
+#: ../calendar.php:190
+msgid "Tishrei"
+msgstr ""
+
+#: ../calendar.php:191
+msgid "Heshvan"
+msgstr ""
+
+#: ../calendar.php:192
+msgid "Kislev"
+msgstr ""
+
+#: ../calendar.php:193
+msgid "Tevet"
+msgstr ""
+
+#: ../calendar.php:194
+msgid "Shevat"
+msgstr ""
+
+#: ../calendar.php:195
+msgid "Adar"
+msgstr ""
+
+#: ../calendar.php:196
+msgid "Adar I"
+msgstr ""
+
+#: ../calendar.php:197
+msgid "Adar II"
+msgstr ""
+
+#: ../calendar.php:198
+msgid "Nissan"
+msgstr ""
+
+#: ../calendar.php:199
+msgid "Iyar"
+msgstr ""
+
+#: ../calendar.php:200
+msgid "Sivan"
+msgstr ""
+
+#: ../calendar.php:201
+msgid "Tamuz"
+msgstr ""
+
+#: ../calendar.php:202
+msgid "Av"
+msgstr ""
+
+#: ../calendar.php:203
+msgid "Elul"
+msgstr ""
+
+#: ../calendar.php:204
+msgid "Muharram"
+msgstr ""
+
+#: ../calendar.php:205
+msgid "Safar"
+msgstr ""
+
+#: ../calendar.php:206
+msgid "Rabi' al-awwal"
+msgstr ""
+
+#: ../calendar.php:207
+msgid "Rabi' al-thani"
+msgstr ""
+
+#: ../calendar.php:208
+msgid "Jumada al-awwal"
+msgstr ""
+
+#: ../calendar.php:209
+msgid "Jumada al-thani"
+msgstr ""
+
+#: ../calendar.php:210
+msgid "Rajab"
+msgstr ""
+
+#: ../calendar.php:211
+msgid "Sha'aban"
+msgstr ""
+
+#: ../calendar.php:212
+msgid "Ramadan"
+msgstr ""
+
+#: ../calendar.php:213
+msgid "Shawwal"
+msgstr ""
+
+#: ../calendar.php:214
+msgid "Dhu al-Qi'dah"
+msgstr ""
+
+#: ../calendar.php:215
+msgid "Dhu al-Hijjah"
+msgstr ""
+
+#: ../calendar.php:239 ../calendar.php:255 ../calendar.php:256
+#: ../calendar.php:259 ../calendar.php:260 ../calendar.php:500
 msgid "All People"
 msgstr "Mọi Người"
 
-#: ../calendar.php:190 ../calendar.php:515
+#: ../calendar.php:243 ../calendar.php:575
 msgid "Living People"
 msgstr "Người Sống"
 
-#: ../calendar.php:194 ../calendar.php:518
+#: ../calendar.php:247 ../calendar.php:578
 msgid "Recent Years (&lt; 100 yrs)"
 msgstr "Những năm gần đây (< 100 năm)"
 
-#: ../calendar.php:223
+#: ../calendar.php:276
 msgid "Show events of"
 msgstr ""
 
-#: ../calendar.php:229 ../calendar.php:527
+#: ../calendar.php:282 ../calendar.php:587
 msgid "Births, Deaths, Marriages"
 msgstr "Sinh, Tử, Kết Hôn"
 
 #. I18N: This is the GEDCOM label for "Christening"
-#: ../calendar.php:238 ../help_text.php:324
+#: ../calendar.php:291 ../help_text.php:324
 msgid "CHR"
 msgstr "Lể Rửa Tội"
 
 #. I18N: This is the GEDCOM label for "Adult Christening"
-#: ../calendar.php:241 ../help_text.php:350
+#: ../calendar.php:294 ../help_text.php:350
 msgid "CHRA"
 msgstr "Lể Rửa Tội Cho Người Lớn"
 
 #. I18N: This is the GEDCOM label for "Baptism"
-#: ../calendar.php:244 ../help_text.php:138
+#: ../calendar.php:297 ../help_text.php:138
 msgid "BAPM"
 msgstr "Bí Tích Rửa Tội"
 
 #. I18N: This is the GEDCOM label for "Common Law Marriage"
-#: ../calendar.php:247 ../help_text.php:1746
+#: ../calendar.php:300 ../help_text.php:1746
 msgid "_COML"
 msgstr "Common Law marriage"
 
 #. I18N: This is the GEDCOM label for "Separated"
-#: ../calendar.php:253 ../help_text.php:2358
+#: ../calendar.php:306 ../help_text.php:2358
 msgid "_SEPR"
 msgstr "Ly Thân"
 
 #. I18N: This is the GEDCOM label for "Burial"
-#: ../calendar.php:262 ../help_text.php:250
+#: ../calendar.php:315 ../help_text.php:250
 msgid "BURI"
 msgstr "Lể An Táng"
 
 #. I18N: This is the GEDCOM label for "Immigration"
-#: ../calendar.php:265 ../help_text.php:850
+#: ../calendar.php:318 ../help_text.php:850
 msgid "IMMI"
 msgstr "Nhập Cảnh"
 
 #. I18N: This is the GEDCOM label for "Emigration"
-#: ../calendar.php:268 ../help_text.php:544
+#: ../calendar.php:321 ../help_text.php:544
 msgid "EMIG"
 msgstr "Di Cư"
 
-#: ../calendar.php:474
+#: ../calendar.php:534
 msgid "Day not set"
 msgstr "Ngày chưa đặt vào"
 
@@ -15202,6 +15447,11 @@ msgstr ""
 #: ../help_text.php:1158
 msgid "REFN"
 msgstr "Số Tham Khảo"
+
+#. I18N: This is the GEDCOM label for "Relationship"
+#: ../help_text.php:1164
+msgid "RELA"
+msgstr "Tình Họ Hàng"
 
 #: ../help_text.php:1165
 msgid "Select a relationship name from the list. Selecting <b>Godfather</b> means: <i>This associate is the Godfather of the current individual</i>."
@@ -20665,6 +20915,12 @@ msgstr "Gia đình với tên họ %s"
 #: ../famlist.php:270
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
 msgstr ""
+
+#~ msgid "Family with Parents"
+#~ msgstr "Gia đình của cha mẹ"
+
+#~ msgid "Family with"
+#~ msgstr "Gia đình của"
 
 #~ msgid "Grandfather"
 #~ msgstr "Ông ngoại"
