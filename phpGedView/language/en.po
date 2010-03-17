@@ -10836,8 +10836,7 @@ msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:141
 msgid "Infirmaties - xx = Whether blind (both eyes) Y/N, Whether Deaf and Dumb Y/N"
-msgstr "msgstr \"\"
-"
+msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/js/census_5_input.js.php:143
 msgid "Education - xxx = At School, Cannot Read, Cannot Write = eg x--, xxx, or -xx etc"

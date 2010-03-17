@@ -5726,8 +5726,7 @@ msgstr "Hauakivi"
 
 #: ../includes/config_data.php:85
 msgid "Video"
-msgstr "msgstr \"\"
-"
+msgstr ""
 
 #: ../includes/config_data.php:86
 msgid "Painting"

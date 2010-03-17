@@ -11760,8 +11760,7 @@ msgstr "Overschrijf locatie gegevens"
 
 #: ../modules/googlemap/help_text.php:194
 msgid "Overwrite location data in the database with data from the file.<br />When this option is selected, the location data in the database (latitude, longitude, zoomlevel and flag) are overwritten with the data in the file, if available. If the record is not already in the database a new record will be created, unless the Update-only  option is also selected."
-msgstr "msgstr \"\"
-"
+msgstr ""
 
 #: ../modules/googlemap/help_text.php:198
 msgid "List inactive places"
