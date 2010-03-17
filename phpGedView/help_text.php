@@ -4807,32 +4807,32 @@ case 'index_add_favorites':
 	break;
 
 case 'index_charts':
-	$title=i18n::translate('index_charts');
+	$title=i18n::translate('CHARTS BLOCK');
 	$text=i18n::translate('This block allows a pedigree, descendancy, or hourglass chart to appear on the Welcome or the MyGedView page.  Because of space limitations, the charts should be placed only on the left side of the page.<br /><br />When this block appears on the Welcome page, the root person and the type of chart to be displayed are determined by the administrator.  When this block appears on the user\'s personalized MyGedView page, these options are determined by the user.<br /><br />The behavior of these charts is identical to their behavior when they are called up from the menus.  Click on the box of a person to see more details about them.');
 	break;
 
 case 'index_common_given_names':
-	$title=i18n::translate('index_common_given_names');
+	$title=i18n::translate('MOST COMMON GIVEN NAMES');
 	$text=i18n::translate('This block displays a list of frequently occurring given names from this database. You can configure how many given names should appear in the list.');
 	break;
 
 case 'index_common_names':
-	$title=i18n::translate('index_common_names');
+	$title=i18n::translate('MOST COMMON SURNAMES');
 	$text=i18n::translate('This block displays a list of frequently occurring surnames from this database. A surname must occur at least #COMMON_NAMES_THRESHOLD# times before it will appear in this list.  The administrator has control over this threshold.<br /><br />When you click on a surname in this list, you will be taken to the Individuals, where you will get more details about that name.');
 	break;
 
 case 'index_events':
-	$title=i18n::translate('index_events');
+	$title=i18n::translate('UPCOMING EVENTS BLOCK');
 	$text=i18n::translate('This block shows you anniversaries of events that are coming up in the near future.<br /><br />The administrator determines how far ahead the block will look.  You can further refine the block\'s display of upcoming events through several configuration options.');
 	break;
 
 case 'index_favorites':
-	$title=i18n::translate('index_favorites');
+	$title=i18n::translate('GEDCOM FAVORITES BLOCK');
 	$text=i18n::translate('The GEDCOM Favorites block is much the same as the "My Favorites" block of the MyGedView Portal page. Unlike the Portal page configuration, only the administrator or a user with Admin rights can change the list of favorites in this block.<br /><br />The purpose of the GEDCOM Favorites block is to draw the visitor\'s attention to persons of special interest.  This GEDCOM\'s favorites are available for selection from a drop-down list in the header on every page.<br /><br />When you click on one of the listed site favorites, you will be taken to the Individual Information page of that person.');
 	break;
 
 case 'index_gedcom_news_adm':
-	$title=i18n::translate('index_gedcom_news_adm');
+	$title=i18n::translate('GEDCOM NEWS BLOCK');
 	$text=i18n::translate('The GEDCOM News text allows the use of <b>HTML tags</b> and <b>HTML entities</b>.  HTML should not be used in News titles.<br /><br />Be sure to always use both start and end tags.  It may help to have an understanding of HTML appropriate for a web site administrator. This program uses <b>Cascading Style Sheets (CSS)</b> as well. A different CSS is implemented for each theme.  You can use classes from these style sheets to control the appearance of your messages.<br /><br />If you need more help with this, the PhpGedView web site has some examples of how to use these tags in your GEDCOM News block.<br /><br />As with the FAQ list, GEDCOM News titles and News text allow embedded references to $pgv_lang, $factarray, and $GLOBALS variables to provide complete flexibility in the creation of News items that are sensitive to the currently active language.<br /><br />The following description, taken from the Help text for the FAQ list, is equally applicable to GEDCOM News items.<br /><br />HTML entities are a very easy way to add special characters to your FAQ titles and text.  You can use symbolic names, decimal numbers, or hexadecimal numbers.  A complete list of HTML entities, their coding, and their representation by your browser can be found here:  <a href="http://htmlhelp.com/reference/html40/entities/" target="_blank">HTML entity lists</a><br /><br />On occasion, you may need to show a Tilde character&nbsp;&nbsp;<b>&#x7E;</b>&nbsp;&nbsp;or a Number Sign&nbsp;&nbsp;<b>&#x23;</b>&nbsp;&nbsp;in your URLs or text.  These characters have a special meaning to the PhpGedView Help system and can only be entered in their hexadecimal or decimal form.  Similarly, the&nbsp;&nbsp;<b>&lt;</b>&nbsp;&nbsp;and&nbsp;&nbsp;<b>&gt;</b>&nbsp;&nbsp;characters that usually enclose HTML tags must be entered in their hexadecimal or decimal forms if they are to be treated as normal text instead of signalling an HTML tag.<ul><li><b>&amp;&#x23;35;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x23;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x23;</b></li><li><b>&amp;&#x23;60;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3C;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3C;</b></li><li><b>&amp;&#x23;62;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x3E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x3E;</b></li><li><b>&amp;&#x23;126;</b>&nbsp;&nbsp;or&nbsp;&nbsp;<b>&amp;&#x23;x7E;</b>&nbsp;&nbsp;will result in&nbsp;&nbsp;<b>&#x7E;</b></li></ul>There is a&nbsp;&nbsp;<b>&amp;tilde;</b>&nbsp;&nbsp;HTML entity, but this symbol is not interpreted as a Tilde when coded in URLs.<br /><br />You can insert references to entries in the language files or to values of global variables.  Examples: <ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the language variable "Add to Clippings Cart", and if it were to appear in this field, would show as <b>Add to Clippings Cart</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the Fact name $factarray["AFN"], and if it were to appear in this field, would show as <b>Ancestral File Number (AFN)</b> when the FAQ list is viewed in the current language. </li><li><b>&#x23;PGV_VERSION&#x23;&nbsp;&#x23;PGV_VERSION_RELEASE&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the constant PGV_VERSION, a space, and a reference to the constant PGV_VERSION_RELEASE, and if they were to appear in this field, would show as <b>#PGV_VERSION#&nbsp;#PGV_VERSION_RELEASE#</b> when the FAQ list is viewed in the current language.</li><li><b>&#x23;GLOBALS[GEDCOM]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM, which is the name of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM]#</b>.</li><li><b>&#x23;GLOBALS[GEDCOM_TITLE]&#x23;</b>&nbsp;&nbsp;&nbsp;is a reference to the global variable $GEDCOM_TITLE, which is the title of the current GEDCOM file.  If it were to appear in this field, it would show as <b>#GLOBALS[GEDCOM_TITLE]#</b>.</li></ul><br />This feature is useful when you wish to create FAQ lists that are different for each language your site supports.  You should put your customized FAQ list titles and entries into the <i>languages/extra.xx.php</i> files (<i>xx</i> is the code for each language), using the following format:<br />$pgv_lang["faq_title1"] = "This is a sample FAQ title";<br />$pgv_lang["faq_body1"] = "This is a sample FAQ body.";');
 	break;
 
@@ -4862,7 +4862,7 @@ case 'index_htmlplus_gedcom':
 	break;
 
 case 'index_htmlplus':
-	$title=i18n::translate('index_htmlplus');
+	$title=i18n::translate('ADVANCED HTML');
 	$text=i18n::translate('This block lets the administrator add information to the Index or Portal page.  Its purpose is similar to the HTML, GEDCOM News, and GEDCOM Statistics blocks, but the administrator has more control over its appearance.');
 	break;
 
@@ -4877,7 +4877,7 @@ case 'index_htmlplus_title':
 	break;
 
 case 'index_loggedin':
-	$title=i18n::translate('index_loggedin');
+	$title=i18n::translate('LOGGED IN USERS BLOCK');
 	$text=i18n::translate('This block will show you the users currently logged in.<br /><br />If you are not an administrator, your view of logged-in users is restricted to those who have elected to be visible while on-line.  For this to work, you must also elect to be visible while on-line.  On-line users who are invisible to you are counted as being anonymous.');
 	break;
 
@@ -4887,12 +4887,12 @@ case 'index_login':
 	break;
 
 case 'index_media':
-	$title=i18n::translate('index_media');
+	$title=i18n::translate('RANDOM PICTURE BLOCK');
 	$text=i18n::translate('In this block PhpGedView randomly chooses a media file to show you on each visit to this page.<br /><br />When you click on the picture, you will see its full-size version.  Below the picture you have a link to the person associated with the picture.  When you click on the picture caption, you will see the picture on the MultiMedia page. When you click on the person\'s name, you will be taken to the Individual Information page of that person.');
 	break;
 
 case 'index_onthisday':
-	$title=i18n::translate('index_onthisday');
+	$title=i18n::translate('ON THIS DAY IN YOUR HISTORY BLOCK');
 	$text=i18n::translate('This block is similar to the "Upcoming Events" block, except that it displays today\'s events.');
 	break;
 
@@ -4907,12 +4907,12 @@ case 'index_portal':
 	break;
 
 case 'index_stats':
-	$title=i18n::translate('index_stats');
+	$title=i18n::translate('GEDCOM STATISTICS BLOCK');
 	$text=i18n::translate('In this block you will see some statistics about the current GEDCOM file.  If you need more information than is listed, send a message to the contact at the bottom of the page.');
 	break;
 
 case 'index_top10_pageviews':
-	$title=i18n::translate('index_top10_pageviews');
+	$title=i18n::translate('MOST VIEWED ITEMS BLOCK');
 	$text=i18n::translate('This block will list the top 10 individuals, families, or sources that have been viewed by visitors to this site.  In order for this block to appear the site administrator must have enabled the Item Hit counters.');
 	break;
 
@@ -5377,7 +5377,7 @@ case 'readme':
 	break;
 
 case 'recent_changes':
-	$title=i18n::translate('Recent Changes');
+	$title=i18n::translate('RECENT CHANGES BLOCK');
 	$text=i18n::translate('This block shows you the most recent changes to the GEDCOM as recorded by the CHAN GEDCOM tag.');
 	break;
 
@@ -5437,7 +5437,7 @@ case 'restore_faq_edits':
 	break;
 
 case 'review_changes':
-	$title=i18n::translate('Review GEDCOM Changes');
+	$title=i18n::translate('RECENT CHANGES BLOCK');
 	$text=i18n::translate('This block will list all of the records that have been changed online and that still need to be reviewed and accepted into the database.');
 	break;
 
@@ -5447,7 +5447,7 @@ case 'rootid':
 	break;
 
 case 'rss_feed':
-	$title=i18n::translate('rss_feed');
+	$title=i18n::translate('RSS FEED SETTINGS');
 	$text=i18n::translate('The ATOM/RSS feed available in PhpGedView allows anyone to view, using a suitable feed aggregator, the contents of your site\'s Welcome page without visiting the site. Most aggregators will pop up a notice letting the user know when something has changed on a page being monitored. This essentially allows anyone to monitor your PhpGedView site without needing to visit it regularly.<br /><br />The Feed block is used to customize the link to the feed, allowing specific feed types (most readers can deal with most types so this can usually be left at the default), and the specific module you would like in your feed. The language of the feed and the GEDCOM used will be based on the language and GEDCOM active in PhpGedView when you select the feed.<br /><br />The types of feed that can be generated include ATOM, RSS 2.0, RSS 1.0, RSS 0.92, HTML and JavaScript. The first four types are for feed aggregators, while JavaScript and HTML are meant to enable inclusion of the feeds in other web pages.  Note that the numbers of the RSS feed indicate different styles, not a different version.<br /><br />There is an option to select authentication that will log the user in, and allow the user to view, using a suitable RSS aggregator, any information that he could normally view if logged in. Basic Authentication uses <i>Basic HTTP Authentication</i> to log the user in. Future enhancements might allow <i>Digest Authentication</i>.<br /><br />This <a href=\'http://en.wikipedia.org/wiki/RSS_(file_format)\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats. <i>Basic HTTP Authentication</i> is discussed in this <a href=\'http://en.wikipedia.org/wiki/Basic_authentication_scheme\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a>, while <i>Digest Authentication</i> is discussed in this <a http://en.wikipedia.org/wiki/Digest_access_authentication\' target=\'_blank\' alt=\'Wikipedia article\' title=\'Wikipedia article\'><b>Wikipedia article</b></a>.');
 	break;
 
@@ -5627,7 +5627,7 @@ case 'timeline_control':
 	break;
 
 case 'todo':
-	$title=i18n::translate('todo');
+	$title=i18n::translate('"TO DO" BLOCK');
 	$text=i18n::translate('This block helps you keep track of <b>_TODO</b> tasks in the database.<br /><br />To add &quot;To Do&quot; tasks to your records, you may first need amend the GEDCOM configuration so that the <b>_TODO</b> fact is in the list of facts that can be added to the records of individuals, families, sources, and repositories.  Each of these lists, which you will find in the Edit Options section of the GEDCOM configuration, is independent.  The order of the list entries is not important; you can add the new entries at the beginning of each list.');
 	break;
 
@@ -5822,7 +5822,7 @@ case 'welcome_new':
 	break;
 
 case 'yahrzeit':
-	$title=i18n::translate('yahrzeit');
+	$title=i18n::translate('YAHRZEITEN BLOCK');
 	$text=i18n::translate('This block shows you Yahrzeiten that are coming up in the near future.<br /><br />Yahrzeiten (singular: Yahrzeit) are anniversaries of a person\'s death.  These anniversaries are observed in the Jewish tradition; they are no longer in common use in other traditions.  «Yahrzeit» can also be spelled «Jahrzeit» or «Yartzeit».<br /><br />The Administrator determines how far ahead the block will look.  You can further refine the block\'s display of upcoming Yahrzeiten through configuration options.');
 	break;
 
@@ -5831,7 +5831,7 @@ case 'zip':
 	$text=i18n::translate('Select this option as to save your clippings in a ZIP file.  For more information about ZIP files, please visit <a href="http://www.winzip.com" target="_blank">http://www.winzip.com</a>.');
 default:
 	$title=i18n::translate('Help');
-	$text=i18n::translate('The help text has been written for this item.');
+	$text=i18n::translate('The help text has not been written for this item.');
 	// If we've been called from a module, allow the module to provide the help text
 	$mod=safe_GET('mod', PGV_REGEX_ALPHANUM);
 	if (file_exists(PGV_ROOT.'modules/'.$mod.'/help_text.php')) {
