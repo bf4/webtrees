@@ -222,7 +222,7 @@ if ($action=="newentry") {
 			// Copy user-supplied thumbnail file into the main destination directory
 			if (!copy(filename_decode($whichFile1), filename_decode($whichFile2))) {
 				// the file cannot be copied
-				$error .= i18n::translate('There was an error uploading your file.')."<br />".i18n::translate('The file %s could not be copied from %s', $realThumbFolderName.$mediaFile, $realThumbFolderName.$mediaFile);."<br />";
+				$error .= i18n::translate('There was an error uploading your file.')."<br />".i18n::translate('The file %s could not be copied from %s', $realThumbFolderName.$mediaFile, $realThumbFolderName.$mediaFile)."<br />";
 			} else {
 				@chmod(filename_decode($whichFile2), PGV_PERM_FILE);
 				AddToLog("Media file {$folderName}{$mediaFile} copied from {$thumbFolderName}{$mediaFile}");
@@ -567,7 +567,7 @@ if ($action == "update") {
 						echo i18n::translate('Thumbnail file <b>%s</b> successfully moved from <b>%s</b> to <b>%s</b>.', $oldFilename, str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $oldFolder), str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folder));
 						break;
 					case 3:
-						echo i18n::translate('Thumbnail file successfully moved and renamed from <b>%s%s</b> to <b>%s%s</b>.', str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $oldFolder), $oldFilename str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folder), $filename);
+						echo i18n::translate('Thumbnail file successfully moved and renamed from <b>%s</b> to <b>%s</b>.', str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $oldFolder), $oldFilename, str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folder), $filename);
 						break;
 					}
 				} else {
@@ -581,7 +581,7 @@ if ($action == "update") {
 						echo i18n::translate('Main media file <b>%s</b> could not be moved from <b>%s</b> to <b>%s</b>.', $oldFileName, str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $oldFolder), str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folder));
 						break;
 					case 3:
-						echo i18n::translate('Main media file could not be moved and renamed from <b>%s%s</b> to <b>%s%s</b>.', str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $oldFolder), $oldFilename str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folder), $filename);
+						echo i18n::translate('Main media file could not be moved and renamed from <b>%s</b> to <b>%s</b>.', str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $oldFolder), $oldFilename, str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folder), $filename);
 						break;
 					}
 					echo '</span>';
