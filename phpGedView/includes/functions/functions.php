@@ -2598,6 +2598,28 @@ function get_relationship_name($nodes) {
 	case 'parparsis': return /* I18N: great-aunt        */ i18n::translate('parent\'s parent\'s sister');
 	case 'parparbro': return /* I18N: great-uncle       */ i18n::translate('parent\'s parent\'s brother');
 	case 'parparsib': return /* I18N: great-aunt/uncle  */ i18n::translate('parent\'s parent\'s sibling');
+	
+	case 'motbrowif': return /* I18N: mother's brother's wife    */ i18n::translate('mother\'s brother\'s wife');
+	case 'motbrospo': return /* I18N: mother's brother's spouse */ i18n::translate('mother\'s brother\'s spouse');
+	case 'motsishus': return /* I18N: mother's sister's husband */ i18n::translate('mother\'s sister\'s husband');
+	case 'motsisspo': return /* I18N: mother's sister's spouse   */ i18n::translate('mother\'s sister\'s spouse');
+	case 'motsibwif': return /* I18N: mother's sibling's wife    */ i18n::translate('mother\'s sibling\'s wife');
+	case 'motsibhus': return /* I18N: mother's sibling's husband */ i18n::translate('mother\'s sibling\'s husband');
+	case 'motsibspo': return /* I18N: mother's sibling's spouse */ i18n::translate('mother\'s sibling\'s spouse');
+	case 'fatbrowif': return /* I18N: father's brother's wife     */ i18n::translate('father\'s brother\'s wife');
+	case 'fatbrospo': return /* I18N: father's brother's spouse  */ i18n::translate('father\'s brother\'s spouse');
+	case 'fatsishus': return /* I18N: father's sister's husband  */ i18n::translate('father\'s sister\'s husband');
+	case 'fatsisspo': return /* I18N: father's sister's spouse    */ i18n::translate('father\'s sister\'s spouse');
+	case 'fatsibwif': return /* I18N: father's sibling's wife     */ i18n::translate('father\'s sibling\'s wife');
+	case 'fatsibhus': return /* I18N: father's sibling's husband  */ i18n::translate('father\'s sibling\'s husband');
+	case 'fatsibspo': return /* I18N: father's sibling's spouse   */ i18n::translate('father\'s sibling\'s spouse');
+	case 'parbrowif': return /* I18N: parent's brother's wife     */ i18n::translate('parent\'s brother\'s wife');
+	case 'parbrospo': return /* I18N: parent's brother's spouse  */ i18n::translate('parent\'s brother\'s spouse');
+	case 'parsishus': return /* I18N: parent's sister's husband  */ i18n::translate('parent\'s sister\'s husband');
+	case 'parsisspo': return /* I18N: parent's sister's spouse    */ i18n::translate('parent\'s sister\'s spouse');
+	case 'parsibwif': return /* I18N: parent's sibling's wife     */ i18n::translate('parent\'s sibling\'s wife');
+	case 'parsibhus': return /* I18N: parent's sibling's husband  */ i18n::translate('parent\'s sibling\'s husband');
+	case 'parsibspo': return /* I18N: parent's sibling's spouse   */ i18n::translate('parent\'s sibling\'s spouse');
 	}
 
 	// Look for generic/pattern relationships.
