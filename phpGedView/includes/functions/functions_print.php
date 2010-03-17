@@ -1613,8 +1613,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 * @param string $linebr optional linebreak
 */
 function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
-	global $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
-	global $PEDIGREE_FULL_DETAILS, $LANGUAGE, $lang_short_cut;
+	global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	// Level 1 ASSO
 	if (preg_match('/^1 ASSO @('.PGV_REGEX_XREF.')@(\n[2-9].*)*/', $factrec, $amatch)) {
