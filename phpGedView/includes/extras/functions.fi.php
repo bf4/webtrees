@@ -65,12 +65,6 @@ function date_localisation_fi(&$q1, &$d1, &$q2, &$d2, &$q3) {
 		$q2=$pgv_lang[$q2];
 }
 
-function edit_to_gedcom_date_fi($datestr) {
-	// Allow "full finnish" dates to be converted to gedcom dates
-	$datestr=preg_replace('/\b(\d{1,2})\.? *( \S+kuu)ta *( \d{4})\b/','$1$2$3', $datestr);
-	return default_edit_to_gedcom_date($datestr);
-}
-
 //-- functions to calculate finnish specific genitive names
 // NOTE this function is incomplete and probably very inefficient.
 // I've decided that for now the task is beyond me, I have looked

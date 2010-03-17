@@ -41,7 +41,7 @@
 	if (!empty($EVEN) && count($EVEN)>0) {
 		$newgedrec .= "1 DATA\n";
 		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\n";
-		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\n";
+		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".$EVEN_DATE."\n";
 		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\n";
 		if (!empty($AGNC))      $newgedrec .= "2 AGNC ".$AGNC."\n";
 	}

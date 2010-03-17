@@ -114,41 +114,6 @@ function parse_time($timestr)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// This pair of functions converts between the internal gedcom date and the
-// text that the user sees when editing a date on a form.
-// They can be overridden by the presence of gedcom_to_edit_date_XX() in
-// includes/extras/functions.XX.php
-////////////////////////////////////////////////////////////////////////////////
-function default_gedcom_to_edit_date($datestr)
-{
-	// Don't do too much here - it will annoy experienced PGV users.
-	// Maybe just remove calendar escapes, which we will be able to automatically
-	// recreate?
-	return $datestr;
-}
-function default_edit_to_gedcom_date($datestr)
-{
-	global $pgv_lang;
-	// The order of these keywords is significant, to avoid partial matches.  In particular:
-	// ads:adr_leap_year:adr to prevent "Adar" matching "Adar Sheni" or "Adar I" matching "Adar II"
-	// \b prevents the german JULI matching @#DJULIAN@, etc.
-
-	foreach (array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec','vend','brum','frim','nivo','pluv','vent','germ','flor','prai','mess','ther','fruc','comp','tsh','csh','ksl','tvt','shv','nsn','iyr','svn','tmz','aav','ell','abt','aft','bef','bet','cal','est','from','int','to','b.c.') as $keyword) {
-		$datestr=preg_replace('/\b'.str_replace('.','[.]?',$pgv_lang[$keyword]).'\b/i', strtoupper($keyword), $datestr);
-	}
-
-	foreach (array('ads','adr_leap_year','adr','jan_1st','feb_1st','mar_1st','apr_1st','may_1st','jun_1st','jul_1st','aug_1st','sep_1st','oct_1st','nov_1st','dec_1st') as $keyword) {
-		$datestr=preg_replace('/\b'.str_replace('.','[.]?',$pgv_lang[$keyword]).'\b/i', strtoupper(substr($keyword,0,3)), $datestr);
-	}
-
-	foreach (array('and') as $keyword) {
-		$datestr=preg_replace('/\b'.str_replace('.','[.]?',$pgv_lang[$keyword]).'\b/i', strtoupper($keyword), $datestr);
-	}
-
-	return $datestr;
-}
-
-////////////////////////////////////////////////////////////////////////////////
 // Convert a unix timestamp into a formated date-time value, for logs, etc.
 // We can't just use date("$DATE_FORMAT- $TIME_FORMAT") as this doesn't
 // support internationalisation.

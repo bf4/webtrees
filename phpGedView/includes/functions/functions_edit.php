@@ -1908,7 +1908,6 @@ function addNewFact($fact) {
 			$gedrec="1 {$fact}\n";
 		}
 		if ($DATE) {
-			$DATE=check_input_date($DATE);
 			$gedrec.="2 DATE {$DATE}\n";
 		}
 		if ($PLAC) {
@@ -2202,7 +2201,6 @@ function handle_updates($newged, $levelOverride="no") {
 			$newline = $glevels[$j]+$levelAdjust.' '.$tag[$j];
 			//-- check and translate the incoming dates
 			if ($tag[$j]=="DATE" && $text[$j]!='') {
-				$text[$j] = check_input_date($text[$j]);
 			}
 			// echo $newline;
 			if ($text[$j]!='') {
@@ -2214,26 +2212,6 @@ function handle_updates($newged, $levelOverride="no") {
 	}
 
 	return $newged;
-}
-
-
-/**
-* check the given date that was input by a user and convert it
-* to proper gedcom date if possible
-* @author John Finlay
-* @param string $datestr the date input by the user
-* @return string the converted date string
-*/
-function check_input_date($datestr) {
-	global $lang_short_cut, $LANGUAGE;
-	// Convert from natural language to gedcom format
-	$conversion_function="edit_to_gedcom_date_{$lang_short_cut[$LANGUAGE]}";
-	if (function_exists($conversion_function))
-		$datestr=$conversion_function($datestr);
-	else
-		$datestr=default_edit_to_gedcom_date($datestr);
-
-	return trim($datestr);
 }
 
 /**
@@ -2449,14 +2427,6 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 
 		if ($type!="DATA" && $type!="CONT") {
 			$tags[]=$type;
-			if ($type=='DATE') {
-				// Allow the user to edit the date in his/her own natural language
-				$conversion_function="gedcom_to_edit_date_{$lang_short_cut[$LANGUAGE]}";
-				if (function_exists($conversion_function))
-					$text=$conversion_function($text);
-				else
-					$text=default_gedcom_to_edit_date($text);
-			}
 			if ($type=="_AKAN" || $type=="_AKA" || $type=="ALIA") {
 				// Allow special processing for different languages
 				$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
