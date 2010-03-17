@@ -160,7 +160,60 @@ if ($view!='preview') {
 			$l.='_leap_year';
 		else
 			$l='';
-		$month_name=$pgv_lang[$m.$l];
+		// TODO: This should be in the date class.
+		switch($m.$l) {
+		case 'jan': $month_name=i18n::translate('January'); break;
+		case 'feb': $month_name=i18n::translate('February'); break;
+		case 'mar': $month_name=i18n::translate('March'); break;
+		case 'apr': $month_name=i18n::translate('April'); break;
+		case 'may': $month_name=i18n::translate('May'); break;
+		case 'jun': $month_name=i18n::translate('June'); break;
+		case 'jul': $month_name=i18n::translate('July'); break;
+		case 'aug': $month_name=i18n::translate('August'); break;
+		case 'sep': $month_name=i18n::translate('September'); break;
+		case 'oct': $month_name=i18n::translate('October'); break;
+		case 'nov': $month_name=i18n::translate('November'); break;
+		case 'dec': $month_name=i18n::translate('December'); break;
+		case 'vend': $month_name=i18n::translate('Vendémiaire'); break;
+		case 'brum': $month_name=i18n::translate('Brumaire'); break;
+		case 'frim': $month_name=i18n::translate('Frimaire'); break;
+		case 'nivo': $month_name=i18n::translate('Nivôse'); break;
+		case 'pluv': $month_name=i18n::translate('Pluviôse'); break;
+		case 'vent': $month_name=i18n::translate('Ventôse'); break;
+		case 'germ': $month_name=i18n::translate('Germinal'); break;
+		case 'flor': $month_name=i18n::translate('Floréal'); break;
+		case 'prai': $month_name=i18n::translate('Prairial'); break;
+		case 'mess': $month_name=i18n::translate('Messidor'); break;
+		case 'ther': $month_name=i18n::translate('Thermidor'); break;
+		case 'fruc': $month_name=i18n::translate('Fructidor'); break;
+		case 'comp': $month_name=i18n::translate('jours complémentaires'); break;
+		case 'tsh': $month_name=i18n::translate('Tishrei'); break;
+		case 'csh': $month_name=i18n::translate('Heshvan'); break;
+		case 'ksl': $month_name=i18n::translate('Kislev'); break;
+		case 'tvt': $month_name=i18n::translate('Tevet'); break;
+		case 'shv': $month_name=i18n::translate('Shevat'); break;
+		case 'adr': $month_name=i18n::translate('Adar'); break;
+		case 'adr_leap_year': $month_name=i18n::translate('Adar I'); break;
+		case 'ads': $month_name=i18n::translate('Adar II'); break;
+		case 'nsn': $month_name=i18n::translate('Nissan'); break;
+		case 'iyr': $month_name=i18n::translate('Iyar'); break;
+		case 'svn': $month_name=i18n::translate('Sivan'); break;
+		case 'tmz': $month_name=i18n::translate('Tamuz'); break;
+		case 'aav': $month_name=i18n::translate('Av'); break;
+		case 'ell': $month_name=i18n::translate('Elul'); break;
+		case 'muhar': $month_name=i18n::translate('Muharram'); break;
+		case 'safar': $month_name=i18n::translate('Safar'); break;
+		case 'rabia': $month_name=i18n::translate('Rabi\' al-awwal'); break;
+		case 'rabit': $month_name=i18n::translate('Rabi\' al-thani'); break;
+		case 'jumaa': $month_name=i18n::translate('Jumada al-awwal'); break;
+		case 'jumat': $month_name=i18n::translate('Jumada al-thani'); break;
+		case 'rajab': $month_name=i18n::translate('Rajab'); break;
+		case 'shaab': $month_name=i18n::translate('Sha\'aban'); break;
+		case 'ramad': $month_name=i18n::translate('Ramadan'); break;
+		case 'shaww': $month_name=i18n::translate('Shawwal'); break;
+		case 'dhuaq': $month_name=i18n::translate('Dhu al-Qi\'dah'); break;
+		case 'dhuah': $month_name=i18n::translate('Dhu al-Hijjah'); break;
+		}
 		if ($n==$cal_date->m)
 			$month_name="<span class=\"error\">{$month_name}</span>";
 		echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$m}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$month_name}</a>";
@@ -290,18 +343,25 @@ if ($view!='preview') {
 	}
 	echo help_link('day_month');
 	echo '</td><td class="topbottombar" colspan="4">';
-	foreach (array('gregorian', 'julian', 'jewish', 'french', 'hijri') as $n=>$newcal) {
+	$n=0;
+	foreach (array(
+		'gregorian'=>i18n::translate('Gregorian'),
+		'julian'=>i18n::translate('Julian'),
+		'jewish'=>i18n::translate('Jewish'),
+		'french'=>i18n::translate('French'),
+		'hijri'=>i18n::translate('Hijri')
+	) as $newcal=>$cal_name) {
 		$tmp=$cal_date->convert_to_cal($newcal);
-		if ($n) {
-			echo ' | ';
-		}
 		if ($tmp->InValidRange()) {
+			if ($n++) {
+				echo ' | ';
+			}
 			if ($tmp->CALENDAR_ESCAPE()==$cal_date->CALENDAR_ESCAPE()) {
-				echo "<span class=\"error\">{$pgv_lang['cal_'.$newcal]}</span>";
+				echo "<span class=\"error\">{$cal_name}</span>";
 			} else {
 				$newcalesc=urlencode($tmp->CALENDAR_ESCAPE());
 				$tmpmonth=$tmp->FormatGedcomMonth();
-				echo "<a href=\"".encode_url("calendar.php?cal={$newcalesc}&day={$tmp->d}&month={$tmpmonth}&year={$tmp->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$pgv_lang['cal_'.$newcal]}</a>";
+				echo "<a href=\"".encode_url("calendar.php?cal={$newcalesc}&day={$tmp->d}&month={$tmpmonth}&year={$tmp->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$cal_name}</a>";
 			}
 		}
 	}
@@ -579,7 +639,7 @@ function apply_filter($facts, $filterof, $filtersx) {
 // the place.
 ////////////////////////////////////////////////////////////////////////////////
 function calendar_fact_text($fact, $show_places) {
-	global $pgv_lang, $TEXT_DIRECTION;
+	global $TEXT_DIRECTION;
 	$text=i18n::translate($fact['fact']).' - '.$fact['date']->Display(true, "", array());
 	if ($fact['anniv']>0)
 		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.i18n::translate('%s year anniversary', $fact['anniv']).')</span>';
@@ -592,7 +652,7 @@ function calendar_fact_text($fact, $show_places) {
 // Format a list of facts for display
 ////////////////////////////////////////////////////////////////////////////////
 function calendar_list_text($list, $tag1, $tag2, $show_sex_symbols) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $males, $females;
 	foreach ($list as $id=>$facts) {
 		$tmp=GedcomRecord::GetInstance($id);
