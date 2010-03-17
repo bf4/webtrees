@@ -7796,47 +7796,47 @@ msgstr "son-in-law"
 #. I18N: step-son
 #: ../includes/functions/functions.php:2479
 msgid "husband's son"
-msgstr ""
+msgstr "step-son"
 
 #. I18N: step-son
 #: ../includes/functions/functions.php:2480
 msgid "wife's son"
-msgstr ""
+msgstr "step-son"
 
 #. I18N: step-son
 #: ../includes/functions/functions.php:2481
 msgid "spouses's son"
-msgstr ""
+msgstr "step-son"
 
 #. I18N: step-daughter
 #: ../includes/functions/functions.php:2482
 msgid "husband's daughter"
-msgstr ""
+msgstr "step-daughter"
 
 #. I18N: step-daughter
 #: ../includes/functions/functions.php:2483
 msgid "wife's daughter"
-msgstr ""
+msgstr "step-daughter"
 
 #. I18N: step-daughter
 #: ../includes/functions/functions.php:2484
 msgid "spouses's daughter"
-msgstr ""
+msgstr "step-daughter"
 
 #. I18N: step-child
 #: ../includes/functions/functions.php:2485
 msgid "husband's child"
-msgstr ""
+msgstr "step-child"
 
 #. I18N: step-child
 #: ../includes/functions/functions.php:2486
 msgid "wife's child"
-msgstr ""
+msgstr "step-child"
 
 #. I18N: step-child
 #: ../includes/functions/functions.php:2487
 msgid "spouses's child"
-msgstr ""
+msgstr "step-child"
 
 #. I18N: great-grandmother
 #: ../includes/functions/functions.php:2490
