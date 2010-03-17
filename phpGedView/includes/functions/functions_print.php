@@ -213,49 +213,37 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			}
 			if ($LINK_ICONS!="disabled") {
 				$click_link="javascript:;";
-				$whichChart="";
 				if (PGV_SCRIPT_NAME=='pedigree.php') {
 					$click_link=encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}");
-					$whichChart="pedigree_chart";
 					$whichID=$pid;
 				}
 
 				if (PGV_SCRIPT_NAME=='hourglass.php') {
 					$click_link=encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}");
-					$whichChart="hourglass_chart";
 					$whichID=$pid;
 				}
 
 				if (PGV_SCRIPT_NAME=='ancestry.php') {
 					$click_link=encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}");
-					$whichChart="ancestry_chart";
 					$whichID=$pid;
 				}
 
 				if (PGV_SCRIPT_NAME=='descendancy.php') {
 					$click_link=encode_url("descendancy.php?&show_full={$PEDIGREE_FULL_DETAILS}&pid={$pid}&agenerations={$generations}&box_width={$box_width}&ged={$GEDCOM}");
-					$whichChart="descend_chart";
 					$whichID=$pid;
 				}
 
 				if (PGV_SCRIPT_NAME=='family.php' && !empty($famid)) {
 					$click_link=encode_url("family.php?famid={$famid}&show_full=1&ged={$GEDCOM}");
-					$whichChart="familybook_chart";
 					$whichID=$famid;
 				}
 
 				if (PGV_SCRIPT_NAME=='individual.php') {
 					$click_link=encode_url("individual.php?pid={$pid}&ged={$GEDCOM}");
-					$whichChart="indi_info";
 					$whichID=$pid;
 				}
 
-				if (empty($whichChart)) $title="";
-				else {
-					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang[$whichChart].": ".$whichID;
-					else $title = $whichID." :".$pgv_lang[$whichChart];
-				}
-				$icons .= "<a href=\"$click_link\" title=\"$title\" ";
+				$icons .= "<a href=\"$click_link\" ";
 				// NOTE: Zoom
 				if ($LINK_ICONS=="mouseover") $icons .= "onmouseover=\"show_family_box('".$boxID."', '";
 				if ($LINK_ICONS=="click") $icons .= "onclick=\"toggle_family_box('".$boxID."', '";
