@@ -84,7 +84,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	}
 	$title .= i18n::translate('News');
 	if(PGV_USER_GEDCOM_ADMIN) {
-		$title .= help_link('index_gedcom_news_a');
+		$title .= help_link('index_gedcom_news_adm');
 	} else {
 		$title .= help_link('index_gedcom_news');
 	}
