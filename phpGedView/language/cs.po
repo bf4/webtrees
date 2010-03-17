@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-16 21:00+0000\n"
+"POT-Creation-Date: 2010-03-17 16:39+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -1113,9 +1113,11 @@ msgstr ""
 #: ../downloadgedcom.php:153 ../downloadgedcom.php:156 ../indilist.php:128
 #: ../indilist.php:147 ../install.php:878 ../install.php:937
 #: ../editconfig_gedcom.php:2123 ../editconfig_gedcom.php:2172
-#: ../editgedcoms.php:267 ../editgedcoms.php:317 ../useradmin.php:54
+#: ../editgedcoms.php:262 ../editgedcoms.php:313 ../useradmin.php:54
 #: ../useradmin.php:808 ../uploadgedcom.php:842 ../clippings.php:205
-#: ../includes/family_nav.php:727 ../includes/classes/class_stats.php:823
+#: ../includes/family_nav.php:727
+#: ../includes/functions/functions_edit.php:1463
+#: ../includes/classes/class_stats.php:823
 #: ../modules/lightbox/lb_editconfig.php:176
 #: ../modules/lightbox/lb_editconfig.php:181
 #: ../modules/lightbox/lb_editconfig.php:207
@@ -1275,7 +1277,7 @@ msgstr ""
 msgid "Enter report values"
 msgstr "Zadat kritéria pro zprávu"
 
-#: ../reportengine.php:181 ../editgedcoms.php:185 ../imageview.php:177
+#: ../reportengine.php:181 ../editgedcoms.php:182 ../imageview.php:177
 #: ../mediaviewer.php:115
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:65
 #: ../modules/lightbox/functions/lightbox_print_media_row.php:77
@@ -1287,7 +1289,7 @@ msgstr "Soubor nebyl nalezen."
 msgid "Selected Report"
 msgstr "Vybraná zpráva"
 
-#: ../reportengine.php:315 ../includes/functions/functions_edit.php:950
+#: ../reportengine.php:315 ../includes/functions/functions_edit.php:948
 msgid "Select a date"
 msgstr "Vybrat datum"
 
@@ -1373,7 +1375,7 @@ msgstr "Skrýt podrobnosti"
 msgid "Manually mark Search Engines by IP"
 msgstr ""
 
-#: ../manageservers.php:247 ../manageservers.php:294 ../editgedcoms.php:201
+#: ../manageservers.php:247 ../manageservers.php:294 ../editgedcoms.php:198
 #: ../useradmin.php:599 ../useradmin.php:679
 #: ../includes/functions/functions_print_facts.php:174
 #: ../includes/functions/functions_print_facts.php:215
@@ -1536,7 +1538,7 @@ msgstr ""
 
 #: ../lifespan.php:329 ../includes/extras/functions.pl.php:192
 #: ../includes/extras/functions.sl.php:155
-#: ../includes/functions/functions_edit.php:1607
+#: ../includes/functions/functions_edit.php:1610
 msgid "Individual"
 msgstr ""
 
@@ -1821,8 +1823,8 @@ msgstr ""
 #: ../editlang_edit_settings.php:329 ../editlang_edit_settings.php:400
 #: ../branches.php:169 ../uploadgedcom.php:503 ../uploadgedcom.php:517
 #: ../uploadgedcom.php:634 ../uploadgedcom.php:669 ../uploadgedcom.php:730
-#: ../includes/functions/functions_edit.php:1355
-#: ../includes/functions/functions_edit.php:1481
+#: ../includes/functions/functions_edit.php:1353
+#: ../includes/functions/functions_edit.php:1484
 #: ../includes/functions/functions_print_lists.php:306
 #: ../includes/functions/functions_print_lists.php:685
 #: ../includes/functions/functions_print.php:2025
@@ -1888,7 +1890,7 @@ msgstr "Ano"
 #: ../editlang_edit_settings.php:324 ../editlang_edit_settings.php:395
 #: ../uploadgedcom.php:507 ../uploadgedcom.php:518 ../uploadgedcom.php:634
 #: ../uploadgedcom.php:670 ../uploadgedcom.php:731
-#: ../includes/functions/functions_edit.php:1484
+#: ../includes/functions/functions_edit.php:1487
 #: ../includes/functions/functions_print_lists.php:687
 #: ../includes/functions/functions_print_facts.php:313
 #: ../includes/functions/functions_print_facts.php:1626
@@ -1978,22 +1980,22 @@ msgid "Disable logging"
 msgstr "Vypnout"
 
 #: ../install.php:844 ../editconfig_gedcom.php:1111
-#: ../editconfig_gedcom.php:1124
+#: ../editconfig_gedcom.php:1124 ../editgedcoms.php:263 ../editgedcoms.php:314
 msgid "Daily"
 msgstr "Denně"
 
 #: ../install.php:845 ../editconfig_gedcom.php:1112
-#: ../editconfig_gedcom.php:1125
+#: ../editconfig_gedcom.php:1125 ../editgedcoms.php:264 ../editgedcoms.php:315
 msgid "Weekly"
 msgstr "Týdně"
 
 #: ../install.php:846 ../editconfig_gedcom.php:1113
-#: ../editconfig_gedcom.php:1126
+#: ../editconfig_gedcom.php:1126 ../editgedcoms.php:265 ../editgedcoms.php:316
 msgid "Monthly"
 msgstr "Měsíčně"
 
 #: ../install.php:847 ../editconfig_gedcom.php:1114
-#: ../editconfig_gedcom.php:1127
+#: ../editconfig_gedcom.php:1127 ../editgedcoms.php:266 ../editgedcoms.php:317
 msgid "Yearly"
 msgstr "Ročně"
 
@@ -2173,7 +2175,7 @@ msgid "Enter Individual ID"
 msgstr "Zadat ID osoby"
 
 #: ../inverselink.php:161 ../includes/family_nav.php:554
-#: ../includes/functions/functions_edit.php:1629
+#: ../includes/functions/functions_edit.php:1632
 #: ../modules/family_nav/family_nav.php:586
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1074
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1081
@@ -2193,7 +2195,7 @@ msgid "Repository"
 msgstr ""
 
 #: ../inverselink.php:205 ../note.php:97 ../note.php:98
-#: ../includes/functions/functions_edit.php:1289
+#: ../includes/functions/functions_edit.php:1287
 #: ../includes/functions/functions_print.php:1207
 #: ../modules/GEDFact_assistant/_CENS/census_4_text.php:60
 #: ../edit_interface.php:912 ../edit_interface.php:1178
@@ -2374,24 +2376,24 @@ msgstr ""
 msgid "GEDCOM Configuration"
 msgstr "Nastavení GEDCOMu"
 
-#: ../editconfig_gedcom.php:661 ../editgedcoms.php:117 ../uploadgedcom.php:262
+#: ../editconfig_gedcom.php:661 ../editgedcoms.php:114 ../uploadgedcom.php:262
 #: ../uploadgedcom.php:282 ../uploadgedcom.php:296 ../uploadgedcom.php:302
 #: ../help_text.php:3819
 msgid "Add GEDCOM"
 msgstr "Přidat další GEDCOM"
 
-#: ../editconfig_gedcom.php:663 ../editgedcoms.php:120 ../uploadgedcom.php:260
+#: ../editconfig_gedcom.php:663 ../editgedcoms.php:117 ../uploadgedcom.php:260
 #: ../uploadgedcom.php:343 ../uploadgedcom.php:350 ../help_text.php:2786
 #: ../help_text.php:5675
 msgid "Upload GEDCOM"
 msgstr "Nahrát GEDCOM"
 
-#: ../editconfig_gedcom.php:665 ../editgedcoms.php:125 ../uploadgedcom.php:264
+#: ../editconfig_gedcom.php:665 ../editgedcoms.php:122 ../uploadgedcom.php:264
 #: ../uploadgedcom.php:402 ../uploadgedcom.php:409 ../help_text.php:3839
 msgid "Create a new GEDCOM"
 msgstr "Vytvořit nový GEDCOM"
 
-#: ../editconfig_gedcom.php:667 ../editgedcoms.php:155
+#: ../editconfig_gedcom.php:667 ../editgedcoms.php:152
 msgid "Upload Replacement"
 msgstr ""
 
@@ -2458,7 +2460,7 @@ msgstr ""
 msgid "The GEDCOM file, <b>%s</b>, does not exist at the specified location."
 msgstr "Soubor GEDCOM, [%s], není na zadaném místě."
 
-#: ../editconfig_gedcom.php:922 ../editgedcoms.php:148 ../help_text.php:4660
+#: ../editconfig_gedcom.php:922 ../editgedcoms.php:145 ../help_text.php:4660
 msgid "GEDCOM title"
 msgstr "Zadejte nadpis popisující data v tomto GEDCOM souboru"
 
@@ -3099,7 +3101,7 @@ msgstr ""
 msgid "Facts"
 msgstr ""
 
-#: ../editconfig_gedcom.php:2181 ../includes/functions/functions_edit.php:728
+#: ../editconfig_gedcom.php:2181 ../includes/functions/functions_edit.php:726
 #: ../includes/functions/functions_mediadb.php:1478 ../edit_interface.php:429
 #: ../edit_interface.php:468 ../edit_interface.php:519
 #: ../edit_interface.php:592 ../edit_interface.php:631
@@ -3268,73 +3270,73 @@ msgstr ""
 msgid "PHP information"
 msgstr ""
 
-#: ../editgedcoms.php:81 ../help_text.php:2571
+#: ../editgedcoms.php:78 ../help_text.php:2571
 msgid "GEDCOM Administration"
 msgstr "Správa GEDCOMů"
 
-#: ../editgedcoms.php:91 ../changelanguage.php:267
+#: ../editgedcoms.php:88 ../changelanguage.php:267
 msgid "Current GEDCOMs"
 msgstr "Současné GEDCOM soubory"
 
-#: ../editgedcoms.php:98
+#: ../editgedcoms.php:95
 msgid "Default GEDCOM"
 msgstr "Implicitní GEDCOM"
 
-#: ../editgedcoms.php:112 ../help_text.php:3445
+#: ../editgedcoms.php:109 ../help_text.php:3445
 msgid "Check if GEDCOM files are downloadable"
 msgstr ""
 
-#: ../editgedcoms.php:128 ../useradmin.php:1098 ../changelanguage.php:120
+#: ../editgedcoms.php:125 ../useradmin.php:1098 ../changelanguage.php:120
 #: ../usermigrate.php:68 ../usermigrate.php:115 ../usermigrate.php:148
 #: ../usermigrate.php:177 ../usermigrate.php:225
 msgid "Return to the Admin menu"
 msgstr "Zpět do menu Admina"
 
-#: ../editgedcoms.php:163
+#: ../editgedcoms.php:160
 msgid "GEDCOM file"
 msgstr "Soubory GEDCOM"
 
-#: ../editgedcoms.php:179
+#: ../editgedcoms.php:176
 msgid "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem"
 msgstr ""
 
-#: ../editgedcoms.php:182
+#: ../editgedcoms.php:179
 #, php-format
 msgid "%s cannot be downloaded."
 msgstr ""
 
-#: ../editgedcoms.php:189 ../uploadgedcom.php:266 ../uploadgedcom.php:280
+#: ../editgedcoms.php:186 ../uploadgedcom.php:266 ../uploadgedcom.php:280
 #: ../uploadgedcom.php:294 ../uploadgedcom.php:300 ../uploadgedcom.php:1116
 #: ../usermigrate.php:146
 msgid "Import"
 msgstr ""
 
-#: ../editgedcoms.php:191
+#: ../editgedcoms.php:188
 msgid "This GEDCOM has not yet been imported."
 msgstr "Tento GEDCOM ještě nebyl importován."
 
-#: ../editgedcoms.php:197 ../usermigrate.php:147 ../export_gedcom.php:51
+#: ../editgedcoms.php:194 ../usermigrate.php:147 ../export_gedcom.php:51
 #: ../export_gedcom.php:56 ../help_text.php:2586
 msgid "Export"
 msgstr ""
 
-#: ../editgedcoms.php:201
+#: ../editgedcoms.php:198
 msgid "Are you sure you want to delete this GEDCOM"
 msgstr "Opravdu chcete smazat tento GEDCOM"
 
-#: ../editgedcoms.php:206
+#: ../editgedcoms.php:203
 msgid "Download"
 msgstr "Stáhnout"
 
-#: ../editgedcoms.php:211
+#: ../editgedcoms.php:208
 msgid "Check"
 msgstr "Zkontrolovat"
 
-#: ../editgedcoms.php:221
+#: ../editgedcoms.php:218
 msgid "Configuration file"
 msgstr "Konfigurační soubor"
 
-#: ../editgedcoms.php:229 ../editgedcoms.php:248 ../useradmin.php:56
+#: ../editgedcoms.php:226 ../editgedcoms.php:245 ../useradmin.php:56
 #: ../useradmin.php:616 ../useradmin.php:812 ../note.php:102
 #: ../includes/functions/functions_print_facts.php:161
 #: ../includes/functions/functions_print_facts.php:164
@@ -3361,15 +3363,15 @@ msgstr "Konfigurační soubor"
 msgid "Edit"
 msgstr "Upravit"
 
-#: ../editgedcoms.php:240
+#: ../editgedcoms.php:237
 msgid "Privacy file"
 msgstr "Soubor privátnosti"
 
-#: ../editgedcoms.php:259
+#: ../editgedcoms.php:256
 msgid "SearchLog files"
 msgstr ""
 
-#: ../editgedcoms.php:313
+#: ../editgedcoms.php:309
 msgid "ChangeLog files"
 msgstr ""
 
@@ -3427,7 +3429,7 @@ msgstr "Rok:"
 msgid "Timeline Chart"
 msgstr "Časová osa"
 
-#: ../timeline.php:281 ../includes/functions/functions_edit.php:1490
+#: ../timeline.php:281 ../includes/functions/functions_edit.php:1493
 #: ../includes/functions/functions.php:838
 #: ../includes/classes/class_stats.php:1793
 #: ../includes/classes/class_stats.php:2673
@@ -3439,7 +3441,7 @@ msgstr "Časová osa"
 msgid "Male"
 msgstr "Muž"
 
-#: ../timeline.php:283 ../includes/functions/functions_edit.php:1492
+#: ../timeline.php:283 ../includes/functions/functions_edit.php:1495
 #: ../includes/functions/functions.php:840
 #: ../includes/classes/class_stats.php:1793
 #: ../includes/classes/class_stats.php:2673
@@ -3454,8 +3456,8 @@ msgstr "Žena"
 #: ../timeline.php:285 ../placelist.php:143 ../placelist.php:287
 #: ../placelist.php:329 ../placelist.php:370 ../placelist.php:447
 #: ../includes/family_nav.php:730 ../includes/family_nav.php:733
-#: ../includes/functions/functions_edit.php:1395
-#: ../includes/functions/functions_edit.php:1494
+#: ../includes/functions/functions_edit.php:1393
+#: ../includes/functions/functions_edit.php:1497
 #: ../includes/functions/functions_print.php:1831
 #: ../includes/functions/functions.php:842
 #: ../includes/classes/class_serviceclient.php:90
@@ -3664,14 +3666,14 @@ msgstr ""
 #: ../module_admin.php:400 ../editlang_edit_settings.php:174
 #: ../editlang_edit_settings.php:457 ../editnews.php:111
 #: ../includes/media_reorder.php:60 ../includes/media_reorder.php:213
-#: ../includes/functions/functions_edit.php:424
-#: ../includes/functions/functions_edit.php:746
-#: ../includes/functions/functions_edit.php:1742
-#: ../includes/functions/functions_edit.php:1779
-#: ../includes/functions/functions_edit.php:1798
-#: ../includes/functions/functions_edit.php:1811
-#: ../includes/functions/functions_edit.php:1824
-#: ../includes/functions/functions_edit.php:1840
+#: ../includes/functions/functions_edit.php:422
+#: ../includes/functions/functions_edit.php:744
+#: ../includes/functions/functions_edit.php:1745
+#: ../includes/functions/functions_edit.php:1782
+#: ../includes/functions/functions_edit.php:1801
+#: ../includes/functions/functions_edit.php:1814
+#: ../includes/functions/functions_edit.php:1827
+#: ../includes/functions/functions_edit.php:1843
 #: ../includes/functions/functions_mediadb.php:1145
 #: ../includes/functions/functions_mediadb.php:1505
 #: ../modules/lightbox/album.php:104
@@ -3998,10 +4000,6 @@ msgid "Sounds like"
 msgstr ""
 
 #: ../search_advanced.php:221 ../addsearchlink.php:86
-#: ../includes/functions/functions_charts.php:726
-#: ../includes/functions/functions_charts.php:785
-#: ../includes/functions/functions_charts.php:792
-#: ../includes/functions/functions_charts.php:812
 #: ../includes/classes/class_person.php:1571
 #: ../includes/controllers/individual_ctrl.php:821
 #: ../includes/controllers/individual_ctrl.php:882 ../edit_interface.php:2323
@@ -4021,10 +4019,6 @@ msgid "GIVN"
 msgstr "Křestní jméno(a)"
 
 #: ../search_advanced.php:258 ../addsearchlink.php:85
-#: ../includes/functions/functions_charts.php:727
-#: ../includes/functions/functions_charts.php:786
-#: ../includes/functions/functions_charts.php:793
-#: ../includes/functions/functions_charts.php:813
 #: ../includes/classes/class_person.php:1580
 #: ../includes/controllers/individual_ctrl.php:820
 #: ../includes/controllers/individual_ctrl.php:883 ../edit_interface.php:2322
@@ -4521,7 +4515,7 @@ msgid "Add Media"
 msgstr "Přidat média"
 
 #: ../note.php:131 ../includes/functions/functions_charts.php:555
-#: ../includes/functions/functions_edit.php:967
+#: ../includes/functions/functions_edit.php:965
 #: ../includes/functions/functions_mediadb.php:1140
 #: ../modules/media/media.php:71 ../addmedia.php:61 ../repo.php:103
 #: ../source.php:103 ../help_text.php:3829 ../media.php:833
@@ -4726,6 +4720,7 @@ msgid "Change Individual ID to:"
 msgstr "Změnit ID osob na:"
 
 #: ../uploadgedcom.php:741 ../uploadgedcom.php:746
+#: ../includes/functions/functions_edit.php:1464
 #: ../includes/functions/functions_print_facts.php:242
 #: ../includes/functions/functions_print_facts.php:374
 #: ../includes/functions/functions_print_facts.php:939
@@ -6191,7 +6186,7 @@ msgid "Add a child to this family"
 msgstr "Přidat dítě k této rodině"
 
 #: ../includes/functions/functions_charts.php:451
-#: ../includes/functions/functions_charts.php:941
+#: ../includes/functions/functions_charts.php:799
 msgid "This family remained childless"
 msgstr ""
 
@@ -6210,7 +6205,7 @@ msgid "Add Note"
 msgstr "Přidat poznámku"
 
 #: ../includes/functions/functions_charts.php:537
-#: ../includes/functions/functions_edit.php:1794 ../modules/notes/notes.php:88
+#: ../includes/functions/functions_edit.php:1797 ../modules/notes/notes.php:88
 #: ../help_text.php:3854
 msgid "Add a new Note"
 msgstr "Přidat novou poznámku"
@@ -6221,7 +6216,7 @@ msgid "Add Shared Note"
 msgstr ""
 
 #: ../includes/functions/functions_charts.php:546
-#: ../includes/functions/functions_edit.php:1807 ../modules/notes/notes.php:95
+#: ../includes/functions/functions_edit.php:1810 ../modules/notes/notes.php:95
 #: ../help_text.php:3874
 msgid "Add a new Shared Note"
 msgstr ""
@@ -6232,18 +6227,10 @@ msgid "Add Source Citation"
 msgstr "Přidat citaci k prameni"
 
 #: ../includes/functions/functions_charts.php:565
-#: ../includes/functions/functions_edit.php:1738
+#: ../includes/functions/functions_edit.php:1741
 #: ../modules/sources_tab/sources_tab.php:85 ../help_text.php:3894
 msgid "Add a new Source Citation"
 msgstr "Přidat novou citaci k prameni"
-
-#: ../includes/functions/functions_charts.php:817
-msgid "Grandfather"
-msgstr ""
-
-#: ../includes/functions/functions_charts.php:818
-msgid "Grandmother"
-msgstr ""
 
 #: ../includes/functions/functions_rss.php:71 ../blocks/upcoming_events.php:41
 #: ../blocks/upcoming_events.php:105 ../blocks/rss_block.php:72
@@ -6349,17 +6336,17 @@ msgid "This record was last changed by <i>%s</i> at %s"
 msgstr ""
 
 #: ../includes/functions/functions_edit.php:83
-#: ../includes/functions/functions_edit.php:2366
-#: ../includes/functions/functions_edit.php:2375
+#: ../includes/functions/functions_edit.php:2369
+#: ../includes/functions/functions_edit.php:2378
 msgid "Please reload the previous page to make sure you are working with the most recent record."
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:427
-#: ../includes/functions/functions_edit.php:748
+#: ../includes/functions/functions_edit.php:425
+#: ../includes/functions/functions_edit.php:746
 msgid "Save and go to new record"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:722
+#: ../includes/functions/functions_edit.php:720
 #: ../includes/functions/functions_mediadb.php:1472
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:204
 #: ../edit_interface.php:423 ../edit_interface.php:462
@@ -6371,56 +6358,56 @@ msgstr ""
 msgid "Admin Option"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:980 ../edit_interface.php:1221
+#: ../includes/functions/functions_edit.php:978 ../edit_interface.php:1221
 #: ../edit_interface.php:1271
 msgid "Create Repository"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:994 ../edit_interface.php:903
+#: ../includes/functions/functions_edit.php:992 ../edit_interface.php:903
 msgid "Create a new Shared Note"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1007
-#: ../includes/functions/functions_edit.php:1663 ../edit_interface.php:1037
+#: ../includes/functions/functions_edit.php:1005
+#: ../includes/functions/functions_edit.php:1666 ../edit_interface.php:1037
 msgid "Create a new Shared Note using Assistant"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1021
+#: ../includes/functions/functions_edit.php:1019
 #: ../includes/controllers/note_ctrl.php:200 ../edit_interface.php:1159
 msgid "Edit Shared Note"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1035 ../edit_interface.php:753
+#: ../includes/functions/functions_edit.php:1033 ../edit_interface.php:753
 #: ../edit_interface.php:830
 msgid "Create a new source"
 msgstr "Vytvořit nový pramen"
 
 #. I18N: This is the GEDCOM label for "Shared Note"
-#: ../includes/functions/functions_edit.php:1295
+#: ../includes/functions/functions_edit.php:1293
 #: ../includes/functions/functions_print_facts.php:1139 ../help_text.php:1236
 msgid "SHARED_NOTE"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1373
+#: ../includes/functions/functions_edit.php:1371
 msgid "No Temple - Living Ordinance"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Husband"
-#: ../includes/functions/functions_edit.php:1383
-#: ../includes/functions/functions_edit.php:1384
+#: ../includes/functions/functions_edit.php:1381
+#: ../includes/functions/functions_edit.php:1382
 #: ../includes/functions/functions_print_facts.php:391 ../help_text.php:838
 msgid "HUSB"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Wife"
+#: ../includes/functions/functions_edit.php:1381
 #: ../includes/functions/functions_edit.php:1383
-#: ../includes/functions/functions_edit.php:1385
 #: ../includes/functions/functions_print_facts.php:391 ../help_text.php:1374
 msgid "WIFE"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Birth"
-#: ../includes/functions/functions_edit.php:1396
+#: ../includes/functions/functions_edit.php:1394
 #: ../includes/functions/functions_print_lists.php:98
 #: ../includes/functions/functions_print_lists.php:100
 #: ../includes/functions/functions_print_lists.php:116
@@ -6433,37 +6420,53 @@ msgstr ""
 msgid "BIRT"
 msgstr "Narození"
 
-#: ../includes/functions/functions_edit.php:1397 ../edit_interface.php:579
+#: ../includes/functions/functions_edit.php:1395 ../edit_interface.php:579
 msgid "Adopted"
 msgstr "Adoptován(a)"
 
-#: ../includes/functions/functions_edit.php:1398 ../edit_interface.php:580
+#: ../includes/functions/functions_edit.php:1396 ../edit_interface.php:580
 msgid "Foster"
 msgstr "Pěstoun"
 
-#: ../includes/functions/functions_edit.php:1399 ../edit_interface.php:581
+#: ../includes/functions/functions_edit.php:1397 ../edit_interface.php:581
 msgid "Sealing"
 msgstr "nepřeloženo!!!: Sealing"
 
-#: ../includes/functions/functions_edit.php:1460
+#: ../includes/functions/functions_edit.php:1458
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1499
+#: ../includes/functions/functions_edit.php:1465
+#: ../includes/functions/functions_print_facts.php:238
+#: ../includes/functions/functions_print_facts.php:370
+#: ../includes/functions/functions_print_facts.php:935
+#: ../includes/functions/functions_print_facts.php:1226
+msgid "Privacy"
+msgstr ""
+
+#: ../includes/functions/functions_edit.php:1466
+#: ../includes/functions/functions_print_facts.php:240
+#: ../includes/functions/functions_print_facts.php:372
+#: ../includes/functions/functions_print_facts.php:937
+#: ../includes/functions/functions_print_facts.php:1228
+msgid "Confidential"
+msgstr ""
+
+#: ../includes/functions/functions_edit.php:1502
 #: ../includes/functions/functions_mediadb.php:1079
 #: ../includes/functions/functions_mediadb.php:1280 ../edit_privacy.php:621
 msgid "Choose: "
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1513
-#: ../includes/functions/functions_edit.php:1514
+#: ../includes/functions/functions_edit.php:1516
+#: ../includes/functions/functions_edit.php:1517
 #: ../includes/controllers/individual_ctrl.php:528
 #: ../includes/controllers/individual_ctrl.php:629 ../help_text.php:4470
 msgid "Edit Name"
 msgstr "Upravit jméno"
 
 #. I18N: This is the GEDCOM label for "Latitude"
-#: ../includes/functions/functions_edit.php:1542
+#: ../includes/functions/functions_edit.php:1545
 #: ../includes/functions/functions_print.php:2108
 #: ../modules/googlemap/places.php:588
 #: ../modules/googlemap/places_edit.php:787 ../help_text.php:874
@@ -6471,53 +6474,53 @@ msgid "LATI"
 msgstr "Zeměpsiná šířka"
 
 #. I18N: This is the GEDCOM label for "Longitude"
-#: ../includes/functions/functions_edit.php:1542
+#: ../includes/functions/functions_edit.php:1545
 #: ../includes/functions/functions_print.php:2114
 #: ../modules/googlemap/places.php:589
 #: ../modules/googlemap/places_edit.php:797 ../help_text.php:886
 msgid "LONG"
 msgstr "Zeměpisná délka"
 
-#: ../includes/functions/functions_edit.php:1664
+#: ../includes/functions/functions_edit.php:1667
 msgid "Shared Note using Assistant"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Date of entry in original source"
-#: ../includes/functions/functions_edit.php:1756
-#: ../includes/functions/functions_edit.php:2342
+#: ../includes/functions/functions_edit.php:1759
+#: ../includes/functions/functions_edit.php:2345
 #: ../includes/functions/functions_mediadb.php:1418
 #: ../includes/functions/functions_mediadb.php:1466
 #: ../includes/functions/functions_print_facts.php:1017 ../help_text.php:446
 msgid "DATA:DATE"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1769
-#: ../includes/functions/functions_edit.php:1774
+#: ../includes/functions/functions_edit.php:1772
+#: ../includes/functions/functions_edit.php:1777
 msgid "Add a new Associate"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1820
+#: ../includes/functions/functions_edit.php:1823
 msgid "Add a new Multimedia object"
 msgstr "Přidat nový multimediální soubor"
 
 #. I18N: This is the GEDCOM label for "Restriction"
-#: ../includes/functions/functions_edit.php:1836 ../help_text.php:1188
+#: ../includes/functions/functions_edit.php:1839 ../help_text.php:1188
 msgid "RESN"
 msgstr "Zákaz"
 
-#: ../includes/functions/functions_edit.php:2267 ../blocks/charts.php:171
+#: ../includes/functions/functions_edit.php:2270 ../blocks/charts.php:171
 #: ../blocks/user_favorites.php:137 ../blocks/gedcom_favorites.php:135
 msgid "No such ID exists in this GEDCOM file."
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:2365
-#: ../includes/functions/functions_edit.php:2374
+#: ../includes/functions/functions_edit.php:2368
+#: ../includes/functions/functions_edit.php:2377
 msgid "An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it."
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Status Change Date"
-#: ../includes/functions/functions_edit.php:2503
-#: ../includes/functions/functions_edit.php:2576
+#: ../includes/functions/functions_edit.php:2506
+#: ../includes/functions/functions_edit.php:2579
 #: ../includes/functions/functions_print.php:2145 ../help_text.php:1284
 msgid "STAT:DATE"
 msgstr ""
@@ -7329,985 +7332,989 @@ msgstr "Chyba!!! Není možné zapisovat do konfiguračního souboru PhpGedView.
 msgid "The script timed out before a relationship could be found."
 msgstr "Vykonávání skriptu bylo ukončeno před dokončením vyhledávání."
 
-#: ../includes/functions/functions.php:2350
-#: ../includes/functions/functions.php:2802
-msgid "mother"
-msgstr ""
-
-#: ../includes/functions/functions.php:2351
-#: ../includes/functions/functions.php:2803
-msgid "father"
+#: ../includes/functions/functions.php:2349
+msgid "self"
 msgstr ""
 
 #: ../includes/functions/functions.php:2352
-#: ../includes/functions/functions.php:2804
-msgid "parent"
+#: ../includes/functions/functions.php:2808
+msgid "mother"
 msgstr ""
 
 #: ../includes/functions/functions.php:2353
-#: ../includes/functions/functions.php:2805
-msgid "husband"
+#: ../includes/functions/functions.php:2809
+msgid "father"
 msgstr ""
 
 #: ../includes/functions/functions.php:2354
-#: ../includes/functions/functions.php:2806
-msgid "wife"
+#: ../includes/functions/functions.php:2810
+msgid "parent"
 msgstr ""
 
 #: ../includes/functions/functions.php:2355
-#: ../includes/functions/functions.php:2807
-msgid "spouse"
+#: ../includes/functions/functions.php:2811
+msgid "husband"
 msgstr ""
 
 #: ../includes/functions/functions.php:2356
-#: ../includes/functions/functions.php:2811
-msgid "son"
+#: ../includes/functions/functions.php:2812
+msgid "wife"
 msgstr ""
 
 #: ../includes/functions/functions.php:2357
-#: ../includes/functions/functions.php:2812
-msgid "daughter"
+#: ../includes/functions/functions.php:2813
+msgid "spouse"
 msgstr ""
 
 #: ../includes/functions/functions.php:2358
-#: ../includes/functions/functions.php:2813
+#: ../includes/functions/functions.php:2817
+msgid "son"
+msgstr ""
+
+#: ../includes/functions/functions.php:2359
+#: ../includes/functions/functions.php:2818
+msgid "daughter"
+msgstr ""
+
+#: ../includes/functions/functions.php:2360
+#: ../includes/functions/functions.php:2819
 msgid "child"
 msgstr ""
 
-#: ../includes/functions/functions.php:2364
+#: ../includes/functions/functions.php:2366
 msgid "twin brother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2366
+#: ../includes/functions/functions.php:2368
 msgid "younger brother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2368
+#: ../includes/functions/functions.php:2370
 msgid "elder brother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2371
-#: ../includes/functions/functions.php:2808
+#: ../includes/functions/functions.php:2373
+#: ../includes/functions/functions.php:2814
 msgid "brother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2377
+#: ../includes/functions/functions.php:2379
 msgid "twin sister"
 msgstr ""
 
-#: ../includes/functions/functions.php:2379
+#: ../includes/functions/functions.php:2381
 msgid "younger sister"
 msgstr ""
 
-#: ../includes/functions/functions.php:2381
+#: ../includes/functions/functions.php:2383
 msgid "elder sister"
 msgstr ""
 
-#: ../includes/functions/functions.php:2384
-#: ../includes/functions/functions.php:2809
+#: ../includes/functions/functions.php:2386
+#: ../includes/functions/functions.php:2815
 msgid "sister"
 msgstr ""
 
-#: ../includes/functions/functions.php:2390
+#: ../includes/functions/functions.php:2392
 msgid "twin sibling"
 msgstr ""
 
-#: ../includes/functions/functions.php:2392
+#: ../includes/functions/functions.php:2394
 msgid "younger sibling"
 msgstr ""
 
-#: ../includes/functions/functions.php:2394
+#: ../includes/functions/functions.php:2396
 msgid "elder sibling"
 msgstr ""
 
-#: ../includes/functions/functions.php:2397
-#: ../includes/functions/functions.php:2810
+#: ../includes/functions/functions.php:2399
+#: ../includes/functions/functions.php:2816
 msgid "sibling"
 msgstr ""
 
 #. I18N: grandmother
-#: ../includes/functions/functions.php:2400
+#: ../includes/functions/functions.php:2402
 msgid "mother's mother"
 msgstr ""
 
 #. I18N: grandfather
-#: ../includes/functions/functions.php:2401
+#: ../includes/functions/functions.php:2403
 msgid "mother's father"
 msgstr ""
 
 #. I18N: grandparent
-#: ../includes/functions/functions.php:2402
+#: ../includes/functions/functions.php:2404
 msgid "mother's parent"
 msgstr ""
 
 #. I18N: grandmother
-#: ../includes/functions/functions.php:2403
+#: ../includes/functions/functions.php:2405
 msgid "father's mother"
 msgstr ""
 
 #. I18N: grandfather
-#: ../includes/functions/functions.php:2404
+#: ../includes/functions/functions.php:2406
 msgid "father's father"
 msgstr ""
 
 #. I18N: grandparent
-#: ../includes/functions/functions.php:2405
+#: ../includes/functions/functions.php:2407
 msgid "father's parent"
 msgstr ""
 
 #. I18N: grandmother
-#: ../includes/functions/functions.php:2406
+#: ../includes/functions/functions.php:2408
 msgid "parent's mother"
 msgstr ""
 
 #. I18N: grandfather
-#: ../includes/functions/functions.php:2407
+#: ../includes/functions/functions.php:2409
 msgid "parent's father"
 msgstr ""
 
 #. I18N: grandparent
-#: ../includes/functions/functions.php:2408
+#: ../includes/functions/functions.php:2410
 msgid "parent's parent"
 msgstr ""
 
 #. I18N: granddaughter
-#: ../includes/functions/functions.php:2410
+#: ../includes/functions/functions.php:2412
 msgid "daughter's daughter"
 msgstr ""
 
 #. I18N: grandson
-#: ../includes/functions/functions.php:2411
+#: ../includes/functions/functions.php:2413
 msgid "daughter's son"
 msgstr ""
 
 #. I18N: grandchild
-#: ../includes/functions/functions.php:2412
+#: ../includes/functions/functions.php:2414
 msgid "daughter's child"
 msgstr ""
 
 #. I18N: granddaughter
-#: ../includes/functions/functions.php:2413
+#: ../includes/functions/functions.php:2415
 msgid "son's daughter"
 msgstr ""
 
 #. I18N: grandson
-#: ../includes/functions/functions.php:2414
+#: ../includes/functions/functions.php:2416
 msgid "son's son"
 msgstr ""
 
 #. I18N: grandchild
-#: ../includes/functions/functions.php:2415
+#: ../includes/functions/functions.php:2417
 msgid "son's child"
 msgstr ""
 
 #. I18N: granddaughter
-#: ../includes/functions/functions.php:2416
+#: ../includes/functions/functions.php:2418
 msgid "child's daughter"
 msgstr ""
 
 #. I18N: grandson
-#: ../includes/functions/functions.php:2417
+#: ../includes/functions/functions.php:2419
 msgid "child's son"
 msgstr ""
 
 #. I18N: grandchild
-#: ../includes/functions/functions.php:2418
+#: ../includes/functions/functions.php:2420
 msgid "child's child"
 msgstr ""
 
 #. I18N: step-father
-#: ../includes/functions/functions.php:2420
-#: ../includes/functions/functions.php:2421
+#: ../includes/functions/functions.php:2422
+#: ../includes/functions/functions.php:2423
 msgid "mother's husband"
 msgstr ""
 
 #. I18N: step-mother
-#: ../includes/functions/functions.php:2422
-#: ../includes/functions/functions.php:2423
+#: ../includes/functions/functions.php:2424
+#: ../includes/functions/functions.php:2425
 msgid "father's wife"
 msgstr ""
 
 #. I18N: step-parent
-#: ../includes/functions/functions.php:2424
-#: ../includes/functions/functions.php:2425
+#: ../includes/functions/functions.php:2426
+#: ../includes/functions/functions.php:2427
 msgid "parent's spouse"
 msgstr ""
 
 #. I18N: half-brother
-#: ../includes/functions/functions.php:2427
+#: ../includes/functions/functions.php:2429
 msgid "mother's son"
 msgstr ""
 
 #. I18N: half-sister
-#: ../includes/functions/functions.php:2428
+#: ../includes/functions/functions.php:2430
 msgid "mother's daughter"
 msgstr ""
 
 #. I18N: half-sibling
-#: ../includes/functions/functions.php:2429
+#: ../includes/functions/functions.php:2431
 msgid "mother's child"
 msgstr ""
 
 #. I18N: half-brother
-#: ../includes/functions/functions.php:2430
+#: ../includes/functions/functions.php:2432
 msgid "father's son"
 msgstr ""
 
 #. I18N: half-sister
-#: ../includes/functions/functions.php:2431
+#: ../includes/functions/functions.php:2433
 msgid "father's daughter"
 msgstr ""
 
 #. I18N: half-sibling
-#: ../includes/functions/functions.php:2432
+#: ../includes/functions/functions.php:2434
 msgid "father's child"
 msgstr ""
 
 #. I18N: half-brother
-#: ../includes/functions/functions.php:2433
+#: ../includes/functions/functions.php:2435
 msgid "parent's son"
 msgstr ""
 
 #. I18N: half-sister
-#: ../includes/functions/functions.php:2434
+#: ../includes/functions/functions.php:2436
 msgid "parent's daughter"
 msgstr ""
 
 #. I18N: half-sibling
-#: ../includes/functions/functions.php:2435
+#: ../includes/functions/functions.php:2437
 msgid "parent's child"
 msgstr ""
 
 #. I18N: aunt
-#: ../includes/functions/functions.php:2437
+#: ../includes/functions/functions.php:2439
 msgid "mother's sister"
 msgstr ""
 
 #. I18N: uncle
-#: ../includes/functions/functions.php:2438
+#: ../includes/functions/functions.php:2440
 msgid "mother's brother"
 msgstr ""
 
 #. I18N: aunt/uncle
-#: ../includes/functions/functions.php:2439
+#: ../includes/functions/functions.php:2441
 msgid "mother's sibling"
 msgstr ""
 
 #. I18N: aunt
-#: ../includes/functions/functions.php:2440
+#: ../includes/functions/functions.php:2442
 msgid "father's sister"
 msgstr ""
 
 #. I18N: uncle
-#: ../includes/functions/functions.php:2441
+#: ../includes/functions/functions.php:2443
 msgid "father's brother"
 msgstr ""
 
 #. I18N: aunt/uncle
-#: ../includes/functions/functions.php:2442
+#: ../includes/functions/functions.php:2444
 msgid "father's sibling"
 msgstr ""
 
 #. I18N: aunt
-#: ../includes/functions/functions.php:2443
+#: ../includes/functions/functions.php:2445
 msgid "parent's sister"
 msgstr ""
 
 #. I18N: uncle
-#: ../includes/functions/functions.php:2444
+#: ../includes/functions/functions.php:2446
 msgid "parent's brother"
 msgstr ""
 
 #. I18N: aunt/uncle
-#: ../includes/functions/functions.php:2445
+#: ../includes/functions/functions.php:2447
 msgid "parent's sibling"
 msgstr ""
 
 #. I18N: nephew
-#: ../includes/functions/functions.php:2447
+#: ../includes/functions/functions.php:2449
 msgid "bother's son"
 msgstr ""
 
 #. I18N: niece
-#: ../includes/functions/functions.php:2448
+#: ../includes/functions/functions.php:2450
 msgid "bother's daughter"
 msgstr ""
 
 #. I18N: nephew/neice
-#: ../includes/functions/functions.php:2449
+#: ../includes/functions/functions.php:2451
 msgid "bother's child"
 msgstr ""
 
 #. I18N: nephew
-#: ../includes/functions/functions.php:2450
+#: ../includes/functions/functions.php:2452
 msgid "sister's son"
 msgstr ""
 
 #. I18N: niece
-#: ../includes/functions/functions.php:2451
+#: ../includes/functions/functions.php:2453
 msgid "sister's daughter"
 msgstr ""
 
 #. I18N: nephew/neice
-#: ../includes/functions/functions.php:2452
+#: ../includes/functions/functions.php:2454
 msgid "sister's child"
 msgstr ""
 
 #. I18N: nephew
-#: ../includes/functions/functions.php:2453
+#: ../includes/functions/functions.php:2455
 msgid "sibling's son"
 msgstr ""
 
 #. I18N: niece
-#: ../includes/functions/functions.php:2454
+#: ../includes/functions/functions.php:2456
 msgid "sibling's daughter"
 msgstr ""
 
 #. I18N: nephew/neice
-#: ../includes/functions/functions.php:2455
+#: ../includes/functions/functions.php:2457
 msgid "sibling's child"
 msgstr ""
 
 #. I18N: sister-in-law
-#: ../includes/functions/functions.php:2457
+#: ../includes/functions/functions.php:2459
 msgid "wife's sister"
 msgstr ""
 
 #. I18N: sister-in-law
-#: ../includes/functions/functions.php:2458
+#: ../includes/functions/functions.php:2460
 msgid "husband's sister"
 msgstr ""
 
 #. I18N: sister-in-law
-#: ../includes/functions/functions.php:2459
+#: ../includes/functions/functions.php:2461
 msgid "spouses's sister"
 msgstr ""
 
 #. I18N: brother-in-law
-#: ../includes/functions/functions.php:2460
+#: ../includes/functions/functions.php:2462
 msgid "wife's brother"
 msgstr ""
 
 #. I18N: brother-in-law
-#: ../includes/functions/functions.php:2461
+#: ../includes/functions/functions.php:2463
 msgid "husband's brother"
 msgstr ""
 
 #. I18N: brother-in-law
-#: ../includes/functions/functions.php:2462
+#: ../includes/functions/functions.php:2464
 msgid "spouses's brother"
 msgstr ""
 
 #. I18N: sister-in-law
-#: ../includes/functions/functions.php:2464
+#: ../includes/functions/functions.php:2466
 msgid "brother's wife"
 msgstr ""
 
 #. I18N: brother-in-law
-#: ../includes/functions/functions.php:2465
+#: ../includes/functions/functions.php:2467
 msgid "sister's husband"
 msgstr ""
 
 #. I18N: mother-in-law
-#: ../includes/functions/functions.php:2467
+#: ../includes/functions/functions.php:2469
 msgid "husband's mother"
 msgstr ""
 
 #. I18N: mother-in-law
-#: ../includes/functions/functions.php:2468
+#: ../includes/functions/functions.php:2470
 msgid "wife's mother"
 msgstr ""
 
 #. I18N: mother-in-law
-#: ../includes/functions/functions.php:2469
+#: ../includes/functions/functions.php:2471
 msgid "souses's mother"
 msgstr ""
 
 #. I18N: father-in-law
-#: ../includes/functions/functions.php:2470
+#: ../includes/functions/functions.php:2472
 msgid "husband's father"
 msgstr ""
 
 #. I18N: father-in-law
-#: ../includes/functions/functions.php:2471
+#: ../includes/functions/functions.php:2473
 msgid "wife's father"
 msgstr ""
 
 #. I18N: father-in-law
-#: ../includes/functions/functions.php:2472
+#: ../includes/functions/functions.php:2474
 msgid "souses's father"
 msgstr ""
 
 #. I18N: daughter-in-law
-#: ../includes/functions/functions.php:2474
+#: ../includes/functions/functions.php:2476
 msgid "son's wife"
 msgstr ""
 
 #. I18N: son-in-law
-#: ../includes/functions/functions.php:2475
+#: ../includes/functions/functions.php:2477
 msgid "daughter's husband"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2478
+#: ../includes/functions/functions.php:2480
 msgid "mother's mother's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2479
+#: ../includes/functions/functions.php:2481
 msgid "mother's mother's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2480
+#: ../includes/functions/functions.php:2482
 msgid "mother's mother's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2481
+#: ../includes/functions/functions.php:2483
 msgid "mother's father's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2482
+#: ../includes/functions/functions.php:2484
 msgid "mother's father's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2483
+#: ../includes/functions/functions.php:2485
 msgid "mother's father's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2484
+#: ../includes/functions/functions.php:2486
 msgid "mother's parent's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2485
+#: ../includes/functions/functions.php:2487
 msgid "mother's parent's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2486
+#: ../includes/functions/functions.php:2488
 msgid "mother's parent's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2487
+#: ../includes/functions/functions.php:2489
 msgid "father's mother's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2488
+#: ../includes/functions/functions.php:2490
 msgid "father's mother's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2489
+#: ../includes/functions/functions.php:2491
 msgid "father's mother's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2490
+#: ../includes/functions/functions.php:2492
 msgid "father's father's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2491
+#: ../includes/functions/functions.php:2493
 msgid "father's father's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2492
+#: ../includes/functions/functions.php:2494
 msgid "father's father's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2493
+#: ../includes/functions/functions.php:2495
 msgid "father's parent's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2494
+#: ../includes/functions/functions.php:2496
 msgid "father's parent's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2495
+#: ../includes/functions/functions.php:2497
 msgid "father's parent's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2496
+#: ../includes/functions/functions.php:2498
 msgid "parent's mother's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2497
+#: ../includes/functions/functions.php:2499
 msgid "parent's mother's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2498
+#: ../includes/functions/functions.php:2500
 msgid "parent's mother's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2499
+#: ../includes/functions/functions.php:2501
 msgid "parent's father's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2500
+#: ../includes/functions/functions.php:2502
 msgid "parent's father's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2501
+#: ../includes/functions/functions.php:2503
 msgid "parent's father's parent"
 msgstr ""
 
 #. I18N: great-grandmother
-#: ../includes/functions/functions.php:2502
+#: ../includes/functions/functions.php:2504
 msgid "parent's parent's mother"
 msgstr ""
 
 #. I18N: great-grandfather
-#: ../includes/functions/functions.php:2503
+#: ../includes/functions/functions.php:2505
 msgid "parent's parent's father"
 msgstr ""
 
 #. I18N: great-grandparent
-#: ../includes/functions/functions.php:2504
+#: ../includes/functions/functions.php:2506
 msgid "parent's parent's parent"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2506
-#: ../includes/functions/functions.php:2572
+#: ../includes/functions/functions.php:2508
+#: ../includes/functions/functions.php:2574
 msgid "mother's mother's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2507
-#: ../includes/functions/functions.php:2573
+#: ../includes/functions/functions.php:2509
+#: ../includes/functions/functions.php:2575
 msgid "mother's mother's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2508
-#: ../includes/functions/functions.php:2574
+#: ../includes/functions/functions.php:2510
+#: ../includes/functions/functions.php:2576
 msgid "mother's mother's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2509
-#: ../includes/functions/functions.php:2575
+#: ../includes/functions/functions.php:2511
+#: ../includes/functions/functions.php:2577
 msgid "mother's father's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2510
-#: ../includes/functions/functions.php:2576
+#: ../includes/functions/functions.php:2512
+#: ../includes/functions/functions.php:2578
 msgid "mother's father's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2511
-#: ../includes/functions/functions.php:2577
+#: ../includes/functions/functions.php:2513
+#: ../includes/functions/functions.php:2579
 msgid "mother's father's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2512
-#: ../includes/functions/functions.php:2578
+#: ../includes/functions/functions.php:2514
+#: ../includes/functions/functions.php:2580
 msgid "mother's parent's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2513
-#: ../includes/functions/functions.php:2579
+#: ../includes/functions/functions.php:2515
+#: ../includes/functions/functions.php:2581
 msgid "mother's parent's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2514
-#: ../includes/functions/functions.php:2580
+#: ../includes/functions/functions.php:2516
+#: ../includes/functions/functions.php:2582
 msgid "mother's parent's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2515
-#: ../includes/functions/functions.php:2581
+#: ../includes/functions/functions.php:2517
+#: ../includes/functions/functions.php:2583
 msgid "father's mother's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2516
-#: ../includes/functions/functions.php:2582
+#: ../includes/functions/functions.php:2518
+#: ../includes/functions/functions.php:2584
 msgid "father's mother's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2517
-#: ../includes/functions/functions.php:2583
+#: ../includes/functions/functions.php:2519
+#: ../includes/functions/functions.php:2585
 msgid "father's mother's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2518
-#: ../includes/functions/functions.php:2584
+#: ../includes/functions/functions.php:2520
+#: ../includes/functions/functions.php:2586
 msgid "father's father's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2519
-#: ../includes/functions/functions.php:2585
+#: ../includes/functions/functions.php:2521
+#: ../includes/functions/functions.php:2587
 msgid "father's father's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2520
-#: ../includes/functions/functions.php:2586
+#: ../includes/functions/functions.php:2522
+#: ../includes/functions/functions.php:2588
 msgid "father's father's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2521
-#: ../includes/functions/functions.php:2587
+#: ../includes/functions/functions.php:2523
+#: ../includes/functions/functions.php:2589
 msgid "father's parent's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2522
-#: ../includes/functions/functions.php:2588
+#: ../includes/functions/functions.php:2524
+#: ../includes/functions/functions.php:2590
 msgid "father's parent's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2523
-#: ../includes/functions/functions.php:2589
+#: ../includes/functions/functions.php:2525
+#: ../includes/functions/functions.php:2591
 msgid "father's parent's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2524
-#: ../includes/functions/functions.php:2590
+#: ../includes/functions/functions.php:2526
+#: ../includes/functions/functions.php:2592
 msgid "parent's mother's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2525
-#: ../includes/functions/functions.php:2591
+#: ../includes/functions/functions.php:2527
+#: ../includes/functions/functions.php:2593
 msgid "parent's mother's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2526
-#: ../includes/functions/functions.php:2592
+#: ../includes/functions/functions.php:2528
+#: ../includes/functions/functions.php:2594
 msgid "parent's mother's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2527
-#: ../includes/functions/functions.php:2593
+#: ../includes/functions/functions.php:2529
+#: ../includes/functions/functions.php:2595
 msgid "parent's father's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2528
-#: ../includes/functions/functions.php:2594
+#: ../includes/functions/functions.php:2530
+#: ../includes/functions/functions.php:2596
 msgid "parent's father's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2529
-#: ../includes/functions/functions.php:2595
+#: ../includes/functions/functions.php:2531
+#: ../includes/functions/functions.php:2597
 msgid "parent's father's sibling"
 msgstr ""
 
 #. I18N: great-aunt
-#: ../includes/functions/functions.php:2530
-#: ../includes/functions/functions.php:2596
+#: ../includes/functions/functions.php:2532
+#: ../includes/functions/functions.php:2598
 msgid "parent's parent's sister"
 msgstr ""
 
 #. I18N: great-uncle
-#: ../includes/functions/functions.php:2531
-#: ../includes/functions/functions.php:2597
+#: ../includes/functions/functions.php:2533
+#: ../includes/functions/functions.php:2599
 msgid "parent's parent's brother"
 msgstr ""
 
 #. I18N: great-aunt/uncle
-#: ../includes/functions/functions.php:2532
-#: ../includes/functions/functions.php:2598
+#: ../includes/functions/functions.php:2534
+#: ../includes/functions/functions.php:2600
 msgid "parent's parent's sibling"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2534
+#: ../includes/functions/functions.php:2536
 msgid "daughter's daughter's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2535
+#: ../includes/functions/functions.php:2537
 msgid "daughter's daughter's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2536
+#: ../includes/functions/functions.php:2538
 msgid "daughter's daughter's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2537
+#: ../includes/functions/functions.php:2539
 msgid "daughter's son's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2538
+#: ../includes/functions/functions.php:2540
 msgid "daughter's son's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2539
+#: ../includes/functions/functions.php:2541
 msgid "daughter's son's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2540
+#: ../includes/functions/functions.php:2542
 msgid "daughter's child's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2541
+#: ../includes/functions/functions.php:2543
 msgid "daughter's child's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2542
+#: ../includes/functions/functions.php:2544
 msgid "daughter's child's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2543
+#: ../includes/functions/functions.php:2545
 msgid "son's daughter's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2544
+#: ../includes/functions/functions.php:2546
 msgid "son's daughter's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2545
+#: ../includes/functions/functions.php:2547
 msgid "son's daughter's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2546
+#: ../includes/functions/functions.php:2548
 msgid "son's son's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2547
+#: ../includes/functions/functions.php:2549
 msgid "son's son's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2548
+#: ../includes/functions/functions.php:2550
 msgid "son's son's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2549
+#: ../includes/functions/functions.php:2551
 msgid "son's child's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2550
+#: ../includes/functions/functions.php:2552
 msgid "son's child's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2551
+#: ../includes/functions/functions.php:2553
 msgid "son's child's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2552
+#: ../includes/functions/functions.php:2554
 msgid "child's daughter's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2553
+#: ../includes/functions/functions.php:2555
 msgid "child's daughter's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2554
+#: ../includes/functions/functions.php:2556
 msgid "child's daughter's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2555
+#: ../includes/functions/functions.php:2557
 msgid "child's son's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2556
+#: ../includes/functions/functions.php:2558
 msgid "child's son's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2557
+#: ../includes/functions/functions.php:2559
 msgid "child's son's child"
 msgstr ""
 
 #. I18N: great-granddaughter
-#: ../includes/functions/functions.php:2558
+#: ../includes/functions/functions.php:2560
 msgid "child's child's daughter"
 msgstr ""
 
 #. I18N: great-grandson
-#: ../includes/functions/functions.php:2559
+#: ../includes/functions/functions.php:2561
 msgid "child's child's son"
 msgstr ""
 
 #. I18N: great-grandchild
-#: ../includes/functions/functions.php:2560
+#: ../includes/functions/functions.php:2562
 msgid "child's child's child"
 msgstr ""
 
 #. I18N: step-brother
-#: ../includes/functions/functions.php:2562
+#: ../includes/functions/functions.php:2564
 msgid "mother's husband's son"
 msgstr ""
 
 #. I18N: step-sister
-#: ../includes/functions/functions.php:2563
+#: ../includes/functions/functions.php:2565
 msgid "mother's husband's daughter"
 msgstr ""
 
 #. I18N: step-sibling
-#: ../includes/functions/functions.php:2564
+#: ../includes/functions/functions.php:2566
 msgid "mother's husband's child"
 msgstr ""
 
 #. I18N: step-brother
-#: ../includes/functions/functions.php:2565
+#: ../includes/functions/functions.php:2567
 msgid "father's wife's son"
 msgstr ""
 
 #. I18N: step-sister
-#: ../includes/functions/functions.php:2566
+#: ../includes/functions/functions.php:2568
 msgid "father's wife's daughter"
 msgstr ""
 
 #. I18N: step-sibling
-#: ../includes/functions/functions.php:2567
+#: ../includes/functions/functions.php:2569
 msgid "father's wife's child"
 msgstr ""
 
 #. I18N: step-brother
-#: ../includes/functions/functions.php:2568
+#: ../includes/functions/functions.php:2570
 msgid "parent's spouse's son"
 msgstr ""
 
 #. I18N: step-sister
-#: ../includes/functions/functions.php:2569
+#: ../includes/functions/functions.php:2571
 msgid "parent's spouse's daughter"
 msgstr ""
 
 #. I18N: step-sibling
-#: ../includes/functions/functions.php:2570
+#: ../includes/functions/functions.php:2572
 msgid "parent's spouse's child"
 msgstr ""
 
-#: ../includes/functions/functions.php:2611
+#: ../includes/functions/functions.php:2613
 msgid "great-great-aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2612
+#: ../includes/functions/functions.php:2614
 msgid "great-great-uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2613
+#: ../includes/functions/functions.php:2615
 msgid "great-great-aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2618
+#: ../includes/functions/functions.php:2620
 msgid "great-great-great-aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2619
+#: ../includes/functions/functions.php:2621
 msgid "great-great-great-uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2620
+#: ../includes/functions/functions.php:2622
 msgid "great-great-great-aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2625
+#: ../includes/functions/functions.php:2627
 msgid "great x4 aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2626
+#: ../includes/functions/functions.php:2628
 msgid "great x4 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2627
+#: ../includes/functions/functions.php:2629
 msgid "great x4 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2632
+#: ../includes/functions/functions.php:2634
 msgid "great x5 aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2633
+#: ../includes/functions/functions.php:2635
 msgid "great x5 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2634
+#: ../includes/functions/functions.php:2636
 msgid "great x5 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2639
+#: ../includes/functions/functions.php:2641
 msgid "great x6 aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2640
+#: ../includes/functions/functions.php:2642
 msgid "great x6 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2641
+#: ../includes/functions/functions.php:2643
 msgid "great x6 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2646
+#: ../includes/functions/functions.php:2648
 msgid "great x7 aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2647
+#: ../includes/functions/functions.php:2649
 msgid "great x7 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2648
+#: ../includes/functions/functions.php:2650
 msgid "great x7 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2653
+#: ../includes/functions/functions.php:2655
 #, php-format
 msgid "great x%d aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2654
+#: ../includes/functions/functions.php:2656
 #, php-format
 msgid "great x%d uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2655
+#: ../includes/functions/functions.php:2657
 #, php-format
 msgid "great x%d aunt/uncle"
 msgstr ""
@@ -8386,122 +8393,122 @@ msgstr ""
 
 #: ../includes/functions/functions.php:2710
 #, php-format
-msgid "great x %d grandmother"
+msgid "great x%d grandmother"
 msgstr ""
 
 #: ../includes/functions/functions.php:2711
 #, php-format
-msgid "great x %d grandfather"
+msgid "great x%d grandfather"
 msgstr ""
 
 #: ../includes/functions/functions.php:2712
 #, php-format
-msgid "great x %d grandparent"
-msgstr ""
-
-#: ../includes/functions/functions.php:2721
-msgid "great-great-grandson"
-msgstr ""
-
-#: ../includes/functions/functions.php:2722
-msgid "great-great-granddaughter"
+msgid "great x%d grandparent"
 msgstr ""
 
 #: ../includes/functions/functions.php:2723
+msgid "great-great-grandson"
+msgstr ""
+
+#: ../includes/functions/functions.php:2724
+msgid "great-great-granddaughter"
+msgstr ""
+
+#: ../includes/functions/functions.php:2725
 msgid "great-great-grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2728
+#: ../includes/functions/functions.php:2730
 msgid "great-great-great-grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2729
+#: ../includes/functions/functions.php:2731
 msgid "great-great-great-granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2730
+#: ../includes/functions/functions.php:2732
 msgid "great-great-great-grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2735
+#: ../includes/functions/functions.php:2737
 msgid "great x4 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2736
+#: ../includes/functions/functions.php:2738
 msgid "great x4 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2737
+#: ../includes/functions/functions.php:2739
 msgid "great x4 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2742
+#: ../includes/functions/functions.php:2744
 msgid "great x5 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2743
+#: ../includes/functions/functions.php:2745
 msgid "great x5 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2744
+#: ../includes/functions/functions.php:2746
 msgid "great x5 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2749
+#: ../includes/functions/functions.php:2751
 msgid "great x6 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2750
+#: ../includes/functions/functions.php:2752
 msgid "great x6 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2751
+#: ../includes/functions/functions.php:2753
 msgid "great x6 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2756
+#: ../includes/functions/functions.php:2758
 msgid "great x7 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2757
+#: ../includes/functions/functions.php:2759
 msgid "great x7 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2758
+#: ../includes/functions/functions.php:2760
 msgid "great x7 grandchild"
-msgstr ""
-
-#: ../includes/functions/functions.php:2763
-#, php-format
-msgid "great x%d grandson"
-msgstr ""
-
-#: ../includes/functions/functions.php:2764
-#, php-format
-msgid "great x%d granddaughter"
 msgstr ""
 
 #: ../includes/functions/functions.php:2765
 #, php-format
+msgid "great x%d grandson"
+msgstr ""
+
+#: ../includes/functions/functions.php:2766
+#, php-format
+msgid "great x%d granddaughter"
+msgstr ""
+
+#: ../includes/functions/functions.php:2767
+#, php-format
 msgid "great x%d grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2773
+#: ../includes/functions/functions.php:2779
 #, php-format
 msgid "%s male cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2774
+#: ../includes/functions/functions.php:2780
 #, php-format
 msgid "%s female cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2775
+#: ../includes/functions/functions.php:2781
 #, php-format
 msgid "%s cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2782
+#: ../includes/functions/functions.php:2788
 #, php-format
 msgid "%1$s male cousin, %2$d time removed"
 msgid_plural "%1$s male cousin, %2$d times removed"
@@ -8509,7 +8516,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: ../includes/functions/functions.php:2787
+#: ../includes/functions/functions.php:2793
 #, php-format
 msgid "%1$s female cousin, %2$d time removed"
 msgid_plural "%1$s female cousin, %2$d times removed"
@@ -8517,7 +8524,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: ../includes/functions/functions.php:2790
+#: ../includes/functions/functions.php:2796
 #, php-format
 msgid "%1$s cousin, %2$d time removed"
 msgid_plural "%1$s cousin, %2$d times removed"
@@ -8526,62 +8533,62 @@ msgstr[1] ""
 msgstr[2] ""
 
 #. I18N: These strings are used to build paths of relationships, such as "father's wife's husband's brother"
-#: ../includes/functions/functions.php:2818
+#: ../includes/functions/functions.php:2824
 #, php-format
 msgid "mother's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2819
+#: ../includes/functions/functions.php:2825
 #, php-format
 msgid "father's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2820
+#: ../includes/functions/functions.php:2826
 #, php-format
 msgid "parent's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2821
+#: ../includes/functions/functions.php:2827
 #, php-format
 msgid "husband's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2822
+#: ../includes/functions/functions.php:2828
 #, php-format
 msgid "wife's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2823
+#: ../includes/functions/functions.php:2829
 #, php-format
 msgid "spouse's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2824
+#: ../includes/functions/functions.php:2830
 #, php-format
 msgid "brother's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2825
+#: ../includes/functions/functions.php:2831
 #, php-format
 msgid "sister's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2826
+#: ../includes/functions/functions.php:2832
 #, php-format
 msgid "sibling's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2827
+#: ../includes/functions/functions.php:2833
 #, php-format
 msgid "son's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2828
+#: ../includes/functions/functions.php:2834
 #, php-format
 msgid "daughter's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2829
+#: ../includes/functions/functions.php:2835
 #, php-format
 msgid "child's %s"
 msgstr ""
@@ -8613,20 +8620,6 @@ msgstr ""
 #: ../includes/functions/functions_print_facts.php:1169
 #: ../includes/functions/functions_print_facts.php:1482
 msgid "Copy"
-msgstr ""
-
-#: ../includes/functions/functions_print_facts.php:238
-#: ../includes/functions/functions_print_facts.php:370
-#: ../includes/functions/functions_print_facts.php:935
-#: ../includes/functions/functions_print_facts.php:1226
-msgid "Privacy"
-msgstr ""
-
-#: ../includes/functions/functions_print_facts.php:240
-#: ../includes/functions/functions_print_facts.php:372
-#: ../includes/functions/functions_print_facts.php:937
-#: ../includes/functions/functions_print_facts.php:1228
-msgid "Confidential"
 msgstr ""
 
 #: ../includes/functions/functions_print_facts.php:252
@@ -9145,6 +9138,10 @@ msgid_plural "%d logged-in users"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
+
+#: ../includes/classes/class_sidebar.php:57
+msgid "Sidebar"
+msgstr ""
 
 #: ../includes/classes/class_treenav.php:171
 msgid "View this tree in the full page interactive tree"
