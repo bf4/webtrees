@@ -1616,179 +1616,108 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	global $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
 	global $PEDIGREE_FULL_DETAILS, $LANGUAGE, $lang_short_cut;
 
-	// get ASSOciate(s) ID(s)
-	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
-	for ($i=0; $i<$ct; $i++) {
-		$level = substr($match[$i][0], 0, 1);
-		$pid2 = $match[$i][1];
-		if (empty($pid) && isset($match[1][1])) $pid = $match[1][1];
-		// get RELAtionship field
-		$autoRela = false; // Indicates that the RELA information was automatically generated
-		$assorec = get_sub_record($level, "$level ASSO ", $factrec, $i+1);
-			$rct = preg_match("/\d RELA (.*)/", $assorec, $rmatch);
-			if ($rct>0) {
-				// RELAtionship name in user language
-				$key = strtolower(trim($rmatch[1]));
-				if (substr($key, 0, 1)=='*') {
-					$autoRela = true;
-					$key = substr($key, 1);
-
+	// Level 1 ASSO
+	if (preg_match('/^1 ASSO @('.PGV_REGEX_XREF.')@(\n[2-9].*)*/', $factrec, $amatch)) {
+		$person=Person::getInstance($amatch[1]);
+		if ($person) {
+			$name=$person->getFullName();
+			switch ($type) {
+			case 'INDI':
+				$relationship=get_relationship_name(get_relationship($pid, $amatch[1], true, 4));
+				if (!$relationship) {
+					$relationship=i18n::translate('Relationship Chart');
 				}
-				$cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
-				if ($cr > 0) {
-					$rela = get_sosa_name($relamatch[0][1]);
-				} else {
-					if (isset($pgv_lang[$key])) {
-						$rela = $pgv_lang[$key];
-					} else {
-						$rela = $rmatch[1];
-					}
-					if ($key == "nephew") {
-						$node = get_relationship($pid, $pid2);
-						if (isset($node["path"][1])) {
-							$sex3 = Person::getInstance($node["path"][1])->getSex();
-							if ($sex3 == "M") {
-								$rela = i18n::translate('nephew');
-							} elseif ($sex3 == "F") {
-								$rela = i18n::translate('nephew');
-							}
+				$relationship=' - <a href="relationship.php?pid1='.$pid.'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship.'</a>';
+				break;
+			case 'FAM':
+				$relationship='';
+				$famrec = find_family_record($pid, PGV_GED_ID);
+				if ($famrec) {
+					$parents = find_parents_in_record($famrec);
+					if ($parents["HUSB"]) {
+						$relationship1=get_relationship_name(get_relationship($parents["HUSB"], $amatch[1], true, 4));
+						if (!$relationship1) {
+							$relationship1=i18n::translate('Relationship Chart');
 						}
-					} elseif ($key == "niece") {
-						$node = get_relationship($pid, $pid2);
-						if (isset($node["path"][1])) {
-							$sex3 = Person::getInstance($node["path"][1])->getSex();
-							if ($sex3 == "M") {
-								$rela = i18n::translate('niece');
-							} elseif ($sex3 == "F") {
-								$rela = i18n::translate('niece');
-							}
+						$relationship.=' - <a href="relationship.php?pid1='.$parents["HUSB"].'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship1.'<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sex']['small'].'" class="gender_image" /></a>';
+					}
+					if ($parents["WIFE"]) {
+						$relationship2=get_relationship_name(get_relationship($parents["WIFE"], $amatch[1], true, 4));
+						if (!$relationship2) {
+							$relationship2=i18n::translate('Relationship Chart');
 						}
-					} elseif ($key == "uncle" || $key == "aunt") {
-						$node = get_relationship($pid, $pid2);
-						if (isset($node["path"][1])) {
-							$sex3 = Person::getInstance($node["path"][1])->getSex();
-							if ($sex3 == "M") {
-								$rela = $pgv_lang["sosa_{$key}_2"];
-							} elseif ($sex3 == "F") {
-								$rela = $pgv_lang["sosa_{$key}_3"];
-							}
-						}
-					} elseif ($key == "twin" || $key == "twin_brother" || $key =="twin_sister") {
-						$autoRela = true;
+						$relationship.=' - <a href="relationship.php?pid1='.$parents["WIFE"].'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship2.'<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexf']['small'].'" class="gender_image" /></a>';
 					}
 				}
-				$p = strpos($rela, "(=");
-				if ($p>0) $rela = trim(substr($rela, 0, $p));
-				// Allow special processing for different languages
-				$func="rela_localisation_{$lang_short_cut[$LANGUAGE]}";
-				if (function_exists($func)) {
-					// Localise the relationship
-					echo ' ', $func($rela, $pid2), ': ';
-				} else {
-					echo " {$rela}: ";
-				}
-			} else {
-				$rela = i18n::translate('RELA'); // default
-			}
-
-		// ASSOciate ID link
-		$gedrec = find_gedcom_record($pid2, PGV_GED_ID);
-		if (strstr($gedrec, "@ INDI")!==false || strstr($gedrec, "@ SUBM")!==false) {
-			$record=GedcomRecord::getInstance($pid2);
-			$name=$record->getFullName();
-			echo "<a href=\"", encode_url($record->getLinkUrl()), "\">" , PrintReady($name);
-			if ($SHOW_ID_NUMBERS) {
-				echo "&nbsp;&nbsp;";
-				if ($TEXT_DIRECTION=="rtl") echo getRLM();
-				echo "(", $pid2, ")";
-				if ($TEXT_DIRECTION=="rtl") echo getRLM();
-			}
-			echo "</a>";
-			// ID age
-			if (preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
-				$tmp=new Person($gedrec);
-				$birth_date=$tmp->getBirthDate();
-				$event_date=new GedcomDate($dmatch[1]);
-				// Can't use getDeathDate(), as this also gives BURI/CREM events, which
-				// wouldn't give the correct "days after death" result for people with
-				// no DEAT.
-				$death_event=$tmp->getFactByType('DEAT');
-				if ($death_event) {
-					$death_date=$death_event->getDate();
-				} else {
-					$death_date=new GedcomDate('');
-				}
-				$ageText = '';
-
-				if (!strstr($factrec, "_BIRT_") && !strstr($factrec, "_DEAT_") && GedcomDate::Compare($event_date, $death_date)>=0 && $tmp->isDead()) {
-					// After death, print time since death
-					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $event_date), true);
-					if (!empty($age)) {
-						if (GedcomDate::GetAgeGedcom($death_date, $event_date)=="0d") {
-							$ageText = "(".i18n::translate('on the date of death').")";
-						} else {
-							$ageText = "(".$age." ".i18n::translate('after death').")";
-						}
-					}
-				} elseif (GedcomDate::GetAgeGedcom($birth_date, $event_date)!="0d") {
-					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
-					if (!empty($age)) {
-						$ageText = "(".i18n::translate('Age')." {$age})";
-					}
-				}
-				if (!empty($ageText)) {
-					echo '<span class="age"> ', PrintReady($ageText), '</span>';
-				}
-			}
-
-			// RELAtionship calculation : for a family print relationship to both spouses
-			if ($view!="preview" && !$autoRela) {
-				if ($type=='FAM') {
-					$famrec = find_family_record($pid, PGV_GED_ID);
-					if ($famrec) {
-						$parents = find_parents_in_record($famrec);
-						$pid1 = $parents["HUSB"];
-						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"", encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID), "\">[" , i18n::translate('Relationship Chart') , "<img src=\"$PGV_IMAGE_DIR/" , $PGV_IMAGES["sex"]["small"] , "\" title=\"" , i18n::translate('Husband') , "\" alt=\"" , i18n::translate('Husband') , "\" class=\"gender_image\" />]</a>";
-						$pid1 = $parents["WIFE"];
-						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"", encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID), "\">[" , i18n::translate('Relationship Chart') , "<img src=\"$PGV_IMAGE_DIR/" , $PGV_IMAGES["sexf"]["small"] , "\" title=\"" , i18n::translate('Wife') , "\" alt=\"" , i18n::translate('Wife') , "\" class=\"gender_image\" />]</a>";
-					}
-				}
-				else if ($pid!=$pid2 && $rela!="twin_sister") echo " - <a href=\"", encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID), "\">[" , i18n::translate('Relationship Chart') , "]</a>";
-			}
-
-		} elseif (strstr($gedrec, "@ FAM")!==false) {
-			echo "<a href=\"", encode_url("family.php?show_full=1&famid={$pid2}"), "\">";
-			if ($TEXT_DIRECTION == "ltr") {
-				echo getLRM();
-			} else {
-				echo " ", getRLM();
-			}
-			echo "[", i18n::translate('View Family');
-			if ($SHOW_ID_NUMBERS) {
-				echo " ", getLRM(), "($pid2)", getLRM();
-			}
-			if ($TEXT_DIRECTION == "ltr") {
-				echo getLRM(), "]</a>";
-			} else {
-				echo getRLM(), "]</a>";
+				break;
 			}
 		} else {
-			if (strstr($pid2, " ")) echo $pid2;
-			else echo i18n::translate('unknown');
-			if ($SHOW_ID_NUMBERS) {
-				echo "&nbsp;&nbsp;";
-				if ($TEXT_DIRECTION=="rtl") echo getRLM();
-				echo "(", $pid2, ")";
-				if ($TEXT_DIRECTION=="rtl") echo getRLM();
+			$name=$amatch[1];
+			$relationship='';
+		}
+		if ($SHOW_ID_NUMBERS) {
+			$name.=' ('.$amatch[1].')';
+		}
+		if (preg_match('/\n2 RELA (.+)/', $amatch[2], $rmatch)) {
+			$label='<br /><span class="label">'.i18n::translate('Relationship').':</span> '.$rmatch[1];
+		} else {
+			$label='';
+		}
+		echo '<a href="', $person->getLinkUrl().'">', $name, $relationship, '</a><br />', $label;
+	}
+
+	// Level 2 ASSO
+	preg_match_all('/\n2 ASSO @('.PGV_REGEX_XREF.')@(\n[3-9].*)*/', $factrec, $amatches, PREG_SET_ORDER);
+	foreach ($amatches as $amatch) {
+		$person=Person::getInstance($amatch[1]);
+		if ($person) {
+			$name=$person->getFullName();
+			switch ($type) {
+			case 'INDI':
+				$relationship=get_relationship_name(get_relationship($pid, $amatch[1], true, 4));
+				if (!$relationship) {
+					$relationship=i18n::translate('Relationship Chart');
+				}
+				$relationship=' - <a href="relationship.php?pid1='.$pid.'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship.'</a>';
+				break;
+			case 'FAM':
+				$relationship='';
+				$famrec = find_family_record($pid, PGV_GED_ID);
+				if ($famrec) {
+					$parents = find_parents_in_record($famrec);
+					if ($parents["HUSB"]) {
+						$relationship1=get_relationship_name(get_relationship($parents["HUSB"], $amatch[1], true, 4));
+						if (!$relationship1) {
+							$relationship1=i18n::translate('Relationship Chart');
+						}
+						$relationship.=' - <a href="relationship.php?pid1='.$parents["HUSB"].'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship1.'<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sex']['small'].'" class="gender_image" /></a>';
+					}
+					if ($parents["WIFE"]) {
+						$relationship2=get_relationship_name(get_relationship($parents["WIFE"], $amatch[1], true, 4));
+						if (!$relationship2) {
+							$relationship2=i18n::translate('Relationship Chart');
+						}
+						$relationship.=' - <a href="relationship.php?pid1='.$parents["WIFE"].'&amp;pid2='.$amatch[1].'&amp;ged='.urlencode(PGV_GEDCOM).'">'.$relationship2.'<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexf']['small'].'" class="gender_image" /></a>';
+					}
+				}
+				break;
 			}
+		} else {
+			$name=$amatch[1];
+			$relationship='';
 		}
-		if ($linebr) echo "<br />";
-		if (PGV_SCRIPT_NAME=='pedigree.php') {
-			echo "<br />";
-			if (function_exists('print_fact_sources')) print_fact_sources($assorec, $level+1);
+		if ($SHOW_ID_NUMBERS) {
+			$name.=' ('.$amatch[1].')';
 		}
+		if (preg_match('/\n3 RELA (.+)/', $amatch[2], $rmatch)) {
+			$label='<span class="label">'.$rmatch[1].':</span> ';
+		} else {
+			$label='';
+		}
+		echo $label, '<a href="', $person->getLinkUrl().'">', $name, '</a>', $relationship;
 	}
 }
+
 /**
 * Format age of parents in HTML
 *

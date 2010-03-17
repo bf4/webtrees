@@ -2468,13 +2468,23 @@ function get_relationship_name($nodes) {
 
 	case 'husmot': return /* I18N: mother-in-law  */ i18n::translate('husband\'s mother');
 	case 'wifmot': return /* I18N: mother-in-law  */ i18n::translate('wife\'s mother');
-	case 'spomot': return /* I18N: mother-in-law  */ i18n::translate('souses\'s mother');
+	case 'spomot': return /* I18N: mother-in-law  */ i18n::translate('spouses\'s mother');
 	case 'husfat': return /* I18N: father-in-law  */ i18n::translate('husband\'s father');
 	case 'wiffat': return /* I18N: father-in-law  */ i18n::translate('wife\'s father');
-	case 'spofat': return /* I18N: father-in-law  */ i18n::translate('souses\'s father');
+	case 'spofat': return /* I18N: father-in-law  */ i18n::translate('spouses\'s father');
 
 	case 'sonwif': return /* I18N: daughter-in-law */ i18n::translate('son\'s wife');
 	case 'dauhus': return /* I18N: son-in-law      */ i18n::translate('daughter\'s husband');
+
+	case 'husson': return /* I18N: step-son      */ i18n::translate('husband\'s son');
+	case 'wifson': return /* I18N: step-son      */ i18n::translate('wife\'s son');
+	case 'sposon': return /* I18N: step-son      */ i18n::translate('spouses\'s son');
+	case 'husdau': return /* I18N: step-daughter */ i18n::translate('husband\'s daughter');
+	case 'wifdau': return /* I18N: step-daughter */ i18n::translate('wife\'s daughter');
+	case 'spodau': return /* I18N: step-daughter */ i18n::translate('spouses\'s daughter');
+	case 'huschi': return /* I18N: step-child    */ i18n::translate('husband\'s child');
+	case 'wifchi': return /* I18N: step-child    */ i18n::translate('wife\'s child');
+	case 'spochi': return /* I18N: step-child    */ i18n::translate('spouses\'s child');
 
 	// Level Three relationships
 	case 'motmotmot': return /* I18N: great-grandmother */ i18n::translate('mother\'s mother\'s mother');
