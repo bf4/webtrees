@@ -47,6 +47,7 @@ function media_reorder_row($rtype, $rowm, $pid) {
     global $SEARCH_SPIDER;
     global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $mediaType;
+	global $MEDIA_TYPES;
 
 	if (!isset($rowm)) {
 		$rowm=$row;
@@ -106,7 +107,7 @@ function media_reorder_row($rtype, $rowm, $pid) {
 			} else {
 				$mediaType = i18n::translate('Other');
 			}
-			print "<br /><span class=\"label\">".i18n::translate('Type').": </span> <span class=\"field\">$mediaType</span>";
+			// print "<br /><span class=\"label\">".i18n::translate('Type').": </span> <span class=\"field\">$mediaType</span>";
 		}
 
 		print "\n" . "</td><td>&nbsp;</td>" . "\n";
