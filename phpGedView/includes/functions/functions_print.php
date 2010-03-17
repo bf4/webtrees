@@ -1368,48 +1368,6 @@ function embed_globals($text) {
 	return $text;
 }
 
-function print_help_index($help){
-	global $pgv_lang;
-	$sentence = $pgv_lang[$help];
-	$mod_sentence = "";
-	$replace = "";
-	$replace_text = "";
-	$sub = "";
-	$pos1 = 0;
-	$pos2 = 0;
-	$ch=0;
-	$help_sorted = array();
-	$var="";
-	while (stristr($sentence, "#") == TRUE){
-		$pos1 = strpos($sentence, "#");
-		$mod_sentence = substr_replace($sentence, " ", $pos1, 1);
-		$pos2 = strpos($mod_sentence, "#");
-		$replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
-		$sub = str_replace(array("pgv_lang[", "]"), array("", ""), $replace);
-		if (isset($pgv_lang[$sub])) {
-			$items = explode(',', $pgv_lang[$sub]);
-			$var = $pgv_lang[$items[1]];
-		}
-		if (substr($var, 0, 1)=="_") {
-			$ch++;
-		}
-		$replace_text = "<a href=\"".encode_url("help_text.php?help=".$items[0])."\">".$var."</a><br />";
-		$help_sorted[$replace_text] = $var;
-		$sentence = str_replace("#".$replace."#", $replace_text, $sentence);
-	}
-	uasort($help_sorted, "stringsort");
-	if ($ch==0) $ch=count($help_sorted);
-	else $ch +=$ch;
-	if ($ch>0) echo "<table width=\"100%\"><tr><td style=\"vertical-align: top;\"><ul>";
-	$i=0;
-	foreach ($help_sorted as $k => $help_item){
-		echo "<li>", $k, "</li>";
-		$i++;
-		if ($i==ceil($ch/2)) echo "</ul></td><td style=\"vertical-align: top;\"><ul>";
-	}
-	if ($ch>0) echo "</ul></td></tr></table>";
-}
-
 //-------------------------------------------------------------------------------------------------------------
 // switches between left and rigth align on chosen text direction
 //-------------------------------------------------------------------------------------------------------------
