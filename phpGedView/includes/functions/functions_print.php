@@ -52,7 +52,7 @@ require_once PGV_ROOT.'includes/classes/class_menubar.php';
 */
 function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $ZOOM_BOXES, $LINK_ICONS, $view, $GEDCOM;
-	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
+	global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	global $USE_SILHOUETTE, $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
@@ -2289,28 +2289,33 @@ function print_add_new_fact($id, $usedfacts, $type) {
 * @param none
 */
 function init_calendar_popup() {
-	global $pgv_lang, $WEEK_START;
+	global $WEEK_START;
 
-	echo "<script language=\"JavaScript\" type='text/javascript'>";
-	// month names
-	echo "cal_setMonthNames(";
-	foreach(array('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec') as $n=>$mon) {
-		if ($n>0) echo ", ";
-		echo "\"", $pgv_lang[$mon], "\"";
-	}
-	echo ");";
-	// day headers
-	echo "cal_setDayHeaders(";
-	foreach(array('sunday_1st', 'monday_1st', 'tuesday_1st', 'wednesday_1st', 'thursday_1st', 'friday_1st', 'saturday_1st') as $indexval => $day) {
-		if (isset($pgv_lang[$day])) {
-			if ($day!=="sunday_1st") echo ", ";
-			echo "\"", $pgv_lang[$day], "\"";
-		}
-	}
-	echo ");";
-	// week start day
-	echo "cal_setWeekStart(", $WEEK_START, ");";
-	echo "</script>";
+	echo
+		PGV_JS_START,
+		'cal_setMonthNames(',
+			'"', i18n::translate('January'), '",',
+			'"', i18n::translate('February'), '",',
+			'"', i18n::translate('March'), '",',
+			'"', i18n::translate('April'), '",',
+			'"', i18n::translate('May'), '",',
+			'"', i18n::translate('June'), '",',
+			'"', i18n::translate('July'), '",',
+			'"', i18n::translate('August'), '",',
+			'"', i18n::translate('September'), '",',
+			'"', i18n::translate('October'), '",',
+			'"', i18n::translate('November'), '",',
+			'"', i18n::translate('December'), '");',
+			'cal_setDayHeaders(',
+			'"', i18n::translate('Sun'), '",',
+			'"', i18n::translate('Mon'), '",',
+			'"', i18n::translate('Tue'), '",',
+			'"', i18n::translate('Wed'), '",',
+			'"', i18n::translate('Thu'), '",',
+			'"', i18n::translate('Fri'), '",',
+			'"', i18n::translate('Sat'), '");',
+			'cal_setWeekStart(', $WEEK_START, ');',
+			PGV_JS_END;
 }
 
 /**
