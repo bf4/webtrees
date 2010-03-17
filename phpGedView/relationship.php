@@ -157,7 +157,7 @@ if ($view!="preview") {
 
 	<!-- // Relationship header -->
 	<tr><td colspan="2" class="topbottombar center">
-	<?php print i18n::translate('Relationship Chart')?>
+	<?php echo i18n::translate('Relationship Chart')?>
 	</td>
 
 	<!-- // Empty space -->
@@ -165,12 +165,12 @@ if ($view!="preview") {
 
 	<!-- // Options header -->
 	<td colspan="2" class="topbottombar center">
-	<?php print i18n::translate('Options:')?>
+	<?php echo i18n::translate('Options:')?>
 	</td></tr>
 
 	<!-- // Person 1 -->
 	<tr><td class="descriptionbox">
-	<?php echo print i18n::translate('Person 1'), help_link('relationship_id'); ?>
+	<?php echo i18n::translate('Person 1'), help_link('relationship_id'); ?>
 	</td>
 	<td class="optionbox vmiddle">
 	<input tabindex="1" class="pedigree_form" type="text" name="pid1" id="pid1" size="3" value="<?php print $pid1 ?>" />
@@ -553,7 +553,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 						print "<div id=\"line$index\" dir=\"ltr\" style=\"background:none; position:absolute; right:".($plinex+$Dbxspacing)."px; top:".($liney+$Dbyspacing)."px; width:".($lw+$lh*2)."px; z-index:-100; \" align=\"right\">";
 						print "<img src=\"$PGV_IMAGE_DIR/$line\" align=\"right\" width=\"$lw\" height=\"$lh\" alt=\"\" />\n";
 						print "<br />";
-						print $pgv_lang[$node["relations"][$index]]."\n";
+						print i18n::translate($node["relations"][$index])."\n";
 						print "<img src=\"$arrow_img\" border=\"0\" align=\"middle\" alt=\"\" />\n";
 					}
 					else {
@@ -561,7 +561,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 						print "<br />";
 						print "<img src=\"$arrow_img\" border=\"0\" align=\"middle\" alt=\"\" />\n";
 						if ($lh == 3) print "<br />"; // note: $lh==3 means horiz arrow
-						print $pgv_lang[$node["relations"][$index]]."\n";
+						print i18n::translate($node["relations"][$index])."\n";
 					}
 					print "</div>\n";
 				}
