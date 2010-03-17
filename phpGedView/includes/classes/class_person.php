@@ -742,24 +742,25 @@ class Person extends GedcomRecord {
 	* @param Family $family the family to get the label for
 	* @return string
 	*/
-	function getChildFamilyLabel(&$family) {
-		global $pgv_lang;
+	function getChildFamilyLabel($family) {
 		if (!is_null($family)) {
 			$famlink = get_sub_record(1, '1 FAMC @'.$family->getXref().'@', $this->gedrec);
-			$ft = preg_match('/2 PEDI (.*)/', $famlink, $fmatch);
-			if ($ft>0) {
-				$temp = $fmatch[1];
-				if ($temp!='birth' && isset($pgv_lang[$temp])) return $pgv_lang[$temp].' ';
+			if (preg_match('/2 PEDI (.*)/', $famlink, $fmatch)) {
+				switch ($fmatch[1]) {
+				case 'adopted': return i18n::translate('Family with adoptive parents');
+				case 'foster':  return i18n::translate('Family with foster parents');
+				case 'sealing': return i18n::translate('Family with sealing parents');
+				}
 			}
 		}
-		return i18n::translate('Family with Parents');
+		return i18n::translate('Family with parents');
 	}
 	/**
 	* get the correct label for a step family
 	* @param Family $family the family to get the label for
 	* @return string
 	*/
-	function getStepFamilyLabel(&$family) {
+	function getStepFamilyLabel($family) {
 		$label = 'Unknown Family';
 		if (is_null($family)) return $label;
 		$childfams = $this->getChildFamilies();
@@ -791,33 +792,22 @@ class Person extends GedcomRecord {
 	* @param Family $family the family to get the label for
 	* @return string
 	*/
-	function getSpouseFamilyLabel(&$family) {
-		global $pgv_lang;
-
-		$label = i18n::translate('Family with') . ' ';
+	function getSpouseFamilyLabel($family) {
 		if (is_null($family)) {
-			return $label . i18n::translate('unknown');
-		}
-		$famlink = get_sub_record(1, '1 FAMS @'.$family->getXref().'@', $this->gedrec);
-		if (preg_match('/2 PEDI (.*)/', $famlink, $fmatch)) {
-			$temp = $fmatch[1];
-			if ($temp=='birth') {
-				$label = i18n::translate('BIRT').' ';
-			} elseif (isset($pgv_lang[$temp])) {
-				$label = $pgv_lang[$temp].' ';
+			$spouse=i18n::translate('unknown');
+		} else {
+			$husb = $family->getHusband();
+			$wife = $family->getWife();
+			if ($this->equals($husb) && !is_null($wife)) {
+				$spouse = $wife->getFullName();
+			} elseif ($this->equals($wife) && !is_null($husb)) {
+				$spouse = $husb->getFullName();
+			} else {
+				$spouse = i18n::translate('unknown');
 			}
 		}
-		$husb = $family->getHusband();
-		$wife = $family->getWife();
-		if ($this->equals($husb)) {
-			if (!is_null($wife)) $label .= $wife->getFullName();
-			else $label .= i18n::translate('unknown');
-		}
-		else {
-			if (!is_null($husb)) $label .= $husb->getFullName();
-			else $label .= i18n::translate('unknown');
-		}
-		return $label;
+		// I18N: %s is the spouse name
+		return i18n::translate('Family with %s', $spouse);
 	}
 	/**
 	* get updated Person

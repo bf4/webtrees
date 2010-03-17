@@ -101,11 +101,8 @@ class family_nav_Tab extends Tab {
 				<td style="padding-bottom:4px;" align="center" colspan="2">
 				<?php
 				echo "<a style=\"font:12px tahoma, arial, helvetica, sans-serif; padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
-				echo "<b>".i18n::translate('Parents Family')."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				echo "<b>".$label."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>";
-				//echo "<a href=\"family.php?famid=".$famid."\">";
-				//echo "<b>".i18n::translate('Parents Family')."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
-				//echo "</a>";
 				?>
 				</td>
 			</tr>
@@ -247,11 +244,8 @@ class family_nav_Tab extends Tab {
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
 				echo "<a style=\"padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
-				echo "<b>".i18n::translate('Step-Parent Family')."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				echo "<b>".$label."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>";
-				//echo "<a href=\"family.php?famid=".$famid."\">";
-				//echo "<b>".i18n::translate('Step-Parent Family')."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
-				//echo "</a>";
 				?>
 				</td>
 			</tr>
