@@ -95,19 +95,6 @@ if (count($dir_array)>0) {
 	$d_logfile_str .= "</form>";
 }
 
-$usermanual_filename = "docs/english/PGV-manual-en.html";
-$d_LangName = "lang_name_" . "english";
-$doc_lang = $pgv_lang[$d_LangName];
-$new_usermanual_filename = "docs/" . $languages[$LANGUAGE] . "/PGV-manual-" . $language_settings[$LANGUAGE]["lang_short_cut"] . ".html";
-if (file_exists($new_usermanual_filename)) {
-	$usermanual_filename = $new_usermanual_filename; $d_LangName = "lang_name_" . $languages[$LANGUAGE]; $doc_lang = $pgv_lang[$d_LangName];
-}
-
-$d_img_module_str = "&nbsp;";
-if (file_exists("img_editconfig.php")) {
-	$d_img_module_str = "<a href=\"img_editconfig.php?action=edit\">".i18n::translate('Edit Image Manipulation Configuration')."</a><br />";
-}
-
 $err_write = file_is_writeable("config.php");
 
 $verify_msg = false;
