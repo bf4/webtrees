@@ -146,12 +146,56 @@ class CalendarDate {
 			return null;
 		}
 	}
-	static function NUM_TO_MONTH($n) {
-		static $months=array(0=>'', 1=>'jan', 2=>'feb', 3=>'mar', 4=>'apr', 5=>'may', 6=>'jun', 7=>'jul', 8=>'aug', 9=>'sep', 10=>'oct', 11=>'nov', 12=>'dec');
-		if (isset($months[$n])) {
-			return $months[$n];
-		} else {
-			return null;
+	// We put these in the base class, to save duplicating it in the Julian and Gregorian calendars
+	static function NUM_TO_MONTH($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate('January');
+		case 2:  return i18n::translate('February');
+		case 3:  return i18n::translate('March');
+		case 4:  return i18n::translate('April');
+		case 5:  return i18n::translate('May');
+		case 6:  return i18n::translate('June');
+		case 7:  return i18n::translate('July');
+		case 8:  return i18n::translate('August');
+		case 9:  return i18n::translate('September');
+		case 10: return i18n::translate('October');
+		case 11: return i18n::translate('November');
+		case 12: return i18n::translate('December');
+		default: return '';
+		}
+	}
+	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate('Jan');
+		case 2:  return i18n::translate('Feb');
+		case 3:  return i18n::translate('Mar');
+		case 4:  return i18n::translate('Apr');
+		case 5:  return i18n::translate('May');
+		case 6:  return i18n::translate('Jun');
+		case 7:  return i18n::translate('Jul');
+		case 8:  return i18n::translate('Aug');
+		case 9:  return i18n::translate('Sep');
+		case 10: return i18n::translate('Oct');
+		case 11: return i18n::translate('Nov');
+		case 12: return i18n::translate('Dec');
+		default: return '';
+		}
+	}
+	static function NUM_TO_GEDCOM_MONTH($n, $leap_year) {
+		switch ($n) {
+		case 1:  return 'JAN';
+		case 2:  return 'FEB';
+		case 3:  return 'MAR';
+		case 4:  return 'APR';
+		case 5:  return 'MAY';
+		case 6:  return 'JUN';
+		case 7:  return 'JUL';
+		case 8:  return 'AUG';
+		case 9:  return 'SEP';
+		case 10: return 'OCT';
+		case 11: return 'NOV';
+		case 12: return 'DEC';
+		default: return '';
 		}
 	}
 	static function CAL_START_JD() {
@@ -298,7 +342,7 @@ class CalendarDate {
 
 	// How many days in the current week
 	function DaysInWeek() {
-		return self::NUM_DAYS_OF_WEEK();
+		return $this->NUM_DAYS_OF_WEEK();
 	}
 
 	// Format a date
@@ -366,11 +410,11 @@ class CalendarDate {
 	}
 
 	function FormatLongWeekday() {
-		return $this->LONG_DAYS_OF_WEEK($this->minJD % self::NUM_DAYS_OF_WEEK());
+		return $this->LONG_DAYS_OF_WEEK($this->minJD % $this->NUM_DAYS_OF_WEEK());
 	}
 
 	function FormatShortWeekday() {
-		return $this->SHORT_DAYS_OF_WEEK($this->minJD % self::NUM_DAYS_OF_WEEK());
+		return $this->SHORT_DAYS_OF_WEEK($this->minJD % $this->NUM_DAYS_OF_WEEK());
 	}
 
 	function FormatISOWeekday() {
@@ -388,7 +432,7 @@ class CalendarDate {
 	}
 
 	function FormatNumericWeekday() {
-		return ($this->minJD + 1) % self::NUM_DAYS_OF_WEEK();
+		return ($this->minJD + 1) % $this->NUM_DAYS_OF_WEEK();
 	}
 
 	function FormatDayOfYear() {
@@ -407,21 +451,11 @@ class CalendarDate {
 	}
 
 	function FormatLongMonth() {
-		global $pgv_lang;
-		$tmp=$this->NUM_TO_MONTH($this->m);
-		if (isset($pgv_lang[$tmp]))
-			return $pgv_lang[$tmp];
-		else
-			return $tmp;
+		return $this->NUM_TO_MONTH($this->m, $this->IsLeapYear());
 	}
 
 	function FormatShortMonth() {
-		global $pgv_lang;
-		$tmp=$this->NUM_TO_MONTH($this->m).'_1st';
-		if (isset($pgv_lang[$tmp]))
-			return $pgv_lang[$tmp];
-		else
-			return $this->FormatLongMonth();
+		return $this->NUM_TO_SHORT_MONTH($this->m, $this->IsLeapYear());
 	}
 
 	// NOTE Short year is NOT a 2-digit year.  It is for calendars such as hebrew
@@ -438,7 +472,7 @@ class CalendarDate {
 	}
 
 	function FormatGedcomMonth() {
-		return strtoupper($this->NUM_TO_MONTH($this->m));
+		return $this->NUM_TO_GEDCOM_MONTH($this->m, $this->IsLeapYear());
 	}
 
 	function FormatGedcomYear() {
@@ -627,14 +661,15 @@ class JulianDate extends CalendarDate {
 	}
 
 	function FormatLongYear() {
-		global $pgv_lang;
-		if ($this->y<0)
-			return (-$this->y).$pgv_lang['b.c.'];
-		else
+		if ($this->y<0) {
+			// I18N: Number of years "before christ"
+			return i18n::translate('%d B.C.', -$this->y);
+		} else {
 			if ($this->new_old_style) {
 				return sprintf('%d/%02d', $this->y-1, $this->y % 100);
 			} else
 				return $this->y;
+		}
 	}
 
 	function FormatGedcomYear() {
@@ -664,12 +699,60 @@ class JewishDate extends CalendarDate {
 			return null;
 		}
 	}
-	static function NUM_TO_MONTH($n) {
-		static $months=array(0=>'', 1=>'tsh', 2=>'csh', 3=>'ksl', 4=>'tvt', 5=>'shv', 6=>'adr', 7=>'ads', 8=>'nsn', 9=>'iyr', 10=>'svn', 11=>'tmz', 12=>'aav', 13=>'ell');
-		if (isset($months[$n])) {
-			return $months[$n];
-		} else {
-			return null;
+	static function NUM_TO_MONTH($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate('Tishrei');
+		case 2:  return i18n::translate('Heshvan');
+		case 3:  return i18n::translate('Kislev');
+		case 4:  return i18n::translate('Tevet');
+		case 5:  return i18n::translate('Shevat');
+		case 6:  if ($leap_year) return i18n::translate('Adar'); else return i18n::translate('Adar I');
+		case 7:  return i18n::translate('Adar II');
+		case 8:  return i18n::translate('Nissan');
+		case 9:  return i18n::translate('Iyar');
+		case 10: return i18n::translate('Sivan');
+		case 11: return i18n::translate('Tamuz');
+		case 12: return i18n::translate('Av');
+		case 13: return i18n::translate('Elul');
+		default: return '';
+		}
+	}
+	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
+		// TODO: Do these have short names?
+		switch ($n) {
+		case 1:  return i18n::translate('Tishrei');
+		case 2:  return i18n::translate('Heshvan');
+		case 3:  return i18n::translate('Kislev');
+		case 4:  return i18n::translate('Tevet');
+		case 5:  return i18n::translate('Shevat');
+		case 6:  if ($leap_year) return i18n::translate('Adar'); else return i18n::translate('Adar I');
+		case 7:  return i18n::translate('Adar II');
+		case 8:  return i18n::translate('Nissan');
+		case 9:  return i18n::translate('Iyar');
+		case 10: return i18n::translate('Sivan');
+		case 11: return i18n::translate('Tamuz');
+		case 12: return i18n::translate('Av');
+		case 13: return i18n::translate('Elul');
+		default: return '';
+		}
+	}
+	static function NUM_TO_GEDCOM_MONTH($n, $leap_year) {
+		// TODO: Do these have short names in English?
+		switch ($n) {
+		case 1:  return 'TSH';
+		case 2:  return 'CSH';
+		case 3:  return 'KSL';
+		case 4:  return 'TVT';
+		case 5:  return 'SHV';
+		case 6:  return 'ADR';
+		case 7:  return 'ADS';
+		case 8:  return 'NSN';
+		case 9:  return 'IYR';
+		case 10: return 'SVN';
+		case 11: return 'TMZ';
+		case 12: return 'AAV';
+		case 13: return 'ELL';
+		default: return '';
 		}
 	}
 	static function NUM_MONTHS() {
@@ -706,18 +789,6 @@ class JewishDate extends CalendarDate {
 			list($m, $d, $y)=array(0, 0, 0);
 		return array($y, $m, $d);
 	}
-
-	function FormatLongMonth() {
-		global $pgv_lang;
-		$mon=$this->NUM_TO_MONTH($this->m);
-		if ($mon=='adr' && $this->IsLeapYear())
-			$mon.='_leap_year';
-		return $pgv_lang[$mon];
-	}
-
-	function FormatShortMonth() {
-		return $this->FormatLongMonth();
-	}
 } // class JewishDate
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -730,39 +801,62 @@ class HebrewDate extends JewishDate {
 	const GERSH="׳";
 	const ALAFIM="אלפים";
 	
-	static $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב׳", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
-	static $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
-
 	function FormatDayZeros() {
-		return self::NumToHebrew($this->d);
+		return $this->NumToHebrew($this->d);
 	}
 
 	function FormatDay() {
-		return self::NumToHebrew($this->d);
+		return $this->NumToHebrew($this->d);
 	}
 
-	function FormatLongMonth() {
-		$mon=$this->NUM_TO_MONTH($this->m);
-		if ($mon=='adr' && $this->IsLeapYear())
-			return "אדר א׳";
-		else
-			return self::$HEBREW_MONTHS[$this->m];
+	static function LONG_DAYS_OF_WEEK($n) {
+		// Do not translate these - they are supposed to be hebrew, whatever language is shown.
+		switch ($n) {
+		case 0: return i18n::translate('שני');
+		case 1: return i18n::translate('שלישי');
+		case 2: return i18n::translate('רביעי');
+		case 3: return i18n::translate('חמישי');
+		case 4: return i18n::translate('ששי');
+		case 5: return i18n::translate('שבת');
+		case 6: return i18n::translate('ראשון');
+		}
+	}
+	static function SHORT_DAYS_OF_WEEK($n) {
+		// TODO: Do these have short names?
+		return LONG_DAYS_OF_WEEK($n);
 	}
 
-	function FormatLongWeekday() {
-		return self::$HEBREW_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
+	static function NUM_TO_MONTH($n, $leap_year) {
+		// Do not translate these - they are supposed to be hebrew, whatever language is shown.
+		switch ($n) {
+		case 1:  return 'תשרי';
+		case 2:  return 'חשוון';
+		case 3:  return 'כסלו';
+		case 4:  return 'טבת';
+		case 5:  return 'שבט';
+		case 6:  if ($leap_year) return 'אדר א׳'; else return 'אדר';
+		case 7:  return 'אדר ב׳';
+		case 8:  return 'ניסן';
+		case 9:  return 'איי�';
+		case 10: return 'סיוון';
+		case 11: return 'תמוז';
+		case 12: return 'אב';
+		case 13: return 'אלול';
+		default: return '';
+		}
 	}
-
-	function FormatShortWeekday() {
-		return self::$HEBREW_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
+	
+	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
+		// TODO: Do these have short names?
+		return $this->NUM_TO_MONTH($n, $leap_year);
 	}
 
 	function FormatShortYear() {
-		return self::NumToHebrew($this->y%1000);
+		return $this->NumToHebrew($this->y%1000);
 	}
 
 	function FormatLongYear() {
-		return self::NumToHebrew($this->y);
+		return $this->NumToHebrew($this->y);
 	}
 	// Convert a decimal number to hebrew - like roman numerals, but with extra punctuation
 	// and special rules.
@@ -841,12 +935,42 @@ class FrenchRDate extends CalendarDate {
 			return null;
 		}
 	}
-	static function NUM_TO_MONTH($n) {
-		static $months=array(0=>'', 1=>'vend', 2=>'brum', 3=>'frim', 4=>'nivo', 5=>'pluv', 6=>'vent', 7=>'germ', 8=>'flor', 9=>'prai', 10=>'mess', 11=>'ther', 12=>'fruc', 13=>'comp');
-		if (isset($months[$n])) {
-			return $months[$n];
-		} else {
-			return null;
+	static function NUM_TO_MONTH($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate('Vendémiaire');
+		case 2:  return i18n::translate('Brumaire');
+		case 3:  return i18n::translate('Frimaire');
+		case 4:  return i18n::translate('Nivôse');
+		case 5:  return i18n::translate('Pluviôse');
+		case 6:  return i18n::translate('Ventôse');
+		case 7:  return i18n::translate('Germinal');
+		case 8:  return i18n::translate('Floréal');
+		case 9:  return i18n::translate('Prairial');
+		case 10: return i18n::translate('Messidor');
+		case 11: return i18n::translate('Thermidor');
+		case 12: return i18n::translate('Fructidor');
+		case 13: return i18n::translate('jours complémentaires');
+		}
+	}
+	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
+		// TODO: Do these have short names?
+		return $this->NUM_TO_MONTH($n);
+	}
+	static function NUM_TO_GEDCOM_MONTH($n, $leap_year) {
+		switch ($n) {
+		case 1:  return 'VEND';
+		case 2:  return 'BRUM';
+		case 3:  return 'FRIM';
+		case 4:  return 'NIVO';
+		case 5:  return 'PLUV';
+		case 6:  return 'VENT';
+		case 7:  return 'GERM';
+		case 8:  return 'FLOR';
+		case 9:  return 'PRAI';
+		case 10: return 'MESS';
+		case 11: return 'THER';
+		case 12: return 'FRUC';
+		case 13: return 'COMP';
 		}
 	}
 	static function NUM_MONTHS() {
@@ -867,19 +991,8 @@ class FrenchRDate extends CalendarDate {
 		}
 	}
 	static function SHORT_DAYS_OF_WEEK($n) {
-		// TODO: What are the abbreviations of these?
-		switch ($n) {
-		case 0: return i18n::translate('Primidi');
-		case 1: return i18n::translate('Duodi');
-		case 2: return i18n::translate('Tridi');
-		case 3: return i18n::translate('Quartidi');
-		case 4: return i18n::translate('Quintidi');
-		case 5: return i18n::translate('Sextidi');
-		case 6: return i18n::translate('Septidi');
-		case 7: return i18n::translate('Octidi');
-		case 8: return i18n::translate('Nonidi');
-		case 9: return i18n::translate('Decidi');
-		}
+		// TODO: Do these have short names?
+		return $this->LONG_DAYS_OF_WEEK($n);
 	}
 	static function NUM_DAYS_OF_WEEK() {
 		return 10; // A "metric" week of 10 unimaginatively named days.
@@ -931,12 +1044,42 @@ class HijriDate extends CalendarDate {
 			return null;
 		}
 	}
-	static function NUM_TO_MONTH($n) {
-		static $months=array(0=>'', 1=>'muhar', 2=>'safar', 3=>'rabia', 4=>'rabit', 5=>'jumaa', 6=>'jumat', 7=>'rajab', 8=>'shaab', 9=>'ramad', 10=>'shaww', 11=>'dhuaq', 12=>'dhuah');
-		if (isset($months[$n])) {
-			return $months[$n];
-		} else {
-			return null;
+	static function NUM_TO_MONTH($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate('Muharram');
+		case 2:  return i18n::translate('Safar');
+		case 3:  return i18n::translate('Rabi\' al-awwal');
+		case 4:  return i18n::translate('Rabi\' al-thani');
+		case 5:  return i18n::translate('Jumada al-awwal');
+		case 6:  return i18n::translate('Jumada al-thani');
+		case 7:  return i18n::translate('Rajab');
+		case 8:  return i18n::translate('Sha\'aban');
+		case 9:  return i18n::translate('Ramadan');
+		case 10: return i18n::translate('Shawwal');
+		case 11: return i18n::translate('Dhu al-Qi\'dah');
+		case 12: return i18n::translate('Dhu al-Hijjah');
+		default: return '';
+		}
+	}
+	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
+		// TODO: Do these have short names?
+		return $this->NUM_TO_MONTH($n, $leap_year);
+	}
+	static function NUM_TO_GEDCOM_MONTH($n, $leap_year) {
+		switch ($n) {
+		case 1:  return 'MUHAR';
+		case 2:  return 'SAFAR';
+		case 3:  return 'RABIA';
+		case 4:  return 'RABIT';
+		case 5:  return 'JUMAA';
+		case 6:  return 'JUMAT';
+		case 7:  return 'RAJAB';
+		case 8:  return 'SHAAB';
+		case 9:  return 'RAMAD';
+		case 10: return 'SHAWW';
+		case 11: return 'DHUAQ';
+		case 12: return 'DHUAH';
+		default: return '';
 		}
 	}
 	static function CAL_START_JD() {
@@ -965,23 +1108,37 @@ class HijriDate extends CalendarDate {
 // rather than the local language.
 ////////////////////////////////////////////////////////////////////////////////
 class ArabicDate extends HijriDate {
-	static $ARABIC_MONTHS=array("", "محرّم", "صفر", "ربيع الأول", "ربيع الثانى", "جمادى الأول", "جمادى الثاني", "رجب", "شعبان", "رمضان", "شوّال", "ذو القعدة", "ذو الحجة");
 	static $ARABIC_DAYS=array("الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعه", "السبت", "الأحد");
 
-	function FormatLongMonth() {
-		return self::$ARABIC_MONTHS[$this->m];
+	static function NUM_TO_MONTH($n, $leap_year) {
+		// Do not translate these - they are supposed to be arabic, whatever language is shown.
+		switch ($n) {
+		case 1:  return 'محرّم';
+		case 2:  return 'صفر';
+		case 3:  return 'ربيع الأول';
+		case 4:  return 'ربيع الثانى';
+		case 5:  return 'جمادى الأول';
+		case 6:  return 'جمادى الثاني';
+		case 7:  return 'رجب';
+		case 8:  return 'شعبان';
+		case 9:  return 'رمضان';
+		case 10: return 'شوّال';
+		case 11: return 'ذو القعدة';
+		case 12: return 'ذو الحجة';
+		default: return '';
+		}
 	}
-
-	function FormatShortMonth() {
-		return self::$ARABIC_MONTHS[$this->m];
+	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
+		// TODO: Do these have short names?
+		return $this->NUM_TO_MONTH($n, $leap_year);
 	}
 
 	function FormatLongWeekday() {
-		return self::$ARABIC_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
+		return $this->$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortWeekday() {
-		return self::$ARABIC_DAYS[$this->minJD % self::NUM_DAYS_OF_WEEK()];
+		return $this->$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
 	}
 } // class ArabicDate
 
@@ -989,7 +1146,7 @@ class ArabicDate extends HijriDate {
 // Definitions for the Roman calendar
 // TODO The 5.5.1 gedcom spec mentions this calendar, but gives no details of
 // how it is to be represented....  This class is just a place holder so that
-// PGV won't compain if it receives one.
+// webtrees won't compain if it receives one.
 ////////////////////////////////////////////////////////////////////////////////
 class RomanDate extends CalendarDate {
 	static function CALENDAR_ESCAPE() {
@@ -1140,7 +1297,7 @@ class GedcomDate {
 	// Convert a date to the prefered format and calendar(s) display.
 	// Optionally make the date a URL to the calendar.
 	function Display($url=false, $date_fmt=null, $cal_fmts=null) {
-		global $pgv_lang, $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
+		global $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
 
 		// EXPERIMENTAL CODE for [ 1050249 ] Privacy: year instead of complete date in public views
 		// TODO If feedback is positive, create a GUI option to edit it.

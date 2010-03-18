@@ -146,74 +146,15 @@ if ($view!='preview') {
 			echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$d_fmt}</a>";
 		echo ' | ';
 	}
-	$tmp=new GedcomDate($today->Format('@ A O E')); // Need a gedcom date to get localisation
+	$tmp=new GedcomDate($today->Format('@ A O E')); // Need a GedcomDate object to get localisation
 	echo "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$tmp->Display(true, NULL, array()).'</b></a>';
 	// Month selector
 	echo '<tr><td class="descriptionbox vmiddle">';
 	echo i18n::translate('Month'), help_link('annivers_month_select'), '</td>';
 	echo '<td class="optionbox" colspan="7">';
 	for ($n=1; $n<=$cal_date->NUM_MONTHS(); ++$n) {
-		$m=$cal_date->NUM_TO_MONTH($n);
-		if ($n==7 && $cal_date->CALENDAR_ESCAPE()=='@#DHEBREW@' && !$cal_date->IsLeapYear())
-		continue;
-		if ($n==6 && $cal_date->CALENDAR_ESCAPE()=='@#DHEBREW@' && $cal_date->IsLeapYear())
-			$l.='_leap_year';
-		else
-			$l='';
-		// TODO: This should be in the date class.
-		switch($m.$l) {
-		case 'jan': $month_name=i18n::translate('January'); break;
-		case 'feb': $month_name=i18n::translate('February'); break;
-		case 'mar': $month_name=i18n::translate('March'); break;
-		case 'apr': $month_name=i18n::translate('April'); break;
-		case 'may': $month_name=i18n::translate('May'); break;
-		case 'jun': $month_name=i18n::translate('June'); break;
-		case 'jul': $month_name=i18n::translate('July'); break;
-		case 'aug': $month_name=i18n::translate('August'); break;
-		case 'sep': $month_name=i18n::translate('September'); break;
-		case 'oct': $month_name=i18n::translate('October'); break;
-		case 'nov': $month_name=i18n::translate('November'); break;
-		case 'dec': $month_name=i18n::translate('December'); break;
-		case 'vend': $month_name=i18n::translate('Vendémiaire'); break;
-		case 'brum': $month_name=i18n::translate('Brumaire'); break;
-		case 'frim': $month_name=i18n::translate('Frimaire'); break;
-		case 'nivo': $month_name=i18n::translate('Nivôse'); break;
-		case 'pluv': $month_name=i18n::translate('Pluviôse'); break;
-		case 'vent': $month_name=i18n::translate('Ventôse'); break;
-		case 'germ': $month_name=i18n::translate('Germinal'); break;
-		case 'flor': $month_name=i18n::translate('Floréal'); break;
-		case 'prai': $month_name=i18n::translate('Prairial'); break;
-		case 'mess': $month_name=i18n::translate('Messidor'); break;
-		case 'ther': $month_name=i18n::translate('Thermidor'); break;
-		case 'fruc': $month_name=i18n::translate('Fructidor'); break;
-		case 'comp': $month_name=i18n::translate('jours complémentaires'); break;
-		case 'tsh': $month_name=i18n::translate('Tishrei'); break;
-		case 'csh': $month_name=i18n::translate('Heshvan'); break;
-		case 'ksl': $month_name=i18n::translate('Kislev'); break;
-		case 'tvt': $month_name=i18n::translate('Tevet'); break;
-		case 'shv': $month_name=i18n::translate('Shevat'); break;
-		case 'adr': $month_name=i18n::translate('Adar'); break;
-		case 'adr_leap_year': $month_name=i18n::translate('Adar I'); break;
-		case 'ads': $month_name=i18n::translate('Adar II'); break;
-		case 'nsn': $month_name=i18n::translate('Nissan'); break;
-		case 'iyr': $month_name=i18n::translate('Iyar'); break;
-		case 'svn': $month_name=i18n::translate('Sivan'); break;
-		case 'tmz': $month_name=i18n::translate('Tamuz'); break;
-		case 'aav': $month_name=i18n::translate('Av'); break;
-		case 'ell': $month_name=i18n::translate('Elul'); break;
-		case 'muhar': $month_name=i18n::translate('Muharram'); break;
-		case 'safar': $month_name=i18n::translate('Safar'); break;
-		case 'rabia': $month_name=i18n::translate('Rabi\' al-awwal'); break;
-		case 'rabit': $month_name=i18n::translate('Rabi\' al-thani'); break;
-		case 'jumaa': $month_name=i18n::translate('Jumada al-awwal'); break;
-		case 'jumat': $month_name=i18n::translate('Jumada al-thani'); break;
-		case 'rajab': $month_name=i18n::translate('Rajab'); break;
-		case 'shaab': $month_name=i18n::translate('Sha\'aban'); break;
-		case 'ramad': $month_name=i18n::translate('Ramadan'); break;
-		case 'shaww': $month_name=i18n::translate('Shawwal'); break;
-		case 'dhuaq': $month_name=i18n::translate('Dhu al-Qi\'dah'); break;
-		case 'dhuah': $month_name=i18n::translate('Dhu al-Hijjah'); break;
-		}
+		$month_name=$cal_date->NUM_TO_MONTH($n, $cal_date->IsLeapYear());
+		$m=$cal_date->NUM_TO_GEDCOM_MONTH($n, $cal_date->IsLeapYear());
 		if ($n==$cal_date->m)
 			$month_name="<span class=\"error\">{$month_name}</span>";
 		echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$m}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$month_name}</a>";
