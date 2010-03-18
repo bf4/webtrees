@@ -571,15 +571,12 @@ case 'addfamlink':
 	echo "<td class=\"facts_value\"><input type=\"text\" id=\"famid\" name=\"famid\" size=\"8\" /> ";
 	print_findfamily_link("famid");
 	echo "\n</td></tr>";
-	if ($famtag=="CHIL") {
-		echo "<tr><td class=\"facts_label\">", i18n::translate('PEDI'), "</td>";
-		echo "<td class=\"facts_value\"><select name=\"pedigree\">";
-		echo "<option value=\"\"></option>";
-		echo "<option value=\"birth\" >", i18n::translate('BIRT'), "</option>";
-		echo "<option value=\"adopted\" >", i18n::translate('Adopted'), "</option>";
-		echo "<option value=\"foster\" >", i18n::translate('Foster'), "</option>";
-		echo "<option value=\"sealing\" >", i18n::translate('Sealing'), "</option>";
-		echo "</select></td></tr>";
+	if ($famtag=='CHIL') {
+		echo
+			'<tr>',
+			'<td class="facts_label">', i18n::translate('Pedigree'), '</td>',
+			'<td class="facts_value">', edit_field_pedi('pedigree'), '</td>',
+			'</tr>';
 	}
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";

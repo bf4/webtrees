@@ -39,6 +39,44 @@ define('PGV_FUNCTIONS_EDIT_PHP', '');
 
 require_once PGV_ROOT.'includes/functions/functions_import.php';
 
+// Create a <select> control for a form
+// $name     - the ID for the form element
+// $values   - array of value=>display items
+// $empty    - null => don't add a row.  non-null - value for ""
+// $selected - the currently selected item (if any)
+// $extra    - extra markup for field (e.g. tab key sequence)
+function select_edit_control($name, $values, $empty, $selected, $extra) {
+	if (is_null($empty)) {
+		$html='';
+	} else {
+		if (empty($selected)) {
+			$html='<option value="" selected="selected">'.htmlspecialchars($empty).'</option>';
+		} else {
+			$html='<option value="">'.$empty.'</option>';
+		}
+	}
+	foreach ($values as $key=>$value) {
+		if ($value==$selected) {
+			$html.='<option value="'.htmlspecialchars($key).'" selected="selected">'.htmlspecialchars($value).'</option>';
+		} else {
+			$html.='<option value="'.htmlspecialchars($key).'">'.htmlspecialchars($value).'</option>';
+		}
+	}
+	return '<select name="'.$name.'" '.$extra.'>'.$html.'</select>';
+}
+
+// Print an edit control for a ADOP field
+function edit_field_adop($name, $selected='', $extra='') {
+	global $ADOP_CODES;
+	return select_edit_control($name, $ADOP_CODES, null, $selected, $extra);
+}
+
+// Print an edit control for a PEDI field
+function edit_field_pedi($name, $selected='', $extra='') {
+	global $PEDI_CODES;
+	return select_edit_control($name, $PEDI_CODES, '', $selected, $extra);
+}
+
 //-- this function creates a new unique connection
 //-- and adds it to the connections file
 //-- it returns the connection identifier
@@ -1377,32 +1415,10 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		echo "</select>\n";
 	}
 	else if ($fact=="ADOP") {
-		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >";
-		foreach (array("BOTH"=>i18n::translate('HUSB')."+".i18n::translate('WIFE'),
-										"HUSB"=>i18n::translate('HUSB'),
-										"WIFE"=>i18n::translate('WIFE')) as $k=>$v) {
-			echo "<option value='$k'";
-			if ($value==$k)
-				echo " selected=\"selected\"";
-			echo ">$v</option>";
-		}
-		echo "</select>\n";
-	}
-	else if ($fact=="PEDI") {
-		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >";
-		foreach (array(''       =>i18n::translate('unknown'),
-										"birth"  =>i18n::translate('BIRT'),
-										"adopted"=>i18n::translate('Adopted'),
-										"foster" =>i18n::translate('Foster'),
-										"sealing"=>i18n::translate('Sealing')) as $k=>$v) {
-			echo "<option value='$k'";
-			if (UTF8_strtolower($value)==$k)
-				echo " selected=\"selected\"";
-			echo ">$v</option>";
-		}
-		echo "</select>\n";
-	}
-	else if ($fact=="STAT") {
+		echo edit_field_adop($element_name, $value, $tabkey);
+	} else if ($fact=="PEDI") {
+		echo edit_field_pedi($element_name, $value, $tabkey);
+	} else if ($fact=="STAT") {
 		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >\n";
 		echo "<option value=''>No special status</option>\n";
 		foreach($STATUS_CODES as $code=>$status) {

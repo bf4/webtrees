@@ -87,12 +87,19 @@ $MEDIA_TYPES=array(
 	'other'      =>i18n::translate('Other'),
 );
 
-// BIRT:PEDI values
-$PEDIGREE_TYPES=array(
-	'adopted'=>i18n::translate('adopted'),
-	'birth'  =>i18n::translate('birth'),
-	'foster' =>i18n::translate('foster'),
-	'sealing'=>i18n::translate('sealing'),
+// GEDCOM ADOP codes
+$ADOP_CODES=array(
+	'BOTH'=>i18n::translate('Adopted by both parents'),
+	'HUSB'=>i18n::translate('Adopted by father'),
+	'WIFE'=>i18n::translate('Adopted by mother')
+);
+
+// GEDCOM PEDI codes
+$PEDI_CODES=array(
+	'birth'  =>i18n::translate('Birth'),
+	'adopted'=>i18n::translate('Adopted'),
+	'foster' =>i18n::translate('Foster'),
+	'sealing'=>i18n::translate('Sealing')
 );
 
 // TEMP tags - LDS temple codes
