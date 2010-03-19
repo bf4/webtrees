@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Fab\n"
 "Report-Msgid-Bugs-To: i18n@webtrees.net\n"
-"POT-Creation-Date: 2010-03-17 23:22+0000\n"
+"POT-Creation-Date: 2010-03-19 06:59+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Greg Roach <greg@subaqua.co.uk>\n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgstr ""
 #: ../statisticsplot.php:790
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:462
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:540
-#: ../calendar.php:494
+#: ../calendar.php:435
 msgid "Total individuals"
 msgstr "Totale persone"
 
@@ -93,8 +93,8 @@ msgstr "Età media di morte"
 #: ../includes/classes/class_stats.php:656
 #: ../includes/classes/class_stats.php:658
 #: ../includes/classes/class_stats.php:666
-#: ../includes/classes/class_stats.php:667 ../calendar.php:263
-#: ../calendar.php:266 ../calendar.php:497 ../blocks/gedcom_stats.php:124
+#: ../includes/classes/class_stats.php:667 ../calendar.php:204
+#: ../calendar.php:207 ../calendar.php:438 ../blocks/gedcom_stats.php:124
 #: ../blocks/gedcom_stats.php:198
 msgid "Males"
 msgstr "Maschi"
@@ -104,8 +104,8 @@ msgstr "Maschi"
 #: ../includes/classes/class_stats.php:655
 #: ../includes/classes/class_stats.php:659
 #: ../includes/classes/class_stats.php:665
-#: ../includes/classes/class_stats.php:668 ../calendar.php:269
-#: ../calendar.php:272 ../calendar.php:498 ../blocks/gedcom_stats.php:125
+#: ../includes/classes/class_stats.php:668 ../calendar.php:210
+#: ../calendar.php:213 ../calendar.php:439 ../blocks/gedcom_stats.php:125
 #: ../blocks/gedcom_stats.php:199
 msgid "Females"
 msgstr "Femmine"
@@ -145,7 +145,7 @@ msgstr ""
 #: ../includes/classes/class_stats.php:3288 ../statisticsplot.php:786
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:487
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:565
-#: ../calendar.php:502
+#: ../calendar.php:443
 msgid "Total families"
 msgstr "Totale famiglie"
 
@@ -626,7 +626,7 @@ msgstr "Statistiche"
 #: ../includes/controllers/advancedsearch_ctrl.php:468
 #: ../includes/controllers/search_ctrl.php:775
 #: ../modules/googlemap/placehierarchy.php:241
-#: ../modules/individuals/pgv_module.php:50 ../calendar.php:463
+#: ../modules/individuals/pgv_module.php:50 ../calendar.php:404
 #: ../blocks/gedcom_stats.php:123 ../blocks/gedcom_stats.php:275
 msgid "Individuals"
 msgstr "Persone"
@@ -642,7 +642,7 @@ msgstr "Persone"
 #: ../includes/classes/class_menubar.php:589
 #: ../includes/controllers/search_ctrl.php:790
 #: ../modules/googlemap/placehierarchy.php:241
-#: ../modules/families/pgv_module.php:50 ../calendar.php:464
+#: ../modules/families/pgv_module.php:50 ../calendar.php:405
 #: ../blocks/gedcom_stats.php:131 ../blocks/gedcom_stats.php:291
 #: ../famlist.php:137 ../famlist.php:138
 msgid "Families"
@@ -851,8 +851,8 @@ msgstr "Messaggio eliminato"
 #: ../modules/googlemap/places_edit.php:168
 #: ../modules/googlemap/places_edit.php:831 ../modules/googlemap/flags.php:50
 #: ../modules/googlemap/flags.php:99 ../modules/googlemap/flags.php:193
-#: ../edit_interface.php:301 ../edit_interface.php:2781
-#: ../edit_interface.php:2784 ../edit_interface.php:2787
+#: ../edit_interface.php:301 ../edit_interface.php:2778
+#: ../edit_interface.php:2781 ../edit_interface.php:2784
 #: ../addremotelink.php:57 ../addremotelink.php:280 ../export_gedcom.php:90
 #: ../addmedia.php:89 ../addmedia.php:663 ../help_text.php:5849
 msgid "Close Window"
@@ -900,7 +900,7 @@ msgstr "Il più vecchio alla fine"
 #: ../includes/controllers/hourglass_ctrl.php:385
 #: ../modules/lightbox/lb_editconfig.php:89
 #: ../modules/lightbox/lb_editconfig.php:92
-#: ../modules/googlemap/placecheck.php:143 ../calendar.php:234
+#: ../modules/googlemap/placecheck.php:143 ../calendar.php:175
 #: ../gedcheck.php:118 ../gedcheck.php:123 ../familybook.php:175
 msgid "Show"
 msgstr "Visualizza"
@@ -1000,7 +1000,7 @@ msgstr "Tipo modulo sconosciuto"
 #: ../themes/cloudy/templates/personbox_template.php:62
 #: ../themes/xenea/templates/personbox_template.php:62
 #: ../themes/standard/templates/personbox_template.php:62 ../index.php:350
-#: ../index.php:402 ../index.php:433 ../admin.php:307
+#: ../index.php:402 ../index.php:433 ../admin.php:294
 msgid "Loading..."
 msgstr "Caricamento in corso"
 
@@ -1113,7 +1113,7 @@ msgstr "Applicare le impostazioni di privacy?"
 #: ../editgedcoms.php:262 ../editgedcoms.php:313 ../useradmin.php:54
 #: ../useradmin.php:808 ../uploadgedcom.php:842 ../clippings.php:205
 #: ../includes/family_nav.php:727
-#: ../includes/functions/functions_edit.php:1463
+#: ../includes/functions/functions_edit.php:1479
 #: ../includes/classes/class_stats.php:823
 #: ../modules/lightbox/lb_editconfig.php:176
 #: ../modules/lightbox/lb_editconfig.php:181
@@ -1205,7 +1205,7 @@ msgstr "NOTA: Grandi basi dati possono richiedere molto tempo per processare pri
 #: ../modules/lightbox/functions/lb_indi_doors_1.php:67
 #: ../modules/googlemap/placecheck.php:83
 #: ../modules/googlemap/placecheck.php:102 ../faq.php:175 ../faq.php:220
-#: ../faq.php:283 ../medialist.php:163 ../calendar.php:285
+#: ../faq.php:283 ../medialist.php:163 ../calendar.php:226
 #: ../blocks/user_messages.php:88 ../blocks/random_media.php:350
 #: ../blocks/rss_block.php:70 ../famlist.php:96 ../famlist.php:170
 #: ../famlist.php:172 ../famlist.php:259 ../famlist.php:261
@@ -1286,7 +1286,7 @@ msgstr "File non trovato"
 msgid "Selected Report"
 msgstr "Report Selezionato"
 
-#: ../reportengine.php:315 ../includes/functions/functions_edit.php:948
+#: ../reportengine.php:315 ../includes/functions/functions_edit.php:986
 msgid "Select a date"
 msgstr "Seleziona una data"
 
@@ -1299,8 +1299,8 @@ msgstr "Scarica Report"
 #: ../index_edit.php:273 ../index_edit.php:535
 #: ../includes/media_reorder.php:62 ../includes/media_reorder.php:215
 #: ../dir_editor.php:242 ../modules/lightbox/album.php:106
-#: ../modules/clippings/clippings.php:280 ../edit_interface.php:2309
-#: ../edit_interface.php:2450 ../edit_interface.php:2709 ../faq.php:180
+#: ../modules/clippings/clippings.php:280 ../edit_interface.php:2306
+#: ../edit_interface.php:2447 ../edit_interface.php:2706 ../faq.php:180
 #: ../faq.php:228
 msgid "Cancel"
 msgstr "Annulla"
@@ -1321,7 +1321,7 @@ msgstr ""
 msgid "Welcome page"
 msgstr "Pagina di Benvenuto"
 
-#: ../manageservers.php:42 ../manageservers.php:224 ../admin.php:279
+#: ../manageservers.php:42 ../manageservers.php:224 ../admin.php:266
 #: ../help_text.php:2681
 msgid "Manage Sites"
 msgstr "Gestione Siti"
@@ -1399,8 +1399,8 @@ msgstr "Elimina"
 #: ../modules/GEDFact_assistant/_MEDIA/media_query_1a.php:53
 #: ../modules/googlemap/places.php:626 ../modules/clippings/index.php:291
 #: ../modules/clippings/index.php:317 ../modules/clippings/clippings.php:82
-#: ../edit_interface.php:2397 ../edit_interface.php:2417
-#: ../edit_interface.php:2430 ../edit_interface.php:2443
+#: ../edit_interface.php:2394 ../edit_interface.php:2414
+#: ../edit_interface.php:2427 ../edit_interface.php:2440
 #: ../blocks/user_favorites.php:107 ../blocks/gedcom_favorites.php:105
 msgid "Remove"
 msgstr "Rimuovere"
@@ -1535,7 +1535,7 @@ msgstr "Cancella Prospetto"
 
 #: ../lifespan.php:329 ../includes/extras/functions.pl.php:192
 #: ../includes/extras/functions.sl.php:155
-#: ../includes/functions/functions_edit.php:1610
+#: ../includes/functions/functions_edit.php:1626
 msgid "Individual"
 msgstr "Individuale"
 
@@ -1819,8 +1819,8 @@ msgstr ""
 #: ../editlang_edit_settings.php:329 ../editlang_edit_settings.php:400
 #: ../branches.php:169 ../uploadgedcom.php:503 ../uploadgedcom.php:517
 #: ../uploadgedcom.php:634 ../uploadgedcom.php:669 ../uploadgedcom.php:730
-#: ../includes/functions/functions_edit.php:1353
-#: ../includes/functions/functions_edit.php:1484
+#: ../includes/functions/functions_edit.php:1391
+#: ../includes/functions/functions_edit.php:1500
 #: ../includes/functions/functions_print_lists.php:306
 #: ../includes/functions/functions_print_lists.php:685
 #: ../includes/functions/functions_print.php:1899
@@ -1886,7 +1886,7 @@ msgstr "Si"
 #: ../editlang_edit_settings.php:324 ../editlang_edit_settings.php:395
 #: ../uploadgedcom.php:507 ../uploadgedcom.php:518 ../uploadgedcom.php:634
 #: ../uploadgedcom.php:670 ../uploadgedcom.php:731
-#: ../includes/functions/functions_edit.php:1487
+#: ../includes/functions/functions_edit.php:1503
 #: ../includes/functions/functions_print_lists.php:687
 #: ../includes/functions/functions_print_facts.php:313
 #: ../includes/functions/functions_print_facts.php:1626
@@ -2171,7 +2171,7 @@ msgid "Enter Individual ID"
 msgstr "Inserisci ID Persona"
 
 #: ../inverselink.php:161 ../includes/family_nav.php:554
-#: ../includes/functions/functions_edit.php:1632
+#: ../includes/functions/functions_edit.php:1648
 #: ../modules/family_nav/family_nav.php:580
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1074
 #: ../modules/GEDFact_assistant/_MEDIA/media_3_search_add.php:1081
@@ -2191,17 +2191,17 @@ msgid "Repository"
 msgstr "Deposito"
 
 #: ../inverselink.php:205 ../note.php:97 ../note.php:98
-#: ../includes/functions/functions_edit.php:1287
+#: ../includes/functions/functions_edit.php:1325
 #: ../includes/functions/functions_print.php:1195
 #: ../modules/GEDFact_assistant/_CENS/census_4_text.php:60
-#: ../edit_interface.php:912 ../edit_interface.php:1178
+#: ../edit_interface.php:909 ../edit_interface.php:1175
 msgid "Shared Note"
 msgstr "Note condivise"
 
 #: ../inverselink.php:220 ../includes/controllers/media_ctrl.php:235
 #: ../modules/lightbox/functions/lb_link.php:57
-#: ../modules/lightbox/functions/lb_link.php:60 ../edit_interface.php:598
-#: ../edit_interface.php:645 ../media.php:761
+#: ../modules/lightbox/functions/lb_link.php:60 ../edit_interface.php:595
+#: ../edit_interface.php:642 ../media.php:761
 msgid "Set link"
 msgstr "Impostare link"
 
@@ -2321,7 +2321,7 @@ msgstr "Visualizza Famiglia"
 #: ../editconfig_gedcom.php:135 ../editconfig_gedcom.php:144 ../client.php:417
 #: ../client.php:426 ../includes/functions/functions_mediadb.php:929
 #: ../includes/functions/functions_mediadb.php:939
-#: ../includes/functions/functions_mediadb.php:949 ../edit_interface.php:1389
+#: ../includes/functions/functions_mediadb.php:949 ../edit_interface.php:1386
 #: ../addmedia.php:199 ../addmedia.php:214 ../addmedia.php:225
 msgid "There was an error uploading your file."
 msgstr "C'è stato un errore caricando il file GEDCOM"
@@ -2464,7 +2464,7 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: ../editconfig_gedcom.php:943 ../editconfig_gedcom.php:2220 ../admin.php:287
+#: ../editconfig_gedcom.php:943 ../editconfig_gedcom.php:2220 ../admin.php:274
 msgid "You have not configured the languages your site will support.<br />PhpGedView will use its default actions."
 msgstr "Non hai configurato le lingue supportate.<br />PhpGedView utilizzerà le sue azioni standard."
 
@@ -2484,20 +2484,20 @@ msgstr "Formato Calendario"
 msgid "No calendar conversion"
 msgstr "Nessuna conversione calendario"
 
-#: ../editconfig_gedcom.php:987 ../calendar.php:348
+#: ../editconfig_gedcom.php:987 ../calendar.php:289
 msgid "Gregorian"
 msgstr "Gregoriano"
 
-#: ../editconfig_gedcom.php:988 ../calendar.php:349
+#: ../editconfig_gedcom.php:988 ../calendar.php:290
 msgid "Julian"
 msgstr "Giuliano"
 
 #: ../editconfig_gedcom.php:989 ../includes/specialchars.php:66
-#: ../calendar.php:351
+#: ../calendar.php:292
 msgid "French"
 msgstr ""
 
-#: ../editconfig_gedcom.php:990 ../calendar.php:350
+#: ../editconfig_gedcom.php:990 ../calendar.php:291
 msgid "Jewish"
 msgstr ""
 
@@ -2513,7 +2513,7 @@ msgstr ""
 msgid "Hebrew and Gregorian"
 msgstr ""
 
-#: ../editconfig_gedcom.php:994 ../calendar.php:352
+#: ../editconfig_gedcom.php:994 ../calendar.php:293
 msgid "Hijri"
 msgstr ""
 
@@ -3097,13 +3097,13 @@ msgstr ""
 msgid "Facts"
 msgstr "Fatti"
 
-#: ../editconfig_gedcom.php:2181 ../includes/functions/functions_edit.php:726
+#: ../editconfig_gedcom.php:2181 ../includes/functions/functions_edit.php:764
 #: ../includes/functions/functions_mediadb.php:1478 ../edit_interface.php:429
 #: ../edit_interface.php:468 ../edit_interface.php:519
-#: ../edit_interface.php:592 ../edit_interface.php:631
-#: ../edit_interface.php:794 ../edit_interface.php:926
-#: ../edit_interface.php:1129 ../edit_interface.php:1194
-#: ../edit_interface.php:1264 ../edit_interface.php:2628
+#: ../edit_interface.php:589 ../edit_interface.php:628
+#: ../edit_interface.php:791 ../edit_interface.php:923
+#: ../edit_interface.php:1126 ../edit_interface.php:1191
+#: ../edit_interface.php:1261 ../edit_interface.php:2625
 #: ../addremotelink.php:262 ../help_text.php:5260
 msgid "Do not update the CHAN (Last Change) record"
 msgstr "Non aggiornare il record CHAN (Ultima modifica)"
@@ -3262,7 +3262,7 @@ msgstr ""
 msgid "RSS Format"
 msgstr ""
 
-#: ../pgvinfo.php:46 ../admin.php:197 ../help_text.php:5300
+#: ../pgvinfo.php:46 ../admin.php:184 ../help_text.php:5300
 msgid "PHP information"
 msgstr "PHP informazioni"
 
@@ -3425,7 +3425,7 @@ msgstr "Anno:"
 msgid "Timeline Chart"
 msgstr "Scala Temporale"
 
-#: ../timeline.php:281 ../includes/functions/functions_edit.php:1493
+#: ../timeline.php:281 ../includes/functions/functions_edit.php:1509
 #: ../includes/functions/functions.php:838
 #: ../includes/classes/class_stats.php:1793
 #: ../includes/classes/class_stats.php:2673
@@ -3433,11 +3433,11 @@ msgstr "Scala Temporale"
 #: ../includes/controllers/individual_ctrl.php:108
 #: ../includes/controllers/individual_ctrl.php:571
 #: ../includes/controllers/descendancy_ctrl.php:102 ../statisticsplot.php:805
-#: ../calendar.php:581 ../calendar.php:663 ../blocks/top10_givnnames.php:100
+#: ../calendar.php:522 ../calendar.php:604 ../blocks/top10_givnnames.php:100
 msgid "Male"
 msgstr "Maschio"
 
-#: ../timeline.php:283 ../includes/functions/functions_edit.php:1495
+#: ../timeline.php:283 ../includes/functions/functions_edit.php:1511
 #: ../includes/functions/functions.php:840
 #: ../includes/classes/class_stats.php:1793
 #: ../includes/classes/class_stats.php:2673
@@ -3445,15 +3445,14 @@ msgstr "Maschio"
 #: ../includes/controllers/individual_ctrl.php:109
 #: ../includes/controllers/individual_ctrl.php:573
 #: ../includes/controllers/descendancy_ctrl.php:103 ../statisticsplot.php:806
-#: ../calendar.php:584 ../calendar.php:667 ../blocks/top10_givnnames.php:95
+#: ../calendar.php:525 ../calendar.php:608 ../blocks/top10_givnnames.php:95
 msgid "Female"
 msgstr "Femmina"
 
 #: ../timeline.php:285 ../placelist.php:143 ../placelist.php:287
 #: ../placelist.php:329 ../placelist.php:370 ../placelist.php:447
 #: ../includes/family_nav.php:730 ../includes/family_nav.php:733
-#: ../includes/functions/functions_edit.php:1393
-#: ../includes/functions/functions_edit.php:1497
+#: ../includes/functions/functions_edit.php:1513
 #: ../includes/functions/functions.php:842
 #: ../includes/classes/class_serviceclient.php:90
 #: ../includes/classes/class_stats.php:867
@@ -3536,7 +3535,7 @@ msgstr "Femmina"
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:449
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:488
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:489
-#: ../calendar.php:671 ../blocks/top10_givnnames.php:105
+#: ../calendar.php:612 ../blocks/top10_givnnames.php:105
 msgid "unknown"
 msgstr "sconosciuto"
 
@@ -3584,7 +3583,7 @@ msgstr "Mostra solo agli amministratori"
 msgid "Hide even from admin users"
 msgstr "Nascondi anche agli amministratori"
 
-#: ../module_admin.php:96 ../module_admin.php:183 ../admin.php:182
+#: ../module_admin.php:96 ../module_admin.php:183 ../admin.php:169
 #: ../help_text.php:2701
 msgid "Module Administration"
 msgstr ""
@@ -3660,14 +3659,14 @@ msgstr ""
 #: ../module_admin.php:400 ../editlang_edit_settings.php:174
 #: ../editlang_edit_settings.php:457 ../editnews.php:111
 #: ../includes/media_reorder.php:60 ../includes/media_reorder.php:213
-#: ../includes/functions/functions_edit.php:422
-#: ../includes/functions/functions_edit.php:744
-#: ../includes/functions/functions_edit.php:1745
-#: ../includes/functions/functions_edit.php:1782
-#: ../includes/functions/functions_edit.php:1801
-#: ../includes/functions/functions_edit.php:1814
-#: ../includes/functions/functions_edit.php:1827
+#: ../includes/functions/functions_edit.php:460
+#: ../includes/functions/functions_edit.php:782
+#: ../includes/functions/functions_edit.php:1761
+#: ../includes/functions/functions_edit.php:1798
+#: ../includes/functions/functions_edit.php:1817
+#: ../includes/functions/functions_edit.php:1830
 #: ../includes/functions/functions_edit.php:1843
+#: ../includes/functions/functions_edit.php:1859
 #: ../includes/functions/functions_mediadb.php:1145
 #: ../includes/functions/functions_mediadb.php:1505
 #: ../modules/lightbox/album.php:104
@@ -3677,11 +3676,11 @@ msgstr ""
 #: ../modules/googlemap/places_edit.php:827 ../modules/googlemap/flags.php:154
 #: ../modules/googlemap/flags.php:190 ../edit_interface.php:416
 #: ../edit_interface.php:436 ../edit_interface.php:456
-#: ../edit_interface.php:491 ../edit_interface.php:934
-#: ../edit_interface.php:1091 ../edit_interface.php:1140
-#: ../edit_interface.php:1201 ../edit_interface.php:2307
-#: ../edit_interface.php:2450 ../edit_interface.php:2602
-#: ../edit_interface.php:2639 ../edit_interface.php:2707 ../faq.php:179
+#: ../edit_interface.php:491 ../edit_interface.php:931
+#: ../edit_interface.php:1088 ../edit_interface.php:1137
+#: ../edit_interface.php:1198 ../edit_interface.php:2304
+#: ../edit_interface.php:2447 ../edit_interface.php:2599
+#: ../edit_interface.php:2636 ../edit_interface.php:2704 ../faq.php:179
 #: ../faq.php:227 ../help_text.php:5455
 msgid "Save"
 msgstr ""
@@ -3700,7 +3699,7 @@ msgid "Admin GEDCOM"
 msgstr "Amministra GEDCOM"
 
 #: ../useradmin.php:123 ../useradmin.php:127 ../useradmin.php:141
-#: ../useradmin.php:226 ../useradmin.php:1079 ../admin.php:271
+#: ../useradmin.php:226 ../useradmin.php:1079 ../admin.php:258
 #: ../edituser.php:73 ../edituser.php:87 ../edituser.php:121
 #: ../includes/classes/class_menubar.php:163 ../help_text.php:2576
 #: ../help_text.php:2796 ../blocks/getting_started.php:66
@@ -3929,7 +3928,7 @@ msgstr "Invia messaggio a utenti che non hanno mai effettuato l'accesso"
 msgid "Send message to users who have not logged in for 6 months"
 msgstr "Invia messaggio a utenti che non hanno effettuato l'accesso per 6 mesi"
 
-#: ../useradmin.php:1101 ../admin.php:169 ../admin.php:189
+#: ../useradmin.php:1101 ../admin.php:156 ../admin.php:176
 msgid "Informational"
 msgstr "Informazioni"
 
@@ -3996,8 +3995,8 @@ msgstr "Suona come"
 #: ../search_advanced.php:221 ../addsearchlink.php:86
 #: ../includes/classes/class_person.php:1561
 #: ../includes/controllers/individual_ctrl.php:821
-#: ../includes/controllers/individual_ctrl.php:882 ../edit_interface.php:2323
-#: ../edit_interface.php:2326 ../addremotelink.php:132
+#: ../includes/controllers/individual_ctrl.php:882 ../edit_interface.php:2320
+#: ../edit_interface.php:2323 ../addremotelink.php:132
 msgid "Father"
 msgstr "Padre"
 
@@ -4015,8 +4014,8 @@ msgstr "Nome proprio"
 #: ../search_advanced.php:258 ../addsearchlink.php:85
 #: ../includes/classes/class_person.php:1570
 #: ../includes/controllers/individual_ctrl.php:820
-#: ../includes/controllers/individual_ctrl.php:883 ../edit_interface.php:2322
-#: ../edit_interface.php:2327 ../addremotelink.php:131
+#: ../includes/controllers/individual_ctrl.php:883 ../edit_interface.php:2319
+#: ../edit_interface.php:2324 ../addremotelink.php:131
 msgid "Mother"
 msgstr "Madre"
 
@@ -4127,7 +4126,7 @@ msgstr "Trova un altro collegamento"
 msgid "Language File Edit Utility"
 msgstr "Utility per editare i file di linguaggio"
 
-#: ../editlang_edit_settings.php:152 ../admin.php:292 ../changelanguage.php:49
+#: ../editlang_edit_settings.php:152 ../admin.php:279 ../changelanguage.php:49
 #: ../changelanguage.php:134 ../help_text.php:3844
 msgid "Add files and settings for a new language"
 msgstr "Aggiungi i file e le impostazioni per una nuova lingua"
@@ -4164,31 +4163,31 @@ msgstr ""
 msgid "Week starting day"
 msgstr ""
 
-#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:174
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:218
 msgid "Sunday"
 msgstr "Domenica"
 
-#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:168
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:212
 msgid "Monday"
 msgstr "Lunedì"
 
-#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:169
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:213
 msgid "Tuesday"
 msgstr "Martedì"
 
-#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:170
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:214
 msgid "Wednesday"
 msgstr "Mercoledì"
 
-#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:171
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:215
 msgid "Thursday"
 msgstr "Giovedì"
 
-#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:172
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:216
 msgid "Friday"
 msgstr "Venerdì"
 
-#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:173
+#: ../editlang_edit_settings.php:273 ../includes/classes/class_date.php:217
 msgid "Saturday"
 msgstr "Sabato"
 
@@ -4343,7 +4342,7 @@ msgstr "Il nome contiene"
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:346
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:367
 #: ../modules/GEDFact_assistant/_CENS/census_3_find.php:388
-#: ../medialist.php:148 ../calendar.php:593 ../blocks/random_media.php:357
+#: ../medialist.php:148 ../calendar.php:534 ../blocks/random_media.php:357
 #: ../media.php:809 ../media.php:829
 msgid "Filter"
 msgstr "Filtra"
@@ -4478,7 +4477,7 @@ msgstr "Totale Fonti"
 #: ../includes/functions/functions_print_lists.php:506
 #: ../modules/descendancy/descendancy.php:144
 #: ../modules/relatives/relatives.php:192
-#: ../modules/relatives/relatives.php:236 ../calendar.php:303
+#: ../modules/relatives/relatives.php:236 ../calendar.php:244
 #: ../help_text.php:934
 msgid "MARR"
 msgstr "Matrimonio"
@@ -4517,7 +4516,7 @@ msgid "Add Media"
 msgstr "Aggiungi Media"
 
 #: ../note.php:131 ../includes/functions/functions_charts.php:555
-#: ../includes/functions/functions_edit.php:965
+#: ../includes/functions/functions_edit.php:1003
 #: ../includes/functions/functions_mediadb.php:1140
 #: ../modules/media/media.php:71 ../addmedia.php:61 ../repo.php:103
 #: ../source.php:103 ../help_text.php:3829 ../media.php:833
@@ -4722,7 +4721,7 @@ msgid "Change Individual ID to:"
 msgstr "Modifica ID Persona in:"
 
 #: ../uploadgedcom.php:741 ../uploadgedcom.php:746
-#: ../includes/functions/functions_edit.php:1464
+#: ../includes/functions/functions_edit.php:1480
 #: ../includes/functions/functions_print_facts.php:242
 #: ../includes/functions/functions_print_facts.php:374
 #: ../includes/functions/functions_print_facts.php:939
@@ -4739,7 +4738,7 @@ msgstr "Importazione completata"
 msgid "sec."
 msgstr ""
 
-#: ../uploadgedcom.php:801 ../admin.php:210
+#: ../uploadgedcom.php:801 ../admin.php:197
 #: ../includes/classes/class_menubar.php:156 ../blocks/getting_started.php:65
 msgid "Manage GEDCOMs and edit Privacy"
 msgstr "Amministra il GEDCOM e la Privacy"
@@ -4796,7 +4795,7 @@ msgstr "Tipo"
 msgid "Import Statistics"
 msgstr "Statistiche Importazione"
 
-#: ../admin.php:54 ../admin.php:140 ../help_text.php:2496
+#: ../admin.php:54 ../admin.php:127 ../help_text.php:2496
 msgid "Administration"
 msgstr "Amministrazione"
 
@@ -4804,105 +4803,101 @@ msgstr "Amministrazione"
 msgid "View log files"
 msgstr "Visualizza file di log"
 
-#: ../admin.php:108
-msgid "Edit Image Manipulation Configuration"
-msgstr "Modifica la configurazione della manipolazione immagini"
-
-#: ../admin.php:141
+#: ../admin.php:128
 msgid "Current Server Time:"
 msgstr "Ora attuale del server"
 
-#: ../admin.php:143
+#: ../admin.php:130
 msgid "Current User Time:"
 msgstr "Ora attuale dell'utente"
 
-#: ../admin.php:148
+#: ../admin.php:135
 msgid "Your <i>config.php</i> file is still writable.  For security, you should set the permissions of this file back to read-only when you have finished configuring your site."
 msgstr "Il tuo file <i>config.php</i> è ancora scrivibile. Per maggior sicurezza, dovresti impostare i permessi di questo file a sola lettura quando hai finito di configurare questo sito."
 
-#: ../admin.php:153
+#: ../admin.php:140
 msgid "User accounts awaiting verification by admin"
 msgstr "Account utente in attesa di verifica da admin"
 
-#: ../admin.php:158
+#: ../admin.php:145
 msgid "One or more user accounts have warnings"
 msgstr "Uno o più account utente hanno avvertenze"
 
-#: ../admin.php:170 ../admin.php:206
+#: ../admin.php:157 ../admin.php:193
 msgid "Data and GEDCOM administration"
 msgstr "Amministrazioni Dati e GEDCOM"
 
-#: ../admin.php:172 ../admin.php:233
+#: ../admin.php:159 ../admin.php:220
 msgid "Unlinked Records"
 msgstr "Record non collegati"
 
-#: ../admin.php:175 ../admin.php:261
+#: ../admin.php:162 ../admin.php:248
 msgid "Site administration"
 msgstr "Amministrazione sito"
 
-#: ../admin.php:193
+#: ../admin.php:180
 msgid "View readme.txt file"
 msgstr "Visualizza file readme.txt"
 
-#: ../admin.php:193
+#: ../admin.php:180
 msgid "README documentation"
 msgstr "File README"
 
-#: ../admin.php:197
+#: ../admin.php:184
 msgid "Show PHP information page"
 msgstr "Visualizza pagina di informazioni PHP"
 
-#: ../admin.php:212 ../edit_merge.php:47 ../edit_merge.php:174
+#: ../admin.php:199 ../edit_merge.php:47 ../edit_merge.php:174
 #: ../edit_merge.php:326 ../help_text.php:2556
 msgid "Merge records"
 msgstr "Fondi dati"
 
-#: ../admin.php:215 ../dir_editor.php:87 ../dir_editor.php:88
+#: ../admin.php:202 ../dir_editor.php:87 ../dir_editor.php:88
 #: ../help_text.php:2541
 msgid "Cleanup Index directory"
 msgstr "Pulitura Indice Directory"
 
-#: ../admin.php:221 ../modules/batch_update/batch_update.php:61
+#: ../admin.php:208 ../modules/batch_update/batch_update.php:61
 #: ../modules/batch_update/batch_update.php:77
 msgid "Batch Update"
 msgstr "Effettua aggiornamenti/modifiche sequenziali sul tuo GEDCOM"
 
-#: ../admin.php:237 ../edit_interface.php:343 ../edit_interface.php:2448
+#: ../admin.php:224 ../edit_interface.php:343 ../edit_interface.php:2445
 msgid "Add an unlinked person"
 msgstr "Aggiungi una persona non collegata"
 
-#: ../admin.php:240
+#: ../admin.php:227
 msgid "Add an unlinked source"
 msgstr "Aggiungere fonte non collegata"
 
-#: ../admin.php:245
+#: ../admin.php:232
 msgid "Add an unlinked note"
 msgstr "Aggiungi una nota non collegata"
 
-#: ../admin.php:265
+#: ../admin.php:252
 msgid "Configuration"
 msgstr "Configurazione"
 
-#: ../admin.php:267 ../includes/controllers/usermigrate_ctrl.php:127
+#: ../admin.php:254 ../includes/controllers/usermigrate_ctrl.php:127
 #: ../usermigrate.php:128 ../usermigrate.php:133 ../usermigrate.php:140
 msgid "User Information Migration tool"
 msgstr ""
 
-#: ../admin.php:273 ../includes/controllers/usermigrate_ctrl.php:125
+#: ../admin.php:260 ../includes/controllers/usermigrate_ctrl.php:125
 #: ../usermigrate.php:50 ../usermigrate.php:75 ../help_text.php:2801
 msgid "Backup"
 msgstr ""
 
-#: ../admin.php:277 ../includes/classes/class_menubar.php:951 ../faq.php:40
+#: ../admin.php:264 ../includes/classes/class_menubar.php:951 ../faq.php:40
 #: ../help_text.php:2611
 msgid "FAQ List"
 msgstr "Lista FAQ"
 
-#: ../admin.php:283
+#: ../admin.php:270
 msgid "Configure supported languages"
 msgstr "Configura le lingue supportate"
 
-#: ../admin.php:319 ../printlog.php:91 ../printlog.php:113
+#: ../admin.php:306 ../printlog.php:91 ../printlog.php:113
 msgid "Content of log file"
 msgstr "Contenuto del file di log"
 
@@ -5016,8 +5011,7 @@ msgid "Update MyAccount"
 msgstr "Aggiorna Account"
 
 #: ../edit_changes.php:46 ../edit_changes.php:64 ../edit_changes.php:145
-#: ../help_text.php:2546 ../help_text.php:5440
-#: ../blocks/review_changes.php:109
+#: ../help_text.php:2546 ../blocks/review_changes.php:109
 msgid "Review GEDCOM Changes"
 msgstr "Rivedi le modifiche al file GEDCOM"
 
@@ -5427,16 +5421,16 @@ msgstr "Come attuale"
 
 #: ../addsearchlink.php:87 ../includes/functions/functions_print.php:1903
 #: ../includes/controllers/individual_ctrl.php:850
-#: ../includes/controllers/individual_ctrl.php:859 ../edit_interface.php:614
-#: ../edit_interface.php:2346 ../edit_interface.php:2355
+#: ../includes/controllers/individual_ctrl.php:859 ../edit_interface.php:611
+#: ../edit_interface.php:2343 ../edit_interface.php:2352
 #: ../addremotelink.php:133
 msgid "Husband"
 msgstr "Marito:"
 
 #: ../addsearchlink.php:88 ../includes/functions/functions_print.php:1903
 #: ../includes/controllers/individual_ctrl.php:849
-#: ../includes/controllers/individual_ctrl.php:858 ../edit_interface.php:612
-#: ../edit_interface.php:2344 ../edit_interface.php:2353
+#: ../includes/controllers/individual_ctrl.php:858 ../edit_interface.php:609
+#: ../edit_interface.php:2341 ../edit_interface.php:2350
 #: ../addremotelink.php:134
 msgid "Wife"
 msgstr "Moglie:"
@@ -5445,7 +5439,7 @@ msgstr "Moglie:"
 #: ../includes/controllers/individual_ctrl.php:864
 #: ../modules/googlemap/googlemap.php:785
 #: ../modules/googlemap/googlemap.php:820
-#: ../modules/relatives/relatives.php:280 ../edit_interface.php:2332
+#: ../modules/relatives/relatives.php:280 ../edit_interface.php:2329
 #: ../addremotelink.php:135
 msgid "Son"
 msgstr "Figlio"
@@ -5454,7 +5448,7 @@ msgstr "Figlio"
 #: ../includes/controllers/individual_ctrl.php:863
 #: ../modules/googlemap/googlemap.php:781
 #: ../modules/googlemap/googlemap.php:816
-#: ../modules/relatives/relatives.php:281 ../edit_interface.php:2334
+#: ../modules/relatives/relatives.php:281 ../edit_interface.php:2331
 #: ../addremotelink.php:136
 msgid "Daughter"
 msgstr "Figlia"
@@ -5542,7 +5536,7 @@ msgstr "Cognome:"
 
 #: ../search.php:348
 #: ../modules/GEDFact_assistant/_CENS/census_2_source_input.php:1018
-#: ../calendar.php:225
+#: ../calendar.php:166
 msgid "Year"
 msgstr "Anno:"
 
@@ -5753,21 +5747,32 @@ msgid "Other"
 msgstr "Altro"
 
 #: ../includes/config_data.php:92
-msgid "adopted"
+msgid "Adopted by both parents"
 msgstr ""
 
-#: ../includes/config_data.php:93 ../includes/classes/class_stats.php:1881
-#: ../includes/classes/class_stats.php:3799
-msgid "birth"
-msgstr "nascita"
+#: ../includes/config_data.php:93
+msgid "Adopted by father"
+msgstr ""
 
 #: ../includes/config_data.php:94
-msgid "foster"
+msgid "Adopted by mother"
 msgstr ""
 
-#: ../includes/config_data.php:95
-msgid "sealing"
+#: ../includes/config_data.php:99
+msgid "Birth"
 msgstr ""
+
+#: ../includes/config_data.php:100
+msgid "Adopted"
+msgstr "Adottato"
+
+#: ../includes/config_data.php:101
+msgid "Foster"
+msgstr "Tutela"
+
+#: ../includes/config_data.php:102
+msgid "Sealing"
+msgstr "Sigillatura"
 
 #: ../includes/specialchars.php:59
 msgid "Czech"
@@ -5889,96 +5894,104 @@ msgstr ""
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2183 ../calendar.php:165
+#: ../includes/functions/functions_print.php:2183
+#: ../includes/classes/class_date.php:152
 msgid "January"
 msgstr "Gennaio"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2184 ../calendar.php:166
+#: ../includes/functions/functions_print.php:2184
+#: ../includes/classes/class_date.php:153
 msgid "February"
 msgstr "Febbraio"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2185 ../statisticsplot.php:733
-#: ../calendar.php:167
+#: ../includes/functions/functions_print.php:2185
+#: ../includes/classes/class_date.php:154 ../statisticsplot.php:733
 msgid "March"
 msgstr "Marzo"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2186 ../statisticsplot.php:734
-#: ../calendar.php:168
+#: ../includes/functions/functions_print.php:2186
+#: ../includes/classes/class_date.php:155 ../statisticsplot.php:734
 msgid "April"
 msgstr "Aprile"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2187 ../statisticsplot.php:735
-#: ../calendar.php:169
+#: ../includes/functions/functions_print.php:2187
+#: ../includes/classes/class_date.php:156
+#: ../includes/classes/class_date.php:173 ../statisticsplot.php:735
 msgid "May"
 msgstr "Maggio"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2188 ../statisticsplot.php:736
-#: ../calendar.php:170
+#: ../includes/functions/functions_print.php:2188
+#: ../includes/classes/class_date.php:157 ../statisticsplot.php:736
 msgid "June"
 msgstr "Giugno"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2189 ../statisticsplot.php:737
-#: ../calendar.php:171
+#: ../includes/functions/functions_print.php:2189
+#: ../includes/classes/class_date.php:158 ../statisticsplot.php:737
 msgid "July"
 msgstr "Luglio"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2190 ../calendar.php:172
+#: ../includes/functions/functions_print.php:2190
+#: ../includes/classes/class_date.php:159
 msgid "August"
 msgstr "Agosto"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2191 ../calendar.php:173
+#: ../includes/functions/functions_print.php:2191
+#: ../includes/classes/class_date.php:160
 msgid "September"
 msgstr "Settembre"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2192 ../calendar.php:174
+#: ../includes/functions/functions_print.php:2192
+#: ../includes/classes/class_date.php:161
 msgid "October"
 msgstr "Ottobre"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2193 ../calendar.php:175
+#: ../includes/functions/functions_print.php:2193
+#: ../includes/classes/class_date.php:162
 msgid "November"
 msgstr "Novembre"
 
 #: ../includes/extras/functions.el.php:44
 #: ../includes/extras/functions.pl.php:46
 #: ../includes/extras/functions.sl.php:46
-#: ../includes/functions/functions_print.php:2194 ../calendar.php:176
+#: ../includes/functions/functions_print.php:2194
+#: ../includes/classes/class_date.php:163
 msgid "December"
 msgstr "Dicembre"
 
 #: ../includes/extras/functions.pl.php:130
 #: ../includes/extras/functions.sl.php:115
 #: ../includes/functions/functions_date.php:82
-#: ../includes/controllers/individual_ctrl.php:862 ../edit_interface.php:2336
+#: ../includes/controllers/individual_ctrl.php:862 ../edit_interface.php:2333
 msgid "Child"
 msgstr "Bambino"
 
@@ -6220,7 +6233,7 @@ msgid "Add Note"
 msgstr "Aggiungi nota"
 
 #: ../includes/functions/functions_charts.php:537
-#: ../includes/functions/functions_edit.php:1797 ../modules/notes/notes.php:88
+#: ../includes/functions/functions_edit.php:1813 ../modules/notes/notes.php:88
 #: ../help_text.php:3854
 msgid "Add a new Note"
 msgstr "Aggiungi una nota al fatto"
@@ -6231,7 +6244,7 @@ msgid "Add Shared Note"
 msgstr "Aggiungi una nota condivisa"
 
 #: ../includes/functions/functions_charts.php:546
-#: ../includes/functions/functions_edit.php:1810 ../modules/notes/notes.php:95
+#: ../includes/functions/functions_edit.php:1826 ../modules/notes/notes.php:95
 #: ../help_text.php:3874
 msgid "Add a new Shared Note"
 msgstr "Aggiungi una nuova nota condivisa"
@@ -6242,7 +6255,7 @@ msgid "Add Source Citation"
 msgstr "Aggiungi fonte"
 
 #: ../includes/functions/functions_charts.php:565
-#: ../includes/functions/functions_edit.php:1741
+#: ../includes/functions/functions_edit.php:1757
 #: ../modules/sources_tab/sources_tab.php:85 ../help_text.php:3894
 msgid "Add a new Source Citation"
 msgstr "Aggiungi una fonte"
@@ -6307,7 +6320,7 @@ msgid "Top 10 Surnames"
 msgstr "Top 10 Cognomi"
 
 #: ../includes/functions/functions_rss.php:319
-#: ../includes/functions/functions_print_lists.php:1619 ../help_text.php:5380
+#: ../includes/functions/functions_print_lists.php:1619
 #: ../blocks/rss_block.php:76 ../blocks/recent_changes.php:39
 #: ../blocks/recent_changes.php:79
 msgid "Recent Changes"
@@ -6340,118 +6353,78 @@ msgstr "Ultima modifica"
 msgid "Random Picture"
 msgstr "Foto casuale"
 
-#: ../includes/functions/functions_edit.php:81
+#: ../includes/functions/functions_edit.php:119
 #, php-format
 msgid "The record with id %s was changed by another user since you last accessed it."
 msgstr "Il record con ID %s è stato modificato da un altro utente da quando hai avuto l'ultimo accesso."
 
-#: ../includes/functions/functions_edit.php:82
+#: ../includes/functions/functions_edit.php:120
 #, php-format
 msgid "This record was last changed by <i>%s</i> at %s"
 msgstr "L'ultima modifica a questo record è stata effettuata da <i>%s</i> in data %s"
 
-#: ../includes/functions/functions_edit.php:83
-#: ../includes/functions/functions_edit.php:2347
-#: ../includes/functions/functions_edit.php:2356
+#: ../includes/functions/functions_edit.php:121
+#: ../includes/functions/functions_edit.php:2363
+#: ../includes/functions/functions_edit.php:2372
 msgid "Please reload the previous page to make sure you are working with the most recent record."
 msgstr "Per favore, ricarica la pagina precedente per essere certo di lavorare sul record più recente"
 
-#: ../includes/functions/functions_edit.php:425
-#: ../includes/functions/functions_edit.php:746
+#: ../includes/functions/functions_edit.php:463
+#: ../includes/functions/functions_edit.php:784
 msgid "Save and go to new record"
 msgstr "Salva e vai a un nuovo record"
 
-#: ../includes/functions/functions_edit.php:720
+#: ../includes/functions/functions_edit.php:758
 #: ../includes/functions/functions_mediadb.php:1472
 #: ../modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php:204
 #: ../edit_interface.php:423 ../edit_interface.php:462
-#: ../edit_interface.php:513 ../edit_interface.php:586
-#: ../edit_interface.php:625 ../edit_interface.php:788
-#: ../edit_interface.php:920 ../edit_interface.php:1123
-#: ../edit_interface.php:1188 ../edit_interface.php:1258
-#: ../edit_interface.php:2622 ../addremotelink.php:256
+#: ../edit_interface.php:513 ../edit_interface.php:583
+#: ../edit_interface.php:622 ../edit_interface.php:785
+#: ../edit_interface.php:917 ../edit_interface.php:1120
+#: ../edit_interface.php:1185 ../edit_interface.php:1255
+#: ../edit_interface.php:2619 ../addremotelink.php:256
 msgid "Admin Option"
 msgstr "Opzioni di Amministrazione"
 
-#: ../includes/functions/functions_edit.php:978 ../edit_interface.php:1221
-#: ../edit_interface.php:1271
+#: ../includes/functions/functions_edit.php:1016 ../edit_interface.php:1218
+#: ../edit_interface.php:1268
 msgid "Create Repository"
 msgstr "Crea deposito"
 
-#: ../includes/functions/functions_edit.php:992 ../edit_interface.php:903
+#: ../includes/functions/functions_edit.php:1030 ../edit_interface.php:900
 msgid "Create a new Shared Note"
 msgstr "Crea una nuova nota condivisa"
 
-#: ../includes/functions/functions_edit.php:1005
-#: ../includes/functions/functions_edit.php:1666 ../edit_interface.php:1037
+#: ../includes/functions/functions_edit.php:1043
+#: ../includes/functions/functions_edit.php:1682 ../edit_interface.php:1034
 msgid "Create a new Shared Note using Assistant"
 msgstr "Crea una nuova nota condivisa utilizzando l'assistente"
 
-#: ../includes/functions/functions_edit.php:1019
-#: ../includes/controllers/note_ctrl.php:200 ../edit_interface.php:1159
+#: ../includes/functions/functions_edit.php:1057
+#: ../includes/controllers/note_ctrl.php:200 ../edit_interface.php:1156
 msgid "Edit Shared Note"
 msgstr "Modifica nota condivisa"
 
-#: ../includes/functions/functions_edit.php:1033 ../edit_interface.php:753
-#: ../edit_interface.php:830
+#: ../includes/functions/functions_edit.php:1071 ../edit_interface.php:750
+#: ../edit_interface.php:827
 msgid "Create a new source"
 msgstr "Crea una nuova fonte"
 
 #. I18N: This is the GEDCOM label for "Shared Note"
-#: ../includes/functions/functions_edit.php:1293
+#: ../includes/functions/functions_edit.php:1331
 #: ../includes/functions/functions_print_facts.php:1139 ../help_text.php:1236
 msgid "SHARED_NOTE"
 msgstr "Shared Note"
 
-#: ../includes/functions/functions_edit.php:1371
+#: ../includes/functions/functions_edit.php:1409
 msgid "No Temple - Living Ordinance"
 msgstr "Nessun Tempio - "
 
-#. I18N: This is the GEDCOM label for "Husband"
-#: ../includes/functions/functions_edit.php:1381
-#: ../includes/functions/functions_edit.php:1382
-#: ../includes/functions/functions_print_facts.php:391 ../help_text.php:838
-msgid "HUSB"
-msgstr "Marito"
-
-#. I18N: This is the GEDCOM label for "Wife"
-#: ../includes/functions/functions_edit.php:1381
-#: ../includes/functions/functions_edit.php:1383
-#: ../includes/functions/functions_print_facts.php:391 ../help_text.php:1374
-msgid "WIFE"
-msgstr "Moglie"
-
-#. I18N: This is the GEDCOM label for "Birth"
-#: ../includes/functions/functions_edit.php:1394
-#: ../includes/functions/functions_print_lists.php:98
-#: ../includes/functions/functions_print_lists.php:100
-#: ../includes/functions/functions_print_lists.php:116
-#: ../includes/controllers/lifespan_ctrl.php:499
-#: ../includes/controllers/lifespan_ctrl.php:528
-#: ../includes/controllers/lifespan_ctrl.php:547
-#: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:454
-#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:531
-#: ../edit_interface.php:578 ../calendar.php:288 ../help_text.php:212
-msgid "BIRT"
-msgstr "Nascita"
-
-#: ../includes/functions/functions_edit.php:1395 ../edit_interface.php:579
-msgid "Adopted"
-msgstr "Adottato"
-
-#: ../includes/functions/functions_edit.php:1396 ../edit_interface.php:580
-msgid "Foster"
-msgstr "Tutela"
-
-#: ../includes/functions/functions_edit.php:1397 ../edit_interface.php:581
-msgid "Sealing"
-msgstr "Sigillatura"
-
-#: ../includes/functions/functions_edit.php:1458
+#: ../includes/functions/functions_edit.php:1474
 msgid "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect."
 msgstr "Nota: Devi abilitare la funzione  'Utilizza la restrizione GEDCOM (RESN)' perché questa impostazione abbia effetto."
 
-#: ../includes/functions/functions_edit.php:1465
+#: ../includes/functions/functions_edit.php:1481
 #: ../includes/functions/functions_print_facts.php:238
 #: ../includes/functions/functions_print_facts.php:370
 #: ../includes/functions/functions_print_facts.php:935
@@ -6459,7 +6432,7 @@ msgstr "Nota: Devi abilitare la funzione  'Utilizza la restrizione GEDCOM (RESN)
 msgid "Privacy"
 msgstr ""
 
-#: ../includes/functions/functions_edit.php:1466
+#: ../includes/functions/functions_edit.php:1482
 #: ../includes/functions/functions_print_facts.php:240
 #: ../includes/functions/functions_print_facts.php:372
 #: ../includes/functions/functions_print_facts.php:937
@@ -6467,21 +6440,21 @@ msgstr ""
 msgid "Confidential"
 msgstr "Confidenziale"
 
-#: ../includes/functions/functions_edit.php:1502
+#: ../includes/functions/functions_edit.php:1518
 #: ../includes/functions/functions_mediadb.php:1079
 #: ../includes/functions/functions_mediadb.php:1280 ../edit_privacy.php:621
 msgid "Choose: "
 msgstr "Scegli:"
 
-#: ../includes/functions/functions_edit.php:1516
-#: ../includes/functions/functions_edit.php:1517
+#: ../includes/functions/functions_edit.php:1532
+#: ../includes/functions/functions_edit.php:1533
 #: ../includes/controllers/individual_ctrl.php:528
 #: ../includes/controllers/individual_ctrl.php:629 ../help_text.php:4470
 msgid "Edit Name"
 msgstr "Modifica il nome"
 
 #. I18N: This is the GEDCOM label for "Latitude"
-#: ../includes/functions/functions_edit.php:1545
+#: ../includes/functions/functions_edit.php:1561
 #: ../includes/functions/functions_print.php:1982
 #: ../modules/googlemap/places.php:588
 #: ../modules/googlemap/places_edit.php:787 ../help_text.php:874
@@ -6489,53 +6462,53 @@ msgid "LATI"
 msgstr "Latitudine"
 
 #. I18N: This is the GEDCOM label for "Longitude"
-#: ../includes/functions/functions_edit.php:1545
+#: ../includes/functions/functions_edit.php:1561
 #: ../includes/functions/functions_print.php:1988
 #: ../modules/googlemap/places.php:589
 #: ../modules/googlemap/places_edit.php:797 ../help_text.php:886
 msgid "LONG"
 msgstr "Longitudine"
 
-#: ../includes/functions/functions_edit.php:1667
+#: ../includes/functions/functions_edit.php:1683
 msgid "Shared Note using Assistant"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Date of entry in original source"
-#: ../includes/functions/functions_edit.php:1759
-#: ../includes/functions/functions_edit.php:2323
+#: ../includes/functions/functions_edit.php:1775
+#: ../includes/functions/functions_edit.php:2339
 #: ../includes/functions/functions_mediadb.php:1418
 #: ../includes/functions/functions_mediadb.php:1466
 #: ../includes/functions/functions_print_facts.php:1017 ../help_text.php:446
 msgid "DATA:DATE"
 msgstr "Data di inserimento nella fonte originale"
 
-#: ../includes/functions/functions_edit.php:1772
-#: ../includes/functions/functions_edit.php:1777
+#: ../includes/functions/functions_edit.php:1788
+#: ../includes/functions/functions_edit.php:1793
 msgid "Add a new Associate"
 msgstr "Aggiungi una persona collegata"
 
-#: ../includes/functions/functions_edit.php:1823
+#: ../includes/functions/functions_edit.php:1839
 msgid "Add a new Multimedia object"
 msgstr "Aggiungi un oggetto multimediale"
 
 #. I18N: This is the GEDCOM label for "Restriction"
-#: ../includes/functions/functions_edit.php:1839 ../help_text.php:1188
+#: ../includes/functions/functions_edit.php:1855 ../help_text.php:1188
 msgid "RESN"
 msgstr "Restrizione"
 
-#: ../includes/functions/functions_edit.php:2248 ../blocks/charts.php:171
+#: ../includes/functions/functions_edit.php:2264 ../blocks/charts.php:171
 #: ../blocks/user_favorites.php:137 ../blocks/gedcom_favorites.php:135
 msgid "No such ID exists in this GEDCOM file."
 msgstr "Non esiste questo ID nel file di famiglia."
 
-#: ../includes/functions/functions_edit.php:2346
-#: ../includes/functions/functions_edit.php:2355
+#: ../includes/functions/functions_edit.php:2362
+#: ../includes/functions/functions_edit.php:2371
 msgid "An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it."
 msgstr "Si è verificato un errore mentre veniva creato il modulo di modifica. Un altro utente potrebbe aver modificato questo record mentre tu lo visionavi."
 
 #. I18N: This is the GEDCOM label for "Status Change Date"
-#: ../includes/functions/functions_edit.php:2476
-#: ../includes/functions/functions_edit.php:2549
+#: ../includes/functions/functions_edit.php:2492
+#: ../includes/functions/functions_edit.php:2565
 #: ../includes/functions/functions_print.php:2019 ../help_text.php:1284
 msgid "STAT:DATE"
 msgstr "Data di cambio status"
@@ -6677,6 +6650,19 @@ msgstr "Foglie"
 msgid "Show persons born more than 100 years ago."
 msgstr "Visualizza le persone nate più di 100 anni fa."
 
+#. I18N: This is the GEDCOM label for "Birth"
+#: ../includes/functions/functions_print_lists.php:98
+#: ../includes/functions/functions_print_lists.php:100
+#: ../includes/functions/functions_print_lists.php:116
+#: ../includes/controllers/lifespan_ctrl.php:499
+#: ../includes/controllers/lifespan_ctrl.php:528
+#: ../includes/controllers/lifespan_ctrl.php:547
+#: ../modules/GEDFact_assistant/_MEDIA/media_3_find.php:454
+#: ../modules/GEDFact_assistant/_CENS/census_3_find.php:531
+#: ../calendar.php:229 ../help_text.php:212
+msgid "BIRT"
+msgstr "Nascita"
+
 #: ../includes/functions/functions_print_lists.php:99
 msgid "Show persons born within the last 100 years."
 msgstr "Visualizza le persone nate nel corso degli ultimi 100 anni."
@@ -6691,7 +6677,7 @@ msgstr "Visualizza le persone che sono morte più di 100 anni fa."
 #: ../includes/functions/functions_print_lists.php:120
 #: ../includes/controllers/lifespan_ctrl.php:507
 #: ../includes/controllers/lifespan_ctrl.php:536
-#: ../includes/controllers/lifespan_ctrl.php:553 ../calendar.php:312
+#: ../includes/controllers/lifespan_ctrl.php:553 ../calendar.php:253
 #: ../help_text.php:458
 msgid "DEAT"
 msgstr "Morte"
@@ -6710,7 +6696,7 @@ msgstr "Reimposta l'elenco di default."
 #: ../includes/functions/functions_print_lists.php:499
 #: ../includes/functions/functions_print_lists.php:503
 #: ../includes/functions/functions_print_lists.php:1072
-#: ../edit_interface.php:1212 ../edit_interface.php:1228 ../help_text.php:996
+#: ../edit_interface.php:1209 ../edit_interface.php:1225 ../help_text.php:996
 #: ../blocks/yahrzeit.php:155
 msgid "NAME"
 msgstr "Nome"
@@ -6812,7 +6798,7 @@ msgid "Show divorced couples."
 msgstr "Visualizza coppie divorziate."
 
 #. I18N: This is the GEDCOM label for "Divorce"
-#: ../includes/functions/functions_print_lists.php:490 ../calendar.php:309
+#: ../includes/functions/functions_print_lists.php:490 ../calendar.php:250
 #: ../help_text.php:502
 msgid "DIV"
 msgstr "Divorzio"
@@ -6838,16 +6824,16 @@ msgstr "Decade di matrimonio"
 #: ../includes/functions/functions_print_lists.php:848
 #: ../includes/functions/functions_print_lists.php:988
 #: ../includes/functions/functions_print_lists.php:1129
-#: ../edit_interface.php:744 ../edit_interface.php:761
-#: ../edit_interface.php:894 ../edit_interface.php:1025
-#: ../edit_interface.php:1064 ../edit_interface.php:1150 ../medialist.php:129
+#: ../edit_interface.php:741 ../edit_interface.php:758
+#: ../edit_interface.php:891 ../edit_interface.php:1022
+#: ../edit_interface.php:1061 ../edit_interface.php:1147 ../medialist.php:129
 #: ../help_text.php:1326 ../blocks/block_htmlplus.php:217 ../media.php:800
 msgid "TITL"
 msgstr "Titolo"
 
 #. I18N: This is the GEDCOM label for "Author"
 #: ../includes/functions/functions_print_lists.php:849
-#: ../edit_interface.php:774 ../help_text.php:126
+#: ../edit_interface.php:771 ../help_text.php:126
 msgid "AUTH"
 msgstr "Autore"
 
@@ -6955,7 +6941,7 @@ msgstr "Non esistono eventi per domani."
 msgid "No events exist for the next %s days."
 msgstr ""
 
-#: ../includes/functions/functions_print_lists.php:1906 ../calendar.php:645
+#: ../includes/functions/functions_print_lists.php:1906 ../calendar.php:586
 #: ../blocks/yahrzeit.php:145
 #, php-format
 msgid "%s year anniversary"
@@ -7280,42 +7266,42 @@ msgstr "Aggiungi dagli appunti"
 msgid "Add new fact"
 msgstr "Aggiungi un nuovo fatto"
 
-#: ../includes/functions/functions_print.php:2164 ../calendar.php:324
+#: ../includes/functions/functions_print.php:2164 ../calendar.php:265
 msgid "Custom Event"
 msgstr "Evento personalizzato"
 
 #: ../includes/functions/functions_print.php:2196
-#: ../includes/classes/class_date.php:185
+#: ../includes/classes/class_date.php:229
 msgid "Sun"
 msgstr ""
 
 #: ../includes/functions/functions_print.php:2197
-#: ../includes/classes/class_date.php:179
+#: ../includes/classes/class_date.php:223
 msgid "Mon"
 msgstr ""
 
 #: ../includes/functions/functions_print.php:2198
-#: ../includes/classes/class_date.php:180
+#: ../includes/classes/class_date.php:224
 msgid "Tue"
 msgstr ""
 
 #: ../includes/functions/functions_print.php:2199
-#: ../includes/classes/class_date.php:181
+#: ../includes/classes/class_date.php:225
 msgid "Wed"
 msgstr ""
 
 #: ../includes/functions/functions_print.php:2200
-#: ../includes/classes/class_date.php:182
+#: ../includes/classes/class_date.php:226
 msgid "Thu"
 msgstr ""
 
 #: ../includes/functions/functions_print.php:2201
-#: ../includes/classes/class_date.php:183
+#: ../includes/classes/class_date.php:227
 msgid "Fri"
 msgstr ""
 
 #: ../includes/functions/functions_print.php:2202
-#: ../includes/classes/class_date.php:184
+#: ../includes/classes/class_date.php:228
 msgid "Sat"
 msgstr ""
 
@@ -7374,47 +7360,47 @@ msgid "self"
 msgstr ""
 
 #: ../includes/functions/functions.php:2352
-#: ../includes/functions/functions.php:2840
+#: ../includes/functions/functions.php:2825
 msgid "mother"
 msgstr ""
 
 #: ../includes/functions/functions.php:2353
-#: ../includes/functions/functions.php:2841
+#: ../includes/functions/functions.php:2826
 msgid "father"
 msgstr ""
 
 #: ../includes/functions/functions.php:2354
-#: ../includes/functions/functions.php:2842
+#: ../includes/functions/functions.php:2827
 msgid "parent"
 msgstr ""
 
 #: ../includes/functions/functions.php:2355
-#: ../includes/functions/functions.php:2843
+#: ../includes/functions/functions.php:2828
 msgid "husband"
 msgstr ""
 
 #: ../includes/functions/functions.php:2356
-#: ../includes/functions/functions.php:2844
+#: ../includes/functions/functions.php:2829
 msgid "wife"
 msgstr ""
 
 #: ../includes/functions/functions.php:2357
-#: ../includes/functions/functions.php:2845
+#: ../includes/functions/functions.php:2830
 msgid "spouse"
 msgstr ""
 
 #: ../includes/functions/functions.php:2358
-#: ../includes/functions/functions.php:2849
+#: ../includes/functions/functions.php:2834
 msgid "son"
 msgstr "figlio"
 
 #: ../includes/functions/functions.php:2359
-#: ../includes/functions/functions.php:2850
+#: ../includes/functions/functions.php:2835
 msgid "daughter"
 msgstr "figlia"
 
 #: ../includes/functions/functions.php:2360
-#: ../includes/functions/functions.php:2851
+#: ../includes/functions/functions.php:2836
 msgid "child"
 msgstr ""
 
@@ -7431,7 +7417,7 @@ msgid "elder brother"
 msgstr ""
 
 #: ../includes/functions/functions.php:2373
-#: ../includes/functions/functions.php:2846
+#: ../includes/functions/functions.php:2831
 msgid "brother"
 msgstr ""
 
@@ -7448,7 +7434,7 @@ msgid "elder sister"
 msgstr ""
 
 #: ../includes/functions/functions.php:2386
-#: ../includes/functions/functions.php:2847
+#: ../includes/functions/functions.php:2832
 msgid "sister"
 msgstr ""
 
@@ -7465,7 +7451,7 @@ msgid "elder sibling"
 msgstr ""
 
 #: ../includes/functions/functions.php:2399
-#: ../includes/functions/functions.php:2848
+#: ../includes/functions/functions.php:2833
 msgid "sibling"
 msgstr ""
 
@@ -8320,312 +8306,312 @@ msgid "mother's brother's wife"
 msgstr ""
 
 #. I18N: uncle
-#: ../includes/functions/functions.php:2614
+#: ../includes/functions/functions.php:2613
 msgid "mother's sister's husband"
 msgstr ""
 
 #. I18N: aunt
-#: ../includes/functions/functions.php:2619
+#: ../includes/functions/functions.php:2614
 msgid "father's brother's wife"
 msgstr ""
 
 #. I18N: uncle
-#: ../includes/functions/functions.php:2621
+#: ../includes/functions/functions.php:2615
 msgid "father's sister's husband"
 msgstr ""
 
 #. I18N: aunt
-#: ../includes/functions/functions.php:2626
+#: ../includes/functions/functions.php:2616
 msgid "parent's brother's wife"
 msgstr ""
 
 #. I18N: uncle
-#: ../includes/functions/functions.php:2628
+#: ../includes/functions/functions.php:2617
 msgid "parent's sister's husband"
 msgstr ""
 
-#: ../includes/functions/functions.php:2645
-#: ../includes/functions/functions.php:2652
+#: ../includes/functions/functions.php:2630
+#: ../includes/functions/functions.php:2637
 msgid "great-great-uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2646
-#: ../includes/functions/functions.php:2653
+#: ../includes/functions/functions.php:2631
+#: ../includes/functions/functions.php:2638
 msgid "great-great-aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2647
-#: ../includes/functions/functions.php:2654
+#: ../includes/functions/functions.php:2632
+#: ../includes/functions/functions.php:2639
 msgid "great-great-aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2659
+#: ../includes/functions/functions.php:2644
 msgid "great x4 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2660
+#: ../includes/functions/functions.php:2645
 msgid "great x4 aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2661
+#: ../includes/functions/functions.php:2646
 msgid "great x4 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2666
+#: ../includes/functions/functions.php:2651
 msgid "great x5 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2667
+#: ../includes/functions/functions.php:2652
 msgid "great x5 aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2668
+#: ../includes/functions/functions.php:2653
 msgid "great x5 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2673
+#: ../includes/functions/functions.php:2658
 msgid "great x6 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2674
+#: ../includes/functions/functions.php:2659
 msgid "great x6 aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2675
+#: ../includes/functions/functions.php:2660
 msgid "great x6 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2680
+#: ../includes/functions/functions.php:2665
 msgid "great x7 uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2681
+#: ../includes/functions/functions.php:2666
 msgid "great x7 aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2682
+#: ../includes/functions/functions.php:2667
 msgid "great x7 aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2687
+#: ../includes/functions/functions.php:2672
 #, php-format
 msgid "great x%d uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2688
+#: ../includes/functions/functions.php:2673
 #, php-format
 msgid "great x%d aunt"
 msgstr ""
 
-#: ../includes/functions/functions.php:2689
+#: ../includes/functions/functions.php:2674
 #, php-format
 msgid "great x%d aunt/uncle"
 msgstr ""
 
-#: ../includes/functions/functions.php:2700
+#: ../includes/functions/functions.php:2685
 msgid "great-great-grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2701
+#: ../includes/functions/functions.php:2686
 msgid "great-great-grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2702
+#: ../includes/functions/functions.php:2687
 msgid "great-great-grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2707
+#: ../includes/functions/functions.php:2692
 msgid "great-great-great-grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2708
+#: ../includes/functions/functions.php:2693
 msgid "great-great-great-grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2709
+#: ../includes/functions/functions.php:2694
 msgid "great-great-great-grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2714
+#: ../includes/functions/functions.php:2699
 msgid "great x4 grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2715
+#: ../includes/functions/functions.php:2700
 msgid "great x4 grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2716
+#: ../includes/functions/functions.php:2701
 msgid "great x4 grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2721
+#: ../includes/functions/functions.php:2706
 msgid "great x5 grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2722
+#: ../includes/functions/functions.php:2707
 msgid "great x5 grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2723
+#: ../includes/functions/functions.php:2708
 msgid "great x5 grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2728
+#: ../includes/functions/functions.php:2713
 msgid "great x6 grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2729
+#: ../includes/functions/functions.php:2714
 msgid "great x6 grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2730
+#: ../includes/functions/functions.php:2715
 msgid "great x6 grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2735
+#: ../includes/functions/functions.php:2720
 msgid "great x7 grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2736
+#: ../includes/functions/functions.php:2721
 msgid "great x7 grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2737
+#: ../includes/functions/functions.php:2722
 msgid "great x7 grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2742
+#: ../includes/functions/functions.php:2727
 #, php-format
 msgid "great x%d grandmother"
 msgstr ""
 
-#: ../includes/functions/functions.php:2743
+#: ../includes/functions/functions.php:2728
 #, php-format
 msgid "great x%d grandfather"
 msgstr ""
 
-#: ../includes/functions/functions.php:2744
+#: ../includes/functions/functions.php:2729
 #, php-format
 msgid "great x%d grandparent"
 msgstr ""
 
-#: ../includes/functions/functions.php:2755
+#: ../includes/functions/functions.php:2740
 msgid "great-great-grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2756
+#: ../includes/functions/functions.php:2741
 msgid "great-great-granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2757
+#: ../includes/functions/functions.php:2742
 msgid "great-great-grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2762
+#: ../includes/functions/functions.php:2747
 msgid "great-great-great-grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2763
+#: ../includes/functions/functions.php:2748
 msgid "great-great-great-granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2764
+#: ../includes/functions/functions.php:2749
 msgid "great-great-great-grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2769
+#: ../includes/functions/functions.php:2754
 msgid "great x4 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2770
+#: ../includes/functions/functions.php:2755
 msgid "great x4 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2771
+#: ../includes/functions/functions.php:2756
 msgid "great x4 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2776
+#: ../includes/functions/functions.php:2761
 msgid "great x5 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2777
+#: ../includes/functions/functions.php:2762
 msgid "great x5 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2778
+#: ../includes/functions/functions.php:2763
 msgid "great x5 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2783
+#: ../includes/functions/functions.php:2768
 msgid "great x6 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2784
+#: ../includes/functions/functions.php:2769
 msgid "great x6 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2785
+#: ../includes/functions/functions.php:2770
 msgid "great x6 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2790
+#: ../includes/functions/functions.php:2775
 msgid "great x7 grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2791
+#: ../includes/functions/functions.php:2776
 msgid "great x7 granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2792
+#: ../includes/functions/functions.php:2777
 msgid "great x7 grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2797
+#: ../includes/functions/functions.php:2782
 #, php-format
 msgid "great x%d grandson"
 msgstr ""
 
-#: ../includes/functions/functions.php:2798
+#: ../includes/functions/functions.php:2783
 #, php-format
 msgid "great x%d granddaughter"
 msgstr ""
 
-#: ../includes/functions/functions.php:2799
+#: ../includes/functions/functions.php:2784
 #, php-format
 msgid "great x%d grandchild"
 msgstr ""
 
-#: ../includes/functions/functions.php:2811
+#: ../includes/functions/functions.php:2796
 #, php-format
 msgid "%s male cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2812
+#: ../includes/functions/functions.php:2797
 #, php-format
 msgid "%s female cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2813
+#: ../includes/functions/functions.php:2798
 #, php-format
 msgid "%s cousin"
 msgstr ""
 
-#: ../includes/functions/functions.php:2820
+#: ../includes/functions/functions.php:2805
 #, php-format
 msgid "%1$s male cousin, %2$d time removed"
 msgid_plural "%1$s male cousin, %2$d times removed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/functions/functions.php:2825
+#: ../includes/functions/functions.php:2810
 #, php-format
 msgid "%1$s female cousin, %2$d time removed"
 msgid_plural "%1$s female cousin, %2$d times removed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/functions/functions.php:2828
+#: ../includes/functions/functions.php:2813
 #, php-format
 msgid "%1$s cousin, %2$d time removed"
 msgid_plural "%1$s cousin, %2$d times removed"
@@ -8633,62 +8619,62 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. I18N: These strings are used to build paths of relationships, such as "father's wife's husband's brother"
-#: ../includes/functions/functions.php:2856
+#: ../includes/functions/functions.php:2841
 #, php-format
 msgid "mother's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2857
+#: ../includes/functions/functions.php:2842
 #, php-format
 msgid "father's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2858
+#: ../includes/functions/functions.php:2843
 #, php-format
 msgid "parent's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2859
+#: ../includes/functions/functions.php:2844
 #, php-format
 msgid "husband's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2860
+#: ../includes/functions/functions.php:2845
 #, php-format
 msgid "wife's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2861
+#: ../includes/functions/functions.php:2846
 #, php-format
 msgid "spouse's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2862
+#: ../includes/functions/functions.php:2847
 #, php-format
 msgid "brother's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2863
+#: ../includes/functions/functions.php:2848
 #, php-format
 msgid "sister's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2864
+#: ../includes/functions/functions.php:2849
 #, php-format
 msgid "sibling's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2865
+#: ../includes/functions/functions.php:2850
 #, php-format
 msgid "son's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2866
+#: ../includes/functions/functions.php:2851
 #, php-format
 msgid "daughter's %s"
 msgstr ""
 
-#: ../includes/functions/functions.php:2867
+#: ../includes/functions/functions.php:2852
 #, php-format
 msgid "child's %s"
 msgstr ""
@@ -8700,8 +8686,8 @@ msgid "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 msgstr ""
 
 #: ../includes/functions/functions_db.php:2060 ../edit_interface.php:375
-#: ../edit_interface.php:392 ../edit_interface.php:1990
-#: ../edit_interface.php:2006 ../edit_interface.php:2063 ../edit_merge.php:182
+#: ../edit_interface.php:392 ../edit_interface.php:1987
+#: ../edit_interface.php:2003 ../edit_interface.php:2060 ../edit_merge.php:182
 msgid "GEDCOM record successfully deleted."
 msgstr "Campo GEDCOM cancellato con successo."
 
@@ -8742,6 +8728,16 @@ msgstr "Famiglia da bambino"
 msgid "ADOP"
 msgstr "Adozione"
 
+#. I18N: This is the GEDCOM label for "Husband"
+#: ../includes/functions/functions_print_facts.php:391 ../help_text.php:838
+msgid "HUSB"
+msgstr "Marito"
+
+#. I18N: This is the GEDCOM label for "Wife"
+#: ../includes/functions/functions_print_facts.php:391 ../help_text.php:1374
+msgid "WIFE"
+msgstr "Moglie"
+
 #: ../includes/functions/functions_print_facts.php:458
 #: ../includes/functions/functions_print_facts.php:460
 msgid "Unrecognized GEDCOM Code"
@@ -8754,7 +8750,7 @@ msgstr "Questo è un errore, e vorremo sistemarlo. Per favore notificalo a"
 #. I18N: This is the GEDCOM label for "Publication"
 #: ../includes/functions/functions_print_facts.php:572
 #: ../includes/functions/functions_print_facts.php:925
-#: ../edit_interface.php:777 ../help_text.php:1146
+#: ../edit_interface.php:774 ../help_text.php:1146
 msgid "PUBL"
 msgstr "Pubblicazione"
 
@@ -8767,27 +8763,27 @@ msgstr "Formato"
 
 #. I18N: This is the GEDCOM label for "Address"
 #: ../includes/functions/functions_print_facts.php:759
-#: ../edit_interface.php:1241 ../help_text.php:54
+#: ../edit_interface.php:1238 ../help_text.php:54
 msgid "ADDR"
 msgstr "Indirizzo"
 
 #. I18N: This is the GEDCOM label for "Phone"
 #: ../includes/functions/functions_print_facts.php:828
-#: ../modules/googlemap/googlemap.php:308 ../edit_interface.php:1244
+#: ../modules/googlemap/googlemap.php:308 ../edit_interface.php:1241
 #: ../help_text.php:1098
 msgid "PHON"
 msgstr "Telefono"
 
 #. I18N: This is the GEDCOM label for "FAX"
 #: ../includes/functions/functions_print_facts.php:837
-#: ../modules/googlemap/googlemap.php:314 ../edit_interface.php:1247
+#: ../modules/googlemap/googlemap.php:314 ../edit_interface.php:1244
 #: ../help_text.php:766
 msgid "FAX"
 msgstr ""
 
 #. I18N: This is the GEDCOM label for "Email Address"
 #: ../includes/functions/functions_print_facts.php:846
-#: ../modules/googlemap/googlemap.php:320 ../edit_interface.php:1250
+#: ../modules/googlemap/googlemap.php:320 ../edit_interface.php:1247
 #: ../help_text.php:532
 msgid "EMAIL"
 msgstr "Indirizzo E-mail"
@@ -8965,18 +8961,18 @@ msgstr "Lista degli Oggetti Multimediali"
 msgid "Anniversary Calendar"
 msgstr "Calendario anniversari"
 
-#: ../includes/classes/class_menubar.php:677 ../calendar.php:330
-#: ../calendar.php:332
+#: ../includes/classes/class_menubar.php:677 ../calendar.php:271
+#: ../calendar.php:273
 msgid "View Day"
 msgstr "Guarda il giorno"
 
-#: ../includes/classes/class_menubar.php:683 ../calendar.php:335
-#: ../calendar.php:337
+#: ../includes/classes/class_menubar.php:683 ../calendar.php:276
+#: ../calendar.php:278
 msgid "View Month"
 msgstr "Guarda il mese"
 
-#: ../includes/classes/class_menubar.php:689 ../calendar.php:340
-#: ../calendar.php:342
+#: ../includes/classes/class_menubar.php:689 ../calendar.php:281
+#: ../calendar.php:283
 msgid "View Year"
 msgstr "Guarda l'anno"
 
@@ -9017,54 +9013,292 @@ msgstr "Mostra aiuto contestuale"
 msgid "Change Theme"
 msgstr "Cambia Tema"
 
-#: ../includes/classes/class_date.php:857
-#: ../includes/classes/class_date.php:872
+#: ../includes/classes/class_date.php:169 ../statisticsplot.php:731
+msgid "Jan"
+msgstr "Gen"
+
+#: ../includes/classes/class_date.php:170 ../statisticsplot.php:732
+msgid "Feb"
+msgstr ""
+
+#: ../includes/classes/class_date.php:171
+msgid "Mar"
+msgstr ""
+
+#: ../includes/classes/class_date.php:172
+msgid "Apr"
+msgstr ""
+
+#: ../includes/classes/class_date.php:174
+msgid "Jun"
+msgstr ""
+
+#: ../includes/classes/class_date.php:175
+msgid "Jul"
+msgstr ""
+
+#: ../includes/classes/class_date.php:176 ../statisticsplot.php:738
+msgid "Aug"
+msgstr "Ago"
+
+#: ../includes/classes/class_date.php:177 ../statisticsplot.php:739
+msgid "Sep"
+msgstr "Set"
+
+#: ../includes/classes/class_date.php:178 ../statisticsplot.php:740
+msgid "Oct"
+msgstr "Ott"
+
+#: ../includes/classes/class_date.php:179 ../statisticsplot.php:741
+msgid "Nov"
+msgstr ""
+
+#: ../includes/classes/class_date.php:180 ../statisticsplot.php:742
+msgid "Dec"
+msgstr "Dic"
+
+#. I18N: Number of years "before christ"
+#: ../includes/classes/class_date.php:666
+#, php-format
+msgid "%d B.C."
+msgstr ""
+
+#: ../includes/classes/class_date.php:704
+#: ../includes/classes/class_date.php:723
+msgid "Tishrei"
+msgstr ""
+
+#: ../includes/classes/class_date.php:705
+#: ../includes/classes/class_date.php:724
+msgid "Heshvan"
+msgstr ""
+
+#: ../includes/classes/class_date.php:706
+#: ../includes/classes/class_date.php:725
+msgid "Kislev"
+msgstr ""
+
+#: ../includes/classes/class_date.php:707
+#: ../includes/classes/class_date.php:726
+msgid "Tevet"
+msgstr ""
+
+#: ../includes/classes/class_date.php:708
+#: ../includes/classes/class_date.php:727
+msgid "Shevat"
+msgstr ""
+
+#: ../includes/classes/class_date.php:709
+#: ../includes/classes/class_date.php:728
+msgid "Adar"
+msgstr ""
+
+#: ../includes/classes/class_date.php:709
+#: ../includes/classes/class_date.php:728
+msgid "Adar I"
+msgstr ""
+
+#: ../includes/classes/class_date.php:710
+#: ../includes/classes/class_date.php:729
+msgid "Adar II"
+msgstr ""
+
+#: ../includes/classes/class_date.php:711
+#: ../includes/classes/class_date.php:730
+msgid "Nissan"
+msgstr ""
+
+#: ../includes/classes/class_date.php:712
+#: ../includes/classes/class_date.php:731
+msgid "Iyar"
+msgstr ""
+
+#: ../includes/classes/class_date.php:713
+#: ../includes/classes/class_date.php:732
+msgid "Sivan"
+msgstr ""
+
+#: ../includes/classes/class_date.php:714
+#: ../includes/classes/class_date.php:733
+msgid "Tamuz"
+msgstr ""
+
+#: ../includes/classes/class_date.php:715
+#: ../includes/classes/class_date.php:734
+msgid "Av"
+msgstr ""
+
+#: ../includes/classes/class_date.php:716
+#: ../includes/classes/class_date.php:735
+msgid "Elul"
+msgstr ""
+
+#: ../includes/classes/class_date.php:815
+msgid "שני"
+msgstr ""
+
+#: ../includes/classes/class_date.php:816
+msgid "שלישי"
+msgstr ""
+
+#: ../includes/classes/class_date.php:817
+msgid "רביעי"
+msgstr ""
+
+#: ../includes/classes/class_date.php:818
+msgid "חמישי"
+msgstr ""
+
+#: ../includes/classes/class_date.php:819
+msgid "ששי"
+msgstr ""
+
+#: ../includes/classes/class_date.php:820
+msgid "שבת"
+msgstr ""
+
+#: ../includes/classes/class_date.php:821
+msgid "ראשון"
+msgstr ""
+
+#: ../includes/classes/class_date.php:940
+msgid "Vendémiaire"
+msgstr ""
+
+#: ../includes/classes/class_date.php:941
+msgid "Brumaire"
+msgstr ""
+
+#: ../includes/classes/class_date.php:942
+msgid "Frimaire"
+msgstr ""
+
+#: ../includes/classes/class_date.php:943
+msgid "Nivôse"
+msgstr ""
+
+#: ../includes/classes/class_date.php:944
+msgid "Pluviôse"
+msgstr ""
+
+#: ../includes/classes/class_date.php:945
+msgid "Ventôse"
+msgstr "Ventose"
+
+#: ../includes/classes/class_date.php:946
+msgid "Germinal"
+msgstr ""
+
+#: ../includes/classes/class_date.php:947
+msgid "Floréal"
+msgstr ""
+
+#: ../includes/classes/class_date.php:948
+msgid "Prairial"
+msgstr ""
+
+#: ../includes/classes/class_date.php:949
+msgid "Messidor"
+msgstr ""
+
+#: ../includes/classes/class_date.php:950
+msgid "Thermidor"
+msgstr "Termidoro"
+
+#: ../includes/classes/class_date.php:951
+msgid "Fructidor"
+msgstr ""
+
+#: ../includes/classes/class_date.php:952
+msgid "jours complémentaires"
+msgstr "giorni complementari"
+
+#: ../includes/classes/class_date.php:981
 msgid "Primidi"
 msgstr ""
 
-#: ../includes/classes/class_date.php:858
-#: ../includes/classes/class_date.php:873
+#: ../includes/classes/class_date.php:982
 msgid "Duodi"
 msgstr ""
 
-#: ../includes/classes/class_date.php:859
-#: ../includes/classes/class_date.php:874
+#: ../includes/classes/class_date.php:983
 msgid "Tridi"
 msgstr ""
 
-#: ../includes/classes/class_date.php:860
-#: ../includes/classes/class_date.php:875
+#: ../includes/classes/class_date.php:984
 msgid "Quartidi"
 msgstr ""
 
-#: ../includes/classes/class_date.php:861
-#: ../includes/classes/class_date.php:876
+#: ../includes/classes/class_date.php:985
 msgid "Quintidi"
 msgstr ""
 
-#: ../includes/classes/class_date.php:862
-#: ../includes/classes/class_date.php:877
+#: ../includes/classes/class_date.php:986
 msgid "Sextidi"
 msgstr ""
 
-#: ../includes/classes/class_date.php:863
-#: ../includes/classes/class_date.php:878
+#: ../includes/classes/class_date.php:987
 msgid "Septidi"
 msgstr ""
 
-#: ../includes/classes/class_date.php:864
-#: ../includes/classes/class_date.php:879
+#: ../includes/classes/class_date.php:988
 msgid "Octidi"
 msgstr ""
 
-#: ../includes/classes/class_date.php:865
-#: ../includes/classes/class_date.php:880
+#: ../includes/classes/class_date.php:989
 msgid "Nonidi"
 msgstr ""
 
-#: ../includes/classes/class_date.php:866
-#: ../includes/classes/class_date.php:881
+#: ../includes/classes/class_date.php:990
 msgid "Decidi"
+msgstr ""
+
+#: ../includes/classes/class_date.php:1049
+msgid "Muharram"
+msgstr ""
+
+#: ../includes/classes/class_date.php:1050
+msgid "Safar"
+msgstr ""
+
+#: ../includes/classes/class_date.php:1051
+msgid "Rabi' al-awwal"
+msgstr "Rabi 'al-awwal"
+
+#: ../includes/classes/class_date.php:1052
+msgid "Rabi' al-thani"
+msgstr "Rabi 'al-Thani"
+
+#: ../includes/classes/class_date.php:1053
+msgid "Jumada al-awwal"
+msgstr ""
+
+#: ../includes/classes/class_date.php:1054
+msgid "Jumada al-thani"
+msgstr "Jumada al-Thani"
+
+#: ../includes/classes/class_date.php:1055
+msgid "Rajab"
+msgstr ""
+
+#: ../includes/classes/class_date.php:1056
+msgid "Sha'aban"
+msgstr ""
+
+#: ../includes/classes/class_date.php:1057
+msgid "Ramadan"
+msgstr ""
+
+#: ../includes/classes/class_date.php:1058
+msgid "Shawwal"
+msgstr ""
+
+#: ../includes/classes/class_date.php:1059
+msgid "Dhu al-Qi'dah"
+msgstr ""
+
+#: ../includes/classes/class_date.php:1060
+msgid "Dhu al-Hijjah"
 msgstr ""
 
 #: ../includes/classes/class_media.php:244
@@ -9148,6 +9382,11 @@ msgstr "secolo"
 #: ../includes/classes/class_stats.php:1793
 msgid "Average age related to death century"
 msgstr "Età media relativa al secolo di morte"
+
+#: ../includes/classes/class_stats.php:1881
+#: ../includes/classes/class_stats.php:3799
+msgid "birth"
+msgstr "nascita"
 
 #: ../includes/classes/class_stats.php:1882
 #: ../includes/classes/class_stats.php:3800
@@ -9567,12 +9806,12 @@ msgstr "Informazioni sulla Famiglia"
 msgid "Edit Family"
 msgstr "Modifica famiglia"
 
-#: ../includes/controllers/family_ctrl.php:370 ../edit_interface.php:2380
+#: ../includes/controllers/family_ctrl.php:370 ../edit_interface.php:2377
 msgid "Change Family Members"
 msgstr "Modifica i membri della famiglia"
 
 #: ../includes/controllers/family_ctrl.php:389
-#: ../modules/relatives/relatives.php:293 ../edit_interface.php:2257
+#: ../modules/relatives/relatives.php:293 ../edit_interface.php:2254
 #: ../help_text.php:5415
 msgid "Re-order children"
 msgstr "Riordina figli"
@@ -9724,12 +9963,12 @@ msgstr "Nome:"
 msgid "Delete Name"
 msgstr "Cancella il nome"
 
-#: ../includes/controllers/individual_ctrl.php:569 ../calendar.php:252
+#: ../includes/controllers/individual_ctrl.php:569 ../calendar.php:193
 msgid "Gender"
 msgstr "Sesso"
 
 #: ../includes/controllers/individual_ctrl.php:620
-#: ../modules/relatives/relatives.php:402 ../edit_interface.php:2671
+#: ../modules/relatives/relatives.php:402 ../edit_interface.php:2668
 #: ../help_text.php:5420
 msgid "Reorder Families"
 msgstr "Riordina le famiglie"
@@ -9798,9 +10037,9 @@ msgid "Ex-Husband"
 msgstr "Ex-marito"
 
 #: ../includes/controllers/individual_ctrl.php:848
-#: ../includes/controllers/individual_ctrl.php:857 ../edit_interface.php:2348
-#: ../edit_interface.php:2357 ../edit_interface.php:2391
-#: ../edit_interface.php:2411
+#: ../includes/controllers/individual_ctrl.php:857 ../edit_interface.php:2345
+#: ../edit_interface.php:2354 ../edit_interface.php:2388
+#: ../edit_interface.php:2408
 msgid "Spouse"
 msgstr "Coniuge"
 
@@ -9847,34 +10086,6 @@ msgstr "inferiore a"
 #: ../statisticsplot.php:932 ../statisticsplot.php:991
 msgid " not implemented:"
 msgstr "non implementato:"
-
-#: ../statisticsplot.php:731
-msgid "Jan"
-msgstr "Gen"
-
-#: ../statisticsplot.php:732
-msgid "Feb"
-msgstr ""
-
-#: ../statisticsplot.php:738
-msgid "Aug"
-msgstr "Ago"
-
-#: ../statisticsplot.php:739
-msgid "Sep"
-msgstr "Set"
-
-#: ../statisticsplot.php:740
-msgid "Oct"
-msgstr "Ott"
-
-#: ../statisticsplot.php:741
-msgid "Nov"
-msgstr ""
-
-#: ../statisticsplot.php:742
-msgid "Dec"
-msgstr "Dic"
 
 #: ../statisticsplot.php:808
 msgid " per gender"
@@ -10848,12 +11059,12 @@ msgid "Lang"
 msgstr ""
 
 #: ../modules/GEDFact_assistant/_CENS/addnoteaction_assisted.php:113
-#: ../edit_interface.php:1008
+#: ../edit_interface.php:1005
 msgid "New Shared Note created successfully."
 msgstr "Nuova nota condivisa creata con successo."
 
 #: ../modules/GEDFact_assistant/_CENS/addnoteaction_assisted.php:118
-#: ../edit_interface.php:884 ../edit_interface.php:1009 ../addmedia.php:443
+#: ../edit_interface.php:881 ../edit_interface.php:1006 ../addmedia.php:443
 msgid "Paste the following ID into your editing fields to reference the newly created record "
 msgstr "Incolla il seguente ID nei campi di modifica per far riferimento a file appena creato "
 
@@ -12423,113 +12634,112 @@ msgid "Editing this GEDCOM has been disabled by the administrator."
 msgstr "Le modifiche a questo GEDCOM sono state disabilitate dall'Amministratore."
 
 #: ../edit_interface.php:290 ../edit_interface.php:401
-#: ../edit_interface.php:1985 ../edit_interface.php:2000
+#: ../edit_interface.php:1982 ../edit_interface.php:1997
 #: ../addremotelink.php:52 ../addmedia.php:86
 msgid "Privacy settings prevent you from editing this record."
 msgstr "Le impostazioni privacy ti impediscono di modificare questo record."
 
 #: ../edit_interface.php:292 ../edit_interface.php:295
 #: ../edit_interface.php:403 ../edit_interface.php:406
-#: ../edit_interface.php:1986 ../edit_interface.php:1987
-#: ../edit_interface.php:2001 ../edit_interface.php:2002
+#: ../edit_interface.php:1983 ../edit_interface.php:1984
+#: ../edit_interface.php:1998 ../edit_interface.php:1999
 #: ../addremotelink.php:54 ../addmedia.php:87
 msgid "You have no access to"
 msgstr "Non hai accesso a"
 
-#: ../edit_interface.php:346 ../edit_interface.php:2440 ../help_text.php:3764
+#: ../edit_interface.php:346 ../edit_interface.php:2437 ../help_text.php:3764
 msgid "Add child"
 msgstr "Aggiungi bambino"
 
-#. I18N: This is the GEDCOM label for "Pedigree"
-#: ../edit_interface.php:575 ../help_text.php:1092
-msgid "PEDI"
-msgstr "Antenati"
+#: ../edit_interface.php:577
+msgid "Pedigree"
+msgstr ""
 
-#: ../edit_interface.php:744 ../edit_interface.php:894
-#: ../edit_interface.php:1025 ../edit_interface.php:1064
-#: ../edit_interface.php:1150 ../edit_interface.php:1212
+#: ../edit_interface.php:741 ../edit_interface.php:891
+#: ../edit_interface.php:1022 ../edit_interface.php:1061
+#: ../edit_interface.php:1147 ../edit_interface.php:1209
 msgid "You must provide a "
 msgstr "Devi fornire un "
 
 #. I18N: This is the GEDCOM label for "Abbreviation"
-#: ../edit_interface.php:758 ../help_text.php:48
+#: ../edit_interface.php:755 ../help_text.php:48
 msgid "ABBR"
 msgstr "Abbreviazione"
 
 #. I18N: This is the GEDCOM label for "Hebrew"
-#: ../edit_interface.php:765 ../edit_interface.php:1232 ../help_text.php:2064
+#: ../edit_interface.php:762 ../edit_interface.php:1229 ../help_text.php:2064
 msgid "_HEB"
 msgstr "Ebreo"
 
 #. I18N: This is the GEDCOM label for "Romanized"
-#: ../edit_interface.php:770 ../edit_interface.php:1237 ../help_text.php:1218
+#: ../edit_interface.php:767 ../edit_interface.php:1234 ../help_text.php:1218
 msgid "ROMN"
 msgstr "Latinizzato"
 
 #. I18N: This is the GEDCOM label for "Repository"
-#: ../edit_interface.php:780 ../help_text.php:1176
+#: ../edit_interface.php:777 ../help_text.php:1176
 msgid "REPO"
 msgstr "Deposito"
 
 #. I18N: This is the GEDCOM label for "Call Number"
-#: ../edit_interface.php:783 ../help_text.php:276
+#: ../edit_interface.php:780 ../help_text.php:276
 msgid "CALN"
 msgstr "Numero"
 
-#: ../edit_interface.php:802
+#: ../edit_interface.php:799
 msgid "Associate events with this source"
 msgstr "Associa eventi a questa fonte"
 
-#: ../edit_interface.php:806
+#: ../edit_interface.php:803
 msgid "Select Events"
 msgstr "Selezionare Eventi"
 
-#: ../edit_interface.php:883
+#: ../edit_interface.php:880
 msgid "New source created successfully."
 msgstr "Nuova fonte creata con successo."
 
 #. I18N: This is the GEDCOM label for "Web Home Page"
-#: ../edit_interface.php:1253 ../help_text.php:1386
+#: ../edit_interface.php:1250 ../help_text.php:1386
 msgid "WWW"
 msgstr "Web Home Page"
 
-#: ../edit_interface.php:1316
+#: ../edit_interface.php:1313
 msgid "New Repository created"
 msgstr "Creato nuovo deposito"
 
-#: ../edit_interface.php:1317
+#: ../edit_interface.php:1314
 msgid "Paste the following Repository ID into your editing fields to reference this Repository "
 msgstr "Incolla il seguente ID di deposito nei tuoi campi di modifica per far riferimento a questo deposito"
 
-#: ../edit_interface.php:1330 ../edit_interface.php:1546
-#: ../edit_interface.php:1605 ../edit_interface.php:1668
-#: ../edit_interface.php:1847 ../edit_interface.php:1973
-#: ../edit_interface.php:2125 ../edit_interface.php:2149
-#: ../edit_interface.php:2173 ../edit_interface.php:2197
-#: ../edit_interface.php:2592 ../edit_interface.php:2665
-#: ../edit_interface.php:2736 ../addmedia.php:449 ../addmedia.php:631
+#: ../edit_interface.php:1327 ../edit_interface.php:1543
+#: ../edit_interface.php:1602 ../edit_interface.php:1665
+#: ../edit_interface.php:1844 ../edit_interface.php:1970
+#: ../edit_interface.php:2122 ../edit_interface.php:2146
+#: ../edit_interface.php:2170 ../edit_interface.php:2194
+#: ../edit_interface.php:2589 ../edit_interface.php:2662
+#: ../edit_interface.php:2733 ../addmedia.php:449 ../addmedia.php:631
 #: ../addmedia.php:639 ../media.php:733
 msgid "Update successful"
 msgstr "Caricato con successo"
 
-#: ../edit_interface.php:2113
+#: ../edit_interface.php:2110
 msgid "Record copied to clipboard"
 msgstr "Record copiato negli appunti"
 
-#: ../edit_interface.php:2308
+#: ../edit_interface.php:2305
 msgid "Sort by birth dates"
 msgstr "Ordina per date di nascita"
 
-#: ../edit_interface.php:2375
+#: ../edit_interface.php:2372
 msgid "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes."
 msgstr "Utilizza questa pagina per modificare o rimuovere i membri della famiglia.<br /><br />Per ciascun membro della famiglia puoi utilizzare il link Modifica per scegliere una persona differente a svolgere quel ruolo nella famiglia.<br /><br />Quando avrai finito con le modifiche de imembri della famiglia, clicca sul pulsante Salva per salvarle"
 
-#: ../edit_interface.php:2398 ../edit_interface.php:2418
-#: ../edit_interface.php:2431 ../edit_interface.php:2444
+#: ../edit_interface.php:2395 ../edit_interface.php:2415
+#: ../edit_interface.php:2428 ../edit_interface.php:2441
 msgid "Change"
 msgstr "Cambiare"
 
-#: ../edit_interface.php:2708
+#: ../edit_interface.php:2705
 msgid "Sort by marriage date"
 msgstr "Ordina per data di matrimonio"
 
@@ -12807,224 +13017,68 @@ msgstr ""
 msgid "Month"
 msgstr ""
 
-#: ../calendar.php:177
-msgid "Vendémiaire"
-msgstr ""
-
-#: ../calendar.php:178
-msgid "Brumaire"
-msgstr ""
-
-#: ../calendar.php:179
-msgid "Frimaire"
-msgstr ""
-
-#: ../calendar.php:180
-msgid "Nivôse"
-msgstr ""
-
-#: ../calendar.php:181
-msgid "Pluviôse"
-msgstr ""
-
-#: ../calendar.php:182
-msgid "Ventôse"
-msgstr "Ventose"
-
-#: ../calendar.php:183
-msgid "Germinal"
-msgstr ""
-
-#: ../calendar.php:184
-msgid "Floréal"
-msgstr ""
-
-#: ../calendar.php:185
-msgid "Prairial"
-msgstr ""
-
-#: ../calendar.php:186
-msgid "Messidor"
-msgstr ""
-
-#: ../calendar.php:187
-msgid "Thermidor"
-msgstr "Termidoro"
-
-#: ../calendar.php:188
-msgid "Fructidor"
-msgstr ""
-
-#: ../calendar.php:189
-msgid "jours complémentaires"
-msgstr "giorni complementari"
-
-#: ../calendar.php:190
-msgid "Tishrei"
-msgstr ""
-
-#: ../calendar.php:191
-msgid "Heshvan"
-msgstr ""
-
-#: ../calendar.php:192
-msgid "Kislev"
-msgstr ""
-
-#: ../calendar.php:193
-msgid "Tevet"
-msgstr ""
-
-#: ../calendar.php:194
-msgid "Shevat"
-msgstr ""
-
-#: ../calendar.php:195
-msgid "Adar"
-msgstr ""
-
-#: ../calendar.php:196
-msgid "Adar I"
-msgstr ""
-
-#: ../calendar.php:197
-msgid "Adar II"
-msgstr ""
-
-#: ../calendar.php:198
-msgid "Nissan"
-msgstr ""
-
-#: ../calendar.php:199
-msgid "Iyar"
-msgstr ""
-
-#: ../calendar.php:200
-msgid "Sivan"
-msgstr ""
-
-#: ../calendar.php:201
-msgid "Tamuz"
-msgstr ""
-
-#: ../calendar.php:202
-msgid "Av"
-msgstr ""
-
-#: ../calendar.php:203
-msgid "Elul"
-msgstr ""
-
-#: ../calendar.php:204
-msgid "Muharram"
-msgstr ""
-
-#: ../calendar.php:205
-msgid "Safar"
-msgstr ""
-
-#: ../calendar.php:206
-msgid "Rabi' al-awwal"
-msgstr "Rabi 'al-awwal"
-
-#: ../calendar.php:207
-msgid "Rabi' al-thani"
-msgstr "Rabi 'al-Thani"
-
-#: ../calendar.php:208
-msgid "Jumada al-awwal"
-msgstr ""
-
-#: ../calendar.php:209
-msgid "Jumada al-thani"
-msgstr "Jumada al-Thani"
-
-#: ../calendar.php:210
-msgid "Rajab"
-msgstr ""
-
-#: ../calendar.php:211
-msgid "Sha'aban"
-msgstr ""
-
-#: ../calendar.php:212
-msgid "Ramadan"
-msgstr ""
-
-#: ../calendar.php:213
-msgid "Shawwal"
-msgstr ""
-
-#: ../calendar.php:214
-msgid "Dhu al-Qi'dah"
-msgstr ""
-
-#: ../calendar.php:215
-msgid "Dhu al-Hijjah"
-msgstr ""
-
-#: ../calendar.php:239 ../calendar.php:255 ../calendar.php:256
-#: ../calendar.php:259 ../calendar.php:260 ../calendar.php:500
+#: ../calendar.php:180 ../calendar.php:196 ../calendar.php:197
+#: ../calendar.php:200 ../calendar.php:201 ../calendar.php:441
 msgid "All People"
 msgstr "Tutte le persone"
 
-#: ../calendar.php:243 ../calendar.php:575
+#: ../calendar.php:184 ../calendar.php:516
 msgid "Living People"
 msgstr "Persone viventi"
 
-#: ../calendar.php:247 ../calendar.php:578
+#: ../calendar.php:188 ../calendar.php:519
 msgid "Recent Years (&lt; 100 yrs)"
 msgstr "Eventi recenti (<100 anni)"
 
-#: ../calendar.php:276
+#: ../calendar.php:217
 msgid "Show events of"
 msgstr ""
 
-#: ../calendar.php:282 ../calendar.php:587
+#: ../calendar.php:223 ../calendar.php:528
 msgid "Births, Deaths, Marriages"
 msgstr "Nascite, Morti, Matrimoni"
 
 #. I18N: This is the GEDCOM label for "Christening"
-#: ../calendar.php:291 ../help_text.php:324
+#: ../calendar.php:232 ../help_text.php:324
 msgid "CHR"
 msgstr "Cresima"
 
 #. I18N: This is the GEDCOM label for "Adult Christening"
-#: ../calendar.php:294 ../help_text.php:350
+#: ../calendar.php:235 ../help_text.php:350
 msgid "CHRA"
 msgstr "Cresima da Adulto"
 
 #. I18N: This is the GEDCOM label for "Baptism"
-#: ../calendar.php:297 ../help_text.php:138
+#: ../calendar.php:238 ../help_text.php:138
 msgid "BAPM"
 msgstr "Battesimo"
 
 #. I18N: This is the GEDCOM label for "Common Law Marriage"
-#: ../calendar.php:300 ../help_text.php:1746
+#: ../calendar.php:241 ../help_text.php:1746
 msgid "_COML"
 msgstr "Matrimonio legale"
 
 #. I18N: This is the GEDCOM label for "Separated"
-#: ../calendar.php:306 ../help_text.php:2358
+#: ../calendar.php:247 ../help_text.php:2358
 msgid "_SEPR"
 msgstr "Separato"
 
 #. I18N: This is the GEDCOM label for "Burial"
-#: ../calendar.php:315 ../help_text.php:250
+#: ../calendar.php:256 ../help_text.php:250
 msgid "BURI"
 msgstr "Sepoltura"
 
 #. I18N: This is the GEDCOM label for "Immigration"
-#: ../calendar.php:318 ../help_text.php:850
+#: ../calendar.php:259 ../help_text.php:850
 msgid "IMMI"
 msgstr "Immigrazione"
 
 #. I18N: This is the GEDCOM label for "Emigration"
-#: ../calendar.php:321 ../help_text.php:544
+#: ../calendar.php:262 ../help_text.php:544
 msgid "EMIG"
 msgstr "Emigrazione"
 
-#: ../calendar.php:534
+#: ../calendar.php:475
 msgid "Day not set"
 msgstr "Giornata non impostata"
 
@@ -15411,6 +15465,11 @@ msgstr "Ordinazione"
 #: ../help_text.php:1087
 msgid "In the Citation Details field you would enter the page number or other information that might help someone find the information in the source."
 msgstr ""
+
+#. I18N: This is the GEDCOM label for "Pedigree"
+#: ../help_text.php:1092
+msgid "PEDI"
+msgstr "Antenati"
 
 #: ../help_text.php:1093
 msgid "This field describes the relationship of the child to its family.  The possibilities are:<ul><li><b>unknown</b>&nbsp;&nbsp;&nbsp;The child's relationship to its family cannot be determined.  When this option is selected, the Pedigree field will not be copied into the database.<br /><br /></li><li><b>Birth</b>&nbsp;&nbsp;&nbsp;This option indicates that the child is related to its family by birth.<br /><br /></li><li><b>Adopted</b>&nbsp;&nbsp;&nbsp;This option indicates that the child was adopted by its family.  This does <i>not</i> indicate that there is no blood relationship between the child and its family; it shows that the child was adopted by the family in question sometime after the child's birth.<br /><br /></li><li><b>Foster</b>&nbsp;&nbsp;&nbsp;This option indicates that the child is a foster child of the family.  Usually, there is no blood relationship between the child and its family.<br /><br /></li><li><b>Sealing</b>&nbsp;&nbsp;&nbsp;The child was sealed to its family in an LDS <i>sealing</i> ceremony.  A child sealing is performed when the parents were sealed to each other after the birth of the child.  Children born after the parents' sealing are automatically sealed to the family.<br /><br /></li></ul>"
@@ -18755,7 +18814,7 @@ msgid "This form allows you to add a new favorite item to your list of favorites
 msgstr ""
 
 #: ../help_text.php:4810
-msgid "index_charts"
+msgid "CHARTS BLOCK"
 msgstr ""
 
 #: ../help_text.php:4811
@@ -18763,7 +18822,7 @@ msgid "This block allows a pedigree, descendancy, or hourglass chart to appear o
 msgstr ""
 
 #: ../help_text.php:4815
-msgid "index_common_given_names"
+msgid "MOST COMMON GIVEN NAMES"
 msgstr ""
 
 #: ../help_text.php:4816
@@ -18771,7 +18830,7 @@ msgid "This block displays a list of frequently occurring given names from this 
 msgstr ""
 
 #: ../help_text.php:4820
-msgid "index_common_names"
+msgid "MOST COMMON SURNAMES"
 msgstr ""
 
 #: ../help_text.php:4821
@@ -18779,7 +18838,7 @@ msgid "This block displays a list of frequently occurring surnames from this dat
 msgstr ""
 
 #: ../help_text.php:4825
-msgid "index_events"
+msgid "UPCOMING EVENTS BLOCK"
 msgstr ""
 
 #: ../help_text.php:4826
@@ -18787,7 +18846,7 @@ msgid "This block shows you anniversaries of events that are coming up in the ne
 msgstr ""
 
 #: ../help_text.php:4830
-msgid "index_favorites"
+msgid "GEDCOM FAVORITES BLOCK"
 msgstr ""
 
 #: ../help_text.php:4831
@@ -18795,7 +18854,7 @@ msgid "The GEDCOM Favorites block is much the same as the \"My Favorites\" block
 msgstr ""
 
 #: ../help_text.php:4835
-msgid "index_gedcom_news_adm"
+msgid "GEDCOM NEWS BLOCK"
 msgstr ""
 
 #: ../help_text.php:4836
@@ -18843,7 +18902,7 @@ msgid "Select the database to which the keywords apply.<br /><br />Your site sup
 msgstr ""
 
 #: ../help_text.php:4865
-msgid "index_htmlplus"
+msgid "ADVANCED HTML"
 msgstr ""
 
 #: ../help_text.php:4866
@@ -18867,7 +18926,7 @@ msgid "This text should be blank or very brief.  When blank, the Advanced HTML b
 msgstr ""
 
 #: ../help_text.php:4880
-msgid "index_loggedin"
+msgid "LOGGED IN USERS BLOCK"
 msgstr ""
 
 #: ../help_text.php:4881
@@ -18883,7 +18942,7 @@ msgid "You can login on almost every page of this program. You will usually do s
 msgstr ""
 
 #: ../help_text.php:4890
-msgid "index_media"
+msgid "RANDOM PICTURE BLOCK"
 msgstr ""
 
 #: ../help_text.php:4891
@@ -18891,7 +18950,7 @@ msgid "In this block PhpGedView randomly chooses a media file to show you on eac
 msgstr ""
 
 #: ../help_text.php:4895
-msgid "index_onthisday"
+msgid "ON THIS DAY IN YOUR HISTORY BLOCK"
 msgstr ""
 
 #: ../help_text.php:4896
@@ -18915,7 +18974,7 @@ msgid "The Welcome page consists of several separate blocks, and can be customiz
 msgstr ""
 
 #: ../help_text.php:4910
-msgid "index_stats"
+msgid "GEDCOM STATISTICS BLOCK"
 msgstr ""
 
 #: ../help_text.php:4911
@@ -18923,7 +18982,7 @@ msgid "In this block you will see some statistics about the current GEDCOM file.
 msgstr ""
 
 #: ../help_text.php:4915
-msgid "index_top10_pageviews"
+msgid "MOST VIEWED ITEMS BLOCK"
 msgstr ""
 
 #: ../help_text.php:4916
@@ -19540,6 +19599,10 @@ msgstr ""
 msgid "See <a href=\"readme.txt\" target=\"_blank\"><b>Readme.txt</b></a> for more information."
 msgstr ""
 
+#: ../help_text.php:5380 ../help_text.php:5440
+msgid "RECENT CHANGES BLOCK"
+msgstr ""
+
 #: ../help_text.php:5381
 msgid "This block shows you the most recent changes to the GEDCOM as recorded by the CHAN GEDCOM tag."
 msgstr ""
@@ -19625,7 +19688,7 @@ msgid "This block will list all of the records that have been changed online and
 msgstr ""
 
 #: ../help_text.php:5450
-msgid "rss_feed"
+msgid "RSS FEED SETTINGS"
 msgstr ""
 
 #: ../help_text.php:5451
@@ -19873,7 +19936,7 @@ msgid "Click the drop down menu to change the speed at which the timeline scroll
 msgstr ""
 
 #: ../help_text.php:5630
-msgid "todo"
+msgid "\"TO DO\" BLOCK"
 msgstr ""
 
 #: ../help_text.php:5631
@@ -20134,7 +20197,7 @@ msgid "Since you are seeing this page, you have successfully installed PhpGedVie
 msgstr ""
 
 #: ../help_text.php:5825
-msgid "yahrzeit"
+msgid "YAHRZEITEN BLOCK"
 msgstr ""
 
 #: ../help_text.php:5826
@@ -20150,7 +20213,7 @@ msgid "Select this option as to save your clippings in a ZIP file.  For more inf
 msgstr ""
 
 #: ../help_text.php:5834
-msgid "The help text has been written for this item."
+msgid "The help text has not been written for this item."
 msgstr ""
 
 #: ../help_text.php:5844
@@ -20932,6 +20995,9 @@ msgstr "Famiglie con cognome %s"
 #: ../famlist.php:270
 msgid "Choose a letter to show families where a spouse has a given name which starts with that letter."
 msgstr "Scegli una lettera per mostrare le famiglie in cui il coniuge ha un nome che inizia con quella lettera."
+
+#~ msgid "Edit Image Manipulation Configuration"
+#~ msgstr "Modifica la configurazione della manipolazione immagini"
 
 #~ msgid "nephew"
 #~ msgstr "nipote"
