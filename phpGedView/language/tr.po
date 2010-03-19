@@ -2222,7 +2222,7 @@ msgid "My Page"
 msgstr "Benim GedView Anasayfam"
 
 #: ../index.php:373
-msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
+msgid "My Page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
 msgstr "Sizin <b>Benim GedView Anasayfam</b> alanında kısa yoldan devamlı görmek istediğiniz kişileri Sık Kullanılanlara ekleyerek gelecek yıl dönümlerini kaçırmayacaksınız  yada incelemek istediğinizde arama yapmadan kısa yoldan görüntüleyebilirsiniz, Günlüğünüze istediğiniz hadiseleri kaydedebilir bu vesile ile unutmak istemediğiniz notları yazabilirsiniz Günlüğünüzü sizden başka yönetici dahil hiç kimse göremez, Bu anasayfada diğer kayıtlı üyelerin gelecek yıldönümleri yada diğer üyelerden PhpGedView üzerinden size gönderilen mesajları okuyabilir yada diğer kayıtlı üyelere PhpGedView üzerinden mesajlaşma imkanı bulacaksınız. Ayrıca sağda ...<b>Benim GedView Anasayfamı özelleştir</b>... linki tıklatıp <b>Benim GedView Anasayfamda</b> görmek istediğiniz modülleri yükleyin Benim GedView Anasayfanızı zenginleştirebilirsiniz ve dahası."
 
 #: ../index.php:446 ../index_edit.php:430 ../blocks/user_welcome.php:62

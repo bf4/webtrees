@@ -2222,7 +2222,7 @@ msgid "My Page"
 msgstr "Portalul MyGedView"
 
 #: ../index.php:373
-msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
+msgid "My Page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
 msgstr "Pagina dumneavoastră MyGedView vă permite să păstraţi marcaje către persoanele dumneavoastră favorite, să urmăriţi evenimentele următoare, şi să colaboraţi cu alti utilizatori PhpGedView."
 
 #: ../index.php:446 ../index_edit.php:430 ../blocks/user_welcome.php:62

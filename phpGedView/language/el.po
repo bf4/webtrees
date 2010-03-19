@@ -2222,7 +2222,7 @@ msgid "My Page"
 msgstr "Ατομική πύλη"
 
 #: ../index.php:373
-msgid "Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
+msgid "My Page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users."
 msgstr "Η σελίδα Ατομική πύλη, σας επιτρέπει να κρατάτε σελιδοδείκτες των αγαπημένων σας ανθρώπων, να παρακολουθείτε επερχόμενα γεγονότα και να συνεργάζεσθε με άλλους χρήστες του PhpGedView."
 
 #: ../index.php:446 ../index_edit.php:430 ../blocks/user_welcome.php:62
@@ -19084,7 +19084,7 @@ msgstr ""
 
 #: ../help_text.php:5041
 msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will be logged in and go directly to your My Page, where you can edit your settings, add or edit favorites, send and read messages, etc.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
-msgstr "LOGIN BUTTONS<br /><br />Here you see two buttons to Login to the system.<br />To what page you will be forwarded (or sent back to), is depending of the button, that you click after typing your user name and password.<br /><br />* The <b> Σύνδεση χρήστη </b> Button<br />IF you click this button, you will be logged in and go directly to your MyGedView page, where you edit your settings, add or edit favorites, send and read messages and so on.<br /><br />* The <b> Διαχείριση </b> Button<br />If you have admin rights, you can click this button to go directly to the main Administration Page."
+msgstr "LOGIN BUTTONS<br /><br />Here you see two buttons to Login to the system.<br />To what page you will be forwarded (or sent back to), is depending of the button, that you click after typing your user name and password.<br /><br />* The <b> Σύνδεση χρήστη </b> Button<br />IF you click this button, you will be logged in and go directly to My Page, where you edit your settings, add or edit favorites, send and read messages and so on.<br /><br />* The <b> Διαχείριση </b> Button<br />If you have admin rights, you can click this button to go directly to the main Administration Page."
 
 #: ../help_text.php:5045
 msgid "login_buttons"
