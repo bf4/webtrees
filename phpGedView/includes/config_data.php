@@ -102,6 +102,47 @@ $PEDI_CODES=array(
 	'sealing'=>i18n::translate('Sealing')
 );
 
+// GEDCOM RELA codes
+// These aren't part of the standard, but we list the common ones here so we can translate them.
+$RELA_CODES=array(
+	'attendant'       =>i18n::translate('Attendant'),
+	'attending'       =>i18n::translate('Attending'),
+	'best_man'        =>i18n::translate('Best Man'),
+	'bridesmaid'      =>i18n::translate('Bridesmaid'),
+	'buyer'           =>i18n::translate('Buyer'),
+	'circumciser'     =>i18n::translate('Circumciser'),
+	'civil_registrar' =>i18n::translate('Civil Registrar'),
+	'employee'        =>i18n::translate('Employee'),
+	'employer'        =>i18n::translate('Employer'),
+	'foster_child'    =>i18n::translate('Foster Child'),
+	'foster_father'   =>i18n::translate('Foster Father'),
+	'foster_mother'   =>i18n::translate('Foster Mother'),
+	'friend'          =>i18n::translate('Friend'),
+	'godfather'       =>i18n::translate('Godfather'),
+	'godmother'       =>i18n::translate('Godmother'),
+	'godparent'       =>i18n::translate('Godparent'),
+	'godson'          =>i18n::translate('Godson'),
+	'goddaughter'     =>i18n::translate('Goddaughter'),
+	'godchild'        =>i18n::translate('Godchild'),
+	'guardian'        =>i18n::translate('Guardian'),
+	'informant'       =>i18n::translate('Informant'),
+	'lodger'          =>i18n::translate('Lodger'),
+	'nanny'           =>i18n::translate('Nanny'),
+	'nurse'           =>i18n::translate('Nurse'),
+	'owner'           =>i18n::translate('Owner'),
+	'priest'          =>i18n::translate('Priest'),
+	'rabbi'           =>i18n::translate('Rabbi'),
+	'registry_officer'=>i18n::translate('Registry Officer'),
+	'seller'          =>i18n::translate('Seller'),
+	'servant'         =>i18n::translate('Servant'),
+	'slave'           =>i18n::translate('Slave'),
+	'twin'            =>i18n::translate('Twin'),
+	'twin_brother'    =>i18n::translate('Twin brother'),
+	'twin_sister'     =>i18n::translate('Twin sister'),
+	'ward'            =>i18n::translate('Ward'),
+	'witness'         =>i18n::translate('Witness')
+);
+
 // TEMP tags - LDS temple codes
 $TEMPLE_CODES = array(
 	'ABA'  =>'Aba, Nigeria',

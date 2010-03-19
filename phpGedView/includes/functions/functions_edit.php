@@ -42,7 +42,7 @@ require_once PGV_ROOT.'includes/functions/functions_import.php';
 // Create a <select> control for a form
 // $name     - the ID for the form element
 // $values   - array of value=>display items
-// $empty    - null => don't add a row.  non-null - value for ""
+// $empty    - if not null, then add an entry ""=>$empty
 // $selected - the currently selected item (if any)
 // $extra    - extra markup for field (e.g. tab key sequence)
 function select_edit_control($name, $values, $empty, $selected, $extra) {
@@ -56,7 +56,7 @@ function select_edit_control($name, $values, $empty, $selected, $extra) {
 		}
 	}
 	foreach ($values as $key=>$value) {
-		if ($value==$selected) {
+		if ($key==$selected) {
 			$html.='<option value="'.htmlspecialchars($key).'" selected="selected">'.htmlspecialchars($value).'</option>';
 		} else {
 			$html.='<option value="'.htmlspecialchars($key).'">'.htmlspecialchars($value).'</option>';
@@ -75,6 +75,16 @@ function edit_field_adop($name, $selected='', $extra='') {
 function edit_field_pedi($name, $selected='', $extra='') {
 	global $PEDI_CODES;
 	return select_edit_control($name, $PEDI_CODES, '', $selected, $extra);
+}
+
+// Print an edit control for a RELA field
+function edit_field_rela($name, $selected='', $extra='') {
+	global $RELA_CODES;
+	// The user is allowed to specify values that aren't in the list.
+	if (!array_key_exists($selected, $RELA_CODES)) {
+		$RELA_CODES[$selected]=$selected;
+	}
+	return select_edit_control($name, $RELA_CODES, null, $selected, $extra);
 }
 
 //-- this function creates a new unique connection
@@ -1097,7 +1107,7 @@ function print_addnewsource_link($element_id) {
 */
 function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose='', $rowDisplay=true) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
-	global $assorela, $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION, $pgv_changes;
+	global $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION, $pgv_changes;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
@@ -1415,9 +1425,9 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		echo "</select>\n";
 	}
 	else if ($fact=="ADOP") {
-		echo edit_field_adop($element_name, $value, $tabkey);
+		echo edit_field_adop($element_name, $value, 'tabindex="'.$tabkey.'"');
 	} else if ($fact=="PEDI") {
-		echo edit_field_pedi($element_name, $value, $tabkey);
+		echo edit_field_pedi($element_name, $value, 'tabindex="'.$tabkey.'"');
 	} else if ($fact=="STAT") {
 		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >\n";
 		echo "<option value=''>No special status</option>\n";
@@ -1429,18 +1439,8 @@ if (substr($tag, 0, strpos($tag, "CENS"))) {
 		echo "</select>\n";
 	}
 	else if ($fact=="RELA") {
-		$text=strtolower($value);
-		// add current relationship if not found in default list
-		if (!array_key_exists($text, $assorela)) $assorela[$text]=$text;
-		echo "<select tabindex=\"", $tabkey, "\" id=\"", $element_id, "\" name=\"", $element_name, "\" >\n";
-		foreach ($assorela as $key=>$value) {
-			echo "<option value=\"", $key, "\"";
-			if ($key==$text) echo " selected=\"selected\"";
-			echo ">", $assorela[$key], "</option>\n";
-		}
-		echo "</select>\n";
-	}
-	else if ($fact=="_PGVU") {
+		echo edit_field_rela($element_name, strtolower($value), 'tabindex="'.$tabkey.'"');
+	} else if ($fact=="_PGVU") {
 		$text=strtolower($value);
 		echo "<select tabindex=\"", $tabkey, "\" id=\"", $element_id, "\" name=\"", $element_name, "\" >\n";
 		echo '<option value=""';

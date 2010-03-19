@@ -59,56 +59,6 @@ $update_CHAN=!safe_POST_bool('preserve_last_changed');
 
 $uploaded_files = array();
 
-// items for ASSO RELA selector :
-$assokeys = array(
-	'attendant',
-	'attending',
-	'best_man',
-	'bridesmaid',
-	'buyer',
-	'circumciser',
-	'civil_registrar',
-	'employee',
-	'employer',
-	'foster_child',
-	'foster_father',
-	'foster_mother',
-	'friend',
-	'godfather',
-	'godmother',
-	'godparent',
-	'godson',
-	'goddaughter',
-	'godchild',
-	'guardian',
-	'informant',
-	'lodger',
-	'nanny',
-	'nurse',
-	'owner',
-	'priest',
-	'rabbi',
-	'registry_officer',
-	'seller',
-	'servant',
-	'slave',
-	'twin',
-	'twin_brother',
-	'twin_sister',
-	'ward',
-	'witness',
-	'' // DO NOT DELETE
-);
-$assorela = array();
-foreach ($assokeys as $indexval => $key) {
-	if (isset($pgv_lang["$key"])) {
-		$assorela["$key"] = $pgv_lang["$key"];
-	} else {
-		$assorela["$key"] = "? $key";
-	}
-}
-uasort($assorela, "stringsort");
-
 print_simple_header('Edit Interface');
 
 if ($ENABLE_AUTOCOMPLETE) {
