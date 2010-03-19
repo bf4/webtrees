@@ -1,27 +1,23 @@
 /* jquery css THEME adjustments for RTL */
-/* @version $Id$ */
 
 /* Tabs --------------------------------*/
 .ui-tabs { direction: rtl; }
-
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected,
 .ui-tabs .ui-tabs-nav li.ui-state-default {float: right; }
 .ui-tabs .ui-tabs-nav li a { float: right; }
 
 .static_tab_rtl {
 	float: left;
-	margin-left: 1px;
+	margin-right: 1px;
 	width: 240px;
 	border-color: #cccccc;
 }
-
 .static_tab_content_rtl {
 	position: absolute;
 	z-index: 100;
-	left: 0px;
-	background: #eff8f8; 
-	margin-top:0px; 
-	margin-left:41px;
+	left: 10px;
+	margin-top:-2px; 
+	
 }
 
 /* Navigator & Flyout menu Styles ------*/
@@ -36,12 +32,14 @@
 	color:#000000; 
 	text-align: right;
 	margin-top: -2px;
-	right: 64px;
+	right: 70px;
 	padding: 3px;
 }
 .flyout2rtl a:hover{
-	color:red;
+	color:#ff0000;
 }
 #flyout3 {
 	text-align: right;
 }
+
+

@@ -2,8 +2,11 @@
 /**
  * Header for colors theme
  *
- * PhpGedView: Genealogy Viewer
- * Copyright (C) 2010  PGV Development Team.  All rights reserved.
+ * webtrees: Web based Family History software
+ * Copyright (C) 2010 webtrees development team.
+ *
+ * Derived from PhpGedView
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @package PhpGedView
+ * @package webtrees
  * @subpackage Themes
  * @version $Id$
  */
@@ -29,31 +32,21 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $DATE_FORMAT;
-
-$displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMAT);
-
-if (!isset($view)) $view = safe_REQUEST($_REQUEST, 'view', PGV_REGEX_XREF);
-$menubar = new MenuBar();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-	
-
-
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $CHARACTER_SET; ?>" />
 		<?php if (isset($_GET["pgvaction"]) && $_GET["pgvaction"]=="places_edit") { ?>
 			<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> <?php } 
 		?>
-		<?php if ($FAVICON) { ?><link rel="shortcut icon" href="<?php echo $FAVICON; ?>" type="image/x-icon" /> <?php } ?>
+		<?php if ($FAVICON) { ?>
+		<link rel="shortcut icon" href="<?php echo $FAVICON; ?>" type="image/x-icon" /> <?php } ?>
 
 		<title><?php echo $title; ?></title>
 		<?php if ($ENABLE_RSS && !$REQUIRE_AUTHENTICATION) { ?>
 			<link href="<?php echo encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}"); ?>" rel="alternate" type="<?php echo $applicationType; ?>" title=" <?php echo htmlspecialchars($GEDCOM_TITLE); ?>" />
 		<?php } ?>
-		<link rel="stylesheet" href="<?php echo $stylesheet; ?>" type="text/css" media="all" />
-		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) { ?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
 			<link rel="stylesheet" href="<?php echo SHARED_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
@@ -92,11 +85,13 @@ $menubar = new MenuBar();
 	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery/jquery-ui.min.js"></script>
 	<link type="text/css" href="js/jquery/css/jquery-ui.custom.css" rel="Stylesheet" />
-	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo SHARED_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
 	<?php if ($TEXT_DIRECTION=='rtl') {?>
-		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo SHARED_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo SHARED_THEME_DIR?>style_rtl.css" rel="Stylesheet"  media="all" />  
 	<?php }?>
 	<link type="text/css" href="<?php echo SHARED_THEME_DIR?>modules.css" rel="Stylesheet" />
+	<link type="text/css" href="<?php echo $stylesheet; ?>"  rel="stylesheet" media="all" />
 </head>
 <body id="body" <?php echo $bodyOnLoad; ?>>
 <!-- begin header section -->

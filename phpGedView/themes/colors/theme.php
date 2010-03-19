@@ -28,14 +28,20 @@
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
-	header('HTTP/1.0 403 Forbidden');
-	exit;
+        header('HTTP/1.0 403 Forbidden');
+        exit;
 }
+/**
+ * Complete list of selectable color sub-types for the Colors theme
+ *
+ */
+
+$subColor="ash";
 
 $theme_name       = "Default Color";
 $SHARED_THEME_DIR = "themes/colors/";
 define('SHARED_THEME_DIR', $SHARED_THEME_DIR);
-$stylesheet       = $SHARED_THEME_DIR . "css/ash.css"; 
-$print_stylesheet = $SHARED_THEME_DIR . "css/ash.css"; 
+$stylesheet       = $SHARED_THEME_DIR . "css/" . $subColor . ".css";
+$print_stylesheet = $SHARED_THEME_DIR . "css/" . $subColor . ".css";
 include('themes/colors/theme.inc');
 
