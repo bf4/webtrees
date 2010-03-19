@@ -2446,9 +2446,9 @@ function get_relationship_name($nodes) {
 	case 'parbro': return /* I18N: uncle       */ i18n::translate('parent\'s brother');
 	case 'parsib': return /* I18N: aunt/uncle  */ i18n::translate('parent\'s sibling');
 
-	case 'broson': return /* I18N: nephew       */ i18n::translate('bother\'s son');
-	case 'brodau': return /* I18N: niece        */ i18n::translate('bother\'s daughter');
-	case 'brochi': return /* I18N: nephew/neice */ i18n::translate('bother\'s child');
+	case 'broson': return /* I18N: nephew       */ i18n::translate('brother\'s son');
+	case 'brodau': return /* I18N: niece        */ i18n::translate('brother\'s daughter');
+	case 'brochi': return /* I18N: nephew/neice */ i18n::translate('brother\'s child');
 	case 'sisson': return /* I18N: nephew       */ i18n::translate('sister\'s son');
 	case 'sisdau': return /* I18N: niece        */ i18n::translate('sister\'s daughter');
 	case 'sischi': return /* I18N: nephew/neice */ i18n::translate('sister\'s child');
