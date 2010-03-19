@@ -38,15 +38,16 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_TODO_PHP', '');
 
 require_once PGV_ROOT.'includes/functions/functions_print_lists.php';
+require_once PGV_ROOT.'includes/functions/functions_edit.php';
 
 $PGV_BLOCKS['print_todo']['name']     =i18n::translate('&quot;To Do&quot; tasks');
 $PGV_BLOCKS['print_todo']['descr']    =i18n::translate('The To Do block lists all outstanding _TODO facts in the database.');
 $PGV_BLOCKS['print_todo']['canconfig']=true;
 $PGV_BLOCKS['print_todo']['config']   =array(
 	'cache'          =>0,
-	'show_unassigned'=>'yes', // show unassigned items
-	'show_other'     =>'no',  // show items assigned to other users
-	'show_future'    =>'no'   // show items with a future date
+	'show_unassigned'=>true,  // show unassigned items
+	'show_other'     =>false, // show items assigned to other users
+	'show_future'    =>false  // show items with a future date
 );
 
 // this block prints a list of _TODO events in your gedcom
@@ -131,46 +132,25 @@ function print_todo_config($config) {
 		$config=$PGV_BLOCKS['print_todo']['config'];
 	}
 
-	print '<tr><td class="descriptionbox wrap width33">';
-	print i18n::translate('Show other users\' tasks');
-	print help_link('todo_show_other');
-	print '</td></td><td class="optionbox">';
-	print '<select name="show_other">';
-	foreach (array('yes'=>i18n::translate('Yes'), 'no'=>i18n::translate('No')) as $option=>$desc) {
-		print "<option value=\"{$option}\"";
-		if ($config['show_other']==$option)
-			print " selected=\"selected\"";
-		print ">{$desc}</option>";
-	}
-	print '</select></td></tr>';
+	echo '<tr><td class="descriptionbox wrap width33">';
+	echo i18n::translate('Show other users\' tasks'), help_link('todo_show_other');
+	echo '</td><td class="optionbox">';
+	echo edit_field_yes_no('show_other', $config['show_other']);
+	echo '</td></tr>';
 
-	print '<tr><td class="descriptionbox wrap width33">';
-	print i18n::translate('Show unassigned tasks');
-	print help_link('todo_show_unassigned');
-	print '</td></td><td class="optionbox">';
-	print '<select name="show_unassigned">';
-	foreach (array('yes'=>i18n::translate('Yes'), 'no'=>i18n::translate('No')) as $option=>$desc) {
-		print "<option value=\"{$option}\"";
-		if ($config['show_unassigned']==$option)
-			print " selected=\"selected\"";
-		print ">{$desc}</option>";
-	}
-	print '</select></td></tr>';
+	echo '<tr><td class="descriptionbox wrap width33">';
+	echo i18n::translate('Show unassigned tasks'), help_link('todo_show_unassigned');
+	echo '</td><td class="optionbox">';
+	echo edit_field_yes_no('show_other', $config['show_unassigned']);
+	echo '</td></tr>';
 
-	print '<tr><td class="descriptionbox wrap width33">';
-	print i18n::translate('Show future tasks');
-	print help_link('todo_show_future');
-	print '</td></td><td class="optionbox">';
-	print '<select name="show_future">';
-	foreach (array('yes'=>i18n::translate('Yes'), 'no'=>i18n::translate('No')) as $option=>$desc) {
-		print "<option value=\"{$option}\"";
-		if ($config['show_future']==$option)
-			print " selected=\"selected\"";
-		print ">{$desc}</option>";
-	}
-	print '</select></td></tr>';
+	echo '<tr><td class="descriptionbox wrap width33">';
+	echo i18n::translate('Show future tasks'), help_link('todo_show_future');
+	echo '</td><td class="optionbox">';
+	echo edit_field_yes_no('show_other', $config['show_future']);
+	echo '</td></tr>';
 
 	// Cache file life is not configurable by user
-	print '<input type="hidden" name="cache" value="0" />';
+	echo '<input type="hidden" name="cache" value="0" />';
 }
 ?>

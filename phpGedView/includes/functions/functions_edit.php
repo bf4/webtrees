@@ -65,6 +65,13 @@ function select_edit_control($name, $values, $empty, $selected, $extra) {
 	return '<select name="'.$name.'" '.$extra.'>'.$html.'</select>';
 }
 
+// Print an edit control for a Yes/No field
+function edit_field_yes_no($name, $selected='', $extra='') {
+	return select_edit_control(
+		$name, array(true=>i18n::translate('Yes'), false=>i18n::translate('No')), null, $selected, $extra
+	);
+}
+
 // Print an edit control for a ADOP field
 function edit_field_adop($name, $selected='', $extra='') {
 	global $ADOP_CODES;

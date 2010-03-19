@@ -46,7 +46,7 @@ $PGV_BLOCKS["print_block_givn_top10"]["config"]		= array(
 	"cache"=>7,
 	"num"=>10,
 	"infoStyle"=>"style2",
-	"showUnknown"=>"yes"
+	"showUnknown"=>true
 	);
 
 /**
@@ -58,8 +58,8 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_givn_top10"]["config"];
 	if (isset($config["infoStyle"])) $infoStyle = $config["infoStyle"];  // "style1" or "style2"
 	else $infoStyle = "style2";
-	if (isset($config["showUnknown"])) $showUnknown = $config["showUnknown"];  // "yes" or "no"
-	else $showUnknown = "yes";
+	if (isset($config["showUnknown"])) $showUnknown = $config["showUnknown"];
+	else $showUnknown = true;
 
 	$stats=new Stats(PGV_GEDCOM);
 
@@ -101,7 +101,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		}
 		//List Unknown names
 		$totals=$stats->commonGivenUnknownTotals($params);
-		if ($totals && $showUnknown=="yes") {
+		if ($totals && $showUnknown) {
 			$content.='<b>'.i18n::translate('unknown').'</b><div class="wrap" style="'.$padding.'">'.$totals.'</div><br />';
 		}
 		break;
@@ -109,7 +109,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		$params=array(1,$config['num'],'rcount');
 		$content.='<table class="center"><tr valign="top"><td>'.$stats->commonGivenFemaleTable($params).'</td>';
 		$content.='<td>'.$stats->commonGivenMaleTable($params).'</td>';
-		if ($showUnknown=="yes") {
+		if ($showUnknown) {
 			$content.='<td>'.$stats->commonGivenUnknownTable($params).'</td>';
 		}
 		$content.='</tr></table>';
@@ -130,7 +130,7 @@ function print_block_givn_top10_config($config) {
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_givn_top10"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_givn_top10"]["config"]["cache"];
 	if (!isset($config["infoStyle"])) $config["infoStyle"] = "style2";
-	if (!isset($config["showUnknown"])) $config["showUnknown"] = "yes";
+	if (!isset($config["showUnknown"])) $config["showUnknown"] = true;
 
 	print "<tr><td class=\"descriptionbox wrap width33\">".i18n::translate('Number of items to show')."</td>";?>
 	<td class="optionbox">
@@ -151,24 +151,17 @@ function print_block_givn_top10_config($config) {
 
 	<tr><td class="descriptionbox wrap width33">
 	<?php
-	print i18n::translate('Show unknown gender');
-	print help_link('showUnknown');
-	?>
-	</td><td class="optionbox">
-		<select name="showUnknown">
-			<option value="yes"<?php if ($config["showUnknown"]=="yes") print " selected=\"selected\"";?>><?php print i18n::translate('Yes'); ?></option>
-			<option value="no"<?php if ($config["showUnknown"]=="no") print " selected=\"selected\"";?>><?php print i18n::translate('No'); ?></option>
-		</select>
-	</td></tr>
-
-<?php	// Cache file life
+	echo i18n::translate('Show unknown gender'), help_link('showUnknown');
+	echo '</td><td class="optionbox">';
+	echo edit_field_yes_no('showUnknown', $config['showUnknown']);
+	echo '</td></tr>';
+	// Cache file life
 	if ($ctype=="gedcom") {
-  		print "<tr><td class=\"descriptionbox wrap width33\">";
-			print i18n::translate('Cache file life');
-			print help_link('cache_life');
-		print "</td><td class=\"optionbox\">";
-			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
-		print "</td></tr>";
+  	echo '<tr><td class="descriptionbox wrap width33">';
+		echo i18n::translate('Cache file life'), help_link('cache_life');
+		echo '</td><td class="optionbox">';
+		echo '<input type="text" name="cache" size="2" value="', $config['cache'], '" />';
+		echo '</td></tr>';
 	}
 }
 ?>
