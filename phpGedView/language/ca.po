@@ -2218,7 +2218,7 @@ msgstr "Aquesta pàgina ha estat desactivada per l'administrador del lloc."
 
 #: ../index.php:311 ../index.php:372 ../index_edit.php:158
 #: ../includes/classes/class_menubar.php:110
-msgid "MyGedView Portal"
+msgid "My Page"
 msgstr "Portal MyGedView"
 
 #: ../index.php:373
@@ -2226,7 +2226,7 @@ msgid "Your MyGedView page allows you to keep bookmarks of your favorite people,
 msgstr "El vostre portal MyGedView us permet tenir ex-libris de familiars preferits, estar al corrent d'aniversaris i col·laborar amb altres usuaris."
 
 #: ../index.php:446 ../index_edit.php:430 ../blocks/user_welcome.php:62
-msgid "Customize MyGedView Portal"
+msgid "Customize My Page"
 msgstr "Personalitzeu el Portal MyGedView"
 
 #: ../index.php:453 ../index_edit.php:431 ../blocks/gedcom_block.php:57
@@ -5114,7 +5114,7 @@ msgid "PhpGedView User Login"
 msgstr "Accés d'usuaris a PhpGedView"
 
 #: ../login.php:161 ../help_text.php:5191
-msgid "In order to access the MyGedView Portal page, you must be a registered user on the system.  On the MyGedView Portal page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of PhpGedView pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView."
+msgid "In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of PhpGedView pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView."
 msgstr "Per accedir a la pàgina Portal MyGedView cal que sigueu un usuari enregistrat del sistema. A la pàgina Portal MyGedView podeu fer exlibris amb les persones preferides, portar un dietari, gestionar correu, veure altres usuaris amb accés i personalitzar diversos aspectes de les pàgines de PhpGedView.<br /><br />Entreu el nom d'usuari i la contrasenya als camps corresponents per accedir a MyGedView."
 
 #: ../login.php:166
@@ -5256,7 +5256,7 @@ msgid "Clear cache files"
 msgstr "Neteja els fitxers cau"
 
 #: ../index_edit.php:551
-msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
+msgid "Here is a short description of each of the blocks you can place on the Welcome or My Page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
 msgstr "Heus aquí una breu descripció de cada un dels blocs que podeu posar a la pàgina Benvingut o a la Portal MyGedView .<br /><table border='1' align='center'><tr><td class='list_value'><b>Nom</b></td><td class='list_value'><b></b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40
@@ -16652,7 +16652,7 @@ msgid "The method to be used to contact the Genealogy contact about genealogy qu
 msgstr ""
 
 #: ../help_text.php:2916
-msgid "Enter the maximum number of days to show in Upcoming Events blocks.  This number cannot be greater than 30. If you enter a larger value, 30 will be used.<br /><br />The value you enter here determines how far ahead PhpGedView looks when searching for upcoming events.  The results of this search, done once daily, are copied into a temporary file.<br /><br />No Upcoming Events blocks on Index or Portal pages can request more days than this value.  The larger you make this, the longer it will take to build the daily database extract, and the longer it will take to display the block, even when you request to display a number of days less than this setting."
+msgid "Enter the maximum number of days to show in Upcoming Events blocks.  This number cannot be greater than 30. If you enter a larger value, 30 will be used.<br /><br />The value you enter here determines how far ahead PhpGedView looks when searching for upcoming events.  The results of this search, done once daily, are copied into a temporary file.<br /><br />No Upcoming Events blocks on Index or My Pages can request more days than this value.  The larger you make this, the longer it will take to build the daily database extract, and the longer it will take to display the block, even when you request to display a number of days less than this setting."
 msgstr "Entreu el màxim nombre de dies a mostrar al bloc d'esdeveniments propers. No por ésser més gran de 30. Si n'hi poseu més, prendrà 30.<br /><br />El valor que entreu aquí determina quan de temps endavant mirarà el PhpGedView cercant esdeveniments propers. El resultat d'aquesta recerca -es fa un cop al dia- s'emmagatzema en un fitxer temporal.<br /><br />Ni a les pàgines d'Índex o al Portal, es poden demanar més dies que aquest valor prefixat. Com més gran sigui el valor, més estona es trigarà a construir la base de dades diària i més estona caldrà per mostrar-lo al bloc, el mateix passa si demaneu veure un nombre de dies menor."
 
 #: ../help_text.php:2921
@@ -17884,7 +17884,7 @@ msgid "In order to improve performance, several of the blocks on the PhpGedView 
 msgstr "A fi de donar agilitat, alguns blocs de  la pàgina d'inici PhpGedView es guarden com a fitxers cau al directori índex. Els fitxers cau de molts blocs es refresquen diàriament, però pot haver-hi ocasions que vulgueu refrescar-los manualment.<br /><br />Aquest botó us permet fer-ho quan calgui."
 
 #: ../help_text.php:4175
-msgid "Click this button to save your changes.<br /><br />You will be returned to the Welcome or MyGedView Portal page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly."
+msgid "Click this button to save your changes.<br /><br />You will be returned to the Welcome or My Page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly."
 msgstr "Polseu aquest botó per desar els canvis.<br /><br />Retornareu a la pàgina Benvingut o a Portal MyGedView, però no veureu els canvis. Us cal emprar la funció Actualitza del navegador per veure'ls correctament."
 
 #: ../help_text.php:4179
@@ -18587,7 +18587,7 @@ msgid "header_favorites"
 msgstr ""
 
 #: ../help_text.php:4696
-msgid "The Favorites drop-down list shows the favorites that you have selected on your personalized Portal page.  It also shows the favorites that the site administrator has selected for the currently active GEDCOM.  Clicking on one of the favorites entries will take you directly to the Individual Information page of that person.<br /><br />More help about adding Favorites is available in your personalized Portal page."
+msgid "The Favorites drop-down list shows the favorites that you have selected on your personalized My Page.  It also shows the favorites that the site administrator has selected for the currently active GEDCOM.  Clicking on one of the favorites entries will take you directly to the Individual Information page of that person.<br /><br />More help about adding Favorites is available in your personalized My Page."
 msgstr "És una finestra desplegable que us mostra els favorits que heu seleccionat al portal personal (MyGedView). També hi veureu els favorits del GEDCOM actiu, que l'administrador del lloc ha escollit. Polsant un dels favorits us menarà directament a la pàgina Fitxa personal de la persona corresponent.<br /><br />Disposeu d'ajuda per afegir favorits al portal MyGedView."
 
 #: ../help_text.php:4700
@@ -18791,7 +18791,7 @@ msgid "index_favorites"
 msgstr ""
 
 #: ../help_text.php:4831
-msgid "The GEDCOM Favorites block is much the same as the \"My Favorites\" block of the MyGedView Portal page. Unlike the Portal page configuration, only the administrator or a user with Admin rights can change the list of favorites in this block.<br /><br />The purpose of the GEDCOM Favorites block is to draw the visitor's attention to persons of special interest.  This GEDCOM's favorites are available for selection from a drop-down list in the header on every page.<br /><br />When you click on one of the listed site favorites, you will be taken to the Individual Information page of that person."
+msgid "The GEDCOM Favorites block is much the same as the \"My Favorites\" block of My Page. Unlike the My Page configuration, only the administrator or a user with Admin rights can change the list of favorites in this block.<br /><br />The purpose of the GEDCOM Favorites block is to draw the visitor's attention to persons of special interest.  This GEDCOM's favorites are available for selection from a drop-down list in the header on every page.<br /><br />When you click on one of the listed site favorites, you will be taken to the Individual Information page of that person."
 msgstr ""
 
 #: ../help_text.php:4835
@@ -18847,7 +18847,7 @@ msgid "index_htmlplus"
 msgstr ""
 
 #: ../help_text.php:4866
-msgid "This block lets the administrator add information to the Index or Portal page.  Its purpose is similar to the HTML, GEDCOM News, and GEDCOM Statistics blocks, but the administrator has more control over its appearance."
+msgid "This block lets the administrator add information to the Index or My Page.  Its purpose is similar to the HTML, GEDCOM News, and GEDCOM Statistics blocks, but the administrator has more control over its appearance."
 msgstr "Aquest bloc permet a l'administrador afegir informació a la pàgina Índex o Portal. La finalitat és semblant que la dels blocs HTML, Notícies i Estadístiques GEDCOM, però aquí l'administrador té més control sobre la presentació."
 
 #: ../help_text.php:4870
@@ -18863,7 +18863,7 @@ msgid "index_htmlplus_title"
 msgstr ""
 
 #: ../help_text.php:4876
-msgid "This text should be blank or very brief.  When blank, the Advanced HTML block will show on the Index or Portal page as a plain block, just like the HTML block does.  When there is text, the Advanced HTML block will show like all the other blocks, complete with a block title bar containing the text you enter here."
+msgid "This text should be blank or very brief.  When blank, the Advanced HTML block will show on the Index or My Page as a plain block, just like the HTML block does.  When there is text, the Advanced HTML block will show like all the other blocks, complete with a block title bar containing the text you enter here."
 msgstr "Aquest text ha de restar en blanc o ésser molt breu. Si el deixeu en blanc, el bloc HTML avançat es veurà a les pàgines Índex o Portal com un bloc senzill, tal com ho és el bloc HTML. Si hi ha text, es veurà com la resta de blocs amb una barra amb el text entrat aquí, com a títol."
 
 #: ../help_text.php:4880
@@ -19083,7 +19083,7 @@ msgid "login_buttons_aut"
 msgstr ""
 
 #: ../help_text.php:5041
-msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will be logged in and go directly to your MyGedView Portal page, where you can edit your settings, add or edit favorites, send and read messages, etc.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
+msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will be logged in and go directly to your My Page, where you can edit your settings, add or edit favorites, send and read messages, etc.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
 msgstr "Aquest dos botons serveixen per accedir al sistema.<br /><br />La pàgina us menarà a un lloc diferent segons quin polseu desprès d'haver escrit el nom d'usuari i la contrasenya.<br /><ul><li>Botó <b>Accés</b><br />Amb aquest accedireu i anireu directament a la vostra pàgina Portal MyGedView, que us permet editar els vostres paràmetres, afegir o editar favorits, enviar i rebre missatges, etc.</li><li>Botó <b>Administració</b><br />Si teniu atributs d'administrador podeu polsar-lo per anar directament a la pàgina principal d'Administració.</li></ul>"
 
 #: ../help_text.php:5045
@@ -19091,7 +19091,7 @@ msgid "login_buttons"
 msgstr ""
 
 #: ../help_text.php:5046
-msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to or sent back to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will return to the page you were just on, but with logged-in access rights.<br /><br />For example, if you click <b>Login</b> when you were at the Pedigree page, you will return to that same page.  If you click this button when you were on the main Welcome page, you will be taken to the MyGedView Portal page.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
+msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to or sent back to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will return to the page you were just on, but with logged-in access rights.<br /><br />For example, if you click <b>Login</b> when you were at the Pedigree page, you will return to that same page.  If you click this button when you were on the main Welcome page, you will be taken to My Page.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
 msgstr "Aquest dos botons serveixen per accedir al sistema.<br /><br />La pàgina us menarà o us retronarà a un lloc diferent segons quin polseu desprès d'haver escrit el nom d'usuari i la contrasenya.<br /><ul><li>Botó <b>Accés</b><br />Amb aquest tornareu a la pàgina on éreu però amb drets i permisos d'usuari enregistrat.<br /><br />Per exemple, si polseu <b>Accés</b> des de l'arbre genealògic, retornareu a aquesta pàgina. Si ho feu des de la d'inici, anireu a parar a la de Portal MyGedView.</li><li>Botó <b>Administració</b><br />Si teniu atributs d'administrador podeu polsar-lo per anar directament a la pàgina principal d'Administració.</li></ul>"
 
 #: ../help_text.php:5050
@@ -19111,7 +19111,7 @@ msgid "mail_option1"
 msgstr ""
 
 #: ../help_text.php:5061
-msgid "With this option, the PhpGedView internal messaging system will be used and no emails will be sent.<br /><br />You will receive only <u>internal</u> messages from the other users.  When another site user sends you a message, that message will appear in the Message block on your personal MyGedView Portal page.  If you have removed this block from your MyGedView Portal page, you will not see any messages.  They will, however, show up as soon as you configure the MyGedView Portal page to again have the Message block."
+msgid "With this option, the PhpGedView internal messaging system will be used and no emails will be sent.<br /><br />You will receive only <u>internal</u> messages from the other users.  When another site user sends you a message, that message will appear in the Message block on your personal My Page.  If you have removed this block from your My Page, you will not see any messages.  They will, however, show up as soon as you configure My Page to again have the Message block."
 msgstr "Amb aquesta opció fareu servir el sistema intern de missatgeria del PhpGedView i no rebreu correus electrònics.<br /><br />Solament rebreu missatges <u>interns</u> dels altres usuaris que, quan n'enviïn un, sortirà a la bústia personal del Portal MyGedView. Si heu tret aquest bloc del Portal MyGedView, no podreu veure cap missatge. Tanmateix els recuperareu així que configureu el Portal MyGedView per tornar a disposar del Bloc de Bústia."
 
 #: ../help_text.php:5065
@@ -19127,7 +19127,7 @@ msgid "mail_option3"
 msgstr ""
 
 #: ../help_text.php:5071
-msgid "With this option, you will only receive email messages at the address you configured on your Account page.  The messaging system internal to PhpGedView will not be used at all, and there will never be any messages in the Message block on your personal MyGedView Portal page."
+msgid "With this option, you will only receive email messages at the address you configured on your Account page.  The messaging system internal to PhpGedView will not be used at all, and there will never be any messages in the Message block on your personal My Page."
 msgstr "Amb aquesta opció solament rebreu missatges de correu electrònic a l'adreça configurada a la pàgina del compte. El sistema intern de missatgeria del PhpGedView no es farà servir per res i mai hi haurà missatges a bloc de bústia personal del Portal MyGedView."
 
 #: ../help_text.php:5075
@@ -19184,7 +19184,7 @@ msgid "Menu"
 msgstr "Menú"
 
 #: ../help_text.php:5111 ../help_text.php:5115
-msgid "<div class=\"name_head\"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href=\"#menu_fam\">Welcome page</a><br /></li><li><a href=\"#menu_myged\">MyGedView Portal</a><br /></li><li><a href=\"#menu_charts\">Charts</a><br /></li><li><a href=\"#menu_lists\">Lists</a><br /></li><li><a href=\"#menu_annical\">Anniversary Calendar</a><br /></li><li><a href=\"#menu_clip\">Family Tree Clippings Cart</a><br /></li><li><a href=\"#menu_search\">Search</a><br /></li><li><a href=\"#menu_help\">Help</a></li></ul>"
+msgid "<div class=\"name_head\"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href=\"#menu_fam\">Welcome page</a><br /></li><li><a href=\"#menu_myged\">My Page</a><br /></li><li><a href=\"#menu_charts\">Charts</a><br /></li><li><a href=\"#menu_lists\">Lists</a><br /></li><li><a href=\"#menu_annical\">Anniversary Calendar</a><br /></li><li><a href=\"#menu_clip\">Family Tree Clippings Cart</a><br /></li><li><a href=\"#menu_search\">Search</a><br /></li><li><a href=\"#menu_help\">Help</a></li></ul>"
 msgstr ""
 
 #: ../help_text.php:5116
@@ -19204,7 +19204,7 @@ msgid "menu_myged"
 msgstr ""
 
 #: ../help_text.php:5126
-msgid "If you are logged in, this menu can include the following items:<ol><li>MyGedView Portal<br />This takes you to your own customizable Starting page.</li><li>My Account<br />You can edit your personal data here.</li><li>My Pedigree<br />If you have selected a Root person for this GEDCOM, this will take you to the Pedigree chart for that person.</li><li>My Individual Record<br />This link will take you to your Individual Information page, where all genealogical data about yourself and your family is displayed.</li></ol>"
+msgid "If you are logged in, this menu can include the following items:<ol><li>My Page<br />This takes you to your own customizable Starting page.</li><li>My Account<br />You can edit your personal data here.</li><li>My Pedigree<br />If you have selected a Root person for this GEDCOM, this will take you to the Pedigree chart for that person.</li><li>My Individual Record<br />This link will take you to your Individual Information page, where all genealogical data about yourself and your family is displayed.</li></ol>"
 msgstr "Si heu accedit, aquest menú pot incloure les següents entrades:<ol><li>Portal MyGedView<br />Mena a la pàgina personalitzada o Portal My GedView.</li><li>El vostre compte<br />Permet editar les dades personals com a usuari enregistrat.</li><li>El vostre arbre<br />Mena a l'arbre genealògic familiar, començant per la persona que hagueu seleccionat prèviament.</li><li>La vostra fitxa<br />Mena a la pàgina Fitxa personal on apareixen les vostres pròpies dades genealògiques i les de la vostra família.</li></ol>"
 
 #: ../help_text.php:5130
@@ -19273,7 +19273,7 @@ msgid "mygedview_customize"
 msgstr ""
 
 #: ../help_text.php:5181
-msgid "When you entered here for the first time, you already had some blocks on this page.  If you like, you can customize this Portal page.<br /><br />When you click this link you will be taken to a form where you can add, move, or delete blocks.  More explanation is available on that form."
+msgid "When you entered here for the first time, you already had some blocks on this page.  If you like, you can customize this My Page.<br /><br />When you click this link you will be taken to a form where you can add, move, or delete blocks.  More explanation is available on that form."
 msgstr "Quan hi entreu per primer cop ja tindreu alguns blocs a la pàgina. Si voleu, podeu canviar-la.<br /><br />Polsant l'enllaç aneu a parar a un formulari que us permet afegir, moure o esborrar blocs. Hi ha explicació de com fer-ho en aquell formulari."
 
 #: ../help_text.php:5185
@@ -19317,7 +19317,7 @@ msgid "mygedview_welcome"
 msgstr ""
 
 #: ../help_text.php:5211
-msgid "The Welcome block shows you:<ul><li>The current GEDCOM file</li><li>The date and time</li><li>Links to:<ul><li>My Account</li><li>My Pedigree</li><li>My Individual Record</li><li>Customize MyGedView Portal</li></ul></li></ul><br /><b>Note:</b><br />You will see the links to <b>My Indi</b> and <b>My Pedigree</b> only if you are known to the current GEDCOM file.  You might have a record in one GEDCOM file and therefore see the <b>My Indi</b> and <b>My Pedigree</b> links, while in another GEDCOM file you do not have a record and consequently these links are not displayed."
+msgid "The Welcome block shows you:<ul><li>The current GEDCOM file</li><li>The date and time</li><li>Links to:<ul><li>My Account</li><li>My Pedigree</li><li>My Individual Record</li><li>Customize My Page</li></ul></li></ul><br /><b>Note:</b><br />You will see the links to <b>My Indi</b> and <b>My Pedigree</b> only if you are known to the current GEDCOM file.  You might have a record in one GEDCOM file and therefore see the <b>My Indi</b> and <b>My Pedigree</b> links, while in another GEDCOM file you do not have a record and consequently these links are not displayed."
 msgstr "Aquest bloc us mostra:<ul><li>El fitxer GEDCOM actual</li><li>Data i hora</li><li>Enllaços amb:<ul><li>Dades de registre</li><li>El vostre arbre</li><li>La vostra fitxa</li><li>Personalitzeu el Portal MyGedView</li></ul></li></ul><br /><b>Nota:</b><br />Hi podeu veure enllaços a <b>La meva fitxa</b> i <b>El meu arbre</b> solament si esteu enregistrat al fitxer GEDCOM actiu. Pot passar que vegeu aquests enllaços en un fitxer en el que hi esteu enregistrat i no us surtin en un que no hi sigueu."
 
 #: ../help_text.php:5215
@@ -20190,7 +20190,7 @@ msgid "Please click on the link below or paste it into your browser, login with 
 msgstr "Polseu a l'enllaç de sota o enganxeu-lo al vostre navegador, entrant amb la nova contrasenya i canvia-la immediatament per mantenir assegurada la integritat de les vostres dades."
 
 #: ../login_register.php:136
-msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
+msgid "After you have logged in, select the «My Account» link under the «My Page» menu and fill in the password fields to change your password."
 msgstr "Un cop dins, seleccioneu l'enllaç 'Dades de registre' sota el menú 'Portal MyGedView' i escriviu al camp corresponent la vostra nova contrasenya."
 
 #: ../login_register.php:142
@@ -20450,7 +20450,7 @@ msgid "Charts Block"
 msgstr "Bloc de gràfics"
 
 #: ../blocks/charts.php:44
-msgid "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
+msgid "The Charts block allows you to place a chart on the Welcome or My Page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
 msgstr "El bloc de gràfics us permet posar-ne a la pàgina d'inici o a la del Portal MyGedView. Podeu configurar el bloc per que n'hi surtin d'avantpassats, descendents o el rellotge de sorra. També us permet escollir la persona arrel del gràfic."
 
 #: ../blocks/html_block.php:39
@@ -20632,7 +20632,7 @@ msgid "User Welcome"
 msgstr "Pàgina d'inici"
 
 #: ../blocks/user_welcome.php:40
-msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
+msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his My Page."
 msgstr "El Bloc Pàgina d'Inici d'Usuari mostra l'hora i data actuals, enllaços per a modificar el registre o per accedir a l'arbre genealògic i per personalitzar la pàgina MyGedView."
 
 #: ../blocks/rss_block.php:42 ../blocks/rss_block.php:56

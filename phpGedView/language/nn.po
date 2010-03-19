@@ -2218,7 +2218,7 @@ msgstr "Denne siden er deaktivert av administratoren til nettstedet."
 
 #: ../index.php:311 ../index.php:372 ../index_edit.php:158
 #: ../includes/classes/class_menubar.php:110
-msgid "MyGedView Portal"
+msgid "My Page"
 msgstr "Min GedView"
 
 #: ../index.php:373
@@ -2226,7 +2226,7 @@ msgid "Your MyGedView page allows you to keep bookmarks of your favorite people,
 msgstr "Dette er <i>din side</i> der du kan velge egne <i>favoritter</i>, bli påminnet om <i>kommende begivenheter</i> og <i>samarbeide med andre brukere</i>."
 
 #: ../index.php:446 ../index_edit.php:430 ../blocks/user_welcome.php:62
-msgid "Customize MyGedView Portal"
+msgid "Customize My Page"
 msgstr "Endre <i>din egen</i> side"
 
 #: ../index.php:453 ../index_edit.php:431 ../blocks/gedcom_block.php:57
@@ -5114,7 +5114,7 @@ msgid "PhpGedView User Login"
 msgstr "PhpGedView innlogging for brukere"
 
 #: ../login.php:161 ../help_text.php:5191
-msgid "In order to access the MyGedView Portal page, you must be a registered user on the system.  On the MyGedView Portal page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of PhpGedView pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView."
+msgid "In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of PhpGedView pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView."
 msgstr "<center><b>Siden <i>Min GedView</i> er bare tilgjengelig for <i>registerte brukere</i>.</b><br /><br />I <b><i>Min GedView</i></b> kan du lage dine egne snarveier til favoritt-personer,<br />notere i notatblokken din, sende meldinger, se loggen til andre brukere<br />eller skreddersy ditt eget oppsett av PhpGedView.<br /><br />Dersom du har brukernavn og passord, så logg deg inn i feltene under.</center />"
 
 #: ../login.php:166
@@ -5256,7 +5256,7 @@ msgid "Clear cache files"
 msgstr "Rens hurtigminne-filen"
 
 #: ../index_edit.php:551
-msgid "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
+msgid "Here is a short description of each of the blocks you can place on the Welcome or My Page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>"
 msgstr "Her er en kort beskrivelse for hver av de rammene du har valgt for sidene Velkommen eller Min GedView.<br /><table border='1' align='center'><tr><td class='list_value'><b>Navn</b></td><td class='list_value'><b>Beskrivelse</b></td></tr>&nbsp;</table>"
 
 #: ../clippings.php:43 ../modules/clippings/index.php:40
@@ -16652,7 +16652,7 @@ msgid "The method to be used to contact the Genealogy contact about genealogy qu
 msgstr ""
 
 #: ../help_text.php:2916
-msgid "Enter the maximum number of days to show in Upcoming Events blocks.  This number cannot be greater than 30. If you enter a larger value, 30 will be used.<br /><br />The value you enter here determines how far ahead PhpGedView looks when searching for upcoming events.  The results of this search, done once daily, are copied into a temporary file.<br /><br />No Upcoming Events blocks on Index or Portal pages can request more days than this value.  The larger you make this, the longer it will take to build the daily database extract, and the longer it will take to display the block, even when you request to display a number of days less than this setting."
+msgid "Enter the maximum number of days to show in Upcoming Events blocks.  This number cannot be greater than 30. If you enter a larger value, 30 will be used.<br /><br />The value you enter here determines how far ahead PhpGedView looks when searching for upcoming events.  The results of this search, done once daily, are copied into a temporary file.<br /><br />No Upcoming Events blocks on Index or My Pages can request more days than this value.  The larger you make this, the longer it will take to build the daily database extract, and the longer it will take to display the block, even when you request to display a number of days less than this setting."
 msgstr "Angi maks antall dager som skal vises i rammen Kommende hendelser.  Tallet kan ikke være større enn 30. Dersom du angir et større tall, vil 30 bli brukt.<br /><br />Verdien du angir vil bestemme hvor mange dager fram i tid PhpGedView vil se etter kommende hendelser.  Resultatet av søket, som utføres kun en gang om dagen, vil lagres i en midlertidig fil.<br /><br />PS 1. Brukere kan ikke velge flere dager enn angitt her på sine personlige sider.<br /><br />PS 2. Dersom du har en stor slektsbase, vil det ta lengre tid å lage den daglige filen, jo flere dager du angir. Det vil også ta lengre tid å vise rammen, selv om du/brukere angir færre dager på hovedsiden/personlige sider."
 
 #: ../help_text.php:2921
@@ -17884,7 +17884,7 @@ msgid "In order to improve performance, several of the blocks on the PhpGedView 
 msgstr ""
 
 #: ../help_text.php:4175
-msgid "Click this button to save your changes.<br /><br />You will be returned to the Welcome or MyGedView Portal page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly."
+msgid "Click this button to save your changes.<br /><br />You will be returned to the Welcome or My Page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly."
 msgstr "Klikk på denne knappen for godkjenne endringer du har lagret tidligere."
 
 #: ../help_text.php:4179
@@ -18587,7 +18587,7 @@ msgid "header_favorites"
 msgstr ""
 
 #: ../help_text.php:4696
-msgid "The Favorites drop-down list shows the favorites that you have selected on your personalized Portal page.  It also shows the favorites that the site administrator has selected for the currently active GEDCOM.  Clicking on one of the favorites entries will take you directly to the Individual Information page of that person.<br /><br />More help about adding Favorites is available in your personalized Portal page."
+msgid "The Favorites drop-down list shows the favorites that you have selected on your personalized My Page.  It also shows the favorites that the site administrator has selected for the currently active GEDCOM.  Clicking on one of the favorites entries will take you directly to the Individual Information page of that person.<br /><br />More help about adding Favorites is available in your personalized My Page."
 msgstr "Denne \"slipp-ned\"-listen vil vise deg Favoritter i slektsbasen, valgt av administratoren til nettstedet. Dersom du er en registert bruker og har logget inn, vil du se Dine favoritter som du har/kunne ha valgt deg på din personlige hovedside.<br />Ved å klikke på en av favorittene, så vil du få opp siden med \"Fakta om personen\" for den valgte favoritt-personen.<br />Mer hjelp om å legge til \"Dine favoritter\" er tilgjengelig på din personlige side (Min GedView)."
 
 #: ../help_text.php:4700
@@ -18791,7 +18791,7 @@ msgid "index_favorites"
 msgstr ""
 
 #: ../help_text.php:4831
-msgid "The GEDCOM Favorites block is much the same as the \"My Favorites\" block of the MyGedView Portal page. Unlike the Portal page configuration, only the administrator or a user with Admin rights can change the list of favorites in this block.<br /><br />The purpose of the GEDCOM Favorites block is to draw the visitor's attention to persons of special interest.  This GEDCOM's favorites are available for selection from a drop-down list in the header on every page.<br /><br />When you click on one of the listed site favorites, you will be taken to the Individual Information page of that person."
+msgid "The GEDCOM Favorites block is much the same as the \"My Favorites\" block of My Page. Unlike the My Page configuration, only the administrator or a user with Admin rights can change the list of favorites in this block.<br /><br />The purpose of the GEDCOM Favorites block is to draw the visitor's attention to persons of special interest.  This GEDCOM's favorites are available for selection from a drop-down list in the header on every page.<br /><br />When you click on one of the listed site favorites, you will be taken to the Individual Information page of that person."
 msgstr ""
 
 #: ../help_text.php:4835
@@ -18847,7 +18847,7 @@ msgid "index_htmlplus"
 msgstr ""
 
 #: ../help_text.php:4866
-msgid "This block lets the administrator add information to the Index or Portal page.  Its purpose is similar to the HTML, GEDCOM News, and GEDCOM Statistics blocks, but the administrator has more control over its appearance."
+msgid "This block lets the administrator add information to the Index or My Page.  Its purpose is similar to the HTML, GEDCOM News, and GEDCOM Statistics blocks, but the administrator has more control over its appearance."
 msgstr ""
 
 #: ../help_text.php:4870
@@ -18863,7 +18863,7 @@ msgid "index_htmlplus_title"
 msgstr ""
 
 #: ../help_text.php:4876
-msgid "This text should be blank or very brief.  When blank, the Advanced HTML block will show on the Index or Portal page as a plain block, just like the HTML block does.  When there is text, the Advanced HTML block will show like all the other blocks, complete with a block title bar containing the text you enter here."
+msgid "This text should be blank or very brief.  When blank, the Advanced HTML block will show on the Index or My Page as a plain block, just like the HTML block does.  When there is text, the Advanced HTML block will show like all the other blocks, complete with a block title bar containing the text you enter here."
 msgstr ""
 
 #: ../help_text.php:4880
@@ -19083,7 +19083,7 @@ msgid "login_buttons_aut"
 msgstr ""
 
 #: ../help_text.php:5041
-msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will be logged in and go directly to your MyGedView Portal page, where you can edit your settings, add or edit favorites, send and read messages, etc.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
+msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will be logged in and go directly to your My Page, where you can edit your settings, add or edit favorites, send and read messages, etc.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
 msgstr "Her ser du to knapper for å logge deg inn i systemet.<dl><dt><b>Logg inn</b></dt><dd>Vanlige brukere benytter bare denne knappen etter at de har oppgitt brukernavn og passord. Da vil de bli sendt til sin egen Min GedView-side, hvor de kan sende og lese beskjeder, endre oppsettet sitt, legge til eller endre favoritter osv.</dd><dt><b>Admin</b></dt><dd>Denne virker bare for brukere som har administrajon rettigheter. Ved å klikke på denne knappen vil siden for administrasjon av nettstedet bli vist.</dd></dl>"
 
 #: ../help_text.php:5045
@@ -19091,7 +19091,7 @@ msgid "login_buttons"
 msgstr ""
 
 #: ../help_text.php:5046
-msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to or sent back to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will return to the page you were just on, but with logged-in access rights.<br /><br />For example, if you click <b>Login</b> when you were at the Pedigree page, you will return to that same page.  If you click this button when you were on the main Welcome page, you will be taken to the MyGedView Portal page.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
+msgid "Here you see two buttons to login to the system.<br /><br />The page you will be taken to or sent back to depends on which button you click after typing your user name and password.<br /><ul><li>The <b>Login</b> button<br />If you click this button, you will return to the page you were just on, but with logged-in access rights.<br /><br />For example, if you click <b>Login</b> when you were at the Pedigree page, you will return to that same page.  If you click this button when you were on the main Welcome page, you will be taken to My Page.</li><li>The <b>Admin</b> button<br />If you have Admin rights, you can click this button to go directly to the main Administration page.</li></ul>"
 msgstr "Her ser du to knapper for å logge deg inn på systemet.<br />Det er avhengig av den knappen du velger for hvor du blir sendt videre etter å ha oppgitt brukernavn og passord.<dl><dt><b>Logg inn</b></dt><dd>Hvis du klikker på den venstre knappen, vil du komme tilbake til den siden du kom fra.<br />Så, dersom du klikket \"Logg inn\" da du var på siden med slektstre, vil du komme tilbake til denne siden.<br />Dersom du klikket på <b>Min GedView</b> i menyen, vil du gå direkte til din personlige side, der du kan endre oppsettet ditt, legge til eller endre favoritter, sende og lese beskjeder og så videre.</dd><dt><b>Admin</b></dt><dd>Dersom du har rettigheter som administrator, kan du klikke på knappen til høyre og gå direkte til siden for å administrere nettstedet.</dd></dl>"
 
 #: ../help_text.php:5050
@@ -19111,7 +19111,7 @@ msgid "mail_option1"
 msgstr ""
 
 #: ../help_text.php:5061
-msgid "With this option, the PhpGedView internal messaging system will be used and no emails will be sent.<br /><br />You will receive only <u>internal</u> messages from the other users.  When another site user sends you a message, that message will appear in the Message block on your personal MyGedView Portal page.  If you have removed this block from your MyGedView Portal page, you will not see any messages.  They will, however, show up as soon as you configure the MyGedView Portal page to again have the Message block."
+msgid "With this option, the PhpGedView internal messaging system will be used and no emails will be sent.<br /><br />You will receive only <u>internal</u> messages from the other users.  When another site user sends you a message, that message will appear in the Message block on your personal My Page.  If you have removed this block from your My Page, you will not see any messages.  They will, however, show up as soon as you configure My Page to again have the Message block."
 msgstr "Ved å bruke dette valget, vil det interne beskjedsystemet i PhpGedView bli brukt og det vil ikke bli sendt noen epost.<br /><br />Du vil <u>bare</u> motta <u>interne beskjeder</u> fra andre brukere.<br />Når andre brukere sender deg en beskjed, vil beskjeden bli plassert i din beskjed-ramme på din egen side ; Min GedView. Dersom du har fjernet denne rammen fra siden din, vil du ikke se noen beskjeder. De vil imidlertid bli vist dersom du velger å aktivere den igjen."
 
 #: ../help_text.php:5065
@@ -19127,7 +19127,7 @@ msgid "mail_option3"
 msgstr ""
 
 #: ../help_text.php:5071
-msgid "With this option, you will only receive email messages at the address you configured on your Account page.  The messaging system internal to PhpGedView will not be used at all, and there will never be any messages in the Message block on your personal MyGedView Portal page."
+msgid "With this option, you will only receive email messages at the address you configured on your Account page.  The messaging system internal to PhpGedView will not be used at all, and there will never be any messages in the Message block on your personal My Page."
 msgstr "Her vil beskjeder <b>bare</b> bli sendt til epost-adressen din.<br />Det interne besjedsystemet i PhpGedView vil ikke bli brukt."
 
 #: ../help_text.php:5075
@@ -19184,7 +19184,7 @@ msgid "Menu"
 msgstr "Meny"
 
 #: ../help_text.php:5111 ../help_text.php:5115
-msgid "<div class=\"name_head\"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href=\"#menu_fam\">Welcome page</a><br /></li><li><a href=\"#menu_myged\">MyGedView Portal</a><br /></li><li><a href=\"#menu_charts\">Charts</a><br /></li><li><a href=\"#menu_lists\">Lists</a><br /></li><li><a href=\"#menu_annical\">Anniversary Calendar</a><br /></li><li><a href=\"#menu_clip\">Family Tree Clippings Cart</a><br /></li><li><a href=\"#menu_search\">Search</a><br /></li><li><a href=\"#menu_help\">Help</a></li></ul>"
+msgid "<div class=\"name_head\"><center><b>MENUS</b></center></div><br />The page headers have drop-down menus associated with each menu icon.<br /><br />When you move your mouse pointer over an icon a sub-menu will appear, if one exists.  When you click on an icon you will be taken to the first item in the sub-menu.<br /><br />The following menu icons are usually available:<ul><li><a href=\"#menu_fam\">Welcome page</a><br /></li><li><a href=\"#menu_myged\">My Page</a><br /></li><li><a href=\"#menu_charts\">Charts</a><br /></li><li><a href=\"#menu_lists\">Lists</a><br /></li><li><a href=\"#menu_annical\">Anniversary Calendar</a><br /></li><li><a href=\"#menu_clip\">Family Tree Clippings Cart</a><br /></li><li><a href=\"#menu_search\">Search</a><br /></li><li><a href=\"#menu_help\">Help</a></li></ul>"
 msgstr ""
 
 #: ../help_text.php:5116
@@ -19204,7 +19204,7 @@ msgid "menu_myged"
 msgstr ""
 
 #: ../help_text.php:5126
-msgid "If you are logged in, this menu can include the following items:<ol><li>MyGedView Portal<br />This takes you to your own customizable Starting page.</li><li>My Account<br />You can edit your personal data here.</li><li>My Pedigree<br />If you have selected a Root person for this GEDCOM, this will take you to the Pedigree chart for that person.</li><li>My Individual Record<br />This link will take you to your Individual Information page, where all genealogical data about yourself and your family is displayed.</li></ol>"
+msgid "If you are logged in, this menu can include the following items:<ol><li>My Page<br />This takes you to your own customizable Starting page.</li><li>My Account<br />You can edit your personal data here.</li><li>My Pedigree<br />If you have selected a Root person for this GEDCOM, this will take you to the Pedigree chart for that person.</li><li>My Individual Record<br />This link will take you to your Individual Information page, where all genealogical data about yourself and your family is displayed.</li></ol>"
 msgstr "Brukere som er logget inn, kan her finne linker for å tilpasse personlige data og for å endre konto-oppsettet ditt.<dl><dt>Min side</dt><dd>Sender deg til din egen \"Start-side\".</dd><dt>Min konto</dt><dd>Her kan du endre ditt personlige oppsett.</dd><dt><br />- <i>Dersom du finnes i slektsbasen og admin har angitt dette i brukerkontoen din,<br />vil du også kunne se:</i><br /><br />Mitt anetre</dt><dd>Dette vil sende deg til diagrammet med dine aner/forfedre, der du har valgt din egen hovedperson.</dd><dt>Meg selv</dt><dd>Dette vil vise deg din egen side, der alle opplysninger om deg selv og din familie blir vist.</dd><dt><br />- <i>Dersom du har rettigheter som administrator, vil du også kunne se:</i><br /><br />Admin</dt><dd>Viser deg hovedsiden for å administrere PhpGedView.</dd><dt>Administrere Slektsfil(er) og personvern</dt></dl>"
 
 #: ../help_text.php:5130
@@ -19273,7 +19273,7 @@ msgid "mygedview_customize"
 msgstr ""
 
 #: ../help_text.php:5181
-msgid "When you entered here for the first time, you already had some blocks on this page.  If you like, you can customize this Portal page.<br /><br />When you click this link you will be taken to a form where you can add, move, or delete blocks.  More explanation is available on that form."
+msgid "When you entered here for the first time, you already had some blocks on this page.  If you like, you can customize this My Page.<br /><br />When you click this link you will be taken to a form where you can add, move, or delete blocks.  More explanation is available on that form."
 msgstr "Når du kom inn på denne siden første gang, hadde du allerede noen rammer på siden.<br />Dersom du ønsker det, kan du tilpasse denne siden etter dine egne ønsker/behov.<br />Ved å klikke på denne linken, vil du få opp et nytt vindu med et skjema, der du kan legge til, slette eller flytte på rammer.<br />Mer forklaring er tilgjengelig i det skjemaet."
 
 #: ../help_text.php:5185
@@ -19317,7 +19317,7 @@ msgid "mygedview_welcome"
 msgstr ""
 
 #: ../help_text.php:5211
-msgid "The Welcome block shows you:<ul><li>The current GEDCOM file</li><li>The date and time</li><li>Links to:<ul><li>My Account</li><li>My Pedigree</li><li>My Individual Record</li><li>Customize MyGedView Portal</li></ul></li></ul><br /><b>Note:</b><br />You will see the links to <b>My Indi</b> and <b>My Pedigree</b> only if you are known to the current GEDCOM file.  You might have a record in one GEDCOM file and therefore see the <b>My Indi</b> and <b>My Pedigree</b> links, while in another GEDCOM file you do not have a record and consequently these links are not displayed."
+msgid "The Welcome block shows you:<ul><li>The current GEDCOM file</li><li>The date and time</li><li>Links to:<ul><li>My Account</li><li>My Pedigree</li><li>My Individual Record</li><li>Customize My Page</li></ul></li></ul><br /><b>Note:</b><br />You will see the links to <b>My Indi</b> and <b>My Pedigree</b> only if you are known to the current GEDCOM file.  You might have a record in one GEDCOM file and therefore see the <b>My Indi</b> and <b>My Pedigree</b> links, while in another GEDCOM file you do not have a record and consequently these links are not displayed."
 msgstr "<dt>Denne velkomstrammen viser deg:</dt><dd>- Den aktive slektsbasen</dd><dd>- Dato og klokkeslett</dd><dd>- Linker til:</dd><dd> - - Min konto</dd><dd>- - Mitt anetre (se PS under)</dd><dd>- - Meg selv (se PS under)</dd><dd>- - Endre <i>din egen</i> side</dd><br /><b>PS !</b>  Du vil bare kunne se linkene til \"Meg selv\" og \"Mitt anetre\" dersom du er registrert i den aktive slektsbasen.<br />Derfor vil du kunne se disse linkene i noen slektsbaser, mens i andre der du ikke er registert, vil du ikke se disse linkene..."
 
 #: ../help_text.php:5215
@@ -20190,7 +20190,7 @@ msgid "Please click on the link below or paste it into your browser, login with 
 msgstr "Vennligst klikk på linken under. Logg deg inn med det nye passordet. Du bør så angi et nytt passord for å verne om sikkerheten til dataene dine."
 
 #: ../login_register.php:136
-msgid "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password."
+msgid "After you have logged in, select the «My Account» link under the «My Page» menu and fill in the password fields to change your password."
 msgstr "Etter at du har logget deg inn, velg da 'Min konto' i menyen 'Min GedView' og angi et nytt passord i feltet for å endre passordet ditt."
 
 #: ../login_register.php:142
@@ -20450,7 +20450,7 @@ msgid "Charts Block"
 msgstr "Diagramblokken"
 
 #: ../blocks/charts.php:44
-msgid "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
+msgid "The Charts block allows you to place a chart on the Welcome or My Page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart."
 msgstr "Med Diagramblokken kan du plassere et diagram på velkomstsiden eller MyGedView-siden Du kan konfigurere blokken til å vise et anediagram, etterkommerdiagram eller timeglassvisning.  Du kan også bestemme rotpersonen til diagrammet."
 
 #: ../blocks/html_block.php:39
@@ -20632,7 +20632,7 @@ msgid "User Welcome"
 msgstr "Rammen Bruker/eier-info"
 
 #: ../blocks/user_welcome.php:40
-msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page."
+msgid "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his My Page."
 msgstr "Rammen for brukeres egen siden viser brukeren, gjeldende dato og tid, hurtiglinker for endre egen konto eller å gå til deres eget slektstre, og en link for å tilpasse egen siden."
 
 #: ../blocks/rss_block.php:42 ../blocks/rss_block.php:56

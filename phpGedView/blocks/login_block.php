@@ -38,7 +38,7 @@ define('PGV_LOGIN_BLOCK_PHP', '');
 
 $PGV_BLOCKS["print_login_block"]["name"]		= i18n::translate('Login');
 $PGV_BLOCKS["print_login_block"]["descr"]		= i18n::translate('The Login block accepts a user name and password for users to login.');
-$PGV_BLOCKS["print_login_block"]["type"]		= "both";		// On Portal page, this becomes a Logout block
+$PGV_BLOCKS["print_login_block"]["type"]		= "both";		// On My Page, this becomes a Logout block
 $PGV_BLOCKS["print_login_block"]["canconfig"]	= false;
 $PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>0);
 

@@ -110,7 +110,7 @@ if (file_exists(PGV_ROOT.'modules')) {
 //	Build sorted table of block names, BUT:
 //		include in this table ONLY if the block is appropriate for this page
 //		If $BLOCK["type"] is	"both", include in both page types
-//					"user", include in Portal page only
+//					"user", include in My Page only
 //					"gedcom", include in Index page only
 $SortedBlocks = array();
 foreach($PGV_BLOCKS as $key => $BLOCK) {
@@ -155,7 +155,7 @@ else {
 }
 
 if ($ctype=="user") {
-	print_simple_header(i18n::translate('MyGedView Portal'));
+	print_simple_header(i18n::translate('My Page'));
 } else {
 	print_simple_header(get_gedcom_setting(PGV_GED_ID, 'title'));
 }
@@ -427,7 +427,7 @@ else {
 	<table dir="ltr" border="1" width="400px">
 	<tr><td class="topbottombar" colspan="7">
 	<?php
-	if ($ctype=="user") print "<b>".UTF8_strtoupper(i18n::translate('Customize MyGedView Portal'))."</b>";
+	if ($ctype=="user") print "<b>".UTF8_strtoupper(i18n::translate('Customize My Page'))."</b>";
 	else print "<b>".UTF8_strtoupper(i18n::translate('Customize this GEDCOM Welcome page'))."</b>";
 	echo help_link('portal_config_intructions');
 	print "</td></tr>";
@@ -548,7 +548,7 @@ else {
 	print "\n\t<div id=\"help\" class=\"tab_page\" style=\"position: absolute; display: none; top: auto; left: auto; z-index: 2; \">\n\t";
 
 	print "<br /><center><input type=\"button\" value=\"".i18n::translate('Click here to continue')."\" onclick=\"expand_layer('configure', true); expand_layer('help', false);\" /></center><br /><br />\n";
-	echo i18n::translate("Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>");
+	echo i18n::translate("Here is a short description of each of the blocks you can place on the Welcome or My Page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>");
 
 	// end of 2nd tab
 	print "</div>\n";

@@ -64,7 +64,7 @@ $pgv_lang["switch_lifespan"]		= "Show Lifespan chart";
 $pgv_lang["switch_timeline"]		= "Show Timeline chart";
 $pgv_lang["differences"]			= "Differences";
 $pgv_lang["charts_block"]			= "Charts Block";
-$pgv_lang["charts_block_descr"]		= "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.";
+$pgv_lang["charts_block_descr"]		= "The Charts block allows you to place a chart on the Welcome or My Page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.";
 $pgv_lang["charts_click_box"]		= "Click on any of the boxes to get more information about that person.";
 $pgv_lang["chart_type"]				= "Chart Type";
 $pgv_lang["changedate1"]			= "Ending range of change dates";
@@ -1245,7 +1245,7 @@ $pgv_lang["mail04_line01"]			= "Hello #user_fullname# ...";
 $pgv_lang["mail04_line02"]			= "A new password was requested for your user name.";
 $pgv_lang["mail04_line03"]			= "Recommendation:";
 $pgv_lang["mail04_line04"]			= "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure.";
-$pgv_lang["mail04_line05"]			= "After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password.";
+$pgv_lang["mail04_line05"]			= "After you have logged in, select the «My Account» link under the «My Page» menu and fill in the password fields to change your password.";
 $pgv_lang["mail04_subject"] 		= "Data request at #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]				= "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>#user[email]#</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security.";
@@ -1253,7 +1253,7 @@ $pgv_lang["pwreqinfo"]				= "Hello...<br /><br />An email with your new password
 $pgv_lang["myuserdata"] 			= "My Account";
 $pgv_lang["user_theme"] 			= "My Theme";
 $pgv_lang["mgv"]					= "MyGedView";
-$pgv_lang["mygedview"]				= "MyGedView Portal";
+$pgv_lang["mygedview"]				= "My Page";
 $pgv_lang["passwordlength"] 		= "Passwords must contain at least 6 characters.";
 $pgv_lang["welcome_text_auth_mode_1"]	= "<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to every visitor who has a user account.<br /><br />If you have a user account, you can login on this page.  If you don't have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your application, the site administrator will activate your account.  You will receive an email when your application has been approved.";
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorized</u> users only.<br /><br />If you have a user account you can login on this page.  If you don't have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved.";
@@ -1343,7 +1343,7 @@ $pgv_lang["stat_earliest_birth"] 	= "Earliest birth year";
 $pgv_lang["stat_latest_birth"] 	= "Latest birth year";
 $pgv_lang["stat_earliest_death"] 	= "Earliest death year";
 $pgv_lang["stat_latest_death"] 	= "Latest death year";
-$pgv_lang["customize_page"] 		= "Customize MyGedView Portal";
+$pgv_lang["customize_page"] 		= "Customize My Page";
 $pgv_lang["customize_gedcom_page"]	= "Customize this GEDCOM Welcome page";
 $pgv_lang["upcoming_events_block"]	= "Upcoming Events";
 $pgv_lang["upcoming_events_descr"]	= "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look.";
@@ -1364,7 +1364,7 @@ $pgv_lang["user_messages_descr"]	= "The User Messages block shows a list of the 
 $pgv_lang["user_favorites_block"]	= "User Favorites";
 $pgv_lang["user_favorites_descr"]	= "The User Favorites block shows the user a list of his favorite people in the database so that he can easily link to them.";
 $pgv_lang["welcome_block"]			= "User Welcome";
-$pgv_lang["welcome_descr"]			= "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his MyGedView Portal page.";
+$pgv_lang["welcome_descr"]			= "The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customize his My Page.";
 $pgv_lang["random_media_block"] 	= "Random Media";
 $pgv_lang["random_media_descr"] 	= "The Random Media block randomly selects a photo or other media item from the currently active database and displays it to the user.<br /><br />The administrator determines whether this block can show media items associated with persons or events.";
 $pgv_lang["random_media_persons_or_all"]	= "Show only persons, events, or all?";
@@ -1827,8 +1827,8 @@ $pgv_lang["definitions"]			= "Definitions";
 //-- Index_edit
 $pgv_lang["block_desc"]				= "Block Descriptions";
 $pgv_lang["click_here"]				= "Click here to continue";
-$pgv_lang["click_here_help"]		= "Click this button to save your changes.<br /><br />You will be returned to the Welcome or MyGedView Portal page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly.";
-$pgv_lang["block_summaries"]		= "Here is a short description of each of the blocks you can place on the Welcome or MyGedView Portal page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>";
+$pgv_lang["click_here_help"]		= "Click this button to save your changes.<br /><br />You will be returned to the Welcome or My Page, but your changes may not be shown.  You may need to use the Page Reload function of your browser to view your changes properly.";
+$pgv_lang["block_summaries"]		= "Here is a short description of each of the blocks you can place on the Welcome or My Page.<br /><table border='1' align='center'><tr><td class='list_value'><b>Name</b></td><td class='list_value'><b>Description</b></td></tr>&nbsp;</table>";
 // Built in index_edit.php
 $pgv_lang["block_summary_table"]	= "&nbsp;";
 

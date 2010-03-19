@@ -505,14 +505,14 @@ DATABASE TABLE LAYOUT
 PhpGedView uses a very simple database table layout because it operates
 primarily on the GEDCOM data and only needs the database for search and
 retrieval.  There are only a few tables in the database:
-  pgv_blocks        # Description of each user's Portal page
+  pgv_blocks        # Description of each user's My Page
   pgv_dates         # Stores decoded date information from GEDCOM records
   pgv_families      # All the families in the GEDCOM
   pgv_favorites     # Stores users favorites
   pgv_individuals   # All the individuals in the GEDCOM
   pgv_messages      # Messages to and from users
   pgv_names         # Stores decoded name information from GEDCOM records
-  pgv_news          # Stores news items for the Index and Portal pages
+  pgv_news          # Stores news items for the Index and My Pages
   pgv_other         # All other level 0 GEDCOM records (i.e., repositories, 
                     #   media objects, notes, etc.)
   pgv_placelinks    # Cross-reference between places and individuals and

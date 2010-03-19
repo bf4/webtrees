@@ -107,7 +107,7 @@ class MenuBar
 		}
 
 		//-- main menu
-		$menu = new Menu(i18n::translate('MyGedView Portal'), "index.php?ctype=user", "down");
+		$menu = new Menu(i18n::translate('My Page'), "index.php?ctype=user", "down");
 		if (!empty($PGV_IMAGES["mygedview"]["large"])) {
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["large"]);
 		} elseif (!empty($PGV_IMAGES["gedcom"]["large"])) {

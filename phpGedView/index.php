@@ -308,7 +308,7 @@ if ($action=="ajax") {
 
 if ($ctype=="user") {
 	$helpindex = "index_myged_help";
-	print_header(i18n::translate('MyGedView Portal'));
+	print_header(i18n::translate('My Page'));
 } else {
 	print_header(get_gedcom_setting(PGV_GED_ID, 'title'));
 }
@@ -369,7 +369,7 @@ echo PGV_JS_END;
 print "<table width=\"100%\"><tr><td>";		// This is needed so that page footers print in the right place
 if ($ctype=="user") {
 	print "<div align=\"center\" style=\"width: 99%;\">";
-	print "<h1>".i18n::translate('MyGedView Portal')."</h1>";
+	print "<h1>".i18n::translate('My Page')."</h1>";
 	print i18n::translate('Your MyGedView page allows you to keep bookmarks of your favorite people, track upcoming events, and collaborate with other PhpGedView users.');
 	print "<br /><br /></div>";
 }
@@ -443,7 +443,7 @@ print "</td></tr></table><br />";		// Close off that table
 
 if ($ctype=="user" && !$welcome_block_present) {
 	print "<div align=\"center\" style=\"width: 99%;\">";
-	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize MyGedView Portal')."</a>";
+	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".i18n::translate('Customize My Page')."</a>";
 	echo help_link('mygedview_customize');
 	print "</div>";
 }

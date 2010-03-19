@@ -58,6 +58,6 @@ $pgv_lang["unrecognized_code"]="Unrecognised GEDCOM Code";
 $pgv_lang["use_colors"]="Use colours";
 $pgv_lang["user_favorites_block"]="User Favourites";
 $pgv_lang["user_favorites_descr"]="The User Favourites block shows the user a list of his favourite people in the database so that he can easily link to them.";
-$pgv_lang["welcome_descr"]="The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customise his MyGedView Portal page.";
+$pgv_lang["welcome_descr"]="The User Welcome block shows the user the current date and time, quick links to modify his account or go to his own Pedigree chart, and a link to customise his My Page.";
 $pgv_lang["welcome_text_auth_mode_2"]="<center><b>Welcome to this Genealogy website</b></center><br />Access to this site is permitted to <u>authorised</u> users only.<br /><br />If you have a user account you can login on this page.  If you don't have a user account, you can apply for one by clicking on the appropriate link below.<br /><br />After verifying your information, the administrator will either approve or decline your account application.  You will receive an email message when your application has been approved.";
 $pgv_lang["confirm_fav_remove"] 	= "Are you sure you want to remove this item from your list of Favourites?";

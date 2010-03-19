@@ -98,7 +98,7 @@ if ($action=='login') {
 			if ($pid) {
 				$url = "individual.php?pid=".$pid;
 			} else {
-				//-- user does not have a pid?  Go to mygedview portal
+				//-- user does not have a pid?  Go to My Page
 				$url = "index.php?ctype=user";
 			}
 		}
@@ -158,7 +158,7 @@ echo "<div class=\"center\">\n";
 echo "<table class=\"center width60 ltr\"><tr><td>";
 switch ($help_message) {
 case 'mygedview_login_help':
-	echo i18n::translate('In order to access the MyGedView Portal page, you must be a registered user on the system.  On the MyGedView Portal page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of PhpGedView pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView.');
+	echo i18n::translate('In order to access My Page, you must be a registered user on the system.  On My Page you can bookmark your favorite people, keep a user journal, manage messages, see other logged in users, and customize various aspects of PhpGedView pages.<br /><br />Enter your User name and Password in the appropriate fields to login to MyGedView.');
 	break;
 default:
 	switch ($WELCOME_TEXT_AUTH_MODE){

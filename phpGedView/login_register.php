@@ -133,7 +133,7 @@ switch ($action) {
 				$mail_body .= i18n::translate('Password') . ": " . $user_new_pw . "\r\n\r\n";
 				$mail_body .= i18n::translate('Recommendation:') . "\r\n";
 				$mail_body .= i18n::translate('Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure.') . "\r\n\r\n";
-				$mail_body .= i18n::translate('After you have logged in, select the «My Account» link under the «MyGedView Portal» menu and fill in the password fields to change your password.') . "\r\n\r\n";
+				$mail_body .= i18n::translate('After you have logged in, select the «My Account» link under the «My Page» menu and fill in the password fields to change your password.') . "\r\n\r\n";
 
 				if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".PGV_SERVER_NAME.PGV_SCRIPT_PATH."\">".PGV_SERVER_NAME.PGV_SCRIPT_PATH."</a>";
 				else $mail_body .= PGV_SERVER_NAME.PGV_SCRIPT_PATH;
