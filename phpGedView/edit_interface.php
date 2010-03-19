@@ -290,28 +290,29 @@ elseif ($type=="FAM") {
 
 if (strstr($action, "addchild")) {
 	if (empty($famid)) {
-		echo "<b>", i18n::translate('Add an unlinked person'), "</b>", help_link('edit_add_unlinked_person');
+		echo '<b>', i18n::translate('Add an unlinked person'), '</b>', help_link('edit_add_unlinked_person');
 	}
 	else {
-		echo "<b>", i18n::translate('Add child'), "</b>", help_link('edit_add_child');
+		echo '<b>', i18n::translate('Add child'), '</b>', help_link('edit_add_child');
 	}
-}
-else if (strstr($action, "addspouse")) {
-	echo "<b>", $pgv_lang["add_".strtolower($famtag)], "</b>\n";
-	echo help_link('edit_add_spouse');
-}
-else if (strstr($action, "addnewparent")) {
+} else if (strstr($action, "addspouse")) {
 	if ($famtag=="WIFE") {
-		echo "<b>", i18n::translate('Add a new mother'), "</b>\n";
+		echo '<b>', i18n::translate('Add wife'), '</b>';
 	} else {
-		echo "<b>", i18n::translate('Add a new father'), "</b>\n";
+		echo '<b>', i18n::translate('Add husband'), '</b>';
+	}
+	echo help_link('edit_add_spouse');
+} else if (strstr($action, "addnewparent")) {
+	if ($famtag=="WIFE") {
+		echo '<b>', i18n::translate('Add a new mother'), '</b>';
+	} else {
+		echo '<b>', i18n::translate('Add a new father'), '</b>';
 	}
 	echo help_link('edit_add_parent');
-}
-else if (strstr($action, "addopfchild")) {
-	echo "<b>", i18n::translate('Add a child to create a one-parent family'), '</b>', help_link('edit_add_child');
+}else if (strstr($action, "addopfchild")) {
+	echo '<b>', i18n::translate('Add a child to create a one-parent family'), '</b>', help_link('edit_add_child');
 } else {
-	echo "<b>", i18n::translate($type), "</b>";
+	echo '<b>', i18n::translate($type), '</b>';
 }
 //------------------------------------------------------------------------------
 switch ($action) {
