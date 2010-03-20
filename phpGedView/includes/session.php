@@ -36,13 +36,13 @@ if (!defined('PGV_SCRIPT_NAME')) {
 }
 
 // Identify ourself
-define('PGV_PHPGEDVIEW',      'PhpGedView');
-define('PGV_VERSION',         '4.3.0');
+define('PGV_PHPGEDVIEW',      'webtrees');
+define('PGV_VERSION',         '1.0.0');
 define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
-define('PGV_PHPGEDVIEW_URL',  'http://www.phpgedview.net');
-define('PGV_PHPGEDVIEW_WIKI', 'http://wiki.phpgedview.net');
-define('PGV_TRANSLATORS_URL', 'https://sourceforge.net/projects/phpgedview/forums/forum/294245');
+define('PGV_PHPGEDVIEW_URL',  'http://www.webtrees.net');
+define('PGV_PHPGEDVIEW_WIKI', 'http://www.webtrees.net/wiki');
+define('PGV_TRANSLATORS_URL', 'https://launchpad.net/webtrees');
 
 // Enable debugging output?
 define('PGV_DEBUG',      false);
