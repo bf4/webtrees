@@ -72,6 +72,7 @@ padding-right:0pt;
 	background-image: url(images/right1R.gif);
 }
 /* jquery css THEME adjustments for RTL */
+/* @version $Id: jquery-ui_theme_rtl.css 7457 2010-03-14 22:30:48Z rob $ */
 
 /* Tabs --------------------------------*/
 .ui-tabs { direction: rtl; }
@@ -91,7 +92,6 @@ padding-right:0pt;
 	position: absolute;
 	z-index: 100;
 	left: 0px;
-	background: #eff8f8; 
 	margin-top:0px; 
 	margin-left:41px;
 }

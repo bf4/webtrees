@@ -1,6 +1,6 @@
 /**
  ** Style for the Mercury Theme          
- ** @version $Id$
+ ** @version $Id: ash.css 7424 2010-03-14 14:20:29Z rob $
  */
 
 .something {
@@ -1625,19 +1625,19 @@ dt {
 .ui-widget-content a 						{ color:#3f728d; }
 .ui-widget-content a:hover 					{ color:#3f728d; text-decoration:underline;}
 
-.ui-tabs .ui-tabs-nav 						{ border-color:#888888; background: #d4d4d4; opacity: 0.67;}
+.ui-tabs .ui-tabs-nav 						{ border-color:#888888; background: #9DA5B4; }
 .ui-tabs .ui-tabs-nav li 					{ border-color:#888888; background: #efefee;}
 .ui-tabs .ui-tabs-nav li a 					{ color:#555555; padding: .2em .3em .2em .3em;  }
 .ui-tabs .ui-tabs-nav li:hover				{ color:red; background: #f0f2f5;}
 .ui-tabs .ui-tabs-nav li a:hover			{ color:#3f728d; text-decoration:underline;}
 
-.ui-tabs-nav li.ui-tabs-selected  	 		{ color:#3f728d; border-color: #888888; background:#ffffff;}
+.ui-tabs-nav li.ui-tabs-selected  	 		{ color:3f728d; border-color: #888888; background:#707070;}
 .ui-tabs-nav li.ui-tabs-selected a	 		{ font-weight:600; color:3f728d;}
-.ui-tabs-nav li.ui-tabs-selected a:hover	{ font-weight:600; color:3f728d; background:#ffffff; }
+.ui-tabs-nav li.ui-tabs-selected a:hover	{ font-weight:600; color:3f728d; background:#707070; }
 .ui-tabs-nav li.ui-tabs-selected:hover		{ background:#efefee; }
 .ui-tabs .ui-tabs-panel	 					{ background:#fff; }
 
-.static_tab_content  { 
+.static_tab_content, .static_tab_content_rtl  { 
 	border-color: #999999; 
 	background: #f0f2f5;
 }
@@ -1656,13 +1656,13 @@ dt {
 }
 /* Items moved from jquery-ui.custom.css */
 /* Accordion ----------------------------------*/
-.ui-accordion .ui-accordion-header 		{ cursor: pointer; position: relative; margin-top: 1px; zoom: 1; background: #d4d4d4; opacity: 0.67; }
-.ui-accordion .ui-accordion-header a 	{ display: block; font-size: 1em; padding: .5em .5em .5em 2.2em; color: #000000 ;}
+.ui-accordion .ui-accordion-header 		{ cursor: pointer; position: relative; margin-top: 1px; zoom: 1; background: #9DA5B4; }
+.ui-accordion .ui-accordion-header a 	{ display: block; font-size: 1em; padding: .5em .5em .5em 2.2em; color: #707070 ;}
 /* Component containers ----------------------------------*/
-.ui-widget-header { border: 1px solid #b2c7d7; background: #ffffff url(images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
+.ui-widget-header { border: 1px solid #b2c7d7; background: #707070 url(images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
 /* Interaction states ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #999999; background: #efefee url(images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
-.ui-state-active {border: 1px solid #ccc; }
+.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #efefee url(images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
+.ui-state-active {border: 1px solid #999999; }
 
 /* Navigator and Flyout menu Styles --------*/
 .nam a:hover{

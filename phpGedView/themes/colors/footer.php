@@ -62,8 +62,6 @@ if ($SHOW_STATS || PGV_DEBUG) {
 if (exists_pending_change()) {
 	echo "<br />", i18n::translate('Changes have been made to this GEDCOM.'), " <a href=\"javascript:;\" onclick=\"window.open('edit_changes.php', '_blank', 'width=600, height=500, resizable=1, scrollbars=1'); return false;\">", i18n::translate('Accept / Reject Changes'), "</a>\n";
 }
-
-
 echo "</div>";
 echo "</div> <!-- close div id=\"footer\" -->\n";
 ?>
