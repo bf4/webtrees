@@ -148,7 +148,6 @@ class CalendarDate {
 	}
 	// We put these in the base class, to save duplicating it in the Julian and Gregorian calendars
 	static function NUM_TO_MONTH_NOMINATIVE($n, $leap_year) {
-		// Nominative forms refer to the subject of a sentence.  e.g. used as a heading for a monthly calendar
 		switch ($n) {
 		case 1:  return i18n::translate_c('NOMINATIVE', 'January');
 		case 2:  return i18n::translate_c('NOMINATIVE', 'February');
@@ -166,7 +165,6 @@ class CalendarDate {
 		}
 	}
 	static function NUM_TO_MONTH_GENITIVE($n, $leap_year) {
-		// Genitive (possessive) forms are used to modify another noun.  e.g. "14th January"
 		switch ($n) {
 		case 1:  return i18n::translate_c('GENITIVE', 'January');
 		case 2:  return i18n::translate_c('GENITIVE', 'February');
@@ -180,6 +178,40 @@ class CalendarDate {
 		case 10: return i18n::translate_c('GENITIVE', 'October');
 		case 11: return i18n::translate_c('GENITIVE', 'November');
 		case 12: return i18n::translate_c('GENITIVE', 'December');
+		default: return '';
+		}
+	}
+	static function NUM_TO_MONTH_LOCATIVE($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('LOCATIVE', 'January');
+		case 2:  return i18n::translate_c('LOCATIVE', 'February');
+		case 3:  return i18n::translate_c('LOCATIVE', 'March');
+		case 4:  return i18n::translate_c('LOCATIVE', 'April');
+		case 5:  return i18n::translate_c('LOCATIVE', 'May');
+		case 6:  return i18n::translate_c('LOCATIVE', 'June');
+		case 7:  return i18n::translate_c('LOCATIVE', 'July');
+		case 8:  return i18n::translate_c('LOCATIVE', 'August');
+		case 9:  return i18n::translate_c('LOCATIVE', 'September');
+		case 10: return i18n::translate_c('LOCATIVE', 'October');
+		case 11: return i18n::translate_c('LOCATIVE', 'November');
+		case 12: return i18n::translate_c('LOCATIVE', 'December');
+		default: return '';
+		}
+	}
+	static function NUM_TO_MONTH_INSTRUMENTAL($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('INSTRUMENTAL', 'January');
+		case 2:  return i18n::translate_c('INSTRUMENTAL', 'February');
+		case 3:  return i18n::translate_c('INSTRUMENTAL', 'March');
+		case 4:  return i18n::translate_c('INSTRUMENTAL', 'April');
+		case 5:  return i18n::translate_c('INSTRUMENTAL', 'May');
+		case 6:  return i18n::translate_c('INSTRUMENTAL', 'June');
+		case 7:  return i18n::translate_c('INSTRUMENTAL', 'July');
+		case 8:  return i18n::translate_c('INSTRUMENTAL', 'August');
+		case 9:  return i18n::translate_c('INSTRUMENTAL', 'September');
+		case 10: return i18n::translate_c('INSTRUMENTAL', 'October');
+		case 11: return i18n::translate_c('INSTRUMENTAL', 'November');
+		case 12: return i18n::translate_c('INSTRUMENTAL', 'December');
 		default: return '';
 		}
 	}
@@ -366,7 +398,7 @@ class CalendarDate {
 
 	// Format a date
 	// $format - format string: the codes are specified in http://php.net/date
-	function Format($format) {
+	function Format($format, $qualifier='') {
 		// Legacy formats (DMY) become jFY
 		if (preg_match('/^[DMY,. ;\/-]+$/', $format)) {
 			$format=strtr($format, 'DM', 'jF');
@@ -385,6 +417,23 @@ class CalendarDate {
 		if (!$this->d || !$this->m || !$this->y) {
 			$format=trim($format, ',. ;/-');
 		}
+		if ($this->d) {
+			$case='GENITIVE';
+		} else {
+			switch ($qualifier) {
+			case '':
+			case 'int':
+			case 'est':
+	 		case 'cal': $case='NOMINATIVE'; break;
+			case 'to':
+			case 'abt':
+			case 'from': $case='GENITIVE'; break;
+			case 'aft':  $case='LOCATIVE'; break;
+			case 'bef':
+			case 'bet':
+			case 'and': $case='INSTRUMENTAL'; break;
+			}
+		}
 		// Build up the formated date, character at a time
 		preg_match_all('/%[^%]/', $format, $matches);
 		foreach ($matches[0] as $match) {
@@ -397,7 +446,7 @@ class CalendarDate {
 			case '%S': $format=str_replace($match, $this->FormatOrdinalSuffix(),  $format); break;
 			case '%w': $format=str_replace($match, $this->FormatNumericWeekday(), $format); break;
 			case '%z': $format=str_replace($match, $this->FormatDayOfYear(),      $format); break;
-			case '%F': $format=str_replace($match, $this->FormatLongMonth(),      $format); break;
+			case '%F': $format=str_replace($match, $this->FormatLongMonth($case), $format); break;
 			case '%m': $format=str_replace($match, $this->FormatMonthZeros(),     $format); break;
 			case '%M': $format=str_replace($match, $this->FormatShortMonth(),     $format); break;
 			case '%n': $format=str_replace($match, $this->FormatMonth(),          $format); break;
@@ -469,8 +518,13 @@ class CalendarDate {
 			return '0'.$this->m;
 	}
 
-	function FormatLongMonth() {
-		return $this->NUM_TO_MONTH_NOMINATIVE($this->m, $this->IsLeapYear());
+	function FormatLongMonth($case='NOMINATIVE') {
+		switch ($case) {
+		case 'GENITIVE':     return $this->NUM_TO_MONTH_GENITIVE    ($this->m, $this->IsLeapYear());
+		case 'NOMINATIVE':   return $this->NUM_TO_MONTH_NOMINATIVE  ($this->m, $this->IsLeapYear());
+		case 'LOCATIVE':     return $this->NUM_TO_MONTH_LOCATIVE    ($this->m, $this->IsLeapYear());
+		case 'INSTRUMENTAL': return $this->NUM_TO_MONTH_INSTRUMENTAL($this->m, $this->IsLeapYear());
+		}
 	}
 
 	function FormatShortMonth() {
@@ -754,6 +808,42 @@ class JewishDate extends CalendarDate {
 		default: return '';
 		}
 	}
+	static function NUM_TO_MONTH_LOCATIVE($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('LOCATIVE', 'Tishrei');
+		case 2:  return i18n::translate_c('LOCATIVE', 'Heshvan');
+		case 3:  return i18n::translate_c('LOCATIVEENITIVE', 'Kislev');
+		case 4:  return i18n::translate_c('LOCATIVE', 'Tevet');
+		case 5:  return i18n::translate_c('LOCATIVE', 'Shevat');
+		case 6:  if ($leap_year) return i18n::translate_c('LOCATIVE', 'Adar'); else return i18n::translate_c('LOCATIVEENITIVE', 'Adar I');
+		case 7:  return i18n::translate_c('LOCATIVE', 'Adar II');
+		case 8:  return i18n::translate_c('LOCATIVE', 'Nissan');
+		case 9:  return i18n::translate_c('LOCATIVE', 'Iyar');
+		case 10: return i18n::translate_c('LOCATIVE', 'Sivan');
+		case 11: return i18n::translate_c('LOCATIVE', 'Tamuz');
+		case 12: return i18n::translate_c('LOCATIVE', 'Av');
+		case 13: return i18n::translate_c('LOCATIVE', 'Elul');
+		default: return '';
+		}
+	}
+	static function NUM_TO_MONTH_INSTRUMENTAL($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('INSTRUMENTAL', 'Tishrei');
+		case 2:  return i18n::translate_c('INSTRUMENTAL', 'Heshvan');
+		case 3:  return i18n::translate_c('INSTRUMENTAL', 'Kislev');
+		case 4:  return i18n::translate_c('INSTRUMENTAL', 'Tevet');
+		case 5:  return i18n::translate_c('INSTRUMENTAL', 'Shevat');
+		case 6:  if ($leap_year) return i18n::translate_c('INSTRUMENTAL', 'Adar'); else return i18n::translate_c('INSTRUMENTAL', 'Adar I');
+		case 7:  return i18n::translate_c('INSTRUMENTAL', 'Adar II');
+		case 8:  return i18n::translate_c('INSTRUMENTAL', 'Nissan');
+		case 9:  return i18n::translate_c('INSTRUMENTAL', 'Iyar');
+		case 10: return i18n::translate_c('INSTRUMENTAL', 'Sivan');
+		case 11: return i18n::translate_c('INSTRUMENTAL', 'Tamuz');
+		case 12: return i18n::translate_c('INSTRUMENTAL', 'Av');
+		case 13: return i18n::translate_c('INSTRUMENTAL', 'Elul');
+		default: return '';
+		}
+	}
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
 		switch ($n) {
@@ -888,6 +978,16 @@ class HebrewDate extends JewishDate {
 		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
 	
+	static function NUM_TO_MONTH_LOCATIVE($n, $leap_year) {
+		// Hebrew does not have locative forms
+		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
+	}
+	
+	static function NUM_TO_MONTH_INSTRUMENTAL($n, $leap_year) {
+		// Hebrew does not have instrumental forms
+		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
+	}
+	
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
 		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
@@ -1009,6 +1109,40 @@ class FrenchRDate extends CalendarDate {
 		case 11: return i18n::translate_c('GENITIVE', 'Thermidor');
 		case 12: return i18n::translate_c('GENITIVE', 'Fructidor');
 		case 13: return i18n::translate_c('GENITIVE', 'jours complémentaires');
+		}
+	}
+	static function NUM_TO_MONTH_LOCATIVE($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('LOCATIVE', 'Vendémiaire');
+		case 2:  return i18n::translate_c('LOCATIVE', 'Brumaire');
+		case 3:  return i18n::translate_c('LOCATIVE', 'Frimaire');
+		case 4:  return i18n::translate_c('LOCATIVE', 'Nivôse');
+		case 5:  return i18n::translate_c('LOCATIVE', 'Pluviôse');
+		case 6:  return i18n::translate_c('LOCATIVE', 'Ventôse');
+		case 7:  return i18n::translate_c('LOCATIVE', 'Germinal');
+		case 8:  return i18n::translate_c('LOCATIVE', 'Floréal');
+		case 9:  return i18n::translate_c('LOCATIVE', 'Prairial');
+		case 10: return i18n::translate_c('LOCATIVE', 'Messidor');
+		case 11: return i18n::translate_c('LOCATIVE', 'Thermidor');
+		case 12: return i18n::translate_c('LOCATIVE', 'Fructidor');
+		case 13: return i18n::translate_c('LOCATIVE', 'jours complémentaires');
+		}
+	}
+	static function NUM_TO_MONTH_INSTRUMENTAL($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('INSTRUMENTAL', 'Vendémiaire');
+		case 2:  return i18n::translate_c('INSTRUMENTAL', 'Brumaire');
+		case 3:  return i18n::translate_c('INSTRUMENTAL', 'Frimaire');
+		case 4:  return i18n::translate_c('INSTRUMENTAL', 'Nivôse');
+		case 5:  return i18n::translate_c('INSTRUMENTAL', 'Pluviôse');
+		case 6:  return i18n::translate_c('INSTRUMENTAL', 'Ventôse');
+		case 7:  return i18n::translate_c('INSTRUMENTAL', 'Germinal');
+		case 8:  return i18n::translate_c('INSTRUMENTAL', 'Floréal');
+		case 9:  return i18n::translate_c('INSTRUMENTAL', 'Prairial');
+		case 10: return i18n::translate_c('INSTRUMENTAL', 'Messidor');
+		case 11: return i18n::translate_c('INSTRUMENTAL', 'Thermidor');
+		case 12: return i18n::translate_c('INSTRUMENTAL', 'Fructidor');
+		case 13: return i18n::translate_c('INSTRUMENTAL', 'jours complémentaires');
 		}
 	}
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
@@ -1137,6 +1271,40 @@ class HijriDate extends CalendarDate {
 		default: return '';
 		}
 	}
+	static function NUM_TO_MONTH_LOCATIVE($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('LOCATIVE', 'Muharram');
+		case 2:  return i18n::translate_c('LOCATIVE', 'Safar');
+		case 3:  return i18n::translate_c('LOCATIVE', 'Rabi\' al-awwal');
+		case 4:  return i18n::translate_c('LOCATIVE', 'Rabi\' al-thani');
+		case 5:  return i18n::translate_c('LOCATIVE', 'Jumada al-awwal');
+		case 6:  return i18n::translate_c('LOCATIVE', 'Jumada al-thani');
+		case 7:  return i18n::translate_c('LOCATIVE', 'Rajab');
+		case 8:  return i18n::translate_c('LOCATIVE', 'Sha\'aban');
+		case 9:  return i18n::translate_c('LOCATIVE', 'Ramadan');
+		case 10: return i18n::translate_c('LOCATIVE', 'Shawwal');
+		case 11: return i18n::translate_c('LOCATIVE', 'Dhu al-Qi\'dah');
+		case 12: return i18n::translate_c('LOCATIVE', 'Dhu al-Hijjah');
+		default: return '';
+		}
+	}
+	static function NUM_TO_MONTH_INSTRUMENTAL($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('INSTRUMENTAL', 'Muharram');
+		case 2:  return i18n::translate_c('INSTRUMENTAL', 'Safar');
+		case 3:  return i18n::translate_c('INSTRUMENTAL', 'Rabi\' al-awwal');
+		case 4:  return i18n::translate_c('INSTRUMENTAL', 'Rabi\' al-thani');
+		case 5:  return i18n::translate_c('INSTRUMENTAL', 'Jumada al-awwal');
+		case 6:  return i18n::translate_c('INSTRUMENTAL', 'Jumada al-thani');
+		case 7:  return i18n::translate_c('INSTRUMENTAL', 'Rajab');
+		case 8:  return i18n::translate_c('INSTRUMENTAL', 'Sha\'aban');
+		case 9:  return i18n::translate_c('INSTRUMENTAL', 'Ramadan');
+		case 10: return i18n::translate_c('INSTRUMENTAL', 'Shawwal');
+		case 11: return i18n::translate_c('INSTRUMENTAL', 'Dhu al-Qi\'dah');
+		case 12: return i18n::translate_c('INSTRUMENTAL', 'Dhu al-Hijjah');
+		default: return '';
+		}
+	}
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
 		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
@@ -1208,6 +1376,16 @@ class ArabicDate extends HijriDate {
 		// Arabic does not have genitive forms
 		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
+	static function NUM_TO_MONTH_LOCATIVE($n, $leap_year) {
+		// Arabic does not have locative forms
+		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
+	}
+	
+	static function NUM_TO_MONTH_INSTRUMENTAL($n, $leap_year) {
+		// Arabic does not have instrumental forms
+		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
+	}
+	
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
 		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
