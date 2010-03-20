@@ -1572,12 +1572,12 @@ class GedcomDate {
 
 		// Two dates with text before, between and after
 		$q1=$this->qual1;
-		$d1=$this->date1->Format($date_fmt);
+		$d1=$this->date1->Format($date_fmt, $this->qual1);
 		$q2=$this->qual2;
 		if (is_null($this->date2))
 			$d2='';
 		else
-			$d2=$this->date2->Format($date_fmt);
+			$d2=$this->date2->Format($date_fmt, $this->qual2);
 		$q3='';
 		$func($q1, $d1, $q2, $d2, $q3);
 		// Convert to other calendars, if requested
@@ -1587,7 +1587,7 @@ class GedcomDate {
 			if ($cal_fmt!='none') {
 				$d1conv=$this->date1->convert_to_cal($cal_fmt);
 				if ($d1conv->InValidRange()) {
-					$d1tmp=$d1conv->Format($date_fmt);
+					$d1tmp=$d1conv->Format($date_fmt, $this->qual1);
 				} else {
 					$d1tmp='';
 				}
@@ -1598,7 +1598,7 @@ class GedcomDate {
 				} else {
 					$d2conv=$this->date2->convert_to_cal($cal_fmt);
 					if ($d2conv->InValidRange()) {
-						$d2tmp=$d2conv->Format($date_fmt);
+						$d2tmp=$d2conv->Format($date_fmt, $this->qual2);
 					} else {
 						$d2tmp='';
 					}
