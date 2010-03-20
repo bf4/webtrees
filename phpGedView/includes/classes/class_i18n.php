@@ -156,6 +156,25 @@ class i18n {
 		return call_user_func_array('sprintf', $args);
 	}
 
+	// Context sensitive version of translate.
+	// echo i18n::translate_c('NOMINATIVE', 'January');
+	// echo i18n::translate_c('GENITIVE',   'January');
+	static public function translate_c(/* var_args */) {
+		$args=func_get_args();
+		$args[0]=Zend_Registry::get('Zend_Translate')->_($args[0]."\x04".$args[1]);
+		unset ($args[1]);
+		foreach ($args as &$arg) {
+			if (is_array($arg)) {
+				$arg=i18n::make_list($arg);
+			}
+		}
+		// TODO: for each embedded string, if the text-direction is the opposite of the
+		// page language, then wrap it in &ltr; on LTR pages and &rtl; on RTL pages.
+		// This will ensure that non/weakly direction characters in the main string
+		// are displayed correctly by the browser's BIDI algorithm.
+		return call_user_func_array('sprintf', $args);
+	}
+
 	// Similar to translate, but do perform "no operation" on it.
 	// This is necessary to fetch a format string (containing % characters) without
 	// performing sustitution of arguments.

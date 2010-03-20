@@ -94,8 +94,8 @@ if ($year==0)
 // Extract values from date
 $days_in_month=$cal_date->DaysInMonth();
 $days_in_week=$cal_date->DaysInWeek();
-$cal_month=$cal_date->Format('O');
-$today_month=$today->Format('O');
+$cal_month=$cal_date->Format('%O');
+$today_month=$today->Format('%O');
 
 // Invalid dates?  Go to monthly view, where they'll be found.
 if ($cal_date->d>$days_in_month && $action=='today')
@@ -139,28 +139,28 @@ if ($view!='preview') {
 	echo i18n::translate('Day'), help_link('annivers_date_select'), '</td><td colspan="7" class="optionbox">';
 	for($d=1; $d<=$days_in_month; $d++) {
 		// Format the day number using the calendar
-		$tmp=new GedcomDate($cal_date->Format("@ {$d} O E")); $d_fmt=$tmp->date1->Format('j');
+		$tmp=new GedcomDate($cal_date->Format("%@ {$d} %O %E")); $d_fmt=$tmp->date1->Format('%j');
 		if ($d==$cal_date->d)
 			echo "<span class=\"error\">{$d_fmt}</span>";
 		else
 			echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$d_fmt}</a>";
 		echo ' | ';
 	}
-	$tmp=new GedcomDate($today->Format('@ A O E')); // Need a GedcomDate object to get localisation
+	$tmp=new GedcomDate($today->Format('%@ %A %O %E')); // Need a GedcomDate object to get localisation
 	echo "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$tmp->Display(true, NULL, array()).'</b></a>';
 	// Month selector
 	echo '<tr><td class="descriptionbox vmiddle">';
 	echo i18n::translate('Month'), help_link('annivers_month_select'), '</td>';
 	echo '<td class="optionbox" colspan="7">';
 	for ($n=1; $n<=$cal_date->NUM_MONTHS(); ++$n) {
-		$month_name=$cal_date->NUM_TO_MONTH($n, $cal_date->IsLeapYear());
+		$month_name=$cal_date->NUM_TO_MONTH_GENITIVE($n, $cal_date->IsLeapYear());
 		$m=$cal_date->NUM_TO_GEDCOM_MONTH($n, $cal_date->IsLeapYear());
 		if ($n==$cal_date->m)
 			$month_name="<span class=\"error\">{$month_name}</span>";
 		echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$m}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$month_name}</a>";
 		echo ' | ';
 	}
-	echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day=".min($cal_date->d, $today->DaysInMonth())."&month={$today_month}&year={$today->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\"><b>".$today->Format('F Y').'</b></a></td></tr>';
+	echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day=".min($cal_date->d, $today->DaysInMonth())."&month={$today_month}&year={$today->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\"><b>".$today->Format('%F %Y').'</b></a></td></tr>';
 	// Year selector
 	echo '<tr><td class="descriptionbox vmiddle">';
 	echo i18n::translate('Year'), help_link('annivers_year_select'), '</td>';
@@ -168,7 +168,7 @@ if ($view!='preview') {
 	echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year=".($cal_date->y==1?-1:$cal_date->y-1)."&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">-1</a>";
 	echo " <input type=\"text\" name=\"year\" value=\"{$year}\" size=\"7\" /> ";
 	echo "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year=".($cal_date->y==-1?1:$cal_date->y+1)."&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">+1</a>";
-	echo " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$today->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\"><b>".$today->Format('Y')."</b></a>";
+	echo " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$today->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\"><b>".$today->Format('%Y')."</b></a>";
 	echo "</td> ";
 	// Filtering options
 	echo "<td class=\"descriptionbox vmiddle\">";
@@ -481,7 +481,7 @@ case 'calendar':
 				echo '&nbsp;';
 		else {
 			// Format the day number using the calendar
-			$tmp=new GedcomDate($cal_date->Format("@ {$d} O E")); $d_fmt=$tmp->date1->Format('j');
+			$tmp=new GedcomDate($cal_date->Format("%@ {$d} %O %E")); $d_fmt=$tmp->date1->Format('%j');
 			if ($d==$today->d && $cal_date->m==$today->m)
 				echo "<span class=\"cal_day current_day\">{$d_fmt}</span>";
 			else
@@ -492,7 +492,7 @@ case 'calendar':
 				if ($alt_date->CALENDAR_ESCAPE()!=$cal_date->CALENDAR_ESCAPE()) {
 					list($alt_date->y, $alt_date->m, $alt_date->d)=$alt_date->JDtoYMD($cal_date->minJD+$d-1);
 					$alt_date->SetJDfromYMD();
-					echo "<span class=\"rtl_cal_day\">".$alt_date->Format("j M")."</span>";
+					echo "<span class=\"rtl_cal_day\">".$alt_date->Format("%j %M")."</span>";
 					break;
 				}
 			}

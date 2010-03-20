@@ -147,20 +147,39 @@ class CalendarDate {
 		}
 	}
 	// We put these in the base class, to save duplicating it in the Julian and Gregorian calendars
-	static function NUM_TO_MONTH($n, $leap_year) {
+	static function NUM_TO_MONTH_NOMINATIVE($n, $leap_year) {
+		// Nominative forms refer to the subject of a sentence.  e.g. used as a heading for a monthly calendar
 		switch ($n) {
-		case 1:  return i18n::translate('January');
-		case 2:  return i18n::translate('February');
-		case 3:  return i18n::translate('March');
-		case 4:  return i18n::translate('April');
-		case 5:  return i18n::translate('May');
-		case 6:  return i18n::translate('June');
-		case 7:  return i18n::translate('July');
-		case 8:  return i18n::translate('August');
-		case 9:  return i18n::translate('September');
-		case 10: return i18n::translate('October');
-		case 11: return i18n::translate('November');
-		case 12: return i18n::translate('December');
+		case 1:  return i18n::translate_c('NOMINATIVE', 'January');
+		case 2:  return i18n::translate_c('NOMINATIVE', 'February');
+		case 3:  return i18n::translate_c('NOMINATIVE', 'March');
+		case 4:  return i18n::translate_c('NOMINATIVE', 'April');
+		case 5:  return i18n::translate_c('NOMINATIVE', 'May');
+		case 6:  return i18n::translate_c('NOMINATIVE', 'June');
+		case 7:  return i18n::translate_c('NOMINATIVE', 'July');
+		case 8:  return i18n::translate_c('NOMINATIVE', 'August');
+		case 9:  return i18n::translate_c('NOMINATIVE', 'September');
+		case 10: return i18n::translate_c('NOMINATIVE', 'October');
+		case 11: return i18n::translate_c('NOMINATIVE', 'November');
+		case 12: return i18n::translate_c('NOMINATIVE', 'December');
+		default: return '';
+		}
+	}
+	static function NUM_TO_MONTH_GENITIVE($n, $leap_year) {
+		// Genitive (possessive) forms are used to modify another noun.  e.g. 14th of January
+		switch ($n) {
+		case 1:  return i18n::translate_c('GENITIVE', 'January');
+		case 2:  return i18n::translate_c('GENITIVE', 'February');
+		case 3:  return i18n::translate_c('GENITIVE', 'March');
+		case 4:  return i18n::translate_c('GENITIVE', 'April');
+		case 5:  return i18n::translate_c('GENITIVE', 'May');
+		case 6:  return i18n::translate_c('GENITIVE', 'June');
+		case 7:  return i18n::translate_c('GENITIVE', 'July');
+		case 8:  return i18n::translate_c('GENITIVE', 'August');
+		case 9:  return i18n::translate_c('GENITIVE', 'September');
+		case 10: return i18n::translate_c('GENITIVE', 'October');
+		case 11: return i18n::translate_c('GENITIVE', 'November');
+		case 12: return i18n::translate_c('GENITIVE', 'December');
 		default: return '';
 		}
 	}
@@ -451,7 +470,7 @@ class CalendarDate {
 	}
 
 	function FormatLongMonth() {
-		return $this->NUM_TO_MONTH($this->m, $this->IsLeapYear());
+		return $this->NUM_TO_MONTH_NOMINATIVE($this->m, $this->IsLeapYear());
 	}
 
 	function FormatShortMonth() {
@@ -699,7 +718,7 @@ class JewishDate extends CalendarDate {
 			return null;
 		}
 	}
-	static function NUM_TO_MONTH($n, $leap_year) {
+	static function NUM_TO_MONTH_NOMINATIVE($n, $leap_year) {
 		switch ($n) {
 		case 1:  return i18n::translate('Tishrei');
 		case 2:  return i18n::translate('Heshvan');
@@ -826,7 +845,7 @@ class HebrewDate extends JewishDate {
 		return LONG_DAYS_OF_WEEK($n);
 	}
 
-	static function NUM_TO_MONTH($n, $leap_year) {
+	static function NUM_TO_MONTH_NOMINATIVE($n, $leap_year) {
 		// Do not translate these - they are supposed to be hebrew, whatever language is shown.
 		switch ($n) {
 		case 1:  return 'תשרי';
@@ -848,7 +867,7 @@ class HebrewDate extends JewishDate {
 	
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
-		return $this->NUM_TO_MONTH($n, $leap_year);
+		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
 
 	function FormatShortYear() {
@@ -935,7 +954,7 @@ class FrenchRDate extends CalendarDate {
 			return null;
 		}
 	}
-	static function NUM_TO_MONTH($n, $leap_year) {
+	static function NUM_TO_MONTH_NOMINATIVE($n, $leap_year) {
 		switch ($n) {
 		case 1:  return i18n::translate('Vendémiaire');
 		case 2:  return i18n::translate('Brumaire');
@@ -954,7 +973,7 @@ class FrenchRDate extends CalendarDate {
 	}
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
-		return $this->NUM_TO_MONTH($n);
+		return $this->NUM_TO_MONTH_NOMINATIVE($n);
 	}
 	static function NUM_TO_GEDCOM_MONTH($n, $leap_year) {
 		switch ($n) {
@@ -1044,7 +1063,7 @@ class HijriDate extends CalendarDate {
 			return null;
 		}
 	}
-	static function NUM_TO_MONTH($n, $leap_year) {
+	static function NUM_TO_MONTH_NOMINATIVE($n, $leap_year) {
 		switch ($n) {
 		case 1:  return i18n::translate('Muharram');
 		case 2:  return i18n::translate('Safar');
@@ -1063,7 +1082,7 @@ class HijriDate extends CalendarDate {
 	}
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
-		return $this->NUM_TO_MONTH($n, $leap_year);
+		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
 	static function NUM_TO_GEDCOM_MONTH($n, $leap_year) {
 		switch ($n) {
@@ -1110,7 +1129,7 @@ class HijriDate extends CalendarDate {
 class ArabicDate extends HijriDate {
 	static $ARABIC_DAYS=array("الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعه", "السبت", "الأحد");
 
-	static function NUM_TO_MONTH($n, $leap_year) {
+	static function NUM_TO_MONTH_NOMINATIVE($n, $leap_year) {
 		// Do not translate these - they are supposed to be arabic, whatever language is shown.
 		switch ($n) {
 		case 1:  return 'محرّم';
@@ -1130,7 +1149,7 @@ class ArabicDate extends HijriDate {
 	}
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
-		return $this->NUM_TO_MONTH($n, $leap_year);
+		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
 
 	function FormatLongWeekday() {
