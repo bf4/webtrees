@@ -161,7 +161,12 @@ class i18n {
 	// echo i18n::translate_c('GENITIVE',   'January');
 	static public function translate_c(/* var_args */) {
 		$args=func_get_args();
-		$args[0]=Zend_Registry::get('Zend_Translate')->_($args[0]."\x04".$args[1]);
+		$msgid=$args[0]."\x04".$args[1];
+		$msgtxt=Zend_Registry::get('Zend_Translate')->_($msgid);
+		if ($msgtxt==$msgid) {
+			$msgtxt=$args[1];
+		}
+		$args[0]=$msgtxt;
 		unset ($args[1]);
 		foreach ($args as &$arg) {
 			if (is_array($arg)) {

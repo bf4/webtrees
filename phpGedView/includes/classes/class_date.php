@@ -166,7 +166,7 @@ class CalendarDate {
 		}
 	}
 	static function NUM_TO_MONTH_GENITIVE($n, $leap_year) {
-		// Genitive (possessive) forms are used to modify another noun.  e.g. 14th of January
+		// Genitive (possessive) forms are used to modify another noun.  e.g. "14th January"
 		switch ($n) {
 		case 1:  return i18n::translate_c('GENITIVE', 'January');
 		case 2:  return i18n::translate_c('GENITIVE', 'February');
@@ -720,19 +720,37 @@ class JewishDate extends CalendarDate {
 	}
 	static function NUM_TO_MONTH_NOMINATIVE($n, $leap_year) {
 		switch ($n) {
-		case 1:  return i18n::translate('Tishrei');
-		case 2:  return i18n::translate('Heshvan');
-		case 3:  return i18n::translate('Kislev');
-		case 4:  return i18n::translate('Tevet');
-		case 5:  return i18n::translate('Shevat');
-		case 6:  if ($leap_year) return i18n::translate('Adar'); else return i18n::translate('Adar I');
-		case 7:  return i18n::translate('Adar II');
-		case 8:  return i18n::translate('Nissan');
-		case 9:  return i18n::translate('Iyar');
-		case 10: return i18n::translate('Sivan');
-		case 11: return i18n::translate('Tamuz');
-		case 12: return i18n::translate('Av');
-		case 13: return i18n::translate('Elul');
+		case 1:  return i18n::translate_c('NOMINATIVE', 'Tishrei');
+		case 2:  return i18n::translate_c('NOMINATIVE', 'Heshvan');
+		case 3:  return i18n::translate_c('NOMINATIVE', 'Kislev');
+		case 4:  return i18n::translate_c('NOMINATIVE', 'Tevet');
+		case 5:  return i18n::translate_c('NOMINATIVE', 'Shevat');
+		case 6:  if ($leap_year) return i18n::translate_c('NOMINATIVE', 'Adar'); else return i18n::translate_c('NOMINATIVE', 'Adar I');
+		case 7:  return i18n::translate_c('NOMINATIVE', 'Adar II');
+		case 8:  return i18n::translate_c('NOMINATIVE', 'Nissan');
+		case 9:  return i18n::translate_c('NOMINATIVE', 'Iyar');
+		case 10: return i18n::translate_c('NOMINATIVE', 'Sivan');
+		case 11: return i18n::translate_c('NOMINATIVE', 'Tamuz');
+		case 12: return i18n::translate_c('NOMINATIVE', 'Av');
+		case 13: return i18n::translate_c('NOMINATIVE', 'Elul');
+		default: return '';
+		}
+	}
+	static function NUM_TO_MONTH_GENITIVE($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('GENITIVE', 'Tishrei');
+		case 2:  return i18n::translate_c('GENITIVE', 'Heshvan');
+		case 3:  return i18n::translate_c('GENITIVE', 'Kislev');
+		case 4:  return i18n::translate_c('GENITIVE', 'Tevet');
+		case 5:  return i18n::translate_c('GENITIVE', 'Shevat');
+		case 6:  if ($leap_year) return i18n::translate_c('GENITIVE', 'Adar'); else return i18n::translate_c('GENITIVE', 'Adar I');
+		case 7:  return i18n::translate_c('GENITIVE', 'Adar II');
+		case 8:  return i18n::translate_c('GENITIVE', 'Nissan');
+		case 9:  return i18n::translate_c('GENITIVE', 'Iyar');
+		case 10: return i18n::translate_c('GENITIVE', 'Sivan');
+		case 11: return i18n::translate_c('GENITIVE', 'Tamuz');
+		case 12: return i18n::translate_c('GENITIVE', 'Av');
+		case 13: return i18n::translate_c('GENITIVE', 'Elul');
 		default: return '';
 		}
 	}
@@ -864,6 +882,11 @@ class HebrewDate extends JewishDate {
 		default: return '';
 		}
 	}
+
+	static function NUM_TO_MONTH_GENITIVE($n, $leap_year) {
+		// Hebrew does not have genitive forms
+		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
+	}
 	
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
@@ -956,19 +979,36 @@ class FrenchRDate extends CalendarDate {
 	}
 	static function NUM_TO_MONTH_NOMINATIVE($n, $leap_year) {
 		switch ($n) {
-		case 1:  return i18n::translate('Vendémiaire');
-		case 2:  return i18n::translate('Brumaire');
-		case 3:  return i18n::translate('Frimaire');
-		case 4:  return i18n::translate('Nivôse');
-		case 5:  return i18n::translate('Pluviôse');
-		case 6:  return i18n::translate('Ventôse');
-		case 7:  return i18n::translate('Germinal');
-		case 8:  return i18n::translate('Floréal');
-		case 9:  return i18n::translate('Prairial');
-		case 10: return i18n::translate('Messidor');
-		case 11: return i18n::translate('Thermidor');
-		case 12: return i18n::translate('Fructidor');
-		case 13: return i18n::translate('jours complémentaires');
+		case 1:  return i18n::translate_c('NOMINATIVE', 'Vendémiaire');
+		case 2:  return i18n::translate_c('NOMINATIVE', 'Brumaire');
+		case 3:  return i18n::translate_c('NOMINATIVE', 'Frimaire');
+		case 4:  return i18n::translate_c('NOMINATIVE', 'Nivôse');
+		case 5:  return i18n::translate_c('NOMINATIVE', 'Pluviôse');
+		case 6:  return i18n::translate_c('NOMINATIVE', 'Ventôse');
+		case 7:  return i18n::translate_c('NOMINATIVE', 'Germinal');
+		case 8:  return i18n::translate_c('NOMINATIVE', 'Floréal');
+		case 9:  return i18n::translate_c('NOMINATIVE', 'Prairial');
+		case 10: return i18n::translate_c('NOMINATIVE', 'Messidor');
+		case 11: return i18n::translate_c('NOMINATIVE', 'Thermidor');
+		case 12: return i18n::translate_c('NOMINATIVE', 'Fructidor');
+		case 13: return i18n::translate_c('NOMINATIVE', 'jours complémentaires');
+		}
+	}
+	static function NUM_TO_MONTH_GENITIVE($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('GENITIVE', 'Vendémiaire');
+		case 2:  return i18n::translate_c('GENITIVE', 'Brumaire');
+		case 3:  return i18n::translate_c('GENITIVE', 'Frimaire');
+		case 4:  return i18n::translate_c('GENITIVE', 'Nivôse');
+		case 5:  return i18n::translate_c('GENITIVE', 'Pluviôse');
+		case 6:  return i18n::translate_c('GENITIVE', 'Ventôse');
+		case 7:  return i18n::translate_c('GENITIVE', 'Germinal');
+		case 8:  return i18n::translate_c('GENITIVE', 'Floréal');
+		case 9:  return i18n::translate_c('GENITIVE', 'Prairial');
+		case 10: return i18n::translate_c('GENITIVE', 'Messidor');
+		case 11: return i18n::translate_c('GENITIVE', 'Thermidor');
+		case 12: return i18n::translate_c('GENITIVE', 'Fructidor');
+		case 13: return i18n::translate_c('GENITIVE', 'jours complémentaires');
 		}
 	}
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
@@ -1065,18 +1105,35 @@ class HijriDate extends CalendarDate {
 	}
 	static function NUM_TO_MONTH_NOMINATIVE($n, $leap_year) {
 		switch ($n) {
-		case 1:  return i18n::translate('Muharram');
-		case 2:  return i18n::translate('Safar');
-		case 3:  return i18n::translate('Rabi\' al-awwal');
-		case 4:  return i18n::translate('Rabi\' al-thani');
-		case 5:  return i18n::translate('Jumada al-awwal');
-		case 6:  return i18n::translate('Jumada al-thani');
-		case 7:  return i18n::translate('Rajab');
-		case 8:  return i18n::translate('Sha\'aban');
-		case 9:  return i18n::translate('Ramadan');
-		case 10: return i18n::translate('Shawwal');
-		case 11: return i18n::translate('Dhu al-Qi\'dah');
-		case 12: return i18n::translate('Dhu al-Hijjah');
+		case 1:  return i18n::translate_c('NOMINATIVE', 'Muharram');
+		case 2:  return i18n::translate_c('NOMINATIVE', 'Safar');
+		case 3:  return i18n::translate_c('NOMINATIVE', 'Rabi\' al-awwal');
+		case 4:  return i18n::translate_c('NOMINATIVE', 'Rabi\' al-thani');
+		case 5:  return i18n::translate_c('NOMINATIVE', 'Jumada al-awwal');
+		case 6:  return i18n::translate_c('NOMINATIVE', 'Jumada al-thani');
+		case 7:  return i18n::translate_c('NOMINATIVE', 'Rajab');
+		case 8:  return i18n::translate_c('NOMINATIVE', 'Sha\'aban');
+		case 9:  return i18n::translate_c('NOMINATIVE', 'Ramadan');
+		case 10: return i18n::translate_c('NOMINATIVE', 'Shawwal');
+		case 11: return i18n::translate_c('NOMINATIVE', 'Dhu al-Qi\'dah');
+		case 12: return i18n::translate_c('NOMINATIVE', 'Dhu al-Hijjah');
+		default: return '';
+		}
+	}
+	static function NUM_TO_MONTH_GENITIVE($n, $leap_year) {
+		switch ($n) {
+		case 1:  return i18n::translate_c('GENITIVE', 'Muharram');
+		case 2:  return i18n::translate_c('GENITIVE', 'Safar');
+		case 3:  return i18n::translate_c('GENITIVE', 'Rabi\' al-awwal');
+		case 4:  return i18n::translate_c('GENITIVE', 'Rabi\' al-thani');
+		case 5:  return i18n::translate_c('GENITIVE', 'Jumada al-awwal');
+		case 6:  return i18n::translate_c('GENITIVE', 'Jumada al-thani');
+		case 7:  return i18n::translate_c('GENITIVE', 'Rajab');
+		case 8:  return i18n::translate_c('GENITIVE', 'Sha\'aban');
+		case 9:  return i18n::translate_c('GENITIVE', 'Ramadan');
+		case 10: return i18n::translate_c('GENITIVE', 'Shawwal');
+		case 11: return i18n::translate_c('GENITIVE', 'Dhu al-Qi\'dah');
+		case 12: return i18n::translate_c('GENITIVE', 'Dhu al-Hijjah');
 		default: return '';
 		}
 	}
@@ -1146,6 +1203,10 @@ class ArabicDate extends HijriDate {
 		case 12: return 'ذو الحجة';
 		default: return '';
 		}
+	}
+	static function NUM_TO_MONTH_GENITIVE($n, $leap_year) {
+		// Arabic does not have genitive forms
+		return $this->NUM_TO_MONTH_NOMINATIVE($n, $leap_year);
 	}
 	static function NUM_TO_SHORT_MONTH($n, $leap_year) {
 		// TODO: Do these have short names?
