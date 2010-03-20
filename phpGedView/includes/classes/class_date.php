@@ -812,10 +812,10 @@ class JewishDate extends CalendarDate {
 		switch ($n) {
 		case 1:  return i18n::translate_c('LOCATIVE', 'Tishrei');
 		case 2:  return i18n::translate_c('LOCATIVE', 'Heshvan');
-		case 3:  return i18n::translate_c('LOCATIVEENITIVE', 'Kislev');
+		case 3:  return i18n::translate_c('LOCATIVE', 'Kislev');
 		case 4:  return i18n::translate_c('LOCATIVE', 'Tevet');
 		case 5:  return i18n::translate_c('LOCATIVE', 'Shevat');
-		case 6:  if ($leap_year) return i18n::translate_c('LOCATIVE', 'Adar'); else return i18n::translate_c('LOCATIVEENITIVE', 'Adar I');
+		case 6:  if ($leap_year) return i18n::translate_c('LOCATIVE', 'Adar'); else return i18n::translate_c('LOCATIVE', 'Adar I');
 		case 7:  return i18n::translate_c('LOCATIVE', 'Adar II');
 		case 8:  return i18n::translate_c('LOCATIVE', 'Nissan');
 		case 9:  return i18n::translate_c('LOCATIVE', 'Iyar');
